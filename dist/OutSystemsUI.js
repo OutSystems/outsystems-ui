@@ -1802,7 +1802,7 @@ var OSFramework;
                     }
                     _handleFocusTrap() {
                         const opts = {
-                            focusTargetElement: this._floatingUIOptions.anchorElem.parentElement,
+                            focusTargetElement: this._floatingOptions.AnchorElem.parentElement,
                         };
                         this._focusTrapInstance = new OSUI.Behaviors.FocusTrap(opts);
                     }
@@ -1822,7 +1822,7 @@ var OSFramework;
                         OSUI.Helper.Dom.Attribute.Set(this.featureElem, OSUI.Constants.A11YAttributes.TabIndex, this.isOpen
                             ? OSUI.Constants.A11YAttributes.States.TabIndexShow
                             : OSUI.Constants.A11YAttributes.States.TabIndexHidden);
-                        OSUI.Helper.Dom.Attribute.Set(this._floatingUIOptions.anchorElem, OSUI.Constants.A11YAttributes.TabIndex, this.isOpen
+                        OSUI.Helper.Dom.Attribute.Set(this._floatingOptions.AnchorElem, OSUI.Constants.A11YAttributes.TabIndex, this.isOpen
                             ? OSUI.Constants.A11YAttributes.States.TabIndexHidden
                             : OSUI.Constants.A11YAttributes.States.TabIndexShow);
                     }
@@ -1856,14 +1856,14 @@ var OSFramework;
                         if (this.isOpen) {
                             this._focusableActiveElement = document.activeElement;
                             this._focusTrapInstance.enableForA11y();
-                            this.setFloatingUIBehaviour();
+                            this.setFloatingBehaviour();
                             OSUI.Helper.AsyncInvocation(() => {
                                 this.featureElem.focus();
                             });
                         }
                         else {
                             this._focusTrapInstance.disableForA11y();
-                            this._floatingUIInstance.close();
+                            this._floatingInstance.unsetFloatingPosition();
                             OSUI.Helper.AsyncInvocation(() => {
                                 this.featureElem.blur();
                                 if (isBodyClick === false) {
@@ -1885,7 +1885,7 @@ var OSFramework;
                     build() {
                         this._setCallbacks();
                         this._setEventListeners();
-                        this.setFloatingUIOptions();
+                        this.setFloatingConfigs();
                         this._handleFocusTrap();
                         this._setA11YProperties();
                         this.setBalloonShape();
@@ -1896,7 +1896,7 @@ var OSFramework;
                         }
                     }
                     dispose() {
-                        this._floatingUIInstance.dispose();
+                        this._floatingInstance.dispose();
                         this._unsetCallbacks();
                         super.dispose();
                     }
@@ -1912,42 +1912,42 @@ var OSFramework;
                         }
                         OSUI.Helper.Dom.Styles.SetStyleAttribute(this.featureElem, Balloon_1.Enum.CssCustomProperties.Shape, 'var(--border-radius-' + this.featureOptions.shape + ')');
                     }
-                    setFloatingUIBehaviour(isUpdate) {
-                        if (isUpdate || this._floatingUIInstance === undefined) {
-                            this.setFloatingUIOptions();
-                            if (isUpdate && this._floatingUIInstance !== undefined) {
-                                this._floatingUIInstance.update(this._floatingUIOptions);
+                    setFloatingBehaviour(isUpdate) {
+                        if (isUpdate || this._floatingInstance === undefined) {
+                            this.setFloatingConfigs();
+                            if (isUpdate && this._floatingInstance !== undefined) {
+                                this._floatingInstance.update(this._floatingOptions);
                             }
                             else {
-                                this._floatingUIInstance = new Providers.OSUI.Utils.FloatingUI(this._floatingUIOptions);
+                                this._floatingInstance = new OSUI.Utils.FloatingPosition.Factory.NewFloatingPosition(this._floatingOptions, OSUI.Utils.FloatingPosition.Enum.Provider.FloatingUI);
                             }
                         }
                         else {
-                            this._floatingUIInstance.build();
+                            this._floatingInstance.build();
                         }
                     }
-                    setFloatingUIOptions() {
-                        this._floatingUIOptions = {
-                            autoPlacement: this.featureOptions.position === OSUI.GlobalEnum.FloatingPosition.Auto,
-                            anchorElem: this.featureOptions.anchorElem,
-                            autoPlacementOptions: {
+                    setFloatingConfigs() {
+                        this._floatingOptions = {
+                            AutoPlacement: this.featureOptions.position === OSUI.GlobalEnum.FloatingPosition.Auto,
+                            AnchorElem: this.featureOptions.anchorElem,
+                            AutoPlacementOptions: {
                                 alignment: this.featureOptions.alignment,
                                 allowedPlacements: this.featureOptions.allowedPlacements,
                             },
-                            floatingElem: this.featureElem,
-                            position: this.featureOptions.position,
-                            updatePosition: true,
+                            FloatingElem: this.featureElem,
+                            Position: this.featureOptions.position,
+                            UpdatePosition: true,
                         };
                     }
-                    updateFloatingUIOptions(floatingUIOptions) {
-                        if (floatingUIOptions !== undefined) {
-                            this._floatingUIOptions = floatingUIOptions;
+                    updateFloatingConfigs(floatingConfigs) {
+                        if (floatingConfigs !== undefined) {
+                            this._floatingOptions = floatingConfigs;
                         }
-                        this.setFloatingUIBehaviour(true);
+                        this.setFloatingBehaviour(true);
                     }
                     updatePositionOption(position) {
                         this.featureOptions.position = position;
-                        this.setFloatingUIBehaviour(true);
+                        this.setFloatingBehaviour(true);
                     }
                 }
                 Balloon_1.Balloon = Balloon;
@@ -11387,6 +11387,106 @@ var OSFramework;
         })(Patterns = OSUI.Patterns || (OSUI.Patterns = {}));
     })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
 })(OSFramework || (OSFramework = {}));
+var OSFramework;
+(function (OSFramework) {
+    var OSUI;
+    (function (OSUI) {
+        var Utils;
+        (function (Utils) {
+            var FloatingPosition;
+            (function (FloatingPosition) {
+                var Enum;
+                (function (Enum) {
+                    let CssCustomProperties;
+                    (function (CssCustomProperties) {
+                        CssCustomProperties["Offset"] = "--osui-floating-offset";
+                        CssCustomProperties["YPosition"] = "--osui-floating-position-y";
+                        CssCustomProperties["XPosition"] = "--osui-floating-position-x";
+                    })(CssCustomProperties = Enum.CssCustomProperties || (Enum.CssCustomProperties = {}));
+                    let Provider;
+                    (function (Provider) {
+                        Provider["FloatingUI"] = "FloatingUI";
+                    })(Provider = Enum.Provider || (Enum.Provider = {}));
+                })(Enum = FloatingPosition.Enum || (FloatingPosition.Enum = {}));
+            })(FloatingPosition = Utils.FloatingPosition || (Utils.FloatingPosition = {}));
+        })(Utils = OSUI.Utils || (OSUI.Utils = {}));
+    })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
+})(OSFramework || (OSFramework = {}));
+var OSFramework;
+(function (OSFramework) {
+    var OSUI;
+    (function (OSUI) {
+        var Utils;
+        (function (Utils) {
+            var FloatingPosition;
+            (function (FloatingPosition_1) {
+                class FloatingPosition {
+                    constructor(options) {
+                        this.floatingConfigs = options;
+                        this.build();
+                    }
+                    getOffsetValue() {
+                        return parseInt(getComputedStyle(this.floatingConfigs.AnchorElem).getPropertyValue(FloatingPosition_1.Enum.CssCustomProperties.Offset));
+                    }
+                    build() {
+                        this.setFloatingPosition();
+                        this.isBuilt = true;
+                    }
+                    dispose() {
+                        this.isBuilt = false;
+                    }
+                    update(options) {
+                        this.floatingConfigs = options;
+                        this.setFloatingPosition();
+                    }
+                }
+                FloatingPosition_1.FloatingPosition = FloatingPosition;
+            })(FloatingPosition = Utils.FloatingPosition || (Utils.FloatingPosition = {}));
+        })(Utils = OSUI.Utils || (OSUI.Utils = {}));
+    })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
+})(OSFramework || (OSFramework = {}));
+var OSFramework;
+(function (OSFramework) {
+    var OSUI;
+    (function (OSUI) {
+        var Utils;
+        (function (Utils) {
+            var FloatingPosition;
+            (function (FloatingPosition) {
+                class FloatingPositionConfig {
+                }
+                FloatingPosition.FloatingPositionConfig = FloatingPositionConfig;
+            })(FloatingPosition = Utils.FloatingPosition || (Utils.FloatingPosition = {}));
+        })(Utils = OSUI.Utils || (OSUI.Utils = {}));
+    })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
+})(OSFramework || (OSFramework = {}));
+var OSFramework;
+(function (OSFramework) {
+    var OSUI;
+    (function (OSUI) {
+        var Utils;
+        (function (Utils) {
+            var FloatingPosition;
+            (function (FloatingPosition) {
+                var Factory;
+                (function (Factory) {
+                    function NewFloatingPosition(configs, provider) {
+                        let _floatingPositionItem = null;
+                        switch (provider) {
+                            case FloatingPosition.Enum.Provider.FloatingUI:
+                                _floatingPositionItem = new Providers.OSUI.Utils.FloatingUI(configs);
+                                break;
+                            default:
+                                throw new Error(`There is no FloatingPosition of the ${provider} provider`);
+                        }
+                        return _floatingPositionItem;
+                    }
+                    Factory.NewFloatingPosition = NewFloatingPosition;
+                })(Factory = FloatingPosition.Factory || (FloatingPosition.Factory = {}));
+            })(FloatingPosition = Utils.FloatingPosition || (Utils.FloatingPosition = {}));
+        })(Utils = OSUI.Utils || (OSUI.Utils = {}));
+    })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
+})(OSFramework || (OSFramework = {}));
 var OutSystems;
 (function (OutSystems) {
     var OSUI;
@@ -20254,12 +20354,6 @@ var Providers;
         (function (Utils) {
             var Enum;
             (function (Enum) {
-                let CssCustomProperties;
-                (function (CssCustomProperties) {
-                    CssCustomProperties["Offset"] = "--osui-floating-offset";
-                    CssCustomProperties["YPosition"] = "--osui-floating-position-y";
-                    CssCustomProperties["XPosition"] = "--osui-floating-position-x";
-                })(CssCustomProperties = Enum.CssCustomProperties || (Enum.CssCustomProperties = {}));
                 let ProviderInfo;
                 (function (ProviderInfo) {
                     ProviderInfo["Name"] = "FloatingUI";
@@ -20275,64 +20369,66 @@ var Providers;
     (function (OSUI) {
         var Utils;
         (function (Utils) {
-            class FloatingUI {
+            class FloatingUI extends OSFramework.OSUI.Utils.FloatingPosition.FloatingPosition {
                 constructor(options) {
-                    this._floatingUIOptions = options;
-                    this.build();
+                    super(options);
                 }
-                _getOffsetValue() {
-                    return parseInt(getComputedStyle(this._floatingUIOptions.anchorElem).getPropertyValue(Utils.Enum.CssCustomProperties.Offset));
+                dispose() {
+                    if (this.floatingConfigs.UpdatePosition) {
+                        this.eventOnUpdateCallback();
+                    }
+                    super.dispose();
                 }
-                _setFloatingPosition() {
+                setFloatingPosition() {
                     const _middlewareArray = [];
-                    if (this._floatingUIOptions.autoPlacement) {
-                        if (this._floatingUIOptions.autoPlacementOptions.alignment === OSFramework.OSUI.Constants.EmptyString) {
-                            this._floatingUIOptions.autoPlacementOptions.alignment = null;
+                    if (this.floatingConfigs.AutoPlacement) {
+                        if (this.floatingConfigs.AutoPlacementOptions.alignment === OSFramework.OSUI.Constants.EmptyString) {
+                            this.floatingConfigs.AutoPlacementOptions.alignment = null;
                         }
-                        if (this._floatingUIOptions.autoPlacementOptions.allowedPlacements.length <= 0) {
-                            this._floatingUIOptions.autoPlacementOptions.allowedPlacements.push(OSFramework.OSUI.GlobalEnum.FloatingPosition.BottomStart);
+                        if (this.floatingConfigs.AutoPlacementOptions.allowedPlacements.length <= 0) {
+                            this.floatingConfigs.AutoPlacementOptions.allowedPlacements.push(OSFramework.OSUI.GlobalEnum.FloatingPosition.BottomStart);
                         }
-                        _middlewareArray.push(window.FloatingUIDOM.autoPlacement(this._floatingUIOptions.autoPlacementOptions));
+                        _middlewareArray.push(window.FloatingUIDOM.autoPlacement(this.floatingConfigs.AutoPlacementOptions));
                         _middlewareArray.push(window.FloatingUIDOM.shift());
                     }
-                    if (this._floatingUIOptions.position !== OSFramework.OSUI.GlobalEnum.FloatingPosition.Center) {
-                        _middlewareArray.push(window.FloatingUIDOM.offset(this._getOffsetValue()));
+                    if (this.floatingConfigs.Position !== OSFramework.OSUI.GlobalEnum.FloatingPosition.Center) {
+                        _middlewareArray.push(window.FloatingUIDOM.offset(this.getOffsetValue()));
                     }
                     const _eventOnUpdatePosition = () => {
-                        window.FloatingUIDOM.computePosition(this._floatingUIOptions.anchorElem, this._floatingUIOptions.floatingElem, {
-                            placement: this._floatingUIOptions.position,
+                        window.FloatingUIDOM.computePosition(this.floatingConfigs.AnchorElem, this.floatingConfigs.FloatingElem, {
+                            placement: this.floatingConfigs.Position,
                             middleware: _middlewareArray,
                         }).then(({ x, y }) => {
-                            OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(this._floatingUIOptions.floatingElem, Utils.Enum.CssCustomProperties.YPosition, y + OSFramework.OSUI.GlobalEnum.Units.Pixel);
-                            OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(this._floatingUIOptions.floatingElem, Utils.Enum.CssCustomProperties.XPosition, x + OSFramework.OSUI.GlobalEnum.Units.Pixel);
+                            OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(this.floatingConfigs.FloatingElem, OSFramework.OSUI.Utils.FloatingPosition.Enum.CssCustomProperties.YPosition, y + OSFramework.OSUI.GlobalEnum.Units.Pixel);
+                            OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(this.floatingConfigs.FloatingElem, OSFramework.OSUI.Utils.FloatingPosition.Enum.CssCustomProperties.XPosition, x + OSFramework.OSUI.GlobalEnum.Units.Pixel);
                         });
                     };
                     _eventOnUpdatePosition();
-                    if (this._floatingUIOptions.updatePosition) {
-                        this._eventOnUpdateCallback = window.FloatingUIDOM.autoUpdate(this._floatingUIOptions.anchorElem, this._floatingUIOptions.floatingElem, _eventOnUpdatePosition.bind(this));
+                    if (this.floatingConfigs.UpdatePosition) {
+                        this.eventOnUpdateCallback = window.FloatingUIDOM.autoUpdate(this.floatingConfigs.AnchorElem, this.floatingConfigs.FloatingElem, _eventOnUpdatePosition.bind(this));
                     }
                 }
-                build() {
-                    this._setFloatingPosition();
-                }
-                close() {
-                    this._eventOnUpdateCallback();
+                unsetFloatingPosition() {
+                    this.eventOnUpdateCallback();
                     OSFramework.OSUI.Helper.ApplySetTimeOut(() => {
-                        OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(this._floatingUIOptions.floatingElem, Utils.Enum.CssCustomProperties.YPosition, 0);
-                        OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(this._floatingUIOptions.floatingElem, Utils.Enum.CssCustomProperties.XPosition, 0);
+                        OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(this.floatingConfigs.FloatingElem, OSFramework.OSUI.Utils.FloatingPosition.Enum.CssCustomProperties.YPosition, 0);
+                        OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(this.floatingConfigs.FloatingElem, OSFramework.OSUI.Utils.FloatingPosition.Enum.CssCustomProperties.XPosition, 0);
                     }, 50);
-                }
-                dispose() {
-                    if (this._floatingUIOptions.updatePosition) {
-                        this._eventOnUpdateCallback();
-                    }
-                }
-                update(options) {
-                    this._floatingUIOptions = options;
-                    this.build();
                 }
             }
             Utils.FloatingUI = FloatingUI;
+        })(Utils = OSUI.Utils || (OSUI.Utils = {}));
+    })(OSUI = Providers.OSUI || (Providers.OSUI = {}));
+})(Providers || (Providers = {}));
+var Providers;
+(function (Providers) {
+    var OSUI;
+    (function (OSUI) {
+        var Utils;
+        (function (Utils) {
+            class FloatingUIConfig extends OSFramework.OSUI.Utils.FloatingPosition.FloatingPositionConfig {
+            }
+            Utils.FloatingUIConfig = FloatingUIConfig;
         })(Utils = OSUI.Utils || (OSUI.Utils = {}));
     })(OSUI = Providers.OSUI || (Providers.OSUI = {}));
 })(Providers || (Providers = {}));

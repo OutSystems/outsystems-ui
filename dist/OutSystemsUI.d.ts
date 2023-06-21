@@ -860,8 +860,8 @@ declare namespace OSFramework.OSUI.Feature.Balloon {
     class Balloon<PT> extends AbstractFeature<PT, BalloonOptions> implements IBalloon {
         private _eventBodyClick;
         private _eventOnKeypress;
-        private _floatingUIInstance;
-        private _floatingUIOptions;
+        private _floatingInstance;
+        private _floatingOptions;
         private _focusTrapInstance;
         private _focusableActiveElement;
         private _isOpenedByApi;
@@ -882,9 +882,9 @@ declare namespace OSFramework.OSUI.Feature.Balloon {
         dispose(): void;
         open(isOpenedByApi: boolean): void;
         setBalloonShape(shape?: GlobalEnum.ShapeTypes): void;
-        setFloatingUIBehaviour(isUpdate?: boolean): void;
-        setFloatingUIOptions(): void;
-        updateFloatingUIOptions(floatingUIOptions?: Providers.OSUI.Utils.FloatingUIOptions): void;
+        setFloatingBehaviour(isUpdate?: boolean): void;
+        setFloatingConfigs(): void;
+        updateFloatingConfigs(floatingConfigs?: Utils.FloatingPosition.FloatingPositionConfig): void;
         updatePositionOption(position: GlobalEnum.FloatingPosition): void;
     }
 }
@@ -3632,6 +3632,49 @@ declare namespace OSFramework.OSUI.Patterns.TouchEvents {
         constructor(config: JSON);
     }
 }
+declare namespace OSFramework.OSUI.Utils.FloatingPosition.Enum {
+    enum CssCustomProperties {
+        Offset = "--osui-floating-offset",
+        YPosition = "--osui-floating-position-y",
+        XPosition = "--osui-floating-position-x"
+    }
+    enum Provider {
+        FloatingUI = "FloatingUI"
+    }
+}
+declare namespace OSFramework.OSUI.Utils.FloatingPosition {
+    abstract class FloatingPosition implements IFloatingPosition {
+        protected eventOnUpdateCallback: OSFramework.OSUI.GlobalCallbacks.Generic;
+        protected floatingConfigs: FloatingPositionConfig;
+        protected isBuilt: boolean;
+        constructor(options: FloatingPositionConfig);
+        protected getOffsetValue(): number;
+        build(): void;
+        dispose(): void;
+        update(options: FloatingPositionConfig): void;
+        abstract setFloatingPosition(): void;
+        abstract unsetFloatingPosition(): void;
+    }
+}
+declare namespace OSFramework.OSUI.Utils.FloatingPosition {
+    class FloatingPositionConfig {
+        AnchorElem: HTMLElement;
+        AutoPlacement: boolean;
+        AutoPlacementOptions: AutoPlacementOptions;
+        FloatingElem: HTMLElement;
+        Position: string;
+        UpdatePosition: boolean;
+    }
+}
+declare namespace OSFramework.OSUI.Utils.FloatingPosition.Factory {
+    function NewFloatingPosition(configs: FloatingPositionConfig, provider: string): void;
+}
+declare namespace OSFramework.OSUI.Utils.FloatingPosition {
+    interface IFloatingPosition {
+        setFloatingPosition(): void;
+        unsetFloatingPosition(): void;
+    }
+}
 declare namespace OutSystems.OSUI.ErrorCodes {
     const Success: {
         code: string;
@@ -5812,34 +5855,20 @@ declare namespace Providers.OSUI.TimePicker.Flatpickr {
     }
 }
 declare namespace Providers.OSUI.Utils.Enum {
-    enum CssCustomProperties {
-        Offset = "--osui-floating-offset",
-        YPosition = "--osui-floating-position-y",
-        XPosition = "--osui-floating-position-x"
-    }
     enum ProviderInfo {
         Name = "FloatingUI",
         Version = "1.2.8"
     }
 }
 declare namespace Providers.OSUI.Utils {
-    type FloatingUIOptions = {
-        anchorElem: HTMLElement;
-        autoPlacement: boolean;
-        autoPlacementOptions: AutoPlacementOptions;
-        floatingElem: HTMLElement;
-        position: string;
-        updatePosition: boolean;
-    };
-    class FloatingUI {
-        private _eventOnUpdateCallback;
-        private _floatingUIOptions;
-        constructor(options: FloatingUIOptions);
-        private _getOffsetValue;
-        private _setFloatingPosition;
-        build(): void;
-        close(): void;
+    class FloatingUI extends OSFramework.OSUI.Utils.FloatingPosition.FloatingPosition {
+        constructor(options: FloatingUIConfig);
         dispose(): void;
-        update(options: FloatingUIOptions): void;
+        setFloatingPosition(): void;
+        unsetFloatingPosition(): void;
+    }
+}
+declare namespace Providers.OSUI.Utils {
+    class FloatingUIConfig extends OSFramework.OSUI.Utils.FloatingPosition.FloatingPositionConfig {
     }
 }

@@ -22,12 +22,10 @@ namespace OSFramework.OSUI.Feature.Balloon {
 		// Store the listener callbacks
 		private _eventBodyClick: GlobalCallbacks.Generic;
 		private _eventOnKeypress: GlobalCallbacks.Generic;
-		// Store the Floating UI provider instance
-		// eslint-disable-next-line @typescript-eslint/naming-convention
-		private _floatingUIInstance: Providers.OSUI.Utils.FloatingUI;
-		// Store the Floating UI provider options
-		// eslint-disable-next-line @typescript-eslint/naming-convention
-		private _floatingUIOptions: Providers.OSUI.Utils.FloatingUIOptions;
+		// Store the Floating Util instance
+		private _floatingInstance: Utils.FloatingPosition.FloatingPosition;
+		// Store the Floating Util options
+		private _floatingOptions: Utils.FloatingPosition.FloatingPositionConfig;
 		// FocusTrap Properties
 		private _focusTrapInstance: Behaviors.FocusTrap;
 		private _focusableActiveElement: HTMLElement;
@@ -57,7 +55,7 @@ namespace OSFramework.OSUI.Feature.Balloon {
 		// Add Focus Trap to the Pattern
 		private _handleFocusTrap(): void {
 			const opts = {
-				focusTargetElement: this._floatingUIOptions.anchorElem.parentElement,
+				focusTargetElement: this._floatingOptions.AnchorElem.parentElement,
 			} as Behaviors.FocusTrapParams;
 
 			this._focusTrapInstance = new Behaviors.FocusTrap(opts);
@@ -99,7 +97,7 @@ namespace OSFramework.OSUI.Feature.Balloon {
 			);
 
 			Helper.Dom.Attribute.Set(
-				this._floatingUIOptions.anchorElem,
+				this._floatingOptions.AnchorElem,
 				Constants.A11YAttributes.TabIndex,
 				this.isOpen
 					? Constants.A11YAttributes.States.TabIndexHidden
@@ -157,8 +155,8 @@ namespace OSFramework.OSUI.Feature.Balloon {
 				this._focusableActiveElement = document.activeElement as HTMLElement;
 				this._focusTrapInstance.enableForA11y();
 
-				// Set FloatingUI
-				this.setFloatingUIBehaviour();
+				// Set Floating Util
+				this.setFloatingBehaviour();
 
 				// Focus on element when pattern is open
 				Helper.AsyncInvocation(() => {
@@ -167,8 +165,8 @@ namespace OSFramework.OSUI.Feature.Balloon {
 			} else {
 				// Handle focus trap logic
 				this._focusTrapInstance.disableForA11y();
-				// Remove FloatingUI
-				this._floatingUIInstance.close();
+				// Remove Floating Util
+				this._floatingInstance.unsetFloatingPosition();
 				// Focus on last element clicked. Async to avoid conflict with closing animation
 				Helper.AsyncInvocation(() => {
 					this.featureElem.blur();
@@ -203,7 +201,7 @@ namespace OSFramework.OSUI.Feature.Balloon {
 		public build(): void {
 			this._setCallbacks();
 			this._setEventListeners();
-			this.setFloatingUIOptions();
+			this.setFloatingConfigs();
 			this._handleFocusTrap();
 			this._setA11YProperties();
 			this.setBalloonShape();
@@ -226,7 +224,7 @@ namespace OSFramework.OSUI.Feature.Balloon {
 		 * @memberof Balloon
 		 */
 		public dispose(): void {
-			this._floatingUIInstance.dispose();
+			this._floatingInstance.dispose();
 			this._unsetCallbacks();
 			super.dispose();
 		}
@@ -262,56 +260,59 @@ namespace OSFramework.OSUI.Feature.Balloon {
 		}
 
 		/**
-		 * Method to set the FloatingUI provider instance
+		 * Method to set the Floating Util
 		 *
 		 * @param {boolean} [isUpdate]
 		 * @memberof Balloon
 		 */
-		public setFloatingUIBehaviour(isUpdate?: boolean): void {
-			if (isUpdate || this._floatingUIInstance === undefined) {
-				this.setFloatingUIOptions();
+		public setFloatingBehaviour(isUpdate?: boolean): void {
+			if (isUpdate || this._floatingInstance === undefined) {
+				this.setFloatingConfigs();
 
-				if (isUpdate && this._floatingUIInstance !== undefined) {
-					this._floatingUIInstance.update(this._floatingUIOptions);
+				if (isUpdate && this._floatingInstance !== undefined) {
+					this._floatingInstance.update(this._floatingOptions);
 				} else {
-					this._floatingUIInstance = new Providers.OSUI.Utils.FloatingUI(this._floatingUIOptions);
+					this._floatingInstance = new Utils.FloatingPosition.Factory.NewFloatingPosition(
+						this._floatingOptions,
+						Utils.FloatingPosition.Enum.Provider.FloatingUI
+					);
 				}
 			} else {
-				this._floatingUIInstance.build();
+				this._floatingInstance.build();
 			}
 		}
 
 		/**
-		 * Method to set the FloatingUI options
+		 * Method to set the Floating configs
 		 *
 		 * @memberof Balloon
 		 */
-		public setFloatingUIOptions(): void {
-			this._floatingUIOptions = {
-				autoPlacement: this.featureOptions.position === GlobalEnum.FloatingPosition.Auto,
-				anchorElem: this.featureOptions.anchorElem,
-				autoPlacementOptions: {
+		public setFloatingConfigs(): void {
+			this._floatingOptions = {
+				AutoPlacement: this.featureOptions.position === GlobalEnum.FloatingPosition.Auto,
+				AnchorElem: this.featureOptions.anchorElem,
+				AutoPlacementOptions: {
 					alignment: this.featureOptions.alignment,
 					allowedPlacements: this.featureOptions.allowedPlacements,
 				},
-				floatingElem: this.featureElem,
-				position: this.featureOptions.position,
-				updatePosition: true,
+				FloatingElem: this.featureElem,
+				Position: this.featureOptions.position,
+				UpdatePosition: true,
 			};
 		}
 
 		/**
 		 * Method to update the FloatingUI options
 		 *
-		 * @param {Providers.OSUI.Utils.FloatingUIOptions} [floatingUIOptions]
+		 * @param {Providers.OSUI.Utils.FloatingUIOptions} [floatingConfigs]
 		 * @memberof Balloon
 		 */
-		public updateFloatingUIOptions(floatingUIOptions?: Providers.OSUI.Utils.FloatingUIOptions): void {
-			if (floatingUIOptions !== undefined) {
-				this._floatingUIOptions = floatingUIOptions;
+		public updateFloatingConfigs(floatingConfigs?: Utils.FloatingPosition.FloatingPositionConfig): void {
+			if (floatingConfigs !== undefined) {
+				this._floatingOptions = floatingConfigs;
 			}
 
-			this.setFloatingUIBehaviour(true);
+			this.setFloatingBehaviour(true);
 		}
 
 		/**
@@ -322,7 +323,7 @@ namespace OSFramework.OSUI.Feature.Balloon {
 		 */
 		public updatePositionOption(position: GlobalEnum.FloatingPosition): void {
 			this.featureOptions.position = position;
-			this.setFloatingUIBehaviour(true);
+			this.setFloatingBehaviour(true);
 		}
 	}
 }
