@@ -15,34 +15,31 @@ namespace OSFramework.OSUI.Patterns.Video {
 		private _videoElement: HTMLVideoElement;
 		// Store the source element
 		private _videoSourceElement: HTMLSourceElement;
-		// Store the platform events
 
+		/**
+		 * Creates an instance of Video.
+		 * @param {string} uniqueId
+		 * @param {JSON} configs
+		 * @memberof Video
+		 */
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new VideoConfig(configs));
 		}
 
 		// Method that will set the Autoplay attribute
 		private _setAutoplay(): void {
-			if (this.configs.Autoplay) {
-				this._videoElement.autoplay = true;
+			this._videoElement.autoplay = this.configs.Autoplay;
 
-				if (!this.configs.Muted) {
-					console.warn(
-						`Some modern browsers will not autoplay your video on ${GlobalEnum.PatternName.Video} if it's not muted. The general rule of many browsers is that a user must opt-in to certain actions before they can happen. Set the Muted parameter to True, to start the video automatically.`
-					);
-				}
-			} else {
-				this._videoElement.autoplay = false;
+			if (this.configs.Autoplay && this.configs.Muted === false) {
+				console.warn(
+					`Some modern browsers will not autoplay your video on ${GlobalEnum.PatternName.Video} if it's not muted. The general rule of many browsers is that a user must opt-in to certain actions before they can happen. Set the Muted parameter to True, to start the video automatically.`
+				);
 			}
 		}
 
 		// Method that will set the controls attribute
 		private _setControls(): void {
-			if (this.configs.Controls) {
-				this._videoElement.controls = true;
-			} else {
-				this._videoElement.controls = false;
-			}
+			this._videoElement.controls = this.configs.Controls;
 		}
 
 		// Method that will set the Height attribute
@@ -60,20 +57,12 @@ namespace OSFramework.OSUI.Patterns.Video {
 
 		// Method that will set the loop attribute
 		private _setLoop(): void {
-			if (this.configs.Loop) {
-				this._videoElement.loop = true;
-			} else {
-				this._videoElement.loop = false;
-			}
+			this._videoElement.loop = this.configs.Loop;
 		}
 
 		// Method that will set the muted attribute
 		private _setMuted(): void {
-			if (this.configs.Muted) {
-				this._videoElement.muted = true;
-			} else {
-				this._videoElement.muted = false;
-			}
+			this._videoElement.muted = this.configs.Muted;
 		}
 
 		// Method that will set the poster image on video

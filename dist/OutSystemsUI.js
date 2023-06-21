@@ -10926,23 +10926,13 @@ var OSFramework;
                         super(uniqueId, new Video_1.VideoConfig(configs));
                     }
                     _setAutoplay() {
-                        if (this.configs.Autoplay) {
-                            this._videoElement.autoplay = true;
-                            if (!this.configs.Muted) {
-                                console.warn(`Some modern browsers will not autoplay your video on ${OSUI.GlobalEnum.PatternName.Video} if it's not muted. The general rule of many browsers is that a user must opt-in to certain actions before they can happen. Set the Muted parameter to True, to start the video automatically.`);
-                            }
-                        }
-                        else {
-                            this._videoElement.autoplay = false;
+                        this._videoElement.autoplay = this.configs.Autoplay;
+                        if (this.configs.Autoplay && this.configs.Muted === false) {
+                            console.warn(`Some modern browsers will not autoplay your video on ${OSUI.GlobalEnum.PatternName.Video} if it's not muted. The general rule of many browsers is that a user must opt-in to certain actions before they can happen. Set the Muted parameter to True, to start the video automatically.`);
                         }
                     }
                     _setControls() {
-                        if (this.configs.Controls) {
-                            this._videoElement.controls = true;
-                        }
-                        else {
-                            this._videoElement.controls = false;
-                        }
+                        this._videoElement.controls = this.configs.Controls;
                     }
                     _setHeight() {
                         if (this.configs.Height !== OSUI.Constants.EmptyString) {
@@ -10953,20 +10943,10 @@ var OSFramework;
                         }
                     }
                     _setLoop() {
-                        if (this.configs.Loop) {
-                            this._videoElement.loop = true;
-                        }
-                        else {
-                            this._videoElement.loop = false;
-                        }
+                        this._videoElement.loop = this.configs.Loop;
                     }
                     _setMuted() {
-                        if (this.configs.Muted) {
-                            this._videoElement.muted = true;
-                        }
-                        else {
-                            this._videoElement.muted = false;
-                        }
+                        this._videoElement.muted = this.configs.Muted;
                     }
                     _setPosterUrl() {
                         if (this.configs.PosterURL !== OSUI.Constants.EmptyString) {
