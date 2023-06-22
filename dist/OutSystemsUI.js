@@ -9644,7 +9644,6 @@ var OSFramework;
                         this._tabsIndicatorElement = OSUI.Helper.Dom.ClassSelector(this.selfElement, Tabs_1.Enum.CssClasses.TabsIndicatorElem);
                     }
                     unsetCallbacks() {
-                        this._removeEvents();
                         this._eventOnHeaderKeypress = undefined;
                         this._eventOnResize = undefined;
                         if (this._hasDragGestures) {
@@ -9748,6 +9747,7 @@ var OSFramework;
                         }
                     }
                     dispose() {
+                        this._removeEvents();
                         this.unsetCallbacks();
                         this.unsetHtmlElements();
                         super.dispose();
@@ -9979,7 +9979,6 @@ var OSFramework;
                         console.log(OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
                     }
                     unsetCallbacks() {
-                        this._removeEvents();
                         this._eventOnTabsClick = undefined;
                     }
                     unsetHtmlElements() {
@@ -9999,6 +9998,7 @@ var OSFramework;
                     }
                     dispose() {
                         this.notifyParent(Patterns.Tabs.Enum.ChildNotifyActionType.RemovedHeaderItem);
+                        this._removeEvents();
                         this.unsetCallbacks();
                         super.dispose();
                     }

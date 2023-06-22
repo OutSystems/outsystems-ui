@@ -754,8 +754,6 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 		 * @memberof OSFramework.Patterns.Tabs.Tabs
 		 */
 		protected unsetCallbacks(): void {
-			this._removeEvents();
-
 			this._eventOnHeaderKeypress = undefined;
 			this._eventOnResize = undefined;
 
@@ -947,6 +945,7 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 		 */
 		public dispose(): void {
 			// Remove event listeners on tabs header element
+			this._removeEvents();
 			this.unsetCallbacks();
 			this.unsetHtmlElements();
 
