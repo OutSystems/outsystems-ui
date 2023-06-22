@@ -1,5 +1,5 @@
 /*!
-OutSystems UI 2.16.0
+OutSystems UI 2.17.0
 Website:
  • https://www.outsystems.com/outsystems-ui
 GitHub:
@@ -133,7 +133,7 @@ var OSFramework;
             Constants.AccessibilityHideElementClass = 'wcag-hide-text';
             Constants.IsRTLClass = 'is-rtl';
             Constants.NoTransition = 'no-transition';
-            Constants.OSUIVersion = '2.16.0';
+            Constants.OSUIVersion = '2.17.0';
             Constants.ZeroValue = 0;
         })(Constants = OSUI.Constants || (OSUI.Constants = {}));
     })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
@@ -6242,7 +6242,6 @@ var OSFramework;
                     }
                     build() {
                         super.build();
-                        this.setHtmlElements();
                         this._setSvgCode();
                         this.finishBuild();
                     }
@@ -6257,7 +6256,6 @@ var OSFramework;
                     dispose() {
                         if (this.isBuilt) {
                             this.unsetCallbacks();
-                            this.unsetHtmlElements();
                             super.dispose();
                         }
                     }
@@ -8870,7 +8868,6 @@ var OSFramework;
                         }
                     }
                     unsetCallbacks() {
-                        this._removeEvents();
                         this._eventClick = undefined;
                         this._eventKeypress = undefined;
                         this._globalEventBody = undefined;
@@ -8913,6 +8910,7 @@ var OSFramework;
                         }
                     }
                     dispose() {
+                        this._removeEvents();
                         this.unsetCallbacks();
                         this.unsetHtmlElements();
                         super.dispose();
@@ -10907,6 +10905,7 @@ var OSFramework;
                         VideoAttributes["Height"] = "height";
                         VideoAttributes["TypePath"] = "video/";
                         VideoAttributes["Width"] = "width";
+                        VideoAttributes["Muted"] = "muted";
                     })(VideoAttributes = Enum.VideoAttributes || (Enum.VideoAttributes = {}));
                 })(Enum = Video.Enum || (Video.Enum = {}));
             })(Video = Patterns.Video || (Patterns.Video = {}));
@@ -17669,7 +17668,6 @@ var Providers;
                         this.setA11YProperties();
                     }
                     _manageDisableStatus() {
-                        this.virtualselectConfigs.close();
                         if (this.configs.IsDisabled) {
                             OSFramework.OSUI.Helper.Dom.Attribute.Set(this.selfElement, OSFramework.OSUI.GlobalEnum.HTMLAttributes.Disabled, '');
                         }
@@ -17758,6 +17756,7 @@ var Providers;
                         this.finishBuild();
                     }
                     changeProperty(propertyName, propertyValue) {
+                        this.virtualselectConfigs.close();
                         if ((propertyName === VirtualSelect.Enum.Properties.OptionsList || propertyName === VirtualSelect.Enum.Properties.StartingSelection) &&
                             typeof propertyValue === 'string') {
                             propertyValue = JSON.parse(propertyValue);
@@ -17769,17 +17768,9 @@ var Providers;
                                     this._manageDisableStatus();
                                     break;
                                 case VirtualSelect.Enum.Properties.NoOptionsText:
-                                    this.redraw();
-                                    break;
                                 case VirtualSelect.Enum.Properties.NoResultsText:
-                                    this.redraw();
-                                    break;
                                 case VirtualSelect.Enum.Properties.OptionsList:
-                                    this.redraw();
-                                    break;
                                 case VirtualSelect.Enum.Properties.Prompt:
-                                    this.redraw();
-                                    break;
                                 case VirtualSelect.Enum.Properties.SearchPrompt:
                                     this.redraw();
                                     break;
