@@ -2851,7 +2851,7 @@ var OSFramework;
                         this.triggerPlatformEventCallback(this._platformEventInitialized);
                     }
                 }
-                unsetCallbacks() {
+                unsetGlobalCallbacks() {
                     this._platformEventInitialized = undefined;
                 }
                 build() {
@@ -2877,7 +2877,7 @@ var OSFramework;
                 dispose() {
                     this._isBuilt = false;
                     this._unsetCommonHtmlElements();
-                    this.unsetCallbacks();
+                    this.unsetGlobalCallbacks();
                     this._configs = undefined;
                 }
                 equalsToID(patternId) {
@@ -3203,7 +3203,6 @@ var OSFramework;
                 }
                 unsetCallbacks() {
                     this._platformEventProviderConfigsAppliedCallback = undefined;
-                    super.unsetCallbacks();
                 }
                 build() {
                     this.providerInfo = {
@@ -6237,6 +6236,9 @@ var OSFramework;
                     setHtmlElements() {
                         console.log(OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
                     }
+                    unsetCallbacks() {
+                        console.log(OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
+                    }
                     unsetHtmlElements() {
                         console.log(OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
                     }
@@ -6255,7 +6257,6 @@ var OSFramework;
                     }
                     dispose() {
                         if (this.isBuilt) {
-                            this.unsetCallbacks();
                             super.dispose();
                         }
                     }
@@ -9644,6 +9645,7 @@ var OSFramework;
                         this._tabsIndicatorElement = OSUI.Helper.Dom.ClassSelector(this.selfElement, Tabs_1.Enum.CssClasses.TabsIndicatorElem);
                     }
                     unsetCallbacks() {
+                        this._removeEvents();
                         this._eventOnHeaderKeypress = undefined;
                         this._eventOnResize = undefined;
                         if (this._hasDragGestures) {
@@ -9747,7 +9749,6 @@ var OSFramework;
                         }
                     }
                     dispose() {
-                        this._removeEvents();
                         this.unsetCallbacks();
                         this.unsetHtmlElements();
                         super.dispose();
