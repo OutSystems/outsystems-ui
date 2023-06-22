@@ -1090,7 +1090,7 @@ declare namespace OSFramework.OSUI.Patterns {
         protected finishBuild(): void;
         protected triggerPlatformEventCallback(platFormCallback: GlobalCallbacks.OSGeneric, ...args: unknown[]): void;
         protected triggerPlatformInitializedEventCallback(): void;
-        protected unsetCallbacks(): void;
+        protected unsetGlobalCallbacks(): void;
         build(): void;
         changeProperty(propertyName: string, propertyValue: unknown): void;
         dispose(): void;
@@ -1105,6 +1105,7 @@ declare namespace OSFramework.OSUI.Patterns {
         protected abstract setA11YProperties(): void;
         protected abstract setCallbacks(): void;
         protected abstract setHtmlElements(): void;
+        protected abstract unsetCallbacks(): void;
         protected abstract unsetHtmlElements(): void;
     }
 }
@@ -2108,6 +2109,7 @@ declare namespace OSFramework.OSUI.Patterns.InlineSvg {
         protected setA11YProperties(): void;
         protected setCallbacks(): void;
         protected setHtmlElements(): void;
+        protected unsetCallbacks(): void;
         protected unsetHtmlElements(): void;
         build(): void;
         changeProperty(propertyName: string, propertyValue: unknown): void;
