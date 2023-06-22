@@ -1,5 +1,5 @@
 /*!
- * Virtual Select v1.0.37
+ * Virtual Select v1.0.39
  * https://sa-si-dev.github.io/virtual-select
  * Licensed under MIT (https://github.com/sa-si-dev/virtual-select/blob/master/LICENSE)
  */
@@ -241,6 +241,18 @@
 	height: 40px;
 	padding: 0 5px 0 15px;
 	position: relative;
+}
+.vscomp-search-label,
+.vscomp-live-region {
+	border: 0;
+	clip: rect(0 0 0 0);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
 }
 .vscomp-search-input {
 	background-color: rgba(0, 0, 0, 0);

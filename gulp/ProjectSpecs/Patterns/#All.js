@@ -29,6 +29,7 @@ const tabsHeaderItem = require('./TabsHeaderItem');
 const timePicker = require('./TimePicker');
 const tooltip = require('./Tooltip');
 const touchEvents = require('./TouchEvents');
+const video = require('./Video');
 
 /* 
 * List of all patterns in OSFramework.OSUI.Patterns.*
@@ -71,6 +72,8 @@ const patterns = {
 	"timepicker": timePicker.info,
 	"tooltip": tooltip.info,
 	"touch-events": touchEvents.info,
+	"video": video.info,
+
 };
 
 // Expose all patterns list!

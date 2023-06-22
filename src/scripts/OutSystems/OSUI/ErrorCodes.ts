@@ -319,6 +319,13 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailClose: 'OSUI-API-30005',
 	};
 
+	export const Video = {
+		FailChangeProperty: 'OSUI-API-31001',
+		FailClose: 'OSUI-API-31002',
+		FailDispose: 'OSUI-API-31003',
+		FailRegisterCallback: 'OSUI-API-31004',
+	};
+
 	// Error Codes used in Legacy Client Action
 	export const Legacy = {
 		FailAddFavicon_Legacy: 'OSUI-LEG-000001',
