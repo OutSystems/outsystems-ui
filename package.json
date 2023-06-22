@@ -31,6 +31,7 @@
 	],
 	"homepage": "https://outsystemsui.outsystems.com/OutsystemsUiWebsite/",
 	"devDependencies": {
+		"@floating-ui/dom": "^1.2.8",
 		"@splidejs/splide": "4.1.3",
 		"@typescript-eslint/eslint-plugin": "^5.45.0",
 		"@typescript-eslint/parser": "^5.45.0",

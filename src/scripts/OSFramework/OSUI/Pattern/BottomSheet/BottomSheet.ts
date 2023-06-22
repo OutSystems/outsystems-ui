@@ -88,7 +88,7 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 			}
 		}
 
-		// Method to hadnle the Shape config css variable
+		// Method to handle the Shape config css variable
 		private _handleShape(shape: GlobalEnum.ShapeTypes): void {
 			Helper.Dom.Styles.SetStyleAttribute(
 				this.selfElement,
@@ -134,11 +134,11 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 			);
 		}
 
-		// Call methods to open or close, based ok e.key and behavior applied
+		// Call methods to open or close, based on e.key and behaviour applied
 		private _onkeypressCallback(e: KeyboardEvent): void {
 			const isEscapedPressed = e.key === GlobalEnum.Keycodes.Escape;
 
-			// Close the Notification when pressing Esc
+			// Close the BottomSheet when pressing Esc
 			if (isEscapedPressed && this._isOpen) {
 				this.close();
 			}
