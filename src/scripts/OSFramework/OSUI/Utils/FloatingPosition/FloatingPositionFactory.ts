@@ -1,5 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 namespace OSFramework.OSUI.Utils.FloatingPosition.Factory {
+	/**
+	 * FloatingPosition Factory
+	 *
+	 * @export
+	 * @param {FloatingPositionConfig} configs
+	 * @param {string} provider
+	 * @return {*}  {void}
+	 */
 	export function NewFloatingPosition(configs: FloatingPositionConfig, provider: string): void {
 		let _floatingPositionItem = null;
 

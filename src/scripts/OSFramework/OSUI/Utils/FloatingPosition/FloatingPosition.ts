@@ -16,6 +16,11 @@ namespace OSFramework.OSUI.Utils.FloatingPosition {
 		// Store if the Util is built
 		protected isBuilt: boolean;
 
+		/**
+		 * Creates an instance of FloatingPosition.
+		 * @param {FloatingPositionConfig} options
+		 * @memberof FloatingPosition
+		 */
 		constructor(options: FloatingPositionConfig) {
 			this.floatingConfigs = options;
 			this.build();
@@ -29,21 +34,50 @@ namespace OSFramework.OSUI.Utils.FloatingPosition {
 			);
 		}
 
+		/**
+		 * Method to build the Util
+		 *
+		 * @memberof FloatingPosition
+		 */
 		public build(): void {
 			this.setFloatingPosition();
 			this.isBuilt = true;
 		}
 
+		/**
+		 * Method to destroy the util
+		 *
+		 * @memberof FloatingPosition
+		 */
 		public dispose(): void {
 			this.isBuilt = false;
 		}
 
+		/**
+		 * Method to update the Util
+		 *
+		 * @param {FloatingPositionConfig} options
+		 * @memberof FloatingPosition
+		 */
 		public update(options: FloatingPositionConfig): void {
 			this.floatingConfigs = options;
 			this.setFloatingPosition();
 		}
 
+		/**
+		 * Mandatory impplementation of method to set floating position
+		 *
+		 * @abstract
+		 * @memberof FloatingPosition
+		 */
 		public abstract setFloatingPosition(): void;
+
+		/**
+		 * Mandatory impplementation of method to unset floating position
+		 *
+		 * @abstract
+		 * @memberof FloatingPosition
+		 */
 		public abstract unsetFloatingPosition(): void;
 	}
 }

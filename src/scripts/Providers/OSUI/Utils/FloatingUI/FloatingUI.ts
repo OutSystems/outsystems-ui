@@ -8,6 +8,11 @@ namespace Providers.OSUI.Utils {
 	 */
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	export class FloatingUI extends OSFramework.OSUI.Utils.FloatingPosition.FloatingPosition {
+		/**
+		 * Creates an instance of FloatingUI.
+		 * @param {FloatingUIConfig} options
+		 * @memberof FloatingUI
+		 */
 		constructor(options: FloatingUIConfig) {
 			super(options);
 		}

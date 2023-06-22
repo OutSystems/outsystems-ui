@@ -1,5 +1,11 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSFramework.OSUI.Utils.FloatingPosition {
+	/**
+	 * FloatingPosition configs
+	 *
+	 * @export
+	 * @class FloatingPositionConfig
+	 */
 	export class FloatingPositionConfig {
 		public AnchorElem: HTMLElement;
 		public AutoPlacement: boolean;
