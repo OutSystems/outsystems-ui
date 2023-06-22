@@ -269,8 +269,6 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 		 * @memberof OSFramework.Patterns.Submenu.Submenu
 		 */
 		protected unsetCallbacks(): void {
-			this._removeEvents();
-
 			// Reassign the elements to undefined, preventing memory leaks
 			this._eventClick = undefined;
 			this._eventKeypress = undefined;
@@ -368,6 +366,7 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 		 */
 		public dispose(): void {
 			// Remove event listners
+			this._removeEvents();
 			this.unsetCallbacks();
 
 			// Remove unused HTML elements

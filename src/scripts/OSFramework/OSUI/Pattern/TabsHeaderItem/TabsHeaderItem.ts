@@ -86,7 +86,6 @@ namespace OSFramework.OSUI.Patterns.TabsHeaderItem {
 		 * @memberof OSFramework.Patterns.TabsHeaderItem.TabsHeaderItem
 		 */
 		protected unsetCallbacks(): void {
-			this._removeEvents();
 			this._eventOnTabsClick = undefined;
 		}
 
@@ -142,6 +141,8 @@ namespace OSFramework.OSUI.Patterns.TabsHeaderItem {
 		public dispose(): void {
 			// Notify parent about this instance will be destroyed
 			this.notifyParent(Tabs.Enum.ChildNotifyActionType.RemovedHeaderItem);
+
+			this._removeEvents();
 
 			this.unsetCallbacks();
 
