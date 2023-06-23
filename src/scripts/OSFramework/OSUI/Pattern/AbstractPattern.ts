@@ -98,12 +98,13 @@ namespace OSFramework.OSUI.Patterns {
 		}
 
 		/**
-		 * Unsets the callbacks.
+		 * Unsets the global callbacks.
+		 * This naming is used to prevent overriding the unsetCallback method on all patterns
 		 *
 		 * @protected
 		 * @memberof OSFramework.Patterns.AbstractPattern
 		 */
-		protected unsetCallbacks(): void {
+		protected unsetGlobalCallbacks(): void {
 			this._platformEventInitialized = undefined;
 		}
 
@@ -157,7 +158,7 @@ namespace OSFramework.OSUI.Patterns {
 		public dispose(): void {
 			this._isBuilt = false;
 			this._unsetCommonHtmlElements();
-			this.unsetCallbacks();
+			this.unsetGlobalCallbacks();
 			this._configs = undefined;
 		}
 
@@ -266,6 +267,7 @@ namespace OSFramework.OSUI.Patterns {
 		protected abstract setA11YProperties(): void;
 		protected abstract setCallbacks(): void;
 		protected abstract setHtmlElements(): void;
+		protected abstract unsetCallbacks(): void;
 		protected abstract unsetHtmlElements(): void;
 	}
 }
