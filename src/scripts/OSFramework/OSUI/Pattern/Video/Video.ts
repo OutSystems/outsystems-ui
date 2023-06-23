@@ -113,10 +113,10 @@ namespace OSFramework.OSUI.Patterns.Video {
 		private _setVideoTrack(): void {
 			// Check if contains tracks to be added
 			// If true, create the element with all the attributes
-			const subtitlesList = JSON.parse(this.configs.Subtitles);
+			const captionsList = JSON.parse(this.configs.Captions);
 
-			if (subtitlesList.length > 0) {
-				for (const item of subtitlesList) {
+			if (captionsList.length > 0) {
+				for (const item of captionsList) {
 					const trackElement = document.createElement(Patterns.Video.Enum.VideoTags.Track);
 
 					// Add class to track element created

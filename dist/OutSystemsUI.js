@@ -11512,9 +11512,9 @@ var OSFramework;
                         this._videoSourceElement.type = Patterns.Video.Enum.VideoAttributes.TypePath + _urlFileExtension;
                     }
                     _setVideoTrack() {
-                        const subtitlesList = JSON.parse(this.configs.Subtitles);
-                        if (subtitlesList.length > 0) {
-                            for (const item of subtitlesList) {
+                        const captionsList = JSON.parse(this.configs.Captions);
+                        if (captionsList.length > 0) {
+                            for (const item of captionsList) {
                                 const trackElement = document.createElement(Patterns.Video.Enum.VideoTags.Track);
                                 OSUI.Helper.Dom.Styles.AddClass(trackElement, Patterns.Video.Enum.CssClass.VideoTrack);
                                 trackElement.kind = Patterns.Video.Enum.VideoAttributes.Captions;
