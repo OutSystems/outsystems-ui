@@ -251,6 +251,8 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 			if (isEscapedPressed) {
 				this.close();
 			}
+
+			e.stopPropagation();
 		}
 
 		// Method to toggle the Sidebar
