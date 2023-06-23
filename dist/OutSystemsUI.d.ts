@@ -3712,12 +3712,12 @@ declare namespace OSFramework.OSUI.Patterns.Video {
 declare namespace OSFramework.OSUI.Patterns.Video {
     class VideoConfig extends AbstractConfiguration {
         Autoplay: boolean;
+        Captions: string;
         Controls: boolean;
         Height: string;
         Loop: boolean;
         Muted: boolean;
         PosterURL: string;
-        Subtitles: string;
         URL: string;
         Width: string;
         constructor(config: JSON);
