@@ -244,7 +244,7 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 		 * @memberof OverflowMenu
 		 */
 		public dispose(): void {
-			this._balloonFeature.dispose();
+			this._balloonFeature?.dispose();
 			this.removeEventListeners();
 			this.unsetCallbacks();
 			this.unsetHtmlElements();
