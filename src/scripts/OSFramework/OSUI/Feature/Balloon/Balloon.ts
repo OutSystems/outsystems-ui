@@ -224,7 +224,7 @@ namespace OSFramework.OSUI.Feature.Balloon {
 		 * @memberof Balloon
 		 */
 		public dispose(): void {
-			this._floatingInstance.dispose();
+			this._floatingInstance?.dispose();
 			this._unsetCallbacks();
 			super.dispose();
 		}

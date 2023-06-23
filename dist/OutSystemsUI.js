@@ -1897,7 +1897,8 @@ var OSFramework;
                         }
                     }
                     dispose() {
-                        this._floatingInstance.dispose();
+                        var _a;
+                        (_a = this._floatingInstance) === null || _a === void 0 ? void 0 : _a.dispose();
                         this._unsetCallbacks();
                         super.dispose();
                     }
@@ -7233,7 +7234,8 @@ var OSFramework;
                         }
                     }
                     dispose() {
-                        this._balloonFeature.dispose();
+                        var _a;
+                        (_a = this._balloonFeature) === null || _a === void 0 ? void 0 : _a.dispose();
                         this.removeEventListeners();
                         this.unsetCallbacks();
                         this.unsetHtmlElements();
