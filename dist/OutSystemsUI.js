@@ -9018,6 +9018,7 @@ var OSFramework;
                         if (isEscapedPressed) {
                             this.close();
                         }
+                        e.stopPropagation();
                     }
                     _toggle() {
                         if (this._isOpen) {
