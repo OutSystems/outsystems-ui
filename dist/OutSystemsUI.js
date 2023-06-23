@@ -8423,8 +8423,8 @@ var OSFramework;
                             this._isOpen = true;
                             this._triggerOnToggleEvent();
                             if (this._clickOutsideToClose || (this.configs.HasOverlay && this._clickOutsideToClose === undefined)) {
-                                OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnMouseDown, this._eventOverlayMouseDown);
-                                OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick, this._eventOverlayClick);
+                                OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnMouseDown, this._eventOverlayMouseDown.bind(this));
+                                OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick, this._eventOverlayClick.bind(this));
                             }
                         }
                         this.selfElement.focus();
@@ -8442,7 +8442,9 @@ var OSFramework;
                     _overlayMouseDownCallback(_args, e) {
                         const targetElem = e.target;
                         this._clickedOutsideElement = true;
-                        if (targetElem.closest('.osui-sidebar__header') || targetElem.closest('.osui-sidebar__content')) {
+                        if (targetElem.closest(`${OSUI.Constants.Dot}${Sidebar_1.Enum.CssClass.Header}`) ||
+                            (targetElem.closest(`${OSUI.Constants.Dot}${Sidebar_1.Enum.CssClass.Content}`) &&
+                                this.selfElement.contains(targetElem) === false)) {
                             this._clickedOutsideElement = false;
                         }
                     }
@@ -8483,6 +8485,7 @@ var OSFramework;
                         if (isEscapedPressed) {
                             this.close();
                         }
+                        e.stopPropagation();
                     }
                     _toggle() {
                         if (this._isOpen) {
