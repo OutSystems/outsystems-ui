@@ -2850,7 +2850,7 @@ var OSFramework;
                         this.triggerPlatformEventCallback(this._platformEventInitialized);
                     }
                 }
-                unsetCallbacks() {
+                unsetGlobalCallbacks() {
                     this._platformEventInitialized = undefined;
                 }
                 build() {
@@ -2876,7 +2876,7 @@ var OSFramework;
                 dispose() {
                     this._isBuilt = false;
                     this._unsetCommonHtmlElements();
-                    this.unsetCallbacks();
+                    this.unsetGlobalCallbacks();
                     this._configs = undefined;
                 }
                 equalsToID(patternId) {
@@ -3202,7 +3202,6 @@ var OSFramework;
                 }
                 unsetCallbacks() {
                     this._platformEventProviderConfigsAppliedCallback = undefined;
-                    super.unsetCallbacks();
                 }
                 build() {
                     this.providerInfo = {
@@ -6236,12 +6235,14 @@ var OSFramework;
                     setHtmlElements() {
                         console.log(OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
                     }
+                    unsetCallbacks() {
+                        console.log(OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
+                    }
                     unsetHtmlElements() {
                         console.log(OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
                     }
                     build() {
                         super.build();
-                        this.setHtmlElements();
                         this._setSvgCode();
                         this.finishBuild();
                     }
@@ -6255,8 +6256,6 @@ var OSFramework;
                     }
                     dispose() {
                         if (this.isBuilt) {
-                            this.unsetCallbacks();
-                            this.unsetHtmlElements();
                             super.dispose();
                         }
                     }
@@ -8869,7 +8868,6 @@ var OSFramework;
                         }
                     }
                     unsetCallbacks() {
-                        this._removeEvents();
                         this._eventClick = undefined;
                         this._eventKeypress = undefined;
                         this._globalEventBody = undefined;
@@ -8912,6 +8910,7 @@ var OSFramework;
                         }
                     }
                     dispose() {
+                        this._removeEvents();
                         this.unsetCallbacks();
                         this.unsetHtmlElements();
                         super.dispose();
@@ -9980,7 +9979,6 @@ var OSFramework;
                         console.log(OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
                     }
                     unsetCallbacks() {
-                        this._removeEvents();
                         this._eventOnTabsClick = undefined;
                     }
                     unsetHtmlElements() {
@@ -10000,6 +9998,7 @@ var OSFramework;
                     }
                     dispose() {
                         this.notifyParent(Patterns.Tabs.Enum.ChildNotifyActionType.RemovedHeaderItem);
+                        this._removeEvents();
                         this.unsetCallbacks();
                         super.dispose();
                     }
@@ -17336,7 +17335,6 @@ var Providers;
                         this.setA11YProperties();
                     }
                     _manageDisableStatus() {
-                        this.virtualselectConfigs.close();
                         if (this.configs.IsDisabled) {
                             OSFramework.OSUI.Helper.Dom.Attribute.Set(this.selfElement, OSFramework.OSUI.GlobalEnum.HTMLAttributes.Disabled, '');
                         }
@@ -17425,6 +17423,7 @@ var Providers;
                         this.finishBuild();
                     }
                     changeProperty(propertyName, propertyValue) {
+                        this.virtualselectConfigs.close();
                         if ((propertyName === VirtualSelect.Enum.Properties.OptionsList || propertyName === VirtualSelect.Enum.Properties.StartingSelection) &&
                             typeof propertyValue === 'string') {
                             propertyValue = JSON.parse(propertyValue);
@@ -17436,17 +17435,9 @@ var Providers;
                                     this._manageDisableStatus();
                                     break;
                                 case VirtualSelect.Enum.Properties.NoOptionsText:
-                                    this.redraw();
-                                    break;
                                 case VirtualSelect.Enum.Properties.NoResultsText:
-                                    this.redraw();
-                                    break;
                                 case VirtualSelect.Enum.Properties.OptionsList:
-                                    this.redraw();
-                                    break;
                                 case VirtualSelect.Enum.Properties.Prompt:
-                                    this.redraw();
-                                    break;
                                 case VirtualSelect.Enum.Properties.SearchPrompt:
                                     this.redraw();
                                     break;
