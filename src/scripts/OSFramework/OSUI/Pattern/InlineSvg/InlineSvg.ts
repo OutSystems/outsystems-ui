@@ -61,6 +61,16 @@ namespace OSFramework.OSUI.Patterns.InlineSvg {
 		}
 
 		/**
+		 * Unset the callbacks that will be assigned to the pattern.
+		 *
+		 * @protected
+		 * @memberof InlineSvg
+		 */
+		protected unsetCallbacks(): void {
+			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
+		}
+
+		/**
 		 * Reassign the HTML elements to undefined, preventing memory leaks.
 		 *
 		 * @protected
@@ -108,8 +118,6 @@ namespace OSFramework.OSUI.Patterns.InlineSvg {
 		 */
 		public dispose(): void {
 			if (this.isBuilt) {
-				this.unsetCallbacks();
-
 				//Destroying the base of pattern
 				super.dispose();
 			}

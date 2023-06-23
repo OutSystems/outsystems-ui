@@ -2850,7 +2850,7 @@ var OSFramework;
                         this.triggerPlatformEventCallback(this._platformEventInitialized);
                     }
                 }
-                unsetCallbacks() {
+                unsetGlobalCallbacks() {
                     this._platformEventInitialized = undefined;
                 }
                 build() {
@@ -2876,7 +2876,7 @@ var OSFramework;
                 dispose() {
                     this._isBuilt = false;
                     this._unsetCommonHtmlElements();
-                    this.unsetCallbacks();
+                    this.unsetGlobalCallbacks();
                     this._configs = undefined;
                 }
                 equalsToID(patternId) {
@@ -3202,7 +3202,6 @@ var OSFramework;
                 }
                 unsetCallbacks() {
                     this._platformEventProviderConfigsAppliedCallback = undefined;
-                    super.unsetCallbacks();
                 }
                 build() {
                     this.providerInfo = {
@@ -6236,6 +6235,9 @@ var OSFramework;
                     setHtmlElements() {
                         console.log(OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
                     }
+                    unsetCallbacks() {
+                        console.log(OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
+                    }
                     unsetHtmlElements() {
                         console.log(OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
                     }
@@ -6254,7 +6256,6 @@ var OSFramework;
                     }
                     dispose() {
                         if (this.isBuilt) {
-                            this.unsetCallbacks();
                             super.dispose();
                         }
                     }
@@ -8422,8 +8423,8 @@ var OSFramework;
                             this._isOpen = true;
                             this._triggerOnToggleEvent();
                             if (this._clickOutsideToClose || (this.configs.HasOverlay && this._clickOutsideToClose === undefined)) {
-                                OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnMouseDown, this._eventOverlayMouseDown.bind(this));
-                                OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick, this._eventOverlayClick.bind(this));
+                                OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnMouseDown, this._eventOverlayMouseDown);
+                                OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick, this._eventOverlayClick);
                             }
                         }
                         this.selfElement.focus();
@@ -8441,9 +8442,7 @@ var OSFramework;
                     _overlayMouseDownCallback(_args, e) {
                         const targetElem = e.target;
                         this._clickedOutsideElement = true;
-                        if (targetElem.closest(`${OSUI.Constants.Dot}${Sidebar_1.Enum.CssClass.Header}`) ||
-                            (targetElem.closest(`${OSUI.Constants.Dot}${Sidebar_1.Enum.CssClass.Content}`) &&
-                                this.selfElement.contains(targetElem) === false)) {
+                        if (targetElem.closest('.osui-sidebar__header') || targetElem.closest('.osui-sidebar__content')) {
                             this._clickedOutsideElement = false;
                         }
                     }
@@ -8484,7 +8483,6 @@ var OSFramework;
                         if (isEscapedPressed) {
                             this.close();
                         }
-                        e.stopPropagation();
                     }
                     _toggle() {
                         if (this._isOpen) {
@@ -8870,7 +8868,6 @@ var OSFramework;
                         }
                     }
                     unsetCallbacks() {
-                        this._removeEvents();
                         this._eventClick = undefined;
                         this._eventKeypress = undefined;
                         this._globalEventBody = undefined;
@@ -8913,6 +8910,7 @@ var OSFramework;
                         }
                     }
                     dispose() {
+                        this._removeEvents();
                         this.unsetCallbacks();
                         this.unsetHtmlElements();
                         super.dispose();
@@ -9981,7 +9979,6 @@ var OSFramework;
                         console.log(OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
                     }
                     unsetCallbacks() {
-                        this._removeEvents();
                         this._eventOnTabsClick = undefined;
                     }
                     unsetHtmlElements() {
@@ -10001,6 +9998,7 @@ var OSFramework;
                     }
                     dispose() {
                         this.notifyParent(Patterns.Tabs.Enum.ChildNotifyActionType.RemovedHeaderItem);
+                        this._removeEvents();
                         this.unsetCallbacks();
                         super.dispose();
                     }
