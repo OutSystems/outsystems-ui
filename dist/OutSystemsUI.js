@@ -1812,6 +1812,7 @@ var OSFramework;
                         if (isEscapedPressed && this.isOpen) {
                             this.close();
                         }
+                        e.stopPropagation();
                     }
                     _removeEventListeners() {
                         this.featureElem.removeEventListener(OSUI.GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
@@ -7303,6 +7304,21 @@ var OSFramework;
                 class OverflowMenuConfig extends Patterns.AbstractConfiguration {
                     constructor(config) {
                         super(config);
+                    }
+                    validateDefault(key, value) {
+                        let validatedValue = undefined;
+                        switch (key) {
+                            case OverflowMenu.Enum.Properties.Shape:
+                                validatedValue = this.validateInRange(value, OSUI.GlobalEnum.ShapeTypes.SoftRounded, OSUI.GlobalEnum.ShapeTypes.Sharp, OSUI.GlobalEnum.ShapeTypes.Rounded);
+                                break;
+                            case OverflowMenu.Enum.Properties.Position:
+                                validatedValue = this.validateInRange(value, OSUI.GlobalEnum.FloatingPosition.Auto, OSUI.GlobalEnum.FloatingPosition.Bottom, OSUI.GlobalEnum.FloatingPosition.BottomEnd, OSUI.GlobalEnum.FloatingPosition.BottomStart, OSUI.GlobalEnum.FloatingPosition.Center, OSUI.GlobalEnum.FloatingPosition.Left, OSUI.GlobalEnum.FloatingPosition.LeftEnd, OSUI.GlobalEnum.FloatingPosition.LeftStart, OSUI.GlobalEnum.FloatingPosition.Right, OSUI.GlobalEnum.FloatingPosition.RightEnd, OSUI.GlobalEnum.FloatingPosition.RightStart, OSUI.GlobalEnum.FloatingPosition.Top, OSUI.GlobalEnum.FloatingPosition.TopEnd, OSUI.GlobalEnum.FloatingPosition.TopStart);
+                                break;
+                            default:
+                                validatedValue = super.validateDefault(key, value);
+                                break;
+                        }
+                        return validatedValue;
                     }
                 }
                 OverflowMenu.OverflowMenuConfig = OverflowMenuConfig;
