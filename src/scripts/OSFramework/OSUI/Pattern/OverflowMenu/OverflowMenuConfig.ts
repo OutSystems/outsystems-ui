@@ -35,7 +35,23 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 					);
 					break;
 				case Enum.Properties.Position:
-					validatedValue = this.validateString(value as string, GlobalEnum.FloatingPosition.Auto);
+					validatedValue = this.validateInRange(
+						value,
+						GlobalEnum.FloatingPosition.Auto,
+						GlobalEnum.FloatingPosition.Bottom,
+						GlobalEnum.FloatingPosition.BottomEnd,
+						GlobalEnum.FloatingPosition.BottomStart,
+						GlobalEnum.FloatingPosition.Center,
+						GlobalEnum.FloatingPosition.Left,
+						GlobalEnum.FloatingPosition.LeftEnd,
+						GlobalEnum.FloatingPosition.LeftStart,
+						GlobalEnum.FloatingPosition.Right,
+						GlobalEnum.FloatingPosition.RightEnd,
+						GlobalEnum.FloatingPosition.RightStart,
+						GlobalEnum.FloatingPosition.Top,
+						GlobalEnum.FloatingPosition.TopEnd,
+						GlobalEnum.FloatingPosition.TopStart
+					);
 					break;
 				default:
 					validatedValue = super.validateDefault(key, value);
