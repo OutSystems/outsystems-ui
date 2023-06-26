@@ -1812,6 +1812,7 @@ var OSFramework;
                         if (isEscapedPressed && this.isOpen) {
                             this.close();
                         }
+                        e.stopPropagation();
                     }
                     _removeEventListeners() {
                         this.featureElem.removeEventListener(OSUI.GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
@@ -7303,6 +7304,21 @@ var OSFramework;
                 class OverflowMenuConfig extends Patterns.AbstractConfiguration {
                     constructor(config) {
                         super(config);
+                    }
+                    validateDefault(key, value) {
+                        let validatedValue = undefined;
+                        switch (key) {
+                            case OverflowMenu.Enum.Properties.Shape:
+                                validatedValue = this.validateInRange(value, OSUI.GlobalEnum.ShapeTypes.SoftRounded, OSUI.GlobalEnum.ShapeTypes.Sharp, OSUI.GlobalEnum.ShapeTypes.Rounded);
+                                break;
+                            case OverflowMenu.Enum.Properties.Position:
+                                validatedValue = this.validateString(value, OSUI.GlobalEnum.FloatingPosition.Auto);
+                                break;
+                            default:
+                                validatedValue = super.validateDefault(key, value);
+                                break;
+                        }
+                        return validatedValue;
                     }
                 }
                 OverflowMenu.OverflowMenuConfig = OverflowMenuConfig;
