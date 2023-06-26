@@ -15,6 +15,8 @@ namespace OSFramework.OSUI.Patterns.Video {
 		private _videoElement: HTMLVideoElement;
 		// Store the source element
 		private _videoSourceElement: HTMLSourceElement;
+		// Store the current video state
+		private _videoState: string;
 
 		/**
 		 * Creates an instance of Video.
@@ -156,6 +158,9 @@ namespace OSFramework.OSUI.Patterns.Video {
 			} else {
 				this.triggerPlatformEventCallback(this._platformEventOnStateChanged.bind(this), stateChanged);
 			}
+
+			// Update video state value
+			this._videoState = stateChanged;
 		}
 
 		/**
@@ -314,6 +319,17 @@ namespace OSFramework.OSUI.Patterns.Video {
 		}
 
 		/**
+		 * Method to get video state
+		 *
+		 * @memberof OSFramework.Patterns.Video.Video
+		 */
+		public getVideoState(): string {
+			// code goes here
+			console.log(this._videoState);
+			return this._videoState;
+		}
+
+		/**
 		 * Set callbacks for the pattern
 		 *
 		 * @param {string} eventName
@@ -333,6 +349,24 @@ namespace OSFramework.OSUI.Patterns.Video {
 				default:
 					super.registerCallback(eventName, callback);
 			}
+		}
+
+		/**
+		 * Method to pause video
+		 *
+		 * @memberof OSFramework.Patterns.Video.Video
+		 */
+		public setVideoPause(): void {
+			this._videoElement.pause();
+		}
+
+		/**
+		 * Method to play video
+		 *
+		 * @memberof OSFramework.Patterns.Video.Video
+		 */
+		public setVideoPlay(): void {
+			this._videoElement.play();
 		}
 	}
 }

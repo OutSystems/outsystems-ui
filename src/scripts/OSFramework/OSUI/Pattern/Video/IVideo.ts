@@ -6,7 +6,10 @@ namespace OSFramework.OSUI.Patterns.Video {
 	 * @export
 	 * @interface IVideo
 	 * @extends {Interface.IPattern}
-	 * @extends {Interface.ICallback}
 	 */
-	export interface IVideo extends Interface.IPattern {}
+	export interface IVideo extends Interface.IPattern {
+		getVideoState(): void;
+		setVideoPause(): void;
+		setVideoPlay(): void;
+	}
 }

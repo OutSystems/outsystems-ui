@@ -3679,6 +3679,9 @@ declare namespace OSFramework.OSUI.Patterns.Video.Enum {
 }
 declare namespace OSFramework.OSUI.Patterns.Video {
     interface IVideo extends Interface.IPattern {
+        getVideoState(): void;
+        setVideoPause(): void;
+        setVideoPlay(): void;
     }
 }
 declare namespace OSFramework.OSUI.Patterns.Video {
@@ -3686,6 +3689,7 @@ declare namespace OSFramework.OSUI.Patterns.Video {
         private _platformEventOnStateChanged;
         private _videoElement;
         private _videoSourceElement;
+        private _videoState;
         constructor(uniqueId: string, configs: JSON);
         private _setAutoplay;
         private _setControls;
@@ -3706,7 +3710,10 @@ declare namespace OSFramework.OSUI.Patterns.Video {
         build(): void;
         changeProperty(propertyName: string, propertyValue: unknown): void;
         dispose(): void;
+        getVideoState(): string;
         registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void;
+        setVideoPause(): void;
+        setVideoPlay(): void;
     }
 }
 declare namespace OSFramework.OSUI.Patterns.Video {
@@ -4052,9 +4059,11 @@ declare namespace OutSystems.OSUI.ErrorCodes {
     };
     const Video: {
         FailChangeProperty: string;
-        FailClose: string;
         FailDispose: string;
         FailRegisterCallback: string;
+        FailGetState: string;
+        FailPause: string;
+        FailPlay: string;
     };
     const Legacy: {
         FailAddFavicon_Legacy: string;
@@ -4441,6 +4450,9 @@ declare namespace OutSystems.OSUI.Patterns.VideoAPI {
     function GetVideoById(videoId: string): OSFramework.OSUI.Patterns.Video.IVideo;
     function Initialize(videoId: string): OSFramework.OSUI.Patterns.Video.IVideo;
     function RegisterCallback(videoId: string, eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): string;
+    function VideoPause(videoId: string): string;
+    function VideoPlay(videoId: string): string;
+    function VideoGetState(videoId: string): string;
 }
 declare namespace OutSystems.OSUI.Utils.Accessibility {
     function SetAccessibilityRole(widgetId: string, role: string): string;
