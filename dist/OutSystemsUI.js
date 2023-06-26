@@ -11614,8 +11614,7 @@ var OSFramework;
                         this.unsetHtmlElements();
                         super.dispose();
                     }
-                    getVideoState() {
-                        console.log(this._videoState);
+                    get getVideoState() {
                         return this._videoState;
                     }
                     registerCallback(eventName, callback) {
@@ -15289,6 +15288,18 @@ var OutSystems;
                     return result;
                 }
                 VideoAPI.RegisterCallback = RegisterCallback;
+                function VideoGetState(videoId) {
+                    const result = OutSystems.OSUI.Utils.CreateApiResponse({
+                        errorCode: OSUI.ErrorCodes.Video.FailGetState,
+                        hasValue: true,
+                        callback: () => {
+                            const video = GetVideoById(videoId);
+                            return video.getVideoState;
+                        },
+                    });
+                    return result;
+                }
+                VideoAPI.VideoGetState = VideoGetState;
                 function VideoPause(videoId) {
                     const result = OutSystems.OSUI.Utils.CreateApiResponse({
                         errorCode: OSUI.ErrorCodes.Video.FailPause,
@@ -15311,17 +15322,6 @@ var OutSystems;
                     return result;
                 }
                 VideoAPI.VideoPlay = VideoPlay;
-                function VideoGetState(videoId) {
-                    const result = OutSystems.OSUI.Utils.CreateApiResponse({
-                        errorCode: OSUI.ErrorCodes.Video.FailGetState,
-                        callback: () => {
-                            const video = GetVideoById(videoId);
-                            video.getVideoState();
-                        },
-                    });
-                    return result;
-                }
-                VideoAPI.VideoGetState = VideoGetState;
             })(VideoAPI = Patterns.VideoAPI || (Patterns.VideoAPI = {}));
         })(Patterns = OSUI.Patterns || (OSUI.Patterns = {}));
     })(OSUI = OutSystems.OSUI || (OutSystems.OSUI = {}));

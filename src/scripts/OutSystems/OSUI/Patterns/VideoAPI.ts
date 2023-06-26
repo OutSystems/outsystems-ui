@@ -130,8 +130,29 @@ namespace OutSystems.OSUI.Patterns.VideoAPI {
 	}
 
 	/**
+	 * Function that returns the state of a given video
 	 *
-	 * Function that play video on a given video
+	 * @export
+	 * @param {string} videoId
+	 * @return {*}  {string}
+	 */
+	export function VideoGetState(videoId: string): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Video.FailGetState,
+			hasValue: true,
+			callback: () => {
+				const video = GetVideoById(videoId);
+
+				return video.getVideoState;
+			},
+		});
+
+		return result;
+	}
+
+	/**
+	 *
+	 * Function that pause video on a given video
 	 * @export
 	 * @param {string} videoId
 	 * @return {*}  {string}
@@ -163,26 +184,6 @@ namespace OutSystems.OSUI.Patterns.VideoAPI {
 				const video = GetVideoById(videoId);
 
 				video.setVideoPlay();
-			},
-		});
-
-		return result;
-	}
-
-	/**
-	 *
-	 * Function that play video on a given video
-	 * @export
-	 * @param {string} videoId
-	 * @return {*}  {string}
-	 */
-	export function VideoGetState(videoId: string): string {
-		const result = OutSystems.OSUI.Utils.CreateApiResponse({
-			errorCode: ErrorCodes.Video.FailGetState,
-			callback: () => {
-				const video = GetVideoById(videoId);
-
-				video.getVideoState();
 			},
 		});
 

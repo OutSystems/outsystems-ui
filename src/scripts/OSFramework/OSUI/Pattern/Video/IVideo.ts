@@ -8,8 +8,26 @@ namespace OSFramework.OSUI.Patterns.Video {
 	 * @extends {Interface.IPattern}
 	 */
 	export interface IVideo extends Interface.IPattern {
-		getVideoState(): void;
+		/**
+		 * Getter the value of video state
+		 *
+		 * @type {string}
+		 * @memberof IVideo
+		 */
+		getVideoState: string;
+
+		/**
+		 * Function that will trigger the pause video method
+		 *
+		 * @memberof IVideo
+		 */
 		setVideoPause(): void;
+
+		/**
+		 * Function that will trigger the play video method
+		 *
+		 * @memberof IVideo
+		 */
 		setVideoPlay(): void;
 	}
 }

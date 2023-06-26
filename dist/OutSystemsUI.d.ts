@@ -3679,7 +3679,7 @@ declare namespace OSFramework.OSUI.Patterns.Video.Enum {
 }
 declare namespace OSFramework.OSUI.Patterns.Video {
     interface IVideo extends Interface.IPattern {
-        getVideoState(): void;
+        getVideoState: string;
         setVideoPause(): void;
         setVideoPlay(): void;
     }
@@ -3710,7 +3710,7 @@ declare namespace OSFramework.OSUI.Patterns.Video {
         build(): void;
         changeProperty(propertyName: string, propertyValue: unknown): void;
         dispose(): void;
-        getVideoState(): string;
+        get getVideoState(): string;
         registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void;
         setVideoPause(): void;
         setVideoPlay(): void;
@@ -4450,9 +4450,9 @@ declare namespace OutSystems.OSUI.Patterns.VideoAPI {
     function GetVideoById(videoId: string): OSFramework.OSUI.Patterns.Video.IVideo;
     function Initialize(videoId: string): OSFramework.OSUI.Patterns.Video.IVideo;
     function RegisterCallback(videoId: string, eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): string;
+    function VideoGetState(videoId: string): string;
     function VideoPause(videoId: string): string;
     function VideoPlay(videoId: string): string;
-    function VideoGetState(videoId: string): string;
 }
 declare namespace OutSystems.OSUI.Utils.Accessibility {
     function SetAccessibilityRole(widgetId: string, role: string): string;
