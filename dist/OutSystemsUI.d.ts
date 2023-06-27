@@ -2462,6 +2462,7 @@ declare namespace OSFramework.OSUI.Patterns.OverflowMenu {
         Position: GlobalEnum.FloatingPosition;
         Shape: GlobalEnum.ShapeTypes;
         constructor(config: JSON);
+        validateDefault(key: string, value: unknown): unknown;
     }
 }
 declare namespace OSFramework.OSUI.Patterns.Progress {

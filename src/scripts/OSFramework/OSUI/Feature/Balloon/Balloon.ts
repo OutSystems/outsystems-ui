@@ -69,6 +69,8 @@ namespace OSFramework.OSUI.Feature.Balloon {
 			if (isEscapedPressed && this.isOpen) {
 				this.close();
 			}
+
+			e.stopPropagation();
 		}
 
 		// Method to remove the event listeners

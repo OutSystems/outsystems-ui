@@ -28,6 +28,7 @@
     
     &__balloon {
         min-width: var(--osui-overflow-menu-min-width);
+        overflow: hidden;
 
         a {
             color: var(--color-neutral-9);
@@ -56,6 +57,8 @@
 .tablet,
 .phone {
     .osui-overflow-menu {
+        --border-radius-rounded: 100%;
+
         .osui-overflow-menu__trigger {
             &.btn {
                 // Longer specificity to be able to always override default responsive styles for buttons
