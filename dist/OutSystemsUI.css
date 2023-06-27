@@ -12889,7 +12889,7 @@ html[data-uieditorversion^="1"] .wizard-wrapper-item{
   background-color:var(--color-neutral-6);
 }
 .osui-dropdown-serverside__balloon-content > *:not([data-list]){
-  z-index:1;
+  z-index:var(--layer-local-tier-1);
 }
 .osui-dropdown-serverside__balloon--has-not-search .osui-dropdown-serverside__balloon-content{
   border-top:none;
@@ -13046,6 +13046,7 @@ body:has(.popup-dialog):has(.osui-dropdown-serverside--is-opened) .osui-dropdown
   -webkit-transition:opacity 250ms ease;
   -o-transition:opacity 250ms ease;
   transition:opacity 250ms ease;
+  z-index:var(--layer-global-instant-interaction);
 }
 .phone .osui-dropdown-serverside__balloon-wrapper{
   -servicestudio-background-color:var(--color-neutral-0);
@@ -13097,11 +13098,11 @@ body:has(.popup-dialog):has(.osui-dropdown-serverside--is-opened) .osui-dropdown
   -o-transition:background 250ms ease;
   transition:background 250ms ease;
   width:100%;
-  z-index:0;
+  z-index:var(--layer-global-screen);
 }
 .osui-dropdown-serverside-item:hover, .osui-dropdown-serverside-item--is-selected{
   background-color:var(--color-neutral-2);
-  z-index:1;
+  z-index:var(--layer-local-tier-1);
 }
 .osui-dropdown-serverside-item:hover, .osui-dropdown-serverside-item--is-selected{
   -servicestudio-background-color:var(--color-neutral-0);
