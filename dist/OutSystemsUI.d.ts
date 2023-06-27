@@ -4451,9 +4451,9 @@ declare namespace OutSystems.OSUI.Patterns.VideoAPI {
     function GetVideoById(videoId: string): OSFramework.OSUI.Patterns.Video.IVideo;
     function Initialize(videoId: string): OSFramework.OSUI.Patterns.Video.IVideo;
     function RegisterCallback(videoId: string, eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): string;
-    function VideoGetState(videoId: string): string;
-    function VideoPause(videoId: string): string;
-    function VideoPlay(videoId: string): string;
+    function GetState(videoId: string): string;
+    function Pause(videoId: string): string;
+    function Play(videoId: string): string;
 }
 declare namespace OutSystems.OSUI.Utils.Accessibility {
     function SetAccessibilityRole(widgetId: string, role: string): string;

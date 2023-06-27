@@ -136,7 +136,7 @@ namespace OutSystems.OSUI.Patterns.VideoAPI {
 	 * @param {string} videoId
 	 * @return {*}  {string}
 	 */
-	export function VideoGetState(videoId: string): string {
+	export function GetState(videoId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.Video.FailGetState,
 			hasValue: true,
@@ -157,7 +157,7 @@ namespace OutSystems.OSUI.Patterns.VideoAPI {
 	 * @param {string} videoId
 	 * @return {*}  {string}
 	 */
-	export function VideoPause(videoId: string): string {
+	export function Pause(videoId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.Video.FailPause,
 			callback: () => {
@@ -177,7 +177,7 @@ namespace OutSystems.OSUI.Patterns.VideoAPI {
 	 * @param {string} videoId
 	 * @return {*}  {string}
 	 */
-	export function VideoPlay(videoId: string): string {
+	export function Play(videoId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.Video.FailPlay,
 			callback: () => {

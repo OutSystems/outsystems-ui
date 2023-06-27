@@ -15304,7 +15304,7 @@ var OutSystems;
                     return result;
                 }
                 VideoAPI.RegisterCallback = RegisterCallback;
-                function VideoGetState(videoId) {
+                function GetState(videoId) {
                     const result = OutSystems.OSUI.Utils.CreateApiResponse({
                         errorCode: OSUI.ErrorCodes.Video.FailGetState,
                         hasValue: true,
@@ -15315,8 +15315,8 @@ var OutSystems;
                     });
                     return result;
                 }
-                VideoAPI.VideoGetState = VideoGetState;
-                function VideoPause(videoId) {
+                VideoAPI.GetState = GetState;
+                function Pause(videoId) {
                     const result = OutSystems.OSUI.Utils.CreateApiResponse({
                         errorCode: OSUI.ErrorCodes.Video.FailPause,
                         callback: () => {
@@ -15326,8 +15326,8 @@ var OutSystems;
                     });
                     return result;
                 }
-                VideoAPI.VideoPause = VideoPause;
-                function VideoPlay(videoId) {
+                VideoAPI.Pause = Pause;
+                function Play(videoId) {
                     const result = OutSystems.OSUI.Utils.CreateApiResponse({
                         errorCode: OSUI.ErrorCodes.Video.FailPlay,
                         callback: () => {
@@ -15337,7 +15337,7 @@ var OutSystems;
                     });
                     return result;
                 }
-                VideoAPI.VideoPlay = VideoPlay;
+                VideoAPI.Play = Play;
             })(VideoAPI = Patterns.VideoAPI || (Patterns.VideoAPI = {}));
         })(Patterns = OSUI.Patterns || (OSUI.Patterns = {}));
     })(OSUI = OutSystems.OSUI || (OutSystems.OSUI = {}));
