@@ -15,6 +15,8 @@ namespace OSFramework.OSUI.Patterns.Video {
 		private _videoElement: HTMLVideoElement;
 		// Store the source element
 		private _videoSourceElement: HTMLSourceElement;
+		// Store the current video state
+		private _videoState: string;
 
 		/**
 		 * Creates an instance of Video.
@@ -26,7 +28,12 @@ namespace OSFramework.OSUI.Patterns.Video {
 			super(uniqueId, new VideoConfig(configs));
 		}
 
-		// Method that will set the Autoplay attribute
+		/**
+		 * Method that will set the Autoplay attribute
+		 *
+		 * @private
+		 * @memberof Video
+		 */
 		private _setAutoplay(): void {
 			this._videoElement.autoplay = this.configs.Autoplay;
 
@@ -37,12 +44,22 @@ namespace OSFramework.OSUI.Patterns.Video {
 			}
 		}
 
-		// Method that will set the controls attribute
+		/**
+		 * Method that will set the controls attribute
+		 *
+		 * @private
+		 * @memberof Video
+		 */
 		private _setControls(): void {
 			this._videoElement.controls = this.configs.Controls;
 		}
 
-		// Method that will set the Height attribute
+		/**
+		 * Method that will set the Height attribute
+		 *
+		 * @private
+		 * @memberof Video
+		 */
 		private _setHeight(): void {
 			if (this.configs.Height !== Constants.EmptyString) {
 				OSUI.Helper.Dom.Attribute.Set(
@@ -55,17 +72,32 @@ namespace OSFramework.OSUI.Patterns.Video {
 			}
 		}
 
-		// Method that will set the loop attribute
+		/**
+		 * Method that will set the loop attribute
+		 *
+		 * @private
+		 * @memberof Video
+		 */
 		private _setLoop(): void {
 			this._videoElement.loop = this.configs.Loop;
 		}
 
-		// Method that will set the muted attribute
+		/**
+		 * Method that will set the muted attribute
+		 *
+		 * @private
+		 * @memberof Video
+		 */
 		private _setMuted(): void {
 			this._videoElement.muted = this.configs.Muted;
 		}
 
-		// Method that will set the poster image on video
+		/**
+		 * Method that will set the poster image on video
+		 *
+		 * @private
+		 * @memberof Video
+		 */
 		private _setPosterUrl(): void {
 			if (this.configs.PosterURL !== Constants.EmptyString) {
 				this._videoElement.poster = this.configs.PosterURL;
@@ -74,7 +106,12 @@ namespace OSFramework.OSUI.Patterns.Video {
 			}
 		}
 
-		// Method to apply all initial video configs
+		/**
+		 * Method to apply all initial video configs
+		 *
+		 * @private
+		 * @memberof Video
+		 */
 		private _setVideoConfigs(): void {
 			this._setAutoplay();
 
@@ -96,7 +133,12 @@ namespace OSFramework.OSUI.Patterns.Video {
 			}
 		}
 
-		// Method to create the source element
+		/**
+		 * Method to create the source element
+		 *
+		 * @private
+		 * @memberof Video
+		 */
 		private _setVideoSource(): void {
 			// Get the file extension from URL
 			const _urlFileExtension = this.configs.URL.split('.').pop();
@@ -109,7 +151,12 @@ namespace OSFramework.OSUI.Patterns.Video {
 			this._videoSourceElement.type = Patterns.Video.Enum.VideoAttributes.TypePath + _urlFileExtension;
 		}
 
-		// Method create the track element
+		/**
+		 * Method create the track element
+		 *
+		 * @private
+		 * @memberof Video
+		 */
 		private _setVideoTrack(): void {
 			// Check if contains tracks to be added
 			// If true, create the element with all the attributes
@@ -134,7 +181,12 @@ namespace OSFramework.OSUI.Patterns.Video {
 			}
 		}
 
-		// Method that will set the Width attribute
+		/**
+		 * Method that will set the Width attribute
+		 *
+		 * @private
+		 * @memberof Video
+		 */
 		private _setWidth(): void {
 			if (this.configs.Width !== Constants.EmptyString) {
 				OSUI.Helper.Dom.Attribute.Set(
@@ -147,7 +199,13 @@ namespace OSFramework.OSUI.Patterns.Video {
 			}
 		}
 
-		// Method that triggers the OnStateChanged event
+		/**
+		 * Method that triggers the OnStateChanged event
+		 *
+		 * @private
+		 * @param {string} stateChanged value of video state
+		 * @memberof Video
+		 */
 		private _triggerOnStateChangedEvent(stateChanged: string): void {
 			if (stateChanged === Patterns.Video.Enum.VideoStates.Unstarted) {
 				if (this._videoElement.currentTime === 0) {
@@ -156,6 +214,9 @@ namespace OSFramework.OSUI.Patterns.Video {
 			} else {
 				this.triggerPlatformEventCallback(this._platformEventOnStateChanged.bind(this), stateChanged);
 			}
+
+			// Update video state value
+			this._videoState = stateChanged;
 		}
 
 		/**
@@ -314,6 +375,15 @@ namespace OSFramework.OSUI.Patterns.Video {
 		}
 
 		/**
+		 * Method to get video state
+		 *
+		 * @memberof OSFramework.Patterns.Video.Video
+		 */
+		public get getVideoState(): string {
+			return this._videoState;
+		}
+
+		/**
 		 * Set callbacks for the pattern
 		 *
 		 * @param {string} eventName
@@ -333,6 +403,24 @@ namespace OSFramework.OSUI.Patterns.Video {
 				default:
 					super.registerCallback(eventName, callback);
 			}
+		}
+
+		/**
+		 * Method to pause video
+		 *
+		 * @memberof OSFramework.Patterns.Video.Video
+		 */
+		public setVideoPause(): void {
+			this._videoElement.pause();
+		}
+
+		/**
+		 * Method to play video
+		 *
+		 * @memberof OSFramework.Patterns.Video.Video
+		 */
+		public setVideoPlay(): void {
+			this._videoElement.play();
 		}
 	}
 }

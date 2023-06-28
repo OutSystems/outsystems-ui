@@ -11558,6 +11558,7 @@ var OSFramework;
                         else {
                             this.triggerPlatformEventCallback(this._platformEventOnStateChanged.bind(this), stateChanged);
                         }
+                        this._videoState = stateChanged;
                     }
                     setA11YProperties() {
                         console.log(OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -11629,6 +11630,9 @@ var OSFramework;
                         this.unsetHtmlElements();
                         super.dispose();
                     }
+                    get getVideoState() {
+                        return this._videoState;
+                    }
                     registerCallback(eventName, callback) {
                         switch (eventName) {
                             case Patterns.Video.Enum.Events.OnStateChanged:
@@ -11642,6 +11646,12 @@ var OSFramework;
                             default:
                                 super.registerCallback(eventName, callback);
                         }
+                    }
+                    setVideoPause() {
+                        this._videoElement.pause();
+                    }
+                    setVideoPlay() {
+                        this._videoElement.play();
                     }
                 }
                 Video_1.Video = Video;
@@ -12058,9 +12068,11 @@ var OutSystems;
             };
             ErrorCodes.Video = {
                 FailChangeProperty: 'OSUI-API-31001',
-                FailClose: 'OSUI-API-31002',
-                FailDispose: 'OSUI-API-31003',
-                FailRegisterCallback: 'OSUI-API-31004',
+                FailDispose: 'OSUI-API-31002',
+                FailRegisterCallback: 'OSUI-API-31003',
+                FailGetState: 'OSUI-API-31004',
+                FailPause: 'OSUI-API-31005',
+                FailPlay: 'OSUI-API-31006',
             };
             ErrorCodes.Legacy = {
                 FailAddFavicon_Legacy: 'OSUI-LEG-000001',
@@ -15292,6 +15304,40 @@ var OutSystems;
                     return result;
                 }
                 VideoAPI.RegisterCallback = RegisterCallback;
+                function GetState(videoId) {
+                    const result = OutSystems.OSUI.Utils.CreateApiResponse({
+                        errorCode: OSUI.ErrorCodes.Video.FailGetState,
+                        hasValue: true,
+                        callback: () => {
+                            const video = GetVideoById(videoId);
+                            return video.getVideoState;
+                        },
+                    });
+                    return result;
+                }
+                VideoAPI.GetState = GetState;
+                function Pause(videoId) {
+                    const result = OutSystems.OSUI.Utils.CreateApiResponse({
+                        errorCode: OSUI.ErrorCodes.Video.FailPause,
+                        callback: () => {
+                            const video = GetVideoById(videoId);
+                            video.setVideoPause();
+                        },
+                    });
+                    return result;
+                }
+                VideoAPI.Pause = Pause;
+                function Play(videoId) {
+                    const result = OutSystems.OSUI.Utils.CreateApiResponse({
+                        errorCode: OSUI.ErrorCodes.Video.FailPlay,
+                        callback: () => {
+                            const video = GetVideoById(videoId);
+                            video.setVideoPlay();
+                        },
+                    });
+                    return result;
+                }
+                VideoAPI.Play = Play;
             })(VideoAPI = Patterns.VideoAPI || (Patterns.VideoAPI = {}));
         })(Patterns = OSUI.Patterns || (OSUI.Patterns = {}));
     })(OSUI = OutSystems.OSUI || (OutSystems.OSUI = {}));
