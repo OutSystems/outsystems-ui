@@ -5218,6 +5218,9 @@ var OSFramework;
                             }
                         }
                         _close() {
+                            if (this._isOpen === false) {
+                                return;
+                            }
                             if (this._closeDynamically === false) {
                                 this._selectValuesWrapper.focus();
                             }
@@ -5227,6 +5230,7 @@ var OSFramework;
                             this._isOpen = false;
                             this._updatePatternState();
                             this._unsetObserver();
+                            this._unsetEvents(true);
                         }
                         _endOfCloseAnimation() {
                             this._balloonWrapperElement.removeEventListener(OSUI.GlobalEnum.HTMLEvent.TransitionEnd, this._eventOnCloseTransitionEnd);
@@ -5273,10 +5277,16 @@ var OSFramework;
                             OSUI.Helper.Dom.Move(this._balloonWrapperElement, this._activeScreenElement);
                         }
                         _onBodyClick(_eventType, event) {
+                            if (this._isOpen === false) {
+                                return;
+                            }
                             const targetElement = event.target;
                             const getBaseElement = targetElement.closest(OSUI.Constants.Dot + ServerSide.Enum.CssClass.Pattern) ||
                                 targetElement.closest(OSUI.Constants.Dot + ServerSide.Enum.CssClass.BalloonWrapper);
-                            if (this._isOpen && getBaseElement !== this.selfElement && getBaseElement !== this._balloonWrapperElement) {
+                            if (OSUI.Helper.DeviceInfo.IsPhone ||
+                                (OSUI.Helper.DeviceInfo.IsPhone === false &&
+                                    getBaseElement !== this.selfElement &&
+                                    getBaseElement !== this._balloonWrapperElement)) {
                                 this._closeDynamically = true;
                                 this._close();
                             }
@@ -5375,6 +5385,9 @@ var OSFramework;
                             this._setBalloonCoordinates();
                         }
                         _open() {
+                            if (this._isOpen) {
+                                return;
+                            }
                             this._closeDynamically = false;
                             this._isOpen = true;
                             this._windowWidth = window.innerWidth;
@@ -5383,6 +5396,7 @@ var OSFramework;
                             OSUI.Helper.Dom.Styles.AddClass(document.body, ServerSide.Enum.CssClass.IsVisible);
                             this._updatePatternState();
                             this._setObserver();
+                            OSUI.Helper.AsyncInvocation(this._setUpEvents.bind(this));
                         }
                         _optionItemHasBeenClicked(optionItemId) {
                             const clickedItem = this.getChild(optionItemId);
@@ -5508,18 +5522,20 @@ var OSFramework;
                         _setUpEvents() {
                             this._selectValuesWrapper.addEventListener(OSUI.GlobalEnum.HTMLEvent.Click, this._eventOnClick);
                             this._selectValuesWrapper.addEventListener(OSUI.GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyboardPress);
-                            this._balloonOptionsWrapperElement.addEventListener(OSUI.GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyboardPress);
-                            if (this._balloonSearchInputElement) {
-                                this._balloonSearchInputElement.addEventListener(OSUI.GlobalEnum.HTMLEvent.Click, this._eventOnClickInputSearch);
-                                this._balloonSearchInputElement.addEventListener(OSUI.GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyboardPress);
-                                this._balloonSearchInputElement.addEventListener(OSUI.GlobalEnum.HTMLEvent.Blur, this._eventOnSearchInputBlur);
-                                this._balloonSearchInputElement.addEventListener(OSUI.GlobalEnum.HTMLEvent.Focus, this._eventOnSearchInputFocus);
+                            if (this.isBuilt) {
+                                this._balloonOptionsWrapperElement.addEventListener(OSUI.GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyboardPress);
+                                if (this._balloonSearchInputElement) {
+                                    this._balloonSearchInputElement.addEventListener(OSUI.GlobalEnum.HTMLEvent.Click, this._eventOnClickInputSearch);
+                                    this._balloonSearchInputElement.addEventListener(OSUI.GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyboardPress);
+                                    this._balloonSearchInputElement.addEventListener(OSUI.GlobalEnum.HTMLEvent.Blur, this._eventOnSearchInputBlur);
+                                    this._balloonSearchInputElement.addEventListener(OSUI.GlobalEnum.HTMLEvent.Focus, this._eventOnSearchInputFocus);
+                                }
+                                OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick, this._eventOnBodyClick);
+                                OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnScroll, this._eventOnBodyScroll);
+                                this._requestAnimationOnBodyScroll = requestAnimationFrame(this._eventOnBodyScroll);
+                                OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.WindowResize, this._eventOnWindowResize);
+                                OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.OrientationChange, this._eventOnOrientationChange);
                             }
-                            OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick, this._eventOnBodyClick);
-                            OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnScroll, this._eventOnBodyScroll);
-                            this._requestAnimationOnBodyScroll = requestAnimationFrame(this._eventOnBodyScroll);
-                            OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.WindowResize, this._eventOnWindowResize);
-                            OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.OrientationChange, this._eventOnOrientationChange);
                         }
                         _touchMove() {
                             if (OSUI.Helper.DeviceInfo.IsIos && 'ontouchmove' in window) {
@@ -5534,9 +5550,11 @@ var OSFramework;
                         _triggerToogleCalbackEvent() {
                             this.triggerPlatformEventCallback(this._platformEventOnToggleCallback, this._isOpen);
                         }
-                        _unsetEvents() {
-                            this._selectValuesWrapper.removeEventListener(OSUI.GlobalEnum.HTMLEvent.Click, this._eventOnClick);
-                            this._selectValuesWrapper.removeEventListener(OSUI.GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyboardPress);
+                        _unsetEvents(isUpdate = false) {
+                            if (isUpdate === false) {
+                                this._selectValuesWrapper.removeEventListener(OSUI.GlobalEnum.HTMLEvent.Click, this._eventOnClick);
+                                this._selectValuesWrapper.removeEventListener(OSUI.GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyboardPress);
+                            }
                             this._balloonOptionsWrapperElement.removeEventListener(OSUI.GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyboardPress);
                             if (this._balloonSearchInputElement) {
                                 this._balloonSearchInputElement.removeEventListener(OSUI.GlobalEnum.HTMLEvent.Click, this._eventOnClickInputSearch);
