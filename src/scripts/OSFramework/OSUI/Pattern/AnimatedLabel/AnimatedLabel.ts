@@ -60,7 +60,7 @@ namespace OSFramework.OSUI.Patterns.AnimatedLabel {
 
 		// Method that implements the toggle of the state of the input.
 		// It can either add or remove the class "active" of the input.
-		private _inputStateToggle(isFocus: boolean | undefined): void {
+		private _inputStateToggle(isFocus = false): void {
 			const inputHasText = this._inputElement && this._inputElement.value !== '';
 
 			//let's check if we have something to do. Is the pattern built or (it's building) and we have text in the input?
@@ -127,7 +127,7 @@ namespace OSFramework.OSUI.Patterns.AnimatedLabel {
 				// clear the input's prompt, as it not supported when used inside AnimatedLabel
 				this._inputElement.placeholder = '';
 
-				this._inputStateToggle(undefined);
+				this._inputStateToggle();
 			} else {
 				throw new Error(Enum.Messages.InputNotFound);
 			}
@@ -204,7 +204,7 @@ namespace OSFramework.OSUI.Patterns.AnimatedLabel {
 		public updateOnRender(): void {
 			// Do not run this instead the pattern is totally built
 			if (this.isBuilt) {
-				this._inputStateToggle(undefined);
+				this._inputStateToggle();
 			}
 		}
 	}
