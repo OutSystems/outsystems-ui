@@ -4211,7 +4211,7 @@ var OSFramework;
                             this._inputStateToggle(true);
                         }
                     }
-                    _inputStateToggle(isFocus) {
+                    _inputStateToggle(isFocus = false) {
                         const inputHasText = this._inputElement && this._inputElement.value !== '';
                         if (this.isBuilt || inputHasText) {
                             if ((inputHasText || isFocus) && this._isLabelFocus === false) {
@@ -4246,7 +4246,7 @@ var OSFramework;
                                 OSUI.Helper.Dom.TagSelector(this._inputPhElement, OSUI.GlobalEnum.DataBlocksTag.TextArea);
                         if (this._inputElement) {
                             this._inputElement.placeholder = '';
-                            this._inputStateToggle(undefined);
+                            this._inputStateToggle();
                         }
                         else {
                             throw new Error(AnimatedLabel_1.Enum.Messages.InputNotFound);
@@ -4281,7 +4281,7 @@ var OSFramework;
                     }
                     updateOnRender() {
                         if (this.isBuilt) {
-                            this._inputStateToggle(undefined);
+                            this._inputStateToggle();
                         }
                     }
                 }
