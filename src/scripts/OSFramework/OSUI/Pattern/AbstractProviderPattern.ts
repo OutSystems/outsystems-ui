@@ -125,8 +125,6 @@ namespace OSFramework.OSUI.Patterns {
 		 */
 		protected unsetCallbacks(): void {
 			this._platformEventProviderConfigsAppliedCallback = undefined;
-
-			super.unsetCallbacks();
 		}
 
 		/**

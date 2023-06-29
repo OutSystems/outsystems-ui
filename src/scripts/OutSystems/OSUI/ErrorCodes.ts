@@ -311,6 +311,23 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailRegisterCallback: 'OSUI-API-29003',
 	};
 
+	export const OverflowMenu = {
+		FailChangeProperty: 'OSUI-API-30001',
+		FailDispose: 'OSUI-API-30002',
+		FailRegisterCallback: 'OSUI-API-30003',
+		FailOpen: 'OSUI-API-30004',
+		FailClose: 'OSUI-API-30005',
+	};
+
+	export const Video = {
+		FailChangeProperty: 'OSUI-API-31001',
+		FailDispose: 'OSUI-API-31002',
+		FailRegisterCallback: 'OSUI-API-31003',
+		FailGetState: 'OSUI-API-31004',
+		FailPause: 'OSUI-API-31005',
+		FailPlay: 'OSUI-API-31006',
+	};
+
 	// Error Codes used in Legacy Client Action
 	export const Legacy = {
 		FailAddFavicon_Legacy: 'OSUI-LEG-000001',

@@ -1,6 +1,6 @@
 {
 	"name": "outsystems-ui",
-	"version": "2.16.0",
+	"version": "2.17.0",
 	"description": "OutSystems UI Framework",
 	"license": "BSD-3-Clause",
 	"scripts": {
@@ -31,6 +31,7 @@
 	],
 	"homepage": "https://outsystemsui.outsystems.com/OutsystemsUiWebsite/",
 	"devDependencies": {
+		"@floating-ui/dom": "^1.2.8",
 		"@splidejs/splide": "4.1.3",
 		"@typescript-eslint/eslint-plugin": "^5.45.0",
 		"@typescript-eslint/parser": "^5.45.0",

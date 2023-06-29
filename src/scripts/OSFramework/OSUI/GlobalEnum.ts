@@ -69,6 +69,29 @@ namespace OSFramework.OSUI.GlobalEnum {
 		TopRight = 'top-right',
 	}
 
+	export enum FloatingAlignment {
+		Center = 'center',
+		End = 'end',
+		Start = 'start',
+	}
+
+	export enum FloatingPosition {
+		Auto = 'auto',
+		Bottom = 'bottom',
+		BottomStart = 'bottom-start',
+		BottomEnd = 'bottom-end',
+		Center = 'center',
+		Left = 'left',
+		LeftEnd = 'left-end',
+		LeftStart = 'left-start',
+		Right = 'right',
+		RightEnd = 'right-end',
+		RightStart = 'right-start',
+		Top = 'top',
+		TopStart = 'top-start',
+		TopEnd = 'top-end',
+	}
+
 	/**
 	 * OutSystemsUI elements CSS properties
 	 */
@@ -185,6 +208,13 @@ namespace OSFramework.OSUI.GlobalEnum {
 	}
 
 	/**
+	 * OutSystemsUI Custom Events
+	 */
+	export enum CustomEvent {
+		BalloonOnToggle = 'balloon.onToggle',
+	}
+
+	/**
 	 * OutSystemsUI elements inline styles
 	 */
 	export enum InlineStyle {
@@ -263,6 +293,7 @@ namespace OSFramework.OSUI.GlobalEnum {
 		Accordion = 'Accordion',
 		AccordionItem = 'Accordion Item',
 		AnimatedLabel = 'Animated Label',
+		Balloon = 'Balloon',
 		BottomSheet = 'Bottom Sheet',
 		ButtonLoading = 'ButtonLoading',
 		Carousel = 'Carousel',
@@ -276,6 +307,7 @@ namespace OSFramework.OSUI.GlobalEnum {
 		InlineSvg = 'InlineSVG',
 		MonthPicker = 'MonthPicker',
 		Notification = 'Notification',
+		OverflowMenu = 'OverflowMenu',
 		ProgressBar = 'Progress Bar',
 		ProgressCircle = 'Progress Circle',
 		RangeSlider = 'Range Slider',
@@ -293,6 +325,7 @@ namespace OSFramework.OSUI.GlobalEnum {
 		Timepicker = 'Timepicker',
 		Tooltip = 'Tooltip',
 		TouchEvents = 'TouchEvents',
+		Video = 'Video',
 	}
 
 	/**

@@ -1,0 +1,69 @@
+/* Patterns - Navigation - OverflowMenu */
+////
+/// @group Patterns-OverflowMenu
+/// Patterns - Navigation - OverflowMenu
+
+.osui-overflow-menu {
+    --osui-overflow-menu-min-width: 170px;
+    --border-radius-rounded: 16px;
+
+    &__trigger {
+        --osui-floating-offset: var(--space-s);
+
+        border: var(--border-size-s) solid transparent;
+        border-radius: var(--osui-overflow-menu-shape);
+        color: var(--color-neutral-9);
+        width: 32px;
+
+        * {
+            pointer-events: none;
+        }
+    }
+
+    &--is-open {
+        .osui-overflow-menu__trigger {
+            background-color: var(--color-neutral-4);
+        }
+    }
+    
+    &__balloon {
+        min-width: var(--osui-overflow-menu-min-width);
+        overflow: hidden;
+
+        a {
+            color: var(--color-neutral-9);
+    
+            &:hover {
+                background: var(--color-neutral-4);
+                text-decoration: none;
+            }
+
+            // Service Studio Preview
+            & {
+                -servicestudio-align-items: center;
+                -servicestudio-display: inline-flex!important;
+                -servicestudio-color:var(--color-neutral-9);
+                -servicestudio-padding: var(--space-s) var(--space-base);
+            }
+        }
+    
+        // To make extensibility with ExtendedClass easier
+        a:not([class^='padding-']){
+            padding:var(--space-s) var(--space-base);
+        }
+    }
+}
+
+.tablet,
+.phone {
+    .osui-overflow-menu {
+        --border-radius-rounded: 100%;
+
+        .osui-overflow-menu__trigger {
+            &.btn {
+                // Longer specificity to be able to always override default responsive styles for buttons
+                width: 40px;
+            }
+        }
+    }
+}
