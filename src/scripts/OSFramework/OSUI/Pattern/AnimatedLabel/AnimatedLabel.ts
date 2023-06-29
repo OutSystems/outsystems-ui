@@ -60,7 +60,7 @@ namespace OSFramework.OSUI.Patterns.AnimatedLabel {
 
 		// Method that implements the toggle of the state of the input.
 		// It can either add or remove the class "active" of the input.
-		private _inputStateToggle(isFocus: boolean): void {
+		private _inputStateToggle(isFocus = false): void {
 			const inputHasText = this._inputElement && this._inputElement.value !== '';
 
 			//let's check if we have something to do. Is the pattern built or (it's building) and we have text in the input?
