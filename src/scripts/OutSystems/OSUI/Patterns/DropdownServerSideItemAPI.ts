@@ -2,7 +2,7 @@
 namespace OutSystems.OSUI.Patterns.DropdownServerSideItemAPI {
 	const _dropdownServerSideItemItemsMap = new Map<
 		string,
-		OSFramework.Patterns.DropdownServerSideItem.IDropdownServerSideItem
+		OSFramework.OSUI.Patterns.DropdownServerSideItem.IDropdownServerSideItem
 	>(); //DropdownServerSideItem.uniqueId -> DropdownServerSideItem obj
 
 	/**
@@ -15,23 +15,16 @@ namespace OutSystems.OSUI.Patterns.DropdownServerSideItemAPI {
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 	export function ChangeProperty(dropdownServerSideItemId: string, propertyName: string, propertyValue: any): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.DropdownServerSideItem.FailChangeProperty,
+			callback: () => {
+				const _dropdownServerSideItemItem = GetDropdownServerSideItemItemById(dropdownServerSideItemId);
 
-		try {
-			const _dropdownServerSideItemItem = GetDropdownServerSideItemItemById(dropdownServerSideItemId);
+				_dropdownServerSideItemItem.changeProperty(propertyName, propertyValue);
+			},
+		});
 
-			_dropdownServerSideItemItem.changeProperty(propertyName, propertyValue);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.DropdownServerSideItem.FailChangeProperty;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -40,19 +33,19 @@ namespace OutSystems.OSUI.Patterns.DropdownServerSideItemAPI {
 	 * @export
 	 * @param {string} dropdownServerSideItemId ID of the Pattern that a new instance will be created.
 	 * @param {string} configs Configurations for the Pattern in JSON format.
-	 * @return {*}  {OSFramework.Patterns.DropdownServerSideItem.IDropdownServerSideItem}
+	 * @return {*}  {OSFramework.OSUI.Patterns.DropdownServerSideItem.IDropdownServerSideItem}
 	 */
 	export function Create(
 		dropdownServerSideItemId: string,
 		configs: string
-	): OSFramework.Patterns.DropdownServerSideItem.IDropdownServerSideItem {
+	): OSFramework.OSUI.Patterns.DropdownServerSideItem.IDropdownServerSideItem {
 		if (_dropdownServerSideItemItemsMap.has(dropdownServerSideItemId)) {
 			throw new Error(
-				`There is already a ${OSFramework.GlobalEnum.PatternName.DropdownServerSideItem} registered under id: ${dropdownServerSideItemId}`
+				`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.DropdownServerSideItem} registered under id: ${dropdownServerSideItemId}`
 			);
 		}
 
-		const _dropdownServerSideItemItem = new OSFramework.Patterns.DropdownServerSideItem.DropdownServerSideItem(
+		const _dropdownServerSideItemItem = new OSFramework.OSUI.Patterns.DropdownServerSideItem.DropdownServerSideItem(
 			dropdownServerSideItemId,
 			JSON.parse(configs)
 		);
@@ -69,25 +62,18 @@ namespace OutSystems.OSUI.Patterns.DropdownServerSideItemAPI {
 	 * @param {string} dropdownServerSideItemId
 	 */
 	export function Dispose(dropdownServerSideItemId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.DropdownServerSideItem.FailDispose,
+			callback: () => {
+				const _dropdownServerSideItemItem = GetDropdownServerSideItemItemById(dropdownServerSideItemId);
 
-		try {
-			const _dropdownServerSideItemItem = GetDropdownServerSideItemItemById(dropdownServerSideItemId);
+				_dropdownServerSideItemItem.dispose();
 
-			_dropdownServerSideItemItem.dispose();
+				_dropdownServerSideItemItemsMap.delete(_dropdownServerSideItemItem.uniqueId);
+			},
+		});
 
-			_dropdownServerSideItemItemsMap.delete(_dropdownServerSideItemItem.uniqueId);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.DropdownServerSideItem.FailDispose;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -97,7 +83,7 @@ namespace OutSystems.OSUI.Patterns.DropdownServerSideItemAPI {
 	 * @return {*}  Array<string>
 	 */
 	export function GetAllDropdownServerSideItemItemsMap(): Array<string> {
-		return OSFramework.Helper.MapOperation.ExportKeys(_dropdownServerSideItemItemsMap);
+		return OSFramework.OSUI.Helper.MapOperation.ExportKeys(_dropdownServerSideItemItemsMap);
 	}
 
 	/**
@@ -105,16 +91,16 @@ namespace OutSystems.OSUI.Patterns.DropdownServerSideItemAPI {
 	 *
 	 * @export
 	 * @param {string} dropdownServerSideItemId ID of the DropdownServerSideItem that will be looked for.
-	 * @return {*}  {OSFramework.Patterns.DropdownServerSideItem.IDropdownServerSideItem;}
+	 * @return {*}  {OSFramework.OSUI.Patterns.DropdownServerSideItem.IDropdownServerSideItem;}
 	 */
 	export function GetDropdownServerSideItemItemById(
 		dropdownServerSideItemId: string
-	): OSFramework.Patterns.DropdownServerSideItem.IDropdownServerSideItem {
-		return OSFramework.Helper.MapOperation.FindInMap(
+	): OSFramework.OSUI.Patterns.DropdownServerSideItem.IDropdownServerSideItem {
+		return OSFramework.OSUI.Helper.MapOperation.FindInMap(
 			'DropdownServerSideItem',
 			dropdownServerSideItemId,
 			_dropdownServerSideItemItemsMap
-		) as OSFramework.Patterns.DropdownServerSideItem.IDropdownServerSideItem;
+		) as OSFramework.OSUI.Patterns.DropdownServerSideItem.IDropdownServerSideItem;
 	}
 
 	/**
@@ -122,11 +108,11 @@ namespace OutSystems.OSUI.Patterns.DropdownServerSideItemAPI {
 	 *
 	 * @export
 	 * @param {string} dropdownServerSideItemId ID of the DropdownServerSideItemItem that will be initialized.
-	 * @return {*}  {OSFramework.Patterns.DropdownServerSideItem.IDropdownServerSideItem}
+	 * @return {*}  {OSFramework.OSUI.Patterns.DropdownServerSideItem.IDropdownServerSideItem}
 	 */
 	export function Initialize(
 		dropdownServerSideItemId: string
-	): OSFramework.Patterns.DropdownServerSideItem.IDropdownServerSideItem {
+	): OSFramework.OSUI.Patterns.DropdownServerSideItem.IDropdownServerSideItem {
 		const _dropdownServerSideItemItem = GetDropdownServerSideItemItemById(dropdownServerSideItemId);
 
 		_dropdownServerSideItemItem.build();
@@ -140,29 +126,22 @@ namespace OutSystems.OSUI.Patterns.DropdownServerSideItemAPI {
 	 * @export
 	 * @param {string} dropdownServerSideItemId
 	 * @param {string} eventName
-	 * @param {OSFramework.GlobalCallbacks.OSGeneric} callback
+	 * @param {OSFramework.OSUI.GlobalCallbacks.OSGeneric} callback
 	 */
 	export function RegisterCallback(
 		dropdownServerSideItemId: string,
 		eventName: string,
-		callback: OSFramework.GlobalCallbacks.OSGeneric
+		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
 	): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.DropdownServerSideItem.FailRegisterCallback,
+			callback: () => {
+				const _dropdownServerSideItemItem = this.GetDropdownServerSideItemItemById(dropdownServerSideItemId);
 
-		try {
-			const _dropdownServerSideItemItem = this.GetDropdownServerSideItemItemById(dropdownServerSideItemId);
+				_dropdownServerSideItemItem.registerCallback(eventName, callback);
+			},
+		});
 
-			_dropdownServerSideItemItem.registerCallback(eventName, callback);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.DropdownServerSideItem.FailDispose;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 }

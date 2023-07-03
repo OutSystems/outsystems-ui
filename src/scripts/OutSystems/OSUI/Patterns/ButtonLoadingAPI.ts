@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Patterns.ButtonLoadingAPI {
-	const _buttonsLoadingMap = new Map<string, OSFramework.Patterns.ButtonLoading.IButtonLoading>(); //buttonLoading.uniqueId -> ButtonLoading obj
+	const _buttonsLoadingMap = new Map<string, OSFramework.OSUI.Patterns.ButtonLoading.IButtonLoading>(); //buttonLoading.uniqueId -> ButtonLoading obj
 
 	/**
 	 * Function that will change the property of a given ButtonLoading.
@@ -11,23 +11,16 @@ namespace OutSystems.OSUI.Patterns.ButtonLoadingAPI {
 	 * @param {unknown} propertyValue Value that will be set to the property
 	 */
 	export function ChangeProperty(buttonLoadingId: string, propertyName: string, propertyValue: unknown): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.ButtonLoading.FailChangeProperty,
+			callback: () => {
+				const buttonLoading = GetButtonLoadingById(buttonLoadingId);
 
-		try {
-			const buttonLoading = GetButtonLoadingById(buttonLoadingId);
+				buttonLoading.changeProperty(propertyName, propertyValue);
+			},
+		});
 
-			buttonLoading.changeProperty(propertyName, propertyValue);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.ButtonLoading.FailChangeProperty;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -36,19 +29,19 @@ namespace OutSystems.OSUI.Patterns.ButtonLoadingAPI {
 	 * @export
 	 * @param {string} ButtonLoadingId ID of the ButtonLoading where the instance will be created.
 	 * @param {string} configs configurations for the ButtonLoading in JSON format.
-	 * @return {*}  {OSFramework.Patterns.IButtonLoading}
+	 * @return {*}  {OSFramework.OSUI.Patterns.IButtonLoading}
 	 */
 	export function Create(
 		buttonLoadingId: string,
 		configs: string
-	): OSFramework.Patterns.ButtonLoading.IButtonLoading {
+	): OSFramework.OSUI.Patterns.ButtonLoading.IButtonLoading {
 		if (_buttonsLoadingMap.has(buttonLoadingId)) {
 			throw new Error(
-				`There is already a ${OSFramework.GlobalEnum.PatternName.ButtonLoading} registered under id: ${buttonLoadingId}`
+				`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.ButtonLoading} registered under id: ${buttonLoadingId}`
 			);
 		}
 
-		const _newButtonLoading = new OSFramework.Patterns.ButtonLoading.ButtonLoading(
+		const _newButtonLoading = new OSFramework.OSUI.Patterns.ButtonLoading.ButtonLoading(
 			buttonLoadingId,
 			JSON.parse(configs)
 		);
@@ -65,35 +58,28 @@ namespace OutSystems.OSUI.Patterns.ButtonLoadingAPI {
 	 * @param {string} ButtonLoadingId
 	 */
 	export function Dispose(buttonLoadingId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.ButtonLoading.FailDispose,
+			callback: () => {
+				const buttonLoading = GetButtonLoadingById(buttonLoadingId);
 
-		try {
-			const buttonLoading = GetButtonLoadingById(buttonLoadingId);
+				buttonLoading.dispose();
 
-			buttonLoading.dispose();
+				_buttonsLoadingMap.delete(buttonLoading.uniqueId);
+			},
+		});
 
-			_buttonsLoadingMap.delete(buttonLoading.uniqueId);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.ButtonLoading.FailChangeProperty;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
 	 * Function that will return the Map with all the ButtonLoading instances at the page
 	 *
 	 * @export
-	 * @return {*}  {Map<string, OSFramework.Patterns.ButtonLoading.IButtonLoading>}
+	 * @return {*}  {Map<string, OSFramework.OSUI.Patterns.ButtonLoading.IButtonLoading>}
 	 */
 	export function GetAllButtonsLoading(): Array<string> {
-		return OSFramework.Helper.MapOperation.ExportKeys(_buttonsLoadingMap);
+		return OSFramework.OSUI.Helper.MapOperation.ExportKeys(_buttonsLoadingMap);
 	}
 
 	/**
@@ -101,14 +87,16 @@ namespace OutSystems.OSUI.Patterns.ButtonLoadingAPI {
 	 *
 	 * @export
 	 * @param {string} ButtonLoadingId ID of the ButtonLoading that will be looked for.
-	 * @return {*}  {OSFramework.Patterns.ButtonLoading.IButtonLoading}
+	 * @return {*}  {OSFramework.OSUI.Patterns.ButtonLoading.IButtonLoading}
 	 */
-	export function GetButtonLoadingById(buttonLoadingId: string): OSFramework.Patterns.ButtonLoading.IButtonLoading {
-		return OSFramework.Helper.MapOperation.FindInMap(
-			OSFramework.GlobalEnum.PatternName.ButtonLoading,
+	export function GetButtonLoadingById(
+		buttonLoadingId: string
+	): OSFramework.OSUI.Patterns.ButtonLoading.IButtonLoading {
+		return OSFramework.OSUI.Helper.MapOperation.FindInMap(
+			OSFramework.OSUI.GlobalEnum.PatternName.ButtonLoading,
 			buttonLoadingId,
 			_buttonsLoadingMap
-		) as OSFramework.Patterns.ButtonLoading.IButtonLoading;
+		) as OSFramework.OSUI.Patterns.ButtonLoading.IButtonLoading;
 	}
 
 	/**
@@ -116,13 +104,39 @@ namespace OutSystems.OSUI.Patterns.ButtonLoadingAPI {
 	 *
 	 * @export
 	 * @param {string} ButtonLoadingId ID of the ButtonLoading that will be initialized.
-	 * @return {*}  {OSFramework.Patterns.ButtonLoading.IButtonLoading}
+	 * @return {*}  {OSFramework.OSUI.Patterns.ButtonLoading.IButtonLoading}
 	 */
-	export function Initialize(buttonLoadingId: string): OSFramework.Patterns.ButtonLoading.IButtonLoading {
+	export function Initialize(buttonLoadingId: string): OSFramework.OSUI.Patterns.ButtonLoading.IButtonLoading {
 		const buttonLoading = GetButtonLoadingById(buttonLoadingId);
 
 		buttonLoading.build();
 
 		return buttonLoading;
+	}
+
+	/**
+	 * Function to register a provider callback
+	 *
+	 * @export
+	 * @param {string} dropdownId
+	 * @param {string} eventName
+	 * @param {OSFramework.OSUI.GlobalCallbacks.OSGeneric} callback
+	 * @return {*}  {string}
+	 */
+	export function RegisterCallback(
+		dropdownId: string,
+		eventName: string,
+		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
+	): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.ButtonLoading.FailRegisterCallback,
+			callback: () => {
+				const buttonLoading = this.GetButtonLoadingById(dropdownId);
+
+				buttonLoading.registerCallback(eventName, callback);
+			},
+		});
+
+		return result;
 	}
 }

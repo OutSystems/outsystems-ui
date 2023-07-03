@@ -1,4 +1,4 @@
-/*! Patterns - Content - Chat Message */
+/* Patterns - Content - Chat Message */
 ////
 /// @group Patterns-Chat_Message
 /// Patterns - Content - Chat Message
@@ -57,14 +57,15 @@
 	}
 }
 
-// IsRTL -------------------------------------------------------------------------
+// IsRTL --------------------------------------------------------------------
+///
 .is-rtl {
 	.chat {
 		&.right {
 			.chat {
 				&-photo {
-					margin-left: var(--space-base);
-					margin-right: var(--space-none);
+					margin-left: var(--space-none);
+					margin-right: var(--space-base);
 				}
 			}
 		}

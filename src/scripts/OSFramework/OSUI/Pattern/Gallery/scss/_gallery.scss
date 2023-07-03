@@ -1,0 +1,66 @@
+/* Patterns - Adaptive - Gallery */
+////
+/// @group Patterns-Gallery
+/// Patterns - Adaptive - Gallery
+
+///
+.osui-gallery {
+	&,
+	& > .list {
+		display: grid;
+		grid-gap: var(--gallery-gap);
+		grid-template-columns: repeat(var(--gallery-desktop-items), minmax(0, 1fr));
+	}
+
+	& > * {
+		margin-top: 0;
+	}
+
+	& > .list {
+		grid-column-end: calc(var(--gallery-desktop-items) + 1);
+		grid-column-start: 1;
+		overflow: initial;
+
+		.card,
+		.animate {
+			height: 100%;
+		}
+
+		.card-background {
+			-servicestudio-height: 100% !important;
+		}
+	}
+
+	& > img {
+		object-fit: cover;
+	}
+}
+
+// Responsive --------------------------------------------------------------------
+///
+.tablet {
+	.osui-gallery {
+		&,
+		& > .list {
+			grid-template-columns: repeat(var(--gallery-tablet-items), minmax(0, 1fr));
+		}
+
+		& > .list {
+			grid-column-end: calc(var(--gallery-tablet-items) + 1);
+		}
+	}
+}
+
+///
+.phone {
+	.osui-gallery {
+		&,
+		& > .list {
+			grid-template-columns: repeat(var(--gallery-phone-items), minmax(0, 1fr));
+		}
+
+		& > .list {
+			grid-column-end: calc(var(--gallery-phone-items) + 1);
+		}
+	}
+}

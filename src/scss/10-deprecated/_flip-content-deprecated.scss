@@ -1,4 +1,4 @@
-/*! Patterns - Content - Flip_Content */
+/* Patterns - Content - Flip_Content */
 /* Since this pattern is Deprecated, it should not appear at SASSDCS! */
 
 .flip-content {
@@ -33,7 +33,7 @@
 
 .flip-content-front {
 	position: relative;
-	z-index: 2;
+	z-index: var(--layer-local-tier-1);
 }
 
 .flip-content-back {

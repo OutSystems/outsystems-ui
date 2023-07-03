@@ -1,4 +1,4 @@
-/*! Widgets - Form */
+/* Widgets - Form */
 ////
 /// @group Widgets-Form
 /// Widgets - Form
@@ -35,6 +35,18 @@
 		}
 	}
 
+	& > span.input-text {
+		.form-control[class*='ThemeGrid_Width'].not-valid {
+			& + span.validation-message {
+				left: 0;
+			}
+
+			&.ThemeGrid_MarginGutter + span.validation-message {
+				left: 22px;
+			}
+		}
+	}
+
 	textarea[data-textarea] {
 		& + span {
 			&.validation-message {
@@ -53,8 +65,11 @@
 			bottom: 4px;
 		}
 
-		&.not-valid span.validation-message {
-			bottom: -19px;
+		&,
+		&.dropdown-expanded {
+			&.not-valid span.validation-message {
+				bottom: -19px;
+			}
 		}
 	}
 
@@ -96,7 +111,11 @@ span.validation-message {
 		left: 6px;
 	}
 
-	.form.OSFillParent .form-control[class*='ThemeGrid_Width'].not-valid + span.validation-message,
+	.form.OSFillParent span.input-text .form-control[class*='ThemeGrid_Width'].not-valid + span.validation-message,
+	.form
+		span.input-text
+		.form-control[class*='ThemeGrid_Width'].not-valid.ThemeGrid_MarginGutter
+		+ span.validation-message,
 	.form-control[class*='ThemeGrid_Width'].not-valid + span.validation-message {
 		left: 0;
 	}

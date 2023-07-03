@@ -1,4 +1,4 @@
-/*! Page Layout - Login */
+/* Page Layout - Login */
 ////
 /// @group Layout-Login
 /// Page Layout - Login
@@ -26,7 +26,7 @@
 		box-shadow: var(--shadow-l);
 		min-width: 435px;
 		padding: var(--space-xxl);
-		z-index: 2;
+		z-index: var(--layer-global-screen);
 	}
 }
 

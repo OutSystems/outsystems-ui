@@ -1,14 +1,16 @@
 {
     "entryPoints": [
-        "./src/scripts/OSFramework/*.ts",
+        "./src/scripts/OSFramework/OSUI/*.ts",
         "./src/scripts/OutSystems/OSUI/*.ts",
-        "./src/scripts/Providers/*.ts"
+        "./src/scripts/Providers/OSUI//*.ts"
     ],
     "entryPointStrategy": "expand",
     "includeVersion": true,
     "hideGenerator": true,
     "out": "./docs",
-    "sort": "source-order",
+    "sort": [
+        "source-order"
+    ],
     "umlClassDiagram": {
         "type": "detailed",
         "location": "local",

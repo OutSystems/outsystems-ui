@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Patterns.SidebarAPI {
-	const _sidebarMap = new Map<string, OSFramework.Patterns.Sidebar.ISidebar>();
+	const _sidebarMap = new Map<string, OSFramework.OSUI.Patterns.Sidebar.ISidebar>();
 	/**
 	 * Function that will change the property of a given Sidebar.
 	 *
@@ -10,23 +10,37 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	 * @param {*} propertyValue
 	 */
 	export function ChangeProperty(sidebarId: string, propertyName: string, propertyValue: unknown): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Sidebar.FailChangeProperty,
+			callback: () => {
+				const sidebar = GetSidebarById(sidebarId);
 
-		try {
-			const sidebar = GetSidebarById(sidebarId);
+				sidebar.changeProperty(propertyName, propertyValue);
+			},
+		});
 
-			sidebar.changeProperty(propertyName, propertyValue);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Sidebar.FailChangeProperty;
-		}
+		return result;
+	}
 
-		return JSON.stringify(responseObj);
+	/**
+	 * Function that will toggle the click on outside to close the sidebar.
+	 *
+	 * @export
+	 * @param {string} sidebarId
+	 * @param {boolean} closeOnOutSIdeClick
+	 * @return {*}  {string}
+	 */
+	export function ClickOutsideToClose(sidebarId: string, closeOnOutSIdeClick: boolean): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Sidebar.FailClickOutsideToClose,
+			callback: () => {
+				const sidebar = GetSidebarById(sidebarId);
+
+				sidebar.clickOutsideToClose(closeOnOutSIdeClick);
+			},
+		});
+
+		return result;
 	}
 
 	/**
@@ -36,23 +50,16 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	 * @param {string} sidebarId
 	 */
 	export function Close(sidebarId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Sidebar.FailClose,
+			callback: () => {
+				const sidebar = GetSidebarById(sidebarId);
 
-		try {
-			const sidebar = GetSidebarById(sidebarId);
+				sidebar.close();
+			},
+		});
 
-			sidebar.close();
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Sidebar.FailClose;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -61,16 +68,16 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	 * @export
 	 * @param {string} sidebarId
 	 * @param {string} configs
-	 * @return {*}  {OSFramework.Patterns.Sidebar.ISidebar}
+	 * @return {*}  {OSFramework.OSUI.Patterns.Sidebar.ISidebar}
 	 */
-	export function Create(sidebarId: string, configs: string): OSFramework.Patterns.Sidebar.ISidebar {
+	export function Create(sidebarId: string, configs: string): OSFramework.OSUI.Patterns.Sidebar.ISidebar {
 		if (_sidebarMap.has(sidebarId)) {
 			throw new Error(
-				`There is already a ${OSFramework.GlobalEnum.PatternName.Sidebar} registered under id: ${sidebarId}`
+				`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.Sidebar} registered under id: ${sidebarId}`
 			);
 		}
 
-		const _newSidebar = new OSFramework.Patterns.Sidebar.Sidebar(sidebarId, JSON.parse(configs));
+		const _newSidebar = new OSFramework.OSUI.Patterns.Sidebar.Sidebar(sidebarId, JSON.parse(configs));
 		_sidebarMap.set(sidebarId, _newSidebar);
 		return _newSidebar;
 	}
@@ -82,25 +89,18 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	 * @param {string} sidebarId
 	 */
 	export function Dispose(sidebarId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Sidebar.FailDispose,
+			callback: () => {
+				const sidebar = GetSidebarById(sidebarId);
 
-		try {
-			const sidebar = GetSidebarById(sidebarId);
+				sidebar.dispose();
 
-			sidebar.dispose();
+				_sidebarMap.delete(sidebarId);
+			},
+		});
 
-			_sidebarMap.delete(sidebarId);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Sidebar.FailDispose;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -110,7 +110,7 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	 * @return {*}  {Array<string>}
 	 */
 	export function GetAllSidebars(): Array<string> {
-		return OSFramework.Helper.MapOperation.ExportKeys(_sidebarMap);
+		return OSFramework.OSUI.Helper.MapOperation.ExportKeys(_sidebarMap);
 	}
 
 	/**
@@ -118,14 +118,14 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	 *
 	 * @export
 	 * @param {string} sidebarId
-	 * @return {*}  {OSFramework.Patterns.Sidebar.ISidebar}
+	 * @return {*}  {OSFramework.OSUI.Patterns.Sidebar.ISidebar}
 	 */
-	export function GetSidebarById(sidebarId: string): OSFramework.Patterns.Sidebar.ISidebar {
-		return OSFramework.Helper.MapOperation.FindInMap(
-			OSFramework.GlobalEnum.PatternName.Sidebar,
+	export function GetSidebarById(sidebarId: string): OSFramework.OSUI.Patterns.Sidebar.ISidebar {
+		return OSFramework.OSUI.Helper.MapOperation.FindInMap(
+			OSFramework.OSUI.GlobalEnum.PatternName.Sidebar,
 			sidebarId,
 			_sidebarMap
-		) as OSFramework.Patterns.Sidebar.ISidebar;
+		) as OSFramework.OSUI.Patterns.Sidebar.ISidebar;
 	}
 
 	/**
@@ -133,9 +133,9 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	 *
 	 * @export
 	 * @param {string} sidebarId
-	 * @return {*}  {OSFramework.Patterns.Sidebar.ISidebar}
+	 * @return {*}  {OSFramework.OSUI.Patterns.Sidebar.ISidebar}
 	 */
-	export function Initialize(sidebarId: string): OSFramework.Patterns.Sidebar.ISidebar {
+	export function Initialize(sidebarId: string): OSFramework.OSUI.Patterns.Sidebar.ISidebar {
 		const sidebar = GetSidebarById(sidebarId);
 
 		sidebar.build();
@@ -150,53 +150,42 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	 * @param {string} sidebarId
 	 */
 	export function Open(sidebarId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Sidebar.FailOpen,
+			callback: () => {
+				const sidebar = GetSidebarById(sidebarId);
 
-		try {
-			const sidebar = GetSidebarById(sidebarId);
+				sidebar.open();
+			},
+		});
 
-			sidebar.open();
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Sidebar.FailOpen;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
-	 * Function that will register a pattern callback.
+	 * Function to register a provider callback
 	 *
 	 * @export
 	 * @param {string} sidebarId
-	 * @param {OSFramework.Patterns.Sidebar.Callbacks.OSOnToggleEvent} callback
+	 * @param {string} eventName
+	 * @param {OSFramework.OSUI.GlobalCallbacks.OSGeneric} callback
+	 * @return {*} {string} Return Message Success or message of error info if it's the case.
 	 */
 	export function RegisterCallback(
 		sidebarId: string,
-		callback: OSFramework.Patterns.Sidebar.Callbacks.OSOnToggleEvent
+		eventName: string,
+		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
 	): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Sidebar.FailRegisterCallback,
+			callback: () => {
+				const _sidebarItem = this.GetSidebarById(sidebarId);
 
-		try {
-			const sidebar = GetSidebarById(sidebarId);
+				_sidebarItem.registerCallback(eventName, callback);
+			},
+		});
 
-			sidebar.registerCallback(callback);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Sidebar.FailRegisterCallback;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
@@ -206,22 +195,15 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	 * @param {string} sidebarId
 	 */
 	export function ToggleGestures(sidebarId: string, enableSwipe: boolean): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Sidebar.FailToggleSwipe,
+			callback: () => {
+				const sidebar = GetSidebarById(sidebarId);
 
-		try {
-			const sidebar = GetSidebarById(sidebarId);
+				sidebar.toggleGestures(enableSwipe);
+			},
+		});
 
-			sidebar.toggleGestures(enableSwipe);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Sidebar.FailToggleSwipe;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 }

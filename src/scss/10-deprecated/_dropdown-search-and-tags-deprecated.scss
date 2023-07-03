@@ -1,4 +1,4 @@
-/*! Patterns - Interaction - Dropdown Search and Tags, common styles */
+/* Patterns - Interaction - Dropdown Search and Tags, common styles */
 /* Since this pattern is Deprecated, it should not appear at SASSDCS! */
 
 .choices {
@@ -92,7 +92,7 @@
 			pointer-events: none;
 			position: absolute;
 			width: 1px;
-			z-index: -10;
+			z-index: var(--layer-global-negative);
 		}
 	}
 
@@ -162,7 +162,7 @@
 			top: 100%;
 			width: 100%;
 			word-break: break-all;
-			z-index: 3;
+			z-index: var(--layer-local-tier-3);
 
 			&.is-active {
 				display: block;

@@ -1,4 +1,4 @@
-/*! Patterns - Interaction - Input With Icon */
+/* Patterns - Interaction - Input With Icon */
 ////
 /// @group Patterns-Input_With_Icon
 /// Patterns - Interaction - Input With Icon
@@ -78,7 +78,7 @@
 	.input-with-icon {
 		.input-with-icon-content-icon {
 			padding-bottom: var(--space-m);
-			z-index: 1;
+			z-index: var(--layer-local-tier-1);
 		}
 	}
 }

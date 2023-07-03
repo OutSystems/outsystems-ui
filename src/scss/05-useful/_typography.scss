@@ -1,4 +1,4 @@
-/*! Usefull - Typography */
+/* Usefull - Typography */
 ////
 /// @group UsefullClasses-Typography
 /// Usefull - Typography
@@ -28,6 +28,16 @@
 ///
 .bold {
 	font-weight: var(--font-bold);
+}
+
+///
+.italic {
+	font-style: italic;
+}
+
+///
+.oblique {
+	font-style: oblique;
 }
 
 ///

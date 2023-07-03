@@ -1,4 +1,4 @@
-/*! Page Layout - Header */
+/* Page Layout - Header */
 ////
 /// @group Layout-Header
 /// Page Layout - Header
@@ -7,7 +7,7 @@
 .header {
 	background-color: var(--header-color);
 	box-shadow: 0 1px 5px 0 rgba(21, 24, 26, 0.1);
-	z-index: 100;
+	z-index: var(--layer-global-navigation);
 
 	// Service Studio Preview
 	& {
@@ -132,19 +132,27 @@
 		left: 0;
 		position: fixed;
 		top: 0;
-		z-index: 102;
+		z-index: var(--layer-global-navigation);
 	}
 }
 
 // IsRTL -------------------------------------------------------------------------
 ///
 .is-rtl {
-	.header-logo {
-		padding-left: var(--space-base);
-		padding-right: 0;
+	.header {
+		&-logo {
+			padding-left: var(--space-base);
+			padding-right: 0;
+		}
+
+		.header-content > [data-block*='ApplicationTitle'] .application-name {
+			margin-right: 0;
+			margin-left: var(--space-m);
+		}
 	}
 
-	.app-logo {
+	.app-logo,
+	.layout-side .app-logo {
 		margin-left: var(--space-s);
 		margin-right: 0;
 	}

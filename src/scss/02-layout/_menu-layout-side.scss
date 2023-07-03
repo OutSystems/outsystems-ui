@@ -1,4 +1,4 @@
-/*! Page Layout Side - Layout Side - Menu */
+/* Page Layout Side - Layout Side - Menu */
 ////
 /// @group Layout-Side-Menu
 /// Page Layout Side - Layout Side - Menu
@@ -17,7 +17,7 @@
 		position: fixed;
 		top: 0;
 		width: var(--side-menu-size);
-		z-index: 105;
+		z-index: var(--osui-menu-layer);
 	}
 }
 
@@ -36,7 +36,7 @@
 		width: var(--side-menu-size);
 
 		will-change: transform;
-		z-index: 105;
+		z-index: var(--osui-menu-layer);
 	}
 
 	&.menu-visible {
@@ -53,6 +53,7 @@
 	.layout-side {
 		&:not(.layout-native):not(.aside-overlay) .app-menu-content {
 			left: 0;
+			right: 0;
 		}
 
 		&.aside-expandable:not(.fixed-header) .app-menu-content {
@@ -108,9 +109,20 @@
 	&.tablet,
 	&.phone {
 		.app-menu-content {
-			left: auto;
 			right: calc(-1 * var(--side-menu-size));
 			transition: all 330ms ease-out;
+		}
+	}
+
+	&:not(.portrait) {
+		.layout-side {
+			&.layout-native {
+				&.aside-visible {
+					.app-menu-content {
+						right: 0;
+					}
+				}
+			}
 		}
 	}
 

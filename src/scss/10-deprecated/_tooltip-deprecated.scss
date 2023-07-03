@@ -1,4 +1,4 @@
-/*! Patterns - Content - Tooltip */
+/* Patterns - Content - Tooltip */
 /* Since this pattern is Deprecated, it should not appear at SASSDCS! */
 
 .tooltip {
@@ -7,7 +7,7 @@
 
 	// Service Studio Preview
 	& {
-		-servicestudio-z-index: 0;
+		-servicestudio-z-index: var(--layer-global-screen);
 	}
 
 	&-content {
@@ -25,7 +25,7 @@
 		padding: var(--space-s) var(--space-base);
 		position: absolute;
 		text-align: center;
-		z-index: 100;
+		z-index: var(--layer-global-elevated);
 
 		// Service Studio Preview
 		& {
@@ -181,7 +181,7 @@
 		position: fixed;
 		top: 0;
 		width: 100%;
-		z-index: 1;
+		z-index: var(--layer-local-tier-1);
 
 		// Service Studio Preview
 		& {

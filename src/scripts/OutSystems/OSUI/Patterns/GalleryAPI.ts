@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Patterns.GalleryAPI {
-	const _galleryMap = new Map<string, OSFramework.Patterns.Gallery.IGallery>(); //gallery.uniqueId -> Gallery obj
+	const _galleryMap = new Map<string, OSFramework.OSUI.Patterns.Gallery.IGallery>(); //gallery.uniqueId -> Gallery obj
 
 	/**
 	 * Function that will change the property of a given gallery.
@@ -12,23 +12,16 @@ namespace OutSystems.OSUI.Patterns.GalleryAPI {
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 	export function ChangeProperty(galleryId: string, propertyName: string, propertyValue: any): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Gallery.FailChangeProperty,
+			callback: () => {
+				const gallery = GetGalleryById(galleryId);
 
-		try {
-			const gallery = GetGalleryById(galleryId);
+				gallery.changeProperty(propertyName, propertyValue);
+			},
+		});
 
-			gallery.changeProperty(propertyName, propertyValue);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Gallery.FailChangeProperty;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 	/**
 	 * Create the new gallery instance and add it to the galleryMap
@@ -36,16 +29,16 @@ namespace OutSystems.OSUI.Patterns.GalleryAPI {
 	 * @export
 	 * @param {string} galleryId ID of the Gallery where the instance will be created.
 	 * @param {string} configs configurations for the Gallery in JSON format.
-	 * @return {*}  {OSFramework.Patterns.IGallery}
+	 * @return {*}  {OSFramework.OSUI.Patterns.IGallery}
 	 */
-	export function Create(galleryId: string, configs: string): OSFramework.Patterns.Gallery.IGallery {
+	export function Create(galleryId: string, configs: string): OSFramework.OSUI.Patterns.Gallery.IGallery {
 		if (_galleryMap.has(galleryId)) {
 			throw new Error(
-				`There is already a ${OSFramework.GlobalEnum.PatternName.Gallery} registered under id: ${galleryId}`
+				`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.Gallery} registered under id: ${galleryId}`
 			);
 		}
 
-		const _newGallery = new OSFramework.Patterns.Gallery.Gallery(galleryId, JSON.parse(configs));
+		const _newGallery = new OSFramework.OSUI.Patterns.Gallery.Gallery(galleryId, JSON.parse(configs));
 
 		_galleryMap.set(galleryId, _newGallery);
 
@@ -59,35 +52,28 @@ namespace OutSystems.OSUI.Patterns.GalleryAPI {
 	 * @param {string} galleryId
 	 */
 	export function Dispose(galleryId: string): string {
-		const responseObj = {
-			isSuccess: true,
-			message: ErrorCodes.Success.message,
-			code: ErrorCodes.Success.code,
-		};
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Gallery.FailDispose,
+			callback: () => {
+				const gallery = GetGalleryById(galleryId);
 
-		try {
-			const gallery = GetGalleryById(galleryId);
+				gallery.dispose();
 
-			gallery.dispose();
+				_galleryMap.delete(galleryId);
+			},
+		});
 
-			_galleryMap.delete(galleryId);
-		} catch (error) {
-			responseObj.isSuccess = false;
-			responseObj.message = error.message;
-			responseObj.code = ErrorCodes.Gallery.FailChangeProperty;
-		}
-
-		return JSON.stringify(responseObj);
+		return result;
 	}
 
 	/**
 	 * Fucntion that will return the Map with all the gallery instances at the page
 	 *
 	 * @export
-	 * @return {*}  {Map<string, OSFramework.Patterns.IGallery>}
+	 * @return {*}  {Map<string, OSFramework.OSUI.Patterns.IGallery>}
 	 */
 	export function GetAllGalleries(): Array<string> {
-		return OSFramework.Helper.MapOperation.ExportKeys(_galleryMap);
+		return OSFramework.OSUI.Helper.MapOperation.ExportKeys(_galleryMap);
 	}
 
 	/**
@@ -95,10 +81,10 @@ namespace OutSystems.OSUI.Patterns.GalleryAPI {
 	 *
 	 * @export
 	 * @param {string} galleryId ID of the Gallery that will be looked for.
-	 * @return {*}  {OSFramework.Patterns.IGallery}
+	 * @return {*}  {OSFramework.OSUI.Patterns.IGallery}
 	 */
-	export function GetGalleryById(galleryId: string): OSFramework.Patterns.Gallery.IGallery {
-		return OSFramework.Helper.MapOperation.FindInMap('Gallery', galleryId, _galleryMap);
+	export function GetGalleryById(galleryId: string): OSFramework.OSUI.Patterns.Gallery.IGallery {
+		return OSFramework.OSUI.Helper.MapOperation.FindInMap('Gallery', galleryId, _galleryMap);
 	}
 
 	/**
@@ -106,13 +92,39 @@ namespace OutSystems.OSUI.Patterns.GalleryAPI {
 	 *
 	 * @export
 	 * @param {string} galleryId ID of the Gallery that will be initialized.
-	 * @return {*}  {OSFramework.Patterns.GalleryIGallery}
+	 * @return {*}  {OSFramework.OSUI.Patterns.GalleryIGallery}
 	 */
-	export function Initialize(galleryId: string): OSFramework.Patterns.Gallery.IGallery {
+	export function Initialize(galleryId: string): OSFramework.OSUI.Patterns.Gallery.IGallery {
 		const gallery = GetGalleryById(galleryId);
 
 		gallery.build();
 
 		return gallery;
+	}
+
+	/**
+	 * Function to register a provider callback
+	 *
+	 * @export
+	 * @param {string} dropdownId
+	 * @param {string} eventName
+	 * @param {OSFramework.OSUI.GlobalCallbacks.OSGeneric} callback
+	 * @return {*}  {string}
+	 */
+	export function RegisterCallback(
+		dropdownId: string,
+		eventName: string,
+		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
+	): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Gallery.FailRegisterCallback,
+			callback: () => {
+				const gallery = this.GetGalleryById(dropdownId);
+
+				gallery.registerCallback(eventName, callback);
+			},
+		});
+
+		return result;
 	}
 }

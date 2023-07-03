@@ -1,0 +1,84 @@
+/* Patterns - Interaction - DropdownTags */
+////
+/// @group Patterns-DropdownTags
+/// Patterns - Interaction - DropdownTags
+
+///
+.osui-dropdown-tags {
+	// If not valid
+	&.osui-dropdown--not-valid {
+		// Virtual Select provider
+		.vscomp-toggle-button {
+			border-color: var(--color-error);
+		}
+	}
+
+	// Service Studio Preview
+	&-ss-preview {
+		-servicestudio-background-color: var(--color-neutral-0);
+		-servicestudio-border-radius: var(--border-radius-soft);
+		-servicestudio-border: var(--border-size-s) solid var(--color-neutral-5);
+		-servicestudio-color: var(--color-neutral-3);
+		-servicestudio-display: inline-block;
+		-servicestudio-height: 40px;
+		-servicestudio-min-width: 180px;
+		-servicestudio-padding-left: var(--space-s);
+		-servicestudio-position: relative;
+		-servicestudio-vertical-align: middle;
+		-servicestudio-width: 100%;
+
+		& > .icon {
+			-servicestudio-color: var(--color-neutral-7);
+			-servicestudio-font-size: var(--font-size-h4);
+			-servicestudio-position: absolute;
+			-servicestudio-right: 16px;
+			-servicestudio-top: 8px;
+		}
+
+		& > div {
+			-servicestudio-background-color: var(--color-neutral-3);
+			-servicestudio-border-radius: 30px;
+			-servicestudio-color: var(--color-neutral-7);
+			-servicestudio-display: inline-block;
+			-servicestudio-font-size: var(--font-size-s);
+			-servicestudio-font-weight: var(--font-semi-bold);
+			-servicestudio-height: 30px;
+			-servicestudio-padding: 5px 35px 5px 10px;
+			-servicestudio-position: relative;
+			-servicestudio-top: 50%;
+			-servicestudio-transform: translateY(-50%);
+
+			span {
+				-servicestudio-margin: var(--space-none);
+			}
+
+			& > .icon {
+				-servicestudio-background-color: var(--color-neutral-7);
+				-servicestudio-border-radius: 100%;
+				-servicestudio-color: var(--color-neutral-0);
+				-servicestudio-display: block;
+				-servicestudio-font-size: var(--font-size-s);
+				-servicestudio-height: 15px;
+				-servicestudio-line-height: 1;
+				-servicestudio-margin: 0;
+				-servicestudio-position: absolute;
+				-servicestudio-right: 10px;
+				-servicestudio-text-align: center;
+				-servicestudio-top: 50%;
+				-servicestudio-transform: translateY(-50%);
+				-servicestudio-width: 15px;
+
+				&:before {
+					-servicestudio-content: '˟';
+					-servicestudio-display: inline-block;
+					-servicestudio-font-size: var(--font-size-h3);
+					-servicestudio-height: 20px;
+					-servicestudio-left: 50%;
+					-servicestudio-position: absolute;
+					-servicestudio-top: 50%;
+					-servicestudio-transform: translate(-50%, -50%);
+				}
+			}
+		}
+	}
+}

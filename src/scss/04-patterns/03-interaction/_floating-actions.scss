@@ -1,10 +1,12 @@
-/*! Patterns - Interaction - Floating Actions */
+/* Patterns - Interaction - Floating Actions */
 ////
 /// @group Patterns-Floating_Actions
 /// Patterns - Interaction - Floating Actions
 
 ///
 .floating {
+	--osui-floating-actions-layer: var(--layer-global-elevated);
+
 	&-actions-wrapper {
 		align-items: flex-end;
 		bottom: 0;
@@ -14,7 +16,7 @@
 		position: fixed;
 		right: 0;
 		will-change: transform, opacity;
-		z-index: 104;
+		z-index: var(--osui-floating-actions-layer);
 
 		&:not(.is--open) {
 			pointer-events: none;
@@ -153,7 +155,7 @@
 		top: 0;
 		transition: opacity 180ms ease-out;
 		width: 100vw;
-		z-index: 103;
+		z-index: var(--osui-floating-actions-layer);
 
 		&.is--open {
 			opacity: 1;

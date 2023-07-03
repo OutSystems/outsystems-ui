@@ -1,4 +1,4 @@
-/*! Patterns - Interaction - DatePicker */
+/* Patterns - Interaction - DatePicker */
 /* Since this pattern is Deprecated, it should not appear at SASSDCS! */
 
 .pika {
@@ -18,7 +18,7 @@
 		&.is-bound {
 			box-shadow: var(--shadow-s);
 			position: absolute !important;
-			z-index: 151;
+			z-index: var(--layer-global-elevated);
 		}
 
 		&.is-hidden {
@@ -169,7 +169,7 @@
 		padding: var(--space-none);
 		position: relative;
 		width: 32px;
-		z-index: 10;
+		z-index: var(--layer-local-tier-1);
 
 		&:hover {
 			background-color: var(--color-neutral-3);
@@ -331,7 +331,7 @@ input.OSFillParent.calendar-input {
 		position: absolute;
 		right: 0;
 		top: 0;
-		z-index: 100;
+		z-index: var(--laber-global-elevated);
 
 		&.is--open {
 			display: block;
@@ -373,7 +373,7 @@ input.OSFillParent.calendar-input {
 			height: auto;
 			overflow: visible;
 			width: auto;
-			z-index: 100;
+			z-index: var(--laber-global-elevated);
 		}
 	}
 
@@ -386,7 +386,7 @@ input.OSFillParent.calendar-input {
 
 .portal-class ~ .pika-single.is-bound {
 	/* Fix datepicker when inside Popup Widget */
-	z-index: 251;
+	z-index: calc(var(--layer-above) + var(--popup-layer));
 }
 
 // Responsive --------------------------------------------------------------------

@@ -1,4 +1,4 @@
-/*! Usefull - a11y (Accessibility) */
+/* Usefull - a11y (Accessibility) */
 ////
 /// @group Patterns-a11y
 /// Usefull - a11y (Accessibility)
@@ -31,7 +31,7 @@
 	position: absolute;
 	text-transform: uppercase;
 	top: 10px;
-	z-index: 200;
+	z-index: var(--layer-global-instant-interaction);
 
 	&[data-showskipcontent='false'] {
 		display: none;

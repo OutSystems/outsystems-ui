@@ -1,0 +1,578 @@
+/* VirtualSelect Library Core Styles */
+
+// Set the transform values to checkBox Checked Icon
+@mixin CheckBoxCheckIconTransform {
+	transform: rotate(45deg) translate(3px, -3px);
+}
+@mixin IsRTL_CheckBoxCheckIconTransform {
+	transform: rotate(45deg) translate(-2px, 3px);
+}
+
+// Set the transform values to checkBox Checked Icon
+@mixin CheckBoxCheckIconTransform {
+	transform: rotate(45deg) translate(3px, -3px);
+}
+@mixin IsRTL_CheckBoxCheckIconTransform {
+	transform: rotate(45deg) translate(-2px, 3px);
+}
+
+// VirtualSelect overriding styles
+// Parent wrapper container
+.vscomp {
+	&-ele {
+		max-width: initial;
+
+		&.pop-comp-active {
+			.vscomp-toggle-button {
+				border-color: var(--color-primary);
+
+				&:after {
+					color: var(--color-primary);
+					transform: rotate(180deg) translateY(50%);
+				}
+			}
+		}
+		.vscomp {
+			&-clear-icon {
+				&::after,
+				&::before {
+					background-color: inherit;
+					left: 50%;
+					transform: translateX(-50%);
+				}
+			}
+		}
+	}
+
+	&-ele .vscomp-clear-icon:after,
+	&-search-clear:after {
+		align-items: center;
+		color: #91999e;
+		content: '\f00d';
+		display: flex;
+		font: normal normal normal 13px/1 FontAwesome;
+		height: 100%;
+		justify-content: center;
+		position: absolute;
+		text-indent: 0;
+		top: 0;
+		width: 24px;
+	}
+
+	&-clear-button:hover {
+		background-color: var(--color-neutral-4);
+
+		.vscomp-clear-icon {
+			&::after,
+			&::before {
+				background-color: transparent;
+				color: var(--color-neutral-7);
+			}
+		}
+	}
+
+	&-search-clear:hover:after {
+		background-color: transparent;
+		color: var(--color-neutral-7);
+	}
+}
+
+// Wrapper container
+.vscomp-wrapper {
+	&.focused,
+	&:focus {
+		.vscomp-toggle-button {
+			box-shadow: none;
+		}
+
+		.checkbox-icon {
+			border-color: var(--color-neutral-6);
+		}
+	}
+
+	&.has-value {
+		&.show-value-as-tags {
+			.vscomp-toggle-button {
+				padding-left: var(--space-s);
+			}
+
+			.vscomp-clear-button {
+				right: var(--space-xl);
+			}
+		}
+		.vscomp-value {
+			margin-right: var(--space-m);
+		}
+	}
+
+	&:not(.has-value) {
+		.vscomp-value {
+			color: var(--color-neutral-7);
+			opacity: 1;
+		}
+	}
+
+	&.multiple {
+		.vscomp-search-container {
+			padding-left: var(--space-base);
+
+			&:before {
+				display: none;
+			}
+		}
+
+		.vscomp-option {
+			&.selected {
+				.checkbox-icon {
+					background-color: var(--color-primary);
+					border-color: var(--color-primary);
+
+					&:after {
+						border-color: var(--color-neutral-0);
+						border-left-color: transparent;
+						border-top-color: transparent;
+						height: 80%;
+						opacity: 1;
+						@include CheckBoxCheckIconTransform;
+						width: 45%;
+					}
+				}
+			}
+
+			.vscomp-option-text {
+				flex: 1;
+				width: auto;
+			}
+		}
+	}
+
+	&:not(.multiple) {
+		.vscomp-option.group-title {
+			height: var(--space-xl) !important; // !important required to override the element style in html
+		}
+	}
+
+	&.show-value-as-tags {
+		.vscomp-toggle-button {
+			height: auto;
+			min-height: var(--vscomp-toogle-btn-height);
+			padding: var(--space-xs) var(--space-xxl) var(--space-none) var(--space-base);
+		}
+
+		.vscomp-value-tag {
+			background-color: var(--color-neutral-3);
+			border: var(--border-size-none);
+			color: var(--color-neutral-7);
+			font-size: var(--font-size-xs);
+			font-weight: var(--font-semi-bold);
+			padding: 6px 35px 6px 10px;
+			position: relative;
+
+			.vscomp-value-tag-content {
+				width: 100%;
+			}
+
+			.vscomp-value-tag-clear-button {
+				background-color: var(--color-neutral-7);
+				border-radius: 100%;
+				height: 14px;
+				position: absolute;
+				right: 10px;
+				width: 14px;
+
+				.vscomp-clear-icon {
+					height: 12px;
+					left: var(--space-none);
+					position: relative;
+					top: var(--space-none);
+					width: 12px;
+
+					&:before,
+					&:after {
+						color: var(--color-neutral-4);
+					}
+				}
+			}
+		}
+		.vscomp-clear-button {
+			margin-top: 0;
+			top: 50%;
+			transform: translateY(-50%);
+		}
+	}
+
+	// When Show as Popup (mobile behaviour)
+	&.show-as-popup {
+		.vscomp-dropbox {
+			border: none;
+
+			&-container {
+				background-color: var(--overlay-background);
+				// The !important is needed in order to overwrite the inline style added by library!
+				z-index: var(--layer-global-elevated) !important;
+			}
+
+			.vscomp-search-container {
+				height: 48px;
+			}
+
+			.vscomp-search-input {
+				height: inherit;
+			}
+		}
+	}
+
+	// RTL Text
+	&.text-direction-rtl {
+		&.multiple {
+			.vscomp-search-container {
+				padding-left: var(--space-s);
+			}
+
+			.vscomp-option {
+				&.selected {
+					.checkbox-icon {
+						&:after {
+							@include IsRTL_CheckBoxCheckIconTransform;
+						}
+					}
+				}
+			}
+		}
+
+		&:not(.multiple) {
+			.vscomp-search-container {
+				padding: var(--space-none) var(--space-xl) var(--space-none) var(--space-s);
+
+				&:before {
+					left: auto;
+					right: var(--space-base);
+				}
+			}
+		}
+
+		&.show-value-as-tags {
+			&.has-value {
+				.vscomp-clear-button {
+					left: var(--space-l);
+				}
+			}
+
+			.vscomp-value-tag {
+				padding: 6px 10px 6px 35px;
+			}
+
+			.vscomp-value-tag-clear-button {
+				left: 10px;
+				right: auto;
+			}
+		}
+
+		.vscomp-toggle-button {
+			padding: var(--space-xs) var(--space-base) var(--space-xs) var(--space-xl);
+
+			&:after {
+				left: var(--space-base);
+				right: auto;
+			}
+		}
+
+		.checkbox-icon {
+			margin-left: var(--space-s);
+
+			&.checked {
+				&:after {
+					@include IsRTL_CheckBoxCheckIconTransform;
+				}
+			}
+		}
+	}
+
+	&:not(.text-direction-rtl) {
+		&.has-value {
+			.vscomp-clear-button {
+				right: var(--space-xl);
+			}
+		}
+	}
+
+	// Checkbox
+	.checkbox-icon {
+		background-color: var(--color-neutral-0);
+		border-radius: var(--border-radius-soft);
+		border: var(--border-size-s) solid var(--color-neutral-5);
+		height: 16px;
+		margin-right: var(--space-s);
+		overflow: visible;
+		transition: background-color 0.25s ease;
+		width: 16px;
+
+		&:after {
+			backface-visibility: hidden;
+			border-color: transparent;
+			height: 85%;
+			opacity: 0;
+			transition: opacity 0.25s ease;
+			width: 40%;
+		}
+
+		&.checked {
+			background-color: var(--color-primary);
+			border-color: var(--color-primary);
+
+			&:after {
+				border-color: var(--color-neutral-0);
+				border-left-color: transparent;
+				border-top-color: transparent;
+				height: 80%;
+				opacity: 1;
+				@include CheckBoxCheckIconTransform;
+				width: 45%;
+			}
+		}
+	}
+}
+
+// Top part - Select to open dropdown
+.vscomp-toggle-button {
+	--vscomp-toogle-btn-arrow-size: 22px;
+	--vscomp-toogle-btn-height: 40px;
+	--vscomp-toogle-btn-mobile-height: 48px;
+
+	background-color: var(--color-neutral-0);
+	border-radius: var(--border-radius-soft);
+	border: var(--border-size-s) solid var(--color-neutral-5);
+	color: var(--color-neutral-9);
+	cursor: pointer;
+	display: inline-flex;
+	height: var(--vscomp-toogle-btn-height);
+	line-height: var(--vscomp-toogle-btn-height);
+	min-width: 180px;
+	padding: var(--space-xs) var(--space-xl) var(--space-xs) var(--space-base);
+	position: relative;
+	transition: height, border-color 0.25s ease;
+	vertical-align: middle;
+	width: 100%;
+
+	// Create new arrow for all dropdown types
+	&:after {
+		color: var(--color-neutral-7);
+		content: '';
+		font: normal normal normal var(--vscomp-toogle-btn-arrow-size) / 1 FontAwesome;
+		position: absolute;
+		right: var(--space-base);
+		top: 50%;
+		transform: translateY(-50%);
+		transform-origin: center;
+		transition: all 0.25s ease;
+	}
+
+	&:hover {
+		border-color: var(--color-neutral-6);
+	}
+}
+
+// Container with the selected value(s)
+.vscomp-value {
+	font-size: var(--font-size-s);
+}
+
+// Default dropdown arrow
+.vscomp-arrow {
+	display: none;
+}
+
+// Bottom part - Parent wrapper opptions container
+.pop-comp-wrapper {
+	box-shadow: none;
+}
+
+// Wrapper options container
+.vscomp-dropbox {
+	background-color: var(--color-neutral-0);
+	border-radius: var(--border-radius-soft);
+	border: var(--border-size-s) solid var(--color-neutral-5);
+	overflow: hidden;
+
+	// This is an override in order to fix an issue when inside a AlignCenter pattern
+	.vscomp-dropbox-close-button {
+		display: none;
+	}
+}
+
+// Opptions container input search wrapper
+.vscomp-search-container {
+	border-bottom: var(--border-size-s) solid var(--color-neutral-5);
+	padding: var(--space-none) var(--space-s) var(--space-none) var(--space-xl);
+	position: relative;
+
+	&:before {
+		align-items: center;
+		color: var(--color-neutral-7);
+		content: '';
+		display: flex;
+		font: normal normal normal 14px/1 FontAwesome;
+		height: 100%;
+		left: var(--space-base);
+		position: absolute;
+		top: 0;
+	}
+
+	.vscomp-search-clear {
+		border-radius: var(--border-radius-circle);
+		color: var(--color-neutral-7);
+		display: table;
+		font-size: var(--font-size-h5);
+		font-weight: var(--font-semi-bold);
+		height: 24px;
+		line-height: 1;
+		text-align: center;
+		width: 24px;
+
+		/* Hide text from provider div in order to keep consistency on styles */
+		text-indent: 100%;
+		white-space: nowrap;
+		overflow: hidden;
+
+		// Fix vertical alignemnt differences due to system fonts usage
+		.osx &,
+		.ios & {
+			line-height: 1.1;
+		}
+
+		&:hover {
+			background-color: var(--color-neutral-4);
+		}
+	}
+}
+
+// Opptions container input search
+.vscomp-search-input {
+	font-size: var(--font-size-s);
+
+	&::placeholder {
+		color: var(--color-neutral-9);
+		opacity: 0.5;
+	}
+}
+
+// Options Container
+.vscomp-options-container {
+	&::-webkit-scrollbar {
+		width: 5px;
+	}
+
+	&::-webkit-scrollbar-track {
+		background: var(--color-neutral-4);
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background-color: var(--color-neutral-6);
+	}
+}
+
+// Option Item text
+.vscomp-option-text {
+	color: var(--color-neutral-9);
+	display: inline-block;
+	font-size: var(--font-size-s);
+
+	// To keep vertical align using inline-block.
+	// This is used so that the text can  get ellipsis if too long
+	* {
+		vertical-align: middle;
+	}
+}
+
+// Option Item
+.vscomp-option {
+	align-content: center;
+	background-color: var(--color-neutral-0);
+	transition: background-color 0.25s ease;
+
+	&.focused,
+	&.selected {
+		background-color: var(--color-neutral-3);
+	}
+
+	&.focused {
+		background-color: var(--color-neutral-2);
+	}
+
+	// Style dropdown group title
+	&.group-title {
+		.vscomp-option-text {
+			opacity: 1;
+			// Style group title in single select dropdown
+			// this selector is necessary so that the style is not applied when the option has a checkbox
+			&:only-child {
+				color: var(--color-neutral-7);
+				font-size: var(--font-size-label);
+				font-weight: var(--font-semi-bold);
+				text-transform: uppercase;
+			}
+		}
+	}
+}
+
+// Option Item description
+.vscomp-option-description {
+	color: var(--color-neutral-7);
+	font-size: var(--font-size-label);
+	margin-top: 1px;
+}
+
+// Accessibility -----------------------------------------------------------------
+///
+.has-accessible-features {
+	.vscomp-toggle-button {
+		border-color: var(--color-neutral-7);
+		color: var(--color-neutral-10);
+
+		&:after {
+			color: var(--color-neutral-9);
+		}
+	}
+}
+
+// Responsive --------------------------------------------------------------------
+///
+.phone,
+.tablet {
+	.vscomp-wrapper {
+		&.show-value-as-tags {
+			.vscomp-toggle-button {
+				min-height: var(--vscomp-toogle-btn-mobile-height);
+			}
+		}
+	}
+
+	.vscomp-toggle-button {
+		height: var(--vscomp-toogle-btn-mobile-height);
+	}
+}
+
+// Popup Mode --------------------------------------------------------
+body {
+	&.vscomp-popup-active {
+		.vscomp-wrapper:not(.focused) {
+			z-index: var(--layer-global-screen);
+		}
+
+		.vscomp-wrapper {
+			z-index: var(--layer-global-off-canvas);
+		}
+	}
+}
+
+// Layer Library Overrides
+.pop-comp-arrow,
+.pop-comp-wrapper,
+.vscomp-wrapper.keep-always-open .vscomp-dropbox-container {
+	z-index: var(--layer-local-tier-1);
+}
+
+.pop-comp-content,
+.vscomp-dropbox-container {
+	z-index: var(--layer-local-tier-2);
+}

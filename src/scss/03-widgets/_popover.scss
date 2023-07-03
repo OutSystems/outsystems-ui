@@ -1,4 +1,4 @@
-/*! Widgets - Popover */
+/* Widgets - Popover */
 ////
 /// @group Widgets-Popover
 /// Widgets - Popover
@@ -24,7 +24,7 @@
 			max-width: 350px;
 			min-width: auto;
 			padding: var(--space-base);
-			z-index: 105;
+			z-index: var(--layer-global-elevated);
 		}
 	}
 }

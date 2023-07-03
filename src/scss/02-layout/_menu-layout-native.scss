@@ -1,4 +1,4 @@
-/*! Page Layout - Layout Native - Menu */
+/* Page Layout - Layout Native - Menu */
 ////
 /// @group Layout-Native-Menu
 /// Page Layout - Layout Native - Menu
@@ -29,29 +29,33 @@
 // Responsice --------------------------------------------------------------------
 ///
 .desktop {
+	.layout {
+		&.layout-native {
+			&.layout-side {
+				&.aside-expandable {
+					.app-menu-content {
+						padding-top: calc(var(--header-size) + var(--header-size-content) + var(--os-safe-area-top));
+					}
+
+					&.hide-header-on-scroll:not(.header-is--visible) {
+						.app-menu-content {
+							padding-top: var(--header-size-content);
+						}
+					}
+				}
+			}
+		}
+	}
+
 	.layout-native {
 		&.aside {
 			&-visible,
 			&-expandable {
 				.app-menu-content {
 					box-shadow: var(--shadow-m);
-					z-index: 110;
+					z-index: var(--osui-menu-layer);
 				}
 			}
-		}
-
-		&.layout-side {
-			&.aside-expandable {
-				.app-menu-content {
-					padding-top: calc(var(--header-size) + var(--header-size-content) + var(--os-safe-area-top));
-				}
-			}
-		}
-	}
-
-	.layout-side.layout-native.aside-expandable.hide-header-on-scroll:not(.header-is--visible) {
-		.app-menu-content {
-			padding-top: var(--header-size-content);
 		}
 	}
 }
@@ -90,7 +94,7 @@
 					.app-menu-content {
 						box-shadow: var(--shadow-m);
 						left: 0;
-						z-index: 110;
+						z-index: var(--osui-menu-layer);
 					}
 				}
 			}

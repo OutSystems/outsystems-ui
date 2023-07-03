@@ -1,0 +1,105 @@
+/* Patterns - Numbers - ProgressCircle */
+////
+/// @group Patterns-ProgressCircle
+/// Patterns - Numbers - ProgressCircle
+
+[data-block*='ProgressCircle'] {
+	display: inline-block;
+}
+
+///
+.osui-progress-circle {
+	align-items: center;
+	display: flex;
+	height: var(--progress-circle-size);
+	position: relative;
+	width: var(--progress-circle-size);
+
+	&__container {
+		display: inline-block;
+		height: var(--circle-size);
+		margin: 0 auto;
+		position: relative;
+		width: var(--circle-size);
+		z-index: var(--layer-global-screen);
+
+		> div {
+			display: block;
+			min-height: inherit;
+			min-width: inherit;
+		}
+
+		&__progress-path,
+		&__trail-path {
+			cx: 50%;
+			cy: 50%;
+			fill: transparent;
+			left: 0;
+			position: absolute;
+			r: var(--radius);
+			stroke-width: var(--thickness);
+			top: 0;
+			transform: rotate(-90deg);
+			transform-origin: center;
+		}
+
+		&__progress-path {
+<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/Progress/Circle/scss/_progresscircle.scss
+			stroke: var(--progress-color, var(--color-primary));
+========
+			stroke: var(--progress-circle-gradient-url, var(--progress-color, var(--color-primary)));
+>>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/Progress/Circle/scss/_progresscircle.scss
+			stroke-dasharray: var(--stroke-dasharray);
+			stroke-dashoffset: var(--stroke-dashoffset);
+			stroke-linecap: var(--shape);
+			transition: stroke-dashoffset 0;
+
+			&.animate {
+				&-entrance,
+				&-progress-change {
+					transition-duration: 0.35s;
+				}
+
+				&-entrance {
+					transition-delay: 0.5s;
+				}
+			}
+		}
+
+		&__trail-path {
+			stroke: var(--trail-color, var(--color-neutral-3));
+		}
+	}
+
+	&__content {
+		left: 50%;
+		position: absolute;
+		text-align: center;
+		top: 50%;
+		transform: translate(-50%, -50%);
+		width: 80%;
+		z-index: var(--layer-local-tier-1);
+	}
+
+	.osui-inline-svg {
+		display: inline-flex;
+		// the !important is used to override the inline style
+		height: var(--circle-size) !important;
+		position: relative;
+		width: var(--circle-size);
+
+		svg {
+			height: var(--circle-size);
+			width: var(--circle-size);
+		}
+	}
+}
+
+// IsRTL
+.is-rtl {
+	.osui-progress-circle {
+		.svg-wrapper {
+			transform: scaleX(-1);
+		}
+	}
+}

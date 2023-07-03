@@ -1,4 +1,4 @@
-/*! Deprecated block preview */
+/* Deprecated block preview */
 /* 
 	Notes:
 	- This section contains several styles that style the deprecated message on the deprecated blocks
@@ -24,5 +24,5 @@
 	-servicestudio-top: -9px;
 	-servicestudio-height: 9px;
 	-servicestudio-width: 72px;
-	-servicestudio-z-index: 3;
+	-servicestudio-z-index: var(--layer-local-tier-3);
 }

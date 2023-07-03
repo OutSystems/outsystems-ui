@@ -1,4 +1,4 @@
-/*! Patterns - Content - Submenu */
+/* Patterns - Content - Submenu */
 /* Since this pattern is Deprecated, it should not appear at SASSDCS! */
 
 .submenu {
@@ -130,7 +130,7 @@
 		top: calc(100% + var(--space-xs));
 		transform: translateY(-8px);
 		transition: all 130ms ease-out;
-		z-index: 100;
+		z-index: var(--layer-global-elevated);
 
 		// Service Studio Preview
 		& {

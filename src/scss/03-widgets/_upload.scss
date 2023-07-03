@@ -1,4 +1,4 @@
-/*! Widgets - Upload */
+/* Widgets - Upload */
 ////
 /// @group Widgets-Upload
 /// Widgets - Upload
@@ -42,5 +42,16 @@
 		line-height: 1;
 		margin-right: var(--space-base);
 		width: auto;
+	}
+}
+
+// IsRTL --------------------------------------------------------------------
+///
+.is-rtl {
+	[data-upload] {
+		[data-icon] {
+			margin-left: var(--space-base);
+			margin-right: var(--space-none);
+		}
 	}
 }

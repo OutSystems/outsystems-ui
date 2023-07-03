@@ -1,4 +1,4 @@
-/*! Page Layout - Menu */
+/* Page Layout - Menu */
 ////
 /// @group Layout-Menu
 /// Page Layout - Menu
@@ -26,7 +26,7 @@
 	transition: opacity 130ms ease-in;
 	width: 100vw;
 	will-change: opacity;
-	z-index: 104;
+	z-index: calc(var(--osui-menu-layer) - var(--layer-local-tier-1));
 
 	// Service Studio Preview
 	& {
@@ -73,7 +73,7 @@
 			-servicestudio-height: 100%;
 			-servicestudio-position: fixed;
 			-servicestudio-width: var(--side-menu-size);
-			-servicestudio-z-index: 105;
+			-servicestudio-z-index: var(--layer-global-navigation);
 		}
 
 		& > div {
@@ -145,7 +145,7 @@
 		width: var(--side-menu-size);
 
 		will-change: transform;
-		z-index: 105;
+		z-index: var(--osui-menu-layer);
 	}
 
 	// .menu-visible is a class added into the .layout element
@@ -210,6 +210,19 @@
 // IsRTL -------------------------------------------------------------------------
 ///
 .is-rtl {
+	.app-menu-content {
+		left: auto;
+		right: calc(-1 * var(--side-menu-size));
+	}
+
+	.menu-visible {
+		.app-menu-content {
+			right: 0;
+			-webkit-transform: translateX(0) translateZ(0);
+			transform: translateX(0) translateZ(0);
+		}
+	}
+
 	&.tablet,
 	&.phone {
 		.menu-visible .app-menu-content {

@@ -1,4 +1,4 @@
-/*! Widgets - Popup */
+/* Widgets - Popup */
 ////
 /// @group Widgets-Popup
 /// Widgets - Popup
@@ -13,7 +13,7 @@
 
 ///
 [data-popup-backdrop] {
-	z-index: 250;
+	z-index: var(--osui-popup-layer);
 }
 
 ///

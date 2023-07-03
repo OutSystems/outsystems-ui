@@ -1,0 +1,70 @@
+/* Patterns - Interaction - MonthPicker */
+////
+/// @group Patterns-MonthPicker
+/// Patterns - Interaction - MonthPicker
+
+/// Import Flatpickr library styles
+@import '../../../../../Providers/OSUI/Monthpicker/Flatpickr/scss/_flatpickr.scss';
+
+@import 'monthpicker_ss_preview_image';
+
+///
+.osui-monthpicker {
+	// Service Studio Preview Container Styles
+	&-ss-preview {
+		display: none;
+
+		// Service Studio Preview
+		& {
+			-servicestudio-background-image: $monthpicker_img_base64;
+			-servicestudio-background-position: top center;
+			-servicestudio-background-repeat: no-repeat;
+			-servicestudio-background-size: contain;
+			-servicestudio-display: inline-block;
+			-servicestudio-height: 0;
+			-servicestudio-margin-left: -3px;
+			-servicestudio-margin-top: 2px;
+			-servicestudio-max-width: 320px;
+			-servicestudio-overflow: hidden;
+			-servicestudio-padding-top: min(250px, 100%);
+			-servicestudio-position: relative;
+			-servicestudio-width: 100%;
+			-servicestudio-z-index: var(--layer-local-tier-1);
+
+			& + .placeholder-ss-preview {
+				-servicestudio-height: 0;
+				-servicestudio-opacity: 0;
+				-servicestudio-overflow: hidden;
+				-servicestudio-width: 100%;
+			}
+		}
+	}
+
+	.not-valid + .input,
+	.not-valid + .flatpickr-mobile {
+		border-color: var(--color-error);
+	}
+
+	input {
+		// Hide the platform input which is set as hidden by the library and we're change it into the expected type, however we do not want it visible since library will add a clone to better deal with the selected dates.
+		&:first-of-type {
+			display: none !important;
+		}
+
+		// Disable states for Datepicker
+		&[disabled] + input {
+			background-color: var(--color-neutral-2);
+			border: var(--border-size-s) solid var(--color-neutral-4);
+			color: var(--color-neutral-6);
+			pointer-events: none;
+		}
+	}
+}
+
+///
+.form {
+	// Service Studio Preview
+	.osui-monthpicker-ss-preview {
+		-servicestudio-margin-top: -22px;
+	}
+}

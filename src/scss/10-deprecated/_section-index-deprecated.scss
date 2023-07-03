@@ -1,4 +1,4 @@
-/*! Patterns - Navigation - Section Index */
+/* Patterns - Navigation - Section Index */
 ///
 .section-index {
 	border-left: var(--border-size-s) solid var(--color-neutral-5);
@@ -44,6 +44,7 @@
 .layout-native {
 	.section-index {
 		&.is--sticky {
+			position: fixed;
 			top: calc(var(--header-size) + var(--header-size-content) + var(--top-position) + var(--os-safe-area-top));
 		}
 	}
@@ -58,17 +59,6 @@
 				top: calc(
 					var(--header-size) + var(--header-size-content) + var(--top-position) + var(--status-bar-height)
 				);
-			}
-		}
-	}
-}
-
-///
-.ios {
-	.layout-native {
-		.section-index {
-			&.is--sticky {
-				position: fixed;
 			}
 		}
 	}

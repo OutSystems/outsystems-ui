@@ -1,0 +1,109 @@
+/* Patterns - Numbers - ProgressBar */
+////
+/// @group Patterns-ProgressBar
+/// Patterns - Numbers - Progress Bar
+
+///
+.osui-progress {
+	&-bar {
+		--progress-value: 0%;
+
+		min-height: var(--thickness);
+		position: relative;
+
+		& {
+			-servicestudio-min-height: var(--thickness, 8px);
+		}
+
+		&__container {
+			min-height: var(--thickness);
+			position: relative;
+
+			& {
+				-servicestudio-min-height: var(--thickness, 8px);
+			}
+
+			&.animate {
+				&-entrance .osui-progress-bar__value:before {
+					transition-delay: 0.5s;
+				}
+				&-entrance,
+				&-progress-change {
+					.osui-progress-bar__value:before {
+						transition-duration: 0.35s;
+					}
+				}
+			}
+		}
+
+		&__value {
+			border-radius: calc(var(--shape) / 2);
+			height: var(--thickness);
+			left: 0;
+			overflow: hidden;
+			position: absolute;
+			right: 0;
+
+			& {
+				-servicestudio-height: var(--thickness, 8px);
+			}
+
+			&:after,
+			&:before {
+				border-radius: calc(var(--shape) / 2);
+				content: '';
+				height: 100%;
+				left: 0;
+				position: absolute;
+				top: 0;
+
+				& {
+					-servicestudio-border-radius: var(--shape, var(--border-radius-rounded));
+				}
+			}
+
+			&:after {
+				background: var(--trail-color);
+				width: 100%;
+
+				& {
+					-servicestudio-background: var(--trail-color, var(--color-neutral-3));
+				}
+			}
+
+			&:before {
+				background: var(--progress-gradient, var(--progress-color));
+				width: var(--progress-value);
+				z-index: var(--layer-local-tier-1);
+
+				& {
+					-servicestudio-background: var(--progress-color, var(--color-primary));
+					-servicestudio-width: var(--progress-value, 50%);
+				}
+			}
+		}
+
+		&__content {
+			left: 0;
+			padding: var(--space-none) var(--space-s);
+			position: absolute;
+			top: 50%;
+			transform: translateY(-50%);
+			width: 100%;
+			z-index: var(--layer-local-tier-1);
+
+			& {
+				-servicestudio-text-align: center;
+			}
+		}
+	}
+}
+
+// IsRTL -------------------------------------------------------------------------
+///
+.is-rtl {
+	.osui-progress-bar__value:before {
+		left: inherit;
+		right: 0;
+	}
+}

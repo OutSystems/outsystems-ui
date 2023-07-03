@@ -1,20 +1,22 @@
-/*! Patterns - Interaction - Video */
+/* Patterns - Interaction - Video */
 ////
 /// @group Patterns-Video
 /// Patterns - Interaction - Video
 
 ///
 .video {
-	.hide-controls {
+	&-preview {
+		display: block;
+	}
+}
+
+.video-wrapper {
+	&.hide-controls {
 		pointer-events: none;
 
 		&::-webkit-media-controls-panel,
 		&::-webkit-media-controls-panel-container {
 			display: none !important;
 		}
-	}
-
-	&-preview {
-		display: block;
 	}
 }

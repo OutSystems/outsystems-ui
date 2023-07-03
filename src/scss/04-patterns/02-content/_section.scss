@@ -1,4 +1,4 @@
-/*! Patterns - Content - Section */
+/* Patterns - Content - Section */
 ////
 /// @group Patterns-Section
 /// Patterns - Content - Section
@@ -27,7 +27,7 @@
 				position: -webkit-sticky; //Fix for older iPhones
 				position: sticky;
 				top: calc(var(--section-top-position) + var(--os-safe-area-top));
-				z-index: 90;
+				z-index: calc(var(--layer-below) + var(--layer-global-navigation));
 			}
 		}
 
@@ -57,6 +57,17 @@
 		&.is--sticky {
 			.section-title {
 				top: calc(var(--section-top-position) + var(--status-bar-height));
+			}
+		}
+	}
+}
+
+///
+.ios[data-status-bar-height] {
+	.section-group {
+		&.is--sticky {
+			.section-title {
+				top: 0;
 			}
 		}
 	}

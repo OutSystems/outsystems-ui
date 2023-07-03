@@ -1,4 +1,4 @@
-/*! Patterns - Adaptive - Master Detail */
+/* Patterns - Adaptive - Master Detail */
 ////
 /// @group Patterns-Master_Detail
 /// Patterns - Adaptive - Master Detail
@@ -43,7 +43,7 @@
 				left: calc(var(--os-safe-area-left) + var(--space-m));
 				position: fixed;
 				top: 12px;
-				z-index: 180;
+				z-index: var(--layer-global-screen);
 
 				// Service Studio Preview
 				& {
@@ -136,7 +136,7 @@
 				transition: all 190ms ease-in;
 				width: 100%;
 				will-change: transform;
-				z-index: 150;
+				z-index: calc(var(--layer-above) + var(--layer-global-navigation));
 
 				&.open {
 					transform: translateX(0) translateZ(0);
@@ -160,6 +160,7 @@
 			padding-top: calc(var(--header-size) + var(--os-safe-area-top));
 
 			.split-right-close {
+				display: block;
 				left: calc(var(--os-safe-area-left) + var(--space-base));
 			}
 		}

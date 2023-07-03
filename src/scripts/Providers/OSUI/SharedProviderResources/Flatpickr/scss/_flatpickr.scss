@@ -1,0 +1,565 @@
+/*
+	Overriding styles for Flatpickr library.
+	Shared between SingleDatePicker, RangeDatePicker and TimePicker
+*/
+<<<<<<<< HEAD:src/scripts/Providers/SharedProviderResources/Flatpickr/scss/_flatpickr.scss
+========
+
+>>>>>>>> origin/rc2.16.0:src/scripts/Providers/OSUI/SharedProviderResources/Flatpickr/scss/_flatpickr.scss
+.flatpickr-calendar {
+	--osui-flatpickr-layer: var(--layer-global-elevated);
+	border-radius: var(--border-radius-soft);
+	border: var(--border-size-s) solid var(--color-neutral-5);
+	box-shadow: var(--shadow-none);
+	width: 320px;
+
+	&.open {
+<<<<<<<< HEAD:src/scripts/Providers/SharedProviderResources/Flatpickr/scss/_flatpickr.scss
+		z-index: 99;
+========
+		z-index: var(--osui-flatpickr-layer);
+
+		&.inside-bottom-sheet {
+			z-index: calc(var(--osui-bottom-sheet-layer) + var(--layer-local-tier-1));
+		}
+		&.inside-popup {
+			z-index: calc(var(--osui-popup-layer) + var(--layer-local-tier-1));
+		}
+		&.inside-sidebar {
+			z-index: calc(var(--osui-sidebar-layer) + var(--layer-local-tier-1));
+		}
+		&.inside-notification {
+			z-index: calc(var(--osui-notification-layer) + var(--layer-local-tier-1));
+		}
+>>>>>>>> origin/rc2.16.0:src/scripts/Providers/OSUI/SharedProviderResources/Flatpickr/scss/_flatpickr.scss
+	}
+
+	&.arrowTop {
+		&:before,
+		&::after {
+			left: 40px;
+		}
+	}
+
+	// Has Time
+	&.hasTime {
+		.flatpickr-time {
+			border: var(--border-size-none);
+			height: 30px;
+			overflow: visible;
+			padding: var(--space-none) var(--space-base) var(--space-base);
+		}
+	}
+
+	&.hasWeeks {
+		// to take into account the padding we're adding after flatpickr has calculated its width
+		min-width: min-content;
+
+		.flatpickr-weekwrapper .flatpickr-weeks {
+			margin-right: var(--space-xs);
+		}
+
+		span.flatpickr-day {
+			height: 35px;
+			line-height: 34px;
+			max-width: 35px;
+		}
+	}
+
+	.numInputWrapper {
+		span {
+			&.arrowUp,
+			&.arrowDown {
+				border: none;
+			}
+
+			&.arrowUp:after {
+				border-bottom-color: var(--color-primary);
+			}
+			&.arrowDown:after {
+				border-top-color: var(--color-primary);
+			}
+		}
+	}
+
+	&.inline {
+		display: inline-block;
+	}
+}
+
+// Flatpickr - Top info wrapper container
+.flatpickr-months {
+	align-items: center;
+	display: grid;
+	grid-template-areas: 'date prev next';
+	grid-template-columns: 1fr 34px 34px;
+	padding: var(--space-base);
+	position: relative;
+
+	.flatpickr-month {
+		justify-self: flex-start;
+		flex: none;
+		grid-area: date;
+	}
+
+	// Arrows left and right
+	.flatpickr-prev-month,
+	.flatpickr-next-month {
+		align-items: center;
+		display: flex;
+		justify-content: center;
+		justify-self: flex-end;
+		height: 34px;
+		padding: 0;
+		position: static;
+		top: unset;
+		width: 34px;
+		z-index: calc(var(--osui-flatpickr-layer) + var(--layer-local-tier-1));
+
+		&:hover {
+			background-color: var(--color-neutral-2);
+			border-radius: var(--border-radius-circle);
+		}
+
+		svg {
+			height: 12px;
+			width: 12px;
+
+			path {
+				stroke-width: 1px;
+				stroke: var(--color-primary);
+			}
+		}
+	}
+
+	.flatpickr-prev-month {
+		left: unset;
+		grid-area: prev;
+	}
+
+	.flatpickr-next-month {
+		grid-area: next;
+		right: unset;
+	}
+}
+
+// Flatpickr - Month and Year container
+.flatpickr-current-month {
+	align-items: center;
+	color: var(--color-primary);
+	display: inline-flex;
+	font-size: var(--font-size-s);
+	justify-content: flex-start;
+	left: unset;
+	padding: 0;
+	position: static;
+	text-align: unset;
+	transform: none;
+	width: unset;
+
+	// Month Select
+	.flatpickr-monthDropdown-months {
+		appearance: none;
+		border-radius: var(--border-radius-soft);
+		font-weight: var(--font-semi-bold);
+		height: 30px;
+		line-height: normal;
+		margin: 0;
+		order: 2;
+		padding: var(--space-none) var(--space-s);
+
+		&:hover,
+		&:focus {
+			background-color: var(--color-neutral-2);
+		}
+	}
+
+	// Year stepper
+	.numInputWrapper {
+		padding: var(--space-none) var(--space-s);
+		width: 60px;
+
+		&:hover,
+		&:focus {
+			background-color: var(--color-neutral-2);
+			border-radius: var(--border-radius-soft);
+		}
+
+		input {
+			border: var(--border-size-s) solid transparent;
+			border-radius: var(--border-radius-soft);
+			font-size: var(--font-size-s);
+			font-weight: var(--font-semi-bold);
+			height: 30px;
+			padding: 0;
+
+			&:hover {
+				background-color: var(--color-neutral-2);
+			}
+		}
+	}
+}
+
+// Flatpickr - Days container
+.flatpickr-innerContainer {
+	padding: var(--space-s) var(--space-base) var(--space-base);
+}
+
+.flatpickr-rContainer,
+.flatpickr-days {
+	width: 100%;
+}
+
+.dayContainer {
+	max-width: 100%;
+	min-width: 100%;
+	width: 100%;
+}
+
+// Flatpickr - WeekDays
+.flatpickr-weekdays {
+	padding-bottom: var(--space-base);
+}
+.flatpickr-weekwrapper {
+	.flatpickr-weekday {
+		visibility: hidden;
+	}
+}
+
+// Flatpickr - WeekDay Element
+span.flatpickr-weekday {
+	color: var(--color-neutral-7);
+	font-size: var(--font-size-s);
+	font-weight: var(--font-regular);
+	user-select: none;
+}
+
+// Flatpickr - DayElem
+.flatpickr-day {
+	color: var(--color-neutral-9);
+	font-size: var(--font-size-s);
+	font-weight: var(--font-regular);
+	user-select: none;
+	line-height: 37px;
+
+	&.prevMonthDay,
+	&.nextMonthDay {
+		color: var(--color-neutral-5);
+
+		&:hover,
+		&:focus {
+			color: var(--color-neutral-7);
+		}
+	}
+
+	&.today {
+		border-color: var(--color-neutral-6);
+
+		&:hover,
+		&:focus {
+			border-color: var(--color-neutral-3);
+			background: var(--color-neutral-3);
+			color: var(--color-primary);
+		}
+
+		&.inRange {
+			color: var(--color-neutral-9);
+		}
+	}
+
+	&:hover,
+	&:focus,
+	&.inRange,
+	&.today.inRange,
+	&.prevMonthDay:hover,
+	&.prevMonthDay:focus,
+	&.prevMonthDay.inRange,
+	&.prevMonthDay.today.inRange,
+	&.nextMonthDay:hover,
+	&.nextMonthDay:focus,
+	&.nextMonthDay.inRange,
+	&.nextMonthDay.today.inRange {
+		background: var(--color-neutral-3);
+		border-color: var(--color-neutral-3);
+	}
+
+	&.selected,
+	&.selected:focus,
+	&.selected:hover,
+	&.selected.inRange,
+	&.selected.prevMonthDay,
+	&.selected.nextMonthDay,
+	&.startRange,
+	&.startRange:focus,
+	&.startRange:hover,
+	&.startRange.inRange,
+	&.startRange.prevMonthDay,
+	&.startRange.nextMonthDay,
+	&.endRange,
+	&.endRange:focus,
+	&.endRange:hover,
+	&.endRange.inRange,
+	&.endRange.prevMonthDay,
+	&.endRange.nextMonthDay {
+		background: var(--color-primary);
+		border-color: var(--color-primary);
+
+		&.today {
+			color: var(--color-neutral-0);
+		}
+	}
+	// InRange Styles
+	&.selected.startRange,
+	&.startRange.startRange,
+	&.endRange.startRange,
+	&.selected.endRange,
+	&.startRange.endRange,
+	&.endRange.endRange,
+	&.inRange {
+		&:before {
+			content: '';
+			display: block;
+			top: -1px;
+			bottom: -1px;
+			background-color: var(--color-neutral-3);
+			position: absolute;
+			z-index: var(--layer-global-negative);
+		}
+	}
+
+	&.selected.startRange.endRange,
+	&.startRange.endRange,
+	&.selected.endRange.startRange,
+	&.endRange.startRange {
+		&,
+		&:before {
+			border-radius: 50px;
+		}
+	}
+
+	&.selected.startRange,
+	&.startRange.startRange {
+		border-radius: 50px;
+
+		&:before {
+			border-radius: 50px 0 0 50px;
+			left: 0;
+			right: -2px;
+		}
+	}
+
+	&.selected.endRange,
+	&.endRange.endRange {
+		border-radius: 50px;
+
+		&:before {
+			border-radius: 0 50px 50px 0;
+			right: 0;
+			left: -2px;
+		}
+	}
+
+	&.inRange {
+		box-shadow: var(--shadow-none);
+
+		&:before {
+			left: -2px;
+			right: -2px;
+		}
+	}
+
+	&.selected.startRange + .endRange:not(:nth-child(7n + 1)),
+	&.startRange.startRange + .endRange:not(:nth-child(7n + 1)),
+	&.endRange.startRange + .endRange:not(:nth-child(7n + 1)) {
+		box-shadow: var(--shadow-none);
+	}
+}
+
+// Flatpickr - Time container
+.flatpickr-time {
+	display: flex;
+	position: relative;
+	align-items: center;
+	justify-content: center;
+	line-height: 30px;
+
+	input {
+		&:hover,
+		&:focus {
+			background: transparent;
+		}
+	}
+
+	// Hour and Minute input number
+	.numInputWrapper {
+		flex: initial;
+		height: 30px;
+		padding: 0 var(--space-base);
+		min-width: 48px;
+		width: auto;
+
+		&:hover,
+		&:focus {
+			border-radius: var(--border-radius-soft);
+		}
+
+		.numInput {
+			font-size: var(--font-size-s);
+		}
+	}
+
+	&.time24hr {
+		.numInputWrapper {
+			width: inherit;
+		}
+	}
+
+	// AM/PM selector
+	.flatpickr-am-pm {
+		background-color: var(--color-primary);
+		border-radius: var(--border-radius-soft);
+		color: var(--color-neutral-0);
+		font-size: var(--font-size-xs);
+		font-weight: var(--font-semi-bold);
+		height: 18px;
+		line-height: 16px;
+		position: absolute;
+		right: var(--space-l);
+		text-transform: lowercase;
+		width: 40px;
+
+		&:hover,
+		&:focus {
+			background-color: var(--color-primary-hover);
+		}
+	}
+}
+
+.firefox .flatpickr-time {
+	input {
+		max-width: 48px; // fix for different input appearance css rules regarding size
+	}
+}
+
+// Flatpickr - TodayBtn
+.flatpickr-today-button {
+	padding: var(--space-none) var(--space-base) var(--space-base);
+	user-select: none;
+
+	a {
+		cursor: pointer;
+
+		&:hover {
+			text-decoration: none;
+		}
+	}
+}
+
+// Responsive --------------------------------------------------------------------
+///
+.safari input.flatpickr-input,
+.safari input.flatpickr-input + input {
+	transition: none; // Fix input flickering on redraw()
+}
+
+.phone {
+	.flatpickr-current-month .flatpickr-monthDropdown-months,
+	.flatpickr-current-month .numInputWrapper .numInput,
+	.flatpickr-time .numInputWrapper .numInput {
+		// Hack to disable zoom focus on mobile
+		font-size: var(--font-size-base);
+	}
+
+	// Hack to force alignment left on iOS 15+
+	.flatpickr-mobile::-webkit-date-and-time-value {
+		text-align: left;
+	}
+
+	// IsRTL ---------------
+	.is-rtl {
+		// Hack to force alignment right on iOS 15+
+		.flatpickr-mobile::-webkit-date-and-time-value {
+			text-align: right;
+		}
+	}
+}
+
+// IsRTL -------------------------------------------------------------------------
+///
+.is-rtl {
+<<<<<<<< HEAD:src/scripts/Providers/SharedProviderResources/Flatpickr/scss/_flatpickr.scss
+========
+	&:has(.layout-side) .flatpickr-calendar {
+		--osui-flatpickr-layer: calc(var(--osui-menu-layer) + var(--layer-local-tier-1));
+	}
+
+>>>>>>>> origin/rc2.16.0:src/scripts/Providers/OSUI/SharedProviderResources/Flatpickr/scss/_flatpickr.scss
+	.flatpickr-calendar {
+		// This +10px will be used to better contain all the text without cropping it since RTL texts are bigger
+		width: 330px;
+	}
+
+	.flatpickr-months,
+	.flatpickr-weekdays,
+	.flatpickr-days {
+		direction: rtl;
+	}
+
+	.flatpickr-prev-month,
+	.flatpickr-next-month {
+		transform: scaleX(-1);
+	}
+
+	.numInputWrapper {
+		span {
+			left: 0;
+			padding: 0 2px 0 4px; // This values are defined at library as well!
+			right: unset;
+		}
+	}
+
+	.flatpickr-current-month {
+		.flatpickr-monthDropdown-months {
+			margin-left: var(--space-base);
+			margin-right: var(--space-none);
+		}
+	}
+
+	.flatpickr-day {
+		&.selected.startRange,
+		&.startRange.startRange,
+		&.endRange.startRange {
+			border-radius: 50px;
+
+			&:before {
+				border-radius: 0 50px 50px 0;
+				left: -2px;
+				right: 0;
+			}
+		}
+
+		&.selected.endRange,
+		&.startRange.endRange,
+		&.endRange.endRange {
+			border-radius: 50px;
+
+			&:before {
+				border-radius: 50px 0 0 50px;
+				left: 0;
+				right: -2px;
+			}
+		}
+	}
+}
+
+// Layer Library Overrides
+.flatpickr-calendar.static.open {
+	z-index: var(--osui-flatpickr-layer);
+}
+
+// Exception for firefox support for :has()
+@supports not selector(:has(*)) {
+	.is-rtl .flatpickr-calendar {
+		--osui-flatpickr-layer: calc(var(--osui-menu-layer) + var(--layer-local-tier-1));
+	}
+}
