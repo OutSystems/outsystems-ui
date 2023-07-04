@@ -411,6 +411,17 @@ namespace OSFramework.OSUI.Helper {
 		}
 
 		/**
+		 * Method that will set the region role
+		 *
+		 * @param {HTMLElement} element Target element to receive the role atributte
+		 * @returns
+		 * @memberof OSFramework.Helper.A11Y
+		 */
+		public static RoleRegion(element: HTMLElement): void {
+			Dom.Attribute.Set(element, Constants.A11YAttributes.Role.AttrName, Constants.A11YAttributes.Role.Region);
+		}
+
+		/**
 		 * Method that will set the search role
 		 *
 		 * @param {HTMLElement} element Target element to receive the role atributte

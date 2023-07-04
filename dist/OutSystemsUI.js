@@ -59,7 +59,8 @@ var OSFramework;
                     Haspopup: 'aria-haspopup',
                     Hidden: 'aria-hidden',
                     Label: 'aria-label',
-                    Labelledby: 'labelledby',
+                    Labelledby: 'aria-labelledby',
+                    Level: 'aria-level',
                     Multiselectable: 'aria-multiselectable',
                     Selected: 'aria-selected',
                     ValueMax: 'valuemax',
@@ -80,6 +81,7 @@ var OSFramework;
                     MenuItem: 'menuitem',
                     Option: 'option',
                     Progressbar: 'progressbar',
+                    Region: 'region',
                     Search: 'search',
                     Tab: 'tab',
                     TabList: 'tablist',
@@ -2897,6 +2899,9 @@ var OSFramework;
                 static AriaLabelledBy(element, targetId) {
                     Helper.Dom.Attribute.Set(element, OSUI.Constants.A11YAttributes.Aria.Labelledby, targetId);
                 }
+                static AriaLevel(element, value) {
+                    Helper.Dom.Attribute.Set(element, OSUI.Constants.A11YAttributes.Aria.Level, value);
+                }
                 static AriaLiveAssertive(element) {
                     Helper.Dom.Attribute.Set(element, OSUI.Constants.A11YAttributes.AriaLive.AttrName, OSUI.Constants.A11YAttributes.AriaLive.Assertive);
                 }
@@ -2944,6 +2949,9 @@ var OSFramework;
                 }
                 static RoleProgressBar(element) {
                     Helper.Dom.Attribute.Set(element, OSUI.Constants.A11YAttributes.Role.AttrName, OSUI.Constants.A11YAttributes.Role.Progressbar);
+                }
+                static RoleRegion(element) {
+                    Helper.Dom.Attribute.Set(element, OSUI.Constants.A11YAttributes.Role.AttrName, OSUI.Constants.A11YAttributes.Role.Region);
                 }
                 static RoleSearch(element) {
                     Helper.Dom.Attribute.Set(element, OSUI.Constants.A11YAttributes.Role.AttrName, OSUI.Constants.A11YAttributes.Role.Search);
@@ -3620,7 +3628,7 @@ var OSFramework;
                         super(uniqueId, new Accordion_1.AccordionConfig(configs));
                     }
                     setA11YProperties() {
-                        OSUI.Helper.A11Y.RoleTabList(this.selfElement);
+                        console.log(OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
                     }
                     setCallbacks() {
                         console.log(OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -3662,7 +3670,6 @@ var OSFramework;
                     }
                     build() {
                         super.build();
-                        this.setA11YProperties();
                         this.finishBuild();
                     }
                     changeProperty(propertyName, propertyValue) {
@@ -3843,11 +3850,13 @@ var OSFramework;
                         const titleTabindexValue = this.configs.IsDisabled
                             ? OSUI.Constants.A11YAttributes.States.TabIndexHidden
                             : OSUI.Constants.A11YAttributes.States.TabIndexShow;
-                        const contentTabindexValue = !this.configs.IsDisabled && this._isOpen
+                        const titleFocusableElementsTabindexValue = !this.configs.IsDisabled && this._isOpen
                             ? OSUI.Constants.A11YAttributes.States.TabIndexShow
                             : OSUI.Constants.A11YAttributes.States.TabIndexHidden;
                         OSUI.Helper.A11Y.TabIndex(this._accordionItemTitleElem, titleTabindexValue);
-                        OSUI.Helper.A11Y.TabIndex(this._accordionItemContentElem, contentTabindexValue);
+                        for (const child of this._accordionTitleFocusableChildren) {
+                            OSUI.Helper.A11Y.TabIndex(child, titleFocusableElementsTabindexValue);
+                        }
                     }
                     _onKeyboardPress(event) {
                         const isEscapedKey = event.key === OSUI.GlobalEnum.Keycodes.Escape;
@@ -3942,18 +3951,19 @@ var OSFramework;
                     }
                     setA11YProperties() {
                         if (this.isBuilt === false) {
-                            OSUI.Helper.A11Y.AriaControls(this.selfElement, this._accordionItemPlaceholder.id);
+                            OSUI.Helper.A11Y.AriaControls(this._accordionItemTitleElem, this._accordionItemPlaceholder.id);
                             OSUI.Helper.A11Y.AriaLabelledBy(this._accordionItemContentElem, this._accordionItemTitleElem.id);
                             OSUI.Helper.A11Y.AriaHiddenTrue(this._accordionItemIconElem);
-                            OSUI.Helper.A11Y.AriaDisabled(this.selfElement, this.configs.IsDisabled);
-                            OSUI.Helper.A11Y.RoleTab(this.selfElement);
+                            OSUI.Helper.A11Y.AriaDisabled(this._accordionItemTitleElem, this.configs.IsDisabled);
                             OSUI.Helper.A11Y.RoleButton(this._accordionItemTitleElem);
-                            OSUI.Helper.A11Y.RoleTabPanel(this._accordionItemPlaceholder);
+                            OSUI.Helper.A11Y.RoleRegion(this._accordionItemContentElem);
                         }
                         this._handleTabIndex();
-                        OSUI.Helper.A11Y.AriaExpanded(this.selfElement, this._isOpen.toString());
                         OSUI.Helper.A11Y.AriaExpanded(this._accordionItemTitleElem, this._isOpen.toString());
                         OSUI.Helper.A11Y.AriaHidden(this._accordionItemContentElem, (!this._isOpen).toString());
+                        for (const child of this._accordionTitleFocusableChildren) {
+                            OSUI.Helper.A11Y.AriaHidden(child, (!this._isOpen).toString());
+                        }
                     }
                     setCallbacks() {
                         this._eventOnClick = this._accordionOnClickHandler.bind(this);
@@ -3966,6 +3976,7 @@ var OSFramework;
                         this._accordionItemIconElem = OSUI.Helper.Dom.ClassSelector(this.selfElement, AccordionItem_1.Enum.CssClass.PatternIcon);
                         this._accordionItemIconCustomElem = OSUI.Helper.Dom.ClassSelector(this.selfElement, AccordionItem_1.Enum.CssClass.PatternIcon + '.' + OSUI.GlobalEnum.CssClassElements.Placeholder);
                         this._accordionItemPlaceholder = this._accordionItemContentElem.firstChild;
+                        this._accordionTitleFocusableChildren = OSUI.Helper.Dom.TagSelectorAll(this._accordionItemTitleElem, OSUI.Constants.FocusableElems);
                     }
                     setInitialCssClasses() {
                         if (this._isOpen) {
