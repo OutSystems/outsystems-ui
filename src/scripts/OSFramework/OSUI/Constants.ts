@@ -14,7 +14,6 @@ namespace OSFramework.OSUI.Constants {
 			Hidden: 'aria-hidden',
 			Label: 'aria-label',
 			Labelledby: 'aria-labelledby',
-			Level: 'aria-level',
 			Multiselectable: 'aria-multiselectable',
 			Selected: 'aria-selected',
 			ValueMax: 'valuemax',

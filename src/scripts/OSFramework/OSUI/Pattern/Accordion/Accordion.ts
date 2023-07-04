@@ -16,7 +16,6 @@ namespace OSFramework.OSUI.Patterns.Accordion {
 		 */
 		protected setA11YProperties(): void {
 			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
-			// Helper.A11Y.RoleTabList(this.selfElement);
 		}
 
 		/**
