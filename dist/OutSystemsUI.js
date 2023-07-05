@@ -60,7 +60,6 @@ var OSFramework;
                     Hidden: 'aria-hidden',
                     Label: 'aria-label',
                     Labelledby: 'aria-labelledby',
-                    Level: 'aria-level',
                     Multiselectable: 'aria-multiselectable',
                     Selected: 'aria-selected',
                     ValueMax: 'valuemax',
@@ -2898,9 +2897,6 @@ var OSFramework;
                 }
                 static AriaLabelledBy(element, targetId) {
                     Helper.Dom.Attribute.Set(element, OSUI.Constants.A11YAttributes.Aria.Labelledby, targetId);
-                }
-                static AriaLevel(element, value) {
-                    Helper.Dom.Attribute.Set(element, OSUI.Constants.A11YAttributes.Aria.Level, value);
                 }
                 static AriaLiveAssertive(element) {
                     Helper.Dom.Attribute.Set(element, OSUI.Constants.A11YAttributes.AriaLive.AttrName, OSUI.Constants.A11YAttributes.AriaLive.Assertive);

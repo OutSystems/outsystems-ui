@@ -18,7 +18,6 @@ declare namespace OSFramework.OSUI.Constants {
             Hidden: string;
             Label: string;
             Labelledby: string;
-            Level: string;
             Multiselectable: string;
             Selected: string;
             ValueMax: string;
@@ -1052,7 +1051,6 @@ declare namespace OSFramework.OSUI.Helper {
         static AriaHiddenTrue(element: HTMLElement): void;
         static AriaLabel(element: HTMLElement, value: string): void;
         static AriaLabelledBy(element: HTMLElement, targetId: string): void;
-        static AriaLevel(element: HTMLElement, value: string): void;
         static AriaLiveAssertive(element: HTMLElement): void;
         static AriaLiveOff(element: HTMLElement): void;
         static AriaLivePolite(element: HTMLElement): void;
