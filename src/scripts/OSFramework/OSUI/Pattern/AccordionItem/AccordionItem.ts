@@ -17,6 +17,8 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 		private _accordionItemPlaceholder: HTMLElement;
 		// Stores the HTML element of the pattern's title
 		private _accordionItemTitleElem: HTMLElement;
+		// Stores the HTML element of the pattern's title placeholder
+		private _accordionTitleFocusableChildren: HTMLElement[];
 		// Stores if should be aware of elements clickable inside the title
 		private _allowTitleEvents: boolean;
 		// Store the collapsed height value
@@ -106,13 +108,17 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 			const titleTabindexValue = this.configs.IsDisabled
 				? Constants.A11YAttributes.States.TabIndexHidden
 				: Constants.A11YAttributes.States.TabIndexShow;
-			const contentTabindexValue =
+			const titleFocusableElementsTabindexValue =
 				!this.configs.IsDisabled && this._isOpen
 					? Constants.A11YAttributes.States.TabIndexShow
 					: Constants.A11YAttributes.States.TabIndexHidden;
 
 			Helper.A11Y.TabIndex(this._accordionItemTitleElem, titleTabindexValue);
-			Helper.A11Y.TabIndex(this._accordionItemContentElem, contentTabindexValue);
+
+			// The focusable elements inside the Accordion Title must be non-focusable unless the Accordion is expanded
+			for (const child of this._accordionTitleFocusableChildren) {
+				Helper.A11Y.TabIndex(child as HTMLElement, titleFocusableElementsTabindexValue);
+			}
 		}
 
 		// Method to hadle Keyboardpress event
@@ -254,7 +260,7 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 			// Set the static attributes on page load only
 			if (this.isBuilt === false) {
 				// Set ARIA Controls
-				Helper.A11Y.AriaControls(this.selfElement, this._accordionItemPlaceholder.id);
+				Helper.A11Y.AriaControls(this._accordionItemTitleElem, this._accordionItemPlaceholder.id);
 
 				// Set ARIA LabelledBy
 				Helper.A11Y.AriaLabelledBy(this._accordionItemContentElem, this._accordionItemTitleElem.id);
@@ -263,23 +269,26 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 				Helper.A11Y.AriaHiddenTrue(this._accordionItemIconElem);
 
 				// Set ARIA Disabled
-				Helper.A11Y.AriaDisabled(this.selfElement, this.configs.IsDisabled);
+				Helper.A11Y.AriaDisabled(this._accordionItemTitleElem, this.configs.IsDisabled);
 
 				// Set roles
-				Helper.A11Y.RoleTab(this.selfElement);
 				Helper.A11Y.RoleButton(this._accordionItemTitleElem);
-				Helper.A11Y.RoleTabPanel(this._accordionItemPlaceholder);
+				Helper.A11Y.RoleRegion(this._accordionItemContentElem);
 			}
 
 			// Set Tabindex
 			this._handleTabIndex();
 
 			// Set ARIA Expanded
-			Helper.A11Y.AriaExpanded(this.selfElement, this._isOpen.toString());
 			Helper.A11Y.AriaExpanded(this._accordionItemTitleElem, this._isOpen.toString());
 
 			// Set aria-hidden to content
 			Helper.A11Y.AriaHidden(this._accordionItemContentElem, (!this._isOpen).toString());
+
+			// The focusable elements inside the Accordion Title must be hidden unless the Accordion is expanded
+			for (const child of this._accordionTitleFocusableChildren) {
+				Helper.A11Y.AriaHidden(child, (!this._isOpen).toString());
+			}
 		}
 
 		/**
@@ -310,6 +319,12 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 				Enum.CssClass.PatternIcon + '.' + GlobalEnum.CssClassElements.Placeholder
 			);
 			this._accordionItemPlaceholder = this._accordionItemContentElem.firstChild as HTMLElement;
+
+			// Get all focusable elements inside Accordion Title
+			this._accordionTitleFocusableChildren = Helper.Dom.TagSelectorAll(
+				this._accordionItemTitleElem,
+				Constants.FocusableElems
+			);
 		}
 
 		/**
@@ -354,6 +369,7 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 			this._accordionItemContentElem = undefined;
 			this._accordionItemIconElem = undefined;
 			this._accordionItemPlaceholder = undefined;
+			this._accordionTitleFocusableChildren = [];
 		}
 
 		/**

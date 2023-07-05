@@ -38,6 +38,7 @@ declare namespace OSFramework.OSUI.Constants {
             MenuItem: string;
             Option: string;
             Progressbar: string;
+            Region: string;
             Search: string;
             Tab: string;
             TabList: string;
@@ -1066,6 +1067,7 @@ declare namespace OSFramework.OSUI.Helper {
         static RoleMenuItem(element: HTMLElement): void;
         static RoleOption(element: HTMLElement): void;
         static RoleProgressBar(element: HTMLElement): void;
+        static RoleRegion(element: HTMLElement): void;
         static RoleSearch(element: HTMLElement): void;
         static RoleTab(element: HTMLElement): void;
         static RoleTabList(element: HTMLElement): void;
@@ -1354,6 +1356,7 @@ declare namespace OSFramework.OSUI.Patterns.AccordionItem {
         private _accordionItemIconElem;
         private _accordionItemPlaceholder;
         private _accordionItemTitleElem;
+        private _accordionTitleFocusableChildren;
         private _allowTitleEvents;
         private _collapsedHeight;
         private _eventOnClick;
