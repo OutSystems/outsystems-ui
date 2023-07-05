@@ -369,6 +369,7 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 			this._accordionItemContentElem = undefined;
 			this._accordionItemIconElem = undefined;
 			this._accordionItemPlaceholder = undefined;
+			this._accordionTitleFocusableChildren = [];
 		}
 
 		/**
