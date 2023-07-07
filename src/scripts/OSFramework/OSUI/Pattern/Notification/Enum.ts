@@ -1,9 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/Notification/Enum.ts
-namespace OSFramework.Patterns.Notification.Enum {
-========
 namespace OSFramework.OSUI.Patterns.Notification.Enum {
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/Notification/Enum.ts
 	/**
 	 * Notification Enum for CSS Classes
 	 */

@@ -34,7 +34,7 @@ namespace OSFramework.OSUI.Patterns.InlineSvg {
 		 * Sets the A11Y properties when the pattern is built.
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.InlineSvg.InlineSvg
+		 * @memberof OSFramework.OSUI.Patterns.InlineSvg.InlineSvg
 		 */
 		protected setA11YProperties(): void {
 			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -44,7 +44,7 @@ namespace OSFramework.OSUI.Patterns.InlineSvg {
 		 * Set the callbacks that will be assigned to the pattern.
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.InlineSvg.InlineSvg
+		 * @memberof OSFramework.OSUI.Patterns.InlineSvg.InlineSvg
 		 */
 		protected setCallbacks(): void {
 			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -54,7 +54,7 @@ namespace OSFramework.OSUI.Patterns.InlineSvg {
 		 * Set the html references that will be used to manage the cssClasses and atribute properties.
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.InlineSvg.InlineSvg
+		 * @memberof OSFramework.OSUI.Patterns.InlineSvg.InlineSvg
 		 */
 		protected setHtmlElements(): void {
 			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -74,7 +74,7 @@ namespace OSFramework.OSUI.Patterns.InlineSvg {
 		 * Reassign the HTML elements to undefined, preventing memory leaks.
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.InlineSvg.InlineSvg
+		 * @memberof OSFramework.OSUI.Patterns.InlineSvg.InlineSvg
 		 */
 		protected unsetHtmlElements(): void {
 			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -83,7 +83,7 @@ namespace OSFramework.OSUI.Patterns.InlineSvg {
 		/**
 		 * Builds the pattern.
 		 *
-		 * @memberof OSFramework.Patterns.InlineSvg.InlineSvg
+		 * @memberof OSFramework.OSUI.Patterns.InlineSvg.InlineSvg
 		 */
 		public build(): void {
 			super.build();
@@ -98,7 +98,7 @@ namespace OSFramework.OSUI.Patterns.InlineSvg {
 		 *
 		 * @param {string} propertyName
 		 * @param {unknown} propertyValue
-		 * @memberof OSFramework.Patterns.InlineSvg.InlineSvg
+		 * @memberof OSFramework.OSUI.Patterns.InlineSvg.InlineSvg
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
@@ -114,7 +114,7 @@ namespace OSFramework.OSUI.Patterns.InlineSvg {
 		/**
 		 * Destroy the InlineSvg
 		 *
-		 * @memberof OSFramework.Patterns.InlineSvg.InlineSvg
+		 * @memberof OSFramework.OSUI.Patterns.InlineSvg.InlineSvg
 		 */
 		public dispose(): void {
 			if (this.isBuilt) {

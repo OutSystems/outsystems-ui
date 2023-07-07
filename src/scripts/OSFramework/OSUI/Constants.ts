@@ -1,9 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-<<<<<<<< HEAD:src/scripts/OSFramework/Constants.ts
-namespace OSFramework.Constants {
-========
 namespace OSFramework.OSUI.Constants {
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Constants.ts
 	/**
 	 * OutSystemsUI Accessibility attribues
 	 */
@@ -107,15 +103,12 @@ namespace OSFramework.OSUI.Constants {
 		'December',
 	];
 
-<<<<<<<< HEAD:src/scripts/OSFramework/Constants.ts
-========
 	/* Store the default app lang */
 	export const Language = {
 		code: 'en-US',
 		short: 'en',
 	};
 
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Constants.ts
 	/* cssClass to be added to elements that must visible yet hidded for accessibility purposes */
 	export const AccessibilityHideElementClass = 'wcag-hide-text';
 
@@ -126,11 +119,7 @@ namespace OSFramework.OSUI.Constants {
 	export const NoTransition = 'no-transition';
 
 	/* OSUI Version */
-<<<<<<<< HEAD:src/scripts/OSFramework/Constants.ts
-	export const OSUIVersion = '2.12.0';
-========
 	export const OSUIVersion = '2.16.0';
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Constants.ts
 
 	/*Constant to be used across project as the zero value*/
 	export const ZeroValue = 0;

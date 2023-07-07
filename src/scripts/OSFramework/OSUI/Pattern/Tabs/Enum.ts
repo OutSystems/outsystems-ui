@@ -1,9 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/Tabs/Enum.ts
-namespace OSFramework.Patterns.Tabs.Enum {
-========
 namespace OSFramework.OSUI.Patterns.Tabs.Enum {
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/Tabs/Enum.ts
 	/**
 	 * Communication between Patterns - Notification Type
 	 */
@@ -51,10 +47,7 @@ namespace OSFramework.OSUI.Patterns.Tabs.Enum {
 	export enum CssProperty {
 		TabsContentItemOverflow = '--tabs-content-item-overflow',
 		TabsHeaderItems = '--tabs-header-items',
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/Tabs/Enum.ts
-========
 		TabsHeight = '--tabs-height',
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/Tabs/Enum.ts
 		TabsIndicatorScale = '--tabs-indicator-scale',
 		TabsIndicatorTransform = '--tabs-indicator-transform',
 	}
@@ -85,8 +78,6 @@ namespace OSFramework.OSUI.Patterns.Tabs.Enum {
 		TabsContentItem = 'TabsContentItem',
 		TabsHeaderItem = 'TabsHeaderItem',
 	}
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/Tabs/Enum.ts
-========
 
 	/**
 	 * Callbacks eventName
@@ -97,5 +88,4 @@ namespace OSFramework.OSUI.Patterns.Tabs.Enum {
 	export enum Events {
 		OnChange = 'OnChange',
 	}
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/Tabs/Enum.ts
 }

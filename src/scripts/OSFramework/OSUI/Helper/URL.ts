@@ -1,16 +1,12 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-<<<<<<<< HEAD:src/scripts/OSFramework/Helper/URL.ts
-namespace OSFramework.Helper {
-========
 namespace OSFramework.OSUI.Helper {
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Helper/URL.ts
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	export abstract class URL {
 		/**
 		 * Function that validates if a given URL is a valid image URL
 		 *
 		 * @param url
-		 * @memberof OSFramework.Helper.URL
+		 * @memberof OSFramework.OSUI.Helper.URL
 		 */
 		public static IsImage(url: string): boolean {
 			return (
@@ -24,7 +20,7 @@ namespace OSFramework.OSUI.Helper {
 		 * Function that validates if a given URL is a valid URL
 		 *
 		 * @param url
-		 * @memberof OSFramework.Helper.URL
+		 * @memberof OSFramework.OSUI.Helper.URL
 		 */
 		public static IsValid(url: string): boolean {
 			const pattern = new RegExp(

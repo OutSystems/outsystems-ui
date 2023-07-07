@@ -1,9 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/Tabs/TabsConfig.ts
-namespace OSFramework.Patterns.Tabs {
-========
 namespace OSFramework.OSUI.Patterns.Tabs {
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/Tabs/TabsConfig.ts
 	export class TabsConfig extends AbstractConfiguration {
 		public ContentAutoHeight: boolean;
 		public Height: string;
@@ -12,17 +8,14 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 		public TabsOrientation: GlobalEnum.Orientation;
 		public TabsVerticalPosition: GlobalEnum.Direction;
 
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/Tabs/TabsConfig.ts
-========
 		/**
 		 * Method that will check if a given property (key) can be changed/updated!
 		 *
 		 * @param isBuilt True when pattern has been built!
 		 * @param key property name
 		 * @returns {boolean} boolean
-		 * @memberof  OSFramework.Patterns.Tabs.TabsConfig
+		 * @memberof  OSFramework.OSUI.Patterns.Tabs.TabsConfig
 		 */
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/Tabs/TabsConfig.ts
 		public validateCanChange(isBuilt: boolean, key: string): boolean {
 			if (isBuilt) {
 				return key !== Enum.Properties.StartingTab;
@@ -36,7 +29,7 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 		 * @param key property name
 		 * @param value value to be check
 		 * @returns {unknown} value
-		 * @memberof  OSFramework.Patterns.Tabs.TabsConfig
+		 * @memberof  OSFramework.OSUI.Patterns.Tabs.TabsConfig
 		 */
 		public validateDefault(key: string, value: unknown): unknown {
 			let validatedValue = undefined;

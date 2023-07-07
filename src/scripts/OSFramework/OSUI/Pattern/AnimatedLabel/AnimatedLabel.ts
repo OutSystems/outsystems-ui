@@ -1,9 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/AnimatedLabel/AnimatedLabel.ts
-namespace OSFramework.Patterns.AnimatedLabel {
-========
 namespace OSFramework.OSUI.Patterns.AnimatedLabel {
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/AnimatedLabel/AnimatedLabel.ts
 	/**
 	 * Class that implements the AnimatedLabel pattern.
 	 *
@@ -89,8 +85,6 @@ namespace OSFramework.OSUI.Patterns.AnimatedLabel {
 			this._inputElement.removeEventListener(GlobalEnum.HTMLEvent.AnimationStart, this._eventAnimationStart);
 		}
 
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/AnimatedLabel/AnimatedLabel.ts
-========
 		/**
 		 * This method has no implementation on this pattern context!
 		 */
@@ -98,12 +92,11 @@ namespace OSFramework.OSUI.Patterns.AnimatedLabel {
 			console.warn(GlobalEnum.WarningMessages.MethodNotImplemented);
 		}
 
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/AnimatedLabel/AnimatedLabel.ts
 		/**
 		 * Set the callbacks that will be assigned to the window click event
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.AnimatedLabel.AnimatedLabel
+		 * @memberof OSFramework.OSUI.Patterns.AnimatedLabel.AnimatedLabel
 		 */
 		protected setCallbacks(): void {
 			this._eventBlur = this._inputBlurCallback.bind(this);
@@ -117,7 +110,7 @@ namespace OSFramework.OSUI.Patterns.AnimatedLabel {
 		 * Update info based on htmlContent
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.AnimatedLabel.AnimatedLabel
+		 * @memberof OSFramework.OSUI.Patterns.AnimatedLabel.AnimatedLabel
 		 */
 		protected setHtmlElements(): void {
 			this._labelPhElement = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClasses.LabelPlaceholder);
@@ -149,7 +142,7 @@ namespace OSFramework.OSUI.Patterns.AnimatedLabel {
 		 * Removes the listeners that were added in the code and unsets the callbacks.
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.AnimatedLabel.AnimatedLabel
+		 * @memberof OSFramework.OSUI.Patterns.AnimatedLabel.AnimatedLabel
 		 */
 		protected unsetCallbacks(): void {
 			this._removeEvents();
@@ -163,7 +156,7 @@ namespace OSFramework.OSUI.Patterns.AnimatedLabel {
 		 * Removes the local value of the variables pointing to HTML elements;
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.AnimatedLabel.AnimatedLabel
+		 * @memberof OSFramework.OSUI.Patterns.AnimatedLabel.AnimatedLabel
 		 */
 		protected unsetHtmlElements(): void {
 			this._labelPhElement = undefined;
@@ -174,7 +167,7 @@ namespace OSFramework.OSUI.Patterns.AnimatedLabel {
 		/**
 		 * Builds the animation label.
 		 *
-		 * @memberof OSFramework.Patterns.AnimatedLabel.AnimatedLabel
+		 * @memberof OSFramework.OSUI.Patterns.AnimatedLabel.AnimatedLabel
 		 */
 		public build(): void {
 			//OS takes a while to set the TextArea
@@ -192,7 +185,7 @@ namespace OSFramework.OSUI.Patterns.AnimatedLabel {
 		/**
 		 * Destroy the Animatedlabel.
 		 *
-		 * @memberof OSFramework.Patterns.AnimatedLabel.AnimatedLabel
+		 * @memberof OSFramework.OSUI.Patterns.AnimatedLabel.AnimatedLabel
 		 */
 		public dispose(): void {
 			this.unsetCallbacks();
@@ -206,7 +199,7 @@ namespace OSFramework.OSUI.Patterns.AnimatedLabel {
 		/**
 		 * Update Label active status accordingly when the input info has changed.
 		 *
-		 * @memberof OSFramework.Patterns.AnimatedLabel.AnimatedLabel
+		 * @memberof OSFramework.OSUI.Patterns.AnimatedLabel.AnimatedLabel
 		 */
 		public updateOnRender(): void {
 			// Do not run this instead the pattern is totally built

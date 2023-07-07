@@ -1,9 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/RangeSlider/Enum.ts
-namespace OSFramework.Patterns.RangeSlider.Enum {
-========
 namespace OSFramework.OSUI.Patterns.RangeSlider.Enum {
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/RangeSlider/Enum.ts
 	/**
 	 * RangeSlider Enum for CSS Classes
 	 */

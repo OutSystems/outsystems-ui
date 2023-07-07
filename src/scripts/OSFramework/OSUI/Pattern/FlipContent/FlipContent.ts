@@ -1,9 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/FlipContent/FlipContent.ts
-namespace OSFramework.Patterns.FlipContent {
-========
 namespace OSFramework.OSUI.Patterns.FlipContent {
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/FlipContent/FlipContent.ts
 	/**
 	 * Defines the interface for OutSystemsUI Patterns
 	 */
@@ -16,11 +12,7 @@ namespace OSFramework.OSUI.Patterns.FlipContent {
 		private _flipWrapperElement: HTMLElement;
 
 		// Callback function to trigger the click event on the platform
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/FlipContent/FlipContent.ts
-		private _plataformEventFlip: Callbacks.OSFlipEvent;
-========
 		private _platformEventOnToggle: GlobalCallbacks.OSGeneric;
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/FlipContent/FlipContent.ts
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new FlipContentConfig(configs));
@@ -97,7 +89,7 @@ namespace OSFramework.OSUI.Patterns.FlipContent {
 		 * Set the A11Y attributes
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.FlipContent.FlipContent
+		 * @memberof OSFramework.OSUI.Patterns.FlipContent.FlipContent
 		 */
 		protected setA11YProperties(): void {
 			if (this.configs.FlipSelf) {
@@ -112,7 +104,7 @@ namespace OSFramework.OSUI.Patterns.FlipContent {
 		 * Set the events
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.FlipContent.FlipContent
+		 * @memberof OSFramework.OSUI.Patterns.FlipContent.FlipContent
 		 */
 		protected setCallbacks(): void {
 			this._eventKeydown = this._keydownCallback.bind(this);
@@ -125,7 +117,7 @@ namespace OSFramework.OSUI.Patterns.FlipContent {
 		 * Set the HTML elements
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.FlipContent.FlipContent
+		 * @memberof OSFramework.OSUI.Patterns.FlipContent.FlipContent
 		 */
 		protected setHtmlElements(): void {
 			this._flipWrapperElement = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.PatternContainer);
@@ -135,7 +127,7 @@ namespace OSFramework.OSUI.Patterns.FlipContent {
 		 * Method to remove all assigned callbacks
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.FlipContent.FlipContent
+		 * @memberof OSFramework.OSUI.Patterns.FlipContent.FlipContent
 		 */
 		protected unsetCallbacks(): void {
 			this._removeEvents();
@@ -148,7 +140,7 @@ namespace OSFramework.OSUI.Patterns.FlipContent {
 		 * Set the HTML elements
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.FlipContent.FlipContent
+		 * @memberof OSFramework.OSUI.Patterns.FlipContent.FlipContent
 		 */
 		protected unsetHtmlElements(): void {
 			this._flipWrapperElement = undefined;
@@ -157,7 +149,7 @@ namespace OSFramework.OSUI.Patterns.FlipContent {
 		/**
 		 * Building Flip Content
 		 *
-		 * @memberof OSFramework.Patterns.FlipContent.FlipContent
+		 * @memberof OSFramework.OSUI.Patterns.FlipContent.FlipContent
 		 */
 		public build(): void {
 			super.build();
@@ -180,7 +172,7 @@ namespace OSFramework.OSUI.Patterns.FlipContent {
 		 *
 		 * @param {string} propertyName
 		 * @param {unknown} propertyValue
-		 * @memberof OSFramework.Patterns.FlipContent.FlipContent
+		 * @memberof OSFramework.OSUI.Patterns.FlipContent.FlipContent
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
@@ -201,7 +193,7 @@ namespace OSFramework.OSUI.Patterns.FlipContent {
 		/**
 		 * Destroy FlipContent
 		 *
-		 * @memberof OSFramework.Patterns.FlipContent.FlipContent
+		 * @memberof OSFramework.OSUI.Patterns.FlipContent.FlipContent
 		 */
 		public dispose(): void {
 			this.unsetCallbacks();
@@ -215,13 +207,8 @@ namespace OSFramework.OSUI.Patterns.FlipContent {
 		 *
 		 * @param {string} eventName
 		 * @param {GlobalCallbacks.OSGeneric} callback
-		 @memberof OSFramework.Patterns.FlipContent.FlipContent
+		 @memberof OSFramework.OSUI.Patterns.FlipContent.FlipContent
 		 */
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/FlipContent/FlipContent.ts
-		public registerCallback(callback: Callbacks.OSFlipEvent): void {
-			if (this._plataformEventFlip === undefined) {
-				this._plataformEventFlip = callback;
-========
 		public registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
 				case Enum.Events.OnToggle:
@@ -231,7 +218,6 @@ namespace OSFramework.OSUI.Patterns.FlipContent {
 					break;
 				default:
 					super.registerCallback(eventName, callback);
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/FlipContent/FlipContent.ts
 			}
 		}
 
@@ -244,7 +230,7 @@ namespace OSFramework.OSUI.Patterns.FlipContent {
 		/**
 		 * Tries to show the font
 		 *
-		 * @memberof OSFramework.Patterns.FlipContent.FlipContent
+		 * @memberof OSFramework.OSUI.Patterns.FlipContent.FlipContent
 		 */
 		public showFrontContent(): void {
 			if (this.configs.IsFlipped) {
@@ -255,7 +241,7 @@ namespace OSFramework.OSUI.Patterns.FlipContent {
 		/**
 		 * Public method to trigger the flipping of the pattern and the event on the platform's side
 		 *
-		 * @memberof OSFramework.Patterns.FlipContent.FlipContent
+		 * @memberof OSFramework.OSUI.Patterns.FlipContent.FlipContent
 		 */
 		public toggleFlipContent(): void {
 			this.configs.IsFlipped = !this.configs.IsFlipped;

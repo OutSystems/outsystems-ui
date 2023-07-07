@@ -6,7 +6,7 @@ namespace OSFramework.OSUI.Helper {
 		 * Function that validates if a given svgString is a valid SVG
 		 *
 		 * @param url
-		 * @memberof OSFramework.Helper.URL
+		 * @memberof OSFramework.OSUI.Helper.URL
 		 */
 		public static IsValid(svgString: string): boolean {
 			const parser = new DOMParser();

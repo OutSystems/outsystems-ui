@@ -1,9 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/DropdownServerSideItem/IDropdownServerSideItem.ts
-namespace OSFramework.Patterns.DropdownServerSideItem {
-========
 namespace OSFramework.OSUI.Patterns.DropdownServerSideItem {
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/DropdownServerSideItem/IDropdownServerSideItem.ts
 	/**
 	 * Defines the interface for OutSystemsUI DropdownServerSideItem Pattern
 	 *
@@ -16,7 +12,7 @@ namespace OSFramework.OSUI.Patterns.DropdownServerSideItem {
 		 * Key used to trigger the notification into Dropdown parent
 		 *
 		 * @type {string}
-		 * @memberof OSFramework.Patterns.DropdownServerSideItem.IDropdownServerSideItem
+		 * @memberof OSFramework.OSUI.Patterns.DropdownServerSideItem.IDropdownServerSideItem
 		 */
 		keyboardTriggeredKey: string;
 
@@ -25,7 +21,7 @@ namespace OSFramework.OSUI.Patterns.DropdownServerSideItem {
 		 *
 		 * @readonly
 		 * @type {boolean}
-		 * @memberof OSFramework.Patterns.DropdownServerSideItem.IDropdownServerSideItem
+		 * @memberof OSFramework.OSUI.Patterns.DropdownServerSideItem.IDropdownServerSideItem
 		 */
 		get IsSelected(): boolean;
 
@@ -34,18 +30,14 @@ namespace OSFramework.OSUI.Patterns.DropdownServerSideItem {
 		 *
 		 * @readonly
 		 * @type {boolean}
-		 * @memberof OSFramework.Patterns.DropdownServerSideItem.IDropdownServerSideItem
+		 * @memberof OSFramework.OSUI.Patterns.DropdownServerSideItem.IDropdownServerSideItem
 		 */
 		get ItemId(): string;
 		/**
 		 * Method used to update the DropdownOptionItem selected state
 		 *
 		 * @param triggerCallback True by default, used to block the callback when needed
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/DropdownServerSideItem/IDropdownServerSideItem.ts
-		 * @memberof IDropdownServerSideItem
-========
-		 * @memberof OSFramework.Patterns.DropdownServerSideItem.IDropdownServerSideItem
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/DropdownServerSideItem/IDropdownServerSideItem.ts
+		 * @memberof OSFramework.OSUI.Patterns.DropdownServerSideItem.IDropdownServerSideItem
 		 */
 		toggleSelected(triggerCallback?: boolean): void;
 	}

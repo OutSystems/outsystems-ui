@@ -1,9 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/SectionIndex/SectionIndexConfig.ts
-namespace OSFramework.Patterns.SectionIndex {
-========
 namespace OSFramework.OSUI.Patterns.SectionIndex {
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/SectionIndex/SectionIndexConfig.ts
 	/**
 	 * Class that represents the custom configurations received by the SectionIndex.
 	 *
@@ -21,7 +17,7 @@ namespace OSFramework.OSUI.Patterns.SectionIndex {
 		 * @param key property name
 		 * @param value value to be check
 		 * @returns {unknown} value
-		 * @memberof  OSFramework.Patterns.SectionIndex.SectionIndexConfig
+		 * @memberof  OSFramework.OSUI.Patterns.SectionIndex.SectionIndexConfig
 		 */
 		public validateDefault(key: string, value: unknown): unknown {
 			let validatedValue = undefined;

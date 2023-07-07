@@ -157,7 +157,7 @@ namespace OSFramework.OSUI.Patterns.SectionIndex {
 		 * This method has no implementation on this pattern context!
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.SectionIndex.SectionIndex
+		 * @memberof OSFramework.OSUI.Patterns.SectionIndex.SectionIndex
 		 */
 		protected setA11YProperties(): void {
 			console.warn(GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -167,7 +167,7 @@ namespace OSFramework.OSUI.Patterns.SectionIndex {
 		 * This method has no implementation on this pattern context!
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.SectionIndex.SectionIndex
+		 * @memberof OSFramework.OSUI.Patterns.SectionIndex.SectionIndex
 		 */
 		protected setCallbacks(): void {
 			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -177,7 +177,7 @@ namespace OSFramework.OSUI.Patterns.SectionIndex {
 		 * Method to set the HTMLElements used
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.SectionIndex.SectionIndex
+		 * @memberof OSFramework.OSUI.Patterns.SectionIndex.SectionIndex
 		 */
 		protected setHtmlElements(): void {
 			// Check if overlay is enabled => If StatusBar is enabled and if is iOS device
@@ -202,7 +202,7 @@ namespace OSFramework.OSUI.Patterns.SectionIndex {
 		 * This method has no implementation on this pattern context!
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.SectionIndex.SectionIndex
+		 * @memberof OSFramework.OSUI.Patterns.SectionIndex.SectionIndex
 		 */
 		protected unsetCallbacks(): void {
 			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -212,7 +212,7 @@ namespace OSFramework.OSUI.Patterns.SectionIndex {
 		 * Method to unset the HTMLElements used
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.SectionIndex.SectionIndex
+		 * @memberof OSFramework.OSUI.Patterns.SectionIndex.SectionIndex
 		 */
 		protected unsetHtmlElements(): void {
 			this._mainScrollContainerElement = undefined;
@@ -223,7 +223,7 @@ namespace OSFramework.OSUI.Patterns.SectionIndex {
 		 *
 		 * @param childId Child Item Id to be stored/managed
 		 * @param notifiedTo {Enum.ChildNotifyActionType} triggered notification type
-		 * @memberof OSFramework.Patterns.SectionIndex.SectionIndex
+		 * @memberof OSFramework.OSUI.Patterns.SectionIndex.SectionIndex
 		 */
 		public beNotifiedByChild(
 			childItem: Patterns.SectionIndexItem.SectionIndexItem,
@@ -252,7 +252,7 @@ namespace OSFramework.OSUI.Patterns.SectionIndex {
 		/**
 		 *  Builds the SectionIndex.
 		 *
-		 * @memberof OSFramework.Patterns.SectionIndex.SectionIndex
+		 * @memberof OSFramework.OSUI.Patterns.SectionIndex.SectionIndex
 		 */
 		public build(): void {
 			super.build();
@@ -271,7 +271,7 @@ namespace OSFramework.OSUI.Patterns.SectionIndex {
 		 *
 		 * @param {string} propertyName
 		 * @param {unknown} propertyValue
-		 * @memberof OSFramework.Patterns.SectionIndex.SectionIndex
+		 * @memberof OSFramework.OSUI.Patterns.SectionIndex.SectionIndex
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
@@ -287,7 +287,7 @@ namespace OSFramework.OSUI.Patterns.SectionIndex {
 		/**
 		 * Disposes the current pattern.
 		 *
-		 * @memberof OSFramework.Patterns.SectionIndex.SectionIndex
+		 * @memberof OSFramework.OSUI.Patterns.SectionIndex.SectionIndex
 		 */
 		public dispose(): void {
 			this.unsetHtmlElements();

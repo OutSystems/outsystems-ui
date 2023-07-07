@@ -1,9 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/DropdownServerSideItem/DropdownServerSideItemConfig.ts
-namespace OSFramework.Patterns.DropdownServerSideItem {
-========
 namespace OSFramework.OSUI.Patterns.DropdownServerSideItem {
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/DropdownServerSideItem/DropdownServerSideItemConfig.ts
 	/**
 	 * Class that represents the custom configurations received by the DropdownServerSideItem.
 	 *
@@ -25,7 +21,7 @@ namespace OSFramework.OSUI.Patterns.DropdownServerSideItem {
 		 * @param key property name
 		 * @param value value to be check
 		 * @returns {unknown} value
-		 * @memberof  OSFramework.Patterns.DropdownServerSideItem.DropdownServerSideItemConfig
+		 * @memberof  OSFramework.OSUI.Patterns.DropdownServerSideItem.DropdownServerSideItemConfig
 		 */
 		public validateDefault(key: string, value: unknown): unknown {
 			let validatedValue = undefined;

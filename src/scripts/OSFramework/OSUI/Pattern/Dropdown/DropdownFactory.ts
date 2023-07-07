@@ -1,16 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/Dropdown/DropdownFactory.ts
-namespace OSFramework.Patterns.Dropdown.Factory {
-========
 namespace OSFramework.OSUI.Patterns.Dropdown.Factory {
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/Dropdown/DropdownFactory.ts
 	/**
 	 * Create the new Dropdown instance object according given provider
 	 *
 	 * @export
 	 * @param {string} dropdownId ID of the Pattern that a new instance will be created.
 	 * @param {string} configs Configurations for the Pattern in JSON format.
-	 * @return {*}  {OSFramework.Patterns.Progress.IDropdown}
+	 * @return {*}  {OSFramework.OSUI.Patterns.Progress.IDropdown}
 	 */
 	export function NewDropdown(
 		dropdownId: string,

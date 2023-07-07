@@ -1,9 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/AccordionItem/Enum.ts
-namespace OSFramework.Patterns.AccordionItem.Enum {
-========
 namespace OSFramework.OSUI.Patterns.AccordionItem.Enum {
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/AccordionItem/Enum.ts
 	/**
 	 * AccordionItem Enum properties
 	 */

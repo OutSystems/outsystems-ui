@@ -1,9 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/AnimatedLabel/Enum.ts
-namespace OSFramework.Patterns.AnimatedLabel.Enum {
-========
 namespace OSFramework.OSUI.Patterns.AnimatedLabel.Enum {
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/AnimatedLabel/Enum.ts
 	/**
 	 * AnimatedLabel Enums
 	 */

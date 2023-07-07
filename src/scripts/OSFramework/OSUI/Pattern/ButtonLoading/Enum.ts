@@ -1,9 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/ButtonLoading/Enum.ts
-namespace OSFramework.Patterns.ButtonLoading.Enum {
-========
 namespace OSFramework.OSUI.Patterns.ButtonLoading.Enum {
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/ButtonLoading/Enum.ts
 	/**
 	 * ButtonLoading Enum properties
 	 *

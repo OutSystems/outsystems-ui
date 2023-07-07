@@ -9,14 +9,6 @@ namespace Providers.OSUI.Dropdown.VirtualSelect.Enum {
 	}
 
 	/**
-	 * VirtualSelect provider info
-	 */
-	export enum ProviderInfo {
-		Name = 'VirtualSelect',
-		Version = '1.0.31',
-	}
-
-	/**
 	 * CSS Classes
 	 */
 	export enum CssClass {

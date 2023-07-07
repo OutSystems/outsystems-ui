@@ -21,7 +21,7 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 		 * @param {string} key
 		 * @param {unknown} value
 		 * @return {*}  {unknown}
-		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheetConfig
+		 * @memberof OSFramework.OSUI.Patterns.BottomSheet.BottomSheetConfig
 		 */
 		public validateDefault(key: string, value: unknown): unknown {
 			let validatedValue = undefined;

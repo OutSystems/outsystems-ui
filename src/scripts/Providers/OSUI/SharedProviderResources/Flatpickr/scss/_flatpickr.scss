@@ -2,10 +2,7 @@
 	Overriding styles for Flatpickr library.
 	Shared between SingleDatePicker, RangeDatePicker and TimePicker
 */
-<<<<<<<< HEAD:src/scripts/Providers/SharedProviderResources/Flatpickr/scss/_flatpickr.scss
-========
 
->>>>>>>> origin/rc2.16.0:src/scripts/Providers/OSUI/SharedProviderResources/Flatpickr/scss/_flatpickr.scss
 .flatpickr-calendar {
 	--osui-flatpickr-layer: var(--layer-global-elevated);
 	border-radius: var(--border-radius-soft);
@@ -14,9 +11,6 @@
 	width: 320px;
 
 	&.open {
-<<<<<<<< HEAD:src/scripts/Providers/SharedProviderResources/Flatpickr/scss/_flatpickr.scss
-		z-index: 99;
-========
 		z-index: var(--osui-flatpickr-layer);
 
 		&.inside-bottom-sheet {
@@ -31,7 +25,6 @@
 		&.inside-notification {
 			z-index: calc(var(--osui-notification-layer) + var(--layer-local-tier-1));
 		}
->>>>>>>> origin/rc2.16.0:src/scripts/Providers/OSUI/SharedProviderResources/Flatpickr/scss/_flatpickr.scss
 	}
 
 	&.arrowTop {
@@ -487,13 +480,10 @@ span.flatpickr-weekday {
 // IsRTL -------------------------------------------------------------------------
 ///
 .is-rtl {
-<<<<<<<< HEAD:src/scripts/Providers/SharedProviderResources/Flatpickr/scss/_flatpickr.scss
-========
 	&:has(.layout-side) .flatpickr-calendar {
 		--osui-flatpickr-layer: calc(var(--osui-menu-layer) + var(--layer-local-tier-1));
 	}
 
->>>>>>>> origin/rc2.16.0:src/scripts/Providers/OSUI/SharedProviderResources/Flatpickr/scss/_flatpickr.scss
 	.flatpickr-calendar {
 		// This +10px will be used to better contain all the text without cropping it since RTL texts are bigger
 		width: 330px;

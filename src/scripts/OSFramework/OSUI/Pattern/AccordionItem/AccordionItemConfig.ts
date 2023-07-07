@@ -1,9 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/AccordionItem/AccordionItemConfig.ts
-namespace OSFramework.Patterns.AccordionItem {
-========
 namespace OSFramework.OSUI.Patterns.AccordionItem {
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/AccordionItem/AccordionItemConfig.ts
 	export class AccordionItemConfig extends AbstractConfiguration {
 		public Icon: string;
 		public IconPosition: string;
@@ -20,7 +16,7 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 		 * @param isBuilt if pattern is already built
 		 * @param key key name to be checked
 		 * @returns {boolean}
-		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItemConfig
+		 * @memberof OSFramework.OSUI.Patterns.AccordionItem.AccordionItemConfig
 		 */
 		public validateCanChange(isBuilt: boolean, key: string): boolean {
 			if (isBuilt) {
@@ -35,7 +31,7 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 		 * @param key property name
 		 * @param value value to be set
 		 * @returns {*}
-		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItemConfig
+		 * @memberof OSFramework.OSUI.Patterns.AccordionItem.AccordionItemConfig
 		 */
 		public validateDefault(key: string, value: unknown): unknown {
 			let validatedValue = undefined;

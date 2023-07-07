@@ -1,9 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/Notification/NotificationConfig.ts
-namespace OSFramework.Patterns.Notification {
-========
 namespace OSFramework.OSUI.Patterns.Notification {
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/Notification/NotificationConfig.ts
 	export class NotificationConfig extends AbstractConfiguration {
 		public CloseAfterTime: number;
 		public InteractToClose: boolean;
@@ -18,7 +14,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		 * @param isBuilt True when pattern has been built!
 		 * @param key property name
 		 * @returns {boolean} boolean
-		 * @memberof  OSFramework.Patterns.Notification.NotificationConfig
+		 * @memberof  OSFramework.OSUI.Patterns.Notification.NotificationConfig
 		 */
 		public validateCanChange(isBuilt: boolean, key: string): boolean {
 			if (isBuilt) {
@@ -33,7 +29,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		 * @param key property name
 		 * @param value value to be check
 		 * @returns {unknown} value
-		 * @memberof  OSFramework.Patterns.Notification.NotificationConfig
+		 * @memberof  OSFramework.OSUI.Patterns.Notification.NotificationConfig
 		 */
 		public validateDefault(key: string, value: unknown): unknown {
 			let validatedValue = undefined;

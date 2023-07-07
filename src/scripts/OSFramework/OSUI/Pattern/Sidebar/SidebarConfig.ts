@@ -1,9 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/Sidebar/SidebarConfig.ts
-namespace OSFramework.Patterns.Sidebar {
-========
 namespace OSFramework.OSUI.Patterns.Sidebar {
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/Sidebar/SidebarConfig.ts
 	export class SidebarConfig extends AbstractConfiguration {
 		/** PUBLIC PROPERTIES **/
 		public Direction: GlobalEnum.Direction;
@@ -21,7 +17,7 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 		 * @param isBuilt True when pattern has been built!
 		 * @param key property name
 		 * @returns {boolean} boolean
-		 * @memberof  OSFramework.Patterns.Sidebar.SidebarConfig
+		 * @memberof  OSFramework.OSUI.Patterns.Sidebar.SidebarConfig
 		 */
 		public validateCanChange(isBuilt: boolean, key: string): boolean {
 			if (isBuilt) {
@@ -36,7 +32,7 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 		 * @param key property name
 		 * @param value value to be check
 		 * @returns {unknown} value
-		 * @memberof  OSFramework.Patterns.Sidebar.SidebarConfig
+		 * @memberof  OSFramework.OSUI.Patterns.Sidebar.SidebarConfig
 		 */
 		public validateDefault(key: string, value: unknown): unknown {
 			let validatedValue = undefined;

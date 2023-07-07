@@ -1,9 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/AbstractConfiguration.ts
-namespace OSFramework.Patterns {
-========
 namespace OSFramework.OSUI.Patterns {
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/AbstractConfiguration.ts
 	/**
 	 * Contains the configurations shared with all patterns.
 	 *
@@ -30,7 +26,7 @@ namespace OSFramework.OSUI.Patterns {
 		 * @param {(boolean | undefined)} value
 		 * @param {boolean} defaultValue
 		 * @return {*}  {boolean}
-		 * @memberof OSFramework.Patterns.AbstractConfiguration
+		 * @memberof OSFramework.OSUI.Patterns.AbstractConfiguration
 		 */
 		protected validateBoolean(value: boolean | undefined, defaultValue: boolean): boolean {
 			return value !== undefined ? value : defaultValue;
@@ -43,7 +39,7 @@ namespace OSFramework.OSUI.Patterns {
 		 * @param {string} value
 		 * @param {string} defaultValue
 		 * @return {*}  {(string | Date)}
-		 * @memberof OSFramework.Patterns.AbstractConfiguration
+		 * @memberof OSFramework.OSUI.Patterns.AbstractConfiguration
 		 */
 		protected validateDate(value: string | Date, defaultValue: string): string | Date {
 			return Helper.Dates.IsNull(value) === false ? value : defaultValue;
@@ -57,7 +53,7 @@ namespace OSFramework.OSUI.Patterns {
 		 * @param {unknown} defaultValue
 		 * @param {...unknown[]} args
 		 * @return {*}  {unknown}
-		 * @memberof OSFramework.Patterns.AbstractConfiguration
+		 * @memberof OSFramework.OSUI.Patterns.AbstractConfiguration
 		 */
 		protected validateInRange(value: unknown, defaultValue: unknown, ...args: unknown[]): unknown {
 			if (value) {
@@ -79,7 +75,7 @@ namespace OSFramework.OSUI.Patterns {
 		 * @param {number} value
 		 * @param {number} defaultValue
 		 * @return {*}  {number}
-		 * @memberof OSFramework.Patterns.AbstractConfiguration
+		 * @memberof OSFramework.OSUI.Patterns.AbstractConfiguration
 		 */
 		protected validateNumber(value: number, defaultValue: number): number {
 			return typeof value === 'number' ? value : defaultValue;
@@ -92,7 +88,7 @@ namespace OSFramework.OSUI.Patterns {
 		 * @param {(string | undefined)} value
 		 * @param {string} defaultValue
 		 * @return {*}  {string}
-		 * @memberof OSFramework.Patterns.AbstractConfiguration
+		 * @memberof OSFramework.OSUI.Patterns.AbstractConfiguration
 		 */
 		protected validateString(value: string | undefined, defaultValue: string): string {
 			return value && value.trim() ? value : defaultValue;
@@ -105,11 +101,7 @@ namespace OSFramework.OSUI.Patterns {
 		 * @param {string} value
 		 * @param {string} defaultValue
 		 * @return {*}  {(string)}
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/AbstractConfiguration.ts
-		 * @memberof AbstractConfiguration
-========
-		 * @memberof OSFramework.Patterns.AbstractConfiguration
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/AbstractConfiguration.ts
+		 * @memberof OSFramework.OSUI.Patterns.AbstractConfiguration
 		 */
 		protected validateTime(value: string, defaultValue: string): string {
 			return Helper.Times.IsNull(value) === false ? value : defaultValue;
@@ -121,7 +113,7 @@ namespace OSFramework.OSUI.Patterns {
 		 * @param {boolean} _isBuilt
 		 * @param {string} _key
 		 * @return {*}  {boolean}
-		 * @memberof OSFramework.Patterns.AbstractConfiguration
+		 * @memberof OSFramework.OSUI.Patterns.AbstractConfiguration
 		 */
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		public validateCanChange(_isBuilt: boolean, _key: string): boolean {
@@ -134,7 +126,7 @@ namespace OSFramework.OSUI.Patterns {
 		 * @param {string} _key
 		 * @param {unknown} value
 		 * @return {*}  {unknown}
-		 * @memberof OSFramework.Patterns.AbstractConfiguration
+		 * @memberof OSFramework.OSUI.Patterns.AbstractConfiguration
 		 */
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		public validateDefault(_key: string, value: unknown): unknown {

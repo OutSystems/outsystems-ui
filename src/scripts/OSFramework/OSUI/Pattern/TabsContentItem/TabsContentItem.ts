@@ -24,7 +24,7 @@ namespace OSFramework.OSUI.Patterns.TabsContentItem {
 		 *
 		 * @protected
 		 * @param {boolean} [isUpdate=true]
-		 * @memberof OSFramework.Patterns.TabsContentItem.TabsContentItem
+		 * @memberof OSFramework.OSUI.Patterns.TabsContentItem.TabsContentItem
 		 */
 		protected setA11YProperties(isUpdate = true): void {
 			if (isUpdate) {
@@ -47,7 +47,7 @@ namespace OSFramework.OSUI.Patterns.TabsContentItem {
 		 * This method has no implementation on this pattern context!
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.TabsContentItem.TabsContentItem
+		 * @memberof OSFramework.OSUI.Patterns.TabsContentItem.TabsContentItem
 		 */
 		protected setCallbacks(): void {
 			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -57,7 +57,7 @@ namespace OSFramework.OSUI.Patterns.TabsContentItem {
 		 * Method to set the HTML Elements
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.TabsContentItem.TabsContentItem
+		 * @memberof OSFramework.OSUI.Patterns.TabsContentItem.TabsContentItem
 		 */
 		protected setHtmlElements(): void {
 			this._focusableElements = Helper.Dom.GetFocusableElements(this.selfElement);
@@ -67,7 +67,7 @@ namespace OSFramework.OSUI.Patterns.TabsContentItem {
 		 * This method has no implementation on this pattern context!
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.TabsContentItem.TabsContentItem
+		 * @memberof OSFramework.OSUI.Patterns.TabsContentItem.TabsContentItem
 		 */
 		protected unsetCallbacks(): void {
 			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -77,7 +77,7 @@ namespace OSFramework.OSUI.Patterns.TabsContentItem {
 		 * Method to unset the HTML Elements
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.TabsContentItem.TabsContentItem
+		 * @memberof OSFramework.OSUI.Patterns.TabsContentItem.TabsContentItem
 		 */
 		protected unsetHtmlElements(): void {
 			this._focusableElements = undefined;
@@ -86,7 +86,7 @@ namespace OSFramework.OSUI.Patterns.TabsContentItem {
 		/**
 		 * Method to build the pattern
 		 *
-		 * @memberof OSFramework.Patterns.TabsContentItem.TabsContentItem
+		 * @memberof OSFramework.OSUI.Patterns.TabsContentItem.TabsContentItem
 		 */
 		public build(): void {
 			super.build();
@@ -109,7 +109,7 @@ namespace OSFramework.OSUI.Patterns.TabsContentItem {
 		/**
 		 * Method to remove event listener and destroy TabsContentItem instance
 		 *
-		 * @memberof OSFramework.Patterns.TabsContentItem.TabsContentItem
+		 * @memberof OSFramework.OSUI.Patterns.TabsContentItem.TabsContentItem
 		 */
 		public dispose(): void {
 			this.unsetHtmlElements();
@@ -123,7 +123,7 @@ namespace OSFramework.OSUI.Patterns.TabsContentItem {
 		 * Method to get the current data-tab attribute, called by the Tabs
 		 *
 		 * @return {*}  {number}
-		 * @memberof OSFramework.Patterns.TabsContentItem.TabsContentItem
+		 * @memberof OSFramework.OSUI.Patterns.TabsContentItem.TabsContentItem
 		 */
 		public getDataTab(): number {
 			return this._dataTab;
@@ -133,7 +133,7 @@ namespace OSFramework.OSUI.Patterns.TabsContentItem {
 		 * Method to get the element offsetLeft value, called by the Tabs
 		 *
 		 * @return {*}  {number}
-		 * @memberof OSFramework.Patterns.TabsContentItem.TabsContentItem
+		 * @memberof OSFramework.OSUI.Patterns.TabsContentItem.TabsContentItem
 		 */
 		public getOffsetLeft(): number {
 			return this.selfElement.offsetLeft;
@@ -143,7 +143,7 @@ namespace OSFramework.OSUI.Patterns.TabsContentItem {
 		 * Method to set the aria-labbeledby attribute, called by the tabs
 		 *
 		 * @param {string} headerItemId
-		 * @memberof OSFramework.Patterns.TabsContentItem.TabsContentItem
+		 * @memberof OSFramework.OSUI.Patterns.TabsContentItem.TabsContentItem
 		 */
 		public setAriaLabelledByAttribute(headerItemId: string): void {
 			Helper.A11Y.AriaLabelledBy(this.selfElement, headerItemId);
@@ -153,7 +153,7 @@ namespace OSFramework.OSUI.Patterns.TabsContentItem {
 		 * Method to set the data-tab attribute, called by the tabs
 		 *
 		 * @param {number} dataTab
-		 * @memberof OSFramework.Patterns.TabsContentItem.TabsContentItem
+		 * @memberof OSFramework.OSUI.Patterns.TabsContentItem.TabsContentItem
 		 */
 		public setDataTab(dataTab: number): void {
 			Helper.Dom.Attribute.Set(this.selfElement, Tabs.Enum.Attributes.DataTab, dataTab.toString());
@@ -163,7 +163,7 @@ namespace OSFramework.OSUI.Patterns.TabsContentItem {
 		/**
 		 * Method to set the element as active, called by the tabs
 		 *
-		 * @memberof OSFramework.Patterns.TabsContentItem.TabsContentItem
+		 * @memberof OSFramework.OSUI.Patterns.TabsContentItem.TabsContentItem
 		 */
 		public setIsActive(): void {
 			if (this.selfElement) {
@@ -177,7 +177,7 @@ namespace OSFramework.OSUI.Patterns.TabsContentItem {
 		 * Method to set the intersection observer, called by the tabs
 		 *
 		 * @param {IntersectionObserver} observer
-		 * @memberof OSFramework.Patterns.TabsContentItem.TabsContentItem
+		 * @memberof OSFramework.OSUI.Patterns.TabsContentItem.TabsContentItem
 		 */
 		public setOnDragObserver(observer: IntersectionObserver): void {
 			observer.observe(this.selfElement);
@@ -187,7 +187,7 @@ namespace OSFramework.OSUI.Patterns.TabsContentItem {
 		 * Method to stop observing this element in the intersection observer, called by the tabs
 		 *
 		 * @param {IntersectionObserver} observer
-		 * @memberof OSFramework.Patterns.TabsContentItem.TabsContentItem
+		 * @memberof OSFramework.OSUI.Patterns.TabsContentItem.TabsContentItem
 		 */
 		public unobserveDragObserver(observer: IntersectionObserver): void {
 			// disconnect observer when destroyed from DOM
@@ -197,7 +197,7 @@ namespace OSFramework.OSUI.Patterns.TabsContentItem {
 		/**
 		 * Method to set the element as active, called by the tabs
 		 *
-		 * @memberof OSFramework.Patterns.TabsContentItem.TabsContentItem
+		 * @memberof OSFramework.OSUI.Patterns.TabsContentItem.TabsContentItem
 		 */
 		public unsetIsActive(): void {
 			if (this.selfElement) {
@@ -212,7 +212,7 @@ namespace OSFramework.OSUI.Patterns.TabsContentItem {
 		 *
 		 * @readonly
 		 * @type {boolean}
-		 * @memberof OSFramework.Patterns.TabsContentItem.TabsContentItem
+		 * @memberof OSFramework.OSUI.Patterns.TabsContentItem.TabsContentItem
 		 */
 		public get IsActive(): boolean {
 			return this._isActive;

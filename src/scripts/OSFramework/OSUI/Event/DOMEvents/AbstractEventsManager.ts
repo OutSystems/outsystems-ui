@@ -1,9 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-<<<<<<<< HEAD:src/scripts/OSFramework/Event/AbstractEventsManager.ts
-namespace OSFramework.Event {
-========
 namespace OSFramework.OSUI.Event.DOMEvents {
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Event/DOMEvents/AbstractEventsManager.ts
 	/**
 	 * This class is a Manager of events (listeners, observers, etc.)
 	 *
@@ -21,12 +17,6 @@ namespace OSFramework.OSUI.Event.DOMEvents {
 			this._events = new Map<ET, IEvent<D>>();
 		}
 
-<<<<<<<< HEAD:src/scripts/OSFramework/Event/AbstractEventsManager.ts
-		public get events(): Map<ET, IEvent<D>> {
-			return this._events;
-		}
-
-========
 		/**
 		 * This method is used to add assign a new callback to a given EventType
 		 *
@@ -34,7 +24,6 @@ namespace OSFramework.OSUI.Event.DOMEvents {
 		 * @param handler
 		 * @memberof OSFramework.Event.AbstractEventsManager
 		 */
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Event/DOMEvents/AbstractEventsManager.ts
 		public addHandler(eventType: ET, handler: GlobalCallbacks.Generic): void {
 			if (this._events && this._events.has(eventType)) {
 				this._events.get(eventType).addHandler(handler);
@@ -63,9 +52,6 @@ namespace OSFramework.OSUI.Event.DOMEvents {
 			return returnValue;
 		}
 
-<<<<<<<< HEAD:src/scripts/OSFramework/Event/AbstractEventsManager.ts
-		public removeHandler(eventType: ET, handler: GlobalCallbacks.OSGeneric): void {
-========
 		/**
 		 * Remove the given event type
 		 *
@@ -74,7 +60,6 @@ namespace OSFramework.OSUI.Event.DOMEvents {
 		 * @memberof OSFramework.Event.AbstractEventsManager
 		 */
 		public removeHandler(eventType: ET, handler: GlobalCallbacks.Generic): void {
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Event/DOMEvents/AbstractEventsManager.ts
 			if (this._events.has(eventType)) {
 				const event = this._events.get(eventType);
 				event.removeHandler(handler);

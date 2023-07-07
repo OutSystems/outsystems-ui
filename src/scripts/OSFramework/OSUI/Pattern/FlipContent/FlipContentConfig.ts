@@ -1,9 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/FlipContent/FlipContentConfig.ts
-namespace OSFramework.Patterns.FlipContent {
-========
 namespace OSFramework.OSUI.Patterns.FlipContent {
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/FlipContent/FlipContentConfig.ts
 	export class FlipContentConfig extends AbstractConfiguration {
 		public FlipSelf: boolean;
 		public IsFlipped: boolean;
@@ -18,7 +14,7 @@ namespace OSFramework.OSUI.Patterns.FlipContent {
 		 * @param isBuilt True when pattern has been built!
 		 * @param key property name
 		 * @returns {boolean} boolean
-		 * @memberof  OSFramework.Patterns.FlipContent.FlipContentConfig
+		 * @memberof  OSFramework.OSUI.Patterns.FlipContent.FlipContentConfig
 		 */
 		public validateCanChange(isBuilt: boolean, key: string): boolean {
 			if (isBuilt) {

@@ -714,7 +714,7 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 		 * Method that adds the necessary attributes and listeners to the Tabs header
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Tabs.Tabs
+		 * @memberof OSFramework.OSUI.Patterns.Tabs.Tabs
 		 */
 		protected setA11YProperties(): void {
 			// Set aria-role to TabsHeader
@@ -727,7 +727,7 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 		 * Method to set the callbacks and event listeners
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Tabs.Tabs
+		 * @memberof OSFramework.OSUI.Patterns.Tabs.Tabs
 		 */
 		protected setCallbacks(): void {
 			this._eventOnHeaderKeypress = this._handleKeypressEvent.bind(this);
@@ -739,7 +739,7 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 		 * Method to assign the html elements to the header and content wrappers
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Tabs.Tabs
+		 * @memberof OSFramework.OSUI.Patterns.Tabs.Tabs
 		 */
 		protected setHtmlElements(): void {
 			this._tabsHeaderElement = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClasses.TabsHeader);
@@ -751,7 +751,7 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 		 * Removes the listeners that were added in the code and unsets the callbacks.
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Tabs.Tabs
+		 * @memberof OSFramework.OSUI.Patterns.Tabs.Tabs
 		 */
 		protected unsetCallbacks(): void {
 			// Remove event listeners on tabs header element
@@ -770,7 +770,7 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 		 * Method to unset the html elements references
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Tabs.Tabs
+		 * @memberof OSFramework.OSUI.Patterns.Tabs.Tabs
 		 */
 		protected unsetHtmlElements(): void {
 			this._tabsHeaderElement = undefined;
@@ -824,7 +824,7 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 		/**
 		 * Method to build the pattern
 		 *
-		 * @memberof OSFramework.Patterns.Tabs.Tabs
+		 * @memberof OSFramework.OSUI.Patterns.Tabs.Tabs
 		 */
 		public build(): void {
 			super.build();
@@ -849,7 +849,7 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 		 *
 		 * @param {string} propertyName
 		 * @param {*} propertyValue
-		 * @memberof OSFramework.Patterns.Tabs.Tabs
+		 * @memberof OSFramework.OSUI.Patterns.Tabs.Tabs
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
@@ -888,7 +888,7 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 		 * @param {boolean} [triggerEvent=false]
 		 * @param {boolean} [triggeredByObserver=false]
 		 * @return {*}  {void}
-		 * @memberof OSFramework.Patterns.Tabs.Tabs
+		 * @memberof OSFramework.OSUI.Patterns.Tabs.Tabs
 		 */
 		public changeTab(
 			tabIndex = this.configs.StartingTab,
@@ -943,7 +943,7 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 		/**
 		 * Method to remove event listener and destroy Tabs instance
 		 *
-		 * @memberof OSFramework.Patterns.Tabs.Tabs
+		 * @memberof OSFramework.OSUI.Patterns.Tabs.Tabs
 		 */
 		public dispose(): void {
 			this.unsetCallbacks();
@@ -958,7 +958,7 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 		 *
 		 * @param {string} eventName
 		 * @param {GlobalCallbacks.OSGeneric} callback
-		 * @memberof OSFramework.Patterns.Tabs.Tabs
+		 * @memberof OSFramework.OSUI.Patterns.Tabs.Tabs
 		 */
 		public registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
@@ -976,7 +976,7 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 		 * Method to set the drag gestures necessary configurations
 		 *
 		 * @param {boolean} addDragGestures
-		 * @memberof OSFramework.Patterns.Tabs.Tabs
+		 * @memberof OSFramework.OSUI.Patterns.Tabs.Tabs
 		 */
 		public toggleDragGestures(addDragGestures: boolean): void {
 			// If running on native shell

@@ -1,9 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/SwipeEvents/SwipeEvents.ts
-namespace OSFramework.Patterns.SwipeEvents {
-========
 namespace OSFramework.OSUI.Patterns.SwipeEvents {
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/SwipeEvents/SwipeEvents.ts
 	/**
 	 * Defines the interface for OutSystemsUI Patterns
 	 */
@@ -81,7 +77,7 @@ namespace OSFramework.OSUI.Patterns.SwipeEvents {
 		 * This method has no implementation on this pattern context!
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.SwipeEvents.SwipeEvents
+		 * @memberof OSFramework.OSUI.Patterns.SwipeEvents.SwipeEvents
 		 */
 		protected setA11YProperties(): void {
 			console.warn(GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -91,7 +87,7 @@ namespace OSFramework.OSUI.Patterns.SwipeEvents {
 		 * Sets the callbacks to be used in the pattern.
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.SwipeEvents.SwipeEvents
+		 * @memberof OSFramework.OSUI.Patterns.SwipeEvents.SwipeEvents
 		 */
 		protected setCallbacks(): void {
 			this._gestureStartEvent = this.EventGestureEnd.bind(this);
@@ -104,7 +100,7 @@ namespace OSFramework.OSUI.Patterns.SwipeEvents {
 		 * Set the html references that will be used to manage the cssClasses and atribute properties
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.SwipeEvents.SwipeEvents
+		 * @memberof OSFramework.OSUI.Patterns.SwipeEvents.SwipeEvents
 		 */
 		protected setHtmlElements(): void {
 			this._swipableElement = document.getElementById(this.configs.WidgetId);
@@ -114,7 +110,7 @@ namespace OSFramework.OSUI.Patterns.SwipeEvents {
 		 * Removes event listeners and callbacks.
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.SwipeEvents.SwipeEvents
+		 * @memberof OSFramework.OSUI.Patterns.SwipeEvents.SwipeEvents
 		 */
 		protected unsetCallbacks(): void {
 			this._removeEventListeners();
@@ -127,7 +123,7 @@ namespace OSFramework.OSUI.Patterns.SwipeEvents {
 		 * Release references to HTML elements.
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.SwipeEvents.SwipeEvents
+		 * @memberof OSFramework.OSUI.Patterns.SwipeEvents.SwipeEvents
 		 */
 		protected unsetHtmlElements(): void {
 			this._swipableElement = undefined;
@@ -138,7 +134,7 @@ namespace OSFramework.OSUI.Patterns.SwipeEvents {
 		 * @param {number} offsetX
 		 * @param {number} offsetY
 		 * @param {number} timeTaken
-		 * @memberof OSFramework.Patterns.SwipeEvents.SwipeEvents
+		 * @memberof OSFramework.OSUI.Patterns.SwipeEvents.SwipeEvents
 		 */
 		public EventGestureEnd(offsetX: number, offsetY: number, timeTaken: number): void {
 			if (
@@ -166,7 +162,7 @@ namespace OSFramework.OSUI.Patterns.SwipeEvents {
 		 * Block the default behaviour of the GestureMove
 		 *
 		 * @param {TouchEvent} event
-		 * @memberof OSFramework.Patterns.SwipeEvents.SwipeEvents
+		 * @memberof OSFramework.OSUI.Patterns.SwipeEvents.SwipeEvents
 		 */
 		public EventGestureMove(event: TouchEvent): void {
 			if (event) {
@@ -177,7 +173,7 @@ namespace OSFramework.OSUI.Patterns.SwipeEvents {
 		/**
 		 * Build SwipeEvents
 		 *
-		 * @memberof OSFramework.Patterns.SwipeEvents.SwipeEvents
+		 * @memberof OSFramework.OSUI.Patterns.SwipeEvents.SwipeEvents
 		 */
 		public build(): void {
 			super.build();
@@ -189,7 +185,7 @@ namespace OSFramework.OSUI.Patterns.SwipeEvents {
 		/**
 		 * Destroy SwipeEvents
 		 *
-		 * @memberof OSFramework.Patterns.SwipeEvents.SwipeEvents
+		 * @memberof OSFramework.OSUI.Patterns.SwipeEvents.SwipeEvents
 		 */
 		public dispose(): void {
 			super.dispose();
@@ -197,16 +193,13 @@ namespace OSFramework.OSUI.Patterns.SwipeEvents {
 			this.unsetHtmlElements();
 		}
 
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/SwipeEvents/SwipeEvents.ts
-========
 		/**
 		 * Method used to register the provider callback
 		 *
 		 * @param {string} eventName Event name that will be assigned
 		 * @param {GlobalCallbacks.OSGeneric} callback Function name that will be passed as a callback function to the event above
-		 * @memberof OSFramework.Patterns.SwipeEvents.SwipeEvents
+		 * @memberof OSFramework.OSUI.Patterns.SwipeEvents.SwipeEvents
 		 */
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/SwipeEvents/SwipeEvents.ts
 		public registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
 				case Patterns.SwipeEvents.Enum.Events.SwipeDown:

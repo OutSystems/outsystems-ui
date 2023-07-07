@@ -13,7 +13,7 @@ namespace OSFramework.OSUI.Patterns.InlineSvg {
 		 * @param key property name
 		 * @param value value to be check
 		 * @returns {unknown} value
-		 * @memberof  OSFramework.Patterns.InlineSvg.InlineSvgConfig
+		 * @memberof  OSFramework.OSUI.Patterns.InlineSvg.InlineSvgConfig
 		 */
 		public validateDefault(key: string, value: unknown): unknown {
 			let validatedValue = undefined;

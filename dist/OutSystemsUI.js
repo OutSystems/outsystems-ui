@@ -365,6 +365,7 @@ var OSFramework;
                 HTMLEvent["TouchMove"] = "touchmove";
                 HTMLEvent["TouchStart"] = "touchstart";
                 HTMLEvent["TransitionEnd"] = "transitionend";
+                HTMLEvent["Message"] = "message";
             })(HTMLEvent = GlobalEnum.HTMLEvent || (GlobalEnum.HTMLEvent = {}));
             let InlineStyle;
             (function (InlineStyle) {
@@ -1148,6 +1149,7 @@ var OSFramework;
                         Type["BodyOnMouseDown"] = "body.mousedown";
                         Type["OrientationChange"] = "window.onorientationchange";
                         Type["WindowResize"] = "window.onresize";
+                        Type["WindowMessage"] = "window.message";
                     })(Type = Listeners.Type || (Listeners.Type = {}));
                 })(Listeners = DOMEvents.Listeners || (DOMEvents.Listeners = {}));
             })(DOMEvents = Event.DOMEvents || (Event.DOMEvents = {}));
@@ -2023,10 +2025,12 @@ var OSFramework;
                 }
                 static get IsIphoneWithNotch() {
                     if (DeviceInfo._isIphoneWithNotch === undefined) {
-                        const ratio = window.devicePixelRatio || 1;
+                        const ratio = (sessionStorage.previewDevicesPixelRatio
+                            ? sessionStorage.previewDevicesPixelRatio
+                            : window.devicePixelRatio) || 1;
                         const currScreen = {
-                            width: window.screen.width * ratio,
-                            height: window.screen.height * ratio,
+                            width: window.visualViewport.width * ratio,
+                            height: window.visualViewport.height * ratio,
                             description: '',
                         };
                         DeviceInfo._iphoneDetails = iphoneDevices.find((device) => {
@@ -2166,6 +2170,9 @@ var OSFramework;
                         localOs = DeviceInfo._operatingSystem;
                     }
                     return localOs;
+                }
+                static RefreshOperatingSystem() {
+                    DeviceInfo._operatingSystem = DeviceInfo.GetOperatingSystem(DeviceInfo._getUserAgent());
                 }
             }
             DeviceInfo._browser = OSUI.GlobalEnum.Browser.unknown;
@@ -4042,12 +4049,6 @@ var OSFramework;
             var BottomSheet;
             (function (BottomSheet_1) {
                 class BottomSheet extends Patterns.AbstractPattern {
-                    get gestureEventInstance() {
-                        return this._gestureEventInstance;
-                    }
-                    get hasGestureEvents() {
-                        return this._hasGestureEvents;
-                    }
                     constructor(uniqueId, configs) {
                         super(uniqueId, new BottomSheet_1.BottomSheetConfig(configs));
                         this._isOpen = false;
@@ -4059,6 +4060,12 @@ var OSFramework;
                                 mass: 1,
                             },
                         };
+                    }
+                    get gestureEventInstance() {
+                        return this._gestureEventInstance;
+                    }
+                    get hasGestureEvents() {
+                        return this._hasGestureEvents;
                     }
                     _handleFocusTrap() {
                         const opts = {

@@ -1,9 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-<<<<<<<< HEAD:src/scripts/OSFramework/Helper/Sanitize.ts
-namespace OSFramework.Helper {
-========
 namespace OSFramework.OSUI.Helper {
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Helper/Sanitize.ts
 	/**
 	 * Method used to sanitize a given value text
 	 *

@@ -18,7 +18,7 @@ namespace OSFramework.OSUI.Patterns {
 		 * @param {ProviderConfigs} specificConfigs
 		 * @param {ProviderConfigs} extendedConfigs
 		 * @return {*}  {ProviderConfigs}
-		 * @memberof OSFramework.Patterns.AbstractProviderConfiguration
+		 * @memberof OSFramework.OSUI.Patterns.AbstractProviderConfiguration
 		 */
 		protected mergeConfigs(
 			commonConfigs: ProviderConfigs,

@@ -102,11 +102,7 @@
 			padding: 0 var(--space-base) 0 0;
 			position: fixed;
 			top: calc(var(--header-size) + var(--header-size-content) + var(--status-bar-height));
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/SectionIndex/scss/_sectionindex.scss
-			z-index: 1;
-========
 			z-index: var(--layer-local-tier-1);
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/SectionIndex/scss/_sectionindex.scss
 		}
 	}
 

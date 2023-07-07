@@ -6,7 +6,7 @@ namespace OSFramework.OSUI.Helper {
 		 *
 		 * @export
 		 * @param {string} time
-		 * @memberof OSFramework.Helper.Times
+		 * @memberof OSFramework.OSUI.Helper.Times
 		 */
 		public static IsNull(time: string): boolean {
 			if (isNaN(Date.parse(time))) {

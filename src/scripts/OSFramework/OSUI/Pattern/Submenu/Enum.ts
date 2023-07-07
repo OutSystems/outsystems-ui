@@ -1,9 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/Submenu/Enum.ts
-namespace OSFramework.Patterns.Submenu.Enum {
-========
 namespace OSFramework.OSUI.Patterns.Submenu.Enum {
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/Submenu/Enum.ts
 	/**
 	 *  Css Classes
 	 */

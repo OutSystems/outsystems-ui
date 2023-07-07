@@ -18,7 +18,7 @@ namespace OSFramework.OSUI.Patterns.TimePicker {
 		 * @param key property name
 		 * @param value value to be check
 		 * @returns {unknown} value
-		 * @memberof  OSFramework.Patterns.TimePicker.AbstractTimePickerConfig
+		 * @memberof  OSFramework.OSUI.Patterns.TimePicker.AbstractTimePickerConfig
 		 */
 		public validateDefault(key: string, value: unknown): unknown {
 			let validatedValue = undefined;

@@ -1,9 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/AccordionItem/AccordionItem.ts
-namespace OSFramework.Patterns.AccordionItem {
-========
 namespace OSFramework.OSUI.Patterns.AccordionItem {
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/AccordionItem/AccordionItem.ts
 	/**
 	 * Defines the interface for OutSystemsUI Patterns
 	 */
@@ -252,7 +248,7 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 		 * Method to handle Accessibility attributes
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
+		 * @memberof OSFramework.OSUI.Patterns.AccordionItem.AccordionItem
 		 */
 		protected setA11YProperties(): void {
 			// Set the static attributes on page load only
@@ -290,7 +286,7 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 		 * Method to set the listeners and callbacks
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
+		 * @memberof OSFramework.OSUI.Patterns.AccordionItem.AccordionItem
 		 */
 		protected setCallbacks(): void {
 			this._eventOnClick = this._accordionOnClickHandler.bind(this);
@@ -302,7 +298,7 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 		 * Method that sets the HTML elements of the Accordion Item
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
+		 * @memberof OSFramework.OSUI.Patterns.AccordionItem.AccordionItem
 		 */
 		protected setHtmlElements(): void {
 			this._accordionItemTitleElem = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.PatternTitle);
@@ -310,11 +306,7 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 			this._accordionItemIconElem = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.PatternIcon);
 			// Getting the custom icon that is also a placeholder (ph)
 			this._accordionItemIconCustomElem = Helper.Dom.ClassSelector(
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/AccordionItem/AccordionItem.ts
-				this._selfElem,
-========
 				this.selfElement,
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/AccordionItem/AccordionItem.ts
 				Enum.CssClass.PatternIcon + '.' + GlobalEnum.CssClassElements.Placeholder
 			);
 			this._accordionItemPlaceholder = this._accordionItemContentElem.firstChild as HTMLElement;
@@ -324,7 +316,7 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 		 * Method to set the initial CSS Classes
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
+		 * @memberof OSFramework.OSUI.Patterns.AccordionItem.AccordionItem
 		 */
 		protected setInitialCssClasses(): void {
 			if (this._isOpen) {
@@ -343,7 +335,7 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 		 * Method to remove all assigned callbacks
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
+		 * @memberof OSFramework.OSUI.Patterns.AccordionItem.AccordionItem
 		 */
 		protected unsetCallbacks(): void {
 			this._eventOnClick = undefined;
@@ -355,7 +347,7 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 		 * Method to unset the html elements
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
+		 * @memberof OSFramework.OSUI.Patterns.AccordionItem.AccordionItem
 		 */
 		protected unsetHtmlElements(): void {
 			this._accordionItemTitleElem = undefined;
@@ -369,7 +361,7 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 		 *
 		 * @readonly
 		 * @type {boolean}
-		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
+		 * @memberof OSFramework.OSUI.Patterns.AccordionItem.AccordionItem
 		 */
 		public get isDisabled(): boolean {
 			return this.configs.IsDisabled;
@@ -380,7 +372,7 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 		 *
 		 * @readonly
 		 * @type {boolean}
-		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
+		 * @memberof OSFramework.OSUI.Patterns.AccordionItem.AccordionItem
 		 */
 		public get isOpen(): boolean {
 			return this._isOpen;
@@ -389,11 +381,7 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 		/**
 		 * Method to prevent clicks inside thte title to open the accordion
 		 *
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/AccordionItem/AccordionItem.ts
-		 * @memberof AccordionItem
-========
-		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/AccordionItem/AccordionItem.ts
+		 * @memberof OSFramework.OSUI.Patterns.AccordionItem.AccordionItem
 		 */
 		public allowTitleEvents(): void {
 			this._allowTitleEvents = true;
@@ -402,21 +390,13 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 		/**
 		 * Method to build the pattern.
 		 *
-		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
+		 * @memberof OSFramework.OSUI.Patterns.AccordionItem.AccordionItem
 		 */
 		public build(): void {
 			super.build();
 
 			this.setHtmlElements();
 			this.setInitialCssClasses();
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/AccordionItem/AccordionItem.ts
-
-			this._setAccordionParent();
-
-			this._setIsDisabledState();
-			this.setA11yProperties(false);
-========
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/AccordionItem/AccordionItem.ts
 
 			this._setAccordionParent();
 
@@ -431,7 +411,7 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 		 *
 		 * @param {string} propertyName
 		 * @param {unknown} propertyValue
-		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
+		 * @memberof OSFramework.OSUI.Patterns.AccordionItem.AccordionItem
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
@@ -458,7 +438,7 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 		/**
 		 * Method to close the AccordionItem
 		 *
-		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
+		 * @memberof OSFramework.OSUI.Patterns.AccordionItem.AccordionItem
 		 */
 		public close(): void {
 			if (!this._isOpen) {
@@ -488,7 +468,7 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 		/**
 		 * Method to remove event listener and destroy AccordionItem instance
 		 *
-		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
+		 * @memberof OSFramework.OSUI.Patterns.AccordionItem.AccordionItem
 		 */
 		public dispose(): void {
 			this.unsetCallbacks();
@@ -507,7 +487,7 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 		/**
 		 * Method to open the AccordionItem
 		 *
-		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
+		 * @memberof OSFramework.OSUI.Patterns.AccordionItem.AccordionItem
 		 */
 		public open(): void {
 			if (this._isOpen) {
@@ -552,19 +532,9 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 		/**
 		 * Register a given callback event handler.
 		 *
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/AccordionItem/AccordionItem.ts
-		 * @param {GlobalCallbacks.OSGeneric} callback
-		 * @memberof AccordionItem
-		 */
-		public registerCallback(callback: GlobalCallbacks.OSGeneric): void {
-			if (this._platformEventOnToggle === undefined) {
-				this._platformEventOnToggle = callback;
-			} else {
-				console.warn(`The ${GlobalEnum.PatternName.AccordionItem} already has the toggle callback set.`);
-========
 		 * @param {string} eventName
 		 * @param {GlobalCallbacks.OSGeneric} callback
-		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
+		 * @memberof OSFramework.OSUI.Patterns.AccordionItem.AccordionItem
 		 */
 		public registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
@@ -575,7 +545,6 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 					break;
 				default:
 					super.registerCallback(eventName, callback);
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/AccordionItem/AccordionItem.ts
 			}
 		}
 	}

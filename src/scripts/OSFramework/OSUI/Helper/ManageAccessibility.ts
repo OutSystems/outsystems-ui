@@ -1,16 +1,12 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-<<<<<<<< HEAD:src/scripts/OSFramework/Helper/ManageAccessibility.ts
-namespace OSFramework.Helper {
-========
 namespace OSFramework.OSUI.Helper {
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Helper/ManageAccessibility.ts
 	export abstract class A11Y {
 		/**
 		 * Method that will disable the aria-atomic
 		 *
 		 * @param {HTMLElement} element Target element to receive the value atributte
 		 * @returns
-		 * @memberof OSFramework.Helper.A11Y
+		 * @memberof OSFramework.OSUI.Helper.A11Y
 		 */
 		public static AriaAtomicFalse(element: HTMLElement): void {
 			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Atomic, Constants.A11YAttributes.States.False);
@@ -21,7 +17,7 @@ namespace OSFramework.OSUI.Helper {
 		 *
 		 * @param {HTMLElement} element Target element to receive the value atributte
 		 * @returns
-		 * @memberof OSFramework.Helper.A11Y
+		 * @memberof OSFramework.OSUI.Helper.A11Y
 		 */
 		public static AriaAtomicTrue(element: HTMLElement): void {
 			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Atomic, Constants.A11YAttributes.States.True);
@@ -33,7 +29,7 @@ namespace OSFramework.OSUI.Helper {
 		 * @param {HTMLElement} element Target element to receive the value atributte
 		 * @param {string} targetId Element id that will be related to target element
 		 * @returns
-		 * @memberof OSFramework.Helper.A11Y
+		 * @memberof OSFramework.OSUI.Helper.A11Y
 		 */
 		public static AriaControls(element: HTMLElement, targetId: string): void {
 			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Controls, targetId);
@@ -45,7 +41,7 @@ namespace OSFramework.OSUI.Helper {
 		 * @param {HTMLElement} element Target element to receive the value atributte
 		 * @param {string} targetId Element id that will be related to target element
 		 * @returns
-		 * @memberof OSFramework.Helper.A11Y
+		 * @memberof OSFramework.OSUI.Helper.A11Y
 		 */
 		public static AriaDescribedBy(element: HTMLElement, targetId: string): void {
 			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Describedby, targetId);
@@ -57,7 +53,7 @@ namespace OSFramework.OSUI.Helper {
 		 * @static
 		 * @param {HTMLElement} element
 		 * @param {boolean} isDisabled
-		 * @memberof OSFramework.Helper.A11Y
+		 * @memberof OSFramework.OSUI.Helper.A11Y
 		 */
 		public static AriaDisabled(element: HTMLElement, isDisabled: boolean): void {
 			Helper.Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Disabled, isDisabled);
@@ -68,7 +64,7 @@ namespace OSFramework.OSUI.Helper {
 		 *
 		 * @static
 		 * @param {HTMLElement} element
-		 * @memberof OSFramework.Helper.A11Y
+		 * @memberof OSFramework.OSUI.Helper.A11Y
 		 */
 		public static AriaDisabledFalse(element: HTMLElement): void {
 			Helper.Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Disabled, false);
@@ -79,7 +75,7 @@ namespace OSFramework.OSUI.Helper {
 		 *
 		 * @static
 		 * @param {HTMLElement} element
-		 * @memberof OSFramework.Helper.A11Y
+		 * @memberof OSFramework.OSUI.Helper.A11Y
 		 */
 		public static AriaDisabledTrue(element: HTMLElement): void {
 			Helper.Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Disabled, true);
@@ -90,7 +86,7 @@ namespace OSFramework.OSUI.Helper {
 		 *
 		 * @param {HTMLElement} element Target element to receive the value atributte
 		 * @returns
-		 * @memberof OSFramework.Helper.A11Y
+		 * @memberof OSFramework.OSUI.Helper.A11Y
 		 */
 		public static AriaExpanded(element: HTMLElement, value: string): void {
 			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Expanded, value);
@@ -101,7 +97,7 @@ namespace OSFramework.OSUI.Helper {
 		 *
 		 * @param {HTMLElement} element Target element to receive the value atributte
 		 * @returns
-		 * @memberof OSFramework.Helper.A11Y
+		 * @memberof OSFramework.OSUI.Helper.A11Y
 		 */
 		public static AriaExpandedFalse(element: HTMLElement): void {
 			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Expanded, Constants.A11YAttributes.States.False);
@@ -112,7 +108,7 @@ namespace OSFramework.OSUI.Helper {
 		 *
 		 * @param {HTMLElement} element Target element to receive the value atributte
 		 * @returns
-		 * @memberof OSFramework.Helper.A11Y
+		 * @memberof OSFramework.OSUI.Helper.A11Y
 		 */
 		public static AriaExpandedTrue(element: HTMLElement): void {
 			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Expanded, Constants.A11YAttributes.States.True);
@@ -123,7 +119,7 @@ namespace OSFramework.OSUI.Helper {
 		 *
 		 * @param {HTMLElement} element Target element to receive the value atributte
 		 * @returns
-		 * @memberof OSFramework.Helper.A11Y
+		 * @memberof OSFramework.OSUI.Helper.A11Y
 		 */
 		public static AriaHasPopup(element: HTMLElement, value: string): void {
 			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Haspopup, value);
@@ -134,7 +130,7 @@ namespace OSFramework.OSUI.Helper {
 		 *
 		 * @param {HTMLElement} element Target element to receive the value atributte
 		 * @returns
-		 * @memberof OSFramework.Helper.A11Y
+		 * @memberof OSFramework.OSUI.Helper.A11Y
 		 */
 		public static AriaHasPopupFalse(element: HTMLElement): void {
 			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Haspopup, Constants.A11YAttributes.States.False);
@@ -145,7 +141,7 @@ namespace OSFramework.OSUI.Helper {
 		 *
 		 * @param {HTMLElement} element Target element to receive the value atributte
 		 * @returns
-		 * @memberof OSFramework.Helper.A11Y
+		 * @memberof OSFramework.OSUI.Helper.A11Y
 		 */
 		public static AriaHasPopupTrue(element: HTMLElement): void {
 			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Haspopup, Constants.A11YAttributes.States.True);
@@ -156,7 +152,7 @@ namespace OSFramework.OSUI.Helper {
 		 *
 		 * @param {HTMLElement} element Target element to receive the value atributte
 		 * @returns
-		 * @memberof OSFramework.Helper.A11Y
+		 * @memberof OSFramework.OSUI.Helper.A11Y
 		 */
 		public static AriaHidden(element: HTMLElement, value: string): void {
 			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Hidden, value);
@@ -167,7 +163,7 @@ namespace OSFramework.OSUI.Helper {
 		 *
 		 * @param {HTMLElement} element Target element to receive the value atributte
 		 * @returns
-		 * @memberof OSFramework.Helper.A11Y
+		 * @memberof OSFramework.OSUI.Helper.A11Y
 		 */
 		public static AriaHiddenFalse(element: HTMLElement): void {
 			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Hidden, Constants.A11YAttributes.States.False);
@@ -178,7 +174,7 @@ namespace OSFramework.OSUI.Helper {
 		 *
 		 * @param {HTMLElement} element Target element to receive the value atributte
 		 * @returns
-		 * @memberof OSFramework.Helper.A11Y
+		 * @memberof OSFramework.OSUI.Helper.A11Y
 		 */
 		public static AriaHiddenTrue(element: HTMLElement): void {
 			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Hidden, Constants.A11YAttributes.States.True);
@@ -190,7 +186,7 @@ namespace OSFramework.OSUI.Helper {
 		 * @param {HTMLElement} element Target element to receive the value atributte
 		 * @param {string} value Value atributte to be set on target element
 		 * @returns
-		 * @memberof OSFramework.Helper.A11Y
+		 * @memberof OSFramework.OSUI.Helper.A11Y
 		 */
 		public static AriaLabel(element: HTMLElement, value: string): void {
 			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Label, value);
@@ -202,7 +198,7 @@ namespace OSFramework.OSUI.Helper {
 		 * @param {HTMLElement} element Target element to receive the value atributte
 		 * @param {string} targetId Element id that will be related to target element
 		 * @returns
-		 * @memberof OSFramework.Helper.A11Y
+		 * @memberof OSFramework.OSUI.Helper.A11Y
 		 */
 		public static AriaLabelledBy(element: HTMLElement, targetId: string): void {
 			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Labelledby, targetId);
@@ -213,7 +209,7 @@ namespace OSFramework.OSUI.Helper {
 		 *
 		 * @param {HTMLElement} element Target element to receive the value atributte
 		 * @returns
-		 * @memberof OSFramework.Helper.A11Y
+		 * @memberof OSFramework.OSUI.Helper.A11Y
 		 */
 		public static AriaLiveAssertive(element: HTMLElement): void {
 			Dom.Attribute.Set(
@@ -228,7 +224,7 @@ namespace OSFramework.OSUI.Helper {
 		 *
 		 * @param {HTMLElement} element Target element to receive the value atributte
 		 * @returns
-		 * @memberof OSFramework.Helper.A11Y
+		 * @memberof OSFramework.OSUI.Helper.A11Y
 		 */
 		public static AriaLiveOff(element: HTMLElement): void {
 			Dom.Attribute.Set(
@@ -243,7 +239,7 @@ namespace OSFramework.OSUI.Helper {
 		 *
 		 * @param {HTMLElement} element Target element to receive the value atributte
 		 * @returns
-		 * @memberof OSFramework.Helper.A11Y
+		 * @memberof OSFramework.OSUI.Helper.A11Y
 		 */
 		public static AriaLivePolite(element: HTMLElement): void {
 			Dom.Attribute.Set(
@@ -258,7 +254,7 @@ namespace OSFramework.OSUI.Helper {
 		 *
 		 * @static
 		 * @param {HTMLElement} element Target element to receive the value atributte
-		 * @memberof OSFramework.Helper.A11Y
+		 * @memberof OSFramework.OSUI.Helper.A11Y
 		 */
 		public static AriaSelectedFalse(element: HTMLElement): void {
 			Helper.Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Selected, false);
@@ -269,7 +265,7 @@ namespace OSFramework.OSUI.Helper {
 		 *
 		 * @static
 		 * @param {HTMLElement} element Target element to receive the value atributte
-		 * @memberof OSFramework.Helper.A11Y
+		 * @memberof OSFramework.OSUI.Helper.A11Y
 		 */
 		public static AriaSelectedTrue(element: HTMLElement): void {
 			Helper.Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Selected, true);
@@ -281,7 +277,7 @@ namespace OSFramework.OSUI.Helper {
 		 * @param {HTMLElement} element Target element to receive the value atributte
 		 * @param {number} value Value that will be set on aria atributte
 		 * @returns
-		 * @memberof OSFramework.Helper.A11Y
+		 * @memberof OSFramework.OSUI.Helper.A11Y
 		 */
 		public static AriaValueMax(element: HTMLElement, value: number): void {
 			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.ValueMax, value);
@@ -293,7 +289,7 @@ namespace OSFramework.OSUI.Helper {
 		 * @param {HTMLElement} element Target element to receive the value atributte
 		 * @param {number} value Value that will be set on aria atributte
 		 * @returns
-		 * @memberof OSFramework.Helper.A11Y
+		 * @memberof OSFramework.OSUI.Helper.A11Y
 		 */
 		public static AriaValueMin(element: HTMLElement, value: number): void {
 			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.ValueMin, value);
@@ -304,7 +300,7 @@ namespace OSFramework.OSUI.Helper {
 		 *
 		 * @param {HTMLElement} element Target element to receive the value atributte
 		 * @returns
-		 * @memberof OSFramework.Helper.A11Y
+		 * @memberof OSFramework.OSUI.Helper.A11Y
 		 */
 		public static MultiselectableFalse(element: HTMLElement): void {
 			Dom.Attribute.Set(
@@ -319,7 +315,7 @@ namespace OSFramework.OSUI.Helper {
 		 *
 		 * @param {HTMLElement} element Target element to receive the value atributte
 		 * @returns
-		 * @memberof OSFramework.Helper.A11Y
+		 * @memberof OSFramework.OSUI.Helper.A11Y
 		 */
 		public static MultiselectableTrue(element: HTMLElement): void {
 			Dom.Attribute.Set(
@@ -334,7 +330,7 @@ namespace OSFramework.OSUI.Helper {
 		 *
 		 * @param {HTMLElement} element Target element to receive the role atributte
 		 * @returns
-		 * @memberof OSFramework.Helper.A11Y
+		 * @memberof OSFramework.OSUI.Helper.A11Y
 		 */
 		public static RoleAlert(element: HTMLElement): void {
 			Dom.Attribute.Set(element, Constants.A11YAttributes.Role.AttrName, Constants.A11YAttributes.Role.Alert);
@@ -345,7 +341,7 @@ namespace OSFramework.OSUI.Helper {
 		 *
 		 * @param {HTMLElement} element Target element to receive the role atributte
 		 * @returns
-		 * @memberof OSFramework.Helper.A11Y
+		 * @memberof OSFramework.OSUI.Helper.A11Y
 		 */
 		public static RoleButton(element: HTMLElement): void {
 			Dom.Attribute.Set(element, Constants.A11YAttributes.Role.AttrName, Constants.A11YAttributes.Role.Button);
@@ -356,7 +352,7 @@ namespace OSFramework.OSUI.Helper {
 		 *
 		 * @static
 		 * @param {HTMLElement} element
-		 * @memberof OSFramework.Helper.A11Y
+		 * @memberof OSFramework.OSUI.Helper.A11Y
 		 */
 		public static RoleComplementary(element: HTMLElement): void {
 			Dom.Attribute.Set(
@@ -371,7 +367,7 @@ namespace OSFramework.OSUI.Helper {
 		 *
 		 * @param {HTMLElement} element Target element to receive the role atributte
 		 * @returns
-		 * @memberof OSFramework.Helper.A11Y
+		 * @memberof OSFramework.OSUI.Helper.A11Y
 		 */
 		public static RoleListbox(element: HTMLElement): void {
 			Dom.Attribute.Set(element, Constants.A11YAttributes.Role.AttrName, Constants.A11YAttributes.Role.Listbox);
@@ -382,7 +378,7 @@ namespace OSFramework.OSUI.Helper {
 		 *
 		 * @param {HTMLElement} element Target element to receive the role atributte
 		 * @returns
-		 * @memberof OSFramework.Helper.A11Y
+		 * @memberof OSFramework.OSUI.Helper.A11Y
 		 */
 		public static RoleMenuItem(element: HTMLElement): void {
 			Dom.Attribute.Set(element, Constants.A11YAttributes.Role.AttrName, Constants.A11YAttributes.Role.MenuItem);
@@ -393,7 +389,7 @@ namespace OSFramework.OSUI.Helper {
 		 *
 		 * @param {HTMLElement} element Target element to receive the role atributte
 		 * @returns
-		 * @memberof OSFramework.Helper.A11Y
+		 * @memberof OSFramework.OSUI.Helper.A11Y
 		 */
 		public static RoleOption(element: HTMLElement): void {
 			Dom.Attribute.Set(element, Constants.A11YAttributes.Role.AttrName, Constants.A11YAttributes.Role.Option);
@@ -404,7 +400,7 @@ namespace OSFramework.OSUI.Helper {
 		 *
 		 * @param {HTMLElement} element Target element to receive the role atributte
 		 * @returns
-		 * @memberof OSFramework.Helper.A11Y
+		 * @memberof OSFramework.OSUI.Helper.A11Y
 		 */
 		public static RoleProgressBar(element: HTMLElement): void {
 			Dom.Attribute.Set(
@@ -419,7 +415,7 @@ namespace OSFramework.OSUI.Helper {
 		 *
 		 * @param {HTMLElement} element Target element to receive the role atributte
 		 * @returns
-		 * @memberof OSFramework.Helper.A11Y
+		 * @memberof OSFramework.OSUI.Helper.A11Y
 		 */
 		public static RoleSearch(element: HTMLElement): void {
 			Dom.Attribute.Set(element, Constants.A11YAttributes.Role.AttrName, Constants.A11YAttributes.Role.Search);
@@ -430,7 +426,7 @@ namespace OSFramework.OSUI.Helper {
 		 *
 		 * @static
 		 * @param {HTMLElement} element Target element to receive the role atributte
-		 * @memberof OSFramework.Helper.A11Y
+		 * @memberof OSFramework.OSUI.Helper.A11Y
 		 */
 		public static RoleTab(element: HTMLElement): void {
 			Helper.Dom.Attribute.Set(
@@ -445,7 +441,7 @@ namespace OSFramework.OSUI.Helper {
 		 *
 		 * @static
 		 * @param {HTMLElement} element Target element to receive the role atributte
-		 * @memberof OSFramework.Helper.A11Y
+		 * @memberof OSFramework.OSUI.Helper.A11Y
 		 */
 		public static RoleTabList(element: HTMLElement): void {
 			Helper.Dom.Attribute.Set(
@@ -460,7 +456,7 @@ namespace OSFramework.OSUI.Helper {
 		 *
 		 * @static
 		 * @param {HTMLElement} element Target element to receive the role atributte
-		 * @memberof OSFramework.Helper.A11Y
+		 * @memberof OSFramework.OSUI.Helper.A11Y
 		 */
 		public static RoleTabPanel(element: HTMLElement): void {
 			Helper.Dom.Attribute.Set(
@@ -475,7 +471,7 @@ namespace OSFramework.OSUI.Helper {
 		 *
 		 * @param {HTMLElement} element Target element to receive the role atributte
 		 * @returns
-		 * @memberof OSFramework.Helper.A11Y
+		 * @memberof OSFramework.OSUI.Helper.A11Y
 		 */
 		public static RoleTooltip(element: HTMLElement): void {
 			Dom.Attribute.Set(element, Constants.A11YAttributes.Role.AttrName, Constants.A11YAttributes.Role.Tooltip);
@@ -487,10 +483,7 @@ namespace OSFramework.OSUI.Helper {
 		 * @param {boolean} state
 		 * @param {HTMLElement[]} elements
 		 * @returns
-<<<<<<<< HEAD:src/scripts/OSFramework/Helper/ManageAccessibility.ts
-========
-		 * @memberof OSFramework.Helper.A11Y
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Helper/ManageAccessibility.ts
+		 * @memberof OSFramework.OSUI.Helper.A11Y
 		 */
 		public static SetElementsTabIndex(state: boolean, elements: HTMLElement[]): void {
 			const tabIndexValue = state
@@ -508,7 +501,7 @@ namespace OSFramework.OSUI.Helper {
 		 *
 		 * @param {HTMLElement} element Target element to receive the value atributte
 		 * @returns
-		 * @memberof OSFramework.Helper.A11Y
+		 * @memberof OSFramework.OSUI.Helper.A11Y
 		 */
 		public static TabIndex(element: HTMLElement, value: string): void {
 			Dom.Attribute.Set(element, Constants.A11YAttributes.TabIndex, value);
@@ -519,7 +512,7 @@ namespace OSFramework.OSUI.Helper {
 		 *
 		 * @param {HTMLElement} element Target element to receive the value atributte
 		 * @returns
-		 * @memberof OSFramework.Helper.A11Y
+		 * @memberof OSFramework.OSUI.Helper.A11Y
 		 */
 		public static TabIndexFalse(element: HTMLElement): void {
 			Dom.Attribute.Set(
@@ -534,7 +527,7 @@ namespace OSFramework.OSUI.Helper {
 		 *
 		 * @param {HTMLElement} element Target element to receive the value atributte
 		 * @returns
-		 * @memberof OSFramework.Helper.A11Y
+		 * @memberof OSFramework.OSUI.Helper.A11Y
 		 */
 		public static TabIndexTrue(element: HTMLElement): void {
 			Dom.Attribute.Set(element, Constants.A11YAttributes.TabIndex, Constants.A11YAttributes.States.TabIndexShow);

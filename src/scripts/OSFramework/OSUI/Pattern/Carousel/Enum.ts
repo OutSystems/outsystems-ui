@@ -1,9 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/Carousel/Enum.ts
-namespace OSFramework.Patterns.Carousel.Enum {
-========
 namespace OSFramework.OSUI.Patterns.Carousel.Enum {
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/Carousel/Enum.ts
 	/**
 	 * Carousel Events
 	 */

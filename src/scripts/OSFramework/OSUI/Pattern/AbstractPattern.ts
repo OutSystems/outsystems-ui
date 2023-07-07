@@ -1,9 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/AbstractPattern.ts
-namespace OSFramework.Patterns {
-========
 namespace OSFramework.OSUI.Patterns {
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/AbstractPattern.ts
 	/**
 	 * Defines the Default props and methods for OutSystemsUI Patterns
 	 *
@@ -30,15 +26,11 @@ namespace OSFramework.OSUI.Patterns {
 		protected isProviderBased = false;
 
 		/**
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/AbstractPattern.ts
-		 * Reference for the base HTML of the element of this pattern;
-========
 		 * Creates an instance of AbstractPattern.
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/AbstractPattern.ts
 		 *
 		 * @param {string} uniqueId
 		 * @param {C} configs
-		 * @memberof OSFramework.Patterns.AbstractPattern
+		 * @memberof OSFramework.OSUI.Patterns.AbstractPattern
 		 */
 		constructor(uniqueId: string, configs: C) {
 			this._uniqueId = uniqueId;
@@ -64,7 +56,7 @@ namespace OSFramework.OSUI.Patterns {
 		 * Marks the built as being finished.
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.AbstractPattern
+		 * @memberof OSFramework.OSUI.Patterns.AbstractPattern
 		 */
 		protected finishBuild(): void {
 			// Check if this is a provider based pattern, If true Initialization cb Event will be triggered at the new provider instance creation.
@@ -110,7 +102,7 @@ namespace OSFramework.OSUI.Patterns {
 		 * This naming is used to prevent overriding the unsetCallback method on all patterns
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.AbstractPattern
+		 * @memberof OSFramework.OSUI.Patterns.AbstractPattern
 		 */
 		protected unsetGlobalCallbacks(): void {
 			this._platformEventInitialized = undefined;
@@ -119,7 +111,7 @@ namespace OSFramework.OSUI.Patterns {
 		/**
 		 * Builds the pattern.
 		 *
-		 * @memberof OSFramework.Patterns.AbstractPattern
+		 * @memberof OSFramework.OSUI.Patterns.AbstractPattern
 		 */
 		public build(): void {
 			this._setCommonHtmlElements();
@@ -131,7 +123,7 @@ namespace OSFramework.OSUI.Patterns {
 		 *
 		 * @param {string} propertyName
 		 * @param {unknown} propertyValue
-		 * @memberof OSFramework.Patterns.AbstractPattern
+		 * @memberof OSFramework.OSUI.Patterns.AbstractPattern
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			if (this._configs.hasOwnProperty(propertyName)) {
@@ -161,7 +153,7 @@ namespace OSFramework.OSUI.Patterns {
 		/**
 		 * Disposes the pattern.
 		 *
-		 * @memberof OSFramework.Patterns.AbstractPattern
+		 * @memberof OSFramework.OSUI.Patterns.AbstractPattern
 		 */
 		public dispose(): void {
 			this._isBuilt = false;
@@ -175,7 +167,7 @@ namespace OSFramework.OSUI.Patterns {
 		 *
 		 * @param {string} patternId
 		 * @return {*}  {boolean}
-		 * @memberof OSFramework.Patterns.AbstractPattern
+		 * @memberof OSFramework.OSUI.Patterns.AbstractPattern
 		 */
 		public equalsToID(patternId: string): boolean {
 			return patternId === this._uniqueId || patternId === this._widgetId;
@@ -187,7 +179,7 @@ namespace OSFramework.OSUI.Patterns {
 		 * @abstract
 		 * @param {string} eventName
 		 * @param {GlobalCallbacks.OSGeneric} callback
-		 * @memberof OSFramework.Patterns.AbstractPattern
+		 * @memberof OSFramework.OSUI.Patterns.AbstractPattern
 		 */
 		public registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
@@ -209,7 +201,7 @@ namespace OSFramework.OSUI.Patterns {
 		 * @readonly
 		 * @protected
 		 * @type {boolean}
-		 * @memberof OSFramework.Patterns.AbstractPattern
+		 * @memberof OSFramework.OSUI.Patterns.AbstractPattern
 		 */
 		//TODO: getter to remove.
 		protected get _enableAccessibility(): boolean {
@@ -221,7 +213,7 @@ namespace OSFramework.OSUI.Patterns {
 		 *
 		 * @readonly
 		 * @type {(HTMLElement | undefined)}
-		 * @memberof OSFramework.Patterns.AbstractPattern
+		 * @memberof OSFramework.OSUI.Patterns.AbstractPattern
 		 */
 		public get selfElement(): HTMLElement {
 			return this._selfElem;
@@ -232,7 +224,7 @@ namespace OSFramework.OSUI.Patterns {
 		 *
 		 * @readonly
 		 * @type {boolean}
-		 * @memberof OSFramework.Patterns.AbstractPattern
+		 * @memberof OSFramework.OSUI.Patterns.AbstractPattern
 		 */
 		public get isBuilt(): boolean {
 			return this._isBuilt;
@@ -243,7 +235,7 @@ namespace OSFramework.OSUI.Patterns {
 		 *
 		 * @readonly
 		 * @type {C}
-		 * @memberof OSFramework.Patterns.AbstractPattern
+		 * @memberof OSFramework.OSUI.Patterns.AbstractPattern
 		 */
 		public get configs(): C {
 			return this._configs;
@@ -254,7 +246,7 @@ namespace OSFramework.OSUI.Patterns {
 		 *
 		 * @readonly
 		 * @type {string}
-		 * @memberof OSFramework.Patterns.AbstractPattern
+		 * @memberof OSFramework.OSUI.Patterns.AbstractPattern
 		 */
 		public get uniqueId(): string {
 			return this._uniqueId;
@@ -265,7 +257,7 @@ namespace OSFramework.OSUI.Patterns {
 		 *
 		 * @readonly
 		 * @type {string}
-		 * @memberof OSFramework.Patterns.AbstractPattern
+		 * @memberof OSFramework.OSUI.Patterns.AbstractPattern
 		 */
 		public get widgetId(): string {
 			return this._widgetId;

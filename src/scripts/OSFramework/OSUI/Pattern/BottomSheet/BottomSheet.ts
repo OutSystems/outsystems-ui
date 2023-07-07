@@ -46,7 +46,7 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 		 *
 		 * @readonly
 		 * @type {Event.GestureEvent.DragEvent}
-		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
+		 * @memberof OSFramework.OSUI.Patterns.BottomSheet.BottomSheet
 		 */
 		public get gestureEventInstance(): Event.GestureEvent.DragEvent {
 			return this._gestureEventInstance;
@@ -57,7 +57,7 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 		 *
 		 * @readonly
 		 * @type {boolean}
-		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
+		 * @memberof OSFramework.OSUI.Patterns.BottomSheet.BottomSheet
 		 */
 		public get hasGestureEvents(): boolean {
 			return this._hasGestureEvents;
@@ -205,7 +205,7 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 		 * Method to remove the event listeners
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
+		 * @memberof OSFramework.OSUI.Patterns.BottomSheet.BottomSheet
 		 */
 		protected removeEventListeners(): void {
 			this._bottomSheetContentElem.removeEventListener(GlobalEnum.HTMLEvent.Scroll, this._eventOnContentScroll);
@@ -218,7 +218,7 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 		 * Add the Accessibility Attributes values
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
+		 * @memberof OSFramework.OSUI.Patterns.BottomSheet.BottomSheet
 		 */
 		protected setA11YProperties(): void {
 			if (!this.isBuilt) {
@@ -247,7 +247,7 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 		 * Method to set the listeners and platform event callbacks
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
+		 * @memberof OSFramework.OSUI.Patterns.BottomSheet.BottomSheet
 		 */
 		protected setCallbacks(): void {
 			this._eventOnContentScroll = this._onContentScrollCallback.bind(this);
@@ -258,7 +258,7 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 		 * Method to add event listeners
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
+		 * @memberof OSFramework.OSUI.Patterns.BottomSheet.BottomSheet
 		 */
 		protected setEventListeners(): void {
 			this._bottomSheetContentElem.addEventListener(GlobalEnum.HTMLEvent.Scroll, this._eventOnContentScroll);
@@ -278,7 +278,7 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 		 * Update info based on htmlContent
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
+		 * @memberof OSFramework.OSUI.Patterns.BottomSheet.BottomSheet
 		 */
 		protected setHtmlElements(): void {
 			this._parentSelf = Helper.Dom.GetElementById(this.widgetId);
@@ -290,7 +290,7 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 		 * Method to set initial options
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
+		 * @memberof OSFramework.OSUI.Patterns.BottomSheet.BottomSheet
 		 */
 		protected setInitialOptions(): void {
 			this._toggleHandler(this.configs.ShowHandler);
@@ -301,7 +301,7 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 		 * Method to unset callbacks
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
+		 * @memberof OSFramework.OSUI.Patterns.BottomSheet.BottomSheet
 		 */
 		protected unsetCallbacks(): void {
 			this._eventOnContentScroll = undefined;
@@ -313,7 +313,7 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 		 * Removes the local value of the variables pointing to HTML elements;
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
+		 * @memberof OSFramework.OSUI.Patterns.BottomSheet.BottomSheet
 		 */
 		protected unsetHtmlElements(): void {
 			this._parentSelf = undefined;
@@ -324,7 +324,7 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 		/**
 		 *  Builds the BottomSheet.
 		 *
-		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
+		 * @memberof OSFramework.OSUI.Patterns.BottomSheet.BottomSheet
 		 */
 		public build(): void {
 			super.build();
@@ -342,7 +342,7 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 		 *
 		 * @param {string} propertyName
 		 * @param {unknown} propertyValue
-		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
+		 * @memberof OSFramework.OSUI.Patterns.BottomSheet.BottomSheet
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
@@ -363,7 +363,7 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 		/**
 		 * Method to close the BottomSHeet
 		 *
-		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
+		 * @memberof OSFramework.OSUI.Patterns.BottomSheet.BottomSheet
 		 */
 		public close(): void {
 			if (this._isOpen) {
@@ -374,7 +374,7 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 		/**
 		 * Disposes the current pattern.
 		 *
-		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
+		 * @memberof OSFramework.OSUI.Patterns.BottomSheet.BottomSheet
 		 */
 		public dispose(): void {
 			if (this._isOpen) {
@@ -394,7 +394,7 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 		/**
 		 * Method to open the BottomSheet
 		 *
-		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
+		 * @memberof OSFramework.OSUI.Patterns.BottomSheet.BottomSheet
 		 */
 		public open(): void {
 			if (this._isOpen === false) {
@@ -407,7 +407,7 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 		 *
 		 * @param {string} eventName
 		 * @param {GlobalCallbacks.OSGeneric} callback
-		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
+		 * @memberof OSFramework.OSUI.Patterns.BottomSheet.BottomSheet
 		 */
 		public registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
@@ -424,7 +424,7 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 		/**
 		 * Removes the gesture events to open/close the BottomSheet on Native Apps
 		 *
-		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
+		 * @memberof OSFramework.OSUI.Patterns.BottomSheet.BottomSheet
 		 */
 		public removeGestureEvents(): void {
 			if (this._gestureEventInstance !== undefined) {
@@ -440,7 +440,7 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 		 * Sets the gesture events to open/close the BottomSheet on Native Apps
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
+		 * @memberof OSFramework.OSUI.Patterns.BottomSheet.BottomSheet
 		 */
 		public setGestureEvents(
 			onGestureStart: Event.GestureEvent.Callbacks.GestureStart,

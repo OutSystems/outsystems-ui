@@ -4,12 +4,7 @@
 /// Patterns - Interaction - DatePicker
 
 /// Import Flatpickr library styles
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/DatePicker/scss/_datepicker.scss
-@import '../../../../Providers/SharedProviderResources/Flatpickr/scss/flatpickr';
-========
 @import '../../../../../Providers/OSUI/SharedProviderResources/Flatpickr/scss/flatpickr';
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/DatePicker/scss/_datepicker.scss
-
 @import 'datepicker_ss_preview_imgs';
 
 ///
@@ -28,14 +23,11 @@
 			}
 		}
 
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/DatePicker/scss/_datepicker.scss
-========
 		// Hide the platform input which is set as hidden by the library and we're change it into the expected type, however we do not want it visible since library will add a clone to better deal with the selected dates.
 		&:first-of-type {
 			display: none !important;
 		}
 
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/DatePicker/scss/_datepicker.scss
 		// Disable states for Datepicker
 		&.flatpickr-input[disabled] + input {
 			background-color: var(--color-neutral-2);
@@ -119,10 +111,6 @@
 	.flatpickr-mobile ~ span.validation-message {
 		bottom: -40px;
 	}
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/DatePicker/scss/_datepicker.scss
-
-========
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/DatePicker/scss/_datepicker.scss
 }
 
 ///

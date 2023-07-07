@@ -1,9 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/DatePicker/Enum.ts
-namespace OSFramework.Patterns.DatePicker.Enum {
-========
 namespace OSFramework.OSUI.Patterns.DatePicker.Enum {
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/DatePicker/Enum.ts
 	/**
 	 * DatePicker Enum for CSS Classes
 	 */

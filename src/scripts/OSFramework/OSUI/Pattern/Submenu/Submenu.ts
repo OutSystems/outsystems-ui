@@ -1,27 +1,14 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/Submenu/Submenu.ts
-namespace OSFramework.Patterns.Submenu {
-========
 namespace OSFramework.OSUI.Patterns.Submenu {
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/Submenu/Submenu.ts
 	/**
 	 * Defines the interface for OutSystemsUI Patterns
 	 */
 	export class Submenu extends AbstractPattern<SubmenuConfig> implements ISubmenu {
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/Submenu/Submenu.ts
-		// Store the pattern locals
-		private _dynamicallyOpening = false;
-========
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/Submenu/Submenu.ts
 		private _eventClick: GlobalCallbacks.Generic;
 		private _eventKeypress: GlobalCallbacks.Generic;
 		private _eventOnMouseEnter: GlobalCallbacks.Generic;
 		private _eventOnMouseLeave: GlobalCallbacks.Generic;
 		private _globalEventBody: GlobalCallbacks.Generic;
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/Submenu/Submenu.ts
-		private _globalEventOpen: GlobalCallbacks.Generic;
-========
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/Submenu/Submenu.ts
 		private _hasActiveLinks = false;
 		private _hasElements = false;
 		private _isActive = false;
@@ -39,13 +26,8 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 
 		// Close submenu, when BodyOnCLick event is triggered
 		private _bodyClickCallback(_args: string, e: MouseEvent): void {
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/Submenu/Submenu.ts
-			if (this.isBuilt && this._isOpen && this._dynamicallyOpening === false) {
-				if (!this._selfElem.contains(e.target as HTMLElement)) {
-========
 			if (this.isBuilt && this._isOpen) {
 				if (!this.selfElement.contains(e.target as HTMLElement)) {
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/Submenu/Submenu.ts
 					this.close();
 				}
 
@@ -192,7 +174,7 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 		 * Add the A11Y attributes values
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Submenu.Submenu
+		 * @memberof OSFramework.OSUI.Patterns.Submenu.Submenu
 		 */
 		protected setA11YProperties(): void {
 			// Apply the default A11Y
@@ -214,7 +196,7 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 		 * Add Pattern Events
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Submenu.Submenu
+		 * @memberof OSFramework.OSUI.Patterns.Submenu.Submenu
 		 */
 		protected setCallbacks(): void {
 			// Define the callbacks that will be used
@@ -239,7 +221,7 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 		 * Update info based on htmlContent
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Submenu.Submenu
+		 * @memberof OSFramework.OSUI.Patterns.Submenu.Submenu
 		 */
 		protected setHtmlElements(): void {
 			this._submenuHeaderElement = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.PatternHeader);
@@ -259,7 +241,7 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 		 * Set the cssClasses that should be assigned to the element on it's initialization
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Submenu.Submenu
+		 * @memberof OSFramework.OSUI.Patterns.Submenu.Submenu
 		 */
 		protected setInitialStates(): void {
 			// Add active class to pattern based on links whith active state
@@ -284,7 +266,7 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 		 * Remove all the assigned Events
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Submenu.Submenu
+		 * @memberof OSFramework.OSUI.Patterns.Submenu.Submenu
 		 */
 		protected unsetCallbacks(): void {
 			// Reassign the elements to undefined, preventing memory leaks
@@ -300,7 +282,7 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 		 * Reassign the HTML elements to undefined, preventing memory leaks
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Submenu.Submenu
+		 * @memberof OSFramework.OSUI.Patterns.Submenu.Submenu
 		 */
 		protected unsetHtmlElements(): void {
 			this._submenuHeaderElement = undefined;
@@ -312,7 +294,7 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 		/**
 		 * Built the Submenu
 		 *
-		 * @memberof OSFramework.Patterns.Submenu.Submenu
+		 * @memberof OSFramework.OSUI.Patterns.Submenu.Submenu
 		 */
 		public build(): void {
 			super.build();
@@ -354,7 +336,7 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 		/**
 		 * Close Submenu
 		 *
-		 * @memberof OSFramework.Patterns.Submenu.Submenu
+		 * @memberof OSFramework.OSUI.Patterns.Submenu.Submenu
 		 */
 		public close(): void {
 			if (this._isOpen) {
@@ -380,7 +362,7 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 		/**
 		 * Destroy the Submenu
 		 *
-		 * @memberof OSFramework.Patterns.Submenu.Submenu
+		 * @memberof OSFramework.OSUI.Patterns.Submenu.Submenu
 		 */
 		public dispose(): void {
 			// Remove event listners
@@ -397,7 +379,7 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 		/**
 		 * Public Open Submenu
 		 *
-		 * @memberof OSFramework.Patterns.Submenu.Submenu
+		 * @memberof OSFramework.OSUI.Patterns.Submenu.Submenu
 		 */
 		public open(): void {
 			if (this.hasClickOutsideToClose) {
@@ -456,7 +438,7 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 		/**
 		 * Trigger on submenu onRender, to update active state
 		 *
-		 * @memberof OSFramework.Patterns.Submenu.Submenu
+		 * @memberof OSFramework.OSUI.Patterns.Submenu.Submenu
 		 */
 		public updateOnRender(): void {
 			if (this.isBuilt) {

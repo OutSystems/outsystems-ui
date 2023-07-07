@@ -66,11 +66,7 @@
 			}
 
 			& > .osui-tabs__header__indicator {
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/Tabs/scss/_tabs.scss
-				min-height: 1px;
-========
 				height: var(--tabs-indicator-size);
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/Tabs/scss/_tabs.scss
 				position: absolute;
 				top: 0;
 				transform: translateY(var(--tabs-indicator-transform)) translateX(0) translateZ(0)
@@ -107,11 +103,7 @@
 
 		.osui-tabs__header__indicator {
 			bottom: 0;
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/Tabs/scss/_tabs.scss
-			min-width: 1px;
-========
 			min-width: var(--tabs-indicator-size);
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/Tabs/scss/_tabs.scss
 			height: 2px;
 			transform: translateX(var(--tabs-indicator-transform)) translateY(0) translateZ(0)
 				scaleX(var(--tabs-indicator-scale));
@@ -139,11 +131,6 @@
 		}
 	}
 
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/Tabs/scss/_tabs.scss
-	&--has-drag:not(.osui-tabs--is-vertical) {
-		.osui-tabs__content {
-			overflow-x: auto;
-========
 	&--has-auto-height {
 		.osui-tabs__content-item {
 			display: none;
@@ -165,7 +152,6 @@
 		// To prevent render/position issues after repaints that affect the Tabs size
 		.osui-tabs__content:not(:focus-within) {
 			scroll-snap-type: x mandatory;
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/Tabs/scss/_tabs.scss
 		}
 	}
 
@@ -214,11 +200,7 @@
 			transition: transform 200ms linear;
 			transform-origin: 0 0;
 			will-change: transform;
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/Tabs/scss/_tabs.scss
-			z-index: 1;
-========
 			z-index: var(--layer-local-tier-1);
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/Tabs/scss/_tabs.scss
 
 			&[disabled] {
 				background-color: var(--color-neutral-6);
@@ -240,10 +222,6 @@
 		overflow: hidden;
 		overscroll-behavior-x: contain;
 		position: relative;
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/Tabs/scss/_tabs.scss
-		scroll-snap-type: x mandatory;
-========
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/Tabs/scss/_tabs.scss
 		width: 100%;
 
 		&::-webkit-scrollbar {
@@ -252,12 +230,7 @@
 
 		&-item {
 			height: 100%;
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/Tabs/scss/_tabs.scss
-			max-width: 99.99%; /* prevent render issues on chrome, in some screen-sizes, due to overflow hidden and css snap */
-			overflow-y: auto;
-========
 			overflow-y: var(--tabs-content-item-overflow);
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/Tabs/scss/_tabs.scss
 			padding: var(--space-m) var(--space-none);
 			scroll-snap-align: start;
 			scroll-snap-stop: always;

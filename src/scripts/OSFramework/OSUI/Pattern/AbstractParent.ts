@@ -27,7 +27,7 @@ namespace OSFramework.OSUI.Patterns {
 		 * @protected
 		 * @param childId Child Id of the element to be found
 		 * @returns Child Reference
-		 * @memberof OSFramework.Patterns.AbstractParent
+		 * @memberof OSFramework.OSUI.Patterns.AbstractParent
 		 */
 		protected getChild(childId: string): CT {
 			// Get ChildType
@@ -48,7 +48,7 @@ namespace OSFramework.OSUI.Patterns {
 		 * @param index Index of the item to be returned
 		 * @param childType To be based on childType childs collection, otherwise will assume parent only contains one child type!
 		 * @returns Child Reference
-		 * @memberof OSFramework.Patterns.AbstractParent
+		 * @memberof OSFramework.OSUI.Patterns.AbstractParent
 		 */
 		protected getChildByIndex(index: number, childType?: string): CT {
 			// If childType undefined, get the first key object name!
@@ -67,7 +67,7 @@ namespace OSFramework.OSUI.Patterns {
 		 * @protected
 		 * @param childId Child id where index will be found
 		 * @returns Index value
-		 * @memberof OSFramework.Patterns.AbstractParent
+		 * @memberof OSFramework.OSUI.Patterns.AbstractParent
 		 */
 		protected getChildIndex(childId: string): number {
 			// Get ChildType
@@ -84,7 +84,7 @@ namespace OSFramework.OSUI.Patterns {
 		 * @protected
 		 * @param childId Id that should be added
 		 * @param childItem Reference to be added
-		 * @memberof OSFramework.Patterns.AbstractParent
+		 * @memberof OSFramework.OSUI.Patterns.AbstractParent
 		 */
 		protected setChild(childItem: CT): void {
 			const childType = childItem.constructor.name;
@@ -116,7 +116,7 @@ namespace OSFramework.OSUI.Patterns {
 		 *
 		 * @protected
 		 * @param childId Id of the item that will be removed
-		 * @memberof OSFramework.Patterns.AbstractParent
+		 * @memberof OSFramework.OSUI.Patterns.AbstractParent
 		 */
 		protected unsetChild(childId: string): void {
 			// Get ChildType
@@ -181,7 +181,7 @@ namespace OSFramework.OSUI.Patterns {
 		 *
 		 * @param type To be based on childType childs collection, otherwise will assume parent only contains one child type!
 		 * @returns
-		 * @memberof OSFramework.Patterns.AbstractParent
+		 * @memberof OSFramework.OSUI.Patterns.AbstractParent
 		 */
 		public getChildItems(type?: string): Array<CT> {
 			// If type undefined, get the first key object name!
@@ -200,7 +200,7 @@ namespace OSFramework.OSUI.Patterns {
 		 * @abstract
 		 * @param {string} childItem Child Item
 		 * @param {string} notifiedTo Notification name (Should be based on an Enum)
-		 * @memberof OSFramework.Patterns.AbstractParent
+		 * @memberof OSFramework.OSUI.Patterns.AbstractParent
 		 */
 		public abstract beNotifiedByChild(childItem: CT, notifiedTo: string): void;
 	}

@@ -1,9 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/Sidebar/Enum.ts
-namespace OSFramework.Patterns.Sidebar.Enum {
-========
 namespace OSFramework.OSUI.Patterns.Sidebar.Enum {
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/Sidebar/Enum.ts
 	/**
 	 * Sidebar Enum properties
 	 *

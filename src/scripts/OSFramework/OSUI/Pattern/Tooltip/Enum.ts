@@ -1,9 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/Tooltip/Enum.ts
-namespace OSFramework.Patterns.Tooltip.Enum {
-========
 namespace OSFramework.OSUI.Patterns.Tooltip.Enum {
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/Tooltip/Enum.ts
 	/**
 	 * AriaLabel
 	 */
@@ -29,10 +25,6 @@ namespace OSFramework.OSUI.Patterns.Tooltip.Enum {
 	 * Events
 	 */
 	export enum Events {
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/Tooltip/Enum.ts
-		Initialized = 'Initialized',
-========
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/Tooltip/Enum.ts
 		OnToggle = 'OnToggle',
 	}
 

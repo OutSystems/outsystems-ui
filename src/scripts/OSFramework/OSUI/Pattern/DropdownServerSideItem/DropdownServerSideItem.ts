@@ -1,9 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/DropdownServerSideItem/DropdownServerSideItem.ts
-namespace OSFramework.Patterns.DropdownServerSideItem {
-========
 namespace OSFramework.OSUI.Patterns.DropdownServerSideItem {
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/DropdownServerSideItem/DropdownServerSideItem.ts
 	/**
 	 *  Class that implements the DropdownServerSideItem pattern.
 	 *
@@ -114,7 +110,7 @@ namespace OSFramework.OSUI.Patterns.DropdownServerSideItem {
 		 * Add the Accessibility Attributes values
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.DropdownServerSideItem.DropdownServerSideItem
+		 * @memberof OSFramework.OSUI.Patterns.DropdownServerSideItem.DropdownServerSideItem
 		 */
 		protected setA11YProperties(): void {
 			// By default set disable to tabIndex
@@ -129,7 +125,7 @@ namespace OSFramework.OSUI.Patterns.DropdownServerSideItem {
 		 * Sets the callbacks to be used with the provider.
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.DropdownServerSideItem.DropdownServerSideItem
+		 * @memberof OSFramework.OSUI.Patterns.DropdownServerSideItem.DropdownServerSideItem
 		 */
 		protected setCallbacks(): void {
 			this._eventOnClick = this._onSelected.bind(this);
@@ -140,7 +136,7 @@ namespace OSFramework.OSUI.Patterns.DropdownServerSideItem {
 		 * This method has no implementation on this pattern context!
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.DropdownServerSideItem.DropdownServerSideItem
+		 * @memberof OSFramework.OSUI.Patterns.DropdownServerSideItem.DropdownServerSideItem
 		 */
 		protected setHtmlElements(): void {
 			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -150,7 +146,7 @@ namespace OSFramework.OSUI.Patterns.DropdownServerSideItem {
 		 * Unset callbacks that has been assigned to the element
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.DropdownServerSideItem.DropdownServerSideItem
+		 * @memberof OSFramework.OSUI.Patterns.DropdownServerSideItem.DropdownServerSideItem
 		 */
 		protected unsetCallbacks(): void {
 			this._eventOnClick = null;
@@ -162,7 +158,7 @@ namespace OSFramework.OSUI.Patterns.DropdownServerSideItem {
 		 * This method has no implementation on this pattern context!
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.DropdownServerSideItem.DropdownServerSideItem
+		 * @memberof OSFramework.OSUI.Patterns.DropdownServerSideItem.DropdownServerSideItem
 		 */
 		protected unsetHtmlElements(): void {
 			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -171,7 +167,7 @@ namespace OSFramework.OSUI.Patterns.DropdownServerSideItem {
 		/**
 		 *  Builds the DropdownServerSideItem.
 		 *
-		 * @memberof OSFramework.Patterns.DropdownServerSideItem.DropdownServerSideItem
+		 * @memberof OSFramework.OSUI.Patterns.DropdownServerSideItem.DropdownServerSideItem
 		 */
 		public build(): void {
 			super.build();
@@ -200,7 +196,7 @@ namespace OSFramework.OSUI.Patterns.DropdownServerSideItem {
 		 *
 		 * @param {string} propertyName
 		 * @param {unknown} propertyValue
-		 * @memberof OSFramework.Patterns.DropdownServerSideItem.DropdownServerSideItem
+		 * @memberof OSFramework.OSUI.Patterns.DropdownServerSideItem.DropdownServerSideItem
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
@@ -217,7 +213,7 @@ namespace OSFramework.OSUI.Patterns.DropdownServerSideItem {
 		/**
 		 * Disposes the current pattern.
 		 *
-		 * @memberof OSFramework.Patterns.DropdownServerSideItem.DropdownServerSideItem
+		 * @memberof OSFramework.OSUI.Patterns.DropdownServerSideItem.DropdownServerSideItem
 		 */
 		public dispose(): void {
 			if (this.isBuilt) {
@@ -237,11 +233,7 @@ namespace OSFramework.OSUI.Patterns.DropdownServerSideItem {
 		 *
 		 * @param {string} eventName Event name that will be assigned
 		 * @param {OSFramework.GlobalCallbacks.OSGeneric} callback Function name that will be passed as a callback function to the event above
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/DropdownServerSideItem/DropdownServerSideItem.ts
-		 * @memberof DropdownServerSideItem
-========
-		 * @memberof OSFramework.Patterns.DropdownServerSideItem.DropdownServerSideItem
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/DropdownServerSideItem/DropdownServerSideItem.ts
+		 * @memberof OSFramework.OSUI.Patterns.DropdownServerSideItem.DropdownServerSideItem
 		 */
 		public registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
@@ -258,7 +250,7 @@ namespace OSFramework.OSUI.Patterns.DropdownServerSideItem {
 		/**
 		 * Method used to set item as blur state
 		 *
-		 * @memberof OSFramework.Patterns.DropdownServerSideItem.DropdownServerSideItem
+		 * @memberof OSFramework.OSUI.Patterns.DropdownServerSideItem.DropdownServerSideItem
 		 */
 		public setBlur(): void {
 			this.selfElement.blur();
@@ -267,7 +259,7 @@ namespace OSFramework.OSUI.Patterns.DropdownServerSideItem {
 		/**
 		 * Method used to set item as focus state
 		 *
-		 * @memberof OSFramework.Patterns.DropdownServerSideItem.DropdownServerSideItem
+		 * @memberof OSFramework.OSUI.Patterns.DropdownServerSideItem.DropdownServerSideItem
 		 */
 		public setFocus(): void {
 			this.selfElement.focus();
@@ -276,7 +268,7 @@ namespace OSFramework.OSUI.Patterns.DropdownServerSideItem {
 		/**
 		 * Method used to set the tabindex attribute
 		 *
-		 * @memberof OSFramework.Patterns.DropdownServerSideItem.DropdownServerSideItem
+		 * @memberof OSFramework.OSUI.Patterns.DropdownServerSideItem.DropdownServerSideItem
 		 */
 		public setTabindex(): void {
 			Helper.A11Y.TabIndexTrue(this.selfElement);
@@ -286,11 +278,7 @@ namespace OSFramework.OSUI.Patterns.DropdownServerSideItem {
 		 * Method used to update the selected status
 		 *
 		 * @param triggerCallback True by default, used to block the callback when needed
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/DropdownServerSideItem/DropdownServerSideItem.ts
-		 * @memberof DropdownServerSideItem
-========
-		 * @memberof OSFramework.Patterns.DropdownServerSideItem.DropdownServerSideItem
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/DropdownServerSideItem/DropdownServerSideItem.ts
+		 * @memberof OSFramework.OSUI.Patterns.DropdownServerSideItem.DropdownServerSideItem
 		 */
 		public toggleSelected(triggerCallback = true): void {
 			// Update the Status value with the it's Toggled value
@@ -298,22 +286,14 @@ namespace OSFramework.OSUI.Patterns.DropdownServerSideItem {
 
 			if (triggerCallback) {
 				// Trigger platform callback about Option has been selected!
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/DropdownServerSideItem/DropdownServerSideItem.ts
-				Helper.AsyncInvocation(
-					this._platformEventOnClickCallback,
-					this.parentObject.widgetId,
-					this.configs.ItemId
-				);
-========
 				this.triggerPlatformEventCallback(this._platformEventOnClickCallback, this.configs.ItemId);
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/DropdownServerSideItem/DropdownServerSideItem.ts
 			}
 		}
 
 		/**
 		 * Method used to unset the tabindex attribute
 		 *
-		 * @memberof OSFramework.Patterns.DropdownServerSideItem.DropdownServerSideItem
+		 * @memberof OSFramework.OSUI.Patterns.DropdownServerSideItem.DropdownServerSideItem
 		 */
 		public unsetTabindex(): void {
 			Helper.A11Y.TabIndexFalse(this.selfElement);
@@ -324,7 +304,7 @@ namespace OSFramework.OSUI.Patterns.DropdownServerSideItem {
 		 *
 		 * @readonly
 		 * @type {boolean}
-		 * @memberof OSFramework.Patterns.DropdownServerSideItem.DropdownServerSideItem
+		 * @memberof OSFramework.OSUI.Patterns.DropdownServerSideItem.DropdownServerSideItem
 		 */
 		public get IsSelected(): boolean {
 			return this.configs.IsSelected;
@@ -335,7 +315,7 @@ namespace OSFramework.OSUI.Patterns.DropdownServerSideItem {
 		 *
 		 * @readonly
 		 * @type {boolean}
-		 * @memberof OSFramework.Patterns.DropdownServerSideItem.DropdownServerSideItem
+		 * @memberof OSFramework.OSUI.Patterns.DropdownServerSideItem.DropdownServerSideItem
 		 */
 		public get ItemId(): string {
 			return this.configs.ItemId;

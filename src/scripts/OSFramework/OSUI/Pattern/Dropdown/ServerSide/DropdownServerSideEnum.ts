@@ -1,9 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/Dropdown/ServerSide/DropdownServerSideEnum.ts
-namespace OSFramework.Patterns.Dropdown.ServerSide.Enum {
-========
 namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide.Enum {
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/Dropdown/ServerSide/DropdownServerSideEnum.ts
 	/**
 	 * Notifications Type, From Child (DropdownServerSideItem) to Parent (DropdownServerSide)
 	 */

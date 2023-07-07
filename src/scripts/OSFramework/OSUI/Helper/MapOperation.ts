@@ -1,9 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-<<<<<<<< HEAD:src/scripts/OSFramework/Helper/MapOperation.ts
-namespace OSFramework.Helper.MapOperation {
-========
 namespace OSFramework.OSUI.Helper.MapOperation {
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Helper/MapOperation.ts
 	/**
 	 * Finds in a map the pattern element
 	 *
@@ -18,11 +14,7 @@ namespace OSFramework.OSUI.Helper.MapOperation {
 	): Interface.IPattern {
 		let pattern: Interface.IPattern;
 
-<<<<<<<< HEAD:src/scripts/OSFramework/Helper/MapOperation.ts
-		// animatedLabelId is the UniqueId
-========
 		// Search for patternId as the uniqueId
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Helper/MapOperation.ts
 		if (map.has(patternId)) {
 			pattern = map.get(patternId);
 		} else {

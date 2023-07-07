@@ -1,9 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/FlipContent/Enum.ts
-namespace OSFramework.Patterns.FlipContent.Enum {
-========
 namespace OSFramework.OSUI.Patterns.FlipContent.Enum {
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/FlipContent/Enum.ts
 	/**
 	 * FlipContent Enum properties
 	 */

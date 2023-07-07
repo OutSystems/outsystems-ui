@@ -1,9 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/DatePicker/AbstractDatePickerConfig.ts
-namespace OSFramework.Patterns.DatePicker {
-========
 namespace OSFramework.OSUI.Patterns.DatePicker {
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/DatePicker/AbstractDatePickerConfig.ts
 	export abstract class AbstractDatePickerConfig extends Patterns.AbstractProviderConfiguration {
 		public DateFormat: string;
 		public FirstWeekDay: number;
@@ -23,7 +19,7 @@ namespace OSFramework.OSUI.Patterns.DatePicker {
 		 * @param key property name
 		 * @param value value to be check
 		 * @returns {unknown} value
-		 * @memberof  OSFramework.Patterns.DatePicker.AbstractDatePickerConfig
+		 * @memberof  OSFramework.OSUI.Patterns.DatePicker.AbstractDatePickerConfig
 		 */
 		public validateDefault(key: string, value: unknown): unknown {
 			let validatedValue = undefined;

@@ -1,9 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/Progress/ProgressFactory.ts
-namespace OSFramework.Patterns.Progress.Factory {
-========
 namespace OSFramework.OSUI.Patterns.Progress.Factory {
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/Progress/ProgressFactory.ts
 	/**
 	 * Create the new Progress instance object according given type
 	 *

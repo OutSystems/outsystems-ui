@@ -7,7 +7,7 @@ namespace OSFramework.OSUI.Patterns.MonthPicker.Factory {
 	 * @param {string} monthPickerId ID of the Pattern that a new instance will be created.
 	 * @param {string} provider
 	 * @param {string} configs Configurations for the Pattern in JSON format.
-	 * @return {*}  {OSFramework.Patterns.Progress.IMonthPicker}
+	 * @return {*}  {OSFramework.OSUI.Patterns.Progress.IMonthPicker}
 	 */
 	export function NewMonthPicker(
 		monthPickerId: string,

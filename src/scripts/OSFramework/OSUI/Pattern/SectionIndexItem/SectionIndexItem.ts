@@ -164,7 +164,7 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 		 * Add the Accessibility Attributes values
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.SectionIndexItem.SectionIndexItem
+		 * @memberof OSFramework.OSUI.Patterns.SectionIndexItem.SectionIndexItem
 		 */
 		protected setA11YProperties(): void {
 			// Set RoleButton attribute
@@ -177,7 +177,7 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 		 * Method to set the callbacks and event listeners
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.SectionIndexItem.SectionIndexItem
+		 * @memberof OSFramework.OSUI.Patterns.SectionIndexItem.SectionIndexItem
 		 */
 		protected setCallbacks(): void {
 			this._eventOnClick = this._onSelected.bind(this);
@@ -189,7 +189,7 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 		 * Method to set the HTMLElements used
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.SectionIndexItem.SectionIndexItem
+		 * @memberof OSFramework.OSUI.Patterns.SectionIndexItem.SectionIndexItem
 		 */
 		protected setHtmlElements(): void {
 			// Check if overlay is enabled => If StatusBar is enabled and if is iOS device
@@ -214,7 +214,7 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 		 *  Removes the listeners that were added in the code and unsets the callbacks.
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.SectionIndexItem.SectionIndexItem
+		 * @memberof OSFramework.OSUI.Patterns.SectionIndexItem.SectionIndexItem
 		 */
 		protected unsetCallbacks(): void {
 			this._removeEvents();
@@ -228,7 +228,7 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 		 * Method to unset the html elements used
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.SectionIndexItem.SectionIndexItem
+		 * @memberof OSFramework.OSUI.Patterns.SectionIndexItem.SectionIndexItem
 		 */
 		protected unsetHtmlElements(): void {
 			this._mainScrollContainerElement = undefined;
@@ -238,7 +238,7 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 		/**
 		 *  Builds the SectionIndexItem.
 		 *
-		 * @memberof OSFramework.Patterns.SectionIndexItem.SectionIndexItem
+		 * @memberof OSFramework.OSUI.Patterns.SectionIndexItem.SectionIndexItem
 		 */
 		public build(): void {
 			super.build();
@@ -269,7 +269,7 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 		 *
 		 * @param {string} propertyName
 		 * @param {unknown} propertyValue
-		 * @memberof OSFramework.Patterns.SectionIndexItem.SectionIndexItem
+		 * @memberof OSFramework.OSUI.Patterns.SectionIndexItem.SectionIndexItem
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
@@ -288,7 +288,7 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 		/**
 		 * Disposes the current pattern.
 		 *
-		 * @memberof OSFramework.Patterns.SectionIndexItem.SectionIndexItem
+		 * @memberof OSFramework.OSUI.Patterns.SectionIndexItem.SectionIndexItem
 		 */
 		public dispose(): void {
 			this.unsetCallbacks();
@@ -303,7 +303,7 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 		/**
 		 * Adds active class from pattern.
 		 *
-		 * @memberof OSFramework.Patterns.SectionIndexItem.SectionIndexItem
+		 * @memberof OSFramework.OSUI.Patterns.SectionIndexItem.SectionIndexItem
 		 */
 		public setIsActive(): void {
 			if (this._isActive === false) {
@@ -315,7 +315,7 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 		/**
 		 * Removes active class from pattern.
 		 *
-		 * @memberof OSFramework.Patterns.SectionIndexItem.SectionIndexItem
+		 * @memberof OSFramework.OSUI.Patterns.SectionIndexItem.SectionIndexItem
 		 */
 		public unsetIsActive(): void {
 			if (this._isActive) {
@@ -329,7 +329,7 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 		 *
 		 * @readonly
 		 * @type {boolean}
-		 * @memberof OSFramework.Patterns.SectionIndexItem.SectionIndexItem
+		 * @memberof OSFramework.OSUI.Patterns.SectionIndexItem.SectionIndexItem
 		 */
 		public get IsSelected(): boolean {
 			return this._isActive;
@@ -340,7 +340,7 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 		 *
 		 * @readonly
 		 * @type {HTMLElement}
-		 * @memberof OSFramework.Patterns.SectionIndexItem.SectionIndexItem
+		 * @memberof OSFramework.OSUI.Patterns.SectionIndexItem.SectionIndexItem
 		 */
 		public get TargetElement(): HTMLElement {
 			return this._targetElement;
@@ -351,7 +351,7 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 		 *
 		 * @readonly
 		 * @type {OffsetValues}
-		 * @memberof OSFramework.Patterns.SectionIndexItem.SectionIndexItem
+		 * @memberof OSFramework.OSUI.Patterns.SectionIndexItem.SectionIndexItem
 		 */
 		public get TargetElementOffset(): OffsetValues {
 			return this._targetElementOffset;

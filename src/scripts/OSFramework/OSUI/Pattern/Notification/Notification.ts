@@ -1,9 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/Notification/Notification.ts
-namespace OSFramework.Patterns.Notification {
-========
 namespace OSFramework.OSUI.Patterns.Notification {
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/Notification/Notification.ts
 	/**
 	 * Defines the interface for OutSystemsUI Patterns
 	 */
@@ -30,34 +26,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		// Store the parent element
 		private _parentSelf: HTMLElement;
 		// Store the platform events
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/Notification/Notification.ts
-		private _platformEventOnInitialize: Callbacks.OSInitializedEvent;
 		private _platformEventOnToggle: Callbacks.OSOnToggleEvent;
-
-		/**
-		 * Get Gesture Events Instance
-		 *
-		 * @readonly
-		 * @type {Event.GestureEvent.SwipeEvent}
-		 * @memberof Notification
-		 */
-		public get gestureEventInstance(): Event.GestureEvent.SwipeEvent {
-			return this._gestureEventInstance;
-		}
-
-		/**
-		 * Get if has gesture events
-		 *
-		 * @readonly
-		 * @type {boolean}
-		 * @memberof Notification
-		 */
-		public get hasGestureEvents(): boolean {
-			return this._hasGestureEvents;
-		}
-========
-		private _platformEventOnToggle: Callbacks.OSOnToggleEvent;
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/Notification/Notification.ts
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new NotificationConfig(configs));
@@ -98,13 +67,8 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		private _handleGestureEvents(): void {
 			if (Helper.DeviceInfo.IsNative) {
 				// Create and save gesture event instance. Created here and not on constructor,
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/Notification/Notification.ts
-				// as we need to pass this._selfElem, only available after super.build()
-				this._gestureEventInstance = new Event.GestureEvent.SwipeEvent(this._selfElem);
-========
 				// as we need to pass this.selfElement, only available after super.build()
 				this._gestureEventInstance = new Event.GestureEvent.SwipeEvent(this.selfElement);
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/Notification/Notification.ts
 
 				//Set event listeners and callbacks
 				this.setGestureEvents(
@@ -123,11 +87,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 			// Remove the A11Y states to focus trap
 			this._focusTrapInstance.disableForA11y();
 
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/Notification/Notification.ts
-			Helper.Dom.Styles.RemoveClass(this._selfElem, Enum.CssClass.PatternIsOpen);
-========
 			Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.PatternIsOpen);
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/Notification/Notification.ts
 
 			// Trigger Notification event with new status
 			this._triggerOnToggleEvent(this._isOpen);
@@ -172,11 +132,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 			// Add the A11Y states to focus trap
 			this._focusTrapInstance.enableForA11y();
 
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/Notification/Notification.ts
-			Helper.Dom.Styles.AddClass(this._selfElem, Enum.CssClass.PatternIsOpen);
-========
 			Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.PatternIsOpen);
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/Notification/Notification.ts
 
 			// Trigger Notification event with new status
 			this._triggerOnToggleEvent(this._isOpen);
@@ -206,15 +162,11 @@ namespace OSFramework.OSUI.Patterns.Notification {
 
 		// Set the cssClasses that should be assigned to the element on it's initialization
 		private _updateA11yProperties(): void {
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/Notification/Notification.ts
-			Helper.Dom.Attribute.Set(this._selfElem, Constants.A11YAttributes.Aria.Hidden, (!this._isOpen).toString());
-========
 			Helper.Dom.Attribute.Set(
 				this.selfElement,
 				Constants.A11YAttributes.Aria.Hidden,
 				(!this._isOpen).toString()
 			);
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/Notification/Notification.ts
 
 			Helper.Dom.Attribute.Set(
 				this.selfElement,
@@ -277,7 +229,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		 * Sets the A11Y properties when the pattern is built.
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Notification.Notification
+		 * @memberof OSFramework.OSUI.Patterns.Notification.Notification
 		 */
 		protected setA11YProperties(): void {
 			Helper.Dom.Attribute.Set(
@@ -294,7 +246,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		 *  Sets the callbacks to be used in the pattern.
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Notification.Notification
+		 * @memberof OSFramework.OSUI.Patterns.Notification.Notification
 		 */
 		protected setCallbacks(): void {
 			this._eventOnClick = this._clickCallback.bind(this);
@@ -305,23 +257,17 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		 * Set the html references that will be used to manage the cssClasses and atribute properties
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Notification.Notification
+		 * @memberof OSFramework.OSUI.Patterns.Notification.Notification
 		 */
 		protected setHtmlElements(): void {
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/Notification/Notification.ts
-			this._parentSelf = Helper.Dom.GetElementById(this._widgetId);
-
-			Helper.AsyncInvocation(this._platformEventOnInitialize, this.widgetId);
-========
 			this._parentSelf = Helper.Dom.GetElementById(this.widgetId);
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/Notification/Notification.ts
 		}
 
 		/**
 		 * Set the cssClasses that should be assigned to the element on it's initialization
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Notification.Notification
+		 * @memberof OSFramework.OSUI.Patterns.Notification.Notification
 		 */
 		protected setInitialStates(): void {
 			// Set event if device is touch
@@ -350,7 +296,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		 * Method to remove all assigned callbacks
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Notification.Notification
+		 * @memberof OSFramework.OSUI.Patterns.Notification.Notification
 		 */
 		protected unsetCallbacks(): void {
 			// Reassign the elements to undefined, preventing memory leaks and remove events
@@ -366,14 +312,10 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		 * Reassign the HTML elements to undefined, preventing memory leaks
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Notification.Notification
+		 * @memberof OSFramework.OSUI.Patterns.Notification.Notification
 		 */
 		protected unsetHtmlElements(): void {
 			this._parentSelf = undefined;
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/Notification/Notification.ts
-			this._platformEventOnInitialize = undefined;
-========
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/Notification/Notification.ts
 			this._platformEventOnToggle = undefined;
 		}
 
@@ -401,7 +343,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		 *
 		 * @param {string} propertyName
 		 * @param {unknown} propertyValue
-		 * @memberof OSFramework.Patterns.Notification.Notification
+		 * @memberof OSFramework.OSUI.Patterns.Notification.Notification
 		 */
 		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
 		public changeProperty(propertyName: string, propertyValue: any): void {
@@ -443,7 +385,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		/**
 		 * Destroy the Notification
 		 *
-		 * @memberof OSFramework.Patterns.Notification.Notification
+		 * @memberof OSFramework.OSUI.Patterns.Notification.Notification
 		 */
 		public dispose(): void {
 			if (this.isBuilt) {
@@ -469,7 +411,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		/**
 		 * Public method to hide the notification, if it's visible.
 		 *
-		 * @memberof OSFramework.Patterns.Notification.Notification
+		 * @memberof OSFramework.OSUI.Patterns.Notification.Notification
 		 */
 		public hide(): void {
 			if (this._isOpen) {
@@ -480,7 +422,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		/**
 		 * Handle the platform swipe bottom gesture
 		 *
-		 * @memberof OSFramework.Patterns.Notification.Notification
+		 * @memberof OSFramework.OSUI.Patterns.Notification.Notification
 		 */
 		public onSwipeBottom(): void {
 			if (
@@ -496,7 +438,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		/**
 		 * Handle the platform swipe left gesture
 		 *
-		 * @memberof OSFramework.Patterns.Notification.Notification
+		 * @memberof OSFramework.OSUI.Patterns.Notification.Notification
 		 */
 		public onSwipeLeft(): void {
 			if (
@@ -511,7 +453,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		/**
 		 * Handle the platform swipe right gesture
 		 *
-		 * @memberof OSFramework.Patterns.Notification.Notification
+		 * @memberof OSFramework.OSUI.Patterns.Notification.Notification
 		 */
 		public onSwipeRight(): void {
 			if (
@@ -526,7 +468,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		/**
 		 * Handle the platform swipe top gesture
 		 *
-		 * @memberof OSFramework.Patterns.Notification.Notification
+		 * @memberof OSFramework.OSUI.Patterns.Notification.Notification
 		 */
 		public onSwipeUp(): void {
 			this.hide();
@@ -537,11 +479,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		 *
 		 * @param {string} eventName
 		 * @param {GlobalCallbacks.OSGeneric} callback
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/Notification/Notification.ts
-		 * @memberof Notification
-========
-		 * @memberof OSFramework.Patterns.Notification.Notification
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/Notification/Notification.ts
+		 * @memberof OSFramework.OSUI.Patterns.Notification.Notification
 		 */
 		public registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
@@ -559,11 +497,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		/**
 		 * Removes the gesture events to open/close the Notification on Mobile Apps
 		 *
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/Notification/Notification.ts
-		 * @memberof Notification
-========
-		 * @memberof OSFramework.Patterns.Notification.Notification
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/Notification/Notification.ts
+		 * @memberof OSFramework.OSUI.Patterns.Notification.Notification
 		 */
 		public removeGestureEvents(): void {
 			if (this._gestureEventInstance !== undefined) {
@@ -579,11 +513,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		 * Sets the gesture events to open/close the Notification on Native Apps
 		 *
 		 * @protected
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/Notification/Notification.ts
-		 * @memberof Notification
-========
-		 * @memberof OSFramework.Patterns.Notification.Notification
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/Notification/Notification.ts
+		 * @memberof OSFramework.OSUI.Patterns.Notification.Notification
 		 */
 		public setGestureEvents(
 			onSwipeDownCallback: Event.GestureEvent.Callbacks.SwipeDown,
@@ -603,7 +533,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		/**
 		 * Public method to show the notification, if it's closed.
 		 *
-		 * @memberof OSFramework.Patterns.Notification.Notification
+		 * @memberof OSFramework.OSUI.Patterns.Notification.Notification
 		 */
 		public show(): void {
 			if (this._isOpen === false) {
@@ -616,7 +546,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		 *
 		 * @readonly
 		 * @type {Event.GestureEvent.SwipeEvent}
-		 * @memberof OSFramework.Patterns.Notification.Notification
+		 * @memberof OSFramework.OSUI.Patterns.Notification.Notification
 		 */
 		public get gestureEventInstance(): Event.GestureEvent.SwipeEvent {
 			return this._gestureEventInstance;
@@ -627,7 +557,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		 *
 		 * @readonly
 		 * @type {boolean}
-		 * @memberof OSFramework.Patterns.Notification.Notification
+		 * @memberof OSFramework.OSUI.Patterns.Notification.Notification
 		 */
 		public get hasGestureEvents(): boolean {
 			return this._hasGestureEvents;

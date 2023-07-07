@@ -1,9 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/RangeSlider/RangeSliderFactory.ts
-namespace OSFramework.Patterns.RangeSlider.Factory {
-========
 namespace OSFramework.OSUI.Patterns.RangeSlider.Factory {
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/RangeSlider/RangeSliderFactory.ts
 	/**
 	 * Create the new RangeSlider instance object according given provider
 	 *

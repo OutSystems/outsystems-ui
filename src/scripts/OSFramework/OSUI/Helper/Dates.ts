@@ -12,7 +12,7 @@ namespace OSFramework.OSUI.Helper {
 		 * @static
 		 * @param {Date} _date
 		 * @return {*}  {string}
-		 * @memberof OSFramework.Helper.Dates
+		 * @memberof OSFramework.OSUI.Helper.Dates
 		 */
 		public static GetTimeFromDate(_date: Date): string {
 			// Get the Hour at the selected DateTime
@@ -33,7 +33,7 @@ namespace OSFramework.OSUI.Helper {
 		 * @param {string} date1 Date to be checked if minor
 		 * @param {string} date2 Date to be checked if it's greater than date1
 		 * @return {*}  {boolean}
-		 * @memberof OSFramework.Helper.Dates
+		 * @memberof OSFramework.OSUI.Helper.Dates
 		 */
 		public static IsBeforeThan(date1: string, date2: string): boolean {
 			return Date.parse(date1) <= Date.parse(date2);
@@ -44,7 +44,7 @@ namespace OSFramework.OSUI.Helper {
 		 *
 		 * @export
 		 * @param {string} date
-		 * @memberof OSFramework.Helper.Dates
+		 * @memberof OSFramework.OSUI.Helper.Dates
 		 */
 		public static IsNull(date: string | Date): boolean {
 			let _date: Date;
@@ -104,7 +104,7 @@ namespace OSFramework.OSUI.Helper {
 		 *
 		 * @export
 		 * @param {string} date example of date.
-		 * @memberof OSFramework.Helper.Dates
+		 * @memberof OSFramework.OSUI.Helper.Dates
 		 */
 		public static SetServerDateFormat(date: string): void {
 			Dates._serverFormat = date.replace('13', 'DD').replace('10', 'MM').replace('1900', 'YYYY');
@@ -116,7 +116,7 @@ namespace OSFramework.OSUI.Helper {
 		 * @readonly
 		 * @static
 		 * @type {string}
-		 * @memberof OSFramework.Helper.Dates
+		 * @memberof OSFramework.OSUI.Helper.Dates
 		 */
 		public static get ServerFormat(): string {
 			return Dates._serverFormat;

@@ -1,9 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/Accordion/AccordionConfig.ts
-namespace OSFramework.Patterns.Accordion {
-========
 namespace OSFramework.OSUI.Patterns.Accordion {
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/Accordion/AccordionConfig.ts
 	export class AccordionConfig extends AbstractConfiguration {
 		public MultipleItems: boolean;
 
@@ -17,7 +13,7 @@ namespace OSFramework.OSUI.Patterns.Accordion {
 		 * @param key property name
 		 * @param value value to be set
 		 * @returns {*}
-		 * @memberof OSFramework.Patterns.Accordion.AccordionConfig
+		 * @memberof OSFramework.OSUI.Patterns.Accordion.AccordionConfig
 		 */
 		public validateDefault(key: string, value: unknown): unknown {
 			let validatedValue = undefined;

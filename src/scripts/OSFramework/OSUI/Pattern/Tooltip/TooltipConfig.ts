@@ -1,9 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/Tooltip/TooltipConfig.ts
-namespace OSFramework.Patterns.Tooltip {
-========
 namespace OSFramework.OSUI.Patterns.Tooltip {
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/Tooltip/TooltipConfig.ts
 	/**
 	 * Class that represents the custom configurations received by the Tooltip.
 	 *
@@ -26,7 +22,7 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 		 * @param isBuilt True when pattern has been built!
 		 * @param key property name
 		 * @returns {boolean} boolean
-		 * @memberof  OSFramework.Patterns.Tooltip.TooltipConfig
+		 * @memberof  OSFramework.OSUI.Patterns.Tooltip.TooltipConfig
 		 */
 		public validateCanChange(isBuilt: boolean, key: string): boolean {
 			if (isBuilt) {
@@ -41,7 +37,7 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 		 * @param key property name
 		 * @param value value to be check
 		 * @returns {unknown} value
-		 * @memberof  OSFramework.Patterns.Tooltip.TooltipConfig
+		 * @memberof  OSFramework.OSUI.Patterns.Tooltip.TooltipConfig
 		 */
 		public validateDefault(key: string, value: unknown): unknown {
 			let validatedValue = undefined;

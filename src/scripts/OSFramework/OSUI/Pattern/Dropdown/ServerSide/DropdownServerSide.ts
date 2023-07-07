@@ -860,7 +860,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		 * Add the Accessibility Attributes values
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
+		 * @memberof OSFramework.OSUI.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
 		 */
 		protected setA11YProperties(): void {
 			// Update Tabindex Ballon elements
@@ -891,7 +891,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		 * Method to set the calbacks
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
+		 * @memberof OSFramework.OSUI.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
 		 */
 		protected setCallbacks(): void {
 			this._eventOnBodyClick = this._onBodyClick.bind(this);
@@ -912,7 +912,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		 * Method to set the html elements used
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
+		 * @memberof OSFramework.OSUI.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
 		 */
 		protected setHtmlElements(): void {
 			this._activeScreenElement = Helper.Dom.ClassSelector(
@@ -959,7 +959,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		 * Unset callbacks that has been assigned to the element
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
+		 * @memberof OSFramework.OSUI.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
 		 */
 		protected unsetCallbacks(): void {
 			this._eventOnBodyClick = undefined;
@@ -981,7 +981,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		 * Method to unset the html elements used
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
+		 * @memberof OSFramework.OSUI.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
 		 */
 		protected unsetHtmlElements(): void {
 			// Ensure that the ballon has been removed from the DOM since it has been Moved to outside of pattern context.
@@ -1004,7 +1004,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		 *
 		 * @param childId Dropdown Option Item Id to be stored
 		 * @param notifiedTo {Enum.ChildNotifyActionType} triggered notification type
-		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
+		 * @memberof OSFramework.OSUI.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
 		 */
 		public beNotifiedByChild(
 			childItem: Patterns.DropdownServerSideItem.DropdownServerSideItem,
@@ -1043,7 +1043,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		 *
 		 * @param {string} propertyName the name of the property that will be changed
 		 * @param {unknown} propertyValue the new value that should be assigned to the given property name
-		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
+		 * @memberof OSFramework.OSUI.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			// Store previous extended class before change it!
@@ -1067,7 +1067,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		/**
 		 * Method that will check for all Selected OptionItems and Unselect them
 		 *
-		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
+		 * @memberof OSFramework.OSUI.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
 		 */
 		public clear(): void {
 			// Get all Selected Items
@@ -1082,7 +1082,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		/**
 		 * Method used to close the Dropdown
 		 *
-		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
+		 * @memberof OSFramework.OSUI.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
 		 */
 		public close(): void {
 			// SetTimeout is needed in order to ensure there is no conflit between OnClickBody and a button click that trigger this method.
@@ -1092,7 +1092,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		/**
 		 * Set pattern with a disable status
 		 *
-		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
+		 * @memberof OSFramework.OSUI.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
 		 */
 		public disable(): void {
 			// Assign disabled status.
@@ -1105,7 +1105,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		/**
 		 * Destroy the Dropdown.
 		 *
-		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
+		 * @memberof OSFramework.OSUI.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
 		 */
 		public dispose(): void {
 			this._unsetObserver();
@@ -1119,7 +1119,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		/**
 		 * Remove disable status from
 		 *
-		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
+		 * @memberof OSFramework.OSUI.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
 		 */
 		public enable(): void {
 			// Remove disabled status.
@@ -1132,7 +1132,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		/**
 		 * This method has no implementation on this context.
 		 *
-		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
+		 * @memberof OSFramework.OSUI.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
 		 */
 		public getSelectedValues(): string {
 			return this._hasNoImplementation();
@@ -1141,7 +1141,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		/**
 		 * Method used to open the Dropdown
 		 *
-		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
+		 * @memberof OSFramework.OSUI.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
 		 */
 		public open(): void {
 			// SetTimeout is needed in order to ensure there is no conflit between OnClickBody and a button click that trigger this method.
@@ -1153,7 +1153,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		 *
 		 * @param {string} eventName Event name that will be assigned
 		 * @param {GlobalCallbacks.OSGeneric} callback Function name that will be passed as a callback function to the event above
-		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
+		 * @memberof OSFramework.OSUI.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
 		 */
 		public registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
@@ -1181,7 +1181,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		/**
 		 * This method has no implementation on this context.
 		 *
-		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
+		 * @memberof OSFramework.OSUI.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
 		 */
 		public setProviderConfigs(): string {
 			return this._hasNoImplementation();
@@ -1190,7 +1190,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		/**
 		 * This method has no implementation on this context.
 		 *
-		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
+		 * @memberof OSFramework.OSUI.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
 		 */
 		public setProviderEvent(): string {
 			return this._hasNoImplementation();
@@ -1210,7 +1210,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		/**
 		 * This method has no implementation on this context.
 		 *
-		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
+		 * @memberof OSFramework.OSUI.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
 		 */
 		public unsetProviderEvent(): string {
 			return this._hasNoImplementation();
@@ -1221,7 +1221,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		 *
 		 * @param {boolean} Set if the dropdown is valid or not
 		 * @param {string} Text message to be added
-		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
+		 * @memberof OSFramework.OSUI.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
 		 */
 		public validation(isValid: boolean, validationMessage: string): void {
 			if (isValid === false) {

@@ -33,7 +33,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		 * @param key property name
 		 * @param value value to be check
 		 * @returns {unknown} value
-		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSideConfig
+		 * @memberof OSFramework.OSUI.Patterns.Dropdown.ServerSide.OSUIDropdownServerSideConfig
 		 */
 		public validateDefault(key: string, value: unknown): unknown {
 			let validatedValue = undefined;
@@ -56,7 +56,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		 *
 		 * @readonly
 		 * @type {number}
-		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSideConfig
+		 * @memberof OSFramework.OSUI.Patterns.Dropdown.ServerSide.OSUIDropdownServerSideConfig
 		 */
 		public get balloonMaxHeight(): number {
 			return this._balloonMaxHeight as number;
@@ -66,7 +66,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		 * Getter that allows to obtain the string that should be added to the balloon options container by default
 		 *
 		 * @readonly
-		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSideConfig
+		 * @memberof OSFramework.OSUI.Patterns.Dropdown.ServerSide.OSUIDropdownServerSideConfig
 		 */
 		public get balloonOptionsArialabel(): string {
 			return this._balloonOptionsArialabel;
@@ -76,7 +76,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		 * Getter that allows to obtain the string that should be added to the select "input" container.
 		 *
 		 * @readonly
-		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSideConfig
+		 * @memberof OSFramework.OSUI.Patterns.Dropdown.ServerSide.OSUIDropdownServerSideConfig
 		 */
 		public get selectValuesWrapperAriaLabel(): string {
 			return this._selectValuesWrapperAriaLabel as string;

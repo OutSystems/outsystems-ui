@@ -607,7 +607,7 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 		 * Add the Accessibility Attributes values
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Tooltip.Tooltip
+		 * @memberof OSFramework.OSUI.Patterns.Tooltip.Tooltip
 		 */
 		protected setA11YProperties(): void {
 			// Set Role to the tooltipContent
@@ -628,7 +628,7 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 		 * Set the method that will be assigned to the window click event
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Tooltip.Tooltip
+		 * @memberof OSFramework.OSUI.Patterns.Tooltip.Tooltip
 		 */
 		protected setCallbacks(): void {
 			this._eventOnBalloonClick = this._onBalloonClick.bind(this);
@@ -649,7 +649,7 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 		 * Update info based on htmlContent
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Tooltip.Tooltip
+		 * @memberof OSFramework.OSUI.Patterns.Tooltip.Tooltip
 		 */
 		protected setHtmlElements(): void {
 			this._activeScreenElement = Helper.Dom.ClassSelector(
@@ -687,7 +687,7 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 		 * Remove all the assigned Events
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Tooltip.Tooltip
+		 * @memberof OSFramework.OSUI.Patterns.Tooltip.Tooltip
 		 */
 		protected unsetCallbacks(): void {
 			this._eventOnBalloonClick = undefined;
@@ -707,7 +707,7 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 		 * Unsets the refences to the HTML elements.
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Tooltip.Tooltip
+		 * @memberof OSFramework.OSUI.Patterns.Tooltip.Tooltip
 		 */
 		protected unsetHtmlElements(): void {
 			// Remove the detached balloon html element!
@@ -723,7 +723,7 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 		/**
 		 * Build tooltip
 		 *
-		 * @memberof OSFramework.Patterns.Tooltip.Tooltip
+		 * @memberof OSFramework.OSUI.Patterns.Tooltip.Tooltip
 		 */
 		public build(): void {
 			super.build();
@@ -737,7 +737,7 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 		 *
 		 * @param {string} propertyName the name of the property that will be changed
 		 * @param {unknown} propertyValue the new value that should be assigned to the given property name
-		 * @memberof OSFramework.Patterns.Tooltip.Tooltip
+		 * @memberof OSFramework.OSUI.Patterns.Tooltip.Tooltip
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			// Store previous extended class before change it!
@@ -777,7 +777,7 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 		/**
 		 * Close the tooltip
 		 *
-		 * @memberof OSFramework.Patterns.Tooltip.Tooltip
+		 * @memberof OSFramework.OSUI.Patterns.Tooltip.Tooltip
 		 */
 		public close(): void {
 			this._triggerClose();
@@ -786,7 +786,7 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 		/**
 		 * Destroy the tooltip
 		 *
-		 * @memberof OSFramework.Patterns.Tooltip.Tooltip
+		 * @memberof OSFramework.OSUI.Patterns.Tooltip.Tooltip
 		 */
 		public dispose(): void {
 			this._unsetEvents();
@@ -799,7 +799,7 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 		/**
 		 * Open the tooltip
 		 *
-		 * @memberof OSFramework.Patterns.Tooltip.Tooltip
+		 * @memberof OSFramework.OSUI.Patterns.Tooltip.Tooltip
 		 */
 		public open(): void {
 			this._isOpenedByApi = true;
@@ -811,7 +811,7 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 		 *
 		 * @param {string} eventName Event name that will be assigned
 		 * @param {GlobalCallbacks.OSGeneric} callback Function name that will be passed as a callback function to the event above
-		 * @memberof OSFramework.Patterns.Tooltip.Tooltip
+		 * @memberof OSFramework.OSUI.Patterns.Tooltip.Tooltip
 		 */
 		public registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
@@ -831,7 +831,7 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 		 *
 		 * @readonly
 		 * @type {boolean}
-		 * @memberof OSFramework.Patterns.Tooltip.Tooltip
+		 * @memberof OSFramework.OSUI.Patterns.Tooltip.Tooltip
 		 */
 		public get IsOpen(): boolean {
 			return this._isOpen;

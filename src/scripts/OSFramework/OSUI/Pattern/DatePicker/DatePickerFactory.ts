@@ -1,9 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/DatePicker/DatePickerFactory.ts
-namespace OSFramework.Patterns.DatePicker.Factory {
-========
 namespace OSFramework.OSUI.Patterns.DatePicker.Factory {
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/DatePicker/DatePickerFactory.ts
 	/**
 	 * Create the new DatePicker instance object according given provider
 	 *

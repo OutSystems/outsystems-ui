@@ -1,9 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-<<<<<<<< HEAD:src/scripts/OSFramework/GlobalEnum.ts
-namespace OSFramework.GlobalEnum {
-========
 namespace OSFramework.OSUI.GlobalEnum {
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/GlobalEnum.ts
 	/**
 	 * OutSystemsUI common properties
 	 */
@@ -20,10 +16,7 @@ namespace OSFramework.OSUI.GlobalEnum {
 		AsideExpandable = 'aside-expandable',
 		Container = 'screen-container',
 		Content = 'content',
-<<<<<<<< HEAD:src/scripts/OSFramework/GlobalEnum.ts
-========
 		DeprecatedSubmenu = 'submenu',
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/GlobalEnum.ts
 		Footer = 'footer',
 		Header = 'header',
 		HeaderHideOnScroll = 'hide-header-on-scroll',
@@ -39,10 +32,7 @@ namespace OSFramework.OSUI.GlobalEnum {
 		MainContent = 'main-content',
 		MenuLinks = 'app-menu-links',
 		Placeholder = 'ph',
-<<<<<<<< HEAD:src/scripts/OSFramework/GlobalEnum.ts
-========
 		InputNotValid = 'not-valid',
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/GlobalEnum.ts
 	}
 
 	/**
@@ -50,11 +40,8 @@ namespace OSFramework.OSUI.GlobalEnum {
 	 */
 	export enum CSSSelectors {
 		InputFormControl = 'input.form-control',
-<<<<<<<< HEAD:src/scripts/OSFramework/GlobalEnum.ts
-========
 		IosBounceScroll = 'ios .ios-bounce:not(.hide-header-on-scroll) .content',
 		LayoutNativeHeader = 'layout-native:not(.hide-header-on-scroll) .header',
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/GlobalEnum.ts
 	}
 
 	/**
@@ -90,7 +77,6 @@ namespace OSFramework.OSUI.GlobalEnum {
 		Initial = 'initial',
 		None = 'none',
 		PaddingTop = 'padding-top',
-		Auto = 'auto',
 	}
 
 	/**
@@ -110,10 +96,7 @@ namespace OSFramework.OSUI.GlobalEnum {
 		D = 'D',
 		d = 'd',
 		DD = 'DD',
-<<<<<<<< HEAD:src/scripts/OSFramework/GlobalEnum.ts
-========
 		DDD = 'DDD',
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/GlobalEnum.ts
 		M = 'M',
 		m = 'm',
 		MM = 'MM',
@@ -153,12 +136,8 @@ namespace OSFramework.OSUI.GlobalEnum {
 	 * OutSystemsUI HTML Attributes
 	 */
 	export enum HTMLAttributes {
-<<<<<<<< HEAD:src/scripts/OSFramework/GlobalEnum.ts
-		AllowEventPropagation = '[data-allow-event-propagation=true]',
-========
 		AllowEventPropagation = '[data-allow-event-propagation=true], [data-allow-event-propagation=True]',
 		Class = 'class',
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/GlobalEnum.ts
 		DataInput = 'data-input',
 		Disabled = 'disabled',
 		Id = 'id',
@@ -194,13 +173,9 @@ namespace OSFramework.OSUI.GlobalEnum {
 		MouseDown = 'mousedown',
 		MouseEnter = 'mouseenter',
 		MouseLeave = 'mouseleave',
-<<<<<<<< HEAD:src/scripts/OSFramework/GlobalEnum.ts
-		OrientationChange = 'orientationchange',
-========
 		MouseUp = 'mouseup',
 		OrientationChange = 'orientationchange',
 		Prefix = 'on',
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/GlobalEnum.ts
 		Resize = 'resize',
 		Scroll = 'scroll',
 		TouchEnd = 'touchend',
@@ -299,10 +274,7 @@ namespace OSFramework.OSUI.GlobalEnum {
 		FloatingActions = 'Floating Actions',
 		FloatingActionsItem = 'Floating Actions Item',
 		Gallery = 'Gallery',
-<<<<<<<< HEAD:src/scripts/OSFramework/GlobalEnum.ts
-========
 		InlineSvg = 'InlineSVG',
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/GlobalEnum.ts
 		MonthPicker = 'MonthPicker',
 		Notification = 'Notification',
 		ProgressBar = 'Progress Bar',
@@ -334,22 +306,14 @@ namespace OSFramework.OSUI.GlobalEnum {
 	}
 
 	/**
-<<<<<<<< HEAD:src/scripts/OSFramework/GlobalEnum.ts
-	 * OutSystemsUI Input Types
-	 */
-	export enum InputTypes {
-========
 	 * OutSystemsUI Input Class Types
 	 */
 	export enum InputClassTypes {
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/GlobalEnum.ts
 		InputLarge = 'input-large',
 		InputSmall = 'input-small',
 	}
 
 	/**
-<<<<<<<< HEAD:src/scripts/OSFramework/GlobalEnum.ts
-========
 	 * OutSystemsUI Input attribute values Types
 	 */
 	export enum InputTypeAttr {
@@ -360,7 +324,6 @@ namespace OSFramework.OSUI.GlobalEnum {
 	}
 
 	/**
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/GlobalEnum.ts
 	 * OutSystemsUI Units
 	 */
 	export enum Units {
@@ -407,10 +370,7 @@ namespace OSFramework.OSUI.GlobalEnum {
 
 	export enum WarningMessages {
 		FeatureNotImplemented = 'This feature is not yet implemented!',
-<<<<<<<< HEAD:src/scripts/OSFramework/GlobalEnum.ts
-========
 		MethodNotImplemented = 'This Method has no implementation on the context of this pattern.',
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/GlobalEnum.ts
 	}
 
 	export enum NullValues {
@@ -427,13 +387,10 @@ namespace OSFramework.OSUI.GlobalEnum {
 		Initialized = 'Initialized',
 		OnProviderConfigsApplied = 'OnProviderConfigsApplied',
 	}
-<<<<<<<< HEAD:src/scripts/OSFramework/GlobalEnum.ts
-========
 
 	export enum SVGHelperConstants {
 		DOMType = 'image/svg+xml',
 		ParserError = 'parsererror',
 		SVG = 'svg',
 	}
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/GlobalEnum.ts
 }

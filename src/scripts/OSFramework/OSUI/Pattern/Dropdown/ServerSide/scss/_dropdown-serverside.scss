@@ -88,11 +88,7 @@ $balloonMobileTopMargin: 5vh;
 			position: absolute;
 			transition: opacity 300ms ease;
 			width: 100%;
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/Dropdown/scss/_dropdown-serverside.scss
-			z-index: 2;
-========
 			z-index: var(--layer-global-elevated);
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/Dropdown/ServerSide/scss/_dropdown-serverside.scss
 
 			// Service Studio Preview
 			& {
@@ -125,13 +121,8 @@ $balloonMobileTopMargin: 5vh;
 			}
 		}
 
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/Dropdown/scss/_dropdown-serverside.scss
-		// Search placeholder
-		&-search {
-========
 		// Search Wrapper
 		&-search-wrapper {
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/Dropdown/ServerSide/scss/_dropdown-serverside.scss
 			background-color: var(--color-neutral-0);
 			padding: var(--space-none);
 			position: relative;
@@ -155,15 +146,8 @@ $balloonMobileTopMargin: 5vh;
 				top: 0;
 			}
 
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/Dropdown/scss/_dropdown-serverside.scss
-			/* Used this approach in order to avoid renderization issues since at andoird the 
-			border-bottom assigned to the search element was not getting applied due to list renderization */
-			&:empty + .osui-dropdown-serverside__balloon-content {
-				border-top: none;
-========
 			&:empty + .osui-dropdown-serverside__balloon-search-icon {
 				display: none;
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/Dropdown/ServerSide/scss/_dropdown-serverside.scss
 			}
 
 			input,
@@ -247,11 +231,7 @@ $balloonMobileTopMargin: 5vh;
 					border-top-width: var(--border-size-none);
 				}
 
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/Dropdown/scss/_dropdown-serverside.scss
-				&-search {
-========
 				&-search-wrapper {
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/Dropdown/ServerSide/scss/_dropdown-serverside.scss
 					border-bottom: var(--border-size-none);
 					border-top: var(--border-size-s) solid var(--color-neutral-5);
 					order: 3;
@@ -358,7 +338,7 @@ $balloonMobileTopMargin: 5vh;
 // https://bugzilla.mozilla.org/show_bug.cgi?id=418039
 .firefox {
 	.osui-dropdown-serverside__balloon-wrapper.osui-dropdown-serverside--is-opened {
-		z-index: var(--layer-global-instant-interaction)
+		z-index: var(--layer-global-instant-interaction);
 	}
 }
 

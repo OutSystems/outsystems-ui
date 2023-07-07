@@ -1,9 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/Rating/Rating.ts
-namespace OSFramework.Patterns.Rating {
-========
 namespace OSFramework.OSUI.Patterns.Rating {
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/Rating/Rating.ts
 	/**
 	 * Defines the interface for OutSystemsUI Patterns
 	 */
@@ -19,11 +15,7 @@ namespace OSFramework.OSUI.Patterns.Rating {
 		// Store if the rating value is half
 		private _isHalfValue: boolean;
 		// Store the callback to be used on the OnSelect event
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/Rating/Rating.ts
-		private _platformEventOnSelect: Callbacks.OSOnSelectEvent;
-========
 		private _platformEventOnSelect: GlobalCallbacks.OSGeneric;
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/Rating/Rating.ts
 		// Store the fieldset html element
 		private _ratingFieldsetElem: HTMLElement;
 		// Store if the rating already has an event added
@@ -295,7 +287,7 @@ namespace OSFramework.OSUI.Patterns.Rating {
 		 * This method has no implementation on this pattern context!
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Rating.Rating
+		 * @memberof OSFramework.OSUI.Patterns.Rating.Rating
 		 */
 		protected setA11YProperties(): void {
 			console.warn(GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -305,7 +297,7 @@ namespace OSFramework.OSUI.Patterns.Rating {
 		 * Set the events
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Rating.Rating
+		 * @memberof OSFramework.OSUI.Patterns.Rating.Rating
 		 */
 		protected setCallbacks(): void {
 			this._eventOnRatingClick = this._ratingOnClick.bind(this);
@@ -315,7 +307,7 @@ namespace OSFramework.OSUI.Patterns.Rating {
 		 * Set the html references that will be used to manage the cssClasses and atribute properties
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Rating.Rating
+		 * @memberof OSFramework.OSUI.Patterns.Rating.Rating
 		 */
 		protected setHtmlElements(): void {
 			this._ratingIconStatesElem = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.IconStates);
@@ -326,7 +318,7 @@ namespace OSFramework.OSUI.Patterns.Rating {
 		 * Method to remove all assigned callbacks
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Rating.Rating
+		 * @memberof OSFramework.OSUI.Patterns.Rating.Rating
 		 */
 		protected unsetCallbacks(): void {
 			this._eventOnRatingClick = undefined;
@@ -336,7 +328,7 @@ namespace OSFramework.OSUI.Patterns.Rating {
 		 * UnSet the HTML elements
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Rating.Rating
+		 * @memberof OSFramework.OSUI.Patterns.Rating.Rating
 		 */
 		protected unsetHtmlElements(): void {
 			// Remove html from the fieldset
@@ -349,7 +341,7 @@ namespace OSFramework.OSUI.Patterns.Rating {
 		/**
 		 * Building Rating
 		 *
-		 * @memberof OSFramework.Patterns.Rating.Rating
+		 * @memberof OSFramework.OSUI.Patterns.Rating.Rating
 		 */
 		public build(): void {
 			super.build();
@@ -380,7 +372,7 @@ namespace OSFramework.OSUI.Patterns.Rating {
 		 *
 		 * @param {string} propertyName
 		 * @param {*} propertyValue
-		 * @memberof OSFramework.Patterns.Rating.Rating
+		 * @memberof OSFramework.OSUI.Patterns.Rating.Rating
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			//Storing the current Size, before possibly changing this property.
@@ -413,7 +405,7 @@ namespace OSFramework.OSUI.Patterns.Rating {
 		/**
 		 * Destroy the Rating pattern
 		 *
-		 * @memberof OSFramework.Patterns.Rating.Rating
+		 * @memberof OSFramework.OSUI.Patterns.Rating.Rating
 		 */
 		public dispose(): void {
 			this._removeEvents();
@@ -427,16 +419,9 @@ namespace OSFramework.OSUI.Patterns.Rating {
 		/**
 		 * Register a given callback event handler.
 		 *
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/Rating/Rating.ts
-		 * @param {Callbacks.OSOnSelectEvent} callback
-		 * @memberof Rating
-		 */
-		public registerCallback(callback: Callbacks.OSOnSelectEvent): void {
-			this._platformEventOnSelect = callback;
-========
 		 * @param {string} eventName
 		 * @param {GlobalCallbacks.OSGeneric} callback
-		 * @memberof OSFramework.Patterns.Rating.Rating
+		 * @memberof OSFramework.OSUI.Patterns.Rating.Rating
 		 */
 		public registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
@@ -448,7 +433,6 @@ namespace OSFramework.OSUI.Patterns.Rating {
 				default:
 					super.registerCallback(eventName, callback);
 			}
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/Rating/Rating.ts
 		}
 	}
 }

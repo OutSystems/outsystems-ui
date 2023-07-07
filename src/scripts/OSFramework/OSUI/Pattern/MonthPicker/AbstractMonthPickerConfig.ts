@@ -23,7 +23,7 @@ namespace OSFramework.OSUI.Patterns.MonthPicker {
 		 * @param key property name
 		 * @param value value to be check
 		 * @returns {unknown} value
-		 * @memberof OSFramework.Patterns.MonthPicker.AbstractMonthPickerConfig
+		 * @memberof OSFramework.OSUI.Patterns.MonthPicker.AbstractMonthPickerConfig
 		 */
 		public validateDefault(key: string, value: unknown): unknown {
 			let validatedValue = undefined;

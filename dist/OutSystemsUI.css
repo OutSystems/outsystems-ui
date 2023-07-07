@@ -8578,6 +8578,9 @@ html[data-uieditorversion^="1"] .osui-datepicker-calendar-ss-preview.has-today-b
 .vscomp-wrapper.has-value.show-value-as-tags .vscomp-toggle-button{
   padding-left:var(--space-s);
 }
+.vscomp-wrapper.has-value.show-value-as-tags .vscomp-clear-button{
+  right:var(--space-xl);
+}
 .vscomp-wrapper.has-value .vscomp-value{
   margin-right:var(--space-m);
 }

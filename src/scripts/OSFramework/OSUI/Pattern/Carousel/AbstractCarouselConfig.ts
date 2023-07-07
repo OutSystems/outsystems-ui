@@ -1,9 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/Carousel/AbstractCarouselConfig.ts
-namespace OSFramework.Patterns.Carousel {
-========
 namespace OSFramework.OSUI.Patterns.Carousel {
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/Carousel/AbstractCarouselConfig.ts
 	export abstract class AbstractCarouselConfig extends Patterns.AbstractProviderConfiguration {
 		public AutoPlay: boolean;
 		public Direction: GlobalEnum.Direction.LTR | GlobalEnum.Direction.RTL | GlobalEnum.Direction.TTB;
@@ -27,7 +23,7 @@ namespace OSFramework.OSUI.Patterns.Carousel {
 		 * @param isBuilt True when pattern has been built!
 		 * @param key property name
 		 * @returns {boolean} boolean
-		 * @memberof  OSFramework.Patterns.Carousel.AbstractCarouselConfig
+		 * @memberof  OSFramework.OSUI.Patterns.Carousel.AbstractCarouselConfig
 		 */
 		public validateCanChange(isBuilt: boolean, key: string): boolean {
 			if (isBuilt) {
@@ -42,7 +38,7 @@ namespace OSFramework.OSUI.Patterns.Carousel {
 		 * @param key property name
 		 * @param value value to be check
 		 * @returns {unknown} value
-		 * @memberof  OSFramework.Patterns.Carousel.AbstractCarouselConfig
+		 * @memberof  OSFramework.OSUI.Patterns.Carousel.AbstractCarouselConfig
 		 */
 		public validateDefault(key: string, value: unknown): unknown {
 			let validatedValue = undefined;

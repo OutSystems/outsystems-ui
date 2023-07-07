@@ -1,9 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/Rating/Enum.ts
-namespace OSFramework.Patterns.Rating.Enum {
-========
 namespace OSFramework.OSUI.Patterns.Rating.Enum {
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/Rating/Enum.ts
 	/**
 	 * CSS Classes
 	 */

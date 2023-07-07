@@ -1,9 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/RangeSlider/AbstractRangeSliderConfig.ts
-namespace OSFramework.Patterns.RangeSlider {
-========
 namespace OSFramework.OSUI.Patterns.RangeSlider {
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/RangeSlider/AbstractRangeSliderConfig.ts
 	export abstract class AbstractRangeSliderConfig extends Patterns.AbstractProviderConfiguration {
 		// These variables hold the inital state of a RangeSlider
 		public InitialValueFrom: number;
@@ -25,17 +21,14 @@ namespace OSFramework.OSUI.Patterns.RangeSlider {
 			super(config);
 		}
 
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/RangeSlider/AbstractRangeSliderConfig.ts
-========
 		/**
 		 * Method that will check if a given property (key) value is the type expected!
 		 *
 		 * @param key property name
 		 * @param value value to be check
 		 * @returns {unknown} value
-		 * @memberof  OSFramework.Patterns.RangeSlider.AbstractRangeSliderConfig
+		 * @memberof  OSFramework.OSUI.Patterns.RangeSlider.AbstractRangeSliderConfig
 		 */
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/RangeSlider/AbstractRangeSliderConfig.ts
 		public validateDefault(key: string, value: unknown): unknown {
 			let validatedValue = undefined;
 

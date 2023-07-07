@@ -1,9 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-<<<<<<<< HEAD:src/scripts/OSFramework/Pattern/Gallery/Gallery.ts
-namespace OSFramework.Patterns.Gallery {
-========
 namespace OSFramework.OSUI.Patterns.Gallery {
->>>>>>>> origin/rc2.16.0:src/scripts/OSFramework/OSUI/Pattern/Gallery/Gallery.ts
 	/**
 	 * Defines the interface for OutSystemsUI Gallery Pattern
 	 *
@@ -21,7 +17,7 @@ namespace OSFramework.OSUI.Patterns.Gallery {
 		 * Function used to set the Gallery's items gap
 		 *
 		 * @private
-		 * @memberof OSFramework.Patterns.Gallery.Gallery
+		 * @memberof OSFramework.OSUI.Patterns.Gallery.Gallery
 		 */
 		private _setItemsGap(): void {
 			Helper.Dom.Styles.SetStyleAttribute(
@@ -35,7 +31,7 @@ namespace OSFramework.OSUI.Patterns.Gallery {
 		 * Function used to set the Gallery's number of items per row in Desktop
 		 *
 		 * @private
-		 * @memberof OSFramework.Patterns.Gallery.Gallery
+		 * @memberof OSFramework.OSUI.Patterns.Gallery.Gallery
 		 */
 		private _setRowItemsDesktop(): void {
 			//The number must be greater than 0
@@ -64,7 +60,7 @@ namespace OSFramework.OSUI.Patterns.Gallery {
 		 * Function used to set the Gallery's number of items per row in Phone
 		 *
 		 * @private
-		 * @memberof OSFramework.Patterns.Gallery.Gallery
+		 * @memberof OSFramework.OSUI.Patterns.Gallery.Gallery
 		 */
 		private _setRowItemsPhone(): void {
 			//The number must be greater than 0
@@ -92,7 +88,7 @@ namespace OSFramework.OSUI.Patterns.Gallery {
 		 * Function used to set the Gallery's number of items per row in Tablet
 		 *
 		 * @private
-		 * @memberof OSFramework.Patterns.Gallery.Gallery
+		 * @memberof OSFramework.OSUI.Patterns.Gallery.Gallery
 		 */
 		private _setRowItemsTablet(): void {
 			//The number must be greater than 0
@@ -121,7 +117,7 @@ namespace OSFramework.OSUI.Patterns.Gallery {
 		 * This method has no implementation on this pattern context!
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Gallery.Gallery
+		 * @memberof OSFramework.OSUI.Patterns.Gallery.Gallery
 		 */
 		protected setA11YProperties(): void {
 			console.warn(GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -131,7 +127,7 @@ namespace OSFramework.OSUI.Patterns.Gallery {
 		 * This method has no implementation on this pattern context!
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Gallery.Gallery
+		 * @memberof OSFramework.OSUI.Patterns.Gallery.Gallery
 		 */
 		protected setCallbacks(): void {
 			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -141,7 +137,7 @@ namespace OSFramework.OSUI.Patterns.Gallery {
 		 * This method has no implementation on this pattern context!
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Gallery.Gallery
+		 * @memberof OSFramework.OSUI.Patterns.Gallery.Gallery
 		 */
 		protected setHtmlElements(): void {
 			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -151,7 +147,7 @@ namespace OSFramework.OSUI.Patterns.Gallery {
 		 * This method has no implementation on this pattern context!
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Gallery.Gallery
+		 * @memberof OSFramework.OSUI.Patterns.Gallery.Gallery
 		 */
 		protected unsetCallbacks(): void {
 			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -161,7 +157,7 @@ namespace OSFramework.OSUI.Patterns.Gallery {
 		 * This method has no implementation on this pattern context!
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Gallery.Gallery
+		 * @memberof OSFramework.OSUI.Patterns.Gallery.Gallery
 		 */
 		protected unsetHtmlElements(): void {
 			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -170,7 +166,7 @@ namespace OSFramework.OSUI.Patterns.Gallery {
 		/**
 		 * Build Gallery
 		 *
-		 * @memberof OSFramework.Patterns.Gallery.Gallery
+		 * @memberof OSFramework.OSUI.Patterns.Gallery.Gallery
 		 */
 		public build(): void {
 			super.build();
@@ -191,7 +187,7 @@ namespace OSFramework.OSUI.Patterns.Gallery {
 		 *
 		 * @param {string} propertyName
 		 * @param {unknown} propertyValue
-		 * @memberof OSFramework.Patterns.Gallery.Gallery
+		 * @memberof OSFramework.OSUI.Patterns.Gallery.Gallery
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
