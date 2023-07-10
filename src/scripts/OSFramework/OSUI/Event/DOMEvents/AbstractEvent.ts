@@ -21,7 +21,7 @@ namespace OSFramework.OSUI.Event.DOMEvents {
 		 * @type {GlobalCallbacks.OSGeneric[]}
 		 * @memberof AbstractEvent
 		 */
-		protected get handlers(): GlobalCallbacks.OSGeneric[] {
+		public get handlers(): GlobalCallbacks.OSGeneric[] {
 			return this._handlers;
 		}
 
