@@ -1,18 +1,16 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace OSFramework.OSUI.Event {
+namespace OSFramework.OSUI.Event.DOMEvents {
 	/**
-	 * This class is a Manager of events. It will be used by the Map/Marker/etc in order to support
-	 * the listenning of the different events supported by the parent element.
-	 * You can almost think of it, as the object that works underneath "document.addEventListener()" API - which will
-	 * be equivalent to out "MapAPI.MapManager.Events.Subscribe()".
+	 * This class is a Manager of events (listeners, observers, etc.)
 	 *
 	 * @export
 	 * @abstract
 	 * @class AbstractEventsManager
-	 * @template ET type events that this manager will be handling (e.g. MapEventType, MarkerEventTypes, ...)
-	 * @template D  this will be the type of Data to be passed, by default to the handlers.
+	 * @template ET EventType
+	 * @template D Event object
 	 */
 	export abstract class AbstractEventsManager<ET, D> {
+		// Store all events
 		private _events: Map<ET, IEvent<D>>;
 
 		constructor() {

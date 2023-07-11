@@ -14,12 +14,15 @@
 	min-height: 40px;
 	overflow: hidden;
 	padding: var(--space-s) var(--space-base);
+	position: relative;
 	transition: background 250ms ease;
 	width: 100%;
+	z-index: 0;
 
 	&:hover,
 	&--is-selected {
 		background-color: var(--color-neutral-2);
+		z-index: 1;
 
 		// Service Studio Preview
 		& {

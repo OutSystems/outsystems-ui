@@ -52,7 +52,7 @@
 	height: 100%;
 	position: relative;
 	width: 100%;
-	z-index: 1;
+	z-index: var(--layer-local-tier-1);
 }
 
 .range-slider .noUi-connect,
@@ -66,13 +66,13 @@
 	-webkit-transform-style: preserve-3d;
 	transform-style: flat;
 	will-change: transform;
-	z-index: 1;
+	z-index: var(--layer-local-tier-1);
 }
 
 .range-slider .noUi-connects {
 	border-radius: var(--border-radius-soft);
 	overflow: hidden;
-	z-index: 0;
+	z-index: var(--layer-global-screen);
 }
 
 .range-slider .noUi-horizontal .noUi-handle,

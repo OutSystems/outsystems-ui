@@ -6,7 +6,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect.Tags {
 			super(uniqueId, new VirtualSelectTagsConfig(configs));
 
 			// Set the AriaLabel text value for the hidden text input wrapper
-			this._hiddenInputWrapperAriaLabelVal = Dropdown.VirtualSelect.Enum.PropertiesValues.AriaLabelMultipleValue;
+			this.hiddenInputWrapperAriaLabelVal = Dropdown.VirtualSelect.Enum.PropertiesValues.AriaLabelMultipleValue;
 		}
 
 		/**
@@ -18,7 +18,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect.Tags {
 		 */
 		protected getSelectedOptionsStructure(): DropDownOption[] {
 			// Store the options selected
-			const optionsSelected = this._virtualselectConfigs.getSelectedOptions();
+			const optionsSelected = this.virtualselectConfigs.getSelectedOptions();
 
 			return optionsSelected;
 		}
@@ -31,7 +31,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect.Tags {
 		 */
 		protected prepareConfigs(): void {
 			// Get the library configurations
-			this._virtualselectOpts = this.configs.getProviderConfig();
+			this.virtualselectOpts = this.configs.getProviderConfig();
 
 			// Instance will be Created!
 			this.createProviderInstance();

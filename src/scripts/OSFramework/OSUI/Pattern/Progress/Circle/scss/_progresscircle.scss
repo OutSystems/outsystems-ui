@@ -21,7 +21,7 @@
 		margin: 0 auto;
 		position: relative;
 		width: var(--circle-size);
-		z-index: 0;
+		z-index: var(--layer-global-screen);
 
 		> div {
 			display: block;
@@ -74,10 +74,10 @@
 		top: 50%;
 		transform: translate(-50%, -50%);
 		width: 80%;
-		z-index: 1;
+		z-index: var(--layer-local-tier-1);
 	}
 
-	.svg-wrapper {
+	.osui-inline-svg {
 		display: inline-flex;
 		// the !important is used to override the inline style
 		height: var(--circle-size) !important;

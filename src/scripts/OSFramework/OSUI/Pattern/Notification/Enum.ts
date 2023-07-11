@@ -28,7 +28,6 @@ namespace OSFramework.OSUI.Patterns.Notification.Enum {
 	 * Notification Events
 	 */
 	export enum Events {
-		OnInitialize = 'Initialized',
 		OnToggle = 'OnToggle',
 	}
 

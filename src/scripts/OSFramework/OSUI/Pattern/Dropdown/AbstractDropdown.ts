@@ -4,6 +4,13 @@ namespace OSFramework.OSUI.Patterns.Dropdown {
 		extends AbstractProviderPattern<P, C>
 		implements IDropdown
 	{
+		/**
+		 * Creates an instance of AbstractDropdown.
+		 *
+		 * @param {string} uniqueId
+		 * @param {C} configs
+		 * @memberof AbstractDropdown
+		 */
 		constructor(uniqueId: string, configs: C) {
 			super(uniqueId, configs);
 		}

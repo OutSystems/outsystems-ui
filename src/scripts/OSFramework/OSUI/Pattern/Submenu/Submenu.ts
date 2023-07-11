@@ -13,13 +13,12 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 		private _hasElements = false;
 		private _isActive = false;
 		private _isOpen = false;
-		// Platform OnInitialize Callback
-		private _platformEventInitializedCallback: GlobalCallbacks.OSGeneric;
 		private _platformEventOnToggleCallback: GlobalCallbacks.OSGeneric;
 		private _submenuActiveLinksElement: HTMLElement;
 		private _submenuAllLinksElement: HTMLAnchorElement[];
 		private _submenuHeaderElement: HTMLElement;
 		private _submenuLinksElement: HTMLElement;
+		public hasClickOutsideToClose = true;
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new SubmenuConfig(configs));
@@ -124,7 +123,10 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 			}
 
 			// Remove handler from Event Manager
-			Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnClick, this._globalEventBody);
+			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
+				Event.DOMEvents.Listeners.Type.BodyOnClick,
+				this._globalEventBody
+			);
 		}
 
 		// Set submenu as active
@@ -152,9 +154,6 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 			if (this._isOpen) {
 				this.close();
 			} else {
-				// Add the body click handler to event manager
-				Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnClick, this._globalEventBody);
-
 				// Make async the method call
 				Helper.AsyncInvocation(this.open.bind(this));
 			}
@@ -202,8 +201,8 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 		protected setCallbacks(): void {
 			// Define the callbacks that will be used
 			this._eventClick = this._clickCallback.bind(this);
-			this._eventKeypress = this._keypressCallback.bind(this);
 			this._globalEventBody = this._bodyClickCallback.bind(this);
+			this._eventKeypress = this._keypressCallback.bind(this);
 			this._eventOnMouseEnter = this._onMouseEnterCallback.bind(this);
 			this._eventOnMouseLeave = this._onMouseLeaveCallback.bind(this);
 
@@ -270,15 +269,12 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 		 * @memberof OSFramework.Patterns.Submenu.Submenu
 		 */
 		protected unsetCallbacks(): void {
-			this._removeEvents();
-
 			// Reassign the elements to undefined, preventing memory leaks
 			this._eventClick = undefined;
 			this._eventKeypress = undefined;
 			this._globalEventBody = undefined;
 			this._eventOnMouseEnter = undefined;
 			this._eventOnMouseLeave = undefined;
-			this._platformEventInitializedCallback = undefined;
 			this._platformEventOnToggleCallback = undefined;
 		}
 
@@ -311,21 +307,30 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 
 			this.setCallbacks();
 
-			// Trigger platform's _platformEventInitializedCallback client Action
-			Helper.AsyncInvocation(this._platformEventInitializedCallback, this.widgetId);
-
 			this.finishBuild();
 		}
 
 		/**
-		 * Method to change the value of configs/current state.
+		 * Method to toggle the behaviour to close submenu when clicking the body
 		 *
-		 * @param {string} propertyName
-		 * @param {unknown} propertyValue
-		 * @memberof OSFramework.Patterns.Submenu.Submenu
+		 * @param {boolean} clickOutsideToClose
+		 * @memberof Submenu
 		 */
-		public changeProperty(propertyName: string, propertyValue: unknown): void {
-			super.changeProperty(propertyName, propertyValue);
+		public clickOutsideToClose(clickOutsideToClose: boolean): void {
+			this.hasClickOutsideToClose = clickOutsideToClose;
+
+			// Make sure the event is updated when the API is triggered in runtime
+			if (this.hasClickOutsideToClose) {
+				Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
+					Event.DOMEvents.Listeners.Type.BodyOnClick,
+					this._globalEventBody
+				);
+			} else if (this.hasClickOutsideToClose === false) {
+				Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
+					Event.DOMEvents.Listeners.Type.BodyOnClick,
+					this._globalEventBody
+				);
+			}
 		}
 
 		/**
@@ -335,8 +340,13 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 		 */
 		public close(): void {
 			if (this._isOpen) {
-				// Remove handler from Event Manager
-				Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnClick, this._globalEventBody);
+				if (this.hasClickOutsideToClose) {
+					// Remove handler from Event Manager
+					Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
+						Event.DOMEvents.Listeners.Type.BodyOnClick,
+						this._globalEventBody
+					);
+				}
 
 				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.PatternIsOpen);
 
@@ -345,7 +355,7 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 				this._updateA11yProperties();
 
 				// Trigger the _platformEventOnToggleCallback callback!
-				Helper.AsyncInvocation(this._platformEventOnToggleCallback, this.widgetId, false);
+				this.triggerPlatformEventCallback(this._platformEventOnToggleCallback, false);
 			}
 		}
 
@@ -356,6 +366,7 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 		 */
 		public dispose(): void {
 			// Remove event listners
+			this._removeEvents();
 			this.unsetCallbacks();
 
 			// Remove unused HTML elements
@@ -371,20 +382,19 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 		 * @memberof OSFramework.Patterns.Submenu.Submenu
 		 */
 		public open(): void {
-			// Add the body click handler to event manager
-			Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnClick, this._globalEventBody);
+			if (this.hasClickOutsideToClose) {
+				// Add the body click handler to event manager
+				Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
+					Event.DOMEvents.Listeners.Type.BodyOnClick,
+					this._globalEventBody
+				);
+			}
 
 			// Make async the method call
 			Helper.AsyncInvocation(this._show.bind(this));
 
-			setTimeout(function () {
-				if (!this._dynamiclyOpening) {
-					this._dynamiclyOpening = false;
-				}
-			}, 500);
-
 			// Trigger the _platformEventOnToggleCallback callback!
-			Helper.AsyncInvocation(this._platformEventOnToggleCallback, this.widgetId, true);
+			this.triggerPlatformEventCallback(this._platformEventOnToggleCallback, true);
 		}
 
 		/**
@@ -394,24 +404,15 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 		 * @param {GlobalCallbacks.OSGeneric} callback
 		 * @memberof Submenu
 		 */
-		public registerCallback(callback: GlobalCallbacks.OSGeneric, eventName: string): void {
+		public registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
-				case Enum.Events.Initialized:
-					if (this._platformEventInitializedCallback === undefined) {
-						this._platformEventInitializedCallback = callback;
-					}
-					break;
-
 				case Enum.Events.OnToggle:
 					if (this._platformEventOnToggleCallback === undefined) {
 						this._platformEventOnToggleCallback = callback;
 					}
 					break;
-
 				default:
-					throw new Error(
-						`${ErrorCodes.Submenu.FailRegisterCallback}: The given '${eventName}' event name is not defined.`
-					);
+					super.registerCallback(eventName, callback);
 			}
 		}
 

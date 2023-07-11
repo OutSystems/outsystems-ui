@@ -15,14 +15,14 @@ namespace Providers.OSUI.Datepicker.Flatpickr.RangeDate {
 				// Set the new Start DefaultDate value
 				this.configs.InitialStartDate = this.provider.formatDate(
 					this.provider.selectedDates[0],
-					this._flatpickrOpts.dateFormat
+					this.flatpickrOpts.dateFormat
 				);
 
 				// Set the new End DefaultDate value
 				if (this.provider.selectedDates[1]) {
 					this.configs.InitialEndDate = this.provider.formatDate(
 						this.provider.selectedDates[1],
-						this._flatpickrOpts.dateFormat
+						this.flatpickrOpts.dateFormat
 					);
 				}
 			}
@@ -64,34 +64,28 @@ namespace Providers.OSUI.Datepicker.Flatpickr.RangeDate {
 		 * @param {string[]} selectedDates Array of selected dates
 		 * @memberof Providers.OSUI.DatePicker.Flatpickr.RangeDate.OSUIFlatpickrRangeDate
 		 */
-		protected onDateSelectedEvent(selectedDates: string[]): void {
+		protected onDateSelectedEvent(selectedDates: Array<Date>): void {
 			// Store selected dates with the expected dateFormat as a string type
 			const _selectedDate = [];
 
 			// Check if any date has been selected, In case of Clear this will retunr empty array
 			if (selectedDates.length > 0) {
-				_selectedDate[0] = this.provider.formatDate(selectedDates[0], this._flatpickrOpts.dateFormat);
+				_selectedDate[0] = this.provider.formatDate(selectedDates[0], this.flatpickrOpts.dateFormat);
 				if (selectedDates[1]) {
-					_selectedDate[1] = this.provider.formatDate(selectedDates[1], this._flatpickrOpts.dateFormat);
+					_selectedDate[1] = this.provider.formatDate(selectedDates[1], this.flatpickrOpts.dateFormat);
 				}
 			}
 
-			// Trigger the platform update attribute value based on the flatpicker text input value!
-			// This can be done on this context since on this case the "hidden" input should be text type!
-			OSFramework.OSUI.Helper.Dom.SetInputValue(
-				this._datePickerPlatformInputElem,
-				this._flatpickrInputElem.value
-			);
-
 			// Ensure user has selected start and end dates before trigger the onSelectedDate callback, or user has clean the seelcted dates!
 			if (selectedDates.length === 0 || selectedDates.length === 2) {
-				// Trigger platform's onChange callback event
-				OSFramework.OSUI.Helper.AsyncInvocation(
-					this._onSelectedCallbackEvent,
-					this.widgetId,
-					_selectedDate[0],
-					_selectedDate[1]
+				// Trigger the platform update attribute value based on the flatpicker text input value!
+				// This can be done on this context since on this case the "hidden" input should be text type!
+				OSFramework.OSUI.Helper.Dom.SetInputValue(
+					this.datePickerPlatformInputElem,
+					this.flatpickrInputElem.value
 				);
+				// Trigger platform's onChange callback event
+				this.triggerPlatformEventCallback(this.onSelectedCallbackEvent, _selectedDate[0], _selectedDate[1]);
 			}
 		}
 
@@ -117,7 +111,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr.RangeDate {
 			// Set the type attribute value
 			// This is needed once library set it as an hidden by default which can not be since otherwise the updating it's value will not be triggered the local variable update. That said it will be hidden through CSS!
 			OSFramework.OSUI.Helper.Dom.Attribute.Set(
-				this._datePickerPlatformInputElem,
+				this.datePickerPlatformInputElem,
 				OSFramework.OSUI.GlobalEnum.HTMLAttributes.type,
 				OSFramework.OSUI.GlobalEnum.InputTypeAttr.Text
 			);
@@ -130,9 +124,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr.RangeDate {
 		 */
 		public build(): void {
 			super.build();
-
 			this.prepareConfigs();
-
 			this.finishBuild();
 		}
 
@@ -172,7 +164,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr.RangeDate {
 			if (
 				OSFramework.OSUI.Helper.Dates.IsNull(startDate) === false &&
 				OSFramework.OSUI.Helper.Dates.IsNull(endDate) === false &&
-				this._datePickerPlatformInputElem.disabled === false
+				this.datePickerPlatformInputElem.disabled === false
 			) {
 				// Redefine the Initial dates
 				this.configs.InitialStartDate = startDate;

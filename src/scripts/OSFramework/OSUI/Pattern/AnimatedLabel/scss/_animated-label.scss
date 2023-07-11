@@ -31,7 +31,7 @@
 		position: absolute;
 		top: 8px;
 		transition: all 300ms ease;
-		z-index: 1;
+		z-index: var(--layer-global-screen);
 
 		.icon {
 			padding-right: var(--space-base);

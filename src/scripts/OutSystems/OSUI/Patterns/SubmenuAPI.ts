@@ -25,6 +25,27 @@ namespace OutSystems.OSUI.Patterns.SubmenuAPI {
 	}
 
 	/**
+	 *
+	 * Function that will toggle the behaviour to close submenu when clicking the body
+	 * @export
+	 * @param {string} submenuId
+	 * @param {boolean} clickOutsideToClose
+	 * @return {*}  {string}
+	 */
+	export function ClickOutsideToClose(submenuId: string, clickOutsideToClose: boolean): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Submenu.FailClickOutsideToClose,
+			callback: () => {
+				const submenu = GetSubmenuById(submenuId);
+
+				submenu.clickOutsideToClose(clickOutsideToClose);
+			},
+		});
+
+		return result;
+	}
+
+	/**
 	 * Function that will close a given submenu.
 	 *
 	 * @export
@@ -164,7 +185,7 @@ namespace OutSystems.OSUI.Patterns.SubmenuAPI {
 			callback: () => {
 				const submenu = GetSubmenuById(submenuId);
 
-				submenu.registerCallback(callback, eventName);
+				submenu.registerCallback(eventName, callback);
 			},
 		});
 

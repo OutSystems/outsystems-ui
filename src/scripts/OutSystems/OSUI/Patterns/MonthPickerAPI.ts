@@ -248,26 +248,6 @@ namespace OutSystems.OSUI.Patterns.MonthPickerAPI {
 	}
 
 	/**
-	 * Function to remove providerEvents added by extensibility
-	 *
-	 * @export
-	 * @param {string} monthPickerId
-	 * @param {string} eventId
-	 * @return {*}  {string}
-	 */
-	export function UnsetProviderEvent(monthPickerId: string, eventId: string): string {
-		const result = OutSystems.OSUI.Utils.CreateApiResponse({
-			errorCode: ErrorCodes.MonthPicker.FailRemoveProviderEvent,
-			callback: () => {
-				const monthPicker = GetMonthPickerItemById(monthPickerId);
-				monthPicker.unsetProviderEvent(eventId);
-			},
-		});
-
-		return result;
-	}
-
-	/**
 	 * Function that will set a different language to a given MonthPickerId
 	 *
 	 * @export
@@ -302,6 +282,63 @@ namespace OutSystems.OSUI.Patterns.MonthPickerAPI {
 			callback: () => {
 				const _monthPicker = this.GetMonthPickerItemById(monthPickerId);
 				_monthPicker.setEditableInput(IsEditable);
+			},
+		});
+
+		return result;
+	}
+
+	/**
+	 * Function to remove providerEvents added by extensibility
+	 *
+	 * @export
+	 * @param {string} monthPickerId
+	 * @param {string} eventId
+	 * @return {*}  {string}
+	 */
+	export function UnsetProviderEvent(monthPickerId: string, eventId: string): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.MonthPicker.FailRemoveProviderEvent,
+			callback: () => {
+				const monthPicker = GetMonthPickerItemById(monthPickerId);
+				monthPicker.unsetProviderEvent(eventId);
+			},
+		});
+
+		return result;
+	}
+
+	/**
+	 * Function that will update the InitialMonth fot a given MonthpickerId
+	 * @param {string} monthPickerId
+	 * @param {string} monthYear The value for the InitialMonth
+	 */
+	export function UpdateInitialMonth(monthPickerId: string, monthYear: MonthYear): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.MonthPicker.FailUpdateInitialMonth,
+			callback: () => {
+				const _monthPicker = this.GetMonthPickerItemById(monthPickerId);
+				_monthPicker.updateInitialMonth(monthYear);
+			},
+		});
+
+		return result;
+	}
+
+	/**
+	 * Function that will update the prompt message for a given MonthPickerId
+	 *
+	 * @param {string} monthPickerId
+	 * @param {string} promptMessage The value for the prompt message
+	 * @return {*} Response Object as a JSON String
+	 */
+	export function UpdatePrompt(monthPickerId: string, promptMessage: string): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.MonthPicker.FailUpdatePrompt,
+			callback: () => {
+				const _monthPicker = this.GetMonthPickerItemById(monthPickerId);
+
+				_monthPicker.updatePrompt(promptMessage);
 			},
 		});
 

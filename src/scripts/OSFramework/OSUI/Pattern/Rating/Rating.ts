@@ -15,7 +15,7 @@ namespace OSFramework.OSUI.Patterns.Rating {
 		// Store if the rating value is half
 		private _isHalfValue: boolean;
 		// Store the callback to be used on the OnSelect event
-		private _platformEventOnSelect: Callbacks.OSOnSelectEvent;
+		private _platformEventOnSelect: GlobalCallbacks.OSGeneric;
 		// Store the fieldset html element
 		private _ratingFieldsetElem: HTMLElement;
 		// Store if the rating already has an event added
@@ -279,7 +279,7 @@ namespace OSFramework.OSUI.Patterns.Rating {
 		// Method that triggers the OnSelect event
 		private _triggerOnSelectEvent(value: number): void {
 			if (this._platformEventOnSelect !== undefined) {
-				Helper.AsyncInvocation(this._platformEventOnSelect, this.widgetId, value);
+				this.triggerPlatformEventCallback(this._platformEventOnSelect, value);
 			}
 		}
 
@@ -417,13 +417,22 @@ namespace OSFramework.OSUI.Patterns.Rating {
 		}
 
 		/**
-		 * Set callbacks for the onSelect click event
+		 * Register a given callback event handler.
 		 *
-		 * @param {Callbacks.OSOnSelectEvent} callback
+		 * @param {string} eventName
+		 * @param {GlobalCallbacks.OSGeneric} callback
 		 * @memberof OSFramework.Patterns.Rating.Rating
 		 */
-		public registerCallback(callback: Callbacks.OSOnSelectEvent): void {
-			this._platformEventOnSelect = callback;
+		public registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void {
+			switch (eventName) {
+				case Enum.Events.OnSelected:
+					if (this._platformEventOnSelect === undefined) {
+						this._platformEventOnSelect = callback;
+					}
+					break;
+				default:
+					super.registerCallback(eventName, callback);
+			}
 		}
 	}
 }

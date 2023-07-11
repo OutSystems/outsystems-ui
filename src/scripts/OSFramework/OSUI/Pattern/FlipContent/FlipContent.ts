@@ -12,7 +12,7 @@ namespace OSFramework.OSUI.Patterns.FlipContent {
 		private _flipWrapperElement: HTMLElement;
 
 		// Callback function to trigger the click event on the platform
-		private _plataformEventFlip: Callbacks.OSFlipEvent;
+		private _platformEventOnToggle: GlobalCallbacks.OSGeneric;
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new FlipContentConfig(configs));
@@ -71,9 +71,7 @@ namespace OSFramework.OSUI.Patterns.FlipContent {
 
 		// Triggers the toggle event on the platform
 		private _triggerPlatformEvent(): void {
-			if (this._plataformEventFlip) {
-				Helper.AsyncInvocation(this._plataformEventFlip.bind(this), this.widgetId, this.configs.IsFlipped);
-			}
+			this.triggerPlatformEventCallback(this._platformEventOnToggle, this.configs.IsFlipped);
 		}
 
 		// Update the A11Y attributes
@@ -205,13 +203,21 @@ namespace OSFramework.OSUI.Patterns.FlipContent {
 		}
 
 		/**
-		 * Register OnToogleClick clientAction as a callBack reference
+		 * Register a given callback event handler.
 		 *
-		 * @memberof OSFramework.Patterns.FlipContent.FlipContent
+		 * @param {string} eventName
+		 * @param {GlobalCallbacks.OSGeneric} callback
+		 @memberof OSFramework.Patterns.FlipContent.FlipContent
 		 */
-		public registerCallback(callback: Callbacks.OSFlipEvent): void {
-			if (this._plataformEventFlip === undefined) {
-				this._plataformEventFlip = callback;
+		public registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void {
+			switch (eventName) {
+				case Enum.Events.OnToggle:
+					if (this._platformEventOnToggle === undefined) {
+						this._platformEventOnToggle = callback;
+					}
+					break;
+				default:
+					super.registerCallback(eventName, callback);
 			}
 		}
 

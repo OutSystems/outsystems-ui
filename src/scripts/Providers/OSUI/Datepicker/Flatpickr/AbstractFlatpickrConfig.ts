@@ -15,6 +15,9 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		// Store a integer list of weekdays
 		private _disabledWeekDays = [];
 
+		// Store if DateTime is being used
+		private _isUsingDateTime: boolean;
+
 		// Store the language that will be assigned as a locale to the DatePicker
 		private _lang: string;
 
@@ -22,7 +25,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		private _providerOptions: FlatpickrOptions;
 
 		// Store configs set using extensibility
-		protected _providerExtendedOptions: FlatpickrOptions;
+		protected providerExtendedOptions: FlatpickrOptions;
 
 		// Stores the ability to allow inputs to be editable or not
 		public AllowInput = false;
@@ -69,7 +72,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		// Method used to check the language and also map it into Flatpickr expected format
 		private _checkLocale(): FlatpickrLocale {
 			// FlatpickrLocale script file is already loaded
-			let _locale: FlatpickrLocale;
+			let _locale: FlatpickrLocale = window.flatpickr.l10ns.en;
 			try {
 				// Set the locale in order to define the calendar language
 				_locale = window.flatpickr.l10ns[this._lang];
@@ -77,7 +80,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 				// Set the calendar first week day
 				_locale.firstDayOfWeek = this.FirstWeekDay;
 			} catch (error) {
-				throw new Error(`${Flatpickr.ErrorCodes.FailSetLocale}: Locale '${this._lang}' not found!`);
+				console.error(`${Flatpickr.ErrorCodes.FailSetLocale}: Locale '${this._lang}' not found!`);
 			}
 
 			return _locale;
@@ -157,6 +160,19 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 			}
 		}
 
+		// Method to check the date config passed and set the correct hours, according to date time being used
+		private _validateDate(date: string): Date | string {
+			const _finalDate = date;
+
+			if (OSFramework.OSUI.Helper.Dates.IsNull(_finalDate)) {
+				return undefined;
+			} else if (this._isUsingDateTime) {
+				return _finalDate;
+			} else {
+				return OSFramework.OSUI.Helper.Dates.NormalizeDateTime(_finalDate);
+			}
+		}
+
 		/**
 		 * Method used to get all the global Flatpickr properties across the different types of instances
 		 *
@@ -164,6 +180,8 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		 * @memberof Providers.OSUI.DatePicker.Flatpickr.AbstractFlatpickrConfig
 		 */
 		public getProviderConfig(): FlatpickrOptions {
+			this._isUsingDateTime =
+				this.TimeFormat !== OSFramework.OSUI.Patterns.DatePicker.Enum.TimeFormatMode.Disable;
 			// Check the disabled days to be applied on datepicker
 			this._setDisable();
 
@@ -175,12 +193,11 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 				allowInput: this.AllowInput,
 				disable: this.Disable.length === 0 ? undefined : this.Disable,
 				disableMobile: this.DisableMobile,
-				dateFormat:
-					this.TimeFormat !== OSFramework.OSUI.Patterns.DatePicker.Enum.TimeFormatMode.Disable
-						? this.ServerDateFormat + ' H:i:S' // do not change 'H:i:S' since it's absoluted needed due to platform conversions!
-						: this.ServerDateFormat,
-				maxDate: OSFramework.OSUI.Helper.Dates.IsNull(this.MaxDate) ? undefined : this.MaxDate,
-				minDate: OSFramework.OSUI.Helper.Dates.IsNull(this.MinDate) ? undefined : this.MinDate,
+				dateFormat: this._isUsingDateTime
+					? this.ServerDateFormat + ' H:i:S' // do not change 'H:i:S' since it's absoluted needed due to platform conversions!
+					: this.ServerDateFormat,
+				maxDate: this._validateDate(this.MaxDate),
+				minDate: this._validateDate(this.MinDate),
 				onChange: this.OnChange,
 				time_24hr: this.TimeFormat === OSFramework.OSUI.Patterns.DatePicker.Enum.TimeFormatMode.Time24hFormat,
 				updateInputVal: false, // (*)
@@ -202,7 +219,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		 * @memberof Providers.OSUI.DatePicker.Flatpickr.AbstractFlatpickrConfig
 		 */
 		public setExtensibilityConfigs(newConfigs: FlatpickrOptions): void {
-			this._providerExtendedOptions = newConfigs;
+			this.providerExtendedOptions = newConfigs;
 		}
 
 		/**

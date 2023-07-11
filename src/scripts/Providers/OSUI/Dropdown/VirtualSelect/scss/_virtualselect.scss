@@ -197,7 +197,7 @@
 			&-container {
 				background-color: var(--overlay-background);
 				// The !important is needed in order to overwrite the inline style added by library!
-				z-index: 101 !important;
+				z-index: var(--layer-global-elevated) !important;
 			}
 
 			.vscomp-search-container {
@@ -544,11 +544,23 @@
 body {
 	&.vscomp-popup-active {
 		.vscomp-wrapper:not(.focused) {
-			z-index: 0;
+			z-index: var(--layer-global-screen);
 		}
 
 		.vscomp-wrapper {
-			z-index: 300;
+			z-index: var(--layer-global-off-canvas);
 		}
 	}
+}
+
+// Layer Library Overrides
+.pop-comp-arrow,
+.pop-comp-wrapper,
+.vscomp-wrapper.keep-always-open .vscomp-dropbox-container {
+	z-index: var(--layer-local-tier-1);
+}
+
+.pop-comp-content,
+.vscomp-dropbox-container {
+	z-index: var(--layer-local-tier-2);
 }

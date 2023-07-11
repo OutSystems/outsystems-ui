@@ -8,13 +8,6 @@ namespace OSFramework.OSUI.Patterns.Dropdown.Enum {
 		DropdownSmall = 'dropdown--is-small',
 	}
 
-	/**
-	 * Events
-	 */
-	export enum Events {
-		Initialized = 'Initialized',
-	}
-
 	// Dropdown Mode Types
 	export enum Mode {
 		Search = 'search',

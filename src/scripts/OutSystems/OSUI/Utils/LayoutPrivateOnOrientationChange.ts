@@ -62,8 +62,8 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 		 * Function used to set the orientation event
 		 */
 		public static Set(): void {
-			OSFramework.OSUI.Event.GlobalEventManager.Instance.addHandler(
-				OSFramework.OSUI.Event.Type.OrientationChange,
+			OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
+				OSFramework.OSUI.Event.DOMEvents.Listeners.Type.OrientationChange,
 				this._onOrientationChange
 			);
 		}
@@ -72,8 +72,8 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 		 * Function used to unset the orientation event
 		 */
 		public static Unset(): void {
-			OSFramework.OSUI.Event.GlobalEventManager.Instance.removeHandler(
-				OSFramework.OSUI.Event.Type.OrientationChange,
+			OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
+				OSFramework.OSUI.Event.DOMEvents.Listeners.Type.OrientationChange,
 				this._onOrientationChange
 			);
 		}

@@ -32,8 +32,8 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 		private _hasSingleContent: boolean;
 		// Store the number of headerItems to be used to set the css variable
 		private _headerItemsLength: number;
-		// Store if the current browser is chrome
-		private _isChrome: boolean;
+		// Store if the current browser is Chrome or Edge (Chromium based)
+		private _isChromium: boolean;
 		// Store the onTabsChange platform callback
 		private _platformEventTabsOnChange: Callbacks.OSOnChangeEvent;
 		// Store the id of the requestAnimationFrame called to animate the indicator
@@ -51,7 +51,7 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 			// Check if running on native shell, to enable drag gestures
 			this._hasDragGestures =
 				Helper.DeviceInfo.IsNative && this.configs.TabsOrientation === GlobalEnum.Orientation.Horizontal;
-			this._isChrome = Helper.DeviceInfo.GetBrowser() === 'chrome';
+			this._isChromium = Helper.DeviceInfo.GetBrowser() === 'chrome' || Helper.DeviceInfo.GetBrowser() === 'edge';
 		}
 
 		// Method that it's called whenever a new TabsContentItem is rendered
@@ -91,11 +91,17 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 			this.selfElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnHeaderKeypress);
 
 			// Add event listener for window resize, to update active indicator size
-			Event.GlobalEventManager.Instance.addHandler(Event.Type.WindowResize, this._eventOnResize);
+			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
+				Event.DOMEvents.Listeners.Type.WindowResize,
+				this._eventOnResize
+			);
 
 			// Add orientationchange listener to update active indicator size, on touch devices
 			if (Helper.DeviceInfo.IsPhone || Helper.DeviceInfo.IsTablet) {
-				Event.GlobalEventManager.Instance.addHandler(Event.Type.OrientationChange, this._eventOnResize);
+				Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
+					Event.DOMEvents.Listeners.Type.OrientationChange,
+					this._eventOnResize
+				);
 			}
 		}
 
@@ -249,7 +255,7 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 
 		// Method that handles the indicator size and transition
 		private _handleTabIndicator(): void {
-			if (this._activeTabHeaderElement) {
+			if (this._activeTabHeaderElement?.selfElement) {
 				// Check if it comes form a disabled tab, to remove the disable class
 				if (
 					!Helper.Dom.Attribute.Get(
@@ -275,7 +281,7 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 
 				let pixelRatio = 1;
 
-				if (this._isChrome) {
+				if (this._isChromium) {
 					// devicePixelRatio used here to account for browser or system zoom
 					pixelRatio = window.devicePixelRatio;
 				}
@@ -285,7 +291,7 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 
 				// Update the css variables, that will trigger a transform transition
 				function updateIndicatorUI() {
-					if (this._activeTabHeaderElement) {
+					if (this._tabsIndicatorElement) {
 						// Apply transform: translate
 						Helper.Dom.Styles.SetStyleAttribute(
 							this._tabsIndicatorElement,
@@ -402,11 +408,17 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 			this._tabsHeaderElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnHeaderKeypress);
 
 			// Remove resize event
-			Event.GlobalEventManager.Instance.removeHandler(Event.Type.WindowResize, this._eventOnResize);
+			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
+				Event.DOMEvents.Listeners.Type.WindowResize,
+				this._eventOnResize
+			);
 
 			// Remove orientationchange listener
 			if (Helper.DeviceInfo.IsPhone || Helper.DeviceInfo.IsTablet) {
-				Event.GlobalEventManager.Instance.removeHandler(Event.Type.OrientationChange, this._eventOnResize);
+				Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
+					Event.DOMEvents.Listeners.Type.OrientationChange,
+					this._eventOnResize
+				);
 			}
 		}
 
@@ -517,8 +529,19 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 
 		// Method to set the Tabs Height
 		private _setHeight(height: string): void {
-			// Create css variable
+			// Set tabs overflow based on height
+			const tabsOverflow =
+				height === GlobalEnum.CssProperties.Auto || height === Constants.EmptyString
+					? GlobalEnum.CssProperties.Initial
+					: GlobalEnum.CssProperties.Auto;
+
+			// Create css variables
 			Helper.Dom.Styles.SetStyleAttribute(this.selfElement, Enum.CssProperty.TabsHeight, height);
+			Helper.Dom.Styles.SetStyleAttribute(
+				this.selfElement,
+				Enum.CssProperty.TabsContentItemOverflow,
+				tabsOverflow
+			);
 		}
 
 		// Method to set the initial options on screen load
@@ -643,7 +666,7 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 		// Method that triggers the OnTabsChange event
 		private _triggerOnChangeEvent(activeTab: number): void {
 			if (this._platformEventTabsOnChange !== undefined) {
-				Helper.AsyncInvocation(this._platformEventTabsOnChange, this.widgetId, activeTab);
+				this.triggerPlatformEventCallback(this._platformEventTabsOnChange, activeTab);
 			}
 		}
 
@@ -731,8 +754,8 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 		 * @memberof OSFramework.Patterns.Tabs.Tabs
 		 */
 		protected unsetCallbacks(): void {
+			// Remove event listeners on tabs header element
 			this._removeEvents();
-
 			this._eventOnHeaderKeypress = undefined;
 			this._eventOnResize = undefined;
 
@@ -815,9 +838,7 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 			this.changeTab(this.configs.StartingTab);
 
 			// Call following methods async to prevent affecting Main Thread and causing Long Tasks on page load
-
 			Helper.AsyncInvocation(this.setCallbacks.bind(this));
-
 			Helper.AsyncInvocation(this.setA11YProperties.bind(this));
 
 			this.finishBuild();
@@ -925,7 +946,6 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 		 * @memberof OSFramework.Patterns.Tabs.Tabs
 		 */
 		public dispose(): void {
-			// Remove event listeners on tabs header element
 			this.unsetCallbacks();
 			this.unsetHtmlElements();
 
@@ -934,16 +954,21 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 		}
 
 		/**
-		 * Set callbacks for the onTabsChange event
+		 * Register a given callback event handler.
 		 *
-		 * @param {Callbacks.OSOnChangeEvent} callback
+		 * @param {string} eventName
+		 * @param {GlobalCallbacks.OSGeneric} callback
 		 * @memberof OSFramework.Patterns.Tabs.Tabs
 		 */
-		public registerCallback(callback: Callbacks.OSOnChangeEvent): void {
-			if (this._platformEventTabsOnChange === undefined) {
-				this._platformEventTabsOnChange = callback;
-			} else {
-				console.warn(`The ${GlobalEnum.PatternName.Tabs} already has the tabs change callback set.`);
+		public registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void {
+			switch (eventName) {
+				case Enum.Events.OnChange:
+					if (this._platformEventTabsOnChange === undefined) {
+						this._platformEventTabsOnChange = callback;
+					}
+					break;
+				default:
+					super.registerCallback(eventName, callback);
 			}
 		}
 

@@ -14,6 +14,16 @@ namespace OSFramework.OSUI.Patterns.Rating.Enum {
 	}
 
 	/**
+	 * Callbacks eventName
+	 *
+	 * @export
+	 * @enum {number}
+	 */
+	export enum Events {
+		OnSelected = 'OnSelected',
+	}
+
+	/**
 	 * Properties
 	 */
 	export enum Properties {

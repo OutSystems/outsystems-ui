@@ -243,7 +243,7 @@ namespace OSFramework.OSUI.Patterns.DropdownServerSideItem {
 					}
 					break;
 				default:
-					throw new Error(`The given '${eventName}' event name it's not defined.`);
+					super.registerCallback(eventName, callback);
 			}
 		}
 
@@ -286,11 +286,7 @@ namespace OSFramework.OSUI.Patterns.DropdownServerSideItem {
 
 			if (triggerCallback) {
 				// Trigger platform callback about Option has been selected!
-				Helper.AsyncInvocation(
-					this._platformEventOnClickCallback,
-					this.parentObject.widgetId,
-					this.configs.ItemId
-				);
+				this.triggerPlatformEventCallback(this._platformEventOnClickCallback, this.configs.ItemId);
 			}
 		}
 

@@ -56,17 +56,15 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		// Keyboard Key Press Event
 		private _eventOnkeyboardPress: GlobalCallbacks.Generic;
 		// Store the instance of the Object responsible to Add Custom HTML elements to the DropdownBallon that will help on deal with keyboard navigation (Accessibility)
-		private _focusTrapObject: Behaviors.FocusTrap;
+		private _focusTrapInstance: Behaviors.FocusTrap;
+		// Flag that will be used to check if DropdownBalloon should be also set with a11y selector.
+		private _hasA11yEnabled = false;
 		// Set the observer that will check if the balloon is inside screen boundaries!
 		private _intersectionObserver: IntersectionObserver;
 		// Store a Flag property that will control if the dropdown is blocked (like it's under closing animation)
 		private _isBlocked = false;
 		// Store the Element State, by default is closed!
 		private _isOpen = false;
-		// Store the HTML element for the layout where the Balloon will be moved into.
-		private _layoutElement: HTMLElement;
-		// Platform OnInitialize Callback
-		private _platformEventInitializedCallback: GlobalCallbacks.OSGeneric;
 		// Platform OnClose Callback
 		private _platformEventOnToggleCallback: GlobalCallbacks.OSGeneric;
 		// Store the RequestAnimationFrame that will be triggered at OnBodyScroll
@@ -110,8 +108,8 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 				this._selectValuesWrapper.focus();
 			}
 
-			// Remove isVisible class to the layout
-			Helper.Dom.Styles.RemoveClass(this._activeScreenElement, Enum.CssClass.IsVisible);
+			// Remove isVisible class from the body
+			Helper.Dom.Styles.RemoveClass(document.body, Enum.CssClass.IsVisible);
 
 			// Update the touchMove when pattern is open!
 			this._touchMove();
@@ -183,6 +181,17 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			}
 		}
 
+		// Method to set the FocusTrap at DropdownBallon in order to help on deal with keyboard navigation (Accessibility)
+		private _handleFocusTrap(): void {
+			const opts = {
+				focusBottomCallback: this._eventOnSpanFocus.bind(this),
+				focusTargetElement: this._balloonWrapperElement,
+				focusTopCallback: this._eventOnSpanFocus.bind(this),
+			} as Behaviors.FocusTrapParams;
+
+			this._focusTrapInstance = new Behaviors.FocusTrap(opts);
+		}
+
 		// Method that will return HasNoImplementation Error Info
 		private _hasNoImplementation(): string {
 			throw new Error(
@@ -190,9 +199,9 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			);
 		}
 
-		// Move ballon element to outside of the pattern context
+		// Move ballon element to active screen element, outside of the pattern context
 		private _moveBallonElement(): void {
-			Helper.Dom.Move(this._balloonWrapperElement, this._layoutElement);
+			Helper.Dom.Move(this._balloonWrapperElement, this._activeScreenElement);
 		}
 
 		// Close when click outside of pattern
@@ -277,7 +286,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 						if (this._balloonSearchInputElement) {
 							this._balloonSearchInputElement.focus();
 						} else {
-							this._focusTrapObject.topElement.focus();
+							this._focusTrapInstance.topElement.focus();
 						}
 					} else if (event.key === GlobalEnum.Keycodes.ArrowDown) {
 						// If ArrowDown Key
@@ -369,8 +378,8 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			// Update the touchMove when pattern is open!
 			this._touchMove();
 
-			// Add the isVisible class to the layout
-			Helper.Dom.Styles.AddClass(this._activeScreenElement, Enum.CssClass.IsVisible);
+			// Add the isVisible class to body
+			Helper.Dom.Styles.AddClass(document.body, Enum.CssClass.IsVisible);
 			this._updatePatternState();
 
 			// Set the Observer in order to update it's position if balloon is out of bounds!
@@ -450,7 +459,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 						if (this._balloonSearchInputElement) {
 							this._balloonSearchInputElement.focus();
 						} else {
-							this._focusTrapObject.topElement.focus();
+							this._focusTrapInstance.topElement.focus();
 						}
 						break;
 
@@ -461,7 +470,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 							// Set focus the the first one
 							this._balloonFocusableElemsInFooter[0].focus();
 						} else {
-							this._focusTrapObject.bottomElement.focus();
+							this._focusTrapInstance.bottomElement.focus();
 						}
 						break;
 
@@ -553,15 +562,11 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			}
 		}
 
-		// Add Custom HTML elements to the DropdownBallon in order to help on deal with keyboard navigation (Accessibility)
-		private _setFocusSpanElements(): void {
-			const opts = {
-				focusBottomCallback: this._eventOnSpanFocus.bind(this),
-				focusTargetElement: this._balloonWrapperElement,
-				focusTopCallback: this._eventOnSpanFocus.bind(this),
-			} as Behaviors.FocusTrapParams;
-
-			this._focusTrapObject = new Behaviors.FocusTrap(opts);
+		// Method to set the initial options on screen load
+		private _setInitialOptions(): void {
+			if (this.configs.IsDisabled) {
+				this.disable();
+			}
 		}
 
 		// Method used to store a given DropdownOption into optionItems list, it's triggered by DropdownServerSideItem
@@ -633,15 +638,27 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 				);
 			}
 			// Add the BodyClick callback that will be used Close open Dropdown!
-			Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnClick, this._eventOnBodyClick);
+			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
+				Event.DOMEvents.Listeners.Type.BodyOnClick,
+				this._eventOnBodyClick
+			);
 			// Add the BodyScroll callback that will be used to update the balloon coodinates
-			Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnScroll, this._eventOnBodyScroll);
+			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
+				Event.DOMEvents.Listeners.Type.BodyOnScroll,
+				this._eventOnBodyScroll
+			);
 			// Update "animation" before the next repaint
 			this._requestAnimationOnBodyScroll = requestAnimationFrame(this._eventOnBodyScroll);
 			// Add the window resize callback that will be used to update the balloon position!
-			Event.GlobalEventManager.Instance.addHandler(Event.Type.WindowResize, this._eventOnWindowResize);
+			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
+				Event.DOMEvents.Listeners.Type.WindowResize,
+				this._eventOnWindowResize
+			);
 			// Add the OnOrientationChange callback that will be used to close the balloon position!
-			Event.GlobalEventManager.Instance.addHandler(Event.Type.OrientationChange, this._eventOnOrientationChange);
+			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
+				Event.DOMEvents.Listeners.Type.OrientationChange,
+				this._eventOnOrientationChange
+			);
 		}
 
 		// Method used to manage the onTouchMove when we're at mobile devices in order to block the window scroll!
@@ -665,7 +682,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 
 		// Mehod used to trigger the _platformEventOnToggleCallback callback!
 		private _triggerToogleCalbackEvent(): void {
-			Helper.AsyncInvocation(this._platformEventOnToggleCallback, this.widgetId, this._isOpen);
+			this.triggerPlatformEventCallback(this._platformEventOnToggleCallback, this._isOpen);
 		}
 
 		// Remove Pattern Events
@@ -694,11 +711,20 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 					this._eventOnSearchInputFocus
 				);
 			}
-			Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnClick, this._eventOnBodyClick);
-			Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnScroll, this._eventOnBodyScroll);
-			Event.GlobalEventManager.Instance.removeHandler(Event.Type.WindowResize, this._eventOnWindowResize);
-			Event.GlobalEventManager.Instance.removeHandler(
-				Event.Type.OrientationChange,
+			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
+				Event.DOMEvents.Listeners.Type.BodyOnClick,
+				this._eventOnBodyClick
+			);
+			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
+				Event.DOMEvents.Listeners.Type.BodyOnScroll,
+				this._eventOnBodyScroll
+			);
+			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
+				Event.DOMEvents.Listeners.Type.WindowResize,
+				this._eventOnWindowResize
+			);
+			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
+				Event.DOMEvents.Listeners.Type.OrientationChange,
 				this._eventOnOrientationChange
 			);
 		}
@@ -730,6 +756,19 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 				? Constants.A11YAttributes.States.TabIndexShow
 				: Constants.A11YAttributes.States.TabIndexHidden;
 
+			// Get the layout container
+			const layoutElemContainer = OSFramework.OSUI.Helper.Dom.ClassSelector(
+				document,
+				OSFramework.OSUI.GlobalEnum.CssClassElements.Layout
+			);
+			// If it exist and contains a11y class, we must enable it to the Balloon as well since it will be placed outside layout container.
+			this._hasA11yEnabled =
+				layoutElemContainer !== undefined &&
+				OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(
+					layoutElemContainer,
+					OSFramework.OSUI.Constants.HasAccessibilityClass
+				);
+
 			// If there is the Search input
 			if (this._balloonSearchInputElement !== undefined) {
 				Helper.A11Y.TabIndex(this._balloonSearchInputElement, tabIndexValue);
@@ -746,11 +785,17 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 
 			// Update FocusHTML elements attributes
 			if (this._isOpen) {
-				this._focusTrapObject.enableForA11y();
+				this._focusTrapInstance.enableForA11y();
+				// If a11y is enabled at the layout, set it to the ballon as well since if it't outside of layout context
+				if (this._hasA11yEnabled) {
+					Helper.Dom.Styles.AddClass(this._balloonWrapperElement, Constants.HasAccessibilityClass);
+				}
 				// Ballon Options Wrapper
 				Helper.A11Y.AriaHiddenFalse(this._balloonOptionsWrapperElement);
 			} else {
-				this._focusTrapObject.disableForA11y();
+				this._focusTrapInstance.disableForA11y();
+				// Remove a11y selector in order to grant it will be updated each time Balloon gets open
+				Helper.Dom.Styles.RemoveClass(this._balloonWrapperElement, Constants.HasAccessibilityClass);
 				// Ballon Options Wrapper
 				Helper.A11Y.AriaHiddenTrue(this._balloonOptionsWrapperElement);
 			}
@@ -792,6 +837,9 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 				} else {
 					this._balloonOptionsWrapperElement.focus();
 				}
+
+				// Trigger the toggle callback event
+				this._triggerToogleCalbackEvent();
 			} else {
 				// Remove IsOpend Class => Close it!
 				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.IsOpened);
@@ -806,9 +854,6 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 					this._eventOnCloseTransitionEnd
 				);
 			}
-
-			// Trigger the toggle callback event
-			this._triggerToogleCalbackEvent();
 		}
 
 		/**
@@ -820,6 +865,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		protected setA11YProperties(): void {
 			// Update Tabindex Ballon elements
 			this._updateBalloonAccessibilityElements();
+
 			// Enabled TabIndex to the SelectValuesWrapper
 			Helper.A11Y.TabIndexTrue(this._selectValuesWrapper);
 			// Set SelectValuesWrapper with button as a role
@@ -869,7 +915,6 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
 		 */
 		protected setHtmlElements(): void {
-			this._layoutElement = Helper.Dom.ClassSelector(document.body, GlobalEnum.CssClassElements.Layout);
 			this._activeScreenElement = Helper.Dom.ClassSelector(
 				document.body,
 				GlobalEnum.CssClassElements.ActiveScreen
@@ -896,8 +941,8 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			);
 			this._selectValuesWrapper = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.SelectValuesWrapper);
 
-			// Add custom SPAN HTML Elements that will help on Accessibility keyboard navigation
-			this._setFocusSpanElements();
+			// Set focusTrap in order to help with A11y
+			this._handleFocusTrap();
 			// Add Accessibility properties
 			this.setA11YProperties();
 			// Add the pattern Events
@@ -908,9 +953,6 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			this._moveBallonElement();
 			// Set the balloon coordinates
 			this._setBalloonCoordinates();
-
-			// Trigger platform's _platformEventInitializedCallback client Action
-			Helper.AsyncInvocation(this._platformEventInitializedCallback, this.widgetId);
 		}
 
 		/**
@@ -932,7 +974,6 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			this._eventOnSpanFocus = undefined;
 			this._eventOnTouchMove = undefined;
 			this._eventOnWindowResize = undefined;
-			this._platformEventInitializedCallback = undefined;
 			this._platformEventOnToggleCallback = undefined;
 		}
 
@@ -947,7 +988,6 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			this._balloonWrapperElement.remove();
 
 			// unset the local properties
-			this._layoutElement = undefined;
 			this._activeScreenElement = undefined;
 			this._balloonContainerElement = undefined;
 			this._balloonFocusableElemsInFooter = [];
@@ -994,7 +1034,8 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			super.build();
 			this.setCallbacks();
 			this.setHtmlElements();
-			super.finishBuild();
+			this._setInitialOptions();
+			this.finishBuild();
 		}
 
 		/**
@@ -1044,7 +1085,8 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
 		 */
 		public close(): void {
-			this._close();
+			// SetTimeout is needed in order to ensure there is no conflit between OnClickBody and a button click that trigger this method.
+			OSFramework.OSUI.Helper.AsyncInvocation(this._close.bind(this));
 		}
 
 		/**
@@ -1067,7 +1109,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		 */
 		public dispose(): void {
 			this._unsetObserver();
-			this._focusTrapObject.dispose();
+			this._focusTrapInstance.dispose();
 			this._unsetEvents();
 			this.unsetCallbacks();
 			this.unsetHtmlElements();
@@ -1102,7 +1144,8 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
 		 */
 		public open(): void {
-			this._open();
+			// SetTimeout is needed in order to ensure there is no conflit between OnClickBody and a button click that trigger this method.
+			OSFramework.OSUI.Helper.AsyncInvocation(this._open.bind(this));
 		}
 
 		/**
@@ -1114,12 +1157,6 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		 */
 		public registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
-				case Patterns.Dropdown.Enum.Events.Initialized:
-					if (this._platformEventInitializedCallback === undefined) {
-						this._platformEventInitializedCallback = callback;
-					}
-					break;
-
 				case Enum.Events.OnToggle:
 					if (this._platformEventOnToggleCallback === undefined) {
 						this._platformEventOnToggleCallback = callback;
@@ -1127,9 +1164,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 					break;
 
 				default:
-					throw new Error(
-						`${ErrorCodes.Dropdown.FailRegisterCallback}:	The given '${eventName}' event name is not defined.`
-					);
+					super.registerCallback(eventName, callback);
 			}
 		}
 

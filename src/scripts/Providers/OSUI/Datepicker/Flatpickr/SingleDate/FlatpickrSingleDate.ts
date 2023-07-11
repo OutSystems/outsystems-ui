@@ -18,22 +18,22 @@ namespace Providers.OSUI.Datepicker.Flatpickr.SingleDate {
 		 * @param {string[]} selectedDates Array of selected dates
 		 * @memberof Providers.OSUI.DatePicker.Flatpickr.SingleDate.OSUIFlatpickrSingleDate
 		 */
-		protected onDateSelectedEvent(selectedDates: string[]): void {
+		protected onDateSelectedEvent(selectedDates: Array<Date>): void {
 			// Store selected date with the expected dateFormat as a string type
 			let _selectedDate = '';
 
 			// Check if any date has been selected, In case of Clear this will retunr empty array
 			if (selectedDates.length > 0) {
-				_selectedDate = this.provider.formatDate(selectedDates[0], this._flatpickrOpts.dateFormat);
+				_selectedDate = this.provider.formatDate(selectedDates[0], this.flatpickrOpts.dateFormat);
 			}
 
 			// Trigger the platform update attribute value change!
-			OSFramework.OSUI.Helper.Dom.SetInputValue(this._datePickerPlatformInputElem, _selectedDate);
+			OSFramework.OSUI.Helper.Dom.SetInputValue(this.datePickerPlatformInputElem, _selectedDate);
 
 			// Check if values are not beeing updated by UpdateInitialDate API Method!
 			if (this._isUpdatedInitialDateByClientAction === false) {
 				// Trigger platform's onChange callback event
-				OSFramework.OSUI.Helper.AsyncInvocation(this._onSelectedCallbackEvent, this.widgetId, _selectedDate);
+				this.triggerPlatformEventCallback(this.onSelectedCallbackEvent, _selectedDate);
 			}
 
 			// Reset Flag value;
@@ -83,11 +83,12 @@ namespace Providers.OSUI.Datepicker.Flatpickr.SingleDate {
 			// Set the type attribute value
 			// This is needed once library set it as an hidden by default which can not be since otherwise the updating it's value will not be triggered the local variable update. That said it will be hidden through CSS!
 			OSFramework.OSUI.Helper.Dom.Attribute.Set(
-				this._datePickerPlatformInputElem,
+				this.datePickerPlatformInputElem,
 				OSFramework.OSUI.GlobalEnum.HTMLAttributes.type,
 				dateType
 			);
 		}
+
 		/**
 		 * Builds the Pattern
 		 *
@@ -139,7 +140,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr.SingleDate {
 							// Set the new DefaultDate values
 							this.configs.InitialDate = this.provider.formatDate(
 								this.provider.selectedDates[0],
-								this._flatpickrOpts.dateFormat
+								this.flatpickrOpts.dateFormat
 							);
 						}
 						this.prepareToAndRedraw();
@@ -165,15 +166,15 @@ namespace Providers.OSUI.Datepicker.Flatpickr.SingleDate {
 		 * @memberof Providers.OSUI.DatePicker.Flatpickr.SingleDate.OSUIFlatpickrSingleDate
 		 */
 		public updateInitialDate(value: string): void {
-			if (this._datePickerPlatformInputElem.disabled === false) {
+			if (this.datePickerPlatformInputElem.disabled === false) {
 				// Enable Flag in order to prevent trigger OnDateSelected platform callback event
 				this._isUpdatedInitialDateByClientAction = true;
 				// Redefine the Initial date
 				this.configs.InitialDate = value;
 				// Redefine the value that is assigned to the input, since pattern will be redrawed it will be based on that value as well
 				OSFramework.OSUI.Helper.Dom.SetInputValue(
-					this._datePickerPlatformInputElem,
-					this.provider.formatDate(value, this._flatpickrOpts.dateFormat)
+					this.datePickerPlatformInputElem,
+					this.provider.formatDate(value, this.flatpickrOpts.dateFormat)
 				);
 				// Redraw calendar!
 				this.prepareToAndRedraw();

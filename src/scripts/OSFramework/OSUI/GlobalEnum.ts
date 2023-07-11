@@ -73,9 +73,10 @@ namespace OSFramework.OSUI.GlobalEnum {
 	 * OutSystemsUI elements CSS properties
 	 */
 	export enum CssProperties {
+		Auto = 'auto',
+		Initial = 'initial',
 		None = 'none',
 		PaddingTop = 'padding-top',
-		Auto = 'auto',
 	}
 
 	/**
@@ -136,6 +137,7 @@ namespace OSFramework.OSUI.GlobalEnum {
 	 */
 	export enum HTMLAttributes {
 		AllowEventPropagation = '[data-allow-event-propagation=true], [data-allow-event-propagation=True]',
+		Class = 'class',
 		DataInput = 'data-input',
 		Disabled = 'disabled',
 		Id = 'id',
@@ -173,6 +175,7 @@ namespace OSFramework.OSUI.GlobalEnum {
 		MouseLeave = 'mouseleave',
 		MouseUp = 'mouseup',
 		OrientationChange = 'orientationchange',
+		Prefix = 'on',
 		Resize = 'resize',
 		Scroll = 'scroll',
 		TouchEnd = 'touchend',
@@ -270,6 +273,7 @@ namespace OSFramework.OSUI.GlobalEnum {
 		FloatingActions = 'Floating Actions',
 		FloatingActionsItem = 'Floating Actions Item',
 		Gallery = 'Gallery',
+		InlineSvg = 'InlineSVG',
 		MonthPicker = 'MonthPicker',
 		Notification = 'Notification',
 		ProgressBar = 'Progress Bar',
@@ -315,6 +319,7 @@ namespace OSFramework.OSUI.GlobalEnum {
 		Date = 'date',
 		DateTime = 'date-time-edit',
 		Text = 'text',
+		Time = 'time',
 	}
 
 	/**
@@ -369,5 +374,22 @@ namespace OSFramework.OSUI.GlobalEnum {
 
 	export enum NullValues {
 		Time = '00:00:00',
+	}
+
+	/**
+	 * Events available for all provider based patterns.
+	 *
+	 * @export
+	 * @enum {number}
+	 */
+	export enum ProviderEvents {
+		Initialized = 'Initialized',
+		OnProviderConfigsApplied = 'OnProviderConfigsApplied',
+	}
+
+	export enum SVGHelperConstants {
+		DOMType = 'image/svg+xml',
+		ParserError = 'parsererror',
+		SVG = 'svg',
 	}
 }

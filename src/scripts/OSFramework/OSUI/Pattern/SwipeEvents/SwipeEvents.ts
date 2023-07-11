@@ -179,7 +179,7 @@ namespace OSFramework.OSUI.Patterns.SwipeEvents {
 			super.build();
 			this.setHtmlElements();
 			this.setCallbacks();
-			super.finishBuild();
+			this.finishBuild();
 		}
 
 		/**

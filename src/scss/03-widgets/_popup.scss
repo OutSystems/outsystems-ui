@@ -13,7 +13,7 @@
 
 ///
 [data-popup-backdrop] {
-	z-index: $popup-zindex;
+	z-index: var(--osui-popup-layer);
 }
 
 ///

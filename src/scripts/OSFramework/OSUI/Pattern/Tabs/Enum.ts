@@ -45,8 +45,9 @@ namespace OSFramework.OSUI.Patterns.Tabs.Enum {
 	 * Tabs Enum for CSS Custom Properties
 	 */
 	export enum CssProperty {
-		TabsHeight = '--tabs-height',
+		TabsContentItemOverflow = '--tabs-content-item-overflow',
 		TabsHeaderItems = '--tabs-header-items',
+		TabsHeight = '--tabs-height',
 		TabsIndicatorScale = '--tabs-indicator-scale',
 		TabsIndicatorTransform = '--tabs-indicator-transform',
 	}
@@ -76,5 +77,15 @@ namespace OSFramework.OSUI.Patterns.Tabs.Enum {
 	export enum ChildTypes {
 		TabsContentItem = 'TabsContentItem',
 		TabsHeaderItem = 'TabsHeaderItem',
+	}
+
+	/**
+	 * Callbacks eventName
+	 *
+	 * @export
+	 * @enum {number}
+	 */
+	export enum Events {
+		OnChange = 'OnChange',
 	}
 }

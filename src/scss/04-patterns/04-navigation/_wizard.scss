@@ -78,7 +78,7 @@
 		margin: 0 auto;
 		position: relative;
 		width: 32px;
-		z-index: 2;
+		z-index: var(--layer-local-tier-1);
 
 		&:empty {
 			height: 8px;
@@ -98,7 +98,7 @@
 				top: 50%;
 				transform: translateY(-50%);
 				width: calc(100% - 24px);
-				z-index: 0;
+				z-index: var(--layer-global-screen);
 			}
 		}
 

@@ -34,7 +34,6 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 		// Store the parent element
 		private _parentSelf: HTMLElement;
 		// Store the platform events
-		private _platformEventOnInitialize: Callbacks.OSInitializedEvent;
 		private _platformEventOnToggle: Callbacks.OSOnToggleEvent;
 
 		constructor(uniqueId: string, configs: JSON) {
@@ -62,11 +61,14 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 				Helper.A11Y.SetElementsTabIndex(this._isOpen, this._focusTrapInstance.focusableElements);
 
 				if (this._clickOutsideToClose || (this.configs.HasOverlay && this._clickOutsideToClose === undefined)) {
-					Event.GlobalEventManager.Instance.removeHandler(
-						Event.Type.BodyOnMouseDown,
+					Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
+						Event.DOMEvents.Listeners.Type.BodyOnMouseDown,
 						this._eventOverlayMouseDown
 					);
-					Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnClick, this._eventOverlayClick);
+					Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
+						Event.DOMEvents.Listeners.Type.BodyOnClick,
+						this._eventOverlayClick
+					);
 				}
 			}
 		}
@@ -78,6 +80,12 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 			} as Behaviors.FocusTrapParams;
 
 			this._focusTrapInstance = new Behaviors.FocusTrap(opts);
+
+			// Disable tabIndex to the inner focusable elements if its start closed!
+			if (this._isOpen === false) {
+				// Will handle the tabindex value of the elements inside pattern
+				Helper.A11Y.SetElementsTabIndex(false, this._focusTrapInstance.focusableElements);
+			}
 		}
 
 		// Method to handle the creation of the GestureEvents
@@ -143,11 +151,14 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 				this._triggerOnToggleEvent();
 
 				if (this._clickOutsideToClose || (this.configs.HasOverlay && this._clickOutsideToClose === undefined)) {
-					Event.GlobalEventManager.Instance.addHandler(
-						Event.Type.BodyOnMouseDown,
-						this._eventOverlayMouseDown
+					Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
+						Event.DOMEvents.Listeners.Type.BodyOnMouseDown,
+						this._eventOverlayMouseDown.bind(this)
 					);
-					Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnClick, this._eventOverlayClick);
+					Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
+						Event.DOMEvents.Listeners.Type.BodyOnClick,
+						this._eventOverlayClick.bind(this)
+					);
 				}
 			}
 
@@ -161,10 +172,13 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 		// Overlay onClick event to close the Sidebar
 		private _overlayClickCallback(_args: string, e: MouseEvent): void {
 			// If the sidebar is opened and the mouse down event occured outside the sidebar, close it.
-			if (this._isOpen && this._clickedOutsideElement) {
+			if (
+				this._isOpen &&
+				this._clickedOutsideElement &&
+				(e.target === this.selfElement || this._clickOutsideToClose)
+			) {
 				this.close();
 			}
-
 			e.stopPropagation();
 		}
 
@@ -173,7 +187,11 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 		private _overlayMouseDownCallback(_args: string, e: MouseEvent): void {
 			const targetElem = e.target as HTMLElement;
 			this._clickedOutsideElement = true;
-			if (targetElem.closest('.osui-sidebar__header') || targetElem.closest('.osui-sidebar__content')) {
+			if (
+				targetElem.closest(`${Constants.Dot}${Enum.CssClass.Header}`) ||
+				(targetElem.closest(`${Constants.Dot}${Enum.CssClass.Content}`) &&
+					this.selfElement.contains(targetElem) === false)
+			) {
 				// If the click was inside the side bar, then change the flag to false.
 				this._clickedOutsideElement = false;
 			}
@@ -182,8 +200,14 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 		// Method to remove the event listeners
 		private _removeEvents(): void {
 			this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventSidebarKeypress);
-			Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnMouseDown, this._eventOverlayMouseDown);
-			Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnClick, this._eventOverlayClick);
+			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
+				Event.DOMEvents.Listeners.Type.BodyOnMouseDown,
+				this._eventOverlayMouseDown
+			);
+			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
+				Event.DOMEvents.Listeners.Type.BodyOnClick,
+				this._eventOverlayClick
+			);
 		}
 
 		// Set the Sidebar opening/closing direction
@@ -231,6 +255,8 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 			if (isEscapedPressed) {
 				this.close();
 			}
+
+			e.stopPropagation();
 		}
 
 		// Method to toggle the Sidebar
@@ -255,7 +281,7 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 
 		// Method that triggers the OnToggle event
 		private _triggerOnToggleEvent(): void {
-			Helper.AsyncInvocation(this._platformEventOnToggle, this.widgetId, this._isOpen);
+			this.triggerPlatformEventCallback(this._platformEventOnToggle, this._isOpen);
 		}
 
 		/**
@@ -299,8 +325,6 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 			this._parentSelf = Helper.Dom.GetElementById(this.widgetId);
 
 			this._setWidth();
-
-			Helper.AsyncInvocation(this._platformEventOnInitialize, this.widgetId);
 		}
 
 		/**
@@ -325,7 +349,6 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 		 */
 		protected unsetHtmlElements(): void {
 			this._parentSelf = undefined;
-			this._platformEventOnInitialize = undefined;
 			this._platformEventOnToggle = undefined;
 		}
 
@@ -439,17 +462,12 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 		/**
 		 * Set callbacks for the pattern
 		 *
-		 * @param {Callbacks.OSOnToggleEvent} callback
-		 * @memberof OSFramework.Patterns.Sidebar.Sidebar
+		 * @param {string} eventName
+		 * @param {GlobalCallbacks.OSGeneric} callback
+		 @memberof OSFramework.Patterns.Sidebar.Sidebar
 		 */
 		public registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
-				case Patterns.Sidebar.Enum.Events.OnInitialize:
-					if (this._platformEventOnInitialize === undefined) {
-						this._platformEventOnInitialize = callback;
-					}
-					break;
-
 				case Patterns.Sidebar.Enum.Events.OnToggle:
 					if (this._platformEventOnToggle === undefined) {
 						this._platformEventOnToggle = callback;
@@ -459,9 +477,7 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 					break;
 
 				default:
-					throw new Error(
-						`${ErrorCodes.Sidebar.FailRegisterCallback}:	The given '${eventName}' event name is not defined.`
-					);
+					super.registerCallback(eventName, callback);
 			}
 		}
 

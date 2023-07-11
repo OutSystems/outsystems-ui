@@ -1,35 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Patterns.TabsHeaderItemAPI {
-	const _tabsMap = new Map<string, string>();
 	const _tabsHeaderItemMap = new Map<string, OSFramework.OSUI.Patterns.TabsHeaderItem.ITabsHeaderItem>();
-	/**
-	 * Gets the Tabd pattern the Item belongs to
-	 *
-	 * @return {*}  {Map<string, OSFramework.OSUI.Patterns.TabsHeaderItem.ITabsHeaderItem>}
-	 */
-	export function GetTabsByItem(tabsHeaderItemId: string): OSFramework.OSUI.Patterns.Tabs.ITabs {
-		let tabs: OSFramework.OSUI.Patterns.Tabs.ITabs;
-
-		if (_tabsMap.has(tabsHeaderItemId)) {
-			tabs = TabsAPI.GetTabsById(_tabsMap.get(tabsHeaderItemId));
-		} else {
-			// Try to find its reference on DOM
-			const elem = OSFramework.OSUI.Helper.Dom.GetElementByUniqueId(tabsHeaderItemId);
-			const tabsElem = elem.closest(
-				OSFramework.OSUI.Constants.Dot + OSFramework.OSUI.Patterns.Tabs.Enum.CssClasses.TabsWrapper
-			);
-
-			if (!tabsElem) {
-				throw Error(
-					`This ${OSFramework.OSUI.GlobalEnum.PatternName.TabsHeaderItem} does not belong to any ${OSFramework.OSUI.GlobalEnum.PatternName.Tabs} pattern.`
-				);
-			}
-			const uniqueId = tabsElem.getAttribute('name');
-			tabs = TabsAPI.GetTabsById(uniqueId);
-		}
-
-		return tabs;
-	}
 
 	/**
 	 * Function that will change the property of a given Tabs pattern.
@@ -70,7 +41,6 @@ namespace OutSystems.OSUI.Patterns.TabsHeaderItemAPI {
 				`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.TabsHeaderItem} registered under id: ${tabsHeaderItemId}`
 			);
 		}
-		const tabs = GetTabsByItem(tabsHeaderItemId);
 
 		const _newTabsHeaderItem = new OSFramework.OSUI.Patterns.TabsHeaderItem.TabsHeaderItem(
 			tabsHeaderItemId,
@@ -78,11 +48,6 @@ namespace OutSystems.OSUI.Patterns.TabsHeaderItemAPI {
 		);
 
 		_tabsHeaderItemMap.set(tabsHeaderItemId, _newTabsHeaderItem);
-		_newTabsHeaderItem.build();
-
-		if (tabs !== undefined) {
-			_tabsMap.set(tabsHeaderItemId, tabs.uniqueId);
-		}
 
 		return _newTabsHeaderItem;
 	}
@@ -160,7 +125,7 @@ namespace OutSystems.OSUI.Patterns.TabsHeaderItemAPI {
 	 * Function that gets the instance of Tabs by a given ID.
 	 *
 	 * @export
-	 * @param {string} tabsId ID of the Tabs that will be looked for.
+	 * @param {string} tabsHeaderItemId ID of the TabsHeaderItem that will be looked for.
 	 * @return {*}  {OSFramework.OSUI.Patterns.Tabs.ITabs}
 	 */
 	export function GetTabsHeaderItemById(
@@ -187,6 +152,47 @@ namespace OutSystems.OSUI.Patterns.TabsHeaderItemAPI {
 				const tabsHeaderItem = GetTabsHeaderItemById(tabsHeaderItemId);
 
 				tabsHeaderItem.updateOnRender();
+			},
+		});
+
+		return result;
+	}
+
+	/**
+	 * Function that will initialize the pattern instance.
+	 *
+	 * @export
+	 * @param {string} tabsHeaderItemId ID of the TabsHeaderItem pattern that will be initialized.
+	 * @return {*}  {OSFramework.OSUI.Patterns.TabsHeaderItem.ITabsHeaderItem}
+	 */
+	export function Initialize(tabsHeaderItemId: string): OSFramework.OSUI.Patterns.TabsHeaderItem.ITabsHeaderItem {
+		const tabsHeaderItem = GetTabsHeaderItemById(tabsHeaderItemId);
+
+		tabsHeaderItem.build();
+
+		return tabsHeaderItem;
+	}
+
+	/**
+	 * Function that will register a pattern callback.
+	 *
+	 * @export
+	 * @param {string} tabsHeaderItemId
+	 * @param {string} eventName
+	 * @param {OSFramework.OSUI.GlobalCallbacks.OSGeneric} callback
+	 * @return {*}  {string}
+	 */
+	export function RegisterCallback(
+		tabsHeaderItemId: string,
+		eventName: string,
+		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
+	): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.TabsHeaderItem.FailRegisterCallback,
+			callback: () => {
+				const tabsHeaderItem = GetTabsHeaderItemById(tabsHeaderItemId);
+
+				tabsHeaderItem.registerCallback(eventName, callback);
 			},
 		});
 

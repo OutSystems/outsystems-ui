@@ -17,7 +17,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect.Search {
 		 * @return {*}  {string[]}
 		 * @memberof Providers.OSUI.Dropdown.VirtualSelect.Search.VirtualSelectSearchConfig
 		 */
-		protected _getSelectedValues(): string[] {
+		protected getSelectedValues(): string[] {
 			const selectedKeyvalues = [];
 
 			// Has selected values?
@@ -48,7 +48,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect.Search {
 				multiple: this.AllowMultipleSelection,
 			};
 
-			return this.mergeConfigs(super.getProviderConfig(), virtualSelectSearchOpts, this._providerExtendedOptions);
+			return this.mergeConfigs(super.getProviderConfig(), virtualSelectSearchOpts, this.providerExtendedOptions);
 		}
 
 		/**

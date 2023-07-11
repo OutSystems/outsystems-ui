@@ -98,7 +98,10 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 		private _removeEvents(): void {
 			this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
 			this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyBoardPress);
-			Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnScroll, this._eventOnBodyScroll);
+			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
+				Event.DOMEvents.Listeners.Type.BodyOnScroll,
+				this._eventOnBodyScroll
+			);
 		}
 
 		// Check if header IsFixed
@@ -151,7 +154,10 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 			this.selfElement.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
 			this.selfElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyBoardPress);
 			// Add the BodyScroll callback that will be used to update the balloon coodinates
-			Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnScroll, this._eventOnBodyScroll);
+			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
+				Event.DOMEvents.Listeners.Type.BodyOnScroll,
+				this._eventOnBodyScroll
+			);
 		}
 
 		/**

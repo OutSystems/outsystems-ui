@@ -1,6 +1,8 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSFramework.OSUI.Patterns.Tooltip {
 	export class Tooltip extends AbstractPattern<TooltipConfig> implements ITooltip {
+		// Store the HTML element for the ActiveScreen where a status class will be updated accoding balloon is open or not.
+		private _activeScreenElement: HTMLElement;
 		// Event OnMouseEnter at _tooltipBalloonWrapperElem
 		private _eventBalloonWrapperOnMouseEnter: GlobalCallbacks.Generic;
 		// Event OnMouseLeave at at _tooltipBalloonWrapperElem
@@ -35,8 +37,6 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 		private _isOpen: boolean;
 		// Flag used to deal with onBodyClick and open api concurrency methods!
 		private _isOpenedByApi = false;
-		// Platform OnInitialize Callback
-		private _platformEventInitializedCallback: GlobalCallbacks.OSGeneric;
 		// Platform OnClose Callback
 		private _platformEventOnToggleCallback: GlobalCallbacks.OSGeneric;
 		// Store the RequestAnimationFrame that will be triggered at OnBodyScroll
@@ -59,10 +59,9 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 			this._tooltipBalloonPositionClass = this.configs.Position;
 		}
 
-		// Move balloon element to outside of the pattern context
+		// Move balloon element to active screen, outside of the pattern context
 		private _moveBalloonElement(): void {
-			const layoutElement = Helper.Dom.ClassSelector(document.body, GlobalEnum.CssClassElements.Layout);
-			Helper.Dom.Move(this._tooltipBalloonWrapperElem, layoutElement);
+			Helper.Dom.Move(this._tooltipBalloonWrapperElem, this._activeScreenElement);
 		}
 
 		// Check if a clickable item has been clicked, otherwise stop the propagation!
@@ -152,7 +151,10 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 				// If the click has occur outside of this tooltip, or tooltipBalloon!
 				if (_closestElem !== this.selfElement && _closestBalloonElem !== this._tooltipBalloonWrapperElem) {
 					// Remove the Event
-					Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnClick, this._eventOnBodyClick);
+					Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
+						Event.DOMEvents.Listeners.Type.BodyOnClick,
+						this._eventOnBodyClick
+					);
 
 					// Close Tooltip
 					this._triggerClose();
@@ -380,19 +382,28 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 			}
 
 			// Add the BodyScroll callback that will be used to update the balloon coodinates
-			Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnScroll, this._eventOnBodyScroll);
+			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
+				Event.DOMEvents.Listeners.Type.BodyOnScroll,
+				this._eventOnBodyScroll
+			);
 			// Update "animation" before the next repaint
 			this._requestAnimationOnBodyScroll = requestAnimationFrame(this._eventOnBodyScroll);
 
 			// Add the window resize callback that will be used update the balloon position!
-			Event.GlobalEventManager.Instance.addHandler(Event.Type.WindowResize, this._eventOnWindowResize);
+			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
+				Event.DOMEvents.Listeners.Type.WindowResize,
+				this._eventOnWindowResize
+			);
 			// Update "animation" before the next repaint
 			this._requestAnimationOnWindowResize = requestAnimationFrame(this._eventOnWindowResize);
 
 			// If it's open by default!
 			if (this._isOpen) {
 				// Add a window event that will be responsible to close it, if it's opend by default
-				Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnClick, this._eventOnBodyClick);
+				Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
+					Event.DOMEvents.Listeners.Type.BodyOnClick,
+					this._eventOnBodyClick
+				);
 			}
 
 			// If tooltip should behave at onMouseClick, or if it's on tablet or phone
@@ -446,7 +457,7 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 				}
 
 				// Trigger the _platformEventOnToggleCallback callback!
-				Helper.AsyncInvocation(this._platformEventOnToggleCallback, this.widgetId, false);
+				this.triggerPlatformEventCallback(this._platformEventOnToggleCallback, false);
 			}
 		}
 
@@ -495,13 +506,16 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 				});
 
 				// Add the Event responsible to close it when click outside!
-				Event.GlobalEventManager.Instance.addHandler(Event.Type.BodyOnClick, this._eventOnBodyClick);
+				Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
+					Event.DOMEvents.Listeners.Type.BodyOnClick,
+					this._eventOnBodyClick
+				);
 
 				// ReSet the Observer in order to update it's position if balloon run out of bounds!
 				Helper.AsyncInvocation(this._setObserver.bind(this));
 
 				// Trigger the _platformEventOnToggleCallback callback!
-				Helper.AsyncInvocation(this._platformEventOnToggleCallback, this.widgetId, true);
+				this.triggerPlatformEventCallback(this._platformEventOnToggleCallback, true);
 
 				// Delay the _isOpenedByApi assignement in order to deal with clickOnBody() and open() api concurrency!
 				Helper.AsyncInvocation(() => {
@@ -517,10 +531,19 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 			this._tooltipIconElem.removeEventListener(GlobalEnum.HTMLEvent.Focus, this._eventOnFocus);
 			this._tooltipBalloonContentElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnBalloonClick);
 
-			Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnClick, this._eventOnBodyClick);
-			Event.GlobalEventManager.Instance.removeHandler(Event.Type.BodyOnScroll, this._eventOnBodyScroll);
+			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
+				Event.DOMEvents.Listeners.Type.BodyOnClick,
+				this._eventOnBodyClick
+			);
+			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
+				Event.DOMEvents.Listeners.Type.BodyOnScroll,
+				this._eventOnBodyScroll
+			);
 
-			Event.GlobalEventManager.Instance.removeHandler(Event.Type.WindowResize, this._eventOnWindowResize);
+			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
+				Event.DOMEvents.Listeners.Type.WindowResize,
+				this._eventOnWindowResize
+			);
 
 			this._tooltipBalloonContentElem.removeEventListener(
 				GlobalEnum.HTMLEvent.TransitionEnd,
@@ -629,6 +652,10 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 		 * @memberof OSFramework.Patterns.Tooltip.Tooltip
 		 */
 		protected setHtmlElements(): void {
+			this._activeScreenElement = Helper.Dom.ClassSelector(
+				document.body,
+				GlobalEnum.CssClassElements.ActiveScreen
+			);
 			// Set the html references that will be used to manage the cssClasses and atribute properties
 			this._tooltipIconElem = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.Content);
 			this._tooltipBalloonContentElem = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.BalloonContent);
@@ -654,9 +681,6 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 				// Update the AriaHidden to the balloon!
 				Helper.A11Y.AriaHiddenFalse(this._tooltipBalloonWrapperElem);
 			}
-
-			// Trigger platform's _platformEventInitializedCallback client Action
-			Helper.AsyncInvocation(this._platformEventInitializedCallback, this.widgetId);
 		}
 
 		/**
@@ -689,6 +713,8 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 			// Remove the detached balloon html element!
 			this._tooltipBalloonWrapperElem.remove();
 
+			// unset the local properties
+			this._activeScreenElement = undefined;
 			this._tooltipIconElem = undefined;
 			this._tooltipBalloonContentElem = undefined;
 			this._tooltipBalloonWrapperElem = undefined;
@@ -789,12 +815,6 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 		 */
 		public registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
-				case Enum.Events.Initialized:
-					if (this._platformEventInitializedCallback === undefined) {
-						this._platformEventInitializedCallback = callback;
-					}
-					break;
-
 				case Enum.Events.OnToggle:
 					if (this._platformEventOnToggleCallback === undefined) {
 						this._platformEventOnToggleCallback = callback;
@@ -802,9 +822,7 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 					break;
 
 				default:
-					throw new Error(
-						`${ErrorCodes.Tooltip.FailRegisterCallback}: The given '${eventName}' event name is not defined.`
-					);
+					super.registerCallback(eventName, callback);
 			}
 		}
 

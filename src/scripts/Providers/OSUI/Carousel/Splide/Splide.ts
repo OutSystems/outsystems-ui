@@ -24,8 +24,6 @@ namespace Providers.OSUI.Carousel.Splide {
 		private _eventOnResize: OSFramework.OSUI.GlobalCallbacks.Generic;
 		// Store if a List widget is used inside the CarouselItems placeholder
 		private _hasList: boolean;
-		// Store the onInitialized event
-		private _platformEventInitialized: OSFramework.OSUI.GlobalCallbacks.OSGeneric;
 		// Store the onSlideMoved event
 		private _platformEventOnSlideMoved: OSFramework.OSUI.Patterns.Carousel.Callbacks.OSOnSlideMovedEvent;
 		// Store initial provider options
@@ -53,7 +51,7 @@ namespace Providers.OSUI.Carousel.Splide {
 		// Method to init the provider
 		private _initProvider(): void {
 			// Init provider
-			this._provider = new window.Splide(this._carouselProviderElem, this._splideOptions);
+			this.provider = new window.Splide(this._carouselProviderElem, this._splideOptions);
 
 			// Set provider Info to be used by setProviderConfigs API calls
 			this.updateProviderEvents({
@@ -72,7 +70,7 @@ namespace Providers.OSUI.Carousel.Splide {
 			this._setCarouselWidth();
 
 			// Init the provider
-			this._provider.mount();
+			this.provider.mount();
 
 			// Update pagination class, in case navigation was changed
 			this._togglePaginationClass();
@@ -114,17 +112,16 @@ namespace Providers.OSUI.Carousel.Splide {
 
 		// Method to set the OnInitializeEvent
 		private _setOnInitializedEvent(): void {
-			this._provider.on(Enum.SpliderEvents.Mounted, () => {
-				// Trigger platform's InstanceIntializedHandler client Action
-				this.triggerPlatformEventInitialized(this._platformEventInitialized);
+			this.provider.on(Enum.SpliderEvents.Mounted, () => {
+				this.triggerPlatformInitializedEventCallback();
 			});
 		}
 
 		// Method to set the OnSlideMoved event
 		private _setOnSlideMovedEvent(): void {
-			this._provider.on(Enum.SpliderEvents.Moved, (index) => {
+			this.provider.on(Enum.SpliderEvents.Moved, (index) => {
 				if (index !== this._currentIndex) {
-					OSFramework.OSUI.Helper.AsyncInvocation(this._platformEventOnSlideMoved, this.widgetId, index);
+					this.triggerPlatformEventCallback(this._platformEventOnSlideMoved, index);
 					this._currentIndex = index;
 				}
 			});
@@ -183,8 +180,8 @@ namespace Providers.OSUI.Carousel.Splide {
 			this._eventOnResize = this._redefineCarouselWidth.bind(this);
 
 			// Add event listener for window resize
-			OSFramework.OSUI.Event.GlobalEventManager.Instance.addHandler(
-				OSFramework.OSUI.Event.Type.WindowResize,
+			OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
+				OSFramework.OSUI.Event.DOMEvents.Listeners.Type.WindowResize,
 				this._eventOnResize
 			);
 		}
@@ -236,14 +233,14 @@ namespace Providers.OSUI.Carousel.Splide {
 		 */
 		protected unsetCallbacks(): void {
 			// remove event listener
-			OSFramework.OSUI.Event.GlobalEventManager.Instance.removeHandler(
-				OSFramework.OSUI.Event.Type.WindowResize,
+			OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
+				OSFramework.OSUI.Event.DOMEvents.Listeners.Type.WindowResize,
 				this._eventOnResize
 			);
 
 			this._eventOnResize = undefined;
-			this._platformEventInitialized = undefined;
 			this._platformEventOnSlideMoved = undefined;
+			super.unsetCallbacks();
 		}
 
 		/**
@@ -307,13 +304,13 @@ namespace Providers.OSUI.Carousel.Splide {
 						this.redraw();
 						break;
 					case OSFramework.OSUI.Patterns.Carousel.Enum.Properties.Height:
-						this._provider.options = { height: propertyValue as string | number };
+						this.provider.options = { height: propertyValue as string | number };
 						break;
 					case OSFramework.OSUI.Patterns.Carousel.Enum.Properties.Padding:
-						this._provider.options = { padding: propertyValue as string | number };
+						this.provider.options = { padding: propertyValue as string | number };
 						break;
 					case OSFramework.OSUI.Patterns.Carousel.Enum.Properties.ItemsGap:
-						this._provider.options = { gap: propertyValue as string | number };
+						this.provider.options = { gap: propertyValue as string | number };
 						break;
 				}
 			}
@@ -330,7 +327,7 @@ namespace Providers.OSUI.Carousel.Splide {
 		public dispose(): void {
 			// Check if provider is ready
 			if (this.isBuilt) {
-				this._provider.destroy();
+				this.provider.destroy();
 			}
 
 			this.unsetCallbacks();
@@ -346,7 +343,7 @@ namespace Providers.OSUI.Carousel.Splide {
 		 * @memberof Providers.OSUI.Carousel.Splide.OSUISplide
 		 */
 		public goTo(index: number): void {
-			this._provider.go(index);
+			this.provider.go(index);
 		}
 
 		/**
@@ -355,7 +352,7 @@ namespace Providers.OSUI.Carousel.Splide {
 		 * @memberof Providers.OSUI.Carousel.Splide.OSUISplide
 		 */
 		public next(): void {
-			this._provider.go(Enum.Go.Next);
+			this.provider.go(Enum.Go.Next);
 		}
 
 		/**
@@ -364,7 +361,7 @@ namespace Providers.OSUI.Carousel.Splide {
 		 * @memberof Providers.OSUI.Carousel.Splide.OSUISplide
 		 */
 		public previous(): void {
-			this._provider.go(Enum.Go.Previous);
+			this.provider.go(Enum.Go.Previous);
 		}
 
 		/**
@@ -379,8 +376,8 @@ namespace Providers.OSUI.Carousel.Splide {
 				case OSFramework.OSUI.Patterns.Carousel.Enum.CarouselEvents.OnSlideMoved:
 					this._platformEventOnSlideMoved = callback;
 					break;
-				case OSFramework.OSUI.Patterns.Carousel.Enum.CarouselEvents.Initialized:
-					this._platformEventInitialized = callback;
+				default:
+					super.registerCallback(eventName, callback);
 					break;
 			}
 		}
@@ -412,6 +409,7 @@ namespace Providers.OSUI.Carousel.Splide {
 		public setProviderConfigs(newConfigs: SplideOpts): void {
 			this.configs.setExtensibilityConfigs(newConfigs);
 			this.redraw();
+			super.setProviderConfigs(newConfigs);
 		}
 
 		/**
@@ -421,7 +419,7 @@ namespace Providers.OSUI.Carousel.Splide {
 		 * @memberof Providers.OSUI.Carousel.Splide.OSUISplide
 		 */
 		public toggleDrag(hasDrag: boolean): void {
-			this._provider.options = { drag: hasDrag };
+			this.provider.options = { drag: hasDrag };
 		}
 
 		/**
@@ -444,7 +442,7 @@ namespace Providers.OSUI.Carousel.Splide {
 				this.setInitialCssClasses();
 
 				// Check if provider is ready
-				if (typeof this._provider === 'object') {
+				if (typeof this.provider === 'object') {
 					// Keep same position after update
 					// Check autoplay config, as that triggers the provider onChange and our onRender event, but doesn't udpate the _currentIndex property.
 					if (this._currentIndex !== undefined || this.configs.AutoPlay === true) {

@@ -13,12 +13,27 @@ namespace OSFramework.OSUI.Patterns {
 		extends AbstractPattern<C>
 		implements Interface.IProviderPattern<P>
 	{
+		// Holds the callback for the provider config applied event
+		private _platformEventProviderConfigsAppliedCallback: GlobalCallbacks.OSGeneric;
 		// Holds the provider
-		protected _provider: P;
+		private _provider: P;
 		// Holds the provider info
-		protected _providerInfo: ProviderInfo;
+		private _providerInfo: ProviderInfo;
 		// Holds the providerEvents instance, that manages the provider events
 		protected providerEventsManagerInstance: Event.ProviderEvents.IProviderEventManager;
+
+		/**
+		 * Creates an instance of AbstractProviderPattern.
+		 *
+		 * @param {string} uniqueId
+		 * @param {C} configs
+		 * @memberof OSFramework.Patterns.AbstractProviderPattern
+		 */
+		constructor(uniqueId: string, configs: C) {
+			super(uniqueId, configs);
+
+			this.isProviderBased = true;
+		}
 
 		// Method to get an event index from an array
 		private _getEventIndexFromArray(event: Event.ProviderEvents.IProviderEvent): number {
@@ -103,20 +118,17 @@ namespace OSFramework.OSUI.Patterns {
 		}
 
 		/**
-		 * Trigger platform's InstanceIntializedHandler client Action
+		 * Unsets the callbacks.
 		 *
-		 * @param {GlobalCallbacks.OSGeneric} platFormCallback
+		 * @protected
 		 * @memberof OSFramework.Patterns.AbstractProviderPattern
 		 */
-		protected triggerPlatformEventInitialized(platFormCallback: GlobalCallbacks.OSGeneric): void {
-			// Ensure it's only be trigger the first time!
-			if (this.isBuilt === false) {
-				Helper.AsyncInvocation(platFormCallback, this.widgetId);
-			}
+		protected unsetCallbacks(): void {
+			this._platformEventProviderConfigsAppliedCallback = undefined;
 		}
 
 		/**
-		 * Build the Pattern
+		 * Method to build the pattern
 		 *
 		 * @memberof OSFramework.Patterns.AbstractProviderPattern
 		 */
@@ -126,6 +138,13 @@ namespace OSFramework.OSUI.Patterns {
 				version: undefined,
 				events: undefined,
 			};
+
+			// Force provider redraw/update when rtl is changed in runtime
+			OSFramework.OSUI.Event.DOMEvents.Observers.GlobalObserverManager.Instance.addHandler(
+				Event.DOMEvents.Observers.ObserverEvent.RTL,
+				this.redraw.bind(this)
+			);
+
 			super.build();
 		}
 
@@ -164,8 +183,43 @@ namespace OSFramework.OSUI.Patterns {
 		 * @memberof OSFramework.Patterns.AbstractProviderPattern
 		 */
 		public dispose(): void {
-			this.providerEventsManagerInstance = undefined;
+			OSFramework.OSUI.Event.DOMEvents.Observers.GlobalObserverManager.Instance.removeHandler(
+				Event.DOMEvents.Observers.ObserverEvent.RTL,
+				this.redraw.bind(this)
+			);
+
 			super.dispose();
+		}
+
+		/**
+		 * Register the default events for provider based patterns.
+		 *
+		 * @abstract
+		 * @param {string} eventName
+		 * @param {GlobalCallbacks.OSGeneric} callback
+		 * @memberof AbstractProviderPattern
+		 */
+		public registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void {
+			switch (eventName) {
+				case GlobalEnum.ProviderEvents.OnProviderConfigsApplied:
+					if (this._platformEventProviderConfigsAppliedCallback === undefined) {
+						this._platformEventProviderConfigsAppliedCallback = callback;
+					}
+					break;
+				default:
+					super.registerCallback(eventName, callback);
+			}
+		}
+
+		/**
+		 * Method used to set all the provider configs. In the AbstractProviderPattern, it
+		 * will simply trigger the callback to warn that the configs have been applied to the provider.
+		 * @param {ProviderConfigs} providerConfigs
+		 * @memberof AbstractProviderPattern
+		 */
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		public setProviderConfigs(providerConfigs: unknown): void {
+			this.triggerPlatformEventCallback(this._platformEventProviderConfigsAppliedCallback);
 		}
 
 		/**
@@ -296,7 +350,5 @@ namespace OSFramework.OSUI.Patterns {
 
 		// Common methods all providers must implement
 		protected abstract prepareConfigs(): void;
-		public abstract registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void;
-		public abstract setProviderConfigs(providerConfigs: ProviderConfigs): void;
 	}
 }

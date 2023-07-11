@@ -198,7 +198,7 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 
 		// Method that triggers the OnToggle event
 		private _triggerOnToggleEvent(): void {
-			Helper.AsyncInvocation(this._platformEventOnToggle, this.widgetId, this._isOpen);
+			this.triggerPlatformEventCallback(this._platformEventOnToggle, this._isOpen);
 		}
 
 		/**
@@ -403,16 +403,21 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 		}
 
 		/**
-		 * Set callbacks for the onToggle event
+		 * Register a given callback event handler.
 		 *
-		 * @param {GlobalCallbacks.Generic} callback
+		 * @param {string} eventName
+		 * @param {GlobalCallbacks.OSGeneric} callback
 		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
 		 */
-		public registerCallback(callback: GlobalCallbacks.Generic): void {
-			if (this._platformEventOnToggle === undefined) {
-				this._platformEventOnToggle = callback;
-			} else {
-				console.warn(`The ${GlobalEnum.PatternName.BottomSheet} already has the toggle callback set.`);
+		public registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void {
+			switch (eventName) {
+				case Enum.Events.OnToggle:
+					if (this._platformEventOnToggle === undefined) {
+						this._platformEventOnToggle = callback;
+					}
+					break;
+				default:
+					super.registerCallback(eventName, callback);
 			}
 		}
 

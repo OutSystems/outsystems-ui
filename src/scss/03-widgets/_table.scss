@@ -270,20 +270,33 @@
 	th.sortable:focus {
 		box-shadow: 0 0 0 3px var(--color-focus-outer);
 		position: relative;
-		z-index: 1;
+		z-index: var(--layer-global-screen);
 	}
 }
 
-// IsRTL -------------------------------------------------------------------------
+// IsRTL --------------------------------------------------------------------
 ///
 .is-rtl {
 	&.phone,
 	&.tablet {
 		.table:not(.table-no-responsive) {
+			td {
+				text-align: right !important;
+			}
+
 			td:before {
 				margin-left: 10px;
 				margin-right: 0px;
 			}
 		}
+	}
+
+	.table-header th {
+		text-align: right;
+	}
+
+	.sortable-icon {
+		margin-left: var(--space-none);
+		right: var(--space-s);
 	}
 }

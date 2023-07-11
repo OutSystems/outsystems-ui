@@ -26,7 +26,7 @@ stages:
 
                       for FILE in $CHANGED_FILES
                           do    
-                              if [[ $FILE == *"src/scripts/OutSystems/OSUI/Patterns"* ]]; then
+                              if [[ $FILE == *"src/scripts/OSFramework/OSUI/Pattern"* || $FILE == *"src/scripts/OutSystems/OSUI/Patterns"* ]]; then
                                   
                                   ELEMENT=$(echo $FILE| cut -d/ -f6) # 6th file name in the file path
 
@@ -36,7 +36,7 @@ stages:
 
                               fi
 
-                              if [[ $FILE == *"src/scripts/OSFramework/Pattern"* || $FILE == *"src/scss/04-patterns"* ]]; then
+                              if [[ $FILE == *"src/scss/04-patterns"* || $FILE == *"src/scripts/Providers/OSUI"* ]]; then
                                   ELEMENT=$(echo $FILE| cut -d/ -f5) # 5th file/folder name in the file path
 
                                   if [[ $ELEMENT == *".scss"* ]]; then 
@@ -45,7 +45,7 @@ stages:
 
                               fi
 
-                              if [[ $FILE == *"src/scss/10-deprecated"* || $FILE == *"src/scripts/Providers"* ]]; then
+                              if [[ $FILE == *"src/scss/10-deprecated"* ]]; then
                                   ELEMENT=$(echo $FILE| cut -d/ -f4) # 4th file/folder name in the file path
                                   
                                   if [[ $ELEMENT == *"-deprecated.scss"* ]]; then 
@@ -103,7 +103,7 @@ stages:
                       ENVIRONMENT: dev
                       TAGS: not @skipLegacy and not @skipSafari and ($(tags))
                       LEGACY: True
-                      BRANCH: $(branch)
+                      MODULE: $(branch)
 
     - stage: safari_functional_tests
       variables:
@@ -128,7 +128,7 @@ stages:
                       ENVIRONMENT: dev
                       TAGS: not @legacy and not @skipSafari and ($(tags))
                       LEGACY: False
-                      BRANCH: $(branch)
+                      MODULE: $(branch)
 
     - stage: chrome_functional_tests_legacy
       variables:
@@ -151,7 +151,7 @@ stages:
                       ENVIRONMENT: dev
                       TAGS: not @skipLegacy and not @skipChrome and ($(tags))
                       LEGACY: True
-                      BRANCH: $(branch)
+                      MODULE: $(branch)
 
     - stage: chrome_functional_tests
       variables:
@@ -176,7 +176,7 @@ stages:
                       ENVIRONMENT: dev
                       TAGS: not @legacy and not @skipChrome and ($(tags))
                       LEGACY: False
-                      BRANCH: $(branch)
+                      MODULE: $(branch)
 
     - stage: publish_cucumber_results
       displayName: 'Publish cucumber results'

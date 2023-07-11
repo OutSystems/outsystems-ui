@@ -16,7 +16,6 @@ namespace Providers.OSUI.RangeSlider.NoUISlider {
 		protected eventProviderValueChanged: OSFramework.OSUI.GlobalCallbacks.Generic;
 		// Store the provider options
 		protected noUiSliderOpts: NoUiSliderOptions;
-		protected platformEventInitialize: OSFramework.OSUI.GlobalCallbacks.OSGeneric;
 		protected platformEventValueChange: OSFramework.OSUI.Patterns.RangeSlider.Callbacks.OSOnValueChangeEvent;
 		// throttle before invoking the platform
 		protected throttleTimeValue = 200;
@@ -97,8 +96,13 @@ namespace Providers.OSUI.RangeSlider.NoUISlider {
 			// Set OnValueChange event
 			this._setOnValueChangeEvent(RangeSlider.NoUiSlider.Enum.NoUISliderEvents.Slide);
 
-			// Trigger platform's InstanceIntializedHandler client Action
-			this.triggerPlatformEventInitialized(this.platformEventInitialize);
+			/**
+			 * Trigger Innitialized Event.
+			 * - This is needed for the patterns based on a provider since at the Initialized Event at the
+			 * Platform side, custom code can be added in order to add customization to the provider.
+			 * - This way, Initialized Event will be triggered every time a redraw occurs.
+			 */
+			this.triggerPlatformInitializedEventCallback();
 		}
 
 		/**
@@ -171,6 +175,7 @@ namespace Providers.OSUI.RangeSlider.NoUISlider {
 		 */
 		protected unsetCallbacks(): void {
 			this.eventProviderValueChanged = undefined;
+			super.unsetCallbacks();
 		}
 
 		/**
@@ -292,20 +297,14 @@ namespace Providers.OSUI.RangeSlider.NoUISlider {
 		 */
 		public registerCallback(eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
-				case OSFramework.OSUI.Patterns.RangeSlider.Enum.RangeSliderEvents.OnInitialize:
-					if (this.platformEventInitialize === undefined) {
-						this.platformEventInitialize = callback;
-					}
-					break;
 				case OSFramework.OSUI.Patterns.RangeSlider.Enum.RangeSliderEvents.OnValueChange:
 					if (this.platformEventValueChange === undefined) {
 						this.platformEventValueChange = callback;
 					}
 					break;
 				default:
-					throw new Error(
-						`${OSFramework.OSUI.ErrorCodes.RangeSlider.FailRegisterCallback}:	The given '${eventName}' event name is not defined.`
-					);
+					super.registerCallback(eventName, callback);
+					break;
 			}
 		}
 
@@ -319,6 +318,7 @@ namespace Providers.OSUI.RangeSlider.NoUISlider {
 			this.configs.setExtensibilityConfigs(newConfigs);
 
 			this.redraw();
+			super.setProviderConfigs(newConfigs);
 		}
 
 		/**

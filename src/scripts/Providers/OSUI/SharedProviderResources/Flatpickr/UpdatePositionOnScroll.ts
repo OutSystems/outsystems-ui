@@ -48,8 +48,8 @@ namespace Providers.OSUI.SharedProviderResources.Flatpickr {
 		// Add Events
 		private _setUpEvents(): void {
 			// Add the BodyScroll callback that will be used to update the balloon coodinates
-			OSFramework.OSUI.Event.GlobalEventManager.Instance.addHandler(
-				OSFramework.OSUI.Event.Type.BodyOnScroll,
+			OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
+				OSFramework.OSUI.Event.DOMEvents.Listeners.Type.BodyOnScroll,
 				this._onBodyScrollEvent
 			);
 		}
@@ -61,8 +61,8 @@ namespace Providers.OSUI.SharedProviderResources.Flatpickr {
 
 		// Remove Added Events
 		private _unsetEvents(): void {
-			OSFramework.OSUI.Event.GlobalEventManager.Instance.removeHandler(
-				OSFramework.OSUI.Event.Type.BodyOnScroll,
+			OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
+				OSFramework.OSUI.Event.DOMEvents.Listeners.Type.BodyOnScroll,
 				this._onBodyScrollEvent
 			);
 		}

@@ -95,6 +95,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		popupDropboxBreakpoint?: string;
 		position?: string;
 		search?: boolean;
+		searchNormalize?: boolean;
 		searchPlaceholderText?: string;
 		selectAllOnlyVisible?: boolean;
 		selectAllText?: string;

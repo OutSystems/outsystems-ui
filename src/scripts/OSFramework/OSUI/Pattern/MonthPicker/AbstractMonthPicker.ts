@@ -14,5 +14,7 @@ namespace OSFramework.OSUI.Patterns.MonthPicker {
 		public abstract close(): void;
 		public abstract open(): void;
 		public abstract setLanguage(value: string): void;
+		public abstract updateInitialMonth(monthYear: MonthYear): void;
+		public abstract updatePrompt(promptMessage: string): void;
 	}
 }

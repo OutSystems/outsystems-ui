@@ -113,4 +113,30 @@ namespace OutSystems.OSUI.Patterns.ButtonLoadingAPI {
 
 		return buttonLoading;
 	}
+
+	/**
+	 * Function to register a provider callback
+	 *
+	 * @export
+	 * @param {string} dropdownId
+	 * @param {string} eventName
+	 * @param {OSFramework.OSUI.GlobalCallbacks.OSGeneric} callback
+	 * @return {*}  {string}
+	 */
+	export function RegisterCallback(
+		dropdownId: string,
+		eventName: string,
+		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
+	): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.ButtonLoading.FailRegisterCallback,
+			callback: () => {
+				const buttonLoading = this.GetButtonLoadingById(dropdownId);
+
+				buttonLoading.registerCallback(eventName, callback);
+			},
+		});
+
+		return result;
+	}
 }
