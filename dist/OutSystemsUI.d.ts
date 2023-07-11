@@ -2422,6 +2422,8 @@ declare namespace OSFramework.OSUI.Patterns.OverflowMenu.Enum {
 }
 declare namespace OSFramework.OSUI.Patterns.OverflowMenu {
     interface IOverflowMenu extends Interface.IPattern, Interface.IOpenable {
+        disable(): void;
+        enable(): void;
     }
 }
 declare namespace OSFramework.OSUI.Patterns.OverflowMenu {
@@ -2431,6 +2433,7 @@ declare namespace OSFramework.OSUI.Patterns.OverflowMenu {
         private _balloonFeature;
         private _eventBalloonOnToggle;
         private _eventOnClick;
+        private _isDisabled;
         private _isOpenedByApi;
         private _platformEventOnToggle;
         private _triggerElem;
@@ -2453,7 +2456,9 @@ declare namespace OSFramework.OSUI.Patterns.OverflowMenu {
         build(): void;
         changeProperty(propertyName: string, propertyValue: unknown): void;
         close(): void;
+        disable(): void;
         dispose(): void;
+        enable(): void;
         open(isOpenedByApi: boolean): void;
         registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void;
         setBalloonOptions(balloonOptions?: Feature.Balloon.BalloonOptions): void;
@@ -4060,6 +4065,8 @@ declare namespace OutSystems.OSUI.ErrorCodes {
         FailRegisterCallback: string;
         FailOpen: string;
         FailClose: string;
+        FailEnable: string;
+        FailDisable: string;
     };
     const Video: {
         FailChangeProperty: string;
@@ -4273,7 +4280,9 @@ declare namespace OutSystems.OSUI.Patterns.NotificationAPI {
 declare namespace OutSystems.OSUI.Patterns.OverflowMenuAPI {
     function ChangeProperty(overflowMenuId: string, propertyName: string, propertyValue: unknown): string;
     function Create(overflowMenuId: string, configs: string): OSFramework.OSUI.Patterns.OverflowMenu.IOverflowMenu;
+    function Disable(overflowMenuId: string): string;
     function Dispose(overflowMenuId: string): string;
+    function Enable(overflowMenuId: string): string;
     function GetAllOverflowMenus(): Array<string>;
     function GetOverflowMenuById(overflowMenuId: string): OSFramework.OSUI.Patterns.OverflowMenu.IOverflowMenu;
     function Initialize(overflowMenuId: string): OSFramework.OSUI.Patterns.OverflowMenu.IOverflowMenu;
