@@ -230,22 +230,33 @@ namespace OutSystems.OSUI.Utils {
 
 	/**
 	 * Action to be used on the Login screen to enable users to show or hide the password characters.
+	 * If WidgetId exists we will show the password to that input, otherwise it will pick the first one on the screen.
+	 * @export
+	 * @param {string} [WidgetId] Input element to which we will toggle the password visibility.
+	 * @return {*}  {string}
 	 */
-	export function ShowPassword(): string {
+	export function ShowPassword(WidgetId?: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.Utilities.FailShowPassword,
 			callback: () => {
-				const inputPassword = OSFramework.OSUI.Helper.Dom.ClassSelector(
-					document,
-					'login-password'
-				) as HTMLInputElement;
-				const typeInputPassword = inputPassword.type;
+				if (WidgetId) {
+					const inputPassword = OSFramework.OSUI.Helper.Dom.GetElementById(WidgetId) as HTMLInputElement;
+					const typeInputPassword = inputPassword.type === 'password' ? 'text' : 'password';
+					inputPassword.setAttribute('type', typeInputPassword);
+					OSFramework.OSUI.Helper.Dom.Attribute.Set(inputPassword, 'type', typeInputPassword);
+				} else {
+					const inputPassword = OSFramework.OSUI.Helper.Dom.ClassSelector(
+						document,
+						'login-password'
+					) as HTMLInputElement;
+					const typeInputPassword = inputPassword.type;
 
-				OSFramework.OSUI.Helper.Dom.Attribute.Set(
-					inputPassword,
-					'type',
-					typeInputPassword === 'password' ? 'text' : 'password'
-				);
+					OSFramework.OSUI.Helper.Dom.Attribute.Set(
+						inputPassword,
+						'type',
+						typeInputPassword === 'password' ? 'text' : 'password'
+					);
+				}
 			},
 		});
 
