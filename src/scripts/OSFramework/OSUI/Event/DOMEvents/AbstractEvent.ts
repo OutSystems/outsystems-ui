@@ -17,7 +17,7 @@ namespace OSFramework.OSUI.Event.DOMEvents {
 		 * Getter for handlers
 		 *
 		 * @readonly
-		 * @protected
+		 * @public
 		 * @type {GlobalCallbacks.OSGeneric[]}
 		 * @memberof AbstractEvent
 		 */
