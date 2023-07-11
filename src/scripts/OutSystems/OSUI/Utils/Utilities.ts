@@ -241,6 +241,13 @@ namespace OutSystems.OSUI.Utils {
 			callback: () => {
 				if (WidgetId) {
 					const inputPassword = OSFramework.OSUI.Helper.Dom.GetElementById(WidgetId) as HTMLInputElement;
+					// If the element with WidgetId is not an input we will log a warning
+					if (
+						inputPassword.tagName.toLowerCase() !== 'input' ||
+						(inputPassword.type !== 'text' && inputPassword.type !== 'password')
+					) {
+						console.warn(`Object with WidgetId '${WidgetId}' should be an input element.`);
+					}
 					const typeInputPassword = inputPassword.type === 'password' ? 'text' : 'password';
 					inputPassword.setAttribute('type', typeInputPassword);
 					OSFramework.OSUI.Helper.Dom.Attribute.Set(inputPassword, 'type', typeInputPassword);
