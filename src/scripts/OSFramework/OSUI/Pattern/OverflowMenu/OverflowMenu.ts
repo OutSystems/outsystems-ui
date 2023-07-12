@@ -248,7 +248,11 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 		public disable(): void {
 			this._isDisabled = true;
 			this.close();
-			Helper.Dom.Attribute.Set(this._triggerElem, GlobalEnum.HTMLAttributes.Disabled, '');
+			Helper.Dom.Attribute.Set(
+				this._triggerElem,
+				GlobalEnum.HTMLAttributes.Disabled,
+				OSFramework.OSUI.Constants.EmptyString
+			);
 		}
 
 		/**
