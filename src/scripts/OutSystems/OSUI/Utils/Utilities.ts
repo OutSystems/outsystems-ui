@@ -254,7 +254,7 @@ namespace OutSystems.OSUI.Utils {
 						_inputPassword.type === OSFramework.OSUI.GlobalEnum.InputTypeAttr.Password
 							? OSFramework.OSUI.GlobalEnum.InputTypeAttr.Text
 							: OSFramework.OSUI.GlobalEnum.InputTypeAttr.Password;
-					_inputPassword.setAttribute(OSFramework.OSUI.GlobalEnum.HTMLAttributes.Type, _typeInputPassword);
+
 					OSFramework.OSUI.Helper.Dom.Attribute.Set(
 						_inputPassword,
 						OSFramework.OSUI.GlobalEnum.HTMLAttributes.Type,
