@@ -317,6 +317,8 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailRegisterCallback: 'OSUI-API-30003',
 		FailOpen: 'OSUI-API-30004',
 		FailClose: 'OSUI-API-30005',
+		FailEnable: 'OSUI-API-30006',
+		FailDisable: 'OSUI-API-30007',
 	};
 
 	export const Video = {

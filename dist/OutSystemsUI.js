@@ -7159,6 +7159,7 @@ var OSFramework;
                 class OverflowMenu extends Patterns.AbstractPattern {
                     constructor(uniqueId, configs) {
                         super(uniqueId, new OverflowMenu_1.OverflowMenuConfig(configs));
+                        this._isDisabled = false;
                         this._isOpenedByApi = false;
                         this.isOpen = false;
                     }
@@ -7263,6 +7264,11 @@ var OSFramework;
                             this._balloonFeature.close();
                         }
                     }
+                    disable() {
+                        this._isDisabled = true;
+                        this.close();
+                        OSUI.Helper.Dom.Attribute.Set(this._triggerElem, OSUI.GlobalEnum.HTMLAttributes.Disabled, '');
+                    }
                     dispose() {
                         var _a;
                         (_a = this._balloonFeature) === null || _a === void 0 ? void 0 : _a.dispose();
@@ -7271,8 +7277,12 @@ var OSFramework;
                         this.unsetHtmlElements();
                         super.dispose();
                     }
+                    enable() {
+                        this._isDisabled = false;
+                        OSUI.Helper.Dom.Attribute.Remove(this._triggerElem, OSUI.GlobalEnum.HTMLAttributes.Disabled);
+                    }
                     open(isOpenedByApi) {
-                        if (this._balloonFeature.isOpen === false) {
+                        if (this._balloonFeature.isOpen === false && this._isDisabled === false) {
                             this._isOpenedByApi = isOpenedByApi;
                             this._balloonFeature.open(this._isOpenedByApi);
                         }
@@ -12094,6 +12104,8 @@ var OutSystems;
                 FailRegisterCallback: 'OSUI-API-30003',
                 FailOpen: 'OSUI-API-30004',
                 FailClose: 'OSUI-API-30005',
+                FailEnable: 'OSUI-API-30006',
+                FailDisable: 'OSUI-API-30007',
             };
             ErrorCodes.Video = {
                 FailChangeProperty: 'OSUI-API-31001',
@@ -13825,6 +13837,17 @@ var OutSystems;
                     return _overflowMenuItem;
                 }
                 OverflowMenuAPI.Create = Create;
+                function Disable(overflowMenuId) {
+                    const result = OutSystems.OSUI.Utils.CreateApiResponse({
+                        errorCode: OSUI.ErrorCodes.OverflowMenu.FailDisable,
+                        callback: () => {
+                            const _overflowMenu = GetOverflowMenuById(overflowMenuId);
+                            _overflowMenu.disable();
+                        },
+                    });
+                    return result;
+                }
+                OverflowMenuAPI.Disable = Disable;
                 function Dispose(overflowMenuId) {
                     const result = OutSystems.OSUI.Utils.CreateApiResponse({
                         errorCode: OSUI.ErrorCodes.OverflowMenu.FailDispose,
@@ -13837,6 +13860,17 @@ var OutSystems;
                     return result;
                 }
                 OverflowMenuAPI.Dispose = Dispose;
+                function Enable(overflowMenuId) {
+                    const result = OutSystems.OSUI.Utils.CreateApiResponse({
+                        errorCode: OSUI.ErrorCodes.OverflowMenu.FailEnable,
+                        callback: () => {
+                            const _overflowMenu = GetOverflowMenuById(overflowMenuId);
+                            _overflowMenu.enable();
+                        },
+                    });
+                    return result;
+                }
+                OverflowMenuAPI.Enable = Enable;
                 function GetAllOverflowMenus() {
                     return OSFramework.OSUI.Helper.MapOperation.ExportKeys(_overflowMenuMap);
                 }
