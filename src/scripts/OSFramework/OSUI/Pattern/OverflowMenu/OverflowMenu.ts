@@ -18,6 +18,8 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 		// Store the Event Callbacks
 		private _eventBalloonOnToggle: GlobalCallbacks.Generic;
 		private _eventOnClick: GlobalCallbacks.Generic;
+		// Flag used to set the enable/disable state
+		private _isDisabled = false;
 		// Flag used to deal with onBodyClick and open api concurrency methods!
 		private _isOpenedByApi = false;
 		// Store the platform events
@@ -27,7 +29,7 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 
 		// Store the Balloon options to pass to the Balloon Class
 		public balloonOptions: Feature.Balloon.BalloonOptions;
-		// Store the isOpen ststus
+		// Store the isOpen status
 		public isOpen = false;
 
 		constructor(uniqueId: string, configs: JSON) {
@@ -239,6 +241,21 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 		}
 
 		/**
+		 * Method to disable the pattern
+		 *
+		 * @memberof OverflowMenu
+		 */
+		public disable(): void {
+			this._isDisabled = true;
+			this.close();
+			Helper.Dom.Attribute.Set(
+				this._triggerElem,
+				GlobalEnum.HTMLAttributes.Disabled,
+				OSFramework.OSUI.Constants.EmptyString
+			);
+		}
+
+		/**
 		 * Method to destroy the Pattern
 		 *
 		 * @memberof OverflowMenu
@@ -252,12 +269,22 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 		}
 
 		/**
+		 * Method to enable the pattern
+		 *
+		 * @memberof OverflowMenu
+		 */
+		public enable(): void {
+			this._isDisabled = false;
+			Helper.Dom.Attribute.Remove(this._triggerElem, GlobalEnum.HTMLAttributes.Disabled);
+		}
+
+		/**
 		 * Method to open the Pattern
 		 *
 		 * @memberof OverflowMenu
 		 */
 		public open(isOpenedByApi: boolean): void {
-			if (this._balloonFeature.isOpen === false) {
+			if (this._balloonFeature.isOpen === false && this._isDisabled === false) {
 				this._isOpenedByApi = isOpenedByApi;
 				this._balloonFeature.open(this._isOpenedByApi);
 			}

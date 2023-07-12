@@ -53,6 +53,25 @@ namespace OutSystems.OSUI.Patterns.OverflowMenuAPI {
 	}
 
 	/**
+	 * Function that will disable the given OverflowMenu
+	 *
+	 * @export
+	 * @param {string} overflowMenuId
+	 */
+	export function Disable(overflowMenuId: string): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.OverflowMenu.FailDisable,
+			callback: () => {
+				const _overflowMenu = GetOverflowMenuById(overflowMenuId);
+
+				_overflowMenu.disable();
+			},
+		});
+
+		return result;
+	}
+
+	/**
 	 * Function that will dispose the instance of the given OverflowMenu
 	 *
 	 * @export
@@ -67,6 +86,25 @@ namespace OutSystems.OSUI.Patterns.OverflowMenuAPI {
 				_overflowMenu.dispose();
 
 				_overflowMenuMap.delete(_overflowMenu.uniqueId);
+			},
+		});
+
+		return result;
+	}
+
+	/**
+	 * Function that will enable the given OverflowMenu
+	 *
+	 * @export
+	 * @param {string} overflowMenuId
+	 */
+	export function Enable(overflowMenuId: string): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.OverflowMenu.FailEnable,
+			callback: () => {
+				const _overflowMenu = GetOverflowMenuById(overflowMenuId);
+
+				_overflowMenu.enable();
 			},
 		});
 
