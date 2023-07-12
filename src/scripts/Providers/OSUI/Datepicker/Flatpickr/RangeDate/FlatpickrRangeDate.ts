@@ -112,7 +112,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr.RangeDate {
 			// This is needed once library set it as an hidden by default which can not be since otherwise the updating it's value will not be triggered the local variable update. That said it will be hidden through CSS!
 			OSFramework.OSUI.Helper.Dom.Attribute.Set(
 				this.datePickerPlatformInputElem,
-				OSFramework.OSUI.GlobalEnum.HTMLAttributes.type,
+				OSFramework.OSUI.GlobalEnum.HTMLAttributes.Type,
 				OSFramework.OSUI.GlobalEnum.InputTypeAttr.Text
 			);
 		}

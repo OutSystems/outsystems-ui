@@ -29,6 +29,7 @@ namespace OSFramework.OSUI.GlobalEnum {
 		LayoutSide = 'layout-side',
 		LayoutTop = 'layout-top',
 		List = 'list',
+		LoginPassword = 'login-password',
 		MainContent = 'main-content',
 		MenuLinks = 'app-menu-links',
 		Placeholder = 'ph',
@@ -167,7 +168,7 @@ namespace OSFramework.OSUI.GlobalEnum {
 		Name = 'name',
 		StatusBar = 'data-status-bar-height',
 		Style = 'style',
-		type = 'type',
+		Type = 'type',
 	}
 
 	/**
@@ -351,6 +352,7 @@ namespace OSFramework.OSUI.GlobalEnum {
 	export enum InputTypeAttr {
 		Date = 'date',
 		DateTime = 'date-time-edit',
+		Password = 'password',
 		Text = 'text',
 		Time = 'time',
 	}

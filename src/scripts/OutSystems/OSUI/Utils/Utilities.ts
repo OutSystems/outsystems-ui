@@ -241,28 +241,38 @@ namespace OutSystems.OSUI.Utils {
 			errorCode: ErrorCodes.Utilities.FailShowPassword,
 			callback: () => {
 				if (WidgetId) {
-					const inputPassword = OSFramework.OSUI.Helper.Dom.GetElementById(WidgetId) as HTMLInputElement;
+					const _inputPassword = OSFramework.OSUI.Helper.Dom.GetElementById(WidgetId) as HTMLInputElement;
 					// If the element with WidgetId is not an input we will log a warning
 					if (
-						inputPassword.tagName.toLowerCase() !== 'input' ||
-						(inputPassword.type !== 'text' && inputPassword.type !== 'password')
+						_inputPassword.tagName.toLowerCase() !== OSFramework.OSUI.GlobalEnum.HTMLElement.Input ||
+						(_inputPassword.type !== OSFramework.OSUI.GlobalEnum.InputTypeAttr.Text &&
+							_inputPassword.type !== OSFramework.OSUI.GlobalEnum.InputTypeAttr.Password)
 					) {
 						console.warn(`Object with WidgetId '${WidgetId}' should be an input element.`);
 					}
-					const typeInputPassword = inputPassword.type === 'password' ? 'text' : 'password';
-					inputPassword.setAttribute('type', typeInputPassword);
-					OSFramework.OSUI.Helper.Dom.Attribute.Set(inputPassword, 'type', typeInputPassword);
+					const _typeInputPassword =
+						_inputPassword.type === OSFramework.OSUI.GlobalEnum.InputTypeAttr.Password
+							? OSFramework.OSUI.GlobalEnum.InputTypeAttr.Text
+							: OSFramework.OSUI.GlobalEnum.InputTypeAttr.Password;
+					_inputPassword.setAttribute(OSFramework.OSUI.GlobalEnum.HTMLAttributes.Type, _typeInputPassword);
+					OSFramework.OSUI.Helper.Dom.Attribute.Set(
+						_inputPassword,
+						OSFramework.OSUI.GlobalEnum.HTMLAttributes.Type,
+						_typeInputPassword
+					);
 				} else {
-					const inputPassword = OSFramework.OSUI.Helper.Dom.ClassSelector(
+					const _inputPassword = OSFramework.OSUI.Helper.Dom.ClassSelector(
 						document,
-						'login-password'
+						OSFramework.OSUI.GlobalEnum.CssClassElements.LoginPassword
 					) as HTMLInputElement;
-					const typeInputPassword = inputPassword.type;
+					const _typeInputPassword = _inputPassword.type;
 
 					OSFramework.OSUI.Helper.Dom.Attribute.Set(
-						inputPassword,
-						'type',
-						typeInputPassword === 'password' ? 'text' : 'password'
+						_inputPassword,
+						OSFramework.OSUI.GlobalEnum.HTMLAttributes.Type,
+						_typeInputPassword === OSFramework.OSUI.GlobalEnum.InputTypeAttr.Password
+							? OSFramework.OSUI.GlobalEnum.InputTypeAttr.Text
+							: OSFramework.OSUI.GlobalEnum.InputTypeAttr.Password
 					);
 				}
 			},
