@@ -7695,6 +7695,9 @@ span.flatpickr-weekday{
 .animated-label-input .form-control[data-textarea] + span.validation-message{
   bottom:7px;
 }
+.list.list-group > [data-block*=AnimatedLabel]:first-child .animated-label{
+  margin-top:var(--space-s);
+}
 .form .animated-label-input .form-control[data-textarea] + span.validation-message{
   position:relative;
   bottom:var(--space-m);
