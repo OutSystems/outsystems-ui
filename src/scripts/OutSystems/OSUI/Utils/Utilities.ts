@@ -229,10 +229,11 @@ namespace OutSystems.OSUI.Utils {
 	}
 
 	/**
-	 * Action to be used on the Login screen to enable users to show or hide the password characters.
-	 * If WidgetId exists we will show the password to that input, otherwise it will pick the first one on the screen.
+	 * Shows and hides the value of an Input of type password, allowing users to view their entered password temporarily for verification or editing purposes.
+	 * If WidgetId does not exist or is left empty, the action affects the first password Input on the screen.
+	 *
 	 * @export
-	 * @param {string} [WidgetId] Input element to which we will toggle the password visibility.
+	 * @param {string} [WidgetId] Identifier of the Input widget.
 	 * @return {*}  {string}
 	 */
 	export function ShowPassword(WidgetId?: string): string {
