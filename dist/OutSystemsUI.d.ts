@@ -559,7 +559,7 @@ declare namespace OSFramework.OSUI.Behaviors {
 declare namespace OSFramework.OSUI.Event.DOMEvents {
     abstract class AbstractEvent<T> implements IEvent<T> {
         private _handlers;
-        protected get handlers(): GlobalCallbacks.OSGeneric[];
+        get handlers(): GlobalCallbacks.OSGeneric[];
         addHandler(handler: GlobalCallbacks.OSGeneric): void;
         hasHandlers(): boolean;
         removeHandler(handler: GlobalCallbacks.OSGeneric): void;
@@ -582,6 +582,7 @@ declare namespace OSFramework.OSUI.Event.DOMEvents {
 }
 declare namespace OSFramework.OSUI.Event.DOMEvents {
     interface IEvent<D> {
+        handlers: GlobalCallbacks.OSGeneric[];
         addEvent(): void;
         addHandler(handler: GlobalCallbacks.OSGeneric, ...args: any[]): void;
         hasHandlers(): boolean;

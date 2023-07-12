@@ -1023,6 +1023,9 @@ var OSFramework;
                         if (this._events.has(eventType)) {
                             const event = this._events.get(eventType);
                             event.removeHandler(handler);
+                            if (event.handlers.length === 0) {
+                                this._events.delete(eventType);
+                            }
                         }
                     }
                     trigger(eventType, data, ...args) {
