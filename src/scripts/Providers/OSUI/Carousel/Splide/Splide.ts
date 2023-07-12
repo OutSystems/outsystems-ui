@@ -95,7 +95,8 @@ namespace Providers.OSUI.Carousel.Splide {
 		// Used on resize to refresh provider and redefine the width
 		private _redefineCarouselWidth(): void {
 			// Update UI on window resize
-			this.provider.refresh();
+			this.redraw();
+
 			// Update css variable
 			this._setCarouselWidth();
 		}

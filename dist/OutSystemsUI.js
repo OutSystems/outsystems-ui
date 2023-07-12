@@ -16957,7 +16957,7 @@ var Providers;
                         }
                     }
                     _redefineCarouselWidth() {
-                        this.provider.refresh();
+                        this.redraw();
                         this._setCarouselWidth();
                     }
                     _setCarouselWidth() {
