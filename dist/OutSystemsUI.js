@@ -7267,7 +7267,7 @@ var OSFramework;
                     disable() {
                         this._isDisabled = true;
                         this.close();
-                        OSUI.Helper.Dom.Attribute.Set(this._triggerElem, OSUI.GlobalEnum.HTMLAttributes.Disabled, '');
+                        OSUI.Helper.Dom.Attribute.Set(this._triggerElem, OSUI.GlobalEnum.HTMLAttributes.Disabled, OSFramework.OSUI.Constants.EmptyString);
                     }
                     dispose() {
                         var _a;
@@ -16991,8 +16991,13 @@ var Providers;
                         }
                     }
                     _redefineCarouselWidth() {
-                        this.redraw();
-                        this._setCarouselWidth();
+                        OSFramework.OSUI.Helper.ApplySetTimeOut(() => {
+                            this.provider.refresh();
+                            this._setCarouselWidth();
+                            if (this.selfElement.offsetWidth >= window.innerWidth) {
+                                this.redraw();
+                            }
+                        }, 500);
                     }
                     _setCarouselWidth() {
                         OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(this._carouselTrackElem, OSFramework.OSUI.Patterns.Carousel.Enum.CssVariables.CarouselWidth, this.selfElement.offsetWidth + OSFramework.OSUI.GlobalEnum.Units.Pixel);
