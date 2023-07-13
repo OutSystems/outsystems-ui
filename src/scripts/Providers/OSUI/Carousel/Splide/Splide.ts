@@ -102,11 +102,14 @@ namespace Providers.OSUI.Carousel.Splide {
 			OSFramework.OSUI.Helper.ApplySetTimeOut(() => {
 				// First lets try to do a simple provider refresh, to update the width correctly
 				this.provider.refresh();
+				// Update width, to be able to properly make the width validation coming next
 				this._setCarouselWidth();
 
 				// If that was still not enough, then let's trigger a full redraw
 				if (this.selfElement.offsetWidth >= window.innerWidth) {
 					this.redraw();
+					// This needs to be called again, to update the size one final time, to prevent situation where the Carousel wouldn't assume 100% width
+					this._setCarouselWidth();
 				}
 			}, 500);
 		}
