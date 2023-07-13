@@ -16,7 +16,6 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 		 * @param {boolean} [blockObserver]
 		 * @param {boolean} [triggerEvent]
 		 * @param {boolean} [triggeredByObserver]
-		 * @memberof ITabs
 		 */
 		changeTab(
 			tabIndex: number,
@@ -25,11 +24,11 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 			triggerEvent?: boolean,
 			triggeredByObserver?: boolean
 		): void;
+
 		/**
 		 * Function that will toggle the gestures on Tabs
 		 *
 		 * @param {boolean} addDragGestures
-		 * @memberof ITabs
 		 */
 		toggleDragGestures(addDragGestures: boolean): void;
 	}
