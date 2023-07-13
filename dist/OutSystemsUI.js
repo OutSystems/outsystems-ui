@@ -247,6 +247,7 @@ var OSFramework;
                 CssClassElements["LayoutSide"] = "layout-side";
                 CssClassElements["LayoutTop"] = "layout-top";
                 CssClassElements["List"] = "list";
+                CssClassElements["LoginPassword"] = "login-password";
                 CssClassElements["MainContent"] = "main-content";
                 CssClassElements["MenuLinks"] = "app-menu-links";
                 CssClassElements["Placeholder"] = "ph";
@@ -358,7 +359,7 @@ var OSFramework;
                 HTMLAttributes["Name"] = "name";
                 HTMLAttributes["StatusBar"] = "data-status-bar-height";
                 HTMLAttributes["Style"] = "style";
-                HTMLAttributes["type"] = "type";
+                HTMLAttributes["Type"] = "type";
             })(HTMLAttributes = GlobalEnum.HTMLAttributes || (GlobalEnum.HTMLAttributes = {}));
             let HTMLElement;
             (function (HTMLElement) {
@@ -500,6 +501,7 @@ var OSFramework;
             (function (InputTypeAttr) {
                 InputTypeAttr["Date"] = "date";
                 InputTypeAttr["DateTime"] = "date-time-edit";
+                InputTypeAttr["Password"] = "password";
                 InputTypeAttr["Text"] = "text";
                 InputTypeAttr["Time"] = "time";
             })(InputTypeAttr = GlobalEnum.InputTypeAttr || (GlobalEnum.InputTypeAttr = {}));
@@ -7267,7 +7269,7 @@ var OSFramework;
                     disable() {
                         this._isDisabled = true;
                         this.close();
-                        OSUI.Helper.Dom.Attribute.Set(this._triggerElem, OSUI.GlobalEnum.HTMLAttributes.Disabled, '');
+                        OSUI.Helper.Dom.Attribute.Set(this._triggerElem, OSUI.GlobalEnum.HTMLAttributes.Disabled, OSFramework.OSUI.Constants.EmptyString);
                     }
                     dispose() {
                         var _a;
@@ -16869,13 +16871,29 @@ var OutSystems;
                 return result;
             }
             Utils.SetSelectedTableRow = SetSelectedTableRow;
-            function ShowPassword() {
+            function ShowPassword(WidgetId) {
                 const result = OutSystems.OSUI.Utils.CreateApiResponse({
                     errorCode: OSUI.ErrorCodes.Utilities.FailShowPassword,
                     callback: () => {
-                        const inputPassword = OSFramework.OSUI.Helper.Dom.ClassSelector(document, 'login-password');
-                        const typeInputPassword = inputPassword.type;
-                        OSFramework.OSUI.Helper.Dom.Attribute.Set(inputPassword, 'type', typeInputPassword === 'password' ? 'text' : 'password');
+                        if (WidgetId) {
+                            const _inputPassword = OSFramework.OSUI.Helper.Dom.GetElementById(WidgetId);
+                            if (_inputPassword.tagName.toLowerCase() !== OSFramework.OSUI.GlobalEnum.HTMLElement.Input ||
+                                (_inputPassword.type !== OSFramework.OSUI.GlobalEnum.InputTypeAttr.Text &&
+                                    _inputPassword.type !== OSFramework.OSUI.GlobalEnum.InputTypeAttr.Password)) {
+                                console.warn(`Object with WidgetId '${WidgetId}' should be an input element.`);
+                            }
+                            const _typeInputPassword = _inputPassword.type === OSFramework.OSUI.GlobalEnum.InputTypeAttr.Password
+                                ? OSFramework.OSUI.GlobalEnum.InputTypeAttr.Text
+                                : OSFramework.OSUI.GlobalEnum.InputTypeAttr.Password;
+                            OSFramework.OSUI.Helper.Dom.Attribute.Set(_inputPassword, OSFramework.OSUI.GlobalEnum.HTMLAttributes.Type, _typeInputPassword);
+                        }
+                        else {
+                            const _inputPassword = OSFramework.OSUI.Helper.Dom.ClassSelector(document, OSFramework.OSUI.GlobalEnum.CssClassElements.LoginPassword);
+                            const _typeInputPassword = _inputPassword.type;
+                            OSFramework.OSUI.Helper.Dom.Attribute.Set(_inputPassword, OSFramework.OSUI.GlobalEnum.HTMLAttributes.Type, _typeInputPassword === OSFramework.OSUI.GlobalEnum.InputTypeAttr.Password
+                                ? OSFramework.OSUI.GlobalEnum.InputTypeAttr.Text
+                                : OSFramework.OSUI.GlobalEnum.InputTypeAttr.Password);
+                        }
                     },
                 });
                 return result;
@@ -16991,8 +17009,14 @@ var Providers;
                         }
                     }
                     _redefineCarouselWidth() {
-                        this.provider.refresh();
-                        this._setCarouselWidth();
+                        OSFramework.OSUI.Helper.ApplySetTimeOut(() => {
+                            this.provider.refresh();
+                            this._setCarouselWidth();
+                            if (this.selfElement.offsetWidth >= window.innerWidth) {
+                                this.redraw();
+                                this._setCarouselWidth();
+                            }
+                        }, 500);
                     }
                     _setCarouselWidth() {
                         OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(this._carouselTrackElem, OSFramework.OSUI.Patterns.Carousel.Enum.CssVariables.CarouselWidth, this.selfElement.offsetWidth + OSFramework.OSUI.GlobalEnum.Units.Pixel);
@@ -17795,7 +17819,7 @@ var Providers;
                             this.jumpIntoToday();
                         }
                         updatePlatformInputAttrs() {
-                            OSFramework.OSUI.Helper.Dom.Attribute.Set(this.datePickerPlatformInputElem, OSFramework.OSUI.GlobalEnum.HTMLAttributes.type, OSFramework.OSUI.GlobalEnum.InputTypeAttr.Text);
+                            OSFramework.OSUI.Helper.Dom.Attribute.Set(this.datePickerPlatformInputElem, OSFramework.OSUI.GlobalEnum.HTMLAttributes.Type, OSFramework.OSUI.GlobalEnum.InputTypeAttr.Text);
                         }
                         build() {
                             super.build();
@@ -17941,7 +17965,7 @@ var Providers;
                             const dateType = this.configs.TimeFormat === OSFramework.OSUI.Patterns.DatePicker.Enum.TimeFormatMode.Disable
                                 ? OSFramework.OSUI.GlobalEnum.InputTypeAttr.Date
                                 : OSFramework.OSUI.GlobalEnum.InputTypeAttr.DateTime;
-                            OSFramework.OSUI.Helper.Dom.Attribute.Set(this.datePickerPlatformInputElem, OSFramework.OSUI.GlobalEnum.HTMLAttributes.type, dateType);
+                            OSFramework.OSUI.Helper.Dom.Attribute.Set(this.datePickerPlatformInputElem, OSFramework.OSUI.GlobalEnum.HTMLAttributes.Type, dateType);
                         }
                         build() {
                             super.build();
@@ -19379,7 +19403,7 @@ var Providers;
                         this.monthPickerPlatformInputElem = undefined;
                     }
                     updatePlatformInputAttrs() {
-                        OSFramework.OSUI.Helper.Dom.Attribute.Set(this.monthPickerPlatformInputElem, OSFramework.OSUI.GlobalEnum.HTMLAttributes.type, OSFramework.OSUI.GlobalEnum.InputTypeAttr.Text);
+                        OSFramework.OSUI.Helper.Dom.Attribute.Set(this.monthPickerPlatformInputElem, OSFramework.OSUI.GlobalEnum.HTMLAttributes.Type, OSFramework.OSUI.GlobalEnum.InputTypeAttr.Text);
                     }
                     build() {
                         super.build();
@@ -20635,7 +20659,7 @@ var Providers;
                         this.timePickerPlatformInputElem = undefined;
                     }
                     updatePlatformInputAttrs() {
-                        OSFramework.OSUI.Helper.Dom.Attribute.Set(this.timePickerPlatformInputElem, OSFramework.OSUI.GlobalEnum.HTMLAttributes.type, OSFramework.OSUI.GlobalEnum.InputTypeAttr.Time);
+                        OSFramework.OSUI.Helper.Dom.Attribute.Set(this.timePickerPlatformInputElem, OSFramework.OSUI.GlobalEnum.HTMLAttributes.Type, OSFramework.OSUI.GlobalEnum.InputTypeAttr.Time);
                     }
                     build() {
                         super.build();

@@ -184,6 +184,7 @@ declare namespace OSFramework.OSUI.GlobalEnum {
         LayoutSide = "layout-side",
         LayoutTop = "layout-top",
         List = "list",
+        LoginPassword = "login-password",
         MainContent = "main-content",
         MenuLinks = "app-menu-links",
         Placeholder = "ph",
@@ -284,7 +285,7 @@ declare namespace OSFramework.OSUI.GlobalEnum {
         Name = "name",
         StatusBar = "data-status-bar-height",
         Style = "style",
-        type = "type"
+        Type = "type"
     }
     enum HTMLElement {
         Body = "body",
@@ -414,6 +415,7 @@ declare namespace OSFramework.OSUI.GlobalEnum {
     enum InputTypeAttr {
         Date = "date",
         DateTime = "date-time-edit",
+        Password = "password",
         Text = "text",
         Time = "time"
     }
@@ -4617,7 +4619,7 @@ declare namespace OutSystems.OSUI.Utils {
     function MoveElement(ElementId: string, TargetSelector: string, TimeoutVal?: number): string;
     function SetActiveElement(ElementId: string, IsActive: boolean): string;
     function SetSelectedTableRow(TableId: string, RowNumber: number, IsSelected: boolean): string;
-    function ShowPassword(): string;
+    function ShowPassword(WidgetId?: string): string;
 }
 declare namespace Providers.OSUI.ErrorCodes {
     const FloatingUI: {
