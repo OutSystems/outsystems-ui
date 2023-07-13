@@ -229,23 +229,52 @@ namespace OutSystems.OSUI.Utils {
 	}
 
 	/**
-	 * Action to be used on the Login screen to enable users to show or hide the password characters.
+	 * Shows and hides the value of an Input of type password, allowing users to view their entered password temporarily for verification or editing purposes.
+	 * If WidgetId does not exist or is left empty, the action affects the first password Input on the screen.
+	 *
+	 * @export
+	 * @param {string} [WidgetId] Identifier of the Input widget.
+	 * @return {*}  {string}
 	 */
-	export function ShowPassword(): string {
+	export function ShowPassword(WidgetId?: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.Utilities.FailShowPassword,
 			callback: () => {
-				const inputPassword = OSFramework.OSUI.Helper.Dom.ClassSelector(
-					document,
-					'login-password'
-				) as HTMLInputElement;
-				const typeInputPassword = inputPassword.type;
+				if (WidgetId) {
+					const _inputPassword = OSFramework.OSUI.Helper.Dom.GetElementById(WidgetId) as HTMLInputElement;
+					// If the element with WidgetId is not an input we will log a warning
+					if (
+						_inputPassword.tagName.toLowerCase() !== OSFramework.OSUI.GlobalEnum.HTMLElement.Input ||
+						(_inputPassword.type !== OSFramework.OSUI.GlobalEnum.InputTypeAttr.Text &&
+							_inputPassword.type !== OSFramework.OSUI.GlobalEnum.InputTypeAttr.Password)
+					) {
+						console.warn(`Object with WidgetId '${WidgetId}' should be an input element.`);
+					}
+					const _typeInputPassword =
+						_inputPassword.type === OSFramework.OSUI.GlobalEnum.InputTypeAttr.Password
+							? OSFramework.OSUI.GlobalEnum.InputTypeAttr.Text
+							: OSFramework.OSUI.GlobalEnum.InputTypeAttr.Password;
 
-				OSFramework.OSUI.Helper.Dom.Attribute.Set(
-					inputPassword,
-					'type',
-					typeInputPassword === 'password' ? 'text' : 'password'
-				);
+					OSFramework.OSUI.Helper.Dom.Attribute.Set(
+						_inputPassword,
+						OSFramework.OSUI.GlobalEnum.HTMLAttributes.Type,
+						_typeInputPassword
+					);
+				} else {
+					const _inputPassword = OSFramework.OSUI.Helper.Dom.ClassSelector(
+						document,
+						OSFramework.OSUI.GlobalEnum.CssClassElements.LoginPassword
+					) as HTMLInputElement;
+					const _typeInputPassword = _inputPassword.type;
+
+					OSFramework.OSUI.Helper.Dom.Attribute.Set(
+						_inputPassword,
+						OSFramework.OSUI.GlobalEnum.HTMLAttributes.Type,
+						_typeInputPassword === OSFramework.OSUI.GlobalEnum.InputTypeAttr.Password
+							? OSFramework.OSUI.GlobalEnum.InputTypeAttr.Text
+							: OSFramework.OSUI.GlobalEnum.InputTypeAttr.Password
+					);
+				}
 			},
 		});
 
