@@ -247,6 +247,7 @@ var OSFramework;
                 CssClassElements["LayoutSide"] = "layout-side";
                 CssClassElements["LayoutTop"] = "layout-top";
                 CssClassElements["List"] = "list";
+                CssClassElements["LoginPassword"] = "login-password";
                 CssClassElements["MainContent"] = "main-content";
                 CssClassElements["MenuLinks"] = "app-menu-links";
                 CssClassElements["Placeholder"] = "ph";
@@ -358,7 +359,7 @@ var OSFramework;
                 HTMLAttributes["Name"] = "name";
                 HTMLAttributes["StatusBar"] = "data-status-bar-height";
                 HTMLAttributes["Style"] = "style";
-                HTMLAttributes["type"] = "type";
+                HTMLAttributes["Type"] = "type";
             })(HTMLAttributes = GlobalEnum.HTMLAttributes || (GlobalEnum.HTMLAttributes = {}));
             let HTMLElement;
             (function (HTMLElement) {
@@ -500,6 +501,7 @@ var OSFramework;
             (function (InputTypeAttr) {
                 InputTypeAttr["Date"] = "date";
                 InputTypeAttr["DateTime"] = "date-time-edit";
+                InputTypeAttr["Password"] = "password";
                 InputTypeAttr["Text"] = "text";
                 InputTypeAttr["Time"] = "time";
             })(InputTypeAttr = GlobalEnum.InputTypeAttr || (GlobalEnum.InputTypeAttr = {}));
@@ -7267,7 +7269,7 @@ var OSFramework;
                     disable() {
                         this._isDisabled = true;
                         this.close();
-                        OSUI.Helper.Dom.Attribute.Set(this._triggerElem, OSUI.GlobalEnum.HTMLAttributes.Disabled, '');
+                        OSUI.Helper.Dom.Attribute.Set(this._triggerElem, OSUI.GlobalEnum.HTMLAttributes.Disabled, OSFramework.OSUI.Constants.EmptyString);
                     }
                     dispose() {
                         var _a;
@@ -9799,7 +9801,7 @@ var OSFramework;
                         CssProperty["TabsContentItemOverflow"] = "--tabs-content-item-overflow";
                         CssProperty["TabsHeaderItems"] = "--tabs-header-items";
                         CssProperty["TabsHeight"] = "--tabs-height";
-                        CssProperty["TabsIndicatorScale"] = "--tabs-indicator-scale";
+                        CssProperty["TabsIndicatorSize"] = "--tabs-indicator-size";
                         CssProperty["TabsIndicatorTransform"] = "--tabs-indicator-transform";
                     })(CssProperty = Enum.CssProperty || (Enum.CssProperty = {}));
                     let Properties;
@@ -9842,7 +9844,6 @@ var OSFramework;
                         super(uniqueId, new Tabs_1.TabsConfig(configs));
                         this._hasDragGestures =
                             OSUI.Helper.DeviceInfo.IsNative && this.configs.TabsOrientation === OSUI.GlobalEnum.Orientation.Horizontal;
-                        this._isChromium = OSUI.Helper.DeviceInfo.GetBrowser() === 'chrome' || OSUI.Helper.DeviceInfo.GetBrowser() === 'edge';
                     }
                     _addContentItem(tabsContentChildItem) {
                         if (this.getChild(tabsContentChildItem.uniqueId)) {
@@ -9967,39 +9968,35 @@ var OSFramework;
                             if (!OSUI.Helper.Dom.Attribute.Get(this._activeTabHeaderElement.selfElement, OSUI.GlobalEnum.HTMLAttributes.Disabled)) {
                                 OSUI.Helper.Dom.Attribute.Remove(this._tabsIndicatorElement, OSUI.GlobalEnum.HTMLAttributes.Disabled);
                             }
-                            const isVertical = this.configs.TabsOrientation === OSUI.GlobalEnum.Orientation.Vertical;
-                            const activeElement = this._activeTabHeaderElement.selfElement;
-                            const transformValue = isVertical
-                                ? activeElement.offsetTop
+                            const _isVertical = this.configs.TabsOrientation === OSUI.GlobalEnum.Orientation.Vertical;
+                            const _activeElement = this._activeTabHeaderElement.selfElement;
+                            const transformValue = _isVertical
+                                ? _activeElement.offsetTop
                                 : OutSystems.OSUI.Utils.GetIsRTL()
-                                    ? -(this._tabsHeaderElement.offsetWidth - activeElement.offsetLeft - activeElement.offsetWidth)
-                                    : activeElement.offsetLeft;
-                            const newSize = isVertical ? activeElement.offsetHeight : activeElement.offsetWidth;
-                            let pixelRatio = 1;
-                            if (this._isChromium) {
-                                pixelRatio = window.devicePixelRatio;
-                            }
-                            const newScaleValue = (pixelRatio * newSize) / Math.round(pixelRatio);
+                                    ? -(this._tabsHeaderElement.offsetWidth - _activeElement.offsetLeft - _activeElement.offsetWidth)
+                                    : _activeElement.offsetLeft;
+                            const elementRect = _activeElement.getBoundingClientRect();
+                            const finalScale = _isVertical ? elementRect.height : elementRect.width;
                             function updateIndicatorUI() {
                                 if (this._tabsIndicatorElement) {
                                     OSUI.Helper.Dom.Styles.SetStyleAttribute(this._tabsIndicatorElement, Tabs_1.Enum.CssProperty.TabsIndicatorTransform, transformValue + OSUI.GlobalEnum.Units.Pixel);
-                                    OSUI.Helper.Dom.Styles.SetStyleAttribute(this._tabsIndicatorElement, Tabs_1.Enum.CssProperty.TabsIndicatorScale, Math.floor(newScaleValue));
+                                    OSUI.Helper.Dom.Styles.SetStyleAttribute(this._tabsIndicatorElement, Tabs_1.Enum.CssProperty.TabsIndicatorSize, Math.floor(finalScale) + OSUI.GlobalEnum.Units.Pixel);
                                 }
                                 else {
                                     cancelAnimationFrame(this._requestAnimationFrameOnIndicatorResize);
                                 }
                             }
                             this._requestAnimationFrameOnIndicatorResize = requestAnimationFrame(updateIndicatorUI.bind(this));
-                            if (isNaN(newScaleValue) || newScaleValue === 0) {
+                            if (isNaN(finalScale) || finalScale === 0) {
                                 const resizeObserver = new ResizeObserver((entries) => {
                                     for (const entry of entries) {
                                         if (entry.contentBoxSize) {
                                             this._handleTabIndicator();
-                                            resizeObserver.unobserve(activeElement);
+                                            resizeObserver.unobserve(_activeElement);
                                         }
                                     }
                                 });
-                                resizeObserver.observe(activeElement);
+                                resizeObserver.observe(_activeElement);
                             }
                         }
                     }
@@ -16869,13 +16866,29 @@ var OutSystems;
                 return result;
             }
             Utils.SetSelectedTableRow = SetSelectedTableRow;
-            function ShowPassword() {
+            function ShowPassword(WidgetId) {
                 const result = OutSystems.OSUI.Utils.CreateApiResponse({
                     errorCode: OSUI.ErrorCodes.Utilities.FailShowPassword,
                     callback: () => {
-                        const inputPassword = OSFramework.OSUI.Helper.Dom.ClassSelector(document, 'login-password');
-                        const typeInputPassword = inputPassword.type;
-                        OSFramework.OSUI.Helper.Dom.Attribute.Set(inputPassword, 'type', typeInputPassword === 'password' ? 'text' : 'password');
+                        if (WidgetId) {
+                            const _inputPassword = OSFramework.OSUI.Helper.Dom.GetElementById(WidgetId);
+                            if (_inputPassword.tagName.toLowerCase() !== OSFramework.OSUI.GlobalEnum.HTMLElement.Input ||
+                                (_inputPassword.type !== OSFramework.OSUI.GlobalEnum.InputTypeAttr.Text &&
+                                    _inputPassword.type !== OSFramework.OSUI.GlobalEnum.InputTypeAttr.Password)) {
+                                console.warn(`Object with WidgetId '${WidgetId}' should be an input element.`);
+                            }
+                            const _typeInputPassword = _inputPassword.type === OSFramework.OSUI.GlobalEnum.InputTypeAttr.Password
+                                ? OSFramework.OSUI.GlobalEnum.InputTypeAttr.Text
+                                : OSFramework.OSUI.GlobalEnum.InputTypeAttr.Password;
+                            OSFramework.OSUI.Helper.Dom.Attribute.Set(_inputPassword, OSFramework.OSUI.GlobalEnum.HTMLAttributes.Type, _typeInputPassword);
+                        }
+                        else {
+                            const _inputPassword = OSFramework.OSUI.Helper.Dom.ClassSelector(document, OSFramework.OSUI.GlobalEnum.CssClassElements.LoginPassword);
+                            const _typeInputPassword = _inputPassword.type;
+                            OSFramework.OSUI.Helper.Dom.Attribute.Set(_inputPassword, OSFramework.OSUI.GlobalEnum.HTMLAttributes.Type, _typeInputPassword === OSFramework.OSUI.GlobalEnum.InputTypeAttr.Password
+                                ? OSFramework.OSUI.GlobalEnum.InputTypeAttr.Text
+                                : OSFramework.OSUI.GlobalEnum.InputTypeAttr.Password);
+                        }
                     },
                 });
                 return result;
@@ -17795,7 +17808,7 @@ var Providers;
                             this.jumpIntoToday();
                         }
                         updatePlatformInputAttrs() {
-                            OSFramework.OSUI.Helper.Dom.Attribute.Set(this.datePickerPlatformInputElem, OSFramework.OSUI.GlobalEnum.HTMLAttributes.type, OSFramework.OSUI.GlobalEnum.InputTypeAttr.Text);
+                            OSFramework.OSUI.Helper.Dom.Attribute.Set(this.datePickerPlatformInputElem, OSFramework.OSUI.GlobalEnum.HTMLAttributes.Type, OSFramework.OSUI.GlobalEnum.InputTypeAttr.Text);
                         }
                         build() {
                             super.build();
@@ -17941,7 +17954,7 @@ var Providers;
                             const dateType = this.configs.TimeFormat === OSFramework.OSUI.Patterns.DatePicker.Enum.TimeFormatMode.Disable
                                 ? OSFramework.OSUI.GlobalEnum.InputTypeAttr.Date
                                 : OSFramework.OSUI.GlobalEnum.InputTypeAttr.DateTime;
-                            OSFramework.OSUI.Helper.Dom.Attribute.Set(this.datePickerPlatformInputElem, OSFramework.OSUI.GlobalEnum.HTMLAttributes.type, dateType);
+                            OSFramework.OSUI.Helper.Dom.Attribute.Set(this.datePickerPlatformInputElem, OSFramework.OSUI.GlobalEnum.HTMLAttributes.Type, dateType);
                         }
                         build() {
                             super.build();
@@ -19379,7 +19392,7 @@ var Providers;
                         this.monthPickerPlatformInputElem = undefined;
                     }
                     updatePlatformInputAttrs() {
-                        OSFramework.OSUI.Helper.Dom.Attribute.Set(this.monthPickerPlatformInputElem, OSFramework.OSUI.GlobalEnum.HTMLAttributes.type, OSFramework.OSUI.GlobalEnum.InputTypeAttr.Text);
+                        OSFramework.OSUI.Helper.Dom.Attribute.Set(this.monthPickerPlatformInputElem, OSFramework.OSUI.GlobalEnum.HTMLAttributes.Type, OSFramework.OSUI.GlobalEnum.InputTypeAttr.Text);
                     }
                     build() {
                         super.build();
@@ -20635,7 +20648,7 @@ var Providers;
                         this.timePickerPlatformInputElem = undefined;
                     }
                     updatePlatformInputAttrs() {
-                        OSFramework.OSUI.Helper.Dom.Attribute.Set(this.timePickerPlatformInputElem, OSFramework.OSUI.GlobalEnum.HTMLAttributes.type, OSFramework.OSUI.GlobalEnum.InputTypeAttr.Time);
+                        OSFramework.OSUI.Helper.Dom.Attribute.Set(this.timePickerPlatformInputElem, OSFramework.OSUI.GlobalEnum.HTMLAttributes.Type, OSFramework.OSUI.GlobalEnum.InputTypeAttr.Time);
                     }
                     build() {
                         super.build();
