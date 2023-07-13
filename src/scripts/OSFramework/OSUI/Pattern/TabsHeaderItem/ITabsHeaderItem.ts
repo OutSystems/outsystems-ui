@@ -2,10 +2,13 @@
 namespace OSFramework.OSUI.Patterns.TabsHeaderItem {
 	/**
 	 * Defines the interface for OutSystemsUI TabsHeaderItem Pattern
+	 *
+	 * @export
+	 * @interface ITabsHeaderItem
+	 * @extends {Interface.IChild}
 	 */
 	export interface ITabsHeaderItem extends Interface.IChild {
 		get IsActive(): boolean;
-
 		disable(): void;
 		enable(): void;
 		getDataTab(): number;

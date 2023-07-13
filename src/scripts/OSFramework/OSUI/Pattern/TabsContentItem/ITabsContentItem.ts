@@ -2,6 +2,10 @@
 namespace OSFramework.OSUI.Patterns.TabsContentItem {
 	/**
 	 * Defines the interface for OutSystemsUI TabsContentItem Pattern
+	 *
+	 * @export
+	 * @interface ITabsContentItem
+	 * @extends {Interface.IChild}
 	 */
 	export interface ITabsContentItem extends Interface.IChild {
 		get IsActive(): boolean;
