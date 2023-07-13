@@ -17004,8 +17004,14 @@ var Providers;
                         }
                     }
                     _redefineCarouselWidth() {
-                        this.provider.refresh();
-                        this._setCarouselWidth();
+                        OSFramework.OSUI.Helper.ApplySetTimeOut(() => {
+                            this.provider.refresh();
+                            this._setCarouselWidth();
+                            if (this.selfElement.offsetWidth >= window.innerWidth) {
+                                this.redraw();
+                                this._setCarouselWidth();
+                            }
+                        }, 500);
                     }
                     _setCarouselWidth() {
                         OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(this._carouselTrackElem, OSFramework.OSUI.Patterns.Carousel.Enum.CssVariables.CarouselWidth, this.selfElement.offsetWidth + OSFramework.OSUI.GlobalEnum.Units.Pixel);
