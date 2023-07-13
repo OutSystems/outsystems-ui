@@ -81,9 +81,6 @@ namespace OSFramework.OSUI.Patterns.Tabs.Enum {
 
 	/**
 	 * Callbacks eventName
-	 *
-	 * @export
-	 * @enum {number}
 	 */
 	export enum Events {
 		OnChange = 'OnChange',
