@@ -9972,28 +9972,28 @@ body.vscomp-popup-active .vscomp-wrapper{
   left:inherit;
   right:inherit;
 }
-.osui-range-slider .osui-range-slider__provider[disabled=true]{
+.osui-range-slider .osui-range-slider__provider[disabled]{
   pointer-events:none;
 }
-.osui-range-slider .osui-range-slider__provider[disabled=true] .noUi-target{
+.osui-range-slider .osui-range-slider__provider[disabled] .noUi-target{
   background-color:var(--color-neutral-4);
 }
-.osui-range-slider .osui-range-slider__provider[disabled=true] .noUi-connect{
+.osui-range-slider .osui-range-slider__provider[disabled] .noUi-connect{
   background-color:var(--color-neutral-6);
 }
-.osui-range-slider .osui-range-slider__provider[disabled=true] .noUi-handle{
+.osui-range-slider .osui-range-slider__provider[disabled] .noUi-handle{
   background-color:var(--color-neutral-2);
   border:var(--border-size-s) solid var(--color-neutral-5);
   -webkit-box-shadow:none;
           box-shadow:none;
 }
-.osui-range-slider .osui-range-slider__provider[disabled=true] .noUi-handle:before, .osui-range-slider .osui-range-slider__provider[disabled=true] .noUi-handle:after{
+.osui-range-slider .osui-range-slider__provider[disabled] .noUi-handle:before, .osui-range-slider .osui-range-slider__provider[disabled] .noUi-handle:after{
   border-color:var(--color-neutral-6);
 }
-.osui-range-slider .osui-range-slider__provider[disabled=true] .noUi-pips{
+.osui-range-slider .osui-range-slider__provider[disabled] .noUi-pips{
   color:var(--color-neutral-6);
 }
-.osui-range-slider .osui-range-slider__provider[disabled=true] .noUi-tooltip{
+.osui-range-slider .osui-range-slider__provider[disabled] .noUi-tooltip{
   color:var(--color-neutral-6);
 }
 .has-accessible-features .osui-range-slider{

@@ -32,9 +32,9 @@ namespace Providers.OSUI.RangeSlider.NoUISlider {
 		// Method to togghe the disabled attribute
 		private _setIsDisabled(isDisabled: boolean): void {
 			if (isDisabled) {
-				OSFramework.OSUI.Helper.Dom.Disable(this._rangeSliderProviderElem);
+				this.provider.disable();
 			} else {
-				OSFramework.OSUI.Helper.Dom.Enable(this._rangeSliderProviderElem);
+				this.provider.enable();
 			}
 		}
 
@@ -78,11 +78,11 @@ namespace Providers.OSUI.RangeSlider.NoUISlider {
 		 * @memberof Providers.OSUI.RangeSlider.NoUISlider.AbstractNoUiSlider
 		 */
 		protected createProviderInstance(): void {
-			// Set inital library options
-			this.setInitialStates();
-
 			// Init provider
 			this.provider = window.noUiSlider.create(this._rangeSliderProviderElem, this.noUiSliderOpts);
+
+			// Set inital visual configs, like size and disabled status
+			this.setInitialStates();
 
 			// Set provider Info to be used by setProviderConfigs API calls
 			this.updateProviderEvents({
@@ -156,7 +156,7 @@ namespace Providers.OSUI.RangeSlider.NoUISlider {
 		}
 
 		/**
-		 * Method to set the library options from the config
+		 * Method to set initial visual states from the configs
 		 *
 		 * @private
 		 * @memberof Providers.OSUI.RangeSlider.NoUISlider.AbstractNoUiSlider

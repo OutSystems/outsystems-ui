@@ -227,7 +227,7 @@
 	}
 
 	.osui-range-slider__provider {
-		&[disabled='true'] {
+		&[disabled] {
 			pointer-events: none;
 
 			.noUi {

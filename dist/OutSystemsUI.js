@@ -19834,10 +19834,10 @@ var Providers;
                     }
                     _setIsDisabled(isDisabled) {
                         if (isDisabled) {
-                            OSFramework.OSUI.Helper.Dom.Disable(this._rangeSliderProviderElem);
+                            this.provider.disable();
                         }
                         else {
-                            OSFramework.OSUI.Helper.Dom.Enable(this._rangeSliderProviderElem);
+                            this.provider.enable();
                         }
                     }
                     _setOnValueChangeEvent(changeEvent) {
@@ -19859,8 +19859,8 @@ var Providers;
                         }
                     }
                     createProviderInstance() {
-                        this.setInitialStates();
                         this.provider = window.noUiSlider.create(this._rangeSliderProviderElem, this.noUiSliderOpts);
+                        this.setInitialStates();
                         this.updateProviderEvents({
                             name: RangeSlider.NoUiSlider.Enum.ProviderInfo.Name,
                             version: RangeSlider.NoUiSlider.Enum.ProviderInfo.Version,
@@ -20269,6 +20269,7 @@ var Providers;
                         }
                         getProviderConfig() {
                             let rangeSliderOptions = {
+                                handleAttributes: [{ 'aria-label': 'handle' }, { 'aria-label': 'handle' }],
                                 start: [this.StartingValueFrom, this.StartingValueTo],
                                 connect: true,
                             };
@@ -20381,6 +20382,7 @@ var Providers;
                         }
                         getProviderConfig() {
                             let singleSliderOptions = {
+                                handleAttributes: [{ 'aria-label': 'handle' }],
                                 start: [this.StartingValueFrom],
                                 connect: RangeSlider.NoUiSlider.Enum.NoUiSliderConnectOptions.Lower,
                             };
