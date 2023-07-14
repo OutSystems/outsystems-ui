@@ -8,7 +8,9 @@ namespace OSFramework.OSUI.Patterns.AnimatedLabel.Enum {
 		OnAutoFillStart = 'onAutoFillStart',
 	}
 
-	// Css Classes
+	/**
+	 * Css Classes
+	 */
 	export enum CssClasses {
 		InputPlaceholder = 'animated-label-input',
 		IsActive = 'active',
@@ -16,7 +18,9 @@ namespace OSFramework.OSUI.Patterns.AnimatedLabel.Enum {
 		Pattern = 'animated-label',
 	}
 
-	// Warning/Error messages
+	/**
+	 * Warning/Error messages
+	 */
 	export enum Messages {
 		InputNotFound = 'Missing input or textarea.',
 		LabelNotFound = 'We notice that a label is missing inside the Label Placeholder. In order to grant accessibility add it and assign the Input Widget accordingly.',

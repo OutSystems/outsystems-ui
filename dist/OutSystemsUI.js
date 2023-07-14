@@ -247,6 +247,7 @@ var OSFramework;
                 CssClassElements["LayoutSide"] = "layout-side";
                 CssClassElements["LayoutTop"] = "layout-top";
                 CssClassElements["List"] = "list";
+                CssClassElements["LoginPassword"] = "login-password";
                 CssClassElements["MainContent"] = "main-content";
                 CssClassElements["MenuLinks"] = "app-menu-links";
                 CssClassElements["Placeholder"] = "ph";
@@ -358,7 +359,7 @@ var OSFramework;
                 HTMLAttributes["Name"] = "name";
                 HTMLAttributes["StatusBar"] = "data-status-bar-height";
                 HTMLAttributes["Style"] = "style";
-                HTMLAttributes["type"] = "type";
+                HTMLAttributes["Type"] = "type";
             })(HTMLAttributes = GlobalEnum.HTMLAttributes || (GlobalEnum.HTMLAttributes = {}));
             let HTMLElement;
             (function (HTMLElement) {
@@ -500,6 +501,7 @@ var OSFramework;
             (function (InputTypeAttr) {
                 InputTypeAttr["Date"] = "date";
                 InputTypeAttr["DateTime"] = "date-time-edit";
+                InputTypeAttr["Password"] = "password";
                 InputTypeAttr["Text"] = "text";
                 InputTypeAttr["Time"] = "time";
             })(InputTypeAttr = GlobalEnum.InputTypeAttr || (GlobalEnum.InputTypeAttr = {}));
@@ -6367,12 +6369,6 @@ var OSFramework;
                     constructor(config) {
                         super(config);
                     }
-                    validateCanChange(isBuilt, key) {
-                        if (isBuilt) {
-                            return key !== FlipContent.Enum.Properties.IsFlipped;
-                        }
-                        return true;
-                    }
                 }
                 FlipContent.FlipContentConfig = FlipContentConfig;
             })(FlipContent = Patterns.FlipContent || (Patterns.FlipContent = {}));
@@ -7073,37 +7069,6 @@ var OSFramework;
             var Notification;
             (function (Notification) {
                 class NotificationConfig extends Patterns.AbstractConfiguration {
-                    validateCanChange(isBuilt, key) {
-                        if (isBuilt) {
-                            return key !== Notification.Enum.Properties.StartsOpen;
-                        }
-                        return true;
-                    }
-                    validateDefault(key, value) {
-                        let validatedValue = undefined;
-                        switch (key) {
-                            case Notification.Enum.Properties.InteractToClose:
-                                validatedValue = this.validateBoolean(value, true);
-                                break;
-                            case Notification.Enum.Properties.NeedsSwipes:
-                            case Notification.Enum.Properties.StartsOpen:
-                                validatedValue = this.validateBoolean(value, false);
-                                break;
-                            case Notification.Enum.Properties.Position:
-                                validatedValue = this.validateString(value, Notification.Enum.Defaults.DefaultPosition);
-                                break;
-                            case Notification.Enum.Properties.Width:
-                                validatedValue = this.validateString(value, Notification.Enum.Defaults.DefaultWidth);
-                                break;
-                            case Notification.Enum.Properties.CloseAfterTime:
-                                validatedValue = this.validateNumber(value, undefined);
-                                break;
-                            default:
-                                validatedValue = super.validateDefault(key, value);
-                                break;
-                        }
-                        return validatedValue;
-                    }
                 }
                 Notification.NotificationConfig = NotificationConfig;
             })(Notification = Patterns.Notification || (Patterns.Notification = {}));
@@ -7267,7 +7232,7 @@ var OSFramework;
                     disable() {
                         this._isDisabled = true;
                         this.close();
-                        OSUI.Helper.Dom.Attribute.Set(this._triggerElem, OSUI.GlobalEnum.HTMLAttributes.Disabled, '');
+                        OSUI.Helper.Dom.Attribute.Set(this._triggerElem, OSUI.GlobalEnum.HTMLAttributes.Disabled, OSFramework.OSUI.Constants.EmptyString);
                     }
                     dispose() {
                         var _a;
@@ -8891,12 +8856,6 @@ var OSFramework;
             var SectionIndexItem;
             (function (SectionIndexItem) {
                 class SectionIndexItemConfig extends Patterns.AbstractConfiguration {
-                    validateCanChange(isBuilt, key) {
-                        if (isBuilt) {
-                            return key !== SectionIndexItem.Enum.Properties.ScrollToWidgetId;
-                        }
-                        return true;
-                    }
                 }
                 SectionIndexItem.SectionIndexItemConfig = SectionIndexItemConfig;
             })(SectionIndexItem = Patterns.SectionIndexItem || (Patterns.SectionIndexItem = {}));
@@ -9231,31 +9190,6 @@ var OSFramework;
                 class SidebarConfig extends Patterns.AbstractConfiguration {
                     constructor(config) {
                         super(config);
-                    }
-                    validateCanChange(isBuilt, key) {
-                        if (isBuilt) {
-                            return key !== Sidebar.Enum.Properties.StartsOpen;
-                        }
-                        return true;
-                    }
-                    validateDefault(key, value) {
-                        let validatedValue = undefined;
-                        switch (key) {
-                            case Sidebar.Enum.Properties.Direction:
-                                validatedValue = this.validateInRange(value, OSUI.GlobalEnum.Direction.Right, OSUI.GlobalEnum.Direction.Right, OSUI.GlobalEnum.Direction.Left);
-                                break;
-                            case Sidebar.Enum.Properties.HasOverlay:
-                            case Sidebar.Enum.Properties.StartsOpen:
-                                validatedValue = this.validateBoolean(value, false);
-                                break;
-                            case Sidebar.Enum.Properties.Width:
-                                validatedValue = this.validateString(value, '500px');
-                                break;
-                            default:
-                                validatedValue = super.validateDefault(key, value);
-                                break;
-                        }
-                        return validatedValue;
                     }
                 }
                 Sidebar.SidebarConfig = SidebarConfig;
@@ -10383,34 +10317,6 @@ var OSFramework;
             var Tabs;
             (function (Tabs) {
                 class TabsConfig extends Patterns.AbstractConfiguration {
-                    validateCanChange(isBuilt, key) {
-                        if (isBuilt) {
-                            return key !== Tabs.Enum.Properties.StartingTab;
-                        }
-                        return true;
-                    }
-                    validateDefault(key, value) {
-                        let validatedValue = undefined;
-                        switch (key) {
-                            case Tabs.Enum.Properties.TabsOrientation:
-                                validatedValue = this.validateInRange(value, OSUI.GlobalEnum.Orientation.Horizontal, OSUI.GlobalEnum.Orientation.Vertical);
-                                break;
-                            case Tabs.Enum.Properties.TabsVerticalPosition:
-                                validatedValue = this.validateInRange(value, OSUI.GlobalEnum.Direction.Left, OSUI.GlobalEnum.Direction.Right);
-                                break;
-                            case Tabs.Enum.Properties.ContentAutoHeight:
-                            case Tabs.Enum.Properties.JustifyHeaders:
-                                validatedValue = this.validateBoolean(value, false);
-                                break;
-                            case Tabs.Enum.Properties.Height:
-                                validatedValue = this.validateString(value, OSUI.GlobalEnum.CssProperties.Auto);
-                                break;
-                            default:
-                                validatedValue = super.validateDefault(key, value);
-                                break;
-                        }
-                        return validatedValue;
-                    }
                 }
                 Tabs.TabsConfig = TabsConfig;
             })(Tabs = Patterns.Tabs || (Patterns.Tabs = {}));
@@ -16869,13 +16775,29 @@ var OutSystems;
                 return result;
             }
             Utils.SetSelectedTableRow = SetSelectedTableRow;
-            function ShowPassword() {
+            function ShowPassword(WidgetId) {
                 const result = OutSystems.OSUI.Utils.CreateApiResponse({
                     errorCode: OSUI.ErrorCodes.Utilities.FailShowPassword,
                     callback: () => {
-                        const inputPassword = OSFramework.OSUI.Helper.Dom.ClassSelector(document, 'login-password');
-                        const typeInputPassword = inputPassword.type;
-                        OSFramework.OSUI.Helper.Dom.Attribute.Set(inputPassword, 'type', typeInputPassword === 'password' ? 'text' : 'password');
+                        if (WidgetId) {
+                            const _inputPassword = OSFramework.OSUI.Helper.Dom.GetElementById(WidgetId);
+                            if (_inputPassword.tagName.toLowerCase() !== OSFramework.OSUI.GlobalEnum.HTMLElement.Input ||
+                                (_inputPassword.type !== OSFramework.OSUI.GlobalEnum.InputTypeAttr.Text &&
+                                    _inputPassword.type !== OSFramework.OSUI.GlobalEnum.InputTypeAttr.Password)) {
+                                console.warn(`Object with WidgetId '${WidgetId}' should be an input element.`);
+                            }
+                            const _typeInputPassword = _inputPassword.type === OSFramework.OSUI.GlobalEnum.InputTypeAttr.Password
+                                ? OSFramework.OSUI.GlobalEnum.InputTypeAttr.Text
+                                : OSFramework.OSUI.GlobalEnum.InputTypeAttr.Password;
+                            OSFramework.OSUI.Helper.Dom.Attribute.Set(_inputPassword, OSFramework.OSUI.GlobalEnum.HTMLAttributes.Type, _typeInputPassword);
+                        }
+                        else {
+                            const _inputPassword = OSFramework.OSUI.Helper.Dom.ClassSelector(document, OSFramework.OSUI.GlobalEnum.CssClassElements.LoginPassword);
+                            const _typeInputPassword = _inputPassword.type;
+                            OSFramework.OSUI.Helper.Dom.Attribute.Set(_inputPassword, OSFramework.OSUI.GlobalEnum.HTMLAttributes.Type, _typeInputPassword === OSFramework.OSUI.GlobalEnum.InputTypeAttr.Password
+                                ? OSFramework.OSUI.GlobalEnum.InputTypeAttr.Text
+                                : OSFramework.OSUI.GlobalEnum.InputTypeAttr.Password);
+                        }
                     },
                 });
                 return result;
@@ -17795,7 +17717,7 @@ var Providers;
                             this.jumpIntoToday();
                         }
                         updatePlatformInputAttrs() {
-                            OSFramework.OSUI.Helper.Dom.Attribute.Set(this.datePickerPlatformInputElem, OSFramework.OSUI.GlobalEnum.HTMLAttributes.type, OSFramework.OSUI.GlobalEnum.InputTypeAttr.Text);
+                            OSFramework.OSUI.Helper.Dom.Attribute.Set(this.datePickerPlatformInputElem, OSFramework.OSUI.GlobalEnum.HTMLAttributes.Type, OSFramework.OSUI.GlobalEnum.InputTypeAttr.Text);
                         }
                         build() {
                             super.build();
@@ -17941,7 +17863,7 @@ var Providers;
                             const dateType = this.configs.TimeFormat === OSFramework.OSUI.Patterns.DatePicker.Enum.TimeFormatMode.Disable
                                 ? OSFramework.OSUI.GlobalEnum.InputTypeAttr.Date
                                 : OSFramework.OSUI.GlobalEnum.InputTypeAttr.DateTime;
-                            OSFramework.OSUI.Helper.Dom.Attribute.Set(this.datePickerPlatformInputElem, OSFramework.OSUI.GlobalEnum.HTMLAttributes.type, dateType);
+                            OSFramework.OSUI.Helper.Dom.Attribute.Set(this.datePickerPlatformInputElem, OSFramework.OSUI.GlobalEnum.HTMLAttributes.Type, dateType);
                         }
                         build() {
                             super.build();
@@ -19379,7 +19301,7 @@ var Providers;
                         this.monthPickerPlatformInputElem = undefined;
                     }
                     updatePlatformInputAttrs() {
-                        OSFramework.OSUI.Helper.Dom.Attribute.Set(this.monthPickerPlatformInputElem, OSFramework.OSUI.GlobalEnum.HTMLAttributes.type, OSFramework.OSUI.GlobalEnum.InputTypeAttr.Text);
+                        OSFramework.OSUI.Helper.Dom.Attribute.Set(this.monthPickerPlatformInputElem, OSFramework.OSUI.GlobalEnum.HTMLAttributes.Type, OSFramework.OSUI.GlobalEnum.InputTypeAttr.Text);
                     }
                     build() {
                         super.build();
@@ -20635,7 +20557,7 @@ var Providers;
                         this.timePickerPlatformInputElem = undefined;
                     }
                     updatePlatformInputAttrs() {
-                        OSFramework.OSUI.Helper.Dom.Attribute.Set(this.timePickerPlatformInputElem, OSFramework.OSUI.GlobalEnum.HTMLAttributes.type, OSFramework.OSUI.GlobalEnum.InputTypeAttr.Time);
+                        OSFramework.OSUI.Helper.Dom.Attribute.Set(this.timePickerPlatformInputElem, OSFramework.OSUI.GlobalEnum.HTMLAttributes.Type, OSFramework.OSUI.GlobalEnum.InputTypeAttr.Time);
                     }
                     build() {
                         super.build();

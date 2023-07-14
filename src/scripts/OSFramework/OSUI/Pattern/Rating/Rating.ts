@@ -442,7 +442,7 @@ namespace OSFramework.OSUI.Patterns.Rating {
 		}
 
 		/**
-		 * Method to build the pattern.
+		 * Method to build the Rating
 		 *
 		 * @memberof OSFramework.Patterns.Rating.Rating
 		 */
