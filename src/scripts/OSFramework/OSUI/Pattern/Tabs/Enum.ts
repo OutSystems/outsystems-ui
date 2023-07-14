@@ -48,7 +48,7 @@ namespace OSFramework.OSUI.Patterns.Tabs.Enum {
 		TabsContentItemOverflow = '--tabs-content-item-overflow',
 		TabsHeaderItems = '--tabs-header-items',
 		TabsHeight = '--tabs-height',
-		TabsIndicatorScale = '--tabs-indicator-scale',
+		TabsIndicatorSize = '--tabs-indicator-size',
 		TabsIndicatorTransform = '--tabs-indicator-transform',
 	}
 

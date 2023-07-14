@@ -9801,7 +9801,7 @@ var OSFramework;
                         CssProperty["TabsContentItemOverflow"] = "--tabs-content-item-overflow";
                         CssProperty["TabsHeaderItems"] = "--tabs-header-items";
                         CssProperty["TabsHeight"] = "--tabs-height";
-                        CssProperty["TabsIndicatorScale"] = "--tabs-indicator-scale";
+                        CssProperty["TabsIndicatorSize"] = "--tabs-indicator-size";
                         CssProperty["TabsIndicatorTransform"] = "--tabs-indicator-transform";
                     })(CssProperty = Enum.CssProperty || (Enum.CssProperty = {}));
                     let Properties;
@@ -9844,7 +9844,6 @@ var OSFramework;
                         super(uniqueId, new Tabs_1.TabsConfig(configs));
                         this._hasDragGestures =
                             OSUI.Helper.DeviceInfo.IsNative && this.configs.TabsOrientation === OSUI.GlobalEnum.Orientation.Horizontal;
-                        this._isChromium = OSUI.Helper.DeviceInfo.GetBrowser() === 'chrome' || OSUI.Helper.DeviceInfo.GetBrowser() === 'edge';
                     }
                     _addContentItem(tabsContentChildItem) {
                         if (this.getChild(tabsContentChildItem.uniqueId)) {
@@ -9969,39 +9968,35 @@ var OSFramework;
                             if (!OSUI.Helper.Dom.Attribute.Get(this._activeTabHeaderElement.selfElement, OSUI.GlobalEnum.HTMLAttributes.Disabled)) {
                                 OSUI.Helper.Dom.Attribute.Remove(this._tabsIndicatorElement, OSUI.GlobalEnum.HTMLAttributes.Disabled);
                             }
-                            const isVertical = this.configs.TabsOrientation === OSUI.GlobalEnum.Orientation.Vertical;
-                            const activeElement = this._activeTabHeaderElement.selfElement;
-                            const transformValue = isVertical
-                                ? activeElement.offsetTop
+                            const _isVertical = this.configs.TabsOrientation === OSUI.GlobalEnum.Orientation.Vertical;
+                            const _activeElement = this._activeTabHeaderElement.selfElement;
+                            const transformValue = _isVertical
+                                ? _activeElement.offsetTop
                                 : OutSystems.OSUI.Utils.GetIsRTL()
-                                    ? -(this._tabsHeaderElement.offsetWidth - activeElement.offsetLeft - activeElement.offsetWidth)
-                                    : activeElement.offsetLeft;
-                            const newSize = isVertical ? activeElement.offsetHeight : activeElement.offsetWidth;
-                            let pixelRatio = 1;
-                            if (this._isChromium) {
-                                pixelRatio = window.devicePixelRatio;
-                            }
-                            const newScaleValue = (pixelRatio * newSize) / Math.round(pixelRatio);
+                                    ? -(this._tabsHeaderElement.offsetWidth - _activeElement.offsetLeft - _activeElement.offsetWidth)
+                                    : _activeElement.offsetLeft;
+                            const elementRect = _activeElement.getBoundingClientRect();
+                            const finalScale = _isVertical ? elementRect.height : elementRect.width;
                             function updateIndicatorUI() {
                                 if (this._tabsIndicatorElement) {
                                     OSUI.Helper.Dom.Styles.SetStyleAttribute(this._tabsIndicatorElement, Tabs_1.Enum.CssProperty.TabsIndicatorTransform, transformValue + OSUI.GlobalEnum.Units.Pixel);
-                                    OSUI.Helper.Dom.Styles.SetStyleAttribute(this._tabsIndicatorElement, Tabs_1.Enum.CssProperty.TabsIndicatorScale, Math.floor(newScaleValue));
+                                    OSUI.Helper.Dom.Styles.SetStyleAttribute(this._tabsIndicatorElement, Tabs_1.Enum.CssProperty.TabsIndicatorSize, Math.floor(finalScale) + OSUI.GlobalEnum.Units.Pixel);
                                 }
                                 else {
                                     cancelAnimationFrame(this._requestAnimationFrameOnIndicatorResize);
                                 }
                             }
                             this._requestAnimationFrameOnIndicatorResize = requestAnimationFrame(updateIndicatorUI.bind(this));
-                            if (isNaN(newScaleValue) || newScaleValue === 0) {
+                            if (isNaN(finalScale) || finalScale === 0) {
                                 const resizeObserver = new ResizeObserver((entries) => {
                                     for (const entry of entries) {
                                         if (entry.contentBoxSize) {
                                             this._handleTabIndicator();
-                                            resizeObserver.unobserve(activeElement);
+                                            resizeObserver.unobserve(_activeElement);
                                         }
                                     }
                                 });
-                                resizeObserver.observe(activeElement);
+                                resizeObserver.observe(_activeElement);
                             }
                         }
                     }

@@ -3225,7 +3225,7 @@ declare namespace OSFramework.OSUI.Patterns.Tabs.Enum {
         TabsContentItemOverflow = "--tabs-content-item-overflow",
         TabsHeaderItems = "--tabs-header-items",
         TabsHeight = "--tabs-height",
-        TabsIndicatorScale = "--tabs-indicator-scale",
+        TabsIndicatorSize = "--tabs-indicator-size",
         TabsIndicatorTransform = "--tabs-indicator-transform"
     }
     enum Properties {
@@ -3265,7 +3265,6 @@ declare namespace OSFramework.OSUI.Patterns.Tabs {
         private _hasDragGestures;
         private _hasSingleContent;
         private _headerItemsLength;
-        private _isChromium;
         private _platformEventTabsOnChange;
         private _requestAnimationFrameOnIndicatorResize;
         private _tabsContentElement;
