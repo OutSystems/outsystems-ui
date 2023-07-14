@@ -6,7 +6,7 @@ namespace Providers.OSUI.RangeSlider.NoUiSlider.Enum {
 	}
 
 	export enum NoUISliderLabels {
-		Handle = 'handle',
+		Handle = 'handler',
 		Lower = 'lower-handle',
 		Single = 'handle',
 		Upper = 'upper-handle',
