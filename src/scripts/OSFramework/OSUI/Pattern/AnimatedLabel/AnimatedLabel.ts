@@ -165,7 +165,7 @@ namespace OSFramework.OSUI.Patterns.AnimatedLabel {
 		}
 
 		/**
-		 * Builds the animation label.
+		 *  Method to build the animation label.
 		 *
 		 * @memberof OSFramework.Patterns.AnimatedLabel.AnimatedLabel
 		 */

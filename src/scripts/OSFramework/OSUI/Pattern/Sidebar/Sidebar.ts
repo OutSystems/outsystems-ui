@@ -459,7 +459,7 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 		}
 
 		/**
-		 * Method to build the pattern.
+		 * Method to build the Sidebar
 		 *
 		 * @memberof OSFramework.Patterns.Sidebar.Sidebar
 		 */

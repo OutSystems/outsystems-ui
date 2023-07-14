@@ -191,7 +191,7 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 		}
 
 		/**
-		 * Method to build the Pattern
+		 * Method to build the OverflowMenu
 		 *
 		 * @memberof OverflowMenu
 		 */

@@ -322,7 +322,7 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 		}
 
 		/**
-		 *  Builds the BottomSheet.
+		 * Method to build the BottomSheet.
 		 *
 		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
 		 */

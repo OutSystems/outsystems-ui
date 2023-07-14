@@ -980,7 +980,7 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 		}
 
 		/**
-		 * Method to build the pattern
+		 * Method to build the Tabs
 		 *
 		 * @memberof OSFramework.Patterns.Tabs.Tabs
 		 */

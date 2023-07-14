@@ -396,6 +396,11 @@ namespace OSFramework.OSUI.Patterns.Notification {
 			this._platformEventOnToggle = undefined;
 		}
 
+		/**
+		 * Method to build the Notification
+		 *
+		 * @memberof Notification
+		 */
 		public build(): void {
 			super.build();
 

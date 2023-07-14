@@ -284,7 +284,7 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 		}
 
 		/**
-		 *  Builds the SectionIndexItem.
+		 * Method to build the SectionIndexItem.
 		 *
 		 * @memberof OSFramework.Patterns.SectionIndexItem.SectionIndexItem
 		 */

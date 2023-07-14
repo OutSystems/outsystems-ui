@@ -147,7 +147,7 @@ namespace OSFramework.OSUI.Patterns.FlipContent {
 		}
 
 		/**
-		 * Building Flip Content
+		 * Method to build the Flip Content
 		 *
 		 * @memberof OSFramework.Patterns.FlipContent.FlipContent
 		 */

@@ -115,7 +115,7 @@ namespace OSFramework.OSUI.Patterns.TabsHeaderItem {
 		}
 
 		/**
-		 * Method to build the pattern
+		 * Method to build the TabsHeaderItem
 		 *
 		 * @memberof OSFramework.Patterns.TabsHeaderItem.TabsHeaderItem
 		 */
