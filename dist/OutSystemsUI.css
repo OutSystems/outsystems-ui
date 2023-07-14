@@ -9996,6 +9996,12 @@ body.vscomp-popup-active .vscomp-wrapper{
 .osui-range-slider .osui-range-slider__provider[disabled=true] .noUi-tooltip{
   color:var(--color-neutral-6);
 }
+.has-accessible-features .osui-range-slider{
+  border:var(--border-size-m) solid transparent;
+}
+.has-accessible-features .osui-range-slider:focus-within{
+  border-color:var(--color-focus-outer);
+}
 .has-accessible-features .osui-range-slider .noUi-handle:focus{
   border-color:var(--color-focus-inner);
   -webkit-box-shadow:0 0 0 3px var(--color-focus-outer);
