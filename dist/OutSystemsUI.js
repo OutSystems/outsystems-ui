@@ -3748,18 +3748,6 @@ var OSFramework;
                     constructor(config) {
                         super(config);
                     }
-                    validateDefault(key, value) {
-                        let validatedValue = undefined;
-                        switch (key) {
-                            case Accordion.Enum.Properties.MultipleItems:
-                                validatedValue = this.validateBoolean(value, false);
-                                break;
-                            default:
-                                validatedValue = super.validateDefault(key, value);
-                                break;
-                        }
-                        return validatedValue;
-                    }
                 }
                 Accordion.AccordionConfig = AccordionConfig;
             })(Accordion = Patterns.Accordion || (Patterns.Accordion = {}));
@@ -4110,30 +4098,6 @@ var OSFramework;
                 class AccordionItemConfig extends Patterns.AbstractConfiguration {
                     constructor(config) {
                         super(config);
-                    }
-                    validateCanChange(isBuilt, key) {
-                        if (isBuilt) {
-                            return key !== AccordionItem.Enum.Properties.StartsExpanded;
-                        }
-                        return true;
-                    }
-                    validateDefault(key, value) {
-                        let validatedValue = undefined;
-                        switch (key) {
-                            case AccordionItem.Enum.Properties.IsDisabled:
-                                validatedValue = this.validateBoolean(value, false);
-                                break;
-                            case AccordionItem.Enum.Properties.Icon:
-                                validatedValue = this.validateString(value, AccordionItem.Enum.IconType.Caret);
-                                break;
-                            case AccordionItem.Enum.Properties.IconPosition:
-                                validatedValue = this.validateString(value, OSUI.GlobalEnum.Direction.Right);
-                                break;
-                            default:
-                                validatedValue = super.validateDefault(key, value);
-                                break;
-                        }
-                        return validatedValue;
                     }
                 }
                 AccordionItem.AccordionItemConfig = AccordionItemConfig;
@@ -4584,21 +4548,6 @@ var OSFramework;
                 class BottomSheetConfig extends Patterns.AbstractConfiguration {
                     constructor(config) {
                         super(config);
-                    }
-                    validateDefault(key, value) {
-                        let validatedValue = undefined;
-                        switch (key) {
-                            case BottomSheet.Enum.Properties.Shape:
-                                validatedValue = this.validateInRange(value, OSUI.GlobalEnum.ShapeTypes.SoftRounded, OSUI.GlobalEnum.ShapeTypes.Sharp, OSUI.GlobalEnum.ShapeTypes.Rounded);
-                                break;
-                            case BottomSheet.Enum.Properties.ShowHandler:
-                                validatedValue = this.validateBoolean(value, false);
-                                break;
-                            default:
-                                validatedValue = super.validateDefault(key, value);
-                                break;
-                        }
-                        return validatedValue;
                     }
                 }
                 BottomSheet.BottomSheetConfig = BottomSheetConfig;

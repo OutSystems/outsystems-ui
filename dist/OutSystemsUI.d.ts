@@ -1327,7 +1327,6 @@ declare namespace OSFramework.OSUI.Patterns.Accordion {
     class AccordionConfig extends AbstractConfiguration {
         MultipleItems: boolean;
         constructor(config: JSON);
-        validateDefault(key: string, value: unknown): unknown;
     }
 }
 declare namespace OSFramework.OSUI.Patterns.Accordion.Enum {
@@ -1405,8 +1404,6 @@ declare namespace OSFramework.OSUI.Patterns.AccordionItem {
         IsDisabled: boolean;
         StartsExpanded: boolean;
         constructor(config: JSON);
-        validateCanChange(isBuilt: boolean, key: string): boolean;
-        validateDefault(key: string, value: unknown): unknown;
     }
 }
 declare namespace OSFramework.OSUI.Patterns.AccordionItem.Enum {
@@ -1558,7 +1555,6 @@ declare namespace OSFramework.OSUI.Patterns.BottomSheet {
         Shape: GlobalEnum.ShapeTypes;
         ShowHandler: boolean;
         constructor(config: JSON);
-        validateDefault(key: string, value: unknown): unknown;
     }
 }
 declare namespace OSFramework.OSUI.Patterns.BottomSheet.Callbacks {
