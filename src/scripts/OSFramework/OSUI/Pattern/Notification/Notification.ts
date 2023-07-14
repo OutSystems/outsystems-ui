@@ -49,7 +49,6 @@ namespace OSFramework.OSUI.Patterns.Notification {
 
 		// Trigger the notification at toggle behaviour
 		private _clickCallback(e: MouseEvent): void {
-			e.stopPropagation();
 			e.preventDefault();
 			this.hide();
 		}
