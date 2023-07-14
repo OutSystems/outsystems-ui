@@ -20069,6 +20069,7 @@ var Providers;
                     })(ProviderInfo = Enum.ProviderInfo || (Enum.ProviderInfo = {}));
                     let NoUISliderLabels;
                     (function (NoUISliderLabels) {
+                        NoUISliderLabels["Handle"] = "handle";
                         NoUISliderLabels["Lower"] = "lower-handle";
                         NoUISliderLabels["Single"] = "handle";
                         NoUISliderLabels["Upper"] = "upper-handle";
@@ -20269,7 +20270,10 @@ var Providers;
                         }
                         getProviderConfig() {
                             let rangeSliderOptions = {
-                                handleAttributes: [{ 'aria-label': 'handle' }, { 'aria-label': 'handle' }],
+                                handleAttributes: [
+                                    { 'aria-label': RangeSlider.NoUiSlider.Enum.NoUISliderLabels.Handle },
+                                    { 'aria-label': RangeSlider.NoUiSlider.Enum.NoUISliderLabels.Handle },
+                                ],
                                 start: [this.StartingValueFrom, this.StartingValueTo],
                                 connect: true,
                             };
@@ -20382,7 +20386,7 @@ var Providers;
                         }
                         getProviderConfig() {
                             let singleSliderOptions = {
-                                handleAttributes: [{ 'aria-label': 'handle' }],
+                                handleAttributes: [{ 'aria-label': RangeSlider.NoUiSlider.Enum.NoUISliderLabels.Handle }],
                                 start: [this.StartingValueFrom],
                                 connect: RangeSlider.NoUiSlider.Enum.NoUiSliderConnectOptions.Lower,
                             };

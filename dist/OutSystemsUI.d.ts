@@ -5817,6 +5817,7 @@ declare namespace Providers.OSUI.RangeSlider.NoUiSlider.Enum {
         Version = "15.7.0"
     }
     enum NoUISliderLabels {
+        Handle = "handle",
         Lower = "lower-handle",
         Single = "handle",
         Upper = "upper-handle"

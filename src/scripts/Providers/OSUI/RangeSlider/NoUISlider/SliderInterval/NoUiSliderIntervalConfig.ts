@@ -16,7 +16,10 @@ namespace Providers.OSUI.RangeSlider.NoUISlider.SliderInterval {
 		public getProviderConfig(): NoUiSliderOptions {
 			// eslint-disable-next-line prefer-const
 			let rangeSliderOptions = {
-				handleAttributes: [{ 'aria-label': 'handle' }, { 'aria-label': 'handle' }],
+				handleAttributes: [
+					{ 'aria-label': NoUiSlider.Enum.NoUISliderLabels.Handle },
+					{ 'aria-label': NoUiSlider.Enum.NoUISliderLabels.Handle },
+				],
 				start: [this.StartingValueFrom, this.StartingValueTo],
 				connect: true,
 			};
