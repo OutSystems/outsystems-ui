@@ -31,11 +31,7 @@ namespace Providers.OSUI.RangeSlider.NoUISlider {
 
 		// Method to togghe the disabled attribute
 		private _setIsDisabled(isDisabled: boolean): void {
-			if (isDisabled) {
-				this.provider.disable();
-			} else {
-				this.provider.enable();
-			}
+			isDisabled ? this.provider.disable() : this.provider.enable();
 		}
 
 		// Method to set the OnValueChangeEvent
