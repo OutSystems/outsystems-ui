@@ -11,6 +11,13 @@ namespace OSFramework.OSUI.Patterns.Sidebar.Enum {
 	}
 
 	/**
+	 * Sidebar default properties
+	 */
+	export enum Defaults {
+		Width = '500px',
+	}
+
+	/**
 	 * Sidebar Enum for CSS Classes
 	 */
 	export enum CssClass {

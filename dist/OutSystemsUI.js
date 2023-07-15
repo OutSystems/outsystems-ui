@@ -3748,6 +3748,18 @@ var OSFramework;
                     constructor(config) {
                         super(config);
                     }
+                    validateDefault(key, value) {
+                        let validatedValue = undefined;
+                        switch (key) {
+                            case Accordion.Enum.Properties.MultipleItems:
+                                validatedValue = this.validateBoolean(value, false);
+                                break;
+                            default:
+                                validatedValue = super.validateDefault(key, value);
+                                break;
+                        }
+                        return validatedValue;
+                    }
                 }
                 Accordion.AccordionConfig = AccordionConfig;
             })(Accordion = Patterns.Accordion || (Patterns.Accordion = {}));
@@ -4098,6 +4110,30 @@ var OSFramework;
                 class AccordionItemConfig extends Patterns.AbstractConfiguration {
                     constructor(config) {
                         super(config);
+                    }
+                    validateCanChange(isBuilt, key) {
+                        if (isBuilt) {
+                            return key !== AccordionItem.Enum.Properties.StartsExpanded;
+                        }
+                        return true;
+                    }
+                    validateDefault(key, value) {
+                        let validatedValue = undefined;
+                        switch (key) {
+                            case AccordionItem.Enum.Properties.IsDisabled:
+                                validatedValue = this.validateBoolean(value, false);
+                                break;
+                            case AccordionItem.Enum.Properties.Icon:
+                                validatedValue = this.validateString(value, AccordionItem.Enum.IconType.Caret);
+                                break;
+                            case AccordionItem.Enum.Properties.IconPosition:
+                                validatedValue = this.validateString(value, OSUI.GlobalEnum.Direction.Right);
+                                break;
+                            default:
+                                validatedValue = super.validateDefault(key, value);
+                                break;
+                        }
+                        return validatedValue;
                     }
                 }
                 AccordionItem.AccordionItemConfig = AccordionItemConfig;
@@ -4549,6 +4585,21 @@ var OSFramework;
                     constructor(config) {
                         super(config);
                     }
+                    validateDefault(key, value) {
+                        let validatedValue = undefined;
+                        switch (key) {
+                            case BottomSheet.Enum.Properties.Shape:
+                                validatedValue = this.validateInRange(value, OSUI.GlobalEnum.ShapeTypes.SoftRounded, OSUI.GlobalEnum.ShapeTypes.Sharp, OSUI.GlobalEnum.ShapeTypes.Rounded);
+                                break;
+                            case BottomSheet.Enum.Properties.ShowHandler:
+                                validatedValue = this.validateBoolean(value, false);
+                                break;
+                            default:
+                                validatedValue = super.validateDefault(key, value);
+                                break;
+                        }
+                        return validatedValue;
+                    }
                 }
                 BottomSheet.BottomSheetConfig = BottomSheetConfig;
             })(BottomSheet = Patterns.BottomSheet || (Patterns.BottomSheet = {}));
@@ -4780,19 +4831,19 @@ var OSFramework;
                                 validatedValue = this.validateNumber(value, 1);
                                 break;
                             case Carousel.Enum.Properties.Height:
-                                validatedValue = this.validateString(value, 'auto');
+                                validatedValue = this.validateString(value, Carousel.Enum.Defaults.Height);
                                 break;
                             case Carousel.Enum.Properties.AutoPlay:
                                 validatedValue = this.validateBoolean(value, false);
                                 break;
                             case Carousel.Enum.Properties.ItemsGap:
-                                validatedValue = this.validateString(value, '0px');
+                                validatedValue = this.validateString(value, Carousel.Enum.Defaults.SpaceNone);
                                 break;
                             case Carousel.Enum.Properties.Loop:
                                 validatedValue = this.validateBoolean(value, true);
                                 break;
                             case Carousel.Enum.Properties.Padding:
-                                validatedValue = this.validateString(value, '0px');
+                                validatedValue = this.validateString(value, Carousel.Enum.Defaults.SpaceNone);
                                 break;
                             default:
                                 validatedValue = super.validateDefault(key, value);
@@ -4887,6 +4938,11 @@ var OSFramework;
                         Navigation["Dots"] = "dots";
                         Navigation["None"] = "none";
                     })(Navigation = Enum.Navigation || (Enum.Navigation = {}));
+                    let Defaults;
+                    (function (Defaults) {
+                        Defaults["Height"] = "auto";
+                        Defaults["SpaceNone"] = "0px";
+                    })(Defaults = Enum.Defaults || (Enum.Defaults = {}));
                 })(Enum = Carousel.Enum || (Carousel.Enum = {}));
             })(Carousel = Patterns.Carousel || (Patterns.Carousel = {}));
         })(Patterns = OSUI.Patterns || (OSUI.Patterns = {}));
@@ -6318,6 +6374,12 @@ var OSFramework;
                     constructor(config) {
                         super(config);
                     }
+                    validateCanChange(isBuilt, key) {
+                        if (isBuilt) {
+                            return key !== FlipContent.Enum.Properties.IsFlipped;
+                        }
+                        return true;
+                    }
                 }
                 FlipContent.FlipContentConfig = FlipContentConfig;
             })(FlipContent = Patterns.FlipContent || (Patterns.FlipContent = {}));
@@ -6561,7 +6623,7 @@ var OSFramework;
                         let validatedValue = undefined;
                         switch (key) {
                             case InlineSvg.Enum.Properties.SVGCode:
-                                validatedValue = super.validateString(value, '');
+                                validatedValue = super.validateString(value, OSFramework.OSUI.Constants.EmptyString);
                                 break;
                             default:
                                 validatedValue = super.validateDefault(key, value);
@@ -7018,6 +7080,37 @@ var OSFramework;
             var Notification;
             (function (Notification) {
                 class NotificationConfig extends Patterns.AbstractConfiguration {
+                    validateCanChange(isBuilt, key) {
+                        if (isBuilt) {
+                            return key !== Notification.Enum.Properties.StartsOpen;
+                        }
+                        return true;
+                    }
+                    validateDefault(key, value) {
+                        let validatedValue = undefined;
+                        switch (key) {
+                            case Notification.Enum.Properties.InteractToClose:
+                                validatedValue = this.validateBoolean(value, true);
+                                break;
+                            case Notification.Enum.Properties.NeedsSwipes:
+                            case Notification.Enum.Properties.StartsOpen:
+                                validatedValue = this.validateBoolean(value, false);
+                                break;
+                            case Notification.Enum.Properties.Position:
+                                validatedValue = this.validateString(value, Notification.Enum.Defaults.DefaultPosition);
+                                break;
+                            case Notification.Enum.Properties.Width:
+                                validatedValue = this.validateString(value, Notification.Enum.Defaults.DefaultWidth);
+                                break;
+                            case Notification.Enum.Properties.CloseAfterTime:
+                                validatedValue = this.validateNumber(value, undefined);
+                                break;
+                            default:
+                                validatedValue = super.validateDefault(key, value);
+                                break;
+                        }
+                        return validatedValue;
+                    }
                 }
                 Notification.NotificationConfig = NotificationConfig;
             })(Notification = Patterns.Notification || (Patterns.Notification = {}));
@@ -8805,6 +8898,12 @@ var OSFramework;
             var SectionIndexItem;
             (function (SectionIndexItem) {
                 class SectionIndexItemConfig extends Patterns.AbstractConfiguration {
+                    validateCanChange(isBuilt, key) {
+                        if (isBuilt) {
+                            return key !== SectionIndexItem.Enum.Properties.ScrollToWidgetId;
+                        }
+                        return true;
+                    }
                 }
                 SectionIndexItem.SectionIndexItemConfig = SectionIndexItemConfig;
             })(SectionIndexItem = Patterns.SectionIndexItem || (Patterns.SectionIndexItem = {}));
@@ -8828,6 +8927,10 @@ var OSFramework;
                         Properties["Width"] = "Width";
                         Properties["HasOverlay"] = "HasOverlay";
                     })(Properties = Enum.Properties || (Enum.Properties = {}));
+                    let Defaults;
+                    (function (Defaults) {
+                        Defaults["Width"] = "500px";
+                    })(Defaults = Enum.Defaults || (Enum.Defaults = {}));
                     let CssClass;
                     (function (CssClass) {
                         CssClass["Aside"] = "osui-sidebar";
@@ -9139,6 +9242,31 @@ var OSFramework;
                 class SidebarConfig extends Patterns.AbstractConfiguration {
                     constructor(config) {
                         super(config);
+                    }
+                    validateCanChange(isBuilt, key) {
+                        if (isBuilt) {
+                            return key !== Sidebar.Enum.Properties.StartsOpen;
+                        }
+                        return true;
+                    }
+                    validateDefault(key, value) {
+                        let validatedValue = undefined;
+                        switch (key) {
+                            case Sidebar.Enum.Properties.Direction:
+                                validatedValue = this.validateInRange(value, OSUI.GlobalEnum.Direction.Right, OSUI.GlobalEnum.Direction.Right, OSUI.GlobalEnum.Direction.Left);
+                                break;
+                            case Sidebar.Enum.Properties.HasOverlay:
+                            case Sidebar.Enum.Properties.StartsOpen:
+                                validatedValue = this.validateBoolean(value, false);
+                                break;
+                            case Sidebar.Enum.Properties.Width:
+                                validatedValue = this.validateString(value, Sidebar.Enum.Defaults.Width);
+                                break;
+                            default:
+                                validatedValue = super.validateDefault(key, value);
+                                break;
+                        }
+                        return validatedValue;
                     }
                 }
                 Sidebar.SidebarConfig = SidebarConfig;
@@ -10266,6 +10394,34 @@ var OSFramework;
             var Tabs;
             (function (Tabs) {
                 class TabsConfig extends Patterns.AbstractConfiguration {
+                    validateCanChange(isBuilt, key) {
+                        if (isBuilt) {
+                            return key !== Tabs.Enum.Properties.StartingTab;
+                        }
+                        return true;
+                    }
+                    validateDefault(key, value) {
+                        let validatedValue = undefined;
+                        switch (key) {
+                            case Tabs.Enum.Properties.TabsOrientation:
+                                validatedValue = this.validateInRange(value, OSUI.GlobalEnum.Orientation.Horizontal, OSUI.GlobalEnum.Orientation.Vertical);
+                                break;
+                            case Tabs.Enum.Properties.TabsVerticalPosition:
+                                validatedValue = this.validateInRange(value, OSUI.GlobalEnum.Direction.Left, OSUI.GlobalEnum.Direction.Right);
+                                break;
+                            case Tabs.Enum.Properties.ContentAutoHeight:
+                            case Tabs.Enum.Properties.JustifyHeaders:
+                                validatedValue = this.validateBoolean(value, false);
+                                break;
+                            case Tabs.Enum.Properties.Height:
+                                validatedValue = this.validateString(value, OSUI.GlobalEnum.CssProperties.Auto);
+                                break;
+                            default:
+                                validatedValue = super.validateDefault(key, value);
+                                break;
+                        }
+                        return validatedValue;
+                    }
                 }
                 Tabs.TabsConfig = TabsConfig;
             })(Tabs = Patterns.Tabs || (Patterns.Tabs = {}));

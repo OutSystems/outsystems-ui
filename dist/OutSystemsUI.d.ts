@@ -1327,6 +1327,7 @@ declare namespace OSFramework.OSUI.Patterns.Accordion {
     class AccordionConfig extends AbstractConfiguration {
         MultipleItems: boolean;
         constructor(config: JSON);
+        validateDefault(key: string, value: unknown): unknown;
     }
 }
 declare namespace OSFramework.OSUI.Patterns.Accordion.Enum {
@@ -1404,6 +1405,8 @@ declare namespace OSFramework.OSUI.Patterns.AccordionItem {
         IsDisabled: boolean;
         StartsExpanded: boolean;
         constructor(config: JSON);
+        validateCanChange(isBuilt: boolean, key: string): boolean;
+        validateDefault(key: string, value: unknown): unknown;
     }
 }
 declare namespace OSFramework.OSUI.Patterns.AccordionItem.Enum {
@@ -1555,6 +1558,7 @@ declare namespace OSFramework.OSUI.Patterns.BottomSheet {
         Shape: GlobalEnum.ShapeTypes;
         ShowHandler: boolean;
         constructor(config: JSON);
+        validateDefault(key: string, value: unknown): unknown;
     }
 }
 declare namespace OSFramework.OSUI.Patterns.BottomSheet.Callbacks {
@@ -1708,6 +1712,10 @@ declare namespace OSFramework.OSUI.Patterns.Carousel.Enum {
         Both = "both",
         Dots = "dots",
         None = "none"
+    }
+    enum Defaults {
+        Height = "auto",
+        SpaceNone = "0px"
     }
 }
 declare namespace OSFramework.OSUI.Patterns.Carousel {
@@ -2144,6 +2152,7 @@ declare namespace OSFramework.OSUI.Patterns.FlipContent {
         FlipSelf: boolean;
         IsFlipped: boolean;
         constructor(config: JSON);
+        validateCanChange(isBuilt: boolean, key: string): boolean;
     }
 }
 declare namespace OSFramework.OSUI.Patterns.FlipContent {
@@ -2388,6 +2397,8 @@ declare namespace OSFramework.OSUI.Patterns.Notification {
         Position: string;
         StartsOpen: boolean;
         Width: string;
+        validateCanChange(isBuilt: boolean, key: string): boolean;
+        validateDefault(key: string, value: unknown): unknown;
     }
 }
 declare namespace OSFramework.OSUI.Patterns.OverflowMenu.Callbacks {
@@ -2944,6 +2955,7 @@ declare namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 declare namespace OSFramework.OSUI.Patterns.SectionIndexItem {
     class SectionIndexItemConfig extends AbstractConfiguration {
         ScrollToWidgetId: string;
+        validateCanChange(isBuilt: boolean, key: string): boolean;
     }
 }
 declare namespace OSFramework.OSUI.Patterns.Sidebar.Callbacks {
@@ -2957,6 +2969,9 @@ declare namespace OSFramework.OSUI.Patterns.Sidebar.Enum {
         Direction = "Direction",
         Width = "Width",
         HasOverlay = "HasOverlay"
+    }
+    enum Defaults {
+        Width = "500px"
     }
     enum CssClass {
         Aside = "osui-sidebar",
@@ -3040,6 +3055,8 @@ declare namespace OSFramework.OSUI.Patterns.Sidebar {
         StartsOpen: boolean;
         Width: string;
         constructor(config: JSON);
+        validateCanChange(isBuilt: boolean, key: string): boolean;
+        validateDefault(key: string, value: unknown): unknown;
     }
 }
 declare namespace OSFramework.OSUI.Patterns.Submenu.Enum {
@@ -3309,6 +3326,8 @@ declare namespace OSFramework.OSUI.Patterns.Tabs {
         StartingTab: number;
         TabsOrientation: GlobalEnum.Orientation;
         TabsVerticalPosition: GlobalEnum.Direction;
+        validateCanChange(isBuilt: boolean, key: string): boolean;
+        validateDefault(key: string, value: unknown): unknown;
     }
 }
 declare namespace OSFramework.OSUI.Patterns.TabsContentItem {
