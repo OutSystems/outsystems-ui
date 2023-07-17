@@ -8,6 +8,7 @@ namespace OSFramework.OSUI.Patterns.AnimatedLabel {
 	 * @extends {AbstractConfiguration}
 	 */
 	export class AnimatedLabelConfig extends AbstractConfiguration {
+		// Code here
 		constructor(config: JSON) {
 			super(config);
 		}
