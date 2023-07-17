@@ -19834,12 +19834,7 @@ var Providers;
                             this.configs.rangeSliderMode === OSFramework.OSUI.Patterns.RangeSlider.Enum.Mode.Interval;
                     }
                     _setIsDisabled(isDisabled) {
-                        if (isDisabled) {
-                            OSFramework.OSUI.Helper.Dom.Disable(this._rangeSliderProviderElem);
-                        }
-                        else {
-                            OSFramework.OSUI.Helper.Dom.Enable(this._rangeSliderProviderElem);
-                        }
+                        isDisabled ? this.provider.disable() : this.provider.enable();
                     }
                     _setOnValueChangeEvent(changeEvent) {
                         this.provider.on(changeEvent, this.eventProviderValueChanged);
@@ -19860,8 +19855,8 @@ var Providers;
                         }
                     }
                     createProviderInstance() {
-                        this.setInitialStates();
                         this.provider = window.noUiSlider.create(this._rangeSliderProviderElem, this.noUiSliderOpts);
+                        this.setInitialStates();
                         this.updateProviderEvents({
                             name: RangeSlider.NoUiSlider.Enum.ProviderInfo.Name,
                             version: RangeSlider.NoUiSlider.Enum.ProviderInfo.Version,
@@ -20070,6 +20065,7 @@ var Providers;
                     })(ProviderInfo = Enum.ProviderInfo || (Enum.ProviderInfo = {}));
                     let NoUISliderLabels;
                     (function (NoUISliderLabels) {
+                        NoUISliderLabels["Handle"] = "handler";
                         NoUISliderLabels["Lower"] = "lower-handle";
                         NoUISliderLabels["Single"] = "handle";
                         NoUISliderLabels["Upper"] = "upper-handle";
@@ -20270,6 +20266,10 @@ var Providers;
                         }
                         getProviderConfig() {
                             let rangeSliderOptions = {
+                                handleAttributes: [
+                                    { 'aria-label': RangeSlider.NoUiSlider.Enum.NoUISliderLabels.Handle },
+                                    { 'aria-label': RangeSlider.NoUiSlider.Enum.NoUISliderLabels.Handle },
+                                ],
                                 start: [this.StartingValueFrom, this.StartingValueTo],
                                 connect: true,
                             };
@@ -20382,6 +20382,7 @@ var Providers;
                         }
                         getProviderConfig() {
                             let singleSliderOptions = {
+                                handleAttributes: [{ 'aria-label': RangeSlider.NoUiSlider.Enum.NoUISliderLabels.Handle }],
                                 start: [this.StartingValueFrom],
                                 connect: RangeSlider.NoUiSlider.Enum.NoUiSliderConnectOptions.Lower,
                             };
