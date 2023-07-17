@@ -9979,24 +9979,24 @@ var OSFramework;
                             }
                             const _isVertical = this.configs.TabsOrientation === OSUI.GlobalEnum.Orientation.Vertical;
                             const _activeElement = this._activeTabHeaderElement.selfElement;
-                            const transformValue = _isVertical
+                            const _transformValue = _isVertical
                                 ? _activeElement.offsetTop
                                 : OutSystems.OSUI.Utils.GetIsRTL()
                                     ? -(this._tabsHeaderElement.offsetWidth - _activeElement.offsetLeft - _activeElement.offsetWidth)
                                     : _activeElement.offsetLeft;
-                            const elementRect = _activeElement.getBoundingClientRect();
-                            const finalScale = _isVertical ? elementRect.height : elementRect.width;
+                            const _elementRect = _activeElement.getBoundingClientRect();
+                            const _finalSize = _isVertical ? _elementRect.height : _elementRect.width;
                             function updateIndicatorUI() {
                                 if (this._tabsIndicatorElement) {
-                                    OSUI.Helper.Dom.Styles.SetStyleAttribute(this._tabsIndicatorElement, Tabs_1.Enum.CssProperty.TabsIndicatorTransform, transformValue + OSUI.GlobalEnum.Units.Pixel);
-                                    OSUI.Helper.Dom.Styles.SetStyleAttribute(this._tabsIndicatorElement, Tabs_1.Enum.CssProperty.TabsIndicatorSize, Math.floor(finalScale) + OSUI.GlobalEnum.Units.Pixel);
+                                    OSUI.Helper.Dom.Styles.SetStyleAttribute(this._tabsIndicatorElement, Tabs_1.Enum.CssProperty.TabsIndicatorTransform, _transformValue + OSUI.GlobalEnum.Units.Pixel);
+                                    OSUI.Helper.Dom.Styles.SetStyleAttribute(this._tabsIndicatorElement, Tabs_1.Enum.CssProperty.TabsIndicatorSize, Math.floor(_finalSize) + OSUI.GlobalEnum.Units.Pixel);
                                 }
                                 else {
                                     cancelAnimationFrame(this._requestAnimationFrameOnIndicatorResize);
                                 }
                             }
                             this._requestAnimationFrameOnIndicatorResize = requestAnimationFrame(updateIndicatorUI.bind(this));
-                            if (isNaN(finalScale) || finalScale === 0) {
+                            if (isNaN(_finalSize) || _finalSize === 0) {
                                 const resizeObserver = new ResizeObserver((entries) => {
                                     for (const entry of entries) {
                                         if (entry.contentBoxSize) {
@@ -19837,12 +19837,7 @@ var Providers;
                             this.configs.rangeSliderMode === OSFramework.OSUI.Patterns.RangeSlider.Enum.Mode.Interval;
                     }
                     _setIsDisabled(isDisabled) {
-                        if (isDisabled) {
-                            OSFramework.OSUI.Helper.Dom.Disable(this._rangeSliderProviderElem);
-                        }
-                        else {
-                            OSFramework.OSUI.Helper.Dom.Enable(this._rangeSliderProviderElem);
-                        }
+                        isDisabled ? this.provider.disable() : this.provider.enable();
                     }
                     _setOnValueChangeEvent(changeEvent) {
                         this.provider.on(changeEvent, this.eventProviderValueChanged);
@@ -19863,8 +19858,8 @@ var Providers;
                         }
                     }
                     createProviderInstance() {
-                        this.setInitialStates();
                         this.provider = window.noUiSlider.create(this._rangeSliderProviderElem, this.noUiSliderOpts);
+                        this.setInitialStates();
                         this.updateProviderEvents({
                             name: RangeSlider.NoUiSlider.Enum.ProviderInfo.Name,
                             version: RangeSlider.NoUiSlider.Enum.ProviderInfo.Version,
@@ -20073,6 +20068,7 @@ var Providers;
                     })(ProviderInfo = Enum.ProviderInfo || (Enum.ProviderInfo = {}));
                     let NoUISliderLabels;
                     (function (NoUISliderLabels) {
+                        NoUISliderLabels["Handle"] = "handler";
                         NoUISliderLabels["Lower"] = "lower-handle";
                         NoUISliderLabels["Single"] = "handle";
                         NoUISliderLabels["Upper"] = "upper-handle";
@@ -20273,6 +20269,10 @@ var Providers;
                         }
                         getProviderConfig() {
                             let rangeSliderOptions = {
+                                handleAttributes: [
+                                    { 'aria-label': RangeSlider.NoUiSlider.Enum.NoUISliderLabels.Handle },
+                                    { 'aria-label': RangeSlider.NoUiSlider.Enum.NoUISliderLabels.Handle },
+                                ],
                                 start: [this.StartingValueFrom, this.StartingValueTo],
                                 connect: true,
                             };
@@ -20385,6 +20385,7 @@ var Providers;
                         }
                         getProviderConfig() {
                             let singleSliderOptions = {
+                                handleAttributes: [{ 'aria-label': RangeSlider.NoUiSlider.Enum.NoUISliderLabels.Handle }],
                                 start: [this.StartingValueFrom],
                                 connect: RangeSlider.NoUiSlider.Enum.NoUiSliderConnectOptions.Lower,
                             };
