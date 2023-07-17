@@ -227,7 +227,7 @@
 	}
 
 	.osui-range-slider__provider {
-		&[disabled='true'] {
+		&[disabled] {
 			pointer-events: none;
 
 			.noUi {
@@ -266,6 +266,12 @@
 ///
 .has-accessible-features {
 	.osui-range-slider {
+		border: var(--border-size-m) solid transparent;
+
+		&:focus-within {
+			border-color: var(--color-focus-outer);
+		}
+
 		.noUi-handle:focus {
 			border-color: var(--color-focus-inner);
 			box-shadow: 0 0 0 3px var(--color-focus-outer);
