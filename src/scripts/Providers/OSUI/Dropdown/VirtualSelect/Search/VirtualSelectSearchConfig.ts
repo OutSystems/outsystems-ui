@@ -31,7 +31,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect.Search {
 					}
 				} else {
 					// It's Single option, set only the first given value
-					if (this.StartingSelection[0].value !== '') {
+					if (this.StartingSelection[0].value !== OSFramework.OSUI.Constants.EmptyString) {
 						selectedKeyvalues.push(this.StartingSelection[0].value);
 					}
 				}
