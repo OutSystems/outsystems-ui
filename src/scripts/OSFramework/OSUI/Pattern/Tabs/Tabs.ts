@@ -32,8 +32,6 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 		private _hasSingleContent: boolean;
 		// Store the number of headerItems to be used to set the css variable
 		private _headerItemsLength: number;
-		// Store if the current browser is Chrome or Edge (Chromium based)
-		private _isChromium: boolean;
 		// Store the onTabsChange platform callback
 		private _platformEventTabsOnChange: Callbacks.OSOnChangeEvent;
 		// Store the id of the requestAnimationFrame called to animate the indicator
@@ -51,7 +49,6 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 			// Check if running on native shell, to enable drag gestures
 			this._hasDragGestures =
 				Helper.DeviceInfo.IsNative && this.configs.TabsOrientation === GlobalEnum.Orientation.Horizontal;
-			this._isChromium = Helper.DeviceInfo.GetBrowser() === 'chrome' || Helper.DeviceInfo.GetBrowser() === 'edge';
 		}
 
 		/**
@@ -320,28 +317,21 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 					Helper.Dom.Attribute.Remove(this._tabsIndicatorElement, GlobalEnum.HTMLAttributes.Disabled);
 				}
 
-				const isVertical = this.configs.TabsOrientation === GlobalEnum.Orientation.Vertical;
-				const activeElement = this._activeTabHeaderElement.selfElement;
+				const _isVertical = this.configs.TabsOrientation === GlobalEnum.Orientation.Vertical;
+				const _activeElement = this._activeTabHeaderElement.selfElement;
 
 				// Get transform value based on orientation and rtl value
-				const transformValue = isVertical
-					? activeElement.offsetTop
+				const _transformValue = _isVertical
+					? _activeElement.offsetTop
 					: OutSystems.OSUI.Utils.GetIsRTL()
-					? -(this._tabsHeaderElement.offsetWidth - activeElement.offsetLeft - activeElement.offsetWidth)
-					: activeElement.offsetLeft;
+					? -(this._tabsHeaderElement.offsetWidth - _activeElement.offsetLeft - _activeElement.offsetWidth)
+					: _activeElement.offsetLeft;
 
-				// Check current active item size
-				const newSize = isVertical ? activeElement.offsetHeight : activeElement.offsetWidth;
+				// Get the actual size of the current tabsHeader
+				const _elementRect = _activeElement.getBoundingClientRect();
 
-				let pixelRatio = 1;
-
-				if (this._isChromium) {
-					// devicePixelRatio used here to account for browser or system zoom
-					pixelRatio = window.devicePixelRatio;
-				}
-
-				// translate pixel sized value to a scale value
-				const newScaleValue = (pixelRatio * newSize) / Math.round(pixelRatio);
+				// Set the final size, based on orientation
+				const _finalSize = _isVertical ? _elementRect.height : _elementRect.width;
 
 				// Update the css variables, that will trigger a transform transition
 				function updateIndicatorUI() {
@@ -350,14 +340,14 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 						Helper.Dom.Styles.SetStyleAttribute(
 							this._tabsIndicatorElement,
 							Enum.CssProperty.TabsIndicatorTransform,
-							transformValue + GlobalEnum.Units.Pixel
+							_transformValue + GlobalEnum.Units.Pixel
 						);
 
-						// Apply transform scale
+						// Set indicator size
 						Helper.Dom.Styles.SetStyleAttribute(
 							this._tabsIndicatorElement,
-							Enum.CssProperty.TabsIndicatorScale,
-							Math.floor(newScaleValue)
+							Enum.CssProperty.TabsIndicatorSize,
+							Math.floor(_finalSize) + GlobalEnum.Units.Pixel
 						);
 					} else {
 						cancelAnimationFrame(this._requestAnimationFrameOnIndicatorResize);
@@ -368,17 +358,17 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 
 				// If at this moment the active item has no size (NaN), set an observer to run this method when its size is changed
 				// This happens, as an example, when there're tabs inside tabs, and inner one has no size when it's built, due to being on a non-active tab
-				if (isNaN(newScaleValue) || newScaleValue === 0) {
+				if (isNaN(_finalSize) || _finalSize === 0) {
 					const resizeObserver = new ResizeObserver((entries) => {
 						for (const entry of entries) {
 							if (entry.contentBoxSize) {
 								this._handleTabIndicator();
 								// We just need this once, so lets remove the observer
-								resizeObserver.unobserve(activeElement);
+								resizeObserver.unobserve(_activeElement);
 							}
 						}
 					});
-					resizeObserver.observe(activeElement);
+					resizeObserver.observe(_activeElement);
 				}
 			}
 		}
