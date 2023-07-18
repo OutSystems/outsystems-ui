@@ -11691,6 +11691,9 @@ var OSFramework;
                                 super.registerCallback(eventName, callback);
                         }
                     }
+                    setVideoJumpToTime(time) {
+                        this._videoElement.currentTime = time;
+                    }
                     setVideoPause() {
                         this._videoElement.pause();
                     }
@@ -12119,6 +12122,7 @@ var OutSystems;
                 FailGetState: 'OSUI-API-31004',
                 FailPause: 'OSUI-API-31005',
                 FailPlay: 'OSUI-API-31006',
+                FailSetTime: 'OSUI-API-31007',
             };
             ErrorCodes.Legacy = {
                 FailAddFavicon_Legacy: 'OSUI-LEG-000001',
@@ -15406,6 +15410,17 @@ var OutSystems;
                     return result;
                 }
                 VideoAPI.Play = Play;
+                function JumpToTime(videoId, time) {
+                    const result = OutSystems.OSUI.Utils.CreateApiResponse({
+                        errorCode: OSUI.ErrorCodes.Video.FailSetTime,
+                        callback: () => {
+                            const video = GetVideoById(videoId);
+                            return video.setVideoJumpToTime(time);
+                        },
+                    });
+                    return result;
+                }
+                VideoAPI.JumpToTime = JumpToTime;
             })(VideoAPI = Patterns.VideoAPI || (Patterns.VideoAPI = {}));
         })(Patterns = OSUI.Patterns || (OSUI.Patterns = {}));
     })(OSUI = OutSystems.OSUI || (OutSystems.OSUI = {}));

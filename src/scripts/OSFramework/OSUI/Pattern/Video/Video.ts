@@ -406,6 +406,16 @@ namespace OSFramework.OSUI.Patterns.Video {
 		}
 
 		/**
+		 * Method to set current time
+		 *
+		 * @param {number} time value in seconds
+		 * @memberof Video
+		 */
+		public setVideoJumpToTime(time: number): void {
+			this._videoElement.currentTime = time;
+		}
+
+		/**
 		 * Method to pause video
 		 *
 		 * @memberof OSFramework.Patterns.Video.Video

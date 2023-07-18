@@ -171,8 +171,8 @@ namespace OutSystems.OSUI.Patterns.VideoAPI {
 	}
 
 	/**
-	 *
 	 * Function that play video on a given video
+	 *
 	 * @export
 	 * @param {string} videoId
 	 * @return {*}  {string}
@@ -184,6 +184,27 @@ namespace OutSystems.OSUI.Patterns.VideoAPI {
 				const video = GetVideoById(videoId);
 
 				video.setVideoPlay();
+			},
+		});
+
+		return result;
+	}
+
+	/**
+	 * Function that jump to a specific time on a given video
+	 *
+	 * @export
+	 * @param {string} videoId
+	 * @param {number} time
+	 * @return {*}  {string}
+	 */
+	export function JumpToTime(videoId: string, time: number): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Video.FailSetTime,
+			callback: () => {
+				const video = GetVideoById(videoId);
+
+				video.setVideoJumpToTime(time);
 			},
 		});
 
