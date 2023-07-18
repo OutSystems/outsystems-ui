@@ -376,6 +376,11 @@ namespace OSFramework.OSUI.Patterns.Progress.Circle {
 			);
 		}
 
+		/**
+		 * Method to build the ProgressCircle
+		 *
+		 * @memberof Circle
+		 */
 		public build(): void {
 			super.build();
 

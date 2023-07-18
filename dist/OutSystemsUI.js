@@ -4831,19 +4831,19 @@ var OSFramework;
                                 validatedValue = this.validateNumber(value, 1);
                                 break;
                             case Carousel.Enum.Properties.Height:
-                                validatedValue = this.validateString(value, 'auto');
+                                validatedValue = this.validateString(value, Carousel.Enum.Defaults.Height);
                                 break;
                             case Carousel.Enum.Properties.AutoPlay:
                                 validatedValue = this.validateBoolean(value, false);
                                 break;
                             case Carousel.Enum.Properties.ItemsGap:
-                                validatedValue = this.validateString(value, '0px');
+                                validatedValue = this.validateString(value, Carousel.Enum.Defaults.SpaceNone);
                                 break;
                             case Carousel.Enum.Properties.Loop:
                                 validatedValue = this.validateBoolean(value, true);
                                 break;
                             case Carousel.Enum.Properties.Padding:
-                                validatedValue = this.validateString(value, '0px');
+                                validatedValue = this.validateString(value, Carousel.Enum.Defaults.SpaceNone);
                                 break;
                             default:
                                 validatedValue = super.validateDefault(key, value);
@@ -4938,6 +4938,11 @@ var OSFramework;
                         Navigation["Dots"] = "dots";
                         Navigation["None"] = "none";
                     })(Navigation = Enum.Navigation || (Enum.Navigation = {}));
+                    let Defaults;
+                    (function (Defaults) {
+                        Defaults["Height"] = "auto";
+                        Defaults["SpaceNone"] = "0px";
+                    })(Defaults = Enum.Defaults || (Enum.Defaults = {}));
                 })(Enum = Carousel.Enum || (Carousel.Enum = {}));
             })(Carousel = Patterns.Carousel || (Patterns.Carousel = {}));
         })(Patterns = OSUI.Patterns || (OSUI.Patterns = {}));
@@ -6618,7 +6623,7 @@ var OSFramework;
                         let validatedValue = undefined;
                         switch (key) {
                             case InlineSvg.Enum.Properties.SVGCode:
-                                validatedValue = super.validateString(value, '');
+                                validatedValue = super.validateString(value, OSFramework.OSUI.Constants.EmptyString);
                                 break;
                             default:
                                 validatedValue = super.validateDefault(key, value);
@@ -8921,6 +8926,10 @@ var OSFramework;
                         Properties["Width"] = "Width";
                         Properties["HasOverlay"] = "HasOverlay";
                     })(Properties = Enum.Properties || (Enum.Properties = {}));
+                    let Defaults;
+                    (function (Defaults) {
+                        Defaults["Width"] = "500px";
+                    })(Defaults = Enum.Defaults || (Enum.Defaults = {}));
                     let CssClass;
                     (function (CssClass) {
                         CssClass["Aside"] = "osui-sidebar";
@@ -9250,7 +9259,7 @@ var OSFramework;
                                 validatedValue = this.validateBoolean(value, false);
                                 break;
                             case Sidebar.Enum.Properties.Width:
-                                validatedValue = this.validateString(value, '500px');
+                                validatedValue = this.validateString(value, Sidebar.Enum.Defaults.Width);
                                 break;
                             default:
                                 validatedValue = super.validateDefault(key, value);
@@ -19130,11 +19139,15 @@ var Providers;
                             if (((_a = this.StartingSelection) === null || _a === void 0 ? void 0 : _a.length) > 0) {
                                 if (this.AllowMultipleSelection) {
                                     for (const option of this.StartingSelection) {
-                                        selectedKeyvalues.push(option.value);
+                                        if (option.value !== OSFramework.OSUI.Constants.EmptyString) {
+                                            selectedKeyvalues.push(option.value);
+                                        }
                                     }
                                 }
                                 else {
-                                    selectedKeyvalues.push(this.StartingSelection[0].value);
+                                    if (this.StartingSelection[0].value !== '') {
+                                        selectedKeyvalues.push(this.StartingSelection[0].value);
+                                    }
                                 }
                             }
                             return selectedKeyvalues;
@@ -19209,7 +19222,9 @@ var Providers;
                             const selectedKeyvalues = [];
                             if (this.StartingSelection.length > 0) {
                                 for (const option of this.StartingSelection) {
-                                    selectedKeyvalues.push(option.value);
+                                    if (option.value !== OSFramework.OSUI.Constants.EmptyString) {
+                                        selectedKeyvalues.push(option.value);
+                                    }
                                 }
                             }
                             return selectedKeyvalues;
@@ -19827,12 +19842,7 @@ var Providers;
                             this.configs.rangeSliderMode === OSFramework.OSUI.Patterns.RangeSlider.Enum.Mode.Interval;
                     }
                     _setIsDisabled(isDisabled) {
-                        if (isDisabled) {
-                            OSFramework.OSUI.Helper.Dom.Disable(this._rangeSliderProviderElem);
-                        }
-                        else {
-                            OSFramework.OSUI.Helper.Dom.Enable(this._rangeSliderProviderElem);
-                        }
+                        isDisabled ? this.provider.disable() : this.provider.enable();
                     }
                     _setOnValueChangeEvent(changeEvent) {
                         this.provider.on(changeEvent, this.eventProviderValueChanged);
@@ -19853,8 +19863,8 @@ var Providers;
                         }
                     }
                     createProviderInstance() {
-                        this.setInitialStates();
                         this.provider = window.noUiSlider.create(this._rangeSliderProviderElem, this.noUiSliderOpts);
+                        this.setInitialStates();
                         this.updateProviderEvents({
                             name: RangeSlider.NoUiSlider.Enum.ProviderInfo.Name,
                             version: RangeSlider.NoUiSlider.Enum.ProviderInfo.Version,
@@ -20063,6 +20073,7 @@ var Providers;
                     })(ProviderInfo = Enum.ProviderInfo || (Enum.ProviderInfo = {}));
                     let NoUISliderLabels;
                     (function (NoUISliderLabels) {
+                        NoUISliderLabels["Handle"] = "handler";
                         NoUISliderLabels["Lower"] = "lower-handle";
                         NoUISliderLabels["Single"] = "handle";
                         NoUISliderLabels["Upper"] = "upper-handle";
@@ -20263,6 +20274,10 @@ var Providers;
                         }
                         getProviderConfig() {
                             let rangeSliderOptions = {
+                                handleAttributes: [
+                                    { 'aria-label': RangeSlider.NoUiSlider.Enum.NoUISliderLabels.Handle },
+                                    { 'aria-label': RangeSlider.NoUiSlider.Enum.NoUISliderLabels.Handle },
+                                ],
                                 start: [this.StartingValueFrom, this.StartingValueTo],
                                 connect: true,
                             };
@@ -20375,6 +20390,7 @@ var Providers;
                         }
                         getProviderConfig() {
                             let singleSliderOptions = {
+                                handleAttributes: [{ 'aria-label': RangeSlider.NoUiSlider.Enum.NoUISliderLabels.Handle }],
                                 start: [this.StartingValueFrom],
                                 connect: RangeSlider.NoUiSlider.Enum.NoUiSliderConnectOptions.Lower,
                             };
