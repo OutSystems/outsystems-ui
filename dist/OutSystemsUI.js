@@ -19140,11 +19140,15 @@ var Providers;
                             if (((_a = this.StartingSelection) === null || _a === void 0 ? void 0 : _a.length) > 0) {
                                 if (this.AllowMultipleSelection) {
                                     for (const option of this.StartingSelection) {
-                                        selectedKeyvalues.push(option.value);
+                                        if (option.value !== OSFramework.OSUI.Constants.EmptyString) {
+                                            selectedKeyvalues.push(option.value);
+                                        }
                                     }
                                 }
                                 else {
-                                    selectedKeyvalues.push(this.StartingSelection[0].value);
+                                    if (this.StartingSelection[0].value !== '') {
+                                        selectedKeyvalues.push(this.StartingSelection[0].value);
+                                    }
                                 }
                             }
                             return selectedKeyvalues;
@@ -19219,7 +19223,9 @@ var Providers;
                             const selectedKeyvalues = [];
                             if (this.StartingSelection.length > 0) {
                                 for (const option of this.StartingSelection) {
-                                    selectedKeyvalues.push(option.value);
+                                    if (option.value !== OSFramework.OSUI.Constants.EmptyString) {
+                                        selectedKeyvalues.push(option.value);
+                                    }
                                 }
                             }
                             return selectedKeyvalues;
