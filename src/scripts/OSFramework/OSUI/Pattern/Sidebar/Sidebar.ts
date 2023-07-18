@@ -42,7 +42,12 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 			this._currentDirectionCssClass = Enum.CssClass.ClassModifier + this.configs.Direction;
 		}
 
-		// Actual method that knows what is to close the sidebar
+		/**
+		 * Method to close Sidebar
+		 *
+		 * @private
+		 * @memberof Sidebar
+		 */
 		private _closeSidebar(): void {
 			this._isOpen = false;
 
@@ -73,7 +78,12 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 			}
 		}
 
-		// Add Focus Trap to Pattern
+		/**
+		 * Method to add Focus Trap to Pattern
+		 *
+		 * @private
+		 * @memberof Sidebar
+		 */
 		private _handleFocusTrap(): void {
 			const opts = {
 				focusTargetElement: this._parentSelf,
@@ -88,7 +98,12 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 			}
 		}
 
-		// Method to handle the creation of the GestureEvents
+		/**
+		 * Method to handle the creation of the GestureEvents
+		 *
+		 * @private
+		 * @memberof Sidebar
+		 */
 		private _handleGestureEvents(): void {
 			if (Helper.DeviceInfo.IsNative) {
 				// Create and save gesture event instance. Created here and not on constructor,
@@ -106,7 +121,15 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 			}
 		}
 
-		// Method to handle the start of a gesture
+		/**
+		 * Method to handle the start of a gesture
+		 *
+		 * @private
+		 * @param {number} offsetX
+		 * @param {number} offsetY
+		 * @param {number} timeTaken
+		 * @memberof Sidebar
+		 */
 		private _onGestureEnd(offsetX: number, offsetY: number, timeTaken: number): void {
 			this._animateOnDragInstance.onDragEnd(offsetX, offsetY, timeTaken, this._toggle.bind(this));
 
@@ -115,7 +138,17 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 			}
 		}
 
-		// Method to handle the gesture move
+		/**
+		 * Method to handle the gesture move
+		 *
+		 * @private
+		 * @param {number} x
+		 * @param {number} y
+		 * @param {number} offsetX
+		 * @param {number} offsetY
+		 * @param {TouchEvent} evt
+		 * @memberof Sidebar
+		 */
 		private _onGestureMove(x: number, y: number, offsetX: number, offsetY: number, evt: TouchEvent): void {
 			this._animateOnDragInstance.onDragMove(offsetX, offsetY, x, y, evt);
 
@@ -124,7 +157,14 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 			}
 		}
 
-		// Method to handle the end of a gesture
+		/**
+		 * Method to handle the end of a gesture
+		 *
+		 * @private
+		 * @param {number} x
+		 * @param {number} y
+		 * @memberof Sidebar
+		 */
 		private _onGestureStart(x: number, y: number): void {
 			this._animateOnDragInstance.onDragStart(
 				false,
@@ -136,7 +176,12 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 			);
 		}
 
-		// Actual method that knows what is to open the sidebar
+		/**
+		 * Method to open Sidebar
+		 *
+		 * @private
+		 * @memberof Sidebar
+		 */
 		private _openSidebar() {
 			Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.IsOpen);
 			Helper.A11Y.TabIndexTrue(this.selfElement);
@@ -169,7 +214,14 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 			Helper.A11Y.SetElementsTabIndex(this._isOpen, this._focusTrapInstance.focusableElements);
 		}
 
-		// Overlay onClick event to close the Sidebar
+		/**
+		 * Method to close Sidebar on an overlay click
+		 *
+		 * @private
+		 * @param {string} _args
+		 * @param {MouseEvent} e
+		 * @memberof Sidebar
+		 */
 		private _overlayClickCallback(_args: string, e: MouseEvent): void {
 			// If the sidebar is opened and the mouse down event occured outside the sidebar, close it.
 			if (
@@ -182,8 +234,15 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 			e.stopPropagation();
 		}
 
-		// Method to check if the mouse down event happened outside the sidebar
-		// This is required to cover the cases when selecting text and moving the cursor to the sidebar's overlay.
+		/**
+		 * Method to check if the mouse down event happened outside the sidebar
+		 * This is required to cover the cases when selecting text and moving the cursor to the sidebar's overlay.
+		 *
+		 * @private
+		 * @param {string} _args
+		 * @param {MouseEvent} e
+		 * @memberof Sidebar
+		 */
 		private _overlayMouseDownCallback(_args: string, e: MouseEvent): void {
 			const targetElem = e.target as HTMLElement;
 			this._clickedOutsideElement = true;
@@ -197,7 +256,12 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 			}
 		}
 
-		// Method to remove the event listeners
+		/**
+		 * Method to remove the event listeners
+		 *
+		 * @private
+		 * @memberof Sidebar
+		 */
 		private _removeEvents(): void {
 			this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventSidebarKeypress);
 			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
@@ -210,7 +274,12 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 			);
 		}
 
-		// Set the Sidebar opening/closing direction
+		/**
+		 * Method to set the Sidebar opening/closing direction
+		 *
+		 * @private
+		 * @memberof Sidebar
+		 */
 		private _setDirection(): void {
 			// Reset direction class
 			if (this._currentDirectionCssClass !== '') {
@@ -220,7 +289,12 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 			Helper.Dom.Styles.AddClass(this.selfElement, this._currentDirectionCssClass);
 		}
 
-		// Sets the Sidebar overlay
+		/**
+		 * Method to sets the Sidebar overlay
+		 *
+		 * @private
+		 * @memberof Sidebar
+		 */
 		private _setHasOverlay(): void {
 			const alreadyHasOverlayClass = Helper.Dom.Styles.ContainsClass(this.selfElement, Enum.CssClass.HasOverlay);
 
@@ -231,7 +305,12 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 			}
 		}
 
-		// Set the cssClasses that should be assigned to the element on it's initialization
+		/**
+		 * Method to set the cssClasses that should be assigned to the element on it's initialization
+		 *
+		 * @private
+		 * @memberof Sidebar
+		 */
 		private _setInitialCssClasses(): void {
 			this._setDirection();
 			this._setWidth();
@@ -242,12 +321,23 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 			}
 		}
 
-		// Set the Sidebar width
+		/**
+		 * Method to set the Sidebar width
+		 *
+		 * @private
+		 * @memberof Sidebar
+		 */
 		private _setWidth(): void {
 			Helper.Dom.Styles.SetStyleAttribute(this.selfElement, Enum.CssProperty.Width, this.configs.Width);
 		}
 
-		// Method that will handle the tab navigation and sidebar closing on Escape
+		/**
+		 * Method that will handle the tab navigation and sidebar closing on Escape
+		 *
+		 * @private
+		 * @param {KeyboardEvent} e
+		 * @memberof Sidebar
+		 */
 		private _sidebarKeypressCallback(e: KeyboardEvent): void {
 			const isEscapedPressed = e.key === GlobalEnum.Keycodes.Escape;
 
@@ -259,7 +349,12 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 			e.stopPropagation();
 		}
 
-		// Method to toggle the Sidebar
+		/**
+		 * Method to toggle the Sidebar
+		 *
+		 * @private
+		 * @memberof Sidebar
+		 */
 		private _toggle(): void {
 			if (this._isOpen) {
 				this.close();
@@ -268,7 +363,13 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 			}
 		}
 
-		// Method to toggle gestures on Sidebar
+		/**
+		 * Method to toggle gestures on Sidebar
+		 *
+		 * @private
+		 * @param {boolean} enableSwipes
+		 * @memberof Sidebar
+		 */
 		private _toggleGesturesSidebar(enableSwipes: boolean): void {
 			if (enableSwipes && this._hasGestureEvents === false) {
 				if (this._gestureEventInstance === undefined) {
@@ -279,7 +380,12 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 			}
 		}
 
-		// Method that triggers the OnToggle event
+		/**
+		 * Method that triggers the OnToggle event
+		 *
+		 * @private
+		 * @memberof Sidebar
+		 */
 		private _triggerOnToggleEvent(): void {
 			this.triggerPlatformEventCallback(this._platformEventOnToggle, this._isOpen);
 		}
@@ -353,7 +459,7 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 		}
 
 		/**
-		 * Method to build the pattern.
+		 * Method to build the Sidebar
 		 *
 		 * @memberof OSFramework.Patterns.Sidebar.Sidebar
 		 */
@@ -460,7 +566,7 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 		}
 
 		/**
-		 * Set callbacks for the pattern
+		 * Method to set the callbacks for the pattern
 		 *
 		 * @param {string} eventName
 		 * @param {GlobalCallbacks.OSGeneric} callback
@@ -482,7 +588,7 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 		}
 
 		/**
-		 * Removes the gesture events to open/close the Sidebar on Native Apps
+		 * Method that removes the gesture events to open/close the Sidebar on Native Apps
 		 *
 		 * @memberof OSFramework.Patterns.Sidebar.Sidebar
 		 */
@@ -497,7 +603,7 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 		}
 
 		/**
-		 * Sets the gesture events to open/close the Sidebar on Native Apps
+		 * Method that sets the gesture events to open/close the Sidebar on Native Apps
 		 *
 		 * @protected
 		 * @memberof OSFramework.Patterns.Sidebar.Sidebar
@@ -518,7 +624,8 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 		/**
 		 * Method that toggle swipes on sidebar.
 		 *
-		 * @memberof OSFramework.Patterns.Sidebar.Sidebar
+		 * @param {boolean} enableSwipe
+		 * @memberof Sidebar
 		 */
 		public toggleGestures(enableSwipe: boolean): void {
 			this._toggleGesturesSidebar(enableSwipe);

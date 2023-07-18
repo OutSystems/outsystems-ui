@@ -155,6 +155,11 @@ namespace OSFramework.OSUI.Patterns.Progress.Bar {
 			super.unsetHtmlElements();
 		}
 
+		/**
+		 * Method to build the ProgressBar
+		 *
+		 * @memberof Bar
+		 */
 		public build(): void {
 			super.build();
 

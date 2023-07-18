@@ -1713,6 +1713,10 @@ declare namespace OSFramework.OSUI.Patterns.Carousel.Enum {
         Dots = "dots",
         None = "none"
     }
+    enum Defaults {
+        Height = "auto",
+        SpaceNone = "0px"
+    }
 }
 declare namespace OSFramework.OSUI.Patterns.Carousel {
     interface ICarousel extends Interface.IPattern {
@@ -2333,7 +2337,6 @@ declare namespace OSFramework.OSUI.Patterns.Notification.Enum {
 declare namespace OSFramework.OSUI.Patterns.Notification {
     interface INotification extends Interface.IPattern {
         hide(): void;
-        registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void;
         show(): void;
     }
 }
@@ -2906,9 +2909,9 @@ declare namespace OSFramework.OSUI.Patterns.SectionIndexItem.Enum {
 }
 declare namespace OSFramework.OSUI.Patterns.SectionIndexItem {
     interface ISectionIndexItem extends Interface.IChild {
-        get IsSelected(): boolean;
-        get TargetElement(): HTMLElement;
-        get TargetElementOffset(): OffsetValues;
+        IsSelected: boolean;
+        TargetElement: HTMLElement;
+        TargetElementOffset: OffsetValues;
         setIsActive(): void;
         unsetIsActive(): void;
     }
@@ -2967,6 +2970,9 @@ declare namespace OSFramework.OSUI.Patterns.Sidebar.Enum {
         Width = "Width",
         HasOverlay = "HasOverlay"
     }
+    enum Defaults {
+        Width = "500px"
+    }
     enum CssClass {
         Aside = "osui-sidebar",
         Content = "osui-sidebar__content",
@@ -2986,7 +2992,6 @@ declare namespace OSFramework.OSUI.Patterns.Sidebar.Enum {
 declare namespace OSFramework.OSUI.Patterns.Sidebar {
     interface ISidebar extends Interface.IPattern, Interface.IOpenable {
         clickOutsideToClose(closeOnOutSIdeClick: boolean): void;
-        registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void;
         toggleGestures(enableSwipe: boolean): void;
     }
 }
@@ -3326,7 +3331,7 @@ declare namespace OSFramework.OSUI.Patterns.Tabs {
 }
 declare namespace OSFramework.OSUI.Patterns.TabsContentItem {
     interface ITabsContentItem extends Interface.IChild {
-        get IsActive(): boolean;
+        IsActive: boolean;
         getDataTab(): number;
         getOffsetLeft(): number;
         setAriaLabelledByAttribute(headerItemId: string): void;
@@ -3368,7 +3373,7 @@ declare namespace OSFramework.OSUI.Patterns.TabsContentItem {
 }
 declare namespace OSFramework.OSUI.Patterns.TabsHeaderItem {
     interface ITabsHeaderItem extends Interface.IChild {
-        get IsActive(): boolean;
+        IsActive: boolean;
         disable(): void;
         enable(): void;
         getDataTab(): number;

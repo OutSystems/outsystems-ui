@@ -1062,6 +1062,11 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			}
 		}
 
+		/**
+		 * Method to build the DropdownServerSide
+		 *
+		 * @memberof OSUIDropdownServerSide
+		 */
 		public build(): void {
 			super.build();
 			this.setCallbacks();
