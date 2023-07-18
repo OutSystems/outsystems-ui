@@ -6818,7 +6818,6 @@ var OSFramework;
                         }, this.configs.CloseAfterTime);
                     }
                     _clickCallback(e) {
-                        e.stopPropagation();
                         e.preventDefault();
                         this.hide();
                     }
