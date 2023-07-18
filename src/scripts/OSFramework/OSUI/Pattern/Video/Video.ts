@@ -305,7 +305,7 @@ namespace OSFramework.OSUI.Patterns.Video {
 		}
 
 		/**
-		 * Method to build the pattern.
+		 * Method to build the Video
 		 *
 		 * @memberof OSFramework.Patterns.Video.Video
 		 */

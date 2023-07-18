@@ -51,7 +51,13 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 				Helper.DeviceInfo.IsNative && this.configs.TabsOrientation === GlobalEnum.Orientation.Horizontal;
 		}
 
-		// Method that it's called whenever a new TabsContentItem is rendered
+		/**
+		 * Method that it's called whenever a new TabsContentItem is rendered
+		 *
+		 * @private
+		 * @param {Patterns.TabsContentItem.TabsContentItem} tabsContentChildItem
+		 * @memberof Tabs
+		 */
 		private _addContentItem(tabsContentChildItem: Patterns.TabsContentItem.TabsContentItem): void {
 			if (this.getChild(tabsContentChildItem.uniqueId)) {
 				throw new Error(
@@ -83,7 +89,12 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 			}
 		}
 
-		// Add event listener for arrow navigation
+		/**
+		 * Add event listener for arrow navigation
+		 *
+		 * @private
+		 * @memberof Tabs
+		 */
 		private _addEvents(): void {
 			this.selfElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnHeaderKeypress);
 
@@ -102,7 +113,13 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 			}
 		}
 
-		// Method that it's called whenever a new TabsHeaderItem is rendered
+		/**
+		 * Method that it's called whenever a new TabsHeaderItem is rendered
+		 *
+		 * @private
+		 * @param {Patterns.TabsHeaderItem.TabsHeaderItem} tabsHeaderChildItem
+		 * @memberof Tabs
+		 */
 		private _addHeaderItem(tabsHeaderChildItem: Patterns.TabsHeaderItem.TabsHeaderItem): void {
 			if (this.getChild(tabsHeaderChildItem.uniqueId)) {
 				throw new Error(
@@ -143,7 +160,14 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 			}
 		}
 
-		// Method to change the active content item
+		/**
+		 * Method to change the active content item
+		 *
+		 * @private
+		 * @param {number} newTabIndex
+		 * @param {boolean} triggeredByObserver
+		 * @memberof Tabs
+		 */
 		private _changeActiveContentItem(newTabIndex: number, triggeredByObserver: boolean): void {
 			// Get the contentItem, based on the newTabIndex
 			const newContentItem = this.getChildByIndex(
@@ -170,7 +194,13 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 			}
 		}
 
-		// Method to change the active header item
+		/**
+		 * Method to change the active header item
+		 *
+		 * @private
+		 * @param {TabsHeaderItem.ITabsHeaderItem} newHeaderItem
+		 * @memberof Tabs
+		 */
 		private _changeActiveHeaderItem(newHeaderItem: TabsHeaderItem.ITabsHeaderItem): void {
 			// Remove old headerItem as active
 			if (this._activeTabHeaderElement) {
@@ -184,7 +214,14 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 			}
 		}
 
-		// Method to determine the next target index on changeTab method
+		/**
+		 * Method to determine the next target index on changeTab method
+		 *
+		 * @private
+		 * @param {number} tabIndex
+		 * @return {*}  {number}
+		 * @memberof Tabs
+		 */
 		private _getTargetIndex(tabIndex: number): number {
 			let newTabIndex;
 
@@ -202,7 +239,14 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 			return newTabIndex;
 		}
 
-		// Method that handles the Keypress Event, for tabs navigation using arrows
+		/**
+		 * Method that handles the Keypress Event, for tabs navigation using arrows
+		 *
+		 * @private
+		 * @param {KeyboardEvent} e
+		 * @return {*}  {void}
+		 * @memberof Tabs
+		 */
 		private _handleKeypressEvent(e: KeyboardEvent): void {
 			let targetHeaderItemIndex;
 			// Check if target is the header, to do not change tab on x arrow press
@@ -244,13 +288,23 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 			}
 		}
 
-		// Method to adjust the tabs css active item on resize or orientation-change
+		/**
+		 * Method to adjust the tabs css active item on resize or orientation-change
+		 *
+		 * @private
+		 * @memberof Tabs
+		 */
 		private _handleOnResizeEvent(): void {
 			this._scrollToTargetContent(this._activeTabContentElement);
 			Helper.AsyncInvocation(this._handleTabIndicator.bind(this));
 		}
 
-		// Method that handles the indicator size and transition
+		/**
+		 * Method that handles the indicator size and transition
+		 *
+		 * @private
+		 * @memberof Tabs
+		 */
 		private _handleTabIndicator(): void {
 			if (this._activeTabHeaderElement?.selfElement) {
 				// Check if it comes form a disabled tab, to remove the disable class
@@ -319,7 +373,12 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 			}
 		}
 
-		// Method to make neccessary preparations for header and content items, that can't be done on their scope
+		/**
+		 * Method to make neccessary preparations for header and content items, that can't be done on their scope
+		 *
+		 * @private
+		 * @memberof Tabs
+		 */
 		private _prepareHeaderAndContentItems(): void {
 			// Set if the Tabs has only one Content
 			this._hasSingleContent = this.getChildItems(Enum.ChildTypes.TabsContentItem).length === 1;
@@ -352,7 +411,13 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 			this._updateItemsConnection(false);
 		}
 
-		// Method that it's called whenever a new TabsContentItem is destroyed
+		/**
+		 * Method that it's called whenever a new TabsContentItem is destroyed
+		 *
+		 * @private
+		 * @param {string} childContentId
+		 * @memberof Tabs
+		 */
 		private _removeContentItem(childContentId: string): void {
 			const childContentItem = this.getChild(childContentId) as TabsContentItem.ITabsContentItem;
 			let auxIndex: number;
@@ -393,7 +458,12 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 			}
 		}
 
-		// Remove Pattern Events
+		/**
+		 * Remove Pattern Events
+		 *
+		 * @private
+		 * @memberof Tabs
+		 */
 		private _removeEvents(): void {
 			this._tabsHeaderElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnHeaderKeypress);
 
@@ -412,7 +482,13 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 			}
 		}
 
-		// Method that it's called whenever a new TabsHeaderItem is destroyed
+		/**
+		 * Method that it's called whenever a new TabsHeaderItem is destroyed
+		 *
+		 * @private
+		 * @param {string} childHeaderId
+		 * @memberof Tabs
+		 */
 		private _removeHeaderItem(childHeaderId: string): void {
 			const auxIndex = this.getChildIndex(childHeaderId);
 			const wasActive = this.getChild(childHeaderId).IsActive;
@@ -453,7 +529,13 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 			}
 		}
 
-		// Method to scroll to new target content item
+		/**
+		 * Method to scroll to new target content item
+		 *
+		 * @private
+		 * @param {Patterns.TabsContentItem.ITabsContentItem} newContentItem
+		 * @memberof Tabs
+		 */
 		private _scrollToTargetContent(newContentItem: Patterns.TabsContentItem.ITabsContentItem): void {
 			if (newContentItem) {
 				// Scroll to new content item
@@ -465,7 +547,13 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 			}
 		}
 
-		// Method to set if the Tabs AutoHeight
+		/**
+		 * Method to set if the Tabs AutoHeight
+		 *
+		 * @private
+		 * @param {boolean} hasAutoHeight
+		 * @memberof Tabs
+		 */
 		private _setContentAutoHeight(hasAutoHeight: boolean): void {
 			if (this._hasDragGestures === false) {
 				if (hasAutoHeight) {
@@ -480,7 +568,12 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 			}
 		}
 
-		// Method to set an IntersectionObserver when drag gestures are enable, to detect the activeItem on drag
+		/**
+		 * Method to set an IntersectionObserver when drag gestures are enable, to detect the activeItem on drag
+		 *
+		 * @private
+		 * @memberof Tabs
+		 */
 		private _setDragObserver(): void {
 			// Observer options
 			const observerOptions = {
@@ -511,13 +604,25 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 			});
 		}
 
-		// Method to set the CSS variable that holds the number of header items
+		/**
+		 * Method to set the CSS variable that holds the number of header items
+		 *
+		 * @private
+		 * @param {number} itemsLength
+		 * @memberof Tabs
+		 */
 		private _setHeaderItemsCustomProperty(itemsLength: number): void {
 			// Create css variable
 			Helper.Dom.Styles.SetStyleAttribute(this.selfElement, Enum.CssProperty.TabsHeaderItems, itemsLength);
 		}
 
-		// Method to set the Tabs Height
+		/**
+		 * Method to set the Tabs Height
+		 *
+		 * @private
+		 * @param {string} height
+		 * @memberof Tabs
+		 */
 		private _setHeight(height: string): void {
 			// Set tabs overflow based on height
 			const tabsOverflow =
@@ -534,7 +639,12 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 			);
 		}
 
-		// Method to set the initial options on screen load
+		/**
+		 * Method to set the initial options on screen load
+		 *
+		 * @private
+		 * @memberof Tabs
+		 */
 		private _setInitialOptions(): void {
 			// Call necessary methods that avoid layout shift first
 			// Set the --tabs-header-items css variable
@@ -552,7 +662,13 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 			}
 		}
 
-		// Method to set if the Tabs are justified
+		/**
+		 * Method to set if the Tabs are justified
+		 *
+		 * @private
+		 * @param {boolean} isJustified
+		 * @memberof Tabs
+		 */
 		private _setIsJustified(isJustified: boolean): void {
 			if (isJustified) {
 				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClasses.IsJustified);
@@ -566,7 +682,13 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 			}
 		}
 
-		// Method to set the Tabs Orientation
+		/**
+		 * Method to set the Tabs Orientation
+		 *
+		 * @private
+		 * @param {GlobalEnum.Orientation} orientation
+		 * @memberof Tabs
+		 */
 		private _setOrientation(orientation: GlobalEnum.Orientation): void {
 			Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClasses.Modifier + this._currentOrientation);
 			Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClasses.Modifier + orientation);
@@ -580,7 +702,13 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 			}
 		}
 
-		// Method to set the Tabs Position
+		/**
+		 * Method to set the Tabs Position
+		 *
+		 * @private
+		 * @param {GlobalEnum.Direction} position
+		 * @memberof Tabs
+		 */
 		private _setPosition(position: GlobalEnum.Direction): void {
 			Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClasses.Modifier + this._currentVerticalPositon);
 			Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClasses.Modifier + position);
@@ -588,7 +716,14 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 			this._currentVerticalPositon = position;
 		}
 
-		// Toggle TableHeaderItem disbaled status
+		/**
+		 * Toggle TableHeaderItem disbaled status
+		 *
+		 * @private
+		 * @param {string} childHeaderId
+		 * @param {boolean} isDisabled
+		 * @memberof Tabs
+		 */
 		private _setTabHeaderItemDisabledStatus(childHeaderId: string, isDisabled: boolean): void {
 			const _tabHeaderItemElement = Helper.Dom.GetElementByUniqueId(childHeaderId);
 			const _tabItemIndex = this.getChildIndex(childHeaderId);
@@ -640,7 +775,13 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 			}
 		}
 
-		// Method to change between tabs
+		/**
+		 * Method to change between tabs
+		 *
+		 * @private
+		 * @param {string} childHeaderId
+		 * @memberof Tabs
+		 */
 		private _tabHeaderItemHasBeenClicked(childHeaderId: string): void {
 			const newHeaderItem = this.getChild(childHeaderId) as TabsHeaderItem.ITabsHeaderItem;
 
@@ -653,19 +794,36 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 			this.changeTab(this.getChildIndex(childHeaderId), newHeaderItem, true);
 		}
 
-		// Method that triggers the OnTabsChange event
+		/**
+		 * Method that triggers the OnTabsChange event
+		 *
+		 * @private
+		 * @param {number} activeTab
+		 * @memberof Tabs
+		 */
 		private _triggerOnChangeEvent(activeTab: number): void {
 			if (this._platformEventTabsOnChange !== undefined) {
 				this.triggerPlatformEventCallback(this._platformEventTabsOnChange, activeTab);
 			}
 		}
 
-		// Method to remove the drag Observer on each contentItem
+		/**
+		 * Method to remove the drag Observer on each contentItem
+		 *
+		 * @private
+		 * @memberof Tabs
+		 */
 		private _unsetDragObserver(): void {
 			this._dragObserver.disconnect();
 		}
 
-		// Method that handles the connection between HeaderItems and ContentItem, related to data-tab and aria-controls/labbeledby
+		/**
+		 * Method that handles the connection between HeaderItems and ContentItem, related to data-tab and aria-controls/labbeledby
+		 *
+		 * @private
+		 * @param {boolean} [updateDataTab=true]
+		 * @memberof Tabs
+		 */
 		private _updateItemsConnection(updateDataTab = true): void {
 			// By default look to the first content item.
 			let currentContentItem = this.getChildByIndex(
@@ -812,7 +970,7 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 		}
 
 		/**
-		 * Method to build the pattern
+		 * Method to build the Tabs
 		 *
 		 * @memberof OSFramework.Patterns.Tabs.Tabs
 		 */

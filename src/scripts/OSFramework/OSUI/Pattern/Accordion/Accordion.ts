@@ -9,7 +9,7 @@ namespace OSFramework.OSUI.Patterns.Accordion {
 		}
 
 		/**
-		 * Sets the A11Y properties when the pattern is built.
+		 * Method to set the A11Y properties when the pattern is built.
 		 *
 		 * @protected
 		 * @memberof OSFramework.Patterns.Accordion.Accordion
@@ -110,7 +110,7 @@ namespace OSFramework.OSUI.Patterns.Accordion {
 		}
 
 		/**
-		 * Method to build the pattern.
+		 * Method to build the Accordion
 		 *
 		 * @memberof OSFramework.Patterns.Accordion.Accordion
 		 */
