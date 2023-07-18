@@ -204,7 +204,7 @@ namespace OutSystems.OSUI.Patterns.VideoAPI {
 			callback: () => {
 				const video = GetVideoById(videoId);
 
-				return video.setVideoJumpToTime(time);
+				video.setVideoJumpToTime(time);
 			},
 		});
 
