@@ -189,4 +189,17 @@ namespace OutSystems.OSUI.Patterns.VideoAPI {
 
 		return result;
 	}
+
+	export function JumpToTime(videoId: string, time: number): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Video.FailSetTime,
+			callback: () => {
+				const video = GetVideoById(videoId);
+
+				return video.setVideoJumpToTime(time);
+			},
+		});
+
+		return result;
+	}
 }

@@ -328,6 +328,7 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailGetState: 'OSUI-API-31004',
 		FailPause: 'OSUI-API-31005',
 		FailPlay: 'OSUI-API-31006',
+		FailSetTime: 'OSUI-API-31007',
 	};
 
 	// Error Codes used in Legacy Client Action

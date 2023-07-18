@@ -3691,6 +3691,7 @@ declare namespace OSFramework.OSUI.Patterns.Video.Enum {
 declare namespace OSFramework.OSUI.Patterns.Video {
     interface IVideo extends Interface.IPattern {
         getVideoState: string;
+        setVideoJumpToTime(time: number): void;
         setVideoPause(): void;
         setVideoPlay(): void;
     }
@@ -3723,6 +3724,7 @@ declare namespace OSFramework.OSUI.Patterns.Video {
         dispose(): void;
         get getVideoState(): string;
         registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void;
+        setVideoJumpToTime(time: number): void;
         setVideoPause(): void;
         setVideoPlay(): void;
     }
@@ -4077,6 +4079,7 @@ declare namespace OutSystems.OSUI.ErrorCodes {
         FailGetState: string;
         FailPause: string;
         FailPlay: string;
+        FailSetTime: string;
     };
     const Legacy: {
         FailAddFavicon_Legacy: string;
@@ -4468,6 +4471,7 @@ declare namespace OutSystems.OSUI.Patterns.VideoAPI {
     function GetState(videoId: string): string;
     function Pause(videoId: string): string;
     function Play(videoId: string): string;
+    function JumpToTime(videoId: string, time: number): string;
 }
 declare namespace OutSystems.OSUI.Utils.Accessibility {
     function SetAccessibilityRole(widgetId: string, role: string): string;
