@@ -60,7 +60,6 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		 * @memberof Notification
 		 */
 		private _clickCallback(e: MouseEvent): void {
-			e.stopPropagation();
 			e.preventDefault();
 			this.hide();
 		}
