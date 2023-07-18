@@ -406,7 +406,7 @@ namespace OSFramework.OSUI.Patterns.Video {
 		}
 
 		/**
-		 * uMethod to set current time
+		 * Method to set current time
 		 *
 		 * @param {number} time value in seconds
 		 * @memberof Video
