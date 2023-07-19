@@ -410,17 +410,11 @@ namespace OSFramework.OSUI.Patterns.Video {
 		/**
 		 * Method to set current time
 		 *
-		 * @param {number} time value in seconds
+		 * @param {number} currentTime value in seconds
 		 * @memberof Video
 		 */
-		public setVideoJumpToTime(time: string): void {
-			const jumpToTime = time.split(':');
-			// Convert the time provided into seconds
-			const timeInSeconds =
-				+jumpToTime[0] * Enum.VideoTime.Hour * Enum.VideoTime.Minute +
-				+jumpToTime[1] * Enum.VideoTime.Minute +
-				+jumpToTime[2];
-			this._videoElement.currentTime = timeInSeconds;
+		public setVideoJumpToTime(currentTime: number): void {
+			this._videoElement.currentTime = currentTime;
 		}
 
 		/**

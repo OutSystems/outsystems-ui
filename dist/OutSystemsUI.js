@@ -567,6 +567,11 @@ var OSFramework;
                 SVGHelperConstants["ParserError"] = "parsererror";
                 SVGHelperConstants["SVG"] = "svg";
             })(SVGHelperConstants = GlobalEnum.SVGHelperConstants || (GlobalEnum.SVGHelperConstants = {}));
+            let Time;
+            (function (Time) {
+                Time[Time["HourInSeconds"] = 3600] = "HourInSeconds";
+                Time[Time["MinuteInSeconds"] = 60] = "MinuteInSeconds";
+            })(Time = GlobalEnum.Time || (GlobalEnum.Time = {}));
         })(GlobalEnum = OSUI.GlobalEnum || (OSUI.GlobalEnum = {}));
     })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
 })(OSFramework || (OSFramework = {}));
@@ -3076,6 +3081,11 @@ var OSFramework;
         var Helper;
         (function (Helper) {
             class Times {
+                static ConvertInSeconds(time) {
+                    return (time.getHours() * OSUI.GlobalEnum.Time.HourInSeconds +
+                        time.getMinutes() * OSUI.GlobalEnum.Time.MinuteInSeconds +
+                        time.getSeconds());
+                }
                 static IsNull(time) {
                     if (isNaN(Date.parse(time))) {
                         if (typeof time === OSUI.Constants.JavaScriptTypes.String) {
@@ -11505,11 +11515,6 @@ var OSFramework;
                         VideoAttributes["Width"] = "width";
                         VideoAttributes["Muted"] = "muted";
                     })(VideoAttributes = Enum.VideoAttributes || (Enum.VideoAttributes = {}));
-                    let VideoTime;
-                    (function (VideoTime) {
-                        VideoTime[VideoTime["Hour"] = 60] = "Hour";
-                        VideoTime[VideoTime["Minute"] = 60] = "Minute";
-                    })(VideoTime = Enum.VideoTime || (Enum.VideoTime = {}));
                 })(Enum = Video.Enum || (Video.Enum = {}));
             })(Video = Patterns.Video || (Patterns.Video = {}));
         })(Patterns = OSUI.Patterns || (OSUI.Patterns = {}));
@@ -11696,12 +11701,8 @@ var OSFramework;
                                 super.registerCallback(eventName, callback);
                         }
                     }
-                    setVideoJumpToTime(time) {
-                        const jumpToTime = time.split(':');
-                        const timeInSeconds = +jumpToTime[0] * Video_1.Enum.VideoTime.Hour * Video_1.Enum.VideoTime.Minute +
-                            +jumpToTime[1] * Video_1.Enum.VideoTime.Minute +
-                            +jumpToTime[2];
-                        this._videoElement.currentTime = timeInSeconds;
+                    setVideoJumpToTime(currentTime) {
+                        this._videoElement.currentTime = currentTime;
                     }
                     setVideoPause() {
                         this._videoElement.pause();
@@ -15419,12 +15420,12 @@ var OutSystems;
                     return result;
                 }
                 VideoAPI.Play = Play;
-                function JumpToTime(videoId, time) {
+                function JumpToTime(videoId, currentTime) {
                     const result = OutSystems.OSUI.Utils.CreateApiResponse({
                         errorCode: OSUI.ErrorCodes.Video.FailSetTime,
                         callback: () => {
                             const video = GetVideoById(videoId);
-                            video.setVideoJumpToTime(time);
+                            video.setVideoJumpToTime(currentTime);
                         },
                     });
                     return result;

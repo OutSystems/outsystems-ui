@@ -19,10 +19,10 @@ namespace OSFramework.OSUI.Patterns.Video {
 		/**
 		 *  Function that will trigger the set current video time method
 		 *
-		 * @param {number} time value in seconds
+		 * @param {number} currentTime value in seconds
 		 * @memberof IVideo
 		 */
-		setVideoJumpToTime(time: string): void;
+		setVideoJumpToTime(currentTime: number): void;
 
 		/**
 		 * Function that will trigger the pause video method

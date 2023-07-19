@@ -471,6 +471,10 @@ declare namespace OSFramework.OSUI.GlobalEnum {
         ParserError = "parsererror",
         SVG = "svg"
     }
+    enum Time {
+        HourInSeconds = 3600,
+        MinuteInSeconds = 60
+    }
 }
 declare namespace OSFramework.OSUI.Behaviors {
     type SpringAnimationProperties = {
@@ -1096,6 +1100,7 @@ declare namespace OSFramework.OSUI.Helper {
 }
 declare namespace OSFramework.OSUI.Helper {
     abstract class Times {
+        static ConvertInSeconds(time: Date): number;
         static IsNull(time: string): boolean;
     }
 }
@@ -3692,15 +3697,11 @@ declare namespace OSFramework.OSUI.Patterns.Video.Enum {
         Width = "width",
         Muted = "muted"
     }
-    enum VideoTime {
-        Hour = 60,
-        Minute = 60
-    }
 }
 declare namespace OSFramework.OSUI.Patterns.Video {
     interface IVideo extends Interface.IPattern {
         getVideoState: string;
-        setVideoJumpToTime(time: string): void;
+        setVideoJumpToTime(currentTime: number): void;
         setVideoPause(): void;
         setVideoPlay(): void;
     }
@@ -3734,7 +3735,7 @@ declare namespace OSFramework.OSUI.Patterns.Video {
         dispose(): void;
         get getVideoState(): string;
         registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void;
-        setVideoJumpToTime(time: string): void;
+        setVideoJumpToTime(currentTime: number): void;
         setVideoPause(): void;
         setVideoPlay(): void;
     }
@@ -4481,7 +4482,7 @@ declare namespace OutSystems.OSUI.Patterns.VideoAPI {
     function GetState(videoId: string): string;
     function Pause(videoId: string): string;
     function Play(videoId: string): string;
-    function JumpToTime(videoId: string, time: string): string;
+    function JumpToTime(videoId: string, currentTime: number): string;
 }
 declare namespace OutSystems.OSUI.Utils.Accessibility {
     function SetAccessibilityRole(widgetId: string, role: string): string;

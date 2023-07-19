@@ -427,4 +427,9 @@ namespace OSFramework.OSUI.GlobalEnum {
 		ParserError = 'parsererror',
 		SVG = 'svg',
 	}
+
+	export enum Time {
+		HourInSeconds = 3600,
+		MinuteInSeconds = 60,
+	}
 }
