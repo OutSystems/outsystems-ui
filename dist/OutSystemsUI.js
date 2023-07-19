@@ -11505,6 +11505,11 @@ var OSFramework;
                         VideoAttributes["Width"] = "width";
                         VideoAttributes["Muted"] = "muted";
                     })(VideoAttributes = Enum.VideoAttributes || (Enum.VideoAttributes = {}));
+                    let VideoTime;
+                    (function (VideoTime) {
+                        VideoTime[VideoTime["Hour"] = 60] = "Hour";
+                        VideoTime[VideoTime["Minute"] = 60] = "Minute";
+                    })(VideoTime = Enum.VideoTime || (Enum.VideoTime = {}));
                 })(Enum = Video.Enum || (Video.Enum = {}));
             })(Video = Patterns.Video || (Patterns.Video = {}));
         })(Patterns = OSUI.Patterns || (OSUI.Patterns = {}));
@@ -11692,7 +11697,11 @@ var OSFramework;
                         }
                     }
                     setVideoJumpToTime(time) {
-                        this._videoElement.currentTime = time;
+                        const jumpToTime = time.split(':');
+                        const timeInSeconds = +jumpToTime[0] * Video_1.Enum.VideoTime.Hour * Video_1.Enum.VideoTime.Minute +
+                            +jumpToTime[1] * Video_1.Enum.VideoTime.Minute +
+                            +jumpToTime[2];
+                        this._videoElement.currentTime = timeInSeconds;
                     }
                     setVideoPause() {
                         this._videoElement.pause();
@@ -15415,7 +15424,7 @@ var OutSystems;
                         errorCode: OSUI.ErrorCodes.Video.FailSetTime,
                         callback: () => {
                             const video = GetVideoById(videoId);
-                            return video.setVideoJumpToTime(time);
+                            video.setVideoJumpToTime(time);
                         },
                     });
                     return result;
@@ -19160,7 +19169,7 @@ var Providers;
                                     }
                                 }
                                 else {
-                                    if (this.StartingSelection[0].value !== '') {
+                                    if (this.StartingSelection[0].value !== OSFramework.OSUI.Constants.EmptyString) {
                                         selectedKeyvalues.push(this.StartingSelection[0].value);
                                     }
                                 }

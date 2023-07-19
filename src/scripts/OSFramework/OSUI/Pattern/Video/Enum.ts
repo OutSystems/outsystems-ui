@@ -58,4 +58,9 @@ namespace OSFramework.OSUI.Patterns.Video.Enum {
 		Width = 'width',
 		Muted = 'muted',
 	}
+
+	export enum VideoTime {
+		Hour = 60, // 60 minutes
+		Minute = 60, // 60 seconds
+	}
 }

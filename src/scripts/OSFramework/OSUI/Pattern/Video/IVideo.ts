@@ -22,7 +22,7 @@ namespace OSFramework.OSUI.Patterns.Video {
 		 * @param {number} time value in seconds
 		 * @memberof IVideo
 		 */
-		setVideoJumpToTime(time: number): void;
+		setVideoJumpToTime(time: string): void;
 
 		/**
 		 * Function that will trigger the pause video method

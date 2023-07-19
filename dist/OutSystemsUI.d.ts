@@ -3692,11 +3692,15 @@ declare namespace OSFramework.OSUI.Patterns.Video.Enum {
         Width = "width",
         Muted = "muted"
     }
+    enum VideoTime {
+        Hour = 60,
+        Minute = 60
+    }
 }
 declare namespace OSFramework.OSUI.Patterns.Video {
     interface IVideo extends Interface.IPattern {
         getVideoState: string;
-        setVideoJumpToTime(time: number): void;
+        setVideoJumpToTime(time: string): void;
         setVideoPause(): void;
         setVideoPlay(): void;
     }
@@ -3705,6 +3709,7 @@ declare namespace OSFramework.OSUI.Patterns.Video {
     class Video extends AbstractPattern<VideoConfig> implements IVideo {
         private _platformEventOnStateChanged;
         private _videoElement;
+        private _videoJumpTime;
         private _videoSourceElement;
         private _videoState;
         constructor(uniqueId: string, configs: JSON);
@@ -3729,7 +3734,7 @@ declare namespace OSFramework.OSUI.Patterns.Video {
         dispose(): void;
         get getVideoState(): string;
         registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void;
-        setVideoJumpToTime(time: number): void;
+        setVideoJumpToTime(time: string): void;
         setVideoPause(): void;
         setVideoPlay(): void;
     }
@@ -4476,7 +4481,7 @@ declare namespace OutSystems.OSUI.Patterns.VideoAPI {
     function GetState(videoId: string): string;
     function Pause(videoId: string): string;
     function Play(videoId: string): string;
-    function JumpToTime(videoId: string, time: number): string;
+    function JumpToTime(videoId: string, time: string): string;
 }
 declare namespace OutSystems.OSUI.Utils.Accessibility {
     function SetAccessibilityRole(widgetId: string, role: string): string;

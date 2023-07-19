@@ -198,7 +198,7 @@ namespace OutSystems.OSUI.Patterns.VideoAPI {
 	 * @param {number} time
 	 * @return {*}  {string}
 	 */
-	export function JumpToTime(videoId: string, time: number): string {
+	export function JumpToTime(videoId: string, time: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.Video.FailSetTime,
 			callback: () => {
