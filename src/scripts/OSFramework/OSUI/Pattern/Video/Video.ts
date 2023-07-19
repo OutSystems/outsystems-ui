@@ -13,6 +13,8 @@ namespace OSFramework.OSUI.Patterns.Video {
 		private _platformEventOnStateChanged: Callbacks.OSOnStateChangedEvent;
 		// Store the video element
 		private _videoElement: HTMLVideoElement;
+		// Store the value for video to jump into a specific time
+		private _videoJumpTime: number;
 		// Store the source element
 		private _videoSourceElement: HTMLSourceElement;
 		// Store the current video state
@@ -408,11 +410,11 @@ namespace OSFramework.OSUI.Patterns.Video {
 		/**
 		 * Method to set current time
 		 *
-		 * @param {number} time value in seconds
+		 * @param {number} currentTime value in seconds
 		 * @memberof Video
 		 */
-		public setVideoJumpToTime(time: number): void {
-			this._videoElement.currentTime = time;
+		public setVideoJumpToTime(currentTime: number): void {
+			this._videoElement.currentTime = currentTime;
 		}
 
 		/**

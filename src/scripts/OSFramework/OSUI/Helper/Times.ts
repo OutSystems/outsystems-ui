@@ -2,6 +2,25 @@
 namespace OSFramework.OSUI.Helper {
 	export abstract class Times {
 		/**
+		 * Function used to convert a time in seconds
+		 *
+		 * @static
+		 * @param {string} time
+		 * @return {*}  {number}
+		 * @memberof Times
+		 */
+		public static ConvertInSeconds(time: Date): number {
+			// Convert the time provided into seconds
+			return (
+				// To get the total seconds of hours and minutes, the hour needs to be multiplied for the number of minutes
+				// and the minutes needs to multiply for the number of seconds
+				time.getHours() * GlobalEnum.Time.HourInSeconds +
+				time.getMinutes() * GlobalEnum.Time.MinuteInSeconds +
+				time.getSeconds()
+			);
+		}
+
+		/**
 		 * Function used to check if a given time is an OutSystems nullDate
 		 *
 		 * @export

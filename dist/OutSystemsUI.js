@@ -567,6 +567,11 @@ var OSFramework;
                 SVGHelperConstants["ParserError"] = "parsererror";
                 SVGHelperConstants["SVG"] = "svg";
             })(SVGHelperConstants = GlobalEnum.SVGHelperConstants || (GlobalEnum.SVGHelperConstants = {}));
+            let Time;
+            (function (Time) {
+                Time[Time["HourInSeconds"] = 3600] = "HourInSeconds";
+                Time[Time["MinuteInSeconds"] = 60] = "MinuteInSeconds";
+            })(Time = GlobalEnum.Time || (GlobalEnum.Time = {}));
         })(GlobalEnum = OSUI.GlobalEnum || (OSUI.GlobalEnum = {}));
     })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
 })(OSFramework || (OSFramework = {}));
@@ -3076,6 +3081,11 @@ var OSFramework;
         var Helper;
         (function (Helper) {
             class Times {
+                static ConvertInSeconds(time) {
+                    return (time.getHours() * OSUI.GlobalEnum.Time.HourInSeconds +
+                        time.getMinutes() * OSUI.GlobalEnum.Time.MinuteInSeconds +
+                        time.getSeconds());
+                }
                 static IsNull(time) {
                     if (isNaN(Date.parse(time))) {
                         if (typeof time === OSUI.Constants.JavaScriptTypes.String) {
@@ -11691,8 +11701,8 @@ var OSFramework;
                                 super.registerCallback(eventName, callback);
                         }
                     }
-                    setVideoJumpToTime(time) {
-                        this._videoElement.currentTime = time;
+                    setVideoJumpToTime(currentTime) {
+                        this._videoElement.currentTime = currentTime;
                     }
                     setVideoPause() {
                         this._videoElement.pause();
@@ -15410,12 +15420,12 @@ var OutSystems;
                     return result;
                 }
                 VideoAPI.Play = Play;
-                function JumpToTime(videoId, time) {
+                function JumpToTime(videoId, currentTime) {
                     const result = OutSystems.OSUI.Utils.CreateApiResponse({
                         errorCode: OSUI.ErrorCodes.Video.FailSetTime,
                         callback: () => {
                             const video = GetVideoById(videoId);
-                            return video.setVideoJumpToTime(time);
+                            video.setVideoJumpToTime(currentTime);
                         },
                     });
                     return result;
@@ -19160,7 +19170,7 @@ var Providers;
                                     }
                                 }
                                 else {
-                                    if (this.StartingSelection[0].value !== '') {
+                                    if (this.StartingSelection[0].value !== OSFramework.OSUI.Constants.EmptyString) {
                                         selectedKeyvalues.push(this.StartingSelection[0].value);
                                     }
                                 }
