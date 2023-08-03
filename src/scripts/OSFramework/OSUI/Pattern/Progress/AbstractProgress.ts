@@ -5,7 +5,7 @@ namespace OSFramework.OSUI.Patterns.Progress {
 		implements IProgress
 	{
 		private _eventAnimateEntranceEnd: GlobalCallbacks.Generic;
-		protected contentElemId = Constants.EmptyString;
+		protected contentElem: HTMLElement;
 		protected gradientLength: number;
 		protected progressElem: HTMLElement;
 		protected progressType: ProgressEnum.ProgressTypes;
@@ -102,7 +102,7 @@ namespace OSFramework.OSUI.Patterns.Progress {
 		 */
 		protected unsetHtmlElements(): void {
 			this.progressElem = undefined;
-			this.contentElemId = Constants.EmptyString;
+			this.contentElem = undefined;
 		}
 
 		/**
