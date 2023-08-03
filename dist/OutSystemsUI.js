@@ -7392,6 +7392,7 @@ var OSFramework;
                 class AbstractProgress extends Patterns.AbstractPattern {
                     constructor(uniqueId, configs) {
                         super(uniqueId, configs);
+                        this.contentElemId = '';
                     }
                     _animateEntranceEnd() {
                         this.progressElem.removeEventListener(OSUI.GlobalEnum.HTMLEvent.TransitionEnd, this._eventAnimateEntranceEnd);
@@ -7401,7 +7402,6 @@ var OSFramework;
                     _setAccessibilityProps() {
                         OSUI.Helper.Dom.Attribute.Set(this.selfElement, OSUI.Constants.A11YAttributes.TabIndex, '0');
                         OSUI.Helper.Dom.Attribute.Set(this.selfElement, OSUI.Constants.A11YAttributes.Role.AttrName, OSUI.Constants.A11YAttributes.Role.Progressbar);
-                        OSUI.Helper.Dom.Attribute.Set(this.selfElement, OSUI.Constants.A11YAttributes.Aria.Label, 'progress');
                         OSUI.Helper.Dom.Attribute.Set(this.selfElement, OSUI.Constants.A11YAttributes.Aria.ValueMin, Progress.ProgressEnum.Properties.MinProgressValue);
                         OSUI.Helper.Dom.Attribute.Set(this.selfElement, OSUI.Constants.A11YAttributes.Aria.ValueMax, Progress.ProgressEnum.Properties.MaxProgressValue);
                     }
@@ -7493,6 +7493,8 @@ var OSFramework;
                         CssClass["AddInitialAnimation"] = "animate-entrance";
                         CssClass["AnimateProgressChange"] = "animate-progress-change";
                         CssClass["Container"] = "osui-progress-bar__container";
+                        CssClass["ProgressBarContent"] = "osui-progress-bar__content";
+                        CssClass["ProgressCircleContent"] = "osui-progress-circle__content";
                     })(CssClass = ProgressEnum.CssClass || (ProgressEnum.CssClass = {}));
                     let InlineStyleProp;
                     (function (InlineStyleProp) {
@@ -7609,7 +7611,7 @@ var OSFramework;
                             this.updatedProgressValue();
                         }
                         setA11YProperties() {
-                            console.warn(OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
+                            OSUI.Helper.A11Y.AriaLabelledBy(this.selfElement, this.contentElemId);
                         }
                         setCallbacks() {
                             super.setCallbacks();
@@ -7621,6 +7623,7 @@ var OSFramework;
                         }
                         setHtmlElements() {
                             this.progressElem = this.selfElement.querySelector(OSUI.Constants.Dot + Progress.ProgressEnum.CssClass.Container);
+                            this.contentElemId = this.selfElement.querySelector(OSUI.Constants.Dot + Progress.ProgressEnum.CssClass.ProgressBarContent).id;
                         }
                         unsetCallbacks() {
                             super.unsetCallbacks();
@@ -7631,6 +7634,7 @@ var OSFramework;
                         build() {
                             super.build();
                             this.setHtmlElements();
+                            this.setA11YProperties();
                             this._setCssVariables();
                             this.setCallbacks();
                             if (!this.isBuilt) {
@@ -7886,7 +7890,7 @@ var OSFramework;
                             }
                         }
                         setA11YProperties() {
-                            console.warn(OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
+                            OSUI.Helper.A11Y.AriaLabelledBy(this.selfElement, this.contentElemId);
                         }
                         setCallbacks() {
                             super.setCallbacks();
@@ -7900,6 +7904,7 @@ var OSFramework;
                         setHtmlElements() {
                             this._blockParent = document.getElementById(this.widgetId).parentElement;
                             this.progressElem = this.selfElement.querySelector(OSUI.Constants.Dot + Circle_1.Enum.CssClass.Progress);
+                            this.contentElemId = this.selfElement.querySelector(OSUI.Constants.Dot + Progress.ProgressEnum.CssClass.ProgressCircleContent).id;
                             if (this.isBuilt) {
                                 this._gradientElem = this.progressElem.parentElement.querySelector('defs');
                             }
@@ -7930,6 +7935,7 @@ var OSFramework;
                         build() {
                             super.build();
                             this.setHtmlElements();
+                            this.setA11YProperties();
                             this._setCssVariables();
                             this._progressToOffset();
                             this.setCallbacks();
