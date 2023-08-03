@@ -249,7 +249,7 @@ namespace OSFramework.OSUI.Patterns.Progress.Circle {
 		 * @memberof OSFramework.Patterns.Progress.Circle.Circle
 		 */
 		protected setA11YProperties(): void {
-			console.warn(GlobalEnum.WarningMessages.MethodNotImplemented);
+			Helper.A11Y.AriaLabelledBy(this.selfElement, this.contentElemId);
 		}
 
 		/**
@@ -289,6 +289,10 @@ namespace OSFramework.OSUI.Patterns.Progress.Circle {
 			this._blockParent = document.getElementById(this.widgetId).parentElement;
 			// Set the html reference that will be used to do all the needed calcs
 			this.progressElem = this.selfElement.querySelector(Constants.Dot + Enum.CssClass.Progress);
+			// Set Progress Bar content element id
+			this.contentElemId = this.selfElement.querySelector(
+				OSUI.Constants.Dot + Progress.ProgressEnum.CssClass.ProgressCircleContent
+			).id;
 			// Set the <defs> element when using a svg gradient. Only after built, as the gradient is only available through Client Action
 			if (this.isBuilt) {
 				this._gradientElem = this.progressElem.parentElement.querySelector('defs');
@@ -385,6 +389,8 @@ namespace OSFramework.OSUI.Patterns.Progress.Circle {
 			super.build();
 
 			this.setHtmlElements();
+
+			this.setA11YProperties();
 
 			this._setCssVariables();
 

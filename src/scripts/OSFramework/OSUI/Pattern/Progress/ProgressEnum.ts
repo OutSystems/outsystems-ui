@@ -7,6 +7,8 @@ namespace OSFramework.OSUI.Patterns.Progress.ProgressEnum {
 		AddInitialAnimation = 'animate-entrance',
 		AnimateProgressChange = 'animate-progress-change',
 		Container = 'osui-progress-bar__container',
+		ProgressBarContent = 'osui-progress-bar__content',
+		ProgressCircleContent = 'osui-progress-circle__content',
 	}
 
 	/**
