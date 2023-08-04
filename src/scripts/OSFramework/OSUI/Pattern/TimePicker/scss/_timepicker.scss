@@ -24,17 +24,24 @@
 			}
 		}
 
-		// Hide the platform input which is set as hidden by the library and we're change it into the expected type, however we do not want it visible since library will add a clone to better deal with the selected dates.
-		&:first-of-type {
-			display: none !important;
-		}
-
 		// Disable states for Datepicker
 		&.flatpickr-input[disabled] + input {
 			background-color: var(--color-neutral-2);
 			border: var(--border-size-s) solid var(--color-neutral-4);
 			color: var(--color-neutral-6);
 			pointer-events: none;
+		}
+	}
+
+	// Hide the platform input which is set as hidden by the library and we're change it into the expected type, however we do not want it visible since library will add a clone to better deal with the selected dates.
+	& > span > input {
+		&:first-of-type {
+			display: none !important;
+
+			// Make the platform input visible in Service Studio
+			& {
+				-servicestudio-display: inline-flex !important;
+			}
 		}
 	}
 
@@ -46,7 +53,7 @@
 		// Service Studio Preview
 		& {
 			-servicestudio-background-color: transparent;
-			-servicestudio-background-position: top center;
+			-servicestudio-background-position: top left;
 			-servicestudio-background-repeat: no-repeat;
 			-servicestudio-background-size: contain;
 			-servicestudio-border-radius: var(--border-radius-soft);
