@@ -7392,7 +7392,6 @@ var OSFramework;
                 class AbstractProgress extends Patterns.AbstractPattern {
                     constructor(uniqueId, configs) {
                         super(uniqueId, configs);
-                        this.contentElemId = '';
                     }
                     _animateEntranceEnd() {
                         this.progressElem.removeEventListener(OSUI.GlobalEnum.HTMLEvent.TransitionEnd, this._eventAnimateEntranceEnd);
@@ -7421,6 +7420,7 @@ var OSFramework;
                     }
                     unsetHtmlElements() {
                         this.progressElem = undefined;
+                        this.contentElem = undefined;
                     }
                     updatedProgressValue() {
                         if (this.configs.Progress < Progress.ProgressEnum.Properties.MinProgressValue) {
@@ -7488,6 +7488,10 @@ var OSFramework;
             (function (Progress) {
                 var ProgressEnum;
                 (function (ProgressEnum) {
+                    let AriaLabel;
+                    (function (AriaLabel) {
+                        AriaLabel["Progress"] = "progress";
+                    })(AriaLabel = ProgressEnum.AriaLabel || (ProgressEnum.AriaLabel = {}));
                     let CssClass;
                     (function (CssClass) {
                         CssClass["AddInitialAnimation"] = "animate-entrance";
@@ -7611,7 +7615,10 @@ var OSFramework;
                             this.updatedProgressValue();
                         }
                         setA11YProperties() {
-                            OSUI.Helper.A11Y.AriaLabelledBy(this.selfElement, this.contentElemId);
+                            if (this.contentElem.innerHTML)
+                                OSUI.Helper.A11Y.AriaLabelledBy(this.selfElement, this.contentElem.id);
+                            else
+                                OSUI.Helper.A11Y.AriaLabel(this.selfElement, Progress.ProgressEnum.AriaLabel.Progress);
                         }
                         setCallbacks() {
                             super.setCallbacks();
@@ -7623,7 +7630,7 @@ var OSFramework;
                         }
                         setHtmlElements() {
                             this.progressElem = this.selfElement.querySelector(OSUI.Constants.Dot + Progress.ProgressEnum.CssClass.Container);
-                            this.contentElemId = this.selfElement.querySelector(OSUI.Constants.Dot + Progress.ProgressEnum.CssClass.ProgressBarContent).id;
+                            this.contentElem = this.selfElement.querySelector(OSUI.Constants.Dot + Progress.ProgressEnum.CssClass.ProgressBarContent);
                         }
                         unsetCallbacks() {
                             super.unsetCallbacks();
@@ -7890,7 +7897,10 @@ var OSFramework;
                             }
                         }
                         setA11YProperties() {
-                            OSUI.Helper.A11Y.AriaLabelledBy(this.selfElement, this.contentElemId);
+                            if (this.contentElem.innerHTML)
+                                OSUI.Helper.A11Y.AriaLabelledBy(this.selfElement, this.contentElem.id);
+                            else
+                                OSUI.Helper.A11Y.AriaLabel(this.selfElement, Progress.ProgressEnum.AriaLabel.Progress);
                         }
                         setCallbacks() {
                             super.setCallbacks();
@@ -7904,7 +7914,7 @@ var OSFramework;
                         setHtmlElements() {
                             this._blockParent = document.getElementById(this.widgetId).parentElement;
                             this.progressElem = this.selfElement.querySelector(OSUI.Constants.Dot + Circle_1.Enum.CssClass.Progress);
-                            this.contentElemId = this.selfElement.querySelector(OSUI.Constants.Dot + Progress.ProgressEnum.CssClass.ProgressCircleContent).id;
+                            this.contentElem = this.selfElement.querySelector(OSUI.Constants.Dot + Progress.ProgressEnum.CssClass.ProgressCircleContent);
                             if (this.isBuilt) {
                                 this._gradientElem = this.progressElem.parentElement.querySelector('defs');
                             }

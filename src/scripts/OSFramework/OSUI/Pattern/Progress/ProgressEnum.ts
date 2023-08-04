@@ -1,6 +1,12 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSFramework.OSUI.Patterns.Progress.ProgressEnum {
 	/**
+	 * Progress Enum AriaLabel
+	 */
+	export enum AriaLabel {
+		Progress = 'progress',
+	}
+	/**
 	 * Progress Enum Common classes
 	 */
 	export enum CssClass {
