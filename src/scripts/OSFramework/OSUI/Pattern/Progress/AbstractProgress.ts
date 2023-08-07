@@ -5,6 +5,7 @@ namespace OSFramework.OSUI.Patterns.Progress {
 		implements IProgress
 	{
 		private _eventAnimateEntranceEnd: GlobalCallbacks.Generic;
+		protected contentElem: HTMLElement;
 		protected gradientLength: number;
 		protected progressElem: HTMLElement;
 		protected progressType: ProgressEnum.ProgressTypes;
@@ -31,8 +32,6 @@ namespace OSFramework.OSUI.Patterns.Progress {
 				Constants.A11YAttributes.Role.AttrName,
 				Constants.A11YAttributes.Role.Progressbar
 			);
-
-			Helper.Dom.Attribute.Set(this.selfElement, Constants.A11YAttributes.Aria.Label, 'progress');
 
 			Helper.Dom.Attribute.Set(
 				this.selfElement,
@@ -103,6 +102,7 @@ namespace OSFramework.OSUI.Patterns.Progress {
 		 */
 		protected unsetHtmlElements(): void {
 			this.progressElem = undefined;
+			this.contentElem = undefined;
 		}
 
 		/**
