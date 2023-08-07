@@ -23,6 +23,8 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 		private _eventOverlayMouseDown: GlobalCallbacks.Generic;
 		// Store the keypress event with bind(this)
 		private _eventSidebarKeypress: GlobalCallbacks.Generic;
+		// Store focus manager instance
+		private _focusManagerInstance: Behaviors.FocusManager;
 		// Store focus trap instance
 		private _focusTrapInstance: Behaviors.FocusTrap;
 		// Store gesture events instance
@@ -76,6 +78,7 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 					);
 				}
 			}
+			this._focusManagerInstance.returnFocusToElement();
 		}
 
 		/**
@@ -84,12 +87,14 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 		 * @private
 		 * @memberof Sidebar
 		 */
-		private _handleFocusTrap(): void {
+		private _handleFocusBehavior(): void {
 			const opts = {
 				focusTargetElement: this._parentSelf,
 			} as Behaviors.FocusTrapParams;
 
 			this._focusTrapInstance = new Behaviors.FocusTrap(opts);
+
+			this._focusManagerInstance = new Behaviors.FocusManager();
 
 			// Disable tabIndex to the inner focusable elements if its start closed!
 			if (this._isOpen === false) {
@@ -189,6 +194,8 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 
 			// Add the A11Y states to focus trap
 			this._focusTrapInstance.enableForA11y();
+
+			this._focusManagerInstance.storeLastFocusedElement();
 
 			if (this.isBuilt) {
 				//let's only change the property and trigger the OS event IF the pattern is already built.
@@ -470,7 +477,7 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 
 			this.setHtmlElements();
 
-			this._handleFocusTrap();
+			this._handleFocusBehavior();
 
 			this._setInitialCssClasses();
 

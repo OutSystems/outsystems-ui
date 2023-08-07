@@ -525,6 +525,14 @@ declare namespace OSFramework.OSUI.Behaviors {
     export {};
 }
 declare namespace OSFramework.OSUI.Behaviors {
+    class FocusManager {
+        private _lastFocusedElem;
+        constructor();
+        returnFocusToElement(): void;
+        storeLastFocusedElement(): void;
+    }
+}
+declare namespace OSFramework.OSUI.Behaviors {
     type FocusTrapParams = {
         focusBottomCallback: GlobalCallbacks.Generic;
         focusTargetElement: HTMLElement;
@@ -871,14 +879,14 @@ declare namespace OSFramework.OSUI.Feature.Balloon {
         private _eventOnKeypress;
         private _floatingInstance;
         private _floatingOptions;
+        private _focusManagerInstance;
         private _focusTrapInstance;
-        private _focusableActiveElement;
         private _isOpenedByApi;
         private _onToggleEvent;
         isOpen: boolean;
         constructor(featurePattern: PT, featureElem: HTMLElement, options: BalloonOptions);
         private _bodyClickCallback;
-        private _handleFocusTrap;
+        private _handleFocusBehavior;
         private _onkeypressCallback;
         private _removeEventListeners;
         private _setA11YProperties;
@@ -1511,8 +1519,8 @@ declare namespace OSFramework.OSUI.Patterns.BottomSheet {
         private _bottomSheetHeaderElem;
         private _eventOnContentScroll;
         private _eventOnKeypress;
+        private _focusManagerInstance;
         private _focusTrapInstance;
-        private _focusableActiveElement;
         private _gestureEventInstance;
         private _hasGestureEvents;
         private _isOpen;
@@ -1529,7 +1537,7 @@ declare namespace OSFramework.OSUI.Patterns.BottomSheet {
         get gestureEventInstance(): Event.GestureEvent.DragEvent;
         get hasGestureEvents(): boolean;
         constructor(uniqueId: string, configs: JSON);
-        private _handleFocusTrap;
+        private _handleFocusBehavior;
         private _handleGestureEvents;
         private _handleShape;
         private _onContentScrollCallback;
@@ -2350,8 +2358,8 @@ declare namespace OSFramework.OSUI.Patterns.Notification {
         private _eventOnClick;
         private _eventOnKeypress;
         private _eventType;
+        private _focusManagerInstance;
         private _focusTrapInstance;
-        private _focusableActiveElement;
         private _gestureEventInstance;
         private _hasGestureEvents;
         private _isOpen;
@@ -2360,7 +2368,7 @@ declare namespace OSFramework.OSUI.Patterns.Notification {
         constructor(uniqueId: string, configs: JSON);
         private _autoCloseNotification;
         private _clickCallback;
-        private _handleFocusTrap;
+        private _handleFocusBehavior;
         private _handleGestureEvents;
         private _hideNotification;
         private _keypressCallback;
@@ -3009,6 +3017,7 @@ declare namespace OSFramework.OSUI.Patterns.Sidebar {
         private _eventOverlayClick;
         private _eventOverlayMouseDown;
         private _eventSidebarKeypress;
+        private _focusManagerInstance;
         private _focusTrapInstance;
         private _gestureEventInstance;
         private _hasGestureEvents;
@@ -3017,7 +3026,7 @@ declare namespace OSFramework.OSUI.Patterns.Sidebar {
         private _platformEventOnToggle;
         constructor(uniqueId: string, configs: JSON);
         private _closeSidebar;
-        private _handleFocusTrap;
+        private _handleFocusBehavior;
         private _handleGestureEvents;
         private _onGestureEnd;
         private _onGestureMove;

@@ -13,10 +13,10 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		private _eventOnKeypress: GlobalCallbacks.Generic;
 		// Define the event to be applied based on device
 		private _eventType: string;
+		// Store focus manager instance
+		private _focusManagerInstance: Behaviors.FocusManager;
 		// Store focus trap instance
 		private _focusTrapInstance: Behaviors.FocusTrap;
-		// Store the active element focused
-		private _focusableActiveElement: HTMLElement;
 		// Store gesture events instance
 		private _gestureEventInstance: Event.GestureEvent.SwipeEvent;
 		// Store if the pattern has gesture events added
@@ -70,12 +70,14 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		 * @private
 		 * @memberof Notification
 		 */
-		private _handleFocusTrap(): void {
+		private _handleFocusBehavior(): void {
 			const opts = {
 				focusTargetElement: this._parentSelf,
 			} as Behaviors.FocusTrapParams;
 
 			this._focusTrapInstance = new Behaviors.FocusTrap(opts);
+
+			this._focusManagerInstance = new Behaviors.FocusManager();
 		}
 
 		/**
@@ -124,7 +126,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 			this.selfElement.blur();
 
 			// Focus on last element clicked
-			this._focusableActiveElement.focus();
+			this._focusManagerInstance.returnFocusToElement();
 
 			// Remove listeners to toggle Notification
 			if (Helper.DeviceInfo.IsNative === false && this.configs.InteractToClose) {
@@ -167,7 +169,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		 * @memberof Notification
 		 */
 		private _showNotification(): void {
-			this._focusableActiveElement = document.activeElement as HTMLElement;
+			this._focusManagerInstance.storeLastFocusedElement();
 			this._isOpen = true;
 
 			// Add the A11Y states to focus trap
@@ -410,7 +412,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 
 			this.setHtmlElements();
 
-			this._handleFocusTrap();
+			this._handleFocusBehavior();
 
 			this.setA11YProperties();
 

@@ -17,9 +17,10 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 		// Listener callbacks
 		private _eventOnContentScroll: GlobalCallbacks.Generic;
 		private _eventOnKeypress: GlobalCallbacks.Generic;
+		// Store focus manager instance
+		private _focusManagerInstance: Behaviors.FocusManager;
 		// FocusTrap Properties
 		private _focusTrapInstance: Behaviors.FocusTrap;
-		private _focusableActiveElement: HTMLElement;
 		// Store gesture events instance
 		private _gestureEventInstance: Event.GestureEvent.DragEvent;
 		// Store if the pattern has gesture events added
@@ -73,12 +74,14 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 		 * @private
 		 * @memberof BottomSheet
 		 */
-		private _handleFocusTrap(): void {
+		private _handleFocusBehavior(): void {
 			const opts = {
 				focusTargetElement: this._parentSelf,
 			} as Behaviors.FocusTrapParams;
 
 			this._focusTrapInstance = new Behaviors.FocusTrap(opts);
+
+			this._focusManagerInstance = new Behaviors.FocusManager();
 		}
 
 		/**
@@ -227,7 +230,7 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 
 			// Handle focus trap logic
 			if (isOpen) {
-				this._focusableActiveElement = document.activeElement as HTMLElement;
+				this._focusManagerInstance.storeLastFocusedElement();
 				this._focusTrapInstance.enableForA11y();
 				// Focus on element when pattern is open
 				this.selfElement.focus();
@@ -237,7 +240,7 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 				// Focus on last element clicked. Async to avoid conflict with closing animation
 				Helper.AsyncInvocation(() => {
 					this.selfElement.blur();
-					this._focusableActiveElement.focus();
+					this._focusManagerInstance.returnFocusToElement();
 				});
 			}
 
@@ -398,7 +401,7 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 		public build(): void {
 			super.build();
 			this.setHtmlElements();
-			this._handleFocusTrap();
+			this._handleFocusBehavior();
 			this.setInitialOptions();
 			this.setCallbacks();
 			this.setA11YProperties();
