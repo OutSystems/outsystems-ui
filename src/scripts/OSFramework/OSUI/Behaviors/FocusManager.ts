@@ -20,7 +20,7 @@ namespace OSFramework.OSUI.Behaviors {
 		 * @return {*}  {void}
 		 * @memberof OSFramework.Behaviors.FocusManager
 		 */
-		public returnFocusToElement(): void {
+		public setFocusToStoredElement(): void {
 			// If no element was set as the last focused element or it is not focusable anymore,
 			// return the focus to the first focusable element in the page.
 			if (

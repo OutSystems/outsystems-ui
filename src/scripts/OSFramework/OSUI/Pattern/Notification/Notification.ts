@@ -126,7 +126,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 			this.selfElement.blur();
 
 			// Focus on last element clicked
-			this._focusManagerInstance.returnFocusToElement();
+			this._focusManagerInstance.setFocusToStoredElement();
 
 			// Remove listeners to toggle Notification
 			if (Helper.DeviceInfo.IsNative === false && this.configs.InteractToClose) {

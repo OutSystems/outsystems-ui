@@ -240,7 +240,7 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 				// Focus on last element clicked. Async to avoid conflict with closing animation
 				Helper.AsyncInvocation(() => {
 					this.selfElement.blur();
-					this._focusManagerInstance.returnFocusToElement();
+					this._focusManagerInstance.setFocusToStoredElement();
 				});
 			}
 

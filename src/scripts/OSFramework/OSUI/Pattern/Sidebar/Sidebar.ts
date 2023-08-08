@@ -78,7 +78,7 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 					);
 				}
 			}
-			this._focusManagerInstance.returnFocusToElement();
+			this._focusManagerInstance.setFocusToStoredElement();
 		}
 
 		/**

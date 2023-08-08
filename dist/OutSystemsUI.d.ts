@@ -528,7 +528,7 @@ declare namespace OSFramework.OSUI.Behaviors {
     class FocusManager {
         private _lastFocusedElem;
         constructor();
-        returnFocusToElement(): void;
+        setFocusToStoredElement(): void;
         storeLastFocusedElement(): void;
     }
 }

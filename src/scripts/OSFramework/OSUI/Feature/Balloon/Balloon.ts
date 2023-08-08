@@ -176,7 +176,7 @@ namespace OSFramework.OSUI.Feature.Balloon {
 				Helper.AsyncInvocation(() => {
 					this.featureElem.blur();
 					if (isBodyClick === false) {
-						this._focusManagerInstance.returnFocusToElement();
+						this._focusManagerInstance.setFocusToStoredElement();
 					}
 				});
 			}

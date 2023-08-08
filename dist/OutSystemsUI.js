@@ -809,7 +809,7 @@ var OSFramework;
             class FocusManager {
                 constructor() {
                 }
-                returnFocusToElement() {
+                setFocusToStoredElement() {
                     if (this._lastFocusedElem === undefined ||
                         !document.body.contains(this._lastFocusedElem) ||
                         this._lastFocusedElem.hasAttribute(OSUI.GlobalEnum.HTMLAttributes.Disabled) ||
@@ -1912,7 +1912,7 @@ var OSFramework;
                             OSUI.Helper.AsyncInvocation(() => {
                                 this.featureElem.blur();
                                 if (isBodyClick === false) {
-                                    this._focusManagerInstance.returnFocusToElement();
+                                    this._focusManagerInstance.setFocusToStoredElement();
                                 }
                             });
                         }
@@ -4485,7 +4485,7 @@ var OSFramework;
                             this._focusTrapInstance.disableForA11y();
                             OSUI.Helper.AsyncInvocation(() => {
                                 this.selfElement.blur();
-                                this._focusManagerInstance.returnFocusToElement();
+                                this._focusManagerInstance.setFocusToStoredElement();
                             });
                         }
                         this._triggerOnToggleEvent();
@@ -6884,7 +6884,7 @@ var OSFramework;
                         this._triggerOnToggleEvent(this._isOpen);
                         this._updateA11yProperties();
                         this.selfElement.blur();
-                        this._focusManagerInstance.returnFocusToElement();
+                        this._focusManagerInstance.setFocusToStoredElement();
                         if (OSUI.Helper.DeviceInfo.IsNative === false && this.configs.InteractToClose) {
                             this.selfElement.removeEventListener(this._eventType, this._eventOnClick);
                             this.selfElement.removeEventListener(OSUI.GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
@@ -9026,7 +9026,7 @@ var OSFramework;
                                 OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick, this._eventOverlayClick);
                             }
                         }
-                        this._focusManagerInstance.returnFocusToElement();
+                        this._focusManagerInstance.setFocusToStoredElement();
                     }
                     _handleFocusBehavior() {
                         const opts = {
