@@ -2495,6 +2495,7 @@ declare namespace OSFramework.OSUI.Patterns.OverflowMenu {
 declare namespace OSFramework.OSUI.Patterns.Progress {
     abstract class AbstractProgress<C extends ProgressConfiguration> extends AbstractPattern<C> implements IProgress {
         private _eventAnimateEntranceEnd;
+        protected contentElem: HTMLElement;
         protected gradientLength: number;
         protected progressElem: HTMLElement;
         protected progressType: ProgressEnum.ProgressTypes;
@@ -2536,10 +2537,15 @@ declare namespace OSFramework.OSUI.Patterns.Progress {
     }
 }
 declare namespace OSFramework.OSUI.Patterns.Progress.ProgressEnum {
+    enum AriaLabel {
+        Progress = "progress"
+    }
     enum CssClass {
         AddInitialAnimation = "animate-entrance",
         AnimateProgressChange = "animate-progress-change",
-        Container = "osui-progress-bar__container"
+        Container = "osui-progress-bar__container",
+        ProgressBarContent = "osui-progress-bar__content",
+        ProgressCircleContent = "osui-progress-circle__content"
     }
     enum InlineStyleProp {
         ProgressColor = "--progress-color",
