@@ -26,9 +26,10 @@ namespace OSFramework.OSUI.Feature.Balloon {
 		private _floatingInstance: Utils.FloatingPosition.FloatingPosition;
 		// Store the Floating Util options
 		private _floatingOptions: Utils.FloatingPosition.FloatingPositionConfig;
+		// Store focus manager instance
+		private _focusManagerInstance: Behaviors.FocusManager;
 		// FocusTrap Properties
 		private _focusTrapInstance: Behaviors.FocusTrap;
-		private _focusableActiveElement: HTMLElement;
 		// Flag used to deal with onBodyClick and open api concurrency methods!
 		private _isOpenedByApi = false;
 		// Store the onTogle custom event
@@ -53,12 +54,14 @@ namespace OSFramework.OSUI.Feature.Balloon {
 		}
 
 		// Add Focus Trap to the Pattern
-		private _handleFocusTrap(): void {
+		private _handleFocusBehavior(): void {
 			const opts = {
 				focusTargetElement: this._floatingOptions.AnchorElem.parentElement,
 			} as Behaviors.FocusTrapParams;
 
 			this._focusTrapInstance = new Behaviors.FocusTrap(opts);
+
+			this._focusManagerInstance = new Behaviors.FocusManager();
 		}
 
 		// Call methods to open or close, based on e.key and behaviour applied
@@ -154,7 +157,7 @@ namespace OSFramework.OSUI.Feature.Balloon {
 
 			if (this.isOpen) {
 				// Handle focus trap logic
-				this._focusableActiveElement = document.activeElement as HTMLElement;
+				this._focusManagerInstance.storeLastFocusedElement();
 				this._focusTrapInstance.enableForA11y();
 
 				// Set Floating Util
@@ -173,7 +176,7 @@ namespace OSFramework.OSUI.Feature.Balloon {
 				Helper.AsyncInvocation(() => {
 					this.featureElem.blur();
 					if (isBodyClick === false) {
-						this._focusableActiveElement.focus();
+						this._focusManagerInstance.setFocusToStoredElement();
 					}
 				});
 			}
@@ -204,7 +207,7 @@ namespace OSFramework.OSUI.Feature.Balloon {
 			this._setCallbacks();
 			this._setEventListeners();
 			this.setFloatingConfigs();
-			this._handleFocusTrap();
+			this._handleFocusBehavior();
 			this._setA11YProperties();
 			this.setBalloonShape();
 		}

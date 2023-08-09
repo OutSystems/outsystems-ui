@@ -806,6 +806,37 @@ var OSFramework;
     (function (OSUI) {
         var Behaviors;
         (function (Behaviors) {
+            class FocusManager {
+                constructor() {
+                }
+                setFocusToStoredElement() {
+                    if (this._lastFocusedElem === undefined ||
+                        !document.body.contains(this._lastFocusedElem) ||
+                        this._lastFocusedElem.hasAttribute(OSUI.GlobalEnum.HTMLAttributes.Disabled) ||
+                        this._lastFocusedElem.tabIndex < 0) {
+                        document.querySelector(OSFramework.OSUI.Constants.FocusableElems).focus();
+                    }
+                    else {
+                        this._lastFocusedElem.focus();
+                    }
+                }
+                storeLastFocusedElement() {
+                    if (document.activeElement !== undefined &&
+                        document.activeElement !== null &&
+                        document.activeElement !== document.body)
+                        this._lastFocusedElem = document.activeElement;
+                }
+            }
+            Behaviors.FocusManager = FocusManager;
+        })(Behaviors = OSUI.Behaviors || (OSUI.Behaviors = {}));
+    })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
+})(OSFramework || (OSFramework = {}));
+var OSFramework;
+(function (OSFramework) {
+    var OSUI;
+    (function (OSUI) {
+        var Behaviors;
+        (function (Behaviors) {
             class FocusTrap {
                 constructor(opts) {
                     this._hasBeenPassThoughFirstOne = false;
@@ -1812,11 +1843,12 @@ var OSFramework;
                             e.stopPropagation();
                         }
                     }
-                    _handleFocusTrap() {
+                    _handleFocusBehavior() {
                         const opts = {
                             focusTargetElement: this._floatingOptions.AnchorElem.parentElement,
                         };
                         this._focusTrapInstance = new OSUI.Behaviors.FocusTrap(opts);
+                        this._focusManagerInstance = new OSUI.Behaviors.FocusManager();
                     }
                     _onkeypressCallback(e) {
                         const isEscapedPressed = e.key === OSUI.GlobalEnum.Keycodes.Escape;
@@ -1867,7 +1899,7 @@ var OSFramework;
                         }
                         this._setA11YProperties();
                         if (this.isOpen) {
-                            this._focusableActiveElement = document.activeElement;
+                            this._focusManagerInstance.storeLastFocusedElement();
                             this._focusTrapInstance.enableForA11y();
                             this.setFloatingBehaviour();
                             OSUI.Helper.AsyncInvocation(() => {
@@ -1880,7 +1912,7 @@ var OSFramework;
                             OSUI.Helper.AsyncInvocation(() => {
                                 this.featureElem.blur();
                                 if (isBodyClick === false) {
-                                    this._focusableActiveElement.focus();
+                                    this._focusManagerInstance.setFocusToStoredElement();
                                 }
                             });
                         }
@@ -1899,7 +1931,7 @@ var OSFramework;
                         this._setCallbacks();
                         this._setEventListeners();
                         this.setFloatingConfigs();
-                        this._handleFocusTrap();
+                        this._handleFocusBehavior();
                         this._setA11YProperties();
                         this.setBalloonShape();
                     }
@@ -4389,11 +4421,12 @@ var OSFramework;
                             },
                         };
                     }
-                    _handleFocusTrap() {
+                    _handleFocusBehavior() {
                         const opts = {
                             focusTargetElement: this._parentSelf,
                         };
                         this._focusTrapInstance = new OSUI.Behaviors.FocusTrap(opts);
+                        this._focusManagerInstance = new OSUI.Behaviors.FocusManager();
                     }
                     _handleGestureEvents() {
                         if (!OSUI.Helper.DeviceInfo.IsDesktop) {
@@ -4444,7 +4477,7 @@ var OSFramework;
                         this.setEventListeners();
                         this.setA11YProperties();
                         if (isOpen) {
-                            this._focusableActiveElement = document.activeElement;
+                            this._focusManagerInstance.storeLastFocusedElement();
                             this._focusTrapInstance.enableForA11y();
                             this.selfElement.focus();
                         }
@@ -4452,7 +4485,7 @@ var OSFramework;
                             this._focusTrapInstance.disableForA11y();
                             OSUI.Helper.AsyncInvocation(() => {
                                 this.selfElement.blur();
-                                this._focusableActiveElement.focus();
+                                this._focusManagerInstance.setFocusToStoredElement();
                             });
                         }
                         this._triggerOnToggleEvent();
@@ -4516,7 +4549,7 @@ var OSFramework;
                     build() {
                         super.build();
                         this.setHtmlElements();
-                        this._handleFocusTrap();
+                        this._handleFocusBehavior();
                         this.setInitialOptions();
                         this.setCallbacks();
                         this.setA11YProperties();
@@ -6831,11 +6864,12 @@ var OSFramework;
                         e.preventDefault();
                         this.hide();
                     }
-                    _handleFocusTrap() {
+                    _handleFocusBehavior() {
                         const opts = {
                             focusTargetElement: this._parentSelf,
                         };
                         this._focusTrapInstance = new OSUI.Behaviors.FocusTrap(opts);
+                        this._focusManagerInstance = new OSUI.Behaviors.FocusManager();
                     }
                     _handleGestureEvents() {
                         if (OSUI.Helper.DeviceInfo.IsNative) {
@@ -6850,7 +6884,7 @@ var OSFramework;
                         this._triggerOnToggleEvent(this._isOpen);
                         this._updateA11yProperties();
                         this.selfElement.blur();
-                        this._focusableActiveElement.focus();
+                        this._focusManagerInstance.setFocusToStoredElement();
                         if (OSUI.Helper.DeviceInfo.IsNative === false && this.configs.InteractToClose) {
                             this.selfElement.removeEventListener(this._eventType, this._eventOnClick);
                             this.selfElement.removeEventListener(OSUI.GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
@@ -6867,7 +6901,7 @@ var OSFramework;
                         this.selfElement.removeEventListener(OSUI.GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
                     }
                     _showNotification() {
-                        this._focusableActiveElement = document.activeElement;
+                        this._focusManagerInstance.storeLastFocusedElement();
                         this._isOpen = true;
                         this._focusTrapInstance.enableForA11y();
                         OSUI.Helper.Dom.Styles.AddClass(this.selfElement, Notification_1.Enum.CssClass.PatternIsOpen);
@@ -6969,7 +7003,7 @@ var OSFramework;
                         OSUI.Helper.AsyncInvocation(this.setInitialStates.bind(this));
                         this.setCallbacks();
                         this.setHtmlElements();
-                        this._handleFocusTrap();
+                        this._handleFocusBehavior();
                         this.setA11YProperties();
                         this._handleGestureEvents();
                         this.finishBuild();
@@ -9008,12 +9042,14 @@ var OSFramework;
                                 OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick, this._eventOverlayClick);
                             }
                         }
+                        this._focusManagerInstance.setFocusToStoredElement();
                     }
-                    _handleFocusTrap() {
+                    _handleFocusBehavior() {
                         const opts = {
                             focusTargetElement: this._parentSelf,
                         };
                         this._focusTrapInstance = new OSUI.Behaviors.FocusTrap(opts);
+                        this._focusManagerInstance = new OSUI.Behaviors.FocusManager();
                         if (this._isOpen === false) {
                             OSUI.Helper.A11Y.SetElementsTabIndex(false, this._focusTrapInstance.focusableElements);
                         }
@@ -9045,6 +9081,7 @@ var OSFramework;
                         OSUI.Helper.A11Y.TabIndexTrue(this.selfElement);
                         OSUI.Helper.A11Y.AriaHiddenFalse(this.selfElement);
                         this._focusTrapInstance.enableForA11y();
+                        this._focusManagerInstance.storeLastFocusedElement();
                         if (this.isBuilt) {
                             this._isOpen = true;
                             this._triggerOnToggleEvent();
@@ -9169,7 +9206,7 @@ var OSFramework;
                         super.build();
                         this.setCallbacks();
                         this.setHtmlElements();
-                        this._handleFocusTrap();
+                        this._handleFocusBehavior();
                         this._setInitialCssClasses();
                         this.setA11YProperties();
                         this._handleGestureEvents();
