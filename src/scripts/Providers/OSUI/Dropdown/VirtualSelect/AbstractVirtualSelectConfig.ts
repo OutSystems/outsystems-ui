@@ -155,8 +155,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 				previousValue[group_name].push(option);
 
 				return previousValue;
-			},
-			{});
+			}, {});
 			return [hasDescription, groupOptionsObject];
 		}
 
