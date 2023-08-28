@@ -793,7 +793,8 @@ body,
 }
 .phone .layout .main-content .layout.layout-native{
   -servicestudio-min-width:100vw;
-} /*! 3.2. Header */
+}
+/*! 3.2. Header */
 .header{
   background-color:var(--header-color);
   -webkit-box-shadow:0 1px 5px 0 rgba(21, 24, 26, 0.1);
@@ -4650,7 +4651,7 @@ span.flatpickr-weekday{
 }
 /*! 5.4. VirtualSelect */
 /*!
- * Virtual Select v1.0.39
+ * Virtual Select v1.0.40
  * https://sa-si-dev.github.io/virtual-select
  * Licensed under MIT (https://github.com/sa-si-dev/virtual-select/blob/master/LICENSE)
  */
@@ -8467,14 +8468,17 @@ span.flatpickr-weekday{
   display:none;
   -moz-appearance:none;
 }
-.osui-datepicker input:first-of-type{
-  display:none !important;
-}
 .osui-datepicker input.flatpickr-input[disabled] + input{
   background-color:var(--color-neutral-2);
   border:var(--border-size-s) solid var(--color-neutral-4);
   color:var(--color-neutral-6);
   pointer-events:none;
+}
+.osui-datepicker > span > input:first-of-type{
+  display:none !important;
+}
+.osui-datepicker > span > input:first-of-type{
+  -servicestudio-display:inline-flex !important;
 }
 .osui-datepicker-calendar-ss-preview{
   display:none;
@@ -9555,14 +9559,17 @@ body.vscomp-popup-active .vscomp-wrapper{
 .osui-monthpicker .not-valid + .flatpickr-mobile{
   border-color:var(--color-error);
 }
-.osui-monthpicker input:first-of-type{
-  display:none !important;
-}
 .osui-monthpicker input[disabled] + input{
   background-color:var(--color-neutral-2);
   border:var(--border-size-s) solid var(--color-neutral-4);
   color:var(--color-neutral-6);
   pointer-events:none;
+}
+.osui-monthpicker > span > input:first-of-type{
+  display:none !important;
+}
+.osui-monthpicker > span > input:first-of-type{
+  -servicestudio-display:inline-flex !important;
 }
 .form .osui-monthpicker-ss-preview{
   -servicestudio-margin-top:-22px;
@@ -10517,14 +10524,17 @@ body.vscomp-popup-active .vscomp-wrapper{
   display:none;
   -moz-appearance:none;
 }
-.osui-timepicker input:first-of-type{
-  display:none !important;
-}
 .osui-timepicker input.flatpickr-input[disabled] + input{
   background-color:var(--color-neutral-2);
   border:var(--border-size-s) solid var(--color-neutral-4);
   color:var(--color-neutral-6);
   pointer-events:none;
+}
+.osui-timepicker > span > input:first-of-type{
+  display:none !important;
+}
+.osui-timepicker > span > input:first-of-type{
+  -servicestudio-display:inline-flex !important;
 }
 .osui-timepicker__dropdown-ss-preview{
   display:none;
@@ -10532,7 +10542,7 @@ body.vscomp-popup-active .vscomp-wrapper{
 }
 .osui-timepicker__dropdown-ss-preview{
   -servicestudio-background-color:transparent;
-  -servicestudio-background-position:top center;
+  -servicestudio-background-position:top left;
   -servicestudio-background-repeat:no-repeat;
   -servicestudio-background-size:contain;
   -servicestudio-border-radius:var(--border-radius-soft);
