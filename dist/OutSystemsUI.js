@@ -17695,7 +17695,7 @@ var Providers;
                             return _finalDate;
                         }
                         else {
-                            return OSFramework.OSUI.Helper.Dates.NormalizeDateTime(_finalDate);
+                            return OSFramework.OSUI.Helper.Dates.NormalizeDateTime(_finalDate, date === this.MaxDate);
                         }
                     }
                     getProviderConfig() {
@@ -19034,7 +19034,7 @@ var Providers;
                     let ProviderInfo;
                     (function (ProviderInfo) {
                         ProviderInfo["Name"] = "VirtualSelect";
-                        ProviderInfo["Version"] = "1.0.39";
+                        ProviderInfo["Version"] = "1.0.40";
                     })(ProviderInfo = Enum.ProviderInfo || (Enum.ProviderInfo = {}));
                     let CssClass;
                     (function (CssClass) {
