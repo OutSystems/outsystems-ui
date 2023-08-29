@@ -11706,6 +11706,9 @@ html[data-uieditorversion^="1"] .osui-timepicker__dropdown-ss-preview.time12h, h
   -webkit-perspective:1000px;
           perspective:1000px;
 }
+.desktop .osui-tabs__content-item:not(.osui-tabs--is-active) *{
+  visibility:hidden;
+}
 .osui-tabs__preview{
   display:none;
 }
