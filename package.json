@@ -1,6 +1,6 @@
 {
 	"name": "outsystems-ui",
-	"version": "2.17.0",
+	"version": "2.18.0",
 	"description": "OutSystems UI Framework",
 	"license": "BSD-3-Clause",
 	"scripts": {
