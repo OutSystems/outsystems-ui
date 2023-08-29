@@ -21051,5 +21051,3 @@ var Providers;
         })(Utils = OSUI.Utils || (OSUI.Utils = {}));
     })(OSUI = Providers.OSUI || (Providers.OSUI = {}));
 })(Providers || (Providers = {}));
-
-//# sourceMappingURL=dev.OutSystemsUI.js.map
