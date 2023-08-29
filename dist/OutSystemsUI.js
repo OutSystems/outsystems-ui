@@ -1,5 +1,5 @@
 /*!
-OutSystems UI 2.17.0
+OutSystems UI 2.18.0
 Website:
  • https://www.outsystems.com/outsystems-ui
 GitHub:
@@ -135,7 +135,7 @@ var OSFramework;
             Constants.AccessibilityHideElementClass = 'wcag-hide-text';
             Constants.IsRTLClass = 'is-rtl';
             Constants.NoTransition = 'no-transition';
-            Constants.OSUIVersion = '2.17.0';
+            Constants.OSUIVersion = '2.18.0';
             Constants.ZeroValue = 0;
         })(Constants = OSUI.Constants || (OSUI.Constants = {}));
     })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
@@ -18644,16 +18644,7 @@ var Providers;
                         }
                     }
                     _manageAttributes() {
-                        this._manageDisableStatus();
                         this.setA11YProperties();
-                    }
-                    _manageDisableStatus() {
-                        if (this.configs.IsDisabled) {
-                            OSFramework.OSUI.Helper.Dom.Attribute.Set(this.selfElement, OSFramework.OSUI.GlobalEnum.HTMLAttributes.Disabled, '');
-                        }
-                        else {
-                            OSFramework.OSUI.Helper.Dom.Attribute.Remove(this.selfElement, OSFramework.OSUI.GlobalEnum.HTMLAttributes.Disabled);
-                        }
                     }
                     _onMouseUp(event) {
                         event.preventDefault();
@@ -18745,8 +18736,6 @@ var Providers;
                         if (this.isBuilt) {
                             switch (propertyName) {
                                 case OSFramework.OSUI.Patterns.Dropdown.Enum.Properties.IsDisabled:
-                                    this._manageDisableStatus();
-                                    break;
                                 case VirtualSelect.Enum.Properties.NoOptionsText:
                                 case VirtualSelect.Enum.Properties.NoResultsText:
                                 case VirtualSelect.Enum.Properties.OptionsList:
@@ -18768,9 +18757,9 @@ var Providers;
                         OSFramework.OSUI.Helper.AsyncInvocation(this.virtualselectConfigs.close.bind(this.virtualselectConfigs));
                     }
                     disable() {
-                        if (this.configs.IsDisabled === false) {
+                        if (this.configs.IsDisabled === false && this.provider !== undefined) {
                             this.configs.IsDisabled = true;
-                            this._manageDisableStatus();
+                            this.provider.$ele.disable();
                         }
                     }
                     dispose() {
@@ -18789,9 +18778,9 @@ var Providers;
                         super.dispose();
                     }
                     enable() {
-                        if (this.configs.IsDisabled) {
+                        if (this.configs.IsDisabled && this.provider !== undefined) {
                             this.configs.IsDisabled = false;
-                            this._manageDisableStatus();
+                            this.provider.$ele.enable();
                         }
                     }
                     getSelectedValues() {
@@ -18971,6 +18960,7 @@ var Providers;
                         this._groupedOptionsList = groupedOptionsList;
                         this._providerOptions = {
                             ele: this.ElementId,
+                            disabled: this.IsDisabled,
                             dropboxWrapper: OSFramework.OSUI.GlobalEnum.HTMLElement.Body,
                             hasOptionDescription: hasDescription,
                             hideClearButton: false,

@@ -1,6 +1,6 @@
 @charset "UTF-8";
 /*!
-OutSystems UI 2.17.0
+OutSystems UI 2.18.0
 Website:
  • https://www.outsystems.com/outsystems-ui
 GitHub:
@@ -793,8 +793,7 @@ body,
 }
 .phone .layout .main-content .layout.layout-native{
   -servicestudio-min-width:100vw;
-}
-/*! 3.2. Header */
+} /*! 3.2. Header */
 .header{
   background-color:var(--header-color);
   -webkit-box-shadow:0 1px 5px 0 rgba(21, 24, 26, 0.1);
@@ -2779,9 +2778,15 @@ span.validation-message{
   margin-right:var(--space-base);
   width:auto;
 }
+[data-upload]:focus-visible{
+  border:var(--border-size-s) solid var(--color-primary);
+}
 .is-rtl [data-upload] [data-icon]{
   margin-left:var(--space-base);
   margin-right:var(--space-none);
+}
+.has-accessible-features [data-upload]{
+  border:var(--border-size-s) solid var(--color-neutral-7);
 }
 /*! 4.13. Button Group */
 .button-group{
@@ -4942,7 +4947,9 @@ span.flatpickr-weekday{
   padding:0 5px 0 15px;
 }
 .vscomp-search-label,
-.vscomp-live-region{
+.vscomp-live-region,
+.vscomp-dropbox-container-top,
+.vscomp-dropbox-container-bottom{
   border:0;
   clip:rect(0 0 0 0);
   height:1px;
