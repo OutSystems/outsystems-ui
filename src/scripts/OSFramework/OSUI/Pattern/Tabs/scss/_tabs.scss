@@ -363,6 +363,13 @@
 	}
 }
 
+// Fix issue when patterns like Dropdown are open when the header click is triggered.
+.desktop {
+	.osui-tabs__content-item:not(.osui-tabs--is-active) * {
+		visibility: hidden;
+	} 
+}
+
 // Service Studio Preview Message
 .osui-tabs__preview {
 	display: none;
