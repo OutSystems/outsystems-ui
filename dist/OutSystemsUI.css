@@ -1,6 +1,6 @@
 @charset "UTF-8";
 /*!
-OutSystems UI 2.17.0
+OutSystems UI 2.18.0
 Website:
  • https://www.outsystems.com/outsystems-ui
 GitHub:
@@ -4967,7 +4967,9 @@ span.flatpickr-weekday{
   padding:0 5px 0 15px;
 }
 .vscomp-search-label,
-.vscomp-live-region{
+.vscomp-live-region,
+.vscomp-dropbox-container-top,
+.vscomp-dropbox-container-bottom{
   border:0;
   clip:rect(0 0 0 0);
   height:1px;

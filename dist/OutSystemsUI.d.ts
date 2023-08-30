@@ -80,7 +80,7 @@ declare namespace OSFramework.OSUI.Constants {
     const AccessibilityHideElementClass = "wcag-hide-text";
     const IsRTLClass = "is-rtl";
     const NoTransition = "no-transition";
-    const OSUIVersion = "2.17.0";
+    const OSUIVersion = "2.18.0";
     const ZeroValue = 0;
 }
 declare namespace OSFramework.OSUI.ErrorCodes {
@@ -342,8 +342,10 @@ declare namespace OSFramework.OSUI.GlobalEnum {
         ArrowLeft = "ArrowLeft",
         ArrowRight = "ArrowRight",
         ArrowUp = "ArrowUp",
+        End = "End",
         Enter = "Enter",
         Escape = "Escape",
+        Home = "Home",
         Shift = "Shift",
         ShiftTab = "ShiftTab",
         Space = " ",
@@ -5370,7 +5372,6 @@ declare namespace Providers.OSUI.Dropdown.VirtualSelect {
         constructor(uniqueId: string, configs: C);
         private _addErrorMessage;
         private _manageAttributes;
-        private _manageDisableStatus;
         private _onMouseUp;
         private _onSelectedOption;
         private _onWindowResize;
