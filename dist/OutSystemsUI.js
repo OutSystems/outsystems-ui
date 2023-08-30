@@ -10637,7 +10637,9 @@ var OSFramework;
                     setA11YProperties(isUpdate = true) {
                         if (isUpdate === false) {
                             OSUI.Helper.A11Y.RoleTab(this.selfElement);
-                            OSUI.Helper.A11Y.RolePresentation(this.selfElement.parentElement);
+                            if (OSUI.Helper.DeviceInfo.IsIos || OSUI.Helper.DeviceInfo.GetOperatingSystem() === OSUI.GlobalEnum.MobileOS.MacOS) {
+                                OSUI.Helper.A11Y.RolePresentation(this.selfElement.parentElement);
+                            }
                         }
                         if (this._isActive) {
                             OSUI.Helper.A11Y.TabIndexTrue(this.selfElement);
