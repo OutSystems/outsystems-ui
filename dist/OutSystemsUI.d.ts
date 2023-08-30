@@ -3107,10 +3107,13 @@ declare namespace OSFramework.OSUI.Patterns.Submenu {
 }
 declare namespace OSFramework.OSUI.Patterns.Submenu {
     class Submenu extends AbstractPattern<SubmenuConfig> implements ISubmenu {
+        private _eventBalloonKeypress;
         private _eventClick;
         private _eventKeypress;
         private _eventOnMouseEnter;
         private _eventOnMouseLeave;
+        private _focusManagerInstance;
+        private _focusTrapInstance;
         private _globalEventBody;
         private _hasActiveLinks;
         private _hasElements;
@@ -3126,6 +3129,8 @@ declare namespace OSFramework.OSUI.Patterns.Submenu {
         private _bodyClickCallback;
         private _checkForActiveLinks;
         private _clickCallback;
+        private _handleFocusBehavior;
+        private _keypressBalloonCallback;
         private _keypressCallback;
         private _onMouseEnterCallback;
         private _onMouseLeaveCallback;
