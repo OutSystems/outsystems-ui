@@ -5375,7 +5375,6 @@ declare namespace Providers.OSUI.Dropdown.VirtualSelect {
         constructor(uniqueId: string, configs: C);
         private _addErrorMessage;
         private _manageAttributes;
-        private _manageDisableStatus;
         private _onMouseUp;
         private _onSelectedOption;
         private _onWindowResize;

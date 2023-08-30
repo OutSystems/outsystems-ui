@@ -2796,9 +2796,15 @@ span.validation-message{
   margin-right:var(--space-base);
   width:auto;
 }
+[data-upload]:focus-visible{
+  border:var(--border-size-s) solid var(--color-primary);
+}
 .is-rtl [data-upload] [data-icon]{
   margin-left:var(--space-base);
   margin-right:var(--space-none);
+}
+.has-accessible-features [data-upload]{
+  border:var(--border-size-s) solid var(--color-neutral-7);
 }
 /*! 4.13. Button Group */
 .button-group{
@@ -4967,7 +4973,9 @@ span.flatpickr-weekday{
   padding:0 5px 0 15px;
 }
 .vscomp-search-label,
-.vscomp-live-region{
+.vscomp-live-region,
+.vscomp-dropbox-container-top,
+.vscomp-dropbox-container-bottom{
   border:0;
   clip:rect(0 0 0 0);
   height:1px;
