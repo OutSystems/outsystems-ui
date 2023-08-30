@@ -9413,6 +9413,22 @@ var OSFramework;
                     _clickCallback() {
                         this._toggleSubmenu();
                     }
+                    _handleFocusBehavior() {
+                        const opts = {
+                            focusTargetElement: this._submenuLinksElement,
+                        };
+                        this._focusTrapInstance = new OSUI.Behaviors.FocusTrap(opts);
+                        this._focusManagerInstance = new OSUI.Behaviors.FocusManager();
+                        if (this._isOpen === false) {
+                            OSUI.Helper.A11Y.SetElementsTabIndex(false, this._focusTrapInstance.focusableElements);
+                        }
+                    }
+                    _keypressBalloonCallback(e) {
+                        if (e.key === OSUI.GlobalEnum.Keycodes.Escape && this._isOpen) {
+                            this.close();
+                            this._submenuHeaderElement.focus();
+                        }
+                    }
                     _keypressCallback(e) {
                         const _clickedElem = e.target;
                         const _closestElem = _clickedElem.closest(OSUI.Constants.Dot + Submenu_1.Enum.CssClass.Pattern);
@@ -9420,6 +9436,15 @@ var OSFramework;
                         const _isEnterPressed = e.key === OSUI.GlobalEnum.Keycodes.Enter;
                         const _isTabPressed = e.key === OSUI.GlobalEnum.Keycodes.Tab;
                         const _isShiftPressed = e.shiftKey;
+                        const _isArrowUp = e.key === OSUI.GlobalEnum.Keycodes.ArrowUp;
+                        const _isArrowDown = e.key === OSUI.GlobalEnum.Keycodes.ArrowDown;
+                        const _targetAfterArrow = _isArrowUp ? this._focusTrapInstance.focusableElements.length - 1 : 0;
+                        if (_isArrowDown || _isArrowUp) {
+                            this.open();
+                            OSUI.Helper.AsyncInvocation(() => {
+                                this._focusTrapInstance.focusableElements[_targetAfterArrow].focus();
+                            });
+                        }
                         if (_isEnterPressed) {
                             this._toggleSubmenu();
                         }
@@ -9490,7 +9515,14 @@ var OSFramework;
                         OSUI.Helper.A11Y.AriaExpanded(this._submenuHeaderElement, this._isOpen.toString());
                         OSUI.Helper.A11Y.AriaHidden(this._submenuLinksElement, (!this._isOpen).toString());
                         this._submenuAllLinksElement.forEach((item) => {
-                            this._isOpen ? OSUI.Helper.A11Y.TabIndexTrue(item) : OSUI.Helper.A11Y.TabIndexFalse(item);
+                            if (this._isOpen) {
+                                OSUI.Helper.A11Y.TabIndexTrue(item);
+                                OSUI.Helper.A11Y.AriaHiddenFalse(item);
+                            }
+                            else {
+                                OSUI.Helper.A11Y.TabIndexFalse(item);
+                                OSUI.Helper.A11Y.AriaHiddenTrue(item);
+                            }
                         });
                     }
                     setA11YProperties() {
@@ -9506,6 +9538,7 @@ var OSFramework;
                     setCallbacks() {
                         this._eventClick = this._clickCallback.bind(this);
                         this._globalEventBody = this._bodyClickCallback.bind(this);
+                        this._eventBalloonKeypress = this._keypressBalloonCallback.bind(this);
                         this._eventKeypress = this._keypressCallback.bind(this);
                         this._eventOnMouseEnter = this._onMouseEnterCallback.bind(this);
                         this._eventOnMouseLeave = this._onMouseLeaveCallback.bind(this);
@@ -9541,6 +9574,7 @@ var OSFramework;
                     }
                     unsetCallbacks() {
                         this._eventClick = undefined;
+                        this._eventBalloonKeypress = undefined;
                         this._eventKeypress = undefined;
                         this._globalEventBody = undefined;
                         this._eventOnMouseEnter = undefined;
@@ -9557,6 +9591,7 @@ var OSFramework;
                         super.build();
                         this.setHtmlElements();
                         this.setInitialStates();
+                        this._handleFocusBehavior();
                         this.setA11YProperties();
                         this.setCallbacks();
                         this.finishBuild();
@@ -9572,12 +9607,15 @@ var OSFramework;
                     }
                     close() {
                         if (this._isOpen) {
+                            this._focusTrapInstance.disableForA11y();
                             if (this.hasClickOutsideToClose) {
                                 OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick, this._globalEventBody);
                             }
                             OSUI.Helper.Dom.Styles.RemoveClass(this.selfElement, Submenu_1.Enum.CssClass.PatternIsOpen);
                             this._isOpen = false;
                             this._updateA11yProperties();
+                            this._focusManagerInstance.setFocusToStoredElement();
+                            this._submenuLinksElement.removeEventListener(OSUI.GlobalEnum.HTMLEvent.keyDown, this._eventBalloonKeypress.bind(this));
                             this.triggerPlatformEventCallback(this._platformEventOnToggleCallback, false);
                         }
                     }
@@ -9588,9 +9626,12 @@ var OSFramework;
                         super.dispose();
                     }
                     open() {
+                        this._focusTrapInstance.enableForA11y();
+                        this._focusManagerInstance.storeLastFocusedElement();
                         if (this.hasClickOutsideToClose) {
                             OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick, this._globalEventBody);
                         }
+                        this._submenuLinksElement.addEventListener(OSUI.GlobalEnum.HTMLEvent.keyDown, this._eventBalloonKeypress.bind(this));
                         OSUI.Helper.AsyncInvocation(this._show.bind(this));
                         this.triggerPlatformEventCallback(this._platformEventOnToggleCallback, true);
                     }
