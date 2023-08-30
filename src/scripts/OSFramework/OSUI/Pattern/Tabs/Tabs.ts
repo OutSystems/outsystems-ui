@@ -278,6 +278,18 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 
 					this.changeTab(targetHeaderItemIndex, undefined, true);
 					break;
+				case GlobalEnum.Keycodes.End:
+					targetHeaderItemIndex = this.getChildItems(Enum.ChildTypes.TabsHeaderItem).length - 1;
+
+					this.changeTab(targetHeaderItemIndex, undefined, true);
+
+					break;
+				case GlobalEnum.Keycodes.Home:
+					targetHeaderItemIndex = 0;
+
+					this.changeTab(targetHeaderItemIndex, undefined, true);
+
+					break;
 			}
 
 			const targetHeaderItem = this.getChildByIndex(targetHeaderItemIndex, Enum.ChildTypes.TabsHeaderItem);
