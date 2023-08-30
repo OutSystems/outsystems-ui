@@ -61,7 +61,7 @@ namespace OSFramework.OSUI.Patterns.TabsHeaderItem {
 		protected setA11YProperties(isUpdate = true): void {
 			// Static attribute to be added when the item is created
 			if (isUpdate === false) {
-				Helper.A11Y.RoleTab(this.selfElement);
+				Helper.A11Y.RoleTab(this.selfElement.parentElement);
 			}
 
 			// Dynamic values that need to be changed when toggling the active state
