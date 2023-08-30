@@ -79,6 +79,7 @@ var OSFramework;
                     Listbox: 'listbox',
                     MenuItem: 'menuitem',
                     Option: 'option',
+                    Presentation: 'presentation',
                     Progressbar: 'progressbar',
                     Region: 'region',
                     Search: 'search',
@@ -2986,6 +2987,9 @@ var OSFramework;
                 }
                 static RoleOption(element) {
                     Helper.Dom.Attribute.Set(element, OSUI.Constants.A11YAttributes.Role.AttrName, OSUI.Constants.A11YAttributes.Role.Option);
+                }
+                static RolePresentation(element) {
+                    Helper.Dom.Attribute.Set(element, OSUI.Constants.A11YAttributes.Role.AttrName, OSUI.Constants.A11YAttributes.Role.Presentation);
                 }
                 static RoleProgressBar(element) {
                     Helper.Dom.Attribute.Set(element, OSUI.Constants.A11YAttributes.Role.AttrName, OSUI.Constants.A11YAttributes.Role.Progressbar);
@@ -10632,7 +10636,8 @@ var OSFramework;
                     }
                     setA11YProperties(isUpdate = true) {
                         if (isUpdate === false) {
-                            OSUI.Helper.A11Y.RoleTab(this.selfElement.parentElement);
+                            OSUI.Helper.A11Y.RoleTab(this.selfElement);
+                            OSUI.Helper.A11Y.RolePresentation(this.selfElement.parentElement);
                         }
                         if (this._isActive) {
                             OSUI.Helper.A11Y.TabIndexTrue(this.selfElement);

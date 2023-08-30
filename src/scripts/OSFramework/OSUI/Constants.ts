@@ -33,6 +33,7 @@ namespace OSFramework.OSUI.Constants {
 			Listbox: 'listbox',
 			MenuItem: 'menuitem',
 			Option: 'option',
+			Presentation: 'presentation',
 			Progressbar: 'progressbar',
 			Region: 'region',
 			Search: 'search',
