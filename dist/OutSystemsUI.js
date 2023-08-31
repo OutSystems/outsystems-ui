@@ -4522,7 +4522,7 @@ var OSFramework;
                     }
                     setA11YProperties() {
                         if (!this.isBuilt) {
-                            OSUI.Helper.Dom.Attribute.Set(this.selfElement, OSUI.Constants.A11YAttributes.Role.Complementary, true);
+                            OSUI.Helper.A11Y.RoleComplementary(this.selfElement);
                         }
                         OSUI.Helper.Dom.Attribute.Set(this.selfElement, OSUI.Constants.A11YAttributes.Aria.Hidden, (!this._isOpen).toString());
                         OSUI.Helper.Dom.Attribute.Set(this.selfElement, OSUI.Constants.A11YAttributes.TabIndex, this._isOpen

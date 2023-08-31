@@ -304,7 +304,7 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 		 */
 		protected setA11YProperties(): void {
 			if (!this.isBuilt) {
-				Helper.Dom.Attribute.Set(this.selfElement, Constants.A11YAttributes.Role.Complementary, true);
+				Helper.A11Y.RoleComplementary(this.selfElement);
 			}
 
 			Helper.Dom.Attribute.Set(
