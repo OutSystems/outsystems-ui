@@ -79,6 +79,7 @@ var OSFramework;
                     Listbox: 'listbox',
                     MenuItem: 'menuitem',
                     Option: 'option',
+                    Presentation: 'presentation',
                     Progressbar: 'progressbar',
                     Region: 'region',
                     Search: 'search',
@@ -421,8 +422,10 @@ var OSFramework;
                 Keycodes["ArrowLeft"] = "ArrowLeft";
                 Keycodes["ArrowRight"] = "ArrowRight";
                 Keycodes["ArrowUp"] = "ArrowUp";
+                Keycodes["End"] = "End";
                 Keycodes["Enter"] = "Enter";
                 Keycodes["Escape"] = "Escape";
+                Keycodes["Home"] = "Home";
                 Keycodes["Shift"] = "Shift";
                 Keycodes["ShiftTab"] = "ShiftTab";
                 Keycodes["Space"] = " ";
@@ -2984,6 +2987,9 @@ var OSFramework;
                 }
                 static RoleOption(element) {
                     Helper.Dom.Attribute.Set(element, OSUI.Constants.A11YAttributes.Role.AttrName, OSUI.Constants.A11YAttributes.Role.Option);
+                }
+                static RolePresentation(element) {
+                    Helper.Dom.Attribute.Set(element, OSUI.Constants.A11YAttributes.Role.AttrName, OSUI.Constants.A11YAttributes.Role.Presentation);
                 }
                 static RoleProgressBar(element) {
                     Helper.Dom.Attribute.Set(element, OSUI.Constants.A11YAttributes.Role.AttrName, OSUI.Constants.A11YAttributes.Role.Progressbar);
@@ -10068,6 +10074,14 @@ var OSFramework;
                                 }
                                 this.changeTab(targetHeaderItemIndex, undefined, true);
                                 break;
+                            case OSUI.GlobalEnum.Keycodes.End:
+                                targetHeaderItemIndex = this.getChildItems(Tabs_1.Enum.ChildTypes.TabsHeaderItem).length - 1;
+                                this.changeTab(targetHeaderItemIndex, undefined, true);
+                                break;
+                            case OSUI.GlobalEnum.Keycodes.Home:
+                                targetHeaderItemIndex = 0;
+                                this.changeTab(targetHeaderItemIndex, undefined, true);
+                                break;
                         }
                         const targetHeaderItem = this.getChildByIndex(targetHeaderItemIndex, Tabs_1.Enum.ChildTypes.TabsHeaderItem);
                         if (targetHeaderItem) {
@@ -10669,6 +10683,9 @@ var OSFramework;
                     setA11YProperties(isUpdate = true) {
                         if (isUpdate === false) {
                             OSUI.Helper.A11Y.RoleTab(this.selfElement);
+                            if (OSUI.Helper.DeviceInfo.IsIos || OSUI.Helper.DeviceInfo.GetOperatingSystem() === OSUI.GlobalEnum.MobileOS.MacOS) {
+                                OSUI.Helper.A11Y.RolePresentation(this.selfElement.parentElement);
+                            }
                         }
                         if (this._isActive) {
                             OSUI.Helper.A11Y.TabIndexTrue(this.selfElement);

@@ -396,6 +396,17 @@ namespace OSFramework.OSUI.Helper {
 		}
 
 		/**
+		 * Method that will set the presentation role
+		 *
+		 * @static
+		 * @param {HTMLElement} element
+		 * @memberof A11Y
+		 */
+		public static RolePresentation(element: HTMLElement): void {
+			Dom.Attribute.Set(element, Constants.A11YAttributes.Role.AttrName, Constants.A11YAttributes.Role.Presentation);
+		}
+
+		/**
 		 * Method that will set the progressbar role
 		 *
 		 * @param {HTMLElement} element Target element to receive the role atributte
