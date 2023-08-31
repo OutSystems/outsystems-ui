@@ -3273,6 +3273,9 @@ declare namespace OSFramework.OSUI.Patterns.Tabs.Enum {
     enum ObserverOptions {
         RootMargin = "1px"
     }
+    enum ElementsBlockingOnChange {
+        Dropdown = ".pop-comp-active"
+    }
     enum ChildTypes {
         TabsContentItem = "TabsContentItem",
         TabsHeaderItem = "TabsHeaderItem"

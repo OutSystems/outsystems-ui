@@ -9935,6 +9935,10 @@ var OSFramework;
                     (function (ObserverOptions) {
                         ObserverOptions["RootMargin"] = "1px";
                     })(ObserverOptions = Enum.ObserverOptions || (Enum.ObserverOptions = {}));
+                    let ElementsBlockingOnChange;
+                    (function (ElementsBlockingOnChange) {
+                        ElementsBlockingOnChange["Dropdown"] = ".pop-comp-active";
+                    })(ElementsBlockingOnChange = Enum.ElementsBlockingOnChange || (Enum.ElementsBlockingOnChange = {}));
                     let ChildTypes;
                     (function (ChildTypes) {
                         ChildTypes["TabsContentItem"] = "TabsContentItem";
@@ -10440,7 +10444,8 @@ var OSFramework;
                     }
                     changeTab(tabIndex = this.configs.StartingTab, tabsHeaderItem, triggerEvent = false, triggeredByObserver = false) {
                         if (this._activeTabHeaderElement === tabsHeaderItem ||
-                            (tabIndex === this.configs.StartingTab && this.isBuilt && tabsHeaderItem === undefined)) {
+                            (tabIndex === this.configs.StartingTab && this.isBuilt && tabsHeaderItem === undefined) ||
+                            this._activeTabContentElement.selfElement.querySelector(Tabs_1.Enum.ElementsBlockingOnChange.Dropdown)) {
                             return;
                         }
                         let newTabIndex;

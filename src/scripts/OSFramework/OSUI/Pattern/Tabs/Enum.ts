@@ -72,6 +72,13 @@ namespace OSFramework.OSUI.Patterns.Tabs.Enum {
 	}
 
 	/**
+	 * Tabs Enum for Selectors of elements that can block OnChange event
+	 */
+	export enum ElementsBlockingOnChange {
+		Dropdown = '.pop-comp-active',
+	}
+
+	/**
 	 * Tabs Enum for Tabs child types
 	 */
 	export enum ChildTypes {
