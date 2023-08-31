@@ -4461,9 +4461,17 @@ var OSFramework;
                         this._animateOnDragInstance.onDragStart(true, OSUI.GlobalEnum.Direction.Down, x, y, true, this.selfElement.clientHeight.toString());
                     }
                     _onkeypressCallback(e) {
-                        const isEscapedPressed = e.key === OSUI.GlobalEnum.Keycodes.Escape;
-                        if (isEscapedPressed && this._isOpen) {
-                            this.close();
+                        var _a, _b;
+                        switch (e.key) {
+                            case OSUI.GlobalEnum.Keycodes.Escape:
+                                this.close();
+                                break;
+                            case OSUI.GlobalEnum.Keycodes.End:
+                                (_a = this._focusTrapInstance.focusableElements[this._focusTrapInstance.focusableElements.length - 1]) === null || _a === void 0 ? void 0 : _a.focus();
+                                break;
+                            case OSUI.GlobalEnum.Keycodes.Home:
+                                (_b = this._focusTrapInstance.focusableElements[0]) === null || _b === void 0 ? void 0 : _b.focus();
+                                break;
                         }
                     }
                     _toggleBottomSheet(isOpen) {
