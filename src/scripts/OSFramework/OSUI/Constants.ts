@@ -27,6 +27,7 @@ namespace OSFramework.OSUI.Constants {
 		},
 		Role: {
 			Alert: 'alert',
+			AlertDialog: 'alertdialog',
 			AttrName: 'role',
 			Button: 'button',
 			Complementary: 'complementary',
