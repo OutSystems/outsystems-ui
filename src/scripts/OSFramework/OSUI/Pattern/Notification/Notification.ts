@@ -45,7 +45,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		 * @memberof Notification
 		 */
 		private _autoCloseNotification(): void {
-			setTimeout(() => {
+			Helper.ApplySetTimeOut(() => {
 				if (this._isOpen) {
 					this.hide();
 				}
@@ -313,7 +313,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 			Helper.Dom.Attribute.Set(
 				this.selfElement,
 				Constants.A11YAttributes.Role.AttrName,
-				Constants.A11YAttributes.Role.Alert
+				Constants.A11YAttributes.Role.AlertDialog
 			);
 
 			// Update accessibility properties
