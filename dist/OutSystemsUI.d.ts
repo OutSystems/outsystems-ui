@@ -37,6 +37,7 @@ declare namespace OSFramework.OSUI.Constants {
             Listbox: string;
             MenuItem: string;
             Option: string;
+            Presentation: string;
             Progressbar: string;
             Region: string;
             Search: string;
@@ -342,8 +343,10 @@ declare namespace OSFramework.OSUI.GlobalEnum {
         ArrowLeft = "ArrowLeft",
         ArrowRight = "ArrowRight",
         ArrowUp = "ArrowUp",
+        End = "End",
         Enter = "Enter",
         Escape = "Escape",
+        Home = "Home",
         Shift = "Shift",
         ShiftTab = "ShiftTab",
         Space = " ",
@@ -1081,6 +1084,7 @@ declare namespace OSFramework.OSUI.Helper {
         static RoleListbox(element: HTMLElement): void;
         static RoleMenuItem(element: HTMLElement): void;
         static RoleOption(element: HTMLElement): void;
+        static RolePresentation(element: HTMLElement): void;
         static RoleProgressBar(element: HTMLElement): void;
         static RoleRegion(element: HTMLElement): void;
         static RoleSearch(element: HTMLElement): void;

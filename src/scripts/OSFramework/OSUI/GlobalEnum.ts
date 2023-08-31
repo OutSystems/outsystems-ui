@@ -250,8 +250,10 @@ namespace OSFramework.OSUI.GlobalEnum {
 		ArrowLeft = 'ArrowLeft',
 		ArrowRight = 'ArrowRight',
 		ArrowUp = 'ArrowUp',
+		End = 'End',
 		Enter = 'Enter',
 		Escape = 'Escape',
+		Home = 'Home',
 		Shift = 'Shift',
 		ShiftTab = 'ShiftTab', // Do not exist as a keyboard key, but used to manage this behaviour
 		Space = ' ',
