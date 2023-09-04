@@ -42,8 +42,27 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 
 		// Manage the attributes to be added
 		private _manageAttributes(): void {
+			// Check if the pattern should be in disabled mode
+			this._manageDisableStatus();
+
 			// Manage A11Y attributes
 			this.setA11YProperties();
+		}
+
+		// Manage the disable status of the pattern
+		private _manageDisableStatus(): void {
+			if (this.configs.IsDisabled) {
+				OSFramework.OSUI.Helper.Dom.Attribute.Set(
+					this.selfElement,
+					OSFramework.OSUI.GlobalEnum.HTMLAttributes.Disabled,
+					''
+				);
+			} else {
+				OSFramework.OSUI.Helper.Dom.Attribute.Remove(
+					this.selfElement,
+					OSFramework.OSUI.GlobalEnum.HTMLAttributes.Disabled
+				);
+			}
 		}
 
 		// Prevent the default behaviour of the event
