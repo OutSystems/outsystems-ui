@@ -1137,6 +1137,8 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			Helper.Dom.Attribute.Set(this._balloonWrapperElement, GlobalEnum.HTMLAttributes.Disabled, '');
 			// Assign IsDisabled class
 			Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.IsDisabled);
+			// Assign tabindex value on values wrapper
+			Helper.A11Y.TabIndexFalse(this._selectValuesWrapper);
 		}
 
 		/**
@@ -1164,6 +1166,8 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			Helper.Dom.Attribute.Remove(this._balloonWrapperElement, GlobalEnum.HTMLAttributes.Disabled);
 			// Remove IsDisabled class
 			Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.IsDisabled);
+			// Assign tabindex value on values wrapper
+			Helper.A11Y.TabIndexTrue(this._selectValuesWrapper);
 		}
 
 		/**

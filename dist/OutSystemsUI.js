@@ -73,6 +73,7 @@ var OSFramework;
                 },
                 Role: {
                     Alert: 'alert',
+                    AlertDialog: 'alertdialog',
                     AttrName: 'role',
                     Button: 'button',
                     Complementary: 'complementary',
@@ -5837,6 +5838,7 @@ var OSFramework;
                             OSUI.Helper.Dom.Attribute.Set(this.selfElement, OSUI.GlobalEnum.HTMLAttributes.Disabled, '');
                             OSUI.Helper.Dom.Attribute.Set(this._balloonWrapperElement, OSUI.GlobalEnum.HTMLAttributes.Disabled, '');
                             OSUI.Helper.Dom.Styles.AddClass(this.selfElement, ServerSide.Enum.CssClass.IsDisabled);
+                            OSUI.Helper.A11Y.TabIndexFalse(this._selectValuesWrapper);
                         }
                         dispose() {
                             this._unsetObserver();
@@ -5850,6 +5852,7 @@ var OSFramework;
                             OSUI.Helper.Dom.Attribute.Remove(this.selfElement, OSUI.GlobalEnum.HTMLAttributes.Disabled);
                             OSUI.Helper.Dom.Attribute.Remove(this._balloonWrapperElement, OSUI.GlobalEnum.HTMLAttributes.Disabled);
                             OSUI.Helper.Dom.Styles.RemoveClass(this.selfElement, ServerSide.Enum.CssClass.IsDisabled);
+                            OSUI.Helper.A11Y.TabIndexTrue(this._selectValuesWrapper);
                         }
                         getSelectedValues() {
                             return this._hasNoImplementation();
@@ -6868,7 +6871,7 @@ var OSFramework;
                         this._isOpen = this.configs.StartsOpen;
                     }
                     _autoCloseNotification() {
-                        setTimeout(() => {
+                        OSUI.Helper.ApplySetTimeOut(() => {
                             if (this._isOpen) {
                                 this.hide();
                             }
@@ -6975,7 +6978,7 @@ var OSFramework;
                         }
                     }
                     setA11YProperties() {
-                        OSUI.Helper.Dom.Attribute.Set(this.selfElement, OSUI.Constants.A11YAttributes.Role.AttrName, OSUI.Constants.A11YAttributes.Role.Alert);
+                        OSUI.Helper.Dom.Attribute.Set(this.selfElement, OSUI.Constants.A11YAttributes.Role.AttrName, OSUI.Constants.A11YAttributes.Role.AlertDialog);
                         this._updateA11yProperties();
                     }
                     setCallbacks() {
@@ -18717,6 +18720,14 @@ var Providers;
                     _manageAttributes() {
                         this.setA11YProperties();
                     }
+                    _manageDisableStatus() {
+                        if (this.configs.IsDisabled) {
+                            this.provider.$ele.disable();
+                        }
+                        else {
+                            this.provider.$ele.enable();
+                        }
+                    }
                     _onMouseUp(event) {
                         event.preventDefault();
                     }
@@ -18807,6 +18818,8 @@ var Providers;
                         if (this.isBuilt) {
                             switch (propertyName) {
                                 case OSFramework.OSUI.Patterns.Dropdown.Enum.Properties.IsDisabled:
+                                    this._manageDisableStatus();
+                                    break;
                                 case VirtualSelect.Enum.Properties.NoOptionsText:
                                 case VirtualSelect.Enum.Properties.NoResultsText:
                                 case VirtualSelect.Enum.Properties.OptionsList:
