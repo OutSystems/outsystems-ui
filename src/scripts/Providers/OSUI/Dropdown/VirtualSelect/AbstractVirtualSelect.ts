@@ -46,6 +46,15 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 			this.setA11YProperties();
 		}
 
+		// Manage the disable status of the pattern
+		private _manageDisableStatus(): void {
+			if (this.configs.IsDisabled) {
+				this.provider.$ele.disable();
+			} else {
+				this.provider.$ele.enable();
+			}
+		}
+
 		// Prevent the default behaviour of the event
 		private _onMouseUp(event) {
 			event.preventDefault();
@@ -256,6 +265,8 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 			if (this.isBuilt) {
 				switch (propertyName) {
 					case OSFramework.OSUI.Patterns.Dropdown.Enum.Properties.IsDisabled:
+						this._manageDisableStatus();
+						break;
 					case Enum.Properties.NoOptionsText:
 					case Enum.Properties.NoResultsText:
 					case Enum.Properties.OptionsList:
