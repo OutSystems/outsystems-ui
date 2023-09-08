@@ -7,6 +7,27 @@ namespace OutSystems.OSUI.Utils.PreviewInDevices {
 	 * @class OnPostMessage
 	 */
 	abstract class OnPostMessage {
+		/**
+		 * Holds the knowledge if the app is running within the Preview In Devices.
+		 *
+		 * @private
+		 * @static
+		 * @memberof OnPostMessage
+		 */
+		private static _isInPreviewInDevices = false;
+
+		/**
+		 * Adds a css class to the body, to make it easily style accordingly.
+		 *
+		 * @private
+		 * @static
+		 * @memberof OnPostMessage
+		 */
+		private static _addInPreviewCssClass(): void {
+			OnPostMessage._isInPreviewInDevices = true;
+			document.body.classList.add('PreviewInDevices');
+		}
+
 		private static _createPhonePreviewStyle(notchValue: number) {
 			if (!notchValue) {
 				return;
@@ -80,6 +101,7 @@ namespace OutSystems.OSUI.Utils.PreviewInDevices {
 		 * @memberof OnPostMessage
 		 */
 		private static _messageFromPreview(evt: MessageEvent<IDataPreviewInDevice>): void {
+			OnPostMessage._addInPreviewCssClass();
 			if (OSFramework.Helper.DeviceInfo.IsPhone) {
 				OnPostMessage._createPhonePreviewStyle(evt.data.notchValue);
 			} else if (OSFramework.Helper.DeviceInfo.IsTablet) {
@@ -93,6 +115,16 @@ namespace OutSystems.OSUI.Utils.PreviewInDevices {
 			LayoutPrivate.SetDeviceClass(false);
 		}
 
+		/**
+		 * Indicates if the APP is running within the Preview In Devices frame.
+		 *
+		 * @readonly
+		 * @static
+		 * @type {boolean}
+		 * @memberof OnPostMessage
+		 */
+		public static get IsInPreviewInDevices(): boolean {
+			return OnPostMessage._isInPreviewInDevices;
 		}
 
 		/**
