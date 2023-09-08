@@ -365,6 +365,7 @@ var OSFramework;
                 HTMLEvent["TouchMove"] = "touchmove";
                 HTMLEvent["TouchStart"] = "touchstart";
                 HTMLEvent["TransitionEnd"] = "transitionend";
+                HTMLEvent["Message"] = "message";
             })(HTMLEvent = GlobalEnum.HTMLEvent || (GlobalEnum.HTMLEvent = {}));
             let InlineStyle;
             (function (InlineStyle) {
@@ -1148,6 +1149,7 @@ var OSFramework;
                         Type["BodyOnMouseDown"] = "body.mousedown";
                         Type["OrientationChange"] = "window.onorientationchange";
                         Type["WindowResize"] = "window.onresize";
+                        Type["WindowMessage"] = "window.message";
                     })(Type = Listeners.Type || (Listeners.Type = {}));
                 })(Listeners = DOMEvents.Listeners || (DOMEvents.Listeners = {}));
             })(DOMEvents = Event.DOMEvents || (Event.DOMEvents = {}));
@@ -1177,6 +1179,8 @@ var OSFramework;
                                     return new Listeners.WindowResize();
                                 case Listeners.Type.OrientationChange:
                                     return new Listeners.OrientationChange();
+                                case Listeners.Type.WindowMessage:
+                                    return new Listeners.WindowMessage();
                                 default:
                                     throw new Error(`The listener ${listenerType} is not supported.`);
                             }
@@ -1215,6 +1219,30 @@ var OSFramework;
                         }
                     }
                     Listeners.OrientationChange = OrientationChange;
+                })(Listeners = DOMEvents.Listeners || (DOMEvents.Listeners = {}));
+            })(DOMEvents = Event.DOMEvents || (Event.DOMEvents = {}));
+        })(Event = OSUI.Event || (OSUI.Event = {}));
+    })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
+})(OSFramework || (OSFramework = {}));
+var OSFramework;
+(function (OSFramework) {
+    var OSUI;
+    (function (OSUI) {
+        var Event;
+        (function (Event) {
+            var DOMEvents;
+            (function (DOMEvents) {
+                var Listeners;
+                (function (Listeners) {
+                    class WindowMessage extends Listeners.AbstractListener {
+                        constructor() {
+                            super(window, OSUI.GlobalEnum.HTMLEvent.Message);
+                        }
+                        _windowTrigger(evt) {
+                            this.trigger(OSUI.GlobalEnum.HTMLEvent.Message, evt);
+                        }
+                    }
+                    Listeners.WindowMessage = WindowMessage;
                 })(Listeners = DOMEvents.Listeners || (DOMEvents.Listeners = {}));
             })(DOMEvents = Event.DOMEvents || (Event.DOMEvents = {}));
         })(Event = OSUI.Event || (OSUI.Event = {}));
@@ -1962,9 +1990,16 @@ var OSFramework;
                     return localOs;
                 }
                 static _getUserAgent(userAgent = '') {
-                    return userAgent.replace(' ', '') === ''
-                        ? window.navigator.userAgent.toLowerCase()
-                        : userAgent.toLowerCase();
+                    const cleanedUserAgent = userAgent.replace(' ', '');
+                    if (cleanedUserAgent === '') {
+                        if (sessionStorage.previewDevicesUserAgent) {
+                            return sessionStorage.previewDevicesUserAgent.toLowerCase();
+                        }
+                        return window.navigator.userAgent.toLowerCase();
+                    }
+                    else {
+                        return userAgent.toLowerCase();
+                    }
                 }
                 static _isChrome(ua) {
                     return ua.includes(UAKeyword.chrome) || ua.includes(UAKeyword.crios);
@@ -2023,10 +2058,12 @@ var OSFramework;
                 }
                 static get IsIphoneWithNotch() {
                     if (DeviceInfo._isIphoneWithNotch === undefined) {
-                        const ratio = window.devicePixelRatio || 1;
+                        const ratio = (sessionStorage.previewDevicesPixelRatio
+                            ? sessionStorage.previewDevicesPixelRatio
+                            : window.devicePixelRatio) || 1;
                         const currScreen = {
-                            width: window.screen.width * ratio,
-                            height: window.screen.height * ratio,
+                            width: window.visualViewport.width * ratio,
+                            height: window.visualViewport.height * ratio,
                             description: '',
                         };
                         DeviceInfo._iphoneDetails = iphoneDevices.find((device) => {
@@ -2166,6 +2203,9 @@ var OSFramework;
                         localOs = DeviceInfo._operatingSystem;
                     }
                     return localOs;
+                }
+                static RefreshOperatingSystem() {
+                    DeviceInfo._operatingSystem = DeviceInfo.GetOperatingSystem(DeviceInfo._getUserAgent());
                 }
             }
             DeviceInfo._browser = OSUI.GlobalEnum.Browser.unknown;
@@ -14999,6 +15039,95 @@ var OutSystems;
                     }
                 }
                 LayoutPrivate.OnOrientationChange = OnOrientationChange;
+            })(LayoutPrivate = Utils.LayoutPrivate || (Utils.LayoutPrivate = {}));
+        })(Utils = OSUI.Utils || (OSUI.Utils = {}));
+    })(OSUI = OutSystems.OSUI || (OutSystems.OSUI = {}));
+})(OutSystems || (OutSystems = {}));
+var OutSystems;
+(function (OutSystems) {
+    var OSUI;
+    (function (OSUI) {
+        var Utils;
+        (function (Utils) {
+            var LayoutPrivate;
+            (function (LayoutPrivate) {
+                class OnPostMessage {
+                    static _createPhonePreviewStyle(notchValue) {
+                        if (!notchValue) {
+                            return;
+                        }
+                        const style = document.createElement('style');
+                        style.textContent = `
+				body * {
+					user-select: none !important
+				}
+	
+				body.is-phone.android.portrait {
+					--status-bar-height: ${notchValue}px;
+				} 
+				
+				body.portrait.is-phone {
+					--os-safe-area-top: ${notchValue}px;
+				} 
+				
+				body.landscape.is-phone {
+					--os-safe-area-right: ${notchValue}px;
+					--os-safe-area-left: ${notchValue}px;
+				}
+	
+				.is-phone .active-screen.screen-container::-webkit-scrollbar, html::-webkit-scrollbar,
+				.is-phone.ios .active-screen.screen-container .content::-webkit-scrollbar, html::-webkit-scrollbar {
+					display: none;
+				}
+			`;
+                        document.body.classList.add('is-phone');
+                        document.body.setAttribute('data-status-bar-height', `${notchValue}px`);
+                        document.head.appendChild(style);
+                    }
+                    static _createTabletPreviewStyle() {
+                        const style = document.createElement('style');
+                        style.textContent = `
+				body * {
+					user-select: none !important
+				}
+				
+				.tablet .active-screen.screen-container::-webkit-scrollbar, html::-webkit-scrollbar,
+				.tablet.ios .active-screen.screen-container .content::-webkit-scrollbar, html::-webkit-scrollbar {
+					display: none;
+				}
+			`;
+                        document.head.appendChild(style);
+                    }
+                    static _message(evtName, evt) {
+                        if (OSFramework.OSUI.Event.DOMEvents.Listeners.Type.WindowMessage === evtName &&
+                            (evt.origin.includes('outsystems.app') || evt.origin.includes('outsystems.dev'))) {
+                            OnPostMessage._messageFromPreview(evt);
+                        }
+                    }
+                    static _messageFromPreview(evt) {
+                        if (OSFramework.OSUI.Helper.DeviceInfo.IsPhone) {
+                            OnPostMessage._createPhonePreviewStyle(evt.data.notchValue);
+                        }
+                        else if (OSFramework.OSUI.Helper.DeviceInfo.IsTablet) {
+                            OnPostMessage._createTabletPreviewStyle();
+                        }
+                        sessionStorage.setItem('previewDevicesUserAgent', evt.data.userAgent);
+                        sessionStorage.setItem('previewDevicesPixelRatio', evt.data.pixelRatio);
+                        OnPostMessage.Unset();
+                        evt.source.postMessage('received', { targetOrigin: evt.origin });
+                        OSFramework.OSUI.Helper.DeviceInfo.RefreshOperatingSystem();
+                        LayoutPrivate.SetDeviceClass(false);
+                    }
+                    static Set() {
+                        if (window.self !== window.top) {
+                            OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSFramework.OSUI.Event.DOMEvents.Listeners.Type.WindowMessage, OnPostMessage._message);
+                        }
+                    }
+                    static Unset() {
+                        OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSFramework.OSUI.Event.DOMEvents.Listeners.Type.WindowMessage, OnPostMessage._message);
+                    }
+                }
+                OnPostMessage.Set();
             })(LayoutPrivate = Utils.LayoutPrivate || (Utils.LayoutPrivate = {}));
         })(Utils = OSUI.Utils || (OSUI.Utils = {}));
     })(OSUI = OutSystems.OSUI || (OutSystems.OSUI = {}));

@@ -22,7 +22,7 @@ Website:
  • https://www.outsystems.com/outsystems-ui
 GitHub:
  • https://github.com/OutSystems/outsystems-ui
-*/
+*/ 
 /*!
 Section Index:
 0. Root - CSS Variables
@@ -139,6 +139,7 @@ Section Index:
         6.6.5. Separator
         6.6.6. Pull to Refresh
         6.6.7. List Updating
+        6.6.8. Provider Login Button
     6.7. Advanced
         6.7.1. Dropdown ServerSide
         6.7.2. Dropdown ServerSide Item
@@ -453,6 +454,8 @@ Functions & Mixins
 @import '04-patterns/06-utilities/pull-to-refresh';
 /*! 6.6.7. List Updating */
 @import '04-patterns/06-utilities/list-updating';
+/*! 6.6.8. Provider Login Button */
+@import '04-patterns/06-utilities/provider-login-button';
 
 /*! 6.7. Advanced */
 /*! 6.7.1. Dropdown ServerSide */
@@ -582,3 +585,4 @@ Functions & Mixins
 Excluders
 =============================================================================== */
 @import '09-excluders/excluders';
+

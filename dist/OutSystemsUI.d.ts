@@ -290,7 +290,8 @@ declare namespace OSFramework.OSUI.GlobalEnum {
         TouchEnd = "touchend",
         TouchMove = "touchmove",
         TouchStart = "touchstart",
-        TransitionEnd = "transitionend"
+        TransitionEnd = "transitionend",
+        Message = "message"
     }
     enum InlineStyle {
         Display = "display",
@@ -607,7 +608,8 @@ declare namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
         BodyOnScroll = "body.onscroll",
         BodyOnMouseDown = "body.mousedown",
         OrientationChange = "window.onorientationchange",
-        WindowResize = "window.onresize"
+        WindowResize = "window.onresize",
+        WindowMessage = "window.message"
     }
 }
 declare namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
@@ -623,6 +625,12 @@ declare namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
     class OrientationChange extends AbstractListener<string> {
         constructor();
         private _orientationTrigger;
+    }
+}
+declare namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
+    class WindowMessage extends AbstractListener<string> {
+        constructor();
+        private _windowTrigger;
     }
 }
 declare namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
@@ -862,6 +870,7 @@ declare namespace OSFramework.OSUI.Helper {
         static GetDeviceOrientation(): GlobalEnum.DeviceOrientation;
         static GetDeviceType(): GlobalEnum.DeviceType;
         static GetOperatingSystem(userAgent?: string): GlobalEnum.MobileOS;
+        static RefreshOperatingSystem(): void;
     }
 }
 declare namespace OSFramework.OSUI.Helper {
@@ -4198,6 +4207,8 @@ declare namespace OutSystems.OSUI.Utils.LayoutPrivate {
         static Set(): void;
         static Unset(): void;
     }
+}
+declare namespace OutSystems.OSUI.Utils.LayoutPrivate {
 }
 declare namespace OutSystems.OSUI.Utils {
     function LogMessage(message: string): void;
