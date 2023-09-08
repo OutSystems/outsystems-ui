@@ -1,5 +1,11 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace OutSystems.OSUI.Utils.LayoutPrivate {
+namespace OutSystems.OSUI.Utils.PreviewInDevices {
+	/**
+	 * Responsible for handling the Preview In Device behavior.
+	 *
+	 * @abstract
+	 * @class OnPostMessage
+	 */
 	abstract class OnPostMessage {
 		private static _createPhonePreviewStyle(notchValue: number) {
 			if (!notchValue) {
@@ -55,7 +61,7 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 			document.head.appendChild(style);
 		}
 
-		private static _message(evtName, evt) {
+		private static _message(evtName: string, evt: MessageEvent): void {
 			if (
 				OSFramework.OSUI.Event.DOMEvents.Listeners.Type.WindowMessage === evtName &&
 				(evt.origin.includes('outsystems.app') || evt.origin.includes('outsystems.dev'))
@@ -64,7 +70,16 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 			}
 		}
 
-		private static _messageFromPreview(evt): void {
+		/**
+		 * Adds the required CSS classes, and CSS overrides so that the application adapts correctly
+		 * to the device selected in the preview devices.
+		 *
+		 * @private
+		 * @static
+		 * @param {*} evt
+		 * @memberof OnPostMessage
+		 */
+		private static _messageFromPreview(evt: MessageEvent<IDataPreviewInDevice>): void {
 			if (OSFramework.OSUI.Helper.DeviceInfo.IsPhone) {
 				OnPostMessage._createPhonePreviewStyle(evt.data.notchValue);
 			} else if (OSFramework.OSUI.Helper.DeviceInfo.IsTablet) {
@@ -75,7 +90,7 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 			OnPostMessage.Unset();
 			evt.source.postMessage('received', { targetOrigin: evt.origin });
 			OSFramework.OSUI.Helper.DeviceInfo.RefreshOperatingSystem();
-			SetDeviceClass(false);
+			LayoutPrivate.SetDeviceClass(false);
 		}
 
 		/**
