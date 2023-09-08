@@ -84,7 +84,7 @@ namespace OutSystems.OSUI.Utils.PreviewInDevices {
 
 		private static _message(evtName: string, evt: MessageEvent): void {
 			if (
-				OSFramework.OSUI.Event.DOMEvents.Listeners.Type.WindowMessage === evtName &&
+				OSFramework.OSUI.GlobalEnum.HTMLEvent.Message === evtName &&
 				(evt.origin.includes('outsystems.app') || evt.origin.includes('outsystems.dev'))
 			) {
 				OnPostMessage._messageFromPreview(evt);
