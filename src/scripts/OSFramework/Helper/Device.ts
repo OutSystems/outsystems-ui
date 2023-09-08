@@ -347,8 +347,8 @@ namespace OSFramework.Helper {
 						? sessionStorage.previewDevicesPixelRatio
 						: window.devicePixelRatio) || 1;
 				const currScreen: iphoneDetails = {
-					width: window.visualViewport.width * ratio,
-					height: window.visualViewport.height * ratio,
+					width: window.visualViewport ? window.visualViewport.width : window.innerWidth * ratio,
+					height: window.visualViewport ? window.visualViewport.height : window.innerHeight * ratio,
 					description: '',
 				};
 
