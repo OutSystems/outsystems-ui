@@ -140,16 +140,17 @@ namespace OSFramework.OSUI.Helper {
 		 * @memberof OSFramework.Helper.DeviceInfo
 		 */
 		private static _getUserAgent(userAgent = ''): string {
-			const cleanedUserAgent = userAgent.replace(' ', '');
+			let localUserAgent = userAgent;
 
-			if (cleanedUserAgent === '') {
+			if (userAgent.replace(' ', '') === '') {
 				if (sessionStorage.previewDevicesUserAgent) {
-					return sessionStorage.previewDevicesUserAgent.toLowerCase();
+					localUserAgent = sessionStorage.previewDevicesUserAgent;
+				} else {
+					localUserAgent = window.navigator.userAgent;
 				}
-				return window.navigator.userAgent.toLowerCase();
-			} else {
-				return userAgent.toLowerCase();
 			}
+
+			return localUserAgent.toLowerCase();
 		}
 
 		/**
