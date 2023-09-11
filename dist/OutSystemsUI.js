@@ -2062,8 +2062,8 @@ var OSFramework;
                             ? sessionStorage.previewDevicesPixelRatio
                             : window.devicePixelRatio) || 1;
                         const currScreen = {
-                            width: window.visualViewport.width * ratio,
-                            height: window.visualViewport.height * ratio,
+                            width: (window.visualViewport ? window.visualViewport.width : window.innerWidth) * ratio,
+                            height: (window.visualViewport ? window.visualViewport.height : window.innerHeight) * ratio,
                             description: '',
                         };
                         DeviceInfo._iphoneDetails = iphoneDevices.find((device) => {
@@ -4082,12 +4082,6 @@ var OSFramework;
             var BottomSheet;
             (function (BottomSheet_1) {
                 class BottomSheet extends Patterns.AbstractPattern {
-                    get gestureEventInstance() {
-                        return this._gestureEventInstance;
-                    }
-                    get hasGestureEvents() {
-                        return this._hasGestureEvents;
-                    }
                     constructor(uniqueId, configs) {
                         super(uniqueId, new BottomSheet_1.BottomSheetConfig(configs));
                         this._isOpen = false;
@@ -4099,6 +4093,12 @@ var OSFramework;
                                 mass: 1,
                             },
                         };
+                    }
+                    get gestureEventInstance() {
+                        return this._gestureEventInstance;
+                    }
+                    get hasGestureEvents() {
+                        return this._hasGestureEvents;
                     }
                     _handleFocusTrap() {
                         const opts = {
