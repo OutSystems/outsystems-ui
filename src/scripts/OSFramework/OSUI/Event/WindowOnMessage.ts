@@ -10,9 +10,13 @@ namespace OSFramework.Event {
 	export class WindowMessage extends Event.AbstractEvent<string> {
 		constructor() {
 			super();
-			if (window.self !== window.top) {
+			if (this._windowIsInsideIframe()) {
 				window.addEventListener(GlobalEnum.HTMLEvent.Message, this._windowTrigger.bind(this), true);
 			}
+		}
+
+		private _windowIsInsideIframe(): boolean {
+			return window.self !== window.top;
 		}
 
 		private _windowTrigger(evt: MessageEvent): void {

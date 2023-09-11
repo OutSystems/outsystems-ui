@@ -70,15 +70,15 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 			} else if (OSFramework.Helper.DeviceInfo.IsTablet) {
 				OnPostMessage._createTabletPreviewStyle();
 			}
-			sessionStorage.setItem('previewDevicesUserAgent', evt.data.userAgent);
-			sessionStorage.setItem('previewDevicesPixelRatio', evt.data.pixelRatio);
+			sessionStorage.setItem('userAgent', evt.data.userAgent);
+			sessionStorage.setItem('pixelRatio', evt.data.pixelRatio);
 			OnPostMessage.Unset();
 			evt.source.postMessage('received', { targetOrigin: evt.origin });
 			SetDeviceClass(false);
 		}
 
 		/**
-		 * Function used to set the message event
+		 * Function used to set the orientation event
 		 */
 		public static Set(): void {
 			if (window.self !== window.top) {
@@ -90,7 +90,7 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 		}
 
 		/**
-		 * Function used to unset the message event
+		 * Function used to unset the orientation event
 		 */
 		public static Unset(): void {
 			OSFramework.Event.GlobalEventManager.Instance.removeHandler(
@@ -100,6 +100,5 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 		}
 	}
 
-	// Invoke the event register
 	OnPostMessage.Set();
 }
