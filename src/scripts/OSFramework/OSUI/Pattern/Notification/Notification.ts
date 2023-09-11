@@ -13,10 +13,10 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		private _eventOnKeypress: GlobalCallbacks.Generic;
 		// Define the event to be applied based on device
 		private _eventType: string;
-		// Store focus manager instance
-		private _focusManagerInstance: Behaviors.FocusManager;
 		// Store focus trap instance
 		private _focusTrapInstance: Behaviors.FocusTrap;
+		// Store the active element focused
+		private _focusableActiveElement: HTMLElement;
 		// Store gesture events instance
 		private _gestureEventInstance: Event.GestureEvent.SwipeEvent;
 		// Store if the pattern has gesture events added
@@ -38,12 +38,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 			this._isOpen = this.configs.StartsOpen;
 		}
 
-		/**
-		 * Method to close Notification after wait the time defined
-		 *
-		 * @private
-		 * @memberof Notification
-		 */
+		// Close Notification after wait the time defined
 		private _autoCloseNotification(): void {
 			setTimeout(() => {
 				if (this._isOpen) {
@@ -52,40 +47,23 @@ namespace OSFramework.OSUI.Patterns.Notification {
 			}, this.configs.CloseAfterTime);
 		}
 
-		/**
-		 * Method to trigger the notification at toggle behaviour
-		 *
-		 * @private
-		 * @param {MouseEvent} e
-		 * @memberof Notification
-		 */
+		// Trigger the notification at toggle behaviour
 		private _clickCallback(e: MouseEvent): void {
+			e.stopPropagation();
 			e.preventDefault();
 			this.hide();
 		}
 
-		/**
-		 * Method to add Focus Trap to Pattern
-		 *
-		 * @private
-		 * @memberof Notification
-		 */
-		private _handleFocusBehavior(): void {
+		// Add Focus Trap to Pattern
+		private _handleFocusTrap(): void {
 			const opts = {
 				focusTargetElement: this._parentSelf,
 			} as Behaviors.FocusTrapParams;
 
 			this._focusTrapInstance = new Behaviors.FocusTrap(opts);
-
-			this._focusManagerInstance = new Behaviors.FocusManager();
 		}
 
-		/**
-		 * Method to handle the creation of the GestureEvents
-		 *
-		 * @private
-		 * @memberof Notification
-		 */
+		// Method to handle the creation of the GestureEvents
 		private _handleGestureEvents(): void {
 			if (Helper.DeviceInfo.IsNative) {
 				// Create and save gesture event instance. Created here and not on constructor,
@@ -102,12 +80,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 			}
 		}
 
-		/**
-		 * Method to hide Notification
-		 *
-		 * @private
-		 * @memberof Notification
-		 */
+		// Hide Notification
 		private _hideNotification(): void {
 			this._isOpen = false;
 
@@ -126,7 +99,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 			this.selfElement.blur();
 
 			// Focus on last element clicked
-			this._focusManagerInstance.setFocusToStoredElement();
+			this._focusableActiveElement.focus();
 
 			// Remove listeners to toggle Notification
 			if (Helper.DeviceInfo.IsNative === false && this.configs.InteractToClose) {
@@ -135,13 +108,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 			}
 		}
 
-		/**
-		 * Method to call open or close, based ok e.key and behavior applied
-		 *
-		 * @private
-		 * @param {KeyboardEvent} e
-		 * @memberof Notification
-		 */
+		// Call methods to open or close, based ok e.key and behavior applied
 		private _keypressCallback(e: KeyboardEvent): void {
 			const isEscapedPressed = e.key === GlobalEnum.Keycodes.Escape;
 
@@ -151,25 +118,15 @@ namespace OSFramework.OSUI.Patterns.Notification {
 			}
 		}
 
-		/**
-		 * Method to remove all the assigned events
-		 *
-		 * @private
-		 * @memberof Notification
-		 */
+		// Remove all the assigned Events
 		private _removeEvents(): void {
 			this.selfElement.removeEventListener(this._eventType, this._eventOnClick);
 			this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
 		}
 
-		/**
-		 * Method to show Notification
-		 *
-		 * @private
-		 * @memberof Notification
-		 */
+		// Show Notification
 		private _showNotification(): void {
-			this._focusManagerInstance.storeLastFocusedElement();
+			this._focusableActiveElement = document.activeElement as HTMLElement;
 			this._isOpen = true;
 
 			// Add the A11Y states to focus trap
@@ -198,23 +155,12 @@ namespace OSFramework.OSUI.Patterns.Notification {
 			}
 		}
 
-		/**
-		 * Method to trigger the OnToggle event
-		 *
-		 * @private
-		 * @param {boolean} isOpen
-		 * @memberof Notification
-		 */
+		// Method that triggers the OnToggle event
 		private _triggerOnToggleEvent(isOpen: boolean): void {
 			this.triggerPlatformEventCallback(this._platformEventOnToggle, isOpen);
 		}
 
-		/**
-		 * Method to set the cssClasses that should be assigned to the element on it's initialization
-		 *
-		 * @private
-		 * @memberof Notification
-		 */
+		// Set the cssClasses that should be assigned to the element on it's initialization
 		private _updateA11yProperties(): void {
 			Helper.Dom.Attribute.Set(
 				this.selfElement,
@@ -234,13 +180,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 			Helper.A11Y.SetElementsTabIndex(this._isOpen, this._focusTrapInstance.focusableElements);
 		}
 
-		/**
-		 * Method to update time to apply on AutoClose
-		 *
-		 * @private
-		 * @param {number} value
-		 * @memberof Notification
-		 */
+		// Update time to apply on AutoClose
 		private _updateCloseAfterTime(value: number): void {
 			this.configs.CloseAfterTime = value;
 			if (this._isOpen) {
@@ -248,13 +188,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 			}
 		}
 
-		/**
-		 * Method to update time to apply on AutoClose
-		 *
-		 * @private
-		 * @param {boolean} value
-		 * @memberof Notification
-		 */
+		// Update time to apply on AutoClose
 		private _updateInteractToClose(value: boolean): void {
 			if (this.configs.InteractToClose !== value) {
 				this.configs.InteractToClose = value;
@@ -268,13 +202,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 			}
 		}
 
-		/**
-		 * Method to update position
-		 *
-		 * @private
-		 * @param {string} position
-		 * @memberof Notification
-		 */
+		// Update position
 		private _updatePosition(position: string): void {
 			// Only change classes if are different
 			if (this.configs.Position !== position) {
@@ -287,13 +215,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 			}
 		}
 
-		/**
-		 * Method to update width
-		 *
-		 * @private
-		 * @param {string} width
-		 * @memberof Notification
-		 */
+		// Update width
 		private _updateWidth(width: string): void {
 			this.configs.Width = width;
 			if (width !== '') {
@@ -304,7 +226,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		}
 
 		/**
-		 * Method to set the A11Y properties when the pattern is built.
+		 * Sets the A11Y properties when the pattern is built.
 		 *
 		 * @protected
 		 * @memberof OSFramework.Patterns.Notification.Notification
@@ -321,7 +243,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		}
 
 		/**
-		 *  Method to set the callbacks to be used in the pattern.
+		 *  Sets the callbacks to be used in the pattern.
 		 *
 		 * @protected
 		 * @memberof OSFramework.Patterns.Notification.Notification
@@ -332,7 +254,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		}
 
 		/**
-		 * Method to set the html references that will be used to manage the cssClasses and atribute properties
+		 * Set the html references that will be used to manage the cssClasses and atribute properties
 		 *
 		 * @protected
 		 * @memberof OSFramework.Patterns.Notification.Notification
@@ -342,7 +264,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		}
 
 		/**
-		 * Method to set the cssClasses that should be assigned to the element on it's initialization
+		 * Set the cssClasses that should be assigned to the element on it's initialization
 		 *
 		 * @protected
 		 * @memberof OSFramework.Patterns.Notification.Notification
@@ -387,7 +309,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		}
 
 		/**
-		 * Method to reassign the HTML elements to undefined, preventing memory leaks
+		 * Reassign the HTML elements to undefined, preventing memory leaks
 		 *
 		 * @protected
 		 * @memberof OSFramework.Patterns.Notification.Notification
@@ -397,11 +319,6 @@ namespace OSFramework.OSUI.Patterns.Notification {
 			this._platformEventOnToggle = undefined;
 		}
 
-		/**
-		 * Method to build the Notification
-		 *
-		 * @memberof Notification
-		 */
 		public build(): void {
 			super.build();
 
@@ -412,7 +329,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 
 			this.setHtmlElements();
 
-			this._handleFocusBehavior();
+			this._handleFocusTrap();
 
 			this.setA11YProperties();
 
@@ -422,7 +339,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		}
 
 		/**
-		 * Method to update value when a parameters changed occurs
+		 * Update value when a parameters changed occurs
 		 *
 		 * @param {string} propertyName
 		 * @param {unknown} propertyValue
@@ -466,7 +383,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		}
 
 		/**
-		 * Method to destroy the Notification
+		 * Destroy the Notification
 		 *
 		 * @memberof OSFramework.Patterns.Notification.Notification
 		 */
@@ -492,7 +409,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		}
 
 		/**
-		 * Method to hide the notification, if it's visible.
+		 * Public method to hide the notification, if it's visible.
 		 *
 		 * @memberof OSFramework.Patterns.Notification.Notification
 		 */
@@ -503,7 +420,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		}
 
 		/**
-		 * Method to handle the platform swipe bottom gesture
+		 * Handle the platform swipe bottom gesture
 		 *
 		 * @memberof OSFramework.Patterns.Notification.Notification
 		 */
@@ -519,7 +436,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		}
 
 		/**
-		 * Method to handle the platform swipe left gesture
+		 * Handle the platform swipe left gesture
 		 *
 		 * @memberof OSFramework.Patterns.Notification.Notification
 		 */
@@ -534,7 +451,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		}
 
 		/**
-		 * Method to handle the platform swipe right gesture
+		 * Handle the platform swipe right gesture
 		 *
 		 * @memberof OSFramework.Patterns.Notification.Notification
 		 */
@@ -549,7 +466,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		}
 
 		/**
-		 * Method to handle the platform swipe top gesture
+		 * Handle the platform swipe top gesture
 		 *
 		 * @memberof OSFramework.Patterns.Notification.Notification
 		 */
@@ -558,7 +475,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		}
 
 		/**
-		 * Method to register the provider callback
+		 * Method used to register the provider callback
 		 *
 		 * @param {string} eventName
 		 * @param {GlobalCallbacks.OSGeneric} callback
@@ -578,7 +495,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		}
 
 		/**
-		 * Method to remove the gesture events to open/close the Notification on Mobile Apps
+		 * Removes the gesture events to open/close the Notification on Mobile Apps
 		 *
 		 * @memberof OSFramework.Patterns.Notification.Notification
 		 */
@@ -593,7 +510,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		}
 
 		/**
-		 * Method to set the gesture events to open/close the Notification on Native Apps
+		 * Sets the gesture events to open/close the Notification on Native Apps
 		 *
 		 * @protected
 		 * @memberof OSFramework.Patterns.Notification.Notification
@@ -614,7 +531,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		}
 
 		/**
-		 * Method to show the notification, if it's closed.
+		 * Public method to show the notification, if it's closed.
 		 *
 		 * @memberof OSFramework.Patterns.Notification.Notification
 		 */
@@ -625,7 +542,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		}
 
 		/**
-		 * Method to get Gesture Events Instance
+		 * Get Gesture Events Instance
 		 *
 		 * @readonly
 		 * @type {Event.GestureEvent.SwipeEvent}
@@ -636,7 +553,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		}
 
 		/**
-		 * Method to check if gesture events is applied
+		 * Get if has gesture events
 		 *
 		 * @readonly
 		 * @type {boolean}

@@ -164,7 +164,7 @@ namespace OSFramework.OSUI.Patterns.Gallery {
 		}
 
 		/**
-		 * Method to build the Gallery
+		 * Build Gallery
 		 *
 		 * @memberof OSFramework.Patterns.Gallery.Gallery
 		 */

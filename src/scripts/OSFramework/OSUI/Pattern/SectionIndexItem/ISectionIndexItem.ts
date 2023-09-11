@@ -8,42 +8,11 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 	 * @extends {Interface.IChild}
 	 */
 	export interface ISectionIndexItem extends Interface.IChild {
-		/**
-		 * Readable property to get the active state of the element
-		 *
-		 * @type {boolean}
-		 * @memberof ISectionIndexItem
-		 */
-		IsSelected: boolean;
+		get IsSelected(): boolean;
+		get TargetElement(): HTMLElement;
+		get TargetElementOffset(): OffsetValues;
 
-		/**
-		 * Readable property to get targetElement object
-		 *
-		 * @type {HTMLElement}
-		 * @memberof ISectionIndexItem
-		 */
-		TargetElement: HTMLElement;
-
-		/**
-		 * Readable property to get targetElementOffset info
-		 *
-		 * @type {OffsetValues}
-		 * @memberof ISectionIndexItem
-		 */
-		TargetElementOffset: OffsetValues;
-
-		/**
-		 * Method to add the active state
-		 *
-		 * @memberof ISectionIndexItem
-		 */
 		setIsActive(): void;
-
-		/**
-		 * Method to remove the active state
-		 *
-		 * @memberof ISectionIndexItem
-		 */
 		unsetIsActive(): void;
 	}
 }

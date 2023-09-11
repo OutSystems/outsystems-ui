@@ -250,7 +250,7 @@ namespace OSFramework.OSUI.Patterns.SectionIndex {
 		}
 
 		/**
-		 * Method to build the SectionIndex.
+		 *  Builds the SectionIndex.
 		 *
 		 * @memberof OSFramework.Patterns.SectionIndex.SectionIndex
 		 */

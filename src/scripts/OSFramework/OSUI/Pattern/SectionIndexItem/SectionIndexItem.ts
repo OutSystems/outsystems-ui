@@ -38,12 +38,7 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 			super(uniqueId, new SectionIndexItemConfig(configs));
 		}
 
-		/**
-		 * Method to check the scroll to know if the target element is visible and sets the item as active
-		 *
-		 * @private
-		 * @memberof SectionIndexItem
-		 */
+		// spies the scroll to know if the target element is visible and sets the item as active
 		private _onBodyScroll(): void {
 			// Set target element offset info!
 			this._setTargetOffsetInfo();
@@ -72,13 +67,7 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 			}
 		}
 
-		/**
-		 * Method to set the A11y keyboard navigation
-		 *
-		 * @private
-		 * @param {KeyboardEvent} event
-		 * @memberof SectionIndexItem
-		 */
+		// A11y keyboard navigation
 		private _onKeyboardPressed(event: KeyboardEvent): void {
 			event.preventDefault();
 			event.stopPropagation();
@@ -93,13 +82,7 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 			}
 		}
 
-		/**
-		 * Method to handle the click event
-		 *
-		 * @private
-		 * @param {Event} event
-		 * @memberof SectionIndexItem
-		 */
+		// Method to handle the click event
 		private _onSelected(event: Event): void {
 			event.preventDefault();
 			event.stopPropagation();
@@ -111,12 +94,7 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 			this.notifyParent(SectionIndex.Enum.ChildNotifyActionType.Click);
 		}
 
-		/**
-		 * Method to remove Pattern events
-		 *
-		 * @private
-		 * @memberof SectionIndexItem
-		 */
+		// Remove Pattern Events
 		private _removeEvents(): void {
 			this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
 			this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyBoardPress);
@@ -126,12 +104,7 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 			);
 		}
 
-		/**
-		 * Method to check if header IsFixed
-		 *
-		 * @private
-		 * @memberof SectionIndexItem
-		 */
+		// Check if header IsFixed
 		private _setHeaderSize(): void {
 			const header = Helper.Dom.ClassSelector(document.body, GlobalEnum.CssClassElements.Header);
 			this._headerIsFixed = !!Helper.Dom.ClassSelector(document.body, GlobalEnum.CssClassElements.HeaderIsFixed);
@@ -142,23 +115,12 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 			}
 		}
 
-		/**
-		 * Method to add a data attribute to be used in automated tests
-		 * and to have info on DOM of which element the index is pointing
-		 *
-		 * @private
-		 * @memberof SectionIndexItem
-		 */
+		// Adds a data attribute to be used in automated tests and to have info on DOM of which element the index is pointing
 		private _setLinkAttribute(): void {
 			Helper.Dom.Attribute.Set(this.selfElement, Enum.DataTypes.dataItem, this.configs.ScrollToWidgetId);
 		}
 
-		/**
-		 * Method to set the TargetElement
-		 *
-		 * @private
-		 * @memberof SectionIndexItem
-		 */
+		// Set TargetElement
 		private _setTargetElement(): void {
 			// Check if the element has been already defined!
 			if (this._targetElement === undefined) {
@@ -174,12 +136,7 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 			}
 		}
 
-		/**
-		 * Method to set the offset info related with TargetElement
-		 *
-		 * @private
-		 * @memberof SectionIndexItem
-		 */
+		// Set offset info related with TargetElement
 		private _setTargetOffsetInfo(): void {
 			// Check if TargetElement has been already defined, otherwise define it!
 			this._setTargetElement();
@@ -192,12 +149,7 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 				this._targetElement.offsetTop + this._headerHeight + (this.parentObject.contentPaddingTop as number);
 		}
 
-		/**
-		 * Method to set the event listeners
-		 *
-		 * @private
-		 * @memberof SectionIndexItem
-		 */
+		// Method to set the event listeners
 		private _setUpEvents(): void {
 			this.selfElement.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
 			this.selfElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyBoardPress);
@@ -209,7 +161,7 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 		}
 
 		/**
-		 * Method to add the A11Y attributes values
+		 * Add the Accessibility Attributes values
 		 *
 		 * @protected
 		 * @memberof OSFramework.Patterns.SectionIndexItem.SectionIndexItem
@@ -284,7 +236,7 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 		}
 
 		/**
-		 * Method to build the SectionIndexItem.
+		 *  Builds the SectionIndexItem.
 		 *
 		 * @memberof OSFramework.Patterns.SectionIndexItem.SectionIndexItem
 		 */

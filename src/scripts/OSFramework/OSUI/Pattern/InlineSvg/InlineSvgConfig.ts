@@ -20,7 +20,7 @@ namespace OSFramework.OSUI.Patterns.InlineSvg {
 
 			switch (key) {
 				case Enum.Properties.SVGCode:
-					validatedValue = super.validateString(value as string, OSFramework.OSUI.Constants.EmptyString);
+					validatedValue = super.validateString(value as string, '');
 					break;
 				default:
 					validatedValue = super.validateDefault(key, value);

@@ -7,20 +7,17 @@ namespace OSFramework.OSUI.Interface {
 	 * @interface IOpenable
 	 */
 	export interface IOpenable {
-		isOpen?: boolean;
 		/**
 		 * Method signature to close the pattern.
 		 *
 		 * @memberof OSFramework.Interface.IOpenable
 		 */
 		close(): void;
-
 		/**
 		 * Method signature to open the pattern.
 		 *
-		 * @param {boolean} [isOpenedByApi]
-		 * @memberof IOpenable
+		 * @memberof OSFramework.Interface.IOpenable
 		 */
-		open(isOpenedByApi?: boolean): void;
+		open(): void;
 	}
 }

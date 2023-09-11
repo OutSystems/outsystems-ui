@@ -63,11 +63,6 @@ namespace OSFramework.OSUI.Event.DOMEvents {
 			if (this._events.has(eventType)) {
 				const event = this._events.get(eventType);
 				event.removeHandler(handler);
-
-				// If this was the last handler, then remove this eventType
-				if (event.handlers.length === 0) {
-					this._events.delete(eventType);
-				}
 			}
 		}
 

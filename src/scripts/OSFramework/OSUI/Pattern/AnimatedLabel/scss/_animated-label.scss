@@ -105,11 +105,6 @@
 	}
 }
 
-/* Fix for animated labels inside lists */
-.list.list-group > [data-block*='AnimatedLabel']:first-child .animated-label {
-	margin-top: var(--space-s);
-}
-
 ///
 .form {
 	.animated-label {

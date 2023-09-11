@@ -2,6 +2,9 @@
 namespace OSFramework.OSUI.Patterns.Gallery.Enum {
 	/**
 	 * Gallery CSS Variables
+	 *
+	 * @export
+	 * @enum {number}
 	 */
 	export enum CssVariables {
 		PatternItemsDesktop = '--gallery-desktop-items',
@@ -14,6 +17,9 @@ namespace OSFramework.OSUI.Patterns.Gallery.Enum {
 	}
 	/**
 	 * Gallery Enum properties
+	 *
+	 * @export
+	 * @enum {number}
 	 */
 	export enum Properties {
 		ItemsGap = 'ItemsGap',

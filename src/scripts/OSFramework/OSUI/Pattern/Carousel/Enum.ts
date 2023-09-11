@@ -65,12 +65,4 @@ namespace OSFramework.OSUI.Patterns.Carousel.Enum {
 		Dots = 'dots',
 		None = 'none',
 	}
-
-	/**
-	 * Carousel default properties
-	 */
-	export enum Defaults {
-		Height = 'auto',
-		SpaceNone = '0px',
-	}
 }

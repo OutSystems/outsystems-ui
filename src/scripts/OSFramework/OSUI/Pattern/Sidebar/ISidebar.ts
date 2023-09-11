@@ -9,20 +9,8 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 	 * @extends {Interface.ICallback}
 	 */
 	export interface ISidebar extends Interface.IPattern, Interface.IOpenable {
-		/**
-		 * Method to toggle the click on outside to close the Sidebar.
-		 *
-		 * @param {boolean} closeOnOutSIdeClick
-		 * @memberof ISidebar
-		 */
 		clickOutsideToClose(closeOnOutSIdeClick: boolean): void;
-
-		/**
-		 * Method that toggle swipes on Sidebar.
-		 *
-		 * @param {boolean} enableSwipe
-		 * @memberof ISidebar
-		 */
+		registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void;
 		toggleGestures(enableSwipe: boolean): void;
 	}
 }

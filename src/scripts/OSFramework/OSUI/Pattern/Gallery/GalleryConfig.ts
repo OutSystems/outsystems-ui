@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSFramework.OSUI.Patterns.Gallery {
 	/**
-	 * Class that represents the custom configurations received by the Gallery.
+	 * Defines the interface for OutSystemsUI Gallery Pattern
 	 *
 	 * @export
 	 * @class GalleryConfig

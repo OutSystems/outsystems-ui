@@ -165,7 +165,7 @@ namespace OSFramework.OSUI.Patterns.DropdownServerSideItem {
 		}
 
 		/**
-		 * Method to build the DropdownServerSideItem.
+		 *  Builds the DropdownServerSideItem.
 		 *
 		 * @memberof OSFramework.Patterns.DropdownServerSideItem.DropdownServerSideItem
 		 */

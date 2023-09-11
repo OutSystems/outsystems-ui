@@ -2,6 +2,9 @@
 namespace OSFramework.OSUI.Patterns.Sidebar.Enum {
 	/**
 	 * Sidebar Enum properties
+	 *
+	 * @export
+	 * @enum {number}
 	 */
 	export enum Properties {
 		StartsOpen = 'StartsOpen',
@@ -11,14 +14,10 @@ namespace OSFramework.OSUI.Patterns.Sidebar.Enum {
 	}
 
 	/**
-	 * Sidebar default properties
-	 */
-	export enum Defaults {
-		Width = '500px',
-	}
-
-	/**
 	 * Sidebar Enum for CSS Classes
+	 *
+	 * @export
+	 * @enum {number}
 	 */
 	export enum CssClass {
 		Aside = 'osui-sidebar',
@@ -32,13 +31,16 @@ namespace OSFramework.OSUI.Patterns.Sidebar.Enum {
 
 	/**
 	 * Sidebar Enum for CSS Custom Properties
+	 *
+	 * @export
+	 * @enum {number}
 	 */
 	export enum CssProperty {
 		Width = '--sidebar-width',
 	}
 
 	/**
-	 * Sidebar Enum Events
+	 * Sidebar Events
 	 */
 	export enum Events {
 		OnToggle = 'OnToggle',

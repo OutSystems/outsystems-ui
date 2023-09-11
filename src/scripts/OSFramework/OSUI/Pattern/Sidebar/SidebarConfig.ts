@@ -1,12 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSFramework.OSUI.Patterns.Sidebar {
-	/**
-	 * Class that represents the custom configurations received by the Sidebar.
-	 *
-	 * @export
-	 * @class SidebarConfig
-	 * @extends {AbstractConfiguration}
-	 */
 	export class SidebarConfig extends AbstractConfiguration {
 		/** PUBLIC PROPERTIES **/
 		public Direction: GlobalEnum.Direction;
@@ -57,7 +50,7 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 					validatedValue = this.validateBoolean(value as boolean, false);
 					break;
 				case Enum.Properties.Width:
-					validatedValue = this.validateString(value as string, Enum.Defaults.Width);
+					validatedValue = this.validateString(value as string, '500px');
 					break;
 				default:
 					validatedValue = super.validateDefault(key, value);

@@ -95,8 +95,7 @@ namespace OSFramework.OSUI.Patterns.Progress.Bar {
 		 * @memberof OSFramework.Patterns.Progress.Bar.Bar
 		 */
 		protected setA11YProperties(): void {
-			if (this.contentElem.innerHTML) Helper.A11Y.AriaLabelledBy(this.selfElement, this.contentElem.id);
-			else Helper.A11Y.AriaLabel(this.selfElement, ProgressEnum.AriaLabel.Progress);
+			console.warn(GlobalEnum.WarningMessages.MethodNotImplemented);
 		}
 
 		/**
@@ -134,10 +133,6 @@ namespace OSFramework.OSUI.Patterns.Progress.Bar {
 		protected setHtmlElements(): void {
 			// Set the html references that will be used to manage the cssClasses and atribute properties
 			this.progressElem = this.selfElement.querySelector(Constants.Dot + ProgressEnum.CssClass.Container);
-			// Set Progress Circle content element
-			this.contentElem = this.selfElement.querySelector(
-				OSUI.Constants.Dot + Progress.ProgressEnum.CssClass.ProgressBarContent
-			);
 		}
 
 		/**
@@ -160,17 +155,10 @@ namespace OSFramework.OSUI.Patterns.Progress.Bar {
 			super.unsetHtmlElements();
 		}
 
-		/**
-		 * Method to build the ProgressBar
-		 *
-		 * @memberof Bar
-		 */
 		public build(): void {
 			super.build();
 
 			this.setHtmlElements();
-
-			this.setA11YProperties();
 
 			this._setCssVariables();
 

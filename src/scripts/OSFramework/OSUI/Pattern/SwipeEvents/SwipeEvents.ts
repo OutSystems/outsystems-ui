@@ -171,7 +171,7 @@ namespace OSFramework.OSUI.Patterns.SwipeEvents {
 		}
 
 		/**
-		 * Method to build the SwipeEvents
+		 * Build SwipeEvents
 		 *
 		 * @memberof OSFramework.Patterns.SwipeEvents.SwipeEvents
 		 */

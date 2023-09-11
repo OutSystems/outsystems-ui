@@ -7,9 +7,6 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem.Enum {
 		ScrollToWidgetId = 'ScrollToWidgetId',
 	}
 
-	/**
-	 * SectionIndexItem Enum DataTypes
-	 */
 	export enum DataTypes {
 		dataItem = 'data-item',
 	}

@@ -29,12 +29,7 @@ namespace OSFramework.OSUI.Patterns.Rating {
 			super(uniqueId, new RatingConfig(configs));
 		}
 
-		/**
-		 * Method that will iterate on the RatingScale, to crate an item for each one
-		 *
-		 * @private
-		 * @memberof Rating
-		 */
+		// Medthod that will iterate on the RatingScale, to crate an item for each one
 		private _createItems(): void {
 			// Check if the the we should limit the amount of items
 			if (this.configs.RatingScale > Enum.Properties.MaxRatingScale) {
@@ -52,26 +47,12 @@ namespace OSFramework.OSUI.Patterns.Rating {
 			}
 		}
 
-		/**
-		 * Method to get the rating decimal value
-		 *
-		 * @private
-		 * @param {number} value
-		 * @return {*}  {number}
-		 * @memberof Rating
-		 */
+		// Get the rating decimal value
 		private _getDecimalValue(value: number): number {
 			return Math.round((value - Math.floor(value)) * 100) / 100;
 		}
 
-		/**
-		 * Method to get if the valie is-half
-		 *
-		 * @private
-		 * @param {number} value
-		 * @return {*}  {boolean}
-		 * @memberof Rating
-		 */
+		// Get if the valie is-half
 		private _getIsHalfValue(value: number): boolean {
 			const decimalValue = this._getDecimalValue(value);
 			// If bigger than 0.3 and lower than 0.7 means it should be represented as a half value.
@@ -79,24 +60,13 @@ namespace OSFramework.OSUI.Patterns.Rating {
 			return !!(decimalValue >= 0.3 && decimalValue <= 0.7);
 		}
 
-		/**
-		 * Method to get the rating value
-		 *
-		 * @private
-		 * @return {*}  {number}
-		 * @memberof Rating
-		 */
+		// Get the rating value
 		private _getValue(): number {
 			const inputChecked = Helper.Dom.TagSelector(this.selfElement, 'input:checked') as HTMLInputElement;
 			return parseInt(inputChecked.value);
 		}
 
-		/**
-		 * Method that handles the placeholders content storage and DOM lifecycle
-		 *
-		 * @private
-		 * @memberof Rating
-		 */
+		// Method that handles the placeholders content storage and DOM lifecycle
 		private _handlePlaceholders(): void {
 			// Store the placholders content to cloned after
 			this._clonedPlaceholders = this._ratingIconStatesElem.innerHTML;
@@ -105,12 +75,7 @@ namespace OSFramework.OSUI.Patterns.Rating {
 			this._ratingIconStatesElem.remove();
 		}
 
-		/**
-		 * Method to manage the click event
-		 *
-		 * @private
-		 * @memberof Rating
-		 */
+		// Method to manage the click event
 		private _manageRatingEvent(): void {
 			// Check if a event was already added
 			if (this._ratingHasEventAdded) {
@@ -127,13 +92,7 @@ namespace OSFramework.OSUI.Patterns.Rating {
 			}
 		}
 
-		/**
-		 * Method that handles the click event and set the new value, by checking the input:checked
-		 *
-		 * @private
-		 * @param {MouseEvent} e
-		 * @memberof Rating
-		 */
+		// Method that handles the click event and set the new value, by checking the input:checked
 		private _ratingOnClick(e: MouseEvent): void {
 			const currentTarget = e.target as HTMLElement;
 			// Remove the is-half when clicking, as a click will never result in a half value
@@ -148,12 +107,7 @@ namespace OSFramework.OSUI.Patterns.Rating {
 				this._setValue(true);
 			}
 		}
-		/**
-		 * Method to remove the event listeners
-		 *
-		 * @private
-		 * @memberof Rating
-		 */
+		// Method to remove the event listeners
 		private _removeEvents(): void {
 			// remove event listener if any was added
 			if (this.selfElement && this._ratingHasEventAdded) {
@@ -161,13 +115,7 @@ namespace OSFramework.OSUI.Patterns.Rating {
 			}
 		}
 
-		/**
-		 * Method called on createItems() to render the correct HTML structure for each item
-		 *
-		 * @private
-		 * @param {number} index
-		 * @memberof Rating
-		 */
+		// Method called on createItems() to render the correct HTML structure for each item
 		private _renderItem(index: number): void {
 			// If first input, whihc is hidden, than also hide the label
 			const hideLabelClass: string = index === 0 ? Enum.CssClass.WCAGHideText : '';
@@ -184,13 +132,7 @@ namespace OSFramework.OSUI.Patterns.Rating {
 			this._ratingFieldsetElem.innerHTML += input + label;
 		}
 
-		/**
-		 * Method to toggle fieldset disbaled status
-		 *
-		 * @private
-		 * @param {boolean} isDisabled
-		 * @memberof Rating
-		 */
+		// Toggle fieldset disbaled status
 		private _setFieldsetDisabledStatus(isDisabled: boolean): void {
 			const isFieldsetDisabled = Helper.Dom.Attribute.Get(
 				this._ratingFieldsetElem,
@@ -204,12 +146,7 @@ namespace OSFramework.OSUI.Patterns.Rating {
 			}
 		}
 
-		/**
-		 * Method to set the cssClasses that should be assigned to the element on it's initialization
-		 *
-		 * @private
-		 * @memberof Rating
-		 */
+		// Set the cssClasses that should be assigned to the element on it's initialization
 		private _setInitialCssClasses(): void {
 			// Set IsHalf class
 			if (this._isHalfValue) {
@@ -227,37 +164,21 @@ namespace OSFramework.OSUI.Patterns.Rating {
 			}
 		}
 
-		/**
-		 * Method to set the initial and local properties values
-		 *
-		 * @private
-		 * @memberof Rating
-		 */
+		// Set the initial and local properties values
 		private _setInitialPropertiesValues(): void {
 			this._disabled = !this.configs.IsEdit;
 			this._ratingInputName = 'rating-' + this.uniqueId;
 			this._ratingHasEventAdded = false;
 		}
 
-		/**
-		 * Method to set disabled status
-		 *
-		 * @private
-		 * @param {boolean} isDisabled
-		 * @memberof Rating
-		 */
+		// Set disabled status
 		private _setIsDisabled(isDisabled: boolean): void {
 			this._setFieldsetDisabledStatus(isDisabled);
 
 			this._disabled = isDisabled;
 		}
 
-		/**
-		 * Method to set the IsEdit option
-		 *
-		 * @private
-		 * @memberof Rating
-		 */
+		// Set the IsEdit option
 		private _setIsEdit(): void {
 			// Set the fieldset and input disabled attribute status
 			this._setIsDisabled(!this.configs.IsEdit);
@@ -271,12 +192,7 @@ namespace OSFramework.OSUI.Patterns.Rating {
 			this._manageRatingEvent();
 		}
 
-		/**
-		 * Method to set a RatingScale - The amout of stars pattern will have
-		 *
-		 * @private
-		 * @memberof Rating
-		 */
+		// Set a RatingScale - The amout of stars pattern will have
 		private _setScale(): void {
 			// Clean (if already exist) old Stars inside pattern
 			this._ratingFieldsetElem.innerHTML = '';
@@ -286,13 +202,7 @@ namespace OSFramework.OSUI.Patterns.Rating {
 			this._setValue();
 		}
 
-		/**
-		 * Method to set the Rating Size
-		 *
-		 * @private
-		 * @param {string} oldSize
-		 * @memberof Rating
-		 */
+		// Set the Rating Size
 		private _setSize(oldSize: string): void {
 			// Reset current class
 			if (oldSize !== '') {
@@ -305,14 +215,7 @@ namespace OSFramework.OSUI.Patterns.Rating {
 			}
 		}
 
-		/**
-		 * Method to set a rating value
-		 *
-		 * @private
-		 * @param {boolean} [triggerEvent=false]
-		 * @return {*}  {void}
-		 * @memberof Rating
-		 */
+		// Set a rating value
 		private _setValue(triggerEvent = false): void {
 			// Check if passed value is decimal
 			this._decimalValue = this._getDecimalValue(this.configs.RatingValue);
@@ -373,13 +276,7 @@ namespace OSFramework.OSUI.Patterns.Rating {
 			}
 		}
 
-		/**
-		 * Method that triggers the OnSelect event
-		 *
-		 * @private
-		 * @param {number} value
-		 * @memberof Rating
-		 */
+		// Method that triggers the OnSelect event
 		private _triggerOnSelectEvent(value: number): void {
 			if (this._platformEventOnSelect !== undefined) {
 				this.triggerPlatformEventCallback(this._platformEventOnSelect, value);
@@ -397,7 +294,7 @@ namespace OSFramework.OSUI.Patterns.Rating {
 		}
 
 		/**
-		 * Method to set the events
+		 * Set the events
 		 *
 		 * @protected
 		 * @memberof OSFramework.Patterns.Rating.Rating
@@ -407,7 +304,7 @@ namespace OSFramework.OSUI.Patterns.Rating {
 		}
 
 		/**
-		 * Method to set the html references that will be used to manage the cssClasses and atribute properties
+		 * Set the html references that will be used to manage the cssClasses and atribute properties
 		 *
 		 * @protected
 		 * @memberof OSFramework.Patterns.Rating.Rating
@@ -428,7 +325,7 @@ namespace OSFramework.OSUI.Patterns.Rating {
 		}
 
 		/**
-		 * Method to unset the HTML elements
+		 * UnSet the HTML elements
 		 *
 		 * @protected
 		 * @memberof OSFramework.Patterns.Rating.Rating
@@ -442,7 +339,7 @@ namespace OSFramework.OSUI.Patterns.Rating {
 		}
 
 		/**
-		 * Method to build the Rating
+		 * Building Rating
 		 *
 		 * @memberof OSFramework.Patterns.Rating.Rating
 		 */
@@ -471,7 +368,7 @@ namespace OSFramework.OSUI.Patterns.Rating {
 		}
 
 		/**
-		 * Method to update value when a parameters changed occurs
+		 * Update value when a parameters changed occurs
 		 *
 		 * @param {string} propertyName
 		 * @param {*} propertyValue
@@ -506,7 +403,7 @@ namespace OSFramework.OSUI.Patterns.Rating {
 		}
 
 		/**
-		 * Method to destroy the Rating pattern
+		 * Destroy the Rating pattern
 		 *
 		 * @memberof OSFramework.Patterns.Rating.Rating
 		 */
@@ -520,7 +417,7 @@ namespace OSFramework.OSUI.Patterns.Rating {
 		}
 
 		/**
-		 * Method to register a given callback event handler.
+		 * Register a given callback event handler.
 		 *
 		 * @param {string} eventName
 		 * @param {GlobalCallbacks.OSGeneric} callback

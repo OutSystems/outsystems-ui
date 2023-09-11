@@ -23,8 +23,6 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 		private _eventOverlayMouseDown: GlobalCallbacks.Generic;
 		// Store the keypress event with bind(this)
 		private _eventSidebarKeypress: GlobalCallbacks.Generic;
-		// Store focus manager instance
-		private _focusManagerInstance: Behaviors.FocusManager;
 		// Store focus trap instance
 		private _focusTrapInstance: Behaviors.FocusTrap;
 		// Store gesture events instance
@@ -44,12 +42,7 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 			this._currentDirectionCssClass = Enum.CssClass.ClassModifier + this.configs.Direction;
 		}
 
-		/**
-		 * Method to close Sidebar
-		 *
-		 * @private
-		 * @memberof Sidebar
-		 */
+		// Actual method that knows what is to close the sidebar
 		private _closeSidebar(): void {
 			this._isOpen = false;
 
@@ -78,23 +71,15 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 					);
 				}
 			}
-			this._focusManagerInstance.setFocusToStoredElement();
 		}
 
-		/**
-		 * Method to add Focus Trap to Pattern
-		 *
-		 * @private
-		 * @memberof Sidebar
-		 */
-		private _handleFocusBehavior(): void {
+		// Add Focus Trap to Pattern
+		private _handleFocusTrap(): void {
 			const opts = {
 				focusTargetElement: this._parentSelf,
 			} as Behaviors.FocusTrapParams;
 
 			this._focusTrapInstance = new Behaviors.FocusTrap(opts);
-
-			this._focusManagerInstance = new Behaviors.FocusManager();
 
 			// Disable tabIndex to the inner focusable elements if its start closed!
 			if (this._isOpen === false) {
@@ -103,12 +88,7 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 			}
 		}
 
-		/**
-		 * Method to handle the creation of the GestureEvents
-		 *
-		 * @private
-		 * @memberof Sidebar
-		 */
+		// Method to handle the creation of the GestureEvents
 		private _handleGestureEvents(): void {
 			if (Helper.DeviceInfo.IsNative) {
 				// Create and save gesture event instance. Created here and not on constructor,
@@ -126,15 +106,7 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 			}
 		}
 
-		/**
-		 * Method to handle the start of a gesture
-		 *
-		 * @private
-		 * @param {number} offsetX
-		 * @param {number} offsetY
-		 * @param {number} timeTaken
-		 * @memberof Sidebar
-		 */
+		// Method to handle the start of a gesture
 		private _onGestureEnd(offsetX: number, offsetY: number, timeTaken: number): void {
 			this._animateOnDragInstance.onDragEnd(offsetX, offsetY, timeTaken, this._toggle.bind(this));
 
@@ -143,17 +115,7 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 			}
 		}
 
-		/**
-		 * Method to handle the gesture move
-		 *
-		 * @private
-		 * @param {number} x
-		 * @param {number} y
-		 * @param {number} offsetX
-		 * @param {number} offsetY
-		 * @param {TouchEvent} evt
-		 * @memberof Sidebar
-		 */
+		// Method to handle the gesture move
 		private _onGestureMove(x: number, y: number, offsetX: number, offsetY: number, evt: TouchEvent): void {
 			this._animateOnDragInstance.onDragMove(offsetX, offsetY, x, y, evt);
 
@@ -162,14 +124,7 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 			}
 		}
 
-		/**
-		 * Method to handle the end of a gesture
-		 *
-		 * @private
-		 * @param {number} x
-		 * @param {number} y
-		 * @memberof Sidebar
-		 */
+		// Method to handle the end of a gesture
 		private _onGestureStart(x: number, y: number): void {
 			this._animateOnDragInstance.onDragStart(
 				false,
@@ -181,12 +136,7 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 			);
 		}
 
-		/**
-		 * Method to open Sidebar
-		 *
-		 * @private
-		 * @memberof Sidebar
-		 */
+		// Actual method that knows what is to open the sidebar
 		private _openSidebar() {
 			Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.IsOpen);
 			Helper.A11Y.TabIndexTrue(this.selfElement);
@@ -194,8 +144,6 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 
 			// Add the A11Y states to focus trap
 			this._focusTrapInstance.enableForA11y();
-
-			this._focusManagerInstance.storeLastFocusedElement();
 
 			if (this.isBuilt) {
 				//let's only change the property and trigger the OS event IF the pattern is already built.
@@ -221,14 +169,7 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 			Helper.A11Y.SetElementsTabIndex(this._isOpen, this._focusTrapInstance.focusableElements);
 		}
 
-		/**
-		 * Method to close Sidebar on an overlay click
-		 *
-		 * @private
-		 * @param {string} _args
-		 * @param {MouseEvent} e
-		 * @memberof Sidebar
-		 */
+		// Overlay onClick event to close the Sidebar
 		private _overlayClickCallback(_args: string, e: MouseEvent): void {
 			// If the sidebar is opened and the mouse down event occured outside the sidebar, close it.
 			if (
@@ -241,15 +182,8 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 			e.stopPropagation();
 		}
 
-		/**
-		 * Method to check if the mouse down event happened outside the sidebar
-		 * This is required to cover the cases when selecting text and moving the cursor to the sidebar's overlay.
-		 *
-		 * @private
-		 * @param {string} _args
-		 * @param {MouseEvent} e
-		 * @memberof Sidebar
-		 */
+		// Method to check if the mouse down event happened outside the sidebar
+		// This is required to cover the cases when selecting text and moving the cursor to the sidebar's overlay.
 		private _overlayMouseDownCallback(_args: string, e: MouseEvent): void {
 			const targetElem = e.target as HTMLElement;
 			this._clickedOutsideElement = true;
@@ -263,12 +197,7 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 			}
 		}
 
-		/**
-		 * Method to remove the event listeners
-		 *
-		 * @private
-		 * @memberof Sidebar
-		 */
+		// Method to remove the event listeners
 		private _removeEvents(): void {
 			this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventSidebarKeypress);
 			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
@@ -281,12 +210,7 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 			);
 		}
 
-		/**
-		 * Method to set the Sidebar opening/closing direction
-		 *
-		 * @private
-		 * @memberof Sidebar
-		 */
+		// Set the Sidebar opening/closing direction
 		private _setDirection(): void {
 			// Reset direction class
 			if (this._currentDirectionCssClass !== '') {
@@ -296,12 +220,7 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 			Helper.Dom.Styles.AddClass(this.selfElement, this._currentDirectionCssClass);
 		}
 
-		/**
-		 * Method to sets the Sidebar overlay
-		 *
-		 * @private
-		 * @memberof Sidebar
-		 */
+		// Sets the Sidebar overlay
 		private _setHasOverlay(): void {
 			const alreadyHasOverlayClass = Helper.Dom.Styles.ContainsClass(this.selfElement, Enum.CssClass.HasOverlay);
 
@@ -312,12 +231,7 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 			}
 		}
 
-		/**
-		 * Method to set the cssClasses that should be assigned to the element on it's initialization
-		 *
-		 * @private
-		 * @memberof Sidebar
-		 */
+		// Set the cssClasses that should be assigned to the element on it's initialization
 		private _setInitialCssClasses(): void {
 			this._setDirection();
 			this._setWidth();
@@ -328,23 +242,12 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 			}
 		}
 
-		/**
-		 * Method to set the Sidebar width
-		 *
-		 * @private
-		 * @memberof Sidebar
-		 */
+		// Set the Sidebar width
 		private _setWidth(): void {
 			Helper.Dom.Styles.SetStyleAttribute(this.selfElement, Enum.CssProperty.Width, this.configs.Width);
 		}
 
-		/**
-		 * Method that will handle the tab navigation and sidebar closing on Escape
-		 *
-		 * @private
-		 * @param {KeyboardEvent} e
-		 * @memberof Sidebar
-		 */
+		// Method that will handle the tab navigation and sidebar closing on Escape
 		private _sidebarKeypressCallback(e: KeyboardEvent): void {
 			const isEscapedPressed = e.key === GlobalEnum.Keycodes.Escape;
 
@@ -356,12 +259,7 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 			e.stopPropagation();
 		}
 
-		/**
-		 * Method to toggle the Sidebar
-		 *
-		 * @private
-		 * @memberof Sidebar
-		 */
+		// Method to toggle the Sidebar
 		private _toggle(): void {
 			if (this._isOpen) {
 				this.close();
@@ -370,13 +268,7 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 			}
 		}
 
-		/**
-		 * Method to toggle gestures on Sidebar
-		 *
-		 * @private
-		 * @param {boolean} enableSwipes
-		 * @memberof Sidebar
-		 */
+		// Method to toggle gestures on Sidebar
 		private _toggleGesturesSidebar(enableSwipes: boolean): void {
 			if (enableSwipes && this._hasGestureEvents === false) {
 				if (this._gestureEventInstance === undefined) {
@@ -387,12 +279,7 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 			}
 		}
 
-		/**
-		 * Method that triggers the OnToggle event
-		 *
-		 * @private
-		 * @memberof Sidebar
-		 */
+		// Method that triggers the OnToggle event
 		private _triggerOnToggleEvent(): void {
 			this.triggerPlatformEventCallback(this._platformEventOnToggle, this._isOpen);
 		}
@@ -466,7 +353,7 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 		}
 
 		/**
-		 * Method to build the Sidebar
+		 * Method to build the pattern.
 		 *
 		 * @memberof OSFramework.Patterns.Sidebar.Sidebar
 		 */
@@ -477,7 +364,7 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 
 			this.setHtmlElements();
 
-			this._handleFocusBehavior();
+			this._handleFocusTrap();
 
 			this._setInitialCssClasses();
 
@@ -573,7 +460,7 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 		}
 
 		/**
-		 * Method to set the callbacks for the pattern
+		 * Set callbacks for the pattern
 		 *
 		 * @param {string} eventName
 		 * @param {GlobalCallbacks.OSGeneric} callback
@@ -595,7 +482,7 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 		}
 
 		/**
-		 * Method that removes the gesture events to open/close the Sidebar on Native Apps
+		 * Removes the gesture events to open/close the Sidebar on Native Apps
 		 *
 		 * @memberof OSFramework.Patterns.Sidebar.Sidebar
 		 */
@@ -610,7 +497,7 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 		}
 
 		/**
-		 * Method that sets the gesture events to open/close the Sidebar on Native Apps
+		 * Sets the gesture events to open/close the Sidebar on Native Apps
 		 *
 		 * @protected
 		 * @memberof OSFramework.Patterns.Sidebar.Sidebar
@@ -631,8 +518,7 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 		/**
 		 * Method that toggle swipes on sidebar.
 		 *
-		 * @param {boolean} enableSwipe
-		 * @memberof Sidebar
+		 * @memberof OSFramework.Patterns.Sidebar.Sidebar
 		 */
 		public toggleGestures(enableSwipe: boolean): void {
 			this._toggleGesturesSidebar(enableSwipe);

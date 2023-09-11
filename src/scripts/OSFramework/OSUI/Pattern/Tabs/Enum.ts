@@ -48,7 +48,7 @@ namespace OSFramework.OSUI.Patterns.Tabs.Enum {
 		TabsContentItemOverflow = '--tabs-content-item-overflow',
 		TabsHeaderItems = '--tabs-header-items',
 		TabsHeight = '--tabs-height',
-		TabsIndicatorSize = '--tabs-indicator-size',
+		TabsIndicatorScale = '--tabs-indicator-scale',
 		TabsIndicatorTransform = '--tabs-indicator-transform',
 	}
 
@@ -81,6 +81,9 @@ namespace OSFramework.OSUI.Patterns.Tabs.Enum {
 
 	/**
 	 * Callbacks eventName
+	 *
+	 * @export
+	 * @enum {number}
 	 */
 	export enum Events {
 		OnChange = 'OnChange',

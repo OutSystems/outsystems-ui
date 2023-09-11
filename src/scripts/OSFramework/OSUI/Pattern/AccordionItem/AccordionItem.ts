@@ -17,8 +17,6 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 		private _accordionItemPlaceholder: HTMLElement;
 		// Stores the HTML element of the pattern's title
 		private _accordionItemTitleElem: HTMLElement;
-		// Stores the HTML element of the pattern's title placeholder
-		private _accordionTitleFocusableChildren: HTMLElement[];
 		// Stores if should be aware of elements clickable inside the title
 		private _allowTitleEvents: boolean;
 		// Store the collapsed height value
@@ -42,14 +40,7 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 			this._isOpen = this.configs.StartsExpanded;
 		}
 
-		/**
-		 * Method to handle the click event
-		 *
-		 * @private
-		 * @param {MouseEvent} event
-		 * @return {*}  {void}
-		 * @memberof AccordionItem
-		 */
+		// Method to handle the click event
 		private _accordionOnClickHandler(event: MouseEvent): void {
 			if (this._allowTitleEvents) {
 				if (
@@ -68,24 +59,13 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 			}
 		}
 
-		/**
-		 * Method to add the event listeners
-		 *
-		 * @private
-		 * @memberof AccordionItem
-		 */
+		// Method to add the event listeners
 		private _addEvents(): void {
 			this._accordionItemTitleElem.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
 			this._accordionItemTitleElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyPress);
 		}
 
-		/**
-		 * Method to handle async animation
-		 *
-		 * @private
-		 * @param {boolean} isExpand
-		 * @memberof AccordionItem
-		 */
+		// Method to handle async animation
 		private _animationAsync(isExpand: boolean): void {
 			const finalHeight = isExpand ? this._expandedHeight : this._collapsedHeight;
 
@@ -121,37 +101,21 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 			this._onToggleCallback();
 		}
 
-		/**
-		 * Method to handle the tabindex values
-		 *
-		 * @private
-		 * @memberof AccordionItem
-		 */
+		// Method to handle the tabindex values
 		private _handleTabIndex(): void {
 			const titleTabindexValue = this.configs.IsDisabled
 				? Constants.A11YAttributes.States.TabIndexHidden
 				: Constants.A11YAttributes.States.TabIndexShow;
-			const titleFocusableElementsTabindexValue =
+			const contentTabindexValue =
 				!this.configs.IsDisabled && this._isOpen
 					? Constants.A11YAttributes.States.TabIndexShow
 					: Constants.A11YAttributes.States.TabIndexHidden;
 
 			Helper.A11Y.TabIndex(this._accordionItemTitleElem, titleTabindexValue);
-
-			// The focusable elements inside the Accordion Title must be non-focusable unless the Accordion is expanded
-			for (const child of this._accordionTitleFocusableChildren) {
-				Helper.A11Y.TabIndex(child as HTMLElement, titleFocusableElementsTabindexValue);
-			}
+			Helper.A11Y.TabIndex(this._accordionItemContentElem, contentTabindexValue);
 		}
 
-		/**
-		 * Method to handle Keyboardpress event
-		 *
-		 * @private
-		 * @param {KeyboardEvent} event
-		 * @return {*}  {void}
-		 * @memberof AccordionItem
-		 */
+		// Method to hadle Keyboardpress event
 		private _onKeyboardPress(event: KeyboardEvent): void {
 			const isEscapedKey = event.key === GlobalEnum.Keycodes.Escape;
 			const isEnterOrSpaceKey =
@@ -173,33 +137,18 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 			}
 		}
 
-		/**
-		 * Method to handle the keyboard interactions
-		 *
-		 * @private
-		 * @memberof AccordionItem
-		 */
+		// Method to handle the keyboard interactions
 		private _onToggleCallback(): void {
 			this.triggerPlatformEventCallback(this._platformEventOnToggle, this._isOpen);
 		}
 
-		/**
-		 * Method to remove the event listeners
-		 *
-		 * @private
-		 * @memberof AccordionItem
-		 */
+		// Method to remove the event listeners
 		private _removeEvents(): void {
 			this._accordionItemTitleElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
 			this._accordionItemTitleElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyPress);
 		}
 
-		/**
-		 * Method to set the parent Info, if an accordion wrapper is being used
-		 *
-		 * @private
-		 * @memberof AccordionItem
-		 */
+		// Method to set the parent Info, if an accordion wrapper is being used
 		private _setAccordionParent(): void {
 			// Get parent info
 			this.setParentInfo(
@@ -214,12 +163,7 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 			}
 		}
 
-		/**
-		 * Method that changes the icon's position
-		 *
-		 * @private
-		 * @memberof AccordionItem
-		 */
+		// Method that changes the icon's position
 		private _setIconPosition(): void {
 			//If the page we're on is RTL, the icon's position has to change accordingly.
 			if (this.configs.IconPosition === GlobalEnum.Direction.Right) {
@@ -231,12 +175,7 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 			}
 		}
 
-		/**
-		 * Method that changes the icon's type (Caret, Plus/Minus, Custom)
-		 *
-		 * @private
-		 * @memberof AccordionItem
-		 */
+		// Method that changes the icon's type (Caret, Plus/Minus, Custom)
 		private _setIconType(): void {
 			switch (this.configs.Icon) {
 				case Enum.IconType.PlusMinus:
@@ -263,12 +202,7 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 			}
 		}
 
-		/**
-		 * Method to handle the IsDisabled state
-		 *
-		 * @private
-		 * @memberof AccordionItem
-		 */
+		// Method to handle the IsDisabled state
 		private _setIsDisabledState(): void {
 			if (this.configs.IsDisabled) {
 				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.PatternDisabled);
@@ -286,12 +220,7 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 			this._handleTabIndex();
 		}
 
-		/**
-		 * Method to handle the onTransitionEnd on accordion toggle animation
-		 *
-		 * @private
-		 * @memberof AccordionItem
-		 */
+		// Method to handle the onTransitionEnd on accordion toggle animation
 		private _transitionEndHandler(): void {
 			if (this._accordionItemContentElem) {
 				Helper.Dom.Styles.RemoveClass(this._accordionItemContentElem, Enum.CssClass.PatternAnimating);
@@ -325,7 +254,7 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 			// Set the static attributes on page load only
 			if (this.isBuilt === false) {
 				// Set ARIA Controls
-				Helper.A11Y.AriaControls(this._accordionItemTitleElem, this._accordionItemPlaceholder.id);
+				Helper.A11Y.AriaControls(this.selfElement, this._accordionItemPlaceholder.id);
 
 				// Set ARIA LabelledBy
 				Helper.A11Y.AriaLabelledBy(this._accordionItemContentElem, this._accordionItemTitleElem.id);
@@ -334,26 +263,23 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 				Helper.A11Y.AriaHiddenTrue(this._accordionItemIconElem);
 
 				// Set ARIA Disabled
-				Helper.A11Y.AriaDisabled(this._accordionItemTitleElem, this.configs.IsDisabled);
+				Helper.A11Y.AriaDisabled(this.selfElement, this.configs.IsDisabled);
 
 				// Set roles
+				Helper.A11Y.RoleTab(this.selfElement);
 				Helper.A11Y.RoleButton(this._accordionItemTitleElem);
-				Helper.A11Y.RoleRegion(this._accordionItemContentElem);
+				Helper.A11Y.RoleTabPanel(this._accordionItemPlaceholder);
 			}
 
 			// Set Tabindex
 			this._handleTabIndex();
 
 			// Set ARIA Expanded
+			Helper.A11Y.AriaExpanded(this.selfElement, this._isOpen.toString());
 			Helper.A11Y.AriaExpanded(this._accordionItemTitleElem, this._isOpen.toString());
 
 			// Set aria-hidden to content
 			Helper.A11Y.AriaHidden(this._accordionItemContentElem, (!this._isOpen).toString());
-
-			// The focusable elements inside the Accordion Title must be hidden unless the Accordion is expanded
-			for (const child of this._accordionTitleFocusableChildren) {
-				Helper.A11Y.AriaHidden(child, (!this._isOpen).toString());
-			}
 		}
 
 		/**
@@ -369,7 +295,7 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 		}
 
 		/**
-		 * Method to set the HTML elements of the Accordion Item
+		 * Method that sets the HTML elements of the Accordion Item
 		 *
 		 * @protected
 		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
@@ -384,12 +310,6 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 				Enum.CssClass.PatternIcon + '.' + GlobalEnum.CssClassElements.Placeholder
 			);
 			this._accordionItemPlaceholder = this._accordionItemContentElem.firstChild as HTMLElement;
-
-			// Get all focusable elements inside Accordion Title
-			this._accordionTitleFocusableChildren = Helper.Dom.TagSelectorAll(
-				this._accordionItemTitleElem,
-				Constants.FocusableElems
-			);
 		}
 
 		/**
@@ -434,11 +354,10 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 			this._accordionItemContentElem = undefined;
 			this._accordionItemIconElem = undefined;
 			this._accordionItemPlaceholder = undefined;
-			this._accordionTitleFocusableChildren = [];
 		}
 
 		/**
-		 * Method to return the isDisabled value
+		 * isDisabled getter
 		 *
 		 * @readonly
 		 * @type {boolean}
@@ -449,7 +368,7 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 		}
 
 		/**
-		 * Method to return the IsOpen value
+		 * IsOpen getter
 		 *
 		 * @readonly
 		 * @type {boolean}
@@ -469,7 +388,7 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 		}
 
 		/**
-		 * Method to build the AccordionItem
+		 * Method to build the pattern.
 		 *
 		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
 		 */
@@ -611,7 +530,7 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 		}
 
 		/**
-		 * Method to register a given callback event handler.
+		 * Register a given callback event handler.
 		 *
 		 * @param {string} eventName
 		 * @param {GlobalCallbacks.OSGeneric} callback
