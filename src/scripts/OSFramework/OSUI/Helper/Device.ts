@@ -140,9 +140,16 @@ namespace OSFramework.OSUI.Helper {
 		 * @memberof OSFramework.Helper.DeviceInfo
 		 */
 		private static _getUserAgent(userAgent = ''): string {
-			return userAgent.replace(' ', '') === ''
-				? window.navigator.userAgent.toLowerCase()
-				: userAgent.toLowerCase();
+			const cleanedUserAgent = userAgent.replace(' ', '');
+
+			if (cleanedUserAgent === '') {
+				if (sessionStorage.previewDevicesUserAgent) {
+					return sessionStorage.previewDevicesUserAgent.toLowerCase();
+				}
+				return window.navigator.userAgent.toLowerCase();
+			} else {
+				return userAgent.toLowerCase();
+			}
 		}
 
 		/**
@@ -348,10 +355,13 @@ namespace OSFramework.OSUI.Helper {
 		public static get IsIphoneWithNotch(): boolean {
 			if (DeviceInfo._isIphoneWithNotch === undefined) {
 				// get the device pixel ratio
-				const ratio = window.devicePixelRatio || 1;
+				const ratio =
+					(sessionStorage.previewDevicesPixelRatio
+						? sessionStorage.previewDevicesPixelRatio
+						: window.devicePixelRatio) || 1;
 				const currScreen: iphoneDetails = {
-					width: window.screen.width * ratio,
-					height: window.screen.height * ratio,
+					width: window.visualViewport.width * ratio,
+					height: window.visualViewport.height * ratio,
 					description: '',
 				};
 
@@ -591,6 +601,16 @@ namespace OSFramework.OSUI.Helper {
 			}
 
 			return localOs;
+		}
+
+		/**
+		 * Refresh the operating system information
+		 *
+		 * @static
+		 * @memberof DeviceInfo
+		 */
+		public static RefreshOperatingSystem(): void {
+			DeviceInfo._operatingSystem = DeviceInfo.GetOperatingSystem(DeviceInfo._getUserAgent());
 		}
 	}
 }

@@ -13,7 +13,7 @@ namespace OSFramework.OSUI.Constants {
 			Haspopup: 'aria-haspopup',
 			Hidden: 'aria-hidden',
 			Label: 'aria-label',
-			Labelledby: 'labelledby',
+			Labelledby: 'aria-labelledby',
 			Multiselectable: 'aria-multiselectable',
 			Selected: 'aria-selected',
 			ValueMax: 'valuemax',
@@ -34,6 +34,7 @@ namespace OSFramework.OSUI.Constants {
 			MenuItem: 'menuitem',
 			Option: 'option',
 			Progressbar: 'progressbar',
+			Region: 'region',
 			Search: 'search',
 			Tab: 'tab',
 			TabList: 'tablist',
@@ -61,6 +62,9 @@ namespace OSFramework.OSUI.Constants {
 
 	/* Used to typify the empty string value*/
 	export const EmptyString = '';
+
+	/* Attribute used to flag some elements to be ignored by the Focus Trap behaviour */
+	export const FocusTrapIgnoreAttr = 'ignore-focus-trap';
 
 	/* Store focusable elements when doing a focus trap inside an element*/
 	export const FocusableElems =
@@ -119,7 +123,7 @@ namespace OSFramework.OSUI.Constants {
 	export const NoTransition = 'no-transition';
 
 	/* OSUI Version */
-	export const OSUIVersion = '2.16.0';
+	export const OSUIVersion = '2.17.0';
 
 	/*Constant to be used across project as the zero value*/
 	export const ZeroValue = 0;

@@ -30,37 +30,66 @@ namespace OSFramework.OSUI.Patterns.AnimatedLabel {
 			this._isLabelFocus = false;
 		}
 
-		// Add Pattern Events
+		/**
+		 * Method to add Pattern Events
+		 *
+		 * @private
+		 * @memberof AnimatedLabel
+		 */
 		private _addEvents(): void {
 			this._inputElement.addEventListener(GlobalEnum.HTMLEvent.Blur, this._eventBlur);
 			this._inputElement.addEventListener(GlobalEnum.HTMLEvent.Focus, this._eventFocus);
 			this._inputElement.addEventListener(GlobalEnum.HTMLEvent.AnimationStart, this._eventAnimationStart);
 		}
 
-		// Callback to the event onAnimationStart
+		/**
+		 * Method to set callback to the event onAnimationStart
+		 *
+		 * @private
+		 * @param {AnimationEvent} e
+		 * @memberof AnimatedLabel
+		 */
 		private _inputAnimationStartCallback(e: AnimationEvent): void {
 			if (e.animationName === Enum.AnimationEvent.OnAutoFillStart) {
 				this._inputStateToggle(true);
 			}
 		}
 
-		//  Callback to the event "blur" of the input
+		/**
+		 * Method to set callback to the event "blur" of the input
+		 *
+		 * @private
+		 * @param {UIEvent} evt
+		 * @memberof AnimatedLabel
+		 */
 		private _inputBlurCallback(evt: UIEvent): void {
 			if (evt.type === GlobalEnum.HTMLEvent.Blur) {
 				this._inputStateToggle(false);
 			}
 		}
 
-		//  Callback to the event "focus" of the input
+		/**
+		 * Method to set callback to the event "focus" of the input
+		 *
+		 * @private
+		 * @param {UIEvent} evt
+		 * @memberof AnimatedLabel
+		 */
 		private _inputFocusCallback(evt: UIEvent): void {
 			if (evt.type === GlobalEnum.HTMLEvent.Focus) {
 				this._inputStateToggle(true);
 			}
 		}
 
-		// Method that implements the toggle of the state of the input.
-		// It can either add or remove the class "active" of the input.
-		private _inputStateToggle(isFocus: boolean | undefined): void {
+		/**
+		 * Method that implements the toggle of the state of the input.
+		 * It can either add or remove the class "active" of the input.
+		 *
+		 * @private
+		 * @param {boolean} [isFocus=false]
+		 * @memberof AnimatedLabel
+		 */
+		private _inputStateToggle(isFocus = false): void {
 			const inputHasText = this._inputElement && this._inputElement.value !== '';
 
 			//let's check if we have something to do. Is the pattern built or (it's building) and we have text in the input?
@@ -78,7 +107,12 @@ namespace OSFramework.OSUI.Patterns.AnimatedLabel {
 			}
 		}
 
-		// Remove Pattern Events
+		/**
+		 * Method to remove Pattern Events
+		 *
+		 * @private
+		 * @memberof AnimatedLabel
+		 */
 		private _removeEvents(): void {
 			this._inputElement.removeEventListener(GlobalEnum.HTMLEvent.Blur, this._eventBlur);
 			this._inputElement.removeEventListener(GlobalEnum.HTMLEvent.Focus, this._eventFocus);
@@ -93,7 +127,7 @@ namespace OSFramework.OSUI.Patterns.AnimatedLabel {
 		}
 
 		/**
-		 * Set the callbacks that will be assigned to the window click event
+		 * Method to set the callbacks that will be assigned to the window click event
 		 *
 		 * @protected
 		 * @memberof OSFramework.Patterns.AnimatedLabel.AnimatedLabel
@@ -107,7 +141,7 @@ namespace OSFramework.OSUI.Patterns.AnimatedLabel {
 		}
 
 		/**
-		 * Update info based on htmlContent
+		 * method to update info based on htmlContent
 		 *
 		 * @protected
 		 * @memberof OSFramework.Patterns.AnimatedLabel.AnimatedLabel
@@ -127,7 +161,7 @@ namespace OSFramework.OSUI.Patterns.AnimatedLabel {
 				// clear the input's prompt, as it not supported when used inside AnimatedLabel
 				this._inputElement.placeholder = '';
 
-				this._inputStateToggle(undefined);
+				this._inputStateToggle();
 			} else {
 				throw new Error(Enum.Messages.InputNotFound);
 			}
@@ -139,7 +173,7 @@ namespace OSFramework.OSUI.Patterns.AnimatedLabel {
 		}
 
 		/**
-		 * Removes the listeners that were added in the code and unsets the callbacks.
+		 * Method to remove the listeners that were added in the code and unsets the callbacks.
 		 *
 		 * @protected
 		 * @memberof OSFramework.Patterns.AnimatedLabel.AnimatedLabel
@@ -153,7 +187,7 @@ namespace OSFramework.OSUI.Patterns.AnimatedLabel {
 		}
 
 		/**
-		 * Removes the local value of the variables pointing to HTML elements;
+		 * Method to remove the local value of the variables pointing to HTML elements;
 		 *
 		 * @protected
 		 * @memberof OSFramework.Patterns.AnimatedLabel.AnimatedLabel
@@ -165,7 +199,7 @@ namespace OSFramework.OSUI.Patterns.AnimatedLabel {
 		}
 
 		/**
-		 * Builds the animation label.
+		 * Method to build the animation label.
 		 *
 		 * @memberof OSFramework.Patterns.AnimatedLabel.AnimatedLabel
 		 */
@@ -183,7 +217,7 @@ namespace OSFramework.OSUI.Patterns.AnimatedLabel {
 		}
 
 		/**
-		 * Destroy the Animatedlabel.
+		 * Method to destroy the Animatedlabel.
 		 *
 		 * @memberof OSFramework.Patterns.AnimatedLabel.AnimatedLabel
 		 */
@@ -197,14 +231,14 @@ namespace OSFramework.OSUI.Patterns.AnimatedLabel {
 		}
 
 		/**
-		 * Update Label active status accordingly when the input info has changed.
+		 * Method to update Label active status accordingly when the input info has changed.
 		 *
 		 * @memberof OSFramework.Patterns.AnimatedLabel.AnimatedLabel
 		 */
 		public updateOnRender(): void {
 			// Do not run this instead the pattern is totally built
 			if (this.isBuilt) {
-				this._inputStateToggle(undefined);
+				this._inputStateToggle();
 			}
 		}
 	}

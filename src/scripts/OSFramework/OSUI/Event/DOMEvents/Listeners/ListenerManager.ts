@@ -10,6 +10,8 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 	export class ListenerManager extends AbstractEventsManager<Type, string> {
 		protected getInstanceOfEventType(listenerType: Type): IListener {
 			switch (listenerType) {
+				case Type.BalloonOnToggle:
+					return new BalloonOnToggle();
 				case Type.BodyOnClick:
 					return new BodyOnClick();
 				case Type.BodyOnScroll:
@@ -20,6 +22,8 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 					return new WindowResize();
 				case Type.OrientationChange:
 					return new OrientationChange();
+				case Type.WindowMessage:
+					return new WindowMessage();
 				default:
 					throw new Error(`The listener ${listenerType} is not supported.`);
 			}

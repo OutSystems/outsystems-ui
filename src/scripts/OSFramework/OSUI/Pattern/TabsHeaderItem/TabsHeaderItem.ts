@@ -20,19 +20,34 @@ namespace OSFramework.OSUI.Patterns.TabsHeaderItem {
 			super(uniqueId, new TabsHeaderItemConfig(configs));
 		}
 
-		// Method to handle the click event
+		/**
+		 * Method to handle the click event
+		 *
+		 * @private
+		 * @memberof TabsHeaderItem
+		 */
 		private _handleClickEvent(): void {
 			if (this._isActive === false) {
 				this.notifyParent(Tabs.Enum.ChildNotifyActionType.Click);
 			}
 		}
 
-		// Method to remove the event listeners
+		/**
+		 * Method to remove the event listeners
+		 *
+		 * @private
+		 * @memberof TabsHeaderItem
+		 */
 		private _removeEvents(): void {
 			this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnTabsClick);
 		}
 
-		// Method to set the event listeners
+		/**
+		 * Method to set the event listeners
+		 *
+		 * @private
+		 * @memberof TabsHeaderItem
+		 */
 		private _setUpEvents(): void {
 			this.selfElement.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnTabsClick);
 		}
@@ -100,7 +115,7 @@ namespace OSFramework.OSUI.Patterns.TabsHeaderItem {
 		}
 
 		/**
-		 * Method to build the pattern
+		 * Method to build the TabsHeaderItem
 		 *
 		 * @memberof OSFramework.Patterns.TabsHeaderItem.TabsHeaderItem
 		 */
@@ -171,7 +186,7 @@ namespace OSFramework.OSUI.Patterns.TabsHeaderItem {
 		/**
 		 * Method to set the aria-controls attribute, called by the Tabs
 		 *
-		 * @param {string} contentItemId
+		 * @param {string} contentItemId Element that will receive the aria-controls
 		 * @memberof OSFramework.Patterns.TabsHeaderItem.TabsHeaderItem
 		 */
 		public setAriaControlsAttribute(contentItemId: string): void {
@@ -181,7 +196,7 @@ namespace OSFramework.OSUI.Patterns.TabsHeaderItem {
 		/**
 		 * Method to set the data-tab attribute, called by the Tabs
 		 *
-		 * @param {number} dataTab
+		 * @param {number} dataTab Tab that will be the active
 		 * @memberof OSFramework.Patterns.TabsHeaderItem.TabsHeaderItem
 		 */
 		public setDataTab(dataTab: number): void {
