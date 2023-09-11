@@ -33,11 +33,6 @@ const sectionInfo = {
             "name": "List Updating",
             "path": "04-patterns/06-utilities/list-updating"
         }
-        ,
-        {
-            "name": "Provider Login Button",
-            "path": "04-patterns/06-utilities/provider-login-button"
-        }
     ]
 };
 

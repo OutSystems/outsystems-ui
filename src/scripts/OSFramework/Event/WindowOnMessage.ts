@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
+namespace OSFramework.Event {
 	/**
 	 * Class that represents the Post Message on the Window.
 	 *
@@ -7,13 +7,16 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 	 * @class WindowMessage
 	 * @extends {Event.AbstractEvent<string>}
 	 */
-	export class WindowMessage extends AbstractListener<string> {
+	export class WindowMessage extends Event.AbstractEvent<string> {
 		constructor() {
-			super(window, GlobalEnum.HTMLEvent.Message);
+			super();
+			if (window.self !== window.top) {
+				window.addEventListener(GlobalEnum.HTMLEvent.Message, this._windowTrigger.bind(this), true);
+			}
 		}
 
 		private _windowTrigger(evt: MessageEvent): void {
-			this.trigger(GlobalEnum.HTMLEvent.Message, evt);
+			this.trigger(Event.Type.WindowMessage, evt);
 		}
 	}
 }

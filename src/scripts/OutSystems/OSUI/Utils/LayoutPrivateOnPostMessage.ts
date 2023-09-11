@@ -57,7 +57,7 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 
 		private static _message(evtName, evt) {
 			if (
-				OSFramework.OSUI.Event.DOMEvents.Listeners.Type.WindowMessage === evtName &&
+				OSFramework.Event.Type.WindowMessage === evtName &&
 				(evt.origin.includes('outsystems.app') || evt.origin.includes('outsystems.dev'))
 			) {
 				OnPostMessage._messageFromPreview(evt);
@@ -65,16 +65,16 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 		}
 
 		private static _messageFromPreview(evt): void {
-			if (OSFramework.OSUI.Helper.DeviceInfo.IsPhone) {
+			if (OSFramework.Helper.DeviceInfo.IsPhone) {
 				OnPostMessage._createPhonePreviewStyle(evt.data.notchValue);
-			} else if (OSFramework.OSUI.Helper.DeviceInfo.IsTablet) {
+			} else if (OSFramework.Helper.DeviceInfo.IsTablet) {
 				OnPostMessage._createTabletPreviewStyle();
 			}
 			sessionStorage.setItem('previewDevicesUserAgent', evt.data.userAgent);
 			sessionStorage.setItem('previewDevicesPixelRatio', evt.data.pixelRatio);
 			OnPostMessage.Unset();
 			evt.source.postMessage('received', { targetOrigin: evt.origin });
-			OSFramework.OSUI.Helper.DeviceInfo.RefreshOperatingSystem();
+			OSFramework.Helper.DeviceInfo.RefreshOperatingSystem();
 			SetDeviceClass(false);
 		}
 
@@ -83,8 +83,8 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 		 */
 		public static Set(): void {
 			if (window.self !== window.top) {
-				OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
-					OSFramework.OSUI.Event.DOMEvents.Listeners.Type.WindowMessage,
+				OSFramework.Event.GlobalEventManager.Instance.addHandler(
+					OSFramework.Event.Type.WindowMessage,
 					OnPostMessage._message
 				);
 			}
@@ -94,8 +94,8 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 		 * Function used to unset the message event
 		 */
 		public static Unset(): void {
-			OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
-				OSFramework.OSUI.Event.DOMEvents.Listeners.Type.WindowMessage,
+			OSFramework.Event.GlobalEventManager.Instance.removeHandler(
+				OSFramework.Event.Type.WindowMessage,
 				OnPostMessage._message
 			);
 		}

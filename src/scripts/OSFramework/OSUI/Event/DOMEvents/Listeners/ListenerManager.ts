@@ -20,8 +20,6 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 					return new WindowResize();
 				case Type.OrientationChange:
 					return new OrientationChange();
-				case Type.WindowMessage:
-					return new WindowMessage();
 				default:
 					throw new Error(`The listener ${listenerType} is not supported.`);
 			}
