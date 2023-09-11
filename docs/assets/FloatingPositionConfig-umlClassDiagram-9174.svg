@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="316px" preserveAspectRatio="none" style="width:277px;height:316px;background:#CED4DA;" version="1.1" viewBox="0 0 277 316" width="277px" zoomAndPan="magnify"><defs><filter height="300%" id="f1k4rpd3vzz9zy" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><!--MD5=[204b1a4923371b79c92b23f1f24d6a68]
+class FloatingPositionConfig--><rect codeLine="7" fill="#FFFFFF" filter="url(#f1k4rpd3vzz9zy)" height="117.7305" id="FloatingPositionConfig" style="stroke:#272B30;stroke-width:1.5;" width="256" x="7" y="7"/><ellipse cx="68.75" cy="23" fill="#ADD1B2" rx="11" ry="11" style="stroke:#272B30;stroke-width:1.0;"/><path d="M71.2231,29.1431 Q70.6421,29.4419 70.0029,29.5913 Q69.3638,29.7407 68.6582,29.7407 Q66.1514,29.7407 64.8315,28.0889 Q63.5117,26.437 63.5117,23.3159 Q63.5117,20.1865 64.8315,18.5347 Q66.1514,16.8828 68.6582,16.8828 Q69.3638,16.8828 70.0112,17.0322 Q70.6587,17.1816 71.2231,17.4805 L71.2231,20.2031 Q70.5923,19.6221 69.9988,19.3523 Q69.4053,19.0825 68.7744,19.0825 Q67.4297,19.0825 66.7449,20.1492 Q66.0601,21.2158 66.0601,23.3159 Q66.0601,25.4077 66.7449,26.4744 Q67.4297,27.541 68.7744,27.541 Q69.4053,27.541 69.9988,27.2712 Q70.5923,27.0015 71.2231,26.4204 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="124" x="89.25" y="27.5352">FloatingPositionConfig</text><line style="stroke:#272B30;stroke-width:1.5;" x1="8" x2="262" y1="39" y2="39"/><ellipse cx="18" cy="50" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="146" x="27" y="53.6348">AnchorElem : HTMLElement</text><ellipse cx="18" cy="62.9551" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="132" x="27" y="66.5898">AutoPlacement : boolean</text><ellipse cx="18" cy="75.9102" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="230" x="27" y="79.5449">AutoPlacementOptions : placementOptions</text><ellipse cx="18" cy="88.8652" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="149" x="27" y="92.5">FloatingElem : HTMLElement</text><ellipse cx="18" cy="101.8203" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="84" x="27" y="105.4551">Position : string</text><ellipse cx="18" cy="114.7754" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="133" x="27" y="118.4102">UpdatePosition : boolean</text><!--MD5=[112caa6667cd14e792639fa00394816a]
+class FloatingUIConfig--><rect codeLine="15" fill="#FFFFFF" filter="url(#f1k4rpd3vzz9zy)" height="117.7305" id="FloatingUIConfig" style="stroke:#272B30;stroke-width:1.5;" width="256" x="7" y="185"/><ellipse cx="85.25" cy="201" fill="#ADD1B2" rx="11" ry="11" style="stroke:#272B30;stroke-width:1.0;"/><path d="M87.7231,207.1431 Q87.1421,207.4419 86.5029,207.5913 Q85.8638,207.7407 85.1582,207.7407 Q82.6514,207.7407 81.3315,206.0889 Q80.0117,204.437 80.0117,201.3159 Q80.0117,198.1865 81.3315,196.5347 Q82.6514,194.8828 85.1582,194.8828 Q85.8638,194.8828 86.5112,195.0322 Q87.1587,195.1816 87.7231,195.4805 L87.7231,198.2031 Q87.0923,197.6221 86.4988,197.3523 Q85.9053,197.0825 85.2744,197.0825 Q83.9297,197.0825 83.2449,198.1492 Q82.5601,199.2158 82.5601,201.3159 Q82.5601,203.4077 83.2449,204.4744 Q83.9297,205.541 85.2744,205.541 Q85.9053,205.541 86.4988,205.2712 Q87.0923,205.0015 87.7231,204.4204 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="91" x="105.75" y="205.5352">FloatingUIConfig</text><line style="stroke:#272B30;stroke-width:1.5;" x1="8" x2="262" y1="217" y2="217"/><ellipse cx="18" cy="228" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="146" x="27" y="231.6348">AnchorElem : HTMLElement</text><ellipse cx="18" cy="240.9551" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="132" x="27" y="244.5898">AutoPlacement : boolean</text><ellipse cx="18" cy="253.9102" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="230" x="27" y="257.5449">AutoPlacementOptions : placementOptions</text><ellipse cx="18" cy="266.8652" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="149" x="27" y="270.5">FloatingElem : HTMLElement</text><ellipse cx="18" cy="279.8203" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="84" x="27" y="283.4551">Position : string</text><ellipse cx="18" cy="292.7754" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="133" x="27" y="296.4102">UpdatePosition : boolean</text><!--MD5=[c5d2e48a5b59851c8f200e43c645a397]
+reverse link FloatingPositionConfig to FloatingUIConfig--><path codeLine="23" d="M135,145.53 C135,158.79 135,172.33 135,184.94 " fill="none" id="FloatingPositionConfig-backto-FloatingUIConfig" style="stroke:#272B30;stroke-width:1.0;"/><polygon fill="none" points="128,145.12,135,125.12,142,145.12,128,145.12" style="stroke:#272B30;stroke-width:1.0;"/><!--MD5=[fe02a5b56120d04de430cb1d5c7405e3]
+@startuml
+skinparam ClassArrowColor #272b30
+skinparam ClassBorderColor #272b30
+skinparam ClassBackgroundColor #fff
+skinparam BackgroundColor #ced4da
+hide empty methods
+hide empty fields
+class "FloatingPositionConfig" {
+    +AnchorElem : HTMLElement
+    +AutoPlacement : boolean
+    +AutoPlacementOptions : placementOptions
+    +FloatingElem : HTMLElement
+    +Position : string
+    +UpdatePosition : boolean
+}
+class "FloatingUIConfig" {
+    +AnchorElem : HTMLElement
+    +AutoPlacement : boolean
+    +AutoPlacementOptions : placementOptions
+    +FloatingElem : HTMLElement
+    +Position : string
+    +UpdatePosition : boolean
+}
+"FloatingPositionConfig" <|- - "FloatingUIConfig"
+@enduml
+
+PlantUML version 1.2021.14(Fri Nov 12 16:46:50 WET 2021)
+(GPL source distribution)
+Java Runtime: Java(TM) SE Runtime Environment
+JVM: Java HotSpot(TM) 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: PT
+--></g></svg>

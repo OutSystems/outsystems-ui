@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="254px" preserveAspectRatio="none" style="width:244px;height:254px;background:#CED4DA;" version="1.1" viewBox="0 0 244 254" width="244px" zoomAndPan="magnify"><defs><filter height="300%" id="f1db4ogvl2y574" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><!--MD5=[3a4a638e44f85746b1f9d9d5645f8c97]
+class IFloatable--><rect codeLine="7" fill="#FFFFFF" filter="url(#f1db4ogvl2y574)" height="86.8652" id="IFloatable" style="stroke:#272B30;stroke-width:1.5;" width="223" x="7" y="154"/><ellipse cx="86.75" cy="170" fill="#B4A7E5" rx="11" ry="11" style="stroke:#272B30;stroke-width:1.0;"/><path d="M83.1777,166.2651 L83.1777,164.1069 L90.5571,164.1069 L90.5571,166.2651 L88.0918,166.2651 L88.0918,174.3418 L90.5571,174.3418 L90.5571,176.5 L83.1777,176.5 L83.1777,174.3418 L85.6431,174.3418 L85.6431,166.2651 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="55" x="107.25" y="174.5352">IFloatable</text><line style="stroke:#272B30;stroke-width:1.5;" x1="8" x2="229" y1="186" y2="186"/><ellipse cx="18" cy="197" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="90" x="27" y="200.6348">isOpen : boolean</text><line style="stroke:#272B30;stroke-width:1.5;" x1="8" x2="229" y1="206.9551" y2="206.9551"/><ellipse cx="18" cy="217.9551" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="68" x="27" y="221.5898">close() : void</text><ellipse cx="18" cy="230.9102" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="197" x="27" y="234.5449">open(isOpenedByApi: boolean) : void</text><!--MD5=[10f0bc30af2cfecf3ef477b487a33739]
+class IOpenable--><rect codeLine="12" fill="#FFFFFF" filter="url(#f1db4ogvl2y574)" height="86.8652" id="IOpenable" style="stroke:#272B30;stroke-width:1.5;" width="223" x="7" y="7"/><ellipse cx="84.75" cy="23" fill="#B4A7E5" rx="11" ry="11" style="stroke:#272B30;stroke-width:1.0;"/><path d="M81.1777,19.2651 L81.1777,17.1069 L88.5571,17.1069 L88.5571,19.2651 L86.0918,19.2651 L86.0918,27.3418 L88.5571,27.3418 L88.5571,29.5 L81.1777,29.5 L81.1777,27.3418 L83.6431,27.3418 L83.6431,19.2651 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="59" x="105.25" y="27.5352">IOpenable</text><line style="stroke:#272B30;stroke-width:1.5;" x1="8" x2="229" y1="39" y2="39"/><ellipse cx="18" cy="50" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="90" x="27" y="53.6348">isOpen : boolean</text><line style="stroke:#272B30;stroke-width:1.5;" x1="8" x2="229" y1="59.9551" y2="59.9551"/><ellipse cx="18" cy="70.9551" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="68" x="27" y="74.5898">close() : void</text><ellipse cx="18" cy="83.9102" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="197" x="27" y="87.5449">open(isOpenedByApi: boolean) : void</text><!--MD5=[5dd719a335fa209e3b2372246f92cd4a]
+reverse link IOpenable to IFloatable--><path codeLine="17" d="M118.5,114.39 C118.5,127.62 118.5,141.29 118.5,153.58 " fill="none" id="IOpenable-backto-IFloatable" style="stroke:#272B30;stroke-width:1.0;"/><polygon fill="none" points="111.5,114.22,118.5,94.22,125.5,114.22,111.5,114.22" style="stroke:#272B30;stroke-width:1.0;"/><!--MD5=[15d9f944f64008d8f60a30f5ea7e5c6d]
+@startuml
+skinparam ClassArrowColor #272b30
+skinparam ClassBorderColor #272b30
+skinparam ClassBackgroundColor #fff
+skinparam BackgroundColor #ced4da
+hide empty methods
+hide empty fields
+interface "IFloatable" {
+    +isOpen : boolean
+    +close() : void
+    +open(isOpenedByApi: boolean) : void
+}
+interface "IOpenable" {
+    +isOpen : boolean
+    +close() : void
+    +open(isOpenedByApi: boolean) : void
+}
+"IOpenable" <|- - "IFloatable"
+@enduml
+
+PlantUML version 1.2021.14(Fri Nov 12 16:46:50 WET 2021)
+(GPL source distribution)
+Java Runtime: Java(TM) SE Runtime Environment
+JVM: Java HotSpot(TM) 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: PT
+--></g></svg>
