@@ -10,6 +10,8 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 	export class ListenerManager extends AbstractEventsManager<Type, string> {
 		protected getInstanceOfEventType(listenerType: Type): IListener {
 			switch (listenerType) {
+				case Type.BalloonOnToggle:
+					return new BalloonOnToggle();
 				case Type.BodyOnClick:
 					return new BodyOnClick();
 				case Type.BodyOnScroll:

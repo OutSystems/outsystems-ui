@@ -429,7 +429,12 @@ namespace OSFramework.OSUI.Helper {
 		 * @memberof OSFramework.Helper.Dom
 		 */
 		public static GetFocusableElements(element: HTMLElement): HTMLElement[] {
-			return [...element.querySelectorAll(Constants.FocusableElems)] as HTMLElement[];
+			const _focusableElems = element.querySelectorAll(Constants.FocusableElems);
+			// Remove any element that has the focus-trap-ignore attribute
+			const _filteredElements = Array.from(_focusableElems).filter(
+				(element) => element.getAttribute(Constants.FocusTrapIgnoreAttr) !== 'true'
+			);
+			return [..._filteredElements] as HTMLElement[];
 		}
 
 		/**

@@ -18,6 +18,9 @@ const sectionInfo = {
             "key": "animated-label"
         },
         {
+            "key": "balloon"
+        },
+        {
             "key": "bottom-sheet"
         },
         {
@@ -69,8 +72,7 @@ const sectionInfo = {
             "key": "timepicker"
         },
         {
-            "name": "Video",
-            "path": "04-patterns/03-interaction/video"
+            "key": "video"
         }
     ]
 };

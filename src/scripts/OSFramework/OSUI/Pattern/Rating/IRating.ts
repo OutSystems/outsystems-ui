@@ -2,6 +2,10 @@
 namespace OSFramework.OSUI.Patterns.Rating {
 	/**
 	 * Defines the interface for OutSystemsUI Rating Pattern
+	 *
+	 * @export
+	 * @interface IRating
+	 * @extends {Interface.IPattern}
 	 */
 	export interface IRating extends Interface.IPattern {}
 }

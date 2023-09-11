@@ -124,7 +124,7 @@ namespace OSFramework.OSUI.Patterns.ButtonLoading {
 		}
 
 		/**
-		 *  Builds the button loading.
+		 * Method to build the button loading.
 		 *
 		 * @memberof OSFramework.Patterns.ButtonLoading.ButtonLoading
 		 */

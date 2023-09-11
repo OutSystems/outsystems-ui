@@ -69,8 +69,7 @@
 				height: var(--tabs-indicator-size);
 				position: absolute;
 				top: 0;
-				transform: translateY(var(--tabs-indicator-transform)) translateX(0) translateZ(0)
-					scaleY(var(--tabs-indicator-scale));
+				transform: translateY(var(--tabs-indicator-transform)) translateX(0) translateZ(0);
 				width: 2px;
 			}
 		}
@@ -103,10 +102,9 @@
 
 		.osui-tabs__header__indicator {
 			bottom: 0;
-			min-width: var(--tabs-indicator-size);
 			height: 2px;
-			transform: translateX(var(--tabs-indicator-transform)) translateY(0) translateZ(0)
-				scaleX(var(--tabs-indicator-scale));
+			transform: translateX(var(--tabs-indicator-transform)) translateY(0) translateZ(0);
+			width: (var(--tabs-indicator-size));
 		}
 
 		.osui-tabs__content {
