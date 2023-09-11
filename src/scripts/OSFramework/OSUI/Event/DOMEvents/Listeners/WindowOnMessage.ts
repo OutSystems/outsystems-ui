@@ -10,6 +10,7 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 	export class WindowMessage extends AbstractListener<string> {
 		constructor() {
 			super(window, GlobalEnum.HTMLEvent.Message);
+			this.eventCallback = this._windowTrigger.bind(this);
 		}
 
 		private _windowTrigger(evt: MessageEvent): void {

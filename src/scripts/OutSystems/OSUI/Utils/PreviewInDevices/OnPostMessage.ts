@@ -1,6 +1,33 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace OutSystems.OSUI.Utils.LayoutPrivate {
+namespace OutSystems.OSUI.Utils.PreviewInDevices {
+	/**
+	 * Responsible for handling the Preview In Device behavior.
+	 *
+	 * @abstract
+	 * @class OnPostMessage
+	 */
 	abstract class OnPostMessage {
+		/**
+		 * Holds the knowledge if the app is running within the Preview In Devices.
+		 *
+		 * @private
+		 * @static
+		 * @memberof OnPostMessage
+		 */
+		private static _isInPreviewInDevices = false;
+
+		/**
+		 * Adds a css class to the body, to make it easily style accordingly.
+		 *
+		 * @private
+		 * @static
+		 * @memberof OnPostMessage
+		 */
+		private static _addInPreviewCssClass(): void {
+			OnPostMessage._isInPreviewInDevices = true;
+			document.body.classList.add('PreviewInDevices');
+		}
+
 		private static _createPhonePreviewStyle(notchValue: number) {
 			if (!notchValue) {
 				return;
@@ -55,16 +82,26 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 			document.head.appendChild(style);
 		}
 
-		private static _message(evtName, evt) {
+		private static _message(evtName: string, evt: MessageEvent): void {
 			if (
-				OSFramework.OSUI.Event.DOMEvents.Listeners.Type.WindowMessage === evtName &&
+				OSFramework.OSUI.GlobalEnum.HTMLEvent.Message === evtName &&
 				(evt.origin.includes('outsystems.app') || evt.origin.includes('outsystems.dev'))
 			) {
 				OnPostMessage._messageFromPreview(evt);
 			}
 		}
 
-		private static _messageFromPreview(evt): void {
+		/**
+		 * Adds the required CSS classes, and CSS overrides so that the application adapts correctly
+		 * to the device selected in the preview devices.
+		 *
+		 * @private
+		 * @static
+		 * @param {*} evt
+		 * @memberof OnPostMessage
+		 */
+		private static _messageFromPreview(evt: MessageEvent<IDataPreviewInDevice>): void {
+			OnPostMessage._addInPreviewCssClass();
 			if (OSFramework.OSUI.Helper.DeviceInfo.IsPhone) {
 				OnPostMessage._createPhonePreviewStyle(evt.data.notchValue);
 			} else if (OSFramework.OSUI.Helper.DeviceInfo.IsTablet) {
@@ -75,7 +112,19 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 			OnPostMessage.Unset();
 			evt.source.postMessage('received', { targetOrigin: evt.origin });
 			OSFramework.OSUI.Helper.DeviceInfo.RefreshOperatingSystem();
-			SetDeviceClass(false);
+			LayoutPrivate.SetDeviceClass(false);
+		}
+
+		/**
+		 * Indicates if the APP is running within the Preview In Devices frame.
+		 *
+		 * @readonly
+		 * @static
+		 * @type {boolean}
+		 * @memberof OnPostMessage
+		 */
+		public static get IsInPreviewInDevices(): boolean {
+			return OnPostMessage._isInPreviewInDevices;
 		}
 
 		/**
