@@ -9,13 +9,13 @@ namespace OSFramework.OSUI.Patterns.Accordion {
 		}
 
 		/**
-		 * Sets the A11Y properties when the pattern is built.
+		 * Method to set the A11Y properties when the pattern is built.
 		 *
 		 * @protected
 		 * @memberof OSFramework.Patterns.Accordion.Accordion
 		 */
 		protected setA11YProperties(): void {
-			Helper.A11Y.RoleTabList(this.selfElement);
+			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
 		}
 
 		/**
@@ -110,14 +110,12 @@ namespace OSFramework.OSUI.Patterns.Accordion {
 		}
 
 		/**
-		 * Method to build the pattern.
+		 * Method to build the Accordion
 		 *
 		 * @memberof OSFramework.Patterns.Accordion.Accordion
 		 */
 		public build(): void {
 			super.build();
-
-			this.setA11YProperties();
 
 			this.finishBuild();
 		}
