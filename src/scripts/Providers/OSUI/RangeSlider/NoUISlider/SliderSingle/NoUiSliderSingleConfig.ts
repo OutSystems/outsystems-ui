@@ -16,6 +16,7 @@ namespace Providers.OSUI.RangeSlider.NoUISlider.SliderSingle {
 		public getProviderConfig(): NoUiSliderOptions {
 			// eslint-disable-next-line prefer-const
 			let singleSliderOptions = {
+				handleAttributes: [{ 'aria-label': NoUiSlider.Enum.NoUISliderLabels.Handle }],
 				start: [this.StartingValueFrom],
 				connect: NoUiSlider.Enum.NoUiSliderConnectOptions.Lower,
 			};

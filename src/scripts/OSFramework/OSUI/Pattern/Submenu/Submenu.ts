@@ -292,7 +292,7 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 		}
 
 		/**
-		 * Built the Submenu
+		 * Method to build the Submenu
 		 *
 		 * @memberof OSFramework.Patterns.Submenu.Submenu
 		 */

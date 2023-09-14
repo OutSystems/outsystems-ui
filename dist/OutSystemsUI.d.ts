@@ -38,6 +38,7 @@ declare namespace OSFramework.OSUI.Constants {
             MenuItem: string;
             Option: string;
             Progressbar: string;
+            Region: string;
             Search: string;
             Tab: string;
             TabList: string;
@@ -57,6 +58,7 @@ declare namespace OSFramework.OSUI.Constants {
     const Comma = ",";
     const EnableLogMessages = false;
     const EmptyString = "";
+    const FocusTrapIgnoreAttr = "ignore-focus-trap";
     const FocusableElems = "a[href]:not([disabled]),[tabindex=\"0\"], button:not([disabled]), textarea:not([disabled]), input[type=\"text\"]:not([disabled]), input[type=\"radio\"]:not([disabled]), input[type=\"checkbox\"]:not([disabled]),input[type=\"submit\"]:not([disabled]), select:not([disabled])";
     const JavaScriptTypes: {
         Undefined: string;
@@ -78,7 +80,7 @@ declare namespace OSFramework.OSUI.Constants {
     const AccessibilityHideElementClass = "wcag-hide-text";
     const IsRTLClass = "is-rtl";
     const NoTransition = "no-transition";
-    const OSUIVersion = "2.16.0";
+    const OSUIVersion = "2.17.0";
     const ZeroValue = 0;
 }
 declare namespace OSFramework.OSUI.ErrorCodes {
@@ -182,6 +184,7 @@ declare namespace OSFramework.OSUI.GlobalEnum {
         LayoutSide = "layout-side",
         LayoutTop = "layout-top",
         List = "list",
+        LoginPassword = "login-password",
         MainContent = "main-content",
         MenuLinks = "app-menu-links",
         Placeholder = "ph",
@@ -208,6 +211,27 @@ declare namespace OSFramework.OSUI.GlobalEnum {
         Top = "top",
         TopLeft = "top-left",
         TopRight = "top-right"
+    }
+    enum FloatingAlignment {
+        Center = "center",
+        End = "end",
+        Start = "start"
+    }
+    enum FloatingPosition {
+        Auto = "auto",
+        Bottom = "bottom",
+        BottomStart = "bottom-start",
+        BottomEnd = "bottom-end",
+        Center = "center",
+        Left = "left",
+        LeftEnd = "left-end",
+        LeftStart = "left-start",
+        Right = "right",
+        RightEnd = "right-end",
+        RightStart = "right-start",
+        Top = "top",
+        TopStart = "top-start",
+        TopEnd = "top-end"
     }
     enum CssProperties {
         Auto = "auto",
@@ -261,7 +285,7 @@ declare namespace OSFramework.OSUI.GlobalEnum {
         Name = "name",
         StatusBar = "data-status-bar-height",
         Style = "style",
-        type = "type"
+        Type = "type"
     }
     enum HTMLElement {
         Body = "body",
@@ -292,6 +316,9 @@ declare namespace OSFramework.OSUI.GlobalEnum {
         TouchStart = "touchstart",
         TransitionEnd = "transitionend",
         Message = "message"
+    }
+    enum CustomEvent {
+        BalloonOnToggle = "balloon.onToggle"
     }
     enum InlineStyle {
         Display = "display",
@@ -343,6 +370,7 @@ declare namespace OSFramework.OSUI.GlobalEnum {
         Accordion = "Accordion",
         AccordionItem = "Accordion Item",
         AnimatedLabel = "Animated Label",
+        Balloon = "Balloon",
         BottomSheet = "Bottom Sheet",
         ButtonLoading = "ButtonLoading",
         Carousel = "Carousel",
@@ -356,6 +384,7 @@ declare namespace OSFramework.OSUI.GlobalEnum {
         InlineSvg = "InlineSVG",
         MonthPicker = "MonthPicker",
         Notification = "Notification",
+        OverflowMenu = "OverflowMenu",
         ProgressBar = "Progress Bar",
         ProgressCircle = "Progress Circle",
         RangeSlider = "Range Slider",
@@ -372,7 +401,8 @@ declare namespace OSFramework.OSUI.GlobalEnum {
         TabsContentItem = "TabsContentItem",
         Timepicker = "Timepicker",
         Tooltip = "Tooltip",
-        TouchEvents = "TouchEvents"
+        TouchEvents = "TouchEvents",
+        Video = "Video"
     }
     enum ShapeTypes {
         Rounded = "rounded",
@@ -386,6 +416,7 @@ declare namespace OSFramework.OSUI.GlobalEnum {
     enum InputTypeAttr {
         Date = "date",
         DateTime = "date-time-edit",
+        Password = "password",
         Text = "text",
         Time = "time"
     }
@@ -441,6 +472,10 @@ declare namespace OSFramework.OSUI.GlobalEnum {
         ParserError = "parsererror",
         SVG = "svg"
     }
+    enum Time {
+        HourInSeconds = 3600,
+        MinuteInSeconds = 60
+    }
 }
 declare namespace OSFramework.OSUI.Behaviors {
     type SpringAnimationProperties = {
@@ -491,6 +526,14 @@ declare namespace OSFramework.OSUI.Behaviors {
     export {};
 }
 declare namespace OSFramework.OSUI.Behaviors {
+    class FocusManager {
+        private _lastFocusedElem;
+        constructor();
+        setFocusToStoredElement(): void;
+        storeLastFocusedElement(): void;
+    }
+}
+declare namespace OSFramework.OSUI.Behaviors {
     type FocusTrapParams = {
         focusBottomCallback: GlobalCallbacks.Generic;
         focusTargetElement: HTMLElement;
@@ -531,7 +574,7 @@ declare namespace OSFramework.OSUI.Behaviors {
 declare namespace OSFramework.OSUI.Event.DOMEvents {
     abstract class AbstractEvent<T> implements IEvent<T> {
         private _handlers;
-        protected get handlers(): GlobalCallbacks.OSGeneric[];
+        get handlers(): GlobalCallbacks.OSGeneric[];
         addHandler(handler: GlobalCallbacks.OSGeneric): void;
         hasHandlers(): boolean;
         removeHandler(handler: GlobalCallbacks.OSGeneric): void;
@@ -554,6 +597,7 @@ declare namespace OSFramework.OSUI.Event.DOMEvents {
 }
 declare namespace OSFramework.OSUI.Event.DOMEvents {
     interface IEvent<D> {
+        handlers: GlobalCallbacks.OSGeneric[];
         addEvent(): void;
         addHandler(handler: GlobalCallbacks.OSGeneric, ...args: any[]): void;
         hasHandlers(): boolean;
@@ -569,9 +613,15 @@ declare namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
         private _eventType;
         protected eventCallback: EventListenerObject;
         protected useCapture: boolean;
-        constructor(eventTarget: HTMLElement | Window, eventType: GlobalEnum.HTMLEvent);
+        constructor(eventTarget: HTMLElement | Document | Window, eventType: GlobalEnum.HTMLEvent | GlobalEnum.CustomEvent, isCustomEvent?: boolean);
         addEvent(): void;
         removeEvent(): void;
+    }
+}
+declare namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
+    class BalloonOnToggle extends AbstractListener<string> {
+        constructor();
+        private _onToggleTrigger;
     }
 }
 declare namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
@@ -604,6 +654,7 @@ declare namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 }
 declare namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
     enum Type {
+        BalloonOnToggle = "balloon.onToggle",
         BodyOnClick = "body.onclick",
         BodyOnScroll = "body.onscroll",
         BodyOnMouseDown = "body.mousedown",
@@ -807,6 +858,81 @@ declare namespace OSFramework.OSUI.Event.ProviderEvents {
         get hasPendingEvents(): boolean;
     }
 }
+declare namespace OSFramework.OSUI.Feature {
+    abstract class AbstractFeature<PT, O> implements IFeature {
+        private _featureElem;
+        private _featureOptions;
+        private _featurePattern;
+        constructor(featurePattern: PT, featureElem: HTMLElement, options: O);
+        dispose(): void;
+        get featureElem(): HTMLElement;
+        get featureOptions(): O;
+        get featurePattern(): PT;
+    }
+}
+declare namespace OSFramework.OSUI.Feature {
+    interface IFeature extends Interface.IDisposable {
+    }
+}
+declare namespace OSFramework.OSUI.Feature.Balloon {
+    type BalloonOptions = {
+        alignment: GlobalEnum.FloatingAlignment;
+        allowedPlacements: Array<GlobalEnum.FloatingPosition>;
+        anchorElem: HTMLElement;
+        position: GlobalEnum.FloatingPosition;
+        shape: GlobalEnum.ShapeTypes;
+    };
+    class Balloon<PT> extends AbstractFeature<PT, BalloonOptions> implements IBalloon {
+        private _eventBodyClick;
+        private _eventOnKeypress;
+        private _floatingInstance;
+        private _floatingOptions;
+        private _focusManagerInstance;
+        private _focusTrapInstance;
+        private _isOpenedByApi;
+        private _onToggleEvent;
+        isOpen: boolean;
+        constructor(featurePattern: PT, featureElem: HTMLElement, options: BalloonOptions);
+        private _bodyClickCallback;
+        private _handleFocusBehavior;
+        private _onkeypressCallback;
+        private _removeEventListeners;
+        private _setA11YProperties;
+        private _setCallbacks;
+        private _setEventListeners;
+        private _toggleBalloon;
+        private _unsetCallbacks;
+        build(): void;
+        close(): void;
+        dispose(): void;
+        open(isOpenedByApi: boolean): void;
+        setBalloonShape(shape?: GlobalEnum.ShapeTypes): void;
+        setFloatingBehaviour(isUpdate?: boolean): void;
+        setFloatingConfigs(): void;
+        updateFloatingConfigs(floatingConfigs?: Utils.FloatingPosition.FloatingPositionConfig): void;
+        updatePositionOption(position: GlobalEnum.FloatingPosition): void;
+    }
+}
+declare namespace OSFramework.OSUI.Feature.Balloon.Enum {
+    enum CssClasses {
+        IsOpen = "osui-balloon--is-open",
+        Pattern = "osui-balloon"
+    }
+    enum CssCustomProperties {
+        Shape = "--osui-balloon-shape"
+    }
+    enum Properties {
+        AnchorId = "AnchorId",
+        BalloonPosition = "BalloonPosition",
+        BalloonShape = "BalloonShape"
+    }
+}
+declare namespace OSFramework.OSUI.Feature.Balloon {
+    interface IBalloon extends Feature.IFeature, Interface.IOpenable {
+        setBalloonShape(shape?: GlobalEnum.ShapeTypes): void;
+        updatePositionOption(position: GlobalEnum.FloatingPosition): void;
+    }
+}
 declare namespace OSFramework.OSUI.Helper {
     function AsyncInvocation(callback: GlobalCallbacks.Generic, ...args: unknown[]): void;
     function ApplySetTimeOut(callback: GlobalCallbacks.Generic, time: number, ...args: unknown[]): void;
@@ -965,6 +1091,7 @@ declare namespace OSFramework.OSUI.Helper {
         static RoleMenuItem(element: HTMLElement): void;
         static RoleOption(element: HTMLElement): void;
         static RoleProgressBar(element: HTMLElement): void;
+        static RoleRegion(element: HTMLElement): void;
         static RoleSearch(element: HTMLElement): void;
         static RoleTab(element: HTMLElement): void;
         static RoleTabList(element: HTMLElement): void;
@@ -990,6 +1117,7 @@ declare namespace OSFramework.OSUI.Helper {
 }
 declare namespace OSFramework.OSUI.Helper {
     abstract class Times {
+        static ConvertInSeconds(time: Date): number;
         static IsNull(time: string): boolean;
     }
 }
@@ -1033,6 +1161,10 @@ declare namespace OSFramework.OSUI.Interface {
     }
 }
 declare namespace OSFramework.OSUI.Interface {
+    interface IFloatable extends IOpenable {
+    }
+}
+declare namespace OSFramework.OSUI.Interface {
     interface IGestureEvent {
         hasGestureEvents: boolean;
         removeGestureEvents(): void;
@@ -1040,8 +1172,9 @@ declare namespace OSFramework.OSUI.Interface {
 }
 declare namespace OSFramework.OSUI.Interface {
     interface IOpenable {
+        isOpen?: boolean;
         close(): void;
-        open(): void;
+        open(isOpenedByApi?: boolean): void;
     }
 }
 declare namespace OSFramework.OSUI.Interface {
@@ -1248,6 +1381,7 @@ declare namespace OSFramework.OSUI.Patterns.AccordionItem {
         private _accordionItemIconElem;
         private _accordionItemPlaceholder;
         private _accordionItemTitleElem;
+        private _accordionTitleFocusableChildren;
         private _allowTitleEvents;
         private _collapsedHeight;
         private _eventOnClick;
@@ -1394,8 +1528,8 @@ declare namespace OSFramework.OSUI.Patterns.BottomSheet {
         private _bottomSheetHeaderElem;
         private _eventOnContentScroll;
         private _eventOnKeypress;
+        private _focusManagerInstance;
         private _focusTrapInstance;
-        private _focusableActiveElement;
         private _gestureEventInstance;
         private _hasGestureEvents;
         private _isOpen;
@@ -1412,7 +1546,7 @@ declare namespace OSFramework.OSUI.Patterns.BottomSheet {
         get gestureEventInstance(): Event.GestureEvent.DragEvent;
         get hasGestureEvents(): boolean;
         constructor(uniqueId: string, configs: JSON);
-        private _handleFocusTrap;
+        private _handleFocusBehavior;
         private _handleGestureEvents;
         private _handleShape;
         private _onContentScrollCallback;
@@ -1600,6 +1734,10 @@ declare namespace OSFramework.OSUI.Patterns.Carousel.Enum {
         Both = "both",
         Dots = "dots",
         None = "none"
+    }
+    enum Defaults {
+        Height = "auto",
+        SpaceNone = "0px"
     }
 }
 declare namespace OSFramework.OSUI.Patterns.Carousel {
@@ -2221,7 +2359,6 @@ declare namespace OSFramework.OSUI.Patterns.Notification.Enum {
 declare namespace OSFramework.OSUI.Patterns.Notification {
     interface INotification extends Interface.IPattern {
         hide(): void;
-        registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void;
         show(): void;
     }
 }
@@ -2230,8 +2367,8 @@ declare namespace OSFramework.OSUI.Patterns.Notification {
         private _eventOnClick;
         private _eventOnKeypress;
         private _eventType;
+        private _focusManagerInstance;
         private _focusTrapInstance;
-        private _focusableActiveElement;
         private _gestureEventInstance;
         private _hasGestureEvents;
         private _isOpen;
@@ -2240,7 +2377,7 @@ declare namespace OSFramework.OSUI.Patterns.Notification {
         constructor(uniqueId: string, configs: JSON);
         private _autoCloseNotification;
         private _clickCallback;
-        private _handleFocusTrap;
+        private _handleFocusBehavior;
         private _handleGestureEvents;
         private _hideNotification;
         private _keypressCallback;
@@ -2286,9 +2423,88 @@ declare namespace OSFramework.OSUI.Patterns.Notification {
         validateDefault(key: string, value: unknown): unknown;
     }
 }
+declare namespace OSFramework.OSUI.Patterns.OverflowMenu.Callbacks {
+    type OSOnToggleEvent = {
+        (overflowMenuId: string, isOpen: boolean): void;
+    };
+}
+declare namespace OSFramework.OSUI.Patterns.OverflowMenu.Enum {
+    enum AriaLabel {
+        Trigger = "Trigger the balloon"
+    }
+    enum CssClass {
+        Open = "osui-overflow-menu--is-open",
+        Trigger = "osui-overflow-menu__trigger",
+        Balloon = "osui-overflow-menu__balloon"
+    }
+    enum CssCustomProperties {
+        Shape = "--osui-overflow-menu-shape"
+    }
+    enum Events {
+        OnMenuToggle = "OnToggle"
+    }
+    enum Properties {
+        Position = "Position",
+        Shape = "Shape"
+    }
+}
+declare namespace OSFramework.OSUI.Patterns.OverflowMenu {
+    interface IOverflowMenu extends Interface.IPattern, Interface.IOpenable {
+        disable(): void;
+        enable(): void;
+    }
+}
+declare namespace OSFramework.OSUI.Patterns.OverflowMenu {
+    class OverflowMenu extends AbstractPattern<OverflowMenuConfig> implements IOverflowMenu {
+        private _ariaLabelTrigger;
+        private _balloonElem;
+        private _balloonFeature;
+        private _eventBalloonOnToggle;
+        private _eventOnClick;
+        private _isDisabled;
+        private _isOpenedByApi;
+        private _platformEventOnToggle;
+        private _triggerElem;
+        balloonOptions: Feature.Balloon.BalloonOptions;
+        isOpen: boolean;
+        constructor(uniqueId: string, configs: JSON);
+        private _balloonOnToggleCallback;
+        private _onClickCallback;
+        private _setBalloonFeature;
+        private _setOverflowMenuShape;
+        private _togglePattern;
+        private _triggerOnToggleEvent;
+        protected removeEventListeners(): void;
+        protected setA11YProperties(): void;
+        protected setCallbacks(): void;
+        protected setEventListeners(): void;
+        protected setHtmlElements(): void;
+        protected unsetCallbacks(): void;
+        protected unsetHtmlElements(): void;
+        build(): void;
+        changeProperty(propertyName: string, propertyValue: unknown): void;
+        close(): void;
+        disable(): void;
+        dispose(): void;
+        enable(): void;
+        open(isOpenedByApi: boolean): void;
+        registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void;
+        setBalloonOptions(balloonOptions?: Feature.Balloon.BalloonOptions): void;
+        setTriggerAriaLabel(ariaLabelText: string): void;
+    }
+}
+declare namespace OSFramework.OSUI.Patterns.OverflowMenu {
+    class OverflowMenuConfig extends AbstractConfiguration {
+        Position: GlobalEnum.FloatingPosition;
+        Shape: GlobalEnum.ShapeTypes;
+        constructor(config: JSON);
+        validateDefault(key: string, value: unknown): unknown;
+    }
+}
 declare namespace OSFramework.OSUI.Patterns.Progress {
     abstract class AbstractProgress<C extends ProgressConfiguration> extends AbstractPattern<C> implements IProgress {
         private _eventAnimateEntranceEnd;
+        protected contentElem: HTMLElement;
         protected gradientLength: number;
         protected progressElem: HTMLElement;
         protected progressType: ProgressEnum.ProgressTypes;
@@ -2330,10 +2546,15 @@ declare namespace OSFramework.OSUI.Patterns.Progress {
     }
 }
 declare namespace OSFramework.OSUI.Patterns.Progress.ProgressEnum {
+    enum AriaLabel {
+        Progress = "progress"
+    }
     enum CssClass {
         AddInitialAnimation = "animate-entrance",
         AnimateProgressChange = "animate-progress-change",
-        Container = "osui-progress-bar__container"
+        Container = "osui-progress-bar__container",
+        ProgressBarContent = "osui-progress-bar__content",
+        ProgressCircleContent = "osui-progress-circle__content"
     }
     enum InlineStyleProp {
         ProgressColor = "--progress-color",
@@ -2716,9 +2937,9 @@ declare namespace OSFramework.OSUI.Patterns.SectionIndexItem.Enum {
 }
 declare namespace OSFramework.OSUI.Patterns.SectionIndexItem {
     interface ISectionIndexItem extends Interface.IChild {
-        get IsSelected(): boolean;
-        get TargetElement(): HTMLElement;
-        get TargetElementOffset(): OffsetValues;
+        IsSelected: boolean;
+        TargetElement: HTMLElement;
+        TargetElementOffset: OffsetValues;
         setIsActive(): void;
         unsetIsActive(): void;
     }
@@ -2777,6 +2998,9 @@ declare namespace OSFramework.OSUI.Patterns.Sidebar.Enum {
         Width = "Width",
         HasOverlay = "HasOverlay"
     }
+    enum Defaults {
+        Width = "500px"
+    }
     enum CssClass {
         Aside = "osui-sidebar",
         Content = "osui-sidebar__content",
@@ -2796,7 +3020,6 @@ declare namespace OSFramework.OSUI.Patterns.Sidebar.Enum {
 declare namespace OSFramework.OSUI.Patterns.Sidebar {
     interface ISidebar extends Interface.IPattern, Interface.IOpenable {
         clickOutsideToClose(closeOnOutSIdeClick: boolean): void;
-        registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void;
         toggleGestures(enableSwipe: boolean): void;
     }
 }
@@ -2809,6 +3032,7 @@ declare namespace OSFramework.OSUI.Patterns.Sidebar {
         private _eventOverlayClick;
         private _eventOverlayMouseDown;
         private _eventSidebarKeypress;
+        private _focusManagerInstance;
         private _focusTrapInstance;
         private _gestureEventInstance;
         private _hasGestureEvents;
@@ -2817,7 +3041,7 @@ declare namespace OSFramework.OSUI.Patterns.Sidebar {
         private _platformEventOnToggle;
         constructor(uniqueId: string, configs: JSON);
         private _closeSidebar;
-        private _handleFocusTrap;
+        private _handleFocusBehavior;
         private _handleGestureEvents;
         private _onGestureEnd;
         private _onGestureMove;
@@ -3035,7 +3259,7 @@ declare namespace OSFramework.OSUI.Patterns.Tabs.Enum {
         TabsContentItemOverflow = "--tabs-content-item-overflow",
         TabsHeaderItems = "--tabs-header-items",
         TabsHeight = "--tabs-height",
-        TabsIndicatorScale = "--tabs-indicator-scale",
+        TabsIndicatorSize = "--tabs-indicator-size",
         TabsIndicatorTransform = "--tabs-indicator-transform"
     }
     enum Properties {
@@ -3075,7 +3299,6 @@ declare namespace OSFramework.OSUI.Patterns.Tabs {
         private _hasDragGestures;
         private _hasSingleContent;
         private _headerItemsLength;
-        private _isChromium;
         private _platformEventTabsOnChange;
         private _requestAnimationFrameOnIndicatorResize;
         private _tabsContentElement;
@@ -3137,7 +3360,7 @@ declare namespace OSFramework.OSUI.Patterns.Tabs {
 }
 declare namespace OSFramework.OSUI.Patterns.TabsContentItem {
     interface ITabsContentItem extends Interface.IChild {
-        get IsActive(): boolean;
+        IsActive: boolean;
         getDataTab(): number;
         getOffsetLeft(): number;
         setAriaLabelledByAttribute(headerItemId: string): void;
@@ -3179,7 +3402,7 @@ declare namespace OSFramework.OSUI.Patterns.TabsContentItem {
 }
 declare namespace OSFramework.OSUI.Patterns.TabsHeaderItem {
     interface ITabsHeaderItem extends Interface.IChild {
-        get IsActive(): boolean;
+        IsActive: boolean;
         disable(): void;
         enable(): void;
         getDataTab(): number;
@@ -3455,6 +3678,147 @@ declare namespace OSFramework.OSUI.Patterns.TouchEvents {
     class TouchEventsConfig extends AbstractConfiguration {
         WidgetId: string;
         constructor(config: JSON);
+    }
+}
+declare namespace OSFramework.OSUI.Patterns.Video.Callbacks {
+    type OSOnStateChangedEvent = {
+        (videoId: string, stateChanged: string): void;
+    };
+}
+declare namespace OSFramework.OSUI.Patterns.Video.Enum {
+    enum CssClass {
+        VideoSource = "osui-video-source",
+        VideoTrack = "osui-video-track"
+    }
+    enum Events {
+        OnStateChanged = "StateChanged"
+    }
+    enum VideoStates {
+        OnEnded = "Ended",
+        OnPause = "Paused",
+        OnPlaying = "Playing",
+        Unstarted = "Unstarted"
+    }
+    enum Properties {
+        Autoplay = "Autoplay",
+        Controls = "Controls",
+        Height = "Height",
+        Loop = "Loop",
+        Muted = "Muted",
+        PosterURL = "PosterURL",
+        URL = "URL",
+        Width = "Width"
+    }
+    enum VideoTags {
+        Source = "source",
+        Track = "track"
+    }
+    enum VideoAttributes {
+        Captions = "captions",
+        Default = "default",
+        Height = "height",
+        TypePath = "video/",
+        Width = "width",
+        Muted = "muted"
+    }
+}
+declare namespace OSFramework.OSUI.Patterns.Video {
+    interface IVideo extends Interface.IPattern {
+        getVideoState: string;
+        setVideoJumpToTime(currentTime: number): void;
+        setVideoPause(): void;
+        setVideoPlay(): void;
+    }
+}
+declare namespace OSFramework.OSUI.Patterns.Video {
+    class Video extends AbstractPattern<VideoConfig> implements IVideo {
+        private _platformEventOnStateChanged;
+        private _videoElement;
+        private _videoJumpTime;
+        private _videoSourceElement;
+        private _videoState;
+        constructor(uniqueId: string, configs: JSON);
+        private _setAutoplay;
+        private _setControls;
+        private _setHeight;
+        private _setLoop;
+        private _setMuted;
+        private _setPosterUrl;
+        private _setVideoConfigs;
+        private _setVideoSource;
+        private _setVideoTrack;
+        private _setWidth;
+        private _triggerOnStateChangedEvent;
+        protected setA11YProperties(): void;
+        protected setCallbacks(): void;
+        protected setHtmlElements(): void;
+        protected unsetCallbacks(): void;
+        protected unsetHtmlElements(): void;
+        build(): void;
+        changeProperty(propertyName: string, propertyValue: unknown): void;
+        dispose(): void;
+        get getVideoState(): string;
+        registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void;
+        setVideoJumpToTime(currentTime: number): void;
+        setVideoPause(): void;
+        setVideoPlay(): void;
+    }
+}
+declare namespace OSFramework.OSUI.Patterns.Video {
+    class VideoConfig extends AbstractConfiguration {
+        Autoplay: boolean;
+        Captions: string;
+        Controls: boolean;
+        Height: string;
+        Loop: boolean;
+        Muted: boolean;
+        PosterURL: string;
+        URL: string;
+        Width: string;
+        constructor(config: JSON);
+    }
+}
+declare namespace OSFramework.OSUI.Utils.FloatingPosition.Enum {
+    enum CssCustomProperties {
+        Offset = "--osui-floating-offset",
+        YPosition = "--osui-floating-position-y",
+        XPosition = "--osui-floating-position-x"
+    }
+    enum Provider {
+        FloatingUI = "FloatingUI"
+    }
+}
+declare namespace OSFramework.OSUI.Utils.FloatingPosition {
+    abstract class FloatingPosition implements IFloatingPosition {
+        protected eventOnUpdateCallback: OSFramework.OSUI.GlobalCallbacks.Generic;
+        protected floatingConfigs: FloatingPositionConfig;
+        protected isBuilt: boolean;
+        constructor(options: FloatingPositionConfig);
+        protected getOffsetValue(): number;
+        build(): void;
+        dispose(): void;
+        update(options: FloatingPositionConfig): void;
+        abstract setFloatingPosition(): void;
+        abstract unsetFloatingPosition(): void;
+    }
+}
+declare namespace OSFramework.OSUI.Utils.FloatingPosition {
+    class FloatingPositionConfig {
+        AnchorElem: HTMLElement;
+        AutoPlacement: boolean;
+        AutoPlacementOptions: AutoPlacementOptions;
+        FloatingElem: HTMLElement;
+        Position: string;
+        UpdatePosition: boolean;
+    }
+}
+declare namespace OSFramework.OSUI.Utils.FloatingPosition.Factory {
+    function NewFloatingPosition(configs: FloatingPositionConfig, provider: string): void;
+}
+declare namespace OSFramework.OSUI.Utils.FloatingPosition {
+    interface IFloatingPosition {
+        setFloatingPosition(): void;
+        unsetFloatingPosition(): void;
     }
 }
 declare namespace OutSystems.OSUI.ErrorCodes {
@@ -3734,6 +4098,24 @@ declare namespace OutSystems.OSUI.ErrorCodes {
         FailDispose: string;
         FailRegisterCallback: string;
     };
+    const OverflowMenu: {
+        FailChangeProperty: string;
+        FailDispose: string;
+        FailRegisterCallback: string;
+        FailOpen: string;
+        FailClose: string;
+        FailEnable: string;
+        FailDisable: string;
+    };
+    const Video: {
+        FailChangeProperty: string;
+        FailDispose: string;
+        FailRegisterCallback: string;
+        FailGetState: string;
+        FailPause: string;
+        FailPlay: string;
+        FailSetTime: string;
+    };
     const Legacy: {
         FailAddFavicon_Legacy: string;
         MoveElement_Legacy: string;
@@ -3935,6 +4317,19 @@ declare namespace OutSystems.OSUI.Patterns.NotificationAPI {
     function RegisterCallback(notificationId: string, eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): string;
     function Show(notificationId: string): string;
 }
+declare namespace OutSystems.OSUI.Patterns.OverflowMenuAPI {
+    function ChangeProperty(overflowMenuId: string, propertyName: string, propertyValue: unknown): string;
+    function Create(overflowMenuId: string, configs: string): OSFramework.OSUI.Patterns.OverflowMenu.IOverflowMenu;
+    function Disable(overflowMenuId: string): string;
+    function Dispose(overflowMenuId: string): string;
+    function Enable(overflowMenuId: string): string;
+    function GetAllOverflowMenus(): Array<string>;
+    function GetOverflowMenuById(overflowMenuId: string): OSFramework.OSUI.Patterns.OverflowMenu.IOverflowMenu;
+    function Initialize(overflowMenuId: string): OSFramework.OSUI.Patterns.OverflowMenu.IOverflowMenu;
+    function RegisterCallback(overflowMenuId: string, eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.Generic): string;
+    function Open(overflowMenuId: string): string;
+    function Close(overflowMenuId: string): string;
+}
 declare namespace OutSystems.OSUI.Patterns.ProgressAPI {
     function ChangeProperty(progressId: string, propertyName: string, propertyValue: any): string;
     function Create(progressId: string, type: string, configs: string): OSFramework.OSUI.Patterns.Progress.IProgress;
@@ -4100,6 +4495,19 @@ declare namespace OutSystems.OSUI.Patterns.TouchEventsAPI {
     function Initialize(touchEventsId: string): OSFramework.OSUI.Patterns.TouchEvents.ITouchEvents;
     function RegisterCallback(touchEventsID: string, eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): void;
 }
+declare namespace OutSystems.OSUI.Patterns.VideoAPI {
+    function ChangeProperty(videoId: string, propertyName: string, propertyValue: unknown): string;
+    function Create(videoId: string, configs: string): OSFramework.OSUI.Patterns.Video.IVideo;
+    function Dispose(videoId: string): string;
+    function GetAllVideos(): Array<string>;
+    function GetVideoById(videoId: string): OSFramework.OSUI.Patterns.Video.IVideo;
+    function Initialize(videoId: string): OSFramework.OSUI.Patterns.Video.IVideo;
+    function RegisterCallback(videoId: string, eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): string;
+    function GetState(videoId: string): string;
+    function Pause(videoId: string): string;
+    function Play(videoId: string): string;
+    function JumpToTime(videoId: string, currentTime: number): string;
+}
 declare namespace OutSystems.OSUI.Utils.Accessibility {
     function SetAccessibilityRole(widgetId: string, role: string): string;
     function SetAriaHidden(widgetId: string, isHidden: boolean): string;
@@ -4208,8 +4616,6 @@ declare namespace OutSystems.OSUI.Utils.LayoutPrivate {
         static Unset(): void;
     }
 }
-declare namespace OutSystems.OSUI.Utils.LayoutPrivate {
-}
 declare namespace OutSystems.OSUI.Utils {
     function LogMessage(message: string): void;
 }
@@ -4251,7 +4657,22 @@ declare namespace OutSystems.OSUI.Utils {
     function MoveElement(ElementId: string, TargetSelector: string, TimeoutVal?: number): string;
     function SetActiveElement(ElementId: string, IsActive: boolean): string;
     function SetSelectedTableRow(TableId: string, RowNumber: number, IsSelected: boolean): string;
-    function ShowPassword(): string;
+    function ShowPassword(WidgetId?: string): string;
+}
+declare namespace OutSystems.OSUI.Utils.PreviewInDevices {
+    interface IDataPreviewInDevice {
+        notchValue?: number;
+        pixelRatio?: string;
+        userAgent?: string;
+    }
+}
+declare namespace OutSystems.OSUI.Utils.PreviewInDevices {
+}
+declare namespace Providers.OSUI.ErrorCodes {
+    const FloatingUI: {
+        FailCallProvider: string;
+        FailSetPosition: string;
+    };
 }
 declare namespace Providers {
 }
@@ -5029,7 +5450,7 @@ declare namespace Providers.OSUI.Dropdown.VirtualSelect {
 declare namespace Providers.OSUI.Dropdown.VirtualSelect.Enum {
     enum ProviderInfo {
         Name = "VirtualSelect",
-        Version = "1.0.39"
+        Version = "1.0.40"
     }
     enum CssClass {
         ErrorMessage = "osui-dropdown-error-message",
@@ -5443,6 +5864,7 @@ declare namespace Providers.OSUI.RangeSlider.NoUiSlider.Enum {
         Version = "15.7.0"
     }
     enum NoUISliderLabels {
+        Handle = "handler",
         Lower = "lower-handle",
         Single = "handle",
         Upper = "upper-handle"
@@ -5612,5 +6034,23 @@ declare namespace Providers.OSUI.TimePicker.Flatpickr {
 }
 declare namespace Providers.OSUI.TimePicker.Flatpickr {
     interface IFlatpickrTime extends OSFramework.OSUI.Patterns.TimePicker.ITimePicker, OSFramework.OSUI.Interface.IProviderPattern<Flatpickr> {
+    }
+}
+declare namespace Providers.OSUI.Utils.Enum {
+    enum ProviderInfo {
+        Name = "FloatingUI",
+        Version = "1.2.8"
+    }
+}
+declare namespace Providers.OSUI.Utils {
+    class FloatingUI extends OSFramework.OSUI.Utils.FloatingPosition.FloatingPosition {
+        constructor(options: FloatingUIConfig);
+        dispose(): void;
+        setFloatingPosition(): void;
+        unsetFloatingPosition(): void;
+    }
+}
+declare namespace Providers.OSUI.Utils {
+    class FloatingUIConfig extends OSFramework.OSUI.Utils.FloatingPosition.FloatingPositionConfig {
     }
 }
