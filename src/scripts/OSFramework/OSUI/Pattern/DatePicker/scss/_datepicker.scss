@@ -34,14 +34,12 @@
 	}
 
 	// Hide the platform input which is set as hidden by the library and we're change it into the expected type, however we do not want it visible since library will add a clone to better deal with the selected dates.
-	& > span > input {
-		&:first-of-type {
-			display: none !important;
+	input.flatpickr-input:first-of-type {
+		display: none;
 
-			// Make the platform input visible in Service Studio
-			& {
-				-servicestudio-display: inline-flex !important;
-			}
+		// Make the platform input visible in Service Studio
+		& {
+			-servicestudio-display: inline-flex !important;
 		}
 	}
 

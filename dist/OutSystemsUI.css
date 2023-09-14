@@ -8544,10 +8544,10 @@ span.flatpickr-weekday{
   color:var(--color-neutral-6);
   pointer-events:none;
 }
-.osui-datepicker > span > input:first-of-type{
-  display:none !important;
+.osui-datepicker input.flatpickr-input:first-of-type{
+  display:none;
 }
-.osui-datepicker > span > input:first-of-type{
+.osui-datepicker input.flatpickr-input:first-of-type{
   -servicestudio-display:inline-flex !important;
 }
 .osui-datepicker-calendar-ss-preview{
@@ -9647,10 +9647,10 @@ body.vscomp-popup-active .vscomp-wrapper{
   color:var(--color-neutral-6);
   pointer-events:none;
 }
-.osui-monthpicker > span > input:first-of-type{
-  display:none !important;
+.osui-monthpicker input.flatpickr-input:first-of-type{
+  display:none;
 }
-.osui-monthpicker > span > input:first-of-type{
+.osui-monthpicker input.flatpickr-input:first-of-type{
   -servicestudio-display:inline-flex !important;
 }
 .form .osui-monthpicker-ss-preview{
@@ -10622,10 +10622,10 @@ body.vscomp-popup-active .vscomp-wrapper{
   color:var(--color-neutral-6);
   pointer-events:none;
 }
-.osui-timepicker > span > input:first-of-type{
-  display:none !important;
+.osui-timepicker input.flatpickr-input:first-of-type{
+  display:none;
 }
-.osui-timepicker > span > input:first-of-type{
+.osui-timepicker input.flatpickr-input:first-of-type{
   -servicestudio-display:inline-flex !important;
 }
 .osui-timepicker__dropdown-ss-preview{
