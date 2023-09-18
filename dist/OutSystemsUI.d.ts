@@ -879,18 +879,21 @@ declare namespace OSFramework.OSUI.Feature.Balloon {
         shape: GlobalEnum.ShapeTypes;
     };
     class Balloon<PT> extends AbstractFeature<PT, BalloonOptions> implements IBalloon {
+        private _currentFocusedElementIndex;
         private _eventBodyClick;
         private _eventOnKeypress;
         private _floatingInstance;
         private _floatingOptions;
         private _focusManagerInstance;
         private _focusTrapInstance;
+        private _focusableBalloonElements;
         private _isOpenedByApi;
         private _onToggleEvent;
         isOpen: boolean;
         constructor(featurePattern: PT, featureElem: HTMLElement, options: BalloonOptions);
         private _bodyClickCallback;
         private _handleFocusBehavior;
+        private _manageFocusInsideBalloon;
         private _onkeypressCallback;
         private _removeEventListeners;
         private _setA11YProperties;
@@ -901,7 +904,7 @@ declare namespace OSFramework.OSUI.Feature.Balloon {
         build(): void;
         close(): void;
         dispose(): void;
-        open(isOpenedByApi: boolean): void;
+        open(isOpenedByApi: boolean, arrowKeyPressed?: GlobalEnum.Keycodes.ArrowDown | GlobalEnum.Keycodes.ArrowUp): void;
         setBalloonShape(shape?: GlobalEnum.ShapeTypes): void;
         setFloatingBehaviour(isUpdate?: boolean): void;
         setFloatingConfigs(): void;
@@ -925,6 +928,7 @@ declare namespace OSFramework.OSUI.Feature.Balloon.Enum {
 }
 declare namespace OSFramework.OSUI.Feature.Balloon {
     interface IBalloon extends Feature.IFeature, Interface.IOpenable {
+        open(isOpenedByApi?: boolean, arrowKeyPressed?: GlobalEnum.Keycodes.ArrowDown | GlobalEnum.Keycodes.ArrowUp): void;
         setBalloonShape(shape?: GlobalEnum.ShapeTypes): void;
         updatePositionOption(position: GlobalEnum.FloatingPosition): void;
     }
@@ -2457,6 +2461,7 @@ declare namespace OSFramework.OSUI.Patterns.OverflowMenu {
         private _balloonFeature;
         private _eventBalloonOnToggle;
         private _eventOnClick;
+        private _eventOnKeydown;
         private _isDisabled;
         private _isOpenedByApi;
         private _platformEventOnToggle;
@@ -2466,6 +2471,7 @@ declare namespace OSFramework.OSUI.Patterns.OverflowMenu {
         constructor(uniqueId: string, configs: JSON);
         private _balloonOnToggleCallback;
         private _onClickCallback;
+        private _onKeydownCallback;
         private _setBalloonFeature;
         private _setOverflowMenuShape;
         private _togglePattern;
@@ -2483,7 +2489,7 @@ declare namespace OSFramework.OSUI.Patterns.OverflowMenu {
         disable(): void;
         dispose(): void;
         enable(): void;
-        open(isOpenedByApi: boolean): void;
+        open(isOpenedByApi: boolean, keyPressed?: GlobalEnum.Keycodes.ArrowDown | GlobalEnum.Keycodes.ArrowUp): void;
         registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void;
         setBalloonOptions(balloonOptions?: Feature.Balloon.BalloonOptions): void;
         setTriggerAriaLabel(ariaLabelText: string): void;
