@@ -2452,6 +2452,7 @@ declare namespace OSFramework.OSUI.Patterns.OverflowMenu {
     interface IOverflowMenu extends Interface.IPattern, Interface.IOpenable {
         disable(): void;
         enable(): void;
+        open(isOpenedByApi?: boolean, arrowKeyPressed?: GlobalEnum.Keycodes.ArrowDown | GlobalEnum.Keycodes.ArrowUp): void;
     }
 }
 declare namespace OSFramework.OSUI.Patterns.OverflowMenu {
