@@ -80,8 +80,8 @@ namespace OSFramework.OSUI.GlobalEnum {
 	export enum FloatingPosition {
 		Auto = 'auto',
 		Bottom = 'bottom',
-		BottomStart = 'bottom-start',
 		BottomEnd = 'bottom-end',
+		BottomStart = 'bottom-start',
 		Center = 'center',
 		Left = 'left',
 		LeftEnd = 'left-end',
@@ -90,8 +90,8 @@ namespace OSFramework.OSUI.GlobalEnum {
 		RightEnd = 'right-end',
 		RightStart = 'right-start',
 		Top = 'top',
-		TopStart = 'top-start',
 		TopEnd = 'top-end',
+		TopStart = 'top-start',
 	}
 
 	/**
@@ -165,12 +165,12 @@ namespace OSFramework.OSUI.GlobalEnum {
 		Class = 'class',
 		DataInput = 'data-input',
 		Disabled = 'disabled',
+		Href = 'href',
 		Id = 'id',
 		Name = 'name',
 		StatusBar = 'data-status-bar-height',
 		Style = 'style',
 		Type = 'type',
-		Href = 'href',
 	}
 
 	/**
@@ -325,8 +325,8 @@ namespace OSFramework.OSUI.GlobalEnum {
 		Submenu = 'Submenu',
 		SwipeEvents = 'SwipeEvents',
 		Tabs = 'Tabs',
-		TabsHeaderItem = 'TabsHeaderItem',
 		TabsContentItem = 'TabsContentItem',
+		TabsHeaderItem = 'TabsHeaderItem',
 		Timepicker = 'Timepicker',
 		Tooltip = 'Tooltip',
 		TouchEvents = 'TouchEvents',
