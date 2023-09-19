@@ -23,6 +23,7 @@ namespace OSFramework.OSUI.GlobalEnum {
 		HeaderIsFixed = 'fixed-header',
 		HeaderIsVisible = 'header-is--visible',
 		HeaderTopContent = 'header-top-content',
+		InputNotValid = 'not-valid',
 		IsTouch = 'is--touch',
 		Layout = 'layout',
 		LayoutNative = 'layout-native',
@@ -33,7 +34,7 @@ namespace OSFramework.OSUI.GlobalEnum {
 		MainContent = 'main-content',
 		MenuLinks = 'app-menu-links',
 		Placeholder = 'ph',
-		InputNotValid = 'not-valid',
+		SkipContent = 'skip-nav',
 	}
 
 	/**
@@ -169,6 +170,7 @@ namespace OSFramework.OSUI.GlobalEnum {
 		StatusBar = 'data-status-bar-height',
 		Style = 'style',
 		Type = 'type',
+		Href = 'href',
 	}
 
 	/**

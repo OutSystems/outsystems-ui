@@ -180,6 +180,7 @@ declare namespace OSFramework.OSUI.GlobalEnum {
         HeaderIsFixed = "fixed-header",
         HeaderIsVisible = "header-is--visible",
         HeaderTopContent = "header-top-content",
+        InputNotValid = "not-valid",
         IsTouch = "is--touch",
         Layout = "layout",
         LayoutNative = "layout-native",
@@ -190,7 +191,7 @@ declare namespace OSFramework.OSUI.GlobalEnum {
         MainContent = "main-content",
         MenuLinks = "app-menu-links",
         Placeholder = "ph",
-        InputNotValid = "not-valid"
+        SkipContent = "skip-nav"
     }
     enum CSSSelectors {
         InputFormControl = "input.form-control",
@@ -287,7 +288,8 @@ declare namespace OSFramework.OSUI.GlobalEnum {
         Name = "name",
         StatusBar = "data-status-bar-height",
         Style = "style",
-        Type = "type"
+        Type = "type",
+        Href = "href"
     }
     enum HTMLElement {
         Body = "body",
@@ -4618,6 +4620,12 @@ declare namespace OutSystems.OSUI.Utils.LayoutPrivate {
         private static _onOrientationChange;
         static Set(): void;
         static Unset(): void;
+    }
+}
+declare namespace OutSystems.OSUI.Utils.LayoutPrivate {
+    abstract class SkipContentLink {
+        private static _setLink;
+        static Set(): void;
     }
 }
 declare namespace OutSystems.OSUI.Utils {
