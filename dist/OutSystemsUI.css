@@ -12318,6 +12318,7 @@ html[data-uieditorversion^="1"] .wizard-wrapper-item{
 }
 /*! 6.5.5. Rating */
 .rating{
+  position:relative;
   display:-webkit-inline-box;
   display:-ms-inline-flexbox;
   display:inline-flex;
@@ -12338,6 +12339,9 @@ html[data-uieditorversion^="1"] .wizard-wrapper-item{
 }
 .rating.rating-medium{
   --rating-size:24px;
+}
+.rating.is-edit{
+  pointer-events:initial;
 }
 .rating.is-edit .rating-item{
   cursor:pointer;
@@ -12380,41 +12384,49 @@ html[data-uieditorversion^="1"] .wizard-wrapper-item{
   opacity:0;
   z-index:var(--layer-global-screen);
 }
-.rating .rating-item[class*=rating-]:last-of-type{
+.rating-item:last-of-type{
   padding-right:0;
 }
-.rating input:checked + label .rating-item-empty,
-.rating input:checked ~ label .rating-item-filled{
+.rating:hover input + .rating-item .rating-item-filled{
+  opacity:1;
+}
+.rating input{
+}
+.rating input:first-of-type + .rating-item{
+  background:transparent;
+  display:none;
+  height:100%;
+  left:0;
+  position:absolute;
+  top:0;
+  width:100%;
+  -webkit-box-shadow:0 0 0 3px var(--color-focus-outer);
+          box-shadow:0 0 0 3px var(--color-focus-outer);
+}
+.rating input:first-of-type:focus:checked + .rating-item{
+  display:block;
+}
+.rating input:checked + .rating-item .rating-item-empty, .rating input:checked ~ .rating-item .rating-item-filled, .rating input:focus + .rating-item .rating-item-empty, .rating input:hover ~ .rating-item .rating-item-filled{
   opacity:0;
+}
+.rating input:hover ~ .rating-item .rating-item-empty, .rating input:hover + .rating-item .rating-item-filled, .rating input:focus ~ .rating-item .rating-item-empty, .rating input:focus + .rating-item .rating-item-filled, .rating input:checked + .rating-item .rating-item-filled, .rating input:checked + .rating-item .rating-item-half, .rating input:checked ~ .rating-item .rating-item-empty{
+  opacity:1;
 }
 .rating.is-half .rating-item-half{
   z-index:var(--layer-local-tier-1);
 }
-.rating.is-half input:checked + label .rating-item-half{
+.rating.is-half input:checked + .rating-item .rating-item-half{
   opacity:1;
 }
-.rating.is-half input:checked + label .rating-item-filled{
+.rating.is-half input:checked + .rating-item .rating-item-filled{
   opacity:0;
 }
-.rating:hover input + label .rating-item-filled, .rating.is-half:hover input:checked + label .rating-item-filled{
-  opacity:1;
-}
-.rating input:focus + label .rating-item-empty,
-.rating input:hover ~ label .rating-item-filled{
+.rating.is-half input:hover ~ .rating-item .rating-item-filled,
+.rating.is-half input:hover ~ .rating-item .rating-item-half{
   opacity:0;
 }
-.rating input:checked ~ label .rating-item-empty,
-.rating input:checked + label .rating-item-filled,
-.rating input:checked + label .rating-item-half,
-.rating input:hover ~ label .rating-item-empty,
-.rating input:focus ~ label .rating-item-empty,
-.rating input:focus + label .rating-item-filled{
-  opacity:1;
-}
-.rating input:hover ~ label .rating-item-filled, .rating.is-half input:hover ~ label.rating-item .rating-item-filled, .rating.is-half input:hover ~ label.rating-item .rating-item-half{
-  opacity:0;
-}
-.rating input:hover + label .rating-item-filled, .rating.is-half input:hover + label.rating-item .rating-item-filled{
+.rating.is-half:hover input:checked + .rating-item .rating-item-filled,
+.rating.is-half input:hover + .rating-item .rating-item-filled{
   opacity:1;
 }
 .rating .icon-states{
@@ -12437,7 +12449,17 @@ html[data-uieditorversion^="1"] .wizard-wrapper-item{
       -ms-transform:scaleX(-1);
           transform:scaleX(-1);
 }
-.has-accessible-features input:focus + .rating-item > div{
+.has-accessible-features .rating.is-half input:focus + .rating-item .rating-item-filled,
+.has-accessible-features .rating.is-half input:focus + .rating-item .rating-item-filled *, .has-accessible-features .rating:not(.is-half) input:focus + .rating-item .rating-item-half,
+.has-accessible-features .rating:not(.is-half) input:focus + .rating-item .rating-item-half *,
+.has-accessible-features .rating input:checked + .rating-item .rating-item-empty,
+.has-accessible-features .rating input:checked + .rating-item .rating-item-empty *{
+  -webkit-box-shadow:none;
+          box-shadow:none;
+}
+.has-accessible-features .rating.is-half input:focus + .rating-item .rating-item-half,
+.has-accessible-features .rating.is-half input:focus + .rating-item .rating-item-half *, .has-accessible-features .rating:not(.is-half) input:focus + .rating-item .rating-item-filled,
+.has-accessible-features .rating:not(.is-half) input:focus + .rating-item .rating-item-filled *{
   -webkit-box-shadow:0 0 0 3px var(--color-focus-outer);
           box-shadow:0 0 0 3px var(--color-focus-outer);
 }

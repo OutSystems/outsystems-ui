@@ -142,6 +142,14 @@ namespace OSFramework.OSUI.Patterns.Rating {
 			// Check if the e.target is a label with the Enum.RatingCssClass.RatingInput class
 			const isInput = Helper.Dom.Styles.ContainsClass(currentTarget, Enum.CssClass.RatingInput);
 			if (isInput) {
+				const lastchosen = this.selfElement.querySelectorAll(GlobalEnum.HTMLElement.Input)[
+					this.configs.RatingValue
+				];
+				if (lastchosen) {
+					lastchosen.ariaChecked = 'false';
+					lastchosen.ariaHidden = 'true';
+				}
+
 				// If it is, then get the input:checked value
 				this.configs.RatingValue = this._getValue();
 				// And use that value to set a new Rating Value
@@ -169,16 +177,21 @@ namespace OSFramework.OSUI.Patterns.Rating {
 		 * @memberof Rating
 		 */
 		private _renderItem(index: number): void {
-			// If first input, whihc is hidden, than also hide the label
-			const hideLabelClass: string = index === 0 ? Enum.CssClass.WCAGHideText : '';
 			// if not first input, which is hidden, add the html stored form the placeholders
 			const labelHTML = index !== 0 ? this._clonedPlaceholders : '';
 			// Create a unique rating input id, based on the index
 			const ratingInputId: string = this.uniqueId + '-rating-' + index;
 
-			// Craete input and label html
-			const input = `<input type="radio" class="${Enum.CssClass.RatingInput} ${Enum.CssClass.WCAGHideText}" id=${ratingInputId} name=${this._ratingInputName} value=${index}/>`;
-			const label = `<label class='${Enum.CssClass.RatingItem} ${hideLabelClass}' for=${ratingInputId}><span class="${Enum.CssClass.WCAGHideText}">Rating ${index}</span>${labelHTML}</label>`;
+			// Create input and label html
+			let input;
+			let label;
+			if (!this.configs.IsEdit) {
+				input = `<input type="radio" class="${Enum.CssClass.RatingInput} ${Enum.CssClass.WCAGHideText}" id=${ratingInputId} name=${this._ratingInputName} value=${index} aria-hidden="true">`;
+				label = `<label class='${Enum.CssClass.RatingItem}' for=${ratingInputId} aria-hidden="true"><span class="${Enum.CssClass.WCAGHideText}">Rating ${index}</span>${labelHTML}</label>`;
+			} else {
+				input = `<input type="radio" class="${Enum.CssClass.RatingInput} ${Enum.CssClass.WCAGHideText}" id=${ratingInputId} name=${this._ratingInputName} value=${index}>`;
+				label = `<label class='${Enum.CssClass.RatingItem}' for=${ratingInputId}><span class="${Enum.CssClass.WCAGHideText}">Rating ${index}</span>${labelHTML}</label>`;
+			}
 
 			// Append new input + label to fieldset's html
 			this._ratingFieldsetElem.innerHTML += input + label;
@@ -329,6 +342,8 @@ namespace OSFramework.OSUI.Patterns.Rating {
 			// If there's only one rating item, then there's no need for further checks, this one will be checked
 			if (this.configs.RatingScale === 1) {
 				ratingItems[1].checked = true;
+				ratingItems[1].ariaChecked = 'true';
+				ratingItems[1].ariaHidden = 'false';
 				return;
 			}
 
@@ -339,6 +354,7 @@ namespace OSFramework.OSUI.Patterns.Rating {
 				this._isHalfValue || this._decimalValue > 0.7
 					? Math.floor(this.configs.RatingValue) + 1
 					: Math.floor(this.configs.RatingValue);
+			const oldValue = Math.floor(this.configs.RatingValue);
 
 			if (newValue < Enum.Properties.MinRatingScale) {
 				// If negative value, set it as 0 by default
@@ -356,8 +372,13 @@ namespace OSFramework.OSUI.Patterns.Rating {
 				);
 			}
 
+			ratingItems[oldValue].ariaChecked = 'false';
+			ratingItems[oldValue].ariaHidden = 'true';
+
 			// Set the itemas as :checked
 			ratingItems[newValue].checked = true;
+			ratingItems[newValue].ariaChecked = 'true';
+			ratingItems[newValue].ariaHidden = 'false';
 
 			// If is-half add the appropriate class, otherwise just declare the this.isHalfValue, to complete the if statement
 			if (this._isHalfValue) {
