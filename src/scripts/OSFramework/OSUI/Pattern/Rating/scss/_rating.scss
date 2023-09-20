@@ -152,6 +152,10 @@
 			.rating-item-half {
 				opacity: 1;
 			}
+
+			.rating-item-filled {
+				opacity: 0;
+			}
 		}
 
 		input:hover ~ .rating-item {
@@ -163,6 +167,14 @@
 
 		&:hover input:checked + .rating-item .rating-item-filled,
 		input:hover + .rating-item .rating-item-filled {
+			opacity: 1;
+		}
+
+		&:hover input:hover ~ .rating-item .rating-item-filled {
+			opacity: 0;
+		}
+
+		&:hover input:hover + .rating-item .rating-item-filled {
 			opacity: 1;
 		}
 	}
