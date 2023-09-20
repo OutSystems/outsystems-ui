@@ -8365,7 +8365,6 @@ var OSFramework;
                             const lastchosen = this.selfElement.querySelectorAll(OSUI.GlobalEnum.HTMLElement.Input)[this.configs.RatingValue];
                             if (lastchosen) {
                                 lastchosen.ariaChecked = 'false';
-                                lastchosen.ariaHidden = 'true';
                             }
                             this.configs.RatingValue = this._getValue();
                             this._setValue(true);
@@ -8379,14 +8378,12 @@ var OSFramework;
                     _renderItem(index) {
                         const labelHTML = index !== 0 ? this._clonedPlaceholders : '';
                         const ratingInputId = this.uniqueId + '-rating-' + index;
-                        let input;
+                        const input = `<input type="radio" class="${Rating_1.Enum.CssClass.RatingInput} ${Rating_1.Enum.CssClass.WCAGHideText}" id=${ratingInputId} name=${this._ratingInputName} value=${index} aria-hidden="true">`;
                         let label;
                         if (!this.configs.IsEdit) {
-                            input = `<input type="radio" class="${Rating_1.Enum.CssClass.RatingInput} ${Rating_1.Enum.CssClass.WCAGHideText}" id=${ratingInputId} name=${this._ratingInputName} value=${index} aria-hidden="true">`;
                             label = `<label class='${Rating_1.Enum.CssClass.RatingItem}' for=${ratingInputId} aria-hidden="true"><span class="${Rating_1.Enum.CssClass.WCAGHideText}">Rating ${index}</span>${labelHTML}</label>`;
                         }
                         else {
-                            input = `<input type="radio" class="${Rating_1.Enum.CssClass.RatingInput} ${Rating_1.Enum.CssClass.WCAGHideText}" id=${ratingInputId} name=${this._ratingInputName} value=${index}>`;
                             label = `<label class='${Rating_1.Enum.CssClass.RatingItem}' for=${ratingInputId}><span class="${Rating_1.Enum.CssClass.WCAGHideText}">Rating ${index}</span>${labelHTML}</label>`;
                         }
                         this._ratingFieldsetElem.innerHTML += input + label;
@@ -8422,9 +8419,19 @@ var OSFramework;
                     }
                     _setIsEdit() {
                         this._setIsDisabled(!this.configs.IsEdit);
-                        this.configs.IsEdit
-                            ? OSUI.Helper.Dom.Styles.AddClass(this.selfElement, Rating_1.Enum.CssClass.IsEdit)
-                            : OSUI.Helper.Dom.Styles.RemoveClass(this.selfElement, Rating_1.Enum.CssClass.IsEdit);
+                        const LabelList = this.selfElement.querySelectorAll(OSUI.Constants.Dot + Rating_1.Enum.CssClass.RatingItem);
+                        if (this.configs.IsEdit) {
+                            OSUI.Helper.Dom.Styles.AddClass(this.selfElement, Rating_1.Enum.CssClass.IsEdit);
+                            LabelList.forEach((label) => {
+                                label.removeAttribute('aria-hidden');
+                            });
+                        }
+                        else {
+                            OSUI.Helper.Dom.Styles.RemoveClass(this.selfElement, Rating_1.Enum.CssClass.IsEdit);
+                            LabelList.forEach((label) => {
+                                label.ariaHidden = 'true';
+                            });
+                        }
                         this._manageRatingEvent();
                     }
                     _setScale() {
@@ -8450,13 +8457,11 @@ var OSFramework;
                         if (this.configs.RatingScale === 1) {
                             ratingItems[1].checked = true;
                             ratingItems[1].ariaChecked = 'true';
-                            ratingItems[1].ariaHidden = 'false';
                             return;
                         }
                         let newValue = this._isHalfValue || this._decimalValue > 0.7
                             ? Math.floor(this.configs.RatingValue) + 1
                             : Math.floor(this.configs.RatingValue);
-                        const oldValue = Math.floor(this.configs.RatingValue);
                         if (newValue < Rating_1.Enum.Properties.MinRatingScale) {
                             newValue = Rating_1.Enum.Properties.MinRatingScale;
                             console.warn(`The value of RatingValue property on the '${this.widgetId}' ${OSUI.GlobalEnum.PatternName.Rating} can't be smaller than '${Rating_1.Enum.Properties.MinRatingScale}'.`);
@@ -8465,11 +8470,8 @@ var OSFramework;
                             newValue = this.configs.RatingScale;
                             console.warn(`The value of the RatingValue property on the '${this.widgetId}' ${OSUI.GlobalEnum.PatternName.Rating} exceeds the scale boundaries. To ensure its correct behaviour, set a value smaller or equal to '${this.configs.RatingScale}'.`);
                         }
-                        ratingItems[oldValue].ariaChecked = 'false';
-                        ratingItems[oldValue].ariaHidden = 'true';
                         ratingItems[newValue].checked = true;
                         ratingItems[newValue].ariaChecked = 'true';
-                        ratingItems[newValue].ariaHidden = 'false';
                         if (this._isHalfValue) {
                             OSUI.Helper.Dom.Styles.AddClass(this.selfElement, Rating_1.Enum.CssClass.IsHalf);
                         }
