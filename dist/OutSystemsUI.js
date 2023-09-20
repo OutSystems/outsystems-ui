@@ -1890,6 +1890,7 @@ var OSFramework;
                             }
                             else if (isArrowDownPressed || isArrowUpPressed) {
                                 this._manageFocusInsideBalloon(e.key);
+                                e.preventDefault();
                             }
                         }
                         e.stopPropagation();
@@ -7283,6 +7284,7 @@ var OSFramework;
                             (event.key === OSUI.GlobalEnum.Keycodes.ArrowDown || event.key === OSUI.GlobalEnum.Keycodes.ArrowUp)) {
                             this._isOpenedByApi = false;
                             this.open(this._isOpenedByApi, event.key);
+                            event.preventDefault();
                         }
                     }
                     _setBalloonFeature() {

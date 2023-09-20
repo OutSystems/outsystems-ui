@@ -119,6 +119,7 @@ namespace OSFramework.OSUI.Feature.Balloon {
 					// Move the focus between the balloon's focusable elements when pressing ArrowDown or ArrowUp
 				} else if (isArrowDownPressed || isArrowUpPressed) {
 					this._manageFocusInsideBalloon(e.key);
+					e.preventDefault(); // Prevent scroll
 				}
 			}
 

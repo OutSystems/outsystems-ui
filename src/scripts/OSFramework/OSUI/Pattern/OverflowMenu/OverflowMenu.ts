@@ -63,6 +63,7 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 			) {
 				this._isOpenedByApi = false;
 				this.open(this._isOpenedByApi, event.key);
+				event.preventDefault(); // Prevent scroll
 			}
 		}
 
