@@ -86,6 +86,19 @@
 		}
 	}
 
+	input {
+		&:checked + .rating-item .rating-item-empty,
+		&:checked ~ .rating-item .rating-item-filled {
+			opacity: 0;
+		}
+	}
+
+	&.is-half {
+		input:checked ~ .rating-item .rating-item-half {
+			opacity: 0;
+		}
+	}
+
 	/* Selected Styles*/
 	&:hover input + .rating-item .rating-item-filled {
 		opacity: 1;
@@ -110,20 +123,22 @@
 
 		// These need to be separated, to keep exact CSS specificty, for the hover/ checked styles to work as intended
 		/* Checked styles*/
-		&:checked + .rating-item .rating-item-empty,
-		&:checked ~ .rating-item .rating-item-filled,
-		&:focus + .rating-item .rating-item-empty,
-		&:hover ~ .rating-item .rating-item-filled {
+		&:checked + .rating-item .rating-item-filled,
+		&:checked + .rating-item .rating-item-half,
+		&:checked ~ .rating-item .rating-item-empty,
+		&:hover ~ .rating-item .rating-item-empty,
+		&:focus ~ .rating-item .rating-item-empty,
+		&:focus + .rating-item .rating-item-filled {
+			opacity: 1;
+		}
+
+		//&:focus + .rating-item .rating-item-empty,
+		&:hover ~ .rating-item .rating-item-filled,
+		&:hover ~ .rating-item .rating-item-half {
 			opacity: 0;
 		}
 
-		&:hover ~ .rating-item .rating-item-empty,
-		&:hover + .rating-item .rating-item-filled,
-		&:focus ~ .rating-item .rating-item-empty,
-		&:focus + .rating-item .rating-item-filled,
-		&:checked + .rating-item .rating-item-filled,
-		&:checked + .rating-item .rating-item-half,
-		&:checked ~ .rating-item .rating-item-empty {
+		&:hover + .rating-item .rating-item-filled {
 			opacity: 1;
 		}
 	}
@@ -136,9 +151,6 @@
 		input:checked + .rating-item {
 			.rating-item-half {
 				opacity: 1;
-			}
-			.rating-item-filled {
-				opacity: 0;
 			}
 		}
 

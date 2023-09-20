@@ -12387,6 +12387,12 @@ html[data-uieditorversion^="1"] .wizard-wrapper-item{
 .rating-item:last-of-type{
   padding-right:0;
 }
+.rating input:checked + .rating-item .rating-item-empty, .rating input:checked ~ .rating-item .rating-item-filled{
+  opacity:0;
+}
+.rating.is-half input:checked ~ .rating-item .rating-item-half{
+  opacity:0;
+}
 .rating:hover input + .rating-item .rating-item-filled{
   opacity:1;
 }
@@ -12406,10 +12412,13 @@ html[data-uieditorversion^="1"] .wizard-wrapper-item{
 .rating input:first-of-type:focus:checked + .rating-item{
   display:block;
 }
-.rating input:checked + .rating-item .rating-item-empty, .rating input:checked ~ .rating-item .rating-item-filled, .rating input:focus + .rating-item .rating-item-empty, .rating input:hover ~ .rating-item .rating-item-filled{
+.rating input:checked + .rating-item .rating-item-filled, .rating input:checked + .rating-item .rating-item-half, .rating input:checked ~ .rating-item .rating-item-empty, .rating input:hover ~ .rating-item .rating-item-empty, .rating input:focus ~ .rating-item .rating-item-empty, .rating input:focus + .rating-item .rating-item-filled{
+  opacity:1;
+}
+.rating input:hover ~ .rating-item .rating-item-filled, .rating input:hover ~ .rating-item .rating-item-half{
   opacity:0;
 }
-.rating input:hover ~ .rating-item .rating-item-empty, .rating input:hover + .rating-item .rating-item-filled, .rating input:focus ~ .rating-item .rating-item-empty, .rating input:focus + .rating-item .rating-item-filled, .rating input:checked + .rating-item .rating-item-filled, .rating input:checked + .rating-item .rating-item-half, .rating input:checked ~ .rating-item .rating-item-empty{
+.rating input:hover + .rating-item .rating-item-filled{
   opacity:1;
 }
 .rating.is-half .rating-item-half{
@@ -12417,9 +12426,6 @@ html[data-uieditorversion^="1"] .wizard-wrapper-item{
 }
 .rating.is-half input:checked + .rating-item .rating-item-half{
   opacity:1;
-}
-.rating.is-half input:checked + .rating-item .rating-item-filled{
-  opacity:0;
 }
 .rating.is-half input:hover ~ .rating-item .rating-item-filled,
 .rating.is-half input:hover ~ .rating-item .rating-item-half{
