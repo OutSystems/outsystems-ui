@@ -243,6 +243,7 @@ var OSFramework;
                 CssClassElements["HeaderIsFixed"] = "fixed-header";
                 CssClassElements["HeaderIsVisible"] = "header-is--visible";
                 CssClassElements["HeaderTopContent"] = "header-top-content";
+                CssClassElements["InputNotValid"] = "not-valid";
                 CssClassElements["IsTouch"] = "is--touch";
                 CssClassElements["Layout"] = "layout";
                 CssClassElements["LayoutNative"] = "layout-native";
@@ -253,7 +254,7 @@ var OSFramework;
                 CssClassElements["MainContent"] = "main-content";
                 CssClassElements["MenuLinks"] = "app-menu-links";
                 CssClassElements["Placeholder"] = "ph";
-                CssClassElements["InputNotValid"] = "not-valid";
+                CssClassElements["SkipContent"] = "skip-nav";
             })(CssClassElements = GlobalEnum.CssClassElements || (GlobalEnum.CssClassElements = {}));
             let CSSSelectors;
             (function (CSSSelectors) {
@@ -362,6 +363,7 @@ var OSFramework;
                 HTMLAttributes["StatusBar"] = "data-status-bar-height";
                 HTMLAttributes["Style"] = "style";
                 HTMLAttributes["Type"] = "type";
+                HTMLAttributes["Href"] = "href";
             })(HTMLAttributes = GlobalEnum.HTMLAttributes || (GlobalEnum.HTMLAttributes = {}));
             let HTMLElement;
             (function (HTMLElement) {
@@ -16390,6 +16392,31 @@ var OutSystems;
                     }
                 }
                 LayoutPrivate.OnOrientationChange = OnOrientationChange;
+            })(LayoutPrivate = Utils.LayoutPrivate || (Utils.LayoutPrivate = {}));
+        })(Utils = OSUI.Utils || (OSUI.Utils = {}));
+    })(OSUI = OutSystems.OSUI || (OutSystems.OSUI = {}));
+})(OutSystems || (OutSystems = {}));
+var OutSystems;
+(function (OutSystems) {
+    var OSUI;
+    (function (OSUI) {
+        var Utils;
+        (function (Utils) {
+            var LayoutPrivate;
+            (function (LayoutPrivate) {
+                class SkipContentLink {
+                    static _setLink() {
+                        const mainContent = OSFramework.OSUI.Helper.Dom.ClassSelector(document, OSFramework.OSUI.GlobalEnum.CssClassElements.MainContent);
+                        const skipContentLink = OSFramework.OSUI.Helper.Dom.ClassSelector(document, OSFramework.OSUI.GlobalEnum.CssClassElements.SkipContent);
+                        if (mainContent && skipContentLink) {
+                            skipContentLink.setAttribute(OSFramework.OSUI.GlobalEnum.HTMLAttributes.Href, mainContent.getAttribute(OSFramework.OSUI.GlobalEnum.HTMLAttributes.Id));
+                        }
+                    }
+                    static Set() {
+                        this._setLink();
+                    }
+                }
+                LayoutPrivate.SkipContentLink = SkipContentLink;
             })(LayoutPrivate = Utils.LayoutPrivate || (Utils.LayoutPrivate = {}));
         })(Utils = OSUI.Utils || (OSUI.Utils = {}));
     })(OSUI = OutSystems.OSUI || (OutSystems.OSUI = {}));
