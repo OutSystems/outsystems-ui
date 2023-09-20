@@ -223,8 +223,8 @@ declare namespace OSFramework.OSUI.GlobalEnum {
     enum FloatingPosition {
         Auto = "auto",
         Bottom = "bottom",
-        BottomStart = "bottom-start",
         BottomEnd = "bottom-end",
+        BottomStart = "bottom-start",
         Center = "center",
         Left = "left",
         LeftEnd = "left-end",
@@ -233,8 +233,8 @@ declare namespace OSFramework.OSUI.GlobalEnum {
         RightEnd = "right-end",
         RightStart = "right-start",
         Top = "top",
-        TopStart = "top-start",
-        TopEnd = "top-end"
+        TopEnd = "top-end",
+        TopStart = "top-start"
     }
     enum CssProperties {
         Auto = "auto",
@@ -284,12 +284,12 @@ declare namespace OSFramework.OSUI.GlobalEnum {
         Class = "class",
         DataInput = "data-input",
         Disabled = "disabled",
+        Href = "href",
         Id = "id",
         Name = "name",
         StatusBar = "data-status-bar-height",
         Style = "style",
-        Type = "type",
-        Href = "href"
+        Type = "type"
     }
     enum HTMLElement {
         Body = "body",
@@ -298,6 +298,7 @@ declare namespace OSFramework.OSUI.GlobalEnum {
         FieldSet = "fieldset",
         Input = "input",
         Link = "a",
+        Radio = "radio",
         Span = "span"
     }
     enum HTMLEvent {
@@ -402,8 +403,8 @@ declare namespace OSFramework.OSUI.GlobalEnum {
         Submenu = "Submenu",
         SwipeEvents = "SwipeEvents",
         Tabs = "Tabs",
-        TabsHeaderItem = "TabsHeaderItem",
         TabsContentItem = "TabsContentItem",
+        TabsHeaderItem = "TabsHeaderItem",
         Timepicker = "Timepicker",
         Tooltip = "Tooltip",
         TouchEvents = "TouchEvents",

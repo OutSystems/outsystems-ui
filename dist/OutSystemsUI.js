@@ -291,8 +291,8 @@ var OSFramework;
             (function (FloatingPosition) {
                 FloatingPosition["Auto"] = "auto";
                 FloatingPosition["Bottom"] = "bottom";
-                FloatingPosition["BottomStart"] = "bottom-start";
                 FloatingPosition["BottomEnd"] = "bottom-end";
+                FloatingPosition["BottomStart"] = "bottom-start";
                 FloatingPosition["Center"] = "center";
                 FloatingPosition["Left"] = "left";
                 FloatingPosition["LeftEnd"] = "left-end";
@@ -301,8 +301,8 @@ var OSFramework;
                 FloatingPosition["RightEnd"] = "right-end";
                 FloatingPosition["RightStart"] = "right-start";
                 FloatingPosition["Top"] = "top";
-                FloatingPosition["TopStart"] = "top-start";
                 FloatingPosition["TopEnd"] = "top-end";
+                FloatingPosition["TopStart"] = "top-start";
             })(FloatingPosition = GlobalEnum.FloatingPosition || (GlobalEnum.FloatingPosition = {}));
             let CssProperties;
             (function (CssProperties) {
@@ -358,12 +358,12 @@ var OSFramework;
                 HTMLAttributes["Class"] = "class";
                 HTMLAttributes["DataInput"] = "data-input";
                 HTMLAttributes["Disabled"] = "disabled";
+                HTMLAttributes["Href"] = "href";
                 HTMLAttributes["Id"] = "id";
                 HTMLAttributes["Name"] = "name";
                 HTMLAttributes["StatusBar"] = "data-status-bar-height";
                 HTMLAttributes["Style"] = "style";
                 HTMLAttributes["Type"] = "type";
-                HTMLAttributes["Href"] = "href";
             })(HTMLAttributes = GlobalEnum.HTMLAttributes || (GlobalEnum.HTMLAttributes = {}));
             let HTMLElement;
             (function (HTMLElement) {
@@ -373,6 +373,7 @@ var OSFramework;
                 HTMLElement["FieldSet"] = "fieldset";
                 HTMLElement["Input"] = "input";
                 HTMLElement["Link"] = "a";
+                HTMLElement["Radio"] = "radio";
                 HTMLElement["Span"] = "span";
             })(HTMLElement = GlobalEnum.HTMLElement || (GlobalEnum.HTMLElement = {}));
             let HTMLEvent;
@@ -485,8 +486,8 @@ var OSFramework;
                 PatternName["Submenu"] = "Submenu";
                 PatternName["SwipeEvents"] = "SwipeEvents";
                 PatternName["Tabs"] = "Tabs";
-                PatternName["TabsHeaderItem"] = "TabsHeaderItem";
                 PatternName["TabsContentItem"] = "TabsContentItem";
+                PatternName["TabsHeaderItem"] = "TabsHeaderItem";
                 PatternName["Timepicker"] = "Timepicker";
                 PatternName["Tooltip"] = "Tooltip";
                 PatternName["TouchEvents"] = "TouchEvents";
@@ -8408,9 +8409,9 @@ var OSFramework;
                         this._isHalfValue = false;
                         const isInput = OSUI.Helper.Dom.Styles.ContainsClass(currentTarget, Rating_1.Enum.CssClass.RatingInput);
                         if (isInput) {
-                            const lastchosen = this.selfElement.querySelectorAll(OSUI.GlobalEnum.HTMLElement.Input)[this.configs.RatingValue];
-                            if (lastchosen) {
-                                lastchosen.ariaChecked = 'false';
+                            const _lastChosen = this.selfElement.querySelectorAll(OSUI.GlobalEnum.HTMLElement.Input)[this.configs.RatingValue];
+                            if (_lastChosen) {
+                                _lastChosen.ariaChecked = OSUI.Constants.A11YAttributes.States.False;
                             }
                             this.configs.RatingValue = this._getValue();
                             this._setValue(true);
@@ -8424,10 +8425,10 @@ var OSFramework;
                     _renderItem(index) {
                         const labelHTML = index !== 0 ? this._clonedPlaceholders : '';
                         const ratingInputId = this.uniqueId + '-rating-' + index;
-                        const input = `<input type="radio" class="${Rating_1.Enum.CssClass.RatingInput} ${Rating_1.Enum.CssClass.WCAGHideText}" id=${ratingInputId} name=${this._ratingInputName} value=${index} aria-hidden="true">`;
+                        const input = `<input type="${OSUI.GlobalEnum.HTMLElement.Radio}"class="${Rating_1.Enum.CssClass.RatingInput} ${Rating_1.Enum.CssClass.WCAGHideText}" id=${ratingInputId} name=${this._ratingInputName} value=${index} aria-hidden="${OSUI.Constants.A11YAttributes.States.True}">`;
                         let label;
                         if (!this.configs.IsEdit) {
-                            label = `<label class='${Rating_1.Enum.CssClass.RatingItem}' for=${ratingInputId} aria-hidden="true"><span class="${Rating_1.Enum.CssClass.WCAGHideText}">Rating ${index}</span>${labelHTML}</label>`;
+                            label = `<label class='${Rating_1.Enum.CssClass.RatingItem}' for=${ratingInputId} aria-hidden="${OSUI.Constants.A11YAttributes.States.True}"><span class="${Rating_1.Enum.CssClass.WCAGHideText}">Rating ${index}</span>${labelHTML}</label>`;
                         }
                         else {
                             label = `<label class='${Rating_1.Enum.CssClass.RatingItem}' for=${ratingInputId}><span class="${Rating_1.Enum.CssClass.WCAGHideText}">Rating ${index}</span>${labelHTML}</label>`;
@@ -8437,7 +8438,7 @@ var OSFramework;
                     _setFieldsetDisabledStatus(isDisabled) {
                         const isFieldsetDisabled = OSUI.Helper.Dom.Attribute.Get(this._ratingFieldsetElem, OSUI.GlobalEnum.HTMLAttributes.Disabled);
                         if (isDisabled) {
-                            OSUI.Helper.Dom.Attribute.Set(this._ratingFieldsetElem, OSUI.GlobalEnum.HTMLAttributes.Disabled, 'true');
+                            OSUI.Helper.Dom.Attribute.Set(this._ratingFieldsetElem, OSUI.GlobalEnum.HTMLAttributes.Disabled, OSUI.Constants.A11YAttributes.States.True);
                         }
                         else if (!isDisabled && isFieldsetDisabled) {
                             OSUI.Helper.Dom.Attribute.Remove(this._ratingFieldsetElem, OSUI.GlobalEnum.HTMLAttributes.Disabled);
@@ -8469,13 +8470,13 @@ var OSFramework;
                         if (this.configs.IsEdit) {
                             OSUI.Helper.Dom.Styles.AddClass(this.selfElement, Rating_1.Enum.CssClass.IsEdit);
                             LabelList.forEach((label) => {
-                                label.removeAttribute('aria-hidden');
+                                label.removeAttribute(OSUI.Constants.A11YAttributes.Aria.Hidden);
                             });
                         }
                         else {
                             OSUI.Helper.Dom.Styles.RemoveClass(this.selfElement, Rating_1.Enum.CssClass.IsEdit);
                             LabelList.forEach((label) => {
-                                label.ariaHidden = 'true';
+                                label.ariaHidden = OSUI.Constants.A11YAttributes.States.True;
                             });
                         }
                         this._manageRatingEvent();
@@ -8502,7 +8503,7 @@ var OSFramework;
                         }
                         if (this.configs.RatingScale === 1) {
                             ratingItems[1].checked = true;
-                            ratingItems[1].ariaChecked = 'true';
+                            ratingItems[1].ariaChecked = OSUI.Constants.A11YAttributes.States.True;
                             return;
                         }
                         let newValue = this._isHalfValue || this._decimalValue > 0.7
@@ -8517,7 +8518,7 @@ var OSFramework;
                             console.warn(`The value of the RatingValue property on the '${this.widgetId}' ${OSUI.GlobalEnum.PatternName.Rating} exceeds the scale boundaries. To ensure its correct behaviour, set a value smaller or equal to '${this.configs.RatingScale}'.`);
                         }
                         ratingItems[newValue].checked = true;
-                        ratingItems[newValue].ariaChecked = 'true';
+                        ratingItems[newValue].ariaChecked = OSUI.Constants.A11YAttributes.States.True;
                         if (this._isHalfValue) {
                             OSUI.Helper.Dom.Styles.AddClass(this.selfElement, Rating_1.Enum.CssClass.IsHalf);
                         }
