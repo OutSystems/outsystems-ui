@@ -1854,10 +1854,41 @@ var OSFramework;
                         this._focusTrapInstance = new OSUI.Behaviors.FocusTrap(opts);
                         this._focusManagerInstance = new OSUI.Behaviors.FocusManager();
                     }
+                    _manageFocusInsideBalloon(arrowKeyPressed) {
+                        if (this._focusableBalloonElements.length === 0 || arrowKeyPressed === undefined) {
+                            this._currentFocusedElementIndex = undefined;
+                        }
+                        else if (arrowKeyPressed === OSUI.GlobalEnum.Keycodes.ArrowDown) {
+                            if (this._currentFocusedElementIndex === undefined ||
+                                this._currentFocusedElementIndex >= this._focusableBalloonElements.length - 1)
+                                this._currentFocusedElementIndex = 0;
+                            else
+                                this._currentFocusedElementIndex = this._currentFocusedElementIndex + 1;
+                        }
+                        else if (arrowKeyPressed === OSUI.GlobalEnum.Keycodes.ArrowUp) {
+                            if (this._currentFocusedElementIndex === undefined || this._currentFocusedElementIndex === 0)
+                                this._currentFocusedElementIndex = this._focusableBalloonElements.length - 1;
+                            else
+                                this._currentFocusedElementIndex = this._currentFocusedElementIndex - 1;
+                        }
+                        if (this._currentFocusedElementIndex === undefined) {
+                            this.featureElem.focus();
+                        }
+                        else {
+                            this._focusableBalloonElements[this._currentFocusedElementIndex].focus();
+                        }
+                    }
                     _onkeypressCallback(e) {
                         const isEscapedPressed = e.key === OSUI.GlobalEnum.Keycodes.Escape;
-                        if (isEscapedPressed && this.isOpen) {
-                            this.close();
+                        const isArrowDownPressed = e.key === OSUI.GlobalEnum.Keycodes.ArrowDown;
+                        const isArrowUpPressed = e.key === OSUI.GlobalEnum.Keycodes.ArrowUp;
+                        if (this.isOpen) {
+                            if (isEscapedPressed) {
+                                this.close();
+                            }
+                            else if (isArrowDownPressed || isArrowUpPressed) {
+                                this._manageFocusInsideBalloon(e.key);
+                            }
                         }
                         e.stopPropagation();
                     }
@@ -1891,7 +1922,7 @@ var OSFramework;
                             OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick, this._eventBodyClick);
                         }
                     }
-                    _toggleBalloon(isOpen, isBodyClick = false) {
+                    _toggleBalloon(isOpen, isBodyClick = false, arrowKeyPressed) {
                         this.isOpen = isOpen;
                         if (isOpen) {
                             OSUI.Helper.Dom.Styles.AddClass(this.featureElem, Balloon_1.Enum.CssClasses.IsOpen);
@@ -1906,9 +1937,8 @@ var OSFramework;
                             this._focusManagerInstance.storeLastFocusedElement();
                             this._focusTrapInstance.enableForA11y();
                             this.setFloatingBehaviour();
-                            OSUI.Helper.AsyncInvocation(() => {
-                                this.featureElem.focus();
-                            });
+                            this._focusableBalloonElements = this.featureElem.querySelectorAll(OSUI.Constants.FocusableElems);
+                            this._manageFocusInsideBalloon(arrowKeyPressed);
                         }
                         else {
                             this._focusTrapInstance.disableForA11y();
@@ -1919,6 +1949,8 @@ var OSFramework;
                                     this._focusManagerInstance.setFocusToStoredElement();
                                 }
                             });
+                            this._focusableBalloonElements = undefined;
+                            this._currentFocusedElementIndex = undefined;
                         }
                         this._onToggleEvent(this.isOpen, this.featureElem);
                         OSUI.Helper.AsyncInvocation(() => {
@@ -1950,10 +1982,10 @@ var OSFramework;
                         this._unsetCallbacks();
                         super.dispose();
                     }
-                    open(isOpenedByApi) {
+                    open(isOpenedByApi, arrowKeyPressed) {
                         if (this.isOpen === false) {
                             this._isOpenedByApi = isOpenedByApi;
-                            this._toggleBalloon(true);
+                            this._toggleBalloon(true, false, arrowKeyPressed);
                         }
                     }
                     setBalloonShape(shape) {
@@ -7244,6 +7276,13 @@ var OSFramework;
                             this.open(this._isOpenedByApi);
                         }
                     }
+                    _onKeydownCallback(event) {
+                        if (!this._balloonFeature.isOpen &&
+                            (event.key === OSUI.GlobalEnum.Keycodes.ArrowDown || event.key === OSUI.GlobalEnum.Keycodes.ArrowUp)) {
+                            this._isOpenedByApi = false;
+                            this.open(this._isOpenedByApi, event.key);
+                        }
+                    }
                     _setBalloonFeature() {
                         this.setBalloonOptions();
                         this._balloonFeature = new OSFramework.OSUI.Feature.Balloon.Balloon(this, this._balloonElem, this.balloonOptions);
@@ -7270,6 +7309,7 @@ var OSFramework;
                     }
                     removeEventListeners() {
                         this._triggerElem.removeEventListener(OSUI.GlobalEnum.HTMLEvent.Click, this._eventOnClick);
+                        this._triggerElem.removeEventListener(OSUI.GlobalEnum.HTMLEvent.keyDown, this._eventOnKeydown);
                         OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSUI.Event.DOMEvents.Listeners.Type.BalloonOnToggle, this._eventBalloonOnToggle);
                     }
                     setA11YProperties() {
@@ -7284,9 +7324,11 @@ var OSFramework;
                     setCallbacks() {
                         this._eventBalloonOnToggle = this._balloonOnToggleCallback.bind(this);
                         this._eventOnClick = this._onClickCallback.bind(this);
+                        this._eventOnKeydown = this._onKeydownCallback.bind(this);
                     }
                     setEventListeners() {
                         this._triggerElem.addEventListener(OSUI.GlobalEnum.HTMLEvent.Click, this._eventOnClick);
+                        this._triggerElem.addEventListener(OSUI.GlobalEnum.HTMLEvent.keyDown, this._eventOnKeydown);
                         OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.BalloonOnToggle, this._eventBalloonOnToggle);
                     }
                     setHtmlElements() {
@@ -7348,10 +7390,10 @@ var OSFramework;
                         this._isDisabled = false;
                         OSUI.Helper.Dom.Attribute.Remove(this._triggerElem, OSUI.GlobalEnum.HTMLAttributes.Disabled);
                     }
-                    open(isOpenedByApi) {
+                    open(isOpenedByApi, keyPressed) {
                         if (this._balloonFeature.isOpen === false && this._isDisabled === false) {
                             this._isOpenedByApi = isOpenedByApi;
-                            this._balloonFeature.open(this._isOpenedByApi);
+                            this._balloonFeature.open(this._isOpenedByApi, keyPressed);
                         }
                     }
                     registerCallback(eventName, callback) {
