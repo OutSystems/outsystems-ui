@@ -32,10 +32,12 @@ namespace OSFramework.OSUI.Patterns.ButtonLoading {
 		private _setIsLoading(isLoading: boolean): void {
 			if (isLoading) {
 				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.IsLoading);
+				Helper.A11Y.AriaBusyTrue(this.selfElement);
 				this.isBuilt && Helper.A11Y.TabIndexFalse(this._buttonElement);
 				this._buttonElement.blur();
 			} else {
 				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.IsLoading);
+				Helper.A11Y.AriaBusyFalse(this.selfElement);
 				this.isBuilt && Helper.A11Y.TabIndexTrue(this._buttonElement);
 			}
 		}

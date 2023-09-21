@@ -24,6 +24,28 @@ namespace OSFramework.OSUI.Helper {
 		}
 
 		/**
+		 * Method that will disable the aria-busy
+		 *
+		 * @param {HTMLElement} element Target element to receive the value atributte
+		 * @returns
+		 * @memberof OSFramework.Helper.A11Y
+		 */
+		public static AriaBusyFalse(element: HTMLElement): void {
+			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Busy, Constants.A11YAttributes.States.False);
+		}
+
+		/**
+		 * Method that will enable the aria-busy
+		 *
+		 * @param {HTMLElement} element Target element to receive the value atributte
+		 * @returns
+		 * @memberof OSFramework.Helper.A11Y
+		 */
+		public static AriaBusyTrue(element: HTMLElement): void {
+			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Busy, Constants.A11YAttributes.States.True);
+		}
+
+		/**
 		 * Method that will define the aria-controls
 		 *
 		 * @param {HTMLElement} element Target element to receive the value atributte
@@ -403,7 +425,11 @@ namespace OSFramework.OSUI.Helper {
 		 * @memberof A11Y
 		 */
 		public static RolePresentation(element: HTMLElement): void {
-			Dom.Attribute.Set(element, Constants.A11YAttributes.Role.AttrName, Constants.A11YAttributes.Role.Presentation);
+			Dom.Attribute.Set(
+				element,
+				Constants.A11YAttributes.Role.AttrName,
+				Constants.A11YAttributes.Role.Presentation
+			);
 		}
 
 		/**

@@ -10,6 +10,7 @@ declare namespace OSFramework.OSUI.Constants {
     const A11YAttributes: {
         Aria: {
             Atomic: string;
+            Busy: string;
             Controls: string;
             Describedby: string;
             Disabled: string;
@@ -1054,6 +1055,8 @@ declare namespace OSFramework.OSUI.Helper {
     abstract class A11Y {
         static AriaAtomicFalse(element: HTMLElement): void;
         static AriaAtomicTrue(element: HTMLElement): void;
+        static AriaBusyFalse(element: HTMLElement): void;
+        static AriaBusyTrue(element: HTMLElement): void;
         static AriaControls(element: HTMLElement, targetId: string): void;
         static AriaDescribedBy(element: HTMLElement, targetId: string): void;
         static AriaDisabled(element: HTMLElement, isDisabled: boolean): void;
