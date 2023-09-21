@@ -291,8 +291,8 @@ var OSFramework;
             (function (FloatingPosition) {
                 FloatingPosition["Auto"] = "auto";
                 FloatingPosition["Bottom"] = "bottom";
-                FloatingPosition["BottomStart"] = "bottom-start";
                 FloatingPosition["BottomEnd"] = "bottom-end";
+                FloatingPosition["BottomStart"] = "bottom-start";
                 FloatingPosition["Center"] = "center";
                 FloatingPosition["Left"] = "left";
                 FloatingPosition["LeftEnd"] = "left-end";
@@ -301,8 +301,8 @@ var OSFramework;
                 FloatingPosition["RightEnd"] = "right-end";
                 FloatingPosition["RightStart"] = "right-start";
                 FloatingPosition["Top"] = "top";
-                FloatingPosition["TopStart"] = "top-start";
                 FloatingPosition["TopEnd"] = "top-end";
+                FloatingPosition["TopStart"] = "top-start";
             })(FloatingPosition = GlobalEnum.FloatingPosition || (GlobalEnum.FloatingPosition = {}));
             let CssProperties;
             (function (CssProperties) {
@@ -358,12 +358,12 @@ var OSFramework;
                 HTMLAttributes["Class"] = "class";
                 HTMLAttributes["DataInput"] = "data-input";
                 HTMLAttributes["Disabled"] = "disabled";
+                HTMLAttributes["Href"] = "href";
                 HTMLAttributes["Id"] = "id";
                 HTMLAttributes["Name"] = "name";
                 HTMLAttributes["StatusBar"] = "data-status-bar-height";
                 HTMLAttributes["Style"] = "style";
                 HTMLAttributes["Type"] = "type";
-                HTMLAttributes["Href"] = "href";
             })(HTMLAttributes = GlobalEnum.HTMLAttributes || (GlobalEnum.HTMLAttributes = {}));
             let HTMLElement;
             (function (HTMLElement) {
@@ -485,8 +485,8 @@ var OSFramework;
                 PatternName["Submenu"] = "Submenu";
                 PatternName["SwipeEvents"] = "SwipeEvents";
                 PatternName["Tabs"] = "Tabs";
-                PatternName["TabsHeaderItem"] = "TabsHeaderItem";
                 PatternName["TabsContentItem"] = "TabsContentItem";
+                PatternName["TabsHeaderItem"] = "TabsHeaderItem";
                 PatternName["Timepicker"] = "Timepicker";
                 PatternName["Tooltip"] = "Tooltip";
                 PatternName["TouchEvents"] = "TouchEvents";
@@ -1874,10 +1874,14 @@ var OSFramework;
                                 this._currentFocusedElementIndex = this._currentFocusedElementIndex - 1;
                         }
                         if (this._currentFocusedElementIndex === undefined) {
-                            this.featureElem.focus();
+                            OSUI.Helper.AsyncInvocation(() => {
+                                this.featureElem.focus();
+                            });
                         }
                         else {
-                            this._focusableBalloonElements[this._currentFocusedElementIndex].focus();
+                            OSUI.Helper.AsyncInvocation(() => {
+                                this._focusableBalloonElements[this._currentFocusedElementIndex].focus();
+                            });
                         }
                     }
                     _onkeypressCallback(e) {
