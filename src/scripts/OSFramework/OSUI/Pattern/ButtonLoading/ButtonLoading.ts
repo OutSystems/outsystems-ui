@@ -33,12 +33,13 @@ namespace OSFramework.OSUI.Patterns.ButtonLoading {
 			if (isLoading) {
 				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.IsLoading);
 				Helper.A11Y.AriaBusyTrue(this.selfElement);
-				this.isBuilt && Helper.A11Y.TabIndexFalse(this._buttonElement);
+				this.isBuilt &&
+					Helper.Dom.Attribute.Set(this._buttonElement, GlobalEnum.HTMLAttributes.Disabled, 'true');
 				this._buttonElement.blur();
 			} else {
 				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.IsLoading);
 				Helper.A11Y.AriaBusyFalse(this.selfElement);
-				this.isBuilt && Helper.A11Y.TabIndexTrue(this._buttonElement);
+				this.isBuilt && Helper.Dom.Attribute.Remove(this._buttonElement, GlobalEnum.HTMLAttributes.Disabled);
 			}
 		}
 

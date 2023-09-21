@@ -4730,13 +4730,14 @@ var OSFramework;
                         if (isLoading) {
                             OSUI.Helper.Dom.Styles.AddClass(this.selfElement, ButtonLoading_1.Enum.CssClass.IsLoading);
                             OSUI.Helper.A11Y.AriaBusyTrue(this.selfElement);
-                            this.isBuilt && OSUI.Helper.A11Y.TabIndexFalse(this._buttonElement);
+                            this.isBuilt &&
+                                OSUI.Helper.Dom.Attribute.Set(this._buttonElement, OSUI.GlobalEnum.HTMLAttributes.Disabled, 'true');
                             this._buttonElement.blur();
                         }
                         else {
                             OSUI.Helper.Dom.Styles.RemoveClass(this.selfElement, ButtonLoading_1.Enum.CssClass.IsLoading);
                             OSUI.Helper.A11Y.AriaBusyFalse(this.selfElement);
-                            this.isBuilt && OSUI.Helper.A11Y.TabIndexTrue(this._buttonElement);
+                            this.isBuilt && OSUI.Helper.Dom.Attribute.Remove(this._buttonElement, OSUI.GlobalEnum.HTMLAttributes.Disabled);
                         }
                     }
                     _setLoadingLabel(showSpinnerOnly) {
