@@ -18,6 +18,7 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 		// Store the Event Callbacks
 		private _eventBalloonOnToggle: GlobalCallbacks.Generic;
 		private _eventOnClick: GlobalCallbacks.Generic;
+		private _eventOnKeydown: GlobalCallbacks.Generic;
 		// Flag used to set the enable/disable state
 		private _isDisabled = false;
 		// Flag used to deal with onBodyClick and open api concurrency methods!
@@ -51,6 +52,18 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 			} else {
 				this._isOpenedByApi = false;
 				this.open(this._isOpenedByApi);
+			}
+		}
+
+		// Method to handle the trigger Keydown callback
+		private _onKeydownCallback(event: KeyboardEvent): void {
+			if (
+				!this._balloonFeature.isOpen &&
+				(event.key === GlobalEnum.Keycodes.ArrowDown || event.key === GlobalEnum.Keycodes.ArrowUp)
+			) {
+				this._isOpenedByApi = false;
+				this.open(this._isOpenedByApi, event.key);
+				event.preventDefault(); // Prevent scroll
 			}
 		}
 
@@ -106,6 +119,7 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 		 */
 		protected removeEventListeners(): void {
 			this._triggerElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
+			this._triggerElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnKeydown);
 
 			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
 				Event.DOMEvents.Listeners.Type.BalloonOnToggle,
@@ -139,6 +153,7 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 		protected setCallbacks(): void {
 			this._eventBalloonOnToggle = this._balloonOnToggleCallback.bind(this);
 			this._eventOnClick = this._onClickCallback.bind(this);
+			this._eventOnKeydown = this._onKeydownCallback.bind(this);
 		}
 
 		/**
@@ -149,6 +164,7 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 		 */
 		protected setEventListeners(): void {
 			this._triggerElem.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
+			this._triggerElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnKeydown);
 
 			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
 				Event.DOMEvents.Listeners.Type.BalloonOnToggle,
@@ -283,10 +299,13 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 		 *
 		 * @memberof OverflowMenu
 		 */
-		public open(isOpenedByApi: boolean): void {
+		public open(
+			isOpenedByApi: boolean,
+			keyPressed?: GlobalEnum.Keycodes.ArrowDown | GlobalEnum.Keycodes.ArrowUp
+		): void {
 			if (this._balloonFeature.isOpen === false && this._isDisabled === false) {
 				this._isOpenedByApi = isOpenedByApi;
-				this._balloonFeature.open(this._isOpenedByApi);
+				this._balloonFeature.open(this._isOpenedByApi, keyPressed);
 			}
 		}
 

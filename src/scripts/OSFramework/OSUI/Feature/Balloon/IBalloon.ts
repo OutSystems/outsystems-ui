@@ -10,6 +10,18 @@ namespace OSFramework.OSUI.Feature.Balloon {
 	 */
 	export interface IBalloon extends Feature.IFeature, Interface.IOpenable {
 		/**
+		 * Overload the open method.
+		 *
+		 * @param {boolean} [isOpenedByApi]
+		 * @param {boolean} [arrowKeyPressed]
+		 * @memberof IBalloon
+		 */
+		open(
+			isOpenedByApi?: boolean,
+			arrowKeyPressed?: GlobalEnum.Keycodes.ArrowDown | GlobalEnum.Keycodes.ArrowUp
+		): void;
+
+		/**
 		 * Method to set the Balloon border shape
 		 *
 		 * @param {GlobalEnum.ShapeTypes} [shape]
