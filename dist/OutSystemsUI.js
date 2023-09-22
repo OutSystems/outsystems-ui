@@ -1875,10 +1875,14 @@ var OSFramework;
                                 this._currentFocusedElementIndex = this._currentFocusedElementIndex - 1;
                         }
                         if (this._currentFocusedElementIndex === undefined) {
-                            this.featureElem.focus();
+                            OSUI.Helper.AsyncInvocation(() => {
+                                this.featureElem.focus();
+                            });
                         }
                         else {
-                            this._focusableBalloonElements[this._currentFocusedElementIndex].focus();
+                            OSUI.Helper.AsyncInvocation(() => {
+                                this._focusableBalloonElements[this._currentFocusedElementIndex].focus();
+                            });
                         }
                     }
                     _onkeypressCallback(e) {

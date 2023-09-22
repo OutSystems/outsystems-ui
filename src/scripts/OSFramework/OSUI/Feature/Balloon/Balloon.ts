@@ -99,10 +99,14 @@ namespace OSFramework.OSUI.Feature.Balloon {
 
 			// If the _currentFocusedElementIndex is undefined, focus on the balloon wrapper
 			if (this._currentFocusedElementIndex === undefined) {
-				this.featureElem.focus();
+				OSUI.Helper.AsyncInvocation(() => {
+					this.featureElem.focus();
+				});
 				// Otherwise, focus on the element corresponding ot the _currentFocusedElementIndex
 			} else {
-				(this._focusableBalloonElements[this._currentFocusedElementIndex] as HTMLElement).focus();
+				OSUI.Helper.AsyncInvocation(() => {
+					(this._focusableBalloonElements[this._currentFocusedElementIndex] as HTMLElement).focus();
+				});
 			}
 		}
 
