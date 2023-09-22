@@ -243,6 +243,7 @@ var OSFramework;
                 CssClassElements["HeaderIsFixed"] = "fixed-header";
                 CssClassElements["HeaderIsVisible"] = "header-is--visible";
                 CssClassElements["HeaderTopContent"] = "header-top-content";
+                CssClassElements["InputNotValid"] = "not-valid";
                 CssClassElements["IsTouch"] = "is--touch";
                 CssClassElements["Layout"] = "layout";
                 CssClassElements["LayoutNative"] = "layout-native";
@@ -253,7 +254,7 @@ var OSFramework;
                 CssClassElements["MainContent"] = "main-content";
                 CssClassElements["MenuLinks"] = "app-menu-links";
                 CssClassElements["Placeholder"] = "ph";
-                CssClassElements["InputNotValid"] = "not-valid";
+                CssClassElements["SkipContent"] = "skip-nav";
             })(CssClassElements = GlobalEnum.CssClassElements || (GlobalEnum.CssClassElements = {}));
             let CSSSelectors;
             (function (CSSSelectors) {
@@ -290,8 +291,8 @@ var OSFramework;
             (function (FloatingPosition) {
                 FloatingPosition["Auto"] = "auto";
                 FloatingPosition["Bottom"] = "bottom";
-                FloatingPosition["BottomStart"] = "bottom-start";
                 FloatingPosition["BottomEnd"] = "bottom-end";
+                FloatingPosition["BottomStart"] = "bottom-start";
                 FloatingPosition["Center"] = "center";
                 FloatingPosition["Left"] = "left";
                 FloatingPosition["LeftEnd"] = "left-end";
@@ -300,8 +301,8 @@ var OSFramework;
                 FloatingPosition["RightEnd"] = "right-end";
                 FloatingPosition["RightStart"] = "right-start";
                 FloatingPosition["Top"] = "top";
-                FloatingPosition["TopStart"] = "top-start";
                 FloatingPosition["TopEnd"] = "top-end";
+                FloatingPosition["TopStart"] = "top-start";
             })(FloatingPosition = GlobalEnum.FloatingPosition || (GlobalEnum.FloatingPosition = {}));
             let CssProperties;
             (function (CssProperties) {
@@ -357,6 +358,7 @@ var OSFramework;
                 HTMLAttributes["Class"] = "class";
                 HTMLAttributes["DataInput"] = "data-input";
                 HTMLAttributes["Disabled"] = "disabled";
+                HTMLAttributes["Href"] = "href";
                 HTMLAttributes["Id"] = "id";
                 HTMLAttributes["Name"] = "name";
                 HTMLAttributes["StatusBar"] = "data-status-bar-height";
@@ -483,8 +485,8 @@ var OSFramework;
                 PatternName["Submenu"] = "Submenu";
                 PatternName["SwipeEvents"] = "SwipeEvents";
                 PatternName["Tabs"] = "Tabs";
-                PatternName["TabsHeaderItem"] = "TabsHeaderItem";
                 PatternName["TabsContentItem"] = "TabsContentItem";
+                PatternName["TabsHeaderItem"] = "TabsHeaderItem";
                 PatternName["Timepicker"] = "Timepicker";
                 PatternName["Tooltip"] = "Tooltip";
                 PatternName["TouchEvents"] = "TouchEvents";
@@ -1854,10 +1856,46 @@ var OSFramework;
                         this._focusTrapInstance = new OSUI.Behaviors.FocusTrap(opts);
                         this._focusManagerInstance = new OSUI.Behaviors.FocusManager();
                     }
+                    _manageFocusInsideBalloon(arrowKeyPressed) {
+                        if (this._focusableBalloonElements.length === 0 || arrowKeyPressed === undefined) {
+                            this._currentFocusedElementIndex = undefined;
+                        }
+                        else if (arrowKeyPressed === OSUI.GlobalEnum.Keycodes.ArrowDown) {
+                            if (this._currentFocusedElementIndex === undefined ||
+                                this._currentFocusedElementIndex >= this._focusableBalloonElements.length - 1)
+                                this._currentFocusedElementIndex = 0;
+                            else
+                                this._currentFocusedElementIndex = this._currentFocusedElementIndex + 1;
+                        }
+                        else if (arrowKeyPressed === OSUI.GlobalEnum.Keycodes.ArrowUp) {
+                            if (this._currentFocusedElementIndex === undefined || this._currentFocusedElementIndex === 0)
+                                this._currentFocusedElementIndex = this._focusableBalloonElements.length - 1;
+                            else
+                                this._currentFocusedElementIndex = this._currentFocusedElementIndex - 1;
+                        }
+                        if (this._currentFocusedElementIndex === undefined) {
+                            OSUI.Helper.AsyncInvocation(() => {
+                                this.featureElem.focus();
+                            });
+                        }
+                        else {
+                            OSUI.Helper.AsyncInvocation(() => {
+                                this._focusableBalloonElements[this._currentFocusedElementIndex].focus();
+                            });
+                        }
+                    }
                     _onkeypressCallback(e) {
                         const isEscapedPressed = e.key === OSUI.GlobalEnum.Keycodes.Escape;
-                        if (isEscapedPressed && this.isOpen) {
-                            this.close();
+                        const isArrowDownPressed = e.key === OSUI.GlobalEnum.Keycodes.ArrowDown;
+                        const isArrowUpPressed = e.key === OSUI.GlobalEnum.Keycodes.ArrowUp;
+                        if (this.isOpen) {
+                            if (isEscapedPressed) {
+                                this.close();
+                            }
+                            else if (isArrowDownPressed || isArrowUpPressed) {
+                                this._manageFocusInsideBalloon(e.key);
+                                e.preventDefault();
+                            }
                         }
                         e.stopPropagation();
                     }
@@ -1891,7 +1929,7 @@ var OSFramework;
                             OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick, this._eventBodyClick);
                         }
                     }
-                    _toggleBalloon(isOpen, isBodyClick = false) {
+                    _toggleBalloon(isOpen, isBodyClick = false, arrowKeyPressed) {
                         this.isOpen = isOpen;
                         if (isOpen) {
                             OSUI.Helper.Dom.Styles.AddClass(this.featureElem, Balloon_1.Enum.CssClasses.IsOpen);
@@ -1906,9 +1944,8 @@ var OSFramework;
                             this._focusManagerInstance.storeLastFocusedElement();
                             this._focusTrapInstance.enableForA11y();
                             this.setFloatingBehaviour();
-                            OSUI.Helper.AsyncInvocation(() => {
-                                this.featureElem.focus();
-                            });
+                            this._focusableBalloonElements = this.featureElem.querySelectorAll(OSUI.Constants.FocusableElems);
+                            this._manageFocusInsideBalloon(arrowKeyPressed);
                         }
                         else {
                             this._focusTrapInstance.disableForA11y();
@@ -1919,6 +1956,8 @@ var OSFramework;
                                     this._focusManagerInstance.setFocusToStoredElement();
                                 }
                             });
+                            this._focusableBalloonElements = undefined;
+                            this._currentFocusedElementIndex = undefined;
                         }
                         this._onToggleEvent(this.isOpen, this.featureElem);
                         OSUI.Helper.AsyncInvocation(() => {
@@ -1950,10 +1989,10 @@ var OSFramework;
                         this._unsetCallbacks();
                         super.dispose();
                     }
-                    open(isOpenedByApi) {
+                    open(isOpenedByApi, arrowKeyPressed) {
                         if (this.isOpen === false) {
                             this._isOpenedByApi = isOpenedByApi;
-                            this._toggleBalloon(true);
+                            this._toggleBalloon(true, false, arrowKeyPressed);
                         }
                     }
                     setBalloonShape(shape) {
@@ -7244,6 +7283,14 @@ var OSFramework;
                             this.open(this._isOpenedByApi);
                         }
                     }
+                    _onKeydownCallback(event) {
+                        if (!this._balloonFeature.isOpen &&
+                            (event.key === OSUI.GlobalEnum.Keycodes.ArrowDown || event.key === OSUI.GlobalEnum.Keycodes.ArrowUp)) {
+                            this._isOpenedByApi = false;
+                            this.open(this._isOpenedByApi, event.key);
+                            event.preventDefault();
+                        }
+                    }
                     _setBalloonFeature() {
                         this.setBalloonOptions();
                         this._balloonFeature = new OSFramework.OSUI.Feature.Balloon.Balloon(this, this._balloonElem, this.balloonOptions);
@@ -7270,6 +7317,7 @@ var OSFramework;
                     }
                     removeEventListeners() {
                         this._triggerElem.removeEventListener(OSUI.GlobalEnum.HTMLEvent.Click, this._eventOnClick);
+                        this._triggerElem.removeEventListener(OSUI.GlobalEnum.HTMLEvent.keyDown, this._eventOnKeydown);
                         OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSUI.Event.DOMEvents.Listeners.Type.BalloonOnToggle, this._eventBalloonOnToggle);
                     }
                     setA11YProperties() {
@@ -7284,9 +7332,11 @@ var OSFramework;
                     setCallbacks() {
                         this._eventBalloonOnToggle = this._balloonOnToggleCallback.bind(this);
                         this._eventOnClick = this._onClickCallback.bind(this);
+                        this._eventOnKeydown = this._onKeydownCallback.bind(this);
                     }
                     setEventListeners() {
                         this._triggerElem.addEventListener(OSUI.GlobalEnum.HTMLEvent.Click, this._eventOnClick);
+                        this._triggerElem.addEventListener(OSUI.GlobalEnum.HTMLEvent.keyDown, this._eventOnKeydown);
                         OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.BalloonOnToggle, this._eventBalloonOnToggle);
                     }
                     setHtmlElements() {
@@ -7348,10 +7398,10 @@ var OSFramework;
                         this._isDisabled = false;
                         OSUI.Helper.Dom.Attribute.Remove(this._triggerElem, OSUI.GlobalEnum.HTMLAttributes.Disabled);
                     }
-                    open(isOpenedByApi) {
+                    open(isOpenedByApi, keyPressed) {
                         if (this._balloonFeature.isOpen === false && this._isDisabled === false) {
                             this._isOpenedByApi = isOpenedByApi;
-                            this._balloonFeature.open(this._isOpenedByApi);
+                            this._balloonFeature.open(this._isOpenedByApi, keyPressed);
                         }
                     }
                     registerCallback(eventName, callback) {
@@ -16348,6 +16398,31 @@ var OutSystems;
                     }
                 }
                 LayoutPrivate.OnOrientationChange = OnOrientationChange;
+            })(LayoutPrivate = Utils.LayoutPrivate || (Utils.LayoutPrivate = {}));
+        })(Utils = OSUI.Utils || (OSUI.Utils = {}));
+    })(OSUI = OutSystems.OSUI || (OutSystems.OSUI = {}));
+})(OutSystems || (OutSystems = {}));
+var OutSystems;
+(function (OutSystems) {
+    var OSUI;
+    (function (OSUI) {
+        var Utils;
+        (function (Utils) {
+            var LayoutPrivate;
+            (function (LayoutPrivate) {
+                class SkipContentLink {
+                    static _setLink() {
+                        const mainContent = OSFramework.OSUI.Helper.Dom.ClassSelector(document, OSFramework.OSUI.GlobalEnum.CssClassElements.MainContent);
+                        const skipContentLink = OSFramework.OSUI.Helper.Dom.ClassSelector(document, OSFramework.OSUI.GlobalEnum.CssClassElements.SkipContent);
+                        if (mainContent && skipContentLink) {
+                            skipContentLink.setAttribute(OSFramework.OSUI.GlobalEnum.HTMLAttributes.Href, mainContent.getAttribute(OSFramework.OSUI.GlobalEnum.HTMLAttributes.Id));
+                        }
+                    }
+                    static Set() {
+                        this._setLink();
+                    }
+                }
+                LayoutPrivate.SkipContentLink = SkipContentLink;
             })(LayoutPrivate = Utils.LayoutPrivate || (Utils.LayoutPrivate = {}));
         })(Utils = OSUI.Utils || (OSUI.Utils = {}));
     })(OSUI = OutSystems.OSUI || (OutSystems.OSUI = {}));
