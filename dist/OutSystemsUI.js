@@ -51,7 +51,8 @@ var OSFramework;
         (function (Constants) {
             Constants.A11YAttributes = {
                 Aria: {
-                    Atomic: 'atomic',
+                    Atomic: 'aria-atomic',
+                    Busy: 'aria-busy',
                     Controls: 'aria-controls',
                     Describedby: 'aria-describedby',
                     Disabled: 'aria-disabled',
@@ -2936,6 +2937,12 @@ var OSFramework;
                 static AriaAtomicTrue(element) {
                     Helper.Dom.Attribute.Set(element, OSUI.Constants.A11YAttributes.Aria.Atomic, OSUI.Constants.A11YAttributes.States.True);
                 }
+                static AriaBusyFalse(element) {
+                    Helper.Dom.Attribute.Set(element, OSUI.Constants.A11YAttributes.Aria.Busy, OSUI.Constants.A11YAttributes.States.False);
+                }
+                static AriaBusyTrue(element) {
+                    Helper.Dom.Attribute.Set(element, OSUI.Constants.A11YAttributes.Aria.Busy, OSUI.Constants.A11YAttributes.States.True);
+                }
                 static AriaControls(element, targetId) {
                     Helper.Dom.Attribute.Set(element, OSUI.Constants.A11YAttributes.Aria.Controls, targetId);
                 }
@@ -4762,12 +4769,15 @@ var OSFramework;
                     _setIsLoading(isLoading) {
                         if (isLoading) {
                             OSUI.Helper.Dom.Styles.AddClass(this.selfElement, ButtonLoading_1.Enum.CssClass.IsLoading);
-                            this.isBuilt && OSUI.Helper.A11Y.TabIndexFalse(this._buttonElement);
+                            OSUI.Helper.A11Y.AriaBusyTrue(this.selfElement);
+                            this.isBuilt &&
+                                OSUI.Helper.Dom.Attribute.Set(this._buttonElement, OSUI.GlobalEnum.HTMLAttributes.Disabled, 'true');
                             this._buttonElement.blur();
                         }
                         else {
                             OSUI.Helper.Dom.Styles.RemoveClass(this.selfElement, ButtonLoading_1.Enum.CssClass.IsLoading);
-                            this.isBuilt && OSUI.Helper.A11Y.TabIndexTrue(this._buttonElement);
+                            OSUI.Helper.A11Y.AriaBusyFalse(this.selfElement);
+                            this.isBuilt && OSUI.Helper.Dom.Attribute.Remove(this._buttonElement, OSUI.GlobalEnum.HTMLAttributes.Disabled);
                         }
                     }
                     _setLoadingLabel(showSpinnerOnly) {
