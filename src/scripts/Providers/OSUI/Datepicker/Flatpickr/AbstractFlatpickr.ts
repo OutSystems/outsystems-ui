@@ -427,7 +427,9 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		public close(): void {
 			if (this.provider.isOpen) {
 				this.provider.close();
-				OSFramework.OSUI.Helper.A11Y.TabIndexFalse(this._todayButtonElem);
+				if(this.configs.ShowTodayButton) {
+					OSFramework.OSUI.Helper.A11Y.TabIndexFalse(this._todayButtonElem);
+				}
 			}
 		}
 
@@ -485,7 +487,9 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 			const isInputDisable = this.datePickerPlatformInputElem.disabled;
 			if (this.provider.isOpen === false && isInputDisable === false) {
 				this.provider.open();
-				OSFramework.OSUI.Helper.A11Y.TabIndexTrue(this._todayButtonElem);
+				if(this.configs.ShowTodayButton) {
+					OSFramework.OSUI.Helper.A11Y.TabIndexTrue(this._todayButtonElem);
+				}
 			}
 		}
 
