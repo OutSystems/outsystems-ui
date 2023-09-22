@@ -183,6 +183,7 @@ namespace OSFramework.OSUI.GlobalEnum {
 		FieldSet = 'fieldset',
 		Input = 'input',
 		Link = 'a',
+		Radio = 'radio',
 		Span = 'span',
 	}
 
