@@ -133,6 +133,8 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 
 			if(this._providerFocusSpanTarget) {
 				this.provider.calendarContainer.insertBefore(this._todayButtonElem, this._providerFocusSpanTarget);
+			} else {
+				this.provider.calendarContainer.appendChild(this._todayButtonElem);
 			}
 
 		}
