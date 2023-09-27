@@ -489,7 +489,6 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 
 		// Set balloon position and coordinates based on pattern SelfElement
 		private _setBalloonCoordinates(lookAtXPosition = true): void {
-			console.log('update coords');
 			// Get all info from the pattern self element
 			const selfElement = this.selfElement.getBoundingClientRect();
 
