@@ -4777,6 +4777,8 @@ declare namespace Providers.OSUI.Datepicker.Flatpickr {
     abstract class AbstractFlatpickr<C extends Flatpickr.AbstractFlatpickrConfig> extends OSFramework.OSUI.Patterns.DatePicker.AbstractDatePicker<Flatpickr, C> implements IFlatpickr {
         private _a11yInfoContainerElem;
         private _bodyScrollCommonBehaviour;
+        private _providerFocusSpanTarget;
+        private _todayButtonElem;
         private _zindexCommonBehavior;
         protected datePickerPlatformInputElem: HTMLInputElement;
         protected flatpickrInputElem: HTMLInputElement;
@@ -4786,6 +4788,7 @@ declare namespace Providers.OSUI.Datepicker.Flatpickr {
         private _setAttributes;
         private _setCalendarCssClasses;
         private _setParentMinHeight;
+        private _todayButtonKeydown;
         private _unsetParentMinHeight;
         protected addTodayBtn(): void;
         protected createProviderInstance(): void;

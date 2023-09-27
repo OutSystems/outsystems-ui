@@ -4457,6 +4457,12 @@ var OSFramework;
             var BottomSheet;
             (function (BottomSheet_1) {
                 class BottomSheet extends Patterns.AbstractPattern {
+                    get gestureEventInstance() {
+                        return this._gestureEventInstance;
+                    }
+                    get hasGestureEvents() {
+                        return this._hasGestureEvents;
+                    }
                     constructor(uniqueId, configs) {
                         super(uniqueId, new BottomSheet_1.BottomSheetConfig(configs));
                         this._isOpen = false;
@@ -4468,12 +4474,6 @@ var OSFramework;
                                 mass: 1,
                             },
                         };
-                    }
-                    get gestureEventInstance() {
-                        return this._gestureEventInstance;
-                    }
-                    get hasGestureEvents() {
-                        return this._hasGestureEvents;
                     }
                     _handleFocusBehavior() {
                         const opts = {
@@ -17592,19 +17592,39 @@ var Providers;
                     _setParentMinHeight() {
                         OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(this.selfElement, OSFramework.OSUI.GlobalEnum.InlineStyle.Height, this.selfElement.clientHeight + OSFramework.OSUI.GlobalEnum.Units.Pixel);
                     }
+                    _todayButtonKeydown(e) {
+                        switch (e.key) {
+                            case OSFramework.OSUI.GlobalEnum.Keycodes.Tab:
+                                return;
+                            case OSFramework.OSUI.GlobalEnum.Keycodes.Enter:
+                            case OSFramework.OSUI.GlobalEnum.Keycodes.Space:
+                                e.preventDefault();
+                                this.provider.setDate(this.provider.now, true);
+                                this.jumpIntoToday();
+                                break;
+                        }
+                    }
                     _unsetParentMinHeight() {
                         OSFramework.OSUI.Helper.Dom.Styles.RemoveStyleAttribute(this.selfElement, OSFramework.OSUI.GlobalEnum.InlineStyle.Height);
                     }
                     addTodayBtn() {
-                        const todayBtnWrapper = document.createElement(OSFramework.OSUI.GlobalEnum.HTMLElement.Div);
-                        todayBtnWrapper.classList.add(Flatpickr.Enum.CssClasses.TodayBtn);
+                        this._todayButtonElem = document.createElement(OSFramework.OSUI.GlobalEnum.HTMLElement.Div);
+                        this._todayButtonElem.classList.add(Flatpickr.Enum.CssClasses.TodayBtn);
                         const todayBtn = document.createElement(OSFramework.OSUI.GlobalEnum.HTMLElement.Link);
+                        OSFramework.OSUI.Helper.A11Y.TabIndexTrue(todayBtn);
                         const langCode = Flatpickr.l10ns.TodayBtn[this.configs.Lang] !== undefined ? this.configs.Lang : 'en';
                         todayBtn.innerHTML = Flatpickr.l10ns.TodayBtn[langCode].title;
                         OSFramework.OSUI.Helper.A11Y.AriaLabel(todayBtn, Flatpickr.l10ns.TodayBtn[langCode].ariaLabel);
                         todayBtn.addEventListener(OSFramework.OSUI.GlobalEnum.HTMLEvent.Click, this.todayBtnClick.bind(this));
-                        todayBtnWrapper.appendChild(todayBtn);
-                        this.provider.calendarContainer.appendChild(todayBtnWrapper);
+                        todayBtn.addEventListener(OSFramework.OSUI.GlobalEnum.HTMLEvent.keyDown, this._todayButtonKeydown.bind(this));
+                        this._todayButtonElem.appendChild(todayBtn);
+                        this._providerFocusSpanTarget = this.provider.calendarContainer.querySelector('.focus-trap-bottom-element');
+                        if (this._providerFocusSpanTarget) {
+                            this.provider.calendarContainer.insertBefore(this._todayButtonElem, this._providerFocusSpanTarget);
+                        }
+                        else {
+                            this.provider.calendarContainer.appendChild(this._todayButtonElem);
+                        }
                     }
                     createProviderInstance() {
                         this.provider = window.flatpickr(this.datePickerPlatformInputElem, this.flatpickrOpts);
@@ -17715,6 +17735,9 @@ var Providers;
                     close() {
                         if (this.provider.isOpen) {
                             this.provider.close();
+                            if (this.configs.ShowTodayButton) {
+                                OSFramework.OSUI.Helper.A11Y.TabIndexFalse(this._todayButtonElem);
+                            }
                         }
                     }
                     disableDays(disableDays) {
@@ -17741,6 +17764,9 @@ var Providers;
                         const isInputDisable = this.datePickerPlatformInputElem.disabled;
                         if (this.provider.isOpen === false && isInputDisable === false) {
                             this.provider.open();
+                            if (this.configs.ShowTodayButton) {
+                                OSFramework.OSUI.Helper.A11Y.TabIndexTrue(this._todayButtonElem);
+                            }
                         }
                     }
                     registerCallback(eventName, callback) {
