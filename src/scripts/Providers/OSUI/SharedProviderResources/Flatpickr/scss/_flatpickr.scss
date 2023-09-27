@@ -553,3 +553,26 @@ span.flatpickr-weekday {
 		--osui-flatpickr-layer: calc(var(--osui-menu-layer) + var(--layer-local-tier-1));
 	}
 }
+
+// Accessibility ------------------------------------------------------------------
+// cannot use has-accessible-features class, as the pickder is detached from its context on layout
+.osui-datepicker-calendar {
+	.flatpickr-months .flatpickr-month:focus-within {
+		overflow: visible;
+	}
+
+	.numInputWrapper input,
+	.flatpickr-monthDropdown-months,
+	.flatpickr-prev-month,
+	.flatpickr-next-month,
+	.flatpickr-am-pm,
+	.flatpickr-today-button a {
+		&:focus-visible {
+			box-shadow: 0 0 0 3px var(--color-focus-outer);
+		}
+	}
+
+	.flatpickr-day:focus-visible{
+		border-color: var(--color-focus-outer);
+	}
+}

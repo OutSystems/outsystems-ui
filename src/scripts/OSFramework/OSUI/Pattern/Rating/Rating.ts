@@ -131,7 +131,7 @@ namespace OSFramework.OSUI.Patterns.Rating {
 		 * Method that handles the click event and set the new value, by checking the input:checked
 		 *
 		 * @private
-		 * @param {MouseEvent} e
+		 * @param {MouseEvent}
 		 * @memberof Rating
 		 */
 		private _ratingOnClick(e: MouseEvent): void {
@@ -142,6 +142,13 @@ namespace OSFramework.OSUI.Patterns.Rating {
 			// Check if the e.target is a label with the Enum.RatingCssClass.RatingInput class
 			const isInput = Helper.Dom.Styles.ContainsClass(currentTarget, Enum.CssClass.RatingInput);
 			if (isInput) {
+				const _lastChosen = this.selfElement.querySelectorAll(GlobalEnum.HTMLElement.Input)[
+					this.configs.RatingValue
+				];
+				if (_lastChosen) {
+					_lastChosen.ariaChecked = Constants.A11YAttributes.States.False;
+				}
+
 				// If it is, then get the input:checked value
 				this.configs.RatingValue = this._getValue();
 				// And use that value to set a new Rating Value
@@ -169,16 +176,20 @@ namespace OSFramework.OSUI.Patterns.Rating {
 		 * @memberof Rating
 		 */
 		private _renderItem(index: number): void {
-			// If first input, whihc is hidden, than also hide the label
-			const hideLabelClass: string = index === 0 ? Enum.CssClass.WCAGHideText : '';
 			// if not first input, which is hidden, add the html stored form the placeholders
 			const labelHTML = index !== 0 ? this._clonedPlaceholders : '';
 			// Create a unique rating input id, based on the index
 			const ratingInputId: string = this.uniqueId + '-rating-' + index;
 
-			// Craete input and label html
-			const input = `<input type="radio" class="${Enum.CssClass.RatingInput} ${Enum.CssClass.WCAGHideText}" id=${ratingInputId} name=${this._ratingInputName} value=${index}/>`;
-			const label = `<label class='${Enum.CssClass.RatingItem} ${hideLabelClass}' for=${ratingInputId}><span class="${Enum.CssClass.WCAGHideText}">Rating ${index}</span>${labelHTML}</label>`;
+			// Create input and label html
+			const input = `<input type="${GlobalEnum.HTMLElement.Radio}"class="${Enum.CssClass.RatingInput} ${Enum.CssClass.WCAGHideText}" id=${ratingInputId} name=${this._ratingInputName} value=${index} aria-hidden="${Constants.A11YAttributes.States.True}">`;
+
+			let label;
+			if (!this.configs.IsEdit) {
+				label = `<label class='${Enum.CssClass.RatingItem}' for=${ratingInputId} aria-hidden="${Constants.A11YAttributes.States.True}"><span class="${Enum.CssClass.WCAGHideText}">Rating ${index}</span>${labelHTML}</label>`;
+			} else {
+				label = `<label class='${Enum.CssClass.RatingItem}' for=${ratingInputId}><span class="${Enum.CssClass.WCAGHideText}">Rating ${index}</span>${labelHTML}</label>`;
+			}
 
 			// Append new input + label to fieldset's html
 			this._ratingFieldsetElem.innerHTML += input + label;
@@ -198,7 +209,11 @@ namespace OSFramework.OSUI.Patterns.Rating {
 			);
 
 			if (isDisabled) {
-				Helper.Dom.Attribute.Set(this._ratingFieldsetElem, GlobalEnum.HTMLAttributes.Disabled, 'true');
+				Helper.Dom.Attribute.Set(
+					this._ratingFieldsetElem,
+					GlobalEnum.HTMLAttributes.Disabled,
+					Constants.A11YAttributes.States.True
+				);
 			} else if (!isDisabled && isFieldsetDisabled) {
 				Helper.Dom.Attribute.Remove(this._ratingFieldsetElem, GlobalEnum.HTMLAttributes.Disabled);
 			}
@@ -261,11 +276,22 @@ namespace OSFramework.OSUI.Patterns.Rating {
 		private _setIsEdit(): void {
 			// Set the fieldset and input disabled attribute status
 			this._setIsDisabled(!this.configs.IsEdit);
+			const LabelList = this.selfElement.querySelectorAll(Constants.Dot + Enum.CssClass.RatingItem);
 
 			// Toggle the is-edit class
-			this.configs.IsEdit
-				? Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.IsEdit)
-				: Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.IsEdit);
+			if (this.configs.IsEdit) {
+				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.IsEdit);
+
+				LabelList.forEach((label) => {
+					label.removeAttribute(Constants.A11YAttributes.Aria.Hidden);
+				});
+			} else {
+				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.IsEdit);
+
+				LabelList.forEach((label) => {
+					label.ariaHidden = Constants.A11YAttributes.States.True;
+				});
+			}
 
 			// Review if there's a need to add/remove the click event, accordingly to the IsEdit value
 			this._manageRatingEvent();
@@ -329,6 +355,7 @@ namespace OSFramework.OSUI.Patterns.Rating {
 			// If there's only one rating item, then there's no need for further checks, this one will be checked
 			if (this.configs.RatingScale === 1) {
 				ratingItems[1].checked = true;
+				ratingItems[1].ariaChecked = Constants.A11YAttributes.States.True;
 				return;
 			}
 
@@ -358,6 +385,7 @@ namespace OSFramework.OSUI.Patterns.Rating {
 
 			// Set the itemas as :checked
 			ratingItems[newValue].checked = true;
+			ratingItems[newValue].ariaChecked = Constants.A11YAttributes.States.True;
 
 			// If is-half add the appropriate class, otherwise just declare the this.isHalfValue, to complete the if statement
 			if (this._isHalfValue) {

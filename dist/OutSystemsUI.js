@@ -51,7 +51,8 @@ var OSFramework;
         (function (Constants) {
             Constants.A11YAttributes = {
                 Aria: {
-                    Atomic: 'atomic',
+                    Atomic: 'aria-atomic',
+                    Busy: 'aria-busy',
                     Controls: 'aria-controls',
                     Describedby: 'aria-describedby',
                     Disabled: 'aria-disabled',
@@ -243,6 +244,7 @@ var OSFramework;
                 CssClassElements["HeaderIsFixed"] = "fixed-header";
                 CssClassElements["HeaderIsVisible"] = "header-is--visible";
                 CssClassElements["HeaderTopContent"] = "header-top-content";
+                CssClassElements["InputNotValid"] = "not-valid";
                 CssClassElements["IsTouch"] = "is--touch";
                 CssClassElements["Layout"] = "layout";
                 CssClassElements["LayoutNative"] = "layout-native";
@@ -253,7 +255,7 @@ var OSFramework;
                 CssClassElements["MainContent"] = "main-content";
                 CssClassElements["MenuLinks"] = "app-menu-links";
                 CssClassElements["Placeholder"] = "ph";
-                CssClassElements["InputNotValid"] = "not-valid";
+                CssClassElements["SkipContent"] = "skip-nav";
             })(CssClassElements = GlobalEnum.CssClassElements || (GlobalEnum.CssClassElements = {}));
             let CSSSelectors;
             (function (CSSSelectors) {
@@ -290,8 +292,8 @@ var OSFramework;
             (function (FloatingPosition) {
                 FloatingPosition["Auto"] = "auto";
                 FloatingPosition["Bottom"] = "bottom";
-                FloatingPosition["BottomStart"] = "bottom-start";
                 FloatingPosition["BottomEnd"] = "bottom-end";
+                FloatingPosition["BottomStart"] = "bottom-start";
                 FloatingPosition["Center"] = "center";
                 FloatingPosition["Left"] = "left";
                 FloatingPosition["LeftEnd"] = "left-end";
@@ -300,8 +302,8 @@ var OSFramework;
                 FloatingPosition["RightEnd"] = "right-end";
                 FloatingPosition["RightStart"] = "right-start";
                 FloatingPosition["Top"] = "top";
-                FloatingPosition["TopStart"] = "top-start";
                 FloatingPosition["TopEnd"] = "top-end";
+                FloatingPosition["TopStart"] = "top-start";
             })(FloatingPosition = GlobalEnum.FloatingPosition || (GlobalEnum.FloatingPosition = {}));
             let CssProperties;
             (function (CssProperties) {
@@ -357,6 +359,7 @@ var OSFramework;
                 HTMLAttributes["Class"] = "class";
                 HTMLAttributes["DataInput"] = "data-input";
                 HTMLAttributes["Disabled"] = "disabled";
+                HTMLAttributes["Href"] = "href";
                 HTMLAttributes["Id"] = "id";
                 HTMLAttributes["Name"] = "name";
                 HTMLAttributes["StatusBar"] = "data-status-bar-height";
@@ -371,6 +374,7 @@ var OSFramework;
                 HTMLElement["FieldSet"] = "fieldset";
                 HTMLElement["Input"] = "input";
                 HTMLElement["Link"] = "a";
+                HTMLElement["Radio"] = "radio";
                 HTMLElement["Span"] = "span";
             })(HTMLElement = GlobalEnum.HTMLElement || (GlobalEnum.HTMLElement = {}));
             let HTMLEvent;
@@ -483,8 +487,8 @@ var OSFramework;
                 PatternName["Submenu"] = "Submenu";
                 PatternName["SwipeEvents"] = "SwipeEvents";
                 PatternName["Tabs"] = "Tabs";
-                PatternName["TabsHeaderItem"] = "TabsHeaderItem";
                 PatternName["TabsContentItem"] = "TabsContentItem";
+                PatternName["TabsHeaderItem"] = "TabsHeaderItem";
                 PatternName["Timepicker"] = "Timepicker";
                 PatternName["Tooltip"] = "Tooltip";
                 PatternName["TouchEvents"] = "TouchEvents";
@@ -1854,10 +1858,46 @@ var OSFramework;
                         this._focusTrapInstance = new OSUI.Behaviors.FocusTrap(opts);
                         this._focusManagerInstance = new OSUI.Behaviors.FocusManager();
                     }
+                    _manageFocusInsideBalloon(arrowKeyPressed) {
+                        if (this._focusableBalloonElements.length === 0 || arrowKeyPressed === undefined) {
+                            this._currentFocusedElementIndex = undefined;
+                        }
+                        else if (arrowKeyPressed === OSUI.GlobalEnum.Keycodes.ArrowDown) {
+                            if (this._currentFocusedElementIndex === undefined ||
+                                this._currentFocusedElementIndex >= this._focusableBalloonElements.length - 1)
+                                this._currentFocusedElementIndex = 0;
+                            else
+                                this._currentFocusedElementIndex = this._currentFocusedElementIndex + 1;
+                        }
+                        else if (arrowKeyPressed === OSUI.GlobalEnum.Keycodes.ArrowUp) {
+                            if (this._currentFocusedElementIndex === undefined || this._currentFocusedElementIndex === 0)
+                                this._currentFocusedElementIndex = this._focusableBalloonElements.length - 1;
+                            else
+                                this._currentFocusedElementIndex = this._currentFocusedElementIndex - 1;
+                        }
+                        if (this._currentFocusedElementIndex === undefined) {
+                            OSUI.Helper.AsyncInvocation(() => {
+                                this.featureElem.focus();
+                            });
+                        }
+                        else {
+                            OSUI.Helper.AsyncInvocation(() => {
+                                this._focusableBalloonElements[this._currentFocusedElementIndex].focus();
+                            });
+                        }
+                    }
                     _onkeypressCallback(e) {
                         const isEscapedPressed = e.key === OSUI.GlobalEnum.Keycodes.Escape;
-                        if (isEscapedPressed && this.isOpen) {
-                            this.close();
+                        const isArrowDownPressed = e.key === OSUI.GlobalEnum.Keycodes.ArrowDown;
+                        const isArrowUpPressed = e.key === OSUI.GlobalEnum.Keycodes.ArrowUp;
+                        if (this.isOpen) {
+                            if (isEscapedPressed) {
+                                this.close();
+                            }
+                            else if (isArrowDownPressed || isArrowUpPressed) {
+                                this._manageFocusInsideBalloon(e.key);
+                                e.preventDefault();
+                            }
                         }
                         e.stopPropagation();
                     }
@@ -1891,7 +1931,7 @@ var OSFramework;
                             OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick, this._eventBodyClick);
                         }
                     }
-                    _toggleBalloon(isOpen, isBodyClick = false) {
+                    _toggleBalloon(isOpen, isBodyClick = false, arrowKeyPressed) {
                         this.isOpen = isOpen;
                         if (isOpen) {
                             OSUI.Helper.Dom.Styles.AddClass(this.featureElem, Balloon_1.Enum.CssClasses.IsOpen);
@@ -1906,9 +1946,8 @@ var OSFramework;
                             this._focusManagerInstance.storeLastFocusedElement();
                             this._focusTrapInstance.enableForA11y();
                             this.setFloatingBehaviour();
-                            OSUI.Helper.AsyncInvocation(() => {
-                                this.featureElem.focus();
-                            });
+                            this._focusableBalloonElements = this.featureElem.querySelectorAll(OSUI.Constants.FocusableElems);
+                            this._manageFocusInsideBalloon(arrowKeyPressed);
                         }
                         else {
                             this._focusTrapInstance.disableForA11y();
@@ -1919,6 +1958,8 @@ var OSFramework;
                                     this._focusManagerInstance.setFocusToStoredElement();
                                 }
                             });
+                            this._focusableBalloonElements = undefined;
+                            this._currentFocusedElementIndex = undefined;
                         }
                         this._onToggleEvent(this.isOpen, this.featureElem);
                         OSUI.Helper.AsyncInvocation(() => {
@@ -1950,10 +1991,10 @@ var OSFramework;
                         this._unsetCallbacks();
                         super.dispose();
                     }
-                    open(isOpenedByApi) {
+                    open(isOpenedByApi, arrowKeyPressed) {
                         if (this.isOpen === false) {
                             this._isOpenedByApi = isOpenedByApi;
-                            this._toggleBalloon(true);
+                            this._toggleBalloon(true, false, arrowKeyPressed);
                         }
                     }
                     setBalloonShape(shape) {
@@ -2895,6 +2936,12 @@ var OSFramework;
                 }
                 static AriaAtomicTrue(element) {
                     Helper.Dom.Attribute.Set(element, OSUI.Constants.A11YAttributes.Aria.Atomic, OSUI.Constants.A11YAttributes.States.True);
+                }
+                static AriaBusyFalse(element) {
+                    Helper.Dom.Attribute.Set(element, OSUI.Constants.A11YAttributes.Aria.Busy, OSUI.Constants.A11YAttributes.States.False);
+                }
+                static AriaBusyTrue(element) {
+                    Helper.Dom.Attribute.Set(element, OSUI.Constants.A11YAttributes.Aria.Busy, OSUI.Constants.A11YAttributes.States.True);
                 }
                 static AriaControls(element, targetId) {
                     Helper.Dom.Attribute.Set(element, OSUI.Constants.A11YAttributes.Aria.Controls, targetId);
@@ -4410,12 +4457,6 @@ var OSFramework;
             var BottomSheet;
             (function (BottomSheet_1) {
                 class BottomSheet extends Patterns.AbstractPattern {
-                    get gestureEventInstance() {
-                        return this._gestureEventInstance;
-                    }
-                    get hasGestureEvents() {
-                        return this._hasGestureEvents;
-                    }
                     constructor(uniqueId, configs) {
                         super(uniqueId, new BottomSheet_1.BottomSheetConfig(configs));
                         this._isOpen = false;
@@ -4427,6 +4468,12 @@ var OSFramework;
                                 mass: 1,
                             },
                         };
+                    }
+                    get gestureEventInstance() {
+                        return this._gestureEventInstance;
+                    }
+                    get hasGestureEvents() {
+                        return this._hasGestureEvents;
                     }
                     _handleFocusBehavior() {
                         const opts = {
@@ -4722,12 +4769,15 @@ var OSFramework;
                     _setIsLoading(isLoading) {
                         if (isLoading) {
                             OSUI.Helper.Dom.Styles.AddClass(this.selfElement, ButtonLoading_1.Enum.CssClass.IsLoading);
-                            this.isBuilt && OSUI.Helper.A11Y.TabIndexFalse(this._buttonElement);
+                            OSUI.Helper.A11Y.AriaBusyTrue(this.selfElement);
+                            this.isBuilt &&
+                                OSUI.Helper.Dom.Attribute.Set(this._buttonElement, OSUI.GlobalEnum.HTMLAttributes.Disabled, 'true');
                             this._buttonElement.blur();
                         }
                         else {
                             OSUI.Helper.Dom.Styles.RemoveClass(this.selfElement, ButtonLoading_1.Enum.CssClass.IsLoading);
-                            this.isBuilt && OSUI.Helper.A11Y.TabIndexTrue(this._buttonElement);
+                            OSUI.Helper.A11Y.AriaBusyFalse(this.selfElement);
+                            this.isBuilt && OSUI.Helper.Dom.Attribute.Remove(this._buttonElement, OSUI.GlobalEnum.HTMLAttributes.Disabled);
                         }
                     }
                     _setLoadingLabel(showSpinnerOnly) {
@@ -7244,6 +7294,14 @@ var OSFramework;
                             this.open(this._isOpenedByApi);
                         }
                     }
+                    _onKeydownCallback(event) {
+                        if (!this._balloonFeature.isOpen &&
+                            (event.key === OSUI.GlobalEnum.Keycodes.ArrowDown || event.key === OSUI.GlobalEnum.Keycodes.ArrowUp)) {
+                            this._isOpenedByApi = false;
+                            this.open(this._isOpenedByApi, event.key);
+                            event.preventDefault();
+                        }
+                    }
                     _setBalloonFeature() {
                         this.setBalloonOptions();
                         this._balloonFeature = new OSFramework.OSUI.Feature.Balloon.Balloon(this, this._balloonElem, this.balloonOptions);
@@ -7270,6 +7328,7 @@ var OSFramework;
                     }
                     removeEventListeners() {
                         this._triggerElem.removeEventListener(OSUI.GlobalEnum.HTMLEvent.Click, this._eventOnClick);
+                        this._triggerElem.removeEventListener(OSUI.GlobalEnum.HTMLEvent.keyDown, this._eventOnKeydown);
                         OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSUI.Event.DOMEvents.Listeners.Type.BalloonOnToggle, this._eventBalloonOnToggle);
                     }
                     setA11YProperties() {
@@ -7284,9 +7343,11 @@ var OSFramework;
                     setCallbacks() {
                         this._eventBalloonOnToggle = this._balloonOnToggleCallback.bind(this);
                         this._eventOnClick = this._onClickCallback.bind(this);
+                        this._eventOnKeydown = this._onKeydownCallback.bind(this);
                     }
                     setEventListeners() {
                         this._triggerElem.addEventListener(OSUI.GlobalEnum.HTMLEvent.Click, this._eventOnClick);
+                        this._triggerElem.addEventListener(OSUI.GlobalEnum.HTMLEvent.keyDown, this._eventOnKeydown);
                         OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.BalloonOnToggle, this._eventBalloonOnToggle);
                     }
                     setHtmlElements() {
@@ -7348,10 +7409,10 @@ var OSFramework;
                         this._isDisabled = false;
                         OSUI.Helper.Dom.Attribute.Remove(this._triggerElem, OSUI.GlobalEnum.HTMLAttributes.Disabled);
                     }
-                    open(isOpenedByApi) {
+                    open(isOpenedByApi, keyPressed) {
                         if (this._balloonFeature.isOpen === false && this._isDisabled === false) {
                             this._isOpenedByApi = isOpenedByApi;
-                            this._balloonFeature.open(this._isOpenedByApi);
+                            this._balloonFeature.open(this._isOpenedByApi, keyPressed);
                         }
                     }
                     registerCallback(eventName, callback) {
@@ -8362,6 +8423,10 @@ var OSFramework;
                         this._isHalfValue = false;
                         const isInput = OSUI.Helper.Dom.Styles.ContainsClass(currentTarget, Rating_1.Enum.CssClass.RatingInput);
                         if (isInput) {
+                            const _lastChosen = this.selfElement.querySelectorAll(OSUI.GlobalEnum.HTMLElement.Input)[this.configs.RatingValue];
+                            if (_lastChosen) {
+                                _lastChosen.ariaChecked = OSUI.Constants.A11YAttributes.States.False;
+                            }
                             this.configs.RatingValue = this._getValue();
                             this._setValue(true);
                         }
@@ -8372,17 +8437,22 @@ var OSFramework;
                         }
                     }
                     _renderItem(index) {
-                        const hideLabelClass = index === 0 ? Rating_1.Enum.CssClass.WCAGHideText : '';
                         const labelHTML = index !== 0 ? this._clonedPlaceholders : '';
                         const ratingInputId = this.uniqueId + '-rating-' + index;
-                        const input = `<input type="radio" class="${Rating_1.Enum.CssClass.RatingInput} ${Rating_1.Enum.CssClass.WCAGHideText}" id=${ratingInputId} name=${this._ratingInputName} value=${index}/>`;
-                        const label = `<label class='${Rating_1.Enum.CssClass.RatingItem} ${hideLabelClass}' for=${ratingInputId}><span class="${Rating_1.Enum.CssClass.WCAGHideText}">Rating ${index}</span>${labelHTML}</label>`;
+                        const input = `<input type="${OSUI.GlobalEnum.HTMLElement.Radio}"class="${Rating_1.Enum.CssClass.RatingInput} ${Rating_1.Enum.CssClass.WCAGHideText}" id=${ratingInputId} name=${this._ratingInputName} value=${index} aria-hidden="${OSUI.Constants.A11YAttributes.States.True}">`;
+                        let label;
+                        if (!this.configs.IsEdit) {
+                            label = `<label class='${Rating_1.Enum.CssClass.RatingItem}' for=${ratingInputId} aria-hidden="${OSUI.Constants.A11YAttributes.States.True}"><span class="${Rating_1.Enum.CssClass.WCAGHideText}">Rating ${index}</span>${labelHTML}</label>`;
+                        }
+                        else {
+                            label = `<label class='${Rating_1.Enum.CssClass.RatingItem}' for=${ratingInputId}><span class="${Rating_1.Enum.CssClass.WCAGHideText}">Rating ${index}</span>${labelHTML}</label>`;
+                        }
                         this._ratingFieldsetElem.innerHTML += input + label;
                     }
                     _setFieldsetDisabledStatus(isDisabled) {
                         const isFieldsetDisabled = OSUI.Helper.Dom.Attribute.Get(this._ratingFieldsetElem, OSUI.GlobalEnum.HTMLAttributes.Disabled);
                         if (isDisabled) {
-                            OSUI.Helper.Dom.Attribute.Set(this._ratingFieldsetElem, OSUI.GlobalEnum.HTMLAttributes.Disabled, 'true');
+                            OSUI.Helper.Dom.Attribute.Set(this._ratingFieldsetElem, OSUI.GlobalEnum.HTMLAttributes.Disabled, OSUI.Constants.A11YAttributes.States.True);
                         }
                         else if (!isDisabled && isFieldsetDisabled) {
                             OSUI.Helper.Dom.Attribute.Remove(this._ratingFieldsetElem, OSUI.GlobalEnum.HTMLAttributes.Disabled);
@@ -8410,9 +8480,19 @@ var OSFramework;
                     }
                     _setIsEdit() {
                         this._setIsDisabled(!this.configs.IsEdit);
-                        this.configs.IsEdit
-                            ? OSUI.Helper.Dom.Styles.AddClass(this.selfElement, Rating_1.Enum.CssClass.IsEdit)
-                            : OSUI.Helper.Dom.Styles.RemoveClass(this.selfElement, Rating_1.Enum.CssClass.IsEdit);
+                        const LabelList = this.selfElement.querySelectorAll(OSUI.Constants.Dot + Rating_1.Enum.CssClass.RatingItem);
+                        if (this.configs.IsEdit) {
+                            OSUI.Helper.Dom.Styles.AddClass(this.selfElement, Rating_1.Enum.CssClass.IsEdit);
+                            LabelList.forEach((label) => {
+                                label.removeAttribute(OSUI.Constants.A11YAttributes.Aria.Hidden);
+                            });
+                        }
+                        else {
+                            OSUI.Helper.Dom.Styles.RemoveClass(this.selfElement, Rating_1.Enum.CssClass.IsEdit);
+                            LabelList.forEach((label) => {
+                                label.ariaHidden = OSUI.Constants.A11YAttributes.States.True;
+                            });
+                        }
                         this._manageRatingEvent();
                     }
                     _setScale() {
@@ -8437,6 +8517,7 @@ var OSFramework;
                         }
                         if (this.configs.RatingScale === 1) {
                             ratingItems[1].checked = true;
+                            ratingItems[1].ariaChecked = OSUI.Constants.A11YAttributes.States.True;
                             return;
                         }
                         let newValue = this._isHalfValue || this._decimalValue > 0.7
@@ -8451,6 +8532,7 @@ var OSFramework;
                             console.warn(`The value of the RatingValue property on the '${this.widgetId}' ${OSUI.GlobalEnum.PatternName.Rating} exceeds the scale boundaries. To ensure its correct behaviour, set a value smaller or equal to '${this.configs.RatingScale}'.`);
                         }
                         ratingItems[newValue].checked = true;
+                        ratingItems[newValue].ariaChecked = OSUI.Constants.A11YAttributes.States.True;
                         if (this._isHalfValue) {
                             OSUI.Helper.Dom.Styles.AddClass(this.selfElement, Rating_1.Enum.CssClass.IsHalf);
                         }
@@ -16348,6 +16430,31 @@ var OutSystems;
                     }
                 }
                 LayoutPrivate.OnOrientationChange = OnOrientationChange;
+            })(LayoutPrivate = Utils.LayoutPrivate || (Utils.LayoutPrivate = {}));
+        })(Utils = OSUI.Utils || (OSUI.Utils = {}));
+    })(OSUI = OutSystems.OSUI || (OutSystems.OSUI = {}));
+})(OutSystems || (OutSystems = {}));
+var OutSystems;
+(function (OutSystems) {
+    var OSUI;
+    (function (OSUI) {
+        var Utils;
+        (function (Utils) {
+            var LayoutPrivate;
+            (function (LayoutPrivate) {
+                class SkipContentLink {
+                    static _setLink() {
+                        const mainContent = OSFramework.OSUI.Helper.Dom.ClassSelector(document, OSFramework.OSUI.GlobalEnum.CssClassElements.MainContent);
+                        const skipContentLink = OSFramework.OSUI.Helper.Dom.ClassSelector(document, OSFramework.OSUI.GlobalEnum.CssClassElements.SkipContent);
+                        if (mainContent && skipContentLink) {
+                            skipContentLink.setAttribute(OSFramework.OSUI.GlobalEnum.HTMLAttributes.Href, mainContent.getAttribute(OSFramework.OSUI.GlobalEnum.HTMLAttributes.Id));
+                        }
+                    }
+                    static Set() {
+                        this._setLink();
+                    }
+                }
+                LayoutPrivate.SkipContentLink = SkipContentLink;
             })(LayoutPrivate = Utils.LayoutPrivate || (Utils.LayoutPrivate = {}));
         })(Utils = OSUI.Utils || (OSUI.Utils = {}));
     })(OSUI = OutSystems.OSUI || (OutSystems.OSUI = {}));

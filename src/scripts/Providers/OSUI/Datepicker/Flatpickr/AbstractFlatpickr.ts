@@ -8,6 +8,9 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		private _a11yInfoContainerElem: HTMLElement;
 		// Event OnBodyScroll common behaviour
 		private _bodyScrollCommonBehaviour: SharedProviderResources.Flatpickr.UpdatePositionOnScroll;
+		private _providerFocusSpanTarget: HTMLElement;
+		// Store HtmlElement for the Today Button
+		private _todayButtonElem: HTMLElement;
 		// Validation of ZIndex position common behavior
 		private _zindexCommonBehavior: SharedProviderResources.Flatpickr.UpdateZindex;
 		// Store pattern input HTML element reference
@@ -75,6 +78,24 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 			);
 		}
 
+		// Method to handle the keydows event for the Today Button 
+		private _todayButtonKeydown(e: KeyboardEvent):void {
+			switch (e.key) {
+				case OSFramework.OSUI.GlobalEnum.Keycodes.Tab:
+					// Prevent the flatpickr default behaviour for tab
+					return;
+
+				case OSFramework.OSUI.GlobalEnum.Keycodes.Enter:
+				case OSFramework.OSUI.GlobalEnum.Keycodes.Space:
+					e.preventDefault();
+					// Set the currentDate at the Datepicker
+					this.provider.setDate(this.provider.now, true);
+					// Trigger the jumpIntoDate!
+					this.jumpIntoToday();
+				break;
+			}
+		}
+
 		// Remove the clientHeight that has been assigned before the redraw process!
 		private _unsetParentMinHeight(): void {
 			OSFramework.OSUI.Helper.Dom.Styles.RemoveStyleAttribute(
@@ -91,21 +112,31 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		 */
 		protected addTodayBtn(): void {
 			// Create the wrapper container
-			const todayBtnWrapper = document.createElement(OSFramework.OSUI.GlobalEnum.HTMLElement.Div);
-			todayBtnWrapper.classList.add(Enum.CssClasses.TodayBtn);
+			this._todayButtonElem = document.createElement(OSFramework.OSUI.GlobalEnum.HTMLElement.Div);
+			this._todayButtonElem.classList.add(Enum.CssClasses.TodayBtn);
 
 			// Create the TodayBtn element
 			const todayBtn = document.createElement(OSFramework.OSUI.GlobalEnum.HTMLElement.Link);
+			OSFramework.OSUI.Helper.A11Y.TabIndexTrue(todayBtn);
 			const langCode = l10ns.TodayBtn[this.configs.Lang] !== undefined ? this.configs.Lang : 'en';
 
 			todayBtn.innerHTML = l10ns.TodayBtn[langCode].title;
 			OSFramework.OSUI.Helper.A11Y.AriaLabel(todayBtn, l10ns.TodayBtn[langCode].ariaLabel);
 
 			todayBtn.addEventListener(OSFramework.OSUI.GlobalEnum.HTMLEvent.Click, this.todayBtnClick.bind(this));
+			todayBtn.addEventListener(OSFramework.OSUI.GlobalEnum.HTMLEvent.keyDown, this._todayButtonKeydown.bind(this));
 
 			// Append elements to the proper containers
-			todayBtnWrapper.appendChild(todayBtn);
-			this.provider.calendarContainer.appendChild(todayBtnWrapper);
+			this._todayButtonElem.appendChild(todayBtn);
+			// Make sure to append this just before the focus trap span from flatpickr
+			this._providerFocusSpanTarget = this.provider.calendarContainer.querySelector('.focus-trap-bottom-element');
+
+			if(this._providerFocusSpanTarget) {
+				this.provider.calendarContainer.insertBefore(this._todayButtonElem, this._providerFocusSpanTarget);
+			} else {
+				this.provider.calendarContainer.appendChild(this._todayButtonElem);
+			}
+
 		}
 
 		/**
@@ -398,6 +429,9 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		public close(): void {
 			if (this.provider.isOpen) {
 				this.provider.close();
+				if(this.configs.ShowTodayButton) {
+					OSFramework.OSUI.Helper.A11Y.TabIndexFalse(this._todayButtonElem);
+				}
 			}
 		}
 
@@ -455,6 +489,9 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 			const isInputDisable = this.datePickerPlatformInputElem.disabled;
 			if (this.provider.isOpen === false && isInputDisable === false) {
 				this.provider.open();
+				if(this.configs.ShowTodayButton) {
+					OSFramework.OSUI.Helper.A11Y.TabIndexTrue(this._todayButtonElem);
+				}
 			}
 		}
 

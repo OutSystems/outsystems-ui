@@ -5,6 +5,7 @@
 
 ///
 .rating {
+	position: relative;
 	display: inline-flex;
 	flex-wrap: wrap;
 	font-size: var(--rating-size);
@@ -15,21 +16,20 @@
 		-servicestudio-display: inline-flex;
 	}
 
-	&.rating {
-		&-small {
-			.rating-item {
-				padding-right: calc(var(--rating-size) + var(--space-xs));
-			}
+	&.rating-small {
+		--rating-size: 8px;
 
-			--rating-size: 8px;
-		}
-
-		&-medium {
-			--rating-size: 24px;
+		.rating-item {
+			padding-right: calc(var(--rating-size) + var(--space-xs));
 		}
 	}
 
+	&.rating-medium {
+		--rating-size: 24px;
+	}
+
 	&.is-edit {
+		pointer-events: initial;
 		.rating-item {
 			cursor: pointer;
 			pointer-events: auto;
@@ -80,60 +80,103 @@
 			opacity: 0;
 			z-index: var(--layer-global-screen);
 		}
+
+		&:last-of-type {
+			padding-right: 0;
+		}
 	}
 
-	.rating-item[class*='rating-']:last-of-type {
-		padding-right: 0;
+	input {
+		&:checked + .rating-item .rating-item-empty,
+		&:checked ~ .rating-item .rating-item-filled {
+			opacity: 0;
+		}
 	}
 
-	// These need to be separated, to keep exact CSS specificty, for the hover/ checked styles to work as intended
-	/* Checked styles*/
-	input:checked + label .rating-item-empty,
-	input:checked ~ label .rating-item-filled {
-		opacity: 0;
-	}
-
-	&.is-half .rating-item-half {
-		z-index: var(--layer-local-tier-1);
-	}
-
-	&.is-half input:checked + label .rating-item-half {
-		opacity: 1;
-	}
-
-	&.is-half input:checked + label .rating-item-filled {
-		opacity: 0;
+	&.is-half {
+		input:checked ~ .rating-item .rating-item-half {
+			opacity: 0;
+		}
 	}
 
 	/* Selected Styles*/
-	&:hover input + label .rating-item-filled,
-	&.is-half:hover input:checked + label .rating-item-filled {
+	&:hover input + .rating-item .rating-item-filled {
 		opacity: 1;
 	}
 
-	input:focus + label .rating-item-empty,
-	input:hover ~ label .rating-item-filled {
-		opacity: 0;
+	input {
+		&:first-of-type {
+			+ .rating-item {
+				background: transparent;
+				display: none;
+				height: 100%;
+				left: 0;
+				position: absolute;
+				top: 0;
+				width: 100%;
+				box-shadow: 0 0 0 3px var(--color-focus-outer);
+			}
+			&:focus:checked + .rating-item {
+				display: block;
+			}
+		}
+
+		// These need to be separated, to keep exact CSS specificty, for the hover/ checked styles to work as intended
+		/* Checked styles*/
+		&:checked + .rating-item .rating-item-filled,
+		&:checked + .rating-item .rating-item-half,
+		&:checked ~ .rating-item .rating-item-empty,
+		&:hover ~ .rating-item .rating-item-empty,
+		&:focus ~ .rating-item .rating-item-empty,
+		&:focus + .rating-item .rating-item-filled {
+			opacity: 1;
+		}
+
+		//&:focus + .rating-item .rating-item-empty,
+		&:hover ~ .rating-item .rating-item-filled,
+		&:hover ~ .rating-item .rating-item-half {
+			opacity: 0;
+		}
+
+		&:hover + .rating-item .rating-item-filled {
+			opacity: 1;
+		}
 	}
 
-	input:checked ~ label .rating-item-empty,
-	input:checked + label .rating-item-filled,
-	input:checked + label .rating-item-half,
-	input:hover ~ label .rating-item-empty,
-	input:focus ~ label .rating-item-empty,
-	input:focus + label .rating-item-filled {
-		opacity: 1;
-	}
+	&.is-half {
+		.rating-item-half {
+			z-index: var(--layer-local-tier-1);
+		}
 
-	input:hover ~ label .rating-item-filled,
-	&.is-half input:hover ~ label.rating-item .rating-item-filled,
-	&.is-half input:hover ~ label.rating-item .rating-item-half {
-		opacity: 0;
-	}
+		input:checked + .rating-item {
+			.rating-item-half {
+				opacity: 1;
+			}
 
-	input:hover + label .rating-item-filled,
-	&.is-half input:hover + label.rating-item .rating-item-filled {
-		opacity: 1;
+			.rating-item-filled {
+				opacity: 0;
+			}
+		}
+
+		input:hover ~ .rating-item {
+			.rating-item-filled,
+			.rating-item-half {
+				opacity: 0;
+			}
+		}
+
+		&:hover input:checked + .rating-item .rating-item-filled,
+		input:hover + .rating-item .rating-item-filled {
+			opacity: 1;
+		}
+
+		&:hover input:hover ~ .rating-item .rating-item-filled {
+			opacity: 0;
+		}
+
+		&:hover input:hover + .rating-item .rating-item-filled {
+			opacity: 1;
+		}
 	}
 
 	.icon-states {
@@ -192,8 +235,23 @@
 // Accessibility -----------------------------------------------------------------
 ///
 .has-accessible-features {
-	input:focus + .rating-item > div {
-		box-shadow: 0 0 0 3px var(--color-focus-outer);
+	.rating {
+		&.is-half input:focus + .rating-item .rating-item-filled,
+		&:not(.is-half) input:focus + .rating-item .rating-item-half,
+		input:checked + .rating-item .rating-item-empty {
+			&,
+			* {
+				box-shadow: none;
+			}
+		}
+
+		&.is-half input:focus + .rating-item .rating-item-half,
+		&:not(.is-half) input:focus + .rating-item .rating-item-filled {
+			&,
+			* {
+				box-shadow: 0 0 0 3px var(--color-focus-outer);
+			}
+		}
 	}
 }
 
@@ -207,4 +265,4 @@
 			}
 		}
 	}
-} 
+}
