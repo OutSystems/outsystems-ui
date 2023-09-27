@@ -22,7 +22,9 @@ namespace Providers.OSUI.Dropdown.VirtualSelect.Tags {
 			if (this.StartingSelection.length > 0) {
 				// Get the selected key value
 				for (const option of this.StartingSelection) {
-					selectedKeyvalues.push(option.value);
+					if (option.value !== OSFramework.OSUI.Constants.EmptyString) {
+						selectedKeyvalues.push(option.value);
+					}
 				}
 			}
 

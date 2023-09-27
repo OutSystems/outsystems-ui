@@ -33,32 +33,6 @@ jobs:
                   target_branch: 'main'
                   commit_message_template: 'Merged rc${{ steps.split-lts-tag.outputs._1 }} into main. [skip ci]'
 
-    delete-rc:
-        needs: merge-rc
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v3
-              with:
-                  ref: main
-
-            - uses: actions/setup-node@v3
-
-            - name: Get tags versions
-              id: get-tags
-              uses: JinoArch/get-latest-tag@latest
-
-            - name: Get lts version
-              id: split-lts-tag
-              uses: jungwinter/split@v2
-              with:
-                  msg: '${{ steps.get-tags.outputs.latestTag }}'
-                  separator: 'v'
-
-            - name: Delete rc${{ steps.split-lts-tag.outputs._1 }}
-              shell: bash
-              run: |
-                  git push origin -d rc${{ steps.split-lts-tag.outputs._1 }}
-
     compile-prod:
         needs: merge-rc
         runs-on: ubuntu-latest
@@ -139,3 +113,29 @@ jobs:
             - run: npm publish
               env:
                   NODE_AUTH_TOKEN: ${{secrets.NPM_UICOMPONENTS}}
+
+    delete-rc:
+        needs: [deploy-doc, publish-npm]
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+              with:
+                  ref: main
+
+            - uses: actions/setup-node@v3
+
+            - name: Get tags versions
+              id: get-tags
+              uses: JinoArch/get-latest-tag@latest
+
+            - name: Get lts version
+              id: split-lts-tag
+              uses: jungwinter/split@v2
+              with:
+                  msg: '${{ steps.get-tags.outputs.latestTag }}'
+                  separator: 'v'
+
+            - name: Delete rc${{ steps.split-lts-tag.outputs._1 }}
+              shell: bash
+              run: |
+                  git push origin -d rc${{ steps.split-lts-tag.outputs._1 }}

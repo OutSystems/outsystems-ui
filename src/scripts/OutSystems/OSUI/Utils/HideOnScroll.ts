@@ -10,10 +10,8 @@ namespace OutSystems.OSUI.Utils.HideOnScroll {
 
 		if (OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(header, 'hide') && content) {
 			let startY = 0;
-			const mainContentHeight: number = OSFramework.OSUI.Helper.Dom.ClassSelector(
-				document.body,
-				'main-content'
-			)?.scrollHeight;
+			const mainContentHeight: number = OSFramework.OSUI.Helper.Dom.ClassSelector(document.body, 'main-content')
+				?.scrollHeight;
 
 			const threshold = 60;
 			const layout = OSFramework.OSUI.Helper.Dom.ClassSelector(

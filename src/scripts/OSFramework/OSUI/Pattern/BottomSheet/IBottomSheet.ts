@@ -8,7 +8,18 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 	 * @extends {Interface.IPattern}
 	 */
 	export interface IBottomSheet extends Interface.IPattern {
+		/**
+		 * Method to close the BottomSheet
+		 *
+		 * @memberof IBottomSheet
+		 */
 		close(): void;
+
+		/**
+		 * Method to open the BottomSheet
+		 *
+		 * @memberof IBottomSheet
+		 */
 		open(): void;
 	}
 }

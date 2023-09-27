@@ -81,7 +81,7 @@ namespace OSFramework.OSUI.Patterns.InlineSvg {
 		}
 
 		/**
-		 * Builds the pattern.
+		 * Method to build the InlineSVG
 		 *
 		 * @memberof OSFramework.Patterns.InlineSvg.InlineSvg
 		 */

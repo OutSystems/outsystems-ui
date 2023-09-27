@@ -108,6 +108,13 @@ namespace OutSystems.OSUI.Patterns.BottomSheetAPI {
 		return _bottomSheetItem;
 	}
 
+	/**
+	 * Function to open this pattern
+	 *
+	 * @export
+	 * @param {string} bottomSheetId
+	 * @return {*}  {string}
+	 */
 	export function Open(bottomSheetId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.BottomSheet.FailOpen,
@@ -121,6 +128,13 @@ namespace OutSystems.OSUI.Patterns.BottomSheetAPI {
 		return result;
 	}
 
+	/**
+	 * Function to close this pattern
+	 *
+	 * @export
+	 * @param {string} bottomSheetId
+	 * @return {*}  {string}
+	 */
 	export function Close(bottomSheetId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.BottomSheet.FailClose,

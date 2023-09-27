@@ -1,0 +1,10 @@
+@import '_video_ss_preview_imgs';
+///
+.osui-video {
+	// ServiceStudio Preview
+	-servicestudio-background-image: $video_img_base64;
+	-servicestudio-background-position: top center;
+	-servicestudio-background-repeat: no-repeat;
+	-servicestudio-background-size: cover;
+	-servicestudio-max-width: 100%;
+}

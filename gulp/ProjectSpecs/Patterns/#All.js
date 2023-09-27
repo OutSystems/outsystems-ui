@@ -2,6 +2,7 @@
 const accordion = require('./Accordion');
 const accordionItem = require('./AccordionItem');
 const animatedLabel = require('./AnimatedLabel');
+const balloon = require('./Balloon');
 const bottomSheet = require('./BottomSheet');
 const buttonLoading = require('./ButtonLoading');
 const carousel = require('./Carousel');
@@ -13,6 +14,7 @@ const flipContent = require('./FlipContent');
 const gallery = require('./Gallery');
 const monthPicker = require('./MonthPicker');
 const notification = require('./Notification');
+const overflowMenu = require('./OverflowMenu');
 const progress = require('./Progress');
 const rangeSlider = require('./RangeSlider');
 const rating = require('./Rating');
@@ -27,6 +29,7 @@ const tabsHeaderItem = require('./TabsHeaderItem');
 const timePicker = require('./TimePicker');
 const tooltip = require('./Tooltip');
 const touchEvents = require('./TouchEvents');
+const video = require('./Video');
 
 /* 
 * List of all patterns in OSFramework.OSUI.Patterns.*
@@ -41,7 +44,8 @@ const touchEvents = require('./TouchEvents');
 const patterns = {
 	"accordion-item": accordionItem.info,
 	"accordion": accordion.info,
-	"animated-label": animatedLabel.info,	
+	"animated-label": animatedLabel.info,
+	"balloon": balloon.info,	
 	"bottom-sheet": bottomSheet.info,	
 	"button-loading": buttonLoading.info,
 	"carousel": carousel.info,
@@ -53,6 +57,7 @@ const patterns = {
 	"gallery": gallery.info,
 	"monthpicker": monthPicker.info,
 	"notification": notification.info,
+	"overflowMenu": overflowMenu.info,
 	"progress": progress.info,
 	"range-slider": rangeSlider.info,
 	"rating": rating.info,
@@ -67,6 +72,8 @@ const patterns = {
 	"timepicker": timePicker.info,
 	"tooltip": tooltip.info,
 	"touch-events": touchEvents.info,
+	"video": video.info,
+
 };
 
 // Expose all patterns list!

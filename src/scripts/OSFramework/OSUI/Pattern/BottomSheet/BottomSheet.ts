@@ -17,9 +17,10 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 		// Listener callbacks
 		private _eventOnContentScroll: GlobalCallbacks.Generic;
 		private _eventOnKeypress: GlobalCallbacks.Generic;
+		// Store focus manager instance
+		private _focusManagerInstance: Behaviors.FocusManager;
 		// FocusTrap Properties
 		private _focusTrapInstance: Behaviors.FocusTrap;
-		private _focusableActiveElement: HTMLElement;
 		// Store gesture events instance
 		private _gestureEventInstance: Event.GestureEvent.DragEvent;
 		// Store if the pattern has gesture events added
@@ -42,7 +43,7 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 		};
 
 		/**
-		 * Get Gesture Events Instance
+		 * Method to get Gesture Events Instance
 		 *
 		 * @readonly
 		 * @type {Event.GestureEvent.DragEvent}
@@ -53,7 +54,7 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 		}
 
 		/**
-		 * Get if has gesture events
+		 * Method to get if has gesture events
 		 *
 		 * @readonly
 		 * @type {boolean}
@@ -67,16 +68,28 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 			super(uniqueId, new BottomSheetConfig(configs));
 		}
 
-		// Add Focus Trap to Pattern
-		private _handleFocusTrap(): void {
+		/**
+		 * Method to add Focus Trap to Pattern
+		 *
+		 * @private
+		 * @memberof BottomSheet
+		 */
+		private _handleFocusBehavior(): void {
 			const opts = {
 				focusTargetElement: this._parentSelf,
 			} as Behaviors.FocusTrapParams;
 
 			this._focusTrapInstance = new Behaviors.FocusTrap(opts);
+
+			this._focusManagerInstance = new Behaviors.FocusManager();
 		}
 
-		// Method to handle the creation of the GestureEvents
+		/**
+		 * Method to handle the creation of the GestureEvents
+		 *
+		 * @private
+		 * @memberof BottomSheet
+		 */
 		private _handleGestureEvents(): void {
 			if (!Helper.DeviceInfo.IsDesktop) {
 				// Create and save gesture event instance. Created here and not on constructor,
@@ -88,7 +101,13 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 			}
 		}
 
-		// Method to hadnle the Shape config css variable
+		/**
+		 * Method to handle the Shape config css variable
+		 *
+		 * @private
+		 * @param {GlobalEnum.ShapeTypes} shape
+		 * @memberof BottomSheet
+		 */
 		private _handleShape(shape: GlobalEnum.ShapeTypes): void {
 			Helper.Dom.Styles.SetStyleAttribute(
 				this.selfElement,
@@ -97,7 +116,12 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 			);
 		}
 
-		// Method to be called as callback on scroll event, to toggle class on BottomSheet when it has scroll active
+		/**
+		 * Method to be called as callback on scroll event, to toggle class on BottomSheet when it has scroll active
+		 *
+		 * @private
+		 * @memberof BottomSheet
+		 */
 		private _onContentScrollCallback(): void {
 			if (this._bottomSheetContentElem.scrollTop === 0) {
 				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.HasSCroll);
@@ -106,7 +130,15 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 			}
 		}
 
-		// Method to handle the start of a gesture
+		/**
+		 * Method to handle the start of a gesture
+		 *
+		 * @private
+		 * @param {number} offsetX
+		 * @param {number} offsetY
+		 * @param {number} timeTaken
+		 * @memberof BottomSheet
+		 */
 		private _onGestureEnd(offsetX: number, offsetY: number, timeTaken: number): void {
 			this._animateOnDragInstance.onDragEnd(
 				offsetX,
@@ -117,12 +149,29 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 			);
 		}
 
-		// Method to handle the gesture move
+		/**
+		 * Method to handle the gesture move
+		 *
+		 * @private
+		 * @param {number} x
+		 * @param {number} y
+		 * @param {number} offsetX
+		 * @param {number} offsetY
+		 * @param {TouchEvent} evt
+		 * @memberof BottomSheet
+		 */
 		private _onGestureMove(x: number, y: number, offsetX: number, offsetY: number, evt: TouchEvent): void {
 			this._animateOnDragInstance.onDragMove(offsetX, offsetY, x, y, evt);
 		}
 
-		// Method to handle the end of a gesture
+		/**
+		 * Method to handle the end of a gesture
+		 *
+		 * @private
+		 * @param {number} x
+		 * @param {number} y
+		 * @memberof BottomSheet
+		 */
 		private _onGestureStart(x: number, y: number): void {
 			this._animateOnDragInstance.onDragStart(
 				true,
@@ -134,17 +183,29 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 			);
 		}
 
-		// Call methods to open or close, based ok e.key and behavior applied
+		/**
+		 * Method to call open or close, based on e.key and behaviour applied
+		 *
+		 * @private
+		 * @param {KeyboardEvent} e
+		 * @memberof BottomSheet
+		 */
 		private _onkeypressCallback(e: KeyboardEvent): void {
 			const isEscapedPressed = e.key === GlobalEnum.Keycodes.Escape;
 
-			// Close the Notification when pressing Esc
+			// Close the BottomSheet when pressing Esc
 			if (isEscapedPressed && this._isOpen) {
 				this.close();
 			}
 		}
 
-		// Method to toggle the open/close the BottomSheet
+		/**
+		 * Method to toggle the open/close the BottomSheet
+		 *
+		 * @private
+		 * @param {boolean} isOpen
+		 * @memberof BottomSheet
+		 */
 		private _toggleBottomSheet(isOpen: boolean): void {
 			// Cancel animation if active
 			if (this._animateOnDragInstance?.dragParams.SpringAnimation) {
@@ -169,7 +230,7 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 
 			// Handle focus trap logic
 			if (isOpen) {
-				this._focusableActiveElement = document.activeElement as HTMLElement;
+				this._focusManagerInstance.storeLastFocusedElement();
 				this._focusTrapInstance.enableForA11y();
 				// Focus on element when pattern is open
 				this.selfElement.focus();
@@ -179,7 +240,7 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 				// Focus on last element clicked. Async to avoid conflict with closing animation
 				Helper.AsyncInvocation(() => {
 					this.selfElement.blur();
-					this._focusableActiveElement.focus();
+					this._focusManagerInstance.setFocusToStoredElement();
 				});
 			}
 
@@ -187,7 +248,13 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 			this._triggerOnToggleEvent();
 		}
 
-		// Method that toggles the showHandler config
+		/**
+		 * Method that toggles the showHandler config
+		 *
+		 * @private
+		 * @param {boolean} ShowHandler
+		 * @memberof BottomSheet
+		 */
 		private _toggleHandler(ShowHandler: boolean): void {
 			if (ShowHandler) {
 				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.HasHandler);
@@ -196,7 +263,12 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 			}
 		}
 
-		// Method that triggers the OnToggle event
+		/**
+		 * Method that triggers the OnToggle event
+		 *
+		 * @private
+		 * @memberof BottomSheet
+		 */
 		private _triggerOnToggleEvent(): void {
 			this.triggerPlatformEventCallback(this._platformEventOnToggle, this._isOpen);
 		}
@@ -215,7 +287,7 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 		}
 
 		/**
-		 * Add the Accessibility Attributes values
+		 * Method to add the Accessibility Attributes values
 		 *
 		 * @protected
 		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
@@ -275,7 +347,7 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 		}
 
 		/**
-		 * Update info based on htmlContent
+		 * Method to update info based on htmlContent
 		 *
 		 * @protected
 		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
@@ -310,7 +382,7 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 		}
 
 		/**
-		 * Removes the local value of the variables pointing to HTML elements;
+		 * Method to remove the local value of the variables pointing to HTML elements;
 		 *
 		 * @protected
 		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
@@ -322,14 +394,14 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 		}
 
 		/**
-		 *  Builds the BottomSheet.
+		 * Method to build the BottomSheet.
 		 *
 		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
 		 */
 		public build(): void {
 			super.build();
 			this.setHtmlElements();
-			this._handleFocusTrap();
+			this._handleFocusBehavior();
 			this.setInitialOptions();
 			this.setCallbacks();
 			this.setA11YProperties();
@@ -338,7 +410,7 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 		}
 
 		/**
-		 * Applies the changes of state/value of the configurations.
+		 * Method to apply the changes of state/value of the configurations.
 		 *
 		 * @param {string} propertyName
 		 * @param {unknown} propertyValue
@@ -372,7 +444,7 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 		}
 
 		/**
-		 * Disposes the current pattern.
+		 * Method to destroy pattern.
 		 *
 		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
 		 */
@@ -403,7 +475,7 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 		}
 
 		/**
-		 * Register a given callback event handler.
+		 * Method to register a given callback event handler.
 		 *
 		 * @param {string} eventName
 		 * @param {GlobalCallbacks.OSGeneric} callback
@@ -422,7 +494,7 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 		}
 
 		/**
-		 * Removes the gesture events to open/close the BottomSheet on Native Apps
+		 * Method to remove the gesture events to open/close the BottomSheet on Native Apps
 		 *
 		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
 		 */
@@ -437,7 +509,7 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 		}
 
 		/**
-		 * Sets the gesture events to open/close the BottomSheet on Native Apps
+		 * Method to set the gesture events to open/close the BottomSheet on Native Apps
 		 *
 		 * @protected
 		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet

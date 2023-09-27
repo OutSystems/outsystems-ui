@@ -17,7 +17,7 @@ PS: This comment will not be visible at the compiled version!
 =============================================================================== */
 
 /*!
-OutSystems UI 2.16.0
+OutSystems UI 2.17.0
 Website:
  • https://www.outsystems.com/outsystems-ui
 GitHub:
@@ -96,33 +96,35 @@ Section Index:
         6.3.1. Action Sheet
         6.3.2. Animate
         6.3.3. Animated Label
-        6.3.4. Bottom Sheet
-        6.3.5. Carousel
-        6.3.6. DatePicker
-        6.3.7. Dropdown
-            6.3.7.1 Dropdown Search
-            6.3.7.2 Dropdown Tags
-        6.3.8. Floating Actions
-        6.3.9. Input With Icon
-        6.3.10. Lightbox Image
-        6.3.11. MonthPicker
-        6.3.12. Notification
-        6.3.13. RangeSlider
-        6.3.14. Scrollable Area
-        6.3.15. Search
-        6.3.16. Sidebar
-        6.3.17. Stacked Cards
-        6.3.18. TimePicker
-        6.3.19. Video
+        6.3.4. Balloon
+        6.3.5. Bottom Sheet
+        6.3.6. Carousel
+        6.3.7. DatePicker
+        6.3.8. Dropdown
+            6.3.8.1 Dropdown Search
+            6.3.8.2 Dropdown Tags
+        6.3.9. Floating Actions
+        6.3.10. Input With Icon
+        6.3.11. Lightbox Image
+        6.3.12. MonthPicker
+        6.3.13. Notification
+        6.3.14. RangeSlider
+        6.3.15. Scrollable Area
+        6.3.16. Search
+        6.3.17. Sidebar
+        6.3.18. Stacked Cards
+        6.3.19. TimePicker
+        6.3.20. Video
     6.4. Navigation
         6.4.1. Bottom Bar Item
         6.4.2. Breadcrumbs
-        6.4.3. Pagination
-        6.4.4. Section Index
-        6.4.5. Submenu
-        6.4.6. Tabs
-        6.4.7. Timeline
-        6.4.8. Wizard
+        6.4.3. OverflowMenu
+        6.4.4. Pagination
+        6.4.5. Section Index
+        6.4.6. Submenu
+        6.4.7. Tabs
+        6.4.8. Timeline
+        6.4.9. Wizard
     6.5. Numbers
         6.5.1. Badge
         6.5.2. Counter
@@ -163,6 +165,7 @@ Section Index:
         6.8.17. Submenu
         6.8.18. Tabs
         6.8.19. Tooltip
+        6.8.20. Video
 7. Usefull Classes
     7.1. a11y (Accessibility)
     7.2. Colors - Brand
@@ -369,59 +372,63 @@ Functions & Mixins
 @import '04-patterns/03-interaction/animate';
 /*! 6.3.3. Animated Label */
 @import '../scripts/OSFramework/OSUI/Pattern/AnimatedLabel/scss/animated-label';
-/*! 6.3.4. Bottom Sheet */
+/*! 6.3.4. Balloon */
+@import '../scripts/OSFramework/OSUI/Feature/Balloon/scss/balloon';
+/*! 6.3.5. Bottom Sheet */
 @import '../scripts/OSFramework/OSUI/Pattern/BottomSheet/scss/bottomsheet';
-/*! 6.3.5. Carousel */
+/*! 6.3.6. Carousel */
 @import '../scripts/OSFramework/OSUI/Pattern/Carousel/scss/carousel';
-/*! 6.3.6. DatePicker */
+/*! 6.3.7. DatePicker */
 @import '../scripts/OSFramework/OSUI/Pattern/DatePicker/scss/datepicker';
-/*! 6.3.7. Dropdown */
+/*! 6.3.8. Dropdown */
 @import '../scripts/OSFramework/OSUI/Pattern/Dropdown/scss/dropdown';
-/*! 6.3.7.1 Dropdown Search */
+/*! 6.3.8.1 Dropdown Search */
 @import '../scripts/OSFramework/OSUI/Pattern/Dropdown/scss/dropdown-search';
-/*! 6.3.7.2 Dropdown Tags */
+/*! 6.3.8.2 Dropdown Tags */
 @import '../scripts/OSFramework/OSUI/Pattern/Dropdown/scss/dropdown-tags';
-/*! 6.3.8. Floating Actions */
+/*! 6.3.9. Floating Actions */
 @import '04-patterns/03-interaction/floating-actions';
-/*! 6.3.9. Input With Icon */
+/*! 6.3.10. Input With Icon */
 @import '04-patterns/03-interaction/input-with-icon';
-/*! 6.3.10. Lightbox Image */
+/*! 6.3.11. Lightbox Image */
 @import '04-patterns/03-interaction/lightbox-image';
-/*! 6.3.11. MonthPicker */
+/*! 6.3.12. MonthPicker */
 @import '../scripts/OSFramework/OSUI/Pattern/MonthPicker/scss/monthpicker';
-/*! 6.3.12. Notification */
+/*! 6.3.13. Notification */
 @import '../scripts/OSFramework/OSUI/Pattern/Notification/scss/notification';
-/*! 6.3.13. RangeSlider */
+/*! 6.3.14. RangeSlider */
 @import '../scripts/OSFramework/OSUI/Pattern/RangeSlider/scss/rangeslider';
-/*! 6.3.14. Scrollable Area */
+/*! 6.3.15. Scrollable Area */
 @import '04-patterns/03-interaction/scrollable-area';
-/*! 6.3.15. Search */
+/*! 6.3.16. Search */
 @import '04-patterns/03-interaction/search';
-/*! 6.3.16. Sidebar */
+/*! 6.3.17. Sidebar */
 @import '../scripts/OSFramework/OSUI/Pattern/Sidebar/scss/sidebar';
-/*! 6.3.17. Stacked Cards */
+/*! 6.3.18. Stacked Cards */
 @import '04-patterns/03-interaction/stacked-cards';
-/*! 6.3.18. TimePicker */
+/*! 6.3.19. TimePicker */
 @import '../scripts/OSFramework/OSUI/Pattern/TimePicker/scss/timepicker';
-/*! 6.3.19. Video */
-@import '04-patterns/03-interaction/video';
+/*! 6.3.20. Video */
+@import '../scripts/OSFramework/OSUI/Pattern/Video/scss/video';
 
 /*! 6.4. Navigation */
 /*! 6.4.1. Bottom Bar Item */
 @import '04-patterns/04-navigation/bottom-bar-item';
 /*! 6.4.2. Breadcrumbs */
 @import '04-patterns/04-navigation/breadcrumbs';
-/*! 6.4.3. Pagination */
+/*! 6.4.3. OverflowMenu */
+@import '../scripts/OSFramework/OSUI/Pattern/OverflowMenu/scss/overflowmenu';
+/*! 6.4.4. Pagination */
 @import '04-patterns/04-navigation/pagination';
-/*! 6.4.4. Section Index */
+/*! 6.4.5. Section Index */
 @import '../scripts/OSFramework/OSUI/Pattern/SectionIndex/scss/sectionindex';
-/*! 6.4.5. Submenu */
+/*! 6.4.6. Submenu */
 @import '../scripts/OSFramework/OSUI/Pattern/Submenu/scss/submenu';
-/*! 6.4.6. Tabs */
+/*! 6.4.7. Tabs */
 @import '../scripts/OSFramework/OSUI/Pattern/Tabs/scss/tabs';
-/*! 6.4.7. Timeline */
+/*! 6.4.8. Timeline */
 @import '04-patterns/04-navigation/timeline';
-/*! 6.4.8. Wizard */
+/*! 6.4.9. Wizard */
 @import '04-patterns/04-navigation/wizard';
 
 /*! 6.5. Numbers */
@@ -501,6 +508,8 @@ Functions & Mixins
 @import '10-deprecated/tabs-deprecated';
 /*! 6.8.19. Tooltip */
 @import '10-deprecated/tooltip-deprecated';
+/*! 6.8.20. Video */
+@import '10-deprecated/video-deprecated';
 
 /*! ==============================================================================
 7. Usefull Classes

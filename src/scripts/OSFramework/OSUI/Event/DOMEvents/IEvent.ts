@@ -8,6 +8,7 @@ namespace OSFramework.OSUI.Event.DOMEvents {
 	 * @template D this will the type of Data to be passed, by default to the handlers.
 	 */
 	export interface IEvent<D> {
+		handlers: GlobalCallbacks.OSGeneric[];
 		addEvent(): void;
 		addHandler(handler: GlobalCallbacks.OSGeneric, ...args): void;
 		hasHandlers(): boolean;

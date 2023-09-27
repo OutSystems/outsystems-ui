@@ -17,12 +17,12 @@
 	position: relative;
 	transition: background 250ms ease;
 	width: 100%;
-	z-index: 0;
+	z-index: var(--layer-global-screen);
 
 	&:hover,
 	&--is-selected {
 		background-color: var(--color-neutral-2);
-		z-index: 1;
+		z-index: var(--layer-local-tier-1);
 
 		// Service Studio Preview
 		& {

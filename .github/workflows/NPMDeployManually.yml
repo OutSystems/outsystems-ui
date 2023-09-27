@@ -1,4 +1,4 @@
-name: release-npm-manually
+name: npm-deploy-manually
 
 on:
     workflow_dispatch:

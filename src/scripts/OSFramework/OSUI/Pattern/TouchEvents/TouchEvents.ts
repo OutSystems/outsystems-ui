@@ -195,7 +195,7 @@ namespace OSFramework.OSUI.Patterns.TouchEvents {
 		}
 
 		/**
-		 * Build TouchEvents
+		 * Method to build the TouchEvents
 		 *
 		 * @memberof OSFramework.Patterns.TouchEvents.TouchEvents
 		 */

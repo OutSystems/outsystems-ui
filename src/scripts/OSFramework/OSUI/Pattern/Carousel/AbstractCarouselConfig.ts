@@ -58,19 +58,19 @@ namespace OSFramework.OSUI.Patterns.Carousel {
 					validatedValue = this.validateNumber(value as number, 1);
 					break;
 				case Enum.Properties.Height:
-					validatedValue = this.validateString(value as string, 'auto');
+					validatedValue = this.validateString(value as string, Enum.Defaults.Height);
 					break;
 				case Enum.Properties.AutoPlay:
 					validatedValue = this.validateBoolean(value as boolean, false);
 					break;
 				case Enum.Properties.ItemsGap:
-					validatedValue = this.validateString(value as string, '0px');
+					validatedValue = this.validateString(value as string, Enum.Defaults.SpaceNone);
 					break;
 				case Enum.Properties.Loop:
 					validatedValue = this.validateBoolean(value as boolean, true);
 					break;
 				case Enum.Properties.Padding:
-					validatedValue = this.validateString(value as string, '0px');
+					validatedValue = this.validateString(value as string, Enum.Defaults.SpaceNone);
 					break;
 				default:
 					validatedValue = super.validateDefault(key, value);

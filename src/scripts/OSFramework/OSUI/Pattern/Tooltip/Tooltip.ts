@@ -721,7 +721,7 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 		}
 
 		/**
-		 * Build tooltip
+		 * Method to build the Tooltip
 		 *
 		 * @memberof OSFramework.Patterns.Tooltip.Tooltip
 		 */

@@ -102,6 +102,10 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 
 		// Close the Balloon
 		private _close(): void {
+			if (this._isOpen === false) {
+				return;
+			}
+
 			// Check if the close will be done by logic instead of user interaction
 			if (this._closeDynamically === false) {
 				// Set focus to the base element
@@ -122,6 +126,8 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			this._updatePatternState();
 			// Cancel the Observer!
 			this._unsetObserver();
+			// Remove event listeners
+			this._unsetEvents(true);
 		}
 
 		// Update stuff at end of close animation
@@ -206,6 +212,9 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 
 		// Close when click outside of pattern
 		private _onBodyClick(_eventType: string, event: MouseEvent): void {
+			if (this._isOpen === false) {
+				return;
+			}
 			// Get the target element
 			const targetElement = event.target as HTMLElement;
 			// Get the closest based on pattern base selector
@@ -213,8 +222,13 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 				targetElement.closest(Constants.Dot + Enum.CssClass.Pattern) ||
 				targetElement.closest(Constants.Dot + Enum.CssClass.BalloonWrapper);
 
-			// If the click occurs outside of this instance and if it's open, close it!
-			if (this._isOpen && getBaseElement !== this.selfElement && getBaseElement !== this._balloonWrapperElement) {
+			// If it's phone, always close, as it is on popup mode
+			if (
+				Helper.DeviceInfo.IsPhone ||
+				(Helper.DeviceInfo.IsPhone === false &&
+					getBaseElement !== this.selfElement &&
+					getBaseElement !== this._balloonWrapperElement)
+			) {
 				this._closeDynamically = true;
 				this._close();
 			}
@@ -367,6 +381,10 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 
 		// Open the Balloon
 		private _open(): void {
+			if (this._isOpen) {
+				return;
+			}
+
 			this._closeDynamically = false;
 			this._isOpen = true;
 
@@ -384,6 +402,9 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 
 			// Set the Observer in order to update it's position if balloon is out of bounds!
 			this._setObserver();
+
+			// Add event listeners
+			Helper.AsyncInvocation(this._setUpEvents.bind(this));
 		}
 
 		// Method to deal with the click at a DropdpownOptionItem
@@ -610,55 +631,63 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			this._selectValuesWrapper.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
 			// Add KeyDown Event to the SelectValuesWrapper (A11y - stuff)
 			this._selectValuesWrapper.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyboardPress);
-			// Add KeyDown Event to the BalloonContent (OptionsWrapper) (A11y - stuff)
-			this._balloonOptionsWrapperElement.addEventListener(
-				GlobalEnum.HTMLEvent.keyDown,
-				this._eventOnkeyboardPress
-			);
-			// If search input exist (A11y - stuff)
-			if (this._balloonSearchInputElement) {
-				this._balloonSearchInputElement.addEventListener(
-					GlobalEnum.HTMLEvent.Click,
-					this._eventOnClickInputSearch
-				);
-				// Add keyPress event in order to capture Escape key
-				this._balloonSearchInputElement.addEventListener(
+
+			if (this.isBuilt) {
+				// Add KeyDown Event to the BalloonContent (OptionsWrapper) (A11y - stuff)
+				this._balloonOptionsWrapperElement.addEventListener(
 					GlobalEnum.HTMLEvent.keyDown,
 					this._eventOnkeyboardPress
 				);
-				// Add BlurEvent in order to manage the Balloon Height when at iOS due to keyboard is in use
-				this._balloonSearchInputElement.addEventListener(
-					GlobalEnum.HTMLEvent.Blur,
-					this._eventOnSearchInputBlur
+				// If search input exist (A11y - stuff)
+				if (this._balloonSearchInputElement) {
+					this._balloonSearchInputElement.addEventListener(
+						GlobalEnum.HTMLEvent.Click,
+						this._eventOnClickInputSearch
+					);
+
+					// Add keyPress event in order to capture Escape key
+					this._balloonSearchInputElement.addEventListener(
+						GlobalEnum.HTMLEvent.keyDown,
+						this._eventOnkeyboardPress
+					);
+					// Add BlurEvent in order to manage the Balloon Height when at iOS due to keyboard is in use
+					this._balloonSearchInputElement.addEventListener(
+						GlobalEnum.HTMLEvent.Blur,
+						this._eventOnSearchInputBlur
+					);
+					// Add FocusEvent in order to manage the Balloon Height when at iOS due to keyboard is in use
+					this._balloonSearchInputElement.addEventListener(
+						GlobalEnum.HTMLEvent.Focus,
+						this._eventOnSearchInputFocus
+					);
+				}
+
+				// Add the BodyClick callback that will be used Close open Dropdown!
+				Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
+					Event.DOMEvents.Listeners.Type.BodyOnClick,
+					this._eventOnBodyClick
 				);
-				// Add FocusEvent in order to manage the Balloon Height when at iOS due to keyboard is in use
-				this._balloonSearchInputElement.addEventListener(
-					GlobalEnum.HTMLEvent.Focus,
-					this._eventOnSearchInputFocus
+
+				// Add the BodyScroll callback that will be used to update the balloon coodinates
+				Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
+					Event.DOMEvents.Listeners.Type.BodyOnScroll,
+					this._eventOnBodyScroll
+				);
+
+				// Update "animation" before the next repaint
+				this._requestAnimationOnBodyScroll = requestAnimationFrame(this._eventOnBodyScroll);
+				// Add the window resize callback that will be used to update the balloon position!
+				Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
+					Event.DOMEvents.Listeners.Type.WindowResize,
+					this._eventOnWindowResize
+				);
+
+				// Add the OnOrientationChange callback that will be used to close the balloon position!
+				Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
+					Event.DOMEvents.Listeners.Type.OrientationChange,
+					this._eventOnOrientationChange
 				);
 			}
-			// Add the BodyClick callback that will be used Close open Dropdown!
-			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
-				Event.DOMEvents.Listeners.Type.BodyOnClick,
-				this._eventOnBodyClick
-			);
-			// Add the BodyScroll callback that will be used to update the balloon coodinates
-			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
-				Event.DOMEvents.Listeners.Type.BodyOnScroll,
-				this._eventOnBodyScroll
-			);
-			// Update "animation" before the next repaint
-			this._requestAnimationOnBodyScroll = requestAnimationFrame(this._eventOnBodyScroll);
-			// Add the window resize callback that will be used to update the balloon position!
-			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
-				Event.DOMEvents.Listeners.Type.WindowResize,
-				this._eventOnWindowResize
-			);
-			// Add the OnOrientationChange callback that will be used to close the balloon position!
-			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
-				Event.DOMEvents.Listeners.Type.OrientationChange,
-				this._eventOnOrientationChange
-			);
 		}
 
 		// Method used to manage the onTouchMove when we're at mobile devices in order to block the window scroll!
@@ -686,9 +715,12 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		}
 
 		// Remove Pattern Events
-		private _unsetEvents(): void {
-			this._selectValuesWrapper.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
-			this._selectValuesWrapper.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyboardPress);
+		private _unsetEvents(isUpdate = false): void {
+			if (isUpdate === false) {
+				this._selectValuesWrapper.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
+				this._selectValuesWrapper.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyboardPress);
+			}
+
 			this._balloonOptionsWrapperElement.removeEventListener(
 				GlobalEnum.HTMLEvent.keyDown,
 				this._eventOnkeyboardPress
@@ -1030,6 +1062,11 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			}
 		}
 
+		/**
+		 * Method to build the DropdownServerSide
+		 *
+		 * @memberof OSUIDropdownServerSide
+		 */
 		public build(): void {
 			super.build();
 			this.setCallbacks();

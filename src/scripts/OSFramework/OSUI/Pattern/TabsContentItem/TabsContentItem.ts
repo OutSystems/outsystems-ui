@@ -84,7 +84,7 @@ namespace OSFramework.OSUI.Patterns.TabsContentItem {
 		}
 
 		/**
-		 * Method to build the pattern
+		 * Method to build the TabsContentItem
 		 *
 		 * @memberof OSFramework.Patterns.TabsContentItem.TabsContentItem
 		 */

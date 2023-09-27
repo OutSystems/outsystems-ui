@@ -17,11 +17,11 @@ namespace OSFramework.OSUI.Event.DOMEvents {
 		 * Getter for handlers
 		 *
 		 * @readonly
-		 * @protected
+		 * @public
 		 * @type {GlobalCallbacks.OSGeneric[]}
 		 * @memberof AbstractEvent
 		 */
-		protected get handlers(): GlobalCallbacks.OSGeneric[] {
+		public get handlers(): GlobalCallbacks.OSGeneric[] {
 			return this._handlers;
 		}
 

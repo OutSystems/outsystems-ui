@@ -193,7 +193,7 @@ $balloonMobileTopMargin: 5vh;
 
 			// Avoid having data-list above other elements in this context, such as a StickyTop SelectAll Option container.
 			& > *:not([data-list]) {
-				z-index: 1;
+				z-index: var(--layer-local-tier-1);
 			}
 		}
 
@@ -488,6 +488,7 @@ body:has(.popup-dialog):has(.osui-dropdown-serverside--is-opened) {
 				overflow: hidden;
 				top: 0;
 				transition: opacity 250ms ease;
+				z-index: var(--layer-global-instant-interaction);
 
 				// Service Studio Preview
 				& {

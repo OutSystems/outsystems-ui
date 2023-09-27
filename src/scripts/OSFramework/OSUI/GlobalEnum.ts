@@ -29,6 +29,7 @@ namespace OSFramework.OSUI.GlobalEnum {
 		LayoutSide = 'layout-side',
 		LayoutTop = 'layout-top',
 		List = 'list',
+		LoginPassword = 'login-password',
 		MainContent = 'main-content',
 		MenuLinks = 'app-menu-links',
 		Placeholder = 'ph',
@@ -67,6 +68,29 @@ namespace OSFramework.OSUI.GlobalEnum {
 		Top = 'top',
 		TopLeft = 'top-left',
 		TopRight = 'top-right',
+	}
+
+	export enum FloatingAlignment {
+		Center = 'center',
+		End = 'end',
+		Start = 'start',
+	}
+
+	export enum FloatingPosition {
+		Auto = 'auto',
+		Bottom = 'bottom',
+		BottomStart = 'bottom-start',
+		BottomEnd = 'bottom-end',
+		Center = 'center',
+		Left = 'left',
+		LeftEnd = 'left-end',
+		LeftStart = 'left-start',
+		Right = 'right',
+		RightEnd = 'right-end',
+		RightStart = 'right-start',
+		Top = 'top',
+		TopStart = 'top-start',
+		TopEnd = 'top-end',
 	}
 
 	/**
@@ -144,7 +168,7 @@ namespace OSFramework.OSUI.GlobalEnum {
 		Name = 'name',
 		StatusBar = 'data-status-bar-height',
 		Style = 'style',
-		type = 'type',
+		Type = 'type',
 	}
 
 	/**
@@ -183,6 +207,13 @@ namespace OSFramework.OSUI.GlobalEnum {
 		TouchStart = 'touchstart',
 		TransitionEnd = 'transitionend',
 		Message = 'message',
+	}
+
+	/**
+	 * OutSystemsUI Custom Events
+	 */
+	export enum CustomEvent {
+		BalloonOnToggle = 'balloon.onToggle',
 	}
 
 	/**
@@ -264,6 +295,7 @@ namespace OSFramework.OSUI.GlobalEnum {
 		Accordion = 'Accordion',
 		AccordionItem = 'Accordion Item',
 		AnimatedLabel = 'Animated Label',
+		Balloon = 'Balloon',
 		BottomSheet = 'Bottom Sheet',
 		ButtonLoading = 'ButtonLoading',
 		Carousel = 'Carousel',
@@ -277,6 +309,7 @@ namespace OSFramework.OSUI.GlobalEnum {
 		InlineSvg = 'InlineSVG',
 		MonthPicker = 'MonthPicker',
 		Notification = 'Notification',
+		OverflowMenu = 'OverflowMenu',
 		ProgressBar = 'Progress Bar',
 		ProgressCircle = 'Progress Circle',
 		RangeSlider = 'Range Slider',
@@ -294,6 +327,7 @@ namespace OSFramework.OSUI.GlobalEnum {
 		Timepicker = 'Timepicker',
 		Tooltip = 'Tooltip',
 		TouchEvents = 'TouchEvents',
+		Video = 'Video',
 	}
 
 	/**
@@ -319,6 +353,7 @@ namespace OSFramework.OSUI.GlobalEnum {
 	export enum InputTypeAttr {
 		Date = 'date',
 		DateTime = 'date-time-edit',
+		Password = 'password',
 		Text = 'text',
 		Time = 'time',
 	}
@@ -392,5 +427,10 @@ namespace OSFramework.OSUI.GlobalEnum {
 		DOMType = 'image/svg+xml',
 		ParserError = 'parsererror',
 		SVG = 'svg',
+	}
+
+	export enum Time {
+		HourInSeconds = 3600,
+		MinuteInSeconds = 60,
 	}
 }

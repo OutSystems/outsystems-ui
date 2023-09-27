@@ -169,7 +169,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 			} else if (this._isUsingDateTime) {
 				return _finalDate;
 			} else {
-				return OSFramework.OSUI.Helper.Dates.NormalizeDateTime(_finalDate);
+				return OSFramework.OSUI.Helper.Dates.NormalizeDateTime(_finalDate, date === this.MaxDate);
 			}
 		}
 

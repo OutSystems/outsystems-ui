@@ -1,3 +1,6 @@
+// FloatingUI => Balloon
+import {computePosition, autoPlacement, AutoPlacementOptions, DetectOverflowOptions, autoUpdate, flip, shift, offset } from './../../node_modules/@floating-ui/dom/index';
+
 // DatePicker => Flatpickr
 import flatpickr from 'flatpickr';
 import { BaseOptions as flatpickrOpts } from 'flatpickr/dist/types/options';
@@ -22,6 +25,15 @@ declare global {
 	//eslint-disable-next-line @typescript-eslint/naming-convention
 	interface Window {
 		cordova: any;
+
+		// FloatingUI => Balloon
+		FloatingUIDOM: FloatingUIDOM;
+		computePosition: typeof computePosition;
+		autoPlacement: typeof autoPlacement;
+		autoUpdate: typeof autoUpdate;
+		flip: typeof flip;
+		shift: typeof shift;
+		offset: typeof offset;
 
 		// DatePicker => Flatpickr
 		flatpickr: typeof flatpickr;
@@ -52,6 +64,20 @@ declare global {
 		connection: any;
 		standalone: any;
 	}
+
+	interface FloatingUIDOM {
+		computePosition: (reference: unknown, floating: unknown, config: ComputePositionConfig) => Promise<ComputePositionReturn>;
+		autoPlacement: (options?: Partial<Options & DetectOverflowOptions>) => Middleware;
+		placementOptions: (AutoPlacementOptions, DetectOverflowOptions) => void;
+		autoUpdate(reference: ReferenceElement, floating: FloatingElement, update: () => void, options?: Partial<Options>): () => void;
+		flip: (options?: Partial<FlipOptions & DetectOverflowOptions>) => Middleware;
+		shift: (options?: Partial<Options & DetectOverflowOptions>) => Middleware;
+		offset: (value?: Options) => Middleware;
+	}
+
+	type AutoPlacementOptions = placementOptions;
+
+	type BalloonAnchor = unknown;
 
 	// Drag Events Type
 	type DragEvents = Event.DragEvent;

@@ -22,9 +22,6 @@ namespace OSFramework.OSUI.Patterns.FlipContent.Enum {
 
 	/**
 	 * Callbacks eventName
-	 *
-	 * @export
-	 * @enum {number}
 	 */
 	export enum Events {
 		OnToggle = 'OnToggle',

@@ -18,7 +18,13 @@ namespace OSFramework.OSUI.Patterns.FlipContent {
 			super(uniqueId, new FlipContentConfig(configs));
 		}
 
-		// Toggle pattern on keypress
+		/**
+		 * Method to toggle pattern on keypress
+		 *
+		 * @private
+		 * @param {KeyboardEvent} e
+		 * @memberof FlipContent
+		 */
 		private _keydownCallback(e: KeyboardEvent): void {
 			//If ENTER or SPACE use toggle to validate & If ESC is pressed then we need to close Flip
 			if (
@@ -32,13 +38,23 @@ namespace OSFramework.OSUI.Patterns.FlipContent {
 			}
 		}
 
-		// Method to remove the event listeners
+		/**
+		 * Method to remove the event listeners
+		 *
+		 * @private
+		 * @memberof FlipContent
+		 */
 		private _removeEvents(): void {
 			this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventKeydown);
 			this._flipWrapperElement.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventClick);
 		}
 
-		// Setting the handlers and the classes for when the FlipSelf is active or not
+		/**
+		 * Method to set the handlers and the classes for when the FlipSelf is active or not
+		 *
+		 * @private
+		 * @memberof FlipContent
+		 */
 		private _setEventHandlers(): void {
 			if (this.configs.FlipSelf) {
 				this.selfElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventKeydown);
@@ -53,14 +69,24 @@ namespace OSFramework.OSUI.Patterns.FlipContent {
 			}
 		}
 
-		// Toggle FlipContent if is to start flipped
+		/**
+		 * Method to toggle FlipContent, if is to start flipped
+		 *
+		 * @private
+		 * @memberof FlipContent
+		 */
 		private _setStartsFlipped() {
 			if (this.isBuilt === false) {
 				this._toggleClasses();
 			}
 		}
 
-		// Set the classes on the pattern's first render, toggle click & parameters changed
+		/**
+		 * Method to set the classes on the pattern's first render, toggle click & parameters changed
+		 *
+		 * @private
+		 * @memberof FlipContent
+		 */
 		private _toggleClasses(): void {
 			if (this.configs.IsFlipped) {
 				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.PatternIsFlipped);
@@ -69,12 +95,22 @@ namespace OSFramework.OSUI.Patterns.FlipContent {
 			}
 		}
 
-		// Triggers the toggle event on the platform
+		/**
+		 * Method to trigger the toggle event on the platform
+		 *
+		 * @private
+		 * @memberof FlipContent
+		 */
 		private _triggerPlatformEvent(): void {
 			this.triggerPlatformEventCallback(this._platformEventOnToggle, this.configs.IsFlipped);
 		}
 
-		// Update the A11Y attributes
+		/**
+		 * Method to update the A11Y attributes
+		 *
+		 * @private
+		 * @memberof FlipContent
+		 */
 		private _updateA11yProperties(): void {
 			if (this.configs.FlipSelf) {
 				Helper.A11Y.AriaAtomicTrue(this.selfElement);
@@ -86,7 +122,7 @@ namespace OSFramework.OSUI.Patterns.FlipContent {
 		}
 
 		/**
-		 * Set the A11Y attributes
+		 * Method to set the A11Y attributes
 		 *
 		 * @protected
 		 * @memberof OSFramework.Patterns.FlipContent.FlipContent
@@ -101,7 +137,7 @@ namespace OSFramework.OSUI.Patterns.FlipContent {
 		}
 
 		/**
-		 * Set the events
+		 * Method to set the events
 		 *
 		 * @protected
 		 * @memberof OSFramework.Patterns.FlipContent.FlipContent
@@ -114,7 +150,7 @@ namespace OSFramework.OSUI.Patterns.FlipContent {
 		}
 
 		/**
-		 * Set the HTML elements
+		 * Method to set the HTML elements
 		 *
 		 * @protected
 		 * @memberof OSFramework.Patterns.FlipContent.FlipContent
@@ -137,7 +173,7 @@ namespace OSFramework.OSUI.Patterns.FlipContent {
 		}
 
 		/**
-		 * Set the HTML elements
+		 * Method to set the HTML elements
 		 *
 		 * @protected
 		 * @memberof OSFramework.Patterns.FlipContent.FlipContent
@@ -147,7 +183,7 @@ namespace OSFramework.OSUI.Patterns.FlipContent {
 		}
 
 		/**
-		 * Building Flip Content
+		 * Method to build the Flip Content
 		 *
 		 * @memberof OSFramework.Patterns.FlipContent.FlipContent
 		 */
@@ -168,7 +204,7 @@ namespace OSFramework.OSUI.Patterns.FlipContent {
 		}
 
 		/**
-		 * Update value when a parameters changed occurs
+		 * Method to update value when a parameters changed occurs
 		 *
 		 * @param {string} propertyName
 		 * @param {unknown} propertyValue
@@ -191,7 +227,7 @@ namespace OSFramework.OSUI.Patterns.FlipContent {
 		}
 
 		/**
-		 * Destroy FlipContent
+		 * Method to destroy FlipContent
 		 *
 		 * @memberof OSFramework.Patterns.FlipContent.FlipContent
 		 */
@@ -203,7 +239,7 @@ namespace OSFramework.OSUI.Patterns.FlipContent {
 		}
 
 		/**
-		 * Register a given callback event handler.
+		 * Method to register a given callback event handler.
 		 *
 		 * @param {string} eventName
 		 * @param {GlobalCallbacks.OSGeneric} callback
@@ -221,6 +257,11 @@ namespace OSFramework.OSUI.Patterns.FlipContent {
 			}
 		}
 
+		/**
+		 * Method to show the back content
+		 *
+		 * @memberof FlipContent
+		 */
 		public showBackContent(): void {
 			if (this.configs.IsFlipped === false) {
 				this.toggleFlipContent();
@@ -228,7 +269,7 @@ namespace OSFramework.OSUI.Patterns.FlipContent {
 		}
 
 		/**
-		 * Tries to show the font
+		 * Method to show the front content
 		 *
 		 * @memberof OSFramework.Patterns.FlipContent.FlipContent
 		 */
@@ -239,7 +280,7 @@ namespace OSFramework.OSUI.Patterns.FlipContent {
 		}
 
 		/**
-		 * Public method to trigger the flipping of the pattern and the event on the platform's side
+		 * Method to trigger the flipping of the pattern and the event on the platform's side
 		 *
 		 * @memberof OSFramework.Patterns.FlipContent.FlipContent
 		 */

@@ -95,9 +95,23 @@ namespace Providers.OSUI.Carousel.Splide {
 		// Used on resize to refresh provider and redefine the width
 		private _redefineCarouselWidth(): void {
 			// Update UI on window resize
-			this.provider.refresh();
-			// Update css variable
-			this._setCarouselWidth();
+			// A simple provider refresh is not enough to cover all situations, where the Carousel has no defined fixed width.
+			// This method is triggered by the global window resize event, that already has a 100ms timeout, to mitigate the performance impact.
+			// Another 500ms were added, to further mitigate the impact
+
+			OSFramework.OSUI.Helper.ApplySetTimeOut(() => {
+				// First lets try to do a simple provider refresh, to update the width correctly
+				this.provider.refresh();
+				// Update width, to be able to properly make the width validation coming next
+				this._setCarouselWidth();
+
+				// If that was still not enough, then let's trigger a full redraw
+				if (this.selfElement.offsetWidth >= window.innerWidth) {
+					this.redraw();
+					// This needs to be called again, to update the size one final time, to prevent situation where the Carousel wouldn't assume 100% width
+					this._setCarouselWidth();
+				}
+			}, 500);
 		}
 
 		// Ensure that the splide track maintains the correct width

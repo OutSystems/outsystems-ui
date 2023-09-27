@@ -33,14 +33,14 @@ namespace OSFramework.OSUI.Patterns.AccordionItem.Enum {
 
 	/**
 	 * Callbacks eventName
-	 *
-	 * @export
-	 * @enum {number}
 	 */
 	export enum Events {
 		OnToggle = 'OnToggle',
 	}
 
+	/**
+	 * AccordionItem Enum IconType
+	 */
 	export enum IconType {
 		Caret = 'Caret',
 		Custom = 'Custom',

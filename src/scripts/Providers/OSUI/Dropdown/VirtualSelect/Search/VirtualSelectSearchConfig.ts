@@ -19,18 +19,21 @@ namespace Providers.OSUI.Dropdown.VirtualSelect.Search {
 		 */
 		protected getSelectedValues(): string[] {
 			const selectedKeyvalues = [];
-
 			// Has selected values?
 			if (this.StartingSelection?.length > 0) {
 				// Check if it's multiple options
 				if (this.AllowMultipleSelection) {
 					// Get the selected key value
 					for (const option of this.StartingSelection) {
-						selectedKeyvalues.push(option.value);
+						if (option.value !== OSFramework.OSUI.Constants.EmptyString) {
+							selectedKeyvalues.push(option.value);
+						}
 					}
 				} else {
 					// It's Single option, set only the first given value
-					selectedKeyvalues.push(this.StartingSelection[0].value);
+					if (this.StartingSelection[0].value !== OSFramework.OSUI.Constants.EmptyString) {
+						selectedKeyvalues.push(this.StartingSelection[0].value);
+					}
 				}
 			}
 
