@@ -1,0 +1,214 @@
+/* Patterns - Interaction - Search */
+////
+/// @group Patterns-Search
+/// Patterns - Interaction - Search
+
+///
+.osui-search {
+	position: relative;
+
+	&:empty {
+		// Service Studio Preview
+		& {
+			-servicestudio-height: 40px;
+		}
+	}
+
+	&__input {
+		position: relative;
+
+		&:empty {
+			// Service Studio Preview
+			& {
+				-servicestudio-background-color: #fff;
+				-servicestudio-border-radius: 4px;
+				-servicestudio-height: 40px;
+			}
+		}
+	}
+
+	.form-control {
+		&[data-input] {
+			padding-left: var(--space-xl);
+		}
+	}
+
+	span.osui-search {
+		&__glass,
+		&__glass-circle,
+		&__glass-bar {
+			display: block;
+			transition: all 300ms ease;
+		}
+
+		&__glass {
+			height: 22px;
+			left: var(--space-base);
+			margin-top: -11px;
+			position: absolute;
+			top: 50%;
+			transform: scale(0.7);
+			width: 18px;
+		}
+
+		&__glass-circle {
+			border-radius: var(--border-radius-circle);
+			box-shadow: inset 0 0 0 3px var(--color-neutral-6);
+			height: 16px;
+			position: absolute;
+			top: 0;
+			width: 16px;
+		}
+
+		&__glass-bar {
+			background-color: var(--color-neutral-6);
+			bottom: 0;
+			height: 10px;
+			position: absolute;
+			right: 0;
+			transform: rotate(-45deg);
+			width: 3px;
+		}
+	}
+}
+
+.form {
+	.osui-search {
+		input[data-input] {
+			margin-bottom: var(--space-none);
+		}
+	}
+}
+
+// IsRTL -------------------------------------------------------------------------
+///
+.is-rtl {
+	.osui-search {
+		&__input:after {
+			left: auto;
+			right: var(--space-base);
+		}
+
+		.form-control[data-input] {
+			padding-left: var(--space-base);
+			padding-right: var(--space-xl);
+		}
+	}
+}
+
+// Layout Native ------------------------------------------------------------------
+///
+
+.layout-native {
+	.header {
+		.osui-search {
+			input[data-input] {
+				&,
+				&:empty {
+					border: var(--border-size-none);
+					padding-left: var(--space-xl);
+				}
+			}
+		}
+	}
+
+	.header-right {
+		.osui-search--native {
+			&.osui-search {
+				background-color: transparent;
+				padding: var(--space-none);
+				position: static;
+
+				&.osui-search--is-open {
+					.osui-search {
+						&__input {
+							transform: translate(0, 0);
+						}
+
+						&__glass-button {
+							span.osui-search {
+								&__glass-circle {
+									border-radius: var(--border-radius-none);
+									height: 22px;
+									transform: translateX(8px) rotate(135deg);
+									width: 3px;
+								}
+
+								&__glass-bar {
+									height: 22px;
+									transform: translateX(-8px) rotate(45deg);
+								}
+							}
+						}
+					}
+
+					span.osui-search__glass {
+						transform: translateY(-24px) scale(0.7);
+					}
+				}
+
+				span.osui-search__glass {
+					transform: translateY(-300%) scale(0.7);
+				}
+			}
+
+			.osui-search {
+				&__glass-button {
+					height: 22px;
+					position: relative;
+					width: 19px;
+				}
+
+				&__input {
+					left: var(--os-safe-area-left);
+					position: absolute;
+					right: 0;
+					top: var(--os-safe-area-top);
+					transform: translate(0, calc(-100% - var(--os-safe-area-top)));
+					transition: all 300ms ease;
+
+					input[data-input] {
+						&,
+						&:empty {
+							height: var(--header-size);
+							padding: var(--space-none) var(--space-xl);
+							transition: none;
+						}
+						&:focus {
+							border-bottom: var(--border-size-s) solid transparent;
+						}
+					}
+
+					::-webkit-input-placeholder {
+						color: var(--color-neutral-6);
+					}
+				}
+			}
+		}
+	}
+
+	.header-content {
+		.osui-search {
+			input[data-input] {
+				&,
+				&:empty {
+					border-radius: var(--border-radius-none);
+				}
+			}
+		}
+	}
+}
+
+// Hide Search on page transitions
+.slide-from-left-enter .layout-native .header-right .osui-search__input,
+.slide-from-left-leave .layout-native .header-right .osui-search__input,
+.slide-from-right-enter .layout-native .header-right .osui-search__input,
+.slide-from-right-leave .layout-native .header-right .osui-search__input,
+.slide-from-top-enter .layout-native .header-right .osui-search__input,
+.slide-from-top-leave .layout-native .header-right .osui-search__input,
+.slide-from-bottom-enter .layout-native .header-right .osui-search__input,
+.slide-from-bottom-leave .layout-native .header-right .osui-search__input,
+.fade-enter .header-right .layout-native .osui-search__input,
+.fade-leave .header-right .layout-native .osui-search__input {
+	display: none;
+}

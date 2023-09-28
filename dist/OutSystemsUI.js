@@ -4457,6 +4457,12 @@ var OSFramework;
             var BottomSheet;
             (function (BottomSheet_1) {
                 class BottomSheet extends Patterns.AbstractPattern {
+                    get gestureEventInstance() {
+                        return this._gestureEventInstance;
+                    }
+                    get hasGestureEvents() {
+                        return this._hasGestureEvents;
+                    }
                     constructor(uniqueId, configs) {
                         super(uniqueId, new BottomSheet_1.BottomSheetConfig(configs));
                         this._isOpen = false;
@@ -4468,12 +4474,6 @@ var OSFramework;
                                 mass: 1,
                             },
                         };
-                    }
-                    get gestureEventInstance() {
-                        return this._gestureEventInstance;
-                    }
-                    get hasGestureEvents() {
-                        return this._hasGestureEvents;
                     }
                     _handleFocusBehavior() {
                         const opts = {
@@ -8644,6 +8644,155 @@ var OSFramework;
     (function (OSUI) {
         var Patterns;
         (function (Patterns) {
+            var Search;
+            (function (Search) {
+                var Enum;
+                (function (Enum) {
+                    let CssClass;
+                    (function (CssClass) {
+                        CssClass["Pattern"] = "osui-search";
+                        CssClass["PatternGlassBar"] = "osui-search__glass-bar";
+                        CssClass["PatternGlassButton"] = "osui-search__glass-button";
+                        CssClass["PatternGlassCircle"] = "osui-search__glass-circle";
+                        CssClass["PatternInput"] = "osui-search__input";
+                        CssClass["PatternIsOpen"] = "osui-search--is-open";
+                        CssClass["PatternNative"] = "osui-search--native";
+                    })(CssClass = Enum.CssClass || (Enum.CssClass = {}));
+                })(Enum = Search.Enum || (Search.Enum = {}));
+            })(Search = Patterns.Search || (Patterns.Search = {}));
+        })(Patterns = OSUI.Patterns || (OSUI.Patterns = {}));
+    })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
+})(OSFramework || (OSFramework = {}));
+var OSFramework;
+(function (OSFramework) {
+    var OSUI;
+    (function (OSUI) {
+        var Patterns;
+        (function (Patterns) {
+            var Search;
+            (function (Search_1) {
+                class Search extends Patterns.AbstractPattern {
+                    constructor(uniqueId, configs) {
+                        super(uniqueId, new Search_1.SearchConfig(configs));
+                        this._enableNative = false;
+                        this._isOpen = false;
+                    }
+                    _nativeSearchBehavior() {
+                        this._enableNative = true;
+                        this.selfElement.classList.add(Search_1.Enum.CssClass.PatternNative);
+                        this._searchInput = OSUI.Helper.Dom.TagSelector(this.selfElement, OSFramework.OSUI.GlobalEnum.HTMLElement.Input);
+                        this._searchGlassButton = document.createElement(OSFramework.OSUI.GlobalEnum.HTMLElement.Div);
+                        this._searchGlassButton.classList.add(Search_1.Enum.CssClass.PatternGlassButton);
+                        this.selfElement.appendChild(this._searchGlassButton);
+                        OSUI.Helper.A11Y.TabIndexFalse(this._searchInput);
+                        OSUI.Helper.A11Y.TabIndexTrue(this._searchGlassButton);
+                        OSUI.Helper.A11Y.AriaExpandedFalse(this._searchGlassButton);
+                        OSUI.Helper.A11Y.AriaLabel(this._searchGlassButton, 'Open Search');
+                        const glassCircle = document.createElement(OSFramework.OSUI.GlobalEnum.HTMLElement.Span);
+                        const glassBar = document.createElement(OSFramework.OSUI.GlobalEnum.HTMLElement.Span);
+                        glassCircle.classList.add(Search_1.Enum.CssClass.PatternGlassCircle);
+                        glassBar.classList.add(Search_1.Enum.CssClass.PatternGlassBar);
+                        this._searchGlassButton.appendChild(glassCircle);
+                        this._searchGlassButton.appendChild(glassBar);
+                        this._searchGlassButton.addEventListener(OSUI.GlobalEnum.HTMLEvent.Click, this._toggleNativeSearch.bind(this));
+                    }
+                    _removeEvents() {
+                        this._searchGlassButton.removeEventListener(OSUI.GlobalEnum.HTMLEvent.Click, this._toggleNativeSearch);
+                    }
+                    _toggleNativeSearch() {
+                        if (this._isOpen) {
+                            this.selfElement.classList.remove(Search_1.Enum.CssClass.PatternIsOpen);
+                            OSUI.Helper.A11Y.TabIndexFalse(this._searchInput);
+                            OSUI.Helper.A11Y.AriaExpandedFalse(this._searchGlassButton);
+                            OSUI.Helper.A11Y.AriaLabel(this._searchGlassButton, 'Open Search');
+                            this._isOpen = false;
+                        }
+                        else {
+                            if (this._searchInput && this._searchInput.value === '') {
+                                OSFramework.OSUI.Helper.ApplySetTimeOut(() => {
+                                    this._searchInput.focus();
+                                }, 300);
+                            }
+                            this.selfElement.classList.add(Search_1.Enum.CssClass.PatternIsOpen);
+                            OSUI.Helper.A11Y.TabIndexTrue(this._searchInput);
+                            OSUI.Helper.A11Y.AriaExpandedTrue(this._searchGlassButton);
+                            OSUI.Helper.A11Y.AriaLabel(this._searchGlassButton, 'Close Search');
+                            this._isOpen = true;
+                        }
+                    }
+                    setA11YProperties() {
+                        console.log(OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
+                    }
+                    setCallbacks() {
+                        console.log(OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
+                    }
+                    setHtmlElements() {
+                        console.log(OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
+                    }
+                    unsetCallbacks() {
+                        console.log(OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
+                    }
+                    unsetHtmlElements() {
+                        this._searchGlassButton = undefined;
+                        this._searchInput = undefined;
+                    }
+                    build() {
+                        super.build();
+                        this.finishBuild();
+                    }
+                    dispose() {
+                        if (this.isBuilt) {
+                            if (this._enableNative) {
+                                this._removeEvents();
+                                this.unsetHtmlElements;
+                            }
+                            super.dispose();
+                        }
+                    }
+                    enableNativeBehavior() {
+                        this._nativeSearchBehavior();
+                    }
+                    setAriaLabel(ariaLabel) {
+                        if (this._searchGlassButton) {
+                            OSUI.Helper.A11Y.AriaLabel(this._searchGlassButton, ariaLabel);
+                        }
+                    }
+                    get IsNativeEnabled() {
+                        return this._enableNative;
+                    }
+                    get IsOpen() {
+                        return this._isOpen;
+                    }
+                }
+                Search_1.Search = Search;
+            })(Search = Patterns.Search || (Patterns.Search = {}));
+        })(Patterns = OSUI.Patterns || (OSUI.Patterns = {}));
+    })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
+})(OSFramework || (OSFramework = {}));
+var OSFramework;
+(function (OSFramework) {
+    var OSUI;
+    (function (OSUI) {
+        var Patterns;
+        (function (Patterns) {
+            var Search;
+            (function (Search) {
+                class SearchConfig extends Patterns.AbstractConfiguration {
+                    constructor(config) {
+                        super(config);
+                    }
+                }
+                Search.SearchConfig = SearchConfig;
+            })(Search = Patterns.Search || (Patterns.Search = {}));
+        })(Patterns = OSUI.Patterns || (OSUI.Patterns = {}));
+    })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
+})(OSFramework || (OSFramework = {}));
+var OSFramework;
+(function (OSFramework) {
+    var OSUI;
+    (function (OSUI) {
+        var Patterns;
+        (function (Patterns) {
             var SectionIndex;
             (function (SectionIndex) {
                 var Enum;
@@ -12222,10 +12371,10 @@ var OutSystems;
             };
             ErrorCodes.Search = {
                 FailChangeProperty: 'OSUI-API-20001',
-                FailClose: 'OSUI-API-20002',
-                FailDispose: 'OSUI-API-20003',
-                FailOpen: 'OSUI-API-20004',
-                FailRegisterCallback: 'OSUI-API-20005',
+                FailDispose: 'OSUI-API-20002',
+                FailRegisterCallback: 'OSUI-API-20003',
+                FailEnableNativeBehavior: 'OSUI-API-20004',
+                FailUpdateGlassButtonAriaLabel: 'OSUI-API-20005',
             };
             ErrorCodes.SectionIndexItem = {
                 FailChangeProperty: 'OSUI-API-21001',
@@ -14481,6 +14630,98 @@ var OutSystems;
                 }
                 RatingAPI.RegisterCallback = RegisterCallback;
             })(RatingAPI = Patterns.RatingAPI || (Patterns.RatingAPI = {}));
+        })(Patterns = OSUI.Patterns || (OSUI.Patterns = {}));
+    })(OSUI = OutSystems.OSUI || (OutSystems.OSUI = {}));
+})(OutSystems || (OutSystems = {}));
+var OutSystems;
+(function (OutSystems) {
+    var OSUI;
+    (function (OSUI) {
+        var Patterns;
+        (function (Patterns) {
+            var SearchAPI;
+            (function (SearchAPI) {
+                const _searchMap = new Map();
+                function ChangeProperty(searchId, propertyName, propertyValue) {
+                    const result = OutSystems.OSUI.Utils.CreateApiResponse({
+                        errorCode: OSUI.ErrorCodes.Search.FailChangeProperty,
+                        callback: () => {
+                            const search = GetSearchById(searchId);
+                            search.changeProperty(propertyName, propertyValue);
+                        },
+                    });
+                    return result;
+                }
+                SearchAPI.ChangeProperty = ChangeProperty;
+                function Create(searchId, configs) {
+                    if (_searchMap.has(searchId)) {
+                        throw new Error(`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.Search} registered under id: ${searchId}`);
+                    }
+                    const _newSearch = new OSFramework.OSUI.Patterns.Search.Search(searchId, JSON.parse(configs));
+                    _searchMap.set(searchId, _newSearch);
+                    return _newSearch;
+                }
+                SearchAPI.Create = Create;
+                function Dispose(searchId) {
+                    const result = OutSystems.OSUI.Utils.CreateApiResponse({
+                        errorCode: OSUI.ErrorCodes.Search.FailDispose,
+                        callback: () => {
+                            const search = GetSearchById(searchId);
+                            search.dispose();
+                            _searchMap.delete(searchId);
+                        },
+                    });
+                    return result;
+                }
+                SearchAPI.Dispose = Dispose;
+                function GetAllSearches() {
+                    return OSFramework.OSUI.Helper.MapOperation.ExportKeys(_searchMap);
+                }
+                SearchAPI.GetAllSearches = GetAllSearches;
+                function GetSearchById(searchId) {
+                    return OSFramework.OSUI.Helper.MapOperation.FindInMap('Search', searchId, _searchMap);
+                }
+                SearchAPI.GetSearchById = GetSearchById;
+                function Initialize(searchId) {
+                    const search = GetSearchById(searchId);
+                    search.build();
+                    return search;
+                }
+                SearchAPI.Initialize = Initialize;
+                function RegisterCallback(searchId, eventName, callback) {
+                    const result = OutSystems.OSUI.Utils.CreateApiResponse({
+                        errorCode: OSUI.ErrorCodes.Search.FailRegisterCallback,
+                        callback: () => {
+                            const _SearchItem = this.GetSearchById(searchId);
+                            _SearchItem.registerCallback(eventName, callback);
+                        },
+                    });
+                    return result;
+                }
+                SearchAPI.RegisterCallback = RegisterCallback;
+                function EnableNativeBehavior(searchId) {
+                    const result = OutSystems.OSUI.Utils.CreateApiResponse({
+                        errorCode: OSUI.ErrorCodes.Search.FailEnableNativeBehavior,
+                        callback: () => {
+                            const search = this.GetSearchById(searchId);
+                            search.enableNativeBehavior();
+                        },
+                    });
+                    return result;
+                }
+                SearchAPI.EnableNativeBehavior = EnableNativeBehavior;
+                function UpdateGlassButtonAriaLabel(searchId, ariaLabel) {
+                    const result = OutSystems.OSUI.Utils.CreateApiResponse({
+                        errorCode: OSUI.ErrorCodes.Search.FailUpdateGlassButtonAriaLabel,
+                        callback: () => {
+                            const search = this.GetSearchById(searchId);
+                            search.setAriaLabel(ariaLabel);
+                        },
+                    });
+                    return result;
+                }
+                SearchAPI.UpdateGlassButtonAriaLabel = UpdateGlassButtonAriaLabel;
+            })(SearchAPI = Patterns.SearchAPI || (Patterns.SearchAPI = {}));
         })(Patterns = OSUI.Patterns || (OSUI.Patterns = {}));
     })(OSUI = OutSystems.OSUI || (OutSystems.OSUI = {}));
 })(OutSystems || (OutSystems = {}));
@@ -17592,19 +17833,39 @@ var Providers;
                     _setParentMinHeight() {
                         OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(this.selfElement, OSFramework.OSUI.GlobalEnum.InlineStyle.Height, this.selfElement.clientHeight + OSFramework.OSUI.GlobalEnum.Units.Pixel);
                     }
+                    _todayButtonKeydown(e) {
+                        switch (e.key) {
+                            case OSFramework.OSUI.GlobalEnum.Keycodes.Tab:
+                                return;
+                            case OSFramework.OSUI.GlobalEnum.Keycodes.Enter:
+                            case OSFramework.OSUI.GlobalEnum.Keycodes.Space:
+                                e.preventDefault();
+                                this.provider.setDate(this.provider.now, true);
+                                this.jumpIntoToday();
+                                break;
+                        }
+                    }
                     _unsetParentMinHeight() {
                         OSFramework.OSUI.Helper.Dom.Styles.RemoveStyleAttribute(this.selfElement, OSFramework.OSUI.GlobalEnum.InlineStyle.Height);
                     }
                     addTodayBtn() {
-                        const todayBtnWrapper = document.createElement(OSFramework.OSUI.GlobalEnum.HTMLElement.Div);
-                        todayBtnWrapper.classList.add(Flatpickr.Enum.CssClasses.TodayBtn);
+                        this._todayButtonElem = document.createElement(OSFramework.OSUI.GlobalEnum.HTMLElement.Div);
+                        this._todayButtonElem.classList.add(Flatpickr.Enum.CssClasses.TodayBtn);
                         const todayBtn = document.createElement(OSFramework.OSUI.GlobalEnum.HTMLElement.Link);
+                        OSFramework.OSUI.Helper.A11Y.TabIndexTrue(todayBtn);
                         const langCode = Flatpickr.l10ns.TodayBtn[this.configs.Lang] !== undefined ? this.configs.Lang : 'en';
                         todayBtn.innerHTML = Flatpickr.l10ns.TodayBtn[langCode].title;
                         OSFramework.OSUI.Helper.A11Y.AriaLabel(todayBtn, Flatpickr.l10ns.TodayBtn[langCode].ariaLabel);
                         todayBtn.addEventListener(OSFramework.OSUI.GlobalEnum.HTMLEvent.Click, this.todayBtnClick.bind(this));
-                        todayBtnWrapper.appendChild(todayBtn);
-                        this.provider.calendarContainer.appendChild(todayBtnWrapper);
+                        todayBtn.addEventListener(OSFramework.OSUI.GlobalEnum.HTMLEvent.keyDown, this._todayButtonKeydown.bind(this));
+                        this._todayButtonElem.appendChild(todayBtn);
+                        this._providerFocusSpanTarget = this.provider.calendarContainer.querySelector('.focus-trap-bottom-element');
+                        if (this._providerFocusSpanTarget) {
+                            this.provider.calendarContainer.insertBefore(this._todayButtonElem, this._providerFocusSpanTarget);
+                        }
+                        else {
+                            this.provider.calendarContainer.appendChild(this._todayButtonElem);
+                        }
                     }
                     createProviderInstance() {
                         this.provider = window.flatpickr(this.datePickerPlatformInputElem, this.flatpickrOpts);
@@ -17715,6 +17976,9 @@ var Providers;
                     close() {
                         if (this.provider.isOpen) {
                             this.provider.close();
+                            if (this.configs.ShowTodayButton) {
+                                OSFramework.OSUI.Helper.A11Y.TabIndexFalse(this._todayButtonElem);
+                            }
                         }
                     }
                     disableDays(disableDays) {
@@ -17741,6 +18005,9 @@ var Providers;
                         const isInputDisable = this.datePickerPlatformInputElem.disabled;
                         if (this.provider.isOpen === false && isInputDisable === false) {
                             this.provider.open();
+                            if (this.configs.ShowTodayButton) {
+                                OSFramework.OSUI.Helper.A11Y.TabIndexTrue(this._todayButtonElem);
+                            }
                         }
                     }
                     registerCallback(eventName, callback) {

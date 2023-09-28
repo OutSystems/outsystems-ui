@@ -2875,6 +2875,53 @@ declare namespace OSFramework.OSUI.Patterns.Rating {
         constructor(config: JSON);
     }
 }
+declare namespace OSFramework.OSUI.Patterns.Search.Enum {
+    enum CssClass {
+        Pattern = "osui-search",
+        PatternGlassBar = "osui-search__glass-bar",
+        PatternGlassButton = "osui-search__glass-button",
+        PatternGlassCircle = "osui-search__glass-circle",
+        PatternInput = "osui-search__input",
+        PatternIsOpen = "osui-search--is-open",
+        PatternNative = "osui-search--native"
+    }
+}
+declare namespace OSFramework.OSUI.Patterns.Search {
+    interface ISearch extends Interface.IPattern {
+        IsNativeEnabled: boolean;
+        IsOpen: boolean;
+        enableNativeBehavior(): void;
+        setAriaLabel(ariaLabel: string): void;
+    }
+}
+declare namespace OSFramework.OSUI.Patterns.Search {
+    class Search extends AbstractPattern<SearchConfig> implements ISearch {
+        private _enableNative;
+        private _isOpen;
+        private _searchGlassButton;
+        private _searchInput;
+        constructor(uniqueId: string, configs: JSON);
+        private _nativeSearchBehavior;
+        private _removeEvents;
+        private _toggleNativeSearch;
+        protected setA11YProperties(): void;
+        protected setCallbacks(): void;
+        protected setHtmlElements(): void;
+        protected unsetCallbacks(): void;
+        protected unsetHtmlElements(): void;
+        build(): void;
+        dispose(): void;
+        enableNativeBehavior(): void;
+        setAriaLabel(ariaLabel: string): void;
+        get IsNativeEnabled(): boolean;
+        get IsOpen(): boolean;
+    }
+}
+declare namespace OSFramework.OSUI.Patterns.Search {
+    class SearchConfig extends AbstractConfiguration {
+        constructor(config: JSON);
+    }
+}
 declare namespace OSFramework.OSUI.Patterns.SectionIndex.Enum {
     enum ChildNotifyActionType {
         Active = "active",
@@ -4012,10 +4059,10 @@ declare namespace OutSystems.OSUI.ErrorCodes {
     };
     const Search: {
         FailChangeProperty: string;
-        FailClose: string;
         FailDispose: string;
-        FailOpen: string;
         FailRegisterCallback: string;
+        FailEnableNativeBehavior: string;
+        FailUpdateGlassButtonAriaLabel: string;
     };
     const SectionIndexItem: {
         FailChangeProperty: string;
@@ -4384,6 +4431,17 @@ declare namespace OutSystems.OSUI.Patterns.RatingAPI {
     function GetRatingById(ratingId: string): OSFramework.OSUI.Patterns.Rating.IRating;
     function Initialize(ratingId: string): OSFramework.OSUI.Patterns.Rating.IRating;
     function RegisterCallback(ratingId: string, eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): string;
+}
+declare namespace OutSystems.OSUI.Patterns.SearchAPI {
+    function ChangeProperty(searchId: string, propertyName: string, propertyValue: any): string;
+    function Create(searchId: string, configs: string): OSFramework.OSUI.Patterns.Search.ISearch;
+    function Dispose(searchId: string): string;
+    function GetAllSearches(): Array<string>;
+    function GetSearchById(searchId: string): OSFramework.OSUI.Patterns.Search.ISearch;
+    function Initialize(searchId: string): OSFramework.OSUI.Patterns.Search.ISearch;
+    function RegisterCallback(searchId: string, eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): string;
+    function EnableNativeBehavior(searchId: string): string;
+    function UpdateGlassButtonAriaLabel(searchId: string, ariaLabel: string): string;
 }
 declare namespace OutSystems.OSUI.Patterns.SectionIndexAPI {
     function ChangeProperty(sectionIndexId: string, propertyName: string, propertyValue: any): string;
@@ -4777,6 +4835,8 @@ declare namespace Providers.OSUI.Datepicker.Flatpickr {
     abstract class AbstractFlatpickr<C extends Flatpickr.AbstractFlatpickrConfig> extends OSFramework.OSUI.Patterns.DatePicker.AbstractDatePicker<Flatpickr, C> implements IFlatpickr {
         private _a11yInfoContainerElem;
         private _bodyScrollCommonBehaviour;
+        private _providerFocusSpanTarget;
+        private _todayButtonElem;
         private _zindexCommonBehavior;
         protected datePickerPlatformInputElem: HTMLInputElement;
         protected flatpickrInputElem: HTMLInputElement;
@@ -4786,6 +4846,7 @@ declare namespace Providers.OSUI.Datepicker.Flatpickr {
         private _setAttributes;
         private _setCalendarCssClasses;
         private _setParentMinHeight;
+        private _todayButtonKeydown;
         private _unsetParentMinHeight;
         protected addTodayBtn(): void;
         protected createProviderInstance(): void;

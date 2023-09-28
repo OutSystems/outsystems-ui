@@ -197,10 +197,10 @@ namespace OutSystems.OSUI.ErrorCodes {
 
 	export const Search = {
 		FailChangeProperty: 'OSUI-API-20001',
-		FailClose: 'OSUI-API-20002',
-		FailDispose: 'OSUI-API-20003',
-		FailOpen: 'OSUI-API-20004',
-		FailRegisterCallback: 'OSUI-API-20005',
+		FailDispose: 'OSUI-API-20002',
+		FailRegisterCallback: 'OSUI-API-20003',
+		FailEnableNativeBehavior: 'OSUI-API-20004',
+		FailUpdateGlassButtonAriaLabel: 'OSUI-API-20005',
 	};
 
 	export const SectionIndexItem = {
