@@ -12,10 +12,10 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 		extends AbstractChild<SectionIndexItemConfig, SectionIndex.ISectionIndex>
 		implements ISectionIndexItem
 	{
-		// Event OnBodyScroll
-		private _eventOnBodyScroll: GlobalCallbacks.Generic;
 		// Store the on click event
 		private _eventOnClick: GlobalCallbacks.Generic;
+		// Event OnScreenScroll
+		private _eventOnScreenScroll: GlobalCallbacks.Generic;
 		//Stores the keyboard callback function
 		private _eventOnkeyBoardPress: GlobalCallbacks.Generic;
 		// Store the header size if it's fixed!
@@ -38,13 +38,23 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 			super(uniqueId, new SectionIndexItemConfig(configs));
 		}
 
-		/**
-		 * Method to check the scroll to know if the target element is visible and sets the item as active
-		 *
-		 * @private
-		 * @memberof SectionIndexItem
-		 */
-		private _onBodyScroll(): void {
+		// Method to set the A11y keyboard navigation
+		private _onKeyboardPressed(event: KeyboardEvent): void {
+			event.preventDefault();
+			event.stopPropagation();
+
+			switch (event.key) {
+				// If Enter or Space Keys trigger as a click event!
+				case GlobalEnum.Keycodes.Enter:
+				case GlobalEnum.Keycodes.Space:
+					// Triggered as it was clicked!
+					this._onSelected(event);
+					break;
+			}
+		}
+
+		// Method to check the scroll to know if the target element is visible and sets the item as active
+		private _onScreenScroll(): void {
 			// Set target element offset info!
 			this._setTargetOffsetInfo();
 			// Get the vertical scroll position value
@@ -62,7 +72,7 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 				- AND;
 				- If scroll has hit the bottom and element doesn't have height enought to be placed at that
 				offset it should set it as IsActive since it will be the last item in screen inside the scrollContainer.
-			 */
+				*/
 			if (
 				(this.isFirstChild && scrollYPosition.percentageInView === 0) ||
 				(elementOffsetTopVal >= -thresholdVal && elementOffsetTopVal <= thresholdVal) ||
@@ -72,34 +82,7 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 			}
 		}
 
-		/**
-		 * Method to set the A11y keyboard navigation
-		 *
-		 * @private
-		 * @param {KeyboardEvent} event
-		 * @memberof SectionIndexItem
-		 */
-		private _onKeyboardPressed(event: KeyboardEvent): void {
-			event.preventDefault();
-			event.stopPropagation();
-
-			switch (event.key) {
-				// If Enter or Space Keys trigger as a click event!
-				case GlobalEnum.Keycodes.Enter:
-				case GlobalEnum.Keycodes.Space:
-					// Triggered as it was clicked!
-					this._onSelected(event);
-					break;
-			}
-		}
-
-		/**
-		 * Method to handle the click event
-		 *
-		 * @private
-		 * @param {Event} event
-		 * @memberof SectionIndexItem
-		 */
+		// Method to handle the click event
 		private _onSelected(event: Event): void {
 			event.preventDefault();
 			event.stopPropagation();
@@ -111,27 +94,17 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 			this.notifyParent(SectionIndex.Enum.ChildNotifyActionType.Click);
 		}
 
-		/**
-		 * Method to remove Pattern events
-		 *
-		 * @private
-		 * @memberof SectionIndexItem
-		 */
+		// Method to remove Pattern events
 		private _removeEvents(): void {
 			this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
 			this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyBoardPress);
 			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
-				Event.DOMEvents.Listeners.Type.BodyOnScroll,
-				this._eventOnBodyScroll
+				Event.DOMEvents.Listeners.Type.ScreenOnScroll,
+				this._eventOnScreenScroll
 			);
 		}
 
-		/**
-		 * Method to check if header IsFixed
-		 *
-		 * @private
-		 * @memberof SectionIndexItem
-		 */
+		// Method to check if header IsFixed
 		private _setHeaderSize(): void {
 			const header = Helper.Dom.ClassSelector(document.body, GlobalEnum.CssClassElements.Header);
 			this._headerIsFixed = !!Helper.Dom.ClassSelector(document.body, GlobalEnum.CssClassElements.HeaderIsFixed);
@@ -142,23 +115,12 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 			}
 		}
 
-		/**
-		 * Method to add a data attribute to be used in automated tests
-		 * and to have info on DOM of which element the index is pointing
-		 *
-		 * @private
-		 * @memberof SectionIndexItem
-		 */
+		// Method to add a data attribute to be used in automated tests and to have info on DOM of which element the index is pointing
 		private _setLinkAttribute(): void {
 			Helper.Dom.Attribute.Set(this.selfElement, Enum.DataTypes.dataItem, this.configs.ScrollToWidgetId);
 		}
 
-		/**
-		 * Method to set the TargetElement
-		 *
-		 * @private
-		 * @memberof SectionIndexItem
-		 */
+		// Method to set the TargetElement
 		private _setTargetElement(): void {
 			// Check if the element has been already defined!
 			if (this._targetElement === undefined) {
@@ -174,12 +136,7 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 			}
 		}
 
-		/**
-		 * Method to set the offset info related with TargetElement
-		 *
-		 * @private
-		 * @memberof SectionIndexItem
-		 */
+		// Method to set the offset info related with TargetElement
 		private _setTargetOffsetInfo(): void {
 			// Check if TargetElement has been already defined, otherwise define it!
 			this._setTargetElement();
@@ -192,19 +149,14 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 				this._targetElement.offsetTop + this._headerHeight + (this.parentObject.contentPaddingTop as number);
 		}
 
-		/**
-		 * Method to set the event listeners
-		 *
-		 * @private
-		 * @memberof SectionIndexItem
-		 */
+		// Method to set the event listeners
 		private _setUpEvents(): void {
 			this.selfElement.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
 			this.selfElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyBoardPress);
 			// Add the BodyScroll callback that will be used to update the balloon coodinates
 			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
-				Event.DOMEvents.Listeners.Type.BodyOnScroll,
-				this._eventOnBodyScroll
+				Event.DOMEvents.Listeners.Type.ScreenOnScroll,
+				this._eventOnScreenScroll
 			);
 		}
 
@@ -230,7 +182,7 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 		protected setCallbacks(): void {
 			this._eventOnClick = this._onSelected.bind(this);
 			this._eventOnkeyBoardPress = this._onKeyboardPressed.bind(this);
-			this._eventOnBodyScroll = this._onBodyScroll.bind(this);
+			this._eventOnScreenScroll = this._onScreenScroll.bind(this);
 		}
 
 		/**
@@ -269,7 +221,7 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 
 			this._eventOnClick = undefined;
 			this._eventOnkeyBoardPress = undefined;
-			this._eventOnBodyScroll = undefined;
+			this._eventOnScreenScroll = undefined;
 		}
 
 		/**
