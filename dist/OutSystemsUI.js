@@ -11357,8 +11357,7 @@ var OSFramework;
                         OSUI.Helper.A11Y.RoleButton(this._tooltipIconElem);
                         OSUI.Helper.A11Y.RoleTooltip(this._tooltipBalloonWrapperElem);
                         OSUI.Helper.A11Y.AriaDescribedBy(this._tooltipIconElem, this._tooltipBalloonContentElem.id);
-                        OSUI.Helper.A11Y.AriaHiddenFalse(this._tooltipBalloonWrapperElem);
-                        OSUI.Helper.A11Y.AriaHiddenFalse(this._tooltipBalloonWrapperElem);
+                        OSUI.Helper.A11Y.AriaHiddenTrue(this._tooltipBalloonWrapperElem);
                         OSUI.Helper.A11Y.TabIndexTrue(this._tooltipIconElem);
                     }
                     setCallbacks() {

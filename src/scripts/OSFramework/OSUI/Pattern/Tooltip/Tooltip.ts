@@ -631,9 +631,7 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 			// Set AriaDescribedBy to the TooltipBalloon
 			Helper.A11Y.AriaDescribedBy(this._tooltipIconElem, this._tooltipBalloonContentElem.id);
 			// Set the AriaHidden to the balloon!
-			Helper.A11Y.AriaHiddenFalse(this._tooltipBalloonWrapperElem);
-			// Set the AriaHidden to the balloon!
-			Helper.A11Y.AriaHiddenFalse(this._tooltipBalloonWrapperElem);
+			Helper.A11Y.AriaHiddenTrue(this._tooltipBalloonWrapperElem);
 			// Set TabIndex to the TooltipTrigger
 			Helper.A11Y.TabIndexTrue(this._tooltipIconElem);
 		}
