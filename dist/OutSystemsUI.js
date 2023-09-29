@@ -11172,6 +11172,15 @@ var OSFramework;
                             cancelAnimationFrame(this._requestAnimationOnWindowResize);
                         }
                     }
+                    _onkeypressCallback(e) {
+                        const isEscapedPressed = e.key === OSUI.GlobalEnum.Keycodes.Escape;
+                        if (this._isOpen) {
+                            if (isEscapedPressed) {
+                                this.close();
+                            }
+                        }
+                        e.stopPropagation();
+                    }
                     _setBalloonCoordinates() {
                         const selfElement = this.selfElement.getBoundingClientRect();
                         if (selfElement.x === this._selfElementBoundingClientRect.x &&
@@ -11241,6 +11250,7 @@ var OSFramework;
                         if (OSUI.Helper.DeviceInfo.HasAccessibilityEnabled) {
                             this._tooltipIconElem.addEventListener(OSUI.GlobalEnum.HTMLEvent.Blur, this._eventOnBlur);
                             this._tooltipIconElem.addEventListener(OSUI.GlobalEnum.HTMLEvent.Focus, this._eventOnFocus);
+                            this._tooltipIconElem.addEventListener(OSUI.GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
                         }
                         OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnScroll, this._eventOnBodyScroll);
                         this._requestAnimationOnBodyScroll = requestAnimationFrame(this._eventOnBodyScroll);
@@ -11265,7 +11275,6 @@ var OSFramework;
                             this._isOpen = false;
                             OSUI.Helper.Dom.Styles.RemoveClass(this.selfElement, Tooltip_1.Enum.CssClass.IsOpened);
                             OSUI.Helper.Dom.Styles.RemoveClass(this._tooltipBalloonWrapperElem, Tooltip_1.Enum.CssClass.BalloonIsOpened);
-                            OSUI.Helper.A11Y.AriaHiddenTrue(this._tooltipBalloonWrapperElem);
                             this._unsetObserver();
                             if (this._tooltipBalloonPositionClass !== this.configs.Position) {
                                 OSUI.Helper.Dom.Styles.RemoveClass(this._tooltipBalloonWrapperElem, this._tooltipBalloonPositionClass);
@@ -11287,7 +11296,6 @@ var OSFramework;
                             this._unsetObserver();
                             this._setBalloonCoordinates();
                             this._setBalloonPosition(false, this._tooltipBalloonContentElem.getBoundingClientRect());
-                            OSUI.Helper.A11Y.AriaHiddenFalse(this._tooltipBalloonWrapperElem);
                             OSUI.Helper.AsyncInvocation(() => {
                                 OSUI.Helper.Dom.Styles.AddClass(this._tooltipBalloonWrapperElem, Tooltip_1.Enum.CssClass.BalloonIsOpening);
                                 this._tooltipBalloonContentElem.addEventListener(OSUI.GlobalEnum.HTMLEvent.TransitionEnd, this._eventOnOpenedBalloon);
@@ -11306,6 +11314,7 @@ var OSFramework;
                         this._tooltipIconElem.removeEventListener(OSUI.GlobalEnum.HTMLEvent.Click, this._eventOnClick);
                         this._tooltipIconElem.removeEventListener(OSUI.GlobalEnum.HTMLEvent.Blur, this._eventOnBlur);
                         this._tooltipIconElem.removeEventListener(OSUI.GlobalEnum.HTMLEvent.Focus, this._eventOnFocus);
+                        this._tooltipIconElem.removeEventListener(OSUI.GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
                         this._tooltipBalloonContentElem.removeEventListener(OSUI.GlobalEnum.HTMLEvent.Click, this._eventOnBalloonClick);
                         OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick, this._eventOnBodyClick);
                         OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnScroll, this._eventOnBodyScroll);
@@ -11345,12 +11354,12 @@ var OSFramework;
                         }
                     }
                     setA11YProperties() {
-                        OSUI.Helper.A11Y.RoleTooltip(this._tooltipIconElem);
-                        OSUI.Helper.A11Y.AriaLabel(this._tooltipIconElem, Tooltip_1.Enum.AriaLabelText.Content);
+                        OSUI.Helper.A11Y.RoleButton(this._tooltipIconElem);
+                        OSUI.Helper.A11Y.RoleTooltip(this._tooltipBalloonWrapperElem);
+                        OSUI.Helper.A11Y.AriaDescribedBy(this._tooltipIconElem, this._tooltipBalloonContentElem.id);
+                        OSUI.Helper.A11Y.AriaHiddenFalse(this._tooltipBalloonWrapperElem);
+                        OSUI.Helper.A11Y.AriaHiddenFalse(this._tooltipBalloonWrapperElem);
                         OSUI.Helper.A11Y.TabIndexTrue(this._tooltipIconElem);
-                        OSUI.Helper.A11Y.AriaDescribedBy(this._tooltipIconElem, this._tooltipBalloonWrapperElem.id);
-                        OSUI.Helper.A11Y.AriaLabelledBy(this._tooltipIconElem, this._tooltipBalloonWrapperElem.id);
-                        OSUI.Helper.A11Y.AriaHiddenTrue(this._tooltipBalloonWrapperElem);
                     }
                     setCallbacks() {
                         this._eventOnBalloonClick = this._onBalloonClick.bind(this);
@@ -11360,6 +11369,7 @@ var OSFramework;
                         this._eventOnClick = this._onClick.bind(this);
                         this._eventOnFocus = this._onFocus.bind(this);
                         this._eventOnOpenedBalloon = this._onOpenedBalloon.bind(this);
+                        this._eventOnKeypress = this._onkeypressCallback.bind(this);
                         this._eventOnWindowResize = this._onWindowResize.bind(this);
                         this._eventBalloonWrapperOnMouseEnter = this._onBalloonWrapperMouseEnter.bind(this);
                         this._eventBalloonWrapperOnMouseLeave = this._onBalloonWrapperMouseLeave.bind(this);
@@ -11390,6 +11400,7 @@ var OSFramework;
                         this._eventOnClick = undefined;
                         this._eventOnFocus = undefined;
                         this._eventOnOpenedBalloon = undefined;
+                        this._eventOnKeypress = undefined;
                         this._eventOnWindowResize = undefined;
                         this._eventBalloonWrapperOnMouseEnter = undefined;
                         this._eventBalloonWrapperOnMouseLeave = undefined;
@@ -17592,19 +17603,39 @@ var Providers;
                     _setParentMinHeight() {
                         OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(this.selfElement, OSFramework.OSUI.GlobalEnum.InlineStyle.Height, this.selfElement.clientHeight + OSFramework.OSUI.GlobalEnum.Units.Pixel);
                     }
+                    _todayButtonKeydown(e) {
+                        switch (e.key) {
+                            case OSFramework.OSUI.GlobalEnum.Keycodes.Tab:
+                                return;
+                            case OSFramework.OSUI.GlobalEnum.Keycodes.Enter:
+                            case OSFramework.OSUI.GlobalEnum.Keycodes.Space:
+                                e.preventDefault();
+                                this.provider.setDate(this.provider.now, true);
+                                this.jumpIntoToday();
+                                break;
+                        }
+                    }
                     _unsetParentMinHeight() {
                         OSFramework.OSUI.Helper.Dom.Styles.RemoveStyleAttribute(this.selfElement, OSFramework.OSUI.GlobalEnum.InlineStyle.Height);
                     }
                     addTodayBtn() {
-                        const todayBtnWrapper = document.createElement(OSFramework.OSUI.GlobalEnum.HTMLElement.Div);
-                        todayBtnWrapper.classList.add(Flatpickr.Enum.CssClasses.TodayBtn);
+                        this._todayButtonElem = document.createElement(OSFramework.OSUI.GlobalEnum.HTMLElement.Div);
+                        this._todayButtonElem.classList.add(Flatpickr.Enum.CssClasses.TodayBtn);
                         const todayBtn = document.createElement(OSFramework.OSUI.GlobalEnum.HTMLElement.Link);
+                        OSFramework.OSUI.Helper.A11Y.TabIndexTrue(todayBtn);
                         const langCode = Flatpickr.l10ns.TodayBtn[this.configs.Lang] !== undefined ? this.configs.Lang : 'en';
                         todayBtn.innerHTML = Flatpickr.l10ns.TodayBtn[langCode].title;
                         OSFramework.OSUI.Helper.A11Y.AriaLabel(todayBtn, Flatpickr.l10ns.TodayBtn[langCode].ariaLabel);
                         todayBtn.addEventListener(OSFramework.OSUI.GlobalEnum.HTMLEvent.Click, this.todayBtnClick.bind(this));
-                        todayBtnWrapper.appendChild(todayBtn);
-                        this.provider.calendarContainer.appendChild(todayBtnWrapper);
+                        todayBtn.addEventListener(OSFramework.OSUI.GlobalEnum.HTMLEvent.keyDown, this._todayButtonKeydown.bind(this));
+                        this._todayButtonElem.appendChild(todayBtn);
+                        this._providerFocusSpanTarget = this.provider.calendarContainer.querySelector('.focus-trap-bottom-element');
+                        if (this._providerFocusSpanTarget) {
+                            this.provider.calendarContainer.insertBefore(this._todayButtonElem, this._providerFocusSpanTarget);
+                        }
+                        else {
+                            this.provider.calendarContainer.appendChild(this._todayButtonElem);
+                        }
                     }
                     createProviderInstance() {
                         this.provider = window.flatpickr(this.datePickerPlatformInputElem, this.flatpickrOpts);
@@ -17715,6 +17746,9 @@ var Providers;
                     close() {
                         if (this.provider.isOpen) {
                             this.provider.close();
+                            if (this.configs.ShowTodayButton) {
+                                OSFramework.OSUI.Helper.A11Y.TabIndexFalse(this._todayButtonElem);
+                            }
                         }
                     }
                     disableDays(disableDays) {
@@ -17741,6 +17775,9 @@ var Providers;
                         const isInputDisable = this.datePickerPlatformInputElem.disabled;
                         if (this.provider.isOpen === false && isInputDisable === false) {
                             this.provider.open();
+                            if (this.configs.ShowTodayButton) {
+                                OSFramework.OSUI.Helper.A11Y.TabIndexTrue(this._todayButtonElem);
+                            }
                         }
                     }
                     registerCallback(eventName, callback) {

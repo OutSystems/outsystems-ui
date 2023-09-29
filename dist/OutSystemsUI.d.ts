@@ -3575,8 +3575,10 @@ declare namespace OSFramework.OSUI.Patterns.Tooltip {
         private _eventOnBodyScroll;
         private _eventOnClick;
         private _eventOnFocus;
+        private _eventOnKeypress;
         private _eventOnOpenedBalloon;
         private _eventOnWindowResize;
+        private _focusManagerInstance;
         private _intersectionObserver;
         private _isBalloonWrapperMouseEnter;
         private _isIconMouseEnter;
@@ -3605,6 +3607,7 @@ declare namespace OSFramework.OSUI.Patterns.Tooltip {
         private _onIconMouseLeave;
         private _onOpenedBalloon;
         private _onWindowResize;
+        private _onkeypressCallback;
         private _setBalloonCoordinates;
         private _setBalloonPosition;
         private _setBalloonWrapperExtendedClass;
@@ -4777,6 +4780,8 @@ declare namespace Providers.OSUI.Datepicker.Flatpickr {
     abstract class AbstractFlatpickr<C extends Flatpickr.AbstractFlatpickrConfig> extends OSFramework.OSUI.Patterns.DatePicker.AbstractDatePicker<Flatpickr, C> implements IFlatpickr {
         private _a11yInfoContainerElem;
         private _bodyScrollCommonBehaviour;
+        private _providerFocusSpanTarget;
+        private _todayButtonElem;
         private _zindexCommonBehavior;
         protected datePickerPlatformInputElem: HTMLInputElement;
         protected flatpickrInputElem: HTMLInputElement;
@@ -4786,6 +4791,7 @@ declare namespace Providers.OSUI.Datepicker.Flatpickr {
         private _setAttributes;
         private _setCalendarCssClasses;
         private _setParentMinHeight;
+        private _todayButtonKeydown;
         private _unsetParentMinHeight;
         protected addTodayBtn(): void;
         protected createProviderInstance(): void;
