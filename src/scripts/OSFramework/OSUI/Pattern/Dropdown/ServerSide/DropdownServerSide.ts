@@ -280,7 +280,13 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 					}
 
 					// If Enter or Space Keys and Single Option
-					if (event.key === GlobalEnum.Keycodes.Enter || event.key === GlobalEnum.Keycodes.Space) {
+					if (
+						event.key === GlobalEnum.Keycodes.Enter ||
+						event.key === GlobalEnum.Keycodes.Space ||
+						event.key === GlobalEnum.Keycodes.ArrowUp ||
+						event.key === GlobalEnum.Keycodes.ArrowDown ||
+						event.key === GlobalEnum.Keycodes.Home
+					) {
 						// Trigger the click in order to be captured also by DOM (body onClick) in order to close other Dropdowns in page if they are open!
 						this._selectValuesWrapper.click();
 					}
@@ -804,6 +810,10 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			// If there is the Search input
 			if (this._balloonSearchInputElement !== undefined) {
 				Helper.A11Y.TabIndex(this._balloonSearchInputElement, tabIndexValue);
+				Helper.A11Y.AriaHidden(
+					this._balloonSearchInputElement,
+					(tabIndexValue === Constants.A11YAttributes.States.TabIndexHidden).toString()
+				);
 			}
 
 			// Ballon Options Wrapper
