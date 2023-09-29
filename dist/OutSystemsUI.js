@@ -1224,39 +1224,13 @@ var OSFramework;
             (function (DOMEvents) {
                 var Listeners;
                 (function (Listeners) {
-                    class BodyOnScroll extends Listeners.AbstractListener {
-                        constructor() {
-                            super(document.body, OSUI.GlobalEnum.HTMLEvent.Scroll);
-                            this.useCapture = true;
-                            this.eventCallback = this._bodyTrigger.bind(this);
-                        }
-                        _bodyTrigger(evt) {
-                            this.trigger(OSUI.GlobalEnum.HTMLEvent.Scroll, evt);
-                        }
-                    }
-                    Listeners.BodyOnScroll = BodyOnScroll;
-                })(Listeners = DOMEvents.Listeners || (DOMEvents.Listeners = {}));
-            })(DOMEvents = Event.DOMEvents || (Event.DOMEvents = {}));
-        })(Event = OSUI.Event || (OSUI.Event = {}));
-    })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
-})(OSFramework || (OSFramework = {}));
-var OSFramework;
-(function (OSFramework) {
-    var OSUI;
-    (function (OSUI) {
-        var Event;
-        (function (Event) {
-            var DOMEvents;
-            (function (DOMEvents) {
-                var Listeners;
-                (function (Listeners) {
                     let Type;
                     (function (Type) {
                         Type["BalloonOnToggle"] = "balloon.onToggle";
                         Type["BodyOnClick"] = "body.onclick";
-                        Type["BodyOnScroll"] = "body.onscroll";
                         Type["BodyOnMouseDown"] = "body.mousedown";
                         Type["OrientationChange"] = "window.onorientationchange";
+                        Type["ScreenOnScroll"] = "screen.onscroll";
                         Type["WindowResize"] = "window.onresize";
                     })(Type = Listeners.Type || (Listeners.Type = {}));
                 })(Listeners = DOMEvents.Listeners || (DOMEvents.Listeners = {}));
@@ -1281,14 +1255,14 @@ var OSFramework;
                                     return new Listeners.BalloonOnToggle();
                                 case Listeners.Type.BodyOnClick:
                                     return new Listeners.BodyOnClick();
-                                case Listeners.Type.BodyOnScroll:
-                                    return new Listeners.BodyOnScroll();
                                 case Listeners.Type.BodyOnMouseDown:
                                     return new Listeners.BodyOnMouseDown();
                                 case Listeners.Type.WindowResize:
                                     return new Listeners.WindowResize();
                                 case Listeners.Type.OrientationChange:
                                     return new Listeners.OrientationChange();
+                                case Listeners.Type.ScreenOnScroll:
+                                    return new Listeners.ScreenOnScroll();
                                 default:
                                     throw new Error(`The listener ${listenerType} is not supported.`);
                             }
@@ -1327,6 +1301,31 @@ var OSFramework;
                         }
                     }
                     Listeners.OrientationChange = OrientationChange;
+                })(Listeners = DOMEvents.Listeners || (DOMEvents.Listeners = {}));
+            })(DOMEvents = Event.DOMEvents || (Event.DOMEvents = {}));
+        })(Event = OSUI.Event || (OSUI.Event = {}));
+    })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
+})(OSFramework || (OSFramework = {}));
+var OSFramework;
+(function (OSFramework) {
+    var OSUI;
+    (function (OSUI) {
+        var Event;
+        (function (Event) {
+            var DOMEvents;
+            (function (DOMEvents) {
+                var Listeners;
+                (function (Listeners) {
+                    class ScreenOnScroll extends Listeners.AbstractListener {
+                        constructor() {
+                            super(OSUI.Helper.Dom.ClassSelector(document, OSUI.GlobalEnum.CssClassElements.ActiveScreen), OSUI.GlobalEnum.HTMLEvent.Scroll);
+                            this.eventCallback = this._screenTrigger.bind(this);
+                        }
+                        _screenTrigger(evt) {
+                            this.trigger(OSUI.GlobalEnum.HTMLEvent.Scroll, evt);
+                        }
+                    }
+                    Listeners.ScreenOnScroll = ScreenOnScroll;
                 })(Listeners = DOMEvents.Listeners || (DOMEvents.Listeners = {}));
             })(DOMEvents = Event.DOMEvents || (Event.DOMEvents = {}));
         })(Event = OSUI.Event || (OSUI.Event = {}));
@@ -4457,6 +4456,12 @@ var OSFramework;
             var BottomSheet;
             (function (BottomSheet_1) {
                 class BottomSheet extends Patterns.AbstractPattern {
+                    get gestureEventInstance() {
+                        return this._gestureEventInstance;
+                    }
+                    get hasGestureEvents() {
+                        return this._hasGestureEvents;
+                    }
                     constructor(uniqueId, configs) {
                         super(uniqueId, new BottomSheet_1.BottomSheetConfig(configs));
                         this._isOpen = false;
@@ -4468,12 +4473,6 @@ var OSFramework;
                                 mass: 1,
                             },
                         };
-                    }
-                    get gestureEventInstance() {
-                        return this._gestureEventInstance;
-                    }
-                    get hasGestureEvents() {
-                        return this._hasGestureEvents;
                     }
                     _handleFocusBehavior() {
                         const opts = {
@@ -5352,7 +5351,6 @@ var OSFramework;
                             }
                             OSUI.Helper.Dom.Styles.RemoveClass(document.body, ServerSide.Enum.CssClass.IsVisible);
                             this._touchMove();
-                            cancelAnimationFrame(this._requestAnimationOnBodyScroll);
                             this._isOpen = false;
                             this._updatePatternState();
                             this._unsetObserver();
@@ -5417,28 +5415,6 @@ var OSFramework;
                                 this._close();
                             }
                         }
-                        _onBodyScroll(_eventType, event) {
-                            if (this.isBuilt) {
-                                if (event !== undefined && event.target === this._balloonContentElement) {
-                                    cancelAnimationFrame(this._requestAnimationOnBodyScroll);
-                                    return;
-                                }
-                                if (this._isOpen && OSUI.Helper.DeviceInfo.IsDesktop === false) {
-                                    cancelAnimationFrame(this._requestAnimationOnBodyScroll);
-                                    if (OSUI.Helper.DeviceInfo.IsTablet) {
-                                        this._close();
-                                    }
-                                    return;
-                                }
-                                if (this._isOpen) {
-                                    this._setBalloonCoordinates(false);
-                                    this._requestAnimationOnBodyScroll = requestAnimationFrame(this._eventOnBodyScroll);
-                                }
-                                else {
-                                    cancelAnimationFrame(this._requestAnimationOnBodyScroll);
-                                }
-                            }
-                        }
                         _onKeyboardPressed(event) {
                             event.stopPropagation();
                             switch (event.target) {
@@ -5479,6 +5455,15 @@ var OSFramework;
                         _onOrientationChange() {
                             if (this._isOpen) {
                                 this._close();
+                            }
+                        }
+                        _onScreenScroll() {
+                            if (this.isBuilt && this._isOpen) {
+                                if (OSUI.Helper.DeviceInfo.IsTablet) {
+                                    this._close();
+                                    return;
+                                }
+                                requestAnimationFrame(this._setBalloonCoordinates.bind(this));
                             }
                         }
                         _onSearchInputBlur() {
@@ -5595,11 +5580,8 @@ var OSFramework;
                                     selfElement.x === this._selfElementBoundingClientRect.x &&
                                     selfElement.right ===
                                         this._selfElementBoundingClientRect.x + this._selfElementBoundingClientRect.width &&
-                                    selfElement.y === this._selfElementBoundingClientRect.y)) {
-                                cancelAnimationFrame(this._requestAnimationOnBodyScroll);
-                                return;
-                            }
-                            this._selfElementBoundingClientRect.x = selfElement.x;
+                                    selfElement.y === this._selfElementBoundingClientRect.y))
+                                this._selfElementBoundingClientRect.x = selfElement.x;
                             this._selfElementBoundingClientRect.y = selfElement.y;
                             OSUI.Helper.Dom.Styles.SetStyleAttribute(this._balloonWrapperElement, ServerSide.Enum.InlineCssVariables.Top, selfElement.top + OSUI.GlobalEnum.Units.Pixel);
                             OSUI.Helper.Dom.Styles.SetStyleAttribute(this._balloonWrapperElement, ServerSide.Enum.InlineCssVariables.Left, selfElement.left + OSUI.GlobalEnum.Units.Pixel);
@@ -5657,8 +5639,9 @@ var OSFramework;
                                     this._balloonSearchInputElement.addEventListener(OSUI.GlobalEnum.HTMLEvent.Focus, this._eventOnSearchInputFocus);
                                 }
                                 OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick, this._eventOnBodyClick);
-                                OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnScroll, this._eventOnBodyScroll);
-                                this._requestAnimationOnBodyScroll = requestAnimationFrame(this._eventOnBodyScroll);
+                                if (OSUI.Helper.DeviceInfo.IsPhone === false) {
+                                    OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.ScreenOnScroll, this._eventOnScreenScroll);
+                                }
                                 OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.WindowResize, this._eventOnWindowResize);
                                 OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.OrientationChange, this._eventOnOrientationChange);
                             }
@@ -5689,7 +5672,9 @@ var OSFramework;
                                 this._balloonSearchInputElement.removeEventListener(OSUI.GlobalEnum.HTMLEvent.Focus, this._eventOnSearchInputFocus);
                             }
                             OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick, this._eventOnBodyClick);
-                            OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnScroll, this._eventOnBodyScroll);
+                            if (OSUI.Helper.DeviceInfo.IsPhone === false) {
+                                OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSUI.Event.DOMEvents.Listeners.Type.ScreenOnScroll, this._eventOnScreenScroll);
+                            }
                             OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSUI.Event.DOMEvents.Listeners.Type.WindowResize, this._eventOnWindowResize);
                             OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSUI.Event.DOMEvents.Listeners.Type.OrientationChange, this._eventOnOrientationChange);
                         }
@@ -5779,7 +5764,7 @@ var OSFramework;
                         }
                         setCallbacks() {
                             this._eventOnBodyClick = this._onBodyClick.bind(this);
-                            this._eventOnBodyScroll = this._onBodyScroll.bind(this);
+                            this._eventOnScreenScroll = this._onScreenScroll.bind(this);
                             this._eventOnClick = this._onSelectValuesWrapperClicked.bind(this);
                             this._eventOnClickInputSearch = this._onSearchInputClicked.bind(this);
                             this._eventOnCloseTransitionEnd = this._endOfCloseAnimation.bind(this);
@@ -5811,7 +5796,7 @@ var OSFramework;
                         }
                         unsetCallbacks() {
                             this._eventOnBodyClick = undefined;
-                            this._eventOnBodyScroll = undefined;
+                            this._eventOnScreenScroll = undefined;
                             this._eventOnClick = undefined;
                             this._eventOnClickInputSearch = undefined;
                             this._eventOnCloseTransitionEnd = undefined;
@@ -8903,17 +8888,6 @@ var OSFramework;
                             top: 0,
                         };
                     }
-                    _onBodyScroll() {
-                        this._setTargetOffsetInfo();
-                        const scrollYPosition = OSUI.Behaviors.ScrollVerticalPosition(this._mainScrollContainerElement);
-                        const thresholdVal = 40;
-                        const elementOffsetTopVal = this._targetElementOffset.top - scrollYPosition.value;
-                        if ((this.isFirstChild && scrollYPosition.percentageInView === 0) ||
-                            (elementOffsetTopVal >= -thresholdVal && elementOffsetTopVal <= thresholdVal) ||
-                            (this.isLastChild && scrollYPosition.percentageInView === 100)) {
-                            this.notifyParent(Patterns.SectionIndex.Enum.ChildNotifyActionType.Active);
-                        }
-                    }
                     _onKeyboardPressed(event) {
                         event.preventDefault();
                         event.stopPropagation();
@@ -8922,6 +8896,17 @@ var OSFramework;
                             case OSUI.GlobalEnum.Keycodes.Space:
                                 this._onSelected(event);
                                 break;
+                        }
+                    }
+                    _onScreenScroll() {
+                        this._setTargetOffsetInfo();
+                        const scrollYPosition = OSUI.Behaviors.ScrollVerticalPosition(this._mainScrollContainerElement);
+                        const thresholdVal = 40;
+                        const elementOffsetTopVal = this._targetElementOffset.top - scrollYPosition.value;
+                        if ((this.isFirstChild && scrollYPosition.percentageInView === 0) ||
+                            (elementOffsetTopVal >= -thresholdVal && elementOffsetTopVal <= thresholdVal) ||
+                            (this.isLastChild && scrollYPosition.percentageInView === 100)) {
+                            this.notifyParent(Patterns.SectionIndex.Enum.ChildNotifyActionType.Active);
                         }
                     }
                     _onSelected(event) {
@@ -8933,7 +8918,7 @@ var OSFramework;
                     _removeEvents() {
                         this.selfElement.removeEventListener(OSUI.GlobalEnum.HTMLEvent.Click, this._eventOnClick);
                         this.selfElement.removeEventListener(OSUI.GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyBoardPress);
-                        OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnScroll, this._eventOnBodyScroll);
+                        OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSUI.Event.DOMEvents.Listeners.Type.ScreenOnScroll, this._eventOnScreenScroll);
                     }
                     _setHeaderSize() {
                         const header = OSUI.Helper.Dom.ClassSelector(document.body, OSUI.GlobalEnum.CssClassElements.Header);
@@ -8964,7 +8949,7 @@ var OSFramework;
                     _setUpEvents() {
                         this.selfElement.addEventListener(OSUI.GlobalEnum.HTMLEvent.Click, this._eventOnClick);
                         this.selfElement.addEventListener(OSUI.GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyBoardPress);
-                        OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnScroll, this._eventOnBodyScroll);
+                        OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.ScreenOnScroll, this._eventOnScreenScroll);
                     }
                     setA11YProperties() {
                         OSUI.Helper.A11Y.RoleButton(this.selfElement);
@@ -8973,7 +8958,7 @@ var OSFramework;
                     setCallbacks() {
                         this._eventOnClick = this._onSelected.bind(this);
                         this._eventOnkeyBoardPress = this._onKeyboardPressed.bind(this);
-                        this._eventOnBodyScroll = this._onBodyScroll.bind(this);
+                        this._eventOnScreenScroll = this._onScreenScroll.bind(this);
                     }
                     setHtmlElements() {
                         if (OSUI.Helper.Dom.Attribute.Has(document.body, OSUI.GlobalEnum.HTMLAttributes.StatusBar) &&
@@ -8988,7 +8973,7 @@ var OSFramework;
                         this._removeEvents();
                         this._eventOnClick = undefined;
                         this._eventOnkeyBoardPress = undefined;
-                        this._eventOnBodyScroll = undefined;
+                        this._eventOnScreenScroll = undefined;
                     }
                     unsetHtmlElements() {
                         this._mainScrollContainerElement = undefined;
@@ -11122,22 +11107,6 @@ var OSFramework;
                             }
                         }
                     }
-                    _onBodyScroll() {
-                        if (this.isBuilt) {
-                            if (this._isOpen && OSUI.Helper.DeviceInfo.IsDesktop === false) {
-                                cancelAnimationFrame(this._requestAnimationOnBodyScroll);
-                                this._triggerClose();
-                                return;
-                            }
-                            if (this._isOpen) {
-                                this._setBalloonCoordinates();
-                                this._requestAnimationOnBodyScroll = requestAnimationFrame(this._eventOnBodyScroll);
-                            }
-                            else {
-                                cancelAnimationFrame(this._requestAnimationOnBodyScroll);
-                            }
-                        }
-                    }
                     _onClick(e) {
                         e.stopPropagation();
                         this._triggerOpen();
@@ -11162,6 +11131,22 @@ var OSFramework;
                     _onOpenedBalloon() {
                         this._tooltipBalloonContentElem.removeEventListener(OSUI.GlobalEnum.HTMLEvent.TransitionEnd, this._eventOnOpenedBalloon);
                         OSUI.Helper.Dom.Styles.RemoveClass(this._tooltipBalloonWrapperElem, Tooltip_1.Enum.CssClass.BalloonIsOpening);
+                    }
+                    _onScreenScroll() {
+                        if (this.isBuilt) {
+                            if (this._isOpen && OSUI.Helper.DeviceInfo.IsDesktop === false) {
+                                cancelAnimationFrame(this._requestAnimationOnBodyScroll);
+                                this._triggerClose();
+                                return;
+                            }
+                            if (this._isOpen) {
+                                this._setBalloonCoordinates();
+                                this._requestAnimationOnBodyScroll = requestAnimationFrame(this._eventOnScreenScroll);
+                            }
+                            else {
+                                cancelAnimationFrame(this._requestAnimationOnBodyScroll);
+                            }
+                        }
                     }
                     _onWindowResize() {
                         this._setBalloonCoordinates();
@@ -11242,8 +11227,8 @@ var OSFramework;
                             this._tooltipIconElem.addEventListener(OSUI.GlobalEnum.HTMLEvent.Blur, this._eventOnBlur);
                             this._tooltipIconElem.addEventListener(OSUI.GlobalEnum.HTMLEvent.Focus, this._eventOnFocus);
                         }
-                        OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnScroll, this._eventOnBodyScroll);
-                        this._requestAnimationOnBodyScroll = requestAnimationFrame(this._eventOnBodyScroll);
+                        OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.ScreenOnScroll, this._eventOnScreenScroll);
+                        this._requestAnimationOnBodyScroll = requestAnimationFrame(this._eventOnScreenScroll);
                         OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.WindowResize, this._eventOnWindowResize);
                         this._requestAnimationOnWindowResize = requestAnimationFrame(this._eventOnWindowResize);
                         if (this._isOpen) {
@@ -11308,7 +11293,7 @@ var OSFramework;
                         this._tooltipIconElem.removeEventListener(OSUI.GlobalEnum.HTMLEvent.Focus, this._eventOnFocus);
                         this._tooltipBalloonContentElem.removeEventListener(OSUI.GlobalEnum.HTMLEvent.Click, this._eventOnBalloonClick);
                         OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick, this._eventOnBodyClick);
-                        OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnScroll, this._eventOnBodyScroll);
+                        OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSUI.Event.DOMEvents.Listeners.Type.ScreenOnScroll, this._eventOnScreenScroll);
                         OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSUI.Event.DOMEvents.Listeners.Type.WindowResize, this._eventOnWindowResize);
                         this._tooltipBalloonContentElem.removeEventListener(OSUI.GlobalEnum.HTMLEvent.TransitionEnd, this._eventOnOpenedBalloon);
                         this._tooltipIconElem.removeEventListener(OSUI.GlobalEnum.HTMLEvent.MouseEnter, this._eventIconOnMouseEnter);
@@ -11356,7 +11341,7 @@ var OSFramework;
                         this._eventOnBalloonClick = this._onBalloonClick.bind(this);
                         this._eventOnBlur = this._onBlur.bind(this);
                         this._eventOnBodyClick = this._onBodyClick.bind(this);
-                        this._eventOnBodyScroll = this._onBodyScroll.bind(this);
+                        this._eventOnScreenScroll = this._onScreenScroll.bind(this);
                         this._eventOnClick = this._onClick.bind(this);
                         this._eventOnFocus = this._onFocus.bind(this);
                         this._eventOnOpenedBalloon = this._onOpenedBalloon.bind(this);
@@ -11386,7 +11371,7 @@ var OSFramework;
                         this._eventOnBalloonClick = undefined;
                         this._eventOnBlur = undefined;
                         this._eventOnBodyClick = undefined;
-                        this._eventOnBodyScroll = undefined;
+                        this._eventOnScreenScroll = undefined;
                         this._eventOnClick = undefined;
                         this._eventOnFocus = undefined;
                         this._eventOnOpenedBalloon = undefined;
@@ -17592,19 +17577,39 @@ var Providers;
                     _setParentMinHeight() {
                         OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(this.selfElement, OSFramework.OSUI.GlobalEnum.InlineStyle.Height, this.selfElement.clientHeight + OSFramework.OSUI.GlobalEnum.Units.Pixel);
                     }
+                    _todayButtonKeydown(e) {
+                        switch (e.key) {
+                            case OSFramework.OSUI.GlobalEnum.Keycodes.Tab:
+                                return;
+                            case OSFramework.OSUI.GlobalEnum.Keycodes.Enter:
+                            case OSFramework.OSUI.GlobalEnum.Keycodes.Space:
+                                e.preventDefault();
+                                this.provider.setDate(this.provider.now, true);
+                                this.jumpIntoToday();
+                                break;
+                        }
+                    }
                     _unsetParentMinHeight() {
                         OSFramework.OSUI.Helper.Dom.Styles.RemoveStyleAttribute(this.selfElement, OSFramework.OSUI.GlobalEnum.InlineStyle.Height);
                     }
                     addTodayBtn() {
-                        const todayBtnWrapper = document.createElement(OSFramework.OSUI.GlobalEnum.HTMLElement.Div);
-                        todayBtnWrapper.classList.add(Flatpickr.Enum.CssClasses.TodayBtn);
+                        this._todayButtonElem = document.createElement(OSFramework.OSUI.GlobalEnum.HTMLElement.Div);
+                        this._todayButtonElem.classList.add(Flatpickr.Enum.CssClasses.TodayBtn);
                         const todayBtn = document.createElement(OSFramework.OSUI.GlobalEnum.HTMLElement.Link);
+                        OSFramework.OSUI.Helper.A11Y.TabIndexTrue(todayBtn);
                         const langCode = Flatpickr.l10ns.TodayBtn[this.configs.Lang] !== undefined ? this.configs.Lang : 'en';
                         todayBtn.innerHTML = Flatpickr.l10ns.TodayBtn[langCode].title;
                         OSFramework.OSUI.Helper.A11Y.AriaLabel(todayBtn, Flatpickr.l10ns.TodayBtn[langCode].ariaLabel);
                         todayBtn.addEventListener(OSFramework.OSUI.GlobalEnum.HTMLEvent.Click, this.todayBtnClick.bind(this));
-                        todayBtnWrapper.appendChild(todayBtn);
-                        this.provider.calendarContainer.appendChild(todayBtnWrapper);
+                        todayBtn.addEventListener(OSFramework.OSUI.GlobalEnum.HTMLEvent.keyDown, this._todayButtonKeydown.bind(this));
+                        this._todayButtonElem.appendChild(todayBtn);
+                        this._providerFocusSpanTarget = this.provider.calendarContainer.querySelector('.focus-trap-bottom-element');
+                        if (this._providerFocusSpanTarget) {
+                            this.provider.calendarContainer.insertBefore(this._todayButtonElem, this._providerFocusSpanTarget);
+                        }
+                        else {
+                            this.provider.calendarContainer.appendChild(this._todayButtonElem);
+                        }
                     }
                     createProviderInstance() {
                         this.provider = window.flatpickr(this.datePickerPlatformInputElem, this.flatpickrOpts);
@@ -17656,7 +17661,8 @@ var Providers;
                                 ariaLabelValue = this.datePickerPlatformInputElem.getAttribute(OSFramework.OSUI.Constants.A11YAttributes.Aria.Label);
                             }
                             OSFramework.OSUI.Helper.A11Y.AriaLabel(this.flatpickrInputElem, ariaLabelValue);
-                            OSFramework.OSUI.Helper.A11Y.AriaDescribedBy(this.flatpickrInputElem, this._a11yInfoContainerElem.id);
+                            if (OSFramework.OSUI.Helper.DeviceInfo.IsDesktop)
+                                OSFramework.OSUI.Helper.A11Y.AriaDescribedBy(this.flatpickrInputElem, this._a11yInfoContainerElem.id);
                             if (this.configs.Lang !== OSFramework.OSUI.Constants.Language.short) {
                                 this._a11yInfoContainerElem.innerHTML =
                                     Datepicker.Flatpickr.l10ns.A11yContainerInfo[this.configs.Lang] !== undefined
@@ -17715,6 +17721,9 @@ var Providers;
                     close() {
                         if (this.provider.isOpen) {
                             this.provider.close();
+                            if (this.configs.ShowTodayButton) {
+                                OSFramework.OSUI.Helper.A11Y.TabIndexFalse(this._todayButtonElem);
+                            }
                         }
                     }
                     disableDays(disableDays) {
@@ -17741,6 +17750,9 @@ var Providers;
                         const isInputDisable = this.datePickerPlatformInputElem.disabled;
                         if (this.provider.isOpen === false && isInputDisable === false) {
                             this.provider.open();
+                            if (this.configs.ShowTodayButton) {
+                                OSFramework.OSUI.Helper.A11Y.TabIndexTrue(this._todayButtonElem);
+                            }
                         }
                     }
                     registerCallback(eventName, callback) {
@@ -20696,11 +20708,11 @@ var Providers;
                         this._setCallbacks();
                         this._setUpEvents();
                     }
-                    _onBodyScroll() {
+                    _onScreenScroll() {
                         if (this._picker.isBuilt) {
                             if (this._picker.provider.isOpen) {
                                 this._picker.provider._positionCalendar();
-                                this._requestAnimationOnBodyScroll = requestAnimationFrame(this._onBodyScrollEvent);
+                                this._requestAnimationOnBodyScroll = requestAnimationFrame(this._onScreenScrollEvent);
                             }
                             else {
                                 cancelAnimationFrame(this._requestAnimationOnBodyScroll);
@@ -20708,21 +20720,21 @@ var Providers;
                         }
                     }
                     _setCallbacks() {
-                        this._onBodyScrollEvent = this._onBodyScroll.bind(this);
+                        this._onScreenScrollEvent = this._onScreenScroll.bind(this);
                     }
                     _setUpEvents() {
-                        OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSFramework.OSUI.Event.DOMEvents.Listeners.Type.BodyOnScroll, this._onBodyScrollEvent);
+                        OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSFramework.OSUI.Event.DOMEvents.Listeners.Type.ScreenOnScroll, this._onScreenScrollEvent);
                     }
                     _unsetCallbacks() {
-                        this._onBodyScrollEvent = undefined;
+                        this._onScreenScrollEvent = undefined;
                     }
                     _unsetEvents() {
-                        OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSFramework.OSUI.Event.DOMEvents.Listeners.Type.BodyOnScroll, this._onBodyScrollEvent);
+                        OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSFramework.OSUI.Event.DOMEvents.Listeners.Type.ScreenOnScroll, this._onScreenScrollEvent);
                     }
                     dispose() {
                         this._unsetEvents();
                         this._unsetCallbacks();
-                        this._onBodyScrollEvent = undefined;
+                        this._onScreenScrollEvent = undefined;
                         this._requestAnimationOnBodyScroll = undefined;
                     }
                 }
