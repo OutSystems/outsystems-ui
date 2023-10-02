@@ -648,12 +648,6 @@ declare namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
     }
 }
 declare namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
-    class BodyOnScroll extends AbstractListener<string> {
-        constructor();
-        private _bodyTrigger;
-    }
-}
-declare namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
     interface IListener extends IEvent<unknown> {
         disableBodyClickEvent?(): void;
         enableBodyClickEvent?(): void;
@@ -663,9 +657,9 @@ declare namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
     enum Type {
         BalloonOnToggle = "balloon.onToggle",
         BodyOnClick = "body.onclick",
-        BodyOnScroll = "body.onscroll",
         BodyOnMouseDown = "body.mousedown",
         OrientationChange = "window.onorientationchange",
+        ScreenOnScroll = "screen.onscroll",
         WindowResize = "window.onresize"
     }
 }
@@ -682,6 +676,12 @@ declare namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
     class OrientationChange extends AbstractListener<string> {
         constructor();
         private _orientationTrigger;
+    }
+}
+declare namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
+    class ScreenOnScroll extends AbstractListener<string> {
+        constructor();
+        private _screenTrigger;
     }
 }
 declare namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
@@ -1916,11 +1916,11 @@ declare namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
         private _balloonWrapperElement;
         private _closeDynamically;
         private _eventOnBodyClick;
-        private _eventOnBodyScroll;
         private _eventOnClick;
         private _eventOnClickInputSearch;
         private _eventOnCloseTransitionEnd;
         private _eventOnOrientationChange;
+        private _eventOnScreenScroll;
         private _eventOnSearchInputBlur;
         private _eventOnSearchInputFocus;
         private _eventOnSpanFocus;
@@ -1933,7 +1933,6 @@ declare namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
         private _isBlocked;
         private _isOpen;
         private _platformEventOnToggleCallback;
-        private _requestAnimationOnBodyScroll;
         private _selectValuesWrapper;
         private _selectValuesWrapperAriaLabel;
         private _selfElementBoundingClientRect;
@@ -1947,9 +1946,9 @@ declare namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
         private _hasNoImplementation;
         private _moveBallonElement;
         private _onBodyClick;
-        private _onBodyScroll;
         private _onKeyboardPressed;
         private _onOrientationChange;
+        private _onScreenScroll;
         private _onSearchInputBlur;
         private _onSearchInputClicked;
         private _onSearchInputFocus;
@@ -3006,8 +3005,8 @@ declare namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 }
 declare namespace OSFramework.OSUI.Patterns.SectionIndexItem {
     class SectionIndexItem extends AbstractChild<SectionIndexItemConfig, SectionIndex.ISectionIndex> implements ISectionIndexItem {
-        private _eventOnBodyScroll;
         private _eventOnClick;
+        private _eventOnScreenScroll;
         private _eventOnkeyBoardPress;
         private _headerHeight;
         private _headerIsFixed;
@@ -3016,8 +3015,8 @@ declare namespace OSFramework.OSUI.Patterns.SectionIndexItem {
         private _targetElement;
         private _targetElementOffset;
         constructor(uniqueId: string, configs: JSON);
-        private _onBodyScroll;
         private _onKeyboardPressed;
+        private _onScreenScroll;
         private _onSelected;
         private _removeEvents;
         private _setHeaderSize;
@@ -3623,10 +3622,10 @@ declare namespace OSFramework.OSUI.Patterns.Tooltip {
         private _eventOnBalloonClick;
         private _eventOnBlur;
         private _eventOnBodyClick;
-        private _eventOnBodyScroll;
         private _eventOnClick;
         private _eventOnFocus;
         private _eventOnOpenedBalloon;
+        private _eventOnScreenScroll;
         private _eventOnWindowResize;
         private _intersectionObserver;
         private _isBalloonWrapperMouseEnter;
@@ -3649,12 +3648,12 @@ declare namespace OSFramework.OSUI.Patterns.Tooltip {
         private _onBalloonWrapperMouseLeave;
         private _onBlur;
         private _onBodyClick;
-        private _onBodyScroll;
         private _onClick;
         private _onFocus;
         private _onIconMouseEnter;
         private _onIconMouseLeave;
         private _onOpenedBalloon;
+        private _onScreenScroll;
         private _onWindowResize;
         private _setBalloonCoordinates;
         private _setBalloonPosition;
@@ -6015,11 +6014,11 @@ declare namespace Providers.OSUI.SharedProviderResources.Flatpickr.Enum {
 }
 declare namespace Providers.OSUI.SharedProviderResources.Flatpickr {
     class UpdatePositionOnScroll {
-        private _onBodyScrollEvent;
+        private _onScreenScrollEvent;
         private _picker;
         private _requestAnimationOnBodyScroll;
         constructor(picker: Datepicker.Flatpickr.IFlatpickr | TimePicker.Flatpickr.IFlatpickrTime | MonthPicker.Flatpickr.IFlatpickrMonth);
-        private _onBodyScroll;
+        private _onScreenScroll;
         private _setCallbacks;
         private _setUpEvents;
         private _unsetCallbacks;

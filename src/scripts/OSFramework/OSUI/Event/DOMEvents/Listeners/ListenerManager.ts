@@ -14,14 +14,14 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 					return new BalloonOnToggle();
 				case Type.BodyOnClick:
 					return new BodyOnClick();
-				case Type.BodyOnScroll:
-					return new BodyOnScroll();
 				case Type.BodyOnMouseDown:
 					return new BodyOnMouseDown();
 				case Type.WindowResize:
 					return new WindowResize();
 				case Type.OrientationChange:
 					return new OrientationChange();
+				case Type.ScreenOnScroll:
+					return new ScreenOnScroll();
 				default:
 					throw new Error(`The listener ${listenerType} is not supported.`);
 			}
