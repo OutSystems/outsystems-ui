@@ -8677,7 +8677,7 @@ var OSFramework;
                         OSUI.Helper.A11Y.TabIndexFalse(this._searchInput);
                         OSUI.Helper.A11Y.TabIndexTrue(this._searchGlassButton);
                         OSUI.Helper.A11Y.AriaExpandedFalse(this._searchGlassButton);
-                        OSUI.Helper.A11Y.AriaLabel(this._searchGlassButton, 'Open Search');
+                        OSUI.Helper.A11Y.AriaLabel(this._searchGlassButton, this._searchOpenAriaLabel === undefined ? Search_1.Enum.AriaLabel.Open : this._searchOpenAriaLabel);
                         const glassCircle = document.createElement(OSFramework.OSUI.GlobalEnum.HTMLElement.Span);
                         const glassBar = document.createElement(OSFramework.OSUI.GlobalEnum.HTMLElement.Span);
                         glassCircle.classList.add(Search_1.Enum.CssClass.PatternGlassCircle);
@@ -8694,7 +8694,7 @@ var OSFramework;
                             this.selfElement.classList.remove(Search_1.Enum.CssClass.PatternIsOpen);
                             OSUI.Helper.A11Y.TabIndexFalse(this._searchInput);
                             OSUI.Helper.A11Y.AriaExpandedFalse(this._searchGlassButton);
-                            OSUI.Helper.A11Y.AriaLabel(this._searchGlassButton, Search_1.Enum.AriaLabel.Open);
+                            OSUI.Helper.A11Y.AriaLabel(this._searchGlassButton, this._searchOpenAriaLabel === undefined ? Search_1.Enum.AriaLabel.Open : this._searchOpenAriaLabel);
                             this._isOpen = false;
                         }
                         else {
@@ -8706,7 +8706,7 @@ var OSFramework;
                             this.selfElement.classList.add(Search_1.Enum.CssClass.PatternIsOpen);
                             OSUI.Helper.A11Y.TabIndexTrue(this._searchInput);
                             OSUI.Helper.A11Y.AriaExpandedTrue(this._searchGlassButton);
-                            OSUI.Helper.A11Y.AriaLabel(this._searchGlassButton, Search_1.Enum.AriaLabel.Close);
+                            OSUI.Helper.A11Y.AriaLabel(this._searchGlassButton, this._searchCloseAriaLabel === undefined ? Search_1.Enum.AriaLabel.Close : this._searchCloseAriaLabel);
                             this._isOpen = true;
                         }
                     }
@@ -8742,9 +8742,11 @@ var OSFramework;
                     enableNativeBehavior() {
                         this._nativeSearchBehavior();
                     }
-                    setAriaLabel(ariaLabel) {
+                    setAriaLabel(openAriaLabel, closeAriaLabel) {
                         if (this._searchGlassButton) {
-                            OSUI.Helper.A11Y.AriaLabel(this._searchGlassButton, ariaLabel);
+                            this._searchOpenAriaLabel = openAriaLabel;
+                            this._searchCloseAriaLabel = closeAriaLabel;
+                            OSUI.Helper.A11Y.AriaLabel(this._searchGlassButton, this._searchOpenAriaLabel);
                         }
                     }
                     get IsNativeEnabled() {
@@ -14700,12 +14702,12 @@ var OutSystems;
                     return result;
                 }
                 SearchAPI.EnableNativeBehavior = EnableNativeBehavior;
-                function UpdateGlassButtonAriaLabel(searchId, ariaLabel) {
+                function UpdateGlassButtonAriaLabel(searchId, openAriaLabel, closeAriaLabel) {
                     const result = OutSystems.OSUI.Utils.CreateApiResponse({
                         errorCode: OSUI.ErrorCodes.Search.FailUpdateGlassButtonAriaLabel,
                         callback: () => {
                             const search = this.GetSearchById(searchId);
-                            search.setAriaLabel(ariaLabel);
+                            search.setAriaLabel(openAriaLabel, closeAriaLabel);
                         },
                     });
                     return result;

@@ -7,8 +7,10 @@ namespace OSFramework.OSUI.Patterns.Search {
 		// Store pattern visibility
 		private _enableNative = false;
 		private _isOpen = false;
+		private _searchCloseAriaLabel: string;
 		private _searchGlassButton: HTMLElement;
 		private _searchInput: HTMLInputElement;
+		private _searchOpenAriaLabel: string;
 		/**
 		 * Creates an instance of Search.
 		 *
@@ -42,7 +44,10 @@ namespace OSFramework.OSUI.Patterns.Search {
 			Helper.A11Y.TabIndexFalse(this._searchInput);
 			Helper.A11Y.TabIndexTrue(this._searchGlassButton);
 			Helper.A11Y.AriaExpandedFalse(this._searchGlassButton);
-			Helper.A11Y.AriaLabel(this._searchGlassButton, 'Open Search');
+			Helper.A11Y.AriaLabel(
+				this._searchGlassButton,
+				this._searchOpenAriaLabel === undefined ? Enum.AriaLabel.Open : this._searchOpenAriaLabel
+			);
 
 			// Create span element to create the custom glass on search
 			const glassCircle = document.createElement(OSFramework.OSUI.GlobalEnum.HTMLElement.Span);
@@ -84,7 +89,10 @@ namespace OSFramework.OSUI.Patterns.Search {
 				// Set A11Y properties
 				Helper.A11Y.TabIndexFalse(this._searchInput);
 				Helper.A11Y.AriaExpandedFalse(this._searchGlassButton);
-				Helper.A11Y.AriaLabel(this._searchGlassButton, Enum.AriaLabel.Open);
+				Helper.A11Y.AriaLabel(
+					this._searchGlassButton,
+					this._searchOpenAriaLabel === undefined ? Enum.AriaLabel.Open : this._searchOpenAriaLabel
+				);
 
 				this._isOpen = false;
 			} else {
@@ -101,7 +109,10 @@ namespace OSFramework.OSUI.Patterns.Search {
 				// Set A11Y properties
 				Helper.A11Y.TabIndexTrue(this._searchInput);
 				Helper.A11Y.AriaExpandedTrue(this._searchGlassButton);
-				Helper.A11Y.AriaLabel(this._searchGlassButton, Enum.AriaLabel.Close);
+				Helper.A11Y.AriaLabel(
+					this._searchGlassButton,
+					this._searchCloseAriaLabel === undefined ? Enum.AriaLabel.Close : this._searchCloseAriaLabel
+				);
 				this._isOpen = true;
 			}
 		}
@@ -201,9 +212,11 @@ namespace OSFramework.OSUI.Patterns.Search {
 		 * @param {string} ariaLabel
 		 * @memberof Search
 		 */
-		public setAriaLabel(ariaLabel: string): void {
+		public setAriaLabel(openAriaLabel: string, closeAriaLabel: string): void {
 			if (this._searchGlassButton) {
-				Helper.A11Y.AriaLabel(this._searchGlassButton, ariaLabel);
+				this._searchOpenAriaLabel = openAriaLabel;
+				this._searchCloseAriaLabel = closeAriaLabel;
+				Helper.A11Y.AriaLabel(this._searchGlassButton, this._searchOpenAriaLabel);
 			}
 		}
 

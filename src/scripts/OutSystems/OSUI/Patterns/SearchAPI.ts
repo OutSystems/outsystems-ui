@@ -151,20 +151,24 @@ namespace OutSystems.OSUI.Patterns.SearchAPI {
 	}
 
 	/**
-	 * Function that will update the aria label
+	 * Function that will update the aria label for open and close states
 	 *
 	 * @export
 	 * @param {string} searchId
 	 * @param {string} ariaLabel
 	 * @return {*}  {string}
 	 */
-	export function UpdateGlassButtonAriaLabel(searchId: string, ariaLabel: string): string {
+	export function UpdateGlassButtonAriaLabel(
+		searchId: string,
+		openAriaLabel: string,
+		closeAriaLabel: string
+	): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.Search.FailUpdateGlassButtonAriaLabel,
 			callback: () => {
 				const search = this.GetSearchById(searchId);
 
-				search.setAriaLabel(ariaLabel);
+				search.setAriaLabel(openAriaLabel, closeAriaLabel);
 			},
 		});
 

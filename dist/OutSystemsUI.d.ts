@@ -2894,15 +2894,17 @@ declare namespace OSFramework.OSUI.Patterns.Search {
         IsNativeEnabled: boolean;
         IsOpen: boolean;
         enableNativeBehavior(): void;
-        setAriaLabel(ariaLabel: string): void;
+        setAriaLabel(openAriaLabel: string, closeAriaLabel: any): void;
     }
 }
 declare namespace OSFramework.OSUI.Patterns.Search {
     class Search extends AbstractPattern<SearchConfig> implements ISearch {
         private _enableNative;
         private _isOpen;
+        private _searchCloseAriaLabel;
         private _searchGlassButton;
         private _searchInput;
+        private _searchOpenAriaLabel;
         constructor(uniqueId: string, configs: JSON);
         private _nativeSearchBehavior;
         private _removeEvents;
@@ -2915,7 +2917,7 @@ declare namespace OSFramework.OSUI.Patterns.Search {
         build(): void;
         dispose(): void;
         enableNativeBehavior(): void;
-        setAriaLabel(ariaLabel: string): void;
+        setAriaLabel(openAriaLabel: string, closeAriaLabel: string): void;
         get IsNativeEnabled(): boolean;
         get IsOpen(): boolean;
     }
@@ -4444,7 +4446,7 @@ declare namespace OutSystems.OSUI.Patterns.SearchAPI {
     function Initialize(searchId: string): OSFramework.OSUI.Patterns.Search.ISearch;
     function RegisterCallback(searchId: string, eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): string;
     function EnableNativeBehavior(searchId: string): string;
-    function UpdateGlassButtonAriaLabel(searchId: string, ariaLabel: string): string;
+    function UpdateGlassButtonAriaLabel(searchId: string, openAriaLabel: string, closeAriaLabel: string): string;
 }
 declare namespace OutSystems.OSUI.Patterns.SectionIndexAPI {
     function ChangeProperty(sectionIndexId: string, propertyName: string, propertyValue: any): string;

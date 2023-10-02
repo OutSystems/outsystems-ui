@@ -28,10 +28,10 @@ namespace OSFramework.OSUI.Patterns.Search {
 		enableNativeBehavior(): void;
 
 		/**
-		 * Method to update the aria-label on glass button when has the native behavior enabled
+		 * Method to update the aria-label (open & close states) on glass button when has the native behavior enabled
 		 *
 		 * @memberof ISearch
 		 */
-		setAriaLabel(ariaLabel: string): void;
+		setAriaLabel(openAriaLabel: string, closeAriaLabel): void;
 	}
 }
