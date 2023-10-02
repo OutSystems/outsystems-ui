@@ -8101,6 +8101,9 @@ span.flatpickr-weekday{
 .flatpickr-calendar.hasWeeks .flatpickr-weekwrapper .flatpickr-weeks{
   margin-right:var(--space-xs);
 }
+.flatpickr-calendar.hasWeeks .flatpickr-weekwrapper .flatpickr-weeks .flatpickr-day{
+  color:var(--color-neutral-5);
+}
 .flatpickr-calendar.hasWeeks span.flatpickr-day{
   height:35px;
   line-height:34px;
@@ -8470,6 +8473,21 @@ span.flatpickr-weekday{
   .is-rtl .flatpickr-calendar{
     --osui-flatpickr-layer:calc(var(--osui-menu-layer) + var(--layer-local-tier-1));
   }
+}
+.osui-datepicker-calendar .flatpickr-months .flatpickr-month:focus-within{
+  overflow:visible;
+}
+.osui-datepicker-calendar .numInputWrapper input:focus-visible,
+.osui-datepicker-calendar .flatpickr-monthDropdown-months:focus-visible,
+.osui-datepicker-calendar .flatpickr-prev-month:focus-visible,
+.osui-datepicker-calendar .flatpickr-next-month:focus-visible,
+.osui-datepicker-calendar .flatpickr-am-pm:focus-visible,
+.osui-datepicker-calendar .flatpickr-today-button a:focus-visible{
+  -webkit-box-shadow:0 0 0 3px var(--color-focus-outer);
+          box-shadow:0 0 0 3px var(--color-focus-outer);
+}
+.osui-datepicker-calendar .flatpickr-day:focus-visible{
+  border-color:var(--color-focus-outer);
 }
 .osui-datepicker input[type=date]::-webkit-inner-spin-button, .osui-datepicker input[type=date]::-webkit-calendar-picker-indicator, .osui-datepicker input[type=date]::-webkit-datetime-edit-year-field, .osui-datepicker input[type=date]::-webkit-datetime-edit-month-field, .osui-datepicker input[type=date]::-webkit-datetime-edit-day-field, .osui-datepicker input[type=date]::-webkit-datetime-edit-fields-wrapper{
   display:none;
@@ -10754,6 +10772,7 @@ html[data-uieditorversion^="1"] .osui-timepicker__dropdown-ss-preview.time12h, h
 }
 /*! 6.4.3. OverflowMenu */
 .osui-overflow-menu{
+  display:inline-block;
   --osui-overflow-menu-min-width:170px;
   --border-radius-rounded:16px;
 }

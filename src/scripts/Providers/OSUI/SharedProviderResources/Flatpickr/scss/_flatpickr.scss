@@ -50,6 +50,10 @@
 
 		.flatpickr-weekwrapper .flatpickr-weeks {
 			margin-right: var(--space-xs);
+
+			.flatpickr-day {
+				color: var(--color-neutral-5);
+			}
 		}
 
 		span.flatpickr-day {
@@ -572,7 +576,7 @@ span.flatpickr-weekday {
 		}
 	}
 
-	.flatpickr-day:focus-visible{
+	.flatpickr-day:focus-visible {
 		border-color: var(--color-focus-outer);
 	}
 }
