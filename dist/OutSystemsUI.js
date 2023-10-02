@@ -8658,6 +8658,11 @@ var OSFramework;
                         CssClass["PatternIsOpen"] = "osui-search--is-open";
                         CssClass["PatternNative"] = "osui-search--native";
                     })(CssClass = Enum.CssClass || (Enum.CssClass = {}));
+                    let AriaLabel;
+                    (function (AriaLabel) {
+                        AriaLabel["Close"] = "Close search";
+                        AriaLabel["Open"] = "Open search";
+                    })(AriaLabel = Enum.AriaLabel || (Enum.AriaLabel = {}));
                 })(Enum = Search.Enum || (Search.Enum = {}));
             })(Search = Patterns.Search || (Patterns.Search = {}));
         })(Patterns = OSUI.Patterns || (OSUI.Patterns = {}));
@@ -8704,7 +8709,7 @@ var OSFramework;
                             this.selfElement.classList.remove(Search_1.Enum.CssClass.PatternIsOpen);
                             OSUI.Helper.A11Y.TabIndexFalse(this._searchInput);
                             OSUI.Helper.A11Y.AriaExpandedFalse(this._searchGlassButton);
-                            OSUI.Helper.A11Y.AriaLabel(this._searchGlassButton, 'Open Search');
+                            OSUI.Helper.A11Y.AriaLabel(this._searchGlassButton, Search_1.Enum.AriaLabel.Open);
                             this._isOpen = false;
                         }
                         else {
@@ -8716,7 +8721,7 @@ var OSFramework;
                             this.selfElement.classList.add(Search_1.Enum.CssClass.PatternIsOpen);
                             OSUI.Helper.A11Y.TabIndexTrue(this._searchInput);
                             OSUI.Helper.A11Y.AriaExpandedTrue(this._searchGlassButton);
-                            OSUI.Helper.A11Y.AriaLabel(this._searchGlassButton, 'Close Search');
+                            OSUI.Helper.A11Y.AriaLabel(this._searchGlassButton, Search_1.Enum.AriaLabel.Close);
                             this._isOpen = true;
                         }
                     }

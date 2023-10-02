@@ -84,7 +84,7 @@ namespace OSFramework.OSUI.Patterns.Search {
 				// Set A11Y properties
 				Helper.A11Y.TabIndexFalse(this._searchInput);
 				Helper.A11Y.AriaExpandedFalse(this._searchGlassButton);
-				Helper.A11Y.AriaLabel(this._searchGlassButton, 'Open Search');
+				Helper.A11Y.AriaLabel(this._searchGlassButton, Enum.AriaLabel.Open);
 
 				this._isOpen = false;
 			} else {
@@ -101,7 +101,7 @@ namespace OSFramework.OSUI.Patterns.Search {
 				// Set A11Y properties
 				Helper.A11Y.TabIndexTrue(this._searchInput);
 				Helper.A11Y.AriaExpandedTrue(this._searchGlassButton);
-				Helper.A11Y.AriaLabel(this._searchGlassButton, 'Close Search');
+				Helper.A11Y.AriaLabel(this._searchGlassButton, Enum.AriaLabel.Close);
 				this._isOpen = true;
 			}
 		}

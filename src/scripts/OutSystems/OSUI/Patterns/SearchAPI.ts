@@ -150,6 +150,14 @@ namespace OutSystems.OSUI.Patterns.SearchAPI {
 		return result;
 	}
 
+	/**
+	 * Function that will update the aria label
+	 *
+	 * @export
+	 * @param {string} searchId
+	 * @param {string} ariaLabel
+	 * @return {*}  {string}
+	 */
 	export function UpdateGlassButtonAriaLabel(searchId: string, ariaLabel: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.Search.FailUpdateGlassButtonAriaLabel,

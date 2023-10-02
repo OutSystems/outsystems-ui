@@ -12,4 +12,11 @@ namespace OSFramework.OSUI.Patterns.Search.Enum {
 		PatternIsOpen = 'osui-search--is-open',
 		PatternNative = 'osui-search--native',
 	}
+	/**
+	 * Search Enum AriaLabel
+	 */
+	export enum AriaLabel {
+		Close = 'Close search',
+		Open = 'Open search',
+	}
 }

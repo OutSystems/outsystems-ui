@@ -2885,6 +2885,10 @@ declare namespace OSFramework.OSUI.Patterns.Search.Enum {
         PatternIsOpen = "osui-search--is-open",
         PatternNative = "osui-search--native"
     }
+    enum AriaLabel {
+        Close = "Close search",
+        Open = "Open search"
+    }
 }
 declare namespace OSFramework.OSUI.Patterns.Search {
     interface ISearch extends Interface.IPattern {
