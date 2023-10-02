@@ -32,6 +32,6 @@ namespace OSFramework.OSUI.Patterns.Search {
 		 *
 		 * @memberof ISearch
 		 */
-		setAriaLabel(openAriaLabel: string, closeAriaLabel): void;
+		setAriaLabel(openAriaLabel: string, closeAriaLabel: string): void;
 	}
 }

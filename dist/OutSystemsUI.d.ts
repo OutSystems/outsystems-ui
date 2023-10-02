@@ -2894,7 +2894,7 @@ declare namespace OSFramework.OSUI.Patterns.Search {
         IsNativeEnabled: boolean;
         IsOpen: boolean;
         enableNativeBehavior(): void;
-        setAriaLabel(openAriaLabel: string, closeAriaLabel: any): void;
+        setAriaLabel(openAriaLabel: string, closeAriaLabel: string): void;
     }
 }
 declare namespace OSFramework.OSUI.Patterns.Search {
