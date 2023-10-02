@@ -112,7 +112,9 @@ $balloonMobileTopMargin: 5vh;
 			overflow: hidden;
 			// --osui-dropdown-ss-thresholdanimateval is the value used as a threshold to animate down the balloon
 			transform: translateY(calc(-1 * var(--osui-dropdown-ss-thresholdanimateval)));
-			transition: opacity 250ms ease, transform 300ms ease-in-out;
+			transition:
+				opacity 250ms ease,
+				transform 300ms ease-in-out;
 
 			// Service Studio Preview
 			& {
@@ -193,7 +195,7 @@ $balloonMobileTopMargin: 5vh;
 
 			// Avoid having data-list above other elements in this context, such as a StickyTop SelectAll Option container.
 			& > *:not([data-list]) {
-				z-index: var(--layer-local-tier-1);
+				z-index: var(--layer-local-tier-2);
 			}
 		}
 
@@ -338,7 +340,7 @@ $balloonMobileTopMargin: 5vh;
 // https://bugzilla.mozilla.org/show_bug.cgi?id=418039
 .firefox {
 	.osui-dropdown-serverside__balloon-wrapper.osui-dropdown-serverside--is-opened {
-		z-index: var(--layer-global-instant-interaction)
+		z-index: var(--layer-global-instant-interaction);
 	}
 }
 
@@ -371,11 +373,22 @@ body:has(.popup-dialog):has(.osui-dropdown-serverside--is-opened) {
 				&:before {
 					color: var(--color-neutral-7);
 				}
+
+				input,
+				.form-control[data-input] {
+					&:focus {
+						box-shadow: inset 0 0 0 3px var(--color-focus-outer);
+					}
+				}
 			}
 
 			&-content {
 				&::-webkit-scrollbar-thumb {
 					background-color: var(--color-neutral-7);
+				}
+
+				&:focus {
+					box-shadow: inset 0 0 0 3px var(--color-focus-outer);
 				}
 			}
 		}

@@ -6,7 +6,7 @@
 ///
 .osui-dropdown-serverside-item {
 	align-items: center;
-	background-color: var(--color-neutral-0);
+	background-color: transparent;
 	color: var(--color-neutral-9);
 	cursor: pointer;
 	display: flex;
@@ -53,6 +53,10 @@
 	.osui-dropdown-serverside-item {
 		&:hover {
 			background-color: var(--color-neutral-4);
+		}
+
+		&:focus {
+			box-shadow: inset 0 0 0 3px var(--color-focus-outer);
 		}
 	}
 }
