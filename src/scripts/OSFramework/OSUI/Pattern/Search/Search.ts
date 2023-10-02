@@ -43,6 +43,7 @@ namespace OSFramework.OSUI.Patterns.Search {
 			// Set A11Y properties to elements
 			Helper.A11Y.TabIndexFalse(this._searchInput);
 			Helper.A11Y.TabIndexTrue(this._searchGlassButton);
+			Helper.A11Y.RoleButton(this._searchGlassButton);
 			Helper.A11Y.AriaExpandedFalse(this._searchGlassButton);
 			Helper.A11Y.AriaLabel(
 				this._searchGlassButton,

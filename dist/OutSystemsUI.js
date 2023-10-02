@@ -8676,6 +8676,7 @@ var OSFramework;
                         this.selfElement.appendChild(this._searchGlassButton);
                         OSUI.Helper.A11Y.TabIndexFalse(this._searchInput);
                         OSUI.Helper.A11Y.TabIndexTrue(this._searchGlassButton);
+                        OSUI.Helper.A11Y.RoleButton(this._searchGlassButton);
                         OSUI.Helper.A11Y.AriaExpandedFalse(this._searchGlassButton);
                         OSUI.Helper.A11Y.AriaLabel(this._searchGlassButton, this._searchOpenAriaLabel === undefined ? Search_1.Enum.AriaLabel.Open : this._searchOpenAriaLabel);
                         const glassCircle = document.createElement(OSFramework.OSUI.GlobalEnum.HTMLElement.Span);
