@@ -8749,7 +8749,7 @@ var OSFramework;
                         if (this.isBuilt) {
                             if (this._enableNative) {
                                 this._removeEvents();
-                                this.unsetHtmlElements;
+                                this.unsetHtmlElements();
                             }
                             super.dispose();
                         }

@@ -178,7 +178,7 @@ namespace OSFramework.OSUI.Patterns.Search {
 				// Call methods based of native behavior enablement
 				if (this._enableNative) {
 					this._removeEvents();
-					this.unsetHtmlElements;
+					this.unsetHtmlElements();
 				}
 
 				//Destroying the base of pattern

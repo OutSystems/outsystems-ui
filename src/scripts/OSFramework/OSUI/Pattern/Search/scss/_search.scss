@@ -9,9 +9,7 @@
 
 	&:empty {
 		// Service Studio Preview
-		& {
-			-servicestudio-height: 40px;
-		}
+		-servicestudio-height: 40px;
 	}
 
 	&__input {
@@ -19,11 +17,9 @@
 
 		&:empty {
 			// Service Studio Preview
-			& {
-				-servicestudio-background-color: #fff;
-				-servicestudio-border-radius: 4px;
-				-servicestudio-height: 40px;
-			}
+			-servicestudio-background-color: #fff;
+			-servicestudio-border-radius: 4px;
+			-servicestudio-height: 40px;
 		}
 	}
 
