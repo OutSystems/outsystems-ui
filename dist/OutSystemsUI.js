@@ -11157,6 +11157,15 @@ var OSFramework;
                             cancelAnimationFrame(this._requestAnimationOnWindowResize);
                         }
                     }
+                    _onkeypressCallback(e) {
+                        const isEscapedPressed = e.key === OSUI.GlobalEnum.Keycodes.Escape;
+                        if (this._isOpen) {
+                            if (isEscapedPressed) {
+                                this.close();
+                            }
+                        }
+                        e.stopPropagation();
+                    }
                     _setBalloonCoordinates() {
                         const selfElement = this.selfElement.getBoundingClientRect();
                         if (selfElement.x === this._selfElementBoundingClientRect.x &&
@@ -11226,6 +11235,7 @@ var OSFramework;
                         if (OSUI.Helper.DeviceInfo.HasAccessibilityEnabled) {
                             this._tooltipIconElem.addEventListener(OSUI.GlobalEnum.HTMLEvent.Blur, this._eventOnBlur);
                             this._tooltipIconElem.addEventListener(OSUI.GlobalEnum.HTMLEvent.Focus, this._eventOnFocus);
+                            this._tooltipIconElem.addEventListener(OSUI.GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
                         }
                         OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.ScreenOnScroll, this._eventOnScreenScroll);
                         this._requestAnimationOnBodyScroll = requestAnimationFrame(this._eventOnScreenScroll);
@@ -11250,7 +11260,6 @@ var OSFramework;
                             this._isOpen = false;
                             OSUI.Helper.Dom.Styles.RemoveClass(this.selfElement, Tooltip_1.Enum.CssClass.IsOpened);
                             OSUI.Helper.Dom.Styles.RemoveClass(this._tooltipBalloonWrapperElem, Tooltip_1.Enum.CssClass.BalloonIsOpened);
-                            OSUI.Helper.A11Y.AriaHiddenTrue(this._tooltipBalloonWrapperElem);
                             this._unsetObserver();
                             if (this._tooltipBalloonPositionClass !== this.configs.Position) {
                                 OSUI.Helper.Dom.Styles.RemoveClass(this._tooltipBalloonWrapperElem, this._tooltipBalloonPositionClass);
@@ -11272,7 +11281,6 @@ var OSFramework;
                             this._unsetObserver();
                             this._setBalloonCoordinates();
                             this._setBalloonPosition(false, this._tooltipBalloonContentElem.getBoundingClientRect());
-                            OSUI.Helper.A11Y.AriaHiddenFalse(this._tooltipBalloonWrapperElem);
                             OSUI.Helper.AsyncInvocation(() => {
                                 OSUI.Helper.Dom.Styles.AddClass(this._tooltipBalloonWrapperElem, Tooltip_1.Enum.CssClass.BalloonIsOpening);
                                 this._tooltipBalloonContentElem.addEventListener(OSUI.GlobalEnum.HTMLEvent.TransitionEnd, this._eventOnOpenedBalloon);
@@ -11291,6 +11299,7 @@ var OSFramework;
                         this._tooltipIconElem.removeEventListener(OSUI.GlobalEnum.HTMLEvent.Click, this._eventOnClick);
                         this._tooltipIconElem.removeEventListener(OSUI.GlobalEnum.HTMLEvent.Blur, this._eventOnBlur);
                         this._tooltipIconElem.removeEventListener(OSUI.GlobalEnum.HTMLEvent.Focus, this._eventOnFocus);
+                        this._tooltipIconElem.removeEventListener(OSUI.GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
                         this._tooltipBalloonContentElem.removeEventListener(OSUI.GlobalEnum.HTMLEvent.Click, this._eventOnBalloonClick);
                         OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick, this._eventOnBodyClick);
                         OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSUI.Event.DOMEvents.Listeners.Type.ScreenOnScroll, this._eventOnScreenScroll);
@@ -11330,12 +11339,11 @@ var OSFramework;
                         }
                     }
                     setA11YProperties() {
-                        OSUI.Helper.A11Y.RoleTooltip(this._tooltipIconElem);
-                        OSUI.Helper.A11Y.AriaLabel(this._tooltipIconElem, Tooltip_1.Enum.AriaLabelText.Content);
-                        OSUI.Helper.A11Y.TabIndexTrue(this._tooltipIconElem);
-                        OSUI.Helper.A11Y.AriaDescribedBy(this._tooltipIconElem, this._tooltipBalloonWrapperElem.id);
-                        OSUI.Helper.A11Y.AriaLabelledBy(this._tooltipIconElem, this._tooltipBalloonWrapperElem.id);
+                        OSUI.Helper.A11Y.RoleButton(this._tooltipIconElem);
+                        OSUI.Helper.A11Y.RoleTooltip(this._tooltipBalloonWrapperElem);
+                        OSUI.Helper.A11Y.AriaDescribedBy(this._tooltipIconElem, this._tooltipBalloonContentElem.id);
                         OSUI.Helper.A11Y.AriaHiddenTrue(this._tooltipBalloonWrapperElem);
+                        OSUI.Helper.A11Y.TabIndexTrue(this._tooltipIconElem);
                     }
                     setCallbacks() {
                         this._eventOnBalloonClick = this._onBalloonClick.bind(this);
@@ -11345,6 +11353,7 @@ var OSFramework;
                         this._eventOnClick = this._onClick.bind(this);
                         this._eventOnFocus = this._onFocus.bind(this);
                         this._eventOnOpenedBalloon = this._onOpenedBalloon.bind(this);
+                        this._eventOnKeypress = this._onkeypressCallback.bind(this);
                         this._eventOnWindowResize = this._onWindowResize.bind(this);
                         this._eventBalloonWrapperOnMouseEnter = this._onBalloonWrapperMouseEnter.bind(this);
                         this._eventBalloonWrapperOnMouseLeave = this._onBalloonWrapperMouseLeave.bind(this);
@@ -11375,6 +11384,7 @@ var OSFramework;
                         this._eventOnClick = undefined;
                         this._eventOnFocus = undefined;
                         this._eventOnOpenedBalloon = undefined;
+                        this._eventOnKeypress = undefined;
                         this._eventOnWindowResize = undefined;
                         this._eventBalloonWrapperOnMouseEnter = undefined;
                         this._eventBalloonWrapperOnMouseLeave = undefined;
