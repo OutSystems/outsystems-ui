@@ -8165,6 +8165,9 @@ span.flatpickr-weekday{
 .flatpickr-calendar.hasWeeks .flatpickr-weekwrapper .flatpickr-weeks{
   margin-right:var(--space-xs);
 }
+.flatpickr-calendar.hasWeeks .flatpickr-weekwrapper .flatpickr-weeks .flatpickr-day{
+  color:var(--color-neutral-5);
+}
 .flatpickr-calendar.hasWeeks span.flatpickr-day{
   height:35px;
   line-height:34px;
@@ -10849,6 +10852,7 @@ html[data-uieditorversion^="1"] .osui-timepicker__dropdown-ss-preview.time12h, h
 }
 /*! 6.4.3. OverflowMenu */
 .osui-overflow-menu{
+  display:inline-block;
   --osui-overflow-menu-min-width:170px;
   --border-radius-rounded:16px;
 }

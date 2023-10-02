@@ -78,8 +78,8 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 			);
 		}
 
-		// Method to handle the keydows event for the Today Button 
-		private _todayButtonKeydown(e: KeyboardEvent):void {
+		// Method to handle the keydows event for the Today Button
+		private _todayButtonKeydown(e: KeyboardEvent): void {
 			switch (e.key) {
 				case OSFramework.OSUI.GlobalEnum.Keycodes.Tab:
 					// Prevent the flatpickr default behaviour for tab
@@ -92,7 +92,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 					this.provider.setDate(this.provider.now, true);
 					// Trigger the jumpIntoDate!
 					this.jumpIntoToday();
-				break;
+					break;
 			}
 		}
 
@@ -124,19 +124,21 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 			OSFramework.OSUI.Helper.A11Y.AriaLabel(todayBtn, l10ns.TodayBtn[langCode].ariaLabel);
 
 			todayBtn.addEventListener(OSFramework.OSUI.GlobalEnum.HTMLEvent.Click, this.todayBtnClick.bind(this));
-			todayBtn.addEventListener(OSFramework.OSUI.GlobalEnum.HTMLEvent.keyDown, this._todayButtonKeydown.bind(this));
+			todayBtn.addEventListener(
+				OSFramework.OSUI.GlobalEnum.HTMLEvent.keyDown,
+				this._todayButtonKeydown.bind(this)
+			);
 
 			// Append elements to the proper containers
 			this._todayButtonElem.appendChild(todayBtn);
 			// Make sure to append this just before the focus trap span from flatpickr
 			this._providerFocusSpanTarget = this.provider.calendarContainer.querySelector('.focus-trap-bottom-element');
 
-			if(this._providerFocusSpanTarget) {
+			if (this._providerFocusSpanTarget) {
 				this.provider.calendarContainer.insertBefore(this._todayButtonElem, this._providerFocusSpanTarget);
 			} else {
 				this.provider.calendarContainer.appendChild(this._todayButtonElem);
 			}
-
 		}
 
 		/**
@@ -295,7 +297,11 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 				// Set the aria-label attribute value
 				OSFramework.OSUI.Helper.A11Y.AriaLabel(this.flatpickrInputElem, ariaLabelValue);
 				// Set the aria-describedby attribute in order to give more context about how to navigate into calendar using keyboard
-				OSFramework.OSUI.Helper.A11Y.AriaDescribedBy(this.flatpickrInputElem, this._a11yInfoContainerElem.id);
+				if (OSFramework.OSUI.Helper.DeviceInfo.IsDesktop)
+					OSFramework.OSUI.Helper.A11Y.AriaDescribedBy(
+						this.flatpickrInputElem,
+						this._a11yInfoContainerElem.id
+					);
 
 				// Check if lang is not EN (default one)
 				if (this.configs.Lang !== OSFramework.OSUI.Constants.Language.short) {
@@ -429,7 +435,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		public close(): void {
 			if (this.provider.isOpen) {
 				this.provider.close();
-				if(this.configs.ShowTodayButton) {
+				if (this.configs.ShowTodayButton) {
 					OSFramework.OSUI.Helper.A11Y.TabIndexFalse(this._todayButtonElem);
 				}
 			}
@@ -489,7 +495,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 			const isInputDisable = this.datePickerPlatformInputElem.disabled;
 			if (this.provider.isOpen === false && isInputDisable === false) {
 				this.provider.open();
-				if(this.configs.ShowTodayButton) {
+				if (this.configs.ShowTodayButton) {
 					OSFramework.OSUI.Helper.A11Y.TabIndexTrue(this._todayButtonElem);
 				}
 			}

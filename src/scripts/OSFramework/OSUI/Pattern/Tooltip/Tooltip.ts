@@ -17,14 +17,14 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 		private _eventOnBlur: GlobalCallbacks.Generic;
 		// Event OnBodyClick
 		private _eventOnBodyClick: GlobalCallbacks.Generic;
-		// Event OnBodyScroll
-		private _eventOnBodyScroll: GlobalCallbacks.Generic;
 		// Event OnPatternClick
 		private _eventOnClick: GlobalCallbacks.Generic;
 		// Event OnPatternFocus
 		private _eventOnFocus: GlobalCallbacks.Generic;
 		// Event OnOpendBalloon
 		private _eventOnOpenedBalloon: GlobalCallbacks.Generic;
+		// Event OnScreenScroll
+		private _eventOnScreenScroll: GlobalCallbacks.Generic;
 		// On WindowResize Event
 		private _eventOnWindowResize: GlobalCallbacks.Generic;
 		// Set the observer that will check if the balloon is inside screen boundaries!
@@ -162,28 +162,6 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 			}
 		}
 
-		// Update the balloon coordinates
-		private _onBodyScroll(): void {
-			if (this.isBuilt) {
-				// If it's open and not at Desktop, close it!
-				if (this._isOpen && Helper.DeviceInfo.IsDesktop === false) {
-					cancelAnimationFrame(this._requestAnimationOnBodyScroll);
-					this._triggerClose();
-					return;
-				}
-
-				// If the balloon is open and not IsPhone
-				if (this._isOpen) {
-					// Update the coordinates
-					this._setBalloonCoordinates();
-					// Update the "animation" before the next repaint
-					this._requestAnimationOnBodyScroll = requestAnimationFrame(this._eventOnBodyScroll);
-				} else {
-					cancelAnimationFrame(this._requestAnimationOnBodyScroll);
-				}
-			}
-		}
-
 		// Trigger the tooltip at onClick behaviour
 		private _onClick(e: MouseEvent): void {
 			e.stopPropagation();
@@ -227,6 +205,28 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 			Helper.Dom.Styles.RemoveClass(this._tooltipBalloonWrapperElem, Enum.CssClass.BalloonIsOpening);
 		}
 
+		// Update the balloon coordinates
+		private _onScreenScroll(): void {
+			if (this.isBuilt) {
+				// If it's open and not at Desktop, close it!
+				if (this._isOpen && Helper.DeviceInfo.IsDesktop === false) {
+					cancelAnimationFrame(this._requestAnimationOnBodyScroll);
+					this._triggerClose();
+					return;
+				}
+
+				// If the balloon is open and not IsPhone
+				if (this._isOpen) {
+					// Update the coordinates
+					this._setBalloonCoordinates();
+					// Update the "animation" before the next repaint
+					this._requestAnimationOnBodyScroll = requestAnimationFrame(this._eventOnScreenScroll);
+				} else {
+					cancelAnimationFrame(this._requestAnimationOnBodyScroll);
+				}
+			}
+		}
+		
 		// Manage the behaviour when there is a window resize!
 		private _onWindowResize(): void {
 			// Update Coordinates
@@ -381,13 +381,13 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 				this._tooltipIconElem.addEventListener(GlobalEnum.HTMLEvent.Focus, this._eventOnFocus);
 			}
 
-			// Add the BodyScroll callback that will be used to update the balloon coodinates
+			// Add the ScreenScroll callback that will be used to update the balloon coodinates
 			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
-				Event.DOMEvents.Listeners.Type.BodyOnScroll,
-				this._eventOnBodyScroll
+				Event.DOMEvents.Listeners.Type.ScreenOnScroll,
+				this._eventOnScreenScroll
 			);
 			// Update "animation" before the next repaint
-			this._requestAnimationOnBodyScroll = requestAnimationFrame(this._eventOnBodyScroll);
+			this._requestAnimationOnBodyScroll = requestAnimationFrame(this._eventOnScreenScroll);
 
 			// Add the window resize callback that will be used update the balloon position!
 			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
@@ -536,8 +536,8 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 				this._eventOnBodyClick
 			);
 			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
-				Event.DOMEvents.Listeners.Type.BodyOnScroll,
-				this._eventOnBodyScroll
+				Event.DOMEvents.Listeners.Type.ScreenOnScroll,
+				this._eventOnScreenScroll
 			);
 
 			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
@@ -634,7 +634,7 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 			this._eventOnBalloonClick = this._onBalloonClick.bind(this);
 			this._eventOnBlur = this._onBlur.bind(this);
 			this._eventOnBodyClick = this._onBodyClick.bind(this);
-			this._eventOnBodyScroll = this._onBodyScroll.bind(this);
+			this._eventOnScreenScroll = this._onScreenScroll.bind(this);
 			this._eventOnClick = this._onClick.bind(this);
 			this._eventOnFocus = this._onFocus.bind(this);
 			this._eventOnOpenedBalloon = this._onOpenedBalloon.bind(this);
@@ -693,7 +693,7 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 			this._eventOnBalloonClick = undefined;
 			this._eventOnBlur = undefined;
 			this._eventOnBodyClick = undefined;
-			this._eventOnBodyScroll = undefined;
+			this._eventOnScreenScroll = undefined;
 			this._eventOnClick = undefined;
 			this._eventOnFocus = undefined;
 			this._eventOnOpenedBalloon = undefined;
