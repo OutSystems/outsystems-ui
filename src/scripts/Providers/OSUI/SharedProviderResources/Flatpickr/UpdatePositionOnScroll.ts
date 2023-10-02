@@ -1,8 +1,8 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace Providers.OSUI.SharedProviderResources.Flatpickr {
 	export class UpdatePositionOnScroll {
-		// Event OnBodyScroll
-		private _onBodyScrollEvent: OSFramework.OSUI.GlobalCallbacks.Generic;
+		// Event OnScreenScroll
+		private _onScreenScrollEvent: OSFramework.OSUI.GlobalCallbacks.Generic;
 		// Store the picker instance
 		private _picker:
 			| Datepicker.Flatpickr.IFlatpickr
@@ -26,14 +26,14 @@ namespace Providers.OSUI.SharedProviderResources.Flatpickr {
 		}
 
 		// Update the calendar position
-		private _onBodyScroll(): void {
+		private _onScreenScroll(): void {
 			if (this._picker.isBuilt) {
 				// If the calendar is open!
 				if (this._picker.provider.isOpen) {
 					// trigger provider update position method
 					this._picker.provider._positionCalendar();
 					// Update the "position" before the next "repaint"
-					this._requestAnimationOnBodyScroll = requestAnimationFrame(this._onBodyScrollEvent);
+					this._requestAnimationOnBodyScroll = requestAnimationFrame(this._onScreenScrollEvent);
 				} else {
 					cancelAnimationFrame(this._requestAnimationOnBodyScroll);
 				}
@@ -42,28 +42,28 @@ namespace Providers.OSUI.SharedProviderResources.Flatpickr {
 
 		// Method used to set callbacks
 		private _setCallbacks(): void {
-			this._onBodyScrollEvent = this._onBodyScroll.bind(this);
+			this._onScreenScrollEvent = this._onScreenScroll.bind(this);
 		}
 
 		// Add Events
 		private _setUpEvents(): void {
 			// Add the BodyScroll callback that will be used to update the balloon coodinates
 			OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
-				OSFramework.OSUI.Event.DOMEvents.Listeners.Type.BodyOnScroll,
-				this._onBodyScrollEvent
+				OSFramework.OSUI.Event.DOMEvents.Listeners.Type.ScreenOnScroll,
+				this._onScreenScrollEvent
 			);
 		}
 
 		// Method used to unset callbacks
 		private _unsetCallbacks(): void {
-			this._onBodyScrollEvent = undefined;
+			this._onScreenScrollEvent = undefined;
 		}
 
 		// Remove Added Events
 		private _unsetEvents(): void {
 			OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
-				OSFramework.OSUI.Event.DOMEvents.Listeners.Type.BodyOnScroll,
-				this._onBodyScrollEvent
+				OSFramework.OSUI.Event.DOMEvents.Listeners.Type.ScreenOnScroll,
+				this._onScreenScrollEvent
 			);
 		}
 
@@ -76,7 +76,7 @@ namespace Providers.OSUI.SharedProviderResources.Flatpickr {
 			this._unsetEvents();
 			this._unsetCallbacks();
 
-			this._onBodyScrollEvent = undefined;
+			this._onScreenScrollEvent = undefined;
 			this._requestAnimationOnBodyScroll = undefined;
 		}
 	}
