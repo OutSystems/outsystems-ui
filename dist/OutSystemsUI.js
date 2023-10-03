@@ -8630,86 +8630,10 @@ var OSFramework;
         var Patterns;
         (function (Patterns) {
             var Search;
-            (function (Search) {
-                var Enum;
-                (function (Enum) {
-                    let CssClass;
-                    (function (CssClass) {
-                        CssClass["Pattern"] = "osui-search";
-                        CssClass["PatternGlassBar"] = "osui-search__glass-bar";
-                        CssClass["PatternGlassButton"] = "osui-search__glass-button";
-                        CssClass["PatternGlassCircle"] = "osui-search__glass-circle";
-                        CssClass["PatternInput"] = "osui-search__input";
-                        CssClass["PatternIsOpen"] = "osui-search--is-open";
-                        CssClass["PatternNative"] = "osui-search--native";
-                    })(CssClass = Enum.CssClass || (Enum.CssClass = {}));
-                    let AriaLabel;
-                    (function (AriaLabel) {
-                        AriaLabel["Close"] = "Close search";
-                        AriaLabel["Open"] = "Open search";
-                    })(AriaLabel = Enum.AriaLabel || (Enum.AriaLabel = {}));
-                })(Enum = Search.Enum || (Search.Enum = {}));
-            })(Search = Patterns.Search || (Patterns.Search = {}));
-        })(Patterns = OSUI.Patterns || (OSUI.Patterns = {}));
-    })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
-})(OSFramework || (OSFramework = {}));
-var OSFramework;
-(function (OSFramework) {
-    var OSUI;
-    (function (OSUI) {
-        var Patterns;
-        (function (Patterns) {
-            var Search;
             (function (Search_1) {
                 class Search extends Patterns.AbstractPattern {
                     constructor(uniqueId, configs) {
                         super(uniqueId, new Search_1.SearchConfig(configs));
-                        this._enableNative = false;
-                        this._isOpen = false;
-                    }
-                    _nativeSearchBehavior() {
-                        this._enableNative = true;
-                        this.selfElement.classList.add(Search_1.Enum.CssClass.PatternNative);
-                        this._searchInput = OSUI.Helper.Dom.TagSelector(this.selfElement, OSFramework.OSUI.GlobalEnum.HTMLElement.Input);
-                        this._searchGlassButton = document.createElement(OSFramework.OSUI.GlobalEnum.HTMLElement.Div);
-                        this._searchGlassButton.classList.add(Search_1.Enum.CssClass.PatternGlassButton);
-                        this.selfElement.appendChild(this._searchGlassButton);
-                        OSUI.Helper.A11Y.TabIndexFalse(this._searchInput);
-                        OSUI.Helper.A11Y.TabIndexTrue(this._searchGlassButton);
-                        OSUI.Helper.A11Y.RoleButton(this._searchGlassButton);
-                        OSUI.Helper.A11Y.AriaExpandedFalse(this._searchGlassButton);
-                        OSUI.Helper.A11Y.AriaLabel(this._searchGlassButton, this._searchOpenAriaLabel === undefined ? Search_1.Enum.AriaLabel.Open : this._searchOpenAriaLabel);
-                        const glassCircle = document.createElement(OSFramework.OSUI.GlobalEnum.HTMLElement.Span);
-                        const glassBar = document.createElement(OSFramework.OSUI.GlobalEnum.HTMLElement.Span);
-                        glassCircle.classList.add(Search_1.Enum.CssClass.PatternGlassCircle);
-                        glassBar.classList.add(Search_1.Enum.CssClass.PatternGlassBar);
-                        this._searchGlassButton.appendChild(glassCircle);
-                        this._searchGlassButton.appendChild(glassBar);
-                        this._searchGlassButton.addEventListener(OSUI.GlobalEnum.HTMLEvent.Click, this._toggleNativeSearch.bind(this));
-                    }
-                    _removeEvents() {
-                        this._searchGlassButton.removeEventListener(OSUI.GlobalEnum.HTMLEvent.Click, this._toggleNativeSearch);
-                    }
-                    _toggleNativeSearch() {
-                        if (this._isOpen) {
-                            this.selfElement.classList.remove(Search_1.Enum.CssClass.PatternIsOpen);
-                            OSUI.Helper.A11Y.TabIndexFalse(this._searchInput);
-                            OSUI.Helper.A11Y.AriaExpandedFalse(this._searchGlassButton);
-                            OSUI.Helper.A11Y.AriaLabel(this._searchGlassButton, this._searchOpenAriaLabel === undefined ? Search_1.Enum.AriaLabel.Open : this._searchOpenAriaLabel);
-                            this._isOpen = false;
-                        }
-                        else {
-                            if (this._searchInput && this._searchInput.value === '') {
-                                OSFramework.OSUI.Helper.ApplySetTimeOut(() => {
-                                    this._searchInput.focus();
-                                }, 300);
-                            }
-                            this.selfElement.classList.add(Search_1.Enum.CssClass.PatternIsOpen);
-                            OSUI.Helper.A11Y.TabIndexTrue(this._searchInput);
-                            OSUI.Helper.A11Y.AriaExpandedTrue(this._searchGlassButton);
-                            OSUI.Helper.A11Y.AriaLabel(this._searchGlassButton, this._searchCloseAriaLabel === undefined ? Search_1.Enum.AriaLabel.Close : this._searchCloseAriaLabel);
-                            this._isOpen = true;
-                        }
                     }
                     setA11YProperties() {
                         console.log(OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -8724,8 +8648,7 @@ var OSFramework;
                         console.log(OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
                     }
                     unsetHtmlElements() {
-                        this._searchGlassButton = undefined;
-                        this._searchInput = undefined;
+                        console.log(OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
                     }
                     build() {
                         super.build();
@@ -8733,28 +8656,8 @@ var OSFramework;
                     }
                     dispose() {
                         if (this.isBuilt) {
-                            if (this._enableNative) {
-                                this._removeEvents();
-                                this.unsetHtmlElements();
-                            }
                             super.dispose();
                         }
-                    }
-                    enableNativeBehavior() {
-                        this._nativeSearchBehavior();
-                    }
-                    setAriaLabel(openAriaLabel, closeAriaLabel) {
-                        if (this._searchGlassButton) {
-                            this._searchOpenAriaLabel = openAriaLabel;
-                            this._searchCloseAriaLabel = closeAriaLabel;
-                            OSUI.Helper.A11Y.AriaLabel(this._searchGlassButton, this._searchOpenAriaLabel);
-                        }
-                    }
-                    get IsNativeEnabled() {
-                        return this._enableNative;
-                    }
-                    get IsOpen() {
-                        return this._isOpen;
                     }
                 }
                 Search_1.Search = Search;
@@ -12366,8 +12269,6 @@ var OutSystems;
                 FailChangeProperty: 'OSUI-API-20001',
                 FailDispose: 'OSUI-API-20002',
                 FailRegisterCallback: 'OSUI-API-20003',
-                FailEnableNativeBehavior: 'OSUI-API-20004',
-                FailUpdateGlassButtonAriaLabel: 'OSUI-API-20005',
             };
             ErrorCodes.SectionIndexItem = {
                 FailChangeProperty: 'OSUI-API-21001',
@@ -14692,28 +14593,6 @@ var OutSystems;
                     return result;
                 }
                 SearchAPI.RegisterCallback = RegisterCallback;
-                function EnableNativeBehavior(searchId) {
-                    const result = OutSystems.OSUI.Utils.CreateApiResponse({
-                        errorCode: OSUI.ErrorCodes.Search.FailEnableNativeBehavior,
-                        callback: () => {
-                            const search = this.GetSearchById(searchId);
-                            search.enableNativeBehavior();
-                        },
-                    });
-                    return result;
-                }
-                SearchAPI.EnableNativeBehavior = EnableNativeBehavior;
-                function UpdateGlassButtonAriaLabel(searchId, openAriaLabel, closeAriaLabel) {
-                    const result = OutSystems.OSUI.Utils.CreateApiResponse({
-                        errorCode: OSUI.ErrorCodes.Search.FailUpdateGlassButtonAriaLabel,
-                        callback: () => {
-                            const search = this.GetSearchById(searchId);
-                            search.setAriaLabel(openAriaLabel, closeAriaLabel);
-                        },
-                    });
-                    return result;
-                }
-                SearchAPI.UpdateGlassButtonAriaLabel = UpdateGlassButtonAriaLabel;
             })(SearchAPI = Patterns.SearchAPI || (Patterns.SearchAPI = {}));
         })(Patterns = OSUI.Patterns || (OSUI.Patterns = {}));
     })(OSUI = OutSystems.OSUI || (OutSystems.OSUI = {}));

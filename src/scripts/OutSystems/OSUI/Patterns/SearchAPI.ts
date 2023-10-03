@@ -129,49 +129,4 @@ namespace OutSystems.OSUI.Patterns.SearchAPI {
 
 		return result;
 	}
-
-	/**
-	 * Function that will enable the native behavior
-	 *
-	 * @export
-	 * @param {string} searchId
-	 * @return {*}  {string}
-	 */
-	export function EnableNativeBehavior(searchId: string): string {
-		const result = OutSystems.OSUI.Utils.CreateApiResponse({
-			errorCode: ErrorCodes.Search.FailEnableNativeBehavior,
-			callback: () => {
-				const search = this.GetSearchById(searchId);
-
-				search.enableNativeBehavior();
-			},
-		});
-
-		return result;
-	}
-
-	/**
-	 * Function that will update the aria label for open and close states
-	 *
-	 * @export
-	 * @param {string} searchId
-	 * @param {string} ariaLabel
-	 * @return {*}  {string}
-	 */
-	export function UpdateGlassButtonAriaLabel(
-		searchId: string,
-		openAriaLabel: string,
-		closeAriaLabel: string
-	): string {
-		const result = OutSystems.OSUI.Utils.CreateApiResponse({
-			errorCode: ErrorCodes.Search.FailUpdateGlassButtonAriaLabel,
-			callback: () => {
-				const search = this.GetSearchById(searchId);
-
-				search.setAriaLabel(openAriaLabel, closeAriaLabel);
-			},
-		});
-
-		return result;
-	}
 }

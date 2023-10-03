@@ -2874,41 +2874,13 @@ declare namespace OSFramework.OSUI.Patterns.Rating {
         constructor(config: JSON);
     }
 }
-declare namespace OSFramework.OSUI.Patterns.Search.Enum {
-    enum CssClass {
-        Pattern = "osui-search",
-        PatternGlassBar = "osui-search__glass-bar",
-        PatternGlassButton = "osui-search__glass-button",
-        PatternGlassCircle = "osui-search__glass-circle",
-        PatternInput = "osui-search__input",
-        PatternIsOpen = "osui-search--is-open",
-        PatternNative = "osui-search--native"
-    }
-    enum AriaLabel {
-        Close = "Close search",
-        Open = "Open search"
-    }
-}
 declare namespace OSFramework.OSUI.Patterns.Search {
     interface ISearch extends Interface.IPattern {
-        IsNativeEnabled: boolean;
-        IsOpen: boolean;
-        enableNativeBehavior(): void;
-        setAriaLabel(openAriaLabel: string, closeAriaLabel: string): void;
     }
 }
 declare namespace OSFramework.OSUI.Patterns.Search {
     class Search extends AbstractPattern<SearchConfig> implements ISearch {
-        private _enableNative;
-        private _isOpen;
-        private _searchCloseAriaLabel;
-        private _searchGlassButton;
-        private _searchInput;
-        private _searchOpenAriaLabel;
         constructor(uniqueId: string, configs: JSON);
-        private _nativeSearchBehavior;
-        private _removeEvents;
-        private _toggleNativeSearch;
         protected setA11YProperties(): void;
         protected setCallbacks(): void;
         protected setHtmlElements(): void;
@@ -2916,10 +2888,6 @@ declare namespace OSFramework.OSUI.Patterns.Search {
         protected unsetHtmlElements(): void;
         build(): void;
         dispose(): void;
-        enableNativeBehavior(): void;
-        setAriaLabel(openAriaLabel: string, closeAriaLabel: string): void;
-        get IsNativeEnabled(): boolean;
-        get IsOpen(): boolean;
     }
 }
 declare namespace OSFramework.OSUI.Patterns.Search {
@@ -4066,8 +4034,6 @@ declare namespace OutSystems.OSUI.ErrorCodes {
         FailChangeProperty: string;
         FailDispose: string;
         FailRegisterCallback: string;
-        FailEnableNativeBehavior: string;
-        FailUpdateGlassButtonAriaLabel: string;
     };
     const SectionIndexItem: {
         FailChangeProperty: string;
@@ -4445,8 +4411,6 @@ declare namespace OutSystems.OSUI.Patterns.SearchAPI {
     function GetSearchById(searchId: string): OSFramework.OSUI.Patterns.Search.ISearch;
     function Initialize(searchId: string): OSFramework.OSUI.Patterns.Search.ISearch;
     function RegisterCallback(searchId: string, eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): string;
-    function EnableNativeBehavior(searchId: string): string;
-    function UpdateGlassButtonAriaLabel(searchId: string, openAriaLabel: string, closeAriaLabel: string): string;
 }
 declare namespace OutSystems.OSUI.Patterns.SectionIndexAPI {
     function ChangeProperty(sectionIndexId: string, propertyName: string, propertyValue: any): string;

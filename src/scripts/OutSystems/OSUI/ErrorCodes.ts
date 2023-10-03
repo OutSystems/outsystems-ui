@@ -199,8 +199,6 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailChangeProperty: 'OSUI-API-20001',
 		FailDispose: 'OSUI-API-20002',
 		FailRegisterCallback: 'OSUI-API-20003',
-		FailEnableNativeBehavior: 'OSUI-API-20004',
-		FailUpdateGlassButtonAriaLabel: 'OSUI-API-20005',
 	};
 
 	export const SectionIndexItem = {
