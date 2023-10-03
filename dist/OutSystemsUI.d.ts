@@ -3594,9 +3594,11 @@ declare namespace OSFramework.OSUI.Patterns.Tooltip {
         private _eventOnBodyClick;
         private _eventOnClick;
         private _eventOnFocus;
+        private _eventOnKeypress;
         private _eventOnOpenedBalloon;
         private _eventOnScreenScroll;
         private _eventOnWindowResize;
+        private _focusManagerInstance;
         private _intersectionObserver;
         private _isBalloonWrapperMouseEnter;
         private _isIconMouseEnter;
@@ -3625,6 +3627,7 @@ declare namespace OSFramework.OSUI.Patterns.Tooltip {
         private _onOpenedBalloon;
         private _onScreenScroll;
         private _onWindowResize;
+        private _onkeypressCallback;
         private _setBalloonCoordinates;
         private _setBalloonPosition;
         private _setBalloonWrapperExtendedClass;
