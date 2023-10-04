@@ -2874,6 +2874,27 @@ declare namespace OSFramework.OSUI.Patterns.Rating {
         constructor(config: JSON);
     }
 }
+declare namespace OSFramework.OSUI.Patterns.Search {
+    interface ISearch extends Interface.IPattern {
+    }
+}
+declare namespace OSFramework.OSUI.Patterns.Search {
+    class Search extends AbstractPattern<SearchConfig> implements ISearch {
+        constructor(uniqueId: string, configs: JSON);
+        protected setA11YProperties(): void;
+        protected setCallbacks(): void;
+        protected setHtmlElements(): void;
+        protected unsetCallbacks(): void;
+        protected unsetHtmlElements(): void;
+        build(): void;
+        dispose(): void;
+    }
+}
+declare namespace OSFramework.OSUI.Patterns.Search {
+    class SearchConfig extends AbstractConfiguration {
+        constructor(config: JSON);
+    }
+}
 declare namespace OSFramework.OSUI.Patterns.SectionIndex.Enum {
     enum ChildNotifyActionType {
         Active = "active",
@@ -4014,9 +4035,7 @@ declare namespace OutSystems.OSUI.ErrorCodes {
     };
     const Search: {
         FailChangeProperty: string;
-        FailClose: string;
         FailDispose: string;
-        FailOpen: string;
         FailRegisterCallback: string;
     };
     const SectionIndexItem: {
@@ -4386,6 +4405,15 @@ declare namespace OutSystems.OSUI.Patterns.RatingAPI {
     function GetRatingById(ratingId: string): OSFramework.OSUI.Patterns.Rating.IRating;
     function Initialize(ratingId: string): OSFramework.OSUI.Patterns.Rating.IRating;
     function RegisterCallback(ratingId: string, eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): string;
+}
+declare namespace OutSystems.OSUI.Patterns.SearchAPI {
+    function ChangeProperty(searchId: string, propertyName: string, propertyValue: any): string;
+    function Create(searchId: string, configs: string): OSFramework.OSUI.Patterns.Search.ISearch;
+    function Dispose(searchId: string): string;
+    function GetAllSearches(): Array<string>;
+    function GetSearchById(searchId: string): OSFramework.OSUI.Patterns.Search.ISearch;
+    function Initialize(searchId: string): OSFramework.OSUI.Patterns.Search.ISearch;
+    function RegisterCallback(searchId: string, eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): string;
 }
 declare namespace OutSystems.OSUI.Patterns.SectionIndexAPI {
     function ChangeProperty(sectionIndexId: string, propertyName: string, propertyValue: any): string;

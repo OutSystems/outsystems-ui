@@ -8629,6 +8629,66 @@ var OSFramework;
     (function (OSUI) {
         var Patterns;
         (function (Patterns) {
+            var Search;
+            (function (Search_1) {
+                class Search extends Patterns.AbstractPattern {
+                    constructor(uniqueId, configs) {
+                        super(uniqueId, new Search_1.SearchConfig(configs));
+                    }
+                    setA11YProperties() {
+                        console.log(OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
+                    }
+                    setCallbacks() {
+                        console.log(OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
+                    }
+                    setHtmlElements() {
+                        console.log(OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
+                    }
+                    unsetCallbacks() {
+                        console.log(OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
+                    }
+                    unsetHtmlElements() {
+                        console.log(OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
+                    }
+                    build() {
+                        super.build();
+                        this.finishBuild();
+                    }
+                    dispose() {
+                        if (this.isBuilt) {
+                            super.dispose();
+                        }
+                    }
+                }
+                Search_1.Search = Search;
+            })(Search = Patterns.Search || (Patterns.Search = {}));
+        })(Patterns = OSUI.Patterns || (OSUI.Patterns = {}));
+    })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
+})(OSFramework || (OSFramework = {}));
+var OSFramework;
+(function (OSFramework) {
+    var OSUI;
+    (function (OSUI) {
+        var Patterns;
+        (function (Patterns) {
+            var Search;
+            (function (Search) {
+                class SearchConfig extends Patterns.AbstractConfiguration {
+                    constructor(config) {
+                        super(config);
+                    }
+                }
+                Search.SearchConfig = SearchConfig;
+            })(Search = Patterns.Search || (Patterns.Search = {}));
+        })(Patterns = OSUI.Patterns || (OSUI.Patterns = {}));
+    })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
+})(OSFramework || (OSFramework = {}));
+var OSFramework;
+(function (OSFramework) {
+    var OSUI;
+    (function (OSUI) {
+        var Patterns;
+        (function (Patterns) {
             var SectionIndex;
             (function (SectionIndex) {
                 var Enum;
@@ -12217,10 +12277,8 @@ var OutSystems;
             };
             ErrorCodes.Search = {
                 FailChangeProperty: 'OSUI-API-20001',
-                FailClose: 'OSUI-API-20002',
-                FailDispose: 'OSUI-API-20003',
-                FailOpen: 'OSUI-API-20004',
-                FailRegisterCallback: 'OSUI-API-20005',
+                FailDispose: 'OSUI-API-20002',
+                FailRegisterCallback: 'OSUI-API-20003',
             };
             ErrorCodes.SectionIndexItem = {
                 FailChangeProperty: 'OSUI-API-21001',
@@ -14476,6 +14534,76 @@ var OutSystems;
                 }
                 RatingAPI.RegisterCallback = RegisterCallback;
             })(RatingAPI = Patterns.RatingAPI || (Patterns.RatingAPI = {}));
+        })(Patterns = OSUI.Patterns || (OSUI.Patterns = {}));
+    })(OSUI = OutSystems.OSUI || (OutSystems.OSUI = {}));
+})(OutSystems || (OutSystems = {}));
+var OutSystems;
+(function (OutSystems) {
+    var OSUI;
+    (function (OSUI) {
+        var Patterns;
+        (function (Patterns) {
+            var SearchAPI;
+            (function (SearchAPI) {
+                const _searchMap = new Map();
+                function ChangeProperty(searchId, propertyName, propertyValue) {
+                    const result = OutSystems.OSUI.Utils.CreateApiResponse({
+                        errorCode: OSUI.ErrorCodes.Search.FailChangeProperty,
+                        callback: () => {
+                            const search = GetSearchById(searchId);
+                            search.changeProperty(propertyName, propertyValue);
+                        },
+                    });
+                    return result;
+                }
+                SearchAPI.ChangeProperty = ChangeProperty;
+                function Create(searchId, configs) {
+                    if (_searchMap.has(searchId)) {
+                        throw new Error(`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.Search} registered under id: ${searchId}`);
+                    }
+                    const _newSearch = new OSFramework.OSUI.Patterns.Search.Search(searchId, JSON.parse(configs));
+                    _searchMap.set(searchId, _newSearch);
+                    return _newSearch;
+                }
+                SearchAPI.Create = Create;
+                function Dispose(searchId) {
+                    const result = OutSystems.OSUI.Utils.CreateApiResponse({
+                        errorCode: OSUI.ErrorCodes.Search.FailDispose,
+                        callback: () => {
+                            const search = GetSearchById(searchId);
+                            search.dispose();
+                            _searchMap.delete(searchId);
+                        },
+                    });
+                    return result;
+                }
+                SearchAPI.Dispose = Dispose;
+                function GetAllSearches() {
+                    return OSFramework.OSUI.Helper.MapOperation.ExportKeys(_searchMap);
+                }
+                SearchAPI.GetAllSearches = GetAllSearches;
+                function GetSearchById(searchId) {
+                    return OSFramework.OSUI.Helper.MapOperation.FindInMap('Search', searchId, _searchMap);
+                }
+                SearchAPI.GetSearchById = GetSearchById;
+                function Initialize(searchId) {
+                    const search = GetSearchById(searchId);
+                    search.build();
+                    return search;
+                }
+                SearchAPI.Initialize = Initialize;
+                function RegisterCallback(searchId, eventName, callback) {
+                    const result = OutSystems.OSUI.Utils.CreateApiResponse({
+                        errorCode: OSUI.ErrorCodes.Search.FailRegisterCallback,
+                        callback: () => {
+                            const _SearchItem = this.GetSearchById(searchId);
+                            _SearchItem.registerCallback(eventName, callback);
+                        },
+                    });
+                    return result;
+                }
+                SearchAPI.RegisterCallback = RegisterCallback;
+            })(SearchAPI = Patterns.SearchAPI || (Patterns.SearchAPI = {}));
         })(Patterns = OSUI.Patterns || (OSUI.Patterns = {}));
     })(OSUI = OutSystems.OSUI || (OutSystems.OSUI = {}));
 })(OutSystems || (OutSystems = {}));
