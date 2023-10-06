@@ -4456,12 +4456,6 @@ var OSFramework;
             var BottomSheet;
             (function (BottomSheet_1) {
                 class BottomSheet extends Patterns.AbstractPattern {
-                    get gestureEventInstance() {
-                        return this._gestureEventInstance;
-                    }
-                    get hasGestureEvents() {
-                        return this._hasGestureEvents;
-                    }
                     constructor(uniqueId, configs) {
                         super(uniqueId, new BottomSheet_1.BottomSheetConfig(configs));
                         this._isOpen = false;
@@ -4473,6 +4467,12 @@ var OSFramework;
                                 mass: 1,
                             },
                         };
+                    }
+                    get gestureEventInstance() {
+                        return this._gestureEventInstance;
+                    }
+                    get hasGestureEvents() {
+                        return this._hasGestureEvents;
                     }
                     _handleFocusBehavior() {
                         const opts = {
@@ -5422,7 +5422,11 @@ var OSFramework;
                                     if (event.key === OSUI.GlobalEnum.Keycodes.Escape) {
                                         this._close();
                                     }
-                                    if (event.key === OSUI.GlobalEnum.Keycodes.Enter || event.key === OSUI.GlobalEnum.Keycodes.Space) {
+                                    if (event.key === OSUI.GlobalEnum.Keycodes.Enter ||
+                                        event.key === OSUI.GlobalEnum.Keycodes.Space ||
+                                        event.key === OSUI.GlobalEnum.Keycodes.ArrowUp ||
+                                        event.key === OSUI.GlobalEnum.Keycodes.ArrowDown ||
+                                        event.key === OSUI.GlobalEnum.Keycodes.Home) {
                                         this._selectValuesWrapper.click();
                                     }
                                     break;
@@ -5702,6 +5706,7 @@ var OSFramework;
                                     OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(layoutElemContainer, OSFramework.OSUI.Constants.HasAccessibilityClass);
                             if (this._balloonSearchInputElement !== undefined) {
                                 OSUI.Helper.A11Y.TabIndex(this._balloonSearchInputElement, tabIndexValue);
+                                OSUI.Helper.A11Y.AriaHidden(this._balloonSearchInputElement, (tabIndexValue === OSUI.Constants.A11YAttributes.States.TabIndexHidden).toString());
                             }
                             OSUI.Helper.A11Y.TabIndex(this._balloonOptionsWrapperElement, tabIndexValue);
                             if (this._balloonFocusableElemsInFooter.length > 0) {

@@ -7746,7 +7746,7 @@ span.flatpickr-weekday{
   height:auto;
   left:var(--osui-floating-position-x);
   opacity:0;
-  position:absolute;
+  position:fixed;
   pointer-events:none;
   top:var(--osui-floating-position-y);
   visibility:hidden;
@@ -12870,7 +12870,7 @@ html[data-uieditorversion^="1"] .wizard-wrapper-item{
   background-color:var(--color-neutral-6);
 }
 .osui-dropdown-serverside__balloon-content > *:not([data-list]){
-  z-index:var(--layer-local-tier-1);
+  z-index:var(--layer-local-tier-2);
 }
 .osui-dropdown-serverside__balloon--has-not-search .osui-dropdown-serverside__balloon-content{
   border-top:none;
@@ -12966,8 +12966,17 @@ body:has(.popup-dialog):has(.osui-dropdown-serverside--is-opened) .osui-dropdown
 .has-accessible-features .osui-dropdown-serverside__balloon-search:before{
   color:var(--color-neutral-7);
 }
+.has-accessible-features .osui-dropdown-serverside__balloon-search input:focus,
+.has-accessible-features .osui-dropdown-serverside__balloon-search .form-control[data-input]:focus{
+  -webkit-box-shadow:inset 0 0 0 3px var(--color-focus-outer);
+          box-shadow:inset 0 0 0 3px var(--color-focus-outer);
+}
 .has-accessible-features .osui-dropdown-serverside__balloon-content::-webkit-scrollbar-thumb{
   background-color:var(--color-neutral-7);
+}
+.has-accessible-features .osui-dropdown-serverside__balloon-content:focus{
+  -webkit-box-shadow:inset 0 0 0 3px var(--color-focus-outer);
+          box-shadow:inset 0 0 0 3px var(--color-focus-outer);
 }
 .is-rtl .osui-dropdown-serverside__selected-values{
   margin-left:var(--space-base);
@@ -13062,7 +13071,7 @@ body:has(.popup-dialog):has(.osui-dropdown-serverside--is-opened) .osui-dropdown
   -webkit-box-align:center;
       -ms-flex-align:center;
           align-items:center;
-  background-color:var(--color-neutral-0);
+  background-color:transparent;
   color:var(--color-neutral-9);
   cursor:pointer;
   display:-webkit-box;
@@ -13111,6 +13120,10 @@ body:has(.popup-dialog):has(.osui-dropdown-serverside--is-opened) .osui-dropdown
 }
 .has-accessible-features .osui-dropdown-serverside-item:hover{
   background-color:var(--color-neutral-4);
+}
+.has-accessible-features .osui-dropdown-serverside-item:focus{
+  -webkit-box-shadow:inset 0 0 0 3px var(--color-focus-outer);
+          box-shadow:inset 0 0 0 3px var(--color-focus-outer);
 }
 .tablet .osui-dropdown-serverside-item,
 .phone .osui-dropdown-serverside-item{
