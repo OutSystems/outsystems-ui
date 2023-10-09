@@ -495,6 +495,9 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 			const isInputDisable = this.datePickerPlatformInputElem.disabled;
 			if (this.provider.isOpen === false && isInputDisable === false) {
 				this.provider.open();
+
+				// Focus on input element, after the open trigger occur
+				this.flatpickrInputElem.focus();
 				if (this.configs.ShowTodayButton) {
 					OSFramework.OSUI.Helper.A11Y.TabIndexTrue(this._todayButtonElem);
 				}

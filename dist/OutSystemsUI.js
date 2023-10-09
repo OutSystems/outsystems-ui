@@ -4456,6 +4456,12 @@ var OSFramework;
             var BottomSheet;
             (function (BottomSheet_1) {
                 class BottomSheet extends Patterns.AbstractPattern {
+                    get gestureEventInstance() {
+                        return this._gestureEventInstance;
+                    }
+                    get hasGestureEvents() {
+                        return this._hasGestureEvents;
+                    }
                     constructor(uniqueId, configs) {
                         super(uniqueId, new BottomSheet_1.BottomSheetConfig(configs));
                         this._isOpen = false;
@@ -4467,12 +4473,6 @@ var OSFramework;
                                 mass: 1,
                             },
                         };
-                    }
-                    get gestureEventInstance() {
-                        return this._gestureEventInstance;
-                    }
-                    get hasGestureEvents() {
-                        return this._hasGestureEvents;
                     }
                     _handleFocusBehavior() {
                         const opts = {
@@ -17893,6 +17893,7 @@ var Providers;
                         const isInputDisable = this.datePickerPlatformInputElem.disabled;
                         if (this.provider.isOpen === false && isInputDisable === false) {
                             this.provider.open();
+                            this.flatpickrInputElem.focus();
                             if (this.configs.ShowTodayButton) {
                                 OSFramework.OSUI.Helper.A11Y.TabIndexTrue(this._todayButtonElem);
                             }
