@@ -497,7 +497,10 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 				this.provider.open();
 
 				// Focus on input element, after the open trigger occur
-				this.flatpickrInputElem.focus();
+				if (this.flatpickrInputElem) {
+					this.flatpickrInputElem.focus();
+				}
+
 				if (this.configs.ShowTodayButton) {
 					OSFramework.OSUI.Helper.A11Y.TabIndexTrue(this._todayButtonElem);
 				}
