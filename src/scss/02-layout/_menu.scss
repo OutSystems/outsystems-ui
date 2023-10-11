@@ -65,6 +65,17 @@
 }
 
 ///
+.layout-blank {
+	.header-content {
+		// Service Studio Preview
+		& {
+			-servicestudio-align-items: center;
+			-servicestudio-flex-direction: row;
+		}
+	}
+}
+
+///
 .layout-side {
 	.aside-navigation {
 		// Service Studio Preview

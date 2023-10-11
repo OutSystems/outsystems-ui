@@ -1129,6 +1129,10 @@ body,
   -servicestudio-align-items:center;
   -servicestudio-flex-direction:row;
 }
+.layout-blank .header-content{
+  -servicestudio-align-items:center;
+  -servicestudio-flex-direction:row;
+}
 .layout-side .aside-navigation{
   -servicestudio-background-color:var(--color-neutral-0);
   -servicestudio-height:100%;
