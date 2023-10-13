@@ -36,6 +36,14 @@
 
 	// Has Time
 	&.hasTime {
+		/* This will implement a workaround:
+		* 	- When Time is present and a date is selected, library will set focus to the Time input,
+		*   If Time input is not inside at the screen boundaries, browser will force a document scroll in order
+		*   be possible to put that input inside the boundaries, which creates an issue due content will be moved
+		*   to a place where then it's not possible to came from.
+		**/
+		position: fixed;
+
 		.flatpickr-time {
 			border: var(--border-size-none);
 			height: 30px;
