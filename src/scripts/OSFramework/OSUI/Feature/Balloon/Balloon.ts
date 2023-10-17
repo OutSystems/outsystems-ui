@@ -48,9 +48,12 @@ namespace OSFramework.OSUI.Feature.Balloon {
 
 		// Method to handle the body click callback, that closes the Balloon
 		private _bodyClickCallback(_args: string, e: MouseEvent): void {
-			if (e.target === this.featureOptions?.anchorElem || this._isOpenedByApi) {
+			const _eventTarget = e.target;
+
+			if (_eventTarget === this.featureOptions?.anchorElem || this._isOpenedByApi || this.featureElem.contains(_eventTarget as HTMLElement)) {
 				return;
 			}
+			
 			if (this.isOpen) {
 				this._toggleBalloon(false, true);
 				e.stopPropagation();
