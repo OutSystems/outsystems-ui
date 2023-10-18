@@ -1,5 +1,5 @@
 /*!
-OutSystems UI 2.18.0
+OutSystems UI 2.18.1
 Website:
  • https://www.outsystems.com/outsystems-ui
 GitHub:
@@ -138,7 +138,7 @@ var OSFramework;
             Constants.AccessibilityHideElementClass = 'wcag-hide-text';
             Constants.IsRTLClass = 'is-rtl';
             Constants.NoTransition = 'no-transition';
-            Constants.OSUIVersion = '2.18.0';
+            Constants.OSUIVersion = '2.18.1';
             Constants.ZeroValue = 0;
         })(Constants = OSUI.Constants || (OSUI.Constants = {}));
     })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
@@ -1842,7 +1842,8 @@ var OSFramework;
                     }
                     _bodyClickCallback(_args, e) {
                         var _a;
-                        if (e.target === ((_a = this.featureOptions) === null || _a === void 0 ? void 0 : _a.anchorElem) || this._isOpenedByApi) {
+                        const _eventTarget = e.target;
+                        if (_eventTarget === ((_a = this.featureOptions) === null || _a === void 0 ? void 0 : _a.anchorElem) || this._isOpenedByApi || this.featureElem.contains(_eventTarget)) {
                             return;
                         }
                         if (this.isOpen) {

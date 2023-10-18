@@ -126,7 +126,7 @@ namespace OSFramework.OSUI.Constants {
 	export const NoTransition = 'no-transition';
 
 	/* OSUI Version */
-	export const OSUIVersion = '2.19.0';
+	export const OSUIVersion = '2.18.1';
 
 	/*Constant to be used across project as the zero value*/
 	export const ZeroValue = 0;
