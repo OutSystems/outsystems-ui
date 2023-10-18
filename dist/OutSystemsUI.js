@@ -1842,7 +1842,8 @@ var OSFramework;
                     }
                     _bodyClickCallback(_args, e) {
                         var _a;
-                        if (e.target === ((_a = this.featureOptions) === null || _a === void 0 ? void 0 : _a.anchorElem) || this._isOpenedByApi) {
+                        const _eventTarget = e.target;
+                        if (_eventTarget === ((_a = this.featureOptions) === null || _a === void 0 ? void 0 : _a.anchorElem) || this._isOpenedByApi || this.featureElem.contains(_eventTarget)) {
                             return;
                         }
                         if (this.isOpen) {
