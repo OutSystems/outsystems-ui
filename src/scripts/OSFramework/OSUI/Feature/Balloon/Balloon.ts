@@ -19,6 +19,8 @@ namespace OSFramework.OSUI.Feature.Balloon {
 	 * @template PT
 	 */
 	export class Balloon<PT> extends AbstractFeature<PT, BalloonOptions> implements IBalloon {
+		// Store the current focused element's index
+		private _currentFocusedElementIndex: number;
 		// Store the listener callbacks
 		private _eventBodyClick: GlobalCallbacks.Generic;
 		private _eventOnKeypress: GlobalCallbacks.Generic;
@@ -30,6 +32,8 @@ namespace OSFramework.OSUI.Feature.Balloon {
 		private _focusManagerInstance: Behaviors.FocusManager;
 		// FocusTrap Properties
 		private _focusTrapInstance: Behaviors.FocusTrap;
+		// Store the focusable elements inside the balloon
+		private _focusableBalloonElements: NodeListOf<Element>;
 		// Flag used to deal with onBodyClick and open api concurrency methods!
 		private _isOpenedByApi = false;
 		// Store the onTogle custom event
@@ -44,9 +48,12 @@ namespace OSFramework.OSUI.Feature.Balloon {
 
 		// Method to handle the body click callback, that closes the Balloon
 		private _bodyClickCallback(_args: string, e: MouseEvent): void {
-			if (e.target === this.featureOptions?.anchorElem || this._isOpenedByApi) {
+			const _eventTarget = e.target;
+
+			if (_eventTarget === this.featureOptions?.anchorElem || this._isOpenedByApi || this.featureElem.contains(_eventTarget as HTMLElement)) {
 				return;
 			}
+			
 			if (this.isOpen) {
 				this._toggleBalloon(false, true);
 				e.stopPropagation();
@@ -64,13 +71,63 @@ namespace OSFramework.OSUI.Feature.Balloon {
 			this._focusManagerInstance = new Behaviors.FocusManager();
 		}
 
+		// Manage the focus of the elements inside the Balloon
+		private _manageFocusInsideBalloon(
+			arrowKeyPressed?: GlobalEnum.Keycodes.ArrowDown | GlobalEnum.Keycodes.ArrowUp
+		) {
+			if (this._focusableBalloonElements.length === 0 || arrowKeyPressed === undefined) {
+				this._currentFocusedElementIndex = undefined;
+			}
+			// When ArrowDown is pressed
+			else if (arrowKeyPressed === GlobalEnum.Keycodes.ArrowDown) {
+				// If the _currentFocusedElementIndex is undefined or is the last one
+				// Then move the focus to the first focusable element
+				if (
+					this._currentFocusedElementIndex === undefined ||
+					this._currentFocusedElementIndex >= this._focusableBalloonElements.length - 1
+				)
+					this._currentFocusedElementIndex = 0;
+				// Otherwise, move the focus to the next focusable element
+				else this._currentFocusedElementIndex = this._currentFocusedElementIndex + 1;
+			}
+			// When ArrowUp is pressed
+			else if (arrowKeyPressed === GlobalEnum.Keycodes.ArrowUp) {
+				// If the _currentFocusedElementIndex is undefined or is the first one
+				// Then move the focus to the last focusable element
+				if (this._currentFocusedElementIndex === undefined || this._currentFocusedElementIndex === 0)
+					this._currentFocusedElementIndex = this._focusableBalloonElements.length - 1;
+				// Otherwise, move the focus to the previous focusable element
+				else this._currentFocusedElementIndex = this._currentFocusedElementIndex - 1;
+			}
+
+			// If the _currentFocusedElementIndex is undefined, focus on the balloon wrapper
+			if (this._currentFocusedElementIndex === undefined) {
+				OSUI.Helper.AsyncInvocation(() => {
+					this.featureElem.focus();
+				});
+				// Otherwise, focus on the element corresponding ot the _currentFocusedElementIndex
+			} else {
+				OSUI.Helper.AsyncInvocation(() => {
+					(this._focusableBalloonElements[this._currentFocusedElementIndex] as HTMLElement).focus();
+				});
+			}
+		}
+
 		// Call methods to open or close, based on e.key and behaviour applied
 		private _onkeypressCallback(e: KeyboardEvent): void {
 			const isEscapedPressed = e.key === GlobalEnum.Keycodes.Escape;
+			const isArrowDownPressed = e.key === GlobalEnum.Keycodes.ArrowDown;
+			const isArrowUpPressed = e.key === GlobalEnum.Keycodes.ArrowUp;
 
-			// Close the Balloon when pressing Esc
-			if (isEscapedPressed && this.isOpen) {
-				this.close();
+			if (this.isOpen) {
+				// Close the Balloon when pressing Esc
+				if (isEscapedPressed) {
+					this.close();
+					// Move the focus between the balloon's focusable elements when pressing ArrowDown or ArrowUp
+				} else if (isArrowDownPressed || isArrowUpPressed) {
+					this._manageFocusInsideBalloon(e.key);
+					e.preventDefault(); // Prevent scroll
+				}
 			}
 
 			e.stopPropagation();
@@ -137,7 +194,11 @@ namespace OSFramework.OSUI.Feature.Balloon {
 		}
 
 		// Method to toggle the open/close the Balloon
-		private _toggleBalloon(isOpen: boolean, isBodyClick = false): void {
+		private _toggleBalloon(
+			isOpen: boolean,
+			isBodyClick = false,
+			arrowKeyPressed?: GlobalEnum.Keycodes.ArrowDown | GlobalEnum.Keycodes.ArrowUp
+		): void {
 			// Update property
 			this.isOpen = isOpen;
 
@@ -163,10 +224,10 @@ namespace OSFramework.OSUI.Feature.Balloon {
 				// Set Floating Util
 				this.setFloatingBehaviour();
 
-				// Focus on element when pattern is open
-				Helper.AsyncInvocation(() => {
-					this.featureElem.focus();
-				});
+				// Store the focusable elements inside the Balloon
+				this._focusableBalloonElements = this.featureElem.querySelectorAll(Constants.FocusableElems);
+				// Manage the focus when opening the balloon
+				this._manageFocusInsideBalloon(arrowKeyPressed);
 			} else {
 				// Handle focus trap logic
 				this._focusTrapInstance.disableForA11y();
@@ -179,6 +240,10 @@ namespace OSFramework.OSUI.Feature.Balloon {
 						this._focusManagerInstance.setFocusToStoredElement();
 					}
 				});
+
+				// Unset focus attributes
+				this._focusableBalloonElements = undefined;
+				this._currentFocusedElementIndex = undefined;
 			}
 
 			// Trigger the Custom Event BalloonOnToggle
@@ -239,10 +304,13 @@ namespace OSFramework.OSUI.Feature.Balloon {
 		 *
 		 * @memberof Balloon
 		 */
-		public open(isOpenedByApi: boolean): void {
+		public open(
+			isOpenedByApi: boolean,
+			arrowKeyPressed?: GlobalEnum.Keycodes.ArrowDown | GlobalEnum.Keycodes.ArrowUp
+		): void {
 			if (this.isOpen === false) {
 				this._isOpenedByApi = isOpenedByApi;
-				this._toggleBalloon(true);
+				this._toggleBalloon(true, false, arrowKeyPressed);
 			}
 		}
 

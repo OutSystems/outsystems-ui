@@ -180,6 +180,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 			// Set the library options
 			this._providerOptions = {
 				ele: this.ElementId,
+				disabled: this.IsDisabled,
 				dropboxWrapper: OSFramework.OSUI.GlobalEnum.HTMLElement.Body,
 				hasOptionDescription: hasDescription,
 				hideClearButton: false,

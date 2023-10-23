@@ -6,9 +6,9 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 	export enum Type {
 		BalloonOnToggle = 'balloon.onToggle',
 		BodyOnClick = 'body.onclick',
-		BodyOnScroll = 'body.onscroll',
 		BodyOnMouseDown = 'body.mousedown',
 		OrientationChange = 'window.onorientationchange',
+		ScreenOnScroll = 'screen.onscroll',
 		WindowResize = 'window.onresize',
 		WindowMessage = 'window.message',
 	}

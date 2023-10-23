@@ -278,6 +278,18 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 
 					this.changeTab(targetHeaderItemIndex, undefined, true);
 					break;
+				case GlobalEnum.Keycodes.End:
+					targetHeaderItemIndex = this.getChildItems(Enum.ChildTypes.TabsHeaderItem).length - 1;
+
+					this.changeTab(targetHeaderItemIndex, undefined, true);
+
+					break;
+				case GlobalEnum.Keycodes.Home:
+					targetHeaderItemIndex = 0;
+
+					this.changeTab(targetHeaderItemIndex, undefined, true);
+
+					break;
 			}
 
 			const targetHeaderItem = this.getChildByIndex(targetHeaderItemIndex, Enum.ChildTypes.TabsHeaderItem);
@@ -1048,7 +1060,9 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 			if (
 				this._activeTabHeaderElement === tabsHeaderItem ||
 				// to prevent triggering event if using client action SetActiveTab to set the already active item
-				(tabIndex === this.configs.StartingTab && this.isBuilt && tabsHeaderItem === undefined)
+				(tabIndex === this.configs.StartingTab && this.isBuilt && tabsHeaderItem === undefined) ||
+				// To prevent changing tab when a dropdown is currently open, which would cause UI issues
+				this._activeTabContentElement.selfElement.querySelector(Enum.ElementsBlockingOnChange.Dropdown)
 			) {
 				return;
 			}

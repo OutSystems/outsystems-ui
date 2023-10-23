@@ -34,8 +34,6 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		private _closeDynamically = false;
 		// Click On Body
 		private _eventOnBodyClick: GlobalCallbacks.Generic;
-		// Event OnBodyScroll
-		private _eventOnBodyScroll: GlobalCallbacks.Generic;
 		// Click Event
 		private _eventOnClick: GlobalCallbacks.Generic;
 		private _eventOnClickInputSearch: GlobalCallbacks.Generic;
@@ -43,6 +41,8 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		private _eventOnCloseTransitionEnd: GlobalCallbacks.Generic;
 		// Event OnOrientationChange Event
 		private _eventOnOrientationChange: GlobalCallbacks.Generic;
+		// Event OnScreenScroll
+		private _eventOnScreenScroll: GlobalCallbacks.Generic;
 		// OnSearchInputBlur Event
 		private _eventOnSearchInputBlur: GlobalCallbacks.Generic;
 		// OnSearchInputFocus Event
@@ -67,8 +67,6 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		private _isOpen = false;
 		// Platform OnClose Callback
 		private _platformEventOnToggleCallback: GlobalCallbacks.OSGeneric;
-		// Store the RequestAnimationFrame that will be triggered at OnBodyScroll
-		private _requestAnimationOnBodyScroll: number;
 		// Store the HTML element for the Dropdown Select Wrapper
 		private _selectValuesWrapper: HTMLElement;
 		// Store the SelectValuesWrapper AriaLabel text
@@ -118,8 +116,6 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			// Update the touchMove when pattern is open!
 			this._touchMove();
 
-			// Cancel the requestAnimationFrame
-			cancelAnimationFrame(this._requestAnimationOnBodyScroll);
 			// Update status property
 			this._isOpen = false;
 			// Update pattern status!
@@ -234,38 +230,6 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			}
 		}
 
-		// Update the balloon coordinates
-		private _onBodyScroll(_eventType: string, event: UIEvent): void {
-			if (this.isBuilt) {
-				// If the scroll occcurs inside balloonContent, stop all the forward logic!
-				if (event !== undefined && event.target === this._balloonContentElement) {
-					cancelAnimationFrame(this._requestAnimationOnBodyScroll);
-					return;
-				}
-
-				// If it's open and not at Desktop
-				if (this._isOpen && Helper.DeviceInfo.IsDesktop === false) {
-					cancelAnimationFrame(this._requestAnimationOnBodyScroll);
-
-					// If it's tablet close it in order to prevent flickering on updating it's position!
-					if (Helper.DeviceInfo.IsTablet) {
-						this._close();
-					}
-					return;
-				}
-
-				// If the balloon is open and not IsPhone
-				if (this._isOpen) {
-					// Update the coordinates
-					this._setBalloonCoordinates(false);
-					// Update the "animation" before the next repaint
-					this._requestAnimationOnBodyScroll = requestAnimationFrame(this._eventOnBodyScroll);
-				} else {
-					cancelAnimationFrame(this._requestAnimationOnBodyScroll);
-				}
-			}
-		}
-
 		// A11y keyboard keys
 		private _onKeyboardPressed(event: KeyboardEvent): void {
 			event.stopPropagation();
@@ -280,7 +244,13 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 					}
 
 					// If Enter or Space Keys and Single Option
-					if (event.key === GlobalEnum.Keycodes.Enter || event.key === GlobalEnum.Keycodes.Space) {
+					if (
+						event.key === GlobalEnum.Keycodes.Enter ||
+						event.key === GlobalEnum.Keycodes.Space ||
+						event.key === GlobalEnum.Keycodes.ArrowUp ||
+						event.key === GlobalEnum.Keycodes.ArrowDown ||
+						event.key === GlobalEnum.Keycodes.Home
+					) {
 						// Trigger the click in order to be captured also by DOM (body onClick) in order to close other Dropdowns in page if they are open!
 						this._selectValuesWrapper.click();
 					}
@@ -328,6 +298,21 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		private _onOrientationChange(): void {
 			if (this._isOpen) {
 				this._close();
+			}
+		}
+
+		// Update the balloon coordinates
+		private _onScreenScroll(): void {
+			if (this.isBuilt && this._isOpen) {
+				// If it's tablet close it in order to prevent flickering on updating it's position!
+				if (Helper.DeviceInfo.IsTablet) {
+					this._close();
+					return;
+				}
+
+				// If the balloon is open and Desktop
+				// Update the coordinates
+				requestAnimationFrame(this._setBalloonCoordinates.bind(this));
 			}
 		}
 
@@ -521,10 +506,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 					selfElement.right ===
 						this._selfElementBoundingClientRect.x + this._selfElementBoundingClientRect.width &&
 					selfElement.y === this._selfElementBoundingClientRect.y)
-			) {
-				cancelAnimationFrame(this._requestAnimationOnBodyScroll);
-				return;
-			}
+			)
 
 			// Store the new selElement coordinates
 			this._selfElementBoundingClientRect.x = selfElement.x;
@@ -667,15 +649,15 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 					Event.DOMEvents.Listeners.Type.BodyOnClick,
 					this._eventOnBodyClick
 				);
+				
+				if(Helper.DeviceInfo.IsPhone === false) {
+					// Add the ScreenScroll callback that will be used to update the balloon coodinates
+					Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
+						Event.DOMEvents.Listeners.Type.ScreenOnScroll,
+						this._eventOnScreenScroll
+					);
+				}
 
-				// Add the BodyScroll callback that will be used to update the balloon coodinates
-				Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
-					Event.DOMEvents.Listeners.Type.BodyOnScroll,
-					this._eventOnBodyScroll
-				);
-
-				// Update "animation" before the next repaint
-				this._requestAnimationOnBodyScroll = requestAnimationFrame(this._eventOnBodyScroll);
 				// Add the window resize callback that will be used to update the balloon position!
 				Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
 					Event.DOMEvents.Listeners.Type.WindowResize,
@@ -747,10 +729,14 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 				Event.DOMEvents.Listeners.Type.BodyOnClick,
 				this._eventOnBodyClick
 			);
-			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
-				Event.DOMEvents.Listeners.Type.BodyOnScroll,
-				this._eventOnBodyScroll
-			);
+
+			if(Helper.DeviceInfo.IsPhone === false) {
+				Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
+					Event.DOMEvents.Listeners.Type.ScreenOnScroll,
+					this._eventOnScreenScroll
+				);
+			}
+
 			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
 				Event.DOMEvents.Listeners.Type.WindowResize,
 				this._eventOnWindowResize
@@ -804,6 +790,10 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			// If there is the Search input
 			if (this._balloonSearchInputElement !== undefined) {
 				Helper.A11Y.TabIndex(this._balloonSearchInputElement, tabIndexValue);
+				Helper.A11Y.AriaHidden(
+					this._balloonSearchInputElement,
+					(tabIndexValue === Constants.A11YAttributes.States.TabIndexHidden).toString()
+				);
 			}
 
 			// Ballon Options Wrapper
@@ -927,7 +917,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		 */
 		protected setCallbacks(): void {
 			this._eventOnBodyClick = this._onBodyClick.bind(this);
-			this._eventOnBodyScroll = this._onBodyScroll.bind(this);
+			this._eventOnScreenScroll = this._onScreenScroll.bind(this);
 			this._eventOnClick = this._onSelectValuesWrapperClicked.bind(this);
 			this._eventOnClickInputSearch = this._onSearchInputClicked.bind(this);
 			this._eventOnCloseTransitionEnd = this._endOfCloseAnimation.bind(this);
@@ -995,7 +985,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		 */
 		protected unsetCallbacks(): void {
 			this._eventOnBodyClick = undefined;
-			this._eventOnBodyScroll = undefined;
+			this._eventOnScreenScroll = undefined;
 			this._eventOnClick = undefined;
 			this._eventOnClickInputSearch = undefined;
 			this._eventOnCloseTransitionEnd = undefined;
@@ -1137,6 +1127,8 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			Helper.Dom.Attribute.Set(this._balloonWrapperElement, GlobalEnum.HTMLAttributes.Disabled, '');
 			// Assign IsDisabled class
 			Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.IsDisabled);
+			// Assign tabindex value on values wrapper
+			Helper.A11Y.TabIndexFalse(this._selectValuesWrapper);
 		}
 
 		/**
@@ -1164,6 +1156,8 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			Helper.Dom.Attribute.Remove(this._balloonWrapperElement, GlobalEnum.HTMLAttributes.Disabled);
 			// Remove IsDisabled class
 			Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.IsDisabled);
+			// Assign tabindex value on values wrapper
+			Helper.A11Y.TabIndexTrue(this._selectValuesWrapper);
 		}
 
 		/**

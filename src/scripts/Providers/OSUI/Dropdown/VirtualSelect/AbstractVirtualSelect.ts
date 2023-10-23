@@ -42,9 +42,6 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 
 		// Manage the attributes to be added
 		private _manageAttributes(): void {
-			// Check if the pattern should be in disabled mode
-			this._manageDisableStatus();
-
 			// Manage A11Y attributes
 			this.setA11YProperties();
 		}
@@ -52,16 +49,9 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		// Manage the disable status of the pattern
 		private _manageDisableStatus(): void {
 			if (this.configs.IsDisabled) {
-				OSFramework.OSUI.Helper.Dom.Attribute.Set(
-					this.selfElement,
-					OSFramework.OSUI.GlobalEnum.HTMLAttributes.Disabled,
-					''
-				);
+				this.provider.$ele.disable();
 			} else {
-				OSFramework.OSUI.Helper.Dom.Attribute.Remove(
-					this.selfElement,
-					OSFramework.OSUI.GlobalEnum.HTMLAttributes.Disabled
-				);
+				this.provider.$ele.enable();
 			}
 		}
 
@@ -319,10 +309,9 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		 * @memberof Providers.OSUI.Dropdown.VirtualSelect.AbstractVirtualSelect
 		 */
 		public disable(): void {
-			if (this.configs.IsDisabled === false) {
+			if (this.configs.IsDisabled === false && this.provider !== undefined) {
 				this.configs.IsDisabled = true;
-
-				this._manageDisableStatus();
+				this.provider.$ele.disable();
 			}
 		}
 
@@ -359,10 +348,9 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		 * @memberof Providers.OSUI.Dropdown.VirtualSelect.AbstractVirtualSelect
 		 */
 		public enable(): void {
-			if (this.configs.IsDisabled) {
+			if (this.configs.IsDisabled && this.provider !== undefined) {
 				this.configs.IsDisabled = false;
-
-				this._manageDisableStatus();
+				this.provider.$ele.enable();
 			}
 		}
 
