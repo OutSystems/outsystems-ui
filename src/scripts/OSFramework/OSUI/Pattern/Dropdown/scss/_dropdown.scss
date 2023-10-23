@@ -34,6 +34,10 @@
 		.vscomp-wrapper {
 			font-family: inherit;
 		}
+		// Consistent border color on focus (similar to inputs)
+		.vscomp-wrapper:focus .vscomp-toggle-button {
+			border-color: var(--color-primary);
+		}
 	}
 
 	/// Dropdown Option Item image
