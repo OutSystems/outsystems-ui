@@ -7,59 +7,70 @@ jobs:
     compile-prod:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v3
+            - name: Checkout branch main
+              uses: actions/checkout@v3
               with:
                   ref: main
 
-            - run: npm install
+            - name: Install project dependencies
+              run: npm install
 
-            - name: Compile Prod
+            - name: Compile Production code
               run: npm run build
 
-            - name: Git Commit
-              uses: stefanzweifel/git-auto-commit-action@v4
+            - name: Sign and commit compiled code to branch main
+              uses: ./.github/signed-commit/
               with:
                   branch: main
-                  commit_message: Compiled Production Mode [skip ci]
+                  message: 'Compiled Production Mode [skip ci]'
+                  newFiles: true
+                  gpgPriv: ${{ secrets.GPG_SIGN_KEY }}
+                  gpgPassPhrase: ${{ secrets.GPG_PASSPHRASE }}
 
     update-doc:
         needs: compile-prod
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v3
+            - name: Checkout branch main
+              uses: actions/checkout@v3
               with:
                   ref: main
                   token: ${{ secrets.PAT }}
 
             - uses: actions/setup-node@v3
 
-            - run: npm install
+            - name: Install project dependencies
+              run: npm install
 
             - name: Install graphviz
               run: sudo apt install -y graphviz
 
-            - run: npm run docs
+            - name: Generate documentation
+              run: npm run docs
 
-            - name: Git Commit
-              uses: stefanzweifel/git-auto-commit-action@v4
+            - name: Sign and commit documentation to branch main
+              uses: ./.github/signed-commit/
               with:
                   branch: main
-                  commit_message: Update documentation [skip ci]
+                  message: 'Update documentation [skip ci]'
+                  newFiles: true
+                  gpgPriv: ${{ secrets.GPG_SIGN_KEY }}
+                  gpgPassPhrase: ${{ secrets.GPG_PASSPHRASE }}
 
     deploy-doc:
         needs: update-doc
         runs-on: ubuntu-latest
 
         steps:
-            - uses: actions/checkout@v3
+            - name: Checkout branch main
+              uses: actions/checkout@v3
               with:
                   ref: main
 
             - uses: actions/setup-node@v3
 
-            - name: Push files into github page
+            - name: Push documentation into github page
               uses: GuillaumeFalourd/copy-push-files@v1
-
               with:
                   source_files: docs/*
                   remote_repository: https://github.com/outsystems-ui-docs/outsystems-ui-docs.github.io
