@@ -32,8 +32,9 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		private _balloonWrapperElement: HTMLElement;
 		// Store a Flag property that will help dealing with the focus state at the close moment
 		private _closeDynamically = false;
-		// Click On Body
-		private _eventOnBodyClick: GlobalCallbacks.Generic;
+		private _drodpownBalloonContentActiveElem: HTMLElement;
+		// Blur event
+		private _eventOnBlur: GlobalCallbacks.Generic;
 		// Click Event
 		private _eventOnClick: GlobalCallbacks.Generic;
 		private _eventOnClickInputSearch: GlobalCallbacks.Generic;
@@ -206,30 +207,6 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			Helper.Dom.Move(this._balloonWrapperElement, this._activeScreenElement);
 		}
 
-		// Close when click outside of pattern
-		private _onBodyClick(_eventType: string, event: MouseEvent): void {
-			if (this._isOpen === false) {
-				return;
-			}
-			// Get the target element
-			const targetElement = event.target as HTMLElement;
-			// Get the closest based on pattern base selector
-			const getBaseElement =
-				targetElement.closest(Constants.Dot + Enum.CssClass.Pattern) ||
-				targetElement.closest(Constants.Dot + Enum.CssClass.BalloonWrapper);
-
-			// If it's phone, always close, as it is on popup mode
-			if (
-				Helper.DeviceInfo.IsPhone ||
-				(Helper.DeviceInfo.IsPhone === false &&
-					getBaseElement !== this.selfElement &&
-					getBaseElement !== this._balloonWrapperElement)
-			) {
-				this._closeDynamically = true;
-				this._close();
-			}
-		}
-
 		// A11y keyboard keys
 		private _onKeyboardPressed(event: KeyboardEvent): void {
 			event.stopPropagation();
@@ -329,6 +306,31 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		// Used to manage the balloon height accordingly keyboard is in use due to the way iOS deal with it!
 		private _onSearchInputFocus(): void {
 			Helper.Dom.Styles.AddClass(this._balloonWrapperElement, Enum.CssClass.SearchInputIsFocused);
+		}
+
+		// Method to handle the onBlur event that closes the dropdown
+		private _onSelectValuesWrapperBlur(): void {
+			Helper.AsyncInvocation(() => {
+				// Wait for next activeElement be active
+				// Check if a previous active element has been assigned
+				if (this._drodpownBalloonContentActiveElem) {
+					this._drodpownBalloonContentActiveElem.removeEventListener(
+						GlobalEnum.HTMLEvent.Blur,
+						this._eventOnBlur
+					);
+				}
+
+				if (document.activeElement !== this.selfElement && this._balloonWrapperElement.contains(document.activeElement) === false) {
+					this.close();
+				} else {
+					// Add the blur event in order to proper close the tooltip after its blur
+					this._drodpownBalloonContentActiveElem = document.activeElement as HTMLElement;
+					this._drodpownBalloonContentActiveElem.addEventListener(
+						GlobalEnum.HTMLEvent.Blur,
+						this._eventOnBlur
+					);
+				}
+			});
 		}
 
 		// Used to apply the logic when user click to open the Dropdown
@@ -556,7 +558,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			// If search input exist add a class to the balloon
 			if (this._balloonSearchInputElement === undefined) {
 				// Needed to style the balloon height once at phone
-				Helper.Dom.Styles.AddClass(this._balloonWrapperElement, Enum.CssClass.BalloonHasNotSearchInput);
+								Helper.Dom.Styles.AddClass(this._balloonWrapperElement, Enum.CssClass.BalloonHasNotSearchInput);
 			}
 
 			// Check if the ExtendedClass attribute must be set since balloon will be moved outise of pattern context
@@ -613,6 +615,8 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			this._selectValuesWrapper.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
 			// Add KeyDown Event to the SelectValuesWrapper (A11y - stuff)
 			this._selectValuesWrapper.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyboardPress);
+			// Add OnBlue Event to the SelectValuesWrapper
+			this._selectValuesWrapper.addEventListener(GlobalEnum.HTMLEvent.Blur, this._eventOnBlur);
 
 			if (this.isBuilt) {
 				// Add KeyDown Event to the BalloonContent (OptionsWrapper) (A11y - stuff)
@@ -643,12 +647,6 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 						this._eventOnSearchInputFocus
 					);
 				}
-
-				// Add the BodyClick callback that will be used Close open Dropdown!
-				Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
-					Event.DOMEvents.Listeners.Type.BodyOnClick,
-					this._eventOnBodyClick
-				);
 				
 				if(Helper.DeviceInfo.IsPhone === false) {
 					// Add the ScreenScroll callback that will be used to update the balloon coodinates
@@ -701,6 +699,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			if (isUpdate === false) {
 				this._selectValuesWrapper.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
 				this._selectValuesWrapper.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyboardPress);
+				this._selectValuesWrapper.removeEventListener(GlobalEnum.HTMLEvent.Blur, this._eventOnBlur);
 			}
 
 			this._balloonOptionsWrapperElement.removeEventListener(
@@ -725,10 +724,6 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 					this._eventOnSearchInputFocus
 				);
 			}
-			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
-				Event.DOMEvents.Listeners.Type.BodyOnClick,
-				this._eventOnBodyClick
-			);
 
 			if(Helper.DeviceInfo.IsPhone === false) {
 				Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
@@ -916,8 +911,8 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
 		 */
 		protected setCallbacks(): void {
-			this._eventOnBodyClick = this._onBodyClick.bind(this);
 			this._eventOnScreenScroll = this._onScreenScroll.bind(this);
+			this._eventOnBlur = this._onSelectValuesWrapperBlur.bind(this);
 			this._eventOnClick = this._onSelectValuesWrapperClicked.bind(this);
 			this._eventOnClickInputSearch = this._onSearchInputClicked.bind(this);
 			this._eventOnCloseTransitionEnd = this._endOfCloseAnimation.bind(this);
@@ -984,8 +979,8 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
 		 */
 		protected unsetCallbacks(): void {
-			this._eventOnBodyClick = undefined;
 			this._eventOnScreenScroll = undefined;
+			this._eventOnBlur = undefined;
 			this._eventOnClick = undefined;
 			this._eventOnClickInputSearch = undefined;
 			this._eventOnCloseTransitionEnd = undefined;
