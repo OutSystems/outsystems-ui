@@ -50,7 +50,7 @@ jobs:
               run: npm run build
 
             - name: Sign and commit compiled code to branch main
-              uses: ./.github/signed-commit/
+              uses: ./.github/os-git-actions/signed-commit/
               with:
                   branch: main
                   message: 'Compiled Production Mode [skip ci]'
@@ -80,7 +80,7 @@ jobs:
               run: npm run docs
 
             - name: Sign and commit documentation to branch main
-              uses: ./.github/signed-commit/
+              uses: ./.github/os-git-actions/signed-commit/
               with:
                   branch: main
                   message: 'Update documentation [skip ci]'

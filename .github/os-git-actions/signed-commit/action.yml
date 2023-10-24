@@ -26,13 +26,13 @@ runs:
     using: composite
     steps:
         - name: Setup GPG to sign commits
-          uses: ./.github/setup-gpg/
+          uses: ./.github/os-git-actions/setup-gpg/
           with:
               gpgPriv: ${{ inputs.gpgPriv }}
               gpgPassPhrase: ${{ inputs.gpgPassPhrase }}
 
         - name: Perform git commit
-          uses: ./.github/manual-commit/
+          uses: ./.github/os-git-actions/manual-commit/
           with:
               branch: ${{ inputs.branch }}
               message: ${{ inputs.message }}
