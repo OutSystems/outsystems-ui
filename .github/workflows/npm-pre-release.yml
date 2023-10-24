@@ -97,7 +97,7 @@ jobs:
               run: npm run gta-update-version ${{ steps.get-artifact-version.outputs.version }}
 
             - name: Sign and Commit version increment to branch dev
-              uses: ./.github/signed-commit/
+              uses: ./.github/os-git-actions/signed-commit/
               with:
                   branch: dev
                   message: 'Updated version. [skip ci]'
@@ -164,7 +164,7 @@ jobs:
               run: npm run build
 
             - name: Sign and commit compiled code to branch rc${{ steps.get-artifact-version.outputs.version }}
-              uses: ./.github/signed-commit/
+              uses: ./.github/os-git-actions/signed-commit/
               with:
                   branch: 'rc${{ steps.get-artifact-version.outputs.version }}'
                   message: 'Compiled Production Mode [skip ci]'
