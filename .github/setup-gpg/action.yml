@@ -1,0 +1,22 @@
+name: 'setup-gpg'
+description: 'Prepare to get following commits signed'
+inputs:
+    gpgPriv:
+        description: 'GPG Private key'
+        required: true
+        default: ''
+    gpgPassPhrase:
+        description: 'GPG passphrase'
+        required: false
+        default: '""'
+
+runs:
+    using: composite
+    steps:
+        - name: Import and load GPG key
+          uses: crazy-max/ghaction-import-gpg@v6
+          with:
+              gpg_private_key: ${{ inputs.gpgPriv }}
+              passphrase: ${{ inputs.gpgPassPhrase }}
+              git_user_signingkey: true
+              git_commit_gpgsign: true

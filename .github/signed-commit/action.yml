@@ -1,0 +1,39 @@
+name: 'signed-gpg-commit'
+description: 'Prepare and sign the commit signed'
+inputs:
+    branch:
+        description: 'Branch where to commit.'
+        required: true
+        default: ''
+    message:
+        description: 'Commit message.'
+        required: true
+        default: ''
+    newFiles:
+        description: 'Defines if a `git add.` should be made or not.'
+        required: false
+        default: false
+    gpgPriv:
+        description: 'GPG Private key'
+        required: true
+        default: ''
+    gpgPassPhrase:
+        description: 'GPG passphrase'
+        required: false
+        default: '""'
+
+runs:
+    using: composite
+    steps:
+        - name: Setup GPG to sign commits
+          uses: ./.github/setup-gpg/
+          with:
+              gpgPriv: ${{ inputs.gpgPriv }}
+              gpgPassPhrase: ${{ inputs.gpgPassPhrase }}
+
+        - name: Perform git commit
+          uses: ./.github/manual-commit/
+          with:
+              branch: ${{ inputs.branch }}
+              message: ${{ inputs.message }}
+              newFiles: ${{ inputs.newFiles }}
