@@ -129,9 +129,10 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 
 				if (document.activeElement !== this._tooltipIconElem && this._tooltipBalloonContentElem.contains(document.activeElement) === false) {
 					this._triggerClose();
-				} else {
+				} else if(document.activeElement !== document.body) {
 					// Add the blur event in order to proper close the tooltip after its blur
 					this._tooltipBalloonContentActiveElem = document.activeElement as HTMLElement;
+	
 					this._tooltipBalloonContentActiveElem.addEventListener(
 						GlobalEnum.HTMLEvent.Blur,
 						this._eventOnBlur
@@ -413,14 +414,19 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 		}
 
 		// Close the Balloon
-		private _triggerClose() {
+		private  _triggerClose() {
 			// Check if the tooltip is open
 			if (this._isOpen) {
 				this._isOpen = false;
 
-				// Remove the IsOpned selector
-				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.IsOpened);
-				Helper.Dom.Styles.RemoveClass(this._tooltipBalloonWrapperElem, Enum.CssClass.BalloonIsOpened);
+				// Set custom timeout to run after platform event's throttle time
+				const _timeout = this._tooltipBalloonContentElem.querySelector(Constants.AllowPropagationAttr) ? 110 : 0;
+
+				Helper.ApplySetTimeOut(()=>{
+					// Remove the IsOpened selector
+					Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.IsOpened);
+					Helper.Dom.Styles.RemoveClass(this._tooltipBalloonWrapperElem, Enum.CssClass.BalloonIsOpened);
+				}, _timeout);
 
 				// Cancel the Observer!
 				this._unsetObserver();
@@ -444,6 +450,7 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 		private _triggerOpen() {
 			// Check if the tooltip is closed
 			if (this._isOpen === false) {
+				
 				this._isOpen = true;
 
 				// Get all Tooltips Ids in order to close them!
