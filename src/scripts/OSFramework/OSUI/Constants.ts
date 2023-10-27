@@ -54,6 +54,9 @@ namespace OSFramework.OSUI.Constants {
 		},
 	};
 
+	/* Attribute used to allow propagation on containers with event */
+	export const AllowPropagationAttr = '[data-allow-event-propagation]';
+
 	/* Used to concatenate when querySelector for a class */
 	export const Dot = '.';
 
