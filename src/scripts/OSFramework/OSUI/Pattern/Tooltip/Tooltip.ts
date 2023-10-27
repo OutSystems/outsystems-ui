@@ -39,6 +39,8 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 		private _isOpen: boolean;
 		// Flag used to deal with onBodyClick and open api concurrency methods!
 		private _isOpenedByApi = false;
+		// Store if the current browser is safari
+		private _isSafari: boolean;
 		// Platform OnClose Callback
 		private _platformEventOnToggleCallback: GlobalCallbacks.OSGeneric;
 		// Store the RequestAnimationFrame that will be triggered at OnBodyScroll
@@ -59,6 +61,7 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 
 			this._isOpen = this.configs.StartVisible;
 			this._tooltipBalloonPositionClass = this.configs.Position;
+			this._isSafari = OutSystems.OSUI.Utils.GetBrowser() === GlobalEnum.Browser.safari;
 		}
 
 		// Move balloon element to active screen, outside of the pattern context
@@ -420,7 +423,7 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 				this._isOpen = false;
 
 				// Set custom timeout to run after platform event's throttle time
-				const _timeout = this._tooltipBalloonContentElem.querySelector(Constants.AllowPropagationAttr) ? 110 : 0;
+				const _timeout = this._tooltipBalloonContentElem.querySelector(Constants.AllowPropagationAttr) || this._isSafari ? 110 : 0;
 
 				Helper.ApplySetTimeOut(()=>{
 					// Remove the IsOpened selector
