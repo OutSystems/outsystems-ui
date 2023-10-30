@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="183px" preserveAspectRatio="none" style="width:193px;height:183px;background:#CED4DA;" version="1.1" viewBox="0 0 193 183" width="193px" zoomAndPan="magnify"><defs><filter height="300%" id="f1bmuvu45k6e9k" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><!--MD5=[5c9e161de1f32f186f31a959d8045923]
+class RTLObserverConfigs--><rect codeLine="7" fill="#FFFFFF" filter="url(#f1bmuvu45k6e9k)" height="78.8652" id="RTLObserverConfigs" style="stroke:#272B30;stroke-width:1.5;" width="172" x="7" y="91"/><ellipse cx="32.35" cy="107" fill="#ADD1B2" rx="11" ry="11" style="stroke:#272B30;stroke-width:1.0;"/><path d="M34.8231,113.1431 Q34.2421,113.4419 33.6029,113.5913 Q32.9638,113.7407 32.2582,113.7407 Q29.7514,113.7407 28.4315,112.0889 Q27.1117,110.437 27.1117,107.3159 Q27.1117,104.1865 28.4315,102.5347 Q29.7514,100.8828 32.2582,100.8828 Q32.9638,100.8828 33.6112,101.0322 Q34.2587,101.1816 34.8231,101.4805 L34.8231,104.2031 Q34.1923,103.6221 33.5988,103.3523 Q33.0053,103.0825 32.3744,103.0825 Q31.0297,103.0825 30.3449,104.1492 Q29.6601,105.2158 29.6601,107.3159 Q29.6601,109.4077 30.3449,110.4744 Q31.0297,111.541 32.3744,111.541 Q33.0053,111.541 33.5988,111.2712 Q34.1923,111.0015 34.8231,110.4204 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="117" x="48.65" y="111.5352">RTLObserverConfigs</text><line style="stroke:#272B30;stroke-width:1.5;" x1="8" x2="178" y1="123" y2="123"/><ellipse cx="18" cy="134" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="122" x="27" y="137.6348">attributeFilter : string[]</text><ellipse cx="18" cy="146.9551" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="146" x="27" y="150.5898">attributeOldValue : boolean</text><ellipse cx="18" cy="159.9102" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;fill:none;"/><text fill="#000000" font-family="sans-serif" font-size="11" lengthAdjust="spacing" textLength="93" x="27" y="163.5449">subtree : boolean</text><!--MD5=[cd0b4896a9c230e5a140111297eefa63]
+class MutationObserverInit--><rect codeLine="12" fill="#FFFFFF" filter="url(#f1bmuvu45k6e9k)" height="24.1328" id="MutationObserverInit" style="stroke:#272B30;stroke-width:1.5;" width="125" x="30.5" y="7"/><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="119" x="33.5" y="23.6016">MutationObserverInit</text><!--MD5=[90199fce58a249b7d655a5e288f3b90c]
+reverse link MutationObserverInit to RTLObserverConfigs--><path codeLine="14" d="M93,51.69 C93,63.94 93,78.07 93,90.89 " fill="none" id="MutationObserverInit-backto-RTLObserverConfigs" style="stroke:#272B30;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="none" points="86,51.31,93,31.31,100,51.31,86,51.31" style="stroke:#272B30;stroke-width:1.0;"/><!--MD5=[7b369249fb7210736249f8dd0e349c85]
+@startuml
+skinparam ClassArrowColor #272b30
+skinparam ClassBorderColor #272b30
+skinparam ClassBackgroundColor #fff
+skinparam BackgroundColor #ced4da
+hide empty methods
+hide empty fields
+class "RTLObserverConfigs" {
+    +attributeFilter : string[]
+    +attributeOldValue : boolean
+    +subtree : boolean
+}
+class "MutationObserverInit"
+hide "MutationObserverInit" circle
+"MutationObserverInit" <|.. "RTLObserverConfigs"
+@enduml
+
+PlantUML version 1.2021.14(Fri Nov 12 16:46:50 WET 2021)
+(GPL source distribution)
+Java Runtime: Java(TM) SE Runtime Environment
+JVM: Java HotSpot(TM) 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: PT
+--></g></svg>
