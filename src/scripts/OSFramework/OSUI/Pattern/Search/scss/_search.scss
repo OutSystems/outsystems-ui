@@ -1,0 +1,104 @@
+/* Patterns - Interaction - Search */
+////
+/// @group Patterns-Search
+/// Patterns - Interaction - Search
+
+///
+.osui-search {
+	position: relative;
+
+	&:empty {
+		// Service Studio Preview
+		-servicestudio-height: 40px;
+	}
+
+	&__input {
+		position: relative;
+
+		&:empty {
+			// Service Studio Preview
+			-servicestudio-background-color: #fff;
+			-servicestudio-border-radius: 4px;
+			-servicestudio-height: 40px;
+		}
+
+		input[data-input] {
+			background-image: url(data:image/svg+xml;base64,PHN2ZyBpZD0iU3ZnanNTdmcxMDAxIiB3aWR0aD0iMjg4IiBoZWlnaHQ9IjI4OCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2ZXJzaW9uPSIxLjEiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4bWxuczpzdmdqcz0iaHR0cDovL3N2Z2pzLmNvbS9zdmdqcyI+PGRlZnMgaWQ9IlN2Z2pzRGVmczEwMDIiPjwvZGVmcz48ZyBpZD0iU3ZnanNHMTAwOCI+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNjY0IDE2NjQiIHdpZHRoPSIyODgiIGhlaWdodD0iMjg4Ij48cGF0aCBmaWxsPSIjYWRiNWJkIiBkPSJNMTE1MiA3MDRxMC0xODUtMTMxLjUtMzE2LjVUNzA0IDI1NlQzODcuNSAzODcuNVQyNTYgNzA0dDEzMS41IDMxNi41VDcwNCAxMTUydDMxNi41LTEzMS41VDExNTIgNzA0em01MTIgODMycTAgNTItMzggOTB0LTkwIDM4cS01NCAwLTkwLTM4bC0zNDMtMzQycS0xNzkgMTI0LTM5OSAxMjRxLTE0MyAwLTI3My41LTU1LjV0LTIyNS0xNTB0LTE1MC0yMjVUMCA3MDR0NTUuNS0yNzMuNXQxNTAtMjI1dDIyNS0xNTBUNzA0IDB0MjczLjUgNTUuNXQyMjUgMTUwdDE1MCAyMjVUMTQwOCA3MDRxMCAyMjAtMTI0IDM5OWwzNDMgMzQzcTM3IDM3IDM3IDkweiIgY2xhc3M9ImNvbG9yY3VycmVudENvbG9yIHN2Z1NoYXBlIj48L3BhdGg+PC9zdmc+PC9nPjwvc3ZnPg==);
+			background-position: left var(--space-base) center;
+			background-repeat: no-repeat;
+			background-size: 14px auto;
+		}
+	}
+
+	.form-control {
+		&[data-input] {
+			padding-left: var(--space-xl);
+		}
+	}
+}
+
+.form {
+	.osui-search {
+		input[data-input] {
+			margin-bottom: var(--space-none);
+		}
+	}
+}
+
+// IsRTL -------------------------------------------------------------------------
+///
+.is-rtl {
+	.osui-search {
+		&__input:after {
+			left: auto;
+			right: var(--space-base);
+		}
+
+		.form-control[data-input] {
+			padding-left: var(--space-base);
+			padding-right: var(--space-xl);
+		}
+	}
+}
+
+// Layout Native ------------------------------------------------------------------
+///
+
+.layout-native {
+	.header {
+		.osui-search {
+			input[data-input] {
+				&,
+				&:empty {
+					border: var(--border-size-none);
+					padding-left: var(--space-xl);
+				}
+			}
+		}
+	}
+
+	.header-content {
+		.osui-search {
+			input[data-input] {
+				&,
+				&:empty {
+					border-radius: var(--border-radius-none);
+				}
+			}
+		}
+	}
+}
+
+// Hide Search on page transitions
+.slide-from-left-enter .layout-native .header-right .osui-search__input,
+.slide-from-left-leave .layout-native .header-right .osui-search__input,
+.slide-from-right-enter .layout-native .header-right .osui-search__input,
+.slide-from-right-leave .layout-native .header-right .osui-search__input,
+.slide-from-top-enter .layout-native .header-right .osui-search__input,
+.slide-from-top-leave .layout-native .header-right .osui-search__input,
+.slide-from-bottom-enter .layout-native .header-right .osui-search__input,
+.slide-from-bottom-leave .layout-native .header-right .osui-search__input,
+.fade-enter .header-right .layout-native .osui-search__input,
+.fade-leave .header-right .layout-native .osui-search__input {
+	display: none;
+}

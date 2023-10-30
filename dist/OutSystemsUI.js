@@ -1,5 +1,5 @@
 /*!
-OutSystems UI 2.17.0
+OutSystems UI 2.18.0
 Website:
  • https://www.outsystems.com/outsystems-ui
 GitHub:
@@ -51,7 +51,8 @@ var OSFramework;
         (function (Constants) {
             Constants.A11YAttributes = {
                 Aria: {
-                    Atomic: 'atomic',
+                    Atomic: 'aria-atomic',
+                    Busy: 'aria-busy',
                     Controls: 'aria-controls',
                     Describedby: 'aria-describedby',
                     Disabled: 'aria-disabled',
@@ -73,12 +74,14 @@ var OSFramework;
                 },
                 Role: {
                     Alert: 'alert',
+                    AlertDialog: 'alertdialog',
                     AttrName: 'role',
                     Button: 'button',
                     Complementary: 'complementary',
                     Listbox: 'listbox',
                     MenuItem: 'menuitem',
                     Option: 'option',
+                    Presentation: 'presentation',
                     Progressbar: 'progressbar',
                     Region: 'region',
                     Search: 'search',
@@ -135,7 +138,7 @@ var OSFramework;
             Constants.AccessibilityHideElementClass = 'wcag-hide-text';
             Constants.IsRTLClass = 'is-rtl';
             Constants.NoTransition = 'no-transition';
-            Constants.OSUIVersion = '2.17.0';
+            Constants.OSUIVersion = '2.18.0';
             Constants.ZeroValue = 0;
         })(Constants = OSUI.Constants || (OSUI.Constants = {}));
     })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
@@ -241,6 +244,7 @@ var OSFramework;
                 CssClassElements["HeaderIsFixed"] = "fixed-header";
                 CssClassElements["HeaderIsVisible"] = "header-is--visible";
                 CssClassElements["HeaderTopContent"] = "header-top-content";
+                CssClassElements["InputNotValid"] = "not-valid";
                 CssClassElements["IsTouch"] = "is--touch";
                 CssClassElements["Layout"] = "layout";
                 CssClassElements["LayoutNative"] = "layout-native";
@@ -251,7 +255,7 @@ var OSFramework;
                 CssClassElements["MainContent"] = "main-content";
                 CssClassElements["MenuLinks"] = "app-menu-links";
                 CssClassElements["Placeholder"] = "ph";
-                CssClassElements["InputNotValid"] = "not-valid";
+                CssClassElements["SkipContent"] = "skip-nav";
             })(CssClassElements = GlobalEnum.CssClassElements || (GlobalEnum.CssClassElements = {}));
             let CSSSelectors;
             (function (CSSSelectors) {
@@ -288,8 +292,8 @@ var OSFramework;
             (function (FloatingPosition) {
                 FloatingPosition["Auto"] = "auto";
                 FloatingPosition["Bottom"] = "bottom";
-                FloatingPosition["BottomStart"] = "bottom-start";
                 FloatingPosition["BottomEnd"] = "bottom-end";
+                FloatingPosition["BottomStart"] = "bottom-start";
                 FloatingPosition["Center"] = "center";
                 FloatingPosition["Left"] = "left";
                 FloatingPosition["LeftEnd"] = "left-end";
@@ -298,8 +302,8 @@ var OSFramework;
                 FloatingPosition["RightEnd"] = "right-end";
                 FloatingPosition["RightStart"] = "right-start";
                 FloatingPosition["Top"] = "top";
-                FloatingPosition["TopStart"] = "top-start";
                 FloatingPosition["TopEnd"] = "top-end";
+                FloatingPosition["TopStart"] = "top-start";
             })(FloatingPosition = GlobalEnum.FloatingPosition || (GlobalEnum.FloatingPosition = {}));
             let CssProperties;
             (function (CssProperties) {
@@ -355,6 +359,7 @@ var OSFramework;
                 HTMLAttributes["Class"] = "class";
                 HTMLAttributes["DataInput"] = "data-input";
                 HTMLAttributes["Disabled"] = "disabled";
+                HTMLAttributes["Href"] = "href";
                 HTMLAttributes["Id"] = "id";
                 HTMLAttributes["Name"] = "name";
                 HTMLAttributes["StatusBar"] = "data-status-bar-height";
@@ -369,6 +374,7 @@ var OSFramework;
                 HTMLElement["FieldSet"] = "fieldset";
                 HTMLElement["Input"] = "input";
                 HTMLElement["Link"] = "a";
+                HTMLElement["Radio"] = "radio";
                 HTMLElement["Span"] = "span";
             })(HTMLElement = GlobalEnum.HTMLElement || (GlobalEnum.HTMLElement = {}));
             let HTMLEvent;
@@ -421,8 +427,10 @@ var OSFramework;
                 Keycodes["ArrowLeft"] = "ArrowLeft";
                 Keycodes["ArrowRight"] = "ArrowRight";
                 Keycodes["ArrowUp"] = "ArrowUp";
+                Keycodes["End"] = "End";
                 Keycodes["Enter"] = "Enter";
                 Keycodes["Escape"] = "Escape";
+                Keycodes["Home"] = "Home";
                 Keycodes["Shift"] = "Shift";
                 Keycodes["ShiftTab"] = "ShiftTab";
                 Keycodes["Space"] = " ";
@@ -479,8 +487,8 @@ var OSFramework;
                 PatternName["Submenu"] = "Submenu";
                 PatternName["SwipeEvents"] = "SwipeEvents";
                 PatternName["Tabs"] = "Tabs";
-                PatternName["TabsHeaderItem"] = "TabsHeaderItem";
                 PatternName["TabsContentItem"] = "TabsContentItem";
+                PatternName["TabsHeaderItem"] = "TabsHeaderItem";
                 PatternName["Timepicker"] = "Timepicker";
                 PatternName["Tooltip"] = "Tooltip";
                 PatternName["TouchEvents"] = "TouchEvents";
@@ -1216,39 +1224,13 @@ var OSFramework;
             (function (DOMEvents) {
                 var Listeners;
                 (function (Listeners) {
-                    class BodyOnScroll extends Listeners.AbstractListener {
-                        constructor() {
-                            super(document.body, OSUI.GlobalEnum.HTMLEvent.Scroll);
-                            this.useCapture = true;
-                            this.eventCallback = this._bodyTrigger.bind(this);
-                        }
-                        _bodyTrigger(evt) {
-                            this.trigger(OSUI.GlobalEnum.HTMLEvent.Scroll, evt);
-                        }
-                    }
-                    Listeners.BodyOnScroll = BodyOnScroll;
-                })(Listeners = DOMEvents.Listeners || (DOMEvents.Listeners = {}));
-            })(DOMEvents = Event.DOMEvents || (Event.DOMEvents = {}));
-        })(Event = OSUI.Event || (OSUI.Event = {}));
-    })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
-})(OSFramework || (OSFramework = {}));
-var OSFramework;
-(function (OSFramework) {
-    var OSUI;
-    (function (OSUI) {
-        var Event;
-        (function (Event) {
-            var DOMEvents;
-            (function (DOMEvents) {
-                var Listeners;
-                (function (Listeners) {
                     let Type;
                     (function (Type) {
                         Type["BalloonOnToggle"] = "balloon.onToggle";
                         Type["BodyOnClick"] = "body.onclick";
-                        Type["BodyOnScroll"] = "body.onscroll";
                         Type["BodyOnMouseDown"] = "body.mousedown";
                         Type["OrientationChange"] = "window.onorientationchange";
+                        Type["ScreenOnScroll"] = "screen.onscroll";
                         Type["WindowResize"] = "window.onresize";
                     })(Type = Listeners.Type || (Listeners.Type = {}));
                 })(Listeners = DOMEvents.Listeners || (DOMEvents.Listeners = {}));
@@ -1273,14 +1255,14 @@ var OSFramework;
                                     return new Listeners.BalloonOnToggle();
                                 case Listeners.Type.BodyOnClick:
                                     return new Listeners.BodyOnClick();
-                                case Listeners.Type.BodyOnScroll:
-                                    return new Listeners.BodyOnScroll();
                                 case Listeners.Type.BodyOnMouseDown:
                                     return new Listeners.BodyOnMouseDown();
                                 case Listeners.Type.WindowResize:
                                     return new Listeners.WindowResize();
                                 case Listeners.Type.OrientationChange:
                                     return new Listeners.OrientationChange();
+                                case Listeners.Type.ScreenOnScroll:
+                                    return new Listeners.ScreenOnScroll();
                                 default:
                                     throw new Error(`The listener ${listenerType} is not supported.`);
                             }
@@ -1319,6 +1301,31 @@ var OSFramework;
                         }
                     }
                     Listeners.OrientationChange = OrientationChange;
+                })(Listeners = DOMEvents.Listeners || (DOMEvents.Listeners = {}));
+            })(DOMEvents = Event.DOMEvents || (Event.DOMEvents = {}));
+        })(Event = OSUI.Event || (OSUI.Event = {}));
+    })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
+})(OSFramework || (OSFramework = {}));
+var OSFramework;
+(function (OSFramework) {
+    var OSUI;
+    (function (OSUI) {
+        var Event;
+        (function (Event) {
+            var DOMEvents;
+            (function (DOMEvents) {
+                var Listeners;
+                (function (Listeners) {
+                    class ScreenOnScroll extends Listeners.AbstractListener {
+                        constructor() {
+                            super(OSUI.Helper.Dom.ClassSelector(document, OSUI.GlobalEnum.CssClassElements.ActiveScreen), OSUI.GlobalEnum.HTMLEvent.Scroll);
+                            this.eventCallback = this._screenTrigger.bind(this);
+                        }
+                        _screenTrigger(evt) {
+                            this.trigger(OSUI.GlobalEnum.HTMLEvent.Scroll, evt);
+                        }
+                    }
+                    Listeners.ScreenOnScroll = ScreenOnScroll;
                 })(Listeners = DOMEvents.Listeners || (DOMEvents.Listeners = {}));
             })(DOMEvents = Event.DOMEvents || (Event.DOMEvents = {}));
         })(Event = OSUI.Event || (OSUI.Event = {}));
@@ -1835,7 +1842,8 @@ var OSFramework;
                     }
                     _bodyClickCallback(_args, e) {
                         var _a;
-                        if (e.target === ((_a = this.featureOptions) === null || _a === void 0 ? void 0 : _a.anchorElem) || this._isOpenedByApi) {
+                        const _eventTarget = e.target;
+                        if (_eventTarget === ((_a = this.featureOptions) === null || _a === void 0 ? void 0 : _a.anchorElem) || this._isOpenedByApi || this.featureElem.contains(_eventTarget)) {
                             return;
                         }
                         if (this.isOpen) {
@@ -1850,10 +1858,46 @@ var OSFramework;
                         this._focusTrapInstance = new OSUI.Behaviors.FocusTrap(opts);
                         this._focusManagerInstance = new OSUI.Behaviors.FocusManager();
                     }
+                    _manageFocusInsideBalloon(arrowKeyPressed) {
+                        if (this._focusableBalloonElements.length === 0 || arrowKeyPressed === undefined) {
+                            this._currentFocusedElementIndex = undefined;
+                        }
+                        else if (arrowKeyPressed === OSUI.GlobalEnum.Keycodes.ArrowDown) {
+                            if (this._currentFocusedElementIndex === undefined ||
+                                this._currentFocusedElementIndex >= this._focusableBalloonElements.length - 1)
+                                this._currentFocusedElementIndex = 0;
+                            else
+                                this._currentFocusedElementIndex = this._currentFocusedElementIndex + 1;
+                        }
+                        else if (arrowKeyPressed === OSUI.GlobalEnum.Keycodes.ArrowUp) {
+                            if (this._currentFocusedElementIndex === undefined || this._currentFocusedElementIndex === 0)
+                                this._currentFocusedElementIndex = this._focusableBalloonElements.length - 1;
+                            else
+                                this._currentFocusedElementIndex = this._currentFocusedElementIndex - 1;
+                        }
+                        if (this._currentFocusedElementIndex === undefined) {
+                            OSUI.Helper.AsyncInvocation(() => {
+                                this.featureElem.focus();
+                            });
+                        }
+                        else {
+                            OSUI.Helper.AsyncInvocation(() => {
+                                this._focusableBalloonElements[this._currentFocusedElementIndex].focus();
+                            });
+                        }
+                    }
                     _onkeypressCallback(e) {
                         const isEscapedPressed = e.key === OSUI.GlobalEnum.Keycodes.Escape;
-                        if (isEscapedPressed && this.isOpen) {
-                            this.close();
+                        const isArrowDownPressed = e.key === OSUI.GlobalEnum.Keycodes.ArrowDown;
+                        const isArrowUpPressed = e.key === OSUI.GlobalEnum.Keycodes.ArrowUp;
+                        if (this.isOpen) {
+                            if (isEscapedPressed) {
+                                this.close();
+                            }
+                            else if (isArrowDownPressed || isArrowUpPressed) {
+                                this._manageFocusInsideBalloon(e.key);
+                                e.preventDefault();
+                            }
                         }
                         e.stopPropagation();
                     }
@@ -1887,7 +1931,7 @@ var OSFramework;
                             OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick, this._eventBodyClick);
                         }
                     }
-                    _toggleBalloon(isOpen, isBodyClick = false) {
+                    _toggleBalloon(isOpen, isBodyClick = false, arrowKeyPressed) {
                         this.isOpen = isOpen;
                         if (isOpen) {
                             OSUI.Helper.Dom.Styles.AddClass(this.featureElem, Balloon_1.Enum.CssClasses.IsOpen);
@@ -1902,9 +1946,8 @@ var OSFramework;
                             this._focusManagerInstance.storeLastFocusedElement();
                             this._focusTrapInstance.enableForA11y();
                             this.setFloatingBehaviour();
-                            OSUI.Helper.AsyncInvocation(() => {
-                                this.featureElem.focus();
-                            });
+                            this._focusableBalloonElements = this.featureElem.querySelectorAll(OSUI.Constants.FocusableElems);
+                            this._manageFocusInsideBalloon(arrowKeyPressed);
                         }
                         else {
                             this._focusTrapInstance.disableForA11y();
@@ -1915,6 +1958,8 @@ var OSFramework;
                                     this._focusManagerInstance.setFocusToStoredElement();
                                 }
                             });
+                            this._focusableBalloonElements = undefined;
+                            this._currentFocusedElementIndex = undefined;
                         }
                         this._onToggleEvent(this.isOpen, this.featureElem);
                         OSUI.Helper.AsyncInvocation(() => {
@@ -1946,10 +1991,10 @@ var OSFramework;
                         this._unsetCallbacks();
                         super.dispose();
                     }
-                    open(isOpenedByApi) {
+                    open(isOpenedByApi, arrowKeyPressed) {
                         if (this.isOpen === false) {
                             this._isOpenedByApi = isOpenedByApi;
-                            this._toggleBalloon(true);
+                            this._toggleBalloon(true, false, arrowKeyPressed);
                         }
                     }
                     setBalloonShape(shape) {
@@ -2892,6 +2937,12 @@ var OSFramework;
                 static AriaAtomicTrue(element) {
                     Helper.Dom.Attribute.Set(element, OSUI.Constants.A11YAttributes.Aria.Atomic, OSUI.Constants.A11YAttributes.States.True);
                 }
+                static AriaBusyFalse(element) {
+                    Helper.Dom.Attribute.Set(element, OSUI.Constants.A11YAttributes.Aria.Busy, OSUI.Constants.A11YAttributes.States.False);
+                }
+                static AriaBusyTrue(element) {
+                    Helper.Dom.Attribute.Set(element, OSUI.Constants.A11YAttributes.Aria.Busy, OSUI.Constants.A11YAttributes.States.True);
+                }
                 static AriaControls(element, targetId) {
                     Helper.Dom.Attribute.Set(element, OSUI.Constants.A11YAttributes.Aria.Controls, targetId);
                 }
@@ -2984,6 +3035,9 @@ var OSFramework;
                 }
                 static RoleOption(element) {
                     Helper.Dom.Attribute.Set(element, OSUI.Constants.A11YAttributes.Role.AttrName, OSUI.Constants.A11YAttributes.Role.Option);
+                }
+                static RolePresentation(element) {
+                    Helper.Dom.Attribute.Set(element, OSUI.Constants.A11YAttributes.Role.AttrName, OSUI.Constants.A11YAttributes.Role.Presentation);
                 }
                 static RoleProgressBar(element) {
                     Helper.Dom.Attribute.Set(element, OSUI.Constants.A11YAttributes.Role.AttrName, OSUI.Constants.A11YAttributes.Role.Progressbar);
@@ -4455,9 +4509,17 @@ var OSFramework;
                         this._animateOnDragInstance.onDragStart(true, OSUI.GlobalEnum.Direction.Down, x, y, true, this.selfElement.clientHeight.toString());
                     }
                     _onkeypressCallback(e) {
-                        const isEscapedPressed = e.key === OSUI.GlobalEnum.Keycodes.Escape;
-                        if (isEscapedPressed && this._isOpen) {
-                            this.close();
+                        var _a, _b;
+                        switch (e.key) {
+                            case OSUI.GlobalEnum.Keycodes.Escape:
+                                this.close();
+                                break;
+                            case OSUI.GlobalEnum.Keycodes.End:
+                                (_a = this._focusTrapInstance.focusableElements[this._focusTrapInstance.focusableElements.length - 1]) === null || _a === void 0 ? void 0 : _a.focus();
+                                break;
+                            case OSUI.GlobalEnum.Keycodes.Home:
+                                (_b = this._focusTrapInstance.focusableElements[0]) === null || _b === void 0 ? void 0 : _b.focus();
+                                break;
                         }
                     }
                     _toggleBottomSheet(isOpen) {
@@ -4508,7 +4570,7 @@ var OSFramework;
                     }
                     setA11YProperties() {
                         if (!this.isBuilt) {
-                            OSUI.Helper.Dom.Attribute.Set(this.selfElement, OSUI.Constants.A11YAttributes.Role.Complementary, true);
+                            OSUI.Helper.A11Y.RoleComplementary(this.selfElement);
                         }
                         OSUI.Helper.Dom.Attribute.Set(this.selfElement, OSUI.Constants.A11YAttributes.Aria.Hidden, (!this._isOpen).toString());
                         OSUI.Helper.Dom.Attribute.Set(this.selfElement, OSUI.Constants.A11YAttributes.TabIndex, this._isOpen
@@ -4707,12 +4769,15 @@ var OSFramework;
                     _setIsLoading(isLoading) {
                         if (isLoading) {
                             OSUI.Helper.Dom.Styles.AddClass(this.selfElement, ButtonLoading_1.Enum.CssClass.IsLoading);
-                            this.isBuilt && OSUI.Helper.A11Y.TabIndexFalse(this._buttonElement);
+                            OSUI.Helper.A11Y.AriaBusyTrue(this.selfElement);
+                            this.isBuilt &&
+                                OSUI.Helper.Dom.Attribute.Set(this._buttonElement, OSUI.GlobalEnum.HTMLAttributes.Disabled, 'true');
                             this._buttonElement.blur();
                         }
                         else {
                             OSUI.Helper.Dom.Styles.RemoveClass(this.selfElement, ButtonLoading_1.Enum.CssClass.IsLoading);
-                            this.isBuilt && OSUI.Helper.A11Y.TabIndexTrue(this._buttonElement);
+                            OSUI.Helper.A11Y.AriaBusyFalse(this.selfElement);
+                            this.isBuilt && OSUI.Helper.Dom.Attribute.Remove(this._buttonElement, OSUI.GlobalEnum.HTMLAttributes.Disabled);
                         }
                     }
                     _setLoadingLabel(showSpinnerOnly) {
@@ -5287,7 +5352,6 @@ var OSFramework;
                             }
                             OSUI.Helper.Dom.Styles.RemoveClass(document.body, ServerSide.Enum.CssClass.IsVisible);
                             this._touchMove();
-                            cancelAnimationFrame(this._requestAnimationOnBodyScroll);
                             this._isOpen = false;
                             this._updatePatternState();
                             this._unsetObserver();
@@ -5352,28 +5416,6 @@ var OSFramework;
                                 this._close();
                             }
                         }
-                        _onBodyScroll(_eventType, event) {
-                            if (this.isBuilt) {
-                                if (event !== undefined && event.target === this._balloonContentElement) {
-                                    cancelAnimationFrame(this._requestAnimationOnBodyScroll);
-                                    return;
-                                }
-                                if (this._isOpen && OSUI.Helper.DeviceInfo.IsDesktop === false) {
-                                    cancelAnimationFrame(this._requestAnimationOnBodyScroll);
-                                    if (OSUI.Helper.DeviceInfo.IsTablet) {
-                                        this._close();
-                                    }
-                                    return;
-                                }
-                                if (this._isOpen) {
-                                    this._setBalloonCoordinates(false);
-                                    this._requestAnimationOnBodyScroll = requestAnimationFrame(this._eventOnBodyScroll);
-                                }
-                                else {
-                                    cancelAnimationFrame(this._requestAnimationOnBodyScroll);
-                                }
-                            }
-                        }
                         _onKeyboardPressed(event) {
                             event.stopPropagation();
                             switch (event.target) {
@@ -5381,7 +5423,11 @@ var OSFramework;
                                     if (event.key === OSUI.GlobalEnum.Keycodes.Escape) {
                                         this._close();
                                     }
-                                    if (event.key === OSUI.GlobalEnum.Keycodes.Enter || event.key === OSUI.GlobalEnum.Keycodes.Space) {
+                                    if (event.key === OSUI.GlobalEnum.Keycodes.Enter ||
+                                        event.key === OSUI.GlobalEnum.Keycodes.Space ||
+                                        event.key === OSUI.GlobalEnum.Keycodes.ArrowUp ||
+                                        event.key === OSUI.GlobalEnum.Keycodes.ArrowDown ||
+                                        event.key === OSUI.GlobalEnum.Keycodes.Home) {
                                         this._selectValuesWrapper.click();
                                     }
                                     break;
@@ -5414,6 +5460,15 @@ var OSFramework;
                         _onOrientationChange() {
                             if (this._isOpen) {
                                 this._close();
+                            }
+                        }
+                        _onScreenScroll() {
+                            if (this.isBuilt && this._isOpen) {
+                                if (OSUI.Helper.DeviceInfo.IsTablet) {
+                                    this._close();
+                                    return;
+                                }
+                                requestAnimationFrame(this._setBalloonCoordinates.bind(this));
                             }
                         }
                         _onSearchInputBlur() {
@@ -5530,11 +5585,8 @@ var OSFramework;
                                     selfElement.x === this._selfElementBoundingClientRect.x &&
                                     selfElement.right ===
                                         this._selfElementBoundingClientRect.x + this._selfElementBoundingClientRect.width &&
-                                    selfElement.y === this._selfElementBoundingClientRect.y)) {
-                                cancelAnimationFrame(this._requestAnimationOnBodyScroll);
-                                return;
-                            }
-                            this._selfElementBoundingClientRect.x = selfElement.x;
+                                    selfElement.y === this._selfElementBoundingClientRect.y))
+                                this._selfElementBoundingClientRect.x = selfElement.x;
                             this._selfElementBoundingClientRect.y = selfElement.y;
                             OSUI.Helper.Dom.Styles.SetStyleAttribute(this._balloonWrapperElement, ServerSide.Enum.InlineCssVariables.Top, selfElement.top + OSUI.GlobalEnum.Units.Pixel);
                             OSUI.Helper.Dom.Styles.SetStyleAttribute(this._balloonWrapperElement, ServerSide.Enum.InlineCssVariables.Left, selfElement.left + OSUI.GlobalEnum.Units.Pixel);
@@ -5592,8 +5644,9 @@ var OSFramework;
                                     this._balloonSearchInputElement.addEventListener(OSUI.GlobalEnum.HTMLEvent.Focus, this._eventOnSearchInputFocus);
                                 }
                                 OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick, this._eventOnBodyClick);
-                                OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnScroll, this._eventOnBodyScroll);
-                                this._requestAnimationOnBodyScroll = requestAnimationFrame(this._eventOnBodyScroll);
+                                if (OSUI.Helper.DeviceInfo.IsPhone === false) {
+                                    OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.ScreenOnScroll, this._eventOnScreenScroll);
+                                }
                                 OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.WindowResize, this._eventOnWindowResize);
                                 OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.OrientationChange, this._eventOnOrientationChange);
                             }
@@ -5624,7 +5677,9 @@ var OSFramework;
                                 this._balloonSearchInputElement.removeEventListener(OSUI.GlobalEnum.HTMLEvent.Focus, this._eventOnSearchInputFocus);
                             }
                             OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick, this._eventOnBodyClick);
-                            OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnScroll, this._eventOnBodyScroll);
+                            if (OSUI.Helper.DeviceInfo.IsPhone === false) {
+                                OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSUI.Event.DOMEvents.Listeners.Type.ScreenOnScroll, this._eventOnScreenScroll);
+                            }
                             OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSUI.Event.DOMEvents.Listeners.Type.WindowResize, this._eventOnWindowResize);
                             OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSUI.Event.DOMEvents.Listeners.Type.OrientationChange, this._eventOnOrientationChange);
                         }
@@ -5652,6 +5707,7 @@ var OSFramework;
                                     OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(layoutElemContainer, OSFramework.OSUI.Constants.HasAccessibilityClass);
                             if (this._balloonSearchInputElement !== undefined) {
                                 OSUI.Helper.A11Y.TabIndex(this._balloonSearchInputElement, tabIndexValue);
+                                OSUI.Helper.A11Y.AriaHidden(this._balloonSearchInputElement, (tabIndexValue === OSUI.Constants.A11YAttributes.States.TabIndexHidden).toString());
                             }
                             OSUI.Helper.A11Y.TabIndex(this._balloonOptionsWrapperElement, tabIndexValue);
                             if (this._balloonFocusableElemsInFooter.length > 0) {
@@ -5714,7 +5770,7 @@ var OSFramework;
                         }
                         setCallbacks() {
                             this._eventOnBodyClick = this._onBodyClick.bind(this);
-                            this._eventOnBodyScroll = this._onBodyScroll.bind(this);
+                            this._eventOnScreenScroll = this._onScreenScroll.bind(this);
                             this._eventOnClick = this._onSelectValuesWrapperClicked.bind(this);
                             this._eventOnClickInputSearch = this._onSearchInputClicked.bind(this);
                             this._eventOnCloseTransitionEnd = this._endOfCloseAnimation.bind(this);
@@ -5746,7 +5802,7 @@ var OSFramework;
                         }
                         unsetCallbacks() {
                             this._eventOnBodyClick = undefined;
-                            this._eventOnBodyScroll = undefined;
+                            this._eventOnScreenScroll = undefined;
                             this._eventOnClick = undefined;
                             this._eventOnClickInputSearch = undefined;
                             this._eventOnCloseTransitionEnd = undefined;
@@ -5823,6 +5879,7 @@ var OSFramework;
                             OSUI.Helper.Dom.Attribute.Set(this.selfElement, OSUI.GlobalEnum.HTMLAttributes.Disabled, '');
                             OSUI.Helper.Dom.Attribute.Set(this._balloonWrapperElement, OSUI.GlobalEnum.HTMLAttributes.Disabled, '');
                             OSUI.Helper.Dom.Styles.AddClass(this.selfElement, ServerSide.Enum.CssClass.IsDisabled);
+                            OSUI.Helper.A11Y.TabIndexFalse(this._selectValuesWrapper);
                         }
                         dispose() {
                             this._unsetObserver();
@@ -5836,6 +5893,7 @@ var OSFramework;
                             OSUI.Helper.Dom.Attribute.Remove(this.selfElement, OSUI.GlobalEnum.HTMLAttributes.Disabled);
                             OSUI.Helper.Dom.Attribute.Remove(this._balloonWrapperElement, OSUI.GlobalEnum.HTMLAttributes.Disabled);
                             OSUI.Helper.Dom.Styles.RemoveClass(this.selfElement, ServerSide.Enum.CssClass.IsDisabled);
+                            OSUI.Helper.A11Y.TabIndexTrue(this._selectValuesWrapper);
                         }
                         getSelectedValues() {
                             return this._hasNoImplementation();
@@ -6854,7 +6912,7 @@ var OSFramework;
                         this._isOpen = this.configs.StartsOpen;
                     }
                     _autoCloseNotification() {
-                        setTimeout(() => {
+                        OSUI.Helper.ApplySetTimeOut(() => {
                             if (this._isOpen) {
                                 this.hide();
                             }
@@ -6961,7 +7019,7 @@ var OSFramework;
                         }
                     }
                     setA11YProperties() {
-                        OSUI.Helper.Dom.Attribute.Set(this.selfElement, OSUI.Constants.A11YAttributes.Role.AttrName, OSUI.Constants.A11YAttributes.Role.Alert);
+                        OSUI.Helper.Dom.Attribute.Set(this.selfElement, OSUI.Constants.A11YAttributes.Role.AttrName, OSUI.Constants.A11YAttributes.Role.AlertDialog);
                         this._updateA11yProperties();
                     }
                     setCallbacks() {
@@ -7227,6 +7285,14 @@ var OSFramework;
                             this.open(this._isOpenedByApi);
                         }
                     }
+                    _onKeydownCallback(event) {
+                        if (!this._balloonFeature.isOpen &&
+                            (event.key === OSUI.GlobalEnum.Keycodes.ArrowDown || event.key === OSUI.GlobalEnum.Keycodes.ArrowUp)) {
+                            this._isOpenedByApi = false;
+                            this.open(this._isOpenedByApi, event.key);
+                            event.preventDefault();
+                        }
+                    }
                     _setBalloonFeature() {
                         this.setBalloonOptions();
                         this._balloonFeature = new OSFramework.OSUI.Feature.Balloon.Balloon(this, this._balloonElem, this.balloonOptions);
@@ -7253,6 +7319,7 @@ var OSFramework;
                     }
                     removeEventListeners() {
                         this._triggerElem.removeEventListener(OSUI.GlobalEnum.HTMLEvent.Click, this._eventOnClick);
+                        this._triggerElem.removeEventListener(OSUI.GlobalEnum.HTMLEvent.keyDown, this._eventOnKeydown);
                         OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSUI.Event.DOMEvents.Listeners.Type.BalloonOnToggle, this._eventBalloonOnToggle);
                     }
                     setA11YProperties() {
@@ -7267,9 +7334,11 @@ var OSFramework;
                     setCallbacks() {
                         this._eventBalloonOnToggle = this._balloonOnToggleCallback.bind(this);
                         this._eventOnClick = this._onClickCallback.bind(this);
+                        this._eventOnKeydown = this._onKeydownCallback.bind(this);
                     }
                     setEventListeners() {
                         this._triggerElem.addEventListener(OSUI.GlobalEnum.HTMLEvent.Click, this._eventOnClick);
+                        this._triggerElem.addEventListener(OSUI.GlobalEnum.HTMLEvent.keyDown, this._eventOnKeydown);
                         OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.BalloonOnToggle, this._eventBalloonOnToggle);
                     }
                     setHtmlElements() {
@@ -7331,10 +7400,10 @@ var OSFramework;
                         this._isDisabled = false;
                         OSUI.Helper.Dom.Attribute.Remove(this._triggerElem, OSUI.GlobalEnum.HTMLAttributes.Disabled);
                     }
-                    open(isOpenedByApi) {
+                    open(isOpenedByApi, keyPressed) {
                         if (this._balloonFeature.isOpen === false && this._isDisabled === false) {
                             this._isOpenedByApi = isOpenedByApi;
-                            this._balloonFeature.open(this._isOpenedByApi);
+                            this._balloonFeature.open(this._isOpenedByApi, keyPressed);
                         }
                     }
                     registerCallback(eventName, callback) {
@@ -8345,6 +8414,10 @@ var OSFramework;
                         this._isHalfValue = false;
                         const isInput = OSUI.Helper.Dom.Styles.ContainsClass(currentTarget, Rating_1.Enum.CssClass.RatingInput);
                         if (isInput) {
+                            const _lastChosen = this.selfElement.querySelectorAll(OSUI.GlobalEnum.HTMLElement.Input)[this.configs.RatingValue];
+                            if (_lastChosen) {
+                                _lastChosen.ariaChecked = OSUI.Constants.A11YAttributes.States.False;
+                            }
                             this.configs.RatingValue = this._getValue();
                             this._setValue(true);
                         }
@@ -8355,17 +8428,22 @@ var OSFramework;
                         }
                     }
                     _renderItem(index) {
-                        const hideLabelClass = index === 0 ? Rating_1.Enum.CssClass.WCAGHideText : '';
                         const labelHTML = index !== 0 ? this._clonedPlaceholders : '';
                         const ratingInputId = this.uniqueId + '-rating-' + index;
-                        const input = `<input type="radio" class="${Rating_1.Enum.CssClass.RatingInput} ${Rating_1.Enum.CssClass.WCAGHideText}" id=${ratingInputId} name=${this._ratingInputName} value=${index}/>`;
-                        const label = `<label class='${Rating_1.Enum.CssClass.RatingItem} ${hideLabelClass}' for=${ratingInputId}><span class="${Rating_1.Enum.CssClass.WCAGHideText}">Rating ${index}</span>${labelHTML}</label>`;
+                        const input = `<input type="${OSUI.GlobalEnum.HTMLElement.Radio}"class="${Rating_1.Enum.CssClass.RatingInput} ${Rating_1.Enum.CssClass.WCAGHideText}" id=${ratingInputId} name=${this._ratingInputName} value=${index} aria-hidden="${OSUI.Constants.A11YAttributes.States.True}">`;
+                        let label;
+                        if (!this.configs.IsEdit) {
+                            label = `<label class='${Rating_1.Enum.CssClass.RatingItem}' for=${ratingInputId} aria-hidden="${OSUI.Constants.A11YAttributes.States.True}"><span class="${Rating_1.Enum.CssClass.WCAGHideText}">Rating ${index}</span>${labelHTML}</label>`;
+                        }
+                        else {
+                            label = `<label class='${Rating_1.Enum.CssClass.RatingItem}' for=${ratingInputId}><span class="${Rating_1.Enum.CssClass.WCAGHideText}">Rating ${index}</span>${labelHTML}</label>`;
+                        }
                         this._ratingFieldsetElem.innerHTML += input + label;
                     }
                     _setFieldsetDisabledStatus(isDisabled) {
                         const isFieldsetDisabled = OSUI.Helper.Dom.Attribute.Get(this._ratingFieldsetElem, OSUI.GlobalEnum.HTMLAttributes.Disabled);
                         if (isDisabled) {
-                            OSUI.Helper.Dom.Attribute.Set(this._ratingFieldsetElem, OSUI.GlobalEnum.HTMLAttributes.Disabled, 'true');
+                            OSUI.Helper.Dom.Attribute.Set(this._ratingFieldsetElem, OSUI.GlobalEnum.HTMLAttributes.Disabled, OSUI.Constants.A11YAttributes.States.True);
                         }
                         else if (!isDisabled && isFieldsetDisabled) {
                             OSUI.Helper.Dom.Attribute.Remove(this._ratingFieldsetElem, OSUI.GlobalEnum.HTMLAttributes.Disabled);
@@ -8393,9 +8471,19 @@ var OSFramework;
                     }
                     _setIsEdit() {
                         this._setIsDisabled(!this.configs.IsEdit);
-                        this.configs.IsEdit
-                            ? OSUI.Helper.Dom.Styles.AddClass(this.selfElement, Rating_1.Enum.CssClass.IsEdit)
-                            : OSUI.Helper.Dom.Styles.RemoveClass(this.selfElement, Rating_1.Enum.CssClass.IsEdit);
+                        const LabelList = this.selfElement.querySelectorAll(OSUI.Constants.Dot + Rating_1.Enum.CssClass.RatingItem);
+                        if (this.configs.IsEdit) {
+                            OSUI.Helper.Dom.Styles.AddClass(this.selfElement, Rating_1.Enum.CssClass.IsEdit);
+                            LabelList.forEach((label) => {
+                                label.removeAttribute(OSUI.Constants.A11YAttributes.Aria.Hidden);
+                            });
+                        }
+                        else {
+                            OSUI.Helper.Dom.Styles.RemoveClass(this.selfElement, Rating_1.Enum.CssClass.IsEdit);
+                            LabelList.forEach((label) => {
+                                label.ariaHidden = OSUI.Constants.A11YAttributes.States.True;
+                            });
+                        }
                         this._manageRatingEvent();
                     }
                     _setScale() {
@@ -8420,6 +8508,7 @@ var OSFramework;
                         }
                         if (this.configs.RatingScale === 1) {
                             ratingItems[1].checked = true;
+                            ratingItems[1].ariaChecked = OSUI.Constants.A11YAttributes.States.True;
                             return;
                         }
                         let newValue = this._isHalfValue || this._decimalValue > 0.7
@@ -8434,6 +8523,7 @@ var OSFramework;
                             console.warn(`The value of the RatingValue property on the '${this.widgetId}' ${OSUI.GlobalEnum.PatternName.Rating} exceeds the scale boundaries. To ensure its correct behaviour, set a value smaller or equal to '${this.configs.RatingScale}'.`);
                         }
                         ratingItems[newValue].checked = true;
+                        ratingItems[newValue].ariaChecked = OSUI.Constants.A11YAttributes.States.True;
                         if (this._isHalfValue) {
                             OSUI.Helper.Dom.Styles.AddClass(this.selfElement, Rating_1.Enum.CssClass.IsHalf);
                         }
@@ -8536,6 +8626,66 @@ var OSFramework;
                 }
                 Rating.RatingConfig = RatingConfig;
             })(Rating = Patterns.Rating || (Patterns.Rating = {}));
+        })(Patterns = OSUI.Patterns || (OSUI.Patterns = {}));
+    })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
+})(OSFramework || (OSFramework = {}));
+var OSFramework;
+(function (OSFramework) {
+    var OSUI;
+    (function (OSUI) {
+        var Patterns;
+        (function (Patterns) {
+            var Search;
+            (function (Search_1) {
+                class Search extends Patterns.AbstractPattern {
+                    constructor(uniqueId, configs) {
+                        super(uniqueId, new Search_1.SearchConfig(configs));
+                    }
+                    setA11YProperties() {
+                        console.log(OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
+                    }
+                    setCallbacks() {
+                        console.log(OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
+                    }
+                    setHtmlElements() {
+                        console.log(OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
+                    }
+                    unsetCallbacks() {
+                        console.log(OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
+                    }
+                    unsetHtmlElements() {
+                        console.log(OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
+                    }
+                    build() {
+                        super.build();
+                        this.finishBuild();
+                    }
+                    dispose() {
+                        if (this.isBuilt) {
+                            super.dispose();
+                        }
+                    }
+                }
+                Search_1.Search = Search;
+            })(Search = Patterns.Search || (Patterns.Search = {}));
+        })(Patterns = OSUI.Patterns || (OSUI.Patterns = {}));
+    })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
+})(OSFramework || (OSFramework = {}));
+var OSFramework;
+(function (OSFramework) {
+    var OSUI;
+    (function (OSUI) {
+        var Patterns;
+        (function (Patterns) {
+            var Search;
+            (function (Search) {
+                class SearchConfig extends Patterns.AbstractConfiguration {
+                    constructor(config) {
+                        super(config);
+                    }
+                }
+                Search.SearchConfig = SearchConfig;
+            })(Search = Patterns.Search || (Patterns.Search = {}));
         })(Patterns = OSUI.Patterns || (OSUI.Patterns = {}));
     })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
 })(OSFramework || (OSFramework = {}));
@@ -8804,17 +8954,6 @@ var OSFramework;
                             top: 0,
                         };
                     }
-                    _onBodyScroll() {
-                        this._setTargetOffsetInfo();
-                        const scrollYPosition = OSUI.Behaviors.ScrollVerticalPosition(this._mainScrollContainerElement);
-                        const thresholdVal = 40;
-                        const elementOffsetTopVal = this._targetElementOffset.top - scrollYPosition.value;
-                        if ((this.isFirstChild && scrollYPosition.percentageInView === 0) ||
-                            (elementOffsetTopVal >= -thresholdVal && elementOffsetTopVal <= thresholdVal) ||
-                            (this.isLastChild && scrollYPosition.percentageInView === 100)) {
-                            this.notifyParent(Patterns.SectionIndex.Enum.ChildNotifyActionType.Active);
-                        }
-                    }
                     _onKeyboardPressed(event) {
                         event.preventDefault();
                         event.stopPropagation();
@@ -8823,6 +8962,17 @@ var OSFramework;
                             case OSUI.GlobalEnum.Keycodes.Space:
                                 this._onSelected(event);
                                 break;
+                        }
+                    }
+                    _onScreenScroll() {
+                        this._setTargetOffsetInfo();
+                        const scrollYPosition = OSUI.Behaviors.ScrollVerticalPosition(this._mainScrollContainerElement);
+                        const thresholdVal = 40;
+                        const elementOffsetTopVal = this._targetElementOffset.top - scrollYPosition.value;
+                        if ((this.isFirstChild && scrollYPosition.percentageInView === 0) ||
+                            (elementOffsetTopVal >= -thresholdVal && elementOffsetTopVal <= thresholdVal) ||
+                            (this.isLastChild && scrollYPosition.percentageInView === 100)) {
+                            this.notifyParent(Patterns.SectionIndex.Enum.ChildNotifyActionType.Active);
                         }
                     }
                     _onSelected(event) {
@@ -8834,7 +8984,7 @@ var OSFramework;
                     _removeEvents() {
                         this.selfElement.removeEventListener(OSUI.GlobalEnum.HTMLEvent.Click, this._eventOnClick);
                         this.selfElement.removeEventListener(OSUI.GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyBoardPress);
-                        OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnScroll, this._eventOnBodyScroll);
+                        OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSUI.Event.DOMEvents.Listeners.Type.ScreenOnScroll, this._eventOnScreenScroll);
                     }
                     _setHeaderSize() {
                         const header = OSUI.Helper.Dom.ClassSelector(document.body, OSUI.GlobalEnum.CssClassElements.Header);
@@ -8865,7 +9015,7 @@ var OSFramework;
                     _setUpEvents() {
                         this.selfElement.addEventListener(OSUI.GlobalEnum.HTMLEvent.Click, this._eventOnClick);
                         this.selfElement.addEventListener(OSUI.GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyBoardPress);
-                        OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnScroll, this._eventOnBodyScroll);
+                        OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.ScreenOnScroll, this._eventOnScreenScroll);
                     }
                     setA11YProperties() {
                         OSUI.Helper.A11Y.RoleButton(this.selfElement);
@@ -8874,7 +9024,7 @@ var OSFramework;
                     setCallbacks() {
                         this._eventOnClick = this._onSelected.bind(this);
                         this._eventOnkeyBoardPress = this._onKeyboardPressed.bind(this);
-                        this._eventOnBodyScroll = this._onBodyScroll.bind(this);
+                        this._eventOnScreenScroll = this._onScreenScroll.bind(this);
                     }
                     setHtmlElements() {
                         if (OSUI.Helper.Dom.Attribute.Has(document.body, OSUI.GlobalEnum.HTMLAttributes.StatusBar) &&
@@ -8889,7 +9039,7 @@ var OSFramework;
                         this._removeEvents();
                         this._eventOnClick = undefined;
                         this._eventOnkeyBoardPress = undefined;
-                        this._eventOnBodyScroll = undefined;
+                        this._eventOnScreenScroll = undefined;
                     }
                     unsetHtmlElements() {
                         this._mainScrollContainerElement = undefined;
@@ -9407,6 +9557,22 @@ var OSFramework;
                     _clickCallback() {
                         this._toggleSubmenu();
                     }
+                    _handleFocusBehavior() {
+                        const opts = {
+                            focusTargetElement: this._submenuLinksElement,
+                        };
+                        this._focusTrapInstance = new OSUI.Behaviors.FocusTrap(opts);
+                        this._focusManagerInstance = new OSUI.Behaviors.FocusManager();
+                        if (this._isOpen === false) {
+                            OSUI.Helper.A11Y.SetElementsTabIndex(false, this._focusTrapInstance.focusableElements);
+                        }
+                    }
+                    _keypressBalloonCallback(e) {
+                        if (e.key === OSUI.GlobalEnum.Keycodes.Escape && this._isOpen) {
+                            this.close();
+                            this._submenuHeaderElement.focus();
+                        }
+                    }
                     _keypressCallback(e) {
                         const _clickedElem = e.target;
                         const _closestElem = _clickedElem.closest(OSUI.Constants.Dot + Submenu_1.Enum.CssClass.Pattern);
@@ -9414,6 +9580,15 @@ var OSFramework;
                         const _isEnterPressed = e.key === OSUI.GlobalEnum.Keycodes.Enter;
                         const _isTabPressed = e.key === OSUI.GlobalEnum.Keycodes.Tab;
                         const _isShiftPressed = e.shiftKey;
+                        const _isArrowUp = e.key === OSUI.GlobalEnum.Keycodes.ArrowUp;
+                        const _isArrowDown = e.key === OSUI.GlobalEnum.Keycodes.ArrowDown;
+                        const _targetAfterArrow = _isArrowUp ? this._focusTrapInstance.focusableElements.length - 1 : 0;
+                        if (_isArrowDown || _isArrowUp) {
+                            this.open();
+                            OSUI.Helper.AsyncInvocation(() => {
+                                this._focusTrapInstance.focusableElements[_targetAfterArrow].focus();
+                            });
+                        }
                         if (_isEnterPressed) {
                             this._toggleSubmenu();
                         }
@@ -9484,7 +9659,14 @@ var OSFramework;
                         OSUI.Helper.A11Y.AriaExpanded(this._submenuHeaderElement, this._isOpen.toString());
                         OSUI.Helper.A11Y.AriaHidden(this._submenuLinksElement, (!this._isOpen).toString());
                         this._submenuAllLinksElement.forEach((item) => {
-                            this._isOpen ? OSUI.Helper.A11Y.TabIndexTrue(item) : OSUI.Helper.A11Y.TabIndexFalse(item);
+                            if (this._isOpen) {
+                                OSUI.Helper.A11Y.TabIndexTrue(item);
+                                OSUI.Helper.A11Y.AriaHiddenFalse(item);
+                            }
+                            else {
+                                OSUI.Helper.A11Y.TabIndexFalse(item);
+                                OSUI.Helper.A11Y.AriaHiddenTrue(item);
+                            }
                         });
                     }
                     setA11YProperties() {
@@ -9500,6 +9682,7 @@ var OSFramework;
                     setCallbacks() {
                         this._eventClick = this._clickCallback.bind(this);
                         this._globalEventBody = this._bodyClickCallback.bind(this);
+                        this._eventBalloonKeypress = this._keypressBalloonCallback.bind(this);
                         this._eventKeypress = this._keypressCallback.bind(this);
                         this._eventOnMouseEnter = this._onMouseEnterCallback.bind(this);
                         this._eventOnMouseLeave = this._onMouseLeaveCallback.bind(this);
@@ -9535,6 +9718,7 @@ var OSFramework;
                     }
                     unsetCallbacks() {
                         this._eventClick = undefined;
+                        this._eventBalloonKeypress = undefined;
                         this._eventKeypress = undefined;
                         this._globalEventBody = undefined;
                         this._eventOnMouseEnter = undefined;
@@ -9551,6 +9735,7 @@ var OSFramework;
                         super.build();
                         this.setHtmlElements();
                         this.setInitialStates();
+                        this._handleFocusBehavior();
                         this.setA11YProperties();
                         this.setCallbacks();
                         this.finishBuild();
@@ -9566,12 +9751,15 @@ var OSFramework;
                     }
                     close() {
                         if (this._isOpen) {
+                            this._focusTrapInstance.disableForA11y();
                             if (this.hasClickOutsideToClose) {
                                 OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick, this._globalEventBody);
                             }
                             OSUI.Helper.Dom.Styles.RemoveClass(this.selfElement, Submenu_1.Enum.CssClass.PatternIsOpen);
                             this._isOpen = false;
                             this._updateA11yProperties();
+                            this._focusManagerInstance.setFocusToStoredElement();
+                            this._submenuLinksElement.removeEventListener(OSUI.GlobalEnum.HTMLEvent.keyDown, this._eventBalloonKeypress.bind(this));
                             this.triggerPlatformEventCallback(this._platformEventOnToggleCallback, false);
                         }
                     }
@@ -9582,9 +9770,12 @@ var OSFramework;
                         super.dispose();
                     }
                     open() {
+                        this._focusTrapInstance.enableForA11y();
+                        this._focusManagerInstance.storeLastFocusedElement();
                         if (this.hasClickOutsideToClose) {
                             OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick, this._globalEventBody);
                         }
+                        this._submenuLinksElement.addEventListener(OSUI.GlobalEnum.HTMLEvent.keyDown, this._eventBalloonKeypress.bind(this));
                         OSUI.Helper.AsyncInvocation(this._show.bind(this));
                         this.triggerPlatformEventCallback(this._platformEventOnToggleCallback, true);
                     }
@@ -9888,6 +10079,10 @@ var OSFramework;
                     (function (ObserverOptions) {
                         ObserverOptions["RootMargin"] = "1px";
                     })(ObserverOptions = Enum.ObserverOptions || (Enum.ObserverOptions = {}));
+                    let ElementsBlockingOnChange;
+                    (function (ElementsBlockingOnChange) {
+                        ElementsBlockingOnChange["Dropdown"] = ".pop-comp-active";
+                    })(ElementsBlockingOnChange = Enum.ElementsBlockingOnChange || (Enum.ElementsBlockingOnChange = {}));
                     let ChildTypes;
                     (function (ChildTypes) {
                         ChildTypes["TabsContentItem"] = "TabsContentItem";
@@ -10021,6 +10216,14 @@ var OSFramework;
                                 if (targetHeaderItemIndex < 0) {
                                     targetHeaderItemIndex = this.getChildItems(Tabs_1.Enum.ChildTypes.TabsHeaderItem).length - 1;
                                 }
+                                this.changeTab(targetHeaderItemIndex, undefined, true);
+                                break;
+                            case OSUI.GlobalEnum.Keycodes.End:
+                                targetHeaderItemIndex = this.getChildItems(Tabs_1.Enum.ChildTypes.TabsHeaderItem).length - 1;
+                                this.changeTab(targetHeaderItemIndex, undefined, true);
+                                break;
+                            case OSUI.GlobalEnum.Keycodes.Home:
+                                targetHeaderItemIndex = 0;
                                 this.changeTab(targetHeaderItemIndex, undefined, true);
                                 break;
                         }
@@ -10385,7 +10588,8 @@ var OSFramework;
                     }
                     changeTab(tabIndex = this.configs.StartingTab, tabsHeaderItem, triggerEvent = false, triggeredByObserver = false) {
                         if (this._activeTabHeaderElement === tabsHeaderItem ||
-                            (tabIndex === this.configs.StartingTab && this.isBuilt && tabsHeaderItem === undefined)) {
+                            (tabIndex === this.configs.StartingTab && this.isBuilt && tabsHeaderItem === undefined) ||
+                            this._activeTabContentElement.selfElement.querySelector(Tabs_1.Enum.ElementsBlockingOnChange.Dropdown)) {
                             return;
                         }
                         let newTabIndex;
@@ -10623,6 +10827,9 @@ var OSFramework;
                     setA11YProperties(isUpdate = true) {
                         if (isUpdate === false) {
                             OSUI.Helper.A11Y.RoleTab(this.selfElement);
+                            if (OSUI.Helper.DeviceInfo.IsIos || OSUI.Helper.DeviceInfo.GetOperatingSystem() === OSUI.GlobalEnum.MobileOS.MacOS) {
+                                OSUI.Helper.A11Y.RolePresentation(this.selfElement.parentElement);
+                            }
                         }
                         if (this._isActive) {
                             OSUI.Helper.A11Y.TabIndexTrue(this.selfElement);
@@ -10966,22 +11173,6 @@ var OSFramework;
                             }
                         }
                     }
-                    _onBodyScroll() {
-                        if (this.isBuilt) {
-                            if (this._isOpen && OSUI.Helper.DeviceInfo.IsDesktop === false) {
-                                cancelAnimationFrame(this._requestAnimationOnBodyScroll);
-                                this._triggerClose();
-                                return;
-                            }
-                            if (this._isOpen) {
-                                this._setBalloonCoordinates();
-                                this._requestAnimationOnBodyScroll = requestAnimationFrame(this._eventOnBodyScroll);
-                            }
-                            else {
-                                cancelAnimationFrame(this._requestAnimationOnBodyScroll);
-                            }
-                        }
-                    }
                     _onClick(e) {
                         e.stopPropagation();
                         this._triggerOpen();
@@ -11007,6 +11198,22 @@ var OSFramework;
                         this._tooltipBalloonContentElem.removeEventListener(OSUI.GlobalEnum.HTMLEvent.TransitionEnd, this._eventOnOpenedBalloon);
                         OSUI.Helper.Dom.Styles.RemoveClass(this._tooltipBalloonWrapperElem, Tooltip_1.Enum.CssClass.BalloonIsOpening);
                     }
+                    _onScreenScroll() {
+                        if (this.isBuilt) {
+                            if (this._isOpen && OSUI.Helper.DeviceInfo.IsDesktop === false) {
+                                cancelAnimationFrame(this._requestAnimationOnBodyScroll);
+                                this._triggerClose();
+                                return;
+                            }
+                            if (this._isOpen) {
+                                this._setBalloonCoordinates();
+                                this._requestAnimationOnBodyScroll = requestAnimationFrame(this._eventOnScreenScroll);
+                            }
+                            else {
+                                cancelAnimationFrame(this._requestAnimationOnBodyScroll);
+                            }
+                        }
+                    }
                     _onWindowResize() {
                         this._setBalloonCoordinates();
                         if (this._isOpen) {
@@ -11015,6 +11222,15 @@ var OSFramework;
                         else {
                             cancelAnimationFrame(this._requestAnimationOnWindowResize);
                         }
+                    }
+                    _onkeypressCallback(e) {
+                        const isEscapedPressed = e.key === OSUI.GlobalEnum.Keycodes.Escape;
+                        if (this._isOpen) {
+                            if (isEscapedPressed) {
+                                this.close();
+                            }
+                        }
+                        e.stopPropagation();
                     }
                     _setBalloonCoordinates() {
                         const selfElement = this.selfElement.getBoundingClientRect();
@@ -11085,9 +11301,10 @@ var OSFramework;
                         if (OSUI.Helper.DeviceInfo.HasAccessibilityEnabled) {
                             this._tooltipIconElem.addEventListener(OSUI.GlobalEnum.HTMLEvent.Blur, this._eventOnBlur);
                             this._tooltipIconElem.addEventListener(OSUI.GlobalEnum.HTMLEvent.Focus, this._eventOnFocus);
+                            this._tooltipIconElem.addEventListener(OSUI.GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
                         }
-                        OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnScroll, this._eventOnBodyScroll);
-                        this._requestAnimationOnBodyScroll = requestAnimationFrame(this._eventOnBodyScroll);
+                        OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.ScreenOnScroll, this._eventOnScreenScroll);
+                        this._requestAnimationOnBodyScroll = requestAnimationFrame(this._eventOnScreenScroll);
                         OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSUI.Event.DOMEvents.Listeners.Type.WindowResize, this._eventOnWindowResize);
                         this._requestAnimationOnWindowResize = requestAnimationFrame(this._eventOnWindowResize);
                         if (this._isOpen) {
@@ -11109,7 +11326,6 @@ var OSFramework;
                             this._isOpen = false;
                             OSUI.Helper.Dom.Styles.RemoveClass(this.selfElement, Tooltip_1.Enum.CssClass.IsOpened);
                             OSUI.Helper.Dom.Styles.RemoveClass(this._tooltipBalloonWrapperElem, Tooltip_1.Enum.CssClass.BalloonIsOpened);
-                            OSUI.Helper.A11Y.AriaHiddenTrue(this._tooltipBalloonWrapperElem);
                             this._unsetObserver();
                             if (this._tooltipBalloonPositionClass !== this.configs.Position) {
                                 OSUI.Helper.Dom.Styles.RemoveClass(this._tooltipBalloonWrapperElem, this._tooltipBalloonPositionClass);
@@ -11131,7 +11347,6 @@ var OSFramework;
                             this._unsetObserver();
                             this._setBalloonCoordinates();
                             this._setBalloonPosition(false, this._tooltipBalloonContentElem.getBoundingClientRect());
-                            OSUI.Helper.A11Y.AriaHiddenFalse(this._tooltipBalloonWrapperElem);
                             OSUI.Helper.AsyncInvocation(() => {
                                 OSUI.Helper.Dom.Styles.AddClass(this._tooltipBalloonWrapperElem, Tooltip_1.Enum.CssClass.BalloonIsOpening);
                                 this._tooltipBalloonContentElem.addEventListener(OSUI.GlobalEnum.HTMLEvent.TransitionEnd, this._eventOnOpenedBalloon);
@@ -11150,9 +11365,10 @@ var OSFramework;
                         this._tooltipIconElem.removeEventListener(OSUI.GlobalEnum.HTMLEvent.Click, this._eventOnClick);
                         this._tooltipIconElem.removeEventListener(OSUI.GlobalEnum.HTMLEvent.Blur, this._eventOnBlur);
                         this._tooltipIconElem.removeEventListener(OSUI.GlobalEnum.HTMLEvent.Focus, this._eventOnFocus);
+                        this._tooltipIconElem.removeEventListener(OSUI.GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
                         this._tooltipBalloonContentElem.removeEventListener(OSUI.GlobalEnum.HTMLEvent.Click, this._eventOnBalloonClick);
                         OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick, this._eventOnBodyClick);
-                        OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSUI.Event.DOMEvents.Listeners.Type.BodyOnScroll, this._eventOnBodyScroll);
+                        OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSUI.Event.DOMEvents.Listeners.Type.ScreenOnScroll, this._eventOnScreenScroll);
                         OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSUI.Event.DOMEvents.Listeners.Type.WindowResize, this._eventOnWindowResize);
                         this._tooltipBalloonContentElem.removeEventListener(OSUI.GlobalEnum.HTMLEvent.TransitionEnd, this._eventOnOpenedBalloon);
                         this._tooltipIconElem.removeEventListener(OSUI.GlobalEnum.HTMLEvent.MouseEnter, this._eventIconOnMouseEnter);
@@ -11189,21 +11405,21 @@ var OSFramework;
                         }
                     }
                     setA11YProperties() {
-                        OSUI.Helper.A11Y.RoleTooltip(this._tooltipIconElem);
-                        OSUI.Helper.A11Y.AriaLabel(this._tooltipIconElem, Tooltip_1.Enum.AriaLabelText.Content);
-                        OSUI.Helper.A11Y.TabIndexTrue(this._tooltipIconElem);
-                        OSUI.Helper.A11Y.AriaDescribedBy(this._tooltipIconElem, this._tooltipBalloonWrapperElem.id);
-                        OSUI.Helper.A11Y.AriaLabelledBy(this._tooltipIconElem, this._tooltipBalloonWrapperElem.id);
+                        OSUI.Helper.A11Y.RoleButton(this._tooltipIconElem);
+                        OSUI.Helper.A11Y.RoleTooltip(this._tooltipBalloonWrapperElem);
+                        OSUI.Helper.A11Y.AriaDescribedBy(this._tooltipIconElem, this._tooltipBalloonContentElem.id);
                         OSUI.Helper.A11Y.AriaHiddenTrue(this._tooltipBalloonWrapperElem);
+                        OSUI.Helper.A11Y.TabIndexTrue(this._tooltipIconElem);
                     }
                     setCallbacks() {
                         this._eventOnBalloonClick = this._onBalloonClick.bind(this);
                         this._eventOnBlur = this._onBlur.bind(this);
                         this._eventOnBodyClick = this._onBodyClick.bind(this);
-                        this._eventOnBodyScroll = this._onBodyScroll.bind(this);
+                        this._eventOnScreenScroll = this._onScreenScroll.bind(this);
                         this._eventOnClick = this._onClick.bind(this);
                         this._eventOnFocus = this._onFocus.bind(this);
                         this._eventOnOpenedBalloon = this._onOpenedBalloon.bind(this);
+                        this._eventOnKeypress = this._onkeypressCallback.bind(this);
                         this._eventOnWindowResize = this._onWindowResize.bind(this);
                         this._eventBalloonWrapperOnMouseEnter = this._onBalloonWrapperMouseEnter.bind(this);
                         this._eventBalloonWrapperOnMouseLeave = this._onBalloonWrapperMouseLeave.bind(this);
@@ -11230,10 +11446,11 @@ var OSFramework;
                         this._eventOnBalloonClick = undefined;
                         this._eventOnBlur = undefined;
                         this._eventOnBodyClick = undefined;
-                        this._eventOnBodyScroll = undefined;
+                        this._eventOnScreenScroll = undefined;
                         this._eventOnClick = undefined;
                         this._eventOnFocus = undefined;
                         this._eventOnOpenedBalloon = undefined;
+                        this._eventOnKeypress = undefined;
                         this._eventOnWindowResize = undefined;
                         this._eventBalloonWrapperOnMouseEnter = undefined;
                         this._eventBalloonWrapperOnMouseLeave = undefined;
@@ -12066,10 +12283,8 @@ var OutSystems;
             };
             ErrorCodes.Search = {
                 FailChangeProperty: 'OSUI-API-20001',
-                FailClose: 'OSUI-API-20002',
-                FailDispose: 'OSUI-API-20003',
-                FailOpen: 'OSUI-API-20004',
-                FailRegisterCallback: 'OSUI-API-20005',
+                FailDispose: 'OSUI-API-20002',
+                FailRegisterCallback: 'OSUI-API-20003',
             };
             ErrorCodes.SectionIndexItem = {
                 FailChangeProperty: 'OSUI-API-21001',
@@ -14334,6 +14549,76 @@ var OutSystems;
     (function (OSUI) {
         var Patterns;
         (function (Patterns) {
+            var SearchAPI;
+            (function (SearchAPI) {
+                const _searchMap = new Map();
+                function ChangeProperty(searchId, propertyName, propertyValue) {
+                    const result = OutSystems.OSUI.Utils.CreateApiResponse({
+                        errorCode: OSUI.ErrorCodes.Search.FailChangeProperty,
+                        callback: () => {
+                            const search = GetSearchById(searchId);
+                            search.changeProperty(propertyName, propertyValue);
+                        },
+                    });
+                    return result;
+                }
+                SearchAPI.ChangeProperty = ChangeProperty;
+                function Create(searchId, configs) {
+                    if (_searchMap.has(searchId)) {
+                        throw new Error(`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.Search} registered under id: ${searchId}`);
+                    }
+                    const _newSearch = new OSFramework.OSUI.Patterns.Search.Search(searchId, JSON.parse(configs));
+                    _searchMap.set(searchId, _newSearch);
+                    return _newSearch;
+                }
+                SearchAPI.Create = Create;
+                function Dispose(searchId) {
+                    const result = OutSystems.OSUI.Utils.CreateApiResponse({
+                        errorCode: OSUI.ErrorCodes.Search.FailDispose,
+                        callback: () => {
+                            const search = GetSearchById(searchId);
+                            search.dispose();
+                            _searchMap.delete(searchId);
+                        },
+                    });
+                    return result;
+                }
+                SearchAPI.Dispose = Dispose;
+                function GetAllSearches() {
+                    return OSFramework.OSUI.Helper.MapOperation.ExportKeys(_searchMap);
+                }
+                SearchAPI.GetAllSearches = GetAllSearches;
+                function GetSearchById(searchId) {
+                    return OSFramework.OSUI.Helper.MapOperation.FindInMap('Search', searchId, _searchMap);
+                }
+                SearchAPI.GetSearchById = GetSearchById;
+                function Initialize(searchId) {
+                    const search = GetSearchById(searchId);
+                    search.build();
+                    return search;
+                }
+                SearchAPI.Initialize = Initialize;
+                function RegisterCallback(searchId, eventName, callback) {
+                    const result = OutSystems.OSUI.Utils.CreateApiResponse({
+                        errorCode: OSUI.ErrorCodes.Search.FailRegisterCallback,
+                        callback: () => {
+                            const _SearchItem = this.GetSearchById(searchId);
+                            _SearchItem.registerCallback(eventName, callback);
+                        },
+                    });
+                    return result;
+                }
+                SearchAPI.RegisterCallback = RegisterCallback;
+            })(SearchAPI = Patterns.SearchAPI || (Patterns.SearchAPI = {}));
+        })(Patterns = OSUI.Patterns || (OSUI.Patterns = {}));
+    })(OSUI = OutSystems.OSUI || (OutSystems.OSUI = {}));
+})(OutSystems || (OutSystems = {}));
+var OutSystems;
+(function (OutSystems) {
+    var OSUI;
+    (function (OSUI) {
+        var Patterns;
+        (function (Patterns) {
             var SectionIndexAPI;
             (function (SectionIndexAPI) {
                 const _sectionIndexItemsMap = new Map();
@@ -16284,6 +16569,31 @@ var OutSystems;
     (function (OSUI) {
         var Utils;
         (function (Utils) {
+            var LayoutPrivate;
+            (function (LayoutPrivate) {
+                class SkipContentLink {
+                    static _setLink() {
+                        const mainContent = OSFramework.OSUI.Helper.Dom.ClassSelector(document, OSFramework.OSUI.GlobalEnum.CssClassElements.MainContent);
+                        const skipContentLink = OSFramework.OSUI.Helper.Dom.ClassSelector(document, OSFramework.OSUI.GlobalEnum.CssClassElements.SkipContent);
+                        if (mainContent && skipContentLink) {
+                            skipContentLink.setAttribute(OSFramework.OSUI.GlobalEnum.HTMLAttributes.Href, mainContent.getAttribute(OSFramework.OSUI.GlobalEnum.HTMLAttributes.Id));
+                        }
+                    }
+                    static Set() {
+                        this._setLink();
+                    }
+                }
+                LayoutPrivate.SkipContentLink = SkipContentLink;
+            })(LayoutPrivate = Utils.LayoutPrivate || (Utils.LayoutPrivate = {}));
+        })(Utils = OSUI.Utils || (OSUI.Utils = {}));
+    })(OSUI = OutSystems.OSUI || (OutSystems.OSUI = {}));
+})(OutSystems || (OutSystems = {}));
+var OutSystems;
+(function (OutSystems) {
+    var OSUI;
+    (function (OSUI) {
+        var Utils;
+        (function (Utils) {
             function LogMessage(message) {
                 if (OSFramework.OSUI.Helper.LogMessage(message)) {
                     console.log(OSFramework.OSUI.Helper.LogMessage(message));
@@ -17411,19 +17721,39 @@ var Providers;
                     _setParentMinHeight() {
                         OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(this.selfElement, OSFramework.OSUI.GlobalEnum.InlineStyle.Height, this.selfElement.clientHeight + OSFramework.OSUI.GlobalEnum.Units.Pixel);
                     }
+                    _todayButtonKeydown(e) {
+                        switch (e.key) {
+                            case OSFramework.OSUI.GlobalEnum.Keycodes.Tab:
+                                return;
+                            case OSFramework.OSUI.GlobalEnum.Keycodes.Enter:
+                            case OSFramework.OSUI.GlobalEnum.Keycodes.Space:
+                                e.preventDefault();
+                                this.provider.setDate(this.provider.now, true);
+                                this.jumpIntoToday();
+                                break;
+                        }
+                    }
                     _unsetParentMinHeight() {
                         OSFramework.OSUI.Helper.Dom.Styles.RemoveStyleAttribute(this.selfElement, OSFramework.OSUI.GlobalEnum.InlineStyle.Height);
                     }
                     addTodayBtn() {
-                        const todayBtnWrapper = document.createElement(OSFramework.OSUI.GlobalEnum.HTMLElement.Div);
-                        todayBtnWrapper.classList.add(Flatpickr.Enum.CssClasses.TodayBtn);
+                        this._todayButtonElem = document.createElement(OSFramework.OSUI.GlobalEnum.HTMLElement.Div);
+                        this._todayButtonElem.classList.add(Flatpickr.Enum.CssClasses.TodayBtn);
                         const todayBtn = document.createElement(OSFramework.OSUI.GlobalEnum.HTMLElement.Link);
+                        OSFramework.OSUI.Helper.A11Y.TabIndexTrue(todayBtn);
                         const langCode = Flatpickr.l10ns.TodayBtn[this.configs.Lang] !== undefined ? this.configs.Lang : 'en';
                         todayBtn.innerHTML = Flatpickr.l10ns.TodayBtn[langCode].title;
                         OSFramework.OSUI.Helper.A11Y.AriaLabel(todayBtn, Flatpickr.l10ns.TodayBtn[langCode].ariaLabel);
                         todayBtn.addEventListener(OSFramework.OSUI.GlobalEnum.HTMLEvent.Click, this.todayBtnClick.bind(this));
-                        todayBtnWrapper.appendChild(todayBtn);
-                        this.provider.calendarContainer.appendChild(todayBtnWrapper);
+                        todayBtn.addEventListener(OSFramework.OSUI.GlobalEnum.HTMLEvent.keyDown, this._todayButtonKeydown.bind(this));
+                        this._todayButtonElem.appendChild(todayBtn);
+                        this._providerFocusSpanTarget = this.provider.calendarContainer.querySelector('.focus-trap-bottom-element');
+                        if (this._providerFocusSpanTarget) {
+                            this.provider.calendarContainer.insertBefore(this._todayButtonElem, this._providerFocusSpanTarget);
+                        }
+                        else {
+                            this.provider.calendarContainer.appendChild(this._todayButtonElem);
+                        }
                     }
                     createProviderInstance() {
                         this.provider = window.flatpickr(this.datePickerPlatformInputElem, this.flatpickrOpts);
@@ -17475,7 +17805,8 @@ var Providers;
                                 ariaLabelValue = this.datePickerPlatformInputElem.getAttribute(OSFramework.OSUI.Constants.A11YAttributes.Aria.Label);
                             }
                             OSFramework.OSUI.Helper.A11Y.AriaLabel(this.flatpickrInputElem, ariaLabelValue);
-                            OSFramework.OSUI.Helper.A11Y.AriaDescribedBy(this.flatpickrInputElem, this._a11yInfoContainerElem.id);
+                            if (OSFramework.OSUI.Helper.DeviceInfo.IsDesktop)
+                                OSFramework.OSUI.Helper.A11Y.AriaDescribedBy(this.flatpickrInputElem, this._a11yInfoContainerElem.id);
                             if (this.configs.Lang !== OSFramework.OSUI.Constants.Language.short) {
                                 this._a11yInfoContainerElem.innerHTML =
                                     Datepicker.Flatpickr.l10ns.A11yContainerInfo[this.configs.Lang] !== undefined
@@ -17534,6 +17865,9 @@ var Providers;
                     close() {
                         if (this.provider.isOpen) {
                             this.provider.close();
+                            if (this.configs.ShowTodayButton) {
+                                OSFramework.OSUI.Helper.A11Y.TabIndexFalse(this._todayButtonElem);
+                            }
                         }
                     }
                     disableDays(disableDays) {
@@ -17560,6 +17894,12 @@ var Providers;
                         const isInputDisable = this.datePickerPlatformInputElem.disabled;
                         if (this.provider.isOpen === false && isInputDisable === false) {
                             this.provider.open();
+                            if (this.flatpickrInputElem) {
+                                this.flatpickrInputElem.focus();
+                            }
+                            if (this.configs.ShowTodayButton) {
+                                OSFramework.OSUI.Helper.A11Y.TabIndexTrue(this._todayButtonElem);
+                            }
                         }
                     }
                     registerCallback(eventName, callback) {
@@ -18145,199 +18485,199 @@ var Providers;
                 (function (l10ns) {
                     l10ns.A11yContainerInfo = {
                         ar: {
-                            htmlTex: 'من أجل أن تكون قادرًا على التنقل من خلال التقويم باستخدام مفتاح لوحة المفاتيح: استخدم مفتاح السهم CMD أو CTRL + لأسفل للتنقل إلى سياق التقويم ؛ استخدم مفاتيح الأسهم للتنقل خلال أيام التقويم ؛ استخدم مفاتيح السهم CMD أو CTRL + اليمين أو اليسرى للتنقل عبر أشهر ؛ استخدم مفاتيح الأسهم CMD أو CTRL + لأعلى أو لأسفل للتنقل عبر سنوات ؛',
+                            htmlTex: 'استخدم مفتاح السهم للأسفل لفتح التقويم؛ استخدم مفاتيح الأسهم للتنقل في أيام التقويم؛ استخدم مفتاح Ctrl أو Cmd + الأسهم اليمين أو اليسار للتنقل بين الشهور؛ استخدم مفتاح Ctrl أو Cmd + الأسهم للأعلى أو للأسفل للتنقل بين السنوات؛',
                         },
                         at: {
-                            htmlTex: 'Um mit Tastaturschlüssel durch den Kalender navigieren zu können: Verwenden Sie CMD oder Strg + Down -Pfeil -Taste, um in den Kalenderkontext zu navigieren; Verwenden Sie Pfeilschlüssel, um durch Kalendertage zu navigieren. Verwenden Sie CMD- oder Strg + rechts oder linke Pfeiltasten, um Monate zu navigieren. Verwenden Sie CMD oder Strg + Up- oder Down -Pfeiltasten, um durch Jahre zu navigieren.',
+                            htmlTex: 'Verwenden Sie die Pfeiltaste nach unten, um den Kalender zu öffnen; Verwenden Sie die Pfeiltasten, um sich durch die Kalendertage zu bewegen; Verwenden Sie die Strg- oder Cmd-Taste + die rechte oder linke Pfeiltaste, um sich durch die Monate zu bewegen; Verwenden Sie die Strg- oder Cmd-Taste + die Pfeiltasten nach oben oder unten, um sich durch die Jahre zu bewegen;',
                         },
                         az: {
-                            htmlTex: 'Klaviatura düyməsi ilə təqvimlə naviqasiya etmək üçün: Təqvim kontekstinə keçmək üçün CMD və ya CTRL + Down Ok düyməsinə istifadə edin; Təqvim günlərində gəzmək üçün ox düymələrindən istifadə edin; Aylarla gəzmək üçün CMD və ya CTRL + sağ və ya sol ox düymələrindən istifadə edin; İllərlə gəzmək üçün CMD və ya CTRL + yuxarı və ya aşağı ox düymələrindən istifadə edin;',
+                            htmlTex: 'Təqvim açmaq üçün aşağı ox düyməsindən istifadə edin; Təqvim gününü gəzmək üçün aşağı və ya yuxarı ox düymələrindən istifadə edin; Aylar arasında gəzmək üçün Ctrl və ya Cmd + sağ və ya sol ox düymələrindən istifadə edin; İllər arasında gəzmək üçün Ctrl və ya Cmd + yuxarı və ya aşağı ox düymələrindən istifadə edin;',
                         },
                         be: {
-                            htmlTex: 'Для таго, каб мець магчымасць перамяшчацца па календары з клавішнай клавішай: Выкарыстоўвайце CMD або CTRL + клавіша са стрэлкай уніз, каб перайсці ў каляндарны кантэкст; Выкарыстоўвайце клавішы са стрэлкамі для навігацыі праз каляндарныя дні; Выкарыстоўвайце CMD або CTRL + правай або левай клавішы са стрэлкамі для навігацыі праз месяцы; Выкарыстоўвайце CMD або CTRL + клавішы са стрэлкамі ўверх ці ўніз, каб перамяшчацца праз гады;',
+                            htmlTex: 'Выкарыстоўвайце клавішу стрэлкі ўніз, каб адкрыць каляндар; Выкарыстоўвайце стрэлкі для навігацыі па днях каляндара; Выкарыстоўвайце клавішу Ctrl або Cmd + стрэлкі ўправа або ўлева для навігацыі па месяцах; Выкарыстоўвайце клавішу Ctrl або Cmd + стрэлкі ўверх або ўніз для навігацыі па гадах;',
                         },
                         bg: {
-                            htmlTex: 'За да можете да навигирате през календара с клавиатура: използвайте CMD или Ctrl + Key Arrow Key, за да придвижите в контекста на календара; Използвайте клавишите със стрелки, за да се движите през календарни дни; Използвайте CMD или Ctrl + десни или леви клавиши със стрелки, за да се движите през месеци; Използвайте CMD или CTRL + нагоре или надолу клавиши със стрелки, за да навигирате през години;',
+                            htmlTex: 'Използвайте клавиша със стрелка надолу, за да отворите календара; Използвайте стрелките за да навигирате през дните в календара; Използвайте Ctrl или Cmd + стрелка надясно или наляво, за да навигирате през месеците; Използвайте Ctrl или Cmd + стрелка нагоре или надолу, за да навигирате през годините;',
                         },
                         bn: {
-                            htmlTex: 'কীবোর্ড কী দিয়ে ক্যালেন্ডারের মাধ্যমে নেভিগেট করতে সক্ষম হওয়ার জন্য: ক্যালেন্ডার প্রসঙ্গে নেভিগেট করতে সিএমডি বা সিটিআরএল + ডাউন তীর কী ব্যবহার করুন; ক্যালেন্ডারের দিনগুলিতে নেভিগেট করতে তীর কী ব্যবহার করুন; কয়েক মাস ধরে নেভিগেট করতে সিএমডি বা সিটিআরএল + ডান বা বাম তীর কী ব্যবহার করুন; বছরের মধ্যে নেভিগেট করতে সিএমডি বা সিটিআরএল + উপরে বা ডাউন তীর কী ব্যবহার করুন;',
+                            htmlTex: 'ক্যালেন্ডার খোলার জন্য ডাউন অ্যারো কি ব্যবহার করুন; ক্যালেন্ডারের দিনগুলি নেভিগেট করতে এরো কি ব্যবহার করুন; মাসের মধ্যে নেভিগেট করতে Ctrl বা Cmd + ডান বা বাম অ্যারো কি ব্যবহার করুন; বছরের মধ্যে নেভিগেট করতে Ctrl বা Cmd + উপর বা নিচে অ্যারো কি ব্যবহার করুন;',
                         },
                         bs: {
-                            htmlTex: 'Da biste mogli kretati kroz kalendar s tipkovnicom tipkovnicom: Koristite CMD ili Ctrl + tipku sa strelicom dolje za kretanje u kontekst kalendara; Koristite tipke sa strelicama za navigaciju kroz dane kalendara; Koristite CMD ili CTRL + tastere sa strelicom ili lijeve strelice za kretanje kroz mjesece; Upotrijebite CMD ili Ctrl + gore ili dolje tipke sa strelicama za navigaciju kroz godine;',
+                            htmlTex: 'Koristite strelicu prema dolje za otvaranje kalendara; Koristite strelice za navigaciju kroz dane u kalendaru; Koristite Ctrl ili Cmd + desnu ili lijevu strelicu za navigaciju kroz mjesece; Koristite Ctrl ili Cmd + strelicu prema gore ili prema dolje za navigaciju kroz godine;',
                         },
                         ca: {
-                            htmlTex: 'Per poder navegar pel calendari amb tecla de teclat: utilitzeu la tecla CMD o CTRL + Down Arrow per navegar cap al context del calendari; Utilitzeu les tecles de fletxa per navegar durant els dies naturals; Utilitzeu les tecles de fletxa CMD o CTRL + dreta o esquerra per navegar durant mesos; Utilitzeu les tecles de fletxa CMD o Ctrl + amunt o avall per navegar durant anys;',
+                            htmlTex: 'Utilitzeu la tecla de la fletxa cap avall per obrir el calendari; Utilitzeu les fletxes per navegar pels dies del calendari; Utilitzeu Ctrl o Cmd + la fletxa de dreta o esquerra per navegar pels mesos; Utilitzeu Ctrl o Cmd + la fletxa cap amunt o cap avall per navegar pels anys;',
                         },
                         cat: {
-                            htmlTex: 'Per poder navegar pel calendari amb tecla de teclat: utilitzeu la tecla CMD o CTRL + Down Arrow per navegar cap al context del calendari; Utilitzeu les tecles de fletxa per navegar durant els dies naturals; Utilitzeu les tecles de fletxa CMD o CTRL + dreta o esquerra per navegar durant mesos; Utilitzeu les tecles de fletxa CMD o Ctrl + amunt o avall per navegar durant anys;',
+                            htmlTex: 'Utilitzeu la tecla de la fletxa cap avall per obrir el calendari; Utilitzeu les tecles de la fletxa per navegar pels dies del calendari; Utilitzeu cmd o ctrl + tecla de la fletxa dreta o esquerra per navegar pels mesos; Utilitzeu cmd o ctrl + tecla de la fletxa cap amunt o cap avall per navegar pels anys;',
                         },
                         ckb: {
-                            htmlTex: 'Ji bo ku bikaribin bi kalîfar bi klavyeyê bi klavyeyê vegerin: Bişkojka CMD an CTRL + Down-ê bikar bînin da ku nav çarçoveya salnameyê veguhezînin; Bişkojkên arrow bikar bînin ku bi rojên salnameyê vegerin. Bişkojkên CMD an CTRL + rast an çepê bikar bînin da ku bi mehan rêve bibin; Bişkojkên CMD an CTRL + UP an Down bikar bînin da ku bi salan navigirin;',
+                            htmlTex: 'ئەم توندوتان بەکاربهێنە بۆ کردنەوەی ڕۆژنامە; توندوتانی تیر بۆ ناوی ڕۆژەکانی ڕۆژنامە بکەن; دوگمەی cmd یان ctrl + توندوی ئەستوو یان چەپ بۆ ناوی مانگەکان بکەن; دوگمەی cmd یان ctrl + توندوی سەرەوە یان خوار بۆ ناوی ساڵەکان بکەن;',
                         },
                         cs: {
-                            htmlTex: 'Chcete -li být schopen procházet kalendářem pomocí klávesnice klávesnice: Použijte CMD nebo Ctrl + Down Arrow Key pro navigaci do kontextu kalendáře; Použijte klíče se šipkami pro navigaci v kalendářních dnech; Pro navigaci v měsících použijte klíče CMD nebo CTRL + vpravo nebo vlevo; Pro navigaci po létech použijte klávesy se šipkami CMD nebo CTRL + nahoru nebo dolů;',
+                            htmlTex: 'Použijte klávesu šipka dolů k otevření kalendáře; Použijte šipky k navigaci mezi dny v kalendáři; Použijte klávesu Ctrl nebo Cmd + šipky vpravo nebo vlevo k navigaci mezi měsíci; Použijte klávesu Ctrl nebo Cmd + šipky nahoru nebo dolů k navigaci mezi roky;',
                         },
                         cy: {
-                            htmlTex: "Er mwyn gallu llywio trwy'r calendr gydag allwedd bysellfwrdd: defnyddiwch allwedd saeth CMD neu CTRL + Down i lywio i gyd -destun calendr; Defnyddio allweddi saeth i lywio trwy ddiwrnodau calendr; Defnyddio allweddi saeth CMD neu Ctrl + dde neu chwith i lywio trwy fisoedd; Defnyddiwch allweddi saeth CMD neu CTRL + i fyny neu i lawr i lywio trwy flynyddoedd;",
+                            htmlTex: 'Defnyddiwch y botwm saeth i lawr i agor y calendr; Defnyddiwch y bysellau i lywio drwy ddyddiau calendr; Defnyddiwch Ctrl neu Cmd + y bysellau de neu lafur i lywio drwy fisoedd; Defnyddiwch Ctrl neu Cmd + y bysellau i fyny neu i lawr i lywio drwy flynyddoedd;',
                         },
                         da: {
-                            htmlTex: 'For at kunne navigere gennem kalender med tastaturnøgle: Brug CMD eller Ctrl + Down Arrow -tasten til at navigere i kalenderkontekst; Brug piletaster til at navigere gennem kalenderdage; Brug CMD eller CTRL + højre eller venstre piletaster til at navigere gennem måneder; Brug CMD eller CTRL + op eller ned på piletasterne til at navigere gennem år;',
+                            htmlTex: 'Brug pil ned for at åbne kalenderen; Brug piletasterne til at navigere gennem kalenderens dage; Brug Ctrl eller Cmd + højre eller venstre pil for at navigere gennem månederne; Brug Ctrl eller Cmd + op eller ned pilene for at navigere gennem årene;',
                         },
                         de: {
-                            htmlTex: 'Um mit Tastaturschlüssel durch den Kalender navigieren zu können: Verwenden Sie CMD oder Strg + Down -Pfeil -Taste, um in den Kalenderkontext zu navigieren; Verwenden Sie Pfeilschlüssel, um durch Kalendertage zu navigieren. Verwenden Sie CMD- oder Strg + rechts oder linke Pfeiltasten, um Monate zu navigieren. Verwenden Sie CMD oder Strg + Up- oder Down -Pfeiltasten, um durch Jahre zu navigieren.',
+                            htmlTex: 'Verwenden Sie die Pfeiltaste nach unten, um den Kalender zu öffnen; Verwenden Sie die Pfeiltasten, um durch die Kalendertage zu navigieren; Verwenden Sie die Befehlstaste oder Strg + Pfeiltaste rechts oder links, um durch die Monate zu navigieren; Verwenden Sie die Befehlstaste oder Strg + Pfeiltaste nach oben oder unten, um durch die Jahre zu navigieren;',
                         },
                         en: {
-                            htmlTex: 'In order to be able to navigate through calendar with keyboard key: Use cmd or ctrl + down arrow key to navigate into calendar context; Use arrow keys to navigate through calendar days; Use cmd or ctrl + right or left arrow keys to navigate through months; Use cmd or ctrl + up or down arrow keys to navigate through years;',
+                            htmlTex: 'Use arrow down key to open the calendar; Use arrow keys to navigate through calendar days; Use cmd or ctrl + right or left arrow keys to navigate through months; Use cmd or ctrl + up or down arrow keys to navigate through years;',
                         },
                         eo: {
-                            htmlTex: 'Por povi navigi tra kalendaro per klavara ŝlosilo: Uzu CMD aŭ CTRL + malsupren sagoklavon por navigi en kalendaran kuntekston; Uzu sagajn ŝlosilojn por navigi tra kalendaraj tagoj; Uzu CMD aŭ CTRL + dekstran aŭ maldekstran sagoklavojn por navigi tra monatoj; Uzu CMD aŭ CTRL + supren aŭ malsupren sagoklavojn por navigi tra jaroj;',
+                            htmlTex: 'Uzu la malsupran sago-butonon por malfermi la kalendaron; Uzu sago-butonojn por navigi tra kalendaraj tagoj; Uzu cmd aŭ ctrl + dekstren aŭ maldekstren sago-butonojn por navigi tra monatoj; Uzu cmd aŭ ctrl + supren aŭ malsupren sago-butonojn por navigi tra jaroj;',
                         },
                         es: {
-                            htmlTex: 'Para poder navegar a través del calendario con la tecla de teclado: use la tecla CMD o CTRL + Down Arrow para navegar hacia el contexto del calendario; Use las teclas de flecha para navegar a través de los días calendario; Use las teclas CMD o CTRL + Derecha o Left Flecha para navegar durante meses; Use CMD o Ctrl + Arrow Keys para navegar a través de años;',
+                            htmlTex: 'Utiliza la tecla de flecha hacia abajo para abrir el calendario; Utiliza las teclas de flecha para navegar por los días del calendario; Utiliza cmd o ctrl + teclas de flecha derecha o izquierda para navegar por los meses; Utiliza cmd o ctrl + teclas de flecha arriba o abajo para navegar por los años;',
                         },
                         et: {
-                            htmlTex: 'Klaviatuuri klahviga kalendris liikumiseks: kasutage kalendri konteksti navigeerimiseks CMD või CTRL + Down Noole klahvi; Kasutage kalendripäevade liikumiseks nooleklahve; Kasutage kuude jooksul navigeerimiseks CMD või Ctrl + paremat või vasakut nooleklahvi; Kasutage aastate jooksul navigeerimiseks CMD või Ctrl + üles või alla nooleklahve;',
+                            htmlTex: 'Kasutage allanoolt, et avada kalender; Kasutage nooleklahve kalendripäevade sirvimiseks; Kasutage käsku või ctrl + parema või vasaku nooleklahvi, et sirvida kuude vahel; Kasutage käsku või ctrl + üles või alla nooleklahvi, et sirvida aastate vahel;',
                         },
                         fa: {
-                            htmlTex: 'برای اینکه بتوانید از طریق تقویم با کلید صفحه کلید حرکت کنید: از کلید Arrow CMD یا Ctrl + Down برای حرکت در متن تقویم استفاده کنید. از کلیدهای فلش برای حرکت در روزهای تقویم استفاده کنید. برای حرکت در طی ماهها از کلیدهای پیکان راست یا CTRL + راست یا چپ استفاده کنید. برای حرکت در طی سالها از کلیدهای Arrow CMD یا CTRL + بالا یا پایین استفاده کنید.',
+                            htmlTex: 'از کلید پایین فشار دهید تا تقویم باز شود؛ از کلید‌های پایین برای ناوبری در ایام تقویم استفاده کنید؛ از کلیدهای cmd یا ctrl + راست یا چپ برای ناوبری در ماه‌ها استفاده کنید؛ از کلیدهای cmd یا ctrl + پایین یا بالا برای ناوبری در سال‌ها استفاده کنید؛',
                         },
                         fi: {
-                            htmlTex: 'Kalenterin avulla näppäimistön näppäimellä voi kulkea CMD- tai CTRL + Down -nuolinäppäimellä kalenterikontekstissa; Käytä nuolinäppäimiä kalenteripäivinä; Käytä CMD: tä tai Ctrl +: ta oikealla tai vasemmalla nuolinäppäimellä nähdäksesi kuukausia; Käytä CMD: tä tai Ctrl + ylös tai alas nuolinäppäimiä navigoidaksesi vuosien ajan;',
+                            htmlTex: 'Käytä nuolinäppäintä alentaaksesi kalenterin; Käytä nuolinäppäimiä navigoidaksesi kalenterin päivien läpi; Käytä cmd- tai ctrl-näppäintä ja nuolinäppäimiä oikealle tai vasemmalle navigoidaksesi kuukausien läpi; Käytä cmd- tai ctrl-näppäintä ja nuolinäppäimiä ylös tai alas navigoidaksesi vuosien läpi;',
                         },
                         fo: {
-                            htmlTex: 'Um mit Tastaturschlüssel durch den Kalender navigieren zu können: Verwenden Sie CMD oder Strg + Down -Pfeil -Taste, um in den Kalenderkontext zu navigieren; Verwenden Sie Pfeilschlüssel, um durch Kalendertage zu navigieren. Verwenden Sie CMD- oder Strg + rechts oder linke Pfeiltasten, um Monate zu navigieren. Verwenden Sie CMD oder Strg + Up- oder Down -Pfeiltasten, um durch Jahre zu navigieren.',
+                            htmlTex: 'Brúk niður píl til at opna kalendara; Brúk niður pílar til at navigera ímillum kalenderdagar; Brúk cmd ella ctrl + høgri ella vinstri niður pílar til at navigera ímillum mánaðir; Brúk cmd ella ctrl + upp ella niður pílar til at navigera ímillum ár;',
                         },
                         fr: {
-                            htmlTex: 'Afin de pouvoir naviguer dans le calendrier avec la clé du clavier: utilisez CMD ou Ctrl + Down Arrow Key pour naviguer dans le contexte du calendrier; Utilisez des clés Arrow pour naviguer dans les jours civils; Utilisez CMD ou CTRL + les clés de flèche droite ou gauche pour naviguer dans des mois; Utilisez des clés CMD ou CTRL + UP ou Down pour naviguer dans des années;',
+                            htmlTex: 'Utilisez la touche flèche vers le bas pour ouvrir le calendrier ; Utilisez les touches flèches pour naviguer à travers les jours du calendrier ; Utilisez la touche cmd ou ctrl + flèche droite ou gauche pour naviguer à travers les mois ; Utilisez la touche cmd ou ctrl + flèche vers le haut ou vers le bas pour naviguer à travers les années ;',
                         },
                         ga: {
-                            htmlTex: "D'fhonn a bheith in ann nascleanúint a dhéanamh trí fhéilire le heochair mhéarchláir: Úsáid eochair CMD nó Ctrl + Down saighead chun dul isteach i gcomhthéacs féilire; Bain úsáid as eochracha saighead chun nascleanúint a dhéanamh trí laethanta féilire; Bain úsáid as CMD nó Ctrl + eochracha saighead ar dheis nó ar chlé chun nascleanúint a dhéanamh trí mhí; Bain úsáid as eochracha CMD nó Ctrl + suas nó síos saighead le nascleanúint a dhéanamh trí bhlianta;",
+                            htmlTex: 'Úsáid an gcnaipe síos freisin chun an féilire a oscailt; Úsáid na siorafí siar chun bealach a aimsiú trí laethanta na féilire; Úsáid an cmd nó an cnaipe ctrl + saigheada ar dheis nó ar chlé chun aistriú trí mhíonna; Úsáid an cmd nó an cnaipe ctrl + saigheada suas nó síos chun aistriú trí blianta;',
                         },
                         gr: {
-                            htmlTex: 'Προκειμένου να μπορέσετε να περιηγηθείτε στο ημερολόγιο με το κλειδί πληκτρολογίου: Χρησιμοποιήστε το πλήκτρο CMD ή CTRL + DOWN για να περιηγηθείτε στο πλαίσιο του ημερολογίου. Χρησιμοποιήστε πλήκτρα βέλους για να περιηγηθείτε στις ημερολογιακές ημέρες. Χρησιμοποιήστε CMD ή CTRL + δεξιά ή αριστερά πλήκτρα βέλους για να περιηγηθείτε σε μήνες. Χρησιμοποιήστε CMD ή CTRL + πάνω ή κάτω πλήκτρα βέλους για να περιηγηθείτε σε χρόνια.',
+                            htmlTex: 'Χρησιμοποιήστε το πλήκτρο κάτω βέλους για να ανοίξετε το ημερολόγιο. Χρησιμοποιήστε τα πλήκτρα βέλους για να περιηγηθείτε στις ημέρες του ημερολογίου. Χρησιμοποιήστε το πλήκτρο cmd ή ctrl + δεξιά ή αριστερά βέλη για να περιηγηθείτε στους μήνες. Χρησιμοποιήστε το πλήκτρο cmd ή ctrl + πάνω ή κάτω βέλος για να περιηγηθείτε στα έτη.',
                         },
                         he: {
-                            htmlTex: 'על מנת להיות מסוגל לנווט בלוח השנה עם מקש המקלדת: השתמש במפתח CMD או Ctrl + Down Down כדי לנווט בהקשר של לוח השנה; השתמש במקשי חצים כדי לנווט בימי לוח השנה; השתמש במפתחות CMD או CTRL + ימין או שמאל כדי לנווט בחודשים; השתמש במפתחות CMD או Ctrl + Up או Down כדי לנווט בשנים;',
+                            htmlTex: 'השתמש במקש חץ למטה כדי לפתוח את הלוח שנה; השתמש במקשי החץ לניווט בימי לוח השנה; השתמש במקש cmd או ctrl + מקשי החץ ימינה או שמאלה לניווט בין חודשים; השתמש במקש cmd או ctrl + מקשי החץ למעלה או למטה לניווט בין שנים;',
                         },
                         hi: {
-                            htmlTex: 'कीबोर्ड कुंजी के साथ कैलेंडर के माध्यम से नेविगेट करने में सक्षम होने के लिए: कैलेंडर संदर्भ में नेविगेट करने के लिए सीएमडी या सीटीआरएल + डाउन एरो कुंजी का उपयोग करें; कैलेंडर दिनों के माध्यम से नेविगेट करने के लिए तीर कुंजियों का उपयोग करें; महीनों के माध्यम से नेविगेट करने के लिए CMD या CTRL + दाएं या बाएं तीर कुंजियों का उपयोग करें; वर्षों के माध्यम से नेविगेट करने के लिए CMD या CTRL + अप या डाउन तीर कुंजियों का उपयोग करें;',
+                            htmlTex: 'कैलेंडर खोलने के लिए नीचे तीर का उपयोग करें; कैलेंडर के दिनों में नेविगेट करने के लिए तीर का उपयोग करें; महीनों में नेविगेट करने के लिए cmd या ctrl + दायां या बाएं तीर का उपयोग करें; वर्षों में नेविगेट करने के लिए cmd या ctrl + ऊपर या नीचे तीर का उपयोग करें;',
                         },
                         hr: {
-                            htmlTex: 'Da biste se mogli kretati kroz kalendar s tipkovnicom tipki: Upotrijebite CMD ili Ctrl + tipku sa strelicom dolje za kretanje u kontekst kalendara; Upotrijebite tipke sa strelicama za kretanje kroz kalendarske dane; Koristite CMD ili Ctrl + tipke s desne ili lijeve strelice za kretanje kroz mjesece; Koristite CMD ili Ctrl + tipke sa strelicama gore ili dolje za kretanje kroz godine;',
+                            htmlTex: 'Koristite tipku za strelicu prema dolje da biste otvorili kalendar; Koristite tipke sa strelicama za navigaciju kroz dane kalendara; Koristite tipke cmd ili ctrl + desno ili lijevo za navigaciju kroz mjesece; Koristite tipke cmd ili ctrl + gore ili dolje za navigaciju kroz godine;',
                         },
                         hu: {
-                            htmlTex: 'Annak érdekében, hogy a naptárban navigálhassunk a naptárban: használja a CMD vagy a CTRL + Down Arrow billentyűt a naptári kontextusban való navigáláshoz; A nyílgombokkal navigálhat a naptári napokon; Használja a CMD -t vagy a Ctrl + jobb vagy bal nyílgombot a hónapok során; Használja a CMD -t vagy a Ctrl + felfelé vagy lefelé tartó nyíl kulcsokat az évek során;',
+                            htmlTex: 'Használja az "Arrow Down" gombot a naptár megnyitásához; Használja az "Arrow" gombokat a naptári napok közötti navigáláshoz; Használja a cmd vagy ctrl + jobb vagy bal nyilakat a hónapok közötti navigáláshoz; Használja a cmd vagy ctrl + fel vagy le nyilakat az évek közötti navigáláshoz;',
                         },
                         hy: {
-                            htmlTex: 'Որպեսզի կարողանաք նավարկվել ստեղնաշարի ստեղնաշարի միջոցով. Օգտագործեք CMD կամ Ctrl + Down Arrow ստեղնը `օրացուցային համատեքստում նավարկելու համար. Օրացուցային օրերի միջոցով նավարկելու համար օգտագործեք սլաքների ստեղներ; Օգտագործեք CMD կամ CTRL + աջ կամ ձախ սլաքի ստեղներ `ամիսների միջոցով նավարկելու համար; Տարիներ շարունակ նավարկելու համար օգտագործեք CMD կամ CTRL + Up կամ Down Arrow ստեղներ.',
+                            htmlTex: 'Օգտագործեք "Ներքև" սլաքը թողնելու համար՝ օգտագործեք սլաքերը օրվանին նավահանելու համար։ օգտագործեք cmd կամ ctrl + աջ կամ ձախ սլաքերը ամսերի մեջ հանելու համար։ օգտագործեք cmd կամ ctrl + վերև կամ ներքև սլաքերը տասնամյա մեջ հանելու համար։',
                         },
                         id: {
-                            htmlTex: 'Untuk dapat menavigasi melalui kalender dengan kunci keyboard: Gunakan CMD atau Ctrl + Down Arrow Key untuk menavigasi ke konteks kalender; Gunakan tombol panah untuk menavigasi melalui hari kalender; Gunakan cmd atau ctrl + tombol panah kanan atau kiri untuk menavigasi selama berbulan -bulan; Gunakan CMD atau Ctrl + Kunci Panah Atas atau Bawah untuk menavigasi selama bertahun -tahun;',
+                            htmlTex: 'Gunakan tombol panah bawah untuk membuka kalender; Gunakan tombol panah untuk menavigasi melalui hari-hari kalender; Gunakan cmd atau ctrl + tombol panah kanan atau kiri untuk menavigasi melalui bulan-bulan; Gunakan cmd atau ctrl + tombol panah atas atau bawah untuk menavigasi melalui tahun-tahun;',
                         },
                         is: {
-                            htmlTex: 'Til þess að geta flett í gegnum dagatal með lyklaborðslykli: Notaðu CMD eða Ctrl + Down Arrow Key til að sigla í dagatal samhengi; Notaðu örlykla til að fletta í gegnum almanaksdaga; Notaðu CMD eða CTRL + hægri eða vinstri örvatakkana til að sigla í gegnum mánuði; Notaðu CMD eða Ctrl + upp eða niður örvatakkana til að sigla í gegnum ár;',
+                            htmlTex: 'Notaðu niður örvarna til að opna dagatalið; Notaðu örvarnar til að sigla í gegnum daga dagatalið; Notaðu cmd eða ctrl + hægri eða vinstri örvarnar til að sigla í gegnum mánaði; Notaðu cmd eða ctrl + upp eða niður örvarnar til að sigla í gegnum árin;',
                         },
                         it: {
-                            htmlTex: 'Per poter navigare tramite il calendario con la chiave di tastiera: utilizzare il tasto CMD o CTRL + Down Freccia per navigare nel contesto del calendario; Usa i tasti freccia per navigare nei giorni di calendario; Utilizzare i tasti di freccia CMD o CTRL + destra o sinistra per navigare nei mesi; Utilizzare CMD o CTRL + UP o giù tasti freccia per navigare negli anni;',
+                            htmlTex: 'Usa il tasto freccia giù per aprire il calendario; Usa le frecce per navigare attraverso i giorni del calendario; Usa cmd o ctrl + freccia destra o sinistra per navigare attraverso i mesi; Usa cmd o ctrl + freccia su o giù per navigare attraverso gli anni;',
                         },
                         ja: {
-                            htmlTex: 'キーボードキーを使用してカレンダーをナビゲートできるようにする矢印キーを使用して、暦日をナビゲートします。 CMDまたはCTRL +右矢印キーまたは左矢印キーを使用して、数か月を航行します。 CMDまたはCtrl +上または下の矢印キーを使用して、年を操作します。',
+                            htmlTex: 'カレンダーを開くには矢印キーを下に使用してください；カレンダーの日付を移動するには矢印キーを使用してください；月を移動するにはcmdまたはctrlキーと右矢印キーまたは左矢印キーを使用してください；年を移動するにはcmdまたはctrlキーと上矢印キーまたは下矢印キーを使用してください；',
                         },
                         ka: {
-                            htmlTex: 'იმისათვის, რომ შეძლოთ კალენდარი კლავიშის გასაღებით კალენდარში: გამოიყენეთ CMD ან Ctrl + Down Arrow გასაღები კალენდარული კონტექსტში გადასასვლელად; გამოიყენეთ ისრის გასაღებები კალენდარული დღეების ნავიგაციისთვის; გამოიყენეთ CMD ან CTRL + მარჯვენა ან მარცხენა ისრის გასაღებები, რომ მოხდეს ნავიგაცია თვეების განმავლობაში; გამოიყენეთ CMD ან CTRL + ზემოთ ან ქვემოთ ისრის გასაღებები, რომლითაც წლების განმავლობაში ნავიგაციაა;',
+                            htmlTex: 'გამოიყენეთ ქვევით მდგომარე ღილაკი კალენდრის გახსნისათვის; გამოიყენეთ კლავიში კალენდრის დღეებზე ნავიგაციისთვის; გამოიყენეთ cmd ან ctrl + მარჯვნაის ან მარცხნაის ღილაკები თვეების შესამოწმებლად; გამოიყენეთ cmd ან ctrl + ზემოთ ან ქვემოთ მდგარე ღილაკები წლების შესამოწმებლად;',
                         },
                         km: {
-                            htmlTex: 'ដើម្បីអាចរុករកតាមប្រតិទិនដោយប្រើគ្រាប់ចុចក្តារចុច: ប្រើ CMD ឬបញ្ជា (Ctrl) + គ្រាប់ចុចព្រួញចុះក្រោមដើម្បីរុករកទៅក្នុងបរិបទប្រតិទិន; ប្រើគ្រាប់ចុចព្រួញដើម្បីរុករកតាមថ្ងៃប្រតិទិន; ប្រើ CMD ឬបញ្ជា (Ctrl) + គ្រាប់ចុចព្រួញស្ដាំឬឆ្វេងដើម្បីរុករកពេញមួយខែ; ប្រើ CMD ឬបញ្ជា (Ctrl) + គ្រាប់ចុចព្រួញចុះក្រោមឬចុះក្រោមដើម្បីរុករកពេញមួយឆ្នាំ;',
+                            htmlTex: 'ប្រើព្រួញក្រាហ្វាសក្រាហ្វាសដើម្បីបើកប្រតិទិន; ប្រើព្រួញក្រាហ្វាសដើម្បីរុករុករបស់ថ្ងៃកូនក្នុងប្រតិទិន; ប្រើព្រួញ cmd ឬ ctrl + ព្រួញស្ដាំឬស្តាំខ្លីដើម្បីរុករុករបស់ខែ; ប្រើព្រួញ cmd ឬ ctrl + ព្រួញឡើងឬឡើងដើម្បីរុករុករបស់ឆ្នាំ;',
                         },
                         ko: {
-                            htmlTex: '키보드 키로 캘린더를 탐색 할 수 있으려면 : CMD 또는 CTRL + 다운 화살표 키를 사용하여 캘린더 컨텍스트로 탐색하십시오. 화살표 키를 사용하여 달력 일을 탐색하십시오. CMD 또는 CTRL + 오른쪽 또는 왼쪽 화살표 키를 사용하여 몇 달 동안 탐색하십시오. CMD 또는 Ctrl + Up 또는 Down Arrow 키를 사용하여 수년 동안 탐색하십시오.',
+                            htmlTex: '달력을 열려면 아래쪽 화살표 키를 사용하십시오. 달력 날짜를 탐색하려면 화살표 키를 사용하십시오. 월을 탐색하려면 cmd 또는 ctrl + 오른쪽 또는 왼쪽 화살표 키를 사용하십시오. 년도를 탐색하려면 cmd 또는 ctrl + 위쪽 또는 아래쪽 화살표 키를 사용하십시오.',
                         },
                         kz: {
-                            htmlTex: 'Пернетақта пернесімен күнтізбе арқылы шарлау алу үшін: Күнтізбе мәтінмәніне өту үшін CMD немесе CTRL + төмен көрсеткісін пайдаланыңыз; Күнтізбелік күндерде шарлау үшін көрсеткі пернелерді қолданыңыз; Айдармен шарлау үшін CMD немесе CTRL + оң немесе сол жақ көрсеткі пернелерін пайдаланыңыз; Жылдар бойына шарлау үшін CMD немесе CTRL + UP немесе төмен көрсеткілерді қолданыңыз;',
+                            htmlTex: 'Қалендарды ашу үшін жоғары жақ көрсеткінді пайдаланыңыз; Календардың күндері арасында навигациялау үшін көрсеткінді пайдаланыңыз; Айдарды навигациялау үшін cmd немесе ctrl + оң немесе сол көрсеткінді пайдаланыңыз; Жылдарды навигациялау үшін cmd немесе ctrl + жоғары немесе төмен көрсеткінді пайдаланыңыз;',
                         },
                         lt: {
-                            htmlTex: 'Norėdami naršyti po kalendorių su klaviatūros klavišu: naudokite CMD arba Ctrl + Down rodyklės klavišą, kad galėtumėte pereiti į kalendoriaus kontekstą; Naudokite rodyklės klavišus, kad galėtumėte naršyti per kalendorines dienas; Norėdami naršyti po mėnesius, naudokite CMD arba CTRL + dešinę arba kairiąją rodyklės klavišus; Norėdami naršyti po metus, naudokite CMD arba CTRL + aukštyn arba žemyn rodyklių klavišus;',
+                            htmlTex: 'Naudokite rodyklės žemyn klavišą, kad atidarytumėte kalendorių; Naudokite rodykles, kad naršytumėte kalendoriaus dienas; Naudokite cmd arba ctrl + dešinįjį arba kairįjį rodyklę, kad naršytumėte mėnesius; Naudokite cmd arba ctrl + aukštyn arba žemyn rodyklę, kad naršytumėte metus;',
                         },
                         lv: {
-                            htmlTex: 'Lai varētu pārvietoties pa kalendāru ar tastatūras atslēgu: izmantojiet CMD vai CTRL + lejupejošo bultiņas atslēgu, lai pārietu kalendāra kontekstā; Izmantojiet bulttaustiņus, lai pārvietotos kalendārajās dienās; Izmantojiet CMD vai CTRL + labās vai kreisās bultiņas taustiņus, lai pārvietotos mēnešos; Izmantojiet cmd vai ctrl + uz augšu vai uz leju bultiņu taustiņiem, lai pārvietotos pa gadiem;',
+                            htmlTex: 'Izmantojiet bultiņu uz leju taustiņu, lai atvērtu kalendāru; Izmantojiet bultiņas, lai navigētu caur kalendāra dienām; Izmantojiet cmd vai ctrl + pa labi vai pa kreisi bultiņas, lai navigētu mēnešos; Izmantojiet cmd vai ctrl + uz augšu vai uz leju bultiņas, lai navigētu gados;',
                         },
                         mk: {
-                            htmlTex: 'За да можете да се движите низ календарот со копчето за тастатура: Користете го копчето CMD или Ctrl + Down Arrow за да се движите во контекст на календарот; Користете ги копчињата со стрела за да се движите низ календарските денови; Користете CMD или CTRL + десно или лево стрела со стрелки за да се движите низ месеци; Користете CMD или CTRL + UPAR или DOWN ARROW ARROW за да се движите низ години;',
+                            htmlTex: 'Користете го копчето со стрелка надолу за да отворите календар; Користете стрелките за да навигирате низ деновите во календарот; Користете го копчето cmd или ctrl + стрелка десно или лево за да навигирате низ месеци; Користете го копчето cmd или ctrl + стрелка горе или долу за да навигирате низ годините;',
                         },
                         mn: {
-                            htmlTex: 'Гарын түлхүүрээр хуанлигаар дамжуулж явах боломжтой байхын тулд: CMD эсвэл CTTL + Down Arge Acew Aurow товчийг ашиглана уу; Календарийн өдрүүдийг дамжуулан чиглүүлэхийн тулд сумны товчлууруудыг ашиглана уу; CMD эсвэл CTD эсвэл CTRL + Баруун эсвэл зүүн сумыг ашиглан сараар дамжин өнгөрөх; CMD эсвэл CTRL + UP эсвэл AP A эсвэл DOWN ARCE товчийг ашиглан олон жилийн турш дамжин өнгөрөх;',
+                            htmlTex: 'Календарыг нээхийн тулд доошилтуур товчлуурыг ашиглана уу; Календарын өдөрүүдэд хүрэхийн тулд доошилтуур товчлуурыг ашиглана уу; Саруудад нэвтрүүлгэн тохируулахын тулд cmd эсвэл ctrl + баруун эсвэл зүүн доошилтуур товчлуурыг ашиглана уу; Жилийг нэвтрүүлгэн тохируулахын тулд cmd эсвэл ctrl + доошилтуур товчлуурыг дээш эсвэл доошилтуур ашиглана уу;',
                         },
                         ms: {
-                            htmlTex: 'Untuk dapat menavigasi kalendar dengan kunci papan kekunci: Gunakan kekunci anak panah CMD atau Ctrl + Down untuk menavigasi ke dalam konteks kalendar; Gunakan kekunci anak panah untuk menavigasi hari kalendar; Gunakan CMD atau Ctrl + kekunci anak panah kanan atau kiri untuk menavigasi melalui bulan; Gunakan kekunci anak panah CMD atau CTRL + UP atau DOWN untuk menavigasi selama bertahun -tahun;',
+                            htmlTex: 'Guna pakai ke bawah panah untuk membuka kalendar; Guna ke bawah panah untuk melayari hari-hari kalendar; Guna cmd atau ctrl + panah ke kanan atau kiri untuk melayari bulan; Guna cmd atau ctrl + panah ke atas atau bawah untuk melayari tahun;',
                         },
                         my: {
-                            htmlTex: 'ပြက္ခဒိန်ကို Keyboard Key ဖြင့်သွားလာနိုင်ရန်အတွက် CMD သို့မဟုတ် Ctrl + Down arrow ကိုသုံးပါ။ ပြက္ခဒိန်ရက်များမှတစ်ဆင့်သွားရန်မြှားသော့များကိုသုံးပါ။ လများလေသွားရန် CMD သို့မဟုတ် CTRL + လက်ဝဲသို့မဟုတ်လက်ဝဲမြှားခလုတ်များကိုသုံးပါ။ နှစ်ပေါင်းသွားရန် CMD သို့မဟုတ် Ctrl + Up သို့မဟုတ် Up arrow သော့များကိုသုံးပါ။',
+                            htmlTex: 'ကော်နာနှင့် ရွှေတိုးကို ဖွင့်ပါ။ ကိုက်ဘ်လက်များကို ရှာဖွေရန်အသုံးပြုပါ။ ကိုနှင့် ctrl သို့မဟုတ်အမြင်ကို ညာဘက်သို့မဟုတ် ညာမြက်သို့မှစားရင်းသားကို ရှာဖွေရန်အသုံးပြုပါ။',
                         },
                         nl: {
-                            htmlTex: 'Om door de agenda met toetsenbordsleutel door de kalender te kunnen navigeren: gebruik CMD of Ctrl + Down Arrow -toets om naar de context van de kalender te navigeren; Gebruik pijltoetsen om door kalenderdagen te navigeren; Gebruik CMD of Ctrl + rechter- of linker pijltoetsen om maanden door te navigeren; Gebruik CMD of Ctrl + omhoog of omlaag pijltoetsen om jaren door te navigeren;',
+                            htmlTex: 'Gebruik de pijl-omlaag-toets om de kalender te openen; Gebruik de pijltoetsen om door kalenderdagen te navigeren; Gebruik cmd of ctrl + rechter- of linkerpijltoetsen om door maanden te navigeren; Gebruik cmd of ctrl + omhoog- of omlaagpijltoetsen om door jaren te navigeren;',
                         },
                         nb: {
-                            htmlTex: 'For å kunne navigere gjennom kalender med tastaturnøkkel: Bruk CMD eller CTRL + ned piletasten for å navigere inn i kalenderkontekst; Bruk piltastene for å navigere gjennom kalenderdagene; Bruk CMD eller Ctrl + høyre eller venstre piltaster for å navigere gjennom måneder; Bruk CMD eller Ctrl + opp eller ned piltastene for å navigere gjennom år;',
+                            htmlTex: 'Bruk piltasten ned for å åpne kalenderen; Bruk piltastene for å navigere gjennom kalenderens dager; Bruk cmd eller ctrl + høyre eller venstre piltast for å navigere gjennom månedene; Bruk cmd eller ctrl + opp eller ned piltast for å navigere gjennom årene;',
                         },
                         nn: {
-                            htmlTex: 'For å kunne navigere gjennom kalender med tastaturnøkkel: Bruk CMD eller CTRL + ned piletasten for å navigere inn i kalenderkontekst; Bruk piltastene for å navigere gjennom kalenderdagene; Bruk CMD eller Ctrl + høyre eller venstre piltaster for å navigere gjennom måneder; Bruk CMD eller Ctrl + opp eller ned piltastene for å navigere gjennom år;',
+                            htmlTex: 'Bruk piltasten ned for å opne kalenderen; Bruk piltastane for å navigere gjennom kalenderdagar; Bruk cmd eller ctrl + høgre eller venstre piltast for å navigere gjennom månader; Bruk cmd eller ctrl + opp eller ned piltast for å navigere gjennom år;',
                         },
                         no: {
-                            htmlTex: 'For å kunne navigere gjennom kalender med tastaturnøkkel: Bruk CMD eller CTRL + ned piletasten for å navigere inn i kalenderkontekst; Bruk piltastene for å navigere gjennom kalenderdagene; Bruk CMD eller Ctrl + høyre eller venstre piltaster for å navigere gjennom måneder; Bruk CMD eller Ctrl + opp eller ned piltastene for å navigere gjennom år;',
+                            htmlTex: 'Bruk piltasten ned for å åpne kalenderen; Bruk piltastene for å navigere gjennom kalenderdager; Bruk cmd eller ctrl + høyre eller venstre piltast for å navigere gjennom månedene; Bruk cmd eller ctrl + opp eller ned piltast for å navigere gjennom år;',
                         },
                         pa: {
-                            htmlTex: 'ਕ੍ਰਮ ਵਿੱਚ ਕੀਬੋਰਡ ਕੁੰਜੀ ਨਾਲ ਕੈਲੰਡਰ ਤੇ ਨੈਵੀਗੇਟ ਕਰਨ ਦੇ ਯੋਗ ਹੋਣ ਲਈ: ਕੈਲੰਡਰ ਪ੍ਰਸੰਗ ਵਿੱਚ ਨੈਵੀਗੇਟ ਕਰਨ ਲਈ ਸੀ.ਐੱਮ.ਡੀ. ਜਾਂ CTRL + ਡਾਉਨ ਐਰੋ ਬਟਨ ਦੀ ਵਰਤੋਂ ਕਰੋ; ਕੈਲੰਡਰ ਦੇ ਦਿਨਾਂ ਵਿੱਚ ਨੈਵੀਗੇਟ ਕਰਨ ਲਈ ਐਰੋ ਕੁੰਜੀਆਂ ਦੀ ਵਰਤੋਂ ਕਰੋ; ਮਹੀਨਿਆਂ ਦੇ ਜ਼ਰੀਏ ਨੈਵੀਗੇਟ ਕਰਨ ਲਈ ਸੀ.ਐੱਮ.ਡੀ. ਜਾਂ Ctrl + ਸੱਜੇ ਜਾਂ ਖੱਬੀ ਐਰੋ ਦੀਆਂ ਕੁੰਜੀਆਂ ਦੀ ਵਰਤੋਂ ਕਰੋ; ਸਾਲਾਂ ਦੁਆਰਾ ਨੇਵੀਗੇਟ ਕਰਨ ਲਈ ਸੀ.ਐੱਮ.ਡੀ. ਜਾਂ Ctrl + U ਉੱਪਰ ਜਾਂ ਹੇਠਾਂ ਐਰੋ ਬਟਨ ਦੀ ਵਰਤੋਂ ਕਰੋ;',
+                            htmlTex: 'ਕੈਲੰਡਰ ਖੋਲਣ ਲਈ ਹੇਠਾਂ ਆਰੋ ਕੁੱਝ ਕਰੋ; ਕੈਲੰਡਰ ਦਿਨਾਂ ਵਿੱਚ ਸਿਰਣ ਲਈ ਆਰੋ ਕੁੱਝ ਕਰੋ; ਮਹੀਨਿਆਂ ਵਿੱਚ ਸਿਰਣ ਲਈ cmd ਜਾਂ ctrl + ਸੱਜੇ ਜਾਂ ਖੱਬੇ ਆਰੋ ਕੁੱਝ ਕਰੋ; ਸਾਲਾਂ ਵਿੱਚ ਸਿਰਣ ਲਈ cmd ਜਾਂ ctrl + ਉੱਤੇ ਜਾਂ ਹੇਠੇ ਆਰੋ ਕੁੱਝ ਕਰੋ;',
                         },
                         pl: {
-                            htmlTex: 'Aby móc poruszać się po kalendarzu z klawiszem klawiatury: Użyj CMD lub CTRL + Down Strzałka, aby nawigować do kontekstu kalendarza; Użyj klawiszy strzałek do nawigacji przez dni kalendarzowe; Użyj klawiszy CMD lub CTRL + prawej lub lewej strzałki, aby poruszać się przez miesiące; Użyj CMD lub CTRL + w górę lub w dół klawiszy strzałek, aby poruszać się przez lata;',
+                            htmlTex: 'Użyj klawisza strzałki w dół, aby otworzyć kalendarz; Użyj strzałek, aby nawigować przez dni kalendarza; Użyj klawiszy cmd lub ctrl + strzałka w prawo lub lewo, aby nawigować między miesiącami; Użyj klawiszy cmd lub ctrl + strzałka w górę lub w dół, aby nawigować między latami;',
                         },
                         pt: {
-                            htmlTex: 'Para poder navegar pelo calendário com a tecla do teclado: use a tecla de seta CMD ou CTRL + Down para navegar no contexto do calendário; Use teclas de seta para navegar pelos dias do calendário; Use as teclas de seta CMD ou CTRL + direita ou esquerda para navegar por meses; Use as teclas de seta CMD ou Ctrl + para cima ou para baixo para navegar por anos;',
+                            htmlTex: 'Use a tecla de seta para baixo para abrir o calendário; Use as teclas de seta para navegar pelos dias do calendário; Use cmd ou ctrl + seta para a direita ou esquerda para navegar pelos meses; Use cmd ou ctrl + seta para cima ou para baixo para navegar pelos anos;',
                         },
                         ro: {
-                            htmlTex: 'Pentru a putea naviga prin calendarul cu tasta tastatură: utilizați tasta CMD sau Ctrl + Down Arrow pentru a naviga în contextul calendaristic; Utilizați tastele săgeată pentru a naviga în zilele calendaristice; Utilizați tastele săgeată CMD sau Ctrl + dreapta sau stânga pentru a naviga prin luni; Utilizați tastele săgeată CMD sau Ctrl + în sus sau în jos pentru a naviga de -a lungul anilor;',
+                            htmlTex: 'Utilizați tasta săgeată în jos pentru a deschide calendarul; Utilizați tastele săgeată pentru a naviga prin zilele calendarului; Utilizați cmd sau ctrl + săgeată dreapta sau stânga pentru a naviga prin lunile calendarului; Utilizați cmd sau ctrl + săgeată sus sau jos pentru a naviga prin ani;',
                         },
                         ru: {
-                            htmlTex: 'Чтобы иметь возможность ориентироваться в календаре с клавишной клавиатурой: используйте CMD или CTRL + Down Cool для перемещения в контекст календаря; Используйте клавиши стрел, чтобы перемещаться по календарным дням; Используйте CMD или CTRL + правые или левые клавиши со стрелками, чтобы перемещаться в течение нескольких месяцев; Используйте CMD или CTRL + вверх или вниз клавиши со стрелками, чтобы перемещаться по годам;',
+                            htmlTex: 'Используйте клавишу стрелки вниз, чтобы открыть календарь; Используйте стрелки для навигации по дням календаря; Используйте клавиши cmd или ctrl + стрелка вправо или влево для навигации между месяцами; Используйте клавиши cmd или ctrl + стрелка вверх или вниз для навигации по годам;',
                         },
                         si: {
-                            htmlTex: 'යතුරුපුවරු යතුර සමඟ දින දර්ශනය හරහා සැරිසැරීමට හැකි වීම සඳහා: දින දර්ශන සන්දර්භය තුළට යාත්රා කිරීම සඳහා CMD හෝ CTRL + Down ඊතල යතුර භාවිතා කරන්න. දින දර්ශන දින හරහා සැරිසැරීමට ඊතල යතුරු භාවිතා කරන්න; මාස හරහා සැරිසැරීමට Cmd හෝ Ctrl + දකුණ හෝ වම් ඊතල යතුරු භාවිතා කරන්න; අවුරුදු ගණනාව තුළ සැරිසැරීමට CMD හෝ CTRL + ඉහළට හෝ පහළට ඊතල යතුරු භාවිතා කරන්න;',
+                            htmlTex: 'දිවය විවෘත කිරීමට දවස කිරීම සඳහා ඊරාව් මෝල භාරතීය කරන්න; දින සඳහා ඊරා කිරීම සඳහා ඊරා මෝල භාරතීය කරන්න; මාමාන සඳහා cmd හෝ ctrl + වමට හෝ දකුණු ඊරා කිරීම සඳහා; වරාය සඳහා cmd හෝ ctrl + ඉහළ හෝ අසල ඊරා කිරීම සඳහා ඊරා කිරීමට භාරතීය කරන්න;',
                         },
                         sk: {
-                            htmlTex: 'Aby ste mohli prejsť v kalendári s klávesom Keyboard: Použite navigáciu šípky CMD alebo CTRL + Down navigáciu do kontextu kalendára; Použite klávesy so šípkami na prechádzanie v kalendárnych dňoch; Na previgovanie cez mesiace použite klávesy CMD alebo CTRL + pravého alebo ľavého šípky; Na previgovanie rokov používajte navigáciu šípov CMD alebo CTRL + hore alebo dole;',
+                            htmlTex: 'Použite kláves smerom nadol na otvorenie kalendára; Použite šípky smerom hore a dole na navigáciu medzi dňami v kalendári; Použite klávesy cmd alebo ctrl + vpravo alebo vľavo na navigáciu medzi mesiacmi; Použite klávesy cmd alebo ctrl + smerom hore alebo dolu na navigáciu medzi rokmi;',
                         },
                         sl: {
-                            htmlTex: 'Da bi lahko krmarili po koledarju s tipkovnico tipkovnice: s tipko puščice CMD ali CTRL + Down za krmarjenje v koledarski kontekst; Uporabite puščice za krmarjenje po koledarskih dneh; Za krmarjenje po mesecih uporabite tipke CMD ali CTRL + desno ali levo puščico; Za krmarjenje skozi leta uporabite tipke CMD ali CTRL + UP ali Down;',
+                            htmlTex: 'Uporabite tipko s puščico dol za odpiranje koledarja; Uporabite puščične tipke za krmarjenje med dnevi v koledarju; Uporabite tipki cmd ali ctrl + desno ali levo puščico za krmarjenje med meseci; Uporabite tipki cmd ali ctrl + puščico gor ali dol za krmarjenje med leti;',
                         },
                         sq: {
-                            htmlTex: 'Në mënyrë që të jeni në gjendje të lundroni përmes kalendarit me çelësin e tastierës: Përdorni çelësin CMD ose Ctrl + Down Arrow për të lundruar në kontekstin e kalendarit; Përdorni çelësat e shigjetave për të lundruar nëpër ditë kalendarike; Përdorni çelësat e shigjetës CMD ose CTRL + të djathtë ose të majtë për të lundruar me muaj; Përdorni çelësat e shigjetës CMD ose Ctrl + Up ose Down për të lundruar me vite;',
+                            htmlTex: 'Përdorni tastierën me shigjetën poshtë për të hapur kalendarin; Përdorni tastierën me shigjetën lart dhe poshtë për të lëvizur nëpër ditët e kalendarit; Përdorni tastierën cmd ose ctrl + majtas ose djathtas për të lëvizur nëpër muajt; Përdorni tastierën cmd ose ctrl + shigjetën lart ose poshtë për të lëvizur nëpër vitet;',
                         },
                         sr: {
-                            htmlTex: 'Да бисте могли да се крећете кроз календар са кључем тастатуре: Користите ЦМД или ЦТРЛ + тастер са стрелицом до надоле да бисте се кретали у календарски контекст; Користите тастере са стрелицама да бисте се кретали кроз календарске дане; Користите ЦМД или ЦТРЛ + десно или лијево типке са стрелицом да бисте се кретали кроз месецима; Користите ЦМД или ЦТРЛ + горе или доле стрелице са стрелицама да бисте се кретали кроз године;',
+                            htmlTex: 'Koristite taster strelica nadole da biste otvorili kalendar; Koristite tasteri strelica za navigaciju kroz dane kalendara; Koristite cmd ili ctrl + strelice desno ili levo za navigaciju kroz mesece; Koristite cmd ili ctrl + strelice gore ili dole za navigaciju kroz godine;',
                         },
                         sv: {
-                            htmlTex: 'För att kunna navigera genom kalendern med tangentbordsnyckel: Använd CMD eller CTRL + Down Arrow -tangent för att navigera i kalendersammanhang; Använd pilnycklar för att navigera genom kalenderdagarna; Använd CMD eller CTRL + höger eller vänster pilnycklar för att navigera genom månader; Använd CMD eller CTRL + upp eller ned pilnycklar för att navigera genom år;',
+                            htmlTex: 'Använd piltangenten nedåt för att öppna kalendern; Använd piltangenterna för att navigera genom kalenderdagar; Använd cmd eller ctrl + höger eller vänster piltangent för att navigera genom månader; Använd cmd eller ctrl + upp eller ner piltangent för att navigera genom år;',
                         },
                         th: {
-                            htmlTex: 'เพื่อให้สามารถนำทางผ่านปฏิทินด้วยคีย์บอร์ดคีย์บอร์ด: ใช้ปุ่มลูกศร CMD หรือ CTRL + ลงเพื่อนำทางไปยังบริบทของปฏิทิน ใช้ปุ่มลูกศรเพื่อนำทางผ่านวันปฏิทิน ใช้ปุ่มลูกศร CMD หรือ CTRL + ขวาหรือซ้ายเพื่อนำทางผ่านเดือน ใช้ปุ่มลูกศร CMD หรือ CTRL + ขึ้นหรือลงเพื่อนำทางผ่านปี',
+                            htmlTex: 'ใช้ปุ่มลูกศรลงเพื่อเปิดปฏิทิน; ใช้ปุ่มลูกศรเพื่อนำทางผ่านวันที่ในปฏิทิน; ใช้ cmd หรือ ctrl + ปุ่มลูกศรขวาหรือซ้ายเพื่อนำทางผ่านเดือน; ใช้ cmd หรือ ctrl + ปุ่มลูกศรขึ้นหรือลงเพื่อนำทางผ่านปี;',
                         },
                         tr: {
-                            htmlTex: 'Klavye tuşu ile takvimde gezinebilmesi için: takvim bağlamında gezinmek için CMD veya CTRL + Down ok tuşunu kullanın; Takvim günlerinde gezinmek için ok tuşlarını kullanın; Aylar boyunca gezinmek için CMD veya CTRL + sağ veya sol ok tuşlarını kullanın; Yıllar boyunca gezinmek için CMD veya Ctrl + yukarı veya aşağı ok tuşlarını kullanın;',
+                            htmlTex: 'Takvimi açmak için aşağı ok tuşunu kullanın; Takvim günleri arasında gezinmek için ok tuşlarını kullanın; Aylar arasında gezinmek için cmd veya ctrl + sağ veya sol ok tuşlarını kullanın; Yıllar arasında gezinmek için cmd veya ctrl + yukarı veya aşağı ok tuşlarını kullanın;',
                         },
                         uk: {
-                            htmlTex: 'Для того, щоб мати змогу орієнтуватися по календару за допомогою клавіші клавіатури: Використовуйте клавішу стрілки CMD або CTRL + вниз, щоб перейти до контексту календаря; Використовуйте клавіші зі стрілками, щоб орієнтуватися на календарні дні; Використовуйте клавіші стрілки CMD або CTRL + ліва або ліва, щоб навігація через місяці; Використовуйте клавіші стрілки CMD або CTRL + вгору або вниз, щоб орієнтуватися на роки;',
+                            htmlTex: 'Використовуйте клавішу стрілка вниз, щоб відкрити календар; Використовуйте клавіші зі стрілкою, щоб переміщатися між днями календаря; Використовуйте клавіші cmd або ctrl + вправо або вліво, щоб переміщатися між місяцями; Використовуйте клавіші cmd або ctrl + стрілка вгору або вниз, щоб переміщатися між роками;',
                         },
                         uz: {
-                            htmlTex: "Klaviatura kaliti bilan taqvimga o'tish imkoniyatiga ega bo'lish uchun: CMD yoki CTRL + pastga quyish tugmachasini kalendar kontekstiga o'tish uchun foydalaning; Taqvim kunlari orqali harakat qilish uchun o'q tugmalaridan foydalaning; Bir necha oy ichida harakatlanish uchun CMD yoki CTRL + o'ng yoki chap o'q tugmachalaridan foydalaning; CMD yoki CTRL + yuqoriga yoki pastga o'qishni yillar davomida o'tish uchun foydalaning;",
+                            htmlTex: "Kalendar ochish uchun pastga yo'naltirish tugmasidan foydalaning; Kalendar kunlaridan o'tish uchun pastga va tepaga yo'naltirish tugmalari qo'llaniladi; Oy o'rtasida o'tish uchun cmd yoki ctrl + chap yoki o'ng oyoq tugmalaridan foydalaning; Yil o'rtasida o'tish uchun cmd yoki ctrl + tepaga yoki pastga yo'naltirish tugmalari qo'llaniladi;",
                         },
                         vn: {
-                            htmlTex: 'Để có thể điều hướng qua lịch bằng phím bàn phím: sử dụng phím Mũi tên CMD hoặc CTRL + để điều hướng vào ngữ cảnh lịch; Sử dụng các phím mũi tên để điều hướng qua các ngày theo lịch; Sử dụng CMD hoặc CTRL + Phím mũi tên phải hoặc trái để điều hướng qua tháng; Sử dụng các phím mũi tên CMD hoặc CTRL + lên hoặc xuống để điều hướng qua nhiều năm;',
+                            htmlTex: 'Sử dụng phím mũi tên xuống để mở lịch; Sử dụng các phím mũi tên để điều hướng qua các ngày trong lịch; Sử dụng cmd hoặc ctrl + phím mũi tên phải hoặc trái để điều hướng qua các tháng; Sử dụng cmd hoặc ctrl + phím mũi tên lên hoặc xuống để điều hướng qua các năm;',
                         },
                         zh: {
-                            htmlTex: '為了能夠使用鍵盤鍵瀏覽日曆：使用cmd或ctrl + down箭頭鍵導航到日曆上下文中；使用箭頭鍵在日曆日內導航；使用cmd或ctrl +右或左箭頭鍵在幾個月中導航；使用CMD或CTRL +向上或向下箭頭鍵在多年中導航；',
+                            htmlTex: '使用下箭头键打开日历; 使用箭头键在日历天数之间导航; 使用cmd或ctrl +右或左箭头键导航月份; 使用cmd或ctrl +上或下箭头键导航年份;',
                         },
                         zh_tw: {
-                            htmlTex: '为了能够使用键盘键浏览日历：使用cmd或ctrl + down箭头键导航到日历上下文中；使用箭头键在日历日内导航；使用cmd或ctrl +右或左箭头键在几个月中导航；使用CMD或CTRL +向上或向下箭头键在多年中导航；',
+                            htmlTex: '使用下箭頭鍵打開日曆; 使用箭頭鍵在日曆天數之間導航; 使用cmd或ctrl +右或左箭頭鍵導航月份; 使用cmd或ctrl +上或下箭頭鍵導航年份;',
                         },
                     };
                 })(l10ns = Flatpickr.l10ns || (Flatpickr.l10ns = {}));
@@ -18644,15 +18984,14 @@ var Providers;
                         }
                     }
                     _manageAttributes() {
-                        this._manageDisableStatus();
                         this.setA11YProperties();
                     }
                     _manageDisableStatus() {
                         if (this.configs.IsDisabled) {
-                            OSFramework.OSUI.Helper.Dom.Attribute.Set(this.selfElement, OSFramework.OSUI.GlobalEnum.HTMLAttributes.Disabled, '');
+                            this.provider.$ele.disable();
                         }
                         else {
-                            OSFramework.OSUI.Helper.Dom.Attribute.Remove(this.selfElement, OSFramework.OSUI.GlobalEnum.HTMLAttributes.Disabled);
+                            this.provider.$ele.enable();
                         }
                     }
                     _onMouseUp(event) {
@@ -18768,9 +19107,9 @@ var Providers;
                         OSFramework.OSUI.Helper.AsyncInvocation(this.virtualselectConfigs.close.bind(this.virtualselectConfigs));
                     }
                     disable() {
-                        if (this.configs.IsDisabled === false) {
+                        if (this.configs.IsDisabled === false && this.provider !== undefined) {
                             this.configs.IsDisabled = true;
-                            this._manageDisableStatus();
+                            this.provider.$ele.disable();
                         }
                     }
                     dispose() {
@@ -18789,9 +19128,9 @@ var Providers;
                         super.dispose();
                     }
                     enable() {
-                        if (this.configs.IsDisabled) {
+                        if (this.configs.IsDisabled && this.provider !== undefined) {
                             this.configs.IsDisabled = false;
-                            this._manageDisableStatus();
+                            this.provider.$ele.enable();
                         }
                     }
                     getSelectedValues() {
@@ -18971,6 +19310,7 @@ var Providers;
                         this._groupedOptionsList = groupedOptionsList;
                         this._providerOptions = {
                             ele: this.ElementId,
+                            disabled: this.IsDisabled,
                             dropboxWrapper: OSFramework.OSUI.GlobalEnum.HTMLElement.Body,
                             hasOptionDescription: hasDescription,
                             hideClearButton: false,
@@ -20515,11 +20855,11 @@ var Providers;
                         this._setCallbacks();
                         this._setUpEvents();
                     }
-                    _onBodyScroll() {
+                    _onScreenScroll() {
                         if (this._picker.isBuilt) {
                             if (this._picker.provider.isOpen) {
                                 this._picker.provider._positionCalendar();
-                                this._requestAnimationOnBodyScroll = requestAnimationFrame(this._onBodyScrollEvent);
+                                this._requestAnimationOnBodyScroll = requestAnimationFrame(this._onScreenScrollEvent);
                             }
                             else {
                                 cancelAnimationFrame(this._requestAnimationOnBodyScroll);
@@ -20527,21 +20867,21 @@ var Providers;
                         }
                     }
                     _setCallbacks() {
-                        this._onBodyScrollEvent = this._onBodyScroll.bind(this);
+                        this._onScreenScrollEvent = this._onScreenScroll.bind(this);
                     }
                     _setUpEvents() {
-                        OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSFramework.OSUI.Event.DOMEvents.Listeners.Type.BodyOnScroll, this._onBodyScrollEvent);
+                        OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSFramework.OSUI.Event.DOMEvents.Listeners.Type.ScreenOnScroll, this._onScreenScrollEvent);
                     }
                     _unsetCallbacks() {
-                        this._onBodyScrollEvent = undefined;
+                        this._onScreenScrollEvent = undefined;
                     }
                     _unsetEvents() {
-                        OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSFramework.OSUI.Event.DOMEvents.Listeners.Type.BodyOnScroll, this._onBodyScrollEvent);
+                        OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSFramework.OSUI.Event.DOMEvents.Listeners.Type.ScreenOnScroll, this._onScreenScrollEvent);
                     }
                     dispose() {
                         this._unsetEvents();
                         this._unsetCallbacks();
-                        this._onBodyScrollEvent = undefined;
+                        this._onScreenScrollEvent = undefined;
                         this._requestAnimationOnBodyScroll = undefined;
                     }
                 }

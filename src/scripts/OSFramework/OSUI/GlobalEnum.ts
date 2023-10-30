@@ -23,6 +23,7 @@ namespace OSFramework.OSUI.GlobalEnum {
 		HeaderIsFixed = 'fixed-header',
 		HeaderIsVisible = 'header-is--visible',
 		HeaderTopContent = 'header-top-content',
+		InputNotValid = 'not-valid',
 		IsTouch = 'is--touch',
 		Layout = 'layout',
 		LayoutNative = 'layout-native',
@@ -33,7 +34,7 @@ namespace OSFramework.OSUI.GlobalEnum {
 		MainContent = 'main-content',
 		MenuLinks = 'app-menu-links',
 		Placeholder = 'ph',
-		InputNotValid = 'not-valid',
+		SkipContent = 'skip-nav',
 	}
 
 	/**
@@ -79,8 +80,8 @@ namespace OSFramework.OSUI.GlobalEnum {
 	export enum FloatingPosition {
 		Auto = 'auto',
 		Bottom = 'bottom',
-		BottomStart = 'bottom-start',
 		BottomEnd = 'bottom-end',
+		BottomStart = 'bottom-start',
 		Center = 'center',
 		Left = 'left',
 		LeftEnd = 'left-end',
@@ -89,8 +90,8 @@ namespace OSFramework.OSUI.GlobalEnum {
 		RightEnd = 'right-end',
 		RightStart = 'right-start',
 		Top = 'top',
-		TopStart = 'top-start',
 		TopEnd = 'top-end',
+		TopStart = 'top-start',
 	}
 
 	/**
@@ -164,6 +165,7 @@ namespace OSFramework.OSUI.GlobalEnum {
 		Class = 'class',
 		DataInput = 'data-input',
 		Disabled = 'disabled',
+		Href = 'href',
 		Id = 'id',
 		Name = 'name',
 		StatusBar = 'data-status-bar-height',
@@ -181,6 +183,7 @@ namespace OSFramework.OSUI.GlobalEnum {
 		FieldSet = 'fieldset',
 		Input = 'input',
 		Link = 'a',
+		Radio = 'radio',
 		Span = 'span',
 	}
 
@@ -250,8 +253,10 @@ namespace OSFramework.OSUI.GlobalEnum {
 		ArrowLeft = 'ArrowLeft',
 		ArrowRight = 'ArrowRight',
 		ArrowUp = 'ArrowUp',
+		End = 'End',
 		Enter = 'Enter',
 		Escape = 'Escape',
+		Home = 'Home',
 		Shift = 'Shift',
 		ShiftTab = 'ShiftTab', // Do not exist as a keyboard key, but used to manage this behaviour
 		Space = ' ',
@@ -321,8 +326,8 @@ namespace OSFramework.OSUI.GlobalEnum {
 		Submenu = 'Submenu',
 		SwipeEvents = 'SwipeEvents',
 		Tabs = 'Tabs',
-		TabsHeaderItem = 'TabsHeaderItem',
 		TabsContentItem = 'TabsContentItem',
+		TabsHeaderItem = 'TabsHeaderItem',
 		Timepicker = 'Timepicker',
 		Tooltip = 'Tooltip',
 		TouchEvents = 'TouchEvents',
