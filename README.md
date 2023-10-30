@@ -8,7 +8,7 @@ Create modern experiences with fully customizable responsive Screen Templates an
 
 | `One Framework`                                                              | `Fully Integrated`                                                             | `Responsive by Default`                                                           | `Limitless Possibilities`                                                         |
 | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------ | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
-| Create seamless experiences for Reactive Web and Native Mobile Applications. | Drag and drop UI Patterns and Screen Templates from OutSystems Service Studio. | Ready to use Layouts and UI Patterns that automatically adapt to the device size. | Extend the styles of over 70 UI Patterns and Screen Templates to make them yours. |
+| Create seamless experiences for Reactive Web and Native Mobile Applications. | Drag and drop UI Patterns and Screen Templates from OutSystems Service Studio. | Ready-to-use Layouts and UI Patterns that automatically adapt to the device size. | Extend the styles of over 70 UI Patterns and Screen Templates to make them yours. |
 
 ### Key features
 
@@ -59,7 +59,7 @@ We highly recommend the usage of the following tools:
 <ol>
   <li>Do a Repository <strong>Fork</strong></li>
   <li>Create a branch based in the branch <strong>master</strong> (latest & greatest release) - branch master is <strong>dev</strong></li>
-  <li>Open your banch Code in Visual Studio Code</li>
+  <li>Open your branch Code in Visual Studio Code</li>
   <li>Run the following command in Visual Studio Code terminal: <code>npm run setup</code> (this will install all the dependencies that you need to compile the code)</li>
   <li>Do your magic! 😎</li>
   <li><strong>Document your code</strong> (with the extension "Document This", start typing <code>/**</code> and the extension will give you a good starting point</li>
@@ -68,12 +68,12 @@ We highly recommend the usage of the following tools:
     Check if the code format is following our conventions (in Visual Studio Code terminal: <code>npm run lint</code>)
     <ol>
       <li>Some of the conventions can be fixed automatically by lint (in Visual Studio Code terminal: <code>npm run lintfix</code>)</li>
-      <li>Although the script above execute the prettier conventions, you may want to run it over all project files (in Visual Studio Code terminal: <code>npm run prettier</code>)</li>
+      <li>Although the script above executes the prettier conventions, you may want to run it over all project files (in Visual Studio Code terminal: <code>npm run prettier</code>)</li>
     </ol>
   </li>
   <li>Fix all errors & warnings! ✅</li>
   <li>Kept the branch updated with the master branch and also synchronized with the upstream <strong>master</strong></li>
-  <li>Create a PR, describing what was the (mis)behavior, what you changed and please provide a sample </li>
+  <li>Create a PR, describing what was the (mis)behavior, and what you changed and please provide a sample </li>
 </ol>
 
 ### How to do a Pull Request?
@@ -103,9 +103,10 @@ To be accepted, a Pull Request needs to:
 
 ## Useful Links
 
--   Download latest version in [OutSystems forge](https://www.outsystems.com/forge/component-versions/1385)
+-   Download the latest version in [OutSystems forge](https://www.outsystems.com/forge/component-versions/1385)
 -   Check the [online documentation](https://outsystemsui.outsystems.com/outsystemsuiwebsite/)
+-   [NPM Package](https://www.npmjs.com/package/outsystems-ui)
 
 ## 📫&nbsp; Have a question? Want to chat? Ran into a problem?
 
-Write us in [the component support page](https://www.outsystems.com/forge/component-discussions/1385/OutSystems+UI)!
+Write us on [the component support page](https://www.outsystems.com/forge/component-discussions/1385/OutSystems+UI)!
