@@ -11,7 +11,7 @@ namespace OutSystems.OSUI.Utils {
 			callback: () => {
 				const existingFavicon = OSFramework.OSUI.Helper.Dom.TagSelector(
 					document.head,
-					"link[rel*='icon']"
+					"link[rel='shortcut icon']"
 				) as HTMLLinkElement;
 
 				if (existingFavicon) {
