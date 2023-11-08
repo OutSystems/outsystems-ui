@@ -57,6 +57,7 @@ declare namespace OSFramework.OSUI.Constants {
             True: string;
         };
     };
+    const AllowPropagationAttr = "[data-allow-event-propagation]";
     const Dot = ".";
     const Comma = ",";
     const EnableLogMessages = false;
@@ -3591,7 +3592,6 @@ declare namespace OSFramework.OSUI.Patterns.Tooltip {
         private _eventIconOnMouseLeave;
         private _eventOnBalloonClick;
         private _eventOnBlur;
-        private _eventOnBodyClick;
         private _eventOnClick;
         private _eventOnFocus;
         private _eventOnKeypress;
@@ -3604,6 +3604,7 @@ declare namespace OSFramework.OSUI.Patterns.Tooltip {
         private _isIconMouseEnter;
         private _isOpen;
         private _isOpenedByApi;
+        private _isSafari;
         private _platformEventOnToggleCallback;
         private _requestAnimationOnBodyScroll;
         private _requestAnimationOnWindowResize;
@@ -3619,7 +3620,6 @@ declare namespace OSFramework.OSUI.Patterns.Tooltip {
         private _onBalloonWrapperMouseEnter;
         private _onBalloonWrapperMouseLeave;
         private _onBlur;
-        private _onBodyClick;
         private _onClick;
         private _onFocus;
         private _onIconMouseEnter;

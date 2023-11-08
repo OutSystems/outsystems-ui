@@ -166,16 +166,17 @@ namespace OutSystems.OSUI.Utils.DeviceDetection {
 			];
 
 			let device;
-			if (windowWidth < phoneMax || (isLandscape === false && windowHeight < phoneMax)) {
+
+			// To set the device using the window dimensions, we just need to look into the largest dimension
+			const windowSize = isLandscape ? windowWidth : windowHeight;
+
+			if (windowSize <= phoneMax) {
 				//Is phone!
 				device = 0;
-			} else if (
-				(windowWidth >= phoneMax && windowWidth <= tabletMax) ||
-				(windowHeight >= phoneMax && windowHeight <= tabletMax && isLandscape)
-			) {
+			} else if (windowSize <= tabletMax) {
 				//Is Tablet!
 				device = 1;
-			} else if (windowWidth > tabletMax || (windowHeight > tabletMax && isLandscape)) {
+			} else {
 				//Is Desktop!
 				device = 2;
 			}
