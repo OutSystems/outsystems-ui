@@ -16110,7 +16110,6 @@ var OutSystems;
                         const orient = windowWidth > windowHeight
                             ? OSFramework.OSUI.GlobalEnum.DeviceOrientation.landscape
                             : OSFramework.OSUI.GlobalEnum.DeviceOrientation.portrait;
-                        const isLandscape = orient === OSFramework.OSUI.GlobalEnum.DeviceOrientation.landscape;
                         const userValues = {
                             phone: phoneWidth,
                             tablet: tabletWidth,
@@ -16123,11 +16122,10 @@ var OutSystems;
                             OSFramework.OSUI.GlobalEnum.DeviceType.desktop,
                         ];
                         let device;
-                        const windowSize = isLandscape ? windowWidth : windowHeight;
-                        if (windowSize <= phoneMax) {
+                        if (windowWidth <= phoneMax) {
                             device = 0;
                         }
-                        else if (windowSize <= tabletMax) {
+                        else if (windowWidth <= tabletMax) {
                             device = 1;
                         }
                         else {
