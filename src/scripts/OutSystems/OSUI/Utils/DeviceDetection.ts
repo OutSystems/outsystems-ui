@@ -149,7 +149,6 @@ namespace OutSystems.OSUI.Utils.DeviceDetection {
 				windowWidth > windowHeight
 					? OSFramework.OSUI.GlobalEnum.DeviceOrientation.landscape
 					: OSFramework.OSUI.GlobalEnum.DeviceOrientation.portrait;
-			const isLandscape = orient === OSFramework.OSUI.GlobalEnum.DeviceOrientation.landscape;
 
 			const userValues = {
 				phone: phoneWidth,
@@ -167,13 +166,10 @@ namespace OutSystems.OSUI.Utils.DeviceDetection {
 
 			let device;
 
-			// To set the device using the window dimensions, we just need to look into the largest dimension
-			const windowSize = isLandscape ? windowWidth : windowHeight;
-
-			if (windowSize <= phoneMax) {
+			if (windowWidth <= phoneMax) {
 				//Is phone!
 				device = 0;
-			} else if (windowSize <= tabletMax) {
+			} else if (windowWidth <= tabletMax) {
 				//Is Tablet!
 				device = 1;
 			} else {
