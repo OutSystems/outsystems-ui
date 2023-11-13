@@ -10200,10 +10200,22 @@ var OSFramework;
                         return newTabIndex;
                     }
                     _handleKeypressEvent(e) {
-                        let targetHeaderItemIndex;
-                        if (e.target !== this._activeTabHeaderElement.selfElement) {
-                            return;
+                        if (e.target === this._activeTabHeaderElement.selfElement) {
+                            this._handleKeypressEventOnTabHeader(e);
                         }
+                        else if (e.target === this._activeTabContentElement.selfElement) {
+                            this._handleKeypressEventOnTabContent(e);
+                        }
+                    }
+                    _handleKeypressEventOnTabContent(e) {
+                        if (e.shiftKey === true && e.key === OSUI.GlobalEnum.Keycodes.Tab) {
+                            e.preventDefault();
+                            const tabHeaderItem = this.getChildByIndex(this.configs.StartingTab, Tabs_1.Enum.ChildTypes.TabsHeaderItem);
+                            tabHeaderItem.selfElement.focus();
+                        }
+                    }
+                    _handleKeypressEventOnTabHeader(e) {
+                        let targetHeaderItemIndex;
                         switch (e.key) {
                             case OSUI.GlobalEnum.Keycodes.ArrowRight:
                                 targetHeaderItemIndex = this.configs.StartingTab + 1;
@@ -10226,6 +10238,10 @@ var OSFramework;
                             case OSUI.GlobalEnum.Keycodes.Home:
                                 targetHeaderItemIndex = 0;
                                 this.changeTab(targetHeaderItemIndex, undefined, true);
+                                break;
+                            case OSUI.GlobalEnum.Keycodes.Tab:
+                                e.preventDefault();
+                                this.getChildByIndex(this.configs.StartingTab, Tabs_1.Enum.ChildTypes.TabsContentItem).selfElement.focus();
                                 break;
                         }
                         const targetHeaderItem = this.getChildByIndex(targetHeaderItemIndex, Tabs_1.Enum.ChildTypes.TabsHeaderItem);
