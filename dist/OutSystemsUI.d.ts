@@ -63,7 +63,7 @@ declare namespace OSFramework.OSUI.Constants {
     const EnableLogMessages = false;
     const EmptyString = "";
     const FocusTrapIgnoreAttr = "ignore-focus-trap";
-    const FocusableElems = "a[href]:not([disabled]),[tabindex=\"0\"], button:not([disabled]), textarea:not([disabled]), input[type=\"text\"]:not([disabled]), input[type=\"radio\"]:not([disabled]), input[type=\"checkbox\"]:not([disabled]),input[type=\"submit\"]:not([disabled]), select:not([disabled])";
+    const FocusableElems = "a[href]:not([disabled]),[tabindex=\"0\"], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled])";
     const JavaScriptTypes: {
         Undefined: string;
         Boolean: string;

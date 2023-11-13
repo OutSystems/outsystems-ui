@@ -74,7 +74,7 @@ namespace OSFramework.OSUI.Constants {
 
 	/* Store focusable elements when doing a focus trap inside an element*/
 	export const FocusableElems =
-		'a[href]:not([disabled]),[tabindex="0"], button:not([disabled]), textarea:not([disabled]), input[type="text"]:not([disabled]), input[type="radio"]:not([disabled]), input[type="checkbox"]:not([disabled]),input[type="submit"]:not([disabled]), select:not([disabled])';
+		'a[href]:not([disabled]),[tabindex="0"], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled])';
 
 	/* Store JavaScript types*/
 	export const JavaScriptTypes = {
