@@ -248,27 +248,11 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 		 * @memberof Tabs
 		 */
 		private _handleKeypressEvent(e: KeyboardEvent): void {
-			// Check if target is the header, to do not change tab on x arrow press
-			if (e.target === this._activeTabHeaderElement.selfElement) {
-				this._handleKeypressEventOnTabHeader(e);
-			} else if (e.target === this._activeTabContentElement.selfElement) {
-				this._handleKeypressEventOnTabContent(e);
-			}
-		}
-
-		private _handleKeypressEventOnTabContent(e: KeyboardEvent) {
-			if (e.shiftKey === true && e.key === GlobalEnum.Keycodes.Tab) {
-				e.preventDefault();
-				const tabHeaderItem = this.getChildByIndex(
-					this.configs.StartingTab,
-					Enum.ChildTypes.TabsHeaderItem
-				) as TabsHeaderItem.ITabsHeaderItem;
-				tabHeaderItem.selfElement.focus();
-			}
-		}
-
-		private _handleKeypressEventOnTabHeader(e: KeyboardEvent) {
 			let targetHeaderItemIndex;
+			// Check if target is the header, to do not change tab on x arrow press
+			if (e.target !== this._activeTabHeaderElement.selfElement) {
+				return;
+			}
 
 			switch (e.key) {
 				case GlobalEnum.Keycodes.ArrowRight:
@@ -305,10 +289,6 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 
 					this.changeTab(targetHeaderItemIndex, undefined, true);
 
-					break;
-				case GlobalEnum.Keycodes.Tab:
-					e.preventDefault();
-					this.getChildByIndex(this.configs.StartingTab, Enum.ChildTypes.TabsContentItem).selfElement.focus();
 					break;
 			}
 
