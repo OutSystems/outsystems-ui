@@ -1,6 +1,6 @@
 @charset "UTF-8";
 /*!
-OutSystems UI 2.18.0
+OutSystems UI 2.18.1
 Website:
  • https://www.outsystems.com/outsystems-ui
 GitHub:
@@ -8508,10 +8508,10 @@ span.flatpickr-weekday{
   color:var(--color-neutral-6);
   pointer-events:none;
 }
-.osui-datepicker input.flatpickr-input:first-of-type{
+.osui-datepicker input:first-of-type{
   display:none;
 }
-.osui-datepicker input.flatpickr-input:first-of-type{
+.osui-datepicker input:first-of-type{
   -servicestudio-display:inline-flex !important;
 }
 .osui-datepicker-calendar-ss-preview{
@@ -9599,10 +9599,10 @@ body.vscomp-popup-active .vscomp-wrapper{
   color:var(--color-neutral-6);
   pointer-events:none;
 }
-.osui-monthpicker input.flatpickr-input:first-of-type{
+.osui-monthpicker input:first-of-type{
   display:none;
 }
-.osui-monthpicker input.flatpickr-input:first-of-type{
+.osui-monthpicker input:first-of-type{
   -servicestudio-display:inline-flex !important;
 }
 .form .osui-monthpicker-ss-preview{
@@ -10465,10 +10465,10 @@ body.vscomp-popup-active .vscomp-wrapper{
   color:var(--color-neutral-6);
   pointer-events:none;
 }
-.osui-timepicker input.flatpickr-input:first-of-type{
+.osui-timepicker input[type=time]:first-of-type{
   display:none;
 }
-.osui-timepicker input.flatpickr-input:first-of-type{
+.osui-timepicker input[type=time]:first-of-type{
   -servicestudio-display:inline-flex !important;
 }
 .osui-timepicker__dropdown-ss-preview{

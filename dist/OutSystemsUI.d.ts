@@ -57,12 +57,13 @@ declare namespace OSFramework.OSUI.Constants {
             True: string;
         };
     };
+    const AllowPropagationAttr = "[data-allow-event-propagation]";
     const Dot = ".";
     const Comma = ",";
     const EnableLogMessages = false;
     const EmptyString = "";
     const FocusTrapIgnoreAttr = "ignore-focus-trap";
-    const FocusableElems = "a[href]:not([disabled]),[tabindex=\"0\"], button:not([disabled]), textarea:not([disabled]), input[type=\"text\"]:not([disabled]), input[type=\"radio\"]:not([disabled]), input[type=\"checkbox\"]:not([disabled]),input[type=\"submit\"]:not([disabled]), select:not([disabled])";
+    const FocusableElems = "a[href]:not([disabled]),[tabindex=\"0\"], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled])";
     const JavaScriptTypes: {
         Undefined: string;
         Boolean: string;
@@ -83,7 +84,7 @@ declare namespace OSFramework.OSUI.Constants {
     const AccessibilityHideElementClass = "wcag-hide-text";
     const IsRTLClass = "is-rtl";
     const NoTransition = "no-transition";
-    const OSUIVersion = "2.18.0";
+    const OSUIVersion = "2.18.1";
     const ZeroValue = 0;
 }
 declare namespace OSFramework.OSUI.ErrorCodes {
@@ -3591,7 +3592,6 @@ declare namespace OSFramework.OSUI.Patterns.Tooltip {
         private _eventIconOnMouseLeave;
         private _eventOnBalloonClick;
         private _eventOnBlur;
-        private _eventOnBodyClick;
         private _eventOnClick;
         private _eventOnFocus;
         private _eventOnKeypress;
@@ -3604,6 +3604,7 @@ declare namespace OSFramework.OSUI.Patterns.Tooltip {
         private _isIconMouseEnter;
         private _isOpen;
         private _isOpenedByApi;
+        private _isSafari;
         private _platformEventOnToggleCallback;
         private _requestAnimationOnBodyScroll;
         private _requestAnimationOnWindowResize;
@@ -3619,7 +3620,6 @@ declare namespace OSFramework.OSUI.Patterns.Tooltip {
         private _onBalloonWrapperMouseEnter;
         private _onBalloonWrapperMouseLeave;
         private _onBlur;
-        private _onBodyClick;
         private _onClick;
         private _onFocus;
         private _onIconMouseEnter;

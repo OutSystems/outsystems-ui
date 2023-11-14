@@ -149,7 +149,6 @@ namespace OutSystems.OSUI.Utils.DeviceDetection {
 				windowWidth > windowHeight
 					? OSFramework.OSUI.GlobalEnum.DeviceOrientation.landscape
 					: OSFramework.OSUI.GlobalEnum.DeviceOrientation.portrait;
-			const isLandscape = orient === OSFramework.OSUI.GlobalEnum.DeviceOrientation.landscape;
 
 			const userValues = {
 				phone: phoneWidth,
@@ -166,16 +165,14 @@ namespace OutSystems.OSUI.Utils.DeviceDetection {
 			];
 
 			let device;
-			if (windowWidth < phoneMax || (isLandscape === false && windowHeight < phoneMax)) {
+
+			if (windowWidth <= phoneMax) {
 				//Is phone!
 				device = 0;
-			} else if (
-				(windowWidth >= phoneMax && windowWidth <= tabletMax) ||
-				(windowHeight >= phoneMax && windowHeight <= tabletMax && isLandscape)
-			) {
+			} else if (windowWidth <= tabletMax) {
 				//Is Tablet!
 				device = 1;
-			} else if (windowWidth > tabletMax || (windowHeight > tabletMax && isLandscape)) {
+			} else {
 				//Is Desktop!
 				device = 2;
 			}
