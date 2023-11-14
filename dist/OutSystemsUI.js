@@ -105,7 +105,7 @@ var OSFramework;
             Constants.EnableLogMessages = false;
             Constants.EmptyString = '';
             Constants.FocusTrapIgnoreAttr = 'ignore-focus-trap';
-            Constants.FocusableElems = 'a[href]:not([disabled]),[tabindex="0"], button:not([disabled]), textarea:not([disabled]), input[type="text"]:not([disabled]), input[type="radio"]:not([disabled]), input[type="checkbox"]:not([disabled]),input[type="submit"]:not([disabled]), select:not([disabled])';
+            Constants.FocusableElems = 'a[href]:not([disabled]),[tabindex="0"], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled])';
             Constants.JavaScriptTypes = {
                 Undefined: 'undefined',
                 Boolean: 'boolean',
