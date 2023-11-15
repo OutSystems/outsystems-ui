@@ -62,6 +62,11 @@ namespace OSFramework.OSUI.Patterns.TabsHeaderItem {
 			// Static attribute to be added when the item is created
 			if (isUpdate === false) {
 				Helper.A11Y.RoleTab(this.selfElement);
+
+				// Workaround for VoiceOver support
+				if(Helper.DeviceInfo.IsIos || Helper.DeviceInfo.GetOperatingSystem() === GlobalEnum.MobileOS.MacOS) {
+					Helper.A11Y.RolePresentation(this.selfElement.parentElement);
+				}
 			}
 
 			// Dynamic values that need to be changed when toggling the active state
