@@ -4,10 +4,15 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 	 * Defines the interface for OutSystemsUI Patterns
 	 */
 	export class Submenu extends AbstractPattern<SubmenuConfig> implements ISubmenu {
+		private _eventBalloonKeypress: GlobalCallbacks.Generic;
 		private _eventClick: GlobalCallbacks.Generic;
 		private _eventKeypress: GlobalCallbacks.Generic;
 		private _eventOnMouseEnter: GlobalCallbacks.Generic;
 		private _eventOnMouseLeave: GlobalCallbacks.Generic;
+		// Store focus manager instance
+		private _focusManagerInstance: Behaviors.FocusManager;
+		// Store focus trap instance
+		private _focusTrapInstance: Behaviors.FocusTrap;
 		private _globalEventBody: GlobalCallbacks.Generic;
 		private _hasActiveLinks = false;
 		private _hasElements = false;
@@ -50,6 +55,34 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 			this._toggleSubmenu();
 		}
 
+		// Method to add Focus Trap to Pattern
+		private _handleFocusBehavior(): void {
+			const opts = {
+				focusTargetElement: this._submenuLinksElement,
+			} as Behaviors.FocusTrapParams;
+
+			this._focusTrapInstance = new Behaviors.FocusTrap(opts);
+
+			this._focusManagerInstance = new Behaviors.FocusManager();
+
+			// Disable tabIndex to the inner focusable elements if its start closed!
+			if (this._isOpen === false) {
+				// Will handle the tabindex value of the elements inside pattern
+				Helper.A11Y.SetElementsTabIndex(false, this._focusTrapInstance.focusableElements);
+			}
+		}
+
+		// Call methods to close, based ok e.key
+		private _keypressBalloonCallback(e: KeyboardEvent): void {
+			// Close the submenu when pressing Esc
+			if (e.key === GlobalEnum.Keycodes.Escape && this._isOpen) {
+				this.close();
+
+				this._submenuHeaderElement.focus();
+			}
+
+		}
+
 		// Call methods to open or close, based ok e.key and behavior applied
 		private _keypressCallback(e: KeyboardEvent): void {
 			const _clickedElem: HTMLElement = e.target as HTMLElement;
@@ -58,6 +91,17 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 			const _isEnterPressed = e.key === GlobalEnum.Keycodes.Enter;
 			const _isTabPressed = e.key === GlobalEnum.Keycodes.Tab;
 			const _isShiftPressed = e.shiftKey;
+			const _isArrowUp = e.key === GlobalEnum.Keycodes.ArrowUp;
+			const _isArrowDown = e.key === GlobalEnum.Keycodes.ArrowDown;
+			const _targetAfterArrow = _isArrowUp ? this._focusTrapInstance.focusableElements.length - 1 : 0;
+
+			// Open and select first or last item
+			if(_isArrowDown || _isArrowUp) {
+				this.open();
+				Helper.AsyncInvocation(()=>{
+					this._focusTrapInstance.focusableElements[_targetAfterArrow].focus();
+				});
+			}
 
 			// Open the submenu
 			if (_isEnterPressed) {
@@ -166,7 +210,13 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 
 			// Update the tabindex of each link
 			this._submenuAllLinksElement.forEach((item: HTMLElement) => {
-				this._isOpen ? Helper.A11Y.TabIndexTrue(item) : Helper.A11Y.TabIndexFalse(item);
+				if(this._isOpen) {
+					Helper.A11Y.TabIndexTrue(item);
+					Helper.A11Y.AriaHiddenFalse(item);
+				} else {
+					Helper.A11Y.TabIndexFalse(item);
+					Helper.A11Y.AriaHiddenTrue(item);
+				}
 			});
 		}
 
@@ -202,6 +252,7 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 			// Define the callbacks that will be used
 			this._eventClick = this._clickCallback.bind(this);
 			this._globalEventBody = this._bodyClickCallback.bind(this);
+			this._eventBalloonKeypress = this._keypressBalloonCallback.bind(this);
 			this._eventKeypress = this._keypressCallback.bind(this);
 			this._eventOnMouseEnter = this._onMouseEnterCallback.bind(this);
 			this._eventOnMouseLeave = this._onMouseLeaveCallback.bind(this);
@@ -271,6 +322,7 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 		protected unsetCallbacks(): void {
 			// Reassign the elements to undefined, preventing memory leaks
 			this._eventClick = undefined;
+			this._eventBalloonKeypress = undefined;
 			this._eventKeypress = undefined;
 			this._globalEventBody = undefined;
 			this._eventOnMouseEnter = undefined;
@@ -302,6 +354,8 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 			this.setHtmlElements();
 
 			this.setInitialStates();
+
+			this._handleFocusBehavior();
 
 			this.setA11YProperties();
 
@@ -340,6 +394,9 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 		 */
 		public close(): void {
 			if (this._isOpen) {
+				// Remove the A11Y states to focus trap
+				this._focusTrapInstance.disableForA11y();
+
 				if (this.hasClickOutsideToClose) {
 					// Remove handler from Event Manager
 					Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
@@ -353,6 +410,10 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 				this._isOpen = false;
 
 				this._updateA11yProperties();
+
+				this._focusManagerInstance.setFocusToStoredElement();
+
+				this._submenuLinksElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventBalloonKeypress.bind(this));
 
 				// Trigger the _platformEventOnToggleCallback callback!
 				this.triggerPlatformEventCallback(this._platformEventOnToggleCallback, false);
@@ -382,6 +443,11 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 		 * @memberof OSFramework.Patterns.Submenu.Submenu
 		 */
 		public open(): void {
+			// Add the A11Y states to focus trap
+			this._focusTrapInstance.enableForA11y();
+
+			this._focusManagerInstance.storeLastFocusedElement();
+
 			if (this.hasClickOutsideToClose) {
 				// Add the body click handler to event manager
 				Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
@@ -389,6 +455,8 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 					this._globalEventBody
 				);
 			}
+
+			this._submenuLinksElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventBalloonKeypress.bind(this));
 
 			// Make async the method call
 			Helper.AsyncInvocation(this._show.bind(this));

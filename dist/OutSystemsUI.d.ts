@@ -10,6 +10,7 @@ declare namespace OSFramework.OSUI.Constants {
     const A11YAttributes: {
         Aria: {
             Atomic: string;
+            Busy: string;
             Controls: string;
             Describedby: string;
             Disabled: string;
@@ -31,12 +32,14 @@ declare namespace OSFramework.OSUI.Constants {
         };
         Role: {
             Alert: string;
+            AlertDialog: string;
             AttrName: string;
             Button: string;
             Complementary: string;
             Listbox: string;
             MenuItem: string;
             Option: string;
+            Presentation: string;
             Progressbar: string;
             Region: string;
             Search: string;
@@ -80,7 +83,7 @@ declare namespace OSFramework.OSUI.Constants {
     const AccessibilityHideElementClass = "wcag-hide-text";
     const IsRTLClass = "is-rtl";
     const NoTransition = "no-transition";
-    const OSUIVersion = "2.17.0";
+    const OSUIVersion = "2.18.0";
     const ZeroValue = 0;
 }
 declare namespace OSFramework.OSUI.ErrorCodes {
@@ -178,6 +181,7 @@ declare namespace OSFramework.OSUI.GlobalEnum {
         HeaderIsFixed = "fixed-header",
         HeaderIsVisible = "header-is--visible",
         HeaderTopContent = "header-top-content",
+        InputNotValid = "not-valid",
         IsTouch = "is--touch",
         Layout = "layout",
         LayoutNative = "layout-native",
@@ -188,7 +192,7 @@ declare namespace OSFramework.OSUI.GlobalEnum {
         MainContent = "main-content",
         MenuLinks = "app-menu-links",
         Placeholder = "ph",
-        InputNotValid = "not-valid"
+        SkipContent = "skip-nav"
     }
     enum CSSSelectors {
         InputFormControl = "input.form-control",
@@ -220,8 +224,8 @@ declare namespace OSFramework.OSUI.GlobalEnum {
     enum FloatingPosition {
         Auto = "auto",
         Bottom = "bottom",
-        BottomStart = "bottom-start",
         BottomEnd = "bottom-end",
+        BottomStart = "bottom-start",
         Center = "center",
         Left = "left",
         LeftEnd = "left-end",
@@ -230,8 +234,8 @@ declare namespace OSFramework.OSUI.GlobalEnum {
         RightEnd = "right-end",
         RightStart = "right-start",
         Top = "top",
-        TopStart = "top-start",
-        TopEnd = "top-end"
+        TopEnd = "top-end",
+        TopStart = "top-start"
     }
     enum CssProperties {
         Auto = "auto",
@@ -281,6 +285,7 @@ declare namespace OSFramework.OSUI.GlobalEnum {
         Class = "class",
         DataInput = "data-input",
         Disabled = "disabled",
+        Href = "href",
         Id = "id",
         Name = "name",
         StatusBar = "data-status-bar-height",
@@ -294,6 +299,7 @@ declare namespace OSFramework.OSUI.GlobalEnum {
         FieldSet = "fieldset",
         Input = "input",
         Link = "a",
+        Radio = "radio",
         Span = "span"
     }
     enum HTMLEvent {
@@ -343,8 +349,10 @@ declare namespace OSFramework.OSUI.GlobalEnum {
         ArrowLeft = "ArrowLeft",
         ArrowRight = "ArrowRight",
         ArrowUp = "ArrowUp",
+        End = "End",
         Enter = "Enter",
         Escape = "Escape",
+        Home = "Home",
         Shift = "Shift",
         ShiftTab = "ShiftTab",
         Space = " ",
@@ -397,8 +405,8 @@ declare namespace OSFramework.OSUI.GlobalEnum {
         Submenu = "Submenu",
         SwipeEvents = "SwipeEvents",
         Tabs = "Tabs",
-        TabsHeaderItem = "TabsHeaderItem",
         TabsContentItem = "TabsContentItem",
+        TabsHeaderItem = "TabsHeaderItem",
         Timepicker = "Timepicker",
         Tooltip = "Tooltip",
         TouchEvents = "TouchEvents",
@@ -641,12 +649,6 @@ declare namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
     }
 }
 declare namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
-    class BodyOnScroll extends AbstractListener<string> {
-        constructor();
-        private _bodyTrigger;
-    }
-}
-declare namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
     interface IListener extends IEvent<unknown> {
         disableBodyClickEvent?(): void;
         enableBodyClickEvent?(): void;
@@ -656,9 +658,9 @@ declare namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
     enum Type {
         BalloonOnToggle = "balloon.onToggle",
         BodyOnClick = "body.onclick",
-        BodyOnScroll = "body.onscroll",
         BodyOnMouseDown = "body.mousedown",
         OrientationChange = "window.onorientationchange",
+        ScreenOnScroll = "screen.onscroll",
         WindowResize = "window.onresize",
         WindowMessage = "window.message"
     }
@@ -676,6 +678,12 @@ declare namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
     class OrientationChange extends AbstractListener<string> {
         constructor();
         private _orientationTrigger;
+    }
+}
+declare namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
+    class ScreenOnScroll extends AbstractListener<string> {
+        constructor();
+        private _screenTrigger;
     }
 }
 declare namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
@@ -883,18 +891,21 @@ declare namespace OSFramework.OSUI.Feature.Balloon {
         shape: GlobalEnum.ShapeTypes;
     };
     class Balloon<PT> extends AbstractFeature<PT, BalloonOptions> implements IBalloon {
+        private _currentFocusedElementIndex;
         private _eventBodyClick;
         private _eventOnKeypress;
         private _floatingInstance;
         private _floatingOptions;
         private _focusManagerInstance;
         private _focusTrapInstance;
+        private _focusableBalloonElements;
         private _isOpenedByApi;
         private _onToggleEvent;
         isOpen: boolean;
         constructor(featurePattern: PT, featureElem: HTMLElement, options: BalloonOptions);
         private _bodyClickCallback;
         private _handleFocusBehavior;
+        private _manageFocusInsideBalloon;
         private _onkeypressCallback;
         private _removeEventListeners;
         private _setA11YProperties;
@@ -905,7 +916,7 @@ declare namespace OSFramework.OSUI.Feature.Balloon {
         build(): void;
         close(): void;
         dispose(): void;
-        open(isOpenedByApi: boolean): void;
+        open(isOpenedByApi: boolean, arrowKeyPressed?: GlobalEnum.Keycodes.ArrowDown | GlobalEnum.Keycodes.ArrowUp): void;
         setBalloonShape(shape?: GlobalEnum.ShapeTypes): void;
         setFloatingBehaviour(isUpdate?: boolean): void;
         setFloatingConfigs(): void;
@@ -929,6 +940,7 @@ declare namespace OSFramework.OSUI.Feature.Balloon.Enum {
 }
 declare namespace OSFramework.OSUI.Feature.Balloon {
     interface IBalloon extends Feature.IFeature, Interface.IOpenable {
+        open(isOpenedByApi?: boolean, arrowKeyPressed?: GlobalEnum.Keycodes.ArrowDown | GlobalEnum.Keycodes.ArrowUp): void;
         setBalloonShape(shape?: GlobalEnum.ShapeTypes): void;
         updatePositionOption(position: GlobalEnum.FloatingPosition): void;
     }
@@ -1059,6 +1071,8 @@ declare namespace OSFramework.OSUI.Helper {
     abstract class A11Y {
         static AriaAtomicFalse(element: HTMLElement): void;
         static AriaAtomicTrue(element: HTMLElement): void;
+        static AriaBusyFalse(element: HTMLElement): void;
+        static AriaBusyTrue(element: HTMLElement): void;
         static AriaControls(element: HTMLElement, targetId: string): void;
         static AriaDescribedBy(element: HTMLElement, targetId: string): void;
         static AriaDisabled(element: HTMLElement, isDisabled: boolean): void;
@@ -1090,6 +1104,7 @@ declare namespace OSFramework.OSUI.Helper {
         static RoleListbox(element: HTMLElement): void;
         static RoleMenuItem(element: HTMLElement): void;
         static RoleOption(element: HTMLElement): void;
+        static RolePresentation(element: HTMLElement): void;
         static RoleProgressBar(element: HTMLElement): void;
         static RoleRegion(element: HTMLElement): void;
         static RoleSearch(element: HTMLElement): void;
@@ -1910,11 +1925,11 @@ declare namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
         private _balloonWrapperElement;
         private _closeDynamically;
         private _eventOnBodyClick;
-        private _eventOnBodyScroll;
         private _eventOnClick;
         private _eventOnClickInputSearch;
         private _eventOnCloseTransitionEnd;
         private _eventOnOrientationChange;
+        private _eventOnScreenScroll;
         private _eventOnSearchInputBlur;
         private _eventOnSearchInputFocus;
         private _eventOnSpanFocus;
@@ -1927,7 +1942,6 @@ declare namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
         private _isBlocked;
         private _isOpen;
         private _platformEventOnToggleCallback;
-        private _requestAnimationOnBodyScroll;
         private _selectValuesWrapper;
         private _selectValuesWrapperAriaLabel;
         private _selfElementBoundingClientRect;
@@ -1941,9 +1955,9 @@ declare namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
         private _hasNoImplementation;
         private _moveBallonElement;
         private _onBodyClick;
-        private _onBodyScroll;
         private _onKeyboardPressed;
         private _onOrientationChange;
+        private _onScreenScroll;
         private _onSearchInputBlur;
         private _onSearchInputClicked;
         private _onSearchInputFocus;
@@ -2452,6 +2466,7 @@ declare namespace OSFramework.OSUI.Patterns.OverflowMenu {
     interface IOverflowMenu extends Interface.IPattern, Interface.IOpenable {
         disable(): void;
         enable(): void;
+        open(isOpenedByApi?: boolean, arrowKeyPressed?: GlobalEnum.Keycodes.ArrowDown | GlobalEnum.Keycodes.ArrowUp): void;
     }
 }
 declare namespace OSFramework.OSUI.Patterns.OverflowMenu {
@@ -2461,6 +2476,7 @@ declare namespace OSFramework.OSUI.Patterns.OverflowMenu {
         private _balloonFeature;
         private _eventBalloonOnToggle;
         private _eventOnClick;
+        private _eventOnKeydown;
         private _isDisabled;
         private _isOpenedByApi;
         private _platformEventOnToggle;
@@ -2470,6 +2486,7 @@ declare namespace OSFramework.OSUI.Patterns.OverflowMenu {
         constructor(uniqueId: string, configs: JSON);
         private _balloonOnToggleCallback;
         private _onClickCallback;
+        private _onKeydownCallback;
         private _setBalloonFeature;
         private _setOverflowMenuShape;
         private _togglePattern;
@@ -2487,7 +2504,7 @@ declare namespace OSFramework.OSUI.Patterns.OverflowMenu {
         disable(): void;
         dispose(): void;
         enable(): void;
-        open(isOpenedByApi: boolean): void;
+        open(isOpenedByApi: boolean, keyPressed?: GlobalEnum.Keycodes.ArrowDown | GlobalEnum.Keycodes.ArrowUp): void;
         registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void;
         setBalloonOptions(balloonOptions?: Feature.Balloon.BalloonOptions): void;
         setTriggerAriaLabel(ariaLabelText: string): void;
@@ -2866,6 +2883,27 @@ declare namespace OSFramework.OSUI.Patterns.Rating {
         constructor(config: JSON);
     }
 }
+declare namespace OSFramework.OSUI.Patterns.Search {
+    interface ISearch extends Interface.IPattern {
+    }
+}
+declare namespace OSFramework.OSUI.Patterns.Search {
+    class Search extends AbstractPattern<SearchConfig> implements ISearch {
+        constructor(uniqueId: string, configs: JSON);
+        protected setA11YProperties(): void;
+        protected setCallbacks(): void;
+        protected setHtmlElements(): void;
+        protected unsetCallbacks(): void;
+        protected unsetHtmlElements(): void;
+        build(): void;
+        dispose(): void;
+    }
+}
+declare namespace OSFramework.OSUI.Patterns.Search {
+    class SearchConfig extends AbstractConfiguration {
+        constructor(config: JSON);
+    }
+}
 declare namespace OSFramework.OSUI.Patterns.SectionIndex.Enum {
     enum ChildNotifyActionType {
         Active = "active",
@@ -2946,8 +2984,8 @@ declare namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 }
 declare namespace OSFramework.OSUI.Patterns.SectionIndexItem {
     class SectionIndexItem extends AbstractChild<SectionIndexItemConfig, SectionIndex.ISectionIndex> implements ISectionIndexItem {
-        private _eventOnBodyScroll;
         private _eventOnClick;
+        private _eventOnScreenScroll;
         private _eventOnkeyBoardPress;
         private _headerHeight;
         private _headerIsFixed;
@@ -2956,8 +2994,8 @@ declare namespace OSFramework.OSUI.Patterns.SectionIndexItem {
         private _targetElement;
         private _targetElementOffset;
         constructor(uniqueId: string, configs: JSON);
-        private _onBodyScroll;
         private _onKeyboardPressed;
+        private _onScreenScroll;
         private _onSelected;
         private _removeEvents;
         private _setHeaderSize;
@@ -3116,10 +3154,13 @@ declare namespace OSFramework.OSUI.Patterns.Submenu {
 }
 declare namespace OSFramework.OSUI.Patterns.Submenu {
     class Submenu extends AbstractPattern<SubmenuConfig> implements ISubmenu {
+        private _eventBalloonKeypress;
         private _eventClick;
         private _eventKeypress;
         private _eventOnMouseEnter;
         private _eventOnMouseLeave;
+        private _focusManagerInstance;
+        private _focusTrapInstance;
         private _globalEventBody;
         private _hasActiveLinks;
         private _hasElements;
@@ -3135,6 +3176,8 @@ declare namespace OSFramework.OSUI.Patterns.Submenu {
         private _bodyClickCallback;
         private _checkForActiveLinks;
         private _clickCallback;
+        private _handleFocusBehavior;
+        private _keypressBalloonCallback;
         private _keypressCallback;
         private _onMouseEnterCallback;
         private _onMouseLeaveCallback;
@@ -3272,6 +3315,9 @@ declare namespace OSFramework.OSUI.Patterns.Tabs.Enum {
     }
     enum ObserverOptions {
         RootMargin = "1px"
+    }
+    enum ElementsBlockingOnChange {
+        Dropdown = ".pop-comp-active"
     }
     enum ChildTypes {
         TabsContentItem = "TabsContentItem",
@@ -3555,11 +3601,13 @@ declare namespace OSFramework.OSUI.Patterns.Tooltip {
         private _eventOnBalloonClick;
         private _eventOnBlur;
         private _eventOnBodyClick;
-        private _eventOnBodyScroll;
         private _eventOnClick;
         private _eventOnFocus;
+        private _eventOnKeypress;
         private _eventOnOpenedBalloon;
+        private _eventOnScreenScroll;
         private _eventOnWindowResize;
+        private _focusManagerInstance;
         private _intersectionObserver;
         private _isBalloonWrapperMouseEnter;
         private _isIconMouseEnter;
@@ -3581,13 +3629,14 @@ declare namespace OSFramework.OSUI.Patterns.Tooltip {
         private _onBalloonWrapperMouseLeave;
         private _onBlur;
         private _onBodyClick;
-        private _onBodyScroll;
         private _onClick;
         private _onFocus;
         private _onIconMouseEnter;
         private _onIconMouseLeave;
         private _onOpenedBalloon;
+        private _onScreenScroll;
         private _onWindowResize;
+        private _onkeypressCallback;
         private _setBalloonCoordinates;
         private _setBalloonPosition;
         private _setBalloonWrapperExtendedClass;
@@ -3995,9 +4044,7 @@ declare namespace OutSystems.OSUI.ErrorCodes {
     };
     const Search: {
         FailChangeProperty: string;
-        FailClose: string;
         FailDispose: string;
-        FailOpen: string;
         FailRegisterCallback: string;
     };
     const SectionIndexItem: {
@@ -4368,6 +4415,15 @@ declare namespace OutSystems.OSUI.Patterns.RatingAPI {
     function Initialize(ratingId: string): OSFramework.OSUI.Patterns.Rating.IRating;
     function RegisterCallback(ratingId: string, eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): string;
 }
+declare namespace OutSystems.OSUI.Patterns.SearchAPI {
+    function ChangeProperty(searchId: string, propertyName: string, propertyValue: any): string;
+    function Create(searchId: string, configs: string): OSFramework.OSUI.Patterns.Search.ISearch;
+    function Dispose(searchId: string): string;
+    function GetAllSearches(): Array<string>;
+    function GetSearchById(searchId: string): OSFramework.OSUI.Patterns.Search.ISearch;
+    function Initialize(searchId: string): OSFramework.OSUI.Patterns.Search.ISearch;
+    function RegisterCallback(searchId: string, eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): string;
+}
 declare namespace OutSystems.OSUI.Patterns.SectionIndexAPI {
     function ChangeProperty(sectionIndexId: string, propertyName: string, propertyValue: any): string;
     function Create(sectionIndexId: string, configs: string): OSFramework.OSUI.Patterns.SectionIndex.ISectionIndex;
@@ -4616,6 +4672,12 @@ declare namespace OutSystems.OSUI.Utils.LayoutPrivate {
         static Unset(): void;
     }
 }
+declare namespace OutSystems.OSUI.Utils.LayoutPrivate {
+    abstract class SkipContentLink {
+        private static _setLink;
+        static Set(): void;
+    }
+}
 declare namespace OutSystems.OSUI.Utils {
     function LogMessage(message: string): void;
 }
@@ -4763,6 +4825,8 @@ declare namespace Providers.OSUI.Datepicker.Flatpickr {
     abstract class AbstractFlatpickr<C extends Flatpickr.AbstractFlatpickrConfig> extends OSFramework.OSUI.Patterns.DatePicker.AbstractDatePicker<Flatpickr, C> implements IFlatpickr {
         private _a11yInfoContainerElem;
         private _bodyScrollCommonBehaviour;
+        private _providerFocusSpanTarget;
+        private _todayButtonElem;
         private _zindexCommonBehavior;
         protected datePickerPlatformInputElem: HTMLInputElement;
         protected flatpickrInputElem: HTMLInputElement;
@@ -4772,6 +4836,7 @@ declare namespace Providers.OSUI.Datepicker.Flatpickr {
         private _setAttributes;
         private _setCalendarCssClasses;
         private _setParentMinHeight;
+        private _todayButtonKeydown;
         private _unsetParentMinHeight;
         protected addTodayBtn(): void;
         protected createProviderInstance(): void;
@@ -5936,11 +6001,11 @@ declare namespace Providers.OSUI.SharedProviderResources.Flatpickr.Enum {
 }
 declare namespace Providers.OSUI.SharedProviderResources.Flatpickr {
     class UpdatePositionOnScroll {
-        private _onBodyScrollEvent;
+        private _onScreenScrollEvent;
         private _picker;
         private _requestAnimationOnBodyScroll;
         constructor(picker: Datepicker.Flatpickr.IFlatpickr | TimePicker.Flatpickr.IFlatpickrTime | MonthPicker.Flatpickr.IFlatpickrMonth);
-        private _onBodyScroll;
+        private _onScreenScroll;
         private _setCallbacks;
         private _setUpEvents;
         private _unsetCallbacks;

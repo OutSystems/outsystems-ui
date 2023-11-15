@@ -5,7 +5,8 @@ namespace OSFramework.OSUI.Constants {
 	 */
 	export const A11YAttributes = {
 		Aria: {
-			Atomic: 'atomic',
+			Atomic: 'aria-atomic',
+			Busy: 'aria-busy',
 			Controls: 'aria-controls',
 			Describedby: 'aria-describedby',
 			Disabled: 'aria-disabled',
@@ -27,12 +28,14 @@ namespace OSFramework.OSUI.Constants {
 		},
 		Role: {
 			Alert: 'alert',
+			AlertDialog: 'alertdialog',
 			AttrName: 'role',
 			Button: 'button',
 			Complementary: 'complementary',
 			Listbox: 'listbox',
 			MenuItem: 'menuitem',
 			Option: 'option',
+			Presentation: 'presentation',
 			Progressbar: 'progressbar',
 			Region: 'region',
 			Search: 'search',
@@ -123,7 +126,7 @@ namespace OSFramework.OSUI.Constants {
 	export const NoTransition = 'no-transition';
 
 	/* OSUI Version */
-	export const OSUIVersion = '2.17.0';
+	export const OSUIVersion = '2.18.0';
 
 	/*Constant to be used across project as the zero value*/
 	export const ZeroValue = 0;

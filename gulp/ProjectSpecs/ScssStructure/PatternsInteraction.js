@@ -58,11 +58,10 @@ const sectionInfo = {
             "path": "04-patterns/03-interaction/scrollable-area"
         },
         {
-            "name": "Search",
-            "path": "04-patterns/03-interaction/search"
+            "key": "sidebar"
         },
         {
-            "key": "sidebar"
+            "key": "search"
         },
         {
             "name": "Stacked Cards",

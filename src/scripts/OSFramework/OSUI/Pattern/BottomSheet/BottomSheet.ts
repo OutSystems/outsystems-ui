@@ -191,12 +191,22 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 		 * @memberof BottomSheet
 		 */
 		private _onkeypressCallback(e: KeyboardEvent): void {
-			const isEscapedPressed = e.key === GlobalEnum.Keycodes.Escape;
-
-			// Close the BottomSheet when pressing Esc
-			if (isEscapedPressed && this._isOpen) {
-				this.close();
+			switch (e.key) {
+				case GlobalEnum.Keycodes.Escape:
+					// Close the BottomSheet when pressing Esc
+					this.close();
+					break;
+			
+				case GlobalEnum.Keycodes.End:
+					// Focus on last focusable item
+					this._focusTrapInstance.focusableElements[this._focusTrapInstance.focusableElements.length - 1]?.focus();
+					break;
+				case GlobalEnum.Keycodes.Home:
+					// Focus on first focusable items (in this case, its the bottom sheet itself)
+					this._focusTrapInstance.focusableElements[0]?.focus();
+					break;
 			}
+
 		}
 
 		/**
@@ -294,7 +304,7 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 		 */
 		protected setA11YProperties(): void {
 			if (!this.isBuilt) {
-				Helper.Dom.Attribute.Set(this.selfElement, Constants.A11YAttributes.Role.Complementary, true);
+				Helper.A11Y.RoleComplementary(this.selfElement);
 			}
 
 			Helper.Dom.Attribute.Set(

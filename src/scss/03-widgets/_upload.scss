@@ -43,6 +43,10 @@
 		margin-right: var(--space-base);
 		width: auto;
 	}
+
+	&:focus-visible {
+		border: var(--border-size-s) solid var(--color-primary);
+	}
 }
 
 // IsRTL --------------------------------------------------------------------
@@ -53,5 +57,13 @@
 			margin-left: var(--space-base);
 			margin-right: var(--space-none);
 		}
+	}
+}
+
+/* Accessibility -------------------------------------------------------------- */
+///
+.has-accessible-features {
+	[data-upload] {
+		border: var(--border-size-s) solid var(--color-neutral-7);
 	}
 }

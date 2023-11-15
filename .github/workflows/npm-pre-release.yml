@@ -1,8 +1,10 @@
 name: pre-release
 
 on:
-    release:
-        types: [prereleased]
+    # RUG | 02.11.2023 | Commenting the workflow, not to run in the context of the ODC.
+    # release:
+    #     types: [prereleased]
+    workflow_dispatch:
 
 jobs:
     run-lint-and-prettier:

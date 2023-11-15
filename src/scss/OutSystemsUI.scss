@@ -17,7 +17,7 @@ PS: This comment will not be visible at the compiled version!
 =============================================================================== */
 
 /*!
-OutSystems UI 2.17.0
+OutSystems UI 2.18.0
 Website:
  • https://www.outsystems.com/outsystems-ui
 GitHub:
@@ -110,8 +110,8 @@ Section Index:
         6.3.13. Notification
         6.3.14. RangeSlider
         6.3.15. Scrollable Area
-        6.3.16. Search
-        6.3.17. Sidebar
+        6.3.16. Sidebar
+        6.3.17. Search
         6.3.18. Stacked Cards
         6.3.19. TimePicker
         6.3.20. Video
@@ -162,10 +162,11 @@ Section Index:
         6.8.14. Progress Circle Fraction
         6.8.15. Section Index
         6.8.16. Sidebar
-        6.8.17. Submenu
-        6.8.18. Tabs
-        6.8.19. Tooltip
-        6.8.20. Video
+        6.8.17. Search
+        6.8.18. Submenu
+        6.8.19. Tabs
+        6.8.20. Tooltip
+        6.8.21. Video
 7. Usefull Classes
     7.1. a11y (Accessibility)
     7.2. Colors - Brand
@@ -400,10 +401,10 @@ Functions & Mixins
 @import '../scripts/OSFramework/OSUI/Pattern/RangeSlider/scss/rangeslider';
 /*! 6.3.15. Scrollable Area */
 @import '04-patterns/03-interaction/scrollable-area';
-/*! 6.3.16. Search */
-@import '04-patterns/03-interaction/search';
-/*! 6.3.17. Sidebar */
+/*! 6.3.16. Sidebar */
 @import '../scripts/OSFramework/OSUI/Pattern/Sidebar/scss/sidebar';
+/*! 6.3.17. Search */
+@import '../scripts/OSFramework/OSUI/Pattern/Search/scss/search';
 /*! 6.3.18. Stacked Cards */
 @import '04-patterns/03-interaction/stacked-cards';
 /*! 6.3.19. TimePicker */
@@ -502,13 +503,15 @@ Functions & Mixins
 @import '10-deprecated/section-index-deprecated';
 /*! 6.8.16. Sidebar */
 @import '10-deprecated/sidebar-deprecated';
-/*! 6.8.17. Submenu */
+/*! 6.8.17. Search */
+@import '10-deprecated/search-deprecated';
+/*! 6.8.18. Submenu */
 @import '10-deprecated/submenu-deprecated';
-/*! 6.8.18. Tabs */
+/*! 6.8.19. Tabs */
 @import '10-deprecated/tabs-deprecated';
-/*! 6.8.19. Tooltip */
+/*! 6.8.20. Tooltip */
 @import '10-deprecated/tooltip-deprecated';
-/*! 6.8.20. Video */
+/*! 6.8.21. Video */
 @import '10-deprecated/video-deprecated';
 
 /*! ==============================================================================

@@ -71,6 +71,10 @@ const sectionInfo = {
             "path": "10-deprecated/sidebar-deprecated"
         },
         {
+            "name": "Search",
+            "path": "10-deprecated/search-deprecated"
+        },
+        {
             "name": "Submenu",
             "path": "10-deprecated/submenu-deprecated"
         },
