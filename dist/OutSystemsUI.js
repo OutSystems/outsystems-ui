@@ -1,5 +1,5 @@
 /*!
-OutSystems UI 2.18.1
+OutSystems UI 2.18.2
 Website:
  • https://www.outsystems.com/outsystems-ui
 GitHub:
@@ -139,7 +139,7 @@ var OSFramework;
             Constants.AccessibilityHideElementClass = 'wcag-hide-text';
             Constants.IsRTLClass = 'is-rtl';
             Constants.NoTransition = 'no-transition';
-            Constants.OSUIVersion = '2.18.1';
+            Constants.OSUIVersion = '2.18.2';
             Constants.ZeroValue = 0;
         })(Constants = OSUI.Constants || (OSUI.Constants = {}));
     })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));

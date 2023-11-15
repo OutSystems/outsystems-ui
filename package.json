@@ -1,6 +1,6 @@
 {
 	"name": "outsystems-ui",
-	"version": "2.19.1",
+	"version": "2.18.2",
 	"description": "OutSystems UI Framework",
 	"license": "BSD-3-Clause",
 	"scripts": {
@@ -38,7 +38,7 @@
 		"browser-sync": "^2.27.11",
 		"eslint": "^8.47.0",
 		"eslint-config-prettier": "^9.0.0",
-		"eslint-plugin-prettier": "^5.0.0", 
+		"eslint-plugin-prettier": "^5.0.0",
 		"fancy-log": "^2.0.0",
 		"flatpickr": "^4.6.13",
 		"gulp": "^4.0.2",
