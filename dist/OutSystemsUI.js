@@ -366,6 +366,7 @@ var OSFramework;
                 HTMLAttributes["StatusBar"] = "data-status-bar-height";
                 HTMLAttributes["Style"] = "style";
                 HTMLAttributes["Type"] = "type";
+                HTMLAttributes["Value"] = "value";
             })(HTMLAttributes = GlobalEnum.HTMLAttributes || (GlobalEnum.HTMLAttributes = {}));
             let HTMLElement;
             (function (HTMLElement) {
@@ -2242,6 +2243,9 @@ var OSFramework;
                         return true;
                     }
                     return false;
+                }
+                static IsValid(date) {
+                    return !isNaN(Number(new Date(date)));
                 }
                 static NormalizeDateTime(date, normalizeToMax = true) {
                     let _newDate = date;
@@ -18346,10 +18350,29 @@ var Providers;
                             super(uniqueId, new SingleDate.FlatpickrSingleDateConfig(configs));
                             this._isUpdatedInitialDateByClientAction = false;
                         }
+                        _checkInitialDate() {
+                            let clearPlatformInput = false;
+                            if (OSFramework.OSUI.Helper.Dates.IsNull(this.configs.InitialDate)) {
+                                if (this.datePickerPlatformInputElem.value !== OSFramework.OSUI.Constants.EmptyString &&
+                                    OSFramework.OSUI.Helper.Dates.IsValid(this.datePickerPlatformInputElem.value)) {
+                                    this.configs.InitialDate = new Date(this.datePickerPlatformInputElem.value).toString();
+                                }
+                                else {
+                                    clearPlatformInput = true;
+                                }
+                            }
+                            else if (this.datePickerPlatformInputElem.value !== OSFramework.OSUI.Constants.EmptyString) {
+                                clearPlatformInput = true;
+                            }
+                            if (clearPlatformInput) {
+                                OSFramework.OSUI.Helper.Dom.Attribute.Set(this.datePickerPlatformInputElem, OSFramework.OSUI.GlobalEnum.HTMLAttributes.Value, OSFramework.OSUI.Constants.EmptyString);
+                            }
+                            this.prepareConfigs();
+                        }
                         onDateSelectedEvent(selectedDates) {
                             let _selectedDate = '';
                             if (selectedDates.length > 0) {
-                                _selectedDate = this.provider.formatDate(selectedDates[0], this.flatpickrOpts.dateFormat);
+                                _selectedDate = this.provider.formatDate(selectedDates[0], this.provider.enableTime ? 'Y-m-d H:i:S' : 'Y-m-d');
                             }
                             OSFramework.OSUI.Helper.Dom.SetInputValue(this.datePickerPlatformInputElem, _selectedDate);
                             if (this._isUpdatedInitialDateByClientAction === false) {
@@ -18374,7 +18397,7 @@ var Providers;
                         }
                         build() {
                             super.build();
-                            this.prepareConfigs();
+                            this._checkInitialDate();
                             this.finishBuild();
                         }
                         changeProperty(propertyName, propertyValue) {
