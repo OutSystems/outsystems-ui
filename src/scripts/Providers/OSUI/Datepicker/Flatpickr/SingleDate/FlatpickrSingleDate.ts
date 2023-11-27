@@ -22,7 +22,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr.SingleDate {
 					this.datePickerPlatformInputElem.value !== OSFramework.OSUI.Constants.EmptyString &&
 					OSFramework.OSUI.Helper.Dates.IsValid(this.datePickerPlatformInputElem.value)
 				) {
-					this.configs.InitialDate = new Date(this.datePickerPlatformInputElem.value).toString();
+					this.configs.InitialDate = new Date(this.datePickerPlatformInputElem.value);
 				} else {
 					// If the date isn't valid, the platform input value will be removed
 					clearPlatformInput = true;
@@ -57,7 +57,10 @@ namespace Providers.OSUI.Datepicker.Flatpickr.SingleDate {
 
 			// Check if any date has been selected, In case of Clear this will return empty array
 			if (selectedDates.length > 0) {
-				_selectedDate = this.provider.formatDate(selectedDates[0], this.provider.enableTime ? 'Y-m-d H:i:S' : 'Y-m-d' );
+				_selectedDate = this.provider.formatDate(
+					selectedDates[0],
+					this.provider.config.enableTime ? 'Y-m-d H:i:S' : 'Y-m-d'
+				);
 			}
 
 			// Trigger the platform update attribute value change!

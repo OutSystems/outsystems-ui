@@ -11,7 +11,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr.SingleDate {
 	 */
 	export class FlatpickrSingleDateConfig extends AbstractFlatpickrConfig {
 		// Set the property initialDate
-		public InitialDate: string;
+		public InitialDate: string | Date;
 
 		constructor(config: JSON) {
 			super(config);

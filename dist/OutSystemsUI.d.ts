@@ -4958,7 +4958,7 @@ declare namespace Providers.OSUI.Datepicker.Flatpickr.SingleDate {
 }
 declare namespace Providers.OSUI.Datepicker.Flatpickr.SingleDate {
     class FlatpickrSingleDateConfig extends AbstractFlatpickrConfig {
-        InitialDate: string;
+        InitialDate: string | Date;
         constructor(config: JSON);
         getProviderConfig(): FlatpickrOptions;
     }
