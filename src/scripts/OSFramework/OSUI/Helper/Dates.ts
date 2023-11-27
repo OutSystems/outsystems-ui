@@ -73,6 +73,17 @@ namespace OSFramework.OSUI.Helper {
 		}
 
 		/**
+		 * Function used to check if a date is valid
+		 *
+		 * @param {string} date
+		 * @return {*}  {boolean}
+		 * @memberof Dates
+		 */
+		public static IsValid(date: string): boolean {
+			return !isNaN(Number(new Date(date)));
+		}
+
+		/**
 		 * Function used to normalize the OutSystems DateTimes, used on scopes expecting a Date
 		 *
 		 * @static

@@ -291,7 +291,8 @@ declare namespace OSFramework.OSUI.GlobalEnum {
         Name = "name",
         StatusBar = "data-status-bar-height",
         Style = "style",
-        Type = "type"
+        Type = "type",
+        Value = "value"
     }
     enum HTMLElement {
         Body = "body",
@@ -957,6 +958,7 @@ declare namespace OSFramework.OSUI.Helper {
         static GetTimeFromDate(_date: Date): string;
         static IsBeforeThan(date1: string, date2: string): boolean;
         static IsNull(date: string | Date): boolean;
+        static IsValid(date: string): boolean;
         static NormalizeDateTime(date: string | Date, normalizeToMax?: boolean): Date;
         static SetServerDateFormat(date: string): void;
         static get ServerFormat(): string;
@@ -4944,6 +4946,7 @@ declare namespace Providers.OSUI.Datepicker.Flatpickr.SingleDate {
     class OSUIFlatpickrSingleDate extends AbstractFlatpickr<FlatpickrSingleDateConfig> {
         private _isUpdatedInitialDateByClientAction;
         constructor(uniqueId: string, configs: JSON);
+        private _checkInitialDate;
         protected onDateSelectedEvent(selectedDates: Array<Date>): void;
         protected prepareToAndRedraw(): void;
         protected todayBtnClick(event: MouseEvent): void;
@@ -4955,7 +4958,7 @@ declare namespace Providers.OSUI.Datepicker.Flatpickr.SingleDate {
 }
 declare namespace Providers.OSUI.Datepicker.Flatpickr.SingleDate {
     class FlatpickrSingleDateConfig extends AbstractFlatpickrConfig {
-        InitialDate: string;
+        InitialDate: string | Date;
         constructor(config: JSON);
         getProviderConfig(): FlatpickrOptions;
     }

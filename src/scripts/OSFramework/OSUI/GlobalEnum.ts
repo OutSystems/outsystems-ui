@@ -171,6 +171,7 @@ namespace OSFramework.OSUI.GlobalEnum {
 		StatusBar = 'data-status-bar-height',
 		Style = 'style',
 		Type = 'type',
+		Value = 'value',
 	}
 
 	/**
