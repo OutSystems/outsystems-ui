@@ -206,6 +206,7 @@ namespace OSFramework.OSUI.GlobalEnum {
 		Prefix = 'on',
 		Resize = 'resize',
 		Scroll = 'scroll',
+		ScrollEnd = 'scrollend',
 		TouchEnd = 'touchend',
 		TouchMove = 'touchmove',
 		TouchStart = 'touchstart',
