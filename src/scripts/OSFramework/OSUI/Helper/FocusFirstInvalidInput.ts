@@ -80,7 +80,7 @@ namespace OSFramework.OSUI.Helper {
 				callback: () => {
 					let element: HTMLElement = document.body;
 
-					if (elementId !== '') {
+					if (elementId !== Constants.EmptyString) {
 						element = Helper.Dom.GetElementById(elementId);
 					}
 
