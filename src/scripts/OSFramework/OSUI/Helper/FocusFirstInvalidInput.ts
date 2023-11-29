@@ -37,22 +37,29 @@ namespace OSFramework.OSUI.Helper {
 			isSmooth: boolean,
 			elementParentClass: string
 		): void {
-			// Set the scrollable element to add the ScrollEnd event
-			const activeScreenElement = Helper.Dom.ClassSelector(
-				document.body,
-				GlobalEnum.CssClassElements.ActiveScreen
-			);
-
-			// Set the temporary function for event of ScrollEnd, to focus on element after the scroll occur
-			const focusOnScrollEnd = () => {
-				element.focus();
-				activeScreenElement.removeEventListener(GlobalEnum.HTMLEvent.ScrollEnd, focusOnScrollEnd);
-			};
+			const browser = OSFramework.OSUI.Helper.DeviceInfo.GetBrowser();
 
 			OutSystems.OSUI.Utils.ScrollToElement(element.id, isSmooth, 0, elementParentClass);
 
-			// Add event on scrollable element, to focus on target element
-			activeScreenElement.addEventListener(GlobalEnum.HTMLEvent.ScrollEnd, focusOnScrollEnd);
+			// Set the element focus directly because the event scrollend isn't supported by safari or iOS
+			if (browser === GlobalEnum.Browser.safari || OSFramework.OSUI.Helper.DeviceInfo.IsIos) {
+				element.focus();
+			} else {
+				// Set the scrollable element to add the ScrollEnd event
+				const activeScreenElement = Helper.Dom.ClassSelector(
+					document.body,
+					GlobalEnum.CssClassElements.ActiveScreen
+				);
+
+				// Set the temporary function for event of ScrollEnd, to focus on element after the scroll occur
+				const focusOnScrollEnd = () => {
+					element.focus();
+					activeScreenElement.removeEventListener(GlobalEnum.HTMLEvent.ScrollEnd, focusOnScrollEnd);
+				};
+
+				// Add event on scrollable element, to focus on target element
+				activeScreenElement.addEventListener(GlobalEnum.HTMLEvent.ScrollEnd, focusOnScrollEnd);
+			}
 		}
 
 		// Method that will search for the closest element with ID
