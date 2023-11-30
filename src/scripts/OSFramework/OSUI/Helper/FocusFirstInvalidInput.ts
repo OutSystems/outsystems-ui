@@ -43,6 +43,11 @@ namespace OSFramework.OSUI.Helper {
 
 			// Set the element focus directly because the event scrollend isn't supported by safari or iOS
 			if (browser === GlobalEnum.Browser.safari || OSFramework.OSUI.Helper.DeviceInfo.IsIos) {
+				if (isSmooth) {
+					console.warn(
+						'Due to the unsupported scrollend event on Safari/iOS, the smooth transition is disabled and the invalid input will be focused directly.'
+					);
+				}
 				element.focus();
 			} else {
 				// Set the scrollable element to add the ScrollEnd event
