@@ -5,14 +5,16 @@ const scssStructure = require('../../ProjectSpecs/ScssStructure/#All');
 const envType = {'development':'dev', 'production':'prod'}
 
 // Store text that will be added as SectionIndex
-let indexSection = '';
+let indexSection;
 
-function createIndexSectionDev() {
-    return createIndexSection(envType.development);
+function createIndexSectionDev(platformType) {
+    indexSection = '';
+    return createIndexSection(envType.development, platformType);
 }
 
-function createIndexSectionProd() {
-    return createIndexSection(envType.production);
+function createIndexSectionProd(platformType) {
+    indexSection = '';
+    return createIndexSection(envType.production, platformType);
 }
 
 // Used to define the initialization text of each line
@@ -40,7 +42,7 @@ function getLineText(text, level = 0) {
 
 
 // Method that will create the text for the SectionIndex section dynamically
-function createIndexSection(env) {
+function createIndexSection(env, platformType) {
 	// Section iteractor
     let sectionIndex = 0;
 
@@ -84,8 +86,11 @@ function createIndexSection(env) {
 
                         // 2. Go through each section assets
                         for (const subAsset of asset.assets) {
+                            if(subAsset.platform !== undefined && subAsset.platform !== platformType) {
+                                continue;
+                            }
                             // Check if 'key' is an attribute of the current asset, if so it means it's a pattern!
-                            if (subAsset.key === undefined) {
+                            else if (subAsset.key === undefined) {
                                 indexSection += getLineText(`${sectionIndex}.${assetIndex}.${subAssetIndex}. ${subAsset.name}`, 2);
                             } else {
 
