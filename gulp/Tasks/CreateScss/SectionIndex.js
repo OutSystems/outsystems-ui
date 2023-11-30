@@ -49,7 +49,7 @@ function createIndexSection(env, platformType) {
     // Start Index Section
     indexSection += ``;
     indexSection += `/*!\n`;
-    indexSection += `${project.info.name} ${project.info.version}\n`;
+    indexSection += `${project.info.name} ${project.info.version} • ${platformType.toUpperCase()} Platform\n`;
     if (project.info.description !== '') {
         indexSection += `${project.info.description}\n`;
     }
