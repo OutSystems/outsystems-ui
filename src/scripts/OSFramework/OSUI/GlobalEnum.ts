@@ -171,6 +171,7 @@ namespace OSFramework.OSUI.GlobalEnum {
 		StatusBar = 'data-status-bar-height',
 		Style = 'style',
 		Type = 'type',
+		Value = 'value',
 	}
 
 	/**
@@ -205,6 +206,7 @@ namespace OSFramework.OSUI.GlobalEnum {
 		Prefix = 'on',
 		Resize = 'resize',
 		Scroll = 'scroll',
+		ScrollEnd = 'scrollend',
 		TouchEnd = 'touchend',
 		TouchMove = 'touchmove',
 		TouchStart = 'touchstart',

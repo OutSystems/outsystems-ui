@@ -37,13 +37,28 @@ namespace OSFramework.OSUI.Helper {
 			isSmooth: boolean,
 			elementParentClass: string
 		): void {
+			// Set the scrollable element to add the ScrollEnd event
+			const activeScreenElement = Helper.Dom.ClassSelector(
+				document.body,
+				GlobalEnum.CssClassElements.ActiveScreen
+			);
+
+			// Set the temporary function for event of ScrollEnd, to focus on element after the scroll occur
+			const focusOnScrollEnd = () => {
+				element.focus();
+				activeScreenElement.removeEventListener(GlobalEnum.HTMLEvent.ScrollEnd, focusOnScrollEnd);
+			};
+
 			OutSystems.OSUI.Utils.ScrollToElement(element.id, isSmooth, 0, elementParentClass);
+
+			// Add event on scrollable element, to focus on target element
+			activeScreenElement.addEventListener(GlobalEnum.HTMLEvent.ScrollEnd, focusOnScrollEnd);
 		}
 
 		// Method that will search for the closest element with ID
 		private static _searchElementId(element: HTMLElement, isSmooth: boolean, elementParentClass: string): void {
 			const elementToSearch = element.parentElement;
-			if (elementToSearch.id !== '') {
+			if (elementToSearch.id !== Constants.EmptyString) {
 				this._scrollToInvalidInput(elementToSearch, isSmooth, elementParentClass);
 			} else {
 				this._searchElementId(elementToSearch, isSmooth, elementParentClass);
@@ -65,11 +80,14 @@ namespace OSFramework.OSUI.Helper {
 				callback: () => {
 					let element: HTMLElement = document.body;
 
-					if (elementId !== '') {
+					if (elementId !== Constants.EmptyString) {
 						element = Helper.Dom.GetElementById(elementId);
 					}
 
-					this._checkInvalidInputs(element, isSmooth, elementParentClass);
+					// Wait for platform to add invalid classes
+					Helper.AsyncInvocation(() => {
+						this._checkInvalidInputs(element, isSmooth, elementParentClass);
+					});
 				},
 			});
 

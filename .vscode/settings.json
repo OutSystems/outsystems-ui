@@ -1,6 +1,6 @@
 {
 	"diffEditor.ignoreTrimWhitespace": true,
-	"files.autoSave": "off",
+	"files.autoSave": "afterDelay",
 	"editor.minimap.maxColumn": 170,
 	"editor.wordWrapColumn": 170,
 	"editor.formatOnSave": true,

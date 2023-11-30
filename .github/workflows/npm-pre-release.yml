@@ -1,7 +1,6 @@
 name: pre-release
 
 on:
-    # RUG | 02.11.2023 | Commenting the workflow, not to run in the context of the ODC.
     # release:
     #     types: [prereleased]
     workflow_dispatch:
@@ -10,21 +9,27 @@ jobs:
     run-lint-and-prettier:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v3
+            - name: Checkout branch dev
+              uses: actions/checkout@v3
               with:
                   ref: dev
 
             - uses: actions/setup-node@v3
 
-            - run: npm install
-            - run: npm run lintfix
-            - run: npm run prettier
+            - name: Install project dependencies
+              run: npm install
+
+            - name: Run lintfix and prettier
+              run: |
+                  npm run lintfix
+                  npm run prettier
 
     get-tags-versions:
         needs: run-lint-and-prettier
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v3
+            - name: Checkout branch dev
+              uses: actions/checkout@v3
               with:
                   ref: dev
 
@@ -34,7 +39,7 @@ jobs:
               id: get-tags
               uses: JinoArch/get-latest-tag@latest
 
-            - name: Get latest version
+            - name: Get latest version ${{ steps.get-tags.outputs.latestTag }}
               id: split-lts-tag
               uses: jungwinter/split@v2
               with:
@@ -57,14 +62,25 @@ jobs:
         needs: get-tags-versions
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v3
+            # - name: Configure Git with the GitHub Token
+            #   run: |
+            #       git config --global user.email "sa_git_uicomponents@outsystems.com"
+            #       git config --global user.name "UiComponentsBot"
+            #       git config --global credential.helper store
+            #   env:
+            #       GITHUB_TOKEN: ${{ secrets.PAT }}
+            # The code above
+
+            - name: Checkout branch dev
+              uses: actions/checkout@v3
               with:
                   ref: dev
                   token: ${{ secrets.PAT }}
 
             - uses: actions/setup-node@v3
 
-            - run: npm install
+            - name: Install project dependencies
+              run: npm install
 
             - name: Get new version artifact
               uses: actions/download-artifact@v3
@@ -81,17 +97,21 @@ jobs:
             - name: Update version from v${{ steps.get-artifact-version.outputs.version }}
               run: npm run gta-update-version ${{ steps.get-artifact-version.outputs.version }}
 
-            - name: Commit updated version
-              uses: stefanzweifel/git-auto-commit-action@v4
+            - name: Sign and Commit version increment to branch dev
+              uses: ./.github/os-git-actions/signed-commit/
               with:
                   branch: dev
-                  commit_message: Updated version. [skip ci]
+                  message: 'Updated version. [skip ci]'
+                  newFiles: true
+                  gpgPriv: ${{ secrets.GPG_SIGN_KEY }}
+                  gpgPassPhrase: ${{ secrets.GPG_PASSPHRASE }}
 
     create-rc:
         needs: get-tags-versions
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v3
+            - name: Checkout branch dev
+              uses: actions/checkout@v3
               with:
                   ref: dev
 
@@ -109,7 +129,7 @@ jobs:
                   value=`cat new-version-artf.txt`
                   echo "version="$value >> $GITHUB_OUTPUT
 
-            - name: Create rc${{ steps.get-artifact-version.outputs.version }}
+            - name: Create branch rc${{ steps.get-artifact-version.outputs.version }}
               shell: bash
               run: |
                   git checkout -b rc${{ steps.get-artifact-version.outputs.version }}
@@ -133,26 +153,32 @@ jobs:
                   value=`cat new-version-artf.txt`
                   echo "version="$value >> $GITHUB_OUTPUT
 
-            - uses: actions/checkout@v3
+            - name: Checkout branch rc${{ steps.get-artifact-version.outputs.version }}
+              uses: actions/checkout@v3
               with:
                   ref: rc${{ steps.get-artifact-version.outputs.version }}
 
-            - run: npm install
+            - name: Install project dependencies
+              run: npm install
 
-            - name: Compile Prod
+            - name: Compile Production code
               run: npm run build
 
-            - name: Git Commit
-              uses: stefanzweifel/git-auto-commit-action@v4
+            - name: Sign and commit compiled code to branch rc${{ steps.get-artifact-version.outputs.version }}
+              uses: ./.github/os-git-actions/signed-commit/
               with:
-                  branch: rc${{ steps.get-artifact-version.outputs.version }}
-                  commit_message: Compiled Production Mode [skip ci]
+                  branch: 'rc${{ steps.get-artifact-version.outputs.version }}'
+                  message: 'Compiled Production Mode [skip ci]'
+                  newFiles: true
+                  gpgPriv: ${{ secrets.GPG_SIGN_KEY }}
+                  gpgPassPhrase: ${{ secrets.GPG_PASSPHRASE }}
 
     delete-artifact:
         needs: [update-version, create-rc, compile-rc]
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v3
+            - name: Checkout branch dev
+              uses: actions/checkout@v3
               with:
                   ref: dev
 

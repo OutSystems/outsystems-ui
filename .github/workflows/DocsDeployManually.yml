@@ -7,7 +7,8 @@ jobs:
     deploy-doc:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v3
+            - name: Checkout branch main
+              uses: actions/checkout@v3
               with:
                   ref: main
 
@@ -15,7 +16,6 @@ jobs:
 
             - name: Push files into github page
               uses: GuillaumeFalourd/copy-push-files@v1
-
               with:
                   source_files: docs/*
                   remote_repository: https://github.com/outsystems-ui-docs/outsystems-ui-docs.github.io

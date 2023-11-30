@@ -15,8 +15,6 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 		private _eventOnBalloonClick: GlobalCallbacks.Generic;
 		// Event OnPatternBlur (combined with focus)
 		private _eventOnBlur: GlobalCallbacks.Generic;
-		// Event OnBodyClick
-		private _eventOnBodyClick: GlobalCallbacks.Generic;
 		// Event OnPatternClick
 		private _eventOnClick: GlobalCallbacks.Generic;
 		// Event OnPatternFocus
@@ -41,6 +39,8 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 		private _isOpen: boolean;
 		// Flag used to deal with onBodyClick and open api concurrency methods!
 		private _isOpenedByApi = false;
+		// Store if the current browser is safari
+		private _isSafari: boolean;
 		// Platform OnClose Callback
 		private _platformEventOnToggleCallback: GlobalCallbacks.OSGeneric;
 		// Store the RequestAnimationFrame that will be triggered at OnBodyScroll
@@ -61,6 +61,7 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 
 			this._isOpen = this.configs.StartVisible;
 			this._tooltipBalloonPositionClass = this.configs.Position;
+			this._isSafari = OutSystems.OSUI.Utils.GetBrowser() === GlobalEnum.Browser.safari;
 		}
 
 		// Move balloon element to active screen, outside of the pattern context
@@ -119,8 +120,8 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 
 		// Method to close the tooltip at onBlur
 		private _onBlur(): void {
-			// Wait for next activeElement be active
 			Helper.AsyncInvocation(() => {
+				// Wait for next activeElement be active
 				// Check if a previous active element has been assigned
 				if (this._tooltipBalloonContentActiveElem) {
 					this._tooltipBalloonContentActiveElem.removeEventListener(
@@ -129,41 +130,18 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 					);
 				}
 
-				// Get the closest element in order to check if the activeElement is inside this TooltipBalloon
-				const _closestElem = document.activeElement.closest(Constants.Dot + Enum.CssClass.Pattern);
-				if (_closestElem !== this.selfElement) {
-					// Close Tooltip
+				if (document.activeElement !== this._tooltipIconElem && this._tooltipBalloonContentElem.contains(document.activeElement) === false) {
 					this._triggerClose();
-				} else {
+				} else if(document.activeElement !== document.body) {
 					// Add the blur event in order to proper close the tooltip after its blur
 					this._tooltipBalloonContentActiveElem = document.activeElement as HTMLElement;
+	
 					this._tooltipBalloonContentActiveElem.addEventListener(
 						GlobalEnum.HTMLEvent.Blur,
 						this._eventOnBlur
 					);
 				}
 			});
-		}
-
-		// Close tooltip if user has clicked outside of it
-		private _onBodyClick(_eventName: string, e: MouseEvent): void {
-			if (this.isBuilt && this._isOpenedByApi === false) {
-				const _clickedElem = e.target as HTMLElement;
-				const _closestElem = _clickedElem.closest(Constants.Dot + Enum.CssClass.Pattern);
-				const _closestBalloonElem = _clickedElem.closest(Constants.Dot + Enum.CssClass.BalloonWrapper);
-
-				// If the click has occur outside of this tooltip, or tooltipBalloon!
-				if (_closestElem !== this.selfElement && _closestBalloonElem !== this._tooltipBalloonWrapperElem) {
-					// Remove the Event
-					Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
-						Event.DOMEvents.Listeners.Type.BodyOnClick,
-						this._eventOnBodyClick
-					);
-
-					// Close Tooltip
-					this._triggerClose();
-				}
-			}
 		}
 
 		// Trigger the tooltip at onClick behaviour
@@ -391,8 +369,7 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 
 		// Add the tooltip Events
 		private _setUpEvents(): void {
-			// If the accessibility feature is enabled
-			if (Helper.DeviceInfo.HasAccessibilityEnabled) {
+			if(this.configs.IsHover === false) {
 				// Add the focus event in order to show the tooltip balloon when the toolTip content is focused
 				this._tooltipIconElem.addEventListener(GlobalEnum.HTMLEvent.Blur, this._eventOnBlur);
 				this._tooltipIconElem.addEventListener(GlobalEnum.HTMLEvent.Focus, this._eventOnFocus);
@@ -414,15 +391,6 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 			);
 			// Update "animation" before the next repaint
 			this._requestAnimationOnWindowResize = requestAnimationFrame(this._eventOnWindowResize);
-
-			// If it's open by default!
-			if (this._isOpen) {
-				// Add a window event that will be responsible to close it, if it's opend by default
-				Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
-					Event.DOMEvents.Listeners.Type.BodyOnClick,
-					this._eventOnBodyClick
-				);
-			}
 
 			// If tooltip should behave at onMouseClick, or if it's on tablet or phone
 			if (this.configs.IsHover === false || Helper.DeviceInfo.IsDesktop === false) {
@@ -449,14 +417,19 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 		}
 
 		// Close the Balloon
-		private _triggerClose() {
+		private  _triggerClose() {
 			// Check if the tooltip is open
 			if (this._isOpen) {
 				this._isOpen = false;
 
-				// Remove the IsOpned selector
-				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.IsOpened);
-				Helper.Dom.Styles.RemoveClass(this._tooltipBalloonWrapperElem, Enum.CssClass.BalloonIsOpened);
+				// Set custom timeout to run after platform event's throttle time
+				const _timeout = this._tooltipBalloonContentElem.querySelector(Constants.AllowPropagationAttr) || this._isSafari ? 110 : 0;
+
+				Helper.ApplySetTimeOut(()=>{
+					// Remove the IsOpened selector
+					Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.IsOpened);
+					Helper.Dom.Styles.RemoveClass(this._tooltipBalloonWrapperElem, Enum.CssClass.BalloonIsOpened);
+				}, _timeout);
 
 				// Cancel the Observer!
 				this._unsetObserver();
@@ -480,6 +453,7 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 		private _triggerOpen() {
 			// Check if the tooltip is closed
 			if (this._isOpen === false) {
+				
 				this._isOpen = true;
 
 				// Get all Tooltips Ids in order to close them!
@@ -518,12 +492,6 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 					Helper.Dom.Styles.AddClass(this._tooltipBalloonWrapperElem, Enum.CssClass.BalloonIsOpened);
 				});
 
-				// Add the Event responsible to close it when click outside!
-				Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
-					Event.DOMEvents.Listeners.Type.BodyOnClick,
-					this._eventOnBodyClick
-				);
-
 				// ReSet the Observer in order to update it's position if balloon run out of bounds!
 				Helper.AsyncInvocation(this._setObserver.bind(this));
 
@@ -545,10 +513,6 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 			this._tooltipIconElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
 			this._tooltipBalloonContentElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnBalloonClick);
 
-			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
-				Event.DOMEvents.Listeners.Type.BodyOnClick,
-				this._eventOnBodyClick
-			);
 			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
 				Event.DOMEvents.Listeners.Type.ScreenOnScroll,
 				this._eventOnScreenScroll
@@ -645,7 +609,6 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 		protected setCallbacks(): void {
 			this._eventOnBalloonClick = this._onBalloonClick.bind(this);
 			this._eventOnBlur = this._onBlur.bind(this);
-			this._eventOnBodyClick = this._onBodyClick.bind(this);
 			this._eventOnScreenScroll = this._onScreenScroll.bind(this);
 			this._eventOnClick = this._onClick.bind(this);
 			this._eventOnFocus = this._onFocus.bind(this);
@@ -705,7 +668,6 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 		protected unsetCallbacks(): void {
 			this._eventOnBalloonClick = undefined;
 			this._eventOnBlur = undefined;
-			this._eventOnBodyClick = undefined;
 			this._eventOnScreenScroll = undefined;
 			this._eventOnClick = undefined;
 			this._eventOnFocus = undefined;

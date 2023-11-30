@@ -1,7 +1,6 @@
 name: release
 
 on:
-    # RUG | 02.11.2023 | Commenting the workflow, not to run in the context of the ODC.
     # release:
     #     types: [released]
     workflow_dispatch:
@@ -10,7 +9,8 @@ jobs:
     merge-rc:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v3
+            - name: Checkout branch dev
+              uses: actions/checkout@v3
               with:
                   ref: dev
 
@@ -27,7 +27,7 @@ jobs:
                   msg: '${{ steps.get-tags.outputs.latestTag }}'
                   separator: 'v'
 
-            - name: Merge rc${{ steps.split-lts-tag.outputs._1 }} into main
+            - name: Merge branch rc${{ steps.split-lts-tag.outputs._1 }} into main
               uses: everlytic/branch-merge@1.1.2
               with:
                   github_token: ${{ secrets.PAT }}
@@ -39,59 +39,70 @@ jobs:
         needs: merge-rc
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v3
+            - name: Checkout branch main
+              uses: actions/checkout@v3
               with:
                   ref: main
 
-            - run: npm install
+            - name: Install project dependencies
+              run: npm install
 
-            - name: Compile Prod
+            - name: Compile Production code
               run: npm run build
 
-            - name: Git Commit
-              uses: stefanzweifel/git-auto-commit-action@v4
+            - name: Sign and commit compiled code to branch main
+              uses: ./.github/os-git-actions/signed-commit/
               with:
                   branch: main
-                  commit_message: Compiled Production Mode [skip ci]
+                  message: 'Compiled Production Mode [skip ci]'
+                  newFiles: true
+                  gpgPriv: ${{ secrets.GPG_SIGN_KEY }}
+                  gpgPassPhrase: ${{ secrets.GPG_PASSPHRASE }}
 
     update-doc:
         needs: compile-prod
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v3
+            - name: Checkout branch main
+              uses: actions/checkout@v3
               with:
                   ref: main
                   token: ${{ secrets.PAT }}
 
             - uses: actions/setup-node@v3
 
-            - run: npm install
+            - name: Install project dependencies
+              run: npm install
 
             - name: Install graphviz
               run: sudo apt install -y graphviz
 
-            - run: npm run docs
+            - name: Generate documentation
+              run: npm run docs
 
-            - name: Git Commit
-              uses: stefanzweifel/git-auto-commit-action@v4
+            - name: Sign and commit documentation to branch main
+              uses: ./.github/os-git-actions/signed-commit/
               with:
                   branch: main
-                  commit_message: Update documentation [skip ci]
+                  message: 'Update documentation [skip ci]'
+                  newFiles: true
+                  gpgPriv: ${{ secrets.GPG_SIGN_KEY }}
+                  gpgPassPhrase: ${{ secrets.GPG_PASSPHRASE }}
 
     deploy-doc:
         needs: update-doc
         runs-on: ubuntu-latest
 
         steps:
-            - uses: actions/checkout@v3
+            - name: Checkout branch main
+              uses: actions/checkout@v3
               with:
                   ref: main
 
             - uses: actions/setup-node@v3
 
-            - name: Push files into github page
+            - name: Push documentation files into github page
               uses: GuillaumeFalourd/copy-push-files@v1
-
               with:
                   source_files: docs/*
                   remote_repository: https://github.com/outsystems-ui-docs/outsystems-ui-docs.github.io
@@ -103,7 +114,8 @@ jobs:
         needs: update-doc
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v3
+            - name: Checkout branch main
+              uses: actions/checkout@v3
               with:
                   ref: main
 
@@ -112,7 +124,8 @@ jobs:
                   node-version: 16
                   registry-url: https://registry.npmjs.org/
 
-            - run: npm publish
+            - name: Publish new version to NPM
+              run: npm publish
               env:
                   NODE_AUTH_TOKEN: ${{secrets.NPM_UICOMPONENTS}}
 
@@ -120,7 +133,8 @@ jobs:
         needs: [deploy-doc, publish-npm]
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v3
+            - name: Checkout branch main
+              uses: actions/checkout@v3
               with:
                   ref: main
 
@@ -130,14 +144,14 @@ jobs:
               id: get-tags
               uses: JinoArch/get-latest-tag@latest
 
-            - name: Get lts version
+            - name: Get latest version
               id: split-lts-tag
               uses: jungwinter/split@v2
               with:
                   msg: '${{ steps.get-tags.outputs.latestTag }}'
                   separator: 'v'
 
-            - name: Delete rc${{ steps.split-lts-tag.outputs._1 }}
+            - name: Delete branch rc${{ steps.split-lts-tag.outputs._1 }}
               shell: bash
               run: |
                   git push origin -d rc${{ steps.split-lts-tag.outputs._1 }}
