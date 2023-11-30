@@ -259,7 +259,7 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 					// If is right arrow, navigate to current active tabs + 1 (next item)
 					targetHeaderItemIndex = this.configs.StartingTab + 1;
 
-					// If in last item, change to the first
+					// If in last item, change to the first change
 					if (targetHeaderItemIndex >= this.getChildItems(Enum.ChildTypes.TabsHeaderItem).length) {
 						targetHeaderItemIndex = 0;
 					}
@@ -336,8 +336,8 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 				const _transformValue = _isVertical
 					? _activeElement.offsetTop
 					: OutSystems.OSUI.Utils.GetIsRTL()
-					? -(this._tabsHeaderElement.offsetWidth - _activeElement.offsetLeft - _activeElement.offsetWidth)
-					: _activeElement.offsetLeft;
+					  ? -(this._tabsHeaderElement.offsetWidth - _activeElement.offsetLeft - _activeElement.offsetWidth)
+					  : _activeElement.offsetLeft;
 
 				// Get the actual size of the current tabsHeader
 				const _elementRect = _activeElement.getBoundingClientRect();
