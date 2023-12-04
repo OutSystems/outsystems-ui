@@ -40,6 +40,8 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 		private _tabsContentElement: HTMLElement;
 		// Store the headerItems wrapper -- osui-tabs__header
 		private _tabsHeaderElement: HTMLElement;
+		// Store the tabs header enabled elements
+		private _tabsHeadersEnabled: Array<Patterns.TabsHeaderItem.ITabsHeaderItem>;
 		// Store the tabs-indicator element -- osui-tabs_indicator
 		private _tabsIndicatorElement: HTMLElement;
 
@@ -248,7 +250,9 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 		 * @memberof Tabs
 		 */
 		private _handleKeypressEvent(e: KeyboardEvent): void {
+			let currentTabHeader;
 			let targetHeaderItemIndex;
+
 			// Check if target is the header, to do not change tab on x arrow press
 			if (e.target !== this._activeTabHeaderElement.selfElement) {
 				return;
@@ -256,36 +260,40 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 
 			switch (e.key) {
 				case GlobalEnum.Keycodes.ArrowRight:
-					// If is right arrow, navigate to current active tabs + 1 (next item)
-					targetHeaderItemIndex = this.configs.StartingTab + 1;
+					// Get the index of active tab header for target index calculation
+					currentTabHeader = this._tabsHeadersEnabled.indexOf(this._activeTabHeaderElement);
 
-					// If in last item, change to the first change
-					if (targetHeaderItemIndex >= this.getChildItems(Enum.ChildTypes.TabsHeaderItem).length) {
-						targetHeaderItemIndex = 0;
-					}
+					// Set the target index element based on enabled tabhs header elements
+					targetHeaderItemIndex =
+						this._tabsHeadersEnabled[currentTabHeader + 1] === undefined
+							? this._tabsHeadersEnabled[0].getDataTab()
+							: this._tabsHeadersEnabled[currentTabHeader + 1].getDataTab();
 
 					this.changeTab(targetHeaderItemIndex, undefined, true);
+
 					break;
 				case GlobalEnum.Keycodes.ArrowLeft:
-					// If is left arrow, navigate to current active tabs - 1 (previous item)
-					targetHeaderItemIndex = this.configs.StartingTab - 1;
+					// Get the index of active tab header for target index
+					currentTabHeader = this._tabsHeadersEnabled.indexOf(this._activeTabHeaderElement);
 
-					// To prevent triggering changeTab, if already on first item
-					if (targetHeaderItemIndex < 0) {
-						// If in first item, change to the last
-						targetHeaderItemIndex = this.getChildItems(Enum.ChildTypes.TabsHeaderItem).length - 1;
-					}
+					// Set the target index element based on enabled tabhs header elements
+					targetHeaderItemIndex =
+						this._tabsHeadersEnabled[currentTabHeader - 1] === undefined
+							? this._tabsHeadersEnabled[this._tabsHeadersEnabled.length - 1].getDataTab()
+							: this._tabsHeadersEnabled[currentTabHeader - 1].getDataTab();
 
 					this.changeTab(targetHeaderItemIndex, undefined, true);
 					break;
 				case GlobalEnum.Keycodes.End:
-					targetHeaderItemIndex = this.getChildItems(Enum.ChildTypes.TabsHeaderItem).length - 1;
+					// Set the last enabled tabs header
+					targetHeaderItemIndex = this._tabsHeadersEnabled[this._tabsHeadersEnabled.length - 1].getDataTab();
 
 					this.changeTab(targetHeaderItemIndex, undefined, true);
 
 					break;
 				case GlobalEnum.Keycodes.Home:
-					targetHeaderItemIndex = 0;
+					// Set the first enabled tabs header
+					targetHeaderItemIndex = this._tabsHeadersEnabled[0].getDataTab();
 
 					this.changeTab(targetHeaderItemIndex, undefined, true);
 
@@ -421,6 +429,9 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 			// Here setting as false the param, as we don't want to set the data-tab here.
 			// That will be done by each pattern, as they are created
 			this._updateItemsConnection(false);
+
+			// Set the list of enabled TabsHeaders
+			this._updateListOfEnbaledTabsHeader();
 		}
 
 		/**
@@ -871,6 +882,18 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 		}
 
 		/**
+		 * Function that will update the list of enabled tabs headers
+		 *
+		 * @private
+		 * @memberof Tabs
+		 */
+		private _updateListOfEnbaledTabsHeader(): void {
+			this._tabsHeadersEnabled = (
+				this.getChildItems(Enum.ChildTypes.TabsHeaderItem) as Patterns.TabsHeaderItem.ITabsHeaderItem[]
+			).filter((element) => !(element.selfElement as HTMLButtonElement).disabled);
+		}
+
+		/**
 		 * Method that adds the necessary attributes and listeners to the Tabs header
 		 *
 		 * @protected
@@ -961,9 +984,12 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 					break;
 				case Enum.ChildNotifyActionType.DisabledHeaderItem:
 					this._setTabHeaderItemDisabledStatus(childItem.uniqueId, true);
+					this._updateListOfEnbaledTabsHeader();
+
 					break;
 				case Enum.ChildNotifyActionType.EnabledHeaderItem:
 					this._setTabHeaderItemDisabledStatus(childItem.uniqueId, false);
+					this._updateListOfEnbaledTabsHeader();
 					break;
 				case Enum.ChildNotifyActionType.RemovedContentItem:
 					this._removeContentItem(childItem.uniqueId);
