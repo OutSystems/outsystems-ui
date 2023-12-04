@@ -9,8 +9,10 @@ namespace OSFramework.OSUI.Helper {
 				Constants.Dot + Patterns.Dropdown.ServerSide.Enum.CssClass.NotValid,
 				Constants.Dot + Providers.OSUI.Dropdown.VirtualSelect.Enum.CssClass.NotValid,
 			];
+
 			// Arrange the class names list for selector
 			const joinClassNames = [notValidClassess].join(Constants.Comma);
+
 			// Get the first invalid input element
 			const invalidInput = element.querySelectorAll(joinClassNames)[0] as HTMLElement;
 
@@ -37,25 +39,37 @@ namespace OSFramework.OSUI.Helper {
 			isSmooth: boolean,
 			elementParentClass: string
 		): void {
-			// Set the scrollable element to add the ScrollEnd event
-			const activeScreenElement = Helper.Dom.ClassSelector(
-				document.body,
-				GlobalEnum.CssClassElements.ActiveScreen
-			);
-
-			// Set the temporary function for event of ScrollEnd, to focus on element after the scroll occur
-			const focusOnScrollEnd = () => {
-				element.focus();
-				activeScreenElement.removeEventListener(GlobalEnum.HTMLEvent.ScrollEnd, focusOnScrollEnd);
-			};
+			const browser = OSFramework.OSUI.Helper.DeviceInfo.GetBrowser();
 
 			OutSystems.OSUI.Utils.ScrollToElement(element.id, isSmooth, 0, elementParentClass);
 
-			// Add event on scrollable element, to focus on target element
-			activeScreenElement.addEventListener(GlobalEnum.HTMLEvent.ScrollEnd, focusOnScrollEnd);
+			// Set the element focus directly because the event scrollend isn't supported by safari or iOS
+			if (browser === GlobalEnum.Browser.safari || OSFramework.OSUI.Helper.DeviceInfo.IsIos) {
+				if (isSmooth) {
+					console.warn(
+						'Due to the unsupported scrollend event on Safari/iOS, the smooth transition is disabled and the invalid input will be focused directly.'
+					);
+				}
+				element.focus();
+			} else {
+				// Set the scrollable element to add the ScrollEnd event
+				const activeScreenElement = Helper.Dom.ClassSelector(
+					document.body,
+					GlobalEnum.CssClassElements.ActiveScreen
+				);
+
+				// Set the temporary function for event of ScrollEnd, to focus on element after the scroll occur
+				const focusOnScrollEnd = () => {
+					element.focus();
+					activeScreenElement.removeEventListener(GlobalEnum.HTMLEvent.ScrollEnd, focusOnScrollEnd);
+				};
+
+				// Add event on scrollable element, to focus on target element
+				activeScreenElement.addEventListener(GlobalEnum.HTMLEvent.ScrollEnd, focusOnScrollEnd);
+			}
 		}
 
-		// Method that will search for the closest element with ID
+		// Method that will search for the closest element with ID to valid the invalid inputs
 		private static _searchElementId(element: HTMLElement, isSmooth: boolean, elementParentClass: string): void {
 			const elementToSearch = element.parentElement;
 			if (elementToSearch.id !== Constants.EmptyString) {
@@ -84,7 +98,7 @@ namespace OSFramework.OSUI.Helper {
 						element = Helper.Dom.GetElementById(elementId);
 					}
 
-					// Wait for platform to add invalid classes
+					// Wait for invalid classes injection by platform to each input
 					Helper.AsyncInvocation(() => {
 						this._checkInvalidInputs(element, isSmooth, elementParentClass);
 					});
