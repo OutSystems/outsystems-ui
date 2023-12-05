@@ -1,3 +1,24 @@
+/* 
+* Global constants info
+**/
+const constants = {
+    envType: {
+        development: 'dev', 
+        production: 'prod'
+    },
+    // list of files to be exclued from a specific platform
+    excludeFromTsTranspile: {
+        O11: [
+            './src/scripts/OutSystems/OSUI/Utils/PreviewInDevices/**/*'
+        ]
+    },
+    // list of platftoms to compile and create scss files.
+    platforms: {
+        o11: 'O11',
+        odc: 'ODC',
+    }
+};
+
 // Store the default project specifications
 const specs = {
     "version": "2.18.2",
@@ -7,4 +28,6 @@ const specs = {
     "gitHub": "GitHub:\n • https://github.com/OutSystems/outsystems-ui",
 }
 
+// Expose sections info!
 exports.info = specs;
+exports.globalConsts = constants;
