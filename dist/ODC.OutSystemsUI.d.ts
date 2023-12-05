@@ -57,12 +57,13 @@ declare namespace OSFramework.OSUI.Constants {
             True: string;
         };
     };
+    const AllowPropagationAttr = "[data-allow-event-propagation]";
     const Dot = ".";
     const Comma = ",";
     const EnableLogMessages = false;
     const EmptyString = "";
     const FocusTrapIgnoreAttr = "ignore-focus-trap";
-    const FocusableElems = "a[href]:not([disabled]),[tabindex=\"0\"], button:not([disabled]), textarea:not([disabled]), input[type=\"text\"]:not([disabled]), input[type=\"radio\"]:not([disabled]), input[type=\"checkbox\"]:not([disabled]),input[type=\"submit\"]:not([disabled]), select:not([disabled])";
+    const FocusableElems = "a[href]:not([disabled]),[tabindex=\"0\"], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled])";
     const JavaScriptTypes: {
         Undefined: string;
         Boolean: string;
@@ -83,7 +84,7 @@ declare namespace OSFramework.OSUI.Constants {
     const AccessibilityHideElementClass = "wcag-hide-text";
     const IsRTLClass = "is-rtl";
     const NoTransition = "no-transition";
-    const OSUIVersion = "2.18.0";
+    const OSUIVersion = "2.18.2";
     const ZeroValue = 0;
 }
 declare namespace OSFramework.OSUI.ErrorCodes {
@@ -290,7 +291,8 @@ declare namespace OSFramework.OSUI.GlobalEnum {
         Name = "name",
         StatusBar = "data-status-bar-height",
         Style = "style",
-        Type = "type"
+        Type = "type",
+        Value = "value"
     }
     enum HTMLElement {
         Body = "body",
@@ -317,6 +319,7 @@ declare namespace OSFramework.OSUI.GlobalEnum {
         Prefix = "on",
         Resize = "resize",
         Scroll = "scroll",
+        ScrollEnd = "scrollend",
         TouchEnd = "touchend",
         TouchMove = "touchmove",
         TouchStart = "touchstart",
@@ -964,6 +967,7 @@ declare namespace OSFramework.OSUI.Helper {
         static GetTimeFromDate(_date: Date): string;
         static IsBeforeThan(date1: string, date2: string): boolean;
         static IsNull(date: string | Date): boolean;
+        static IsValid(date: string): boolean;
         static NormalizeDateTime(date: string | Date, normalizeToMax?: boolean): Date;
         static SetServerDateFormat(date: string): void;
         static get ServerFormat(): string;
@@ -3600,7 +3604,6 @@ declare namespace OSFramework.OSUI.Patterns.Tooltip {
         private _eventIconOnMouseLeave;
         private _eventOnBalloonClick;
         private _eventOnBlur;
-        private _eventOnBodyClick;
         private _eventOnClick;
         private _eventOnFocus;
         private _eventOnKeypress;
@@ -3613,6 +3616,7 @@ declare namespace OSFramework.OSUI.Patterns.Tooltip {
         private _isIconMouseEnter;
         private _isOpen;
         private _isOpenedByApi;
+        private _isSafari;
         private _platformEventOnToggleCallback;
         private _requestAnimationOnBodyScroll;
         private _requestAnimationOnWindowResize;
@@ -3628,7 +3632,6 @@ declare namespace OSFramework.OSUI.Patterns.Tooltip {
         private _onBalloonWrapperMouseEnter;
         private _onBalloonWrapperMouseLeave;
         private _onBlur;
-        private _onBodyClick;
         private _onClick;
         private _onFocus;
         private _onIconMouseEnter;
@@ -4962,6 +4965,7 @@ declare namespace Providers.OSUI.Datepicker.Flatpickr.SingleDate {
     class OSUIFlatpickrSingleDate extends AbstractFlatpickr<FlatpickrSingleDateConfig> {
         private _isUpdatedInitialDateByClientAction;
         constructor(uniqueId: string, configs: JSON);
+        private _checkInitialDate;
         protected onDateSelectedEvent(selectedDates: Array<Date>): void;
         protected prepareToAndRedraw(): void;
         protected todayBtnClick(event: MouseEvent): void;
@@ -4973,7 +4977,7 @@ declare namespace Providers.OSUI.Datepicker.Flatpickr.SingleDate {
 }
 declare namespace Providers.OSUI.Datepicker.Flatpickr.SingleDate {
     class FlatpickrSingleDateConfig extends AbstractFlatpickrConfig {
-        InitialDate: string;
+        InitialDate: string | Date;
         constructor(config: JSON);
         getProviderConfig(): FlatpickrOptions;
     }
