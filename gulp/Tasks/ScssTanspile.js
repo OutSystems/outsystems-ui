@@ -9,25 +9,25 @@ const rename = require("gulp-rename");
 const sass = require('gulp-sass')(require('sass'));
 const sourcemaps = require('gulp-sourcemaps');
 
-const envType = {'development':'dev.', 'production':''}
+const project = require('../ProjectSpecs/DefaultSpecs');
 const distFolder = './dist';
 const watchScssThemes = 'src/scss/*.scss';
 
 // Set as Development Mode
 function scssTranspileDev() {
-    return scssTranspile(envType.development);
+    return scssTranspile(project.globalConsts.envType.development);
 }
 
 // Set as Production Mode
 function scssTranspileProd() {
-    return scssTranspile(envType.production);
+    return scssTranspile(project.globalConsts.envType.production);
 }
 
 // Compile SCSS
 function scssTranspile(envMode) {
     let cssResult;
 
-    if(envMode === envType.development) {
+    if(envMode === project.globalConsts.envType.development) {
         cssResult = gulp
 			.src(watchScssThemes)
 			.pipe(sourcemaps.init())
@@ -40,7 +40,7 @@ function scssTranspile(envMode) {
 			)
 			.pipe(
 				rename({
-					prefix: envMode,
+					prefix: `${project.globalConsts.envType.development}.`,
 				})
 			)
 			.pipe(sourcemaps.write('.'))
@@ -53,9 +53,6 @@ function scssTranspile(envMode) {
                 overrideBrowserslist: ['last 10 versions']
             }))
             .pipe(removeEmptyLines())
-            .pipe(rename({
-                prefix: envMode,
-            }))
             .pipe(gulp.dest(distFolder));    
     }
 
