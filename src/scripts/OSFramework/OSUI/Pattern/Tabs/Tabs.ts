@@ -263,7 +263,7 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 					// Get the index of active tab header for target index calculation
 					currentTabHeader = this._tabsHeadersEnabled.indexOf(this._activeTabHeaderElement);
 
-					// Set the target index element based on enabled tabhs header elements
+					// Set the target index element based on enabled tabs header elements
 					targetHeaderItemIndex =
 						this._tabsHeadersEnabled[currentTabHeader + 1] === undefined
 							? this._tabsHeadersEnabled[0].getDataTab()
@@ -276,7 +276,7 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 					// Get the index of active tab header for target index
 					currentTabHeader = this._tabsHeadersEnabled.indexOf(this._activeTabHeaderElement);
 
-					// Set the target index element based on enabled tabhs header elements
+					// Set the target index element based on enabled tabs header elements
 					targetHeaderItemIndex =
 						this._tabsHeadersEnabled[currentTabHeader - 1] === undefined
 							? this._tabsHeadersEnabled[this._tabsHeadersEnabled.length - 1].getDataTab()
@@ -431,7 +431,7 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 			this._updateItemsConnection(false);
 
 			// Set the list of enabled TabsHeaders
-			this._updateListOfEnbaledTabsHeader();
+			this._updateListOfEnabledTabsHeader();
 		}
 
 		/**
@@ -887,7 +887,7 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 		 * @private
 		 * @memberof Tabs
 		 */
-		private _updateListOfEnbaledTabsHeader(): void {
+		private _updateListOfEnabledTabsHeader(): void {
 			this._tabsHeadersEnabled = (
 				this.getChildItems(Enum.ChildTypes.TabsHeaderItem) as Patterns.TabsHeaderItem.ITabsHeaderItem[]
 			).filter((element) => !(element.selfElement as HTMLButtonElement).disabled);
@@ -978,24 +978,26 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 					break;
 				case Enum.ChildNotifyActionType.AddHeaderItem:
 					this._addHeaderItem(childItem as Patterns.TabsHeaderItem.TabsHeaderItem);
+					this._updateListOfEnabledTabsHeader();
 					break;
 				case Enum.ChildNotifyActionType.Click:
 					this._tabHeaderItemHasBeenClicked(childItem.uniqueId);
 					break;
 				case Enum.ChildNotifyActionType.DisabledHeaderItem:
 					this._setTabHeaderItemDisabledStatus(childItem.uniqueId, true);
-					this._updateListOfEnbaledTabsHeader();
+					this._updateListOfEnabledTabsHeader();
 
 					break;
 				case Enum.ChildNotifyActionType.EnabledHeaderItem:
 					this._setTabHeaderItemDisabledStatus(childItem.uniqueId, false);
-					this._updateListOfEnbaledTabsHeader();
+					this._updateListOfEnabledTabsHeader();
 					break;
 				case Enum.ChildNotifyActionType.RemovedContentItem:
 					this._removeContentItem(childItem.uniqueId);
 					break;
 				case Enum.ChildNotifyActionType.RemovedHeaderItem:
 					this._removeHeaderItem(childItem.uniqueId);
+					this._updateListOfEnabledTabsHeader();
 					break;
 				case Enum.ChildNotifyActionType.UpdateIndicator:
 					this._handleTabIndicator();

@@ -395,6 +395,7 @@ var OSFramework;
                 HTMLEvent["Prefix"] = "on";
                 HTMLEvent["Resize"] = "resize";
                 HTMLEvent["Scroll"] = "scroll";
+                HTMLEvent["ScrollEnd"] = "scrollend";
                 HTMLEvent["TouchEnd"] = "touchend";
                 HTMLEvent["TouchMove"] = "touchmove";
                 HTMLEvent["TouchStart"] = "touchstart";
@@ -2860,11 +2861,26 @@ var OSFramework;
                     }
                 }
                 static _scrollToInvalidInput(element, isSmooth, elementParentClass) {
+                    const browser = OSFramework.OSUI.Helper.DeviceInfo.GetBrowser();
                     OutSystems.OSUI.Utils.ScrollToElement(element.id, isSmooth, 0, elementParentClass);
+                    if (browser === OSUI.GlobalEnum.Browser.safari || OSFramework.OSUI.Helper.DeviceInfo.IsIos) {
+                        if (isSmooth) {
+                            console.warn('Due to the unsupported scrollend event on Safari/iOS, the smooth transition is disabled and the invalid input will be focused directly.');
+                        }
+                        element.focus();
+                    }
+                    else {
+                        const activeScreenElement = Helper.Dom.ClassSelector(document.body, OSUI.GlobalEnum.CssClassElements.ActiveScreen);
+                        const focusOnScrollEnd = () => {
+                            element.focus();
+                            activeScreenElement.removeEventListener(OSUI.GlobalEnum.HTMLEvent.ScrollEnd, focusOnScrollEnd);
+                        };
+                        activeScreenElement.addEventListener(OSUI.GlobalEnum.HTMLEvent.ScrollEnd, focusOnScrollEnd);
+                    }
                 }
                 static _searchElementId(element, isSmooth, elementParentClass) {
                     const elementToSearch = element.parentElement;
-                    if (elementToSearch.id !== '') {
+                    if (elementToSearch.id !== OSUI.Constants.EmptyString) {
                         this._scrollToInvalidInput(elementToSearch, isSmooth, elementParentClass);
                     }
                     else {
@@ -2876,10 +2892,12 @@ var OSFramework;
                         errorCode: OutSystems.OSUI.ErrorCodes.Utilities.FailGetInvalidInput,
                         callback: () => {
                             let element = document.body;
-                            if (elementId !== '') {
+                            if (elementId !== OSUI.Constants.EmptyString) {
                                 element = Helper.Dom.GetElementById(elementId);
                             }
-                            this._checkInvalidInputs(element, isSmooth, elementParentClass);
+                            Helper.AsyncInvocation(() => {
+                                this._checkInvalidInputs(element, isSmooth, elementParentClass);
+                            });
                         },
                     });
                     return result;
@@ -10204,31 +10222,34 @@ var OSFramework;
                         return newTabIndex;
                     }
                     _handleKeypressEvent(e) {
+                        let currentTabHeader;
                         let targetHeaderItemIndex;
                         if (e.target !== this._activeTabHeaderElement.selfElement) {
                             return;
                         }
                         switch (e.key) {
                             case OSUI.GlobalEnum.Keycodes.ArrowRight:
-                                targetHeaderItemIndex = this.configs.StartingTab + 1;
-                                if (targetHeaderItemIndex >= this.getChildItems(Tabs_1.Enum.ChildTypes.TabsHeaderItem).length) {
-                                    targetHeaderItemIndex = 0;
-                                }
+                                currentTabHeader = this._tabsHeadersEnabled.indexOf(this._activeTabHeaderElement);
+                                targetHeaderItemIndex =
+                                    this._tabsHeadersEnabled[currentTabHeader + 1] === undefined
+                                        ? this._tabsHeadersEnabled[0].getDataTab()
+                                        : this._tabsHeadersEnabled[currentTabHeader + 1].getDataTab();
                                 this.changeTab(targetHeaderItemIndex, undefined, true);
                                 break;
                             case OSUI.GlobalEnum.Keycodes.ArrowLeft:
-                                targetHeaderItemIndex = this.configs.StartingTab - 1;
-                                if (targetHeaderItemIndex < 0) {
-                                    targetHeaderItemIndex = this.getChildItems(Tabs_1.Enum.ChildTypes.TabsHeaderItem).length - 1;
-                                }
+                                currentTabHeader = this._tabsHeadersEnabled.indexOf(this._activeTabHeaderElement);
+                                targetHeaderItemIndex =
+                                    this._tabsHeadersEnabled[currentTabHeader - 1] === undefined
+                                        ? this._tabsHeadersEnabled[this._tabsHeadersEnabled.length - 1].getDataTab()
+                                        : this._tabsHeadersEnabled[currentTabHeader - 1].getDataTab();
                                 this.changeTab(targetHeaderItemIndex, undefined, true);
                                 break;
                             case OSUI.GlobalEnum.Keycodes.End:
-                                targetHeaderItemIndex = this.getChildItems(Tabs_1.Enum.ChildTypes.TabsHeaderItem).length - 1;
+                                targetHeaderItemIndex = this._tabsHeadersEnabled[this._tabsHeadersEnabled.length - 1].getDataTab();
                                 this.changeTab(targetHeaderItemIndex, undefined, true);
                                 break;
                             case OSUI.GlobalEnum.Keycodes.Home:
-                                targetHeaderItemIndex = 0;
+                                targetHeaderItemIndex = this._tabsHeadersEnabled[0].getDataTab();
                                 this.changeTab(targetHeaderItemIndex, undefined, true);
                                 break;
                         }
@@ -10289,6 +10310,7 @@ var OSFramework;
                             this._activeTabContentElement.setIsActive();
                         }
                         this._updateItemsConnection(false);
+                        this._updateListOfEnabledTabsHeader();
                     }
                     _removeContentItem(childContentId) {
                         const childContentItem = this.getChild(childContentId);
@@ -10498,6 +10520,9 @@ var OSFramework;
                             }
                         });
                     }
+                    _updateListOfEnabledTabsHeader() {
+                        this._tabsHeadersEnabled = this.getChildItems(Tabs_1.Enum.ChildTypes.TabsHeaderItem).filter((element) => !element.selfElement.disabled);
+                    }
                     setA11YProperties() {
                         OSUI.Helper.A11Y.RoleTabList(this._tabsHeaderElement.firstElementChild);
                         OSUI.Helper.A11Y.AriaHiddenTrue(this._tabsIndicatorElement);
@@ -10533,21 +10558,25 @@ var OSFramework;
                                 break;
                             case Tabs_1.Enum.ChildNotifyActionType.AddHeaderItem:
                                 this._addHeaderItem(childItem);
+                                this._updateListOfEnabledTabsHeader();
                                 break;
                             case Tabs_1.Enum.ChildNotifyActionType.Click:
                                 this._tabHeaderItemHasBeenClicked(childItem.uniqueId);
                                 break;
                             case Tabs_1.Enum.ChildNotifyActionType.DisabledHeaderItem:
                                 this._setTabHeaderItemDisabledStatus(childItem.uniqueId, true);
+                                this._updateListOfEnabledTabsHeader();
                                 break;
                             case Tabs_1.Enum.ChildNotifyActionType.EnabledHeaderItem:
                                 this._setTabHeaderItemDisabledStatus(childItem.uniqueId, false);
+                                this._updateListOfEnabledTabsHeader();
                                 break;
                             case Tabs_1.Enum.ChildNotifyActionType.RemovedContentItem:
                                 this._removeContentItem(childItem.uniqueId);
                                 break;
                             case Tabs_1.Enum.ChildNotifyActionType.RemovedHeaderItem:
                                 this._removeHeaderItem(childItem.uniqueId);
+                                this._updateListOfEnabledTabsHeader();
                                 break;
                             case Tabs_1.Enum.ChildNotifyActionType.UpdateIndicator:
                                 this._handleTabIndicator();

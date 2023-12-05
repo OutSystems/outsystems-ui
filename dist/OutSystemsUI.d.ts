@@ -319,6 +319,7 @@ declare namespace OSFramework.OSUI.GlobalEnum {
         Prefix = "on",
         Resize = "resize",
         Scroll = "scroll",
+        ScrollEnd = "scrollend",
         TouchEnd = "touchend",
         TouchMove = "touchmove",
         TouchStart = "touchstart",
@@ -3343,6 +3344,7 @@ declare namespace OSFramework.OSUI.Patterns.Tabs {
         private _requestAnimationFrameOnIndicatorResize;
         private _tabsContentElement;
         private _tabsHeaderElement;
+        private _tabsHeadersEnabled;
         private _tabsIndicatorElement;
         constructor(uniqueId: string, configs: JSON);
         private _addContentItem;
@@ -3372,6 +3374,7 @@ declare namespace OSFramework.OSUI.Patterns.Tabs {
         private _triggerOnChangeEvent;
         private _unsetDragObserver;
         private _updateItemsConnection;
+        private _updateListOfEnabledTabsHeader;
         protected setA11YProperties(): void;
         protected setCallbacks(): void;
         protected setHtmlElements(): void;
