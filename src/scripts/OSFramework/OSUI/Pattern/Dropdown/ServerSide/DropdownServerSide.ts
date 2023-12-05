@@ -8,8 +8,6 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		>
 		implements IDropdownServerSide
 	{
-		// Store the HTML element for the ActiveScreen where a status class will be updated accoding balloon is open or not.
-		private _activeScreenElement: HTMLElement;
 		// Store the HTML element for the DropdownBalloonContainer
 		private _balloonContainerElement: HTMLElement;
 		// Store the HTML element for the DropdownBalloonContent
@@ -199,11 +197,6 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			throw new Error(
 				`${ErrorCodes.Dropdown.HasNoImplementation.code}: ${ErrorCodes.Dropdown.HasNoImplementation.message}`
 			);
-		}
-
-		// Move ballon element to active screen element, outside of the pattern context
-		private _moveBallonElement(): void {
-			Helper.Dom.Move(this._balloonWrapperElement, this._activeScreenElement);
 		}
 
 		// Close when click outside of pattern
@@ -507,9 +500,8 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 						this._selfElementBoundingClientRect.x + this._selfElementBoundingClientRect.width &&
 					selfElement.y === this._selfElementBoundingClientRect.y)
 			)
-
-			// Store the new selElement coordinates
-			this._selfElementBoundingClientRect.x = selfElement.x;
+				// Store the new selElement coordinates
+				this._selfElementBoundingClientRect.x = selfElement.x;
 			this._selfElementBoundingClientRect.y = selfElement.y;
 
 			// Set Css inline variables
@@ -649,8 +641,8 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 					Event.DOMEvents.Listeners.Type.BodyOnClick,
 					this._eventOnBodyClick
 				);
-				
-				if(Helper.DeviceInfo.IsPhone === false) {
+
+				if (Helper.DeviceInfo.IsPhone === false) {
 					// Add the ScreenScroll callback that will be used to update the balloon coodinates
 					Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
 						Event.DOMEvents.Listeners.Type.ScreenOnScroll,
@@ -730,7 +722,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 				this._eventOnBodyClick
 			);
 
-			if(Helper.DeviceInfo.IsPhone === false) {
+			if (Helper.DeviceInfo.IsPhone === false) {
 				Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
 					Event.DOMEvents.Listeners.Type.ScreenOnScroll,
 					this._eventOnScreenScroll
@@ -937,10 +929,6 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
 		 */
 		protected setHtmlElements(): void {
-			this._activeScreenElement = Helper.Dom.ClassSelector(
-				document.body,
-				GlobalEnum.CssClassElements.ActiveScreen
-			);
 			this._balloonFooterElement = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.BalloonFooter);
 			this._balloonFocusableElemsInFooter = Helper.Dom.TagSelectorAll(
 				this._balloonFooterElement,
@@ -971,8 +959,6 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			this._setUpEvents();
 			// Add CSS classes
 			this._setCssClasses();
-			// Ensure that the Move only happens after HTML elements has been set!
-			this._moveBallonElement();
 			// Set the balloon coordinates
 			this._setBalloonCoordinates();
 		}
@@ -1010,7 +996,6 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			this._balloonWrapperElement.remove();
 
 			// unset the local properties
-			this._activeScreenElement = undefined;
 			this._balloonContainerElement = undefined;
 			this._balloonFocusableElemsInFooter = [];
 			this._balloonFooterElement = undefined;

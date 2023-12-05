@@ -12699,7 +12699,7 @@ html[data-uieditorversion^="1"] .wizard-wrapper-item{
   font:normal normal normal 20px/1 FontAwesome;
   height:100%;
   pointer-events:none;
-  position:absolute;
+  position:fixed;
   right:16px;
   top:0;
   -webkit-transition:-webkit-transform 200ms ease-in-out;
