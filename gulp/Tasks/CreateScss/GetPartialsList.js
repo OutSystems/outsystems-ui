@@ -1,20 +1,18 @@
 const patterns = require('../../ProjectSpecs/Patterns/#All');
+const project = require('../../ProjectSpecs/DefaultSpecs');
 const scssStructure = require('../../ProjectSpecs/ScssStructure/#All');
-const constants = require('../../ProjectSpecs/ScssStructure/#Constants');
-
-const envType = {'development':'dev', 'production':'prod'}
 
 // Store the text to be exposed!
 let partialsListText;
 
 function createPartialsListDev(platformType) {
     partialsListText = '';
-    return createPartialsList(envType.development, platformType);
+    return createPartialsList(project.globalConsts.envType.development, platformType);
 }
 
 function createPartialsListProd(platformType) {
     partialsListText = '';
-    return createPartialsList(envType.production, platformType);
+    return createPartialsList(project.globalConsts.envType.production, platformType);
 }
 
 // Method used to create the import text
@@ -103,11 +101,11 @@ function createPartialsList(env, platformType) {
                             const assetInfo = patterns.all[subAsset.key];
 
                             if (
-                                env === envType.development ||
+                                env === project.globalConsts.envType.development ||
                                 assetInfo.inDevelopment === undefined | false ||
                                 assetInfo.inDevelopment === false ||
                                 (
-                                    env = envType.production &&
+                                    env = project.globalConsts.envType.production &&
                                     assetInfo.inDevelopment &&
                                     assetInfo.inDevelopment === false
                                 )
@@ -132,7 +130,7 @@ function createPartialsList(env, platformType) {
                                     for (const assetItem of assetInfo.assets) {
 
                                         if (
-                                            env === envType.development || assetItem.inDevelopment === false
+                                            env === project.globalConsts.envType.development || assetItem.inDevelopment === false
                                         ) {
                                             if (assetItem.scss) {
                                                 partialsListText += createSectionCommentTitle(`${sectionIndex}.${assetIndex}.${subAssetIndex}.${assetInfoItemIndex} ${assetItem.name}`, 2);

@@ -1,4 +1,4 @@
-const Constants = require('./#Constants');
+const project = require('../DefaultSpecs');
 
 /* 
 * Section Info
@@ -39,7 +39,7 @@ const sectionInfo = {
         {
             "name": "Provider Login Button",
             "path": "04-patterns/06-utilities/provider-login-button",
-            "platform": Constants.info.platforms.odc,
+            "platform": project.globalConsts.platforms.odc,
         }
     ]
 };

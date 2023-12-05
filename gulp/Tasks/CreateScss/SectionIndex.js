@@ -2,19 +2,17 @@ const project = require('../../ProjectSpecs/DefaultSpecs');
 const patterns = require('../../ProjectSpecs/Patterns/#All');
 const scssStructure = require('../../ProjectSpecs/ScssStructure/#All');
 
-const envType = {'development':'dev', 'production':'prod'}
-
 // Store text that will be added as SectionIndex
 let indexSection;
 
 function createIndexSectionDev(platformType) {
     indexSection = '';
-    return createIndexSection(envType.development, platformType);
+    return createIndexSection(project.globalConsts.envType.development, platformType);
 }
 
 function createIndexSectionProd(platformType) {
     indexSection = '';
-    return createIndexSection(envType.production, platformType);
+    return createIndexSection(project.globalConsts.envType.production, platformType);
 }
 
 // Used to define the initialization text of each line
@@ -49,7 +47,7 @@ function createIndexSection(env, platformType) {
     // Start Index Section
     indexSection += ``;
     indexSection += `/*!\n`;
-    indexSection += `${project.info.name} ${project.info.version} • ${platformType.toUpperCase()} Platform\n`;
+    indexSection += `${project.info.name} ${project.info.version} • ${platformType} Platform\n`;
     if (project.info.description !== '') {
         indexSection += `${project.info.description}\n`;
     }
@@ -98,11 +96,11 @@ function createIndexSection(env, platformType) {
                                 const assetInfo = patterns.all[subAsset.key];
 
                                 if (
-                                    env === envType.development ||
+                                    env === project.globalConsts.envType.development ||
                                     assetInfo.inDevelopment === undefined | false ||
                                     assetInfo.inDevelopment === false ||
                                     (
-                                        env = envType.production &&
+                                        env = project.globalConsts.envType.production &&
                                         assetInfo.inDevelopment &&
                                         assetInfo.inDevelopment === false
                                     )
@@ -123,7 +121,7 @@ function createIndexSection(env, platformType) {
                                         for (const assetItem of assetInfo.assets) {
 
                                             if (
-                                                env === envType.development || assetItem.inDevelopment === false
+                                                env === project.globalConsts.envType.development || assetItem.inDevelopment === false
                                             ) {
                                                 if (assetItem.scss) {
                                                     indexSection += getLineText(`${sectionIndex}.${assetIndex}.${subAssetIndex}.${assetInfoItemIndex} ${assetItem.name}`, 3);
