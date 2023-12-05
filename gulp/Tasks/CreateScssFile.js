@@ -1,20 +1,15 @@
 const fs = require('fs');
 
-const getSectionIndexText = require('./CreateScss/SectionIndex');
 const getPartialsList = require('./CreateScss/GetPartialsList');
-const constants = require('../ProjectSpecs/ScssStructure/#Constants');
-
-const envType = {'development':'dev', 'production':'prod'}
-let env = '';
+const getSectionIndexText = require('./CreateScss/SectionIndex');
+const project = require('../ProjectSpecs/DefaultSpecs');
 
 function setDevEnvironment (cb) {
-	env = envType.development;
-	createScssFile(cb);
+	createScssFile(cb, project.globalConsts.envType.development);
 }
 
 function setProdEnvironment (cb) {
-	env = envType.production;
-	createScssFile(cb);
+	createScssFile(cb, project.globalConsts.envType.production);
 }
 
 // Create a file note to give important context!
@@ -44,23 +39,21 @@ function getNotesText () {
 }
 
 // Memthod that will create the file content text and return it depending on platform type
-function getFileText(platformType) {
+function getFileText(platformType, envType) {
 	// Store the Section Index generated text
-	const sectionIndexText = env === envType.production ? getSectionIndexText.textProd(platformType) : getSectionIndexText.textDev(platformType);
+	const sectionIndexText = envType === project.globalConsts.envType.production ? getSectionIndexText.textProd(platformType) : getSectionIndexText.textDev(platformType);
 	// Store the Partials List generated text
-	const partialsText = env === envType.production ? getPartialsList.textProd(platformType) : getPartialsList.textDev(platformType);
+	const partialsText = envType === project.globalConsts.envType.production ? getPartialsList.textProd(platformType) : getPartialsList.textDev(platformType);
 	// Combine text to create the hole file
 	return `${getNotesText()}\n${sectionIndexText}\n${partialsText}`;
 }
 
 // Method used to Create SCSS file structure dynamically
-function createScssFile(cb) {
-    // Set/Update the SCSS file with the generated code for the O11 platform
-    fs.writeFileSync(`./src/scss/O11.OutSystemsUI.scss`, getFileText(constants.info.platforms.o11), 'utf8');
-
-    // Set/Update the SCSS file with the generated code for the ODC platform
-    fs.writeFileSync(`./src/scss/ODC.OutSystemsUI.scss`, getFileText(constants.info.platforms.odc), 'utf8');
-
+function createScssFile(cb, envType) {
+	const pts = project.globalConsts.platforms;
+	for(const pt in pts) {
+        fs.writeFileSync(`./src/scss/${pts[pt]}.OutSystemsUI.scss`, getFileText(pts[pt], envType), 'utf8');
+    }
 	cb();
 }
 
