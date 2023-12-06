@@ -193,6 +193,7 @@ declare namespace OSFramework.OSUI.GlobalEnum {
         MainContent = "main-content",
         MenuLinks = "app-menu-links",
         Placeholder = "ph",
+        Popup = "popup-dialog",
         SkipContent = "skip-nav"
     }
     enum CSSSelectors {
@@ -319,6 +320,7 @@ declare namespace OSFramework.OSUI.GlobalEnum {
         Prefix = "on",
         Resize = "resize",
         Scroll = "scroll",
+        ScrollEnd = "scrollend",
         TouchEnd = "touchend",
         TouchMove = "touchmove",
         TouchStart = "touchstart",
@@ -1035,6 +1037,7 @@ declare namespace OSFramework.OSUI.Helper {
         static GetElementById(id: string): HTMLElement;
         static GetElementByUniqueId(uniqueId: string): HTMLElement;
         static GetFocusableElements(element: HTMLElement): HTMLElement[];
+        static IsInsidePopupWidget(element: HTMLElement): boolean;
         static Move(element: HTMLElement, target: HTMLElement): void;
         static SetInputValue(inputElem: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement, value: string): void;
         static TagSelector(element: HTMLElement, htmlTag: string): HTMLElement | undefined;
@@ -1934,6 +1937,7 @@ declare namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
         private _hasA11yEnabled;
         private _intersectionObserver;
         private _isBlocked;
+        private _isInsidePopup;
         private _isOpen;
         private _platformEventOnToggleCallback;
         private _selectValuesWrapper;
@@ -2033,6 +2037,7 @@ declare namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide.Enum {
         BalloonWrapper = "osui-dropdown-serverside__balloon-wrapper",
         ErrorMessage = "osui-dropdown-serverside-error-message",
         IsDisabled = "osui-dropdown-serverside--is-disabled",
+        IsInsidePopup = "osui-dropdown-serverside--is-inside-popup",
         IsOpened = "osui-dropdown-serverside--is-opened",
         IsVisible = "osui-dropdown-serverside-visible",
         NotValid = "osui-dropdown-serverside--not-valid",

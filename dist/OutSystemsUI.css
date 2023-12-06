@@ -12699,7 +12699,7 @@ html[data-uieditorversion^="1"] .wizard-wrapper-item{
   font:normal normal normal 20px/1 FontAwesome;
   height:100%;
   pointer-events:none;
-  position:absolute;
+  position:fixed;
   right:16px;
   top:0;
   -webkit-transition:-webkit-transform 200ms ease-in-out;
@@ -12939,6 +12939,11 @@ html[data-uieditorversion^="1"] .wizard-wrapper-item{
   border-color:var(--color-neutral-4);
   color:var(--color-neutral-6);
   pointer-events:none;
+}
+.osui-dropdown-serverside--is-inside-popup .osui-dropdown-serverside__balloon-wrapper{
+  top:calc(var(--osui-dropdown-ss-top) + var(--osui-dropdown-ss-input-height) + 4px);
+  position:fixed;
+  overflow:visible;
 }
 .osui-dropdown-serverside--not-valid .osui-dropdown-serverside__selected-values-wrapper{
   border-color:var(--color-error);
