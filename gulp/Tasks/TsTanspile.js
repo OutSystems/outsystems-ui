@@ -10,21 +10,7 @@ const project = require('../ProjectSpecs/DefaultSpecs');
 let defaultTsConfigText = '';
 let filesPath = {};
 
-// Method that will handle the end of tsCompilation
-function onTsCompileFinish(platformType, cb) {
-    const pts = project.globalConsts.platforms;
-    if(platformType === pts[Object.keys(pts)[Object.keys(pts).length-1]]) {
-        cb();
-    }
-}
-
-// Update tsConfig after the compilation in order to ensure it will not be changed dynamically
-function rollBackTsConfigFile() {
-	// Update file with the default text!
-	fs.writeFileSync('tsconfig.json', defaultTsConfigText, 'utf8');
-    defaultTsConfigText = '';
-}
-
+// Method that will check if platformType has been defined through npm inline variable. If yes, that's the one to be tackled
 function getDefaultPlatformType(platformType) {
     const pt = {
         error: false,
@@ -35,8 +21,8 @@ function getDefaultPlatformType(platformType) {
     // Check if a platformType has been passed as an npm inline script value
     if(process.env.npm_config_platform !== undefined) {
         if(project.globalConsts.platforms[process.env.npm_config_platform] === undefined) {
-            console.log(`Given platform '${process.env.npm_config_platform}' does not exist. Plaforms availabe:\n• ${Object.keys(project.globalConsts.platforms).join("\n• ")}`);
             pt.error = true;
+            pt.errorMessage = `Given platform '${process.env.npm_config_platform}' does not exist. Plaforms availabe:\n • ${Object.keys(project.globalConsts.platforms).join("\n • ")}`
         } else {
             pt.type = process.env.npm_config_platform;
             pt.shouldCreateAll = false;
@@ -48,24 +34,42 @@ function getDefaultPlatformType(platformType) {
     return pt;
 }
 
+// Method that will handle the end of tsCompilation
+function onTsCompileFinish(platformType, cb, shouldCreateAll) {
+    const pts = project.globalConsts.platforms;
+    if(shouldCreateAll === false || platformType === pts[Object.keys(pts)[Object.keys(pts).length-1]]) {
+        cb();
+    }
+}
+
+// Update tsConfig after the compilation in order to ensure it will not be changed dynamically
+function rollBackTsConfigFile() {
+	// Update file with the default text!
+	fs.writeFileSync('tsconfig.json', defaultTsConfigText, 'utf8');
+    defaultTsConfigText = '';
+}
+
 // Compile TypeScript
 function tsTranspile(cb, envMode, platformType) {
-    console.log(getDefaultPlatformType(platformType));
-
-    // Set the default platformType
-    const pt = platformType !== undefined ? platformType : Object.keys(project.globalConsts.platforms)[0];
+    // Store the default platformType
+    const pt = getDefaultPlatformType(platformType);
+    // Check if platformTye exist and it's valid
+    if(pt.error) {
+        console.log(`\n⛔️ ERROR: ${pt.errorMessage}\n`);
+        return;
+    }
     // Set filesPath accordingly as well
-    filesPath[pt] = `${distFolder}/${envMode === project.globalConsts.envType.production ? '' : envMode + "."}${project.globalConsts.platforms[pt]}.OutSystemsUI.js`;
+    filesPath[pt.type] = `${distFolder}/${envMode === project.globalConsts.envType.production ? '' : envMode + "."}${project.globalConsts.platforms[pt.type]}.OutSystemsUI.js`;
     // Update tsConfig file and do the Ts compilation accordingly
-    updateTsConfigFile(cb, envMode, project.globalConsts.platforms[pt]);
+    updateTsConfigFile(cb, envMode, project.globalConsts.platforms[pt.type], pt.shouldCreateAll);
     // Check if there is still any pending platform to tackle
-    if(pt !== Object.keys(project.globalConsts.platforms)[Object.keys(project.globalConsts.platforms).length-1]) {
-        tsTranspile(cb, envMode, Object.keys(project.globalConsts.platforms)[(Object.keys(project.globalConsts.platforms).indexOf(pt)+1)]);
+    if(pt.shouldCreateAll && pt.type !== Object.keys(project.globalConsts.platforms)[Object.keys(project.globalConsts.platforms).length-1]) {
+        tsTranspile(cb, envMode, Object.keys(project.globalConsts.platforms)[(Object.keys(project.globalConsts.platforms).indexOf(pt.type)+1)]);
     }
 }
 
 // Method that will trigger the transpile of Ts according if it's development or production mode and platform type (O11 or ODC)
-async function tsTranspileBasedOnPlatform(cb, envMode, platformType) {
+async function tsTranspileBasedOnPlatform(cb, envMode, platformType, shouldCreateAll) {
     let tsProject = ts.createProject('tsconfig.json', {
         outDir: distFolder,
         declaration: envMode === project.globalConsts.envType.production ? true : false,
@@ -80,7 +84,7 @@ async function tsTranspileBasedOnPlatform(cb, envMode, platformType) {
             .pipe(sourcemaps.write("."))
             .pipe(gulp.dest(distFolder))
             .on('finish', () => {
-				onTsCompileFinish(platformType, cb);
+				onTsCompileFinish(platformType, cb, shouldCreateAll);
 			});
     } else {
         tsProject
@@ -88,7 +92,7 @@ async function tsTranspileBasedOnPlatform(cb, envMode, platformType) {
             .pipe(tsProject())
             .pipe(gulp.dest(distFolder))
             .on('finish', () => {
-                onTsCompileFinish(platformType, cb);
+                onTsCompileFinish(platformType, cb, shouldCreateAll);
 			});
     }
 
@@ -138,7 +142,7 @@ function updateFwkInfo(cb) {
 }
 
 // Method that will update the tsConfig file in order to set the exclude files under given platformType
-function updateTsConfigFile(cb, envMode, platformType) {
+function updateTsConfigFile(cb, envMode, platformType, shouldCreateAll) {
 	// Check if there are anything that should be ignored
     if(project.globalConsts.excludeFromTsTranspile[platformType] !== undefined) {
         // Get the text from tsConfig file
@@ -154,7 +158,7 @@ function updateTsConfigFile(cb, envMode, platformType) {
 	    fs.writeFileSync('tsconfig.json', code, 'utf8');
 	}
 
-    tsTranspileBasedOnPlatform(cb, envMode, platformType);
+    tsTranspileBasedOnPlatform(cb, envMode, platformType, shouldCreateAll);
 }
 
 // TypeScript Transpile Task
