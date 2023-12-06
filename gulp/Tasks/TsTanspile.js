@@ -1,8 +1,8 @@
 const gulp = require('gulp');
 const {series} = require('gulp');
 const fs = require('fs');
-const ts = require('gulp-typescript');
 const sourcemaps = require('gulp-sourcemaps');
+const ts = require('gulp-typescript');
 
 const distFolder = './dist';
 const project = require('../ProjectSpecs/DefaultSpecs');
@@ -25,8 +25,33 @@ function rollBackTsConfigFile() {
     defaultTsConfigText = '';
 }
 
+function getDefaultPlatformType(platformType) {
+    const pt = {
+        error: false,
+        shouldCreateAll: true,
+        type: '',
+    }
+
+    // Check if a platformType has been passed as an npm inline script value
+    if(process.env.npm_config_platform !== undefined) {
+        if(project.globalConsts.platforms[process.env.npm_config_platform] === undefined) {
+            console.log(`Given platform '${process.env.npm_config_platform}' does not exist. Plaforms availabe:\n• ${Object.keys(project.globalConsts.platforms).join("\n• ")}`);
+            pt.error = true;
+        } else {
+            pt.type = process.env.npm_config_platform;
+            pt.shouldCreateAll = false;
+        }
+    } else {
+        pt.type = platformType !== undefined ? platformType : Object.keys(project.globalConsts.platforms)[0];
+    }
+
+    return pt;
+}
+
 // Compile TypeScript
 function tsTranspile(cb, envMode, platformType) {
+    console.log(getDefaultPlatformType(platformType));
+
     // Set the default platformType
     const pt = platformType !== undefined ? platformType : Object.keys(project.globalConsts.platforms)[0];
     // Set filesPath accordingly as well

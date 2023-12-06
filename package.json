@@ -4,9 +4,9 @@
 	"description": "OutSystems UI Framework",
 	"license": "BSD-3-Clause",
 	"scripts": {
-		"build": "gulp createProduction && npm run lintfix && npm run lint",
+		"build": "gulp createProduction --platform && npm run lintfix && npm run lint",
 		"create-osui-scss": "gulp updateScssFile",
-		"dev": "gulp startDevelopment",
+		"dev": "gulp startDevelopment --platform",
 		"docs": "npx typedoc",
 		"lint": "eslint . --ext .ts",
 		"lintfix": "eslint . --fix --ext .ts",
