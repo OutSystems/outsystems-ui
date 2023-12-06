@@ -112,7 +112,9 @@ $balloonMobileTopMargin: 5vh;
 			overflow: hidden;
 			// --osui-dropdown-ss-thresholdanimateval is the value used as a threshold to animate down the balloon
 			transform: translateY(calc(-1 * var(--osui-dropdown-ss-thresholdanimateval)));
-			transition: opacity 250ms ease, transform 300ms ease-in-out;
+			transition:
+				opacity 250ms ease,
+				transform 300ms ease-in-out;
 
 			// Service Studio Preview
 			& {

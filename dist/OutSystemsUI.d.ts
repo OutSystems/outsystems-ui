@@ -319,7 +319,6 @@ declare namespace OSFramework.OSUI.GlobalEnum {
         Prefix = "on",
         Resize = "resize",
         Scroll = "scroll",
-        ScrollEnd = "scrollend",
         TouchEnd = "touchend",
         TouchMove = "touchmove",
         TouchStart = "touchstart",
@@ -1907,6 +1906,7 @@ declare namespace OSFramework.OSUI.Patterns.Dropdown {
 }
 declare namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
     class OSUIDropdownServerSide extends Patterns.AbstractParent<OSUIDropdownServerSideConfig, Patterns.DropdownServerSideItem.IDropdownServerSideItem> implements IDropdownServerSide {
+        private _activeScreenElement;
         private _balloonContainerElement;
         private _balloonContentElement;
         private _balloonFocusableElemsInFooter;
@@ -1947,6 +1947,7 @@ declare namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
         private _getRecommendedPosition;
         private _handleFocusTrap;
         private _hasNoImplementation;
+        private _moveBallonElement;
         private _onBodyClick;
         private _onKeyboardPressed;
         private _onOrientationChange;

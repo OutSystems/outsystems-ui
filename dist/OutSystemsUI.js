@@ -395,7 +395,6 @@ var OSFramework;
                 HTMLEvent["Prefix"] = "on";
                 HTMLEvent["Resize"] = "resize";
                 HTMLEvent["Scroll"] = "scroll";
-                HTMLEvent["ScrollEnd"] = "scrollend";
                 HTMLEvent["TouchEnd"] = "touchend";
                 HTMLEvent["TouchMove"] = "touchmove";
                 HTMLEvent["TouchStart"] = "touchstart";
@@ -2861,26 +2860,11 @@ var OSFramework;
                     }
                 }
                 static _scrollToInvalidInput(element, isSmooth, elementParentClass) {
-                    const browser = OSFramework.OSUI.Helper.DeviceInfo.GetBrowser();
                     OutSystems.OSUI.Utils.ScrollToElement(element.id, isSmooth, 0, elementParentClass);
-                    if (browser === OSUI.GlobalEnum.Browser.safari || OSFramework.OSUI.Helper.DeviceInfo.IsIos) {
-                        if (isSmooth) {
-                            console.warn('Due to the unsupported scrollend event on Safari/iOS, the smooth transition is disabled and the invalid input will be focused directly.');
-                        }
-                        element.focus();
-                    }
-                    else {
-                        const activeScreenElement = Helper.Dom.ClassSelector(document.body, OSUI.GlobalEnum.CssClassElements.ActiveScreen);
-                        const focusOnScrollEnd = () => {
-                            element.focus();
-                            activeScreenElement.removeEventListener(OSUI.GlobalEnum.HTMLEvent.ScrollEnd, focusOnScrollEnd);
-                        };
-                        activeScreenElement.addEventListener(OSUI.GlobalEnum.HTMLEvent.ScrollEnd, focusOnScrollEnd);
-                    }
                 }
                 static _searchElementId(element, isSmooth, elementParentClass) {
                     const elementToSearch = element.parentElement;
-                    if (elementToSearch.id !== OSUI.Constants.EmptyString) {
+                    if (elementToSearch.id !== '') {
                         this._scrollToInvalidInput(elementToSearch, isSmooth, elementParentClass);
                     }
                     else {
@@ -2892,12 +2876,10 @@ var OSFramework;
                         errorCode: OutSystems.OSUI.ErrorCodes.Utilities.FailGetInvalidInput,
                         callback: () => {
                             let element = document.body;
-                            if (elementId !== OSUI.Constants.EmptyString) {
+                            if (elementId !== '') {
                                 element = Helper.Dom.GetElementById(elementId);
                             }
-                            Helper.AsyncInvocation(() => {
-                                this._checkInvalidInputs(element, isSmooth, elementParentClass);
-                            });
+                            this._checkInvalidInputs(element, isSmooth, elementParentClass);
                         },
                     });
                     return result;
@@ -4480,6 +4462,12 @@ var OSFramework;
             var BottomSheet;
             (function (BottomSheet_1) {
                 class BottomSheet extends Patterns.AbstractPattern {
+                    get gestureEventInstance() {
+                        return this._gestureEventInstance;
+                    }
+                    get hasGestureEvents() {
+                        return this._hasGestureEvents;
+                    }
                     constructor(uniqueId, configs) {
                         super(uniqueId, new BottomSheet_1.BottomSheetConfig(configs));
                         this._isOpen = false;
@@ -4491,12 +4479,6 @@ var OSFramework;
                                 mass: 1,
                             },
                         };
-                    }
-                    get gestureEventInstance() {
-                        return this._gestureEventInstance;
-                    }
-                    get hasGestureEvents() {
-                        return this._hasGestureEvents;
                     }
                     _handleFocusBehavior() {
                         const opts = {
@@ -5421,6 +5403,9 @@ var OSFramework;
                         _hasNoImplementation() {
                             throw new Error(`${OSUI.ErrorCodes.Dropdown.HasNoImplementation.code}: ${OSUI.ErrorCodes.Dropdown.HasNoImplementation.message}`);
                         }
+                        _moveBallonElement() {
+                            OSUI.Helper.Dom.Move(this._balloonWrapperElement, this._activeScreenElement);
+                        }
                         _onBodyClick(_eventType, event) {
                             if (this._isOpen === false) {
                                 return;
@@ -5803,6 +5788,7 @@ var OSFramework;
                             this._eventOnWindowResize = this._onWindowResize.bind(this);
                         }
                         setHtmlElements() {
+                            this._activeScreenElement = OSUI.Helper.Dom.ClassSelector(document.body, OSUI.GlobalEnum.CssClassElements.ActiveScreen);
                             this._balloonFooterElement = OSUI.Helper.Dom.ClassSelector(this.selfElement, ServerSide.Enum.CssClass.BalloonFooter);
                             this._balloonFocusableElemsInFooter = OSUI.Helper.Dom.TagSelectorAll(this._balloonFooterElement, OSUI.Constants.FocusableElems);
                             this._balloonSearchInputWrapperElement = OSUI.Helper.Dom.ClassSelector(this.selfElement, ServerSide.Enum.CssClass.BalloonSearch);
@@ -5816,6 +5802,7 @@ var OSFramework;
                             this.setA11YProperties();
                             this._setUpEvents();
                             this._setCssClasses();
+                            this._moveBallonElement();
                             this._setBalloonCoordinates();
                         }
                         unsetCallbacks() {
@@ -5835,6 +5822,7 @@ var OSFramework;
                         }
                         unsetHtmlElements() {
                             this._balloonWrapperElement.remove();
+                            this._activeScreenElement = undefined;
                             this._balloonContainerElement = undefined;
                             this._balloonFocusableElemsInFooter = [];
                             this._balloonFooterElement = undefined;
