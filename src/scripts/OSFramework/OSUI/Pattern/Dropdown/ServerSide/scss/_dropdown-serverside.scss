@@ -301,6 +301,10 @@ $balloonMobileTopMargin: 5vh;
 			top: calc(var(--osui-dropdown-ss-top) + var(--osui-dropdown-ss-input-height) + 4px);
 			position: fixed;
 			overflow: visible;
+
+			&.osui-dropdown-serverside--is-opened {
+				z-index: calc(var(--osui-popup-layer) + var(--layer-local-tier-1));
+			}
 		}
 	}
 
@@ -351,10 +355,10 @@ $balloonMobileTopMargin: 5vh;
 	}
 }
 
-// Inside Popup
-body:has(.popup-dialog):has(.osui-dropdown-serverside--is-opened) {
-	.osui-dropdown-serverside__balloon-wrapper.osui-dropdown-serverside--is-opened {
-		z-index: calc(var(--osui-popup-layer) + var(--layer-local-tier-1));
+// Inside Form & Popup
+.form {
+	.osui-dropdown-serverside--is-inside-popup input[data-input] {
+		margin-bottom: 0;
 	}
 }
 
