@@ -205,9 +205,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 
 		// Move ballon element to active screen element, outside of the pattern context
 		private _moveBallonElement(): void {
-			//Helper.Dom.Move(this._balloonWrapperElement, this._activeScreenElement);
-			const balloon = document.adoptNode(this._balloonWrapperElement);
-			this._activeScreenElement.appendChild(balloon);
+			Helper.Dom.Move(this._balloonWrapperElement, this._activeScreenElement);
 		}
 
 		// Close when click outside of pattern
