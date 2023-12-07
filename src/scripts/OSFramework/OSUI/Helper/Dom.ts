@@ -446,11 +446,18 @@ namespace OSFramework.OSUI.Helper {
 		 * @memberof Dom
 		 */
 		public static IsInsidePopupWidget(element: HTMLElement): boolean {
-			const _popup = document.querySelector(Constants.Dot + GlobalEnum.CssClassElements.Popup);
+			const _popup = document.querySelectorAll(Constants.Dot + GlobalEnum.CssClassElements.Popup);
+			let _isInsidePopup = false;
 
-			if (_popup && element) {
-				return _popup.contains(element);
+			if (_popup.length > 0 && element) {
+				_popup.forEach((popup) => {
+					if (popup.contains(element)) {
+						_isInsidePopup = true;
+					}
+				});
 			}
+
+			return _isInsidePopup;
 		}
 
 		/**
