@@ -54,27 +54,39 @@ namespace OSFramework.OSUI.Constants {
 		},
 	};
 
+	/* cssClass to be added to elements that must visible yet hidded for accessibility purposes */
+	export const AccessibilityHideElementClass = 'wcag-hide-text';
+
 	/* Attribute used to allow propagation on containers with event */
 	export const AllowPropagationAttr = '[data-allow-event-propagation]';
-
-	/* Used to concatenate when querySelector for a class */
-	export const Dot = '.';
 
 	/* Used to concatenate when querySelectorAll for a list of classes */
 	export const Comma = ',';
 
-	/* Manage if the log messages are visible or not  */
-	export const EnableLogMessages = false;
+	/* Used to concatenate when querySelector for a class */
+	export const Dot = '.';
 
 	/* Used to typify the empty string value*/
 	export const EmptyString = '';
 
-	/* Attribute used to flag some elements to be ignored by the Focus Trap behaviour */
-	export const FocusTrapIgnoreAttr = 'ignore-focus-trap';
+	/* Manage if the log messages are visible or not  */
+	export const EnableLogMessages = false;
 
 	/* Store focusable elements when doing a focus trap inside an element*/
 	export const FocusableElems =
 		'a[href]:not([disabled]),[tabindex="0"], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled])';
+
+	/* Attribute used to flag some elements to be ignored by the Focus Trap behaviour */
+	export const FocusTrapIgnoreAttr = 'ignore-focus-trap';
+
+	/* cssClass to be checked if the Accessibility Feature is enabled */
+	export const HasAccessibilityClass = 'has-accessible-features';
+
+	/* Used to typify noon-valid expected number values */
+	export const InvalidNumber = -1;
+
+	/* cssClass to be checked if the RTL Feature is enabled */
+	export const IsRTLClass = 'is-rtl';
 
 	/* Store JavaScript types*/
 	export const JavaScriptTypes = {
@@ -91,11 +103,11 @@ namespace OSFramework.OSUI.Constants {
 	export const JustInputs =
 		'input:not([type=button]):not([type=checkbox]):not([type=color]):not([type=file]):not([type=hidden]):not([type=image]):not([type=image]):not([type=radio]):not([type=range]):not([type=reset]):not([type=submit]), textarea';
 
-	/* cssClass to be checked if the Accessibility Feature is enabled */
-	export const HasAccessibilityClass = 'has-accessible-features';
-
-	/* Used to typify noon-valid expected number values */
-	export const InvalidNumber = -1;
+	/* Store the default app lang */
+	export const Language = {
+		code: 'en-US',
+		short: 'en',
+	};
 
 	/* Store months list */
 	export const Months = [
@@ -113,24 +125,19 @@ namespace OSFramework.OSUI.Constants {
 		'December',
 	];
 
-	/* Store the default app lang */
-	export const Language = {
-		code: 'en-US',
-		short: 'en',
-	};
-
-	/* cssClass to be added to elements that must visible yet hidded for accessibility purposes */
-	export const AccessibilityHideElementClass = 'wcag-hide-text';
-
-	/* cssClass to be checked if the RTL Feature is enabled */
-	export const IsRTLClass = 'is-rtl';
-
 	/* cssClass to be remove transitions on element */
 	export const NoTransition = 'no-transition';
+
+	/**
+	 * OSUI Set platform in use.
+	 * - This value will be set dynamically at the compilation momment!
+	 * - Do not change default string value!
+	 */
+	export const OSUIPlatform = '<•>platformType<•>';
 
 	/* OSUI Version */
 	export const OSUIVersion = '2.18.2';
 
-	/*Constant to be used across project as the zero value*/
+	/* Constant to be used across project as the zero value*/
 	export const ZeroValue = 0;
 }
