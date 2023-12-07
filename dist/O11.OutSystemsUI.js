@@ -2833,10 +2833,16 @@ var OSFramework;
                     return [..._filteredElements];
                 }
                 static IsInsidePopupWidget(element) {
-                    const _popup = document.querySelector(OSUI.Constants.Dot + OSUI.GlobalEnum.CssClassElements.Popup);
-                    if (_popup && element) {
-                        return _popup.contains(element);
+                    const _popup = document.querySelectorAll(OSUI.Constants.Dot + OSUI.GlobalEnum.CssClassElements.Popup);
+                    let _isInsidePopup = false;
+                    if (_popup.length > 0 && element) {
+                        _popup.forEach((popup) => {
+                            if (popup.contains(element)) {
+                                _isInsidePopup = true;
+                            }
+                        });
                     }
+                    return _isInsidePopup;
                 }
                 static Move(element, target) {
                     if (element && target) {
@@ -4528,6 +4534,12 @@ var OSFramework;
             var BottomSheet;
             (function (BottomSheet_1) {
                 class BottomSheet extends Patterns.AbstractPattern {
+                    get gestureEventInstance() {
+                        return this._gestureEventInstance;
+                    }
+                    get hasGestureEvents() {
+                        return this._hasGestureEvents;
+                    }
                     constructor(uniqueId, configs) {
                         super(uniqueId, new BottomSheet_1.BottomSheetConfig(configs));
                         this._isOpen = false;
@@ -4539,12 +4551,6 @@ var OSFramework;
                                 mass: 1,
                             },
                         };
-                    }
-                    get gestureEventInstance() {
-                        return this._gestureEventInstance;
-                    }
-                    get hasGestureEvents() {
-                        return this._hasGestureEvents;
                     }
                     _handleFocusBehavior() {
                         const opts = {
@@ -5470,8 +5476,7 @@ var OSFramework;
                             throw new Error(`${OSUI.ErrorCodes.Dropdown.HasNoImplementation.code}: ${OSUI.ErrorCodes.Dropdown.HasNoImplementation.message}`);
                         }
                         _moveBallonElement() {
-                            const balloon = document.adoptNode(this._balloonWrapperElement);
-                            this._activeScreenElement.appendChild(balloon);
+                            OSUI.Helper.Dom.Move(this._balloonWrapperElement, this._activeScreenElement);
                         }
                         _onBodyClick(_eventType, event) {
                             if (this._isOpen === false) {
@@ -10278,31 +10283,34 @@ var OSFramework;
                         return newTabIndex;
                     }
                     _handleKeypressEvent(e) {
+                        let currentTabHeader;
                         let targetHeaderItemIndex;
                         if (e.target !== this._activeTabHeaderElement.selfElement) {
                             return;
                         }
                         switch (e.key) {
                             case OSUI.GlobalEnum.Keycodes.ArrowRight:
-                                targetHeaderItemIndex = this.configs.StartingTab + 1;
-                                if (targetHeaderItemIndex >= this.getChildItems(Tabs_1.Enum.ChildTypes.TabsHeaderItem).length) {
-                                    targetHeaderItemIndex = 0;
-                                }
+                                currentTabHeader = this._tabsHeadersEnabled.indexOf(this._activeTabHeaderElement);
+                                targetHeaderItemIndex =
+                                    this._tabsHeadersEnabled[currentTabHeader + 1] === undefined
+                                        ? this._tabsHeadersEnabled[0].getDataTab()
+                                        : this._tabsHeadersEnabled[currentTabHeader + 1].getDataTab();
                                 this.changeTab(targetHeaderItemIndex, undefined, true);
                                 break;
                             case OSUI.GlobalEnum.Keycodes.ArrowLeft:
-                                targetHeaderItemIndex = this.configs.StartingTab - 1;
-                                if (targetHeaderItemIndex < 0) {
-                                    targetHeaderItemIndex = this.getChildItems(Tabs_1.Enum.ChildTypes.TabsHeaderItem).length - 1;
-                                }
+                                currentTabHeader = this._tabsHeadersEnabled.indexOf(this._activeTabHeaderElement);
+                                targetHeaderItemIndex =
+                                    this._tabsHeadersEnabled[currentTabHeader - 1] === undefined
+                                        ? this._tabsHeadersEnabled[this._tabsHeadersEnabled.length - 1].getDataTab()
+                                        : this._tabsHeadersEnabled[currentTabHeader - 1].getDataTab();
                                 this.changeTab(targetHeaderItemIndex, undefined, true);
                                 break;
                             case OSUI.GlobalEnum.Keycodes.End:
-                                targetHeaderItemIndex = this.getChildItems(Tabs_1.Enum.ChildTypes.TabsHeaderItem).length - 1;
+                                targetHeaderItemIndex = this._tabsHeadersEnabled[this._tabsHeadersEnabled.length - 1].getDataTab();
                                 this.changeTab(targetHeaderItemIndex, undefined, true);
                                 break;
                             case OSUI.GlobalEnum.Keycodes.Home:
-                                targetHeaderItemIndex = 0;
+                                targetHeaderItemIndex = this._tabsHeadersEnabled[0].getDataTab();
                                 this.changeTab(targetHeaderItemIndex, undefined, true);
                                 break;
                         }
@@ -10363,6 +10371,7 @@ var OSFramework;
                             this._activeTabContentElement.setIsActive();
                         }
                         this._updateItemsConnection(false);
+                        this._updateListOfEnabledTabsHeader();
                     }
                     _removeContentItem(childContentId) {
                         const childContentItem = this.getChild(childContentId);
@@ -10572,6 +10581,9 @@ var OSFramework;
                             }
                         });
                     }
+                    _updateListOfEnabledTabsHeader() {
+                        this._tabsHeadersEnabled = this.getChildItems(Tabs_1.Enum.ChildTypes.TabsHeaderItem).filter((element) => !element.selfElement.disabled);
+                    }
                     setA11YProperties() {
                         OSUI.Helper.A11Y.RoleTabList(this._tabsHeaderElement.firstElementChild);
                         OSUI.Helper.A11Y.AriaHiddenTrue(this._tabsIndicatorElement);
@@ -10607,21 +10619,25 @@ var OSFramework;
                                 break;
                             case Tabs_1.Enum.ChildNotifyActionType.AddHeaderItem:
                                 this._addHeaderItem(childItem);
+                                this._updateListOfEnabledTabsHeader();
                                 break;
                             case Tabs_1.Enum.ChildNotifyActionType.Click:
                                 this._tabHeaderItemHasBeenClicked(childItem.uniqueId);
                                 break;
                             case Tabs_1.Enum.ChildNotifyActionType.DisabledHeaderItem:
                                 this._setTabHeaderItemDisabledStatus(childItem.uniqueId, true);
+                                this._updateListOfEnabledTabsHeader();
                                 break;
                             case Tabs_1.Enum.ChildNotifyActionType.EnabledHeaderItem:
                                 this._setTabHeaderItemDisabledStatus(childItem.uniqueId, false);
+                                this._updateListOfEnabledTabsHeader();
                                 break;
                             case Tabs_1.Enum.ChildNotifyActionType.RemovedContentItem:
                                 this._removeContentItem(childItem.uniqueId);
                                 break;
                             case Tabs_1.Enum.ChildNotifyActionType.RemovedHeaderItem:
                                 this._removeHeaderItem(childItem.uniqueId);
+                                this._updateListOfEnabledTabsHeader();
                                 break;
                             case Tabs_1.Enum.ChildNotifyActionType.UpdateIndicator:
                                 this._handleTabIndicator();
