@@ -6,6 +6,7 @@ const browser = require('browser-sync');
 const clean = require('gulp-clean');
 
 // Get dependencies tasks
+const project = require('./gulp/ProjectSpecs/DefaultSpecs');
 const createScssFile = require('./gulp/Tasks/CreateScssFile');
 const cssTranspile = require('./gulp/Tasks/ScssTanspile');
 const tsTranspile = require('./gulp/Tasks/TsTanspile');
@@ -22,14 +23,39 @@ function cleanOldFiles() {
     return gulp.src(distFolder + "/*", {read: false}).pipe(clean());
 }
 
-// Starts a Browser instance
-function initServer() {
+// Method to update development template code
+function updateIndexTemplateFile() {
     // Get the index.html base file
     let code = fs.readFileSync('./gulp/Template/index.html', 'utf8');
+
+    let jsLinks = '';
+    let scssLinks = '';
+    if(process.env.npm_config_platform !== undefined && project.globalConsts.platforms[process.env.npm_config_platform] !== undefined) {
+        code = code.replace(" • --platform--", " • " + project.globalConsts.platforms[process.env.npm_config_platform]);
+        jsLinks = `<li><p><a target="blank" href="./dev.${project.globalConsts.platforms[process.env.npm_config_platform]}.OutSystemsUI.js">${project.globalConsts.platforms[process.env.npm_config_platform]}.OutSystemsUI.js</a></p></li>`;
+        scssLinks = `<li><p><a target="blank" href="./dev.${project.globalConsts.platforms[process.env.npm_config_platform]}.OutSystemsUI.css">${project.globalConsts.platforms[process.env.npm_config_platform]}.OutSystemsUI.css</a></p></li>`;
+    } else {
+        code = code.replace(" • --platform--", "");
+        const pts = project.globalConsts.platforms;
+        for(const pt in pts) {
+            jsLinks += `<li><p><a target="blank" href="./dev.${pts[pt]}.OutSystemsUI.js">${pts[pt]}.OutSystemsUI.js</a></p></li>\n`;
+            scssLinks += `<li><p><a target="blank" href="./dev.${pts[pt]}.OutSystemsUI.css">${pts[pt]}.OutSystemsUI.css</a></p></li>\n`;
+        }
+    }
+
+    code = code.replace("<li>jsListItemToBeReplaced</li>", jsLinks);
+    code = code.replace("<li>scssListItemToBeReplaced</li>", scssLinks);
+
     // Create the new index.html at the dist folder!
     fs.writeFileSync(`${distFolder}/index.html`, code, 'utf8');
+}
 
-    browser.init({server: distFolder, port: serverPort, cors: true});
+// Starts a Browser instance
+function initServer() {
+    updateIndexTemplateFile();
+    setTimeout(() => {
+        browser.init({server: distFolder, port: serverPort, cors: true});
+    }, 0);
 }
 
 // Watch files changed
