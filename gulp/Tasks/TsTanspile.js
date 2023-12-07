@@ -113,7 +113,7 @@ function tsTranspileProd(cb) {
 }
 
 // Add section info to the compiled files.
-function updateFwkInfo(cb) {    
+function updateFwkAndPlatformInfo(cb) {    
     for(const pt in filesPath) {
         // Set the Specifications text info
         let specsInfo = '';
@@ -129,13 +129,15 @@ function updateFwkInfo(cb) {
 
         // Read file code
         let code = fs.readFileSync(filesPath[pt], 'utf8');
+        // Set platformType to the OSFramework.OSUI.Constants
+        code = code.replace("<•>platformType<•>", project.globalConsts.platforms[pt]);
         // Update code
         let updatedCode = specsInfo + code;
         // Ensure code will be set properly before set the update.
         setTimeout(() => {
             // Update the existing file info with the new one!
             fs.writeFileSync(filesPath[pt], updatedCode, 'utf8');
-        }, 0)
+        }, 0);
     }
 
     cb();
@@ -162,5 +164,5 @@ function updateTsConfigFile(cb, envMode, platformType, shouldCreateAll) {
 }
 
 // TypeScript Transpile Task
-exports.transpileDev = series(tsTranspileDev, updateFwkInfo);
-exports.transpileProd = series(tsTranspileProd, updateFwkInfo);
+exports.transpileDev = series(tsTranspileDev, updateFwkAndPlatformInfo);
+exports.transpileProd = series(tsTranspileProd, updateFwkAndPlatformInfo);
