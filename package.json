@@ -13,7 +13,7 @@
 		"prettier": "prettier --config ./.prettierrc.json --write \"**/*.+(js|ts|css)\"",
 		"setup": "npm i && npm run dev",
 		"update-version": "gulp updateVersion",
-		"gta-update-version": "gulp gtaSetVersion --from"
+		"gta-update-version": "gulp gtaSetVersion --newVersion"
 	},
 	"repository": {
 		"type": "git",
