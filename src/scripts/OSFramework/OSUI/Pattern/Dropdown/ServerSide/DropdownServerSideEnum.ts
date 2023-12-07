@@ -24,6 +24,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide.Enum {
 		BalloonWrapper = 'osui-dropdown-serverside__balloon-wrapper',
 		ErrorMessage = 'osui-dropdown-serverside-error-message',
 		IsDisabled = 'osui-dropdown-serverside--is-disabled',
+		IsInsidePopup = 'osui-dropdown-serverside--is-inside-popup',
 		IsOpened = 'osui-dropdown-serverside--is-opened',
 		IsVisible = 'osui-dropdown-serverside-visible',
 		NotValid = 'osui-dropdown-serverside--not-valid',

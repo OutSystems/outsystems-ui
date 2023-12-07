@@ -256,6 +256,7 @@ var OSFramework;
                 CssClassElements["MainContent"] = "main-content";
                 CssClassElements["MenuLinks"] = "app-menu-links";
                 CssClassElements["Placeholder"] = "ph";
+                CssClassElements["Popup"] = "popup-dialog";
                 CssClassElements["SkipContent"] = "skip-nav";
             })(CssClassElements = GlobalEnum.CssClassElements || (GlobalEnum.CssClassElements = {}));
             let CSSSelectors;
@@ -395,6 +396,7 @@ var OSFramework;
                 HTMLEvent["Prefix"] = "on";
                 HTMLEvent["Resize"] = "resize";
                 HTMLEvent["Scroll"] = "scroll";
+                HTMLEvent["ScrollEnd"] = "scrollend";
                 HTMLEvent["TouchEnd"] = "touchend";
                 HTMLEvent["TouchMove"] = "touchmove";
                 HTMLEvent["TouchStart"] = "touchstart";
@@ -2789,6 +2791,12 @@ var OSFramework;
                     const _filteredElements = Array.from(_focusableElems).filter((element) => element.getAttribute(OSUI.Constants.FocusTrapIgnoreAttr) !== 'true');
                     return [..._filteredElements];
                 }
+                static IsInsidePopupWidget(element) {
+                    const _popup = document.querySelector(OSUI.Constants.Dot + OSUI.GlobalEnum.CssClassElements.Popup);
+                    if (_popup && element) {
+                        return _popup.contains(element);
+                    }
+                }
                 static Move(element, target) {
                     if (element && target) {
                         target.appendChild(element);
@@ -2860,11 +2868,26 @@ var OSFramework;
                     }
                 }
                 static _scrollToInvalidInput(element, isSmooth, elementParentClass) {
+                    const browser = OSFramework.OSUI.Helper.DeviceInfo.GetBrowser();
                     OutSystems.OSUI.Utils.ScrollToElement(element.id, isSmooth, 0, elementParentClass);
+                    if (browser === OSUI.GlobalEnum.Browser.safari || OSFramework.OSUI.Helper.DeviceInfo.IsIos) {
+                        if (isSmooth) {
+                            console.warn('Due to the unsupported scrollend event on Safari/iOS, the smooth transition is disabled and the invalid input will be focused directly.');
+                        }
+                        element.focus();
+                    }
+                    else {
+                        const activeScreenElement = Helper.Dom.ClassSelector(document.body, OSUI.GlobalEnum.CssClassElements.ActiveScreen);
+                        const focusOnScrollEnd = () => {
+                            element.focus();
+                            activeScreenElement.removeEventListener(OSUI.GlobalEnum.HTMLEvent.ScrollEnd, focusOnScrollEnd);
+                        };
+                        activeScreenElement.addEventListener(OSUI.GlobalEnum.HTMLEvent.ScrollEnd, focusOnScrollEnd);
+                    }
                 }
                 static _searchElementId(element, isSmooth, elementParentClass) {
                     const elementToSearch = element.parentElement;
-                    if (elementToSearch.id !== '') {
+                    if (elementToSearch.id !== OSUI.Constants.EmptyString) {
                         this._scrollToInvalidInput(elementToSearch, isSmooth, elementParentClass);
                     }
                     else {
@@ -2876,10 +2899,12 @@ var OSFramework;
                         errorCode: OutSystems.OSUI.ErrorCodes.Utilities.FailGetInvalidInput,
                         callback: () => {
                             let element = document.body;
-                            if (elementId !== '') {
+                            if (elementId !== OSUI.Constants.EmptyString) {
                                 element = Helper.Dom.GetElementById(elementId);
                             }
-                            this._checkInvalidInputs(element, isSmooth, elementParentClass);
+                            Helper.AsyncInvocation(() => {
+                                this._checkInvalidInputs(element, isSmooth, elementParentClass);
+                            });
                         },
                     });
                     return result;
@@ -4462,12 +4487,6 @@ var OSFramework;
             var BottomSheet;
             (function (BottomSheet_1) {
                 class BottomSheet extends Patterns.AbstractPattern {
-                    get gestureEventInstance() {
-                        return this._gestureEventInstance;
-                    }
-                    get hasGestureEvents() {
-                        return this._hasGestureEvents;
-                    }
                     constructor(uniqueId, configs) {
                         super(uniqueId, new BottomSheet_1.BottomSheetConfig(configs));
                         this._isOpen = false;
@@ -4479,6 +4498,12 @@ var OSFramework;
                                 mass: 1,
                             },
                         };
+                    }
+                    get gestureEventInstance() {
+                        return this._gestureEventInstance;
+                    }
+                    get hasGestureEvents() {
+                        return this._hasGestureEvents;
                     }
                     _handleFocusBehavior() {
                         const opts = {
@@ -5404,7 +5429,8 @@ var OSFramework;
                             throw new Error(`${OSUI.ErrorCodes.Dropdown.HasNoImplementation.code}: ${OSUI.ErrorCodes.Dropdown.HasNoImplementation.message}`);
                         }
                         _moveBallonElement() {
-                            OSUI.Helper.Dom.Move(this._balloonWrapperElement, this._activeScreenElement);
+                            const balloon = document.adoptNode(this._balloonWrapperElement);
+                            this._activeScreenElement.appendChild(balloon);
                         }
                         _onBodyClick(_eventType, event) {
                             if (this._isOpen === false) {
@@ -5802,7 +5828,13 @@ var OSFramework;
                             this.setA11YProperties();
                             this._setUpEvents();
                             this._setCssClasses();
-                            this._moveBallonElement();
+                            this._isInsidePopup = OSUI.Helper.Dom.IsInsidePopupWidget(this.selfElement);
+                            if (this._isInsidePopup) {
+                                OSUI.Helper.Dom.Styles.AddClass(this.selfElement, ServerSide.Enum.CssClass.IsInsidePopup);
+                            }
+                            else {
+                                this._moveBallonElement();
+                            }
                             this._setBalloonCoordinates();
                         }
                         unsetCallbacks() {
@@ -6036,6 +6068,7 @@ var OSFramework;
                             CssClass["BalloonWrapper"] = "osui-dropdown-serverside__balloon-wrapper";
                             CssClass["ErrorMessage"] = "osui-dropdown-serverside-error-message";
                             CssClass["IsDisabled"] = "osui-dropdown-serverside--is-disabled";
+                            CssClass["IsInsidePopup"] = "osui-dropdown-serverside--is-inside-popup";
                             CssClass["IsOpened"] = "osui-dropdown-serverside--is-opened";
                             CssClass["IsVisible"] = "osui-dropdown-serverside-visible";
                             CssClass["NotValid"] = "osui-dropdown-serverside--not-valid";
