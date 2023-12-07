@@ -49,7 +49,6 @@ function updateIndexTemplateFile() {
             scssLinks += `<li><p><a target="blank" href="./dev.${pts[pt]}.OutSystemsUI.css">${pts[pt]}.OutSystemsUI.css</a></p></li>\n`;
         }
     }
-
     code = code.replace("<li>jsListItemToBeReplaced</li>", jsLinks);
     code = code.replace("<li>scssListItemToBeReplaced</li>", scssLinks);
 
@@ -75,8 +74,7 @@ exports.startDevelopment = series(
 exports.createProduction = series(
     cleanOldFiles,
     createScssFile.update_osui_scss_file_prod,
-    cssTranspile.transpileProd,
-    tsTranspile.transpileProd
+    parallel(cssTranspile.transpileProd, tsTranspile.transpileProd),
 );
 
 exports.updateScssFile = createScssFile.update_osui_scss_file_dev;
