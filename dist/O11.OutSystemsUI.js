@@ -99,13 +99,17 @@ var OSFramework;
                     True: 'true',
                 },
             };
+            Constants.AccessibilityHideElementClass = 'wcag-hide-text';
             Constants.AllowPropagationAttr = '[data-allow-event-propagation]';
-            Constants.Dot = '.';
             Constants.Comma = ',';
-            Constants.EnableLogMessages = false;
+            Constants.Dot = '.';
             Constants.EmptyString = '';
-            Constants.FocusTrapIgnoreAttr = 'ignore-focus-trap';
+            Constants.EnableLogMessages = false;
             Constants.FocusableElems = 'a[href]:not([disabled]),[tabindex="0"], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled])';
+            Constants.FocusTrapIgnoreAttr = 'ignore-focus-trap';
+            Constants.HasAccessibilityClass = 'has-accessible-features';
+            Constants.InvalidNumber = -1;
+            Constants.IsRTLClass = 'is-rtl';
             Constants.JavaScriptTypes = {
                 Undefined: 'undefined',
                 Boolean: 'boolean',
@@ -116,8 +120,10 @@ var OSFramework;
                 Object: 'object',
             };
             Constants.JustInputs = 'input:not([type=button]):not([type=checkbox]):not([type=color]):not([type=file]):not([type=hidden]):not([type=image]):not([type=image]):not([type=radio]):not([type=range]):not([type=reset]):not([type=submit]), textarea';
-            Constants.HasAccessibilityClass = 'has-accessible-features';
-            Constants.InvalidNumber = -1;
+            Constants.Language = {
+                code: 'en-US',
+                short: 'en',
+            };
             Constants.Months = [
                 'January',
                 'February',
@@ -132,13 +138,8 @@ var OSFramework;
                 'November',
                 'December',
             ];
-            Constants.Language = {
-                code: 'en-US',
-                short: 'en',
-            };
-            Constants.AccessibilityHideElementClass = 'wcag-hide-text';
-            Constants.IsRTLClass = 'is-rtl';
             Constants.NoTransition = 'no-transition';
+            Constants.OSUIPlatform = 'O11';
             Constants.OSUIVersion = '2.18.2';
             Constants.ZeroValue = 0;
         })(Constants = OSUI.Constants || (OSUI.Constants = {}));
@@ -17340,6 +17341,10 @@ var OutSystems;
                 return result;
             }
             Utils.SetSelectedTableRow = SetSelectedTableRow;
+            function GetPlatformType() {
+                return OSFramework.OSUI.Constants.OSUIPlatform;
+            }
+            Utils.GetPlatformType = GetPlatformType;
             function ShowPassword(WidgetId) {
                 const result = OutSystems.OSUI.Utils.CreateApiResponse({
                     errorCode: OSUI.ErrorCodes.Utilities.FailShowPassword,
