@@ -63,6 +63,8 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		private _intersectionObserver: IntersectionObserver;
 		// Store a Flag property that will control if the dropdown is blocked (like it's under closing animation)
 		private _isBlocked = false;
+		// Store if Dropdown is being used inside a popup widget
+		private _isInsidePopup: boolean;
 		// Store the Element State, by default is closed!
 		private _isOpen = false;
 		// Platform OnClose Callback
@@ -507,9 +509,8 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 						this._selfElementBoundingClientRect.x + this._selfElementBoundingClientRect.width &&
 					selfElement.y === this._selfElementBoundingClientRect.y)
 			)
-
-			// Store the new selElement coordinates
-			this._selfElementBoundingClientRect.x = selfElement.x;
+				// Store the new selElement coordinates
+				this._selfElementBoundingClientRect.x = selfElement.x;
 			this._selfElementBoundingClientRect.y = selfElement.y;
 
 			// Set Css inline variables
@@ -649,8 +650,8 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 					Event.DOMEvents.Listeners.Type.BodyOnClick,
 					this._eventOnBodyClick
 				);
-				
-				if(Helper.DeviceInfo.IsPhone === false) {
+
+				if (Helper.DeviceInfo.IsPhone === false) {
 					// Add the ScreenScroll callback that will be used to update the balloon coodinates
 					Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
 						Event.DOMEvents.Listeners.Type.ScreenOnScroll,
@@ -730,7 +731,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 				this._eventOnBodyClick
 			);
 
-			if(Helper.DeviceInfo.IsPhone === false) {
+			if (Helper.DeviceInfo.IsPhone === false) {
 				Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
 					Event.DOMEvents.Listeners.Type.ScreenOnScroll,
 					this._eventOnScreenScroll
@@ -971,8 +972,20 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			this._setUpEvents();
 			// Add CSS classes
 			this._setCssClasses();
-			// Ensure that the Move only happens after HTML elements has been set!
-			this._moveBallonElement();
+
+			// Check if the dropdown is placed inside a Popup Widget
+			this._isInsidePopup = Helper.Dom.IsInsidePopupWidget(this.selfElement);
+
+			if (this._isInsidePopup) {
+				/* If it is inside, then do not perform the MoveElement and instead add a class to change some CSS properties.
+				This is done due to the changes in recat-dom recent version, where listeners are all placed on the reactContainer, making any widget with events to loose
+				its context when its moved inside a Popup, that is placed outside the reactContainer*/
+				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.IsInsidePopup);
+			} else {
+				// Ensure that the Move only happens after HTML elements has been set!
+				this._moveBallonElement();
+			}
+
 			// Set the balloon coordinates
 			this._setBalloonCoordinates();
 		}
