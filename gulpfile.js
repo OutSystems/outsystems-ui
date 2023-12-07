@@ -1,26 +1,33 @@
 const gulp = require('gulp');
 const { watch, series, parallel } = require('gulp');
 const fs = require('fs');
-
 const browser = require('browser-sync');
 const clean = require('gulp-clean');
 
 // Get dependencies tasks
-const project = require('./gulp/ProjectSpecs/DefaultSpecs');
 const createScssFile = require('./gulp/Tasks/CreateScssFile');
 const cssTranspile = require('./gulp/Tasks/ScssTanspile');
+const project = require('./gulp/ProjectSpecs/DefaultSpecs');
 const tsTranspile = require('./gulp/Tasks/TsTanspile');
 const updatetVersion = require('./gulp/Tasks/UpdateVersion');
 
 // Local configs
-const serverPort = 3000;
 const distFolder = './dist';
+const serverPort = 3000;
 const watchScssFiles = 'src/**/*.scss';
 const watchTsFiles = 'src/**/*.ts';
 
 // Clean Dist Folder
 function cleanOldFiles() {
     return gulp.src(distFolder + "/*", {read: false}).pipe(clean());
+}
+
+// Starts a Browser instance
+function initServer() {
+    updateIndexTemplateFile();
+    setTimeout(() => {
+        browser.init({server: distFolder, port: serverPort, cors: true});
+    }, 0);
 }
 
 // Method to update development template code
@@ -48,14 +55,6 @@ function updateIndexTemplateFile() {
 
     // Create the new index.html at the dist folder!
     fs.writeFileSync(`${distFolder}/index.html`, code, 'utf8');
-}
-
-// Starts a Browser instance
-function initServer() {
-    updateIndexTemplateFile();
-    setTimeout(() => {
-        browser.init({server: distFolder, port: serverPort, cors: true});
-    }, 0);
 }
 
 // Watch files changed
