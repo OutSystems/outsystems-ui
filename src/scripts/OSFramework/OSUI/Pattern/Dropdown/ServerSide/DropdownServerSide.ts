@@ -973,7 +973,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			// Add CSS classes
 			this._setCssClasses();
 
-			// Check if the dropdown is placed inside a Popu Widget
+			// Check if the dropdown is placed inside a Popup Widget
 			this._isInsidePopup = Helper.Dom.IsInsidePopupWidget(this.selfElement);
 
 			if (this._isInsidePopup) {
