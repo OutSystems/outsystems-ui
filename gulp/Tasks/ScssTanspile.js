@@ -11,25 +11,32 @@ const sourcemaps = require('gulp-sourcemaps');
 
 const project = require('../ProjectSpecs/DefaultSpecs');
 const distFolder = './dist';
-const watchScssThemes = 'src/scss/*.scss';
+let watchScssThemes = 'src/scss/*.scss';
 
-// Set as Development Mode
-function scssTranspileDev() {
-    return scssTranspile(project.globalConsts.envType.development);
-}
+// Check if a platformType has been defined through npm script, if so, compile it's own SCSS theme only, otherwise it will compile all.
+function checkForScssThemeToBeCompiled() {
+    const result = {
+        hasError: false,
+        errorMessage: ''
+    }
 
-// Set as Production Mode
-function scssTranspileProd() {
-    return scssTranspile(project.globalConsts.envType.production);
+    if(process.env.npm_config_platform !== undefined) {
+        if(project.globalConsts.platforms[process.env.npm_config_platform] === undefined) {
+            result.hasError = true;
+            result.errorMessage = `Given platform '${process.env.npm_config_platform}' does not exist. Plaforms availabe:\n • ${Object.keys(project.globalConsts.platforms).join("\n • ")}`
+            console.log(`\n⛔️ ERROR: ${result.errorMessage}\n`);
+        } else {
+            watchScssThemes = `src/scss/${project.globalConsts.platforms[process.env.npm_config_platform]}.OutSystemsUI.scss`;
+        }
+    }
+
+    return result;
 }
 
 // Compile SCSS
-function scssTranspile(envMode) {
-    let cssResult;
-
+function scssTranspile(cb, envMode) {
     if(envMode === project.globalConsts.envType.development) {
-        cssResult = gulp
-			.src(watchScssThemes)
+        gulp.src(watchScssThemes)
 			.pipe(sourcemaps.init())
 			.pipe(sass().on('error', sass.logError))
 			.pipe(postcss([postcssdc, postcssdd]))
@@ -46,7 +53,7 @@ function scssTranspile(envMode) {
 			.pipe(sourcemaps.write('.'))
 			.pipe(gulp.dest(distFolder));
     } else {
-        cssResult = gulp.src(watchScssThemes)
+        gulp.src(watchScssThemes)
             .pipe(sass().on('error', sass.logError))
             .pipe(postcss([postcssdc, postcssdd]))
             .pipe(autoprefixer({
@@ -56,7 +63,21 @@ function scssTranspile(envMode) {
             .pipe(gulp.dest(distFolder));    
     }
 
-    return cssResult;
+    cb();
+}
+
+// Set as Development Mode
+function scssTranspileDev(cb) {
+    if(checkForScssThemeToBeCompiled().hasError === false) {
+        scssTranspile(cb, project.globalConsts.envType.development);
+    }
+}
+
+// Set as Production Mode
+function scssTranspileProd(cb) {
+    if(checkForScssThemeToBeCompiled().hasError === false) {
+        scssTranspile(cb, project.globalConsts.envType.production);
+    }
 }
 
 // SCSS Transpile Tasks
