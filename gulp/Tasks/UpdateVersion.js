@@ -1,4 +1,3 @@
-const parseArgs = require('minimist');
 const prompts = require('prompts');
 const fs = require('fs');
 
