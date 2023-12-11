@@ -133,7 +133,7 @@ namespace OSFramework.OSUI.Constants {
 	 * - This value will be set dynamically at the compilation momment!
 	 * - Do not change default string value!
 	 */
-	export const OSUIPlatform = '<•>platformType<•>';
+	export const OSPlatform = '<•>platformType<•>';
 
 	/* OSUI Version */
 	export const OSUIVersion = '2.18.2';

@@ -235,7 +235,7 @@ namespace OutSystems.OSUI.Utils {
 	 * @return {*}  {string}
 	 */
 	export function GetPlatformType(): string {
-		return OSFramework.OSUI.Constants.OSUIPlatform;
+		return OSFramework.OSUI.Constants.OSPlatform;
 	}
 
 	/**
