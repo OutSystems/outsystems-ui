@@ -32,7 +32,7 @@ function getNotesText () {
 	notes += `• In order to proper manage this file, use:\n`;
 	notes += `└── './gulp/ProjectSpecs/ScssStructure/#All.js' \n`;
 	notes += `\n`;
-	notes += `PS: This comment block will not be visible at the compiled version!\n`;
+	notes += `PS: This comment block will not be visible in the compiled version!\n`;
 	notes +=	"=============================================================================== */\n";
 
 	return notes;
