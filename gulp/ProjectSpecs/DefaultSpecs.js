@@ -6,13 +6,13 @@ const constants = {
         development: 'dev', 
         production: 'prod'
     },
-    // list of files to be exclued from a specific platform
+    // list of files to be excluded from a specific platform
     excludeFromTsTranspile: {
         O11: [
             './src/scripts/OutSystems/OSUI/Utils/PreviewInDevices/**/*'
         ]
     },
-    // list of platftoms to compile and create scss files.
+    // list of platforms to compile and create scss files.
     platforms: {
         o11: 'O11',
         odc: 'ODC',
