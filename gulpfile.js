@@ -37,10 +37,10 @@ function updateIndexTemplateFile() {
 
     let jsLinks = '';
     let scssLinks = '';
-    if(process.env.npm_config_platform !== undefined && project.globalConsts.platforms[process.env.npm_config_platform] !== undefined) {
-        code = code.replace(" • --platform--", " • " + project.globalConsts.platforms[process.env.npm_config_platform]);
-        jsLinks = `<li><p><a target="blank" href="./dev.${project.globalConsts.platforms[process.env.npm_config_platform]}.OutSystemsUI.js">${project.globalConsts.platforms[process.env.npm_config_platform]}.OutSystemsUI.js</a></p></li>`;
-        scssLinks = `<li><p><a target="blank" href="./dev.${project.globalConsts.platforms[process.env.npm_config_platform]}.OutSystemsUI.css">${project.globalConsts.platforms[process.env.npm_config_platform]}.OutSystemsUI.css</a></p></li>`;
+    if(process.env.npm_config_target !== undefined && project.globalConsts.platforms[process.env.npm_config_target] !== undefined) {
+        code = code.replace(" • --platform--", " • " + project.globalConsts.platforms[process.env.npm_config_target]);
+        jsLinks = `<li><p><a target="blank" href="./dev.${project.globalConsts.platforms[process.env.npm_config_target]}.OutSystemsUI.js">${project.globalConsts.platforms[process.env.npm_config_target]}.OutSystemsUI.js</a></p></li>`;
+        scssLinks = `<li><p><a target="blank" href="./dev.${project.globalConsts.platforms[process.env.npm_config_target]}.OutSystemsUI.css">${project.globalConsts.platforms[process.env.npm_config_target]}.OutSystemsUI.css</a></p></li>`;
     } else {
         code = code.replace(" • --platform--", "");
         const pts = project.globalConsts.platforms;

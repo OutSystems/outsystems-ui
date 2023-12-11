@@ -20,13 +20,13 @@ function checkForScssThemeToBeCompiled() {
         errorMessage: ''
     }
 
-    if(process.env.npm_config_platform !== undefined) {
-        if(project.globalConsts.platforms[process.env.npm_config_platform] === undefined) {
+    if(process.env.npm_config_target !== undefined) {
+        if(project.globalConsts.platforms[process.env.npm_config_target] === undefined) {
             result.hasError = true;
-            result.errorMessage = `Given platform '${process.env.npm_config_platform}' does not exist. Plaforms availabe:\n • ${Object.keys(project.globalConsts.platforms).join("\n • ")}`
+            result.errorMessage = `Given platform '${process.env.npm_config_target}' does not exist. Plaforms availabe:\n • ${Object.keys(project.globalConsts.platforms).join("\n • ")}`
             console.log(`\n⛔️ ERROR: ${result.errorMessage}\n`);
         } else {
-            watchScssThemes = `src/scss/${project.globalConsts.platforms[process.env.npm_config_platform]}.OutSystemsUI.scss`;
+            watchScssThemes = `src/scss/${project.globalConsts.platforms[process.env.npm_config_target]}.OutSystemsUI.scss`;
         }
     }
 

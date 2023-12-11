@@ -19,12 +19,12 @@ function getDefaultPlatformType(platformType) {
     }
 
     // Check if a platformType has been passed as an npm inline script value
-    if(process.env.npm_config_platform !== undefined) {
-        if(project.globalConsts.platforms[process.env.npm_config_platform] === undefined) {
+    if(process.env.npm_config_target !== undefined) {
+        if(project.globalConsts.platforms[process.env.npm_config_target] === undefined) {
             pt.error = true;
-            pt.errorMessage = `Given platform '${process.env.npm_config_platform}' does not exist. Plaforms availabe:\n • ${Object.keys(project.globalConsts.platforms).join("\n • ")}`
+            pt.errorMessage = `Given platform '${process.env.npm_config_target}' does not exist. Plaforms availabe:\n • ${Object.keys(project.globalConsts.platforms).join("\n • ")}`
         } else {
-            pt.type = process.env.npm_config_platform;
+            pt.type = process.env.npm_config_target;
             pt.shouldCreateAll = false;
         }
     } else {
