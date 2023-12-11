@@ -50,7 +50,7 @@ function getFileText(platformType, envType) {
 
 // Method used to Create SCSS file structure dynamically
 function createScssFile(cb, envType) {
-	const pts = project.globalConsts.platforms;
+	const pts = project.globalConsts.platformTarget;
 	for(const pt in pts) {
         fs.writeFileSync(`./src/scss/${pts[pt]}.OutSystemsUI.scss`, getFileText(pts[pt], envType), 'utf8');
     }

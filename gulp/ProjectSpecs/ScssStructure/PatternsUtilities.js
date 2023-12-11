@@ -39,7 +39,7 @@ const sectionInfo = {
         {
             "name": "Provider Login Button",
             "path": "04-patterns/06-utilities/provider-login-button",
-            "platform": project.globalConsts.platforms.odc,
+            "platform": project.globalConsts.platformTarget.odc,
         }
     ]
 };

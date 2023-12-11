@@ -37,13 +37,13 @@ function updateIndexTemplateFile() {
 
     let jsLinks = '';
     let scssLinks = '';
-    if(process.env.npm_config_target !== undefined && project.globalConsts.platforms[process.env.npm_config_target] !== undefined) {
-        code = code.replace(" • --platform--", " • " + project.globalConsts.platforms[process.env.npm_config_target]);
-        jsLinks = `<li><p><a target="blank" href="./dev.${project.globalConsts.platforms[process.env.npm_config_target]}.OutSystemsUI.js">${project.globalConsts.platforms[process.env.npm_config_target]}.OutSystemsUI.js</a></p></li>`;
-        scssLinks = `<li><p><a target="blank" href="./dev.${project.globalConsts.platforms[process.env.npm_config_target]}.OutSystemsUI.css">${project.globalConsts.platforms[process.env.npm_config_target]}.OutSystemsUI.css</a></p></li>`;
+    if(process.env.npm_config_target !== undefined && project.globalConsts.platformTarget[process.env.npm_config_target] !== undefined) {
+        code = code.replace(" • --platform--", " • " + project.globalConsts.platformTarget[process.env.npm_config_target]);
+        jsLinks = `<li><p><a target="blank" href="./dev.${project.globalConsts.platformTarget[process.env.npm_config_target]}.OutSystemsUI.js">${project.globalConsts.platformTarget[process.env.npm_config_target]}.OutSystemsUI.js</a></p></li>`;
+        scssLinks = `<li><p><a target="blank" href="./dev.${project.globalConsts.platformTarget[process.env.npm_config_target]}.OutSystemsUI.css">${project.globalConsts.platformTarget[process.env.npm_config_target]}.OutSystemsUI.css</a></p></li>`;
     } else {
         code = code.replace(" • --platform--", "");
-        const pts = project.globalConsts.platforms;
+        const pts = project.globalConsts.platformTarget;
         for(const pt in pts) {
             jsLinks += `<li><p><a target="blank" href="./dev.${pts[pt]}.OutSystemsUI.js">${pts[pt]}.OutSystemsUI.js</a></p></li>\n`;
             scssLinks += `<li><p><a target="blank" href="./dev.${pts[pt]}.OutSystemsUI.css">${pts[pt]}.OutSystemsUI.css</a></p></li>\n`;
