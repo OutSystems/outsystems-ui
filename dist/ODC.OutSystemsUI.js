@@ -1,5 +1,5 @@
 /*!
-OutSystems UI 2.18.2
+OutSystems UI 2.18.2 • ODC Platform
 Website:
  • https://www.outsystems.com/outsystems-ui
 GitHub:
@@ -99,13 +99,17 @@ var OSFramework;
                     True: 'true',
                 },
             };
+            Constants.AccessibilityHideElementClass = 'wcag-hide-text';
             Constants.AllowPropagationAttr = '[data-allow-event-propagation]';
-            Constants.Dot = '.';
             Constants.Comma = ',';
-            Constants.EnableLogMessages = false;
+            Constants.Dot = '.';
             Constants.EmptyString = '';
-            Constants.FocusTrapIgnoreAttr = 'ignore-focus-trap';
+            Constants.EnableLogMessages = false;
             Constants.FocusableElems = 'a[href]:not([disabled]),[tabindex="0"], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled])';
+            Constants.FocusTrapIgnoreAttr = 'ignore-focus-trap';
+            Constants.HasAccessibilityClass = 'has-accessible-features';
+            Constants.InvalidNumber = -1;
+            Constants.IsRTLClass = 'is-rtl';
             Constants.JavaScriptTypes = {
                 Undefined: 'undefined',
                 Boolean: 'boolean',
@@ -116,8 +120,10 @@ var OSFramework;
                 Object: 'object',
             };
             Constants.JustInputs = 'input:not([type=button]):not([type=checkbox]):not([type=color]):not([type=file]):not([type=hidden]):not([type=image]):not([type=image]):not([type=radio]):not([type=range]):not([type=reset]):not([type=submit]), textarea';
-            Constants.HasAccessibilityClass = 'has-accessible-features';
-            Constants.InvalidNumber = -1;
+            Constants.Language = {
+                code: 'en-US',
+                short: 'en',
+            };
             Constants.Months = [
                 'January',
                 'February',
@@ -132,13 +138,8 @@ var OSFramework;
                 'November',
                 'December',
             ];
-            Constants.Language = {
-                code: 'en-US',
-                short: 'en',
-            };
-            Constants.AccessibilityHideElementClass = 'wcag-hide-text';
-            Constants.IsRTLClass = 'is-rtl';
             Constants.NoTransition = 'no-transition';
+            Constants.OSUIPlatform = 'ODC';
             Constants.OSUIVersion = '2.18.2';
             Constants.ZeroValue = 0;
         })(Constants = OSUI.Constants || (OSUI.Constants = {}));
@@ -401,6 +402,7 @@ var OSFramework;
                 HTMLEvent["TouchMove"] = "touchmove";
                 HTMLEvent["TouchStart"] = "touchstart";
                 HTMLEvent["TransitionEnd"] = "transitionend";
+                HTMLEvent["Message"] = "message";
             })(HTMLEvent = GlobalEnum.HTMLEvent || (GlobalEnum.HTMLEvent = {}));
             let CustomEvent;
             (function (CustomEvent) {
@@ -1236,6 +1238,7 @@ var OSFramework;
                         Type["OrientationChange"] = "window.onorientationchange";
                         Type["ScreenOnScroll"] = "screen.onscroll";
                         Type["WindowResize"] = "window.onresize";
+                        Type["WindowMessage"] = "window.message";
                     })(Type = Listeners.Type || (Listeners.Type = {}));
                 })(Listeners = DOMEvents.Listeners || (DOMEvents.Listeners = {}));
             })(DOMEvents = Event.DOMEvents || (Event.DOMEvents = {}));
@@ -1267,6 +1270,8 @@ var OSFramework;
                                     return new Listeners.OrientationChange();
                                 case Listeners.Type.ScreenOnScroll:
                                     return new Listeners.ScreenOnScroll();
+                                case Listeners.Type.WindowMessage:
+                                    return new Listeners.WindowMessage();
                                 default:
                                     throw new Error(`The listener ${listenerType} is not supported.`);
                             }
@@ -1330,6 +1335,31 @@ var OSFramework;
                         }
                     }
                     Listeners.ScreenOnScroll = ScreenOnScroll;
+                })(Listeners = DOMEvents.Listeners || (DOMEvents.Listeners = {}));
+            })(DOMEvents = Event.DOMEvents || (Event.DOMEvents = {}));
+        })(Event = OSUI.Event || (OSUI.Event = {}));
+    })(OSUI = OSFramework.OSUI || (OSFramework.OSUI = {}));
+})(OSFramework || (OSFramework = {}));
+var OSFramework;
+(function (OSFramework) {
+    var OSUI;
+    (function (OSUI) {
+        var Event;
+        (function (Event) {
+            var DOMEvents;
+            (function (DOMEvents) {
+                var Listeners;
+                (function (Listeners) {
+                    class WindowMessage extends Listeners.AbstractListener {
+                        constructor() {
+                            super(window, OSUI.GlobalEnum.HTMLEvent.Message);
+                            this.eventCallback = this._windowTrigger.bind(this);
+                        }
+                        _windowTrigger(evt) {
+                            this.trigger(OSUI.GlobalEnum.HTMLEvent.Message, evt);
+                        }
+                    }
+                    Listeners.WindowMessage = WindowMessage;
                 })(Listeners = DOMEvents.Listeners || (DOMEvents.Listeners = {}));
             })(DOMEvents = Event.DOMEvents || (Event.DOMEvents = {}));
         })(Event = OSUI.Event || (OSUI.Event = {}));
@@ -2361,9 +2391,16 @@ var OSFramework;
                     return localOs;
                 }
                 static _getUserAgent(userAgent = '') {
-                    return userAgent.replace(' ', '') === ''
-                        ? window.navigator.userAgent.toLowerCase()
-                        : userAgent.toLowerCase();
+                    let localUserAgent = userAgent;
+                    if (userAgent.replace(' ', '') === '') {
+                        if (sessionStorage.previewDevicesUserAgent) {
+                            localUserAgent = sessionStorage.previewDevicesUserAgent;
+                        }
+                        else {
+                            localUserAgent = window.navigator.userAgent;
+                        }
+                    }
+                    return localUserAgent.toLowerCase();
                 }
                 static _isChrome(ua) {
                     return ua.includes(UAKeyword.chrome) || ua.includes(UAKeyword.crios);
@@ -2422,10 +2459,12 @@ var OSFramework;
                 }
                 static get IsIphoneWithNotch() {
                     if (DeviceInfo._isIphoneWithNotch === undefined) {
-                        const ratio = window.devicePixelRatio || 1;
+                        const ratio = (sessionStorage.previewDevicesPixelRatio
+                            ? sessionStorage.previewDevicesPixelRatio
+                            : window.devicePixelRatio) || 1;
                         const currScreen = {
-                            width: window.screen.width * ratio,
-                            height: window.screen.height * ratio,
+                            width: (window.visualViewport ? window.visualViewport.width : window.innerWidth) * ratio,
+                            height: (window.visualViewport ? window.visualViewport.height : window.innerHeight) * ratio,
                             description: '',
                         };
                         DeviceInfo._iphoneDetails = iphoneDevices.find((device) => {
@@ -2565,6 +2604,9 @@ var OSFramework;
                         localOs = DeviceInfo._operatingSystem;
                     }
                     return localOs;
+                }
+                static RefreshOperatingSystem() {
+                    DeviceInfo._operatingSystem = DeviceInfo.GetOperatingSystem(DeviceInfo._getUserAgent());
                 }
             }
             DeviceInfo._browser = OSUI.GlobalEnum.Browser.unknown;
@@ -2792,10 +2834,16 @@ var OSFramework;
                     return [..._filteredElements];
                 }
                 static IsInsidePopupWidget(element) {
-                    const _popup = document.querySelector(OSUI.Constants.Dot + OSUI.GlobalEnum.CssClassElements.Popup);
-                    if (_popup && element) {
-                        return _popup.contains(element);
+                    const _popup = document.querySelectorAll(OSUI.Constants.Dot + OSUI.GlobalEnum.CssClassElements.Popup);
+                    let _isInsidePopup = false;
+                    if (_popup.length > 0 && element) {
+                        _popup.forEach((popup) => {
+                            if (popup.contains(element)) {
+                                _isInsidePopup = true;
+                            }
+                        });
                     }
+                    return _isInsidePopup;
                 }
                 static Move(element, target) {
                     if (element && target) {
@@ -4487,6 +4535,12 @@ var OSFramework;
             var BottomSheet;
             (function (BottomSheet_1) {
                 class BottomSheet extends Patterns.AbstractPattern {
+                    get gestureEventInstance() {
+                        return this._gestureEventInstance;
+                    }
+                    get hasGestureEvents() {
+                        return this._hasGestureEvents;
+                    }
                     constructor(uniqueId, configs) {
                         super(uniqueId, new BottomSheet_1.BottomSheetConfig(configs));
                         this._isOpen = false;
@@ -4498,12 +4552,6 @@ var OSFramework;
                                 mass: 1,
                             },
                         };
-                    }
-                    get gestureEventInstance() {
-                        return this._gestureEventInstance;
-                    }
-                    get hasGestureEvents() {
-                        return this._hasGestureEvents;
                     }
                     _handleFocusBehavior() {
                         const opts = {
@@ -5429,8 +5477,7 @@ var OSFramework;
                             throw new Error(`${OSUI.ErrorCodes.Dropdown.HasNoImplementation.code}: ${OSUI.ErrorCodes.Dropdown.HasNoImplementation.message}`);
                         }
                         _moveBallonElement() {
-                            const balloon = document.adoptNode(this._balloonWrapperElement);
-                            this._activeScreenElement.appendChild(balloon);
+                            OSUI.Helper.Dom.Move(this._balloonWrapperElement, this._activeScreenElement);
                         }
                         _onBodyClick(_eventType, event) {
                             if (this._isOpen === false) {
@@ -10237,31 +10284,34 @@ var OSFramework;
                         return newTabIndex;
                     }
                     _handleKeypressEvent(e) {
+                        let currentTabHeader;
                         let targetHeaderItemIndex;
                         if (e.target !== this._activeTabHeaderElement.selfElement) {
                             return;
                         }
                         switch (e.key) {
                             case OSUI.GlobalEnum.Keycodes.ArrowRight:
-                                targetHeaderItemIndex = this.configs.StartingTab + 1;
-                                if (targetHeaderItemIndex >= this.getChildItems(Tabs_1.Enum.ChildTypes.TabsHeaderItem).length) {
-                                    targetHeaderItemIndex = 0;
-                                }
+                                currentTabHeader = this._tabsHeadersEnabled.indexOf(this._activeTabHeaderElement);
+                                targetHeaderItemIndex =
+                                    this._tabsHeadersEnabled[currentTabHeader + 1] === undefined
+                                        ? this._tabsHeadersEnabled[0].getDataTab()
+                                        : this._tabsHeadersEnabled[currentTabHeader + 1].getDataTab();
                                 this.changeTab(targetHeaderItemIndex, undefined, true);
                                 break;
                             case OSUI.GlobalEnum.Keycodes.ArrowLeft:
-                                targetHeaderItemIndex = this.configs.StartingTab - 1;
-                                if (targetHeaderItemIndex < 0) {
-                                    targetHeaderItemIndex = this.getChildItems(Tabs_1.Enum.ChildTypes.TabsHeaderItem).length - 1;
-                                }
+                                currentTabHeader = this._tabsHeadersEnabled.indexOf(this._activeTabHeaderElement);
+                                targetHeaderItemIndex =
+                                    this._tabsHeadersEnabled[currentTabHeader - 1] === undefined
+                                        ? this._tabsHeadersEnabled[this._tabsHeadersEnabled.length - 1].getDataTab()
+                                        : this._tabsHeadersEnabled[currentTabHeader - 1].getDataTab();
                                 this.changeTab(targetHeaderItemIndex, undefined, true);
                                 break;
                             case OSUI.GlobalEnum.Keycodes.End:
-                                targetHeaderItemIndex = this.getChildItems(Tabs_1.Enum.ChildTypes.TabsHeaderItem).length - 1;
+                                targetHeaderItemIndex = this._tabsHeadersEnabled[this._tabsHeadersEnabled.length - 1].getDataTab();
                                 this.changeTab(targetHeaderItemIndex, undefined, true);
                                 break;
                             case OSUI.GlobalEnum.Keycodes.Home:
-                                targetHeaderItemIndex = 0;
+                                targetHeaderItemIndex = this._tabsHeadersEnabled[0].getDataTab();
                                 this.changeTab(targetHeaderItemIndex, undefined, true);
                                 break;
                         }
@@ -10322,6 +10372,7 @@ var OSFramework;
                             this._activeTabContentElement.setIsActive();
                         }
                         this._updateItemsConnection(false);
+                        this._updateListOfEnabledTabsHeader();
                     }
                     _removeContentItem(childContentId) {
                         const childContentItem = this.getChild(childContentId);
@@ -10531,6 +10582,9 @@ var OSFramework;
                             }
                         });
                     }
+                    _updateListOfEnabledTabsHeader() {
+                        this._tabsHeadersEnabled = this.getChildItems(Tabs_1.Enum.ChildTypes.TabsHeaderItem).filter((element) => !element.selfElement.disabled);
+                    }
                     setA11YProperties() {
                         OSUI.Helper.A11Y.RoleTabList(this._tabsHeaderElement.firstElementChild);
                         OSUI.Helper.A11Y.AriaHiddenTrue(this._tabsIndicatorElement);
@@ -10566,21 +10620,25 @@ var OSFramework;
                                 break;
                             case Tabs_1.Enum.ChildNotifyActionType.AddHeaderItem:
                                 this._addHeaderItem(childItem);
+                                this._updateListOfEnabledTabsHeader();
                                 break;
                             case Tabs_1.Enum.ChildNotifyActionType.Click:
                                 this._tabHeaderItemHasBeenClicked(childItem.uniqueId);
                                 break;
                             case Tabs_1.Enum.ChildNotifyActionType.DisabledHeaderItem:
                                 this._setTabHeaderItemDisabledStatus(childItem.uniqueId, true);
+                                this._updateListOfEnabledTabsHeader();
                                 break;
                             case Tabs_1.Enum.ChildNotifyActionType.EnabledHeaderItem:
                                 this._setTabHeaderItemDisabledStatus(childItem.uniqueId, false);
+                                this._updateListOfEnabledTabsHeader();
                                 break;
                             case Tabs_1.Enum.ChildNotifyActionType.RemovedContentItem:
                                 this._removeContentItem(childItem.uniqueId);
                                 break;
                             case Tabs_1.Enum.ChildNotifyActionType.RemovedHeaderItem:
                                 this._removeHeaderItem(childItem.uniqueId);
+                                this._updateListOfEnabledTabsHeader();
                                 break;
                             case Tabs_1.Enum.ChildNotifyActionType.UpdateIndicator:
                                 this._handleTabIndicator();
@@ -17283,6 +17341,10 @@ var OutSystems;
                 return result;
             }
             Utils.SetSelectedTableRow = SetSelectedTableRow;
+            function GetPlatformType() {
+                return OSFramework.OSUI.Constants.OSUIPlatform;
+            }
+            Utils.GetPlatformType = GetPlatformType;
             function ShowPassword(WidgetId) {
                 const result = OutSystems.OSUI.Utils.CreateApiResponse({
                     errorCode: OSUI.ErrorCodes.Utilities.FailShowPassword,
@@ -17311,6 +17373,104 @@ var OutSystems;
                 return result;
             }
             Utils.ShowPassword = ShowPassword;
+        })(Utils = OSUI.Utils || (OSUI.Utils = {}));
+    })(OSUI = OutSystems.OSUI || (OutSystems.OSUI = {}));
+})(OutSystems || (OutSystems = {}));
+var OutSystems;
+(function (OutSystems) {
+    var OSUI;
+    (function (OSUI) {
+        var Utils;
+        (function (Utils) {
+            var PreviewInDevices;
+            (function (PreviewInDevices) {
+                class OnPostMessage {
+                    static _addInPreviewCssClass() {
+                        OnPostMessage._isInPreviewInDevices = true;
+                        document.body.classList.add('PreviewInDevices');
+                    }
+                    static _createPhonePreviewStyle(notchValue) {
+                        if (!notchValue) {
+                            return;
+                        }
+                        const style = document.createElement('style');
+                        style.textContent = `
+				body * {
+					user-select: none !important
+				}
+	
+				body.is-phone.android.portrait {
+					--status-bar-height: ${notchValue}px;
+				} 
+				
+				body.portrait.is-phone {
+					--os-safe-area-top: ${notchValue}px;
+				} 
+				
+				body.landscape.is-phone {
+					--os-safe-area-right: ${notchValue}px;
+					--os-safe-area-left: ${notchValue}px;
+				}
+	
+				.is-phone .active-screen.screen-container::-webkit-scrollbar, html::-webkit-scrollbar,
+				.is-phone.ios .active-screen.screen-container .content::-webkit-scrollbar, html::-webkit-scrollbar {
+					display: none;
+				}
+			`;
+                        document.body.classList.add('is-phone');
+                        document.body.setAttribute('data-status-bar-height', `${notchValue}px`);
+                        document.head.appendChild(style);
+                    }
+                    static _createTabletPreviewStyle() {
+                        const style = document.createElement('style');
+                        style.textContent = `
+				body * {
+					user-select: none !important
+				}
+				
+				.tablet .active-screen.screen-container::-webkit-scrollbar, html::-webkit-scrollbar,
+				.tablet.ios .active-screen.screen-container .content::-webkit-scrollbar, html::-webkit-scrollbar {
+					display: none;
+				}
+			`;
+                        document.head.appendChild(style);
+                    }
+                    static _message(evtName, evt) {
+                        if (OSFramework.OSUI.GlobalEnum.HTMLEvent.Message === evtName &&
+                            (evt.origin.includes('outsystems.app') || evt.origin.includes('outsystems.dev'))) {
+                            OnPostMessage._messageFromPreview(evt);
+                        }
+                    }
+                    static _messageFromPreview(evt) {
+                        OnPostMessage._addInPreviewCssClass();
+                        if (OSFramework.OSUI.Helper.DeviceInfo.IsPhone) {
+                            OnPostMessage._createPhonePreviewStyle(evt.data.notchValue);
+                        }
+                        else if (OSFramework.OSUI.Helper.DeviceInfo.IsTablet) {
+                            OnPostMessage._createTabletPreviewStyle();
+                        }
+                        sessionStorage.setItem('previewDevicesUserAgent', evt.data.userAgent);
+                        sessionStorage.setItem('previewDevicesPixelRatio', evt.data.pixelRatio);
+                        OnPostMessage.Unset();
+                        evt.source.postMessage('received', { targetOrigin: evt.origin });
+                        OSFramework.OSUI.Helper.DeviceInfo.RefreshOperatingSystem();
+                        Utils.LayoutPrivate.SetDeviceClass(false);
+                    }
+                    static get IsInPreviewInDevices() {
+                        return OnPostMessage._isInPreviewInDevices;
+                    }
+                    static Set() {
+                        if (window.self !== window.top) {
+                            OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(OSFramework.OSUI.Event.DOMEvents.Listeners.Type.WindowMessage, OnPostMessage._message);
+                        }
+                    }
+                    static Unset() {
+                        OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(OSFramework.OSUI.Event.DOMEvents.Listeners.Type.WindowMessage, OnPostMessage._message);
+                    }
+                }
+                OnPostMessage._isInPreviewInDevices = false;
+                OnPostMessage.Set();
+            })(PreviewInDevices = Utils.PreviewInDevices || (Utils.PreviewInDevices = {}));
         })(Utils = OSUI.Utils || (OSUI.Utils = {}));
     })(OSUI = OutSystems.OSUI || (OutSystems.OSUI = {}));
 })(OutSystems || (OutSystems = {}));

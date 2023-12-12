@@ -57,13 +57,17 @@ declare namespace OSFramework.OSUI.Constants {
             True: string;
         };
     };
+    const AccessibilityHideElementClass = "wcag-hide-text";
     const AllowPropagationAttr = "[data-allow-event-propagation]";
-    const Dot = ".";
     const Comma = ",";
-    const EnableLogMessages = false;
+    const Dot = ".";
     const EmptyString = "";
-    const FocusTrapIgnoreAttr = "ignore-focus-trap";
+    const EnableLogMessages = false;
     const FocusableElems = "a[href]:not([disabled]),[tabindex=\"0\"], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled])";
+    const FocusTrapIgnoreAttr = "ignore-focus-trap";
+    const HasAccessibilityClass = "has-accessible-features";
+    const InvalidNumber = -1;
+    const IsRTLClass = "is-rtl";
     const JavaScriptTypes: {
         Undefined: string;
         Boolean: string;
@@ -74,16 +78,13 @@ declare namespace OSFramework.OSUI.Constants {
         Object: string;
     };
     const JustInputs = "input:not([type=button]):not([type=checkbox]):not([type=color]):not([type=file]):not([type=hidden]):not([type=image]):not([type=image]):not([type=radio]):not([type=range]):not([type=reset]):not([type=submit]), textarea";
-    const HasAccessibilityClass = "has-accessible-features";
-    const InvalidNumber = -1;
-    const Months: string[];
     const Language: {
         code: string;
         short: string;
     };
-    const AccessibilityHideElementClass = "wcag-hide-text";
-    const IsRTLClass = "is-rtl";
+    const Months: string[];
     const NoTransition = "no-transition";
+    const OSUIPlatform = "<\u2022>platformType<\u2022>";
     const OSUIVersion = "2.18.2";
     const ZeroValue = 0;
 }
@@ -324,7 +325,8 @@ declare namespace OSFramework.OSUI.GlobalEnum {
         TouchEnd = "touchend",
         TouchMove = "touchmove",
         TouchStart = "touchstart",
-        TransitionEnd = "transitionend"
+        TransitionEnd = "transitionend",
+        Message = "message"
     }
     enum CustomEvent {
         BalloonOnToggle = "balloon.onToggle"
@@ -664,7 +666,8 @@ declare namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
         BodyOnMouseDown = "body.mousedown",
         OrientationChange = "window.onorientationchange",
         ScreenOnScroll = "screen.onscroll",
-        WindowResize = "window.onresize"
+        WindowResize = "window.onresize",
+        WindowMessage = "window.message"
     }
 }
 declare namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
@@ -686,6 +689,12 @@ declare namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
     class ScreenOnScroll extends AbstractListener<string> {
         constructor();
         private _screenTrigger;
+    }
+}
+declare namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
+    class WindowMessage extends AbstractListener<string> {
+        constructor();
+        private _windowTrigger;
     }
 }
 declare namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
@@ -1005,6 +1014,7 @@ declare namespace OSFramework.OSUI.Helper {
         static GetDeviceOrientation(): GlobalEnum.DeviceOrientation;
         static GetDeviceType(): GlobalEnum.DeviceType;
         static GetOperatingSystem(userAgent?: string): GlobalEnum.MobileOS;
+        static RefreshOperatingSystem(): void;
     }
 }
 declare namespace OSFramework.OSUI.Helper {
@@ -3348,6 +3358,7 @@ declare namespace OSFramework.OSUI.Patterns.Tabs {
         private _requestAnimationFrameOnIndicatorResize;
         private _tabsContentElement;
         private _tabsHeaderElement;
+        private _tabsHeadersEnabled;
         private _tabsIndicatorElement;
         constructor(uniqueId: string, configs: JSON);
         private _addContentItem;
@@ -3377,6 +3388,7 @@ declare namespace OSFramework.OSUI.Patterns.Tabs {
         private _triggerOnChangeEvent;
         private _unsetDragObserver;
         private _updateItemsConnection;
+        private _updateListOfEnabledTabsHeader;
         protected setA11YProperties(): void;
         protected setCallbacks(): void;
         protected setHtmlElements(): void;
@@ -4717,6 +4729,7 @@ declare namespace OutSystems.OSUI.Utils {
     function MoveElement(ElementId: string, TargetSelector: string, TimeoutVal?: number): string;
     function SetActiveElement(ElementId: string, IsActive: boolean): string;
     function SetSelectedTableRow(TableId: string, RowNumber: number, IsSelected: boolean): string;
+    function GetPlatformType(): string;
     function ShowPassword(WidgetId?: string): string;
 }
 declare namespace Providers.OSUI.ErrorCodes {

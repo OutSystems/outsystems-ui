@@ -1,17 +1,18 @@
 const patterns = require('../../ProjectSpecs/Patterns/#All');
+const project = require('../../ProjectSpecs/DefaultSpecs');
 const scssStructure = require('../../ProjectSpecs/ScssStructure/#All');
 
-const envType = {'development':'dev', 'production':'prod'}
-
 // Store the text to be exposed!
-let partialsListText = '';
+let partialsListText;
 
-function createPartialsListDev() {
-    return createPartialsList(envType.development);
+function createPartialsListDev(platformType) {
+    partialsListText = '';
+    return createPartialsList(project.globalConsts.envType.development, platformType);
 }
 
-function createPartialsListProd() {
-    return createPartialsList(envType.production);
+function createPartialsListProd(platformType) {
+    partialsListText = '';
+    return createPartialsList(project.globalConsts.envType.production, platformType);
 }
 
 // Method used to create the import text
@@ -48,7 +49,7 @@ function createSectionCommentTitle(text, type) {
 }
 
 // Method that will create the text for the SectionIndex section dynamically
-function createPartialsList(env) {	
+function createPartialsList(env, platformType) {	
     // Section iteractor
     let sectionIndex = 0;
 
@@ -88,8 +89,9 @@ function createPartialsList(env) {
 
                     // 2. Go through each section assets
                     for (const subAsset of asset.assets) {
-                        // Check if 'key' is an attribute of the current asset, if so it means it's a pattern!
-                        if (subAsset.key === undefined) {
+                        if(subAsset.platform !== undefined && subAsset.platform !== platformType) {
+                            continue;
+                        } else if (subAsset.key === undefined) {
                             partialsListText += createSectionCommentTitle(`${sectionIndex}.${assetIndex}.${subAssetIndex}. ${subAsset.name}`, 2);
 
                             partialsListText += getImportLineText(subAsset.path);
@@ -99,11 +101,11 @@ function createPartialsList(env) {
                             const assetInfo = patterns.all[subAsset.key];
 
                             if (
-                                env === envType.development ||
+                                env === project.globalConsts.envType.development ||
                                 assetInfo.inDevelopment === undefined | false ||
                                 assetInfo.inDevelopment === false ||
                                 (
-                                    env = envType.production &&
+                                    env = project.globalConsts.envType.production &&
                                     assetInfo.inDevelopment &&
                                     assetInfo.inDevelopment === false
                                 )
@@ -128,7 +130,7 @@ function createPartialsList(env) {
                                     for (const assetItem of assetInfo.assets) {
 
                                         if (
-                                            env === envType.development || assetItem.inDevelopment === false
+                                            env === project.globalConsts.envType.development || assetItem.inDevelopment === false
                                         ) {
                                             if (assetItem.scss) {
                                                 partialsListText += createSectionCommentTitle(`${sectionIndex}.${assetIndex}.${subAssetIndex}.${assetInfoItemIndex} ${assetItem.name}`, 2);

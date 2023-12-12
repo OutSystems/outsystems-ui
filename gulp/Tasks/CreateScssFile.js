@@ -1,19 +1,15 @@
 const fs = require('fs');
 
-const getSectionIndexText = require('./CreateScss/SectionIndex');
 const getPartialsList = require('./CreateScss/GetPartialsList');
-
-const envType = {'development':'dev', 'production':'prod'}
-let env = '';
+const getSectionIndexText = require('./CreateScss/SectionIndex');
+const project = require('../ProjectSpecs/DefaultSpecs');
 
 function setDevEnvironment (cb) {
-	env = envType.development;
-	createScssFile(cb);
+	createScssFile(cb, project.globalConsts.envType.development);
 }
 
 function setProdEnvironment (cb) {
-	env = envType.production;
-	createScssFile(cb);
+	createScssFile(cb, project.globalConsts.envType.production);
 }
 
 // Create a file note to give important context!
@@ -36,25 +32,28 @@ function getNotesText () {
 	notes += `• In order to proper manage this file, use:\n`;
 	notes += `└── './gulp/ProjectSpecs/ScssStructure/#All.js' \n`;
 	notes += `\n`;
-	notes += `PS: This comment will not be visible at the compiled version!\n`;
+	notes += `PS: This comment block will not be visible in the compiled version!\n`;
 	notes +=	"=============================================================================== */\n";
 
 	return notes;
 }
 
-// Method used to Create SCSS file structure dynamically
-function createScssFile(cb) {
+// Memthod that will create the file content text and return it depending on platform type
+function getFileText(platformType, envType) {
 	// Store the Section Index generated text
-	const sectionIndexText = env === envType.production ? getSectionIndexText.textProd() : getSectionIndexText.textDev();
+	const sectionIndexText = envType === project.globalConsts.envType.production ? getSectionIndexText.textProd(platformType) : getSectionIndexText.textDev(platformType);
 	// Store the Partials List generated text
-	const partialsText = env === envType.production ? getPartialsList.textProd() : getPartialsList.textDev();
-
+	const partialsText = envType === project.globalConsts.envType.production ? getPartialsList.textProd(platformType) : getPartialsList.textDev(platformType);
 	// Combine text to create the hole file
-	const newScssText = `${getNotesText()}\n${sectionIndexText}\n${partialsText}`;
+	return `${getNotesText()}\n${sectionIndexText}\n${partialsText}`;
+}
 
-    // Update the SCSS file with the generated code!
-    fs.writeFileSync(`./src/scss/OutSystemsUI.scss`, newScssText, 'utf8');
-
+// Method used to Create SCSS file structure dynamically
+function createScssFile(cb, envType) {
+	const pts = project.globalConsts.platformTarget;
+	for(const pt in pts) {
+        fs.writeFileSync(`./src/scss/${pts[pt]}.OutSystemsUI.scss`, getFileText(pts[pt], envType), 'utf8');
+    }
 	cb();
 }
 
