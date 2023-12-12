@@ -10,5 +10,6 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 		OrientationChange = 'window.onorientationchange',
 		ScreenOnScroll = 'screen.onscroll',
 		WindowResize = 'window.onresize',
+		WindowMessage = 'window.message',
 	}
 }

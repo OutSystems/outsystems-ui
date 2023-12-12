@@ -1,11 +1,8 @@
-const parseArgs = require('minimist');
 const prompts = require('prompts');
 const fs = require('fs');
 
 // Get the default specs
 const defaultSpecs = require("./../ProjectSpecs/DefaultSpecs");
-
-const gtaScriptOpts = parseArgs(process.argv.slice(3), { from: process.env.NODE_ENV || '' });
 
 // Store the new version
 let newVersionToBeSet = '';
@@ -86,12 +83,15 @@ function getFilesList(cb) {
 	cb();
 }
 
-// Set the new version script triggered by the GitHub Action!
+// Set the new version script triggered by the GitHub Action, where the new verion will be passed by script variable --newVersion
 function gtaSetNewVersion(cb) {	
-	let newVersion = gtaScriptOpts.from.replace("v", "").split(".");
-	// Increase into a new version
-	newVersionToBeSet = `${parseInt(newVersion[0])}.${parseInt(newVersion[1])+1}.${parseInt(newVersion[2])}`;
-
+	// Check if version exist 
+	if(process.env.npm_config_newversion === undefined) {
+		console.log(`\n⛔️ ERROR: --newVersion is missing at the script!\n`);
+		return;
+	}
+	// Store the version to be set
+	newVersionToBeSet = process.env.npm_config_newversion.replace("v", "");
 	getFilesList(cb);
 }
 

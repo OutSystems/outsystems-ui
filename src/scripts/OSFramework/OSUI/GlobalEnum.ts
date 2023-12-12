@@ -212,6 +212,7 @@ namespace OSFramework.OSUI.GlobalEnum {
 		TouchMove = 'touchmove',
 		TouchStart = 'touchstart',
 		TransitionEnd = 'transitionend',
+		Message = 'message',
 	}
 
 	/**

@@ -4,16 +4,16 @@
 	"description": "OutSystems UI Framework",
 	"license": "BSD-3-Clause",
 	"scripts": {
-		"build": "gulp createProduction && npm run lintfix && npm run lint",
+		"build": "gulp createProduction --target && npm run lintfix && npm run lint",
 		"create-osui-scss": "gulp updateScssFile",
-		"dev": "gulp startDevelopment",
+		"dev": "gulp startDevelopment --target",
 		"docs": "npx typedoc",
 		"lint": "eslint . --ext .ts",
 		"lintfix": "eslint . --fix --ext .ts",
 		"prettier": "prettier --config ./.prettierrc.json --write \"**/*.+(js|ts|css)\"",
 		"setup": "npm i && npm run dev",
 		"update-version": "gulp updateVersion",
-		"gta-update-version": "gulp gtaSetVersion --from"
+		"gta-update-version": "gulp gtaSetVersion --newVersion"
 	},
 	"repository": {
 		"type": "git",
