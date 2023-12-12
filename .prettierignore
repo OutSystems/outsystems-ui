@@ -6,3 +6,6 @@ node_modules
 src/static/**
 
 *.css
+
+# don't lint settings
+*.snyk
