@@ -1,0 +1,5 @@
+exclude:
+ global:
+   - gulp/**
+   - pipelines/**
+   - docs/**
