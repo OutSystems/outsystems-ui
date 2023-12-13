@@ -1,3 +1,10 @@
+/*!
+OutSystems UI 2.18.2 • O11 Platform
+Website:
+ • https://www.outsystems.com/outsystems-ui
+GitHub:
+ • https://github.com/OutSystems/outsystems-ui
+*/ 
 declare namespace osui {
     function GetVersion(): string;
     function ToggleClass(el: HTMLElement, state: unknown, className: string): void;
@@ -84,7 +91,7 @@ declare namespace OSFramework.OSUI.Constants {
     };
     const Months: string[];
     const NoTransition = "no-transition";
-    const OSUIPlatform = "<\u2022>platformType<\u2022>";
+    const OSPlatform = "O11";
     const OSUIVersion = "2.18.2";
     const ZeroValue = 0;
 }
