@@ -139,7 +139,7 @@ var OSFramework;
                 'December',
             ];
             Constants.NoTransition = 'no-transition';
-            Constants.OSUIPlatform = 'O11';
+            Constants.OSPlatform = 'O11';
             Constants.OSUIVersion = '2.18.2';
             Constants.ZeroValue = 0;
         })(Constants = OSUI.Constants || (OSUI.Constants = {}));
@@ -17342,7 +17342,7 @@ var OutSystems;
             }
             Utils.SetSelectedTableRow = SetSelectedTableRow;
             function GetPlatformType() {
-                return OSFramework.OSUI.Constants.OSUIPlatform;
+                return OSFramework.OSUI.Constants.OSPlatform;
             }
             Utils.GetPlatformType = GetPlatformType;
             function ShowPassword(WidgetId) {
@@ -20659,8 +20659,9 @@ var Providers;
                 var Utils;
                 (function (Utils) {
                     function _setRangeValues(providerConfigs) {
+                        var _a;
                         const _noUiSliderConfigs = providerConfigs;
-                        if (_noUiSliderConfigs.range.length <= 0) {
+                        if (((_a = _noUiSliderConfigs.range) === null || _a === void 0 ? void 0 : _a.length) <= 0) {
                             delete _noUiSliderConfigs.range;
                         }
                         else {

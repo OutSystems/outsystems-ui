@@ -128,15 +128,27 @@ function updateFwkAndPlatformInfo(cb) {
         specsInfo += `*/ \n`;
 
         // Read file code
-        let code = fs.readFileSync(filesPath[pt], 'utf8');
+        let jsCode = fs.readFileSync(filesPath[pt], 'utf8');
+        // Set *.d.ts file path
+        const dtsFilePath = filesPath[pt].replace(".js", ".d.ts");
+        // Check if the *.d.ts file exist
+        let dtsCode = fs.existsSync(dtsFilePath) ? fs.readFileSync(dtsFilePath, 'utf8') : null;
+        
         // Set platformType to the OSFramework.OSUI.Constants
-        code = code.replace("<•>platformType<•>", project.globalConsts.platformTarget[pt]);
+        jsCode = jsCode.replace("<->platformType<->", project.globalConsts.platformTarget[pt]);
+        dtsCode = dtsCode.replace("<->platformType<->", project.globalConsts.platformTarget[pt]);
+
         // Update code
-        let updatedCode = specsInfo + code;
+        let updatedCode = specsInfo + jsCode;
+        let updatedDtsCode = dtsCode !== null ? specsInfo + dtsCode : null;
+
         // Ensure code will be set properly before set the update.
         setTimeout(() => {
             // Update the existing file info with the new one!
             fs.writeFileSync(filesPath[pt], updatedCode, 'utf8');
+            if(updatedDtsCode !== null){
+                fs.writeFileSync(dtsFilePath, updatedDtsCode, 'utf8');
+            }
         }, 0);
     }
 
