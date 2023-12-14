@@ -1,8 +1,8 @@
 const gulp = require('gulp');
 const { watch, series, parallel } = require('gulp');
-const fs = require('fs');
 const browser = require('browser-sync');
 const clean = require('gulp-clean');
+const fs = require('fs');
 
 // Get dependencies tasks
 const createScssFile = require('./gulp/Tasks/CreateScssFile');
@@ -10,6 +10,7 @@ const cssTranspile = require('./gulp/Tasks/ScssTanspile');
 const project = require('./gulp/ProjectSpecs/DefaultSpecs');
 const tsTranspile = require('./gulp/Tasks/TsTanspile');
 const updatetVersion = require('./gulp/Tasks/UpdateVersion');
+const ptdNpm = require('./gulp/Tasks/PrepareToDeployNpm');
 
 // Local configs
 const distFolder = './dist';
@@ -28,13 +29,6 @@ function initServer() {
     setTimeout(() => {
         browser.init({server: distFolder, port: serverPort, cors: true});
     }, 0);
-}
-
-// Prepare code branch to deply
-function prepareToDeploy(cb) {
-    console.log("prepareToDeploy");
-
-    cb();
 }
 
 // Method to update development template code
@@ -86,4 +80,4 @@ exports.createProduction = series(
 exports.updateScssFile = createScssFile.update_osui_scss_file_dev;
 exports.updateVersion = updatetVersion.setVersion;
 exports.gtaSetVersion = updatetVersion.gtaSetVersion;
-exports.prepareToDeploy = prepareToDeploy;
+exports.prepareToDeploy = ptdNpm.prepareToDeployNpm;
