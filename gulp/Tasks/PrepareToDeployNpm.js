@@ -47,8 +47,7 @@ function getTextToBeReplaced(code, startOf, endWith, keepStartAndEnd) {
 
 // Prepare code branch to deply
 exports.prepareToDeployNpm = (cb) => {
-    // Store the name of the branch to be used to deploy into NPM
-    /* TODO: Update const value into: prep-to-deploy */
+    // Store the name of the branch to be used to deploy into NPM 
     const prepareToDeployBranchName = 'prep-to-deploy';
 
     // Get the current branch name
