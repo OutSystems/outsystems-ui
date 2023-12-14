@@ -1,5 +1,6 @@
 const gulp = require('gulp');
 const branchName = require('branch-name');
+const clean = require('gulp-clean');
 const fs = require('fs');
 const jsonFix = require('json-fixer');
 
