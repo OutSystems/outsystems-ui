@@ -110,3 +110,6 @@ package-lock.json
 
 # gta artifact
 new-version-artf.txt
+
+# Distribution files folder
+dist/**
