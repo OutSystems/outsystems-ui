@@ -112,4 +112,4 @@ package-lock.json
 new-version-artf.txt
 
 # distribution folder
-# ./dist
+./dist
