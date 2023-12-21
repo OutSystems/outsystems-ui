@@ -4,6 +4,8 @@ const clean = require('gulp-clean');
 const fs = require('fs');
 const jsonFix = require('json-fixer');
 
+const utils = require('./Utils');
+
 // Store the list of files that should be removed before deploy to NPM
 const listOfPathFilesToRemove = [
     './.github',
@@ -28,11 +30,11 @@ const listOfPathFilesToRemove = [
 function cleanPackageJsonFile() {
     let code = fs.readFileSync(`./package.json`, 'utf8');
     // Remove scripts section
-    code = code.replace(getTextToBeReplaced(code, '"scripts"', '},\n', true), '');
+    code = code.replace(utils.getTextToBeReplaced(code, '"scripts"', '},\n', true), '');
     // Remove engines section
-    code = code.replace(getTextToBeReplaced(code, '"engines"', '},\n', true), '');
+    code = code.replace(utils.getTextToBeReplaced(code, '"engines"', '},\n', true), '');
     // Remove devDependencies section
-    code = code.replace(getTextToBeReplaced(code, '"devDependencies"', '}\n', true), '');
+    code = code.replace(utils.getTextToBeReplaced(code, '"devDependencies"', '}\n', true), '');
     // Update package.json file
     fs.writeFileSync(`./package.json`, JSON.stringify(jsonFix(code).data), 'utf8');
 }
@@ -41,19 +43,11 @@ function cleanPackageJsonFile() {
 function cleanReadmeFile() {
     let code = fs.readFileSync(`./README.md`, 'utf8');
     // Remove scripts section
-    code = code.replace(getTextToBeReplaced(code, '### How to change this code?', '## Useful Links', false), '');
+    code = code.replace(utils.getTextToBeReplaced(code, '### How to change this code?', '## Useful Links', false), '');
     // Clean pending text
     code = code.replace('### How to change this code?', '');
     // Update package.json file
     fs.writeFileSync(`./README.md`, code, 'utf8');
-}
-
-// Method that will return a piece of text between a given initial and end pieces of text
-function getTextToBeReplaced(code, startOf, endWith, keepStartAndEnd) {
-    const startIndex = code.indexOf(startOf) + (keepStartAndEnd ? 0 : startOf.length);
-	const endIndex = startIndex + (code.substring(startIndex, code.length).indexOf(endWith)) + (keepStartAndEnd ? endWith.length : 0);
-	const textBetween = code.substring(startIndex, endIndex);
-    return textBetween;
 }
 
 // Prepare code branch to deply
