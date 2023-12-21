@@ -75,7 +75,7 @@ exports.prepareToDeployNpm = (cb) => {
             }
             cb();
         } else {
-            console.log(`\n⛔️ ERROR: Current branch is '${name}'. This action is only available for branch '${prepareToDeployBranchName}'.\n`);
+            console.log(`\n⛔️ ERROR: Current branch is '${name}'. This action is only available if active branch is '${prepareToDeployBranchName}'.\n`);
         }
     });
 }
