@@ -11,6 +11,7 @@ const project = require('./gulp/ProjectSpecs/DefaultSpecs');
 const tsTranspile = require('./gulp/Tasks/TsTanspile');
 const updatetVersion = require('./gulp/Tasks/UpdateVersion');
 const ptdNpm = require('./gulp/Tasks/PrepareToDeployNpm');
+const gitIgnoreUpdate = require('./gulp/Tasks/GitIgnoreUpdate');
 
 // Local configs
 const distFolder = './dist';
@@ -81,3 +82,4 @@ exports.updateScssFile = createScssFile.update_osui_scss_file_dev;
 exports.updateVersion = updatetVersion.setVersion;
 exports.gtaSetVersion = updatetVersion.gtaSetVersion;
 exports.prepareToDeploy = ptdNpm.prepareToDeployNpm;
+exports.removeDistFromGitIgnore = gitIgnoreUpdate.removeDist;
