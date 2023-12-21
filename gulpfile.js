@@ -1,8 +1,8 @@
 const gulp = require('gulp');
 const { watch, series, parallel } = require('gulp');
-const fs = require('fs');
 const browser = require('browser-sync');
 const clean = require('gulp-clean');
+const fs = require('fs');
 
 // Get dependencies tasks
 const createScssFile = require('./gulp/Tasks/CreateScssFile');
@@ -10,6 +10,8 @@ const cssTranspile = require('./gulp/Tasks/ScssTanspile');
 const project = require('./gulp/ProjectSpecs/DefaultSpecs');
 const tsTranspile = require('./gulp/Tasks/TsTanspile');
 const updatetVersion = require('./gulp/Tasks/UpdateVersion');
+const ptdNpm = require('./gulp/Tasks/PrepareToDeployNpm');
+const gitIgnoreUpdate = require('./gulp/Tasks/GitIgnoreUpdate');
 
 // Local configs
 const distFolder = './dist';
@@ -37,13 +39,13 @@ function updateIndexTemplateFile() {
 
     let jsLinks = '';
     let scssLinks = '';
-    if(process.env.npm_config_target !== undefined && project.globalConsts.platformTarget[process.env.npm_config_target] !== undefined) {
-        code = code.replace(" • --platform--", " • " + project.globalConsts.platformTarget[process.env.npm_config_target]);
-        jsLinks = `<li><p><a target="blank" href="./dev.${project.globalConsts.platformTarget[process.env.npm_config_target]}.OutSystemsUI.js">${project.globalConsts.platformTarget[process.env.npm_config_target]}.OutSystemsUI.js</a></p></li>`;
-        scssLinks = `<li><p><a target="blank" href="./dev.${project.globalConsts.platformTarget[process.env.npm_config_target]}.OutSystemsUI.css">${project.globalConsts.platformTarget[process.env.npm_config_target]}.OutSystemsUI.css</a></p></li>`;
+    if(process.env.npm_config_target !== undefined && project.globalConsts.targetPlatform[process.env.npm_config_target] !== undefined) {
+        code = code.replace(" • --platform--", " • " + project.globalConsts.targetPlatform[process.env.npm_config_target]);
+        jsLinks = `<li><p><a target="blank" href="./dev.${project.globalConsts.targetPlatform[process.env.npm_config_target]}.OutSystemsUI.js">${project.globalConsts.targetPlatform[process.env.npm_config_target]}.OutSystemsUI.js</a></p></li>`;
+        scssLinks = `<li><p><a target="blank" href="./dev.${project.globalConsts.targetPlatform[process.env.npm_config_target]}.OutSystemsUI.css">${project.globalConsts.targetPlatform[process.env.npm_config_target]}.OutSystemsUI.css</a></p></li>`;
     } else {
         code = code.replace(" • --platform--", "");
-        const pts = project.globalConsts.platformTarget;
+        const pts = project.globalConsts.targetPlatform;
         for(const pt in pts) {
             jsLinks += `<li><p><a target="blank" href="./dev.${pts[pt]}.OutSystemsUI.js">${pts[pt]}.OutSystemsUI.js</a></p></li>\n`;
             scssLinks += `<li><p><a target="blank" href="./dev.${pts[pt]}.OutSystemsUI.css">${pts[pt]}.OutSystemsUI.css</a></p></li>\n`;
@@ -62,7 +64,6 @@ function watchFiles() {
     watch(watchTsFiles, series(tsTranspile.transpileDev));
 };
 
-
 // Gulp tasks
 exports.startDevelopment = series(
     cleanOldFiles,
@@ -80,3 +81,5 @@ exports.createProduction = series(
 exports.updateScssFile = createScssFile.update_osui_scss_file_dev;
 exports.updateVersion = updatetVersion.setVersion;
 exports.gtaSetVersion = updatetVersion.gtaSetVersion;
+exports.prepareToDeploy = ptdNpm.prepareToDeployNpm;
+exports.removeDistFromGitIgnore = gitIgnoreUpdate.removeDist;
