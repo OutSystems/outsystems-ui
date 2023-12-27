@@ -338,7 +338,9 @@
 	min-width: 180px;
 	padding: var(--space-xs) var(--space-xl) var(--space-xs) var(--space-base);
 	position: relative;
-	transition: height, border-color 0.25s ease;
+	transition:
+		height,
+		border-color 0.25s ease;
 	vertical-align: middle;
 	width: 100%;
 
@@ -446,6 +448,9 @@
 
 // Options Container
 .vscomp-options-container {
+	border-radius: inherit;
+	z-index: 1;
+
 	&::-webkit-scrollbar {
 		width: 5px;
 	}
