@@ -136,7 +136,7 @@ function updateFwkAndPlatformInfo(cb) {
         
         // Set platformType to the OSFramework.OSUI.Constants
         jsCode = jsCode.replace("<->platformType<->", project.globalConsts.targetPlatform[pt]);
-        dtsCode = dtsCode.replace("<->platformType<->", project.globalConsts.targetPlatform[pt]);
+        dtsCode = dtsCode !== null ? dtsCode.replace("<->platformType<->", project.globalConsts.targetPlatform[pt]) : null;
 
         // Update code
         let updatedCode = specsInfo + jsCode;
