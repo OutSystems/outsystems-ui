@@ -113,10 +113,8 @@ namespace OSFramework.OSUI.Patterns.FlipContent {
 		 */
 		private _updateA11yProperties(): void {
 			if (this.configs.FlipSelf) {
-				Helper.A11Y.AriaAtomicTrue(this.selfElement);
 				Helper.A11Y.TabIndexTrue(this.selfElement);
 			} else {
-				Helper.A11Y.AriaAtomicFalse(this.selfElement);
 				Helper.A11Y.TabIndexFalse(this.selfElement);
 			}
 		}
@@ -129,10 +127,8 @@ namespace OSFramework.OSUI.Patterns.FlipContent {
 		 */
 		protected setA11YProperties(): void {
 			if (this.configs.FlipSelf) {
-				Helper.A11Y.AriaAtomicTrue(this.selfElement);
 				Helper.A11Y.TabIndexTrue(this.selfElement);
 				Helper.A11Y.RoleButton(this.selfElement);
-				Helper.A11Y.AriaLivePolite(this.selfElement);
 			}
 		}
 
