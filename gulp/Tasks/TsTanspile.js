@@ -135,8 +135,8 @@ function updateFwkAndPlatformInfo(cb) {
         let dtsCode = fs.existsSync(dtsFilePath) ? fs.readFileSync(dtsFilePath, 'utf8') : null;
         
         // Set platformType to the OSFramework.OSUI.Constants
-        jsCode = jsCode.replace("<->platformType<->", project.globalConsts.targetPlatform[pt]);
-        dtsCode = dtsCode !== null ? dtsCode.replace("<->platformType<->", project.globalConsts.targetPlatform[pt]) : null;
+        jsCode = jsCode.replace("<->platformType<->", project.globalConsts.platformTarget[pt]);
+        dtsCode = dtsCode !== null ? dtsCode.replace("<->platformType<->", project.globalConsts.platformTarget[pt]) : null;
 
         // Update code
         let updatedCode = specsInfo + jsCode;
