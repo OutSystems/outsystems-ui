@@ -229,6 +229,16 @@ namespace OutSystems.OSUI.Utils {
 	}
 
 	/**
+	 * Method that will return the platformType in use.
+	 *
+	 * @export
+	 * @return {*}  {string}
+	 */
+	export function GetPlatformType(): string {
+		return OSFramework.OSUI.Constants.OSPlatform;
+	}
+
+	/**
 	 * Shows and hides the value of an Input of type password, allowing users to view their entered password temporarily for verification or editing purposes.
 	 * If WidgetId does not exist or is left empty, the action affects the first password Input on the screen.
 	 *

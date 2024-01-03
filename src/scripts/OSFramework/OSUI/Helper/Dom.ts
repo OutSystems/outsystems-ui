@@ -438,6 +438,29 @@ namespace OSFramework.OSUI.Helper {
 		}
 
 		/**
+		 * Method to check if element is inside a Popup widget
+		 *
+		 * @static
+		 * @param {HTMLElement} element
+		 * @return {*}  {boolean}
+		 * @memberof Dom
+		 */
+		public static IsInsidePopupWidget(element: HTMLElement): boolean {
+			const _popup = document.querySelectorAll(Constants.Dot + GlobalEnum.CssClassElements.Popup);
+			let _isInsidePopup = false;
+
+			if (_popup.length > 0 && element) {
+				_popup.forEach((popup) => {
+					if (popup.contains(element)) {
+						_isInsidePopup = true;
+					}
+				});
+			}
+
+			return _isInsidePopup;
+		}
+
+		/**
 		 * Moves a given HTML element to target position.
 		 *
 		 * @static

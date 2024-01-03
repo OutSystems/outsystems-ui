@@ -9,27 +9,34 @@ const rename = require("gulp-rename");
 const sass = require('gulp-sass')(require('sass'));
 const sourcemaps = require('gulp-sourcemaps');
 
-const envType = {'development':'dev.', 'production':''}
+const project = require('../ProjectSpecs/DefaultSpecs');
 const distFolder = './dist';
-const watchScssThemes = 'src/scss/*.scss';
+let watchScssThemes = 'src/scss/*.scss';
 
-// Set as Development Mode
-function scssTranspileDev() {
-    return scssTranspile(envType.development);
-}
+// Check if a platformType has been defined through npm script, if so, compile it's own SCSS theme only, otherwise it will compile all.
+function checkForScssThemeToBeCompiled() {
+    const result = {
+        hasError: false,
+        errorMessage: ''
+    }
 
-// Set as Production Mode
-function scssTranspileProd() {
-    return scssTranspile(envType.production);
+    if(process.env.npm_config_target !== undefined) {
+        if(project.globalConsts.platformTarget[process.env.npm_config_target] === undefined) {
+            result.hasError = true;
+            result.errorMessage = `Given platform '${process.env.npm_config_target}' does not exist. Plaforms availabe:\n • ${Object.keys(project.globalConsts.platformTarget).join("\n • ")}`
+            console.log(`\n⛔️ ERROR: ${result.errorMessage}\n`);
+        } else {
+            watchScssThemes = `src/scss/${project.globalConsts.platformTarget[process.env.npm_config_target]}.OutSystemsUI.scss`;
+        }
+    }
+
+    return result;
 }
 
 // Compile SCSS
-function scssTranspile(envMode) {
-    let cssResult;
-
-    if(envMode === envType.development) {
-        cssResult = gulp
-			.src(watchScssThemes)
+function scssTranspile(cb, envMode) {
+    if(envMode === project.globalConsts.envType.development) {
+        gulp.src(watchScssThemes)
 			.pipe(sourcemaps.init())
 			.pipe(sass().on('error', sass.logError))
 			.pipe(postcss([postcssdc, postcssdd]))
@@ -40,26 +47,37 @@ function scssTranspile(envMode) {
 			)
 			.pipe(
 				rename({
-					prefix: envMode,
+					prefix: `${project.globalConsts.envType.development}.`,
 				})
 			)
 			.pipe(sourcemaps.write('.'))
 			.pipe(gulp.dest(distFolder));
     } else {
-        cssResult = gulp.src(watchScssThemes)
+        gulp.src(watchScssThemes)
             .pipe(sass().on('error', sass.logError))
             .pipe(postcss([postcssdc, postcssdd]))
             .pipe(autoprefixer({
                 overrideBrowserslist: ['last 10 versions']
             }))
             .pipe(removeEmptyLines())
-            .pipe(rename({
-                prefix: envMode,
-            }))
             .pipe(gulp.dest(distFolder));    
     }
 
-    return cssResult;
+    cb();
+}
+
+// Set as Development Mode
+function scssTranspileDev(cb) {
+    if(checkForScssThemeToBeCompiled().hasError === false) {
+        scssTranspile(cb, project.globalConsts.envType.development);
+    }
+}
+
+// Set as Production Mode
+function scssTranspileProd(cb) {
+    if(checkForScssThemeToBeCompiled().hasError === false) {
+        scssTranspile(cb, project.globalConsts.envType.production);
+    }
 }
 
 // SCSS Transpile Tasks

@@ -1,0 +1,600 @@
+/* ===============================================================================
+IMPORTANT NOTE:
+• This file is generated automatically through npm scripts: 
+├── npm run create-osui-scss 
+|	└── Which will recreate this file as a Dev mode. 
+|
+├── npm run build 
+|	└── When Prod mode is being start, it will be recreated before it's compilation. 
+|
+└── npm run dev 
+	└── When Dev mode is being start, it will be recreated, than the compilation will occurs as usually. 
+
+• In order to proper manage this file, use:
+└── './gulp/ProjectSpecs/ScssStructure/#All.js' 
+
+PS: This comment block will not be visible in the compiled version!
+=============================================================================== */
+
+/*!
+OutSystems UI 2.18.2 • ODC Platform
+Website:
+ • https://www.outsystems.com/outsystems-ui
+GitHub:
+ • https://github.com/OutSystems/outsystems-ui
+*/ 
+/*!
+Section Index:
+0. Root - CSS Variables
+1. Resets
+2. HTML Elements
+    2.1. Links
+    2.2. Images
+    2.3. Headings
+3. Page Layout
+    3.1. Layout
+    3.2. Header
+    3.3. Layout Native - Header
+    3.4. Layout Side - Header
+    3.5. Menu
+    3.6. Layout Native - Menu
+    3.7. Layout Side - Menu
+    3.8. Menu - Header Logo
+    3.9. Menu - App Menu Link
+    3.10. Menu - App Login Info
+    3.11. Content
+    3.12. ThemeGrid_Container
+    3.13. Section
+    3.14. Login
+    3.15. iOS Scroll Bounce
+4. Widgets
+    4.1. Inputs and TextAreas
+    4.2. Switch
+    4.3. Checkbox
+    4.4. Dropdown
+    4.5. Button
+    4.6. List
+    4.7. List Item
+    4.8. Table
+    4.9. Table - Sortable Icon
+    4.10. Table - Bulk Actions
+    4.11. Form
+    4.12. Upload
+    4.13. Button Group
+    4.14. Popover
+    4.15. Popup
+    4.16. Feedback Message
+    4.17. Radio Button
+5. Providers
+    5.1. Flatpickr
+    5.2. NoUiSlider
+    5.3. Splide
+    5.4. VirtualSelect
+6. Patterns
+    6.1. Adaptive
+        6.1.1. Columns
+        6.1.2. Gallery
+        6.1.3. Master Detail
+    6.2. Content
+        6.2.1. Accordion
+        6.2.2. Accordion Item
+        6.2.3. Alert
+        6.2.4. Blank Slate
+        6.2.5. Card
+        6.2.6. Card Background
+        6.2.7. Card Item
+        6.2.8. Card Sectioned
+        6.2.9. Chat Message
+        6.2.10. Flip Content
+        6.2.11. Floating Content
+        6.2.12. List Item Content
+        6.2.13. Section
+        6.2.14. Tag
+        6.2.15. Tooltip
+        6.2.16. User Avatar
+    6.3. Interaction
+        6.3.1. Action Sheet
+        6.3.2. Animate
+        6.3.3. Animated Label
+        6.3.4. Balloon
+        6.3.5. Bottom Sheet
+        6.3.6. Carousel
+        6.3.7. DatePicker
+        6.3.8. Dropdown
+            6.3.8.1 Dropdown Search
+            6.3.8.2 Dropdown Tags
+        6.3.9. Floating Actions
+        6.3.10. Input With Icon
+        6.3.11. Lightbox Image
+        6.3.12. MonthPicker
+        6.3.13. Notification
+        6.3.14. RangeSlider
+        6.3.15. Scrollable Area
+        6.3.16. Sidebar
+        6.3.17. Search
+        6.3.18. Stacked Cards
+        6.3.19. TimePicker
+        6.3.20. Video
+    6.4. Navigation
+        6.4.1. Bottom Bar Item
+        6.4.2. Breadcrumbs
+        6.4.3. OverflowMenu
+        6.4.4. Pagination
+        6.4.5. Section Index
+        6.4.6. Submenu
+        6.4.7. Tabs
+        6.4.8. Timeline
+        6.4.9. Wizard
+    6.5. Numbers
+        6.5.1. Badge
+        6.5.2. Counter
+        6.5.3. Icon Badge
+        6.5.4. Progress
+            6.5.4.1 Progress Bar
+            6.5.4.2 Progress Circle
+        6.5.5. Rating
+    6.6. Utilities
+        6.6.1. Align Center
+        6.6.2. Button Loading
+        6.6.3. Center Content
+        6.6.4. Margin Container
+        6.6.5. Separator
+        6.6.6. Pull to Refresh
+        6.6.7. List Updating
+        6.6.8. Provider Login Button
+    6.7. Advanced
+        6.7.1. Dropdown ServerSide
+        6.7.2. Dropdown ServerSide Item
+    6.8. Deprecated Patterns
+        6.8.1. Accordion
+        6.8.2. Button Loading
+        6.8.3. Carousel
+        6.8.4. Datepicker
+        6.8.5. Dropdown Search an Tags (Common)
+        6.8.6. Dropdown Search
+        6.8.7. Dropdown Tags
+        6.8.8. Flip Content
+        6.8.9. Gallery
+        6.8.10. Horizontal Scroll
+        6.8.11. Notification
+        6.8.12. Progress Bar
+        6.8.13. Progress Circle
+        6.8.14. Progress Circle Fraction
+        6.8.15. Section Index
+        6.8.16. Sidebar
+        6.8.17. Search
+        6.8.18. Submenu
+        6.8.19. Tabs
+        6.8.20. Tooltip
+        6.8.21. Video
+7. Usefull Classes
+    7.1. a11y (Accessibility)
+    7.2. Colors - Brand
+    7.3. Colors - Neutral
+    7.4. Colors - Palette
+    7.5. Colors - Semantic
+    7.6. Colors - Others
+    7.7. Text
+    7.8. Typography
+    7.9. Border Size
+    7.10. Border Radius
+    7.11. Space - Margin
+    7.12. Space - Padding
+    7.13. Shadow
+    7.14. Box Width
+    7.15. Box Height
+    7.16. Display
+    7.17. Display - Flex
+    7.18. Display - Align
+    7.19. Images
+    7.20. Overflow
+    7.21. Visibility
+    7.22. Position
+    7.23. Position - Absolute
+    7.24. Miscellaneous
+8. Screen Transitions
+9. Keyframes - Animations
+    9.1. Animate
+    9.2. Button Loading
+    9.3. List Item
+    9.4. Feedback Message
+    9.5. Pull To Refresh
+    9.6. Miscellaneous
+10. Service Studio Preview
+*/
+
+/* ===============================================================================
+SCSS Setup variables
+=============================================================================== */
+@import '00-abstract/setup-global-vars';
+@import '00-abstract/setup-global-typography-vars';
+@import '00-abstract/setup-color-vars';
+@import '00-abstract/setup-border-vars';
+
+/* ===============================================================================
+Functions & Mixins
+=============================================================================== */
+@import '00-abstract/functions';
+@import '00-abstract/mixins';
+
+/*! ==============================================================================
+0. Root - CSS Variables
+=============================================================================== */
+@import '01-foundations/root';
+
+/*! ==============================================================================
+1. Resets
+=============================================================================== */
+@import '01-foundations/resets';
+
+/*! ==============================================================================
+2. HTML Elements
+=============================================================================== */
+/*! 2.1. Links */
+@import '01-foundations/html-elements-link';
+/*! 2.2. Images */
+@import '01-foundations/html-elements-img';
+/*! 2.3. Headings */
+@import '01-foundations/html-elements-headings';
+
+/*! ==============================================================================
+3. Page Layout
+=============================================================================== */
+/*! 3.1. Layout */
+@import '02-layout/layout';
+/*! 3.2. Header */
+@import '02-layout/header';
+/*! 3.3. Layout Native - Header */
+@import '02-layout/header-layout-native';
+/*! 3.4. Layout Side - Header */
+@import '02-layout/header-layout-side';
+/*! 3.5. Menu */
+@import '02-layout/menu';
+/*! 3.6. Layout Native - Menu */
+@import '02-layout/menu-layout-native';
+/*! 3.7. Layout Side - Menu */
+@import '02-layout/menu-layout-side';
+/*! 3.8. Menu - Header Logo */
+@import '02-layout/menu-header-logo';
+/*! 3.9. Menu - App Menu Link */
+@import '02-layout/menu-app-menu-links';
+/*! 3.10. Menu - App Login Info */
+@import '02-layout/menu-app-login-info';
+/*! 3.11. Content */
+@import '02-layout/content';
+/*! 3.12. ThemeGrid_Container */
+@import '02-layout/themegrid-container';
+/*! 3.13. Section */
+@import '02-layout/section';
+/*! 3.14. Login */
+@import '02-layout/login';
+/*! 3.15. iOS Scroll Bounce */
+@import '02-layout/ios-bounce';
+
+/*! ==============================================================================
+4. Widgets
+=============================================================================== */
+/*! 4.1. Inputs and TextAreas */
+@import '03-widgets/inputs-and-textareas';
+/*! 4.2. Switch */
+@import '03-widgets/switch';
+/*! 4.3. Checkbox */
+@import '03-widgets/checkbox';
+/*! 4.4. Dropdown */
+@import '03-widgets/dropdown';
+/*! 4.5. Button */
+@import '03-widgets/btn';
+/*! 4.6. List */
+@import '03-widgets/list';
+/*! 4.7. List Item */
+@import '03-widgets/list-item';
+/*! 4.8. Table */
+@import '03-widgets/table';
+/*! 4.9. Table - Sortable Icon */
+@import '03-widgets/table-sortable-icon';
+/*! 4.10. Table - Bulk Actions */
+@import '03-widgets/bulk-actions';
+/*! 4.11. Form */
+@import '03-widgets/form';
+/*! 4.12. Upload */
+@import '03-widgets/upload';
+/*! 4.13. Button Group */
+@import '03-widgets/button-group';
+/*! 4.14. Popover */
+@import '03-widgets/popover';
+/*! 4.15. Popup */
+@import '03-widgets/popup';
+/*! 4.16. Feedback Message */
+@import '03-widgets/feedback-message';
+/*! 4.17. Radio Button */
+@import '03-widgets/radio-button';
+
+/*! ==============================================================================
+5. Providers
+=============================================================================== */
+/*! 5.1. Flatpickr */
+@import '../scripts/Providers/OSUI/SharedProviderResources/Flatpickr/scss/_flatpickr_lib.scss';
+/*! 5.2. NoUiSlider */
+@import '../scripts/Providers/OSUI/RangeSlider/NoUISlider/scss/_noUiSlider.scss';
+/*! 5.3. Splide */
+@import '../scripts/Providers/OSUI/Carousel/Splide/scss/splide-core.scss';
+/*! 5.4. VirtualSelect */
+@import '../scripts/Providers/OSUI/Dropdown/VirtualSelect/scss/_virtualselect_lib.scss';
+
+/*! ==============================================================================
+6. Patterns
+=============================================================================== */
+/*! 6.1. Adaptive */
+/*! 6.1.1. Columns */
+@import '04-patterns/01-adaptive/columns';
+/*! 6.1.2. Gallery */
+@import '../scripts/OSFramework/OSUI/Pattern/Gallery/scss/gallery';
+/*! 6.1.3. Master Detail */
+@import '04-patterns/01-adaptive/master-detail';
+
+/*! 6.2. Content */
+/*! 6.2.1. Accordion */
+@import '../scripts/OSFramework/OSUI/Pattern/Accordion/scss/accordion';
+/*! 6.2.2. Accordion Item */
+@import '../scripts/OSFramework/OSUI/Pattern/AccordionItem/scss/accordion-item';
+/*! 6.2.3. Alert */
+@import '04-patterns/02-content/alert';
+/*! 6.2.4. Blank Slate */
+@import '04-patterns/02-content/blank-slate';
+/*! 6.2.5. Card */
+@import '04-patterns/02-content/card';
+/*! 6.2.6. Card Background */
+@import '04-patterns/02-content/card-background';
+/*! 6.2.7. Card Item */
+@import '04-patterns/02-content/card-item';
+/*! 6.2.8. Card Sectioned */
+@import '04-patterns/02-content/card-sectioned';
+/*! 6.2.9. Chat Message */
+@import '04-patterns/02-content/chat-message';
+/*! 6.2.10. Flip Content */
+@import '../scripts/OSFramework/OSUI/Pattern/FlipContent/scss/flipcontent';
+/*! 6.2.11. Floating Content */
+@import '04-patterns/02-content/floating-content';
+/*! 6.2.12. List Item Content */
+@import '04-patterns/02-content/list-item-content';
+/*! 6.2.13. Section */
+@import '04-patterns/02-content/section';
+/*! 6.2.14. Tag */
+@import '04-patterns/02-content/tag';
+/*! 6.2.15. Tooltip */
+@import '../scripts/OSFramework/OSUI/Pattern/Tooltip/scss/tooltip';
+/*! 6.2.16. User Avatar */
+@import '04-patterns/02-content/user-avatar';
+
+/*! 6.3. Interaction */
+/*! 6.3.1. Action Sheet */
+@import '04-patterns/03-interaction/action-sheet';
+/*! 6.3.2. Animate */
+@import '04-patterns/03-interaction/animate';
+/*! 6.3.3. Animated Label */
+@import '../scripts/OSFramework/OSUI/Pattern/AnimatedLabel/scss/animated-label';
+/*! 6.3.4. Balloon */
+@import '../scripts/OSFramework/OSUI/Feature/Balloon/scss/balloon';
+/*! 6.3.5. Bottom Sheet */
+@import '../scripts/OSFramework/OSUI/Pattern/BottomSheet/scss/bottomsheet';
+/*! 6.3.6. Carousel */
+@import '../scripts/OSFramework/OSUI/Pattern/Carousel/scss/carousel';
+/*! 6.3.7. DatePicker */
+@import '../scripts/OSFramework/OSUI/Pattern/DatePicker/scss/datepicker';
+/*! 6.3.8. Dropdown */
+@import '../scripts/OSFramework/OSUI/Pattern/Dropdown/scss/dropdown';
+/*! 6.3.8.1 Dropdown Search */
+@import '../scripts/OSFramework/OSUI/Pattern/Dropdown/scss/dropdown-search';
+/*! 6.3.8.2 Dropdown Tags */
+@import '../scripts/OSFramework/OSUI/Pattern/Dropdown/scss/dropdown-tags';
+/*! 6.3.9. Floating Actions */
+@import '04-patterns/03-interaction/floating-actions';
+/*! 6.3.10. Input With Icon */
+@import '04-patterns/03-interaction/input-with-icon';
+/*! 6.3.11. Lightbox Image */
+@import '04-patterns/03-interaction/lightbox-image';
+/*! 6.3.12. MonthPicker */
+@import '../scripts/OSFramework/OSUI/Pattern/MonthPicker/scss/monthpicker';
+/*! 6.3.13. Notification */
+@import '../scripts/OSFramework/OSUI/Pattern/Notification/scss/notification';
+/*! 6.3.14. RangeSlider */
+@import '../scripts/OSFramework/OSUI/Pattern/RangeSlider/scss/rangeslider';
+/*! 6.3.15. Scrollable Area */
+@import '04-patterns/03-interaction/scrollable-area';
+/*! 6.3.16. Sidebar */
+@import '../scripts/OSFramework/OSUI/Pattern/Sidebar/scss/sidebar';
+/*! 6.3.17. Search */
+@import '../scripts/OSFramework/OSUI/Pattern/Search/scss/search';
+/*! 6.3.18. Stacked Cards */
+@import '04-patterns/03-interaction/stacked-cards';
+/*! 6.3.19. TimePicker */
+@import '../scripts/OSFramework/OSUI/Pattern/TimePicker/scss/timepicker';
+/*! 6.3.20. Video */
+@import '../scripts/OSFramework/OSUI/Pattern/Video/scss/video';
+
+/*! 6.4. Navigation */
+/*! 6.4.1. Bottom Bar Item */
+@import '04-patterns/04-navigation/bottom-bar-item';
+/*! 6.4.2. Breadcrumbs */
+@import '04-patterns/04-navigation/breadcrumbs';
+/*! 6.4.3. OverflowMenu */
+@import '../scripts/OSFramework/OSUI/Pattern/OverflowMenu/scss/overflowmenu';
+/*! 6.4.4. Pagination */
+@import '04-patterns/04-navigation/pagination';
+/*! 6.4.5. Section Index */
+@import '../scripts/OSFramework/OSUI/Pattern/SectionIndex/scss/sectionindex';
+/*! 6.4.6. Submenu */
+@import '../scripts/OSFramework/OSUI/Pattern/Submenu/scss/submenu';
+/*! 6.4.7. Tabs */
+@import '../scripts/OSFramework/OSUI/Pattern/Tabs/scss/tabs';
+/*! 6.4.8. Timeline */
+@import '04-patterns/04-navigation/timeline';
+/*! 6.4.9. Wizard */
+@import '04-patterns/04-navigation/wizard';
+
+/*! 6.5. Numbers */
+/*! 6.5.1. Badge */
+@import '04-patterns/05-numbers/badge';
+/*! 6.5.2. Counter */
+@import '04-patterns/05-numbers/counter';
+/*! 6.5.3. Icon Badge */
+@import '04-patterns/05-numbers/icon-badge';
+/*! 6.5.4. Progress */
+/*! 6.5.4.1 Progress Bar */
+@import '../scripts/OSFramework/OSUI/Pattern/Progress/Bar/scss/progressbar';
+/*! 6.5.4.2 Progress Circle */
+@import '../scripts/OSFramework/OSUI/Pattern/Progress/Circle/scss/progresscircle';
+/*! 6.5.5. Rating */
+@import '../scripts/OSFramework/OSUI/Pattern/Rating/scss/rating';
+
+/*! 6.6. Utilities */
+/*! 6.6.1. Align Center */
+@import '04-patterns/06-utilities/align-center';
+/*! 6.6.2. Button Loading */
+@import '../scripts/OSFramework/OSUI/Pattern/ButtonLoading/scss/button-loading';
+/*! 6.6.3. Center Content */
+@import '04-patterns/06-utilities/center-content';
+/*! 6.6.4. Margin Container */
+@import '04-patterns/06-utilities/margin-container';
+/*! 6.6.5. Separator */
+@import '04-patterns/06-utilities/separator';
+/*! 6.6.6. Pull to Refresh */
+@import '04-patterns/06-utilities/pull-to-refresh';
+/*! 6.6.7. List Updating */
+@import '04-patterns/06-utilities/list-updating';
+/*! 6.6.8. Provider Login Button */
+@import '04-patterns/06-utilities/provider-login-button';
+
+/*! 6.7. Advanced */
+/*! 6.7.1. Dropdown ServerSide */
+@import '../scripts/OSFramework/OSUI/Pattern/Dropdown/ServerSide/scss/_dropdown-serverside';
+/*! 6.7.2. Dropdown ServerSide Item */
+@import '../scripts/OSFramework/OSUI/Pattern/DropdownServerSideItem/scss/dropdownserversideitem';
+/*! 6.8. Deprecated Patterns */
+/*! 6.8.1. Accordion */
+@import '10-deprecated/accordion-deprecated';
+/*! 6.8.2. Button Loading */
+@import '10-deprecated/button-loading-deprecated';
+/*! 6.8.3. Carousel */
+@import '10-deprecated/carousel-deprecated';
+/*! 6.8.4. Datepicker */
+@import '10-deprecated/date-picker-deprecated';
+/*! 6.8.5. Dropdown Search an Tags (Common) */
+@import '10-deprecated/dropdown-search-and-tags-deprecated';
+/*! 6.8.6. Dropdown Search */
+@import '10-deprecated/dropdown-search-deprecated';
+/*! 6.8.7. Dropdown Tags */
+@import '10-deprecated/dropdown-tags-deprecated';
+/*! 6.8.8. Flip Content */
+@import '10-deprecated/flip-content-deprecated';
+/*! 6.8.9. Gallery */
+@import '10-deprecated/gallery-deprecated';
+/*! 6.8.10. Horizontal Scroll */
+@import '10-deprecated/horizontal-scroll-deprecated';
+/*! 6.8.11. Notification */
+@import '10-deprecated/notification-deprecated';
+/*! 6.8.12. Progress Bar */
+@import '10-deprecated/progress-bar-deprecated';
+/*! 6.8.13. Progress Circle */
+@import '10-deprecated/progress-circle-deprecated';
+/*! 6.8.14. Progress Circle Fraction */
+@import '10-deprecated/progress-circle-fraction-deprecated';
+/*! 6.8.15. Section Index */
+@import '10-deprecated/section-index-deprecated';
+/*! 6.8.16. Sidebar */
+@import '10-deprecated/sidebar-deprecated';
+/*! 6.8.17. Search */
+@import '10-deprecated/search-deprecated';
+/*! 6.8.18. Submenu */
+@import '10-deprecated/submenu-deprecated';
+/*! 6.8.19. Tabs */
+@import '10-deprecated/tabs-deprecated';
+/*! 6.8.20. Tooltip */
+@import '10-deprecated/tooltip-deprecated';
+/*! 6.8.21. Video */
+@import '10-deprecated/video-deprecated';
+
+/*! ==============================================================================
+7. Usefull Classes
+=============================================================================== */
+/*! 7.1. a11y (Accessibility) */
+@import '05-useful/a11y';
+/*! 7.2. Colors - Brand */
+@import '05-useful/colors-brand';
+/*! 7.3. Colors - Neutral */
+@import '05-useful/colors-neutral';
+/*! 7.4. Colors - Palette */
+@import '05-useful/colors-palette';
+/*! 7.5. Colors - Semantic */
+@import '05-useful/colors-semantic';
+/*! 7.6. Colors - Others */
+@import '05-useful/colors-others';
+/*! 7.7. Text */
+@import '05-useful/text';
+/*! 7.8. Typography */
+@import '05-useful/typography';
+/*! 7.9. Border Size */
+@import '05-useful/border-size';
+/*! 7.10. Border Radius */
+@import '05-useful/border-radius';
+/*! 7.11. Space - Margin */
+@import '05-useful/space-margin';
+/*! 7.12. Space - Padding */
+@import '05-useful/space-padding';
+/*! 7.13. Shadow */
+@import '05-useful/shadow';
+/*! 7.14. Box Width */
+@import '05-useful/box-width';
+/*! 7.15. Box Height */
+@import '05-useful/box-height';
+/*! 7.16. Display */
+@import '05-useful/display';
+/*! 7.17. Display - Flex */
+@import '05-useful/display-flex';
+/*! 7.18. Display - Align */
+@import '05-useful/display-align';
+/*! 7.19. Images */
+@import '05-useful/images';
+/*! 7.20. Overflow */
+@import '05-useful/overflow';
+/*! 7.21. Visibility */
+@import '05-useful/visibility';
+/*! 7.22. Position */
+@import '05-useful/positioning';
+/*! 7.23. Position - Absolute */
+@import '05-useful/positioning-absolute';
+/*! 7.24. Miscellaneous */
+@import '05-useful/miscellaneous';
+
+/*! ==============================================================================
+8. Screen Transitions
+=============================================================================== */
+@import '06-screen-transitions/screen-transitions';
+
+/*! ==============================================================================
+9. Keyframes - Animations
+=============================================================================== */
+/*! 9.1. Animate */
+@import '07-keyframes/animate';
+/*! 9.2. Button Loading */
+@import '07-keyframes/btn-loading';
+/*! 9.3. List Item */
+@import '07-keyframes/list-item';
+/*! 9.4. Feedback Message */
+@import '07-keyframes/feedback-message';
+/*! 9.5. Pull To Refresh */
+@import '07-keyframes/pull-to-refresh';
+/*! 9.6. Miscellaneous */
+@import '07-keyframes/miscellaneous';
+
+/*! ==============================================================================
+10. Service Studio Preview
+=============================================================================== */
+@import '08-servicestudio-preview/servicestudiopreview';
+@import '08-servicestudio-preview/deprecated-preview';
+
+/* ===============================================================================
+Excluders
+=============================================================================== */
+@import '09-excluders/excluders';
+

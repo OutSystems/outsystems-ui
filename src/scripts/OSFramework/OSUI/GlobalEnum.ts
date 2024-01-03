@@ -34,6 +34,7 @@ namespace OSFramework.OSUI.GlobalEnum {
 		MainContent = 'main-content',
 		MenuLinks = 'app-menu-links',
 		Placeholder = 'ph',
+		Popup = 'popup-dialog',
 		SkipContent = 'skip-nav',
 	}
 
@@ -171,6 +172,7 @@ namespace OSFramework.OSUI.GlobalEnum {
 		StatusBar = 'data-status-bar-height',
 		Style = 'style',
 		Type = 'type',
+		Value = 'value',
 	}
 
 	/**
@@ -205,10 +207,12 @@ namespace OSFramework.OSUI.GlobalEnum {
 		Prefix = 'on',
 		Resize = 'resize',
 		Scroll = 'scroll',
+		ScrollEnd = 'scrollend',
 		TouchEnd = 'touchend',
 		TouchMove = 'touchmove',
 		TouchStart = 'touchstart',
 		TransitionEnd = 'transitionend',
+		Message = 'message',
 	}
 
 	/**

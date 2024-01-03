@@ -5,7 +5,7 @@ namespace Providers.OSUI.RangeSlider.NoUISlider.Utils {
 		const _noUiSliderConfigs = providerConfigs;
 
 		// Check if the range key is empty. If true, remove from the array
-		if (_noUiSliderConfigs.range.length <= 0) {
+		if (_noUiSliderConfigs.range?.length <= 0) {
 			delete _noUiSliderConfigs.range;
 		} else {
 			const _rangeValues = {};

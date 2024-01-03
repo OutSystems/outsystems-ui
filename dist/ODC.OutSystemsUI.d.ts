@@ -1,3 +1,10 @@
+/*!
+OutSystems UI 2.18.2 • ODC Platform
+Website:
+ • https://www.outsystems.com/outsystems-ui
+GitHub:
+ • https://github.com/OutSystems/outsystems-ui
+*/ 
 declare namespace osui {
     function GetVersion(): string;
     function ToggleClass(el: HTMLElement, state: unknown, className: string): void;
@@ -57,13 +64,17 @@ declare namespace OSFramework.OSUI.Constants {
             True: string;
         };
     };
+    const AccessibilityHideElementClass = "wcag-hide-text";
     const AllowPropagationAttr = "[data-allow-event-propagation]";
-    const Dot = ".";
     const Comma = ",";
-    const EnableLogMessages = false;
+    const Dot = ".";
     const EmptyString = "";
-    const FocusTrapIgnoreAttr = "ignore-focus-trap";
+    const EnableLogMessages = false;
     const FocusableElems = "a[href]:not([disabled]),[tabindex=\"0\"], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled])";
+    const FocusTrapIgnoreAttr = "ignore-focus-trap";
+    const HasAccessibilityClass = "has-accessible-features";
+    const InvalidNumber = -1;
+    const IsRTLClass = "is-rtl";
     const JavaScriptTypes: {
         Undefined: string;
         Boolean: string;
@@ -74,17 +85,14 @@ declare namespace OSFramework.OSUI.Constants {
         Object: string;
     };
     const JustInputs = "input:not([type=button]):not([type=checkbox]):not([type=color]):not([type=file]):not([type=hidden]):not([type=image]):not([type=image]):not([type=radio]):not([type=range]):not([type=reset]):not([type=submit]), textarea";
-    const HasAccessibilityClass = "has-accessible-features";
-    const InvalidNumber = -1;
-    const Months: string[];
     const Language: {
         code: string;
         short: string;
     };
-    const AccessibilityHideElementClass = "wcag-hide-text";
-    const IsRTLClass = "is-rtl";
+    const Months: string[];
     const NoTransition = "no-transition";
-    const OSUIVersion = "2.18.1";
+    const OSPlatform = "ODC";
+    const OSUIVersion = "2.18.2";
     const ZeroValue = 0;
 }
 declare namespace OSFramework.OSUI.ErrorCodes {
@@ -193,6 +201,7 @@ declare namespace OSFramework.OSUI.GlobalEnum {
         MainContent = "main-content",
         MenuLinks = "app-menu-links",
         Placeholder = "ph",
+        Popup = "popup-dialog",
         SkipContent = "skip-nav"
     }
     enum CSSSelectors {
@@ -291,7 +300,8 @@ declare namespace OSFramework.OSUI.GlobalEnum {
         Name = "name",
         StatusBar = "data-status-bar-height",
         Style = "style",
-        Type = "type"
+        Type = "type",
+        Value = "value"
     }
     enum HTMLElement {
         Body = "body",
@@ -318,10 +328,12 @@ declare namespace OSFramework.OSUI.GlobalEnum {
         Prefix = "on",
         Resize = "resize",
         Scroll = "scroll",
+        ScrollEnd = "scrollend",
         TouchEnd = "touchend",
         TouchMove = "touchmove",
         TouchStart = "touchstart",
-        TransitionEnd = "transitionend"
+        TransitionEnd = "transitionend",
+        Message = "message"
     }
     enum CustomEvent {
         BalloonOnToggle = "balloon.onToggle"
@@ -661,7 +673,8 @@ declare namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
         BodyOnMouseDown = "body.mousedown",
         OrientationChange = "window.onorientationchange",
         ScreenOnScroll = "screen.onscroll",
-        WindowResize = "window.onresize"
+        WindowResize = "window.onresize",
+        WindowMessage = "window.message"
     }
 }
 declare namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
@@ -683,6 +696,12 @@ declare namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
     class ScreenOnScroll extends AbstractListener<string> {
         constructor();
         private _screenTrigger;
+    }
+}
+declare namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
+    class WindowMessage extends AbstractListener<string> {
+        constructor();
+        private _windowTrigger;
     }
 }
 declare namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
@@ -957,6 +976,7 @@ declare namespace OSFramework.OSUI.Helper {
         static GetTimeFromDate(_date: Date): string;
         static IsBeforeThan(date1: string, date2: string): boolean;
         static IsNull(date: string | Date): boolean;
+        static IsValid(date: string): boolean;
         static NormalizeDateTime(date: string | Date, normalizeToMax?: boolean): Date;
         static SetServerDateFormat(date: string): void;
         static get ServerFormat(): string;
@@ -1001,6 +1021,7 @@ declare namespace OSFramework.OSUI.Helper {
         static GetDeviceOrientation(): GlobalEnum.DeviceOrientation;
         static GetDeviceType(): GlobalEnum.DeviceType;
         static GetOperatingSystem(userAgent?: string): GlobalEnum.MobileOS;
+        static RefreshOperatingSystem(): void;
     }
 }
 declare namespace OSFramework.OSUI.Helper {
@@ -1033,6 +1054,7 @@ declare namespace OSFramework.OSUI.Helper {
         static GetElementById(id: string): HTMLElement;
         static GetElementByUniqueId(uniqueId: string): HTMLElement;
         static GetFocusableElements(element: HTMLElement): HTMLElement[];
+        static IsInsidePopupWidget(element: HTMLElement): boolean;
         static Move(element: HTMLElement, target: HTMLElement): void;
         static SetInputValue(inputElem: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement, value: string): void;
         static TagSelector(element: HTMLElement, htmlTag: string): HTMLElement | undefined;
@@ -1932,6 +1954,7 @@ declare namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
         private _hasA11yEnabled;
         private _intersectionObserver;
         private _isBlocked;
+        private _isInsidePopup;
         private _isOpen;
         private _platformEventOnToggleCallback;
         private _selectValuesWrapper;
@@ -2031,6 +2054,7 @@ declare namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide.Enum {
         BalloonWrapper = "osui-dropdown-serverside__balloon-wrapper",
         ErrorMessage = "osui-dropdown-serverside-error-message",
         IsDisabled = "osui-dropdown-serverside--is-disabled",
+        IsInsidePopup = "osui-dropdown-serverside--is-inside-popup",
         IsOpened = "osui-dropdown-serverside--is-opened",
         IsVisible = "osui-dropdown-serverside-visible",
         NotValid = "osui-dropdown-serverside--not-valid",
@@ -3341,6 +3365,7 @@ declare namespace OSFramework.OSUI.Patterns.Tabs {
         private _requestAnimationFrameOnIndicatorResize;
         private _tabsContentElement;
         private _tabsHeaderElement;
+        private _tabsHeadersEnabled;
         private _tabsIndicatorElement;
         constructor(uniqueId: string, configs: JSON);
         private _addContentItem;
@@ -3370,6 +3395,7 @@ declare namespace OSFramework.OSUI.Patterns.Tabs {
         private _triggerOnChangeEvent;
         private _unsetDragObserver;
         private _updateItemsConnection;
+        private _updateListOfEnabledTabsHeader;
         protected setA11YProperties(): void;
         protected setCallbacks(): void;
         protected setHtmlElements(): void;
@@ -4710,7 +4736,17 @@ declare namespace OutSystems.OSUI.Utils {
     function MoveElement(ElementId: string, TargetSelector: string, TimeoutVal?: number): string;
     function SetActiveElement(ElementId: string, IsActive: boolean): string;
     function SetSelectedTableRow(TableId: string, RowNumber: number, IsSelected: boolean): string;
+    function GetPlatformType(): string;
     function ShowPassword(WidgetId?: string): string;
+}
+declare namespace OutSystems.OSUI.Utils.PreviewInDevices {
+    interface IDataPreviewInDevice {
+        notchValue?: number;
+        pixelRatio?: string;
+        userAgent?: string;
+    }
+}
+declare namespace OutSystems.OSUI.Utils.PreviewInDevices {
 }
 declare namespace Providers.OSUI.ErrorCodes {
     const FloatingUI: {
@@ -4944,6 +4980,7 @@ declare namespace Providers.OSUI.Datepicker.Flatpickr.SingleDate {
     class OSUIFlatpickrSingleDate extends AbstractFlatpickr<FlatpickrSingleDateConfig> {
         private _isUpdatedInitialDateByClientAction;
         constructor(uniqueId: string, configs: JSON);
+        private _checkInitialDate;
         protected onDateSelectedEvent(selectedDates: Array<Date>): void;
         protected prepareToAndRedraw(): void;
         protected todayBtnClick(event: MouseEvent): void;
@@ -4955,7 +4992,7 @@ declare namespace Providers.OSUI.Datepicker.Flatpickr.SingleDate {
 }
 declare namespace Providers.OSUI.Datepicker.Flatpickr.SingleDate {
     class FlatpickrSingleDateConfig extends AbstractFlatpickrConfig {
-        InitialDate: string;
+        InitialDate: string | Date;
         constructor(config: JSON);
         getProviderConfig(): FlatpickrOptions;
     }

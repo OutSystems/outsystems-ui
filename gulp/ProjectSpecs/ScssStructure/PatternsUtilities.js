@@ -1,3 +1,5 @@
+const project = require('../DefaultSpecs');
+
 /* 
 * Section Info
 **/
@@ -32,6 +34,12 @@ const sectionInfo = {
         {
             "name": "List Updating",
             "path": "04-patterns/06-utilities/list-updating"
+        }
+        ,
+        {
+            "name": "Provider Login Button",
+            "path": "04-patterns/06-utilities/provider-login-button",
+            "platform": project.globalConsts.platformTarget.odc,
         }
     ]
 };

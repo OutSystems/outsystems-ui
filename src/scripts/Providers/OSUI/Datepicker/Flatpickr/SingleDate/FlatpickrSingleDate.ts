@@ -11,6 +11,39 @@ namespace Providers.OSUI.Datepicker.Flatpickr.SingleDate {
 			super(uniqueId, new FlatpickrSingleDateConfig(configs));
 		}
 
+		// Function to check which InitialDate must be defined on Datepicker
+		private _checkInitialDate(): void {
+			let clearPlatformInput = false;
+
+			// check initial date on Datepicker and plataform input
+			if (OSFramework.OSUI.Helper.Dates.IsNull(this.configs.InitialDate)) {
+				// Check if the input value is valid and is filled
+				if (
+					this.datePickerPlatformInputElem.value !== OSFramework.OSUI.Constants.EmptyString &&
+					OSFramework.OSUI.Helper.Dates.IsValid(this.datePickerPlatformInputElem.value)
+				) {
+					this.configs.InitialDate = new Date(this.datePickerPlatformInputElem.value);
+				} else {
+					// If the date isn't valid, the platform input value will be removed
+					clearPlatformInput = true;
+				}
+			} else if (this.datePickerPlatformInputElem.value !== OSFramework.OSUI.Constants.EmptyString) {
+				// If the InitialDate is defined, the platform input value will be removed
+				clearPlatformInput = true;
+			}
+
+			// Remove the platform input value
+			if (clearPlatformInput) {
+				OSFramework.OSUI.Helper.Dom.Attribute.Set(
+					this.datePickerPlatformInputElem,
+					OSFramework.OSUI.GlobalEnum.HTMLAttributes.Value,
+					OSFramework.OSUI.Constants.EmptyString
+				);
+			}
+
+			this.prepareConfigs();
+		}
+
 		/**
 		 * Method that will be triggered by library each time any date is selected and will also trigger the input update value and also trigger the OnSelectedDate platform event callback!
 		 *
@@ -22,9 +55,12 @@ namespace Providers.OSUI.Datepicker.Flatpickr.SingleDate {
 			// Store selected date with the expected dateFormat as a string type
 			let _selectedDate = '';
 
-			// Check if any date has been selected, In case of Clear this will retunr empty array
+			// Check if any date has been selected, In case of Clear this will return empty array
 			if (selectedDates.length > 0) {
-				_selectedDate = this.provider.formatDate(selectedDates[0], this.flatpickrOpts.dateFormat);
+				_selectedDate = this.provider.formatDate(
+					selectedDates[0],
+					this.provider.config.enableTime ? 'Y-m-d H:i:S' : 'Y-m-d'
+				);
 			}
 
 			// Trigger the platform update attribute value change!
@@ -96,7 +132,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr.SingleDate {
 		 */
 		public build(): void {
 			super.build();
-			this.prepareConfigs();
+			this._checkInitialDate();
 			this.finishBuild();
 		}
 

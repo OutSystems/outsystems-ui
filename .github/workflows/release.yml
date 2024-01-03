@@ -1,8 +1,9 @@
 name: release
 
 on:
-    release:
-        types: [released]
+    # release:
+    #     types: [released]
+    workflow_dispatch:
 
 jobs:
     merge-rc:
