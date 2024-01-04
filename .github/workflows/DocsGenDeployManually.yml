@@ -4,31 +4,7 @@ on:
     workflow_dispatch:
 
 jobs:
-    compile-prod:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout branch main
-              uses: actions/checkout@v3
-              with:
-                  ref: main
-
-            - name: Install project dependencies
-              run: npm install
-
-            - name: Compile Production code
-              run: npm run build
-
-            - name: Sign and commit compiled code to branch main
-              uses: ./.github/os-git-actions/signed-commit/
-              with:
-                  branch: main
-                  message: 'Compiled Production Mode [skip ci]'
-                  newFiles: true
-                  gpgPriv: ${{ secrets.GPG_SIGN_KEY }}
-                  gpgPassPhrase: ${{ secrets.GPG_PASSPHRASE }}
-
     update-doc:
-        needs: compile-prod
         runs-on: ubuntu-latest
         steps:
             - name: Checkout branch main
