@@ -9,8 +9,8 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 		// Store the container element
 		let scrollableContainer: HTMLElement | Document = undefined;
 
-		// If native app, scrollable container will be the .content inside .active-scren
-		if (OSFramework.OSUI.Helper.DeviceInfo.IsNative) {
+		// If native or pwa app, scrollable container will be the .content inside .active-scren
+		if (OSFramework.OSUI.Helper.DeviceInfo.IsNative || OSFramework.OSUI.Helper.DeviceInfo.IsPwa) {
 			scrollableContainer = Helper.Dom.ClassSelector(
 				document,
 				`${GlobalEnum.CssClassElements.ActiveScreen} ${Constants.Dot}${GlobalEnum.CssClassElements.Content}`
