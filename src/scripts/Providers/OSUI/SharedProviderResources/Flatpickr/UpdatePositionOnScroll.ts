@@ -28,14 +28,22 @@ namespace Providers.OSUI.SharedProviderResources.Flatpickr {
 		// Update the calendar position
 		private _onScreenScroll(): void {
 			if (this._picker.isBuilt) {
-				// If the calendar is open!
-				if (this._picker.provider.isOpen) {
-					// trigger provider update position method
-					this._picker.provider._positionCalendar();
-					// Update the "position" before the next "repaint"
-					this._requestAnimationOnBodyScroll = requestAnimationFrame(this._onScreenScrollEvent);
+				// Check if IsDesktop
+				if (OSFramework.OSUI.Helper.DeviceInfo.IsDesktop) {
+					// If the calendar is open!
+					if (this._picker.provider.isOpen) {
+						// trigger provider update position method
+						this._picker.provider._positionCalendar();
+						// Update the "position" before the next "repaint"
+						this._requestAnimationOnBodyScroll = requestAnimationFrame(this._onScreenScrollEvent);
+					} else {
+						cancelAnimationFrame(this._requestAnimationOnBodyScroll);
+					}
 				} else {
-					cancelAnimationFrame(this._requestAnimationOnBodyScroll);
+					// Since it's at phone or tablet, close it if it's open!
+					if (this._picker.provider.isOpen) {
+						this._picker.provider.close();
+					}
 				}
 			}
 		}
