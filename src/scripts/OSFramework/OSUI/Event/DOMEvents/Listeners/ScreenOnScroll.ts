@@ -9,14 +9,17 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 		// Store the container element
 		let scrollableContainer: HTMLElement | Document = undefined;
 
-		// If native or pwa app, scrollable container will be the .content inside .active-scren
-		if (OSFramework.OSUI.Helper.DeviceInfo.IsNative || OSFramework.OSUI.Helper.DeviceInfo.IsPwa) {
+		// If native or pwa app when NOT android, scrollable container will be the .content inside .active-scren
+		if (
+			OSFramework.OSUI.Helper.DeviceInfo.IsAndroid === false &&
+			(OSFramework.OSUI.Helper.DeviceInfo.IsNative || OSFramework.OSUI.Helper.DeviceInfo.IsPwa)
+		) {
 			scrollableContainer = Helper.Dom.ClassSelector(
 				document,
 				`${GlobalEnum.CssClassElements.ActiveScreen} ${Constants.Dot}${GlobalEnum.CssClassElements.Content}`
 			);
 		} else {
-			// At non native apps, .active-screen is the one container with scroll
+			// At non native or android apps, .active-screen is the one container with scroll
 			scrollableContainer = Helper.Dom.ClassSelector(document, GlobalEnum.CssClassElements.ActiveScreen);
 		}
 
