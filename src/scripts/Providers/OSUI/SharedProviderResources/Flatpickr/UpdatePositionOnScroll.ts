@@ -28,9 +28,14 @@ namespace Providers.OSUI.SharedProviderResources.Flatpickr {
 		// Update the calendar position
 		private _onScreenScroll(): void {
 			if (this._picker.isBuilt) {
-				// Check if IsDesktop
-				if (OSFramework.OSUI.Helper.DeviceInfo.IsDesktop) {
-					// If the calendar is open!
+				// Check if IsPhone
+				if (OSFramework.OSUI.Helper.DeviceInfo.IsPhone) {
+					// Close it if it's open!
+					if (this._picker.provider.isOpen) {
+						this._picker.provider.close();
+					}
+				} else {
+					// Since it's at desktop or tablet, update it's position if it's open!
 					if (this._picker.provider.isOpen) {
 						// trigger provider update position method
 						this._picker.provider._positionCalendar();
@@ -38,11 +43,6 @@ namespace Providers.OSUI.SharedProviderResources.Flatpickr {
 						this._requestAnimationOnBodyScroll = requestAnimationFrame(this._onScreenScrollEvent);
 					} else {
 						cancelAnimationFrame(this._requestAnimationOnBodyScroll);
-					}
-				} else {
-					// Since it's at phone or tablet, close it if it's open!
-					if (this._picker.provider.isOpen) {
-						this._picker.provider.close();
 					}
 				}
 			}
