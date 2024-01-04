@@ -30,9 +30,19 @@ namespace Providers.OSUI.SharedProviderResources.Flatpickr {
 			if (this._picker.isBuilt) {
 				// Check if IsPhone
 				if (OSFramework.OSUI.Helper.DeviceInfo.IsPhone) {
-					// Close it if it's open!
-					if (this._picker.provider.isOpen) {
-						this._picker.provider.close();
+					// Check if the active element is a child of the calendar container
+					if (
+						document.activeElement.closest(
+							`${OSFramework.OSUI.Constants.Dot}${Enum.CssClasses.CalendarContainer}`
+						) === this._picker.provider.calendarContainer
+					) {
+						// calendar can't close => trigger provider update position method
+						this._picker.provider._positionCalendar();
+					} else {
+						// Close it if it's open
+						if (this._picker.provider.isOpen) {
+							this._picker.provider.close();
+						}
 					}
 				} else {
 					// Since it's at desktop or tablet, update it's position if it's open!
