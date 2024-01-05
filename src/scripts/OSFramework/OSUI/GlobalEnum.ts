@@ -261,6 +261,8 @@ namespace OSFramework.OSUI.GlobalEnum {
 		Enter = 'Enter',
 		Escape = 'Escape',
 		Home = 'Home',
+		PageDown = 'PageDown',
+		PageUp = 'PageUp',
 		Shift = 'Shift',
 		ShiftTab = 'ShiftTab', // Do not exist as a keyboard key, but used to manage this behaviour
 		Space = ' ',

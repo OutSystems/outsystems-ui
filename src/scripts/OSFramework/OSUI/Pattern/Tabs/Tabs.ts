@@ -250,8 +250,21 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 		 * @memberof Tabs
 		 */
 		private _handleKeypressEvent(e: KeyboardEvent): void {
-			let currentTabHeader;
-			let targetHeaderItemIndex;
+			let currentTabHeader: number;
+			let targetHeaderItemIndex: number;
+
+			// Check if PageDown or PageUp key have been pressed inside any of the TabsContent items
+			if (
+				(e.target as HTMLElement).closest(`${Constants.Dot}${Enum.CssClasses.TabsContent}`) ===
+					this._tabsContentElement &&
+				(e.key === GlobalEnum.Keycodes.PageDown || e.key === GlobalEnum.Keycodes.PageUp)
+			) {
+				/** Due to an issue at Windows when if there is an item such as a textarea inside TabsContent and if
+				 * there are at least 3 TabsContent when 2nd TabsContent is active and textarea is focused, when PageDown or
+				 * PageUp keys are pressed it will ends up on an visual issue. */
+				e.preventDefault();
+				return;
+			}
 
 			// Check if target is the header, to do not change tab on x arrow press
 			if (e.target !== this._activeTabHeaderElement.selfElement) {
@@ -285,6 +298,7 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 					this.changeTab(targetHeaderItemIndex, undefined, true);
 					break;
 				case GlobalEnum.Keycodes.End:
+				case GlobalEnum.Keycodes.PageDown:
 					// Set the last enabled tabs header
 					targetHeaderItemIndex = this._tabsHeadersEnabled[this._tabsHeadersEnabled.length - 1].getDataTab();
 
@@ -292,6 +306,7 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 
 					break;
 				case GlobalEnum.Keycodes.Home:
+				case GlobalEnum.Keycodes.PageUp:
 					// Set the first enabled tabs header
 					targetHeaderItemIndex = this._tabsHeadersEnabled[0].getDataTab();
 
@@ -344,8 +359,12 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 				const _transformValue = _isVertical
 					? _activeElement.offsetTop
 					: OutSystems.OSUI.Utils.GetIsRTL()
-					  ? -(this._tabsHeaderElement.offsetWidth - _activeElement.offsetLeft - _activeElement.offsetWidth)
-					  : _activeElement.offsetLeft;
+						? -(
+								this._tabsHeaderElement.offsetWidth -
+								_activeElement.offsetLeft -
+								_activeElement.offsetWidth
+							)
+						: _activeElement.offsetLeft;
 
 				// Get the actual size of the current tabsHeader
 				const _elementRect = _activeElement.getBoundingClientRect();
@@ -416,7 +435,7 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 				: (this.getChildByIndex(
 						this.configs.StartingTab,
 						Enum.ChildTypes.TabsContentItem
-				  ) as TabsContentItem.ITabsContentItem);
+					) as TabsContentItem.ITabsContentItem);
 
 			// Call the method to immediatelly set the single content as active,
 			// as it won't be needed to wait for more content items
