@@ -19,7 +19,7 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 				`${GlobalEnum.CssClassElements.ActiveScreen} ${Constants.Dot}${GlobalEnum.CssClassElements.Content}`
 			);
 		} else {
-			// At non native or android apps, .active-screen is the one container with scroll
+			// At non native or android apps, .active-screen is the container with scroll
 			scrollableContainer = Helper.Dom.ClassSelector(document, GlobalEnum.CssClassElements.ActiveScreen);
 		}
 
