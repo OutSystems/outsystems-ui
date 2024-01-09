@@ -5,7 +5,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect.Enum {
 	 */
 	export enum ProviderInfo {
 		Name = 'VirtualSelect',
-		Version = '1.0.40',
+		Version = '1.0.41',
 	}
 
 	/**
