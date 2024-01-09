@@ -44,5 +44,26 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 		private _screenTrigger(evt: Event): void {
 			this.trigger(GlobalEnum.HTMLEvent.Scroll, evt);
 		}
+
+		/**
+		 * Method to set a new handler and update the target if it's the case.
+		 * - At screen transitions if we do not update the eventTarget this event will be lost since the container will not be the same instance at the new screen!
+		 *
+		 * @param {GlobalCallbacks.OSGeneric} handler
+		 * @memberof ScreenOnScroll
+		 */
+		public addHandler(handler: GlobalCallbacks.OSGeneric): void {
+			// Check if the current eventTarget is different from the current one.
+			if (this.eventTarget !== scrollableScreenContainer()) {
+				// Remove the assigned event from the previous eventTarget
+				this.removeEvent();
+				// Update the new eventTarget
+				this.eventTarget = scrollableScreenContainer();
+				// Reassign the event but to the new target
+				this.addEvent();
+			}
+			// Set handler
+			super.addHandler(handler);
+		}
 	}
 }

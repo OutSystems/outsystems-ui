@@ -84,5 +84,26 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 				this._eventTarget.removeEventListener(this._eventType, this.eventCallback);
 			}
 		}
+
+		/**
+		 * Getter that allows to obtain the eventTarget reference
+		 *
+		 * @readonly
+		 * @type {HTMLElement | Document | Window}
+		 * @memberof AbstractListener
+		 */
+		public get eventTarget(): HTMLElement | Document | Window {
+			return this._eventTarget;
+		}
+
+		/**
+		 * Setter that allows to update the eventTarget reference
+		 *
+		 * @type {HTMLElement | Document | Window}
+		 * @memberof AbstractListener
+		 */
+		public set eventTarget(el: HTMLElement | Document | Window) {
+			this._eventTarget = el;
+		}
 	}
 }
