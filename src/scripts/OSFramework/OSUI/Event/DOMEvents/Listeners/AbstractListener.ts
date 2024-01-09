@@ -99,7 +99,6 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 		/**
 		 * Setter that allows to update the eventTarget reference
 		 *
-		 * @type {HTMLElement | Document | Window}
 		 * @memberof AbstractListener
 		 */
 		public set eventTarget(el: HTMLElement | Document | Window) {
