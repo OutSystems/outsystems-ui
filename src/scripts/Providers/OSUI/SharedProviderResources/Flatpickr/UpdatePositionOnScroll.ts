@@ -29,7 +29,7 @@ namespace Providers.OSUI.SharedProviderResources.Flatpickr {
 		private _onScreenScroll(): void {
 			if (this._picker.isBuilt) {
 				// Check if IsPhone
-				if (OSFramework.OSUI.Helper.DeviceInfo.IsPhone) {
+				if (this._picker.provider.isOpen && OSFramework.OSUI.Helper.DeviceInfo.IsPhone) {
 					// Check if the active element is a child of the calendar container
 					if (
 						document.activeElement.closest(
@@ -39,12 +39,12 @@ namespace Providers.OSUI.SharedProviderResources.Flatpickr {
 						// calendar can't close => trigger provider update position method
 						this._picker.provider._positionCalendar();
 					} else {
-						// Close it if it's open
-						if (this._picker.provider.isOpen) {
-							this._picker.provider.close();
-						}
+						this._picker.provider.close();
 					}
-				} else {
+				}
+
+				// Ensure app is not running as a phone
+				if (OSFramework.OSUI.Helper.DeviceInfo.IsPhone === false) {
 					// Since it's at desktop or tablet, update it's position if it's open!
 					if (this._picker.provider.isOpen) {
 						// trigger provider update position method
@@ -52,7 +52,9 @@ namespace Providers.OSUI.SharedProviderResources.Flatpickr {
 						// Update the "position" before the next "repaint"
 						this._requestAnimationOnBodyScroll = requestAnimationFrame(this._onScreenScrollEvent);
 					} else {
-						cancelAnimationFrame(this._requestAnimationOnBodyScroll);
+						if (this._requestAnimationOnBodyScroll !== undefined) {
+							cancelAnimationFrame(this._requestAnimationOnBodyScroll);
+						}
 					}
 				}
 			}
