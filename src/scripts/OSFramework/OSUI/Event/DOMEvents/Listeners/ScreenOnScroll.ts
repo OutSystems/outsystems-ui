@@ -10,17 +10,19 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 		let scrollableContainer: HTMLElement | Document = undefined;
 
 		// If native or pwa app when NOT android, scrollable container will be the .content inside .active-scren
-		if (
-			OSFramework.OSUI.Helper.DeviceInfo.IsAndroid === false &&
-			(OSFramework.OSUI.Helper.DeviceInfo.IsNative || OSFramework.OSUI.Helper.DeviceInfo.IsPwa)
-		) {
-			scrollableContainer = Helper.Dom.ClassSelector(
-				document,
-				`${GlobalEnum.CssClassElements.ActiveScreen} ${Constants.Dot}${GlobalEnum.CssClassElements.Content}`
-			);
-		} else {
-			// At non native or android apps, .active-screen is the container with scroll
-			scrollableContainer = Helper.Dom.ClassSelector(document, GlobalEnum.CssClassElements.ActiveScreen);
+		switch (Helper.DeviceInfo.GetOperatingSystem()) {
+			case GlobalEnum.MobileOS.Android:
+			case GlobalEnum.MobileOS.MacOS:
+			case GlobalEnum.MobileOS.Unknown:
+			case GlobalEnum.MobileOS.Windows:
+				scrollableContainer = Helper.Dom.ClassSelector(document, GlobalEnum.CssClassElements.ActiveScreen);
+				break;
+			case GlobalEnum.MobileOS.IOS:
+				scrollableContainer = Helper.Dom.ClassSelector(
+					document,
+					`${GlobalEnum.CssClassElements.ActiveScreen} ${Constants.Dot}${GlobalEnum.CssClassElements.Content}`
+				);
+				break;
 		}
 
 		// If any of the elements above has been find, probably user is using it's own laytout, in those cases body will be set as scrollable container.
