@@ -9,7 +9,7 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 		// Store the container element
 		let scrollableContainer: HTMLElement | Document = undefined;
 
-		// If native or pwa app when NOT android, scrollable container will be the .content inside .active-scren
+		// Check based on the OS since Helper.DeviceInfo.Is* are returnin false in all cases since body classes are not set when this will be executed.
 		switch (Helper.DeviceInfo.GetOperatingSystem()) {
 			case GlobalEnum.MobileOS.Android:
 			case GlobalEnum.MobileOS.MacOS:
