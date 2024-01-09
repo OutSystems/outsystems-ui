@@ -51,10 +51,8 @@ namespace Providers.OSUI.SharedProviderResources.Flatpickr {
 						this._picker.provider._positionCalendar();
 						// Update the "position" before the next "repaint"
 						this._requestAnimationOnBodyScroll = requestAnimationFrame(this._onScreenScrollEvent);
-					} else {
-						if (this._requestAnimationOnBodyScroll !== undefined) {
-							cancelAnimationFrame(this._requestAnimationOnBodyScroll);
-						}
+					} else if (this._requestAnimationOnBodyScroll !== undefined) {
+						cancelAnimationFrame(this._requestAnimationOnBodyScroll);
 					}
 				}
 			}
