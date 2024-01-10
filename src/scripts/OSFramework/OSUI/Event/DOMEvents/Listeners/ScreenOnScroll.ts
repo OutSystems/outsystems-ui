@@ -5,27 +5,19 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 	 *
 	 * @return {*}  {(HTMLElement | Document)}
 	 */
-	function scrollableScreenContainer(): HTMLElement | Document {
+	function getScrollableScreenContainer(): HTMLElement | Document {
 		// Store the container element
-		let scrollableContainer: HTMLElement | Document = undefined;
+		let scrollableContainer = Helper.Dom.ClassSelector(document, GlobalEnum.CssClassElements.ActiveScreen);
 
-		// Check based on the OS since Helper.DeviceInfo.Is* are returnin false in all cases since body classes are not set when this will be executed.
-		switch (Helper.DeviceInfo.GetOperatingSystem()) {
-			case GlobalEnum.MobileOS.Android:
-			case GlobalEnum.MobileOS.MacOS:
-			case GlobalEnum.MobileOS.Unknown:
-			case GlobalEnum.MobileOS.Windows:
-				scrollableContainer = Helper.Dom.ClassSelector(document, GlobalEnum.CssClassElements.ActiveScreen);
-				break;
-			case GlobalEnum.MobileOS.IOS:
-				scrollableContainer = Helper.Dom.ClassSelector(
-					document,
-					`${GlobalEnum.CssClassElements.ActiveScreen} ${Constants.Dot}${GlobalEnum.CssClassElements.Content}`
-				);
-				break;
+		// Check based on the OS once Helper.DeviceInfo.Is* are returning false in all cases since body classes are not set when this will be executed.
+		if (Helper.DeviceInfo.GetOperatingSystem() === GlobalEnum.MobileOS.IOS) {
+			scrollableContainer = Helper.Dom.ClassSelector(
+				document,
+				`${GlobalEnum.CssClassElements.ActiveScreen} ${Constants.Dot}${GlobalEnum.CssClassElements.Content}`
+			);
 		}
 
-		// If any of the elements above has been find, probably user is using it's own laytout, in those cases body will be set as scrollable container.
+		// If any of the elements above has been found, probably user is using it's own laytout, in those cases body will be set as scrollable container.
 		return scrollableContainer !== undefined ? scrollableContainer : document.body;
 	}
 
@@ -38,7 +30,7 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 	 */
 	export class ScreenOnScroll extends AbstractListener<string> {
 		constructor() {
-			super(scrollableScreenContainer(), GlobalEnum.HTMLEvent.Scroll);
+			super(getScrollableScreenContainer(), GlobalEnum.HTMLEvent.Scroll);
 			this.eventCallback = this._screenTrigger.bind(this);
 		}
 
@@ -56,11 +48,11 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 		 */
 		public addHandler(handler: GlobalCallbacks.OSGeneric): void {
 			// Check if the current eventTarget is different from the current one.
-			if (this.eventTarget !== scrollableScreenContainer()) {
+			if (this.eventTarget !== getScrollableScreenContainer()) {
 				// Remove the assigned event from the previous eventTarget
 				this.removeEvent();
 				// Update the new eventTarget
-				this.eventTarget = scrollableScreenContainer();
+				this.eventTarget = getScrollableScreenContainer();
 				// Reassign the event but to the new target
 				this.addEvent();
 			}
