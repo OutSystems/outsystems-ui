@@ -564,19 +564,6 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		}
 
 		/**
-		 * Method used to toggle the default native behavior of DatePicker
-		 *
-		 * @memberof Providers.OSUI.DatePicker.Flatpickr.AbstractFlatpickr
-		 */
-		public toggleNativeBehavior(isNative: boolean): void {
-			// Invert the boolean value of IsNative because of provider option
-			if (this.configs.DisableMobile !== !isNative) {
-				this.configs.DisableMobile = !isNative;
-				this.prepareToAndRedraw();
-			}
-		}
-
-		/**
 		 * Method used to update the prompt message
 		 *
 		 * @param promptMessage The new prompt message value

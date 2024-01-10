@@ -5,25 +5,19 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 	 *
 	 * @return {*}  {(HTMLElement | Document)}
 	 */
-	function scrollableScreenContainer(): HTMLElement | Document {
+	function getScrollableScreenContainer(): HTMLElement | Document {
 		// Store the container element
-		let scrollableContainer: HTMLElement | Document = undefined;
+		let scrollableContainer = Helper.Dom.ClassSelector(document, GlobalEnum.CssClassElements.ActiveScreen);
 
-		// If native or pwa app when NOT android, scrollable container will be the .content inside .active-scren
-		if (
-			OSFramework.OSUI.Helper.DeviceInfo.IsAndroid === false &&
-			(OSFramework.OSUI.Helper.DeviceInfo.IsNative || OSFramework.OSUI.Helper.DeviceInfo.IsPwa)
-		) {
+		// Check based on the OS once Helper.DeviceInfo.Is* are returning false in all cases since body classes are not set when this will be executed.
+		if (Helper.DeviceInfo.GetOperatingSystem() === GlobalEnum.MobileOS.IOS) {
 			scrollableContainer = Helper.Dom.ClassSelector(
 				document,
 				`${GlobalEnum.CssClassElements.ActiveScreen} ${Constants.Dot}${GlobalEnum.CssClassElements.Content}`
 			);
-		} else {
-			// At non native or android apps, .active-screen is the container with scroll
-			scrollableContainer = Helper.Dom.ClassSelector(document, GlobalEnum.CssClassElements.ActiveScreen);
 		}
 
-		// If any of the elements above has been find, probably user is using it's own laytout, in those cases body will be set as scrollable container.
+		// If any of the elements above has been found, probably user is using it's own laytout, in those cases body will be set as scrollable container.
 		return scrollableContainer !== undefined ? scrollableContainer : document.body;
 	}
 
@@ -36,13 +30,34 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 	 */
 	export class ScreenOnScroll extends AbstractListener<string> {
 		constructor() {
-			super(scrollableScreenContainer(), GlobalEnum.HTMLEvent.Scroll);
+			super(getScrollableScreenContainer(), GlobalEnum.HTMLEvent.Scroll);
 			this.eventCallback = this._screenTrigger.bind(this);
 		}
 
 		// Method to act as callback for the added event and trigger all handlers stored
 		private _screenTrigger(evt: Event): void {
 			this.trigger(GlobalEnum.HTMLEvent.Scroll, evt);
+		}
+
+		/**
+		 * Method to set a new handler and update the target if it's the case.
+		 * - At screen transitions if we do not update the eventTarget this event will be lost since the container will not be the same instance at the new screen!
+		 *
+		 * @param {GlobalCallbacks.OSGeneric} handler
+		 * @memberof ScreenOnScroll
+		 */
+		public addHandler(handler: GlobalCallbacks.OSGeneric): void {
+			// Check if the current eventTarget is different from the current one.
+			if (this.eventTarget !== getScrollableScreenContainer()) {
+				// Remove the assigned event from the previous eventTarget
+				this.removeEvent();
+				// Update the new eventTarget
+				this.eventTarget = getScrollableScreenContainer();
+				// Reassign the event but to the new target
+				this.addEvent();
+			}
+			// Set handler
+			super.addHandler(handler);
 		}
 	}
 }
