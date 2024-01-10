@@ -40,16 +40,12 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 
 		// Method to set the A11y keyboard navigation
 		private _onKeyboardPressed(event: KeyboardEvent): void {
-			event.preventDefault();
-			event.stopPropagation();
-
-			switch (event.key) {
-				// If Enter or Space Keys trigger as a click event!
-				case GlobalEnum.Keycodes.Enter:
-				case GlobalEnum.Keycodes.Space:
-					// Triggered as it was clicked!
-					this._onSelected(event);
-					break;
+			// If Enter or Space Keys trigger as a click event!
+			if (event.key === GlobalEnum.Keycodes.Enter || event.key === GlobalEnum.Keycodes.Space) {
+				event.preventDefault();
+				event.stopPropagation();
+				// Triggered as it was clicked!
+				this._onSelected(event);
 			}
 		}
 
