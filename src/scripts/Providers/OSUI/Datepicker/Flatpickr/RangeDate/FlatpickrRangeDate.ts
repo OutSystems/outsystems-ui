@@ -153,6 +153,15 @@ namespace Providers.OSUI.Datepicker.Flatpickr.RangeDate {
 		}
 
 		/**
+		 * This method has no implementation on this pattern context!
+		 *
+		 * @memberof Providers.OSUI.DatePicker.Flatpickr.RangeDate.OSUIFlatpickrRangeDate
+		 */
+		public toggleNativeBehavior(): void {
+			console.log(OSFramework.OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
+		}
+
+		/**
 		 * Method used to update the StartInitialDate and EndInitialDate values
 		 *
 		 * @param startDate The new StartInitialDate value
