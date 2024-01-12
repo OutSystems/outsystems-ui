@@ -588,3 +588,14 @@ span.flatpickr-weekday {
 		border-color: var(--color-focus-outer);
 	}
 }
+
+body:has(.has-accessible-features) .osui-monthpicker__dropdown {
+	.numInputWrapper input,
+	.flatpickr-prev-month,
+	.flatpickr-next-month,
+	.flatpickr-monthSelect-month.selected {
+		&:focus-visible {
+			box-shadow: 0 0 0 3px var(--color-focus-outer);
+		}
+	}
+}
