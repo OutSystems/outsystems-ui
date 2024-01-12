@@ -21,12 +21,17 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		protected flatpickrOpts: FlatpickrOptions;
 		// Flatpickr onChange (SelectedDate) event
 		protected onSelectedCallbackEvent: OSFramework.OSUI.Patterns.DatePicker.Callbacks.OSOnChangeEvent;
+		// Property to store a custom callback called on OnClose Flatpickr event
+		public onCloseCustomCallback = undefined;
 
 		constructor(uniqueId: string, configs: C) {
 			super(uniqueId, configs);
 
 			// Set the default library Event handler that will be used to set on the provider configs
 			this.configs.OnChange = this.onDateSelectedEvent.bind(this);
+
+			// Set the default library Event handler that will be used to set on the provider configs
+			this.configs.OnClose = this.onDatePickerClose.bind(this);
 		}
 
 		// Method used to set the needed HTML attributes
@@ -220,6 +225,28 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		 */
 		protected jumpIntoToday(): void {
 			this.provider.jumpToDate(this.provider.now);
+		}
+
+		/**
+		 * Method used to update the datepicker value when the selected dates is empty
+		 * And to add the custom callback to the OnClose event
+		 *
+		 * @protected
+		 * @memberof AbstractFlatpickr
+		 */
+		protected onDatePickerClose(): void {
+			// Clear the provider selected date if the input is empty
+			if (this.provider.selectedDates.length === 0) {
+				this.onDateSelectedEvent(this.provider.selectedDates);
+			}
+
+			// Call the custom callback provided for users to add custom code when a datepicker close
+			if (
+				this.onCloseCustomCallback !== undefined &&
+				typeof this.onCloseCustomCallback === OSFramework.OSUI.Constants.JavaScriptTypes.Function
+			) {
+				this.onCloseCustomCallback(this.provider);
+			}
 		}
 
 		/**
