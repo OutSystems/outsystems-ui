@@ -31,7 +31,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 			this.configs.OnChange = this.onDateSelectedEvent.bind(this);
 
 			// Set the default library Event handler that will be used to set on the provider configs
-			this.configs.OnClose = this.onDatepickerClose.bind(this);
+			this.configs.OnClose = this.onDatePickerClose.bind(this);
 		}
 
 		// Method used to set the needed HTML attributes
@@ -234,7 +234,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		 * @protected
 		 * @memberof AbstractFlatpickr
 		 */
-		protected onDatepickerClose(): void {
+		protected onDatePickerClose(): void {
 			// Clear the provider selected date if the input is empty
 			if (this.provider.selectedDates.length === 0) {
 				this.onDateSelectedEvent(this.provider.selectedDates);
