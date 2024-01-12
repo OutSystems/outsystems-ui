@@ -57,7 +57,7 @@ namespace OSFramework.OSUI.Patterns.SectionIndex {
 			this._contentPaddingTop = _mainContent
 				? parseFloat(
 						window.getComputedStyle(_mainContent).getPropertyValue(GlobalEnum.CssProperties.PaddingTop)
-				  )
+					)
 				: 0;
 		}
 

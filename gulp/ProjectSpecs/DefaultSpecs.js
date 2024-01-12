@@ -13,7 +13,7 @@ const constants = {
         ]
     },
     // list of platforms to compile and create scss files.
-    targetPlatform: {
+    platformTarget: {
         o11: 'O11',
         odc: 'ODC',
     }

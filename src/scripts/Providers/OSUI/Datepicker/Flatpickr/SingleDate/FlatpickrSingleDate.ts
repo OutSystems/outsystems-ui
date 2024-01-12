@@ -192,6 +192,19 @@ namespace Providers.OSUI.Datepicker.Flatpickr.SingleDate {
 		}
 
 		/**
+		 * Method used to toggle the default native behavior of DatePicker
+		 *
+		 * @memberof Providers.OSUI.DatePicker.Flatpickr.SingleDate.OSUIFlatpickrSingleDate
+		 */
+		public toggleNativeBehavior(isNative: boolean): void {
+			// Invert the boolean value of IsNative because of provider option
+			if (this.configs.DisableMobile !== !isNative) {
+				this.configs.DisableMobile = !isNative;
+				this.prepareToAndRedraw();
+			}
+		}
+
+		/**
 		 * Method used to update the InitialDate config value
 		 *
 		 * @param value The new InitialDate value that will be set
