@@ -42,6 +42,9 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		// Set the OnChange Event that will be defined in the specific context for each Flatpickr mode
 		public OnChange: OSFramework.OSUI.GlobalCallbacks.Generic;
 
+		// Set the OnClose callback to be used whenever the Flatpickr close
+		public OnClose: OSFramework.OSUI.GlobalCallbacks.Generic;
+
 		constructor(config: JSON) {
 			super(config);
 
@@ -199,6 +202,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 				maxDate: this._validateDate(this.MaxDate),
 				minDate: this._validateDate(this.MinDate),
 				onChange: this.OnChange,
+				onClose: this.OnClose,
 				time_24hr: this.TimeFormat === OSFramework.OSUI.Patterns.DatePicker.Enum.TimeFormatMode.Time24hFormat,
 				updateInputVal: false, // (*)
 				weekNumbers: this.ShowWeekNumbers,
