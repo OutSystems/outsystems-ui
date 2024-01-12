@@ -235,20 +235,18 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		 * @memberof AbstractFlatpickr
 		 */
 		protected onDatepickerClose(): void {
-			OSFramework.OSUI.Helper.AsyncInvocation(() => {
-				// Clear the provider selected date if the input is empty
-				if (this.provider.selectedDates.length === 0) {
-					this.onDateSelectedEvent(this.provider.selectedDates);
-				}
+			// Clear the provider selected date if the input is empty
+			if (this.provider.selectedDates.length === 0) {
+				this.onDateSelectedEvent(this.provider.selectedDates);
+			}
 
-				// Call the custom callback provided for users to add custom code when a datepicker close
-				if (
-					this.onCloseCustomCallback !== undefined &&
-					typeof this.onCloseCustomCallback === OSFramework.OSUI.Constants.JavaScriptTypes.Function
-				) {
-					this.onCloseCustomCallback(this.provider);
-				}
-			});
+			// Call the custom callback provided for users to add custom code when a datepicker close
+			if (
+				this.onCloseCustomCallback !== undefined &&
+				typeof this.onCloseCustomCallback === OSFramework.OSUI.Constants.JavaScriptTypes.Function
+			) {
+				this.onCloseCustomCallback(this.provider);
+			}
 		}
 
 		/**
