@@ -17,6 +17,15 @@
 	border-radius: var(--border-radius-soft);
 	position: relative;
 
+	// Toggle on icon click
+	&--toggle-with-icon {
+		& .osui-accordion-item__title {
+			cursor: default;
+		}
+		& .osui-accordion-item__icon {
+			cursor: pointer;
+		}
+	}
 	// Active border-top
 	&:after {
 		background-color: transparent;
