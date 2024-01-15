@@ -12,7 +12,7 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 		let scrollableContainer = Helper.Dom.ClassSelector(document, GlobalEnum.CssClassElements.ActiveScreen);
 
 		// Check based on the OS once Helper.DeviceInfo.Is* are returning false in all cases since body classes are not set when this will be executed.
-		// Check also if layout-native exist in order to grant this will only occurs when thta's the case
+		// Check also if layout-native exist in order to grant this will only occurs when that's the case
 		if (Helper.DeviceInfo.GetOperatingSystem() === GlobalEnum.MobileOS.IOS && layoutNative !== undefined) {
 			scrollableContainer = Helper.Dom.ClassSelector(
 				document,
