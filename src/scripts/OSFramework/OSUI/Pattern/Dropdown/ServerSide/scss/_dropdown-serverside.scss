@@ -112,7 +112,9 @@ $balloonMobileTopMargin: 5vh;
 			overflow: hidden;
 			// --osui-dropdown-ss-thresholdanimateval is the value used as a threshold to animate down the balloon
 			transform: translateY(calc(-1 * var(--osui-dropdown-ss-thresholdanimateval)));
-			transition: opacity 250ms ease, transform 300ms ease-in-out;
+			transition:
+				opacity 250ms ease,
+				transform 300ms ease-in-out;
 
 			// Service Studio Preview
 			& {
@@ -305,6 +307,10 @@ $balloonMobileTopMargin: 5vh;
 			&.osui-dropdown-serverside--is-opened {
 				z-index: calc(var(--osui-popup-layer) + var(--layer-local-tier-1));
 			}
+		}
+
+		.osui-dropdown-serverside__balloon--is-top.osui-dropdown-serverside__balloon-wrapper {
+			top: unset;
 		}
 	}
 
