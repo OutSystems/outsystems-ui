@@ -49,6 +49,7 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 /* ---------------------------------------------------------------------------- */
 //
 .osui-tooltip__balloon-wrapper {
+	word-break: break-word;
 	max-height: $osui-tooltip-baloon-max-height;
 	opacity: 0;
 	overflow: hidden;
@@ -450,7 +451,9 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 	}
 
 	// Is empty
-	&:not(.left):not(.right):not(.center):not(.top):not(.top-left):not(.top-right):not(.bottom):not(.bottom-left):not(.bottom-right) {
+	&:not(.left):not(.right):not(.center):not(.top):not(.top-left):not(.top-right):not(.bottom):not(.bottom-left):not(
+			.bottom-right
+		) {
 		left: calc(var(--osui-tooltip-left) + var(--osui-tooltip-width));
 		max-width: 0;
 		min-width: 0;
@@ -682,7 +685,9 @@ $osui-tooltip-arrow-middle-preview: calc(50% - 2.5px);
 	}
 
 	// Is empty
-	&:not(.left):not(.right):not(.center):not(.top):not(.top-left):not(.top-right):not(.bottom):not(.bottom-left):not(.bottom-right) {
+	&:not(.left):not(.right):not(.center):not(.top):not(.top-left):not(.top-right):not(.bottom):not(.bottom-left):not(
+			.bottom-right
+		) {
 		max-width: $osui-tooltip-baloon-max-width;
 		min-width: $osui-tooltip-baloon-min-width;
 		padding-left: var(--space-base);
