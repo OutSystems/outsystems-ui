@@ -38,8 +38,12 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new AccordionItemConfig(configs));
-
-			this._isOpen = this.configs.StartsExpanded;
+			if (OSFramework.OSUI.Helper.TempStorage.has(this.uniqueId)) {
+				const val = OSFramework.OSUI.Helper.TempStorage.get<IAccordionItemStorage>(this.uniqueId);
+				this._isOpen = val.wasOpen;
+			} else {
+				this._isOpen = this.configs.StartsExpanded;
+			}
 		}
 
 		/**
@@ -526,6 +530,8 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 				return;
 			}
 
+			OSFramework.OSUI.Helper.TempStorage.keep<IAccordionItemStorage>(this.uniqueId, { wasOpen: false });
+
 			Helper.Dom.Attribute.Remove(this._accordionItemContentElem, GlobalEnum.HTMLAttributes.Style);
 			this._expandedHeight = this._accordionItemContentElem.getBoundingClientRect().height;
 
@@ -574,6 +580,8 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 			if (this._isOpen) {
 				return;
 			}
+
+			OSFramework.OSUI.Helper.TempStorage.keep<IAccordionItemStorage>(this.uniqueId, { wasOpen: true });
 
 			Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.PatternClosed);
 			Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.PatternOpen);
