@@ -205,11 +205,11 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 				if (this._clickOutsideToClose || (this.configs.HasOverlay && this._clickOutsideToClose === undefined)) {
 					Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
 						Event.DOMEvents.Listeners.Type.BodyOnMouseDown,
-						this._eventOverlayMouseDown.bind(this)
+						this._eventOverlayMouseDown
 					);
 					Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
 						Event.DOMEvents.Listeners.Type.BodyOnClick,
-						this._eventOverlayClick.bind(this)
+						this._eventOverlayClick
 					);
 				}
 			}
@@ -255,8 +255,7 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 			this._clickedOutsideElement = true;
 			if (
 				targetElem.closest(`${Constants.Dot}${Enum.CssClass.Header}`) ||
-				(targetElem.closest(`${Constants.Dot}${Enum.CssClass.Content}`) &&
-					this.selfElement.contains(targetElem) === false)
+				targetElem.closest(`${Constants.Dot}${Enum.CssClass.Content}`)
 			) {
 				// If the click was inside the side bar, then change the flag to false.
 				this._clickedOutsideElement = false;
