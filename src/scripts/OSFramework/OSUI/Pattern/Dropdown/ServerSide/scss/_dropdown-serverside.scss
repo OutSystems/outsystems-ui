@@ -304,13 +304,13 @@ $balloonMobileTopMargin: 5vh;
 			position: fixed;
 			overflow: visible;
 
+			&.osui-dropdown-serverside__balloon--is-top {
+				top: unset;
+			}
+
 			&.osui-dropdown-serverside--is-opened {
 				z-index: calc(var(--osui-popup-layer) + var(--layer-local-tier-1));
 			}
-		}
-
-		.osui-dropdown-serverside__balloon--is-top.osui-dropdown-serverside__balloon-wrapper {
-			top: unset;
 		}
 	}
 
