@@ -255,9 +255,7 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 			this._clickedOutsideElement = true;
 			if (
 				targetElem.closest(`${Constants.Dot}${Enum.CssClass.Header}`) ||
-				(targetElem.closest(`${Constants.Dot}${Enum.CssClass.Content}`) &&
-					this.selfElement.contains(targetElem) === false)
-				// This is right because the overlay is part of the selfElement.
+				targetElem.closest(`${Constants.Dot}${Enum.CssClass.Content}`)
 			) {
 				// If the click was inside the side bar, then change the flag to false.
 				this._clickedOutsideElement = false;
