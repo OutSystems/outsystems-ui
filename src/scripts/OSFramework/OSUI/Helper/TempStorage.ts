@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSFramework.OSUI.Helper {
 	const MAX_TIME_LAPSE_MINUTES = 10;
-	const MAX_TIME_LAPSE_MS = MAX_TIME_LAPSE_MINUTES * 60000;
+	const MAX_TIME_LAPSE_MILISECONDS = MAX_TIME_LAPSE_MINUTES * 60000;
 
 	interface IStorageInfo {
 		data: unknown;
@@ -13,23 +13,21 @@ namespace OSFramework.OSUI.Helper {
 		private static _timerInterval = undefined;
 
 		private static _cleanUp() {
-			if (TempStorage._instore.size > 0) {
-				const cutDate = Date.now();
-				const keys = TempStorage._instore.keys();
-				for (const key of keys) {
-					const val = TempStorage._instore.get(key);
-					if (val.time + MAX_TIME_LAPSE_MS < cutDate) {
-						TempStorage._instore.delete(key);
-					}
+			const cutDate = Date.now();
+			TempStorage._instore.forEach((val, key) => {
+				if (val.time + MAX_TIME_LAPSE_MILISECONDS < cutDate) {
+					TempStorage._instore.delete(key);
 				}
-			} else {
+			});
+
+			if (TempStorage._instore.size === 0) {
 				TempStorage._stopTimer();
 			}
 		}
 
 		private static _startTimer() {
 			if (TempStorage._timerInterval === undefined) {
-				TempStorage._timerInterval = setInterval(TempStorage._cleanUp, MAX_TIME_LAPSE_MS);
+				TempStorage._timerInterval = setInterval(TempStorage._cleanUp, MAX_TIME_LAPSE_MILISECONDS);
 			}
 		}
 
@@ -38,13 +36,13 @@ namespace OSFramework.OSUI.Helper {
 			TempStorage._timerInterval = undefined;
 		}
 
-		public static get<T>(key: string): T {
+		public static get<T>(key: string): T | undefined {
 			if (TempStorage.has(key)) {
 				const val = TempStorage._instore.get(key);
 
 				return val.data as T;
 			}
-			return {} as T;
+			return undefined;
 		}
 
 		public static has(key: string): boolean {
