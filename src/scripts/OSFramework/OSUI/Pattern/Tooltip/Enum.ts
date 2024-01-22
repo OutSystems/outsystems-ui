@@ -11,6 +11,7 @@ namespace OSFramework.OSUI.Patterns.Tooltip.Enum {
 	 * Tooltip Enum Css Classes
 	 */
 	export enum CssClass {
+		Arrow = 'osui-tooltip__balloon-arrow',
 		BalloonContent = 'osui-tooltip__balloon-wrapper__balloon',
 		BalloonIsOpened = 'osui-tooltip__balloon-wrapper--is-open',
 		BalloonIsOpening = 'osui-tooltip__balloon-wrapper--is-opening',

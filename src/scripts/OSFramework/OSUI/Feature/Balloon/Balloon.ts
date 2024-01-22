@@ -3,9 +3,10 @@ namespace OSFramework.OSUI.Feature.Balloon {
 	// Type for the Balllon Feature options
 	export type BalloonOptions = {
 		alignment: GlobalEnum.FloatingAlignment;
-		allowedPlacements: Array<GlobalEnum.FloatingPosition>;
+		allowedPlacements?: Array<GlobalEnum.FloatingPosition>;
 		anchorElem: HTMLElement;
-		position: GlobalEnum.FloatingPosition;
+		arrowElem?: HTMLElement;
+		position: GlobalEnum.FloatingPosition | GlobalEnum.Position;
 		shape: GlobalEnum.ShapeTypes;
 	};
 
@@ -50,10 +51,14 @@ namespace OSFramework.OSUI.Feature.Balloon {
 		private _bodyClickCallback(_args: string, e: MouseEvent): void {
 			const _eventTarget = e.target;
 
-			if (_eventTarget === this.featureOptions?.anchorElem || this._isOpenedByApi || this.featureElem.contains(_eventTarget as HTMLElement)) {
+			if (
+				_eventTarget === this.featureOptions?.anchorElem ||
+				this._isOpenedByApi ||
+				this.featureElem.contains(_eventTarget as HTMLElement)
+			) {
 				return;
 			}
-			
+
 			if (this.isOpen) {
 				this._toggleBalloon(false, true);
 				e.stopPropagation();
@@ -123,6 +128,7 @@ namespace OSFramework.OSUI.Feature.Balloon {
 				// Close the Balloon when pressing Esc
 				if (isEscapedPressed) {
 					this.close();
+					e.stopPropagation();
 					// Move the focus between the balloon's focusable elements when pressing ArrowDown or ArrowUp
 				} else if (isArrowDownPressed || isArrowUpPressed) {
 					this._manageFocusInsideBalloon(e.key);
@@ -364,6 +370,7 @@ namespace OSFramework.OSUI.Feature.Balloon {
 			this._floatingOptions = {
 				AutoPlacement: this.featureOptions.position === GlobalEnum.FloatingPosition.Auto,
 				AnchorElem: this.featureOptions.anchorElem,
+				ArrowElem: this.featureOptions.arrowElem,
 				AutoPlacementOptions: {
 					alignment: this.featureOptions.alignment,
 					allowedPlacements: this.featureOptions.allowedPlacements,

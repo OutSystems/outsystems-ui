@@ -60,7 +60,23 @@ namespace Providers.OSUI.Utils {
 
 			// Add offset value to middleware
 			if (this.floatingConfigs.Position !== OSFramework.OSUI.GlobalEnum.FloatingPosition.Center) {
-				_middlewareArray.push(window.FloatingUIDOM.offset(this.getOffsetValue()));
+				const defaultOffsetValue = this.getOffsetValue();
+				// If arrow is being used, make it so that the offset accounts for its size
+				const finalOffsetValue = this.floatingConfigs.ArrowElem
+					? Math.sqrt(defaultOffsetValue * this.floatingConfigs.ArrowElem.offsetWidth ** 2) / 2
+					: defaultOffsetValue;
+
+				_middlewareArray.push(window.FloatingUIDOM.offset(finalOffsetValue));
+			}
+
+			if (this.floatingConfigs.ArrowElem) {
+				_middlewareArray.push(
+					window.FloatingUIDOM.arrow({
+						element: this.floatingConfigs.ArrowElem,
+					})
+				);
+
+				_middlewareArray.push(window.FloatingUIDOM.flip());
 			}
 
 			// Set the computePosition method. This is the main provider method to set the balloon position
@@ -72,7 +88,7 @@ namespace Providers.OSUI.Utils {
 						placement: this.floatingConfigs.Position,
 						middleware: _middlewareArray,
 					}
-				).then(({ x, y }) => {
+				).then(({ x, y, middlewareData, placement }) => {
 					// Update the Balloon CSS Variables with the returned optimal x & y for position
 					OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(
 						this.floatingConfigs.FloatingElem,
@@ -84,6 +100,37 @@ namespace Providers.OSUI.Utils {
 						OSFramework.OSUI.Utils.FloatingPosition.Enum.CssCustomProperties.XPosition,
 						x + OSFramework.OSUI.GlobalEnum.Units.Pixel
 					);
+
+					// Of using arrow, set the correct arrow position
+					if (middlewareData.arrow) {
+						const side = placement.split('-')[0];
+
+						const staticSide = {
+							top: OSFramework.OSUI.GlobalEnum.FloatingPosition.Bottom,
+							right: OSFramework.OSUI.GlobalEnum.FloatingPosition.Left,
+							bottom: OSFramework.OSUI.GlobalEnum.FloatingPosition.Top,
+							left: OSFramework.OSUI.GlobalEnum.FloatingPosition.Right,
+						}[side];
+
+						const { x, y } = middlewareData.arrow;
+						Object.assign(this.floatingConfigs.ArrowElem.style, {
+							left:
+								x !== undefined
+									? `${x}${OSFramework.OSUI.GlobalEnum.Units.Pixel}`
+									: OSFramework.OSUI.Constants.EmptyString,
+							top:
+								y !== undefined
+									? `${y}${OSFramework.OSUI.GlobalEnum.Units.Pixel}`
+									: OSFramework.OSUI.Constants.EmptyString,
+							// Ensure the static side gets unset when
+							// flipping to other placements' axes.
+							right: OSFramework.OSUI.Constants.EmptyString,
+							bottom: OSFramework.OSUI.Constants.EmptyString,
+							[staticSide]: `${-this.floatingConfigs.ArrowElem.offsetWidth / 2}${
+								OSFramework.OSUI.GlobalEnum.Units.Pixel
+							}`,
+						});
+					}
 				});
 			};
 
