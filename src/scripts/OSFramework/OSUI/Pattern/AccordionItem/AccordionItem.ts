@@ -33,6 +33,8 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 		private _expandedHeight: number;
 		// Stores if the element is open
 		private _isOpen: boolean;
+		// Stores if the element toggle on icon click
+		private _withIcon: boolean;
 		// Callback function to trigger the click event on the platform
 		private _platformEventOnToggle: GlobalCallbacks.Generic;
 
@@ -40,6 +42,7 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 			super(uniqueId, new AccordionItemConfig(configs));
 
 			this._isOpen = this.configs.StartsExpanded;
+			this._withIcon = this.configs.ToggleWithIcon;
 		}
 
 		/**
@@ -75,8 +78,13 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 		 * @memberof AccordionItem
 		 */
 		private _addEvents(): void {
-			this._accordionItemTitleElem.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
-			this._accordionItemTitleElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyPress);
+			if (this._withIcon) {
+				this._accordionItemIconElem.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
+				this._accordionItemIconElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyPress);
+			} else {
+				this._accordionItemTitleElem.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
+				this._accordionItemTitleElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyPress);
+			}
 		}
 
 		/**
@@ -190,8 +198,13 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 		 * @memberof AccordionItem
 		 */
 		private _removeEvents(): void {
-			this._accordionItemTitleElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
-			this._accordionItemTitleElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyPress);
+			if (this._withIcon) {
+				this._accordionItemIconElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
+				this._accordionItemIconElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyPress);
+			} else {
+				this._accordionItemTitleElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
+				this._accordionItemTitleElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyPress);
+			}
 		}
 
 		/**
@@ -406,6 +419,8 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.PatternClosed);
 				Helper.Dom.Styles.AddClass(this._accordionItemContentElem, Enum.CssClass.PatternCollapsed);
 			}
+
+			this._withIcon && Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.PatternToggleWithIcon);
 
 			this._setIconType();
 			this._setIconPosition();

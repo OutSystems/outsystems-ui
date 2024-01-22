@@ -8,6 +8,7 @@ namespace OSFramework.OSUI.Patterns.AccordionItem.Enum {
 		IsDisabled = 'IsDisabled',
 		Icon = 'Icon',
 		StartsExpanded = 'StartsExpanded',
+		ToggleWithIcon = 'ToggleWithIcon',
 	}
 
 	/**
@@ -29,6 +30,7 @@ namespace OSFramework.OSUI.Patterns.AccordionItem.Enum {
 		PatternIconPositionIsRight = 'osui-accordion-item__title--is-right',
 		PatternOpen = 'osui-accordion-item--is-open',
 		PatternTitle = 'osui-accordion-item__title',
+		PatternToggleWithIcon = 'osui-accordion-item--toggle-with-icon',
 	}
 
 	/**

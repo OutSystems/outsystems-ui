@@ -12,6 +12,7 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 		public IconPosition: string;
 		public IsDisabled: boolean;
 		public StartsExpanded: boolean;
+		public ToggleWithIcon: boolean;
 
 		constructor(config: JSON) {
 			super(config);
@@ -51,6 +52,9 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 					break;
 				case Enum.Properties.IconPosition:
 					validatedValue = this.validateString(value as string, GlobalEnum.Direction.Right);
+					break;
+				case Enum.Properties.ToggleWithIcon:
+					validatedValue = this.validateBoolean(value as boolean, false);
 					break;
 				default:
 					validatedValue = super.validateDefault(key, value);
