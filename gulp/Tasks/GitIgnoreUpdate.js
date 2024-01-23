@@ -6,7 +6,7 @@ const utils = require('./Utils');
 // Update .gitignore file in order to remove ./dist folder from being ignored
 exports.removeDist = (cb) => {
     // Store the name of the branch where this action can only be performed
-    const branchName = 'main';
+    const branchName = 'deploy-npm';
     // Get the current branch name
     bn.get().then((name) => {
         // Check if the curren branch is the expected one!
