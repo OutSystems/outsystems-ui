@@ -1,0 +1,24 @@
+name: CreateAndDeployDocs
+
+on:
+    workflow_dispatch:
+        inputs:
+            branch-name:
+                description: 'Branch to be used as base to create a new one to generate and be published.'
+                type: string
+                required: true
+            delete-branch:
+                description: 'Delete deploy-docs branch at the end of process.'
+                type: boolean
+                default: true
+
+jobs:
+    docs:
+        uses: ./.github/workflows/ManageDocs.yml
+        with:
+            branch-name: ${{ inputs.branch-name }}
+            delete-created-branch: ${{ inputs.delete-branch }}
+            run-lint: true
+        secrets:
+            pat: ${{ secrets.PAT }}
+            uiCompDocs: ${{ secrets.UICOMPONENTSDOCS }}

@@ -1,0 +1,129 @@
+name: ManageDocs
+
+on:
+    workflow_call:
+        inputs:
+            branch-name:
+                description: 'Branch to be used as base to create a new one to generate and be published.'
+                type: string
+                required: true
+            delete-created-branch:
+                description: 'When True deploy-docs branch will be removed at the end of process.'
+                type: boolean
+                required: true
+            run-lint:
+                description: 'Compile and perform lint tests to ensure there is no issues at given branch name.'
+                type: boolean
+                default: true
+        secrets:
+            pat:
+                required: true
+            uiCompDocs:
+                required: true
+
+jobs:
+    run-lint:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout into ${{ inputs.branch-name }}
+              uses: actions/checkout@v4
+              with:
+                  ref: ${{ inputs.branch-name }}
+                  token: ${{ secrets.pat }}
+
+            - name: Install project dependencies
+              if: ${{ inputs.run-lint == true }}
+              run: npm install
+
+            - name: Run build
+              if: ${{ inputs.run-lint == true }}
+              run: npm run build
+
+    create-branch:
+        needs: run-lint
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout into ${{ inputs.branch-name }}
+              uses: actions/checkout@v4
+              with:
+                  ref: ${{ inputs.branch-name }}
+                  token: ${{ secrets.pat }}
+
+            - name: Create new deploy-docs branch based on ${{ inputs.branch-name }}
+              run: |
+                  git checkout -b deploy-docs
+                  git push -u origin deploy-docs
+
+    create-doc:
+        needs: create-branch
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Configure Git with the UiComponentsBot Token
+              run: |
+                  git config --global user.email "sa_git_uicomponents@outsystems.com"
+                  git config --global user.name "UiComponentsBot"
+
+            - name: Checkout into deploy-docs
+              uses: actions/checkout@v4
+              with:
+                  ref: deploy-docs
+                  token: ${{ secrets.PAT }}
+
+            - name: Install project dependencies
+              run: npm install
+
+            - name: Install graphviz
+              run: sudo apt install -y graphviz
+
+            - name: Generate documentation
+              run: npm run docs
+
+            - name: Perform git commit
+              uses: ./.github/os-git-actions/manual-commit/
+              with:
+                  branch: deploy-docs
+                  message: 'Update documentation [skip ci]'
+                  newFiles: true
+
+    publish-doc:
+        needs: create-doc
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout into deploy-docs
+              uses: actions/checkout@v4
+              with:
+                  ref: deploy-docs
+                  token: ${{ secrets.pat }}
+
+            - name: Publish documentation
+              run: |
+                  echo "deploy docs! >>>>"
+
+            # - name: Push documentation files into github page
+            #   uses: GuillaumeFalourd/copy-push-files@v1
+            #   with:
+            #       source_files: docs/*
+            #       remote_repository: https://github.com/outsystems-ui-docs/outsystems-ui-docs.github.io
+            #       access_token: ${{ secrets.uiCompDocs }}
+            #       target_branch: main
+            #       commit_message: Deploy documentation.
+
+    delete-branch:
+        needs: publish-doc
+        runs-on: ubuntu-latest
+
+        if: ${{ inputs.delete-created-branch == true }}
+        steps:
+            - name: Checkout branch dev
+              uses: actions/checkout@v4
+              with:
+                  ref: dev
+
+            - name: Delete branch deploy-docs
+              shell: bash
+              run: |
+                  git push origin -d deploy-docs

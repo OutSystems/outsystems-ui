@@ -1,0 +1,144 @@
+name: ManageNPM
+
+on:
+    workflow_call:
+        inputs:
+            branch-name:
+                description: 'Branch to be used as base to create a new one and be published.'
+                type: string
+                required: true
+            delete-created-branch:
+                description: 'When True deploy-npm branch will be removed at the end of process.'
+                type: boolean
+                required: true
+            run-lint:
+                description: 'Compile and perform lint tests to ensure there is no issues at given branch name.'
+                type: boolean
+                default: true
+        secrets:
+            pat:
+                required: true
+            npmPat:
+                required: true
+
+jobs:
+    run-lint:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout into ${{ inputs.branch-name }}
+              uses: actions/checkout@v4
+              with:
+                  ref: ${{ inputs.branch-name }}
+                  token: ${{ secrets.pat }}
+
+            - name: Install project dependencies
+              if: ${{ inputs.run-lint == true }}
+              run: |
+                  npm install
+
+            - name: Run build
+              if: ${{ inputs.run-lint == true }}
+              run: |
+                  npm run build
+
+    create-branch:
+        needs: run-lint
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout into ${{ inputs.branch-name }}
+              uses: actions/checkout@v4
+              with:
+                  ref: ${{ inputs.branch-name }}
+                  token: ${{ secrets.pat }}
+
+            - name: Create new deploy-npm branch based on ${{ inputs.branch-name }}
+              run: |
+                  git checkout -b deploy-npm
+                  git push -u origin deploy-npm
+
+    prepare-branch:
+        needs: create-branch
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Configure Git with the UiComponentsBot Token
+              run: |
+                  git config --global user.email "sa_git_uicomponents@outsystems.com"
+                  git config --global user.name "UiComponentsBot"
+
+            - name: Checkout into deploy-npm
+              uses: actions/checkout@v4
+              with:
+                  ref: deploy-npm
+                  token: ${{ secrets.pat }}
+
+            - name: Install project dependencies
+              run: |
+                  npm install
+
+            - name: Remove dist folder from .gitignore
+              run: |
+                  gulp removeDistFromGitIgnore
+
+            - name: Compile into production mode
+              run: |
+                  npm run build
+
+            - name: Clean files and folders
+              run: |
+                  gulp prepareToDeploy
+
+            - name: Commit, remove gitignore and commit again!
+              run: |
+                  git add .
+                  git commit -m 'OK to Deploy into NPM. [skip ci]'
+                  git push origin deploy-npm
+
+                  rm .gitignore
+
+                  git add .
+                  git commit -m 'OK to Deploy into NPM. [skip ci]'
+                  git push origin deploy-npm
+
+    publish-npm:
+        needs: prepare-branch
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout into deploy-npm
+              uses: actions/checkout@v4
+              with:
+                  ref: deploy-npm
+                  token: ${{ secrets.pat }}
+
+            - uses: actions/setup-node@v4.0.1
+              with:
+                  node-version: 16
+                  registry-url: https://registry.npmjs.org/
+
+            - name: Publish new version to NPM
+              run: |
+                  echo "Publish NPM! >>>>"
+
+            # - name: Publish new version to NPM
+            #   run: npm publish
+            #   env:
+            #       NODE_AUTH_TOKEN: ${{secrets.npmPat}}
+
+    delete-branch:
+        needs: publish-npm
+        runs-on: ubuntu-latest
+
+        if: ${{ inputs.delete-created-branch == true }}
+        steps:
+            - name: Checkout branch dev
+              uses: actions/checkout@v4
+              with:
+                  ref: dev
+
+            - name: Delete branch deploy-npm
+              shell: bash
+              run: |
+                  git push origin -d deploy-npm
