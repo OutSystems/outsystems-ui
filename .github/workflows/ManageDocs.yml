@@ -99,18 +99,14 @@ jobs:
                   ref: deploy-docs
                   token: ${{ secrets.pat }}
 
-            - name: Publish documentation
-              run: |
-                  echo "deploy docs! >>>>"
-
-            # - name: Push documentation files into github page
-            #   uses: GuillaumeFalourd/copy-push-files@v1
-            #   with:
-            #       source_files: docs/*
-            #       remote_repository: https://github.com/outsystems-ui-docs/outsystems-ui-docs.github.io
-            #       access_token: ${{ secrets.uiCompDocs }}
-            #       target_branch: main
-            #       commit_message: Deploy documentation.
+            - name: Push documentation files into github page
+              uses: GuillaumeFalourd/copy-push-files@v1
+              with:
+                  source_files: docs/*
+                  remote_repository: https://github.com/outsystems-ui-docs/outsystems-ui-docs.github.io
+                  access_token: ${{ secrets.uiCompDocs }}
+                  target_branch: main
+                  commit_message: Deploy documentation.
 
     delete-branch:
         needs: publish-doc

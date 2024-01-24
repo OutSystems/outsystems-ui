@@ -119,13 +119,9 @@ jobs:
                   registry-url: https://registry.npmjs.org/
 
             - name: Publish new version to NPM
-              run: |
-                  echo "Publish NPM! >>>>"
-
-            # - name: Publish new version to NPM
-            #   run: npm publish
-            #   env:
-            #       NODE_AUTH_TOKEN: ${{secrets.npmPat}}
+              run: npm publish
+              env:
+                  NODE_AUTH_TOKEN: ${{secrets.npmPat}}
 
     delete-branch:
         needs: publish-npm
