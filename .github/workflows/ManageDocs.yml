@@ -22,6 +22,18 @@ on:
                 required: true
 
 jobs:
+    check-repo:
+        runs-on: ubuntu-latest
+
+        outputs:
+            is-real-osui-repo: ${{ steps.check-is-real-osui-repo.outputs.isIt }}
+
+        steps:
+            - name: Check if it's outsystems-ui real repository
+              id: check-is-real-osui-repo
+              run: |
+                  echo "isIt=${{ github.event.repository.name == 'outsystems-ui' }}" >> "$GITHUB_OUTPUT"
+
     run-lint:
         runs-on: ubuntu-latest
 
@@ -89,7 +101,7 @@ jobs:
                   newFiles: true
 
     publish-doc:
-        needs: create-doc
+        needs: [check-repo, create-doc]
         runs-on: ubuntu-latest
 
         steps:
@@ -100,6 +112,7 @@ jobs:
                   token: ${{ secrets.pat }}
 
             - name: Push documentation files into github page
+              if: ${{ needs.check-repo.outputs.is-real-osui-repo == 'true' }}
               uses: GuillaumeFalourd/copy-push-files@v1
               with:
                   source_files: docs/*

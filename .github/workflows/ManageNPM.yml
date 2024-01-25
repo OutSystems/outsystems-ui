@@ -22,6 +22,18 @@ on:
                 required: true
 
 jobs:
+    check-repo:
+        runs-on: ubuntu-latest
+
+        outputs:
+            is-real-osui-repo: ${{ steps.check-is-real-osui-repo.outputs.isIt }}
+
+        steps:
+            - name: Check if it's outsystems-ui real repository
+              id: check-is-real-osui-repo
+              run: |
+                  echo "isIt=${{ github.event.repository.name == 'outsystems-ui' }}" >> "$GITHUB_OUTPUT"
+
     run-lint:
         runs-on: ubuntu-latest
 
@@ -103,7 +115,7 @@ jobs:
                   git push origin deploy-npm
 
     publish-npm:
-        needs: prepare-branch
+        needs: [check-repo, prepare-branch]
         runs-on: ubuntu-latest
 
         steps:
@@ -119,6 +131,7 @@ jobs:
                   registry-url: https://registry.npmjs.org/
 
             - name: Publish new version to NPM
+              if: ${{ needs.check-repo.outputs.is-real-osui-repo == 'true' }}
               run: npm publish
               env:
                   NODE_AUTH_TOKEN: ${{secrets.npmPat}}
