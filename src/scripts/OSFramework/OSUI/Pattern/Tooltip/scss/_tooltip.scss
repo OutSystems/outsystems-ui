@@ -16,7 +16,7 @@
 	}
 
 	.osui-balloon {
-		position: absolute;
+		position: fixed;
 	}
 
 	&__balloon-arrow {
@@ -68,6 +68,7 @@
 		font-size: var(--font-size-s);
 		font-weight: var(--font-regular);
 		line-height: initial;
+		max-width: 250px;
 		padding: var(--space-s);
 
 		// Service Studio Preview
