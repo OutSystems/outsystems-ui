@@ -6,6 +6,7 @@ namespace OSFramework.OSUI.Feature.Balloon {
 		allowedPlacements?: Array<GlobalEnum.FloatingPosition>;
 		anchorElem: HTMLElement;
 		arrowElem?: HTMLElement;
+		isFocusable?: boolean;
 		position: GlobalEnum.FloatingPosition | GlobalEnum.Position;
 		shape: GlobalEnum.ShapeTypes;
 	};
@@ -153,24 +154,26 @@ namespace OSFramework.OSUI.Feature.Balloon {
 		private _setA11YProperties(): void {
 			Helper.Dom.Attribute.Set(this.featureElem, Constants.A11YAttributes.Aria.Hidden, (!this.isOpen).toString());
 
-			// Will handle the tabindex value of the elements inside pattern
-			Helper.A11Y.SetElementsTabIndex(this.isOpen, this._focusTrapInstance.focusableElements);
+			if (this.featureOptions.isFocusable !== false) {
+				// Will handle the tabindex value of the elements inside pattern
+				Helper.A11Y.SetElementsTabIndex(this.isOpen, this._focusTrapInstance.focusableElements);
 
-			Helper.Dom.Attribute.Set(
-				this.featureElem,
-				Constants.A11YAttributes.TabIndex,
-				this.isOpen
-					? Constants.A11YAttributes.States.TabIndexShow
-					: Constants.A11YAttributes.States.TabIndexHidden
-			);
+				Helper.Dom.Attribute.Set(
+					this.featureElem,
+					Constants.A11YAttributes.TabIndex,
+					this.isOpen
+						? Constants.A11YAttributes.States.TabIndexShow
+						: Constants.A11YAttributes.States.TabIndexHidden
+				);
 
-			Helper.Dom.Attribute.Set(
-				this._floatingOptions.AnchorElem,
-				Constants.A11YAttributes.TabIndex,
-				this.isOpen
-					? Constants.A11YAttributes.States.TabIndexHidden
-					: Constants.A11YAttributes.States.TabIndexShow
-			);
+				Helper.Dom.Attribute.Set(
+					this._floatingOptions.AnchorElem,
+					Constants.A11YAttributes.TabIndex,
+					this.isOpen
+						? Constants.A11YAttributes.States.TabIndexHidden
+						: Constants.A11YAttributes.States.TabIndexShow
+				);
+			}
 		}
 
 		// Set the callbacks
@@ -189,7 +192,9 @@ namespace OSFramework.OSUI.Feature.Balloon {
 
 		//  Method to add event listeners
 		private _setEventListeners(): void {
-			this.featureElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
+			if (this.featureOptions.isFocusable !== false) {
+				this.featureElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
+			}
 
 			if (this.isOpen) {
 				Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
@@ -223,18 +228,22 @@ namespace OSFramework.OSUI.Feature.Balloon {
 			this._setA11YProperties();
 
 			if (this.isOpen) {
-				// Handle focus trap logic
-				this._focusManagerInstance.storeLastFocusedElement();
-				this._focusTrapInstance.enableForA11y();
+				if (this.featureOptions.isFocusable !== false) {
+					// Handle focus trap logic
+					this._focusManagerInstance.storeLastFocusedElement();
+					this._focusTrapInstance.enableForA11y();
+				}
 
 				// Set Floating Util
 				this.setFloatingBehaviour();
 
-				// Store the focusable elements inside the Balloon
-				this._focusableBalloonElements = this.featureElem.querySelectorAll(Constants.FocusableElems);
-				// Manage the focus when opening the balloon
-				this._manageFocusInsideBalloon(arrowKeyPressed);
-			} else {
+				if (this.featureOptions.isFocusable !== false) {
+					// Store the focusable elements inside the Balloon
+					this._focusableBalloonElements = this.featureElem.querySelectorAll(Constants.FocusableElems);
+					// Manage the focus when opening the balloon
+					this._manageFocusInsideBalloon(arrowKeyPressed);
+				}
+			} else if (this.featureOptions.isFocusable !== false) {
 				// Handle focus trap logic
 				this._focusTrapInstance.disableForA11y();
 				// Remove Floating Util
@@ -278,7 +287,11 @@ namespace OSFramework.OSUI.Feature.Balloon {
 			this._setCallbacks();
 			this._setEventListeners();
 			this.setFloatingConfigs();
-			this._handleFocusBehavior();
+
+			if (this.featureOptions.isFocusable !== false) {
+				this._handleFocusBehavior();
+			}
+
 			this._setA11YProperties();
 			this.setBalloonShape();
 		}

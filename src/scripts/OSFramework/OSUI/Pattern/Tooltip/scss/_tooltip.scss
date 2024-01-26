@@ -25,7 +25,7 @@
 		height: var(--osui-tooltip-arrow-size);
 		background-color: var(--osui-tooltip-background-color);
 		transform: rotate(45deg);
-		z-index: -1;
+		z-index: var(--layer-global-negative);
 	}
 }
 
@@ -50,6 +50,8 @@
 /* ---------------------------------------------------------------------------- */
 //
 .osui-tooltip__balloon-wrapper {
+	pointer-events: none;
+
 	// Service Studio Preview
 	& {
 		-servicestudio-left: initial;
@@ -58,42 +60,19 @@
 		-servicestudio-overflow: initial;
 		-servicestudio-pointer-events: initial;
 	}
-}
 
-/* ---------------------------------------------------------------------------- */
-// Tooltip Baloon
-/* ---------------------------------------------------------------------------- */
-///
-.osui-tooltip__balloon-wrapper__balloon {
-	background-color: var(--osui-tooltip-background-color);
-	border-radius: var(--border-radius-soft);
-	color: var(--color-neutral-0);
-	font-size: var(--font-size-s);
-	font-weight: var(--font-regular);
-	line-height: initial;
-	padding: var(--space-s);
+	&__balloon {
+		background-color: var(--osui-tooltip-background-color);
+		border-radius: var(--border-radius-soft);
+		color: var(--color-neutral-0);
+		font-size: var(--font-size-s);
+		font-weight: var(--font-regular);
+		line-height: initial;
+		padding: var(--space-s);
 
-	// Service Studio Preview
-	& {
-		-servicestudio-opacity: 1;
-	}
-}
-
-///
-.has-accessible-features {
-	.osui-tooltip {
-		&__content {
-			&:focus {
-				box-shadow: none;
-			}
-
-			&:focus-visible {
-				box-shadow: 0 0 0 3px var(--color-focus-outer);
-			}
-		}
-
-		&__balloon-arrow {
-			box-shadow: 0 0 0 3px var(--color-focus-outer);
+		// Service Studio Preview
+		& {
+			-servicestudio-opacity: 1;
 		}
 	}
 }

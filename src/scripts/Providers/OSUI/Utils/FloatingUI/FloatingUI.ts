@@ -8,6 +8,7 @@ namespace Providers.OSUI.Utils {
 	 */
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	export class FloatingUI extends OSFramework.OSUI.Utils.FloatingPosition.FloatingPosition {
+		private _currentPlacement: OSFramework.OSUI.GlobalEnum.FloatingPosition;
 		/**
 		 * Creates an instance of FloatingUI.
 		 * @param {FloatingUIConfig} options
@@ -100,6 +101,15 @@ namespace Providers.OSUI.Utils {
 						OSFramework.OSUI.Utils.FloatingPosition.Enum.CssCustomProperties.XPosition,
 						x + OSFramework.OSUI.GlobalEnum.Units.Pixel
 					);
+
+					// Check last added position class, remove it if different
+					if (this._currentPlacement !== undefined && this._currentPlacement !== placement) {
+						this.floatingConfigs.FloatingElem.classList.remove(this._currentPlacement);
+					}
+
+					// And add the new one
+					this.floatingConfigs.FloatingElem.classList.add(placement);
+					this._currentPlacement = placement;
 
 					// Of using arrow, set the correct arrow position
 					if (middlewareData.arrow) {

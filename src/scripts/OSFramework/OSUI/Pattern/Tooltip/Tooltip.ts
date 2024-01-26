@@ -9,10 +9,28 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 		private _balloonFeature: Feature.Balloon.IBalloon;
 		// Custom Balloon Event
 		private _eventBalloonOnToggle: GlobalCallbacks.Generic;
+		// Event OnMouseEnter at _tooltipBalloonWrapperElem
+		private _eventBalloonWrapperOnMouseEnter: GlobalCallbacks.Generic;
+		// Event OnMouseLeave at at _tooltipBalloonWrapperElem
+		private _eventBalloonWrapperOnMouseLeave: GlobalCallbacks.Generic;
+		// Event OnMouseEnter at _tooltipIconElem
+		private _eventIconOnMouseEnter: GlobalCallbacks.Generic;
+		// Event OnMouseLeave at at _tooltipIconElem
+		private _eventIconOnMouseLeave: GlobalCallbacks.Generic;
+		// Event OnBalloonClick - Manage the balloon click!
+		private _eventOnBalloonClick: GlobalCallbacks.Generic;
+		// Event OnPatternBlur (combined with focus)
+		private _eventOnBlur: GlobalCallbacks.Generic;
 		// Event OnPatternClick
 		private _eventOnClick: GlobalCallbacks.Generic;
 		// Event OnPatternFocus
 		private _eventOnFocus: GlobalCallbacks.Generic;
+		// Event OnPatternKeypress
+		private _eventOnKeypress: GlobalCallbacks.Generic;
+		// Flag used to manage if it's _tooltipBalloonWrapperElem  has been MouseEnter
+		private _isBalloonWrapperMouseEnter = false;
+		// Flag used to manage if it's _tooltipIconElem  has been MouseEnter
+		private _isIconMouseEnter = false;
 		// Flag used to manage if it's open or closed!
 		private _isOpen: boolean;
 		// Flag used to deal with onBodyClick and open api concurrency methods!
@@ -20,6 +38,7 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 		// Platform OnClose Callback
 		private _platformEventOnToggleCallback: GlobalCallbacks.OSGeneric;
 		// Store the HTML elements
+		private _tooltipBalloonContentActiveElem: HTMLElement;
 		private _tooltipBalloonContentElem: HTMLElement;
 		private _tooltipBalloonWrapperElem: HTMLElement;
 		private _tooltipIconElem: HTMLElement;
@@ -35,9 +54,87 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 		// Method to handle the custom BalloonOnToggle callback
 		private _balloonOnToggleCallback(_args: string, e: CustomEvent): void {
 			// If the balloon closed is the one from this pattern, toggle the isOpen
-			if (e.detail.balloonElem === this._balloonElem && e.detail.isOpen) {
-				this._isOpen = false;
+			if (e.detail.balloonElem === this._balloonElem && e.detail.open) {
+				this._triggerClose();
 			}
+		}
+
+		// Check if a clickable item has been clicked, otherwise stop the propagation!
+		private _onBalloonClick(e: MouseEvent): void {
+			// Get all possible clickable items inside tooltip balloon
+			const clickableItems = Array.from(
+				this._tooltipBalloonContentElem.querySelectorAll(
+					Constants.FocusableElems + ', ' + GlobalEnum.HTMLAttributes.AllowEventPropagation
+				)
+			);
+
+			// If there no clickable items, do not let the click be propagated!
+			if (clickableItems.length === 0) {
+				e.stopPropagation();
+				return;
+			}
+
+			// Flag used to help on go through all the clickable items to ensure we check all!
+			let isItemClickableItem = false;
+
+			// Check each clickable item
+			for (const item of clickableItems) {
+				// If the clicked item exist as a clickableItem!
+				if (e.target === item) {
+					isItemClickableItem = true;
+					break;
+				}
+			}
+
+			// If we found the clicked item does not exist as a clickableItem, do no let the click be propagated!
+			if (isItemClickableItem === false) {
+				e.stopPropagation();
+			}
+		}
+
+		// OnMouseEnter at _tooltipBalloonWrapperElem
+		private _onBalloonWrapperMouseEnter(): void {
+			this._isBalloonWrapperMouseEnter = true;
+		}
+
+		// OnMouseLeave at _tooltipBalloonWrapperElem
+		private _onBalloonWrapperMouseLeave(): void {
+			this._isBalloonWrapperMouseEnter = false;
+
+			Helper.AsyncInvocation(() => {
+				if (this._isIconMouseEnter === false) {
+					this._triggerClose();
+				}
+			});
+		}
+
+		// Method to close the tooltip at onBlur
+		private _onBlur(): void {
+			Helper.AsyncInvocation(() => {
+				// Wait for next activeElement be active
+				// Check if a previous active element has been assigned
+				if (this._tooltipBalloonContentActiveElem) {
+					this._tooltipBalloonContentActiveElem.removeEventListener(
+						GlobalEnum.HTMLEvent.Blur,
+						this._eventOnBlur
+					);
+				}
+
+				if (
+					document.activeElement !== this._tooltipIconElem &&
+					this._tooltipBalloonContentElem.contains(document.activeElement) === false
+				) {
+					this._triggerClose();
+				} else if (document.activeElement !== document.body) {
+					// Add the blur event in order to proper close the tooltip after its blur
+					this._tooltipBalloonContentActiveElem = document.activeElement as HTMLElement;
+
+					this._tooltipBalloonContentActiveElem.addEventListener(
+						GlobalEnum.HTMLEvent.Blur,
+						this._eventOnBlur
+					);
+				}
+			});
 		}
 
 		// Trigger the tooltip at onClick behaviour
@@ -47,11 +144,37 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 		}
 
 		// Open the tooltip
-		private _onFocus(e: FocusEvent): void {
-			console.log(e);
-			if (document.activeElement === this._tooltipIconElem && this.IsOpen === false) {
+		private _onFocus(): void {
+			this._triggerOpen();
+		}
+
+		// OnMouseEnter at _tooltipIconElem
+		private _onIconMouseEnter(): void {
+			this._isIconMouseEnter = true;
+
+			if (this._isOpen === false) {
 				this._triggerOpen();
 			}
+		}
+
+		// OnMouseLeave at _tooltipIconElem
+		private _onIconMouseLeave(): void {
+			this._isIconMouseEnter = false;
+
+			Helper.AsyncInvocation(() => {
+				if (this._isBalloonWrapperMouseEnter === false) {
+					this._triggerClose();
+				}
+			});
+		}
+
+		// Call methods to open or close, based on e.key and behaviour applied
+		private _onkeypressCallback(e: KeyboardEvent): void {
+			if (this._isOpen && e.key === GlobalEnum.Keycodes.Escape) {
+				// Close the Balloon when pressing Esc
+				this.close();
+			}
+			e.stopPropagation();
 		}
 
 		// Method to call the Balloon Class
@@ -82,8 +205,33 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 		// Add the tooltip Events
 		private _setUpEvents(): void {
 			if (this.configs.IsHover === false) {
+				// Add the focus event in order to show the tooltip balloon when the toolTip content is focused
+				this._tooltipIconElem.addEventListener(GlobalEnum.HTMLEvent.Blur, this._eventOnBlur);
+				this._tooltipIconElem.addEventListener(GlobalEnum.HTMLEvent.Focus, this._eventOnFocus);
+				this._tooltipIconElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
+			}
+
+			// If tooltip should behave at onMouseClick, or if it's on tablet or phone
+			if (this.configs.IsHover === false || Helper.DeviceInfo.IsDesktop === false) {
 				this._tooltipIconElem.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
-				this.selfElement.addEventListener(GlobalEnum.HTMLEvent.Focus, this._eventOnFocus);
+				this._tooltipBalloonContentElem.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnBalloonClick);
+			}
+
+			// If trigger to open the tooltip must be MouseOver (only works at desktop)
+			if (this.configs.IsHover && Helper.DeviceInfo.IsDesktop === true) {
+				// Set Mouse Hover to the tooltip icon wrapper!
+				this._tooltipIconElem.addEventListener(GlobalEnum.HTMLEvent.MouseEnter, this._eventIconOnMouseEnter);
+				this._tooltipIconElem.addEventListener(GlobalEnum.HTMLEvent.MouseLeave, this._eventIconOnMouseLeave);
+
+				// Set Mouse Hover to the tooltip balloon!
+				this._tooltipBalloonWrapperElem.addEventListener(
+					GlobalEnum.HTMLEvent.MouseEnter,
+					this._eventBalloonWrapperOnMouseEnter
+				);
+				this._tooltipBalloonWrapperElem.addEventListener(
+					GlobalEnum.HTMLEvent.MouseLeave,
+					this._eventBalloonWrapperOnMouseLeave
+				);
 			}
 
 			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
@@ -131,7 +279,22 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 		// Remove Pattern Events
 		private _unsetEvents(): void {
 			this._tooltipIconElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
+			this._tooltipIconElem.removeEventListener(GlobalEnum.HTMLEvent.Blur, this._eventOnBlur);
 			this._tooltipIconElem.removeEventListener(GlobalEnum.HTMLEvent.Focus, this._eventOnFocus);
+			this._tooltipIconElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
+			this._tooltipBalloonContentElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnBalloonClick);
+
+			this._tooltipIconElem.removeEventListener(GlobalEnum.HTMLEvent.MouseEnter, this._eventIconOnMouseEnter);
+			this._tooltipIconElem.removeEventListener(GlobalEnum.HTMLEvent.MouseLeave, this._eventIconOnMouseLeave);
+
+			this._tooltipBalloonWrapperElem.removeEventListener(
+				GlobalEnum.HTMLEvent.MouseEnter,
+				this._eventBalloonWrapperOnMouseEnter
+			);
+			this._tooltipBalloonWrapperElem.removeEventListener(
+				GlobalEnum.HTMLEvent.MouseLeave,
+				this._eventBalloonWrapperOnMouseLeave
+			);
 
 			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
 				Event.DOMEvents.Listeners.Type.BalloonOnToggle,
@@ -177,9 +340,16 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 		 * @memberof OSFramework.Patterns.Tooltip.Tooltip
 		 */
 		protected setCallbacks(): void {
+			this._eventBalloonOnToggle = this._balloonOnToggleCallback.bind(this);
+			this._eventOnBalloonClick = this._onBalloonClick.bind(this);
+			this._eventOnBlur = this._onBlur.bind(this);
 			this._eventOnClick = this._onClick.bind(this);
 			this._eventOnFocus = this._onFocus.bind(this);
-			this._eventBalloonOnToggle = this._balloonOnToggleCallback.bind(this);
+			this._eventOnKeypress = this._onkeypressCallback.bind(this);
+			this._eventBalloonWrapperOnMouseEnter = this._onBalloonWrapperMouseEnter.bind(this);
+			this._eventBalloonWrapperOnMouseLeave = this._onBalloonWrapperMouseLeave.bind(this);
+			this._eventIconOnMouseEnter = this._onIconMouseEnter.bind(this);
+			this._eventIconOnMouseLeave = this._onIconMouseLeave.bind(this);
 		}
 
 		/**
@@ -204,9 +374,16 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 		 * @memberof OSFramework.Patterns.Tooltip.Tooltip
 		 */
 		protected unsetCallbacks(): void {
+			this._eventBalloonOnToggle = undefined;
+			this._eventOnBalloonClick = undefined;
+			this._eventOnBlur = undefined;
 			this._eventOnClick = undefined;
 			this._eventOnFocus = undefined;
-			this._eventBalloonOnToggle = undefined;
+			this._eventOnKeypress = undefined;
+			this._eventBalloonWrapperOnMouseEnter = undefined;
+			this._eventBalloonWrapperOnMouseLeave = undefined;
+			this._eventIconOnMouseEnter = undefined;
+			this._eventIconOnMouseLeave = undefined;
 		}
 
 		/**
@@ -229,7 +406,6 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 		 * @memberof OSFramework.Patterns.Tooltip.Tooltip
 		 */
 		public build(): void {
-			console.log('localhost');
 			super.build();
 			this.setCallbacks();
 			this.setHtmlElements();
@@ -344,6 +520,7 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 						GlobalEnum.FloatingPosition.TopStart,
 						GlobalEnum.FloatingPosition.Center,
 					],
+					isFocusable: false,
 					position: this.configs.Position,
 					shape: GlobalEnum.ShapeTypes.Sharp,
 				};
