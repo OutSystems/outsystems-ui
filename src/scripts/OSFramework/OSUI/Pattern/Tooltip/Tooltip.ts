@@ -54,8 +54,8 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 		// Method to handle the custom BalloonOnToggle callback
 		private _balloonOnToggleCallback(_args: string, e: CustomEvent): void {
 			// If the balloon closed is the one from this pattern, toggle the isOpen
-			if (e.detail.balloonElem === this._balloonElem && e.detail.open) {
-				this._triggerClose();
+			if (e.detail.balloonElem === this._balloonElem && e.detail.isOpen) {
+				this._triggerClose(true);
 			}
 		}
 
@@ -241,10 +241,13 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 		}
 
 		// Close the Balloon
-		private _triggerClose() {
+		private _triggerClose(isFromBalloonEvent = false) {
 			// Check if the tooltip is open
 			if (this._isOpen) {
-				this._balloonFeature.close();
+				if (!isFromBalloonEvent) {
+					this._balloonFeature.close();
+				}
+
 				this._isOpen = false;
 
 				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.IsOpened);
@@ -501,6 +504,12 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 			}
 		}
 
+		/**
+		 * Method to set the Balloon options
+		 *
+		 * @param {Feature.Balloon.BalloonOptions} [balloonOptions]
+		 * @memberof Tooltip
+		 */
 		public setBalloonOptions(balloonOptions?: Feature.Balloon.BalloonOptions): void {
 			if (balloonOptions !== undefined) {
 				this.balloonOptions = balloonOptions;

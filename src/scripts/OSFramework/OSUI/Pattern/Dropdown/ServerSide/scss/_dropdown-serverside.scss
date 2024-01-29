@@ -9,6 +9,11 @@ $balloonMobileTopMargin: 5vh;
 
 ///
 .osui-dropdown-serverside {
+	--osui-dropdown-ss-balloon-max-height: 300px;
+	--osui-dropdown-min-width: 170px;
+	--osui-floating-offset: 20px;
+	position: relative;
+
 	// "Input" section - SelectedValues container
 	&__selected-values {
 		align-items: center;
@@ -74,20 +79,12 @@ $balloonMobileTopMargin: 5vh;
 	&__balloon {
 		// Wrapper
 		&-wrapper {
-			top: calc(
-				var(--osui-dropdown-ss-top) + var(--osui-dropdown-ss-input-height) + $balloonMarginToSelectValuesWrapper
-			);
 			display: flex;
 			flex-direction: column;
 			flex: 1;
-			left: var(--osui-dropdown-ss-left);
-			max-height: 0;
-			max-width: var(--osui-dropdown-ss-width);
-			opacity: 0;
-			overflow: hidden;
-			position: absolute;
-			transition: opacity 300ms ease;
-			width: 100%;
+			max-width: 300px;
+			min-width: var(--osui-dropdown-min-width);
+			position: fixed;
 			z-index: var(--layer-global-elevated);
 
 			// Service Studio Preview
@@ -110,12 +107,6 @@ $balloonMobileTopMargin: 5vh;
 			height: 100%;
 			opacity: 0;
 			overflow: hidden;
-			// --osui-dropdown-ss-thresholdanimateval is the value used as a threshold to animate down the balloon
-			transform: translateY(calc(-1 * var(--osui-dropdown-ss-thresholdanimateval)));
-			transition:
-				opacity 250ms ease,
-				transform 300ms ease-in-out;
-
 			// Service Studio Preview
 			& {
 				-servicestudio-opacity: 1;
@@ -213,35 +204,6 @@ $balloonMobileTopMargin: 5vh;
 		}
 	}
 
-	// When should be open at top!
-	&__balloon--is-top {
-		// Wrapper
-		&.osui-dropdown-serverside__balloon-wrapper {
-			bottom: calc(100vh - var(--osui-dropdown-ss-top) + $balloonMarginToSelectValuesWrapper);
-			top: unset;
-		}
-
-		// Content Container
-		.osui-dropdown-serverside {
-			&__balloon {
-				&-container {
-					transform: translateY(0);
-					transition: opacity 250ms ease;
-				}
-
-				&-content {
-					border-top-width: var(--border-size-none);
-				}
-
-				&-search-wrapper {
-					border-bottom: var(--border-size-none);
-					border-top: var(--border-size-s) solid var(--color-neutral-5);
-					order: 3;
-				}
-			}
-		}
-	}
-
 	// Balloon IsOpen
 	&--is-opened {
 		.osui-dropdown-serverside {
@@ -271,13 +233,6 @@ $balloonMobileTopMargin: 5vh;
 		// Ballon wrapper
 		&.osui-dropdown-serverside__balloon-wrapper {
 			max-height: var(--osui-dropdown-ss-balloon-max-height);
-			opacity: 1;
-
-			// Used to help triggering the IntersectionObserver before going behind header!
-			&.osui-dropdown-serverside__balloon--is-top {
-				max-height: calc(var(--osui-dropdown-ss-balloon-max-height) + var(--header-size));
-				padding-top: var(--header-size);
-			}
 		}
 	}
 
@@ -293,23 +248,6 @@ $balloonMobileTopMargin: 5vh;
 				border-color: var(--color-neutral-4);
 				color: var(--color-neutral-6);
 				pointer-events: none;
-			}
-		}
-	}
-
-	// When inside Popup widget
-	&--is-inside-popup {
-		.osui-dropdown-serverside__balloon-wrapper {
-			top: calc(var(--osui-dropdown-ss-top) + var(--osui-dropdown-ss-input-height) + 4px);
-			position: fixed;
-			overflow: visible;
-
-			&.osui-dropdown-serverside__balloon--is-top {
-				top: unset;
-			}
-
-			&.osui-dropdown-serverside--is-opened {
-				z-index: calc(var(--osui-popup-layer) + var(--layer-local-tier-1));
 			}
 		}
 	}
@@ -350,14 +288,6 @@ $balloonMobileTopMargin: 5vh;
 		.osui-dropdown-serverside__balloon-wrapper.osui-dropdown-serverside--is-opened {
 			z-index: calc(var(--osui-bottom-sheet-layer) + var(--layer-local-tier-1));
 		}
-	}
-}
-
-// Fallback for fierfox that don't support yet :has(), but it's already in development
-// https://bugzilla.mozilla.org/show_bug.cgi?id=418039
-.firefox {
-	.osui-dropdown-serverside__balloon-wrapper.osui-dropdown-serverside--is-opened {
-		z-index: var(--layer-global-instant-interaction);
 	}
 }
 
