@@ -10,6 +10,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		private _onMouseUpEvent: OSFramework.OSUI.GlobalCallbacks.Generic;
 		private _onSelectedOptionEvent: OSFramework.OSUI.GlobalCallbacks.Generic;
 		private _platformEventSelectedOptCallback: OSFramework.OSUI.Patterns.Dropdown.Callbacks.OSOnSelectEvent;
+		private _windowWidth: number;
 
 		// Store the hidden input AriaLabel value
 		protected hiddenInputWrapperAriaLabelVal: string;
@@ -66,17 +67,24 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 			this.triggerPlatformEventCallback(this._platformEventSelectedOptCallback, this.getSelectedValues());
 		}
 
-		// Close the dropdown if it's open!
+		// Close the dropdown if it's open and if the resize is vertically changed!
 		private _onWindowResize() {
-			if (this.provider.isOpened()) {
+			// If there is a horizontal resize and the Dropdown is open, close it!
+			if (this.provider.isOpened() && this._windowWidth !== window.innerWidth) {
 				this.virtualselectConfigs.close();
 			}
+
+			// Update windowWidth value
+			this._windowWidth = window.innerWidth;
 		}
 
-		// Set the ElementId that is expected from VirtualSelect config
-		private _setElementId(): void {
-			// Store the ElementId where the provider will create the Dropdown
+		// Set Dropdown Element ID and window width
+		private _setDropdownProps(): void {
+			// Define the ElementId that is expected from VirtualSelect config and where the provider will create the Dropdown
 			this.configs.ElementId = '#' + this.selfElement.id;
+
+			// Set the windowWidth value
+			this._windowWidth = window.innerWidth;
 		}
 
 		// Set Pattern Events
@@ -231,7 +239,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		public build(): void {
 			super.build();
 
-			this._setElementId();
+			this._setDropdownProps();
 
 			this.setCallbacks();
 
