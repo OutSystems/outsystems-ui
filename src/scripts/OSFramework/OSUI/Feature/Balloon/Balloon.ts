@@ -50,10 +50,14 @@ namespace OSFramework.OSUI.Feature.Balloon {
 		private _bodyClickCallback(_args: string, e: MouseEvent): void {
 			const _eventTarget = e.target;
 
-			if (_eventTarget === this.featureOptions?.anchorElem || this._isOpenedByApi || this.featureElem.contains(_eventTarget as HTMLElement)) {
+			if (
+				_eventTarget === this.featureOptions?.anchorElem ||
+				this._isOpenedByApi ||
+				this.featureElem.contains(_eventTarget as HTMLElement)
+			) {
 				return;
 			}
-			
+
 			if (this.isOpen) {
 				this._toggleBalloon(false, true);
 				e.stopPropagation();
