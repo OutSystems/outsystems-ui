@@ -19,6 +19,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		public NoOptionsText: string;
 		public NoResultsText: string;
 		public OptionsList: DropDownOption[];
+		public PopupDropboxBreakpoint: string;
 		public Prompt: string;
 		public SearchPrompt: string;
 		public ShowDropboxAsPopup = true;
@@ -195,6 +196,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 				selectAllOnlyVisible: true,
 				selectedValue: this.getSelectedValues() as [],
 				showDropboxAsPopup: this.ShowDropboxAsPopup,
+				popupDropboxBreakpoint: this.PopupDropboxBreakpoint,
 				silentInitialValueSet: true,
 				textDirection: OutSystems.OSUI.Utils.GetIsRTL()
 					? OSFramework.OSUI.GlobalEnum.Direction.RTL

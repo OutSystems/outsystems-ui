@@ -4,6 +4,8 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		extends OSFramework.OSUI.Patterns.Dropdown.AbstractDropdown<VirtualSelect, C>
 		implements IVirtualSelect
 	{
+		// Store the onOrientationChange event
+		private _eventOnOrientationChange: OSFramework.OSUI.GlobalCallbacks.Generic;
 		// Store the onResize event
 		private _eventOnWindowResize: OSFramework.OSUI.GlobalCallbacks.Generic;
 		// Dropdown callback events
@@ -40,6 +42,13 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 			}
 		}
 
+		// Method to close the Dropdown if it's opened
+		private _closeOpened(): void {
+			if (this.provider.isOpened()) {
+				this.virtualselectConfigs.close();
+			}
+		}
+
 		// Manage the attributes to be added
 		private _manageAttributes(): void {
 			// Manage A11Y attributes
@@ -60,23 +69,31 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 			event.preventDefault();
 		}
 
+		// Close the dropdown when a orientation change occurs
+		private _onOrientationChange() {
+			this._closeOpened();
+		}
+
 		// Get the selected options and pass them into callBack
 		private _onSelectedOption() {
 			// Trigger platform's SelectedOptionCallbackEvent client Action
 			this.triggerPlatformEventCallback(this._platformEventSelectedOptCallback, this.getSelectedValues());
 		}
 
-		// Close the dropdown if it's open!
+		// Close the dropdown when a resize occurs
 		private _onWindowResize() {
-			if (this.provider.isOpened()) {
-				this.virtualselectConfigs.close();
-			}
+			this._closeOpened();
 		}
 
-		// Set the ElementId that is expected from VirtualSelect config
-		private _setElementId(): void {
+		// Set the Dropdown properties
+		private _setDropdownProps(): void {
 			// Store the ElementId where the provider will create the Dropdown
 			this.configs.ElementId = '#' + this.selfElement.id;
+
+			if (OSFramework.OSUI.Helper.DeviceInfo.IsMobileDevice) {
+				this.configs.PopupDropboxBreakpoint =
+					(window.innerWidth > window.innerHeight ? window.innerWidth : window.innerHeight) + 'px';
+			}
 		}
 
 		// Set Pattern Events
@@ -89,8 +106,13 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 				this.selfElement.addEventListener(OSFramework.OSUI.GlobalEnum.HTMLEvent.MouseUp, this._onMouseUpEvent);
 			}
 
-			if (OSFramework.OSUI.Helper.DeviceInfo.IsDesktop) {
-				//Set the WindowResize in order to close it if it's open!
+			//Set the WindowResize or OrientationChange based on if is a mobile device, in order to close the dropdown if it's open!
+			if (OSFramework.OSUI.Helper.DeviceInfo.IsMobileDevice) {
+				OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
+					OSFramework.OSUI.Event.DOMEvents.Listeners.Type.OrientationChange,
+					this._eventOnOrientationChange
+				);
+			} else {
 				OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
 					OSFramework.OSUI.Event.DOMEvents.Listeners.Type.WindowResize,
 					this._eventOnWindowResize
@@ -183,6 +205,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		protected setCallbacks(): void {
 			// Set the events callback reference
 			this._eventOnWindowResize = this._onWindowResize.bind(this);
+			this._eventOnOrientationChange = this._onOrientationChange.bind(this);
 			this._onMouseUpEvent = this._onMouseUp.bind(this);
 			this._onSelectedOptionEvent = this._onSelectedOption.bind(this);
 		}
@@ -231,7 +254,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		public build(): void {
 			super.build();
 
-			this._setElementId();
+			this._setDropdownProps();
 
 			this.setCallbacks();
 

@@ -461,6 +461,21 @@ namespace OSFramework.OSUI.Helper {
 		}
 
 		/**
+		 * Method to return if is a mobile device based on is operating system
+		 *
+		 * @readonly
+		 * @static
+		 * @type {boolean}
+		 * @memberof DeviceInfo
+		 */
+		public static get IsMobileDevice(): boolean {
+			const isMobileDevice =
+				DeviceInfo.GetOperatingSystem() === GlobalEnum.MobileOS.Android ||
+				DeviceInfo.GetOperatingSystem() === GlobalEnum.MobileOS.IOS;
+			return isMobileDevice;
+		}
+
+		/**
 		 * Gets the Notch Position.
 		 *
 		 * @private
