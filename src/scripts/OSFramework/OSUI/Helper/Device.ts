@@ -461,7 +461,7 @@ namespace OSFramework.OSUI.Helper {
 		}
 
 		/**
-		 * Method to return if is a mobile device based on is operating system
+		 * Method to return if is running on a mobile device
 		 *
 		 * @readonly
 		 * @static

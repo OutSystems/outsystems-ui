@@ -42,13 +42,6 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 			}
 		}
 
-		// Method to close the Dropdown if it's opened
-		private _closeOpened(): void {
-			if (this.provider.isOpened()) {
-				this.virtualselectConfigs.close();
-			}
-		}
-
 		// Manage the attributes to be added
 		private _manageAttributes(): void {
 			// Manage A11Y attributes
@@ -71,7 +64,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 
 		// Close the dropdown when a orientation change occurs
 		private _onOrientationChange() {
-			this._closeOpened();
+			this.close();
 		}
 
 		// Get the selected options and pass them into callBack
@@ -82,7 +75,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 
 		// Close the dropdown when a resize occurs
 		private _onWindowResize() {
-			this._closeOpened();
+			this.close();
 		}
 
 		// Set the Dropdown properties
@@ -317,13 +310,17 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		}
 
 		/**
-		 * Method used to close the Dropdown
+		 * Method used to close the Dropdown if is opened
 		 *
 		 * @memberof Providers.OSUI.Dropdown.VirtualSelect.AbstractVirtualSelect
 		 */
 		public close(): void {
 			// SetTimeout is needed in order to ensure there is no conflit between OnClickBody and a button click that trigger this method.
-			OSFramework.OSUI.Helper.AsyncInvocation(this.virtualselectConfigs.close.bind(this.virtualselectConfigs));
+			if (this.provider.isOpened()) {
+				OSFramework.OSUI.Helper.AsyncInvocation(
+					this.virtualselectConfigs.close.bind(this.virtualselectConfigs)
+				);
+			}
 		}
 
 		/**
