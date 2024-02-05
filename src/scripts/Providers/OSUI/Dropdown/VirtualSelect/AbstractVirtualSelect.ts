@@ -460,16 +460,19 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		 * @memberof Providers.OSUI.Dropdown.VirtualSelect.AbstractVirtualSelect
 		 */
 		public setValue(optionsToSelect: DropDownOption[], silentOnChangedEvent = true): void {
-			const selectedValues = this.getSelectedOptionsStructure().map((value) => value.value) || [];
-			let valuesToSelect = [];
+			// Make async call to wait for fetching data when the setValues API is called inside on OnAfterFecth
+			OSFramework.OSUI.Helper.AsyncInvocation(() => {
+				const selectedValues = this.getSelectedOptionsStructure().map((value) => value.value) || [];
+				let valuesToSelect = [];
 
-			if (optionsToSelect.length > 0) {
-				if (this.virtualselectOpts.multiple) valuesToSelect = optionsToSelect.map((option) => option.value);
-				else valuesToSelect = [optionsToSelect[0].value];
-			}
+				if (optionsToSelect.length > 0) {
+					if (this.virtualselectOpts.multiple) valuesToSelect = optionsToSelect.map((option) => option.value);
+					else valuesToSelect = [optionsToSelect[0].value];
+				}
 
-			if (valuesToSelect.sort().join(' ') !== selectedValues.sort().join(' '))
-				this.virtualselectConfigs.setValue(valuesToSelect, silentOnChangedEvent);
+				if (valuesToSelect.sort().join(' ') !== selectedValues.sort().join(' '))
+					this.virtualselectConfigs.setValue(valuesToSelect, silentOnChangedEvent);
+			});
 		}
 
 		/**
