@@ -1,0 +1,15 @@
+/* Widgets - Popover */
+////
+/// @group Widgets-Popover
+/// Widgets - Popover
+
+// IsRTL -------------------------------------------------------------------------
+///
+.is-rtl {
+	// This is a temporary fix for popover in ODC, until the platform merge the O11 popover fix into ODC
+	[data-popover] > .popover-bottom {
+		margin-left: initial;
+		margin-right: -50%;
+		transform: translateX(50%) translateY(-100%) !important; // We using the !important to override the platform inline style on popover
+	}
+}
