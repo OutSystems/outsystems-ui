@@ -71,8 +71,11 @@ function createIndexSection(env, platformType) {
 
                 // 1. Go through each section assets
                 for (const asset of sectionInfo.assets) {
+                    if(asset.platform !== undefined && asset.platform !== platformType) {
+                        continue;
+                    } 
                     // Check if Asset is also present at the SectionIndex
-                    if (sectionInfo.addToSectionIndex && sectionInfo.assets.length > 1 && asset.name !== '') {
+                    else if (sectionInfo.addToSectionIndex && sectionInfo.assets.length > 1 && asset.name !== '') {
                         // Create a asset SubComment
                         indexSection += getLineText(`${sectionIndex}.${assetIndex}. ${asset.name}`, 1);
                     }
