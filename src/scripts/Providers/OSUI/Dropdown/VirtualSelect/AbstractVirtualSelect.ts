@@ -292,9 +292,6 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 						break;
 					case Enum.Properties.StartingSelection:
 						this.setValue(propertyValue as DropDownOption[]);
-						console.warn(
-							`${OSFramework.OSUI.GlobalEnum.PatternName.Dropdown}: (${this.widgetId}): We recommend using the StartingSelection parameter exclusively for the initial selection and avoid changing it after initialization. To dynamically change the selected options, you should ideally use the DropdownSetValue Client Action.`
-						);
 						break;
 				}
 			}
