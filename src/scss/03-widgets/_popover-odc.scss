@@ -1,15 +1,23 @@
 /* Widgets - Popover */
 ////
 /// @group Widgets-Popover
-/// Widgets - Popover
+/// Widgets - Popover (This is a temporary fix for popover in ODC, until the platform merge the O11 popover fix into ODC)
+
+///
+[data-popover] > .popover-bottom.align-bottom.align-center {
+	transform: translateX(-50%) translateY(-100%);
+}
 
 // IsRTL -------------------------------------------------------------------------
 ///
 .is-rtl {
-	// This is a temporary fix for popover in ODC, until the platform merge the O11 popover fix into ODC
-	[data-popover] > .popover-bottom {
+	[data-popover] > .popover-bottom.align-center {
 		margin-left: initial;
 		margin-right: -50%;
-		transform: translateX(50%) translateY(-100%) !important; // We using the !important to override the platform inline style on popover
+		transform: translateX(50%);
+
+		&.align-bottom {
+			transform: translateX(50%) translateY(-100%);
+		}
 	}
 }
