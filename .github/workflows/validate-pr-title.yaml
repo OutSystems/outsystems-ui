@@ -1,9 +1,0 @@
-name: Validate pull request title
-
-on:
-    pull_request:
-        types: [opened, edited, synchronize, reopened]
-
-jobs:
-    build:
-        uses: OutSystems/rd.github-reusable-workflows/.github/workflows/validate-pr-title.yaml@v1.0.0
