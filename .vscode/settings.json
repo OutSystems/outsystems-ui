@@ -28,5 +28,9 @@
 	},
 	"[jsonc]": {
 		"editor.defaultFormatter": "vscode.json-language-features"
+	},
+	"sonarlint.connectedMode.project": {
+		"connectionId": "outsystems",
+		"projectKey": "OutSystems_outsystems-ui"
 	}
 }
