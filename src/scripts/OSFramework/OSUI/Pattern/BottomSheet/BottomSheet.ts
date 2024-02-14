@@ -196,17 +196,18 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 					// Close the BottomSheet when pressing Esc
 					this.close();
 					break;
-			
+
 				case GlobalEnum.Keycodes.End:
 					// Focus on last focusable item
-					this._focusTrapInstance.focusableElements[this._focusTrapInstance.focusableElements.length - 1]?.focus();
+					this._focusTrapInstance.focusableElements[
+						this._focusTrapInstance.focusableElements.length - 1
+					]?.focus();
 					break;
 				case GlobalEnum.Keycodes.Home:
 					// Focus on first focusable items (in this case, its the bottom sheet itself)
 					this._focusTrapInstance.focusableElements[0]?.focus();
 					break;
 			}
-
 		}
 
 		/**

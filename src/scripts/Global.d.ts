@@ -1,5 +1,14 @@
 // FloatingUI => Balloon
-import {computePosition, autoPlacement, AutoPlacementOptions, DetectOverflowOptions, autoUpdate, flip, shift, offset } from './../../node_modules/@floating-ui/dom/index';
+import {
+	computePosition,
+	autoPlacement,
+	AutoPlacementOptions,
+	DetectOverflowOptions,
+	autoUpdate,
+	flip,
+	shift,
+	offset,
+} from './../../node_modules/@floating-ui/dom/index';
 
 // DatePicker => Flatpickr
 import flatpickr from 'flatpickr';
@@ -66,10 +75,19 @@ declare global {
 	}
 
 	interface FloatingUIDOM {
-		computePosition: (reference: unknown, floating: unknown, config: ComputePositionConfig) => Promise<ComputePositionReturn>;
+		computePosition: (
+			reference: unknown,
+			floating: unknown,
+			config: ComputePositionConfig
+		) => Promise<ComputePositionReturn>;
 		autoPlacement: (options?: Partial<Options & DetectOverflowOptions>) => Middleware;
 		placementOptions: (AutoPlacementOptions, DetectOverflowOptions) => void;
-		autoUpdate(reference: ReferenceElement, floating: FloatingElement, update: () => void, options?: Partial<Options>): () => void;
+		autoUpdate(
+			reference: ReferenceElement,
+			floating: FloatingElement,
+			update: () => void,
+			options?: Partial<Options>
+		): () => void;
 		flip: (options?: Partial<FlipOptions & DetectOverflowOptions>) => Middleware;
 		shift: (options?: Partial<Options & DetectOverflowOptions>) => Middleware;
 		offset: (value?: Options) => Middleware;
@@ -124,7 +142,7 @@ declare global {
 	type GradientColor = {
 		Color: string;
 		Percentage: number;
-	}
+	};
 
 	// Providers -----------------------------------------------------------------
 	type ProviderInfo = {

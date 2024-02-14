@@ -80,7 +80,6 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 
 				this._submenuHeaderElement.focus();
 			}
-
 		}
 
 		// Call methods to open or close, based ok e.key and behavior applied
@@ -96,9 +95,9 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 			const _targetAfterArrow = _isArrowUp ? this._focusTrapInstance.focusableElements.length - 1 : 0;
 
 			// Open and select first or last item
-			if(_isArrowDown || _isArrowUp) {
+			if (_isArrowDown || _isArrowUp) {
 				this.open();
-				Helper.AsyncInvocation(()=>{
+				Helper.AsyncInvocation(() => {
 					this._focusTrapInstance.focusableElements[_targetAfterArrow].focus();
 				});
 			}
@@ -210,7 +209,7 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 
 			// Update the tabindex of each link
 			this._submenuAllLinksElement.forEach((item: HTMLElement) => {
-				if(this._isOpen) {
+				if (this._isOpen) {
 					Helper.A11Y.TabIndexTrue(item);
 					Helper.A11Y.AriaHiddenFalse(item);
 				} else {
@@ -413,7 +412,10 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 
 				this._focusManagerInstance.setFocusToStoredElement();
 
-				this._submenuLinksElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventBalloonKeypress.bind(this));
+				this._submenuLinksElement.removeEventListener(
+					GlobalEnum.HTMLEvent.keyDown,
+					this._eventBalloonKeypress.bind(this)
+				);
 
 				// Trigger the _platformEventOnToggleCallback callback!
 				this.triggerPlatformEventCallback(this._platformEventOnToggleCallback, false);
@@ -456,7 +458,10 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 				);
 			}
 
-			this._submenuLinksElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventBalloonKeypress.bind(this));
+			this._submenuLinksElement.addEventListener(
+				GlobalEnum.HTMLEvent.keyDown,
+				this._eventBalloonKeypress.bind(this)
+			);
 
 			// Make async the method call
 			Helper.AsyncInvocation(this._show.bind(this));
