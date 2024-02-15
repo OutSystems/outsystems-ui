@@ -110,3 +110,11 @@ To be accepted, a Pull Request needs to:
 ## 📫&nbsp; Have a question? Want to chat? Ran into a problem?
 
 Write us on [the component support page](https://www.outsystems.com/forge/component-discussions/1385/OutSystems+UI)!
+
+## How to sign up for the announcement list
+
+Available internally on Slack channel _#rd-uicomponents-contributors_.
+
+## Keywords
+
+GitHub - OutSystems - OutSystemsUI - UIFramework
