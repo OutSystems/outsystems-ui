@@ -113,7 +113,7 @@ Write us on [the component support page](https://www.outsystems.com/forge/compon
 
 ## How to sign up for the announcement list
 
-Available internally on Slack channel _#rd-uicomponents-contributors_ on business days from 2PM-3PM (PT time).
+Available internally on Slack channel _#rd-uicomponents-contributors_.
 
 ## Keywords
 
