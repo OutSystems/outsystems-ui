@@ -1,6 +1,8 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace Providers.OSUI.SharedProviderResources.Flatpickr {
 	export class UpdatePositionOnScroll {
+		// Indicates wether the picker is a time picker or other type of picker (Month, Date, DateTime).
+		private _isTimePicker: boolean;
 		// Event OnScreenScroll
 		private _onScreenScrollEvent: OSFramework.OSUI.GlobalCallbacks.Generic;
 		// Store the picker instance
@@ -19,6 +21,8 @@ namespace Providers.OSUI.SharedProviderResources.Flatpickr {
 		) {
 			// Set picker object
 			this._picker = picker;
+			// Set if the picker is a time picker
+			this._isTimePicker = this._picker instanceof TimePicker.Flatpickr.OSUIFlatpickrTime;
 			// Set onBodyScrollEvent callback
 			this._setCallbacks();
 			// Set the Events
