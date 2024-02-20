@@ -34,16 +34,18 @@ namespace Providers.OSUI.SharedProviderResources.Flatpickr {
 			if (this._picker.isBuilt) {
 				// Check if IsPhone
 				if (this._picker.provider.isOpen && OSFramework.OSUI.Helper.DeviceInfo.IsPhone) {
-					// Check if the active element is a child of the calendar container
+					// Check if the picker is a timepicker, if so, the picker will be closed.
+					// If not a timepicker, then will check if active element is a child of the calendar container
 					if (
+						this._isTimePicker ||
 						document.activeElement.closest(
 							`${OSFramework.OSUI.Constants.Dot}${Enum.CssClasses.CalendarContainer}`
-						) === this._picker.provider.calendarContainer
+						) !== this._picker.provider.calendarContainer
 					) {
+						this._picker.provider.close();
+					} else {
 						// calendar can't close => trigger provider update position method
 						this._picker.provider._positionCalendar();
-					} else {
-						this._picker.provider.close();
 					}
 				}
 
