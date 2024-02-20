@@ -34,8 +34,18 @@ namespace Providers.OSUI.SharedProviderResources.Flatpickr {
 			if (this._picker.isBuilt) {
 				// Check if IsPhone
 				if (this._picker.provider.isOpen && OSFramework.OSUI.Helper.DeviceInfo.IsPhone) {
-					// Check if the picker is a timepicker, if so, the picker will be closed.
-					// If not a timepicker, then will check if active element is a child of the calendar container
+					//
+					/**
+					 * Check if the picker is a timepicker, if so, the picker will be closed.
+					 * - There this need (to check if the active element is not a child of the calendar) due the way
+					 * we've now the active-screen and content containers, since once at native mobile apps both of this
+					 * containers will have the overflow-y as auto, with ends on the ability to scroll the content even when
+					 * at the content (native apps) is the one blocked for the picker if it's open... When scroll occurs on top
+					 * of picker the entire screen (header included) will do have scroll. This approach will make calendar
+					 * update it's position accordingly.
+					 *
+					 * Also if not a timepicker, then will check if active element is a child of the calendar container
+					 */
 					if (
 						this._isTimePicker ||
 						document.activeElement.closest(
