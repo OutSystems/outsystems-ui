@@ -50,12 +50,13 @@ namespace Providers.OSUI.SharedProviderResources.Flatpickr {
 						this._isTimePicker ||
 						document.activeElement.closest(
 							`${OSFramework.OSUI.Constants.Dot}${Enum.CssClasses.CalendarContainer}`
-						) !== this._picker.provider.calendarContainer
+						) === this._picker.provider.calendarContainer
 					) {
-						this._picker.provider.close();
-					} else {
-						// calendar can't close => trigger provider update position method
+						// Prevents the calendar from closing and updates its position to stay in view.
 						this._picker.provider._positionCalendar();
+					} else {
+						// Closes the calendar if the active element is outside the calendar container.
+						this._picker.provider.close();
 					}
 				}
 
