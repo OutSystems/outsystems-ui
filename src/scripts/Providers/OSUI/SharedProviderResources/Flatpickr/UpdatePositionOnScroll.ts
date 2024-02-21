@@ -35,13 +35,18 @@ namespace Providers.OSUI.SharedProviderResources.Flatpickr {
 				// Check if IsPhone
 				if (this._picker.provider.isOpen && OSFramework.OSUI.Helper.DeviceInfo.IsPhone) {
 					/**
-					 * This condition checks if the active element is not a child of the calendar container. This is necessary due to the design of
-					 * active-screen and content containers in both web and native mobile app environments, where `overflow-y` is set to `auto`. This setting
-					 * allows content to be scrollable even when a picker is open in native apps, which could lead to unintended scrolling of the entire screen,
-					 * including the header, when interacting with the picker. To prevent this, the calendar's position is updated to remain in view during scroll events.
+					 * This condition checks if the active element is not a child of the calendar container.
+					 * This is necessary due to the design of active-screen and content containers in both web
+					 * and native mobile app environments, where `overflow-y` is set to `auto`. This setting
+					 * allows content to be scrollable even when a picker is open in native apps, which could
+					 * lead to unintended scrolling of the entire screen, including the header, when interacting
+					 * with the picker. To prevent this, the calendar's position is updated to remain in view
+					 * during scroll events.
 					 *
-					 * However, this behavior is excluded for the timepicker. When the timepicker is triggered (e.g., by focusing on an input field), the appearance
-					 * of the keyboard may cause the page to scroll. In this scenario, we avoid closing the timepicker to maintain user interaction continuity.
+					 * However, this behavior is excluded for the timepicker. When the timepicker is triggered
+					 * (e.g., by focusing on an input field), the appearance of the keyboard may cause the page
+					 * to scroll. In this scenario, we avoid closing the timepicker to maintain user interaction
+					 * continuity.
 					 */
 					if (
 						this._isTimePicker ||
