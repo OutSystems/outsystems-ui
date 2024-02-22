@@ -108,16 +108,17 @@
 		&:first-of-type {
 			+ .rating-item {
 				background: transparent;
-				display: none;
+				box-shadow: 0 0 0 3px var(--color-focus-outer);
 				height: 100%;
 				left: 0;
+				opacity: 0;
+				pointer-events: none;
 				position: absolute;
 				top: 0;
 				width: 100%;
-				box-shadow: 0 0 0 3px var(--color-focus-outer);
 			}
 			&:focus:checked + .rating-item {
-				display: block;
+				opacity: 1;
 			}
 		}
 
