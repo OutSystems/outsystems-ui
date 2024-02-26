@@ -52,7 +52,7 @@ namespace OutSystems.OSUI.Patterns.RatingAPI {
 	 */
 	export function Disable(ratingId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
-			errorCode: ErrorCodes.Rating.FailDispose,
+			errorCode: ErrorCodes.Rating.FailDisable,
 			callback: () => {
 				const rating = GetRatingById(ratingId);
 
@@ -93,7 +93,7 @@ namespace OutSystems.OSUI.Patterns.RatingAPI {
 	 */
 	export function Enable(ratingId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
-			errorCode: ErrorCodes.Rating.FailDispose,
+			errorCode: ErrorCodes.Rating.FailEnable,
 			callback: () => {
 				const rating = GetRatingById(ratingId);
 
