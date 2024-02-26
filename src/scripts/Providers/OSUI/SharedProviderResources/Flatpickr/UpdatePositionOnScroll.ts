@@ -1,6 +1,8 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace Providers.OSUI.SharedProviderResources.Flatpickr {
 	export class UpdatePositionOnScroll {
+		// Indicates wether the picker is a time picker or other type of picker (Month, Date, DateTime).
+		private _isTimePicker: boolean;
 		// Event OnScreenScroll
 		private _onScreenScrollEvent: OSFramework.OSUI.GlobalCallbacks.Generic;
 		// Store the picker instance
@@ -19,6 +21,8 @@ namespace Providers.OSUI.SharedProviderResources.Flatpickr {
 		) {
 			// Set picker object
 			this._picker = picker;
+			// Set if the picker is a time picker
+			this._isTimePicker = this._picker instanceof TimePicker.Flatpickr.OSUIFlatpickrTime;
 			// Set onBodyScrollEvent callback
 			this._setCallbacks();
 			// Set the Events
@@ -30,15 +34,30 @@ namespace Providers.OSUI.SharedProviderResources.Flatpickr {
 			if (this._picker.isBuilt) {
 				// Check if IsPhone
 				if (this._picker.provider.isOpen && OSFramework.OSUI.Helper.DeviceInfo.IsPhone) {
-					// Check if the active element is a child of the calendar container
+					/**
+					 * This condition checks if the active element is not a child of the calendar container.
+					 * This is necessary due to the design of active-screen and content containers in both web
+					 * and native mobile app environments, where `overflow-y` is set to `auto`. This setting
+					 * allows content to be scrollable even when a picker is open in native apps, which could
+					 * lead to unintended scrolling of the entire screen, including the header, when interacting
+					 * with the picker. To prevent this, the calendar's position is updated to remain in view
+					 * during scroll events.
+					 *
+					 * However, this behavior is excluded for the timepicker. When the timepicker is triggered
+					 * (e.g., by focusing on an input field), the appearance of the keyboard may cause the page
+					 * to scroll. In this scenario, we avoid closing the timepicker to maintain user interaction
+					 * continuity.
+					 */
 					if (
+						this._isTimePicker ||
 						document.activeElement.closest(
 							`${OSFramework.OSUI.Constants.Dot}${Enum.CssClasses.CalendarContainer}`
 						) === this._picker.provider.calendarContainer
 					) {
-						// calendar can't close => trigger provider update position method
+						// Prevents the calendar from closing and updates its position to stay in view.
 						this._picker.provider._positionCalendar();
 					} else {
+						// Closes the calendar if the active element is outside the calendar container.
 						this._picker.provider.close();
 					}
 				}
