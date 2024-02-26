@@ -107,9 +107,6 @@ namespace Providers.OSUI.RangeSlider.NoUISlider.SingleSlider {
 				switch (propertyName) {
 					case OSFramework.OSUI.Patterns.RangeSlider.Enum.Properties.StartingValueFrom:
 						this.setValue(propertyValue as number);
-						console.warn(
-							`${OSFramework.OSUI.GlobalEnum.PatternName.RangeSlider}: (${this.widgetId}): You should use a distinct variable to assign on the OnValueChange event. Any updates to ${OSFramework.OSUI.Patterns.RangeSlider.Enum.Properties.InitialValueFrom} parameter should ideally be made using the SetRangeSliderValue Client Action.`
-						);
 						break;
 					case OSFramework.OSUI.Patterns.RangeSlider.Enum.Properties.ShowTickMarks:
 						// Library only supports update on some options, so we need to
