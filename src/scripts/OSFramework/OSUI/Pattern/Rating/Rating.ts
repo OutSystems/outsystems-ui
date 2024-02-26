@@ -267,6 +267,12 @@ namespace OSFramework.OSUI.Patterns.Rating {
 		private _setIsDisabled(isDisabled: boolean): void {
 			this._disabled = isDisabled;
 			this._setFieldsetDisabledStatus(isDisabled);
+
+			if (isDisabled) {
+				this._unsetEvents();
+			} else {
+				this._setEvents();
+			}
 		}
 
 		/**
@@ -447,12 +453,12 @@ namespace OSFramework.OSUI.Patterns.Rating {
 		 * @memberof Rating
 		 */
 		private _unsetEvents(): void {
-			if (this.selfElement && this.configs.IsEdit === false) {
+			if ((this.selfElement && this.configs.IsEdit === false) || this._disabled) {
 				this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnRatingClick);
 			}
 
 			// Manage RatingInput elements events accordingly
-			this._toggleRatingInputsEvents(!this.configs.IsEdit);
+			this._toggleRatingInputsEvents(!this.configs.IsEdit && !this._disabled);
 		}
 
 		/**
