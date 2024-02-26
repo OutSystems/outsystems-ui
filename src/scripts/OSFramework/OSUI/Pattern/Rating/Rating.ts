@@ -20,8 +20,6 @@ namespace OSFramework.OSUI.Patterns.Rating {
 		private _platformEventOnSelect: GlobalCallbacks.OSGeneric;
 		// Store the fieldset html element
 		private _ratingFieldsetElem: HTMLElement;
-		// Store if the rating already has an event added
-		private _ratingHasEventAdded: boolean;
 		// Store the rating icons html element
 		private _ratingIconStatesElem: HTMLElement;
 		// Store the input name to be used on clones
@@ -200,9 +198,6 @@ namespace OSFramework.OSUI.Patterns.Rating {
 
 			// Manage RatingInput elements events accordingly
 			this._toggleRatingInputsEvents(!this.configs.IsEdit);
-
-			// Set events added flag variable
-			this._ratingHasEventAdded = true;
 		}
 
 		/**
@@ -260,7 +255,6 @@ namespace OSFramework.OSUI.Patterns.Rating {
 		 */
 		private _setInitialPropertiesValues(): void {
 			this._ratingInputName = 'rating-' + this.uniqueId;
-			this._ratingHasEventAdded = false;
 		}
 
 		/**
@@ -300,10 +294,10 @@ namespace OSFramework.OSUI.Patterns.Rating {
 			}
 
 			// Review if there's a need to add/remove the click event, accordingly to the IsEdit value
-			if (this._ratingHasEventAdded) {
-				this._unsetEvents();
-			} else {
+			if (this.configs.IsEdit) {
 				this._setEvents();
+			} else {
+				this._unsetEvents();
 			}
 		}
 
@@ -453,15 +447,12 @@ namespace OSFramework.OSUI.Patterns.Rating {
 		 * @memberof Rating
 		 */
 		private _unsetEvents(): void {
-			if (this.selfElement) {
+			if (this.selfElement && this.configs.IsEdit === false) {
 				this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnRatingClick);
 			}
 
 			// Manage RatingInput elements events accordingly
 			this._toggleRatingInputsEvents(!this.configs.IsEdit);
-
-			// Set events added flag variable
-			this._ratingHasEventAdded = false;
 		}
 
 		/**
