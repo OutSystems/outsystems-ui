@@ -171,11 +171,11 @@ namespace OSFramework.OSUI.Patterns.Rating {
 			const ratingInputId: string = this.uniqueId + '-rating-' + index;
 
 			// Create input and label html
-			const input = `<input type="${GlobalEnum.HTMLElement.Radio}" class="${Enum.CssClass.RatingInput} ${Enum.CssClass.WCAGHideText}" id=${ratingInputId} name=${this._ratingInputName} value=${index} aria-hidden="${Constants.A11YAttributes.States.True}">`;
+			const input = `<input type="${GlobalEnum.HTMLElement.Radio}" class="${Enum.CssClass.RatingInput} ${Enum.CssClass.WCAGHideText}" id=${ratingInputId} name=${this._ratingInputName} value=${index}>`;
 
 			let label = '';
 			if (!this.configs.IsEdit) {
-				label = `<label class='${Enum.CssClass.RatingItem}' for=${ratingInputId} aria-hidden="${Constants.A11YAttributes.States.True}"><span class="${Enum.CssClass.WCAGHideText}">Rating ${index}</span>${labelHTML}</label>`;
+				label = `<label class='${Enum.CssClass.RatingItem}' for=${ratingInputId}><span class="${Enum.CssClass.WCAGHideText}">Rating ${index}</span>${labelHTML}</label>`;
 			} else {
 				label = `<label class='${Enum.CssClass.RatingItem}' for=${ratingInputId}><span class="${Enum.CssClass.WCAGHideText}">Rating ${index}</span>${labelHTML}</label>`;
 			}
@@ -282,21 +282,11 @@ namespace OSFramework.OSUI.Patterns.Rating {
 		 * @memberof Rating
 		 */
 		private _setIsEdit(): void {
-			const LabelList = this.selfElement.querySelectorAll(Constants.Dot + Enum.CssClass.RatingItem);
-
 			// Toggle the is-edit class
 			if (this.configs.IsEdit) {
 				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.IsEdit);
-
-				LabelList.forEach((label) => {
-					label.removeAttribute(Constants.A11YAttributes.Aria.Hidden);
-				});
 			} else {
 				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.IsEdit);
-
-				LabelList.forEach((label) => {
-					label.ariaHidden = Constants.A11YAttributes.States.True;
-				});
 			}
 
 			// Review if there's a need to add/remove the click event, accordingly to the IsEdit value
