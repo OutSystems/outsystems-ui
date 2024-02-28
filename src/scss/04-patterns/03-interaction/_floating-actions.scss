@@ -5,7 +5,10 @@
 
 ///
 .floating {
-	--osui-floating-actions-layer: var(--layer-global-elevated);
+	&-actions-wrapper,
+	&-overlay {
+		--osui-floating-actions-layer: var(--layer-global-elevated);
+	}
 
 	&-actions-wrapper {
 		align-items: flex-end;
