@@ -29,10 +29,14 @@
 	}
 
 	&.is-edit {
-		pointer-events: initial;
-		.rating-item {
-			cursor: pointer;
-			pointer-events: auto;
+		// Ensure edit mode will only be available when fieldset is not disabled
+		&:not(:has(fieldset[disabled='true'])) {
+			pointer-events: initial;
+
+			.rating-item {
+				cursor: pointer;
+				pointer-events: auto;
+			}
 		}
 	}
 

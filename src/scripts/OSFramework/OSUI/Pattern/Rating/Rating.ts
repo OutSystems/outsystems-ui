@@ -12,14 +12,14 @@ namespace OSFramework.OSUI.Patterns.Rating {
 		private _disabled: boolean;
 		// Store the click event with bind(this)
 		private _eventOnRatingClick: GlobalCallbacks.Generic;
+		// Store the keyup event
+		private _eventOnRatingInputKeyup: GlobalCallbacks.Generic;
 		// Store if the rating value is half
 		private _isHalfValue: boolean;
 		// Store the callback to be used on the OnSelect event
 		private _platformEventOnSelect: GlobalCallbacks.OSGeneric;
 		// Store the fieldset html element
 		private _ratingFieldsetElem: HTMLElement;
-		// Store if the rating already has an event added
-		private _ratingHasEventAdded: boolean;
 		// Store the rating icons html element
 		private _ratingIconStatesElem: HTMLElement;
 		// Store the input name to be used on clones
@@ -106,24 +106,25 @@ namespace OSFramework.OSUI.Patterns.Rating {
 		}
 
 		/**
-		 * Method to manage the click event
+		 * Method used to set the keyboard keydown event
 		 *
 		 * @private
+		 * @param {KeyboardEvent} e event
 		 * @memberof Rating
 		 */
-		private _manageRatingEvent(): void {
-			// Check if a event was already added
-			if (this._ratingHasEventAdded) {
-				// If true, remove event
-				this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnRatingClick);
-
-				// And set variable as false
-				this._ratingHasEventAdded = false;
-			} else if (this.configs.IsEdit) {
-				// Otherwise, if there is no event already added and the param IsEdit is true, add new event
-				this.selfElement.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnRatingClick);
-				// And set variable as true
-				this._ratingHasEventAdded = true;
+		private _ratingInputOnKeyup(e: KeyboardEvent): void {
+			// Ensure keys pressed are arrows
+			if (
+				e.key === GlobalEnum.Keycodes.ArrowUp ||
+				e.key === GlobalEnum.Keycodes.ArrowRight ||
+				e.key === GlobalEnum.Keycodes.ArrowDown ||
+				e.key === GlobalEnum.Keycodes.ArrowLeft
+			) {
+				/* Block the default borwser behaviour!
+					- This is needed in order to avoid let user be able to select a star when IsEdit=False,
+				by default and since pattern will not be disabled, arrow keys are used to navigate through a 
+				group of checkbox elements, on this case we must block this native behaviour!  */
+				e.preventDefault();
 			}
 		}
 
@@ -155,18 +156,6 @@ namespace OSFramework.OSUI.Patterns.Rating {
 				this._setValue(true);
 			}
 		}
-		/**
-		 * Method to remove the event listeners
-		 *
-		 * @private
-		 * @memberof Rating
-		 */
-		private _removeEvents(): void {
-			// remove event listener if any was added
-			if (this.selfElement && this._ratingHasEventAdded) {
-				this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnRatingClick);
-			}
-		}
 
 		/**
 		 * Method called on createItems() to render the correct HTML structure for each item
@@ -182,17 +171,33 @@ namespace OSFramework.OSUI.Patterns.Rating {
 			const ratingInputId: string = this.uniqueId + '-rating-' + index;
 
 			// Create input and label html
-			const input = `<input type="${GlobalEnum.HTMLElement.Radio}"class="${Enum.CssClass.RatingInput} ${Enum.CssClass.WCAGHideText}" id=${ratingInputId} name=${this._ratingInputName} value=${index} aria-hidden="${Constants.A11YAttributes.States.True}">`;
+			const input = `<input type="${GlobalEnum.HTMLElement.Radio}" class="${Enum.CssClass.RatingInput} ${Enum.CssClass.WCAGHideText}" id=${ratingInputId} name=${this._ratingInputName} value=${index}>`;
 
-			let label;
+			let label = '';
 			if (!this.configs.IsEdit) {
-				label = `<label class='${Enum.CssClass.RatingItem}' for=${ratingInputId} aria-hidden="${Constants.A11YAttributes.States.True}"><span class="${Enum.CssClass.WCAGHideText}">Rating ${index}</span>${labelHTML}</label>`;
+				label = `<label class='${Enum.CssClass.RatingItem}' for=${ratingInputId}><span class="${Enum.CssClass.WCAGHideText}">Rating ${index}</span>${labelHTML}</label>`;
 			} else {
 				label = `<label class='${Enum.CssClass.RatingItem}' for=${ratingInputId}><span class="${Enum.CssClass.WCAGHideText}">Rating ${index}</span>${labelHTML}</label>`;
 			}
 
 			// Append new input + label to fieldset's html
 			this._ratingFieldsetElem.innerHTML += input + label;
+		}
+
+		/**
+		 * Method that will add the needed events
+		 *
+		 * @private
+		 * @memberof Rating
+		 */
+		private _setEvents(): void {
+			if (this.configs.IsEdit) {
+				// Otherwise, if there is no event already added and the param IsEdit is true, add new event
+				this.selfElement.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnRatingClick);
+			}
+
+			// Manage RatingInput elements events accordingly
+			this._toggleRatingInputsEvents(!this.configs.IsEdit);
 		}
 
 		/**
@@ -249,9 +254,7 @@ namespace OSFramework.OSUI.Patterns.Rating {
 		 * @memberof Rating
 		 */
 		private _setInitialPropertiesValues(): void {
-			this._disabled = !this.configs.IsEdit;
 			this._ratingInputName = 'rating-' + this.uniqueId;
-			this._ratingHasEventAdded = false;
 		}
 
 		/**
@@ -262,9 +265,14 @@ namespace OSFramework.OSUI.Patterns.Rating {
 		 * @memberof Rating
 		 */
 		private _setIsDisabled(isDisabled: boolean): void {
+			this._disabled = isDisabled;
 			this._setFieldsetDisabledStatus(isDisabled);
 
-			this._disabled = isDisabled;
+			if (isDisabled) {
+				this._unsetEvents();
+			} else {
+				this._setEvents();
+			}
 		}
 
 		/**
@@ -274,27 +282,19 @@ namespace OSFramework.OSUI.Patterns.Rating {
 		 * @memberof Rating
 		 */
 		private _setIsEdit(): void {
-			// Set the fieldset and input disabled attribute status
-			this._setIsDisabled(!this.configs.IsEdit);
-			const LabelList = this.selfElement.querySelectorAll(Constants.Dot + Enum.CssClass.RatingItem);
-
 			// Toggle the is-edit class
 			if (this.configs.IsEdit) {
 				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.IsEdit);
-
-				LabelList.forEach((label) => {
-					label.removeAttribute(Constants.A11YAttributes.Aria.Hidden);
-				});
 			} else {
 				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.IsEdit);
-
-				LabelList.forEach((label) => {
-					label.ariaHidden = Constants.A11YAttributes.States.True;
-				});
 			}
 
 			// Review if there's a need to add/remove the click event, accordingly to the IsEdit value
-			this._manageRatingEvent();
+			if (this.configs.IsEdit) {
+				this._setEvents();
+			} else {
+				this._unsetEvents();
+			}
 		}
 
 		/**
@@ -402,6 +402,28 @@ namespace OSFramework.OSUI.Patterns.Rating {
 		}
 
 		/**
+		 * Method used to manage the Rating inputs events, they will be only set when IsEdit=False
+		 * - This is needed in order to grant keyboard behaves like ckick, in order to avoid user be able
+		 * to select any star by using keyboard navigation when IsEdit=False!
+		 *
+		 * @private
+		 * @param {boolean} add Flag to indicates if events should be added or removed.
+		 * @memberof Rating
+		 */
+		private _toggleRatingInputsEvents(add: boolean): void {
+			// Get the list of inputs
+			const inputsList = this.selfElement.querySelectorAll(Constants.Dot + Enum.CssClass.RatingInput);
+
+			for (const input of inputsList) {
+				if (add) {
+					input.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnRatingInputKeyup);
+				} else {
+					input.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnRatingInputKeyup);
+				}
+			}
+		}
+
+		/**
 		 * Method that triggers the OnSelect event
 		 *
 		 * @private
@@ -412,6 +434,21 @@ namespace OSFramework.OSUI.Patterns.Rating {
 			if (this._platformEventOnSelect !== undefined) {
 				this.triggerPlatformEventCallback(this._platformEventOnSelect, value);
 			}
+		}
+
+		/**
+		 * Method to remove the event listeners
+		 *
+		 * @private
+		 * @memberof Rating
+		 */
+		private _unsetEvents(): void {
+			if ((this.selfElement && this.configs.IsEdit === false) || this._disabled) {
+				this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnRatingClick);
+			}
+
+			// Manage RatingInput elements events accordingly
+			this._toggleRatingInputsEvents(!this.configs.IsEdit && !this._disabled);
 		}
 
 		/**
@@ -432,6 +469,7 @@ namespace OSFramework.OSUI.Patterns.Rating {
 		 */
 		protected setCallbacks(): void {
 			this._eventOnRatingClick = this._ratingOnClick.bind(this);
+			this._eventOnRatingInputKeyup = this._ratingInputOnKeyup.bind(this);
 		}
 
 		/**
@@ -453,6 +491,7 @@ namespace OSFramework.OSUI.Patterns.Rating {
 		 */
 		protected unsetCallbacks(): void {
 			this._eventOnRatingClick = undefined;
+			this._eventOnRatingInputKeyup = undefined;
 		}
 
 		/**
@@ -487,11 +526,9 @@ namespace OSFramework.OSUI.Patterns.Rating {
 
 			this._handlePlaceholders();
 
-			this._setFieldsetDisabledStatus(!this.configs.IsEdit);
-
 			this._createItems();
 
-			this._manageRatingEvent();
+			this._setEvents();
 
 			this._setValue();
 
@@ -534,17 +571,35 @@ namespace OSFramework.OSUI.Patterns.Rating {
 		}
 
 		/**
+		 * Method to set the Rating as disabled
+		 *
+		 * @memberof Rating
+		 */
+		public disable(): void {
+			this._setIsDisabled(true);
+		}
+
+		/**
 		 * Method to destroy the Rating pattern
 		 *
 		 * @memberof OSFramework.Patterns.Rating.Rating
 		 */
 		public dispose(): void {
-			this._removeEvents();
+			this._unsetEvents();
 
 			this.unsetCallbacks();
 			this.unsetHtmlElements();
 
 			super.dispose();
+		}
+
+		/**
+		 * Method to set the Rating as enabled
+		 *
+		 * @memberof Rating
+		 */
+		public enable(): void {
+			this._setIsDisabled(false);
 		}
 
 		/**
