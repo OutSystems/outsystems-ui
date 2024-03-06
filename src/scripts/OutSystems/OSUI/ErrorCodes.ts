@@ -193,6 +193,8 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailChangeProperty: 'OSUI-API-19001',
 		FailDispose: 'OSUI-API-19002',
 		FailRegisterCallback: 'OSUI-API-19003',
+		FailEnable: 'OSUI-API-19004',
+		FailDisable: 'OSUI-API-19005',
 	};
 
 	export const Search = {

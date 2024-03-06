@@ -45,6 +45,25 @@ namespace OutSystems.OSUI.Patterns.RatingAPI {
 	}
 
 	/**
+	 * Function that will set Rating with given ID as disabled
+	 *
+	 * @export
+	 * @param {string} ratingId
+	 */
+	export function Disable(ratingId: string): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Rating.FailDisable,
+			callback: () => {
+				const rating = GetRatingById(ratingId);
+
+				rating.disable();
+			},
+		});
+
+		return result;
+	}
+
+	/**
 	 *
 	 *
 	 * @export
@@ -60,6 +79,25 @@ namespace OutSystems.OSUI.Patterns.RatingAPI {
 				rating.dispose();
 
 				_ratingsMap.delete(ratingId);
+			},
+		});
+
+		return result;
+	}
+
+	/**
+	 * Function that will set Rating with given ID as enabled
+	 *
+	 * @export
+	 * @param {string} ratingId
+	 */
+	export function Enable(ratingId: string): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Rating.FailEnable,
+			callback: () => {
+				const rating = GetRatingById(ratingId);
+
+				rating.enable();
 			},
 		});
 
