@@ -1,12 +1,13 @@
-name: Check if pull request is inner sourcing
+name: Add Inner Sourcing Label
 
 on:
     pull_request:
         types:
             - opened
             - synchronize
-
 jobs:
     inner_sourcing:
         uses: OutSystems/rd.github-reusable-workflows/.github/workflows/add-inner-sourcing-label.yaml@v1.4.0
+        with:
+            codeowners-path: .github\CODEOWNERS
         secrets: inherit
