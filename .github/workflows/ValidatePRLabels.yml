@@ -1,9 +1,0 @@
-name: Validate pull request labels
-
-on:
-    pull_request:
-        types: [opened, reopened, labeled, unlabeled]
-
-jobs:
-    check-label:
-        uses: OutSystems/rd.github-reusable-workflows/.github/workflows/validate-pr-labels.yaml@v2.0.2
