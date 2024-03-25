@@ -129,12 +129,12 @@
 @keyframes scaleup {
 	0% {
 		opacity: 0;
-		-webkit-transform: translateX(0) translateY(0) translateZ(0) scale(0);
+		transform: translateX(0) translateY(0) translateZ(0) scale(0);
 	}
 
 	100% {
 		opacity: 1;
-		-webkit-transform: translateX(0) translateY(0) translateZ(0) scale(1);
+		transform: translateX(0) translateY(0) translateZ(0) scale(1);
 	}
 }
 
