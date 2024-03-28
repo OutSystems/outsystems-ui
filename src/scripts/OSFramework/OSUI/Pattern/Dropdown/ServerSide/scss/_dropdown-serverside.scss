@@ -353,14 +353,6 @@ $balloonMobileTopMargin: 5vh;
 	}
 }
 
-// Fallback for fierfox that don't support yet :has(), but it's already in development
-// https://bugzilla.mozilla.org/show_bug.cgi?id=418039
-.firefox {
-	.osui-dropdown-serverside__balloon-wrapper.osui-dropdown-serverside--is-opened {
-		z-index: var(--layer-global-instant-interaction);
-	}
-}
-
 // Inside Form & Popup
 .form {
 	.osui-dropdown-serverside--is-inside-popup input[data-input] {
