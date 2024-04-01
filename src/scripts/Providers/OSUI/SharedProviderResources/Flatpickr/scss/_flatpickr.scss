@@ -559,13 +559,6 @@ span.flatpickr-weekday {
 	z-index: var(--osui-flatpickr-layer);
 }
 
-// Exception for firefox support for :has()
-@supports not selector(:has(*)) {
-	.is-rtl .flatpickr-calendar {
-		--osui-flatpickr-layer: calc(var(--osui-menu-layer) + var(--layer-local-tier-1));
-	}
-}
-
 // Accessibility ------------------------------------------------------------------
 // cannot use has-accessible-features class, as the pickder is detached from its context on layout
 .osui-datepicker-calendar {
