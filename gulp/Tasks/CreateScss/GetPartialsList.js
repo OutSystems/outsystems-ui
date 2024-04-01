@@ -71,15 +71,19 @@ function createPartialsList(env, platformType) {
 
             // 1. Go through each section assets
             for (const asset of sectionInfo.assets) {
-                // Check if Asset is also present at the SectionIndex
-                if (sectionInfo.addToSectionIndex && sectionInfo.assets.length > 1 && asset.name !== '') {
-                    // Create a asset SubComment
-                    partialsListText += createSectionCommentTitle(`${sectionIndex}.${assetIndex}. ${asset.name}`, 2);
-                }
+                if(asset.platform !== undefined && asset.platform !== platformType) {
+                    continue
+                } else {
+                    // Check if Asset is also present at the SectionIndex
+                    if (sectionInfo.addToSectionIndex && sectionInfo.assets.length > 1 && asset.name !== '') {
+                        // Create a asset SubComment
+                        partialsListText += createSectionCommentTitle(`${sectionIndex}.${assetIndex}. ${asset.name}`, 2);
+                    }
 
-                // Check if the current assest do not have other assets assigned (Patterns case)
-                if (asset.path !== undefined) {
-                    partialsListText += getImportLineText(asset.path);
+                    // Check if the current asset do not have other assets assigned (Patterns case)
+                    if (asset.path !== undefined) {
+                        partialsListText += getImportLineText(asset.path);
+                    }
                 }
 
                 // Check if the current Asset also contains it's own Assets (Ex: Patterns case)

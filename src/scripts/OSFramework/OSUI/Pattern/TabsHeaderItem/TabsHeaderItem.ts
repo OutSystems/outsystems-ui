@@ -64,7 +64,7 @@ namespace OSFramework.OSUI.Patterns.TabsHeaderItem {
 				Helper.A11Y.RoleTab(this.selfElement);
 
 				// Workaround for VoiceOver support
-				if(Helper.DeviceInfo.IsIos || Helper.DeviceInfo.GetOperatingSystem() === GlobalEnum.MobileOS.MacOS) {
+				if (Helper.DeviceInfo.IsIos || Helper.DeviceInfo.GetOperatingSystem() === GlobalEnum.MobileOS.MacOS) {
 					Helper.A11Y.RolePresentation(this.selfElement.parentElement);
 				}
 			}

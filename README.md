@@ -1,4 +1,4 @@
-# OutSystems UI · v2.18.2
+# OutSystems UI · v2.18.4
 
 ![GitHub License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg) ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
 
@@ -110,3 +110,11 @@ To be accepted, a Pull Request needs to:
 ## 📫&nbsp; Have a question? Want to chat? Ran into a problem?
 
 Write us on [the component support page](https://www.outsystems.com/forge/component-discussions/1385/OutSystems+UI)!
+
+## How to sign up for the announcement list
+
+Available internally on Slack channel _#rd-uicomponents-contributors_.
+
+## Keywords
+
+GitHub - OutSystems - OutSystemsUI - UIFramework

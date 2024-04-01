@@ -1,3 +1,5 @@
+const project = require('../DefaultSpecs');
+
 /* 
 * Section Info
 **/
@@ -61,6 +63,11 @@ const sectionInfo = {
         {
             "name": "Popover",
             "path": "03-widgets/popover"
+        },
+        {
+            "name": "Popover - ODC",
+            "path": "03-widgets/popover-odc",
+            "platform": project.globalConsts.platformTarget.odc,
         },
         {
             "name": "Popup",

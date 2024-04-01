@@ -1,3 +1,3 @@
-# VirtualSelect · ![virtualselect version](https://img.shields.io/badge/version-v1.0.40-informational)
+# VirtualSelect · ![virtualselect version](https://img.shields.io/badge/version-v1.0.42-informational)
 
 All info about this Provider <a href="https://sa-si-dev.github.io/virtual-select/#/">here</a>.

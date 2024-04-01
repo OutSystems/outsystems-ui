@@ -114,15 +114,9 @@ namespace Providers.OSUI.RangeSlider.NoUISlider.IntervalSlider {
 				switch (propertyName) {
 					case OSFramework.OSUI.Patterns.RangeSlider.Enum.Properties.StartingValueFrom:
 						this.setValue(propertyValue as number, this.configs.StartingValueTo);
-						console.warn(
-							`${OSFramework.OSUI.GlobalEnum.PatternName.RangeSliderInterval}: (${this.widgetId}): You should use a distinct variable to assign on the OnValueChange event. Any updates to ${OSFramework.OSUI.Patterns.RangeSlider.Enum.Properties.InitialValueFrom} parameter should ideally be made using the SetRangeSliderIntervalValue Client Action.`
-						);
 						break;
 					case OSFramework.OSUI.Patterns.RangeSlider.Enum.Properties.StartingValueTo:
 						this.setValue(this.configs.StartingValueFrom, propertyValue as number);
-						console.warn(
-							`${OSFramework.OSUI.GlobalEnum.PatternName.RangeSliderInterval}: (${this.widgetId}): You should use a distinct variable to assign on the OnValueChange event. Any updates to ${OSFramework.OSUI.Patterns.RangeSlider.Enum.Properties.InitialValueTo} parameter should ideally be made using the SetRangeSliderIntervalValue Client Action.`
-						);
 						break;
 					case OSFramework.OSUI.Patterns.RangeSlider.Enum.Properties.ShowTickMarks:
 						// Library only supports update on some options, so we need to

@@ -17,12 +17,12 @@ PS: This comment block will not be visible in the compiled version!
 =============================================================================== */
 
 /*!
-OutSystems UI 2.18.2 • ODC Platform
+OutSystems UI 2.18.4 • ODC Platform
 Website:
  • https://www.outsystems.com/outsystems-ui
 GitHub:
  • https://github.com/OutSystems/outsystems-ui
-*/ 
+*/
 /*!
 Section Index:
 0. Root - CSS Variables
@@ -62,9 +62,10 @@ Section Index:
     4.12. Upload
     4.13. Button Group
     4.14. Popover
-    4.15. Popup
-    4.16. Feedback Message
-    4.17. Radio Button
+    4.15. Popover - ODC
+    4.16. Popup
+    4.17. Feedback Message
+    4.18. Radio Button
 5. Providers
     5.1. Flatpickr
     5.2. NoUiSlider
@@ -302,11 +303,13 @@ Functions & Mixins
 @import '03-widgets/button-group';
 /*! 4.14. Popover */
 @import '03-widgets/popover';
-/*! 4.15. Popup */
+/*! 4.15. Popover - ODC */
+@import '03-widgets/popover-odc';
+/*! 4.16. Popup */
 @import '03-widgets/popup';
-/*! 4.16. Feedback Message */
+/*! 4.17. Feedback Message */
 @import '03-widgets/feedback-message';
-/*! 4.17. Radio Button */
+/*! 4.18. Radio Button */
 @import '03-widgets/radio-button';
 
 /*! ==============================================================================
@@ -597,4 +600,3 @@ Functions & Mixins
 Excluders
 =============================================================================== */
 @import '09-excluders/excluders';
-

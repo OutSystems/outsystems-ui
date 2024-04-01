@@ -157,11 +157,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr.SingleDate {
 						: undefined;
 
 				// Check if InitialDate has been "asked" to be changed dynamically without user selected a date at calendar!
-				if (
-					(providerSelectedDate === undefined &&
-						OSFramework.OSUI.Helper.Dates.IsNull(newDateValue) === false) ||
-					providerSelectedDate.getTime() !== newDateValue.getTime()
-				) {
+				if (providerSelectedDate === undefined || providerSelectedDate.getTime() !== newDateValue.getTime()) {
 					redrawAtInitialDateChange = true;
 				}
 			}
@@ -192,6 +188,19 @@ namespace Providers.OSUI.Datepicker.Flatpickr.SingleDate {
 						this.prepareToAndRedraw();
 						break;
 				}
+			}
+		}
+
+		/**
+		 * Method used to toggle the default native behavior of DatePicker
+		 *
+		 * @memberof Providers.OSUI.DatePicker.Flatpickr.SingleDate.OSUIFlatpickrSingleDate
+		 */
+		public toggleNativeBehavior(isNative: boolean): void {
+			// Invert the boolean value of IsNative because of provider option
+			if (this.configs.DisableMobile !== !isNative) {
+				this.configs.DisableMobile = !isNative;
+				this.prepareToAndRedraw();
 			}
 		}
 

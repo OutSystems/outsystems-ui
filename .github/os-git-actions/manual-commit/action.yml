@@ -19,7 +19,7 @@ runs:
     steps:
         - name: Add new files (if needed)
           shell: bash
-          if: ${{ inputs.newFiles }}
+          if: ${{ inputs.newFiles == 'true' }}
           run: |
               git add .
 

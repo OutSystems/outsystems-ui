@@ -1,0 +1,23 @@
+name: CreateAndDeployNPM
+on:
+    workflow_dispatch:
+        inputs:
+            branch-name:
+                description: 'Branch to be used as base to create a new one and be published.'
+                type: string
+                required: true
+            delete-branch:
+                description: 'Delete deploy-npm branch at the end of process.'
+                type: boolean
+                default: true
+
+jobs:
+    docs:
+        uses: ./.github/workflows/ManageNPM.yml
+        with:
+            branch-name: ${{ inputs.branch-name }}
+            delete-created-branch: ${{ inputs.delete-branch }}
+            run-lint: true
+        secrets:
+            pat: ${{ secrets.PAT }}
+            npmPat: ${{ secrets.NPM_UICOMPONENTS }}

@@ -29,10 +29,14 @@
 	}
 
 	&.is-edit {
-		pointer-events: initial;
-		.rating-item {
-			cursor: pointer;
-			pointer-events: auto;
+		// Ensure edit mode will only be available when fieldset is not disabled
+		&:not(:has(fieldset[disabled='true'])) {
+			pointer-events: initial;
+
+			.rating-item {
+				cursor: pointer;
+				pointer-events: auto;
+			}
 		}
 	}
 
@@ -41,6 +45,27 @@
 		display: contents;
 		margin: 0;
 		padding: 0;
+
+		&[disabled='true'] {
+			.rating-item {
+				&-filled,
+				&-half {
+					color: var(--color-neutral-6);
+
+					.icon {
+						color: var(--color-neutral-6);
+					}
+				}
+
+				&-empty {
+					color: var(--color-neutral-6);
+
+					.icon {
+						color: var(--color-neutral-4);
+					}
+				}
+			}
+		}
 	}
 
 	&-item {
@@ -108,16 +133,17 @@
 		&:first-of-type {
 			+ .rating-item {
 				background: transparent;
-				display: none;
+				box-shadow: 0 0 0 3px var(--color-focus-outer);
 				height: 100%;
 				left: 0;
+				opacity: 0;
+				pointer-events: none;
 				position: absolute;
 				top: 0;
 				width: 100%;
-				box-shadow: 0 0 0 3px var(--color-focus-outer);
 			}
 			&:focus:checked + .rating-item {
-				display: block;
+				opacity: 1;
 			}
 		}
 
@@ -250,6 +276,27 @@
 			&,
 			* {
 				box-shadow: 0 0 0 3px var(--color-focus-outer);
+			}
+		}
+	}
+
+	fieldset[disabled='true'] {
+		.rating-item {
+			&-filled,
+			&-half {
+				color: var(--color-neutral-7);
+
+				.icon {
+					color: var(--color-neutral-7);
+				}
+			}
+
+			&-empty {
+				color: var(--color-neutral-7);
+
+				.icon {
+					color: var(--color-neutral-5);
+				}
 			}
 		}
 	}
