@@ -164,7 +164,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		}
 
 		// Method to check the date config passed and set the correct hours, according to date time being used
-		private _validateDate(date: string): Date | string {
+		private _validateDate(date: string, isMaxDate?: boolean): Date | string {
 			const _finalDate = date;
 
 			if (OSFramework.OSUI.Helper.Dates.IsNull(_finalDate)) {
@@ -172,7 +172,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 			} else if (this._isUsingDateTime) {
 				return _finalDate;
 			} else {
-				return OSFramework.OSUI.Helper.Dates.NormalizeDateTime(_finalDate, date === this.MaxDate);
+				return OSFramework.OSUI.Helper.Dates.NormalizeDateTime(_finalDate, isMaxDate);
 			}
 		}
 
@@ -199,7 +199,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 				dateFormat: this._isUsingDateTime
 					? this.ServerDateFormat + ' H:i:S' // do not change 'H:i:S' since it's absoluted needed due to platform conversions!
 					: this.ServerDateFormat,
-				maxDate: this._validateDate(this.MaxDate),
+				maxDate: this._validateDate(this.MaxDate, true),
 				minDate: this._validateDate(this.MinDate),
 				onChange: this.OnChange,
 				onClose: this.OnClose,
