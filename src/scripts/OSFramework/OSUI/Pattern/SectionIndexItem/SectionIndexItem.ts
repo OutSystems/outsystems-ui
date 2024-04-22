@@ -107,7 +107,7 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 
 			// If header exist and it's fixed store its height
 			if (header) {
-				this._headerHeight = this._headerIsFixed ? header.offsetHeight : 2 * header.offsetHeight;
+				this._headerHeight = this._headerIsFixed ? header.offsetHeight : 0;
 			}
 		}
 
@@ -141,8 +141,7 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 			this._setHeaderSize();
 
 			// Set the target element offset top values
-			this._targetElementOffset.top =
-				this._targetElement.offsetTop + this._headerHeight + (this.parentObject.contentPaddingTop as number);
+			this._targetElementOffset.top = this._targetElement.offsetTop;
 		}
 
 		// Method to set the event listeners
