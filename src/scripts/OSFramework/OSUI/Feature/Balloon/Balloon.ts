@@ -299,6 +299,7 @@ namespace OSFramework.OSUI.Feature.Balloon {
 		 */
 		public dispose(): void {
 			this._floatingInstance?.dispose();
+			this._removeEventListeners();
 			this._unsetCallbacks();
 			super.dispose();
 		}
