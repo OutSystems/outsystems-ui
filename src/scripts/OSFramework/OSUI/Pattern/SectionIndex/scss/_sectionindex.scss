@@ -5,6 +5,7 @@
 
 ///
 .osui-section-index {
+	--top-position: calc(var(--header-size) + var(--header-size-content) + var(--status-bar-height));
 	display: flex;
 	flex-direction: column;
 	position: relative;
@@ -54,6 +55,10 @@
 			width: 2px;
 		}
 	}
+
+	&__target {
+		scroll-margin: var(--target-scroll-margin);
+	}
 }
 
 // Accessibility -----------------------------------------------------------------
@@ -101,7 +106,7 @@
 			left: calc(var(--os-safe-area-right) + var(--space-base));
 			padding: 0 var(--space-base) 0 0;
 			position: fixed;
-			top: calc(var(--header-size) + var(--header-size-content) + var(--status-bar-height));
+			top: var(--top-position);
 			z-index: var(--layer-local-tier-1);
 		}
 	}

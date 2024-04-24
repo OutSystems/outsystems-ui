@@ -25,14 +25,6 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 		TargetElement: HTMLElement;
 
 		/**
-		 * Readable property to get targetElementOffset info
-		 *
-		 * @type {OffsetValues}
-		 * @memberof ISectionIndexItem
-		 */
-		TargetElementOffset: OffsetValues;
-
-		/**
 		 * Method to add the active state
 		 *
 		 * @memberof ISectionIndexItem

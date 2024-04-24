@@ -221,6 +221,23 @@ namespace OSFramework.OSUI.Helper {
 		}
 
 		/**
+		 * Returns the value of a CSS Custom Property
+		 *
+		 * @static
+		 * @param {HTMLElement} element
+		 * @param {string} propertyName
+		 * @return {*}
+		 * @memberof StyleManipulation
+		 */
+		public static GetCustomProperty(element: HTMLElement, propertyName: string) {
+			if (element) {
+				return getComputedStyle(element).getPropertyValue(propertyName);
+			} else {
+				throw Error(`The element does not exist, when trying to get the Csutom Property '${propertyName}'.`);
+			}
+		}
+
+		/**
 		 * Method that will remove a given css class from a given html element.
 		 *
 		 * @static
