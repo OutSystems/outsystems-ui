@@ -63,6 +63,16 @@ namespace OSFramework.OSUI.Patterns.SectionIndex {
 			}
 		}
 
+		// Method to get content paddnig top
+		private _getContentPaddingTop(): void {
+			const _mainContent = Helper.Dom.ClassSelector(document, GlobalEnum.CssClassElements.MainContent);
+			this._contentPaddingTop = _mainContent
+				? parseFloat(
+						window.getComputedStyle(_mainContent).getPropertyValue(GlobalEnum.CssProperties.PaddingTop)
+					)
+				: 0;
+		}
+
 		// Method to check if header IsFixed and get its height to be used
 		private _getHeaderSize(): void {
 			const header = Helper.Dom.ClassSelector(document.body, GlobalEnum.CssClassElements.Header);
@@ -266,6 +276,8 @@ namespace OSFramework.OSUI.Patterns.SectionIndex {
 			super.build();
 
 			this.setHtmlElements();
+
+			this._getContentPaddingTop();
 
 			this._getHeaderSize();
 
