@@ -233,7 +233,7 @@ namespace OSFramework.OSUI.Helper {
 			if (element) {
 				return getComputedStyle(element).getPropertyValue(propertyName);
 			} else {
-				throw Error(`The element does not exist, when trying to get the Csutom Property '${propertyName}'.`);
+				throw Error(`The element does not exist, when trying to get the Custom Property '${propertyName}'.`);
 			}
 		}
 
