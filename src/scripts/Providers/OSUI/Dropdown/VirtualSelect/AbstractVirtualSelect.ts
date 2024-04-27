@@ -304,7 +304,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		 * @memberof Providers.OSUI.Dropdown.VirtualSelect.AbstractVirtualSelect
 		 */
 		public clear(silentOnChangedEvent = true): void {
-			this.virtualselectConfigs.reset(silentOnChangedEvent);
+			this.virtualselectConfigs.reset(false, silentOnChangedEvent);
 		}
 
 		/**
