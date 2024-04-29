@@ -1,6 +1,7 @@
 // FloatingUI => Balloon
 import {
 	computePosition,
+	arrow,
 	autoPlacement,
 	AutoPlacementOptions,
 	DetectOverflowOptions,
@@ -82,6 +83,7 @@ declare global {
 			config: ComputePositionConfig
 		) => Promise<ComputePositionReturn>;
 		autoPlacement: (options?: Partial<Options & DetectOverflowOptions>) => Middleware;
+		arrow: (options: ArrowOptions | Derivable<ArrowOptions>) => Middleware;
 		placementOptions: (AutoPlacementOptions, DetectOverflowOptions) => void;
 		autoUpdate(
 			reference: ReferenceElement,
