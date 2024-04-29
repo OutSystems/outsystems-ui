@@ -156,8 +156,17 @@ namespace Providers.OSUI.Datepicker.Flatpickr.SingleDate {
 						? (new Date(this.provider.selectedDates[0]) as Date)
 						: undefined;
 
-				// Check if InitialDate has been "asked" to be changed dynamically without user selected a date at calendar!
-				if (providerSelectedDate === undefined || providerSelectedDate.getTime() !== newDateValue.getTime()) {
+				// Only allow to change if it was not a clear action (newDateValue is NOT null)
+				if (
+					providerSelectedDate === undefined &&
+					OSFramework.OSUI.Helper.Dates.IsNull(newDateValue) === false
+				) {
+					redrawAtInitialDateChange = true;
+					// Check if InitialDate has been "asked" to be changed dynamically without the user selecting a date on the calendar!
+				} else if (
+					providerSelectedDate !== undefined &&
+					providerSelectedDate?.getTime() !== newDateValue.getTime()
+				) {
 					redrawAtInitialDateChange = true;
 				}
 			}
