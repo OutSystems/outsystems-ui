@@ -4,7 +4,6 @@ import {
 	autoPlacement,
 	AutoPlacementOptions,
 	DetectOverflowOptions,
-	arrow,
 	autoUpdate,
 	flip,
 	shift,
@@ -90,7 +89,6 @@ declare global {
 			update: () => void,
 			options?: Partial<Options>
 		): () => void;
-		arrow: (options: ArrowOptions | Derivable<ArrowOptions>) => Middleware;
 		flip: (options?: Partial<FlipOptions & DetectOverflowOptions>) => Middleware;
 		shift: (options?: Partial<Options & DetectOverflowOptions>) => Middleware;
 		offset: (value?: Options) => Middleware;

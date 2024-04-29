@@ -4,6 +4,8 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		extends OSFramework.OSUI.Patterns.Dropdown.AbstractDropdown<VirtualSelect, C>
 		implements IVirtualSelect
 	{
+		// Store the onOrientationChange event
+		private _eventOnOrientationChange: OSFramework.OSUI.GlobalCallbacks.Generic;
 		// Store the onResize event
 		private _eventOnWindowResize: OSFramework.OSUI.GlobalCallbacks.Generic;
 		// Dropdown callback events
@@ -60,23 +62,31 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 			event.preventDefault();
 		}
 
+		// Close the dropdown when a orientation change occurs
+		private _onOrientationChange() {
+			this.close();
+		}
+
 		// Get the selected options and pass them into callBack
 		private _onSelectedOption() {
 			// Trigger platform's SelectedOptionCallbackEvent client Action
 			this.triggerPlatformEventCallback(this._platformEventSelectedOptCallback, this.getSelectedValues());
 		}
 
-		// Close the dropdown if it's open!
+		// Close the dropdown when a resize occurs
 		private _onWindowResize() {
-			if (this.provider.isOpened()) {
-				this.virtualselectConfigs.close();
-			}
+			this.close();
 		}
 
-		// Set the ElementId that is expected from VirtualSelect config
-		private _setElementId(): void {
+		// Set the Dropdown properties
+		private _setDropdownProps(): void {
 			// Store the ElementId where the provider will create the Dropdown
 			this.configs.ElementId = '#' + this.selfElement.id;
+
+			if (OSFramework.OSUI.Helper.DeviceInfo.IsMobileDevice) {
+				this.configs.PopupDropboxBreakpoint =
+					(window.innerWidth > window.innerHeight ? window.innerWidth : window.innerHeight) + 'px';
+			}
 		}
 
 		// Set Pattern Events
@@ -89,8 +99,13 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 				this.selfElement.addEventListener(OSFramework.OSUI.GlobalEnum.HTMLEvent.MouseUp, this._onMouseUpEvent);
 			}
 
-			if (OSFramework.OSUI.Helper.DeviceInfo.IsDesktop) {
-				//Set the WindowResize in order to close it if it's open!
+			//Set the WindowResize or OrientationChange based on if is a mobile device, in order to close the dropdown if it's open!
+			if (OSFramework.OSUI.Helper.DeviceInfo.IsMobileDevice) {
+				OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
+					OSFramework.OSUI.Event.DOMEvents.Listeners.Type.OrientationChange,
+					this._eventOnOrientationChange
+				);
+			} else {
 				OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
 					OSFramework.OSUI.Event.DOMEvents.Listeners.Type.WindowResize,
 					this._eventOnWindowResize
@@ -183,6 +198,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		protected setCallbacks(): void {
 			// Set the events callback reference
 			this._eventOnWindowResize = this._onWindowResize.bind(this);
+			this._eventOnOrientationChange = this._onOrientationChange.bind(this);
 			this._onMouseUpEvent = this._onMouseUp.bind(this);
 			this._onSelectedOptionEvent = this._onSelectedOption.bind(this);
 		}
@@ -231,7 +247,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		public build(): void {
 			super.build();
 
-			this._setElementId();
+			this._setDropdownProps();
 
 			this.setCallbacks();
 
@@ -276,9 +292,6 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 						break;
 					case Enum.Properties.StartingSelection:
 						this.setValue(propertyValue as DropDownOption[]);
-						console.warn(
-							`${OSFramework.OSUI.GlobalEnum.PatternName.Dropdown}: (${this.widgetId}): We recommend using the StartingSelection parameter exclusively for the initial selection and avoid changing it after initialization. To dynamically change the selected options, you should ideally use the DropdownSetValue Client Action.`
-						);
 						break;
 				}
 			}
@@ -287,20 +300,25 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		/**
 		 * Clear any selected values from the Dropdown
 		 *
+		 * @param {boolean} silentOnChangedEvent If True, OnChange event will not be triggered
 		 * @memberof Providers.OSUI.Dropdown.VirtualSelect.AbstractVirtualSelect
 		 */
-		public clear(): void {
-			this.virtualselectConfigs.reset();
+		public clear(silentOnChangedEvent = true): void {
+			this.virtualselectConfigs.reset(false, silentOnChangedEvent);
 		}
 
 		/**
-		 * Method used to close the Dropdown
+		 * Method used to close the Dropdown if is opened
 		 *
 		 * @memberof Providers.OSUI.Dropdown.VirtualSelect.AbstractVirtualSelect
 		 */
 		public close(): void {
 			// SetTimeout is needed in order to ensure there is no conflit between OnClickBody and a button click that trigger this method.
-			OSFramework.OSUI.Helper.AsyncInvocation(this.virtualselectConfigs.close.bind(this.virtualselectConfigs));
+			if (this.provider.isOpened()) {
+				OSFramework.OSUI.Helper.AsyncInvocation(
+					this.virtualselectConfigs.close.bind(this.virtualselectConfigs)
+				);
+			}
 		}
 
 		/**
@@ -440,16 +458,19 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		 * @memberof Providers.OSUI.Dropdown.VirtualSelect.AbstractVirtualSelect
 		 */
 		public setValue(optionsToSelect: DropDownOption[], silentOnChangedEvent = true): void {
-			const selectedValues = this.getSelectedOptionsStructure().map((value) => value.value) || [];
-			let valuesToSelect = [];
+			// Make async call to wait for fetching data when the setValues API is called inside on OnAfterFecth
+			OSFramework.OSUI.Helper.AsyncInvocation(() => {
+				const selectedValues = this.getSelectedOptionsStructure().map((value) => value.value) || [];
+				let valuesToSelect = [];
 
-			if (optionsToSelect.length > 0) {
-				if (this.virtualselectOpts.multiple) valuesToSelect = optionsToSelect.map((option) => option.value);
-				else valuesToSelect = [optionsToSelect[0].value];
-			}
+				if (optionsToSelect.length > 0) {
+					if (this.virtualselectOpts.multiple) valuesToSelect = optionsToSelect.map((option) => option.value);
+					else valuesToSelect = [optionsToSelect[0].value];
+				}
 
-			if (valuesToSelect.sort().join(' ') !== selectedValues.sort().join(' '))
-				this.virtualselectConfigs.setValue(valuesToSelect, silentOnChangedEvent);
+				if (valuesToSelect.sort().join(' ') !== selectedValues.sort().join(' '))
+					this.virtualselectConfigs.setValue(valuesToSelect, silentOnChangedEvent);
+			});
 		}
 
 		/**

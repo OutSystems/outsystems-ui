@@ -1,8 +1,12 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace Providers.OSUI.SharedProviderResources.Flatpickr {
 	export class UpdatePositionOnScroll {
+		// Indicates wether the picker is a time picker or other type of picker (Month, Date, DateTime).
+		private _isTimePicker: boolean;
 		// Event OnScreenScroll
-		private _onScreenScrollEvent: OSFramework.OSUI.GlobalCallbacks.Generic;
+		private _onScrollEvent: OSFramework.OSUI.GlobalCallbacks.Generic;
+		// Store the parent Sidebar instance if any
+		private _parentSidebar: HTMLElement;
 		// Store the picker instance
 		private _picker:
 			| Datepicker.Flatpickr.IFlatpickr
@@ -19,6 +23,12 @@ namespace Providers.OSUI.SharedProviderResources.Flatpickr {
 		) {
 			// Set picker object
 			this._picker = picker;
+			// Set if the picker is a time picker
+			this._isTimePicker = this._picker instanceof TimePicker.Flatpickr.OSUIFlatpickrTime;
+			// Set parent Sidebar
+			this._parentSidebar = picker.selfElement.closest(
+				`${OSFramework.OSUI.Constants.Dot}${OSFramework.OSUI.Patterns.Sidebar.Enum.CssClass.Content}`
+			);
 			// Set onBodyScrollEvent callback
 			this._setCallbacks();
 			// Set the Events
@@ -30,15 +40,30 @@ namespace Providers.OSUI.SharedProviderResources.Flatpickr {
 			if (this._picker.isBuilt) {
 				// Check if IsPhone
 				if (this._picker.provider.isOpen && OSFramework.OSUI.Helper.DeviceInfo.IsPhone) {
-					// Check if the active element is a child of the calendar container
+					/**
+					 * This condition checks if the active element is not a child of the calendar container.
+					 * This is necessary due to the design of active-screen and content containers in both web
+					 * and native mobile app environments, where `overflow-y` is set to `auto`. This setting
+					 * allows content to be scrollable even when a picker is open in native apps, which could
+					 * lead to unintended scrolling of the entire screen, including the header, when interacting
+					 * with the picker. To prevent this, the calendar's position is updated to remain in view
+					 * during scroll events.
+					 *
+					 * However, this behavior is excluded for the timepicker. When the timepicker is triggered
+					 * (e.g., by focusing on an input field), the appearance of the keyboard may cause the page
+					 * to scroll. In this scenario, we avoid closing the timepicker to maintain user interaction
+					 * continuity.
+					 */
 					if (
+						this._isTimePicker ||
 						document.activeElement.closest(
 							`${OSFramework.OSUI.Constants.Dot}${Enum.CssClasses.CalendarContainer}`
 						) === this._picker.provider.calendarContainer
 					) {
-						// calendar can't close => trigger provider update position method
+						// Prevents the calendar from closing and updates its position to stay in view.
 						this._picker.provider._positionCalendar();
 					} else {
+						// Closes the calendar if the active element is outside the calendar container.
 						this._picker.provider.close();
 					}
 				}
@@ -50,7 +75,7 @@ namespace Providers.OSUI.SharedProviderResources.Flatpickr {
 						// trigger provider update position method
 						this._picker.provider._positionCalendar();
 						// Update the "position" before the next "repaint"
-						this._requestAnimationOnBodyScroll = requestAnimationFrame(this._onScreenScrollEvent);
+						this._requestAnimationOnBodyScroll = requestAnimationFrame(this._onScrollEvent);
 					} else if (this._requestAnimationOnBodyScroll !== undefined) {
 						cancelAnimationFrame(this._requestAnimationOnBodyScroll);
 					}
@@ -60,28 +85,32 @@ namespace Providers.OSUI.SharedProviderResources.Flatpickr {
 
 		// Method used to set callbacks
 		private _setCallbacks(): void {
-			this._onScreenScrollEvent = this._onScreenScroll.bind(this);
+			this._onScrollEvent = this._onScreenScroll.bind(this);
 		}
 
 		// Add Events
 		private _setUpEvents(): void {
-			// Add the BodyScroll callback that will be used to update the balloon coodinates
+			// Add the BodyScroll callback that will be used to update the balloon coordinates
 			OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
 				OSFramework.OSUI.Event.DOMEvents.Listeners.Type.ScreenOnScroll,
-				this._onScreenScrollEvent
+				this._onScrollEvent
 			);
+			// If the picker is inside a Sidebar, let's add the method to the Sidebar content as well.
+			if (this._parentSidebar) {
+				this._parentSidebar.addEventListener(OSFramework.OSUI.GlobalEnum.HTMLEvent.Scroll, this._onScrollEvent);
+			}
 		}
 
 		// Method used to unset callbacks
 		private _unsetCallbacks(): void {
-			this._onScreenScrollEvent = undefined;
+			this._onScrollEvent = undefined;
 		}
 
 		// Remove Added Events
 		private _unsetEvents(): void {
 			OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
 				OSFramework.OSUI.Event.DOMEvents.Listeners.Type.ScreenOnScroll,
-				this._onScreenScrollEvent
+				this._onScrollEvent
 			);
 		}
 
@@ -94,7 +123,7 @@ namespace Providers.OSUI.SharedProviderResources.Flatpickr {
 			this._unsetEvents();
 			this._unsetCallbacks();
 
-			this._onScreenScrollEvent = undefined;
+			this._onScrollEvent = undefined;
 			this._requestAnimationOnBodyScroll = undefined;
 		}
 	}

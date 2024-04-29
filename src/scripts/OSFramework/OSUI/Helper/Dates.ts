@@ -92,7 +92,7 @@ namespace OSFramework.OSUI.Helper {
 		 * @return {*}  {Date}
 		 * @memberof Dates
 		 */
-		public static NormalizeDateTime(date: string | Date, normalizeToMax = true): Date {
+		public static NormalizeDateTime(date: string | Date, normalizeToMax): Date {
 			let _newDate = date;
 
 			if (typeof _newDate === 'string') {

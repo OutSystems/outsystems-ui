@@ -12,7 +12,7 @@
 		-servicestudio-white-space: normal;
 	}
 
-	& > * {
+	& > *:not(table) {
 		display: inline-block;
 		transform: translateZ(0);
 	}

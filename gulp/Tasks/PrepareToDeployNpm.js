@@ -11,17 +11,17 @@ const listOfPathFilesToRemove = [
     './.github',
     './.vscode',
     './gulp',
+    './node_modules',
     './pipelines',
     './.eslintignore',
     './.eslintrc.json',
-    './.gitignore',
     './.prettierignore',
     './.prettierrc.json',
     './.snyk',
     './.stylelintignore',
     './.stylelintrc.json',
-    './CODEOWNERS',
     './gulpfile.js',
+    './package-lock.json',
     './tsconfig.json',
     './typedoc.json',
 ];
@@ -53,7 +53,7 @@ function cleanReadmeFile() {
 // Prepare code branch to deply
 exports.prepareToDeployNpm = (cb) => {
     // Store the name of the branch to be used to deploy into NPM 
-    const prepareToDeployBranchName = 'prep-to-deploy';
+    const prepareToDeployBranchName = 'deploy-npm';
     // Get the current branch name
     branchName.get().then((name) => {
         // Check if the curren branch is the expected one!

@@ -1,6 +1,6 @@
 {
 	"diffEditor.ignoreTrimWhitespace": true,
-	"files.autoSave": "off",
+	"files.autoSave": "afterDelay",
 	"editor.minimap.maxColumn": 170,
 	"editor.wordWrapColumn": 170,
 	"editor.formatOnSave": true,
@@ -28,5 +28,9 @@
 	},
 	"[jsonc]": {
 		"editor.defaultFormatter": "vscode.json-language-features"
+	},
+	"sonarlint.connectedMode.project": {
+		"connectionId": "outsystems",
+		"projectKey": "OutSystems_outsystems-ui"
 	}
 }
