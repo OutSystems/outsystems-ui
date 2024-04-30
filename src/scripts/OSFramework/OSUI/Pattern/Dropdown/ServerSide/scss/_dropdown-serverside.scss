@@ -11,8 +11,12 @@ $balloonMobileTopMargin: 5vh;
 .osui-dropdown-serverside {
 	--osui-dropdown-ss-balloon-max-height: 300px;
 	--osui-dropdown-min-width: 170px;
-	--osui-floating-offset: 20px;
+	--osui-floating-offset: var(--space-xs);
 	position: relative;
+
+	.osui-balloon {
+		position: fixed;
+	}
 
 	// "Input" section - SelectedValues container
 	&__selected-values {
@@ -84,9 +88,10 @@ $balloonMobileTopMargin: 5vh;
 			flex: 1;
 			max-width: 300px;
 			min-width: var(--osui-dropdown-min-width);
-			position: fixed;
 			z-index: var(--layer-global-elevated);
-
+			height: 100%;
+			max-height: var(--osui-dropdown-ss-balloon-max-height);
+			overflow: hidden;
 			// Service Studio Preview
 			& {
 				-servicestudio-left: initial;
@@ -94,23 +99,6 @@ $balloonMobileTopMargin: 5vh;
 				-servicestudio-opacity: 1;
 				-servicestudio-position: relative;
 				-servicestudio-top: 2px;
-			}
-		}
-
-		// Content Container
-		&-container {
-			background-color: var(--color-neutral-0);
-			border-radius: var(--border-radius-soft);
-			border: var(--border-size-s) solid var(--color-neutral-5);
-			display: flex;
-			flex-direction: column;
-			height: 100%;
-			opacity: 0;
-			overflow: hidden;
-			// Service Studio Preview
-			& {
-				-servicestudio-opacity: 1;
-				-servicestudio-transform: none;
 			}
 		}
 
@@ -219,20 +207,6 @@ $balloonMobileTopMargin: 5vh;
 					transform: rotate(180deg);
 				}
 			}
-
-			// Balloon section
-			&__balloon {
-				// Content Container
-				&-container {
-					opacity: 1;
-					transform: translateY(0);
-				}
-			}
-		}
-
-		// Ballon wrapper
-		&.osui-dropdown-serverside__balloon-wrapper {
-			max-height: var(--osui-dropdown-ss-balloon-max-height);
 		}
 	}
 
