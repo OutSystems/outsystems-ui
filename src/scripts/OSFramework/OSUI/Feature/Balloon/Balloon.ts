@@ -216,10 +216,14 @@ namespace OSFramework.OSUI.Feature.Balloon {
 			// Toggle class
 			if (isOpen) {
 				Helper.Dom.Styles.AddClass(this.featureElem, Enum.CssClasses.IsOpen);
+				// Set Floating Util
+				this.setFloatingBehaviour();
 				// Add event listeners. This is async to prevent unnecessary calls when clicking on triggers
 				Helper.AsyncInvocation(this._setEventListeners.bind(this));
 			} else {
 				Helper.Dom.Styles.RemoveClass(this.featureElem, Enum.CssClasses.IsOpen);
+				// Remove Floating Util
+				this._floatingInstance.unsetFloatingPosition();
 				// remove event listeners
 				this._removeEventListeners();
 			}
@@ -234,9 +238,6 @@ namespace OSFramework.OSUI.Feature.Balloon {
 					this._focusTrapInstance.enableForA11y();
 				}
 
-				// Set Floating Util
-				this.setFloatingBehaviour();
-
 				if (this.featureOptions.isFocusable !== false) {
 					// Store the focusable elements inside the Balloon
 					this._focusableBalloonElements = this.featureElem.querySelectorAll(Constants.FocusableElems);
@@ -246,8 +247,6 @@ namespace OSFramework.OSUI.Feature.Balloon {
 			} else if (this.featureOptions.isFocusable !== false) {
 				// Handle focus trap logic
 				this._focusTrapInstance.disableForA11y();
-				// Remove Floating Util
-				this._floatingInstance.unsetFloatingPosition();
 				// Focus on last element clicked. Async to avoid conflict with closing animation
 				Helper.AsyncInvocation(() => {
 					this.featureElem.blur();

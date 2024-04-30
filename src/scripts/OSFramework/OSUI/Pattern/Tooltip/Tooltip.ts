@@ -54,7 +54,7 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 		// Method to handle the custom BalloonOnToggle callback
 		private _balloonOnToggleCallback(_args: string, e: CustomEvent): void {
 			// If the balloon closed is the one from this pattern, toggle the isOpen
-			if (e.detail.balloonElem === this._balloonElem && e.detail.isOpen) {
+			if (e.detail.balloonElem === this._balloonElem && e.detail.isOpen !== this._isOpen) {
 				this._triggerClose(true);
 			}
 		}
