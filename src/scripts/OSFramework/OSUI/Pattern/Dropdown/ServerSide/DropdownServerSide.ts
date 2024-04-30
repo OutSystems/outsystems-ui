@@ -8,8 +8,6 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		>
 		implements IDropdownServerSide
 	{
-		// Store the HTML element for the ActiveScreen where a status class will be updated accoding balloon is open or not.
-		private _activeScreenElement: HTMLElement;
 		// Store the HTML element for the DropdownBalloonContainer
 		private _balloonContainerElement: HTMLElement;
 		// Store the HTML element for the DropdownBalloonContent
@@ -49,10 +47,6 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		private _eventOnTouchMove: GlobalCallbacks.Generic;
 		// Keyboard Key Press Event
 		private _eventOnkeyboardPress: GlobalCallbacks.Generic;
-		// Flag that will be used to check if DropdownBalloon should be also set with a11y selector.
-		private _hasA11yEnabled = false;
-		// Store a Flag property that will control if the dropdown is blocked (like it's under closing animation)
-		private _isBlocked = false;
 		// Store the Element State, by default is closed!
 		private _isOpen = false;
 		// Platform OnClose Callback
@@ -89,30 +83,29 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		// Method to handle the custom BalloonOnToggle callback
 		private _balloonOnToggleCallback(_args: string, e: CustomEvent): void {
 			// If the balloon closed is the one from this pattern, toggle the isOpen
-			if (e.detail.balloonElem === this._balloonElem && e.detail.open) {
-				console.log(e);
-				this._close();
+			if (e.detail.balloonElem === this._balloonElem && e.detail.isOpen !== this._isOpen) {
+				this._close(true);
 			}
 		}
 
 		// Close the Balloon
-		private _close(): void {
+		private _close(isFromBalloonEvent = false): void {
 			if (this._isOpen === false) {
 				return;
 			}
 
-			this._balloonFeature.close();
+			if (!isFromBalloonEvent) {
+				this._balloonFeature.close();
+			}
+
 			// Update status property
 			this._isOpen = false;
 
 			// Check if the close will be done by logic instead of user interaction
 			if (this._closeDynamically === false) {
 				// Set focus to the base element
-				//this._selectValuesWrapper.focus();
+				this._selectValuesWrapper.focus();
 			}
-
-			// Remove isVisible class from the body
-			Helper.Dom.Styles.RemoveClass(document.body, Enum.CssClass.IsVisible);
 
 			// Update the touchMove when pattern is open!
 			this._touchMove();
@@ -129,9 +122,6 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 				GlobalEnum.HTMLEvent.TransitionEnd,
 				this._eventOnCloseTransitionEnd
 			);
-
-			// Since animation already ended let's unblock the pattern to be possible open it again
-			this._isBlocked = false;
 
 			// Trigger the toggle callback event
 			this._triggerToogleCalbackEvent();
@@ -224,9 +214,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		// Used to apply the logic when user click to open the Dropdown
 		private _onSelectValuesWrapperClicked(): void {
 			// Ensure that dropdown can open or close
-			if (this._isBlocked === false) {
-				this._isOpen ? this._close() : this._open();
-			}
+			this._isOpen ? this._close() : this._open();
 		}
 
 		// Manage the OnTouchMove action
@@ -238,10 +226,11 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 
 		// Open the Balloon
 		private _open(): void {
+			console.log('open');
 			if (this._isOpen) {
 				return;
 			}
-			this._balloonFeature.open();
+			this._balloonFeature.open(true);
 			this._closeDynamically = false;
 			this._isOpen = true;
 
@@ -515,19 +504,6 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 				? Constants.A11YAttributes.States.TabIndexShow
 				: Constants.A11YAttributes.States.TabIndexHidden;
 
-			// Get the layout container
-			const layoutElemContainer = OSFramework.OSUI.Helper.Dom.ClassSelector(
-				document,
-				OSFramework.OSUI.GlobalEnum.CssClassElements.Layout
-			);
-			// If it exist and contains a11y class, we must enable it to the Balloon as well since it will be placed outside layout container.
-			this._hasA11yEnabled =
-				layoutElemContainer !== undefined &&
-				OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(
-					layoutElemContainer,
-					OSFramework.OSUI.Constants.HasAccessibilityClass
-				);
-
 			// If there is the Search input
 			if (this._balloonSearchInputElement !== undefined) {
 				Helper.A11Y.TabIndex(this._balloonSearchInputElement, tabIndexValue);
@@ -535,6 +511,12 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 					this._balloonSearchInputElement,
 					(tabIndexValue === Constants.A11YAttributes.States.TabIndexHidden).toString()
 				);
+			}
+
+			// If there are items inside Ballon Footer
+			if (this._balloonFocusableElemsInFooter.length > 0) {
+				// Will handle the tabindex value of the elements inside pattern
+				Helper.A11Y.SetElementsTabIndex(this._isOpen, this._balloonFocusableElemsInFooter);
 			}
 
 			// Ballon Options Wrapper
@@ -548,10 +530,6 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 
 			// Update FocusHTML elements attributes
 			if (this._isOpen) {
-				// If a11y is enabled at the layout, set it to the ballon as well since if it't outside of layout context
-				if (this._hasA11yEnabled) {
-					Helper.Dom.Styles.AddClass(this._balloonWrapperElement, Constants.HasAccessibilityClass);
-				}
 				// Ballon Options Wrapper
 				Helper.A11Y.AriaHiddenFalse(this._balloonOptionsWrapperElement);
 			} else {
@@ -583,6 +561,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 
 		// Method that will update the pattern state
 		private _updatePatternState(): void {
+			console.log('update');
 			// Update the TabIndex for the items inside Balloon
 			this._updateBalloonAccessibilityElements();
 
@@ -605,9 +584,6 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 				// Remove IsOpend Class => Close it!
 				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.IsOpened);
 				Helper.Dom.Styles.RemoveClass(this._balloonWrapperElement, Enum.CssClass.IsOpened);
-
-				// Block the pattern in order to avoid user click to open it again before animation ends!
-				this._isBlocked = true;
 
 				// Add the TransitionEnd event
 				this._balloonWrapperElement.addEventListener(
@@ -672,10 +648,6 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
 		 */
 		protected setHtmlElements(): void {
-			this._activeScreenElement = Helper.Dom.ClassSelector(
-				document.body,
-				GlobalEnum.CssClassElements.ActiveScreen
-			);
 			this._balloonFooterElement = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.BalloonFooter);
 			this._balloonFocusableElemsInFooter = Helper.Dom.TagSelectorAll(
 				this._balloonFooterElement,
@@ -727,7 +699,6 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		 */
 		protected unsetHtmlElements(): void {
 			// unset the local properties
-			this._activeScreenElement = undefined;
 			this._balloonContainerElement = undefined;
 			this._balloonFocusableElemsInFooter = [];
 			this._balloonFooterElement = undefined;
@@ -924,9 +895,17 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 				this.balloonOptions = balloonOptions;
 			} else {
 				this.balloonOptions = {
-					alignment: GlobalEnum.FloatingAlignment.End,
-					anchorElem: this._selectValuesWrapper,
-					allowedPlacements: [GlobalEnum.FloatingPosition.Top, GlobalEnum.FloatingPosition.Bottom],
+					alignment: GlobalEnum.FloatingAlignment.Start,
+					anchorElem: this.selfElement,
+					allowedPlacements: [
+						GlobalEnum.FloatingPosition.Top,
+						GlobalEnum.FloatingPosition.Bottom,
+						GlobalEnum.FloatingPosition.BottomEnd,
+						GlobalEnum.FloatingPosition.BottomStart,
+						GlobalEnum.FloatingPosition.TopEnd,
+						GlobalEnum.FloatingPosition.TopStart,
+					],
+					isFocusable: false,
 					position: GlobalEnum.FloatingPosition.Auto,
 					shape: GlobalEnum.ShapeTypes.SoftRounded,
 				};
