@@ -153,6 +153,7 @@ $balloonMobileTopMargin: 5vh;
 		&-content {
 			border-top: var(--border-size-s) solid var(--color-neutral-5);
 			flex: 1;
+			height: var(--osui-dropdown-ss-balloon-max-height);
 			overflow-x: hidden;
 			overflow-y: auto;
 			padding: var(--space-none);
@@ -380,9 +381,12 @@ $balloonMobileTopMargin: 5vh;
 	}
 
 	.osui-dropdown-serverside {
-		.osui-balloon {
+		// Balloon section
+		&__balloon {
 			align-items: center;
 			background-color: var(--overlay-background);
+			border: none;
+			border-radius: var(--border-radius-sharp);
 			display: flex;
 			left: 0;
 			max-width: 100vw;
@@ -390,8 +394,8 @@ $balloonMobileTopMargin: 5vh;
 			overflow: hidden;
 			top: 0;
 			transition: opacity 250ms ease;
+			width: 100vh;
 			z-index: var(--layer-global-instant-interaction);
-			width: 100%;
 
 			// Service Studio Preview
 			& {
@@ -401,18 +405,19 @@ $balloonMobileTopMargin: 5vh;
 				-servicestudio-position: relative;
 				-servicestudio-top: 2px;
 			}
-		}
 
-		// Balloon section
-		&__balloon {
 			// Content Container
 			&-container {
-				background-color: var(--color-neutral-0);
+				background: var(--color-neutral-0);
+				border: 1px solid transparent;
+				border-radius: var(--osui-balloon-shape);
 				box-shadow: var(--shadow-xl);
+				display: flex;
+				flex-direction: column;
 				margin-top: $balloonMobileTopMargin;
 				// 90vh - maxHeight in order to create a margin top/bottom with 5vh
 				max-height: calc(90vh - $balloonMobileTopMargin - var(--header-size));
-				overflow: auto;
+				overflow: hidden;
 				width: 85vw;
 
 				// Service Studio Preview
@@ -434,7 +439,7 @@ $balloonMobileTopMargin: 5vh;
 		}
 
 		&--is-opened {
-			&.osui-dropdown-serverside__balloon-wrapper {
+			&.osui-dropdown-serverside__balloon {
 				min-height: 100vh;
 				opacity: 1;
 			}
