@@ -226,7 +226,6 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 
 		// Open the Balloon
 		private _open(): void {
-			console.log('open');
 			if (this._isOpen) {
 				return;
 			}
@@ -561,7 +560,6 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 
 		// Method that will update the pattern state
 		private _updatePatternState(): void {
-			console.log('update');
 			// Update the TabIndex for the items inside Balloon
 			this._updateBalloonAccessibilityElements();
 

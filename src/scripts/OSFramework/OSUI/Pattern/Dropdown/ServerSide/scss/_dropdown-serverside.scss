@@ -86,12 +86,13 @@ $balloonMobileTopMargin: 5vh;
 			display: flex;
 			flex-direction: column;
 			flex: 1;
-			max-width: 300px;
 			min-width: var(--osui-dropdown-min-width);
 			z-index: var(--layer-global-elevated);
-			height: 100%;
+			height: auto;
 			max-height: var(--osui-dropdown-ss-balloon-max-height);
 			overflow: hidden;
+			width: 100%;
+
 			// Service Studio Preview
 			& {
 				-servicestudio-left: initial;
