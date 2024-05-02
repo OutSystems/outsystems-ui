@@ -924,14 +924,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 				this.balloonOptions = {
 					alignment: GlobalEnum.FloatingAlignment.Start,
 					anchorElem: this.selfElement,
-					allowedPlacements: [
-						GlobalEnum.FloatingPosition.Top,
-						GlobalEnum.FloatingPosition.Bottom,
-						GlobalEnum.FloatingPosition.BottomEnd,
-						GlobalEnum.FloatingPosition.BottomStart,
-						GlobalEnum.FloatingPosition.TopEnd,
-						GlobalEnum.FloatingPosition.TopStart,
-					],
+					allowedPlacements: [GlobalEnum.FloatingPosition.TopStart, GlobalEnum.FloatingPosition.BottomStart],
 					isFocusable: false,
 					position: GlobalEnum.FloatingPosition.Auto,
 					shape: GlobalEnum.ShapeTypes.SoftRounded,
