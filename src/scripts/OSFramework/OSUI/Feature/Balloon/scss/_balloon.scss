@@ -7,9 +7,10 @@
 	--border-radius-rounded: 16px;
 	--osui-floating-position-x: 0;
 	--osui-floating-position-y: 0;
+	--osui-balloon-shadow: var(--shadow-s);
 	--osui-balloon-width: max-content;
 
-	box-shadow: var(--shadow-s);
+	box-shadow: var(--osui-balloon-shadow);
 	border-radius: var(--osui-balloon-shape);
 	background-color: var(--color-neutral-0);
 	height: auto;

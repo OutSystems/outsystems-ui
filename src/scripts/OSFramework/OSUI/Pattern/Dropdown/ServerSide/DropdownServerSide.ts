@@ -689,7 +689,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			);
 			this._balloonContainerElement = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.BalloonContainer);
 			this._balloonContentElement = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.BalloonContent);
-			this._balloonWrapperElement = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.BalloonWrapper);
+			this._balloonWrapperElement = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.Balloon);
 			this._balloonOptionsWrapperElement = Helper.Dom.ClassSelector(
 				this._balloonWrapperElement,
 				Enum.CssClass.BalloonContent
