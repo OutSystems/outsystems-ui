@@ -567,11 +567,25 @@ span.flatpickr-weekday {
 		width: 39px;
 	}
 
+	.flatpickr-weekdays {
+		.flatpickr-weekdaycontainer {
+			justify-content: space-evenly;
+		}
+	}
+
 	// These values used are to go back to the library defaults values, that make this option work
 	.dayContainer {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, 39px);
+		grid-gap: 2px;
 		max-width: 307.875px;
 		min-width: 307.875px;
+		padding: 0 var(--space-xs);
 		width: initial;
+	}
+
+	.flatpickr-day {
+		width: 39px;
 	}
 
 	.flatpickr-rContainer,
