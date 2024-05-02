@@ -124,7 +124,8 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 					document.activeElement !== this._tooltipIconElem &&
 					this._tooltipBalloonContentElem.contains(document.activeElement) === false
 				) {
-					this._triggerClose();
+					// Async to prevent concurrency issues with Balloon onBodyClick
+					Helper.AsyncInvocation(this._triggerClose.bind(this));
 				} else if (document.activeElement !== document.body) {
 					// Add the blur event in order to proper close the tooltip after its blur
 					this._tooltipBalloonContentActiveElem = document.activeElement as HTMLElement;
