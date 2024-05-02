@@ -7,6 +7,7 @@
 	--border-radius-rounded: 16px;
 	--osui-floating-position-x: 0;
 	--osui-floating-position-y: 0;
+	--osui-balloon-width: max-content;
 
 	box-shadow: var(--shadow-s);
 	border-radius: var(--osui-balloon-shape);
@@ -18,7 +19,7 @@
 	pointer-events: none;
 	top: var(--osui-floating-position-y);
 	visibility: hidden;
-	width: max-content;
+	width: var(--osui-balloon-width);
 	z-index: var(--layer-global-elevated);
 
 	&--is-open {

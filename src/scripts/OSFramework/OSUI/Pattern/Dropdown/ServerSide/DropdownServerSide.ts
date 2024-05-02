@@ -34,6 +34,8 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		private _closeDynamically = false;
 		// Custom Balloon Event
 		private _eventBalloonOnToggle: GlobalCallbacks.Generic;
+		// Click On Body
+		private _eventOnBodyClick: GlobalCallbacks.Generic;
 		// Click Event
 		private _eventOnClick: GlobalCallbacks.Generic;
 		private _eventOnClickInputSearch: GlobalCallbacks.Generic;
@@ -101,12 +103,6 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			// Update status property
 			this._isOpen = false;
 
-			// Check if the close will be done by logic instead of user interaction
-			if (this._closeDynamically === false) {
-				// Set focus to the base element
-				this._selectValuesWrapper.focus();
-			}
-
 			// Update the touchMove when pattern is open!
 			this._touchMove();
 			// Update pattern status!
@@ -132,6 +128,20 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			throw new Error(
 				`${ErrorCodes.Dropdown.HasNoImplementation.code}: ${ErrorCodes.Dropdown.HasNoImplementation.message}`
 			);
+		}
+
+		// Close when click outside of pattern
+		private _onBodyClick(): void {
+			if (this._isOpen === false) {
+				return;
+			}
+
+			this._closeDynamically = true;
+
+			// If it's phone, always close, as it is on popup mode
+			if (Helper.DeviceInfo.IsPhone) {
+				this._close();
+			}
 		}
 
 		// A11y keyboard keys
@@ -418,6 +428,12 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 					);
 				}
 
+				// Add the BodyClick callback that will be used Close open Dropdown!
+				Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
+					Event.DOMEvents.Listeners.Type.BodyOnClick,
+					this._eventOnBodyClick
+				);
+
 				Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
 					Event.DOMEvents.Listeners.Type.BalloonOnToggle,
 					this._eventBalloonOnToggle
@@ -463,6 +479,11 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
 				Event.DOMEvents.Listeners.Type.BalloonOnToggle,
 				this._eventBalloonOnToggle
+			);
+
+			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
+				Event.DOMEvents.Listeners.Type.BodyOnClick,
+				this._eventOnBodyClick
 			);
 			if (this._balloonSearchInputElement) {
 				this._balloonSearchInputElement.removeEventListener(
@@ -583,6 +604,12 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.IsOpened);
 				Helper.Dom.Styles.RemoveClass(this._balloonWrapperElement, Enum.CssClass.IsOpened);
 
+				// Check if the close will be done by logic instead of user interaction
+				if (this._closeDynamically === false) {
+					// Set focus to the base element
+					this._selectValuesWrapper.focus();
+				}
+
 				// Add the TransitionEnd event
 				this._balloonWrapperElement.addEventListener(
 					GlobalEnum.HTMLEvent.TransitionEnd,
@@ -629,6 +656,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
 		 */
 		protected setCallbacks(): void {
+			this._eventOnBodyClick = this._onBodyClick.bind(this);
 			this._eventBalloonOnToggle = this._balloonOnToggleCallback.bind(this);
 			this._eventOnClick = this._onSelectValuesWrapperClicked.bind(this);
 			this._eventOnClickInputSearch = this._onSearchInputClicked.bind(this);
@@ -678,6 +706,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
 		 */
 		protected unsetCallbacks(): void {
+			this._eventOnBodyClick = undefined;
 			this._eventBalloonOnToggle = undefined;
 			this._eventOnClick = undefined;
 			this._eventOnClickInputSearch = undefined;
@@ -906,6 +935,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 					isFocusable: false,
 					position: GlobalEnum.FloatingPosition.Auto,
 					shape: GlobalEnum.ShapeTypes.SoftRounded,
+					useTriggerWidth: true,
 				};
 			}
 		}

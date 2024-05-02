@@ -91,7 +91,6 @@ $balloonMobileTopMargin: 5vh;
 			height: auto;
 			max-height: var(--osui-dropdown-ss-balloon-max-height);
 			overflow: hidden;
-			width: 100%;
 
 			// Service Studio Preview
 			& {
@@ -437,10 +436,12 @@ $balloonMobileTopMargin: 5vh;
 
 			// Content Container
 			&-container {
+				background-color: var(--color-neutral-0);
 				box-shadow: var(--shadow-xl);
 				margin-top: $balloonMobileTopMargin;
 				// 90vh - maxHeight in order to create a margin top/bottom with 5vh
 				max-height: calc(90vh - $balloonMobileTopMargin - var(--header-size));
+				overflow: auto;
 				width: 85vw;
 
 				// Service Studio Preview

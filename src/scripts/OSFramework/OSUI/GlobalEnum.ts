@@ -101,6 +101,7 @@ namespace OSFramework.OSUI.GlobalEnum {
 	export enum CssProperties {
 		Auto = 'auto',
 		Initial = 'initial',
+		MaxContent = 'max-content',
 		None = 'none',
 		PaddingTop = 'padding-top',
 	}

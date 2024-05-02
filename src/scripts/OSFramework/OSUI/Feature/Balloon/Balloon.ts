@@ -9,6 +9,7 @@ namespace OSFramework.OSUI.Feature.Balloon {
 		isFocusable?: boolean;
 		position: GlobalEnum.FloatingPosition | GlobalEnum.Position;
 		shape: GlobalEnum.ShapeTypes;
+		useTriggerWidth?: boolean;
 	};
 
 	/**
@@ -26,6 +27,8 @@ namespace OSFramework.OSUI.Feature.Balloon {
 		// Store the listener callbacks
 		private _eventBodyClick: GlobalCallbacks.Generic;
 		private _eventOnKeypress: GlobalCallbacks.Generic;
+		// On WindowResize Event
+		private _eventOnWindowResize: GlobalCallbacks.Generic;
 		// Store the Floating Util instance
 		private _floatingInstance: Utils.FloatingPosition.FloatingPosition;
 		// Store the Floating Util options
@@ -140,6 +143,14 @@ namespace OSFramework.OSUI.Feature.Balloon {
 			e.stopPropagation();
 		}
 
+		// Manage the behaviour when there is a window resize!
+		private _onWindowResize(): void {
+			// If there is a horizontal resize and the Balloon is open, close it!
+			if (this.isOpen) {
+				this.close();
+			}
+		}
+
 		// Method to remove the event listeners
 		private _removeEventListeners(): void {
 			this.featureElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
@@ -147,6 +158,13 @@ namespace OSFramework.OSUI.Feature.Balloon {
 				Event.DOMEvents.Listeners.Type.BodyOnClick,
 				this._eventBodyClick
 			);
+
+			if (this.featureOptions.useTriggerWidth) {
+				Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
+					Event.DOMEvents.Listeners.Type.WindowResize,
+					this._eventOnWindowResize
+				);
+			}
 		}
 
 		// Add the Accessibility Attributes values
@@ -176,10 +194,20 @@ namespace OSFramework.OSUI.Feature.Balloon {
 			}
 		}
 
+		// Method to set the ballon width, based on the useTriggerWidth option
+		private _setBalloonWidth(): void {
+			const _balloonWidth = this.featureOptions.useTriggerWidth
+				? this.featureOptions.anchorElem.offsetWidth + GlobalEnum.Units.Pixel
+				: GlobalEnum.CssProperties.MaxContent;
+
+			Helper.Dom.Styles.SetStyleAttribute(this.featureElem, Enum.CssCustomProperties.Width, _balloonWidth);
+		}
+
 		// Set the callbacks
 		private _setCallbacks(): void {
 			this._eventBodyClick = this._bodyClickCallback.bind(this);
 			this._eventOnKeypress = this._onkeypressCallback.bind(this);
+			this._eventOnWindowResize = this._onWindowResize.bind(this);
 
 			// Set custom Balloon event
 			this._onToggleEvent = function dispatchCustomEvent(isOpen, balloonElem) {
@@ -202,6 +230,14 @@ namespace OSFramework.OSUI.Feature.Balloon {
 					this._eventBodyClick
 				);
 			}
+
+			if (this.featureOptions.useTriggerWidth) {
+				// Add the window resize callback that will be used to close the balloon and avoid width differences!
+				Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
+					Event.DOMEvents.Listeners.Type.WindowResize,
+					this._eventOnWindowResize
+				);
+			}
 		}
 
 		// Method to toggle the open/close the Balloon
@@ -214,8 +250,13 @@ namespace OSFramework.OSUI.Feature.Balloon {
 			this.isOpen = isOpen;
 
 			// Toggle class
-			if (isOpen) {
+			if (this.isOpen) {
 				Helper.Dom.Styles.AddClass(this.featureElem, Enum.CssClasses.IsOpen);
+
+				if (this.featureOptions.useTriggerWidth) {
+					this._setBalloonWidth();
+				}
+
 				// Set Floating Util
 				this.setFloatingBehaviour();
 				// Add event listeners. This is async to prevent unnecessary calls when clicking on triggers
@@ -274,6 +315,7 @@ namespace OSFramework.OSUI.Feature.Balloon {
 			this._eventBodyClick = undefined;
 			this._eventOnKeypress = undefined;
 			this._onToggleEvent = undefined;
+			this._eventOnWindowResize = undefined;
 			window[OSFramework.OSUI.GlobalEnum.CustomEvent.BalloonOnToggle] = undefined;
 		}
 
@@ -292,6 +334,7 @@ namespace OSFramework.OSUI.Feature.Balloon {
 			}
 
 			this._setA11YProperties();
+			this._setBalloonWidth();
 			this.setBalloonShape();
 		}
 
