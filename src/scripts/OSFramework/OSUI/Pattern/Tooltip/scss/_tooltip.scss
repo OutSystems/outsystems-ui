@@ -16,52 +16,6 @@
 	}
 
 	.osui-balloon {
-		position: fixed;
-	}
-
-	&__balloon-arrow {
-		position: absolute;
-		width: var(--osui-tooltip-arrow-size);
-		height: var(--osui-tooltip-arrow-size);
-		background-color: var(--osui-tooltip-background-color);
-		transform: rotate(45deg);
-		z-index: var(--layer-global-negative);
-	}
-}
-
-/* ---------------------------------------------------------------------------- */
-// Tooltip IconWrapper
-/* ---------------------------------------------------------------------------- */
-///
-.osui-tooltip__content {
-	--osui-floating-offset: var(--space-s);
-	cursor: pointer;
-
-	&:empty {
-		// ServiceStudio Preview
-		& {
-			-servicestudio-min-width: 80px;
-		}
-	}
-}
-
-/* ---------------------------------------------------------------------------- */
-// Tooltip BaloonWrapper
-/* ---------------------------------------------------------------------------- */
-//
-.osui-tooltip__balloon-wrapper {
-	pointer-events: none;
-
-	// Service Studio Preview
-	& {
-		-servicestudio-left: initial;
-		-servicestudio-max-height: initial;
-		-servicestudio-opacity: 1;
-		-servicestudio-overflow: initial;
-		-servicestudio-pointer-events: initial;
-	}
-
-	&__balloon {
 		background-color: var(--osui-tooltip-background-color);
 		border-radius: var(--border-radius-soft);
 		color: var(--color-neutral-0);
@@ -73,7 +27,32 @@
 
 		// Service Studio Preview
 		& {
+			-servicestudio-left: initial;
+			-servicestudio-max-height: initial;
 			-servicestudio-opacity: 1;
+			-servicestudio-overflow: initial;
+			-servicestudio-pointer-events: initial;
+		}
+	}
+
+	&__balloon-arrow {
+		position: absolute;
+		width: var(--osui-tooltip-arrow-size);
+		height: var(--osui-tooltip-arrow-size);
+		background-color: var(--osui-tooltip-background-color);
+		transform: rotate(45deg);
+		z-index: var(--layer-global-negative);
+	}
+
+	&__content {
+		--osui-floating-offset: var(--space-s);
+		cursor: pointer;
+
+		&:empty {
+			// ServiceStudio Preview
+			& {
+				-servicestudio-min-width: 80px;
+			}
 		}
 	}
 }

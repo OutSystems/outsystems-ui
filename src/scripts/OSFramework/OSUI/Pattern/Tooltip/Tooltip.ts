@@ -240,6 +240,30 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 			);
 		}
 
+		// Method to translate the tooltip Position config to the expected Floating Position
+		private _transformPosition(tooltipPosition: GlobalEnum.Position): GlobalEnum.FloatingPosition {
+			let _finalPosition;
+
+			switch (tooltipPosition) {
+				case GlobalEnum.Position.BottomLeft:
+					_finalPosition = GlobalEnum.FloatingPosition.BottomStart;
+					break;
+				case GlobalEnum.Position.TopLeft:
+					_finalPosition = GlobalEnum.FloatingPosition.TopStart;
+					break;
+				case GlobalEnum.Position.BottomRight:
+					_finalPosition = GlobalEnum.FloatingPosition.BottomEnd;
+					break;
+				case GlobalEnum.Position.TopRight:
+					_finalPosition = GlobalEnum.FloatingPosition.TopEnd;
+					break;
+				default:
+					_finalPosition = tooltipPosition;
+			}
+
+			return _finalPosition;
+		}
+
 		// Close the Balloon
 		private _triggerClose(isFromBalloonEvent = false) {
 			// Check if the tooltip is open
@@ -442,7 +466,9 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 						break;
 
 					case Enum.Properties.Position:
-						this._balloonFeature.updatePositionOption(propertyValue as GlobalEnum.FloatingPosition);
+						this._balloonFeature.updatePositionOption(
+							this._transformPosition(propertyValue as GlobalEnum.Position)
+						);
 						break;
 				}
 			}
@@ -530,7 +556,7 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 						GlobalEnum.FloatingPosition.Center,
 					],
 					isFocusable: false,
-					position: this.configs.Position,
+					position: this._transformPosition(this.configs.Position),
 					shape: GlobalEnum.ShapeTypes.Sharp,
 				};
 			}
