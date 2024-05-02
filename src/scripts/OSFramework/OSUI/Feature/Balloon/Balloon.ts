@@ -123,7 +123,7 @@ namespace OSFramework.OSUI.Feature.Balloon {
 		}
 
 		// Call methods to open or close, based on e.key and behaviour applied
-		private _onkeypressCallback(e: KeyboardEvent): void {
+		private _onKeypressCallback(e: KeyboardEvent): void {
 			const isEscapedPressed = e.key === GlobalEnum.Keycodes.Escape;
 			const isArrowDownPressed = e.key === GlobalEnum.Keycodes.ArrowDown;
 			const isArrowUpPressed = e.key === GlobalEnum.Keycodes.ArrowUp;
@@ -206,7 +206,7 @@ namespace OSFramework.OSUI.Feature.Balloon {
 		// Set the callbacks
 		private _setCallbacks(): void {
 			this._eventBodyClick = this._bodyClickCallback.bind(this);
-			this._eventOnKeypress = this._onkeypressCallback.bind(this);
+			this._eventOnKeypress = this._onKeypressCallback.bind(this);
 			this._eventOnWindowResize = this._onWindowResize.bind(this);
 
 			// Set custom Balloon event
