@@ -10,8 +10,6 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 	{
 		// Store the HTML element for the DropdownBalloonContainer
 		private _balloonContainerElement: HTMLElement;
-		// Store the HTML element for the DropdownBalloonContent
-		private _balloonContentElement: HTMLElement;
 		// Store the Balloon Element
 		private _balloonElem: HTMLElement;
 		// Store the Balloon Class instance
@@ -28,8 +26,6 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		private _balloonSearchInputElement: HTMLElement;
 		// Store the HTML element for the DropdownBalloonSearch
 		private _balloonSearchInputWrapperElement: HTMLElement;
-		// Store the HTML element for the DropdownBalloonWrapper
-		private _balloonWrapperElement: HTMLElement;
 		// Store a Flag property that will help dealing with the focus state at the close moment
 		private _closeDynamically = false;
 		// Custom Balloon Event
@@ -114,10 +110,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		// Update stuff at end of close animation
 		private _endOfCloseAnimation(): void {
 			// Remove the TransitionEnd event
-			this._balloonWrapperElement.removeEventListener(
-				GlobalEnum.HTMLEvent.TransitionEnd,
-				this._eventOnCloseTransitionEnd
-			);
+			this._balloonElem.removeEventListener(GlobalEnum.HTMLEvent.TransitionEnd, this._eventOnCloseTransitionEnd);
 
 			// Trigger the toggle callback event
 			this._triggerToogleCalbackEvent();
@@ -208,7 +201,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 
 		// Also Used to manage the balloon height accordingly keyboard is in use due to the way iOS deal with it!
 		private _onSearchInputBlur(): void {
-			Helper.Dom.Styles.RemoveClass(this._balloonWrapperElement, Enum.CssClass.SearchInputIsFocused);
+			Helper.Dom.Styles.RemoveClass(this._balloonElem, Enum.CssClass.SearchInputIsFocused);
 		}
 
 		// Used to set a stopPropagation when click at search input
@@ -218,7 +211,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 
 		// Used to manage the balloon height accordingly keyboard is in use due to the way iOS deal with it!
 		private _onSearchInputFocus(): void {
-			Helper.Dom.Styles.AddClass(this._balloonWrapperElement, Enum.CssClass.SearchInputIsFocused);
+			Helper.Dom.Styles.AddClass(this._balloonElem, Enum.CssClass.SearchInputIsFocused);
 		}
 
 		// Used to apply the logic when user click to open the Dropdown
@@ -229,7 +222,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 
 		// Manage the OnTouchMove action
 		private _onTouchMove(event: TouchEvent): void {
-			if (event.target === this._balloonWrapperElement) {
+			if (event.target === this._balloonElem) {
 				event.preventDefault();
 			}
 		}
@@ -367,7 +360,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			// If search input exist add a class to the balloon
 			if (this._balloonSearchInputElement === undefined) {
 				// Needed to style the balloon height once at phone
-				Helper.Dom.Styles.AddClass(this._balloonWrapperElement, Enum.CssClass.BalloonHasNotSearchInput);
+				Helper.Dom.Styles.AddClass(this._balloonElem, Enum.CssClass.BalloonHasNotSearchInput);
 			}
 		}
 
@@ -447,15 +440,9 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			// Check if the used browser has TouchMove event and if it's an iOS device
 			if (Helper.DeviceInfo.IsIos && 'ontouchmove' in window) {
 				if (this._isOpen) {
-					this._balloonWrapperElement.addEventListener(
-						GlobalEnum.HTMLEvent.TouchMove,
-						this._eventOnTouchMove
-					);
+					this._balloonElem.addEventListener(GlobalEnum.HTMLEvent.TouchMove, this._eventOnTouchMove);
 				} else {
-					this._balloonWrapperElement.removeEventListener(
-						GlobalEnum.HTMLEvent.TouchMove,
-						this._eventOnTouchMove
-					);
+					this._balloonElem.removeEventListener(GlobalEnum.HTMLEvent.TouchMove, this._eventOnTouchMove);
 				}
 			}
 		}
@@ -554,7 +541,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 				Helper.A11Y.AriaHiddenFalse(this._balloonOptionsWrapperElement);
 			} else {
 				// Remove a11y selector in order to grant it will be updated each time Balloon gets open
-				Helper.Dom.Styles.RemoveClass(this._balloonWrapperElement, Constants.HasAccessibilityClass);
+				Helper.Dom.Styles.RemoveClass(this._balloonElem, Constants.HasAccessibilityClass);
 				// Ballon Options Wrapper
 				Helper.A11Y.AriaHiddenTrue(this._balloonOptionsWrapperElement);
 			}
@@ -588,7 +575,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			if (this._isOpen) {
 				// Add IsOpend Class!
 				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.IsOpened);
-				Helper.Dom.Styles.AddClass(this._balloonWrapperElement, Enum.CssClass.IsOpened);
+				Helper.Dom.Styles.AddClass(this._balloonElem, Enum.CssClass.IsOpened);
 
 				// Check if inputSearch exist
 				if (this._balloonSearchInputElement) {
@@ -602,7 +589,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			} else {
 				// Remove IsOpend Class => Close it!
 				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.IsOpened);
-				Helper.Dom.Styles.RemoveClass(this._balloonWrapperElement, Enum.CssClass.IsOpened);
+				Helper.Dom.Styles.RemoveClass(this._balloonElem, Enum.CssClass.IsOpened);
 
 				// Check if the close will be done by logic instead of user interaction
 				if (this._closeDynamically === false) {
@@ -611,10 +598,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 				}
 
 				// Add the TransitionEnd event
-				this._balloonWrapperElement.addEventListener(
-					GlobalEnum.HTMLEvent.TransitionEnd,
-					this._eventOnCloseTransitionEnd
-				);
+				this._balloonElem.addEventListener(GlobalEnum.HTMLEvent.TransitionEnd, this._eventOnCloseTransitionEnd);
 			}
 		}
 
@@ -688,15 +672,12 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 				GlobalEnum.HTMLElement.Input
 			);
 			this._balloonContainerElement = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.BalloonContainer);
-			this._balloonContentElement = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.BalloonContent);
-			this._balloonWrapperElement = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.Balloon);
+			this._balloonElem = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.Balloon);
 			this._balloonOptionsWrapperElement = Helper.Dom.ClassSelector(
-				this._balloonWrapperElement,
+				this._balloonElem,
 				Enum.CssClass.BalloonContent
 			);
 			this._selectValuesWrapper = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.SelectValuesWrapper);
-
-			this._balloonElem = this._balloonWrapperElement;
 		}
 
 		/**
@@ -732,9 +713,8 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			this._balloonOptionsWrapperElement = undefined;
 			this._balloonSearchInputElement = undefined;
 			this._balloonSearchInputWrapperElement = undefined;
-			this._balloonWrapperElement = undefined;
-			this._selectValuesWrapper = undefined;
 			this._balloonElem = undefined;
+			this._selectValuesWrapper = undefined;
 		}
 
 		/**
@@ -837,7 +817,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		public disable(): void {
 			// Assign disabled status.
 			Helper.Dom.Attribute.Set(this.selfElement, GlobalEnum.HTMLAttributes.Disabled, '');
-			Helper.Dom.Attribute.Set(this._balloonWrapperElement, GlobalEnum.HTMLAttributes.Disabled, '');
+			Helper.Dom.Attribute.Set(this._balloonElem, GlobalEnum.HTMLAttributes.Disabled, '');
 			// Assign IsDisabled class
 			Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.IsDisabled);
 			// Assign tabindex value on values wrapper
@@ -865,7 +845,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		public enable(): void {
 			// Remove disabled status.
 			Helper.Dom.Attribute.Remove(this.selfElement, GlobalEnum.HTMLAttributes.Disabled);
-			Helper.Dom.Attribute.Remove(this._balloonWrapperElement, GlobalEnum.HTMLAttributes.Disabled);
+			Helper.Dom.Attribute.Remove(this._balloonElem, GlobalEnum.HTMLAttributes.Disabled);
 			// Remove IsDisabled class
 			Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.IsDisabled);
 			// Assign tabindex value on values wrapper
