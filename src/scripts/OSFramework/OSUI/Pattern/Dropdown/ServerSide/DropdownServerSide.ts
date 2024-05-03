@@ -801,7 +801,6 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		public disable(): void {
 			// Assign disabled status.
 			Helper.Dom.Attribute.Set(this.selfElement, GlobalEnum.HTMLAttributes.Disabled, '');
-			Helper.Dom.Attribute.Set(this._balloonElem, GlobalEnum.HTMLAttributes.Disabled, '');
 			// Assign IsDisabled class
 			Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.IsDisabled);
 			// Assign tabindex value on values wrapper
@@ -829,7 +828,6 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		public enable(): void {
 			// Remove disabled status.
 			Helper.Dom.Attribute.Remove(this.selfElement, GlobalEnum.HTMLAttributes.Disabled);
-			Helper.Dom.Attribute.Remove(this._balloonElem, GlobalEnum.HTMLAttributes.Disabled);
 			// Remove IsDisabled class
 			Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.IsDisabled);
 			// Assign tabindex value on values wrapper
@@ -882,18 +880,20 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		 * @memberof OSUIDropdownServerSide
 		 */
 		public setBalloonOptions(balloonOptions?: Feature.Balloon.BalloonOptions): void {
-			const _focusOptions = {
-				elemToFocusOnOpen: this._selectValuesWrapper,
-				useFocus: true,
-				focusTrapParams: {
-					focusBottomCallback: this.close.bind(this),
-					focusTargetElement: this._balloonContainerElement,
-					focusTopCallback: this.close.bind(this),
-				},
-			};
 			if (balloonOptions !== undefined) {
 				this.balloonOptions = balloonOptions;
 			} else {
+				// Set focus options to pass to the Balloon feature
+				const _focusOptions = {
+					elemToFocusOnOpen: this._selectValuesWrapper,
+					useFocus: true,
+					focusTrapParams: {
+						focusBottomCallback: this.close.bind(this),
+						focusTargetElement: this._balloonContainerElement,
+						focusTopCallback: this.close.bind(this),
+					},
+				};
+
 				this.balloonOptions = {
 					alignment: GlobalEnum.FloatingAlignment.Start,
 					anchorElem: this._selectValuesWrapper,

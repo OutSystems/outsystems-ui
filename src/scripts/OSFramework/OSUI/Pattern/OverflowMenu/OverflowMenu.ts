@@ -338,13 +338,14 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 		 * @memberof OverflowMenu
 		 */
 		public setBalloonOptions(balloonOptions?: Feature.Balloon.BalloonOptions): void {
-			const _focusOptions = {
-				useFocus: true,
-			};
-
 			if (balloonOptions !== undefined) {
 				this.balloonOptions = balloonOptions;
 			} else {
+				// Set focus options to pass to the Balloon feature
+				const _focusOptions = {
+					useFocus: true,
+				};
+
 				this.balloonOptions = {
 					alignment: GlobalEnum.FloatingAlignment.Start,
 					allowedPlacements: [
