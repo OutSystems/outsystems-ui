@@ -35,8 +35,6 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		// Click Event
 		private _eventOnClick: GlobalCallbacks.Generic;
 		private _eventOnClickInputSearch: GlobalCallbacks.Generic;
-		// Event OnTransitionEnd applied to the Balloon
-		private _eventOnCloseTransitionEnd: GlobalCallbacks.Generic;
 		// OnSearchInputBlur Event
 		private _eventOnSearchInputBlur: GlobalCallbacks.Generic;
 		// OnSearchInputFocus Event
@@ -105,15 +103,6 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			this._updatePatternState();
 			// Remove event listeners
 			this._unsetEvents(true);
-		}
-
-		// Update stuff at end of close animation
-		private _endOfCloseAnimation(): void {
-			// Remove the TransitionEnd event
-			this._balloonElem.removeEventListener(GlobalEnum.HTMLEvent.TransitionEnd, this._eventOnCloseTransitionEnd);
-
-			// Trigger the toggle callback event
-			this._triggerToogleCalbackEvent();
 		}
 
 		// Method that will return HasNoImplementation Error Info
@@ -583,9 +572,6 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 				} else {
 					this._balloonOptionsWrapperElement.focus();
 				}
-
-				// Trigger the toggle callback event
-				this._triggerToogleCalbackEvent();
 			} else {
 				// Remove IsOpend Class => Close it!
 				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.IsOpened);
@@ -596,10 +582,10 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 					// Set focus to the base element
 					this._selectValuesWrapper.focus();
 				}
-
-				// Add the TransitionEnd event
-				this._balloonElem.addEventListener(GlobalEnum.HTMLEvent.TransitionEnd, this._eventOnCloseTransitionEnd);
 			}
+
+			// Trigger the toggle callback event
+			this._triggerToogleCalbackEvent();
 		}
 
 		/**
@@ -644,7 +630,6 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			this._eventBalloonOnToggle = this._balloonOnToggleCallback.bind(this);
 			this._eventOnClick = this._onSelectValuesWrapperClicked.bind(this);
 			this._eventOnClickInputSearch = this._onSearchInputClicked.bind(this);
-			this._eventOnCloseTransitionEnd = this._endOfCloseAnimation.bind(this);
 			this._eventOnkeyboardPress = this._onKeyboardPressed.bind(this);
 			this._eventOnSearchInputBlur = this._onSearchInputBlur.bind(this);
 			this._eventOnSearchInputFocus = this._onSearchInputFocus.bind(this);
@@ -691,7 +676,6 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			this._eventBalloonOnToggle = undefined;
 			this._eventOnClick = undefined;
 			this._eventOnClickInputSearch = undefined;
-			this._eventOnCloseTransitionEnd = undefined;
 			this._eventOnkeyboardPress = undefined;
 			this._eventOnSearchInputBlur = undefined;
 			this._eventOnSearchInputFocus = undefined;
