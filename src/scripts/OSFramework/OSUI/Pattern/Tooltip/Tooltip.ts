@@ -538,6 +538,10 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 		 * @memberof Tooltip
 		 */
 		public setBalloonOptions(balloonOptions?: Feature.Balloon.BalloonOptions): void {
+			const _focusOptions = {
+				useFocus: false,
+			};
+
 			if (balloonOptions !== undefined) {
 				this.balloonOptions = balloonOptions;
 			} else {
@@ -556,7 +560,7 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 						GlobalEnum.FloatingPosition.TopStart,
 						GlobalEnum.FloatingPosition.Center,
 					],
-					isFocusable: false,
+					focusOptions: _focusOptions,
 					position: this._transformPosition(this.configs.Position),
 					shape: GlobalEnum.ShapeTypes.Sharp,
 				};

@@ -918,16 +918,25 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		 * @memberof OSUIDropdownServerSide
 		 */
 		public setBalloonOptions(balloonOptions?: Feature.Balloon.BalloonOptions): void {
+			const _focusOptions = {
+				elemToFocusOnOpen: this._selectValuesWrapper,
+				useFocus: true,
+				focusTrapParams: {
+					focusBottomCallback: this.close.bind(this),
+					focusTargetElement: this._balloonContainerElement,
+					focusTopCallback: this.close.bind(this),
+				},
+			};
 			if (balloonOptions !== undefined) {
 				this.balloonOptions = balloonOptions;
 			} else {
 				this.balloonOptions = {
 					alignment: GlobalEnum.FloatingAlignment.Start,
-					anchorElem: this.selfElement,
+					anchorElem: this._selectValuesWrapper,
 					allowedPlacements: [GlobalEnum.FloatingPosition.TopStart, GlobalEnum.FloatingPosition.BottomStart],
-					isFocusable: false,
 					position: GlobalEnum.FloatingPosition.Auto,
 					shape: GlobalEnum.ShapeTypes.SoftRounded,
+					focusOptions: _focusOptions,
 					useTriggerWidth: true,
 				};
 			}

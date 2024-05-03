@@ -338,6 +338,10 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 		 * @memberof OverflowMenu
 		 */
 		public setBalloonOptions(balloonOptions?: Feature.Balloon.BalloonOptions): void {
+			const _focusOptions = {
+				useFocus: true,
+			};
+
 			if (balloonOptions !== undefined) {
 				this.balloonOptions = balloonOptions;
 			} else {
@@ -352,6 +356,7 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 					anchorElem: this._triggerElem,
 					position: this.configs.Position,
 					shape: this.configs.Shape,
+					focusOptions: _focusOptions,
 				};
 			}
 		}
