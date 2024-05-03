@@ -32,7 +32,7 @@ $balloonMobileTopMargin: 5vh;
 			-servicestudio-max-height: 320px;
 			-servicestudio-opacity: 1;
 			-servicestudio-position: relative;
-			-servicestudio-top: 2px;
+			-servicestudio-top: calc(100% + 4px);
 		}
 	}
 
