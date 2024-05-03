@@ -12,6 +12,7 @@ namespace OSFramework.OSUI.Feature.Balloon {
 		useTriggerWidth?: boolean;
 	};
 
+	// Type for the Focus options
 	export type FocusOptions = {
 		elemToFocusOnOpen?: HTMLElement;
 		focusTrapParams?: Behaviors.FocusTrapParams;
