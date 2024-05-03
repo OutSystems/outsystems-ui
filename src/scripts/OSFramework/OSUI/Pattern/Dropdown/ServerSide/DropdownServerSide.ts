@@ -562,8 +562,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 
 			// If balloon will open
 			if (this._isOpen) {
-				// Add IsOpend Class!
-				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.IsOpened);
+				// Add IsOpened Class!
 				Helper.Dom.Styles.AddClass(this._balloonElem, Enum.CssClass.IsOpened);
 
 				// Check if inputSearch exist
@@ -573,8 +572,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 					this._balloonOptionsWrapperElement.focus();
 				}
 			} else {
-				// Remove IsOpend Class => Close it!
-				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.IsOpened);
+				// Remove IsOpened Class
 				Helper.Dom.Styles.RemoveClass(this._balloonElem, Enum.CssClass.IsOpened);
 
 				// Check if the close will be done by logic instead of user interaction
