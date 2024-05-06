@@ -554,6 +554,70 @@ span.flatpickr-weekday {
 	}
 }
 
+// ShowMonths option overrides
+.multiMonth {
+	.flatpickr-month,
+	.flatpickr-current-month {
+		width: 100%;
+		justify-content: center;
+	}
+
+	.flatpickr-weekday {
+		flex: none;
+		width: 39px;
+	}
+
+	.flatpickr-weekdays {
+		.flatpickr-weekdaycontainer {
+			justify-content: space-evenly;
+		}
+	}
+
+	// These values used are to go back to the library defaults values, that make this option work
+	.dayContainer {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, 39px);
+		grid-gap: 2px;
+		max-width: 307.875px;
+		min-width: 307.875px;
+		padding: 0 var(--space-xs);
+		width: initial;
+	}
+
+	.flatpickr-day {
+		width: 39px;
+	}
+
+	.flatpickr-rContainer,
+	.flatpickr-days {
+		width: initial;
+	}
+
+	.flatpickr-months {
+		display: flex;
+
+		.flatpickr-month {
+			flex: 1;
+		}
+
+		.flatpickr-prev-month,
+		.flatpickr-next-month {
+			position: absolute;
+			margin: var(--space-xs);
+		}
+	}
+
+	.flatpickr-innerContainer {
+		padding: 0 0 var(--space-xs) 0;
+	}
+
+	.flatpickr-current-month {
+		.numInputWrapper input {
+			display: block;
+		}
+	}
+}
+
 // Layer Library Overrides
 .flatpickr-calendar.static.open {
 	z-index: var(--osui-flatpickr-layer);
