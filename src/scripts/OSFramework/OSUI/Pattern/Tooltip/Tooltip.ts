@@ -258,6 +258,10 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 				case GlobalEnum.Position.TopRight:
 					_finalPosition = GlobalEnum.FloatingPosition.TopEnd;
 					break;
+				// The following one is to avoid issues with the center position and trigger click and also maintain the same behaviour of previous positon logic
+				case GlobalEnum.Position.Center:
+					_finalPosition = GlobalEnum.FloatingPosition.Bottom;
+					break;
 				default:
 					_finalPosition = tooltipPosition;
 			}
@@ -467,9 +471,11 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 						break;
 
 					case Enum.Properties.Position:
-						this._balloonFeature.updatePositionOption(
-							this._transformPosition(propertyValue as GlobalEnum.Position)
-						);
+						if (propertyValue !== Constants.EmptyString) {
+							this._balloonFeature.updatePositionOption(
+								this._transformPosition(propertyValue as GlobalEnum.Position)
+							);
+						}
 						break;
 				}
 			}
