@@ -152,7 +152,8 @@ $balloonMobileTopMargin: 5vh;
 		&-content {
 			border-top: var(--border-size-s) solid var(--color-neutral-5);
 			flex: 1;
-			height: var(--osui-dropdown-ss-balloon-max-height);
+			height: auto;
+			max-height: var(--osui-dropdown-ss-balloon-max-height);
 			overflow-x: hidden;
 			overflow-y: auto;
 			padding: var(--space-none);
@@ -405,13 +406,13 @@ $balloonMobileTopMargin: 5vh;
 				-servicestudio-top: 2px;
 			}
 
-			// Content Container
 			&-container {
 				background: var(--color-neutral-0);
 				border-radius: var(--osui-balloon-shape);
 				box-shadow: var(--shadow-xl);
 				display: flex;
 				flex-direction: column;
+				height: auto;
 				margin-top: $balloonMobileTopMargin;
 				// 90vh - maxHeight in order to create a margin top/bottom with 5vh
 				max-height: calc(90vh - $balloonMobileTopMargin - var(--header-size));
@@ -425,6 +426,11 @@ $balloonMobileTopMargin: 5vh;
 					-servicestudio-opacity: 1;
 					-servicestudio-width: 100%;
 				}
+			}
+
+			&-content {
+				height: var(--osui-dropdown-ss-balloon-max-height);
+				max-height: unset;
 			}
 
 			// If do not exist a input search inside balloon
