@@ -23,8 +23,6 @@ $balloonMobileTopMargin: 5vh;
 		min-width: var(--osui-dropdown-min-width);
 		z-index: var(--layer-global-elevated);
 		height: auto;
-		max-height: var(--osui-dropdown-ss-balloon-max-height);
-		overflow: hidden;
 
 		// Service Studio Preview
 		& {
@@ -409,7 +407,6 @@ $balloonMobileTopMargin: 5vh;
 			// Content Container
 			&-container {
 				background: var(--color-neutral-0);
-				border: 1px solid transparent;
 				border-radius: var(--osui-balloon-shape);
 				box-shadow: var(--shadow-xl);
 				display: flex;
