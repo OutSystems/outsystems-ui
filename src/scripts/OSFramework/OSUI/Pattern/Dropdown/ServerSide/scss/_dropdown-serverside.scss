@@ -20,9 +20,10 @@ $balloonMobileTopMargin: 5vh;
 		display: flex;
 		flex-direction: column;
 		flex: 1;
-		min-width: var(--osui-dropdown-min-width);
-		z-index: var(--layer-global-elevated);
 		height: auto;
+		min-width: var(--osui-dropdown-min-width);
+		overflow: hidden;
+		z-index: var(--layer-global-elevated);
 
 		// Service Studio Preview
 		& {

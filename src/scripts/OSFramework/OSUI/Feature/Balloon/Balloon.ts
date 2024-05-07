@@ -62,6 +62,10 @@ namespace OSFramework.OSUI.Feature.Balloon {
 		private _bodyClickCallback(_args: string, e: MouseEvent): void {
 			const _eventTarget = e.target;
 
+			if (this.featureElem === undefined) {
+				return;
+			}
+
 			if (
 				_eventTarget === this.featureOptions?.anchorElem ||
 				this._isOpenedByApi ||
@@ -360,7 +364,7 @@ namespace OSFramework.OSUI.Feature.Balloon {
 		 * @memberof Balloon
 		 */
 		public close(): void {
-			if (this.isOpen) {
+			if (this.isOpen && this.featureElem !== undefined) {
 				this._toggleBalloon(false);
 			}
 		}
@@ -386,7 +390,7 @@ namespace OSFramework.OSUI.Feature.Balloon {
 			isOpenedByApi: boolean,
 			arrowKeyPressed?: GlobalEnum.Keycodes.ArrowDown | GlobalEnum.Keycodes.ArrowUp
 		): void {
-			if (this.isOpen === false) {
+			if (this.isOpen === false && this.featureElem !== undefined) {
 				this._isOpenedByApi = isOpenedByApi;
 				this._toggleBalloon(true, false, arrowKeyPressed);
 			}
