@@ -90,7 +90,14 @@ namespace OSFramework.OSUI.Patterns.AnimatedLabel {
 		 * @memberof AnimatedLabel
 		 */
 		private _inputStateToggle(isFocus = false): void {
-			const inputHasText = this._inputElement && this._inputElement.value !== '';
+			// In this flag, we are checking if the input has value.
+			// When the input is empty, the checkValidity() return true.
+			// If the input type is number, value is empty and checkValidty() is false this means that the input has invalid value.
+
+			const inputHasText =
+				this._inputElement &&
+				(this._inputElement.value !== '' ||
+					(this._inputElement.type === 'number' && this._inputElement.checkValidity() === false));
 
 			//let's check if we have something to do. Is the pattern built or (it's building) and we have text in the input?
 			if (this.isBuilt || inputHasText) {
