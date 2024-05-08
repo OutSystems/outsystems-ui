@@ -68,6 +68,7 @@ namespace OSFramework.OSUI.Feature.Balloon {
 
 			if (
 				_eventTarget === this.featureOptions?.anchorElem ||
+				this.featureOptions?.anchorElem.contains(_eventTarget as Node) ||
 				this._isOpenedByApi ||
 				this.featureElem.contains(_eventTarget as HTMLElement)
 			) {
