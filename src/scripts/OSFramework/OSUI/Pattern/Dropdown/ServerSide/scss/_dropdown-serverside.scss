@@ -191,7 +191,7 @@ $balloonMobileTopMargin: 5vh;
 	}
 
 	// Balloon IsOpen
-	&--is-opened {
+	&:has(.osui-dropdown-serverside--is-opened) {
 		.osui-dropdown-serverside {
 			// "Input" section wrapper - SelectedValues container wrapper
 			&__selected-values-wrapper {
