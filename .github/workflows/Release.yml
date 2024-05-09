@@ -55,7 +55,7 @@ jobs:
         steps:
             - name: Update v${{ inputs.new-version }} Tag Release from pre-release into latest
               if: ${{ inputs.new-version && inputs.update-prerelease-into-latest == true }}
-              uses: softprops/action-gh-release@v1
+              uses: softprops/action-gh-release@v2.0.5
               with:
                   tag_name: v${{ inputs.new-version }}
                   prerelease: false
