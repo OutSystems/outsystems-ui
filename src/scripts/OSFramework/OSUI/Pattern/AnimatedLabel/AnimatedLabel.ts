@@ -96,7 +96,7 @@ namespace OSFramework.OSUI.Patterns.AnimatedLabel {
 
 			const inputHasText =
 				this._inputElement &&
-				(this._inputElement.value !== '' ||
+				(this._inputElement.value !== Constants.EmptyString ||
 					(this._inputElement.type === 'number' && this._inputElement.checkValidity() === false));
 
 			//let's check if we have something to do. Is the pattern built or (it's building) and we have text in the input?
