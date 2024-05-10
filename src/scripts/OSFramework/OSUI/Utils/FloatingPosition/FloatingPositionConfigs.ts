@@ -8,6 +8,7 @@ namespace OSFramework.OSUI.Utils.FloatingPosition {
 	 */
 	export class FloatingPositionConfig {
 		public AnchorElem: HTMLElement;
+		public ArrowElem: HTMLElement;
 		public AutoPlacement: boolean;
 		public AutoPlacementOptions: AutoPlacementOptions;
 		public FloatingElem: HTMLElement;

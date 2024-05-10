@@ -1,6 +1,7 @@
 // FloatingUI => Balloon
 import {
 	computePosition,
+	arrow,
 	autoPlacement,
 	AutoPlacementOptions,
 	DetectOverflowOptions,
@@ -38,6 +39,7 @@ declare global {
 		// FloatingUI => Balloon
 		FloatingUIDOM: FloatingUIDOM;
 		computePosition: typeof computePosition;
+		arrow: typeof arrow;
 		autoPlacement: typeof autoPlacement;
 		autoUpdate: typeof autoUpdate;
 		flip: typeof flip;
@@ -81,6 +83,7 @@ declare global {
 			config: ComputePositionConfig
 		) => Promise<ComputePositionReturn>;
 		autoPlacement: (options?: Partial<Options & DetectOverflowOptions>) => Middleware;
+		arrow: (options: ArrowOptions | Derivable<ArrowOptions>) => Middleware;
 		placementOptions: (AutoPlacementOptions, DetectOverflowOptions) => void;
 		autoUpdate(
 			reference: ReferenceElement,
