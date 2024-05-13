@@ -88,7 +88,9 @@ $balloonMobileTopMargin: 5vh;
 			padding: var(--space-none) var(--space-base);
 			position: relative;
 			transition: border 250ms ease-in-out;
-			width: 100%;
+			width: calc(
+				100% - 2 * var(--border-size-s)
+			); // subtracts the size of the border so it doesn't get cut off inside the tabs
 		}
 
 		[data-expression] {

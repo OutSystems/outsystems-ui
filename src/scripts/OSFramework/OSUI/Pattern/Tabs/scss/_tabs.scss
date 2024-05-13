@@ -247,6 +247,10 @@
 			.columns {
 				max-width: 99.99%;
 			}
+
+			&:not(.osui-tabs--is-active) {
+				opacity: 0;
+			}
 		}
 	}
 
