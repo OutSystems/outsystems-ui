@@ -3,10 +3,20 @@ namespace OSFramework.OSUI.Feature.Balloon {
 	// Type for the Balllon Feature options
 	export type BalloonOptions = {
 		alignment: GlobalEnum.FloatingAlignment;
-		allowedPlacements: Array<GlobalEnum.FloatingPosition>;
+		allowedPlacements?: Array<GlobalEnum.FloatingPosition>;
 		anchorElem: HTMLElement;
-		position: GlobalEnum.FloatingPosition;
+		arrowElem?: HTMLElement;
+		focusOptions?: FocusOptions;
+		position: GlobalEnum.FloatingPosition | GlobalEnum.Position;
 		shape: GlobalEnum.ShapeTypes;
+		useTriggerWidth?: boolean;
+	};
+
+	// Type for the Focus options
+	export type FocusOptions = {
+		elemToFocusOnOpen?: HTMLElement;
+		focusTrapParams?: Behaviors.FocusTrapParams;
+		useFocus: boolean;
 	};
 
 	/**
@@ -24,6 +34,8 @@ namespace OSFramework.OSUI.Feature.Balloon {
 		// Store the listener callbacks
 		private _eventBodyClick: GlobalCallbacks.Generic;
 		private _eventOnKeypress: GlobalCallbacks.Generic;
+		// On WindowResize Event
+		private _eventOnWindowResize: GlobalCallbacks.Generic;
 		// Store the Floating Util instance
 		private _floatingInstance: Utils.FloatingPosition.FloatingPosition;
 		// Store the Floating Util options
@@ -50,8 +62,13 @@ namespace OSFramework.OSUI.Feature.Balloon {
 		private _bodyClickCallback(_args: string, e: MouseEvent): void {
 			const _eventTarget = e.target;
 
+			if (this.featureElem === undefined) {
+				return;
+			}
+
 			if (
 				_eventTarget === this.featureOptions?.anchorElem ||
+				this.featureOptions?.anchorElem.contains(_eventTarget as Node) ||
 				this._isOpenedByApi ||
 				this.featureElem.contains(_eventTarget as HTMLElement)
 			) {
@@ -67,7 +84,12 @@ namespace OSFramework.OSUI.Feature.Balloon {
 		// Add Focus Trap to the Pattern
 		private _handleFocusBehavior(): void {
 			const opts = {
-				focusTargetElement: this._floatingOptions.AnchorElem.parentElement,
+				focusTargetElement:
+					this.featureOptions.focusOptions.focusTrapParams?.focusTargetElement === undefined
+						? this._floatingOptions.AnchorElem.parentElement
+						: this.featureOptions.focusOptions.focusTrapParams.focusTargetElement,
+				focusBottomCallback: this.featureOptions.focusOptions.focusTrapParams?.focusBottomCallback,
+				focusTopCallback: this.featureOptions.focusOptions.focusTrapParams?.focusTopCallback,
 			} as Behaviors.FocusTrapParams;
 
 			this._focusTrapInstance = new Behaviors.FocusTrap(opts);
@@ -79,46 +101,50 @@ namespace OSFramework.OSUI.Feature.Balloon {
 		private _manageFocusInsideBalloon(
 			arrowKeyPressed?: GlobalEnum.Keycodes.ArrowDown | GlobalEnum.Keycodes.ArrowUp
 		) {
-			if (this._focusableBalloonElements.length === 0 || arrowKeyPressed === undefined) {
-				this._currentFocusedElementIndex = undefined;
-			}
-			// When ArrowDown is pressed
-			else if (arrowKeyPressed === GlobalEnum.Keycodes.ArrowDown) {
-				// If the _currentFocusedElementIndex is undefined or is the last one
-				// Then move the focus to the first focusable element
-				if (
-					this._currentFocusedElementIndex === undefined ||
-					this._currentFocusedElementIndex >= this._focusableBalloonElements.length - 1
-				)
-					this._currentFocusedElementIndex = 0;
-				// Otherwise, move the focus to the next focusable element
-				else this._currentFocusedElementIndex = this._currentFocusedElementIndex + 1;
-			}
-			// When ArrowUp is pressed
-			else if (arrowKeyPressed === GlobalEnum.Keycodes.ArrowUp) {
-				// If the _currentFocusedElementIndex is undefined or is the first one
-				// Then move the focus to the last focusable element
-				if (this._currentFocusedElementIndex === undefined || this._currentFocusedElementIndex === 0)
-					this._currentFocusedElementIndex = this._focusableBalloonElements.length - 1;
-				// Otherwise, move the focus to the previous focusable element
-				else this._currentFocusedElementIndex = this._currentFocusedElementIndex - 1;
-			}
+			if (this.featureOptions.focusOptions.elemToFocusOnOpen === undefined) {
+				if (this._focusableBalloonElements.length === 0 || arrowKeyPressed === undefined) {
+					this._currentFocusedElementIndex = undefined;
+				}
+				// When ArrowDown is pressed
+				else if (arrowKeyPressed === GlobalEnum.Keycodes.ArrowDown) {
+					// If the _currentFocusedElementIndex is undefined or is the last one
+					// Then move the focus to the first focusable element
+					if (
+						this._currentFocusedElementIndex === undefined ||
+						this._currentFocusedElementIndex >= this._focusableBalloonElements.length - 1
+					)
+						this._currentFocusedElementIndex = 0;
+					// Otherwise, move the focus to the next focusable element
+					else this._currentFocusedElementIndex = this._currentFocusedElementIndex + 1;
+				}
+				// When ArrowUp is pressed
+				else if (arrowKeyPressed === GlobalEnum.Keycodes.ArrowUp) {
+					// If the _currentFocusedElementIndex is undefined or is the first one
+					// Then move the focus to the last focusable element
+					if (this._currentFocusedElementIndex === undefined || this._currentFocusedElementIndex === 0)
+						this._currentFocusedElementIndex = this._focusableBalloonElements.length - 1;
+					// Otherwise, move the focus to the previous focusable element
+					else this._currentFocusedElementIndex = this._currentFocusedElementIndex - 1;
+				}
 
-			// If the _currentFocusedElementIndex is undefined, focus on the balloon wrapper
-			if (this._currentFocusedElementIndex === undefined) {
-				OSUI.Helper.AsyncInvocation(() => {
-					this.featureElem.focus();
-				});
-				// Otherwise, focus on the element corresponding ot the _currentFocusedElementIndex
+				// If the _currentFocusedElementIndex is undefined, focus on the balloon wrapper
+				if (this._currentFocusedElementIndex === undefined) {
+					OSUI.Helper.AsyncInvocation(() => {
+						this.featureElem.focus();
+					});
+					// Otherwise, focus on the element corresponding ot the _currentFocusedElementIndex
+				} else {
+					OSUI.Helper.AsyncInvocation(() => {
+						(this._focusableBalloonElements[this._currentFocusedElementIndex] as HTMLElement).focus();
+					});
+				}
 			} else {
-				OSUI.Helper.AsyncInvocation(() => {
-					(this._focusableBalloonElements[this._currentFocusedElementIndex] as HTMLElement).focus();
-				});
+				this.featureOptions.focusOptions.elemToFocusOnOpen.focus();
 			}
 		}
 
 		// Call methods to open or close, based on e.key and behaviour applied
-		private _onkeypressCallback(e: KeyboardEvent): void {
+		private _onKeypressCallback(e: KeyboardEvent): void {
 			const isEscapedPressed = e.key === GlobalEnum.Keycodes.Escape;
 			const isArrowDownPressed = e.key === GlobalEnum.Keycodes.ArrowDown;
 			const isArrowUpPressed = e.key === GlobalEnum.Keycodes.ArrowUp;
@@ -127,6 +153,7 @@ namespace OSFramework.OSUI.Feature.Balloon {
 				// Close the Balloon when pressing Esc
 				if (isEscapedPressed) {
 					this.close();
+					e.stopPropagation();
 					// Move the focus between the balloon's focusable elements when pressing ArrowDown or ArrowUp
 				} else if (isArrowDownPressed || isArrowUpPressed) {
 					this._manageFocusInsideBalloon(e.key);
@@ -137,6 +164,14 @@ namespace OSFramework.OSUI.Feature.Balloon {
 			e.stopPropagation();
 		}
 
+		// Manage the behaviour when there is a window resize!
+		private _onWindowResize(): void {
+			// If there is a horizontal resize and the Balloon is open, close it!
+			if (this.isOpen) {
+				this.close();
+			}
+		}
+
 		// Method to remove the event listeners
 		private _removeEventListeners(): void {
 			this.featureElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
@@ -144,6 +179,13 @@ namespace OSFramework.OSUI.Feature.Balloon {
 				Event.DOMEvents.Listeners.Type.BodyOnClick,
 				this._eventBodyClick
 			);
+
+			if (this.featureOptions.useTriggerWidth) {
+				Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
+					Event.DOMEvents.Listeners.Type.WindowResize,
+					this._eventOnWindowResize
+				);
+			}
 		}
 
 		// Add the Accessibility Attributes values
@@ -151,30 +193,42 @@ namespace OSFramework.OSUI.Feature.Balloon {
 		private _setA11YProperties(): void {
 			Helper.Dom.Attribute.Set(this.featureElem, Constants.A11YAttributes.Aria.Hidden, (!this.isOpen).toString());
 
-			// Will handle the tabindex value of the elements inside pattern
-			Helper.A11Y.SetElementsTabIndex(this.isOpen, this._focusTrapInstance.focusableElements);
+			if (this.featureOptions.focusOptions.useFocus !== false) {
+				// Will handle the tabindex value of the elements inside pattern
+				Helper.A11Y.SetElementsTabIndex(this.isOpen, this._focusTrapInstance.focusableElements);
 
-			Helper.Dom.Attribute.Set(
-				this.featureElem,
-				Constants.A11YAttributes.TabIndex,
-				this.isOpen
-					? Constants.A11YAttributes.States.TabIndexShow
-					: Constants.A11YAttributes.States.TabIndexHidden
-			);
+				Helper.Dom.Attribute.Set(
+					this.featureElem,
+					Constants.A11YAttributes.TabIndex,
+					this.isOpen
+						? Constants.A11YAttributes.States.TabIndexShow
+						: Constants.A11YAttributes.States.TabIndexHidden
+				);
 
-			Helper.Dom.Attribute.Set(
-				this._floatingOptions.AnchorElem,
-				Constants.A11YAttributes.TabIndex,
-				this.isOpen
-					? Constants.A11YAttributes.States.TabIndexHidden
-					: Constants.A11YAttributes.States.TabIndexShow
-			);
+				Helper.Dom.Attribute.Set(
+					this._floatingOptions.AnchorElem,
+					Constants.A11YAttributes.TabIndex,
+					this.isOpen
+						? Constants.A11YAttributes.States.TabIndexHidden
+						: Constants.A11YAttributes.States.TabIndexShow
+				);
+			}
+		}
+
+		// Method to set the ballon width, based on the useTriggerWidth option
+		private _setBalloonWidth(): void {
+			const _balloonWidth = this.featureOptions.useTriggerWidth
+				? this.featureOptions.anchorElem.offsetWidth + GlobalEnum.Units.Pixel
+				: GlobalEnum.CssProperties.MaxContent;
+
+			Helper.Dom.Styles.SetStyleAttribute(this.featureElem, Enum.CssCustomProperties.Width, _balloonWidth);
 		}
 
 		// Set the callbacks
 		private _setCallbacks(): void {
 			this._eventBodyClick = this._bodyClickCallback.bind(this);
-			this._eventOnKeypress = this._onkeypressCallback.bind(this);
+			this._eventOnKeypress = this._onKeypressCallback.bind(this);
+			this._eventOnWindowResize = this._onWindowResize.bind(this);
 
 			// Set custom Balloon event
 			this._onToggleEvent = function dispatchCustomEvent(isOpen, balloonElem) {
@@ -187,12 +241,22 @@ namespace OSFramework.OSUI.Feature.Balloon {
 
 		//  Method to add event listeners
 		private _setEventListeners(): void {
-			this.featureElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
+			if (this.featureOptions.focusOptions.useFocus !== false) {
+				this.featureElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
+			}
 
 			if (this.isOpen) {
 				Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
 					Event.DOMEvents.Listeners.Type.BodyOnClick,
 					this._eventBodyClick
+				);
+			}
+
+			if (this.featureOptions.useTriggerWidth) {
+				// Add the window resize callback that will be used to close the balloon and avoid width differences!
+				Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
+					Event.DOMEvents.Listeners.Type.WindowResize,
+					this._eventOnWindowResize
 				);
 			}
 		}
@@ -207,12 +271,21 @@ namespace OSFramework.OSUI.Feature.Balloon {
 			this.isOpen = isOpen;
 
 			// Toggle class
-			if (isOpen) {
+			if (this.isOpen) {
 				Helper.Dom.Styles.AddClass(this.featureElem, Enum.CssClasses.IsOpen);
+
+				if (this.featureOptions.useTriggerWidth) {
+					this._setBalloonWidth();
+				}
+
+				// Set Floating Util
+				this.setFloatingBehaviour();
 				// Add event listeners. This is async to prevent unnecessary calls when clicking on triggers
 				Helper.AsyncInvocation(this._setEventListeners.bind(this));
 			} else {
 				Helper.Dom.Styles.RemoveClass(this.featureElem, Enum.CssClasses.IsOpen);
+				// Remove Floating Util
+				this._floatingInstance.unsetFloatingPosition();
 				// remove event listeners
 				this._removeEventListeners();
 			}
@@ -221,22 +294,21 @@ namespace OSFramework.OSUI.Feature.Balloon {
 			this._setA11YProperties();
 
 			if (this.isOpen) {
-				// Handle focus trap logic
-				this._focusManagerInstance.storeLastFocusedElement();
-				this._focusTrapInstance.enableForA11y();
+				if (this.featureOptions.focusOptions.useFocus !== false) {
+					// Handle focus trap logic
+					this._focusManagerInstance.storeLastFocusedElement();
+					this._focusTrapInstance.enableForA11y();
+				}
 
-				// Set Floating Util
-				this.setFloatingBehaviour();
-
-				// Store the focusable elements inside the Balloon
-				this._focusableBalloonElements = this.featureElem.querySelectorAll(Constants.FocusableElems);
-				// Manage the focus when opening the balloon
-				this._manageFocusInsideBalloon(arrowKeyPressed);
-			} else {
+				if (this.featureOptions.focusOptions.useFocus !== false) {
+					// Store the focusable elements inside the Balloon
+					this._focusableBalloonElements = this.featureElem.querySelectorAll(Constants.FocusableElems);
+					// Manage the focus when opening the balloon
+					this._manageFocusInsideBalloon(arrowKeyPressed);
+				}
+			} else if (this.featureOptions.focusOptions.useFocus !== false) {
 				// Handle focus trap logic
 				this._focusTrapInstance.disableForA11y();
-				// Remove Floating Util
-				this._floatingInstance.unsetFloatingPosition();
 				// Focus on last element clicked. Async to avoid conflict with closing animation
 				Helper.AsyncInvocation(() => {
 					this.featureElem.blur();
@@ -264,6 +336,7 @@ namespace OSFramework.OSUI.Feature.Balloon {
 			this._eventBodyClick = undefined;
 			this._eventOnKeypress = undefined;
 			this._onToggleEvent = undefined;
+			this._eventOnWindowResize = undefined;
 			window[OSFramework.OSUI.GlobalEnum.CustomEvent.BalloonOnToggle] = undefined;
 		}
 
@@ -276,8 +349,13 @@ namespace OSFramework.OSUI.Feature.Balloon {
 			this._setCallbacks();
 			this._setEventListeners();
 			this.setFloatingConfigs();
-			this._handleFocusBehavior();
+
+			if (this.featureOptions.focusOptions.useFocus !== false) {
+				this._handleFocusBehavior();
+			}
+
 			this._setA11YProperties();
+			this._setBalloonWidth();
 			this.setBalloonShape();
 		}
 
@@ -287,7 +365,7 @@ namespace OSFramework.OSUI.Feature.Balloon {
 		 * @memberof Balloon
 		 */
 		public close(): void {
-			if (this.isOpen) {
+			if (this.isOpen && this.featureElem !== undefined) {
 				this._toggleBalloon(false);
 			}
 		}
@@ -313,7 +391,7 @@ namespace OSFramework.OSUI.Feature.Balloon {
 			isOpenedByApi: boolean,
 			arrowKeyPressed?: GlobalEnum.Keycodes.ArrowDown | GlobalEnum.Keycodes.ArrowUp
 		): void {
-			if (this.isOpen === false) {
+			if (this.isOpen === false && this.featureElem !== undefined) {
 				this._isOpenedByApi = isOpenedByApi;
 				this._toggleBalloon(true, false, arrowKeyPressed);
 			}
@@ -369,6 +447,7 @@ namespace OSFramework.OSUI.Feature.Balloon {
 			this._floatingOptions = {
 				AutoPlacement: this.featureOptions.position === GlobalEnum.FloatingPosition.Auto,
 				AnchorElem: this.featureOptions.anchorElem,
+				ArrowElem: this.featureOptions.arrowElem,
 				AutoPlacementOptions: {
 					alignment: this.featureOptions.alignment,
 					allowedPlacements: this.featureOptions.allowedPlacements,

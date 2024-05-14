@@ -14,17 +14,14 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide.Enum {
 	 * Class
 	 */
 	export enum CssClass {
+		Balloon = 'osui-dropdown-serverside__balloon',
 		BalloonContainer = 'osui-dropdown-serverside__balloon-container',
 		BalloonContent = 'osui-dropdown-serverside__balloon-content',
 		BalloonFooter = 'osui-dropdown-serverside__balloon-footer',
 		BalloonHasNotSearchInput = 'osui-dropdown-serverside__balloon--has-not-search',
-		BalloonPositionBottom = 'osui-dropdown-serverside__balloon--is-bottom',
-		BalloonPositionTop = 'osui-dropdown-serverside__balloon--is-top',
 		BalloonSearch = 'osui-dropdown-serverside__balloon-search',
-		BalloonWrapper = 'osui-dropdown-serverside__balloon-wrapper',
 		ErrorMessage = 'osui-dropdown-serverside-error-message',
 		IsDisabled = 'osui-dropdown-serverside--is-disabled',
-		IsInsidePopup = 'osui-dropdown-serverside--is-inside-popup',
 		IsOpened = 'osui-dropdown-serverside--is-opened',
 		IsVisible = 'osui-dropdown-serverside-visible',
 		NotValid = 'osui-dropdown-serverside--not-valid',

@@ -2,9 +2,9 @@
 namespace OSFramework.OSUI.Behaviors {
 	// FocusTrap type
 	export type FocusTrapParams = {
-		focusBottomCallback: GlobalCallbacks.Generic;
+		focusBottomCallback?: GlobalCallbacks.Generic;
 		focusTargetElement: HTMLElement;
-		focusTopCallback: GlobalCallbacks.Generic;
+		focusTopCallback?: GlobalCallbacks.Generic;
 	};
 
 	/**

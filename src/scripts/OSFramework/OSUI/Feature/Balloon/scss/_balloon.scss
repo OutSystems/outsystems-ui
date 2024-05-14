@@ -7,18 +7,21 @@
 	--border-radius-rounded: 16px;
 	--osui-floating-position-x: 0;
 	--osui-floating-position-y: 0;
+	--osui-balloon-shadow: var(--shadow-s);
+	--osui-balloon-width: max-content;
+	--osui-balloon-position: fixed;
 
-	box-shadow: var(--shadow-s);
+	box-shadow: var(--osui-balloon-shadow);
 	border-radius: var(--osui-balloon-shape);
 	background-color: var(--color-neutral-0);
 	height: auto;
 	left: var(--osui-floating-position-x);
 	opacity: 0;
-	position: fixed;
+	position: var(--osui-balloon-position);
 	pointer-events: none;
 	top: var(--osui-floating-position-y);
 	visibility: hidden;
-	width: max-content;
+	width: var(--osui-balloon-width);
 	z-index: var(--layer-global-elevated);
 
 	&--is-open {
@@ -42,7 +45,7 @@
 		-servicestudio-left: 0;
 		-servicestudio-min-width: 170px;
 		-servicestudio-opacity: 1;
-		-servicestudio-position: absolute;
+		-servicestudio-position: absolute !important;
 		-servicestudio-top: 100%;
 		-servicestudio-visibility: visible;
 
@@ -51,11 +54,13 @@
 			-servicestudio-transform: translate(-50%);
 		}
 
-		&.bottom-start {
+		&.bottom-start,
+		&.bottom-left {
 			-servicestudio-left: 0;
 		}
 
-		&.bottom-end {
+		&.bottom-end,
+		&.bottom-right {
 			-servicestudio-left: 100%;
 			-servicestudio-transform: translateX(-100%);
 		}
@@ -97,13 +102,15 @@
 			-servicestudio-transform: translateY(-50%);
 		}
 
-		&.top-end {
+		&.top-end,
+		&.top-right {
 			-servicestudio-top: 0;
 			-servicestudio-left: 100%;
 			-servicestudio-transform: translateY(-100%) translateX(-100%);
 		}
 
-		&.top-start {
+		&.top-start,
+		&.top-left {
 			-servicestudio-top: 0;
 			-servicestudio-left: 0;
 			-servicestudio-transform: translateY(-100%);
@@ -114,12 +121,5 @@
 			-servicestudio-left: 50%;
 			-servicestudio-transform: translateY(-100%) translateX(-50%);
 		}
-	}
-}
-
-// To fix the balloon getting cut inside Tabs
-.osui-tabs__header-item {
-	.osui-balloon {
-		position: fixed;
 	}
 }
