@@ -147,9 +147,17 @@
 	}
 
 	&:not(.osui-tabs--has-drag) {
-		// To prevent render/position issues after repaints that affect the Tabs size
-		.osui-tabs__content:not(:focus-within) {
-			scroll-snap-type: x mandatory;
+		.osui-tabs__content {
+			// To prevent render/position issues after repaints that affect the Tabs size
+			&:not(:focus-within) {
+				scroll-snap-type: x mandatory;
+			}
+
+			&-item {
+				&:not(.osui-tabs--is-active) {
+					opacity: 0;
+				}
+			}
 		}
 	}
 
@@ -246,10 +254,6 @@
 			// This selector is used to prevent render issues on chrome, in some screen-sizes, due to overflow hidden and css snap
 			.columns {
 				max-width: 99.99%;
-			}
-
-			&:not(.osui-tabs--is-active) {
-				opacity: 0;
 			}
 		}
 	}

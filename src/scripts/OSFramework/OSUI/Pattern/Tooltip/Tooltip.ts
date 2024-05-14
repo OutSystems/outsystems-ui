@@ -19,6 +19,8 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 		private _eventIconOnMouseLeave: GlobalCallbacks.Generic;
 		// Event OnBalloonClick - Manage the balloon click!
 		private _eventOnBalloonClick: GlobalCallbacks.Generic;
+		// Event OnPatternBlur (combined with focus)
+		private _eventOnBlur: GlobalCallbacks.Generic;
 		// Event OnPatternClick
 		private _eventOnClick: GlobalCallbacks.Generic;
 		// Event OnPatternFocus
@@ -100,6 +102,37 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 			});
 		}
 
+		// Method to close the tooltip at onBlur
+		private _onBlur(): void {
+			// Wait for next activeElement be active
+			Helper.AsyncInvocation(() => {
+				// Check if a previous active element has been assigned
+				if (this._tooltipBalloonContentActiveElem) {
+					this._tooltipBalloonContentActiveElem.removeEventListener(
+						GlobalEnum.HTMLEvent.Blur,
+						this._eventOnBlur
+					);
+				}
+
+				// Get the closest element in order to check if the activeElement is inside this TooltipBalloon
+				const _closestElem = document.activeElement.closest(Constants.Dot + Enum.CssClass.Pattern);
+				if (
+					_closestElem !== this.selfElement &&
+					_closestElem?.contains(_closestElem.querySelector(Constants.AllowPropagationAttr)) === false
+				) {
+					// Close Tooltip
+					this._triggerClose();
+				} else {
+					// Add the blur event in order to proper close the tooltip after its blur
+					this._tooltipBalloonContentActiveElem = document.activeElement as HTMLElement;
+					this._tooltipBalloonContentActiveElem.addEventListener(
+						GlobalEnum.HTMLEvent.Blur,
+						this._eventOnBlur
+					);
+				}
+			});
+		}
+
 		// Trigger the tooltip at onClick behaviour
 		private _onClick(e: MouseEvent): void {
 			e.stopPropagation();
@@ -169,6 +202,7 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 		private _setUpEvents(): void {
 			if (this.configs.IsHover === false) {
 				// Add the focus event in order to show the tooltip balloon when the toolTip content is focused
+				this._tooltipIconElem.addEventListener(GlobalEnum.HTMLEvent.Blur, this._eventOnBlur);
 				this._tooltipIconElem.addEventListener(GlobalEnum.HTMLEvent.Focus, this._eventOnFocus);
 				this._tooltipIconElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
 			}
@@ -272,6 +306,7 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 		// Remove Pattern Events
 		private _unsetEvents(): void {
 			this._tooltipIconElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
+			this._tooltipIconElem.removeEventListener(GlobalEnum.HTMLEvent.Blur, this._eventOnBlur);
 			this._tooltipIconElem.removeEventListener(GlobalEnum.HTMLEvent.Focus, this._eventOnFocus);
 			this._tooltipIconElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
 			this._tooltipBalloonContentElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnBalloonClick);
@@ -335,6 +370,7 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 			this._eventBalloonOnToggle = this._balloonOnToggleCallback.bind(this);
 			this._eventOnBalloonClick = this._onBalloonClick.bind(this);
 			this._eventOnClick = this._onClick.bind(this);
+			this._eventOnBlur = this._onBlur.bind(this);
 			this._eventOnFocus = this._onFocus.bind(this);
 			this._eventOnKeypress = this._onkeypressCallback.bind(this);
 			this._eventBalloonWrapperOnMouseEnter = this._onBalloonWrapperMouseEnter.bind(this);
@@ -367,6 +403,7 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 		protected unsetCallbacks(): void {
 			this._eventBalloonOnToggle = undefined;
 			this._eventOnBalloonClick = undefined;
+			this._eventOnBlur = undefined;
 			this._eventOnClick = undefined;
 			this._eventOnFocus = undefined;
 			this._eventOnKeypress = undefined;
