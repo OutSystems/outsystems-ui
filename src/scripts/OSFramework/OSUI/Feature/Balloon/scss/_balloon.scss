@@ -4,119 +4,122 @@
 /// Patterns - Interaction - Balloon
 
 .osui-balloon {
-    --border-radius-rounded: 16px;
-    --osui-floating-position-x: 0;
-    --osui-floating-position-y: 0;
+	--border-radius-rounded: 16px;
+	--osui-floating-position-x: 0;
+	--osui-floating-position-y: 0;
+	--osui-balloon-shadow: var(--shadow-s);
+	--osui-balloon-width: max-content;
+	--osui-balloon-position: fixed;
 
-    box-shadow: var(--shadow-s);
-    border-radius: var(--osui-balloon-shape);
-    background-color: var(--color-neutral-0);
-    height: auto;
-    left: var(--osui-floating-position-x);
-    opacity: 0;
-    position: fixed;
-    pointer-events: none;
-    top: var(--osui-floating-position-y);
-    visibility: hidden;
-    width: max-content;
-    z-index: var(--layer-global-elevated);
+	box-shadow: var(--osui-balloon-shadow);
+	border-radius: var(--osui-balloon-shape);
+	background-color: var(--color-neutral-0);
+	height: auto;
+	left: var(--osui-floating-position-x);
+	opacity: 0;
+	position: var(--osui-balloon-position);
+	pointer-events: none;
+	top: var(--osui-floating-position-y);
+	visibility: hidden;
+	width: var(--osui-balloon-width);
+	z-index: var(--layer-global-elevated);
 
-    &--is-open {
-        visibility: visible;
-        opacity: 1;
-        pointer-events: all;
-        transition: opacity 300ms ease-in;
-    }
+	&--is-open {
+		visibility: visible;
+		opacity: 1;
+		pointer-events: all;
+		transition: opacity 300ms ease-in;
+	}
 
-    // Prevent the pattern from occupying space when closed, without interfering with its own open animation
-    &:not(.osui-balloon--is-open) * {
-        display: none;
-    }
+	// Prevent the pattern from occupying space when closed, without interfering with its own open animation
+	&:not(.osui-balloon--is-open) * {
+		display: none;
 
-    // Service Studio Preview
-    & {
-        -servicestudio-left: 0;
-        -servicestudio-min-width: 170px;
-        -servicestudio-opacity: 1;
-        -servicestudio-position: absolute;
-        -servicestudio-top: 100%;
-        -servicestudio-visibility: visible;
+		& {
+			-servicestudio-display: block;
+		}
+	}
 
+	// Service Studio Preview
+	& {
+		-servicestudio-left: 0;
+		-servicestudio-min-width: 170px;
+		-servicestudio-opacity: 1;
+		-servicestudio-position: absolute !important;
+		-servicestudio-top: 100%;
+		-servicestudio-visibility: visible;
 
-        &.bottom {
-            -servicestudio-left: 50%;
-            -servicestudio-transform: translate(-50%);
-        }
+		&.bottom {
+			-servicestudio-left: 50%;
+			-servicestudio-transform: translate(-50%);
+		}
 
-        &.bottom-start {
-            -servicestudio-left: 0;
-        }
+		&.bottom-start,
+		&.bottom-left {
+			-servicestudio-left: 0;
+		}
 
-        &.bottom-end {
-            -servicestudio-left: 100%;
-            -servicestudio-transform: translateX(-100%);
-        }
+		&.bottom-end,
+		&.bottom-right {
+			-servicestudio-left: 100%;
+			-servicestudio-transform: translateX(-100%);
+		}
 
-        &.center {
-            -servicestudio-top: 0;
-            -servicestudio-left: 0;
-        }
+		&.center {
+			-servicestudio-top: 0;
+			-servicestudio-left: 0;
+		}
 
-        &.left-end {
-            -servicestudio-top: 100%;
-            -servicestudio-transform: translateY(-100%) translateX(-100%);
-        }
+		&.left-end {
+			-servicestudio-top: 100%;
+			-servicestudio-transform: translateY(-100%) translateX(-100%);
+		}
 
-        &.left-start {
-            -servicestudio-top: 0;
-            -servicestudio-transform: translateX(-100%);
-        }
+		&.left-start {
+			-servicestudio-top: 0;
+			-servicestudio-transform: translateX(-100%);
+		}
 
-        &.left {
-            -servicestudio-top: 50%;
-            -servicestudio-transform: translateY(-50%) translateX(-100%);
-        }
+		&.left {
+			-servicestudio-top: 50%;
+			-servicestudio-transform: translateY(-50%) translateX(-100%);
+		}
 
-        &.right-end {
-            -servicestudio-top: 100%;
-            -servicestudio-left: 100%;
-            -servicestudio-transform: translateY(-100%);
-        }
+		&.right-end {
+			-servicestudio-top: 100%;
+			-servicestudio-left: 100%;
+			-servicestudio-transform: translateY(-100%);
+		}
 
-        &.right-start {
-            -servicestudio-top: 0;
-            -servicestudio-left: 100%;
-        }
-         
-         &.right {
-            -servicestudio-top: 50%;
-            -servicestudio-left: 100%;
-            -servicestudio-transform: translateY(-50%);
-        }
+		&.right-start {
+			-servicestudio-top: 0;
+			-servicestudio-left: 100%;
+		}
 
-        &.top-end {
-            -servicestudio-top: 0;
-            -servicestudio-left: 100%;
-            -servicestudio-transform: translateY(-100%) translateX(-100%);
-        }
+		&.right {
+			-servicestudio-top: 50%;
+			-servicestudio-left: 100%;
+			-servicestudio-transform: translateY(-50%);
+		}
 
-        &.top-start {
-            -servicestudio-top: 0;
-            -servicestudio-left: 0;
-            -servicestudio-transform: translateY(-100%);
-        }
+		&.top-end,
+		&.top-right {
+			-servicestudio-top: 0;
+			-servicestudio-left: 100%;
+			-servicestudio-transform: translateY(-100%) translateX(-100%);
+		}
 
-        &.top {
-            -servicestudio-top: 0;
-            -servicestudio-left: 50%;
-            -servicestudio-transform: translateY(-100%) translateX(-50%);
-        }
-    }
-}
+		&.top-start,
+		&.top-left {
+			-servicestudio-top: 0;
+			-servicestudio-left: 0;
+			-servicestudio-transform: translateY(-100%);
+		}
 
-// To fix the balloon getting cut inside Tabs
-.osui-tabs__header-item{
-    .osui-balloon {
-        position: fixed;
-    }
+		&.top {
+			-servicestudio-top: 0;
+			-servicestudio-left: 50%;
+			-servicestudio-transform: translateY(-100%) translateX(-50%);
+		}
+	}
 }

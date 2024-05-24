@@ -101,6 +101,7 @@ namespace OSFramework.OSUI.GlobalEnum {
 	export enum CssProperties {
 		Auto = 'auto',
 		Initial = 'initial',
+		MaxContent = 'max-content',
 		None = 'none',
 		PaddingTop = 'padding-top',
 	}
@@ -151,11 +152,22 @@ namespace OSFramework.OSUI.GlobalEnum {
 	}
 
 	/**
-	 * OutSystemsUI Scroll Options
+	 * OutSystemsUI Scroll Behavior Options
 	 */
 	export enum ScrollBehavior {
 		Auto = 'auto',
+		Instant = 'instant',
 		Smooth = 'smooth',
+	}
+
+	/**
+	 * OutSystemsUI Scroll Position Options
+	 */
+	export enum ScrollPositionBehavior {
+		Start = 'start',
+		Center = 'center',
+		End = 'end',
+		Nearest = 'nearest',
 	}
 
 	/**

@@ -13,6 +13,7 @@ namespace OSFramework.OSUI.Feature.Balloon.Enum {
 	 */
 	export enum CssCustomProperties {
 		Shape = '--osui-balloon-shape',
+		Width = '--osui-balloon-width',
 	}
 
 	/**

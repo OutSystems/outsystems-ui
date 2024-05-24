@@ -9,6 +9,32 @@ $balloonMobileTopMargin: 5vh;
 
 ///
 .osui-dropdown-serverside {
+	--osui-dropdown-ss-balloon-max-height: 300px;
+	--osui-dropdown-min-width: 170px;
+	--osui-floating-offset: var(--space-xs);
+	position: relative;
+
+	.osui-balloon {
+		--osui-balloon-shadow: none;
+		border: var(--border-size-s) solid var(--color-neutral-5);
+		display: flex;
+		flex-direction: column;
+		flex: 1;
+		height: auto;
+		min-width: var(--osui-dropdown-min-width);
+		overflow: hidden;
+		z-index: var(--layer-global-elevated);
+
+		// Service Studio Preview
+		& {
+			-servicestudio-left: initial;
+			-servicestudio-max-height: 320px;
+			-servicestudio-opacity: 1;
+			-servicestudio-position: relative;
+			-servicestudio-top: calc(100% + 4px);
+		}
+	}
+
 	// "Input" section - SelectedValues container
 	&__selected-values {
 		align-items: center;
@@ -72,57 +98,6 @@ $balloonMobileTopMargin: 5vh;
 
 	// Balloon section
 	&__balloon {
-		// Wrapper
-		&-wrapper {
-			top: calc(
-				var(--osui-dropdown-ss-top) + var(--osui-dropdown-ss-input-height) + $balloonMarginToSelectValuesWrapper
-			);
-			display: flex;
-			flex-direction: column;
-			flex: 1;
-			left: var(--osui-dropdown-ss-left);
-			max-height: 0;
-			max-width: var(--osui-dropdown-ss-width);
-			opacity: 0;
-			overflow: hidden;
-			position: absolute;
-			transition: opacity 300ms ease;
-			width: 100%;
-			z-index: var(--layer-global-elevated);
-
-			// Service Studio Preview
-			& {
-				-servicestudio-left: initial;
-				-servicestudio-max-height: 320px;
-				-servicestudio-opacity: 1;
-				-servicestudio-position: relative;
-				-servicestudio-top: 2px;
-			}
-		}
-
-		// Content Container
-		&-container {
-			background-color: var(--color-neutral-0);
-			border-radius: var(--border-radius-soft);
-			border: var(--border-size-s) solid var(--color-neutral-5);
-			display: flex;
-			flex-direction: column;
-			height: 100%;
-			opacity: 0;
-			overflow: hidden;
-			// --osui-dropdown-ss-thresholdanimateval is the value used as a threshold to animate down the balloon
-			transform: translateY(calc(-1 * var(--osui-dropdown-ss-thresholdanimateval)));
-			transition:
-				opacity 250ms ease,
-				transform 300ms ease-in-out;
-
-			// Service Studio Preview
-			& {
-				-servicestudio-opacity: 1;
-				-servicestudio-transform: none;
-			}
-		}
-
 		// Search Wrapper
 		&-search-wrapper {
 			background-color: var(--color-neutral-0);
@@ -177,6 +152,8 @@ $balloonMobileTopMargin: 5vh;
 		&-content {
 			border-top: var(--border-size-s) solid var(--color-neutral-5);
 			flex: 1;
+			height: auto;
+			max-height: var(--osui-dropdown-ss-balloon-max-height);
 			overflow-x: hidden;
 			overflow-y: auto;
 			padding: var(--space-none);
@@ -213,37 +190,8 @@ $balloonMobileTopMargin: 5vh;
 		}
 	}
 
-	// When should be open at top!
-	&__balloon--is-top {
-		// Wrapper
-		&.osui-dropdown-serverside__balloon-wrapper {
-			bottom: calc(100vh - var(--osui-dropdown-ss-top) + $balloonMarginToSelectValuesWrapper);
-			top: unset;
-		}
-
-		// Content Container
-		.osui-dropdown-serverside {
-			&__balloon {
-				&-container {
-					transform: translateY(0);
-					transition: opacity 250ms ease;
-				}
-
-				&-content {
-					border-top-width: var(--border-size-none);
-				}
-
-				&-search-wrapper {
-					border-bottom: var(--border-size-none);
-					border-top: var(--border-size-s) solid var(--color-neutral-5);
-					order: 3;
-				}
-			}
-		}
-	}
-
 	// Balloon IsOpen
-	&--is-opened {
+	&:has(.osui-dropdown-serverside--is-opened) {
 		.osui-dropdown-serverside {
 			// "Input" section wrapper - SelectedValues container wrapper
 			&__selected-values-wrapper {
@@ -256,27 +204,6 @@ $balloonMobileTopMargin: 5vh;
 					color: var(--color-primary);
 					transform: rotate(180deg);
 				}
-			}
-
-			// Balloon section
-			&__balloon {
-				// Content Container
-				&-container {
-					opacity: 1;
-					transform: translateY(0);
-				}
-			}
-		}
-
-		// Ballon wrapper
-		&.osui-dropdown-serverside__balloon-wrapper {
-			max-height: var(--osui-dropdown-ss-balloon-max-height);
-			opacity: 1;
-
-			// Used to help triggering the IntersectionObserver before going behind header!
-			&.osui-dropdown-serverside__balloon--is-top {
-				max-height: calc(var(--osui-dropdown-ss-balloon-max-height) + var(--header-size));
-				padding-top: var(--header-size);
 			}
 		}
 	}
@@ -297,23 +224,6 @@ $balloonMobileTopMargin: 5vh;
 		}
 	}
 
-	// When inside Popup widget
-	&--is-inside-popup {
-		.osui-dropdown-serverside__balloon-wrapper {
-			top: calc(var(--osui-dropdown-ss-top) + var(--osui-dropdown-ss-input-height) + 4px);
-			position: fixed;
-			overflow: visible;
-
-			&.osui-dropdown-serverside__balloon--is-top {
-				top: unset;
-			}
-
-			&.osui-dropdown-serverside--is-opened {
-				z-index: calc(var(--osui-popup-layer) + var(--layer-local-tier-1));
-			}
-		}
-	}
-
 	// When it's not valid
 	&--not-valid {
 		.osui-dropdown-serverside__selected-values-wrapper {
@@ -329,42 +239,18 @@ $balloonMobileTopMargin: 5vh;
 	}
 }
 
-// Inside other fixed patterns
-.osui-dropdown-serverside-visible {
-	// Inside Sidebar
-	&:has(.osui-sidebar--is-open .osui-dropdown-serverside--is-opened) {
-		.osui-dropdown-serverside__balloon-wrapper.osui-dropdown-serverside--is-opened {
-			z-index: calc(var(--osui-sidebar-layer) + var(--layer-local-tier-1));
-		}
-	}
-
-	// Inside Notification
-	&:has(.osui-notification--is-open .osui-dropdown-serverside--is-opened) {
-		.osui-dropdown-serverside__balloon-wrapper.osui-dropdown-serverside--is-opened {
-			z-index: calc(var(--osui-notification-layer) + var(--layer-local-tier-1));
-		}
-	}
-
-	// Inside BottomSheet
-	&:has(.osui-bottom-sheet--is-open .osui-dropdown-serverside--is-opened) {
-		.osui-dropdown-serverside__balloon-wrapper.osui-dropdown-serverside--is-opened {
-			z-index: calc(var(--osui-bottom-sheet-layer) + var(--layer-local-tier-1));
-		}
-	}
-}
-
-// Fallback for fierfox that don't support yet :has(), but it's already in development
-// https://bugzilla.mozilla.org/show_bug.cgi?id=418039
-.firefox {
-	.osui-dropdown-serverside__balloon-wrapper.osui-dropdown-serverside--is-opened {
-		z-index: var(--layer-global-instant-interaction);
-	}
-}
-
 // Inside Form & Popup
 .form {
 	.osui-dropdown-serverside--is-inside-popup input[data-input] {
 		margin-bottom: 0;
+	}
+}
+
+// Inside Tabs
+.windows .osui-tabs {
+	// subtracts the size of the border so it doesn't get cut off inside the tabs, in windows
+	.osui-dropdown-serverside__selected-values-wrapper {
+		width: calc(100% - 2 * var(--border-size-s));
 	}
 }
 
@@ -382,9 +268,7 @@ $balloonMobileTopMargin: 5vh;
 		}
 
 		&__balloon {
-			&-container {
-				border-color: var(--color-neutral-7);
-			}
+			border-color: var(--color-neutral-7);
 
 			&-search {
 				&:before {
@@ -507,35 +391,40 @@ $balloonMobileTopMargin: 5vh;
 	.osui-dropdown-serverside {
 		// Balloon section
 		&__balloon {
-			// Wrapper
-			&-wrapper {
-				align-items: center;
-				background-color: var(--overlay-background);
-				display: flex;
-				left: 0;
-				max-width: 100vw;
-				opacity: 0;
-				overflow: hidden;
-				top: 0;
-				transition: opacity 250ms ease;
-				z-index: var(--layer-global-instant-interaction);
+			align-items: center;
+			background-color: var(--overlay-background);
+			border: none;
+			border-radius: var(--border-radius-sharp);
+			display: flex;
+			left: 0;
+			max-width: 100vw;
+			opacity: 0;
+			overflow: hidden;
+			top: 0;
+			transition: opacity 250ms ease;
+			width: 100vw;
+			z-index: var(--layer-global-instant-interaction);
 
-				// Service Studio Preview
-				& {
-					-servicestudio-background-color: var(--color-neutral-0);
-					-servicestudio-left: initial;
-					-servicestudio-opacity: 1;
-					-servicestudio-position: relative;
-					-servicestudio-top: 2px;
-				}
+			// Service Studio Preview
+			& {
+				-servicestudio-background-color: var(--color-neutral-0);
+				-servicestudio-left: initial;
+				-servicestudio-opacity: 1;
+				-servicestudio-position: relative;
+				-servicestudio-top: 2px;
 			}
 
-			// Content Container
 			&-container {
+				background: var(--color-neutral-0);
+				border-radius: var(--osui-balloon-shape);
 				box-shadow: var(--shadow-xl);
+				display: flex;
+				flex-direction: column;
+				height: auto;
 				margin-top: $balloonMobileTopMargin;
 				// 90vh - maxHeight in order to create a margin top/bottom with 5vh
 				max-height: calc(90vh - $balloonMobileTopMargin - var(--header-size));
+				overflow: hidden;
 				width: 85vw;
 
 				// Service Studio Preview
@@ -545,6 +434,11 @@ $balloonMobileTopMargin: 5vh;
 					-servicestudio-opacity: 1;
 					-servicestudio-width: 100%;
 				}
+			}
+
+			&-content {
+				height: var(--osui-dropdown-ss-balloon-max-height);
+				max-height: unset;
 			}
 
 			// If do not exist a input search inside balloon
@@ -557,7 +451,7 @@ $balloonMobileTopMargin: 5vh;
 		}
 
 		&--is-opened {
-			&.osui-dropdown-serverside__balloon-wrapper {
+			&.osui-dropdown-serverside__balloon {
 				min-height: 100vh;
 				opacity: 1;
 			}

@@ -341,6 +341,11 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 			if (balloonOptions !== undefined) {
 				this.balloonOptions = balloonOptions;
 			} else {
+				// Set focus options to pass to the Balloon feature
+				const _focusOptions = {
+					useFocus: true,
+				};
+
 				this.balloonOptions = {
 					alignment: GlobalEnum.FloatingAlignment.Start,
 					allowedPlacements: [
@@ -352,6 +357,7 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 					anchorElem: this._triggerElem,
 					position: this.configs.Position,
 					shape: this.configs.Shape,
+					focusOptions: _focusOptions,
 				};
 			}
 		}

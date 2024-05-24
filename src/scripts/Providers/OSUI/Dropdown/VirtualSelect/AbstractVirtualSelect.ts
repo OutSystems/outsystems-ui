@@ -300,10 +300,11 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		/**
 		 * Clear any selected values from the Dropdown
 		 *
+		 * @param {boolean} silentOnChangedEvent If True, OnChange event will not be triggered
 		 * @memberof Providers.OSUI.Dropdown.VirtualSelect.AbstractVirtualSelect
 		 */
-		public clear(): void {
-			this.virtualselectConfigs.reset();
+		public clear(silentOnChangedEvent = true): void {
+			this.virtualselectConfigs.reset(false, silentOnChangedEvent);
 		}
 
 		/**

@@ -16,11 +16,22 @@ namespace OSFramework.OSUI.Patterns.SectionIndex {
 		private _activeSectionIndexItem: SectionIndexItem.ISectionIndexItem;
 		// Store the contentPaddingTop
 		private _contentPaddingTop: string | number;
+		// Store the header size if it's fixed!
+		private _headerHeight: number;
+		// Store a flag that will be used to check if the header is fixed!
+		private _headerIsFixed = true;
 		// Store the mainContent reference - The one that will have the scroll
 		private _mainScrollContainerElement: HTMLElement;
-
+		// Boolean flag to prevent code from running before the scroll has ended
 		private _navigateOnClick = false;
+		// Store the scroll settimeout, to be cleared when needed
 		private _scrollTimeout: number;
+		// Store the scroll options to be used on ScrollIntoView
+		public scrollOptions: ScrollIntoViewOptions = {
+			behavior: this.configs.SmoothScrolling ? GlobalEnum.ScrollBehavior.Smooth : GlobalEnum.ScrollBehavior.Auto,
+			inline: GlobalEnum.ScrollPositionBehavior.Start,
+			block: GlobalEnum.ScrollPositionBehavior.Start,
+		};
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new SectionIndexConfig(configs));
@@ -52,13 +63,25 @@ namespace OSFramework.OSUI.Patterns.SectionIndex {
 			}
 		}
 
+		// Method to get content paddnig top
 		private _getContentPaddingTop(): void {
 			const _mainContent = Helper.Dom.ClassSelector(document, GlobalEnum.CssClassElements.MainContent);
 			this._contentPaddingTop = _mainContent
 				? parseFloat(
 						window.getComputedStyle(_mainContent).getPropertyValue(GlobalEnum.CssProperties.PaddingTop)
-				  )
+					)
 				: 0;
+		}
+
+		// Method to check if header IsFixed and get its height to be used
+		private _getHeaderSize(): void {
+			const header = Helper.Dom.ClassSelector(document.body, GlobalEnum.CssClassElements.Header);
+			this._headerIsFixed = !!Helper.Dom.ClassSelector(document.body, GlobalEnum.CssClassElements.HeaderIsFixed);
+
+			// If header exist and it's fixed store its height
+			if (header) {
+				this._headerHeight = this._headerIsFixed ? header.offsetHeight : 0;
+			}
 		}
 
 		// Method used to remove a given SectionIndexItem from sectionIndexItems list, it's triggered by SectionIndexItem
@@ -76,27 +99,23 @@ namespace OSFramework.OSUI.Patterns.SectionIndex {
 
 		// Method that will update the IsActive child item status
 		private _setActiveChildOnClick(child: SectionIndexItem.ISectionIndexItem): void {
+			// If its clicking on the same item, do nothing
+			if (child === this._activeSectionIndexItem) {
+				return;
+			}
+
 			// Clean the timeout
 			this._navigateOnClick = true;
 			window.clearTimeout(this._scrollTimeout);
 			this._scrollTimeout = window.setTimeout(() => {
 				// Reset flag in order to understand navigation by click has ended!
 				this._navigateOnClick = false;
-			}, 800); // enought time to deal with the scroll
+			}, 1000); // enought time to deal with the scroll
 
-			// Remove old sectionIndexItem as active if exist
-			if (this._activeSectionIndexItem) {
-				this._activeSectionIndexItem.unsetIsActive();
-			}
-
-			// Set new sectionIndexItem as active
-			child.setIsActive();
-
-			// Set the current IsActive Child
-			this._activeSectionIndexItem = child;
+			this._updateActiveItem(child);
 
 			// Trigger the Scroll navigation
-			Behaviors.Scroll(this._mainScrollContainerElement, child.TargetElementOffset, this.configs.SmoothScrolling);
+			Behaviors.Scroll(child.TargetElement, this.scrollOptions);
 		}
 
 		// Method used to set the IsActive child item at the onBodyScroll
@@ -106,23 +125,8 @@ namespace OSFramework.OSUI.Patterns.SectionIndex {
 				return;
 			}
 
-			// Get all IsActive Items
-			const isActiveChilds = this.getChildItems().filter((item) => item.IsSelected);
-			// Go through all the IsActive items
-			for (const optionItem of isActiveChilds) {
-				// In case we've multiple IsActive items, unselect all unless last one!
-				if (isActiveChilds.length === 1 || optionItem !== isActiveChilds[isActiveChilds.length - 1]) {
-					this._activeSectionIndexItem.unsetIsActive();
-				}
-			}
-
-			// Set new sectionIndexItem as active
-			child.setIsActive();
-
-			// Set the current IsActive Child
-			this._activeSectionIndexItem = child;
+			this._updateActiveItem(child);
 		}
-
 		// Method to set the SectionIndex IsFixed
 		private _toggleIsFixed(): void {
 			if (this.configs.IsFixed) {
@@ -151,6 +155,20 @@ namespace OSFramework.OSUI.Patterns.SectionIndex {
 				// Remove the Sticky class
 				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.IsSticky);
 			}
+		}
+
+		// Method to remove current active item and set new one
+		private _updateActiveItem(child: SectionIndexItem.ISectionIndexItem): void {
+			// Remove old sectionIndexItem as active if exist
+			if (this._activeSectionIndexItem) {
+				this._activeSectionIndexItem.unsetIsActive();
+			}
+
+			// Set new sectionIndexItem as active
+			child.setIsActive();
+
+			// Set the current IsActive Child
+			this._activeSectionIndexItem = child;
 		}
 
 		/**
@@ -261,6 +279,8 @@ namespace OSFramework.OSUI.Patterns.SectionIndex {
 
 			this._getContentPaddingTop();
 
+			this._getHeaderSize();
+
 			this._toggleIsFixed();
 
 			this.finishBuild();
@@ -280,6 +300,10 @@ namespace OSFramework.OSUI.Patterns.SectionIndex {
 					case Enum.Properties.IsFixed:
 						this._toggleIsFixed();
 						break;
+					case Enum.Properties.SmoothScrolling:
+						this.scrollOptions.behavior = propertyValue
+							? GlobalEnum.ScrollBehavior.Smooth
+							: GlobalEnum.ScrollBehavior.Auto;
 				}
 			}
 		}
@@ -293,17 +317,6 @@ namespace OSFramework.OSUI.Patterns.SectionIndex {
 			this.unsetHtmlElements();
 			//Destroying the base of pattern
 			super.dispose();
-		}
-
-		/**
-		 * Getter of the contentPaddingTop property
-		 *
-		 * @readonly
-		 * @type {(string | number)}
-		 * @memberof SectionIndex
-		 */
-		public get contentPaddingTop(): string | number {
-			return this._contentPaddingTop;
 		}
 	}
 }

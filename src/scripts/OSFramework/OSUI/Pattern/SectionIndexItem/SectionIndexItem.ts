@@ -18,21 +18,12 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 		private _eventOnScreenScroll: GlobalCallbacks.Generic;
 		//Stores the keyboard callback function
 		private _eventOnkeyBoardPress: GlobalCallbacks.Generic;
-		// Store the header size if it's fixed!
-		private _headerHeight = 0;
-		// Store a flag that will be used to check if the header is fixed!
-		private _headerIsFixed = true;
 		// Store the state
 		private _isActive = false;
 		// Store the mainContent reference - The one that will have the scroll
 		private _mainScrollContainerElement: HTMLElement;
 		// Store TargetElement HTML object
 		private _targetElement: HTMLElement = undefined;
-		// Store offset top/bottom from TargetElement HTML object
-		private _targetElementOffset: OffsetValues = {
-			bottom: 0,
-			top: 0,
-		};
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new SectionIndexItemConfig(configs));
@@ -51,14 +42,13 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 
 		// Method to check the scroll to know if the target element is visible and sets the item as active
 		private _onScreenScroll(): void {
-			// Set target element offset info!
-			this._setTargetOffsetInfo();
+			this._setTargetElement();
 			// Get the vertical scroll position value
 			const scrollYPosition = Behaviors.ScrollVerticalPosition(this._mainScrollContainerElement);
 			// Threshold value to set element as Active
 			const thresholdVal = 40;
 			// Store the offSetValue to be checked
-			const elementOffsetTopVal = this._targetElementOffset.top - scrollYPosition.value;
+			const elementOffsetTopVal = this._targetElement.offsetTop - scrollYPosition.value;
 
 			/* Logic behind position validation:
 				- If click to nanvigate into element the calc
@@ -82,10 +72,7 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 		private _onSelected(event: Event): void {
 			event.preventDefault();
 			event.stopPropagation();
-
-			// Update the offsetInfo when clicked since we could have expandable containers that will change this values accoring the scroll content height
-			this._setTargetOffsetInfo();
-
+			this._setTargetElement();
 			// Notify parent about this Item Click
 			this.notifyParent(SectionIndex.Enum.ChildNotifyActionType.Click);
 		}
@@ -100,20 +87,22 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 			);
 		}
 
-		// Method to check if header IsFixed
-		private _setHeaderSize(): void {
-			const header = Helper.Dom.ClassSelector(document.body, GlobalEnum.CssClassElements.Header);
-			this._headerIsFixed = !!Helper.Dom.ClassSelector(document.body, GlobalEnum.CssClassElements.HeaderIsFixed);
-
-			// If header exist and it's fixed store its height
-			if (header) {
-				this._headerHeight = this._headerIsFixed ? header.offsetHeight : 2 * header.offsetHeight;
-			}
-		}
-
 		// Method to add a data attribute to be used in automated tests and to have info on DOM of which element the index is pointing
 		private _setLinkAttribute(): void {
 			Helper.Dom.Attribute.Set(this.selfElement, Enum.DataTypes.dataItem, this.configs.ScrollToWidgetId);
+		}
+
+		// Method to add scroll margin styles for the item target
+		private _setTargetAttributes(): void {
+			// Set class to target, to avoid inline property styles
+			Helper.Dom.Styles.AddClass(this._targetElement, Enum.CssClass.ItemTarget);
+			// Add CSS Variable with the offset value for the scroll target, to be used on the CSS, based on parent topPosition
+			this.setTargetScrollMargin(
+				Helper.Dom.Styles.GetCustomProperty(
+					this.parentObject.selfElement,
+					SectionIndex.Enum.CssVariable.TopPosition
+				)
+			);
 		}
 
 		// Method to set the TargetElement
@@ -123,6 +112,7 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 				try {
 					// Can't be used the Helper.Dom.GetElementById since we don't want a through error if the element does not exist!
 					this._targetElement = document.getElementById(this.configs.ScrollToWidgetId);
+					this._setTargetAttributes();
 				} catch (e) {
 					// Was not able to get Target element!
 					throw new Error(
@@ -130,19 +120,6 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 					);
 				}
 			}
-		}
-
-		// Method to set the offset info related with TargetElement
-		private _setTargetOffsetInfo(): void {
-			// Check if TargetElement has been already defined, otherwise define it!
-			this._setTargetElement();
-
-			// Takes into account the headerSize
-			this._setHeaderSize();
-
-			// Set the target element offset top values
-			this._targetElementOffset.top =
-				this._targetElement.offsetTop + this._headerHeight + (this.parentObject.contentPaddingTop as number);
 		}
 
 		// Method to set the event listeners
@@ -154,6 +131,14 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 				Event.DOMEvents.Listeners.Type.ScreenOnScroll,
 				this._eventOnScreenScroll
 			);
+		}
+
+		// Method to remove scroll margin styles on the item target
+		private _unsetTargetAttributes(): void {
+			// Set class to target, to avoid inline property styles
+			Helper.Dom.Styles.RemoveClass(this._targetElement, Enum.CssClass.ItemTarget);
+			// Add CSS Variable with the offset value for the scroll target, to be used on the CSS
+			Helper.Dom.Styles.RemoveStyleAttribute(this._targetElement, Enum.CssVariable.ScrollMargin);
 		}
 
 		/**
@@ -289,6 +274,8 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 		public dispose(): void {
 			this.unsetCallbacks();
 
+			this._unsetTargetAttributes();
+
 			// Notify parent about this instance will be destroyed
 			this.notifyParent(SectionIndex.Enum.ChildNotifyActionType.Removed);
 
@@ -306,6 +293,17 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 				this._isActive = true;
 				Helper.Dom.Styles.AddClass(this.selfElement, Patterns.SectionIndex.Enum.CssClass.IsActiveItem);
 			}
+		}
+
+		/**
+		 * Set the scroll margin, that acts as scrollIntoView offset
+		 *
+		 * @param {(number | string)} margin
+		 * @memberof SectionIndexItem
+		 */
+		public setTargetScrollMargin(margin: number | string): void {
+			// Add CSS Variable with the offset value for the scroll target, to be used on the CSS
+			Helper.Dom.Styles.SetStyleAttribute(this._targetElement, Enum.CssVariable.ScrollMargin, margin);
 		}
 
 		/**
@@ -340,17 +338,6 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 		 */
 		public get TargetElement(): HTMLElement {
 			return this._targetElement;
-		}
-
-		/**
-		 * Readable property to get targetElementOffset info
-		 *
-		 * @readonly
-		 * @type {OffsetValues}
-		 * @memberof OSFramework.Patterns.SectionIndexItem.SectionIndexItem
-		 */
-		public get TargetElementOffset(): OffsetValues {
-			return this._targetElementOffset;
 		}
 	}
 }

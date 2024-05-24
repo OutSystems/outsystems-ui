@@ -12,6 +12,7 @@ namespace OSFramework.OSUI.Patterns.AnimatedLabel {
 		private _eventAnimationStart: GlobalCallbacks.Generic;
 		private _eventBlur: GlobalCallbacks.Generic;
 		private _eventFocus: GlobalCallbacks.Generic;
+		private _eventKeyDown: GlobalCallbacks.Generic;
 
 		// Set the input html element
 		private _inputElement: HTMLInputElement | HTMLTextAreaElement;
@@ -40,6 +41,9 @@ namespace OSFramework.OSUI.Patterns.AnimatedLabel {
 			this._inputElement.addEventListener(GlobalEnum.HTMLEvent.Blur, this._eventBlur);
 			this._inputElement.addEventListener(GlobalEnum.HTMLEvent.Focus, this._eventFocus);
 			this._inputElement.addEventListener(GlobalEnum.HTMLEvent.AnimationStart, this._eventAnimationStart);
+			if (this._inputElement.type === 'number') {
+				this._inputElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventKeyDown);
+			}
 		}
 
 		/**
@@ -82,6 +86,22 @@ namespace OSFramework.OSUI.Patterns.AnimatedLabel {
 		}
 
 		/**
+		 * Method to set callback to the event "keydown" of the input
+		 *
+		 * @private
+		 * @param {KeyboardEvent} evt
+		 * @memberof AnimatedLabel
+		 */
+		private _inputKeyDownCallback(evt: KeyboardEvent): void {
+			if (evt.type === GlobalEnum.HTMLEvent.keyDown && this._inputElement.type === 'number') {
+				const invalidChars = ['-', '+', 'e', 'E'];
+				if (invalidChars.includes(evt.key) && this._inputElement.value === Constants.EmptyString) {
+					this._inputStateToggle(true);
+				}
+			}
+		}
+
+		/**
 		 * Method that implements the toggle of the state of the input.
 		 * It can either add or remove the class "active" of the input.
 		 *
@@ -90,17 +110,25 @@ namespace OSFramework.OSUI.Patterns.AnimatedLabel {
 		 * @memberof AnimatedLabel
 		 */
 		private _inputStateToggle(isFocus = false): void {
-			const inputHasText = this._inputElement && this._inputElement.value !== '';
+			if (this.isBuilt) {
+				// In this flag, we are checking if the input has value.
+				// When the input is empty, the checkValidity() return true.
+				// If the input type is number, value is empty and checkValidty() is false this means that the input has invalid value.
+				const inputHasText =
+					this._inputElement &&
+					(this._inputElement.value !== Constants.EmptyString ||
+						(this._inputElement.type === 'number' && this._inputElement.checkValidity() === false));
 
-			//let's check if we have something to do. Is the pattern built or (it's building) and we have text in the input?
-			if (this.isBuilt || inputHasText) {
-				//(Does the input have text or is it Focus) and it's currently inactive?
-				if ((inputHasText || isFocus) && this._isLabelFocus === false) {
-					//let's mark as active!
-					Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClasses.IsActive);
-					this._isLabelFocus = true;
-					//is the input empty and it's active and it's blur event
-				} else if (inputHasText === false && this._isLabelFocus && isFocus === false) {
+				if (this._isLabelFocus === false) {
+					//let's check if we have something to do. Is the pattern built or (it's building) and we have text in the input?
+					if (isFocus || inputHasText) {
+						//(Does the input have text or is it Focus) and it's currently inactive?
+						//let's mark as active!
+						Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClasses.IsActive);
+						this._isLabelFocus = true;
+						//is the input empty and it's active and it's blur event
+					}
+				} else if (inputHasText === false && isFocus === false) {
 					Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClasses.IsActive);
 					this._isLabelFocus = false;
 				}
@@ -117,6 +145,9 @@ namespace OSFramework.OSUI.Patterns.AnimatedLabel {
 			this._inputElement.removeEventListener(GlobalEnum.HTMLEvent.Blur, this._eventBlur);
 			this._inputElement.removeEventListener(GlobalEnum.HTMLEvent.Focus, this._eventFocus);
 			this._inputElement.removeEventListener(GlobalEnum.HTMLEvent.AnimationStart, this._eventAnimationStart);
+			if (this._inputElement.type === 'number') {
+				this._inputElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventKeyDown);
+			}
 		}
 
 		/**
@@ -136,7 +167,7 @@ namespace OSFramework.OSUI.Patterns.AnimatedLabel {
 			this._eventBlur = this._inputBlurCallback.bind(this);
 			this._eventFocus = this._inputFocusCallback.bind(this);
 			this._eventAnimationStart = this._inputAnimationStartCallback.bind(this);
-
+			this._eventKeyDown = this._inputKeyDownCallback.bind(this);
 			this._addEvents();
 		}
 
@@ -180,10 +211,10 @@ namespace OSFramework.OSUI.Patterns.AnimatedLabel {
 		 */
 		protected unsetCallbacks(): void {
 			this._removeEvents();
-
 			this._eventBlur = undefined;
 			this._eventFocus = undefined;
 			this._eventAnimationStart = undefined;
+			this._eventKeyDown = undefined;
 		}
 
 		/**

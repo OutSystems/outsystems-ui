@@ -29,15 +29,16 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	 *
 	 * @export
 	 * @param {string} dropdownId
+	 * @param {boolean} silentOnChangedEvent
 	 * @return {*} {string} Return Message Success or message of error info if it's the case.
 	 */
-	export function Clear(dropdownId: string): string {
+	export function Clear(dropdownId: string, silentOnChangedEvent = true): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.Dropdown.FailClear,
 			callback: () => {
-				const _dropdownItem = GetDropdownById(dropdownId);
+				const _dropdownItem = GetDropdownById(dropdownId) as VirtualSelect;
 
-				_dropdownItem.clear();
+				_dropdownItem.clear(silentOnChangedEvent);
 			},
 		});
 
