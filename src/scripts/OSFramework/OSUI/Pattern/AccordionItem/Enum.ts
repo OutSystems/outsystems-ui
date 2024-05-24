@@ -8,6 +8,7 @@ namespace OSFramework.OSUI.Patterns.AccordionItem.Enum {
 		IsDisabled = 'IsDisabled',
 		Icon = 'Icon',
 		StartsExpanded = 'StartsExpanded',
+		ToggleWithIcon = 'ToggleWithIcon',
 	}
 
 	/**
@@ -19,6 +20,7 @@ namespace OSFramework.OSUI.Patterns.AccordionItem.Enum {
 		PatternCollapsed = 'osui-accordion-item__content--is-collapsed',
 		PatternDisabled = 'osui-accordion-item--is-disabled',
 		PatternExpanded = 'osui-accordion-item__content--is-expanded',
+		PatternClickArea = 'osui-accordion-item__click_zone',
 		PatternContent = 'osui-accordion-item__content',
 		PatternIcon = 'osui-accordion-item__icon',
 		PatternIconCaret = 'osui-accordion-item__icon--caret',
@@ -29,6 +31,7 @@ namespace OSFramework.OSUI.Patterns.AccordionItem.Enum {
 		PatternIconPositionIsRight = 'osui-accordion-item__title--is-right',
 		PatternOpen = 'osui-accordion-item--is-open',
 		PatternTitle = 'osui-accordion-item__title',
+		PatternToggleWithIcon = 'osui-accordion-item--toggle-with-icon',
 	}
 
 	/**
