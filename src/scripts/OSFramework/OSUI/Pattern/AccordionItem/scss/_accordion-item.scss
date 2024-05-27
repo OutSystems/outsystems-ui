@@ -17,6 +17,19 @@
 	border-radius: var(--border-radius-soft);
 	position: relative;
 
+	&__click_zone {
+		cursor: pointer;
+	}
+
+	// Toggle on icon click
+	&--toggle-with-icon {
+		& .osui-accordion-item__title {
+			cursor: default;
+		}
+		& .osui-accordion-item__icon {
+			cursor: pointer;
+		}
+	}
 	// Active border-top
 	&:after {
 		background-color: transparent;
@@ -84,7 +97,6 @@
 
 	&__title {
 		align-items: center;
-		cursor: pointer;
 		direction: ltr;
 		display: flex;
 		font-size: var(--font-size-h6);
@@ -144,7 +156,7 @@
 			}
 		}
 
-		&--custom {
+		&--custom:not(.osui-accordion-item__click_zone) {
 			pointer-events: none;
 			-servicestudio-height: auto;
 			-servicestudio-width: auto;
