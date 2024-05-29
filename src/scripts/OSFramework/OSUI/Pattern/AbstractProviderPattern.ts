@@ -14,7 +14,7 @@ namespace OSFramework.OSUI.Patterns {
 		implements Interface.IProviderPattern<P>
 	{
 		// Holds the id of the asyncInvocation that will turn redraw async
-		private _asyncInvocationId: number;
+		private _asyncInvocationId = 0;
 		// Holds the callback for the provider config applied event
 		private _platformEventProviderConfigsAppliedCallback: GlobalCallbacks.OSGeneric;
 		// Holds the provider
@@ -39,7 +39,7 @@ namespace OSFramework.OSUI.Patterns {
 
 		// Method that will check if there is already a redraw process runing in order to cancel it
 		private _cancelRedraw(): void {
-			if (this._asyncInvocationId !== undefined) {
+			if (this._asyncInvocationId !== 0) {
 				clearTimeout(this._asyncInvocationId);
 			}
 		}
