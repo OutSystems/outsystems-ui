@@ -197,4 +197,28 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 
 		return result;
 	}
+
+	/**
+	 * Function that enables toggling the active area to expand and collapse the accordion item.
+	 *
+	 * @export
+	 * @param {string} accordionItemId
+	 * @param {boolean} isIconOnly
+	 * @return {*}  {string}
+	 */
+	export function ToggleClickableZone(accordionItemId: string, isIconOnly: boolean): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.AccordionItem.FailRegisterCallback,
+			callback: () => {
+				const accordionItem = GetAccordionItemById(accordionItemId);
+
+				accordionItem.changeProperty(
+					OSFramework.OSUI.Patterns.AccordionItem.Enum.Properties.ToggleWithIcon,
+					isIconOnly
+				);
+			},
+		});
+
+		return result;
+	}
 }
