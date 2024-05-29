@@ -6,9 +6,13 @@ namespace OSFramework.OSUI.Helper {
 	 * @export
 	 * @param {GlobalCallbacks.Generic} callback
 	 * @param {...unknown[]} args
+	 * @return {*}  {(number)}
 	 */
-	export function AsyncInvocation(callback: GlobalCallbacks.Generic, ...args: unknown[]): void {
-		if (callback) setTimeout(() => callback(...args), 0);
+	export function AsyncInvocation(callback: GlobalCallbacks.Generic, ...args: unknown[]): number {
+		if (callback) {
+			return window.setTimeout(() => callback(...args), 0);
+		}
+		return 0;
 	}
 
 	/**
@@ -18,8 +22,12 @@ namespace OSFramework.OSUI.Helper {
 	 * @param {GlobalCallbacks.Generic} callback
 	 * @param {number} time
 	 * @param {...unknown[]} args
+	 * @return {*}  {(number)}
 	 */
-	export function ApplySetTimeOut(callback: GlobalCallbacks.Generic, time: number, ...args: unknown[]): void {
-		if (callback) setTimeout(() => callback(...args), time);
+	export function ApplySetTimeOut(callback: GlobalCallbacks.Generic, time: number, ...args: unknown[]): number {
+		if (callback) {
+			return window.setTimeout(() => callback(...args), time);
+		}
+		return 0;
 	}
 }

@@ -13,6 +13,8 @@ namespace OSFramework.OSUI.Patterns {
 		extends AbstractPattern<C>
 		implements Interface.IProviderPattern<P>
 	{
+		// Holds the id of the asyncInvocation that will turn redraw async
+		private _asyncInvocationId = 0;
 		// Holds the callback for the provider config applied event
 		private _platformEventProviderConfigsAppliedCallback: GlobalCallbacks.OSGeneric;
 		// Holds the provider
@@ -33,6 +35,13 @@ namespace OSFramework.OSUI.Patterns {
 			super(uniqueId, configs);
 
 			this.isProviderBased = true;
+		}
+
+		// Method that will check if there is already a redraw process runing in order to cancel it
+		private _cancelRedraw(): void {
+			if (this._asyncInvocationId !== 0) {
+				clearTimeout(this._asyncInvocationId);
+			}
 		}
 
 		// Method to get an event index from an array
@@ -98,13 +107,8 @@ namespace OSFramework.OSUI.Patterns {
 			}
 		}
 
-		/**
-		 * Method that will be responsible to redraw pattern when needed
-		 *
-		 * @protected
-		 * @memberof OSFramework.Patterns.AbstractProviderPattern
-		 */
-		protected redraw(): void {
+		// Method that will execute the redraw process
+		private _handleRedraw(): void {
 			// Check if provider has been set!
 			if (this._provider !== undefined) {
 				// Destroy provider instance
@@ -115,6 +119,23 @@ namespace OSFramework.OSUI.Patterns {
 				// Trigger a new instance creation with updated configs
 				this.prepareConfigs();
 			}
+		}
+
+		/**
+		 * Method that will be responsible to redraw pattern when needed
+		 *
+		 * @protected
+		 * @memberof OSFramework.Patterns.AbstractProviderPattern
+		 */
+		protected redraw(): void {
+			/* If a redraw has been trigger before the previous occured, 
+			cancel the previous one and restart a new redraw process, 
+			this way multiple redraws will be prevented.  */
+			this._cancelRedraw();
+
+			this._asyncInvocationId = OSUI.Helper.AsyncInvocation(() => {
+				this._handleRedraw();
+			});
 		}
 
 		/**
