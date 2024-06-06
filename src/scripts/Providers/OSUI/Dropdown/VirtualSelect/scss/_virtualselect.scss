@@ -380,12 +380,12 @@
 // Wrapper options container
 .vscomp-dropbox {
 	--border-color: var(--color-neutral-5);
-	--border-size: 1px;
+	--border-size: var(--border-size-s);
 
 	background-color: var(--color-neutral-0);
 	border-radius: var(--border-radius-soft);
 	/* use inner shadow to workaround the border issue that causes content to be blurry */
-	box-shadow: inset var(--border-color) 0px 0px 0px var(--border-size);
+	box-shadow: inset var(--border-color) 0 0 0 var(--border-size);
 	overflow: hidden;
 	/* needed in order to inner shadow (used as a border) be visible as border-bottom */
 	padding: 0 0 calc(2 * var(--border-size)) var(--border-size);
