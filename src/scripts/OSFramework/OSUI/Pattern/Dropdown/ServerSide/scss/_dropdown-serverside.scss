@@ -227,7 +227,8 @@ $balloonMobileTopMargin: 5vh;
 	// When it's not valid
 	&--not-valid {
 		.osui-dropdown-serverside__selected-values-wrapper {
-			border-color: var(--color-error);
+			/* !important should be here in order to grant more specific selectors be overriding border color at this context. */
+			border-color: var(--color-error) !important;
 		}
 
 		& + .osui-dropdown-serverside-error-message {
