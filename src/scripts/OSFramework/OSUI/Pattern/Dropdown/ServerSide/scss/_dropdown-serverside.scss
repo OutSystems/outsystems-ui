@@ -12,6 +12,7 @@ $balloonMobileTopMargin: 5vh;
 	--osui-dropdown-ss-balloon-max-height: 300px;
 	--osui-dropdown-min-width: 170px;
 	--osui-floating-offset: var(--space-xs);
+	--osui-dropdown-ss-scroll-bar-width: 5px;
 	position: relative;
 
 	.osui-balloon {
@@ -159,7 +160,7 @@ $balloonMobileTopMargin: 5vh;
 			padding: var(--space-none);
 
 			&::-webkit-scrollbar {
-				width: 5px;
+				width: var(--osui-dropdown-ss-scroll-bar-width);
 			}
 
 			&::-webkit-scrollbar-track {
@@ -227,7 +228,8 @@ $balloonMobileTopMargin: 5vh;
 	// When it's not valid
 	&--not-valid {
 		.osui-dropdown-serverside__selected-values-wrapper {
-			border-color: var(--color-error);
+			/* !important should be here in order to grant more specific selectors be overriding border color at this context. */
+			border-color: var(--color-error) !important;
 		}
 
 		& + .osui-dropdown-serverside-error-message {
@@ -284,12 +286,61 @@ $balloonMobileTopMargin: 5vh;
 			}
 
 			&-content {
+				--osui-outline-size: 3px;
+
 				&::-webkit-scrollbar-thumb {
 					background-color: var(--color-neutral-7);
 				}
 
 				&:focus {
-					box-shadow: inset 0 0 0 3px var(--color-focus-outer);
+					// Due the possibility of having a focus inside the balloon, we need to remove the outline from the balloon itself.
+					box-shadow: none;
+
+					// Common outline styles
+					&:before,
+					&:after,
+					& > *:before,
+					& > *:after {
+						background-color: var(--color-focus-outer);
+						content: '';
+						display: block;
+					}
+
+					// This is the outline that will be applied to the content of the balloon vertically.
+					&:before,
+					&:after {
+						height: var(--osui-outline-size);
+						/* This negative margin will avoid having sticky element on pushing down the elements */
+						margin-top: calc(-1 * var(--osui-outline-size));
+						position: sticky;
+						width: 100%;
+						z-index: var(--layer-local-tier-3);
+					}
+
+					&:before {
+						top: 0;
+					}
+
+					&:after {
+						bottom: 0;
+					}
+
+					// This is the outline that will be applied to the content of the balloon horizontally.
+					& > *:before,
+					& > *:after {
+						height: 100%;
+						position: absolute;
+						top: 0;
+						width: var(--osui-outline-size);
+						z-index: var(--layer-local-tier-2);
+					}
+
+					& > *:before {
+						left: 0;
+					}
+					& > *:after {
+						right: 0;
+					}
 				}
 			}
 		}
