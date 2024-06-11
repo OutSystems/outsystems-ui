@@ -43,6 +43,47 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 		}
 
 		/**
+		 * Getter that obtains the element that should be the clicking place to toggle the accordion.
+		 *
+		 * @readonly
+		 * @private
+		 * @type {HTMLElement}
+		 * @memberof AccordionItem
+		 */
+		private get _elementWithEvents(): HTMLElement {
+			let elementWithEvent = this._accordionItemTitleElem;
+			if (this.configs.ToggleWithIcon) {
+				if (this.configs.Icon !== Enum.IconType.Custom) {
+					elementWithEvent = this._accordionItemIconElem;
+				} else {
+					elementWithEvent = this._accordionItemIconCustomElem;
+				}
+			}
+			return elementWithEvent;
+		}
+
+		/**
+		 * Getter that obtains the previous element that was the clicking place. Useful to remove
+		 * events and A11Y attributes.
+		 *
+		 * @readonly
+		 * @private
+		 * @type {HTMLElement}
+		 * @memberof AccordionItem
+		 */
+		private get _previousElementWithEvents(): HTMLElement {
+			let elementWithEvent = this._accordionItemTitleElem;
+			if (!this.configs.ToggleWithIcon) {
+				if (this.configs.Icon !== Enum.IconType.Custom) {
+					elementWithEvent = this._accordionItemIconElem;
+				} else {
+					elementWithEvent = this._accordionItemIconCustomElem;
+				}
+			}
+			return elementWithEvent;
+		}
+
+		/**
 		 * Method to handle the click event
 		 *
 		 * @private
@@ -75,8 +116,10 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 		 * @memberof AccordionItem
 		 */
 		private _addEvents(): void {
-			this._accordionItemTitleElem.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
-			this._accordionItemTitleElem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyPress);
+			const elem = this._elementWithEvents;
+
+			elem.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
+			elem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyPress);
 		}
 
 		/**
@@ -122,6 +165,24 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 		}
 
 		/**
+		 * Method that toogles the clickable area between the whole title (default) and the icon.
+		 *
+		 * @private
+		 * @memberof AccordionItem
+		 */
+		private _changeClikableTargetArea(): void {
+			if (this._previousElementWithEvents !== this._elementWithEvents) {
+				Helper.Dom.Styles.RemoveClass(this._previousElementWithEvents, Enum.CssClass.PatternClickArea);
+				this._removeEvents();
+				this._removeA11Properties();
+				this._setA11ToogleElement();
+				this._handleTabIndex();
+				this._addEvents();
+				Helper.Dom.Styles.AddClass(this._elementWithEvents, Enum.CssClass.PatternClickArea);
+			}
+		}
+
+		/**
 		 * Method to handle the tabindex values
 		 *
 		 * @private
@@ -136,7 +197,7 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 					? Constants.A11YAttributes.States.TabIndexShow
 					: Constants.A11YAttributes.States.TabIndexHidden;
 
-			Helper.A11Y.TabIndex(this._accordionItemTitleElem, titleTabindexValue);
+			Helper.A11Y.TabIndex(this._elementWithEvents, titleTabindexValue);
 
 			// The focusable elements inside the Accordion Title must be non-focusable unless the Accordion is expanded
 			for (const child of this._accordionTitleFocusableChildren) {
@@ -183,6 +244,13 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 			this.triggerPlatformEventCallback(this._platformEventOnToggle, this._isOpen);
 		}
 
+		private _removeA11Properties(): void {
+			const prevElementWithEvent = this._previousElementWithEvents;
+
+			Helper.Dom.Attribute.Remove(prevElementWithEvent, Constants.A11YAttributes.Role.AttrName);
+			Helper.Dom.Attribute.Remove(prevElementWithEvent, Constants.A11YAttributes.TabIndex);
+		}
+
 		/**
 		 * Method to remove the event listeners
 		 *
@@ -190,8 +258,19 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 		 * @memberof AccordionItem
 		 */
 		private _removeEvents(): void {
-			this._accordionItemTitleElem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
-			this._accordionItemTitleElem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyPress);
+			const elem = this._previousElementWithEvents;
+			elem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
+			elem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyPress);
+		}
+
+		private _setA11ToogleElement(): void {
+			const elem = this._elementWithEvents;
+
+			// Set ARIA Controls
+			Helper.A11Y.AriaControls(this._accordionItemTitleElem, this._accordionItemPlaceholder.id);
+
+			// Set roles
+			Helper.A11Y.RoleButton(elem);
 		}
 
 		/**
@@ -272,11 +351,13 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 		private _setIsDisabledState(): void {
 			if (this.configs.IsDisabled) {
 				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.PatternDisabled);
+				Helper.Dom.Styles.RemoveClass(this._elementWithEvents, Enum.CssClass.PatternClickArea);
 				Helper.A11Y.AriaDisabledTrue(this.selfElement);
 				this._removeEvents();
 				this.unsetCallbacks();
 			} else {
 				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.PatternDisabled);
+				Helper.Dom.Styles.AddClass(this._elementWithEvents, Enum.CssClass.PatternClickArea);
 				Helper.A11Y.AriaDisabledFalse(this.selfElement);
 				this.setCallbacks();
 				this._addEvents();
@@ -407,6 +488,10 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 				Helper.Dom.Styles.AddClass(this._accordionItemContentElem, Enum.CssClass.PatternCollapsed);
 			}
 
+			if (this.configs.ToggleWithIcon) {
+				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.PatternToggleWithIcon);
+			}
+
 			this._setIconType();
 			this._setIconPosition();
 		}
@@ -512,6 +597,10 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 						break;
 					case Enum.Properties.Icon:
 						this._setIconType();
+						break;
+					case Enum.Properties.ToggleWithIcon:
+						this._changeClikableTargetArea();
+						break;
 				}
 			}
 		}

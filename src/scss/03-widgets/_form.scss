@@ -6,7 +6,7 @@
 ///
 .form {
 	&.OSFillParent {
-		.form-control[class*='ThemeGrid_Width'].not-valid + span.validation-message {
+		.form-control[class*='ThemeGrid_Width'].not-valid ~ span.validation-message {
 			left: 22px;
 		}
 	}
@@ -39,10 +39,6 @@
 		.form-control[class*='ThemeGrid_Width'].not-valid {
 			& + span.validation-message {
 				left: 0;
-			}
-
-			&.ThemeGrid_MarginGutter + span.validation-message {
-				left: 22px;
 			}
 		}
 	}
@@ -118,5 +114,18 @@ span.validation-message {
 		+ span.validation-message,
 	.form-control[class*='ThemeGrid_Width'].not-valid + span.validation-message {
 		left: 0;
+	}
+}
+
+// IsRTL -------------------------------------------------------------------------
+///
+.is-rtl {
+	form {
+		&.OSFillParent {
+			.form-control[class*='ThemeGrid_Width'].not-valid ~ span.validation-message {
+				left: initial;
+				right: 22px;
+			}
+		}
 	}
 }

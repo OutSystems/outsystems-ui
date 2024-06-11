@@ -156,6 +156,11 @@
 			&-item {
 				&:not(.osui-tabs--is-active) {
 					opacity: 0;
+
+					// Service Studio preview
+					& {
+						-servicestudio-opacity: 1;
+					}
 				}
 			}
 		}
