@@ -11,9 +11,6 @@
     "sort": [
         "source-order"
     ],
-    "plugin": [
-        "typedoc-umlclass"
-    ],
     "umlClassDiagram": {
         "type": "detailed",
         "location": "local",
