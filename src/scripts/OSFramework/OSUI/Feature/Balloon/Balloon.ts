@@ -180,7 +180,7 @@ namespace OSFramework.OSUI.Feature.Balloon {
 				this._eventBodyClick
 			);
 
-			if (this.featureOptions.useTriggerWidth) {
+			if (this.featureOptions.useTriggerWidth && Helper.DeviceInfo.IsMobileDevice === false) {
 				Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
 					Event.DOMEvents.Listeners.Type.WindowResize,
 					this._eventOnWindowResize
@@ -252,7 +252,7 @@ namespace OSFramework.OSUI.Feature.Balloon {
 				);
 			}
 
-			if (this.featureOptions.useTriggerWidth) {
+			if (this.featureOptions.useTriggerWidth && Helper.DeviceInfo.IsMobileDevice === false) {
 				// Add the window resize callback that will be used to close the balloon and avoid width differences!
 				Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
 					Event.DOMEvents.Listeners.Type.WindowResize,
