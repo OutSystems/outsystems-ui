@@ -169,6 +169,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 					} else if (event.key === GlobalEnum.Keycodes.ArrowDown) {
 						// If ArrowDown Key
 						// Focus the first option item!
+						event.preventDefault();
 						this.getChildByIndex(0).setFocus();
 						// Check if Dropdown should only allow single option selected
 						if (this.configs.AllowMultipleSelection === false) {
