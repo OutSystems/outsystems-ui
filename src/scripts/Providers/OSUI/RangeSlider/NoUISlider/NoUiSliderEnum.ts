@@ -2,7 +2,7 @@
 namespace Providers.OSUI.RangeSlider.NoUiSlider.Enum {
 	export enum ProviderInfo {
 		Name = 'noUISlider',
-		Version = '15.7.2',
+		Version = '15.8.1',
 	}
 
 	export enum NoUISliderLabels {
