@@ -235,13 +235,16 @@ namespace OSFramework.OSUI.Patterns.AnimatedLabel {
 		 * @memberof OSFramework.Patterns.AnimatedLabel.AnimatedLabel
 		 */
 		public build(): void {
-			super.build();
+			//OS takes a while to set the TextArea
+			Helper.AsyncInvocation(() => {
+				super.build();
 
-			this.setHtmlElements();
+				this.setHtmlElements();
 
-			this.setCallbacks();
+				this.setCallbacks();
 
-			this.finishBuild();
+				this.finishBuild();
+			});
 		}
 
 		/**
