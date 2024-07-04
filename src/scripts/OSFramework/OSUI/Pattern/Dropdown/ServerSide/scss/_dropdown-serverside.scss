@@ -241,10 +241,15 @@ $balloonMobileTopMargin: 5vh;
 	}
 }
 
-// Inside Form & Popup
+// Inside Form
 .form {
-	.osui-dropdown-serverside--is-inside-popup input[data-input] {
+	.osui-dropdown-serverside__balloon-search-wrapper input[data-input] {
 		margin-bottom: 0;
+	}
+
+	.osui-dropdown-serverside__balloon .wcag-hide-text {
+		position: absolute;
+		margin: -1px;
 	}
 }
 
