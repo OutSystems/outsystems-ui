@@ -267,10 +267,12 @@ namespace OSFramework.OSUI.Patterns.AnimatedLabel {
 		 * @memberof OSFramework.Patterns.AnimatedLabel.AnimatedLabel
 		 */
 		public updateOnRender(): void {
-			// Do not run this instead the pattern is totally built
-			if (this.isBuilt) {
-				this._inputStateToggle();
-			}
+			Helper.AsyncInvocation(() => {
+				// Do not run this instead the pattern is totally built
+				if (this.isBuilt) {
+					this._inputStateToggle();
+				}
+			});
 		}
 	}
 }
