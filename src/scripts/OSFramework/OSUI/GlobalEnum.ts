@@ -255,6 +255,7 @@ namespace OSFramework.OSUI.GlobalEnum {
 	export const InlineStyleValue = {
 		Display: {
 			block: 'block',
+			contents: 'contents',
 			inline: 'inline',
 			none: 'none',
 			unset: '',
