@@ -228,8 +228,8 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		}
 
 		/**
-		 * Method used to update the datepicker value when the selected dates is empty
-		 * And to add the custom callback to the OnClose event
+		 * Method used to update the datepicker value when the selected dates are empty,
+		 * to add the custom callback to the OnClose event and remove the tabindex from the today button
 		 *
 		 * @protected
 		 * @memberof AbstractFlatpickr
@@ -240,6 +240,10 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 				this.onDateSelectedEvent(this.provider.selectedDates);
 			}
 
+			// Remove the tabindex from the today button if it exists
+			if (this.configs.ShowTodayButton && this._todayButtonElem) {
+				OSFramework.OSUI.Helper.A11Y.TabIndexFalse(this._todayButtonElem);
+			}
 			// Call the custom callback provided for users to add custom code when a datepicker close
 			if (
 				this.onCloseCustomCallback !== undefined &&
