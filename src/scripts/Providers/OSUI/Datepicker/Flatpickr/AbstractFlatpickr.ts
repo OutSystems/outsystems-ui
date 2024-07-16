@@ -23,8 +23,6 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		protected onSelectedCallbackEvent: OSFramework.OSUI.Patterns.DatePicker.Callbacks.OSOnChangeEvent;
 		// Property to store a custom callback called on OnClose Flatpickr event
 		public onCloseCustomCallback = undefined;
-		// Property to store a custom callback called on OnOpen Flatpickr event
-		public onOpenCustomCallback = undefined;
 
 		constructor(uniqueId: string, configs: C) {
 			super(uniqueId, configs);
