@@ -240,9 +240,11 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 				this.onDateSelectedEvent(this.provider.selectedDates);
 			}
 
-			// Remove the tabindex from the today button if it exists
+			// Remove the tabindex from the link inside the today button if it exists
 			if (this.configs.ShowTodayButton && this._todayButtonElem) {
-				OSFramework.OSUI.Helper.A11Y.TabIndexFalse(this._todayButtonElem);
+				OSFramework.OSUI.Helper.A11Y.TabIndexFalse(
+					this._todayButtonElem.querySelector(OSFramework.OSUI.GlobalEnum.HTMLElement.Link)
+				);
 			}
 			// Call the custom callback provided for users to add custom code when a datepicker close
 			if (
