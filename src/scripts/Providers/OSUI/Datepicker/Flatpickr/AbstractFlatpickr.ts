@@ -35,6 +35,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 			// Set the default library Event handler that will be used to set on the provider configs
 			this.configs.OnClose = this.onDatePickerClose.bind(this);
 
+			// Set the default library Event handler that will be used to set on the provider configs
 			this.configs.OnOpen = this.onDatePickerOpen.bind(this);
 		}
 
