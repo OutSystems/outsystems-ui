@@ -280,13 +280,6 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 					this._todayButtonElem.querySelector(OSFramework.OSUI.GlobalEnum.HTMLElement.Link)
 				);
 			}
-			// Call the custom callback provided for users to add custom code when a datepicker opens
-			if (
-				this.onOpenCustomCallback !== undefined &&
-				typeof this.onOpenCustomCallback === OSFramework.OSUI.Constants.JavaScriptTypes.Function
-			) {
-				this.onOpenCustomCallback(this.provider);
-			}
 		}
 
 		/**
