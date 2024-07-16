@@ -23,6 +23,8 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		protected onSelectedCallbackEvent: OSFramework.OSUI.Patterns.DatePicker.Callbacks.OSOnChangeEvent;
 		// Property to store a custom callback called on OnClose Flatpickr event
 		public onCloseCustomCallback = undefined;
+		// Property to store a custom callback called on OnOpen Flatpickr event
+		public onOpenCustomCallback = undefined;
 
 		constructor(uniqueId: string, configs: C) {
 			super(uniqueId, configs);
@@ -32,6 +34,8 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 
 			// Set the default library Event handler that will be used to set on the provider configs
 			this.configs.OnClose = this.onDatePickerClose.bind(this);
+
+			this.configs.OnOpen = this.onDatePickerOpen.bind(this);
 		}
 
 		// Method used to set the needed HTML attributes
@@ -252,6 +256,28 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 				typeof this.onCloseCustomCallback === OSFramework.OSUI.Constants.JavaScriptTypes.Function
 			) {
 				this.onCloseCustomCallback(this.provider);
+			}
+		}
+
+		/**
+		 * Method used to add the custom callback to the OnOpen event and add the tabindex for the today button
+		 *
+		 * @protected
+		 * @memberof AbstractFlatpickr
+		 */
+		protected onDatePickerOpen(): void {
+			// Add the tabindex for the link inside the today button if it exists
+			if (this.configs.ShowTodayButton && this._todayButtonElem) {
+				OSFramework.OSUI.Helper.A11Y.TabIndexTrue(
+					this._todayButtonElem.querySelector(OSFramework.OSUI.GlobalEnum.HTMLElement.Link)
+				);
+			}
+			// Call the custom callback provided for users to add custom code when a datepicker opens
+			if (
+				this.onOpenCustomCallback !== undefined &&
+				typeof this.onOpenCustomCallback === OSFramework.OSUI.Constants.JavaScriptTypes.Function
+			) {
+				this.onOpenCustomCallback(this.provider);
 			}
 		}
 
