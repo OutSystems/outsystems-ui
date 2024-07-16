@@ -126,7 +126,14 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 
 			// Create the TodayBtn element
 			const todayBtn = document.createElement(OSFramework.OSUI.GlobalEnum.HTMLElement.Link);
-			OSFramework.OSUI.Helper.A11Y.TabIndexTrue(todayBtn);
+
+			// Set the tabindex for the today button
+			if (this.provider.isOpen) {
+				OSFramework.OSUI.Helper.A11Y.TabIndexTrue(todayBtn);
+			} else {
+				OSFramework.OSUI.Helper.A11Y.TabIndexFalse(todayBtn);
+			}
+
 			const langCode = l10ns.TodayBtn[this.configs.Lang] !== undefined ? this.configs.Lang : 'en';
 
 			todayBtn.innerHTML = l10ns.TodayBtn[langCode].title;
