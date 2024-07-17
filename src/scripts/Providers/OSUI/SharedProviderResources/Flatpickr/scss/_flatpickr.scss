@@ -34,8 +34,8 @@
 		}
 	}
 
-	// Has Time
-	&.hasTime {
+	// Has Time and used inline
+	&.hasTime:not(.inline) {
 		/* This will implement a workaround:
 		* 	- When Time is present and a date is selected, library will set focus to the Time input,
 		*   If Time input is not inside at the screen boundaries, browser will force a document scroll in order
@@ -43,7 +43,9 @@
 		*   to a place where then it's not possible to came from.
 		**/
 		position: fixed;
-
+	}
+	// Has Time
+	&.hasTime {
 		.flatpickr-time {
 			border: var(--border-size-none);
 			height: 30px;
