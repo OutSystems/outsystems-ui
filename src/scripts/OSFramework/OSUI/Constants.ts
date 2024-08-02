@@ -74,7 +74,9 @@ namespace OSFramework.OSUI.Constants {
 
 	/* Store focusable elements when doing a focus trap inside an element*/
 	export const FocusableElems =
-		'a[href]:not([disabled]),[tabindex="0"], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled])';
+		'a[href]:not([disabled]), [tabindex="0"], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled])';
+
+	export const FocusableTabIndexHidden = '[tabindex="-1"]';
 
 	/* Attribute used to flag some elements to be ignored by the Focus Trap behaviour */
 	export const FocusTrapIgnoreAttr = 'ignore-focus-trap';

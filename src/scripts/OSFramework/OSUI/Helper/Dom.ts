@@ -441,12 +441,16 @@ namespace OSFramework.OSUI.Helper {
 		/**
 		 * Method to get the list of focusable elements
 		 *
-		 * @readonly
 		 * @static
-		 * @memberof OSFramework.Helper.Dom
+		 * @param {HTMLElement} element Element to be queried.
+		 * @param {boolean} [includeTabIndexHidden=false] Include elements with tabindex -1
+		 * @return {*}  {HTMLElement[]} List of focusable elements
+		 * @memberof Dom
 		 */
-		public static GetFocusableElements(element: HTMLElement): HTMLElement[] {
-			const _focusableElems = element.querySelectorAll(Constants.FocusableElems);
+		public static GetFocusableElements(element: HTMLElement, includeTabIndexHidden = false): HTMLElement[] {
+			const _focusableElems = element.querySelectorAll(
+				`${Constants.FocusableElems}${includeTabIndexHidden ? ', ' + Constants.FocusableTabIndexHidden : ''}`
+			);
 			// Remove any element that has the focus-trap-ignore attribute
 			const _filteredElements = Array.from(_focusableElems).filter(
 				(element) => element.getAttribute(Constants.FocusTrapIgnoreAttr) !== 'true'

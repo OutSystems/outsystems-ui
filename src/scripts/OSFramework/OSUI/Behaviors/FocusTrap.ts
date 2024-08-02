@@ -115,8 +115,8 @@ namespace OSFramework.OSUI.Behaviors {
 		}
 
 		// Method to set the focusable elements to be used
-		private _setFocusableElements(): void {
-			this._focusableElements = Helper.Dom.GetFocusableElements(this._targetElement);
+		private _setFocusableElements(includeTabIndexHidden = false): void {
+			this._focusableElements = Helper.Dom.GetFocusableElements(this._targetElement, includeTabIndexHidden);
 
 			// Check if predicted elements exist at the _focusableElements
 			for (const predictedElement of this._focusableElements.filter(
@@ -204,7 +204,7 @@ namespace OSFramework.OSUI.Behaviors {
 			Helper.A11Y.AriaHiddenFalse(this._predictableTopElement);
 
 			// Ensure the list of focusable elements is updated, predictable elements starts with TabIndex Hidden
-			this._setFocusableElements();
+			this._setFocusableElements(true);
 		}
 
 		/**
