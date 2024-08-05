@@ -602,7 +602,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			// Set SelectValuesWrapper with button as a role
 			Helper.A11Y.RoleButton(this._selectValuesWrapper);
 			// Set SelectValuesWrapper with aria-haspopup='listbox'
-			Helper.A11Y.AriaHasPopup(this._selectValuesWrapper, Constants.A11YAttributes.Role.Listbox);
+			Helper.A11Y.AriaHasPopup(this._selectValuesWrapper, Constants.A11YAttributes.Aria.Haspopup.value.Listbox);
 			// Set balloon option items container properties
 			Helper.A11Y.RoleListbox(this._balloonOptionsWrapperElement);
 			Helper.A11Y.TabIndexFalse(this._balloonOptionsWrapperElement);
