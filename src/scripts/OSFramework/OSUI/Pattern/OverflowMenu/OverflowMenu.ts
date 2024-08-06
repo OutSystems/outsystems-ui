@@ -135,13 +135,14 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 		 */
 		protected setA11YProperties(): void {
 			if (this.isBuilt === false) {
-				Helper.A11Y.AriaHasPopupTrue(this.selfElement);
+				Helper.A11Y.AriaHasPopup(this._triggerElem, Constants.A11YAttributes.Aria.Haspopup.value.Menu);
 				Helper.A11Y.AriaControls(this._triggerElem, this._balloonElem.id);
+				Helper.A11Y.RoleMenu(this._balloonElem);
 				this.setTriggerAriaLabel(Enum.AriaLabel.Trigger);
 				Helper.Dom.Attribute.Set(this._triggerElem, Constants.FocusTrapIgnoreAttr, true);
 			}
 
-			Helper.A11Y.AriaExpanded(this.selfElement, this.isOpen.toString());
+			Helper.A11Y.AriaExpanded(this._triggerElem, this.isOpen.toString());
 		}
 
 		/**
