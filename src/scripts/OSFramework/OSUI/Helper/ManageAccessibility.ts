@@ -144,7 +144,7 @@ namespace OSFramework.OSUI.Helper {
 		 * @memberof OSFramework.Helper.A11Y
 		 */
 		public static AriaHasPopup(element: HTMLElement, value: string): void {
-			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Haspopup, value);
+			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Haspopup.prop, value);
 		}
 
 		/**
@@ -155,7 +155,11 @@ namespace OSFramework.OSUI.Helper {
 		 * @memberof OSFramework.Helper.A11Y
 		 */
 		public static AriaHasPopupFalse(element: HTMLElement): void {
-			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Haspopup, Constants.A11YAttributes.States.False);
+			Dom.Attribute.Set(
+				element,
+				Constants.A11YAttributes.Aria.Haspopup.prop,
+				Constants.A11YAttributes.Aria.Haspopup.value.False
+			);
 		}
 
 		/**
@@ -166,7 +170,11 @@ namespace OSFramework.OSUI.Helper {
 		 * @memberof OSFramework.Helper.A11Y
 		 */
 		public static AriaHasPopupTrue(element: HTMLElement): void {
-			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Haspopup, Constants.A11YAttributes.States.True);
+			Dom.Attribute.Set(
+				element,
+				Constants.A11YAttributes.Aria.Haspopup.prop,
+				Constants.A11YAttributes.Aria.Haspopup.value.True
+			);
 		}
 
 		/**
@@ -396,7 +404,18 @@ namespace OSFramework.OSUI.Helper {
 		}
 
 		/**
-		 * Method that will set the button role
+		 * * Method that will set the menu role
+		 *
+		 * @static
+		 * @param {HTMLElement} element
+		 * @memberof A11Y
+		 */
+		public static RoleMenu(element: HTMLElement): void {
+			Dom.Attribute.Set(element, Constants.A11YAttributes.Role.AttrName, Constants.A11YAttributes.Role.Menu);
+		}
+
+		/**
+		 * Method that will set the menuitem role
 		 *
 		 * @param {HTMLElement} element Target element to receive the role atributte
 		 * @returns
