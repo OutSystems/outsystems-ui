@@ -88,10 +88,12 @@ namespace OSFramework.OSUI.Constants {
 	export const FocusableElems =
 		'a[href]:not([disabled]), [tabindex="0"], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled])';
 
-	export const FocusableTabIndexHidden = '[tabindex="-1"]';
-
 	/* Attribute used to flag the default tabindex element under the pattern context */
 	export const FocusableTabIndexDefault = 'default-tabindex-element';
+
+	/* Store all the hidden elements under the context of a hidden container (ex: sidebar when it's closed) in order to turn them
+	visible for A11Y when hidden container turns into visible */
+	export const FocusableTabIndexHidden = '[tabindex="-1"][default-tabindex-element]';
 
 	/* Attribute used to flag some elements to be ignored by the Focus Trap behaviour */
 	export const FocusTrapIgnoreAttr = 'ignore-focus-trap';
