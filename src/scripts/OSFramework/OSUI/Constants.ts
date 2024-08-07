@@ -90,6 +90,9 @@ namespace OSFramework.OSUI.Constants {
 
 	export const FocusableTabIndexHidden = '[tabindex="-1"]';
 
+	/* Attribute used to flag the default tabindex element under the pattern context */
+	export const FocusableTabIndexDefault = 'default-tab-index-element';
+
 	/* Attribute used to flag some elements to be ignored by the Focus Trap behaviour */
 	export const FocusTrapIgnoreAttr = 'ignore-focus-trap';
 
