@@ -27,6 +27,9 @@ namespace OSFramework.OSUI.Patterns.Progress {
 		private _setAccessibilityProps(): void {
 			Helper.Dom.Attribute.Set(this.selfElement, Constants.A11YAttributes.TabIndex, '0');
 
+			// Set the attr that will be used to define the default tabindex element
+			Helper.Dom.Attribute.Set(this.selfElement, Constants.FocusableTabIndexDefault, Constants.EmptyString);
+
 			Helper.Dom.Attribute.Set(
 				this.selfElement,
 				Constants.A11YAttributes.Role.AttrName,

@@ -405,6 +405,8 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 		protected setA11YProperties(): void {
 			Helper.A11Y.RoleComplementary(this.selfElement);
 			Helper.A11Y.AriaHasPopupTrue(this.selfElement);
+			// Set the attr that will be used to define the default tabindex element
+			Helper.Dom.Attribute.Set(this.selfElement, Constants.FocusableTabIndexDefault, Constants.EmptyString);
 
 			if (this._isOpen) {
 				Helper.A11Y.TabIndexTrue(this.selfElement);

@@ -140,6 +140,8 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 				Helper.A11Y.RoleMenu(this._balloonElem);
 				this.setTriggerAriaLabel(Enum.AriaLabel.Trigger);
 				Helper.Dom.Attribute.Set(this._triggerElem, Constants.FocusTrapIgnoreAttr, true);
+				// Set the attr that will be used to define the default tabindex element
+				Helper.Dom.Attribute.Set(this._triggerElem, Constants.FocusableTabIndexDefault, Constants.EmptyString);
 			}
 
 			Helper.A11Y.AriaExpanded(this._triggerElem, this.isOpen.toString());

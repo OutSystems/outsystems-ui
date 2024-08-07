@@ -355,6 +355,8 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 			Helper.A11Y.TabIndexTrue(this._tooltipIconElem);
 			// Set Role to the tooltipContent
 			Helper.A11Y.RoleTooltip(this._tooltipBalloonWrapperElem);
+			// Set the attr that will be used to define the default tabindex element
+			Helper.Dom.Attribute.Set(this._tooltipIconElem, Constants.FocusableTabIndexDefault, Constants.EmptyString);
 		}
 
 		/**

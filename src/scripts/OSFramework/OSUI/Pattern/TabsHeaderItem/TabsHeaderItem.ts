@@ -73,9 +73,15 @@ namespace OSFramework.OSUI.Patterns.TabsHeaderItem {
 			if (this._isActive) {
 				Helper.A11Y.TabIndexTrue(this.selfElement);
 				Helper.A11Y.AriaSelectedTrue(this.selfElement);
+
+				// Set the attr that will be used to define the default tabindex element
+				Helper.Dom.Attribute.Set(this.selfElement, Constants.FocusableTabIndexDefault, Constants.EmptyString);
 			} else {
 				Helper.A11Y.TabIndexFalse(this.selfElement);
 				Helper.A11Y.AriaSelectedFalse(this.selfElement);
+
+				// Unset the attr that will be used to define the default tabindex element
+				Helper.Dom.Attribute.Remove(this.selfElement, Constants.FocusableTabIndexDefault);
 			}
 		}
 

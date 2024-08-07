@@ -353,12 +353,18 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.PatternDisabled);
 				Helper.Dom.Styles.RemoveClass(this._elementWithEvents, Enum.CssClass.PatternClickArea);
 				Helper.A11Y.AriaDisabledTrue(this.selfElement);
+				Helper.Dom.Attribute.Remove(this._elementWithEvents, Constants.FocusableTabIndexDefault);
 				this._removeEvents();
 				this.unsetCallbacks();
 			} else {
 				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.PatternDisabled);
 				Helper.Dom.Styles.AddClass(this._elementWithEvents, Enum.CssClass.PatternClickArea);
 				Helper.A11Y.AriaDisabledFalse(this.selfElement);
+				Helper.Dom.Attribute.Set(
+					this._elementWithEvents,
+					Constants.FocusableTabIndexDefault,
+					Constants.EmptyString
+				);
 				this.setCallbacks();
 				this._addEvents();
 			}
