@@ -21,6 +21,8 @@ namespace OSFramework.OSUI.Patterns {
 		private _provider: P;
 		// Holds the provider info
 		private _providerInfo: ProviderInfo;
+		// Holds the callback for the redraw event
+		private _redrawCallback: GlobalCallbacks.Generic;
 		// Holds the providerEvents instance, that manages the provider events
 		protected providerEventsManagerInstance: Event.ProviderEvents.IProviderEventManager;
 
@@ -161,9 +163,11 @@ namespace OSFramework.OSUI.Patterns {
 			};
 
 			// Force provider redraw/update when rtl is changed in runtime
+			this._redrawCallback = this.redraw.bind(this);
+			
 			OSFramework.OSUI.Event.DOMEvents.Observers.GlobalObserverManager.Instance.addHandler(
 				Event.DOMEvents.Observers.ObserverEvent.RTL,
-				this.redraw.bind(this)
+				this._redrawCallback
 			);
 
 			super.build();
@@ -206,8 +210,10 @@ namespace OSFramework.OSUI.Patterns {
 		public dispose(): void {
 			OSFramework.OSUI.Event.DOMEvents.Observers.GlobalObserverManager.Instance.removeHandler(
 				Event.DOMEvents.Observers.ObserverEvent.RTL,
-				this.redraw.bind(this)
+				this._redrawCallback
 			);
+
+			this._redrawCallback = undefined;
 
 			super.dispose();
 		}
