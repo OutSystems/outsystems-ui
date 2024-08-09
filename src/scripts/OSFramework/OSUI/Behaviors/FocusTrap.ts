@@ -19,11 +19,11 @@ namespace OSFramework.OSUI.Behaviors {
 		private _focusTopCallback: GlobalCallbacks.Generic;
 		private _focusableElements: HTMLElement[] = [];
 		private _hasBeenPassThoughFirstOne = false;
+		private _isTargetElementCapableToHaveOthersInside = false;
 		private _lastFocusableElement: HTMLElement;
 		private _predictableBottomElement: HTMLElement;
 		private _predictableTopElement: HTMLElement;
 		private _targetElement: HTMLElement;
-		private _isSpecialTargetElement = false;
 
 		/**
 		 * Creates an instance of FocusTrap.
@@ -46,7 +46,7 @@ namespace OSFramework.OSUI.Behaviors {
 		// Method to create elements
 		private _buildPredictableElements(): void {
 			// Check if the given targetElement is a "special" element
-			this._checkIfSpecialTargetElement();
+			this._checkTargetElementType();
 
 			// Create the focusable elements
 			this._predictableTopElement = document.createElement(GlobalEnum.HTMLElement.Span);
@@ -68,8 +68,13 @@ namespace OSFramework.OSUI.Behaviors {
 		 * 	- "special" concept means that the targetElement will contains other patterns that will also contains their own focusable elements.
 		 * 	- focusable elements from those possible inner patterns should not be considered as part of the focus trap to the current pattern.
 		 */
-		private _checkIfSpecialTargetElement(): void {
-			this._isSpecialTargetElement = this._targetElement.querySelector('.osui-sidebar') !== null;
+		private _checkTargetElementType(): void {
+			if (
+				// Check if the targetElement contains a sidebar element
+				Helper.Dom.ClassSelector(this._targetElement, `${Patterns.Sidebar.Enum.CssClass.Aside}`)
+			) {
+				this._isTargetElementCapableToHaveOthersInside = true;
+			}
 		}
 
 		// Handler for bottom on top element
@@ -140,23 +145,24 @@ namespace OSFramework.OSUI.Behaviors {
 
 			// Ensure we get the proper list of focusable elements
 			for (const element of possibleFocusableElements) {
-				// Check if the element is a direct child of the given targetElement
-				if (element.closest(GlobalEnum.DataBlocksTag.DataBlock) === this._targetElement) {
+				// Check if the element is a child of the given targetElement
+				if (
+					element.closest(GlobalEnum.DataBlocksTag.DataBlock) === this._targetElement ||
+					element.closest(GlobalEnum.DataBlocksTag.DataBlock).contains(this._targetElement)
+				) {
 					// Check if element is not a predictable element
 					if (element !== this._predictableTopElement && element !== this._predictableBottomElement) {
 						this._focusableElements.push(element);
 					}
 					// If the targetElement is a "special" element, we need to ensure that the focusable elements are not part of the inner patterns
 					// Example of having an OverflowMenu inside the Sidebar and also get all the focusable elements from it as a part of the ones at the sideBar context
-				} else if (this._isSpecialTargetElement) {
+				} else if (this._isTargetElementCapableToHaveOthersInside) {
 					// Ensure the element we bring from the inner pattern is the default tabindex element for it!
 					if (Helper.Dom.Attribute.Has(element, Constants.FocusableTabIndexDefault)) {
 						this._focusableElements.push(element);
 					}
 				}
 			}
-
-			console.log('After', this._focusableElements);
 
 			// Remove the first element from array, because of predictable top element added for trapping
 			this._firstFocusableElement = this._focusableElements[0];
