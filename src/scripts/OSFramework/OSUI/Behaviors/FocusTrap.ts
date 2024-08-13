@@ -5,6 +5,7 @@ namespace OSFramework.OSUI.Behaviors {
 		focusBottomCallback?: GlobalCallbacks.Generic;
 		focusTargetElement: HTMLElement;
 		focusTopCallback?: GlobalCallbacks.Generic;
+		isTargetElemCapableToHaveOthersInside?: boolean;
 	};
 
 	/**
@@ -39,15 +40,15 @@ namespace OSFramework.OSUI.Behaviors {
 			this._focusBottomCallback = opts.focusBottomCallback;
 			this._focusTopCallback = opts.focusTopCallback;
 
+			// Set the indicator that will reflect if the target element is capable to have other patterns inside
+			this._isTargetElementCapableToHaveOthersInside = opts.isTargetElemCapableToHaveOthersInside || false;
+
 			// Create the elements needed!
 			this._buildPredictableElements();
 		}
 
 		// Method to create elements
 		private _buildPredictableElements(): void {
-			// Check if the given targetElement is a "special" element
-			this._checkTargetElementType();
-
 			// Create the focusable elements
 			this._predictableTopElement = document.createElement(GlobalEnum.HTMLElement.Span);
 			this._predictableBottomElement = document.createElement(GlobalEnum.HTMLElement.Span);
@@ -61,20 +62,6 @@ namespace OSFramework.OSUI.Behaviors {
 
 			// Set focusable elements
 			this._setFocusableElements();
-		}
-
-		/**
-		 * Method that will check if the targetElement is a "special" element,
-		 * 	- "special" concept means that the targetElement will contains other patterns that will also contains their own focusable elements.
-		 * 	- focusable elements from those possible inner patterns should not be considered as part of the focus trap to the current pattern.
-		 */
-		private _checkTargetElementType(): void {
-			if (
-				// Check if the targetElement contains a sidebar element
-				Helper.Dom.ClassSelector(this._targetElement, `${Patterns.Sidebar.Enum.CssClass.Aside}`)
-			) {
-				this._isTargetElementCapableToHaveOthersInside = true;
-			}
 		}
 
 		// Handler for bottom on top element
