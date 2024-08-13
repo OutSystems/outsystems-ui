@@ -77,7 +77,7 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 		private _handleFocusBehavior(): void {
 			const opts = {
 				focusTargetElement: this._parentSelf,
-				isTargetElemCapableToHaveOthersInside: true,
+				canContainOtherPatterns: true,
 			} as Behaviors.FocusTrapParams;
 
 			this._focusTrapInstance = new Behaviors.FocusTrap(opts);
