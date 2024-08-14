@@ -133,6 +133,8 @@ namespace OSFramework.OSUI.Patterns.FlipContent {
 				Helper.A11Y.TabIndexTrue(this.selfElement);
 				Helper.A11Y.RoleButton(this.selfElement);
 				Helper.A11Y.AriaLivePolite(this.selfElement);
+				// Set the attr that will be used to define the default tabindex element
+				Helper.Dom.Attribute.Set(this.selfElement, Constants.FocusableTabIndexDefault, Constants.EmptyString);
 			}
 		}
 
