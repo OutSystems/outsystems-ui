@@ -19,7 +19,7 @@ namespace OSFramework.OSUI.Behaviors {
 		private _firstFocusableElement: HTMLElement;
 		private _focusBottomCallback: GlobalCallbacks.Generic;
 		private _focusTopCallback: GlobalCallbacks.Generic;
-		private _focusableElements: HTMLElement[] = [];
+		private _focusableElements: HTMLElement[];
 		private _hasBeenPassThoughFirstOne = false;
 		private _lastFocusableElement: HTMLElement;
 		private _predictableBottomElement: HTMLElement;
@@ -33,6 +33,8 @@ namespace OSFramework.OSUI.Behaviors {
 		 * @memberof FocusTrap
 		 */
 		constructor(opts: FocusTrapParams) {
+			this._focusableElements = [];
+
 			// Store the focus target element
 			this._targetElement = opts.focusTargetElement;
 
@@ -132,11 +134,10 @@ namespace OSFramework.OSUI.Behaviors {
 
 			// Ensure we get the proper list of focusable elements
 			for (const element of possibleFocusableElements) {
+				// Get the closest data block from the element
+				const closestDataBlock = element.closest(GlobalEnum.DataBlocksTag.DataBlock);
 				// Check if the element is a child of the given targetElement
-				if (
-					element.closest(GlobalEnum.DataBlocksTag.DataBlock) === this._targetElement ||
-					element.closest(GlobalEnum.DataBlocksTag.DataBlock).contains(this._targetElement)
-				) {
+				if (closestDataBlock === this._targetElement || closestDataBlock.contains(this._targetElement)) {
 					// Check if element is not a predictable element
 					if (element !== this._predictableTopElement && element !== this._predictableBottomElement) {
 						this._focusableElements.push(element);
