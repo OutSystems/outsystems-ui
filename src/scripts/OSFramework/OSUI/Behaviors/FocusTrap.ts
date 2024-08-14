@@ -15,7 +15,7 @@ namespace OSFramework.OSUI.Behaviors {
 	 * @class FocusTrap
 	 */
 	export class FocusTrap {
-		private _canContainOtherPatterns = false;
+		private _canTargetContainOtherPatts = false;
 		private _firstFocusableElement: HTMLElement;
 		private _focusBottomCallback: GlobalCallbacks.Generic;
 		private _focusTopCallback: GlobalCallbacks.Generic;
@@ -43,7 +43,7 @@ namespace OSFramework.OSUI.Behaviors {
 			this._focusTopCallback = opts.focusTopCallback;
 
 			// Set the indicator that will reflect if the target element is capable to have other patterns inside
-			this._canContainOtherPatterns = opts.canContainOtherPatterns || false;
+			this._canTargetContainOtherPatts = opts.canContainOtherPatterns || false;
 
 			// Create the elements needed!
 			this._buildPredictableElements();
@@ -144,7 +144,7 @@ namespace OSFramework.OSUI.Behaviors {
 					}
 					// If the targetElement is a "special" element, we need to ensure that the focusable elements are not part of the inner patterns
 					// Example of having an OverflowMenu inside the Sidebar and also get all the focusable elements from it as a part of the ones at the sideBar context
-				} else if (this._canContainOtherPatterns) {
+				} else if (this._canTargetContainOtherPatts) {
 					// Ensure the element we bring from the inner pattern is the default tabindex element for it!
 					if (Helper.Dom.Attribute.Has(element, Constants.FocusableTabIndexDefault)) {
 						this._focusableElements.push(element);
