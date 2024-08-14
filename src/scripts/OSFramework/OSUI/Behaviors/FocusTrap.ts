@@ -124,7 +124,7 @@ namespace OSFramework.OSUI.Behaviors {
 		// Method to set the focusable elements to be used
 		private _setFocusableElements(includeTabIndexHidden = false): void {
 			// Ensure the list of focusable elements is empty
-			this._focusableElements = [];
+			this._focusableElements.length = 0;
 
 			// Get all the possible focusable
 			const possibleFocusableElements = Helper.Dom.GetFocusableElements(
