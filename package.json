@@ -1,6 +1,6 @@
 {
 	"name": "outsystems-ui",
-	"version": "2.19.1",
+	"version": "2.19.2",
 	"description": "OutSystems UI Framework",
 	"license": "BSD-3-Clause",
 	"scripts": {
@@ -53,7 +53,7 @@
 		"gulp-sourcemaps": "^3.0.0",
 		"gulp-typescript": "^6.0.0-alpha.1",
 		"json-fixer": "^1.6.15",
-		"nouislider": "^15.7.2",
+		"nouislider": "^15.8.1",
 		"postcss": "^8.4.38",
 		"postcss-discard-comments": "^5.1.2",
 		"postcss-discard-duplicates": "^5.1.0",

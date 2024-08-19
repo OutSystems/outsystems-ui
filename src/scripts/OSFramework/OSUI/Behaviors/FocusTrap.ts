@@ -2,6 +2,7 @@
 namespace OSFramework.OSUI.Behaviors {
 	// FocusTrap type
 	export type FocusTrapParams = {
+		canContainOtherPatterns?: boolean;
 		focusBottomCallback?: GlobalCallbacks.Generic;
 		focusTargetElement: HTMLElement;
 		focusTopCallback?: GlobalCallbacks.Generic;
@@ -14,6 +15,7 @@ namespace OSFramework.OSUI.Behaviors {
 	 * @class FocusTrap
 	 */
 	export class FocusTrap {
+		private _canTargetContainOtherPatts = false;
 		private _firstFocusableElement: HTMLElement;
 		private _focusBottomCallback: GlobalCallbacks.Generic;
 		private _focusTopCallback: GlobalCallbacks.Generic;
@@ -31,12 +33,17 @@ namespace OSFramework.OSUI.Behaviors {
 		 * @memberof FocusTrap
 		 */
 		constructor(opts: FocusTrapParams) {
+			this._focusableElements = [];
+
 			// Store the focus target element
 			this._targetElement = opts.focusTargetElement;
 
 			// Set the callbacks to focusable elements
 			this._focusBottomCallback = opts.focusBottomCallback;
 			this._focusTopCallback = opts.focusTopCallback;
+
+			// Set the indicator that will reflect if the target element is capable to have other patterns inside
+			this._canTargetContainOtherPatts = opts.canContainOtherPatterns || false;
 
 			// Create the elements needed!
 			this._buildPredictableElements();
@@ -115,9 +122,22 @@ namespace OSFramework.OSUI.Behaviors {
 		}
 
 		// Method to set the focusable elements to be used
-		private _setFocusableElements(): void {
-			this._focusableElements = Helper.Dom.GetFocusableElements(this._targetElement);
+		private _setFocusableElements(includeTabIndexHidden = false): void {
+			/**
+			 * NOTE: (MORE INFO @ROU-10963)
+			 *	We can find 2 sections below that must be explained:
+			 *		- TO BE REMOVED
+			 *			- After the missing part of the code is implemented (mentioned at the bullet point below), code inside this section should be removed!
+			 *		- TO KEEP
+			 *			- With this implementation we ensure that the focusable elements are not part of the inner patterns
+			 *			- However we still need to ensure focusable elements inside child patterns should be managed through their own FocusTrap
+			 *			- For now code is not prepared to it, but it should be considered in the future, that's why we keep this implementation commented
+			 */
 
+			/* TO BE REMOVED • START •••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••  */
+			// eslint-disable-next-line @typescript-eslint/no-unused-vars
+			includeTabIndexHidden = false;
+			this._focusableElements = Helper.Dom.GetFocusableElements(this._targetElement, false);
 			// Check if predicted elements exist at the _focusableElements
 			for (const predictedElement of this._focusableElements.filter(
 				(item) => item === this._predictableTopElement || item === this._predictableBottomElement
@@ -125,6 +145,38 @@ namespace OSFramework.OSUI.Behaviors {
 				// If so, remove them from the array collection of _focusableElements
 				this._focusableElements.splice(this._focusableElements.indexOf(predictedElement), 1);
 			}
+			/* TO BE REMOVED • END •••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••  */
+
+			/* TO KEEP •••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
+			// Ensure the list of focusable elements is empty
+			this._focusableElements.length = 0;
+
+			// Get all the possible focusable
+			const possibleFocusableElements = Helper.Dom.GetFocusableElements(
+				this._targetElement,
+				includeTabIndexHidden
+			);
+
+			// Ensure we get the proper list of focusable elements
+			for (const element of possibleFocusableElements) {
+				// Get the closest data block from the element
+				const closestDataBlock = element.closest(GlobalEnum.DataBlocksTag.DataBlock);
+				// Check if the element is a child of the given targetElement
+				if (closestDataBlock === this._targetElement || closestDataBlock.contains(this._targetElement)) {
+					// Check if element is not a predictable element
+					if (element !== this._predictableTopElement && element !== this._predictableBottomElement) {
+						this._focusableElements.push(element);
+					}
+					// If the targetElement is a "special" element, we need to ensure that the focusable elements are not part of the inner patterns
+					// Example of having an OverflowMenu inside the Sidebar and also get all the focusable elements from it as a part of the ones at the sideBar context
+				} else if (this._canTargetContainOtherPatts) {
+					// Ensure the element we bring from the inner pattern is the default tabindex element for it!
+					if (Helper.Dom.Attribute.Has(element, Constants.FocusableTabIndexDefault)) {
+						this._focusableElements.push(element);
+					}
+				}
+			}
+			••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••• */
 
 			// Remove the first element from array, because of predictable top element added for trapping
 			this._firstFocusableElement = this._focusableElements[0];
@@ -204,7 +256,7 @@ namespace OSFramework.OSUI.Behaviors {
 			Helper.A11Y.AriaHiddenFalse(this._predictableTopElement);
 
 			// Ensure the list of focusable elements is updated, predictable elements starts with TabIndex Hidden
-			this._setFocusableElements();
+			this._setFocusableElements(true);
 		}
 
 		/**

@@ -359,8 +359,12 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 				const _transformValue = _isVertical
 					? _activeElement.offsetTop
 					: OutSystems.OSUI.Utils.GetIsRTL()
-					? -(this._tabsHeaderElement.offsetWidth - _activeElement.offsetLeft - _activeElement.offsetWidth)
-					: _activeElement.offsetLeft;
+						? -(
+								this._tabsHeaderElement.offsetWidth -
+								_activeElement.offsetLeft -
+								_activeElement.offsetWidth
+							)
+						: _activeElement.offsetLeft;
 
 				// Get the actual size of the current tabsHeader
 				const _elementRect = _activeElement.getBoundingClientRect();
@@ -431,7 +435,7 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 				: (this.getChildByIndex(
 						this.configs.StartingTab,
 						Enum.ChildTypes.TabsContentItem
-				  ) as TabsContentItem.ITabsContentItem);
+					) as TabsContentItem.ITabsContentItem);
 
 			// Call the method to immediatelly set the single content as active,
 			// as it won't be needed to wait for more content items
@@ -804,7 +808,7 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 				Helper.Dom.Styles.SetStyleAttribute(
 					_tabContentItemElement,
 					GlobalEnum.InlineStyle.Display,
-					GlobalEnum.InlineStyleValue.Display.block
+					GlobalEnum.InlineStyleValue.Display.contents
 				);
 
 				if (this._activeTabHeaderElement.selfElement === _tabHeaderItemElement) {

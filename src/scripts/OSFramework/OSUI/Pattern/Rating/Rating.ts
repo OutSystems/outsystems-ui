@@ -148,6 +148,7 @@ namespace OSFramework.OSUI.Patterns.Rating {
 				];
 				if (_lastChosen) {
 					_lastChosen.ariaChecked = Constants.A11YAttributes.States.False;
+					Helper.Dom.Attribute.Remove(_lastChosen, Constants.FocusableTabIndexDefault);
 				}
 
 				// If it is, then get the input:checked value
@@ -356,6 +357,8 @@ namespace OSFramework.OSUI.Patterns.Rating {
 			if (this.configs.RatingScale === 1) {
 				ratingItems[1].checked = true;
 				ratingItems[1].ariaChecked = Constants.A11YAttributes.States.True;
+				// Set the attr that will be used to define the default tabindex element
+				Helper.Dom.Attribute.Set(ratingItems[1], Constants.FocusableTabIndexDefault, Constants.EmptyString);
 				return;
 			}
 
@@ -386,6 +389,8 @@ namespace OSFramework.OSUI.Patterns.Rating {
 			// Set the itemas as :checked
 			ratingItems[newValue].checked = true;
 			ratingItems[newValue].ariaChecked = Constants.A11YAttributes.States.True;
+			// Set the attr that will be used to define the default tabindex element
+			Helper.Dom.Attribute.Set(ratingItems[newValue], Constants.FocusableTabIndexDefault, Constants.EmptyString);
 
 			// If is-half add the appropriate class, otherwise just declare the this.isHalfValue, to complete the if statement
 			if (this._isHalfValue) {

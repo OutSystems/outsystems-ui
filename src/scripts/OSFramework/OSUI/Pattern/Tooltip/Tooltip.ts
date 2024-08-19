@@ -32,7 +32,7 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 		// Flag used to manage if it's _tooltipIconElem  has been MouseEnter
 		private _isIconMouseEnter = false;
 		// Flag used to manage if it's open or closed!
-		private _isOpen: boolean;
+		private _isOpen = false;
 		// Flag used to deal with onBodyClick and open api concurrency methods!
 		private _isOpenedByApi = false;
 		// Platform OnClose Callback
@@ -47,8 +47,6 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new TooltipConfig(configs));
-
-			this._isOpen = this.configs.StartVisible;
 		}
 
 		// Method to handle the custom BalloonOnToggle callback
@@ -192,9 +190,8 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 			}
 
 			// Set default IsVisible cssClass property value
-			if (this._isOpen) {
-				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.IsOpened);
-				Helper.Dom.Styles.AddClass(this._tooltipBalloonWrapperElem, Enum.CssClass.BalloonIsOpened);
+			if (this.configs.StartVisible) {
+				this._triggerOpen();
 			}
 		}
 
@@ -358,6 +355,8 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 			Helper.A11Y.TabIndexTrue(this._tooltipIconElem);
 			// Set Role to the tooltipContent
 			Helper.A11Y.RoleTooltip(this._tooltipBalloonWrapperElem);
+			// Set the attr that will be used to define the default tabindex element
+			Helper.Dom.Attribute.Set(this._tooltipIconElem, Constants.FocusableTabIndexDefault, Constants.EmptyString);
 		}
 
 		/**
@@ -438,8 +437,8 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 			this.setHtmlElements();
 			this.setA11YProperties();
 			this._setUpEvents();
-			this._setCssClasses();
 			this._setBalloonFeature();
+			this._setCssClasses();
 			this.finishBuild();
 		}
 

@@ -143,7 +143,11 @@ namespace OSFramework.OSUI.Patterns.Video {
 		 */
 		private _setVideoSource(): void {
 			// Get the file extension from URL
-			const _urlFileExtension = this.configs.URL.split('.').pop();
+			const _urlFileExtension = OSUI.Helper.URL.GetFileTypeFromURL(this.configs.URL);
+
+			if (_urlFileExtension === null) {
+				console.warn(`The URL '${this.configs.URL}' is not a valid URL.`);
+			}
 
 			// Add class to video source element
 			OSUI.Helper.Dom.Styles.AddClass(this._videoSourceElement, Patterns.Video.Enum.CssClass.VideoSource);

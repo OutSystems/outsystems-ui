@@ -169,6 +169,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 					} else if (event.key === GlobalEnum.Keycodes.ArrowDown) {
 						// If ArrowDown Key
 						// Focus the first option item!
+						event.preventDefault();
 						this.getChildByIndex(0).setFocus();
 						// Check if Dropdown should only allow single option selected
 						if (this.configs.AllowMultipleSelection === false) {
@@ -601,7 +602,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			// Set SelectValuesWrapper with button as a role
 			Helper.A11Y.RoleButton(this._selectValuesWrapper);
 			// Set SelectValuesWrapper with aria-haspopup='listbox'
-			Helper.A11Y.AriaHasPopup(this._selectValuesWrapper, Constants.A11YAttributes.Role.Listbox);
+			Helper.A11Y.AriaHasPopup(this._selectValuesWrapper, Constants.A11YAttributes.Aria.Haspopup.value.Listbox);
 			// Set balloon option items container properties
 			Helper.A11Y.RoleListbox(this._balloonOptionsWrapperElement);
 			Helper.A11Y.TabIndexFalse(this._balloonOptionsWrapperElement);

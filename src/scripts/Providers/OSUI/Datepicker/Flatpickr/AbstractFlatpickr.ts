@@ -32,6 +32,9 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 
 			// Set the default library Event handler that will be used to set on the provider configs
 			this.configs.OnClose = this.onDatePickerClose.bind(this);
+
+			// Set the default library Event handler that will be used to set on the provider configs
+			this.configs.OnOpen = this.onDatePickerOpen.bind(this);
 		}
 
 		// Method used to set the needed HTML attributes
@@ -122,7 +125,14 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 
 			// Create the TodayBtn element
 			const todayBtn = document.createElement(OSFramework.OSUI.GlobalEnum.HTMLElement.Link);
-			OSFramework.OSUI.Helper.A11Y.TabIndexTrue(todayBtn);
+
+			// Set the tabindex for the today button
+			if (this.provider.isOpen) {
+				OSFramework.OSUI.Helper.A11Y.TabIndexTrue(todayBtn);
+			} else {
+				OSFramework.OSUI.Helper.A11Y.TabIndexFalse(todayBtn);
+			}
+
 			const langCode = l10ns.TodayBtn[this.configs.Lang] !== undefined ? this.configs.Lang : 'en';
 
 			todayBtn.innerHTML = l10ns.TodayBtn[langCode].title;
@@ -228,8 +238,8 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		}
 
 		/**
-		 * Method used to update the datepicker value when the selected dates is empty
-		 * And to add the custom callback to the OnClose event
+		 * Method used to update the datepicker value when the selected dates are empty,
+		 * to add the custom callback to the OnClose event and remove the tabindex from the today button
 		 *
 		 * @protected
 		 * @memberof AbstractFlatpickr
@@ -240,12 +250,33 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 				this.onDateSelectedEvent(this.provider.selectedDates);
 			}
 
+			// Remove the tabindex from the link inside the today button if it exists
+			if (this.configs.ShowTodayButton && this._todayButtonElem) {
+				OSFramework.OSUI.Helper.A11Y.TabIndexFalse(
+					this._todayButtonElem.querySelector(OSFramework.OSUI.GlobalEnum.HTMLElement.Link)
+				);
+			}
 			// Call the custom callback provided for users to add custom code when a datepicker close
 			if (
 				this.onCloseCustomCallback !== undefined &&
 				typeof this.onCloseCustomCallback === OSFramework.OSUI.Constants.JavaScriptTypes.Function
 			) {
 				this.onCloseCustomCallback(this.provider);
+			}
+		}
+
+		/**
+		 * Method used to add the custom callback to the OnOpen event and add the tabindex for the today button
+		 *
+		 * @protected
+		 * @memberof AbstractFlatpickr
+		 */
+		protected onDatePickerOpen(): void {
+			// Add the tabindex for the link inside the today button if it exists
+			if (this.configs.ShowTodayButton && this._todayButtonElem) {
+				OSFramework.OSUI.Helper.A11Y.TabIndexTrue(
+					this._todayButtonElem.querySelector(OSFramework.OSUI.GlobalEnum.HTMLElement.Link)
+				);
 			}
 		}
 

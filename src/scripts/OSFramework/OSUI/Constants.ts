@@ -11,7 +11,18 @@ namespace OSFramework.OSUI.Constants {
 			Describedby: 'aria-describedby',
 			Disabled: 'aria-disabled',
 			Expanded: 'aria-expanded',
-			Haspopup: 'aria-haspopup',
+			Haspopup: {
+				prop: 'aria-haspopup',
+				value: {
+					False: 'false',
+					True: 'true',
+					Menu: 'menu',
+					Listbox: 'listbox',
+					Tree: 'tree',
+					Grid: 'grid',
+					Dialog: 'dialog',
+				},
+			},
 			Hidden: 'aria-hidden',
 			Label: 'aria-label',
 			Labelledby: 'aria-labelledby',
@@ -33,6 +44,7 @@ namespace OSFramework.OSUI.Constants {
 			Button: 'button',
 			Complementary: 'complementary',
 			Listbox: 'listbox',
+			Menu: 'menu',
 			MenuItem: 'menuitem',
 			Option: 'option',
 			Presentation: 'presentation',
@@ -74,7 +86,14 @@ namespace OSFramework.OSUI.Constants {
 
 	/* Store focusable elements when doing a focus trap inside an element*/
 	export const FocusableElems =
-		'a[href]:not([disabled]),[tabindex="0"], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled])';
+		'a[href]:not([disabled]), [tabindex="0"], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled])';
+
+	/* Attribute used to flag the default tabindex element under the pattern context */
+	export const FocusableTabIndexDefault = 'default-tabindex-element';
+
+	/* Store all the hidden elements under the context of a hidden container (ex: sidebar when it's closed) in order to turn them
+	visible for A11Y when hidden container turns into visible */
+	export const FocusableTabIndexHidden = '[tabindex="-1"][default-tabindex-element]';
 
 	/* Attribute used to flag some elements to be ignored by the Focus Trap behaviour */
 	export const FocusTrapIgnoreAttr = 'ignore-focus-trap';
@@ -136,7 +155,7 @@ namespace OSFramework.OSUI.Constants {
 	export const OSPlatform = '<->platformType<->';
 
 	/* OSUI Version */
-	export const OSUIVersion = '2.19.1';
+	export const OSUIVersion = '2.19.2';
 
 	/* Constant to be used across project as the zero value*/
 	export const ZeroValue = 0;
