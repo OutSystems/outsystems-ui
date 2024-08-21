@@ -311,7 +311,7 @@ namespace OutSystems.OSUI.Utils.Menu {
 				if (menuIcon) {
 					const menuIconOnKeypress = function (e) {
 						//If enter or space use the menuIcon to validate
-						if (e.keyCode === '32' || e.keyCode === '13') {
+						if (e.keyCode === 32 || e.keyCode === 13) {
 							e.preventDefault();
 							e.stopPropagation();
 							ToggleSideMenu();
