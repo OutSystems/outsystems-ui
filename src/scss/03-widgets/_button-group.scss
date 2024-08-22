@@ -53,6 +53,11 @@
 			color: var(--color-neutral-0);
 		}
 	}
+
+	// Fix validation message position
+	&.not-valid {
+		position: relative;
+	}
 }
 
 /* Button Group when used inside Header Content Placeholder */
