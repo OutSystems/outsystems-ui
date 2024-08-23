@@ -57,6 +57,11 @@
 	// Fix validation message position
 	&.not-valid {
 		position: relative;
+
+		.validation-message {
+			bottom: -12px;
+			position: relative;
+		}
 	}
 }
 
