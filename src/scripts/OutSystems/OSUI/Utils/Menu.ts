@@ -4,7 +4,7 @@ namespace OutSystems.OSUI.Utils.Menu {
 	let _onOrientationChangeCallback: OSFramework.OSUI.GlobalCallbacks.Generic;
 	// Focusable elements on the menu context sine it's different from the default constant that excludes disabled elements with tabindex=-1
 	const MenuFocusableElems =
-		'a[href]:not([disabled]), [tabindex=], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled])';
+		'a[href]:not([disabled]), [tabindex], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled])';
 
 	// OrientationChange handler
 	function _onOrientationChangeCallbackHandler(callback: OSFramework.OSUI.GlobalCallbacks.Generic): void {
