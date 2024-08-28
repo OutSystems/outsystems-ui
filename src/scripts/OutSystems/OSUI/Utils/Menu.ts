@@ -2,6 +2,8 @@
 namespace OutSystems.OSUI.Utils.Menu {
 	// OrientationChange callback to be stored and removed on Destroy
 	let _onOrientationChangeCallback: OSFramework.OSUI.GlobalCallbacks.Generic;
+	// OnResize callback to be stored and removed on Destroy
+	let _onResizeCallback: OSFramework.OSUI.GlobalCallbacks.Generic;
 	// Focusable elements on the menu context sine it's different from the default constant that excludes disabled elements with tabindex=-1
 	const MenuFocusableElems =
 		'a[href]:not([disabled]), [tabindex], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled])';
@@ -11,6 +13,15 @@ namespace OutSystems.OSUI.Utils.Menu {
 		if (callback !== undefined) {
 			setTimeout(function () {
 				_onOrientationChangeCallback();
+			}, 300);
+		}
+	}
+
+	// OnResize handler
+	function _onResizeCallbackHandler(callback: OSFramework.OSUI.GlobalCallbacks.Generic): void {
+		if (callback !== undefined) {
+			setTimeout(function () {
+				_onResizeCallback();
 			}, 300);
 		}
 	}
@@ -27,6 +38,22 @@ namespace OutSystems.OSUI.Utils.Menu {
 			OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
 				OSFramework.OSUI.Event.DOMEvents.Listeners.Type.OrientationChange,
 				_onOrientationChangeCallbackHandler
+			);
+		}
+	}
+
+	/**
+	 * Method that add the OnResize handler
+	 *
+	 * @export
+	 * @param {OSFramework.OSUI.GlobalCallbacks.Generic} callback
+	 */
+	export function AddMenuOnResize(callback: OSFramework.OSUI.GlobalCallbacks.Generic): void {
+		if (callback !== undefined) {
+			_onResizeCallback = callback;
+			OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
+				OSFramework.OSUI.Event.DOMEvents.Listeners.Type.WindowResize,
+				_onResizeCallbackHandler
 			);
 		}
 	}
@@ -136,6 +163,19 @@ namespace OutSystems.OSUI.Utils.Menu {
 				_onOrientationChangeCallbackHandler
 			);
 			_onOrientationChangeCallback = undefined;
+		}
+	}
+
+	/**
+	 * Method that removes the OnResize handler
+	 */
+	export function RemoveMenuOnResize(): void {
+		if (_onResizeCallback !== undefined) {
+			OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
+				OSFramework.OSUI.Event.DOMEvents.Listeners.Type.WindowResize,
+				_onResizeCallbackHandler
+			);
+			_onResizeCallback = undefined;
 		}
 	}
 
