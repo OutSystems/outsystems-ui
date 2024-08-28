@@ -417,7 +417,9 @@ namespace OutSystems.OSUI.Utils.Menu {
 							return;
 						}
 
-						isExpanded = OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(layout, 'menu-visible');
+						isExpanded =
+							OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(layout, 'menu-visible') ||
+							OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(layout, 'menu--visible');
 
 						//If ESC, Close Menu
 						if (isExpanded && isEscapedPressed) {
