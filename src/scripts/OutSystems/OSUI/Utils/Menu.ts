@@ -359,10 +359,7 @@ namespace OutSystems.OSUI.Utils.Menu {
 						const isTabPressed = e.key === 'Tab' || e.keyCode === 9;
 						const isEscapedPressed = e.key === 'Escape' || e.keyCode === 27;
 						const isShiftKey = e.shiftKey;
-						const focusableEls = OSFramework.OSUI.Helper.Dom.TagSelectorAll(
-							menu,
-							OSFramework.OSUI.Constants.FocusableElems
-						);
+						const focusableEls = OSFramework.OSUI.Helper.Dom.TagSelectorAll(menu, MenuFocusableElems);
 
 						const firstFocusableEl = focusableEls[0] as HTMLElement;
 						const lastFocusableEl = focusableEls[focusableEls.length - 1] as HTMLElement;
@@ -382,7 +379,7 @@ namespace OutSystems.OSUI.Utils.Menu {
 
 						isExpanded = OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(layout, 'menu-visible');
 
-						//If esc, Close Menu
+						//If ESC, Close Menu
 						if (isExpanded && isEscapedPressed) {
 							e.preventDefault();
 							e.stopPropagation();
@@ -451,9 +448,9 @@ namespace OutSystems.OSUI.Utils.Menu {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.Utilities.FailToggleSideMenu,
 			callback: () => {
-				const layout = document.querySelector('.layout');
-				const menu = document.querySelector('.app-menu-content') as HTMLElement;
-				const menuIcon = document.querySelector('.menu-icon') as HTMLElement;
+				const layout = OSFramework.OSUI.Helper.Dom.ClassSelector(document, 'layout');
+				const menu = OSFramework.OSUI.Helper.Dom.ClassSelector(document, 'app-menu-content');
+				const menuIcon = OSFramework.OSUI.Helper.Dom.ClassSelector(document, 'menu-icon');
 
 				if (layout && menu) {
 					let isExpanded = layout.classList.contains('menu-visible');
