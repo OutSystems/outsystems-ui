@@ -8,6 +8,9 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		private _a11yInfoContainerElem: HTMLElement;
 		// Event OnBodyScroll common behaviour
 		private _bodyScrollCommonBehaviour: SharedProviderResources.Flatpickr.UpdatePositionOnScroll;
+		/* Flag to store the satus of the platform input */
+		private _isPlatformInputDisabled: boolean;
+		// Store HtmlElement for the provider focus span target
 		private _providerFocusSpanTarget: HTMLElement;
 		// Store HtmlElement for the Today Button
 		private _todayButtonElem: HTMLElement;
@@ -109,6 +112,25 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 			OSFramework.OSUI.Helper.Dom.Styles.RemoveStyleAttribute(
 				this.selfElement,
 				OSFramework.OSUI.GlobalEnum.InlineStyle.Height
+			);
+		}
+
+		// Update certain A11Y properties
+		private _updateA11yProperties(): void {
+			// Ensure flatpickrInputElem tabindex is updated based on the platform input status
+			OSFramework.OSUI.Helper.Dom.Attribute.Set(
+				this.flatpickrInputElem,
+				OSFramework.OSUI.Constants.A11YAttributes.TabIndex,
+				this._isPlatformInputDisabled
+					? OSFramework.OSUI.Constants.A11YAttributes.States.TabIndexHidden
+					: OSFramework.OSUI.Constants.A11YAttributes.States.TabIndexShow
+			);
+
+			// Ensure flatpickrInputElem will also be updated for ScreenReaders
+			OSFramework.OSUI.Helper.Dom.Attribute.Set(
+				this.flatpickrInputElem,
+				OSFramework.OSUI.Constants.A11YAttributes.Aria.Hidden,
+				this._isPlatformInputDisabled.toString()
 			);
 		}
 
@@ -333,12 +355,8 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 					OSFramework.OSUI.Constants.A11YAttributes.Aria.Hidden,
 					OSFramework.OSUI.Constants.A11YAttributes.States.True
 				);
-				// Ensure flatpickrInputElem has active tabindex
-				OSFramework.OSUI.Helper.Dom.Attribute.Set(
-					this.flatpickrInputElem,
-					OSFramework.OSUI.Constants.A11YAttributes.TabIndex,
-					OSFramework.OSUI.Constants.A11YAttributes.States.TabIndexShow
-				);
+
+				this._updateA11yProperties();
 
 				// Set the default aria-label value attribute in case user didn't set it!
 				let ariaLabelValue = Enum.Attribute.DefaultAriaLabel as string;
@@ -391,6 +409,8 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		protected setHtmlElements(): void {
 			// Set the inputHTML element
 			this.datePickerPlatformInputElem = this.selfElement.querySelector('input.form-control');
+			// Store the default state of the input
+			this._isPlatformInputDisabled = this.datePickerPlatformInputElem.disabled;
 			// Store the reference to the info container about how to use keyboard to navigate through calendar
 			this._a11yInfoContainerElem = OSFramework.OSUI.Helper.Dom.TagSelector(
 				this.selfElement.parentElement,
@@ -542,6 +562,22 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 			}
 
 			super.dispose();
+		}
+
+		/**
+		 * Method used to update certain properties at OnRender
+		 *
+		 * @memberof AbstractFlatpickr
+		 */
+		public onRender(): void {
+			// Get the current status of the platform input
+			const isInputDisable = this.datePickerPlatformInputElem.disabled;
+
+			// Ensure the platform input status has been updated to prevent multiple calls due to the OnRender event
+			if (this._isPlatformInputDisabled !== isInputDisable) {
+				this._isPlatformInputDisabled = isInputDisable;
+				this._updateA11yProperties();
+			}
 		}
 
 		/**

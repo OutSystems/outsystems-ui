@@ -95,6 +95,7 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailToggleNativeBehavior: 'OSUI-API-07015',
 		FailUpdateInitialDate: 'OSUI-API-07016',
 		FailUpdatePrompt: 'OSUI-API-07017',
+		FailOnRender: 'OSUI-API-07018',
 	};
 
 	export const FlipContent = {

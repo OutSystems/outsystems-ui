@@ -8,6 +8,7 @@ namespace OSFramework.OSUI.Patterns.DatePicker {
 		close(): void;
 		disableDays(disableDays: string[]): void;
 		disableWeekDays(disableDays: number[]): void;
+		onRender(): void;
 		open(): void;
 		setLanguage(value: string): void;
 		setProviderConfigs(providerConfigs: ProviderConfigs): void;
