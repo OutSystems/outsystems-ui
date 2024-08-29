@@ -257,6 +257,7 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailUpdateInitialTime: 'OSUI-API-26013',
 		FailSetEditableInput: 'OSUI-API-26014',
 		FailUpdatePrompt: 'OSUI-API-26015',
+		FailOnRender: 'OSUI-API-26016',
 	};
 
 	export const MonthPicker = {
@@ -274,6 +275,7 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailSetLanguage: 'OSUI-API-27012',
 		FailUpdateInitialMonth: 'OSUI-API-27013',
 		FailUpdatePrompt: 'OSUI-API-27014',
+		FailOnRender: 'OSUI-API-27015',
 	};
 
 	//Error codes used on the context of the Utilities client actions
