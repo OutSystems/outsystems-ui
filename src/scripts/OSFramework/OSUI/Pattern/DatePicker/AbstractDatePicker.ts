@@ -14,6 +14,7 @@ namespace OSFramework.OSUI.Patterns.DatePicker {
 		public abstract close(): void;
 		public abstract disableDays(value: string[]): void;
 		public abstract disableWeekDays(value: number[]): void;
+		public abstract onRender(): void;
 		public abstract open(): void;
 		public abstract setLanguage(value: string): void;
 		public abstract updateInitialDate(date1: string, date2?: string): void;

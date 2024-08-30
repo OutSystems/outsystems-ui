@@ -11,6 +11,8 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 		private _bodyScrollCommonBehaviour: SharedProviderResources.Flatpickr.UpdatePositionOnScroll;
 		// Store the provider options
 		private _flatpickrOpts: FlatpickrOptions;
+		/* Flag to store the satus of the platform input */
+		private _isPlatformInputDisabled: boolean;
 		// Validation of ZIndex position common behavior
 		private _zindexCommonBehavior: SharedProviderResources.Flatpickr.UpdateZindex;
 		// Store the flatpickr input html element that will be added by library
@@ -100,6 +102,25 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 					this.configs.ExtendedClass
 				);
 			}
+		}
+
+		// Update certain A11Y properties
+		private _updateA11yProperties(): void {
+			// Ensure flatpickrInputElem tabindex is updated based on the platform input status
+			OSFramework.OSUI.Helper.Dom.Attribute.Set(
+				this.flatpickrInputElem,
+				OSFramework.OSUI.Constants.A11YAttributes.TabIndex,
+				this._isPlatformInputDisabled
+					? OSFramework.OSUI.Constants.A11YAttributes.States.TabIndexHidden
+					: OSFramework.OSUI.Constants.A11YAttributes.States.TabIndexShow
+			);
+
+			// Ensure flatpickrInputElem will also be updated for ScreenReaders
+			OSFramework.OSUI.Helper.Dom.Attribute.Set(
+				this.flatpickrInputElem,
+				OSFramework.OSUI.Constants.A11YAttributes.Aria.Hidden,
+				this._isPlatformInputDisabled.toString()
+			);
 		}
 
 		/**
@@ -236,12 +257,8 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 					OSFramework.OSUI.Constants.A11YAttributes.Aria.Hidden,
 					OSFramework.OSUI.Constants.A11YAttributes.States.True
 				);
-				// Ensure flatpickrInputElem has active tabindex
-				OSFramework.OSUI.Helper.Dom.Attribute.Set(
-					this.flatpickrInputElem,
-					OSFramework.OSUI.Constants.A11YAttributes.TabIndex,
-					OSFramework.OSUI.Constants.A11YAttributes.States.TabIndexShow
-				);
+
+				this._updateA11yProperties();
 			}
 		}
 
@@ -266,6 +283,9 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 			this.timePickerPlatformInputElem = this.selfElement.querySelector(
 				OSFramework.OSUI.GlobalEnum.CSSSelectors.InputFormControl
 			);
+
+			// Store the default state of the input
+			this._isPlatformInputDisabled = this.timePickerPlatformInputElem.disabled;
 
 			// If the input hasn't be added
 			if (!this.timePickerPlatformInputElem) {
@@ -400,6 +420,22 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 			}
 
 			super.dispose();
+		}
+
+		/**
+		 * Method used to update certain properties at OnRender
+		 *
+		 * @memberof Providers.OSUI.TimePicker.Flatpickr.OSUIFlatpickrTime
+		 */
+		public onRender(): void {
+			// Get the current status of the platform input
+			const isInputDisable = this.timePickerPlatformInputElem.disabled;
+
+			// Ensure the platform input status has been updated to prevent multiple calls due to the OnRender event
+			if (this._isPlatformInputDisabled !== isInputDisable) {
+				this._isPlatformInputDisabled = isInputDisable;
+				this._updateA11yProperties();
+			}
 		}
 
 		/**

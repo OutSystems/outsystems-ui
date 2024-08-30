@@ -12,6 +12,7 @@ namespace OSFramework.OSUI.Patterns.TimePicker {
 		// Commom methods all TimePickers must implement
 		public abstract clear(): void;
 		public abstract close(): void;
+		public abstract onRender(): void;
 		public abstract open(): void;
 		public abstract setLanguage(value: string): void;
 		public abstract updateInitialTime(time: string): void;
