@@ -182,7 +182,7 @@ namespace OutSystems.OSUI.Patterns.TimePickerAPI {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.TimePicker.FailOnRender,
 			callback: () => {
-				const _timePickerItem = GetTimePickerItemById(timePickerId);
+				const _timePickerItem = this.GetTimePickerItemById(timePickerId);
 
 				_timePickerItem.onRender();
 			},
