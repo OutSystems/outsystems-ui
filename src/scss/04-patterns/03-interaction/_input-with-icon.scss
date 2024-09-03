@@ -69,6 +69,8 @@
 		&.validation-message {
 			display: block;
 			position: absolute;
+			// the !important is used to override a more specific style containing ThemeGrid_Width context which is not needed here
+			left: 0 !important;
 		}
 	}
 }
