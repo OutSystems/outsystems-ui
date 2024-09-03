@@ -172,6 +172,26 @@ namespace OutSystems.OSUI.Patterns.TimePickerAPI {
 	}
 
 	/**
+	 * Function that will be triggered everytime there is a render at TimePicker
+	 *
+	 * @export
+	 * @param {string} timePickerId
+	 * @return {*}  {string}
+	 */
+	export function OnRender(timePickerId: string): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.TimePicker.FailOnRender,
+			callback: () => {
+				const _timePickerItem = this.GetTimePickerItemById(timePickerId);
+
+				_timePickerItem.onRender();
+			},
+		});
+
+		return result;
+	}
+
+	/**
 	 * Function used to Open the Timepicker with the Given Id
 	 *
 	 * @param {string} timePickerId ID of the TimePickerItem that will be initialized.
