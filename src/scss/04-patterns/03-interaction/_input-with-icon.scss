@@ -69,8 +69,6 @@
 		&.validation-message {
 			display: block;
 			position: absolute;
-			// the !important is used to override a more specific style containing ThemeGrid_Width context which is not needed here
-			left: 0 !important;
 		}
 	}
 }
@@ -81,6 +79,10 @@
 		.input-with-icon-content-icon {
 			padding-bottom: var(--space-m);
 			z-index: var(--layer-local-tier-1);
+		}
+
+		.form-control[class*='ThemeGrid_Width'].not-valid ~ span.validation-message {
+			left: 0;
 		}
 	}
 }
