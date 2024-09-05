@@ -2,32 +2,248 @@
 namespace OutSystems.OSUI.Utils.Menu {
 	// OrientationChange callback to be stored and removed on Destroy
 	let _onOrientationChangeCallback: OSFramework.OSUI.GlobalCallbacks.Generic;
-	// OnResize callback to be stored and removed on Destroy
-	let _onResizeCallback: OSFramework.OSUI.GlobalCallbacks.Generic;
+
+	// App Properties
+	export const _appProp = {
+		device: {
+			isLandscape: false,
+			type: undefined as OSFramework.OSUI.GlobalEnum.DeviceType,
+		},
+		layout: {
+			element: undefined as HTMLElement,
+			isAsideExpandable: false,
+			isAsideMenu: false,
+			isAsideMenuOverlay: false,
+			isBlank: false,
+			isTopMenu: false,
+		},
+		menu: {
+			element: undefined as HTMLElement,
+			hasEventListeners: false,
+			isOpen: false,
+		},
+	};
+
 	// Focusable elements on the menu context sine it's different from the default constant that excludes disabled elements with tabindex=-1
-	const MenuFocusableElems =
+	const _menuFocusableElems =
 		'a[href]:not([disabled]), [tabindex], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled])';
 
+	// Add Menu Event Listeners
+	const _addMenuEeventListeners = (): void => {
+		// Check if the keydown event should be added
+		const shouldKeyDownBeAdded =
+			OSFramework.OSUI.Helper.DeviceInfo.IsDesktop === false ||
+			_appProp.layout.isAsideMenuOverlay ||
+			_appProp.layout.isAsideExpandable;
+
+		if (shouldKeyDownBeAdded && _appProp.menu.hasEventListeners === false) {
+			_appProp.menu.hasEventListeners = true;
+			_appProp.menu.element.addEventListener('keydown', _menuOnKeypress);
+		}
+	};
+
+	// Method that add the OnResize handler
+	const _addMenuOnResize = (): void => {
+		OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
+			OSFramework.OSUI.Event.DOMEvents.Listeners.Type.WindowResize,
+			_onResizeCallbackHandler
+		);
+	};
+
+	// Menu on keypress handler
+	const _menuOnKeypress = function (e: KeyboardEvent) {
+		const isTabPressed = e.key === 'Tab';
+		const isEscapedPressed = e.key === 'Escape';
+		const isShiftKey = e.shiftKey;
+		const focusableEls = OSFramework.OSUI.Helper.Dom.TagSelectorAll(_appProp.menu.element, _menuFocusableElems);
+
+		const firstFocusableEl = focusableEls[0] as HTMLElement;
+		const lastFocusableEl = focusableEls[focusableEls.length - 1] as HTMLElement;
+
+		if (!isTabPressed && !isEscapedPressed) {
+			return;
+		}
+
+		//If ESC, Close Menu
+		if (isEscapedPressed && _appProp.menu.isOpen) {
+			e.preventDefault();
+			e.stopPropagation();
+			ToggleSideMenu();
+		}
+
+		if (isShiftKey) {
+			if (document.activeElement === firstFocusableEl) {
+				lastFocusableEl.focus();
+				e.preventDefault();
+			}
+		} else if (document.activeElement === lastFocusableEl) {
+			firstFocusableEl.focus();
+			e.preventDefault();
+		}
+	};
+
 	// OrientationChange handler
-	function _onOrientationChangeCallbackHandler(callback: OSFramework.OSUI.GlobalCallbacks.Generic): void {
+	const _onOrientationChangeCallbackHandler = (callback: OSFramework.OSUI.GlobalCallbacks.Generic): void => {
 		if (callback !== undefined) {
 			setTimeout(function () {
 				_onOrientationChangeCallback();
 			}, 300);
 		}
-	}
+	};
 
 	// OnResize handler
-	function _onResizeCallbackHandler(callback: OSFramework.OSUI.GlobalCallbacks.Generic): void {
-		if (callback !== undefined) {
-			setTimeout(function () {
-				_onResizeCallback();
-			}, 300);
+	const _onResizeCallbackHandler = (): void => {
+		// Get the current device type
+		const currentDeviceType = OSFramework.OSUI.Helper.DeviceInfo.GetDeviceType();
+
+		// Check if the device type is the same as the current device type, if so, return to prevent unnecessary calls
+		if (_appProp.device.type === currentDeviceType) {
+			return;
 		}
-	}
+
+		// Update the device type on the app properties
+		_appProp.device.type = currentDeviceType;
+
+		// Check if the menu is open
+		if (_appProp.menu.isOpen) {
+			// Close the menu, internally it will update the menu attributes
+			ToggleSideMenu();
+		} else {
+			// Update app properties and menu attributes
+			_updatePropsAndAttrs();
+		}
+
+		// Remove the menu event listeners since device type changed
+		_removeMenuEeventListeners();
+
+		// ReAdd the menu event listeners
+		_addMenuEeventListeners();
+	};
+
+	// Remove Menu Event Listeners
+	const _removeMenuEeventListeners = (): void => {
+		if (_appProp.menu.hasEventListeners) {
+			_appProp.menu.hasEventListeners = false;
+			_appProp.menu.element.removeEventListener('keydown', _menuOnKeypress);
+		}
+	};
+
+	// Method that removes the OnResize handler
+	const _removeMenuOnResize = (): void => {
+		OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
+			OSFramework.OSUI.Event.DOMEvents.Listeners.Type.WindowResize,
+			_onResizeCallbackHandler
+		);
+	};
+
+	// Set A11Y attributes to the menu and its childrens
+	const _setA11YAttributes = (menu?: HTMLElement): void => {
+		// Check if the given menu is undefined
+		if (menu === undefined) {
+			// If so, get the menu from the appProps
+			menu = _appProp.menu.element;
+		}
+
+		// Get all focusable elements inside
+		const focusableEls = Array.from(menu.querySelectorAll(_menuFocusableElems));
+		// Get all menu items
+		const menuItems = Array.from(menu.querySelectorAll('.app-menu-links > a'));
+
+		// Remove the elements that are inside a submenu to be manged by the submenu itself
+		for (let i = 0; i < focusableEls.length; ++i) {
+			if (focusableEls[i].closest('.osui-submenu__items')) {
+				focusableEls.splice(i, 1);
+			}
+		}
+
+		// Check if there are any menu items
+		if (menuItems.length > 0) {
+			// Add role menuitem to all menu direct children
+			for (const item of menuItems) {
+				if (!item.hasAttribute('role')) {
+					item.setAttribute('role', 'menuitem');
+				}
+			}
+		}
+
+		// Check if the menu is open or if it's a desktop device with the aside menu overlay or expandable
+		const enableA11Y =
+			_appProp.menu.isOpen ||
+			(OSFramework.OSUI.Helper.DeviceInfo.IsDesktop &&
+				_appProp.layout.isAsideMenuOverlay === false &&
+				_appProp.layout.isAsideExpandable === false);
+
+		// Set the tabindex and aria-expanded attributes based on the enableA11Y flag
+		if (enableA11Y) {
+			OSFramework.OSUI.Helper.A11Y.TabIndexTrue(menu);
+			OSFramework.OSUI.Helper.A11Y.AriaExpandedTrue(menu);
+
+			for (const item of focusableEls) {
+				OSFramework.OSUI.Helper.A11Y.TabIndexTrue(item as HTMLElement);
+			}
+		} else {
+			OSFramework.OSUI.Helper.A11Y.TabIndexFalse(menu);
+			OSFramework.OSUI.Helper.A11Y.AriaExpandedFalse(menu);
+
+			for (const item of focusableEls) {
+				OSFramework.OSUI.Helper.A11Y.TabIndexFalse(item as HTMLElement);
+			}
+		}
+	};
+
+	// Set the properties used to properly manage several menu behaviours
+	const _setAppProps = (): void => {
+		_appProp.menu.element =
+			OSFramework.OSUI.Helper.Dom.ClassSelector(document.body, 'app-menu-content') ||
+			OSFramework.OSUI.Helper.Dom.ClassSelector(document.body, 'app-menu-container');
+
+		_appProp.layout.element = OSFramework.OSUI.Helper.Dom.ClassSelector(document.body, 'layout');
+
+		_appProp.device.type = OSFramework.OSUI.Helper.DeviceInfo.GetDeviceType();
+
+		_appProp.device.isLandscape =
+			OSFramework.OSUI.Helper.DeviceInfo.GetDeviceOrientation() ===
+			OSFramework.OSUI.GlobalEnum.DeviceOrientation.landscape;
+
+		_appProp.menu.isOpen = OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(
+			_appProp.layout.element,
+			'menu-visible'
+		);
+
+		_appProp.layout.isTopMenu = OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(
+			_appProp.layout.element,
+			'layout-top'
+		);
+
+		_appProp.layout.isAsideMenu = OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(
+			_appProp.layout.element,
+			'aside-visible'
+		);
+
+		_appProp.layout.isAsideMenuOverlay = OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(
+			_appProp.layout.element,
+			'aside-overlay'
+		);
+
+		_appProp.layout.isBlank = OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(
+			_appProp.layout.element,
+			'layout-blank'
+		);
+
+		_appProp.layout.isAsideExpandable = OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(
+			_appProp.layout.element,
+			'aside-expandable'
+		);
+	};
+
+	// Update the app properties and attributes of the menu
+	const _updatePropsAndAttrs = (): void => {
+		_setAppProps();
+		_setA11YAttributes();
+	};
 
 	/**
-	 * Method that add the OrientationChange handler
+	 * Method that add the OrientationChange handler, used only for TabletApps (Template_TabletApp > Menu)
 	 *
 	 * @export
 	 * @param {OSFramework.OSUI.GlobalCallbacks.Generic} callback
@@ -43,41 +259,29 @@ namespace OutSystems.OSUI.Utils.Menu {
 	}
 
 	/**
-	 * Method that add the OnResize handler
+	 * Checks if the menu can be draggable
 	 *
 	 * @export
-	 * @param {OSFramework.OSUI.GlobalCallbacks.Generic} callback
-	 */
-	export function AddMenuOnResize(callback: OSFramework.OSUI.GlobalCallbacks.Generic): void {
-		if (callback !== undefined) {
-			_onResizeCallback = callback;
-			OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
-				OSFramework.OSUI.Event.DOMEvents.Listeners.Type.WindowResize,
-				_onResizeCallbackHandler
-			);
-		}
-	}
-
-	/**
-	 * Checks if the menu can be draggable
-	 * @returns
+	 * @return {*}  {string}
 	 */
 	export function IsMenuDraggable(): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.Utilities.FailCheckIsMenuDraggable,
 			hasValue: true,
 			callback: () => {
-				const _layoutMenuVisible = OSFramework.OSUI.Helper.Dom.TagSelector(
-					document.body,
-					'.active-screen .aside-visible'
-				);
-				const _isLandscape = OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(document.body, 'landscape');
+				// Update appProperties
+				_setAppProps();
+
+				const _layoutSideMenuVisible = _appProp.layout.isAsideMenu;
+
 				let _addDragGestures = false;
 
 				if (window.cordova !== undefined && DeviceDetection.IsRunningAsPWA() === false) {
 					if (
-						(_layoutMenuVisible && OSFramework.OSUI.Helper.DeviceInfo.IsDesktop) ||
-						(_layoutMenuVisible && OSFramework.OSUI.Helper.DeviceInfo.IsTablet && _isLandscape)
+						(_layoutSideMenuVisible && OSFramework.OSUI.Helper.DeviceInfo.IsDesktop) ||
+						(_layoutSideMenuVisible &&
+							OSFramework.OSUI.Helper.DeviceInfo.IsTablet &&
+							_appProp.device.isLandscape)
 					) {
 						_addDragGestures = false;
 					} else {
@@ -93,12 +297,16 @@ namespace OutSystems.OSUI.Utils.Menu {
 	}
 
 	/**
-	 * Closes the extended menu content.
+	 * Closes the extended menu content
+	 *
+	 * @export
+	 * @return {*}  {string}
 	 */
 	export function MenuHide(): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.Utilities.FailSetExtendedMenuHide,
 			callback: () => {
+				/* TODO: Check the menu select! */
 				const menu = OSFramework.OSUI.Helper.Dom.ClassSelector(document, 'menu');
 				const appMenu = OSFramework.OSUI.Helper.Dom.ClassSelector(document, 'app-menu-container');
 				const menuOverlay = OSFramework.OSUI.Helper.Dom.ClassSelector(document, 'menu-background');
@@ -123,7 +331,7 @@ namespace OutSystems.OSUI.Utils.Menu {
 					menu.removeEventListener('transitionend', OnTransitionEnd);
 				}
 
-				SetMenuAttributes();
+				_updatePropsAndAttrs();
 			},
 		});
 
@@ -131,19 +339,23 @@ namespace OutSystems.OSUI.Utils.Menu {
 	}
 
 	/**
-	 * Opens the extended menu content.
+	 * Opens the extended menu content
+	 *
+	 * @export
+	 * @return {*}  {string}
 	 */
 	export function MenuShow(): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.Utilities.FailSetExtendedMenuShow,
 			callback: () => {
+				/* TODO: Check the menu select! */
 				const myMenu = OSFramework.OSUI.Helper.Dom.ClassSelector(document, 'menu');
 
 				if (myMenu) {
 					OSFramework.OSUI.Helper.Dom.Styles.AddClass(myMenu, 'menu--visible');
 					OSFramework.OSUI.Helper.Dom.Styles.AddClass(myMenu, 'menu--animatable');
 
-					SetMenuAttributes();
+					_updatePropsAndAttrs();
 				} else {
 					console.warn('The menu element is not present in the screen');
 				}
@@ -154,7 +366,28 @@ namespace OutSystems.OSUI.Utils.Menu {
 	}
 
 	/**
+	 * OnReady method that is called when the menu is ready
+	 *
+	 * @export
+	 */
+	export function OnReady(): void {
+		_updatePropsAndAttrs();
+		_addMenuOnResize();
+	}
+
+	/**
+	 * OnDestroy method that is called when the menu is destroyed
+	 *
+	 * @export
+	 */
+	export function OnDestroy(): void {
+		_removeMenuOnResize();
+	}
+
+	/**
 	 * Method that removes the OrientationChange handler
+	 *
+	 * @export
 	 */
 	export function RemoveMenuOnOrientationChange(): void {
 		if (_onOrientationChangeCallback !== undefined) {
@@ -167,23 +400,13 @@ namespace OutSystems.OSUI.Utils.Menu {
 	}
 
 	/**
-	 * Method that removes the OnResize handler
-	 */
-	export function RemoveMenuOnResize(): void {
-		if (_onResizeCallback !== undefined) {
-			OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
-				OSFramework.OSUI.Event.DOMEvents.Listeners.Type.WindowResize,
-				_onResizeCallbackHandler
-			);
-			_onResizeCallback = undefined;
-		}
-	}
-
-	/**
-	 * Adds the selected states to menu items.
-	 * @param WidgetId
-	 * @param ActiveItem
-	 * @param ActiveSubItem
+	 * Adds the selected states to menu items
+	 *
+	 * @export
+	 * @param {string} WidgetId
+	 * @param {number} ActiveItem
+	 * @param {number} ActiveSubItem
+	 * @return {*}  {string}
 	 */
 	export function SetActiveMenuItems(WidgetId: string, ActiveItem: number, ActiveSubItem: number): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -227,9 +450,12 @@ namespace OutSystems.OSUI.Utils.Menu {
 	}
 
 	/**
-	 * Use this action on a BottomBar block to set an active state to a BottomBarItem.
-	 * Used by default on the BottomBar block inside the OutSystems UI Mobile Templates.
-	 * @param ActiveItem
+	 * Use this action on a BottomBar block to set an active state to a BottomBarItem
+	 * Used by default on the BottomBar block inside the OutSystems UI Mobile Templates
+	 *
+	 * @export
+	 * @param {*} [ActiveItem=-1]
+	 * @return {*}  {string}
 	 */
 	export function SetBottomBarActiveElement(ActiveItem = -1): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -248,43 +474,20 @@ namespace OutSystems.OSUI.Utils.Menu {
 	}
 
 	/**
-	 * Supports the items accessible on the menu.
+	 * Supports the items accessible on the menu
+	 *
+	 * @export
+	 * @return {*}  {string}
 	 */
 	export function SetMenuAttributes(): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.Utilities.FailSetMenuAttributes,
 			callback: () => {
-				const layout = OSFramework.OSUI.Helper.Dom.ClassSelector(document, 'layout');
-				const menu =
-					OSFramework.OSUI.Helper.Dom.ClassSelector(document, 'app-menu-content') ||
-					OSFramework.OSUI.Helper.Dom.ClassSelector(document, 'app-menu-container');
-				const isExpanded =
-					OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(layout, 'menu-visible') ||
-					OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(layout, 'menu--visible');
-
-				if (menu) {
-					let focusableEls = menu.querySelectorAll(MenuFocusableElems);
-					focusableEls = [].slice.call(focusableEls);
-					if (isExpanded) {
-						menu.setAttribute('tabindex', '0');
-						menu.setAttribute('aria-expanded', 'true');
-					} else {
-						menu.setAttribute('tabindex', '-1');
-						menu.setAttribute('aria-expanded', 'false');
-					}
-
-					// Toggle tabindex value if Menu is closed or open
-					if (isExpanded) {
-						// apply tabindex = -1 by default to disable the navigation inside the sidebar when is hidden
-						focusableEls.forEach(function (item) {
-							item.setAttribute('tabindex', '0');
-						});
-					} else {
-						focusableEls.forEach(function (item) {
-							item.setAttribute('tabindex', '-1');
-						});
-					}
+				if (_appProp.menu.element === undefined) {
+					_setAppProps();
 				}
+
+				_setA11YAttributes();
 			},
 		});
 
@@ -292,8 +495,11 @@ namespace OutSystems.OSUI.Utils.Menu {
 	}
 
 	/**
-	 * Changes the menu icon automatic behavior.
-	 * @param MenuAction
+	 * Changes the menu icon automatic behavior
+	 *
+	 * @export
+	 * @param {string} MenuAction
+	 * @return {*}  {string}
 	 */
 	export function SetMenuIcon(MenuAction: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -343,7 +549,10 @@ namespace OutSystems.OSUI.Utils.Menu {
 	}
 
 	/**
-	 * Makes the menu accessibility-ready.
+	 * Makes the menu accessibility-ready
+	 *
+	 * @export
+	 * @return {*}  {string}
 	 */
 	export function SetMenuIconListeners(): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -370,8 +579,11 @@ namespace OutSystems.OSUI.Utils.Menu {
 	}
 
 	/**
-	 * Makes the menu navigation accessibility-ready.
-	 * @param WidgetId
+	 * Makes the menu navigation accessibility-ready
+	 *
+	 * @export
+	 * @param {string} WidgetId
+	 * @return {*}  {string}
 	 */
 	export function SetMenuListeners(WidgetId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -382,100 +594,23 @@ namespace OutSystems.OSUI.Utils.Menu {
 					widgetSelector = '#' + WidgetId;
 				}
 
-				const layout = OSFramework.OSUI.Helper.Dom.ClassSelector(document, 'layout');
+				// Update app properties
+				if (_appProp.menu.element === undefined || _appProp.layout.element === undefined) {
+					_setAppProps();
+				}
+				// Get the menu based on the given widgetId
 				const menu = OSFramework.OSUI.Helper.Dom.TagSelector(
 					document.body,
 					widgetSelector + '.app-menu-content'
 				);
+				// Update menu element
+				_appProp.menu.element = menu;
 
-				if (layout && menu) {
-					let isTopMenuMobile;
-					let isVisibleMobile;
-					let isExpanded = OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(layout, 'menu-visible');
-					const isOverlay = OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(layout, 'aside-overlay');
-					const isExpandable = OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(layout, 'aside-expandable');
-
-					const menuOnKeypress = function (e) {
-						const isTabPressed = e.key === 'Tab' || e.keyCode === 9;
-						const isEscapedPressed = e.key === 'Escape' || e.keyCode === 27;
-						const isShiftKey = e.shiftKey;
-						const focusableEls = OSFramework.OSUI.Helper.Dom.TagSelectorAll(menu, MenuFocusableElems);
-
-						const firstFocusableEl = focusableEls[0] as HTMLElement;
-						const lastFocusableEl = focusableEls[focusableEls.length - 1] as HTMLElement;
-						const isExpandableDesktop =
-							OSFramework.OSUI.Helper.Dom.TagSelector(
-								document.body,
-								'.desktop .active-screen .layout-side.aside-expandable'
-							) ||
-							OSFramework.OSUI.Helper.Dom.TagSelector(
-								document.body,
-								'.tablet.landscape .active-screen .layout-side.aside-expandable'
-							);
-
-						if (!isTabPressed && !isEscapedPressed) {
-							return;
-						}
-
-						isExpanded =
-							OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(layout, 'menu-visible') ||
-							OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(layout, 'menu--visible');
-
-						//If ESC, Close Menu
-						if (isExpanded && isEscapedPressed) {
-							e.preventDefault();
-							e.stopPropagation();
-							ToggleSideMenu();
-						}
-
-						if (!isExpandableDesktop) {
-							if (isShiftKey) {
-								if (document.activeElement === firstFocusableEl) {
-									lastFocusableEl.focus();
-									e.preventDefault();
-								}
-							} else if (document.activeElement === lastFocusableEl) {
-								firstFocusableEl.focus();
-								e.preventDefault();
-							}
-						}
-					};
-
+				if (_appProp.layout.element && menu) {
 					// Invoking setTimeout to schedule the callback to be run asynchronously
 					setTimeout(function () {
-						isTopMenuMobile =
-							OSFramework.OSUI.Helper.Dom.TagSelector(
-								document.body,
-								'.tablet .active-screen .layout-top'
-							) ||
-							OSFramework.OSUI.Helper.Dom.TagSelector(document.body, '.phone .active-screen .layout-top');
-						isVisibleMobile =
-							OSFramework.OSUI.Helper.Dom.TagSelector(
-								document.body,
-								'.tablet.portrait .active-screen .layout-side.aside-visible'
-							) ||
-							OSFramework.OSUI.Helper.Dom.TagSelector(
-								document.body,
-								'.phone .active-screen .layout-side.aside-visible'
-							);
-
-						if (isOverlay || isExpandable || isTopMenuMobile || isVisibleMobile) {
-							menu.addEventListener('keydown', menuOnKeypress);
-							SetMenuAttributes();
-						}
+						_addMenuEeventListeners();
 					}, 0);
-
-					const menuLinks = OSFramework.OSUI.Helper.Dom.ClassSelector(menu, 'app-menu-links');
-					if (menuLinks) {
-						const menuLinksChildren = menuLinks.children;
-
-						// Add role menuitem to all links on menu
-						for (let i = 0; i < menuLinksChildren.length; i++) {
-							if (!menuLinksChildren[i].hasAttribute('role') && menuLinksChildren[i].tagName === 'A') {
-								menuLinksChildren[i].setAttribute('role', 'menuitem');
-							}
-						}
-					}
 				}
 			},
 		});
@@ -484,29 +619,35 @@ namespace OutSystems.OSUI.Utils.Menu {
 	}
 
 	/**
-	 * Expands the menu.
+	 * Toggles the side menu visibility
+	 *
+	 * @export
+	 * @return {*}  {string}
 	 */
 	export function ToggleSideMenu(): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.Utilities.FailToggleSideMenu,
 			callback: () => {
-				const layout = OSFramework.OSUI.Helper.Dom.ClassSelector(document, 'layout');
-				const menu = OSFramework.OSUI.Helper.Dom.ClassSelector(document, 'app-menu-content');
+				// Update app properties
+				if (_appProp.menu.element === undefined || _appProp.layout.element === undefined) {
+					_setAppProps();
+				}
+				const layout = _appProp.layout.element;
+				const menu = _appProp.menu.element;
 				const menuIcon = OSFramework.OSUI.Helper.Dom.ClassSelector(document, 'menu-icon');
 
 				if (layout && menu) {
-					let isExpanded = layout.classList.contains('menu-visible');
-					if (isExpanded && menuIcon) {
+					if (_appProp.menu.isOpen) {
 						layout.classList.remove('menu-visible');
-						menuIcon.focus();
-						isExpanded = false;
+						menuIcon?.focus();
+						_appProp.menu.isOpen = false;
 					} else {
 						layout.classList.add('menu-visible');
 						menu.focus();
-						isExpanded = true;
+						_appProp.menu.isOpen = true;
 					}
 
-					SetMenuAttributes();
+					_updatePropsAndAttrs();
 				}
 			},
 		});
