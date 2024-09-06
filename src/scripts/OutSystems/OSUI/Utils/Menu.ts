@@ -4,7 +4,7 @@ namespace OutSystems.OSUI.Utils.Menu {
 	let _onOrientationChangeCallback: OSFramework.OSUI.GlobalCallbacks.Generic;
 
 	// App Properties
-	export const _appProp = {
+	const _appProp = {
 		device: {
 			isLandscape: false,
 			type: undefined as OSFramework.OSUI.GlobalEnum.DeviceType,
