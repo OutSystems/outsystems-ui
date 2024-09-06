@@ -24,7 +24,7 @@ namespace OutSystems.OSUI.Utils.Menu {
 		},
 	};
 
-	// Focusable elements on the menu context sine it's different from the default constant that excludes disabled elements with tabindex=-1
+	// Focusable elements on the menu context since it's different from the default constant that excludes disabled elements with tabindex=-1
 	const _menuFocusableElems =
 		'a[href]:not([disabled]), [tabindex], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled])';
 
@@ -38,7 +38,7 @@ namespace OutSystems.OSUI.Utils.Menu {
 
 		if (shouldKeyDownBeAdded && _appProp.menu.hasEventListeners === false) {
 			_appProp.menu.hasEventListeners = true;
-			_appProp.menu.element.addEventListener('keydown', _menuOnKeypress);
+			_appProp.menu.element.addEventListener(OSFramework.OSUI.GlobalEnum.HTMLEvent.keyDown, _menuOnKeypress);
 		}
 	};
 
@@ -629,7 +629,7 @@ namespace OutSystems.OSUI.Utils.Menu {
 						}
 					};
 
-					menuIcon.addEventListener('keydown', menuIconOnKeypress);
+					menuIcon.addEventListener(OSFramework.OSUI.GlobalEnum.HTMLEvent.keyDown, menuIconOnKeypress);
 				}
 			},
 		});
