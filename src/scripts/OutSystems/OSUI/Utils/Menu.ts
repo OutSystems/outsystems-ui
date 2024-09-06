@@ -50,6 +50,21 @@ namespace OutSystems.OSUI.Utils.Menu {
 		);
 	};
 
+	const _hideMenu = (): void => {
+		// Update app properties
+		if (_appProp.menu.element === undefined || _appProp.layout.element === undefined) {
+			_setAppProps();
+		}
+
+		const menuIcon = OSFramework.OSUI.Helper.Dom.ClassSelector(document, 'menu-icon');
+
+		_appProp.layout.element.classList.remove('menu-visible');
+		_appProp.menu.isOpen = false;
+		menuIcon?.focus();
+
+		_updatePropsAndAttrs();
+	};
+
 	// Menu on keypress handler
 	const _menuOnKeypress = function (e: KeyboardEvent) {
 		const isTabPressed = e.key === 'Tab';
@@ -68,7 +83,7 @@ namespace OutSystems.OSUI.Utils.Menu {
 		if (isEscapedPressed && _appProp.menu.isOpen) {
 			e.preventDefault();
 			e.stopPropagation();
-			ToggleSideMenu();
+			_toggleMenu();
 		}
 
 		if (isShiftKey) {
@@ -107,7 +122,7 @@ namespace OutSystems.OSUI.Utils.Menu {
 		// Check if the menu is open
 		if (_appProp.menu.isOpen) {
 			// Close the menu, internally it will update the menu attributes
-			ToggleSideMenu();
+			_toggleMenu();
 		} else {
 			// Update app properties and menu attributes
 			_updatePropsAndAttrs();
@@ -236,6 +251,29 @@ namespace OutSystems.OSUI.Utils.Menu {
 		);
 	};
 
+	// Method that will make menu visible
+	const _showMenu = (): void => {
+		// Update app properties
+		if (_appProp.menu.element === undefined || _appProp.layout.element === undefined) {
+			_setAppProps();
+		}
+
+		_appProp.layout.element.classList.add('menu-visible');
+		_appProp.menu.element.focus();
+		_appProp.menu.isOpen = true;
+
+		_updatePropsAndAttrs();
+	};
+
+	// Method that toggles the menu visibility
+	const _toggleMenu = (): void => {
+		if (_appProp.menu.isOpen) {
+			_hideMenu();
+		} else {
+			_showMenu();
+		}
+	};
+
 	// Update the app properties and attributes of the menu
 	const _updatePropsAndAttrs = (): void => {
 		_setAppProps();
@@ -306,13 +344,24 @@ namespace OutSystems.OSUI.Utils.Menu {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.Utilities.FailSetExtendedMenuHide,
 			callback: () => {
-				/* TODO: Check the menu select! */
-				const menu = OSFramework.OSUI.Helper.Dom.ClassSelector(document, 'menu');
-				const appMenu = OSFramework.OSUI.Helper.Dom.ClassSelector(document, 'app-menu-container');
-				const menuOverlay = OSFramework.OSUI.Helper.Dom.ClassSelector(document, 'menu-background');
+				/**
+				 * Get a deprecated menu element
+				 *
+				 * 	This can be present at older versions of the Layouts
+				 *
+				 * @deprecated
+				 */
+				const deprecatedMenu = OSFramework.OSUI.Helper.Dom.ClassSelector(document, 'menu');
+				if (deprecatedMenu) {
+					const appMenu = OSFramework.OSUI.Helper.Dom.ClassSelector(document, 'app-menu-container');
+					const menuOverlay = OSFramework.OSUI.Helper.Dom.ClassSelector(document, 'menu-background');
 
-				if (menu) {
-					OSFramework.OSUI.Helper.Dom.Styles.RemoveClass(menu, 'menu--visible');
+					const onTransitionEnd = () => {
+						OSFramework.OSUI.Helper.Dom.Styles.RemoveClass(deprecatedMenu, 'menu--animatable');
+						deprecatedMenu.removeEventListener('transitionend', onTransitionEnd);
+					};
+
+					OSFramework.OSUI.Helper.Dom.Styles.RemoveClass(deprecatedMenu, 'menu--visible');
 
 					if (menuOverlay) {
 						menuOverlay.style.opacity = '';
@@ -320,15 +369,9 @@ namespace OutSystems.OSUI.Utils.Menu {
 
 					appMenu.style.transform = '';
 
-					menu.addEventListener('transitionend', OnTransitionEnd, false);
+					deprecatedMenu.addEventListener('transitionend', onTransitionEnd, false);
 				} else {
-					console.warn('The menu element is not present in the screen');
-				}
-
-				function OnTransitionEnd() {
-					OSFramework.OSUI.Helper.Dom.Styles.RemoveClass(menu, 'menu--animatable');
-
-					menu.removeEventListener('transitionend', OnTransitionEnd);
+					_hideMenu();
 				}
 
 				_updatePropsAndAttrs();
@@ -348,16 +391,21 @@ namespace OutSystems.OSUI.Utils.Menu {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.Utilities.FailSetExtendedMenuShow,
 			callback: () => {
-				/* TODO: Check the menu select! */
-				const myMenu = OSFramework.OSUI.Helper.Dom.ClassSelector(document, 'menu');
-
-				if (myMenu) {
-					OSFramework.OSUI.Helper.Dom.Styles.AddClass(myMenu, 'menu--visible');
-					OSFramework.OSUI.Helper.Dom.Styles.AddClass(myMenu, 'menu--animatable');
+				/**
+				 * Get a deprecated menu element
+				 *
+				 * 	This can be present at older versions of the Layouts
+				 *
+				 * @deprecated
+				 */
+				const deprecatedMenu = OSFramework.OSUI.Helper.Dom.ClassSelector(document, 'menu');
+				if (deprecatedMenu) {
+					OSFramework.OSUI.Helper.Dom.Styles.AddClass(deprecatedMenu, 'menu--visible');
+					OSFramework.OSUI.Helper.Dom.Styles.AddClass(deprecatedMenu, 'menu--animatable');
 
 					_updatePropsAndAttrs();
 				} else {
-					console.warn('The menu element is not present in the screen');
+					_showMenu();
 				}
 			},
 		});
@@ -566,7 +614,7 @@ namespace OutSystems.OSUI.Utils.Menu {
 						if (e.keyCode === 32 || e.keyCode === 13) {
 							e.preventDefault();
 							e.stopPropagation();
-							ToggleSideMenu();
+							_toggleMenu();
 						}
 					};
 
@@ -628,27 +676,7 @@ namespace OutSystems.OSUI.Utils.Menu {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.Utilities.FailToggleSideMenu,
 			callback: () => {
-				// Update app properties
-				if (_appProp.menu.element === undefined || _appProp.layout.element === undefined) {
-					_setAppProps();
-				}
-				const layout = _appProp.layout.element;
-				const menu = _appProp.menu.element;
-				const menuIcon = OSFramework.OSUI.Helper.Dom.ClassSelector(document, 'menu-icon');
-
-				if (layout && menu) {
-					if (_appProp.menu.isOpen) {
-						layout.classList.remove('menu-visible');
-						menuIcon?.focus();
-						_appProp.menu.isOpen = false;
-					} else {
-						layout.classList.add('menu-visible');
-						menu.focus();
-						_appProp.menu.isOpen = true;
-					}
-
-					_updatePropsAndAttrs();
-				}
+				_toggleMenu();
 			},
 		});
 
