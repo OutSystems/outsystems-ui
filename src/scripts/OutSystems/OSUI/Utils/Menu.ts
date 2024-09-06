@@ -253,6 +253,17 @@ namespace OutSystems.OSUI.Utils.Menu {
 
 	// Method that will make menu visible
 	const _showMenu = (): void => {
+		// Check if the menu should be shown
+		const shouldShowMenu =
+			OSFramework.OSUI.Helper.DeviceInfo.IsDesktop === false ||
+			_appProp.layout.isAsideMenuOverlay ||
+			_appProp.layout.isAsideExpandable;
+
+		// If not, prevent menu to be shown
+		if (shouldShowMenu === false) {
+			return;
+		}
+
 		// Update app properties
 		if (_appProp.menu.element === undefined || _appProp.layout.element === undefined) {
 			_setAppProps();
