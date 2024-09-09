@@ -29,7 +29,11 @@ namespace OutSystems.OSUI.Utils.Menu {
 		'a[href]:not([disabled]), [tabindex], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled])';
 
 	// Add Menu Event Listeners
-	const _addMenuEeventListeners = (): void => {
+	const _addMenuEeventListeners = (hasTriggeredByAPI = false): void => {
+		// Ensure events will be removed when SetMenuListeners "API" has been triggered and before readding them again
+		if (hasTriggeredByAPI) {
+			_removeMenuEeventListeners();
+		}
 		// Check if the keydown event should be added
 		const shouldKeyDownBeAdded =
 			OSFramework.OSUI.Helper.DeviceInfo.IsDesktop === false ||
@@ -425,6 +429,15 @@ namespace OutSystems.OSUI.Utils.Menu {
 	}
 
 	/**
+	 * OnDestroy method that is called when the menu is destroyed
+	 *
+	 * @export
+	 */
+	export function OnDestroy(): void {
+		_removeMenuOnResize();
+	}
+
+	/**
 	 * OnReady method that is called when the menu is ready
 	 *
 	 * @export
@@ -432,15 +445,6 @@ namespace OutSystems.OSUI.Utils.Menu {
 	export function OnReady(): void {
 		_updatePropsAndAttrs();
 		_addMenuOnResize();
-	}
-
-	/**
-	 * OnDestroy method that is called when the menu is destroyed
-	 *
-	 * @export
-	 */
-	export function OnDestroy(): void {
-		_removeMenuOnResize();
 	}
 
 	/**
@@ -668,7 +672,7 @@ namespace OutSystems.OSUI.Utils.Menu {
 				if (_appProp.layout.element && menu) {
 					// Invoking setTimeout to schedule the callback to be run asynchronously
 					setTimeout(function () {
-						_addMenuEeventListeners();
+						_addMenuEeventListeners(true);
 					}, 0);
 				}
 			},
