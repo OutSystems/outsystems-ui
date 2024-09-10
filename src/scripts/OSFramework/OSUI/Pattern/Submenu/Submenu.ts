@@ -74,6 +74,8 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 
 		// Call methods to close, based ok e.key
 		private _keypressBalloonCallback(e: KeyboardEvent): void {
+			e.stopPropagation();
+
 			// Close the submenu when pressing Esc
 			if (e.key === GlobalEnum.Keycodes.Escape && this._isOpen) {
 				this.close();
