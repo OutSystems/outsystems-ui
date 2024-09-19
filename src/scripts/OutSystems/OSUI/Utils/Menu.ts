@@ -432,19 +432,35 @@ namespace OutSystems.OSUI.Utils.Menu {
 	 * OnDestroy method that is called when the menu is destroyed
 	 *
 	 * @export
+	 * @return {*}  {string}
 	 */
-	export function OnDestroy(): void {
-		_removeMenuOnResize();
+	export function OnDestroy(): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Utilities.FailSetMenuOnDestroy,
+			callback: () => {
+				_removeMenuOnResize();
+			},
+		});
+
+		return result;
 	}
 
 	/**
 	 * OnReady method that is called when the menu is ready
 	 *
 	 * @export
+	 * @return {*}  {string}
 	 */
-	export function OnReady(): void {
-		_updatePropsAndAttrs();
-		_addMenuOnResize();
+	export function OnReady(): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Utilities.FailSetMenuOnReady,
+			callback: () => {
+				_updatePropsAndAttrs();
+				_addMenuOnResize();
+			},
+		});
+
+		return result;
 	}
 
 	/**

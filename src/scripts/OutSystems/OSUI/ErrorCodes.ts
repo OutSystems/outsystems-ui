@@ -306,6 +306,8 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailSetExtendedMenuHide: 'OSUI-API-28024',
 		FailSetExtendedMenuShow: 'OSUI-API-28025',
 		FailCheckIsRTL: 'OSUI-API-28026',
+		FailSetMenuOnReady: 'OSUI-API-28027',
+		FailSetMenuOnDestroy: 'OSUI-API-28028',
 	};
 
 	export const InlineSvg = {
