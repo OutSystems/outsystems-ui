@@ -26,6 +26,8 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		private _balloonSearchInputElement: HTMLElement;
 		// Store the HTML element for the DropdownBalloonSearch
 		private _balloonSearchInputWrapperElement: HTMLElement;
+		// Store the HTML element for the DropdownBalloonSearchIcon
+		private _balloonSearchInputIconWrapperElement: HTMLElement;
 		// Store a Flag property that will help dealing with the focus state at the close moment
 		private _closeDynamically = false;
 		// Custom Balloon Event
@@ -113,15 +115,21 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		}
 
 		// Close when click outside of pattern
-		private _onBodyClick(): void {
+		private _onBodyClick(eventName: string, event: PointerEvent): void {
 			if (this._isOpen === false) {
 				return;
 			}
 
 			this._closeDynamically = true;
 
+			// Check if balloon can be closed
 			// If it's phone, always close, as it is on popup mode
-			if (Helper.DeviceInfo.IsPhone) {
+			// Also prevent closing when clicking at an element inside search icon placeholder
+			const canClose =
+				Helper.DeviceInfo.IsPhone &&
+				(event.target as HTMLElement).closest(`.${Enum.CssClass.BalloonSearchIcon}`) === null;
+
+			if (canClose) {
 				this._close();
 			}
 		}
@@ -651,6 +659,10 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 				this.selfElement,
 				Enum.CssClass.BalloonSearch
 			);
+			this._balloonSearchInputIconWrapperElement = Helper.Dom.ClassSelector(
+				this.selfElement,
+				Enum.CssClass.BalloonSearchIcon
+			);
 			this._balloonSearchInputElement = Helper.Dom.TagSelector(
 				this._balloonSearchInputWrapperElement,
 				GlobalEnum.HTMLElement.Input
@@ -696,6 +708,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			this._balloonOptionsWrapperElement = undefined;
 			this._balloonSearchInputElement = undefined;
 			this._balloonSearchInputWrapperElement = undefined;
+			this._balloonSearchInputIconWrapperElement = undefined;
 			this._balloonElem = undefined;
 			this._selectValuesWrapper = undefined;
 		}
