@@ -67,7 +67,7 @@ namespace osui.utils.menu {
 	 */
 	export function AddMenuOnOrientationChanged(callback: OSFramework.OSUI.GlobalCallbacks.Generic): void {
 		console.warn(
-			'osui.utils.menu.AddMenuOnOrientationChanged(), is deprecated. Please use the API `OutSystems.OSUI.Utils.Menu.OnReady(...)`.'
+			'osui.utils.menu.AddMenuOnOrientationChanged(...), is deprecated. Please use the API `OutSystems.OSUI.Utils.Menu.OnReady(...)`.'
 		);
 		return OutSystems.OSUI.Utils.Menu.AddMenuOnOrientationChange(callback);
 	}

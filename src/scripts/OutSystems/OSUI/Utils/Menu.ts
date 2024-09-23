@@ -32,7 +32,7 @@ namespace OutSystems.OSUI.Utils.Menu {
 	const _addMenuEventListeners = (hasTriggeredByAPI = false): void => {
 		// Ensure events will be removed when SetMenuListeners "API" has been triggered and before readding them again
 		if (hasTriggeredByAPI) {
-			_removeMenuEeventListeners();
+			_removeMenuEventListeners();
 		}
 		// Check if the keydown event should be added
 		const shouldKeyDownBeAdded =
@@ -144,14 +144,14 @@ namespace OutSystems.OSUI.Utils.Menu {
 		}
 
 		// Remove the menu event listeners since device type changed
-		_removeMenuEeventListeners();
+		_removeMenuEventListeners();
 
 		// ReAdd the menu event listeners
 		_addMenuEventListeners();
 	};
 
 	// Remove Menu Event Listeners
-	const _removeMenuEeventListeners = (): void => {
+	const _removeMenuEventListeners = (): void => {
 		if (_appProp.menu.hasEventListeners) {
 			_appProp.menu.hasEventListeners = false;
 			_appProp.menu.element.removeEventListener('keydown', _menuOnKeypress);
@@ -324,7 +324,9 @@ namespace OutSystems.OSUI.Utils.Menu {
 	 * @param {OSFramework.OSUI.GlobalCallbacks.Generic} callback
 	 */
 	export function AddMenuOnOrientationChange(callback: OSFramework.OSUI.GlobalCallbacks.Generic): void {
-		_addMenuOnOrientationChange(callback);
+		if (callback !== undefined) {
+			_addMenuOnOrientationChange(callback);
+		}
 	}
 
 	/**
