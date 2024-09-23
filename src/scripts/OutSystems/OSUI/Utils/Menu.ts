@@ -29,7 +29,7 @@ namespace OutSystems.OSUI.Utils.Menu {
 		'a[href]:not([disabled]), [tabindex], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled])';
 
 	// Add Menu Event Listeners
-	const _addMenuEeventListeners = (hasTriggeredByAPI = false): void => {
+	const _addMenuEventListeners = (hasTriggeredByAPI = false): void => {
 		// Ensure events will be removed when SetMenuListeners "API" has been triggered and before readding them again
 		if (hasTriggeredByAPI) {
 			_removeMenuEeventListeners();
@@ -52,6 +52,17 @@ namespace OutSystems.OSUI.Utils.Menu {
 			OSFramework.OSUI.Event.DOMEvents.Listeners.Type.WindowResize,
 			_onResizeCallbackHandler
 		);
+	};
+
+	// Method that add the OrientationChange handler, used only for TabletApps (Template_TabletApp > Menu)
+	const _addMenuOnOrientationChange = (callback: OSFramework.OSUI.GlobalCallbacks.Generic): void => {
+		if (callback !== undefined) {
+			_onOrientationChangeCallback = callback;
+			OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
+				OSFramework.OSUI.Event.DOMEvents.Listeners.Type.OrientationChange,
+				_onOrientationChangeCallbackHandler
+			);
+		}
 	};
 
 	const _hideMenu = (): void => {
@@ -136,7 +147,7 @@ namespace OutSystems.OSUI.Utils.Menu {
 		_removeMenuEeventListeners();
 
 		// ReAdd the menu event listeners
-		_addMenuEeventListeners();
+		_addMenuEventListeners();
 	};
 
 	// Remove Menu Event Listeners
@@ -144,6 +155,17 @@ namespace OutSystems.OSUI.Utils.Menu {
 		if (_appProp.menu.hasEventListeners) {
 			_appProp.menu.hasEventListeners = false;
 			_appProp.menu.element.removeEventListener('keydown', _menuOnKeypress);
+		}
+	};
+
+	// Method that removes the OrientationChange handler, used only for TabletApps (Template_TabletApp > Menu)
+	const _removeMenuOnOrientationChange = (): void => {
+		if (_onOrientationChangeCallback !== undefined) {
+			OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
+				OSFramework.OSUI.Event.DOMEvents.Listeners.Type.OrientationChange,
+				_onOrientationChangeCallbackHandler
+			);
+			_onOrientationChangeCallback = undefined;
 		}
 	};
 
@@ -297,18 +319,12 @@ namespace OutSystems.OSUI.Utils.Menu {
 
 	/**
 	 * Method that add the OrientationChange handler, used only for TabletApps (Template_TabletApp > Menu)
-	 *
+	 * @deprecated
 	 * @export
 	 * @param {OSFramework.OSUI.GlobalCallbacks.Generic} callback
 	 */
 	export function AddMenuOnOrientationChange(callback: OSFramework.OSUI.GlobalCallbacks.Generic): void {
-		if (callback !== undefined) {
-			_onOrientationChangeCallback = callback;
-			OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
-				OSFramework.OSUI.Event.DOMEvents.Listeners.Type.OrientationChange,
-				_onOrientationChangeCallbackHandler
-			);
-		}
+		_addMenuOnOrientationChange(callback);
 	}
 
 	/**
@@ -439,6 +455,10 @@ namespace OutSystems.OSUI.Utils.Menu {
 			errorCode: ErrorCodes.Utilities.FailSetMenuOnDestroy,
 			callback: () => {
 				_removeMenuOnResize();
+				// Remove the OrientationChange handler only for TabletApps
+				if (OSFramework.OSUI.Helper.DeviceInfo.IsTablet) {
+					_removeMenuOnOrientationChange();
+				}
 			},
 		});
 
@@ -451,12 +471,16 @@ namespace OutSystems.OSUI.Utils.Menu {
 	 * @export
 	 * @return {*}  {string}
 	 */
-	export function OnReady(): string {
+	export function OnReady(callback: OSFramework.OSUI.GlobalCallbacks.Generic): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.Utilities.FailSetMenuOnReady,
 			callback: () => {
 				_updatePropsAndAttrs();
 				_addMenuOnResize();
+				// Add the OrientationChange handler only for TabletApps
+				if (OSFramework.OSUI.Helper.DeviceInfo.IsTablet) {
+					_addMenuOnOrientationChange(callback);
+				}
 			},
 		});
 
@@ -465,17 +489,11 @@ namespace OutSystems.OSUI.Utils.Menu {
 
 	/**
 	 * Method that removes the OrientationChange handler
-	 *
+	 * @deprecated
 	 * @export
 	 */
 	export function RemoveMenuOnOrientationChange(): void {
-		if (_onOrientationChangeCallback !== undefined) {
-			OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
-				OSFramework.OSUI.Event.DOMEvents.Listeners.Type.OrientationChange,
-				_onOrientationChangeCallbackHandler
-			);
-			_onOrientationChangeCallback = undefined;
-		}
+		_removeMenuOnOrientationChange();
 	}
 
 	/**
@@ -688,7 +706,7 @@ namespace OutSystems.OSUI.Utils.Menu {
 				if (_appProp.layout.element && menu) {
 					// Invoking setTimeout to schedule the callback to be run asynchronously
 					setTimeout(function () {
-						_addMenuEeventListeners(true);
+						_addMenuEventListeners(true);
 					}, 0);
 				}
 			},
