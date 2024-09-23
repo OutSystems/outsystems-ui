@@ -319,11 +319,11 @@ namespace OutSystems.OSUI.Utils.Menu {
 
 	/**
 	 * Method that add the OrientationChange handler, used only for TabletApps (Template_TabletApp > Menu)
-	 * @deprecated
+	 *
 	 * @export
 	 * @param {OSFramework.OSUI.GlobalCallbacks.Generic} callback
 	 */
-	export function AddMenuOnOrientationChange(callback: OSFramework.OSUI.GlobalCallbacks.Generic): void {
+	export function AddMenuOnOrientationChangeHandler(callback: OSFramework.OSUI.GlobalCallbacks.Generic): void {
 		if (callback !== undefined) {
 			_addMenuOnOrientationChange(callback);
 		}
@@ -491,10 +491,10 @@ namespace OutSystems.OSUI.Utils.Menu {
 
 	/**
 	 * Method that removes the OrientationChange handler
-	 * @deprecated
+	 *
 	 * @export
 	 */
-	export function RemoveMenuOnOrientationChange(): void {
+	export function RemoveMenuOnOrientationChangeHandler(): void {
 		_removeMenuOnOrientationChange();
 	}
 
