@@ -113,15 +113,21 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		}
 
 		// Close when click outside of pattern
-		private _onBodyClick(): void {
+		private _onBodyClick(eventName: string, event: PointerEvent): void {
 			if (this._isOpen === false) {
 				return;
 			}
 
 			this._closeDynamically = true;
 
+			// Check if balloon can be closed
 			// If it's phone, always close, as it is on popup mode
-			if (Helper.DeviceInfo.IsPhone) {
+			// Also prevent closing when clicking at an element inside search icon placeholder
+			const canClose =
+				Helper.DeviceInfo.IsPhone &&
+				(event.target as HTMLElement).closest(`.${Enum.CssClass.BalloonSearchIcon}`) === null;
+
+			if (canClose) {
 				this._close();
 			}
 		}

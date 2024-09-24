@@ -87,7 +87,7 @@
 		justify-content: flex-end;
 		margin-bottom: var(--space-base);
 		opacity: 0;
-		transform: translateY(--space-base) translateZ(0);
+		transform: translateY(var(--space-base)) translateZ(0);
 		transition: all 100ms ease-in;
 
 		// Service Studio Preview
