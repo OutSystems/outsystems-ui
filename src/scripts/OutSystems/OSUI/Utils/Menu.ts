@@ -56,7 +56,7 @@ namespace OutSystems.OSUI.Utils.Menu {
 
 	// Method that add the OrientationChange handler, used only for TabletApps (Template_TabletApp > Menu)
 	const _addMenuOnOrientationChange = (callback: OSFramework.OSUI.GlobalCallbacks.Generic): void => {
-		if (callback !== undefined) {
+		if (callback && OSFramework.OSUI.Helper.DeviceInfo.IsTablet) {
 			_onOrientationChangeCallback = callback;
 			OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
 				OSFramework.OSUI.Event.DOMEvents.Listeners.Type.OrientationChange,
@@ -114,8 +114,8 @@ namespace OutSystems.OSUI.Utils.Menu {
 
 	// OrientationChange handler
 	const _onOrientationChangeCallbackHandler = (callback: OSFramework.OSUI.GlobalCallbacks.Generic): void => {
-		if (callback !== undefined) {
-			setTimeout(function () {
+		if (callback) {
+			OSFramework.OSUI.Helper.ApplySetTimeOut(() => {
 				_onOrientationChangeCallback();
 			}, 300);
 		}
@@ -160,7 +160,7 @@ namespace OutSystems.OSUI.Utils.Menu {
 
 	// Method that removes the OrientationChange handler, used only for TabletApps (Template_TabletApp > Menu)
 	const _removeMenuOnOrientationChange = (): void => {
-		if (_onOrientationChangeCallback !== undefined) {
+		if (_onOrientationChangeCallback && OSFramework.OSUI.Helper.DeviceInfo.IsTablet) {
 			OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
 				OSFramework.OSUI.Event.DOMEvents.Listeners.Type.OrientationChange,
 				_onOrientationChangeCallbackHandler
@@ -317,17 +317,11 @@ namespace OutSystems.OSUI.Utils.Menu {
 		_setA11YAttributes();
 	};
 
-	/**
-	 * Method that add the OrientationChange handler, used only for TabletApps (Template_TabletApp > Menu)
-	 *
-	 * @export
-	 * @param {OSFramework.OSUI.GlobalCallbacks.Generic} callback
-	 */
-	export function AddMenuOnOrientationChangeHandler(callback: OSFramework.OSUI.GlobalCallbacks.Generic): void {
-		if (callback !== undefined) {
-			_addMenuOnOrientationChange(callback);
-		}
-	}
+	// Expose the_addMenuOnOrientationChange method, used only for TabletApps (Template_TabletApp > Menu)
+	export const addMenuOnOrientationChange = _addMenuOnOrientationChange;
+
+	// Expose the _removeMenuOnOrientationChange method, used only for TabletApps (Template_TabletApp > Menu)
+	export const removeMenuOnOrientationChange = _removeMenuOnOrientationChange;
 
 	/**
 	 * Checks if the menu can be draggable
@@ -458,9 +452,7 @@ namespace OutSystems.OSUI.Utils.Menu {
 			callback: () => {
 				_removeMenuOnResize();
 				// Remove the OrientationChange handler only for TabletApps
-				if (OSFramework.OSUI.Helper.DeviceInfo.IsTablet) {
-					_removeMenuOnOrientationChange();
-				}
+				_removeMenuOnOrientationChange();
 			},
 		});
 
@@ -480,22 +472,11 @@ namespace OutSystems.OSUI.Utils.Menu {
 				_updatePropsAndAttrs();
 				_addMenuOnResize();
 				// Add the OrientationChange handler only for TabletApps
-				if (OSFramework.OSUI.Helper.DeviceInfo.IsTablet) {
-					_addMenuOnOrientationChange(callback);
-				}
+				_addMenuOnOrientationChange(callback);
 			},
 		});
 
 		return result;
-	}
-
-	/**
-	 * Method that removes the OrientationChange handler
-	 *
-	 * @export
-	 */
-	export function RemoveMenuOnOrientationChangeHandler(): void {
-		_removeMenuOnOrientationChange();
 	}
 
 	/**
@@ -707,9 +688,9 @@ namespace OutSystems.OSUI.Utils.Menu {
 
 				if (_appProp.layout.element && menu) {
 					// Invoking setTimeout to schedule the callback to be run asynchronously
-					setTimeout(function () {
+					OSFramework.OSUI.Helper.AsyncInvocation(() => {
 						_addMenuEventListeners(true);
-					}, 0);
+					});
 				}
 			},
 		});

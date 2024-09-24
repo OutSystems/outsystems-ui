@@ -142,7 +142,7 @@ namespace OSFramework.OSUI.Helper {
 		private static _getUserAgent(userAgent = ''): string {
 			let localUserAgent = userAgent;
 
-			if (userAgent.replace(' ', '') === '') {
+			if (userAgent.replace(/ /g, '') === '') {
 				if (sessionStorage.previewDevicesUserAgent) {
 					localUserAgent = sessionStorage.previewDevicesUserAgent;
 				} else {

@@ -61,24 +61,24 @@ namespace osui {
 	}
 }
 
-namespace osui.utils.menu {
+namespace OutSystems.OSUI.Utils.Menu {
 	/**
-	 * @deprecated use 'OutSystems.OSUI.Utils.Menu.AddMenuOnOrientationChangeHandler(...)' instead.
+	 * @deprecated use 'OutSystems.OSUI.Utils.Menu.OnReady(...)' instead.
 	 */
-	export function AddMenuOnOrientationChanged(callback: OSFramework.OSUI.GlobalCallbacks.Generic): void {
+	export function AddMenuOnOrientationChange(callback: OSFramework.OSUI.GlobalCallbacks.Generic): void {
 		console.warn(
-			'osui.utils.menu.AddMenuOnOrientationChange(...), is deprecated. Please use the API `OutSystems.OSUI.Utils.Menu.AddMenuOnOrientationChangeHandler(...)`.'
+			'OutSystems.OSUI.Utils.Menu.AddMenuOnOrientationChange(...), is deprecated. Please use the API `OutSystems.OSUI.Utils.Menu.OnReady(...)`.'
 		);
-		return OutSystems.OSUI.Utils.Menu.AddMenuOnOrientationChangeHandler(callback);
+		return OutSystems.OSUI.Utils.Menu.addMenuOnOrientationChange(callback);
 	}
 
 	/**
-	 * @deprecated use 'OutSystems.OSUI.Utils.Menu.RemoveMenuOnOrientationChangeHandler()' instead.
+	 * @deprecated use 'OutSystems.OSUI.Utils.Menu.OnDestroy()' instead.
 	 */
 	export function RemoveMenuOnOrientationChange(): void {
 		console.warn(
-			'osui.utils.menu.RemoveMenuOnOrientationChangeHandler(), is deprecated. Please use the API `OutSystems.OSUI.Utils.Menu.RemoveMenuOnOrientationChangeHandler()`.'
+			'OutSystems.OSUI.Utils.Menu.RemoveMenuOnOrientationChange(), is deprecated. Please use the API `OutSystems.OSUI.Utils.Menu.OnDestroy()`.'
 		);
-		return OutSystems.OSUI.Utils.Menu.RemoveMenuOnOrientationChangeHandler();
+		return OutSystems.OSUI.Utils.Menu.removeMenuOnOrientationChange();
 	}
 }
