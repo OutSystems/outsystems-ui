@@ -114,7 +114,7 @@ namespace OutSystems.OSUI.Utils.Menu {
 
 	// OrientationChange handler
 	const _onOrientationChangeCallbackHandler = (callback: OSFramework.OSUI.GlobalCallbacks.Generic): void => {
-		if (typeof callback === 'function') {
+		if (callback) {
 			OSFramework.OSUI.Helper.ApplySetTimeOut(() => {
 				_onOrientationChangeCallback();
 			}, 300);
