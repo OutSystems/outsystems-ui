@@ -22,7 +22,9 @@ namespace Providers.OSUI.Datepicker.Flatpickr.SingleDate {
 					this.datePickerPlatformInputElem.value !== OSFramework.OSUI.Constants.EmptyString &&
 					OSFramework.OSUI.Helper.Dates.IsValid(this.datePickerPlatformInputElem.value)
 				) {
-					this.configs.InitialDate = new Date(this.datePickerPlatformInputElem.value);
+					this.configs.InitialDate = OSFramework.OSUI.Helper.Dates.NormalizeDate(
+						this.datePickerPlatformInputElem.value
+					);
 				} else {
 					// If the date isn't valid, the platform input value will be removed
 					clearPlatformInput = true;
