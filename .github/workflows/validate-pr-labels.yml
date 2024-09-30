@@ -6,4 +6,4 @@ on:
 
 jobs:
     check-label:
-        uses: OutSystems/rd.github-reusable-workflows/.github/workflows/validate-pr-labels.yaml@v2.0.2
+        uses: OutSystems/rd.github-reusable-workflows/.github/workflows/validate-pr-labels.yaml@v2.0.4

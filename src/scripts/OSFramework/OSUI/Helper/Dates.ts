@@ -80,7 +80,30 @@ namespace OSFramework.OSUI.Helper {
 		 * @memberof Dates
 		 */
 		public static IsValid(date: string): boolean {
-			return !isNaN(Number(new Date(date)));
+			return !isNaN(Number(this.NormalizeDate(date)));
+		}
+
+		/**
+		 * Function used to normalize the OutSystems Dates
+		 *
+		 * @static
+		 * @param {string} date
+		 * @return {*}  {Date}
+		 * @memberof Dates
+		 */
+		public static NormalizeDate(date: string): Date {
+			// Store the current date
+			let currDate: Date;
+
+			// Check if the given date string is a ISO 8601 date format
+			if (date.indexOf('T') > -1) {
+				currDate = new Date(date);
+			} else {
+				// Dates are being sent from platform with '-' instead of '/'
+				currDate = new Date(date.replace(/-/g, '/'));
+			}
+
+			return currDate;
 		}
 
 		/**

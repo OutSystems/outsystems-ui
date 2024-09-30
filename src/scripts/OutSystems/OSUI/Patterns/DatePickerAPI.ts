@@ -195,6 +195,26 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	}
 
 	/**
+	 * Function that will be triggered everytime there is a render at DatePicker
+	 *
+	 * @export
+	 * @param {string} datePickerId
+	 * @return {*}  {string}
+	 */
+	export function OnRender(datePickerId: string): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.DatePicker.FailOnRender,
+			callback: () => {
+				const _datePickerItem = GetDatePickerItemById(datePickerId);
+
+				_datePickerItem.onRender();
+			},
+		});
+
+		return result;
+	}
+
+	/**
 	 * Function to register a provider callback
 	 *
 	 * @export

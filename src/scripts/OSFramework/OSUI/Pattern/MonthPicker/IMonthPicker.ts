@@ -9,6 +9,7 @@ namespace OSFramework.OSUI.Patterns.MonthPicker {
 	 */
 	export interface IMonthPicker extends Interface.IPattern, Interface.IOpenable {
 		clear(): void;
+		open(): void;
 		setLanguage(value: string): void;
 		setProviderConfigs(providerConfigs: ProviderConfigs): void;
 		setProviderEvent(eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.Generic, uniqueId: string): void;

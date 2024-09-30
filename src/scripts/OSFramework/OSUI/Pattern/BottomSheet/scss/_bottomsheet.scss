@@ -135,14 +135,16 @@
 				opacity: 0;
 				position: absolute;
 				transform: translateY(-2px);
-				transition: opacity 200ms ease, transform 200ms var(--osui-bottom-sheet-transition-function);
+				transition:
+					opacity 200ms ease,
+					transform 200ms var(--osui-bottom-sheet-transition-function);
 				top: 0;
 				width: 100%;
 				z-index: var(--layer-global-negative);
 			}
 
 			&:empty {
-				padding-bottom: none;
+				padding-bottom: unset;
 			}
 		}
 	}

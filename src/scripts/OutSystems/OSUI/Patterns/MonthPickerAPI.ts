@@ -172,6 +172,26 @@ namespace OutSystems.OSUI.Patterns.MonthPickerAPI {
 	}
 
 	/**
+	 * Function that will be triggered everytime there is a render at MonthPicker
+	 *
+	 * @export
+	 * @param {string} monthPickerId
+	 * @return {*}  {string}
+	 */
+	export function OnRender(monthPickerId: string): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.MonthPicker.FailOnRender,
+			callback: () => {
+				const _monthPicker = this.GetMonthPickerItemById(monthPickerId);
+
+				_monthPicker.onRender();
+			},
+		});
+
+		return result;
+	}
+
+	/**
 	 * Function to register a provider callback
 	 *
 	 * @export

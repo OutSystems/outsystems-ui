@@ -12,6 +12,7 @@ namespace OSFramework.OSUI.Patterns.MonthPicker {
 		// Common methods that all Carousels must implement!
 		public abstract clear(): void;
 		public abstract close(): void;
+		public abstract onRender(): void;
 		public abstract open(): void;
 		public abstract setLanguage(value: string): void;
 		public abstract updateInitialMonth(monthYear: MonthYear): void;

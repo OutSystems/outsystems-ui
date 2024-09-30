@@ -80,5 +80,9 @@
 			padding-bottom: var(--space-m);
 			z-index: var(--layer-local-tier-1);
 		}
+
+		.form-control[class*='ThemeGrid_Width'].not-valid ~ span.validation-message {
+			left: 0;
+		}
 	}
 }

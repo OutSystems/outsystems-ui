@@ -5,6 +5,7 @@ namespace OSFramework.OSUI.Patterns.TimePicker {
 	 */
 	export interface ITimePicker extends Interface.IPattern, Interface.IOpenable {
 		clear(): void;
+		onRender(): void;
 		setLanguage(value: string): void;
 		setProviderConfigs(providerConfigs: ProviderConfigs): void;
 		setProviderEvent(eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.Generic, uniqueId: string): void;
