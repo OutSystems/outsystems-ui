@@ -52,7 +52,7 @@ namespace OSFramework.OSUI.Helper {
 			// Check if the given date is not a date object and if it's a valid date
 			if (typeof date === 'string') {
 				// Check if string could be parsed into a date - If it has an expected dateformat
-				if (isNaN(Date.parse(date))) {
+				if (Number.isNaN(Date.parse(date))) {
 					throw new Error(`The given date '${date}' it's not a valid date.`);
 				}
 				_date = new Date(Date.parse(date));
@@ -80,7 +80,7 @@ namespace OSFramework.OSUI.Helper {
 		 * @memberof Dates
 		 */
 		public static IsValid(date: string): boolean {
-			return !isNaN(Number(this.NormalizeDate(date)));
+			return !Number.isNaN(Number(this.NormalizeDate(date)));
 		}
 
 		/**
