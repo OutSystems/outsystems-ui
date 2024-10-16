@@ -28,7 +28,7 @@ namespace OSFramework.OSUI.Helper {
 		 * @memberof OSFramework.Helper.Times
 		 */
 		public static IsNull(time: string): boolean {
-			if (isNaN(Date.parse(time))) {
+			if (Number.isNaN(Date.parse(time))) {
 				// Check if the given time is not a time object and if it's a valid time
 				if (typeof time === Constants.JavaScriptTypes.String) {
 					const isValid = /^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$/.test(time);

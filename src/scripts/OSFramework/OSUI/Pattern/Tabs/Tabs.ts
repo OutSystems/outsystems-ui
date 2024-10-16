@@ -185,7 +185,9 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 				this._activeTabContentElement = newContentItem;
 			}
 
-			if (this._hasDragGestures) {
+			// Set focus on the new active header element when running on a device with drag gestures
+			// and the tabs are built to make sure if only runs after the tabs are built
+			if (this._hasDragGestures && this.isBuilt) {
 				this._activeTabHeaderElement.setFocus();
 			}
 
@@ -397,7 +399,7 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 
 				// If at this moment the active item has no size (NaN), set an observer to run this method when its size is changed
 				// This happens, as an example, when there're tabs inside tabs, and inner one has no size when it's built, due to being on a non-active tab
-				if (isNaN(_finalSize) || _finalSize === 0) {
+				if (Number.isNaN(_finalSize) || _finalSize === 0) {
 					const resizeObserver = new ResizeObserver((entries) => {
 						for (const entry of entries) {
 							if (entry.contentBoxSize) {
