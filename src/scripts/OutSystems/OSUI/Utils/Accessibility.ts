@@ -99,6 +99,18 @@ namespace OutSystems.OSUI.Utils.Accessibility {
 	 * @param targetId
 	 */
 	export function SkipToContent(targetId: string): string {
+		// Method to remove tabindex from skipToContent at onBlur
+		function _skipToContentOnBlur(e: FocusEvent): void {
+			OSFramework.OSUI.Helper.AsyncInvocation(() => {
+				const target = e.target as HTMLElement;
+
+				if (target) {
+					OSFramework.OSUI.Helper.Dom.Attribute.Remove(target, 'tabindex');
+					target.removeEventListener(OSFramework.OSUI.GlobalEnum.HTMLEvent.Blur, _skipToContentOnBlur);
+				}
+			});
+		}
+
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.Utilities.FailSkipToContent,
 			callback: () => {
@@ -110,7 +122,7 @@ namespace OutSystems.OSUI.Utils.Accessibility {
 					if (isFocusable === undefined) {
 						OSFramework.OSUI.Helper.Dom.Attribute.Set(target, 'tabindex', '0');
 						target.focus();
-						OSFramework.OSUI.Helper.Dom.Attribute.Remove(target, 'tabindex');
+						target.addEventListener(OSFramework.OSUI.GlobalEnum.HTMLEvent.Blur, _skipToContentOnBlur);
 					} else {
 						target.focus();
 					}
