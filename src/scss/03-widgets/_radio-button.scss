@@ -153,7 +153,7 @@
 
 		&:focus:before {
 			background-color: var(--color-primary);
-			border: 1px solid var(--color-focus-inner);
+			border-color: var(--color-focus-inner);
 			box-shadow: none;
 		}
 
@@ -163,12 +163,6 @@
 
 		&:hover:before {
 			border-color: var(--color-neutral-8);
-		}
-
-		&:focus:before {
-			background-color: var(--color-primary);
-			border: 1px solid var(--color-focus-inner);
-			box-shadow: none;
 		}
 	}
 
