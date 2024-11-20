@@ -1,7 +1,14 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Utils.LayoutPrivate {
 	export abstract class CssBodyVariables {
-		// Function that will check if highContrast mode is active
+		/**
+		 * Method that will check if highContrast mode is active
+		 *
+		 * @private
+		 * @static
+		 * @param {(isHighContrast: boolean) => void} callback
+		 * @memberof CssBodyVariables
+		 */
 		private static _checHighContrastSatus(callback: (isHighContrast: boolean) => void): void {
 			if (typeof window !== 'undefined' && window.matchMedia) {
 				// Set the media query to check for highContrast mode
@@ -23,7 +30,14 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 			}
 		}
 
-		// Function that will check if dark mode is active
+		/**
+		 * Method that will check if dark mode is active
+		 *
+		 * @private
+		 * @static
+		 * @param {(isDarkMode: boolean) => void} callback
+		 * @memberof CssBodyVariables
+		 */
 		private static _checkDarkModeStatus(callback: (isDarkMode: boolean) => void): void {
 			if (typeof window !== 'undefined' && window.matchMedia) {
 				// Set the media query to check for dark mode
@@ -45,7 +59,13 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 			}
 		}
 
-		// Set body css variables for a phone or tablet app
+		/**
+		 * Method to set body css variables for a phone or tablet app
+		 *
+		 * @private
+		 * @static
+		 * @memberof CssBodyVariables
+		 */
 		private static _isPhoneOrTable(): void {
 			OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(
 				document.body,
@@ -54,7 +74,13 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 			);
 		}
 
-		// Set body css variables for non web app
+		/**
+		 * Method to set body css variables for non web app
+		 *
+		 * @private
+		 * @static
+		 * @memberof CssBodyVariables
+		 */
 		private static _notWebApp(): void {
 			const headerContent = OSFramework.OSUI.Helper.Dom.ClassSelector(
 				document,
@@ -82,14 +108,20 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 			}
 		}
 
-		// Function that will set the css variables to body element
+		/**
+		 * Method that will set the css variables to body element
+		 *
+		 * @private
+		 * @static
+		 * @memberof CssBodyVariables
+		 */
 		private static _setCssVars(): void {
-			// Enssure app is not a web app
+			// Ensure app is not a web app
 			if (OSUI.Utils.DeviceDetection.IsWebApp() === false) {
 				this._notWebApp();
 			}
 
-			// Check if device is phone or tablet
+			// Check if app is running on a phone or tablet device
 			if (
 				OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(
 					document.body,
@@ -135,7 +167,10 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 		}
 
 		/**
-		 * Function used to trigger the setCss inline variables to body
+		 * Method that will trigger the setCss functionality
+		 *
+		 * @static
+		 * @memberof CssBodyVariables
 		 */
 		public static Set(): void {
 			this._setCssVars();
