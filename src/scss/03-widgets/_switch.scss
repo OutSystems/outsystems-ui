@@ -105,3 +105,24 @@
 		}
 	}
 }
+
+// OS HighContrast Enabled -------------------------------------------------------
+///
+.os-hight-contrast {
+	[data-switch] {
+		&:empty:after {
+			align-items: center;
+			border: var(--border-size-s) solid var(--color-neutral-6);
+			content: 'off';
+			display: flex;
+			font-size: var(--font-size-xs);
+			justify-content: center;
+			left: -1px;
+			top: 3px;
+		}
+
+		&:checked:after {
+			content: 'on';
+		}
+	}
+}
