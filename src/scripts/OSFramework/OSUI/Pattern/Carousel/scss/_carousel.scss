@@ -119,7 +119,6 @@
 		& {
 			-servicestudio-position: relative;
 		}
-
 	}
 
 	.list:not([data-virtualization-disabled]),
@@ -143,6 +142,7 @@
 	}
 }
 
+// Accessibility -----------------------------------------------------------------
 ///
 .has-accessible-features {
 	.splide__slide {
@@ -150,8 +150,16 @@
 	}
 }
 
+// OS HighContrast Enabled -------------------------------------------------------
 ///
+.os-hight-contrast {
+	.splide__pagination__page {
+		border: 2px solid #ccc;
+	}
+}
+
 // RTL for dynamic changes of direction
+///
 .is-rtl {
 	.splide.splide {
 		&--ltr {
@@ -174,4 +182,3 @@
 		}
 	}
 }
-
