@@ -14,7 +14,7 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 				// Set the media query to check for highContrast mode
 				const highContrastModeQuery = window.matchMedia('(forced-colors: active)');
 
-				// Initial check
+				// Initial check, that's passed through the callback function argument
 				callback(highContrastModeQuery.matches);
 
 				// Listen for changes
@@ -43,7 +43,7 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 				// Set the media query to check for dark mode
 				const darkModeQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
-				// Initial check
+				// Initial check, that's passed through the callback function argument
 				callback(darkModeQuery.matches);
 
 				// Listen for changes
