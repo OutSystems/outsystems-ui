@@ -23,7 +23,7 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 				};
 
 				// Add the event that will detect highContrast mode when it changes
-				highContrastModeQuery.addEventListener('change', listener);
+				highContrastModeQuery.addEventListener(OSFramework.OSUI.GlobalEnum.HTMLEvent.Change, listener);
 			} else {
 				console.warn('HighContrast mode detection is not supported at this context.');
 				callback(false);
@@ -52,7 +52,7 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 				};
 
 				// Add the event that will detect dark mode when it changes
-				darkModeQuery.addEventListener('change', listener);
+				darkModeQuery.addEventListener(OSFramework.OSUI.GlobalEnum.HTMLEvent.Change, listener);
 			} else {
 				console.warn('Dark mode detection is not supported at this context.');
 				callback(false);

@@ -210,6 +210,7 @@ namespace OSFramework.OSUI.GlobalEnum {
 		AnimationEnd = 'animationend',
 		AnimationStart = 'animationstart',
 		Blur = 'blur',
+		Change = 'change',
 		Click = 'click',
 		Focus = 'focus',
 		keyDown = 'keydown',
