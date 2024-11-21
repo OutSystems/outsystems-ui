@@ -19,7 +19,7 @@ namespace OSFramework.OSUI.GlobalEnum {
 		DarkMode = 'is-dark-mode',
 		DeprecatedSubmenu = 'submenu',
 		Footer = 'footer',
-		HasHighContrast = 'is-hight-contrast',
+		HasHighContrast = 'is-hight-contrast-mode',
 		Header = 'header',
 		HeaderHideOnScroll = 'hide-header-on-scroll',
 		HeaderIsFixed = 'fixed-header',
