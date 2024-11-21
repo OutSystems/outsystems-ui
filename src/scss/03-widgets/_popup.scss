@@ -50,3 +50,12 @@
 		}
 	}
 }
+
+// OS HighContrast Enabled -------------------------------------------------------
+///
+.os-hight-contrast {
+	.popup-dialog {
+		border: 3px solid #b7b7b7;
+		border-radius: var(--border-radius-soft);
+	}
+}
