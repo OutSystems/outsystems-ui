@@ -140,12 +140,12 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 				if (isHighContrast) {
 					OSFramework.OSUI.Helper.Dom.Styles.AddClass(
 						document.body,
-						OSFramework.OSUI.GlobalEnum.CssClassElements.HasHighContrast
+						OSFramework.OSUI.GlobalEnum.CssClassElements.HighContrast
 					);
 				} else {
 					OSFramework.OSUI.Helper.Dom.Styles.RemoveClass(
 						document.body,
-						OSFramework.OSUI.GlobalEnum.CssClassElements.HasHighContrast
+						OSFramework.OSUI.GlobalEnum.CssClassElements.HighContrast
 					);
 				}
 			});
