@@ -279,6 +279,29 @@
 	}
 }
 
+// OS HighContrast Enabled -------------------------------------------------------
+///
+.os-hight-contrast {
+	.osui-range-slider {
+		.noUi-horizontal {
+			height: calc(2 * var(--range-slider-thickness));
+		}
+
+		.noUi-vertical {
+			width: calc(2 * var(--range-slider-thickness));
+		}
+
+		.noUi-connect,
+		.noUi-base {
+			border: 2px solid var(--color-neutral-7);
+		}
+	}
+
+	.has-accessible-features .osui-range-slider {
+		border: 0;
+	}
+}
+
 // IsRTL -------------------------------------------------------------------------
 ///
 .is-rtl {
@@ -292,8 +315,7 @@
 }
 
 /* Z-index overrides */
-.noUi-origin
-.noUi-base,
+.noUi-origin .noUi-base,
 .noUi-connect {
 	z-index: var(--layer-local-tier-1);
 }
