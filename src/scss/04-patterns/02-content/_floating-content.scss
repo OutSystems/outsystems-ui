@@ -324,3 +324,13 @@
 		}
 	}
 }
+
+// OS HighContrast Enabled -------------------------------------------------------
+///
+.os-hight-contrast {
+	.floating {
+		&-button {
+			border: 2px solid var(--color-neutral-7);
+		}
+	}
+}
