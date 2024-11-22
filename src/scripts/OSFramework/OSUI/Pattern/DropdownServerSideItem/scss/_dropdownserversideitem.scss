@@ -69,3 +69,26 @@
 		height: 48px;
 	}
 }
+
+// OS HighContrast Enabled -------------------------------------------------------
+///
+.os-hight-contrast {
+	.osui-dropdown-serverside-item {
+		&:hover,
+		&:focus {
+			outline: none;
+			font-weight: var(--font-semi-bold);
+
+			&::before {
+				border: 2px solid var(--color-focus-outer);
+				bottom: 0;
+				content: '';
+				display: block;
+				left: 0;
+				position: absolute;
+				right: 0;
+				top: 0;
+			}
+		}
+	}
+}
