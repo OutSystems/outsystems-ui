@@ -5,6 +5,7 @@
 
 .flatpickr-calendar {
 	--osui-flatpickr-layer: var(--layer-global-elevated);
+
 	border-radius: var(--border-radius-soft);
 	border: var(--border-size-s) solid var(--color-neutral-5);
 	box-shadow: var(--shadow-none);
@@ -655,6 +656,161 @@ body:has(.has-accessible-features) .osui-monthpicker__dropdown {
 	.flatpickr-monthSelect-month.selected {
 		&:focus-visible {
 			box-shadow: 0 0 0 3px var(--color-focus-outer);
+		}
+	}
+}
+
+// OS HighContrast Enabled -------------------------------------------------------
+///
+.os-hight-contrast {
+	.flatpickr-rContainer,
+	.flatpickr-days {
+		padding: 5px;
+	}
+
+	.flatpickr-current-month {
+		.flatpickr-monthDropdown-months {
+			appearance: revert;
+
+			&:focus,
+			&:active {
+				outline: 3px solid var(--color-focus-outer);
+			}
+		}
+	}
+
+	.flatpickr-months {
+		.flatpickr-prev-month,
+		.flatpickr-next-month {
+			&:focus,
+			&:active {
+				outline: 3px solid var(--color-focus-outer);
+			}
+		}
+	}
+
+	.flatpickr-day {
+		border: none;
+		position: relative;
+		z-index: 0;
+
+		&:hover,
+		&:focus,
+		&:focus-visible {
+			z-index: 2;
+		}
+
+		&.today {
+			border: var(--border-size-s) solid var(--color-focus-outer);
+			z-index: 1;
+		}
+
+		&.selected,
+		&.selected:focus,
+		&.selected:focus-visible,
+		&.selected:hover,
+		&.selected.inRange,
+		&.selected.prevMonthDay,
+		&.selected.nextMonthDay {
+			border: var(--border-size-s) solid var(--color-focus-outer);
+			font-size: var(--font-size-base);
+			font-weight: var(--font-semi-bold);
+		}
+
+		&:hover,
+		&:focus,
+		&:focus-visible,
+		&.inRange,
+		&.inRange:hover,
+		&.inRange:focus,
+		&.inRange:focus-visible,
+		&.today.inRange,
+		&.today.inRange:hover,
+		&.today.inRange:focus,
+		&.today.inRange:focus-visible {
+			font-size: var(--font-size-base);
+			font-weight: var(--font-semi-bold);
+			outline: 3px solid var(--color-focus-outer);
+		}
+
+		&.inRange {
+			outline: none;
+
+			&:before {
+				content: '';
+				display: block;
+				position: absolute;
+				top: -1px;
+				right: -2px;
+				left: -2px;
+				bottom: -1px;
+				border: var(--border-size-s) solid var(--color-focus-outer);
+				border-left: none;
+				border-right: none;
+				border-radius: var(--border-radius-none);
+			}
+		}
+
+		// InRange Styles
+		&.selected.startRange,
+		&.startRange,
+		&.endRange.startRange,
+		&.selected.endRange,
+		&.startRange.endRange,
+		&.endRange.endRange {
+			border: none;
+			border-radius: var(--border-radius-none);
+
+			&:before {
+				right: initial;
+			}
+		}
+
+		&.selected.startRange.endRange,
+		&.startRange.endRange,
+		&.selected.endRange.startRange,
+		&.endRange.startRange {
+			&,
+			&:before {
+				// border-radius: 50px;
+			}
+		}
+
+		&.selected.startRange,
+		&.startRange {
+			&:before {
+				border: var(--border-size-s) solid var(--color-focus-outer);
+				border-right: none;
+				border-radius: 50px 0 0 50px;
+				left: 0;
+				right: -2px;
+			}
+		}
+
+		&.selected.endRange,
+		&.endRange.endRange {
+			&:before {
+				border: var(--border-size-s) solid var(--color-focus-outer);
+				border-left: none;
+				border-radius: 0 50px 50px 0;
+				right: 0;
+				left: -2px;
+			}
+		}
+
+		&.inRange {
+			// box-shadow: var(--shadow-none);
+
+			&:before {
+				// left: -2px;
+				// right: -2px;
+			}
+		}
+
+		&.selected.startRange + .endRange:not(:nth-child(7n + 1)),
+		&.startRange + .endRange:not(:nth-child(7n + 1)),
+		&.endRange.startRange + .endRange:not(:nth-child(7n + 1)) {
+			// box-shadow: var(--shadow-none);
 		}
 	}
 }
