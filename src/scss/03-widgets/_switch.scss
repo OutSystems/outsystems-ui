@@ -113,8 +113,9 @@
 		&:empty:after {
 			align-items: center;
 			border: var(--border-size-s) solid var(--color-neutral-6);
-			content: 'off';
+			content: '0';
 			display: flex;
+			font-family: monospace;
 			font-size: var(--font-size-xs);
 			justify-content: center;
 			left: -1px;
@@ -122,7 +123,7 @@
 		}
 
 		&:checked:after {
-			content: 'on';
+			content: '1';
 		}
 	}
 }
