@@ -533,6 +533,61 @@
 	}
 }
 
+// OS HighContrast Enabled -------------------------------------------------------
+///
+.os-hight-contrast {
+	.vscomp-wrapper {
+		&.show-value-as-tags {
+			.vscomp-value-tag {
+				border: 1px solid var(--color-neutral-7);
+			}
+		}
+
+		.vscomp-option {
+			&.focused {
+				&:before {
+					border: 2px solid var(--color-neutral-7);
+					bottom: 0;
+					content: '';
+					display: block;
+					left: 0;
+					position: absolute;
+					right: 0;
+					top: 0;
+				}
+			}
+		}
+
+		&.multiple .vscomp-option {
+			&.selected .checkbox-icon {
+				&:after {
+					border-top: none;
+					border-left: none;
+				}
+			}
+		}
+	}
+
+	.pop-comp-content,
+	.vscomp-dropbox-container {
+		border: 2px solid var(--color-neutral-7);
+	}
+
+	.vscomp-options-container {
+		&::-webkit-scrollbar {
+			width: 5px;
+		}
+
+		&::-webkit-scrollbar-track {
+			border: 3px solid var(--color-neutral-4);
+		}
+
+		&::-webkit-scrollbar-thumb {
+			border: 1px solid var(--color-neutral-4);
+		}
+	}
+}
+
 // Responsive --------------------------------------------------------------------
 ///
 .phone,
