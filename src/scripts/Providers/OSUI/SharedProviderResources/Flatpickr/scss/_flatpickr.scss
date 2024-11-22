@@ -737,17 +737,17 @@ body:has(.has-accessible-features) .osui-monthpicker__dropdown {
 			outline: none;
 
 			&:before {
+				border-left: none;
+				border-radius: var(--border-radius-none);
+				border-right: none;
+				border: var(--border-size-s) solid var(--color-focus-outer);
+				bottom: -1px;
 				content: '';
 				display: block;
-				position: absolute;
-				top: -1px;
-				right: -2px;
 				left: -2px;
-				bottom: -1px;
-				border: var(--border-size-s) solid var(--color-focus-outer);
-				border-left: none;
-				border-right: none;
-				border-radius: var(--border-radius-none);
+				position: absolute;
+				right: -2px;
+				top: -1px;
 			}
 		}
 
@@ -769,9 +769,9 @@ body:has(.has-accessible-features) .osui-monthpicker__dropdown {
 		&.selected.startRange,
 		&.startRange {
 			&:before {
-				border: var(--border-size-s) solid var(--color-focus-outer);
-				border-right: none;
 				border-radius: 50px 0 0 50px;
+				border-right: none;
+				border: var(--border-size-s) solid var(--color-focus-outer);
 				left: 0;
 				right: -2px;
 			}
@@ -780,11 +780,11 @@ body:has(.has-accessible-features) .osui-monthpicker__dropdown {
 		&.selected.endRange,
 		&.endRange.endRange {
 			&:before {
-				border: var(--border-size-s) solid var(--color-focus-outer);
 				border-left: none;
 				border-radius: 0 50px 50px 0;
-				right: 0;
+				border: var(--border-size-s) solid var(--color-focus-outer);
 				left: -2px;
+				right: 0;
 			}
 		}
 	}
