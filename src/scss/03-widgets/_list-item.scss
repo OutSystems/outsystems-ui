@@ -87,3 +87,31 @@
 		}
 	}
 }
+
+// OS HighContrast Enabled -------------------------------------------------------
+///
+.os-hight-contrast {
+	&.desktop,
+	&.tablet.landscape {
+		.list {
+			.list-item:hover,
+			.list-item-selected {
+				position: relative;
+
+				&:before {
+					border: 2px solid var(--color-focus-outer);
+					border-right-width: 0;
+					border-left-width: 5px;
+					bottom: 0;
+					content: '';
+					display: block;
+					left: 0;
+					pointer-events: none;
+					position: absolute;
+					right: 0;
+					top: 0;
+				}
+			}
+		}
+	}
+}
