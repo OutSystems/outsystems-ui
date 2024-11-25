@@ -72,6 +72,22 @@
 	}
 }
 
+// OS HighContrast Enabled -------------------------------------------------------
+///
+.os-hight-contrast {
+	.osui-section-index::before {
+		border-left: 1px solid var(--color-focus-outer);
+	}
+
+	.osui-section-index-item {
+		&--is-active {
+			&::before {
+				border-left: 4px solid var(--color-focus-outer);
+			}
+		}
+	}
+}
+
 // IsRTL -------------------------------------------------------------------------
 ///
 .is-rtl {

@@ -146,3 +146,11 @@
 		border-color: var(--color-focus-inner);
 	}
 }
+
+// OS HighContrast Enabled -------------------------------------------------------
+///
+.os-hight-contrast {
+	.pagination-button.is--active {
+		outline: 2px solid var(--color-focus-outer);
+	}
+}
