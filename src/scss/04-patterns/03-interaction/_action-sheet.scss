@@ -149,3 +149,24 @@
 		}
 	}
 }
+
+// OS HighContrast Enabled -------------------------------------------------------
+///
+.os-hight-contrast {
+	.action-sheet-container--visible .action-sheet {
+		background-color: rgba(0, 0, 0, 1);
+		border: 2px solid var(--color-focus-outer);
+	}
+
+	.action-sheet-actions {
+		position: relative;
+
+		&:has(.btn:focus) {
+			z-index: 1;
+		}
+	}
+
+	.action-sheet-buttons {
+		overflow: visible;
+	}
+}
