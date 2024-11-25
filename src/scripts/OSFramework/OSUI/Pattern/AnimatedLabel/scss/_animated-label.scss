@@ -160,8 +160,6 @@
 
 // Accessibility --------------------------------------------------------------------
 ///
-
-/* Accessibility Styles */
 .has-accessible-features {
 	.animated-label-input {
 		.form-control[data-input] {
@@ -174,6 +172,31 @@
 			&:focus {
 				box-shadow: 0 3px 0 0 var(--color-focus-outer);
 			}
+		}
+	}
+}
+
+// OS HighContrast Enabled -------------------------------------------------------
+///
+.os-hight-contrast {
+	.animated-label-text {
+		font-weight: var(--font-semi-bold);
+		padding: 0 10px;
+	}
+
+	.animated-label {
+		&.active {
+			.animated-label-text {
+				background-color: rgba(0, 0, 0, 1);
+				font-size: var(--font-size-s);
+				top: -16px;
+			}
+		}
+	}
+
+	.animated-label-input {
+		.form-control[data-input] {
+			padding: 0 10px;
 		}
 	}
 }
