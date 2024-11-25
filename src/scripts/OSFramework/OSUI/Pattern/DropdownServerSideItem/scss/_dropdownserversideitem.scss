@@ -77,7 +77,6 @@
 		&:hover,
 		&:focus {
 			outline: none;
-			font-weight: var(--font-semi-bold);
 
 			&::before {
 				border: 2px solid var(--color-focus-outer);
