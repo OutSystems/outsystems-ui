@@ -317,3 +317,19 @@
 		}
 	}
 }
+
+// OS HighContrast Enabled -------------------------------------------------------
+///
+.os-hight-contrast {
+	.has-accessible-features {
+		.rating {
+			&.is-half input:focus + .rating-item .rating-item-half,
+			&:not(.is-half) input:focus + .rating-item .rating-item-filled {
+				&,
+				* {
+					outline: 3px solid var(--color-focus-outer);
+				}
+			}
+		}
+	}
+}
