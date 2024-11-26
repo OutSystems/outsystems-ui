@@ -327,7 +327,7 @@
 			&:not(.is-half) input:focus + .rating-item .rating-item-filled {
 				&,
 				* {
-					outline: 3px solid var(--color-focus-outer);
+					@include a11y-high-contrast-outline;
 				}
 			}
 		}

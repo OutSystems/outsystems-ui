@@ -214,8 +214,8 @@
 	.active-screen {
 		.osui-sidebar {
 			&--is-open {
-				border-left: 2px solid var(--color-focus-outer);
-				border-right: 2px solid var(--color-focus-outer);
+				@include a11y-high-contrast-outline(true, var(--border-size-m), 'left');
+				@include a11y-high-contrast-outline(true, var(--border-size-m), 'right');
 			}
 		}
 	}

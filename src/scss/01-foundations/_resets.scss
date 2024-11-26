@@ -65,6 +65,8 @@ body {
 
 ///
 .os-high-contrast .has-accessible-features :focus {
+	box-shadow: none;
+
 	@include a11y-high-contrast-outline;
 }
 

@@ -274,7 +274,7 @@
 
 		.noUi-handle:focus {
 			border-color: var(--color-focus-inner);
-			box-shadow: 0 0 0 3px var(--color-focus-outer);
+			@include a11y-default-outline;
 		}
 	}
 }
@@ -293,7 +293,7 @@
 
 		.noUi-connect,
 		.noUi-base {
-			border: 2px solid var(--color-neutral-7);
+			border: var(--border-size-m) solid var(--color-neutral-7);
 		}
 	}
 

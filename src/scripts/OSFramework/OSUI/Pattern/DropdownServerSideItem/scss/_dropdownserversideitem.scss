@@ -70,7 +70,7 @@
 			outline: none;
 
 			&:before {
-				@include a11y-high-contrast-outline(false);
+				@include a11y-high-contrast-outline(true);
 				bottom: 0;
 				content: '';
 				display: block;

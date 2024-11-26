@@ -383,7 +383,7 @@
 	.osui-tabs__header-item.osui-tabs--is-active:before,
 	.osui-tabs__content-item:focus:before,
 	.osui-tabs__content-item.osui-tabs--is-active:before {
-		border: 2px solid var(--color-focus-outer);
+		@include a11y-high-contrast-outline(true, var(--border-size-m));
 		bottom: 0;
 		content: '';
 		display: block;
@@ -397,10 +397,6 @@
 	.osui-tabs__header-item:focus:before,
 	.osui-tabs__content-item:focus:before {
 		border-width: 4px;
-	}
-
-	.has-accessible-features .osui-tabs__content-item:focus:before,
-	.osui-tabs__content-item.osui-tabs--is-active:before {
 	}
 
 	.osui-tabs__content-item {

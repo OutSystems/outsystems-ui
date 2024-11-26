@@ -118,14 +118,14 @@
 			}
 
 			&__value {
-				border: 2px solid var(--color-neutral-7);
+				border: var(--border-size-m) solid var(--color-neutral-7);
 				height: calc(2 * var(--thickness));
 
 				&:before,
 				&:after {
-					border: 2px solid var(--color-neutral-7);
-					top: -2px;
-					left: -2px;
+					border: var(--border-size-m) solid var(--color-neutral-7);
+					top: calc(-1 * var(--border-size-m));
+					left: calc(-1 * var(--border-size-m));
 				}
 			}
 		}
