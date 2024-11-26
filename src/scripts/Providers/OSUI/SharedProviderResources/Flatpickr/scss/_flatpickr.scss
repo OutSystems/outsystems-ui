@@ -669,7 +669,25 @@ body:has(.has-accessible-features) .osui-monthpicker__dropdown {
 		padding: 5px;
 	}
 
+	.flatpickr-calendar {
+		&.arrowTop:before,
+		&.arrowTop:after {
+			display: none;
+		}
+
+		.numInputWrapper {
+			span.arrowUp,
+			span.arrowDown {
+				display: none;
+			}
+		}
+	}
+
 	.flatpickr-current-month {
+		.numInputWrapper input {
+			padding: 0 5px;
+		}
+
 		.flatpickr-monthDropdown-months {
 			appearance: revert;
 
