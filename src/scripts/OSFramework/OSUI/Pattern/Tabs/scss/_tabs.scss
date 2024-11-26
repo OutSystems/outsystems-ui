@@ -396,7 +396,7 @@
 
 	.osui-tabs__header-item:focus:before,
 	.osui-tabs__content-item:focus:before {
-		border-width: 4px;
+		border-width: var(--border-size-l);
 	}
 
 	.osui-tabs__content-item {

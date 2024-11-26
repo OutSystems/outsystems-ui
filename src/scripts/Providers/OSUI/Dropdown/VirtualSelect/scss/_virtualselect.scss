@@ -539,14 +539,14 @@
 	.vscomp-wrapper {
 		&.show-value-as-tags {
 			.vscomp-value-tag {
-				border: 1px solid var(--color-neutral-7);
+				border: var(--border-size-s) solid var(--color-neutral-7);
 			}
 		}
 
 		.vscomp-option {
 			&.focused {
 				&:before {
-					border: 2px solid var(--color-neutral-7);
+					border: var(--border-size-m) solid var(--color-neutral-7);
 					bottom: 0;
 					content: '';
 					display: block;
@@ -570,7 +570,7 @@
 
 	.pop-comp-content,
 	.vscomp-dropbox-container {
-		border: 2px solid var(--color-neutral-7);
+		border: var(--border-size-m) solid var(--color-neutral-7);
 	}
 
 	.vscomp-options-container {
@@ -579,11 +579,11 @@
 		}
 
 		&::-webkit-scrollbar-track {
-			border: 3px solid var(--color-neutral-4);
+			border: var(--border-size-l) solid var(--color-neutral-4);
 		}
 
 		&::-webkit-scrollbar-thumb {
-			border: 1px solid var(--color-neutral-4);
+			border: var(--border-size-s) solid var(--color-neutral-4);
 		}
 	}
 }
