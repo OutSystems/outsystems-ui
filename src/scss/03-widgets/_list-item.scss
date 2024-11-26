@@ -99,9 +99,9 @@
 				position: relative;
 
 				&:before {
-					border: 2px solid var(--color-focus-outer);
+					@include a11y-high-contrast-outline(true, var(--border-size-s));
 					border-right-width: 0;
-					border-left-width: 5px;
+					border-left-width: var(--border-size-l);
 					bottom: 0;
 					content: '';
 					display: block;

@@ -55,7 +55,7 @@
 ///
 .os-high-contrast {
 	.popup-dialog {
-		border: 3px solid #b7b7b7;
+		border: var(--border-size-s) solid var(--color-neutral-0);
 		border-radius: var(--border-radius-soft);
 	}
 }

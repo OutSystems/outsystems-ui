@@ -671,7 +671,9 @@ body:has(.has-accessible-features) .osui-monthpicker__dropdown {
 
 	.flatpickr-calendar {
 		&.arrowTop:before,
-		&.arrowTop:after {
+		&.arrowTop:after,
+		&.arrowBottom:before,
+		&.arrowBottom:after {
 			display: none;
 		}
 

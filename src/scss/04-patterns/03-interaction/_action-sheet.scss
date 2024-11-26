@@ -154,15 +154,18 @@
 ///
 .os-high-contrast {
 	.action-sheet-container--visible .action-sheet {
-		background-color: rgba(0, 0, 0, 1);
-		border: 2px solid var(--color-focus-outer);
+		background-color: var(--color-neutral-0);
+		@include a11y-high-contrast-outline(true);
 	}
 
 	.action-sheet-actions {
+		--osui-action-sheet-actions-layer: 0;
+
 		position: relative;
+		z-index: var(--osui-action-sheet-actions-layer);
 
 		&:has(.btn:focus) {
-			z-index: 1;
+			z-index: calc(var(--osui-action-sheet-actions-layer) + var(--layer-local-tier-1));
 		}
 	}
 

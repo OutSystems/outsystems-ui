@@ -330,7 +330,7 @@
 .os-high-contrast {
 	.floating {
 		&-button {
-			border: 2px solid var(--color-neutral-7);
+			border: var(--border-size-m) solid var(--color-neutral-7);
 		}
 	}
 }

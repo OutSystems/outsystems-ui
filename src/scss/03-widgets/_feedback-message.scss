@@ -98,7 +98,7 @@ div.feedback-message-warning {
 ///
 .os-high-contrast {
 	.feedback-message {
-		border-width: 3px;
+		border-width: var(--border-size-l);
 		border-style: solid;
 
 		&.feedback-message-error {

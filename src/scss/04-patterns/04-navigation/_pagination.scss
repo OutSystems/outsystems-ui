@@ -151,6 +151,6 @@
 ///
 .os-high-contrast {
 	.pagination-button.is--active {
-		outline: 2px solid var(--color-focus-outer);
+		@include a11y-high-contrast-outline;
 	}
 }
