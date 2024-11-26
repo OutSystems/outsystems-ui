@@ -60,11 +60,12 @@ body {
 
 ///
 .has-accessible-features :focus {
-	box-shadow: 0 0 0 3px var(--color-focus-outer);
+	@include a11y-default-outline;
 }
 
+///
 .os-high-contrast .has-accessible-features :focus {
-	outline: 3px solid var(--color-focus-outer);
+	@include a11y-high-contrast-outline;
 }
 
 /* ============================================================================ */

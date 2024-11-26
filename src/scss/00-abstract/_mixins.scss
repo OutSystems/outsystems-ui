@@ -1,6 +1,17 @@
 ////
 /// @group global
 
+/// default outline style
+@mixin a11y-default-outline {
+	box-shadow: 0 0 0 3px var(--color-focus-outer);
+}
+
+/// outline style for high contrast mode
+@mixin a11y-high-contrast-outline {
+	box-shadow: none;
+	outline: 3px solid var(--color-focus-outer);
+}
+
 /// AppLogo
 @mixin app-logo {
 	border-radius: var(--border-radius-soft);

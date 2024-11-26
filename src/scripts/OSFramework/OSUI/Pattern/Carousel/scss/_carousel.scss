@@ -153,8 +153,14 @@
 // OS HighContrast Enabled -------------------------------------------------------
 ///
 .os-high-contrast {
-	.splide__pagination__page {
-		border: 2px solid #ccc;
+	.splide__pagination {
+		&__page {
+			@include a11y-high-contrast-outline;
+		}
+
+		li {
+			margin: var(--space-none) var(--space-xs);
+		}
 	}
 }
 
