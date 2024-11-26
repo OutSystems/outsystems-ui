@@ -181,13 +181,13 @@
 .os-high-contrast {
 	.animated-label-text {
 		font-weight: var(--font-semi-bold);
-		padding: 0 10px;
+		padding: var(--space-none) var(--space-s);
 	}
 
 	.animated-label {
 		&.active {
 			.animated-label-text {
-				background-color: rgba(0, 0, 0, 1);
+				background-color: var(--color-neutral-8);
 				font-size: var(--font-size-s);
 				top: -16px;
 			}
@@ -196,7 +196,7 @@
 
 	.animated-label-input {
 		.form-control[data-input] {
-			padding: 0 10px;
+			padding: var(--space-none) var(--space-s);
 		}
 	}
 }
