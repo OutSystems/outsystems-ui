@@ -75,40 +75,6 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 		}
 
 		/**
-		 * Method to set body css variables for non web app
-		 *
-		 * @private
-		 * @static
-		 * @memberof CssBodyVariables
-		 */
-		private static _notWebApp(): void {
-			const headerContent = OSFramework.OSUI.Helper.Dom.ClassSelector(
-				document,
-				OSFramework.OSUI.GlobalEnum.CssClassElements.HeaderTopContent
-			);
-			const footer = OSFramework.OSUI.Helper.Dom.ClassSelector(
-				document,
-				OSFramework.OSUI.GlobalEnum.CssClassElements.Footer
-			);
-
-			if (headerContent) {
-				OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(
-					document.body,
-					OSFramework.OSUI.GlobalEnum.CSSVariables.HeaderContentHeight,
-					headerContent.getBoundingClientRect().height + OSFramework.OSUI.GlobalEnum.Units.Pixel
-				);
-			}
-
-			if (footer) {
-				OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(
-					document.body,
-					OSFramework.OSUI.GlobalEnum.CSSVariables.FooterHeight,
-					footer.getBoundingClientRect().height + OSFramework.OSUI.GlobalEnum.Units.Pixel
-				);
-			}
-		}
-
-		/**
 		 * Method that will set the css variables to body element
 		 *
 		 * @private
@@ -118,7 +84,7 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 		private static _setCssVars(): void {
 			// Ensure app is not a web app
 			if (OSUI.Utils.DeviceDetection.IsWebApp() === false) {
-				this._notWebApp();
+				this._setNotWebApp();
 			}
 
 			// Check if app is running on a phone or tablet device
@@ -164,6 +130,40 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 					);
 				}
 			});
+		}
+
+		/**
+		 * Method to set body css variables for non web app
+		 *
+		 * @private
+		 * @static
+		 * @memberof CssBodyVariables
+		 */
+		private static _setNotWebApp(): void {
+			const headerContent = OSFramework.OSUI.Helper.Dom.ClassSelector(
+				document,
+				OSFramework.OSUI.GlobalEnum.CssClassElements.HeaderTopContent
+			);
+			const footer = OSFramework.OSUI.Helper.Dom.ClassSelector(
+				document,
+				OSFramework.OSUI.GlobalEnum.CssClassElements.Footer
+			);
+
+			if (headerContent) {
+				OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(
+					document.body,
+					OSFramework.OSUI.GlobalEnum.CSSVariables.HeaderContentHeight,
+					headerContent.getBoundingClientRect().height + OSFramework.OSUI.GlobalEnum.Units.Pixel
+				);
+			}
+
+			if (footer) {
+				OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(
+					document.body,
+					OSFramework.OSUI.GlobalEnum.CSSVariables.FooterHeight,
+					footer.getBoundingClientRect().height + OSFramework.OSUI.GlobalEnum.Units.Pixel
+				);
+			}
 		}
 
 		/**
