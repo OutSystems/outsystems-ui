@@ -666,7 +666,7 @@ body:has(.has-accessible-features) .osui-monthpicker__dropdown {
 	.flatpickr-rContainer,
 	.flatpickr-days,
 	.flatpickr-monthSelect-months {
-		padding: 5px;
+		padding: var(--space-xs);
 	}
 
 	.flatpickr-calendar {
@@ -685,7 +685,7 @@ body:has(.has-accessible-features) .osui-monthpicker__dropdown {
 
 	.flatpickr-current-month {
 		.numInputWrapper input {
-			padding: 0 5px;
+			padding: var(--space-none) var(--space-xs);
 		}
 
 		.flatpickr-monthDropdown-months {
@@ -693,7 +693,7 @@ body:has(.has-accessible-features) .osui-monthpicker__dropdown {
 
 			&:focus,
 			&:active {
-				outline: 3px solid var(--color-focus-outer);
+				@include a11y-high-contrast-outline;
 			}
 		}
 	}
@@ -703,26 +703,28 @@ body:has(.has-accessible-features) .osui-monthpicker__dropdown {
 		.flatpickr-next-month {
 			&:focus,
 			&:active {
-				outline: 3px solid var(--color-focus-outer);
+				@include a11y-high-contrast-outline;
 			}
 		}
 	}
 
 	.flatpickr-day,
 	.flatpickr-monthSelect-months .flatpickr-monthSelect-month {
+		--osui-flatpickr-calendar-elems-layer: 0;
+
 		border: none;
 		position: relative;
-		z-index: 0;
+		z-index: var(--osui-flatpickr-calendar-elems-layer);
 
 		&:hover,
 		&:focus,
 		&:focus-visible {
-			z-index: 2;
+			z-index: calc(var(--osui-flatpickr-calendar-elems-layer) + var(--layer-local-tier-2));
 		}
 
 		&.today {
-			border: var(--border-size-s) solid var(--color-focus-outer);
-			z-index: 1;
+			@include a11y-high-contrast-outline(true, var(--border-size-s));
+			z-index: calc(var(--osui-flatpickr-calendar-elems-layer) + var(--layer-local-tier-1));
 		}
 
 		&.selected,
@@ -732,7 +734,7 @@ body:has(.has-accessible-features) .osui-monthpicker__dropdown {
 		&.selected.inRange,
 		&.selected.prevMonthDay,
 		&.selected.nextMonthDay {
-			border: var(--border-size-s) solid var(--color-focus-outer);
+			@include a11y-high-contrast-outline(true, var(--border-size-s));
 			font-size: var(--font-size-base);
 			font-weight: var(--font-semi-bold);
 		}
@@ -750,7 +752,7 @@ body:has(.has-accessible-features) .osui-monthpicker__dropdown {
 		&.today.inRange:focus-visible {
 			font-size: var(--font-size-base);
 			font-weight: var(--font-semi-bold);
-			outline: 3px solid var(--color-focus-outer);
+			@include a11y-high-contrast-outline;
 		}
 
 		&.inRange {
@@ -760,7 +762,7 @@ body:has(.has-accessible-features) .osui-monthpicker__dropdown {
 				border-left: none;
 				border-radius: var(--border-radius-none);
 				border-right: none;
-				border: var(--border-size-s) solid var(--color-focus-outer);
+				@include a11y-high-contrast-outline(true, var(--border-size-s));
 				bottom: -1px;
 				content: '';
 				display: block;
@@ -791,7 +793,7 @@ body:has(.has-accessible-features) .osui-monthpicker__dropdown {
 			&:before {
 				border-radius: 50px 0 0 50px;
 				border-right: none;
-				border: var(--border-size-s) solid var(--color-focus-outer);
+				@include a11y-high-contrast-outline(true, var(--border-size-s));
 				left: 0;
 				right: -2px;
 			}
@@ -802,7 +804,7 @@ body:has(.has-accessible-features) .osui-monthpicker__dropdown {
 			&:before {
 				border-left: none;
 				border-radius: 0 50px 50px 0;
-				border: var(--border-size-s) solid var(--color-focus-outer);
+				@include a11y-high-contrast-outline(true, var(--border-size-s));
 				left: -2px;
 				right: 0;
 			}
