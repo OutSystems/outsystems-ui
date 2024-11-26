@@ -664,7 +664,8 @@ body:has(.has-accessible-features) .osui-monthpicker__dropdown {
 ///
 .os-hight-contrast {
 	.flatpickr-rContainer,
-	.flatpickr-days {
+	.flatpickr-days,
+	.flatpickr-monthSelect-months {
 		padding: 5px;
 	}
 
@@ -689,7 +690,8 @@ body:has(.has-accessible-features) .osui-monthpicker__dropdown {
 		}
 	}
 
-	.flatpickr-day {
+	.flatpickr-day,
+	.flatpickr-monthSelect-months .flatpickr-monthSelect-month {
 		border: none;
 		position: relative;
 		z-index: 0;
