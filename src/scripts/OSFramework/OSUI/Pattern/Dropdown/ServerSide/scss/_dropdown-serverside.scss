@@ -352,6 +352,16 @@ $balloonMobileTopMargin: 5vh;
 	}
 }
 
+// OS HighContrast Enabled -------------------------------------------------------
+///
+.os-high-contrast {
+	.has-accessible-features .osui-dropdown-serverside__balloon-content:focus {
+		--osui-outline-size: 0;
+
+		@include a11y-high-contrast-outline(false);
+	}
+}
+
 // IsRTL -------------------------------------------------------------------------
 ///
 .is-rtl {

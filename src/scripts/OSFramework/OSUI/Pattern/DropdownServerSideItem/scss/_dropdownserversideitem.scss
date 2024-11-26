@@ -61,15 +61,6 @@
 	}
 }
 
-// Responsive --------------------------------------------------------------------
-///
-.tablet,
-.phone {
-	.osui-dropdown-serverside-item {
-		height: 48px;
-	}
-}
-
 // OS HighContrast Enabled -------------------------------------------------------
 ///
 .os-high-contrast {
@@ -78,8 +69,8 @@
 		&:focus {
 			outline: none;
 
-			&::before {
-				border: 2px solid var(--color-focus-outer);
+			&:before {
+				@include a11y-high-contrast-outline(false);
 				bottom: 0;
 				content: '';
 				display: block;
@@ -89,5 +80,14 @@
 				top: 0;
 			}
 		}
+	}
+}
+
+// Responsive --------------------------------------------------------------------
+///
+.tablet,
+.phone {
+	.osui-dropdown-serverside-item {
+		height: 48px;
 	}
 }

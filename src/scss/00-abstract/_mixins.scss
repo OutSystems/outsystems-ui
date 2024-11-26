@@ -3,13 +3,18 @@
 
 /// default outline style
 @mixin a11y-default-outline {
-	box-shadow: 0 0 0 3px var(--color-focus-outer);
+	box-shadow: 0 0 0 var(--border-size-l) var(--color-focus-outer);
 }
 
 /// outline style for high contrast mode
-@mixin a11y-high-contrast-outline {
+@mixin a11y-high-contrast-outline($isOutline: true) {
 	box-shadow: none;
-	outline: 3px solid var(--color-focus-outer);
+
+	@if $isOutline {
+		outline: var(--border-size-l) solid var(--color-focus-outer);
+	} @else {
+		border: var(--border-size-l) solid var(--color-focus-outer);
+	}
 }
 
 /// AppLogo
