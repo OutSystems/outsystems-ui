@@ -2,35 +2,6 @@
 namespace OutSystems.OSUI.Utils.LayoutPrivate {
 	export abstract class CssBodyVariables {
 		/**
-		 * Method that will check if highContrast mode is active
-		 *
-		 * @private
-		 * @static
-		 * @param {(isHighContrast: boolean) => void} callback
-		 * @memberof CssBodyVariables
-		 */
-		private static _checHighContrastSatus(callback: (isHighContrast: boolean) => void): void {
-			if (typeof window !== 'undefined' && window.matchMedia) {
-				// Set the media query to check for highContrast mode
-				const highContrastModeQuery = window.matchMedia('(forced-colors: active)');
-
-				// Initial check, that's passed through the callback function argument
-				callback(highContrastModeQuery.matches);
-
-				// Listen for changes
-				const listener = (event: MediaQueryListEvent) => {
-					callback(event.matches);
-				};
-
-				// Add the event that will detect highContrast mode when it changes
-				highContrastModeQuery.addEventListener(OSFramework.OSUI.GlobalEnum.HTMLEvent.Change, listener);
-			} else {
-				console.warn('HighContrast mode detection is not supported at this context.');
-				callback(false);
-			}
-		}
-
-		/**
 		 * Method that will check if dark mode is active
 		 *
 		 * @private
@@ -60,13 +31,42 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 		}
 
 		/**
+		 * Method that will check if highContrast mode is active
+		 *
+		 * @private
+		 * @static
+		 * @param {(isHighContrast: boolean) => void} callback
+		 * @memberof CssBodyVariables
+		 */
+		private static _checkHighContrastStatus(callback: (isHighContrast: boolean) => void): void {
+			if (typeof window !== 'undefined' && window.matchMedia) {
+				// Set the media query to check for highContrast mode
+				const highContrastModeQuery = window.matchMedia('(forced-colors: active)');
+
+				// Initial check, that's passed through the callback function argument
+				callback(highContrastModeQuery.matches);
+
+				// Listen for changes
+				const listener = (event: MediaQueryListEvent) => {
+					callback(event.matches);
+				};
+
+				// Add the event that will detect highContrast mode when it changes
+				highContrastModeQuery.addEventListener(OSFramework.OSUI.GlobalEnum.HTMLEvent.Change, listener);
+			} else {
+				console.warn('HighContrast mode detection is not supported at this context.');
+				callback(false);
+			}
+		}
+
+		/**
 		 * Method to set body css variables for a phone or tablet app
 		 *
 		 * @private
 		 * @static
 		 * @memberof CssBodyVariables
 		 */
-		private static _isPhoneOrTable(): void {
+		private static _isPhoneOrTablet(): void {
 			OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(
 				document.body,
 				OSFramework.OSUI.GlobalEnum.CSSVariables.ViewportHeight,
@@ -132,11 +132,11 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 					OSFramework.OSUI.GlobalEnum.DeviceType.tablet
 				)
 			) {
-				this._isPhoneOrTable();
+				this._isPhoneOrTablet();
 			}
 
 			// Check if highContrast mode is active
-			this._checHighContrastSatus((isHighContrast) => {
+			this._checkHighContrastStatus((isHighContrast) => {
 				if (isHighContrast) {
 					OSFramework.OSUI.Helper.Dom.Styles.AddClass(
 						document.body,

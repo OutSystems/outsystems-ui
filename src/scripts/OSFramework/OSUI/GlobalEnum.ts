@@ -24,7 +24,7 @@ namespace OSFramework.OSUI.GlobalEnum {
 		HeaderIsFixed = 'fixed-header',
 		HeaderIsVisible = 'header-is--visible',
 		HeaderTopContent = 'header-top-content',
-		HighContrast = 'os-hight-contrast',
+		HighContrast = 'os-high-contrast',
 		InputNotValid = 'not-valid',
 		IsTouch = 'is--touch',
 		Layout = 'layout',
