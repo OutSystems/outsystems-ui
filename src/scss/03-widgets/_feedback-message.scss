@@ -93,3 +93,25 @@ div.feedback-message-warning {
 		}
 	}
 }
+
+// OS HighContrast Enabled -------------------------------------------------------
+///
+.os-high-contrast {
+	.feedback-message {
+		border-width: var(--border-size-l);
+		border-style: solid;
+
+		&.feedback-message-error {
+			border-color: var(--color-error);
+		}
+		&.feedback-message-info {
+			border-color: var(--color-info);
+		}
+		&.feedback-message-success {
+			border-color: var(--color-success);
+		}
+		&.feedback-message-warning {
+			border-color: var(--color-warning);
+		}
+	}
+}

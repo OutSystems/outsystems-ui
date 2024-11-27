@@ -61,6 +61,28 @@
 	}
 }
 
+// OS HighContrast Enabled -------------------------------------------------------
+///
+.os-high-contrast {
+	.osui-dropdown-serverside-item {
+		&:hover,
+		&:focus {
+			outline: none;
+
+			&:before {
+				@include a11y-high-contrast-outline(true);
+				bottom: 0;
+				content: '';
+				display: block;
+				left: 0;
+				position: absolute;
+				right: 0;
+				top: 0;
+			}
+		}
+	}
+}
+
 // Responsive --------------------------------------------------------------------
 ///
 .tablet,

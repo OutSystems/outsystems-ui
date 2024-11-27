@@ -274,8 +274,31 @@
 
 		.noUi-handle:focus {
 			border-color: var(--color-focus-inner);
-			box-shadow: 0 0 0 3px var(--color-focus-outer);
+			@include a11y-default-outline;
 		}
+	}
+}
+
+// OS HighContrast Enabled -------------------------------------------------------
+///
+.os-high-contrast {
+	.osui-range-slider {
+		.noUi-horizontal {
+			height: calc(2 * var(--range-slider-thickness));
+		}
+
+		.noUi-vertical {
+			width: calc(2 * var(--range-slider-thickness));
+		}
+
+		.noUi-connect,
+		.noUi-base {
+			border: var(--border-size-m) solid var(--color-neutral-7);
+		}
+	}
+
+	.has-accessible-features .osui-range-slider {
+		border: 0;
 	}
 }
 
@@ -292,8 +315,7 @@
 }
 
 /* Z-index overrides */
-.noUi-origin
-.noUi-base,
+.noUi-origin .noUi-base,
 .noUi-connect {
 	z-index: var(--layer-local-tier-1);
 }

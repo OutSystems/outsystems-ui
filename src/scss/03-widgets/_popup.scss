@@ -50,3 +50,12 @@
 		}
 	}
 }
+
+// OS HighContrast Enabled -------------------------------------------------------
+///
+.os-high-contrast {
+	.popup-dialog {
+		border: var(--border-size-s) solid var(--color-neutral-0);
+		border-radius: var(--border-radius-soft);
+	}
+}

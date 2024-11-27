@@ -149,3 +149,27 @@
 		}
 	}
 }
+
+// OS HighContrast Enabled -------------------------------------------------------
+///
+.os-high-contrast {
+	.action-sheet-container--visible .action-sheet {
+		background-color: var(--color-neutral-0);
+		@include a11y-high-contrast-outline(true);
+	}
+
+	.action-sheet-actions {
+		--osui-action-sheet-actions-layer: 0;
+
+		position: relative;
+		z-index: var(--osui-action-sheet-actions-layer);
+
+		&:has(.btn:focus) {
+			z-index: calc(var(--osui-action-sheet-actions-layer) + var(--layer-local-tier-1));
+		}
+	}
+
+	.action-sheet-buttons {
+		overflow: visible;
+	}
+}

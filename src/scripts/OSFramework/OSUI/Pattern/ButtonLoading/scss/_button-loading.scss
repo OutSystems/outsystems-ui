@@ -61,7 +61,7 @@
 			animation: loadingSpinner 850ms cubic-bezier(0.7, 1.05, 0.78, 0.78) infinite;
 			border: var(--border-size-m) solid currentColor;
 			border-radius: var(--border-radius-circle);
-			border-top: var(--border-size-m) solid transparent;
+			border-top-color: transparent;
 			height: 16px;
 			margin-right: var(--space-s);
 			width: 16px;
@@ -109,5 +109,19 @@
 .phone {
 	.osui-btn-loading {
 		width: 100%;
+	}
+}
+
+// OS HighContrast Enabled -------------------------------------------------------
+///
+.os-high-contrast {
+	.osui-btn-loading {
+		.btn {
+			.osui-btn-loading__spinner-animation {
+				border-width: var(--border-size-l);
+				border-bottom: none;
+				border-top: none;
+			}
+		}
 	}
 }

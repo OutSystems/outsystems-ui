@@ -107,3 +107,27 @@
 		right: 0;
 	}
 }
+
+// OS HighContrast Enabled -------------------------------------------------------
+///
+.os-high-contrast {
+	.osui-progress {
+		&-bar {
+			&__container {
+				min-height: calc(2 * var(--thickness));
+			}
+
+			&__value {
+				border: var(--border-size-m) solid var(--color-neutral-7);
+				height: calc(2 * var(--thickness));
+
+				&:before,
+				&:after {
+					border: var(--border-size-m) solid var(--color-neutral-7);
+					top: calc(-1 * var(--border-size-m));
+					left: calc(-1 * var(--border-size-m));
+				}
+			}
+		}
+	}
+}

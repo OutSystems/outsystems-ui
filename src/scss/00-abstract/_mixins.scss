@@ -1,6 +1,24 @@
 ////
 /// @group global
 
+/// default outline style
+@mixin a11y-default-outline {
+	box-shadow: 0 0 0 var(--border-size-l) var(--color-focus-outer);
+}
+
+/// outline style for high contrast mode
+@mixin a11y-high-contrast-outline($isBorder: false, $size: var(--border-size-l), $borderType: 'all') {
+	@if $isBorder == false {
+		outline: $size solid var(--color-focus-outer);
+	} @else {
+		@if $borderType == 'all' {
+			border: $size solid var(--color-focus-outer);
+		} @else {
+			border-#{$borderType}: $size solid var(--color-focus-outer);
+		}
+	}
+}
+
 /// AppLogo
 @mixin app-logo {
 	border-radius: var(--border-radius-soft);
