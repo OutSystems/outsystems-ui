@@ -24,6 +24,8 @@ namespace OSFramework.OSUI.Patterns.Progress.ProgressEnum {
 		ProgressColor = '--progress-color',
 		ProgressValue = '--progress-value',
 		ProgressGradient = '--progress-gradient',
+		ProgressInitialSpeed = '--progress-initial-speed',
+		ProgressSpeed = '--progress-speed',
 		Shape = '--shape',
 		Thickness = '--thickness',
 		TrailColor = '--trail-color',
