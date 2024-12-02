@@ -109,6 +109,10 @@
 		&:last-of-type {
 			padding-right: 0;
 		}
+
+		img {
+			max-width: none;
+		}
 	}
 
 	input {
@@ -309,6 +313,22 @@
 		.rating {
 			.wcag-hide-text {
 				margin: unset;
+			}
+		}
+	}
+}
+
+// OS HighContrast Enabled -------------------------------------------------------
+///
+.os-high-contrast {
+	.has-accessible-features {
+		.rating {
+			&.is-half input:focus + .rating-item .rating-item-half,
+			&:not(.is-half) input:focus + .rating-item .rating-item-filled {
+				&,
+				* {
+					@include a11y-high-contrast-outline;
+				}
 			}
 		}
 	}

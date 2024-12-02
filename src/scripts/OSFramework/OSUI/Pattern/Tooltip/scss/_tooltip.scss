@@ -91,3 +91,19 @@
 		text-wrap: wrap;
 	}
 }
+
+// OS HighContrast Enabled -------------------------------------------------------
+///
+.os-high-contrast {
+	.osui-tooltip {
+		.osui-balloon {
+			border: var(--border-size-s) solid var(--osui-tooltip-background-color);
+		}
+
+		&__balloon-arrow {
+			border: 0 solid var(--osui-tooltip-background-color);
+			border-right-width: var(--border-size-s);
+			border-bottom-width: var(--border-size-s);
+		}
+	}
+}

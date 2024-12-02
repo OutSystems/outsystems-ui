@@ -4,67 +4,81 @@
 /// Patterns - Navigation - OverflowMenu
 
 .osui-overflow-menu {
-    display: inline-block;
-    --osui-overflow-menu-min-width: 170px;
-    --border-radius-rounded: 16px;
+	display: inline-block;
+	--osui-overflow-menu-min-width: 170px;
+	--border-radius-rounded: 16px;
 
-    &__trigger {
-        --osui-floating-offset: var(--space-s);
+	&__trigger {
+		--osui-floating-offset: var(--space-s);
 
-        border: var(--border-size-s) solid transparent;
-        border-radius: var(--osui-overflow-menu-shape);
-        color: var(--color-neutral-9);
-        width: 32px;
+		border: var(--border-size-s) solid transparent;
+		border-radius: var(--osui-overflow-menu-shape);
+		color: var(--color-neutral-9);
+		width: 32px;
 
-        * {
-            pointer-events: none;
-        }
-    }
+		* {
+			pointer-events: none;
+		}
+	}
 
-    &--is-open {
-        .osui-overflow-menu__trigger {
-            background-color: var(--color-neutral-4);
-        }
-    }
-    
-    &__balloon {
-        min-width: var(--osui-overflow-menu-min-width);
-        overflow: hidden;
+	&--is-open {
+		.osui-overflow-menu__trigger {
+			background-color: var(--color-neutral-4);
+		}
+	}
 
-        a {
-            color: var(--color-neutral-9);
-    
-            &:hover {
-                background: var(--color-neutral-4);
-                text-decoration: none;
-            }
+	&__balloon {
+		min-width: var(--osui-overflow-menu-min-width);
+		overflow: hidden;
 
-            // Service Studio Preview
-            & {
-                -servicestudio-align-items: center;
-                -servicestudio-display: inline-flex!important;
-                -servicestudio-color:var(--color-neutral-9);
-                -servicestudio-padding: var(--space-s) var(--space-base);
-            }
-        }
-    
-        // To make extensibility with ExtendedClass easier
-        a:not([class^='padding-']){
-            padding:var(--space-s) var(--space-base);
-        }
-    }
+		a {
+			color: var(--color-neutral-9);
+
+			&:hover {
+				background: var(--color-neutral-4);
+				text-decoration: none;
+			}
+
+			// Service Studio Preview
+			& {
+				-servicestudio-align-items: center;
+				-servicestudio-display: inline-flex !important;
+				-servicestudio-color: var(--color-neutral-9);
+				-servicestudio-padding: var(--space-s) var(--space-base);
+			}
+		}
+
+		// To make extensibility with ExtendedClass easier
+		a:not([class^='padding-']) {
+			padding: var(--space-s) var(--space-base);
+		}
+	}
 }
 
 .tablet,
 .phone {
-    .osui-overflow-menu {
-        --border-radius-rounded: 100%;
+	.osui-overflow-menu {
+		--border-radius-rounded: 100%;
 
-        .osui-overflow-menu__trigger {
-            &.btn {
-                // Longer specificity to be able to always override default responsive styles for buttons
-                width: 40px;
-            }
-        }
-    }
+		.osui-overflow-menu__trigger {
+			&.btn {
+				// Longer specificity to be able to always override default responsive styles for buttons
+				width: 40px;
+			}
+		}
+	}
+}
+
+// OS HighContrast Enabled -------------------------------------------------------
+///
+.os-high-contrast {
+	.osui-overflow-menu__balloon {
+		border: var(--border-size-s) solid var(--color-neutral-7);
+
+		a {
+			&:hover {
+				@include a11y-high-contrast-outline;
+			}
+		}
+	}
 }

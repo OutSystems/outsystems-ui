@@ -149,3 +149,20 @@
 		}
 	}
 }
+
+// OS HighContrast Enabled -------------------------------------------------------
+///
+.os-high-contrast {
+	.button-group-item {
+		&.button-group-selected-item:before {
+			content: '';
+			display: block;
+			position: absolute;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			left: 0;
+			border: var(--border-size-l) solid var(--color-primary);
+		}
+	}
+}

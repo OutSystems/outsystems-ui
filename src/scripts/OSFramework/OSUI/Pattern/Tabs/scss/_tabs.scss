@@ -363,6 +363,47 @@
 	}
 }
 
+// OS HighContrast Enabled -------------------------------------------------------
+///
+.os-high-contrast {
+	.osui-tabs__header__indicator {
+		display: none;
+	}
+
+	.osui-tabs__content-item {
+		position: relative;
+	}
+
+	.osui-tabs__header-item:focus,
+	.osui-tabs__content-item :focus {
+		outline: none;
+	}
+
+	.osui-tabs__header-item:focus:before,
+	.osui-tabs__header-item.osui-tabs--is-active:before,
+	.osui-tabs__content-item:focus:before,
+	.osui-tabs__content-item.osui-tabs--is-active:before {
+		@include a11y-high-contrast-outline(true, var(--border-size-m));
+		bottom: 0;
+		content: '';
+		display: block;
+		left: 0;
+		pointer-events: none;
+		position: absolute;
+		right: 0;
+		top: 0;
+	}
+
+	.osui-tabs__header-item:focus:before,
+	.osui-tabs__content-item:focus:before {
+		border-width: var(--border-size-l);
+	}
+
+	.osui-tabs__content-item {
+		padding: var(--space-base);
+	}
+}
+
 // Issue on accordion in webkit
 .windows.chrome,
 .windows.edge,

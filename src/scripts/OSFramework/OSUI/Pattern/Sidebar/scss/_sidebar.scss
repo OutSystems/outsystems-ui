@@ -207,3 +207,16 @@
 		max-width: 85vw;
 	}
 }
+
+// OS HighContrast Enabled -------------------------------------------------------
+///
+.os-high-contrast {
+	.active-screen {
+		.osui-sidebar {
+			&--is-open {
+				@include a11y-high-contrast-outline(true, var(--border-size-m), 'left');
+				@include a11y-high-contrast-outline(true, var(--border-size-m), 'right');
+			}
+		}
+	}
+}

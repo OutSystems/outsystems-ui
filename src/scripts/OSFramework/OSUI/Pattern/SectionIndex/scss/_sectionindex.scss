@@ -67,7 +67,23 @@
 	.osui-section-index-item {
 		&:focus {
 			background-color: transparent;
-			box-shadow: 0 0 0 3px var(--color-focus-outer);
+			@include a11y-default-outline;
+		}
+	}
+}
+
+// OS HighContrast Enabled -------------------------------------------------------
+///
+.os-high-contrast {
+	.osui-section-index::before {
+		@include a11y-high-contrast-outline(true, var(--border-size-s), left);
+	}
+
+	.osui-section-index-item {
+		&--is-active {
+			&::before {
+				@include a11y-high-contrast-outline(true, var(--border-size-l), left);
+			}
 		}
 	}
 }
