@@ -531,6 +531,18 @@
 			color: var(--color-neutral-9);
 		}
 	}
+
+  .vscomp-toggle-all-button:focus {
+    box-shadow: none;
+
+    .checkbox-icon {
+      @include a11y-default-outline;
+    }
+  }
+
+  .vscomp-option.focused {
+    @include a11y-default-outline(true);
+  }
 }
 
 // OS HighContrast Enabled -------------------------------------------------------
