@@ -1,14 +1,5 @@
 name: 'setup-gpg'
 description: 'Prepare to get following commits signed'
-inputs:
-    gpgPriv:
-        description: 'GPG Private key'
-        required: true
-        default: ''
-    gpgPassPhrase:
-        description: 'GPG passphrase'
-        required: false
-        default: '""'
 
 runs:
     using: composite

@@ -119,5 +119,3 @@ jobs:
                   branch: dev
                   message: 'Updated into v${{ inputs.new-dev-release }} [skip ci]'
                   newFiles: true
-                  gpgPriv: ${{ secrets.GPG_SIGN_KEY }}
-                  gpgPassPhrase: ${{ secrets.GPG_PASSPHRASE }}
