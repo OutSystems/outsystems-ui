@@ -202,17 +202,19 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 				//let's only change the property and trigger the OS event IF the pattern is already built.
 				this._isOpen = true;
 				this._triggerOnToggleEvent();
+			}
 
-				if (this._clickOutsideToClose || (this.configs.HasOverlay && this._clickOutsideToClose === undefined)) {
-					Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
-						Event.DOMEvents.Listeners.Type.BodyOnMouseDown,
-						this._eventOverlayMouseDown
-					);
-					Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
-						Event.DOMEvents.Listeners.Type.BodyOnClick,
-						this._eventOverlayClick
-					);
-				}
+			// The sidebar can be set to be open, when created (start open). And in this case, the events
+			// should be added, even if the pattern is not built yet.
+			if (this._clickOutsideToClose || (this.configs.HasOverlay && this._clickOutsideToClose === undefined)) {
+				Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
+					Event.DOMEvents.Listeners.Type.BodyOnMouseDown,
+					this._eventOverlayMouseDown
+				);
+				Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
+					Event.DOMEvents.Listeners.Type.BodyOnClick,
+					this._eventOverlayClick
+				);
 			}
 
 			this.selfElement.focus();
