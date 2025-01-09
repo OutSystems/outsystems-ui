@@ -516,7 +516,13 @@ namespace OutSystems.OSUI.Utils.Menu {
 								OSFramework.OSUI.Helper.Dom.ClassSelector(activeSubMenu, 'submenu-items') ||
 								OSFramework.OSUI.Helper.Dom.ClassSelector(activeSubMenu, 'osui-submenu__items');
 
-							const activeSubMenuItem = subMenuItem.children[ActiveSubItem] as HTMLElement;
+							const activeSubMenuItem = subMenuItem.querySelectorAll(
+								'[' +
+									OSFramework.OSUI.Constants.A11YAttributes.Role.AttrName +
+									"='" +
+									OSFramework.OSUI.Constants.A11YAttributes.Role.MenuItem +
+									"']"
+							)[ActiveSubItem] as HTMLElement;
 							if (activeSubMenuItem) {
 								OSFramework.OSUI.Helper.Dom.Styles.AddClass(activeSubMenuItem, 'active');
 							}
