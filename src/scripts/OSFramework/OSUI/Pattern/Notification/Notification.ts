@@ -7,6 +7,8 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		extends AbstractPattern<NotificationConfig>
 		implements INotification, Interface.ISwipeEvent
 	{
+		// Store the auto close timeout id
+		private _autoCloseTimeoutId: number;
 		// Store the click event with bind(this)
 		private _eventOnClick: GlobalCallbacks.Generic;
 		// Store the keypress event with bind(this)
@@ -45,10 +47,8 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		 * @memberof Notification
 		 */
 		private _autoCloseNotification(): void {
-			Helper.ApplySetTimeOut(() => {
-				if (this._isOpen) {
-					this.hide();
-				}
+			this._autoCloseTimeoutId = Helper.ApplySetTimeOut(() => {
+				this.hide();
 			}, this.configs.CloseAfterTime);
 		}
 
@@ -304,6 +304,18 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		}
 
 		/**
+		 *	Method to clear timeouts
+		 *
+		 * @protected
+		 * @memberof Notification
+		 */
+		protected clearTimeouts(): void {
+			if (this.configs.CloseAfterTime > 0) {
+				clearTimeout(this._autoCloseTimeoutId);
+			}
+		}
+
+		/**
 		 * Method to set the A11Y properties when the pattern is built.
 		 *
 		 * @protected
@@ -475,6 +487,9 @@ namespace OSFramework.OSUI.Patterns.Notification {
 				// Remove Callbacks
 				this.unsetCallbacks();
 
+				// Clear Timeouts
+				this.clearTimeouts();
+
 				// Remove unused HTML elements
 				this.unsetHtmlElements();
 
@@ -499,6 +514,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		public hide(): void {
 			if (this._isOpen) {
 				this._hideNotification();
+				this.clearTimeouts();
 			}
 		}
 
