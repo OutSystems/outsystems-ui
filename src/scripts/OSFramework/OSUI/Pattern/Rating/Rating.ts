@@ -470,9 +470,9 @@ namespace OSFramework.OSUI.Patterns.Rating {
 			let placeholdersOuterHTML = '';
 
 			// Iterate over the cloned placeholders to redefine the id attribute
-			for (const placholder of this._clonedPlaceholders) {
+			for (const placeholder of this._clonedPlaceholders) {
 				// Get a clone of the placeholder to avoid changing the original (HTML Element)
-				const clonedPlaceholder = placholder.cloneNode(true) as HTMLElement;
+				const clonedPlaceholder = placeholder.cloneNode(true) as HTMLElement;
 				// Update the id attribute to contains the related rating index
 				clonedPlaceholder.id = `${clonedPlaceholder.id}-rating-${ratingIndex}`;
 				// Append the outerHTML to the placeholdersOuterHTML
