@@ -393,7 +393,7 @@ namespace OSFramework.OSUI.Helper {
 		}
 
 		/**
-		 * Getter that returns if the device is setted with an RTL language type
+		 * Getter that returns if the device is set with an RTL language type
 		 *
 		 * @readonly
 		 * @static
