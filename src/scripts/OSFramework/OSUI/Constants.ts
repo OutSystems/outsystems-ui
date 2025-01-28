@@ -108,7 +108,7 @@ namespace OSFramework.OSUI.Constants {
 	export const IsRTLClass = 'is-rtl';
 
 	/* To fix an issue when: 
-		- The user is using a device with an Arabic Language
+		- The user is using a device with the Arabic Language
 		- The application IS NOT using the Arabic Language
 
 		That makes date type inputs lose the date format and show the date in the wrong format,
