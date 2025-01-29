@@ -154,13 +154,13 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 			}
 
 			/* To fix an issue when: 
-				- The user is using a device with an Arabic Language
-				- The application IS NOT usgin the Arabic Language
+				- The user is using a device with the Arabic Language
+				- The application IS NOT using the Arabic Language
 
-				That makes date type inputs to loose the date format and show the date in the wrong format,
-				We must force the text direction to RTL at the input in order to fix it.
+				That makes date type inputs lose the date format and show the date in the wrong format,
+				We must force the text direction to RTL in the input in order to fix it.
 				
-				More info about this, at release note: ROU-11464
+				More info about this in the release notes of ROU-11464.
 			*/
 			// Check if device is configured with RTL language
 			if (OSFramework.OSUI.Helper.DeviceInfo.IsRtlLang) {
