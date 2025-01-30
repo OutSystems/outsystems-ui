@@ -17,6 +17,7 @@ $balloonMobileTopMargin: 5vh;
 
 	.osui-balloon {
 		--osui-balloon-shadow: none;
+
 		border: var(--border-size-s) solid var(--color-neutral-5);
 		display: flex;
 		flex-direction: column;
@@ -33,6 +34,7 @@ $balloonMobileTopMargin: 5vh;
 			-servicestudio-opacity: 1;
 			-servicestudio-position: relative;
 			-servicestudio-top: calc(100% + 4px);
+			-servicestudio-width: 100%;
 		}
 	}
 
