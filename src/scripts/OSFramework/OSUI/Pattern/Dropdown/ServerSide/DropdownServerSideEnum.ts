@@ -22,6 +22,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide.Enum {
 		BalloonSearch = 'osui-dropdown-serverside__balloon-search',
 		BalloonSearchIcon = 'osui-dropdown-serverside__balloon-search-icon',
 		ErrorMessage = 'osui-dropdown-serverside-error-message',
+		HasBeenMovedToContent = 'osui-dropdown-serverside--at-content',
 		IsDisabled = 'osui-dropdown-serverside--is-disabled',
 		IsOpened = 'osui-dropdown-serverside--is-opened',
 		IsVisible = 'osui-dropdown-serverside-visible',
@@ -49,6 +50,13 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide.Enum {
 		ThresholVerticalAnimate = '--osui-dropdown-ss-thresholdanimateval',
 		Top = '--osui-dropdown-ss-top',
 		Width = '--osui-dropdown-ss-width',
+	}
+
+	/**
+	 * All elements where Dropdown can be added into and changes must be done
+	 */
+	export enum InsidePattern {
+		BottomSheet = '.osui-bottom-sheet',
 	}
 
 	/**

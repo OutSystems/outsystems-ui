@@ -112,6 +112,24 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			);
 		}
 
+		// Method to move Balloon Options Wrapper to outside of the pattern context
+		private _moveBalloonOptionsWrapper(): void {
+			/* NOTE:
+				- When inside BottomSheet the BalloonOptionsWrapper should be moved to the content wrapper
+				due to position issues related with fixed position of the balloon against BottomSheet fixed position.
+				More info at Release Note: ROU-11549
+			 */
+			// Ensure DropdownServerSide is inside at BottomSheet
+			if (Helper.DeviceInfo.IsPhone && this.selfElement.closest(Enum.InsidePattern.BottomSheet)) {
+				// Get the content element where to move the BalloonOptionsWrapper
+				const contentElem = Helper.Dom.ClassSelector(document, GlobalEnum.CssClassElements.Content);
+				// Move the DropdownServerSide ballon element to the content element
+				Helper.Dom.Move(this._balloonElem, contentElem);
+				// Add a custom css selector in order to style it at this new context
+				OSFramework.OSUI.Helper.Dom.Styles.AddClass(this._balloonElem, Enum.CssClass.HasBeenMovedToContent);
+			}
+		}
+
 		// Close when click outside of pattern
 		private _onBodyClick(eventName: string, event: PointerEvent): void {
 			if (this._isOpen === false) {
@@ -349,6 +367,9 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 				this._balloonElem,
 				this.balloonOptions
 			);
+
+			// Call the method to move the Balloon Options Wrapper
+			OSFramework.OSUI.Helper.AsyncInvocation(this._moveBalloonOptionsWrapper.bind(this));
 		}
 
 		// Method used to add CSS classes to pattern elements
