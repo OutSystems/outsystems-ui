@@ -32,7 +32,7 @@
 	}
 
 	// Prevent the pattern from occupying space when closed, without interfering with its own open animation
-	&:not(.osui-balloon--is-open) * {
+	&:not(.osui-balloon--is-open) > * {
 		display: none;
 
 		& {

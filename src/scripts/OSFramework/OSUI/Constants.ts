@@ -107,6 +107,17 @@ namespace OSFramework.OSUI.Constants {
 	/* cssClass to be checked if the RTL Feature is enabled */
 	export const IsRTLClass = 'is-rtl';
 
+	/* To fix an issue when: 
+		- The user is using a device with the Arabic Language
+		- The application IS NOT using the Arabic Language
+
+		That makes date type inputs lose the date format and show the date in the wrong format,
+		We must force the text direction to RTL in the input in order to fix it.
+		
+		More info about this in the release notes of ROU-11464.
+	*/
+	export const IsRTLDeviceType = 'is-rtl-device';
+
 	/* Store JavaScript types*/
 	export const JavaScriptTypes = {
 		Undefined: 'undefined',
