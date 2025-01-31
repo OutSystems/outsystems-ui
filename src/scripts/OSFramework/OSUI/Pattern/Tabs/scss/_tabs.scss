@@ -254,6 +254,10 @@
 				div:empty {
 					-servicestudio-padding: var(--space-m);
 				}
+
+				.uieditor-if-branch-widget:has(> div:empty) {
+					-servicestudio-height: 0;
+				}
 			}
 
 			// This selector is used to prevent render issues on chrome, in some screen-sizes, due to overflow hidden and css snap
