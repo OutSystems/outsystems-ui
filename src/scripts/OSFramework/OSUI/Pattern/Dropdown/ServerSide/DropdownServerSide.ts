@@ -114,7 +114,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 
 		// Method to move Balloon Options Wrapper to outside of the pattern context
 		private _moveBalloonOptionsWrapper(): void {
-			// Check if BalloonOptions should be moved to outside of the pattern context
+			// Check if BalloonOptions should be moved outside of the pattern context
 			if (this._shouldBalloonOptionsBeMoved()) {
 				// Get the content element where to move the BalloonOptionsWrapper
 				const contentElem = Helper.Dom.ClassSelector(document, GlobalEnum.CssClassElements.Content);
