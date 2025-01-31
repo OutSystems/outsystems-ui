@@ -453,7 +453,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 				due to position issues related with fixed position of the balloon against BottomSheet fixed position.
 				More info at Release Note: ROU-11549
 			 */
-			// Ensure DropdownServerSide is inside at BottomSheet, Notification or Sidebar
+			// Check if the DropdownServerSide is inside a BottomSheet, Notification, or Sidebar
 			if (
 				Helper.DeviceInfo.IsPhone &&
 				(this.selfElement.closest(Enum.InsidePattern.BottomSheet) ||
