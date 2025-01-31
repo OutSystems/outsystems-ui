@@ -446,7 +446,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			}
 		}
 
-		// Method that will check if the BalloonOptionsWrapper should be moved to outside of the pattern context
+		// Method that will check if the BalloonOptionsWrapper should be moved outside of the pattern context
 		private _shouldBalloonOptionsBeMoved(): boolean {
 			/* NOTE:
 				- When inside BottomSheet the BalloonOptionsWrapper should be moved to the content wrapper
