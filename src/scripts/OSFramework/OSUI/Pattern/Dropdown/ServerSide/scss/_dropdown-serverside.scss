@@ -30,10 +30,11 @@ $balloonMobileTopMargin: 5vh;
 		// Service Studio Preview
 		& {
 			-servicestudio-left: initial;
+			-servicestudio-margin-top: 4px;
 			-servicestudio-max-height: 320px;
 			-servicestudio-opacity: 1;
-			-servicestudio-position: relative;
-			-servicestudio-top: calc(100% + 4px);
+			-servicestudio-position: relative !important;
+			-servicestudio-top: 0;
 			-servicestudio-width: 100%;
 		}
 	}
@@ -92,6 +93,12 @@ $balloonMobileTopMargin: 5vh;
 			position: relative;
 			transition: border 250ms ease-in-out;
 			width: 100%;
+
+			// Service Studio Preview
+			& {
+				-servicestudio-height: fit-content;
+				-servicestudio-min-height: 40px;
+			}
 		}
 
 		[data-expression] {
