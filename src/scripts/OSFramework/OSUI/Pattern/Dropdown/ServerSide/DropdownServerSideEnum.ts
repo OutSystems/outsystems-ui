@@ -57,6 +57,8 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide.Enum {
 	 */
 	export enum InsidePattern {
 		BottomSheet = '.osui-bottom-sheet',
+		Notification = '.osui-notification',
+		Sidebar = '.osui-sidebar',
 	}
 
 	/**

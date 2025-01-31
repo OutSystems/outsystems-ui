@@ -114,13 +114,8 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 
 		// Method to move Balloon Options Wrapper to outside of the pattern context
 		private _moveBalloonOptionsWrapper(): void {
-			/* NOTE:
-				- When inside BottomSheet the BalloonOptionsWrapper should be moved to the content wrapper
-				due to position issues related with fixed position of the balloon against BottomSheet fixed position.
-				More info at Release Note: ROU-11549
-			 */
-			// Ensure DropdownServerSide is inside at BottomSheet
-			if (Helper.DeviceInfo.IsPhone && this.selfElement.closest(Enum.InsidePattern.BottomSheet)) {
+			// Check if BalloonOptions should be moved outside of the pattern context
+			if (this._shouldBalloonOptionsBeMoved()) {
 				// Get the content element where to move the BalloonOptionsWrapper
 				const contentElem = Helper.Dom.ClassSelector(document, GlobalEnum.CssClassElements.Content);
 				// Move the DropdownServerSide ballon element to the content element
@@ -448,6 +443,26 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 					Event.DOMEvents.Listeners.Type.BalloonOnToggle,
 					this._eventBalloonOnToggle
 				);
+			}
+		}
+
+		// Method that will check if the BalloonOptionsWrapper should be moved outside of the pattern context
+		private _shouldBalloonOptionsBeMoved(): boolean {
+			/* NOTE:
+				- When inside BottomSheet the BalloonOptionsWrapper should be moved to the content wrapper
+				due to position issues related with fixed position of the balloon against BottomSheet fixed position.
+				More info at Release Note: ROU-11549
+			 */
+			// Check if the DropdownServerSide is inside a BottomSheet, Notification, or Sidebar
+			if (
+				Helper.DeviceInfo.IsPhone &&
+				(this.selfElement.closest(Enum.InsidePattern.BottomSheet) ||
+					this.selfElement.closest(Enum.InsidePattern.Notification) ||
+					this.selfElement.closest(Enum.InsidePattern.Sidebar))
+			) {
+				return true;
+			} else {
+				return false;
 			}
 		}
 
