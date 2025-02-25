@@ -87,6 +87,18 @@ namespace OSFramework.OSUI.Helper {
 		{ width: 1284, height: 2778, description: 'iphone 14 plus' },
 		{ width: 1179, height: 2556, description: 'iphone 14 pro' },
 		{ width: 1290, height: 2796, description: 'iphone 14 pro max' },
+
+		// iPhone15
+		{ width: 1179, height: 2556, description: 'iphone 15' },
+		{ width: 1290, height: 2796, description: 'iphone 15 plus' },
+		{ width: 1179, height: 2556, description: 'iphone 15 pro' },
+		{ width: 1290, height: 2796, description: 'iphone 15 pro max' },
+
+		// iPhone16
+		{ width: 1179, height: 2556, description: 'iphone 16' },
+		{ width: 1290, height: 2796, description: 'iphone 16 plus' },
+		{ width: 1206, height: 2622, description: 'iphone 16 pro' },
+		{ width: 1320, height: 2868, description: 'iphone 16 pro max' },
 	];
 
 	export abstract class DeviceInfo {
