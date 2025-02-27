@@ -5,7 +5,7 @@ namespace OSFramework.OSUI.Patterns.Rating {
 	 */
 	export class Rating extends AbstractPattern<RatingConfig> implements IRating {
 		// Store the placholders content
-		private _clonedPlaceholders: string;
+		private _clonedPlaceholders: HTMLElement[];
 		// Store current decimal value
 		private _decimalValue: number;
 		// Store current disable values
@@ -99,7 +99,7 @@ namespace OSFramework.OSUI.Patterns.Rating {
 		 */
 		private _handlePlaceholders(): void {
 			// Store the placholders content to cloned after
-			this._clonedPlaceholders = this._ratingIconStatesElem.innerHTML;
+			this._clonedPlaceholders = Array.from(this._ratingIconStatesElem.children) as HTMLElement[];
 
 			// After it's stored, remove the original content from the DOM
 			this._ratingIconStatesElem.remove();
@@ -167,7 +167,8 @@ namespace OSFramework.OSUI.Patterns.Rating {
 		 */
 		private _renderItem(index: number): void {
 			// if not first input, which is hidden, add the html stored form the placeholders
-			const labelHTML = index !== 0 ? this._clonedPlaceholders : '';
+			const labelHTML = index !== 0 ? this._updateClonePlaceholdersAttrs(index) : '';
+
 			// Create a unique rating input id, based on the index
 			const ratingInputId: string = this.uniqueId + '-rating-' + index;
 
@@ -454,6 +455,32 @@ namespace OSFramework.OSUI.Patterns.Rating {
 
 			// Manage RatingInput elements events accordingly
 			this._toggleRatingInputsEvents(!this.configs.IsEdit && !this._disabled);
+		}
+
+		/**
+		 * Method to retunr the list of rating placeholders with the updated id attribute
+		 *
+		 * @private
+		 * @param {number} ratingIndex
+		 * @return {*}  {string}
+		 * @memberof Rating
+		 */
+		private _updateClonePlaceholdersAttrs(ratingIndex: number): string {
+			// Store the ourterHTML of the placeholders
+			let placeholdersOuterHTML = '';
+
+			// Iterate over the cloned placeholders to redefine the id attribute
+			for (const placeholder of this._clonedPlaceholders) {
+				// Get a clone of the placeholder to avoid changing the original (HTML Element)
+				const clonedPlaceholder = placeholder.cloneNode(true) as HTMLElement;
+				// Update the id attribute to contains the related rating index
+				clonedPlaceholder.id = `${clonedPlaceholder.id}-rating-${ratingIndex}`;
+				// Append the outerHTML to the placeholdersOuterHTML
+				placeholdersOuterHTML += clonedPlaceholder.outerHTML;
+			}
+
+			// Return the updated placeholders
+			return placeholdersOuterHTML;
 		}
 
 		/**

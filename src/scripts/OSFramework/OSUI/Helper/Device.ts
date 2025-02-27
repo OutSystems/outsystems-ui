@@ -263,6 +263,23 @@ namespace OSFramework.OSUI.Helper {
 		}
 
 		/**
+		 * Checks if the user device language is an RTL language type.
+		 *
+		 * @private
+		 * @static
+		 * @return {*}  {boolean}
+		 * @memberof DeviceInfo
+		 */
+		private static _isRtlLanguage(): boolean {
+			// List of RTL languages
+			const rtlLanguages = ['ar', 'he', 'fa', 'ur', 'ps', 'syr', 'yi', 'ku', 'dv', 'ps', 'sd', 'ug'];
+			// Get the device user language
+			const userLanguage = navigator.language.split('-')[0];
+
+			return rtlLanguages.includes(userLanguage);
+		}
+
+		/**
 		 * Checks if it's running inside Safari browser.
 		 *
 		 * @private
@@ -373,6 +390,18 @@ namespace OSFramework.OSUI.Helper {
 				DeviceInfo._isIphoneWithNotch = DeviceInfo._iphoneDetails !== undefined;
 			}
 			return DeviceInfo._isIphoneWithNotch;
+		}
+
+		/**
+		 * Getter that returns if the device is set with an RTL language type
+		 *
+		 * @readonly
+		 * @static
+		 * @type {boolean}
+		 * @memberof DeviceInfo
+		 */
+		public static get IsRtlLang(): boolean {
+			return DeviceInfo._isRtlLanguage();
 		}
 
 		/**
@@ -516,8 +545,6 @@ namespace OSFramework.OSUI.Helper {
 			// retrieve it's position!
 			return notchPosition;
 		}
-
-		/******************** PUBLIC METHODS ********************/
 
 		/**
 		 * Gets in which browser the framework is running, based in the UserAgent information.

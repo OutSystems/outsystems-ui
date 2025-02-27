@@ -153,6 +153,21 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 				}
 			}
 
+			/* To fix an issue when: 
+				- The user is using a device with the Arabic Language
+				- The application IS NOT using the Arabic Language
+
+				That makes date type inputs lose the date format and show the date in the wrong format,
+				We must force the text direction to RTL in the input in order to fix it.
+				
+				More info about this in the release notes of ROU-11464.
+			*/
+			// Check if device is configured with RTL language
+			if (OSFramework.OSUI.Helper.DeviceInfo.IsRtlLang) {
+				// Add the RTL class to the DatePicker input
+				OSFramework.OSUI.Helper.Dom.Styles.AddClass(body, OSFramework.OSUI.Constants.IsRTLDeviceType);
+			}
+
 			// Set the orientation change event
 			LayoutPrivate.OnOrientationChange.Set();
 		}
