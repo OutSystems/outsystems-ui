@@ -206,27 +206,19 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 
 			// Since native behaviour could be enabled, check if the calendar container exist!
 			if (this.provider.calendarContainer !== undefined) {
-				if (
-					this.configs.DisableMobile === true ||
-					OSFramework.OSUI.Helper.DeviceInfo.IsDesktop ||
-					this.configs.CalendarMode === OSFramework.OSUI.Patterns.DatePicker.Enum.Mode.Range
-				) {
-					// Add TodayBtn
-					if (this.configs.ShowTodayButton) {
-						this.addTodayBtn();
-					}
-
-					// Set Calendar CSS classes
-					this._setCalendarCssClasses();
-
-					// set the onBodyScroll update calendar position behaviour!
-					this._bodyScrollCommonBehaviour = new SharedProviderResources.Flatpickr.UpdatePositionOnScroll(
-						this
-					);
-
-					// set the zindex update position behaviour!
-					this._zindexCommonBehavior = new SharedProviderResources.Flatpickr.UpdateZindex(this);
+				// Add TodayBtn
+				if (this.configs.ShowTodayButton) {
+					this.addTodayBtn();
 				}
+
+				// Set Calendar CSS classes
+				this._setCalendarCssClasses();
+
+				// set the onBodyScroll update calendar position behaviour!
+				this._bodyScrollCommonBehaviour = new SharedProviderResources.Flatpickr.UpdatePositionOnScroll(this);
+
+				// set the zindex update position behaviour!
+				this._zindexCommonBehavior = new SharedProviderResources.Flatpickr.UpdateZindex(this);
 			}
 
 			// Due to platform validations every time a new redraw occurs we must ensure we remove the class based on a clone from the platform input!
