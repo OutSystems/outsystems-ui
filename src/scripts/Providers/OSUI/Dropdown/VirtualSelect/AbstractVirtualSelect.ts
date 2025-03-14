@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace Providers.OSUI.Dropdown.VirtualSelect {
-  export abstract class AbstractVirtualSelect<C extends Dropdown.VirtualSelect.AbstractVirtualSelectConfig>
+	export abstract class AbstractVirtualSelect<C extends Dropdown.VirtualSelect.AbstractVirtualSelectConfig>
 		extends OSFramework.OSUI.Patterns.Dropdown.AbstractDropdown<VirtualSelect, C>
 		implements IVirtualSelect
 	{
@@ -145,12 +145,12 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 				this.uniqueId
 			);
 
-      if (OSFramework.OSUI.Helper.DeviceInfo.HasAccessibilityEnabled) {
-        OSFramework.OSUI.Helper.Dom.Styles.AddClass(
-          this.provider.$dropboxContainer,
-          OSFramework.OSUI.Constants.HasAccessibilityClass
-        );
-      }
+			if (OSFramework.OSUI.Helper.DeviceInfo.HasAccessibilityEnabled) {
+				OSFramework.OSUI.Helper.Dom.Styles.AddClass(
+					this.provider.$dropboxContainer,
+					OSFramework.OSUI.Constants.HasAccessibilityClass
+				);
+			}
 
 			// Set provider Info to be used by setProviderConfigs API calls
 			this.updateProviderEvents({
@@ -290,6 +290,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 					case OSFramework.OSUI.Patterns.Dropdown.Enum.Properties.IsDisabled:
 						this._manageDisableStatus();
 						break;
+					case Enum.Properties.EnableSecureText:
 					case Enum.Properties.NoOptionsText:
 					case Enum.Properties.NoResultsText:
 					case Enum.Properties.OptionsList:

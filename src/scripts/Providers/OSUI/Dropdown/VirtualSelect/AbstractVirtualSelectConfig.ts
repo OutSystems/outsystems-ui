@@ -16,6 +16,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		// Store configs set using extensibility
 		protected providerExtendedOptions: VirtualSelectOpts;
 		public ElementId: string;
+		public EnableSecureText = false;
 		public NoOptionsText: string;
 		public NoResultsText: string;
 		public OptionsList: DropDownOption[];
@@ -181,6 +182,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 			// Set the library options
 			this._providerOptions = {
 				ele: this.ElementId,
+				enableSecureText: this.EnableSecureText,
 				disabled: this.IsDisabled,
 				dropboxWrapper: OSFramework.OSUI.GlobalEnum.HTMLElement.Body,
 				hasOptionDescription: hasDescription,
