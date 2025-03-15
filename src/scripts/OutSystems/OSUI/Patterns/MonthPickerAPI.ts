@@ -289,6 +289,25 @@ namespace OutSystems.OSUI.Patterns.MonthPickerAPI {
 	}
 
 	/**
+	 * Function that will set a different language to all MonthPickers
+	 *
+	 * @export
+	 * @param {string} isoCode
+	 * @return {*}  {string}
+	 */
+	export function SetLanguageAllPickers(isoCode: string): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.MonthPicker.FailSetLanguage,
+			callback: () => {
+				_monthPickerItemsMap.forEach((monthPicker) => {
+					monthPicker.setLanguage(isoCode);
+				});
+			},
+		});
+		return result;
+	}
+
+	/**
 	 * Function that will set the input as editable
 	 *
 	 * @export

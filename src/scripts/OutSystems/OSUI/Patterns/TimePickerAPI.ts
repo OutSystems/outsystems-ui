@@ -275,6 +275,25 @@ namespace OutSystems.OSUI.Patterns.TimePickerAPI {
 	}
 
 	/**
+	 * Function that will set a different language to all TimePickers
+	 *
+	 * @export
+	 * @param {string} isoCode
+	 * @return {*}  {string}
+	 */
+	export function SetLanguageAllPickers(isoCode: string): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.MonthPicker.FailSetLanguage,
+			callback: () => {
+				_timePickerItemsMap.forEach((timePicker) => {
+					timePicker.setLanguage(isoCode);
+				});
+			},
+		});
+		return result;
+	}
+
+	/**
 	 * Function that will update the InitialTime fot a given TimepickerId
 	 * @param {string} timePickerId
 	 * @param {string} time The value for the InitialTime

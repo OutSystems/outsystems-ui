@@ -281,6 +281,25 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	}
 
 	/**
+	 * Function that will set a different language to all DatePickers
+	 *
+	 * @export
+	 * @param {string} isoCode
+	 * @return {*}  {string}
+	 */
+	export function SetLanguageAllPickers(isoCode: string): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.MonthPicker.FailSetLanguage,
+			callback: () => {
+				_datePickerItemsMap.forEach((datePicker) => {
+					datePicker.setLanguage(isoCode);
+				});
+			},
+		});
+		return result;
+	}
+
+	/**
 	 * Function that will update the InitialDate for a given DatepickerId
 	 * 	When:
 	 * 		SingleDate
