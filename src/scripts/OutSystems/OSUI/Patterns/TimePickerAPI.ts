@@ -283,8 +283,9 @@ namespace OutSystems.OSUI.Patterns.TimePickerAPI {
 	 */
 	export function SetLanguageAllPickers(isoCode: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
-			errorCode: ErrorCodes.MonthPicker.FailSetLanguage,
+			errorCode: ErrorCodes.TimePicker.FailSetLanguage,
 			callback: () => {
+				// Set the language to all TimePickers
 				_timePickerItemsMap.forEach((timePicker) => {
 					timePicker.setLanguage(isoCode);
 				});

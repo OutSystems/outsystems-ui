@@ -126,6 +126,22 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 		}
 
 		/**
+		 *Method used to check if a, iso language is valid for Flatpickr
+		 *
+		 * @param {string} locale
+		 * @return {*}  {boolean}
+		 * @memberof Providers.OSUI.MonthPicker.Flatpickr.OSUIFlatpickrMonth
+		 */
+		private _validateLocale(locale: string): boolean {
+			try {
+				// Check the locale
+				return window.flatpickr.l10ns[locale] !== undefined;
+			} catch (error) {
+				return false;
+			}
+		}
+
+		/**
 		 * Method that will be triggered at Flatpickr instance is ready
 		 *
 		 * @protected
@@ -553,6 +569,11 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 		 * @memberof Providers.OSUI.MonthPicker.Flatpickr.OSUIFlatpickrMonth
 		 */
 		public setLanguage(value: string): void {
+			// Validate the given locale in Flatpickr before set it! If not found, throw an error!
+			if (value === '' || !this._validateLocale(value.toLowerCase())) {
+				throw new Error(`Locale '${value}' not found!`);
+			}
+
 			// Set the new Language
 			this.configs.Lang = value.toLowerCase();
 

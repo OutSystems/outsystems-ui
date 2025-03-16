@@ -299,6 +299,7 @@ namespace OutSystems.OSUI.Patterns.MonthPickerAPI {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.MonthPicker.FailSetLanguage,
 			callback: () => {
+				// Set the language to all MonthPickers
 				_monthPickerItemsMap.forEach((monthPicker) => {
 					monthPicker.setLanguage(isoCode);
 				});

@@ -289,8 +289,9 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	 */
 	export function SetLanguageAllPickers(isoCode: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
-			errorCode: ErrorCodes.MonthPicker.FailSetLanguage,
+			errorCode: ErrorCodes.DatePicker.FailSetLanguage,
 			callback: () => {
+				// Set the language to all DatePickers
 				_datePickerItemsMap.forEach((datePicker) => {
 					datePicker.setLanguage(isoCode);
 				});
