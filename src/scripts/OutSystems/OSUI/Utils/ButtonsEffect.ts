@@ -50,7 +50,7 @@ namespace OutSystems.OSUI.Utils {
 			// only if it has a class, only if it's beneath 'main-content' and doesn't pass it, if it's not a chart
 			if (
 				typeof element.className !== 'undefined' &&
-				!element.classList.contains('.main-content') &&
+				!element.classList.contains('main-content') &&
 				!(element instanceof SVGElement)
 			) {
 				if (element.className.split(' ').indexOf(classname) >= 0) {
