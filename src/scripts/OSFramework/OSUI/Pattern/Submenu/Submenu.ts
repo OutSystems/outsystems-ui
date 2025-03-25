@@ -421,10 +421,7 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 
 				this._focusManagerInstance.setFocusToStoredElement();
 
-				this._submenuLinksElement.removeEventListener(
-					GlobalEnum.HTMLEvent.keyDown,
-					this._eventBalloonKeypress.bind(this)
-				);
+				this._submenuLinksElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventBalloonKeypress);
 
 				// Trigger the _platformEventOnToggleCallback callback!
 				this.triggerPlatformEventCallback(this._platformEventOnToggleCallback, false);
@@ -467,10 +464,7 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 				);
 			}
 
-			this._submenuLinksElement.addEventListener(
-				GlobalEnum.HTMLEvent.keyDown,
-				this._eventBalloonKeypress.bind(this)
-			);
+			this._submenuLinksElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventBalloonKeypress);
 
 			// Make async the method call
 			Helper.AsyncInvocation(this._show.bind(this));

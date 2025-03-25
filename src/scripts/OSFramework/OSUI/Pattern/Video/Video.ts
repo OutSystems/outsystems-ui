@@ -215,10 +215,10 @@ namespace OSFramework.OSUI.Patterns.Video {
 		private _triggerOnStateChangedEvent(stateChanged: string): void {
 			if (stateChanged === Patterns.Video.Enum.VideoStates.Unstarted) {
 				if (this._videoElement.currentTime === 0) {
-					this.triggerPlatformEventCallback(this._platformEventOnStateChanged.bind(this), stateChanged);
+					this.triggerPlatformEventCallback(this._platformEventOnStateChanged, stateChanged);
 				}
 			} else {
-				this.triggerPlatformEventCallback(this._platformEventOnStateChanged.bind(this), stateChanged);
+				this.triggerPlatformEventCallback(this._platformEventOnStateChanged, stateChanged);
 			}
 
 			// Update video state value
