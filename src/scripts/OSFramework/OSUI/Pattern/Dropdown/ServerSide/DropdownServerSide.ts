@@ -495,7 +495,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 				GlobalEnum.HTMLEvent.keyDown,
 				this._eventOnkeyboardPress
 			);
-			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
+			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
 				Event.DOMEvents.Listeners.Type.BalloonOnToggle,
 				this._eventBalloonOnToggle
 			);
