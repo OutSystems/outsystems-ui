@@ -28,6 +28,9 @@ namespace OutSystems.OSUI.Utils {
 		function OnTransitionEnd() {
 			if (spanEl && this === el && this === spanEl.parentNode) {
 				this.removeChild(spanEl);
+				el.removeEventListener(OSFramework.OSUI.GlobalEnum.HTMLEvent.AnimationEnd, OnTransitionEnd, false);
+				el.removeEventListener('webkitAnimationEnd', OnTransitionEnd, false);
+				el = undefined;
 			}
 		}
 	}
