@@ -4,7 +4,7 @@ namespace OutSystems.OSUI.Utils {
 	 * [Deprecated] Function used to Toogle a class to a given element
 	 *
 	 * @export
-	 * @param {HTMLElement} el
+	 * @param {HTMLElement} element
 	 * @param {*} state
 	 * @param {string} className
 	 */

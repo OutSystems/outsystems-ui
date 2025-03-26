@@ -40,7 +40,12 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 			this.configs.OnOpen = this.onDatePickerOpen.bind(this);
 		}
 
-		// Method used to set the needed HTML attributes
+		/**
+		 * Method used to set the HTML attributes to the Flatpickr input element
+		 *
+		 * @private
+		 * @memberof AbstractFlatpickr
+		 */
 		private _setAttributes(): void {
 			// Since a new input will be added by the flatpickr library, we must address it only at onReady
 			if (this.datePickerPlatformInputElem.nextSibling) {
@@ -63,7 +68,12 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 			}
 		}
 
-		// Method used to set the CSS classes to the pattern HTML elements
+		/**
+		 * Method used to set the CSS classes to the calendar HTML elements
+		 *
+		 * @private
+		 * @memberof AbstractFlatpickr
+		 */
 		private _setCalendarCssClasses(): void {
 			OSFramework.OSUI.Helper.Dom.Styles.AddClass(
 				this.provider.calendarContainer,
@@ -80,7 +90,12 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 			}
 		}
 
-		// Set the clientHeight to the parent container as an inline style in order vertical content remains same and avoid content vertical flickering!
+		/**
+		 * Method used to set the clientHeight to the parent container as an inline style in order vertical content remains same and avoid content vertical flickering!
+		 *
+		 * @private
+		 * @memberof AbstractFlatpickr
+		 */
 		private _setParentMinHeight(): void {
 			OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(
 				this.selfElement,
@@ -89,7 +104,14 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 			);
 		}
 
-		// Method to handle the keydows event for the Today Button
+		/**
+		 * Method used to handle the keydown event for the Today Button
+		 *
+		 * @private
+		 * @param {KeyboardEvent} e
+		 * @return {*}  {void}
+		 * @memberof AbstractFlatpickr
+		 */
 		private _todayButtonKeydown(e: KeyboardEvent): void {
 			switch (e.key) {
 				case OSFramework.OSUI.GlobalEnum.Keycodes.Tab:
@@ -107,7 +129,12 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 			}
 		}
 
-		// Remove the clientHeight that has been assigned before the redraw process!
+		/**
+		 * Method used to remove the clientHeight that has been assigned before the redraw process!
+		 *
+		 * @private
+		 * @memberof AbstractFlatpickr
+		 */
 		private _unsetParentMinHeight(): void {
 			OSFramework.OSUI.Helper.Dom.Styles.RemoveStyleAttribute(
 				this.selfElement,
@@ -115,7 +142,12 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 			);
 		}
 
-		// Update certain A11Y properties
+		/**
+		 * Method used to update the A11Y properties of the Flatpickr input element
+		 *
+		 * @private
+		 * @memberof AbstractFlatpickr
+		 */
 		private _updateA11yProperties(): void {
 			// Ensure flatpickrInputElem tabindex is updated based on the platform input status
 			OSFramework.OSUI.Helper.Dom.Attribute.Set(
@@ -514,7 +546,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		/**
 		 * Method used to disable days on DatePicker
 		 *
-		 * @param disableDays
+		 * @param {string[]} disableDays
 		 * @memberof Flatpickr.DisableDays
 		 */
 		public disableDays(disableDays: string[]): void {
@@ -525,8 +557,8 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		/**
 		 * Method used to disable weekdays on DatePicker
 		 *
-		 * @param disableWeekDays
-		 * @memberof Flatpickr.DisableWeekDays
+		 * @param {number[]} disableWeekDays
+		 * @memberof AbstractFlatpickr
 		 */
 		public disableWeekDays(disableWeekDays: number[]): void {
 			this.configs.DisabledWeekDays = disableWeekDays;
@@ -625,7 +657,8 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		/**
 		 * Method used to set the DatePicker language
 		 *
-		 * @memberof Providers.OSUI.DatePicker.Flatpickr.AbstractFlatpickr
+		 * @param {string} value
+		 * @memberof AbstractFlatpickr
 		 */
 		public setLanguage(value: string): void {
 			// Set the new Language
