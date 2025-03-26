@@ -13,12 +13,7 @@ namespace OSFramework.OSUI.Patterns.Gallery {
 			super(uniqueId, new GalleryConfig(configs));
 		}
 
-		/**
-		 * Function used to set the Gallery's items gap
-		 *
-		 * @private
-		 * @memberof OSFramework.Patterns.Gallery.Gallery
-		 */
+		// Function used to set the Gallery's items gap
 		private _setItemsGap(): void {
 			Helper.Dom.Styles.SetStyleAttribute(
 				this.selfElement,
@@ -27,12 +22,7 @@ namespace OSFramework.OSUI.Patterns.Gallery {
 			);
 		}
 
-		/**
-		 * Function used to set the Gallery's number of items per row in Desktop
-		 *
-		 * @private
-		 * @memberof OSFramework.Patterns.Gallery.Gallery
-		 */
+		// Function used to set the Gallery's number of items per row in Desktop
 		private _setRowItemsDesktop(): void {
 			//The number must be greater than 0
 			if (this.configs.RowItemsDesktop < Enum.Properties.MinRowItemsAllowed) {
@@ -56,12 +46,7 @@ namespace OSFramework.OSUI.Patterns.Gallery {
 			);
 		}
 
-		/**
-		 * Function used to set the Gallery's number of items per row in Phone
-		 *
-		 * @private
-		 * @memberof OSFramework.Patterns.Gallery.Gallery
-		 */
+		// Function used to set the Gallery's number of items per row in Phone
 		private _setRowItemsPhone(): void {
 			//The number must be greater than 0
 			if (this.configs.RowItemsPhone < Enum.Properties.MinRowItemsAllowed) {
@@ -84,12 +69,7 @@ namespace OSFramework.OSUI.Patterns.Gallery {
 			);
 		}
 
-		/**
-		 * Function used to set the Gallery's number of items per row in Tablet
-		 *
-		 * @private
-		 * @memberof OSFramework.Patterns.Gallery.Gallery
-		 */
+		// Function used to set the Gallery's number of items per row in Tablet
 		private _setRowItemsTablet(): void {
 			//The number must be greater than 0
 			if (this.configs.RowItemsTablet < Enum.Properties.MinRowItemsAllowed) {

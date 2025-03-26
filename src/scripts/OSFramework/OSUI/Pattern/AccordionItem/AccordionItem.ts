@@ -42,14 +42,7 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 			this._isOpen = this.configs.StartsExpanded;
 		}
 
-		/**
-		 * Getter that obtains the element that should be the clicking place to toggle the accordion.
-		 *
-		 * @readonly
-		 * @private
-		 * @type {HTMLElement}
-		 * @memberof AccordionItem
-		 */
+		// Getter that obtains the element that should be the clicking place to toggle the accordion.
 		private get _elementWithEvents(): HTMLElement {
 			let elementWithEvent = this._accordionItemTitleElem;
 			if (this.configs.ToggleWithIcon) {
@@ -62,15 +55,7 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 			return elementWithEvent;
 		}
 
-		/**
-		 * Getter that obtains the previous element that was the clicking place. Useful to remove
-		 * events and A11Y attributes.
-		 *
-		 * @readonly
-		 * @private
-		 * @type {HTMLElement}
-		 * @memberof AccordionItem
-		 */
+		// Getter that obtains the previous element that was the clicking place. Useful to remove events and A11Y attributes.
 		private get _previousElementWithEvents(): HTMLElement {
 			let elementWithEvent = this._accordionItemTitleElem;
 			if (!this.configs.ToggleWithIcon) {
@@ -83,14 +68,7 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 			return elementWithEvent;
 		}
 
-		/**
-		 * Method to handle the click event
-		 *
-		 * @private
-		 * @param {MouseEvent} event
-		 * @return {*}  {void}
-		 * @memberof AccordionItem
-		 */
+		// Method to handle the click event
 		private _accordionOnClickHandler(event: MouseEvent): void {
 			if (this._allowTitleEvents) {
 				if (
@@ -109,12 +87,7 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 			}
 		}
 
-		/**
-		 * Method to add the event listeners
-		 *
-		 * @private
-		 * @memberof AccordionItem
-		 */
+		// Method to add the event listeners
 		private _addEvents(): void {
 			const elem = this._elementWithEvents;
 
@@ -122,13 +95,7 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 			elem.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyPress);
 		}
 
-		/**
-		 * Method to handle async animation
-		 *
-		 * @private
-		 * @param {boolean} isExpand
-		 * @memberof AccordionItem
-		 */
+		// Method to handle async animation
 		private _animationAsync(isExpand: boolean): void {
 			const finalHeight = isExpand ? this._expandedHeight : this._collapsedHeight;
 
@@ -164,12 +131,7 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 			this._onToggleCallback();
 		}
 
-		/**
-		 * Method that toogles the clickable area between the whole title (default) and the icon.
-		 *
-		 * @private
-		 * @memberof AccordionItem
-		 */
+		// Method that toogles the clickable area between the whole title (default) and the icon.
 		private _changeClikableTargetArea(): void {
 			if (this._previousElementWithEvents !== this._elementWithEvents) {
 				Helper.Dom.Styles.RemoveClass(this._previousElementWithEvents, Enum.CssClass.PatternClickArea);
@@ -182,12 +144,7 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 			}
 		}
 
-		/**
-		 * Method to handle the tabindex values
-		 *
-		 * @private
-		 * @memberof AccordionItem
-		 */
+		// Method to handle the tabindex values
 		private _handleTabIndex(): void {
 			const titleTabindexValue = this.configs.IsDisabled
 				? Constants.A11YAttributes.States.TabIndexHidden
@@ -205,14 +162,7 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 			}
 		}
 
-		/**
-		 * Method to handle Keyboardpress event
-		 *
-		 * @private
-		 * @param {KeyboardEvent} event
-		 * @return {*}  {void}
-		 * @memberof AccordionItem
-		 */
+		// Method to handle Keyboardpress event
 		private _onKeyboardPress(event: KeyboardEvent): void {
 			const isEscapedKey = event.key === GlobalEnum.Keycodes.Escape;
 			const isEnterOrSpaceKey =
@@ -234,12 +184,7 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 			}
 		}
 
-		/**
-		 * Method to handle the keyboard interactions
-		 *
-		 * @private
-		 * @memberof AccordionItem
-		 */
+		// Method to handle the keyboard interactions
 		private _onToggleCallback(): void {
 			this.triggerPlatformEventCallback(this._platformEventOnToggle, this._isOpen);
 		}
@@ -251,18 +196,14 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 			Helper.Dom.Attribute.Remove(prevElementWithEvent, Constants.A11YAttributes.TabIndex);
 		}
 
-		/**
-		 * Method to remove the event listeners
-		 *
-		 * @private
-		 * @memberof AccordionItem
-		 */
+		// Method to remove the event listeners
 		private _removeEvents(): void {
 			const elem = this._previousElementWithEvents;
 			elem.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
 			elem.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyPress);
 		}
 
+		// Method to set the A11Y properties
 		private _setA11ToogleElement(): void {
 			const elem = this._elementWithEvents;
 
@@ -273,12 +214,7 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 			Helper.A11Y.RoleButton(elem);
 		}
 
-		/**
-		 * Method to set the parent Info, if an accordion wrapper is being used
-		 *
-		 * @private
-		 * @memberof AccordionItem
-		 */
+		// Method to set the parent Info, if an accordion wrapper is being used
 		private _setAccordionParent(): void {
 			// Get parent info
 			this.setParentInfo(
@@ -293,12 +229,7 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 			}
 		}
 
-		/**
-		 * Method that changes the icon's position
-		 *
-		 * @private
-		 * @memberof AccordionItem
-		 */
+		// Method that changes the icon's position
 		private _setIconPosition(): void {
 			//If the page we're on is RTL, the icon's position has to change accordingly.
 			if (this.configs.IconPosition === GlobalEnum.Direction.Right) {
@@ -310,12 +241,7 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 			}
 		}
 
-		/**
-		 * Method that changes the icon's type (Caret, Plus/Minus, Custom)
-		 *
-		 * @private
-		 * @memberof AccordionItem
-		 */
+		// Method that changes the icon's type (Caret, Plus/Minus, Custom)
 		private _setIconType(): void {
 			switch (this.configs.Icon) {
 				case Enum.IconType.PlusMinus:
@@ -342,12 +268,7 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 			}
 		}
 
-		/**
-		 * Method to handle the IsDisabled state
-		 *
-		 * @private
-		 * @memberof AccordionItem
-		 */
+		// Method to handle the IsDisabled state
 		private _setIsDisabledState(): void {
 			if (this.configs.IsDisabled) {
 				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.PatternDisabled);
@@ -373,12 +294,7 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 			this._handleTabIndex();
 		}
 
-		/**
-		 * Method to handle the onTransitionEnd on accordion toggle animation
-		 *
-		 * @private
-		 * @memberof AccordionItem
-		 */
+		// Method to handle the onTransitionEnd on accordion toggle animation
 		private _transitionEndHandler(): void {
 			if (this._accordionItemContentElem) {
 				Helper.Dom.Styles.RemoveClass(this._accordionItemContentElem, Enum.CssClass.PatternAnimating);

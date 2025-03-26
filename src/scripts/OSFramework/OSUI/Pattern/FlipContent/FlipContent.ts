@@ -16,13 +16,7 @@ namespace OSFramework.OSUI.Patterns.FlipContent {
 			super(uniqueId, new FlipContentConfig(configs));
 		}
 
-		/**
-		 * Method to toggle pattern on keypress
-		 *
-		 * @private
-		 * @param {KeyboardEvent} e
-		 * @memberof FlipContent
-		 */
+		// Method to toggle pattern on keypress
 		private _keydownCallback(e: KeyboardEvent): void {
 			//If ENTER or SPACE use toggle to validate & If ESC is pressed then we need to close Flip
 			if (
@@ -36,23 +30,13 @@ namespace OSFramework.OSUI.Patterns.FlipContent {
 			}
 		}
 
-		/**
-		 * Method to remove the event listeners
-		 *
-		 * @private
-		 * @memberof FlipContent
-		 */
+		//  Method to remove the event listeners
 		private _removeEvents(): void {
 			this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventKeydown);
 			this._flipWrapperElement.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventClick);
 		}
 
-		/**
-		 * Method to set the handlers and the classes for when the FlipSelf is active or not
-		 *
-		 * @private
-		 * @memberof FlipContent
-		 */
+		// Method to set the handlers and the classes for when the FlipSelf is active or not
 		private _setEventHandlers(): void {
 			if (this.configs.FlipSelf) {
 				this.selfElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventKeydown);
@@ -67,24 +51,14 @@ namespace OSFramework.OSUI.Patterns.FlipContent {
 			}
 		}
 
-		/**
-		 * Method to toggle FlipContent, if is to start flipped
-		 *
-		 * @private
-		 * @memberof FlipContent
-		 */
+		// Method to toggle FlipContent, if is to start flipped
 		private _setStartsFlipped() {
 			if (this.isBuilt === false) {
 				this._toggleClasses();
 			}
 		}
 
-		/**
-		 * Method to set the classes on the pattern's first render, toggle click & parameters changed
-		 *
-		 * @private
-		 * @memberof FlipContent
-		 */
+		// Method to set the classes on the pattern's first render, toggle click & parameters changed
 		private _toggleClasses(): void {
 			if (this.configs.IsFlipped) {
 				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.PatternIsFlipped);
@@ -93,22 +67,12 @@ namespace OSFramework.OSUI.Patterns.FlipContent {
 			}
 		}
 
-		/**
-		 * Method to trigger the toggle event on the platform
-		 *
-		 * @private
-		 * @memberof FlipContent
-		 */
+		// Method to trigger the toggle event on the platform
 		private _triggerPlatformEvent(): void {
 			this.triggerPlatformEventCallback(this._platformEventOnToggle, this.configs.IsFlipped);
 		}
 
-		/**
-		 * Method to update the A11Y attributes
-		 *
-		 * @private
-		 * @memberof FlipContent
-		 */
+		// Method to update the A11Y attributes
 		private _updateA11yProperties(): void {
 			if (this.configs.FlipSelf) {
 				Helper.A11Y.AriaAtomicTrue(this.selfElement);

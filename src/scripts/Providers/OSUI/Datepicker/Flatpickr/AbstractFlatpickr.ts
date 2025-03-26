@@ -8,7 +8,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		private _a11yInfoContainerElem: HTMLElement;
 		// Event OnBodyScroll common behaviour
 		private _bodyScrollCommonBehaviour: SharedProviderResources.Flatpickr.UpdatePositionOnScroll;
-		/* Flag to store the satus of the platform input */
+		// Flag to store the satus of the platform input
 		private _isPlatformInputDisabled: boolean;
 		// Store HtmlElement for the provider focus span target
 		private _providerFocusSpanTarget: HTMLElement;
@@ -40,12 +40,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 			this.configs.OnOpen = this.onDatePickerOpen.bind(this);
 		}
 
-		/**
-		 * Method used to set the HTML attributes to the Flatpickr input element
-		 *
-		 * @private
-		 * @memberof AbstractFlatpickr
-		 */
+		// Method used to set the HTML attributes to the Flatpickr input element
 		private _setAttributes(): void {
 			// Since a new input will be added by the flatpickr library, we must address it only at onReady
 			if (this.datePickerPlatformInputElem.nextSibling) {
@@ -68,12 +63,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 			}
 		}
 
-		/**
-		 * Method used to set the CSS classes to the calendar HTML elements
-		 *
-		 * @private
-		 * @memberof AbstractFlatpickr
-		 */
+		// Method used to set the CSS classes to the calendar HTML elements
 		private _setCalendarCssClasses(): void {
 			OSFramework.OSUI.Helper.Dom.Styles.AddClass(
 				this.provider.calendarContainer,
@@ -90,12 +80,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 			}
 		}
 
-		/**
-		 * Method used to set the clientHeight to the parent container as an inline style in order vertical content remains same and avoid content vertical flickering!
-		 *
-		 * @private
-		 * @memberof AbstractFlatpickr
-		 */
+		// Method used to set the clientHeight to the parent container as an inline style in order vertical content remains same and avoid content vertical flickering!
 		private _setParentMinHeight(): void {
 			OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(
 				this.selfElement,
@@ -104,14 +89,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 			);
 		}
 
-		/**
-		 * Method used to handle the keydown event for the Today Button
-		 *
-		 * @private
-		 * @param {KeyboardEvent} e
-		 * @return {*}  {void}
-		 * @memberof AbstractFlatpickr
-		 */
+		// Method used to handle the keydown event for the Today Button
 		private _todayButtonKeydown(e: KeyboardEvent): void {
 			switch (e.key) {
 				case OSFramework.OSUI.GlobalEnum.Keycodes.Tab:
@@ -129,12 +107,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 			}
 		}
 
-		/**
-		 * Method used to remove the clientHeight that has been assigned before the redraw process!
-		 *
-		 * @private
-		 * @memberof AbstractFlatpickr
-		 */
+		// Method used to remove the clientHeight that has been assigned before the redraw process!
 		private _unsetParentMinHeight(): void {
 			OSFramework.OSUI.Helper.Dom.Styles.RemoveStyleAttribute(
 				this.selfElement,
@@ -142,12 +115,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 			);
 		}
 
-		/**
-		 * Method used to update the A11Y properties of the Flatpickr input element
-		 *
-		 * @private
-		 * @memberof AbstractFlatpickr
-		 */
+		// Method used to update the A11Y properties of the Flatpickr input element
 		private _updateA11yProperties(): void {
 			// Ensure flatpickrInputElem tabindex is updated based on the platform input status
 			OSFramework.OSUI.Helper.Dom.Attribute.Set(

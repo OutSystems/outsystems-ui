@@ -7,27 +7,16 @@ namespace OutSystems.OSUI.Utils.PreviewInDevices {
 	 * @class OnPostMessage
 	 */
 	abstract class OnPostMessage {
-		/**
-		 * Holds the knowledge if the app is running within the Preview In Devices.
-		 *
-		 * @private
-		 * @static
-		 * @memberof OnPostMessage
-		 */
+		// Holds the knowledge if the app is running within the Preview In Devices.
 		private static _isInPreviewInDevices = false;
 
-		/**
-		 * Adds a css class to the body, to make it easily style accordingly.
-		 *
-		 * @private
-		 * @static
-		 * @memberof OnPostMessage
-		 */
+		// Adds a css class to the body, to make it easily style accordingly.
 		private static _addInPreviewCssClass(): void {
 			OnPostMessage._isInPreviewInDevices = true;
 			document.body.classList.add('PreviewInDevices');
 		}
 
+		// Creates the CSS overrides for the preview in devices
 		private static _createPhonePreviewStyle(notchValue: number) {
 			if (!notchValue) {
 				return;
@@ -66,6 +55,7 @@ namespace OutSystems.OSUI.Utils.PreviewInDevices {
 			document.head.appendChild(style);
 		}
 
+		// Creates the CSS overrides for the preview in devices
 		private static _createTabletPreviewStyle() {
 			const style = document.createElement('style');
 			style.textContent = `
@@ -82,6 +72,7 @@ namespace OutSystems.OSUI.Utils.PreviewInDevices {
 			document.head.appendChild(style);
 		}
 
+		// Function that handles the message event, sent by preview in devices
 		private static _message(evtName: string, evt: MessageEvent): void {
 			if (
 				OSFramework.OSUI.GlobalEnum.HTMLEvent.Message === evtName &&
@@ -91,15 +82,7 @@ namespace OutSystems.OSUI.Utils.PreviewInDevices {
 			}
 		}
 
-		/**
-		 * Adds the required CSS classes, and CSS overrides so that the application adapts correctly
-		 * to the device selected in the preview devices.
-		 *
-		 * @private
-		 * @static
-		 * @param {*} evt
-		 * @memberof OnPostMessage
-		 */
+		// Adds the required CSS classes, and CSS overrides so that the application adapts correctly to the device selected in the preview devices.
 		private static _messageFromPreview(evt: MessageEvent<IDataPreviewInDevice>): void {
 			OnPostMessage._addInPreviewCssClass();
 			if (OSFramework.OSUI.Helper.DeviceInfo.IsPhone) {
@@ -129,6 +112,9 @@ namespace OutSystems.OSUI.Utils.PreviewInDevices {
 
 		/**
 		 * Function used to set the message event
+		 *
+		 * @static
+		 * @memberof OnPostMessage
 		 */
 		public static Set(): void {
 			if (window.self !== window.top) {
@@ -141,6 +127,9 @@ namespace OutSystems.OSUI.Utils.PreviewInDevices {
 
 		/**
 		 * Function used to unset the message event
+		 *
+		 * @static
+		 * @memberof OnPostMessage
 		 */
 		public static Unset(): void {
 			OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
