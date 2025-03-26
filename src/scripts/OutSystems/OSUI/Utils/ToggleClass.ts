@@ -10,7 +10,7 @@ namespace OutSystems.OSUI.Utils {
 	 */
 	export function ToggleClass(element: HTMLElement, state: unknown, className: string): void {
 		if (!state) {
-			setTimeout(function () {
+			setTimeout(() => {
 				if (!state) {
 					OSFramework.OSUI.Helper.Dom.Styles.RemoveClass(element, className);
 				}
