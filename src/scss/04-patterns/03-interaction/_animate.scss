@@ -3,8 +3,8 @@
 /// @group Patterns-Animate
 /// Patterns - Interaction - Animate
 
-/// This selector has been added a not(.flatpicker-calendar) to avoid conflicts with the flatpickr calendar.
-.animate:not(.flatpicker-calendar) {
+/// This selector has been added a not(.flatpickr-calendar) to avoid conflicts with the flatpickr calendar.
+.animate:not(.flatpickr-calendar) {
 	animation-duration: 1000ms;
 	animation-fill-mode: both;
 	display: inline-block;
