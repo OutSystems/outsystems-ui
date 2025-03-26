@@ -1,6 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Utils {
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	function _bodyClick(eventName: string, event: PointerEvent) {
 		const target = event.target as HTMLElement;
 		if (target.classList.contains('btn')) {

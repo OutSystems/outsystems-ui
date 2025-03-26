@@ -4,9 +4,7 @@ namespace OSFramework.OSUI.Patterns.FlipContent {
 	 * Defines the interface for OutSystemsUI Patterns
 	 */
 	export class FlipContent extends AbstractPattern<FlipContentConfig> implements IFlipContent {
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		private _eventClick: GlobalCallbacks.Generic;
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		private _eventKeydown: GlobalCallbacks.Generic;
 		//The Flip Content content wrapper
 		private _flipWrapperElement: HTMLElement;
