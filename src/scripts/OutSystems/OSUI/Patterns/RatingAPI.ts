@@ -10,8 +10,7 @@ namespace OutSystems.OSUI.Patterns.RatingAPI {
 	 * @param {string} propertyName Property name that will be updated
 	 * @param {*} propertyValue Value that will be set to the property
 	 */
-	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
-	export function ChangeProperty(ratingId: string, propertyName: string, propertyValue: any): string {
+	export function ChangeProperty(ratingId: string, propertyName: string, propertyValue: unknown): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.Rating.FailChangeProperty,
 			callback: () => {

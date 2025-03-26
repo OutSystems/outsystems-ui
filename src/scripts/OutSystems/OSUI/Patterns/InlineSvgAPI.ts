@@ -9,8 +9,7 @@ namespace OutSystems.OSUI.Patterns.InlineSvgAPI {
 	 * @param {string} propertyName
 	 * @param {*} propertyValue
 	 */
-	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
-	export function ChangeProperty(inlineSvgId: string, propertyName: string, propertyValue: any): string {
+	export function ChangeProperty(inlineSvgId: string, propertyName: string, propertyValue: unknown): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.InlineSvg.FailChangeProperty,
 			callback: () => {

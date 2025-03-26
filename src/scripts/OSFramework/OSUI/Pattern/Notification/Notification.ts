@@ -363,8 +363,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		 * @param {unknown} propertyValue
 		 * @memberof OSFramework.Patterns.Notification.Notification
 		 */
-		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
-		public changeProperty(propertyName: string, propertyValue: any): void {
+		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			const _oldNotificationPosition = this.configs.Position;
 
 			super.changeProperty(propertyName, propertyValue);
@@ -373,10 +372,10 @@ namespace OSFramework.OSUI.Patterns.Notification {
 				// Check which property changed and call respective method to update it
 				switch (propertyName) {
 					case Enum.Properties.InteractToClose:
-						this._updateInteractToClose(propertyValue);
+						this._updateInteractToClose(propertyValue as boolean);
 						break;
 					case Enum.Properties.CloseAfterTime:
-						this._updateCloseAfterTime(propertyValue);
+						this._updateCloseAfterTime(propertyValue as number);
 						break;
 					case Enum.Properties.StartsOpen:
 						console.warn(
@@ -387,7 +386,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 						this._updatePosition(_oldNotificationPosition);
 						break;
 					case Enum.Properties.Width:
-						this._updateWidth(propertyValue);
+						this._updateWidth(propertyValue as string);
 						break;
 					case GlobalEnum.CommonPatternsProperties.ExtendedClass:
 						Helper.Dom.Styles.ExtendedClass(
