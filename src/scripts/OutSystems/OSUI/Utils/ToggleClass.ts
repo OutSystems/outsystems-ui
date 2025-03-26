@@ -8,8 +8,7 @@ namespace OutSystems.OSUI.Utils {
 	 * @param {*} state
 	 * @param {string} className
 	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-	export function ToggleClass(element: HTMLElement, state: any, className: string): void {
+	export function ToggleClass(element: HTMLElement, state: unknown, className: string): void {
 		if (!state) {
 			setTimeout(function () {
 				if (!state) {

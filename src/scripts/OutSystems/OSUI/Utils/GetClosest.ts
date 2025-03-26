@@ -10,8 +10,7 @@ namespace OutSystems.OSUI.Utils {
 	 *
 	 */
 	//TODO: Is this function necessary?
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	export function GetClosest(elem: HTMLElement, selector: string): any {
+	export function GetClosest(elem: HTMLElement, selector: string): unknown {
 		return elem.closest(selector) ? elem.closest(selector) : false;
 	}
 }
