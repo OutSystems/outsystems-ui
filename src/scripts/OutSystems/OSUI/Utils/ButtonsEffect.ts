@@ -44,6 +44,7 @@ namespace OutSystems.OSUI.Utils {
 		}, 1800);
 	}
 
+	//TODO: review this function.
 	function _hasSomeParentTheClass(element: HTMLElement, classname: string) {
 		if (element) {
 			// only if it has a class, only if it's beneath 'main-content' and doesn't pass it, if it's not a chart
