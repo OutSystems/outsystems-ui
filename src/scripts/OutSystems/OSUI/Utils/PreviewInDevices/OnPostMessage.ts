@@ -16,7 +16,7 @@ namespace OutSystems.OSUI.Utils.PreviewInDevices {
 			document.body.classList.add('PreviewInDevices');
 		}
 
-		// Creates the CSS overrides for the preview in devices
+		// Creates the CSS overrides for the Preview In Devices in ODC
 		private static _createPhonePreviewStyle(notchValue: number) {
 			if (!notchValue) {
 				return;
