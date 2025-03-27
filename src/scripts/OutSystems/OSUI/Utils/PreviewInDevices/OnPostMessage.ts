@@ -72,7 +72,7 @@ namespace OutSystems.OSUI.Utils.PreviewInDevices {
 			document.head.appendChild(style);
 		}
 
-		// Function that handles the message event, sent by preview in devices
+		// Method that handles the message event, sent by Preview In Devices in ODC
 		private static _message(evtName: string, evt: MessageEvent): void {
 			if (
 				OSFramework.OSUI.GlobalEnum.HTMLEvent.Message === evtName &&
