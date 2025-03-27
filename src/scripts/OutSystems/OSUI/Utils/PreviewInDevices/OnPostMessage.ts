@@ -10,7 +10,7 @@ namespace OutSystems.OSUI.Utils.PreviewInDevices {
 		// Holds the knowledge if the app is running within the Preview In Devices in ODC.
 		private static _isInPreviewInDevices = false;
 
-		// Adds a css class to the body, to make it easily style accordingly.
+		// Adds a CSS class to the body to make it easily style accordingly.
 		private static _addInPreviewCssClass(): void {
 			OnPostMessage._isInPreviewInDevices = true;
 			document.body.classList.add('PreviewInDevices');
