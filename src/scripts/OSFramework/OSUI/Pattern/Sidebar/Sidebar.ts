@@ -179,7 +179,7 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 			Helper.A11Y.SetElementsTabIndex(this._isOpen, this._focusTrapInstance.focusableElements);
 		}
 
-		// Method to close Sidebar on an overlay click
+		// Method to close a Sidebar with a click on the overlay
 		private _overlayClickCallback(_args: string, e: MouseEvent): void {
 			// If the sidebar is opened and the mouse down event occured outside the sidebar, close it.
 			if (
