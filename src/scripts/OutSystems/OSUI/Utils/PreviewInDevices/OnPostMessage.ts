@@ -126,7 +126,7 @@ namespace OutSystems.OSUI.Utils.PreviewInDevices {
 		}
 
 		/**
-		 * Function used to unset the message event
+		 * Method used to unset the message event
 		 *
 		 * @static
 		 * @memberof OnPostMessage
