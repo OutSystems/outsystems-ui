@@ -111,7 +111,7 @@ namespace OutSystems.OSUI.Utils.PreviewInDevices {
 		}
 
 		/**
-		 * Function used to set the message event
+		 * Method used to set the message event
 		 *
 		 * @static
 		 * @memberof OnPostMessage
