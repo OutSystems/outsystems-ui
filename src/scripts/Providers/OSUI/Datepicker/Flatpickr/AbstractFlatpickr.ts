@@ -8,7 +8,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		private _a11yInfoContainerElem: HTMLElement;
 		// Event OnBodyScroll common behaviour
 		private _bodyScrollCommonBehaviour: SharedProviderResources.Flatpickr.UpdatePositionOnScroll;
-		// Flag to store the satus of the platform input
+		// Flag to store the status of the platform input
 		private _isPlatformInputDisabled: boolean;
 		// Store HtmlElement for the provider focus span target
 		private _providerFocusSpanTarget: HTMLElement;
