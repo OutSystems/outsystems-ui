@@ -181,7 +181,7 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 
 		// Method to close a Sidebar with a click on the overlay
 		private _overlayClickCallback(_args: string, e: MouseEvent): void {
-			// If the sidebar is opened and the mouse down event occured outside the sidebar, close it.
+			// If the sidebar is opened and the mouse down event occurred outside the sidebar, close it.
 			if (
 				this._isOpen &&
 				this._clickedOutsideElement &&
