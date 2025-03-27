@@ -109,7 +109,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 			}
 		}
 
-		// Method to call open or close, based ok e.key and behavior applied
+		// Method to call open or close, based on e.key and behavior applied
 		private _keypressCallback(e: KeyboardEvent): void {
 			const isEscapedPressed = e.key === GlobalEnum.Keycodes.Escape;
 
