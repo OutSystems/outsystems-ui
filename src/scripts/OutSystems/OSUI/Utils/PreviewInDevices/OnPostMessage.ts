@@ -7,7 +7,7 @@ namespace OutSystems.OSUI.Utils.PreviewInDevices {
 	 * @class OnPostMessage
 	 */
 	abstract class OnPostMessage {
-		// Holds the knowledge if the app is running within the Preview In Devices.
+		// Holds the knowledge if the app is running within the Preview In Devices in ODC.
 		private static _isInPreviewInDevices = false;
 
 		// Adds a css class to the body, to make it easily style accordingly.
