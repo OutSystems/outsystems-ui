@@ -633,7 +633,7 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 			this._currentVerticalPositon = position;
 		}
 
-		// Toggle TableHeaderItem disbaled status
+		// Toggles the TableHeaderItem disabled status
 		private _setTabHeaderItemDisabledStatus(childHeaderId: string, isDisabled: boolean): void {
 			const _tabHeaderItemElement = Helper.Dom.GetElementByUniqueId(childHeaderId);
 			const _tabItemIndex = this.getChildIndex(childHeaderId);
