@@ -745,7 +745,7 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 			);
 		}
 
-		// Function that will update the list of enabled tabs headers
+		// Method to update the list of enabled tab headers
 		private _updateListOfEnabledTabsHeader(): void {
 			this._tabsHeadersEnabled = (
 				this.getChildItems(Enum.ChildTypes.TabsHeaderItem) as Patterns.TabsHeaderItem.ITabsHeaderItem[]
