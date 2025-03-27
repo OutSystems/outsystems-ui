@@ -344,7 +344,7 @@ namespace OSFramework.OSUI.Patterns.Rating {
 			this._toggleRatingInputsEvents(!this.configs.IsEdit && !this._disabled);
 		}
 
-		// Method to retunr the list of rating placeholders with the updated id attribute
+		// Method to return the list of rating placeholders with the updated id attribute
 		private _updateClonePlaceholdersAttrs(ratingIndex: number): string {
 			// Store the ourterHTML of the placeholders
 			let placeholdersOuterHTML = '';
