@@ -55,7 +55,7 @@ namespace OutSystems.OSUI.Utils.PreviewInDevices {
 			document.head.appendChild(style);
 		}
 
-		// Creates the CSS overrides for the preview in devices
+		// Creates the CSS overrides for the Preview In Devices in ODC
 		private static _createTabletPreviewStyle() {
 			const style = document.createElement('style');
 			style.textContent = `
