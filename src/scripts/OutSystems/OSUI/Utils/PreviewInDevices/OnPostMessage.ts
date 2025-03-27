@@ -82,7 +82,7 @@ namespace OutSystems.OSUI.Utils.PreviewInDevices {
 			}
 		}
 
-		// Adds the required CSS classes, and CSS overrides so that the application adapts correctly to the device selected in the preview devices.
+		// Adds the required CSS classes and CSS overrides so that the application adapts correctly to the device selected in the Preview In Devices in ODC
 		private static _messageFromPreview(evt: MessageEvent<IDataPreviewInDevice>): void {
 			OnPostMessage._addInPreviewCssClass();
 			if (OSFramework.OSUI.Helper.DeviceInfo.IsPhone) {
