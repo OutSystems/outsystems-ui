@@ -290,7 +290,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 					case OSFramework.OSUI.Patterns.Dropdown.Enum.Properties.IsDisabled:
 						this._manageDisableStatus();
 						break;
-					case Enum.Properties.EnableSecureText:
+					case Enum.Properties.SanitizeDropdownValues:
 					case Enum.Properties.NoOptionsText:
 					case Enum.Properties.NoResultsText:
 					case Enum.Properties.OptionsList:

@@ -32,7 +32,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect.Enum {
 	 * Properties
 	 */
 	export enum Properties {
-		EnableSecureText = 'EnableSecureText',
+		SanitizeDropdownValues = 'SanitizeDropdownValues',
 		NoOptionsText = 'NoOptionsText',
 		NoResultsText = 'NoResultsText',
 		OptionsList = 'OptionsList',
