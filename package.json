@@ -67,6 +67,6 @@
 		"typedoc-plugin-merge-modules": "^4.1.0",
 		"typedoc-umlclass": "^0.7.1",
 		"typescript": "^4.9.5",
-		"virtual-select-plugin": "^1.0.47"
+		"virtual-select-plugin": "^1.0.48"
 	}
 }
