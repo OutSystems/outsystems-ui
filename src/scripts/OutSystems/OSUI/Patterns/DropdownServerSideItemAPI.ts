@@ -13,8 +13,11 @@ namespace OutSystems.OSUI.Patterns.DropdownServerSideItemAPI {
 	 * @param {string} propertyName Property name that will be updated
 	 * @param {*} propertyValue Value that will be set to the property
 	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-	export function ChangeProperty(dropdownServerSideItemId: string, propertyName: string, propertyValue: any): string {
+	export function ChangeProperty(
+		dropdownServerSideItemId: string,
+		propertyName: string,
+		propertyValue: unknown
+	): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.DropdownServerSideItem.FailChangeProperty,
 			callback: () => {

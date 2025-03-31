@@ -4,12 +4,11 @@ namespace OSFramework.OSUI.Patterns.MonthPicker {
 		extends AbstractProviderPattern<P, C>
 		implements IMonthPicker
 	{
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: C) {
 			super(uniqueId, configs);
 		}
 
-		// Common methods that all Carousels must implement!
+		// Common methods that all MonthPickers must implement!
 		public abstract clear(): void;
 		public abstract close(): void;
 		public abstract onRender(): void;

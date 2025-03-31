@@ -20,43 +20,29 @@ namespace OSFramework.OSUI.Patterns.TabsHeaderItem {
 			super(uniqueId, new TabsHeaderItemConfig(configs));
 		}
 
-		/**
-		 * Method to handle the click event
-		 *
-		 * @private
-		 * @memberof TabsHeaderItem
-		 */
+		// Method to handle the click event
 		private _handleClickEvent(): void {
 			if (this._isActive === false) {
 				this.notifyParent(Tabs.Enum.ChildNotifyActionType.Click);
 			}
 		}
 
-		/**
-		 * Method to remove the event listeners
-		 *
-		 * @private
-		 * @memberof TabsHeaderItem
-		 */
+		// Method to remove the event listeners
 		private _removeEvents(): void {
 			this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnTabsClick);
 		}
 
-		/**
-		 * Method to set the event listeners
-		 *
-		 * @private
-		 * @memberof TabsHeaderItem
-		 */
+		// Method to set the event listeners
 		private _setUpEvents(): void {
 			this.selfElement.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnTabsClick);
 		}
 
 		/**
-		 * Method to handle the Accessibility attributes
+		 * Method to set the Accessibility attributes
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.TabsHeaderItem.TabsHeaderItem
+		 * @param {boolean} [isUpdate=true]
+		 * @memberof TabsHeaderItem
 		 */
 		protected setA11YProperties(isUpdate = true): void {
 			// Static attribute to be added when the item is created

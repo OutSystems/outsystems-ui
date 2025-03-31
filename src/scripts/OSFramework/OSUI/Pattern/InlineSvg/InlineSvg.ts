@@ -15,12 +15,7 @@ namespace OSFramework.OSUI.Patterns.InlineSvg {
 			super(uniqueId, new InlineSvgConfig(configs));
 		}
 
-		/**
-		 * Method that will set the given SVG code into the pattern container.
-		 *
-		 * @private
-		 * @memberof InlineSvg
-		 */
+		// Method that will set the given SVG code into the pattern container.
 		private _setSvgCode(): void {
 			if (this.configs.SVGCode !== '' && !Helper.SVG.IsValid(this.configs.SVGCode)) {
 				this.selfElement.innerHTML = '';

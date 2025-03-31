@@ -2,8 +2,7 @@
 namespace OutSystems.OSUI.Utils {
 	// Set APIHandler type structure
 	type APIHandler = {
-		// eslint-disable-next-line
-		callback: any;
+		callback: OSFramework.OSUI.GlobalCallbacks.Generic;
 		errorCode: string;
 		hasValue?: boolean;
 	};
@@ -14,7 +13,7 @@ namespace OutSystems.OSUI.Utils {
 		isSuccess: boolean;
 		message: string;
 		// eslint-disable-next-line
-		value?: any;
+		value?: unknown;
 	};
 
 	/**

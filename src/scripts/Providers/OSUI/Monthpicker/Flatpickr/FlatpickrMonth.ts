@@ -13,7 +13,7 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 		private _bodyScrollCommonBehaviour: SharedProviderResources.Flatpickr.UpdatePositionOnScroll;
 		// Store the provider options
 		private _flatpickrOpts: FlatpickrOptions;
-		/* Flag to store the satus of the platform input */
+		// Flag to store the status of the platform input
 		private _isPlatformInputDisabled: boolean;
 		// Validation of ZIndex position common behavior
 		private _zindexCommonBehavior: SharedProviderResources.Flatpickr.UpdateZindex;
@@ -33,12 +33,7 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 			this.configs.OnOpenEventCallback = this.onOpen.bind(this);
 		}
 
-		/**
-		 * Method that will get the instance of the Global onBodyClick event.
-		 *
-		 * @private
-		 * @memberof Providers.OSUI.MonthPicker.Flatpickr.OSUIFlatpickrMonth
-		 */
+		// Method that will get the instance of the Global onBodyClick event.
 		private _getBodyOnClickGlobalEvent(): void {
 			this._bodyOnClickGlobalEvent =
 				OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.events.get(
