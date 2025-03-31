@@ -31,12 +31,7 @@ namespace OSFramework.OSUI.Patterns.AnimatedLabel {
 			this._isLabelFocus = false;
 		}
 
-		/**
-		 * Method to add Pattern Events
-		 *
-		 * @private
-		 * @memberof AnimatedLabel
-		 */
+		// Method to add Pattern Events
 		private _addEvents(): void {
 			this._inputElement.addEventListener(GlobalEnum.HTMLEvent.Blur, this._eventBlur);
 			this._inputElement.addEventListener(GlobalEnum.HTMLEvent.Focus, this._eventFocus);
@@ -46,52 +41,28 @@ namespace OSFramework.OSUI.Patterns.AnimatedLabel {
 			}
 		}
 
-		/**
-		 * Method to set callback to the event onAnimationStart
-		 *
-		 * @private
-		 * @param {AnimationEvent} e
-		 * @memberof AnimatedLabel
-		 */
+		// Method to set callback to the event onAnimationStart
 		private _inputAnimationStartCallback(e: AnimationEvent): void {
 			if (e.animationName === Enum.AnimationEvent.OnAutoFillStart) {
 				this._inputStateToggle(true);
 			}
 		}
 
-		/**
-		 * Method to set callback to the event "blur" of the input
-		 *
-		 * @private
-		 * @param {UIEvent} evt
-		 * @memberof AnimatedLabel
-		 */
+		// Method to set callback to the event "blur" of the input
 		private _inputBlurCallback(evt: UIEvent): void {
 			if (evt.type === GlobalEnum.HTMLEvent.Blur) {
 				this._inputStateToggle(false);
 			}
 		}
 
-		/**
-		 * Method to set callback to the event "focus" of the input
-		 *
-		 * @private
-		 * @param {UIEvent} evt
-		 * @memberof AnimatedLabel
-		 */
+		// Method to set callback to the event "focus" of the input
 		private _inputFocusCallback(evt: UIEvent): void {
 			if (evt.type === GlobalEnum.HTMLEvent.Focus) {
 				this._inputStateToggle(true);
 			}
 		}
 
-		/**
-		 * Method to set callback to the event "keydown" of the input
-		 *
-		 * @private
-		 * @param {KeyboardEvent} evt
-		 * @memberof AnimatedLabel
-		 */
+		// Method to set callback to the event "keydown" of the input
 		private _inputKeyDownCallback(evt: KeyboardEvent): void {
 			if (evt.type === GlobalEnum.HTMLEvent.keyDown && this._inputElement.type === 'number') {
 				const invalidChars = ['-', '+', 'e', 'E'];
@@ -101,14 +72,7 @@ namespace OSFramework.OSUI.Patterns.AnimatedLabel {
 			}
 		}
 
-		/**
-		 * Method that implements the toggle of the state of the input.
-		 * It can either add or remove the class "active" of the input.
-		 *
-		 * @private
-		 * @param {boolean} [isFocus=false]
-		 * @memberof AnimatedLabel
-		 */
+		// Method that implements the toggle of the state of the input. vIt can either add or remove the class "active" of the input.
 		private _inputStateToggle(isFocus = false): void {
 			if (this.isBuilt) {
 				// In this flag, we are checking if the input has value.
@@ -135,12 +99,7 @@ namespace OSFramework.OSUI.Patterns.AnimatedLabel {
 			}
 		}
 
-		/**
-		 * Method to remove Pattern Events
-		 *
-		 * @private
-		 * @memberof AnimatedLabel
-		 */
+		// Method to remove Pattern Events
 		private _removeEvents(): void {
 			this._inputElement.removeEventListener(GlobalEnum.HTMLEvent.Blur, this._eventBlur);
 			this._inputElement.removeEventListener(GlobalEnum.HTMLEvent.Focus, this._eventFocus);

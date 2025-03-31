@@ -4,14 +4,13 @@ namespace OutSystems.OSUI.Utils {
 	 * [Deprecated] Function used to Toogle a class to a given element
 	 *
 	 * @export
-	 * @param {HTMLElement} el
+	 * @param {HTMLElement} element
 	 * @param {*} state
 	 * @param {string} className
 	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-	export function ToggleClass(element: HTMLElement, state: any, className: string): void {
+	export function ToggleClass(element: HTMLElement, state: unknown, className: string): void {
 		if (!state) {
-			setTimeout(function () {
+			setTimeout(() => {
 				if (!state) {
 					OSFramework.OSUI.Helper.Dom.Styles.RemoveClass(element, className);
 				}

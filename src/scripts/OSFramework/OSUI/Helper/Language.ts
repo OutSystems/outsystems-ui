@@ -1,9 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSFramework.OSUI.Helper {
 	export abstract class Language {
-		/**
-		 * App Language
-		 */
+		// App Language
 		private static _lang = Constants.Language.code;
 
 		/**

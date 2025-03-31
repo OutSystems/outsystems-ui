@@ -23,15 +23,7 @@ namespace OSFramework.OSUI.Event.GestureEvent {
 			super(target);
 		}
 
-		/**
-		 * Method to set on GestureEnd callback, as this one needs an exception to detect the final direction swiped
-		 *
-		 * @private
-		 * @param {number} offsetX
-		 * @param {number} offsetY
-		 * @param {number} timeTaken
-		 * @memberof OSFramework.Event.GestureEvent.SwipeEvent
-		 */
+		// Method to set on GestureEnd callback, as this one needs an exception to detect the final direction swiped
 		private _onGestureEnd(offsetX: number, offsetY: number, timeTaken: number): void {
 			// CHeck if this a swipe
 			if (
