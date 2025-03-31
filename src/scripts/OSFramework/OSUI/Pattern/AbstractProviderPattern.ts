@@ -164,7 +164,7 @@ namespace OSFramework.OSUI.Patterns {
 
 			// Force provider redraw/update when rtl is changed in runtime
 			this._redrawCallback = this.redraw.bind(this);
-			
+
 			OSFramework.OSUI.Event.DOMEvents.Observers.GlobalObserverManager.Instance.addHandler(
 				Event.DOMEvents.Observers.ObserverEvent.RTL,
 				this._redrawCallback
