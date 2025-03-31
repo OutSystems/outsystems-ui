@@ -3,7 +3,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSFramework.OSUI.Patterns.Progress.Bar {
 	export class Bar extends Progress.AbstractProgress<ProgressBarConfig> {
-		constructor(uniqueId: string, configs: unknown) {
+		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new ProgressBarConfig(configs));
 			this.progressType = ProgressEnum.ProgressTypes.Bar;
 		}

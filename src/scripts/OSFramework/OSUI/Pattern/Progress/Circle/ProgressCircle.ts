@@ -35,7 +35,7 @@ namespace OSFramework.OSUI.Patterns.Progress.Circle {
 			r: Enum.DefaultValues.RadialRadius,
 		};
 
-		constructor(uniqueId: string, configs: unknown) {
+		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new ProgressCircleConfig(configs));
 		}
 
