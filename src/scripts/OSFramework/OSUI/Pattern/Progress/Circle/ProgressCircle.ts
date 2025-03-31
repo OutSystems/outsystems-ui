@@ -35,8 +35,7 @@ namespace OSFramework.OSUI.Patterns.Progress.Circle {
 			r: Enum.DefaultValues.RadialRadius,
 		};
 
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-		constructor(uniqueId: string, configs: any) {
+		constructor(uniqueId: string, configs: unknown) {
 			super(uniqueId, new ProgressCircleConfig(configs));
 		}
 

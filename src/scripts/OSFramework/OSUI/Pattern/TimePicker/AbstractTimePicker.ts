@@ -4,7 +4,6 @@ namespace OSFramework.OSUI.Patterns.TimePicker {
 		extends AbstractProviderPattern<P, C>
 		implements ITimePicker
 	{
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 		constructor(uniqueId: string, configs: C) {
 			super(uniqueId, configs);
 		}

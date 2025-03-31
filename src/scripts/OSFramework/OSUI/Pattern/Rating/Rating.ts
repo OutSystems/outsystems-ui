@@ -29,12 +29,7 @@ namespace OSFramework.OSUI.Patterns.Rating {
 			super(uniqueId, new RatingConfig(configs));
 		}
 
-		/**
-		 * Method that will iterate on the RatingScale, to crate an item for each one
-		 *
-		 * @private
-		 * @memberof Rating
-		 */
+		// Method that will iterate on the RatingScale, to crate an item for each one
 		private _createItems(): void {
 			// Check if the the we should limit the amount of items
 			if (this.configs.RatingScale > Enum.Properties.MaxRatingScale) {
@@ -52,26 +47,12 @@ namespace OSFramework.OSUI.Patterns.Rating {
 			}
 		}
 
-		/**
-		 * Method to get the rating decimal value
-		 *
-		 * @private
-		 * @param {number} value
-		 * @return {*}  {number}
-		 * @memberof Rating
-		 */
+		// Method to get the rating decimal value
 		private _getDecimalValue(value: number): number {
 			return Math.round((value - Math.floor(value)) * 100) / 100;
 		}
 
-		/**
-		 * Method to get if the valie is-half
-		 *
-		 * @private
-		 * @param {number} value
-		 * @return {*}  {boolean}
-		 * @memberof Rating
-		 */
+		// Method to get if the valie is-half
 		private _getIsHalfValue(value: number): boolean {
 			const decimalValue = this._getDecimalValue(value);
 			// If bigger than 0.3 and lower than 0.7 means it should be represented as a half value.
@@ -79,24 +60,13 @@ namespace OSFramework.OSUI.Patterns.Rating {
 			return !!(decimalValue >= 0.3 && decimalValue <= 0.7);
 		}
 
-		/**
-		 * Method to get the rating value
-		 *
-		 * @private
-		 * @return {*}  {number}
-		 * @memberof Rating
-		 */
+		// Method to get the rating value
 		private _getValue(): number {
 			const inputChecked = Helper.Dom.TagSelector(this.selfElement, 'input:checked') as HTMLInputElement;
 			return parseInt(inputChecked.value);
 		}
 
-		/**
-		 * Method that handles the placeholders content storage and DOM lifecycle
-		 *
-		 * @private
-		 * @memberof Rating
-		 */
+		// Method that handles the placeholders content storage and DOM lifecycle
 		private _handlePlaceholders(): void {
 			// Store the placholders content to cloned after
 			this._clonedPlaceholders = Array.from(this._ratingIconStatesElem.children) as HTMLElement[];
@@ -105,13 +75,7 @@ namespace OSFramework.OSUI.Patterns.Rating {
 			this._ratingIconStatesElem.remove();
 		}
 
-		/**
-		 * Method used to set the keyboard keydown event
-		 *
-		 * @private
-		 * @param {KeyboardEvent} e event
-		 * @memberof Rating
-		 */
+		// Method used to set the keyboard keydown event
 		private _ratingInputOnKeyup(e: KeyboardEvent): void {
 			// Ensure keys pressed are arrows
 			if (
@@ -128,13 +92,7 @@ namespace OSFramework.OSUI.Patterns.Rating {
 			}
 		}
 
-		/**
-		 * Method that handles the click event and set the new value, by checking the input:checked
-		 *
-		 * @private
-		 * @param {MouseEvent}
-		 * @memberof Rating
-		 */
+		// Method that handles the click event and set the new value, by checking the input:checked
 		private _ratingOnClick(e: MouseEvent): void {
 			const currentTarget = e.target as HTMLElement;
 			// Remove the is-half when clicking, as a click will never result in a half value
@@ -158,13 +116,7 @@ namespace OSFramework.OSUI.Patterns.Rating {
 			}
 		}
 
-		/**
-		 * Method called on createItems() to render the correct HTML structure for each item
-		 *
-		 * @private
-		 * @param {number} index
-		 * @memberof Rating
-		 */
+		// Method called on createItems() to render the correct HTML structure for each item
 		private _renderItem(index: number): void {
 			// if not first input, which is hidden, add the html stored form the placeholders
 			const labelHTML = index !== 0 ? this._updateClonePlaceholdersAttrs(index) : '';
@@ -186,12 +138,7 @@ namespace OSFramework.OSUI.Patterns.Rating {
 			this._ratingFieldsetElem.innerHTML += input + label;
 		}
 
-		/**
-		 * Method that will add the needed events
-		 *
-		 * @private
-		 * @memberof Rating
-		 */
+		// Method that will add the needed events
 		private _setEvents(): void {
 			if (this.configs.IsEdit) {
 				// Otherwise, if there is no event already added and the param IsEdit is true, add new event
@@ -202,13 +149,7 @@ namespace OSFramework.OSUI.Patterns.Rating {
 			this._toggleRatingInputsEvents(!this.configs.IsEdit);
 		}
 
-		/**
-		 * Method to toggle fieldset disbaled status
-		 *
-		 * @private
-		 * @param {boolean} isDisabled
-		 * @memberof Rating
-		 */
+		// Method to toggle fieldset disbaled status
 		private _setFieldsetDisabledStatus(isDisabled: boolean): void {
 			const isFieldsetDisabled = Helper.Dom.Attribute.Get(
 				this._ratingFieldsetElem,
@@ -226,12 +167,7 @@ namespace OSFramework.OSUI.Patterns.Rating {
 			}
 		}
 
-		/**
-		 * Method to set the cssClasses that should be assigned to the element on it's initialization
-		 *
-		 * @private
-		 * @memberof Rating
-		 */
+		// Method to set the cssClasses that should be assigned to the element on it's initialization
 		private _setInitialCssClasses(): void {
 			// Set IsHalf class
 			if (this._isHalfValue) {
@@ -249,23 +185,12 @@ namespace OSFramework.OSUI.Patterns.Rating {
 			}
 		}
 
-		/**
-		 * Method to set the initial and local properties values
-		 *
-		 * @private
-		 * @memberof Rating
-		 */
+		// Method to set the initial and local properties values
 		private _setInitialPropertiesValues(): void {
 			this._ratingInputName = 'rating-' + this.uniqueId;
 		}
 
-		/**
-		 * Method to set disabled status
-		 *
-		 * @private
-		 * @param {boolean} isDisabled
-		 * @memberof Rating
-		 */
+		// Method to set disabled status
 		private _setIsDisabled(isDisabled: boolean): void {
 			this._disabled = isDisabled;
 			this._setFieldsetDisabledStatus(isDisabled);
@@ -277,12 +202,7 @@ namespace OSFramework.OSUI.Patterns.Rating {
 			}
 		}
 
-		/**
-		 * Method to set the IsEdit option
-		 *
-		 * @private
-		 * @memberof Rating
-		 */
+		// Method to set the IsEdit option
 		private _setIsEdit(): void {
 			// Toggle the is-edit class
 			if (this.configs.IsEdit) {
@@ -299,12 +219,7 @@ namespace OSFramework.OSUI.Patterns.Rating {
 			}
 		}
 
-		/**
-		 * Method to set a RatingScale - The amout of stars pattern will have
-		 *
-		 * @private
-		 * @memberof Rating
-		 */
+		// Method to set a RatingScale - The amout of stars pattern will have
 		private _setScale(): void {
 			// Clean (if already exist) old Stars inside pattern
 			this._ratingFieldsetElem.innerHTML = '';
@@ -314,13 +229,7 @@ namespace OSFramework.OSUI.Patterns.Rating {
 			this._setValue();
 		}
 
-		/**
-		 * Method to set the Rating Size
-		 *
-		 * @private
-		 * @param {string} oldSize
-		 * @memberof Rating
-		 */
+		// Method to set the Rating Size
 		private _setSize(oldSize: string): void {
 			// Reset current class
 			if (oldSize !== '') {
@@ -333,14 +242,7 @@ namespace OSFramework.OSUI.Patterns.Rating {
 			}
 		}
 
-		/**
-		 * Method to set a rating value
-		 *
-		 * @private
-		 * @param {boolean} [triggerEvent=false]
-		 * @return {*}  {void}
-		 * @memberof Rating
-		 */
+		// Method to set a rating value
 		private _setValue(triggerEvent = false): void {
 			// Check if passed value is decimal
 			this._decimalValue = this._getDecimalValue(this.configs.RatingValue);
@@ -411,10 +313,6 @@ namespace OSFramework.OSUI.Patterns.Rating {
 		 * Method used to manage the Rating inputs events, they will be only set when IsEdit=False
 		 * - This is needed in order to grant keyboard behaves like ckick, in order to avoid user be able
 		 * to select any star by using keyboard navigation when IsEdit=False!
-		 *
-		 * @private
-		 * @param {boolean} add Flag to indicates if events should be added or removed.
-		 * @memberof Rating
 		 */
 		private _toggleRatingInputsEvents(add: boolean): void {
 			// Get the list of inputs
@@ -429,25 +327,14 @@ namespace OSFramework.OSUI.Patterns.Rating {
 			}
 		}
 
-		/**
-		 * Method that triggers the OnSelect event
-		 *
-		 * @private
-		 * @param {number} value
-		 * @memberof Rating
-		 */
+		// Method that triggers the OnSelect event
 		private _triggerOnSelectEvent(value: number): void {
 			if (this._platformEventOnSelect !== undefined) {
 				this.triggerPlatformEventCallback(this._platformEventOnSelect, value);
 			}
 		}
 
-		/**
-		 * Method to remove the event listeners
-		 *
-		 * @private
-		 * @memberof Rating
-		 */
+		// Method to remove the event listeners
 		private _unsetEvents(): void {
 			if ((this.selfElement && this.configs.IsEdit === false) || this._disabled) {
 				this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnRatingClick);
@@ -457,14 +344,7 @@ namespace OSFramework.OSUI.Patterns.Rating {
 			this._toggleRatingInputsEvents(!this.configs.IsEdit && !this._disabled);
 		}
 
-		/**
-		 * Method to retunr the list of rating placeholders with the updated id attribute
-		 *
-		 * @private
-		 * @param {number} ratingIndex
-		 * @return {*}  {string}
-		 * @memberof Rating
-		 */
+		// Method to return the list of rating placeholders with the updated id attribute
 		private _updateClonePlaceholdersAttrs(ratingIndex: number): string {
 			// Store the ourterHTML of the placeholders
 			let placeholdersOuterHTML = '';

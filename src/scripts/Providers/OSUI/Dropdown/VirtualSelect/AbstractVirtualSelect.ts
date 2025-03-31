@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace Providers.OSUI.Dropdown.VirtualSelect {
-  export abstract class AbstractVirtualSelect<C extends Dropdown.VirtualSelect.AbstractVirtualSelectConfig>
+	export abstract class AbstractVirtualSelect<C extends Dropdown.VirtualSelect.AbstractVirtualSelectConfig>
 		extends OSFramework.OSUI.Patterns.Dropdown.AbstractDropdown<VirtualSelect, C>
 		implements IVirtualSelect
 	{
@@ -119,6 +119,11 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 			this.selfElement.removeEventListener(OSFramework.OSUI.GlobalEnum.HTMLEvent.MouseUp, this._onMouseUpEvent);
 
 			OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
+				OSFramework.OSUI.Event.DOMEvents.Listeners.Type.OrientationChange,
+				this._eventOnOrientationChange
+			);
+
+			OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
 				OSFramework.OSUI.Event.DOMEvents.Listeners.Type.WindowResize,
 				this._eventOnWindowResize
 			);
@@ -145,12 +150,12 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 				this.uniqueId
 			);
 
-      if (OSFramework.OSUI.Helper.DeviceInfo.HasAccessibilityEnabled) {
-        OSFramework.OSUI.Helper.Dom.Styles.AddClass(
-          this.provider.$dropboxContainer,
-          OSFramework.OSUI.Constants.HasAccessibilityClass
-        );
-      }
+			if (OSFramework.OSUI.Helper.DeviceInfo.HasAccessibilityEnabled) {
+				OSFramework.OSUI.Helper.Dom.Styles.AddClass(
+					this.provider.$dropboxContainer,
+					OSFramework.OSUI.Constants.HasAccessibilityClass
+				);
+			}
 
 			// Set provider Info to be used by setProviderConfigs API calls
 			this.updateProviderEvents({

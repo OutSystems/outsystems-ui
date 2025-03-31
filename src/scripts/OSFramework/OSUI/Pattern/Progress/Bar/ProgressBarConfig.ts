@@ -2,10 +2,5 @@
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSFramework.OSUI.Patterns.Progress.Bar {
-	export class ProgressBarConfig extends Progress.ProgressConfiguration {
-		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
-		constructor(config: any) {
-			super(config);
-		}
-	}
+	export class ProgressBarConfig extends Progress.ProgressConfiguration {}
 }

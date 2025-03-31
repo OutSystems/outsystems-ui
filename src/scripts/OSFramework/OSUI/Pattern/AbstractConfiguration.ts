@@ -13,8 +13,7 @@ namespace OSFramework.OSUI.Patterns {
 		constructor(config: JSON) {
 			for (const key in config) {
 				if (config[key] !== undefined) {
-					// eslint-disable-next-line @typescript-eslint/no-explicit-any
-					this[key] = this.validateDefault(key, config[key]) as any;
+					this[key] = this.validateDefault(key, config[key]);
 				}
 			}
 		}
