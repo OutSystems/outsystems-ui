@@ -16,12 +16,12 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		// Store configs set using extensibility
 		protected providerExtendedOptions: VirtualSelectOpts;
 		public ElementId: string;
-		public SanitizeDropdownValues = false;
 		public NoOptionsText: string;
 		public NoResultsText: string;
 		public OptionsList: DropDownOption[];
 		public PopupDropboxBreakpoint: string;
 		public Prompt: string;
+		public SanitizeDropdownValues = false;
 		public SearchPrompt: string;
 		public ShowDropboxAsPopup = true;
 		public StartingSelection: DropDownOption[];
