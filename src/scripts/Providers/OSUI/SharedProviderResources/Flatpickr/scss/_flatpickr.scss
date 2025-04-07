@@ -91,6 +91,7 @@
 	}
 
 	&.inline {
+		--osui-flatpickr-layer: var(--layer-global-screen);
 		display: inline-block;
 	}
 }
