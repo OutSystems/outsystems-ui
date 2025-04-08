@@ -93,6 +93,10 @@
 	&.inline {
 		--osui-flatpickr-layer: var(--layer-global-screen);
 		display: inline-block;
+
+		.flatpickr-weekwrapper {
+			min-width: max-content;
+		}
 	}
 }
 
