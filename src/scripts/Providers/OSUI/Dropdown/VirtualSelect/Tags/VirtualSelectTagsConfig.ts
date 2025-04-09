@@ -39,6 +39,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect.Tags {
 		 */
 		public getProviderConfig(): VirtualSelectOpts {
 			const virtualSelectTagsOpts = {
+				ariaLabelText: VirtualSelect.Enum.PropertiesValues.AriaLabelMultipleValue,
 				multiple: true,
 				showValueAsTags: true,
 			};
