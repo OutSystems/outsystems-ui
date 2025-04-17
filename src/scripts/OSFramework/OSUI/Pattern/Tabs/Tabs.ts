@@ -960,8 +960,7 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 				// to prevent triggering event if using client action SetActiveTab to set the already active item
 				(tabIndex === this.configs.StartingTab && this.isBuilt && tabsHeaderItem === undefined) ||
 				// To prevent changing tab when a dropdown is currently open and that content exists, which would cause UI issues
-				(this._activeTabContentElement &&
-					this._activeTabContentElement.selfElement.querySelector(Enum.ElementsBlockingOnChange.Dropdown))
+				this._activeTabContentElement?.selfElement.querySelector(Enum.ElementsBlockingOnChange.Dropdown)
 			) {
 				return;
 			}
