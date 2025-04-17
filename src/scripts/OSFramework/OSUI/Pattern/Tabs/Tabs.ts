@@ -363,6 +363,17 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 
 		// Method to make neccessary preparations for header and content items, that can't be done on their scope
 		private _prepareHeaderAndContentItems(): void {
+			// Make more visible the error message, if the user is trying to use the Tabs without any content or header item
+			// without being too intrusive
+			if (
+				this.getChildItems(Enum.ChildTypes.TabsContentItem).length === 0 ||
+				this.getChildItems(Enum.ChildTypes.TabsHeaderItem).length === 0
+			) {
+				console.log(
+					`${ErrorCodes.Tabs.FailNoContentOrHeaderItemFound}: To ensure predictable behavior and avoid runtime issues, the ${GlobalEnum.PatternName.Tabs} component under uniqueId: '${this.uniqueId}' is designed to include at least one ${GlobalEnum.PatternName.TabsHeaderItem} and one ${GlobalEnum.PatternName.TabsContentItem}.`
+				);
+			}
+
 			// Set if the Tabs has only one Content
 			this._hasSingleContent = this.getChildItems(Enum.ChildTypes.TabsContentItem).length === 1;
 
@@ -409,7 +420,7 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 				this.unsetChild(childContentId);
 			} else {
 				throw new Error(
-					`${ErrorCodes.Tabs.FailUnsetNewChildContentItem}: The ${GlobalEnum.PatternName.TabsContentItem} under uniqueId: '${childContentId}' does not exist as an TabsContentItem from ${GlobalEnum.PatternName.Tabs} with Id: ${this.widgetId}.`
+					`${ErrorCodes.Tabs.FailUnsetNewChildContentItem}: The ${GlobalEnum.PatternName.TabsContentItem} under uniqueId: '${childContentId}' does not exist as a ${GlobalEnum.PatternName.TabsContentItem} from ${GlobalEnum.PatternName.Tabs} with Id: ${this.widgetId}.`
 				);
 			}
 
@@ -467,7 +478,7 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 				this.unsetChild(childHeaderId);
 			} else {
 				throw new Error(
-					`${ErrorCodes.Tabs.FailUnsetNewChildHeaderItem}: The ${GlobalEnum.PatternName.TabsHeaderItem} under uniqueId: '${childHeaderId}' does not exist as an TabsHeaderItem from ${GlobalEnum.PatternName.Tabs} with Id: ${this.widgetId}.`
+					`${ErrorCodes.Tabs.FailUnsetNewChildHeaderItem}: The ${GlobalEnum.PatternName.TabsHeaderItem} under uniqueId: '${childHeaderId}' does not exist as a ${GlobalEnum.PatternName.TabsHeaderItem} from ${GlobalEnum.PatternName.Tabs} with Id: ${this.widgetId}.`
 				);
 			}
 
@@ -691,7 +702,7 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 
 			if (newHeaderItem === undefined) {
 				throw new Error(
-					`${ErrorCodes.Tabs.FailChildItemClicked}: The ${GlobalEnum.PatternName.TabsHeaderItem} under uniqueId: '${childHeaderId}' does not exist as an TabsHeaderItem from ${GlobalEnum.PatternName.Tabs} with Id: ${this.widgetId}.`
+					`${ErrorCodes.Tabs.FailChildItemClicked}: The ${GlobalEnum.PatternName.TabsHeaderItem} under uniqueId: '${childHeaderId}' does not exist as a ${GlobalEnum.PatternName.TabsHeaderItem} from ${GlobalEnum.PatternName.Tabs} with Id: ${this.widgetId}.`
 				);
 			}
 
@@ -948,8 +959,9 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 				this._activeTabHeaderElement === tabsHeaderItem ||
 				// to prevent triggering event if using client action SetActiveTab to set the already active item
 				(tabIndex === this.configs.StartingTab && this.isBuilt && tabsHeaderItem === undefined) ||
-				// To prevent changing tab when a dropdown is currently open, which would cause UI issues
-				this._activeTabContentElement.selfElement.querySelector(Enum.ElementsBlockingOnChange.Dropdown)
+				// To prevent changing tab when a dropdown is currently open and that content exists, which would cause UI issues
+				(this._activeTabContentElement &&
+					this._activeTabContentElement.selfElement.querySelector(Enum.ElementsBlockingOnChange.Dropdown))
 			) {
 				return;
 			}
