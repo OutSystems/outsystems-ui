@@ -58,6 +58,35 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 					OSFramework.OSUI.GlobalEnum.HTMLAttributes.Disabled
 				);
 			}
+
+			/**
+			 * Check if there is an label associated with the platform input.
+			 * 	- If/when a redraw occurs, the label will not be destroyed nor updated, we should search for the label through
+			 * 'for' attribute that is equal to the platform input id, which is the base one to create the new Id.
+			 */
+			const inputLabelElem = OSFramework.OSUI.Helper.Dom.TagSelectorAll(
+				document.body,
+				OSFramework.OSUI.GlobalEnum.HTMLElement.Label
+			).filter(
+				(_lbl) =>
+					_lbl
+						.getAttribute(OSFramework.OSUI.GlobalEnum.HTMLAttributes.For)
+						.indexOf(this.timePickerPlatformInputElem.id) > -1
+			);
+
+			// If there is an label associated with the platform input
+			if (this.flatpickrInputElem && inputLabelElem.length > 0) {
+				// Create an Id for the flatpickr input element that will be then used to set the label for attribute
+				const flatpickrInputElemId = 'fp_' + this.timePickerPlatformInputElem.id;
+				// Set the Id to the flatpickr input element
+				this.flatpickrInputElem.id = flatpickrInputElemId;
+				// Update the label for attribute to the flatpickr input element
+				OSFramework.OSUI.Helper.Dom.Attribute.Set(
+					inputLabelElem[0],
+					OSFramework.OSUI.GlobalEnum.HTMLAttributes.For,
+					flatpickrInputElemId
+				);
+			}
 		}
 
 		// Method used to set the CSS classes to the pattern HTML elements
