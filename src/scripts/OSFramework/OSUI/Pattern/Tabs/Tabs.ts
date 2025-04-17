@@ -369,7 +369,7 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 				this.getChildItems(Enum.ChildTypes.TabsContentItem).length === 0 ||
 				this.getChildItems(Enum.ChildTypes.TabsHeaderItem).length === 0
 			) {
-				console.log(
+				console.warn(
 					`${ErrorCodes.Tabs.FailNoContentOrHeaderItemFound}: To ensure predictable behavior and avoid runtime issues, the ${GlobalEnum.PatternName.Tabs} component under uniqueId: '${this.uniqueId}' is designed to include at least one ${GlobalEnum.PatternName.TabsHeaderItem} and one ${GlobalEnum.PatternName.TabsContentItem}.`
 				);
 			}
