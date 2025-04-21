@@ -226,7 +226,7 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 			}
 
 			// Check if target is the header, to do not change tab on x arrow press
-			if (e.target !== this._activeTabHeaderElement.selfElement) {
+			if (e.target !== this._activeTabHeaderElement?.selfElement) {
 				return;
 			}
 
