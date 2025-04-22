@@ -149,7 +149,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 			const todayBtn = document.createElement(OSFramework.OSUI.GlobalEnum.HTMLElement.Link);
 
 			// Set the tabindex for the today button
-			if (this.provider.isOpen) {
+			if (this.provider.isOpen || this.provider.config.inline) {
 				OSFramework.OSUI.Helper.A11Y.TabIndexTrue(todayBtn);
 			} else {
 				OSFramework.OSUI.Helper.A11Y.TabIndexFalse(todayBtn);
@@ -265,7 +265,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 			}
 
 			// Remove the tabindex from the link inside the today button if it exists
-			if (this.configs.ShowTodayButton && this._todayButtonElem) {
+			if (this.configs.ShowTodayButton && this._todayButtonElem && this.provider.config.inline === false) {
 				OSFramework.OSUI.Helper.A11Y.TabIndexFalse(
 					this._todayButtonElem.querySelector(OSFramework.OSUI.GlobalEnum.HTMLElement.Link)
 				);
@@ -505,7 +505,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		public close(): void {
 			if (this.provider.isOpen) {
 				this.provider.close();
-				if (this.configs.ShowTodayButton) {
+				if (this.configs.ShowTodayButton && this.provider.config.inline === false) {
 					OSFramework.OSUI.Helper.A11Y.TabIndexFalse(this._todayButtonElem);
 				}
 			}

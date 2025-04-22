@@ -232,7 +232,7 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 			Helper.A11Y.AriaHasPopupTrue(this._submenuHeaderElement);
 			Helper.A11Y.TabIndexTrue(this._submenuHeaderElement);
 			Helper.A11Y.AriaControls(this._submenuHeaderElement, this._submenuLinksElement.id);
-			Helper.A11Y.RoleButton(this._submenuHeaderElement);
+			Helper.A11Y.RoleMenuItem(this._submenuHeaderElement);
 
 			// Set the attr that will be used to define the default tabindex element
 			Helper.Dom.Attribute.Set(
@@ -243,7 +243,7 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 
 			// Set the role menuitem on each link
 			this._submenuAllLinksElement.forEach((item: HTMLElement) => {
-				Helper.A11Y.RoleMenuItem(item);
+				Helper.A11Y.RoleButton(item);
 			});
 
 			// Method that as the initial A11Y states and to be used on parameters changed
