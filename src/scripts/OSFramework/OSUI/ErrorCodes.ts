@@ -57,6 +57,7 @@ namespace OSFramework.OSUI.ErrorCodes {
 		FailToSetChildItemAction: 'OSUI-GEN-09004',
 		FailUnsetNewChildContentItem: 'OSUI-GEN-09005',
 		FailUnsetNewChildHeaderItem: 'OSUI-GEN-09006',
+		FailNoContentOrHeaderItemFound: 'OSUI-GEN-09007',
 	};
 
 	export const AbstractParent = {
