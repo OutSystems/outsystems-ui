@@ -502,10 +502,10 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 					} else {
 						this._activeTabHeaderElement = null;
 					}
-
-					// Update scale size variable
-					this._handleTabIndicator();
 				}
+
+        // Update scale size variable
+        Helper.AsyncInvocation(this._handleTabIndicator.bind(this));
 			}
 		}
 
