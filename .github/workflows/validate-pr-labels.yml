@@ -4,6 +4,10 @@ on:
     pull_request:
         types: [opened, reopened, labeled, unlabeled]
 
+concurrency:
+    group: ${{ github.ref }}
+    cancel-in-progress: true
+
 jobs:
     check-label:
         uses: OutSystems/rd.github-reusable-workflows/.github/workflows/validate-pr-labels.yaml@v2.0.5

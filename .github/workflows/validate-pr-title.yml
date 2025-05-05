@@ -4,6 +4,10 @@ on:
     pull_request:
         types: [opened, reopened, edited]
 
+concurrency:
+    group: ${{ github.ref }}
+    cancel-in-progress: true
+
 jobs:
     build:
         uses: OutSystems/rd.github-reusable-workflows/.github/workflows/validate-pr-title.yaml@v2.0.5
