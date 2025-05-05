@@ -39,7 +39,7 @@ jobs:
 
         steps:
             - name: Checkout into ${{ inputs.branch-name }}
-              uses: actions/checkout@v4
+              uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
               with:
                   ref: ${{ inputs.branch-name }}
                   token: ${{ secrets.pat }}
@@ -58,7 +58,7 @@ jobs:
 
         steps:
             - name: Checkout into ${{ inputs.branch-name }}
-              uses: actions/checkout@v4
+              uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
               with:
                   ref: ${{ inputs.branch-name }}
                   token: ${{ secrets.pat }}
@@ -79,7 +79,7 @@ jobs:
                   git config --global user.name "UiComponentsBot"
 
             - name: Checkout into deploy-docs
-              uses: actions/checkout@v4
+              uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
               with:
                   ref: deploy-docs
                   token: ${{ secrets.PAT }}
@@ -106,14 +106,14 @@ jobs:
 
         steps:
             - name: Checkout into deploy-docs
-              uses: actions/checkout@v4
+              uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
               with:
                   ref: deploy-docs
                   token: ${{ secrets.pat }}
 
             - name: Push documentation files into github page
               if: ${{ needs.check-repo.outputs.is-real-osui-repo == 'true' }}
-              uses: GuillaumeFalourd/copy-push-files@v1
+              uses: GuillaumeFalourd/copy-push-files@758ee05c45fbd682b62908f2373bf070077a1e43 # v1
               with:
                   source_files: docs/*
                   remote_repository: https://github.com/outsystems-ui-docs/outsystems-ui-docs.github.io
@@ -128,7 +128,7 @@ jobs:
         if: ${{ inputs.delete-created-branch == true }}
         steps:
             - name: Checkout branch dev
-              uses: actions/checkout@v4
+              uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
               with:
                   ref: dev
 
