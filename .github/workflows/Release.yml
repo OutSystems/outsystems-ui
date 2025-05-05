@@ -1,4 +1,4 @@
-name: Release
+name: Release of OutSystems Maps
 
 on:
     workflow_dispatch:
@@ -17,83 +17,9 @@ on:
                 default: true
 
 jobs:
-    run-lint-on-rc:
-        runs-on: ubuntu-latest
-
-        if: ${{ inputs.new-version }}
-        steps:
-            - name: Checkout into rc${{ inputs.new-version }}
-              uses: actions/checkout@v4
-              with:
-                  ref: rc${{ inputs.new-version }}
-                  token: ${{ secrets.PAT }}
-
-            - name: Install project dependencies
-              run: npm install
-
-            - name: Run build
-              run: npm run build
-
-    merge-rc-into-main:
-        needs: run-lint-on-rc
-        runs-on: ubuntu-latest
-
-        if: ${{ inputs.new-version }}
-        steps:
-            - name: Merge rc${{ inputs.new-version }} into main
-              uses: everlytic/branch-merge@1.1.5
-              with:
-                  github_token: ${{ secrets.PAT }}
-                  source_ref: rc${{ inputs.new-version }}
-                  target_branch: 'main'
-                  commit_message_template: 'Merged rc${{ inputs.new-version }} into main. [skip ci]'
-
-    set-pre-release-as-lts:
-        needs: merge-rc-into-main
-        runs-on: ubuntu-latest
-
-        steps:
-            - name: Update v${{ inputs.new-version }} Tag Release from pre-release into latest
-              if: ${{ inputs.new-version && inputs.update-prerelease-into-latest == true }}
-              uses: softprops/action-gh-release@v2.0.5
-              with:
-                  tag_name: v${{ inputs.new-version }}
-                  prerelease: false
-                  token: ${{ secrets.PAT }}
-    npm:
-        needs: run-lint-on-rc
-        uses: ./.github/workflows/ManageNPM.yml
+    set-release-latest:
+        uses: OutSystems/ui-components.github-reusable-workflows/.github/workflows/release.yaml@5849cd2fd1ccfd786ba0ba28f5ef4270b57ed3a3 #v0.1.1-alpha
         with:
-            branch-name: rc${{ inputs.new-version }}
-            delete-created-branch: true
-            run-lint: false
-        secrets:
-            pat: ${{ secrets.PAT }}
-            npmPat: ${{ secrets.NPM_UICOMPONENTS }}
-
-    docs:
-        needs: run-lint-on-rc
-        uses: ./.github/workflows/ManageDocs.yml
-        with:
-            branch-name: rc${{ inputs.new-version }}
-            delete-created-branch: true
-            run-lint: false
-        secrets:
-            pat: ${{ secrets.PAT }}
-            uiCompDocs: ${{ secrets.UICOMPONENTSDOCS }}
-
-    delete-rc-branch:
-        needs: [merge-rc-into-main, npm, docs]
-        runs-on: ubuntu-latest
-
-        if: ${{ inputs.delete-rc-branch == true }}
-        steps:
-            - name: Checkout branch dev
-              uses: actions/checkout@v4
-              with:
-                  ref: dev
-
-            - name: Delete branch rc${{ inputs.new-version }}
-              shell: bash
-              run: |
-                  git push origin -d rc${{ inputs.new-version }}
+            new-version: ${{ inputs.new-version }}
+            update-prerelease-into-latest: ${{ inputs.update-prerelease-into-latest }}
+            delete-rc-branch: ${{ inputs.delete-rc-branch }}
