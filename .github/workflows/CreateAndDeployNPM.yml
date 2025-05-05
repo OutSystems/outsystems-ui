@@ -12,12 +12,23 @@ on:
                 default: true
 
 jobs:
+    get-gitpersonal-token:
+        uses: OutSystems/rd.github-reusable-workflows/.github/workflows/az-vault-get-key@CommitHash #v?.?.?
+        with:
+            key-name: o11odc-github-gitpersonal-token-prd
+
+    get-npm-token:
+        uses: OutSystems/rd.github-reusable-workflows/.github/workflows/az-vault-get-key@CommitHash #v?.?.?
+        with:
+            key-name: o11odc-github-npm-token-prd
+
     docs:
+        needs: [get-gitpersonal-token, get-npm-token]
         uses: ./.github/workflows/ManageNPM.yml
         with:
             branch-name: ${{ inputs.branch-name }}
             delete-created-branch: ${{ inputs.delete-branch }}
             run-lint: true
         secrets:
-            pat: ${{ secrets.PAT }}
-            npmPat: ${{ secrets.NPM_UICOMPONENTS }}
+            pat: ${{ needs.get-gitpersonal-token.outputs.az-keyvault-value }}
+            npmPat: ${{ needs.get-npm-token.outputs.az-keyvault-value }}
