@@ -11,18 +11,18 @@ concurrency:
 
 jobs:
     get-ado-token:
-        uses: OutSystems/rd.github-reusable-workflows/.github/workflows/az-vault-get-key@CommitHash #v?.?.?
+        uses: OutSystems/rd.github-reusable-workflows/.github/workflows/az-keyvault-get.yaml@3df86e14f6ad0021256077f91c43eca3f73d3b57 #v2.0.6
         with:
             key-name: o11odc-github-ado-token-prd
 
     get-sonar-token:
-        uses: OutSystems/rd.github-reusable-workflows/.github/workflows/az-vault-get-key@CommitHash #v?.?.?
+        uses: OutSystems/rd.github-reusable-workflows/.github/workflows/az-keyvault-get.yaml@3df86e14f6ad0021256077f91c43eca3f73d3b57 #v2.0.6
         with:
             key-name: o11odc-github-sonarcloud-token-prd
 
     build:
         needs: [get-ado-token, get-sonar-token]
-        uses: OutSystems/rd.github-reusable-workflows/.github/workflows/ts-build-project@CommitHash #v?.?.?
+        uses: OutSystems/rd.github-reusable-workflows/.github/workflows/ts-build-project.yaml@9d497d1c5bc6e355aa8f4663539e6b75c212f6b4 #v2.0.7
         with:
             github-ref: ${{ github.ref }}
             run-jest-tests: false

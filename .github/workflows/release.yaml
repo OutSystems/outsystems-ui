@@ -1,4 +1,4 @@
-name: Release of OutSystems Maps
+name: Release of OutSystems UI
 
 on:
     workflow_dispatch:

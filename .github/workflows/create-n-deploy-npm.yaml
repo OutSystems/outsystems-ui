@@ -13,18 +13,18 @@ on:
 
 jobs:
     get-gitpersonal-token:
-        uses: OutSystems/rd.github-reusable-workflows/.github/workflows/az-vault-get-key@CommitHash #v?.?.?
+        uses: OutSystems/rd.github-reusable-workflows/.github/workflows/az-keyvault-get.yaml@3df86e14f6ad0021256077f91c43eca3f73d3b57 #v2.0.6
         with:
             key-name: o11odc-github-gitpersonal-token-prd
 
     get-npm-token:
-        uses: OutSystems/rd.github-reusable-workflows/.github/workflows/az-vault-get-key@CommitHash #v?.?.?
+        uses: OutSystems/rd.github-reusable-workflows/.github/workflows/az-keyvault-get.yaml@3df86e14f6ad0021256077f91c43eca3f73d3b57 #v2.0.6
         with:
             key-name: o11odc-github-npm-token-prd
 
     docs:
         needs: [get-gitpersonal-token, get-npm-token]
-        uses: ./.github/workflows/ManageNPM.yml
+        uses: ./.github/workflows/manage-npm.yaml
         with:
             branch-name: ${{ inputs.branch-name }}
             delete-created-branch: ${{ inputs.delete-branch }}
