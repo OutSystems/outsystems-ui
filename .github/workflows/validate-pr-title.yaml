@@ -10,6 +10,6 @@ concurrency:
 
 jobs:
     build:
-        uses: OutSystems/rd.github-reusable-workflows/.github/workflows/validate-pr-title.yaml@3df86e14f6ad0021256077f91c43eca3f73d3b57 #v2.0.6
+        uses: OutSystems/rd.github-reusable-workflows/.github/workflows/validate-pr-title.yaml@9d497d1c5bc6e355aa8f4663539e6b75c212f6b4 #v2.0.7
         with:
             validate-semVer: false
