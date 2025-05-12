@@ -1,4 +1,4 @@
-# OutSystems UI · v2.22.0
+# OutSystems UI · v2.23.0
 
 ![GitHub License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg) ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
 

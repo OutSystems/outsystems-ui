@@ -8,7 +8,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		private _a11yInfoContainerElem: HTMLElement;
 		// Event OnBodyScroll common behaviour
 		private _bodyScrollCommonBehaviour: SharedProviderResources.Flatpickr.UpdatePositionOnScroll;
-		/* Flag to store the satus of the platform input */
+		// Flag to store the status of the platform input
 		private _isPlatformInputDisabled: boolean;
 		// Store HtmlElement for the provider focus span target
 		private _providerFocusSpanTarget: HTMLElement;
@@ -40,7 +40,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 			this.configs.OnOpen = this.onDatePickerOpen.bind(this);
 		}
 
-		// Method used to set the needed HTML attributes
+		// Method used to set the HTML attributes to the Flatpickr input element
 		private _setAttributes(): void {
 			// Since a new input will be added by the flatpickr library, we must address it only at onReady
 			if (this.datePickerPlatformInputElem.nextSibling) {
@@ -63,7 +63,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 			}
 		}
 
-		// Method used to set the CSS classes to the pattern HTML elements
+		// Method used to set the CSS classes to the calendar HTML elements
 		private _setCalendarCssClasses(): void {
 			OSFramework.OSUI.Helper.Dom.Styles.AddClass(
 				this.provider.calendarContainer,
@@ -80,7 +80,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 			}
 		}
 
-		// Set the clientHeight to the parent container as an inline style in order vertical content remains same and avoid content vertical flickering!
+		// Method used to set the clientHeight to the parent container as an inline style in order vertical content remains same and avoid content vertical flickering!
 		private _setParentMinHeight(): void {
 			OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(
 				this.selfElement,
@@ -89,7 +89,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 			);
 		}
 
-		// Method to handle the keydows event for the Today Button
+		// Method used to handle the keydown event for the Today Button
 		private _todayButtonKeydown(e: KeyboardEvent): void {
 			switch (e.key) {
 				case OSFramework.OSUI.GlobalEnum.Keycodes.Tab:
@@ -107,7 +107,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 			}
 		}
 
-		// Remove the clientHeight that has been assigned before the redraw process!
+		// Method used to remove the clientHeight that has been assigned before the redraw process!
 		private _unsetParentMinHeight(): void {
 			OSFramework.OSUI.Helper.Dom.Styles.RemoveStyleAttribute(
 				this.selfElement,
@@ -115,7 +115,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 			);
 		}
 
-		// Update certain A11Y properties
+		// Method used to update the A11Y properties of the Flatpickr input element
 		private _updateA11yProperties(): void {
 			// Ensure flatpickrInputElem tabindex is updated based on the platform input status
 			OSFramework.OSUI.Helper.Dom.Attribute.Set(
@@ -149,7 +149,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 			const todayBtn = document.createElement(OSFramework.OSUI.GlobalEnum.HTMLElement.Link);
 
 			// Set the tabindex for the today button
-			if (this.provider.isOpen) {
+			if (this.provider.isOpen || this.provider.config.inline) {
 				OSFramework.OSUI.Helper.A11Y.TabIndexTrue(todayBtn);
 			} else {
 				OSFramework.OSUI.Helper.A11Y.TabIndexFalse(todayBtn);
@@ -206,27 +206,19 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 
 			// Since native behaviour could be enabled, check if the calendar container exist!
 			if (this.provider.calendarContainer !== undefined) {
-				if (
-					this.configs.DisableMobile === true ||
-					OSFramework.OSUI.Helper.DeviceInfo.IsDesktop ||
-					this.configs.CalendarMode === OSFramework.OSUI.Patterns.DatePicker.Enum.Mode.Range
-				) {
-					// Add TodayBtn
-					if (this.configs.ShowTodayButton) {
-						this.addTodayBtn();
-					}
-
-					// Set Calendar CSS classes
-					this._setCalendarCssClasses();
-
-					// set the onBodyScroll update calendar position behaviour!
-					this._bodyScrollCommonBehaviour = new SharedProviderResources.Flatpickr.UpdatePositionOnScroll(
-						this
-					);
-
-					// set the zindex update position behaviour!
-					this._zindexCommonBehavior = new SharedProviderResources.Flatpickr.UpdateZindex(this);
+				// Add TodayBtn
+				if (this.configs.ShowTodayButton) {
+					this.addTodayBtn();
 				}
+
+				// Set Calendar CSS classes
+				this._setCalendarCssClasses();
+
+				// set the onBodyScroll update calendar position behaviour!
+				this._bodyScrollCommonBehaviour = new SharedProviderResources.Flatpickr.UpdatePositionOnScroll(this);
+
+				// set the zindex update position behaviour!
+				this._zindexCommonBehavior = new SharedProviderResources.Flatpickr.UpdateZindex(this);
 			}
 
 			// Due to platform validations every time a new redraw occurs we must ensure we remove the class based on a clone from the platform input!
@@ -273,7 +265,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 			}
 
 			// Remove the tabindex from the link inside the today button if it exists
-			if (this.configs.ShowTodayButton && this._todayButtonElem) {
+			if (this.configs.ShowTodayButton && this._todayButtonElem && this.provider.config.inline === false) {
 				OSFramework.OSUI.Helper.A11Y.TabIndexFalse(
 					this._todayButtonElem.querySelector(OSFramework.OSUI.GlobalEnum.HTMLElement.Link)
 				);
@@ -513,7 +505,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		public close(): void {
 			if (this.provider.isOpen) {
 				this.provider.close();
-				if (this.configs.ShowTodayButton) {
+				if (this.configs.ShowTodayButton && this.provider.config.inline === false) {
 					OSFramework.OSUI.Helper.A11Y.TabIndexFalse(this._todayButtonElem);
 				}
 			}
@@ -522,7 +514,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		/**
 		 * Method used to disable days on DatePicker
 		 *
-		 * @param disableDays
+		 * @param {string[]} disableDays
 		 * @memberof Flatpickr.DisableDays
 		 */
 		public disableDays(disableDays: string[]): void {
@@ -533,8 +525,8 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		/**
 		 * Method used to disable weekdays on DatePicker
 		 *
-		 * @param disableWeekDays
-		 * @memberof Flatpickr.DisableWeekDays
+		 * @param {number[]} disableWeekDays
+		 * @memberof AbstractFlatpickr
 		 */
 		public disableWeekDays(disableWeekDays: number[]): void {
 			this.configs.DisabledWeekDays = disableWeekDays;
@@ -633,7 +625,8 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		/**
 		 * Method used to set the DatePicker language
 		 *
-		 * @memberof Providers.OSUI.DatePicker.Flatpickr.AbstractFlatpickr
+		 * @param {string} value
+		 * @memberof AbstractFlatpickr
 		 */
 		public setLanguage(value: string): void {
 			// Set the new Language

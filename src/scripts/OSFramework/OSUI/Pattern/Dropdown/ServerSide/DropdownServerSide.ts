@@ -312,14 +312,14 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 					case GlobalEnum.Keycodes.ArrowUp:
 						// Check If focused item is not the first one!
 						if (getOptionItemIndex > 0) {
-							this._updateOptionItemFocuStateOnKeyPress(optionItem, getOptionItemIndex - 1);
+							this._updateOptionItemFocusStateOnKeyPress(optionItem, getOptionItemIndex - 1);
 						}
 						break;
 
 					// ArrowDown
 					case GlobalEnum.Keycodes.ArrowDown:
 						if (getOptionItemIndex < this.getChildItems().length - 1) {
-							this._updateOptionItemFocuStateOnKeyPress(optionItem, getOptionItemIndex + 1);
+							this._updateOptionItemFocusStateOnKeyPress(optionItem, getOptionItemIndex + 1);
 						}
 						break;
 
@@ -495,7 +495,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 				GlobalEnum.HTMLEvent.keyDown,
 				this._eventOnkeyboardPress
 			);
-			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
+			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
 				Event.DOMEvents.Listeners.Type.BalloonOnToggle,
 				this._eventBalloonOnToggle
 			);
@@ -580,14 +580,14 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		}
 
 		// Method to (un)set option item focus statue
-		private _updateOptionItemFocuStateOnKeyPress(
+		private _updateOptionItemFocusStateOnKeyPress(
 			optionItem: Patterns.DropdownServerSideItem.IDropdownServerSideItem,
 			itemIndex: number
 		): void {
 			// Check if Dropdown should only allow single option selected!
 			if (this.configs.AllowMultipleSelection === false) {
 				// Unset IsSelected to the previous Item
-				optionItem.toggleSelected();
+				optionItem.toggleSelected(false);
 				// Set IsSelected to the next item
 				this.getChildByIndex(itemIndex).toggleSelected();
 			}

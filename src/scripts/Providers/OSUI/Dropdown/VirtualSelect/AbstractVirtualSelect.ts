@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace Providers.OSUI.Dropdown.VirtualSelect {
-  export abstract class AbstractVirtualSelect<C extends Dropdown.VirtualSelect.AbstractVirtualSelectConfig>
+	export abstract class AbstractVirtualSelect<C extends Dropdown.VirtualSelect.AbstractVirtualSelectConfig>
 		extends OSFramework.OSUI.Patterns.Dropdown.AbstractDropdown<VirtualSelect, C>
 		implements IVirtualSelect
 	{
@@ -13,8 +13,6 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		private _onSelectedOptionEvent: OSFramework.OSUI.GlobalCallbacks.Generic;
 		private _platformEventSelectedOptCallback: OSFramework.OSUI.Patterns.Dropdown.Callbacks.OSOnSelectEvent;
 
-		// Store the hidden input AriaLabel value
-		protected hiddenInputWrapperAriaLabelVal: string;
 		// Store a reference of available provider methods
 		protected virtualselectConfigs: VirtualSelectMethods;
 		// Store the provider options
@@ -40,12 +38,6 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 
 				this.selfElement.parentElement.appendChild(textContainer);
 			}
-		}
-
-		// Manage the attributes to be added
-		private _manageAttributes(): void {
-			// Manage A11Y attributes
-			this.setA11YProperties();
 		}
 
 		// Manage the disable status of the pattern
@@ -119,6 +111,11 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 			this.selfElement.removeEventListener(OSFramework.OSUI.GlobalEnum.HTMLEvent.MouseUp, this._onMouseUpEvent);
 
 			OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
+				OSFramework.OSUI.Event.DOMEvents.Listeners.Type.OrientationChange,
+				this._eventOnOrientationChange
+			);
+
+			OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
 				OSFramework.OSUI.Event.DOMEvents.Listeners.Type.WindowResize,
 				this._eventOnWindowResize
 			);
@@ -145,12 +142,12 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 				this.uniqueId
 			);
 
-      if (OSFramework.OSUI.Helper.DeviceInfo.HasAccessibilityEnabled) {
-        OSFramework.OSUI.Helper.Dom.Styles.AddClass(
-          this.provider.$dropboxContainer,
-          OSFramework.OSUI.Constants.HasAccessibilityClass
-        );
-      }
+			if (OSFramework.OSUI.Helper.DeviceInfo.HasAccessibilityEnabled) {
+				OSFramework.OSUI.Helper.Dom.Styles.AddClass(
+					this.provider.$dropboxContainer,
+					OSFramework.OSUI.Constants.HasAccessibilityClass
+				);
+			}
 
 			// Set provider Info to be used by setProviderConfigs API calls
 			this.updateProviderEvents({
@@ -158,9 +155,6 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 				version: Enum.ProviderInfo.Version,
 				events: this.virtualselectConfigs,
 			});
-
-			// Add attributes to the element if needed
-			this._manageAttributes();
 
 			const _bodyEvent = OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.events.get(
 				OSFramework.OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick
@@ -186,14 +180,13 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		}
 
 		/**
-		 * Method that adds the necessary attributes for A11Y purposes
+		 * This method has no implementation on this pattern context!
 		 *
 		 * @protected
 		 * @memberof Providers.OSUI.Dropdown.VirtualSelect.AbstractVirtualSelect
 		 */
 		protected setA11YProperties(): void {
-			// Set the Hidden Input AriaLabel value
-			this.setHiddenInputWrapperAriaLabelVal();
+			console.log(OSFramework.OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
 		}
 
 		/**
@@ -290,6 +283,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 					case OSFramework.OSUI.Patterns.Dropdown.Enum.Properties.IsDisabled:
 						this._manageDisableStatus();
 						break;
+					case Enum.Properties.SanitizeDropdownValues:
 					case Enum.Properties.NoOptionsText:
 					case Enum.Properties.NoResultsText:
 					case Enum.Properties.OptionsList:
@@ -434,15 +428,16 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		}
 
 		/**
-		 * Method used to set the Hidden Input AriaLabel text value
-		 *
-		 * @param {string} value
-		 * @memberof Providers.OSUI.Dropdown.VirtualSelect.AbstractVirtualSelect
+		 * @deprecated use 'SetVirtualSelectConfigs' client action through LowCode or 'OutSystems.OSUI.Patterns.DropdownAPI.SetProviderConfigs()' API instead.
 		 */
 		public setHiddenInputWrapperAriaLabelVal(value?: string): void {
-			this.hiddenInputWrapperAriaLabelVal = value === undefined ? this.hiddenInputWrapperAriaLabelVal : value;
-			// Set HiddenInput AriaLabel Value
-			OSFramework.OSUI.Helper.A11Y.AriaLabel(this.provider.$wrapper, this.hiddenInputWrapperAriaLabelVal);
+			console.warn(
+				'setHiddenInputWrapperAriaLabelVal(...), is deprecated. Please use `SetVirtualSelectConfigs` client action through LowCode or `OutSystems.OSUI.Patterns.DropdownAPI.SetProviderConfigs(...)` JS API instead.'
+			);
+
+			this.setProviderConfigs({
+				ariaLabelText: value,
+			});
 		}
 
 		/**

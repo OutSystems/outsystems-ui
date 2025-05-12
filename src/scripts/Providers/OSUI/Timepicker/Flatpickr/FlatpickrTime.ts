@@ -11,7 +11,7 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 		private _bodyScrollCommonBehaviour: SharedProviderResources.Flatpickr.UpdatePositionOnScroll;
 		// Store the provider options
 		private _flatpickrOpts: FlatpickrOptions;
-		/* Flag to store the satus of the platform input */
+		// Flag to store the status of the platform input
 		private _isPlatformInputDisabled: boolean;
 		// Validation of ZIndex position common behavior
 		private _zindexCommonBehavior: SharedProviderResources.Flatpickr.UpdateZindex;
@@ -31,12 +31,7 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 			this.configs.OnOpenEventCallback = this.onOpen.bind(this);
 		}
 
-		/**
-		 * Method that will get the instance of the Global onBodyClick event.
-		 *
-		 * @private
-		 * @memberof Providers.OSUI.TimePicker.Flatpickr.OSUIFlatpickrTime
-		 */
+		// Method that will get the instance of the Global onBodyClick event.
 		private _getBodyOnClickGlobalEvent(): void {
 			this._bodyOnClickGlobalEvent =
 				OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.events.get(
@@ -61,6 +56,29 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 				OSFramework.OSUI.Helper.Dom.Attribute.Remove(
 					this.flatpickrInputElem,
 					OSFramework.OSUI.GlobalEnum.HTMLAttributes.Disabled
+				);
+			}
+
+			/**
+			 * Check if there is an label associated with the platform input.
+			 * 	- If/when a redraw occurs, the label will not be destroyed nor updated, we should search for the label through
+			 * 'for' attribute that is equal to the platform input id, which is the base one to create the new Id.
+			 */
+			const inputLabelElem = document.querySelector(
+				`${OSFramework.OSUI.GlobalEnum.HTMLElement.Label}[${OSFramework.OSUI.GlobalEnum.HTMLAttributes.For}*=${this.timePickerPlatformInputElem.id}]`
+			) as HTMLElement;
+
+			// If there is an label associated with the platform input
+			if (this.flatpickrInputElem && inputLabelElem) {
+				// Create an Id for the flatpickr input element that will be then used to set the label for attribute
+				const flatpickrInputElemId = 'fp_' + this.timePickerPlatformInputElem.id;
+				// Set the Id to the flatpickr input element
+				this.flatpickrInputElem.id = flatpickrInputElemId;
+				// Update the label for attribute to the flatpickr input element
+				OSFramework.OSUI.Helper.Dom.Attribute.Set(
+					inputLabelElem,
+					OSFramework.OSUI.GlobalEnum.HTMLAttributes.For,
+					flatpickrInputElemId
 				);
 			}
 		}

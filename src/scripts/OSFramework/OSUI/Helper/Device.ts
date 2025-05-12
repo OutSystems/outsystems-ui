@@ -87,6 +87,18 @@ namespace OSFramework.OSUI.Helper {
 		{ width: 1284, height: 2778, description: 'iphone 14 plus' },
 		{ width: 1179, height: 2556, description: 'iphone 14 pro' },
 		{ width: 1290, height: 2796, description: 'iphone 14 pro max' },
+
+		// iPhone15
+		{ width: 1179, height: 2556, description: 'iphone 15' },
+		{ width: 1290, height: 2796, description: 'iphone 15 plus' },
+		{ width: 1179, height: 2556, description: 'iphone 15 pro' },
+		{ width: 1290, height: 2796, description: 'iphone 15 pro max' },
+
+		// iPhone16
+		{ width: 1179, height: 2556, description: 'iphone 16' },
+		{ width: 1290, height: 2796, description: 'iphone 16 plus' },
+		{ width: 1206, height: 2622, description: 'iphone 16 pro' },
+		{ width: 1320, height: 2868, description: 'iphone 16 pro max' },
 	];
 
 	export abstract class DeviceInfo {
@@ -102,15 +114,7 @@ namespace OSFramework.OSUI.Helper {
 		private static _operatingSystem = GlobalEnum.MobileOS.Unknown;
 
 		/******************** PRIVATE METHODS ********************/
-		/**
-		 * Gets the operating system based on the user agent.
-		 *
-		 * @private
-		 * @static
-		 * @param {string} [userAgent='']
-		 * @return {*}  {GlobalEnum.MobileOS}
-		 * @memberof OSFramework.Helper.DeviceInfo
-		 */
+		// Gets the operating system based on the user agent.
 		private static _getOperatingSystem(userAgent = ''): GlobalEnum.MobileOS {
 			const userAgentLocal = DeviceInfo._getUserAgent(userAgent);
 			let localOs = GlobalEnum.MobileOS.Unknown;
@@ -130,15 +134,7 @@ namespace OSFramework.OSUI.Helper {
 			return localOs;
 		}
 
-		/**
-		 * Cleans the userAgent passed by the developer, or returns the one from the window.
-		 *
-		 * @private
-		 * @static
-		 * @param {string} [userAgent='']
-		 * @return {*}
-		 * @memberof OSFramework.Helper.DeviceInfo
-		 */
+		// Cleans the userAgent passed by the developer, or returns the one from the window.
 		private static _getUserAgent(userAgent = ''): string {
 			let localUserAgent = userAgent;
 
@@ -153,28 +149,12 @@ namespace OSFramework.OSUI.Helper {
 			return localUserAgent.toLowerCase();
 		}
 
-		/**
-		 * Checks if it's running inside chrome browser.
-		 *
-		 * @private
-		 * @static
-		 * @param {string} ua
-		 * @return {*}  {boolean}
-		 * @memberof OSFramework.Helper.DeviceInfo
-		 */
+		// Checks if it's running inside chrome browser.
 		private static _isChrome(ua: string): boolean {
 			return ua.includes(UAKeyword.chrome) || ua.includes(UAKeyword.crios);
 		}
 
-		/**
-		 * Checks if it's running inside Edge browser.
-		 *
-		 * @private
-		 * @static
-		 * @param {string} ua
-		 * @return {*}  {boolean}
-		 * @memberof OSFramework.Helper.DeviceInfo
-		 */
+		// Checks if it's running inside Edge browser.
 		private static _isEdge(ua: string): boolean {
 			return (
 				ua.includes(UAKeyword.edge) ||
@@ -184,15 +164,7 @@ namespace OSFramework.OSUI.Helper {
 			);
 		}
 
-		/**
-		 * Checks if it's running inside Firefox browser.
-		 *
-		 * @private
-		 * @static
-		 * @param {string} ua
-		 * @return {*}  {boolean}
-		 * @memberof OSFramework.Helper.DeviceInfo
-		 */
+		// Checks if it's running inside Firefox browser.
 		private static _isFirefox(ua: string): boolean {
 			return ua.includes(UAKeyword.firefox) || ua.includes(UAKeyword.fxios);
 		}
@@ -211,15 +183,7 @@ namespace OSFramework.OSUI.Helper {
 			return ua.includes(UAKeyword.trident) || ua.includes(UAKeyword.msie);
 		}
 
-		/**
-		 * Checks if it's running inside Kindle browser.
-		 *
-		 * @private
-		 * @static
-		 * @param {string} ua
-		 * @return {*}  {boolean}
-		 * @memberof OSFramework.Helper.DeviceInfo
-		 */
+		// Checks if it's running inside Kindle browser.
 		private static _isKindle(ua: string): boolean {
 			return (
 				ua.includes(UAKeyword.kindle) ||
@@ -236,40 +200,17 @@ namespace OSFramework.OSUI.Helper {
 			);
 		}
 
-		/**
-		 * Checks if it's running inside MIUI browser.
-		 *
-		 * @private
-		 * @static
-		 * @param {string} ua
-		 * @return {*}  {boolean}
-		 * @memberof OSFramework.Helper.DeviceInfo
-		 */
+		// Checks if it's running inside MIUI browser.
 		private static _isMiui(ua: string): boolean {
 			return ua.includes(UAKeyword.miuibrowser);
 		}
 
-		/**
-		 * Checks if it's running inside Opera browser.
-		 *
-		 * @private
-		 * @static
-		 * @param {string} ua
-		 * @return {*}  {boolean}
-		 * @memberof OSFramework.Helper.DeviceInfo
-		 */
+		// Checks if it's running inside Opera browser.
 		private static _isOpera(ua: string): boolean {
 			return ua.includes(UAKeyword.opr) || ua.includes(UAKeyword.opera) || ua.includes(UAKeyword.opios);
 		}
 
-		/**
-		 * Checks if the user device language is an RTL language type.
-		 *
-		 * @private
-		 * @static
-		 * @return {*}  {boolean}
-		 * @memberof DeviceInfo
-		 */
+		// Checks if the user device language is an RTL language type.
 		private static _isRtlLanguage(): boolean {
 			// List of RTL languages
 			const rtlLanguages = ['ar', 'he', 'fa', 'ur', 'ps', 'syr', 'yi', 'ku', 'dv', 'ps', 'sd', 'ug'];
@@ -279,61 +220,37 @@ namespace OSFramework.OSUI.Helper {
 			return rtlLanguages.includes(userLanguage);
 		}
 
-		/**
-		 * Checks if it's running inside Safari browser.
-		 *
-		 * @private
-		 * @static
-		 * @param {string} ua
-		 * @return {*}  {boolean}
-		 * @memberof OSFramework.Helper.DeviceInfo
-		 */
+		// Checks if it's running inside Safari browser.
 		private static _isSafari(ua: string): boolean {
 			return ua.includes(UAKeyword.safari);
 		}
 
-		/**
-		 * Checks if it's running inside Samsung browser.
-		 *
-		 * @private
-		 * @static
-		 * @param {string} ua
-		 * @return {*}  {boolean}
-		 * @memberof OSFramework.Helper.DeviceInfo
-		 */
+		// Checks if it's running inside Samsung browser.
 		private static _isSamsung(ua: string): boolean {
 			return ua.includes(UAKeyword.samsungbrowser);
 		}
 
-		/**
-		 *  Checks if it's running inside UC browser.
-		 *
-		 * @private
-		 * @static
-		 * @param {string} ua
-		 * @return {*}  {boolean}
-		 * @memberof OSFramework.Helper.DeviceInfo
-		 */
+		// Checks if it's running inside UC browser.
 		// eslint-disable-next-line @typescript-eslint/naming-convention
 		private static _isUC(ua: string): boolean {
 			return ua.includes(UAKeyword.ucbrowser);
 		}
 
-		/**
-		 * Checks if it's running inside Yandex browser.
-		 *
-		 * @private
-		 * @static
-		 * @param {string} ua
-		 * @return {*}  {boolean}
-		 * @memberof OSFramework.Helper.DeviceInfo
-		 */
+		// Checks if it's running inside Yandex browser.
 		private static _isYandex(ua: string): boolean {
 			return ua.includes(UAKeyword.yabrowser);
 		}
 
 		/******************** PUBLIC GETTERS ********************/
 
+		/**
+		 * Getter that returns if the application is running in a device with accessibility enabled.
+		 *
+		 * @readonly
+		 * @static
+		 * @type {boolean}
+		 * @memberof DeviceInfo
+		 */
 		public static get HasAccessibilityEnabled(): boolean {
 			return Helper.Dom.ClassSelector(document.body, Constants.HasAccessibilityClass) !== undefined;
 		}
@@ -448,6 +365,14 @@ namespace OSFramework.OSUI.Helper {
 			return DeviceInfo._isNativeApp;
 		}
 
+		/**
+		 * Getter that returns if the application is running inside a native shell and the device is Android.
+		 *
+		 * @readonly
+		 * @static
+		 * @type {boolean}
+		 * @memberof DeviceInfo
+		 */
 		public static get IsAndroid(): boolean {
 			if (DeviceInfo._isAndroid === undefined) {
 				DeviceInfo._isAndroid = Dom.Styles.ContainsClass(document.body, GlobalEnum.MobileOS.Android);
@@ -455,6 +380,14 @@ namespace OSFramework.OSUI.Helper {
 			return DeviceInfo._isAndroid;
 		}
 
+		/**
+		 * Getter that returns if the application is running inside a native shell and the device is iOS.
+		 *
+		 * @readonly
+		 * @static
+		 * @type {boolean}
+		 * @memberof DeviceInfo
+		 */
 		public static get IsIos(): boolean {
 			if (DeviceInfo._isIos === undefined) {
 				DeviceInfo._isIos = Dom.Styles.ContainsClass(document.body, GlobalEnum.MobileOS.IOS);

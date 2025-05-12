@@ -40,36 +40,20 @@ namespace OSFramework.OSUI.Patterns.Notification {
 			this._isOpen = this.configs.StartsOpen;
 		}
 
-		/**
-		 * Method to close Notification after wait the time defined
-		 *
-		 * @private
-		 * @memberof Notification
-		 */
+		// Method to close Notification after wait the time defined
 		private _autoCloseNotification(): void {
 			this._autoCloseTimeoutId = Helper.ApplySetTimeOut(() => {
 				this.hide();
 			}, this.configs.CloseAfterTime);
 		}
 
-		/**
-		 * Method to trigger the notification at toggle behaviour
-		 *
-		 * @private
-		 * @param {MouseEvent} e
-		 * @memberof Notification
-		 */
+		// Method to trigger the notification at toggle behaviour
 		private _clickCallback(e: MouseEvent): void {
 			e.preventDefault();
 			this.hide();
 		}
 
-		/**
-		 * Method to add Focus Trap to Pattern
-		 *
-		 * @private
-		 * @memberof Notification
-		 */
+		// Method to add Focus Trap to Pattern
 		private _handleFocusBehavior(): void {
 			const opts = {
 				focusTargetElement: this._parentSelf,
@@ -80,12 +64,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 			this._focusManagerInstance = new Behaviors.FocusManager();
 		}
 
-		/**
-		 * Method to handle the creation of the GestureEvents
-		 *
-		 * @private
-		 * @memberof Notification
-		 */
+		// Method to handle the creation of the GestureEvents
 		private _handleGestureEvents(): void {
 			if (Helper.DeviceInfo.IsNative) {
 				// Create and save gesture event instance. Created here and not on constructor,
@@ -102,12 +81,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 			}
 		}
 
-		/**
-		 * Method to hide Notification
-		 *
-		 * @private
-		 * @memberof Notification
-		 */
+		// Method to hide Notification
 		private _hideNotification(): void {
 			this._isOpen = false;
 
@@ -135,13 +109,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 			}
 		}
 
-		/**
-		 * Method to call open or close, based ok e.key and behavior applied
-		 *
-		 * @private
-		 * @param {KeyboardEvent} e
-		 * @memberof Notification
-		 */
+		// Method to call open or close, based on e.key and behavior applied
 		private _keypressCallback(e: KeyboardEvent): void {
 			const isEscapedPressed = e.key === GlobalEnum.Keycodes.Escape;
 
@@ -151,23 +119,13 @@ namespace OSFramework.OSUI.Patterns.Notification {
 			}
 		}
 
-		/**
-		 * Method to remove all the assigned events
-		 *
-		 * @private
-		 * @memberof Notification
-		 */
+		// Method to remove all the assigned events
 		private _removeEvents(): void {
 			this.selfElement.removeEventListener(this._eventType, this._eventOnClick);
 			this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnKeypress);
 		}
 
-		/**
-		 * Method to show Notification
-		 *
-		 * @private
-		 * @memberof Notification
-		 */
+		// Method to show Notification
 		private _showNotification(): void {
 			this._focusManagerInstance.storeLastFocusedElement();
 			this._isOpen = true;
@@ -198,23 +156,12 @@ namespace OSFramework.OSUI.Patterns.Notification {
 			}
 		}
 
-		/**
-		 * Method to trigger the OnToggle event
-		 *
-		 * @private
-		 * @param {boolean} isOpen
-		 * @memberof Notification
-		 */
+		// Method to trigger the OnToggle event
 		private _triggerOnToggleEvent(isOpen: boolean): void {
 			this.triggerPlatformEventCallback(this._platformEventOnToggle, isOpen);
 		}
 
-		/**
-		 * Method to set the cssClasses that should be assigned to the element on it's initialization
-		 *
-		 * @private
-		 * @memberof Notification
-		 */
+		// Method to set the cssClasses that should be assigned to the element on it's initialization
 		private _updateA11yProperties(): void {
 			Helper.Dom.Attribute.Set(
 				this.selfElement,
@@ -234,13 +181,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 			Helper.A11Y.SetElementsTabIndex(this._isOpen, this._focusTrapInstance.focusableElements);
 		}
 
-		/**
-		 * Method to update time to apply on AutoClose
-		 *
-		 * @private
-		 * @param {number} value
-		 * @memberof Notification
-		 */
+		// Method to update time to apply on AutoClose
 		private _updateCloseAfterTime(value: number): void {
 			this.configs.CloseAfterTime = value;
 			if (this._isOpen) {
@@ -248,13 +189,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 			}
 		}
 
-		/**
-		 * Method to update time to apply on AutoClose
-		 *
-		 * @private
-		 * @param {boolean} value
-		 * @memberof Notification
-		 */
+		// Method to update time to apply on AutoClose
 		private _updateInteractToClose(value: boolean): void {
 			if (this.configs.InteractToClose !== value) {
 				this.configs.InteractToClose = value;
@@ -268,13 +203,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 			}
 		}
 
-		/**
-		 * Method to update position
-		 *
-		 * @private
-		 * @param {string} position
-		 * @memberof Notification
-		 */
+		// Method to update position
 		private _updatePosition(position: string): void {
 			// Only change classes if are different
 			if (this.configs.Position !== position) {
@@ -287,13 +216,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 			}
 		}
 
-		/**
-		 * Method to update width
-		 *
-		 * @private
-		 * @param {string} width
-		 * @memberof Notification
-		 */
+		// Method to update width
 		private _updateWidth(width: string): void {
 			this.configs.Width = width;
 			if (width !== '') {
@@ -440,8 +363,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		 * @param {unknown} propertyValue
 		 * @memberof OSFramework.Patterns.Notification.Notification
 		 */
-		// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
-		public changeProperty(propertyName: string, propertyValue: any): void {
+		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			const _oldNotificationPosition = this.configs.Position;
 
 			super.changeProperty(propertyName, propertyValue);
@@ -450,10 +372,10 @@ namespace OSFramework.OSUI.Patterns.Notification {
 				// Check which property changed and call respective method to update it
 				switch (propertyName) {
 					case Enum.Properties.InteractToClose:
-						this._updateInteractToClose(propertyValue);
+						this._updateInteractToClose(propertyValue as boolean);
 						break;
 					case Enum.Properties.CloseAfterTime:
-						this._updateCloseAfterTime(propertyValue);
+						this._updateCloseAfterTime(propertyValue as number);
 						break;
 					case Enum.Properties.StartsOpen:
 						console.warn(
@@ -464,7 +386,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 						this._updatePosition(_oldNotificationPosition);
 						break;
 					case Enum.Properties.Width:
-						this._updateWidth(propertyValue);
+						this._updateWidth(propertyValue as string);
 						break;
 					case GlobalEnum.CommonPatternsProperties.ExtendedClass:
 						Helper.Dom.Styles.ExtendedClass(

@@ -1,9 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSFramework.OSUI.Helper {
 	export abstract class Dates {
-		/**
-		 * Format of data as set in service center.
-		 */
+		// Format of data as set in service center.
 		private static _serverFormat = '';
 
 		/**

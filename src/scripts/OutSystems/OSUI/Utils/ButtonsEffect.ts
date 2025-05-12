@@ -1,6 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Utils {
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	function _bodyClick(eventName: string, event: PointerEvent) {
 		const target = event.target as HTMLElement;
 		if (target.classList.contains('btn')) {
@@ -28,6 +27,9 @@ namespace OutSystems.OSUI.Utils {
 		function OnTransitionEnd() {
 			if (spanEl && this === el && this === spanEl.parentNode) {
 				this.removeChild(spanEl);
+				el.removeEventListener(OSFramework.OSUI.GlobalEnum.HTMLEvent.AnimationEnd, OnTransitionEnd, false);
+				el.removeEventListener('webkitAnimationEnd', OnTransitionEnd, false);
+				el = undefined;
 			}
 		}
 	}
@@ -42,12 +44,13 @@ namespace OutSystems.OSUI.Utils {
 		}, 1800);
 	}
 
+	//TODO: review this function.
 	function _hasSomeParentTheClass(element: HTMLElement, classname: string) {
 		if (element) {
 			// only if it has a class, only if it's beneath 'main-content' and doesn't pass it, if it's not a chart
 			if (
 				typeof element.className !== 'undefined' &&
-				!element.classList.contains('.main-content') &&
+				!element.classList.contains('main-content') &&
 				!(element instanceof SVGElement)
 			) {
 				if (element.className.split(' ').indexOf(classname) >= 0) {

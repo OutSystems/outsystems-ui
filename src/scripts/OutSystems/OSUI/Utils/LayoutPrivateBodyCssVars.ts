@@ -1,14 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Utils.LayoutPrivate {
 	export abstract class CssBodyVariables {
-		/**
-		 * Method that will check if dark mode is active
-		 *
-		 * @private
-		 * @static
-		 * @param {(isDarkMode: boolean) => void} callback
-		 * @memberof CssBodyVariables
-		 */
+		// Method that will check if dark mode is active
 		private static _checkDarkModeStatus(callback: (isDarkMode: boolean) => void): void {
 			if (typeof window !== 'undefined' && window.matchMedia) {
 				// Set the media query to check for dark mode
@@ -30,14 +23,7 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 			}
 		}
 
-		/**
-		 * Method that will check if highContrast mode is active
-		 *
-		 * @private
-		 * @static
-		 * @param {(isHighContrast: boolean) => void} callback
-		 * @memberof CssBodyVariables
-		 */
+		// Method that will check if highContrast mode is active
 		private static _checkHighContrastStatus(callback: (isHighContrast: boolean) => void): void {
 			if (typeof window !== 'undefined' && window.matchMedia) {
 				// Set the media query to check for highContrast mode
@@ -59,13 +45,7 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 			}
 		}
 
-		/**
-		 * Method to set body css variables for a phone or tablet app
-		 *
-		 * @private
-		 * @static
-		 * @memberof CssBodyVariables
-		 */
+		// Method to set body css variables for a phone or tablet app
 		private static _isPhoneOrTablet(): void {
 			OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(
 				document.body,
@@ -74,13 +54,7 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 			);
 		}
 
-		/**
-		 * Method that will set the css variables to body element
-		 *
-		 * @private
-		 * @static
-		 * @memberof CssBodyVariables
-		 */
+		// Method that will set the css variables to body element
 		private static _setCssVars(): void {
 			// Ensure app is not a web app
 			if (OSUI.Utils.DeviceDetection.IsWebApp() === false) {
@@ -132,13 +106,7 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 			});
 		}
 
-		/**
-		 * Method to set body css variables for non web app
-		 *
-		 * @private
-		 * @static
-		 * @memberof CssBodyVariables
-		 */
+		// Method to set body css variables for non web app
 		private static _setNotWebApp(): void {
 			const headerContent = OSFramework.OSUI.Helper.Dom.ClassSelector(
 				document,

@@ -18,7 +18,9 @@ namespace OSFramework.OSUI.Behaviors {
 		private _canTargetContainOtherPatts = false;
 		private _firstFocusableElement: HTMLElement;
 		private _focusBottomCallback: GlobalCallbacks.Generic;
+		private _focusBottomHandlerCallback: GlobalCallbacks.Generic;
 		private _focusTopCallback: GlobalCallbacks.Generic;
+		private _focusTopHandlerCallback: GlobalCallbacks.Generic;
 		private _focusableElements: HTMLElement[];
 		private _hasBeenPassThoughFirstOne = false;
 		private _lastFocusableElement: HTMLElement;
@@ -104,21 +106,23 @@ namespace OSFramework.OSUI.Behaviors {
 		private _removeEventListeners(): void {
 			this._predictableBottomElement.removeEventListener(
 				GlobalEnum.HTMLEvent.Focus,
-				this._focusBottomHandler.bind(this)
+				this._focusBottomHandlerCallback
 			);
-			this._predictableTopElement.removeEventListener(
-				GlobalEnum.HTMLEvent.Focus,
-				this._focusTopHandler.bind(this)
-			);
+			this._predictableTopElement.removeEventListener(GlobalEnum.HTMLEvent.Focus, this._focusTopHandlerCallback);
+		}
+
+		private _setCallbacks(): void {
+			this._focusBottomHandlerCallback = this._focusBottomHandler.bind(this);
+			this._focusTopHandlerCallback = this._focusTopHandler.bind(this);
 		}
 
 		// Method to add the event listeners to the created elements
 		private _setEventListeners(): void {
 			this._predictableBottomElement.addEventListener(
 				GlobalEnum.HTMLEvent.Focus,
-				this._focusBottomHandler.bind(this)
+				this._focusBottomHandlerCallback
 			);
-			this._predictableTopElement.addEventListener(GlobalEnum.HTMLEvent.Focus, this._focusTopHandler.bind(this));
+			this._predictableTopElement.addEventListener(GlobalEnum.HTMLEvent.Focus, this._focusTopHandlerCallback);
 		}
 
 		// Method to set the focusable elements to be used
@@ -203,9 +207,9 @@ namespace OSFramework.OSUI.Behaviors {
 		// Method that unsets all the callback defined
 		private _unsetCallbacks(): void {
 			this._focusBottomCallback = undefined;
-			this._focusBottomHandler = undefined;
 			this._focusTopCallback = undefined;
-			this._focusTopHandler = undefined;
+			this._focusBottomHandlerCallback = undefined;
+			this._focusTopHandlerCallback = undefined;
 		}
 
 		/**

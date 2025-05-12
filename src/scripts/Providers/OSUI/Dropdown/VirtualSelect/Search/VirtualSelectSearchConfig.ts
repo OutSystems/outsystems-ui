@@ -49,6 +49,9 @@ namespace Providers.OSUI.Dropdown.VirtualSelect.Search {
 		public getProviderConfig(): VirtualSelectOpts {
 			const virtualSelectSearchOpts = {
 				multiple: this.AllowMultipleSelection,
+				ariaLabelText: this.AllowMultipleSelection
+					? VirtualSelect.Enum.PropertiesValues.AriaLabelMultipleValue
+					: VirtualSelect.Enum.PropertiesValues.AriaLabelSingleValue,
 			};
 
 			return this.mergeConfigs(super.getProviderConfig(), virtualSelectSearchOpts, this.providerExtendedOptions);

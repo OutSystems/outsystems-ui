@@ -1,6 +1,6 @@
 {
 	"name": "outsystems-ui",
-	"version": "2.22.0",
+	"version": "2.23.0",
 	"description": "OutSystems UI Framework",
 	"license": "BSD-3-Clause",
 	"scripts": {
@@ -36,17 +36,17 @@
 		"@typescript-eslint/eslint-plugin": "^5.62.0",
 		"@typescript-eslint/parser": "^5.62.0",
 		"branch-name": "^1.0.0",
-		"browser-sync": "^3.0.2",
-		"eslint": "^8.57.0",
-		"eslint-config-prettier": "^9.0.0",
-		"eslint-plugin-prettier": "^5.0.0",
+		"browser-sync": "^3.0.3",
+		"eslint": "^8.57.1",
+		"eslint-config-prettier": "^9.1.0",
+		"eslint-plugin-prettier": "^5.2.5",
 		"fancy-log": "^2.0.0",
 		"flatpickr": "^4.6.13",
 		"gulp": "^4.0.2",
 		"gulp-autoprefixer": "^8.0.0",
 		"gulp-clean": "^0.4.0",
 		"gulp-confirm": "^1.0.8",
-		"gulp-postcss": "^9.0.1",
+		"gulp-postcss": "^9.1.0",
 		"gulp-remove-empty-lines": "^0.1.0",
 		"gulp-rename": "^2.0.0",
 		"gulp-sass": "^5.1.0",
@@ -63,10 +63,10 @@
 		"stylelint": "^14.16.1",
 		"stylelint-config-prettier": "^9.0.5",
 		"stylelint-order": "^6.0.4",
-		"typedoc": "^0.23.9",
-		"typedoc-plugin-merge-modules": "^4.0.1",
-		"typedoc-umlclass": "^0.7.0",
-		"typescript": "^4.5.0",
-		"virtual-select-plugin": "^1.0.47"
+		"typedoc": "^0.23.28",
+		"typedoc-plugin-merge-modules": "^4.1.0",
+		"typedoc-umlclass": "^0.7.1",
+		"typescript": "^4.9.5",
+		"virtual-select-plugin": "^1.0.49"
 	}
 }

@@ -58,6 +58,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		allOptionsSelectedText?: string;
 		allowNewOption?: boolean;
 		alwaysShowSelectedOptionsCount?: boolean;
+		ariaLabelText?: string;
 		autofocus?: boolean;
 		autoSelectFirstOption?: boolean;
 		clearButtonText?: string;

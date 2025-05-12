@@ -4,11 +4,6 @@ namespace Providers.OSUI.Dropdown.VirtualSelect.Search {
 	export class OSUIVirtualSelectSearch extends AbstractVirtualSelect<VirtualSelectSearchConfig> {
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new VirtualSelectSearchConfig(configs));
-
-			// Set the AriaLabel text value for the hidden text input wrapper
-			this.hiddenInputWrapperAriaLabelVal = this.configs.AllowMultipleSelection
-				? Dropdown.VirtualSelect.Enum.PropertiesValues.AriaLabelMultipleValue
-				: Dropdown.VirtualSelect.Enum.PropertiesValues.AriaLabelSingleValue;
 		}
 
 		/**

@@ -21,6 +21,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		public OptionsList: DropDownOption[];
 		public PopupDropboxBreakpoint: string;
 		public Prompt: string;
+		public SanitizeDropdownValues = false;
 		public SearchPrompt: string;
 		public ShowDropboxAsPopup = true;
 		public StartingSelection: DropDownOption[];
@@ -181,6 +182,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 			// Set the library options
 			this._providerOptions = {
 				ele: this.ElementId,
+				enableSecureText: this.SanitizeDropdownValues,
 				disabled: this.IsDisabled,
 				dropboxWrapper: OSFramework.OSUI.GlobalEnum.HTMLElement.Body,
 				hasOptionDescription: hasDescription,

@@ -5,7 +5,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect.Enum {
 	 */
 	export enum ProviderInfo {
 		Name = 'VirtualSelect',
-		Version = '1.0.47',
+		Version = '1.0.49',
 	}
 
 	/**
@@ -32,6 +32,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect.Enum {
 	 * Properties
 	 */
 	export enum Properties {
+		SanitizeDropdownValues = 'SanitizeDropdownValues',
 		NoOptionsText = 'NoOptionsText',
 		NoResultsText = 'NoResultsText',
 		OptionsList = 'OptionsList',

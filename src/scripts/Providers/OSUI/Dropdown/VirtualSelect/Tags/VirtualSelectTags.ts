@@ -4,9 +4,6 @@ namespace Providers.OSUI.Dropdown.VirtualSelect.Tags {
 	export class OSUIVirtualSelectTags extends AbstractVirtualSelect<VirtualSelectTagsConfig> {
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new VirtualSelectTagsConfig(configs));
-
-			// Set the AriaLabel text value for the hidden text input wrapper
-			this.hiddenInputWrapperAriaLabelVal = Dropdown.VirtualSelect.Enum.PropertiesValues.AriaLabelMultipleValue;
 		}
 
 		/**
