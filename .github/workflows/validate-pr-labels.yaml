@@ -8,6 +8,10 @@ concurrency:
     group: ${{ github.ref }}
     cancel-in-progress: true
 
+permissions:
+    contents: read
+    pull-requests: read
+
 jobs:
     check-label:
         uses: OutSystems/rd.github-reusable-workflows/.github/workflows/validate-pr-labels.yaml@9d497d1c5bc6e355aa8f4663539e6b75c212f6b4 #v2.0.7
