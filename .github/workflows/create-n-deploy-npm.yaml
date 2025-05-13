@@ -1,24 +1,20 @@
-name: CreateAndDeployDocs
-
+name: CreateAndDeployNPM
 on:
     workflow_dispatch:
         inputs:
             branch-name:
-                description: 'Branch to be used as base to create a new one to generate and be published.'
+                description: 'Branch to be used as base to create a new one and be published.'
                 type: string
                 required: true
             delete-branch:
-                description: 'Delete deploy-docs branch at the end of process.'
+                description: 'Delete deploy-npm branch at the end of process.'
                 type: boolean
                 default: true
 
 jobs:
     docs:
-        uses: ./.github/workflows/ManageDocs.yml
+        uses: ./.github/workflows/manage-npm.yaml
         with:
             branch-name: ${{ inputs.branch-name }}
             delete-created-branch: ${{ inputs.delete-branch }}
             run-lint: true
-        secrets:
-            pat: ${{ secrets.PAT }}
-            uiCompDocs: ${{ secrets.UICOMPONENTSDOCS }}
