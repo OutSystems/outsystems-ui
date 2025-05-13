@@ -10,22 +10,8 @@ concurrency:
     cancel-in-progress: true
 
 jobs:
-    get-ado-token:
-        uses: OutSystems/rd.github-reusable-workflows/.github/workflows/az-keyvault-get.yaml@9d497d1c5bc6e355aa8f4663539e6b75c212f6b4 #v2.0.7
-        with:
-            key-name: o11odc-github-ado-token-prd
-
-    get-sonar-token:
-        uses: OutSystems/rd.github-reusable-workflows/.github/workflows/az-keyvault-get.yaml@9d497d1c5bc6e355aa8f4663539e6b75c212f6b4 #v2.0.7
-        with:
-            key-name: o11odc-github-sonarcloud-token-prd
-
     build:
-        needs: [get-ado-token, get-sonar-token]
-        uses: OutSystems/rd.github-reusable-workflows/.github/workflows/ts-build-project.yaml@9d497d1c5bc6e355aa8f4663539e6b75c212f6b4 #v2.0.7
+        uses: OutSystems/ui-components.github-reusable-workflows/.github/workflows/ts-build-project.yaml@820fa8e6ffa0c0cb3ea09434b01eec8da6da37b5 # v0.2.3-alpha
         with:
             github-ref: ${{ github.ref }}
             run-jest-tests: false
-        secrets:
-            az-devops-token: ${{ needs.get-ado-token.outputs.az-keyvault-value }}
-            sonarcloud-token: ${{ needs.get-sonar-token.outputs.az-keyvault-value }}

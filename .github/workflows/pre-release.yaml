@@ -18,7 +18,7 @@ on:
 
 jobs:
     create-release-candidate:
-        uses: OutSystems/ui-components.github-reusable-workflows/.github/workflows/pre-release.yaml@5849cd2fd1ccfd786ba0ba28f5ef4270b57ed3a3 #v0.1.1-alpha
+        uses: OutSystems/ui-components.github-reusable-workflows/.github/workflows/pre-release.yaml@820fa8e6ffa0c0cb3ea09434b01eec8da6da37b5 # v0.2.3-alpha
         with:
             new-version: ${{ inputs.new-version }}
             release-date: ${{ inputs.release-date }}
