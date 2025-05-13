@@ -9,6 +9,10 @@ concurrency:
     group: ${{ github.ref }}
     cancel-in-progress: true
 
+permissions:
+    id-token: write
+    contents: read
+
 jobs:
     build:
         uses: OutSystems/ui-components.github-reusable-workflows/.github/workflows/ts-build-project.yaml@820fa8e6ffa0c0cb3ea09434b01eec8da6da37b5 # v0.2.3-alpha
