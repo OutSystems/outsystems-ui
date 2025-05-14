@@ -66,7 +66,7 @@ jobs:
             - name: Azure Login
               uses: OutSystems/rd.github-reusable-workflows/.github/actions/az-login@9d497d1c5bc6e355aa8f4663539e6b75c212f6b4 #v2.0.7
 
-            - name: Get GitHub Token
+            - name: Get GitHub Token from Azure Key Vault
               id: get-github-token
               uses: OutSystems/rd.github-reusable-workflows/.github/actions/az-keyvault-get@9d497d1c5bc6e355aa8f4663539e6b75c212f6b4 #v2.0.7
               with:
@@ -91,7 +91,7 @@ jobs:
             - name: Azure Login
               uses: OutSystems/rd.github-reusable-workflows/.github/actions/az-login@9d497d1c5bc6e355aa8f4663539e6b75c212f6b4 #v2.0.7
 
-            - name: Get GitHub Token
+            - name: Get GitHub Token from Azure Key Vault
               id: get-github-token
               uses: OutSystems/rd.github-reusable-workflows/.github/actions/az-keyvault-get@9d497d1c5bc6e355aa8f4663539e6b75c212f6b4 #v2.0.7
               with:
@@ -144,7 +144,7 @@ jobs:
             - name: Azure Login
               uses: OutSystems/rd.github-reusable-workflows/.github/actions/az-login@9d497d1c5bc6e355aa8f4663539e6b75c212f6b4 #v2.0.7
 
-            - name: Get GitHub Token
+            - name: Get GitHub Token from Azure Key Vault
               id: get-github-token
               uses: OutSystems/rd.github-reusable-workflows/.github/actions/az-keyvault-get@9d497d1c5bc6e355aa8f4663539e6b75c212f6b4 #v2.0.7
               with:
@@ -161,7 +161,7 @@ jobs:
                   node-version: 16
                   registry-url: https://registry.npmjs.org/
 
-            - name: Get NPM Token
+            - name: Get NPM Token from Azure Key Vault
               id: get-npm-token
               uses: OutSystems/rd.github-reusable-workflows/.github/actions/az-keyvault-get@9d497d1c5bc6e355aa8f4663539e6b75c212f6b4 #v2.0.7
               with:

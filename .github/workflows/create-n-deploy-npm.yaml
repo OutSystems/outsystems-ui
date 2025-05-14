@@ -12,7 +12,7 @@ on:
                 default: true
 
 jobs:
-    docs:
+    npm-deploy:
         uses: ./.github/workflows/manage-npm.yaml
         with:
             branch-name: ${{ inputs.branch-name }}
