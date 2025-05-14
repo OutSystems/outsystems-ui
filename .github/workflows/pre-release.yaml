@@ -22,8 +22,10 @@ permissions:
 
 jobs:
     create-release-candidate:
-        uses: OutSystems/ui-components.github-reusable-workflows/.github/workflows/pre-release.yaml@820fa8e6ffa0c0cb3ea09434b01eec8da6da37b5 # v0.2.3-alpha
+        uses: OutSystems/ui-components.github-reusable-workflows/.github/workflows/pre-release.yaml@c2c2fe8d5389eadb5590af71c42fbc898dda8360 #v0.2.4-alpha
         with:
             new-version: ${{ inputs.new-version }}
             release-date: ${{ inputs.release-date }}
             new-dev-release: ${{ inputs.new-dev-release }}
+        secrets:
+            GPG_PRIVATE_KEY: ${{ secrets.GPG_SIGN_KEY }}
