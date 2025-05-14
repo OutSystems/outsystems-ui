@@ -11,9 +11,12 @@ on:
                 description: 'Delete deploy-docs branch at the end of process.'
                 type: boolean
                 default: true
+permissions:
+    id-token: write
+    contents: write
 
 jobs:
-    docs:
+    docs-deploy:
         uses: ./.github/workflows/manage-docs.yaml
         with:
             branch-name: ${{ inputs.branch-name }}
