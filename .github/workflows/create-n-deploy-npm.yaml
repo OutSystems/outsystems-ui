@@ -10,6 +10,9 @@ on:
                 description: 'Delete deploy-npm branch at the end of process.'
                 type: boolean
                 default: true
+permissions:
+    id-token: write
+    contents: write
 
 jobs:
     npm-deploy:

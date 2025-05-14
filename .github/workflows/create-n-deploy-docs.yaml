@@ -11,6 +11,9 @@ on:
                 description: 'Delete deploy-docs branch at the end of process.'
                 type: boolean
                 default: true
+permissions:
+    id-token: write
+    contents: write
 
 jobs:
     docs-deploy:
