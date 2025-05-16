@@ -15,7 +15,7 @@ permissions:
 
 jobs:
     build:
-        uses: OutSystems/ui-components.github-reusable-workflows/.github/workflows/ts-build-project.yaml@c2c2fe8d5389eadb5590af71c42fbc898dda8360 #v0.2.4-alpha
+        uses: OutSystems/ui-components.github-reusable-workflows/.github/workflows/ts-build-project.yaml@7ffd7f90f6e5016bd92d0e050d2516084b99c2f6 #v0.2.5
         with:
             github-ref: ${{ github.ref }}
             run-jest-tests: false
