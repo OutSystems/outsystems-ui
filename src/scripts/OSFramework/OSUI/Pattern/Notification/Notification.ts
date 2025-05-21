@@ -283,25 +283,27 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		 * @memberof OSFramework.Patterns.Notification.Notification
 		 */
 		protected setInitialStates(): void {
-			// Set event if device is touch
-			if (Helper.DeviceInfo.IsTouch) {
-				this._eventType = GlobalEnum.HTMLEvent.TouchStart;
-			} else {
-				this._eventType = GlobalEnum.HTMLEvent.Click;
-			}
+			if (this.isBuilt) {
+				// Set event if device is touch
+				if (Helper.DeviceInfo.IsTouch) {
+					this._eventType = GlobalEnum.HTMLEvent.TouchStart;
+				} else {
+					this._eventType = GlobalEnum.HTMLEvent.Click;
+				}
 
-			// Set width value for Notification
-			Helper.Dom.Styles.SetStyleAttribute(this.selfElement, Enum.CssProperty.Width, this.configs.Width);
+				// Set width value for Notification
+				Helper.Dom.Styles.SetStyleAttribute(this.selfElement, Enum.CssProperty.Width, this.configs.Width);
 
-			// Set position initial class
-			Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.PatternPosition + this.configs.Position);
+				// Set position initial class
+				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.PatternPosition + this.configs.Position);
 
-			if (this._isOpen) {
-				this._showNotification();
-			}
+				if (this._isOpen) {
+					this._showNotification();
+				}
 
-			if (this.configs.CloseAfterTime > 0 && this._isOpen) {
-				this._autoCloseNotification();
+				if (this.configs.CloseAfterTime > 0 && this._isOpen) {
+					this._autoCloseNotification();
+				}
 			}
 		}
 

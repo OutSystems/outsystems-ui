@@ -504,8 +504,8 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 					}
 				}
 
-        // Update scale size variable
-        Helper.AsyncInvocation(this._handleTabIndicator.bind(this));
+				// Update scale size variable
+				Helper.AsyncInvocation(this._handleTabIndicator.bind(this));
 			}
 		}
 
@@ -523,16 +523,18 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 
 		// Method to set if the Tabs AutoHeight
 		private _setContentAutoHeight(hasAutoHeight: boolean): void {
-			if (this._hasDragGestures === false) {
-				if (hasAutoHeight) {
-					Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClasses.HasContentAutoHeight);
+			if (this.isBuilt) {
+				if (this._hasDragGestures === false) {
+					if (hasAutoHeight) {
+						Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClasses.HasContentAutoHeight);
+					} else {
+						Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClasses.HasContentAutoHeight);
+					}
 				} else {
-					Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClasses.HasContentAutoHeight);
+					console.warn(
+						`Tabs (${this.widgetId}): changes to ${Enum.Properties.ContentAutoHeight} parameter do not affect tabs when Gestures are in use.`
+					);
 				}
-			} else {
-				console.warn(
-					`Tabs (${this.widgetId}): changes to ${Enum.Properties.ContentAutoHeight} parameter do not affect tabs when Gestures are in use.`
-				);
 			}
 		}
 
@@ -575,19 +577,21 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 
 		// Method to set the Tabs Height
 		private _setHeight(height: string): void {
-			// Set tabs overflow based on height
-			const tabsOverflow =
-				height === GlobalEnum.CssProperties.Auto || height === Constants.EmptyString
-					? GlobalEnum.CssProperties.Initial
-					: GlobalEnum.CssProperties.Auto;
+			if (this.isBuilt) {
+				// Set tabs overflow based on height
+				const tabsOverflow =
+					height === GlobalEnum.CssProperties.Auto || height === Constants.EmptyString
+						? GlobalEnum.CssProperties.Initial
+						: GlobalEnum.CssProperties.Auto;
 
-			// Create css variables
-			Helper.Dom.Styles.SetStyleAttribute(this.selfElement, Enum.CssProperty.TabsHeight, height);
-			Helper.Dom.Styles.SetStyleAttribute(
-				this.selfElement,
-				Enum.CssProperty.TabsContentItemOverflow,
-				tabsOverflow
-			);
+				// Create css variables
+				Helper.Dom.Styles.SetStyleAttribute(this.selfElement, Enum.CssProperty.TabsHeight, height);
+				Helper.Dom.Styles.SetStyleAttribute(
+					this.selfElement,
+					Enum.CssProperty.TabsContentItemOverflow,
+					tabsOverflow
+				);
+			}
 		}
 
 		// Method to set the initial options on screen load
@@ -610,13 +614,12 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 
 		// Method to set if the Tabs are justified
 		private _setIsJustified(isJustified: boolean): void {
-			if (isJustified) {
-				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClasses.IsJustified);
-			} else {
-				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClasses.IsJustified);
-			}
-
 			if (this.isBuilt) {
+				if (isJustified) {
+					Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClasses.IsJustified);
+				} else {
+					Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClasses.IsJustified);
+				}
 				// Update scale size variable
 				this._handleTabIndicator();
 			}
@@ -638,10 +641,15 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 
 		// Method to set the Tabs Position
 		private _setPosition(position: GlobalEnum.Direction): void {
-			Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClasses.Modifier + this._currentVerticalPositon);
-			Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClasses.Modifier + position);
+			if (this.isBuilt) {
+				Helper.Dom.Styles.RemoveClass(
+					this.selfElement,
+					Enum.CssClasses.Modifier + this._currentVerticalPositon
+				);
+				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClasses.Modifier + position);
 
-			this._currentVerticalPositon = position;
+				this._currentVerticalPositon = position;
+			}
 		}
 
 		// Toggles the TableHeaderItem disabled status
@@ -770,10 +778,12 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 		 * @memberof OSFramework.Patterns.Tabs.Tabs
 		 */
 		protected setA11YProperties(): void {
-			// Set aria-role to TabsHeader
-			Helper.A11Y.RoleTabList(this._tabsHeaderElement.firstElementChild as HTMLElement);
-			// Set aria-hidden to tabs indicator
-			Helper.A11Y.AriaHiddenTrue(this._tabsIndicatorElement);
+			if (this.isBuilt) {
+				// Set aria-role to TabsHeader
+				Helper.A11Y.RoleTabList(this._tabsHeaderElement.firstElementChild as HTMLElement);
+				// Set aria-hidden to tabs indicator
+				Helper.A11Y.AriaHiddenTrue(this._tabsIndicatorElement);
+			}
 		}
 
 		/**
@@ -783,9 +793,11 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 		 * @memberof OSFramework.Patterns.Tabs.Tabs
 		 */
 		protected setCallbacks(): void {
-			this._eventOnHeaderKeypress = this._handleKeypressEvent.bind(this);
-			this._eventOnResize = this._handleOnResizeEvent.bind(this);
-			this._addEvents();
+			if (this.isBuilt) {
+				this._eventOnHeaderKeypress = this._handleKeypressEvent.bind(this);
+				this._eventOnResize = this._handleOnResizeEvent.bind(this);
+				this._addEvents();
+			}
 		}
 
 		/**
