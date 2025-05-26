@@ -78,13 +78,15 @@ namespace OSFramework.OSUI.Patterns.Progress.Bar {
 		 * @memberof OSFramework.Patterns.Progress.Bar.Bar
 		 */
 		protected addInitialAnimation(): void {
-			// Check if the animation at init should be added
-			if (this.configs.AnimateInitialProgress) {
-				this.animateInitial();
-			}
+			if (this.isBuilt) {
+				// Check if the animation at init should be added
+				if (this.configs.AnimateInitialProgress) {
+					this.animateInitial();
+				}
 
-			// Update the progress value and the valuenow accessibility property
-			this.updatedProgressValue();
+				// Update the progress value and the valuenow accessibility property
+				this.updatedProgressValue();
+			}
 		}
 
 		/**
