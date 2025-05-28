@@ -21,7 +21,7 @@ const constants = {
 
 // Store the default project specifications
 const specs = {
-    "version": "2.23.1",
+    "version": "2.24.0",
     "name": "OutSystems UI",
     "description": "",
     "url": "Website:\n • https://www.outsystems.com/outsystems-ui",
