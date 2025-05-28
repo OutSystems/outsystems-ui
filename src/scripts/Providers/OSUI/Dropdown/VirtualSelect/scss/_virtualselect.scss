@@ -520,6 +520,15 @@
 	margin-top: 1px;
 }
 
+// When using the extensibility property allowNewOption
+.vscomp-new-option-icon {
+	&::before {
+		border: 15px solid var(--color-primary);
+		border-bottom-color: rgba(0, 0, 0, 0);
+		border-left-color: rgba(0, 0, 0, 0);
+	}
+}
+
 // Accessibility -----------------------------------------------------------------
 ///
 .has-accessible-features {
@@ -597,14 +606,6 @@
 		&::-webkit-scrollbar-thumb {
 			border: var(--border-size-s) solid var(--color-neutral-4);
 		}
-	}
-}
-
-.vscomp-new-option-icon {
-	&::before {
-		border: 15px solid var(--color-primary);
-		border-bottom-color: rgba(0, 0, 0, 0);
-		border-left-color: rgba(0, 0, 0, 0);
 	}
 }
 
