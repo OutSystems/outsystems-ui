@@ -13,17 +13,13 @@ namespace OSFramework.OSUI.Patterns.AnimatedLabel {
 		private _eventBlur: GlobalCallbacks.Generic;
 		private _eventFocus: GlobalCallbacks.Generic;
 		private _eventKeyDown: GlobalCallbacks.Generic;
-		private _isDisposed = false;
-
 		// Set the input html element
 		private _inputElement: HTMLInputElement | HTMLTextAreaElement;
-
 		// Set the inputPlaceholder html element
 		private _inputPhElement: HTMLElement;
-
+		private _isDisposed = false;
 		// Flag that will be manage if the label is active
 		private _isLabelFocus: boolean;
-
 		// Set the labelPlaceholder html element
 		private _labelPhElement: HTMLElement;
 

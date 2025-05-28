@@ -372,7 +372,7 @@
 	display: none;
 }
 
-// Bottom part - Parent wrapper opptions container
+// Bottom part - Parent wrapper Options container
 .pop-comp-wrapper {
 	box-shadow: none;
 }
@@ -396,7 +396,7 @@
 	}
 }
 
-// Opptions container input search wrapper
+// Options container input search wrapper
 .vscomp-search-container {
 	border-bottom: var(--border-size-s) solid var(--color-neutral-5);
 	padding: var(--space-none) var(--space-s) var(--space-none) var(--space-xl);
@@ -442,7 +442,7 @@
 	}
 }
 
-// Opptions container input search
+// Options container input search
 .vscomp-search-input {
 	font-size: var(--font-size-s);
 
@@ -532,17 +532,17 @@
 		}
 	}
 
-  .vscomp-toggle-all-button:focus {
-    box-shadow: none;
+	.vscomp-toggle-all-button:focus {
+		box-shadow: none;
 
-    .checkbox-icon {
-      @include a11y-default-outline;
-    }
-  }
+		.checkbox-icon {
+			@include a11y-default-outline;
+		}
+	}
 
-  .vscomp-option.focused {
-    @include a11y-default-outline(true);
-  }
+	.vscomp-option.focused {
+		@include a11y-default-outline(true);
+	}
 }
 
 // OS HighContrast Enabled -------------------------------------------------------
@@ -597,6 +597,14 @@
 		&::-webkit-scrollbar-thumb {
 			border: var(--border-size-s) solid var(--color-neutral-4);
 		}
+	}
+}
+
+.vscomp-new-option-icon {
+	&::before {
+		border: 15px solid var(--color-primary);
+		border-bottom-color: rgba(0, 0, 0, 0);
+		border-left-color: rgba(0, 0, 0, 0);
 	}
 }
 
