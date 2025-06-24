@@ -216,19 +216,24 @@ namespace OutSystems.OSUI.Utils.Menu {
 
 		// Set the tabindex and aria-expanded attributes based on the enableA11Y flag
 		if (enableA11Y) {
-			OSFramework.OSUI.Helper.A11Y.TabIndexTrue(menu);
-			OSFramework.OSUI.Helper.A11Y.AriaExpandedTrue(menu);
-
 			for (const item of focusableEls) {
 				OSFramework.OSUI.Helper.A11Y.TabIndexTrue(item as HTMLElement);
 			}
 		} else {
-			OSFramework.OSUI.Helper.A11Y.TabIndexFalse(menu);
-			OSFramework.OSUI.Helper.A11Y.AriaExpandedFalse(menu);
-
 			for (const item of focusableEls) {
 				OSFramework.OSUI.Helper.A11Y.TabIndexFalse(item as HTMLElement);
 			}
+		}
+
+		if (_appProp.menu.isOpen) {
+			OSFramework.OSUI.Helper.A11Y.TabIndexTrue(menu);
+			OSFramework.OSUI.Helper.A11Y.AriaExpandedTrue(menu);
+		} else if (OSFramework.OSUI.Helper.DeviceInfo.IsDesktop) {
+			OSFramework.OSUI.Helper.Dom.Attribute.Remove(menu, OSFramework.OSUI.Constants.A11YAttributes.TabIndex);
+			OSFramework.OSUI.Helper.Dom.Attribute.Remove(menu, OSFramework.OSUI.Constants.A11YAttributes.Aria.Expanded);
+		} else {
+			OSFramework.OSUI.Helper.A11Y.TabIndexFalse(menu);
+			OSFramework.OSUI.Helper.A11Y.AriaExpandedFalse(menu);
 		}
 	};
 
