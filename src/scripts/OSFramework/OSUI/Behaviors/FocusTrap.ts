@@ -37,6 +37,9 @@ namespace OSFramework.OSUI.Behaviors {
 		constructor(opts: FocusTrapParams) {
 			this._focusableElements = [];
 
+			// Set the callbacks to be used
+			this._setCallbacks();
+
 			// Store the focus target element
 			this._targetElement = opts.focusTargetElement;
 
@@ -111,6 +114,7 @@ namespace OSFramework.OSUI.Behaviors {
 			this._predictableTopElement.removeEventListener(GlobalEnum.HTMLEvent.Focus, this._focusTopHandlerCallback);
 		}
 
+		// Method to set the callbacks to be used
 		private _setCallbacks(): void {
 			this._focusBottomHandlerCallback = this._focusBottomHandler.bind(this);
 			this._focusTopHandlerCallback = this._focusTopHandler.bind(this);
