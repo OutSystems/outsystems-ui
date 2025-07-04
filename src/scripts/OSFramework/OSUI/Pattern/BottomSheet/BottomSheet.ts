@@ -82,6 +82,7 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 
 		// Method to handle the creation of the GestureEvents
 		private _handleGestureEvents(): void {
+			// Validate if the device is native or touch, as we only want to create the gesture events on those devices
 			if (Helper.DeviceInfo.IsNative || Helper.DeviceInfo.IsTouch) {
 				// Create and save gesture event instance. Created here and not on constructor,
 				// as we need to pass element, only available after super.build()
