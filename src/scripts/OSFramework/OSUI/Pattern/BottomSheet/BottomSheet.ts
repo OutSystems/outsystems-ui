@@ -82,7 +82,7 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 
 		// Method to handle the creation of the GestureEvents
 		private _handleGestureEvents(): void {
-			if (!Helper.DeviceInfo.IsDesktop) {
+			if (Helper.DeviceInfo.IsNative) {
 				// Create and save gesture event instance. Created here and not on constructor,
 				// as we need to pass element, only available after super.build()
 				this._gestureEventInstance = new Event.GestureEvent.DragEvent(this._bottomSheetHeaderElem);
