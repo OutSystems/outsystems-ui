@@ -197,6 +197,12 @@ namespace OSFramework.OSUI.Helper {
 		 */
 		public static AriaHiddenFalse(element: HTMLElement): void {
 			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Hidden, Constants.A11YAttributes.States.False);
+			/**
+			 * In order to ensure elements inside of the given element are focusable, we must remove the inert attribute
+			 * This attribute should also be managed in the same contexts where aria-hidden is also being managed, that's why
+			 * it's also being removed here.
+			 */
+			Dom.Attribute.Remove(element, GlobalEnum.HTMLAttributes.Inert);
 		}
 
 		/**
@@ -208,6 +214,12 @@ namespace OSFramework.OSUI.Helper {
 		 */
 		public static AriaHiddenTrue(element: HTMLElement): void {
 			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Hidden, Constants.A11YAttributes.States.True);
+			/**
+			 * In order to ensure any other element inside of the given element is not focusable, we set the inert attribute
+			 * This attribute should also be managed in the same contexts where aria-hidden is also being managed, that's why
+			 * it's also being set here.
+			 */
+			Dom.Attribute.Set(element, GlobalEnum.HTMLAttributes.Inert, Constants.EmptyString);
 		}
 
 		/**
