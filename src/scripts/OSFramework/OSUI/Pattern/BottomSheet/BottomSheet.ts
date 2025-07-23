@@ -169,9 +169,13 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 
 			// Toggle class
 			if (isOpen) {
+				this._focusManagerInstance.storeLastFocusedElement();
+
 				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.IsOpen);
 				Helper.Dom.Styles.AddClass(document.body, Enum.CssClass.IsActive);
 			} else {
+				this._focusManagerInstance.setFocusToStoredElement();
+
 				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.IsOpen);
 				Helper.Dom.Styles.RemoveClass(document.body, Enum.CssClass.IsActive);
 			}
@@ -185,18 +189,11 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 
 			// Handle focus trap logic
 			if (isOpen) {
-				this._focusManagerInstance.storeLastFocusedElement();
 				this._focusTrapInstance.enableForA11y();
 				// Focus on element when pattern is open
 				this.selfElement.focus();
 			} else {
 				this._focusTrapInstance.disableForA11y();
-
-				// Focus on last element clicked. Async to avoid conflict with closing animation
-				Helper.AsyncInvocation(() => {
-					this.selfElement.blur();
-					this._focusManagerInstance.setFocusToStoredElement();
-				});
 			}
 
 			// Trigger platform event
