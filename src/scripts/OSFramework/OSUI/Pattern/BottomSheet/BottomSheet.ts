@@ -238,22 +238,13 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 				Helper.A11Y.RoleComplementary(this.selfElement);
 			}
 
-			Helper.Dom.Attribute.Set(
-				this.selfElement,
-				Constants.A11YAttributes.Aria.Hidden,
-				(!this._isOpen).toString()
-			);
-
-			Helper.Dom.Attribute.Set(
-				this.selfElement,
-				Constants.A11YAttributes.TabIndex,
-				this._isOpen
-					? Constants.A11YAttributes.States.TabIndexShow
-					: Constants.A11YAttributes.States.TabIndexHidden
-			);
-
-			// Will handle the tabindex value of the elements inside pattern
-			Helper.A11Y.SetElementsTabIndex(this._isOpen, this._focusTrapInstance.focusableElements);
+			if (this._isOpen) {
+				Helper.A11Y.TabIndexTrue(this.selfElement);
+				Helper.A11Y.AriaHiddenFalse(this.selfElement);
+			} else {
+				Helper.A11Y.TabIndexFalse(this.selfElement);
+				Helper.A11Y.AriaHiddenTrue(this.selfElement);
+			}
 		}
 
 		/**
