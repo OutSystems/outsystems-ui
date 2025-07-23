@@ -21,7 +21,7 @@ namespace OSFramework.OSUI.Behaviors {
 		private _focusBottomHandlerCallback: GlobalCallbacks.Generic;
 		private _focusTopCallback: GlobalCallbacks.Generic;
 		private _focusTopHandlerCallback: GlobalCallbacks.Generic;
-		private _focusableElements: HTMLElement[];
+		private readonly _focusableElements: HTMLElement[];
 		private _hasBeenPassThoughFirstOne = false;
 		private _lastFocusableElement: HTMLElement;
 		private _predictableBottomElement: HTMLElement;
@@ -131,31 +131,6 @@ namespace OSFramework.OSUI.Behaviors {
 
 		// Method to set the focusable elements to be used
 		private _setFocusableElements(includeTabIndexHidden = false): void {
-			/**
-			 * NOTE: (MORE INFO @ROU-10963)
-			 *	We can find 2 sections below that must be explained:
-			 *		- TO BE REMOVED
-			 *			- After the missing part of the code is implemented (mentioned at the bullet point below), code inside this section should be removed!
-			 *		- TO KEEP
-			 *			- With this implementation we ensure that the focusable elements are not part of the inner patterns
-			 *			- However we still need to ensure focusable elements inside child patterns should be managed through their own FocusTrap
-			 *			- For now code is not prepared to it, but it should be considered in the future, that's why we keep this implementation commented
-			 */
-
-			/* TO BE REMOVED • START •••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••  */
-			// eslint-disable-next-line @typescript-eslint/no-unused-vars
-			includeTabIndexHidden = false;
-			this._focusableElements = Helper.Dom.GetFocusableElements(this._targetElement, false);
-			// Check if predicted elements exist at the _focusableElements
-			for (const predictedElement of this._focusableElements.filter(
-				(item) => item === this._predictableTopElement || item === this._predictableBottomElement
-			)) {
-				// If so, remove them from the array collection of _focusableElements
-				this._focusableElements.splice(this._focusableElements.indexOf(predictedElement), 1);
-			}
-			/* TO BE REMOVED • END •••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••  */
-
-			/* TO KEEP •••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
 			// Ensure the list of focusable elements is empty
 			this._focusableElements.length = 0;
 
@@ -184,7 +159,6 @@ namespace OSFramework.OSUI.Behaviors {
 					}
 				}
 			}
-			••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••• */
 
 			// Remove the first element from array, because of predictable top element added for trapping
 			this._firstFocusableElement = this._focusableElements[0];
