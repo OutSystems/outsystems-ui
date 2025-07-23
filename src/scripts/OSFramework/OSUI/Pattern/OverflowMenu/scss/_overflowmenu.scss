@@ -30,6 +30,7 @@
 	&__balloon {
 		min-width: var(--osui-overflow-menu-min-width);
 		overflow: hidden;
+		z-index: var(--layer-global-instant-interaction);
 
 		a {
 			color: var(--color-neutral-9);

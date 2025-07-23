@@ -183,6 +183,7 @@ namespace OSFramework.OSUI.GlobalEnum {
 		For = 'for',
 		Href = 'href',
 		Id = 'id',
+		Inert = 'inert',
 		Name = 'name',
 		StatusBar = 'data-status-bar-height',
 		Style = 'style',

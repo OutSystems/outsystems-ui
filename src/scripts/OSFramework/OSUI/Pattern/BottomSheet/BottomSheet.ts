@@ -169,9 +169,13 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 
 			// Toggle class
 			if (isOpen) {
+				this._focusManagerInstance.storeLastFocusedElement();
+
 				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.IsOpen);
 				Helper.Dom.Styles.AddClass(document.body, Enum.CssClass.IsActive);
 			} else {
+				this._focusManagerInstance.setFocusToStoredElement();
+
 				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.IsOpen);
 				Helper.Dom.Styles.RemoveClass(document.body, Enum.CssClass.IsActive);
 			}
@@ -185,18 +189,11 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 
 			// Handle focus trap logic
 			if (isOpen) {
-				this._focusManagerInstance.storeLastFocusedElement();
 				this._focusTrapInstance.enableForA11y();
 				// Focus on element when pattern is open
 				this.selfElement.focus();
 			} else {
 				this._focusTrapInstance.disableForA11y();
-
-				// Focus on last element clicked. Async to avoid conflict with closing animation
-				Helper.AsyncInvocation(() => {
-					this.selfElement.blur();
-					this._focusManagerInstance.setFocusToStoredElement();
-				});
 			}
 
 			// Trigger platform event
@@ -241,22 +238,13 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 				Helper.A11Y.RoleComplementary(this.selfElement);
 			}
 
-			Helper.Dom.Attribute.Set(
-				this.selfElement,
-				Constants.A11YAttributes.Aria.Hidden,
-				(!this._isOpen).toString()
-			);
-
-			Helper.Dom.Attribute.Set(
-				this.selfElement,
-				Constants.A11YAttributes.TabIndex,
-				this._isOpen
-					? Constants.A11YAttributes.States.TabIndexShow
-					: Constants.A11YAttributes.States.TabIndexHidden
-			);
-
-			// Will handle the tabindex value of the elements inside pattern
-			Helper.A11Y.SetElementsTabIndex(this._isOpen, this._focusTrapInstance.focusableElements);
+			if (this._isOpen) {
+				Helper.A11Y.TabIndexTrue(this.selfElement);
+				Helper.A11Y.AriaHiddenFalse(this.selfElement);
+			} else {
+				Helper.A11Y.TabIndexFalse(this.selfElement);
+				Helper.A11Y.AriaHiddenTrue(this.selfElement);
+			}
 		}
 
 		/**
