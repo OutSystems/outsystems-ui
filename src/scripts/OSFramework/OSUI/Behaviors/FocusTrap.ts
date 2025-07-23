@@ -21,7 +21,7 @@ namespace OSFramework.OSUI.Behaviors {
 		private _focusBottomHandlerCallback: GlobalCallbacks.Generic;
 		private _focusTopCallback: GlobalCallbacks.Generic;
 		private _focusTopHandlerCallback: GlobalCallbacks.Generic;
-		private _focusableElements: HTMLElement[];
+		private readonly _focusableElements: HTMLElement[];
 		private _hasBeenPassThoughFirstOne = false;
 		private _lastFocusableElement: HTMLElement;
 		private _predictableBottomElement: HTMLElement;
