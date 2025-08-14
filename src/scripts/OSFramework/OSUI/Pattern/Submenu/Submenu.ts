@@ -72,6 +72,13 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 			}
 		}
 
+		private _hasValidChilds(): boolean {
+			if (this.isBuilt) {
+				return this._submenuLinksElement.querySelector(':not(span:empty)') !== null;
+			}
+			return false;
+		}
+
 		// Call methods to close, based ok e.key
 		private _keypressBalloonCallback(e: KeyboardEvent): void {
 			e.stopPropagation();
