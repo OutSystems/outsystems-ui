@@ -302,7 +302,7 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 			this._submenuAllLinksElement = [...this._submenuLinksElement.querySelectorAll(GlobalEnum.HTMLElement.Link)];
 
 			// Check if submenu has childs
-			if (this._submenuLinksElement.children.length > 0) {
+			if (this._hasValidChilds()) {
 				this._hasElements = true;
 			}
 
