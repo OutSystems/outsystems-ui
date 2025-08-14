@@ -532,6 +532,18 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 		 */
 		public updateOnRender(): void {
 			if (this.isBuilt) {
+				if (this._hasValidChilds()) {
+					if (this._hasElements === false) {
+						this._hasElements = true;
+						this.setInitialStates();
+						this._addEventListeners();
+					}
+				} else if (this._hasElements) {
+					this._removeEvents();
+					this._hasElements = false;
+					this.setInitialStates();
+				}
+
 				// Check if there are active elements inside
 				this._checkForActiveLinks();
 
