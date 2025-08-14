@@ -29,6 +29,21 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 			super(uniqueId, new SubmenuConfig(configs));
 		}
 
+		private _addEventListeners(): void {
+			// Add events only if has elements inside
+			if (this._hasElements) {
+				// OpenOnHover is only available for devices where the hover exists
+				if (this.configs.OpenOnHover === false || Helper.DeviceInfo.IsTouch) {
+					this._submenuHeaderElement.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventClick);
+				}
+
+				this._submenuHeaderElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventKeypress);
+
+				// if (this.configs.OpenOnHover) {
+				// }
+			}
+		}
+
 		// Close submenu, when BodyOnCLick event is triggered
 		private _bodyClickCallback(_args: string, e: MouseEvent): void {
 			if (this.isBuilt && this._isOpen) {
@@ -272,15 +287,7 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 			this._eventOnMouseEnter = this._onMouseEnterCallback.bind(this);
 			this._eventOnMouseLeave = this._onMouseLeaveCallback.bind(this);
 
-			// Add events only if has elements inside
-			if (this._hasElements) {
-				// OpenOnHover is only available for devices where the hover exists
-				if (this.configs.OpenOnHover === false || Helper.DeviceInfo.IsTouch) {
-					this._submenuHeaderElement.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventClick);
-				}
-
-				this._submenuHeaderElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventKeypress);
-			}
+			this._addEventListeners();
 		}
 
 		/**
