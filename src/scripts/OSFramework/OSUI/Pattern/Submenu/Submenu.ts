@@ -35,6 +35,12 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 				// OpenOnHover is only available for devices where the hover exists
 				if (this.configs.OpenOnHover === false || Helper.DeviceInfo.IsTouch) {
 					this._submenuHeaderElement.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventClick);
+				} else if (this.configs.OpenOnHover) {
+					// First we remove the existing event listeners
+					this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.MouseEnter, this._eventOnMouseEnter);
+					this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.MouseLeave, this._eventOnMouseLeave);
+					this.selfElement.addEventListener(GlobalEnum.HTMLEvent.MouseEnter, this._eventOnMouseEnter);
+					this.selfElement.addEventListener(GlobalEnum.HTMLEvent.MouseLeave, this._eventOnMouseLeave);
 				}
 
 				this._submenuHeaderElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventKeypress);
