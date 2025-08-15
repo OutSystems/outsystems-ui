@@ -38,9 +38,6 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 				}
 
 				this._submenuHeaderElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventKeypress);
-
-				// if (this.configs.OpenOnHover) {
-				// }
 			}
 		}
 
