@@ -520,6 +520,7 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 				if (this._hasElements) {
 					this._submenuHeaderElement.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventClick);
 					this._eventClick = undefined;
+					this.configs.OpenOnHover = true;
 
 					Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.PatternIsHover);
 					this.selfElement.addEventListener(GlobalEnum.HTMLEvent.MouseEnter, this._eventOnMouseEnter);
