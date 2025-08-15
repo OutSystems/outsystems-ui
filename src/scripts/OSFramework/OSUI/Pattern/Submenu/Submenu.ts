@@ -327,8 +327,10 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 
 			// Add an identifier if the pattern has childs
 			if (this._hasElements) {
+				Helper.Dom.Styles.RemoveClass(this._submenuLinksElement, Enum.CssClass.PatternIsHidden);
 				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.PatternIsDropdown);
 			} else {
+				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.PatternIsDropdown);
 				Helper.Dom.Styles.AddClass(this._submenuLinksElement, Enum.CssClass.PatternIsHidden);
 			}
 
