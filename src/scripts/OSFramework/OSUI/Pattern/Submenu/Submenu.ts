@@ -31,11 +31,11 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 		}
 
 		// Add the event listeners to the submenu
-		private _addEventListeners(): void {
+		private _addEventListeners(addKeyboardEvent = true): void {
 			// Add events only if has elements inside
 			if (this._hasElements) {
 				// Add this event only if we haven't added
-				if (this._hasOnHoverListeners === false) {
+				if (addKeyboardEvent) {
 					this._submenuHeaderElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventKeypress);
 				}
 
@@ -95,7 +95,7 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 		}
 
 		// Checks if there are valid child elements
-		private _hasValidChilds(): boolean {
+		private _hasValidChildren(): boolean {
 			if (this.isBuilt) {
 				return this._submenuLinksElement.querySelector(':not(span:empty)') !== null;
 			}
@@ -310,7 +310,7 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 			this._submenuAllLinksElement = [...this._submenuLinksElement.querySelectorAll(GlobalEnum.HTMLElement.Link)];
 
 			// Check if submenu has childs
-			if (this._hasValidChilds()) {
+			if (this._hasValidChildren()) {
 				this._hasElements = true;
 			}
 
@@ -411,7 +411,7 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 					Event.DOMEvents.Listeners.Type.BodyOnClick,
 					this._globalEventBody
 				);
-			} else {
+			} else if (this.hasClickOutsideToClose === false) {
 				Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
 					Event.DOMEvents.Listeners.Type.BodyOnClick,
 					this._globalEventBody
@@ -531,7 +531,7 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 
 					Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.PatternIsHover);
 
-					this._addEventListeners();
+					this._addEventListeners(false);
 				}
 			}
 		}
@@ -543,7 +543,7 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 		 */
 		public updateOnRender(): void {
 			if (this.isBuilt) {
-				if (this._hasValidChilds()) {
+				if (this._hasValidChildren()) {
 					if (this._hasElements === false) {
 						this._hasElements = true;
 						this.setInitialStates();
