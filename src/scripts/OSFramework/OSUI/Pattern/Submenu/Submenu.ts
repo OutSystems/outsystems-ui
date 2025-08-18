@@ -30,6 +30,7 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 			super(uniqueId, new SubmenuConfig(configs));
 		}
 
+		// Add the event listeners to the submenu
 		private _addEventListeners(): void {
 			// Add events only if has elements inside
 			if (this._hasElements) {
@@ -61,6 +62,7 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 			}
 		}
 
+		// Check for active links in the submenu
 		private _checkForActiveLinks(): void {
 			this._submenuActiveLinksElement =
 				Helper.Dom.ClassSelector(this._submenuLinksElement, Enum.CssClass.PatternActive) ||
@@ -92,6 +94,7 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 			}
 		}
 
+		// Checks if there are valid child elements
 		private _hasValidChilds(): boolean {
 			if (this.isBuilt) {
 				return this._submenuLinksElement.querySelector(':not(span:empty)') !== null;
