@@ -16,6 +16,7 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 		private _globalEventBody: GlobalCallbacks.Generic;
 		private _hasActiveLinks = false;
 		private _hasElements = false;
+		private _hasOnHoverListeners = false;
 		private _isActive = false;
 		private _isOpen = false;
 		private _platformEventOnToggleCallback: GlobalCallbacks.OSGeneric;
@@ -32,13 +33,16 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 		private _addEventListeners(): void {
 			// Add events only if has elements inside
 			if (this._hasElements) {
+				// Add this event only if we haven't added
+				if (this._hasOnHoverListeners === false) {
+					this._submenuHeaderElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventKeypress);
+				}
+
 				// OpenOnHover is only available for devices where the hover exists
 				if (this.configs.OpenOnHover === false || Helper.DeviceInfo.IsTouch) {
 					this._submenuHeaderElement.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventClick);
-				} else if (this.configs.OpenOnHover) {
-					// First we remove the existing event listeners
-					this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.MouseEnter, this._eventOnMouseEnter);
-					this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.MouseLeave, this._eventOnMouseLeave);
+				} else if (this.configs.OpenOnHover && this._hasOnHoverListeners === false) {
+					this._hasOnHoverListeners = true;
 					this.selfElement.addEventListener(GlobalEnum.HTMLEvent.MouseEnter, this._eventOnMouseEnter);
 					this.selfElement.addEventListener(GlobalEnum.HTMLEvent.MouseLeave, this._eventOnMouseLeave);
 				}
@@ -185,12 +189,12 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 					this._submenuHeaderElement.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventClick);
 					this._submenuHeaderElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventKeypress);
 				}
-
-				if (this.configs.OpenOnHover && Helper.DeviceInfo.IsTouch === false) {
+				if (this._hasOnHoverListeners) {
 					this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.MouseEnter, this._eventOnMouseEnter);
 					this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.MouseLeave, this._eventOnMouseLeave);
 				}
 			}
+			this._hasOnHoverListeners = false;
 
 			// Remove handler from Event Manager
 			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
@@ -519,7 +523,7 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 		public setOpenOnHover(): void {
 			// OpenOnHover is only available for devices where the hover exists
 			if (Helper.DeviceInfo.IsTouch === false) {
-				if (this._hasElements) {
+				if (this._hasElements && this._hasOnHoverListeners === false) {
 					this._submenuHeaderElement.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventClick);
 					this._eventClick = undefined;
 					this.configs.OpenOnHover = true;
