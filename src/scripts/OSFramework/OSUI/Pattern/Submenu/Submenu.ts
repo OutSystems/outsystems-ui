@@ -46,8 +46,6 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 					this.selfElement.addEventListener(GlobalEnum.HTMLEvent.MouseEnter, this._eventOnMouseEnter);
 					this.selfElement.addEventListener(GlobalEnum.HTMLEvent.MouseLeave, this._eventOnMouseLeave);
 				}
-
-				this._submenuHeaderElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventKeypress);
 			}
 		}
 
@@ -410,7 +408,7 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 					Event.DOMEvents.Listeners.Type.BodyOnClick,
 					this._globalEventBody
 				);
-			} else if (this.hasClickOutsideToClose === false) {
+			} else {
 				Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
 					Event.DOMEvents.Listeners.Type.BodyOnClick,
 					this._globalEventBody
@@ -529,8 +527,8 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 					this.configs.OpenOnHover = true;
 
 					Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.PatternIsHover);
-					this.selfElement.addEventListener(GlobalEnum.HTMLEvent.MouseEnter, this._eventOnMouseEnter);
-					this.selfElement.addEventListener(GlobalEnum.HTMLEvent.MouseLeave, this._eventOnMouseLeave);
+
+					this._addEventListeners();
 				}
 			}
 		}
