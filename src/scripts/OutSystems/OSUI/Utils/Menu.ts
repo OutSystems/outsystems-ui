@@ -125,6 +125,8 @@ namespace OutSystems.OSUI.Utils.Menu {
 
 	// OnResize handler
 	const _onResizeCallbackHandler = (): void => {
+		// Run onResizeCallback only after 300ms, to guarantee layout is updated;
+		// The deviceType class takes this time to be added on the DOM;
 		window.clearTimeout(_onResizeTimeout);
 		_onResizeTimeout = OSFramework.OSUI.Helper.ApplySetTimeOut(() => {
 			// Get the current device type
