@@ -2,6 +2,8 @@
 namespace OutSystems.OSUI.Utils.Menu {
 	// OrientationChange callback to be stored and removed on Destroy
 	let _onOrientationChangeCallback: OSFramework.OSUI.GlobalCallbacks.Generic;
+	// Store the OnResize settimeout, to be cleared when needed
+	let _onResizeTimeout: number;
 
 	// App Properties
 	const _appProp = {
@@ -123,31 +125,36 @@ namespace OutSystems.OSUI.Utils.Menu {
 
 	// OnResize handler
 	const _onResizeCallbackHandler = (): void => {
-		// Get the current device type
-		const currentDeviceType = OSFramework.OSUI.Helper.DeviceInfo.GetDeviceType();
+		// Run onResizeCallback only after 300ms, to guarantee layout is updated;
+		// The deviceType class takes this time to be added on the DOM;
+		window.clearTimeout(_onResizeTimeout);
+		_onResizeTimeout = OSFramework.OSUI.Helper.ApplySetTimeOut(() => {
+			// Get the current device type
+			const currentDeviceType = OSFramework.OSUI.Helper.DeviceInfo.GetDeviceType();
 
-		// Check if the device type is the same as the current device type, if so, return to prevent unnecessary calls
-		if (_appProp.device.type === currentDeviceType) {
-			return;
-		}
+			// Check if the device type is the same as the current device type, if so, return to prevent unnecessary calls
+			if (_appProp.device.type === currentDeviceType) {
+				return;
+			}
 
-		// Update the device type on the app properties
-		_appProp.device.type = currentDeviceType;
+			// Update the device type on the app properties
+			_appProp.device.type = currentDeviceType;
 
-		// Check if the menu is open
-		if (_appProp.menu.isOpen) {
-			// Close the menu, internally it will update the menu attributes
-			_toggleMenu();
-		} else {
-			// Update app properties and menu attributes
-			_updatePropsAndAttrs();
-		}
+			// Check if the menu is open
+			if (_appProp.menu.isOpen) {
+				// Close the menu, internally it will update the menu attributes
+				_toggleMenu();
+			} else {
+				// Update app properties and menu attributes
+				_updatePropsAndAttrs();
+			}
 
-		// Remove the menu event listeners since device type changed
-		_removeMenuEventListeners();
+			// Remove the menu event listeners since device type changed
+			_removeMenuEventListeners();
 
-		// ReAdd the menu event listeners
-		_addMenuEventListeners();
+			// ReAdd the menu event listeners
+			_addMenuEventListeners();
+		}, 300);
 	};
 
 	// Remove Menu Event Listeners
@@ -296,8 +303,24 @@ namespace OutSystems.OSUI.Utils.Menu {
 		}
 
 		// Update app properties
-		if (_appProp.menu.element === undefined || _appProp.layout.element === undefined) {
+		if (
+			_appProp.menu.element === undefined ||
+			_appProp.layout.element === undefined ||
+			_appProp.device.type !== OSFramework.OSUI.Helper.DeviceInfo.GetDeviceType()
+		) {
 			_setAppProps();
+		}
+
+		// Check if the eventListeners exist if the device is not desktop, if not, they should be added
+		const shouldAddEventListeners =
+			_appProp.device.type !== OSFramework.OSUI.GlobalEnum.DeviceType.desktop && !_appProp.menu.hasEventListeners;
+
+		if (shouldAddEventListeners) {
+			// Remove the menu event listeners since device type changed
+			_removeMenuEventListeners();
+
+			// ReAdd the menu event listeners
+			_addMenuEventListeners();
 		}
 
 		_appProp.layout.element.classList.add('menu-visible');
