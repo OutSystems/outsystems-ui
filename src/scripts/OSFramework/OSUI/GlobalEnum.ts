@@ -34,6 +34,7 @@ namespace OSFramework.OSUI.GlobalEnum {
 		List = 'list',
 		LoginPassword = 'login-password',
 		MainContent = 'main-content',
+		MenuContent = 'app-menu-content',
 		MenuLinks = 'app-menu-links',
 		Placeholder = 'ph',
 		Popup = 'popup-dialog',

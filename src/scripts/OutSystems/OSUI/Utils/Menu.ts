@@ -84,24 +84,40 @@ namespace OutSystems.OSUI.Utils.Menu {
 
 	// Menu on keypress handler
 	const _menuOnKeypress = function (e: KeyboardEvent) {
-		const isTabPressed = e.key === 'Tab';
+		// If ESC, Close Menu
 		const isEscapedPressed = e.key === 'Escape';
-		const isShiftKey = e.shiftKey;
-		const focusableEls = OSFramework.OSUI.Helper.Dom.TagSelectorAll(_appProp.menu.element, _menuFocusableElems);
-
-		const firstFocusableEl = focusableEls[0] as HTMLElement;
-		const lastFocusableEl = focusableEls[focusableEls.length - 1] as HTMLElement;
-
-		if (!isTabPressed && !isEscapedPressed) {
-			return;
-		}
-
-		//If ESC, Close Menu
 		if (isEscapedPressed && _appProp.menu.isOpen) {
 			e.preventDefault();
 			e.stopPropagation();
 			_toggleMenu();
+			return;
 		}
+		// If any other than TAB or ESC is pressed
+		const isTabPressed = e.key === 'Tab';
+		if (!isTabPressed && !isEscapedPressed) {
+			return;
+		}
+
+		const isShiftKey = e.shiftKey;
+		const allPossibleFocusableEls = OSFramework.OSUI.Helper.Dom.TagSelectorAll(
+			_appProp.menu.element,
+			_menuFocusableElems
+		);
+		const focusableEls = [];
+
+		// Remove all elements that are inside a submenu to be manged by the submenu itself
+		for (const item of allPossibleFocusableEls) {
+			if (
+				item.closest(
+					OSFramework.OSUI.Constants.Dot + OSFramework.OSUI.Patterns.Submenu.Enum.CssClass.PatternLinks
+				) === null
+			) {
+				focusableEls.push(item);
+			}
+		}
+
+		const firstFocusableEl = focusableEls[0] as HTMLElement;
+		const lastFocusableEl = focusableEls[focusableEls.length - 1] as HTMLElement;
 
 		if (isShiftKey) {
 			if (document.activeElement === firstFocusableEl) {
