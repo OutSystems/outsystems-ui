@@ -214,12 +214,19 @@ namespace OSFramework.OSUI.Helper {
 		 */
 		public static AriaHiddenTrue(element: HTMLElement): void {
 			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Hidden, Constants.A11YAttributes.States.True);
-			/**
-			 * In order to ensure any other element inside of the given element is not focusable, we set the inert attribute
-			 * This attribute should also be managed in the same contexts where aria-hidden is also being managed, that's why
-			 * it's also being set here.
-			 */
-			Dom.Attribute.Set(element, GlobalEnum.HTMLAttributes.Inert, Constants.EmptyString);
+
+			// Inert attr can't be added to elements that will have focus event...
+			if (
+				element.classList.contains(GlobalEnum.FocusTrapClasses.FocusTrapTop) === false &&
+				element.classList.contains(GlobalEnum.FocusTrapClasses.FocusTrapBottom) === false
+			) {
+				/**
+				 * In order to ensure any other element inside of the given element is not focusable, we set the inert attribute
+				 * This attribute should also be managed in the same contexts where aria-hidden is also being managed, that's why
+				 * it's also being set here.
+				 */
+				Dom.Attribute.Set(element, GlobalEnum.HTMLAttributes.Inert, Constants.EmptyString);
+			}
 		}
 
 		/**

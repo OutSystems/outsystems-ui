@@ -152,7 +152,13 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 				}
 			}
 
-			e.stopPropagation();
+			// Check if it's inside menu and not open to stop the propagation event
+			if (
+				this.selfElement.closest(Constants.Dot + GlobalEnum.CssClassElements.MenuContent) === null ||
+				(this.selfElement.closest(Constants.Dot + GlobalEnum.CssClassElements.MenuContent) && this._isOpen)
+			) {
+				e.stopPropagation();
+			}
 		}
 
 		// Trigger the submenu after an hover behaviour
