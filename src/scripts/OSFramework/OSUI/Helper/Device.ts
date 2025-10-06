@@ -99,6 +99,12 @@ namespace OSFramework.OSUI.Helper {
 		{ width: 1290, height: 2796, description: 'iphone 16 plus' },
 		{ width: 1206, height: 2622, description: 'iphone 16 pro' },
 		{ width: 1320, height: 2868, description: 'iphone 16 pro max' },
+
+		// iPhone17
+		{ width: 1206, height: 2622, description: 'iphone 17' },
+		{ width: 1320, height: 2868, description: 'iphone 17 air' }, // New model replacing 'Plus'
+		{ width: 1206, height: 2622, description: 'iphone 17 pro' },
+		{ width: 1320, height: 2868, description: 'iphone 17 pro max' },
 	];
 
 	export abstract class DeviceInfo {
