@@ -13,16 +13,13 @@ namespace OSFramework.OSUI.Patterns.AnimatedLabel {
 		private _eventBlur: GlobalCallbacks.Generic;
 		private _eventFocus: GlobalCallbacks.Generic;
 		private _eventKeyDown: GlobalCallbacks.Generic;
-
 		// Set the input html element
 		private _inputElement: HTMLInputElement | HTMLTextAreaElement;
-
 		// Set the inputPlaceholder html element
 		private _inputPhElement: HTMLElement;
-
+		private _isDisposed = false;
 		// Flag that will be manage if the label is active
 		private _isLabelFocus: boolean;
-
 		// Set the labelPlaceholder html element
 		private _labelPhElement: HTMLElement;
 
@@ -101,11 +98,13 @@ namespace OSFramework.OSUI.Patterns.AnimatedLabel {
 
 		// Method to remove Pattern Events
 		private _removeEvents(): void {
-			this._inputElement.removeEventListener(GlobalEnum.HTMLEvent.Blur, this._eventBlur);
-			this._inputElement.removeEventListener(GlobalEnum.HTMLEvent.Focus, this._eventFocus);
-			this._inputElement.removeEventListener(GlobalEnum.HTMLEvent.AnimationStart, this._eventAnimationStart);
-			if (this._inputElement.type === 'number') {
-				this._inputElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventKeyDown);
+			if (this._inputElement) {
+				this._inputElement.removeEventListener(GlobalEnum.HTMLEvent.Blur, this._eventBlur);
+				this._inputElement.removeEventListener(GlobalEnum.HTMLEvent.Focus, this._eventFocus);
+				this._inputElement.removeEventListener(GlobalEnum.HTMLEvent.AnimationStart, this._eventAnimationStart);
+				if (this._inputElement.type === 'number') {
+					this._inputElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventKeyDown);
+				}
 			}
 		}
 
@@ -196,13 +195,16 @@ namespace OSFramework.OSUI.Patterns.AnimatedLabel {
 		public build(): void {
 			//OS takes a while to set the TextArea
 			Helper.AsyncInvocation(() => {
-				super.build();
+				if (!this._isDisposed) {
+					// Set the common html elements
+					super.build();
 
-				this.setHtmlElements();
+					this.setHtmlElements();
 
-				this.setCallbacks();
+					this.setCallbacks();
 
-				this.finishBuild();
+					this.finishBuild();
+				}
 			});
 		}
 
@@ -212,6 +214,7 @@ namespace OSFramework.OSUI.Patterns.AnimatedLabel {
 		 * @memberof OSFramework.Patterns.AnimatedLabel.AnimatedLabel
 		 */
 		public dispose(): void {
+			this._isDisposed = true;
 			this.unsetCallbacks();
 
 			this.unsetHtmlElements();

@@ -117,15 +117,7 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 				this._eventOnTransitionEnd
 			);
 
-			if (isExpand) {
-				// End of animation, item is expanded
-				Helper.Dom.Styles.AddClass(this._accordionItemContentElem, Enum.CssClass.PatternExpanded);
-				this._isOpen = true;
-			} else {
-				// End of animation, item is collapsed
-				Helper.Dom.Styles.AddClass(this._accordionItemContentElem, Enum.CssClass.PatternCollapsed);
-				this._isOpen = false;
-			}
+			this._isOpen = isExpand;
 
 			this.setA11YProperties();
 			this._onToggleCallback();
@@ -315,6 +307,14 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 					this._transitionEndHandler,
 					false
 				);
+
+				if (this._isOpen) {
+					// End of animation, item is expanded
+					Helper.Dom.Styles.AddClass(this._accordionItemContentElem, Enum.CssClass.PatternExpanded);
+				} else {
+					// End of animation, item is collapsed
+					Helper.Dom.Styles.AddClass(this._accordionItemContentElem, Enum.CssClass.PatternCollapsed);
+				}
 			}
 		}
 

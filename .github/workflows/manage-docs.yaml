@@ -15,11 +15,6 @@ on:
                 description: 'Compile and perform lint tests to ensure there is no issues at given branch name.'
                 type: boolean
                 default: true
-        secrets:
-            pat:
-                required: true
-            uiCompDocs:
-                required: true
 
 jobs:
     check-repo:
@@ -36,13 +31,21 @@ jobs:
 
     run-lint:
         runs-on: ubuntu-latest
-
         steps:
+            - name: Azure Login
+              uses: OutSystems/rd.github-reusable-workflows/.github/actions/az-login@9d497d1c5bc6e355aa8f4663539e6b75c212f6b4 #v2.0.7
+
+            - name: Get GitHub Token from Azure Key Vault
+              id: get-github-token
+              uses: OutSystems/rd.github-reusable-workflows/.github/actions/az-keyvault-get@9d497d1c5bc6e355aa8f4663539e6b75c212f6b4 #v2.0.7
+              with:
+                  key-name: o11odc-github-gitpersonal-token-prd
+
             - name: Checkout into ${{ inputs.branch-name }}
-              uses: actions/checkout@v4
+              uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
               with:
                   ref: ${{ inputs.branch-name }}
-                  token: ${{ secrets.pat }}
+                  token: ${{ steps.get-github-token.outputs.az-keyvault-value }}
 
             - name: Install project dependencies
               if: ${{ inputs.run-lint == true }}
@@ -57,11 +60,20 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
+            - name: Azure Login
+              uses: OutSystems/rd.github-reusable-workflows/.github/actions/az-login@9d497d1c5bc6e355aa8f4663539e6b75c212f6b4 #v2.0.7
+
+            - name: Get GitHub Token from Azure Key Vault
+              id: get-github-token
+              uses: OutSystems/rd.github-reusable-workflows/.github/actions/az-keyvault-get@9d497d1c5bc6e355aa8f4663539e6b75c212f6b4 #v2.0.7
+              with:
+                  key-name: o11odc-github-gitpersonal-token-prd
+
             - name: Checkout into ${{ inputs.branch-name }}
-              uses: actions/checkout@v4
+              uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
               with:
                   ref: ${{ inputs.branch-name }}
-                  token: ${{ secrets.pat }}
+                  token: ${{ steps.get-github-token.outputs.az-keyvault-value }}
 
             - name: Create new deploy-docs branch based on ${{ inputs.branch-name }}
               run: |
@@ -73,16 +85,25 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
+            - name: Azure Login
+              uses: OutSystems/rd.github-reusable-workflows/.github/actions/az-login@9d497d1c5bc6e355aa8f4663539e6b75c212f6b4 #v2.0.7
+
+            - name: Get GitHub Token from Azure Key Vault
+              id: get-github-token
+              uses: OutSystems/rd.github-reusable-workflows/.github/actions/az-keyvault-get@9d497d1c5bc6e355aa8f4663539e6b75c212f6b4 #v2.0.7
+              with:
+                  key-name: o11odc-github-gitpersonal-token-prd
+
             - name: Configure Git with the UiComponentsBot Token
               run: |
                   git config --global user.email "sa_git_uicomponents@outsystems.com"
                   git config --global user.name "UiComponentsBot"
 
             - name: Checkout into deploy-docs
-              uses: actions/checkout@v4
+              uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
               with:
                   ref: deploy-docs
-                  token: ${{ secrets.PAT }}
+                  token: ${{ steps.get-github-token.outputs.az-keyvault-value }}
 
             - name: Install project dependencies
               run: npm install
@@ -105,19 +126,34 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
+            - name: Azure Login
+              uses: OutSystems/rd.github-reusable-workflows/.github/actions/az-login@9d497d1c5bc6e355aa8f4663539e6b75c212f6b4 #v2.0.7
+
+            - name: Get GitHub Token from Azure Key Vault
+              id: get-github-token
+              uses: OutSystems/rd.github-reusable-workflows/.github/actions/az-keyvault-get@9d497d1c5bc6e355aa8f4663539e6b75c212f6b4 #v2.0.7
+              with:
+                  key-name: o11odc-github-gitpersonal-token-prd
+
             - name: Checkout into deploy-docs
-              uses: actions/checkout@v4
+              uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
               with:
                   ref: deploy-docs
-                  token: ${{ secrets.pat }}
+                  token: ${{ steps.get-github-token.outputs.az-keyvault-value }}
+
+            - name: Get osuidocs Token from Azure Key Vault
+              id: get-osuidocs-token
+              uses: OutSystems/rd.github-reusable-workflows/.github/actions/az-keyvault-get@9d497d1c5bc6e355aa8f4663539e6b75c212f6b4 #v2.0.7
+              with:
+                  key-name: o11odc-github-osuidocs-token-prd
 
             - name: Push documentation files into github page
               if: ${{ needs.check-repo.outputs.is-real-osui-repo == 'true' }}
-              uses: GuillaumeFalourd/copy-push-files@v1
+              uses: GuillaumeFalourd/copy-push-files@758ee05c45fbd682b62908f2373bf070077a1e43 # v1
               with:
                   source_files: docs/*
                   remote_repository: https://github.com/outsystems-ui-docs/outsystems-ui-docs.github.io
-                  access_token: ${{ secrets.uiCompDocs }}
+                  access_token: ${{ steps.get-osuidocs-token.outputs.az-keyvault-value }}
                   target_branch: main
                   commit_message: Deploy documentation.
 
@@ -128,7 +164,7 @@ jobs:
         if: ${{ inputs.delete-created-branch == true }}
         steps:
             - name: Checkout branch dev
-              uses: actions/checkout@v4
+              uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
               with:
                   ref: dev
 

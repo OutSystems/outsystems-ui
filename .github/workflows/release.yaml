@@ -1,0 +1,29 @@
+name: Release of OutSystems UI
+
+on:
+    workflow_dispatch:
+        inputs:
+            new-version:
+                description: 'Version to be released.'
+                type: string
+                required: true
+            update-prerelease-into-latest:
+                description: 'Update pre-release into latest.'
+                type: boolean
+                default: true
+            delete-rc-branch:
+                description: 'Delete rc* branch at the end of process.'
+                type: boolean
+                default: true
+
+permissions:
+    id-token: write
+    contents: write
+
+jobs:
+    set-release-latest:
+        uses: OutSystems/ui-components.github-reusable-workflows/.github/workflows/release.yaml@7ffd7f90f6e5016bd92d0e050d2516084b99c2f6 #v0.2.5
+        with:
+            new-version: ${{ inputs.new-version }}
+            update-prerelease-into-latest: ${{ inputs.update-prerelease-into-latest }}
+            delete-rc-branch: ${{ inputs.delete-rc-branch }}

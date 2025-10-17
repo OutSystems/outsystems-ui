@@ -166,7 +166,7 @@ namespace OSFramework.OSUI.Constants {
 	export const OSPlatform = '<->platformType<->';
 
 	/* OSUI Version */
-	export const OSUIVersion = '2.23.0';
+	export const OSUIVersion = '2.25.0';
 
 	/* Constant to be used across project as the zero value*/
 	export const ZeroValue = 0;

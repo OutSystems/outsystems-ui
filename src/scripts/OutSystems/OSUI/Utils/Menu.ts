@@ -2,6 +2,8 @@
 namespace OutSystems.OSUI.Utils.Menu {
 	// OrientationChange callback to be stored and removed on Destroy
 	let _onOrientationChangeCallback: OSFramework.OSUI.GlobalCallbacks.Generic;
+	// Store the OnResize settimeout, to be cleared when needed
+	let _onResizeTimeout: number;
 
 	// App Properties
 	const _appProp = {
@@ -82,24 +84,40 @@ namespace OutSystems.OSUI.Utils.Menu {
 
 	// Menu on keypress handler
 	const _menuOnKeypress = function (e: KeyboardEvent) {
-		const isTabPressed = e.key === 'Tab';
+		// If ESC, Close Menu
 		const isEscapedPressed = e.key === 'Escape';
-		const isShiftKey = e.shiftKey;
-		const focusableEls = OSFramework.OSUI.Helper.Dom.TagSelectorAll(_appProp.menu.element, _menuFocusableElems);
-
-		const firstFocusableEl = focusableEls[0] as HTMLElement;
-		const lastFocusableEl = focusableEls[focusableEls.length - 1] as HTMLElement;
-
-		if (!isTabPressed && !isEscapedPressed) {
-			return;
-		}
-
-		//If ESC, Close Menu
 		if (isEscapedPressed && _appProp.menu.isOpen) {
 			e.preventDefault();
 			e.stopPropagation();
 			_toggleMenu();
+			return;
 		}
+		// If any other than TAB or ESC is pressed
+		const isTabPressed = e.key === 'Tab';
+		if (!isTabPressed && !isEscapedPressed) {
+			return;
+		}
+
+		const isShiftKey = e.shiftKey;
+		const allPossibleFocusableEls = OSFramework.OSUI.Helper.Dom.TagSelectorAll(
+			_appProp.menu.element,
+			_menuFocusableElems
+		);
+		const focusableEls = [];
+
+		// Remove all elements that are inside a submenu to be manged by the submenu itself
+		for (const item of allPossibleFocusableEls) {
+			if (
+				item.closest(
+					OSFramework.OSUI.Constants.Dot + OSFramework.OSUI.Patterns.Submenu.Enum.CssClass.PatternLinks
+				) === null
+			) {
+				focusableEls.push(item);
+			}
+		}
+
+		const firstFocusableEl = focusableEls[0] as HTMLElement;
+		const lastFocusableEl = focusableEls[focusableEls.length - 1] as HTMLElement;
 
 		if (isShiftKey) {
 			if (document.activeElement === firstFocusableEl) {
@@ -123,31 +141,36 @@ namespace OutSystems.OSUI.Utils.Menu {
 
 	// OnResize handler
 	const _onResizeCallbackHandler = (): void => {
-		// Get the current device type
-		const currentDeviceType = OSFramework.OSUI.Helper.DeviceInfo.GetDeviceType();
+		// Run onResizeCallback only after 300ms, to guarantee layout is updated;
+		// The deviceType class takes this time to be added on the DOM;
+		window.clearTimeout(_onResizeTimeout);
+		_onResizeTimeout = OSFramework.OSUI.Helper.ApplySetTimeOut(() => {
+			// Get the current device type
+			const currentDeviceType = OSFramework.OSUI.Helper.DeviceInfo.GetDeviceType();
 
-		// Check if the device type is the same as the current device type, if so, return to prevent unnecessary calls
-		if (_appProp.device.type === currentDeviceType) {
-			return;
-		}
+			// Check if the device type is the same as the current device type, if so, return to prevent unnecessary calls
+			if (_appProp.device.type === currentDeviceType) {
+				return;
+			}
 
-		// Update the device type on the app properties
-		_appProp.device.type = currentDeviceType;
+			// Update the device type on the app properties
+			_appProp.device.type = currentDeviceType;
 
-		// Check if the menu is open
-		if (_appProp.menu.isOpen) {
-			// Close the menu, internally it will update the menu attributes
-			_toggleMenu();
-		} else {
-			// Update app properties and menu attributes
-			_updatePropsAndAttrs();
-		}
+			// Check if the menu is open
+			if (_appProp.menu.isOpen) {
+				// Close the menu, internally it will update the menu attributes
+				_toggleMenu();
+			} else {
+				// Update app properties and menu attributes
+				_updatePropsAndAttrs();
+			}
 
-		// Remove the menu event listeners since device type changed
-		_removeMenuEventListeners();
+			// Remove the menu event listeners since device type changed
+			_removeMenuEventListeners();
 
-		// ReAdd the menu event listeners
-		_addMenuEventListeners();
+			// ReAdd the menu event listeners
+			_addMenuEventListeners();
+		}, 300);
 	};
 
 	// Remove Menu Event Listeners
@@ -216,19 +239,24 @@ namespace OutSystems.OSUI.Utils.Menu {
 
 		// Set the tabindex and aria-expanded attributes based on the enableA11Y flag
 		if (enableA11Y) {
-			OSFramework.OSUI.Helper.A11Y.TabIndexTrue(menu);
-			OSFramework.OSUI.Helper.A11Y.AriaExpandedTrue(menu);
-
 			for (const item of focusableEls) {
 				OSFramework.OSUI.Helper.A11Y.TabIndexTrue(item as HTMLElement);
 			}
 		} else {
-			OSFramework.OSUI.Helper.A11Y.TabIndexFalse(menu);
-			OSFramework.OSUI.Helper.A11Y.AriaExpandedFalse(menu);
-
 			for (const item of focusableEls) {
 				OSFramework.OSUI.Helper.A11Y.TabIndexFalse(item as HTMLElement);
 			}
+		}
+
+		if (_appProp.menu.isOpen) {
+			OSFramework.OSUI.Helper.A11Y.TabIndexTrue(menu);
+			OSFramework.OSUI.Helper.A11Y.AriaExpandedTrue(menu);
+		} else if (OSFramework.OSUI.Helper.DeviceInfo.IsDesktop) {
+			OSFramework.OSUI.Helper.Dom.Attribute.Remove(menu, OSFramework.OSUI.Constants.A11YAttributes.TabIndex);
+			OSFramework.OSUI.Helper.Dom.Attribute.Remove(menu, OSFramework.OSUI.Constants.A11YAttributes.Aria.Expanded);
+		} else {
+			OSFramework.OSUI.Helper.A11Y.TabIndexFalse(menu);
+			OSFramework.OSUI.Helper.A11Y.AriaExpandedFalse(menu);
 		}
 	};
 
@@ -291,8 +319,24 @@ namespace OutSystems.OSUI.Utils.Menu {
 		}
 
 		// Update app properties
-		if (_appProp.menu.element === undefined || _appProp.layout.element === undefined) {
+		if (
+			_appProp.menu.element === undefined ||
+			_appProp.layout.element === undefined ||
+			_appProp.device.type !== OSFramework.OSUI.Helper.DeviceInfo.GetDeviceType()
+		) {
 			_setAppProps();
+		}
+
+		// Check if the eventListeners exist if the device is not desktop, if not, they should be added
+		const shouldAddEventListeners =
+			_appProp.device.type !== OSFramework.OSUI.GlobalEnum.DeviceType.desktop && !_appProp.menu.hasEventListeners;
+
+		if (shouldAddEventListeners) {
+			// Remove the menu event listeners since device type changed
+			_removeMenuEventListeners();
+
+			// ReAdd the menu event listeners
+			_addMenuEventListeners();
 		}
 
 		_appProp.layout.element.classList.add('menu-visible');

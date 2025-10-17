@@ -10,14 +10,14 @@ on:
                 description: 'Delete deploy-npm branch at the end of process.'
                 type: boolean
                 default: true
+permissions:
+    id-token: write
+    contents: write
 
 jobs:
-    docs:
-        uses: ./.github/workflows/ManageNPM.yml
+    npm-deploy:
+        uses: ./.github/workflows/manage-npm.yaml
         with:
             branch-name: ${{ inputs.branch-name }}
             delete-created-branch: ${{ inputs.delete-branch }}
             run-lint: true
-        secrets:
-            pat: ${{ secrets.PAT }}
-            npmPat: ${{ secrets.NPM_UICOMPONENTS }}

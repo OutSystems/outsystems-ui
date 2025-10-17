@@ -100,13 +100,13 @@
 	/* Main */
 	--layer-global-screen: 0;
 	--layer-global-elevated: calc(var(--layer-above) + var(--layer-global-screen)); // 5
-	--layer-global-navigation:  calc(var(--layer-above) + var(--layer-global-elevated)); // 10
-	--layer-global-off-canvas:  calc(var(--layer-above) + var(--layer-global-navigation)); // 15
-	--layer-global-instant-interaction:  calc(var(--layer-above) + var(--layer-global-off-canvas)); // 20
+	--layer-global-navigation: calc(var(--layer-above) + var(--layer-global-elevated)); // 10
+	--layer-global-off-canvas: calc(var(--layer-above) + var(--layer-global-navigation)); // 15
+	--layer-global-instant-interaction: calc(var(--layer-above) + var(--layer-global-off-canvas)); // 20
 
 	/*! Auxiliary */
 	--layer-global-negative: -1;
-	--layer-global-auto: auto; 
+	--layer-global-auto: auto;
 
 	/*! Local Layers */
 	--layer-local-tier-1: 1;
@@ -118,7 +118,7 @@
 	/*! Fixed/Absolute Patterns that need their variables on a global level to be referenced on all DOM contexts */
 	--osui-bottom-sheet-layer: var(--layer-global-off-canvas);
 	--osui-notification-layer: var(--layer-global-instant-interaction);
-	--osui-popup-layer: var(--layer-global-off-canvas);
+	--osui-popup-layer: var(--layer-global-instant-interaction);
 	--osui-sidebar-layer: var(--layer-global-off-canvas);
 	--osui-menu-layer: calc(var(--layer-global-navigation) + var(--layer-local-tier-2));
 }

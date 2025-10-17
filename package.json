@@ -1,6 +1,6 @@
 {
 	"name": "outsystems-ui",
-	"version": "2.23.0",
+	"version": "2.25.0",
 	"description": "OutSystems UI Framework",
 	"license": "BSD-3-Clause",
 	"scripts": {
@@ -36,7 +36,7 @@
 		"@typescript-eslint/eslint-plugin": "^5.62.0",
 		"@typescript-eslint/parser": "^5.62.0",
 		"branch-name": "^1.0.0",
-		"browser-sync": "^3.0.3",
+		"browser-sync": "^3.0.4",
 		"eslint": "^8.57.1",
 		"eslint-config-prettier": "^9.1.0",
 		"eslint-plugin-prettier": "^5.2.5",
@@ -67,6 +67,6 @@
 		"typedoc-plugin-merge-modules": "^4.1.0",
 		"typedoc-umlclass": "^0.7.1",
 		"typescript": "^4.9.5",
-		"virtual-select-plugin": "^1.0.49"
+		"virtual-select-plugin": "^1.1.0"
 	}
 }

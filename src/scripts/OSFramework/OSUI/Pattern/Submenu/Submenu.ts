@@ -16,6 +16,7 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 		private _globalEventBody: GlobalCallbacks.Generic;
 		private _hasActiveLinks = false;
 		private _hasElements = false;
+		private _hasOnHoverListeners = false;
 		private _isActive = false;
 		private _isOpen = false;
 		private _platformEventOnToggleCallback: GlobalCallbacks.OSGeneric;
@@ -27,6 +28,26 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new SubmenuConfig(configs));
+		}
+
+		// Add the event listeners to the submenu
+		private _addEventListeners(addKeyboardEvent = true): void {
+			// Add events only if has elements inside
+			if (this._hasElements) {
+				// Add this event only if we haven't added
+				if (addKeyboardEvent) {
+					this._submenuHeaderElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventKeypress);
+				}
+
+				// OpenOnHover is only available for devices where the hover exists
+				if (this.configs.OpenOnHover === false || Helper.DeviceInfo.IsTouch) {
+					this._submenuHeaderElement.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventClick);
+				} else if (this.configs.OpenOnHover && this._hasOnHoverListeners === false) {
+					this._hasOnHoverListeners = true;
+					this.selfElement.addEventListener(GlobalEnum.HTMLEvent.MouseEnter, this._eventOnMouseEnter);
+					this.selfElement.addEventListener(GlobalEnum.HTMLEvent.MouseLeave, this._eventOnMouseLeave);
+				}
+			}
 		}
 
 		// Close submenu, when BodyOnCLick event is triggered
@@ -41,6 +62,7 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 			}
 		}
 
+		// Check for active links in the submenu
 		private _checkForActiveLinks(): void {
 			this._submenuActiveLinksElement =
 				Helper.Dom.ClassSelector(this._submenuLinksElement, Enum.CssClass.PatternActive) ||
@@ -70,6 +92,14 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 				// Will handle the tabindex value of the elements inside pattern
 				Helper.A11Y.SetElementsTabIndex(false, this._focusTrapInstance.focusableElements);
 			}
+		}
+
+		// Checks if there are valid child elements
+		private _hasValidChildren(): boolean {
+			if (this.isBuilt) {
+				return this._submenuLinksElement.querySelector(':not(span:empty)') !== null;
+			}
+			return false;
 		}
 
 		// Call methods to close, based ok e.key
@@ -122,7 +152,13 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 				}
 			}
 
-			e.stopPropagation();
+			// Check if it's inside menu and not open to stop the propagation event
+			if (
+				this.selfElement.closest(Constants.Dot + GlobalEnum.CssClassElements.MenuContent) === null ||
+				(this.selfElement.closest(Constants.Dot + GlobalEnum.CssClassElements.MenuContent) && this._isOpen)
+			) {
+				e.stopPropagation();
+			}
 		}
 
 		// Trigger the submenu after an hover behaviour
@@ -160,12 +196,12 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 					this._submenuHeaderElement.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventClick);
 					this._submenuHeaderElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventKeypress);
 				}
-
-				if (this.configs.OpenOnHover && Helper.DeviceInfo.IsTouch === false) {
+				if (this._hasOnHoverListeners) {
 					this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.MouseEnter, this._eventOnMouseEnter);
 					this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.MouseLeave, this._eventOnMouseLeave);
 				}
 			}
+			this._hasOnHoverListeners = false;
 
 			// Remove handler from Event Manager
 			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
@@ -265,15 +301,7 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 			this._eventOnMouseEnter = this._onMouseEnterCallback.bind(this);
 			this._eventOnMouseLeave = this._onMouseLeaveCallback.bind(this);
 
-			// Add events only if has elements inside
-			if (this._hasElements) {
-				// OpenOnHover is only available for devices where the hover exists
-				if (this.configs.OpenOnHover === false || Helper.DeviceInfo.IsTouch) {
-					this._submenuHeaderElement.addEventListener(GlobalEnum.HTMLEvent.Click, this._eventClick);
-				}
-
-				this._submenuHeaderElement.addEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventKeypress);
-			}
+			this._addEventListeners();
 		}
 
 		/**
@@ -288,7 +316,7 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 			this._submenuAllLinksElement = [...this._submenuLinksElement.querySelectorAll(GlobalEnum.HTMLElement.Link)];
 
 			// Check if submenu has childs
-			if (this._submenuLinksElement.children.length > 0) {
+			if (this._hasValidChildren()) {
 				this._hasElements = true;
 			}
 
@@ -310,8 +338,10 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 
 			// Add an identifier if the pattern has childs
 			if (this._hasElements) {
+				Helper.Dom.Styles.RemoveClass(this._submenuLinksElement, Enum.CssClass.PatternIsHidden);
 				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.PatternIsDropdown);
 			} else {
+				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.PatternIsDropdown);
 				Helper.Dom.Styles.AddClass(this._submenuLinksElement, Enum.CssClass.PatternIsHidden);
 			}
 
@@ -500,13 +530,14 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 		public setOpenOnHover(): void {
 			// OpenOnHover is only available for devices where the hover exists
 			if (Helper.DeviceInfo.IsTouch === false) {
-				if (this._hasElements) {
+				if (this._hasElements && this._hasOnHoverListeners === false) {
 					this._submenuHeaderElement.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventClick);
 					this._eventClick = undefined;
+					this.configs.OpenOnHover = true;
 
 					Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.PatternIsHover);
-					this.selfElement.addEventListener(GlobalEnum.HTMLEvent.MouseEnter, this._eventOnMouseEnter);
-					this.selfElement.addEventListener(GlobalEnum.HTMLEvent.MouseLeave, this._eventOnMouseLeave);
+
+					this._addEventListeners(false);
 				}
 			}
 		}
@@ -518,6 +549,18 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 		 */
 		public updateOnRender(): void {
 			if (this.isBuilt) {
+				if (this._hasValidChildren()) {
+					if (this._hasElements === false) {
+						this._hasElements = true;
+						this.setInitialStates();
+						this._addEventListeners();
+					}
+				} else if (this._hasElements) {
+					this._removeEvents();
+					this._hasElements = false;
+					this.setInitialStates();
+				}
+
 				// Check if there are active elements inside
 				this._checkForActiveLinks();
 

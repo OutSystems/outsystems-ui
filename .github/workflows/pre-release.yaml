@@ -1,0 +1,31 @@
+name: Pre-Release of OutSystems UI
+
+on:
+    workflow_dispatch:
+        inputs:
+            new-version:
+                description: 'New version to be set. (1.0.1)'
+                type: string
+                required: true
+            release-date:
+                description: 'Release date. (YYYY-MM-DD)'
+                type: string
+                required: true
+            new-dev-release:
+                description: 'Set the new dev version. (1.0.1)'
+                type: string
+                required: false
+
+permissions:
+    id-token: write
+    contents: read
+
+jobs:
+    create-release-candidate:
+        uses: OutSystems/ui-components.github-reusable-workflows/.github/workflows/pre-release.yaml@7ffd7f90f6e5016bd92d0e050d2516084b99c2f6 #v0.2.5
+        with:
+            new-version: ${{ inputs.new-version }}
+            release-date: ${{ inputs.release-date }}
+            new-dev-release: ${{ inputs.new-dev-release }}
+        secrets:
+            GPG_PRIVATE_KEY: ${{ secrets.GPG_SIGN_KEY }}
