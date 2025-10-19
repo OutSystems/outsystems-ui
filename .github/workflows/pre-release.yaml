@@ -22,6 +22,7 @@ permissions:
 
 jobs:
     create-release-candidate:
+        name: Create Release Candidate
         uses: OutSystems/ui-components.github-reusable-workflows/.github/workflows/pre-release.yaml@7ffd7f90f6e5016bd92d0e050d2516084b99c2f6 #v0.2.5
         with:
             new-version: ${{ inputs.new-version }}

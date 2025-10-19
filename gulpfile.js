@@ -6,9 +6,9 @@ const fs = require('fs');
 
 // Get dependencies tasks
 const createScssFile = require('./gulp/Tasks/CreateScssFile');
-const cssTranspile = require('./gulp/Tasks/ScssTanspile');
+const cssTranspile = require('./gulp/Tasks/ScssTranspile');
 const project = require('./gulp/ProjectSpecs/DefaultSpecs');
-const tsTranspile = require('./gulp/Tasks/TsTanspile');
+const tsTranspile = require('./gulp/Tasks/TsTranspile');
 const updatetVersion = require('./gulp/Tasks/UpdateVersion');
 const ptdNpm = require('./gulp/Tasks/PrepareToDeployNpm');
 const gitIgnoreUpdate = require('./gulp/Tasks/GitIgnoreUpdate');
