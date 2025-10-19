@@ -22,6 +22,7 @@ permissions:
 
 jobs:
     set-release-latest:
+        name: Set Release as Latest
         uses: OutSystems/ui-components.github-reusable-workflows/.github/workflows/release.yaml@7ffd7f90f6e5016bd92d0e050d2516084b99c2f6 #v0.2.5
         with:
             new-version: ${{ inputs.new-version }}
