@@ -70,7 +70,7 @@
 .android {
 	.layout-native {
 		.sidebar {
-			padding-top: var(--safe-area-status-bar);
+			padding-top: max(var(--status-bar-height), var(--safe-area-inset-top, 0px));
 		}
 	}
 }

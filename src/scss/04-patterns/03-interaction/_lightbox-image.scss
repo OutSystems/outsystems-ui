@@ -94,7 +94,7 @@
 ///
 .android {
 	.pswp__top-bar {
-		top: var(--safe-area-status-bar);
+		top: max(var(--status-bar-height), var(--safe-area-inset-top, 0px));
 	}
 }
 

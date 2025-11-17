@@ -70,7 +70,8 @@
 					&.aside-expandable {
 						.app-menu-content {
 							padding-top: calc(
-								var(--header-size) + var(--header-size-content) + var(--safe-area-status-bar)
+								var(--header-size) + var(--header-size-content) +
+									max(var(--status-bar-height), var(--safe-area-inset-top, 0px))
 							);
 						}
 					}

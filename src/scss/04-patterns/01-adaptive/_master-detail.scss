@@ -169,7 +169,7 @@
 	&.android {
 		.layout-native {
 			.split-right {
-				padding-top: calc(var(--header-size) + var(--safe-area-status-bar));
+				padding-top: calc(var(--header-size) + max(var(--status-bar-height), var(--safe-area-inset-top, 0px)));
 			}
 		}
 	}
@@ -187,7 +187,7 @@
 	.layout-native {
 		.split-right-close {
 			left: 16px;
-			top: calc(var(--safe-area-status-bar) + 10px);
+			top: calc(max(var(--status-bar-height), var(--safe-area-inset-top, 0px)) + 10px);
 		}
 	}
 }

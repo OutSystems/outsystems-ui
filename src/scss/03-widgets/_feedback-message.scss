@@ -74,7 +74,7 @@ div.feedback-message-warning {
 }
 
 .android .feedback-message {
-	padding-top: calc(var(--safe-area-status-bar) + var(--space-base));
+	padding-top: calc(max(var(--status-bar-height), var(--safe-area-inset-top, 0px)) + var(--space-base));
 }
 
 // IsRTL -------------------------------------------------------------------------
