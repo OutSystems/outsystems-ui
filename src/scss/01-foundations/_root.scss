@@ -101,9 +101,6 @@
 	--bottom-bar-size: #{$bottom-bar-size};
 	--footer-height: #{$footer-height};
 
-	/*! Set the StatusBar variable that will be overwritten when it will be enable due to miss calculations! */
-	--status-bar-height: 0px;
-
 	/*! iOS Safe Areas (Notch Support) */
 	--os-safe-area-top: env(safe-area-inset-top);
 	--os-safe-area-right: env(safe-area-inset-right);
