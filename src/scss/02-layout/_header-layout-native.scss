@@ -120,6 +120,8 @@
 			&.hide-header-on-scroll .header {
 				top: calc(-1 * (var(--header-size) + var(--status-bar-height)));
 			}
+	.layout-native {
+		&.hide-header-on-scroll .header {
 
 			.header,
 			.app-menu {

@@ -52,7 +52,7 @@
 
 // Responsive --------------------------------------------------------------------
 ///
-.android[data-status-bar-height] {
+.android {
 	.section-group {
 		&.is--sticky {
 			.section-title {
@@ -63,7 +63,7 @@
 }
 
 ///
-.ios[data-status-bar-height] {
+.ios {
 	.section-group {
 		&.is--sticky {
 			.section-title {

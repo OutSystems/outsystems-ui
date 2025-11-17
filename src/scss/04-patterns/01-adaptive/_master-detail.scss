@@ -166,7 +166,7 @@
 		}
 	}
 
-	&.android[data-status-bar-height] {
+	&.android {
 		.layout-native {
 			.split-right {
 				padding-top: calc(var(--header-size) + var(--status-bar-height));
@@ -183,7 +183,7 @@
 	}
 }
 
-.android[data-status-bar-height] {
+.android {
 	.layout-native {
 		.split-right-close {
 			left: 16px;

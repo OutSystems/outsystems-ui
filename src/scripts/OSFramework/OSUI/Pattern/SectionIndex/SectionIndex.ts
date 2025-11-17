@@ -201,7 +201,8 @@ namespace OSFramework.OSUI.Patterns.SectionIndex {
 			// Check if overlay is enabled => If StatusBar is enabled and if is iOS device
 			/* With the introduction of the ios-bounce the overflow container change from the .active-screen into .content */
 			if (
-				Helper.Dom.Attribute.Has(document.body, GlobalEnum.HTMLAttributes.StatusBar) &&
+				(Helper.Dom.Attribute.Has(document.body, GlobalEnum.HTMLAttributes.StatusBar) ||
+					!!window.statusbar?.visible) &&
 				Helper.DeviceInfo.GetOperatingSystem() === GlobalEnum.MobileOS.IOS
 			) {
 				this._mainScrollContainerElement = Helper.Dom.ClassSelector(
