@@ -17,7 +17,9 @@
 	padding: var(--space-m);
 	pointer-events: none;
 	position: fixed;
-	transition: transform 300ms ease-out, opacity 300ms ease-out;
+	transition:
+		transform 300ms ease-out,
+		opacity 300ms ease-out;
 	user-select: none;
 	width: var(--notification-width);
 	z-index: var(--osui-notification-layer);
