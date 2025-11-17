@@ -16,8 +16,12 @@
 	--os-safe-area-right: max(env(safe-area-inset-right), var(--safe-area-inset-right, 0px));
 	--os-safe-area-bottom: max(env(safe-area-inset-bottom), var(--safe-area-inset-bottom, 0px));
 	--os-safe-area-left: max(env(safe-area-inset-left), var(--safe-area-inset-left, 0px));
-	/*! This variable will only be used for Android */
-	--safe-area-status-bar: var(--status-bar-height, var(--safe-area-inset-top, 0px));
+	/*! This variable will only be used for Android
+     * Instead of creating the new variable below, we are using the expression
+	 * directly where needed, as the variable value is set in the beginning and
+	 * won't be updated if the CSS variable changes during runtime. 
+	 */
+	/*! --safe-area-status-bar: max(var(--status-bar-height), var(--safe-area-inset-top, 0px)); */
 
 	/*! Typography - Size */
 	@each $type, $value in $osui-typography-heading-sizes {
