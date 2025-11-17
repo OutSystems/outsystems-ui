@@ -4,6 +4,18 @@
 
 ///
 :root {
+	/*! For mobile apps, safe areas */
+	/*! Before MABS12, the insets were obtained via env(safe-area-inset-*)
+		for iOS, as for Android the values were reported incorrectly.
+	    From MABS12 onwards, the native shell is injecting the CSS variables
+		"--safe-area-inset-*".
+		To ensure retrocompatibility, we use max() to get the highest value
+		between env() and the CSS variable.
+	*/
+	--os-safe-area-top: max(env(safe-area-inset-top), var(--safe-area-inset-top, 0px));
+	--os-safe-area-right: max(env(safe-area-inset-right), var(--safe-area-inset-right, 0px));
+	--os-safe-area-bottom: max(env(safe-area-inset-bottom), var(--safe-area-inset-bottom, 0px));
+	--os-safe-area-left: max(env(safe-area-inset-left), var(--safe-area-inset-left, 0px));
 	/*! Typography - Size */
 	@each $type, $value in $osui-typography-heading-sizes {
 		--font-size-h#{$type}: #{$value};
