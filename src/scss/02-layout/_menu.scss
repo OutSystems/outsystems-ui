@@ -195,19 +195,16 @@
 
 ///
 .android {
-	&[data-status-bar-height] {
-		&.portrait {
-			.app-menu-content {
-				padding-top: var(--status-bar-height);
-			}
 	&.portrait {
 		.app-menu-content {
+			padding-top: var(--safe-area-status-bar);
 		}
+	}
 
-		&.landscape {
-			.app-menu-content {
-				padding-left: var(--status-bar-height);
-			}
+	&.landscape {
+		.app-menu-content {
+			padding-left: max(var(--os-safe-area-left), var(--safe-area-status-bar, 0px));
+			padding-right: max(var(--os-safe-area-right), 0px);
 		}
 	}
 }

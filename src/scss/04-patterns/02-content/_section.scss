@@ -56,7 +56,7 @@
 	.section-group {
 		&.is--sticky {
 			.section-title {
-				top: calc(var(--section-top-position) + var(--status-bar-height));
+				top: calc(var(--section-top-position) + var(--safe-area-status-bar));
 			}
 		}
 	}

@@ -5,7 +5,7 @@
 
 ///
 .osui-section-index {
-	--top-position: calc(var(--header-size) + var(--header-size-content) + var(--status-bar-height));
+	--top-position: calc(var(--header-size) + var(--header-size-content) + var(--safe-area-status-bar));
 	display: flex;
 	flex-direction: column;
 	position: relative;

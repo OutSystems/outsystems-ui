@@ -57,7 +57,7 @@
 		.section-index {
 			&.is--sticky {
 				top: calc(
-					var(--header-size) + var(--header-size-content) + var(--top-position) + var(--status-bar-height)
+					var(--header-size) + var(--header-size-content) + var(--top-position) + var(--safe-area-status-bar)
 				);
 			}
 		}

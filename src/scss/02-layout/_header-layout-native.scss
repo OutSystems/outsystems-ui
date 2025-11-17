@@ -115,18 +115,14 @@
 
 ///
 .android {
-	&[data-status-bar-height] {
-		.layout-native {
-			&.hide-header-on-scroll .header {
-				top: calc(-1 * (var(--header-size) + var(--status-bar-height)));
-			}
 	.layout-native {
 		&.hide-header-on-scroll .header {
+			top: calc(-1 * (var(--header-size) + var(--safe-area-status-bar)));
+		}
 
-			.header,
-			.app-menu {
-				padding-top: var(--status-bar-height);
-			}
+		.header,
+		.app-menu {
+			padding-top: var(--safe-area-status-bar);
 		}
 	}
 }

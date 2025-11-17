@@ -59,9 +59,8 @@
 
 // Responsive --------------------------------------------------------------------
 ///
-.android[data-status-bar-height] .layout-native .login-screen {
-	padding-top: var(--status-bar-height);
 .android .layout-native .login-screen {
+	padding-top: var(--safe-area-status-bar);
 }
 
 ///
