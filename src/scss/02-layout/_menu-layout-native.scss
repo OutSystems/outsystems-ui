@@ -70,8 +70,7 @@
 					&.aside-expandable {
 						.app-menu-content {
 							padding-top: calc(
-								var(--header-size) + var(--header-size-content) +
-									max(var(--status-bar-height), var(--safe-area-inset-top, 0px))
+								var(--header-size) + var(--header-size-content) + #{android-safe-area-top()}
 							);
 						}
 					}

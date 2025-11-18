@@ -1,0 +1,16 @@
+////
+/// @group Functions
+/// Global Functions
+
+/// Returns the safe area value with fallback for both env() and CSS variable
+/// @param {String} $side - The side (top, right, bottom, left)
+/// @return {String} - The max() expression with env() and CSS variable fallback
+@function safe-area($side) {
+	@return unquote('max(env(safe-area-inset-#{$side}), var(--safe-area-inset-#{$side}, 0px))');
+}
+
+/// Returns the safe area top value for specifically for Android devices.
+/// @return {String} - The max() expression with current variable and new CSS variable
+@function android-safe-area-top() {
+	@return unquote('max(var(--status-bar-height), var(--safe-area-inset-top, 0px))');
+}

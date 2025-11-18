@@ -21,7 +21,7 @@
 	 * directly where needed, as the variable value is set in the beginning and
 	 * won't be updated if the CSS variable changes during runtime. 
 	 */
-	/*! --safe-area-status-bar: max(var(--status-bar-height), var(--safe-area-inset-top, 0px)); */
+	/*! --safe-area-status-bar: #{android-safe-area-top()}; */
 
 	/*! Typography - Size */
 	@each $type, $value in $osui-typography-heading-sizes {

@@ -101,7 +101,7 @@
 .android {
 	.layout-native {
 		.notification--visible {
-			margin-top: max(var(--status-bar-height), var(--safe-area-inset-top, 0px));
+			margin-top: #{android-safe-area-top()};
 		}
 	}
 }
@@ -120,7 +120,7 @@
 
 	.layout-native {
 		.notification--visible {
-			margin-top: max(var(--status-bar-height), var(--safe-area-inset-top, 0px));
+			margin-top: #{android-safe-area-top()};
 		}
 	}
 }

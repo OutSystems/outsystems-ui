@@ -56,7 +56,7 @@
 	.section-group {
 		&.is--sticky {
 			.section-title {
-				top: calc(var(--section-top-position) + max(var(--status-bar-height), var(--safe-area-inset-top, 0px)));
+				top: calc(var(--section-top-position) + #{android-safe-area-top()});
 			}
 		}
 	}

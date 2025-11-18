@@ -197,7 +197,7 @@
 .android {
 	&.portrait {
 		.app-menu-content {
-			padding-top: max(var(--status-bar-height), var(--safe-area-inset-top, 0px));
+			padding-top: #{android-safe-area-top()};
 		}
 	}
 

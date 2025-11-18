@@ -117,12 +117,12 @@
 .android {
 	.layout-native {
 		&.hide-header-on-scroll .header {
-			top: calc(-1 * (var(--header-size) + max(var(--status-bar-height), var(--safe-area-inset-top, 0px))));
+			top: calc(-1 * (var(--header-size) + #{android-safe-area-top()}));
 		}
 
 		.header,
 		.app-menu {
-			padding-top: max(var(--status-bar-height), var(--safe-area-inset-top, 0px));
+			padding-top: #{android-safe-area-top()};
 		}
 	}
 }
