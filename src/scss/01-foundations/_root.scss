@@ -83,10 +83,17 @@
 	--footer-height: #{$footer-height};
 
 	/*! iOS Safe Areas (Notch Support) */
-	--os-safe-area-top: env(safe-area-inset-top);
-	--os-safe-area-right: env(safe-area-inset-right);
-	--os-safe-area-bottom: env(safe-area-inset-bottom);
-	--os-safe-area-left: env(safe-area-inset-left);
+	/*! Before MABS12, the insets were obtained via env(safe-area-inset-*)
+		for iOS, as for Android the values were reported incorrectly.
+	    From MABS12 onwards, the native shell is injecting the CSS variables
+		"--safe-area-inset-*".
+		To ensure retro-compatibility, we use max() to get the highest value
+		between env() and the CSS variable.
+	*/
+	--os-safe-area-top: #{safe-area(top)};
+	--os-safe-area-right: #{safe-area(right)};
+	--os-safe-area-bottom: #{safe-area(bottom)};
+	--os-safe-area-left: #{safe-area(left)};
 
 	/*! Layer System */
 	--layer-system-scale: 5;
