@@ -65,12 +65,12 @@
 .tablet {
 	.layout-native {
 		.landscape {
-			&.android[data-status-bar-height] {
+			&.android {
 				&.layout-side {
 					&.aside-expandable {
 						.app-menu-content {
 							padding-top: calc(
-								var(--header-size) + var(--header-size-content) + var(--status-bar-height)
+								var(--header-size) + var(--header-size-content) + #{android-safe-area-top()}
 							);
 						}
 					}

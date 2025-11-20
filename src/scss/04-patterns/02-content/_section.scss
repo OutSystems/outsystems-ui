@@ -52,18 +52,18 @@
 
 // Responsive --------------------------------------------------------------------
 ///
-.android[data-status-bar-height] {
+.android {
 	.section-group {
 		&.is--sticky {
 			.section-title {
-				top: calc(var(--section-top-position) + var(--status-bar-height));
+				top: calc(var(--section-top-position) + #{android-safe-area-top()});
 			}
 		}
 	}
 }
 
 ///
-.ios[data-status-bar-height] {
+.ios {
 	.section-group {
 		&.is--sticky {
 			.section-title {

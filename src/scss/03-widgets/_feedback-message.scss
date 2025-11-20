@@ -73,8 +73,8 @@ div.feedback-message-warning {
 	}
 }
 
-.android[data-status-bar-height] .feedback-message {
-	padding-top: calc(var(--status-bar-height) + var(--space-base));
+.android .feedback-message {
+	padding-top: calc(#{android-safe-area-top()} + var(--space-base));
 }
 
 // IsRTL -------------------------------------------------------------------------

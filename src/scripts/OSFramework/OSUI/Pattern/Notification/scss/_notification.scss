@@ -17,7 +17,9 @@
 	padding: var(--space-m);
 	pointer-events: none;
 	position: fixed;
-	transition: transform 300ms ease-out, opacity 300ms ease-out;
+	transition:
+		transform 300ms ease-out,
+		opacity 300ms ease-out;
 	user-select: none;
 	width: var(--notification-width);
 	z-index: var(--osui-notification-layer);
@@ -174,10 +176,10 @@
 }
 
 ///
-.android[data-status-bar-height] {
+.android {
 	.layout-native {
 		.osui-notification--is-open {
-			margin-top: var(--status-bar-height);
+			margin-top: #{android-safe-area-top()};
 		}
 	}
 }

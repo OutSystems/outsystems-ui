@@ -51,7 +51,7 @@ namespace OutSystems.OSUI.Utils.PreviewInDevices {
 			// Adds the is phone class to apply the correct styling
 			// because platform is replacing phone with tablet when we rotate the phone device
 			document.body.classList.add('is-phone');
-			document.body.setAttribute('data-status-bar-height', `${notchValue}px`);
+			document.body.setAttribute('style', `--safe-area-inset-top: ${notchValue}px`);
 			document.head.appendChild(style);
 		}
 

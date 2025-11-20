@@ -52,12 +52,12 @@
 
 // Responsive ---------------------------------------------------------------------------
 ///
-.android[data-status-bar-height] {
+.android {
 	.layout-native {
 		.section-index {
 			&.is--sticky {
 				top: calc(
-					var(--header-size) + var(--header-size-content) + var(--top-position) + var(--status-bar-height)
+					var(--header-size) + var(--header-size-content) + var(--top-position) + #{android-safe-area-top()}
 				);
 			}
 		}

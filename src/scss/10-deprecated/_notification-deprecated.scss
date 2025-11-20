@@ -98,10 +98,10 @@
 	}
 }
 
-.android[data-status-bar-height] {
+.android {
 	.layout-native {
 		.notification--visible {
-			margin-top: var(--status-bar-height);
+			margin-top: #{android-safe-area-top()};
 		}
 	}
 }
@@ -120,7 +120,7 @@
 
 	.layout-native {
 		.notification--visible {
-			margin-top: var(--status-bar-height);
+			margin-top: #{android-safe-area-top()};
 		}
 	}
 }
