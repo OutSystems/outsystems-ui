@@ -20,9 +20,14 @@ namespace OutSystems.OSUI.Utils.Network {
 		// This method can't implement the CreateApiResponse method since it's defined as a function in SS
 		let typeofConnection = 'webbrowser';
 
-		if (navigator.connection !== undefined && navigator.connection.type !== undefined) {
-			//In a mobile device
-			typeofConnection = navigator.connection.type;
+		if (navigator.onLine) {
+			if (navigator.connection?.type) {
+				typeofConnection = navigator.connection.type;
+			} else {
+				typeofConnection = 'unknown';
+			}
+		} else {
+			typeofConnection = 'none';
 		}
 
 		return typeofConnection;
