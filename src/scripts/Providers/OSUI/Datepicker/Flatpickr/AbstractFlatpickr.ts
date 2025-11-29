@@ -97,13 +97,15 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 					return;
 
 				case OSFramework.OSUI.GlobalEnum.Keycodes.Enter:
-				case OSFramework.OSUI.GlobalEnum.Keycodes.Space:
+				case OSFramework.OSUI.GlobalEnum.Keycodes.Space: {
 					e.preventDefault();
 					// Set the currentDate at the Datepicker
-					this.provider.setDate(this.provider.now, true);
+					const currentDatetime = new Date();
+					this.provider.setDate(currentDatetime, true);
 					// Trigger the jumpIntoDate!
 					this.jumpIntoToday();
 					break;
+				}
 			}
 		}
 
@@ -248,7 +250,8 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		 * @memberof Providers.OSUI.DatePicker.Flatpickr.AbstractFlatpickr
 		 */
 		protected jumpIntoToday(): void {
-			this.provider.jumpToDate(this.provider.now);
+			const currentDatetime = new Date();
+			this.provider.jumpToDate(currentDatetime);
 		}
 
 		/**
