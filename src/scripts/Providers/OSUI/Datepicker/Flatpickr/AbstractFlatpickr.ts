@@ -251,7 +251,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		 */
 		protected jumpIntoToday(): void {
 			const currentDatetime = new Date();
-			this.provider.jumpToDate(currentDatetime);
+			this.provider.jumpToDate(currentDatetime, true);
 		}
 
 		/**

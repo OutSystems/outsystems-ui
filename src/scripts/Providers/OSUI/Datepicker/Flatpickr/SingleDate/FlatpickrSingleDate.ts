@@ -100,7 +100,8 @@ namespace Providers.OSUI.Datepicker.Flatpickr.SingleDate {
 		protected todayBtnClick(event: MouseEvent): void {
 			event.preventDefault();
 			// Set the currentDate at the Datepicker
-			this.provider.setDate(this.provider.now, true);
+			const currentDatetime = new Date();
+			this.provider.setDate(currentDatetime, true);
 			// Trigger the jumpIntoDate!
 			this.jumpIntoToday();
 		}
