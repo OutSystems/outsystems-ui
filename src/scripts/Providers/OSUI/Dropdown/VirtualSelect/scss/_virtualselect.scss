@@ -636,6 +636,10 @@ body {
 		.vscomp-wrapper {
 			z-index: var(--layer-global-off-canvas);
 		}
+
+		&:has(.osui-notification--is-open) .vscomp-wrapper {
+			z-index: var(--layer-global-instant-interaction);
+		}
 	}
 }
 
