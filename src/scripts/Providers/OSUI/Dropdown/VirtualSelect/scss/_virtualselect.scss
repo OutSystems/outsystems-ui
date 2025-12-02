@@ -196,8 +196,6 @@
 
 			&-container {
 				background-color: var(--overlay-background);
-				// The !important is needed in order to overwrite the inline style added by library!
-				z-index: var(--layer-global-elevated) !important;
 			}
 
 			.vscomp-search-container {
@@ -634,7 +632,7 @@ body {
 		}
 
 		.vscomp-wrapper {
-			z-index: var(--layer-global-off-canvas);
+			z-index: var(--layer-global-instant-interaction);
 		}
 	}
 }
