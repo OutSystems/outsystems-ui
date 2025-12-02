@@ -97,7 +97,6 @@ namespace Providers.OSUI.Datepicker.Flatpickr.RangeDate {
 		 */
 		protected todayBtnClick(event: MouseEvent): void {
 			event.preventDefault();
-
 			this.jumpIntoToday();
 		}
 
