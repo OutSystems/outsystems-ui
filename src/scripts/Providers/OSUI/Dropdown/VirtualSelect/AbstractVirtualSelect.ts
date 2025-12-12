@@ -2,8 +2,7 @@
 namespace Providers.OSUI.Dropdown.VirtualSelect {
 	export abstract class AbstractVirtualSelect<C extends Dropdown.VirtualSelect.AbstractVirtualSelectConfig>
 		extends OSFramework.OSUI.Patterns.Dropdown.AbstractDropdown<VirtualSelect, C>
-		implements IVirtualSelect
-	{
+		implements IVirtualSelect {
 		// Store the onOrientationChange event
 		private _eventOnOrientationChange: OSFramework.OSUI.GlobalCallbacks.Generic;
 		// Store the onResize event
@@ -37,6 +36,8 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 				textContainer.innerHTML = text;
 
 				this.selfElement.parentElement.appendChild(textContainer);
+			} else {
+				errorMessageElement.innerHTML = text;
 			}
 		}
 
