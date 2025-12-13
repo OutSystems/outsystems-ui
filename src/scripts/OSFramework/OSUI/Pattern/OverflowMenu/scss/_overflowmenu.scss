@@ -56,6 +56,11 @@
 	}
 }
 
+// layer exception when a popup is open on the same screen
+html:has(.popup-backdrop) .osui-overflow-menu__balloon {
+	z-index: var(--layer-global-off-canvas);
+}
+
 .tablet,
 .phone {
 	.osui-overflow-menu {

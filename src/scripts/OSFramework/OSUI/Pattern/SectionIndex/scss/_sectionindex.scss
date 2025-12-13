@@ -5,7 +5,7 @@
 
 ///
 .osui-section-index {
-	--top-position: calc(var(--header-size) + var(--header-size-content) + var(--status-bar-height));
+	--top-position: calc(var(--header-size) + var(--header-size-content) + #{android-safe-area-top()});
 	display: flex;
 	flex-direction: column;
 	position: relative;

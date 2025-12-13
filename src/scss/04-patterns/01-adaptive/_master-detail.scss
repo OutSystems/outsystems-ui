@@ -166,10 +166,10 @@
 		}
 	}
 
-	&.android[data-status-bar-height] {
+	&.android {
 		.layout-native {
 			.split-right {
-				padding-top: calc(var(--header-size) + var(--status-bar-height));
+				padding-top: calc(var(--header-size) + #{android-safe-area-top()});
 			}
 		}
 	}
@@ -183,11 +183,11 @@
 	}
 }
 
-.android[data-status-bar-height] {
+.android {
 	.layout-native {
 		.split-right-close {
 			left: 16px;
-			top: calc(var(--status-bar-height) + 10px);
+			top: calc(#{android-safe-area-top()} + 10px);
 		}
 	}
 }
