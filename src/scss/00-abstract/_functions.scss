@@ -12,5 +12,5 @@
 /// Returns the safe area top value for specifically for Android devices.
 /// @return {String} - The max() expression with current variable and new CSS variable
 @function android-safe-area-top() {
-	@return unquote('max(var(--status-bar-height), var(--safe-area-inset-top, 0px))');
+	@return unquote('max(var(--status-bar-height, 0px), var(--safe-area-inset-top, 0px))');
 }
