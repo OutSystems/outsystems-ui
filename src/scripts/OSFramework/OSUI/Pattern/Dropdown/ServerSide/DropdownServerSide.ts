@@ -6,8 +6,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			OSUIDropdownServerSideConfig,
 			Patterns.DropdownServerSideItem.IDropdownServerSideItem
 		>
-		implements IDropdownServerSide
-	{
+		implements IDropdownServerSide {
 		// Store the HTML element for the DropdownBalloonContainer
 		private _balloonContainerElement: HTMLElement;
 		// Store the Balloon Element
@@ -73,6 +72,8 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 				textContainer.innerHTML = text;
 
 				this.selfElement.parentElement.appendChild(textContainer);
+			} else {
+				errorMessageElement.innerHTML = text;
 			}
 		}
 
