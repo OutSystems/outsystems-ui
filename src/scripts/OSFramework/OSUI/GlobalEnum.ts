@@ -386,6 +386,7 @@ namespace OSFramework.OSUI.GlobalEnum {
 		Password = 'password',
 		Text = 'text',
 		Time = 'time',
+		Button = 'button',
 	}
 
 	/**

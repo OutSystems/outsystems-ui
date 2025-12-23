@@ -53,6 +53,9 @@ namespace OSFramework.OSUI.Patterns.TabsHeaderItem {
 				if (Helper.DeviceInfo.IsIos || Helper.DeviceInfo.GetOperatingSystem() === GlobalEnum.MobileOS.MacOS) {
 					Helper.A11Y.RolePresentation(this.selfElement.parentElement);
 				}
+				
+				//Prevent tab item to be seen by the browser as submit button
+				Helper.Dom.Attribute.Set(this.selfElement, GlobalEnum.HTMLAttributes.Type, GlobalEnum.InputTypeAttr.Button);
 			}
 
 			// Dynamic values that need to be changed when toggling the active state
