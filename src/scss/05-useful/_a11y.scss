@@ -21,6 +21,13 @@
 	}
 }
 
+/* Used to stop underlying page from scrolling */
+///
+.wcag-hide-text.focus-trap-top,
+.wcag-hide-text.focus-trap-bottom {
+    position: fixed;
+}
+
 /* Skip-nav link used on Accessibility*/
 ///
 .skip-nav {
