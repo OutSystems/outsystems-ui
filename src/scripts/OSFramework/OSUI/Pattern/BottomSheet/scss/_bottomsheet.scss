@@ -26,6 +26,11 @@
 	width: 100%;
 	z-index: var(--osui-bottom-sheet-layer);
 
+	body.ptr-loading &,
+	body.ptr-reset & {
+        bottom: -50px;
+	}
+
 	// Service Studio Preview
 	& {
 		-servicestudio-transform: none;
@@ -78,6 +83,11 @@
 			position: absolute;
 			top: 100%;
 			width: 100%;
+
+			body.ptr-loading &,
+			body.ptr-reset & {
+            	height: 0;
+        	}
 		}
 
 		+ .osui-bottom-sheet-overlay {

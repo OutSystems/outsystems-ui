@@ -54,6 +54,13 @@
 		}
 	}
 
+	&-loading,
+	&-reset:has(.osui-bottom-sheet) {
+		.screen-container {
+    		overflow-y: hidden;
+		}
+	}
+
 	&-reset {
 		.content {
 			transform: translate3D(0, 0, 0);
