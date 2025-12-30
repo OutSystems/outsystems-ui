@@ -2,7 +2,8 @@
 namespace Providers.OSUI.Dropdown.VirtualSelect {
 	export abstract class AbstractVirtualSelect<C extends Dropdown.VirtualSelect.AbstractVirtualSelectConfig>
 		extends OSFramework.OSUI.Patterns.Dropdown.AbstractDropdown<VirtualSelect, C>
-		implements IVirtualSelect {
+		implements IVirtualSelect
+	{
 		// Store the onOrientationChange event
 		private _eventOnOrientationChange: OSFramework.OSUI.GlobalCallbacks.Generic;
 		// Store the onResize event
@@ -98,7 +99,12 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 					OSFramework.OSUI.Event.DOMEvents.Listeners.Type.OrientationChange,
 					this._eventOnOrientationChange
 				);
-			} else {
+				//Validates if the device is mobile or if is forcing desktop view.
+				//This prevents the addition of a resize event (e.g. Keyboard Opens)
+			} else if (
+				OSFramework.OSUI.Helper.DeviceInfo.IsDesktop &&
+				OSFramework.OSUI.Helper.DeviceInfo.HasCursorPointer
+			) {
 				OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
 					OSFramework.OSUI.Event.DOMEvents.Listeners.Type.WindowResize,
 					this._eventOnWindowResize
