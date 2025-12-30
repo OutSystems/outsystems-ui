@@ -173,6 +173,8 @@ namespace OSFramework.OSUI.Feature.Balloon {
 
 		// Manage the behaviour when there is a window resize!
 		private _onWindowResize(): void {
+			//Validates if the device is mobile or if is forcing desktop view and if the element is a child of Dropdown Server Side.
+			//This prevents closing the ballon on resize (e.g. Keyboard Opens)
 			if (
 				this._isParentType(Patterns.Dropdown.ServerSide.Enum.CssClass.Pattern) &&
 				(Helper.DeviceInfo.IsMobileDevice || Helper.DeviceInfo.HasCursorPointer === false)
