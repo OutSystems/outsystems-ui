@@ -262,6 +262,18 @@ namespace OSFramework.OSUI.Helper {
 		}
 
 		/**
+		 * Getter that returns if the device has pointer
+		 *
+		 * @readonly
+		 * @static
+		 * @type {boolean}
+		 * @memberof DeviceInfo
+		 */
+		public static get HasCursorPointer(): boolean {
+			return window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+		}
+
+		/**
 		 * Getter that returns if the application is running in a desktop device.
 		 *
 		 * @readonly

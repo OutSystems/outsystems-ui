@@ -97,6 +97,13 @@ namespace OSFramework.OSUI.Feature.Balloon {
 			this._focusManagerInstance = new Behaviors.FocusManager();
 		}
 
+		// Validates if the feature parent is of parent type
+		private _isParentType(patternClassName: string) {
+			return (
+				this.featurePattern as Patterns.AbstractPattern<Patterns.AbstractConfiguration>
+			).selfElement.classList.contains(patternClassName);
+		}
+
 		// Manage the focus of the elements inside the Balloon
 		private _manageFocusInsideBalloon(
 			arrowKeyPressed?: GlobalEnum.Keycodes.ArrowDown | GlobalEnum.Keycodes.ArrowUp
@@ -166,6 +173,13 @@ namespace OSFramework.OSUI.Feature.Balloon {
 
 		// Manage the behaviour when there is a window resize!
 		private _onWindowResize(): void {
+			if (
+				this._isParentType(Patterns.Dropdown.ServerSide.Enum.CssClass.Pattern) &&
+				(Helper.DeviceInfo.IsMobileDevice || Helper.DeviceInfo.HasCursorPointer === false)
+			) {
+				return;
+			}
+
 			// If there is a horizontal resize and the Balloon is open, close it!
 			if (this.isOpen) {
 				this.close();

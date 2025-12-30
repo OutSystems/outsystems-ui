@@ -98,7 +98,10 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 					OSFramework.OSUI.Event.DOMEvents.Listeners.Type.OrientationChange,
 					this._eventOnOrientationChange
 				);
-			} else {
+			} else if (
+				OSFramework.OSUI.Helper.DeviceInfo.IsDesktop &&
+				OSFramework.OSUI.Helper.DeviceInfo.HasCursorPointer
+			) {
 				OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
 					OSFramework.OSUI.Event.DOMEvents.Listeners.Type.WindowResize,
 					this._eventOnWindowResize
