@@ -49,15 +49,20 @@
 			display: block;
 		}
 
-		.content {
+		&:not(.osui-bottom-sheet--is-active) .content {
 			transform: translate3D(0, 50px, 0);
 		}
 	}
 
-	&-reset {
-		.content {
-			transform: translate3D(0, 0, 0);
+	&-loading:not(.osui-bottom-sheet--is-active),
+	&-reset:not(.osui-bottom-sheet--is-active) {
+		.osui-bottom-sheet {
+			display: none;
 		}
+	}
+
+	&-reset {
+		transform: translate3D(0, 0, 0);
 	}
 
 	&-refresh {
