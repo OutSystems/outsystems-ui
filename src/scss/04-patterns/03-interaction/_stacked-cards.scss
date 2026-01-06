@@ -193,7 +193,7 @@
 
 	&.top {
 		background-color: var(--color-info);
-		color: var(--color-neutral-0);
+		color: var(--text-color-neutral-0);
 
 		// Service Studio Preview
 		& {
@@ -207,7 +207,7 @@
 
 	&.right {
 		background-color: var(--color-success);
-		color: var(--color-neutral-0);
+		color: var(--text-color-neutral-0);
 
 		// Service Studio Preview
 		& {
@@ -221,7 +221,7 @@
 
 	&.left {
 		background-color: var(--color-error);
-		color: var(--color-neutral-0);
+		color: var(--text-color-neutral-0);
 
 		// Service Studio Preview
 		& {

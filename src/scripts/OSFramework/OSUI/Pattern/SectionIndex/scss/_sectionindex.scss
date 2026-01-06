@@ -29,7 +29,7 @@
 .osui-section-index-item {
 	&,
 	&:visited {
-		color: var(--color-neutral-8);
+		color: var(--text-color-neutral-8);
 		cursor: pointer;
 		display: flex;
 		padding-bottom: var(--space-xs);
@@ -39,11 +39,11 @@
 	}
 
 	&:hover {
-		color: var(--color-neutral-9);
+		color: var(--text-color-neutral-9);
 	}
 
 	&--is-active {
-		color: var(--color-neutral-9);
+		color: var(--text-color-neutral-9);
 		font-weight: var(--font-semi-bold);
 		&::before {
 			background-color: var(--color-primary);

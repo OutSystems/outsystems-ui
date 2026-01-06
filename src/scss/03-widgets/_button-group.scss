@@ -29,12 +29,12 @@
 		&[disabled] {
 			background-color: var(--color-neutral-0);
 			border: var(--border-size-s) solid var(--color-neutral-4);
-			color: var(--color-neutral-6);
+			color: var(--text-color-neutral-6);
 			pointer-events: none;
 
 			&.button-group-selected-item {
 				background-color: var(--color-neutral-2);
-				color: var(--color-neutral-6);
+				color: var(--text-color-neutral-6);
 			}
 		}
 
@@ -50,7 +50,7 @@
 
 		&.button-group-selected-item {
 			background-color: var(--color-primary);
-			color: var(--color-neutral-0);
+			color: var(--text-color-neutral-0);
 		}
 	}
 
@@ -73,7 +73,7 @@
 			background-color: var(--header-color);
 			border: 0;
 			border-bottom: var(--border-size-m) solid transparent;
-			color: var(--color-neutral-8);
+			color: var(--text-color-neutral-8);
 
 			&:last-child {
 				border-radius: 0;
@@ -81,11 +81,11 @@
 
 			&.button-group-selected-item {
 				border-bottom: var(--border-size-m) solid var(--color-primary);
-				color: var(--color-neutral-10);
+				color: var(--text-color-neutral-10);
 			}
 
 			&[disabled] {
-				color: var(--color-neutral-6);
+				color: var(--text-color-neutral-6);
 
 				&.button-group-selected-item {
 					border-bottom: var(--border-size-m) solid var(--color-neutral-6);

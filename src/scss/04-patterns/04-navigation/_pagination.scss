@@ -33,7 +33,7 @@
 		background-color: var(--color-neutral-0);
 		border: var(--border-size-s) solid var(--color-neutral-4);
 		border-radius: var(--border-radius-soft);
-		color: var(--color-neutral-8);
+		color: var(--text-color-neutral-8);
 		cursor: pointer;
 		display: inline-flex;
 		height: 32px;
@@ -74,7 +74,7 @@
 
 	// pagination-counter
 	&-counter {
-		color: var(--color-neutral-7);
+		color: var(--text-color-neutral-7);
 	}
 
 	.list.list-group {

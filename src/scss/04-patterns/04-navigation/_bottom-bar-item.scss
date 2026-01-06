@@ -14,7 +14,7 @@
 .bottom-bar {
 	display: flex;
 	&:empty:after {
-		color: var(--color-neutral-7);
+		color: var(--text-color-neutral-7);
 		content: 'Add Bottom Bar Items to this Container';
 		display: block;
 		font-size: 12px;
@@ -28,7 +28,7 @@
 		overflow: hidden;
 	}
 	& > a {
-		color: var(--color-neutral-8);
+		color: var(--text-color-neutral-8);
 		&.active {
 			color: var(--color-primary);
 		}

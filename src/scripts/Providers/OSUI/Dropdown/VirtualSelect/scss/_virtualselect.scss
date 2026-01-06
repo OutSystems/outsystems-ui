@@ -58,14 +58,14 @@
 			&::after,
 			&::before {
 				background-color: transparent;
-				color: var(--color-neutral-7);
+				color: var(--text-color-neutral-7);
 			}
 		}
 	}
 
 	&-search-clear:hover:after {
 		background-color: transparent;
-		color: var(--color-neutral-7);
+		color: var(--text-color-neutral-7);
 	}
 }
 
@@ -95,7 +95,7 @@
 
 	&:not(.has-value) {
 		.vscomp-value {
-			color: var(--color-neutral-7);
+			color: var(--text-color-neutral-7);
 			opacity: 1;
 		}
 	}
@@ -150,7 +150,7 @@
 		.vscomp-value-tag {
 			background-color: var(--color-neutral-3);
 			border: var(--border-size-none);
-			color: var(--color-neutral-7);
+			color: var(--text-color-neutral-7);
 			font-size: var(--font-size-xs);
 			font-weight: var(--font-semi-bold);
 			padding: 6px 35px 6px 10px;
@@ -177,7 +177,7 @@
 
 					&:before,
 					&:after {
-						color: var(--color-neutral-4);
+						color: var(--text-color-neutral-4);
 					}
 				}
 			}
@@ -330,7 +330,7 @@
 	background-color: var(--color-neutral-0);
 	border-radius: var(--border-radius-soft);
 	border: var(--border-size-s) solid var(--color-neutral-5);
-	color: var(--color-neutral-9);
+	color: var(--text-color-neutral-9);
 	cursor: pointer;
 	display: inline-flex;
 	height: var(--vscomp-toogle-btn-height);
@@ -346,7 +346,7 @@
 
 	// Create new arrow for all dropdown types
 	&:after {
-		color: var(--color-neutral-7);
+		color: var(--text-color-neutral-7);
 		content: '';
 		font: normal normal normal var(--vscomp-toogle-btn-arrow-size) / 1 FontAwesome;
 		position: absolute;
@@ -404,7 +404,7 @@
 
 	&:before {
 		align-items: center;
-		color: var(--color-neutral-7);
+		color: var(--text-color-neutral-7);
 		content: '';
 		display: flex;
 		font: normal normal normal 14px/1 FontAwesome;
@@ -416,7 +416,7 @@
 
 	.vscomp-search-clear {
 		border-radius: var(--border-radius-circle);
-		color: var(--color-neutral-7);
+		color: var(--text-color-neutral-7);
 		display: table;
 		font-size: var(--font-size-h5);
 		font-weight: var(--font-semi-bold);
@@ -447,7 +447,7 @@
 	font-size: var(--font-size-s);
 
 	&::placeholder {
-		color: var(--color-neutral-9);
+		color: var(--text-color-neutral-9);
 		opacity: 0.5;
 	}
 }
@@ -471,7 +471,7 @@
 
 // Option Item text
 .vscomp-option-text {
-	color: var(--color-neutral-9);
+	color: var(--text-color-neutral-9);
 	display: inline-block;
 	font-size: var(--font-size-s);
 
@@ -504,7 +504,7 @@
 			// Style group title in single select dropdown
 			// this selector is necessary so that the style is not applied when the option has a checkbox
 			&:only-child {
-				color: var(--color-neutral-7);
+				color: var(--text-color-neutral-7);
 				font-size: var(--font-size-label);
 				font-weight: var(--font-semi-bold);
 				text-transform: uppercase;
@@ -515,7 +515,7 @@
 
 // Option Item description
 .vscomp-option-description {
-	color: var(--color-neutral-7);
+	color: var(--text-color-neutral-7);
 	font-size: var(--font-size-label);
 	margin-top: 1px;
 }
@@ -534,10 +534,10 @@
 .has-accessible-features {
 	.vscomp-toggle-button {
 		border-color: var(--color-neutral-7);
-		color: var(--color-neutral-10);
+		color: var(--text-color-neutral-10);
 
 		&:after {
-			color: var(--color-neutral-9);
+			color: var(--text-color-neutral-9);
 		}
 	}
 

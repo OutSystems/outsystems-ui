@@ -5,15 +5,15 @@
 
 /* Input placeholder style */
 ::-webkit-input-placeholder {
-	color: var(--color-neutral-7);
+	color: var(--text-color-neutral-7);
 }
 
 ::-moz-placeholder {
-	color: var(--color-neutral-7);
+	color: var(--text-color-neutral-7);
 }
 
 :-ms-input-placeholder {
-	color: var(--color-neutral-7);
+	color: var(--text-color-neutral-7);
 }
 
 /* Iuput and TextArea */
@@ -24,7 +24,7 @@
 		background-color: var(--color-neutral-0);
 		border: var(--border-size-s) solid var(--color-neutral-5);
 		border-radius: var(--border-radius-soft);
-		color: var(--color-neutral-9);
+		color: var(--text-color-neutral-9);
 		font-size: var(--font-size-s);
 		transition: all 180ms linear;
 
@@ -39,7 +39,7 @@
 		&[disabled] {
 			background-color: var(--color-neutral-2);
 			border: var(--border-size-s) solid var(--color-neutral-4);
-			color: var(--color-neutral-6);
+			color: var(--text-color-neutral-6);
 		}
 	}
 

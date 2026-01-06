@@ -54,7 +54,7 @@ $balloonMobileTopMargin: 5vh;
 
 		&:after {
 			align-items: center;
-			color: var(--color-neutral-7);
+			color: var(--text-color-neutral-7);
 			content: '\f107';
 			display: flex;
 			font: normal normal normal 20px/1 FontAwesome;
@@ -84,7 +84,7 @@ $balloonMobileTopMargin: 5vh;
 			background-color: var(--color-neutral-0);
 			border-radius: var(--border-radius-soft);
 			border: var(--border-size-s) solid var(--color-neutral-5);
-			color: var(--color-neutral-9);
+			color: var(--text-color-neutral-9);
 			cursor: pointer;
 			display: flex;
 			font-size: var(--font-size-s);
@@ -123,7 +123,7 @@ $balloonMobileTopMargin: 5vh;
 
 			&:before {
 				align-items: center;
-				color: var(--color-neutral-6);
+				color: var(--text-color-neutral-6);
 				content: '\f002';
 				display: flex;
 				font: normal normal normal 14px/1 FontAwesome;
@@ -228,7 +228,7 @@ $balloonMobileTopMargin: 5vh;
 			&-wrapper {
 				background-color: var(--color-neutral-2);
 				border-color: var(--color-neutral-4);
-				color: var(--color-neutral-6);
+				color: var(--text-color-neutral-6);
 				pointer-events: none;
 			}
 		}
@@ -288,7 +288,7 @@ $balloonMobileTopMargin: 5vh;
 
 			&-search {
 				&:before {
-					color: var(--color-neutral-7);
+					color: var(--text-color-neutral-7);
 				}
 
 				input,

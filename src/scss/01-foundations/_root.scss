@@ -44,6 +44,11 @@
 		--color-neutral-#{$type}: #{$value};
 	}
 
+	/*! Text Color - Neutral */
+	@each $type, $value in $osui-colors-neutral {
+		--text-color-neutral-#{$type}: var(--color-neutral-#{$type});
+	}
+
 	/*! Color - Semantic */
 	@each $type, $value in $osui-colors-semantic {
 		--color-#{$type}: #{$value};

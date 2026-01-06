@@ -13,7 +13,7 @@
 
 		border: var(--border-size-s) solid transparent;
 		border-radius: var(--osui-overflow-menu-shape);
-		color: var(--color-neutral-9);
+		color: var(--text-color-neutral-9);
 		width: 32px;
 
 		* {
@@ -33,7 +33,7 @@
 		z-index: var(--layer-global-instant-interaction);
 
 		a {
-			color: var(--color-neutral-9);
+			color: var(--text-color-neutral-9);
 
 			&:hover {
 				background: var(--color-neutral-4);

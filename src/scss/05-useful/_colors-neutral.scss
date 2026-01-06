@@ -34,12 +34,12 @@
 	$i: 0;
 	@each $type, $value in $osui-colors-neutral {
 		&-neutral-#{$type} {
-			color: var(--color-neutral-#{$type});
+			color: var(--text-color-neutral-#{$type});
 
 			& {
 				@if ($i > 4) {
 					&-darker {
-						color: var(--color-neutral-#{$type});
+						color: var(--text-color-neutral-#{$type});
 					}
 				}
 			}

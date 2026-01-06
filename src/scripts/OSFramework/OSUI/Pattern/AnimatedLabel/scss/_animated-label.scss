@@ -15,7 +15,7 @@
 
 		.animated-label-input {
 			.form-control[data-input]::-webkit-datetime-edit {
-				color: var(--color-neutral-9);
+				color: var(--text-color-neutral-9);
 			}
 
 			[data-textarea] {
@@ -25,7 +25,7 @@
 	}
 
 	&-text {
-		color: var(--color-neutral-8);
+		color: var(--text-color-neutral-8);
 		font-size: var(--font-size-s);
 		pointer-events: none;
 		position: absolute;
@@ -63,7 +63,7 @@
 					border-bottom: var(--border-size-s) solid var(--color-primary);
 
 					&::-webkit-datetime-edit {
-						color: var(--color-neutral-9);
+						color: var(--text-color-neutral-9);
 					}
 				}
 

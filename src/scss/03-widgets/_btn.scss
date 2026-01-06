@@ -28,7 +28,7 @@
 
 	&[class*='background-'] {
 		border: var(--border-size-s) solid transparent;
-		color: var(--color-neutral-0);
+		color: var(--text-color-neutral-0);
 	}
 
 	&[class*='text-'] {
@@ -44,7 +44,7 @@
 	&-primary {
 		background-color: var(--color-primary);
 		border: var(--border-size-s) solid var(--color-primary);
-		color: var(--color-neutral-0);
+		color: var(--text-color-neutral-0);
 	}
 
 	&-small {
@@ -61,25 +61,25 @@
 	&-cancel {
 		background-color: var(--color-neutral-0);
 		border: var(--border-size-s) solid var(--color-neutral-8);
-		color: var(--color-neutral-7);
+		color: var(--text-color-neutral-7);
 	}
 
 	&-success {
 		background-color: var(--color-success);
 		border: var(--border-size-s) solid var(--color-success);
-		color: var(--color-neutral-0);
+		color: var(--text-color-neutral-0);
 	}
 
 	&-error {
 		background-color: var(--color-error);
 		border: var(--border-size-s) solid var(--color-error);
-		color: var(--color-neutral-0);
+		color: var(--text-color-neutral-0);
 	}
 
 	&[disabled] {
 		background-color: var(--color-neutral-2);
 		border: var(--border-size-s) solid var(--color-neutral-4);
-		color: var(--color-neutral-6);
+		color: var(--text-color-neutral-6);
 		pointer-events: none;
 	}
 }

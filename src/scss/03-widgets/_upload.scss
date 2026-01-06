@@ -9,7 +9,7 @@
 	background: var(--color-neutral-0);
 	border: var(--border-size-s) solid var(--color-neutral-4);
 	border-radius: var(--border-radius-soft);
-	color: var(--color-neutral-9);
+	color: var(--text-color-neutral-9);
 	display: flex;
 	font-size: var(--font-size-s);
 	margin-bottom: 0;
@@ -38,7 +38,7 @@
 
 	[data-icon] {
 		background-color: transparent;
-		color: var(--color-neutral-5);
+		color: var(--text-color-neutral-5);
 		line-height: 1;
 		margin-right: var(--space-base);
 		width: auto;
