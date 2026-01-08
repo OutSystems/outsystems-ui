@@ -121,7 +121,7 @@
 
 		&:hover {
 			background-color: var(--color-primary);
-			color: var(--color-neutral-0);
+			color: var(--text-color-neutral-0);
 		}
 	}
 
@@ -130,7 +130,7 @@
 		background-color: var(--color-primary);
 		border-radius: var(--border-radius-rounded);
 		box-shadow: var(--shadow-xl);
-		color: var(--color-neutral-0);
+		color: var(--text-color-neutral-0);
 		cursor: pointer;
 		display: flex;
 		font-size: var(--font-size-h4);

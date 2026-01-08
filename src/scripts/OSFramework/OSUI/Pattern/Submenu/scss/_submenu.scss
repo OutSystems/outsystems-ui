@@ -142,7 +142,7 @@
 
 		&__item {
 			align-items: center;
-			color: var(--color-neutral-9);
+			color: var(--text-color-neutral-9);
 			display: inline-flex;
 			height: 100%;
 			position: relative;
@@ -153,7 +153,7 @@
 
 			a {
 				align-items: center;
-				color: var(--color-neutral-8);
+				color: var(--text-color-neutral-8);
 				display: flex;
 				height: 100%;
 
@@ -191,7 +191,7 @@
 		}
 
 		a {
-			color: var(--color-neutral-8);
+			color: var(--text-color-neutral-8);
 			margin: 0;
 			padding: var(--space-s) var(--space-base);
 			white-space: nowrap;
@@ -283,7 +283,7 @@
 	.osui-submenu {
 		&:hover {
 			.osui-submenu__header__item {
-				color: var(--color-neutral-9);
+				color: var(--text-color-neutral-9);
 			}
 		}
 
@@ -300,7 +300,7 @@
 
 			&__item {
 				a:hover {
-					color: var(--color-neutral-9);
+					color: var(--text-color-neutral-9);
 				}
 			}
 		}
@@ -309,7 +309,7 @@
 			a {
 				&:hover {
 					background-color: var(--color-neutral-2);
-					color: var(--color-neutral-9);
+					color: var(--text-color-neutral-9);
 				}
 
 				&.active:hover {

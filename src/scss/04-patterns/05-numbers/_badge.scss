@@ -6,7 +6,7 @@
 ///
 .badge {
 	align-items: center;
-	color: var(--color-neutral-0);
+	color: var(--text-color-neutral-0);
 	display: inline-flex;
 	font-weight: var(--font-semi-bold);
 	height: 32px;
@@ -24,7 +24,7 @@
 			&-2,
 			&-3,
 			&-4 {
-				color: var(--color-neutral-9);
+				color: var(--text-color-neutral-9);
 			}
 		}
 

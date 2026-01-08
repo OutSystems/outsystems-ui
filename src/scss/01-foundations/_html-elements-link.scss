@@ -22,7 +22,7 @@ a {
 	}
 
 	&[disabled] {
-		color: var(--color-neutral-6);
+		color: var(--text-color-neutral-6);
 	}
 }
 
@@ -45,7 +45,7 @@ a {
 		&:focus {
 			background-color: var(--color-focus-outer);
 			box-shadow: 0 2px var(--color-focus-inner);
-			color: var(--color-neutral-10);
+			color: var(--text-color-neutral-10);
 
 			&,
 			&:hover {
@@ -54,7 +54,7 @@ a {
 		}
 
 		&[disabled] {
-			color: var(--color-neutral-6);
+			color: var(--text-color-neutral-6);
 		}
 	}
 }

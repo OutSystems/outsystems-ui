@@ -34,12 +34,12 @@
 		&.selected {
 			background-color: var(--color-primary);
 			border-color: transparent;
-			color: var(--color-neutral-0);
+			color: var(--text-color-neutral-0);
 		}
 
 		&.flatpickr-disabled {
 			background-color: var(--color-neutral-1);
-			color: var(--color-neutral-5);
+			color: var(--text-color-neutral-5);
 
 			&:hover {
 				background-color: var(--color-neutral-1) !important; // override provider !important rule

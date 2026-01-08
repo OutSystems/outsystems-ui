@@ -130,7 +130,7 @@
 			}
 
 			.noUi-pips {
-				color: var(--color-neutral-8);
+				color: var(--text-color-neutral-8);
 			}
 
 			.noUi-pips-margin {
@@ -159,7 +159,7 @@
 		}
 
 		&-pips-vertical {
-			color: var(--color-neutral-8);
+			color: var(--text-color-neutral-8);
 			height: 100%;
 			left: 100%;
 			padding: 0 0 0 var(--space-base);
@@ -197,7 +197,7 @@
 		&-tooltip {
 			background: transparent;
 			border: none;
-			color: var(--color-neutral-10);
+			color: var(--text-color-neutral-10);
 			padding: var(--space-xs);
 		}
 
@@ -251,12 +251,12 @@
 				}
 
 				&-pips {
-					color: var(--color-neutral-6);
+					color: var(--text-color-neutral-6);
 				}
 			}
 
 			.noUi-tooltip {
-				color: var(--color-neutral-6);
+				color: var(--text-color-neutral-6);
 			}
 		}
 	}

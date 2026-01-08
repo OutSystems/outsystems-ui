@@ -7,7 +7,7 @@
 .alert {
 	align-items: center;
 	border-radius: var(--border-radius-soft);
-	color: var(--color-neutral-0);
+	color: var(--text-color-neutral-0);
 	display: flex;
 	padding: var(--space-base);
 
@@ -40,7 +40,7 @@
 
 	&-warning {
 		background-color: var(--color-warning);
-		color: var(--color-neutral-10);
+		color: var(--text-color-neutral-10);
 	}
 }
 

@@ -50,18 +50,18 @@
 			.rating-item {
 				&-filled,
 				&-half {
-					color: var(--color-neutral-6);
+					color: var(--text-color-neutral-6);
 
 					.icon {
-						color: var(--color-neutral-6);
+						color: var(--text-color-neutral-6);
 					}
 				}
 
 				&-empty {
-					color: var(--color-neutral-6);
+					color: var(--text-color-neutral-6);
 
 					.icon {
-						color: var(--color-neutral-4);
+						color: var(--text-color-neutral-4);
 					}
 				}
 			}
@@ -288,18 +288,18 @@
 		.rating-item {
 			&-filled,
 			&-half {
-				color: var(--color-neutral-7);
+				color: var(--text-color-neutral-7);
 
 				.icon {
-					color: var(--color-neutral-7);
+					color: var(--text-color-neutral-7);
 				}
 			}
 
 			&-empty {
-				color: var(--color-neutral-7);
+				color: var(--text-color-neutral-7);
 
 				.icon {
-					color: var(--color-neutral-5);
+					color: var(--text-color-neutral-5);
 				}
 			}
 		}

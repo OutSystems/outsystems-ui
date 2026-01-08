@@ -175,7 +175,7 @@
 			align-items: center;
 			background-color: transparent;
 			border: none;
-			color: var(--color-neutral-8);
+			color: var(--text-color-neutral-8);
 			cursor: pointer;
 			display: inline-flex;
 			height: 100%;
@@ -186,21 +186,21 @@
 
 			&:hover {
 				&:not(.osui-tabs--is-active) {
-					color: var(--color-neutral-10);
+					color: var(--text-color-neutral-10);
 				}
 
 				&[disabled] {
-					color: var(--color-neutral-6);
+					color: var(--text-color-neutral-6);
 				}
 			}
 
 			&.osui-tabs--is-active {
-				color: var(--color-neutral-10);
+				color: var(--text-color-neutral-10);
 				text-shadow: 0 0 0.5px currentColor; /* This is used instead of font-weight, to prevent layout-shifts */
 			}
 
 			&[disabled] {
-				color: var(--color-neutral-6);
+				color: var(--text-color-neutral-6);
 				cursor: auto;
 			}
 		}
@@ -355,7 +355,7 @@
 
 			&:focus-visible {
 				background-color: var(--color-focus-outer);
-				color: var(--color-neutral-10);
+				color: var(--text-color-neutral-10);
 			}
 		}
 

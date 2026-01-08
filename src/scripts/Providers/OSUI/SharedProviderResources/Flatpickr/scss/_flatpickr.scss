@@ -63,7 +63,7 @@
 			margin-right: var(--space-xs);
 
 			.flatpickr-day {
-				color: var(--color-neutral-5);
+				color: var(--text-color-neutral-5);
 			}
 		}
 
@@ -241,7 +241,7 @@
 
 // Flatpickr - WeekDay Element
 span.flatpickr-weekday {
-	color: var(--color-neutral-7);
+	color: var(--text-color-neutral-7);
 	font-size: var(--font-size-s);
 	font-weight: var(--font-regular);
 	user-select: none;
@@ -249,7 +249,7 @@ span.flatpickr-weekday {
 
 // Flatpickr - DayElem
 .flatpickr-day {
-	color: var(--color-neutral-9);
+	color: var(--text-color-neutral-9);
 	font-size: var(--font-size-s);
 	font-weight: var(--font-regular);
 	user-select: none;
@@ -257,11 +257,11 @@ span.flatpickr-weekday {
 
 	&.prevMonthDay,
 	&.nextMonthDay {
-		color: var(--color-neutral-5);
+		color: var(--text-color-neutral-5);
 
 		&:hover,
 		&:focus {
-			color: var(--color-neutral-7);
+			color: var(--text-color-neutral-7);
 		}
 	}
 
@@ -276,7 +276,7 @@ span.flatpickr-weekday {
 		}
 
 		&.inRange {
-			color: var(--color-neutral-9);
+			color: var(--text-color-neutral-9);
 		}
 	}
 
@@ -318,7 +318,7 @@ span.flatpickr-weekday {
 		border-color: var(--color-primary);
 
 		&.today {
-			color: var(--color-neutral-0);
+			color: var(--text-color-neutral-0);
 		}
 	}
 	// InRange Styles
@@ -431,7 +431,7 @@ span.flatpickr-weekday {
 	.flatpickr-am-pm {
 		background-color: var(--color-primary);
 		border-radius: var(--border-radius-soft);
-		color: var(--color-neutral-0);
+		color: var(--text-color-neutral-0);
 		font-size: var(--font-size-xs);
 		font-weight: var(--font-semi-bold);
 		height: 18px;
