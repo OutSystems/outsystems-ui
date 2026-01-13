@@ -40,6 +40,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		getDisplayValue: Function;
 		getNewValue: Function;
 		getSelectedOptions: Function;
+		setSelectedOptions: Function;
 		hide: Function;
 		isAllSelected: Function;
 		open: Function;
