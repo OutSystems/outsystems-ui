@@ -95,6 +95,8 @@
 .android {
 	.pswp__top-bar {
 		top: #{android-safe-area-top()};
+		padding-left: var(--safe-area-inset-left, 0px);
+		padding-right: var(--safe-area-inset-right, 0px);
 	}
 }
 

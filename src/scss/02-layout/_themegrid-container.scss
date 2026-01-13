@@ -76,3 +76,13 @@
 		padding: var(--space-none);
 	}
 }
+
+// Android
+.android .layout-native {
+	.main-content.ThemeGrid_Container {
+		padding-top: var(--space-none);
+		padding-left: var(--space-none);
+		padding-right: var(--space-none);
+		padding-bottom: calc(var(--safe-area-inset-bottom, 0px) * var(--has-no-footer));
+	}
+}

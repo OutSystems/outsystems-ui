@@ -73,8 +73,16 @@ div.feedback-message-warning {
 	}
 }
 
-.android .feedback-message {
-	padding-top: calc(#{android-safe-area-top()} + var(--space-base));
+.android {
+	.feedback-message {
+		padding-top: calc(#{android-safe-area-top()} + var(--space-base));
+	}
+
+	&.landscape {
+		.feedback-message {
+			animation-name: feedbackMessageSlideDownPhone;
+		}
+	}
 }
 
 // IsRTL -------------------------------------------------------------------------

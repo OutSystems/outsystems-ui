@@ -132,6 +132,20 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 					footer.getBoundingClientRect().height + OSFramework.OSUI.GlobalEnum.Units.Pixel
 				);
 			}
+
+			if (footer && footer.getBoundingClientRect().height > 0) {
+				OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(
+					document.body,
+					OSFramework.OSUI.GlobalEnum.CSSVariables.HasNoFooter,
+					0
+				);
+			} else {
+				OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(
+					document.body,
+					OSFramework.OSUI.GlobalEnum.CSSVariables.HasNoFooter,
+					1
+				);
+			}
 		}
 
 		/**

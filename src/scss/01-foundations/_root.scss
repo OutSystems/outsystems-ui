@@ -81,6 +81,7 @@
 	--side-menu-size: #{$side-menu-size};
 	--bottom-bar-size: #{$bottom-bar-size};
 	--footer-height: #{$footer-height};
+	--has-no-footer: #{$has-no-footer};
 
 	/*! iOS Safe Areas (Notch Support) */
 	/*! Before MABS12, the insets were obtained via env(safe-area-inset-*)

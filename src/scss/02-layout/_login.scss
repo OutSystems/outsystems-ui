@@ -61,6 +61,9 @@
 ///
 .android .layout-native .login-screen {
 	padding-top: #{android-safe-area-top()};
+	padding-bottom: var(--safe-area-inset-bottom, 0px);
+	padding-left: var(--safe-area-inset-left, 0px);
+	padding-right: var(--safe-area-inset-right, 0px);
 }
 
 ///
