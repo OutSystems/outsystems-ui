@@ -78,11 +78,7 @@
 }
 
 // Android
-.android .layout-native {
-	.main-content.ThemeGrid_Container {
-		padding-top: var(--space-none);
-		padding-left: var(--space-none);
-		padding-right: var(--space-none);
-		padding-bottom: calc(var(--safe-area-inset-bottom, 0px) * var(--has-no-footer));
-	}
+// Gives a padding to the content, this avoids some content to be unreachable under the bottom bar
+.android .main:has(.footer:empty) .content {
+	padding-bottom: var(--safe-area-inset-bottom, 0px);
 }

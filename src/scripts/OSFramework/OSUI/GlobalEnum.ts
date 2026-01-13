@@ -55,7 +55,6 @@ namespace OSFramework.OSUI.GlobalEnum {
 	 */
 	export enum CSSVariables {
 		FooterHeight = '--footer-height',
-		HasNoFooter = '--has-no-footer',
 		HeaderContentHeight = '--header-size-content',
 		OverlayOpacity = '--overlay-opacity',
 		ViewportHeight = '--viewport-height',
