@@ -160,6 +160,12 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 			}
 		}
 
+		// Method to remove the classes added during BottomSheet usage
+		private _removeHtmlClasses(): void {
+			Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.IsOpen);
+			Helper.Dom.Styles.RemoveClass(document.body, Enum.CssClass.IsActive);
+		}
+
 		// Method to toggle the open/close the BottomSheet
 		private _toggleBottomSheet(isOpen: boolean): void {
 			// Cancel animation if active
@@ -385,6 +391,7 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 				this.removeEventListeners();
 			}
 
+			this._removeHtmlClasses();
 			this.unsetHtmlElements();
 			this.unsetCallbacks();
 
