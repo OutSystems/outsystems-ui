@@ -187,8 +187,18 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		 * @memberof Providers.OSUI.DatePicker.Flatpickr.AbstractFlatpickr
 		 */
 		protected createProviderInstance(): void {
+			let flatpickerOptions = this.flatpickrOpts;
+
+			// Places the picker on the left or right side of the input based on RTL being or not enabled
+			if (
+				OutSystems.OSUI.Utils.GetIsRTL() &&
+				(this.flatpickrOpts === undefined || this.flatpickrOpts.position === undefined)
+			) {
+				flatpickerOptions = { ...this.flatpickrOpts, position: 'below right' };
+			}
+
 			// Init provider
-			this.provider = window.flatpickr(this.datePickerPlatformInputElem, this.flatpickrOpts);
+			this.provider = window.flatpickr(this.datePickerPlatformInputElem, flatpickerOptions);
 
 			// Set provider Info to be used by setProviderConfigs API calls
 			this.updateProviderEvents({

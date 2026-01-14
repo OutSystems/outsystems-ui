@@ -507,6 +507,14 @@ span.flatpickr-weekday {
 	.flatpickr-calendar {
 		// This +10px will be used to better contain all the text without cropping it since RTL texts are bigger
 		width: 330px;
+
+		&.arrowTop {
+			&:before,
+			&::after {
+				right: 40px;
+				left: auto;
+			}
+		}
 	}
 
 	.flatpickr-months,
