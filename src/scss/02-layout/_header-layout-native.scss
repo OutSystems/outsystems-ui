@@ -123,6 +123,8 @@
 		.header,
 		.app-menu {
 			padding-top: #{android-safe-area-top()};
+			padding-right: var(--safe-area-inset-right, 0px);
+			padding-left: var(--safe-area-inset-left, 0px);
 		}
 	}
 }

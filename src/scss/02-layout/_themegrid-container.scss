@@ -76,3 +76,9 @@
 		padding: var(--space-none);
 	}
 }
+
+// Android
+// Gives a padding to the content, this avoids some content to be unreachable under the bottom bar
+.android .main:has(.footer:empty) .content {
+	padding-bottom: var(--safe-area-inset-bottom, 0px);
+}
