@@ -90,6 +90,7 @@
 		}
 		.vscomp-value {
 			margin-right: var(--space-m);
+			margin-left: var(--space-none);
 		}
 	}
 
@@ -239,10 +240,20 @@
 			}
 		}
 
+		&.has-value {
+			.vscomp-value {
+				margin-left: var(--space-m);
+				margin-right: var(--space-none);
+			}
+		}
+
 		&.show-value-as-tags {
 			&.has-value {
 				.vscomp-clear-button {
 					left: var(--space-l);
+				}
+				.vscomp-toggle-button {
+					padding-right: var(--space-s);
 				}
 			}
 
@@ -253,6 +264,10 @@
 			.vscomp-value-tag-clear-button {
 				left: 10px;
 				right: auto;
+			}
+
+			.vscomp-toggle-button {
+				padding: var(--space-xs) var(--space-base) var(--space-none) var(--space-xxl);
 			}
 		}
 
