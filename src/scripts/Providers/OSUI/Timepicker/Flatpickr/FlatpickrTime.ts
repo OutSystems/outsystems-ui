@@ -153,18 +153,8 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 				this.timePickerPlatformInputElem.value = OSFramework.OSUI.Constants.EmptyString;
 			}
 
-			let flatpickerOptions = this._flatpickrOpts;
-
-			// Places the picker on the left or right side of the input based on RTL being or not enabled
-			if (
-				OutSystems.OSUI.Utils.GetIsRTL() &&
-				(this._flatpickrOpts === undefined || this._flatpickrOpts.position === undefined)
-			) {
-				flatpickerOptions = { ...this._flatpickrOpts, position: 'below right' };
-			}
-
 			// Init provider
-			this.provider = window.flatpickr(this.timePickerPlatformInputElem, flatpickerOptions);
+			this.provider = window.flatpickr(this.timePickerPlatformInputElem, this._flatpickrOpts);
 			// Set the needed HTML attributes
 			this._setAttributes();
 

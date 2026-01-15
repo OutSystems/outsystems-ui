@@ -54,6 +54,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr.RangeDate {
 			const flatpickrRangeDateOpts = {
 				defaultDate: this._setDefaultDate(),
 				mode: OSFramework.OSUI.Patterns.DatePicker.Enum.Mode.Range,
+				position: OutSystems.OSUI.Utils.GetIsRTL() ? 'below right' : 'below left',
 			};
 
 			return this.mergeConfigs(super.getProviderConfig(), flatpickrRangeDateOpts, this.providerExtendedOptions);

@@ -149,6 +149,7 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 						altFormat: this.DateFormat,
 					}),
 				],
+				position: OutSystems.OSUI.Utils.GetIsRTL() ? 'below right' : 'below left',
 			} as FlatpickrOptions;
 
 			// Make sure locale is not undefined, as when definig the providerOptions defaults in the costructor, the window.locale is no yet available
