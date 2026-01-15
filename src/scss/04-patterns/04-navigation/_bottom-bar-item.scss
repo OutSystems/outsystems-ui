@@ -57,6 +57,14 @@
 	}
 }
 
+.android {
+	.layout-native {
+		.bottom-bar-wrapper {
+			padding-bottom: var(--safe-area-inset-bottom, 0px);
+		}
+	}
+}
+
 ///
 .layout-native {
 	.bottom-bar-wrapper {
