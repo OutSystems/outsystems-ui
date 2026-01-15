@@ -10,4 +10,9 @@ namespace Providers.OSUI.SharedProviderResources.Flatpickr.Enum {
 		Name = 'Flatpickr',
 		Version = '4.6.13',
 	}
+
+	export enum Position {
+		Left = 'below left',
+		Right = 'below right',
+	}
 }

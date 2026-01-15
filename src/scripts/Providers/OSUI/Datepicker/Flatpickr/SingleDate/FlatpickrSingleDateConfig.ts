@@ -31,7 +31,6 @@ namespace Providers.OSUI.Datepicker.Flatpickr.SingleDate {
 				mode: OSFramework.OSUI.Patterns.DatePicker.Enum.Mode.Single,
 				enableTime: this.TimeFormat !== OSFramework.OSUI.Patterns.DatePicker.Enum.TimeFormatMode.Disable,
 				onChange: this.OnChange,
-				position: OutSystems.OSUI.Utils.GetIsRTL() ? 'below right' : 'below left',
 			};
 
 			return this.mergeConfigs(super.getProviderConfig(), flatpickrSingleDateOpts, this.providerExtendedOptions);

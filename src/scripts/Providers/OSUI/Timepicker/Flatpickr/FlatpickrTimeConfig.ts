@@ -94,7 +94,9 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 				onClose: this.OnCloseEventCallback,
 				onOpen: this.OnOpenEventCallback,
 				time_24hr: this.Is24Hours,
-				position: OutSystems.OSUI.Utils.GetIsRTL() ? 'below right' : 'below left',
+				position: OutSystems.OSUI.Utils.GetIsRTL()
+					? Providers.OSUI.SharedProviderResources.Flatpickr.Enum.Position.Right
+					: Providers.OSUI.SharedProviderResources.Flatpickr.Enum.Position.Left,
 			} as FlatpickrOptions;
 
 			// Make sure locale is not undefined, as when definig the providerOptions defaults in the costructor, the window.locale is no yet available

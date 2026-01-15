@@ -7,8 +7,9 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 	 * @class AbstractFlatpickrConfig
 	 * @extends {AbstractDatePickerConfig}
 	 */
-	export abstract class AbstractFlatpickrConfig extends OSFramework.OSUI.Patterns.DatePicker
-		.AbstractDatePickerConfig {
+	export abstract class AbstractFlatpickrConfig
+		extends OSFramework.OSUI.Patterns.DatePicker.AbstractDatePickerConfig
+	{
 		// Store a list of disable days
 		private _disabledDays = [];
 
@@ -210,6 +211,9 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 				time_24hr: this.TimeFormat === OSFramework.OSUI.Patterns.DatePicker.Enum.TimeFormatMode.Time24hFormat,
 				updateInputVal: false, // (*)
 				weekNumbers: this.ShowWeekNumbers,
+				position: OutSystems.OSUI.Utils.GetIsRTL()
+					? Providers.OSUI.SharedProviderResources.Flatpickr.Enum.Position.Right
+					: Providers.OSUI.SharedProviderResources.Flatpickr.Enum.Position.Left,
 			} as FlatpickrOptions;
 
 			// Make sure locale is not undefined, as when defining the providerOptions defaults in the costructor, the window.locale is no yet available
