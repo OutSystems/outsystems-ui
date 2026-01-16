@@ -6,7 +6,8 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			OSUIDropdownServerSideConfig,
 			Patterns.DropdownServerSideItem.IDropdownServerSideItem
 		>
-		implements IDropdownServerSide {
+		implements IDropdownServerSide
+	{
 		// Store the HTML element for the DropdownBalloonContainer
 		private _balloonContainerElement: HTMLElement;
 		// Store the Balloon Element
@@ -601,6 +602,9 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 
 		// Method that will update the pattern state
 		private _updatePatternState(): void {
+			// Update selected wrapper acesssibility attributes
+			this._updateSelectedWrappeAccessibilityElement();
+
 			// Update the TabIndex for the items inside Balloon
 			this._updateBalloonAccessibilityElements();
 
@@ -630,6 +634,16 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			this._triggerToogleCalbackEvent();
 		}
 
+		private _updateSelectedWrappeAccessibilityElement() {
+			if (this._isOpen) {
+				// Set the aria-expanded atribute as true
+				Helper.A11Y.AriaExpandedTrue(this._selectValuesWrapper);
+			} else {
+				// Set the aria-expanded atribute as false
+				Helper.A11Y.AriaExpandedFalse(this._selectValuesWrapper);
+			}
+		}
+
 		/**
 		 * Add the Accessibility Attributes values
 		 *
@@ -637,6 +651,8 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
 		 */
 		protected setA11YProperties(): void {
+			// Update selected wrapper acesssibility attributes
+			this._updateSelectedWrappeAccessibilityElement();
 			// Update Tabindex Ballon elements
 			this._updateBalloonAccessibilityElements();
 
