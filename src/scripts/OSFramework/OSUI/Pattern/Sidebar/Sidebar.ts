@@ -15,6 +15,8 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 		private _clickOutsideToClose: boolean;
 		// Store if the click was outside the sidebar
 		private _clickedOutsideElement: boolean;
+		// Store the content element
+		private _content: HTMLElement;
 		// Store the Sidebar direction
 		private _currentDirectionCssClass: string;
 		// Store the click event with bind(this)
@@ -31,6 +33,8 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 		private _gestureEventInstance: Event.GestureEvent.DragEvent;
 		// Store if the pattern has gesture events added
 		private _hasGestureEvents: boolean;
+		// Store the header element
+		private _header: HTMLElement;
 		// Stores the current status of the sidebar
 		private _isOpen: boolean;
 		// Store the parent element
@@ -54,7 +58,8 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 			if (this.isBuilt) {
 				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.IsOpen);
 				Helper.A11Y.TabIndexFalse(this.selfElement);
-				Helper.A11Y.AriaHiddenTrue(this.selfElement);
+				Helper.A11Y.AriaHiddenTrue(this._content);
+				Helper.A11Y.AriaHiddenTrue(this._header);
 
 				this._triggerOnToggleEvent();
 				this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventSidebarKeypress);
@@ -146,7 +151,8 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 		private _openSidebar() {
 			Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.IsOpen);
 			Helper.A11Y.TabIndexTrue(this.selfElement);
-			Helper.A11Y.AriaHiddenFalse(this.selfElement);
+			Helper.A11Y.AriaHiddenFalse(this._content);
+			Helper.A11Y.AriaHiddenFalse(this._header);
 
 			// Add the A11Y states to focus trap
 			this._focusTrapInstance.enableForA11y();
@@ -309,10 +315,12 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 
 			if (this._isOpen) {
 				Helper.A11Y.TabIndexTrue(this.selfElement);
-				Helper.A11Y.AriaHiddenFalse(this.selfElement);
+				Helper.A11Y.AriaHiddenFalse(this._content);
+				Helper.A11Y.AriaHiddenFalse(this._header);
 			} else {
 				Helper.A11Y.TabIndexFalse(this.selfElement);
-				Helper.A11Y.AriaHiddenTrue(this.selfElement);
+				Helper.A11Y.AriaHiddenTrue(this._content);
+				Helper.A11Y.AriaHiddenTrue(this._header);
 			}
 		}
 
@@ -336,6 +344,8 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 		 */
 		protected setHtmlElements(): void {
 			this._parentSelf = Helper.Dom.GetElementById(this.widgetId);
+			this._content = this.selfElement.querySelector(Constants.Dot + OSUI.Patterns.Sidebar.Enum.CssClass.Content);
+			this._header = this.selfElement.querySelector(Constants.Dot + OSUI.Patterns.Sidebar.Enum.CssClass.Header);
 
 			this._setWidth();
 		}
