@@ -29,6 +29,9 @@
 /// @param {String} $colorName - The color name
 /// @return {String} - The border color
 @function get-border-color($colorName) {
+	@if ($colorName == 'transparent') {
+		@return transparent;
+	}
 	@if ($colorName == 'currentColor') {
 		@return currentColor;
 	}
