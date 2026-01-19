@@ -15,13 +15,6 @@
 	@return unquote('max(var(--status-bar-height, 0px), var(--safe-area-inset-top, 0px))');
 }
 
-/// Returns the text color for a given color name
-/// @param {String} $colorName - The color name
-/// @return {String} - The text color
-@function get-text-color($colorName) {
-	@return var(--text-color-#{$colorName}, --color-#{$colorName});
-}
-
 /// Returns the background color for a given color name
 /// @param {String} $colorName - The color name
 /// @return {String} - The background color
@@ -30,4 +23,21 @@
 		@return transparent;
 	}
 	@return var(--background-color-#{$colorName}, --color-#{$colorName});
+}
+
+/// Returns the border color for a given color name
+/// @param {String} $colorName - The color name
+/// @return {String} - The border color
+@function get-border-color($colorName) {
+	@if ($colorName == 'currentColor') {
+		@return currentColor;
+	}
+	@return var(--border-color-#{$colorName}, --color-#{$colorName});
+}
+
+/// Returns the text color for a given color name
+/// @param {String} $colorName - The color name
+/// @return {String} - The text color
+@function get-text-color($colorName) {
+	@return var(--text-color-#{$colorName}, --color-#{$colorName});
 }
