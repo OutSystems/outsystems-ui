@@ -210,6 +210,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 				minDate: this._validateDate(this.MinDate),
 				onChange: this.OnChange,
 				onClose: this.OnClose,
+				onMonthChange: this.OnMonthChange,
 				onOpen: this.OnOpen,
 				time_24hr: this.TimeFormat === OSFramework.OSUI.Patterns.DatePicker.Enum.TimeFormatMode.Time24hFormat,
 				updateInputVal: false, // (*)
