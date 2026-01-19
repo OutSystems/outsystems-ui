@@ -7,7 +7,7 @@
 .login {
 	&-screen {
 		align-items: center;
-		background-color: var(--color-primary);
+		background-color: get-background-color('primary');
 		display: flex;
 		height: 100%;
 		justify-content: center;
@@ -21,7 +21,7 @@
 	}
 
 	&-form {
-		background-color: var(--color-neutral-0);
+		background-color: get-background-color('neutral-0');
 		border-radius: var(--border-radius-soft);
 		box-shadow: var(--shadow-l);
 		min-width: 435px;
@@ -34,7 +34,7 @@
 .layout-native {
 	.login {
 		&-screen {
-			background-color: var(--color-background-login);
+			background-color: var(--background-color-login, --color-background-login);
 			padding: var(--os-safe-area-top) var(--os-safe-area-right) var(--os-safe-area-bottom)
 				var(--os-safe-area-left);
 		}
