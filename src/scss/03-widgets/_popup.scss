@@ -19,7 +19,7 @@
 ///
 .popup {
 	&-backdrop {
-		background-color: var(--overlay-background);
+		background-color: var(--background-color-overlay, --overlay-background);
 	}
 
 	&-dialog {
@@ -55,7 +55,7 @@
 ///
 .os-high-contrast {
 	.popup-dialog {
-		border: var(--border-size-s) solid var(--color-neutral-0);
+		border: var(--border-size-s) solid get-border-color('neutral-0');
 		border-radius: var(--border-radius-soft);
 	}
 }
