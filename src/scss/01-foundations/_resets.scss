@@ -15,7 +15,7 @@
 /* HTML                                                                         */
 /* ============================================================================ */
 html {
-	color: var(--color-neutral-9);
+	color: get-text-color('neutral-9');
 	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif,
 		'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
 	-moz-osx-font-smoothing: grayscale;
@@ -38,6 +38,7 @@ html {
 ///
 body {
 	background-color: var(--color-background-body);
+	background-color: var(--background-color-body, --color-background-body);
 	/// iOS devices loses the direction default value when toggle the RTL on the body element. Added the default property of direction to prevent the issue.
 	direction: ltr;
 	font-size: var(--font-size-s);
@@ -92,12 +93,12 @@ div[onclick] {
 /* ============================================================================ */
 ///
 label {
-	color: var(--color-neutral-8);
+	color: get-text-color('neutral-8');
 }
 
 ///
 [data-label].mandatory:after {
-	color: var(--color-error);
+	color: get-text-color('error');
 	margin-left: var(--space-xs);
 }
 
