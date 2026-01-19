@@ -5,7 +5,7 @@
 
 ///
 [data-switch] {
-	background-color: transparent;
+	background-color: get-background-color('transparent');
 	border-radius: 0;
 	height: 32px;
 	overflow: initial;
@@ -13,8 +13,8 @@
 
 	&:empty {
 		&:before {
-			background-color: var(--color-neutral-5);
-			border: var(--border-size-s) solid var(--color-neutral-5);
+			background-color: get-background-color('neutral-5');
+			border: var(--border-size-s) solid get-border-color('neutral-5');
 			border-radius: var(--border-radius-rounded);
 			height: 30px;
 			opacity: 1;
@@ -38,15 +38,15 @@
 
 	&:hover {
 		&:before {
-			background-color: var(--color-neutral-6);
+			background-color: get-background-color('neutral-6');
 			border: var(--border-size-s) solid var(--color-neutral-6);
 		}
 	}
 
 	&:checked {
 		&:before {
-			background-color: var(--color-primary);
-			border: var(--border-size-s) solid var(--color-primary);
+			background-color: get-background-color('primary');
+			border: var(--border-size-s) solid get-border-color('primary');
 		}
 
 		&:after {
@@ -59,12 +59,12 @@
 
 		&:empty {
 			&:before {
-				background-color: var(--color-neutral-2);
-				border: var(--border-size-s) solid var(--color-neutral-4);
+				background-color: get-background-color('neutral-2');
+				border: var(--border-size-s) solid get-border-color('neutral-4');
 			}
 
 			&:after {
-				background-color: var(--color-neutral-5);
+				background-color: get-background-color('neutral-5');
 				border: 0;
 			}
 		}
@@ -79,28 +79,28 @@
 
 		&:empty {
 			&:before {
-				background-color: var(--color-neutral-7);
-				border-color: var(--color-neutral-7);
+				background-color: get-background-color('neutral-7');
+				border-color: get-border-color('neutral-7');
 			}
 		}
 
 		&:hover {
 			&:before {
-				background-color: var(--color-neutral-8);
-				border-color: var(--color-neutral-8);
+				background-color: get-background-color('neutral-8');
+				border-color: get-border-color('neutral-8');
 			}
 		}
 
 		&:checked {
 			&:before {
-				background-color: var(--color-primary);
-				border-color: var(--color-primary);
+				background-color: get-background-color('primary');
+				border-color: get-border-color('primary');
 			}
 		}
 
 		&:focus {
 			&:before {
-				border-color: var(--color-focus-inner);
+				border-color: get-border-color('focus-inner');
 			}
 		}
 	}
@@ -112,7 +112,7 @@
 	[data-switch] {
 		&:empty:after {
 			align-items: center;
-			border: var(--border-size-s) solid var(--color-neutral-6);
+			border: var(--border-size-s) solid get-border-color('neutral-6');
 			content: '0';
 			display: flex;
 			font-family: monospace;
