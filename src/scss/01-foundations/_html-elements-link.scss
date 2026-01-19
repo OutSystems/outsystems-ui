@@ -11,18 +11,18 @@ a {
 
 	&,
 	&:visited {
-		color: var(--color-primary);
+		color: get-text-color('primary');
 		transition: all 180ms linear;
 	}
 
 	&:hover,
 	&:focus {
-		color: var(--color-primary-hover);
+		color: get-text-color('primary-hover');
 		text-decoration: underline;
 	}
 
 	&[disabled] {
-		color: var(--color-neutral-6);
+		color: get-text-color('neutral-6');
 	}
 }
 
@@ -43,9 +43,9 @@ a {
 .has-accessible-features {
 	a {
 		&:focus {
-			background-color: var(--color-focus-outer);
+			background-color: get-background-color('focus-outer');
 			box-shadow: 0 2px var(--color-focus-inner);
-			color: var(--color-neutral-10);
+			color: get-text-color('neutral-10');
 
 			&,
 			&:hover {
@@ -54,7 +54,7 @@ a {
 		}
 
 		&[disabled] {
-			color: var(--color-neutral-6);
+			color: get-text-color('neutral-6');
 		}
 	}
 }
