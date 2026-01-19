@@ -5,7 +5,7 @@
 
 ///
 .header {
-	background-color: var(--header-color);
+	background-color: var(--background-color-header, --header-color);
 	box-shadow: 0 1px 5px 0 rgba(21, 24, 26, 0.1);
 	z-index: var(--layer-global-navigation);
 
@@ -56,7 +56,7 @@
 
 ///
 .menu-icon {
-	background-color: transparent;
+	background-color: get-background-color('transparent');
 	border: none;
 	cursor: pointer;
 	display: flex;
@@ -68,7 +68,7 @@
 	width: 24px;
 
 	&-line {
-		background-color: var(--color-neutral-8);
+		background-color: get-background-color('neutral-8');
 		border-radius: 20px;
 		height: 3px;
 		margin: 2px 0;
@@ -78,7 +78,7 @@
 
 ///
 .menu-back {
-	color: var(--color-neutral-8);
+	color: get-text-color('neutral-8');
 }
 
 ///
