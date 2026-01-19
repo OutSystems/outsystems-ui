@@ -9,7 +9,7 @@
 		position: relative;
 
 		&:after {
-			border: var(--border-size-m) solid var(--color-neutral-7);
+			border: var(--border-size-m) solid get-border-color('neutral-7');
 			border-right: var(--border-size-none) !important;
 			border-top: var(--border-size-none) !important;
 			bottom: 0;
@@ -34,10 +34,10 @@
 		& > select {
 			&.dropdown-display {
 				align-items: center;
-				background-color: var(--color-neutral-0);
-				border: var(--border-size-s) solid var(--color-neutral-5);
+				background-color: get-background-color('neutral-0');
+				border: var(--border-size-s) solid get-border-color('neutral-5');
 				border-radius: var(--border-radius-soft);
-				color: var(--color-neutral-9);
+				color: get-text-color('neutral-9');
 				cursor: pointer;
 				display: flex;
 				font-size: var(--font-size-s);
@@ -46,11 +46,11 @@
 				width: 100%;
 
 				&:hover {
-					border: var(--border-size-s) solid var(--color-neutral-6);
+					border: var(--border-size-s) solid get-border-color('neutral-6');
 				}
 
 				&:focus {
-					border: var(--border-size-s) solid var(--color-primary);
+					border: var(--border-size-s) solid get-border-color('primary');
 				}
 			}
 		}
@@ -58,16 +58,16 @@
 		&.not-valid {
 			&.dropdown-expanded > div.dropdown-display,
 			& > select.dropdown-display {
-				border: var(--border-size-s) solid var(--color-error);
+				border: var(--border-size-s) solid get-border-color('error');
 			}
 		}
 
 		&.dropdown-expanded > div.dropdown-display {
-			border: var(--border-size-s) solid var(--color-primary);
+			border: var(--border-size-s) solid get-border-color('primary');
 		}
 
 		& > div.dropdown-list {
-			border: var(--border-size-s) solid var(--color-neutral-4);
+			border: var(--border-size-s) solid get-border-color('neutral-4');
 			border-radius: var(--border-radius-soft);
 			box-shadow: none;
 			left: 0 !important;
@@ -79,19 +79,19 @@
 
 		.dropdown-popup-row {
 			align-items: center;
-			color: var(--color-neutral-9);
+			color: get-text-color('neutral-9');
 			display: flex;
 			height: 40px;
 			padding: var(--space-none) var(--space-base);
 
 			&:hover,
 			&-selected:hover {
-				background: var(--color-neutral-2);
+				background: get-background-color('neutral-2');
 			}
 
 			&-selected {
-				background-color: var(--color-neutral-2);
-				color: var(--color-neutral-9);
+				background-color: get-background-color('neutral-2');
+				color: get-text-color('neutral-9');
 			}
 
 			span {
@@ -117,7 +117,7 @@
 	// Is expanded
 	&-expanded {
 		&.dropdown-container:after {
-			border: var(--border-size-m) solid var(--color-primary);
+			border: var(--border-size-m) solid get-border-color('primary');
 			transform: rotate(135deg) translateY(-3px) translateX(3px);
 		}
 
@@ -138,7 +138,7 @@
 	&.dropdown-expanded {
 		&.dropdown-container {
 			&:after {
-				border: var(--border-size-m) solid var(--color-neutral-7);
+				border: var(--border-size-m) solid get-border-color('neutral-7');
 				border-right: var(--border-size-none) !important;
 				border-top: var(--border-size-none) !important;
 				transform: rotate(-45deg) translateY(0) translateX(0);
@@ -152,9 +152,9 @@ select {
 	&.dropdown-display {
 		&.dropdown-disabled,
 		&[disabled] {
-			background-color: var(--color-neutral-2);
-			border: var(--border-size-s) solid var(--color-neutral-4);
-			color: var(--color-neutral-6);
+			background-color: get-background-color('neutral-2');
+			border: var(--border-size-s) solid get-border-color('neutral-4');
+			color: get-text-color('neutral-6');
 			pointer-events: none;
 		}
 	}
@@ -215,25 +215,25 @@ select.dropdown-display[disabled] {
 	.dropdown-container {
 		&.dropdown-expanded {
 			& > div.dropdown-display {
-				border-color: var(--color-focus-inner);
-				box-shadow: 0 0 0 3px var(--color-focus-outer);
+				border-color: get-border-color('focus-inner');
+				box-shadow: 0 0 0 3px get-background-color('focus-outer');
 			}
 		}
 
 		& > div,
 		& > select {
 			&.dropdown-display {
-				border-color: var(--color-neutral-7);
+				border-color: get-border-color('neutral-7');
 
 				&:hover {
-					border-color: var(--color-neutral-8);
+					border-color: get-border-color('neutral-8');
 				}
 			}
 		}
 
 		& > select {
 			&.dropdown-display:focus {
-				border-color: var(--color-focus-inner);
+				border-color: get-border-color('focus-inner');
 			}
 		}
 	}
