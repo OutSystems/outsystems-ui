@@ -22,7 +22,6 @@
 		}
 
 		&:checked:after {
-			border: var(--border-size-m) solid var(--color-neutral-0);
 			border: var(--border-size-m) solid get-border-color('neutral-0');
 			border-right: var(--border-size-none) !important;
 			border-top: var(--border-size-none) !important;
