@@ -211,6 +211,8 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 				time_24hr: this.TimeFormat === OSFramework.OSUI.Patterns.DatePicker.Enum.TimeFormatMode.Time24hFormat,
 				updateInputVal: false, // (*)
 				weekNumbers: this.ShowWeekNumbers,
+				ariaDateFormat:
+					Providers.OSUI.SharedProviderResources.Flatpickr.Enum.AriaDateFormat.WeekdayMonthDayYear,
 				position: OutSystems.OSUI.Utils.GetIsRTL()
 					? Providers.OSUI.SharedProviderResources.Flatpickr.Enum.Position.Right
 					: Providers.OSUI.SharedProviderResources.Flatpickr.Enum.Position.Left,
