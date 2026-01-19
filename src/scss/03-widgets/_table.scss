@@ -5,7 +5,7 @@
 
 ///
 .table {
-	border: var(--border-size-s) solid var(--color-neutral-4);
+	border: var(--border-size-s) solid get-border-color('neutral-4');
 	border-radius: var(--border-radius-soft);
 	border-spacing: 0;
 	empty-cells: show;
@@ -20,9 +20,9 @@
 		}
 
 		th {
-			background-color: var(--color-neutral-0);
-			border-bottom: var(--border-size-s) solid var(--color-neutral-4);
-			color: var(--color-neutral-8);
+			background-color: get-background-color('neutral-0');
+			border-bottom: var(--border-size-s) solid get-border-color('neutral-4');
+			color: get-text-color('neutral-8');
 			font-weight: var(--font-semi-bold);
 			height: 48px;
 			padding: var(--space-none) var(--space-m);
@@ -43,23 +43,23 @@
 			}
 
 			&.sorted {
-				color: var(--color-primary);
+				color: get-text-color('primary');
 			}
 		}
 	}
 
 	&-row {
 		&:hover td {
-			background: var(--color-neutral-2);
+			background: get-background-color('neutral-2');
 		}
 
 		&.table-row-selected td {
-			background: var(--color-primary) var(--color-primary-lightest);
+			background: get-background-color('primary') get-background-color('primary-lighter');
 		}
 
 		td {
-			background: var(--color-neutral-0);
-			border-bottom: var(--border-size-s) solid var(--color-neutral-4);
+			background: get-background-color('neutral-0');
+			border-bottom: var(--border-size-s) solid get-border-color('neutral-4');
 			height: 56px;
 			padding: var(--space-s) var(--space-m);
 			vertical-align: inherit;
@@ -79,7 +79,7 @@
 
 		&-stripping:nth-child(even) {
 			td {
-				background: var(--color-neutral-1);
+				background: get-background-color('neutral-1');
 			}
 		}
 	}
@@ -105,7 +105,7 @@
 ///
 .desktop {
 	.table-header th.sortable:hover {
-		color: var(--color-primary);
+		color: get-text-color('primary');
 	}
 }
 
@@ -166,7 +166,7 @@
 			}
 
 			tr {
-				border-bottom: var(--border-size-s) solid var(--color-neutral-4);
+				border-bottom: var(--border-size-s) solid get-border-color('neutral-4');
 			}
 
 			td {
@@ -208,8 +208,8 @@
 			}
 
 			td {
-				background: var(--color-neutral-0);
-				border-bottom: var(--border-size-s) solid var(--color-neutral-4);
+				background: get-background-color('neutral-0');
+				border-bottom: var(--border-size-s) solid get-border-color('neutral-4');
 				display: table-cell;
 				padding: var(--space-s) var(--space-m);
 				vertical-align: inherit;
@@ -268,7 +268,7 @@
 ///
 .has-accessible-features {
 	th.sortable:focus {
-		box-shadow: 0 0 0 3px var(--color-focus-outer);
+		box-shadow: 0 0 0 3px get-background-color('focus-outer');
 		position: relative;
 		z-index: var(--layer-global-screen);
 	}
