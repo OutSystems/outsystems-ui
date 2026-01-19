@@ -208,6 +208,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 				onChange: this.OnChange,
 				onClose: this.OnClose,
 				onOpen: this.OnOpen,
+				onMonthChange: this.OnMonthChange,
 				time_24hr: this.TimeFormat === OSFramework.OSUI.Patterns.DatePicker.Enum.TimeFormatMode.Time24hFormat,
 				updateInputVal: false, // (*)
 				weekNumbers: this.ShowWeekNumbers,
