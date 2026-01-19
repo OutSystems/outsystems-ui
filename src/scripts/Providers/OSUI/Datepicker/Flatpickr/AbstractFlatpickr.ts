@@ -6,6 +6,8 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 	{
 		// Store container HTML element reference that contains an explanation about how to navigate through calendar with keyboard
 		private _a11yInfoContainerElem: HTMLElement;
+		// Store container HTML element reference that contains the month information for accessibility
+		private _a11yMonthInformationElem: HTMLElement;
 		// Event OnBodyScroll common behaviour
 		private _bodyScrollCommonBehaviour: SharedProviderResources.Flatpickr.UpdatePositionOnScroll;
 		// Flag to store the status of the platform input
@@ -38,6 +40,26 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 
 			// Set the default library Event handler that will be used to set on the provider configs
 			this.configs.OnOpen = this.onDatePickerOpen.bind(this);
+
+			this.configs.OnMonthChange = this._onMonthChange.bind(this);
+		}
+
+		// Method used to create the HTML element that contains the month information for accessibility
+		private _createA11yMonthInformationElem(): void {
+			this._a11yMonthInformationElem = document.createElement('div');
+
+			// Add the hidden class to the element to hide it from the screen
+			this._a11yMonthInformationElem.classList.add('wcag-hide-text');
+
+			this.provider.calendarContainer
+				.querySelector('.flatpickr-current-month')
+				.appendChild(this._a11yMonthInformationElem);
+
+			this._setCurrentMonthAcessibilityInformation();
+		}
+
+		private _onMonthChange(): void {
+			this._setCurrentMonthAcessibilityInformation();
 		}
 
 		// Method used to set the HTML attributes to the Flatpickr input element
@@ -80,6 +102,10 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 			}
 		}
 
+		// Method used to set the current month accessibility information
+		private _setCurrentMonthAcessibilityInformation(): void {
+			this._a11yMonthInformationElem.innerHTML = this.provider.l10n.months.longhand[this.provider.currentMonth];
+		}
 		// Method used to set the clientHeight to the parent container as an inline style in order vertical content remains same and avoid content vertical flickering!
 		private _setParentMinHeight(): void {
 			OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(
@@ -202,6 +228,9 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 
 			// Update the platform input attributes
 			this.updatePlatformInputAttrs();
+
+			// Create the HTML element that contains the month information for accessibility
+			this._createA11yMonthInformationElem();
 
 			// Set accessibility stuff
 			this.setA11YProperties();
@@ -350,6 +379,9 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 					OSFramework.OSUI.Constants.A11YAttributes.Aria.Hidden,
 					OSFramework.OSUI.Constants.A11YAttributes.States.True
 				);
+
+				OSFramework.OSUI.Helper.A11Y.AriaLivePolite(this._a11yMonthInformationElem);
+				OSFramework.OSUI.Helper.A11Y.AriaAtomicTrue(this._a11yMonthInformationElem);
 
 				this._updateA11yProperties();
 

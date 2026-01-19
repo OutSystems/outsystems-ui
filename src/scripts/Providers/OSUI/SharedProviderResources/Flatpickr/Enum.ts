@@ -18,6 +18,5 @@ namespace Providers.OSUI.SharedProviderResources.Flatpickr.Enum {
 
 	export enum AriaDateFormat {
 		WeekdayMonthDayYear = 'l, F j, Y',
-		MonthDayYear = 'F j, Y',
 	}
 }

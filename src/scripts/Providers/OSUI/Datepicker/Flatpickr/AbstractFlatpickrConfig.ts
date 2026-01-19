@@ -46,6 +46,9 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		// Set the OnClose callback to be used whenever the Flatpickr close
 		public OnClose: OSFramework.OSUI.GlobalCallbacks.Generic;
 
+		// Set the OnMonthChange callback to be used whenever the Flatpickr month changes
+		public OnMonthChange: OSFramework.OSUI.GlobalCallbacks.Generic;
+
 		// Set the OnOpen callback to be used whenever the Flatpickr opens
 		public OnOpen: OSFramework.OSUI.GlobalCallbacks.Generic;
 
