@@ -26,5 +26,8 @@
 /// @param {String} $colorName - The color name
 /// @return {String} - The background color
 @function get-background-color($colorName) {
+	@if ($colorName == 'transparent') {
+		@return transparent;
+	}
 	@return var(--background-color-#{$colorName}, --color-#{$colorName});
 }
