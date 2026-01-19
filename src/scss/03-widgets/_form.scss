@@ -91,7 +91,7 @@
 
 ///
 span.validation-message {
-	color: var(--color-error);
+	color: get-text-color('error');
 	font-size: var(--font-size-xs);
 	margin-left: var(--space-none);
 }
