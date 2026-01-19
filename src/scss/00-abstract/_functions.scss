@@ -14,3 +14,17 @@
 @function android-safe-area-top() {
 	@return unquote('max(var(--status-bar-height, 0px), var(--safe-area-inset-top, 0px))');
 }
+
+/// Returns the text color for a given color name
+/// @param {String} $colorName - The color name
+/// @return {String} - The text color
+@function get-text-color($colorName) {
+	@return var(--text-color-#{$colorName}, --color-#{$colorName});
+}
+
+/// Returns the background color for a given color name
+/// @param {String} $colorName - The color name
+/// @return {String} - The background color
+@function get-background-color($colorName) {
+	@return var(--background-color-#{$colorName}, --color-#{$colorName});
+}
