@@ -21,25 +21,25 @@
 .form-control {
 	&[data-input],
 	&[data-textarea] {
-		background-color: var(--color-neutral-0);
-		border: var(--border-size-s) solid var(--color-neutral-5);
+		background-color: get-background-color('neutral-0');
+		border: var(--border-size-s) solid get-border-color('neutral-5');
 		border-radius: var(--border-radius-soft);
-		color: var(--color-neutral-9);
+		color: get-text-color('neutral-9');
 		font-size: var(--font-size-s);
 		transition: all 180ms linear;
 
 		&:hover {
-			border: var(--border-size-s) solid var(--color-neutral-6);
+			border: var(--border-size-s) solid get-border-color('neutral-6');
 		}
 
 		&:focus {
-			border: var(--border-size-s) solid var(--color-primary);
+			border: var(--border-size-s) solid get-border-color('primary');
 		}
 
 		&[disabled] {
-			background-color: var(--color-neutral-2);
-			border: var(--border-size-s) solid var(--color-neutral-4);
-			color: var(--color-neutral-6);
+			background-color: get-background-color('neutral-2');
+			border: var(--border-size-s) solid get-border-color('neutral-4');
+			color: get-text-color('neutral-6');
 		}
 	}
 
@@ -86,7 +86,7 @@
 	&.not-valid {
 		&[data-input],
 		&[data-textarea] {
-			border: var(--border-size-s) solid var(--color-error);
+			border: var(--border-size-s) solid get-border-color('error');
 		}
 	}
 }
@@ -125,13 +125,13 @@
 	.header-top-content {
 		.form-control {
 			&[data-input] {
-				background-color: var(--header-color);
+				background-color: var(--background-color-header, --header-color);
 				border: 0;
-				border-bottom: var(--border-size-s) solid transparent;
+				border-bottom: var(--border-size-s) solid get-border-color('transparent');
 				border-radius: 0;
 
 				&:focus {
-					border-bottom: var(--border-size-s) solid var(--color-primary);
+					border-bottom: var(--border-size-s) solid get-border-color('primary');
 				}
 			}
 		}
@@ -144,21 +144,21 @@
 	.form-control {
 		&[data-input],
 		&[data-textarea] {
-			border-color: var(--color-neutral-7);
+			border-color: get-border-color('neutral-7');
 
 			&:hover {
-				border-color: var(--color-neutral-8);
+				border-color: get-border-color('neutral-8');
 			}
 
 			&:focus {
-				border-color: var(--color-focus-inner);
+				border-color: get-border-color('focus-inner');
 			}
 
 			&.not-valid {
 				&,
 				&:hover,
 				&:focus {
-					border-color: var(--color-error);
+					border-color: get-border-color('error');
 				}
 			}
 		}
