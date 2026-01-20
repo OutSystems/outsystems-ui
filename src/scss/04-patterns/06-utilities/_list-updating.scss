@@ -10,10 +10,12 @@
 	position: relative;
 
 	&:before {
-		animation: spin 1s infinite linear, fade 300ms ease;
-		border: 5px solid var(--color-neutral-5);
+		animation:
+			spin 1s infinite linear,
+			fade 300ms ease;
+		border: 5px solid get-border-color('neutral-5');
 		border-radius: 50%;
-		border-top-color: var(--color-neutral-7);
+		border-top-color: get-text-color('neutral-7');
 		box-sizing: border-box;
 		content: '';
 		height: 40px;
