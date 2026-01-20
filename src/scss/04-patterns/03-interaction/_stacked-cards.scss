@@ -17,7 +17,7 @@
 		}
 
 		.list.list-group {
-			background-color: transparent;
+			background-color: get-background-color('transparent');
 			height: 100%;
 			z-index: var(--layer-global-screen);
 
@@ -49,7 +49,7 @@
 			&:not([data-animation-disabled]):after {
 				// Service Studio Preview
 				& {
-					-servicestudio-background-color: #fff;
+					-servicestudio-background-color: get-background-color('neutral-0');
 					-servicestudio-background-position: center;
 					-servicestudio-background-repeat: no-repeat;
 					-servicestudio-background-size: 291px 225px;
@@ -130,7 +130,7 @@
 	&-bottom,
 	&-top,
 	&-none {
-		background-color: var(--color-neutral-0);
+		background-color: get-background-color('neutral-0');
 		height: 100%;
 	}
 
@@ -192,8 +192,8 @@
 	}
 
 	&.top {
-		background-color: var(--color-info);
-		color: var(--color-neutral-0);
+		background-color: get-background-color('info');
+		color: get-text-color('neutral-0');
 
 		// Service Studio Preview
 		& {
@@ -206,8 +206,8 @@
 	}
 
 	&.right {
-		background-color: var(--color-success);
-		color: var(--color-neutral-0);
+		background-color: get-background-color('success');
+		color: get-text-color('neutral-0');
 
 		// Service Studio Preview
 		& {
@@ -220,8 +220,8 @@
 	}
 
 	&.left {
-		background-color: var(--color-error);
-		color: var(--color-neutral-0);
+		background-color: get-background-color('error');
+		color: get-text-color('neutral-0');
 
 		// Service Studio Preview
 		& {
