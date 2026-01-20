@@ -10,6 +10,8 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		private _a11yMonthInformationElem: HTMLElement;
 		// Event OnBodyScroll common behaviour
 		private _bodyScrollCommonBehaviour: SharedProviderResources.Flatpickr.UpdatePositionOnScroll;
+		// Store label HTML element reference that is associated with the flatpickr input
+		private _flatpickrInputLableElem: HTMLLabelElement;
 		// Flag to store the status of the platform input
 		private _isPlatformInputDisabled: boolean;
 		// Store HtmlElement for the provider focus span target
@@ -68,6 +70,10 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 			if (this.datePickerPlatformInputElem.nextSibling) {
 				this.flatpickrInputElem = this.datePickerPlatformInputElem.nextSibling as HTMLInputElement;
 
+				this._flatpickrInputLableElem = document.querySelector(
+					`${OSFramework.OSUI.GlobalEnum.HTMLElement.Label}[${OSFramework.OSUI.GlobalEnum.HTMLAttributes.For}*=${this.datePickerPlatformInputElem.id}]`
+				) as HTMLLabelElement;
+
 				// Added the data-input attribute in order to input be styled as all platform inputs
 				OSFramework.OSUI.Helper.Dom.Attribute.Set(
 					this.flatpickrInputElem,
@@ -80,6 +86,20 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 					OSFramework.OSUI.Helper.Dom.Attribute.Remove(
 						this.flatpickrInputElem,
 						OSFramework.OSUI.GlobalEnum.HTMLAttributes.Disabled
+					);
+				}
+
+				// If there is an label associated with the platform input
+				if (this.flatpickrInputElem && this._flatpickrInputLableElem) {
+					// Create an Id for the flatpickr input element that will be then used to set the label for attribute
+					const flatpickrInputElemId = 'fp_' + this.datePickerPlatformInputElem.id;
+					// Set the Id to the flatpickr input element
+					this.flatpickrInputElem.id = flatpickrInputElemId;
+					// Update the label for attribute to the flatpickr input element
+					OSFramework.OSUI.Helper.Dom.Attribute.Set(
+						this._flatpickrInputLableElem,
+						OSFramework.OSUI.GlobalEnum.HTMLAttributes.For,
+						flatpickrInputElemId
 					);
 				}
 			}
@@ -385,26 +405,30 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 
 				this._updateA11yProperties();
 
-				// Set the default aria-label value attribute in case user didn't set it!
-				let ariaLabelValue = Enum.Attribute.DefaultAriaLabel as string;
+				// Set the default aria-label value attribute in case user didn't set a label for the input
+				if (this._flatpickrInputLableElem === undefined) {
+					// Set the default aria-label value attribute in case user didn't set it!
+					let ariaLabelValue = Enum.Attribute.DefaultAriaLabel as string;
 
-				// Check if aria-label attribute has been added to the default input
-				if (
-					this.datePickerPlatformInputElem.hasAttribute(OSFramework.OSUI.Constants.A11YAttributes.Aria.Label)
-				) {
-					ariaLabelValue = this.datePickerPlatformInputElem.getAttribute(
-						OSFramework.OSUI.Constants.A11YAttributes.Aria.Label
-					);
+					// Check if aria-label attribute has been added to the default input
+					if (
+						this.datePickerPlatformInputElem.hasAttribute(
+							OSFramework.OSUI.Constants.A11YAttributes.Aria.Label
+						)
+					) {
+						ariaLabelValue = this.datePickerPlatformInputElem.getAttribute(
+							OSFramework.OSUI.Constants.A11YAttributes.Aria.Label
+						);
+					}
+
+					// Set the aria-label attribute value
+					OSFramework.OSUI.Helper.A11Y.AriaLabel(this.flatpickrInputElem, ariaLabelValue);
 				}
-
-				// Set the aria-label attribute value
-				OSFramework.OSUI.Helper.A11Y.AriaLabel(this.flatpickrInputElem, ariaLabelValue);
 				// Set the aria-describedby attribute in order to give more context about how to navigate into calendar using keyboard
-				if (OSFramework.OSUI.Helper.DeviceInfo.IsDesktop)
-					OSFramework.OSUI.Helper.A11Y.AriaDescribedBy(
-						this.flatpickrInputElem,
-						this._a11yInfoContainerElem.id
-					);
+				OSFramework.OSUI.Helper.A11Y.AriaDescribedBy(
+					this.provider.calendarContainer,
+					this._a11yInfoContainerElem.id
+				);
 
 				// Check if lang is not EN (default one)
 				if (this.configs.Lang !== OSFramework.OSUI.Constants.Language.short) {
