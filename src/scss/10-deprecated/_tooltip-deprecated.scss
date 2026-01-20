@@ -18,9 +18,9 @@
 	}
 
 	&-wrapper {
-		background-color: var(--color-neutral-9);
+		background-color: get-background-color('neutral-9');
 		border-radius: var(--border-radius-soft);
-		color: var(--color-neutral-0);
+		color: get-text-color('neutral-0');
 		min-width: 80px;
 		padding: var(--space-s) var(--space-base);
 		position: absolute;
@@ -45,7 +45,7 @@
 
 			&:after {
 				border: 8px solid transparent;
-				border-top: 8px solid var(--color-neutral-9);
+				border-top: 8px solid get-border-color('neutral-9');
 				bottom: -14px;
 				content: '';
 				height: 0;
@@ -61,7 +61,7 @@
 
 				&:after {
 					border: 8px solid transparent;
-					border-top: 8px solid var(--color-neutral-9);
+					border-top: 8px solid get-border-color('neutral-9');
 					bottom: -14px;
 					content: '';
 					height: 0;
@@ -77,7 +77,7 @@
 
 				&:after {
 					border: 8px solid transparent;
-					border-top: 8px solid var(--color-neutral-9);
+					border-top: 8px solid get-border-color('neutral-9');
 					bottom: -14px;
 					content: '';
 					height: 0;
@@ -95,7 +95,7 @@
 
 			&:after {
 				border: 8px solid transparent;
-				border-bottom: 8px solid var(--color-neutral-9);
+				border-bottom: 8px solid get-border-color('neutral-9');
 				content: '';
 				height: 0;
 				left: 50%;
@@ -111,7 +111,7 @@
 
 				&:after {
 					border: 8px solid transparent;
-					border-bottom: 8px solid var(--color-neutral-9);
+					border-bottom: 8px solid get-border-color('neutral-9');
 					content: '';
 					height: 0;
 					position: absolute;
@@ -127,7 +127,7 @@
 
 				&:after {
 					border: 8px solid transparent;
-					border-bottom: 8px solid var(--color-neutral-9);
+					border-bottom: 8px solid get-border-color('neutral-9');
 					content: '';
 					height: 0;
 					left: 7px;
@@ -145,7 +145,7 @@
 
 			&:after {
 				border: 8px solid transparent;
-				border-left: 8px solid var(--color-neutral-9);
+				border-left: 8px solid get-border-color('neutral-9');
 				content: '';
 				height: 0;
 				left: calc(100% - 1px);
@@ -163,7 +163,7 @@
 
 			&:after {
 				border: 8px solid transparent;
-				border-right: 8px solid var(--color-neutral-9);
+				border-right: 8px solid get-border-color('neutral-9');
 				content: '';
 				height: 0;
 				position: absolute;
