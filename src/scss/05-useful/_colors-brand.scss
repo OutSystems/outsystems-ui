@@ -6,18 +6,18 @@
 ///
 .background {
 	&-primary {
-		background-color: var(--color-primary);
+		background-color: get-background-color('primary');
 
 		&-lightest {
-			background-color: var(--color-neutral-0);
+			background-color: get-background-color('neutral-0');
 		}
 	}
 
 	&-secondary {
-		background-color: var(--color-secondary);
+		background-color: get-background-color('secondary');
 
 		&-lightest {
-			background-color: var(--color-neutral-0);
+			background-color: get-background-color('neutral-0');
 		}
 	}
 }
@@ -27,14 +27,14 @@
 	&-primary {
 		&,
 		&-darker {
-			color: var(--color-primary);
+			color: get-text-color('primary');
 		}
 	}
 
 	&-secondary {
 		&,
 		&-darker {
-			color: var(--color-secondary);
+			color: get-text-color('secondary');
 		}
 	}
 }
