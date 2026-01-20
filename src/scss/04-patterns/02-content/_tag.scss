@@ -6,7 +6,7 @@
 ///
 .tag {
 	align-items: center;
-	color: var(--color-neutral-0);
+	color: get-text-color('neutral-0');
 	display: inline-flex;
 	font-weight: var(--font-semi-bold);
 	height: 32px;
@@ -32,19 +32,19 @@
 
 	&.background {
 		&-transparent {
-			color: var(--color-primary);
+			color: get-text-color('primary');
 		}
 
 		&-neutral {
 			&-0 {
-				color: var(--color-primary);
+				color: get-text-color('primary');
 			}
 
 			&-1,
 			&-2,
 			&-3,
 			&-4 {
-				color: var(--color-neutral-9);
+				color: get-text-color('neutral-9');
 			}
 		}
 	}
