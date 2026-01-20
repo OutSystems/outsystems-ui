@@ -6,7 +6,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 	{
 		// Store container HTML element reference that contains an explanation about how to navigate through calendar with keyboard
 		private _a11yInfoContainerElem: HTMLElement;
-		// Store container HTML element reference that contains the month information for accessibility
+		// Store container HTML element reference that contains the month information
 		private _a11yMonthInformationElem: HTMLElement;
 		// Event OnBodyScroll common behaviour
 		private _bodyScrollCommonBehaviour: SharedProviderResources.Flatpickr.UpdatePositionOnScroll;
@@ -46,16 +46,19 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 			this.configs.OnMonthChange = this._onMonthChange.bind(this);
 		}
 
-		// Method used to create the HTML element that contains the month information for accessibility
+		// Method used to create the HTML element that contains the month information
 		private _createA11yMonthInformationElem(): void {
 			this._a11yMonthInformationElem = document.createElement('div');
 
 			// Add the hidden class to the element to hide it from the screen
 			this._a11yMonthInformationElem.classList.add('wcag-hide-text');
 
-			this.provider.calendarContainer
-				.querySelector('.flatpickr-current-month')
-				.appendChild(this._a11yMonthInformationElem);
+			if (this.provider.calendarContainer !== undefined) {
+				const currentMonthElem = this.provider.calendarContainer.querySelector('.flatpickr-current-month');
+				if (currentMonthElem !== undefined) {
+					currentMonthElem.appendChild(this._a11yMonthInformationElem);
+				}
+			}
 
 			this._setCurrentMonthAcessibilityInformation();
 		}
@@ -400,7 +403,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 					OSFramework.OSUI.Constants.A11YAttributes.States.True
 				);
 
-				OSFramework.OSUI.Helper.A11Y.AriaLivePolite(this._a11yMonthInformationElem);
+				OSFramework.OSUI.Helper.A11Y.AriaLiveAssertive(this._a11yMonthInformationElem);
 				OSFramework.OSUI.Helper.A11Y.AriaAtomicTrue(this._a11yMonthInformationElem);
 
 				this._updateA11yProperties();
