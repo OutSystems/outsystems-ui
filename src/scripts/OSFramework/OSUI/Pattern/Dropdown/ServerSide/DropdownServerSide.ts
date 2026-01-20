@@ -614,11 +614,11 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 					// This is the time needed in mobile devices to draw the input before focusing it
 					OSFramework.OSUI.Helper.ApplySetTimeOut(() => {
 						this._balloonSearchInputElement.focus();
-					}, 20);
+					}, 50);
 				} else {
 					OSFramework.OSUI.Helper.ApplySetTimeOut(() => {
 						this._balloonOptionsWrapperElement.focus();
-					}, 20);
+					}, 50);
 				}
 			} else {
 				// Remove IsOpened Class
