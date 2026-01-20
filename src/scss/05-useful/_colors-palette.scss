@@ -8,7 +8,6 @@
 	- In order to improve the SASSDOC generated file, the loop was splited in 2!
 */
 
-/*! jRio  */
 ///
 .background {
 	@each $color, $variations in $osui-colors-extended {
@@ -28,7 +27,6 @@
 	}
 }
 
-/*! jRio  */
 ///
 .text {
 	@each $color, $variations in $osui-colors-extended {
