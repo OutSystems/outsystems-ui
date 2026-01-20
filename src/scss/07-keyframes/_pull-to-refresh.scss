@@ -10,7 +10,7 @@
 		transform: translateY(0) scale(0.3);
 	}
 	100% {
-		background-color: var(--color-neutral-0);
+		background-color: get-background-color('neutral-0');
 		opacity: 1;
 		transform: scale(1);
 	}
