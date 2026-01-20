@@ -9,9 +9,9 @@
 .osui-deprecated:before {
 	display: none;
 	-servicestudio-background: #fff1dc;
-	-servicestudio-background: var(--color-yellow-lightest);
+	-servicestudio-background: get-background-color('yellow-lightest');
 	-servicestudio-border-radius: var(--border-radius-soft);
-	-servicestudio-color: #333;
+	-servicestudio-color: get-text-color('neutral-9');
 	-servicestudio-content: '⚠ DEPRECATED';
 	-servicestudio-font-weight: var(--font-semi-bold);
 	-servicestudio-display: block;
