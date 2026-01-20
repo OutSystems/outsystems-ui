@@ -33,7 +33,7 @@
 	}
 
 	.list {
-		background-color: transparent;
+		background-color: get-background-color('transparent');
 	}
 
 	& > :not(:first-child) {
