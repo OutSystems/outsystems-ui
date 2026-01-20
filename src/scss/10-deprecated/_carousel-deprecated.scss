@@ -56,7 +56,7 @@
 	& > .list:not([data-animation-disabled]):after {
 		//Service Studio Preview
 		& {
-			-servicestudio-background-color: #fff;
+			-servicestudio-background-color: get-background-color('neutral-0');
 			-servicestudio-background-position: center;
 			-servicestudio-background-repeat: no-repeat;
 			-servicestudio-background-size: 291px 225px;
@@ -84,7 +84,7 @@
 		--carousel-width: 100%;
 		width: var(--carousel-width);
 
-		background-color: transparent;
+		background-color: get-background-color('transparent');
 		white-space: nowrap;
 
 		// Service Studio Preview
@@ -94,7 +94,7 @@
 		}
 
 		.list.list-group {
-			background-color: transparent;
+			background-color: get-background-color('transparent');
 			white-space: nowrap;
 
 			//Service Studio Preview
@@ -133,7 +133,7 @@
 			.list:not([data-animation-disabled]):after {
 				//Service Studio Preview
 				& {
-					-servicestudio-background-color: #fff;
+					-servicestudio-background-color: get-background-color('neutral-0');
 					-servicestudio-background-position: center;
 					-servicestudio-background-repeat: no-repeat;
 					-servicestudio-background-size: 291px 225px;
@@ -166,10 +166,10 @@
 
 	.carousel-navigation {
 		align-items: center;
-		background-color: var(--color-neutral-0);
+		background-color: get-background-color('neutral-0');
 		border-radius: var(--border-radius-circle);
 		box-shadow: var(--shadow-xs);
-		color: var(--color-neutral-7);
+		color: get-text-color('neutral-7');
 		cursor: pointer;
 		display: flex;
 		font-size: var(--font-size-h4);
@@ -211,7 +211,7 @@
 		}
 
 		.carousel-dot {
-			background-color: var(--color-neutral-5);
+			background-color: get-background-color('neutral-5');
 			border-radius: var(--border-radius-circle);
 			cursor: pointer;
 			display: inline-block;
@@ -220,7 +220,7 @@
 			width: 8px;
 
 			&.active {
-				background-color: var(--color-primary);
+				background-color: get-background-color('primary');
 			}
 		}
 	}
@@ -247,7 +247,7 @@
 .has-accessible-features {
 	.carousel {
 		.carousel-navigation:focus {
-			box-shadow: 0 0 0 3px var(--color-focus-outer);
+			box-shadow: 0 0 0 3px get-background-color('focus-outer');
 		}
 	}
 }
