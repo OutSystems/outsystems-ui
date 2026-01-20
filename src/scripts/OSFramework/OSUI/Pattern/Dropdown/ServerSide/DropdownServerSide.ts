@@ -611,9 +611,14 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 
 				// Check if inputSearch exist
 				if (this._balloonSearchInputElement) {
-					this._balloonSearchInputElement.focus();
+					// This is the time needed in mobile devices to draw the input before focusing it
+					OSFramework.OSUI.Helper.ApplySetTimeOut(() => {
+						this._balloonSearchInputElement.focus();
+					}, 20);
 				} else {
-					this._balloonOptionsWrapperElement.focus();
+					OSFramework.OSUI.Helper.ApplySetTimeOut(() => {
+						this._balloonOptionsWrapperElement.focus();
+					}, 20);
 				}
 			} else {
 				// Remove IsOpened Class
@@ -927,7 +932,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			} else {
 				// Set focus options to pass to the Balloon feature
 				const _focusOptions = {
-					elemToFocusOnOpen: this._selectValuesWrapper,
+					elemToFocusOnOpen: this._balloonElem,
 					useFocus: true,
 					focusTrapParams: {
 						focusBottomCallback: this.close.bind(this),

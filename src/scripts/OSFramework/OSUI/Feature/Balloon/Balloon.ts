@@ -210,8 +210,13 @@ namespace OSFramework.OSUI.Feature.Balloon {
 			Helper.Dom.Attribute.Set(this.featureElem, Constants.A11YAttributes.Aria.Hidden, (!this.isOpen).toString());
 
 			if (this.featureOptions.focusOptions.useFocus !== false) {
-				// Will handle the tabindex value of the elements inside pattern
-				Helper.A11Y.SetElementsTabIndex(this.isOpen, this._focusTrapInstance.focusableElements);
+				if (Helper.DeviceInfo.IsMobileDevice === false) {
+					// Will handle the tabindex value of the elements inside pattern
+					Helper.A11Y.SetElementsTabIndex(this.isOpen, this._focusTrapInstance.focusableElements);
+				} else {
+					Helper.A11Y.RoleDialog(this.featureElem);
+					Helper.A11Y.AriaModalTrue(this.featureElem);
+				}
 
 				Helper.Dom.Attribute.Set(
 					this.featureElem,
@@ -310,7 +315,7 @@ namespace OSFramework.OSUI.Feature.Balloon {
 			this._setA11YProperties();
 
 			if (this.isOpen) {
-				if (this.featureOptions.focusOptions.useFocus !== false) {
+				if (this.featureOptions.focusOptions.useFocus !== false && Helper.DeviceInfo.IsMobileDevice === false) {
 					// Handle focus trap logic
 					this._focusManagerInstance.storeLastFocusedElement();
 					this._focusTrapInstance.enableForA11y();
@@ -323,15 +328,17 @@ namespace OSFramework.OSUI.Feature.Balloon {
 					this._manageFocusInsideBalloon(arrowKeyPressed);
 				}
 			} else if (this.featureOptions.focusOptions.useFocus !== false) {
-				// Handle focus trap logic
-				this._focusTrapInstance.disableForA11y();
-				// Focus on last element clicked. Async to avoid conflict with closing animation
-				Helper.AsyncInvocation(() => {
-					this.featureElem.blur();
-					if (isBodyClick === false) {
-						this._focusManagerInstance.setFocusToStoredElement();
-					}
-				});
+				if (Helper.DeviceInfo.IsMobileDevice === false) {
+					// Handle focus trap logic
+					this._focusTrapInstance.disableForA11y();
+					// Focus on last element clicked. Async to avoid conflict with closing animation
+					Helper.AsyncInvocation(() => {
+						this.featureElem.blur();
+						if (isBodyClick === false) {
+							this._focusManagerInstance.setFocusToStoredElement();
+						}
+					});
+				}
 
 				// Unset focus attributes
 				this._focusableBalloonElements = undefined;
@@ -366,7 +373,7 @@ namespace OSFramework.OSUI.Feature.Balloon {
 			this._setEventListeners();
 			this.setFloatingConfigs();
 
-			if (this.featureOptions.focusOptions.useFocus !== false) {
+			if (this.featureOptions.focusOptions.useFocus !== false && Helper.DeviceInfo.IsMobileDevice === false) {
 				this._handleFocusBehavior();
 			}
 
