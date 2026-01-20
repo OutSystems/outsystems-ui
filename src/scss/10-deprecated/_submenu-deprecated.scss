@@ -15,7 +15,7 @@
 
 	&:hover {
 		.submenu-icon:before {
-			border: var(--border-size-s) solid var(--color-neutral-9);
+			border: var(--border-size-s) solid get-border-color('neutral-9');
 			border-right: 0;
 			border-top: 0;
 		}
@@ -24,24 +24,24 @@
 	&.active {
 		&.open {
 			.submenu-item {
-				color: var(--color-primary);
+				color: get-text-color('primary');
 			}
 		}
 
 		.submenu {
 			&-header {
-				border-bottom: var(--border-size-m) solid var(--color-primary);
+				border-bottom: var(--border-size-m) solid get-border-color('primary');
 			}
 
 			&-item {
 				&,
 				a {
-					color: var(--color-primary);
+					color: get-text-color('primary');
 				}
 			}
 
 			&-icon:before {
-				border: var(--border-size-s) solid var(--color-primary);
+				border: var(--border-size-s) solid get-border-color('primary');
 				border-right: 0;
 				border-top: 0;
 			}
@@ -87,7 +87,7 @@
 		transition: all 150ms linear;
 
 		&:before {
-			border: var(--border-size-s) solid var(--color-neutral-8);
+			border: var(--border-size-s) solid get-border-color('neutral-8');
 			border-right: 0;
 			border-top: 0;
 			box-sizing: border-box;
@@ -100,7 +100,7 @@
 
 	&-item {
 		align-items: center;
-		color: var(--color-neutral-9);
+		color: get-text-color('neutral-9');
 		display: inline-flex;
 		height: 100%;
 		position: relative;
@@ -108,15 +108,15 @@
 
 		a {
 			align-items: center;
-			color: var(--color-neutral-8);
+			color: get-text-color('neutral-8');
 			display: flex;
 			height: 100%;
 		}
 	}
 
 	&-items {
-		background-color: var(--color-neutral-0);
-		border: var(--border-size-s) solid var(--color-neutral-4);
+		background-color: get-background-color('neutral-0');
+		border: var(--border-size-s) solid get-border-color('neutral-4');
 		border-radius: var(--border-radius-soft);
 		box-shadow: var(--shadow-m);
 		display: flex;
@@ -141,13 +141,13 @@
 		}
 
 		a {
-			color: var(--color-neutral-8);
+			color: get-text-color('neutral-8');
 			margin: 0;
 			padding: var(--space-s) var(--space-base);
 			white-space: nowrap;
 
 			&.active {
-				color: var(--color-primary);
+				color: get-text-color('primary');
 			}
 		}
 	}
@@ -187,7 +187,7 @@
 		width: 100%;
 
 		&.active .submenu-header {
-			border-left: var(--border-size-m) solid var(--color-primary);
+			border-left: var(--border-size-m) solid get-border-color('primary');
 		}
 
 		&.open .submenu-items {
@@ -238,13 +238,13 @@
 	.submenu {
 		&:hover {
 			.submenu-item {
-				color: var(--color-neutral-9);
+				color: get-text-color('neutral-9');
 			}
 		}
 
 		&.active {
 			.submenu-header:hover .submenu-item {
-				color: var(--color-primary);
+				color: get-text-color('primary');
 			}
 		}
 	}
@@ -252,25 +252,25 @@
 	.submenu {
 		&-header {
 			&:hover {
-				border-bottom: var(--border-size-m) solid var(--color-primary);
+				border-bottom: var(--border-size-m) solid get-border-color('primary');
 			}
 		}
 
 		&-item {
 			a:hover {
-				color: var(--color-neutral-9);
+				color: get-text-color('neutral-9');
 			}
 		}
 
 		&-items {
 			a {
 				&:hover {
-					background-color: var(--color-neutral-2);
-					color: var(--color-neutral-9);
+					background-color: get-background-color('neutral-2');
+					color: get-text-color('neutral-9');
 				}
 
 				&.active:hover {
-					color: var(--color-primary);
+					color: get-text-color('primary');
 				}
 			}
 		}
@@ -297,7 +297,7 @@
 		width: 100%;
 
 		&.active .submenu-header {
-			border-left: var(--border-size-m) solid var(--color-primary);
+			border-left: var(--border-size-m) solid get-border-color('primary');
 			border-bottom: 0;
 		}
 
@@ -349,7 +349,7 @@
 		.submenu {
 			&.active .submenu-header {
 				border-left: 0;
-				border-right: var(--border-size-m) solid var(--color-primary);
+				border-right: var(--border-size-m) solid get-border-color('primary');
 			}
 
 			.submenu-header {
@@ -368,7 +368,7 @@
 		.submenu {
 			&.active .submenu-header {
 				border-left: var(--border-size-none);
-				border-right: var(--border-size-m) solid var(--color-primary);
+				border-right: var(--border-size-m) solid get-border-color('primary');
 			}
 		}
 	}
