@@ -30,10 +30,10 @@
 
 	&-button {
 		align-items: center;
-		background-color: var(--color-neutral-0);
-		border: var(--border-size-s) solid var(--color-neutral-4);
+		background-color: get-background-color('neutral-0');
+		border: var(--border-size-s) solid get-border-color('neutral-4');
 		border-radius: var(--border-radius-soft);
-		color: var(--color-neutral-8);
+		color: get-text-color('neutral-8');
 		cursor: pointer;
 		display: inline-flex;
 		height: 32px;
@@ -48,14 +48,14 @@
 		}
 
 		&.is--active {
-			border: var(--border-size-s) solid var(--color-primary);
-			color: var(--color-primary);
+			border: var(--border-size-s) solid get-border-color('primary');
+			color: get-text-color('primary');
 			cursor: auto;
 			pointer-events: none;
 		}
 
 		&.is--ellipsis {
-			background-color: transparent;
+			background-color: get-background-color('transparent');
 			border: 0;
 			cursor: auto;
 			width: 16px;
@@ -74,7 +74,7 @@
 
 	// pagination-counter
 	&-counter {
-		color: var(--color-neutral-7);
+		color: get-text-color('neutral-7');
 	}
 
 	.list.list-group {
@@ -94,7 +94,7 @@
 .desktop {
 	.pagination-button:not(.is--ellipsis):hover {
 		background-color: rgba(21, 24, 26, 0.04);
-		border: var(--border-size-s) solid var(--color-neutral-4);
+		border: var(--border-size-s) solid get-border-color('neutral-4');
 	}
 }
 
@@ -143,7 +143,7 @@
 ///
 .has-accessible-features {
 	.pagination-button:focus {
-		border-color: var(--color-focus-inner);
+		border-color: get-background-color('focus-inner');
 	}
 }
 
