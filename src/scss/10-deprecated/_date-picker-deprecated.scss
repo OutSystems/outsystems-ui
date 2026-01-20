@@ -3,8 +3,8 @@
 
 .pika {
 	&-single {
-		background: var(--color-neutral-0);
-		border: var(--border-size-s) solid var(--color-neutral-4);
+		background: get-background-color('neutral-0');
+		border: var(--border-size-s) solid get-border-color('neutral-4');
 		border-radius: var(--border-radius-soft);
 		display: block;
 		margin-top: var(--space-xs);
@@ -65,9 +65,9 @@
 	}
 
 	&-prev {
-		background-color: transparent;
+		background-color: get-background-color('transparent');
 		border: var(--border-size-none);
-		color: var(--color-neutral-7);
+		color: get-text-color('neutral-7');
 		cursor: pointer;
 		font: normal normal normal 0 FontAwesome;
 		padding: var(--space-none) var(--space-s);
@@ -80,9 +80,9 @@
 	}
 
 	&-next {
-		background-color: transparent;
+		background-color: get-background-color('transparent');
 		border: var(--border-size-none);
-		color: var(--color-neutral-7);
+		color: get-text-color('neutral-7');
 		cursor: pointer;
 		font: normal normal normal 0 FontAwesome;
 		margin-left: var(--space-base);
@@ -96,7 +96,7 @@
 	}
 
 	&-label {
-		color: var(--color-primary);
+		color: get-text-color('primary');
 		cursor: pointer;
 		position: relative;
 
@@ -105,7 +105,7 @@
 		}
 
 		&:hover {
-			color: var(--color-primary-hover);
+			color: get-text-color('primary-hover');
 			text-decoration: underline;
 		}
 	}
@@ -127,7 +127,7 @@
 		}
 
 		th {
-			color: var(--color-neutral-7);
+			color: get-text-color('neutral-7');
 			flex: 1;
 			font-weight: var(--font-regular);
 
@@ -163,7 +163,7 @@
 		background-color: transparent;
 		border: var(--border-size-none);
 		border-radius: var(--border-radius-soft);
-		color: var(--color-neutral-9);
+		color: get-text-color('neutral-9');
 		cursor: pointer;
 		height: 32px;
 		padding: var(--space-none);
@@ -172,38 +172,38 @@
 		z-index: var(--layer-local-tier-1);
 
 		&:hover {
-			background-color: var(--color-neutral-3);
+			background-color: get-background-color('neutral-3');
 		}
 
 		.is-today & {
-			background-color: var(--color-neutral-4);
+			background-color: get-background-color('neutral-4');
 		}
 
 		.is-inrange & {
-			background: var(--color-primary) var(--color-primary-lightest);
+			background: get-background-color('primary') get-background-color('primary-lightest');
 		}
 
 		.is-startrange &,
 		.is-selected &,
 		.is-endrange & {
-			background: var(--color-primary);
-			color: var(--color-neutral-0);
+			background: get-background-color('primary');
+			color: get-text-color('neutral-0');
 		}
 
 		.is-disabled &,
 		.is-disabled.is-outside-current-month & {
-			color: var(--color-neutral-7);
+			color: get-text-color('neutral-7');
 			pointer-events: none;
 			text-decoration: line-through;
 		}
 
 		.is-outside-current-month & {
-			color: var(--color-neutral-7);
+			color: get-text-color('neutral-7');
 			text-decoration: none;
 		}
 
 		.has-event &:before {
-			background-color: var(--color-primary);
+			background-color: get-background-color('primary');
 			border-radius: var(--border-radius-circle);
 			bottom: 3px;
 			content: '';
@@ -215,7 +215,7 @@
 		}
 
 		.is-selected.has-event &:before {
-			background-color: var(--color-neutral-0);
+			background-color: get-background-color('neutral-0');
 		}
 	}
 
@@ -226,20 +226,20 @@
 		width: 100%;
 
 		&:hover {
-			background-color: transparent;
+			background-color: get-background-color('transparent');
 		}
 	}
 
 	&-go-today {
-		background-color: transparent;
+		background-color: get-background-color('transparent');
 		border: var(--border-size-none);
-		color: var(--color-primary);
+		color: get-text-color('primary');
 		cursor: pointer;
 		font-weight: normal;
 		padding: var(--space-none);
 
 		&:hover {
-			color: var(--color-primary-hover);
+			color: get-text-color('primary-hover');
 		}
 	}
 
@@ -252,8 +252,8 @@
 		width: 33.333%;
 
 		&.is-selected {
-			background-color: var(--color-primary);
-			color: var(--color-neutral-0);
+			background-color: get-background-color('primary');
+			color: get-text-color('neutral-0');
 		}
 	}
 
@@ -263,11 +263,11 @@
 		select {
 			background-color: transparent;
 			border: 0;
-			color: var(--color-primary);
+			color: get-text-color('primary');
 		}
 
 		option {
-			color: var(--color-neutral-10);
+			color: get-text-color('neutral-10');
 		}
 	}
 }
@@ -280,7 +280,7 @@ input.OSFillParent.calendar-input {
 	position: relative;
 
 	&:before {
-		background: var(--color-primary) var(--color-primary-lightest);
+		background: get-background-color('primary') get-background-color('primary-lightest');
 		border-radius: var(--border-radius-soft);
 		content: '';
 		height: 100%;
@@ -316,15 +316,15 @@ input.OSFillParent.calendar-input {
 
 .prev-year,
 .next-year {
-	color: var(--color-neutral-7);
+	color: get-text-color('neutral-7');
 }
 
 /* Keycode shortcuts dialog */
 .calendar-help {
 	&-dialog {
-		background-color: var(--color-neutral-0);
+		background-color: get-background-color('neutral-0');
 		bottom: 0;
-		color: var(--color-neutral-10);
+		color: get-text-color('neutral-10');
 		display: none;
 		left: 0;
 		padding: var(--space-s);
@@ -355,9 +355,9 @@ input.OSFillParent.calendar-input {
 	}
 
 	&-trigger {
-		background-color: var(--color-info);
+		background-color: get-background-color('info');
 		clip: rect(0, 0, 0, 0);
-		color: var(--color-neutral-0);
+		color: get-text-color('neutral-0');
 		height: 0;
 		left: 50%;
 		overflow: hidden;
@@ -378,8 +378,8 @@ input.OSFillParent.calendar-input {
 	}
 
 	&-close {
-		background-color: var(--color-neutral-0);
-		color: var(--color-neutral-10);
+		background-color: get-background-color('neutral-0');
+		color: get-text-color('neutral-10');
 		height: auto;
 	}
 }
@@ -441,15 +441,15 @@ input.OSFillParent.calendar-input {
 			&-title {
 				select {
 					border: none;
-					color: var(--color-primary);
+					color: get-text-color('primary');
 					opacity: 1;
 
 					&:hover {
-						border-bottom: var(--border-size-s) solid var(--color-primary);
+						border-bottom: var(--border-size-s) solid get-border-color('primary');
 					}
 
 					option {
-						color: var(--color-neutral-10);
+						color: get-text-color('neutral-10');
 					}
 				}
 
