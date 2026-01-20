@@ -1,7 +1,7 @@
 /* Patterns - Navigation - Section Index */
 ///
 .section-index {
-	border-left: var(--border-size-s) solid var(--color-neutral-5);
+	border-left: var(--border-size-s) solid get-border-color('neutral-5');
 	display: flex;
 	flex-direction: column;
 
@@ -19,8 +19,8 @@
 		}
 
 		&.is--active {
-			border-left: var(--border-size-m) solid var(--color-primary);
-			color: var(--color-neutral-9);
+			border-left: var(--border-size-m) solid get-border-color('primary');
+			color: get-text-color('neutral-9');
 			font-weight: var(--font-semi-bold);
 		}
 	}
@@ -28,14 +28,14 @@
 	a {
 		&,
 		&:visited {
-			border-left: var(--border-size-m) solid transparent;
-			color: var(--color-neutral-8);
+			border-left: var(--border-size-m) solid get-border-color('transparent');
+			color: get-text-color('neutral-8');
 			margin-bottom: var(--space-s);
 			padding-left: var(--space-base);
 		}
 
 		&:hover {
-			color: var(--color-neutral-9);
+			color: get-text-color('neutral-9');
 		}
 	}
 }
@@ -78,8 +78,8 @@
 	.section-index {
 		a {
 			&:focus {
-				background-color: transparent;
-				box-shadow: 0 0 0 3px var(--color-focus-outer);
+				background-color: get-background-color('transparent');
+				box-shadow: 0 0 0 3px get-background-color('focus-outer');
 			}
 		}
 	}
