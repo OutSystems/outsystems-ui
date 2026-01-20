@@ -17,8 +17,8 @@
 			}
 
 			&-message {
-				background-color: var(--color-indigo);
-				color: var(--color-neutral-0);
+				background-color: get-background-color('indigo');
+				color: get-text-color('neutral-0');
 				text-align: right;
 			}
 		}
@@ -36,7 +36,7 @@
 	}
 
 	&-message {
-		background-color: var(--color-neutral-3);
+		background-color: get-background-color('neutral-3');
 		border-radius: var(--border-radius-soft);
 		display: flex;
 		flex-direction: column;
