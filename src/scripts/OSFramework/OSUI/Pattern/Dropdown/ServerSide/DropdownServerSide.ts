@@ -538,6 +538,16 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			}
 		}
 
+		private _updateA11yProperties() {
+			if (this._isOpen) {
+				// Set the aria-expanded atribute as true
+				Helper.A11Y.AriaExpandedTrue(this._selectValuesWrapper);
+			} else {
+				// Set the aria-expanded atribute as false
+				Helper.A11Y.AriaExpandedFalse(this._selectValuesWrapper);
+			}
+		}
+
 		// Method that will be used to set/unset the TabIndex to the DropdownBallon elements according it's opened/closed
 		private _updateBalloonAccessibilityElements(): void {
 			const tabIndexValue = this._isOpen
@@ -601,6 +611,9 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 
 		// Method that will update the pattern state
 		private _updatePatternState(): void {
+			// Update selected wrapper acesssibility attributes
+			this._updateA11yProperties();
+
 			// Update the TabIndex for the items inside Balloon
 			this._updateBalloonAccessibilityElements();
 
@@ -637,6 +650,8 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
 		 */
 		protected setA11YProperties(): void {
+			// Update selected wrapper acesssibility attributes
+			this._updateA11yProperties();
 			// Update Tabindex Ballon elements
 			this._updateBalloonAccessibilityElements();
 
