@@ -5,7 +5,7 @@
 
 ///
 .button-group {
-	background-color: transparent;
+	background-color: get-background-color('transparent');
 	border-radius: 0;
 	padding: var(--space-none);
 
@@ -70,7 +70,7 @@
 .layout-native {
 	.header-top-content {
 		.button-group-item {
-			background-color: var(--background-color-header, --header-color);
+			background-color: get-app-settings-background-color('header', --header-color);
 			border: 0;
 			border-bottom: var(--border-size-m) solid get-border-color('transparent');
 			color: get-text-color('neutral-8');
