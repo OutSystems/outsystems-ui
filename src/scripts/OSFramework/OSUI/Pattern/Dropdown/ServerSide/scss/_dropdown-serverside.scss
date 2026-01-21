@@ -18,7 +18,7 @@ $balloonMobileTopMargin: 5vh;
 	.osui-balloon {
 		--osui-balloon-shadow: none;
 
-		border: var(--border-size-s) solid var(--color-neutral-5);
+		border: var(--border-size-s) solid get-border-color('neutral-5');
 		display: flex;
 		flex-direction: column;
 		flex: 1;
@@ -49,12 +49,12 @@ $balloonMobileTopMargin: 5vh;
 		overflow: hidden;
 
 		&:hover {
-			border-color: var(--color-neutral-6);
+			border-color: get-border-color('neutral-6');
 		}
 
 		&:after {
 			align-items: center;
-			color: var(--color-neutral-7);
+			color: get-text-color('neutral-7');
 			content: '\f107';
 			display: flex;
 			font: normal normal normal 20px/1 FontAwesome;
