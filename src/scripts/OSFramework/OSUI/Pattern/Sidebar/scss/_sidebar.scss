@@ -7,7 +7,7 @@
 .osui-sidebar {
 	--overlay-opacity: 0;
 
-	background-color: var(--color-neutral-0);
+	background-color: get-background-color('neutral-0');
 	box-shadow: var(--shadow-l);
 	display: flex;
 	flex-direction: column;
@@ -30,7 +30,7 @@
 	}
 
 	&:after {
-		background-color: transparent;
+		background-color: get-background-color('transparent');
 		content: '';
 		height: 100%;
 		position: fixed;
@@ -102,7 +102,7 @@
 
 	&--has-overlay {
 		&::before {
-			background-color: var(--overlay-background);
+			background-color: var(--background-color-overlay, --overlay-background);
 			content: '';
 			cursor: pointer;
 			display: block;
