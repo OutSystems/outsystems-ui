@@ -183,7 +183,7 @@
 		.section-expandable-title:focus,
 		.section-expandable-content:focus {
 			box-shadow: none;
-			outline: 3px solid get-background-color('focus-outer');
+			outline: 3px solid get-border-color('focus-outer');
 		}
 	}
 }

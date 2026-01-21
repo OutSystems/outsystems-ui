@@ -126,7 +126,7 @@
 	.lightbox-item a:focus {
 		background-color: get-background-color('transparent');
 		box-shadow: none;
-		outline: 3px solid get-background-color('focus-outer');
+		outline: 3px solid get-border-color('focus-outer');
 	}
 }
 
