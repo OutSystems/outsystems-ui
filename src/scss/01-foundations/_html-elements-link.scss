@@ -44,7 +44,7 @@ a {
 	a {
 		&:focus {
 			background-color: get-background-color('focus-outer');
-			box-shadow: 0 2px var(--color-focus-inner);
+			box-shadow: 0 2px get-background-color('focus-inner');
 			color: get-text-color('neutral-10');
 
 			&,
