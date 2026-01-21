@@ -11,7 +11,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		// Event OnBodyScroll common behaviour
 		private _bodyScrollCommonBehaviour: SharedProviderResources.Flatpickr.UpdatePositionOnScroll;
 		// Store label HTML element reference that is associated with the flatpickr input
-		private _flatpickrInputLableElem: HTMLLabelElement;
+		private _flatpickrInputLabelElem: HTMLLabelElement;
 		// Flag to store the status of the platform input
 		private _isPlatformInputDisabled: boolean;
 		// Store HtmlElement for the provider focus span target
@@ -73,7 +73,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 			if (this.datePickerPlatformInputElem.nextSibling) {
 				this.flatpickrInputElem = this.datePickerPlatformInputElem.nextSibling as HTMLInputElement;
 
-				this._flatpickrInputLableElem = document.querySelector(
+				this._flatpickrInputLabelElem = document.querySelector(
 					`${OSFramework.OSUI.GlobalEnum.HTMLElement.Label}[${OSFramework.OSUI.GlobalEnum.HTMLAttributes.For}*=${this.datePickerPlatformInputElem.id}]`
 				) as HTMLLabelElement;
 
@@ -93,14 +93,14 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 				}
 
 				// If there is an label associated with the platform input
-				if (this.flatpickrInputElem && this._flatpickrInputLableElem) {
+				if (this.flatpickrInputElem && this._flatpickrInputLabelElem) {
 					// Create an Id for the flatpickr input element that will be then used to set the label for attribute
 					const flatpickrInputElemId = 'fp_' + this.datePickerPlatformInputElem.id;
 					// Set the Id to the flatpickr input element
 					this.flatpickrInputElem.id = flatpickrInputElemId;
 					// Update the label for attribute to the flatpickr input element
 					OSFramework.OSUI.Helper.Dom.Attribute.Set(
-						this._flatpickrInputLableElem,
+						this._flatpickrInputLabelElem,
 						OSFramework.OSUI.GlobalEnum.HTMLAttributes.For,
 						flatpickrInputElemId
 					);
@@ -409,7 +409,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 				this._updateA11yProperties();
 
 				// Set the default aria-label value attribute in case user didn't set a label for the input
-				if (this._flatpickrInputLableElem === undefined) {
+				if (this._flatpickrInputLabelElem === undefined) {
 					// Set the default aria-label value attribute in case user didn't set it!
 					let ariaLabelValue = Enum.Attribute.DefaultAriaLabel as string;
 
