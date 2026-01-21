@@ -5,9 +5,10 @@
 
 ///
 .osui-tooltip {
-	--osui-tooltip-background-color: var(--color-neutral-9);
+	--osui-tooltip-background-color: get-background-color('neutral-9');
 	--osui-tooltip-arrow-size: 10px;
 	--osui-floating-offset: var(--space-s);
+
 	display: inline-block;
 	position: relative;
 
@@ -19,7 +20,7 @@
 	.osui-balloon {
 		background-color: var(--osui-tooltip-background-color);
 		border-radius: var(--border-radius-soft);
-		color: var(--color-neutral-0);
+		color: get-text-color('neutral-0');
 		font-size: var(--font-size-s);
 		font-weight: var(--font-regular);
 		line-height: initial;
