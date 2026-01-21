@@ -42,15 +42,15 @@
 
 	.not-valid + .input,
 	.not-valid + .flatpickr-mobile {
-		border-color: var(--color-error);
+		border-color: get-border-color('error');
 	}
 
 	input {
 		// Disable states for Datepicker
 		&[disabled] + input {
-			background-color: var(--color-neutral-2);
-			border: var(--border-size-s) solid var(--color-neutral-4);
-			color: var(--color-neutral-6);
+			background-color: get-background-color('neutral-2');
+			border: var(--border-size-s) solid get-border-color('neutral-4');
+			color: get-text-color('neutral-6');
 			pointer-events: none;
 		}
 
