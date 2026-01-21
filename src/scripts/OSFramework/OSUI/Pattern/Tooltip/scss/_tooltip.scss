@@ -5,7 +5,7 @@
 
 ///
 .osui-tooltip {
-	--osui-tooltip-background-color: get-background-color('neutral-9');
+	--osui-tooltip-background-color: #{get-background-color('neutral-9')};
 	--osui-tooltip-arrow-size: 10px;
 	--osui-floating-offset: var(--space-s);
 

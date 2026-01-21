@@ -38,7 +38,7 @@
 /// @return {String} - The border color
 @function get-border-color($colorName) {
 	@if ($colorName == 'transparent' or $colorName == 'currentColor') {
-		@return $colorName;
+		@return unquote($colorName);
 	}
 	@return var(--border-color-#{$colorName}, var(--color-#{$colorName}));
 }
