@@ -136,7 +136,7 @@
 	input {
 		&:first-of-type {
 			+ .rating-item {
-				background: transparent;
+				background: get-background-color('transparent');
 				box-shadow: 0 0 0 3px get-background-color('focus-outer');
 				height: 100%;
 				left: 0;

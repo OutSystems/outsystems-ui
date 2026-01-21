@@ -175,7 +175,7 @@ body {
 	}
 
 	.app-menu-links a:focus {
-		background-color: transparent;
+		background-color: get-background-color('transparent');
 		box-shadow: 0 0 0 3px get-background-color('focus-outer');
 	}
 }

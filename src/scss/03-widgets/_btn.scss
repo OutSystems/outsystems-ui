@@ -148,7 +148,7 @@
 .layout-native {
 	.header-right {
 		.btn {
-			background-color: transparent;
+			background-color: get-background-color('transparent');
 			border: 0;
 			color: get-text-color('primary');
 			font-size: var(--font-size-base);

@@ -223,7 +223,7 @@
 
 	&__button {
 		appearance: none;
-		background-color: transparent;
+		background-color: get-background-color('transparent');
 		background-position: center;
 		background-repeat: no-repeat;
 		border: var(--border-size-none);

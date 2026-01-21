@@ -35,7 +35,7 @@
 					order: 2;
 
 					.tabs-header-tab {
-						border-left: var(--border-size-m) solid transparent;
+						border-left: var(--border-size-m) solid get-border-color('transparent');
 						border-right: var(--border-size-none);
 						padding: var(--space-s) var(--space-none) var(--space-s) var(--space-m);
 
@@ -65,7 +65,7 @@
 
 			.tabs-header-tab {
 				border-bottom: var(--border-size-none);
-				border-right: var(--border-size-m) solid transparent;
+				border-right: var(--border-size-m) solid get-border-color('transparent');
 				justify-content: flex-start;
 				margin-left: var(--space-none);
 				padding: var(--space-s) var(--space-m) var(--space-s) var(--space-none);
@@ -100,7 +100,7 @@
 
 	&-tab {
 		align-items: center;
-		border-bottom: var(--border-size-m) solid transparent;
+		border-bottom: var(--border-size-m) solid get-border-color('transparent');
 		color: get-text-color('neutral-8');
 		cursor: pointer;
 		display: flex;
@@ -282,7 +282,7 @@
 				.tabs-header {
 					.tabs-header-tab {
 						border-left: var(--border-size-none);
-						border-right: var(--border-size-m) solid transparent;
+						border-right: var(--border-size-m) solid get-border-color('transparent');
 						margin: 0;
 						padding: var(--space-s) var(--space-m) var(--space-s) var(--space-none);
 					}
@@ -296,7 +296,7 @@
 
 			.tabs {
 				&-header-tab {
-					border-left: var(--border-size-m) solid transparent;
+					border-left: var(--border-size-m) solid get-border-color('transparent');
 					border-right: var(--border-size-none);
 					margin: 0;
 					padding: var(--space-s) var(--space-none) var(--space-s) var(--space-m);

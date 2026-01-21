@@ -21,7 +21,7 @@
 		flex-direction: column;
 
 		.change-image {
-			background-color: transparent;
+			background-color: get-background-color('transparent');
 			color: get-text-color('primary');
 			height: auto;
 			margin-top: var(--space-base);
@@ -32,12 +32,12 @@
 
 	&.uploaded {
 		[data-icon] {
-			background-color: transparent;
+			background-color: get-background-color('transparent');
 		}
 	}
 
 	[data-icon] {
-		background-color: transparent;
+		background-color: get-background-color('transparent');
 		color: get-text-color('neutral-5');
 		line-height: 1;
 		margin-right: var(--space-base);

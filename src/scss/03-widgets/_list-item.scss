@@ -17,7 +17,7 @@
 	&.list-item-no-click-effect {
 		.scale-animation {
 			// !important should be in use in order to grant the expected behaviour when this class is assigned!
-			background: transparent !important;
+			background: get-background-color('transparent') !important;
 			opacity: 0 !important;
 		}
 	}

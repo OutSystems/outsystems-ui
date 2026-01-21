@@ -48,7 +48,7 @@ button.OSFillParent {
 	animation: loadingSpinner 850ms cubic-bezier(0.7, 1.05, 0.78, 0.78) infinite;
 	border: var(--border-size-m) solid get-border-color('currentColor');
 	border-radius: var(--border-radius-circle);
-	border-top: var(--border-size-m) solid transparent;
+	border-top: var(--border-size-m) solid get-border-color('transparent');
 	height: 16px;
 	width: 16px;
 	will-change: transform;

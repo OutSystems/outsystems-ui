@@ -173,7 +173,7 @@
 						transition: none;
 					}
 					&:focus {
-						border-bottom: var(--border-size-s) solid transparent;
+						border-bottom: var(--border-size-s) solid get-border-color('transparent');
 					}
 				}
 

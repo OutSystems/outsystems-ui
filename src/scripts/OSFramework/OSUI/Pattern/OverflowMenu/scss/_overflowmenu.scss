@@ -11,7 +11,7 @@
 	&__trigger {
 		--osui-floating-offset: var(--space-s);
 
-		border: var(--border-size-s) solid transparent;
+		border: var(--border-size-s) solid get-border-color('transparent');
 		border-radius: var(--osui-overflow-menu-shape);
 		color: get-text-color('neutral-9');
 		width: 32px;

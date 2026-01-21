@@ -69,7 +69,7 @@
 
 			.noUi-handle:before,
 			.noUi-handle:after {
-				background: transparent;
+				background: get-background-color('transparent');
 				border-color: get-border-color('neutral-6');
 				border-style: solid;
 				content: '';
@@ -195,7 +195,7 @@
 		}
 
 		&-tooltip {
-			background: transparent;
+			background: get-background-color('transparent');
 			border: none;
 			color: get-text-color('neutral-10');
 			padding: var(--space-xs);

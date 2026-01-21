@@ -160,7 +160,7 @@
 	}
 
 	&-button {
-		background-color: transparent;
+		background-color: get-background-color('transparent');
 		border: var(--border-size-none);
 		border-radius: var(--border-radius-soft);
 		color: get-text-color('neutral-9');

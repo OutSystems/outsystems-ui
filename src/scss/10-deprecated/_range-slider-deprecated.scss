@@ -99,7 +99,7 @@
 .range-slider .noUi-horizontal .noUi-handle:after,
 .range-slider .noUi-vertical .noUi-handle:before,
 .range-slider .noUi-vertical .noUi-handle:after {
-	background: transparent;
+	background: get-background-color('transparent');
 	border-color: get-border-color('neutral-6');
 	border-style: solid;
 	content: '';

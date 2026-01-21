@@ -51,7 +51,7 @@
 	}
 
 	&:disabled {
-		background-color: transparent;
+		background-color: get-background-color('transparent');
 		border: none;
 		pointer-events: none;
 

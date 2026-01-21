@@ -18,7 +18,7 @@
 
 	.flatpickr-monthSelect-month {
 		align-items: center;
-		border: 1px solid transparent;
+		border: 1px solid get-border-color('transparent');
 		border-radius: var(--border-radius-soft);
 		display: flex;
 		height: 40px;
@@ -28,21 +28,21 @@
 
 		&:hover,
 		&:focus {
-			background: var(--color-neutral-2);
+			background: get-background-color('neutral-2');
 		}
 
 		&.selected {
-			background-color: var(--color-primary);
-			border-color: transparent;
-			color: var(--color-neutral-0);
+			background-color: get-background-color('primary');
+			border-color: get-border-color('transparent');
+			color: get-text-color('neutral-0');
 		}
 
 		&.flatpickr-disabled {
-			background-color: var(--color-neutral-1);
-			color: var(--color-neutral-5);
+			background-color: get-background-color('neutral-1');
+			color: get-text-color('neutral-5');
 
 			&:hover {
-				background-color: var(--color-neutral-1) !important; // override provider !important rule
+				background-color: get-background-color('neutral-1') !important; // override provider !important rule
 			}
 
 			&.today:hover,
@@ -52,13 +52,13 @@
 		}
 
 		&.today:not(.selected):not(.flatpickr-disabled) {
-			border-color: var(--color-neutral-6);
+			border-color: get-border-color('neutral-6');
 
 			&:hover,
 			&:focus {
-				background: var(--color-neutral-3);
-				border-color: var(--color-neutral-3);
-				color: var(--color-primary);
+				background: get-background-color('neutral-3');
+				border-color: get-border-color('neutral-3');
+				color: get-text-color('primary');
 			}
 		}
 	}

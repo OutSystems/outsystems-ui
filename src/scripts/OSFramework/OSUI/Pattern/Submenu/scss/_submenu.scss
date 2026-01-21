@@ -114,8 +114,8 @@
 
 	&__header {
 		align-items: center;
-		border-bottom: var(--border-size-m) solid transparent;
-		border-top: var(--border-size-m) solid transparent;
+		border-bottom: var(--border-size-m) solid get-border-color('transparent');
+		border-top: var(--border-size-m) solid get-border-color('transparent');
 		display: flex;
 		padding: var(--space-none) var(--space-s);
 		transition: all 150ms linear;

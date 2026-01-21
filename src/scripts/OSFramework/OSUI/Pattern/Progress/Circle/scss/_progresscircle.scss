@@ -33,7 +33,7 @@
 		&__trail-path {
 			cx: 50%;
 			cy: 50%;
-			fill: transparent;
+			fill: get-background-color('transparent');
 			left: 0;
 			position: absolute;
 			r: var(--radius);

@@ -15,7 +15,7 @@
 
 	.app-menu-content {
 		&:after {
-			background: transparent;
+			background: get-background-color('transparent');
 			content: '';
 			height: 100%;
 			position: absolute;
