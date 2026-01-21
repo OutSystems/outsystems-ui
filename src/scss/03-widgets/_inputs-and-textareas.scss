@@ -125,7 +125,7 @@
 	.header-top-content {
 		.form-control {
 			&[data-input] {
-				background-color: var(--background-color-header, --header-color);
+				background-color: get-app-settings-background-color('header', --header-color);
 				border: 0;
 				border-bottom: var(--border-size-s) solid get-border-color('transparent');
 				border-radius: 0;
