@@ -15,6 +15,14 @@
 	@return unquote('max(var(--status-bar-height, 0px), var(--safe-area-inset-top, 0px))');
 }
 
+/// Returns the app settings background color for a given part name
+/// @param {String} $partName - The part name (header, body, login)
+/// @param {String} $defaultColorValue - The default color value
+/// @return {String} - The app settings background color
+@function get-app-settings-background-color($partName, $defaultColorValue) {
+	@return var(--background-color-#{$partName}, var(#{$defaultColorValue}));
+}
+
 /// Returns the background color for a given color name
 /// @param {String} $colorName - The color name
 /// @return {String} - The background color
@@ -22,7 +30,7 @@
 	@if ($colorName == 'transparent') {
 		@return transparent;
 	}
-	@return var(--background-color-#{$colorName}, --color-#{$colorName});
+	@return var(--background-color-#{$colorName}, var(--color-#{$colorName}));
 }
 
 /// Returns the border color for a given color name
@@ -32,12 +40,12 @@
 	@if ($colorName == 'transparent' or $colorName == 'currentColor') {
 		@return $colorName;
 	}
-	@return var(--border-color-#{$colorName}, --color-#{$colorName});
+	@return var(--border-color-#{$colorName}, var(--color-#{$colorName}));
 }
 
 /// Returns the text color for a given color name
 /// @param {String} $colorName - The color name
 /// @return {String} - The text color
 @function get-text-color($colorName) {
-	@return var(--text-color-#{$colorName}, --color-#{$colorName});
+	@return var(--text-color-#{$colorName}, var(--color-#{$colorName}));
 }
