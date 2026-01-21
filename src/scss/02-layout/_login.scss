@@ -34,7 +34,7 @@
 .layout-native {
 	.login {
 		&-screen {
-			background-color: var(--background-color-login, --color-background-login);
+			background-color: get-app-settings-background-color('login', --color-background-login);
 			padding: var(--os-safe-area-top) var(--os-safe-area-right) var(--os-safe-area-bottom)
 				var(--os-safe-area-left);
 		}
@@ -78,7 +78,7 @@
 	.layout-native {
 		.login {
 			&-form {
-				background: transparent;
+				background: get-background-color('transparent');
 				margin: 0;
 			}
 
