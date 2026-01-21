@@ -37,7 +37,7 @@ html {
 /* ============================================================================ */
 ///
 body {
-	background-color: var(--background-color-body, --color-background-body);
+	background-color: get-app-settings-background-color('body', --color-background-body);
 	/// iOS devices loses the direction default value when toggle the RTL on the body element. Added the default property of direction to prevent the issue.
 	direction: ltr;
 	font-size: var(--font-size-s);
