@@ -9,7 +9,7 @@
 
 	// Service Studio Preview
 	& {
-		-servicestudio-background-color: var(--background-color-header, --header-color);
+		-servicestudio-background-color: get-app-settings-background-color('header', --header-color);
 		-servicestudio-height: auto !important;
 	}
 }
