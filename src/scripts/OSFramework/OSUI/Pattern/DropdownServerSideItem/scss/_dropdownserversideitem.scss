@@ -6,8 +6,8 @@
 ///
 .osui-dropdown-serverside-item {
 	align-items: center;
-	background-color: transparent;
-	color: var(--color-neutral-9);
+	background-color: get-background-color('transparent');
+	color: get-text-color('neutral-9');
 	cursor: pointer;
 	display: flex;
 	flex: 1;
@@ -21,12 +21,12 @@
 
 	&:hover,
 	&--is-selected {
-		background-color: var(--color-neutral-2);
+		background-color: get-background-color('neutral-2');
 		z-index: var(--layer-local-tier-1);
 
 		// Service Studio Preview
 		& {
-			-servicestudio-background-color: var(--color-neutral-0);
+			-servicestudio-background-color: get-background-color('neutral-0');
 		}
 	}
 
@@ -52,11 +52,11 @@
 .has-accessible-features {
 	.osui-dropdown-serverside-item {
 		&:hover {
-			background-color: var(--color-neutral-4);
+			background-color: get-background-color('neutral-4');
 		}
 
 		&:focus {
-			box-shadow: inset 0 0 0 3px var(--color-focus-outer);
+			box-shadow: inset 0 0 0 3px get-background-color('focus-outer');
 		}
 	}
 }
