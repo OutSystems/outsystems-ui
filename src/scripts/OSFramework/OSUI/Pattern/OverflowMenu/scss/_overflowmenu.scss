@@ -13,7 +13,7 @@
 
 		border: var(--border-size-s) solid transparent;
 		border-radius: var(--osui-overflow-menu-shape);
-		color: var(--color-neutral-9);
+		color: get-text-color('neutral-9');
 		width: 32px;
 
 		* {
@@ -23,7 +23,7 @@
 
 	&--is-open {
 		.osui-overflow-menu__trigger {
-			background-color: var(--color-neutral-4);
+			background-color: get-background-color('neutral-4');
 		}
 	}
 
@@ -33,10 +33,10 @@
 		z-index: var(--layer-global-instant-interaction);
 
 		a {
-			color: var(--color-neutral-9);
+			color: get-text-color('neutral-9');
 
 			&:hover {
-				background: var(--color-neutral-4);
+				background: get-background-color('neutral-4');
 				text-decoration: none;
 			}
 
@@ -44,7 +44,7 @@
 			& {
 				-servicestudio-align-items: center;
 				-servicestudio-display: inline-flex !important;
-				-servicestudio-color: var(--color-neutral-9);
+				-servicestudio-color: get-text-color('neutral-9');
 				-servicestudio-padding: var(--space-s) var(--space-base);
 			}
 		}
@@ -79,7 +79,7 @@ html:has(.popup-backdrop) .osui-overflow-menu__balloon {
 ///
 .os-high-contrast {
 	.osui-overflow-menu__balloon {
-		border: var(--border-size-s) solid var(--color-neutral-7);
+		border: var(--border-size-s) solid get-border-color('neutral-7');
 
 		a {
 			&:hover {
