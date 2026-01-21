@@ -5,15 +5,15 @@
 
 /* Input placeholder style */
 ::-webkit-input-placeholder {
-	color: var(--color-neutral-7);
+	color: get-text-color('neutral-7');
 }
 
 ::-moz-placeholder {
-	color: var(--color-neutral-7);
+	color: get-text-color('neutral-7');
 }
 
 :-ms-input-placeholder {
-	color: var(--color-neutral-7);
+	color: get-text-color('neutral-7');
 }
 
 /* Iuput and TextArea */
