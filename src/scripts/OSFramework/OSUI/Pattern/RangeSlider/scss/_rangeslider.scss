@@ -42,12 +42,12 @@
 
 	.noUi {
 		&-base {
-			background-color: transparent;
+			background-color: get-background-color('transparent');
 			border-radius: var(--border-radius-soft);
 		}
 
 		&-target {
-			background: var(--color-neutral-5);
+			background: get-background-color('neutral-5');
 			border: var(--border-size-none);
 			border-radius: var(--border-radius-soft);
 			box-shadow: none;
@@ -56,8 +56,8 @@
 		&-horizontal,
 		&-vertical {
 			.noUi-handle {
-				background-color: var(--color-neutral-0);
-				border: var(--border-size-s) solid var(--color-neutral-7);
+				background-color: get-background-color('neutral-0');
+				border: var(--border-size-s) solid get-border-color('neutral-7');
 				border-radius: var(--border-radius-circle);
 				box-shadow: var(--shadow-xs);
 				cursor: pointer;
@@ -70,7 +70,7 @@
 			.noUi-handle:before,
 			.noUi-handle:after {
 				background: transparent;
-				border-color: var(--color-neutral-6);
+				border-color: get-border-color('neutral-6');
 				border-style: solid;
 				content: '';
 				height: calc(var(--range-slider-handle-size) / 2);
@@ -93,14 +93,14 @@
 
 			.noUi-handle.noUi-active,
 			.noUi-handle:hover {
-				border: var(--border-size-s) solid var(--color-primary);
+				border: var(--border-size-s) solid get-border-color('primary');
 			}
 
 			.noUi-handle.noUi-active:before,
 			.noUi-handle.noUi-active:after,
 			.noUi-handle:hover:before,
 			.noUi-handle:hover:after {
-				border-color: var(--color-primary);
+				border-color: get-border-color('primary');
 			}
 		}
 
@@ -130,7 +130,7 @@
 			}
 
 			.noUi-pips {
-				color: var(--color-neutral-8);
+				color: get-text-color('neutral-8');
 			}
 
 			.noUi-pips-margin {
@@ -143,7 +143,7 @@
 		}
 
 		&-connect {
-			background: var(--color-primary);
+			background: get-background-color('primary');
 		}
 
 		&-background {
@@ -159,7 +159,7 @@
 		}
 
 		&-pips-vertical {
-			color: var(--color-neutral-8);
+			color: get-text-color('neutral-8');
 			height: 100%;
 			left: 100%;
 			padding: 0 0 0 var(--space-base);
@@ -168,7 +168,7 @@
 
 		&-marker {
 			&-large {
-				background-color: var(--color-neutral-6);
+				background-color: get-background-color('neutral-6');
 			}
 
 			&-horizontal {
@@ -197,7 +197,7 @@
 		&-tooltip {
 			background: transparent;
 			border: none;
-			color: var(--color-neutral-10);
+			color: get-text-color('neutral-10');
 			padding: var(--space-xs);
 		}
 
@@ -232,31 +232,31 @@
 
 			.noUi {
 				&-target {
-					background-color: var(--color-neutral-4);
+					background-color: get-background-color('neutral-4');
 				}
 
 				&-connect {
-					background-color: var(--color-neutral-6);
+					background-color: get-background-color('neutral-6');
 				}
 
 				&-handle {
-					background-color: var(--color-neutral-2);
-					border: var(--border-size-s) solid var(--color-neutral-5);
+					background-color: get-background-color('neutral-2');
+					border: var(--border-size-s) solid get-border-color('neutral-5');
 					box-shadow: none;
 
 					&:before,
 					&:after {
-						border-color: var(--color-neutral-6);
+						border-color: get-border-color('neutral-6');
 					}
 				}
 
 				&-pips {
-					color: var(--color-neutral-6);
+					color: get-text-color('neutral-6');
 				}
 			}
 
 			.noUi-tooltip {
-				color: var(--color-neutral-6);
+				color: get-text-color('neutral-6');
 			}
 		}
 	}
@@ -269,11 +269,11 @@
 		border: var(--border-size-m) solid transparent;
 
 		&:focus-within {
-			border-color: var(--color-focus-outer);
+			border-color: get-border-color('focus-outer');
 		}
 
 		.noUi-handle:focus {
-			border-color: var(--color-focus-inner);
+			border-color: get-border-color('focus-inner');
 			@include a11y-default-outline;
 		}
 	}
@@ -293,7 +293,7 @@
 
 		.noUi-connect,
 		.noUi-base {
-			border: var(--border-size-m) solid var(--color-neutral-7);
+			border: var(--border-size-m) solid get-border-color('neutral-7');
 		}
 	}
 
