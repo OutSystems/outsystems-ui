@@ -56,7 +56,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 			if (this.provider.calendarContainer !== undefined) {
 				const currentMonthElem = this.provider.calendarContainer.querySelector('.flatpickr-current-month');
 				if (currentMonthElem !== undefined) {
-					currentMonthElem.appendChild(this._a11yMonthInformationElem);
+					currentMonthElem.prepend(this._a11yMonthInformationElem);
 				}
 			}
 
@@ -127,7 +127,8 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 
 		// Method used to set the current month accessibility information
 		private _setCurrentMonthAcessibilityInformation(): void {
-			this._a11yMonthInformationElem.innerHTML = this.provider.l10n.months.longhand[this.provider.currentMonth];
+			this._a11yMonthInformationElem.innerHTML =
+				this.provider.l10n.months.longhand[this.provider.currentMonth] + ' ' + this.provider.currentYear;
 		}
 		// Method used to set the clientHeight to the parent container as an inline style in order vertical content remains same and avoid content vertical flickering!
 		private _setParentMinHeight(): void {
@@ -403,6 +404,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 					OSFramework.OSUI.Constants.A11YAttributes.States.True
 				);
 
+				OSFramework.OSUI.Helper.A11Y.RoleStatus(this._a11yMonthInformationElem);
 				OSFramework.OSUI.Helper.A11Y.AriaLiveAssertive(this._a11yMonthInformationElem);
 				OSFramework.OSUI.Helper.A11Y.AriaAtomicTrue(this._a11yMonthInformationElem);
 

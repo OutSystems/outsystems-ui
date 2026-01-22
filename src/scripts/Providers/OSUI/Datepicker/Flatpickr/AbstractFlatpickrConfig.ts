@@ -216,7 +216,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 				updateInputVal: false, // (*)
 				weekNumbers: this.ShowWeekNumbers,
 				ariaDateFormat:
-					Providers.OSUI.SharedProviderResources.Flatpickr.Enum.AriaDateFormat.WeekdayMonthDayYear,
+					Providers.OSUI.SharedProviderResources.Flatpickr.Enum.AriaDateFormat.WeekdayDayMonthYear,
 				position: OutSystems.OSUI.Utils.GetIsRTL()
 					? Providers.OSUI.SharedProviderResources.Flatpickr.Enum.Position.Right
 					: Providers.OSUI.SharedProviderResources.Flatpickr.Enum.Position.Left,
