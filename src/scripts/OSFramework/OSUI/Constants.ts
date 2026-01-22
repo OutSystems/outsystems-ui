@@ -6,6 +6,7 @@ namespace OSFramework.OSUI.Constants {
 	export const A11YAttributes = {
 		Aria: {
 			Atomic: 'aria-atomic',
+			Modal: 'aria-modal',
 			Busy: 'aria-busy',
 			Controls: 'aria-controls',
 			Describedby: 'aria-describedby',
@@ -43,6 +44,7 @@ namespace OSFramework.OSUI.Constants {
 			AttrName: 'role',
 			Button: 'button',
 			Complementary: 'complementary',
+			Dialog: 'dialog',
 			Listbox: 'listbox',
 			Menu: 'menu',
 			MenuItem: 'menuitem',
