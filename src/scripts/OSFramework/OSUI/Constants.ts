@@ -53,6 +53,7 @@ namespace OSFramework.OSUI.Constants {
 			Progressbar: 'progressbar',
 			Region: 'region',
 			Search: 'search',
+			Status: 'status',
 			Tab: 'tab',
 			TabList: 'tablist',
 			TabPanel: 'tabpanel',

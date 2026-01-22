@@ -545,6 +545,17 @@ namespace OSFramework.OSUI.Helper {
 		}
 
 		/**
+		 * Method that will set the status role
+		 *
+		 * @param {HTMLElement} element Target element to receive the role atributte
+		 * @returns
+		 * @memberof OSFramework.Helper.A11Y
+		 */
+		public static RoleStatus(element: HTMLElement): void {
+			Dom.Attribute.Set(element, Constants.A11YAttributes.Role.AttrName, Constants.A11YAttributes.Role.Status);
+		}
+
+		/**
 		 * Method that will set the tab role
 		 *
 		 * @static
