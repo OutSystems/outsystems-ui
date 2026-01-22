@@ -46,6 +46,9 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		// Set the OnClose callback to be used whenever the Flatpickr close
 		public OnClose: OSFramework.OSUI.GlobalCallbacks.Generic;
 
+		// Set the OnMonthChange callback to be used whenever the Flatpickr month changes
+		public OnMonthChange: OSFramework.OSUI.GlobalCallbacks.Generic;
+
 		// Set the OnOpen callback to be used whenever the Flatpickr opens
 		public OnOpen: OSFramework.OSUI.GlobalCallbacks.Generic;
 
@@ -207,10 +210,13 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 				minDate: this._validateDate(this.MinDate),
 				onChange: this.OnChange,
 				onClose: this.OnClose,
+				onMonthChange: this.OnMonthChange,
 				onOpen: this.OnOpen,
 				time_24hr: this.TimeFormat === OSFramework.OSUI.Patterns.DatePicker.Enum.TimeFormatMode.Time24hFormat,
 				updateInputVal: false, // (*)
 				weekNumbers: this.ShowWeekNumbers,
+				ariaDateFormat:
+					Providers.OSUI.SharedProviderResources.Flatpickr.Enum.AriaDateFormat.WeekdayDayMonthYear,
 				position: OutSystems.OSUI.Utils.GetIsRTL()
 					? Providers.OSUI.SharedProviderResources.Flatpickr.Enum.Position.Right
 					: Providers.OSUI.SharedProviderResources.Flatpickr.Enum.Position.Left,

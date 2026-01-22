@@ -6,8 +6,12 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 	{
 		// Store container HTML element reference that contains an explanation about how to navigate through calendar with keyboard
 		private _a11yInfoContainerElem: HTMLElement;
+		// Store container HTML element reference that contains the month information
+		private _a11yMonthInformationElem: HTMLElement;
 		// Event OnBodyScroll common behaviour
 		private _bodyScrollCommonBehaviour: SharedProviderResources.Flatpickr.UpdatePositionOnScroll;
+		// Store label HTML element reference that is associated with the flatpickr input
+		private _flatpickrInputLabelElem: HTMLLabelElement;
 		// Flag to store the status of the platform input
 		private _isPlatformInputDisabled: boolean;
 		// Store HtmlElement for the provider focus span target
@@ -38,6 +42,29 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 
 			// Set the default library Event handler that will be used to set on the provider configs
 			this.configs.OnOpen = this.onDatePickerOpen.bind(this);
+
+			this.configs.OnMonthChange = this._onMonthChange.bind(this);
+		}
+
+		// Method used to create the HTML element that contains the month information
+		private _createA11yMonthInformationElem(): void {
+			this._a11yMonthInformationElem = document.createElement('div');
+
+			// Add the hidden class to the element to hide it from the screen
+			this._a11yMonthInformationElem.classList.add('wcag-hide-text');
+
+			if (this.provider.calendarContainer !== undefined) {
+				const currentMonthElem = this.provider.calendarContainer.querySelector('.flatpickr-current-month');
+				if (currentMonthElem !== undefined) {
+					currentMonthElem.prepend(this._a11yMonthInformationElem);
+				}
+			}
+
+			this._setCurrentMonthAcessibilityInformation();
+		}
+
+		private _onMonthChange(): void {
+			this._setCurrentMonthAcessibilityInformation();
 		}
 
 		// Method used to set the HTML attributes to the Flatpickr input element
@@ -45,6 +72,10 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 			// Since a new input will be added by the flatpickr library, we must address it only at onReady
 			if (this.datePickerPlatformInputElem.nextSibling) {
 				this.flatpickrInputElem = this.datePickerPlatformInputElem.nextSibling as HTMLInputElement;
+
+				this._flatpickrInputLabelElem = document.querySelector(
+					`${OSFramework.OSUI.GlobalEnum.HTMLElement.Label}[${OSFramework.OSUI.GlobalEnum.HTMLAttributes.For}*=${this.datePickerPlatformInputElem.id}]`
+				) as HTMLLabelElement;
 
 				// Added the data-input attribute in order to input be styled as all platform inputs
 				OSFramework.OSUI.Helper.Dom.Attribute.Set(
@@ -58,6 +89,20 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 					OSFramework.OSUI.Helper.Dom.Attribute.Remove(
 						this.flatpickrInputElem,
 						OSFramework.OSUI.GlobalEnum.HTMLAttributes.Disabled
+					);
+				}
+
+				// If there is an label associated with the platform input
+				if (this.flatpickrInputElem && this._flatpickrInputLabelElem) {
+					// Create an Id for the flatpickr input element that will be then used to set the label for attribute
+					const flatpickrInputElemId = 'fp_' + this.datePickerPlatformInputElem.id;
+					// Set the Id to the flatpickr input element
+					this.flatpickrInputElem.id = flatpickrInputElemId;
+					// Update the label for attribute to the flatpickr input element
+					OSFramework.OSUI.Helper.Dom.Attribute.Set(
+						this._flatpickrInputLabelElem,
+						OSFramework.OSUI.GlobalEnum.HTMLAttributes.For,
+						flatpickrInputElemId
 					);
 				}
 			}
@@ -80,6 +125,11 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 			}
 		}
 
+		// Method used to set the current month accessibility information
+		private _setCurrentMonthAcessibilityInformation(): void {
+			this._a11yMonthInformationElem.innerHTML =
+				this.provider.l10n.months.longhand[this.provider.currentMonth] + ' ' + this.provider.currentYear;
+		}
 		// Method used to set the clientHeight to the parent container as an inline style in order vertical content remains same and avoid content vertical flickering!
 		private _setParentMinHeight(): void {
 			OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(
@@ -202,6 +252,9 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 
 			// Update the platform input attributes
 			this.updatePlatformInputAttrs();
+
+			// Create the HTML element that contains the month information for accessibility
+			this._createA11yMonthInformationElem();
 
 			// Set accessibility stuff
 			this.setA11YProperties();
@@ -351,28 +404,36 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 					OSFramework.OSUI.Constants.A11YAttributes.States.True
 				);
 
+				OSFramework.OSUI.Helper.A11Y.RoleStatus(this._a11yMonthInformationElem);
+				OSFramework.OSUI.Helper.A11Y.AriaLiveAssertive(this._a11yMonthInformationElem);
+				OSFramework.OSUI.Helper.A11Y.AriaAtomicTrue(this._a11yMonthInformationElem);
+
 				this._updateA11yProperties();
 
-				// Set the default aria-label value attribute in case user didn't set it!
-				let ariaLabelValue = Enum.Attribute.DefaultAriaLabel as string;
+				// Set the default aria-label value attribute in case user didn't set a label for the input
+				if (this._flatpickrInputLabelElem === undefined) {
+					// Set the default aria-label value attribute in case user didn't set it!
+					let ariaLabelValue = Enum.Attribute.DefaultAriaLabel as string;
 
-				// Check if aria-label attribute has been added to the default input
-				if (
-					this.datePickerPlatformInputElem.hasAttribute(OSFramework.OSUI.Constants.A11YAttributes.Aria.Label)
-				) {
-					ariaLabelValue = this.datePickerPlatformInputElem.getAttribute(
-						OSFramework.OSUI.Constants.A11YAttributes.Aria.Label
-					);
+					// Check if aria-label attribute has been added to the default input
+					if (
+						this.datePickerPlatformInputElem.hasAttribute(
+							OSFramework.OSUI.Constants.A11YAttributes.Aria.Label
+						)
+					) {
+						ariaLabelValue = this.datePickerPlatformInputElem.getAttribute(
+							OSFramework.OSUI.Constants.A11YAttributes.Aria.Label
+						);
+					}
+
+					// Set the aria-label attribute value
+					OSFramework.OSUI.Helper.A11Y.AriaLabel(this.flatpickrInputElem, ariaLabelValue);
 				}
-
-				// Set the aria-label attribute value
-				OSFramework.OSUI.Helper.A11Y.AriaLabel(this.flatpickrInputElem, ariaLabelValue);
 				// Set the aria-describedby attribute in order to give more context about how to navigate into calendar using keyboard
-				if (OSFramework.OSUI.Helper.DeviceInfo.IsDesktop)
-					OSFramework.OSUI.Helper.A11Y.AriaDescribedBy(
-						this.flatpickrInputElem,
-						this._a11yInfoContainerElem.id
-					);
+				OSFramework.OSUI.Helper.A11Y.AriaDescribedBy(
+					this.provider.calendarContainer,
+					this._a11yInfoContainerElem.id
+				);
 
 				// Check if lang is not EN (default one)
 				if (this.configs.Lang !== OSFramework.OSUI.Constants.Language.short) {
