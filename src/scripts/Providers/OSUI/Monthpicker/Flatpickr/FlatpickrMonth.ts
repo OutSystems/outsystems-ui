@@ -127,12 +127,14 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 
 		// Method used to set the year buttons HTML elements reference
 		private _setYearButtonsElem(): void {
-			this._flatpickrButtonNextYearElem = this.provider.calendarContainer.querySelector(
-				OSFramework.OSUI.Constants.Dot + Enum.CssClasses.ButtonNextYear
-			);
-			this._flatpickrButtonPreviousYearElem = this.provider.calendarContainer.querySelector(
-				OSFramework.OSUI.Constants.Dot + Enum.CssClasses.ButtonPreviousYear
-			);
+			if (this.provider.calendarContainer !== undefined) {
+				this._flatpickrButtonNextYearElem = this.provider.calendarContainer.querySelector(
+					OSFramework.OSUI.Constants.Dot + Enum.CssClasses.ButtonNextYear
+				);
+				this._flatpickrButtonPreviousYearElem = this.provider.calendarContainer.querySelector(
+					OSFramework.OSUI.Constants.Dot + Enum.CssClasses.ButtonPreviousYear
+				);
+			}
 		}
 
 		// Update certain A11Y properties
@@ -349,14 +351,23 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 
 			const langCode = this.configs.Lang !== undefined ? this.configs.Lang : 'en';
 
-			OSFramework.OSUI.Helper.A11Y.AriaLabel(
-				this._flatpickrButtonNextYearElem,
-				l10ns.NextYearBtn[langCode].ariaLabel
-			);
-			OSFramework.OSUI.Helper.A11Y.AriaLabel(
-				this._flatpickrButtonPreviousYearElem,
-				l10ns.PreviousYearBtn[langCode].ariaLabel
-			);
+			// Check if next year button exists
+			if (this._flatpickrButtonNextYearElem !== undefined) {
+				// Set the aria-label attribute value for next year button
+				OSFramework.OSUI.Helper.A11Y.AriaLabel(
+					this._flatpickrButtonNextYearElem,
+					l10ns.NextYearBtn[langCode].ariaLabel
+				);
+			}
+
+			// Check if previous year button exists
+			if (this._flatpickrButtonPreviousYearElem !== undefined) {
+				// Set the aria-label attribute value for previous year button
+				OSFramework.OSUI.Helper.A11Y.AriaLabel(
+					this._flatpickrButtonPreviousYearElem,
+					l10ns.PreviousYearBtn[langCode].ariaLabel
+				);
+			}
 
 			// Check if lang is not EN (default one)
 			if (this.configs.Lang !== OSFramework.OSUI.Constants.Language.short) {
