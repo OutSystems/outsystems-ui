@@ -261,7 +261,7 @@
 		margin: 0 var(--space-base);
 
 		select {
-			background-color: transparent;
+			background-color: get-background-color('transparent');
 			border: 0;
 			color: get-text-color('primary');
 		}
