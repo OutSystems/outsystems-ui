@@ -266,7 +266,7 @@
 ///
 .has-accessible-features {
 	.osui-range-slider {
-		border: var(--border-size-m) solid transparent;
+		border: var(--border-size-m) solid get-border-color('transparent');
 
 		&:focus-within {
 			border-color: get-border-color('focus-outer');
