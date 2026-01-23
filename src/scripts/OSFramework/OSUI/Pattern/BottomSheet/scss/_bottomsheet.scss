@@ -95,7 +95,7 @@
 	}
 
 	&-overlay {
-		background-color: var(--background-color-overlay, --overlay-background);
+		background-color: get-background-color('overlay');
 		height: 100vh;
 		left: 0;
 		opacity: 0;

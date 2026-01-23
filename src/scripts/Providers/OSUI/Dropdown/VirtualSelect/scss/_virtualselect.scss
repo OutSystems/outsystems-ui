@@ -194,7 +194,7 @@
 			border: none;
 
 			&-container {
-				background-color: var(--background-color-overlay, --overlay-background);
+				background-color: get-background-color('overlay');
 				// The !important is needed in order to overwrite the inline style added by library!
 				z-index: var(--layer-global-elevated) !important;
 			}

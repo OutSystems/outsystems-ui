@@ -19,7 +19,7 @@
 ///
 .popup {
 	&-backdrop {
-		background-color: var(--background-color-overlay, --overlay-background);
+		background-color: get-background-color('overlay');
 	}
 
 	&-dialog {

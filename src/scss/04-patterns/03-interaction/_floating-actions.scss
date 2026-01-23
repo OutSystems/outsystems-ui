@@ -148,7 +148,7 @@
 	}
 
 	&-overlay {
-		background-color: var(--background-color-overlay, --overlay-background);
+		background-color: get-background-color('overlay');
 		cursor: pointer;
 		height: 100vh;
 		opacity: 0;

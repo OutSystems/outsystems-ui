@@ -30,6 +30,9 @@
 	@if ($colorName == 'transparent') {
 		@return transparent;
 	}
+	@if ($colorName == 'overlay') {
+		@return var(--background-color-overlay, var(--overlay-background));
+	}
 	@return var(--background-color-#{$colorName}, var(--color-#{$colorName}));
 }
 
