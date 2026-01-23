@@ -197,7 +197,7 @@
 
 		// Service Studio Preview
 		& {
-			-servicestudio-background-color: #2980b9;
+			-servicestudio-background-color: get-background-color('blue-light');
 			-servicestudio-float: none;
 			-servicestudio-min-height: 80px;
 			-servicestudio-width: 100%;
@@ -211,7 +211,7 @@
 
 		// Service Studio Preview
 		& {
-			-servicestudio-background-color: #27ae60;
+			-servicestudio-background-color: get-background-color('green');
 			-servicestudio-float: right;
 			-servicestudio-min-height: 80px;
 			-servicestudio-width: 50%;
@@ -225,7 +225,7 @@
 
 		// Service Studio Preview
 		& {
-			-servicestudio-background-color: #c0392b;
+			-servicestudio-background-color: get-background-color('red');
 			-servicestudio-float: none;
 			-servicestudio-min-height: 80px;
 			-servicestudio-width: 50%;
