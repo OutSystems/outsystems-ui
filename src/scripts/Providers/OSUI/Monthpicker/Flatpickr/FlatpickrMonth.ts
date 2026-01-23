@@ -11,10 +11,16 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 		private _bodyOnClickGlobalEvent: OSFramework.OSUI.Event.DOMEvents.Listeners.IListener;
 		// Event OnBodyScroll common behaviour
 		private _bodyScrollCommonBehaviour: SharedProviderResources.Flatpickr.UpdatePositionOnScroll;
+		// Store button HTML element reference that is associated with the flatpickr next year button
+		private _flatpickrButtonNextYearElem: HTMLElement;
+		// Store button HTML element reference that is associated with the flatpickr previous year button
+		private _flatpickrButtonPreviousYearElem: HTMLElement;
 		// Store label HTML element reference that is associated with the flatpickr input
 		private _flatpickrInputLabelElem: HTMLLabelElement;
 		// Store the provider options
 		private _flatpickrOpts: FlatpickrOptions;
+		// Store input HTML element reference that is associated with the flatpickr year input
+		private _flatpickrYearInputElem: HTMLElement;
 		// Flag to store the status of the platform input
 		private _isPlatformInputDisabled: boolean;
 		// Validation of ZIndex position common behavior
@@ -41,6 +47,21 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 				OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.events.get(
 					OSFramework.OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick
 				);
+		}
+
+		// Method used to set the year buttons HTML elements reference
+		private _setA11yHtmlElements(): void {
+			if (this.provider.calendarContainer !== undefined) {
+				this._flatpickrButtonNextYearElem = this.provider.calendarContainer.querySelector(
+					OSFramework.OSUI.Constants.Dot + Enum.CssClasses.ButtonNextYear
+				);
+				this._flatpickrButtonPreviousYearElem = this.provider.calendarContainer.querySelector(
+					OSFramework.OSUI.Constants.Dot + Enum.CssClasses.ButtonPreviousYear
+				);
+				this._flatpickrYearInputElem = this.provider.calendarContainer.querySelector(
+					OSFramework.OSUI.Constants.Dot + Enum.CssClasses.YearInput
+				);
+			}
 		}
 
 		// Method used to set the needed HTML attributes
@@ -176,6 +197,8 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 			}
 
 			this.updatePlatformInputAttrs();
+
+			this._setA11yHtmlElements();
 
 			this.setA11YProperties();
 
@@ -330,6 +353,31 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 
 			// Set the aria-describedby attribute in order to give more context about how to navigate into calendar using keyboard
 			OSFramework.OSUI.Helper.A11Y.AriaDescribedBy(this.flatpickrInputElem, this._a11yInfoContainerElem.id);
+
+			if (this._flatpickrYearInputElem !== undefined) {
+				OSFramework.OSUI.Helper.A11Y.AriaLiveAssertive(this._flatpickrYearInputElem);
+				OSFramework.OSUI.Helper.A11Y.AriaAtomicTrue(this._flatpickrYearInputElem);
+			}
+
+			const langCode = this.configs.Lang !== undefined ? this.configs.Lang : 'en';
+
+			// Check if next year button exists
+			if (this._flatpickrButtonNextYearElem !== undefined) {
+				// Set the aria-label attribute value for next year button
+				OSFramework.OSUI.Helper.A11Y.AriaLabel(
+					this._flatpickrButtonNextYearElem,
+					l10ns.NextYearBtn[langCode].ariaLabel
+				);
+			}
+
+			// Check if previous year button exists
+			if (this._flatpickrButtonPreviousYearElem !== undefined) {
+				// Set the aria-label attribute value for previous year button
+				OSFramework.OSUI.Helper.A11Y.AriaLabel(
+					this._flatpickrButtonPreviousYearElem,
+					l10ns.PreviousYearBtn[langCode].ariaLabel
+				);
+			}
 
 			// Check if lang is not EN (default one)
 			if (this.configs.Lang !== OSFramework.OSUI.Constants.Language.short) {
