@@ -399,7 +399,7 @@ span.flatpickr-weekday {
 	input {
 		&:hover,
 		&:focus {
-			background: transparent;
+			background: get-background-color('transparent');
 		}
 	}
 
