@@ -19,6 +19,8 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 		private _flatpickrInputLabelElem: HTMLLabelElement;
 		// Store the provider options
 		private _flatpickrOpts: FlatpickrOptions;
+		// Store input HTML element reference that is associated with the flatpickr year input
+		private _flatpickrYearInputElem: HTMLElement;
 		// Flag to store the status of the platform input
 		private _isPlatformInputDisabled: boolean;
 		// Validation of ZIndex position common behavior
@@ -45,6 +47,21 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 				OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.events.get(
 					OSFramework.OSUI.Event.DOMEvents.Listeners.Type.BodyOnClick
 				);
+		}
+
+		// Method used to set the year buttons HTML elements reference
+		private _setA11yHtmlElements(): void {
+			if (this.provider.calendarContainer !== undefined) {
+				this._flatpickrButtonNextYearElem = this.provider.calendarContainer.querySelector(
+					OSFramework.OSUI.Constants.Dot + Enum.CssClasses.ButtonNextYear
+				);
+				this._flatpickrButtonPreviousYearElem = this.provider.calendarContainer.querySelector(
+					OSFramework.OSUI.Constants.Dot + Enum.CssClasses.ButtonPreviousYear
+				);
+				this._flatpickrYearInputElem = this.provider.calendarContainer.querySelector(
+					OSFramework.OSUI.Constants.Dot + Enum.CssClasses.YearInput
+				);
+			}
 		}
 
 		// Method used to set the needed HTML attributes
@@ -125,18 +142,6 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 			}
 		}
 
-		// Method used to set the year buttons HTML elements reference
-		private _setYearButtonsElem(): void {
-			if (this.provider.calendarContainer !== undefined) {
-				this._flatpickrButtonNextYearElem = this.provider.calendarContainer.querySelector(
-					OSFramework.OSUI.Constants.Dot + Enum.CssClasses.ButtonNextYear
-				);
-				this._flatpickrButtonPreviousYearElem = this.provider.calendarContainer.querySelector(
-					OSFramework.OSUI.Constants.Dot + Enum.CssClasses.ButtonPreviousYear
-				);
-			}
-		}
-
 		// Update certain A11Y properties
 		private _updateA11yProperties(): void {
 			// Ensure flatpickrInputElem tabindex is updated based on the platform input status
@@ -193,7 +198,7 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 
 			this.updatePlatformInputAttrs();
 
-			this._setYearButtonsElem();
+			this._setA11yHtmlElements();
 
 			this.setA11YProperties();
 
@@ -348,6 +353,11 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 
 			// Set the aria-describedby attribute in order to give more context about how to navigate into calendar using keyboard
 			OSFramework.OSUI.Helper.A11Y.AriaDescribedBy(this.flatpickrInputElem, this._a11yInfoContainerElem.id);
+
+			if (this._flatpickrYearInputElem !== undefined) {
+				OSFramework.OSUI.Helper.A11Y.AriaLiveAssertive(this._flatpickrYearInputElem);
+				OSFramework.OSUI.Helper.A11Y.AriaAtomicTrue(this._flatpickrYearInputElem);
+			}
 
 			const langCode = this.configs.Lang !== undefined ? this.configs.Lang : 'en';
 

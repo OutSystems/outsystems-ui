@@ -10,5 +10,6 @@ namespace Providers.OSUI.MonthPicker.Flatpickr.Enum {
 		AccessibilityContainerInfo = 'osui-monthpicker-a11y',
 		ButtonNextYear = 'flatpickr-next-month',
 		ButtonPreviousYear = 'flatpickr-prev-month',
+		YearInput = 'cur-year',
 	}
 }
