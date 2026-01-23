@@ -69,7 +69,7 @@
 .tablet.landscape {
 	.list {
 		.list-item-selected {
-			background: get-background-color('primary') get-background-color('primary-lighter');
+			background: get-background-color('primary') get-background-color('primary-lightest');
 
 			.list-item-content {
 				&-title {

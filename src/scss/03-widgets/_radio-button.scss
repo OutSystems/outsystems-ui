@@ -36,7 +36,7 @@
 	}
 
 	&:focus:before {
-		box-shadow: 0 0 0 2px get-border-color('focus');
+		box-shadow: 0 0 0 2px get-background-color('focus');
 	}
 
 	&:checked {
