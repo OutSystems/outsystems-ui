@@ -55,14 +55,14 @@
 		.vscomp-clear-icon {
 			&::after,
 			&::before {
-				background-color: transparent;
+				background-color: get-background-color('transparent');
 				color: get-text-color('neutral-7');
 			}
 		}
 	}
 
 	&-search-clear:hover:after {
-		background-color: transparent;
+		background-color: get-background-color('transparent');
 		color: get-text-color('neutral-7');
 	}
 }
@@ -116,8 +116,8 @@
 
 					&:after {
 						border-color: get-border-color('neutral-0');
-						border-left-color: transparent;
-						border-top-color: transparent;
+						border-left-color: get-border-color('transparent');
+						border-top-color: get-border-color('transparent');
 						height: 80%;
 						opacity: 1;
 						@include CheckBoxCheckIconTransform;
@@ -323,8 +323,8 @@
 
 			&:after {
 				border-color: get-border-color('neutral-0');
-				border-left-color: transparent;
-				border-top-color: transparent;
+				border-left-color: get-border-color('transparent');
+				border-top-color: get-border-color('transparent');
 				height: 80%;
 				opacity: 1;
 				@include CheckBoxCheckIconTransform;
