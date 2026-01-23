@@ -8,5 +8,7 @@ namespace Providers.OSUI.MonthPicker.Flatpickr.Enum {
 	// CssClasses Enum
 	export enum CssClasses {
 		AccessibilityContainerInfo = 'osui-monthpicker-a11y',
+		ButtonNextYear = 'flatpickr-next-month',
+		ButtonPreviousYear = 'flatpickr-prev-month',
 	}
 }

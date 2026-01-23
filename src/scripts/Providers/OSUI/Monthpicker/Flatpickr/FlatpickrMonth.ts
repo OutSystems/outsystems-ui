@@ -11,6 +11,10 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 		private _bodyOnClickGlobalEvent: OSFramework.OSUI.Event.DOMEvents.Listeners.IListener;
 		// Event OnBodyScroll common behaviour
 		private _bodyScrollCommonBehaviour: SharedProviderResources.Flatpickr.UpdatePositionOnScroll;
+		// Store button HTML element reference that is associated with the flatpickr next year button
+		private _flatpickrButtonNextYearElem: HTMLElement;
+		// Store button HTML element reference that is associated with the flatpickr previous year button
+		private _flatpickrButtonPreviousYearElem: HTMLElement;
 		// Store label HTML element reference that is associated with the flatpickr input
 		private _flatpickrInputLabelElem: HTMLLabelElement;
 		// Store the provider options
@@ -121,6 +125,16 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 			}
 		}
 
+		// Method used to set the year buttons HTML elements reference
+		private _setYearButtonsElem(): void {
+			this._flatpickrButtonNextYearElem = this.provider.calendarContainer.querySelector(
+				OSFramework.OSUI.Constants.Dot + Enum.CssClasses.ButtonNextYear
+			);
+			this._flatpickrButtonPreviousYearElem = this.provider.calendarContainer.querySelector(
+				OSFramework.OSUI.Constants.Dot + Enum.CssClasses.ButtonPreviousYear
+			);
+		}
+
 		// Update certain A11Y properties
 		private _updateA11yProperties(): void {
 			// Ensure flatpickrInputElem tabindex is updated based on the platform input status
@@ -176,6 +190,8 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 			}
 
 			this.updatePlatformInputAttrs();
+
+			this._setYearButtonsElem();
 
 			this.setA11YProperties();
 
@@ -330,6 +346,17 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 
 			// Set the aria-describedby attribute in order to give more context about how to navigate into calendar using keyboard
 			OSFramework.OSUI.Helper.A11Y.AriaDescribedBy(this.flatpickrInputElem, this._a11yInfoContainerElem.id);
+
+			const langCode = this.configs.Lang !== undefined ? this.configs.Lang : 'en';
+
+			OSFramework.OSUI.Helper.A11Y.AriaLabel(
+				this._flatpickrButtonNextYearElem,
+				l10ns.NextYearBtn[langCode].ariaLabel
+			);
+			OSFramework.OSUI.Helper.A11Y.AriaLabel(
+				this._flatpickrButtonPreviousYearElem,
+				l10ns.PreviousYearBtn[langCode].ariaLabel
+			);
 
 			// Check if lang is not EN (default one)
 			if (this.configs.Lang !== OSFramework.OSUI.Constants.Language.short) {
