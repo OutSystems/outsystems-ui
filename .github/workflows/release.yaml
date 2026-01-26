@@ -17,14 +17,21 @@ on:
                 default: true
 
 permissions:
-    id-token: write
-    contents: write
+    contents: read
 
 jobs:
     set-release-latest:
         name: 🏷️ Set Release as Latest
-        uses: OutSystems/ui-components.github-reusable-workflows/.github/workflows/release.yaml@7ffd7f90f6e5016bd92d0e050d2516084b99c2f6 #v0.2.5
+        permissions:
+            id-token: write
+            contents: write
+        #uses: OutSystems/ui-components.github-reusable-workflows/.github/workflows/release.yaml@7ffd7f90f6e5016bd92d0e050d2516084b99c2f6 #v0.2.5
+        uses: ./.github/workflows/template-release.yaml
         with:
             new-version: ${{ inputs.new-version }}
             update-prerelease-into-latest: ${{ inputs.update-prerelease-into-latest }}
             delete-rc-branch: ${{ inputs.delete-rc-branch }}
+        secrets:
+            OSUI_AZURE_CLIENT_ID: ${{ secrets.OSUI_AZURE_CLIENT_ID }}
+            OSUI_AZURE_TENANT_ID: ${{ secrets.OSUI_AZURE_TENANT_ID }}
+            OSUI_AZURE_SUBSCRIPTION_ID: ${{ secrets.OSUI_AZURE_SUBSCRIPTION_ID }}

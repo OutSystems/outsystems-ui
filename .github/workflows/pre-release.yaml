@@ -17,16 +17,22 @@ on:
                 required: false
 
 permissions:
-    id-token: write
     contents: read
 
 jobs:
     create-release-candidate:
         name: 📦 Create Release Candidate
-        uses: OutSystems/ui-components.github-reusable-workflows/.github/workflows/pre-release.yaml@7ffd7f90f6e5016bd92d0e050d2516084b99c2f6 #v0.2.5
+        permissions:
+            id-token: write
+            contents: read
+        #uses: OutSystems/ui-components.github-reusable-workflows/.github/workflows/pre-release.yaml@7ffd7f90f6e5016bd92d0e050d2516084b99c2f6 #v0.2.5
+        uses: ./.github/workflows/template-pre-release.yaml
         with:
             new-version: ${{ inputs.new-version }}
             release-date: ${{ inputs.release-date }}
             new-dev-release: ${{ inputs.new-dev-release }}
         secrets:
             GPG_PRIVATE_KEY: ${{ secrets.GPG_SIGN_KEY }}
+            OSUI_AZURE_CLIENT_ID: ${{ secrets.OSUI_AZURE_CLIENT_ID }}
+            OSUI_AZURE_TENANT_ID: ${{ secrets.OSUI_AZURE_TENANT_ID }}
+            OSUI_AZURE_SUBSCRIPTION_ID: ${{ secrets.OSUI_AZURE_SUBSCRIPTION_ID }}
