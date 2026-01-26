@@ -209,7 +209,7 @@ namespace OSFramework.OSUI.Patterns {
 		 */
 		public dispose(): void {
 			OSFramework.OSUI.Event.DOMEvents.Observers.GlobalObserverManager.Instance.removeHandler(
-				Event.DOMEvents.Observers.ObserverEvent.RTL,
+				Event.DOMEvents.Observers.ObserverEvent.Language,
 				this._redrawCallback
 			);
 
