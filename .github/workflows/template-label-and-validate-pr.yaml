@@ -1,0 +1,70 @@
+#
+# This workflow aggregates 3 actions
+# 1. Checks if any (or all) changes in a PR are on files NOT owned by the author and if so adds an inner sourcing label (or inner sourcing strict).
+#
+# 2. Prevents merging pull requests that don't follow the title convention:
+#      The title convention is 
+#      "+semver: <minor|major|patch> <ticket id> <description>"
+#      OR
+#      "<ticket id> <description>"
+#      depending on the 'validate-semVer' input value,
+#      where ┬┤+semver: <minor|major|patch> ┬┤ section is optional, and <ticket id> must be a JIRA issue identifier.
+#
+# 3. Prevents merging pull requests that don't follow the label conventions.
+#      The rules to allow merging a pull request are:
+#        - it must have at least one label that describes the type of pull request
+#        - it must not have the "do not merge" label
+#     
+#      It assumes the code owners file is is `.github/CODEOWNERS` but you can override the configuration with the input variable `codeowners-path`.
+#
+# HOW TO USE:
+#
+# To call this reusable workflow, copy the code between === lines to a new workflow file,
+# uncomment and adjust "uses" as needed (use the latest tag available).
+# ======================================================================
+#
+# name: Check if pull request is inner sourcing
+#
+# on:
+#   pull_request:
+#     types:
+#       - opened
+#
+# jobs:
+#   inner-sourcing:
+#     name: Check if pull request is inner sourcing
+#     uses: OutSystems/rd.github-reusable-workflows/.github/workflows/label-and-validate-pt.yaml@v2.0.4
+#     secrets: inherit
+#
+# ======================================================================
+
+name: Label and Validate the PR
+
+on:
+  workflow_call:
+    inputs:
+      codeowners-path:
+        required: false
+        type: string
+        default: ./.github/CODEOWNERS
+
+jobs:
+  inner-sourcing:
+    runs-on: ubuntu-latest
+    if: github.actor != 'dependabot[bot]'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+          
+      #- name: Run pr-inner-sourcing-label action
+      #  uses: OutSystems/rd.github-reusable-workflows/.github/actions/add-inner-sourcing-label@v2.0.7
+      #  with:
+      #    github-token-for-labelling: ${{ secrets.GITHUB_TOKEN }}
+      #    github-token-for-team-membership: ${{ secrets.INNERSOURCING_PR_DATA_GITHUB_TOKEN }}
+      #    codeowners-path: ./CODEOWNERS
+      - name: Check PR Title
+        #uses: OutSystems/rd.github-reusable-workflows/.github/actions/validate-pr-title@v2.0.7
+        uses: ./.github/actions/validate-pr-title
+      - name: Validate PR labels
+        #uses: OutSystems/rd.github-reusable-workflows/.github/actions/validate-pr-labels@v2.0.7
+        uses: ./.github/actions/validate-pr-labels

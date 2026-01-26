@@ -1,0 +1,55 @@
+#
+# This workflow prevents merging pull requests that don't follow the title convention.
+# The title convention is 
+# "+semver: <minor|major|patch> <ticket id> <description>"
+# OR
+# "<ticket id> <description>"
+# depending on the 'validate-semVer' input value,
+# where ┬┤+semver: <minor|major|patch> ┬┤ section is optional, and <ticket id> must be a JIRA issue identifier.
+#
+# HOW TO USE:
+#
+# To call this reusable workflow, copy the code between === lines to a new workflow file,
+# uncomment and adjust "uses" as needed (use the latest tag available).
+# ======================================================================
+#
+#name: Validate pull request title
+#
+#on:
+#  pull_request:
+#    types: [opened, reopened, edited]
+#
+#jobs:
+#  check-title:
+#    uses: OutSystems/rd.github-reusable-workflows/.github/workflows/validate-pr-title.yaml@v2.0.4
+#    with:
+#      validate-semVer: false
+#
+# ======================================================================
+#
+name: Validate PR title
+on:
+  workflow_call:    
+    inputs:
+      validate-semVer:
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+    contents: read
+    pull-requests: read
+
+jobs:
+  check-title:
+    name: Check PR title
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: "Check PR title follows '${{ inputs.validate-semVer == true && '+semver: <minor|major|patch> ' || '' }}<ticket id> <description>'"
+        #uses: OutSystems/rd.github-reusable-workflows/.github/actions/validate-pr-title@v2.0.7
+        uses: ./.github/actions/validate-pr-title
+        with:
+          validate-semVer: ${{ inputs.validate-semVer }}        
