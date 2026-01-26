@@ -1,0 +1,35 @@
+#
+# This action is used to run the SonarCloud analysis and publish the results for the current repository.
+#
+# HOW TO USE:
+#
+# To call this reusable action, copy the code between === lines to workflow file,
+# uncomment and adjust "uses" as needed (use the latest tag available).
+# ======================================================================
+# on:
+#     
+#     (...)
+#     steps:
+#     (...)
+#       - name: Run SonarCloud analysis
+#         uses: OutSystems/rd.github-reusable-workflows/.github/actions/run-sonarcloud@vVersionHash
+#         with:
+#           sonarcloud-token: ${{ SONAR_TOKEN }}
+#
+# ======================================================================
+#
+name: Run sonarcloud analysis
+description: 'Executes SonarCloud analysis and publishes results for the current repository, including code quality and coverage metrics.'
+
+inputs:
+  sonarcloud-token:
+    description: 'SonarCloud token with access to the repository.'
+    required: true
+
+runs:
+    using: composite
+    steps:
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@aa494459d7c39c106cc77b166de8b4250a32bb97 #v5.1.0
+        env:
+          SONAR_TOKEN: ${{ inputs.sonarcloud-token }}
