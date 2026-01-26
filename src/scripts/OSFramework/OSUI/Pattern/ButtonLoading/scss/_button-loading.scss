@@ -59,9 +59,9 @@
 		.osui-btn-loading__spinner-animation {
 			display: none;
 			animation: loadingSpinner 850ms cubic-bezier(0.7, 1.05, 0.78, 0.78) infinite;
-			border: var(--border-size-m) solid currentColor;
+			border: var(--border-size-m) solid get-border-color('currentColor');
 			border-radius: var(--border-radius-circle);
-			border-top-color: transparent;
+			border-top-color: get-border-color('transparent');
 			height: 16px;
 			margin-right: var(--space-s);
 			width: 16px;

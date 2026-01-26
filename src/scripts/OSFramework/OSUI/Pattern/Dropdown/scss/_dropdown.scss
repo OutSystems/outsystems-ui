@@ -17,9 +17,9 @@
 
 			.vscomp {
 				&-toggle-button {
-					background-color: var(--color-neutral-2);
-					border: var(--border-size-s) solid var(--color-neutral-4);
-					color: var(--color-neutral-6);
+					background-color: get-background-color('neutral-2');
+					border: var(--border-size-s) solid get-border-color('neutral-4');
+					color: get-text-color('neutral-6');
 					pointer-events: none;
 				}
 
@@ -44,12 +44,12 @@
 			height: 24px;
 			margin-right: var(--space-s);
 			width: 24px;
-			background-color: var(--color-neutral-3);
+			background-color: get-background-color('neutral-3');
 			overflow: hidden;
 		}
 
 		&-icon {
-			color: var(--color-neutral-9);
+			color: get-text-color('neutral-9');
 			font-size: var(--font-size-h6);
 			margin-right: var(--space-s);
 		}
@@ -57,7 +57,7 @@
 
 	/// Error message
 	&-error-message {
-		color: var(--color-error);
+		color: get-text-color('error');
 		font-size: var(--font-size-xs);
 		margin-left: var(--space-none);
 		margin-top: 3px;

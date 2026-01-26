@@ -3,22 +3,22 @@
 
 /// default outline style
 @mixin a11y-default-outline($isInner: false) {
-  @if $isInner {
-    box-shadow: inset 0 0 0 var(--border-size-l) var(--color-focus-outer);
-  } @else {
-    box-shadow: 0 0 0 var(--border-size-l) var(--color-focus-outer);
-  }
+	@if $isInner {
+		box-shadow: inset 0 0 0 var(--border-size-l) get-background-color('focus-outer');
+	} @else {
+		box-shadow: 0 0 0 var(--border-size-l) get-background-color('focus-outer');
+	}
 }
 
 /// outline style for high contrast mode
 @mixin a11y-high-contrast-outline($isBorder: false, $size: var(--border-size-l), $borderType: 'all') {
 	@if $isBorder == false {
-		outline: $size solid var(--color-focus-outer);
+		outline: $size solid get-border-color('focus-outer');
 	} @else {
 		@if $borderType == 'all' {
-			border: $size solid var(--color-focus-outer);
+			border: $size solid get-border-color('focus-outer');
 		} @else {
-			border-#{$borderType}: $size solid var(--color-focus-outer);
+			border-#{$borderType}: $size solid get-border-color('focus-outer');
 		}
 	}
 }

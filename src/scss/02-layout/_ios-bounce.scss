@@ -35,7 +35,7 @@
 				}
 
 				.content {
-					background-color: var(--color-background-body);
+					background-color: get-app-settings-background-color('body', --color-background-body);
 					grid-area: content;
 					overflow-x: hidden;
 					overflow-y: auto;

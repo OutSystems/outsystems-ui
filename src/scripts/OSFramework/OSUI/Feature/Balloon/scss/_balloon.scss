@@ -13,7 +13,7 @@
 
 	box-shadow: var(--osui-balloon-shadow);
 	border-radius: var(--osui-balloon-shape);
-	background-color: var(--color-neutral-0);
+	background-color: get-background-color('neutral-0');
 	height: auto;
 	left: var(--osui-floating-position-x);
 	opacity: 0;

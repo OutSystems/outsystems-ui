@@ -65,7 +65,7 @@
 				&::-webkit-scrollbar-track,
 				&::-webkit-scrollbar-thumb,
 				&:hover::-webkit-scrollbar-track {
-					background-color: transparent;
+					background-color: get-background-color('transparent');
 				}
 
 				&:hover::-webkit-scrollbar-thumb {
@@ -91,7 +91,7 @@
 	&::-webkit-scrollbar-track,
 	&::-webkit-scrollbar-thumb,
 	&:hover::-webkit-scrollbar-track {
-		background-color: transparent;
+		background-color: get-background-color('transparent');
 	}
 
 	&:hover::-webkit-scrollbar-thumb {

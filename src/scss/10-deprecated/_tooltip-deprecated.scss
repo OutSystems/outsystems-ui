@@ -18,9 +18,9 @@
 	}
 
 	&-wrapper {
-		background-color: var(--color-neutral-9);
+		background-color: get-background-color('neutral-9');
 		border-radius: var(--border-radius-soft);
-		color: var(--color-neutral-0);
+		color: get-text-color('neutral-0');
 		min-width: 80px;
 		padding: var(--space-s) var(--space-base);
 		position: absolute;
@@ -44,8 +44,8 @@
 			}
 
 			&:after {
-				border: 8px solid transparent;
-				border-top: 8px solid var(--color-neutral-9);
+				border: 8px solid get-border-color('transparent');
+				border-top: 8px solid get-border-color('neutral-9');
 				bottom: -14px;
 				content: '';
 				height: 0;
@@ -60,8 +60,8 @@
 				right: calc(100% - var(--space-m));
 
 				&:after {
-					border: 8px solid transparent;
-					border-top: 8px solid var(--color-neutral-9);
+					border: 8px solid get-border-color('transparent');
+					border-top: 8px solid get-border-color('neutral-9');
 					bottom: -14px;
 					content: '';
 					height: 0;
@@ -76,8 +76,8 @@
 				left: calc(100% - var(--space-m));
 
 				&:after {
-					border: 8px solid transparent;
-					border-top: 8px solid var(--color-neutral-9);
+					border: 8px solid get-border-color('transparent');
+					border-top: 8px solid get-border-color('neutral-9');
 					bottom: -14px;
 					content: '';
 					height: 0;
@@ -94,8 +94,8 @@
 			transform: translateX(-50%);
 
 			&:after {
-				border: 8px solid transparent;
-				border-bottom: 8px solid var(--color-neutral-9);
+				border: 8px solid get-border-color('transparent');
+				border-bottom: 8px solid get-border-color('neutral-9');
 				content: '';
 				height: 0;
 				left: 50%;
@@ -110,8 +110,8 @@
 				top: calc(100% + var(--space-s));
 
 				&:after {
-					border: 8px solid transparent;
-					border-bottom: 8px solid var(--color-neutral-9);
+					border: 8px solid get-border-color('transparent');
+					border-bottom: 8px solid get-border-color('neutral-9');
 					content: '';
 					height: 0;
 					position: absolute;
@@ -126,8 +126,8 @@
 				top: calc(100% + var(--space-s));
 
 				&:after {
-					border: 8px solid transparent;
-					border-bottom: 8px solid var(--color-neutral-9);
+					border: 8px solid get-border-color('transparent');
+					border-bottom: 8px solid get-border-color('neutral-9');
 					content: '';
 					height: 0;
 					left: 7px;
@@ -144,8 +144,8 @@
 			transform: translateY(-50%);
 
 			&:after {
-				border: 8px solid transparent;
-				border-left: 8px solid var(--color-neutral-9);
+				border: 8px solid get-border-color('transparent');
+				border-left: 8px solid get-border-color('neutral-9');
 				content: '';
 				height: 0;
 				left: calc(100% - 1px);
@@ -162,8 +162,8 @@
 			transform: translateY(-50%);
 
 			&:after {
-				border: 8px solid transparent;
-				border-right: 8px solid var(--color-neutral-9);
+				border: 8px solid get-border-color('transparent');
+				border-right: 8px solid get-border-color('neutral-9');
 				content: '';
 				height: 0;
 				position: absolute;

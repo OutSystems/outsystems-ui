@@ -15,11 +15,11 @@
 			&-#{$color} {
 				@if ($type == '') {
 					& {
-						background-color: var(--color-#{$color});
+						background-color: get-background-color('#{$color}');
 					}
 				} @else {
 					&-#{$type} {
-						background-color: var(--color-#{$color}-#{$type});
+						background-color: get-background-color('#{$color}-#{$type}');
 					}
 				}
 			}
@@ -34,11 +34,11 @@
 			&-#{$color} {
 				@if ($type == '') {
 					& {
-						color: var(--color-#{$color});
+						color: get-text-color('#{$color}');
 					}
 				} @else {
 					&-#{$type} {
-						color: var(--color-#{$color}-#{$type});
+						color: get-text-color('#{$color}-#{$type}');
 					}
 				}
 			}

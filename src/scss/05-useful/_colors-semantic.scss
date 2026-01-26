@@ -12,7 +12,7 @@
 .background {
 	@each $type, $value in $osui-colors-semantic {
 		&-#{$type} {
-			background-color: var(--color-#{$type});
+			background-color: get-background-color('#{$type}');
 		}
 	}
 }
@@ -21,7 +21,7 @@
 .text {
 	@each $type, $value in $osui-colors-semantic {
 		&-#{$type} {
-			color: var(--color-#{$type});
+			color: get-text-color('#{$type}');
 		}
 	}
 }

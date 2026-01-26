@@ -14,13 +14,13 @@
 	@each $type, $value in $osui-colors-neutral {
 		&-neutral {
 			&-#{$type} {
-				background-color: var(--color-neutral-#{$type});
+				background-color: get-background-color('neutral-#{$type}');
 
 				&-lightest {
 					@if ($i < 5) {
-						background-color: var(--color-neutral-9);
+						background-color: get-background-color('neutral-9');
 					} @else {
-						background-color: var(--color-neutral-0);
+						background-color: get-background-color('neutral-0');
 					}
 				}
 			}
@@ -34,12 +34,12 @@
 	$i: 0;
 	@each $type, $value in $osui-colors-neutral {
 		&-neutral-#{$type} {
-			color: var(--color-neutral-#{$type});
+			color: get-text-color('neutral-#{$type}');
 
 			& {
 				@if ($i > 4) {
 					&-darker {
-						color: var(--color-neutral-#{$type});
+						color: get-text-color('neutral-#{$type}');
 					}
 				}
 			}

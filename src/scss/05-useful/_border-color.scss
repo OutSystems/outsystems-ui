@@ -9,22 +9,22 @@
 		@each $box-side-type, $box-side-value in $osui-box-sides {
 			// Border transparent
 			&-#{$box-side-type}-transparent {
-				border-color: transparent;
+				border-color: get-border-color('transparent');
 			}
 
 			// Border Brand Colors
 			&-#{$box-side-type}-primary {
-				border-color: var(--color-primary);
+				border-color: get-border-color('primary');
 			}
 
 			&-#{$box-side-type}-secondary {
-				border-color: var(--color-secondary);
+				border-color: get-border-color('secondary');
 			}
 
 			// Border Neutral Colors
 			@each $neutral-type, $neutral-value in $osui-colors-neutral {
 				&-#{$box-side-type}-neutral#{$neutral-type} {
-					border-#{$box-side-type}-color: var(--color-neutral-#{$neutral-type});
+					border-#{$box-side-type}-color: get-border-color('neutral-#{$neutral-type}');
 				}
 			}
 
@@ -33,11 +33,11 @@
 				@each $variation-type, $variation-value in $variations {
 					@if ($variation-type == '') {
 						&-#{$box-side-type}-#{$color-type} {
-							border-#{$box-side-type}-color: var(--color-#{$color-type});
+							border-#{$box-side-type}-color: get-border-color('color-#{$color-type}');
 						}
 					} @else {
 						&-#{$box-side-type}-#{$color-type}-#{$variation-type} {
-							border-#{$box-side-type}-color: var(--color-#{$color-type}-#{$variation-type});
+							border-#{$box-side-type}-color: get-border-color('color-#{$color-type}-#{$variation-type}');
 						}
 					}
 				}

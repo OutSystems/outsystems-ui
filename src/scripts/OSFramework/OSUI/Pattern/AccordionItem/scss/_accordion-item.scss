@@ -11,8 +11,8 @@
 ///
 .osui-accordion-item {
 	--accordion-active-border-size: 2px;
-	background-color: var(--color-neutral-0);
-	border: var(--border-size-s) solid var(--color-neutral-4);
+	background-color: get-background-color('neutral-0');
+	border: var(--border-size-s) solid get-border-color('neutral-4');
 	border-bottom-width: var(--border-size-s);
 	border-radius: var(--border-radius-soft);
 	position: relative;
@@ -32,8 +32,8 @@
 	}
 	// Active border-top
 	&:after {
-		background-color: transparent;
-		border-color: transparent;
+		background-color: get-background-color('transparent');
+		border-color: get-border-color('transparent');
 		border-style: solid;
 		border-top-left-radius: var(--border-radius-soft);
 		border-top-right-radius: var(--border-radius-soft);
@@ -67,28 +67,28 @@
 
 			&.osui-accordion-item--is-disabled {
 				&::after {
-					border-color: var(--color-neutral-6);
+					border-color: get-border-color('neutral-6');
 				}
 			}
 
 			&::after {
-				border-color: var(--color-primary);
+				border-color: get-border-color('primary');
 				opacity: 1;
 				transition: opacity 300ms ease-in;
 			}
 		}
 
 		&-disabled {
-			color: var(--color-neutral-7);
+			color: get-text-color('neutral-7');
 			pointer-events: none;
 
 			.osui-accordion-item__icon {
-				color: var(--color-neutral-6);
+				color: get-text-color('neutral-6');
 
 				&--plus-minus {
 					&:after,
 					&:before {
-						background-color: var(--color-neutral-6);
+						background-color: get-background-color('neutral-6');
 					}
 				}
 			}
@@ -122,7 +122,7 @@
 
 	&__icon {
 		align-items: center;
-		color: var(--color-primary);
+		color: get-text-color('primary');
 		display: flex;
 		font-family: FontAwesome;
 		font-size: var(--font-size-h4);
@@ -140,7 +140,7 @@
 
 		&--plus-minus {
 			&:after {
-				background-color: var(--color-primary);
+				background-color: get-background-color('primary');
 				content: ' ';
 				height: 100%;
 				transition: transform 300ms ease-in-out;
@@ -148,7 +148,7 @@
 			}
 
 			&:before {
-				background-color: var(--color-primary);
+				background-color: get-background-color('primary');
 				content: ' ';
 				height: 2px;
 				position: absolute;
@@ -256,7 +256,7 @@
 			}
 
 			&:focus-visible {
-				outline: var(--border-size-l) solid var(--color-focus-outer);
+				outline: var(--border-size-l) solid get-border-color('focus-outer');
 			}
 		}
 	}

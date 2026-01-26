@@ -9,16 +9,16 @@
 	&.osui-dropdown--not-valid {
 		// Virtual Select provider
 		.vscomp-toggle-button {
-			border-color: var(--color-error);
+			border-color: get-border-color('error');
 		}
 	}
 
 	// Service Studio Preview
 	&-ss-preview {
-		-servicestudio-background-color: var(--color-neutral-0);
+		-servicestudio-background-color: get-background-color('neutral-0');
 		-servicestudio-border-radius: var(--border-radius-soft);
-		-servicestudio-border: var(--border-size-s) solid var(--color-neutral-5);
-		-servicestudio-color: var(--color-neutral-3);
+		-servicestudio-border: var(--border-size-s) solid get-border-color('neutral-5');
+		-servicestudio-color: get-text-color('neutral-3');
 		-servicestudio-display: inline-block;
 		-servicestudio-height: 40px;
 		-servicestudio-min-width: 180px;
@@ -28,7 +28,7 @@
 		-servicestudio-width: 100%;
 
 		& > .icon {
-			-servicestudio-color: var(--color-neutral-7);
+			-servicestudio-color: get-text-color('neutral-7');
 			-servicestudio-font-size: var(--font-size-h4);
 			-servicestudio-position: absolute;
 			-servicestudio-right: 16px;
@@ -36,9 +36,9 @@
 		}
 
 		& > div {
-			-servicestudio-background-color: var(--color-neutral-3);
+			-servicestudio-background-color: get-background-color('neutral-3');
 			-servicestudio-border-radius: 30px;
-			-servicestudio-color: var(--color-neutral-7);
+			-servicestudio-color: get-text-color('neutral-7');
 			-servicestudio-display: inline-block;
 			-servicestudio-font-size: var(--font-size-s);
 			-servicestudio-font-weight: var(--font-semi-bold);
@@ -53,9 +53,9 @@
 			}
 
 			& > .icon {
-				-servicestudio-background-color: var(--color-neutral-7);
+				-servicestudio-background-color: get-background-color('neutral-7');
 				-servicestudio-border-radius: 100%;
-				-servicestudio-color: var(--color-neutral-0);
+				-servicestudio-color: get-text-color('neutral-0');
 				-servicestudio-display: block;
 				-servicestudio-font-size: var(--font-size-s);
 				-servicestudio-height: 15px;

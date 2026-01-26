@@ -6,10 +6,10 @@
 
 	.choices__item {
 		align-items: center;
-		background-color: var(--color-neutral-3);
-		border: var(--border-size-s) solid var(--color-neutral-3);
+		background-color: get-background-color('neutral-3');
+		border: var(--border-size-s) solid get-border-color('neutral-3');
 		border-radius: var(--border-radius-soft);
-		color: var(--color-neutral-9);
+		color: get-text-color('neutral-9');
 		display: inline-table;
 		font-size: var(--font-size-xs);
 		font-weight: var(--font-semi-bold);
@@ -21,9 +21,9 @@
 		word-break: break-all;
 
 		&.is-highlighted {
-			background-color: var(--color-primary);
-			border: var(--border-size-s) solid var(--color-primary);
-			color: var(--color-neutral-0);
+			background-color: get-background-color('primary');
+			border: var(--border-size-s) solid get-border-color('primary');
+			color: get-text-color('neutral-0');
 		}
 	}
 }
@@ -32,20 +32,20 @@
 	&.is-open {
 		&.is-focused {
 			.choices__inner {
-				border: var(--border-size-s) solid var(--color-primary);
+				border: var(--border-size-s) solid get-border-color('primary');
 				border-radius: var(--border-radius-soft);
 			}
 		}
 
 		.choices__inner {
-			border: var(--border-size-s) solid var(--color-neutral-5);
+			border: var(--border-size-s) solid get-border-color('neutral-5');
 		}
 	}
 
 	&.is-disabled {
 		.choices__item {
 			&.choices__item--selectable {
-				color: var(--color-neutral-7);
+				color: get-text-color('neutral-7');
 			}
 		}
 	}
@@ -64,7 +64,7 @@
 			width: 8px;
 
 			&::after {
-				color: var(--color-neutral-7);
+				color: get-text-color('neutral-7');
 				content: '\f00d';
 				font: normal normal normal 14px/1 FontAwesome;
 				font-family: 'FontAwesome';
@@ -91,7 +91,7 @@
 		&__item {
 			&.is-highlighted {
 				.choices__button::after {
-					color: var(--color-neutral-0);
+					color: get-text-color('neutral-0');
 				}
 			}
 
@@ -101,7 +101,7 @@
 		}
 
 		&__input {
-			background-color: transparent;
+			background-color: get-background-color('transparent');
 		}
 	}
 
@@ -133,8 +133,8 @@
 .is-disabled {
 	.choices__list--multiple {
 		.choices__item {
-			background-color: var(--color-neutral-6);
-			border: var(--border-size-s) solid var(--color-neutral-7);
+			background-color: get-background-color('neutral-6');
+			border: var(--border-size-s) solid get-border-color('neutral-7');
 		}
 	}
 }
@@ -173,8 +173,8 @@
 		&.is-open {
 			&.is-focused {
 				.choices__inner {
-					border-color: var(--color-focus-inner);
-					box-shadow: 0px 0px 0px 3px var(--color-focus-outer);
+					border-color: get-border-color('focus-inner');
+					box-shadow: 0px 0px 0px 3px get-background-color('focus-outer');
 				}
 			}
 		}

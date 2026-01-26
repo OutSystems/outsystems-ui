@@ -23,7 +23,7 @@
 	}
 
 	&-description {
-		color: var(--color-neutral-9);
+		color: get-text-color('neutral-9');
 		padding: var(--space-none) var(--space-base);
 	}
 
@@ -32,7 +32,7 @@
 	}
 
 	&-icon {
-		color: var(--color-neutral-6);
+		color: get-text-color('neutral-6');
 		font-size: 70px;
 	}
 }

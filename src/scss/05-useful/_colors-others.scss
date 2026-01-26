@@ -8,7 +8,7 @@
 	&-transparent {
 		&,
 		.ie11 & {
-			background-color: transparent;
+			background-color: get-background-color('transparent');
 		}
 	}
 }

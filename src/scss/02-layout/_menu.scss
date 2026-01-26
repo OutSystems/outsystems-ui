@@ -9,14 +9,14 @@
 
 	// Service Studio Preview
 	& {
-		-servicestudio-background-color: var(--header-color);
+		-servicestudio-background-color: get-app-settings-background-color('header', --header-color);
 		-servicestudio-height: auto !important;
 	}
 }
 
 ///
 .app-menu-overlay {
-	background-color: var(--overlay-background);
+	background-color: get-background-color('overlay');
 	height: 100vh;
 	left: 0;
 	opacity: 0;
@@ -80,7 +80,7 @@
 	.aside-navigation {
 		// Service Studio Preview
 		& {
-			-servicestudio-background-color: var(--color-neutral-0);
+			-servicestudio-background-color: get-background-color('neutral-0');
 			-servicestudio-height: 100%;
 			-servicestudio-position: fixed;
 			-servicestudio-width: var(--side-menu-size);
@@ -145,7 +145,7 @@
 	}
 
 	.app-menu-content {
-		background-color: var(--color-neutral-0);
+		background-color: get-background-color('neutral-0');
 		flex-direction: column;
 		height: 100%;
 		left: calc(-1 * var(--side-menu-size));

@@ -4,8 +4,8 @@
 /// Patterns - Utilities - Provider Login Button
 
 .btn.btn-provider-login {
-	background: var(--color-neutral-0);
-	border-color: var(--color-neutral-6);
+	background: get-background-color('neutral-0');
+	border-color: get-border-color('neutral-6');
 	border-radius: 0;
 	&-logo {
 		&-only {
@@ -44,7 +44,7 @@
 			width: 20px;
 		}
 		&-text {
-			color: var(--color-neutral-7);
+			color: get-text-color('neutral-7');
 			margin-left: 10px;
 			white-space: nowrap;
 		}

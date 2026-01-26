@@ -23,7 +23,7 @@
 		position: relative;
 
 		&-line {
-			background-color: var(--color-neutral-5);
+			background-color: get-background-color('neutral-5');
 			flex: 1;
 			margin: var(--space-s) var(--space-none) var(--space-s);
 			width: 1px;
@@ -32,7 +32,7 @@
 		&-container {
 			align-items: center;
 			border-radius: var(--border-radius-circle);
-			color: var(--color-neutral-0);
+			color: get-text-color('neutral-0');
 			display: -webkit-box;
 			display: -ms-flexbox;
 			display: flex;
@@ -53,7 +53,7 @@
 
 	&-right,
 	&-content-inner {
-		color: var(--color-neutral-8);
+		color: get-text-color('neutral-8');
 	}
 }
 

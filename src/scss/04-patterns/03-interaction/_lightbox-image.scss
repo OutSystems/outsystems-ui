@@ -27,7 +27,7 @@
 		// Service Studio Preview
 		& {
 			-servicestudio-background-color: rgba(0, 0, 0, 0.3);
-			-servicestudio-color: #fff;
+			-servicestudio-color: get-text-color('neutral-0');
 			-servicestudio-content: 'Image';
 			-servicestudio-font-size: 9px;
 			-servicestudio-left: 0;
@@ -57,7 +57,7 @@
 			// Service Studio Preview
 			& {
 				-servicestudio-background-color: rgba(0, 0, 0, 0.3);
-				-servicestudio-color: #fff;
+				-servicestudio-color: get-text-color('neutral-0');
 				-servicestudio-content: 'Thumbnail';
 				-servicestudio-font-size: 9px;
 				-servicestudio-left: 0;
@@ -124,9 +124,9 @@
 ///
 .has-accessible-features {
 	.lightbox-item a:focus {
-		background-color: transparent;
+		background-color: get-background-color('transparent');
 		box-shadow: none;
-		outline: 3px solid var(--color-focus-outer);
+		outline: 3px solid get-border-color('focus-outer');
 	}
 }
 

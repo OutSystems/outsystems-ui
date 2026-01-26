@@ -6,9 +6,9 @@
 ///
 .section {
 	&-title {
-		background-color: transparent;
-		border-bottom: var(--border-size-s) solid var(--color-neutral-4);
-		color: var(--color-neutral-9);
+		background-color: get-background-color('transparent');
+		border-bottom: var(--border-size-s) solid get-border-color('neutral-4');
+		color: get-text-color('neutral-9');
 		font-size: var(--font-size-h2);
 		font-weight: var(--font-semi-bold);
 		padding: var(--space-none) var(--space-none) var(--space-s) var(--space-none);
@@ -32,7 +32,7 @@
 		}
 
 		.section-title {
-			background-color: var(--color-background-body);
+			background-color: get-app-settings-background-color('body', --color-background-body);
 		}
 	}
 }

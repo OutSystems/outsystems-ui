@@ -13,19 +13,19 @@
 
 	&:before,
 	&:after {
-		border-left: 4px solid transparent;
-		border-right: 4px solid transparent;
+		border-left: 4px solid get-border-color('transparent');
+		border-right: 4px solid get-border-color('transparent');
 		content: '';
 		left: 0;
 		position: absolute;
 	}
 
 	&:before {
-		border-bottom: 4px solid var(--color-neutral-8);
+		border-bottom: 4px solid get-border-color('neutral-8');
 	}
 
 	&:after {
-		border-top: 4px solid var(--color-neutral-8);
+		border-top: 4px solid get-border-color('neutral-8');
 		bottom: 0;
 	}
 }
@@ -35,11 +35,11 @@
 	th.sorted {
 		.sortable-icon {
 			&:before {
-				border-bottom: 4px solid var(--color-primary);
+				border-bottom: 4px solid get-border-color('primary');
 			}
 
 			&:after {
-				border-top: 4px solid var(--color-primary);
+				border-top: 4px solid get-border-color('primary');
 			}
 		}
 	}
@@ -52,11 +52,11 @@
 		th.sortable:hover {
 			.sortable-icon {
 				&:before {
-					border-bottom: 4px solid var(--color-primary);
+					border-bottom: 4px solid get-border-color('primary');
 				}
 
 				&:after {
-					border-top: 4px solid var(--color-primary);
+					border-top: 4px solid get-border-color('primary');
 				}
 			}
 		}

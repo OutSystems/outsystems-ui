@@ -99,10 +99,10 @@
 
 	&-actions-item-button {
 		align-items: center;
-		background-color: var(--color-neutral-0);
+		background-color: get-background-color('neutral-0');
 		border-radius: var(--border-radius-rounded);
 		box-shadow: var(--shadow-s);
-		color: var(--color-primary);
+		color: get-text-color('primary');
 		cursor: pointer;
 		display: flex;
 		font-size: var(--font-size-base);
@@ -120,17 +120,17 @@
 		}
 
 		&:hover {
-			background-color: var(--color-primary);
-			color: var(--color-neutral-0);
+			background-color: get-background-color('primary');
+			color: get-text-color('neutral-0');
 		}
 	}
 
 	&-button {
 		align-items: center;
-		background-color: var(--color-primary);
+		background-color: get-background-color('primary');
 		border-radius: var(--border-radius-rounded);
 		box-shadow: var(--shadow-xl);
-		color: var(--color-neutral-0);
+		color: get-text-color('neutral-0');
 		cursor: pointer;
 		display: flex;
 		font-size: var(--font-size-h4);
@@ -148,7 +148,7 @@
 	}
 
 	&-overlay {
-		background-color: var(--overlay-background);
+		background-color: get-background-color('overlay');
 		cursor: pointer;
 		height: 100vh;
 		opacity: 0;
@@ -231,13 +231,13 @@
 ///
 .has-accessible-features {
 	.floating-button:focus {
-		box-shadow: 0 0 0 3px var(--color-focus-outer);
+		box-shadow: 0 0 0 3px get-background-color('focus-outer');
 	}
 
 	.floating-actions-wrapper {
 		&.is--open {
 			.floating-button:focus {
-				box-shadow: 0 0 0 3px var(--color-focus-outer);
+				box-shadow: 0 0 0 3px get-background-color('focus-outer');
 			}
 		}
 	}

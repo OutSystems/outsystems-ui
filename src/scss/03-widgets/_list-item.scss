@@ -5,7 +5,7 @@
 
 ///
 .list-item {
-	border-bottom: var(--border-size-s) solid var(--color-neutral-4);
+	border-bottom: var(--border-size-s) solid get-border-color('neutral-4');
 	overflow: hidden;
 	padding: var(--space-m);
 	position: relative;
@@ -17,7 +17,7 @@
 	&.list-item-no-click-effect {
 		.scale-animation {
 			// !important should be in use in order to grant the expected behaviour when this class is assigned!
-			background: transparent !important;
+			background: get-background-color('transparent') !important;
 			opacity: 0 !important;
 		}
 	}
@@ -41,7 +41,7 @@
 ///
 .list {
 	.list-item {
-		background-color: var(--color-neutral-0);
+		background-color: get-background-color('neutral-0');
 	}
 }
 
@@ -58,7 +58,7 @@
 	.list {
 		.list-item:hover {
 			&:not(.list-item-no-hover):not(.list-item-selected) {
-				background-color: var(--color-neutral-2);
+				background-color: get-background-color('neutral-2');
 			}
 		}
 	}
@@ -69,19 +69,19 @@
 .tablet.landscape {
 	.list {
 		.list-item-selected {
-			background: var(--color-primary) var(--color-primary-lightest);
+			background: get-background-color('primary') get-background-color('primary-lightest');
 
 			.list-item-content {
 				&-title {
-					color: var(--color-neutral-10);
+					color: get-text-color('neutral-10');
 				}
 
 				&-text {
-					color: var(--color-neutral-8);
+					color: get-text-color('neutral-8');
 				}
 
 				&-right .icon {
-					color: var(--color-primary);
+					color: get-text-color('primary');
 				}
 			}
 		}

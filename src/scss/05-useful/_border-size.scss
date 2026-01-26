@@ -12,7 +12,7 @@
 				@if $type == 'none' {
 					border-width: var(--border-size-#{$type});
 				} @else {
-					border: var(--border-size-#{$type}) solid currentColor;
+					border: var(--border-size-#{$type}) solid get-border-color('currentColor');
 				}
 			}
 		}
@@ -25,7 +25,7 @@
 					// Generated - Eg: .border-top-s
 					&-#{$osui-box-side}-#{$type}:not(.columns),
 					&-#{$osui-box-side}-#{$type}.columns > .columns-item:not(:last-child) {
-						border-#{$osui-box-side}: var(--border-size-#{$type}) solid currentColor;
+						border-#{$osui-box-side}: var(--border-size-#{$type}) solid get-border-color('currentColor');
 					}
 				}
 			}

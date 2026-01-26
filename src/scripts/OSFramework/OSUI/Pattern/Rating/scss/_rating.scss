@@ -50,18 +50,18 @@
 			.rating-item {
 				&-filled,
 				&-half {
-					color: var(--color-neutral-6);
+					color: get-text-color('neutral-6');
 
 					.icon {
-						color: var(--color-neutral-6);
+						color: get-text-color('neutral-6');
 					}
 				}
 
 				&-empty {
-					color: var(--color-neutral-6);
+					color: get-text-color('neutral-6');
 
 					.icon {
-						color: var(--color-neutral-4);
+						color: get-text-color('neutral-4');
 					}
 				}
 			}
@@ -136,8 +136,8 @@
 	input {
 		&:first-of-type {
 			+ .rating-item {
-				background: transparent;
-				box-shadow: 0 0 0 3px var(--color-focus-outer);
+				background: get-background-color('transparent');
+				box-shadow: 0 0 0 3px get-background-color('focus-outer');
 				height: 100%;
 				left: 0;
 				opacity: 0;
@@ -279,7 +279,7 @@
 		&:not(.is-half) input:focus + .rating-item .rating-item-filled {
 			&,
 			* {
-				box-shadow: 0 0 0 3px var(--color-focus-outer);
+				box-shadow: 0 0 0 3px get-background-color('focus-outer');
 			}
 		}
 	}
@@ -288,18 +288,18 @@
 		.rating-item {
 			&-filled,
 			&-half {
-				color: var(--color-neutral-7);
+				color: get-text-color('neutral-7');
 
 				.icon {
-					color: var(--color-neutral-7);
+					color: get-text-color('neutral-7');
 				}
 			}
 
 			&-empty {
-				color: var(--color-neutral-7);
+				color: get-text-color('neutral-7');
 
 				.icon {
-					color: var(--color-neutral-5);
+					color: get-text-color('neutral-5');
 				}
 			}
 		}

@@ -13,7 +13,7 @@
 
 	.splide {
 		&__arrow {
-			background-color: var(--color-neutral-0);
+			background-color: get-background-color('neutral-0');
 			box-shadow: var(--shadow-xs);
 			height: 40px;
 			opacity: 1;
@@ -32,7 +32,7 @@
 				width: 14px;
 
 				path {
-					fill: var(--color-neutral-7);
+					fill: get-text-color('neutral-7');
 				}
 			}
 
@@ -48,7 +48,7 @@
 
 			&__page {
 				&.is-active {
-					background-color: var(--color-primary);
+					background-color: get-background-color('primary');
 					z-index: var(--layer-local-tier-1);
 				}
 			}
@@ -133,7 +133,7 @@
 			-servicestudio-left: 0;
 			-servicestudio-width: 100%;
 			-servicestudio-height: 100%;
-			-servicestudio-background-color: var(--color-neutral-0);
+			-servicestudio-background-color: get-background-color('neutral-0');
 			-servicestudio-background-image: $carousel_helper_img_base64;
 			-servicestudio-background-repeat: no-repeat;
 			-servicestudio-background-position: center;
