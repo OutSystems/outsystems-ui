@@ -213,10 +213,9 @@ namespace OSFramework.OSUI.Feature.Balloon {
 				if (Helper.DeviceInfo.IsMobileDevice === false) {
 					// Will handle the tabindex value of the elements inside pattern
 					Helper.A11Y.SetElementsTabIndex(this.isOpen, this._focusTrapInstance.focusableElements);
-				} else {
-					Helper.A11Y.RoleDialog(this.featureElem);
-					Helper.A11Y.AriaModalTrue(this.featureElem);
-				}
+				} 
+
+				Helper.A11Y.RoleDialog(this.featureElem);
 
 				Helper.Dom.Attribute.Set(
 					this.featureElem,
