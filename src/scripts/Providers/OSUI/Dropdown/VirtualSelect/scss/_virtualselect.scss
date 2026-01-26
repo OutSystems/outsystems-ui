@@ -392,7 +392,7 @@
 
 // Wrapper options container
 .vscomp-dropbox {
-	--border-color: #{$get-border-color('neutral-5')};
+	--border-color: #{get-border-color('neutral-5')};
 	--border-size: var(--border-size-s);
 
 	background-color: get-background-color('neutral-0');
