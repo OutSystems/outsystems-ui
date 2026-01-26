@@ -12,6 +12,8 @@ namespace OSFramework.OSUI.Event.DOMEvents.Observers {
 			switch (observerType) {
 				case Observers.ObserverEvent.RTL:
 					return new MutationObservers.RTL.RTLObserver();
+				case Observers.ObserverEvent.Language:
+					return new MutationObservers.Lang.LangObserver();
 				default:
 					throw new Error(`The observer ${observerType} is not supported.`);
 			}
