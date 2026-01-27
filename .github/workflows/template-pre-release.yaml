@@ -270,8 +270,12 @@ jobs:
         runs-on: ubuntu-latest
         permissions:
             id-token: write
-            contents: read
+            contents: write
+            pull-requests: write
 
+        # This job creates a branch from dev, updates the version, commits the changes,
+        # and creates a PR into dev. This is required because the bot does not have
+        # permissions to commit directly to the dev branch.
         if: ${{ inputs.new-version && inputs.new-dev-release }}
         steps:
             - name: 📂 Checkout repository
@@ -298,6 +302,23 @@ jobs:
                   ref: dev
                   token: ${{ steps.get-github-token.outputs.az-keyvault-value }}
 
+            # Create a new branch from dev for the version update.
+            # If the branch already exists (e.g., workflow was run twice), checkout the existing branch
+            # instead of creating a duplicate. This makes the workflow idempotent.
+            - name: 🔄 Create branch chore/update-dev-version-${{ inputs.new-dev-release }}
+              run: |
+                  if git ls-remote --exit-code --heads origin chore/update-dev-version-${{ inputs.new-dev-release }}; then
+                      echo "Branch chore/update-dev-version-${{ inputs.new-dev-release }} already exists. Checking out..."
+                      git fetch origin chore/update-dev-version-${{ inputs.new-dev-release }}
+                      git checkout chore/update-dev-version-${{ inputs.new-dev-release }}
+                  else
+                      echo "Creating new branch chore/update-dev-version-${{ inputs.new-dev-release }}"
+                      git checkout -b chore/update-dev-version-${{ inputs.new-dev-release }}
+                      git push -u origin chore/update-dev-version-${{ inputs.new-dev-release }}
+                  fi
+              env:
+                  GITHUB_TOKEN: ${{ steps.get-github-token.outputs.az-keyvault-value }}
+
             - name: 📦 Install project dependencies
               run: npm install
 
@@ -320,13 +341,33 @@ jobs:
               with:
                   key-name: o11odc-github-gpg-passphrase-prd
 
-            - name: 🔏 Sign and commit version increment to branch dev
+            # Commit the version changes to the branch with GPG signing.
+            # The signed-commit action will stage, commit, and push the changes.
+            - name: 🔏 Sign and commit version increment to branch chore/update-dev-version-${{ inputs.new-dev-release }}
               #uses: OutSystems/rd.github-reusable-workflows/.github/actions/signed-commit@9d497d1c5bc6e355aa8f4663539e6b75c212f6b4 #v2.0.7
               uses: ./.github/actions/signed-commit
               with:
-                  commit-branch: dev
+                  commit-branch: chore/update-dev-version-${{ inputs.new-dev-release }}
                   commit-message: 'Updated into v${{ inputs.new-dev-release }} [skip ci]'
                   commit-new-files: true
                   gpg-priv-key: ${{ secrets.GPG_PRIVATE_KEY }}
                   # gpg-priv-key: ${{ steps.GetGPGKey.outputs.az-keyvault-value }}
                   gpg-pass-phrase: ${{ steps.GetGPGPassphrase.outputs.az-keyvault-value  }}
+
+            # Create a pull request from the chore/update-dev-version-${{ inputs.new-dev-release }} branch into dev.
+            # Since the commit is already pushed to the remote branch, we use GitHub CLI to create a PR.
+            - name: 🔀 Create pull request
+              run: |
+                  gh pr create \
+                    --base dev \
+                    --draft \
+                    --head chore/update-dev-version-${{ inputs.new-dev-release }} \
+                    --title "Updated into v${{ inputs.new-dev-release }} [skip ci]" \
+                    --body "$(cat <<EOF
+                  This PR updates the dev version into v${{ inputs.new-dev-release }}.
+
+                  This PR was automatically created by the Pre-Release workflow.
+                  EOF
+                  )"
+              env:
+                  GH_TOKEN: ${{ steps.get-github-token.outputs.az-keyvault-value }}
