@@ -9,7 +9,7 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 	 */
 	export class FlatpickrMonthConfig extends OSFramework.OSUI.Patterns.MonthPicker.AbstractMonthPickerConfig {
 		// Store the language that will be assigned as a locale to the MonthPicker
-		private _lang: string;
+		private _dynamicLang: string;
 		// Store the Provider Options
 		private _providerOptions: FlatpickrOptions;
 		// Store configs set using extensibility
@@ -30,9 +30,6 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 
 		constructor(config: JSON) {
 			super(config);
-
-			// Set the lang based on the language that has been defined already
-			this._lang = OSFramework.OSUI.Helper.Language.ShortLang;
 		}
 
 		// Method used to manage the AM/PM time when it's on use
@@ -47,9 +44,9 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 			let _locale: FlatpickrLocale;
 			try {
 				// Set the locale in order to define the calendar language
-				_locale = window.flatpickr.l10ns[this._lang];
+				_locale = window.flatpickr.l10ns[this.Lang];
 			} catch (error) {
-				throw new Error(`${Flatpickr.ErrorCodes.FailSetLocale}: Locale '${this._lang}' not found!`);
+				throw new Error(`${Flatpickr.ErrorCodes.FailSetLocale}: Locale '${this.Lang}' not found!`);
 			}
 
 			return _locale;
@@ -180,7 +177,7 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 		 * @memberof Providers.OSUI.MonthPicker.Flatpickr.FlatpickrMonthConfig
 		 */
 		public get Lang(): string {
-			return this._lang;
+			return this._dynamicLang !== undefined ? this._dynamicLang : OSFramework.OSUI.Helper.Language.ShortLang;
 		}
 
 		/**
@@ -190,7 +187,7 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 		 */
 		public set Lang(value: string) {
 			// substring is needed to avoid passing values like "en-EN" since we must use only "en"
-			this._lang = value.substring(0, 2);
+			this._dynamicLang = value.substring(0, 2);
 		}
 	}
 }
