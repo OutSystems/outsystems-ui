@@ -42,13 +42,13 @@ permissions:
 
 jobs:
   check-title:
-    name: Check PR title
+    name: 🔎 Check PR title
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: 📂 Checkout repository
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
-      - name: "Check PR title follows '${{ inputs.validate-semVer == true && '+semver: <minor|major|patch> ' || '' }}<ticket id> <description>'"
+      - name: "🔎 Check PR title follows '${{ inputs.validate-semVer == true && '+semver: <minor|major|patch> ' || '' }}<ticket id> <description>'"
         #uses: OutSystems/rd.github-reusable-workflows/.github/actions/validate-pr-title@v2.0.7
         uses: ./.github/actions/validate-pr-title
         with:

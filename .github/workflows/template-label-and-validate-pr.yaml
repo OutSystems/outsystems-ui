@@ -50,10 +50,11 @@ on:
 
 jobs:
   inner-sourcing:
+    name: 🔎 Check if pull request is inner sourcing
     runs-on: ubuntu-latest
     if: github.actor != 'dependabot[bot]'
     steps:
-      - name: Checkout repository
+      - name: 📂 Checkout repository
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
           
       #- name: Run pr-inner-sourcing-label action
@@ -62,9 +63,9 @@ jobs:
       #    github-token-for-labelling: ${{ secrets.GITHUB_TOKEN }}
       #    github-token-for-team-membership: ${{ secrets.INNERSOURCING_PR_DATA_GITHUB_TOKEN }}
       #    codeowners-path: ./CODEOWNERS
-      - name: Check PR Title
+      - name: 🔎 Check PR Title
         #uses: OutSystems/rd.github-reusable-workflows/.github/actions/validate-pr-title@v2.0.7
         uses: ./.github/actions/validate-pr-title
-      - name: Validate PR labels
+      - name: 🔎 Validate PR labels
         #uses: OutSystems/rd.github-reusable-workflows/.github/actions/validate-pr-labels@v2.0.7
         uses: ./.github/actions/validate-pr-labels

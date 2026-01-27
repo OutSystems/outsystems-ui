@@ -72,12 +72,12 @@ jobs:
             id-token: write
             contents: read
         steps: 
-            - name: Checkout main branch
+            - name: 📂 Checkout main branch
               uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
               with:
                   ref: ${{ inputs.github-ref }}
 
-            - name: Azure login
+            - name: 🔐 Azure login
               #uses: OutSystems/rd.github-reusable-workflows/.github/actions/az-login@9d497d1c5bc6e355aa8f4663539e6b75c212f6b4 #v2.0.7
               uses: ./.github/actions/az-login
               with:
@@ -85,14 +85,14 @@ jobs:
                   tenant-id: ${{ secrets.OSUI_AZURE_TENANT_ID }}
                   subscription-id: ${{ secrets.OSUI_AZURE_SUBSCRIPTION_ID }}
 
-            - name: Get Azure DevOps token
+            - name: 🔑 Get Azure DevOps token
               id: get-devOps-token
               #uses: OutSystems/rd.github-reusable-workflows/.github/actions/az-keyvault-get@9d497d1c5bc6e355aa8f4663539e6b75c212f6b4 #v2.0.7
               uses: ./.github/actions/az-keyvault-get
               with:
                   key-name: o11odc-github-ado-token-prd
 
-            - name: Get SonarCloud token
+            - name: 🔑 Get SonarCloud token
               id: get-sonarcloud-token
               if: ${{ inputs.run-sonarcloud == true }}
               #uses: OutSystems/rd.github-reusable-workflows/.github/actions/az-keyvault-get@9d497d1c5bc6e355aa8f4663539e6b75c212f6b4 #v2.0.7
@@ -104,17 +104,17 @@ jobs:
               shell: bash
               run: npx @outsystems/assistant login --token ${{ steps.get-devOps-token.outputs.az-keyvault-value }}
 
-            - name: Install dependencies
+            - name: 📦 Install dependencies
               run: npm install
 
-            - name: Run build
+            - name: 🏗️ Run build
               run: npm run build
 
-            - name: Run Vitest with Code Coverage
+            - name: 🧪 Run Vitest with Code Coverage
               if: ${{ inputs.run-vitest == true }}
               run: npm run test:coverage
 
-            - name: Run sonarcloud analysis
+            - name: 📊 Run sonarcloud analysis
               #uses: OutSystems/rd.github-reusable-workflows/.github/actions/run-sonarcloud@3df86e14f6ad0021256077f91c43eca3f73d3b57 #v2.0.6
               uses: ./.github/actions/run-sonarcloud
               if: ${{ inputs.run-sonarcloud == true }}

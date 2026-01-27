@@ -32,12 +32,13 @@ permissions:
 
 jobs:
   check-label:
+    name: 🔎 Check PR labels
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: 📂 Checkout repository
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
           
-      - name: Check PR labels
+      - name: 🔎 Check PR labels
         #uses: OutSystems/rd.github-reusable-workflows/.github/actions/validate-pr-labels@v2.0.7
         uses: ./.github/actions/validate-pr-labels
         

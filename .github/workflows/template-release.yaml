@@ -53,6 +53,7 @@ on:
 
 jobs:
     run-lint-on-rc:
+        name: 📦 Run lint on rc branch
         runs-on: ubuntu-latest
         permissions:
             contents: read
@@ -71,6 +72,7 @@ jobs:
               run: npm run build
 
     merge-rc-into-main:
+        name: 🔄 Merge rc branch into main
         needs: run-lint-on-rc
         runs-on: ubuntu-latest
         permissions:
@@ -79,10 +81,10 @@ jobs:
 
         if: ${{ inputs.new-version }}
         steps:
-            - name: Checkout repository
+            - name: 📂 Checkout repository
               uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
-            - name: Azure Login
+            - name: 🔐 Azure login
               #uses: OutSystems/rd.github-reusable-workflows/.github/actions/az-login@9d497d1c5bc6e355aa8f4663539e6b75c212f6b4 #v2.0.7
               uses: ./.github/actions/az-login
               with:
@@ -90,14 +92,14 @@ jobs:
                   tenant-id: ${{ secrets.OSUI_AZURE_TENANT_ID }}
                   subscription-id: ${{ secrets.OSUI_AZURE_SUBSCRIPTION_ID }}
 
-            - name: Get GitHub Token
+            - name: 🔑 Get GitHub Token
               id: get-github-token
               #uses: OutSystems/rd.github-reusable-workflows/.github/actions/az-keyvault-get@9d497d1c5bc6e355aa8f4663539e6b75c212f6b4 #v2.0.7
               uses: ./.github/actions/az-keyvault-get
               with:
                   key-name: o11odc-github-gitpersonal-token-prd
 
-            - name: Merge rc${{ inputs.new-version }} into main
+            - name: 🔄 Merge rc${{ inputs.new-version }} into main
               uses: everlytic/branch-merge@c4a244dc23143f824ae6c022a10732566cb8e973 #v1.1.5
               with:
                   github_token: ${{ steps.get-github-token.outputs.az-keyvault-value }}
@@ -106,6 +108,7 @@ jobs:
                   commit_message_template: 'Merged rc${{ inputs.new-version }} into main. [skip ci]'
 
     set-pre-release-as-lts:
+        name: 🔖 Set pre-release as LTS
         needs: merge-rc-into-main
         runs-on: ubuntu-latest
         permissions:
@@ -113,10 +116,10 @@ jobs:
             contents: read
 
         steps:
-            - name: Checkout repository
+            - name: 📂 Checkout repository
               uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
-            - name: Azure Login
+            - name: 🔐 Azure login
               #uses: OutSystems/rd.github-reusable-workflows/.github/actions/az-login@9d497d1c5bc6e355aa8f4663539e6b75c212f6b4 #v2.0.7
               uses: ./.github/actions/az-login
               with:
@@ -124,14 +127,14 @@ jobs:
                   tenant-id: ${{ secrets.OSUI_AZURE_TENANT_ID }}
                   subscription-id: ${{ secrets.OSUI_AZURE_SUBSCRIPTION_ID }}
 
-            - name: Get GitHub Token
+            - name: 🔑 Get GitHub Token
               id: get-github-token
               #uses: OutSystems/rd.github-reusable-workflows/.github/actions/az-keyvault-get@9d497d1c5bc6e355aa8f4663539e6b75c212f6b4 #v2.0.7
               uses: ./.github/actions/az-keyvault-get
               with:
                   key-name: o11odc-github-gitpersonal-token-prd
 
-            - name: Update v${{ inputs.new-version }} Tag Release from pre-release into latest
+            - name: 🔖 Update v${{ inputs.new-version }} Tag Release from pre-release into latest
               if: ${{ inputs.new-version && inputs.update-prerelease-into-latest == true }}
               uses: softprops/action-gh-release@da05d552573ad5aba039eaac05058a918a7bf631 #v2.2.2
               with:
@@ -140,6 +143,7 @@ jobs:
                   token: ${{ steps.get-github-token.outputs.az-keyvault-value }}
 
     delete-rc-branch:
+        name: 🗑️ Delete rc branch
         needs: merge-rc-into-main
         runs-on: ubuntu-latest
         permissions:
@@ -147,12 +151,12 @@ jobs:
 
         if: ${{ inputs.delete-rc-branch == true }}
         steps:
-            - name: Checkout branch dev
+            - name: 📂 Checkout branch dev
               uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
               with:
                   ref: dev
 
-            - name: Delete branch rc${{ inputs.new-version }}
+            - name: 🗑️ Delete branch rc${{ inputs.new-version }}
               shell: bash
               run: |
                   git push origin -d rc${{ inputs.new-version }}

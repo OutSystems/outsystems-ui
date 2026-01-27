@@ -69,25 +69,27 @@ on:
 
 jobs:
     run-lint-on-dev:
+        name: 📦 Run lint on dev branch
         runs-on: ubuntu-latest
         permissions:
             contents: read
 
         if: ${{ inputs.new-version }}
         steps:
-            - name: Checkout into dev
+            - name: 📂 Checkout into dev
               uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
               with:
                   ref: dev
 
-            - name: Install project dependencies
+            - name: 📦 Install project dependencies
               run: npm install
 
-            - name: Run build
+            - name: 🏗️ Run build
               run: npm run build
 
     cleanup-existing-rc:
         needs: run-lint-on-dev
+        name: 🧹 Cleanup existing rc branch and tag
         runs-on: ubuntu-latest
         permissions:
             id-token: write
@@ -95,10 +97,10 @@ jobs:
 
         if: ${{ inputs.new-version }}
         steps:
-            - name: Checkout repository
+            - name: 📂 Checkout repository
               uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
-            - name: Azure Login
+            - name: 🔐 Azure login
               #uses: OutSystems/rd.github-reusable-workflows/.github/actions/az-login@9d497d1c5bc6e355aa8f4663539e6b75c212f6b4 #v2.0.7
               uses: ./.github/actions/az-login
               with:
@@ -106,19 +108,19 @@ jobs:
                   tenant-id: ${{ secrets.OSUI_AZURE_TENANT_ID }}
                   subscription-id: ${{ secrets.OSUI_AZURE_SUBSCRIPTION_ID }}
 
-            - name: Get GitHub Token
+            - name: 🔑 Get GitHub Token
               id: get-github-token
               #uses: OutSystems/rd.github-reusable-workflows/.github/actions/az-keyvault-get@9d497d1c5bc6e355aa8f4663539e6b75c212f6b4 #v2.0.7
               uses: ./.github/actions/az-keyvault-get
               with:
                   key-name: o11odc-github-gitpersonal-token-prd
 
-            - name: Checkout with token
+            - name: 📂 Checkout with token
               uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
               with:
                   token: ${{ steps.get-github-token.outputs.az-keyvault-value }}
 
-            - name: Delete existing branch rc${{ inputs.new-version }} if exists
+            - name: 🗑️ Delete existing branch rc${{ inputs.new-version }} if exists
               run: |
                   if git ls-remote --exit-code --heads origin rc${{ inputs.new-version }}; then
                       echo "Branch rc${{ inputs.new-version }} exists. Deleting..."
@@ -127,7 +129,7 @@ jobs:
                       echo "Branch rc${{ inputs.new-version }} does not exist."
                   fi
 
-            - name: Delete existing tag v${{ inputs.new-version }} if exists
+            - name: 🗑️ Delete existing tag v${{ inputs.new-version }} if exists
               run: |
                   if git ls-remote --exit-code --tags origin refs/tags/v${{ inputs.new-version }}; then
                       echo "Tag v${{ inputs.new-version }} exists. Deleting..."
@@ -138,6 +140,7 @@ jobs:
 
     create-rc:
         needs: cleanup-existing-rc
+        name: 📦 Create rc branch
         runs-on: ubuntu-latest
         permissions:
             id-token: write
@@ -145,10 +148,10 @@ jobs:
 
         if: ${{ inputs.new-version }}
         steps:
-            - name: Checkout repository
+            - name: 📂 Checkout repository
               uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
-            - name: Azure Login
+            - name: 🔐 Azure login
               #uses: OutSystems/rd.github-reusable-workflows/.github/actions/az-login@9d497d1c5bc6e355aa8f4663539e6b75c212f6b4 #v2.0.7
               uses: ./.github/actions/az-login
               with:
@@ -163,19 +166,20 @@ jobs:
               with:
                   key-name: o11odc-github-gitpersonal-token-prd
 
-            - name: Checkout into dev
+            - name: 📂 Checkout into dev
               uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
               with:
                   ref: dev
                   token: ${{ steps.get-github-token.outputs.az-keyvault-value }}
 
-            - name: Create branch rc${{ inputs.new-version }}
+            - name: 🔄 Create branch rc${{ inputs.new-version }}
               run: |
                   git checkout -b rc${{ inputs.new-version }}
                   git push -u origin rc${{ inputs.new-version }}
 
     set-tag:
         needs: create-rc
+        name: 🔖 Set tag
         runs-on: ubuntu-latest
         permissions:
             id-token: write
@@ -183,10 +187,10 @@ jobs:
 
         if: ${{ inputs.new-version }}
         steps:
-            - name: Checkout repository
+            - name: 📂 Checkout repository
               uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
-            - name: Azure Login
+            - name: 🔐 Azure login
               #uses: OutSystems/rd.github-reusable-workflows/.github/actions/az-login@9d497d1c5bc6e355aa8f4663539e6b75c212f6b4 #v2.0.7
               uses: ./.github/actions/az-login
               with:
@@ -194,27 +198,28 @@ jobs:
                   tenant-id: ${{ secrets.OSUI_AZURE_TENANT_ID }}
                   subscription-id: ${{ secrets.OSUI_AZURE_SUBSCRIPTION_ID }}
 
-            - name: Get GitHub Token
+            - name: 🔑 Get GitHub Token
               id: get-github-token
               #uses: OutSystems/rd.github-reusable-workflows/.github/actions/az-keyvault-get@9d497d1c5bc6e355aa8f4663539e6b75c212f6b4 #v2.0.7
               uses: ./.github/actions/az-keyvault-get
               with:
                   key-name: o11odc-github-gitpersonal-token-prd
 
-            - name: Checkout into rc${{ inputs.new-version }}
+            - name: 📂 Checkout into rc${{ inputs.new-version }}
               uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
               with:
                   ref: rc${{ inputs.new-version }}
                   fetch-depth: 0
                   token: ${{ steps.get-github-token.outputs.az-keyvault-value }}
 
-            - name: Set tag
+            - name: 🔖 Set tag
               run: |
                   git tag v${{ inputs.new-version }} HEAD
                   git push origin --tags
 
     set-pre-release:
         needs: set-tag
+        name: 📦 Set pre-release
         runs-on: ubuntu-latest
         permissions:
             id-token: write
@@ -222,10 +227,10 @@ jobs:
 
         if: ${{ inputs.new-version }}
         steps:
-            - name: Checkout repository
+            - name: 📂 Checkout repository
               uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
-            - name: Azure Login
+            - name: 🔐 Azure login
               #uses: OutSystems/rd.github-reusable-workflows/.github/actions/az-login@9d497d1c5bc6e355aa8f4663539e6b75c212f6b4 #v2.0.7
               uses: ./.github/actions/az-login
               with:
@@ -233,14 +238,14 @@ jobs:
                   tenant-id: ${{ secrets.OSUI_AZURE_TENANT_ID }}
                   subscription-id: ${{ secrets.OSUI_AZURE_SUBSCRIPTION_ID }}
 
-            - name: Get GitHub Token
+            - name: 🔑 Get GitHub Token
               id: get-github-token
               #uses: OutSystems/rd.github-reusable-workflows/.github/actions/az-keyvault-get@9d497d1c5bc6e355aa8f4663539e6b75c212f6b4 #v2.0.7
               uses: ./.github/actions/az-keyvault-get
               with:
                   key-name: o11odc-github-gitpersonal-token-prd
 
-            - name: Create Release
+            - name: 📦 Create release
               id: create_release
               uses: softprops/action-gh-release@da05d552573ad5aba039eaac05058a918a7bf631 # v2.2.2
               with:
@@ -261,6 +266,7 @@ jobs:
 
     update-dev-version:
         needs: create-rc
+        name: 📦 Update dev version
         runs-on: ubuntu-latest
         permissions:
             id-token: write
@@ -268,10 +274,10 @@ jobs:
 
         if: ${{ inputs.new-version && inputs.new-dev-release }}
         steps:
-            - name: Checkout repository
+            - name: 📂 Checkout repository
               uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
-            - name: Azure Login
+            - name: 🔐 Azure login
               #uses: OutSystems/rd.github-reusable-workflows/.github/actions/az-login@9d497d1c5bc6e355aa8f4663539e6b75c212f6b4 #v2.0.7
               uses: ./.github/actions/az-login
               with:
@@ -279,23 +285,23 @@ jobs:
                   tenant-id: ${{ secrets.OSUI_AZURE_TENANT_ID }}
                   subscription-id: ${{ secrets.OSUI_AZURE_SUBSCRIPTION_ID }}
 
-            - name: Get GitHub Token
+            - name: 🔑 Get GitHub Token
               id: get-github-token
               #uses: OutSystems/rd.github-reusable-workflows/.github/actions/az-keyvault-get@9d497d1c5bc6e355aa8f4663539e6b75c212f6b4 #v2.0.7
               uses: ./.github/actions/az-keyvault-get
               with:
                   key-name: o11odc-github-gitpersonal-token-prd
           
-            - name: Checkout into dev
+            - name: 📂 Checkout into dev
               uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
               with:
                   ref: dev
                   token: ${{ steps.get-github-token.outputs.az-keyvault-value }}
 
-            - name: Install project dependencies
+            - name: 📦 Install project dependencies
               run: npm install
 
-            - name: Update dev version into v${{ inputs.new-dev-release }}
+            - name: 🔖 Update dev version into v${{ inputs.new-dev-release }}
               run: |
                   npm run gta-update-version --newVersion=${{ inputs.new-dev-release }}
              
@@ -307,14 +313,14 @@ jobs:
             #   with:
             #       key-name: o11odc-github-gpg-key-prd
 
-            - name: Get GPG Passphrase from Azure Key Vault
+            - name: 🔑 Get GPG Passphrase from Azure Key Vault
               id: GetGPGPassphrase
               #uses: OutSystems/rd.github-reusable-workflows/.github/actions/az-keyvault-get@9d497d1c5bc6e355aa8f4663539e6b75c212f6b4 #v2.0.7
               uses: ./.github/actions/az-keyvault-get
               with:
                   key-name: o11odc-github-gpg-passphrase-prd
 
-            - name: Sign and Commit version increment to branch dev
+            - name: 🔏 Sign and commit version increment to branch dev
               #uses: OutSystems/rd.github-reusable-workflows/.github/actions/signed-commit@9d497d1c5bc6e355aa8f4663539e6b75c212f6b4 #v2.0.7
               uses: ./.github/actions/signed-commit
               with:
