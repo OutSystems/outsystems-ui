@@ -29,13 +29,13 @@ runs:
   using: composite
   steps:
     - name: Check PR has at least one type of PR label
-      uses: mheap/github-action-required-labels@v5
+      uses: mheap/github-action-required-labels@fb29a14a076b0f74099f6198f77750e8fc236016 #v5.5.0
       with:
         mode: minimum
         count: 1
         labels: 'feature, bug, bugfix, dependencies, dependency, chore'
     - name: "Check PR does not have a 'do not merge' label"
-      uses: mheap/github-action-required-labels@v5
+      uses: mheap/github-action-required-labels@fb29a14a076b0f74099f6198f77750e8fc236016 #v5.5.0
       with:
         mode: exactly
         count: 0
