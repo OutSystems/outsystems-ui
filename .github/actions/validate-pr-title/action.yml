@@ -5,7 +5,7 @@
 # OR
 # "<ticket id> <description>"
 # depending on the 'validate-semVer' input value,
-# where ┬┤+semver: <minor|major|patch> ┬┤ section is optional, and <ticket id> must be a JIRA issue identifier.
+# where ´+semver: <minor|major|patch> ´ section is optional, and <ticket id> must be a JIRA issue identifier.
 #
 # HOW TO USE:
 #

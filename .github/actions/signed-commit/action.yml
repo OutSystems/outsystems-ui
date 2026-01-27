@@ -1,7 +1,7 @@
 #
 # This action enables to perform signed commits. 
-# It uses the crazy-max/ghaction-import-gpg action to import the GPG key and set up the git configuration for signing commits.
-# The action then performs a manual git commit and push to the specified branch.
+# It imports the GPG key manually and sets up the git configuration for signing commits.
+# The action then performs a signed git commit and push to the specified branch.
 #
 # HOW TO USE:
 #
@@ -21,6 +21,7 @@
 #           commit-new-files: ${{ true || false }}
 #           gpg-priv-key: ${{ GPG_SIGN_KEY }}
 #           gpg-pass-phrase: ${{ GPG_PASSPHRASE }}
+#           gpg-passphrase-timeout: ${{ GPG_PASSPHRASE_TIMEOUT }}  # Optional: default 300 seconds
 #
 # ======================================================================
 #
