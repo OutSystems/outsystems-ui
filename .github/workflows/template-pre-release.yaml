@@ -362,7 +362,7 @@ jobs:
                     --base dev \
                     --draft \
                     --head chore/update-dev-version-${{ inputs.new-dev-release }} \
-                    --title "Updated into v${{ inputs.new-dev-release }} [skip ci]" \
+                    --title "Update version into v${{ inputs.new-dev-release }} [skip ci]" \
                     --body "$(cat <<EOF
                   This PR updates the dev version into v${{ inputs.new-dev-release }}.
 
