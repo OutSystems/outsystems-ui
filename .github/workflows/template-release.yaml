@@ -1,0 +1,162 @@
+#
+# This workflow helps to set a release candidate as latest.
+#
+# HOW TO USE:
+#
+# To call this reusable workflow, copy the code between === lines to a new workflow file,
+# uncomment and adjust "uses" as needed (use the latest tag available).
+# ======================================================================
+#
+#name: Validate pull request labels
+#
+#on:
+#  pull_request:
+#    types: [opened, reopened, labeled, unlabeled]
+#
+#jobs:
+#      set-release-latest:
+#         uses: OutSystems/ui-components.github-reusable-workflows/.github/workflows/release.yaml@CommitHash #v?.?.?
+#         with:
+#             new-version: ${{ inputs.new-version }}
+#             update-prerelease-into-latest: true
+#             delete-rc-branch: true
+#
+# ======================================================================
+#
+name: Release
+
+on:
+    workflow_call:
+        inputs:
+            new-version:
+                description: 'Version to be released.'
+                type: string
+                required: true
+            update-prerelease-into-latest:
+                description: 'Update pre-release into latest.'
+                type: boolean
+                default: true
+            delete-rc-branch:
+                description: 'Delete rc* branch at the end of process.'
+                type: boolean
+                default: true
+        secrets:
+            OSUI_AZURE_CLIENT_ID:
+                description: 'Azure Client ID for authentication'
+                required: true
+            OSUI_AZURE_TENANT_ID:
+                description: 'Azure Tenant ID for authentication'
+                required: true
+            OSUI_AZURE_SUBSCRIPTION_ID:
+                description: 'Azure Subscription ID for authentication'
+                required: true
+
+jobs:
+    run-lint-on-rc:
+        name: 📦 Run lint on rc branch
+        runs-on: ubuntu-latest
+        permissions:
+            contents: read
+
+        if: ${{ inputs.new-version }}
+        steps:
+            - name: Checkout into rc${{ inputs.new-version }}
+              uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+              with:
+                  ref: rc${{ inputs.new-version }}
+
+            - name: Install project dependencies
+              run: npm install
+
+            - name: Run build
+              run: npm run build
+
+    merge-rc-into-main:
+        name: 🔄 Merge rc branch into main
+        needs: run-lint-on-rc
+        runs-on: ubuntu-latest
+        permissions:
+            id-token: write
+            contents: read
+
+        if: ${{ inputs.new-version }}
+        steps:
+            - name: 📂 Checkout repository
+              uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+            - name: 🔐 Azure login
+              #uses: OutSystems/rd.github-reusable-workflows/.github/actions/az-login@9d497d1c5bc6e355aa8f4663539e6b75c212f6b4 #v2.0.7
+              uses: ./.github/actions/az-login
+              with:
+                  client-id: ${{ secrets.OSUI_AZURE_CLIENT_ID }}
+                  tenant-id: ${{ secrets.OSUI_AZURE_TENANT_ID }}
+                  subscription-id: ${{ secrets.OSUI_AZURE_SUBSCRIPTION_ID }}
+
+            - name: 🔑 Get GitHub Token
+              id: get-github-token
+              #uses: OutSystems/rd.github-reusable-workflows/.github/actions/az-keyvault-get@9d497d1c5bc6e355aa8f4663539e6b75c212f6b4 #v2.0.7
+              uses: ./.github/actions/az-keyvault-get
+              with:
+                  key-name: o11odc-github-gitpersonal-token-prd
+
+            - name: 🔄 Merge rc${{ inputs.new-version }} into main
+              uses: everlytic/branch-merge@c4a244dc23143f824ae6c022a10732566cb8e973 #v1.1.5
+              with:
+                  github_token: ${{ steps.get-github-token.outputs.az-keyvault-value }}
+                  source_ref: rc${{ inputs.new-version }}
+                  target_branch: 'main'
+                  commit_message_template: 'Merged rc${{ inputs.new-version }} into main. [skip ci]'
+
+    set-pre-release-as-lts:
+        name: 🔖 Set pre-release as LTS
+        needs: merge-rc-into-main
+        runs-on: ubuntu-latest
+        permissions:
+            id-token: write
+            contents: read
+
+        steps:
+            - name: 📂 Checkout repository
+              uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+            - name: 🔐 Azure login
+              #uses: OutSystems/rd.github-reusable-workflows/.github/actions/az-login@9d497d1c5bc6e355aa8f4663539e6b75c212f6b4 #v2.0.7
+              uses: ./.github/actions/az-login
+              with:
+                  client-id: ${{ secrets.OSUI_AZURE_CLIENT_ID }}
+                  tenant-id: ${{ secrets.OSUI_AZURE_TENANT_ID }}
+                  subscription-id: ${{ secrets.OSUI_AZURE_SUBSCRIPTION_ID }}
+
+            - name: 🔑 Get GitHub Token
+              id: get-github-token
+              #uses: OutSystems/rd.github-reusable-workflows/.github/actions/az-keyvault-get@9d497d1c5bc6e355aa8f4663539e6b75c212f6b4 #v2.0.7
+              uses: ./.github/actions/az-keyvault-get
+              with:
+                  key-name: o11odc-github-gitpersonal-token-prd
+
+            - name: 🔖 Update v${{ inputs.new-version }} Tag Release from pre-release into latest
+              if: ${{ inputs.new-version && inputs.update-prerelease-into-latest == true }}
+              uses: softprops/action-gh-release@da05d552573ad5aba039eaac05058a918a7bf631 #v2.2.2
+              with:
+                  tag_name: v${{ inputs.new-version }}
+                  prerelease: false
+                  token: ${{ steps.get-github-token.outputs.az-keyvault-value }}
+
+    delete-rc-branch:
+        name: 🗑️ Delete rc branch
+        needs: merge-rc-into-main
+        runs-on: ubuntu-latest
+        permissions:
+            contents: write
+
+        if: ${{ inputs.delete-rc-branch == true }}
+        steps:
+            - name: 📂 Checkout branch dev
+              uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+              with:
+                  ref: dev
+
+            - name: 🗑️ Delete branch rc${{ inputs.new-version }}
+              shell: bash
+              run: |
+                  git push origin -d rc${{ inputs.new-version }}

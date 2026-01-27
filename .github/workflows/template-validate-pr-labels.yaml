@@ -1,0 +1,44 @@
+#
+# This workflow prevents merging pull requests that don't follow the label conventions.
+# The rules to allow merging a pull request are:
+#   - it must have at least one label that describes the type of pull request
+#   - it must not have the "do not merge" label
+#
+# HOW TO USE:
+#
+# To call this reusable workflow, copy the code between === lines to a new workflow file,
+# uncomment and adjust "uses" as needed (use the latest tag available).
+# ======================================================================
+#
+#name: Validate pull request labels
+#
+#on:
+#  pull_request:
+#    types: [opened, reopened, labeled, unlabeled]
+#
+#jobs:
+#  check-label:
+#    uses: OutSystems/rd.github-reusable-workflows/.github/workflows/validate-pr-labels.yaml@v2.0.4
+#
+# ======================================================================
+#
+name: Validate PR labels
+on:
+  workflow_call:
+
+permissions:
+    contents: read
+    pull-requests: read
+
+jobs:
+  check-label:
+    name: 🔎 Check PR labels
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📂 Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+          
+      - name: 🔎 Check PR labels
+        #uses: OutSystems/rd.github-reusable-workflows/.github/actions/validate-pr-labels@v2.0.7
+        uses: ./.github/actions/validate-pr-labels
+        

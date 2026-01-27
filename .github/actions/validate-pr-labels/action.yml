@@ -1,0 +1,42 @@
+#
+# This action prevents merging pull requests that don't follow the label conventions.
+# The rules to allow merging a pull request are:
+#   - it must have at least one label that describes the type of pull request
+#   - it must not have the "do not merge" label
+#
+# HOW TO USE:
+#
+# To call this reusable action, copy the code between === lines to workflow file,
+# uncomment and adjust "uses" as needed (use the latest tag available).
+# ======================================================================
+# on:
+#  pull_request:
+#    types: [opened, reopened, labeled, unlabeled]
+#
+#     (...)
+#     steps:
+#     (...)
+#       - name: Validate PR labels
+#         uses: OutSystems/rd.github-reusable-workflows/.github/actions/validate-pr-labels@v2.0.4
+#
+# ======================================================================
+#
+
+name: Validate PR labels
+description: "Checks if the PR has at least one label and does not have the 'do not merge' one"
+
+runs:
+  using: composite
+  steps:
+    - name: Check PR has at least one type of PR label
+      uses: mheap/github-action-required-labels@fb29a14a076b0f74099f6198f77750e8fc236016 #v5.5.0
+      with:
+        mode: minimum
+        count: 1
+        labels: 'feature, bug, bugfix, dependencies, dependency, chore'
+    - name: "Check PR does not have a 'do not merge' label"
+      uses: mheap/github-action-required-labels@fb29a14a076b0f74099f6198f77750e8fc236016 #v5.5.0
+      with:
+        mode: exactly
+        count: 0
+        labels: 'do not merge'
