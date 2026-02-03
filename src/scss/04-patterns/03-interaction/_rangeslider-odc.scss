@@ -1,0 +1,20 @@
+/* Patterns - Interaction - Range Slider - ODC */
+////
+/// @group Patterns-Range_Slider
+/// Patterns - Interaction - Range Slider (ODC specific RTL fix)
+
+// IsRTL -------------------------------------------------------------------------
+///
+.is-rtl {
+	.osui-range-slider {
+		.noUi {
+			&-horizontal {
+				.noUi-handle {
+					// For ODC RTL: use left instead of right
+					left: var(--range-slider-handle-sliding-position);
+					right: auto;
+				}
+			}
+		}
+	}
+}
