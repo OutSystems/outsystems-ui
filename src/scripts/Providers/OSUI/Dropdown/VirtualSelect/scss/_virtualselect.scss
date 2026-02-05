@@ -440,6 +440,7 @@
 
 		/* Hide text from provider div in order to keep consistency on styles */
 		text-indent: 100%;
+		font-size: 0;
 		white-space: nowrap;
 		overflow: hidden;
 
