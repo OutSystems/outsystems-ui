@@ -352,7 +352,7 @@ jobs:
                   commit-new-files: true
                   gpg-priv-key: ${{ secrets.GPG_PRIVATE_KEY }}
                   # gpg-priv-key: ${{ steps.GetGPGKey.outputs.az-keyvault-value }}
-                  gpg-pass-phrase: ${{ steps.GetGPGPassphrase.outputs.az-keyvault-value  }}
+                  gpg-pass-phrase: ${{ steps.GetGPGPassphrase.outputs.az-keyvault-value }}
 
             # Create a pull request from the chore/update-dev-version-${{ inputs.new-dev-release }} branch into dev.
             # Since the commit is already pushed to the remote branch, we use GitHub CLI to create a PR.
