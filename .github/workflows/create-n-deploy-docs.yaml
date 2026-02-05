@@ -227,13 +227,12 @@ jobs:
 
     delete-branch:
         needs: publish-doc
-        if: ${{ inputs.run-lint == true }}
         runs-on: ubuntu-latest
         permissions:
             id-token: write
             contents: write
 
-        if: ${{ inputs.delete-branch == true }}
+        if: ${{ inputs.delete-branch == true && inputs.run-lint == true }}
         steps:
             - name: 📥 Checkout branch dev
               uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
