@@ -1,0 +1,28 @@
+name: Test Workflow
+
+on:
+    push:
+        paths:
+            - 'test/README.md'
+            - 'test/README.MD'
+
+permissions:
+    contents: read
+
+jobs:
+    test:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: 📥 Checkout repository
+              uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+            - name: 🔎 Display triggered file changes
+              run: |
+                  echo "Test workflow triggered by README change in test folder"
+                  echo "Commit: ${{ github.sha }}"
+                  echo "Branch: ${{ github.ref_name }}"
+
+            - name: 📄 Show README content
+              run: |
+                  cat test/README.md || cat test/README.MD || echo "README not found"

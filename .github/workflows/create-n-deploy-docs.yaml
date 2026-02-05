@@ -34,6 +34,7 @@ jobs:
 
     run-lint:
         runs-on: ubuntu-latest
+        if: ${{ inputs.run-lint == true }}
         permissions:
             id-token: write
             contents: write
@@ -70,6 +71,7 @@ jobs:
 
     create-branch:
         needs: run-lint
+        if: ${{ inputs.run-lint == true }}
         runs-on: ubuntu-latest
         permissions:
             id-token: write
@@ -105,6 +107,7 @@ jobs:
 
     create-doc:
         needs: create-branch
+        if: ${{ inputs.run-lint == true }}
         runs-on: ubuntu-latest
         permissions:
             id-token: write
@@ -156,6 +159,7 @@ jobs:
 
     publish-doc:
         needs: [check-repo, create-doc]
+        if: ${{ inputs.run-lint == true }}
         runs-on: ubuntu-latest
         permissions:
             id-token: write
@@ -202,6 +206,7 @@ jobs:
 
     delete-branch:
         needs: publish-doc
+        if: ${{ inputs.run-lint == true }}
         runs-on: ubuntu-latest
         permissions:
             id-token: write
