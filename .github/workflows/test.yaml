@@ -26,3 +26,18 @@ jobs:
             - name: 📄 Show README content
               run: |
                   cat test/README.md || cat test/README.MD || echo "README not found"
+
+    deploy-docs:
+        needs: test
+        permissions:
+            id-token: write
+            contents: write
+        uses: ./.github/workflows/create-n-deploy-docs.yaml
+        with:
+            branch-name: ${{ github.ref_name }}
+            delete-branch: true
+            run-lint: true
+        secrets:
+            OSUI_AZURE_CLIENT_ID: ${{ secrets.OSUI_AZURE_CLIENT_ID }}
+            OSUI_AZURE_TENANT_ID: ${{ secrets.OSUI_AZURE_TENANT_ID }}
+            OSUI_AZURE_SUBSCRIPTION_ID: ${{ secrets.OSUI_AZURE_SUBSCRIPTION_ID }}
