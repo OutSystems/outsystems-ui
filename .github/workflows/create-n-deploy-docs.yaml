@@ -15,27 +15,6 @@ on:
                 description: 'Compile and perform lint tests to ensure there is no issues at given branch name.'
                 type: boolean
                 default: true
-    workflow_call:
-        inputs:
-            branch-name:
-                description: 'Branch to be used as base to create a new one to generate and be published.'
-                type: string
-                required: true
-            delete-branch:
-                description: 'Delete deploy-docs branch at the end of process.'
-                type: boolean
-                default: true
-            run-lint:
-                description: 'Compile and perform lint tests to ensure there is no issues at given branch name.'
-                type: boolean
-                default: true
-        secrets:
-            OSUI_AZURE_CLIENT_ID:
-                required: true
-            OSUI_AZURE_TENANT_ID:
-                required: true
-            OSUI_AZURE_SUBSCRIPTION_ID:
-                required: true
 
 permissions:
     contents: read
@@ -55,7 +34,6 @@ jobs:
 
     run-lint:
         runs-on: ubuntu-latest
-        if: ${{ inputs.run-lint == true }}
         permissions:
             id-token: write
             contents: write
@@ -92,7 +70,6 @@ jobs:
 
     create-branch:
         needs: run-lint
-        if: ${{ inputs.run-lint == true }}
         runs-on: ubuntu-latest
         permissions:
             id-token: write
@@ -128,7 +105,6 @@ jobs:
 
     create-doc:
         needs: create-branch
-        if: ${{ inputs.run-lint == true }}
         runs-on: ubuntu-latest
         permissions:
             id-token: write
@@ -191,7 +167,6 @@ jobs:
 
     publish-doc:
         needs: [check-repo, create-doc]
-        if: ${{ inputs.run-lint == true }}
         runs-on: ubuntu-latest
         permissions:
             id-token: write
