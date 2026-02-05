@@ -161,7 +161,7 @@ jobs:
                   commit-branch: deploy-docs
                   commit-message: 'Update documentation [skip ci]'
                   commit-new-files: true
-                  gpg-priv-key: ${{ secrets.GPG_PRIVATE_KEY }}
+                  gpg-priv-key: ${{ secrets.GPG_SIGN_KEY }}
                   # gpg-priv-key: ${{ steps.GetGPGKey.outputs.az-keyvault-value }}
                   gpg-pass-phrase: ${{ steps.GetGPGPassphrase.outputs.az-keyvault-value }}
 
