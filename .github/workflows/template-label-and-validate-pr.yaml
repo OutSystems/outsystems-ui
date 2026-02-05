@@ -50,11 +50,11 @@ on:
 
 jobs:
   inner-sourcing:
-    name: 🔎 Check if pull request is inner sourcing
+    name: Check if pull request is inner sourcing
     runs-on: ubuntu-latest
     if: github.actor != 'dependabot[bot]'
     steps:
-      - name: 📂 Checkout repository
+      - name: 📥 Checkout repository
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
           
       #- name: Run pr-inner-sourcing-label action

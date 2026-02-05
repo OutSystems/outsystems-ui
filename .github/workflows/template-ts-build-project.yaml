@@ -72,7 +72,7 @@ jobs:
             id-token: write
             contents: read
         steps: 
-            - name: 📂 Checkout main branch
+            - name: 📥 Checkout main branch
               uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
               with:
                   ref: ${{ inputs.github-ref }}
@@ -100,11 +100,11 @@ jobs:
               with:
                   key-name: o11odc-github-sonarcloud-token-prd
 
-            - name: Γ¡ò Connect to OutSystems Environment
+            - name: ⭕ Connect to OutSystems Environment
               shell: bash
               run: npx @outsystems/assistant login --token ${{ steps.get-devOps-token.outputs.az-keyvault-value }}
 
-            - name: 📦 Install dependencies
+            - name: 🕸️ Install dependencies
               run: npm install
 
             - name: 🏗️ Run build

@@ -21,7 +21,7 @@ permissions:
 
 jobs:
     create-release-candidate:
-        name: 📦 Create Release Candidate
+        name: Create Release Candidate
         permissions:
             id-token: write
             contents: write
