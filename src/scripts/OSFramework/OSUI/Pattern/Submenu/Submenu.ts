@@ -223,7 +223,9 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 			if (this._isOpen === false) {
 				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.PatternIsOpen);
 
-				this._submenuHeaderElement.focus();
+				if (this.configs.OpenOnHover === false) {
+					this._submenuHeaderElement.focus();
+				}
 				this._isOpen = true;
 
 				this._updateA11yProperties();
@@ -449,7 +451,9 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 
 				this._updateA11yProperties();
 
-				this._focusManagerInstance.setFocusToStoredElement();
+				if (this.configs.OpenOnHover === false) {
+					this._focusManagerInstance.setFocusToStoredElement();
+				}
 
 				this._submenuLinksElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventBalloonKeypress);
 
@@ -484,7 +488,9 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 			// Add the A11Y states to focus trap
 			this._focusTrapInstance.enableForA11y();
 
-			this._focusManagerInstance.storeLastFocusedElement();
+			if (this.configs.OpenOnHover === false) {
+				this._focusManagerInstance.storeLastFocusedElement();
+			}
 
 			if (this.hasClickOutsideToClose) {
 				// Add the body click handler to event manager

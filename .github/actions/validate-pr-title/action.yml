@@ -1,0 +1,43 @@
+#
+# This action prevents merging pull requests that don't follow the title convention.
+# The title convention is 
+# "+semver: <minor|major|patch> <ticket id> <description>"
+# OR
+# "<ticket id> <description>"
+# depending on the 'validate-semVer' input value,
+# where ´+semver: <minor|major|patch> ´ section is optional, and <ticket id> must be a JIRA issue identifier.
+#
+# HOW TO USE:
+#
+# To call this reusable action, copy the code between === lines to workflow file,
+# uncomment and adjust "uses" as needed (use the latest tag available).
+# ======================================================================
+# on:
+#  pull_request:
+#    types: [opened, reopened, edited]
+#     
+#     (...)
+#     steps:
+#     (...)
+#       - name: Validate PR title
+#         uses: OutSystems/rd.github-reusable-workflows/.github/actions/validate-pr-title@v2.0.4
+#
+# ======================================================================
+#
+
+name: Validate PR title
+description: 'Checks if the PR title complies with the convention "<Jira_PROJ>: NNN <description>", e.g. RDMOR: 1234 Some description'
+inputs:
+  validate-semVer:
+    description: "PR title accepts '+semver: <minor|major|patch>' as a prefix"
+    required: false
+    default: 'false'
+
+runs:
+  using: composite
+  steps:
+    - name: "Check PR title follows '${{ inputs.validate-semVer == true && '+semver: <minor|major|patch> ' || '' }}<ticket id> <description>'"
+      uses: deepakputhraya/action-pr-title@v1.0.2
+      with:
+        regex: ^${{ inputs.validate-semVer == true && '(\+semver:\s(minor|major|patch)\s)?' || '' }}([A-Z][A-Z0-9]*-\d+(:)?\s\w)
+      if: ${{ contains(github.head_ref, 'release/') == false && contains(github.head_ref, 'merge/') == false }}

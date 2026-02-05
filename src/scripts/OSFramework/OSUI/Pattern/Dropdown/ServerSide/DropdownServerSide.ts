@@ -6,8 +6,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			OSUIDropdownServerSideConfig,
 			Patterns.DropdownServerSideItem.IDropdownServerSideItem
 		>
-		implements IDropdownServerSide
-	{
+		implements IDropdownServerSide {
 		// Store the HTML element for the DropdownBalloonContainer
 		private _balloonContainerElement: HTMLElement;
 		// Store the Balloon Element
@@ -73,6 +72,8 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 				textContainer.innerHTML = text;
 
 				this.selfElement.parentElement.appendChild(textContainer);
+			} else {
+				errorMessageElement.innerHTML = text;
 			}
 		}
 
@@ -537,6 +538,16 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			}
 		}
 
+		private _updateA11yProperties() {
+			if (this._isOpen) {
+				// Set the aria-expanded atribute as true
+				Helper.A11Y.AriaExpandedTrue(this._selectValuesWrapper);
+			} else {
+				// Set the aria-expanded atribute as false
+				Helper.A11Y.AriaExpandedFalse(this._selectValuesWrapper);
+			}
+		}
+
 		// Method that will be used to set/unset the TabIndex to the DropdownBallon elements according it's opened/closed
 		private _updateBalloonAccessibilityElements(): void {
 			const tabIndexValue = this._isOpen
@@ -600,6 +611,9 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 
 		// Method that will update the pattern state
 		private _updatePatternState(): void {
+			// Update selected wrapper acesssibility attributes
+			this._updateA11yProperties();
+
 			// Update the TabIndex for the items inside Balloon
 			this._updateBalloonAccessibilityElements();
 
@@ -610,9 +624,14 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 
 				// Check if inputSearch exist
 				if (this._balloonSearchInputElement) {
-					this._balloonSearchInputElement.focus();
+					// This is the time needed in mobile devices to draw the input before focusing it
+					OSFramework.OSUI.Helper.ApplySetTimeOut(() => {
+						this._balloonSearchInputElement.focus();
+					}, 50);
 				} else {
-					this._balloonOptionsWrapperElement.focus();
+					OSFramework.OSUI.Helper.ApplySetTimeOut(() => {
+						this._balloonOptionsWrapperElement.focus();
+					}, 50);
 				}
 			} else {
 				// Remove IsOpened Class
@@ -636,6 +655,8 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 		 * @memberof OSFramework.Patterns.Dropdown.ServerSide.OSUIDropdownServerSide
 		 */
 		protected setA11YProperties(): void {
+			// Update selected wrapper acesssibility attributes
+			this._updateA11yProperties();
 			// Update Tabindex Ballon elements
 			this._updateBalloonAccessibilityElements();
 
@@ -926,7 +947,7 @@ namespace OSFramework.OSUI.Patterns.Dropdown.ServerSide {
 			} else {
 				// Set focus options to pass to the Balloon feature
 				const _focusOptions = {
-					elemToFocusOnOpen: this._selectValuesWrapper,
+					elemToFocusOnOpen: this._balloonElem,
 					useFocus: true,
 					focusTrapParams: {
 						focusBottomCallback: this.close.bind(this),

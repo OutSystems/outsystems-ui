@@ -18,7 +18,7 @@ $balloonMobileTopMargin: 5vh;
 	.osui-balloon {
 		--osui-balloon-shadow: none;
 
-		border: var(--border-size-s) solid var(--color-neutral-5);
+		border: var(--border-size-s) solid get-border-color('neutral-5');
 		display: flex;
 		flex-direction: column;
 		flex: 1;
@@ -49,12 +49,12 @@ $balloonMobileTopMargin: 5vh;
 		overflow: hidden;
 
 		&:hover {
-			border-color: var(--color-neutral-6);
+			border-color: get-border-color('neutral-6');
 		}
 
 		&:after {
 			align-items: center;
-			color: var(--color-neutral-7);
+			color: get-text-color('neutral-7');
 			content: '\f107';
 			display: flex;
 			font: normal normal normal 20px/1 FontAwesome;
@@ -68,7 +68,7 @@ $balloonMobileTopMargin: 5vh;
 
 		& > * {
 			&::selection {
-				background-color: transparent;
+				background-color: get-background-color('transparent');
 			}
 
 			&:first-child {
@@ -81,10 +81,10 @@ $balloonMobileTopMargin: 5vh;
 
 		&-wrapper {
 			align-items: center;
-			background-color: var(--color-neutral-0);
+			background-color: get-background-color('neutral-0');
 			border-radius: var(--border-radius-soft);
-			border: var(--border-size-s) solid var(--color-neutral-5);
-			color: var(--color-neutral-9);
+			border: var(--border-size-s) solid get-border-color('neutral-5');
+			color: get-text-color('neutral-9');
 			cursor: pointer;
 			display: flex;
 			font-size: var(--font-size-s);
@@ -110,7 +110,7 @@ $balloonMobileTopMargin: 5vh;
 	&__balloon {
 		// Search Wrapper
 		&-search-wrapper {
-			background-color: var(--color-neutral-0);
+			background-color: get-background-color('neutral-0');
 			padding: var(--space-none);
 			position: relative;
 			display: flex;
@@ -123,7 +123,7 @@ $balloonMobileTopMargin: 5vh;
 
 			&:before {
 				align-items: center;
-				color: var(--color-neutral-6);
+				color: get-text-color('neutral-6');
 				content: '\f002';
 				display: flex;
 				font: normal normal normal 14px/1 FontAwesome;
@@ -139,7 +139,7 @@ $balloonMobileTopMargin: 5vh;
 
 			input,
 			.form-control[data-input] {
-				background-color: transparent;
+				background-color: get-background-color('transparent');
 				border-radius: var(--border-size-none);
 				border: none;
 				color: inherit;
@@ -160,7 +160,7 @@ $balloonMobileTopMargin: 5vh;
 
 		// Options placeholder
 		&-content {
-			border-top: var(--border-size-s) solid var(--color-neutral-5);
+			border-top: var(--border-size-s) solid get-border-color('neutral-5');
 			flex: 1;
 			height: auto;
 			max-height: var(--osui-dropdown-ss-balloon-max-height);
@@ -173,11 +173,11 @@ $balloonMobileTopMargin: 5vh;
 			}
 
 			&::-webkit-scrollbar-track {
-				background: var(--color-neutral-4);
+				background: get-background-color('neutral-4');
 			}
 
 			&::-webkit-scrollbar-thumb {
-				background-color: var(--color-neutral-6);
+				background-color: get-background-color('neutral-6');
 			}
 
 			// Avoid having data-list above other elements in this context, such as a StickyTop SelectAll Option container.
@@ -195,7 +195,7 @@ $balloonMobileTopMargin: 5vh;
 
 		// Footer placeholder
 		&-footer {
-			border-top: var(--border-size-s) solid var(--color-neutral-5);
+			border-top: var(--border-size-s) solid get-border-color('neutral-5');
 			padding: var(--space-s) var(--space-base);
 		}
 	}
@@ -205,13 +205,13 @@ $balloonMobileTopMargin: 5vh;
 		.osui-dropdown-serverside {
 			// "Input" section wrapper - SelectedValues container wrapper
 			&__selected-values-wrapper {
-				border-color: var(--color-primary);
+				border-color: get-border-color('primary');
 			}
 
 			// "Input" section - SelectedValues container
 			&__selected-values {
 				&:after {
-					color: var(--color-primary);
+					color: get-text-color('primary');
 					transform: rotate(180deg);
 				}
 			}
@@ -222,13 +222,13 @@ $balloonMobileTopMargin: 5vh;
 	&--is-disabled {
 		.osui-dropdown-serverside__selected-values {
 			&:after {
-				border-color: var(--color-neutral-6);
+				border-color: get-border-color('neutral-6');
 			}
 
 			&-wrapper {
-				background-color: var(--color-neutral-2);
-				border-color: var(--color-neutral-4);
-				color: var(--color-neutral-6);
+				background-color: get-background-color('neutral-2');
+				border-color: get-border-color('neutral-4');
+				color: get-text-color('neutral-6');
 				pointer-events: none;
 			}
 		}
@@ -238,11 +238,11 @@ $balloonMobileTopMargin: 5vh;
 	&--not-valid {
 		.osui-dropdown-serverside__selected-values-wrapper {
 			/* !important should be here in order to grant more specific selectors be overriding border color at this context. */
-			border-color: var(--color-error) !important;
+			border-color: get-border-color('error') !important;
 		}
 
 		& + .osui-dropdown-serverside-error-message {
-			color: var(--color-error);
+			color: get-text-color('error');
 			font-size: var(--font-size-xs);
 			margin-left: var(--space-none);
 			margin-top: 3px;
@@ -279,22 +279,22 @@ $balloonMobileTopMargin: 5vh;
 			&:after,
 			&-wrapper,
 			&-footer {
-				border-color: var(--color-neutral-7);
+				border-color: get-border-color('neutral-7');
 			}
 		}
 
 		&__balloon {
-			border-color: var(--color-neutral-7);
+			border-color: get-border-color('neutral-7');
 
 			&-search {
 				&:before {
-					color: var(--color-neutral-7);
+					color: get-text-color('neutral-7');
 				}
 
 				input,
 				.form-control[data-input] {
 					&:focus {
-						box-shadow: inset 0 0 0 3px var(--color-focus-outer);
+						box-shadow: inset 0 0 0 3px get-background-color('focus-outer');
 					}
 				}
 			}
@@ -303,7 +303,7 @@ $balloonMobileTopMargin: 5vh;
 				--osui-outline-size: 3px;
 
 				&::-webkit-scrollbar-thumb {
-					background-color: var(--color-neutral-7);
+					background-color: get-background-color('neutral-7');
 				}
 
 				&:focus {
@@ -315,7 +315,7 @@ $balloonMobileTopMargin: 5vh;
 					&:after,
 					& > *:before,
 					& > *:after {
-						background-color: var(--color-focus-outer);
+						background-color: get-background-color('focus-outer');
 						content: '';
 						display: block;
 					}
@@ -483,7 +483,7 @@ $balloonMobileTopMargin: 5vh;
 		// Balloon section
 		&__balloon {
 			align-items: center;
-			background-color: var(--overlay-background);
+			background-color: get-background-color('overlay');
 			border: none;
 			border-radius: var(--border-radius-sharp);
 			display: flex;
@@ -498,7 +498,7 @@ $balloonMobileTopMargin: 5vh;
 
 			// Service Studio Preview
 			& {
-				-servicestudio-background-color: var(--color-neutral-0);
+				-servicestudio-background-color: get-background-color('neutral-0');
 				-servicestudio-left: initial;
 				-servicestudio-opacity: 1;
 				-servicestudio-position: relative;
@@ -506,7 +506,7 @@ $balloonMobileTopMargin: 5vh;
 			}
 
 			&-container {
-				background: var(--color-neutral-0);
+				background: get-background-color('neutral-0');
 				border-radius: var(--osui-balloon-shape);
 				box-shadow: var(--shadow-xl);
 				display: flex;
@@ -579,17 +579,17 @@ $balloonMobileTopMargin: 5vh;
 
 				/* Track */
 				&::-webkit-scrollbar-track {
-					background-color: var(--color-neutral-3);
+					background-color: get-background-color('neutral-3');
 				}
 
 				/* Handle */
 				&::-webkit-scrollbar-thumb {
-					background-color: var(--color-neutral-6);
+					background-color: get-background-color('neutral-6');
 				}
 
 				/* Handle on hover */
 				&::-webkit-scrollbar-thumb:hover {
-					background-color: var(--color-neutral-8);
+					background-color: get-background-color('neutral-8');
 				}
 			}
 		}

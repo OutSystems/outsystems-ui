@@ -21,7 +21,7 @@
 
 		// Service Studio Preview
 		&:after {
-			-servicestudio-color: var(--color-neutral-7);
+			-servicestudio-color: get-text-color('neutral-7');
 			-servicestudio-content: 'Drag screens to this container to create menu entries';
 			-servicestudio-font-size: var(--font-size-xs);
 			-servicestudio-left: 50%;
@@ -33,16 +33,16 @@
 	}
 
 	a {
-		color: var(--color-neutral-9);
+		color: get-text-color('neutral-9');
 
 		// Service Studio Preview
 		& {
-			-servicestudio-color: var(--color-neutral-9);
+			-servicestudio-color: get-text-color('neutral-9');
 		}
 
 		&:hover,
 		&.active {
-			color: var(--color-primary);
+			color: get-text-color('primary');
 			text-decoration: none;
 		}
 	}
@@ -77,12 +77,12 @@ body {
 	.app-menu-links {
 		a {
 			align-items: center;
-			border-bottom: var(--border-size-m) solid transparent;
-			border-top: var(--border-size-m) solid transparent;
+			border-bottom: var(--border-size-m) solid get-border-color('transparent');
+			border-top: var(--border-size-m) solid get-border-color('transparent');
 			display: inline-flex;
 
 			&.active {
-				border-bottom: var(--border-size-m) solid var(--color-primary);
+				border-bottom: var(--border-size-m) solid get-border-color('primary');
 			}
 		}
 	}
@@ -94,7 +94,7 @@ body {
 	.app-menu-links {
 		a {
 			border-bottom: 0;
-			border-left: var(--border-size-m) solid transparent;
+			border-left: var(--border-size-m) solid get-border-color('transparent');
 			border-top: 0;
 			margin-left: 0;
 			padding: var(--space-s) var(--space-m);
@@ -120,7 +120,7 @@ body {
 		}
 
 		a.active {
-			border-left: var(--border-size-m) solid var(--color-primary);
+			border-left: var(--border-size-m) solid get-border-color('primary');
 		}
 	}
 }
@@ -171,11 +171,11 @@ body {
 // Accessibility -----------------------------------------------------------------
 .has-accessible-features {
 	.header a.active:focus {
-		color: var(--color-primary);
+		color: get-text-color('primary');
 	}
 
 	.app-menu-links a:focus {
-		background-color: transparent;
-		box-shadow: 0 0 0 3px var(--color-focus-outer);
+		background-color: get-background-color('transparent');
+		box-shadow: 0 0 0 3px get-background-color('focus-outer');
 	}
 }

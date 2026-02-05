@@ -7,7 +7,7 @@
 .osui-sidebar {
 	--overlay-opacity: 0;
 
-	background-color: var(--color-neutral-0);
+	background-color: get-background-color('neutral-0');
 	box-shadow: var(--shadow-l);
 	display: flex;
 	flex-direction: column;
@@ -30,7 +30,7 @@
 	}
 
 	&:after {
-		background-color: transparent;
+		background-color: get-background-color('transparent');
 		content: '';
 		height: 100%;
 		position: fixed;
@@ -102,7 +102,7 @@
 
 	&--has-overlay {
 		&::before {
-			background-color: var(--overlay-background);
+			background-color: get-background-color('overlay');
 			content: '';
 			cursor: pointer;
 			display: block;
@@ -167,6 +167,9 @@
 	.layout-native {
 		.osui-sidebar {
 			padding-top: #{android-safe-area-top()};
+			padding-right: var(--safe-area-inset-right, 0px);
+			padding-bottom: var(--safe-area-inset-bottom, 0px);
+			padding-left: var(--safe-area-inset-left, 0px);
 		}
 	}
 }

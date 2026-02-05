@@ -7,19 +7,20 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 	 * @class AbstractFlatpickrConfig
 	 * @extends {AbstractDatePickerConfig}
 	 */
-	export abstract class AbstractFlatpickrConfig extends OSFramework.OSUI.Patterns.DatePicker
-		.AbstractDatePickerConfig {
+	export abstract class AbstractFlatpickrConfig
+		extends OSFramework.OSUI.Patterns.DatePicker.AbstractDatePickerConfig
+	{
 		// Store a list of disable days
 		private _disabledDays = [];
 
 		// Store a integer list of weekdays
 		private _disabledWeekDays = [];
+		
+		// Store the language that will be assigned as a locale to the DatePicker
+		private _dynamicLang: string;
 
 		// Store if DateTime is being used
 		private _isUsingDateTime: boolean;
-
-		// Store the language that will be assigned as a locale to the DatePicker
-		private _lang: string;
 
 		// Store the Provider Options
 		private _providerOptions: FlatpickrOptions;
@@ -45,14 +46,14 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		// Set the OnClose callback to be used whenever the Flatpickr close
 		public OnClose: OSFramework.OSUI.GlobalCallbacks.Generic;
 
+		// Set the OnMonthChange callback to be used whenever the Flatpickr month changes
+		public OnMonthChange: OSFramework.OSUI.GlobalCallbacks.Generic;
+
 		// Set the OnOpen callback to be used whenever the Flatpickr opens
 		public OnOpen: OSFramework.OSUI.GlobalCallbacks.Generic;
 
 		constructor(config: JSON) {
 			super(config);
-
-			// Set the lang based on the language that has been defined already
-			this._lang = OSFramework.OSUI.Helper.Language.ShortLang;
 		}
 
 		// Method used to manage the AM/PM time when it's on use
@@ -81,12 +82,12 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 			let _locale: FlatpickrLocale = window.flatpickr.l10ns.en;
 			try {
 				// Set the locale in order to define the calendar language
-				_locale = window.flatpickr.l10ns[this._lang];
+				_locale = window.flatpickr.l10ns[this.Lang];
 
 				// Set the calendar first week day
 				_locale.firstDayOfWeek = this.FirstWeekDay;
 			} catch (error) {
-				console.error(`${Flatpickr.ErrorCodes.FailSetLocale}: Locale '${this._lang}' not found!`);
+				console.error(`${Flatpickr.ErrorCodes.FailSetLocale}: Locale '${this.Lang}' not found!`);
 			}
 
 			return _locale;
@@ -206,10 +207,16 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 				minDate: this._validateDate(this.MinDate),
 				onChange: this.OnChange,
 				onClose: this.OnClose,
+				onMonthChange: this.OnMonthChange,
 				onOpen: this.OnOpen,
 				time_24hr: this.TimeFormat === OSFramework.OSUI.Patterns.DatePicker.Enum.TimeFormatMode.Time24hFormat,
 				updateInputVal: false, // (*)
 				weekNumbers: this.ShowWeekNumbers,
+				ariaDateFormat:
+					Providers.OSUI.SharedProviderResources.Flatpickr.Enum.AriaDateFormat.WeekdayDayMonthYear,
+				position: OutSystems.OSUI.Utils.GetIsRTL()
+					? Providers.OSUI.SharedProviderResources.Flatpickr.Enum.Position.Right
+					: Providers.OSUI.SharedProviderResources.Flatpickr.Enum.Position.Left,
 			} as FlatpickrOptions;
 
 			// Make sure locale is not undefined, as when defining the providerOptions defaults in the costructor, the window.locale is no yet available
@@ -238,7 +245,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		 * @memberof Providers.OSUI.DatePicker.Flatpickr.AbstractFlatpickrConfig
 		 */
 		public get Lang(): string {
-			return this._lang;
+			return this._dynamicLang !== undefined ? this._dynamicLang : OSFramework.OSUI.Helper.Language.ShortLang;
 		}
 
 		/**
@@ -248,7 +255,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		 */
 		public set Lang(value: string) {
 			// substring is needed to avoid passing values like "en-EN" since we must use only "en"
-			this._lang = value.substring(0, 2);
+			this._dynamicLang = value.substring(0, 2);
 		}
 
 		/**

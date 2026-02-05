@@ -83,6 +83,16 @@ body,
 	}
 }
 
+// android
+
+.android {
+	.layout-native {
+		.footer {
+			height: calc(var(--safe-area-inset-bottom, 0px) + var(--bottom-bar-size));
+		}
+	}
+}
+
 // iOS ---------------------------------------------------------------------------
 ///
 .ios {

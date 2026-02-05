@@ -166,7 +166,7 @@ namespace OSFramework.OSUI.Patterns {
 			this._redrawCallback = this.redraw.bind(this);
 
 			OSFramework.OSUI.Event.DOMEvents.Observers.GlobalObserverManager.Instance.addHandler(
-				Event.DOMEvents.Observers.ObserverEvent.RTL,
+				Event.DOMEvents.Observers.ObserverEvent.Language,
 				this._redrawCallback
 			);
 
@@ -209,7 +209,7 @@ namespace OSFramework.OSUI.Patterns {
 		 */
 		public dispose(): void {
 			OSFramework.OSUI.Event.DOMEvents.Observers.GlobalObserverManager.Instance.removeHandler(
-				Event.DOMEvents.Observers.ObserverEvent.RTL,
+				Event.DOMEvents.Observers.ObserverEvent.Language,
 				this._redrawCallback
 			);
 

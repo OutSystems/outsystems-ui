@@ -31,26 +31,26 @@
 // Mantain due to Retro Compatibility
 ///
 div.feedback-message-error {
-	background-color: var(--color-error);
+	background-color: get-background-color('error');
 }
 
 // Mantain due to Retro Compatibility
 ///
 div.feedback-message-info {
-	background-color: var(--color-info);
+	background-color: get-background-color('info');
 }
 
 // Mantain due to Retro Compatibility
 ///
 div.feedback-message-success {
-	background-color: var(--color-success);
+	background-color: get-background-color('success');
 }
 
 // Mantain due to Retro Compatibility
 ///
 div.feedback-message-warning {
-	background-color: var(--color-warning);
-	color: var(--color-neutral-10);
+	background-color: get-background-color('warning');
+	color: get-text-color('neutral-10');
 }
 
 // Responsive --------------------------------------------------------------------
@@ -73,8 +73,16 @@ div.feedback-message-warning {
 	}
 }
 
-.android .feedback-message {
-	padding-top: calc(#{android-safe-area-top()} + var(--space-base));
+.android {
+	.feedback-message {
+		padding-top: calc(#{android-safe-area-top()} + var(--space-base));
+	}
+
+	&.landscape {
+		.feedback-message {
+			animation-name: feedbackMessageSlideDownPhone;
+		}
+	}
 }
 
 // IsRTL -------------------------------------------------------------------------
@@ -102,16 +110,16 @@ div.feedback-message-warning {
 		border-style: solid;
 
 		&.feedback-message-error {
-			border-color: var(--color-error);
+			border-color: get-border-color('error');
 		}
 		&.feedback-message-info {
-			border-color: var(--color-info);
+			border-color: get-border-color('info');
 		}
 		&.feedback-message-success {
-			border-color: var(--color-success);
+			border-color: get-border-color('success');
 		}
 		&.feedback-message-warning {
-			border-color: var(--color-warning);
+			border-color: get-border-color('warning');
 		}
 	}
 }

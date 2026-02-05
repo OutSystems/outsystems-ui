@@ -5,5 +5,6 @@ namespace OSFramework.OSUI.Event.DOMEvents.Observers {
 	 */
 	export enum ObserverEvent {
 		RTL = 'RTL',
+		Language = 'Language',
 	}
 }

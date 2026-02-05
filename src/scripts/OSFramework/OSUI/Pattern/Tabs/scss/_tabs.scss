@@ -30,7 +30,7 @@
 			}
 
 			.osui-tabs__content {
-				border-right: var(--border-size-s) solid var(--color-neutral-5);
+				border-right: var(--border-size-s) solid get-border-color('neutral-5');
 				margin-right: -1px;
 			}
 		}
@@ -51,7 +51,7 @@
 			}
 
 			.osui-tabs__content {
-				border-left: var(--border-size-s) solid var(--color-neutral-5);
+				border-left: var(--border-size-s) solid get-border-color('neutral-5');
 				margin-left: -1px;
 			}
 		}
@@ -108,7 +108,7 @@
 		}
 
 		.osui-tabs__content {
-			border-top: var(--border-size-s) solid var(--color-neutral-5);
+			border-top: var(--border-size-s) solid get-border-color('neutral-5');
 			margin-top: -1px;
 		}
 	}
@@ -173,9 +173,9 @@
 		position: relative;
 		&-item {
 			align-items: center;
-			background-color: transparent;
+			background-color: get-background-color('transparent');
 			border: none;
-			color: var(--color-neutral-8);
+			color: get-text-color('neutral-8');
 			cursor: pointer;
 			display: inline-flex;
 			height: 100%;
@@ -186,27 +186,27 @@
 
 			&:hover {
 				&:not(.osui-tabs--is-active) {
-					color: var(--color-neutral-10);
+					color: get-text-color('neutral-10');
 				}
 
 				&[disabled] {
-					color: var(--color-neutral-6);
+					color: get-text-color('neutral-6');
 				}
 			}
 
 			&.osui-tabs--is-active {
-				color: var(--color-neutral-10);
-				text-shadow: 0 0 0.5px currentColor; /* This is used instead of font-weight, to prevent layout-shifts */
+				color: get-text-color('neutral-10');
+				text-shadow: 0 0 0.5px get-border-color('currentColor'); /* This is used instead of font-weight, to prevent layout-shifts */
 			}
 
 			&[disabled] {
-				color: var(--color-neutral-6);
+				color: get-text-color('neutral-6');
 				cursor: auto;
 			}
 		}
 
 		&__indicator {
-			background-color: var(--color-primary);
+			background-color: get-background-color('primary');
 			position: absolute;
 			transition: transform 200ms linear;
 			transform-origin: 0 0;
@@ -214,7 +214,7 @@
 			z-index: var(--layer-local-tier-1);
 
 			&[disabled] {
-				background-color: var(--color-neutral-6);
+				background-color: get-background-color('neutral-6');
 			}
 		}
 
@@ -280,7 +280,7 @@
 		.osui-tabs__header-item,
 		.osui-tabs__header-item > *,
 		.osui-tabs__content-item {
-			-servicestudio-border: 1px dashed var(--color-neutral-5);
+			-servicestudio-border: 1px dashed get-border-color('neutral-5');
 			-servicestudio-width: 100%;
 		}
 		.osui-tabs__content-item .display-contents {
@@ -307,7 +307,7 @@
 				}
 
 				.osui-tabs__content {
-					border-left: var(--border-size-s) solid var(--color-neutral-5);
+					border-left: var(--border-size-s) solid get-border-color('neutral-5');
 					margin-left: -1px;
 					border-right: 0;
 				}
@@ -328,7 +328,7 @@
 				}
 
 				.osui-tabs__content {
-					border-right: var(--border-size-s) solid var(--color-neutral-5);
+					border-right: var(--border-size-s) solid get-border-color('neutral-5');
 					margin-right: -1px;
 					border-left: 0;
 				}
@@ -354,14 +354,14 @@
 			}
 
 			&:focus-visible {
-				background-color: var(--color-focus-outer);
-				color: var(--color-neutral-10);
+				background-color: get-background-color('focus-outer');
+				color: get-text-color('neutral-10');
 			}
 		}
 
 		&__content-item {
 			&:focus-visible {
-				box-shadow: 0 0 0 1px var(--color-focus-outer) inset;
+				box-shadow: 0 0 0 1px get-background-color('focus-outer') inset;
 			}
 		}
 	}
@@ -461,7 +461,7 @@
 		-servicestudio-left: 0;
 		-servicestudio-width: 100%;
 		-servicestudio-height: 2px;
-		-servicestudio-background-color: var(--color-primary);
+		-servicestudio-background-color: get-background-color('primary');
 		-servicestudio-position: absolute;
 	}
 }
@@ -478,8 +478,8 @@ html[data-uieditorversion^='1'] .osui-tabs__preview {
 
 	&--is-active::after {
 		-servicestudio-align-items: center;
-		-servicestudio-background-color: var(--color-neutral-0);
-		-servicestudio-border: 1px solid var(--color-neutral-3);
+		-servicestudio-background-color: get-background-color('neutral-0');
+		-servicestudio-border: 1px solid get-border-color('neutral-3');
 		-servicestudio-content: 'TabsContentItems are currently hidden. Use the toggle to preview them inside Service Studio.';
 		-servicestudio-display: flex;
 		-servicestudio-justify-content: center;

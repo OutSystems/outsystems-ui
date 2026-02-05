@@ -11,7 +11,7 @@
 	position: relative;
 
 	&::before {
-		background-color: var(--color-neutral-5);
+		background-color: get-background-color('neutral-5');
 		bottom: 0;
 		content: '';
 		left: 0;
@@ -29,7 +29,7 @@
 .osui-section-index-item {
 	&,
 	&:visited {
-		color: var(--color-neutral-8);
+		color: get-text-color('neutral-8');
 		cursor: pointer;
 		display: flex;
 		padding-bottom: var(--space-xs);
@@ -39,14 +39,14 @@
 	}
 
 	&:hover {
-		color: var(--color-neutral-9);
+		color: get-text-color('neutral-9');
 	}
 
 	&--is-active {
-		color: var(--color-neutral-9);
+		color: get-text-color('neutral-9');
 		font-weight: var(--font-semi-bold);
 		&::before {
-			background-color: var(--color-primary);
+			background-color: get-background-color('primary');
 			bottom: 0;
 			content: '';
 			left: 0;
@@ -66,7 +66,7 @@
 .has-accessible-features {
 	.osui-section-index-item {
 		&:focus {
-			background-color: transparent;
+			background-color: get-background-color('transparent');
 			@include a11y-default-outline;
 		}
 	}

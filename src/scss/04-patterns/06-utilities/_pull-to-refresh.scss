@@ -5,7 +5,7 @@
 
 ///
 .pull-to-refresh {
-	color: var(--color-neutral-6);
+	color: get-text-color('neutral-6');
 	font-size: var(--font-size-h3);
 	left: 0;
 	padding: var(--space-s);
@@ -49,15 +49,20 @@
 			display: block;
 		}
 
-		.content {
+		&:not(.osui-bottom-sheet--is-active) .content {
 			transform: translate3D(0, 50px, 0);
 		}
 	}
 
-	&-reset {
-		.content {
-			transform: translate3D(0, 0, 0);
+	&-loading:not(.osui-bottom-sheet--is-active),
+	&-reset:not(.osui-bottom-sheet--is-active) {
+		.osui-bottom-sheet {
+			display: none;
 		}
+	}
+
+	&-reset {
+		transform: translate3D(0, 0, 0);
 	}
 
 	&-refresh {

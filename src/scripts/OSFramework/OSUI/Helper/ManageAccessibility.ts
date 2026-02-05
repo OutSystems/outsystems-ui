@@ -299,6 +299,28 @@ namespace OSFramework.OSUI.Helper {
 		}
 
 		/**
+		 * Method that will disable the aria-modal
+		 *
+		 * @param {HTMLElement} element Target element to receive the value atributte
+		 * @returns
+		 * @memberof OSFramework.Helper.A11Y
+		 */
+		public static AriaModalFalse(element: HTMLElement): void {
+			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Modal, Constants.A11YAttributes.States.False);
+		}
+
+		/**
+		 * Method that will enable the aria-modal
+		 *
+		 * @param {HTMLElement} element Target element to receive the value atributte
+		 * @returns
+		 * @memberof OSFramework.Helper.A11Y
+		 */
+		public static AriaModalTrue(element: HTMLElement): void {
+			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Modal, Constants.A11YAttributes.States.True);
+		}
+
+		/**
 		 * Method that will set the aria-selected to false
 		 *
 		 * @static
@@ -412,6 +434,21 @@ namespace OSFramework.OSUI.Helper {
 		}
 
 		/**
+		 * Method that will set the Dialog role
+		 *
+		 * @static
+		 * @param {HTMLElement} element
+		 * @memberof OSFramework.Helper.A11Y
+		 */
+		public static RoleDialog(element: HTMLElement): void {
+			Dom.Attribute.Set(
+				element,
+				Constants.A11YAttributes.Role.AttrName,
+				Constants.A11YAttributes.Role.Dialog
+			);
+		}
+
+		/**
 		 * Method that will set the list box role
 		 *
 		 * @param {HTMLElement} element Target element to receive the role atributte
@@ -505,6 +542,17 @@ namespace OSFramework.OSUI.Helper {
 		 */
 		public static RoleSearch(element: HTMLElement): void {
 			Dom.Attribute.Set(element, Constants.A11YAttributes.Role.AttrName, Constants.A11YAttributes.Role.Search);
+		}
+
+		/**
+		 * Method that will set the status role
+		 *
+		 * @param {HTMLElement} element Target element to receive the role atributte
+		 * @returns
+		 * @memberof OSFramework.Helper.A11Y
+		 */
+		public static RoleStatus(element: HTMLElement): void {
+			Dom.Attribute.Set(element, Constants.A11YAttributes.Role.AttrName, Constants.A11YAttributes.Role.Status);
 		}
 
 		/**

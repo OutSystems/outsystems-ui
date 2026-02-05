@@ -193,6 +193,6 @@
 ///
 .has-accessible-features {
 	input:focus + .rating-item > div {
-		box-shadow: 0 0 0 3px var(--color-focus-outer);
+		box-shadow: 0 0 0 3px get-background-color('focus-outer');
 	}
 }

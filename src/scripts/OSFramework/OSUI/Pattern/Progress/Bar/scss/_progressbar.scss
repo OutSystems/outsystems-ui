@@ -67,7 +67,7 @@
 				width: 100%;
 
 				& {
-					-servicestudio-background: var(--trail-color, var(--color-neutral-3));
+					-servicestudio-background: var(--trail-color, get-background-color('neutral-3'));
 				}
 			}
 
@@ -77,7 +77,7 @@
 				z-index: var(--layer-local-tier-1);
 
 				& {
-					-servicestudio-background: var(--progress-color, var(--color-primary));
+					-servicestudio-background: var(--progress-color, get-background-color('primary'));
 					-servicestudio-width: var(--progress-value, 50%);
 				}
 			}
@@ -118,12 +118,12 @@
 			}
 
 			&__value {
-				border: var(--border-size-m) solid var(--color-neutral-7);
+				border: var(--border-size-m) solid get-border-color('neutral-7');
 				height: calc(2 * var(--thickness));
 
 				&:before,
 				&:after {
-					border: var(--border-size-m) solid var(--color-neutral-7);
+					border: var(--border-size-m) solid get-border-color('neutral-7');
 					top: calc(-1 * var(--border-size-m));
 					left: calc(-1 * var(--border-size-m));
 				}

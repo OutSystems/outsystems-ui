@@ -33,7 +33,7 @@
 		&__trail-path {
 			cx: 50%;
 			cy: 50%;
-			fill: transparent;
+			fill: get-background-color('transparent');
 			left: 0;
 			position: absolute;
 			r: var(--radius);
@@ -44,7 +44,7 @@
 		}
 
 		&__progress-path {
-			stroke: var(--progress-circle-gradient-url, var(--progress-color, var(--color-primary)));
+			stroke: var(--progress-circle-gradient-url, var(--progress-color, get-border-color('primary')));
 			stroke-dasharray: var(--stroke-dasharray);
 			stroke-dashoffset: var(--stroke-dashoffset);
 			stroke-linecap: var(--shape);
@@ -63,7 +63,7 @@
 		}
 
 		&__trail-path {
-			stroke: var(--trail-color, var(--color-neutral-3));
+			stroke: var(--trail-color, get-border-color('neutral-3'));
 		}
 	}
 

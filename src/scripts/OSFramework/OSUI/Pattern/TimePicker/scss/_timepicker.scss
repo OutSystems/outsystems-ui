@@ -26,9 +26,9 @@
 
 		// Disable states for Datepicker
 		&.flatpickr-input[disabled] + input {
-			background-color: var(--color-neutral-2);
-			border: var(--border-size-s) solid var(--color-neutral-4);
-			color: var(--color-neutral-6);
+			background-color: get-background-color('neutral-2');
+			border: var(--border-size-s) solid get-border-color('neutral-4');
+			color: get-text-color('neutral-6');
 			pointer-events: none;
 		}
 
@@ -51,7 +51,7 @@
 
 		// Service Studio Preview
 		& {
-			-servicestudio-background-color: transparent;
+			-servicestudio-background-color: get-background-color('transparent');
 			-servicestudio-background-position: top left;
 			-servicestudio-background-repeat: no-repeat;
 			-servicestudio-background-size: contain;
@@ -86,7 +86,7 @@
 
 	.not-valid + .input,
 	.not-valid + .flatpickr-mobile {
-		border-color: var(--color-error);
+		border-color: get-border-color('error');
 	}
 
 	.flatpickr-mobile ~ span.validation-message {

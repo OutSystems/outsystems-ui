@@ -11,8 +11,16 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 		private _bodyOnClickGlobalEvent: OSFramework.OSUI.Event.DOMEvents.Listeners.IListener;
 		// Event OnBodyScroll common behaviour
 		private _bodyScrollCommonBehaviour: SharedProviderResources.Flatpickr.UpdatePositionOnScroll;
+		// Store button HTML element reference that is associated with the flatpickr next year button
+		private _flatpickrButtonNextYearElem: HTMLElement;
+		// Store button HTML element reference that is associated with the flatpickr previous year button
+		private _flatpickrButtonPreviousYearElem: HTMLElement;
+		// Store label HTML element reference that is associated with the flatpickr input
+		private _flatpickrInputLabelElem: HTMLLabelElement;
 		// Store the provider options
 		private _flatpickrOpts: FlatpickrOptions;
+		// Store input HTML element reference that is associated with the flatpickr year input
+		private _flatpickrYearInputElem: HTMLElement;
 		// Flag to store the status of the platform input
 		private _isPlatformInputDisabled: boolean;
 		// Validation of ZIndex position common behavior
@@ -41,10 +49,29 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 				);
 		}
 
+		// Method used to set the year buttons HTML elements reference
+		private _setA11yHtmlElements(): void {
+			if (this.provider.calendarContainer !== undefined) {
+				this._flatpickrButtonNextYearElem = this.provider.calendarContainer.querySelector(
+					OSFramework.OSUI.Constants.Dot + Enum.CssClasses.ButtonNextYear
+				);
+				this._flatpickrButtonPreviousYearElem = this.provider.calendarContainer.querySelector(
+					OSFramework.OSUI.Constants.Dot + Enum.CssClasses.ButtonPreviousYear
+				);
+				this._flatpickrYearInputElem = this.provider.calendarContainer.querySelector(
+					OSFramework.OSUI.Constants.Dot + Enum.CssClasses.YearInput
+				);
+			}
+		}
+
 		// Method used to set the needed HTML attributes
 		private _setAttributes(): void {
 			// Since a new input will be added by the flatpickr library, we must address it only at onReady
 			this.flatpickrInputElem = this.monthPickerPlatformInputElem.nextSibling as HTMLInputElement;
+
+			this._flatpickrInputLabelElem = document.querySelector(
+				`${OSFramework.OSUI.GlobalEnum.HTMLElement.Label}[${OSFramework.OSUI.GlobalEnum.HTMLAttributes.For}*=${this.monthPickerPlatformInputElem.id}]`
+			) as HTMLLabelElement;
 
 			// Added the data-input attribute in order to input be styled as all platform inputs
 			OSFramework.OSUI.Helper.Dom.Attribute.Set(
@@ -58,6 +85,20 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 				OSFramework.OSUI.Helper.Dom.Attribute.Remove(
 					this.flatpickrInputElem,
 					OSFramework.OSUI.GlobalEnum.HTMLAttributes.Disabled
+				);
+			}
+
+			// If there is an label associated with the platform input
+			if (this.flatpickrInputElem && this._flatpickrInputLabelElem) {
+				// Create an Id for the flatpickr input element that will be then used to set the label for attribute
+				const flatpickrInputElemId = 'fp_' + this.monthPickerPlatformInputElem.id;
+				// Set the Id to the flatpickr input element
+				this.flatpickrInputElem.id = flatpickrInputElemId;
+				// Update the label for attribute to the flatpickr input element
+				OSFramework.OSUI.Helper.Dom.Attribute.Set(
+					this._flatpickrInputLabelElem,
+					OSFramework.OSUI.GlobalEnum.HTMLAttributes.For,
+					flatpickrInputElemId
 				);
 			}
 		}
@@ -156,6 +197,8 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 			}
 
 			this.updatePlatformInputAttrs();
+
+			this._setA11yHtmlElements();
 
 			this.setA11YProperties();
 
@@ -290,20 +333,51 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 
 			this._updateA11yProperties();
 
-			// Set the default aria-label value attribute in case user didn't set it!
-			let ariaLabelValue = Enum.Attribute.DefaultAriaLabel as string;
+			// Set the default aria-label value attribute in case user didn't set a label for the input
+			if (this._flatpickrInputLabelElem === undefined) {
+				// Set the default aria-label value attribute in case user didn't set it!
+				let ariaLabelValue = Enum.Attribute.DefaultAriaLabel as string;
 
-			// Check if aria-label attribute has been added to the default input
-			if (this.monthPickerPlatformInputElem.hasAttribute(OSFramework.OSUI.Constants.A11YAttributes.Aria.Label)) {
-				ariaLabelValue = this.monthPickerPlatformInputElem.getAttribute(
-					OSFramework.OSUI.Constants.A11YAttributes.Aria.Label
+				// Check if aria-label attribute has been added to the default input
+				if (
+					this.monthPickerPlatformInputElem.hasAttribute(OSFramework.OSUI.Constants.A11YAttributes.Aria.Label)
+				) {
+					ariaLabelValue = this.monthPickerPlatformInputElem.getAttribute(
+						OSFramework.OSUI.Constants.A11YAttributes.Aria.Label
+					);
+				}
+
+				// Set the aria-label attribute value
+				OSFramework.OSUI.Helper.A11Y.AriaLabel(this.flatpickrInputElem, ariaLabelValue);
+			}
+
+			// Set the aria-describedby attribute in order to give more context about how to navigate into calendar using keyboard
+			OSFramework.OSUI.Helper.A11Y.AriaDescribedBy(this.flatpickrInputElem, this._a11yInfoContainerElem.id);
+
+			if (this._flatpickrYearInputElem !== undefined) {
+				OSFramework.OSUI.Helper.A11Y.AriaLiveAssertive(this._flatpickrYearInputElem);
+				OSFramework.OSUI.Helper.A11Y.AriaAtomicTrue(this._flatpickrYearInputElem);
+			}
+
+			const langCode = this.configs.Lang !== undefined ? this.configs.Lang : 'en';
+
+			// Check if next year button exists
+			if (this._flatpickrButtonNextYearElem !== undefined) {
+				// Set the aria-label attribute value for next year button
+				OSFramework.OSUI.Helper.A11Y.AriaLabel(
+					this._flatpickrButtonNextYearElem,
+					l10ns.NextYearBtn[langCode].ariaLabel
 				);
 			}
 
-			// Set the aria-label attribute value
-			OSFramework.OSUI.Helper.A11Y.AriaLabel(this.flatpickrInputElem, ariaLabelValue);
-			// Set the aria-describedby attribute in order to give more context about how to navigate into calendar using keyboard
-			OSFramework.OSUI.Helper.A11Y.AriaDescribedBy(this.flatpickrInputElem, this._a11yInfoContainerElem.id);
+			// Check if previous year button exists
+			if (this._flatpickrButtonPreviousYearElem !== undefined) {
+				// Set the aria-label attribute value for previous year button
+				OSFramework.OSUI.Helper.A11Y.AriaLabel(
+					this._flatpickrButtonPreviousYearElem,
+					l10ns.PreviousYearBtn[langCode].ariaLabel
+				);
+			}
 
 			// Check if lang is not EN (default one)
 			if (this.configs.Lang !== OSFramework.OSUI.Constants.Language.short) {

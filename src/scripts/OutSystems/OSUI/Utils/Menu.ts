@@ -564,7 +564,7 @@ namespace OutSystems.OSUI.Utils.Menu {
 								'[' +
 									OSFramework.OSUI.Constants.A11YAttributes.Role.AttrName +
 									"='" +
-									OSFramework.OSUI.Constants.A11YAttributes.Role.MenuItem +
+									OSFramework.OSUI.Constants.A11YAttributes.Role.Button +
 									"']"
 							)[ActiveSubItem] as HTMLElement;
 							if (activeSubMenuItem) {

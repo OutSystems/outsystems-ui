@@ -1,0 +1,363 @@
+#
+# This action enables to perform signed commits. 
+# It imports the GPG key manually and sets up the git configuration for signing commits.
+# The action then performs a signed git commit and push to the specified branch.
+#
+# HOW TO USE:
+#
+# To call this reusable action, copy the code between === lines to workflow file,
+# uncomment and adjust "uses" as needed (use the latest tag available).
+# ======================================================================
+# on:
+#
+#     (...)
+#     steps:
+#     (...)
+#       - name: Commit changes Signed
+#         uses: OutSystems/rd.github-reusable-workflows/.github/actions/signed-commit@vTagVersion
+#         with:
+#           commit-branch: ${{ BRANCH_NAME }}
+#           commit-message: ${{ COMMIT_MESSAGE }}
+#           commit-new-files: ${{ true || false }}
+#           gpg-priv-key: ${{ GPG_SIGN_KEY }}
+#           gpg-pass-phrase: ${{ GPG_PASSPHRASE }}
+#           gpg-passphrase-timeout: ${{ GPG_PASSPHRASE_TIMEOUT }}  # Optional: default 300 seconds
+#
+# ======================================================================
+#
+
+name: Signed GPG Commit
+description: 'Prepare and sign the commit signed'
+inputs:
+    commit-branch:
+        description: 'Branch where to commit.'
+        required: true
+        default: ''
+    commit-message:
+        description: 'Commit message.'
+        required: true
+        default: ''
+    commit-new-files:
+        description: 'Defines if a `git add.` should be made or not.'
+        required: false
+        default: false
+    gpg-priv-key:
+        description: 'GPG Private key.'
+        required: true
+        default: ''
+    gpg-pass-phrase:
+        description: 'GPG passphrase.'
+        required: false
+        default: '""'
+    gpg-passphrase-timeout:
+        description: 'GPG passphrase cache timeout in seconds. Use -1 for no expiration (not recommended for self-hosted runners). Default: 300 (5 minutes).'
+        required: false
+        default: '300'
+
+runs:
+    using: composite
+    steps:
+        # ============================================================
+        # STEP 1: Configure GPG for non-interactive (CI) use
+        # ============================================================
+        # GPG by default expects a TTY for passphrase input. In CI environments,
+        # there's no TTY, so we configure GPG to use "loopback" pinentry mode
+        # which allows passphrase to be provided programmatically.
+        # 
+        # Security: Use an isolated GNUPGHOME under $RUNNER_TEMP to avoid
+        # persisting keys/config in ~/.gnupg on self-hosted runners.
+        - name: Configure GPG for non-interactive use
+          shell: bash
+          run: |
+              # Create isolated GPG home directory under runner temp with secure permissions
+              # This prevents key/config persistence on self-hosted runners
+              export GNUPGHOME="${RUNNER_TEMP}/gnupg-$$"
+              mkdir -p "$GNUPGHOME"
+              chmod 700 "$GNUPGHOME"
+              
+              # Persist GNUPGHOME for subsequent steps
+              echo "GNUPGHOME=$GNUPGHOME" >> "$GITHUB_ENV"
+              
+              # Configure gpg-agent:
+              # - allow-loopback-pinentry: Allows passphrase input via loopback (not TTY)
+              # - allow-preset-passphrase: Allows caching passphrase before it's needed
+              # Using printf to avoid heredoc indentation issues
+              printf '%s\n' 'allow-loopback-pinentry' 'allow-preset-passphrase' > "$GNUPGHOME/gpg-agent.conf"
+              
+              # Configure gpg:
+              # - pinentry-mode loopback: Use loopback for passphrase (no TTY prompt)
+              # - use-agent: Use gpg-agent for key operations
+              printf '%s\n' 'pinentry-mode loopback' 'use-agent' > "$GNUPGHOME/gpg.conf"
+              
+              # Set secure permissions on config files
+              chmod 600 "$GNUPGHOME/gpg-agent.conf" "$GNUPGHOME/gpg.conf"
+              
+              # Create a GPG wrapper script that injects --passphrase when signing
+              # This works around gpg-agent's PRESET_PASSPHRASE limitations
+              # Git calls gpg with --status-fd for signing, so we detect that
+              GPG_WRAPPER="$GNUPGHOME/gpg-wrapper.sh"
+              cat > "$GPG_WRAPPER" << WRAPPER_EOF
+              #!/bin/bash
+              export GNUPGHOME="$GNUPGHOME"
+              # Check if this is a signing operation
+              # Git uses --status-fd for signing, or we check for signing-related flags
+              IS_SIGNING=false
+              for arg in "\$@"; do
+                  case "\$arg" in
+                      --status-fd*|-bsau|--sign|--clearsign|--detach-sign)
+                          IS_SIGNING=true
+                          break
+                          ;;
+                  esac
+              done
+
+              # If signing and GPG_PASSPHRASE is set, inject --passphrase and --batch --pinentry-mode loopback
+              if [ "\$IS_SIGNING" = true ] && [ -n "\$GPG_PASSPHRASE" ]; then
+                  exec gpg --homedir "\$GNUPGHOME" --batch --pinentry-mode loopback --passphrase "\$GPG_PASSPHRASE" "\$@"
+              else
+                  exec gpg --homedir "\$GNUPGHOME" --pinentry-mode loopback "\$@"
+              fi
+              WRAPPER_EOF
+                            chmod 755 "$GPG_WRAPPER"
+              
+              # Export wrapper path for git to use
+              echo "GPG_WRAPPER=$GPG_WRAPPER" >> "$GITHUB_ENV"
+              
+              # Restart gpg-agent to pick up new configuration
+              # || true prevents failure if agent wasn't running
+              # Use --homedir to ensure we target the isolated keyring
+              gpgconf --homedir "$GNUPGHOME" --kill gpg-agent || true
+              gpg-connect-agent --homedir "$GNUPGHOME" reloadagent /bye || true
+
+        # ============================================================
+        # STEP 2: Validate inputs
+        # ============================================================
+        # Validate required inputs early to provide clear error messages.
+        - name: Validate inputs
+          shell: bash
+          env:
+              GPG_PRIVATE_KEY: ${{ inputs.gpg-priv-key }}
+              COMMIT_BRANCH: ${{ inputs.commit-branch }}
+              COMMIT_MESSAGE: ${{ inputs.commit-message }}
+          run: |
+              # Validate GPG private key is not empty
+              if [ -z "$GPG_PRIVATE_KEY" ]; then
+                  echo "::error::GPG private key is empty. Please provide a valid GPG private key."
+                  exit 1
+              fi
+              
+              # Validate commit branch is not empty
+              if [ -z "$COMMIT_BRANCH" ]; then
+                  echo "::error::Commit branch is empty. Please specify a target branch."
+                  exit 1
+              fi
+              
+              # Validate commit message is not empty
+              if [ -z "$COMMIT_MESSAGE" ]; then
+                  echo "::error::Commit message is empty. Please provide a commit message."
+                  exit 1
+              fi
+
+        # ============================================================
+        # STEP 3: Import GPG key and configure Git for signing
+        # ============================================================
+        # This step imports the provided GPG private key, extracts its
+        # fingerprint and user identity, then configures Git to use it
+        # for commit signing.
+        - name: Import GPG key and configure git
+          shell: bash
+          env:
+              # Pass the private key via environment variable to avoid shell escaping issues
+              GPG_PRIVATE_KEY: ${{ inputs.gpg-priv-key }}
+          run: |
+              # ----------------------------------------------------------
+              # Extract fingerprint from the key BEFORE importing
+              # ----------------------------------------------------------
+              # Using --import-options show-only displays key info without importing.
+              # --with-colons outputs machine-readable format (not locale-dependent).
+              # The 'fpr' line contains the fingerprint in field 10.
+              # { grep fpr || true; } prevents pipeline failure if no match (pipefail safe).
+              # Using printf '%s' instead of echo to avoid escape sequence interpretation
+              # and preserve exact multi-line armored key contents.
+              # --pinentry-mode loopback: Explicitly set on command line for reliability.
+              # --homedir: Ensure we use the isolated GNUPGHOME
+              IMPORT_OUTPUT=$(printf '%s' "$GPG_PRIVATE_KEY" | gpg --homedir "$GNUPGHOME" --batch --pinentry-mode loopback --import --import-options show-only --with-colons 2>/dev/null | { grep fpr || true; } | head -1 | cut -d':' -f10)
+              
+              # ----------------------------------------------------------
+              # Actually import the key into the keyring
+              # ----------------------------------------------------------
+              # --batch: Non-interactive mode, no prompts
+              # --pinentry-mode loopback: Prevents TTY prompts in CI environments
+              # --homedir: Ensure we use the isolated GNUPGHOME
+              # Using printf '%s' to preserve exact key contents (avoid echo escape sequences)
+              printf '%s' "$GPG_PRIVATE_KEY" | gpg --homedir "$GNUPGHOME" --batch --pinentry-mode loopback --import
+              
+              # ----------------------------------------------------------
+              # Determine the fingerprint to use
+              # ----------------------------------------------------------
+              # Prefer the fingerprint from show-only (identifies exact key imported).
+              # Fall back to first secret key if show-only didn't work.
+              if [ -n "$IMPORT_OUTPUT" ]; then
+                  FINGERPRINT="$IMPORT_OUTPUT"
+              else
+                  FINGERPRINT=$(gpg --homedir "$GNUPGHOME" --pinentry-mode loopback --list-secret-keys --with-colons | { grep fpr || true; } | head -1 | cut -d':' -f10)
+              fi
+              
+              # ----------------------------------------------------------
+              # Validate we got a fingerprint
+              # ----------------------------------------------------------
+              # Without a fingerprint, we can't configure signing - fail explicitly.
+              if [ -z "$FINGERPRINT" ]; then
+                  echo "::error::Failed to extract GPG key fingerprint"
+                  exit 1
+              fi
+              
+              # ----------------------------------------------------------
+              # Extract user identity from the key
+              # ----------------------------------------------------------
+              # The 'uid' line in --with-colons format contains the user ID in field 10.
+              # Format is typically: "Real Name <email@example.com>"
+              USER_ID=$(gpg --homedir "$GNUPGHOME" --pinentry-mode loopback --list-secret-keys --with-colons "$FINGERPRINT" | { grep uid || true; } | head -1 | cut -d':' -f10)
+              
+              # Parse email (inside angle brackets) and name (before angle brackets)
+              USER_EMAIL=""
+              USER_NAME=""
+              if [ -n "$USER_ID" ]; then
+                  # Extract email using regex: match content between < and >
+                  if [[ "$USER_ID" =~ \<([^>]+)\> ]]; then
+                      USER_EMAIL="${BASH_REMATCH[1]}"
+                  fi
+                  # Extract name: everything before " <"
+                  USER_NAME=$(echo "$USER_ID" | sed 's/ <.*//')
+              fi
+              
+              # ----------------------------------------------------------
+              # Configure Git for GPG signing
+              # ----------------------------------------------------------
+              # Use full fingerprint (40 chars) for unambiguous key identification.
+              # Short key IDs can collide when multiple keys exist.
+              # Using --local to avoid persisting config on self-hosted runners.
+              if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+                  echo "::error::Git repository not found. Ensure actions/checkout runs before this action."
+                  exit 1
+              fi
+              git config --local user.signingkey "$FINGERPRINT"
+              git config --local commit.gpgsign true
+              
+              # Use the GPG wrapper script that enforces loopback pinentry mode
+              # This prevents "cannot open /dev/tty" errors in CI environments
+              if [ -n "$GPG_WRAPPER" ] && [ -x "$GPG_WRAPPER" ]; then
+                  git config --local gpg.program "$GPG_WRAPPER"
+              else
+                  git config --local gpg.program gpg
+              fi
+              
+              # Ensure gpg.program is set as expected, otherwise signing may use system gpg.
+              CURRENT_GPG_PROGRAM=$(git config --local gpg.program || true)
+              if [ -z "$CURRENT_GPG_PROGRAM" ]; then
+                  echo "::error::Failed to configure git gpg.program for signing."
+                  exit 1
+              fi
+              
+              # Set Git user identity from the GPG key (if extracted)
+              if [ -n "$USER_EMAIL" ]; then
+                  git config --local user.email "$USER_EMAIL"
+              fi
+              if [ -n "$USER_NAME" ]; then
+                  git config --local user.name "$USER_NAME"
+              fi
+
+        # ============================================================
+        # STEP 4: Stage new files (optional)
+        # ============================================================
+        # If commit-new-files is true, stage all changes including new files.
+        - name: Add new files (if needed)
+          shell: bash
+          if: ${{ inputs.commit-new-files == 'true' }}
+          run: |
+              git add .
+
+        # ============================================================
+        # STEP 5: Verify passphrase and commit
+        # ============================================================
+        # This step verifies the passphrase works, then creates the signed commit.
+        # The GPG wrapper script injects --passphrase when signing, avoiding TTY prompts.
+        - name: Commit and push
+          shell: bash
+          env:
+              # Pass passphrase via environment variable for security
+              GPG_PASSPHRASE: ${{ inputs.gpg-pass-phrase }}
+              # Unset GPG_TTY to prevent GPG from trying to use a terminal
+              GPG_TTY: ""
+          run: |
+              # Verify GNUPGHOME is set (should be from Step 1)
+              if [ -z "$GNUPGHOME" ] || [ ! -d "$GNUPGHOME" ]; then
+                  echo "::error::GNUPGHOME is not set or invalid. GPG configuration failed."
+                  exit 1
+              fi
+              
+              # Verify GPG_WRAPPER exists
+              if [ -z "$GPG_WRAPPER" ] || [ ! -x "$GPG_WRAPPER" ]; then
+                  echo "::error::GPG wrapper script not found or not executable."
+                  exit 1
+              fi
+              
+              # ----------------------------------------------------------
+              # Get the signing key and verify passphrase
+              # ----------------------------------------------------------
+              SIGNING_KEY=$(git config --get user.signingkey)
+              
+              # Preflight signing to ensure we won't prompt for a passphrase at commit time.
+              # The wrapper script will inject --passphrase when signing, so we verify it works.
+              if [ -n "$GPG_PASSPHRASE" ] && [ "$GPG_PASSPHRASE" != '""' ]; then
+                  if ! printf 'gpg-passphrase-check' | gpg --homedir "$GNUPGHOME" --batch --pinentry-mode loopback --passphrase "$GPG_PASSPHRASE" --local-user "$SIGNING_KEY" --clearsign >/dev/null 2>&1; then
+                      echo "::error::GPG passphrase is invalid for the provided signing key."
+                      exit 1
+                  fi
+              else
+                  # If no passphrase provided, verify the key is unprotected
+                  if ! printf 'gpg-passphrase-check' | gpg --homedir "$GNUPGHOME" --batch --pinentry-mode loopback --local-user "$SIGNING_KEY" --clearsign >/dev/null 2>&1; then
+                      echo "::error::GPG passphrase is required but not provided."
+                      exit 1
+                  fi
+              fi
+              
+              # ----------------------------------------------------------
+              # Create signed commit and push
+              # ----------------------------------------------------------
+              # Git will automatically use GPG to sign (commit.gpgsign = true).
+              # The wrapper script detects signing operations and injects --passphrase
+              # from GPG_PASSPHRASE environment variable, avoiding TTY prompts.
+              if [ -n "$GPG_WRAPPER" ] && [ -x "$GPG_WRAPPER" ]; then
+                  git -c gpg.program="$GPG_WRAPPER" -c commit.gpgsign=true commit -m "${{ inputs.commit-message }}"
+              else
+                  git commit -m "${{ inputs.commit-message }}"
+              fi
+              
+              # Verify the commit was actually signed
+              # %G? returns: G = good, B = bad, U = unknown validity, X = expired, Y = expired key, R = revoked, E = error, N = no signature
+              SIGNATURE_STATUS=$(git log -1 --format="%G?")
+              if [ "$SIGNATURE_STATUS" != "G" ] && [ "$SIGNATURE_STATUS" != "U" ]; then
+                  echo "::error::Commit was not properly signed (status: $SIGNATURE_STATUS). GPG signing may have failed."
+                  exit 1
+              fi
+              
+              git push origin -- "${{ inputs.commit-branch }}"
+
+        # ============================================================
+        # STEP 6: Cleanup GPG environment
+        # ============================================================
+        # Remove the isolated GNUPGHOME to prevent key/config persistence
+        # on self-hosted runners and avoid cross-job leakage.
+        - name: Cleanup GPG environment
+          shell: bash
+          if: always()
+          run: |
+              # Only kill gpg-agent if GNUPGHOME is set to avoid killing default agent
+              # on self-hosted runners. Use --homedir to target the isolated keyring.
+              if [ -n "$GNUPGHOME" ] && [ -d "$GNUPGHOME" ]; then
+                  gpgconf --homedir "$GNUPGHOME" --kill gpg-agent || true
+                  
+                  # Remove the isolated GNUPGHOME directory
+                  rm -rf "$GNUPGHOME"
+              fi

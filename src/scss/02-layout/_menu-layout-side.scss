@@ -10,7 +10,7 @@
 	}
 
 	.app-menu-content {
-		background-color: var(--color-neutral-0);
+		background-color: get-background-color('neutral-0');
 		bottom: 0;
 		flex-direction: column;
 		height: auto;
@@ -25,7 +25,7 @@
 ///
 .aside-overlay {
 	.app-menu-content {
-		background-color: var(--color-neutral-0);
+		background-color: get-background-color('neutral-0');
 		flex-direction: column;
 		height: 100%;
 		left: calc(-1 * var(--side-menu-size));

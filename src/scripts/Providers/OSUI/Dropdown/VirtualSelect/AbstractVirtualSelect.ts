@@ -37,6 +37,8 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 				textContainer.innerHTML = text;
 
 				this.selfElement.parentElement.appendChild(textContainer);
+			} else {
+				errorMessageElement.innerHTML = text;
 			}
 		}
 
@@ -97,7 +99,12 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 					OSFramework.OSUI.Event.DOMEvents.Listeners.Type.OrientationChange,
 					this._eventOnOrientationChange
 				);
-			} else {
+				//Validates if the device is mobile or if is forcing desktop view.
+				//This prevents the addition of a resize event (e.g. Keyboard Opens)
+			} else if (
+				OSFramework.OSUI.Helper.DeviceInfo.IsDesktop &&
+				OSFramework.OSUI.Helper.DeviceInfo.HasCursorPointer
+			) {
 				OSFramework.OSUI.Event.DOMEvents.Listeners.GlobalListenerManager.Instance.addHandler(
 					OSFramework.OSUI.Event.DOMEvents.Listeners.Type.WindowResize,
 					this._eventOnWindowResize
@@ -128,8 +135,23 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		 * @memberof Providers.OSUI.Dropdown.VirtualSelect.AbstractVirtualSelect
 		 */
 		protected createProviderInstance(): void {
-			// Create the provider instance
-			this.provider = window.VirtualSelect.init(this.virtualselectOpts);
+			let selectedValue: unknown = this.virtualselectOpts.selectedValue;
+
+			// Stores the values selected before provider recreation
+			// when there is a rerender of this component.
+			if (this.provider !== undefined) {
+				const selectedOptions = this.provider.getSelectedOptions();
+				if (selectedOptions !== undefined) {
+					if (Array.isArray(selectedOptions)) {
+						selectedValue = selectedOptions.map((selectedOption) => selectedOption.value);
+					} else {
+						selectedValue = selectedOptions.value;
+					}
+				}
+			}
+
+			// Create the provider instance using the starting value or the previous selected values
+			this.provider = window.VirtualSelect.init({ ...this.virtualselectOpts, selectedValue });
 
 			/* NOTE: When user change the URL and then click at browser back button we're getting an error. This happen because library (VS - VirtualSelect) creates a new instance of the same object and assign it into an array of VS objects that are in the same screen (in this case 2 equal VS objects since we're creating a new VS instance for each Dropdown), that said and in order to avoid this issue, we must follow this approach. 
 			Again, this only happens when user change directly the URL! */

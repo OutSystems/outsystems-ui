@@ -15,7 +15,7 @@
 
 		.animated-label-input {
 			.form-control[data-input]::-webkit-datetime-edit {
-				color: var(--color-neutral-9);
+				color: get-text-color('neutral-9');
 			}
 
 			[data-textarea] {
@@ -25,7 +25,7 @@
 	}
 
 	&-text {
-		color: var(--color-neutral-8);
+		color: get-text-color('neutral-8');
 		font-size: var(--font-size-s);
 		pointer-events: none;
 		position: absolute;
@@ -52,33 +52,33 @@
 		.form-control {
 			&[data-input],
 			&[data-textarea] {
-				background-color: transparent;
+				background-color: get-background-color('transparent');
 				border: var(--border-size-none);
-				border-bottom: var(--border-size-s) solid var(--color-neutral-5);
+				border-bottom: var(--border-size-s) solid get-border-color('neutral-5');
 				border-radius: var(--border-radius-none);
 				padding: var(--space-none);
 				transition: all 100ms ease-in-out;
 
 				&:focus {
-					border-bottom: var(--border-size-s) solid var(--color-primary);
+					border-bottom: var(--border-size-s) solid get-border-color('primary');
 
 					&::-webkit-datetime-edit {
-						color: var(--color-neutral-9);
+						color: get-text-color('neutral-9');
 					}
 				}
 
 				&.not-valid {
-					border-bottom: var(--border-size-s) solid var(--color-error);
+					border-bottom: var(--border-size-s) solid get-border-color('error');
 
 					&:focus {
 						border: var(--border-size-none);
-						border-bottom: var(--border-size-s) solid var(--color-error);
+						border-bottom: var(--border-size-s) solid get-border-color('error');
 					}
 				}
 
 				/* Removes placeholder text for input type date and time*/
 				&::-webkit-datetime-edit {
-					color: transparent;
+					color: get-text-color('transparent');
 				}
 
 				&::-webkit-calendar-picker-indicator {
@@ -163,14 +163,14 @@
 .has-accessible-features {
 	.animated-label-input {
 		.form-control[data-input] {
-			border-color: var(--color-neutral-7);
+			border-color: get-border-color('neutral-7');
 
 			&:hover {
-				border-color: var(--color-neutral-8);
+				border-color: get-border-color('neutral-8');
 			}
 
 			&:focus {
-				box-shadow: 0 3px 0 0 var(--color-focus-outer);
+				box-shadow: 0 3px 0 0 get-background-color('focus-outer');
 			}
 		}
 	}
@@ -187,7 +187,7 @@
 	.animated-label {
 		&.active {
 			.animated-label-text {
-				background-color: var(--color-neutral-8);
+				background-color: get-background-color('neutral-8');
 				font-size: var(--font-size-s);
 				top: -16px;
 			}

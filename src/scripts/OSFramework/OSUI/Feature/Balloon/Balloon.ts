@@ -97,6 +97,13 @@ namespace OSFramework.OSUI.Feature.Balloon {
 			this._focusManagerInstance = new Behaviors.FocusManager();
 		}
 
+	// Validates if the feature parent is of parent type
+	private _isParentType(patternClassName: string) {
+		return (
+			this.featurePattern as unknown as Patterns.AbstractPattern<Patterns.AbstractConfiguration>
+		).selfElement.classList.contains(patternClassName);
+	}
+
 		// Manage the focus of the elements inside the Balloon
 		private _manageFocusInsideBalloon(
 			arrowKeyPressed?: GlobalEnum.Keycodes.ArrowDown | GlobalEnum.Keycodes.ArrowUp
@@ -166,6 +173,15 @@ namespace OSFramework.OSUI.Feature.Balloon {
 
 		// Manage the behaviour when there is a window resize!
 		private _onWindowResize(): void {
+			//Validates if the device is mobile or if is forcing desktop view and if the element is a child of Dropdown Server Side.
+			//This prevents closing the ballon on resize (e.g. Keyboard Opens)
+			if (
+				this._isParentType(Patterns.Dropdown.ServerSide.Enum.CssClass.Pattern) &&
+				(Helper.DeviceInfo.IsMobileDevice || Helper.DeviceInfo.HasCursorPointer === false)
+			) {
+				return;
+			}
+
 			// If there is a horizontal resize and the Balloon is open, close it!
 			if (this.isOpen) {
 				this.close();
@@ -194,8 +210,12 @@ namespace OSFramework.OSUI.Feature.Balloon {
 			Helper.Dom.Attribute.Set(this.featureElem, Constants.A11YAttributes.Aria.Hidden, (!this.isOpen).toString());
 
 			if (this.featureOptions.focusOptions.useFocus !== false) {
-				// Will handle the tabindex value of the elements inside pattern
-				Helper.A11Y.SetElementsTabIndex(this.isOpen, this._focusTrapInstance.focusableElements);
+				if (Helper.DeviceInfo.IsMobileDevice === false) {
+					// Will handle the tabindex value of the elements inside pattern
+					Helper.A11Y.SetElementsTabIndex(this.isOpen, this._focusTrapInstance.focusableElements);
+				} 
+
+				Helper.A11Y.RoleDialog(this.featureElem);
 
 				Helper.Dom.Attribute.Set(
 					this.featureElem,
@@ -294,7 +314,7 @@ namespace OSFramework.OSUI.Feature.Balloon {
 			this._setA11YProperties();
 
 			if (this.isOpen) {
-				if (this.featureOptions.focusOptions.useFocus !== false) {
+				if (this.featureOptions.focusOptions.useFocus !== false && Helper.DeviceInfo.IsMobileDevice === false) {
 					// Handle focus trap logic
 					this._focusManagerInstance.storeLastFocusedElement();
 					this._focusTrapInstance.enableForA11y();
@@ -307,15 +327,17 @@ namespace OSFramework.OSUI.Feature.Balloon {
 					this._manageFocusInsideBalloon(arrowKeyPressed);
 				}
 			} else if (this.featureOptions.focusOptions.useFocus !== false) {
-				// Handle focus trap logic
-				this._focusTrapInstance.disableForA11y();
-				// Focus on last element clicked. Async to avoid conflict with closing animation
-				Helper.AsyncInvocation(() => {
-					this.featureElem.blur();
-					if (isBodyClick === false) {
-						this._focusManagerInstance.setFocusToStoredElement();
-					}
-				});
+				if (Helper.DeviceInfo.IsMobileDevice === false) {
+					// Handle focus trap logic
+					this._focusTrapInstance.disableForA11y();
+					// Focus on last element clicked. Async to avoid conflict with closing animation
+					Helper.AsyncInvocation(() => {
+						this.featureElem.blur();
+						if (isBodyClick === false) {
+							this._focusManagerInstance.setFocusToStoredElement();
+						}
+					});
+				}
 
 				// Unset focus attributes
 				this._focusableBalloonElements = undefined;
@@ -350,7 +372,7 @@ namespace OSFramework.OSUI.Feature.Balloon {
 			this._setEventListeners();
 			this.setFloatingConfigs();
 
-			if (this.featureOptions.focusOptions.useFocus !== false) {
+			if (this.featureOptions.focusOptions.useFocus !== false && Helper.DeviceInfo.IsMobileDevice === false) {
 				this._handleFocusBehavior();
 			}
 
