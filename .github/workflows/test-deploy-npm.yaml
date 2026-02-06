@@ -3,8 +3,7 @@ name: Test Deploy NPM
 on:
     push:
         branches:
-            - dev
-            - main
+            - ROU-12558
 
 permissions:
     contents: read
