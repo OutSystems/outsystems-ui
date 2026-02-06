@@ -141,6 +141,7 @@ jobs:
                   tag_name: v${{ inputs.new-version }}
                   prerelease: false
                   token: ${{ steps.get-github-token.outputs.az-keyvault-value }}
+                  make_latest: true
 
     delete-rc-branch:
         name: Delete rc branch
