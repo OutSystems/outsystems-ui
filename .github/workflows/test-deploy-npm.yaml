@@ -13,7 +13,7 @@ jobs:
     call-deploy-npm:
         uses: ./.github/workflows/create-n-deploy-npm.yaml
         with:
-            branch-name: ${{ github.ref_name }}
+            branch-name: main
             delete-branch: true
             run-lint: true
         secrets:
