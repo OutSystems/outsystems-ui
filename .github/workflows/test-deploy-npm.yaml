@@ -6,7 +6,8 @@ on:
             - ROU-12558
 
 permissions:
-    contents: read
+    id-token: write
+    contents: write
 
 jobs:
     call-deploy-npm:
