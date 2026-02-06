@@ -1,0 +1,22 @@
+name: Test Deploy NPM
+
+on:
+    push:
+        branches:
+            - dev
+            - main
+
+permissions:
+    contents: read
+
+jobs:
+    call-deploy-npm:
+        uses: ./.github/workflows/create-n-deploy-npm.yaml
+        with:
+            branch-name: ${{ github.ref_name }}
+            delete-branch: true
+            run-lint: true
+        secrets:
+            OSUI_AZURE_CLIENT_ID: ${{ secrets.OSUI_AZURE_CLIENT_ID }}
+            OSUI_AZURE_TENANT_ID: ${{ secrets.OSUI_AZURE_TENANT_ID }}
+            OSUI_AZURE_SUBSCRIPTION_ID: ${{ secrets.OSUI_AZURE_SUBSCRIPTION_ID }}
