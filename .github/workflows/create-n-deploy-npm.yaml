@@ -138,18 +138,25 @@ jobs:
             - name: 📥 Checkout repository
               uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
+            # Using remote azure/login action directly to avoid post-action failure
+            # when gulp prepareToDeploy removes the .github folder
             - name: 🔐 Azure Login
-              uses: ./.github/actions/az-login
+              uses: azure/login@a457da9ea143d694b1b9c7c869ebb04ebe844ef5 # v2.3.0
               with:
                 client-id: ${{ secrets.OSUI_AZURE_CLIENT_ID }}
                 tenant-id: ${{ secrets.OSUI_AZURE_TENANT_ID }}
                 subscription-id: ${{ secrets.OSUI_AZURE_SUBSCRIPTION_ID }}
 
+            # Using remote azure/cli action directly to avoid post-action failure
+            # when gulp prepareToDeploy removes the .github folder
             - name: 🔑 Get GitHub Token from Azure Key Vault
               id: get-github-token
-              uses: ./.github/actions/az-keyvault-get
+              uses: azure/cli@089eac9d8cc39f5d003e94f8b65efc51076c9cbd # v2.1.0
               with:
-                  key-name: o11odc-github-gitpersonal-token-prd
+                  inlineScript: |
+                      secretValue=$(az keyvault secret show --name "o11odc-github-gitpersonal-token-prd" --vault-name "kv-ui-components" --query "value" --output tsv)
+                      echo "::add-mask::$secretValue"
+                      echo "az-keyvault-value=$secretValue" >> $GITHUB_OUTPUT
 
             - name: 🔧 Configure Git with the UiComponentsBot Token
               run: |
