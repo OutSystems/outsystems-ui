@@ -1,9 +1,0 @@
-{
-	"recommendations": [
-		"esbenp.prettier-vscode",
-		"stylelint.vscode-stylelint",
-		"oouo-diogo-perdigao.docthis",
-		"waderyan.gitblame",
-		"dbaeumer.vscode-eslint"
-	]
-}
