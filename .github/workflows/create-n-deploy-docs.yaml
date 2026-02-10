@@ -36,7 +36,9 @@ on:
             OSUI_AZURE_TENANT_ID:
                 required: true
             OSUI_AZURE_SUBSCRIPTION_ID:
-                required: true                
+                required: true
+            GPG_SIGN_KEY:
+                required: true
 
 permissions:
     contents: read
