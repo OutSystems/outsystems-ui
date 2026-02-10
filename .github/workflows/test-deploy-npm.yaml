@@ -11,6 +11,7 @@ permissions:
 # testing push to npm
 jobs:
     call-deploy-npm:
+        name: call-deploy-npm
         uses: ./.github/workflows/create-n-deploy-npm.yaml
         with:
             branch-name: main
@@ -21,6 +22,8 @@ jobs:
             OSUI_AZURE_TENANT_ID: ${{ secrets.OSUI_AZURE_TENANT_ID }}
             OSUI_AZURE_SUBSCRIPTION_ID: ${{ secrets.OSUI_AZURE_SUBSCRIPTION_ID }}
     call-deploy-docs:
+        name: call-deploy-docs
+        needs: call-deploy-npm
         uses: ./.github/workflows/create-n-deploy-docs.yaml
         with:
             branch-name: main
