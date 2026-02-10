@@ -8,7 +8,7 @@ on:
 permissions:
     id-token: write
     contents: write
-
+# testing push to npm
 jobs:
     call-deploy-npm:
         uses: ./.github/workflows/create-n-deploy-npm.yaml
