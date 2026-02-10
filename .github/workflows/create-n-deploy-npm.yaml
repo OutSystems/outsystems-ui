@@ -135,9 +135,6 @@ jobs:
             contents: write
 
         steps:
-            - name: 📥 Checkout repository
-              uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-
             # Using remote azure/login action directly to avoid post-action failure
             # when gulp prepareToDeploy removes the .github folder
             - name: 🔐 Azure Login
@@ -205,9 +202,6 @@ jobs:
             contents: write
 
         steps:
-            - name: 📥 Checkout repository
-              uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-
             # Using remote azure/login action directly to avoid post-action failure
             # when gulp prepareToDeploy removes the .github folder
             - name: 🔐 Azure Login

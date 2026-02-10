@@ -20,3 +20,13 @@ jobs:
             OSUI_AZURE_CLIENT_ID: ${{ secrets.OSUI_AZURE_CLIENT_ID }}
             OSUI_AZURE_TENANT_ID: ${{ secrets.OSUI_AZURE_TENANT_ID }}
             OSUI_AZURE_SUBSCRIPTION_ID: ${{ secrets.OSUI_AZURE_SUBSCRIPTION_ID }}
+    call-deploy-docs:
+        uses: ./.github/workflows/create-n-deploy-docs.yaml
+        with:
+            branch-name: main
+            delete-branch: true
+            run-lint: true
+        secrets:
+            OSUI_AZURE_CLIENT_ID: ${{ secrets.OSUI_AZURE_CLIENT_ID }}
+            OSUI_AZURE_TENANT_ID: ${{ secrets.OSUI_AZURE_TENANT_ID }}
+            OSUI_AZURE_SUBSCRIPTION_ID: ${{ secrets.OSUI_AZURE_SUBSCRIPTION_ID }}
