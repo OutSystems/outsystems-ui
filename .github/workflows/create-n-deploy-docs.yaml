@@ -219,19 +219,13 @@ jobs:
                   ref: deploy-docs
                   token: ${{ steps.get-github-token.outputs.az-keyvault-value }}
 
-            - name: 🔑 Get osuidocs Token from Azure Key Vault
-              id: get-osuidocs-token
-              uses: ./.github/actions/az-keyvault-get
-              with:
-                  key-name: o11odc-github-osuidocs-token-prd
-
             - name: 📤 Push documentation files into github page
               if: ${{ needs.check-repo.outputs.is-real-osui-repo == 'true' }}
               uses: GuillaumeFalourd/copy-push-files@758ee05c45fbd682b62908f2373bf070077a1e43 # v1
               with:
                   source_files: docs/*
                   remote_repository: https://github.com/outsystems-ui-docs/outsystems-ui-docs.github.io
-                  access_token: ${{ steps.get-osuidocs-token.outputs.az-keyvault-value }}
+                  access_token: ${{ steps.get-github-token.outputs.az-keyvault-value }}
                   target_branch: main
                   commit_message: Deploy documentation.
 
