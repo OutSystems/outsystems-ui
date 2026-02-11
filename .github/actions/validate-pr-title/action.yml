@@ -37,7 +37,7 @@ runs:
   using: composite
   steps:
     - name: "Check PR title follows '${{ inputs.validate-semVer == true && '+semver: <minor|major|patch> ' || '' }}<ticket id> <description>'"
-      uses: deepakputhraya/action-pr-title@v1.0.2
+      uses: deepakputhraya/action-pr-title@3864bebc79c5f829d25dd42d3c6579d040b0ef16 #v1.0.2
       with:
         regex: ^${{ inputs.validate-semVer == true && '(\+semver:\s(minor|major|patch)\s)?' || '' }}([A-Z][A-Z0-9]*-\d+(:)?\s\w)
       if: ${{ contains(github.head_ref, 'release/') == false && contains(github.head_ref, 'merge/') == false }}
