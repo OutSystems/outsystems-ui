@@ -21,7 +21,7 @@ permissions:
 
 jobs:
     set-release-latest:
-        name: 🏷️ Set Release as Latest
+        name: Set Release as Latest
         permissions:
             id-token: write
             contents: write
