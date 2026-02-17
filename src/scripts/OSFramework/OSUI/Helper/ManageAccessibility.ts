@@ -321,6 +321,28 @@ namespace OSFramework.OSUI.Helper {
 		}
 
 		/**
+		 * Method that will set the aria-orientation to horizontal
+		 *
+		 * @param {HTMLElement} element Target element to receive the value atributte
+		 * @returns
+		 * @memberof OSFramework.Helper.A11Y
+		 */
+		public static AriaOrientationHorizontal(element: HTMLElement): void {
+			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.OrientationHorizontal, Constants.A11YAttributes.States.Horizontal);
+		}
+		
+		/**
+		 * Method that will set the aria-orientation to vertical
+		 *
+		 * @param {HTMLElement} element Target element to receive the value atributte
+		 * @returns
+		 * @memberof OSFramework.Helper.A11Y
+		 */
+		public static AriaOrientationVertical(element: HTMLElement): void {
+			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.OrientationVertical, Constants.A11YAttributes.States.Vertical);
+		}
+
+		/**
 		 * Method that will set the aria-selected to false
 		 *
 		 * @static
