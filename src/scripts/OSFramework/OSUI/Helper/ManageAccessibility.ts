@@ -328,7 +328,7 @@ namespace OSFramework.OSUI.Helper {
 		 * @memberof OSFramework.Helper.A11Y
 		 */
 		public static AriaOrientationHorizontal(element: HTMLElement): void {
-			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.OrientationHorizontal, Constants.A11YAttributes.States.Horizontal);
+			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Orientation, Constants.A11YAttributes.States.Horizontal);
 		}
 		
 		/**
@@ -339,7 +339,7 @@ namespace OSFramework.OSUI.Helper {
 		 * @memberof OSFramework.Helper.A11Y
 		 */
 		public static AriaOrientationVertical(element: HTMLElement): void {
-			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.OrientationVertical, Constants.A11YAttributes.States.Vertical);
+			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Orientation, Constants.A11YAttributes.States.Vertical);
 		}
 
 		/**

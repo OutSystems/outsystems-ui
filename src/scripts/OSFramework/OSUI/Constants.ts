@@ -6,8 +6,7 @@ namespace OSFramework.OSUI.Constants {
 	export const A11YAttributes = {
 		Aria: {
 			Atomic: 'aria-atomic',
-			OrientationHorizontal: 'aria-orientation',
-			OrientationVertical: 'aria-orientation',
+			Orientation: 'aria-orientation',
 			Modal: 'aria-modal',
 			Busy: 'aria-busy',
 			Controls: 'aria-controls',
