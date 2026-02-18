@@ -222,13 +222,7 @@ namespace OutSystems.OSUI.Utils.Menu {
 			// Add role menuitem to all menu direct children
 			for (const item of menuItems) {
 				if (!item.hasAttribute('role')) {
-					item.setAttribute('role', 'menuitem');
-				}
-
-				if(item.classList.contains('active')) {
-					item.setAttribute('aria-selected', 'true');
-				} else {
-					item.setAttribute('aria-selected', 'false');
+					OSFramework.OSUI.Helper.A11Y.RoleMenuItem(item as HTMLElement);
 				}
 			}
 		}
