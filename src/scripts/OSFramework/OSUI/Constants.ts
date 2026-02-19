@@ -6,6 +6,7 @@ namespace OSFramework.OSUI.Constants {
 	export const A11YAttributes = {
 		Aria: {
 			Atomic: 'aria-atomic',
+			Orientation: 'aria-orientation',
 			Modal: 'aria-modal',
 			Busy: 'aria-busy',
 			Controls: 'aria-controls',
@@ -46,6 +47,7 @@ namespace OSFramework.OSUI.Constants {
 			Complementary: 'complementary',
 			Dialog: 'dialog',
 			Listbox: 'listbox',
+			Main: 'main',
 			Menu: 'menu',
 			MenuItem: 'menuitem',
 			Option: 'option',
@@ -63,9 +65,11 @@ namespace OSFramework.OSUI.Constants {
 		States: {
 			Empty: '',
 			False: 'false',
+			Horizontal: 'horizontal',
 			TabIndexHidden: '-1',
 			TabIndexShow: '0',
 			True: 'true',
+			Vertical: 'vertical',
 		},
 	};
 
