@@ -10,7 +10,6 @@ namespace OutSystems.OSUI.Utils.IconLibrary {
 
 	/**
 	 * Get the icon library class already set, if any.
-	 * Used as fallback guard so we do not apply twice when Initialize already ran.
 	 */
 	export function GetIconLibrary(): string | undefined {
 		return _iconLibrary;
@@ -18,7 +17,6 @@ namespace OutSystems.OSUI.Utils.IconLibrary {
 
 	/**
 	 * Set the icon library class value (internal). Called by Initialize after it applies the class.
-	 * Do not use from application code.
 	 */
 	export function SetIconLibrary(value: string): void {
 		_iconLibrary = value;
@@ -28,7 +26,10 @@ namespace OutSystems.OSUI.Utils.IconLibrary {
 	 * Apply icon library class to document.documentElement.
 	 * Normalizes iconLibrary (strips digits/dots) and adds class `icon-library-${normalized}`.
 	 *
-	 * @param iconLibrary
+	 * @export
+	 * @param {string} iconLibrary
+	 * @param {boolean} isInitialize
+	 * @return {*}  {void}
 	 */
 	export function ApplyIconLibraryClass(iconLibrary: string, isInitialize: boolean): void {
 		const newIconLibrary = iconLibrary.replace(/[\d.]/g, ''); // Normalizes name (strips digits/dots)
