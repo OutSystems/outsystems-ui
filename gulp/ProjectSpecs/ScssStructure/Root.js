@@ -1,3 +1,5 @@
+const project = require('../DefaultSpecs');
+
 /* 
 * Section Info
 **/
@@ -9,6 +11,11 @@ const sectionInfo = {
         {
             "name": "",
             "path": "01-foundations/root"
+        },
+        {
+            "name": "",
+            "path": "01-foundations/icon-library",
+            "platform": project.globalConsts.platformTarget.odc
         }
     ]
 };
