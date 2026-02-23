@@ -37,6 +37,23 @@ namespace OSFramework.OSUI.Event.DOMEvents {
 		}
 
 		/**
+		 * Method to check if a given EventType has a given handler
+		 *
+		 * @param eventType
+		 * @param handler
+		 * @returns boolean
+		 * @memberof OSFramework.Event.AbstractEventsManager
+		 */
+		public hasHandler(eventType: ET, handler: GlobalCallbacks.Generic): boolean {
+			let returnValue = false;
+			if (this._events.has(eventType)) {
+				const event = this._events.get(eventType);
+				returnValue = event.hasHandler(handler);
+			}
+			return returnValue;
+		}
+
+		/**
 		 * This method will check if a given EventType has assigned callbacks
 		 *
 		 * @param eventType

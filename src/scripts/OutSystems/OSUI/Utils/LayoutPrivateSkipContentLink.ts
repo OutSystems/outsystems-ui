@@ -16,7 +16,7 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 			if (mainContent && skipContentLink) {
 				skipContentLink.setAttribute(
 					OSFramework.OSUI.GlobalEnum.HTMLAttributes.Href,
-					mainContent.getAttribute(OSFramework.OSUI.GlobalEnum.HTMLAttributes.Id)
+					`#${mainContent.getAttribute(OSFramework.OSUI.GlobalEnum.HTMLAttributes.Id)}`
 				);
 			}
 		}
