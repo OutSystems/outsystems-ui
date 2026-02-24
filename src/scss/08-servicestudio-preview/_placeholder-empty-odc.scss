@@ -1,0 +1,9 @@
+.osui-tabs {
+	&__header,
+	&__content {
+		& > .placeholder-empty > .OSBlockWidget,
+		& > .placeholder-empty > .list.list-group {
+			display: contents;
+		}
+	}
+}

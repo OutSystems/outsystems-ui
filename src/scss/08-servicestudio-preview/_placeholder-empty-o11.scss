@@ -1,0 +1,16 @@
+///
+.ph:empty {
+	display: none;
+}
+
+.osui-tabs {
+	&__header,
+	&__content {
+		& > .ph > .OSBlockWidget,
+		& > .ph > .list.list-group {
+			display: contents;
+		}
+	}
+}
+
+///

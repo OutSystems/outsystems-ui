@@ -17,7 +17,12 @@ const constants = {
     platformTarget: {
         o11: 'O11',
         odc: 'ODC',
-    }
+    },
+    // Icon placeholder CSS class per platform (replaced at compile time; do not change token in source).
+    iconPlaceholderClass: {
+        o11: 'ph',
+        odc: 'placeholder-empty',
+    },
 };
 
 // Store the default project specifications
