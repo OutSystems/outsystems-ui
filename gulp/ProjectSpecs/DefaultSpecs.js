@@ -9,7 +9,8 @@ const constants = {
     // list of files to be excluded from a specific platform
     excludeFromTsTranspile: {
         O11: [
-            './src/scripts/OutSystems/OSUI/Utils/PreviewInDevices/**/*'
+            './src/scripts/OutSystems/OSUI/Utils/PreviewInDevices/**/*',
+            './src/scripts/OutSystems/OSUI/Utils/IconLibrary.ts'
         ]
     },
     // list of platforms to compile and create scss files.
