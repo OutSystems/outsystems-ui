@@ -16,6 +16,11 @@ const sectionInfo = {
             "name": "Icon library",
             "path": "01-foundations/icon-library-odc",
             "platform": project.globalConsts.platformTarget.odc
+        },
+        {
+            "name": "Icon library",
+            "path": "01-foundations/icon-library-o11",
+            "platform": project.globalConsts.platformTarget.o11
         }
     ]
 };

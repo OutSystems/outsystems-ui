@@ -26,6 +26,7 @@ GitHub:
 /*!
 Section Index:
 0. Root - CSS Variables
+    0.2. Icon library
 1. Resets
 2. HTML Elements
     2.1. Links
@@ -219,6 +220,8 @@ Functions & Mixins
 0. Root - CSS Variables
 =============================================================================== */
 @import '01-foundations/root';
+/*! 0.2. Icon library */
+@import '01-foundations/icon-library-o11';
 
 /*! ==============================================================================
 1. Resets
