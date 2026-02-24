@@ -124,9 +124,7 @@ $balloonMobileTopMargin: 5vh;
 			&:before {
 				align-items: center;
 				color: get-text-color('neutral-6');
-				content: '\f002';
 				display: flex;
-				font: normal normal normal 14px/1 FontAwesome;
 				height: 100%;
 				left: var(--space-base);
 				position: absolute;
