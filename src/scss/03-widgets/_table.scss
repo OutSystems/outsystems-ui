@@ -81,6 +81,9 @@
 			td {
 				background: get-background-color('neutral-1');
 			}
+			&:hover td {
+				background: get-background-color('neutral-2');
+			}
 		}
 	}
 
