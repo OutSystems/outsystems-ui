@@ -342,10 +342,12 @@
 
 .splide__arrow--next:after {
 	content: var(--osui-icon-chevron-right);
+	transform: translateX(1px);
 }
 
 .splide__arrow--prev:after {
 	content: var(--osui-icon-chevron-left);
+	transform: translateX(-1px);
 }
 
 // DatePicker / MonthPicker (Flatpickr)
