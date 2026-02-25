@@ -36,7 +36,8 @@ namespace OSFramework.OSUI.GlobalEnum {
 		MainContent = 'main-content',
 		MenuContent = 'app-menu-content',
 		MenuLinks = 'app-menu-links',
-		Placeholder = 'ph',
+		/** Replaced at compile time: ODC → 'ph' (Phosphor), O11 → 'fa' (FontAwesome). Do not change this value. */
+		Placeholder = '<->iconPlaceholderClass<->',
 		Popup = 'popup-dialog',
 		SkipContent = 'skip-nav',
 	}

@@ -381,7 +381,7 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 			this._accordionItemTitleElem = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.PatternTitle);
 			this._accordionItemContentElem = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.PatternContent);
 			this._accordionItemIconElem = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.PatternIcon);
-			// Getting the custom icon that is also a placeholder (ph)
+			// Getting the custom icon placeholder (class replaced at compile time: ph for O11, placeholder-empty for ODC)
 			this._accordionItemIconCustomElem = Helper.Dom.ClassSelector(
 				this.selfElement,
 				Enum.CssClass.PatternIcon + '.' + GlobalEnum.CssClassElements.Placeholder
