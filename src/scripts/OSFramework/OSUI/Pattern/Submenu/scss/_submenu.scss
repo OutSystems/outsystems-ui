@@ -42,12 +42,6 @@
 						text-decoration: none;
 					}
 				}
-
-				&__icon:before {
-					border: var(--border-size-s) solid get-border-color('primary');
-					border-right: 0;
-					border-top: 0;
-				}
 			}
 		}
 	}
