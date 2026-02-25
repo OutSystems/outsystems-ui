@@ -1,3 +1,5 @@
+const project = require('../DefaultSpecs');
+
 /* 
 * Section Info
 **/
@@ -9,6 +11,16 @@ const sectionInfo = {
         {
             "name": "",
             "path": "08-servicestudio-preview/servicestudiopreview"
+        },
+        {
+            "name": "",
+            "path": "08-servicestudio-preview/placeholder-empty-o11",
+            "platform": project.globalConsts.platformTarget.o11
+        },
+        {
+            "name": "",
+            "path": "08-servicestudio-preview/placeholder-empty-odc",
+            "platform": project.globalConsts.platformTarget.odc
         },
         {
             "name": "",
