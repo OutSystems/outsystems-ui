@@ -35,7 +35,7 @@ namespace OutSystems.OSUI.Utils.IconLibrary {
 		const newIconLibrary = iconLibrary.replace(/[\d.]/g, ''); // Normalizes name (strips digits/dots)
 		const currentIconLibrary = IconLibrary.GetIconLibrary();
 
-		if (currentIconLibrary === newIconLibrary) {
+		if (currentIconLibrary === newIconLibrary || newIconLibrary === '') {
 			return;
 		}
 

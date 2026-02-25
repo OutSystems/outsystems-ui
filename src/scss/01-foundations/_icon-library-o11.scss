@@ -234,6 +234,15 @@
 	}
 }
 
+.osui-dropdown-serverside {
+	&__selected-values {
+		&:after {
+			content: '\f107';
+			font: normal normal normal 20px/1 FontAwesome;
+		}
+	}
+}
+
 // DropdownSearch (VirtualSelect)
 // VirtualSelect overriding styles
 // Parent wrapper container
