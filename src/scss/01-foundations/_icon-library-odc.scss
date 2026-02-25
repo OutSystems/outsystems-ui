@@ -4,6 +4,49 @@
 /// When :root has .icon-library-Phosphor or .icon-library-FontAwesome, icons use the matching font.
 ///
 
+/// // ---------------------------------------------------------------------------
+// FontAwesome icon library (default fallback)
+// ---------------------------------------------------------------------------
+:root {
+	--osui-icon-font-family: 'FontAwesome';
+
+	// Dropdown / caret (angle-down)
+	--osui-icon-arrow-down: '\f107';
+
+	// Caret up (TimePicker)
+	--osui-icon-arrow-up: '\f106';
+
+	// Search
+	--osui-icon-search: '\f002';
+
+	// Clear / close (times)
+	--osui-icon-clear: '\f00d';
+
+	// Chevrons
+	--osui-icon-chevron-right: '\f054';
+	--osui-icon-chevron-left: '\f053';
+
+	// Checkbox check
+	--osui-icon-check: '\f00c';
+
+	// Alert
+	--osui-icon-info: '\f05a';
+	--osui-icon-success: '\f058';
+	--osui-icon-error: '\f057';
+	--osui-icon-warning: '\f071';
+
+	// ChatMessage
+	--osui-icon-sent: '\f00c';
+	--osui-icon-time: '\f017';
+
+	// Checkbox
+	--osui-icon-checkbox-checked: '\f00c';
+
+	// Lightbox
+	--osui-icon-arrow-next: '\f061';
+	--osui-icon-arrow-previous: '\f060';
+}
+
 // ---------------------------------------------------------------------------
 // Phosphor icon library
 // ---------------------------------------------------------------------------
@@ -45,49 +88,6 @@
 	// Lightbox
 	--osui-icon-arrow-next: '\e06c';
 	--osui-icon-arrow-previous: '\e058';
-}
-
-// ---------------------------------------------------------------------------
-// FontAwesome icon library
-// ---------------------------------------------------------------------------
-:root.icon-library-FontAwesome {
-	--osui-icon-font-family: 'FontAwesome';
-
-	// Dropdown / caret (angle-down)
-	--osui-icon-arrow-down: '\f107';
-
-	// Caret up (TimePicker)
-	--osui-icon-arrow-up: '\f106';
-
-	// Search
-	--osui-icon-search: '\f002';
-
-	// Clear / close (times)
-	--osui-icon-clear: '\f00d';
-
-	// Chevrons
-	--osui-icon-chevron-right: '\f054';
-	--osui-icon-chevron-left: '\f053';
-
-	// Checkbox check
-	--osui-icon-check: '\f00c';
-
-	// Alert
-	--osui-icon-info: '\f05a';
-	--osui-icon-success: '\f058';
-	--osui-icon-error: '\f057';
-	--osui-icon-warning: '\f071';
-
-	// ChatMessage
-	--osui-icon-sent: '\f00c';
-	--osui-icon-time: '\f017';
-
-	// Checkbox
-	--osui-icon-checkbox-checked: '\f00c';
-
-	// Lightbox
-	--osui-icon-arrow-next: '\f061';
-	--osui-icon-arrow-previous: '\f060';
 }
 
 // ---------------------------------------------------------------------------
