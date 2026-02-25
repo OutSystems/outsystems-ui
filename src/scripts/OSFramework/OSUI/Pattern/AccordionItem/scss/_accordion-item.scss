@@ -132,12 +132,6 @@
 		transition: all 300ms ease-in-out;
 		width: 16px;
 
-		&--caret {
-			&:after {
-				content: '\f107';
-			}
-		}
-
 		&--plus-minus {
 			&:after {
 				background-color: get-background-color('primary');

@@ -1,0 +1,419 @@
+////
+/// @group Root
+/// Icon library CSS variables (FontAwesome vs Phosphor) and component overrides.
+/// When :root has .icon-library-Phosphor or .icon-library-FontAwesome, icons use the matching font.
+///
+
+// ---------------------------------------------------------------------------
+// Phosphor icon library
+// ---------------------------------------------------------------------------
+:root.icon-library-Phosphor {
+	--osui-icon-font-family: 'Phosphor';
+
+	// Dropdown / caret (angle-down)
+	--osui-icon-arrow-down: '\e136';
+
+	// Caret up (TimePicker)
+	--osui-icon-arrow-up: '\e13c';
+
+	// Search
+	--osui-icon-search: '\e30c';
+
+	// Clear / close (times, X)
+	--osui-icon-clear: '\e4f6';
+
+	// Chevrons
+	--osui-icon-chevron-right: '\e13a';
+	--osui-icon-chevron-left: '\e138';
+
+	// Checkbox check
+	--osui-icon-check: '\e182';
+
+	// Alert
+	--osui-icon-info: '\e2ce';
+	--osui-icon-success: '\e184';
+	--osui-icon-error: '\e4f8';
+	--osui-icon-warning: '\e4e0';
+
+	// ChatMessage
+	--osui-icon-sent: '\e182';
+	--osui-icon-time: '\e19a';
+
+	// Checkbox
+	--osui-icon-checkbox-checked: '\e182';
+
+	// Lightbox
+	--osui-icon-arrow-next: '\e06c';
+	--osui-icon-arrow-previous: '\e058';
+}
+
+// ---------------------------------------------------------------------------
+// FontAwesome icon library
+// ---------------------------------------------------------------------------
+:root.icon-library-FontAwesome {
+	--osui-icon-font-family: 'FontAwesome';
+
+	// Dropdown / caret (angle-down)
+	--osui-icon-arrow-down: '\f107';
+
+	// Caret up (TimePicker)
+	--osui-icon-arrow-up: '\f106';
+
+	// Search
+	--osui-icon-search: '\f002';
+
+	// Clear / close (times)
+	--osui-icon-clear: '\f00d';
+
+	// Chevrons
+	--osui-icon-chevron-right: '\f054';
+	--osui-icon-chevron-left: '\f053';
+
+	// Checkbox check
+	--osui-icon-check: '\f00c';
+
+	// Alert
+	--osui-icon-info: '\f05a';
+	--osui-icon-success: '\f058';
+	--osui-icon-error: '\f057';
+	--osui-icon-warning: '\f071';
+
+	// ChatMessage
+	--osui-icon-sent: '\f00c';
+	--osui-icon-time: '\f017';
+
+	// Checkbox
+	--osui-icon-checkbox-checked: '\f00c';
+
+	// Lightbox
+	--osui-icon-arrow-next: '\f061';
+	--osui-icon-arrow-previous: '\f060';
+}
+
+// ---------------------------------------------------------------------------
+// Component selectors – use CSS variables (with FontAwesome as fallback when no library class is set)
+// ---------------------------------------------------------------------------
+
+// Accordion – caret icon
+.osui-accordion-item__icon--caret:after {
+	content: var(--osui-icon-arrow-down);
+	font-family: var(--osui-icon-font-family);
+}
+
+// Search – search icon
+.input-search {
+	position: relative;
+
+	&::after {
+		color: var(--color-neutral-6);
+		content: var(--osui-icon-search);
+		font-family: var(--osui-icon-font-family);
+		left: var(--space-base);
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+	}
+}
+
+// Submenu – header arrow
+.osui-submenu {
+	&__header__icon {
+		margin-inline-start: var(--space-s);
+		transition: transform 200ms ease;
+		transform-origin: center;
+
+		&:after {
+			content: var(--osui-icon-arrow-down);
+			font-family: var(--osui-icon-font-family);
+		}
+	}
+
+	&--is-open {
+		.osui-submenu__header__icon {
+			transform: rotate(180deg);
+		}
+	}
+}
+
+// Dropdown Widget
+.dropdown-container:after {
+	color: var(--color-neutral-7);
+	content: var(--osui-icon-arrow-down);
+	font-family: var(--osui-icon-font-family);
+	font-size: var(--font-size-h5);
+	position: absolute;
+	right: var(--space-base);
+	top: 50%;
+	transform: translateY(-50%);
+	transition: transform 200ms ease;
+}
+
+.dropdown-expanded.dropdown-container {
+	&:after {
+		transform: translateY(-50%) rotate(180deg);
+		transform-origin: center;
+	}
+}
+
+// Table Widget - Sortable Icon
+.sortable-icon {
+	display: inline-block;
+	font-family: var(--osui-icon-font-family);
+	font-size: var(--font-size-xs);
+	height: 11px;
+	margin-left: var(--space-s);
+	position: relative;
+	width: 10px;
+
+	&:after {
+		bottom: -65%;
+		content: var(--osui-icon-arrow-down);
+		position: absolute;
+	}
+
+	&:before {
+		content: var(--osui-icon-arrow-up);
+		position: absolute;
+		top: -65%;
+	}
+}
+
+// MasterDetail – close chevron
+.split-right-close-icon {
+	position: relative;
+
+	&:after {
+		content: var(--osui-icon-chevron-left);
+		font-family: var(--osui-icon-font-family);
+		font-size: var(--font-size-h6);
+	}
+}
+
+// Alert
+.alert {
+	&-icon {
+		height: 24px;
+		position: relative;
+		width: 24px;
+
+		&:after {
+			font-family: var(--osui-icon-font-family);
+			font-size: 24px;
+			height: 100%;
+			left: 0;
+			line-height: 1;
+			position: absolute;
+			top: 0;
+		}
+	}
+
+	&-info {
+		.alert-icon {
+			&:after {
+				content: var(--osui-icon-info);
+			}
+		}
+	}
+
+	&-warning {
+		.alert-icon {
+			&:after {
+				content: var(--osui-icon-warning);
+			}
+		}
+	}
+
+	&-success {
+		.alert-icon {
+			&:after {
+				content: var(--osui-icon-success);
+			}
+		}
+	}
+
+	&-error {
+		.alert-icon {
+			&:after {
+				content: var(--osui-icon-error);
+			}
+		}
+	}
+}
+
+// ChatMessage
+.chat-message-wrapper .chat-message-status {
+	display: inline-flex;
+	gap: var(--space-xs);
+	padding: none;
+}
+
+.chat-message-status {
+	&_icon {
+		position: relative;
+		height: 18px;
+
+		&:after {
+			content: var(--osui-icon-sent);
+			position: absolute;
+			top: 0;
+			left: 0;
+			font-family: var(--osui-icon-font-family);
+		}
+
+		&.is-read {
+			color: var(--color-green);
+		}
+
+		&-time {
+			height: 12px;
+			position: relative;
+			width: 12px;
+
+			&:after {
+				content: var(--osui-icon-time);
+				font-family: var(--osui-icon-font-family);
+				left: 0;
+				position: absolute;
+				top: 0;
+			}
+		}
+	}
+}
+
+// DropdownServerSide
+.osui-dropdown-serverside__selected-values:after {
+	content: var(--osui-icon-arrow-down);
+	font-family: var(--osui-icon-font-family);
+	font-size: var(--font-size-h5);
+}
+
+// DropdownSearch (VirtualSelect)
+.vscomp-toggle-button:after,
+.vscomp-search-container:before,
+.vscomp-search-clear:after,
+.vscomp-ele .vscomp-clear-icon:after {
+	font-family: var(--osui-icon-font-family);
+	font-style: normal;
+}
+
+.vscomp-toggle-button:after {
+	content: var(--osui-icon-arrow-down);
+	font-size: var(--vscomp-toogle-btn-arrow-size);
+}
+
+.vscomp-search-container:before {
+	content: var(--osui-icon-search);
+	font-size: 14px;
+}
+
+.vscomp-search-clear:after,
+.vscomp-ele .vscomp-clear-icon:after {
+	content: var(--osui-icon-clear);
+	font-size: 13px;
+}
+
+.vscomp-wrapper.multiple .vscomp-option.selected .checkbox-icon:after {
+	border: none;
+	content: var(--osui-icon-checkbox-checked);
+	font-family: var(--osui-icon-font-family);
+	color: var(--color-neutral-0);
+	transform: none !important; // !important required to override the element from provider
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 1px;
+	font-size: var(--font-size-xs);
+	line-height: 1;
+	display: flex;
+	left: 1px;
+}
+
+// Carousel
+.osui-carousel .splide__arrow svg {
+	display: none;
+}
+
+.splide__arrow--next:after,
+.splide__arrow--prev:after {
+	color: var(--color-neutral-7);
+	font-family: var(--osui-icon-font-family);
+	position: absolute;
+}
+
+.splide__arrow--next:after {
+	content: var(--osui-icon-chevron-right);
+	transform: translateX(1px);
+}
+
+.splide__arrow--prev:after {
+	content: var(--osui-icon-chevron-left);
+	transform: translateX(-1px);
+}
+
+// DatePicker / MonthPicker (Flatpickr)
+.flatpickr-months .flatpickr-prev-month svg,
+.flatpickr-months .flatpickr-next-month svg {
+	display: none;
+}
+
+.flatpickr-months .flatpickr-prev-month:before,
+.flatpickr-months .flatpickr-next-month:before {
+	color: var(--color-primary);
+	font-family: var(--osui-icon-font-family);
+}
+
+.flatpickr-prev-month:before {
+	content: var(--osui-icon-chevron-left);
+}
+
+.flatpickr-next-month:before {
+	content: var(--osui-icon-chevron-right);
+}
+
+// TimePicker – up/down arrows
+.numInputWrapper span.arrowUp:after,
+.numInputWrapper span.arrowDown:after {
+	border: none !important;
+	font-family: var(--osui-icon-font-family);
+}
+
+.numInputWrapper span.arrowUp:after {
+	content: var(--osui-icon-arrow-up);
+}
+
+.numInputWrapper span.arrowDown:after {
+	content: var(--osui-icon-arrow-down);
+}
+
+// Lightbox
+.pswp__button,
+.pswp__button--arrow--left:before,
+.pswp__button--arrow--right:before {
+	background: none !important;
+}
+
+.pswp__button.pswp__button--close:before {
+	color: var(--color-neutral-0);
+	content: var(--osui-icon-clear);
+	font-family: var(--osui-icon-font-family);
+	font-size: var(--font-size-h5);
+	position: absolute;
+	right: 25%;
+	top: 50%;
+	transform: translateY(-50%) translateX(-50%);
+}
+
+.pswp__button--arrow--right:before,
+.pswp__button--arrow--left:before {
+	color: var(--color-neutral-0);
+	font-family: var(--osui-icon-font-family);
+	font-size: var(--font-size-h5);
+}
+
+.pswp__button--arrow--right:before {
+	content: var(--osui-icon-arrow-next);
+}
+
+.pswp__button--arrow--left:before {
+	content: var(--osui-icon-arrow-previous);
+}
