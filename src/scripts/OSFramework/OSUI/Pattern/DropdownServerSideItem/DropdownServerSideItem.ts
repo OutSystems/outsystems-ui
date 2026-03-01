@@ -289,7 +289,7 @@ namespace OSFramework.OSUI.Patterns.DropdownServerSideItem {
 				this.triggerPlatformEventCallback(
 					this._platformEventOnClickCallback as GlobalCallbacks.OSGeneric,
 					this.configs.ItemId,
-					this.parentId
+					this.parentObject.widgetId
 				);
 			}
 		}
@@ -318,7 +318,7 @@ namespace OSFramework.OSUI.Patterns.DropdownServerSideItem {
 		 * Getter that allows to obtain the ItemId value.
 		 *
 		 * @readonly
-		 * @type {boolean}
+		 * @type {string}
 		 * @memberof OSFramework.Patterns.DropdownServerSideItem.DropdownServerSideItem
 		 */
 		public get ItemId(): string {
