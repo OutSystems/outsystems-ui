@@ -286,7 +286,11 @@ namespace OSFramework.OSUI.Patterns.DropdownServerSideItem {
 
 			if (triggerCallback) {
 				// Trigger platform callback about Option has been selected!
-				this.triggerPlatformEventCallback(this._platformEventOnClickCallback, this.configs.ItemId);
+				this.triggerPlatformEventCallback(
+					this._platformEventOnClickCallback as GlobalCallbacks.OSGeneric,
+					this.configs.ItemId,
+					this.parentId
+				);
 			}
 		}
 
