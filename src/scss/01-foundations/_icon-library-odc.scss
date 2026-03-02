@@ -16,6 +16,10 @@
 	// Caret up (TimePicker)
 	--osui-icon-arrow-up: '\f106';
 
+	// Arrow Left/Right
+	--osui-icon-arrow-left: '\f104';
+	--osui-icon-arrow-right: '\f105';
+
 	// Search
 	--osui-icon-search: '\f002';
 
@@ -68,6 +72,9 @@
 	// Chevrons
 	--osui-icon-chevron-right: '\e13a';
 	--osui-icon-chevron-left: '\e138';
+
+	--osui-icon-arrow-left: '\e138';
+	--osui-icon-arrow-right: '\e13a';
 
 	// Checkbox check
 	--osui-icon-check: '\e182';
@@ -362,12 +369,22 @@
 	font-family: var(--osui-icon-font-family);
 }
 
+.icon-library-FontAwesome .flatpickr-months .flatpickr-prev-month:before,
+.icon-library-FontAwesome .flatpickr-months .flatpickr-next-month:before {
+	font-size: var(--font-size-h5);
+}
+
+.icon-library-Phosphor .flatpickr-months .flatpickr-prev-month:before,
+.icon-library-Phosphor .flatpickr-months .flatpickr-next-month:before {
+	font-weight: var(--font-semi-bold);
+}
+
 .flatpickr-prev-month:before {
-	content: var(--osui-icon-chevron-left);
+	content: var(--osui-icon-arrow-left);
 }
 
 .flatpickr-next-month:before {
-	content: var(--osui-icon-chevron-right);
+	content: var(--osui-icon-arrow-right);
 }
 
 // TimePicker – up/down arrows
