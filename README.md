@@ -10,21 +10,23 @@ Create modern experiences with fully customizable responsive Screen Templates an
 | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------ | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
 | Create seamless experiences for Reactive Web and Native Mobile Applications. | Drag and drop UI Patterns and Screen Templates from OutSystems Service Studio. | Ready-to-use Layouts and UI Patterns that automatically adapt to the device size. | Extend the styles of over 70 UI Patterns and Screen Templates to make them yours. |
 
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for development setup, workflow, code standards, and PR requirements.
+
 ### Key features
 
--   More than 70 UI patterns
--   Easily customizable and extendable design system
--   Responsive UI
--   Right-to-left support
--   Accessibility compliance with WCAG 2.1
--   Actions to deal with different device types
--   Built for Reactive Web and Mobile apps
+- More than 70 UI patterns
+- Easily customizable and extendable design system
+- Responsive UI
+- Right-to-left support
+- Accessibility compliance with WCAG 2.1
+- Actions to deal with different device types
+- Built for Reactive Web and Mobile apps
 
 Find out more in [OutSystems UI website](https://outsystemsui.outsystems.com/OutsystemsUiWebsite/).
 
 ### Where can you find the component?
 
-The OutSystems UI component, like all components, can be found in [OutSystems forge](https://www.outsystems.com/forge/component-overview/1385/outsystems-ui).
+The OutSystems component, like all components, can be found in [OutSystems Forge](https://www.outsystems.com/forge/component-overview/1385/outsystems-ui-o11) and and [OutSystems Forge Component Page (ODC)](https://www.outsystems.com/forge/component-overview/15931/outsystems-ui-odc).
 
 ### Where can you find documentation?
 
@@ -47,12 +49,12 @@ You can fork it then branch it and PR your proposals!
 
 We highly recommend the usage of the following tools:
 
--   [Visual Studio Code](https://code.visualstudio.com/)
--   With these extensions:
-    -   Document This
-    -   ESLint
-    -   Prettier - Code formatter
--   [Node v12.0+](https://nodejs.org/en)
+- [Visual Studio Code](https://code.visualstudio.com/)
+- With these extensions:
+    - Document This
+    - ESLint
+    - Prettier - Code formatter
+- [Node v12.0+](https://nodejs.org/en)
 
 ### How to change this code?
 
@@ -83,7 +85,6 @@ After completing your changes, and testing, please proceed with submitting a Pul
 To be accepted, a Pull Request needs to:
 
 1. **Fulfill the following requirements**
-
     - Needs to compile without errors
     - Needs to follow the code style rules (without warnings and errors)
     - Needs to be approved by 2 team members (owners of the repo)
@@ -103,9 +104,10 @@ To be accepted, a Pull Request needs to:
 
 ## Useful Links
 
--   Download the latest version in [OutSystems forge](https://www.outsystems.com/forge/component-versions/1385)
--   Check the [online documentation](https://outsystemsui.outsystems.com/outsystemsuiwebsite/)
--   [NPM Package](https://www.npmjs.com/package/outsystems-ui)
+- Download latest O11 version in [OutSystems forge](https://www.outsystems.com/forge/component-overview/1385/outsystems-ui-o11)
+- Download latest ODC version in [OutSystems Forge Component Page (ODC)](https://www.outsystems.com/forge/component-overview/15931/outsystems-ui-odc)
+- Check the [online documentation](https://outsystemsui.outsystems.com/outsystemsuiwebsite/)
+- [NPM Package](https://www.npmjs.com/package/outsystems-ui)
 
 ## 📫&nbsp; Have a question? Want to chat? Ran into a problem?
 
