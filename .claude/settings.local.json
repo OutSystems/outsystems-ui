@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:outsystemsui.outsystems.com)",
+      "WebFetch(domain:success.outsystems.com)",
+      "WebFetch(domain:sa-si-dev.github.io)"
+    ]
+  }
+}
