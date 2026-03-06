@@ -49,6 +49,10 @@
 	// Lightbox
 	--osui-icon-arrow-next: '\f061';
 	--osui-icon-arrow-previous: '\f060';
+
+	// Password Policy
+	--osui-icon-x: '\f057';
+	--osui-icon-circle-check: '\f058';
 }
 
 // ---------------------------------------------------------------------------
@@ -95,6 +99,10 @@
 	// Lightbox
 	--osui-icon-arrow-next: '\e06c';
 	--osui-icon-arrow-previous: '\e058';
+
+	// Password Policy
+	--osui-icon-x: 'e4f8';
+	--osui-icon-circle-check: '\e184';
 }
 
 // ---------------------------------------------------------------------------
@@ -433,4 +441,23 @@
 
 .pswp__button--arrow--left:before {
 	content: var(--osui-icon-arrow-previous);
+}
+
+// Password Policy
+.password-policy_icon {
+	min-width: 11px;
+	position: relative;
+
+	&::after {
+		position: absolute;
+		content: var(--osui-icon-x);
+		font-family: var(--osui-icon-font-family);
+		top: 0;
+		left: 0;
+	}
+
+	&.is-valid::after {
+		content: var(--osui-icon-circle-check);
+		color: var(--color-green-darker);
+	}
 }
