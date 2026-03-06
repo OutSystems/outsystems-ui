@@ -26,7 +26,7 @@ Find out more in [OutSystems UI website](https://outsystemsui.outsystems.com/Out
 
 ### Where can you find the component?
 
-The OutSystems component, like all components, can be found in [OutSystems Forge](https://www.outsystems.com/forge/component-overview/1385/outsystems-ui-o11) and and [OutSystems Forge Component Page (ODC)](https://www.outsystems.com/forge/component-overview/15931/outsystems-ui-odc).
+The OutSystems UI component, like all components, can be found in [OutSystems Forge](https://www.outsystems.com/forge/component-overview/1385/outsystems-ui-o11) and [OutSystems Forge Component Page (ODC)](https://www.outsystems.com/forge/component-overview/15931/outsystems-ui-odc).
 
 ### Where can you find documentation?
 
