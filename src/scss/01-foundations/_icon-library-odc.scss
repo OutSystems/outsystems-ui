@@ -51,7 +51,7 @@
 	--osui-icon-arrow-previous: '\f060';
 
 	// Password Policy
-	--osui-icon-x: '\f057';
+	--osui-icon-circle-x: '\f057';
 	--osui-icon-circle-check: '\f058';
 }
 
@@ -101,7 +101,7 @@
 	--osui-icon-arrow-previous: '\e058';
 
 	// Password Policy
-	--osui-icon-x: 'e4f8';
+	--osui-icon-circle-x: 'e4f8';
 	--osui-icon-circle-check: '\e184';
 }
 
@@ -450,7 +450,7 @@
 
 	&::after {
 		position: absolute;
-		content: var(--osui-icon-x);
+		content: var(--osui-icon-circle-x);
 		font-family: var(--osui-icon-font-family);
 		top: 0;
 		left: 0;
