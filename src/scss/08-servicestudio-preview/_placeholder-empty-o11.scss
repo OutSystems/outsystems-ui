@@ -1,4 +1,5 @@
-.ph:empty {
+.ph:empty,
+.placeholder-empty:empty {
 	display: none;
 }
 
@@ -6,7 +7,9 @@
 	&__header,
 	&__content {
 		& > .ph > .OSBlockWidget,
-		& > .ph > .list.list-group {
+		& > .placeholder-empty > .OSBlockWidget,
+		& > .ph > .list.list-group,
+		& > .placeholder-empty > .list.list-group {
 			display: contents;
 		}
 	}

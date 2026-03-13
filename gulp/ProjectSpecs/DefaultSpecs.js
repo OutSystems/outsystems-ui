@@ -20,7 +20,7 @@ const constants = {
     },
     // Icon placeholder CSS class per platform (replaced at compile time; do not change token in source).
     iconPlaceholderClass: {
-        o11: 'ph',
+        o11: 'ph placeholder-empty',
         odc: 'placeholder-empty',
     },
 };
