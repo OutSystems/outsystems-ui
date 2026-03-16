@@ -4,33 +4,24 @@
 # https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
 
 version: 2
-registries:
-  npm-registry-pkgs-dev-azure-com-outsystemsrd-packaging-artifactr:
-    type: npm-registry
-    url: https://pkgs.dev.azure.com/OutSystemsRD/_packaging/ArtifactRepository/npm/registry
-    username: "${{secrets.NPM_REGISTRY_PKGS_DEV_AZURE_COM_OUTSYSTEMSRD_PACKAGING_ARTIFACTR_USERNAME}}"
-    password: "${{secrets.NPM_REGISTRY_PKGS_DEV_AZURE_COM_OUTSYSTEMSRD_PACKAGING_ARTIFACTR_PASSWORD}}"
-
 updates:
-  - package-ecosystem: npm
-    directory: "/"
-    schedule:
-      interval: weekly
-      day: monday
-      time: "09:00"
-      timezone: Europe/Lisbon
-    open-pull-requests-limit: 3
-    rebase-strategy: disabled
-    registries:
-      - npm-registry-pkgs-dev-azure-com-outsystemsrd-packaging-artifactr
-    labels:
-      - chore
-    groups:
-      minor-and-patch:
-        update-types:
-          - minor
-          - patch
-    ignore:
-      - dependency-name: "*"
-        update-types: ["version-update:semver-major"]
-      - dependency-name: "*outsystems*"
+    - package-ecosystem: npm
+      directory: '/'
+      schedule:
+          interval: weekly
+          day: monday
+          time: '09:00'
+          timezone: Europe/Lisbon
+      open-pull-requests-limit: 3
+      rebase-strategy: disabled
+      labels:
+          - chore
+      groups:
+          minor-and-patch:
+              update-types:
+                  - minor
+                  - patch
+      ignore:
+          - dependency-name: '*'
+            update-types: ['version-update:semver-major']
+          - dependency-name: '*outsystems*'
