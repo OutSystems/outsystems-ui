@@ -25,3 +25,4 @@ updates:
           - dependency-name: '*'
             update-types: ['version-update:semver-major']
           - dependency-name: '*outsystems*'
+            versions: ['*']
