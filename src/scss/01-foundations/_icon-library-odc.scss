@@ -58,7 +58,9 @@
 // ---------------------------------------------------------------------------
 // Phosphor icon library
 // ---------------------------------------------------------------------------
-:root.icon-library-Phosphor {
+:root.icon-library-phosphor,
+// fallback for IDE DesignTime
+body.icon-library-phosphor {
 	--osui-icon-font-family: 'Phosphor';
 
 	// Dropdown / caret (angle-down)
