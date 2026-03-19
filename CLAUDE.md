@@ -176,7 +176,6 @@ Use VS Code "Document This" extension (type `/**` above a function/class) for st
 - **Module format:** AMD (`tsconfig.json` specifies `"module": "amd"`)
 - **Single bundle per platform:** No code splitting; entire framework compiles to one JS file
 - **Platform-specific exclusions:** Files excluded via `gulp/ProjectSpecs/DefaultSpecs.js` (e.g., IconLibrary excluded from O11)
-- **Placeholder replacement:** Build replaces `<->platformType<->` and `<->iconPlaceholderClass<->` tokens
 
 ## Common Scenarios
 

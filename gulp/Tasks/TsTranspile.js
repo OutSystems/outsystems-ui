@@ -138,10 +138,6 @@ function updateFwkAndPlatformInfo(cb) {
         jsCode = jsCode.replace("<->platformType<->", project.globalConsts.platformTarget[pt]);
         dtsCode = dtsCode !== null ? dtsCode.replace("<->platformType<->", project.globalConsts.platformTarget[pt]) : null;
 
-        // Set icon placeholder CSS class per platform (e.g. ph for ODC/Phosphor, fa for O11/FontAwesome)
-        jsCode = jsCode.replace(/<->iconPlaceholderClass<->/g, project.globalConsts.iconPlaceholderClass[pt]);
-        dtsCode = dtsCode !== null ? dtsCode.replace(/<->iconPlaceholderClass<->/g, project.globalConsts.iconPlaceholderClass[pt]) : null;
-
         // Update code
         let updatedCode = specsInfo + jsCode;
         let updatedDtsCode = dtsCode !== null ? specsInfo + dtsCode : null;
