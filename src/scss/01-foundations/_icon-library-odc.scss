@@ -356,7 +356,7 @@ body.icon-library-phosphor {
 		-servicestudio-height: 40px;
 		-servicestudio-line-height: 40px;
 		-servicestudio-min-width: 180px;
-		-servicestudio-padding: 0 var(--space-base);
+		-servicestudio-padding: 0 var(--space-m);
 		-servicestudio-position: relative;
 		-servicestudio-vertical-align: middle;
 		-servicestudio-width: 100%;
@@ -366,13 +366,14 @@ body.icon-library-phosphor {
 			-servicestudio-width: 12px;
 
 			&::after {
+				-servicestudio-color: get-text-color('neutral-7');
 				-servicestudio-position: absolute;
 				-servicestudio-top: 50%;
 				-servicestudio-left: 0;
 				-servicestudio-content: var(--osui-icon-arrow-down);
 				-servicestudio-font-family: var(--osui-icon-font-family);
 				-servicestudio-transform: translateY(-50%);
-				-servicestudio-font-size: var(--font-size-base);
+				-servicestudio-font-size: var(--font-size-h5);
 			}
 		}
 	}
@@ -389,7 +390,7 @@ body.icon-library-phosphor {
 		-servicestudio-display: flex;
 		-servicestudio-height: 40px;
 		-servicestudio-min-width: 180px;
-		-servicestudio-padding: 0 var(--space-base);
+		-servicestudio-padding: 0 var(--space-m);
 		-servicestudio-position: relative;
 		-servicestudio-vertical-align: middle;
 		-servicestudio-width: 100%;
@@ -408,6 +409,7 @@ body.icon-library-phosphor {
 			-servicestudio-position: relative;
 			-servicestudio-top: 50%;
 			-servicestudio-transform: translateY(-50%);
+			-servicestudio-width: 70px;
 
 			&__clear-icon {
 				-servicestudio-position: relative;
@@ -427,7 +429,7 @@ body.icon-library-phosphor {
 				-servicestudio-align-self: center;
 				-servicestudio-color: get-text-color('neutral-7');
 				-servicestudio-position: relative;
-				-servicestudio-font-size: var(--font-size-base);
+				-servicestudio-font-size: var(--font-size-h5);
 				-servicestudio-font-weight: normal;
 				-servicestudio-width: 12px;
 
