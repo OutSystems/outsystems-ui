@@ -32,7 +32,7 @@ namespace OutSystems.OSUI.Utils.IconLibrary {
 	 * @return {*}  {void}
 	 */
 	export function ApplyIconLibraryClass(iconLibrary: string, isInitialize: boolean): void {
-		const newIconLibrary = iconLibrary.replace(/[\d.]/g, ''); // Normalizes name (strips digits/dots)
+		const newIconLibrary = iconLibrary.replace(/[\d.]/g, '').toLowerCase(); // Normalizes name (strips digits/dots, lowercases)
 		const currentIconLibrary = IconLibrary.GetIconLibrary();
 
 		if (currentIconLibrary === newIconLibrary || newIconLibrary === '') {

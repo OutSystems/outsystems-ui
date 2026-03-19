@@ -82,8 +82,6 @@ The build system produces separate outputs for two OutSystems platforms:
 1. **TypeScript Compilation** (`gulp/Tasks/TsTranspile.js`)
     - Compiles 363 TypeScript files from `src/scripts/`
     - Uses AMD module format (`tsconfig.json`: `"module": "amd"`)
-    - Platform-specific exclusions (e.g., O11 excludes IconLibrary)
-    - Replaces placeholders: `<->platformType<->`, `<->iconPlaceholderClass<->`
     - Development mode: includes sourcemaps
     - Production mode: generates `.d.ts` declaration files
 
@@ -168,7 +166,6 @@ The build system conditionally excludes files and replaces placeholders at compi
 - `gulp/ProjectSpecs/DefaultSpecs.js` - `excludeFromTsTranspile.O11` specifies files excluded for O11 platform
 - `gulp/ProjectSpecs/DefaultSpecs.js` - `iconPlaceholderClass` differs per platform (`ph` for O11, `placeholder-empty` for ODC)
 - `gulp/Tasks/TsTranspile.js` (in `updateTsConfigFile` function) - dynamically modifies `tsconfig.json` exclude list per platform
-- `gulp/Tasks/TsTranspile.js` (in `updateFwkAndPlatformInfo` function) - replaces `<->platformType<->` and `<->iconPlaceholderClass<->` tokens
 
 **Rationale:** O11 and ODC have different runtime constraints (e.g., icon systems, API availability). Compiling separate bundles reduces bundle size and prevents shipping unnecessary polyfills or compatibility code. This is preferable to runtime platform detection, which would bloat both bundles with unused branches.
 

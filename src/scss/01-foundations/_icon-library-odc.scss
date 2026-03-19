@@ -58,7 +58,9 @@
 // ---------------------------------------------------------------------------
 // Phosphor icon library
 // ---------------------------------------------------------------------------
-:root.icon-library-Phosphor {
+:root.icon-library-phosphor,
+// fallback for IDE DesignTime
+body.icon-library-phosphor {
 	--osui-icon-font-family: 'Phosphor';
 
 	// Dropdown / caret (angle-down)
@@ -341,6 +343,107 @@
 	line-height: 1;
 	display: flex;
 	left: 1px;
+}
+
+.osui-dropdown-search {
+	// Service Studio Preview
+	&-ss-preview {
+		-servicestudio-background-color: get-background-color('neutral-0');
+		-servicestudio-border-radius: var(--border-radius-soft);
+		-servicestudio-border: var(--border-size-s) solid get-border-color('neutral-5');
+		-servicestudio-display: inline-flex;
+		-servicestudio-justify-content: space-between;
+		-servicestudio-height: 40px;
+		-servicestudio-line-height: 40px;
+		-servicestudio-min-width: 180px;
+		-servicestudio-padding: 0 var(--space-m);
+		-servicestudio-position: relative;
+		-servicestudio-vertical-align: middle;
+		-servicestudio-width: 100%;
+
+		&__arrow-icon {
+			-servicestudio-position: relative;
+			-servicestudio-width: 12px;
+
+			&::after {
+				-servicestudio-color: get-text-color('neutral-7');
+				-servicestudio-position: absolute;
+				-servicestudio-top: 50%;
+				-servicestudio-left: 0;
+				-servicestudio-content: var(--osui-icon-arrow-down);
+				-servicestudio-font-family: var(--osui-icon-font-family);
+				-servicestudio-transform: translateY(-50%);
+				-servicestudio-font-size: var(--font-size-h5);
+			}
+		}
+	}
+}
+
+.osui-dropdown-tags {
+	// Service Studio Preview
+	&-ss-preview {
+		-servicestudio-justify-content: space-between;
+		-servicestudio-background-color: get-background-color('neutral-0');
+		-servicestudio-border-radius: var(--border-radius-soft);
+		-servicestudio-border: var(--border-size-s) solid get-border-color('neutral-5');
+		-servicestudio-color: get-text-color('neutral-3');
+		-servicestudio-display: flex;
+		-servicestudio-height: 40px;
+		-servicestudio-min-width: 180px;
+		-servicestudio-padding: 0 var(--space-m);
+		-servicestudio-position: relative;
+		-servicestudio-vertical-align: middle;
+		-servicestudio-width: 100%;
+
+		&-as-tag {
+			-servicestudio-align-items: center;
+			-servicestudio-justify-content: space-between;
+			-servicestudio-background-color: get-background-color('neutral-3');
+			-servicestudio-border-radius: 30px;
+			-servicestudio-color: get-text-color('neutral-7');
+			-servicestudio-display: flex;
+			-servicestudio-font-size: var(--font-size-s);
+			-servicestudio-font-weight: var(--font-semi-bold);
+			-servicestudio-height: 30px;
+			-servicestudio-padding: 8px;
+			-servicestudio-position: relative;
+			-servicestudio-top: 50%;
+			-servicestudio-transform: translateY(-50%);
+			-servicestudio-width: 70px;
+
+			&__clear-icon {
+				-servicestudio-position: relative;
+				-servicestudio-font-weight: normal;
+
+				&::after {
+					-servicestudio-position: absolute;
+					-servicestudio-top: 50%;
+					-servicestudio-left: 0;
+					-servicestudio-content: var(--osui-icon-clear);
+					-servicestudio-font-family: var(--osui-icon-font-family);
+					-servicestudio-transform: translateY(-50%);
+				}
+			}
+
+			&__arrow-icon {
+				-servicestudio-align-self: center;
+				-servicestudio-color: get-text-color('neutral-7');
+				-servicestudio-position: relative;
+				-servicestudio-font-size: var(--font-size-h5);
+				-servicestudio-font-weight: normal;
+				-servicestudio-width: 12px;
+
+				&::after {
+					-servicestudio-position: absolute;
+					-servicestudio-top: 50%;
+					-servicestudio-left: 0;
+					-servicestudio-content: var(--osui-icon-arrow-down);
+					-servicestudio-font-family: var(--osui-icon-font-family);
+					-servicestudio-transform: translateY(-50%);
+				}
+			}
+		}
+	}
 }
 
 // Carousel
