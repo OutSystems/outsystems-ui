@@ -42,7 +42,7 @@ namespace OutSystems.OSUI.Utils.IconLibrary {
 		const htmlElement = document.documentElement;
 
 		if (htmlElement) {
-			htmlElement.classList.add(`icon-library-${newIconLibrary}`);
+			htmlElement.classList.add(`iconLibrary-${newIconLibrary}`);
 		}
 
 		IconLibrary.SetIconLibrary(newIconLibrary);
