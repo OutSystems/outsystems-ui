@@ -8,4 +8,4 @@ src/static/**
 *.css
 
 # don't lint settings
-*.snyk
+.wiz

@@ -1,0 +1,8 @@
+ignore:
+    global_paths:
+        /gulp/**:
+            reason: BY_DESIGN
+        /pipelines/**:
+            reason: BY_DESIGN
+        /docs/**:
+            reason: BY_DESIGN
