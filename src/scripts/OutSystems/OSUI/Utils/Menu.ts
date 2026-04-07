@@ -202,11 +202,8 @@ namespace OutSystems.OSUI.Utils.Menu {
 
 	// Set A11Y attributes to the menu and its childrens
 	const _setA11YAttributes = (menu?: HTMLElement): void => {
-		// Check if the given menu is undefined
-		if (menu === undefined) {
-			// If so, get the menu from the appProps
-			menu = _appProp.menu.element;
-		}
+		// Check if the given menu is undefined, if so, get the menu from the appProps
+		menu ??= _appProp.menu.element;
 
 		// Get all focusable elements inside
 		const focusableEls = Array.from(menu.querySelectorAll(_menuFocusableElems));
@@ -225,7 +222,7 @@ namespace OutSystems.OSUI.Utils.Menu {
 			// Add role menuitem to all menu direct children
 			for (const item of menuItems) {
 				if (!item.hasAttribute('role')) {
-					item.setAttribute('role', 'menuitem');
+					OSFramework.OSUI.Helper.A11Y.RoleMenuItem(item as HTMLElement);
 				}
 			}
 		}

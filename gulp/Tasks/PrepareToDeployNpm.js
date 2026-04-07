@@ -17,7 +17,7 @@ const listOfPathFilesToRemove = [
     './.eslintrc.json',
     './.prettierignore',
     './.prettierrc.json',
-    './.snyk',
+    './.wiz',
     './.stylelintignore',
     './.stylelintrc.json',
     './gulpfile.js',

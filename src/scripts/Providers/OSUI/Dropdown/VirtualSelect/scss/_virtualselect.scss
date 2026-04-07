@@ -38,9 +38,7 @@
 	&-search-clear:after {
 		align-items: center;
 		color: #91999e;
-		content: '\f00d';
 		display: flex;
-		font: normal normal normal 13px/1 FontAwesome;
 		height: 100%;
 		justify-content: center;
 		position: absolute;
@@ -360,8 +358,6 @@
 	// Create new arrow for all dropdown types
 	&:after {
 		color: get-text-color('neutral-7');
-		content: '';
-		font: normal normal normal var(--vscomp-toogle-btn-arrow-size) / 1 FontAwesome;
 		position: absolute;
 		right: var(--space-base);
 		top: 50%;
@@ -418,9 +414,7 @@
 	&:before {
 		align-items: center;
 		color: get-text-color('neutral-7');
-		content: '';
 		display: flex;
-		font: normal normal normal 14px/1 FontAwesome;
 		height: 100%;
 		left: var(--space-base);
 		position: absolute;
@@ -431,7 +425,7 @@
 		border-radius: var(--border-radius-circle);
 		color: get-text-color('neutral-7');
 		display: table;
-		font-size: var(--font-size-h5);
+		font-size: 0;
 		font-weight: var(--font-semi-bold);
 		height: 24px;
 		line-height: 1;

@@ -11,6 +11,7 @@ namespace OSFramework.OSUI.Event.DOMEvents {
 		handlers: GlobalCallbacks.OSGeneric[];
 		addEvent(): void;
 		addHandler(handler: GlobalCallbacks.OSGeneric, ...args): void;
+		hasHandler(handler: GlobalCallbacks.OSGeneric): boolean;
 		hasHandlers(): boolean;
 		removeEvent(): void;
 		removeHandler(handler: GlobalCallbacks.OSGeneric): void;

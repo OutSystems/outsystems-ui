@@ -245,16 +245,13 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 		// Set the cssClasses that should be assigned to the element on it's initialization
 		private _updateA11yProperties(): void {
 			Helper.A11Y.AriaExpanded(this._submenuHeaderElement, this._isOpen.toString());
-			Helper.A11Y.AriaHidden(this._submenuLinksElement, (!this._isOpen).toString());
 
 			// Update the tabindex of each link
 			this._submenuAllLinksElement.forEach((item: HTMLElement) => {
 				if (this._isOpen) {
 					Helper.A11Y.TabIndexTrue(item);
-					Helper.A11Y.AriaHiddenFalse(item);
 				} else {
 					Helper.A11Y.TabIndexFalse(item);
-					Helper.A11Y.AriaHiddenTrue(item);
 				}
 			});
 		}
@@ -281,7 +278,7 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 
 			// Set the role menuitem on each link
 			this._submenuAllLinksElement.forEach((item: HTMLElement) => {
-				Helper.A11Y.RoleButton(item);
+				Helper.A11Y.RoleMenuItem(item);
 			});
 
 			// Method that as the initial A11Y states and to be used on parameters changed

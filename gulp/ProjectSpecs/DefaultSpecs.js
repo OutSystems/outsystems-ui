@@ -9,19 +9,25 @@ const constants = {
     // list of files to be excluded from a specific platform
     excludeFromTsTranspile: {
         O11: [
-            './src/scripts/OutSystems/OSUI/Utils/PreviewInDevices/**/*'
+            './src/scripts/OutSystems/OSUI/Utils/PreviewInDevices/**/*',
+            './src/scripts/OutSystems/OSUI/Utils/IconLibrary.ts'
         ]
     },
     // list of platforms to compile and create scss files.
     platformTarget: {
         o11: 'O11',
         odc: 'ODC',
-    }
+    },
+    // Icon placeholder CSS class per platform (replaced at compile time; do not change token in source).
+    iconPlaceholderClass: {
+        o11: 'ph placeholder-empty',
+        odc: 'placeholder-empty',
+    },
 };
 
 // Store the default project specifications
 const specs = {
-    "version": "2.27.0",
+    "version": "2.28.0",
     "name": "OutSystems UI",
     "description": "",
     "url": "Website:\n • https://www.outsystems.com/outsystems-ui",

@@ -14,6 +14,6 @@ permissions:
 
 jobs:
     check-label:
-        name: 🔎 Validate PR Labels
+        name: Validate PR Labels
         #uses: OutSystems/rd.github-reusable-workflows/.github/workflows/validate-pr-labels.yaml@9d497d1c5bc6e355aa8f4663539e6b75c212f6b4 #v2.0.7
         uses: ./.github/workflows/template-validate-pr-labels.yaml

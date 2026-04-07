@@ -41,10 +41,6 @@ const sectionInfo = {
             "path": "03-widgets/table"
         },
         {
-            "name": "Table - Sortable Icon",
-            "path": "03-widgets/table-sortable-icon"
-        },
-        {
             "name": "Table - Bulk Actions",
             "path": "03-widgets/bulk-actions"
         },

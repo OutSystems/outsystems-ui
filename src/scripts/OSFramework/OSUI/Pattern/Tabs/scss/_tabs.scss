@@ -267,14 +267,6 @@
 		}
 	}
 
-	&__header,
-	&__content {
-		& > .ph > .OSBlockWidget,
-		& > .ph > .list.list-group {
-			display: contents;
-		}
-	}
-
 	// Service Studio Preview
 	& {
 		.osui-tabs__header-item,

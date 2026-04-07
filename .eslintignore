@@ -12,4 +12,4 @@ src/static/**
 *.d.ts
 *.js
 # don't lint settings
-*.snyk
+.wiz

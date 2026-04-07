@@ -36,6 +36,17 @@ namespace OSFramework.OSUI.Event.DOMEvents {
 		}
 
 		/**
+		 * Method to check if the Array has a given handler
+		 *
+		 * @param {GlobalCallbacks.OSGeneric} handler
+		 * @return {*}  {boolean}
+		 * @memberof AbstractEvent
+		 */
+		public hasHandler(handler: GlobalCallbacks.OSGeneric): boolean {
+			return this._handlers.includes(handler);
+		}
+
+		/**
 		 * Method to check if the Array has handlers
 		 *
 		 * @return {*}  {boolean}

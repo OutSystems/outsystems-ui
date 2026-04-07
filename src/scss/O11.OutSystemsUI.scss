@@ -17,7 +17,7 @@ PS: This comment block will not be visible in the compiled version!
 =============================================================================== */
 
 /*!
-OutSystems UI 2.27.0 • O11 Platform
+OutSystems UI 2.28.0 • O11 Platform
 Website:
  • https://www.outsystems.com/outsystems-ui
 GitHub:
@@ -26,6 +26,7 @@ GitHub:
 /*!
 Section Index:
 0. Root - CSS Variables
+    0.2. Icon library
 1. Resets
 2. HTML Elements
     2.1. Links
@@ -56,15 +57,14 @@ Section Index:
     4.6. List
     4.7. List Item
     4.8. Table
-    4.9. Table - Sortable Icon
-    4.10. Table - Bulk Actions
-    4.11. Form
-    4.12. Upload
-    4.13. Button Group
-    4.14. Popover
-    4.15. Popup
-    4.16. Feedback Message
-    4.17. Radio Button
+    4.9. Table - Bulk Actions
+    4.10. Form
+    4.11. Upload
+    4.12. Button Group
+    4.13. Popover
+    4.14. Popup
+    4.15. Feedback Message
+    4.16. Radio Button
 5. Providers
     5.1. Flatpickr
     5.2. NoUiSlider
@@ -220,6 +220,8 @@ Functions & Mixins
 0. Root - CSS Variables
 =============================================================================== */
 @import '01-foundations/root';
+/*! 0.2. Icon library */
+@import '01-foundations/icon-library-o11';
 
 /*! ==============================================================================
 1. Resets
@@ -289,23 +291,21 @@ Functions & Mixins
 @import '03-widgets/list-item';
 /*! 4.8. Table */
 @import '03-widgets/table';
-/*! 4.9. Table - Sortable Icon */
-@import '03-widgets/table-sortable-icon';
-/*! 4.10. Table - Bulk Actions */
+/*! 4.9. Table - Bulk Actions */
 @import '03-widgets/bulk-actions';
-/*! 4.11. Form */
+/*! 4.10. Form */
 @import '03-widgets/form';
-/*! 4.12. Upload */
+/*! 4.11. Upload */
 @import '03-widgets/upload';
-/*! 4.13. Button Group */
+/*! 4.12. Button Group */
 @import '03-widgets/button-group';
-/*! 4.14. Popover */
+/*! 4.13. Popover */
 @import '03-widgets/popover';
-/*! 4.15. Popup */
+/*! 4.14. Popup */
 @import '03-widgets/popup';
-/*! 4.16. Feedback Message */
+/*! 4.15. Feedback Message */
 @import '03-widgets/feedback-message';
-/*! 4.17. Radio Button */
+/*! 4.16. Radio Button */
 @import '03-widgets/radio-button';
 
 /*! ==============================================================================
@@ -588,6 +588,7 @@ Functions & Mixins
 10. Service Studio Preview
 =============================================================================== */
 @import '08-servicestudio-preview/servicestudiopreview';
+@import '08-servicestudio-preview/placeholder-empty-o11';
 @import '08-servicestudio-preview/deprecated-preview';
 
 /* ===============================================================================

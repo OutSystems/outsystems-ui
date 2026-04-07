@@ -36,7 +36,7 @@ namespace OSFramework.OSUI.GlobalEnum {
 		MainContent = 'main-content',
 		MenuContent = 'app-menu-content',
 		MenuLinks = 'app-menu-links',
-		Placeholder = 'ph',
+		Placeholder = 'placeholder-empty',
 		Popup = 'popup-dialog',
 		SkipContent = 'skip-nav',
 	}

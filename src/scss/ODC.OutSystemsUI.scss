@@ -17,7 +17,7 @@ PS: This comment block will not be visible in the compiled version!
 =============================================================================== */
 
 /*!
-OutSystems UI 2.27.0 • ODC Platform
+OutSystems UI 2.28.0 • ODC Platform
 Website:
  • https://www.outsystems.com/outsystems-ui
 GitHub:
@@ -26,6 +26,7 @@ GitHub:
 /*!
 Section Index:
 0. Root - CSS Variables
+    0.2. Icon library
 1. Resets
 2. HTML Elements
     2.1. Links
@@ -56,16 +57,15 @@ Section Index:
     4.6. List
     4.7. List Item
     4.8. Table
-    4.9. Table - Sortable Icon
-    4.10. Table - Bulk Actions
-    4.11. Form
-    4.12. Upload
-    4.13. Button Group
-    4.14. Popover
-    4.15. Popover - ODC
-    4.16. Popup
-    4.17. Feedback Message
-    4.18. Radio Button
+    4.9. Table - Bulk Actions
+    4.10. Form
+    4.11. Upload
+    4.12. Button Group
+    4.13. Popover
+    4.14. Popover - ODC
+    4.15. Popup
+    4.16. Feedback Message
+    4.17. Radio Button
 5. Providers
     5.1. Flatpickr
     5.2. NoUiSlider
@@ -110,12 +110,13 @@ Section Index:
         6.3.12. MonthPicker
         6.3.13. Notification
         6.3.14. RangeSlider
-        6.3.15. Scrollable Area
-        6.3.16. Sidebar
-        6.3.17. Search
-        6.3.18. Stacked Cards
-        6.3.19. TimePicker
-        6.3.20. Video
+        6.3.15. Range Slider - ODC
+        6.3.16. Scrollable Area
+        6.3.17. Sidebar
+        6.3.18. Search
+        6.3.19. Stacked Cards
+        6.3.20. TimePicker
+        6.3.21. Video
     6.4. Navigation
         6.4.1. Bottom Bar Item
         6.4.2. Breadcrumbs
@@ -222,6 +223,8 @@ Functions & Mixins
 0. Root - CSS Variables
 =============================================================================== */
 @import '01-foundations/root';
+/*! 0.2. Icon library */
+@import '01-foundations/icon-library-odc';
 
 /*! ==============================================================================
 1. Resets
@@ -291,25 +294,23 @@ Functions & Mixins
 @import '03-widgets/list-item';
 /*! 4.8. Table */
 @import '03-widgets/table';
-/*! 4.9. Table - Sortable Icon */
-@import '03-widgets/table-sortable-icon';
-/*! 4.10. Table - Bulk Actions */
+/*! 4.9. Table - Bulk Actions */
 @import '03-widgets/bulk-actions';
-/*! 4.11. Form */
+/*! 4.10. Form */
 @import '03-widgets/form';
-/*! 4.12. Upload */
+/*! 4.11. Upload */
 @import '03-widgets/upload';
-/*! 4.13. Button Group */
+/*! 4.12. Button Group */
 @import '03-widgets/button-group';
-/*! 4.14. Popover */
+/*! 4.13. Popover */
 @import '03-widgets/popover';
-/*! 4.15. Popover - ODC */
+/*! 4.14. Popover - ODC */
 @import '03-widgets/popover-odc';
-/*! 4.16. Popup */
+/*! 4.15. Popup */
 @import '03-widgets/popup';
-/*! 4.17. Feedback Message */
+/*! 4.16. Feedback Message */
 @import '03-widgets/feedback-message';
-/*! 4.18. Radio Button */
+/*! 4.17. Radio Button */
 @import '03-widgets/radio-button';
 
 /*! ==============================================================================
@@ -402,17 +403,19 @@ Functions & Mixins
 @import '../scripts/OSFramework/OSUI/Pattern/Notification/scss/notification';
 /*! 6.3.14. RangeSlider */
 @import '../scripts/OSFramework/OSUI/Pattern/RangeSlider/scss/rangeslider';
-/*! 6.3.15. Scrollable Area */
+/*! 6.3.15. Range Slider - ODC */
+@import '04-patterns/03-interaction/rangeslider-odc';
+/*! 6.3.16. Scrollable Area */
 @import '04-patterns/03-interaction/scrollable-area';
-/*! 6.3.16. Sidebar */
+/*! 6.3.17. Sidebar */
 @import '../scripts/OSFramework/OSUI/Pattern/Sidebar/scss/sidebar';
-/*! 6.3.17. Search */
+/*! 6.3.18. Search */
 @import '../scripts/OSFramework/OSUI/Pattern/Search/scss/search';
-/*! 6.3.18. Stacked Cards */
+/*! 6.3.19. Stacked Cards */
 @import '04-patterns/03-interaction/stacked-cards';
-/*! 6.3.19. TimePicker */
+/*! 6.3.20. TimePicker */
 @import '../scripts/OSFramework/OSUI/Pattern/TimePicker/scss/timepicker';
-/*! 6.3.20. Video */
+/*! 6.3.21. Video */
 @import '../scripts/OSFramework/OSUI/Pattern/Video/scss/video';
 
 /*! 6.4. Navigation */
@@ -594,6 +597,7 @@ Functions & Mixins
 10. Service Studio Preview
 =============================================================================== */
 @import '08-servicestudio-preview/servicestudiopreview';
+@import '08-servicestudio-preview/placeholder-empty-odc';
 @import '08-servicestudio-preview/deprecated-preview';
 
 /* ===============================================================================

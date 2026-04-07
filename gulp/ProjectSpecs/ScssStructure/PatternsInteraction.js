@@ -1,3 +1,5 @@
+const project = require('../DefaultSpecs');
+
 /* 
 * Section Info
 **/
@@ -52,6 +54,11 @@ const sectionInfo = {
         },
         {
             "key": "range-slider"
+        },
+        {
+            "name": "Range Slider - ODC",
+            "path": "04-patterns/03-interaction/rangeslider-odc",
+            "platform": project.globalConsts.platformTarget.odc
         },
         {
             "name": "Scrollable Area",
