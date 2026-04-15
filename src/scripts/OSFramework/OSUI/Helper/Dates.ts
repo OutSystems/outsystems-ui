@@ -5,6 +5,27 @@ namespace OSFramework.OSUI.Helper {
 		private static _serverFormat = '';
 
 		/**
+		 * Function to be used in order to get the Json Date from a given Date
+		 *
+		 * @static
+		 * @param {Date} _date
+		 * @return {*}  {string}
+		 * @memberof OSFramework.Helper.Dates
+		 */
+		public static GetJsonDateFromDate(_date: Date): string {
+			const jsonDate = {
+				year: _date.getFullYear(),
+				month: _date.getMonth() + 1,
+				day: _date.getDate(),
+				hours: _date.getHours(),
+				minutes: _date.getMinutes(),
+				seconds: _date.getSeconds(),
+			};
+
+			return JSON.stringify(jsonDate);
+		}
+
+		/**
 		 * Function to be used in order to get the Time from a given Date
 		 *
 		 * @static
