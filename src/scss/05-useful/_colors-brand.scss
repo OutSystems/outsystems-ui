@@ -9,7 +9,7 @@
 		background-color: var(--token-semantics-primary-base);
 
 		&-lightest {
-			background-color: var(--token-primitives-base-white);
+			background-color: var(--token-bg-surface-default);
 		}
 	}
 
@@ -17,7 +17,7 @@
 		background-color: #303d60;
 
 		&-lightest {
-			background-color: var(--token-primitives-base-white);
+			background-color: var(--token-bg-surface-default);
 		}
 	}
 }

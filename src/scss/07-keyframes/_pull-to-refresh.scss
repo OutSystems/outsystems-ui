@@ -10,7 +10,7 @@
 		transform: translateY(0) scale(0.3);
 	}
 	100% {
-		background-color: var(--token-primitives-base-white);
+		background-color: var(--token-bg-surface-default);
 		opacity: 1;
 		transform: scale(1);
 	}

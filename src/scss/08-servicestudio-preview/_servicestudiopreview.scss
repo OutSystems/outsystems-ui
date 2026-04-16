@@ -37,7 +37,7 @@ body > .app-menu-content {
 html[data-uieditorversion^='1'] {
 	body {
 		&:not(.phone):not(.tablet) .layout-side aside {
-			-servicestudio-background-color: var(--token-primitives-base-white);
+			-servicestudio-background-color: var(--token-bg-surface-default);
 			-servicestudio-bottom: 0;
 			-servicestudio-position: fixed;
 			-servicestudio-top: 0;

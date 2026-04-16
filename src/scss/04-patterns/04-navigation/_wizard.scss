@@ -68,8 +68,8 @@
 
 	&-item-icon {
 		align-items: center;
-		background-color: var(--token-primitives-base-white);
-		border: var(--token-border-size-025) solid var(--token-primitives-neutral-500);
+		background-color: var(--token-bg-surface-default);
+		border: var(--token-border-size-025) solid var(--token-border-input-default);
 		border-radius: 50%;
 		color: var(--token-primitives-neutral-700);
 		display: flex;
@@ -112,7 +112,7 @@
 		&.active {
 			.wizard-item {
 				&-icon {
-					background-color: var(--token-primitives-base-white);
+					background-color: var(--token-bg-surface-default);
 					border-color: var(--token-semantics-primary-base);
 					color: var(--token-semantics-primary-base);
 
@@ -124,7 +124,7 @@
 				}
 
 				&-label {
-					color: var(--token-primitives-neutral-1200);
+					color: var(--token-text-default);
 				}
 			}
 		}
@@ -134,7 +134,7 @@
 				&-icon {
 					background-color: var(--token-semantics-primary-base);
 					border-color: var(--token-semantics-primary-base);
-					color: var(--token-primitives-base-white);
+					color: var(--token-text-inverse);
 
 					&-wrapper {
 						&:before {
@@ -144,7 +144,7 @@
 				}
 
 				&-label {
-					color: var(--token-primitives-neutral-800);
+					color: var(--token-text-subtlest);
 				}
 			}
 		}
@@ -153,12 +153,12 @@
 			.wizard-item-icon {
 				&-wrapper {
 					&:before {
-						background-color: var(--token-primitives-neutral-500);
+						background-color: var(--token-bg-neutral-base-default);
 					}
 				}
 
 				.fa-fw {
-					color: var(--token-primitives-neutral-500);
+					color: var(--token-text-disabled);
 				}
 			}
 		}

@@ -4,8 +4,8 @@
 /// Patterns - Utilities - Provider Login Button
 
 .btn.btn-provider-login {
-	background: var(--token-primitives-base-white);
-	border-color: var(--token-primitives-neutral-600);
+	background: var(--token-bg-surface-default);
+	border-color: var(--token-border-input-default);
 	border-radius: 0;
 	&-logo {
 		&-only {

@@ -30,10 +30,10 @@
 
 	&-button {
 		align-items: center;
-		background-color: var(--token-primitives-base-white);
-		border: var(--token-border-size-025) solid var(--token-primitives-neutral-400);
+		background-color: var(--token-bg-surface-default);
+		border: var(--token-border-size-025) solid var(--token-border-default);
 		border-radius: var(--token-border-radius-100);
-		color: var(--token-primitives-neutral-800);
+		color: var(--token-text-subtlest);
 		cursor: pointer;
 		display: inline-flex;
 		height: 32px;
@@ -94,7 +94,7 @@
 .desktop {
 	.pagination-button:not(.is--ellipsis):hover {
 		background-color: rgba(21, 24, 26, 0.04);
-		border: var(--token-border-size-025) solid var(--token-primitives-neutral-400);
+		border: var(--token-border-size-025) solid var(--token-border-default);
 	}
 }
 

@@ -5,8 +5,8 @@
 
 ///
 .card {
-	background-color: var(--token-primitives-base-white);
-	border: var(--token-border-size-025) solid var(--token-primitives-neutral-400);
+	background-color: var(--token-bg-surface-default);
+	border: var(--token-border-size-025) solid var(--token-border-default);
 	border-radius: var(--token-border-radius-100);
 	padding: var(--token-scale-600);
 }

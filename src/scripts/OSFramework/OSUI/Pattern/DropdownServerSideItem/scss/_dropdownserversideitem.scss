@@ -32,7 +32,7 @@
 
 		// Service Studio Preview
 		& {
-			-servicestudio-background-color: var(--token-primitives-base-white);
+			-servicestudio-background-color: var(--token-bg-surface-default);
 		}
 	}
 
@@ -58,7 +58,7 @@
 .has-accessible-features {
 	.osui-dropdown-serverside-item {
 		&:hover {
-			background-color: var(--token-primitives-neutral-400);
+			background-color: var(--token-bg-neutral-subtle-press);
 		}
 
 		&:focus {

@@ -15,7 +15,7 @@
 /* HTML                                                                         */
 /* ============================================================================ */
 html {
-	color: var(--token-primitives-neutral-900);
+	color: var(--token-text-default);
 	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif,
 		'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
 	-moz-osx-font-smoothing: grayscale;
@@ -92,7 +92,7 @@ div[onclick] {
 /* ============================================================================ */
 ///
 label {
-	color: var(--token-primitives-neutral-800);
+	color: var(--token-text-subtlest);
 }
 
 ///

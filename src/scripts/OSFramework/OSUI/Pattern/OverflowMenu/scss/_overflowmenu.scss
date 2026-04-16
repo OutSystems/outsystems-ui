@@ -49,7 +49,7 @@
 			& {
 				-servicestudio-align-items: center;
 				-servicestudio-display: inline-flex !important;
-				-servicestudio-color: var(--token-primitives-neutral-900);
+				-servicestudio-color: var(--token-text-default);
 				-servicestudio-padding: var(--token-scale-200) var(--token-scale-400);
 			}
 		}
@@ -84,7 +84,7 @@ html:has(.popup-backdrop) .osui-overflow-menu__balloon {
 ///
 .os-high-contrast {
 	.osui-overflow-menu__balloon {
-		border: var(--token-border-size-025) solid var(--token-primitives-neutral-700);
+		border: var(--token-border-size-025) solid var(--token-border-input-default);
 
 		a {
 			&:hover {

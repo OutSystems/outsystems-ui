@@ -79,7 +79,7 @@ $osui-colors-brand: 'primary' #1068eb, 'secondary' #303d60, 'primary-hover' #295
 	'primary-selected' 'rgba(20, 110, 245, 0.12)',
 	'primary-lightest' 'linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9))';
 
-$osui-colors-focus: 'outer' #ffd337, 'inner' var(--token-primitives-neutral-1200);
+$osui-colors-focus: 'outer' #ffd337, 'inner' var(--token-text-default);
 
 $osui-colors-extended: 'red'
 		(

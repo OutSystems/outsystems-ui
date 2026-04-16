@@ -49,7 +49,7 @@
 			&:not([data-animation-disabled]):after {
 				// Service Studio Preview
 				& {
-					-servicestudio-background-color: var(--token-primitives-base-white);
+					-servicestudio-background-color: var(--token-bg-surface-default);
 					-servicestudio-background-position: center;
 					-servicestudio-background-repeat: no-repeat;
 					-servicestudio-background-size: 291px 225px;
@@ -130,7 +130,7 @@
 	&-bottom,
 	&-top,
 	&-none {
-		background-color: var(--token-primitives-base-white);
+		background-color: var(--token-bg-surface-default);
 		height: 100%;
 	}
 
@@ -193,7 +193,7 @@
 
 	&.top {
 		background-color: var(--token-semantics-info-base);
-		color: var(--token-primitives-base-white);
+		color: var(--token-text-inverse);
 
 		// Service Studio Preview
 		& {
@@ -207,7 +207,7 @@
 
 	&.right {
 		background-color: var(--token-semantics-success-base);
-		color: var(--token-primitives-base-white);
+		color: var(--token-text-inverse);
 
 		// Service Studio Preview
 		& {
@@ -221,7 +221,7 @@
 
 	&.left {
 		background-color: var(--token-semantics-danger-base);
-		color: var(--token-primitives-base-white);
+		color: var(--token-text-inverse);
 
 		// Service Studio Preview
 		& {

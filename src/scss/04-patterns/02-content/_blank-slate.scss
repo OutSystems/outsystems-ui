@@ -23,7 +23,7 @@
 	}
 
 	&-description {
-		color: var(--token-primitives-neutral-900);
+		color: var(--token-text-default);
 		padding: var(--token-scale-0) var(--token-scale-400);
 	}
 
@@ -32,7 +32,7 @@
 	}
 
 	&-icon {
-		color: var(--token-primitives-neutral-600);
+		color: var(--token-text-disabled);
 		font-size: 70px;
 	}
 }

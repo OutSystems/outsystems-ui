@@ -17,7 +17,7 @@
 
 		&:empty {
 			// Service Studio Preview
-			-servicestudio-background-color: var(--token-primitives-base-white);
+			-servicestudio-background-color: var(--token-bg-surface-default);
 			-servicestudio-border-radius: 4px;
 			-servicestudio-height: 40px;
 		}

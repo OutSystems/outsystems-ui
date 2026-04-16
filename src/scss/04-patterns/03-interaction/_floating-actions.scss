@@ -99,7 +99,7 @@
 
 	&-actions-item-button {
 		align-items: center;
-		background-color: var(--token-primitives-base-white);
+		background-color: var(--token-bg-surface-default);
 		border-radius: var(--token-border-radius-full);
 		box-shadow: var(--token-elevation-1);
 		color: var(--token-semantics-primary-base);
@@ -121,7 +121,7 @@
 
 		&:hover {
 			background-color: var(--token-semantics-primary-base);
-			color: var(--token-primitives-base-white);
+			color: var(--token-text-inverse);
 		}
 	}
 
@@ -130,7 +130,7 @@
 		background-color: var(--token-semantics-primary-base);
 		border-radius: var(--token-border-radius-full);
 		box-shadow: var(--token-elevation-4);
-		color: var(--token-primitives-base-white);
+		color: var(--token-text-inverse);
 		cursor: pointer;
 		display: flex;
 		font-size: var(--token-font-size-550);

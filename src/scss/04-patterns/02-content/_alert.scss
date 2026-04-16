@@ -7,7 +7,7 @@
 .alert {
 	align-items: center;
 	border-radius: var(--token-border-radius-100);
-	color: var(--token-primitives-base-white);
+	color: var(--token-text-inverse);
 	display: flex;
 	padding: var(--token-scale-400);
 
@@ -40,7 +40,7 @@
 
 	&-warning {
 		background-color: var(--token-semantics-warning-base);
-		color: var(--token-primitives-neutral-1200);
+		color: var(--token-text-default);
 	}
 }
 

@@ -22,7 +22,7 @@ a {
 	}
 
 	&[disabled] {
-		color: var(--token-primitives-neutral-600);
+		color: var(--token-text-disabled);
 	}
 }
 
@@ -45,7 +45,7 @@ a {
 		&:focus {
 			background-color: var(--color-focus-outer);
 			box-shadow: 0 2px var(--color-focus-inner);
-			color: var(--token-primitives-neutral-1200);
+			color: var(--token-text-default);
 
 			&,
 			&:hover {
@@ -54,7 +54,7 @@ a {
 		}
 
 		&[disabled] {
-			color: var(--token-primitives-neutral-600);
+			color: var(--token-text-disabled);
 		}
 	}
 }

@@ -80,7 +80,7 @@
 	.aside-navigation {
 		// Service Studio Preview
 		& {
-			-servicestudio-background-color: var(--token-primitives-base-white);
+			-servicestudio-background-color: var(--token-bg-surface-default);
 			-servicestudio-height: 100%;
 			-servicestudio-position: fixed;
 			-servicestudio-width: var(--side-menu-size);

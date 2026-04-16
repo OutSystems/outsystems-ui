@@ -51,7 +51,7 @@
 	--osui-sidebar-layer: var(--layer-global-off-canvas);
 	--osui-menu-layer: calc(var(--layer-global-navigation) + var(--layer-local-tier-2));
 
-	/*! Focus Colors — no token equivalent yet */
+	/*! Focus Colors */
 	--color-focus-outer: #ffd337;
-	--color-focus-inner: var(--token-primitives-neutral-1200);
+	--color-focus-inner: var(--token-text-default);
 }
