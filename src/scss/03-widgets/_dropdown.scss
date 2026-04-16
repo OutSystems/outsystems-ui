@@ -5,6 +5,13 @@
 
 .dropdown {
 	&-container {
+		// ─── Component CSS API ─────────────────────────────────────────────
+		--osui-dropdown-background:    var(--token-bg-input-default);
+		--osui-dropdown-border-color:  var(--token-border-input-default);
+		--osui-dropdown-color:         var(--token-text-default);
+		--osui-dropdown-border-radius: var(--token-border-radius-100);
+		// ───────────────────────────────────────────────────────────────────
+
 		cursor: initial;
 		position: relative;
 
@@ -16,10 +23,10 @@
 		& > select {
 			&.dropdown-display {
 				align-items: center;
-				background-color: var(--token-primitives-base-white);
-				border: var(--token-border-size-025) solid var(--token-primitives-neutral-500);
-				border-radius: var(--token-border-radius-100);
-				color: var(--token-primitives-neutral-900);
+				background-color: var(--osui-dropdown-background);
+				border: var(--token-border-size-025) solid var(--osui-dropdown-border-color);
+				border-radius: var(--osui-dropdown-border-radius);
+				color: var(--osui-dropdown-color);
 				cursor: pointer;
 				display: flex;
 				font-size: var(--token-font-size-350);
@@ -28,7 +35,7 @@
 				width: 100%;
 
 				&:hover {
-					border: var(--token-border-size-025) solid var(--token-primitives-neutral-600);
+					border: var(--token-border-size-025) solid var(--token-border-input-default);
 				}
 
 				&:focus {
@@ -49,7 +56,7 @@
 		}
 
 		& > div.dropdown-list {
-			border: var(--token-border-size-025) solid var(--token-primitives-neutral-400);
+			border: var(--token-border-size-025) solid var(--token-border-default);
 			border-radius: var(--token-border-radius-100);
 			box-shadow: none;
 			left: 0 !important;
@@ -61,19 +68,19 @@
 
 		.dropdown-popup-row {
 			align-items: center;
-			color: var(--token-primitives-neutral-900);
+			color: var(--token-text-default);
 			display: flex;
 			height: 40px;
 			padding: var(--token-scale-0) var(--token-scale-400);
 
 			&:hover,
 			&-selected:hover {
-				background: var(--token-primitives-neutral-200);
+				background: var(--token-bg-input-disabled);
 			}
 
 			&-selected {
-				background-color: var(--token-primitives-neutral-200);
-				color: var(--token-primitives-neutral-900);
+				background-color: var(--token-bg-input-disabled);
+				color: var(--token-text-default);
 			}
 
 			span {
@@ -116,9 +123,9 @@ select {
 	&.dropdown-display {
 		&.dropdown-disabled,
 		&[disabled] {
-			background-color: var(--token-primitives-neutral-200);
-			border: var(--token-border-size-025) solid var(--token-primitives-neutral-400);
-			color: var(--token-primitives-neutral-600);
+			background-color: var(--token-bg-input-disabled);
+			border: var(--token-border-size-025) solid var(--token-border-default);
+			color: var(--token-text-disabled);
 			pointer-events: none;
 		}
 	}
@@ -170,10 +177,10 @@ select.dropdown-display[disabled] {
 		& > div,
 		& > select {
 			&.dropdown-display {
-				border-color: var(--token-primitives-neutral-700);
+				border-color: var(--token-border-input-default);
 
 				&:hover {
-					border-color: var(--token-primitives-neutral-800);
+					border-color: var(--token-border-input-press);
 				}
 			}
 		}

@@ -7,7 +7,7 @@
 	--osui-flatpickr-layer: var(--layer-global-elevated);
 
 	border-radius: var(--token-border-radius-100);
-	border: var(--token-border-size-025) solid var(--token-primitives-neutral-500);
+	border: var(--token-border-size-025) solid var(--token-border-input-default);
 	box-shadow: none;
 	width: 320px;
 
@@ -130,7 +130,7 @@
 		z-index: calc(var(--osui-flatpickr-layer) + var(--layer-local-tier-1));
 
 		&:hover {
-			background-color: var(--token-primitives-neutral-200);
+			background-color: var(--token-bg-neutral-subtle-default);
 			border-radius: 50%;
 		}
 
@@ -183,7 +183,7 @@
 
 		&:hover,
 		&:focus {
-			background-color: var(--token-primitives-neutral-200);
+			background-color: var(--token-bg-neutral-subtle-default);
 		}
 	}
 
@@ -194,7 +194,7 @@
 
 		&:hover,
 		&:focus {
-			background-color: var(--token-primitives-neutral-200);
+			background-color: var(--token-bg-neutral-subtle-default);
 			border-radius: var(--token-border-radius-100);
 		}
 
@@ -207,7 +207,7 @@
 			padding: 0;
 
 			&:hover {
-				background-color: var(--token-primitives-neutral-200);
+				background-color: var(--token-bg-neutral-subtle-default);
 			}
 		}
 	}
@@ -249,7 +249,7 @@ span.flatpickr-weekday {
 
 // Flatpickr - DayElem
 .flatpickr-day {
-	color: var(--token-primitives-neutral-900);
+	color: var(--token-text-default);
 	font-size: var(--token-font-size-350);
 	font-weight: var(--token-font-weight-regular);
 	user-select: none;
@@ -266,7 +266,7 @@ span.flatpickr-weekday {
 	}
 
 	&.today {
-		border-color: var(--token-primitives-neutral-600);
+		border-color: var(--token-border-input-default);
 
 		&:hover,
 		&:focus {
@@ -276,7 +276,7 @@ span.flatpickr-weekday {
 		}
 
 		&.inRange {
-			color: var(--token-primitives-neutral-900);
+			color: var(--token-text-default);
 		}
 	}
 
@@ -318,7 +318,7 @@ span.flatpickr-weekday {
 		border-color: var(--token-semantics-primary-base);
 
 		&.today {
-			color: var(--token-primitives-base-white);
+			color: var(--token-text-inverse);
 		}
 	}
 	// InRange Styles
@@ -431,7 +431,7 @@ span.flatpickr-weekday {
 	.flatpickr-am-pm {
 		background-color: var(--token-semantics-primary-base);
 		border-radius: var(--token-border-radius-100);
-		color: var(--token-primitives-base-white);
+		color: var(--token-text-inverse);
 		font-size: var(--token-font-size-300);
 		font-weight: var(--token-font-weight-semi-bold);
 		height: 18px;

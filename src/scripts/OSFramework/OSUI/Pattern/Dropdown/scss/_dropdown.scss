@@ -50,12 +50,12 @@
 			height: 24px;
 			margin-right: var(--token-scale-200);
 			width: 24px;
-			background-color: var(--token-primitives-neutral-300);
+			background-color: var(--token-bg-neutral-subtle-default);
 			overflow: hidden;
 		}
 
 		&-icon {
-			color: var(--token-primitives-neutral-900);
+			color: var(--token-text-default);
 			font-size: var(--token-font-size-450);
 			margin-right: var(--token-scale-200);
 		}

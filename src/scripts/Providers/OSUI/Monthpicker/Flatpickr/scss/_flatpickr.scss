@@ -28,21 +28,21 @@
 
 		&:hover,
 		&:focus {
-			background: var(--token-primitives-neutral-200);
+			background: var(--token-bg-neutral-subtle-default);
 		}
 
 		&.selected {
 			background-color: var(--token-semantics-primary-base);
 			border-color: transparent;
-			color: var(--token-primitives-base-white);
+			color: var(--token-text-inverse);
 		}
 
 		&.flatpickr-disabled {
-			background-color: var(--token-primitives-neutral-100);
-			color: var(--token-primitives-neutral-500);
+			background-color: var(--token-bg-input-disabled);
+			color: var(--token-border-input-default);
 
 			&:hover {
-				background-color: var(--token-primitives-neutral-100) !important; // override provider !important rule
+				background-color: var(--token-bg-input-disabled) !important; // override provider !important rule
 			}
 
 			&.today:hover,
@@ -52,7 +52,7 @@
 		}
 
 		&.today:not(.selected):not(.flatpickr-disabled) {
-			border-color: var(--token-primitives-neutral-600);
+			border-color: var(--token-border-input-default);
 
 			&:hover,
 			&:focus {

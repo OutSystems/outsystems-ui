@@ -221,7 +221,7 @@
 			z-index: var(--layer-local-tier-1);
 
 			&[disabled] {
-				background-color: var(--token-primitives-neutral-600);
+				background-color: var(--token-text-disabled);
 			}
 		}
 
@@ -354,7 +354,7 @@
 
 			&:focus-visible {
 				background-color: var(--color-focus-outer);
-				color: var(--token-primitives-neutral-1200);
+				color: var(--token-text-default);
 			}
 		}
 

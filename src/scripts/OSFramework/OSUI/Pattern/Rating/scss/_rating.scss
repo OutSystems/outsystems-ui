@@ -50,18 +50,18 @@
 			.rating-item {
 				&-filled,
 				&-half {
-					color: var(--token-primitives-neutral-600);
+					color: var(--token-text-disabled);
 
 					.icon {
-						color: var(--token-primitives-neutral-600);
+						color: var(--token-text-disabled);
 					}
 				}
 
 				&-empty {
-					color: var(--token-primitives-neutral-600);
+					color: var(--token-text-disabled);
 
 					.icon {
-						color: var(--token-primitives-neutral-400);
+						color: var(--token-border-default);
 					}
 				}
 			}
@@ -299,7 +299,7 @@
 				color: var(--token-primitives-neutral-700);
 
 				.icon {
-					color: var(--token-primitives-neutral-500);
+					color: var(--token-border-input-default);
 				}
 			}
 		}

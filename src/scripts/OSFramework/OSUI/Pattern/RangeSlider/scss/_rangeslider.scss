@@ -6,9 +6,9 @@
 ///
 .osui-range-slider {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-range-slider-track-color:           var(--token-primitives-neutral-500);
+	--osui-range-slider-track-color:           var(--token-border-input-default);
 	--osui-range-slider-handle-background:     var(--token-bg-surface-default);
-	--osui-range-slider-handle-border-color:   var(--token-primitives-neutral-700);
+	--osui-range-slider-handle-border-color:   var(--token-border-input-default);
 	--osui-range-slider-handle-shadow:         var(--token-elevation-1);
 	--osui-range-slider-disabled-track-color:  var(--token-bg-neutral-subtle-default);
 	--osui-range-slider-disabled-color:        var(--token-text-disabled);
@@ -79,7 +79,7 @@
 			.noUi-handle:before,
 			.noUi-handle:after {
 				background: transparent;
-				border-color: var(--token-primitives-neutral-600);
+				border-color: var(--token-text-disabled);
 				border-style: solid;
 				content: '';
 				height: calc(var(--range-slider-handle-size) / 2);
@@ -139,7 +139,7 @@
 			}
 
 			.noUi-pips {
-				color: var(--token-primitives-neutral-800);
+				color: var(--token-text-subtlest);
 			}
 
 			.noUi-pips-margin {
@@ -168,7 +168,7 @@
 		}
 
 		&-pips-vertical {
-			color: var(--token-primitives-neutral-800);
+			color: var(--token-text-subtlest);
 			height: 100%;
 			left: 100%;
 			padding: 0 0 0 var(--token-scale-400);
@@ -177,7 +177,7 @@
 
 		&-marker {
 			&-large {
-				background-color: var(--token-primitives-neutral-600);
+				background-color: var(--token-text-disabled);
 			}
 
 			&-horizontal {
@@ -206,7 +206,7 @@
 		&-tooltip {
 			background: transparent;
 			border: none;
-			color: var(--token-primitives-neutral-1200);
+			color: var(--token-text-default);
 			padding: var(--token-scale-100);
 		}
 
@@ -244,21 +244,21 @@
 
 			.noUi {
 				&-target {
-					background-color: var(--token-primitives-neutral-400);
+					background-color: var(--token-border-default);
 				}
 
 				&-connect {
-					background-color: var(--token-primitives-neutral-600);
+					background-color: var(--token-text-disabled);
 				}
 
 				&-handle {
 					background-color: var(--osui-range-slider-handle-background);
-					border: var(--token-border-size-025) solid var(--token-primitives-neutral-500);
+					border: var(--token-border-size-025) solid var(--token-border-input-default);
 					box-shadow: none;
 
 					&:before,
 					&:after {
-						border-color: var(--token-primitives-neutral-600);
+						border-color: var(--token-text-disabled);
 					}
 				}
 
@@ -305,7 +305,7 @@
 
 		.noUi-connect,
 		.noUi-base {
-			border: var(--token-border-size-050) solid var(--token-primitives-neutral-700);
+			border: var(--token-border-size-050) solid var(--token-border-input-default);
 		}
 	}
 

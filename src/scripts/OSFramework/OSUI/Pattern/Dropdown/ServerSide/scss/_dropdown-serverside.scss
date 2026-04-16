@@ -26,7 +26,7 @@ $balloonMobileTopMargin: 5vh;
 	.osui-balloon {
 		--osui-balloon-shadow: none;
 
-		border: var(--token-border-size-025) solid var(--token-primitives-neutral-500);
+		border: var(--token-border-size-025) solid var(--token-border-input-default);
 		display: flex;
 		flex-direction: column;
 		flex: 1;
@@ -57,12 +57,12 @@ $balloonMobileTopMargin: 5vh;
 		overflow: hidden;
 
 		&:hover {
-			border-color: var(--token-primitives-neutral-600);
+			border-color: var(--token-border-input-default);
 		}
 
 		&:after {
 			align-items: center;
-			color: var(--token-primitives-neutral-700);
+			color: var(--token-text-subtlest);
 			display: flex;
 			height: 100%;
 			pointer-events: none;
@@ -129,7 +129,7 @@ $balloonMobileTopMargin: 5vh;
 
 			&:before {
 				align-items: center;
-				color: var(--token-primitives-neutral-600);
+				color: var(--token-text-disabled);
 				display: flex;
 				height: 100%;
 				left: var(--token-scale-400);
@@ -164,7 +164,7 @@ $balloonMobileTopMargin: 5vh;
 
 		// Options placeholder
 		&-content {
-			border-top: var(--token-border-size-025) solid var(--token-primitives-neutral-500);
+			border-top: var(--token-border-size-025) solid var(--token-border-input-default);
 			flex: 1;
 			height: auto;
 			max-height: var(--osui-dropdown-ss-balloon-max-height);
@@ -177,11 +177,11 @@ $balloonMobileTopMargin: 5vh;
 			}
 
 			&::-webkit-scrollbar-track {
-				background: var(--token-primitives-neutral-400);
+				background: var(--token-border-default);
 			}
 
 			&::-webkit-scrollbar-thumb {
-				background-color: var(--token-primitives-neutral-600);
+				background-color: var(--token-text-disabled);
 			}
 
 			// Avoid having data-list above other elements in this context, such as a StickyTop SelectAll Option container.
@@ -199,7 +199,7 @@ $balloonMobileTopMargin: 5vh;
 
 		// Footer placeholder
 		&-footer {
-			border-top: var(--token-border-size-025) solid var(--token-primitives-neutral-500);
+			border-top: var(--token-border-size-025) solid var(--token-border-input-default);
 			padding: var(--token-scale-200) var(--token-scale-400);
 		}
 	}
@@ -230,7 +230,7 @@ $balloonMobileTopMargin: 5vh;
 
 		.osui-dropdown-serverside__selected-values {
 			&:after {
-				border-color: var(--token-primitives-neutral-600);
+				border-color: var(--token-text-disabled);
 			}
 
 			&-wrapper {
@@ -287,16 +287,16 @@ $balloonMobileTopMargin: 5vh;
 			&:after,
 			&-wrapper,
 			&-footer {
-				border-color: var(--token-primitives-neutral-700);
+				border-color: var(--token-border-input-default);
 			}
 		}
 
 		&__balloon {
-			border-color: var(--token-primitives-neutral-700);
+			border-color: var(--token-border-input-default);
 
 			&-search {
 				&:before {
-					color: var(--token-primitives-neutral-700);
+					color: var(--token-border-input-default);
 				}
 
 				input,
@@ -311,7 +311,7 @@ $balloonMobileTopMargin: 5vh;
 				--osui-outline-size: 3px;
 
 				&::-webkit-scrollbar-thumb {
-					background-color: var(--token-primitives-neutral-700);
+					background-color: var(--token-border-input-default);
 				}
 
 				&:focus {
@@ -514,7 +514,7 @@ $balloonMobileTopMargin: 5vh;
 			}
 
 			&-container {
-				background: var(--token-primitives-base-white);
+				background: var(--token-bg-surface-default);
 				border-radius: var(--osui-balloon-shape);
 				box-shadow: var(--token-elevation-4);
 				display: flex;
@@ -587,17 +587,17 @@ $balloonMobileTopMargin: 5vh;
 
 				/* Track */
 				&::-webkit-scrollbar-track {
-					background-color: var(--token-primitives-neutral-300);
+					background-color: var(--token-bg-neutral-subtle-default);
 				}
 
 				/* Handle */
 				&::-webkit-scrollbar-thumb {
-					background-color: var(--token-primitives-neutral-600);
+					background-color: var(--token-text-disabled);
 				}
 
 				/* Handle on hover */
 				&::-webkit-scrollbar-thumb:hover {
-					background-color: var(--token-primitives-neutral-800);
+					background-color: var(--token-border-input-press);
 				}
 			}
 		}

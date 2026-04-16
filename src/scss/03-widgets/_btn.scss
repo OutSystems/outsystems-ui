@@ -5,11 +5,18 @@
 
 ///
 .btn {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-btn-background:    var(--token-bg-surface-default);
+	--osui-btn-color:         var(--token-semantics-primary-base);
+	--osui-btn-border-color:  currentColor;
+	--osui-btn-border-radius: var(--token-border-radius-100);
+	// ───────────────────────────────────────────────────────────────────
+
 	align-items: center;
-	background-color: var(--token-primitives-base-white);
-	border: var(--token-border-size-025) solid currentColor;
-	border-radius: var(--token-border-radius-100);
-	color: var(--token-semantics-primary-base);
+	background-color: var(--osui-btn-background);
+	border: var(--token-border-size-025) solid var(--osui-btn-border-color);
+	border-radius: var(--osui-btn-border-radius);
+	color: var(--osui-btn-color);
 	cursor: pointer;
 	display: inline-flex;
 	filter: brightness(1);
@@ -28,11 +35,11 @@
 
 	&[class*='background-'] {
 		border: var(--token-border-size-025) solid transparent;
-		color: var(--token-primitives-base-white);
+		color: var(--token-text-inverse);
 	}
 
 	&[class*='text-'] {
-		background-color: var(--token-primitives-base-white);
+		background-color: var(--osui-btn-background);
 		border: var(--token-border-size-025) solid currentColor;
 	}
 
@@ -44,7 +51,7 @@
 	&-primary {
 		background-color: var(--token-semantics-primary-base);
 		border: var(--token-border-size-025) solid var(--token-semantics-primary-base);
-		color: var(--token-primitives-base-white);
+		color: var(--token-text-inverse);
 	}
 
 	&-small {
@@ -59,27 +66,35 @@
 	}
 
 	&-cancel {
-		background-color: var(--token-primitives-base-white);
-		border: var(--token-border-size-025) solid var(--token-primitives-neutral-800);
-		color: var(--token-primitives-neutral-700);
+		--osui-btn-background:   var(--token-bg-surface-default);
+		--osui-btn-color:        var(--token-text-subtlest);
+		--osui-btn-border-color: var(--token-border-input-press);
+
+		background-color: var(--osui-btn-background);
+		border: var(--token-border-size-025) solid var(--osui-btn-border-color);
+		color: var(--osui-btn-color);
 	}
 
 	&-success {
 		background-color: var(--token-semantics-success-base);
 		border: var(--token-border-size-025) solid var(--token-semantics-success-base);
-		color: var(--token-primitives-base-white);
+		color: var(--token-text-inverse);
 	}
 
 	&-error {
 		background-color: var(--token-semantics-danger-base);
 		border: var(--token-border-size-025) solid var(--token-semantics-danger-base);
-		color: var(--token-primitives-base-white);
+		color: var(--token-text-inverse);
 	}
 
 	&[disabled] {
-		background-color: var(--token-primitives-neutral-200);
-		border: var(--token-border-size-025) solid var(--token-primitives-neutral-400);
-		color: var(--token-primitives-neutral-600);
+		--osui-btn-background:   var(--token-bg-input-disabled);
+		--osui-btn-color:        var(--token-text-disabled);
+		--osui-btn-border-color: var(--token-border-default);
+
+		background-color: var(--osui-btn-background);
+		border: var(--token-border-size-025) solid var(--osui-btn-border-color);
+		color: var(--osui-btn-color);
 		pointer-events: none;
 	}
 }

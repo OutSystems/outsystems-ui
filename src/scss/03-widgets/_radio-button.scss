@@ -5,6 +5,11 @@
 
 ///
 .radio-button {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-radio-background:   var(--token-bg-input-default);
+	--osui-radio-border-color: var(--token-border-input-default);
+	// ───────────────────────────────────────────────────────────────────
+
 	appearance: none;
 	cursor: pointer;
 	flex-shrink: 0;
@@ -19,8 +24,8 @@
 	}
 
 	&:before {
-		background-color: var(--token-primitives-base-white);
-		border: var(--token-border-size-025) solid var(--token-primitives-neutral-500);
+		background-color: var(--osui-radio-background);
+		border: var(--token-border-size-025) solid var(--osui-radio-border-color);
 		border-radius: var(--token-border-radius-full);
 		content: '';
 
@@ -32,7 +37,7 @@
 	}
 
 	&:hover:before {
-		border: var(--token-border-size-025) solid var(--token-primitives-neutral-600);
+		border: var(--token-border-size-025) solid var(--token-border-input-default);
 	}
 
 	&:focus:before {
@@ -41,7 +46,7 @@
 
 	&:checked {
 		&:before {
-			background-color: var(--token-primitives-base-white);
+			background-color: var(--osui-radio-background);
 			border: 6px solid var(--token-semantics-primary-base);
 		}
 
@@ -57,17 +62,17 @@
 
 		& + label {
 			pointer-events: none;
-			color: var(--token-primitives-neutral-600);
+			color: var(--token-text-disabled);
 		}
 
 		&:before {
-			background-color: var(--token-primitives-neutral-200);
-			border: var(--token-border-size-025) solid var(--token-primitives-neutral-400);
+			background-color: var(--token-bg-input-disabled);
+			border: var(--token-border-size-025) solid var(--token-border-default);
 		}
 
 		&:checked:before {
-			background-color: var(--token-primitives-neutral-200);
-			border: 6px solid var(--token-primitives-neutral-400);
+			background-color: var(--token-bg-input-disabled);
+			border: 6px solid var(--token-border-default);
 		}
 	}
 }
@@ -101,7 +106,7 @@
 		}
 
 		&:checked:before {
-			background-color: var(--token-primitives-base-white);
+			background-color: var(--osui-radio-background);
 			border: 6px solid var(--token-semantics-primary-base);
 		}
 	}
@@ -134,11 +139,11 @@
 		border-radius: var(--token-border-radius-full);
 
 		&:before {
-			border-color: var(--token-primitives-neutral-700);
+			border-color: var(--token-border-input-default);
 		}
 
 		&:after {
-			background-color: var(--token-primitives-base-white);
+			background-color: var(--token-bg-input-default);
 			border-radius: 100%;
 			content: '';
 			height: 12px;
@@ -162,7 +167,7 @@
 		}
 
 		&:hover:before {
-			border-color: var(--token-primitives-neutral-800);
+			border-color: var(--token-border-input-press);
 		}
 	}
 

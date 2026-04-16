@@ -5,31 +5,38 @@
 
 /* Input placeholder style */
 ::-webkit-input-placeholder {
-	color: var(--token-primitives-neutral-700);
+	color: var(--token-text-subtlest);
 }
 
 ::-moz-placeholder {
-	color: var(--token-primitives-neutral-700);
+	color: var(--token-text-subtlest);
 }
 
 :-ms-input-placeholder {
-	color: var(--token-primitives-neutral-700);
+	color: var(--token-text-subtlest);
 }
 
 /* Iuput and TextArea */
 ///
 .form-control {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-input-background:    var(--token-bg-input-default);
+	--osui-input-border-color:  var(--token-border-input-default);
+	--osui-input-color:         var(--token-text-default);
+	--osui-input-border-radius: var(--token-border-radius-100);
+	// ───────────────────────────────────────────────────────────────────
+
 	&[data-input],
 	&[data-textarea] {
-		background-color: var(--token-primitives-base-white);
-		border: var(--token-border-size-025) solid var(--token-primitives-neutral-500);
-		border-radius: var(--token-border-radius-100);
-		color: var(--token-primitives-neutral-900);
+		background-color: var(--osui-input-background);
+		border: var(--token-border-size-025) solid var(--osui-input-border-color);
+		border-radius: var(--osui-input-border-radius);
+		color: var(--osui-input-color);
 		font-size: var(--token-font-size-350);
 		transition: all 180ms linear;
 
 		&:hover {
-			border: var(--token-border-size-025) solid var(--token-primitives-neutral-600);
+			border: var(--token-border-size-025) solid var(--token-border-input-default);
 		}
 
 		&:focus {
@@ -37,9 +44,13 @@
 		}
 
 		&[disabled] {
-			background-color: var(--token-primitives-neutral-200);
-			border: var(--token-border-size-025) solid var(--token-primitives-neutral-400);
-			color: var(--token-primitives-neutral-600);
+			--osui-input-background:   var(--token-bg-input-disabled);
+			--osui-input-border-color: var(--token-border-default);
+			--osui-input-color:        var(--token-text-disabled);
+
+			background-color: var(--osui-input-background);
+			border: var(--token-border-size-025) solid var(--osui-input-border-color);
+			color: var(--osui-input-color);
 		}
 	}
 
@@ -144,10 +155,10 @@
 	.form-control {
 		&[data-input],
 		&[data-textarea] {
-			border-color: var(--token-primitives-neutral-700);
+			border-color: var(--token-border-input-default);
 
 			&:hover {
-				border-color: var(--token-primitives-neutral-800);
+				border-color: var(--token-border-input-press);
 			}
 
 			&:focus {

@@ -74,7 +74,7 @@
 		}
 
 		.checkbox-icon {
-			border-color: var(--token-primitives-neutral-600);
+			border-color: var(--token-border-input-default);
 		}
 	}
 
@@ -92,7 +92,7 @@
 
 	&:not(.has-value) {
 		.vscomp-value {
-			color: var(--token-primitives-neutral-700);
+			color: var(--token-text-subtlest);
 			opacity: 1;
 		}
 	}
@@ -113,7 +113,7 @@
 					border-color: var(--token-semantics-primary-base);
 
 					&:after {
-						border-color: var(--token-primitives-base-white);
+						border-color: var(--token-text-inverse);
 						border-left-color: transparent;
 						border-top-color: transparent;
 						height: 80%;
@@ -297,9 +297,9 @@
 
 	// Checkbox
 	.checkbox-icon {
-		background-color: var(--token-primitives-base-white);
+		background-color: var(--token-bg-input-default);
 		border-radius: var(--token-border-radius-100);
-		border: var(--token-border-size-025) solid var(--token-primitives-neutral-500);
+		border: var(--token-border-size-025) solid var(--token-border-input-default);
 		height: 16px;
 		margin-right: var(--token-scale-200);
 		overflow: visible;
@@ -320,7 +320,7 @@
 			border-color: var(--token-semantics-primary-base);
 
 			&:after {
-				border-color: var(--token-primitives-base-white);
+				border-color: var(--token-text-inverse);
 				border-left-color: transparent;
 				border-top-color: transparent;
 				height: 80%;
@@ -338,10 +338,10 @@
 	--vscomp-toogle-btn-height: 40px;
 	--vscomp-toogle-btn-mobile-height: 48px;
 
-	background-color: var(--token-primitives-base-white);
+	background-color: var(--token-bg-input-default);
 	border-radius: var(--token-border-radius-100);
-	border: var(--token-border-size-025) solid var(--token-primitives-neutral-500);
-	color: var(--token-primitives-neutral-900);
+	border: var(--token-border-size-025) solid var(--token-border-input-default);
+	color: var(--token-text-default);
 	cursor: pointer;
 	display: inline-flex;
 	height: var(--vscomp-toogle-btn-height);
@@ -367,7 +367,7 @@
 	}
 
 	&:hover {
-		border-color: var(--token-primitives-neutral-600);
+		border-color: var(--token-border-input-default);
 	}
 }
 
@@ -388,10 +388,10 @@
 
 // Wrapper options container
 .vscomp-dropbox {
-	--border-color: #{var(--token-primitives-neutral-500)};
+	--border-color: #{var(--token-border-input-default)};
 	--border-size: var(--token-border-size-025);
 
-	background-color: var(--token-primitives-base-white);
+	background-color: var(--token-bg-input-default);
 	border-radius: var(--token-border-radius-100);
 	/* use inner shadow to workaround the border issue that causes content to be blurry */
 	box-shadow: inset var(--border-color) 0 0 0 var(--border-size);
@@ -407,7 +407,7 @@
 
 // Options container input search wrapper
 .vscomp-search-container {
-	border-bottom: var(--token-border-size-025) solid var(--token-primitives-neutral-500);
+	border-bottom: var(--token-border-size-025) solid var(--token-border-input-default);
 	padding: var(--token-scale-0) var(--token-scale-200) var(--token-scale-0) var(--token-scale-1000);
 	position: relative;
 
@@ -454,7 +454,7 @@
 	font-size: var(--token-font-size-350);
 
 	&::placeholder {
-		color: var(--token-primitives-neutral-900);
+		color: var(--token-text-default);
 		opacity: 0.5;
 	}
 }
@@ -468,17 +468,17 @@
 	}
 
 	&::-webkit-scrollbar-track {
-		background: var(--token-primitives-neutral-400);
+		background: var(--token-border-default);
 	}
 
 	&::-webkit-scrollbar-thumb {
-		background-color: var(--token-primitives-neutral-600);
+		background-color: var(--token-text-disabled);
 	}
 }
 
 // Option Item text
 .vscomp-option-text {
-	color: var(--token-primitives-neutral-900);
+	color: var(--token-text-default);
 	display: inline-block;
 	font-size: var(--token-font-size-350);
 
@@ -492,16 +492,16 @@
 // Option Item
 .vscomp-option {
 	align-content: center;
-	background-color: var(--token-primitives-base-white);
+	background-color: var(--token-bg-input-default);
 	transition: background-color 0.25s ease;
 
 	&.focused,
 	&.selected {
-		background-color: var(--token-primitives-neutral-300);
+		background-color: var(--token-bg-neutral-subtle-default);
 	}
 
 	&.focused {
-		background-color: var(--token-primitives-neutral-200);
+		background-color: var(--token-bg-neutral-subtle-default);
 	}
 
 	// Style dropdown group title
@@ -540,11 +540,11 @@
 ///
 .has-accessible-features {
 	.vscomp-toggle-button {
-		border-color: var(--token-primitives-neutral-700);
-		color: var(--token-primitives-neutral-1200);
+		border-color: var(--token-border-input-default);
+		color: var(--token-text-default);
 
 		&:after {
-			color: var(--token-primitives-neutral-900);
+			color: var(--token-text-default);
 		}
 	}
 
@@ -567,14 +567,14 @@
 	.vscomp-wrapper {
 		&.show-value-as-tags {
 			.vscomp-value-tag {
-				border: var(--token-border-size-025) solid var(--token-primitives-neutral-700);
+				border: var(--token-border-size-025) solid var(--token-border-input-default);
 			}
 		}
 
 		.vscomp-option {
 			&.focused {
 				&:before {
-					border: var(--token-border-size-050) solid var(--token-primitives-neutral-700);
+					border: var(--token-border-size-050) solid var(--token-border-input-default);
 					bottom: 0;
 					content: '';
 					display: block;
@@ -598,7 +598,7 @@
 
 	.pop-comp-content,
 	.vscomp-dropbox-container {
-		border: var(--token-border-size-050) solid var(--token-primitives-neutral-700);
+		border: var(--token-border-size-050) solid var(--token-border-input-default);
 	}
 
 	.vscomp-options-container {

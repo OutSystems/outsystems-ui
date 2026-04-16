@@ -16,11 +16,18 @@
 		}
 
 		&-bottom {
-			background-color: var(--token-primitives-base-white);
-			border: var(--token-border-size-025) solid var(--token-primitives-neutral-400);
-			border-radius: var(--token-border-radius-100);
+			// ─── Component CSS API ─────────────────────────────────────────────
+			--osui-popover-background:    var(--token-bg-surface-default);
+			--osui-popover-border-color:  var(--token-border-default);
+			--osui-popover-color:         var(--token-text-default);
+			--osui-popover-border-radius: var(--token-border-radius-100);
+			// ───────────────────────────────────────────────────────────────────
+
+			background-color: var(--osui-popover-background);
+			border: var(--token-border-size-025) solid var(--osui-popover-border-color);
+			border-radius: var(--osui-popover-border-radius);
 			box-shadow: var(--token-elevation-1);
-			color: var(--token-primitives-neutral-900);
+			color: var(--osui-popover-color);
 			max-width: 350px;
 			min-width: auto;
 			padding: var(--token-scale-400);

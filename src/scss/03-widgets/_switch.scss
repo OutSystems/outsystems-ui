@@ -5,6 +5,12 @@
 
 ///
 [data-switch] {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-switch-track-color:          var(--token-border-input-default);
+	--osui-switch-track-border-color:   var(--token-border-input-default);
+	--osui-switch-disabled-track-color: var(--token-bg-input-disabled);
+	// ───────────────────────────────────────────────────────────────────
+
 	background-color: transparent;
 	border-radius: 0;
 	height: 32px;
@@ -13,8 +19,8 @@
 
 	&:empty {
 		&:before {
-			background-color: var(--token-primitives-neutral-500);
-			border: var(--token-border-size-025) solid var(--token-primitives-neutral-500);
+			background-color: var(--osui-switch-track-color);
+			border: var(--token-border-size-025) solid var(--osui-switch-track-border-color);
 			border-radius: var(--token-border-radius-full);
 			height: 30px;
 			opacity: 1;
@@ -38,8 +44,8 @@
 
 	&:hover {
 		&:before {
-			background-color: var(--token-primitives-neutral-600);
-			border: var(--token-border-size-025) solid var(--token-primitives-neutral-600);
+			background-color: var(--token-border-input-default);
+			border: var(--token-border-size-025) solid var(--token-border-input-default);
 		}
 	}
 
@@ -59,12 +65,12 @@
 
 		&:empty {
 			&:before {
-				background-color: var(--token-primitives-neutral-200);
-				border: var(--token-border-size-025) solid var(--token-primitives-neutral-400);
+				background-color: var(--osui-switch-disabled-track-color);
+				border: var(--token-border-size-025) solid var(--token-border-default);
 			}
 
 			&:after {
-				background-color: var(--token-primitives-neutral-500);
+				background-color: var(--token-border-input-default);
 				border: 0;
 			}
 		}
@@ -79,15 +85,15 @@
 
 		&:empty {
 			&:before {
-				background-color: var(--token-primitives-neutral-700);
-				border-color: var(--token-primitives-neutral-700);
+				background-color: var(--token-border-input-default);
+				border-color: var(--token-border-input-default);
 			}
 		}
 
 		&:hover {
 			&:before {
-				background-color: var(--token-primitives-neutral-800);
-				border-color: var(--token-primitives-neutral-800);
+				background-color: var(--token-border-input-press);
+				border-color: var(--token-border-input-press);
 			}
 		}
 
@@ -112,7 +118,7 @@
 	[data-switch] {
 		&:empty:after {
 			align-items: center;
-			border: var(--token-border-size-025) solid var(--token-primitives-neutral-600);
+			border: var(--token-border-size-025) solid var(--token-text-disabled);
 			content: '0';
 			display: flex;
 			font-family: monospace;

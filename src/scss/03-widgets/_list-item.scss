@@ -5,7 +5,7 @@
 
 ///
 .list-item {
-	border-bottom: var(--token-border-size-025) solid var(--token-primitives-neutral-400);
+	border-bottom: var(--token-border-size-025) solid var(--token-border-default);
 	overflow: hidden;
 	padding: var(--token-scale-600);
 	position: relative;
@@ -41,7 +41,7 @@
 ///
 .list {
 	.list-item {
-		background-color: var(--token-primitives-base-white);
+		background-color: var(--token-bg-surface-default);
 	}
 }
 
@@ -58,7 +58,7 @@
 	.list {
 		.list-item:hover {
 			&:not(.list-item-no-hover):not(.list-item-selected) {
-				background-color: var(--token-primitives-neutral-200);
+				background-color: var(--token-bg-neutral-subtle-default);
 			}
 		}
 	}
@@ -73,11 +73,11 @@
 
 			.list-item-content {
 				&-title {
-					color: var(--token-primitives-neutral-1200);
+					color: var(--token-text-default);
 				}
 
 				&-text {
-					color: var(--token-primitives-neutral-800);
+					color: var(--token-text-subtlest);
 				}
 
 				&-right .icon {

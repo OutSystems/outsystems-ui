@@ -20,7 +20,7 @@
 
 		.animated-label-input {
 			.form-control[data-input]::-webkit-datetime-edit {
-				color: var(--token-primitives-neutral-900);
+				color: var(--token-text-default);
 			}
 
 			[data-textarea] {
@@ -68,7 +68,7 @@
 					border-bottom: var(--token-border-size-025) solid var(--token-semantics-primary-base);
 
 					&::-webkit-datetime-edit {
-						color: var(--token-primitives-neutral-900);
+						color: var(--token-text-default);
 					}
 				}
 
@@ -168,10 +168,10 @@
 .has-accessible-features {
 	.animated-label-input {
 		.form-control[data-input] {
-			border-color: var(--token-primitives-neutral-700);
+			border-color: var(--token-border-input-default);
 
 			&:hover {
-				border-color: var(--token-primitives-neutral-800);
+				border-color: var(--token-border-input-press);
 			}
 
 			&:focus {
@@ -192,7 +192,7 @@
 	.animated-label {
 		&.active {
 			.animated-label-text {
-				background-color: var(--token-primitives-neutral-800);
+				background-color: var(--token-text-subtlest);
 				font-size: var(--token-font-size-350);
 				top: -16px;
 			}

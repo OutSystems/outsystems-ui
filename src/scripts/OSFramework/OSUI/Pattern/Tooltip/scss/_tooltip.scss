@@ -6,8 +6,8 @@
 ///
 .osui-tooltip {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-tooltip-background:    var(--token-primitives-neutral-900);
-	--osui-tooltip-color:         var(--token-primitives-base-white);
+	--osui-tooltip-background:    var(--token-text-default);
+	--osui-tooltip-color:         var(--token-text-inverse);
 	--osui-tooltip-border-radius: var(--token-border-radius-100);
 	--osui-tooltip-padding:       var(--token-scale-200);
 	--osui-tooltip-font-size:     var(--token-font-size-350);

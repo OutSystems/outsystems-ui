@@ -118,12 +118,12 @@
 			}
 
 			&__value {
-				border: var(--token-border-size-050) solid var(--token-primitives-neutral-700);
+				border: var(--token-border-size-050) solid var(--token-border-input-default);
 				height: calc(2 * var(--thickness));
 
 				&:before,
 				&:after {
-					border: var(--token-border-size-050) solid var(--token-primitives-neutral-700);
+					border: var(--token-border-size-050) solid var(--token-border-input-default);
 					top: calc(-1 * var(--token-border-size-050));
 					left: calc(-1 * var(--token-border-size-050));
 				}

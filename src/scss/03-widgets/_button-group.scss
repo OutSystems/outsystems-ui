@@ -10,10 +10,16 @@
 	padding: var(--token-scale-0);
 
 	&-item {
-		background-color: var(--token-primitives-base-white);
-		border: var(--token-border-size-025) solid var(--token-semantics-primary-base);
+		// ─── Component CSS API ─────────────────────────────────────────────
+		--osui-button-group-background:    var(--token-bg-surface-default);
+		--osui-button-group-border-color:  var(--token-semantics-primary-base);
+		--osui-button-group-color:         var(--token-semantics-primary-base);
+		// ───────────────────────────────────────────────────────────────────
+
+		background-color: var(--osui-button-group-background);
+		border: var(--token-border-size-025) solid var(--osui-button-group-border-color);
 		border-radius: 0;
-		color: var(--token-semantics-primary-base);
+		color: var(--osui-button-group-color);
 		cursor: pointer;
 		font-size: var(--token-font-size-350);
 		font-weight: var(--token-font-weight-semi-bold);
@@ -27,14 +33,18 @@
 		}
 
 		&[disabled] {
-			background-color: var(--token-primitives-base-white);
-			border: var(--token-border-size-025) solid var(--token-primitives-neutral-400);
-			color: var(--token-primitives-neutral-600);
+			--osui-button-group-background:   var(--token-bg-surface-default);
+			--osui-button-group-border-color: var(--token-border-default);
+			--osui-button-group-color:        var(--token-text-disabled);
+
+			background-color: var(--osui-button-group-background);
+			border: var(--token-border-size-025) solid var(--osui-button-group-border-color);
+			color: var(--osui-button-group-color);
 			pointer-events: none;
 
 			&.button-group-selected-item {
-				background-color: var(--token-primitives-neutral-200);
-				color: var(--token-primitives-neutral-600);
+				background-color: var(--token-bg-input-disabled);
+				color: var(--token-text-disabled);
 			}
 		}
 
@@ -50,7 +60,7 @@
 
 		&.button-group-selected-item {
 			background-color: var(--token-semantics-primary-base);
-			color: var(--token-primitives-base-white);
+			color: var(--token-text-inverse);
 		}
 	}
 
@@ -73,7 +83,7 @@
 			background-color: var(--background-color-header, var(--header-color));
 			border: 0;
 			border-bottom: var(--token-border-size-050) solid transparent;
-			color: var(--token-primitives-neutral-800);
+			color: var(--token-text-subtlest);
 
 			&:last-child {
 				border-radius: 0;
@@ -81,14 +91,14 @@
 
 			&.button-group-selected-item {
 				border-bottom: var(--token-border-size-050) solid var(--token-semantics-primary-base);
-				color: var(--token-primitives-neutral-1200);
+				color: var(--token-text-default);
 			}
 
 			&[disabled] {
-				color: var(--token-primitives-neutral-600);
+				color: var(--token-text-disabled);
 
 				&.button-group-selected-item {
-					border-bottom: var(--token-border-size-050) solid var(--token-primitives-neutral-600);
+					border-bottom: var(--token-border-size-050) solid var(--token-text-disabled);
 				}
 			}
 		}
@@ -118,7 +128,7 @@
 			border-right: var(--token-border-size-0);
 
 			&[disabled] {
-				border-left: var(--token-border-size-025) solid var(--token-primitives-neutral-400);
+				border-left: var(--token-border-size-025) solid var(--token-border-default);
 			}
 		}
 

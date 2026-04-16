@@ -22,7 +22,7 @@
 		}
 
 		&:checked:after {
-			border: var(--token-border-size-050) solid var(--token-primitives-base-white);
+			border: var(--token-border-size-050) solid var(--token-text-inverse);
 			border-right: var(--token-border-size-0) !important;
 			border-top: var(--token-border-size-0) !important;
 			display: block;
@@ -40,7 +40,7 @@
 		}
 
 		&:after {
-			background-color: var(--token-primitives-base-white);
+			background-color: var(--token-text-inverse);
 			content: '';
 			height: 2px;
 			left: 50%;

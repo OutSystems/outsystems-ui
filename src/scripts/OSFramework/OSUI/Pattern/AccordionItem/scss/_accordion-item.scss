@@ -75,7 +75,7 @@
 
 			&.osui-accordion-item--is-disabled {
 				&::after {
-					border-color: var(--token-primitives-neutral-600);
+					border-color: var(--token-text-disabled);
 				}
 			}
 
@@ -93,12 +93,12 @@
 			pointer-events: none;
 
 			.osui-accordion-item__icon {
-				color: var(--token-primitives-neutral-600);
+				color: var(--token-text-disabled);
 
 				&--plus-minus {
 					&:after,
 					&:before {
-						background-color: var(--token-primitives-neutral-600);
+						background-color: var(--token-text-disabled);
 					}
 				}
 			}

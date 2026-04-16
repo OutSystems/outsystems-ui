@@ -5,11 +5,18 @@
 
 ///
 [data-upload] {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-upload-background:    var(--token-bg-surface-default);
+	--osui-upload-border-color:  var(--token-border-default);
+	--osui-upload-color:         var(--token-text-default);
+	--osui-upload-border-radius: var(--token-border-radius-100);
+	// ───────────────────────────────────────────────────────────────────
+
 	align-items: center;
-	background: var(--token-primitives-base-white);
-	border: var(--token-border-size-025) solid var(--token-primitives-neutral-400);
-	border-radius: var(--token-border-radius-100);
-	color: var(--token-primitives-neutral-900);
+	background: var(--osui-upload-background);
+	border: var(--token-border-size-025) solid var(--osui-upload-border-color);
+	border-radius: var(--osui-upload-border-radius);
+	color: var(--osui-upload-color);
 	display: flex;
 	font-size: var(--token-font-size-350);
 	margin-bottom: 0;
@@ -38,7 +45,7 @@
 
 	[data-icon] {
 		background-color: transparent;
-		color: var(--token-primitives-neutral-500);
+		color: var(--token-border-input-default);
 		line-height: 1;
 		margin-right: var(--token-scale-400);
 		width: auto;
@@ -64,6 +71,6 @@
 ///
 .has-accessible-features {
 	[data-upload] {
-		border: var(--token-border-size-025) solid var(--token-primitives-neutral-700);
+		border: var(--token-border-size-025) solid var(--token-border-input-default);
 	}
 }

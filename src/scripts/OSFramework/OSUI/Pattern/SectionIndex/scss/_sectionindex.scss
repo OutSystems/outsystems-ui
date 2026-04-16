@@ -47,11 +47,11 @@
 	}
 
 	&:hover {
-		color: var(--token-primitives-neutral-900);
+		color: var(--token-text-default);
 	}
 
 	&--is-active {
-		color: var(--token-primitives-neutral-900);
+		color: var(--token-text-default);
 		font-weight: var(--token-font-weight-semi-bold);
 		&::before {
 			background-color: var(--token-semantics-primary-base);

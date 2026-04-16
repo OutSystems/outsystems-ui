@@ -38,7 +38,7 @@
 
 		.osui-bottom-sheet__content:empty,
 		.osui-bottom-sheet__header__top-bar:empty {
-			-servicestudio-border: 1px dashed var(--token-primitives-neutral-500);
+			-servicestudio-border: 1px dashed var(--token-border-input-default);
 			-servicestudio-margin: var(--token-scale-400);
 		}
 	}
@@ -46,7 +46,7 @@
 	&--has-handler {
 		.osui-bottom-sheet__header {
 			&::before {
-				background: var(--token-primitives-neutral-500);
+				background: var(--token-border-input-default);
 				border-radius: 100px;
 				content: '';
 				height: 4px;
@@ -208,6 +208,6 @@
 ///
 .os-high-contrast {
 	.osui-bottom-sheet {
-		border: var(--token-border-size-025) solid var(--token-primitives-base-white);
+		border: var(--token-border-size-025) solid var(--token-text-inverse);
 	}
 }
