@@ -4,8 +4,10 @@
 	"description": "OutSystems UI Framework",
 	"license": "BSD-3-Clause",
 	"scripts": {
+		"prebuild": "npx build.tokens --dest src/scss/tokens/ --prefix token",
 		"build": "gulp createProduction --target && npm run lintfix && npm run lint",
 		"create-osui-scss": "gulp updateScssFile",
+		"predev": "npx build.tokens --dest src/scss/tokens/ --prefix token",
 		"dev": "gulp startDevelopment --target",
 		"docs": "npx typedoc",
 		"lint": "eslint . --ext .ts",
@@ -54,6 +56,7 @@
 		"gulp-typescript": "^6.0.0-alpha.1",
 		"json-fixer": "^1.6.15",
 		"nouislider": "^15.8.1",
+		"outsystems-design-tokens": "^1.3.7",
 		"postcss": "^8.4.38",
 		"postcss-discard-comments": "^5.1.2",
 		"postcss-discard-duplicates": "^5.1.0",

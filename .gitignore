@@ -113,3 +113,6 @@ new-version-artf.txt
 
 # Distribution files folder
 dist/**
+
+# Generated design tokens (built by outsystems-design-tokens before each build)
+src/scss/tokens/
