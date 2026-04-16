@@ -3,7 +3,20 @@
     "allow": [
       "WebFetch(domain:outsystemsui.outsystems.com)",
       "WebFetch(domain:success.outsystems.com)",
-      "WebFetch(domain:sa-si-dev.github.io)"
+      "WebFetch(domain:sa-si-dev.github.io)",
+      "Bash(find /Users/bernardo.cardoso/GitHub/outsystems-ui/src/scss -name \"*.scss\" -type f -exec wc -l {} \\\\;)",
+      "Bash(find /Users/bernardo.cardoso/GitHub/outsystems-ui/src/scss -name \"*.scss\" -type f -exec wc -l {} +)",
+      "Bash(npm run:*)",
+      "Bash(npm install:*)",
+      "Bash(node -e \"const p = require\\('./package.json'\\); console.log\\(p.devDependencies['outsystems-design-tokens']\\)\")",
+      "Bash(npx build.tokens --dest src/scss/tokens/ --prefix token)",
+      "Bash(cp /tmp/setup-color-vars.scss /Users/bernardo.cardoso/GitHub/outsystems-ui/src/scss/00-abstract/_setup-color-vars.scss)",
+      "Bash(cp /tmp/setup-border-vars.scss /Users/bernardo.cardoso/GitHub/outsystems-ui/src/scss/00-abstract/_setup-border-vars.scss)",
+      "Bash(git grep:*)",
+      "Bash(ls -lh /Users/bernardo.cardoso/GitHub/outsystems-ui/dist/*.css)",
+      "Bash(git add:*)",
+      "Bash(git commit -m ':*)"
     ]
-  }
+  },
+  "defaultMode": "acceptEdits"
 }
