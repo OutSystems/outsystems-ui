@@ -8,13 +8,18 @@
 /* OutSystems UI Carousel customization */
 ///
 .osui-carousel {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-carousel-arrow-background: var(--token-bg-surface-default);
+	--osui-carousel-arrow-shadow:     var(--token-elevation-1);
+	// ───────────────────────────────────────────────────────────────────
+
 	--osui-carousel-track-width: 100%;
 	--osui-carousel-pagination-margin: 30px;
 
 	.splide {
 		&__arrow {
-			background-color: var(--token-primitives-base-white);
-			box-shadow: var(--token-elevation-1);
+			background-color: var(--osui-carousel-arrow-background);
+			box-shadow: var(--osui-carousel-arrow-shadow);
 			height: 40px;
 			opacity: 1;
 			transition: opacity 150ms linear;

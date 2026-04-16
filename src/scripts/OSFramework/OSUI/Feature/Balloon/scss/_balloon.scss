@@ -4,6 +4,10 @@
 /// Patterns - Interaction - Balloon
 
 .osui-balloon {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-balloon-background: var(--token-bg-surface-default);
+	// ───────────────────────────────────────────────────────────────────
+
 	--border-radius-rounded: 16px;
 	--osui-floating-position-x: 0;
 	--osui-floating-position-y: 0;
@@ -13,7 +17,7 @@
 
 	box-shadow: var(--osui-balloon-shadow);
 	border-radius: var(--osui-balloon-shape);
-	background-color: var(--token-primitives-base-white);
+	background-color: var(--osui-balloon-background);
 	height: auto;
 	left: var(--osui-floating-position-x);
 	opacity: 0;

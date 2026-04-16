@@ -9,6 +9,14 @@ $balloonMobileTopMargin: 5vh;
 
 ///
 .osui-dropdown-serverside {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-dropdown-ss-background:          var(--token-bg-surface-default);
+	--osui-dropdown-ss-border-color:        var(--token-border-input-default);
+	--osui-dropdown-ss-color:               var(--token-text-default);
+	--osui-dropdown-ss-disabled-background: var(--token-bg-input-disabled);
+	--osui-dropdown-ss-disabled-color:      var(--token-text-disabled);
+	// ───────────────────────────────────────────────────────────────────
+
 	--osui-dropdown-ss-balloon-max-height: 300px;
 	--osui-dropdown-min-width: 170px;
 	--osui-floating-offset: var(--token-scale-100);
@@ -79,10 +87,10 @@ $balloonMobileTopMargin: 5vh;
 
 		&-wrapper {
 			align-items: center;
-			background-color: var(--token-primitives-base-white);
+			background-color: var(--osui-dropdown-ss-background);
 			border-radius: var(--token-border-radius-100);
-			border: var(--token-border-size-025) solid var(--token-primitives-neutral-500);
-			color: var(--token-primitives-neutral-900);
+			border: var(--token-border-size-025) solid var(--osui-dropdown-ss-border-color);
+			color: var(--osui-dropdown-ss-color);
 			cursor: pointer;
 			display: flex;
 			font-size: var(--token-font-size-350);
@@ -108,7 +116,7 @@ $balloonMobileTopMargin: 5vh;
 	&__balloon {
 		// Search Wrapper
 		&-search-wrapper {
-			background-color: var(--token-primitives-base-white);
+			background-color: var(--osui-dropdown-ss-background);
 			padding: var(--token-scale-0);
 			position: relative;
 			display: flex;
@@ -216,15 +224,19 @@ $balloonMobileTopMargin: 5vh;
 
 	// When it's disabled
 	&--is-disabled {
+		--osui-dropdown-ss-background:   var(--token-bg-input-disabled);
+		--osui-dropdown-ss-border-color: var(--token-border-default);
+		--osui-dropdown-ss-color:        var(--token-text-disabled);
+
 		.osui-dropdown-serverside__selected-values {
 			&:after {
 				border-color: var(--token-primitives-neutral-600);
 			}
 
 			&-wrapper {
-				background-color: var(--token-primitives-neutral-200);
-				border-color: var(--token-primitives-neutral-400);
-				color: var(--token-primitives-neutral-600);
+				background-color: var(--osui-dropdown-ss-background);
+				border-color: var(--osui-dropdown-ss-border-color);
+				color: var(--osui-dropdown-ss-color);
 				pointer-events: none;
 			}
 		}

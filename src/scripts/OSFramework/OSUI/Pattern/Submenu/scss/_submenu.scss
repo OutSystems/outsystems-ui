@@ -5,6 +5,13 @@
 
 ///
 .osui-submenu {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-submenu-items-background:    var(--token-bg-surface-default);
+	--osui-submenu-items-border-color:  var(--token-border-default);
+	--osui-submenu-items-shadow:        var(--token-elevation-2);
+	--osui-submenu-item-color:          var(--token-text-subtlest);
+	// ───────────────────────────────────────────────────────────────────
+
 	cursor: pointer;
 	display: inline-flex;
 	position: relative;
@@ -111,10 +118,10 @@
 	}
 
 	&__items {
-		background-color: var(--token-primitives-base-white);
-		border: var(--token-border-size-025) solid var(--token-primitives-neutral-400);
+		background-color: var(--osui-submenu-items-background);
+		border: var(--token-border-size-025) solid var(--osui-submenu-items-border-color);
 		border-radius: var(--token-border-radius-100);
-		box-shadow: var(--token-elevation-2);
+		box-shadow: var(--osui-submenu-items-shadow);
 		display: flex;
 		flex-direction: column;
 		left: 0;
@@ -137,7 +144,7 @@
 		}
 
 		a {
-			color: var(--token-primitives-neutral-800);
+			color: var(--osui-submenu-item-color);
 			margin: 0;
 			padding: var(--token-scale-200) var(--token-scale-400);
 			white-space: nowrap;

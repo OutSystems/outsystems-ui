@@ -5,7 +5,15 @@
 
 ///
 .osui-tooltip {
-	--osui-tooltip-background-color: #{var(--token-primitives-neutral-900)};
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-tooltip-background:    var(--token-primitives-neutral-900);
+	--osui-tooltip-color:         var(--token-primitives-base-white);
+	--osui-tooltip-border-radius: var(--token-border-radius-100);
+	--osui-tooltip-padding:       var(--token-scale-200);
+	--osui-tooltip-font-size:     var(--token-font-size-350);
+	// ───────────────────────────────────────────────────────────────────
+
+	--osui-tooltip-background-color: var(--osui-tooltip-background);
 	--osui-tooltip-arrow-size: 10px;
 	--osui-floating-offset: var(--token-scale-200);
 
@@ -19,13 +27,13 @@
 
 	.osui-balloon {
 		background-color: var(--osui-tooltip-background-color);
-		border-radius: var(--token-border-radius-100);
-		color: var(--token-primitives-base-white);
-		font-size: var(--token-font-size-350);
+		border-radius: var(--osui-tooltip-border-radius);
+		color: var(--osui-tooltip-color);
+		font-size: var(--osui-tooltip-font-size);
 		font-weight: var(--token-font-weight-regular);
 		line-height: initial;
 		max-width: 250px;
-		padding: var(--token-scale-200);
+		padding: var(--osui-tooltip-padding);
 
 		&[class*='top'] {
 			&:after {

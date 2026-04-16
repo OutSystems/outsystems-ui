@@ -8,6 +8,12 @@
 
 // Common dropdown styles
 .osui-dropdown {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-dropdown-disabled-background:   var(--token-bg-input-disabled);
+	--osui-dropdown-disabled-border-color: var(--token-border-default);
+	--osui-dropdown-disabled-color:        var(--token-text-disabled);
+	// ───────────────────────────────────────────────────────────────────
+
 	&-search,
 	&-tags {
 		/// Disable states for dropdowns
@@ -17,9 +23,9 @@
 
 			.vscomp {
 				&-toggle-button {
-					background-color: var(--token-primitives-neutral-200);
-					border: var(--token-border-size-025) solid var(--token-primitives-neutral-400);
-					color: var(--token-primitives-neutral-600);
+					background-color: var(--osui-dropdown-disabled-background);
+					border: var(--token-border-size-025) solid var(--osui-dropdown-disabled-border-color);
+					color: var(--osui-dropdown-disabled-color);
 					pointer-events: none;
 				}
 

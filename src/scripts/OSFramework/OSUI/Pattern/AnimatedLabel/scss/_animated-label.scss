@@ -5,6 +5,11 @@
 
 ///
 .animated-label {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-animated-label-color:        var(--token-text-subtlest);
+	--osui-animated-label-border-color: var(--token-border-input-default);
+	// ───────────────────────────────────────────────────────────────────
+
 	position: relative;
 
 	&.active {
@@ -25,7 +30,7 @@
 	}
 
 	&-text {
-		color: var(--token-primitives-neutral-800);
+		color: var(--osui-animated-label-color);
 		font-size: var(--token-font-size-350);
 		pointer-events: none;
 		position: absolute;
@@ -54,7 +59,7 @@
 			&[data-textarea] {
 				background-color: transparent;
 				border: var(--token-border-size-0);
-				border-bottom: var(--token-border-size-025) solid var(--token-primitives-neutral-500);
+				border-bottom: var(--token-border-size-025) solid var(--osui-animated-label-border-color);
 				border-radius: var(--token-border-radius-0);
 				padding: var(--token-scale-0);
 				transition: all 100ms ease-in-out;

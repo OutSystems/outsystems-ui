@@ -5,10 +5,17 @@
 
 ///
 .osui-sidebar {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-sidebar-background:  var(--token-bg-surface-default);
+	--osui-sidebar-shadow:      var(--token-elevation-3);
+	--osui-sidebar-padding-x:   var(--token-scale-600);
+	--osui-sidebar-padding-y:   var(--token-scale-400);
+	// ───────────────────────────────────────────────────────────────────
+
 	--overlay-opacity: 0;
 
-	background-color: var(--token-primitives-base-white);
-	box-shadow: var(--token-elevation-3);
+	background-color: var(--osui-sidebar-background);
+	box-shadow: var(--osui-sidebar-shadow);
 	display: flex;
 	flex-direction: column;
 	height: 100%;
@@ -91,7 +98,7 @@
 
 	&__header,
 	&__content {
-		padding: var(--token-scale-400) var(--token-scale-600);
+		padding: var(--osui-sidebar-padding-y) var(--osui-sidebar-padding-x);
 	}
 
 	&__content {

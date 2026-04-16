@@ -5,13 +5,17 @@
 
 ///
 .osui-section-index {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-section-index-border-color: var(--token-border-default);
+	// ───────────────────────────────────────────────────────────────────
+
 	--top-position: calc(var(--header-size) + var(--header-size-content) + #{android-safe-area-top()});
 	display: flex;
 	flex-direction: column;
 	position: relative;
 
 	&::before {
-		background-color: var(--token-primitives-neutral-500);
+		background-color: var(--osui-section-index-border-color);
 		bottom: 0;
 		content: '';
 		left: 0;
@@ -27,9 +31,13 @@
 }
 
 .osui-section-index-item {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-section-index-item-color: var(--token-text-subtlest);
+	// ───────────────────────────────────────────────────────────────────
+
 	&,
 	&:visited {
-		color: var(--token-primitives-neutral-800);
+		color: var(--osui-section-index-item-color);
 		cursor: pointer;
 		display: flex;
 		padding-bottom: var(--token-scale-100);

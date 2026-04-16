@@ -10,6 +10,12 @@
 
 ///
 .osui-datepicker {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-datepicker-disabled-background:    var(--token-bg-input-disabled);
+	--osui-datepicker-disabled-border-color:  var(--token-border-default);
+	--osui-datepicker-disabled-color:         var(--token-text-disabled);
+	// ───────────────────────────────────────────────────────────────────
+
 	input {
 		// Hack used to disable dateTime input pseudoElements (browser native placeholders)
 		&[type='date'] {
@@ -26,9 +32,9 @@
 
 		// Disable states for Datepicker
 		&.flatpickr-input[disabled] + input {
-			background-color: var(--token-primitives-neutral-200);
-			border: var(--token-border-size-025) solid var(--token-primitives-neutral-400);
-			color: var(--token-primitives-neutral-600);
+			background-color: var(--osui-datepicker-disabled-background);
+			border: var(--token-border-size-025) solid var(--osui-datepicker-disabled-border-color);
+			color: var(--osui-datepicker-disabled-color);
 			pointer-events: none;
 		}
 

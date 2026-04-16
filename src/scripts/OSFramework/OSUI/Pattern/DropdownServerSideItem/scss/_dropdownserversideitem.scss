@@ -5,9 +5,15 @@
 
 ///
 .osui-dropdown-serverside-item {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-dropdown-item-background: transparent;
+	--osui-dropdown-item-color:      var(--token-text-default);
+	--osui-dropdown-item-hover-bg:   var(--token-bg-neutral-subtle-default);
+	// ───────────────────────────────────────────────────────────────────
+
 	align-items: center;
-	background-color: transparent;
-	color: var(--token-primitives-neutral-900);
+	background-color: var(--osui-dropdown-item-background);
+	color: var(--osui-dropdown-item-color);
 	cursor: pointer;
 	display: flex;
 	flex: 1;
@@ -21,7 +27,7 @@
 
 	&:hover,
 	&--is-selected {
-		background-color: var(--token-primitives-neutral-200);
+		background-color: var(--osui-dropdown-item-hover-bg);
 		z-index: var(--layer-local-tier-1);
 
 		// Service Studio Preview

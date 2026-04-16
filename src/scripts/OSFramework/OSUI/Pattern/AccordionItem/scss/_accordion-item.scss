@@ -10,11 +10,19 @@
 
 ///
 .osui-accordion-item {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-accordion-item-background:    var(--token-bg-surface-default);
+	--osui-accordion-item-border-color:  var(--token-border-default);
+	--osui-accordion-item-border-width:  var(--token-border-size-025);
+	--osui-accordion-item-border-radius: var(--token-border-radius-100);
+	--osui-accordion-item-color:         var(--token-text-default);
+	// ───────────────────────────────────────────────────────────────────
+
 	--accordion-active-border-size: 2px;
-	background-color: var(--token-primitives-base-white);
-	border: var(--token-border-size-025) solid var(--token-primitives-neutral-400);
-	border-bottom-width: var(--token-border-size-025);
-	border-radius: var(--token-border-radius-100);
+	background-color: var(--osui-accordion-item-background);
+	border: var(--osui-accordion-item-border-width) solid var(--osui-accordion-item-border-color);
+	border-bottom-width: var(--osui-accordion-item-border-width);
+	border-radius: var(--osui-accordion-item-border-radius);
 	position: relative;
 
 	&__click_zone {
@@ -79,7 +87,9 @@
 		}
 
 		&-disabled {
-			color: var(--token-primitives-neutral-700);
+			--osui-accordion-item-color: var(--token-text-disabled);
+
+			color: var(--osui-accordion-item-color);
 			pointer-events: none;
 
 			.osui-accordion-item__icon {

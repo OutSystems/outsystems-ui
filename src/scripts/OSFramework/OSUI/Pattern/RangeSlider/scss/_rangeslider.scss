@@ -5,6 +5,15 @@
 
 ///
 .osui-range-slider {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-range-slider-track-color:           var(--token-primitives-neutral-500);
+	--osui-range-slider-handle-background:     var(--token-bg-surface-default);
+	--osui-range-slider-handle-border-color:   var(--token-primitives-neutral-700);
+	--osui-range-slider-handle-shadow:         var(--token-elevation-1);
+	--osui-range-slider-disabled-track-color:  var(--token-bg-neutral-subtle-default);
+	--osui-range-slider-disabled-color:        var(--token-text-disabled);
+	// ───────────────────────────────────────────────────────────────────
+
 	--range-slider-handle-size: 24px;
 	--range-slider-thickness: 4px;
 	--range-slider-handle-size-half: calc(var(--range-slider-handle-size) / 2);
@@ -47,7 +56,7 @@
 		}
 
 		&-target {
-			background: var(--token-primitives-neutral-500);
+			background: var(--osui-range-slider-track-color);
 			border: var(--token-border-size-0);
 			border-radius: var(--token-border-radius-100);
 			box-shadow: none;
@@ -56,10 +65,10 @@
 		&-horizontal,
 		&-vertical {
 			.noUi-handle {
-				background-color: var(--token-primitives-base-white);
-				border: var(--token-border-size-025) solid var(--token-primitives-neutral-700);
+				background-color: var(--osui-range-slider-handle-background);
+				border: var(--token-border-size-025) solid var(--osui-range-slider-handle-border-color);
 				border-radius: 50%;
-				box-shadow: var(--token-elevation-1);
+				box-shadow: var(--osui-range-slider-handle-shadow);
 				cursor: pointer;
 				display: inline-block;
 				height: var(--range-slider-handle-size);
@@ -228,6 +237,9 @@
 
 	.osui-range-slider__provider {
 		&[disabled] {
+			--osui-range-slider-handle-background: var(--token-bg-input-disabled);
+			--osui-range-slider-disabled-color:    var(--token-text-disabled);
+
 			pointer-events: none;
 
 			.noUi {
@@ -240,7 +252,7 @@
 				}
 
 				&-handle {
-					background-color: var(--token-primitives-neutral-200);
+					background-color: var(--osui-range-slider-handle-background);
 					border: var(--token-border-size-025) solid var(--token-primitives-neutral-500);
 					box-shadow: none;
 
@@ -251,12 +263,12 @@
 				}
 
 				&-pips {
-					color: var(--token-primitives-neutral-600);
+					color: var(--osui-range-slider-disabled-color);
 				}
 			}
 
 			.noUi-tooltip {
-				color: var(--token-primitives-neutral-600);
+				color: var(--osui-range-slider-disabled-color);
 			}
 		}
 	}

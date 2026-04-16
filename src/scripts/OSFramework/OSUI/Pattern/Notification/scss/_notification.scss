@@ -5,16 +5,26 @@
 
 ///
 .osui-notification {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-notification-background:    var(--token-bg-surface-default);
+	--osui-notification-border-color:  var(--token-border-default);
+	--osui-notification-border-width:  var(--token-border-size-025);
+	--osui-notification-border-radius: var(--token-border-radius-100);
+	--osui-notification-shadow:        var(--token-elevation-4);
+	--osui-notification-color:         var(--token-text-default);
+	--osui-notification-padding:       var(--token-scale-600);
+	// ───────────────────────────────────────────────────────────────────
+
 	--osui-notification-margin: var(--token-scale-600);
 
-	background-color: var(--token-primitives-base-white);
-	border-radius: var(--token-border-radius-100);
-	border: var(--token-border-size-025) solid var(--token-primitives-neutral-400);
-	box-shadow: var(--token-elevation-4);
-	color: var(--token-primitives-neutral-1200);
+	background-color: var(--osui-notification-background);
+	border-radius: var(--osui-notification-border-radius);
+	border: var(--osui-notification-border-width) solid var(--osui-notification-border-color);
+	box-shadow: var(--osui-notification-shadow);
+	color: var(--osui-notification-color);
 	max-width: calc(100vw - (var(--osui-notification-margin) * 2));
 	opacity: 0;
-	padding: var(--token-scale-600);
+	padding: var(--osui-notification-padding);
 	pointer-events: none;
 	position: fixed;
 	transition:

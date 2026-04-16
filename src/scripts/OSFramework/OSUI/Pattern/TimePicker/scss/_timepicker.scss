@@ -10,6 +10,12 @@
 
 ///
 .osui-timepicker {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-timepicker-disabled-background:   var(--token-bg-input-disabled);
+	--osui-timepicker-disabled-border-color: var(--token-border-default);
+	--osui-timepicker-disabled-color:        var(--token-text-disabled);
+	// ───────────────────────────────────────────────────────────────────
+
 	input {
 		// Hack used to disable dateTime input pseudoElements (browser native placeholders)
 		&[type='time'] {
@@ -26,9 +32,9 @@
 
 		// Disable states for Datepicker
 		&.flatpickr-input[disabled] + input {
-			background-color: var(--token-primitives-neutral-200);
-			border: var(--token-border-size-025) solid var(--token-primitives-neutral-400);
-			color: var(--token-primitives-neutral-600);
+			background-color: var(--osui-timepicker-disabled-background);
+			border: var(--token-border-size-025) solid var(--osui-timepicker-disabled-border-color);
+			color: var(--osui-timepicker-disabled-color);
 			pointer-events: none;
 		}
 
