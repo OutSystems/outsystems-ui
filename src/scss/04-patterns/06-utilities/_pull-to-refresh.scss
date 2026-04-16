@@ -5,10 +5,10 @@
 
 ///
 .pull-to-refresh {
-	color: get-text-color('neutral-6');
-	font-size: var(--font-size-h3);
+	color: var(--token-primitives-neutral-600);
+	font-size: var(--token-font-size-650);
 	left: 0;
-	padding: var(--space-s);
+	padding: var(--token-scale-200);
 	position: absolute;
 	text-align: center;
 	width: 100%;

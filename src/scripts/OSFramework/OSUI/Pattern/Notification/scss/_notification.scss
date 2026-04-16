@@ -5,16 +5,16 @@
 
 ///
 .osui-notification {
-	--osui-notification-margin: var(--space-m);
+	--osui-notification-margin: var(--token-scale-600);
 
-	background-color: get-background-color('neutral-0');
-	border-radius: var(--border-radius-soft);
-	border: var(--border-size-s) solid get-border-color('neutral-4');
-	box-shadow: var(--shadow-xl);
-	color: get-text-color('neutral-10');
+	background-color: var(--token-primitives-base-white);
+	border-radius: var(--token-border-radius-100);
+	border: var(--token-border-size-025) solid var(--token-primitives-neutral-400);
+	box-shadow: var(--token-elevation-4);
+	color: var(--token-primitives-neutral-1200);
 	max-width: calc(100vw - (var(--osui-notification-margin) * 2));
 	opacity: 0;
-	padding: var(--space-m);
+	padding: var(--token-scale-600);
 	pointer-events: none;
 	position: fixed;
 	transition:
@@ -171,7 +171,7 @@
 // Responsive --------------------------------------------------------------------
 .phone {
 	.osui-notification {
-		--osui-notification-margin: var(--space-base);
+		--osui-notification-margin: var(--token-scale-400);
 	}
 }
 

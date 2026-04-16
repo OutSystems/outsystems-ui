@@ -12,15 +12,15 @@
 
 	&-item {
 		align-items: center;
-		color: get-text-color('neutral-8');
+		color: var(--token-primitives-neutral-800);
 		display: inline-flex;
 
 		.icon {
-			color: get-text-color('neutral-7');
+			color: var(--token-primitives-neutral-700);
 			display: inline-flex;
-			font-size: var(--font-size-xs);
+			font-size: var(--token-font-size-300);
 			justify-content: center;
-			margin: var(--space-none) var(--space-s);
+			margin: var(--token-scale-0) var(--token-scale-200);
 			width: auto;
 		}
 	}

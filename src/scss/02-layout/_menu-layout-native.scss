@@ -15,7 +15,7 @@
 
 	.app-menu-content {
 		&:after {
-			background: get-background-color('transparent');
+			background: transparent;
 			content: '';
 			height: 100%;
 			position: absolute;
@@ -52,7 +52,7 @@
 			&-visible,
 			&-expandable {
 				.app-menu-content {
-					box-shadow: var(--shadow-m);
+					box-shadow: var(--token-elevation-2);
 					z-index: var(--osui-menu-layer);
 				}
 			}
@@ -92,7 +92,7 @@
 				&-visible,
 				&-expandable {
 					.app-menu-content {
-						box-shadow: var(--shadow-m);
+						box-shadow: var(--token-elevation-2);
 						left: 0;
 						z-index: var(--osui-menu-layer);
 					}

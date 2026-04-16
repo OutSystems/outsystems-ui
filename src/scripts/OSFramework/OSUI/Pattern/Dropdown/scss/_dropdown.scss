@@ -17,9 +17,9 @@
 
 			.vscomp {
 				&-toggle-button {
-					background-color: get-background-color('neutral-2');
-					border: var(--border-size-s) solid get-border-color('neutral-4');
-					color: get-text-color('neutral-6');
+					background-color: var(--token-primitives-neutral-200);
+					border: var(--token-border-size-025) solid var(--token-primitives-neutral-400);
+					color: var(--token-primitives-neutral-600);
 					pointer-events: none;
 				}
 
@@ -42,24 +42,24 @@
 			border-radius: 100%;
 			display: inline-block;
 			height: 24px;
-			margin-right: var(--space-s);
+			margin-right: var(--token-scale-200);
 			width: 24px;
-			background-color: get-background-color('neutral-3');
+			background-color: var(--token-primitives-neutral-300);
 			overflow: hidden;
 		}
 
 		&-icon {
-			color: get-text-color('neutral-9');
-			font-size: var(--font-size-h6);
-			margin-right: var(--space-s);
+			color: var(--token-primitives-neutral-900);
+			font-size: var(--token-font-size-450);
+			margin-right: var(--token-scale-200);
 		}
 	}
 
 	/// Error message
 	&-error-message {
-		color: get-text-color('error');
-		font-size: var(--font-size-xs);
-		margin-left: var(--space-none);
+		color: var(--token-semantics-danger-base);
+		font-size: var(--token-font-size-300);
+		margin-left: var(--token-scale-0);
 		margin-top: 3px;
 	}
 }
@@ -69,7 +69,7 @@
 	.osui-dropdown {
 		&-option-image,
 		&-option-icon {
-			margin-left: var(--space-s);
+			margin-left: var(--token-scale-200);
 			margin-right: initial;
 		}
 	}

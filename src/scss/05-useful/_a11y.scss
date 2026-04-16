@@ -31,9 +31,9 @@
 /* Skip-nav link used on Accessibility*/
 ///
 .skip-nav {
-	left: var(--space-xl);
+	left: var(--token-scale-1000);
 	opacity: 0;
-	padding: var(--space-s) var(--space-base);
+	padding: var(--token-scale-200) var(--token-scale-400);
 	pointer-events: none;
 	position: absolute;
 	text-transform: uppercase;

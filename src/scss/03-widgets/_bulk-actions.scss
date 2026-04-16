@@ -22,9 +22,9 @@
 		}
 
 		&:checked:after {
-			border: var(--border-size-m) solid get-border-color('neutral-0');
-			border-right: var(--border-size-none) !important;
-			border-top: var(--border-size-none) !important;
+			border: var(--token-border-size-050) solid var(--token-primitives-base-white);
+			border-right: var(--token-border-size-0) !important;
+			border-top: var(--token-border-size-0) !important;
 			display: block;
 			height: 2px;
 			left: 4px;
@@ -35,12 +35,12 @@
 
 	.checkbox-intermediate {
 		&:before {
-			background-color: get-background-color('primary');
-			border: var(--border-size-s) solid get-border-color('primary');
+			background-color: var(--token-semantics-primary-base);
+			border: var(--token-border-size-025) solid var(--token-semantics-primary-base);
 		}
 
 		&:after {
-			background-color: get-background-color('neutral-0');
+			background-color: var(--token-primitives-base-white);
 			content: '';
 			height: 2px;
 			left: 50%;

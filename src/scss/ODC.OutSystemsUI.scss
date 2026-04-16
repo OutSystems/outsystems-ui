@@ -17,7 +17,7 @@ PS: This comment block will not be visible in the compiled version!
 =============================================================================== */
 
 /*!
-OutSystems UI 2.28.0 • ODC Platform
+OutSystems UI 2.29.0 • ODC Platform
 Website:
  • https://www.outsystems.com/outsystems-ui
 GitHub:
@@ -209,14 +209,10 @@ Section Index:
 SCSS Setup variables
 =============================================================================== */
 @import '00-abstract/setup-global-vars';
-@import '00-abstract/setup-global-typography-vars';
-@import '00-abstract/setup-color-vars';
-@import '00-abstract/setup-border-vars';
 
 /* ===============================================================================
 Functions & Mixins
 =============================================================================== */
-@import '00-abstract/functions';
 @import '00-abstract/mixins';
 
 /*! ==============================================================================

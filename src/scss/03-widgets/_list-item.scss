@@ -5,9 +5,9 @@
 
 ///
 .list-item {
-	border-bottom: var(--border-size-s) solid get-border-color('neutral-4');
+	border-bottom: var(--token-border-size-025) solid var(--token-primitives-neutral-400);
 	overflow: hidden;
-	padding: var(--space-m);
+	padding: var(--token-scale-600);
 	position: relative;
 
 	&:last-of-type {
@@ -17,7 +17,7 @@
 	&.list-item-no-click-effect {
 		.scale-animation {
 			// !important should be in use in order to grant the expected behaviour when this class is assigned!
-			background: get-background-color('transparent') !important;
+			background: transparent !important;
 			opacity: 0 !important;
 		}
 	}
@@ -41,14 +41,14 @@
 ///
 .list {
 	.list-item {
-		background-color: get-background-color('neutral-0');
+		background-color: var(--token-primitives-base-white);
 	}
 }
 
 ///
 .layout-native {
 	.list-item {
-		padding: var(--space-base);
+		padding: var(--token-scale-400);
 	}
 }
 
@@ -58,7 +58,7 @@
 	.list {
 		.list-item:hover {
 			&:not(.list-item-no-hover):not(.list-item-selected) {
-				background-color: get-background-color('neutral-2');
+				background-color: var(--token-primitives-neutral-200);
 			}
 		}
 	}
@@ -69,19 +69,19 @@
 .tablet.landscape {
 	.list {
 		.list-item-selected {
-			background: get-background-color('primary') get-background-color('primary-lightest');
+			background: var(--token-semantics-primary-base) var(--color-primary-lightest);
 
 			.list-item-content {
 				&-title {
-					color: get-text-color('neutral-10');
+					color: var(--token-primitives-neutral-1200);
 				}
 
 				&-text {
-					color: get-text-color('neutral-8');
+					color: var(--token-primitives-neutral-800);
 				}
 
 				&-right .icon {
-					color: get-text-color('primary');
+					color: var(--token-semantics-primary-base);
 				}
 			}
 		}
@@ -99,9 +99,9 @@
 				position: relative;
 
 				&:before {
-					@include a11y-high-contrast-outline(true, var(--border-size-s));
+					@include a11y-high-contrast-outline(true, var(--token-border-size-025));
 					border-right-width: 0;
-					border-left-width: var(--border-size-l);
+					border-left-width: var(--token-border-size-075);
 					bottom: 0;
 					content: '';
 					display: block;

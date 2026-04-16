@@ -5,8 +5,8 @@
 
 ///
 .bottom-bar-wrapper {
-	background-color: get-background-color('neutral-0');
-	border-top: var(--border-size-s) solid get-border-color('neutral-3');
+	background-color: var(--token-primitives-base-white);
+	border-top: var(--token-border-size-025) solid var(--token-primitives-neutral-300);
 	height: 100%;
 }
 
@@ -14,7 +14,7 @@
 .bottom-bar {
 	display: flex;
 	&:empty:after {
-		color: get-text-color('neutral-7');
+		color: var(--token-primitives-neutral-700);
 		content: 'Add Bottom Bar Items to this Container';
 		display: block;
 		font-size: 12px;
@@ -28,9 +28,9 @@
 		overflow: hidden;
 	}
 	& > a {
-		color: get-text-color('neutral-8');
+		color: var(--token-primitives-neutral-800);
 		&.active {
-			color: get-text-color('primary');
+			color: var(--token-semantics-primary-base);
 		}
 	}
 	&-item {
@@ -39,11 +39,11 @@
 		height: 100%;
 		justify-content: center;
 		overflow: hidden;
-		padding: 0 var(--space-s);
+		padding: 0 var(--token-scale-200);
 		position: relative;
 		&-icon {
 			display: inline-flex;
-			font-size: var(--font-size-h6);
+			font-size: var(--token-font-size-450);
 			height: auto;
 			justify-content: center;
 		}
@@ -84,8 +84,8 @@
 .has-accessible-features {
 	.bottom-bar {
 		& > a:focus {
-			background-color: get-background-color('transparent');
-			box-shadow: 0 0 0 3px get-background-color('focus-outer');
+			background-color: transparent;
+			box-shadow: 0 0 0 3px var(--color-focus-outer);
 		}
 	}
 }

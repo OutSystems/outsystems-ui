@@ -19,9 +19,9 @@
 	}
 
 	&:before {
-		background-color: get-background-color('neutral-0');
-		border: var(--border-size-s) solid get-border-color('neutral-5');
-		border-radius: var(--border-radius-rounded);
+		background-color: var(--token-primitives-base-white);
+		border: var(--token-border-size-025) solid var(--token-primitives-neutral-500);
+		border-radius: var(--token-border-radius-full);
 		content: '';
 
 		display: flex;
@@ -32,17 +32,17 @@
 	}
 
 	&:hover:before {
-		border: var(--border-size-s) solid get-border-color('neutral-6');
+		border: var(--token-border-size-025) solid var(--token-primitives-neutral-600);
 	}
 
 	&:focus:before {
-		box-shadow: 0 0 0 2px get-background-color('focus');
+		box-shadow: 0 0 0 2px var(--color-focus-outer);
 	}
 
 	&:checked {
 		&:before {
-			background-color: get-background-color('neutral-0');
-			border: 6px solid get-border-color('primary');
+			background-color: var(--token-primitives-base-white);
+			border: 6px solid var(--token-semantics-primary-base);
 		}
 
 		&:hover:before {
@@ -51,23 +51,23 @@
 	}
 
 	&:disabled {
-		background-color: get-background-color('transparent');
+		background-color: transparent;
 		border: none;
 		pointer-events: none;
 
 		& + label {
 			pointer-events: none;
-			color: get-text-color('neutral-6');
+			color: var(--token-primitives-neutral-600);
 		}
 
 		&:before {
-			background-color: get-background-color('neutral-2');
-			border: var(--border-size-s) solid get-border-color('neutral-4');
+			background-color: var(--token-primitives-neutral-200);
+			border: var(--token-border-size-025) solid var(--token-primitives-neutral-400);
 		}
 
 		&:checked:before {
-			background-color: get-background-color('neutral-2');
-			border: 6px solid get-border-color('neutral-4');
+			background-color: var(--token-primitives-neutral-200);
+			border: 6px solid var(--token-primitives-neutral-400);
 		}
 	}
 }
@@ -87,7 +87,7 @@
 			width: auto;
 
 			&:not(:first-of-type) {
-				margin-left: var(--space-base);
+				margin-left: var(--token-scale-400);
 			}
 		}
 	}
@@ -97,25 +97,25 @@
 [data-radio-group] {
 	&.not-valid [data-radio-button] .radio-button {
 		&:before {
-			border: var(--border-size-s) solid get-border-color('error');
+			border: var(--token-border-size-025) solid var(--token-semantics-danger-base);
 		}
 
 		&:checked:before {
-			background-color: get-background-color('neutral-0');
-			border: 6px solid get-border-color('primary');
+			background-color: var(--token-primitives-base-white);
+			border: 6px solid var(--token-semantics-primary-base);
 		}
 	}
 
 	[data-radio-button] {
 		align-items: center;
 		display: inline-flex;
-		margin: var(--space-s) 0;
+		margin: var(--token-scale-200) 0;
 
 		label {
 			cursor: pointer;
 			line-height: 1;
 			margin-bottom: 0;
-			margin-left: var(--space-s);
+			margin-left: var(--token-scale-200);
 		}
 	}
 }
@@ -131,14 +131,14 @@
 // Accessibility -----------------------------------------------------------------
 .has-accessible-features {
 	.radio-button {
-		border-radius: var(--border-radius-rounded);
+		border-radius: var(--token-border-radius-full);
 
 		&:before {
-			border-color: get-border-color('neutral-7');
+			border-color: var(--token-primitives-neutral-700);
 		}
 
 		&:after {
-			background-color: get-background-color('neutral-0');
+			background-color: var(--token-primitives-base-white);
 			border-radius: 100%;
 			content: '';
 			height: 12px;
@@ -152,30 +152,30 @@
 		}
 
 		&:focus:before {
-			background-color: get-background-color('primary');
-			border-color: get-border-color('focus-inner');
+			background-color: var(--token-semantics-primary-base);
+			border-color: var(--color-focus-inner);
 			box-shadow: none;
 		}
 
 		&:checked:before {
-			border-color: get-border-color('primary');
+			border-color: var(--token-semantics-primary-base);
 		}
 
 		&:hover:before {
-			border-color: get-border-color('neutral-8');
+			border-color: var(--token-primitives-neutral-800);
 		}
 	}
 
 	[data-radio-group].not-valid [data-radio-button] .radio-button:checked:before {
-		border-color: get-border-color('primary');
+		border-color: var(--token-semantics-primary-base);
 	}
 }
 
 // IsRTL -------------------------------------------------------------------------
 .is-rtl {
 	[data-radio-group] label {
-		margin-left: var(--space-none);
-		margin-right: var(--space-s);
+		margin-left: var(--token-scale-0);
+		margin-right: var(--token-scale-200);
 	}
 
 	.radio-group {
@@ -183,7 +183,7 @@
 			[data-radio-button] {
 				&:not(:first-of-type) {
 					margin-left: unset;
-					margin-right: var(--space-base);
+					margin-right: var(--token-scale-400);
 				}
 			}
 		}

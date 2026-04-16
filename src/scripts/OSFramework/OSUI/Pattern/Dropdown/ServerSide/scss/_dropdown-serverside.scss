@@ -11,14 +11,14 @@ $balloonMobileTopMargin: 5vh;
 .osui-dropdown-serverside {
 	--osui-dropdown-ss-balloon-max-height: 300px;
 	--osui-dropdown-min-width: 170px;
-	--osui-floating-offset: var(--space-xs);
+	--osui-floating-offset: var(--token-scale-100);
 	--osui-dropdown-ss-scroll-bar-width: 5px;
 	position: relative;
 
 	.osui-balloon {
 		--osui-balloon-shadow: none;
 
-		border: var(--border-size-s) solid get-border-color('neutral-5');
+		border: var(--token-border-size-025) solid var(--token-primitives-neutral-500);
 		display: flex;
 		flex-direction: column;
 		flex: 1;
@@ -45,16 +45,16 @@ $balloonMobileTopMargin: 5vh;
 		display: flex;
 		flex: 1;
 		height: inherit;
-		margin-right: var(--space-base);
+		margin-right: var(--token-scale-400);
 		overflow: hidden;
 
 		&:hover {
-			border-color: get-border-color('neutral-6');
+			border-color: var(--token-primitives-neutral-600);
 		}
 
 		&:after {
 			align-items: center;
-			color: get-text-color('neutral-7');
+			color: var(--token-primitives-neutral-700);
 			display: flex;
 			height: 100%;
 			pointer-events: none;
@@ -66,7 +66,7 @@ $balloonMobileTopMargin: 5vh;
 
 		& > * {
 			&::selection {
-				background-color: get-background-color('transparent');
+				background-color: transparent;
 			}
 
 			&:first-child {
@@ -79,15 +79,15 @@ $balloonMobileTopMargin: 5vh;
 
 		&-wrapper {
 			align-items: center;
-			background-color: get-background-color('neutral-0');
-			border-radius: var(--border-radius-soft);
-			border: var(--border-size-s) solid get-border-color('neutral-5');
-			color: get-text-color('neutral-9');
+			background-color: var(--token-primitives-base-white);
+			border-radius: var(--token-border-radius-100);
+			border: var(--token-border-size-025) solid var(--token-primitives-neutral-500);
+			color: var(--token-primitives-neutral-900);
 			cursor: pointer;
 			display: flex;
-			font-size: var(--font-size-s);
+			font-size: var(--token-font-size-350);
 			height: 40px;
-			padding: var(--space-none) var(--space-base);
+			padding: var(--token-scale-0) var(--token-scale-400);
 			position: relative;
 			transition: border 250ms ease-in-out;
 			width: 100%;
@@ -108,8 +108,8 @@ $balloonMobileTopMargin: 5vh;
 	&__balloon {
 		// Search Wrapper
 		&-search-wrapper {
-			background-color: get-background-color('neutral-0');
-			padding: var(--space-none);
+			background-color: var(--token-primitives-base-white);
+			padding: var(--token-scale-0);
 			position: relative;
 			display: flex;
 			align-items: center;
@@ -121,10 +121,10 @@ $balloonMobileTopMargin: 5vh;
 
 			&:before {
 				align-items: center;
-				color: get-text-color('neutral-6');
+				color: var(--token-primitives-neutral-600);
 				display: flex;
 				height: 100%;
-				left: var(--space-base);
+				left: var(--token-scale-400);
 				position: absolute;
 				top: 0;
 			}
@@ -135,13 +135,13 @@ $balloonMobileTopMargin: 5vh;
 
 			input,
 			.form-control[data-input] {
-				background-color: get-background-color('transparent');
-				border-radius: var(--border-size-none);
+				background-color: transparent;
+				border-radius: var(--token-border-size-0);
 				border: none;
 				color: inherit;
-				font-size: var(--font-size-s);
+				font-size: var(--token-font-size-350);
 				height: 40px;
-				padding: var(--space-none) var(--space-s) var(--space-none) var(--space-xl);
+				padding: var(--token-scale-0) var(--token-scale-200) var(--token-scale-0) var(--token-scale-1000);
 				width: 100%;
 			}
 		}
@@ -151,29 +151,29 @@ $balloonMobileTopMargin: 5vh;
 			align-items: center;
 			display: flex;
 			height: 100%;
-			padding: var(--space-none) var(--space-base);
+			padding: var(--token-scale-0) var(--token-scale-400);
 		}
 
 		// Options placeholder
 		&-content {
-			border-top: var(--border-size-s) solid get-border-color('neutral-5');
+			border-top: var(--token-border-size-025) solid var(--token-primitives-neutral-500);
 			flex: 1;
 			height: auto;
 			max-height: var(--osui-dropdown-ss-balloon-max-height);
 			overflow-x: hidden;
 			overflow-y: auto;
-			padding: var(--space-none);
+			padding: var(--token-scale-0);
 
 			&::-webkit-scrollbar {
 				width: var(--osui-dropdown-ss-scroll-bar-width);
 			}
 
 			&::-webkit-scrollbar-track {
-				background: get-background-color('neutral-4');
+				background: var(--token-primitives-neutral-400);
 			}
 
 			&::-webkit-scrollbar-thumb {
-				background-color: get-background-color('neutral-6');
+				background-color: var(--token-primitives-neutral-600);
 			}
 
 			// Avoid having data-list above other elements in this context, such as a StickyTop SelectAll Option container.
@@ -191,8 +191,8 @@ $balloonMobileTopMargin: 5vh;
 
 		// Footer placeholder
 		&-footer {
-			border-top: var(--border-size-s) solid get-border-color('neutral-5');
-			padding: var(--space-s) var(--space-base);
+			border-top: var(--token-border-size-025) solid var(--token-primitives-neutral-500);
+			padding: var(--token-scale-200) var(--token-scale-400);
 		}
 	}
 
@@ -201,13 +201,13 @@ $balloonMobileTopMargin: 5vh;
 		.osui-dropdown-serverside {
 			// "Input" section wrapper - SelectedValues container wrapper
 			&__selected-values-wrapper {
-				border-color: get-border-color('primary');
+				border-color: var(--token-semantics-primary-base);
 			}
 
 			// "Input" section - SelectedValues container
 			&__selected-values {
 				&:after {
-					color: get-text-color('primary');
+					color: var(--token-semantics-primary-base);
 					transform: rotate(180deg);
 				}
 			}
@@ -218,13 +218,13 @@ $balloonMobileTopMargin: 5vh;
 	&--is-disabled {
 		.osui-dropdown-serverside__selected-values {
 			&:after {
-				border-color: get-border-color('neutral-6');
+				border-color: var(--token-primitives-neutral-600);
 			}
 
 			&-wrapper {
-				background-color: get-background-color('neutral-2');
-				border-color: get-border-color('neutral-4');
-				color: get-text-color('neutral-6');
+				background-color: var(--token-primitives-neutral-200);
+				border-color: var(--token-primitives-neutral-400);
+				color: var(--token-primitives-neutral-600);
 				pointer-events: none;
 			}
 		}
@@ -234,13 +234,13 @@ $balloonMobileTopMargin: 5vh;
 	&--not-valid {
 		.osui-dropdown-serverside__selected-values-wrapper {
 			/* !important should be here in order to grant more specific selectors be overriding border color at this context. */
-			border-color: get-border-color('error') !important;
+			border-color: var(--token-semantics-danger-base) !important;
 		}
 
 		& + .osui-dropdown-serverside-error-message {
-			color: get-text-color('error');
-			font-size: var(--font-size-xs);
-			margin-left: var(--space-none);
+			color: var(--token-semantics-danger-base);
+			font-size: var(--token-font-size-300);
+			margin-left: var(--token-scale-0);
 			margin-top: 3px;
 		}
 	}
@@ -262,7 +262,7 @@ $balloonMobileTopMargin: 5vh;
 .windows .osui-tabs {
 	// subtracts the size of the border so it doesn't get cut off inside the tabs, in windows
 	.osui-dropdown-serverside__selected-values-wrapper {
-		width: calc(100% - 2 * var(--border-size-s));
+		width: calc(100% - 2 * var(--token-border-size-025));
 	}
 }
 
@@ -275,22 +275,22 @@ $balloonMobileTopMargin: 5vh;
 			&:after,
 			&-wrapper,
 			&-footer {
-				border-color: get-border-color('neutral-7');
+				border-color: var(--token-primitives-neutral-700);
 			}
 		}
 
 		&__balloon {
-			border-color: get-border-color('neutral-7');
+			border-color: var(--token-primitives-neutral-700);
 
 			&-search {
 				&:before {
-					color: get-text-color('neutral-7');
+					color: var(--token-primitives-neutral-700);
 				}
 
 				input,
 				.form-control[data-input] {
 					&:focus {
-						box-shadow: inset 0 0 0 3px get-background-color('focus-outer');
+						box-shadow: inset 0 0 0 3px var(--color-focus-outer);
 					}
 				}
 			}
@@ -299,7 +299,7 @@ $balloonMobileTopMargin: 5vh;
 				--osui-outline-size: 3px;
 
 				&::-webkit-scrollbar-thumb {
-					background-color: get-background-color('neutral-7');
+					background-color: var(--token-primitives-neutral-700);
 				}
 
 				&:focus {
@@ -311,7 +311,7 @@ $balloonMobileTopMargin: 5vh;
 					&:after,
 					& > *:before,
 					& > *:after {
-						background-color: get-background-color('focus-outer');
+						background-color: var(--color-focus-outer);
 						content: '';
 						display: block;
 					}
@@ -372,11 +372,11 @@ $balloonMobileTopMargin: 5vh;
 .is-rtl {
 	.osui-dropdown-serverside {
 		&__selected-values {
-			margin-left: var(--space-base);
+			margin-left: var(--token-scale-400);
 			margin-right: initial;
 
 			&:after {
-				left: var(--space-base);
+				left: var(--token-scale-400);
 				right: auto;
 			}
 		}
@@ -386,12 +386,12 @@ $balloonMobileTopMargin: 5vh;
 			&-search {
 				&:before {
 					left: auto;
-					right: var(--space-base);
+					right: var(--token-scale-400);
 				}
 
 				input,
 				.form-control[data-input] {
-					padding: var(--space-none) var(--space-xl) var(--space-none) var(--space-s);
+					padding: var(--token-scale-0) var(--token-scale-1000) var(--token-scale-0) var(--token-scale-200);
 				}
 			}
 		}
@@ -410,7 +410,7 @@ $balloonMobileTopMargin: 5vh;
 		&__balloon-search {
 			input,
 			.form-control[data-input] {
-				font-size: var(--font-size-base);
+				font-size: var(--token-font-size-400);
 				height: 48px;
 			}
 		}
@@ -479,7 +479,7 @@ $balloonMobileTopMargin: 5vh;
 		// Balloon section
 		&__balloon {
 			align-items: center;
-			background-color: get-background-color('overlay');
+			background-color: var(--token-backdrop);
 			border: none;
 			border-radius: var(--border-radius-sharp);
 			display: flex;
@@ -494,7 +494,7 @@ $balloonMobileTopMargin: 5vh;
 
 			// Service Studio Preview
 			& {
-				-servicestudio-background-color: get-background-color('neutral-0');
+				-servicestudio-background-color: var(--token-primitives-base-white);
 				-servicestudio-left: initial;
 				-servicestudio-opacity: 1;
 				-servicestudio-position: relative;
@@ -502,9 +502,9 @@ $balloonMobileTopMargin: 5vh;
 			}
 
 			&-container {
-				background: get-background-color('neutral-0');
+				background: var(--token-primitives-base-white);
 				border-radius: var(--osui-balloon-shape);
-				box-shadow: var(--shadow-xl);
+				box-shadow: var(--token-elevation-4);
 				display: flex;
 				flex-direction: column;
 				height: auto;
@@ -575,17 +575,17 @@ $balloonMobileTopMargin: 5vh;
 
 				/* Track */
 				&::-webkit-scrollbar-track {
-					background-color: get-background-color('neutral-3');
+					background-color: var(--token-primitives-neutral-300);
 				}
 
 				/* Handle */
 				&::-webkit-scrollbar-thumb {
-					background-color: get-background-color('neutral-6');
+					background-color: var(--token-primitives-neutral-600);
 				}
 
 				/* Handle on hover */
 				&::-webkit-scrollbar-thumb:hover {
-					background-color: get-background-color('neutral-8');
+					background-color: var(--token-primitives-neutral-800);
 				}
 			}
 		}

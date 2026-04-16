@@ -3,11 +3,26 @@
 /// @group UsefullClasses-Shadow
 /// Usefull - Shadow
 
+// Maps old shadow names to token CSS var names
+$osui-shadow-token-vars: (
+	'none': 'none',
+	'xs': '--token-elevation-1',
+	's': '--token-elevation-1',
+	'm': '--token-elevation-2',
+	'l': '--token-elevation-3',
+	'xl': '--token-elevation-4'
+);
+
 ///
 .shadow {
 	@each $type, $value in $osui-shadow-types {
+		$token: map-get($osui-shadow-token-vars, $type);
 		&-#{$type} {
-			box-shadow: var(--shadow-#{$type});
+			@if $token == 'none' {
+				box-shadow: none;
+			} @else {
+				box-shadow: var(#{$token});
+			}
 		}
 	}
 }

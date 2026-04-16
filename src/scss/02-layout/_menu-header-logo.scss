@@ -7,7 +7,7 @@
 .layout-side {
 	.header-logo {
 		height: var(--header-size);
-		padding: var(--space-none) var(--space-m);
+		padding: var(--token-scale-0) var(--token-scale-600);
 	}
 }
 
@@ -16,6 +16,6 @@
 .phone {
 	.header-logo {
 		height: var(--header-size);
-		padding: var(--space-none) var(--space-m);
+		padding: var(--token-scale-0) var(--token-scale-600);
 	}
 }

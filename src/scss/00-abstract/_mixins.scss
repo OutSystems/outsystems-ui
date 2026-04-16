@@ -1,32 +1,45 @@
 ////
 /// @group global
 
+/// Returns the safe area value with fallback for both env() and CSS variable
+/// @param {String} $side - The side (top, right, bottom, left)
+/// @return {String} - The max() expression with env() and CSS variable fallback
+@function safe-area($side) {
+	@return unquote('max(env(safe-area-inset-#{$side}), var(--safe-area-inset-#{$side}, 0px))');
+}
+
+/// Returns the safe area top value for specifically for Android devices.
+/// @return {String} - The max() expression with current variable and new CSS variable
+@function android-safe-area-top() {
+	@return unquote('max(var(--status-bar-height, 0px), var(--safe-area-inset-top, 0px))');
+}
+
 /// default outline style
 @mixin a11y-default-outline($isInner: false) {
 	@if $isInner {
-		box-shadow: inset 0 0 0 var(--border-size-l) get-background-color('focus-outer');
+		box-shadow: inset 0 0 0 var(--token-border-size-075) var(--color-focus-outer);
 	} @else {
-		box-shadow: 0 0 0 var(--border-size-l) get-background-color('focus-outer');
+		box-shadow: 0 0 0 var(--token-border-size-075) var(--color-focus-outer);
 	}
 }
 
 /// outline style for high contrast mode
-@mixin a11y-high-contrast-outline($isBorder: false, $size: var(--border-size-l), $borderType: 'all') {
+@mixin a11y-high-contrast-outline($isBorder: false, $size: var(--token-border-size-075), $borderType: 'all') {
 	@if $isBorder == false {
-		outline: $size solid get-border-color('focus-outer');
+		outline: $size solid var(--color-focus-outer);
 	} @else {
 		@if $borderType == 'all' {
-			border: $size solid get-border-color('focus-outer');
+			border: $size solid var(--color-focus-outer);
 		} @else {
-			border-#{$borderType}: $size solid get-border-color('focus-outer');
+			border-#{$borderType}: $size solid var(--color-focus-outer);
 		}
 	}
 }
 
 /// AppLogo
 @mixin app-logo {
-	border-radius: var(--border-radius-soft);
-	margin-right: var(--space-s);
+	border-radius: var(--token-border-radius-100);
+	margin-right: var(--token-scale-200);
 	max-height: var(--header-size);
 	max-width: 120px;
 }

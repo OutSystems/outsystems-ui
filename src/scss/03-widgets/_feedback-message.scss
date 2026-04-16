@@ -6,18 +6,18 @@
 ///
 .feedback-message {
 	align-items: center;
-	border-radius: var(--border-radius-soft);
+	border-radius: var(--token-border-radius-100);
 	display: flex;
-	font-size: var(--font-size-h6);
-	font-weight: var(--font-regular);
+	font-size: var(--token-font-size-450);
+	font-weight: var(--token-font-weight-regular);
 	left: 50%;
 	max-width: 600px;
 	min-width: 400px;
-	padding: var(--space-base);
+	padding: var(--token-scale-400);
 
 	i {
 		align-self: flex-start;
-		font-size: var(--font-size-h5);
+		font-size: var(--token-font-size-500);
 		margin-top: 2px;
 		position: relative;
 	}
@@ -25,32 +25,32 @@
 
 ///
 .feedback-message-text {
-	padding-left: var(--space-base);
+	padding-left: var(--token-scale-400);
 }
 
 // Mantain due to Retro Compatibility
 ///
 div.feedback-message-error {
-	background-color: get-background-color('error');
+	background-color: var(--color-error);
 }
 
 // Mantain due to Retro Compatibility
 ///
 div.feedback-message-info {
-	background-color: get-background-color('info');
+	background-color: var(--color-info);
 }
 
 // Mantain due to Retro Compatibility
 ///
 div.feedback-message-success {
-	background-color: get-background-color('success');
+	background-color: var(--color-success);
 }
 
 // Mantain due to Retro Compatibility
 ///
 div.feedback-message-warning {
-	background-color: get-background-color('warning');
-	color: get-text-color('neutral-10');
+	background-color: var(--color-warning);
+	color: var(--token-primitives-neutral-1200);
 }
 
 // Responsive --------------------------------------------------------------------
@@ -68,14 +68,14 @@ div.feedback-message-warning {
 
 	&.ios {
 		.feedback-message {
-			padding-top: calc(var(--os-safe-area-top) + var(--space-base));
+			padding-top: calc(var(--os-safe-area-top) + var(--token-scale-400));
 		}
 	}
 }
 
 .android {
 	.feedback-message {
-		padding-top: calc(#{android-safe-area-top()} + var(--space-base));
+		padding-top: calc(#{android-safe-area-top()} + var(--token-scale-400));
 	}
 
 	&.landscape {
@@ -106,20 +106,20 @@ div.feedback-message-warning {
 ///
 .os-high-contrast {
 	.feedback-message {
-		border-width: var(--border-size-l);
+		border-width: var(--token-border-size-075);
 		border-style: solid;
 
 		&.feedback-message-error {
-			border-color: get-border-color('error');
+			border-color: var(--token-semantics-danger-base);
 		}
 		&.feedback-message-info {
-			border-color: get-border-color('info');
+			border-color: var(--color-info);
 		}
 		&.feedback-message-success {
-			border-color: get-border-color('success');
+			border-color: var(--color-success);
 		}
 		&.feedback-message-warning {
-			border-color: get-border-color('warning');
+			border-color: var(--color-warning);
 		}
 	}
 }

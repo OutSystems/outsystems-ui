@@ -11,15 +11,15 @@
 
 .flatpickr-monthSelect-months {
 	display: grid;
-	gap: var(--space-xs);
+	gap: var(--token-scale-100);
 	grid-template-columns: repeat(3, 1fr);
 	justify-items: center;
 	margin: 0;
 
 	.flatpickr-monthSelect-month {
 		align-items: center;
-		border: 1px solid get-border-color('transparent');
-		border-radius: var(--border-radius-soft);
+		border: 1px solid transparent;
+		border-radius: var(--token-border-radius-100);
 		display: flex;
 		height: 40px;
 		margin: 0;
@@ -28,21 +28,21 @@
 
 		&:hover,
 		&:focus {
-			background: get-background-color('neutral-2');
+			background: var(--token-primitives-neutral-200);
 		}
 
 		&.selected {
-			background-color: get-background-color('primary');
-			border-color: get-border-color('transparent');
-			color: get-text-color('neutral-0');
+			background-color: var(--token-semantics-primary-base);
+			border-color: transparent;
+			color: var(--token-primitives-base-white);
 		}
 
 		&.flatpickr-disabled {
-			background-color: get-background-color('neutral-1');
-			color: get-text-color('neutral-5');
+			background-color: var(--token-primitives-neutral-100);
+			color: var(--token-primitives-neutral-500);
 
 			&:hover {
-				background-color: get-background-color('neutral-1') !important; // override provider !important rule
+				background-color: var(--token-primitives-neutral-100) !important; // override provider !important rule
 			}
 
 			&.today:hover,
@@ -52,13 +52,13 @@
 		}
 
 		&.today:not(.selected):not(.flatpickr-disabled) {
-			border-color: get-border-color('neutral-6');
+			border-color: var(--token-primitives-neutral-600);
 
 			&:hover,
 			&:focus {
-				background: get-background-color('neutral-3');
-				border-color: get-border-color('neutral-3');
-				color: get-text-color('primary');
+				background: var(--token-primitives-neutral-300);
+				border-color: var(--token-primitives-neutral-300);
+				color: var(--token-semantics-primary-base);
 			}
 		}
 	}

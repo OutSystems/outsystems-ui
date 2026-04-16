@@ -6,9 +6,9 @@
 ///
 .badge {
 	align-items: center;
-	color: get-text-color('neutral-0');
+	color: var(--token-primitives-base-white);
 	display: inline-flex;
-	font-weight: var(--font-semi-bold);
+	font-weight: var(--token-font-weight-semi-bold);
 	height: 32px;
 	justify-content: center;
 	line-height: 1;
@@ -17,31 +17,31 @@
 	&.background {
 		&-neutral {
 			&-0 {
-				color: get-text-color('primary');
+				color: var(--token-semantics-primary-base);
 			}
 
 			&-1,
 			&-2,
 			&-3,
 			&-4 {
-				color: get-text-color('neutral-9');
+				color: var(--token-primitives-neutral-900);
 			}
 		}
 
 		&-transparent {
-			color: get-text-color('primary');
+			color: var(--token-semantics-primary-base);
 		}
 	}
 
 	&-small {
-		font-size: var(--font-size-xs);
+		font-size: var(--token-font-size-300);
 		height: 24px;
 		min-width: 24px;
-		padding: var(--space-none) var(--space-xs);
+		padding: var(--token-scale-0) var(--token-scale-100);
 	}
 
 	&-medium {
-		font-size: var(--font-size-base);
+		font-size: var(--token-font-size-400);
 		height: 40px;
 		min-width: 40px;
 	}

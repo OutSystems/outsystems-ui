@@ -56,7 +56,7 @@
 	& > .list:not([data-animation-disabled]):after {
 		//Service Studio Preview
 		& {
-			-servicestudio-background-color: get-background-color('neutral-0');
+			-servicestudio-background-color: var(--token-primitives-base-white);
 			-servicestudio-background-position: center;
 			-servicestudio-background-repeat: no-repeat;
 			-servicestudio-background-size: 291px 225px;
@@ -77,14 +77,14 @@
 
 	/* fix carousel margin top for card pattern inside carousel */
 	[data-block*='Card'] + [data-block*='Card'] .card {
-		margin-top: var(--space-none);
+		margin-top: var(--token-scale-0);
 	}
 
 	.carousel-container {
 		--carousel-width: 100%;
 		width: var(--carousel-width);
 
-		background-color: get-background-color('transparent');
+		background-color: transparent;
 		white-space: nowrap;
 
 		// Service Studio Preview
@@ -94,7 +94,7 @@
 		}
 
 		.list.list-group {
-			background-color: get-background-color('transparent');
+			background-color: transparent;
 			white-space: nowrap;
 
 			//Service Studio Preview
@@ -133,7 +133,7 @@
 			.list:not([data-animation-disabled]):after {
 				//Service Studio Preview
 				& {
-					-servicestudio-background-color: get-background-color('neutral-0');
+					-servicestudio-background-color: var(--token-primitives-base-white);
 					-servicestudio-background-position: center;
 					-servicestudio-background-repeat: no-repeat;
 					-servicestudio-background-size: 291px 225px;
@@ -166,13 +166,13 @@
 
 	.carousel-navigation {
 		align-items: center;
-		background-color: get-background-color('neutral-0');
-		border-radius: var(--border-radius-circle);
-		box-shadow: var(--shadow-xs);
-		color: get-text-color('neutral-7');
+		background-color: var(--token-primitives-base-white);
+		border-radius: 50%;
+		box-shadow: var(--token-elevation-1);
+		color: var(--token-primitives-neutral-700);
 		cursor: pointer;
 		display: flex;
-		font-size: var(--font-size-h4);
+		font-size: var(--token-font-size-550);
 		height: 40px;
 		justify-content: center;
 		opacity: 1;
@@ -203,7 +203,7 @@
 	}
 
 	.carousel-dots-container {
-		margin-top: var(--space-base);
+		margin-top: var(--token-scale-400);
 		text-align: center;
 
 		&.disabled {
@@ -211,16 +211,16 @@
 		}
 
 		.carousel-dot {
-			background-color: get-background-color('neutral-5');
-			border-radius: var(--border-radius-circle);
+			background-color: var(--token-primitives-neutral-500);
+			border-radius: 50%;
 			cursor: pointer;
 			display: inline-block;
 			height: 8px;
-			margin: 0 var(--space-xs);
+			margin: 0 var(--token-scale-100);
 			width: 8px;
 
 			&.active {
-				background-color: get-background-color('primary');
+				background-color: var(--token-semantics-primary-base);
 			}
 		}
 	}
@@ -247,7 +247,7 @@
 .has-accessible-features {
 	.carousel {
 		.carousel-navigation:focus {
-			box-shadow: 0 0 0 3px get-background-color('focus-outer');
+			box-shadow: 0 0 0 3px var(--color-focus-outer);
 		}
 	}
 }

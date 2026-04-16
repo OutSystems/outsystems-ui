@@ -3,26 +3,48 @@
 /// @group UsefullClasses-Border_Radius
 /// Usefull - Border Radius
 
+// Maps old border-radius names to token CSS var names (or literal values)
+$osui-border-radius-token-vars: (
+	'none': '--token-border-radius-0',
+	'soft': '--token-border-radius-100',
+	'rounded': '--token-border-radius-full',
+	'circle': 'literal:50%'
+);
+
 ///
 .border-radius {
 	@each $type, $value in $osui-border-radius-types {
+		$token: map-get($osui-border-radius-token-vars, $type);
 		// Generated - Eg: .border-radius-none
 		&-#{$type} {
-			border-radius: var(--border-radius-#{$type});
+			@if str-slice($token, 1, 8) == 'literal:' {
+				border-radius: #{str-slice($token, 9)};
+			} @else {
+				border-radius: var(#{$token});
+			}
 		}
 
 		@each $osui-box-corner in $osui-box-corners {
 			// Generated - Eg: .border-radius-top-left-none
 			&-#{$osui-box-corner}-#{$type} {
-				border-#{$osui-box-corner}-radius: var(--border-radius-#{$type});
+				@if str-slice($token, 1, 8) == 'literal:' {
+					border-#{$osui-box-corner}-radius: #{str-slice($token, 9)};
+				} @else {
+					border-#{$osui-box-corner}-radius: var(#{$token});
+				}
 			}
 		}
 
 		@each $osui-border-side, $osui-border-corner1, $osui-border-corner2 in $osui-border-radius-box-sides {
 			// Generated - Eg: .border-radius-top-none
 			&-#{$osui-border-side}-#{$type} {
-				border-#{$osui-border-side}-#{$osui-border-corner1}-radius: var(--border-radius-#{$type});
-				border-#{$osui-border-side}-#{$osui-border-corner2}-radius: var(--border-radius-#{$type});
+				@if str-slice($token, 1, 8) == 'literal:' {
+					border-#{$osui-border-side}-#{$osui-border-corner1}-radius: #{str-slice($token, 9)};
+					border-#{$osui-border-side}-#{$osui-border-corner2}-radius: #{str-slice($token, 9)};
+				} @else {
+					border-#{$osui-border-side}-#{$osui-border-corner1}-radius: var(#{$token});
+					border-#{$osui-border-side}-#{$osui-border-corner2}-radius: var(#{$token});
+				}
 			}
 		}
 	}

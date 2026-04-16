@@ -18,21 +18,21 @@
 		}
 
 		& .blank-slate-actions {
-			padding: var(--space-xxl) var(--space-base);
+			padding: var(--token-scale-1200) var(--token-scale-400);
 		}
 	}
 
 	&-description {
-		color: get-text-color('neutral-9');
-		padding: var(--space-none) var(--space-base);
+		color: var(--token-primitives-neutral-900);
+		padding: var(--token-scale-0) var(--token-scale-400);
 	}
 
 	&-actions {
-		padding: var(--space-base);
+		padding: var(--token-scale-400);
 	}
 
 	&-icon {
-		color: get-text-color('neutral-6');
+		color: var(--token-primitives-neutral-600);
 		font-size: 70px;
 	}
 }

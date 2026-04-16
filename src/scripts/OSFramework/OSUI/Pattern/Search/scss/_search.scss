@@ -17,7 +17,7 @@
 
 		&:empty {
 			// Service Studio Preview
-			-servicestudio-background-color: get-background-color('neutral-0');
+			-servicestudio-background-color: var(--token-primitives-base-white);
 			-servicestudio-border-radius: 4px;
 			-servicestudio-height: 40px;
 		}
@@ -25,7 +25,7 @@
 
 	.form-control {
 		&[data-input] {
-			padding-left: var(--space-xl);
+			padding-left: var(--token-scale-1000);
 		}
 	}
 }
@@ -33,7 +33,7 @@
 .form {
 	.osui-search {
 		input[data-input] {
-			margin-bottom: var(--space-none);
+			margin-bottom: var(--token-scale-0);
 		}
 	}
 }
@@ -44,12 +44,12 @@
 	.osui-search {
 		&__input:after {
 			left: auto;
-			right: var(--space-base);
+			right: var(--token-scale-400);
 		}
 
 		.form-control[data-input] {
-			padding-left: var(--space-base);
-			padding-right: var(--space-xl);
+			padding-left: var(--token-scale-400);
+			padding-right: var(--token-scale-1000);
 		}
 	}
 }
@@ -63,8 +63,8 @@
 			input[data-input] {
 				&,
 				&:empty {
-					border: var(--border-size-none);
-					padding-left: var(--space-xl);
+					border: var(--token-border-size-0);
+					padding-left: var(--token-scale-1000);
 				}
 			}
 		}
@@ -75,7 +75,7 @@
 			input[data-input] {
 				&,
 				&:empty {
-					border-radius: var(--border-radius-none);
+					border-radius: var(--token-border-radius-0);
 				}
 			}
 		}

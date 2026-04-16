@@ -125,7 +125,7 @@ body.iconLibrary-phosphor {
 		color: var(--color-neutral-6);
 		content: var(--osui-icon-search);
 		font-family: var(--osui-icon-font-family);
-		left: var(--space-base);
+		left: var(--token-scale-400);
 		position: absolute;
 		top: 50%;
 		transform: translateY(-50%);
@@ -135,7 +135,7 @@ body.iconLibrary-phosphor {
 // Submenu – header arrow
 .osui-submenu {
 	&__header__icon {
-		margin-inline-start: var(--space-s);
+		margin-inline-start: var(--token-scale-200);
 		transition: transform 200ms ease;
 		transform-origin: center;
 
@@ -157,9 +157,9 @@ body.iconLibrary-phosphor {
 	color: var(--color-neutral-7);
 	content: var(--osui-icon-arrow-down);
 	font-family: var(--osui-icon-font-family);
-	font-size: var(--font-size-h5);
+	font-size: var(--token-font-size-500);
 	position: absolute;
-	right: var(--space-base);
+	right: var(--token-scale-400);
 	top: 50%;
 	transform: translateY(-50%);
 	transition: transform 200ms ease;
@@ -176,9 +176,9 @@ body.iconLibrary-phosphor {
 .sortable-icon {
 	display: inline-block;
 	font-family: var(--osui-icon-font-family);
-	font-size: var(--font-size-xs);
+	font-size: var(--token-font-size-300);
 	height: 11px;
-	margin-left: var(--space-s);
+	margin-left: var(--token-scale-200);
 	position: relative;
 	width: 10px;
 
@@ -202,7 +202,7 @@ body.iconLibrary-phosphor {
 	&:after {
 		content: var(--osui-icon-chevron-left);
 		font-family: var(--osui-icon-font-family);
-		font-size: var(--font-size-h6);
+		font-size: var(--token-font-size-450);
 	}
 }
 
@@ -260,7 +260,7 @@ body.iconLibrary-phosphor {
 // ChatMessage
 .chat-message-wrapper .chat-message-status {
 	display: inline-flex;
-	gap: var(--space-xs);
+	gap: var(--token-scale-100);
 	padding: none;
 }
 
@@ -301,7 +301,7 @@ body.iconLibrary-phosphor {
 .osui-dropdown-serverside__selected-values:after {
 	content: var(--osui-icon-arrow-down);
 	font-family: var(--osui-icon-font-family);
-	font-size: var(--font-size-h5);
+	font-size: var(--token-font-size-500);
 }
 
 // DropdownSearch (VirtualSelect)
@@ -339,7 +339,7 @@ body.iconLibrary-phosphor {
 	width: 100%;
 	height: 100%;
 	top: 1px;
-	font-size: var(--font-size-xs);
+	font-size: var(--token-font-size-300);
 	line-height: 1;
 	display: flex;
 	left: 1px;
@@ -348,15 +348,15 @@ body.iconLibrary-phosphor {
 .osui-dropdown-search {
 	// Service Studio Preview
 	&-ss-preview {
-		-servicestudio-background-color: get-background-color('neutral-0');
-		-servicestudio-border-radius: var(--border-radius-soft);
-		-servicestudio-border: var(--border-size-s) solid get-border-color('neutral-5');
+		-servicestudio-background-color: var(--token-primitives-base-white);
+		-servicestudio-border-radius: var(--token-border-radius-100);
+		-servicestudio-border: var(--token-border-size-025) solid var(--token-primitives-neutral-500);
 		-servicestudio-display: inline-flex;
 		-servicestudio-justify-content: space-between;
 		-servicestudio-height: 40px;
 		-servicestudio-line-height: 40px;
 		-servicestudio-min-width: 180px;
-		-servicestudio-padding: 0 var(--space-m);
+		-servicestudio-padding: 0 var(--token-scale-600);
 		-servicestudio-position: relative;
 		-servicestudio-vertical-align: middle;
 		-servicestudio-width: 100%;
@@ -366,14 +366,14 @@ body.iconLibrary-phosphor {
 			-servicestudio-width: 12px;
 
 			&::after {
-				-servicestudio-color: get-text-color('neutral-7');
+				-servicestudio-color: var(--token-primitives-neutral-700);
 				-servicestudio-position: absolute;
 				-servicestudio-top: 50%;
 				-servicestudio-left: 0;
 				-servicestudio-content: var(--osui-icon-arrow-down);
 				-servicestudio-font-family: var(--osui-icon-font-family);
 				-servicestudio-transform: translateY(-50%);
-				-servicestudio-font-size: var(--font-size-h5);
+				-servicestudio-font-size: var(--token-font-size-500);
 			}
 		}
 	}
@@ -383,14 +383,14 @@ body.iconLibrary-phosphor {
 	// Service Studio Preview
 	&-ss-preview {
 		-servicestudio-justify-content: space-between;
-		-servicestudio-background-color: get-background-color('neutral-0');
-		-servicestudio-border-radius: var(--border-radius-soft);
-		-servicestudio-border: var(--border-size-s) solid get-border-color('neutral-5');
-		-servicestudio-color: get-text-color('neutral-3');
+		-servicestudio-background-color: var(--token-primitives-base-white);
+		-servicestudio-border-radius: var(--token-border-radius-100);
+		-servicestudio-border: var(--token-border-size-025) solid var(--token-primitives-neutral-500);
+		-servicestudio-color: var(--token-primitives-neutral-300);
 		-servicestudio-display: flex;
 		-servicestudio-height: 40px;
 		-servicestudio-min-width: 180px;
-		-servicestudio-padding: 0 var(--space-m);
+		-servicestudio-padding: 0 var(--token-scale-600);
 		-servicestudio-position: relative;
 		-servicestudio-vertical-align: middle;
 		-servicestudio-width: 100%;
@@ -398,12 +398,12 @@ body.iconLibrary-phosphor {
 		&-as-tag {
 			-servicestudio-align-items: center;
 			-servicestudio-justify-content: space-between;
-			-servicestudio-background-color: get-background-color('neutral-3');
+			-servicestudio-background-color: var(--token-primitives-neutral-300);
 			-servicestudio-border-radius: 30px;
-			-servicestudio-color: get-text-color('neutral-7');
+			-servicestudio-color: var(--token-primitives-neutral-700);
 			-servicestudio-display: flex;
-			-servicestudio-font-size: var(--font-size-s);
-			-servicestudio-font-weight: var(--font-semi-bold);
+			-servicestudio-font-size: var(--token-font-size-350);
+			-servicestudio-font-weight: var(--token-font-weight-semi-bold);
 			-servicestudio-height: 30px;
 			-servicestudio-padding: 8px;
 			-servicestudio-position: relative;
@@ -427,9 +427,9 @@ body.iconLibrary-phosphor {
 
 			&__arrow-icon {
 				-servicestudio-align-self: center;
-				-servicestudio-color: get-text-color('neutral-7');
+				-servicestudio-color: var(--token-primitives-neutral-700);
 				-servicestudio-position: relative;
-				-servicestudio-font-size: var(--font-size-h5);
+				-servicestudio-font-size: var(--token-font-size-500);
 				-servicestudio-font-weight: normal;
 				-servicestudio-width: 12px;
 
@@ -482,12 +482,12 @@ body.iconLibrary-phosphor {
 
 .icon-library-FontAwesome .flatpickr-months .flatpickr-prev-month:before,
 .icon-library-FontAwesome .flatpickr-months .flatpickr-next-month:before {
-	font-size: var(--font-size-h5);
+	font-size: var(--token-font-size-500);
 }
 
 .icon-library-Phosphor .flatpickr-months .flatpickr-prev-month:before,
 .icon-library-Phosphor .flatpickr-months .flatpickr-next-month:before {
-	font-weight: var(--font-semi-bold);
+	font-weight: var(--token-font-weight-semi-bold);
 }
 
 .flatpickr-prev-month:before {
@@ -524,7 +524,7 @@ body.iconLibrary-phosphor {
 	color: var(--color-neutral-0);
 	content: var(--osui-icon-clear);
 	font-family: var(--osui-icon-font-family);
-	font-size: var(--font-size-h5);
+	font-size: var(--token-font-size-500);
 	position: absolute;
 	right: 25%;
 	top: 50%;
@@ -535,7 +535,7 @@ body.iconLibrary-phosphor {
 .pswp__button--arrow--left:before {
 	color: var(--color-neutral-0);
 	font-family: var(--osui-icon-font-family);
-	font-size: var(--font-size-h5);
+	font-size: var(--token-font-size-500);
 }
 
 .pswp__button--arrow--right:before {

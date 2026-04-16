@@ -42,12 +42,12 @@
 		@each $type, $value in $osui-sizes {
 			&.gutter {
 				&-#{$type} {
-					margin-left: calc(-1 * var(--space-#{$type}) / 2);
-					margin-right: calc(-1 * var(--space-#{$type}) / 2);
+					margin-left: calc(-1 * var(#{map-get($osui-space-token-vars, $type)}) / 2);
+					margin-right: calc(-1 * var(#{map-get($osui-space-token-vars, $type)}) / 2);
 
 					& > .columns-item {
-						margin-bottom: var(--space-#{$type});
-						padding: var(--space-none) calc(var(--space-#{$type}) / 2);
+						margin-bottom: var(#{map-get($osui-space-token-vars, $type)});
+						padding: var(--token-scale-0) calc(var(#{map-get($osui-space-token-vars, $type)}) / 2);
 					}
 
 					.tablet &.tablet-break {
@@ -56,7 +56,7 @@
 						&-middle,
 						&-all {
 							&:only-child > .columns-item:not(:last-child) {
-								margin-bottom: var(--space-#{$type});
+								margin-bottom: var(#{map-get($osui-space-token-vars, $type)});
 							}
 						}
 					}
@@ -67,7 +67,7 @@
 						&-middle,
 						&-all {
 							&:only-child > .columns-item:not(:last-child) {
-								margin-bottom: var(--space-#{$type});
+								margin-bottom: var(#{map-get($osui-space-token-vars, $type)});
 							}
 						}
 					}
@@ -79,7 +79,7 @@
 
 // Override gutters rule
 .columns:only-child > .columns-item {
-	margin-bottom: var(--space-none);
+	margin-bottom: var(--token-scale-0);
 }
 
 // Responsive --------------------------------------------------------------------

@@ -3,6 +3,14 @@
 /// @group UsefullClasses-Border_Size
 /// Usefull - Border Size
 
+// Maps old border-size names to token CSS var names
+$osui-border-size-token-vars: (
+	'none': '--token-border-size-0',
+	's': '--token-border-size-025',
+	'm': '--token-border-size-050',
+	'l': '--token-border-size-075'
+);
+
 ///
 .border {
 	&-size {
@@ -10,9 +18,9 @@
 			// Generated - Eg: .border-size-none
 			&-#{$type} {
 				@if $type == 'none' {
-					border-width: var(--border-size-#{$type});
+					border-width: var(#{map-get($osui-border-size-token-vars, $type)});
 				} @else {
-					border: var(--border-size-#{$type}) solid get-border-color('currentColor');
+					border: var(#{map-get($osui-border-size-token-vars, $type)}) solid currentColor;
 				}
 			}
 		}
@@ -25,7 +33,7 @@
 					// Generated - Eg: .border-top-s
 					&-#{$osui-box-side}-#{$type}:not(.columns),
 					&-#{$osui-box-side}-#{$type}.columns > .columns-item:not(:last-child) {
-						border-#{$osui-box-side}: var(--border-size-#{$type}) solid get-border-color('currentColor');
+						border-#{$osui-box-side}: var(#{map-get($osui-border-size-token-vars, $type)}) solid currentColor;
 					}
 				}
 			}

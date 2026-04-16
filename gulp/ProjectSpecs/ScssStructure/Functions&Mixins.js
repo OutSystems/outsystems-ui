@@ -1,4 +1,4 @@
-/* 
+/*
 * Section Info
 **/
 const sectionInfo = {
@@ -6,10 +6,6 @@ const sectionInfo = {
     "addToSectionIndex": false,
 
     "assets": [
-        {
-            "name": "",
-            "path": "00-abstract/functions"
-        },
         {
             "name": "",
             "path": "00-abstract/mixins"

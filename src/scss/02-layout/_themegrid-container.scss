@@ -5,25 +5,25 @@
 
 ///
 .ThemeGrid_Container {
-	margin: var(--space-none) auto;
+	margin: var(--token-scale-0) auto;
 	width: 100%;
 }
 
 ///
 .header {
 	.ThemeGrid_Container {
-		padding: var(--space-none) var(--space-xl);
+		padding: var(--token-scale-0) var(--token-scale-1000);
 	}
 }
 
 ///
 .layout {
 	.main-content.ThemeGrid_Container {
-		padding: var(--space-xl);
+		padding: var(--token-scale-1000);
 	}
 
 	.footer.ThemeGrid_Container {
-		padding: var(--space-base) var(--space-xl);
+		padding: var(--token-scale-400) var(--token-scale-1000);
 	}
 }
 
@@ -33,16 +33,16 @@
 .tablet {
 	.header {
 		.ThemeGrid_Container {
-			padding: var(--space-none) var(--space-m);
+			padding: var(--token-scale-0) var(--token-scale-600);
 		}
 	}
 
 	.main-content.ThemeGrid_Container {
-		padding: var(--space-m);
+		padding: var(--token-scale-600);
 	}
 
 	.footer.ThemeGrid_Container {
-		padding: var(--space-base) var(--space-m);
+		padding: var(--token-scale-400) var(--token-scale-600);
 	}
 }
 
@@ -50,21 +50,21 @@
 .phone {
 	.header {
 		.ThemeGrid_Container {
-			padding-left: calc(var(--os-safe-area-left) + var(--space-base));
-			padding-right: calc(var(--os-safe-area-right) + var(--space-base));
+			padding-left: calc(var(--os-safe-area-left) + var(--token-scale-400));
+			padding-right: calc(var(--os-safe-area-right) + var(--token-scale-400));
 		}
 	}
 
 	.main-content.ThemeGrid_Container {
-		padding-bottom: var(--space-base);
-		padding-left: calc(var(--os-safe-area-left) + var(--space-base));
-		padding-right: calc(var(--os-safe-area-right) + var(--space-base));
-		padding-top: var(--space-base);
+		padding-bottom: var(--token-scale-400);
+		padding-left: calc(var(--os-safe-area-left) + var(--token-scale-400));
+		padding-right: calc(var(--os-safe-area-right) + var(--token-scale-400));
+		padding-top: var(--token-scale-400);
 	}
 
 	.footer.ThemeGrid_Container {
-		padding-left: calc(var(--os-safe-area-left) + var(--space-base));
-		padding-right: calc(var(--os-safe-area-right) + var(--space-base));
+		padding-left: calc(var(--os-safe-area-left) + var(--token-scale-400));
+		padding-right: calc(var(--os-safe-area-right) + var(--token-scale-400));
 	}
 }
 
@@ -73,7 +73,7 @@
 ///
 .layout-native {
 	.main-content.ThemeGrid_Container {
-		padding: var(--space-none);
+		padding: var(--token-scale-0);
 	}
 }
 

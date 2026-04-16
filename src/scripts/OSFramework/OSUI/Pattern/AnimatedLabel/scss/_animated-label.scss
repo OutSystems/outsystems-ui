@@ -9,24 +9,24 @@
 
 	&.active {
 		.animated-label-text {
-			font-size: var(--font-size-xs);
+			font-size: var(--token-font-size-300);
 			top: -10px;
 		}
 
 		.animated-label-input {
 			.form-control[data-input]::-webkit-datetime-edit {
-				color: get-text-color('neutral-9');
+				color: var(--token-primitives-neutral-900);
 			}
 
 			[data-textarea] {
-				padding-bottom: var(--space-xs);
+				padding-bottom: var(--token-scale-100);
 			}
 		}
 	}
 
 	&-text {
-		color: get-text-color('neutral-8');
-		font-size: var(--font-size-s);
+		color: var(--token-primitives-neutral-800);
+		font-size: var(--token-font-size-350);
 		pointer-events: none;
 		position: absolute;
 		top: 8px;
@@ -34,7 +34,7 @@
 		z-index: var(--layer-global-screen);
 
 		.icon {
-			padding-right: var(--space-base);
+			padding-right: var(--token-scale-400);
 		}
 
 		// Service Studio Preview
@@ -52,33 +52,33 @@
 		.form-control {
 			&[data-input],
 			&[data-textarea] {
-				background-color: get-background-color('transparent');
-				border: var(--border-size-none);
-				border-bottom: var(--border-size-s) solid get-border-color('neutral-5');
-				border-radius: var(--border-radius-none);
-				padding: var(--space-none);
+				background-color: transparent;
+				border: var(--token-border-size-0);
+				border-bottom: var(--token-border-size-025) solid var(--token-primitives-neutral-500);
+				border-radius: var(--token-border-radius-0);
+				padding: var(--token-scale-0);
 				transition: all 100ms ease-in-out;
 
 				&:focus {
-					border-bottom: var(--border-size-s) solid get-border-color('primary');
+					border-bottom: var(--token-border-size-025) solid var(--token-semantics-primary-base);
 
 					&::-webkit-datetime-edit {
-						color: get-text-color('neutral-9');
+						color: var(--token-primitives-neutral-900);
 					}
 				}
 
 				&.not-valid {
-					border-bottom: var(--border-size-s) solid get-border-color('error');
+					border-bottom: var(--token-border-size-025) solid var(--token-semantics-danger-base);
 
 					&:focus {
-						border: var(--border-size-none);
-						border-bottom: var(--border-size-s) solid get-border-color('error');
+						border: var(--token-border-size-0);
+						border-bottom: var(--token-border-size-025) solid var(--token-semantics-danger-base);
 					}
 				}
 
 				/* Removes placeholder text for input type date and time*/
 				&::-webkit-datetime-edit {
-					color: get-text-color('transparent');
+					color: transparent;
 				}
 
 				&::-webkit-calendar-picker-indicator {
@@ -95,7 +95,7 @@
 			}
 
 			&[data-textarea] {
-				margin-top: var(--space-s);
+				margin-top: var(--token-scale-200);
 
 				& + span.validation-message {
 					bottom: 7px;
@@ -107,7 +107,7 @@
 
 /* Fix for animated labels inside lists */
 .list.list-group > [data-block*='AnimatedLabel']:first-child .animated-label {
-	margin-top: var(--space-s);
+	margin-top: var(--token-scale-200);
 }
 
 ///
@@ -115,7 +115,7 @@
 	.animated-label {
 		&-input .form-control[data-textarea] + span.validation-message {
 			position: relative;
-			bottom: var(--space-m);
+			bottom: var(--token-scale-600);
 		}
 	}
 }
@@ -163,14 +163,14 @@
 .has-accessible-features {
 	.animated-label-input {
 		.form-control[data-input] {
-			border-color: get-border-color('neutral-7');
+			border-color: var(--token-primitives-neutral-700);
 
 			&:hover {
-				border-color: get-border-color('neutral-8');
+				border-color: var(--token-primitives-neutral-800);
 			}
 
 			&:focus {
-				box-shadow: 0 3px 0 0 get-background-color('focus-outer');
+				box-shadow: 0 3px 0 0 var(--color-focus-outer);
 			}
 		}
 	}
@@ -180,15 +180,15 @@
 ///
 .os-high-contrast {
 	.animated-label-text {
-		font-weight: var(--font-semi-bold);
-		padding: var(--space-none) var(--space-s);
+		font-weight: var(--token-font-weight-semi-bold);
+		padding: var(--token-scale-0) var(--token-scale-200);
 	}
 
 	.animated-label {
 		&.active {
 			.animated-label-text {
-				background-color: get-background-color('neutral-8');
-				font-size: var(--font-size-s);
+				background-color: var(--token-primitives-neutral-800);
+				font-size: var(--token-font-size-350);
 				top: -16px;
 			}
 		}
@@ -196,7 +196,7 @@
 
 	.animated-label-input {
 		.form-control[data-input] {
-			padding: var(--space-none) var(--space-s);
+			padding: var(--token-scale-0) var(--token-scale-200);
 		}
 	}
 }

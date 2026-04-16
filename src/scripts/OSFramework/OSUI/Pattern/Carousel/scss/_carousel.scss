@@ -13,8 +13,8 @@
 
 	.splide {
 		&__arrow {
-			background-color: get-background-color('neutral-0');
-			box-shadow: var(--shadow-xs);
+			background-color: var(--token-primitives-base-white);
+			box-shadow: var(--token-elevation-1);
 			height: 40px;
 			opacity: 1;
 			transition: opacity 150ms linear;
@@ -32,7 +32,7 @@
 				width: 14px;
 
 				path {
-					fill: get-text-color('neutral-7');
+					fill: var(--token-primitives-neutral-700);
 				}
 			}
 
@@ -48,7 +48,7 @@
 
 			&__page {
 				&.is-active {
-					background-color: get-background-color('primary');
+					background-color: var(--token-semantics-primary-base);
 					z-index: var(--layer-local-tier-1);
 				}
 			}
@@ -133,7 +133,7 @@
 			-servicestudio-left: 0;
 			-servicestudio-width: 100%;
 			-servicestudio-height: 100%;
-			-servicestudio-background-color: get-background-color('neutral-0');
+			-servicestudio-background-color: var(--token-primitives-base-white);
 			-servicestudio-background-image: $carousel_helper_img_base64;
 			-servicestudio-background-repeat: no-repeat;
 			-servicestudio-background-position: center;
@@ -159,7 +159,7 @@
 		}
 
 		li {
-			margin: var(--space-none) var(--space-xs);
+			margin: var(--token-scale-0) var(--token-scale-100);
 		}
 	}
 }

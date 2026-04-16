@@ -11,19 +11,19 @@
 
 	& > .popover {
 		&-top {
-			border: var(--border-size-none);
-			padding: var(--space-none);
+			border: var(--token-border-size-0);
+			padding: var(--token-scale-0);
 		}
 
 		&-bottom {
-			background-color: get-background-color('neutral-0');
-			border: var(--border-size-s) solid get-border-color('neutral-4');
-			border-radius: var(--border-radius-soft);
-			box-shadow: var(--shadow-s);
-			color: get-text-color('neutral-9');
+			background-color: var(--token-primitives-base-white);
+			border: var(--token-border-size-025) solid var(--token-primitives-neutral-400);
+			border-radius: var(--token-border-radius-100);
+			box-shadow: var(--token-elevation-1);
+			color: var(--token-primitives-neutral-900);
 			max-width: 350px;
 			min-width: auto;
-			padding: var(--space-base);
+			padding: var(--token-scale-400);
 			z-index: var(--layer-global-elevated);
 		}
 	}

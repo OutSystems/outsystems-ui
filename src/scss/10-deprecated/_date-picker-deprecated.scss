@@ -3,11 +3,11 @@
 
 .pika {
 	&-single {
-		background: get-background-color('neutral-0');
-		border: var(--border-size-s) solid get-border-color('neutral-4');
-		border-radius: var(--border-radius-soft);
+		background: var(--token-primitives-base-white);
+		border: var(--token-border-size-025) solid var(--token-primitives-neutral-400);
+		border-radius: var(--token-border-radius-100);
 		display: block;
-		margin-top: var(--space-xs);
+		margin-top: var(--token-scale-100);
 		max-width: 320px;
 		position: relative;
 
@@ -16,7 +16,7 @@
 		}
 
 		&.is-bound {
-			box-shadow: var(--shadow-s);
+			box-shadow: var(--token-elevation-1);
 			position: absolute !important;
 			z-index: var(--layer-global-elevated);
 		}
@@ -30,7 +30,7 @@
 		align-items: center;
 		display: flex;
 		justify-content: space-between;
-		padding: var(--space-m) var(--space-base);
+		padding: var(--token-scale-600) var(--token-scale-400);
 
 		select {
 			cursor: pointer;
@@ -55,57 +55,57 @@
 	}
 
 	&-select-month {
-		margin-left: var(--space-base);
+		margin-left: var(--token-scale-400);
 		margin-right: 0;
 
 		.year-first & {
-			margin-left: var(--space-base);
+			margin-left: var(--token-scale-400);
 			margin-right: 0;
 		}
 	}
 
 	&-prev {
-		background-color: get-background-color('transparent');
-		border: var(--border-size-none);
-		color: get-text-color('neutral-7');
+		background-color: transparent;
+		border: var(--token-border-size-0);
+		color: var(--token-primitives-neutral-700);
 		cursor: pointer;
 		font: normal normal normal 0 FontAwesome;
-		padding: var(--space-none) var(--space-s);
+		padding: var(--token-scale-0) var(--token-scale-200);
 
 		&:before {
 			content: '\f104';
-			font-size: var(--font-size-h5);
+			font-size: var(--token-font-size-500);
 			position: relative;
 		}
 	}
 
 	&-next {
-		background-color: get-background-color('transparent');
-		border: var(--border-size-none);
-		color: get-text-color('neutral-7');
+		background-color: transparent;
+		border: var(--token-border-size-0);
+		color: var(--token-primitives-neutral-700);
 		cursor: pointer;
 		font: normal normal normal 0 FontAwesome;
-		margin-left: var(--space-base);
-		padding: var(--space-none) var(--space-s);
+		margin-left: var(--token-scale-400);
+		padding: var(--token-scale-0) var(--token-scale-200);
 
 		&:before {
 			content: '\f105';
-			font-size: var(--font-size-h5);
+			font-size: var(--token-font-size-500);
 			position: relative;
 		}
 	}
 
 	&-label {
-		color: get-text-color('primary');
+		color: var(--token-semantics-primary-base);
 		cursor: pointer;
 		position: relative;
 
 		&:first-child {
-			margin-right: var(--space-base);
+			margin-right: var(--token-scale-400);
 		}
 
 		&:hover {
-			color: get-text-color('primary-hover');
+			color: var(--color-primary-hover);
 			text-decoration: underline;
 		}
 	}
@@ -113,7 +113,7 @@
 	&-table {
 		display: flex;
 		flex-direction: column;
-		padding: var(--space-none) var(--space-base) var(--space-base);
+		padding: var(--token-scale-0) var(--token-scale-400) var(--token-scale-400);
 		width: 100%;
 
 		thead {
@@ -127,9 +127,9 @@
 		}
 
 		th {
-			color: get-text-color('neutral-7');
+			color: var(--token-primitives-neutral-700);
 			flex: 1;
-			font-weight: var(--font-regular);
+			font-weight: var(--token-font-weight-regular);
 
 			abbr[title] {
 				text-decoration: none;
@@ -137,16 +137,16 @@
 		}
 
 		tbody {
-			margin-top: var(--space-s);
+			margin-top: var(--token-scale-200);
 			overflow: hidden;
 
 			tr {
 				display: flex;
 				flex-direction: row;
-				margin-bottom: var(--space-xs);
+				margin-bottom: var(--token-scale-100);
 
 				&:last-child {
-					margin-bottom: var(--space-none);
+					margin-bottom: var(--token-scale-0);
 				}
 			}
 
@@ -160,51 +160,51 @@
 	}
 
 	&-button {
-		background-color: get-background-color('transparent');
-		border: var(--border-size-none);
-		border-radius: var(--border-radius-soft);
-		color: get-text-color('neutral-9');
+		background-color: transparent;
+		border: var(--token-border-size-0);
+		border-radius: var(--token-border-radius-100);
+		color: var(--token-primitives-neutral-900);
 		cursor: pointer;
 		height: 32px;
-		padding: var(--space-none);
+		padding: var(--token-scale-0);
 		position: relative;
 		width: 32px;
 		z-index: var(--layer-local-tier-1);
 
 		&:hover {
-			background-color: get-background-color('neutral-3');
+			background-color: var(--token-primitives-neutral-300);
 		}
 
 		.is-today & {
-			background-color: get-background-color('neutral-4');
+			background-color: var(--token-primitives-neutral-400);
 		}
 
 		.is-inrange & {
-			background: get-background-color('primary') get-background-color('primary-lightest');
+			background: var(--token-semantics-primary-base) var(--color-primary-lightest);
 		}
 
 		.is-startrange &,
 		.is-selected &,
 		.is-endrange & {
-			background: get-background-color('primary');
-			color: get-text-color('neutral-0');
+			background: var(--token-semantics-primary-base);
+			color: var(--token-primitives-base-white);
 		}
 
 		.is-disabled &,
 		.is-disabled.is-outside-current-month & {
-			color: get-text-color('neutral-7');
+			color: var(--token-primitives-neutral-700);
 			pointer-events: none;
 			text-decoration: line-through;
 		}
 
 		.is-outside-current-month & {
-			color: get-text-color('neutral-7');
+			color: var(--token-primitives-neutral-700);
 			text-decoration: none;
 		}
 
 		.has-event &:before {
-			background-color: get-background-color('primary');
-			border-radius: var(--border-radius-circle);
+			background-color: var(--token-semantics-primary-base);
+			border-radius: 50%;
 			bottom: 3px;
 			content: '';
 			height: 4px;
@@ -215,31 +215,31 @@
 		}
 
 		.is-selected.has-event &:before {
-			background-color: get-background-color('neutral-0');
+			background-color: var(--token-primitives-base-white);
 		}
 	}
 
 	&-today-container {
 		height: auto;
-		margin: var(--space-none) var(--space-none);
-		padding: var(--space-none) var(--space-none) var(--space-none);
+		margin: var(--token-scale-0) var(--token-scale-0);
+		padding: var(--token-scale-0) var(--token-scale-0) var(--token-scale-0);
 		width: 100%;
 
 		&:hover {
-			background-color: get-background-color('transparent');
+			background-color: transparent;
 		}
 	}
 
 	&-go-today {
-		background-color: get-background-color('transparent');
-		border: var(--border-size-none);
-		color: get-text-color('primary');
+		background-color: transparent;
+		border: var(--token-border-size-0);
+		color: var(--token-semantics-primary-base);
 		cursor: pointer;
 		font-weight: normal;
-		padding: var(--space-none);
+		padding: var(--token-scale-0);
 
 		&:hover {
-			color: get-text-color('primary-hover');
+			color: var(--color-primary-hover);
 		}
 	}
 
@@ -248,26 +248,26 @@
 		align-items: center;
 		display: flex;
 		justify-content: center;
-		margin-bottom: var(--space-base);
+		margin-bottom: var(--token-scale-400);
 		width: 33.333%;
 
 		&.is-selected {
-			background-color: get-background-color('primary');
-			color: get-text-color('neutral-0');
+			background-color: var(--token-semantics-primary-base);
+			color: var(--token-primitives-base-white);
 		}
 	}
 
 	&-time-container {
-		margin: 0 var(--space-base);
+		margin: 0 var(--token-scale-400);
 
 		select {
-			background-color: get-background-color('transparent');
+			background-color: transparent;
 			border: 0;
-			color: get-text-color('primary');
+			color: var(--token-semantics-primary-base);
 		}
 
 		option {
-			color: get-text-color('neutral-10');
+			color: var(--token-primitives-neutral-1200);
 		}
 	}
 }
@@ -280,8 +280,8 @@ input.OSFillParent.calendar-input {
 	position: relative;
 
 	&:before {
-		background: get-background-color('primary') get-background-color('primary-lightest');
-		border-radius: var(--border-radius-soft);
+		background: var(--token-semantics-primary-base) var(--color-primary-lightest);
+		border-radius: var(--token-border-radius-100);
 		content: '';
 		height: 100%;
 		left: -8px;
@@ -311,23 +311,23 @@ input.OSFillParent.calendar-input {
 	flex-direction: row;
 	-ms-flex-wrap: wrap;
 	flex-wrap: wrap;
-	padding: var(--space-none);
+	padding: var(--token-scale-0);
 }
 
 .prev-year,
 .next-year {
-	color: get-text-color('neutral-7');
+	color: var(--token-primitives-neutral-700);
 }
 
 /* Keycode shortcuts dialog */
 .calendar-help {
 	&-dialog {
-		background-color: get-background-color('neutral-0');
+		background-color: var(--token-primitives-base-white);
 		bottom: 0;
-		color: get-text-color('neutral-10');
+		color: var(--token-primitives-neutral-1200);
 		display: none;
 		left: 0;
-		padding: var(--space-s);
+		padding: var(--token-scale-200);
 		position: absolute;
 		right: 0;
 		top: 0;
@@ -350,20 +350,20 @@ input.OSFillParent.calendar-input {
 		}
 
 		ul {
-			padding-left: var(--space-m);
+			padding-left: var(--token-scale-600);
 		}
 	}
 
 	&-trigger {
-		background-color: get-background-color('info');
+		background-color: var(--color-info);
 		clip: rect(0, 0, 0, 0);
-		color: get-text-color('neutral-0');
+		color: var(--token-primitives-base-white);
 		height: 0;
 		left: 50%;
 		overflow: hidden;
-		padding: var(--space-s);
+		padding: var(--token-scale-200);
 		position: absolute;
-		top: var(--space-xxl);
+		top: var(--token-scale-1200);
 		transform: translateX(-50%);
 		white-space: nowrap;
 		width: 0;
@@ -378,8 +378,8 @@ input.OSFillParent.calendar-input {
 	}
 
 	&-close {
-		background-color: get-background-color('neutral-0');
-		color: get-text-color('neutral-10');
+		background-color: var(--token-primitives-base-white);
+		color: var(--token-primitives-neutral-1200);
 		height: auto;
 	}
 }
@@ -411,8 +411,8 @@ input.OSFillParent.calendar-input {
 	.pika {
 		&-next {
 			margin-left: 0;
-			margin-right: var(--space-m);
-			padding: var(--space-none) var(--space-xs);
+			margin-right: var(--token-scale-600);
+			padding: var(--token-scale-0) var(--token-scale-100);
 
 			&:before {
 				content: '\f104';
@@ -427,7 +427,7 @@ input.OSFillParent.calendar-input {
 
 		&-label {
 			&:first-child {
-				margin-left: var(--space-base);
+				margin-left: var(--token-scale-400);
 				margin-right: 0;
 			}
 		}
@@ -441,15 +441,15 @@ input.OSFillParent.calendar-input {
 			&-title {
 				select {
 					border: none;
-					color: get-text-color('primary');
+					color: var(--token-semantics-primary-base);
 					opacity: 1;
 
 					&:hover {
-						border-bottom: var(--border-size-s) solid get-border-color('primary');
+						border-bottom: var(--token-border-size-025) solid var(--token-semantics-primary-base);
 					}
 
 					option {
-						color: get-text-color('neutral-10');
+						color: var(--token-primitives-neutral-1200);
 					}
 				}
 

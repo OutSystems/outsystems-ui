@@ -24,23 +24,23 @@
 		}
 
 		& > :not(:first-child) {
-			margin-left: var(--space-base);
+			margin-left: var(--token-scale-400);
 		}
 
 		& > [data-block*='Card'] + [data-block*='Card'] .card {
-			margin-top: var(--space-none);
+			margin-top: var(--token-scale-0);
 		}
 	}
 
 	.list {
-		background-color: get-background-color('transparent');
+		background-color: transparent;
 	}
 
 	& > :not(:first-child) {
-		margin-left: var(--space-base);
+		margin-left: var(--token-scale-400);
 	}
 
 	& > [data-block*='Card'] + [data-block*='Card'] .card {
-		margin-top: var(--space-none);
+		margin-top: var(--token-scale-0);
 	}
 }

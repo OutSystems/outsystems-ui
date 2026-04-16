@@ -9,11 +9,11 @@
 	--border-radius-rounded: 16px;
 
 	&__trigger {
-		--osui-floating-offset: var(--space-s);
+		--osui-floating-offset: var(--token-scale-200);
 
-		border: var(--border-size-s) solid get-border-color('transparent');
+		border: var(--token-border-size-025) solid transparent;
 		border-radius: var(--osui-overflow-menu-shape);
-		color: get-text-color('neutral-9');
+		color: var(--token-primitives-neutral-900);
 		width: 32px;
 
 		* {
@@ -23,7 +23,7 @@
 
 	&--is-open {
 		.osui-overflow-menu__trigger {
-			background-color: get-background-color('neutral-4');
+			background-color: var(--token-primitives-neutral-400);
 		}
 	}
 
@@ -33,10 +33,10 @@
 		z-index: var(--layer-global-instant-interaction);
 
 		a {
-			color: get-text-color('neutral-9');
+			color: var(--token-primitives-neutral-900);
 
 			&:hover {
-				background: get-background-color('neutral-4');
+				background: var(--token-primitives-neutral-400);
 				text-decoration: none;
 			}
 
@@ -44,14 +44,14 @@
 			& {
 				-servicestudio-align-items: center;
 				-servicestudio-display: inline-flex !important;
-				-servicestudio-color: get-text-color('neutral-9');
-				-servicestudio-padding: var(--space-s) var(--space-base);
+				-servicestudio-color: var(--token-primitives-neutral-900);
+				-servicestudio-padding: var(--token-scale-200) var(--token-scale-400);
 			}
 		}
 
 		// To make extensibility with ExtendedClass easier
 		a:not([class^='padding-']) {
-			padding: var(--space-s) var(--space-base);
+			padding: var(--token-scale-200) var(--token-scale-400);
 		}
 	}
 }
@@ -79,7 +79,7 @@ html:has(.popup-backdrop) .osui-overflow-menu__balloon {
 ///
 .os-high-contrast {
 	.osui-overflow-menu__balloon {
-		border: var(--border-size-s) solid get-border-color('neutral-7');
+		border: var(--token-border-size-025) solid var(--token-primitives-neutral-700);
 
 		a {
 			&:hover {

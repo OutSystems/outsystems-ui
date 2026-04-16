@@ -11,7 +11,7 @@
 	position: relative;
 
 	&-breadcrumbs {
-		margin-bottom: var(--space-base);
+		margin-bottom: var(--token-scale-400);
 	}
 
 	&-top {
@@ -19,19 +19,19 @@
 
 		&-title {
 			flex: 1;
-			margin-bottom: var(--space-l);
+			margin-bottom: var(--token-scale-800);
 
 			// Retro Compatilibity
 			.Title_Links {
-				font-size: var(--font-size-s);
-				font-weight: var(--font-regular);
+				font-size: var(--token-font-size-350);
+				font-weight: var(--token-font-weight-regular);
 			}
 		}
 
 		&-actions {
 			flex: 1;
 			justify-content: flex-end;
-			margin-bottom: var(--space-l);
+			margin-bottom: var(--token-scale-800);
 			text-align: right;
 		}
 
@@ -66,7 +66,7 @@
 ///
 .layout-native {
 	.content {
-		background-color: get-app-settings-background-color('body', --color-background-body);
+		background-color: var(--background-color-body, var(--color-background-body));
 	}
 
 	.content-middle {

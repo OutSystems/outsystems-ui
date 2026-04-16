@@ -26,9 +26,9 @@
 
 		// Disable states for Datepicker
 		&.flatpickr-input[disabled] + input {
-			background-color: get-background-color('neutral-2');
-			border: var(--border-size-s) solid get-border-color('neutral-4');
-			color: get-text-color('neutral-6');
+			background-color: var(--token-primitives-neutral-200);
+			border: var(--token-border-size-025) solid var(--token-primitives-neutral-400);
+			color: var(--token-primitives-neutral-600);
 			pointer-events: none;
 		}
 
@@ -51,11 +51,11 @@
 
 		// Service Studio Preview
 		& {
-			-servicestudio-background-color: get-background-color('transparent');
+			-servicestudio-background-color: transparent;
 			-servicestudio-background-position: top left;
 			-servicestudio-background-repeat: no-repeat;
 			-servicestudio-background-size: contain;
-			-servicestudio-border-radius: var(--border-radius-soft);
+			-servicestudio-border-radius: var(--token-border-radius-100);
 			-servicestudio-display: inline-block;
 			-servicestudio-height: 0;
 			-servicestudio-margin-top: 2px;
@@ -67,12 +67,12 @@
 
 			&.time12h {
 				-servicestudio-background-image: $timepicker_time12h_img_base64;
-				-servicestudio-height: var(--space-xl);
+				-servicestudio-height: var(--token-scale-1000);
 			}
 
 			&.time24h {
 				-servicestudio-background-image: $timepicker_time24h_img_base64;
-				-servicestudio-height: var(--space-xl);
+				-servicestudio-height: var(--token-scale-1000);
 			}
 
 			& + .placeholder-ss-preview {
@@ -86,7 +86,7 @@
 
 	.not-valid + .input,
 	.not-valid + .flatpickr-mobile {
-		border-color: get-border-color('error');
+		border-color: var(--token-semantics-danger-base);
 	}
 
 	.flatpickr-mobile ~ span.validation-message {
@@ -108,7 +108,7 @@ html[data-uieditorversion^='1'] {
 	.osui-timepicker__dropdown-ss-preview {
 		&.time12h,
 		&.time24h {
-			-servicestudio-padding-top: min(var(--space-xl), 100%);
+			-servicestudio-padding-top: min(var(--token-scale-1000), 100%);
 			-servicestudio-height: 0;
 		}
 	}
@@ -118,48 +118,48 @@ html[data-uieditorversion^='1'] {
 	&.hasTime.noCalendar {
 		.flatpickr-time {
 			padding: 0;
-			height: var(--space-xl);
+			height: var(--token-scale-1000);
 
 			&.time24hr:after {
 				display: none;
 			}
 
 			.numInputWrapper {
-				height: var(--space-xl);
+				height: var(--token-scale-1000);
 				flex-grow: 1;
 			}
 
 			.flatpickr-am-pm {
 				position: relative;
-				margin-left: var(--space-s);
-				margin-right: var(--space-s);
+				margin-left: var(--token-scale-200);
+				margin-right: var(--token-scale-200);
 			}
 		}
 
 		&.dropdown--is-large {
 			.flatpickr-time {
-				height: var(--space-xxl);
-				max-height: var(--space-xxl);
+				height: var(--token-scale-1200);
+				max-height: var(--token-scale-1200);
 
 				.numInputWrapper {
-					height: var(--space-xxl);
+					height: var(--token-scale-1200);
 				}
 				.flatpickr-time-separator {
-					line-height: var(--space-xxl);
+					line-height: var(--token-scale-1200);
 				}
 			}
 		}
 
 		&.dropdown--is-small {
 			.flatpickr-time {
-				height: var(--space-l);
-				max-height: var(--space-l);
+				height: var(--token-scale-800);
+				max-height: var(--token-scale-800);
 
 				.numInputWrapper {
-					height: var(--space-l);
+					height: var(--token-scale-800);
 				}
 				.flatpickr-time-separator {
-					line-height: var(--space-l);
+					line-height: var(--token-scale-800);
 				}
 			}
 		}

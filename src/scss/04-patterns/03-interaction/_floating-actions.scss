@@ -15,7 +15,7 @@
 		bottom: 0;
 		display: flex;
 		flex-direction: column;
-		margin: var(--space-l);
+		margin: var(--token-scale-800);
 		position: fixed;
 		right: 0;
 		will-change: transform, opacity;
@@ -43,14 +43,14 @@
 			}
 
 			.floating-button {
-				box-shadow: var(--shadow-none);
+				box-shadow: none;
 				filter: brightness(0.9);
 				transform: rotate(135deg) translateZ(0);
 			}
 		}
 
 		&.bottom-bar-exists {
-			bottom: calc(var(--bottom-bar-size) + var(--space-base));
+			bottom: calc(var(--bottom-bar-size) + var(--token-scale-400));
 		}
 
 		&.no-rotation {
@@ -77,17 +77,17 @@
 		align-items: flex-end;
 		display: flex;
 		flex-direction: column;
-		padding-bottom: var(--space-s);
-		padding-right: var(--space-s);
+		padding-bottom: var(--token-scale-200);
+		padding-right: var(--token-scale-200);
 	}
 
 	&-actions-item {
 		align-items: center;
 		display: flex;
 		justify-content: flex-end;
-		margin-bottom: var(--space-base);
+		margin-bottom: var(--token-scale-400);
 		opacity: 0;
-		transform: translateY(var(--space-base)) translateZ(0);
+		transform: translateY(var(--token-scale-400)) translateZ(0);
 		transition: all 100ms ease-in;
 
 		// Service Studio Preview
@@ -99,16 +99,16 @@
 
 	&-actions-item-button {
 		align-items: center;
-		background-color: get-background-color('neutral-0');
-		border-radius: var(--border-radius-rounded);
-		box-shadow: var(--shadow-s);
-		color: get-text-color('primary');
+		background-color: var(--token-primitives-base-white);
+		border-radius: var(--token-border-radius-full);
+		box-shadow: var(--token-elevation-1);
+		color: var(--token-semantics-primary-base);
 		cursor: pointer;
 		display: flex;
-		font-size: var(--font-size-base);
+		font-size: var(--token-font-size-400);
 		height: 40px;
 		justify-content: center;
-		margin-left: var(--space-base);
+		margin-left: var(--token-scale-400);
 		transform: translateZ(0) scale(0.3);
 		transition: transform 180ms ease-out;
 		transition-delay: calc(var(--delay) * 40ms);
@@ -120,20 +120,20 @@
 		}
 
 		&:hover {
-			background-color: get-background-color('primary');
-			color: get-text-color('neutral-0');
+			background-color: var(--token-semantics-primary-base);
+			color: var(--token-primitives-base-white);
 		}
 	}
 
 	&-button {
 		align-items: center;
-		background-color: get-background-color('primary');
-		border-radius: var(--border-radius-rounded);
-		box-shadow: var(--shadow-xl);
-		color: get-text-color('neutral-0');
+		background-color: var(--token-semantics-primary-base);
+		border-radius: var(--token-border-radius-full);
+		box-shadow: var(--token-elevation-4);
+		color: var(--token-primitives-base-white);
 		cursor: pointer;
 		display: flex;
-		font-size: var(--font-size-h4);
+		font-size: var(--token-font-size-550);
 		height: 56px;
 		justify-content: center;
 		pointer-events: auto;
@@ -148,7 +148,7 @@
 	}
 
 	&-overlay {
-		background-color: get-background-color('overlay');
+		background-color: var(--token-backdrop);
 		cursor: pointer;
 		height: 100vh;
 		opacity: 0;
@@ -179,7 +179,7 @@
 .phone {
 	.layout-native {
 		.floating-actions-wrapper {
-			margin: var(--space-base);
+			margin: var(--token-scale-400);
 		}
 	}
 
@@ -195,7 +195,7 @@
 		&.landscape {
 			.layout-native {
 				.floating-actions-wrapper {
-					margin-right: calc(var(--os-safe-area-right) + var(--space-base));
+					margin-right: calc(var(--os-safe-area-right) + var(--token-scale-400));
 				}
 			}
 		}
@@ -217,8 +217,8 @@
 ///
 .is-rtl {
 	.floating-actions-item-button {
-		margin-left: var(--space-none);
-		margin-right: var(--space-base);
+		margin-left: var(--token-scale-0);
+		margin-right: var(--token-scale-400);
 	}
 
 	.floating-actions-wrapper {
@@ -231,13 +231,13 @@
 ///
 .has-accessible-features {
 	.floating-button:focus {
-		box-shadow: 0 0 0 3px get-background-color('focus-outer');
+		box-shadow: 0 0 0 3px var(--color-focus-outer);
 	}
 
 	.floating-actions-wrapper {
 		&.is--open {
 			.floating-button:focus {
-				box-shadow: 0 0 0 3px get-background-color('focus-outer');
+				box-shadow: 0 0 0 3px var(--color-focus-outer);
 			}
 		}
 	}
