@@ -206,14 +206,10 @@ Section Index:
 SCSS Setup variables
 =============================================================================== */
 @import '00-abstract/setup-global-vars';
-@import '00-abstract/setup-global-typography-vars';
-@import '00-abstract/setup-color-vars';
-@import '00-abstract/setup-border-vars';
 
 /* ===============================================================================
 Functions & Mixins
 =============================================================================== */
-@import '00-abstract/functions';
 @import '00-abstract/mixins';
 
 /*! ==============================================================================

@@ -11,7 +11,7 @@
 				.wizard-wrapper-item {
 					align-items: center;
 					flex-direction: row;
-					margin-bottom: var(--space-l);
+					margin-bottom: var(--token-scale-800);
 
 					&.label-top {
 						flex-direction: row-reverse;
@@ -19,7 +19,7 @@
 				}
 
 				&:last-child {
-					margin-bottom: var(--space-none);
+					margin-bottom: var(--token-scale-0);
 				}
 			}
 
@@ -55,7 +55,7 @@
 			}
 
 			.wizard-item-label {
-				color: get-text-color('neutral-7');
+				color: var(--token-primitives-neutral-700);
 				text-align: center;
 			}
 		}
@@ -68,10 +68,10 @@
 
 	&-item-icon {
 		align-items: center;
-		background-color: get-background-color('neutral-0');
-		border: var(--border-size-s) solid get-border-color('neutral-5');
-		border-radius: var(--border-radius-circle);
-		color: get-text-color('neutral-7');
+		background-color: var(--token-primitives-base-white);
+		border: var(--token-border-size-025) solid var(--token-primitives-neutral-500);
+		border-radius: 50%;
+		color: var(--token-primitives-neutral-700);
 		display: flex;
 		height: 32px;
 		justify-content: center;
@@ -86,7 +86,7 @@
 		}
 
 		&-wrapper {
-			margin: var(--space-s) var(--space-none);
+			margin: var(--token-scale-200) var(--token-scale-0);
 			position: relative;
 			width: 100%;
 
@@ -103,7 +103,7 @@
 		}
 
 		.icon {
-			font-size: var(--font-size-xs);
+			font-size: var(--token-font-size-300);
 			width: auto;
 		}
 	}
@@ -112,19 +112,19 @@
 		&.active {
 			.wizard-item {
 				&-icon {
-					background-color: get-background-color('neutral-0');
-					border-color: get-border-color('primary');
-					color: get-text-color('primary');
+					background-color: var(--token-primitives-base-white);
+					border-color: var(--token-semantics-primary-base);
+					color: var(--token-semantics-primary-base);
 
 					&-wrapper {
 						&:before {
-							background-color: get-background-color('primary');
+							background-color: var(--token-semantics-primary-base);
 						}
 					}
 				}
 
 				&-label {
-					color: get-text-color('neutral-10');
+					color: var(--token-primitives-neutral-1200);
 				}
 			}
 		}
@@ -132,19 +132,19 @@
 		&.past {
 			.wizard-item {
 				&-icon {
-					background-color: get-background-color('primary');
-					border-color: get-border-color('primary');
-					color: get-text-color('neutral-0');
+					background-color: var(--token-semantics-primary-base);
+					border-color: var(--token-semantics-primary-base);
+					color: var(--token-primitives-base-white);
 
 					&-wrapper {
 						&:before {
-							background-color: get-background-color('primary');
+							background-color: var(--token-semantics-primary-base);
 						}
 					}
 				}
 
 				&-label {
-					color: get-text-color('neutral-8');
+					color: var(--token-primitives-neutral-800);
 				}
 			}
 		}
@@ -153,12 +153,12 @@
 			.wizard-item-icon {
 				&-wrapper {
 					&:before {
-						background-color: get-background-color('neutral-5');
+						background-color: var(--token-primitives-neutral-500);
 					}
 				}
 
 				.fa-fw {
-					color: get-text-color('neutral-5');
+					color: var(--token-primitives-neutral-500);
 				}
 			}
 		}
@@ -166,7 +166,7 @@
 
 	&-vertical {
 		.wizard-item-icon-wrapper {
-			margin: var(--space-none) var(--space-s) var(--space-none) var(--space-none);
+			margin: var(--token-scale-0) var(--token-scale-200) var(--token-scale-0) var(--token-scale-0);
 			width: auto;
 		}
 
@@ -188,7 +188,7 @@
 				}
 
 				.wizard-item-icon-wrapper {
-					margin: var(--space-none) var(--space-none) var(--space-none) var(--space-s);
+					margin: var(--token-scale-0) var(--token-scale-0) var(--token-scale-0) var(--token-scale-200);
 				}
 			}
 		}
@@ -233,7 +233,7 @@ html[data-uieditorversion^='1'] {
 
 				&:last-child {
 					& {
-						-servicestudio-margin-bottom: var(--space-none);
+						-servicestudio-margin-bottom: var(--token-scale-0);
 					}
 				}
 			}
@@ -254,13 +254,13 @@ html[data-uieditorversion^='1'] {
 .is-rtl {
 	.wizard-vertical {
 		.wizard-item-icon-wrapper {
-			margin: var(--space-none) var(--space-none) var(--space-none) var(--space-s);
+			margin: var(--token-scale-0) var(--token-scale-0) var(--token-scale-0) var(--token-scale-200);
 		}
 
 		.wizard-wrapper-item {
 			&.label-top {
 				.wizard-item-icon-wrapper {
-					margin: var(--space-none) var(--space-s) var(--space-none) var(--space-none);
+					margin: var(--token-scale-0) var(--token-scale-200) var(--token-scale-0) var(--token-scale-0);
 				}
 			}
 		}

@@ -6,7 +6,7 @@
 ///
 .layout-side {
 	.app-login-info {
-		padding: var(--space-base) var(--space-m);
+		padding: var(--token-scale-400) var(--token-scale-600);
 	}
 
 	.user-info {
@@ -18,7 +18,7 @@
 .tablet,
 .phone {
 	.app-login-info {
-		padding: var(--space-base) var(--space-m);
+		padding: var(--token-scale-400) var(--token-scale-600);
 	}
 
 	.user-info {

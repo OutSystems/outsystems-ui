@@ -7,23 +7,23 @@
 .margin {
 	@each $type, $value in $osui-sizes {
 		&-#{$type} {
-			margin: var(--space-#{$type});
+			margin: var(#{map-get($osui-space-token-vars, $type)});
 		}
 
 		@each $osui-box-side in $osui-box-sides {
 			&-#{$osui-box-side}-#{$type} {
-				margin-#{$osui-box-side}: var(--space-#{$type});
+				margin-#{$osui-box-side}: var(#{map-get($osui-space-token-vars, $type)});
 			}
 		}
 
 		&-x-#{$type} {
-			margin-left: var(--space-#{$type});
-			margin-right: var(--space-#{$type});
+			margin-left: var(#{map-get($osui-space-token-vars, $type)});
+			margin-right: var(#{map-get($osui-space-token-vars, $type)});
 		}
 
 		&-y-#{$type} {
-			margin-bottom: var(--space-#{$type});
-			margin-top: var(--space-#{$type});
+			margin-bottom: var(#{map-get($osui-space-token-vars, $type)});
+			margin-top: var(#{map-get($osui-space-token-vars, $type)});
 		}
 	}
 
@@ -38,13 +38,13 @@
 	@each $type, $value in $osui-sizes {
 		.margin {
 			&-right-#{$type} {
-				margin-left: var(--space-#{$type});
-				margin-right: var(--space-none);
+				margin-left: var(#{map-get($osui-space-token-vars, $type)});
+				margin-right: var(--token-scale-0);
 			}
 
 			&-left-#{$type} {
-				margin-left: var(--space-none);
-				margin-right: var(--space-#{$type});
+				margin-left: var(--token-scale-0);
+				margin-right: var(#{map-get($osui-space-token-vars, $type)});
 			}
 		}
 	}

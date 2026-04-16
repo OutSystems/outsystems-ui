@@ -5,16 +5,16 @@
 
 ///
 .card {
-	background-color: get-background-color('neutral-0');
-	border: var(--border-size-s) solid get-border-color('neutral-4');
-	border-radius: var(--border-radius-soft);
-	padding: var(--space-m);
+	background-color: var(--token-primitives-base-white);
+	border: var(--token-border-size-025) solid var(--token-primitives-neutral-400);
+	border-radius: var(--token-border-radius-100);
+	padding: var(--token-scale-600);
 }
 
 // Layout -------------------------------------------------------------------------
 ///
 .layout-native {
 	& .card {
-		padding: var(--space-base);
+		padding: var(--token-scale-400);
 	}
 }

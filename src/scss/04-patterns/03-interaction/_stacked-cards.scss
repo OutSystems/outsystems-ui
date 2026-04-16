@@ -13,11 +13,11 @@
 
 	.stackedcards-container {
 		.OSAutoMarginTop {
-			margin-top: var(--space-none);
+			margin-top: var(--token-scale-0);
 		}
 
 		.list.list-group {
-			background-color: get-background-color('transparent');
+			background-color: transparent;
 			height: 100%;
 			z-index: var(--layer-global-screen);
 
@@ -49,7 +49,7 @@
 			&:not([data-animation-disabled]):after {
 				// Service Studio Preview
 				& {
-					-servicestudio-background-color: get-background-color('neutral-0');
+					-servicestudio-background-color: var(--token-primitives-base-white);
 					-servicestudio-background-position: center;
 					-servicestudio-background-repeat: no-repeat;
 					-servicestudio-background-size: 291px 225px;
@@ -130,7 +130,7 @@
 	&-bottom,
 	&-top,
 	&-none {
-		background-color: get-background-color('neutral-0');
+		background-color: var(--token-primitives-base-white);
 		height: 100%;
 	}
 
@@ -192,12 +192,12 @@
 	}
 
 	&.top {
-		background-color: get-background-color('info');
-		color: get-text-color('neutral-0');
+		background-color: var(--token-semantics-info-base);
+		color: var(--token-primitives-base-white);
 
 		// Service Studio Preview
 		& {
-			-servicestudio-background-color: get-background-color('blue-light');
+			-servicestudio-background-color: #e8f2fa;
 			-servicestudio-float: none;
 			-servicestudio-min-height: 80px;
 			-servicestudio-width: 100%;
@@ -206,12 +206,12 @@
 	}
 
 	&.right {
-		background-color: get-background-color('success');
-		color: get-text-color('neutral-0');
+		background-color: var(--token-semantics-success-base);
+		color: var(--token-primitives-base-white);
 
 		// Service Studio Preview
 		& {
-			-servicestudio-background-color: get-background-color('green');
+			-servicestudio-background-color: #37b24d;
 			-servicestudio-float: right;
 			-servicestudio-min-height: 80px;
 			-servicestudio-width: 50%;
@@ -220,12 +220,12 @@
 	}
 
 	&.left {
-		background-color: get-background-color('error');
-		color: get-text-color('neutral-0');
+		background-color: var(--token-semantics-danger-base);
+		color: var(--token-primitives-base-white);
 
 		// Service Studio Preview
 		& {
-			-servicestudio-background-color: get-background-color('red');
+			-servicestudio-background-color: #c92a2a;
 			-servicestudio-float: none;
 			-servicestudio-min-height: 80px;
 			-servicestudio-width: 50%;

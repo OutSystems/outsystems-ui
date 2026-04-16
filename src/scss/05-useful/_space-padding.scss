@@ -7,23 +7,23 @@
 .padding {
 	@each $type, $value in $osui-sizes {
 		&-#{$type} {
-			padding: var(--space-#{$type});
+			padding: var(#{map-get($osui-space-token-vars, $type)});
 		}
 
 		@each $osui-box-side in $osui-box-sides {
 			&-#{$osui-box-side}-#{$type} {
-				padding-#{$osui-box-side}: var(--space-#{$type});
+				padding-#{$osui-box-side}: var(#{map-get($osui-space-token-vars, $type)});
 			}
 		}
 
 		&-x-#{$type} {
-			padding-left: var(--space-#{$type});
-			padding-right: var(--space-#{$type});
+			padding-left: var(#{map-get($osui-space-token-vars, $type)});
+			padding-right: var(#{map-get($osui-space-token-vars, $type)});
 		}
 
 		&-y-#{$type} {
-			padding-bottom: var(--space-#{$type});
-			padding-top: var(--space-#{$type});
+			padding-bottom: var(#{map-get($osui-space-token-vars, $type)});
+			padding-top: var(#{map-get($osui-space-token-vars, $type)});
 		}
 	}
 
@@ -38,13 +38,13 @@
 	@each $type, $value in $osui-sizes {
 		.padding {
 			&-right-#{$type} {
-				padding-left: var(--space-#{$type});
-				padding-right: var(--space-none);
+				padding-left: var(#{map-get($osui-space-token-vars, $type)});
+				padding-right: var(--token-scale-0);
 			}
 
 			&-left-#{$type} {
-				padding-left: var(--space-none);
-				padding-right: var(--space-#{$type});
+				padding-left: var(--token-scale-0);
+				padding-right: var(#{map-get($osui-space-token-vars, $type)});
 			}
 		}
 	}

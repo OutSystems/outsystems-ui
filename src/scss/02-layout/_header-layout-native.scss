@@ -15,12 +15,12 @@
 		top: 0;
 
 		&-top {
-			padding: 0 var(--space-l);
+			padding: 0 var(--token-scale-800);
 		}
 
 		&-title {
-			font-size: var(--font-size-h5);
-			font-weight: var(--font-regular);
+			font-size: var(--token-font-size-500);
+			font-weight: var(--token-font-weight-regular);
 
 			// Service Studio Preview
 			& {
@@ -31,14 +31,14 @@
 
 		&-left {
 			flex: 1;
-			margin-right: var(--space-base);
+			margin-right: var(--token-scale-400);
 		}
 
 		&-right {
 			display: flex;
 			flex: 1;
 			justify-content: flex-end;
-			margin-left: var(--space-base);
+			margin-left: var(--token-scale-400);
 			margin-right: auto;
 
 			// ServiceStudio Preview
@@ -90,7 +90,7 @@
 .phone {
 	.layout-native {
 		.header-top {
-			padding: 0 var(--space-m);
+			padding: 0 var(--token-scale-600);
 		}
 	}
 }
@@ -99,7 +99,7 @@
 .tablet {
 	.layout-native {
 		.header-title {
-			font-size: calc(var(--font-size-h5) - 1px);
+			font-size: calc(var(--token-font-size-500) - 1px);
 		}
 	}
 }
@@ -108,7 +108,7 @@
 .phone {
 	.layout-native {
 		.header-title {
-			font-size: calc(var(--font-size-h5) - 2px);
+			font-size: calc(var(--token-font-size-500) - 2px);
 		}
 	}
 }
@@ -141,13 +141,13 @@
 .is-rtl {
 	.layout-native {
 		.header-left {
-			margin-left: var(--space-base);
+			margin-left: var(--token-scale-400);
 			margin-right: 0;
 		}
 
 		.header-right {
 			margin-left: auto;
-			margin-right: var(--space-base);
+			margin-right: var(--token-scale-400);
 		}
 	}
 }

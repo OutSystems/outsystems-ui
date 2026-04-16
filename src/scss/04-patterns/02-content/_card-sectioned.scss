@@ -8,7 +8,7 @@
 	&-sectioned {
 		display: flex;
 		justify-content: space-between;
-		padding: var(--space-none);
+		padding: var(--token-scale-0);
 
 		&-top {
 			display: flex;
@@ -18,19 +18,19 @@
 		&.flex-direction-row {
 			.card {
 				&-image {
-					padding: var(--space-m) var(--space-none) var(--space-m) var(--space-m);
+					padding: var(--token-scale-600) var(--token-scale-0) var(--token-scale-600) var(--token-scale-600);
 
 					&.padding-none {
-						padding: var(--space-none);
+						padding: var(--token-scale-0);
 					}
 				}
 
 				&-sectioned-right .card-image {
 					order: 2;
-					padding: var(--space-m) var(--space-m) var(--space-m) var(--space-none);
+					padding: var(--token-scale-600) var(--token-scale-600) var(--token-scale-600) var(--token-scale-0);
 
 					&.padding-none {
-						padding: var(--space-none);
+						padding: var(--token-scale-0);
 					}
 				}
 			}
@@ -38,7 +38,7 @@
 	}
 
 	&-image {
-		padding: var(--space-m) var(--space-m) var(--space-none);
+		padding: var(--token-scale-600) var(--token-scale-600) var(--token-scale-0);
 
 		& img {
 			display: block;
@@ -47,18 +47,18 @@
 	}
 
 	&-title {
-		font-size: var(--font-size-h4);
-		font-weight: var(--font-semi-bold);
-		padding: var(--space-m) var(--space-m) var(--space-none) var(--space-m);
+		font-size: var(--token-font-size-550);
+		font-weight: var(--token-font-weight-semi-bold);
+		padding: var(--token-scale-600) var(--token-scale-600) var(--token-scale-0) var(--token-scale-600);
 	}
 
 	&-content {
 		flex: 1;
-		padding: var(--space-m);
+		padding: var(--token-scale-600);
 	}
 
 	&-bottom {
-		padding: var(--space-none) var(--space-m) var(--space-m);
+		padding: var(--token-scale-0) var(--token-scale-600) var(--token-scale-600);
 	}
 }
 
@@ -69,36 +69,36 @@
 			padding: 0;
 
 			&.flex-direction-row .card-image {
-				padding: var(--space-base) var(--space-none) var(--space-base) var(--space-base);
+				padding: var(--token-scale-400) var(--token-scale-0) var(--token-scale-400) var(--token-scale-400);
 
 				&.padding-none {
-					padding: var(--space-none);
+					padding: var(--token-scale-0);
 				}
 			}
 		}
 
 		&-title {
-			padding: var(--space-base) var(--space-base) var(--space-none) var(--space-base);
+			padding: var(--token-scale-400) var(--token-scale-400) var(--token-scale-0) var(--token-scale-400);
 		}
 
 		&-image {
-			padding: var(--space-base) var(--space-base) var(--space-none);
+			padding: var(--token-scale-400) var(--token-scale-400) var(--token-scale-0);
 
 			&.padding-none {
-				padding: var(--space-none);
+				padding: var(--token-scale-0);
 			}
 		}
 
 		&-content {
-			padding: var(--space-base);
+			padding: var(--token-scale-400);
 
 			&.padding-none {
-				padding: var(--space-none);
+				padding: var(--token-scale-0);
 			}
 		}
 
 		&-bottom {
-			padding: var(--space-none) var(--space-base) var(--space-base);
+			padding: var(--token-scale-0) var(--token-scale-400) var(--token-scale-400);
 		}
 	}
 }
@@ -107,12 +107,12 @@
 ///
 .tablet {
 	.card-title {
-		font-size: calc(var(--font-size-h4) - 1px);
+		font-size: calc(var(--token-font-size-550) - 1px);
 	}
 }
 
 .phone {
 	.card-title {
-		font-size: calc(var(--font-size-h4) - 2px);
+		font-size: calc(var(--token-font-size-550) - 2px);
 	}
 }

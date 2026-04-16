@@ -11,7 +11,7 @@
 	position: relative;
 
 	&::before {
-		background-color: get-background-color('neutral-5');
+		background-color: var(--token-primitives-neutral-500);
 		bottom: 0;
 		content: '';
 		left: 0;
@@ -29,24 +29,24 @@
 .osui-section-index-item {
 	&,
 	&:visited {
-		color: get-text-color('neutral-8');
+		color: var(--token-primitives-neutral-800);
 		cursor: pointer;
 		display: flex;
-		padding-bottom: var(--space-xs);
-		padding-left: var(--space-m);
-		padding-top: var(--space-xs);
+		padding-bottom: var(--token-scale-100);
+		padding-left: var(--token-scale-600);
+		padding-top: var(--token-scale-100);
 		position: relative;
 	}
 
 	&:hover {
-		color: get-text-color('neutral-9');
+		color: var(--token-primitives-neutral-900);
 	}
 
 	&--is-active {
-		color: get-text-color('neutral-9');
-		font-weight: var(--font-semi-bold);
+		color: var(--token-primitives-neutral-900);
+		font-weight: var(--token-font-weight-semi-bold);
 		&::before {
-			background-color: get-background-color('primary');
+			background-color: var(--token-semantics-primary-base);
 			bottom: 0;
 			content: '';
 			left: 0;
@@ -66,7 +66,7 @@
 .has-accessible-features {
 	.osui-section-index-item {
 		&:focus {
-			background-color: get-background-color('transparent');
+			background-color: transparent;
 			@include a11y-default-outline;
 		}
 	}
@@ -76,13 +76,13 @@
 ///
 .os-high-contrast {
 	.osui-section-index::before {
-		@include a11y-high-contrast-outline(true, var(--border-size-s), left);
+		@include a11y-high-contrast-outline(true, var(--token-border-size-025), left);
 	}
 
 	.osui-section-index-item {
 		&--is-active {
 			&::before {
-				@include a11y-high-contrast-outline(true, var(--border-size-l), left);
+				@include a11y-high-contrast-outline(true, var(--token-border-size-075), left);
 			}
 		}
 	}
@@ -101,8 +101,8 @@
 	.osui-section-index-item {
 		&,
 		&:visited {
-			padding-left: var(--space-none);
-			padding-right: var(--space-m);
+			padding-left: var(--token-scale-0);
+			padding-right: var(--token-scale-600);
 		}
 
 		&--is-active {
@@ -119,8 +119,8 @@
 .phone {
 	.osui-section-index {
 		&--is-sticky {
-			left: calc(var(--os-safe-area-right) + var(--space-base));
-			padding: 0 var(--space-base) 0 0;
+			left: calc(var(--os-safe-area-right) + var(--token-scale-400));
+			padding: 0 var(--token-scale-400) 0 0;
 			position: fixed;
 			top: var(--top-position);
 			z-index: var(--layer-local-tier-1);
@@ -131,8 +131,8 @@
 		.osui-section-index {
 			&--is-sticky {
 				left: initial;
-				right: calc(var(--os-safe-area-right) + var(--space-base));
-				padding: 0 0 var(--space-base) 0;
+				right: calc(var(--os-safe-area-right) + var(--token-scale-400));
+				padding: 0 0 var(--token-scale-400) 0;
 			}
 		}
 	}

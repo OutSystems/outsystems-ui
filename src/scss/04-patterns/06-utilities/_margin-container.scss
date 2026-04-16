@@ -5,13 +5,13 @@
 
 ///
 .margin-container {
-	padding: var(--space-m);
+	padding: var(--token-scale-600);
 }
 
 ///
 .layout-native {
 	.margin-container {
-		padding: var(--space-l);
+		padding: var(--token-scale-800);
 	}
 }
 
@@ -20,7 +20,7 @@
 .tablet {
 	.layout-native {
 		.margin-container {
-			padding: var(--space-m);
+			padding: var(--token-scale-600);
 		}
 	}
 }
@@ -29,7 +29,7 @@
 .phone {
 	.layout-native {
 		.margin-container {
-			padding: var(--space-base);
+			padding: var(--token-scale-400);
 		}
 	}
 }

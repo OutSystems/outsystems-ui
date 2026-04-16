@@ -10,7 +10,7 @@
 
 	&-left {
 		max-width: 120px;
-		padding-right: var(--space-base);
+		padding-right: var(--token-scale-400);
 	}
 
 	&-center {
@@ -18,17 +18,17 @@
 	}
 
 	&-right {
-		padding-left: var(--space-base);
+		padding-left: var(--token-scale-400);
 	}
 
 	&-title {
-		color: get-text-color('neutral-10');
-		font-size: var(--font-size-h5);
-		font-weight: var(--font-semi-bold);
+		color: var(--token-primitives-neutral-1200);
+		font-size: var(--token-font-size-500);
+		font-weight: var(--token-font-weight-semi-bold);
 	}
 
 	&-text {
-		color: get-text-color('neutral-7');
+		color: var(--token-primitives-neutral-700);
 		overflow: hidden;
 		text-overflow: ellipsis;
 	}
@@ -39,13 +39,13 @@
 .is-rtl {
 	.card-detail {
 		&-left {
-			padding-left: var(--space-base);
+			padding-left: var(--token-scale-400);
 			padding-right: 0;
 		}
 
 		&-right {
 			padding-left: 0;
-			padding-right: var(--space-base);
+			padding-right: var(--token-scale-400);
 		}
 	}
 }

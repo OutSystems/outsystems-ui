@@ -9,9 +9,9 @@
 	:first-child:not(.list) >,
 	.list :first-child > {
 		.osui-accordion-item {
-			border-radius: var(--border-radius-none);
-			border-top-left-radius: var(--border-radius-soft);
-			border-top-right-radius: var(--border-radius-soft);
+			border-radius: var(--token-border-radius-0);
+			border-top-left-radius: var(--token-border-radius-100);
+			border-top-right-radius: var(--token-border-radius-100);
 		}
 	}
 
@@ -19,10 +19,10 @@
 	:last-child:not(.list) >,
 	.list :last-child > {
 		.osui-accordion-item {
-			border-bottom-width: var(--border-size-s);
-			border-radius: var(--border-radius-none);
-			border-bottom-left-radius: var(--border-radius-soft);
-			border-bottom-right-radius: var(--border-radius-soft);
+			border-bottom-width: var(--token-border-size-025);
+			border-radius: var(--token-border-radius-0);
+			border-bottom-left-radius: var(--token-border-radius-100);
+			border-bottom-right-radius: var(--token-border-radius-100);
 		}
 	}
 
@@ -30,7 +30,7 @@
 	:only-child >,
 	.list :only-child > {
 		.osui-accordion-item {
-			border-radius: var(--border-radius-soft);
+			border-radius: var(--token-border-radius-100);
 		}
 	}
 
@@ -38,29 +38,29 @@
 	:first-child:not(.list) > {
 		.osui-accordion-item {
 			&::after {
-				border-top-left-radius: var(--border-radius-soft);
-				border-top-right-radius: var(--border-radius-soft);
+				border-top-left-radius: var(--token-border-radius-100);
+				border-top-right-radius: var(--token-border-radius-100);
 			}
 		}
 	}
 
 	& &-item,
 	.list .osui-accordion-item {
-		border-radius: var(--border-radius-none);
+		border-radius: var(--token-border-radius-0);
 	}
 
 	// Style all the accordion items once inside an accordion
 	& &-item {
-		border-bottom-width: var(--border-size-none);
+		border-bottom-width: var(--token-border-size-0);
 
 		&::after {
-			border-top-left-radius: var(--border-radius-none);
-			border-top-right-radius: var(--border-radius-none);
+			border-top-left-radius: var(--token-border-radius-0);
+			border-top-right-radius: var(--token-border-radius-0);
 		}
 
 		// ServiceStudio Preview
 		& {
-			-servicestudio-border-bottom-width: var(--border-size-s);
+			-servicestudio-border-bottom-width: var(--token-border-size-025);
 		}
 	}
 }

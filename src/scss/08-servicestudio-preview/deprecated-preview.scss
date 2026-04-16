@@ -9,11 +9,11 @@
 .osui-deprecated:before {
 	display: none;
 	-servicestudio-background: #fff1dc;
-	-servicestudio-background: get-background-color('yellow-lightest');
-	-servicestudio-border-radius: var(--border-radius-soft);
-	-servicestudio-color: get-text-color('neutral-9');
+	-servicestudio-background: #fef5e5;
+	-servicestudio-border-radius: var(--token-border-radius-100);
+	-servicestudio-color: var(--token-primitives-neutral-900);
 	-servicestudio-content: '⚠ DEPRECATED';
-	-servicestudio-font-weight: var(--font-semi-bold);
+	-servicestudio-font-weight: var(--token-font-weight-semi-bold);
 	-servicestudio-display: block;
 	-servicestudio-font-size: 9px;
 	-servicestudio-line-height: 8px;

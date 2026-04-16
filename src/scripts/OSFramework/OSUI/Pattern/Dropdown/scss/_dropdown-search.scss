@@ -9,7 +9,7 @@
 	&.osui-dropdown--not-valid {
 		// Virtual Select provider
 		.vscomp-toggle-button {
-			border-color: get-border-color('error');
+			border-color: var(--token-semantics-danger-base);
 		}
 	}
 }

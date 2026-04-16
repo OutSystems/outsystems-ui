@@ -14,10 +14,10 @@
 
 		&.pop-comp-active {
 			.vscomp-toggle-button {
-				border-color: get-border-color('primary');
+				border-color: var(--token-semantics-primary-base);
 
 				&:after {
-					color: get-text-color('primary');
+					color: var(--token-semantics-primary-base);
 					transform: rotate(180deg) translateY(50%);
 				}
 			}
@@ -48,20 +48,20 @@
 	}
 
 	&-clear-button:hover {
-		background-color: get-background-color('neutral-4');
+		background-color: var(--token-primitives-neutral-400);
 
 		.vscomp-clear-icon {
 			&::after,
 			&::before {
-				background-color: get-background-color('transparent');
-				color: get-text-color('neutral-7');
+				background-color: transparent;
+				color: var(--token-primitives-neutral-700);
 			}
 		}
 	}
 
 	&-search-clear:hover:after {
-		background-color: get-background-color('transparent');
-		color: get-text-color('neutral-7');
+		background-color: transparent;
+		color: var(--token-primitives-neutral-700);
 	}
 }
 
@@ -74,32 +74,32 @@
 		}
 
 		.checkbox-icon {
-			border-color: get-border-color('neutral-6');
+			border-color: var(--token-primitives-neutral-600);
 		}
 	}
 
 	&.has-value {
 		&.show-value-as-tags {
 			.vscomp-toggle-button {
-				padding-left: var(--space-s);
+				padding-left: var(--token-scale-200);
 			}
 		}
 		.vscomp-value {
-			margin-right: var(--space-m);
-			margin-left: var(--space-none);
+			margin-right: var(--token-scale-600);
+			margin-left: var(--token-scale-0);
 		}
 	}
 
 	&:not(.has-value) {
 		.vscomp-value {
-			color: get-text-color('neutral-7');
+			color: var(--token-primitives-neutral-700);
 			opacity: 1;
 		}
 	}
 
 	&.multiple {
 		.vscomp-search-container {
-			padding-left: var(--space-base);
+			padding-left: var(--token-scale-400);
 
 			&:before {
 				display: none;
@@ -109,13 +109,13 @@
 		.vscomp-option {
 			&.selected {
 				.checkbox-icon {
-					background-color: get-background-color('primary');
-					border-color: get-border-color('primary');
+					background-color: var(--token-semantics-primary-base);
+					border-color: var(--token-semantics-primary-base);
 
 					&:after {
-						border-color: get-border-color('neutral-0');
-						border-left-color: get-border-color('transparent');
-						border-top-color: get-border-color('transparent');
+						border-color: var(--token-primitives-base-white);
+						border-left-color: transparent;
+						border-top-color: transparent;
 						height: 80%;
 						opacity: 1;
 						@include CheckBoxCheckIconTransform;
@@ -133,7 +133,7 @@
 
 	&:not(.multiple) {
 		.vscomp-option.group-title {
-			height: var(--space-xl) !important; // !important required to override the element style in html
+			height: var(--token-scale-1000) !important; // !important required to override the element style in html
 		}
 	}
 
@@ -141,15 +141,15 @@
 		.vscomp-toggle-button {
 			height: auto;
 			min-height: var(--vscomp-toogle-btn-height);
-			padding: var(--space-xs) var(--space-xxl) var(--space-none) var(--space-base);
+			padding: var(--token-scale-100) var(--token-scale-1200) var(--token-scale-0) var(--token-scale-400);
 		}
 
 		.vscomp-value-tag {
-			background-color: get-background-color('neutral-3');
-			border: var(--border-size-none);
-			color: get-text-color('neutral-7');
-			font-size: var(--font-size-xs);
-			font-weight: var(--font-semi-bold);
+			background-color: var(--token-primitives-neutral-300);
+			border: var(--token-border-size-0);
+			color: var(--token-primitives-neutral-700);
+			font-size: var(--token-font-size-300);
+			font-weight: var(--token-font-weight-semi-bold);
 			padding: 6px 35px 6px 10px;
 			position: relative;
 
@@ -158,7 +158,7 @@
 			}
 
 			.vscomp-value-tag-clear-button {
-				background-color: get-background-color('neutral-7');
+				background-color: var(--token-primitives-neutral-700);
 				border-radius: 100%;
 				height: 14px;
 				position: absolute;
@@ -167,14 +167,14 @@
 
 				.vscomp-clear-icon {
 					height: 12px;
-					left: var(--space-none);
+					left: var(--token-scale-0);
 					position: relative;
-					top: var(--space-none);
+					top: var(--token-scale-0);
 					width: 12px;
 
 					&:before,
 					&:after {
-						color: get-text-color('neutral-4');
+						color: var(--token-primitives-neutral-400);
 					}
 				}
 			}
@@ -192,7 +192,7 @@
 			border: none;
 
 			&-container {
-				background-color: get-background-color('overlay');
+				background-color: var(--token-backdrop);
 				// The !important is needed in order to overwrite the inline style added by library!
 				z-index: var(--layer-global-elevated) !important;
 			}
@@ -211,7 +211,7 @@
 	&.text-direction-rtl {
 		&.multiple {
 			.vscomp-search-container {
-				padding-left: var(--space-s);
+				padding-left: var(--token-scale-200);
 			}
 
 			.vscomp-option {
@@ -227,29 +227,29 @@
 
 		&:not(.multiple) {
 			.vscomp-search-container {
-				padding: var(--space-none) var(--space-xl) var(--space-none) var(--space-s);
+				padding: var(--token-scale-0) var(--token-scale-1000) var(--token-scale-0) var(--token-scale-200);
 
 				&:before {
 					left: auto;
-					right: var(--space-base);
+					right: var(--token-scale-400);
 				}
 			}
 		}
 
 		&.has-value {
 			.vscomp-value {
-				margin-left: var(--space-m);
-				margin-right: var(--space-none);
+				margin-left: var(--token-scale-600);
+				margin-right: var(--token-scale-0);
 			}
 		}
 
 		&.show-value-as-tags {
 			&.has-value {
 				.vscomp-clear-button {
-					left: var(--space-l);
+					left: var(--token-scale-800);
 				}
 				.vscomp-toggle-button {
-					padding-right: var(--space-s);
+					padding-right: var(--token-scale-200);
 				}
 			}
 
@@ -263,21 +263,21 @@
 			}
 
 			.vscomp-toggle-button {
-				padding: var(--space-xs) var(--space-base) var(--space-none) var(--space-xxl);
+				padding: var(--token-scale-100) var(--token-scale-400) var(--token-scale-0) var(--token-scale-1200);
 			}
 		}
 
 		.vscomp-toggle-button {
-			padding: var(--space-xs) var(--space-base) var(--space-xs) var(--space-xl);
+			padding: var(--token-scale-100) var(--token-scale-400) var(--token-scale-100) var(--token-scale-1000);
 
 			&:after {
-				left: var(--space-base);
+				left: var(--token-scale-400);
 				right: auto;
 			}
 		}
 
 		.checkbox-icon {
-			margin-left: var(--space-s);
+			margin-left: var(--token-scale-200);
 
 			&.checked {
 				&:after {
@@ -290,25 +290,25 @@
 	&:not(.text-direction-rtl) {
 		&.has-value {
 			.vscomp-clear-button {
-				right: var(--space-xl);
+				right: var(--token-scale-1000);
 			}
 		}
 	}
 
 	// Checkbox
 	.checkbox-icon {
-		background-color: get-background-color('neutral-0');
-		border-radius: var(--border-radius-soft);
-		border: var(--border-size-s) solid get-border-color('neutral-5');
+		background-color: var(--token-primitives-base-white);
+		border-radius: var(--token-border-radius-100);
+		border: var(--token-border-size-025) solid var(--token-primitives-neutral-500);
 		height: 16px;
-		margin-right: var(--space-s);
+		margin-right: var(--token-scale-200);
 		overflow: visible;
 		transition: background-color 0.25s ease;
 		width: 16px;
 
 		&:after {
 			backface-visibility: hidden;
-			border-color: get-border-color('transparent');
+			border-color: transparent;
 			height: 85%;
 			opacity: 0;
 			transition: opacity 0.25s ease;
@@ -316,13 +316,13 @@
 		}
 
 		&.checked {
-			background-color: get-background-color('primary');
-			border-color: get-border-color('primary');
+			background-color: var(--token-semantics-primary-base);
+			border-color: var(--token-semantics-primary-base);
 
 			&:after {
-				border-color: get-border-color('neutral-0');
-				border-left-color: get-border-color('transparent');
-				border-top-color: get-border-color('transparent');
+				border-color: var(--token-primitives-base-white);
+				border-left-color: transparent;
+				border-top-color: transparent;
 				height: 80%;
 				opacity: 1;
 				@include CheckBoxCheckIconTransform;
@@ -338,16 +338,16 @@
 	--vscomp-toogle-btn-height: 40px;
 	--vscomp-toogle-btn-mobile-height: 48px;
 
-	background-color: get-background-color('neutral-0');
-	border-radius: var(--border-radius-soft);
-	border: var(--border-size-s) solid get-border-color('neutral-5');
-	color: get-text-color('neutral-9');
+	background-color: var(--token-primitives-base-white);
+	border-radius: var(--token-border-radius-100);
+	border: var(--token-border-size-025) solid var(--token-primitives-neutral-500);
+	color: var(--token-primitives-neutral-900);
 	cursor: pointer;
 	display: inline-flex;
 	height: var(--vscomp-toogle-btn-height);
 	line-height: var(--vscomp-toogle-btn-height);
 	min-width: 180px;
-	padding: var(--space-xs) var(--space-xl) var(--space-xs) var(--space-base);
+	padding: var(--token-scale-100) var(--token-scale-1000) var(--token-scale-100) var(--token-scale-400);
 	position: relative;
 	transition:
 		height,
@@ -357,9 +357,9 @@
 
 	// Create new arrow for all dropdown types
 	&:after {
-		color: get-text-color('neutral-7');
+		color: var(--token-primitives-neutral-700);
 		position: absolute;
-		right: var(--space-base);
+		right: var(--token-scale-400);
 		top: 50%;
 		transform: translateY(-50%);
 		transform-origin: center;
@@ -367,13 +367,13 @@
 	}
 
 	&:hover {
-		border-color: get-border-color('neutral-6');
+		border-color: var(--token-primitives-neutral-600);
 	}
 }
 
 // Container with the selected value(s)
 .vscomp-value {
-	font-size: var(--font-size-s);
+	font-size: var(--token-font-size-350);
 }
 
 // Default dropdown arrow
@@ -388,11 +388,11 @@
 
 // Wrapper options container
 .vscomp-dropbox {
-	--border-color: #{get-border-color('neutral-5')};
-	--border-size: var(--border-size-s);
+	--border-color: #{var(--token-primitives-neutral-500)};
+	--border-size: var(--token-border-size-025);
 
-	background-color: get-background-color('neutral-0');
-	border-radius: var(--border-radius-soft);
+	background-color: var(--token-primitives-base-white);
+	border-radius: var(--token-border-radius-100);
 	/* use inner shadow to workaround the border issue that causes content to be blurry */
 	box-shadow: inset var(--border-color) 0 0 0 var(--border-size);
 	overflow: hidden;
@@ -407,26 +407,26 @@
 
 // Options container input search wrapper
 .vscomp-search-container {
-	border-bottom: var(--border-size-s) solid get-border-color('neutral-5');
-	padding: var(--space-none) var(--space-s) var(--space-none) var(--space-xl);
+	border-bottom: var(--token-border-size-025) solid var(--token-primitives-neutral-500);
+	padding: var(--token-scale-0) var(--token-scale-200) var(--token-scale-0) var(--token-scale-1000);
 	position: relative;
 
 	&:before {
 		align-items: center;
-		color: get-text-color('neutral-7');
+		color: var(--token-primitives-neutral-700);
 		display: flex;
 		height: 100%;
-		left: var(--space-base);
+		left: var(--token-scale-400);
 		position: absolute;
 		top: 0;
 	}
 
 	.vscomp-search-clear {
-		border-radius: var(--border-radius-circle);
-		color: get-text-color('neutral-7');
+		border-radius: 50%;
+		color: var(--token-primitives-neutral-700);
 		display: table;
 		font-size: 0;
-		font-weight: var(--font-semi-bold);
+		font-weight: var(--token-font-weight-semi-bold);
 		height: 24px;
 		line-height: 1;
 		text-align: center;
@@ -444,17 +444,17 @@
 		}
 
 		&:hover {
-			background-color: get-background-color('neutral-4');
+			background-color: var(--token-primitives-neutral-400);
 		}
 	}
 }
 
 // Options container input search
 .vscomp-search-input {
-	font-size: var(--font-size-s);
+	font-size: var(--token-font-size-350);
 
 	&::placeholder {
-		color: get-text-color('neutral-9');
+		color: var(--token-primitives-neutral-900);
 		opacity: 0.5;
 	}
 }
@@ -468,19 +468,19 @@
 	}
 
 	&::-webkit-scrollbar-track {
-		background: get-background-color('neutral-4');
+		background: var(--token-primitives-neutral-400);
 	}
 
 	&::-webkit-scrollbar-thumb {
-		background-color: get-background-color('neutral-6');
+		background-color: var(--token-primitives-neutral-600);
 	}
 }
 
 // Option Item text
 .vscomp-option-text {
-	color: get-text-color('neutral-9');
+	color: var(--token-primitives-neutral-900);
 	display: inline-block;
-	font-size: var(--font-size-s);
+	font-size: var(--token-font-size-350);
 
 	// To keep vertical align using inline-block.
 	// This is used so that the text can  get ellipsis if too long
@@ -492,16 +492,16 @@
 // Option Item
 .vscomp-option {
 	align-content: center;
-	background-color: get-background-color('neutral-0');
+	background-color: var(--token-primitives-base-white);
 	transition: background-color 0.25s ease;
 
 	&.focused,
 	&.selected {
-		background-color: get-background-color('neutral-3');
+		background-color: var(--token-primitives-neutral-300);
 	}
 
 	&.focused {
-		background-color: get-background-color('neutral-2');
+		background-color: var(--token-primitives-neutral-200);
 	}
 
 	// Style dropdown group title
@@ -511,9 +511,9 @@
 			// Style group title in single select dropdown
 			// this selector is necessary so that the style is not applied when the option has a checkbox
 			&:only-child {
-				color: get-text-color('neutral-7');
-				font-size: var(--font-size-label);
-				font-weight: var(--font-semi-bold);
+				color: var(--token-primitives-neutral-700);
+				font-size: var(--token-font-size-275);
+				font-weight: var(--token-font-weight-semi-bold);
 				text-transform: uppercase;
 			}
 		}
@@ -522,15 +522,15 @@
 
 // Option Item description
 .vscomp-option-description {
-	color: get-text-color('neutral-7');
-	font-size: var(--font-size-label);
+	color: var(--token-primitives-neutral-700);
+	font-size: var(--token-font-size-275);
 	margin-top: 1px;
 }
 
 // When using the extensibility property allowNewOption
 .vscomp-new-option-icon {
 	&::before {
-		border: 15px solid get-border-color('primary');
+		border: 15px solid var(--token-semantics-primary-base);
 		border-bottom-color: rgba(0, 0, 0, 0);
 		border-left-color: rgba(0, 0, 0, 0);
 	}
@@ -540,11 +540,11 @@
 ///
 .has-accessible-features {
 	.vscomp-toggle-button {
-		border-color: get-border-color('neutral-7');
-		color: get-text-color('neutral-10');
+		border-color: var(--token-primitives-neutral-700);
+		color: var(--token-primitives-neutral-1200);
 
 		&:after {
-			color: get-text-color('neutral-9');
+			color: var(--token-primitives-neutral-900);
 		}
 	}
 
@@ -567,14 +567,14 @@
 	.vscomp-wrapper {
 		&.show-value-as-tags {
 			.vscomp-value-tag {
-				border: var(--border-size-s) solid get-border-color('neutral-7');
+				border: var(--token-border-size-025) solid var(--token-primitives-neutral-700);
 			}
 		}
 
 		.vscomp-option {
 			&.focused {
 				&:before {
-					border: var(--border-size-m) solid get-border-color('neutral-7');
+					border: var(--token-border-size-050) solid var(--token-primitives-neutral-700);
 					bottom: 0;
 					content: '';
 					display: block;
@@ -598,7 +598,7 @@
 
 	.pop-comp-content,
 	.vscomp-dropbox-container {
-		border: var(--border-size-m) solid get-border-color('neutral-7');
+		border: var(--token-border-size-050) solid var(--token-primitives-neutral-700);
 	}
 
 	.vscomp-options-container {
@@ -607,11 +607,11 @@
 		}
 
 		&::-webkit-scrollbar-track {
-			border: var(--border-size-l) solid get-border-color('neutral-4');
+			border: var(--token-border-size-075) solid var(--token-primitives-neutral-400);
 		}
 
 		&::-webkit-scrollbar-thumb {
-			border: var(--border-size-s) solid get-border-color('neutral-4');
+			border: var(--token-border-size-025) solid var(--token-primitives-neutral-400);
 		}
 	}
 }

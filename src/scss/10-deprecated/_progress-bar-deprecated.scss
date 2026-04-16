@@ -2,13 +2,13 @@
 /* Since this pattern is Deprecated, it should not appear at SASSDCS! */
 
 .progress {
-	background-color: get-background-color('primary');
+	background-color: var(--token-semantics-primary-base);
 	transform-origin: left;
 	transition: all 750ms ease-out;
 	will-change: width;
 
 	&-bar {
-		background-color: get-background-color('neutral-3');
+		background-color: var(--token-primitives-neutral-300);
 		overflow: hidden;
 		position: relative;
 

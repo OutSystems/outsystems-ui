@@ -8,7 +8,7 @@
 	align-items: center;
 	display: flex;
 	justify-content: space-between;
-	margin-top: var(--space-m);
+	margin-top: var(--token-scale-600);
 
 	// pagination-container
 	&-container {
@@ -30,15 +30,15 @@
 
 	&-button {
 		align-items: center;
-		background-color: get-background-color('neutral-0');
-		border: var(--border-size-s) solid get-border-color('neutral-4');
-		border-radius: var(--border-radius-soft);
-		color: get-text-color('neutral-8');
+		background-color: var(--token-primitives-base-white);
+		border: var(--token-border-size-025) solid var(--token-primitives-neutral-400);
+		border-radius: var(--token-border-radius-100);
+		color: var(--token-primitives-neutral-800);
 		cursor: pointer;
 		display: inline-flex;
 		height: 32px;
 		justify-content: center;
-		margin-left: var(--space-s);
+		margin-left: var(--token-scale-200);
 		padding: 0;
 		width: 32px;
 
@@ -48,14 +48,14 @@
 		}
 
 		&.is--active {
-			border: var(--border-size-s) solid get-border-color('primary');
-			color: get-text-color('primary');
+			border: var(--token-border-size-025) solid var(--token-semantics-primary-base);
+			color: var(--token-semantics-primary-base);
 			cursor: auto;
 			pointer-events: none;
 		}
 
 		&.is--ellipsis {
-			background-color: get-background-color('transparent');
+			background-color: transparent;
 			border: 0;
 			cursor: auto;
 			width: 16px;
@@ -74,7 +74,7 @@
 
 	// pagination-counter
 	&-counter {
-		color: get-text-color('neutral-7');
+		color: var(--token-primitives-neutral-700);
 	}
 
 	.list.list-group {
@@ -83,7 +83,7 @@
 
 	.form-control[data-input] {
 		height: 32px;
-		margin: var(--space-none) var(--space-s);
+		margin: var(--token-scale-0) var(--token-scale-200);
 		padding: 0;
 		text-align: center;
 		width: 32px;
@@ -94,7 +94,7 @@
 .desktop {
 	.pagination-button:not(.is--ellipsis):hover {
 		background-color: rgba(21, 24, 26, 0.04);
-		border: var(--border-size-s) solid get-border-color('neutral-4');
+		border: var(--token-border-size-025) solid var(--token-primitives-neutral-400);
 	}
 }
 
@@ -115,7 +115,7 @@
 		flex-direction: column;
 
 		&-container {
-			margin-top: var(--space-base);
+			margin-top: var(--token-scale-400);
 		}
 
 		&-button,
@@ -131,7 +131,7 @@
 .is-rtl {
 	.pagination-button {
 		margin-left: 0;
-		margin-right: var(--space-s);
+		margin-right: var(--token-scale-200);
 
 		.icon {
 			transform: rotate(180deg);
@@ -143,7 +143,7 @@
 ///
 .has-accessible-features {
 	.pagination-button:focus {
-		border-color: get-border-color('focus-inner');
+		border-color: var(--color-focus-inner);
 	}
 }
 

@@ -20,7 +20,7 @@
 		--rating-size: 8px;
 
 		.rating-item {
-			padding-right: calc(var(--rating-size) + var(--space-xs));
+			padding-right: calc(var(--rating-size) + var(--token-scale-100));
 		}
 	}
 
@@ -50,18 +50,18 @@
 			.rating-item {
 				&-filled,
 				&-half {
-					color: get-text-color('neutral-6');
+					color: var(--token-primitives-neutral-600);
 
 					.icon {
-						color: get-text-color('neutral-6');
+						color: var(--token-primitives-neutral-600);
 					}
 				}
 
 				&-empty {
-					color: get-text-color('neutral-6');
+					color: var(--token-primitives-neutral-600);
 
 					.icon {
-						color: get-text-color('neutral-4');
+						color: var(--token-primitives-neutral-400);
 					}
 				}
 			}
@@ -72,7 +72,7 @@
 		display: inline-block;
 		height: var(--rating-size);
 		// Padding is used to avoid flicks on hover due to rating-items gap
-		padding-right: calc(var(--rating-size) + var(--space-s));
+		padding-right: calc(var(--rating-size) + var(--token-scale-200));
 		position: relative;
 		width: var(--rating-size);
 
@@ -87,7 +87,7 @@
 
 			// Service Studio Preview
 			& {
-				-servicestudio-margin-right: var(--space-s);
+				-servicestudio-margin-right: var(--token-scale-200);
 				-servicestudio-min-height: 24px;
 				-servicestudio-min-width: 24px;
 				-servicestudio-opacity: 1 !important;
@@ -136,8 +136,8 @@
 	input {
 		&:first-of-type {
 			+ .rating-item {
-				background: get-background-color('transparent');
-				box-shadow: 0 0 0 3px get-background-color('focus-outer');
+				background: transparent;
+				box-shadow: 0 0 0 3px var(--color-focus-outer);
 				height: 100%;
 				left: 0;
 				opacity: 0;
@@ -255,7 +255,7 @@
 .is-rtl {
 	.rating {
 		.rating-item {
-			padding-left: calc(var(--rating-size) + var(--space-s));
+			padding-left: calc(var(--rating-size) + var(--token-scale-200));
 			padding-right: 0;
 			transform: scaleX(-1);
 		}
@@ -279,7 +279,7 @@
 		&:not(.is-half) input:focus + .rating-item .rating-item-filled {
 			&,
 			* {
-				box-shadow: 0 0 0 3px get-background-color('focus-outer');
+				box-shadow: 0 0 0 3px var(--color-focus-outer);
 			}
 		}
 	}
@@ -288,18 +288,18 @@
 		.rating-item {
 			&-filled,
 			&-half {
-				color: get-text-color('neutral-7');
+				color: var(--token-primitives-neutral-700);
 
 				.icon {
-					color: get-text-color('neutral-7');
+					color: var(--token-primitives-neutral-700);
 				}
 			}
 
 			&-empty {
-				color: get-text-color('neutral-7');
+				color: var(--token-primitives-neutral-700);
 
 				.icon {
-					color: get-text-color('neutral-5');
+					color: var(--token-primitives-neutral-500);
 				}
 			}
 		}

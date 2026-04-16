@@ -6,9 +6,9 @@
 .flatpickr-calendar {
 	--osui-flatpickr-layer: var(--layer-global-elevated);
 
-	border-radius: var(--border-radius-soft);
-	border: var(--border-size-s) solid get-border-color('neutral-5');
-	box-shadow: var(--shadow-none);
+	border-radius: var(--token-border-radius-100);
+	border: var(--token-border-size-025) solid var(--token-primitives-neutral-500);
+	box-shadow: none;
 	width: 320px;
 
 	&.open {
@@ -48,10 +48,10 @@
 	// Has Time
 	&.hasTime {
 		.flatpickr-time {
-			border: var(--border-size-none);
+			border: var(--token-border-size-0);
 			height: 30px;
 			overflow: visible;
-			padding: var(--space-none) var(--space-base) var(--space-base);
+			padding: var(--token-scale-0) var(--token-scale-400) var(--token-scale-400);
 		}
 	}
 
@@ -60,10 +60,10 @@
 		min-width: min-content;
 
 		.flatpickr-weekwrapper .flatpickr-weeks {
-			margin-right: var(--space-xs);
+			margin-right: var(--token-scale-100);
 
 			.flatpickr-day {
-				color: get-text-color('neutral-5');
+				color: var(--token-primitives-neutral-500);
 			}
 		}
 
@@ -82,10 +82,10 @@
 			}
 
 			&.arrowUp:after {
-				border-bottom-color: get-border-color('primary');
+				border-bottom-color: var(--token-semantics-primary-base);
 			}
 			&.arrowDown:after {
-				border-top-color: get-border-color('primary');
+				border-top-color: var(--token-semantics-primary-base);
 			}
 		}
 	}
@@ -106,7 +106,7 @@
 	display: grid;
 	grid-template-areas: 'date prev next';
 	grid-template-columns: 1fr 34px 34px;
-	padding: var(--space-base);
+	padding: var(--token-scale-400);
 	position: relative;
 
 	.flatpickr-month {
@@ -130,8 +130,8 @@
 		z-index: calc(var(--osui-flatpickr-layer) + var(--layer-local-tier-1));
 
 		&:hover {
-			background-color: get-background-color('neutral-2');
-			border-radius: var(--border-radius-circle);
+			background-color: var(--token-primitives-neutral-200);
+			border-radius: 50%;
 		}
 
 		svg {
@@ -140,7 +140,7 @@
 
 			path {
 				stroke-width: 1px;
-				stroke: get-text-color('primary');
+				stroke: var(--token-semantics-primary-base);
 			}
 		}
 	}
@@ -159,9 +159,9 @@
 // Flatpickr - Month and Year container
 .flatpickr-current-month {
 	align-items: center;
-	color: get-text-color('primary');
+	color: var(--token-semantics-primary-base);
 	display: inline-flex;
-	font-size: var(--font-size-s);
+	font-size: var(--token-font-size-350);
 	justify-content: flex-start;
 	left: unset;
 	padding: 0;
@@ -173,41 +173,41 @@
 	// Month Select
 	.flatpickr-monthDropdown-months {
 		appearance: none;
-		border-radius: var(--border-radius-soft);
-		font-weight: var(--font-semi-bold);
+		border-radius: var(--token-border-radius-100);
+		font-weight: var(--token-font-weight-semi-bold);
 		height: 30px;
 		line-height: normal;
 		margin: 0;
 		order: 2;
-		padding: var(--space-none) var(--space-s);
+		padding: var(--token-scale-0) var(--token-scale-200);
 
 		&:hover,
 		&:focus {
-			background-color: get-background-color('neutral-2');
+			background-color: var(--token-primitives-neutral-200);
 		}
 	}
 
 	// Year stepper
 	.numInputWrapper {
-		padding: var(--space-none) var(--space-s);
+		padding: var(--token-scale-0) var(--token-scale-200);
 		width: 60px;
 
 		&:hover,
 		&:focus {
-			background-color: get-background-color('neutral-2');
-			border-radius: var(--border-radius-soft);
+			background-color: var(--token-primitives-neutral-200);
+			border-radius: var(--token-border-radius-100);
 		}
 
 		input {
-			border: var(--border-size-s) solid get-border-color('transparent');
-			border-radius: var(--border-radius-soft);
-			font-size: var(--font-size-s);
-			font-weight: var(--font-semi-bold);
+			border: var(--token-border-size-025) solid transparent;
+			border-radius: var(--token-border-radius-100);
+			font-size: var(--token-font-size-350);
+			font-weight: var(--token-font-weight-semi-bold);
 			height: 30px;
 			padding: 0;
 
 			&:hover {
-				background-color: get-background-color('neutral-2');
+				background-color: var(--token-primitives-neutral-200);
 			}
 		}
 	}
@@ -215,7 +215,7 @@
 
 // Flatpickr - Days container
 .flatpickr-innerContainer {
-	padding: var(--space-s) var(--space-base) var(--space-base);
+	padding: var(--token-scale-200) var(--token-scale-400) var(--token-scale-400);
 }
 
 .flatpickr-rContainer,
@@ -231,7 +231,7 @@
 
 // Flatpickr - WeekDays
 .flatpickr-weekdays {
-	padding-bottom: var(--space-base);
+	padding-bottom: var(--token-scale-400);
 }
 .flatpickr-weekwrapper {
 	.flatpickr-weekday {
@@ -241,42 +241,42 @@
 
 // Flatpickr - WeekDay Element
 span.flatpickr-weekday {
-	color: get-text-color('neutral-7');
-	font-size: var(--font-size-s);
-	font-weight: var(--font-regular);
+	color: var(--token-primitives-neutral-700);
+	font-size: var(--token-font-size-350);
+	font-weight: var(--token-font-weight-regular);
 	user-select: none;
 }
 
 // Flatpickr - DayElem
 .flatpickr-day {
-	color: get-text-color('neutral-9');
-	font-size: var(--font-size-s);
-	font-weight: var(--font-regular);
+	color: var(--token-primitives-neutral-900);
+	font-size: var(--token-font-size-350);
+	font-weight: var(--token-font-weight-regular);
 	user-select: none;
 	line-height: 37px;
 
 	&.prevMonthDay,
 	&.nextMonthDay {
-		color: get-text-color('neutral-5');
+		color: var(--token-primitives-neutral-500);
 
 		&:hover,
 		&:focus {
-			color: get-text-color('neutral-7');
+			color: var(--token-primitives-neutral-700);
 		}
 	}
 
 	&.today {
-		border-color: get-border-color('neutral-6');
+		border-color: var(--token-primitives-neutral-600);
 
 		&:hover,
 		&:focus {
-			border-color: get-border-color('neutral-3');
-			background: get-background-color('neutral-3');
-			color: get-text-color('primary');
+			border-color: var(--token-primitives-neutral-300);
+			background: var(--token-primitives-neutral-300);
+			color: var(--token-semantics-primary-base);
 		}
 
 		&.inRange {
-			color: get-text-color('neutral-9');
+			color: var(--token-primitives-neutral-900);
 		}
 	}
 
@@ -292,8 +292,8 @@ span.flatpickr-weekday {
 	&.nextMonthDay:focus,
 	&.nextMonthDay.inRange,
 	&.nextMonthDay.today.inRange {
-		background: get-background-color('neutral-3');
-		border-color: get-border-color('neutral-3');
+		background: var(--token-primitives-neutral-300);
+		border-color: var(--token-primitives-neutral-300);
 	}
 
 	&.selected,
@@ -314,11 +314,11 @@ span.flatpickr-weekday {
 	&.endRange.inRange,
 	&.endRange.prevMonthDay,
 	&.endRange.nextMonthDay {
-		background: get-background-color('primary');
-		border-color: get-border-color('primary');
+		background: var(--token-semantics-primary-base);
+		border-color: var(--token-semantics-primary-base);
 
 		&.today {
-			color: get-text-color('neutral-0');
+			color: var(--token-primitives-base-white);
 		}
 	}
 	// InRange Styles
@@ -334,7 +334,7 @@ span.flatpickr-weekday {
 			display: block;
 			top: -1px;
 			bottom: -1px;
-			background-color: get-background-color('neutral-3');
+			background-color: var(--token-primitives-neutral-300);
 			position: absolute;
 			z-index: var(--layer-global-negative);
 		}
@@ -373,7 +373,7 @@ span.flatpickr-weekday {
 	}
 
 	&.inRange {
-		box-shadow: var(--shadow-none);
+		box-shadow: none;
 
 		&:before {
 			left: -2px;
@@ -384,7 +384,7 @@ span.flatpickr-weekday {
 	&.selected.startRange + .endRange:not(:nth-child(7n + 1)),
 	&.startRange.startRange + .endRange:not(:nth-child(7n + 1)),
 	&.endRange.startRange + .endRange:not(:nth-child(7n + 1)) {
-		box-shadow: var(--shadow-none);
+		box-shadow: none;
 	}
 }
 
@@ -399,7 +399,7 @@ span.flatpickr-weekday {
 	input {
 		&:hover,
 		&:focus {
-			background: get-background-color('transparent');
+			background: transparent;
 		}
 	}
 
@@ -407,17 +407,17 @@ span.flatpickr-weekday {
 	.numInputWrapper {
 		flex: initial;
 		height: 30px;
-		padding: 0 var(--space-base);
+		padding: 0 var(--token-scale-400);
 		min-width: 48px;
 		width: auto;
 
 		&:hover,
 		&:focus {
-			border-radius: var(--border-radius-soft);
+			border-radius: var(--token-border-radius-100);
 		}
 
 		.numInput {
-			font-size: var(--font-size-s);
+			font-size: var(--token-font-size-350);
 		}
 	}
 
@@ -429,21 +429,21 @@ span.flatpickr-weekday {
 
 	// AM/PM selector
 	.flatpickr-am-pm {
-		background-color: get-background-color('primary');
-		border-radius: var(--border-radius-soft);
-		color: get-text-color('neutral-0');
-		font-size: var(--font-size-xs);
-		font-weight: var(--font-semi-bold);
+		background-color: var(--token-semantics-primary-base);
+		border-radius: var(--token-border-radius-100);
+		color: var(--token-primitives-base-white);
+		font-size: var(--token-font-size-300);
+		font-weight: var(--token-font-weight-semi-bold);
 		height: 18px;
 		line-height: 16px;
 		position: absolute;
-		right: var(--space-l);
+		right: var(--token-scale-800);
 		text-transform: lowercase;
 		width: 40px;
 
 		&:hover,
 		&:focus {
-			background-color: get-background-color('primary-hover');
+			background-color: var(--token-semantics-primary-900);
 		}
 	}
 }
@@ -456,7 +456,7 @@ span.flatpickr-weekday {
 
 // Flatpickr - TodayBtn
 .flatpickr-today-button {
-	padding: var(--space-none) var(--space-base) var(--space-base);
+	padding: var(--token-scale-0) var(--token-scale-400) var(--token-scale-400);
 	user-select: none;
 
 	a {
@@ -480,7 +480,7 @@ span.flatpickr-weekday {
 	.flatpickr-current-month .numInputWrapper .numInput,
 	.flatpickr-time .numInputWrapper .numInput {
 		// Hack to disable zoom focus on mobile
-		font-size: var(--font-size-base);
+		font-size: var(--token-font-size-400);
 	}
 
 	// Hack to force alignment left on iOS 15+
@@ -538,8 +538,8 @@ span.flatpickr-weekday {
 
 	.flatpickr-current-month {
 		.flatpickr-monthDropdown-months {
-			margin-left: var(--space-base);
-			margin-right: var(--space-none);
+			margin-left: var(--token-scale-400);
+			margin-right: var(--token-scale-0);
 		}
 	}
 
@@ -596,7 +596,7 @@ span.flatpickr-weekday {
 		grid-gap: 2px;
 		max-width: 307.875px;
 		min-width: 307.875px;
-		padding: 0 var(--space-xs);
+		padding: 0 var(--token-scale-100);
 		width: initial;
 	}
 
@@ -619,12 +619,12 @@ span.flatpickr-weekday {
 		.flatpickr-prev-month,
 		.flatpickr-next-month {
 			position: absolute;
-			margin: var(--space-xs);
+			margin: var(--token-scale-100);
 		}
 	}
 
 	.flatpickr-innerContainer {
-		padding: 0 0 var(--space-xs) 0;
+		padding: 0 0 var(--token-scale-100) 0;
 	}
 
 	.flatpickr-current-month {
@@ -653,12 +653,12 @@ span.flatpickr-weekday {
 	.flatpickr-am-pm,
 	.flatpickr-today-button a {
 		&:focus-visible {
-			box-shadow: 0 0 0 3px get-background-color('focus-outer');
+			box-shadow: 0 0 0 3px var(--color-focus-outer);
 		}
 	}
 
 	.flatpickr-day:focus-visible {
-		border-color: get-border-color('focus-outer');
+		border-color: var(--color-focus-outer);
 	}
 }
 
@@ -668,7 +668,7 @@ body:has(.has-accessible-features) .osui-monthpicker__dropdown {
 	.flatpickr-next-month,
 	.flatpickr-monthSelect-month.selected {
 		&:focus-visible {
-			box-shadow: 0 0 0 3px get-background-color('focus-outer');
+			box-shadow: 0 0 0 3px var(--color-focus-outer);
 		}
 	}
 }
@@ -679,7 +679,7 @@ body:has(.has-accessible-features) .osui-monthpicker__dropdown {
 	.flatpickr-rContainer,
 	.flatpickr-days,
 	.flatpickr-monthSelect-months {
-		padding: var(--space-xs);
+		padding: var(--token-scale-100);
 	}
 
 	.flatpickr-calendar {
@@ -700,7 +700,7 @@ body:has(.has-accessible-features) .osui-monthpicker__dropdown {
 
 	.flatpickr-current-month {
 		.numInputWrapper input {
-			padding: var(--space-none) var(--space-xs);
+			padding: var(--token-scale-0) var(--token-scale-100);
 		}
 
 		.flatpickr-monthDropdown-months {
@@ -738,7 +738,7 @@ body:has(.has-accessible-features) .osui-monthpicker__dropdown {
 		}
 
 		&.today {
-			@include a11y-high-contrast-outline(true, var(--border-size-s));
+			@include a11y-high-contrast-outline(true, var(--token-border-size-025));
 			z-index: calc(var(--osui-flatpickr-calendar-elems-layer) + var(--layer-local-tier-1));
 		}
 
@@ -749,9 +749,9 @@ body:has(.has-accessible-features) .osui-monthpicker__dropdown {
 		&.selected.inRange,
 		&.selected.prevMonthDay,
 		&.selected.nextMonthDay {
-			@include a11y-high-contrast-outline(true, var(--border-size-s));
-			font-size: var(--font-size-base);
-			font-weight: var(--font-semi-bold);
+			@include a11y-high-contrast-outline(true, var(--token-border-size-025));
+			font-size: var(--token-font-size-400);
+			font-weight: var(--token-font-weight-semi-bold);
 		}
 
 		&:hover,
@@ -765,8 +765,8 @@ body:has(.has-accessible-features) .osui-monthpicker__dropdown {
 		&.today.inRange:hover,
 		&.today.inRange:focus,
 		&.today.inRange:focus-visible {
-			font-size: var(--font-size-base);
-			font-weight: var(--font-semi-bold);
+			font-size: var(--token-font-size-400);
+			font-weight: var(--token-font-weight-semi-bold);
 			@include a11y-high-contrast-outline;
 		}
 
@@ -775,9 +775,9 @@ body:has(.has-accessible-features) .osui-monthpicker__dropdown {
 
 			&:before {
 				border-left: none;
-				border-radius: var(--border-radius-none);
+				border-radius: var(--token-border-radius-0);
 				border-right: none;
-				@include a11y-high-contrast-outline(true, var(--border-size-s));
+				@include a11y-high-contrast-outline(true, var(--token-border-size-025));
 				bottom: -1px;
 				content: '';
 				display: block;
@@ -796,7 +796,7 @@ body:has(.has-accessible-features) .osui-monthpicker__dropdown {
 		&.startRange.endRange,
 		&.endRange.endRange {
 			border: none;
-			border-radius: var(--border-radius-none);
+			border-radius: var(--token-border-radius-0);
 
 			&:before {
 				right: initial;
@@ -808,7 +808,7 @@ body:has(.has-accessible-features) .osui-monthpicker__dropdown {
 			&:before {
 				border-radius: 50px 0 0 50px;
 				border-right: none;
-				@include a11y-high-contrast-outline(true, var(--border-size-s));
+				@include a11y-high-contrast-outline(true, var(--token-border-size-025));
 				left: 0;
 				right: -2px;
 			}
@@ -819,7 +819,7 @@ body:has(.has-accessible-features) .osui-monthpicker__dropdown {
 			&:before {
 				border-left: none;
 				border-radius: 0 50px 50px 0;
-				@include a11y-high-contrast-outline(true, var(--border-size-s));
+				@include a11y-high-contrast-outline(true, var(--token-border-size-025));
 				left: -2px;
 				right: 0;
 			}

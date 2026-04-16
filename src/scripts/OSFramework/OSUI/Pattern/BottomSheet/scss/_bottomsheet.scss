@@ -11,11 +11,11 @@
 	--osui-bottom-sheet-draggable-area: 56px;
 	--osui-bottom-sheet-transition-function: cubic-bezier(0.19, 0.35, 0.56, 0.96);
 
-	background-color: get-background-color('neutral-0');
+	background-color: var(--token-primitives-base-white);
 	border-top-left-radius: var(--bottom-sheet-shape);
 	border-top-right-radius: var(--bottom-sheet-shape);
 	bottom: 0;
-	box-shadow: var(--shadow-l);
+	box-shadow: var(--token-elevation-3);
 	left: 0;
 	max-height: var(--bottom-sheet-max-height);
 	min-height: 50vh;
@@ -32,27 +32,27 @@
 
 		.osui-bottom-sheet__content:empty,
 		.osui-bottom-sheet__header__top-bar:empty {
-			-servicestudio-border: 1px dashed get-border-color('neutral-5');
-			-servicestudio-margin: var(--space-base);
+			-servicestudio-border: 1px dashed var(--token-primitives-neutral-500);
+			-servicestudio-margin: var(--token-scale-400);
 		}
 	}
 
 	&--has-handler {
 		.osui-bottom-sheet__header {
 			&::before {
-				background: get-background-color('neutral-5');
+				background: var(--token-primitives-neutral-500);
 				border-radius: 100px;
 				content: '';
 				height: 4px;
 				left: 50%;
 				position: absolute;
-				top: var(--space-base);
+				top: var(--token-scale-400);
 				transform: translateX(-50%);
 				width: 40px;
 			}
 
 			&__top-bar {
-				padding-top: var(--space-l);
+				padding-top: var(--token-scale-800);
 			}
 		}
 	}
@@ -71,7 +71,7 @@
 
 		// to simulate bigger height extended when spring animation is playing
 		&::before {
-			background-color: get-background-color('neutral-0');
+			background-color: var(--token-primitives-base-white);
 			content: '';
 			height: 100%;
 			left: 0;
@@ -95,7 +95,7 @@
 	}
 
 	&-overlay {
-		background-color: get-background-color('overlay');
+		background-color: var(--token-backdrop);
 		height: 100vh;
 		left: 0;
 		opacity: 0;
@@ -125,10 +125,10 @@
 		}
 
 		&__top-bar {
-			padding: var(--space-base);
+			padding: var(--token-scale-400);
 
 			&::before {
-				box-shadow: var(--shadow-l);
+				box-shadow: var(--token-elevation-3);
 				content: '';
 				height: 100%;
 				left: 0;
@@ -152,8 +152,8 @@
 	&__content {
 		max-height: var(--bottom-sheet-max-height);
 		overflow-y: scroll;
-		padding: var(--space-base);
-		padding-bottom: calc(var(--bottom-bar-size) + var(--space-m) + var(--os-safe-area-bottom));
+		padding: var(--token-scale-400);
+		padding-bottom: calc(var(--bottom-bar-size) + var(--token-scale-600) + var(--os-safe-area-bottom));
 	}
 }
 
@@ -175,8 +175,8 @@
 .landscape {
 	.osui-bottom-sheet__header__top-bar,
 	.osui-bottom-sheet__content {
-		padding-right: calc(var(--space-base) + var(--os-safe-area-right));
-		padding-left: calc(var(--space-base) + var(--os-safe-area-left));
+		padding-right: calc(var(--token-scale-400) + var(--os-safe-area-right));
+		padding-left: calc(var(--token-scale-400) + var(--os-safe-area-left));
 	}
 }
 
@@ -202,6 +202,6 @@
 ///
 .os-high-contrast {
 	.osui-bottom-sheet {
-		border: var(--border-size-s) solid get-border-color('neutral-0');
+		border: var(--token-border-size-025) solid var(--token-primitives-base-white);
 	}
 }

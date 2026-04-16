@@ -5,7 +5,7 @@
 	cursor: pointer;
 
 	&:after {
-		color: get-text-color('neutral-7');
+		color: var(--token-primitives-neutral-700);
 		content: '\f107';
 		font: normal normal normal 24px/1 FontAwesome;
 		font-family: 'FontAwesome';
@@ -19,19 +19,19 @@
 	&.is {
 		&-open {
 			&:after {
-				color: get-text-color('primary');
+				color: var(--token-semantics-primary-base);
 				transform: rotate(180deg);
 			}
 		}
 
 		&-disabled {
 			&:after {
-				color: get-text-color('neutral-5');
+				color: var(--token-primitives-neutral-500);
 			}
 
 			.choices__list--single {
 				.choices__item {
-					color: get-text-color('neutral-6');
+					color: var(--token-primitives-neutral-600);
 				}
 			}
 		}
@@ -40,9 +40,9 @@
 	.choices__button {
 		display: none;
 		height: auto;
-		margin-right: var(--space-m);
+		margin-right: var(--token-scale-600);
 		margin-top: -10px;
-		padding: var(--space-none);
+		padding: var(--token-scale-0);
 		position: absolute;
 		right: 0;
 		top: 50%;
@@ -54,7 +54,7 @@
 		}
 
 		&:focus {
-			box-shadow: 0 0 0 2px var(--shadow-xs);
+			box-shadow: 0 0 0 2px var(--token-elevation-1);
 		}
 	}
 
@@ -62,16 +62,16 @@
 		input:not(.btn):not(.checkbox):not(.radio-button),
 		.input {
 			max-width: 100%;
-			padding-left: var(--space-l);
+			padding-left: var(--token-scale-800);
 		}
 	}
 }
 
 .choices__list--single {
 	.choices__item {
-		color: get-text-color('neutral-10');
+		color: var(--token-primitives-neutral-1200);
 		overflow: hidden;
-		padding-right: var(--space-base);
+		padding-right: var(--token-scale-400);
 		text-overflow: ellipsis;
 		white-space: nowrap;
 		width: 99%;
@@ -102,21 +102,21 @@
 
 		.choices__button {
 			left: 0;
-			margin-left: var(--space-m);
-			margin-right: var(--space-none);
+			margin-left: var(--token-scale-600);
+			margin-right: var(--token-scale-0);
 			right: auto;
 		}
 	}
 
 	.choices__list--single {
-		padding-left: var(--space-base);
-		padding-right: var(--space-xs);
+		padding-left: var(--token-scale-400);
+		padding-right: var(--token-scale-100);
 	}
 }
 
 // Accessibility -----------------------------------------------------------------
 .has-accessible-features {
 	.choices[data-type*='select-one'] {
-		border-radius: var(--border-radius-soft);
+		border-radius: var(--token-border-radius-100);
 	}
 }

@@ -12,23 +12,23 @@
 
 		.chat {
 			&-photo {
-				margin-left: var(--space-base);
-				margin-right: var(--space-none);
+				margin-left: var(--token-scale-400);
+				margin-right: var(--token-scale-0);
 			}
 
 			&-message {
-				background-color: get-background-color('indigo');
-				color: get-text-color('neutral-0');
+				background-color: #4263eb;
+				color: var(--token-primitives-base-white);
 				text-align: right;
 			}
 		}
 	}
 
 	&-photo {
-		margin-right: var(--space-base);
+		margin-right: var(--token-scale-400);
 
 		img {
-			border-radius: var(--border-radius-circle);
+			border-radius: 50%;
 			height: 40px;
 			object-fit: cover;
 			width: 40px;
@@ -36,19 +36,19 @@
 	}
 
 	&-message {
-		background-color: get-background-color('neutral-3');
-		border-radius: var(--border-radius-soft);
+		background-color: var(--token-primitives-neutral-300);
+		border-radius: var(--token-border-radius-100);
 		display: flex;
 		flex-direction: column;
 		max-width: 600px;
-		padding: var(--space-base);
+		padding: var(--token-scale-400);
 		position: relative;
 		word-break: break-word;
 
 		&-status {
 			display: block;
-			font-size: var(--font-size-xs);
-			margin-top: var(--space-s);
+			font-size: var(--token-font-size-300);
+			margin-top: var(--token-scale-200);
 
 			&.hidden {
 				display: none;
@@ -64,14 +64,14 @@
 		&.right {
 			.chat {
 				&-photo {
-					margin-left: var(--space-none);
-					margin-right: var(--space-base);
+					margin-left: var(--token-scale-0);
+					margin-right: var(--token-scale-400);
 				}
 			}
 		}
 
 		&-photo {
-			margin-left: var(--space-base);
+			margin-left: var(--token-scale-400);
 			margin-right: 0;
 		}
 	}

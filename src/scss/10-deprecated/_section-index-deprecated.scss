@@ -1,7 +1,7 @@
 /* Patterns - Navigation - Section Index */
 ///
 .section-index {
-	border-left: var(--border-size-s) solid get-border-color('neutral-5');
+	border-left: var(--token-border-size-025) solid var(--token-primitives-neutral-500);
 	display: flex;
 	flex-direction: column;
 
@@ -15,27 +15,27 @@
 		cursor: pointer;
 
 		&:last-child {
-			margin-bottom: var(--space-none);
+			margin-bottom: var(--token-scale-0);
 		}
 
 		&.is--active {
-			border-left: var(--border-size-m) solid get-border-color('primary');
-			color: get-text-color('neutral-9');
-			font-weight: var(--font-semi-bold);
+			border-left: var(--token-border-size-050) solid var(--token-semantics-primary-base);
+			color: var(--token-primitives-neutral-900);
+			font-weight: var(--token-font-weight-semi-bold);
 		}
 	}
 
 	a {
 		&,
 		&:visited {
-			border-left: var(--border-size-m) solid get-border-color('transparent');
-			color: get-text-color('neutral-8');
-			margin-bottom: var(--space-s);
-			padding-left: var(--space-base);
+			border-left: var(--token-border-size-050) solid transparent;
+			color: var(--token-primitives-neutral-800);
+			margin-bottom: var(--token-scale-200);
+			padding-left: var(--token-scale-400);
 		}
 
 		&:hover {
-			color: get-text-color('neutral-9');
+			color: var(--token-primitives-neutral-900);
 		}
 	}
 }
@@ -78,8 +78,8 @@
 	.section-index {
 		a {
 			&:focus {
-				background-color: get-background-color('transparent');
-				box-shadow: 0 0 0 3px get-background-color('focus-outer');
+				background-color: transparent;
+				box-shadow: 0 0 0 3px var(--color-focus-outer);
 			}
 		}
 	}

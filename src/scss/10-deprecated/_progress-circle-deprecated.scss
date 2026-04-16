@@ -16,18 +16,18 @@
 	&-outer {
 		display: flex;
 		justify-content: center;
-		padding: var(--space-base);
+		padding: var(--token-scale-400);
 	}
 
 	&-small .progressbar-text {
-		font-size: var(--font-size-h4);
+		font-size: var(--token-font-size-550);
 	}
 
 	&-medium .progressbar-text {
-		font-size: var(--font-size-h3);
+		font-size: var(--token-font-size-650);
 	}
 
 	&-large .progressbar-text {
-		font-size: var(--font-size-display);
+		font-size: var(--token-font-size-900);
 	}
 }

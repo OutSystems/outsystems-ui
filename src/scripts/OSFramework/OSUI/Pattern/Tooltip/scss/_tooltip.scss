@@ -5,9 +5,9 @@
 
 ///
 .osui-tooltip {
-	--osui-tooltip-background-color: #{get-background-color('neutral-9')};
+	--osui-tooltip-background-color: #{var(--token-primitives-neutral-900)};
 	--osui-tooltip-arrow-size: 10px;
-	--osui-floating-offset: var(--space-s);
+	--osui-floating-offset: var(--token-scale-200);
 
 	display: inline-block;
 	position: relative;
@@ -19,13 +19,13 @@
 
 	.osui-balloon {
 		background-color: var(--osui-tooltip-background-color);
-		border-radius: var(--border-radius-soft);
-		color: get-text-color('neutral-0');
-		font-size: var(--font-size-s);
-		font-weight: var(--font-regular);
+		border-radius: var(--token-border-radius-100);
+		color: var(--token-primitives-base-white);
+		font-size: var(--token-font-size-350);
+		font-weight: var(--token-font-weight-regular);
 		line-height: initial;
 		max-width: 250px;
-		padding: var(--space-s);
+		padding: var(--token-scale-200);
 
 		&[class*='top'] {
 			&:after {
@@ -98,13 +98,13 @@
 .os-high-contrast {
 	.osui-tooltip {
 		.osui-balloon {
-			border: var(--border-size-s) solid var(--osui-tooltip-background-color);
+			border: var(--token-border-size-025) solid var(--osui-tooltip-background-color);
 		}
 
 		&__balloon-arrow {
 			border: 0 solid var(--osui-tooltip-background-color);
-			border-right-width: var(--border-size-s);
-			border-bottom-width: var(--border-size-s);
+			border-right-width: var(--token-border-size-025);
+			border-bottom-width: var(--token-border-size-025);
 		}
 	}
 }

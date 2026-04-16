@@ -6,9 +6,9 @@
 ///
 .avatar {
 	align-items: center;
-	color: get-text-color('neutral-0');
+	color: var(--token-primitives-base-white);
 	display: inline-flex;
-	font-weight: var(--font-semi-bold);
+	font-weight: var(--token-font-weight-semi-bold);
 	height: 32px;
 	justify-content: center;
 	line-height: 1;
@@ -17,31 +17,31 @@
 
 	&.background {
 		&-transparent {
-			color: get-text-color('primary');
+			color: var(--token-semantics-primary-base);
 		}
 
 		&-neutral {
 			&-0 {
-				color: get-text-color('primary');
+				color: var(--token-semantics-primary-base);
 			}
 
 			&-1,
 			&-2,
 			&-3,
 			&-4 {
-				color: get-text-color('neutral-9');
+				color: var(--token-primitives-neutral-900);
 			}
 		}
 	}
 
 	&-small {
-		font-size: var(--font-size-xs);
+		font-size: var(--token-font-size-300);
 		height: 24px;
 		width: 24px;
 	}
 
 	&-medium {
-		font-size: var(--font-size-base);
+		font-size: var(--token-font-size-400);
 		height: 40px;
 		width: 40px;
 	}

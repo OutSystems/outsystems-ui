@@ -65,7 +65,7 @@
 				&::-webkit-scrollbar-track,
 				&::-webkit-scrollbar-thumb,
 				&:hover::-webkit-scrollbar-track {
-					background-color: get-background-color('transparent');
+					background-color: transparent;
 				}
 
 				&:hover::-webkit-scrollbar-thumb {
@@ -91,7 +91,7 @@
 	&::-webkit-scrollbar-track,
 	&::-webkit-scrollbar-thumb,
 	&:hover::-webkit-scrollbar-track {
-		background-color: get-background-color('transparent');
+		background-color: transparent;
 	}
 
 	&:hover::-webkit-scrollbar-thumb {
@@ -112,7 +112,7 @@
 		& > :not(:first-child),
 		.list > :not(:first-child) {
 			margin-left: unset;
-			margin-right: var(--space-base);
+			margin-right: var(--token-scale-400);
 		}
 	}
 }

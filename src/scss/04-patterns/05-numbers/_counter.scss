@@ -6,7 +6,7 @@
 ///
 .counter {
 	display: flex;
-	padding: var(--space-none) var(--space-m);
+	padding: var(--token-scale-0) var(--token-scale-600);
 	word-break: keep-all;
 
 	&.background-transparent {

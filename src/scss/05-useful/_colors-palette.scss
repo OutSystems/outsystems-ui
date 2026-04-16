@@ -3,7 +3,7 @@
 /// @group UsefullClasses-Colors_Pallete
 /// Usefull - Colors Palette
 
-/* 
+/*
 	Note:
 	- In order to improve the SASSDOC generated file, the loop was splited in 2!
 */
@@ -15,11 +15,11 @@
 			&-#{$color} {
 				@if ($type == '') {
 					& {
-						background-color: get-background-color('#{$color}');
+						background-color: #{$value};
 					}
 				} @else {
 					&-#{$type} {
-						background-color: get-background-color('#{$color}-#{$type}');
+						background-color: #{$value};
 					}
 				}
 			}
@@ -34,11 +34,11 @@
 			&-#{$color} {
 				@if ($type == '') {
 					& {
-						color: get-text-color('#{$color}');
+						color: #{$value};
 					}
 				} @else {
 					&-#{$type} {
-						color: get-text-color('#{$color}-#{$type}');
+						color: #{$value};
 					}
 				}
 			}

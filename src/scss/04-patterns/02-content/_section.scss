@@ -6,19 +6,19 @@
 ///
 .section {
 	&-title {
-		background-color: get-background-color('transparent');
-		border-bottom: var(--border-size-s) solid get-border-color('neutral-4');
-		color: get-text-color('neutral-9');
-		font-size: var(--font-size-h2);
-		font-weight: var(--font-semi-bold);
-		padding: var(--space-none) var(--space-none) var(--space-s) var(--space-none);
+		background-color: transparent;
+		border-bottom: var(--token-border-size-025) solid var(--token-primitives-neutral-400);
+		color: var(--token-primitives-neutral-900);
+		font-size: var(--token-font-size-700);
+		font-weight: var(--token-font-weight-semi-bold);
+		padding: var(--token-scale-0) var(--token-scale-0) var(--token-scale-200) var(--token-scale-0);
 		position: relative;
 		text-transform: none;
 		width: 100%;
 	}
 
 	&-content {
-		padding: var(--space-s) var(--space-none) var(--space-none);
+		padding: var(--token-scale-200) var(--token-scale-0) var(--token-scale-0);
 	}
 
 	&-group {
@@ -32,7 +32,7 @@
 		}
 
 		.section-title {
-			background-color: get-app-settings-background-color('body', --color-background-body);
+			background-color: var(--background-color-body, var(--color-background-body));
 		}
 	}
 }
@@ -41,7 +41,7 @@
 .layout-native {
 	.section {
 		&-title {
-			padding: var(--space-s) var(--space-base) var(--space-s) var(--space-base);
+			padding: var(--token-scale-200) var(--token-scale-400) var(--token-scale-200) var(--token-scale-400);
 		}
 
 		&-content {
@@ -87,13 +87,13 @@
 ///
 .tablet {
 	.section-title {
-		font-size: calc(var(--font-size-h2) - 2px);
+		font-size: calc(var(--token-font-size-700) - 2px);
 	}
 }
 
 ///
 .phone {
 	.section-title {
-		font-size: calc(var(--font-size-h2) - 4px);
+		font-size: calc(var(--token-font-size-700) - 4px);
 	}
 }

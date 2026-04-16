@@ -14,8 +14,8 @@
 			right: 0;
 
 			&:not(:empty) + .input-with-icon-input input {
-				padding-left: var(--space-base);
-				padding-right: var(--space-xl);
+				padding-left: var(--token-scale-400);
+				padding-right: var(--token-scale-1000);
 			}
 
 			&.search-actions {
@@ -35,11 +35,11 @@
 
 			&,
 			a {
-				color: get-text-color('neutral-7');
+				color: var(--token-primitives-neutral-700);
 			}
 
 			&:not(:empty) + .input-with-icon-input input {
-				padding-left: var(--space-xl);
+				padding-left: var(--token-scale-1000);
 			}
 
 			&.search-actions {
@@ -47,7 +47,7 @@
 				right: 0;
 
 				&:hover {
-					color: get-text-color('neutral-8');
+					color: var(--token-primitives-neutral-800);
 					cursor: pointer;
 				}
 			}
@@ -77,7 +77,7 @@
 .form {
 	.input-with-icon {
 		.input-with-icon-content-icon {
-			padding-bottom: var(--space-m);
+			padding-bottom: var(--token-scale-600);
 			z-index: var(--layer-local-tier-1);
 		}
 

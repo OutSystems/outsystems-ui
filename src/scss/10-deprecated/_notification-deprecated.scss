@@ -2,13 +2,13 @@
 /* Since this pattern is Deprecated, it should not appear at SASSDCS! */
 
 .notification {
-	background-color: get-background-color('neutral-0');
-	border: var(--border-size-s) solid get-border-color('neutral-4');
-	border-radius: var(--border-radius-soft);
-	box-shadow: var(--shadow-xl);
-	color: get-text-color('neutral-10');
+	background-color: var(--token-primitives-base-white);
+	border: var(--token-border-size-025) solid var(--token-primitives-neutral-400);
+	border-radius: var(--token-border-radius-100);
+	box-shadow: var(--token-elevation-4);
+	color: var(--token-primitives-neutral-1200);
 	left: 50%;
-	padding: var(--space-m);
+	padding: var(--token-scale-600);
 	position: fixed;
 	top: 0;
 	transform: translateY(-120%) translateX(-50%);
