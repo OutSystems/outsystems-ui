@@ -20,10 +20,12 @@
 ///
 .form-control {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-input-background:    var(--token-bg-input-default);
-	--osui-input-border-color:  var(--token-border-input-default);
-	--osui-input-color:         var(--token-text-default);
-	--osui-input-border-radius: var(--token-border-radius-100);
+	--osui-input-background:          var(--token-bg-input-default);
+	--osui-input-border-color:        var(--token-border-input-default);
+	--osui-input-color:               var(--token-text-default);
+	--osui-input-border-radius:       var(--token-border-radius-100);
+	--osui-input-focus-border-color:  var(--token-semantics-primary-base);
+	--osui-input-error-border-color:  var(--token-semantics-danger-base);
 	// ───────────────────────────────────────────────────────────────────
 
 	&[data-input],
@@ -40,7 +42,7 @@
 		}
 
 		&:focus {
-			border: var(--token-border-size-025) solid var(--token-semantics-primary-base);
+			border: var(--token-border-size-025) solid var(--osui-input-focus-border-color);
 		}
 
 		&[disabled] {
@@ -97,7 +99,7 @@
 	&.not-valid {
 		&[data-input],
 		&[data-textarea] {
-			border: var(--token-border-size-025) solid var(--token-semantics-danger-base);
+			border: var(--token-border-size-025) solid var(--osui-input-error-border-color);
 		}
 	}
 }
@@ -142,7 +144,7 @@
 				border-radius: 0;
 
 				&:focus {
-					border-bottom: var(--token-border-size-025) solid var(--token-semantics-primary-base);
+					border-bottom: var(--token-border-size-025) solid var(--osui-input-focus-border-color);
 				}
 			}
 		}
@@ -169,7 +171,7 @@
 				&,
 				&:hover,
 				&:focus {
-					border-color: var(--token-semantics-danger-base);
+					border-color: var(--osui-input-error-border-color);
 				}
 			}
 		}

@@ -10,6 +10,18 @@
 	--osui-btn-color:         var(--token-semantics-primary-base);
 	--osui-btn-border-color:  currentColor;
 	--osui-btn-border-radius: var(--token-border-radius-100);
+	// Primary variant
+	--osui-btn-primary-background:   var(--token-semantics-primary-base);
+	--osui-btn-primary-border-color: var(--token-semantics-primary-base);
+	--osui-btn-primary-color:        var(--token-text-inverse);
+	// Success variant
+	--osui-btn-success-background:   var(--token-semantics-success-base);
+	--osui-btn-success-border-color: var(--token-semantics-success-base);
+	--osui-btn-success-color:        var(--token-text-inverse);
+	// Error variant
+	--osui-btn-error-background:     var(--token-semantics-danger-base);
+	--osui-btn-error-border-color:   var(--token-semantics-danger-base);
+	--osui-btn-error-color:          var(--token-text-inverse);
 	// ───────────────────────────────────────────────────────────────────
 
 	align-items: center;
@@ -49,9 +61,9 @@
 
 	// States
 	&-primary {
-		background-color: var(--token-semantics-primary-base);
-		border: var(--token-border-size-025) solid var(--token-semantics-primary-base);
-		color: var(--token-text-inverse);
+		background-color: var(--osui-btn-primary-background);
+		border: var(--token-border-size-025) solid var(--osui-btn-primary-border-color);
+		color: var(--osui-btn-primary-color);
 	}
 
 	&-small {
@@ -76,15 +88,15 @@
 	}
 
 	&-success {
-		background-color: var(--token-semantics-success-base);
-		border: var(--token-border-size-025) solid var(--token-semantics-success-base);
-		color: var(--token-text-inverse);
+		background-color: var(--osui-btn-success-background);
+		border: var(--token-border-size-025) solid var(--osui-btn-success-border-color);
+		color: var(--osui-btn-success-color);
 	}
 
 	&-error {
-		background-color: var(--token-semantics-danger-base);
-		border: var(--token-border-size-025) solid var(--token-semantics-danger-base);
-		color: var(--token-text-inverse);
+		background-color: var(--osui-btn-error-background);
+		border: var(--token-border-size-025) solid var(--osui-btn-error-border-color);
+		color: var(--osui-btn-error-color);
 	}
 
 	&[disabled] {
@@ -165,7 +177,7 @@
 		.btn {
 			background-color: transparent;
 			border: 0;
-			color: var(--token-semantics-primary-base);
+			color: var(--osui-btn-color);
 			font-size: var(--token-font-size-400);
 			padding: 0;
 		}

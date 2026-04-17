@@ -6,9 +6,10 @@
 ///
 [data-checkbox] {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-checkbox-background:    var(--token-bg-input-default);
-	--osui-checkbox-border-color:  var(--token-border-input-default);
-	--osui-checkbox-border-radius: var(--token-border-radius-100);
+	--osui-checkbox-background:     var(--token-bg-input-default);
+	--osui-checkbox-border-color:   var(--token-border-input-default);
+	--osui-checkbox-border-radius:  var(--token-border-radius-100);
+	--osui-checkbox-checked-color:  var(--token-semantics-primary-base);
 	// ───────────────────────────────────────────────────────────────────
 
 	height: 24px;
@@ -33,8 +34,8 @@
 
 	&:checked {
 		&:before {
-			background: var(--token-semantics-primary-base);
-			border: var(--token-border-size-025) solid var(--token-semantics-primary-base);
+			background: var(--osui-checkbox-checked-color);
+			border: var(--token-border-size-025) solid var(--osui-checkbox-checked-color);
 		}
 
 		&:after {
@@ -106,7 +107,7 @@
 
 		&:checked {
 			&:before {
-				border-color: var(--token-semantics-primary-base);
+				border-color: var(--osui-checkbox-checked-color);
 			}
 		}
 
