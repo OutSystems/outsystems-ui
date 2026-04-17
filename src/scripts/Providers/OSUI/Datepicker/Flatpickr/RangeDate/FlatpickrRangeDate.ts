@@ -85,7 +85,11 @@ namespace Providers.OSUI.Datepicker.Flatpickr.RangeDate {
 					this.flatpickrInputElem.value
 				);
 				// Trigger platform's onChange callback event
-				this.triggerPlatformEventCallback(this.onSelectedCallbackEvent, _selectedDate[0], _selectedDate[1]);
+				this.triggerPlatformEventCallback(
+					this.onSelectedCallbackEvent,
+					OSFramework.OSUI.Helper.Dates.GetJsonDateFromDate(selectedDates[0]),
+					OSFramework.OSUI.Helper.Dates.GetJsonDateFromDate(selectedDates[1])
+				);
 			}
 		}
 
