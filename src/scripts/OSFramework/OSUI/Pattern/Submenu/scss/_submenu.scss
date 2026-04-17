@@ -10,6 +10,8 @@
 	--osui-submenu-items-border-color:  var(--token-border-default);
 	--osui-submenu-items-shadow:        var(--token-elevation-2);
 	--osui-submenu-item-color:          var(--token-text-subtlest);
+	--osui-submenu-header-color:        var(--token-text-default);
+	--osui-submenu-active-border-color: var(--osui-submenu-active-border-color);
 	// ───────────────────────────────────────────────────────────────────
 
 	cursor: pointer;
@@ -34,18 +36,18 @@
 	&.active {
 		&--is-open {
 			.osui-submenu__header__item {
-				color: var(--token-semantics-primary-base);
+				color: var(--osui-submenu-active-border-color);
 			}
 		}
 
 		.osui-submenu {
 			&__header {
-				border-bottom: var(--token-border-size-050) solid var(--token-semantics-primary-base);
+				border-bottom: var(--token-border-size-050) solid var(--osui-submenu-active-border-color);
 
 				&__item {
 					&,
 					a {
-						color: var(--token-semantics-primary-base);
+						color: var(--osui-submenu-active-border-color);
 						text-decoration: none;
 					}
 				}
@@ -95,7 +97,7 @@
 
 		&__item {
 			align-items: center;
-			color: var(--token-text-default);
+			color: var(--osui-submenu-header-color);
 			display: inline-flex;
 			height: 100%;
 			position: relative;
@@ -150,7 +152,7 @@
 			white-space: nowrap;
 
 			&.active {
-				color: var(--token-semantics-primary-base);
+				color: var(--osui-submenu-active-border-color);
 			}
 		}
 	}
@@ -183,7 +185,7 @@
 			width: 100%;
 
 			&.active .osui-submenu__header {
-				border-left: var(--token-border-size-050) solid var(--token-semantics-primary-base);
+				border-left: var(--token-border-size-050) solid var(--osui-submenu-active-border-color);
 			}
 
 			&--is-open > .osui-submenu__items {
@@ -236,24 +238,24 @@
 	.osui-submenu {
 		&:hover {
 			.osui-submenu__header__item {
-				color: var(--token-text-default);
+				color: var(--osui-submenu-header-color);
 			}
 		}
 
 		&.active {
 			.osui-submenu__header:hover .osui-submenu__header__item {
-				color: var(--token-semantics-primary-base);
+				color: var(--osui-submenu-active-border-color);
 			}
 		}
 
 		&__header {
 			&:hover {
-				border-bottom: var(--token-border-size-050) solid var(--token-semantics-primary-base);
+				border-bottom: var(--token-border-size-050) solid var(--osui-submenu-active-border-color);
 			}
 
 			&__item {
 				a:hover {
-					color: var(--token-text-default);
+					color: var(--osui-submenu-header-color);
 				}
 			}
 		}
@@ -262,11 +264,11 @@
 			a {
 				&:hover {
 					background-color: var(--token-bg-neutral-subtle-default);
-					color: var(--token-text-default);
+					color: var(--osui-submenu-header-color);
 				}
 
 				&.active:hover {
-					color: var(--token-semantics-primary-base);
+					color: var(--osui-submenu-active-border-color);
 				}
 			}
 		}
@@ -286,7 +288,7 @@
 				&__header {
 					&:hover {
 						border-bottom: none;
-						border-left: var(--token-border-size-050) solid var(--token-semantics-primary-base);
+						border-left: var(--token-border-size-050) solid var(--osui-submenu-active-border-color);
 					}
 				}
 			}
@@ -314,7 +316,7 @@
 		width: 100%;
 
 		&.active .osui-submenu__header {
-			border-left: var(--token-border-size-050) solid var(--token-semantics-primary-base);
+			border-left: var(--token-border-size-050) solid var(--osui-submenu-active-border-color);
 			border-bottom: 0;
 		}
 
@@ -359,7 +361,7 @@
 
 			&.active .osui-submenu__header {
 				border-left: var(--token-border-size-0);
-				border-right: var(--token-border-size-050) solid var(--token-semantics-primary-base);
+				border-right: var(--token-border-size-050) solid var(--osui-submenu-active-border-color);
 			}
 		}
 	}
@@ -369,7 +371,7 @@
 		.osui-submenu {
 			&.active .osui-submenu__header {
 				border-left: 0;
-				border-right: var(--token-border-size-050) solid var(--token-semantics-primary-base);
+				border-right: var(--token-border-size-050) solid var(--osui-submenu-active-border-color);
 			}
 
 			.osui-submenu__header {
