@@ -5,6 +5,11 @@
 
 ///
 .breadcrumbs {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-breadcrumbs-item-color:      var(--token-text-subtlest);
+	--osui-breadcrumbs-separator-color: var(--token-primitives-neutral-700);
+	// ───────────────────────────────────────────────────────────────────
+
 	&-content {
 		align-items: center;
 		display: flex;
@@ -12,11 +17,11 @@
 
 	&-item {
 		align-items: center;
-		color: var(--token-text-subtlest);
+		color: var(--osui-breadcrumbs-item-color);
 		display: inline-flex;
 
 		.icon {
-			color: var(--token-primitives-neutral-700);
+			color: var(--osui-breadcrumbs-separator-color);
 			display: inline-flex;
 			font-size: var(--token-font-size-300);
 			justify-content: center;

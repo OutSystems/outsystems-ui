@@ -5,8 +5,14 @@
 
 ///
 .badge {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-badge-color:          var(--token-text-inverse);
+	--osui-badge-primary-color:  var(--token-semantics-primary-base);
+	--osui-badge-on-light-color: var(--token-text-default);
+	// ───────────────────────────────────────────────────────────────────
+
 	align-items: center;
-	color: var(--token-text-inverse);
+	color: var(--osui-badge-color);
 	display: inline-flex;
 	font-weight: var(--token-font-weight-semi-bold);
 	height: 32px;
@@ -17,19 +23,19 @@
 	&.background {
 		&-neutral {
 			&-0 {
-				color: var(--token-semantics-primary-base);
+				color: var(--osui-badge-primary-color);
 			}
 
 			&-1,
 			&-2,
 			&-3,
 			&-4 {
-				color: var(--token-text-default);
+				color: var(--osui-badge-on-light-color);
 			}
 		}
 
 		&-transparent {
-			color: var(--token-semantics-primary-base);
+			color: var(--osui-badge-primary-color);
 		}
 	}
 

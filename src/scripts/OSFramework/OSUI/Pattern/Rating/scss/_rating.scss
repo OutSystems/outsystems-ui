@@ -5,6 +5,11 @@
 
 ///
 .rating {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-rating-disabled-color:       var(--token-text-disabled);
+	--osui-rating-disabled-empty-color: var(--token-border-default);
+	// ───────────────────────────────────────────────────────────────────
+
 	position: relative;
 	display: inline-flex;
 	flex-wrap: wrap;
@@ -50,18 +55,18 @@
 			.rating-item {
 				&-filled,
 				&-half {
-					color: var(--token-text-disabled);
+					color: var(--osui-rating-disabled-color);
 
 					.icon {
-						color: var(--token-text-disabled);
+						color: var(--osui-rating-disabled-color);
 					}
 				}
 
 				&-empty {
-					color: var(--token-text-disabled);
+					color: var(--osui-rating-disabled-color);
 
 					.icon {
-						color: var(--token-border-default);
+						color: var(--osui-rating-disabled-empty-color);
 					}
 				}
 			}

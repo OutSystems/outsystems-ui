@@ -5,6 +5,12 @@
 
 ///
 .timeline {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-timeline-line-color:  var(--token-bg-neutral-base-default);
+	--osui-timeline-icon-color:  var(--token-text-inverse);
+	--osui-timeline-text-color:  var(--token-text-subtlest);
+	// ───────────────────────────────────────────────────────────────────
+
 	&-item {
 		display: flex;
 		justify-content: space-between;
@@ -23,7 +29,7 @@
 		position: relative;
 
 		&-line {
-			background-color: var(--token-bg-neutral-base-default);
+			background-color: var(--osui-timeline-line-color);
 			flex: 1;
 			margin: var(--token-scale-200) var(--token-scale-0) var(--token-scale-200);
 			width: 1px;
@@ -32,7 +38,7 @@
 		&-container {
 			align-items: center;
 			border-radius: 50%;
-			color: var(--token-text-inverse);
+			color: var(--osui-timeline-icon-color);
 			display: -webkit-box;
 			display: -ms-flexbox;
 			display: flex;
@@ -53,7 +59,7 @@
 
 	&-right,
 	&-content-inner {
-		color: var(--token-text-subtlest);
+		color: var(--osui-timeline-text-color);
 	}
 }
 

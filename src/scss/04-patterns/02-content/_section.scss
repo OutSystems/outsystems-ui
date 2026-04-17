@@ -5,10 +5,15 @@
 
 ///
 .section {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-section-title-color:        var(--token-text-default);
+	--osui-section-title-border-color: var(--token-border-default);
+	// ───────────────────────────────────────────────────────────────────
+
 	&-title {
 		background-color: transparent;
-		border-bottom: var(--token-border-size-025) solid var(--token-border-default);
-		color: var(--token-text-default);
+		border-bottom: var(--token-border-size-025) solid var(--osui-section-title-border-color);
+		color: var(--osui-section-title-color);
 		font-size: var(--token-font-size-700);
 		font-weight: var(--token-font-weight-semi-bold);
 		padding: var(--token-scale-0) var(--token-scale-0) var(--token-scale-200) var(--token-scale-0);

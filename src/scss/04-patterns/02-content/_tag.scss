@@ -5,8 +5,14 @@
 
 ///
 .tag {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-tag-color:             var(--token-text-inverse);
+	--osui-tag-primary-color:     var(--token-semantics-primary-base);
+	--osui-tag-on-light-color:    var(--token-text-default);
+	// ───────────────────────────────────────────────────────────────────
+
 	align-items: center;
-	color: var(--token-text-inverse);
+	color: var(--osui-tag-color);
 	display: inline-flex;
 	font-weight: var(--token-font-weight-semi-bold);
 	height: 32px;
@@ -32,19 +38,19 @@
 
 	&.background {
 		&-transparent {
-			color: var(--token-semantics-primary-base);
+			color: var(--osui-tag-primary-color);
 		}
 
 		&-neutral {
 			&-0 {
-				color: var(--token-semantics-primary-base);
+				color: var(--osui-tag-primary-color);
 			}
 
 			&-1,
 			&-2,
 			&-3,
 			&-4 {
-				color: var(--token-text-default);
+				color: var(--osui-tag-on-light-color);
 			}
 		}
 	}

@@ -5,9 +5,15 @@
 
 ///
 .split-screen-wrapper {
-	background-color: var(--token-bg-surface-default);
-	border: var(--token-border-size-025) solid var(--token-border-default);
-	border-radius: var(--token-border-radius-100);
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-master-detail-background:    var(--token-bg-surface-default);
+	--osui-master-detail-border-color:  var(--token-border-default);
+	--osui-master-detail-border-radius: var(--token-border-radius-100);
+	// ───────────────────────────────────────────────────────────────────
+
+	background-color: var(--osui-master-detail-background);
+	border: var(--token-border-size-025) solid var(--osui-master-detail-border-color);
+	border-radius: var(--osui-master-detail-border-radius);
 	display: flex;
 	overflow: hidden;
 	position: relative;
@@ -35,7 +41,7 @@
 		}
 
 		&-right {
-			border-left: var(--token-border-size-025) solid var(--token-border-default);
+			border-left: var(--token-border-size-025) solid var(--osui-master-detail-border-color);
 			padding: var(--token-scale-1000);
 			width: calc(100% - var(--left-percentage));
 
@@ -122,7 +128,7 @@
 			}
 
 			&-right {
-				background-color: var(--token-bg-surface-default);
+				background-color: var(--osui-master-detail-background);
 				border-left: var(--token-border-size-0);
 				height: 100%;
 				left: 0;
@@ -197,7 +203,7 @@
 .is-rtl {
 	.split-right {
 		border-left: 0;
-		border-right: var(--token-border-size-025) solid var(--token-border-default);
+		border-right: var(--token-border-size-025) solid var(--osui-master-detail-border-color);
 	}
 }
 

@@ -5,6 +5,11 @@
 
 ///
 .blank-slate {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-blank-slate-description-color: var(--token-text-default);
+	--osui-blank-slate-icon-color:        var(--token-text-disabled);
+	// ───────────────────────────────────────────────────────────────────
+
 	display: flex;
 	flex-direction: column;
 	justify-content: space-around;
@@ -23,7 +28,7 @@
 	}
 
 	&-description {
-		color: var(--token-text-default);
+		color: var(--osui-blank-slate-description-color);
 		padding: var(--token-scale-0) var(--token-scale-400);
 	}
 
@@ -32,7 +37,7 @@
 	}
 
 	&-icon {
-		color: var(--token-text-disabled);
+		color: var(--osui-blank-slate-icon-color);
 		font-size: 70px;
 	}
 }

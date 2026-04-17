@@ -5,8 +5,14 @@
 
 ///
 .avatar {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-avatar-color:          var(--token-text-inverse);
+	--osui-avatar-primary-color:  var(--token-semantics-primary-base);
+	--osui-avatar-on-light-color: var(--token-text-default);
+	// ───────────────────────────────────────────────────────────────────
+
 	align-items: center;
-	color: var(--token-text-inverse);
+	color: var(--osui-avatar-color);
 	display: inline-flex;
 	font-weight: var(--token-font-weight-semi-bold);
 	height: 32px;
@@ -17,19 +23,19 @@
 
 	&.background {
 		&-transparent {
-			color: var(--token-semantics-primary-base);
+			color: var(--osui-avatar-primary-color);
 		}
 
 		&-neutral {
 			&-0 {
-				color: var(--token-semantics-primary-base);
+				color: var(--osui-avatar-primary-color);
 			}
 
 			&-1,
 			&-2,
 			&-3,
 			&-4 {
-				color: var(--token-text-default);
+				color: var(--osui-avatar-on-light-color);
 			}
 		}
 	}

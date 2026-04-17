@@ -5,6 +5,11 @@
 
 ///
 .input-with-icon {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-input-with-icon-icon-color:       var(--token-primitives-neutral-700);
+	--osui-input-with-icon-icon-hover-color: var(--token-text-subtlest);
+	// ───────────────────────────────────────────────────────────────────
+
 	display: flex;
 	position: relative;
 
@@ -35,7 +40,7 @@
 
 			&,
 			a {
-				color: var(--token-primitives-neutral-700);
+				color: var(--osui-input-with-icon-icon-color);
 			}
 
 			&:not(:empty) + .input-with-icon-input input {
@@ -47,7 +52,7 @@
 				right: 0;
 
 				&:hover {
-					color: var(--token-text-subtlest);
+					color: var(--osui-input-with-icon-icon-hover-color);
 					cursor: pointer;
 				}
 			}

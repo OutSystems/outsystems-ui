@@ -5,8 +5,15 @@
 
 ///
 .bottom-bar-wrapper {
-	background-color: var(--token-bg-surface-default);
-	border-top: var(--token-border-size-025) solid var(--token-primitives-neutral-300);
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-bottom-bar-background:         var(--token-bg-surface-default);
+	--osui-bottom-bar-border-color:       var(--token-primitives-neutral-300);
+	--osui-bottom-bar-item-color:         var(--token-text-subtlest);
+	--osui-bottom-bar-item-active-color:  var(--token-semantics-primary-base);
+	// ───────────────────────────────────────────────────────────────────
+
+	background-color: var(--osui-bottom-bar-background);
+	border-top: var(--token-border-size-025) solid var(--osui-bottom-bar-border-color);
 	height: 100%;
 }
 
@@ -28,9 +35,9 @@
 		overflow: hidden;
 	}
 	& > a {
-		color: var(--token-text-subtlest);
+		color: var(--osui-bottom-bar-item-color);
 		&.active {
-			color: var(--token-semantics-primary-base);
+			color: var(--osui-bottom-bar-item-active-color);
 		}
 	}
 	&-item {

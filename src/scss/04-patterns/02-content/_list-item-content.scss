@@ -5,6 +5,11 @@
 
 ///
 .list-item-content {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-list-item-content-title-color: var(--token-text-default);
+	--osui-list-item-content-text-color:  var(--token-primitives-neutral-700);
+	// ───────────────────────────────────────────────────────────────────
+
 	align-items: center;
 	display: flex;
 
@@ -30,13 +35,13 @@
 	}
 
 	&-title {
-		color: var(--token-text-default);
+		color: var(--osui-list-item-content-title-color);
 		font-size: var(--token-font-size-500);
 		font-weight: var(--token-font-weight-semi-bold);
 	}
 
 	&-text {
-		color: var(--token-primitives-neutral-700);
+		color: var(--osui-list-item-content-text-color);
 	}
 }
 

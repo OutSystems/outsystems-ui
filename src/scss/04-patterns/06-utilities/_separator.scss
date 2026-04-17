@@ -5,7 +5,11 @@
 
 ///
 .separator {
-	background-color: var(--token-semantics-primary-base);
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-separator-color: var(--token-semantics-primary-base);
+	// ───────────────────────────────────────────────────────────────────
+
+	background-color: var(--osui-separator-color);
 
 	&-vertical {
 		display: inline-block;

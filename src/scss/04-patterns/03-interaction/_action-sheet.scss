@@ -5,6 +5,12 @@
 
 ///
 .action-sheet {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-action-sheet-background:         var(--token-bg-surface-default);
+	--osui-action-sheet-cancel-color:       var(--token-text-subtlest);
+	--osui-action-sheet-overlay-background: var(--token-backdrop);
+	// ───────────────────────────────────────────────────────────────────
+
 	bottom: 0;
 	left: 0;
 	margin-top: 0;
@@ -41,7 +47,7 @@
 		}
 
 		&:after {
-			background-color: var(--token-backdrop);
+			background-color: var(--osui-action-sheet-overlay-background);
 			content: '';
 			display: block;
 			height: 100%;
@@ -112,7 +118,7 @@
 
 	&-cancel .btn {
 		border: none;
-		color: var(--token-text-subtlest);
+		color: var(--osui-action-sheet-cancel-color);
 	}
 }
 
@@ -154,7 +160,7 @@
 ///
 .os-high-contrast {
 	.action-sheet-container--visible .action-sheet {
-		background-color: var(--token-bg-surface-default);
+		background-color: var(--osui-action-sheet-background);
 		@include a11y-high-contrast-outline(true);
 	}
 

@@ -5,6 +5,14 @@
 
 ///
 .stackedcards {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-stacked-cards-background:               var(--token-bg-surface-default);
+	--osui-stacked-cards-overlay-color:            var(--token-text-inverse);
+	--osui-stacked-cards-overlay-top-background:   var(--token-semantics-info-base);
+	--osui-stacked-cards-overlay-right-background: var(--token-semantics-success-base);
+	--osui-stacked-cards-overlay-left-background:  var(--token-semantics-danger-base);
+	// ───────────────────────────────────────────────────────────────────
+
 	position: relative;
 
 	* {
@@ -130,7 +138,7 @@
 	&-bottom,
 	&-top,
 	&-none {
-		background-color: var(--token-bg-surface-default);
+		background-color: var(--osui-stacked-cards-background);
 		height: 100%;
 	}
 
@@ -192,8 +200,8 @@
 	}
 
 	&.top {
-		background-color: var(--token-semantics-info-base);
-		color: var(--token-text-inverse);
+		background-color: var(--osui-stacked-cards-overlay-top-background);
+		color: var(--osui-stacked-cards-overlay-color);
 
 		// Service Studio Preview
 		& {
@@ -206,8 +214,8 @@
 	}
 
 	&.right {
-		background-color: var(--token-semantics-success-base);
-		color: var(--token-text-inverse);
+		background-color: var(--osui-stacked-cards-overlay-right-background);
+		color: var(--osui-stacked-cards-overlay-color);
 
 		// Service Studio Preview
 		& {
@@ -220,8 +228,8 @@
 	}
 
 	&.left {
-		background-color: var(--token-semantics-danger-base);
-		color: var(--token-text-inverse);
+		background-color: var(--osui-stacked-cards-overlay-left-background);
+		color: var(--osui-stacked-cards-overlay-color);
 
 		// Service Studio Preview
 		& {
