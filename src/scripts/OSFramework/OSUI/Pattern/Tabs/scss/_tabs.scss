@@ -6,10 +6,11 @@
 ///
 .osui-tabs {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-tabs-border-color:          var(--token-border-default);
-	--osui-tabs-header-item-color:     var(--token-text-subtlest);
-	--osui-tabs-header-item-color-active: var(--token-text-default);
+	--osui-tabs-border-color:               var(--token-border-default);
+	--osui-tabs-header-item-color:          var(--token-text-subtlest);
+	--osui-tabs-header-item-color-active:   var(--token-text-default);
 	--osui-tabs-header-item-color-disabled: var(--token-text-disabled);
+	--osui-tabs-indicator-color:            var(--token-semantics-primary-base);
 	// ───────────────────────────────────────────────────────────────────
 
 	--header-item-width: fit-content(30%);
@@ -213,7 +214,7 @@
 		}
 
 		&__indicator {
-			background-color: var(--token-semantics-primary-base);
+			background-color: var(--osui-tabs-indicator-color);
 			position: absolute;
 			transition: transform 200ms linear;
 			transform-origin: 0 0;
@@ -460,7 +461,7 @@
 		-servicestudio-left: 0;
 		-servicestudio-width: 100%;
 		-servicestudio-height: 2px;
-		-servicestudio-background-color: var(--token-semantics-primary-base);
+		-servicestudio-background-color: var(--osui-tabs-indicator-color);
 		-servicestudio-position: absolute;
 	}
 }
