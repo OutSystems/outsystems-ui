@@ -5,6 +5,8 @@
 
 .osui-overflow-menu {
 	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-overflow-menu-background:         var(--token-bg-surface-default);
+	--osui-overflow-menu-shadow:             var(--token-elevation-2);
 	--osui-overflow-menu-color:              var(--token-text-default);
 	--osui-overflow-menu-trigger-active-bg:  var(--token-bg-neutral-subtle-default);
 	// ───────────────────────────────────────────────────────────────────
@@ -33,6 +35,9 @@
 	}
 
 	&__balloon {
+		--osui-balloon-background: var(--osui-overflow-menu-background);
+		--osui-balloon-shadow:     var(--osui-overflow-menu-shadow);
+
 		min-width: var(--osui-overflow-menu-min-width);
 		overflow: hidden;
 		z-index: var(--layer-global-instant-interaction);
