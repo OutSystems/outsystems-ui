@@ -11,11 +11,13 @@
 ///
 .osui-accordion-item {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-accordion-item-background:    var(--token-bg-surface-default);
-	--osui-accordion-item-border-color:  var(--token-border-default);
-	--osui-accordion-item-border-width:  var(--token-border-size-025);
-	--osui-accordion-item-border-radius: var(--token-border-radius-100);
-	--osui-accordion-item-color:         var(--token-text-default);
+	--osui-accordion-item-background:             var(--token-bg-surface-default);
+	--osui-accordion-item-border-color:           var(--token-border-default);
+	--osui-accordion-item-border-width:           var(--token-border-size-025);
+	--osui-accordion-item-border-radius:          var(--token-border-radius-100);
+	--osui-accordion-item-color:                  var(--token-text-default);
+	--osui-accordion-item-active-indicator-color: var(--token-semantics-primary-base);
+	--osui-accordion-item-icon-color:             var(--token-semantics-primary-base);
 	// ───────────────────────────────────────────────────────────────────
 
 	--accordion-active-border-size: 2px;
@@ -80,7 +82,7 @@
 			}
 
 			&::after {
-				border-color: var(--token-semantics-primary-base);
+				border-color: var(--osui-accordion-item-active-indicator-color);
 				opacity: 1;
 				transition: opacity 300ms ease-in;
 			}
@@ -132,7 +134,7 @@
 
 	&__icon {
 		align-items: center;
-		color: var(--token-semantics-primary-base);
+		color: var(--osui-accordion-item-icon-color);
 		display: flex;
 		font-family: FontAwesome;
 		font-size: var(--token-font-size-550);
@@ -144,7 +146,7 @@
 
 		&--plus-minus {
 			&:after {
-				background-color: var(--token-semantics-primary-base);
+				background-color: var(--osui-accordion-item-icon-color);
 				content: ' ';
 				height: 100%;
 				transition: transform 300ms ease-in-out;
@@ -152,7 +154,7 @@
 			}
 
 			&:before {
-				background-color: var(--token-semantics-primary-base);
+				background-color: var(--osui-accordion-item-icon-color);
 				content: ' ';
 				height: 2px;
 				position: absolute;
