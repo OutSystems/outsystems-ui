@@ -9,8 +9,10 @@
 ///
 .osui-carousel {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-carousel-arrow-background: var(--token-bg-surface-default);
-	--osui-carousel-arrow-shadow:     var(--token-elevation-1);
+	--osui-carousel-arrow-background:        var(--token-bg-surface-default);
+	--osui-carousel-arrow-shadow:            var(--token-elevation-1);
+	--osui-carousel-arrow-icon-color:        var(--token-primitives-neutral-700);
+	--osui-carousel-pagination-active-color: var(--token-semantics-primary-base);
 	// ───────────────────────────────────────────────────────────────────
 
 	--osui-carousel-track-width: 100%;
@@ -37,7 +39,7 @@
 				width: 14px;
 
 				path {
-					fill: var(--token-primitives-neutral-700);
+					fill: var(--osui-carousel-arrow-icon-color);
 				}
 			}
 
@@ -53,7 +55,7 @@
 
 			&__page {
 				&.is-active {
-					background-color: var(--token-semantics-primary-base);
+					background-color: var(--osui-carousel-pagination-active-color);
 					z-index: var(--layer-local-tier-1);
 				}
 			}
