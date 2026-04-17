@@ -6,8 +6,9 @@
 ///
 .animated-label {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-animated-label-color:        var(--token-text-subtlest);
-	--osui-animated-label-border-color: var(--token-border-input-default);
+	--osui-animated-label-color:              var(--token-text-subtlest);
+	--osui-animated-label-border-color:       var(--token-border-input-default);
+	--osui-animated-label-focus-border-color: var(--token-semantics-primary-base);
 	// ───────────────────────────────────────────────────────────────────
 
 	position: relative;
@@ -65,7 +66,7 @@
 				transition: all 100ms ease-in-out;
 
 				&:focus {
-					border-bottom: var(--token-border-size-025) solid var(--token-semantics-primary-base);
+					border-bottom: var(--token-border-size-025) solid var(--osui-animated-label-focus-border-color);
 
 					&::-webkit-datetime-edit {
 						color: var(--token-text-default);
