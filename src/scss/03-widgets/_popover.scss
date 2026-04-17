@@ -21,12 +21,13 @@
 			--osui-popover-border-color:  var(--token-border-default);
 			--osui-popover-color:         var(--token-text-default);
 			--osui-popover-border-radius: var(--token-border-radius-100);
+			--osui-popover-shadow:        var(--token-elevation-1);
 			// ───────────────────────────────────────────────────────────────────
 
 			background-color: var(--osui-popover-background);
 			border: var(--token-border-size-025) solid var(--osui-popover-border-color);
 			border-radius: var(--osui-popover-border-radius);
-			box-shadow: var(--token-elevation-1);
+			box-shadow: var(--osui-popover-shadow);
 			color: var(--osui-popover-color);
 			max-width: 350px;
 			min-width: auto;
