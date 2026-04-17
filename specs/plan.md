@@ -161,6 +161,56 @@ This is **not** a backwards-compatible migration. We are replacing the OSUI toke
 - Component scoped vars default to semantic tokens wherever the token system provides them
 - Enables full theme customization from the DTE by overriding semantic tokens
 
+> ✅ **Phases 0–3 complete** as of commit `3b66f2e2b` (branch `ROU-12714`).
+
+---
+
+### Phase 4 — Complete partial CSS APIs
+
+**What:** Extend existing `--osui-*` blocks with missing interaction/state vars. Several components already have a CSS API block but their active, focus, checked, or hover states still reference `--token-*` vars directly — bypassing the API. This phase wires those state rules through new CSS API vars.
+
+**Files touched:** 11 pattern and widget SCSS files (see `implementation.md` Phase 4 for the full var-by-var list)
+
+**Success criteria:**
+- All state/interaction rules use a `--osui-*` var rather than a direct `--token-*` reference
+- No regression in visual output
+
+---
+
+### Phase 5 — New CSS APIs: High-priority components
+
+**What:** Add full CSS API blocks to the 10 most impactful components currently lacking `--osui-*` coverage. Includes two critical fixes: the hardcoded `#4263eb` sent-bubble colour in ChatMessage and the hardcoded `rgba(21, 24, 26, 0.04)` hover in Pagination.
+
+**Components:** Card, Alert, FeedbackMessage, Table, ListItem, Popup, ChatMessage, Wizard, Pagination, FloatingActions
+
+**Success criteria:**
+- All 10 components have a complete CSS API block
+- Zero hardcoded hex or rgba colour values in these files
+
+---
+
+### Phase 6 — New CSS APIs: Remaining components
+
+**What:** Extend CSS API coverage to all remaining visual components that still use tokens directly in property declarations.
+
+**Components (~17):** BottomBarItem, Breadcrumbs, Timeline, Section, CardItem, ListItemContent, BlankSlate, Tag, UserAvatar, StackedCards, ActionSheet, InputWithIcon, MasterDetail, Badge, Separator, ProviderLoginButton, Rating
+
+**Success criteria:**
+- All visual components have CSS API blocks
+- DTE can theme the full component set without knowing internal token names
+
+---
+
+### Phase 7 — Harden state/variant coverage in existing APIs
+
+**What:** Button semantic variants (primary/success/danger), checkbox checked state, and input focus/error/placeholder states all currently bypass the CSS API. Wire these through new `--osui-*` vars. Also includes a grep-based hardcoded hex colour audit to catch any remaining stragglers.
+
+**Files touched:** `_btn.scss`, `_checkbox.scss`, `_inputs-and-textareas.scss` + any files flagged by the audit
+
+**Success criteria:**
+- Button, checkbox, and input interaction states use CSS API vars
+- Grep audit for hardcoded hex values returns zero unresolved matches
+
 ---
 
 ## Decisions

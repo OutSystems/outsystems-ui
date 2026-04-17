@@ -601,3 +601,610 @@ These are the highest-value replacements — they unlock per-component theming i
 - [ ] Buttons use `--token-bg-*` for backgrounds
 - [ ] Surfaces (cards, modals, sidebars) use `--token-bg-surface-default`
 - [ ] All semantic tokens surfaced to the DTE can be overridden to produce a consistent theme change
+
+---
+
+## Phase 4 — Complete partial CSS APIs
+
+**Goal:** Extend existing `--osui-*` blocks so that interaction states (hover, active, focus, checked) also route through the CSS API instead of referencing tokens directly.
+
+### Components and additions
+
+| Component | File | Var to add | Default value |
+|-----------|------|-----------|---------------|
+| AccordionItem | `src/scripts/OSFramework/OSUI/Pattern/AccordionItem/scss/_accordion-item.scss` | `--osui-accordion-item-active-indicator-color` | `var(--token-semantics-primary-base)` |
+| AccordionItem | same | `--osui-accordion-item-icon-color` | `var(--token-semantics-primary-base)` |
+| AnimatedLabel | `src/scripts/OSFramework/OSUI/Pattern/AnimatedLabel/scss/_animated-label.scss` | `--osui-animated-label-focus-border-color` | `var(--token-semantics-primary-base)` |
+| Carousel | `src/scripts/OSFramework/OSUI/Pattern/Carousel/scss/_carousel.scss` | `--osui-carousel-pagination-active-color` | `var(--token-semantics-primary-base)` |
+| Carousel | same | `--osui-carousel-arrow-icon-color` | `var(--token-primitives-neutral-700)` |
+| OverflowMenu | `src/scripts/OSFramework/OSUI/Pattern/OverflowMenu/scss/_overflowmenu.scss` | `--osui-overflow-menu-background` | `var(--token-bg-surface-default)` |
+| OverflowMenu | same | `--osui-overflow-menu-border-color` | `var(--token-border-default)` |
+| OverflowMenu | same | `--osui-overflow-menu-shadow` | `var(--token-elevation-2)` |
+| Popover | `src/scss/03-widgets/_popover.scss` | `--osui-popover-shadow` | `var(--token-elevation-1)` |
+| RadioButton | `src/scss/03-widgets/_radio-button.scss` | `--osui-radio-checked-color` | `var(--token-semantics-primary-base)` |
+| SectionIndex | `src/scripts/OSFramework/OSUI/Pattern/SectionIndex/scss/_sectionindex.scss` | `--osui-section-index-item-active-color` | `var(--token-text-default)` |
+| SectionIndex | same | `--osui-section-index-active-indicator-color` | `var(--token-semantics-primary-base)` |
+| Sidebar | `src/scripts/OSFramework/OSUI/Pattern/Sidebar/scss/_sidebar.scss` | `--osui-sidebar-color` | `var(--token-text-default)` |
+| Submenu | `src/scripts/OSFramework/OSUI/Pattern/Submenu/scss/_submenu.scss` | `--osui-submenu-active-border-color` | `var(--token-semantics-primary-base)` |
+| Submenu | same | `--osui-submenu-header-color` | `var(--token-text-default)` |
+| Switch | `src/scss/03-widgets/_switch.scss` | `--osui-switch-checked-track-color` | `var(--token-semantics-primary-base)` |
+| Switch | same | `--osui-switch-thumb-color` | `var(--token-primitives-base-white)` |
+| Tabs | `src/scripts/OSFramework/OSUI/Pattern/Tabs/scss/_tabs.scss` | `--osui-tabs-indicator-color` | `var(--token-semantics-primary-base)` |
+
+### Wire-up rule
+Each added var must be consumed: replace the direct `var(--token-*)` reference in the existing state rule with the new CSS API var.
+
+### Phase 4 — Acceptance criteria
+
+- [ ] All listed vars are added to their component CSS API blocks (inside the `// ─── Component CSS API` section)
+- [ ] All corresponding state/feature rules use the CSS API var, not a direct token
+- [ ] `npm run build` exits 0
+- [ ] `npm run lint` exits 0
+
+---
+
+## Phase 5 — New CSS APIs: High-priority components
+
+**Goal:** Add CSS API blocks to the 10 most impactful components currently lacking `--osui-*` coverage. Priority criteria: frequently-used components, components with hardcoded colour values, components with the most visual states.
+
+### Pattern reminder
+Declare all scoped vars at the top of the root selector. Use only scoped vars in property declarations. State variants override the var, not the property.
+
+---
+
+### 5.1 Card
+
+**File:** `src/scss/04-patterns/02-content/_card.scss` — **Root selector:** `.card`
+
+```scss
+.card {
+  // ─── Component CSS API ─────────────────────────────────────────────
+  --osui-card-background:    var(--token-bg-surface-default);
+  --osui-card-border-color:  var(--token-border-default);
+  --osui-card-border-radius: var(--token-border-radius-100);
+  --osui-card-border-width:  var(--token-border-size-025);
+  --osui-card-padding:       var(--token-scale-600);
+  // ───────────────────────────────────────────────────────────────────
+
+  background-color: var(--osui-card-background);
+  border: var(--osui-card-border-width) solid var(--osui-card-border-color);
+  border-radius: var(--osui-card-border-radius);
+  padding: var(--osui-card-padding);
+}
+
+.layout-native .card {
+  --osui-card-padding: var(--token-scale-400);
+}
+```
+
+---
+
+### 5.2 Alert
+
+**File:** `src/scss/04-patterns/02-content/_alert.scss` — **Root selector:** `.alert`
+
+Multi-variant component: declare vars with `info` as default, override per variant modifier.
+
+```scss
+.alert {
+  // ─── Component CSS API ─────────────────────────────────────────────
+  --osui-alert-background:    var(--token-semantics-info-base);
+  --osui-alert-color:         var(--token-text-inverse);
+  --osui-alert-border-radius: var(--token-border-radius-100);
+  --osui-alert-padding:       var(--token-scale-400);
+  // ───────────────────────────────────────────────────────────────────
+
+  background-color: var(--osui-alert-background);
+  border-radius: var(--osui-alert-border-radius);
+  color: var(--osui-alert-color);
+  padding: var(--osui-alert-padding);
+
+  &-success { --osui-alert-background: var(--token-semantics-success-base); }
+  &-error   { --osui-alert-background: var(--token-semantics-danger-base); }
+  &-warning {
+    --osui-alert-background: var(--token-semantics-warning-base);
+    --osui-alert-color:      var(--token-text-default);
+  }
+}
+```
+
+---
+
+### 5.3 FeedbackMessage
+
+**File:** `src/scss/03-widgets/_feedback-message.scss` — **Root selector:** `.feedback-message`
+
+Same multi-variant pattern as Alert. Retro-compat variant selectors (`div.feedback-message-error` etc.) must stay — they add var overrides.
+
+```scss
+.feedback-message {
+  // ─── Component CSS API ─────────────────────────────────────────────
+  --osui-feedback-message-background:    var(--token-semantics-info-base);
+  --osui-feedback-message-color:         var(--token-text-inverse);
+  --osui-feedback-message-border-radius: var(--token-border-radius-100);
+  --osui-feedback-message-padding:       var(--token-scale-400);
+  // ───────────────────────────────────────────────────────────────────
+
+  background-color: var(--osui-feedback-message-background);
+  border-radius: var(--osui-feedback-message-border-radius);
+  color: var(--osui-feedback-message-color);
+  padding: var(--osui-feedback-message-padding);
+}
+
+// Retro-compat selectors — keep, extend with var overrides:
+div.feedback-message-error   { --osui-feedback-message-background: var(--token-semantics-danger-base); }
+div.feedback-message-info    { --osui-feedback-message-background: var(--token-semantics-info-base); }
+div.feedback-message-success { --osui-feedback-message-background: var(--token-semantics-success-base); }
+div.feedback-message-warning {
+  --osui-feedback-message-background: var(--token-semantics-warning-base);
+  --osui-feedback-message-color:      var(--token-text-default);
+}
+```
+
+⚠️ The `.phone .feedback-message { border-radius: 0 }` responsive override stays on the property — no CSS API change needed there (property override is intentional, not about theming).
+
+---
+
+### 5.4 Table
+
+**File:** `src/scss/03-widgets/_table.scss` — **Root selector:** `.table`
+
+```scss
+.table {
+  // ─── Component CSS API ─────────────────────────────────────────────
+  --osui-table-border-color:            var(--token-border-default);
+  --osui-table-border-radius:           var(--token-border-radius-100);
+  --osui-table-header-background:       var(--token-bg-surface-default);
+  --osui-table-header-color:            var(--token-text-subtlest);
+  --osui-table-row-background:          var(--token-bg-surface-default);
+  --osui-table-row-hover-background:    var(--token-bg-neutral-subtle-default);
+  --osui-table-row-stripe-background:   var(--token-bg-neutral-subtle-default);
+  --osui-table-row-selected-background: var(--token-semantics-primary-base);
+  --osui-table-sorted-color:            var(--token-semantics-primary-base);
+  // ───────────────────────────────────────────────────────────────────
+
+  border: var(--token-border-size-025) solid var(--osui-table-border-color);
+  border-radius: var(--osui-table-border-radius);
+  ...
+}
+```
+
+Wire:
+- `th`: `background-color` → `var(--osui-table-header-background)`, `color` → `var(--osui-table-header-color)`
+- `.sorted th`: `color` → `var(--osui-table-sorted-color)`
+- `td`: `background` → `var(--osui-table-row-background)`
+- `.table-row:hover td` → `var(--osui-table-row-hover-background)` (**replaces hardcoded `rgba(21, 24, 26, 0.04)` in `.desktop`**)
+- `.table-row-stripping:nth-child(even) td` → `var(--osui-table-row-stripe-background)`
+- `.table-row-selected td` → `background: var(--osui-table-row-selected-background) linear-gradient(...)`
+
+---
+
+### 5.5 ListItem
+
+**File:** `src/scss/03-widgets/_list-item.scss` — **Root selector:** `.list .list-item`
+
+The CSS API vars are scoped inside `.list .list-item` (the styled context), not on bare `.list-item`.
+
+```scss
+.list {
+  .list-item {
+    // ─── Component CSS API ─────────────────────────────────────────────
+    --osui-list-item-background:          var(--token-bg-surface-default);
+    --osui-list-item-hover-background:    var(--token-bg-neutral-subtle-default);
+    --osui-list-item-selected-background: var(--token-semantics-primary-base);
+    --osui-list-item-border-color:        var(--token-border-default);
+    // ───────────────────────────────────────────────────────────────────
+
+    background-color: var(--osui-list-item-background);
+    border-bottom-color: var(--osui-list-item-border-color);
+  }
+}
+
+.desktop, .tablet.landscape {
+  .list {
+    .list-item:hover:not(.list-item-no-hover):not(.list-item-selected) {
+      --osui-list-item-background: var(--osui-list-item-hover-background);
+    }
+    .list-item-selected {
+      background: var(--osui-list-item-selected-background)
+        linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9));
+    }
+  }
+}
+```
+
+---
+
+### 5.6 Popup
+
+**File:** `src/scss/03-widgets/_popup.scss` — **Root selectors:** `.popup-backdrop`, `.popup-dialog`
+
+```scss
+.popup {
+  &-backdrop {
+    // ─── Component CSS API ─────────────────────────────────────────────
+    --osui-popup-backdrop-color: var(--token-backdrop);
+    // ───────────────────────────────────────────────────────────────────
+    background-color: var(--osui-popup-backdrop-color);
+  }
+
+  &-dialog {
+    // ─── Component CSS API ─────────────────────────────────────────────
+    --osui-popup-background:    var(--token-bg-surface-default);
+    --osui-popup-border-radius: var(--token-border-radius-100);
+    --osui-popup-shadow:        var(--token-elevation-4);
+    --osui-popup-padding:       var(--token-scale-600);
+    // ───────────────────────────────────────────────────────────────────
+
+    background-color: var(--osui-popup-background);
+    border-radius: var(--osui-popup-border-radius);
+    box-shadow: var(--osui-popup-shadow);
+    padding: var(--osui-popup-padding);
+  }
+}
+```
+
+---
+
+### 5.7 ChatMessage ⚠️ Critical: hardcoded colour
+
+**File:** `src/scss/04-patterns/02-content/_chat-message.scss` — **Root selector:** `.chat-message`
+
+The "sent" bubble (`right` variant) uses a hardcoded `#4263eb`. Replace with `var(--token-semantics-primary-base)`.
+
+> **Visual note:** This changes the sent-bubble colour from `#4263eb` (indigo) to `var(--token-semantics-primary-base)` (brand primary, default `#1068eb`). Intentional — ties the component to the brand colour system.
+
+```scss
+.chat {
+  &-message {
+    // ─── Component CSS API ─────────────────────────────────────────────
+    --osui-chat-message-background:    var(--token-primitives-neutral-300);
+    --osui-chat-message-color:         inherit;
+    --osui-chat-message-border-radius: var(--token-border-radius-100);
+    --osui-chat-message-padding:       var(--token-scale-400);
+    // ───────────────────────────────────────────────────────────────────
+
+    background-color: var(--osui-chat-message-background);
+    border-radius: var(--osui-chat-message-border-radius);
+    color: var(--osui-chat-message-color);
+    padding: var(--osui-chat-message-padding);
+  }
+
+  &.right .chat-message {
+    --osui-chat-message-background: var(--token-semantics-primary-base); // was: #4263eb
+    --osui-chat-message-color:      var(--token-text-inverse);
+  }
+}
+```
+
+---
+
+### 5.8 Wizard
+
+**File:** `src/scss/04-patterns/04-navigation/_wizard.scss` — **Root selector:** `.wizard-item-icon`
+
+The step circle is the primary visual unit. Declare vars there and propagate via state modifiers on `.wizard-wrapper-item`.
+
+```scss
+.wizard {
+  &-item-icon {
+    // ─── Component CSS API ─────────────────────────────────────────────
+    --osui-wizard-step-background:   var(--token-bg-surface-default);
+    --osui-wizard-step-border-color: var(--token-border-input-default);
+    --osui-wizard-step-color:        var(--token-primitives-neutral-700);
+    --osui-wizard-connector-color:   var(--token-bg-neutral-base-default);
+    // ───────────────────────────────────────────────────────────────────
+
+    background-color: var(--osui-wizard-step-background);
+    border-color: var(--osui-wizard-step-border-color);
+    color: var(--osui-wizard-step-color);
+
+    &-wrapper:before {
+      background-color: var(--osui-wizard-connector-color);
+    }
+  }
+
+  &-wrapper-item {
+    &.active .wizard-item-icon {
+      --osui-wizard-step-border-color: var(--token-semantics-primary-base);
+      --osui-wizard-step-color:        var(--token-semantics-primary-base);
+      --osui-wizard-connector-color:   var(--token-semantics-primary-base);
+    }
+    &.past .wizard-item-icon {
+      --osui-wizard-step-background:   var(--token-semantics-primary-base);
+      --osui-wizard-step-border-color: var(--token-semantics-primary-base);
+      --osui-wizard-step-color:        var(--token-text-inverse);
+      --osui-wizard-connector-color:   var(--token-semantics-primary-base);
+    }
+  }
+}
+```
+
+---
+
+### 5.9 Pagination
+
+**File:** `src/scss/04-patterns/04-navigation/_pagination.scss` — **Root selector:** `.pagination-button`
+
+Also replaces the hardcoded `rgba(21, 24, 26, 0.04)` hover background.
+
+```scss
+.pagination {
+  &-button {
+    // ─── Component CSS API ─────────────────────────────────────────────
+    --osui-pagination-button-background:       var(--token-bg-surface-default);
+    --osui-pagination-button-border-color:     var(--token-border-default);
+    --osui-pagination-button-color:            var(--token-text-subtlest);
+    --osui-pagination-button-border-radius:    var(--token-border-radius-100);
+    --osui-pagination-button-hover-background: var(--token-bg-neutral-subtle-default);
+    --osui-pagination-active-border-color:     var(--token-semantics-primary-base);
+    --osui-pagination-active-color:            var(--token-semantics-primary-base);
+    // ───────────────────────────────────────────────────────────────────
+
+    background-color: var(--osui-pagination-button-background);
+    border-color: var(--osui-pagination-button-border-color);
+    border-radius: var(--osui-pagination-button-border-radius);
+    color: var(--osui-pagination-button-color);
+
+    &.is--active {
+      --osui-pagination-button-border-color: var(--osui-pagination-active-border-color);
+      --osui-pagination-button-color:        var(--osui-pagination-active-color);
+    }
+  }
+}
+
+// Replace hardcoded rgba — wire hover through the CSS API var:
+.desktop {
+  .pagination-button:not(.is--ellipsis):hover {
+    --osui-pagination-button-background: var(--osui-pagination-button-hover-background);
+  }
+}
+```
+
+> **Visual note:** Hover background changes from `rgba(21, 24, 26, 0.04)` to `var(--token-bg-neutral-subtle-default)` (solid light gray). Acceptable trade-off for theming consistency.
+
+---
+
+### 5.10 FloatingActions
+
+**File:** `src/scss/04-patterns/03-interaction/_floating-actions.scss`  
+**Selectors:** `.floating-button` (trigger) and `.floating-actions-item-button` (items)
+
+```scss
+.floating {
+  &-button {
+    // ─── Component CSS API ─────────────────────────────────────────────
+    --osui-floating-button-background: var(--token-semantics-primary-base);
+    --osui-floating-button-color:      var(--token-text-inverse);
+    --osui-floating-button-shadow:     var(--token-elevation-4);
+    // ───────────────────────────────────────────────────────────────────
+
+    background-color: var(--osui-floating-button-background);
+    box-shadow: var(--osui-floating-button-shadow);
+    color: var(--osui-floating-button-color);
+  }
+
+  &-actions-item-button {
+    // ─── Component CSS API ─────────────────────────────────────────────
+    --osui-floating-actions-item-background:       var(--token-bg-surface-default);
+    --osui-floating-actions-item-color:            var(--token-semantics-primary-base);
+    --osui-floating-actions-item-shadow:           var(--token-elevation-1);
+    --osui-floating-actions-item-hover-background: var(--token-semantics-primary-base);
+    --osui-floating-actions-item-hover-color:      var(--token-text-inverse);
+    // ───────────────────────────────────────────────────────────────────
+
+    background-color: var(--osui-floating-actions-item-background);
+    box-shadow: var(--osui-floating-actions-item-shadow);
+    color: var(--osui-floating-actions-item-color);
+
+    &:hover {
+      --osui-floating-actions-item-background: var(--osui-floating-actions-item-hover-background);
+      --osui-floating-actions-item-color:      var(--osui-floating-actions-item-hover-color);
+    }
+  }
+}
+```
+
+---
+
+### Phase 5 — Full acceptance criteria
+
+- [ ] All 10 components have a `// ─── Component CSS API` block
+- [ ] No component in this set has a `--token-*` var or hardcoded value used directly in a property declaration
+- [ ] `.chat.right .chat-message` no longer has `background-color: #4263eb` — replaced with CSS API var
+- [ ] `.desktop .pagination-button:hover` no longer has hardcoded `rgba(21, 24, 26, 0.04)` — replaced with CSS API var
+- [ ] `npm run build` exits 0
+- [ ] `npm run lint` exits 0
+
+---
+
+## Phase 6 — New CSS APIs: Remaining components
+
+**Goal:** Extend CSS API coverage to all remaining visual components. Lower priority than Phase 5 but required for complete DTE theming support.
+
+For each component: add a `// ─── Component CSS API` block at the top of the root selector, declare the listed vars, and wire each to replace the direct token or value reference.
+
+---
+
+### Navigation
+
+- [ ] **BottomBarItem** — `src/scss/04-patterns/04-navigation/_bottom-bar-item.scss` → `.bottom-bar-wrapper`
+  - `--osui-bottom-bar-background: var(--token-bg-surface-default)`
+  - `--osui-bottom-bar-border-color: var(--token-primitives-neutral-300)` *(intentional primitive — no semantic match)*
+  - `--osui-bottom-bar-color: var(--token-text-subtlest)`
+  - `--osui-bottom-bar-active-color: var(--token-semantics-primary-base)`
+
+- [ ] **Breadcrumbs** — `src/scss/04-patterns/04-navigation/_breadcrumbs.scss` → `.breadcrumbs-item`
+  - `--osui-breadcrumbs-color: var(--token-text-subtlest)`
+  - `--osui-breadcrumbs-separator-color: var(--token-primitives-neutral-700)` *(intentional primitive)*
+
+- [ ] **Timeline** — `src/scss/04-patterns/04-navigation/_timeline.scss` → `.timeline`
+  - `--osui-timeline-line-color: var(--token-bg-neutral-base-default)`
+  - `--osui-timeline-icon-color: var(--token-text-inverse)`
+
+---
+
+### Content
+
+- [ ] **Section** — `src/scss/04-patterns/02-content/_section.scss` → `.section-title`
+  - `--osui-section-border-color: var(--token-border-default)`
+  - `--osui-section-color: var(--token-text-default)`
+
+- [ ] **CardItem** — `src/scss/04-patterns/02-content/_card-item.scss` → `.card-detail`
+  - `--osui-card-item-title-color: var(--token-text-default)`
+  - `--osui-card-item-text-color: var(--token-primitives-neutral-700)` *(intentional primitive)*
+
+- [ ] **ListItemContent** — `src/scss/04-patterns/02-content/_list-item-content.scss` → `.list-item-content`
+  - `--osui-list-item-content-title-color: var(--token-text-default)`
+  - `--osui-list-item-content-text-color: var(--token-primitives-neutral-700)` *(intentional primitive)*
+
+- [ ] **BlankSlate** — `src/scss/04-patterns/02-content/_blank-slate.scss` → `.blank-slate`
+  - `--osui-blank-slate-icon-color: var(--token-text-disabled)`
+  - `--osui-blank-slate-description-color: var(--token-text-default)`
+
+- [ ] **Tag** — `src/scss/04-patterns/02-content/_tag.scss` → `.tag`
+  - `--osui-tag-color: var(--token-text-inverse)`
+
+- [ ] **UserAvatar** — `src/scss/04-patterns/02-content/_user-avatar.scss` → `.avatar`
+  - `--osui-avatar-color: var(--token-text-inverse)`
+
+---
+
+### Interaction
+
+- [ ] **StackedCards** — `src/scss/04-patterns/03-interaction/_stacked-cards.scss` → `.stackedcards`
+  - `--osui-stacked-cards-background: var(--token-bg-surface-default)`
+  - `--osui-stacked-cards-overlay-right-color: var(--token-semantics-success-base)`
+  - `--osui-stacked-cards-overlay-left-color: var(--token-semantics-danger-base)`
+  - `--osui-stacked-cards-overlay-top-color: var(--token-semantics-info-base)`
+
+- [ ] **ActionSheet** — `src/scss/04-patterns/03-interaction/_action-sheet.scss` → `.action-sheet`
+  - `--osui-action-sheet-background: var(--token-bg-surface-default)`
+  - `--osui-action-sheet-cancel-color: var(--token-text-subtlest)`
+
+- [ ] **InputWithIcon** — `src/scss/04-patterns/03-interaction/_input-with-icon.scss` → `.input-with-icon`
+  - `--osui-input-with-icon-icon-color: var(--token-primitives-neutral-700)` *(intentional primitive)*
+
+- [ ] **MasterDetail** — `src/scss/04-patterns/01-adaptive/_master-detail.scss` → `.split-screen-wrapper`
+  - `--osui-master-detail-background: var(--token-bg-surface-default)`
+  - `--osui-master-detail-border-color: var(--token-border-default)`
+
+---
+
+### Numbers
+
+- [ ] **Badge** — `src/scss/04-patterns/05-numbers/_badge.scss` → `.badge`
+  - `--osui-badge-color: var(--token-text-inverse)`
+
+---
+
+### Utilities
+
+- [ ] **Separator** — `src/scss/04-patterns/06-utilities/_separator.scss` → `.separator`
+  - `--osui-separator-color: var(--token-semantics-primary-base)`
+
+- [ ] **ProviderLoginButton** — `src/scss/04-patterns/06-utilities/_provider-login-button.scss` → `.btn.btn-provider-login`
+  - `--osui-provider-login-btn-background: var(--token-bg-surface-default)`
+  - `--osui-provider-login-btn-border-color: var(--token-border-input-default)`
+  - `--osui-provider-login-btn-color: var(--token-primitives-neutral-700)` *(intentional primitive)*
+
+---
+
+### Pattern scripts
+
+- [ ] **Rating** — `src/scripts/OSFramework/OSUI/Pattern/Rating/scss/_rating.scss` → `.rating`
+  - `--osui-rating-filled-color: var(--token-semantics-warning-base)`
+  - `--osui-rating-empty-color: var(--token-border-default)`
+  - `--osui-rating-disabled-color: var(--token-text-disabled)`
+
+---
+
+### Phase 6 — Full acceptance criteria
+
+- [ ] All components in the checklist have a `// ─── Component CSS API` block
+- [ ] All added vars are consumed in the component (no orphan declarations)
+- [ ] `npm run build` exits 0
+- [ ] `npm run lint` exits 0
+
+---
+
+## Phase 7 — Harden state/variant coverage in existing APIs
+
+**Goal:** Components with existing CSS API blocks still have some state/variant rules that reference `--token-*` vars or hardcoded values directly. This phase wires those remaining references through the CSS API.
+
+---
+
+### 7.1 Button — Semantic variant backgrounds
+
+**File:** `src/scss/03-widgets/_btn.scss`
+
+The `btn-primary`, `btn-success`, and `btn-danger` variants bypass `--osui-btn-background`. Add per-variant API vars so each variant is independently themeable from the DTE.
+
+| Var | Default | Selector |
+|-----|---------|----------|
+| `--osui-btn-primary-background` | `var(--token-semantics-primary-base)` | `.btn.btn-primary` |
+| `--osui-btn-primary-color` | `var(--token-text-inverse)` | `.btn.btn-primary` |
+| `--osui-btn-success-background` | `var(--token-semantics-success-base)` | `.btn.btn-success` |
+| `--osui-btn-success-color` | `var(--token-text-inverse)` | `.btn.btn-success` |
+| `--osui-btn-danger-background` | `var(--token-semantics-danger-base)` | `.btn.btn-danger` |
+| `--osui-btn-danger-color` | `var(--token-text-inverse)` | `.btn.btn-danger` |
+
+Declare each set on the respective modifier class and consume via the existing `background-color`/`color` properties (which should be updated to reference the new vars instead of the direct token vars).
+
+---
+
+### 7.2 Checkbox — Checked state
+
+**File:** `src/scss/03-widgets/_checkbox.scss`
+
+Add to existing CSS API block:
+- `--osui-checkbox-checked-background: var(--token-semantics-primary-base)`
+- `--osui-checkbox-checked-border-color: var(--token-semantics-primary-base)`
+
+Wire: replace direct `var(--token-semantics-primary-base)` references in the `:checked + label:before` selector.
+
+---
+
+### 7.3 Input — Focus and error states
+
+**File:** `src/scss/03-widgets/_inputs-and-textareas.scss`
+
+Add to existing CSS API block:
+- `--osui-input-focus-border-color: var(--token-semantics-primary-base)`
+- `--osui-input-error-border-color: var(--token-semantics-danger-base)`
+- `--osui-input-placeholder-color: var(--token-text-subtlest)`
+
+Wire: replace direct token refs in the `:focus`, `.not-valid`, and `::placeholder` rules.
+
+---
+
+### 7.4 Remaining hardcoded value audit
+
+After Phases 5 and 6, run this check and fix any remaining cases:
+
+```bash
+# Find hardcoded hex values in OSUI SCSS (excluding provider libs and deprecated)
+grep -r '#[0-9a-fA-F]\{3,6\}' src/scss/ src/scripts/OSFramework src/scripts/Providers/OSUI \
+  --include="*.scss" \
+  --exclude-dir=10-deprecated \
+  --exclude="*_lib.scss"
+```
+
+Any match that is NOT:
+- Inside a `// intentional keep` comment
+- A focus ring (`#ffd337`)
+- A known primitive with no semantic equivalent
+
+…must be replaced with a CSS API var defaulting to the closest semantic token.
+
+---
+
+### Phase 7 — Full acceptance criteria
+
+- [ ] `.btn.btn-primary`, `.btn.btn-success`, `.btn.btn-danger` use CSS API vars for `background-color` and `color`
+- [ ] Checkbox checked state uses `--osui-checkbox-checked-background` and `--osui-checkbox-checked-border-color`
+- [ ] Input focus and error states use `--osui-input-focus-border-color` / `--osui-input-error-border-color`
+- [ ] Input placeholder uses `--osui-input-placeholder-color`
+- [ ] Hardcoded hex audit returns zero unresolved matches
+- [ ] `npm run build` exits 0
+- [ ] `npm run lint` exits 0

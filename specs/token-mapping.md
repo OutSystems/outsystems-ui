@@ -9,6 +9,18 @@ This is the working document for Phase 1 (token definitions) and Phase 2 (compon
 - 🔴 No match — keep as local var or propose addition to token package
 - ❓ Unverified — mapping is a best guess, needs hex confirmation against actual token output
 
+> ⚠️ **Token name corrections (confirmed from implementation):**
+> This spec was written before the `outsystems-design-tokens` package was finalised. Several token category prefixes turned out to be one level flatter than documented. The table below shows both the original spec name and the actual generated name. Use the **Actual** column in all new code.
+>
+> | Category | Spec wrote | Actual |
+> |----------|-----------|--------|
+> | Border width | `--token-border-border-size-025` | `--token-border-size-025` |
+> | Border radius | `--token-border-border-radius-100` | `--token-border-radius-100` |
+> | Font size | `--token-font-font-size-400` | `--token-font-size-400` |
+> | Font weight | `--token-font-font-weight-semi-bold` | `--token-font-weight-semi-bold` |
+>
+> All other token categories (`--token-scale-*`, `--token-elevation-*`, `--token-bg-*`, `--token-text-*`, `--token-semantics-*`, `--token-primitives-*`) match the spec exactly.
+
 **Confirmed decisions applied throughout:**
 - Prefix: `token` → `--token-*`
 - `error` renamed to `danger` everywhere
@@ -275,3 +287,72 @@ These cannot be resolved without a design decision:
 5. **Heading font sizes** (26px, 22px, 18px) — not in token scale; add or substitute?
 6. **`--border-radius-rounded`** (100px vs 999px) — visual difference on non-pill shapes; verify with design
 7. **Shadow scale** (5 OSUI levels vs 4 token elevation levels) — which OSUI shadows collapse?
+
+---
+
+## CSS API Layer — Component Scoped Vars (`--osui-*`)
+
+These vars form the public theming API for each component. They are declared on the component root selector and default to semantic tokens. Consumers (DTE, app CSS) override them per-component without knowing internal token names.
+
+**Naming pattern:** `--osui-{component}-{property}` (D11 decision: Option B)
+
+**State override pattern:** state modifiers re-declare the var, not the property:
+```scss
+.osui-sidebar {
+  --osui-sidebar-background: var(--token-bg-surface-default);
+  background-color: var(--osui-sidebar-background);
+
+  &.is-dark { --osui-sidebar-background: var(--token-primitives-neutral-1200); }
+}
+```
+
+### Confirmed implemented vars (Phases 2b–3, branch ROU-12714)
+
+| Component | CSS API vars | File |
+|-----------|-------------|------|
+| `.btn` | `--osui-btn-background`, `-color`, `-border-color`, `-border-radius` | `03-widgets/_btn.scss` |
+| `.form-control` | `--osui-input-background`, `-border-color`, `-color`, `-border-radius` | `03-widgets/_inputs-and-textareas.scss` |
+| `[data-checkbox]` | `--osui-checkbox-background`, `-border-color`, `-border-radius` | `03-widgets/_checkbox.scss` |
+| `.radio-button` | `--osui-radio-background`, `-border-color` | `03-widgets/_radio-button.scss` |
+| `[data-switch]` | `--osui-switch-track-color`, `-track-border-color`, `-disabled-track-color` | `03-widgets/_switch.scss` |
+| `.dropdown-container` | `--osui-dropdown-background`, `-border-color`, `-color`, `-border-radius` | `03-widgets/_dropdown.scss` |
+| `.button-group-item` | `--osui-button-group-background`, `-border-color`, `-color` | `03-widgets/_button-group.scss` |
+| `[data-upload]` | `--osui-upload-background`, `-border-color`, `-color`, `-border-radius` | `03-widgets/_upload.scss` |
+| `[data-popover]` | `--osui-popover-background`, `-border-color`, `-color`, `-border-radius` | `03-widgets/_popover.scss` |
+| `.osui-accordion-item` | `--osui-accordion-item-background`, `-border-color`, `-border-width`, `-border-radius`, `-color` | `Pattern/AccordionItem/scss/_accordion-item.scss` |
+| `.animated-label` | `--osui-animated-label-color`, `-border-color` | `Pattern/AnimatedLabel/scss/_animated-label.scss` |
+| `.osui-bottom-sheet` | `--osui-bottom-sheet-background`, `-shadow`, `-padding` | `Pattern/BottomSheet/scss/_bottomsheet.scss` |
+| `.osui-carousel` | `--osui-carousel-arrow-background`, `-arrow-shadow` | `Pattern/Carousel/scss/_carousel.scss` |
+| `.osui-datepicker` | `--osui-datepicker-disabled-background`, `-disabled-border-color`, `-disabled-color` | `Pattern/DatePicker/scss/_datepicker.scss` |
+| `.osui-dropdown` | `--osui-dropdown-disabled-background`, `-disabled-border-color`, `-disabled-color` | `Pattern/Dropdown/scss/_dropdown.scss` |
+| `.osui-dropdown-serverside` | `--osui-dropdown-ss-background`, `-border-color`, `-color`, `-disabled-background`, `-disabled-color` | `Pattern/DropdownServerSide/scss/_dropdown-serverside.scss` |
+| `.osui-dropdown-serverside-item` | `--osui-dropdown-item-background`, `-color`, `-hover-bg` | `Pattern/DropdownServerSideItem/scss/_dropdownserversideitem.scss` |
+| `.osui-monthpicker` | `--osui-monthpicker-disabled-background`, `-disabled-border-color`, `-disabled-color` | `Pattern/MonthPicker/scss/_monthpicker.scss` |
+| `.osui-notification` | `--osui-notification-background`, `-border-color`, `-border-width`, `-border-radius`, `-shadow`, `-color`, `-padding` | `Pattern/Notification/scss/_notification.scss` |
+| `.osui-overflow-menu` | `--osui-overflow-menu-color`, `-trigger-active-bg` | `Pattern/OverflowMenu/scss/_overflowmenu.scss` |
+| `.osui-range-slider` | `--osui-range-slider-track-color`, `-handle-background`, `-handle-border-color`, `-handle-shadow`, `-disabled-track-color`, `-disabled-color` | `Pattern/RangeSlider/scss/_rangeslider.scss` |
+| `.osui-section-index` | `--osui-section-index-border-color` | `Pattern/SectionIndex/scss/_sectionindex.scss` |
+| `.osui-section-index-item` | `--osui-section-index-item-color` | `Pattern/SectionIndex/scss/_sectionindex.scss` |
+| `.osui-sidebar` | `--osui-sidebar-background`, `-shadow`, `-padding-x`, `-padding-y` | `Pattern/Sidebar/scss/_sidebar.scss` |
+| `.osui-submenu` | `--osui-submenu-items-background`, `-items-border-color`, `-items-shadow`, `-item-color` | `Pattern/Submenu/scss/_submenu.scss` |
+| `.osui-tabs` | `--osui-tabs-border-color`, `-header-item-color`, `-header-item-color-active`, `-header-item-color-disabled` | `Pattern/Tabs/scss/_tabs.scss` |
+| `.osui-timepicker` | `--osui-timepicker-disabled-background`, `-disabled-border-color`, `-disabled-color` | `Pattern/TimePicker/scss/_timepicker.scss` |
+| `.osui-tooltip` | `--osui-tooltip-background`, `-color`, `-border-radius`, `-padding`, `-font-size` | `Pattern/Tooltip/scss/_tooltip.scss` |
+
+### Components with no CSS API yet (targets for Phases 4–7)
+
+See `implementation.md` Phases 4–7 for the full var list and implementation patterns for each component.
+
+**High-priority gaps:** Card, Alert, FeedbackMessage, Table, ListItem, Popup, ChatMessage (has hardcoded `#4263eb`), Wizard, Pagination (has hardcoded `rgba(21, 24, 26, 0.04)` hover), FloatingActions
+
+**Medium/lower-priority gaps:** BottomBarItem, Breadcrumbs, Timeline, Section, StackedCards, Wizard, MasterDetail, Badge, Tag, Avatar, Separator, Rating, and others
+
+### Intentional `--token-primitives-*` keeps (no semantic equivalent)
+
+These components use primitive tokens as CSS API defaults because no semantic token maps to the required value:
+
+| Component | Var | Primitive | Reason |
+|-----------|-----|-----------|--------|
+| Multiple | icon/text colour | `--token-primitives-neutral-700` (#777777) | Mid-gray; no `--token-text-*` at this value |
+| ChatMessage (received) | `--osui-chat-message-background` | `--token-primitives-neutral-300` (#e0e0e0) | Specific light gray; no `--token-bg-*` match |
+| BottomBarItem | `--osui-bottom-bar-border-color` | `--token-primitives-neutral-300` | Same as above |
