@@ -7,6 +7,7 @@
 .osui-sidebar {
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-sidebar-background:  var(--token-bg-surface-default);
+	--osui-sidebar-color:       var(--token-text-default);
 	--osui-sidebar-shadow:      var(--token-elevation-3);
 	--osui-sidebar-padding-x:   var(--token-scale-600);
 	--osui-sidebar-padding-y:   var(--token-scale-400);
@@ -16,6 +17,7 @@
 
 	background-color: var(--osui-sidebar-background);
 	box-shadow: var(--osui-sidebar-shadow);
+	color: var(--osui-sidebar-color);
 	display: flex;
 	flex-direction: column;
 	height: 100%;
