@@ -32,7 +32,9 @@
 
 .osui-section-index-item {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-section-index-item-color: var(--token-text-subtlest);
+	--osui-section-index-item-color:            var(--token-text-subtlest);
+	--osui-section-index-item-active-color:     var(--token-text-default);
+	--osui-section-index-active-indicator-color: var(--token-semantics-primary-base);
 	// ───────────────────────────────────────────────────────────────────
 
 	&,
@@ -47,14 +49,14 @@
 	}
 
 	&:hover {
-		color: var(--token-text-default);
+		color: var(--osui-section-index-item-active-color);
 	}
 
 	&--is-active {
-		color: var(--token-text-default);
+		color: var(--osui-section-index-item-active-color);
 		font-weight: var(--token-font-weight-semi-bold);
 		&::before {
-			background-color: var(--token-semantics-primary-base);
+			background-color: var(--osui-section-index-active-indicator-color);
 			bottom: 0;
 			content: '';
 			left: 0;
