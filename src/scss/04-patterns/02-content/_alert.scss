@@ -5,11 +5,19 @@
 
 ///
 .alert {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-alert-background:    transparent;
+	--osui-alert-color:         var(--token-text-inverse);
+	--osui-alert-border-radius: var(--token-border-radius-100);
+	--osui-alert-padding:       var(--token-scale-400);
+	// ───────────────────────────────────────────────────────────────────
+
 	align-items: center;
-	border-radius: var(--token-border-radius-100);
-	color: var(--token-text-inverse);
+	background-color: var(--osui-alert-background);
+	border-radius: var(--osui-alert-border-radius);
+	color: var(--osui-alert-color);
 	display: flex;
-	padding: var(--token-scale-400);
+	padding: var(--osui-alert-padding);
 
 	.alert-icon {
 		align-self: flex-start;
@@ -27,20 +35,20 @@
 	}
 
 	&-info {
-		background-color: var(--token-semantics-info-base);
+		--osui-alert-background: var(--token-semantics-info-base);
 	}
 
 	&-success {
-		background-color: var(--token-semantics-success-base);
+		--osui-alert-background: var(--token-semantics-success-base);
 	}
 
 	&-error {
-		background-color: var(--token-semantics-danger-base);
+		--osui-alert-background: var(--token-semantics-danger-base);
 	}
 
 	&-warning {
-		background-color: var(--token-semantics-warning-base);
-		color: var(--token-text-default);
+		--osui-alert-background: var(--token-semantics-warning-base);
+		--osui-alert-color:      var(--token-text-default);
 	}
 }
 

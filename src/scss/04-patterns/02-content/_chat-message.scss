@@ -5,6 +5,13 @@
 
 ///
 .chat {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-chat-message-background:      var(--token-primitives-neutral-300);
+	--osui-chat-message-border-radius:   var(--token-border-radius-100);
+	--osui-chat-message-sent-background: var(--token-semantics-primary-base);
+	--osui-chat-message-sent-color:      var(--token-text-inverse);
+	// ───────────────────────────────────────────────────────────────────
+
 	display: flex;
 
 	&.right {
@@ -17,8 +24,8 @@
 			}
 
 			&-message {
-				background-color: #4263eb;
-				color: var(--token-text-inverse);
+				background-color: var(--osui-chat-message-sent-background);
+				color: var(--osui-chat-message-sent-color);
 				text-align: right;
 			}
 		}
@@ -36,8 +43,8 @@
 	}
 
 	&-message {
-		background-color: var(--token-primitives-neutral-300);
-		border-radius: var(--token-border-radius-100);
+		background-color: var(--osui-chat-message-background);
+		border-radius: var(--osui-chat-message-border-radius);
 		display: flex;
 		flex-direction: column;
 		max-width: 600px;

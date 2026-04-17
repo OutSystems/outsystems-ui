@@ -23,14 +23,22 @@
 	}
 
 	&-dialog {
+		// ─── Component CSS API ─────────────────────────────────────────────
+		--osui-popup-background:    var(--token-bg-surface-default);
+		--osui-popup-border-radius: var(--token-border-radius-100);
+		--osui-popup-shadow:        var(--token-elevation-4);
+		--osui-popup-padding:       var(--token-scale-600);
+		// ───────────────────────────────────────────────────────────────────
+
+		background-color: var(--osui-popup-background);
 		border: 0;
-		border-radius: var(--token-border-radius-100);
-		box-shadow: var(--token-elevation-4);
+		border-radius: var(--osui-popup-border-radius);
+		box-shadow: var(--osui-popup-shadow);
 		margin: var(--token-scale-600);
 		max-height: calc(100% - var(--token-scale-1000));
 		max-width: 500px;
 		overflow: visible;
-		padding: var(--token-scale-600);
+		padding: var(--osui-popup-padding);
 		width: 100%;
 
 		// Service Studio Preview

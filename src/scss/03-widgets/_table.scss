@@ -5,8 +5,20 @@
 
 ///
 .table {
-	border: var(--token-border-size-025) solid var(--token-border-default);
-	border-radius: var(--token-border-radius-100);
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-table-border-color:          var(--token-border-default);
+	--osui-table-border-radius:         var(--token-border-radius-100);
+	--osui-table-header-background:     var(--token-bg-surface-default);
+	--osui-table-header-color:          var(--token-text-subtlest);
+	--osui-table-cell-background:       var(--token-bg-surface-default);
+	--osui-table-row-hover-background:  var(--token-bg-input-disabled);
+	--osui-table-row-stripe-background: var(--token-bg-neutral-subtle-default);
+	--osui-table-sorted-color:              var(--token-semantics-primary-base);
+	--osui-table-row-selected-background:   var(--token-semantics-primary-base);
+	// ───────────────────────────────────────────────────────────────────
+
+	border: var(--token-border-size-025) solid var(--osui-table-border-color);
+	border-radius: var(--osui-table-border-radius);
 	border-spacing: 0;
 	empty-cells: show;
 	white-space: nowrap;
@@ -20,9 +32,9 @@
 		}
 
 		th {
-			background-color: var(--token-bg-surface-default);
-			border-bottom: var(--token-border-size-025) solid var(--token-border-default);
-			color: var(--token-text-subtlest);
+			background-color: var(--osui-table-header-background);
+			border-bottom: var(--token-border-size-025) solid var(--osui-table-border-color);
+			color: var(--osui-table-header-color);
 			font-weight: var(--token-font-weight-semi-bold);
 			height: 48px;
 			padding: var(--token-scale-0) var(--token-scale-600);
@@ -43,23 +55,23 @@
 			}
 
 			&.sorted {
-				color: var(--token-semantics-primary-base);
+				color: var(--osui-table-sorted-color);
 			}
 		}
 	}
 
 	&-row {
 		&:hover td {
-			background: var(--token-bg-input-disabled);
+			background: var(--osui-table-row-hover-background);
 		}
 
 		&.table-row-selected td {
-			background: var(--token-semantics-primary-base) linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9));
+			background: var(--osui-table-row-selected-background) linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9));
 		}
 
 		td {
-			background: var(--token-bg-surface-default);
-			border-bottom: var(--token-border-size-025) solid var(--token-border-default);
+			background: var(--osui-table-cell-background);
+			border-bottom: var(--token-border-size-025) solid var(--osui-table-border-color);
 			height: 56px;
 			padding: var(--token-scale-200) var(--token-scale-600);
 			vertical-align: inherit;
@@ -79,10 +91,10 @@
 
 		&-stripping:nth-child(even) {
 			td {
-				background: var(--token-bg-neutral-subtle-default);
+				background: var(--osui-table-row-stripe-background);
 			}
 			&:hover td {
-				background: var(--token-bg-input-disabled);
+				background: var(--osui-table-row-hover-background);
 			}
 		}
 	}
@@ -108,7 +120,7 @@
 ///
 .desktop {
 	.table-header th.sortable:hover {
-		color: var(--token-semantics-primary-base);
+		color: var(--osui-table-sorted-color);
 	}
 }
 
@@ -211,8 +223,8 @@
 			}
 
 			td {
-				background: var(--token-bg-surface-default);
-				border-bottom: var(--token-border-size-025) solid var(--token-border-default);
+				background: var(--osui-table-cell-background);
+				border-bottom: var(--token-border-size-025) solid var(--osui-table-border-color);
 				display: table-cell;
 				padding: var(--token-scale-200) var(--token-scale-600);
 				vertical-align: inherit;

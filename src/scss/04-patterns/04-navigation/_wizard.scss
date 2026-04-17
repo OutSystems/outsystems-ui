@@ -6,6 +6,17 @@
 ///
 .wizard {
 	&-wrapper {
+		// ─── Component CSS API ─────────────────────────────────────────────
+		--osui-wizard-icon-background:   var(--token-bg-surface-default);
+		--osui-wizard-icon-border-color: var(--token-border-input-default);
+		--osui-wizard-icon-color:        var(--token-primitives-neutral-700);
+		--osui-wizard-label-color:       var(--token-primitives-neutral-700);
+		--osui-wizard-active-color:      var(--token-semantics-primary-base);
+		--osui-wizard-past-background:   var(--token-semantics-primary-base);
+		--osui-wizard-past-color:        var(--token-text-inverse);
+		--osui-wizard-connector-color:   var(--token-bg-neutral-base-default);
+		// ───────────────────────────────────────────────────────────────────
+
 		&.wizard-vertical {
 			[data-block*='WizardItem'] {
 				.wizard-wrapper-item {
@@ -55,7 +66,7 @@
 			}
 
 			.wizard-item-label {
-				color: var(--token-primitives-neutral-700);
+				color: var(--osui-wizard-label-color);
 				text-align: center;
 			}
 		}
@@ -68,10 +79,10 @@
 
 	&-item-icon {
 		align-items: center;
-		background-color: var(--token-bg-surface-default);
-		border: var(--token-border-size-025) solid var(--token-border-input-default);
+		background-color: var(--osui-wizard-icon-background);
+		border: var(--token-border-size-025) solid var(--osui-wizard-icon-border-color);
 		border-radius: 50%;
-		color: var(--token-primitives-neutral-700);
+		color: var(--osui-wizard-icon-color);
 		display: flex;
 		height: 32px;
 		justify-content: center;
@@ -112,13 +123,13 @@
 		&.active {
 			.wizard-item {
 				&-icon {
-					background-color: var(--token-bg-surface-default);
-					border-color: var(--token-semantics-primary-base);
-					color: var(--token-semantics-primary-base);
+					background-color: var(--osui-wizard-icon-background);
+					border-color: var(--osui-wizard-active-color);
+					color: var(--osui-wizard-active-color);
 
 					&-wrapper {
 						&:before {
-							background-color: var(--token-semantics-primary-base);
+							background-color: var(--osui-wizard-active-color);
 						}
 					}
 				}
@@ -132,13 +143,13 @@
 		&.past {
 			.wizard-item {
 				&-icon {
-					background-color: var(--token-semantics-primary-base);
-					border-color: var(--token-semantics-primary-base);
-					color: var(--token-text-inverse);
+					background-color: var(--osui-wizard-past-background);
+					border-color: var(--osui-wizard-past-background);
+					color: var(--osui-wizard-past-color);
 
 					&-wrapper {
 						&:before {
-							background-color: var(--token-semantics-primary-base);
+							background-color: var(--osui-wizard-past-background);
 						}
 					}
 				}
@@ -153,7 +164,7 @@
 			.wizard-item-icon {
 				&-wrapper {
 					&:before {
-						background-color: var(--token-bg-neutral-base-default);
+						background-color: var(--osui-wizard-connector-color);
 					}
 				}
 

@@ -5,8 +5,16 @@
 
 ///
 .feedback-message {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-feedback-message-background:    transparent;
+	--osui-feedback-message-color:         var(--token-text-inverse);
+	--osui-feedback-message-border-radius: var(--token-border-radius-100);
+	// ───────────────────────────────────────────────────────────────────
+
 	align-items: center;
-	border-radius: var(--token-border-radius-100);
+	background-color: var(--osui-feedback-message-background);
+	border-radius: var(--osui-feedback-message-border-radius);
+	color: var(--osui-feedback-message-color);
 	display: flex;
 	font-size: var(--token-font-size-450);
 	font-weight: var(--token-font-weight-regular);
@@ -31,26 +39,26 @@
 // Mantain due to Retro Compatibility
 ///
 div.feedback-message-error {
-	background-color: var(--token-semantics-danger-base);
+	--osui-feedback-message-background: var(--token-semantics-danger-base);
 }
 
 // Mantain due to Retro Compatibility
 ///
 div.feedback-message-info {
-	background-color: var(--token-semantics-info-base);
+	--osui-feedback-message-background: var(--token-semantics-info-base);
 }
 
 // Mantain due to Retro Compatibility
 ///
 div.feedback-message-success {
-	background-color: var(--token-semantics-success-base);
+	--osui-feedback-message-background: var(--token-semantics-success-base);
 }
 
 // Mantain due to Retro Compatibility
 ///
 div.feedback-message-warning {
-	background-color: var(--token-semantics-warning-base);
-	color: var(--token-text-default);
+	--osui-feedback-message-background: var(--token-semantics-warning-base);
+	--osui-feedback-message-color:      var(--token-text-default);
 }
 
 // Responsive --------------------------------------------------------------------

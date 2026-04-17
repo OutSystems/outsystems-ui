@@ -5,6 +5,14 @@
 
 ///
 .pagination {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-pagination-button-background:       var(--token-bg-surface-default);
+	--osui-pagination-button-border-color:     var(--token-border-default);
+	--osui-pagination-button-color:            var(--token-text-subtlest);
+	--osui-pagination-button-hover-background: var(--token-bg-neutral-subtle-default);
+	--osui-pagination-active-color:            var(--token-semantics-primary-base);
+	// ───────────────────────────────────────────────────────────────────
+
 	align-items: center;
 	display: flex;
 	justify-content: space-between;
@@ -30,10 +38,10 @@
 
 	&-button {
 		align-items: center;
-		background-color: var(--token-bg-surface-default);
-		border: var(--token-border-size-025) solid var(--token-border-default);
+		background-color: var(--osui-pagination-button-background);
+		border: var(--token-border-size-025) solid var(--osui-pagination-button-border-color);
 		border-radius: var(--token-border-radius-100);
-		color: var(--token-text-subtlest);
+		color: var(--osui-pagination-button-color);
 		cursor: pointer;
 		display: inline-flex;
 		height: 32px;
@@ -48,8 +56,8 @@
 		}
 
 		&.is--active {
-			border: var(--token-border-size-025) solid var(--token-semantics-primary-base);
-			color: var(--token-semantics-primary-base);
+			border: var(--token-border-size-025) solid var(--osui-pagination-active-color);
+			color: var(--osui-pagination-active-color);
 			cursor: auto;
 			pointer-events: none;
 		}
@@ -93,8 +101,8 @@
 ///
 .desktop {
 	.pagination-button:not(.is--ellipsis):hover {
-		background-color: rgba(21, 24, 26, 0.04);
-		border: var(--token-border-size-025) solid var(--token-border-default);
+		background-color: var(--osui-pagination-button-hover-background);
+		border: var(--token-border-size-025) solid var(--osui-pagination-button-border-color);
 	}
 }
 

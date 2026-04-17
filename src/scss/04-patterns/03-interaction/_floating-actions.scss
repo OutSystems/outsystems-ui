@@ -11,6 +11,14 @@
 	}
 
 	&-actions-wrapper {
+		// ─── Component CSS API ─────────────────────────────────────────────
+		--osui-floating-actions-button-background: var(--token-semantics-primary-base);
+		--osui-floating-actions-button-color:      var(--token-text-inverse);
+		--osui-floating-actions-button-shadow:     var(--token-elevation-4);
+		--osui-floating-actions-item-background:   var(--token-bg-surface-default);
+		--osui-floating-actions-item-color:        var(--token-semantics-primary-base);
+		// ───────────────────────────────────────────────────────────────────
+
 		align-items: flex-end;
 		bottom: 0;
 		display: flex;
@@ -99,10 +107,10 @@
 
 	&-actions-item-button {
 		align-items: center;
-		background-color: var(--token-bg-surface-default);
+		background-color: var(--osui-floating-actions-item-background);
 		border-radius: var(--token-border-radius-full);
 		box-shadow: var(--token-elevation-1);
-		color: var(--token-semantics-primary-base);
+		color: var(--osui-floating-actions-item-color);
 		cursor: pointer;
 		display: flex;
 		font-size: var(--token-font-size-400);
@@ -120,17 +128,17 @@
 		}
 
 		&:hover {
-			background-color: var(--token-semantics-primary-base);
-			color: var(--token-text-inverse);
+			--osui-floating-actions-item-background: var(--osui-floating-actions-button-background);
+			--osui-floating-actions-item-color:      var(--osui-floating-actions-button-color);
 		}
 	}
 
 	&-button {
 		align-items: center;
-		background-color: var(--token-semantics-primary-base);
+		background-color: var(--osui-floating-actions-button-background);
 		border-radius: var(--token-border-radius-full);
-		box-shadow: var(--token-elevation-4);
-		color: var(--token-text-inverse);
+		box-shadow: var(--osui-floating-actions-button-shadow);
+		color: var(--osui-floating-actions-button-color);
 		cursor: pointer;
 		display: flex;
 		font-size: var(--token-font-size-550);

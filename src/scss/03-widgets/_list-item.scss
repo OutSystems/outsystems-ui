@@ -5,7 +5,14 @@
 
 ///
 .list-item {
-	border-bottom: var(--token-border-size-025) solid var(--token-border-default);
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-list-item-border-color:        var(--token-border-default);
+	--osui-list-item-background:          var(--token-bg-surface-default);
+	--osui-list-item-hover-background:    var(--token-bg-neutral-subtle-default);
+	--osui-list-item-selected-background: var(--token-semantics-primary-base);
+	// ───────────────────────────────────────────────────────────────────
+
+	border-bottom: var(--token-border-size-025) solid var(--osui-list-item-border-color);
 	overflow: hidden;
 	padding: var(--token-scale-600);
 	position: relative;
@@ -41,7 +48,7 @@
 ///
 .list {
 	.list-item {
-		background-color: var(--token-bg-surface-default);
+		background-color: var(--osui-list-item-background);
 	}
 }
 
@@ -58,7 +65,7 @@
 	.list {
 		.list-item:hover {
 			&:not(.list-item-no-hover):not(.list-item-selected) {
-				background-color: var(--token-bg-neutral-subtle-default);
+				background-color: var(--osui-list-item-hover-background);
 			}
 		}
 	}
@@ -69,7 +76,7 @@
 .tablet.landscape {
 	.list {
 		.list-item-selected {
-			background: var(--token-semantics-primary-base) linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9));
+			background: var(--osui-list-item-selected-background) linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9));
 
 			.list-item-content {
 				&-title {
@@ -81,7 +88,7 @@
 				}
 
 				&-right .icon {
-					color: var(--token-semantics-primary-base);
+					color: var(--osui-list-item-selected-background);
 				}
 			}
 		}

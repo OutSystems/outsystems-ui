@@ -5,10 +5,18 @@
 
 ///
 .card {
-	background-color: var(--token-bg-surface-default);
-	border: var(--token-border-size-025) solid var(--token-border-default);
-	border-radius: var(--token-border-radius-100);
-	padding: var(--token-scale-600);
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-card-background:    var(--token-bg-surface-default);
+	--osui-card-border-color:  var(--token-border-default);
+	--osui-card-border-width:  var(--token-border-size-025);
+	--osui-card-border-radius: var(--token-border-radius-100);
+	--osui-card-padding:       var(--token-scale-600);
+	// ───────────────────────────────────────────────────────────────────
+
+	background-color: var(--osui-card-background);
+	border: var(--osui-card-border-width) solid var(--osui-card-border-color);
+	border-radius: var(--osui-card-border-radius);
+	padding: var(--osui-card-padding);
 }
 
 // Layout -------------------------------------------------------------------------
