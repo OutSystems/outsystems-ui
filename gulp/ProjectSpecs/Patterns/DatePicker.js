@@ -3,7 +3,7 @@
 **/
 const patternInfo = {
     "codeName": "DatePicker",
-    "scss": "../scripts/OSFramework/OSUI/Pattern/DatePicker/scss/datepicker",
+    "scss": "../scss/04-patterns/03-interaction/date-picker/datepicker",
     "section": "Interaction",
 
     "assets": [

@@ -5,7 +5,7 @@ const patternInfo = {
 	"codeName": "AccordionItem",
 	"inDevelopment": false,
 	"name": "Accordion Item",
-	"scss": "../scripts/OSFramework/OSUI/Pattern/AccordionItem/scss/accordion-item",
+	"scss": "../scss/04-patterns/02-content/accordion-item/accordion-item",
 	"section": "Content"
 };
 

@@ -5,7 +5,7 @@ const patternInfo = {
     "codeName": "Carousel",
     "inDevelopment": false,
     "name": "Carousel",
-    "scss": "../scripts/OSFramework/OSUI/Pattern/Carousel/scss/carousel",
+    "scss": "../scss/04-patterns/02-content/carousel/carousel",
     "section": "Interaction"
 };
 

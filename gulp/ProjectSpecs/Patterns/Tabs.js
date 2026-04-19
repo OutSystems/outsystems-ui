@@ -5,7 +5,7 @@ const patternInfo = {
     "codeName": "Tabs",
     "inDevelopment": false,
     "name": "Tabs",
-    "scss": "../scripts/OSFramework/OSUI/Pattern/Tabs/scss/tabs",
+    "scss": "../scss/04-patterns/04-navigation/tabs/tabs",
     "section": "Navigation"
 };
 

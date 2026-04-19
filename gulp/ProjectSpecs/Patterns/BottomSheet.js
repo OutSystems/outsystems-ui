@@ -5,7 +5,7 @@ const patternInfo = {
     "codeName": "BottomSheet",
     "inDevelopment": false,
     "name": "Bottom Sheet",
-    "scss": "../scripts/OSFramework/OSUI/Pattern/BottomSheet/scss/bottomsheet",
+    "scss": "../scss/04-patterns/01-adaptive/bottom-sheet/bottomsheet",
     "section": "Interaction"
 };
 
