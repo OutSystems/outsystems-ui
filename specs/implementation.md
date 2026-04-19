@@ -1455,3 +1455,108 @@ The document can be generated semi-automatically:
 - [ ] No `--osui-*` var appears in the document that is not actually declared in the SCSS
 - [ ] Document is organised by the category sections defined in §9.4
 - [ ] Each entry shows the property name, default value, and (where applicable) which variant/state it applies to
+
+---
+
+## Phase 10 — Replace `var(--token-*)` with `$token-*` SCSS variables
+
+### 10.1 Background
+
+`outsystems-design-tokens` generates two parallel artefacts:
+
+| File | Contains | Purpose |
+|------|----------|---------|
+| `src/scss/tokens/_root.scss` | `:root { --token-* }` CSS custom properties | Runtime theming by DTE |
+| `src/scss/tokens/_variables.scss` | `$token-*: var(--token-*, fallback)` SCSS variables | Compile-time validation + fallback safety |
+
+After Phases 1–9, all component SCSS files reference tokens via `var(--token-*)`. Phase 10 migrates those references to the equivalent `$token-*` SCSS variable. The compiled CSS output is functionally identical — the SCSS variable expands to a `var(--token-*)` with a hardcoded fallback value chain — but the SCSS source gains compile-time safety and IDE support.
+
+**Example of what the SCSS variable expands to:**
+```scss
+// _variables.scss (generated, never edit)
+$token-bg-surface-default: var(--token-bg-surface-default, $token-primitives-base-white);
+// which itself resolves to:
+$token-primitives-base-white: var(--token-primitives-base-white, #ffffff);
+
+// So $token-bg-surface-default compiles to:
+// var(--token-bg-surface-default, var(--token-primitives-base-white, #ffffff))
+```
+
+### 10.2 Syntax rules
+
+Two cases apply depending on where the token value is used:
+
+**Case A — Regular CSS property value** (no interpolation needed):
+```scss
+// Before
+background-color: var(--token-bg-surface-default);
+border: var(--token-border-size-025) solid var(--token-border-default);
+
+// After
+background-color: $token-bg-surface-default;
+border: $token-border-size-025 solid $token-border-default;
+```
+
+**Case B — CSS custom property declaration** (interpolation required; SCSS treats custom property values as literal strings):
+```scss
+// Before
+--osui-btn-background: var(--token-bg-surface-default);
+
+// After
+--osui-btn-background: #{$token-bg-surface-default};
+```
+
+> **Rule of thumb:** If the left-hand side starts with `--`, wrap the right-hand side in `#{}`. Otherwise, use the SCSS variable directly.
+
+### 10.3 Scope
+
+**In scope — convert `var(--token-*)` → `$token-*`:**
+
+| Directory | Notes |
+|-----------|-------|
+| `src/scss/02-layout/` | All layout partials |
+| `src/scss/03-widgets/` | All widget partials |
+| `src/scss/04-patterns/**/*.scss` | Pattern files and provider overrides |
+
+**Out of scope — leave unchanged:**
+
+| Path | Reason |
+|------|--------|
+| `src/scss/tokens/` | Generated files; never manually edited |
+| `src/scss/01-foundations/_root.scss` | Defines `--token-*` vars in `:root {}`; these are declarations, not usages |
+| `src/scss/00-abstract/` | Setup vars that may reference tokens contextually; review per-file but default to leave |
+| `_*_lib.scss` vendor baselines | Never touch |
+| Any `var(--osui-*)` reference | These are component CSS API vars, not token vars — unchanged |
+
+### 10.4 Find/replace strategy
+
+Because `var(--token-` appears in both contexts (regular properties and custom property declarations), a two-pass find/replace is needed:
+
+**Pass 1 — Custom property RHS** (needs `#{...}` interpolation):
+- Find: `(--osui-[\w-]+)\s*:\s*var\((--token-[\w-]+)\)`
+- Replace: `$1: #{$token-<name>}` (strip `--token-` prefix to form the SCSS var name)
+- Scope: lines that match `^\s*--osui-`
+
+**Pass 2 — Regular property values**:
+- Find: `var\((--token-[\w-]+)\)`
+- Replace: `$token-<name>` (strip `--token-` prefix)
+- Scope: lines that do NOT start with `--`
+
+**Automated approach:** A short script (Python or sed) can perform both passes across all in-scope files. After running, `npm run build` validates correctness.
+
+### 10.5 Verification
+
+After the replacement:
+
+1. `grep -r "var(--token-" src/scss/02-layout src/scss/03-widgets src/scss/04-patterns` → must return zero matches
+2. `npm run build` → exits 0 for both O11 and ODC
+3. Visual diff of compiled CSS against pre-Phase-10 snapshot → only difference should be the addition of fallback values (e.g. `var(--token-bg-surface-default)` → `var(--token-bg-surface-default, var(--token-primitives-base-white, #ffffff))`)
+
+### Phase 10 — Full acceptance criteria
+
+- [ ] Zero `var(--token-*)` references remain in `src/scss/02-layout/`, `src/scss/03-widgets/`, `src/scss/04-patterns/`
+- [ ] `_root.scss`, `_variables.scss`, `_utilities.scss` are unchanged
+- [ ] `var(--osui-*)` references are unchanged throughout
+- [ ] `npm run build` exits 0 (O11 and ODC)
+- [ ] No new SCSS lint errors introduced
+- [ ] Compiled CSS output is visually identical; only difference is the expanded fallback chains on token values

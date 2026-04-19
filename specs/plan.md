@@ -260,6 +260,55 @@ See `implementation.md` Phase 9 for format spec and generation approach.
 
 ---
 
+### Phase 10 — Replace `var(--token-*)` with `$token-*` SCSS variables
+
+**What:** Replace every `var(--token-*)` reference in component SCSS with the corresponding `$token-*` SCSS variable from `_variables.scss`. Two syntaxes are required depending on context:
+
+- **Regular CSS properties** — no interpolation needed:
+  ```scss
+  // Before
+  background: var(--token-bg-surface-default);
+  // After
+  background: $token-bg-surface-default;
+  ```
+
+- **CSS custom property declarations** — interpolation required (SCSS treats custom property values as literal strings):
+  ```scss
+  // Before
+  --osui-btn-background: var(--token-bg-surface-default);
+  // After
+  --osui-btn-background: #{$token-bg-surface-default};
+  ```
+
+**Why:** The SCSS variables in `_variables.scss` are strictly better than bare `var(--token-*)` references:
+
+1. **Compile-time validation** — a typo in `$token-bg-surfaace-default` causes a build failure; a typo in `var(--token-bg-surfaace-default)` is silent and produces no value at runtime.
+2. **Hardcoded fallback values** — every `$token-*` variable expands to a `var(--token-*, fallback)` chain (e.g. `var(--token-bg-surface-default, var(--token-primitives-base-white, #ffffff))`), so components degrade gracefully if the CSS var layer is not loaded.
+3. **IDE autocomplete** — `$token-` variables are recognised by SCSS-aware editors; CSS var strings are not.
+4. **No behavioral change** — the DTE and runtime theming still work because the CSS var reference is preserved in the compiled output.
+
+**Scope — what changes:**
+- All `var(--token-*)` usages in `src/scss/02-layout/`, `src/scss/03-widgets/`, `src/scss/04-patterns/**`
+- Provider override files inside `04-patterns/*/provider/` (excluding `_*_lib.scss` vendor baselines)
+
+**Scope — what does NOT change:**
+- `src/scss/tokens/` — generated files, never edited manually
+- `src/scss/01-foundations/_root.scss` — the `:root {}` block where CSS vars are *defined*, not consumed
+- `src/scss/00-abstract/` — setup variables that mix token references with app-level vars; reviewed individually
+- `var(--osui-*)` references — component CSS API vars, not token vars; leave untouched
+- `_*_lib.scss` vendor baselines — never modified
+
+**Files touched:** All SCSS in `src/scss/02-layout/`, `src/scss/03-widgets/`, `src/scss/04-patterns/` (~80 files).
+
+**Success criteria:**
+- Zero `var(--token-*)` references remain in `02-layout/`, `03-widgets/`, `04-patterns/` after Phase 10
+- `npm run build` exits 0 for both platforms
+- Visual diff against pre-Phase-10 build is empty (compiled CSS output is identical in effect; the only difference is the fallback chain now appears in the output)
+
+See `implementation.md` Phase 10 for file-by-file change surface and find/replace strategy.
+
+---
+
 ## Decisions
 
 | # | Decision | Resolution |
