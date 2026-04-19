@@ -14,7 +14,7 @@
 			flex: 1;
 
 			.tabs-header-tab {
-				margin-left: var(--token-scale-0);
+				margin-left: $token-scale-0;
 			}
 		}
 	}
@@ -35,20 +35,20 @@
 					order: 2;
 
 					.tabs-header-tab {
-						border-left: var(--token-border-size-050) solid transparent;
-						border-right: var(--token-border-size-0);
-						padding: var(--token-scale-200) var(--token-scale-0) var(--token-scale-200) var(--token-scale-600);
+						border-left: $token-border-size-050 solid transparent;
+						border-right: $token-border-size-0;
+						padding: $token-scale-200 $token-scale-0 $token-scale-200 $token-scale-600;
 
 						&.active {
-							border-left: var(--token-border-size-050) solid var(--token-semantics-primary-base);
+							border-left: $token-border-size-050 solid $token-semantics-primary-base;
 						}
 					}
 				}
 
 				&-content {
-					border-left: var(--token-border-size-0);
-					border-right: var(--token-border-size-025) solid var(--token-primitives-neutral-500);
-					margin-left: var(--token-scale-0);
+					border-left: $token-border-size-0;
+					border-right: $token-border-size-025 solid $token-primitives-neutral-500;
+					margin-left: $token-scale-0;
 					margin-right: -1px;
 				}
 			}
@@ -64,26 +64,26 @@
 			}
 
 			.tabs-header-tab {
-				border-bottom: var(--token-border-size-0);
-				border-right: var(--token-border-size-050) solid transparent;
+				border-bottom: $token-border-size-0;
+				border-right: $token-border-size-050 solid transparent;
 				justify-content: flex-start;
-				margin-left: var(--token-scale-0);
-				padding: var(--token-scale-200) var(--token-scale-600) var(--token-scale-200) var(--token-scale-0);
+				margin-left: $token-scale-0;
+				padding: $token-scale-200 $token-scale-600 $token-scale-200 $token-scale-0;
 			}
 
 			&-tab {
 				&.active {
-					border-right: var(--token-border-size-050) solid var(--token-semantics-primary-base);
+					border-right: $token-border-size-050 solid $token-semantics-primary-base;
 				}
 			}
 		}
 
 		.tabs-content {
-			border-left: var(--token-border-size-025) solid var(--token-primitives-neutral-500);
-			border-top: var(--token-border-size-0);
+			border-left: $token-border-size-025 solid $token-primitives-neutral-500;
+			border-top: $token-border-size-0;
 			margin-left: -1px;
-			margin-top: var(--token-scale-0);
-			padding: var(--token-scale-0) var(--token-scale-600);
+			margin-top: $token-scale-0;
+			padding: $token-scale-0 $token-scale-600;
 		}
 	}
 }
@@ -100,29 +100,29 @@
 
 	&-tab {
 		align-items: center;
-		border-bottom: var(--token-border-size-050) solid transparent;
-		color: var(--token-primitives-neutral-800);
+		border-bottom: $token-border-size-050 solid transparent;
+		color: $token-primitives-neutral-800;
 		cursor: pointer;
 		display: flex;
 		justify-content: center;
-		margin-left: var(--token-scale-800);
-		padding: var(--token-scale-400) var(--token-scale-100);
+		margin-left: $token-scale-800;
+		padding: $token-scale-400 $token-scale-100;
 		transition: border 150ms linear;
 		white-space: nowrap;
 
 		&.active {
-			border-bottom: var(--token-border-size-050) solid var(--token-semantics-primary-base);
-			color: var(--token-primitives-neutral-1200);
-			font-weight: var(--token-font-weight-semi-bold);
+			border-bottom: $token-border-size-050 solid $token-semantics-primary-base;
+			color: $token-primitives-neutral-1200;
+			font-weight: $token-font-weight-semi-bold;
 		}
 	}
 }
 
 .tabs-content {
-	border-top: var(--token-border-size-025) solid var(--token-primitives-neutral-500);
+	border-top: $token-border-size-025 solid $token-primitives-neutral-500;
 	flex-grow: 1;
 	margin-top: -1px;
-	padding: var(--token-scale-600) var(--token-scale-0);
+	padding: $token-scale-600 $token-scale-0;
 	position: relative;
 	width: 100%;
 	z-index: var(--layer-global-auto);
@@ -141,7 +141,7 @@
 
 [data-block*='TabsHeaderItem'] {
 	&:first-child .tabs-header-tab {
-		margin-left: var(--token-scale-0);
+		margin-left: $token-scale-0;
 	}
 }
 
@@ -238,23 +238,23 @@
 		&.tabs-vertical {
 			.tabs-header-tab {
 				&:hover {
-					border-bottom: var(--token-border-size-0);
-					border-right: var(--token-border-size-050) solid var(--token-primitives-neutral-600);
+					border-bottom: $token-border-size-0;
+					border-right: $token-border-size-050 solid $token-primitives-neutral-600;
 				}
 				&.active:hover {
-					border-right: var(--token-border-size-050) solid var(--token-semantics-primary-base);
+					border-right: $token-border-size-050 solid $token-semantics-primary-base;
 				}
 			}
 
 			&.tabs-header-right {
 				.tabs-header-tab {
 					&:hover {
-						border-left: var(--token-border-size-050) solid var(--token-primitives-neutral-600);
+						border-left: $token-border-size-050 solid $token-primitives-neutral-600;
 					}
 
 					&.active:hover {
-						border-left: var(--token-border-size-050) solid var(--token-semantics-primary-base);
-						border-right: var(--token-border-size-0);
+						border-left: $token-border-size-050 solid $token-semantics-primary-base;
+						border-right: $token-border-size-0;
 					}
 				}
 			}
@@ -263,12 +263,12 @@
 
 	.tabs-header-tab {
 		&:hover {
-			border-bottom: var(--token-border-size-050) solid var(--token-primitives-neutral-600);
-			color: var(--token-primitives-neutral-1200);
+			border-bottom: $token-border-size-050 solid $token-primitives-neutral-600;
+			color: $token-primitives-neutral-1200;
 		}
 
 		&.active:hover {
-			border-bottom: var(--token-border-size-050) solid var(--token-semantics-primary-base);
+			border-bottom: $token-border-size-050 solid $token-semantics-primary-base;
 		}
 	}
 }
@@ -281,42 +281,42 @@
 			&.tabs-header-right {
 				.tabs-header {
 					.tabs-header-tab {
-						border-left: var(--token-border-size-0);
-						border-right: var(--token-border-size-050) solid transparent;
+						border-left: $token-border-size-0;
+						border-right: $token-border-size-050 solid transparent;
 						margin: 0;
-						padding: var(--token-scale-200) var(--token-scale-600) var(--token-scale-200) var(--token-scale-0);
+						padding: $token-scale-200 $token-scale-600 $token-scale-200 $token-scale-0;
 					}
 				}
 
 				.tabs-content {
-					border-left: var(--token-border-size-025) solid var(--token-primitives-neutral-500);
+					border-left: $token-border-size-025 solid $token-primitives-neutral-500;
 					border-right: 0;
 				}
 			}
 
 			.tabs {
 				&-header-tab {
-					border-left: var(--token-border-size-050) solid transparent;
-					border-right: var(--token-border-size-0);
+					border-left: $token-border-size-050 solid transparent;
+					border-right: $token-border-size-0;
 					margin: 0;
-					padding: var(--token-scale-200) var(--token-scale-0) var(--token-scale-200) var(--token-scale-600);
+					padding: $token-scale-200 $token-scale-0 $token-scale-200 $token-scale-600;
 
 					&.active {
-						border-left: var(--token-border-size-050) solid var(--token-semantics-primary-base);
-						border-right: var(--token-border-size-0);
+						border-left: $token-border-size-050 solid $token-semantics-primary-base;
+						border-right: $token-border-size-0;
 					}
 				}
 
 				&-content {
 					border-left: 0;
-					border-right: var(--token-border-size-025) solid var(--token-primitives-neutral-500);
+					border-right: $token-border-size-025 solid $token-primitives-neutral-500;
 				}
 			}
 		}
 
 		&-header-tab {
 			margin-left: 0;
-			margin-right: var(--token-scale-800);
+			margin-right: $token-scale-800;
 		}
 	}
 
@@ -333,13 +333,13 @@
 			&.tabs-vertical {
 				.tabs-header-tab {
 					&:hover {
-						border-left: var(--token-border-size-050) solid var(--token-primitives-neutral-600);
-						border-right: var(--token-border-size-0);
+						border-left: $token-border-size-050 solid $token-primitives-neutral-600;
+						border-right: $token-border-size-0;
 					}
 
 					&.active {
-						border-left: var(--token-border-size-050) solid var(--token-semantics-primary-base);
-						border-right: var(--token-border-size-0);
+						border-left: $token-border-size-050 solid $token-semantics-primary-base;
+						border-right: $token-border-size-0;
 					}
 				}
 			}

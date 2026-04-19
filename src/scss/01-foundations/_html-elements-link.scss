@@ -11,18 +11,18 @@ a {
 
 	&,
 	&:visited {
-		color: var(--token-semantics-primary-base);
+		color: $token-semantics-primary-base;
 		transition: all 180ms linear;
 	}
 
 	&:hover,
 	&:focus {
-		color: var(--token-semantics-primary-900);
+		color: $token-semantics-primary-900;
 		text-decoration: underline;
 	}
 
 	&[disabled] {
-		color: var(--token-text-disabled);
+		color: $token-text-disabled;
 	}
 }
 
@@ -45,7 +45,7 @@ a {
 		&:focus {
 			background-color: var(--color-focus-outer);
 			box-shadow: 0 2px var(--color-focus-inner);
-			color: var(--token-text-default);
+			color: $token-text-default;
 
 			&,
 			&:hover {
@@ -54,7 +54,7 @@ a {
 		}
 
 		&[disabled] {
-			color: var(--token-text-disabled);
+			color: $token-text-disabled;
 		}
 	}
 }

@@ -2,16 +2,16 @@
 /* Since this pattern is Deprecated, it should not appear at SASSDCS! */
 
 .SliderInterval .noUi-base {
-	background-color: var(--token-primitives-neutral-500);
+	background-color: $token-primitives-neutral-500;
 }
 
 .range-slider .noUi-base {
-	background-color: var(--token-semantics-primary-base);
-	border-radius: var(--token-border-radius-100);
+	background-color: $token-semantics-primary-base;
+	border-radius: $token-border-radius-100;
 }
 
 .range-slider .noUi-origin {
-	background-color: var(--token-primitives-neutral-500);
+	background-color: $token-primitives-neutral-500;
 }
 
 .range-slider .noUi-target,
@@ -28,17 +28,17 @@
 }
 
 .range-slider .noUi-target {
-	background: var(--token-primitives-neutral-500);
-	border: var(--token-border-size-0);
-	border-radius: var(--token-border-radius-100);
+	background: $token-primitives-neutral-500;
+	border: $token-border-size-0;
+	border-radius: $token-border-radius-100;
 	box-shadow: none;
 	height: 4px;
-	margin: var(--token-scale-600) var(--token-scale-0) 45px;
+	margin: $token-scale-600 $token-scale-0 45px;
 	position: relative;
 }
 
 .range-slider .noUi-vertical {
-	margin: var(--token-scale-600) var(--token-scale-0);
+	margin: $token-scale-600 $token-scale-0;
 	width: 4px;
 }
 
@@ -70,17 +70,17 @@
 }
 
 .range-slider .noUi-connects {
-	border-radius: var(--token-border-radius-100);
+	border-radius: $token-border-radius-100;
 	overflow: hidden;
 	z-index: var(--layer-global-screen);
 }
 
 .range-slider .noUi-horizontal .noUi-handle,
 .range-slider .noUi-vertical .noUi-handle {
-	background-color: var(--token-primitives-base-white);
-	border: var(--token-border-size-025) solid var(--token-primitives-neutral-700);
+	background-color: $token-primitives-base-white;
+	border: $token-border-size-025 solid $token-primitives-neutral-700;
 	border-radius: 50%;
-	box-shadow: var(--token-elevation-1);
+	box-shadow: $token-elevation-1;
 	cursor: pointer;
 	display: inline-block;
 	height: 24px;
@@ -100,7 +100,7 @@
 .range-slider .noUi-vertical .noUi-handle:before,
 .range-slider .noUi-vertical .noUi-handle:after {
 	background: transparent;
-	border-color: var(--token-primitives-neutral-600);
+	border-color: $token-primitives-neutral-600;
 	border-style: solid;
 	content: '';
 	height: 10px;
@@ -111,7 +111,7 @@
 
 .range-slider .noUi-horizontal .noUi-handle:before,
 .range-slider .noUi-vertical .noUi-handle:before {
-	border-width: var(--token-border-size-0) var(--token-border-size-0) var(--token-border-size-0) var(--token-border-size-025);
+	border-width: $token-border-size-0 $token-border-size-0 $token-border-size-0 $token-border-size-025;
 	content: '';
 	left: 6px;
 	right: auto;
@@ -120,7 +120,7 @@
 .range-slider .noUi-horizontal .noUi-handle:after,
 .range-slider .noUi-vertical .noUi-handle:after {
 	border-style: solid;
-	border-width: var(--token-border-size-0) var(--token-border-size-025);
+	border-width: $token-border-size-0 $token-border-size-025;
 	left: 10px;
 	width: 3px;
 }
@@ -129,7 +129,7 @@
 .range-slider .noUi-horizontal .noUi-handle:hover,
 .range-slider .noUi-vertical .noUi-handle.noUi-active,
 .range-slider .noUi-vertical .noUi-handle:hover {
-	border: var(--token-border-size-025) solid var(--token-semantics-primary-base);
+	border: $token-border-size-025 solid $token-semantics-primary-base;
 }
 
 .range-slider .noUi-horizontal .noUi-handle.noUi-active:before,
@@ -140,11 +140,11 @@
 .range-slider .noUi-vertical .noUi-handle.noUi-active:after,
 .range-slider .noUi-vertical .noUi-handle:hover:before,
 .range-slider .noUi-vertical .noUi-handle:hover:after {
-	border-color: var(--token-semantics-primary-base);
+	border-color: $token-semantics-primary-base;
 }
 
 .range-slider .noUi-horizontal .noUi-pips {
-	color: var(--token-primitives-neutral-800);
+	color: $token-primitives-neutral-800;
 	position: absolute;
 }
 
@@ -153,7 +153,7 @@
 }
 
 .range-slider .noUi-origin.noUi-connect {
-	background-color: var(--token-semantics-primary-base);
+	background-color: $token-semantics-primary-base;
 	box-shadow: none;
 }
 
@@ -175,15 +175,15 @@
 }
 
 .range-slider .noUi-pips-vertical {
-	color: var(--token-primitives-neutral-800);
+	color: $token-primitives-neutral-800;
 	height: 100%;
 	left: 100%;
-	padding: 0 0 0 var(--token-scale-400);
+	padding: 0 0 0 $token-scale-400;
 	top: 0;
 }
 
 .range-slider .noUi-value-vertical {
-	padding-left: var(--token-scale-200);
+	padding-left: $token-scale-200;
 	-webkit-transform: translate(0, -50%);
 	transform: translate(0, -50%);
 }
@@ -203,12 +203,12 @@
 }
 
 .range-slider .noUi-tooltip {
-	background: var(--token-primitives-base-white);
-	border: var(--token-border-size-025) solid var(--token-primitives-neutral-500);
-	border-radius: var(--token-border-radius-100);
-	color: var(--token-primitives-neutral-1200);
+	background: $token-primitives-base-white;
+	border: $token-border-size-025 solid $token-primitives-neutral-500;
+	border-radius: $token-border-radius-100;
+	color: $token-primitives-neutral-1200;
 	display: block;
-	padding: var(--token-scale-100);
+	padding: $token-scale-100;
 	position: absolute;
 	text-align: center;
 	white-space: nowrap;
@@ -235,12 +235,12 @@
 }
 
 .is-rtl .noUi-value.noUi-value-vertical {
-	padding-left: var(--token-scale-0);
-	padding-right: var(--token-scale-600);
+	padding-left: $token-scale-0;
+	padding-right: $token-scale-600;
 }
 
 .is-rtl .noUi-marker.noUi-marker-vertical {
-	margin-right: var(--token-scale-400);
+	margin-right: $token-scale-400;
 }
 
 /* $4.3.12 - Patterns - Interaction - RangeSlider */
@@ -259,7 +259,7 @@
 }
 
 .range-slider .noUi-connect {
-	background-color: var(--token-semantics-primary-base);
+	background-color: $token-semantics-primary-base;
 	height: 100%;
 	width: 100%;
 }
@@ -283,11 +283,11 @@
 }
 
 .range-slider .noUi-marker-sub {
-	background-color: var(--token-primitives-neutral-500);
+	background-color: $token-primitives-neutral-500;
 }
 
 .range-slider .noUi-marker-large {
-	background-color: var(--token-primitives-neutral-600);
+	background-color: $token-primitives-neutral-600;
 }
 
 .range-slider .noUi-marker-horizontal.noUi-marker {
@@ -311,7 +311,7 @@
 }
 
 .range-slider .noUi-value-sub {
-	background-color: var(--token-primitives-neutral-600);
+	background-color: $token-primitives-neutral-600;
 	font-size: 10px;
 }
 
@@ -332,26 +332,26 @@
 }
 
 .range-slider[data-disabled='true'].noUi-target {
-	background-color: var(--token-primitives-neutral-400);
+	background-color: $token-primitives-neutral-400;
 }
 
 .range-slider[data-disabled='true'] .noUi-connect {
-	background-color: var(--token-primitives-neutral-600);
+	background-color: $token-primitives-neutral-600;
 }
 
 .range-slider[data-disabled='true'] .noUi-handle {
-	background-color: var(--token-primitives-neutral-200);
-	border: var(--token-border-size-025) solid var(--token-primitives-neutral-500);
+	background-color: $token-primitives-neutral-200;
+	border: $token-border-size-025 solid $token-primitives-neutral-500;
 	box-shadow: none;
 }
 
 .range-slider[data-disabled='true'] .noUi-handle:before,
 .range-slider[data-disabled='true'] .noUi-handle:after {
-	border-color: var(--token-primitives-neutral-600);
+	border-color: $token-primitives-neutral-600;
 }
 
 .range-slider[data-disabled='true'] .noUi-pips {
-	color: var(--token-primitives-neutral-600);
+	color: $token-primitives-neutral-600;
 }
 
 /* Accessibility Styles */

@@ -17,7 +17,7 @@ body > .app-menu-content {
 
 	& .app-menu-links {
 		-servicestudio-align-items: flex-start;
-		-servicestudio-padding: var(--token-scale-0);
+		-servicestudio-padding: $token-scale-0;
 		-servicestudio-width: 100% !important;
 	}
 }
@@ -26,8 +26,8 @@ body > .app-menu-content {
 .phone {
 	.app-menu-links {
 		a {
-			-servicestudio-margin-left: var(--token-scale-0);
-			-servicestudio-padding: var(--token-scale-200) var(--token-scale-600);
+			-servicestudio-margin-left: $token-scale-0;
+			-servicestudio-padding: $token-scale-200 $token-scale-600;
 			-servicestudio-width: 100%;
 		}
 	}
@@ -37,7 +37,7 @@ body > .app-menu-content {
 html[data-uieditorversion^='1'] {
 	body {
 		&:not(.phone):not(.tablet) .layout-side aside {
-			-servicestudio-background-color: var(--token-bg-surface-default);
+			-servicestudio-background-color: $token-bg-surface-default;
 			-servicestudio-bottom: 0;
 			-servicestudio-position: fixed;
 			-servicestudio-top: 0;

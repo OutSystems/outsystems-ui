@@ -78,72 +78,72 @@
 
 .gap {
 	&-xs {
-		gap: var(--token-scale-100);
+		gap: $token-scale-100;
 	}
 	&-s {
-		gap: var(--token-scale-200);
+		gap: $token-scale-200;
 	}
 	&-base {
-		gap: var(--token-scale-400);
+		gap: $token-scale-400;
 	}
 	&-m {
-		gap: var(--token-scale-600);
+		gap: $token-scale-600;
 	}
 	&-l {
-		gap: var(--token-scale-800);
+		gap: $token-scale-800;
 	}
 	&-xl {
-		gap: var(--token-scale-1000);
+		gap: $token-scale-1000;
 	}
 	&-xxl {
-		gap: var(--token-scale-1200);
+		gap: $token-scale-1200;
 	}
 }
 
 .row-gap {
 	&-xs {
-		row-gap: var(--token-scale-100);
+		row-gap: $token-scale-100;
 	}
 	&-s {
-		row-gap: var(--token-scale-200);
+		row-gap: $token-scale-200;
 	}
 	&-base {
-		row-gap: var(--token-scale-400);
+		row-gap: $token-scale-400;
 	}
 	&-m {
-		row-gap: var(--token-scale-600);
+		row-gap: $token-scale-600;
 	}
 	&-l {
-		row-gap: var(--token-scale-800);
+		row-gap: $token-scale-800;
 	}
 	&-xl {
-		row-gap: var(--token-scale-1000);
+		row-gap: $token-scale-1000;
 	}
 	&-xxl {
-		row-gap: var(--token-scale-1200);
+		row-gap: $token-scale-1200;
 	}
 }
 
 .column-gap {
 	&-xs {
-		column-gap: var(--token-scale-100);
+		column-gap: $token-scale-100;
 	}
 	&-s {
-		column-gap: var(--token-scale-200);
+		column-gap: $token-scale-200;
 	}
 	&-base {
-		column-gap: var(--token-scale-400);
+		column-gap: $token-scale-400;
 	}
 	&-m {
-		column-gap: var(--token-scale-600);
+		column-gap: $token-scale-600;
 	}
 	&-l {
-		column-gap: var(--token-scale-800);
+		column-gap: $token-scale-800;
 	}
 	&-xl {
-		column-gap: var(--token-scale-1000);
+		column-gap: $token-scale-1000;
 	}
 	&-xxl {
-		column-gap: var(--token-scale-1200);
+		column-gap: $token-scale-1200;
 	}
 }

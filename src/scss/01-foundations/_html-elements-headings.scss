@@ -3,14 +3,14 @@
 /// @group HTML_Elements-Headings
 /// HTML Elements - Headings (h1 to h6 and font-size-display)
 
-// Maps heading level to token font-size CSS var names
+// Maps heading level to token font-size SCSS variables (each expands to var(--token-*, fallback))
 $osui-heading-font-size-token-vars: (
-	1: '--token-font-size-800',
-	2: '--token-font-size-700',
-	3: '--token-font-size-650',
-	4: '--token-font-size-550',
-	5: '--token-font-size-500',
-	6: '--token-font-size-450'
+	1: $token-font-size-800,
+	2: $token-font-size-700,
+	3: $token-font-size-650,
+	4: $token-font-size-550,
+	5: $token-font-size-500,
+	6: $token-font-size-450
 );
 
 /// Default h1, .heading1-6 and font-size-display styles
@@ -27,7 +27,7 @@ h5,
 h6,
 .heading6,
 .font-size-display {
-	font-weight: var(--token-font-weight-semi-bold);
+	font-weight: $token-font-weight-semi-bold;
 	line-height: 1.25;
 	margin: 0;
 }
@@ -37,20 +37,20 @@ h,
 .heading {
 	@each $type, $value in $osui-typography-heading-sizes {
 		&#{$type} {
-			font-size: var(#{map-get($osui-heading-font-size-token-vars, $type)});
+			font-size: #{map-get($osui-heading-font-size-token-vars, $type)};
 		}
 	}
 }
 
 /// Default size display value
 .font-size-display {
-	font-size: var(--token-font-size-900);
+	font-size: $token-font-size-900;
 }
 
 // Default .font-size-h1-6 values
 @each $type, $value in $osui-typography-heading-sizes {
 	.font-size-h#{$type} {
-		font-size: var(#{map-get($osui-heading-font-size-token-vars, $type)});
+		font-size: #{map-get($osui-heading-font-size-token-vars, $type)};
 	}
 }
 
@@ -60,15 +60,15 @@ h,
 		h#{$type},
 		.heading#{$type} {
 			@if $type < 4 {
-				font-size: calc(var(#{map-get($osui-heading-font-size-token-vars, $type)}) - 2px);
+				font-size: calc(#{map-get($osui-heading-font-size-token-vars, $type)} - 2px);
 			} @else {
-				font-size: calc(var(#{map-get($osui-heading-font-size-token-vars, $type)}) - 1px);
+				font-size: calc(#{map-get($osui-heading-font-size-token-vars, $type)} - 1px);
 			}
 		}
 	}
 
 	.font-size-display {
-		font-size: calc(var(--token-font-size-900) - 2px);
+		font-size: calc(#{$token-font-size-900} - 2px);
 	}
 }
 
@@ -78,14 +78,14 @@ h,
 		h#{$type},
 		.heading#{$type} {
 			@if $type < 4 {
-				font-size: calc(var(#{map-get($osui-heading-font-size-token-vars, $type)}) - 4px);
+				font-size: calc(#{map-get($osui-heading-font-size-token-vars, $type)} - 4px);
 			} @else {
-				font-size: calc(var(#{map-get($osui-heading-font-size-token-vars, $type)}) - 2px);
+				font-size: calc(#{map-get($osui-heading-font-size-token-vars, $type)} - 2px);
 			}
 		}
 	}
 
 	.font-size-display {
-		font-size: calc(var(--token-font-size-900) - 4px);
+		font-size: calc(#{$token-font-size-900} - 4px);
 	}
 }

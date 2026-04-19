@@ -41,16 +41,16 @@ $osui-sizes:
 	'xl' 40px,
 	'xxl' 48px;
 
-// Maps old size names to token CSS var names (for utility class generation)
+// Maps old size names to token SCSS variables (for utility class generation)
 $osui-space-token-vars: (
-	'none': '--token-scale-0',
-	'xs': '--token-scale-100',
-	's': '--token-scale-200',
-	'base': '--token-scale-400',
-	'm': '--token-scale-600',
-	'l': '--token-scale-800',
-	'xl': '--token-scale-1000',
-	'xxl': '--token-scale-1200'
+	'none': $token-scale-0,
+	'xs': $token-scale-100,
+	's': $token-scale-200,
+	'base': $token-scale-400,
+	'm': $token-scale-600,
+	'l': $token-scale-800,
+	'xl': $token-scale-1000,
+	'xxl': $token-scale-1200
 );
 
 /* ---------------------------------------------------------------------------- */

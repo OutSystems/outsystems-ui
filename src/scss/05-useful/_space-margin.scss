@@ -7,23 +7,23 @@
 .margin {
 	@each $type, $value in $osui-sizes {
 		&-#{$type} {
-			margin: var(#{map-get($osui-space-token-vars, $type)});
+			margin: #{map-get($osui-space-token-vars, $type)};
 		}
 
 		@each $osui-box-side in $osui-box-sides {
 			&-#{$osui-box-side}-#{$type} {
-				margin-#{$osui-box-side}: var(#{map-get($osui-space-token-vars, $type)});
+				margin-#{$osui-box-side}: #{map-get($osui-space-token-vars, $type)};
 			}
 		}
 
 		&-x-#{$type} {
-			margin-left: var(#{map-get($osui-space-token-vars, $type)});
-			margin-right: var(#{map-get($osui-space-token-vars, $type)});
+			margin-left: #{map-get($osui-space-token-vars, $type)};
+			margin-right: #{map-get($osui-space-token-vars, $type)};
 		}
 
 		&-y-#{$type} {
-			margin-bottom: var(#{map-get($osui-space-token-vars, $type)});
-			margin-top: var(#{map-get($osui-space-token-vars, $type)});
+			margin-bottom: #{map-get($osui-space-token-vars, $type)};
+			margin-top: #{map-get($osui-space-token-vars, $type)};
 		}
 	}
 
@@ -38,13 +38,13 @@
 	@each $type, $value in $osui-sizes {
 		.margin {
 			&-right-#{$type} {
-				margin-left: var(#{map-get($osui-space-token-vars, $type)});
-				margin-right: var(--token-scale-0);
+				margin-left: #{map-get($osui-space-token-vars, $type)};
+				margin-right: $token-scale-0;
 			}
 
 			&-left-#{$type} {
-				margin-left: var(--token-scale-0);
-				margin-right: var(#{map-get($osui-space-token-vars, $type)});
+				margin-left: $token-scale-0;
+				margin-right: #{map-get($osui-space-token-vars, $type)};
 			}
 		}
 	}

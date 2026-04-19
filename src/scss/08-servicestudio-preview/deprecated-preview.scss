@@ -10,10 +10,10 @@
 	display: none;
 	-servicestudio-background: #fff1dc;
 	-servicestudio-background: #fef5e5;
-	-servicestudio-border-radius: var(--token-border-radius-100);
-	-servicestudio-color: var(--token-text-default);
+	-servicestudio-border-radius: $token-border-radius-100;
+	-servicestudio-color: $token-text-default;
 	-servicestudio-content: '⚠ DEPRECATED';
-	-servicestudio-font-weight: var(--token-font-weight-semi-bold);
+	-servicestudio-font-weight: $token-font-weight-semi-bold;
 	-servicestudio-display: block;
 	-servicestudio-font-size: 9px;
 	-servicestudio-line-height: 8px;

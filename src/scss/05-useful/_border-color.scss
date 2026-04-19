@@ -14,7 +14,7 @@
 
 			// Border Brand Colors
 			&-#{$box-side-type}-primary {
-				border-color: var(--token-semantics-primary-base);
+				border-color: $token-semantics-primary-base;
 			}
 
 			&-#{$box-side-type}-secondary {

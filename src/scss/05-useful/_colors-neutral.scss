@@ -18,9 +18,9 @@
 
 				&-lightest {
 					@if ($i < 5) {
-						background-color: var(--token-primitives-neutral-900);
+						background-color: $token-primitives-neutral-900;
 					} @else {
-						background-color: var(--token-primitives-base-white);
+						background-color: $token-primitives-base-white;
 					}
 				}
 			}

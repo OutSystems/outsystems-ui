@@ -3,11 +3,11 @@
 
 .pika {
 	&-single {
-		background: var(--token-primitives-base-white);
-		border: var(--token-border-size-025) solid var(--token-primitives-neutral-400);
-		border-radius: var(--token-border-radius-100);
+		background: $token-primitives-base-white;
+		border: $token-border-size-025 solid $token-primitives-neutral-400;
+		border-radius: $token-border-radius-100;
 		display: block;
-		margin-top: var(--token-scale-100);
+		margin-top: $token-scale-100;
 		max-width: 320px;
 		position: relative;
 
@@ -16,7 +16,7 @@
 		}
 
 		&.is-bound {
-			box-shadow: var(--token-elevation-1);
+			box-shadow: $token-elevation-1;
 			position: absolute !important;
 			z-index: var(--layer-global-elevated);
 		}
@@ -30,7 +30,7 @@
 		align-items: center;
 		display: flex;
 		justify-content: space-between;
-		padding: var(--token-scale-600) var(--token-scale-400);
+		padding: $token-scale-600 $token-scale-400;
 
 		select {
 			cursor: pointer;
@@ -55,53 +55,53 @@
 	}
 
 	&-select-month {
-		margin-left: var(--token-scale-400);
+		margin-left: $token-scale-400;
 		margin-right: 0;
 
 		.year-first & {
-			margin-left: var(--token-scale-400);
+			margin-left: $token-scale-400;
 			margin-right: 0;
 		}
 	}
 
 	&-prev {
 		background-color: transparent;
-		border: var(--token-border-size-0);
-		color: var(--token-primitives-neutral-700);
+		border: $token-border-size-0;
+		color: $token-primitives-neutral-700;
 		cursor: pointer;
 		font: normal normal normal 0 FontAwesome;
-		padding: var(--token-scale-0) var(--token-scale-200);
+		padding: $token-scale-0 $token-scale-200;
 
 		&:before {
 			content: '\f104';
-			font-size: var(--token-font-size-500);
+			font-size: $token-font-size-500;
 			position: relative;
 		}
 	}
 
 	&-next {
 		background-color: transparent;
-		border: var(--token-border-size-0);
-		color: var(--token-primitives-neutral-700);
+		border: $token-border-size-0;
+		color: $token-primitives-neutral-700;
 		cursor: pointer;
 		font: normal normal normal 0 FontAwesome;
-		margin-left: var(--token-scale-400);
-		padding: var(--token-scale-0) var(--token-scale-200);
+		margin-left: $token-scale-400;
+		padding: $token-scale-0 $token-scale-200;
 
 		&:before {
 			content: '\f105';
-			font-size: var(--token-font-size-500);
+			font-size: $token-font-size-500;
 			position: relative;
 		}
 	}
 
 	&-label {
-		color: var(--token-semantics-primary-base);
+		color: $token-semantics-primary-base;
 		cursor: pointer;
 		position: relative;
 
 		&:first-child {
-			margin-right: var(--token-scale-400);
+			margin-right: $token-scale-400;
 		}
 
 		&:hover {
@@ -113,7 +113,7 @@
 	&-table {
 		display: flex;
 		flex-direction: column;
-		padding: var(--token-scale-0) var(--token-scale-400) var(--token-scale-400);
+		padding: $token-scale-0 $token-scale-400 $token-scale-400;
 		width: 100%;
 
 		thead {
@@ -127,9 +127,9 @@
 		}
 
 		th {
-			color: var(--token-primitives-neutral-700);
+			color: $token-primitives-neutral-700;
 			flex: 1;
-			font-weight: var(--token-font-weight-regular);
+			font-weight: $token-font-weight-regular;
 
 			abbr[title] {
 				text-decoration: none;
@@ -137,16 +137,16 @@
 		}
 
 		tbody {
-			margin-top: var(--token-scale-200);
+			margin-top: $token-scale-200;
 			overflow: hidden;
 
 			tr {
 				display: flex;
 				flex-direction: row;
-				margin-bottom: var(--token-scale-100);
+				margin-bottom: $token-scale-100;
 
 				&:last-child {
-					margin-bottom: var(--token-scale-0);
+					margin-bottom: $token-scale-0;
 				}
 			}
 
@@ -161,49 +161,49 @@
 
 	&-button {
 		background-color: transparent;
-		border: var(--token-border-size-0);
-		border-radius: var(--token-border-radius-100);
-		color: var(--token-primitives-neutral-900);
+		border: $token-border-size-0;
+		border-radius: $token-border-radius-100;
+		color: $token-primitives-neutral-900;
 		cursor: pointer;
 		height: 32px;
-		padding: var(--token-scale-0);
+		padding: $token-scale-0;
 		position: relative;
 		width: 32px;
 		z-index: var(--layer-local-tier-1);
 
 		&:hover {
-			background-color: var(--token-primitives-neutral-300);
+			background-color: $token-primitives-neutral-300;
 		}
 
 		.is-today & {
-			background-color: var(--token-primitives-neutral-400);
+			background-color: $token-primitives-neutral-400;
 		}
 
 		.is-inrange & {
-			background: var(--token-semantics-primary-base) linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9));
+			background: $token-semantics-primary-base linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9));
 		}
 
 		.is-startrange &,
 		.is-selected &,
 		.is-endrange & {
-			background: var(--token-semantics-primary-base);
-			color: var(--token-primitives-base-white);
+			background: $token-semantics-primary-base;
+			color: $token-primitives-base-white;
 		}
 
 		.is-disabled &,
 		.is-disabled.is-outside-current-month & {
-			color: var(--token-primitives-neutral-700);
+			color: $token-primitives-neutral-700;
 			pointer-events: none;
 			text-decoration: line-through;
 		}
 
 		.is-outside-current-month & {
-			color: var(--token-primitives-neutral-700);
+			color: $token-primitives-neutral-700;
 			text-decoration: none;
 		}
 
 		.has-event &:before {
-			background-color: var(--token-semantics-primary-base);
+			background-color: $token-semantics-primary-base;
 			border-radius: 50%;
 			bottom: 3px;
 			content: '';
@@ -215,14 +215,14 @@
 		}
 
 		.is-selected.has-event &:before {
-			background-color: var(--token-primitives-base-white);
+			background-color: $token-primitives-base-white;
 		}
 	}
 
 	&-today-container {
 		height: auto;
-		margin: var(--token-scale-0) var(--token-scale-0);
-		padding: var(--token-scale-0) var(--token-scale-0) var(--token-scale-0);
+		margin: $token-scale-0 $token-scale-0;
+		padding: $token-scale-0 $token-scale-0 $token-scale-0;
 		width: 100%;
 
 		&:hover {
@@ -232,11 +232,11 @@
 
 	&-go-today {
 		background-color: transparent;
-		border: var(--token-border-size-0);
-		color: var(--token-semantics-primary-base);
+		border: $token-border-size-0;
+		color: $token-semantics-primary-base;
 		cursor: pointer;
 		font-weight: normal;
-		padding: var(--token-scale-0);
+		padding: $token-scale-0;
 
 		&:hover {
 			color: #295fd6;
@@ -248,26 +248,26 @@
 		align-items: center;
 		display: flex;
 		justify-content: center;
-		margin-bottom: var(--token-scale-400);
+		margin-bottom: $token-scale-400;
 		width: 33.333%;
 
 		&.is-selected {
-			background-color: var(--token-semantics-primary-base);
-			color: var(--token-primitives-base-white);
+			background-color: $token-semantics-primary-base;
+			color: $token-primitives-base-white;
 		}
 	}
 
 	&-time-container {
-		margin: 0 var(--token-scale-400);
+		margin: 0 $token-scale-400;
 
 		select {
 			background-color: transparent;
 			border: 0;
-			color: var(--token-semantics-primary-base);
+			color: $token-semantics-primary-base;
 		}
 
 		option {
-			color: var(--token-primitives-neutral-1200);
+			color: $token-primitives-neutral-1200;
 		}
 	}
 }
@@ -280,8 +280,8 @@ input.OSFillParent.calendar-input {
 	position: relative;
 
 	&:before {
-		background: var(--token-semantics-primary-base) linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9));
-		border-radius: var(--token-border-radius-100);
+		background: $token-semantics-primary-base linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9));
+		border-radius: $token-border-radius-100;
 		content: '';
 		height: 100%;
 		left: -8px;
@@ -311,23 +311,23 @@ input.OSFillParent.calendar-input {
 	flex-direction: row;
 	-ms-flex-wrap: wrap;
 	flex-wrap: wrap;
-	padding: var(--token-scale-0);
+	padding: $token-scale-0;
 }
 
 .prev-year,
 .next-year {
-	color: var(--token-primitives-neutral-700);
+	color: $token-primitives-neutral-700;
 }
 
 /* Keycode shortcuts dialog */
 .calendar-help {
 	&-dialog {
-		background-color: var(--token-primitives-base-white);
+		background-color: $token-primitives-base-white;
 		bottom: 0;
-		color: var(--token-primitives-neutral-1200);
+		color: $token-primitives-neutral-1200;
 		display: none;
 		left: 0;
-		padding: var(--token-scale-200);
+		padding: $token-scale-200;
 		position: absolute;
 		right: 0;
 		top: 0;
@@ -350,20 +350,20 @@ input.OSFillParent.calendar-input {
 		}
 
 		ul {
-			padding-left: var(--token-scale-600);
+			padding-left: $token-scale-600;
 		}
 	}
 
 	&-trigger {
-		background-color: var(--token-semantics-info-base);
+		background-color: $token-semantics-info-base;
 		clip: rect(0, 0, 0, 0);
-		color: var(--token-primitives-base-white);
+		color: $token-primitives-base-white;
 		height: 0;
 		left: 50%;
 		overflow: hidden;
-		padding: var(--token-scale-200);
+		padding: $token-scale-200;
 		position: absolute;
-		top: var(--token-scale-1200);
+		top: $token-scale-1200;
 		transform: translateX(-50%);
 		white-space: nowrap;
 		width: 0;
@@ -378,8 +378,8 @@ input.OSFillParent.calendar-input {
 	}
 
 	&-close {
-		background-color: var(--token-primitives-base-white);
-		color: var(--token-primitives-neutral-1200);
+		background-color: $token-primitives-base-white;
+		color: $token-primitives-neutral-1200;
 		height: auto;
 	}
 }
@@ -411,8 +411,8 @@ input.OSFillParent.calendar-input {
 	.pika {
 		&-next {
 			margin-left: 0;
-			margin-right: var(--token-scale-600);
-			padding: var(--token-scale-0) var(--token-scale-100);
+			margin-right: $token-scale-600;
+			padding: $token-scale-0 $token-scale-100;
 
 			&:before {
 				content: '\f104';
@@ -427,7 +427,7 @@ input.OSFillParent.calendar-input {
 
 		&-label {
 			&:first-child {
-				margin-left: var(--token-scale-400);
+				margin-left: $token-scale-400;
 				margin-right: 0;
 			}
 		}
@@ -441,15 +441,15 @@ input.OSFillParent.calendar-input {
 			&-title {
 				select {
 					border: none;
-					color: var(--token-semantics-primary-base);
+					color: $token-semantics-primary-base;
 					opacity: 1;
 
 					&:hover {
-						border-bottom: var(--token-border-size-025) solid var(--token-semantics-primary-base);
+						border-bottom: $token-border-size-025 solid $token-semantics-primary-base;
 					}
 
 					option {
-						color: var(--token-primitives-neutral-1200);
+						color: $token-primitives-neutral-1200;
 					}
 				}
 

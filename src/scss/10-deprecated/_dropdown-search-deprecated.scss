@@ -5,7 +5,7 @@
 	cursor: pointer;
 
 	&:after {
-		color: var(--token-primitives-neutral-700);
+		color: $token-primitives-neutral-700;
 		content: '\f107';
 		font: normal normal normal 24px/1 FontAwesome;
 		font-family: 'FontAwesome';
@@ -19,19 +19,19 @@
 	&.is {
 		&-open {
 			&:after {
-				color: var(--token-semantics-primary-base);
+				color: $token-semantics-primary-base;
 				transform: rotate(180deg);
 			}
 		}
 
 		&-disabled {
 			&:after {
-				color: var(--token-primitives-neutral-500);
+				color: $token-primitives-neutral-500;
 			}
 
 			.choices__list--single {
 				.choices__item {
-					color: var(--token-primitives-neutral-600);
+					color: $token-primitives-neutral-600;
 				}
 			}
 		}
@@ -40,9 +40,9 @@
 	.choices__button {
 		display: none;
 		height: auto;
-		margin-right: var(--token-scale-600);
+		margin-right: $token-scale-600;
 		margin-top: -10px;
-		padding: var(--token-scale-0);
+		padding: $token-scale-0;
 		position: absolute;
 		right: 0;
 		top: 50%;
@@ -54,7 +54,7 @@
 		}
 
 		&:focus {
-			box-shadow: 0 0 0 2px var(--token-elevation-1);
+			box-shadow: 0 0 0 2px $token-elevation-1;
 		}
 	}
 
@@ -62,16 +62,16 @@
 		input:not(.btn):not(.checkbox):not(.radio-button),
 		.input {
 			max-width: 100%;
-			padding-left: var(--token-scale-800);
+			padding-left: $token-scale-800;
 		}
 	}
 }
 
 .choices__list--single {
 	.choices__item {
-		color: var(--token-primitives-neutral-1200);
+		color: $token-primitives-neutral-1200;
 		overflow: hidden;
-		padding-right: var(--token-scale-400);
+		padding-right: $token-scale-400;
 		text-overflow: ellipsis;
 		white-space: nowrap;
 		width: 99%;
@@ -102,21 +102,21 @@
 
 		.choices__button {
 			left: 0;
-			margin-left: var(--token-scale-600);
-			margin-right: var(--token-scale-0);
+			margin-left: $token-scale-600;
+			margin-right: $token-scale-0;
 			right: auto;
 		}
 	}
 
 	.choices__list--single {
-		padding-left: var(--token-scale-400);
-		padding-right: var(--token-scale-100);
+		padding-left: $token-scale-400;
+		padding-right: $token-scale-100;
 	}
 }
 
 // Accessibility -----------------------------------------------------------------
 .has-accessible-features {
 	.choices[data-type*='select-one'] {
-		border-radius: var(--token-border-radius-100);
+		border-radius: $token-border-radius-100;
 	}
 }

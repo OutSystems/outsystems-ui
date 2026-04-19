@@ -3,12 +3,12 @@
 /// @group UsefullClasses-Border_Radius
 /// Usefull - Border Radius
 
-// Maps old border-radius names to token CSS var names (or literal values)
+// Maps old border-radius names to token SCSS variables (or plain CSS values)
 $osui-border-radius-token-vars: (
-	'none': '--token-border-radius-0',
-	'soft': '--token-border-radius-100',
-	'rounded': '--token-border-radius-full',
-	'circle': 'literal:50%'
+	'none': $token-border-radius-0,
+	'soft': $token-border-radius-100,
+	'rounded': $token-border-radius-full,
+	'circle': 50%
 );
 
 ///
@@ -17,34 +17,21 @@ $osui-border-radius-token-vars: (
 		$token: map-get($osui-border-radius-token-vars, $type);
 		// Generated - Eg: .border-radius-none
 		&-#{$type} {
-			@if str-slice($token, 1, 8) == 'literal:' {
-				border-radius: #{str-slice($token, 9)};
-			} @else {
-				border-radius: var(#{$token});
-			}
+			border-radius: #{$token};
 		}
 
 		@each $osui-box-corner in $osui-box-corners {
 			// Generated - Eg: .border-radius-top-left-none
 			&-#{$osui-box-corner}-#{$type} {
-				@if str-slice($token, 1, 8) == 'literal:' {
-					border-#{$osui-box-corner}-radius: #{str-slice($token, 9)};
-				} @else {
-					border-#{$osui-box-corner}-radius: var(#{$token});
-				}
+				border-#{$osui-box-corner}-radius: #{$token};
 			}
 		}
 
 		@each $osui-border-side, $osui-border-corner1, $osui-border-corner2 in $osui-border-radius-box-sides {
 			// Generated - Eg: .border-radius-top-none
 			&-#{$osui-border-side}-#{$type} {
-				@if str-slice($token, 1, 8) == 'literal:' {
-					border-#{$osui-border-side}-#{$osui-border-corner1}-radius: #{str-slice($token, 9)};
-					border-#{$osui-border-side}-#{$osui-border-corner2}-radius: #{str-slice($token, 9)};
-				} @else {
-					border-#{$osui-border-side}-#{$osui-border-corner1}-radius: var(#{$token});
-					border-#{$osui-border-side}-#{$osui-border-corner2}-radius: var(#{$token});
-				}
+				border-#{$osui-border-side}-#{$osui-border-corner1}-radius: #{$token};
+				border-#{$osui-border-side}-#{$osui-border-corner2}-radius: #{$token};
 			}
 		}
 	}
