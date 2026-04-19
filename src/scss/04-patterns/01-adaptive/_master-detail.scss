@@ -6,13 +6,13 @@
 ///
 .split-screen-wrapper {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-master-detail-background:    var(--token-bg-surface-default);
-	--osui-master-detail-border-color:  var(--token-border-default);
-	--osui-master-detail-border-radius: var(--token-border-radius-100);
+	--osui-master-detail-background:    #{$token-bg-surface-default};
+	--osui-master-detail-border-color:  #{$token-border-default};
+	--osui-master-detail-border-radius: #{$token-border-radius-100};
 	// ───────────────────────────────────────────────────────────────────
 
 	background-color: var(--osui-master-detail-background);
-	border: var(--token-border-size-025) solid var(--osui-master-detail-border-color);
+	border: $token-border-size-025 solid var(--osui-master-detail-border-color);
 	border-radius: var(--osui-master-detail-border-radius);
 	display: flex;
 	overflow: hidden;
@@ -41,12 +41,12 @@
 		}
 
 		&-right {
-			border-left: var(--token-border-size-025) solid var(--osui-master-detail-border-color);
-			padding: var(--token-scale-1000);
+			border-left: $token-border-size-025 solid var(--osui-master-detail-border-color);
+			padding: $token-scale-1000;
 			width: calc(100% - var(--left-percentage));
 
 			.split-right-close {
-				left: calc(var(--os-safe-area-left) + var(--token-scale-600));
+				left: calc(var(--os-safe-area-left) + $token-scale-600);
 				position: fixed;
 				top: 12px;
 				z-index: var(--layer-global-screen);
@@ -57,8 +57,8 @@
 				}
 
 				a {
-					color: var(--token-text-subtlest);
-					font-size: var(--token-font-size-400);
+					color: $token-text-subtlest;
+					font-size: $token-font-size-400;
 				}
 			}
 
@@ -129,12 +129,12 @@
 
 			&-right {
 				background-color: var(--osui-master-detail-background);
-				border-left: var(--token-border-size-0);
+				border-left: $token-border-size-0;
 				height: 100%;
 				left: 0;
-				padding-bottom: calc(var(--os-safe-area-bottom) + var(--token-scale-600));
-				padding-left: calc(var(--os-safe-area-left) + var(--token-scale-600));
-				padding-right: calc(var(--os-safe-area-right) + var(--token-scale-600));
+				padding-bottom: calc(var(--os-safe-area-bottom) + $token-scale-600);
+				padding-left: calc(var(--os-safe-area-left) + $token-scale-600);
+				padding-right: calc(var(--os-safe-area-right) + $token-scale-600);
 				padding-top: var(--header-size);
 				position: fixed;
 				top: 0;
@@ -160,14 +160,14 @@
 
 	.layout-native {
 		.split-right {
-			padding-bottom: calc(var(--os-safe-area-bottom) + var(--token-scale-400));
-			padding-left: calc(var(--os-safe-area-left) + var(--token-scale-400));
-			padding-right: calc(var(--os-safe-area-right) + var(--token-scale-400));
+			padding-bottom: calc(var(--os-safe-area-bottom) + $token-scale-400);
+			padding-left: calc(var(--os-safe-area-left) + $token-scale-400);
+			padding-right: calc(var(--os-safe-area-right) + $token-scale-400);
 			padding-top: calc(var(--header-size) + var(--os-safe-area-top));
 
 			.split-right-close {
 				display: block;
-				left: calc(var(--os-safe-area-left) + var(--token-scale-400));
+				left: calc(var(--os-safe-area-left) + $token-scale-400);
 			}
 		}
 	}
@@ -203,7 +203,7 @@
 .is-rtl {
 	.split-right {
 		border-left: 0;
-		border-right: var(--token-border-size-025) solid var(--osui-master-detail-border-color);
+		border-right: $token-border-size-025 solid var(--osui-master-detail-border-color);
 	}
 }
 

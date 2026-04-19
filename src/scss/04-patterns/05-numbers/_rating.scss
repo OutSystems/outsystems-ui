@@ -18,7 +18,7 @@
 	&.rating {
 		&-small {
 			.rating-item {
-				padding-right: calc(var(--rating-size) + var(--token-scale-100));
+				padding-right: calc(var(--rating-size) + $token-scale-100);
 			}
 
 			--rating-size: 8px;
@@ -47,7 +47,7 @@
 		display: inline-block;
 		height: var(--rating-size);
 		// Padding is used to avoid flicks on hover due to rating-items gap
-		padding-right: calc(var(--rating-size) + var(--token-scale-200));
+		padding-right: calc(var(--rating-size) + $token-scale-200);
 		position: relative;
 		width: var(--rating-size);
 
@@ -82,7 +82,7 @@
 	&-item-empty {
 		// Service Studio Preview
 		& {
-			-servicestudio-margin-right: var(--token-scale-200);
+			-servicestudio-margin-right: $token-scale-200;
 			-servicestudio-min-height: 24px;
 			-servicestudio-min-width: 24px;
 			-servicestudio-opacity: 1 !important;
@@ -182,7 +182,7 @@
 .is-rtl {
 	.rating {
 		.rating-item {
-			padding-left: calc(var(--rating-size) + var(--token-scale-200));
+			padding-left: calc(var(--rating-size) + $token-scale-200);
 			padding-right: 0;
 			transform: scaleX(-1);
 		}

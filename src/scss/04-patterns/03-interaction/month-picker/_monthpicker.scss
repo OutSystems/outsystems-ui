@@ -11,9 +11,9 @@
 ///
 .osui-monthpicker {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-monthpicker-disabled-background:   var(--token-bg-input-disabled);
-	--osui-monthpicker-disabled-border-color: var(--token-border-default);
-	--osui-monthpicker-disabled-color:        var(--token-text-disabled);
+	--osui-monthpicker-disabled-background:   #{$token-bg-input-disabled};
+	--osui-monthpicker-disabled-border-color: #{$token-border-default};
+	--osui-monthpicker-disabled-color:        #{$token-text-disabled};
 	// ───────────────────────────────────────────────────────────────────
 
 	// Service Studio Preview Container Styles
@@ -48,14 +48,14 @@
 
 	.not-valid + .input,
 	.not-valid + .flatpickr-mobile {
-		border-color: var(--token-semantics-danger-base);
+		border-color: $token-semantics-danger-base;
 	}
 
 	input {
 		// Disable states for Datepicker
 		&[disabled] + input {
 			background-color: var(--osui-monthpicker-disabled-background);
-			border: var(--token-border-size-025) solid var(--osui-monthpicker-disabled-border-color);
+			border: $token-border-size-025 solid var(--osui-monthpicker-disabled-border-color);
 			color: var(--osui-monthpicker-disabled-color);
 			pointer-events: none;
 		}

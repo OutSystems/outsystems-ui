@@ -7,8 +7,8 @@
 .feedback-message {
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-feedback-message-background:    transparent;
-	--osui-feedback-message-color:         var(--token-text-inverse);
-	--osui-feedback-message-border-radius: var(--token-border-radius-100);
+	--osui-feedback-message-color:         #{$token-text-inverse};
+	--osui-feedback-message-border-radius: #{$token-border-radius-100};
 	// ───────────────────────────────────────────────────────────────────
 
 	align-items: center;
@@ -16,16 +16,16 @@
 	border-radius: var(--osui-feedback-message-border-radius);
 	color: var(--osui-feedback-message-color);
 	display: flex;
-	font-size: var(--token-font-size-450);
-	font-weight: var(--token-font-weight-regular);
+	font-size: $token-font-size-450;
+	font-weight: $token-font-weight-regular;
 	left: 50%;
 	max-width: 600px;
 	min-width: 400px;
-	padding: var(--token-scale-400);
+	padding: $token-scale-400;
 
 	i {
 		align-self: flex-start;
-		font-size: var(--token-font-size-500);
+		font-size: $token-font-size-500;
 		margin-top: 2px;
 		position: relative;
 	}
@@ -33,32 +33,32 @@
 
 ///
 .feedback-message-text {
-	padding-left: var(--token-scale-400);
+	padding-left: $token-scale-400;
 }
 
 // Mantain due to Retro Compatibility
 ///
 div.feedback-message-error {
-	--osui-feedback-message-background: var(--token-semantics-danger-base);
+	--osui-feedback-message-background: #{$token-semantics-danger-base};
 }
 
 // Mantain due to Retro Compatibility
 ///
 div.feedback-message-info {
-	--osui-feedback-message-background: var(--token-semantics-info-base);
+	--osui-feedback-message-background: #{$token-semantics-info-base};
 }
 
 // Mantain due to Retro Compatibility
 ///
 div.feedback-message-success {
-	--osui-feedback-message-background: var(--token-semantics-success-base);
+	--osui-feedback-message-background: #{$token-semantics-success-base};
 }
 
 // Mantain due to Retro Compatibility
 ///
 div.feedback-message-warning {
-	--osui-feedback-message-background: var(--token-semantics-warning-base);
-	--osui-feedback-message-color:      var(--token-text-default);
+	--osui-feedback-message-background: #{$token-semantics-warning-base};
+	--osui-feedback-message-color:      #{$token-text-default};
 }
 
 // Responsive --------------------------------------------------------------------
@@ -76,14 +76,14 @@ div.feedback-message-warning {
 
 	&.ios {
 		.feedback-message {
-			padding-top: calc(var(--os-safe-area-top) + var(--token-scale-400));
+			padding-top: calc(var(--os-safe-area-top) + $token-scale-400);
 		}
 	}
 }
 
 .android {
 	.feedback-message {
-		padding-top: calc(#{android-safe-area-top()} + var(--token-scale-400));
+		padding-top: calc(#{android-safe-area-top()} + $token-scale-400);
 	}
 
 	&.landscape {
@@ -114,20 +114,20 @@ div.feedback-message-warning {
 ///
 .os-high-contrast {
 	.feedback-message {
-		border-width: var(--token-border-size-075);
+		border-width: $token-border-size-075;
 		border-style: solid;
 
 		&.feedback-message-error {
-			border-color: var(--token-semantics-danger-base);
+			border-color: $token-semantics-danger-base;
 		}
 		&.feedback-message-info {
-			border-color: var(--token-semantics-info-base);
+			border-color: $token-semantics-info-base;
 		}
 		&.feedback-message-success {
-			border-color: var(--token-semantics-success-base);
+			border-color: $token-semantics-success-base;
 		}
 		&.feedback-message-warning {
-			border-color: var(--token-semantics-warning-base);
+			border-color: $token-semantics-warning-base;
 		}
 	}
 }

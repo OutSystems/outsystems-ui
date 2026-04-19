@@ -22,9 +22,9 @@
 		}
 
 		&:checked:after {
-			border: var(--token-border-size-050) solid var(--token-text-inverse);
-			border-right: var(--token-border-size-0) !important;
-			border-top: var(--token-border-size-0) !important;
+			border: $token-border-size-050 solid $token-text-inverse;
+			border-right: $token-border-size-0 !important;
+			border-top: $token-border-size-0 !important;
 			display: block;
 			height: 2px;
 			left: 4px;
@@ -35,12 +35,12 @@
 
 	.checkbox-intermediate {
 		&:before {
-			background-color: var(--token-semantics-primary-base);
-			border: var(--token-border-size-025) solid var(--token-semantics-primary-base);
+			background-color: $token-semantics-primary-base;
+			border: $token-border-size-025 solid $token-semantics-primary-base;
 		}
 
 		&:after {
-			background-color: var(--token-text-inverse);
+			background-color: $token-text-inverse;
 			content: '';
 			height: 2px;
 			left: 50%;

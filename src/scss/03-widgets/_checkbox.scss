@@ -6,19 +6,19 @@
 ///
 [data-checkbox] {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-checkbox-background:     var(--token-bg-input-default);
-	--osui-checkbox-border-color:   var(--token-border-input-default);
-	--osui-checkbox-border-radius:  var(--token-border-radius-100);
-	--osui-checkbox-checked-color:  var(--token-semantics-primary-base);
+	--osui-checkbox-background:     #{$token-bg-input-default};
+	--osui-checkbox-border-color:   #{$token-border-input-default};
+	--osui-checkbox-border-radius:  #{$token-border-radius-100};
+	--osui-checkbox-checked-color:  #{$token-semantics-primary-base};
 	// ───────────────────────────────────────────────────────────────────
 
 	height: 24px;
-	padding: var(--token-scale-0);
+	padding: $token-scale-0;
 	width: 24px;
 
 	&:before {
 		background: var(--osui-checkbox-background);
-		border: var(--token-border-size-025) solid var(--osui-checkbox-border-color);
+		border: $token-border-size-025 solid var(--osui-checkbox-border-color);
 		border-radius: var(--osui-checkbox-border-radius);
 		height: 22px;
 		opacity: 1;
@@ -28,20 +28,20 @@
 
 	&:hover {
 		&:before {
-			border: var(--token-border-size-025) solid var(--token-border-input-default);
+			border: $token-border-size-025 solid $token-border-input-default;
 		}
 	}
 
 	&:checked {
 		&:before {
 			background: var(--osui-checkbox-checked-color);
-			border: var(--token-border-size-025) solid var(--osui-checkbox-checked-color);
+			border: $token-border-size-025 solid var(--osui-checkbox-checked-color);
 		}
 
 		&:after {
-			border: var(--token-border-size-075) solid var(--token-text-inverse);
-			border-right: var(--token-border-size-0) !important;
-			border-top: var(--token-border-size-0) !important;
+			border: $token-border-size-075 solid $token-text-inverse;
+			border-right: $token-border-size-0 !important;
+			border-top: $token-border-size-0 !important;
 			display: block;
 			height: 4px;
 			left: 5px;
@@ -55,13 +55,13 @@
 
 		&:before,
 		&:checked:before {
-			background-color: var(--token-bg-input-disabled);
-			border: var(--token-border-size-025) solid var(--token-border-default);
+			background-color: $token-bg-input-disabled;
+			border: $token-border-size-025 solid $token-border-default;
 		}
 
 		&:checked {
 			&:after {
-				border: var(--token-border-size-075) solid var(--token-text-disabled);
+				border: $token-border-size-075 solid $token-text-disabled;
 			}
 		}
 	}
@@ -93,15 +93,15 @@
 ///
 .has-accessible-features {
 	[data-checkbox] {
-		border-radius: var(--token-border-radius-100);
+		border-radius: $token-border-radius-100;
 
 		&:before {
-			border-color: var(--token-border-input-default);
+			border-color: $token-border-input-default;
 		}
 
 		&:hover {
 			&:before {
-				border-color: var(--token-border-input-press);
+				border-color: $token-border-input-press;
 			}
 		}
 

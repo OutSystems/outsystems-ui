@@ -6,18 +6,18 @@
 ///
 .table {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-table-border-color:          var(--token-border-default);
-	--osui-table-border-radius:         var(--token-border-radius-100);
-	--osui-table-header-background:     var(--token-bg-surface-default);
-	--osui-table-header-color:          var(--token-text-subtlest);
-	--osui-table-cell-background:       var(--token-bg-surface-default);
-	--osui-table-row-hover-background:  var(--token-bg-input-disabled);
-	--osui-table-row-stripe-background: var(--token-bg-neutral-subtle-default);
-	--osui-table-sorted-color:              var(--token-semantics-primary-base);
-	--osui-table-row-selected-background:   var(--token-semantics-primary-base);
+	--osui-table-border-color:          #{$token-border-default};
+	--osui-table-border-radius:         #{$token-border-radius-100};
+	--osui-table-header-background:     #{$token-bg-surface-default};
+	--osui-table-header-color:          #{$token-text-subtlest};
+	--osui-table-cell-background:       #{$token-bg-surface-default};
+	--osui-table-row-hover-background:  #{$token-bg-input-disabled};
+	--osui-table-row-stripe-background: #{$token-bg-neutral-subtle-default};
+	--osui-table-sorted-color:              #{$token-semantics-primary-base};
+	--osui-table-row-selected-background:   #{$token-semantics-primary-base};
 	// ───────────────────────────────────────────────────────────────────
 
-	border: var(--token-border-size-025) solid var(--osui-table-border-color);
+	border: $token-border-size-025 solid var(--osui-table-border-color);
 	border-radius: var(--osui-table-border-radius);
 	border-spacing: 0;
 	empty-cells: show;
@@ -33,21 +33,21 @@
 
 		th {
 			background-color: var(--osui-table-header-background);
-			border-bottom: var(--token-border-size-025) solid var(--osui-table-border-color);
+			border-bottom: $token-border-size-025 solid var(--osui-table-border-color);
 			color: var(--osui-table-header-color);
-			font-weight: var(--token-font-weight-semi-bold);
+			font-weight: $token-font-weight-semi-bold;
 			height: 48px;
-			padding: var(--token-scale-0) var(--token-scale-600);
+			padding: $token-scale-0 $token-scale-600;
 			text-align: left;
 
 			&:first-child {
-				border-radius: var(--token-border-radius-100) var(--token-border-radius-0) var(--token-border-radius-0)
-					var(--token-border-radius-0);
+				border-radius: $token-border-radius-100 $token-border-radius-0 $token-border-radius-0
+					$token-border-radius-0;
 			}
 
 			&:last-child {
-				border-radius: var(--token-border-radius-0) var(--token-border-radius-100) var(--token-border-radius-0)
-					var(--token-border-radius-0);
+				border-radius: $token-border-radius-0 $token-border-radius-100 $token-border-radius-0
+					$token-border-radius-0;
 			}
 
 			&.sortable {
@@ -71,9 +71,9 @@
 
 		td {
 			background: var(--osui-table-cell-background);
-			border-bottom: var(--token-border-size-025) solid var(--osui-table-border-color);
+			border-bottom: $token-border-size-025 solid var(--osui-table-border-color);
 			height: 56px;
-			padding: var(--token-scale-200) var(--token-scale-600);
+			padding: $token-scale-200 $token-scale-600;
 			vertical-align: inherit;
 		}
 
@@ -104,14 +104,14 @@
 			border-bottom: none;
 
 			&:last-child {
-				border-radius: var(--token-border-radius-0) var(--token-border-radius-0) var(--token-border-radius-100)
-					var(--token-border-radius-0);
+				border-radius: $token-border-radius-0 $token-border-radius-0 $token-border-radius-100
+					$token-border-radius-0;
 			}
 		}
 
 		td:first-child {
-			border-radius: var(--token-border-radius-0) var(--token-border-radius-0) var(--token-border-radius-0)
-				var(--token-border-radius-100);
+			border-radius: $token-border-radius-0 $token-border-radius-0 $token-border-radius-0
+				$token-border-radius-100;
 		}
 	}
 }
@@ -181,7 +181,7 @@
 			}
 
 			tr {
-				border-bottom: var(--token-border-size-025) solid var(--token-border-default);
+				border-bottom: $token-border-size-025 solid $token-border-default;
 			}
 
 			td {
@@ -224,9 +224,9 @@
 
 			td {
 				background: var(--osui-table-cell-background);
-				border-bottom: var(--token-border-size-025) solid var(--osui-table-border-color);
+				border-bottom: $token-border-size-025 solid var(--osui-table-border-color);
 				display: table-cell;
-				padding: var(--token-scale-200) var(--token-scale-600);
+				padding: $token-scale-200 $token-scale-600;
 				vertical-align: inherit;
 				width: auto !important;
 
@@ -311,7 +311,7 @@
 	}
 
 	.sortable-icon {
-		margin-left: var(--token-scale-0);
-		right: var(--token-scale-200);
+		margin-left: $token-scale-0;
+		right: $token-scale-200;
 	}
 }

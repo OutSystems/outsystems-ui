@@ -6,10 +6,10 @@
 .dropdown {
 	&-container {
 		// ─── Component CSS API ─────────────────────────────────────────────
-		--osui-dropdown-background:    var(--token-bg-input-default);
-		--osui-dropdown-border-color:  var(--token-border-input-default);
-		--osui-dropdown-color:         var(--token-text-default);
-		--osui-dropdown-border-radius: var(--token-border-radius-100);
+		--osui-dropdown-background:    #{$token-bg-input-default};
+		--osui-dropdown-border-color:  #{$token-border-input-default};
+		--osui-dropdown-color:         #{$token-text-default};
+		--osui-dropdown-border-radius: #{$token-border-radius-100};
 		// ───────────────────────────────────────────────────────────────────
 
 		cursor: initial;
@@ -24,22 +24,22 @@
 			&.dropdown-display {
 				align-items: center;
 				background-color: var(--osui-dropdown-background);
-				border: var(--token-border-size-025) solid var(--osui-dropdown-border-color);
+				border: $token-border-size-025 solid var(--osui-dropdown-border-color);
 				border-radius: var(--osui-dropdown-border-radius);
 				color: var(--osui-dropdown-color);
 				cursor: pointer;
 				display: flex;
-				font-size: var(--token-font-size-350);
+				font-size: $token-font-size-350;
 				height: 40px;
-				padding: var(--token-scale-0) var(--token-scale-400);
+				padding: $token-scale-0 $token-scale-400;
 				width: 100%;
 
 				&:hover {
-					border: var(--token-border-size-025) solid var(--token-border-input-default);
+					border: $token-border-size-025 solid $token-border-input-default;
 				}
 
 				&:focus {
-					border: var(--token-border-size-025) solid var(--token-semantics-primary-base);
+					border: $token-border-size-025 solid $token-semantics-primary-base;
 				}
 			}
 		}
@@ -47,17 +47,17 @@
 		&.not-valid {
 			&.dropdown-expanded > div.dropdown-display,
 			& > select.dropdown-display {
-				border: var(--token-border-size-025) solid var(--token-semantics-danger-base);
+				border: $token-border-size-025 solid $token-semantics-danger-base;
 			}
 		}
 
 		&.dropdown-expanded > div.dropdown-display {
-			border: var(--token-border-size-025) solid var(--token-semantics-primary-base);
+			border: $token-border-size-025 solid $token-semantics-primary-base;
 		}
 
 		& > div.dropdown-list {
-			border: var(--token-border-size-025) solid var(--token-border-default);
-			border-radius: var(--token-border-radius-100);
+			border: $token-border-size-025 solid $token-border-default;
+			border-radius: $token-border-radius-100;
 			box-shadow: none;
 			left: 0 !important;
 			max-height: 300px;
@@ -68,19 +68,19 @@
 
 		.dropdown-popup-row {
 			align-items: center;
-			color: var(--token-text-default);
+			color: $token-text-default;
 			display: flex;
 			height: 40px;
-			padding: var(--token-scale-0) var(--token-scale-400);
+			padding: $token-scale-0 $token-scale-400;
 
 			&:hover,
 			&-selected:hover {
-				background: var(--token-bg-input-disabled);
+				background: $token-bg-input-disabled;
 			}
 
 			&-selected {
-				background-color: var(--token-bg-input-disabled);
-				color: var(--token-text-default);
+				background-color: $token-bg-input-disabled;
+				color: $token-text-default;
 			}
 
 			span {
@@ -94,7 +94,7 @@
 			background: none;
 			max-height: 100%;
 			overflow-y: hidden;
-			padding: var(--token-scale-200) var(--token-scale-0);
+			padding: $token-scale-200 $token-scale-0;
 
 			&:before,
 			&:after {
@@ -106,13 +106,13 @@
 	// Is expanded
 	&-expanded {
 		&-down div.dropdown-list {
-			margin-top: var(--token-scale-100);
+			margin-top: $token-scale-100;
 			top: 100% !important;
 		}
 
 		&-up div.dropdown-list {
 			bottom: 100% !important;
-			margin-bottom: var(--token-scale-100);
+			margin-bottom: $token-scale-100;
 			top: auto !important;
 		}
 	}
@@ -123,9 +123,9 @@ select {
 	&.dropdown-display {
 		&.dropdown-disabled,
 		&[disabled] {
-			background-color: var(--token-bg-input-disabled);
-			border: var(--token-border-size-025) solid var(--token-border-default);
-			color: var(--token-text-disabled);
+			background-color: $token-bg-input-disabled;
+			border: $token-border-size-025 solid $token-border-default;
+			color: $token-text-disabled;
 			pointer-events: none;
 		}
 	}
@@ -137,7 +137,7 @@ div {
 
 		& > span,
 		& > div {
-			font-size: var(--token-font-size-350);
+			font-size: $token-font-size-350;
 		}
 	}
 }
@@ -151,13 +151,13 @@ select.dropdown-display[disabled] {
 .phone {
 	div.dropdown-display,
 	select.dropdown-display {
-		font-size: var(--token-font-size-400);
+		font-size: $token-font-size-400;
 		height: 48px;
 
 		.dropdown-display-content {
 			& > span,
 			& > div {
-				font-size: var(--token-font-size-400);
+				font-size: $token-font-size-400;
 			}
 		}
 	}
@@ -177,10 +177,10 @@ select.dropdown-display[disabled] {
 		& > div,
 		& > select {
 			&.dropdown-display {
-				border-color: var(--token-border-input-default);
+				border-color: $token-border-input-default;
 
 				&:hover {
-					border-color: var(--token-border-input-press);
+					border-color: $token-border-input-press;
 				}
 			}
 		}

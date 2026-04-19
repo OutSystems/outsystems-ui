@@ -6,11 +6,11 @@
 ///
 .card {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-card-background:    var(--token-bg-surface-default);
-	--osui-card-border-color:  var(--token-border-default);
-	--osui-card-border-width:  var(--token-border-size-025);
-	--osui-card-border-radius: var(--token-border-radius-100);
-	--osui-card-padding:       var(--token-scale-600);
+	--osui-card-background:    #{$token-bg-surface-default};
+	--osui-card-border-color:  #{$token-border-default};
+	--osui-card-border-width:  #{$token-border-size-025};
+	--osui-card-border-radius: #{$token-border-radius-100};
+	--osui-card-padding:       #{$token-scale-600};
 	// ───────────────────────────────────────────────────────────────────
 
 	background-color: var(--osui-card-background);
@@ -23,6 +23,6 @@
 ///
 .layout-native {
 	& .card {
-		padding: var(--token-scale-400);
+		padding: $token-scale-400;
 	}
 }

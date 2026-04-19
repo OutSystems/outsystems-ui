@@ -6,8 +6,8 @@
 ///
 .breadcrumbs {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-breadcrumbs-item-color:      var(--token-text-subtlest);
-	--osui-breadcrumbs-separator-color: var(--token-primitives-neutral-700);
+	--osui-breadcrumbs-item-color:      #{$token-text-subtlest};
+	--osui-breadcrumbs-separator-color: #{$token-primitives-neutral-700};
 	// ───────────────────────────────────────────────────────────────────
 
 	&-content {
@@ -23,9 +23,9 @@
 		.icon {
 			color: var(--osui-breadcrumbs-separator-color);
 			display: inline-flex;
-			font-size: var(--token-font-size-300);
+			font-size: $token-font-size-300;
 			justify-content: center;
-			margin: var(--token-scale-0) var(--token-scale-200);
+			margin: $token-scale-0 $token-scale-200;
 			width: auto;
 		}
 	}

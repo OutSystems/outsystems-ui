@@ -11,27 +11,27 @@
 
 	& > .popover {
 		&-top {
-			border: var(--token-border-size-0);
-			padding: var(--token-scale-0);
+			border: $token-border-size-0;
+			padding: $token-scale-0;
 		}
 
 		&-bottom {
 			// ─── Component CSS API ─────────────────────────────────────────────
-			--osui-popover-background:    var(--token-bg-surface-default);
-			--osui-popover-border-color:  var(--token-border-default);
-			--osui-popover-color:         var(--token-text-default);
-			--osui-popover-border-radius: var(--token-border-radius-100);
-			--osui-popover-shadow:        var(--token-elevation-1);
+			--osui-popover-background:    #{$token-bg-surface-default};
+			--osui-popover-border-color:  #{$token-border-default};
+			--osui-popover-color:         #{$token-text-default};
+			--osui-popover-border-radius: #{$token-border-radius-100};
+			--osui-popover-shadow:        #{$token-elevation-1};
 			// ───────────────────────────────────────────────────────────────────
 
 			background-color: var(--osui-popover-background);
-			border: var(--token-border-size-025) solid var(--osui-popover-border-color);
+			border: $token-border-size-025 solid var(--osui-popover-border-color);
 			border-radius: var(--osui-popover-border-radius);
 			box-shadow: var(--osui-popover-shadow);
 			color: var(--osui-popover-color);
 			max-width: 350px;
 			min-width: auto;
-			padding: var(--token-scale-400);
+			padding: $token-scale-400;
 			z-index: var(--layer-global-elevated);
 		}
 	}

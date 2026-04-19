@@ -7,9 +7,9 @@
 .alert {
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-alert-background:    transparent;
-	--osui-alert-color:         var(--token-text-inverse);
-	--osui-alert-border-radius: var(--token-border-radius-100);
-	--osui-alert-padding:       var(--token-scale-400);
+	--osui-alert-color:         #{$token-text-inverse};
+	--osui-alert-border-radius: #{$token-border-radius-100};
+	--osui-alert-padding:       #{$token-scale-400};
 	// ───────────────────────────────────────────────────────────────────
 
 	align-items: center;
@@ -23,7 +23,7 @@
 		align-self: flex-start;
 		display: inline-flex;
 		font-size: 24px;
-		margin-right: var(--token-scale-400);
+		margin-right: $token-scale-400;
 	}
 
 	.fa-fw {
@@ -35,20 +35,20 @@
 	}
 
 	&-info {
-		--osui-alert-background: var(--token-semantics-info-base);
+		--osui-alert-background: #{$token-semantics-info-base};
 	}
 
 	&-success {
-		--osui-alert-background: var(--token-semantics-success-base);
+		--osui-alert-background: #{$token-semantics-success-base};
 	}
 
 	&-error {
-		--osui-alert-background: var(--token-semantics-danger-base);
+		--osui-alert-background: #{$token-semantics-danger-base};
 	}
 
 	&-warning {
-		--osui-alert-background: var(--token-semantics-warning-base);
-		--osui-alert-color:      var(--token-text-default);
+		--osui-alert-background: #{$token-semantics-warning-base};
+		--osui-alert-color:      #{$token-text-default};
 	}
 }
 
@@ -56,7 +56,7 @@
 ///
 .is-rtl {
 	.alert-icon {
-		margin-left: var(--token-scale-400);
+		margin-left: $token-scale-400;
 		margin-right: 0;
 	}
 }

@@ -112,7 +112,7 @@
 		& > :not(:first-child),
 		.list > :not(:first-child) {
 			margin-left: unset;
-			margin-right: var(--token-scale-400);
+			margin-right: $token-scale-400;
 		}
 	}
 }

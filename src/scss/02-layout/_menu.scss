@@ -16,7 +16,7 @@
 
 ///
 .app-menu-overlay {
-	background-color: var(--token-backdrop);
+	background-color: $token-backdrop;
 	height: 100vh;
 	left: 0;
 	opacity: 0;
@@ -80,7 +80,7 @@
 	.aside-navigation {
 		// Service Studio Preview
 		& {
-			-servicestudio-background-color: var(--token-bg-surface-default);
+			-servicestudio-background-color: $token-bg-surface-default;
 			-servicestudio-height: 100%;
 			-servicestudio-position: fixed;
 			-servicestudio-width: var(--side-menu-size);
@@ -141,11 +141,11 @@
 .tablet,
 .phone {
 	.app-login-info {
-		padding: var(--token-scale-200) var(--token-scale-600);
+		padding: $token-scale-200 $token-scale-600;
 	}
 
 	.app-menu-content {
-		background-color: var(--token-bg-surface-default);
+		background-color: $token-bg-surface-default;
 		flex-direction: column;
 		height: 100%;
 		left: calc(-1 * var(--side-menu-size));

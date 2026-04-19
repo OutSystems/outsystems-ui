@@ -6,16 +6,16 @@
 ///
 .osui-notification {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-notification-background:    var(--token-bg-surface-default);
-	--osui-notification-border-color:  var(--token-border-default);
-	--osui-notification-border-width:  var(--token-border-size-025);
-	--osui-notification-border-radius: var(--token-border-radius-100);
-	--osui-notification-shadow:        var(--token-elevation-4);
-	--osui-notification-color:         var(--token-text-default);
-	--osui-notification-padding:       var(--token-scale-600);
+	--osui-notification-background:    #{$token-bg-surface-default};
+	--osui-notification-border-color:  #{$token-border-default};
+	--osui-notification-border-width:  #{$token-border-size-025};
+	--osui-notification-border-radius: #{$token-border-radius-100};
+	--osui-notification-shadow:        #{$token-elevation-4};
+	--osui-notification-color:         #{$token-text-default};
+	--osui-notification-padding:       #{$token-scale-600};
 	// ───────────────────────────────────────────────────────────────────
 
-	--osui-notification-margin: var(--token-scale-600);
+	--osui-notification-margin: #{$token-scale-600};
 
 	background-color: var(--osui-notification-background);
 	border-radius: var(--osui-notification-border-radius);
@@ -181,7 +181,7 @@
 // Responsive --------------------------------------------------------------------
 .phone {
 	.osui-notification {
-		--osui-notification-margin: var(--token-scale-400);
+		--osui-notification-margin: #{$token-scale-400};
 	}
 }
 

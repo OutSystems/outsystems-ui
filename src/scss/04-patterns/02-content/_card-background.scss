@@ -6,11 +6,11 @@
 ///
 .card-background {
 	align-items: center;
-	border-radius: var(--token-border-radius-100);
-	color: var(--token-text-inverse);
+	border-radius: $token-border-radius-100;
+	color: $token-text-inverse;
 	display: flex;
 	overflow: hidden;
-	padding: var(--token-scale-600);
+	padding: $token-scale-600;
 	position: relative;
 
 	// Service Studio Preview
@@ -94,10 +94,10 @@
 ///
 .layout-native {
 	.card-background {
-		padding: var(--token-scale-400);
+		padding: $token-scale-400;
 
 		&.padding-none {
-			padding: var(--token-scale-0);
+			padding: $token-scale-0;
 		}
 	}
 }

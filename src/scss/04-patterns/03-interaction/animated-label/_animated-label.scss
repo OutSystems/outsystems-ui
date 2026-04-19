@@ -6,33 +6,33 @@
 ///
 .animated-label {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-animated-label-color:              var(--token-text-subtlest);
-	--osui-animated-label-border-color:       var(--token-border-input-default);
-	--osui-animated-label-focus-border-color: var(--token-semantics-primary-base);
+	--osui-animated-label-color:              #{$token-text-subtlest};
+	--osui-animated-label-border-color:       #{$token-border-input-default};
+	--osui-animated-label-focus-border-color: #{$token-semantics-primary-base};
 	// ───────────────────────────────────────────────────────────────────
 
 	position: relative;
 
 	&.active {
 		.animated-label-text {
-			font-size: var(--token-font-size-300);
+			font-size: $token-font-size-300;
 			top: -10px;
 		}
 
 		.animated-label-input {
 			.form-control[data-input]::-webkit-datetime-edit {
-				color: var(--token-text-default);
+				color: $token-text-default;
 			}
 
 			[data-textarea] {
-				padding-bottom: var(--token-scale-100);
+				padding-bottom: $token-scale-100;
 			}
 		}
 	}
 
 	&-text {
 		color: var(--osui-animated-label-color);
-		font-size: var(--token-font-size-350);
+		font-size: $token-font-size-350;
 		pointer-events: none;
 		position: absolute;
 		top: 8px;
@@ -40,7 +40,7 @@
 		z-index: var(--layer-global-screen);
 
 		.icon {
-			padding-right: var(--token-scale-400);
+			padding-right: $token-scale-400;
 		}
 
 		// Service Studio Preview
@@ -59,26 +59,26 @@
 			&[data-input],
 			&[data-textarea] {
 				background-color: transparent;
-				border: var(--token-border-size-0);
-				border-bottom: var(--token-border-size-025) solid var(--osui-animated-label-border-color);
-				border-radius: var(--token-border-radius-0);
-				padding: var(--token-scale-0);
+				border: $token-border-size-0;
+				border-bottom: $token-border-size-025 solid var(--osui-animated-label-border-color);
+				border-radius: $token-border-radius-0;
+				padding: $token-scale-0;
 				transition: all 100ms ease-in-out;
 
 				&:focus {
-					border-bottom: var(--token-border-size-025) solid var(--osui-animated-label-focus-border-color);
+					border-bottom: $token-border-size-025 solid var(--osui-animated-label-focus-border-color);
 
 					&::-webkit-datetime-edit {
-						color: var(--token-text-default);
+						color: $token-text-default;
 					}
 				}
 
 				&.not-valid {
-					border-bottom: var(--token-border-size-025) solid var(--token-semantics-danger-base);
+					border-bottom: $token-border-size-025 solid $token-semantics-danger-base;
 
 					&:focus {
-						border: var(--token-border-size-0);
-						border-bottom: var(--token-border-size-025) solid var(--token-semantics-danger-base);
+						border: $token-border-size-0;
+						border-bottom: $token-border-size-025 solid $token-semantics-danger-base;
 					}
 				}
 
@@ -101,7 +101,7 @@
 			}
 
 			&[data-textarea] {
-				margin-top: var(--token-scale-200);
+				margin-top: $token-scale-200;
 
 				& + span.validation-message {
 					bottom: 7px;
@@ -113,7 +113,7 @@
 
 /* Fix for animated labels inside lists */
 .list.list-group > [data-block*='AnimatedLabel']:first-child .animated-label {
-	margin-top: var(--token-scale-200);
+	margin-top: $token-scale-200;
 }
 
 ///
@@ -121,7 +121,7 @@
 	.animated-label {
 		&-input .form-control[data-textarea] + span.validation-message {
 			position: relative;
-			bottom: var(--token-scale-600);
+			bottom: $token-scale-600;
 		}
 	}
 }
@@ -169,10 +169,10 @@
 .has-accessible-features {
 	.animated-label-input {
 		.form-control[data-input] {
-			border-color: var(--token-border-input-default);
+			border-color: $token-border-input-default;
 
 			&:hover {
-				border-color: var(--token-border-input-press);
+				border-color: $token-border-input-press;
 			}
 
 			&:focus {
@@ -186,15 +186,15 @@
 ///
 .os-high-contrast {
 	.animated-label-text {
-		font-weight: var(--token-font-weight-semi-bold);
-		padding: var(--token-scale-0) var(--token-scale-200);
+		font-weight: $token-font-weight-semi-bold;
+		padding: $token-scale-0 $token-scale-200;
 	}
 
 	.animated-label {
 		&.active {
 			.animated-label-text {
-				background-color: var(--token-text-subtlest);
-				font-size: var(--token-font-size-350);
+				background-color: $token-text-subtlest;
+				font-size: $token-font-size-350;
 				top: -16px;
 			}
 		}
@@ -202,7 +202,7 @@
 
 	.animated-label-input {
 		.form-control[data-input] {
-			padding: var(--token-scale-0) var(--token-scale-200);
+			padding: $token-scale-0 $token-scale-200;
 		}
 	}
 }

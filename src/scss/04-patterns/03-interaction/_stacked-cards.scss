@@ -6,11 +6,11 @@
 ///
 .stackedcards {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-stacked-cards-background:               var(--token-bg-surface-default);
-	--osui-stacked-cards-overlay-color:            var(--token-text-inverse);
-	--osui-stacked-cards-overlay-top-background:   var(--token-semantics-info-base);
-	--osui-stacked-cards-overlay-right-background: var(--token-semantics-success-base);
-	--osui-stacked-cards-overlay-left-background:  var(--token-semantics-danger-base);
+	--osui-stacked-cards-background:               #{$token-bg-surface-default};
+	--osui-stacked-cards-overlay-color:            #{$token-text-inverse};
+	--osui-stacked-cards-overlay-top-background:   #{$token-semantics-info-base};
+	--osui-stacked-cards-overlay-right-background: #{$token-semantics-success-base};
+	--osui-stacked-cards-overlay-left-background:  #{$token-semantics-danger-base};
 	// ───────────────────────────────────────────────────────────────────
 
 	position: relative;
@@ -21,7 +21,7 @@
 
 	.stackedcards-container {
 		.OSAutoMarginTop {
-			margin-top: var(--token-scale-0);
+			margin-top: $token-scale-0;
 		}
 
 		.list.list-group {
@@ -57,7 +57,7 @@
 			&:not([data-animation-disabled]):after {
 				// Service Studio Preview
 				& {
-					-servicestudio-background-color: var(--token-bg-surface-default);
+					-servicestudio-background-color: $token-bg-surface-default;
 					-servicestudio-background-position: center;
 					-servicestudio-background-repeat: no-repeat;
 					-servicestudio-background-size: 291px 225px;

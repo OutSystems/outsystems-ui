@@ -6,15 +6,15 @@
 ///
 .badge {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-badge-color:          var(--token-text-inverse);
-	--osui-badge-primary-color:  var(--token-semantics-primary-base);
-	--osui-badge-on-light-color: var(--token-text-default);
+	--osui-badge-color:          #{$token-text-inverse};
+	--osui-badge-primary-color:  #{$token-semantics-primary-base};
+	--osui-badge-on-light-color: #{$token-text-default};
 	// ───────────────────────────────────────────────────────────────────
 
 	align-items: center;
 	color: var(--osui-badge-color);
 	display: inline-flex;
-	font-weight: var(--token-font-weight-semi-bold);
+	font-weight: $token-font-weight-semi-bold;
 	height: 32px;
 	justify-content: center;
 	line-height: 1;
@@ -40,14 +40,14 @@
 	}
 
 	&-small {
-		font-size: var(--token-font-size-300);
+		font-size: $token-font-size-300;
 		height: 24px;
 		min-width: 24px;
-		padding: var(--token-scale-0) var(--token-scale-100);
+		padding: $token-scale-0 $token-scale-100;
 	}
 
 	&-medium {
-		font-size: var(--token-font-size-400);
+		font-size: $token-font-size-400;
 		height: 40px;
 		min-width: 40px;
 	}

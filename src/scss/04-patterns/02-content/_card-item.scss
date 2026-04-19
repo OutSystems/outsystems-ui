@@ -6,8 +6,8 @@
 ///
 .card-detail {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-card-detail-title-color: var(--token-text-default);
-	--osui-card-detail-text-color:  var(--token-primitives-neutral-700);
+	--osui-card-detail-title-color: #{$token-text-default};
+	--osui-card-detail-text-color:  #{$token-primitives-neutral-700};
 	// ───────────────────────────────────────────────────────────────────
 
 	align-items: center;
@@ -15,7 +15,7 @@
 
 	&-left {
 		max-width: 120px;
-		padding-right: var(--token-scale-400);
+		padding-right: $token-scale-400;
 	}
 
 	&-center {
@@ -23,13 +23,13 @@
 	}
 
 	&-right {
-		padding-left: var(--token-scale-400);
+		padding-left: $token-scale-400;
 	}
 
 	&-title {
 		color: var(--osui-card-detail-title-color);
-		font-size: var(--token-font-size-500);
-		font-weight: var(--token-font-weight-semi-bold);
+		font-size: $token-font-size-500;
+		font-weight: $token-font-weight-semi-bold;
 	}
 
 	&-text {
@@ -44,13 +44,13 @@
 .is-rtl {
 	.card-detail {
 		&-left {
-			padding-left: var(--token-scale-400);
+			padding-left: $token-scale-400;
 			padding-right: 0;
 		}
 
 		&-right {
 			padding-left: 0;
-			padding-right: var(--token-scale-400);
+			padding-right: $token-scale-400;
 		}
 	}
 }

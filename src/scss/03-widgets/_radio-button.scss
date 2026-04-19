@@ -6,9 +6,9 @@
 ///
 .radio-button {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-radio-background:     var(--token-bg-input-default);
-	--osui-radio-border-color:   var(--token-border-input-default);
-	--osui-radio-checked-color:  var(--token-semantics-primary-base);
+	--osui-radio-background:     #{$token-bg-input-default};
+	--osui-radio-border-color:   #{$token-border-input-default};
+	--osui-radio-checked-color:  #{$token-semantics-primary-base};
 	// ───────────────────────────────────────────────────────────────────
 
 	appearance: none;
@@ -26,8 +26,8 @@
 
 	&:before {
 		background-color: var(--osui-radio-background);
-		border: var(--token-border-size-025) solid var(--osui-radio-border-color);
-		border-radius: var(--token-border-radius-full);
+		border: $token-border-size-025 solid var(--osui-radio-border-color);
+		border-radius: $token-border-radius-full;
 		content: '';
 
 		display: flex;
@@ -38,7 +38,7 @@
 	}
 
 	&:hover:before {
-		border: var(--token-border-size-025) solid var(--token-border-input-default);
+		border: $token-border-size-025 solid $token-border-input-default;
 	}
 
 	&:focus:before {
@@ -63,17 +63,17 @@
 
 		& + label {
 			pointer-events: none;
-			color: var(--token-text-disabled);
+			color: $token-text-disabled;
 		}
 
 		&:before {
-			background-color: var(--token-bg-input-disabled);
-			border: var(--token-border-size-025) solid var(--token-border-default);
+			background-color: $token-bg-input-disabled;
+			border: $token-border-size-025 solid $token-border-default;
 		}
 
 		&:checked:before {
-			background-color: var(--token-bg-input-disabled);
-			border: 6px solid var(--token-border-default);
+			background-color: $token-bg-input-disabled;
+			border: 6px solid $token-border-default;
 		}
 	}
 }
@@ -93,7 +93,7 @@
 			width: auto;
 
 			&:not(:first-of-type) {
-				margin-left: var(--token-scale-400);
+				margin-left: $token-scale-400;
 			}
 		}
 	}
@@ -103,7 +103,7 @@
 [data-radio-group] {
 	&.not-valid [data-radio-button] .radio-button {
 		&:before {
-			border: var(--token-border-size-025) solid var(--token-semantics-danger-base);
+			border: $token-border-size-025 solid $token-semantics-danger-base;
 		}
 
 		&:checked:before {
@@ -115,13 +115,13 @@
 	[data-radio-button] {
 		align-items: center;
 		display: inline-flex;
-		margin: var(--token-scale-200) 0;
+		margin: $token-scale-200 0;
 
 		label {
 			cursor: pointer;
 			line-height: 1;
 			margin-bottom: 0;
-			margin-left: var(--token-scale-200);
+			margin-left: $token-scale-200;
 		}
 	}
 }
@@ -137,14 +137,14 @@
 // Accessibility -----------------------------------------------------------------
 .has-accessible-features {
 	.radio-button {
-		border-radius: var(--token-border-radius-full);
+		border-radius: $token-border-radius-full;
 
 		&:before {
-			border-color: var(--token-border-input-default);
+			border-color: $token-border-input-default;
 		}
 
 		&:after {
-			background-color: var(--token-bg-input-default);
+			background-color: $token-bg-input-default;
 			border-radius: 100%;
 			content: '';
 			height: 12px;
@@ -158,30 +158,30 @@
 		}
 
 		&:focus:before {
-			background-color: var(--token-semantics-primary-base);
+			background-color: $token-semantics-primary-base;
 			border-color: var(--color-focus-inner);
 			box-shadow: none;
 		}
 
 		&:checked:before {
-			border-color: var(--token-semantics-primary-base);
+			border-color: $token-semantics-primary-base;
 		}
 
 		&:hover:before {
-			border-color: var(--token-border-input-press);
+			border-color: $token-border-input-press;
 		}
 	}
 
 	[data-radio-group].not-valid [data-radio-button] .radio-button:checked:before {
-		border-color: var(--token-semantics-primary-base);
+		border-color: $token-semantics-primary-base;
 	}
 }
 
 // IsRTL -------------------------------------------------------------------------
 .is-rtl {
 	[data-radio-group] label {
-		margin-left: var(--token-scale-0);
-		margin-right: var(--token-scale-200);
+		margin-left: $token-scale-0;
+		margin-right: $token-scale-200;
 	}
 
 	.radio-group {
@@ -189,7 +189,7 @@
 			[data-radio-button] {
 				&:not(:first-of-type) {
 					margin-left: unset;
-					margin-right: var(--token-scale-400);
+					margin-right: $token-scale-400;
 				}
 			}
 		}

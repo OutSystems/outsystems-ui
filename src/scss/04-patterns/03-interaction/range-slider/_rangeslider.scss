@@ -6,12 +6,12 @@
 ///
 .osui-range-slider {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-range-slider-track-color:           var(--token-border-input-default);
-	--osui-range-slider-handle-background:     var(--token-bg-surface-default);
-	--osui-range-slider-handle-border-color:   var(--token-border-input-default);
-	--osui-range-slider-handle-shadow:         var(--token-elevation-1);
-	--osui-range-slider-disabled-track-color:  var(--token-bg-neutral-subtle-default);
-	--osui-range-slider-disabled-color:        var(--token-text-disabled);
+	--osui-range-slider-track-color:           #{$token-border-input-default};
+	--osui-range-slider-handle-background:     #{$token-bg-surface-default};
+	--osui-range-slider-handle-border-color:   #{$token-border-input-default};
+	--osui-range-slider-handle-shadow:         #{$token-elevation-1};
+	--osui-range-slider-disabled-track-color:  #{$token-bg-neutral-subtle-default};
+	--osui-range-slider-disabled-color:        #{$token-text-disabled};
 	// ───────────────────────────────────────────────────────────────────
 
 	--range-slider-handle-size: 24px;
@@ -19,7 +19,7 @@
 	--range-slider-handle-size-half: calc(var(--range-slider-handle-size) / 2);
 	--range-slider-thickness-half: calc(var(--range-slider-thickness) / 2);
 	--range-slider-handle-sliding-position: calc(var(--range-slider-handle-size-half) * -1);
-	padding: 0 var(--token-scale-400);
+	padding: 0 $token-scale-400;
 
 	&--is-vertical {
 		height: var(--range-slider-size);
@@ -29,7 +29,7 @@
 	&--has-ticks {
 		.noUi {
 			&-target {
-				margin: var(--token-scale-600) var(--token-scale-0) var(--token-scale-1000);
+				margin: $token-scale-600 $token-scale-0 $token-scale-1000;
 			}
 		}
 	}
@@ -37,14 +37,14 @@
 	&:not(.osui-range-slider--has-ticks) {
 		.noUi {
 			&-target {
-				margin: var(--token-scale-600) var(--token-scale-0);
+				margin: $token-scale-600 $token-scale-0;
 			}
 		}
 	}
 
 	// Service Studio Preview
 	& {
-		-servicestudio-margin-bottom: var(--token-scale-400);
+		-servicestudio-margin-bottom: $token-scale-400;
 		-servicestudio-display: block;
 		-servicestudio-min-width: 150px;
 	}
@@ -52,13 +52,13 @@
 	.noUi {
 		&-base {
 			background-color: transparent;
-			border-radius: var(--token-border-radius-100);
+			border-radius: $token-border-radius-100;
 		}
 
 		&-target {
 			background: var(--osui-range-slider-track-color);
-			border: var(--token-border-size-0);
-			border-radius: var(--token-border-radius-100);
+			border: $token-border-size-0;
+			border-radius: $token-border-radius-100;
 			box-shadow: none;
 		}
 
@@ -66,7 +66,7 @@
 		&-vertical {
 			.noUi-handle {
 				background-color: var(--osui-range-slider-handle-background);
-				border: var(--token-border-size-025) solid var(--osui-range-slider-handle-border-color);
+				border: $token-border-size-025 solid var(--osui-range-slider-handle-border-color);
 				border-radius: 50%;
 				box-shadow: var(--osui-range-slider-handle-shadow);
 				cursor: pointer;
@@ -79,7 +79,7 @@
 			.noUi-handle:before,
 			.noUi-handle:after {
 				background: transparent;
-				border-color: var(--token-text-disabled);
+				border-color: $token-text-disabled;
 				border-style: solid;
 				content: '';
 				height: calc(var(--range-slider-handle-size) / 2);
@@ -88,34 +88,34 @@
 			}
 
 			.noUi-handle:before {
-				border-width: var(--token-border-size-0) var(--token-border-size-0) var(--token-border-size-0)
-					var(--token-border-size-025);
+				border-width: $token-border-size-0 $token-border-size-0 $token-border-size-0
+					$token-border-size-025;
 				left: calc(var(--range-slider-handle-size) / 4);
 				right: auto;
 			}
 
 			.noUi-handle:after {
-				border-width: var(--token-border-size-0) var(--token-border-size-025);
+				border-width: $token-border-size-0 $token-border-size-025;
 				left: calc(var(--range-slider-handle-size) / 2.5);
 				width: 3px;
 			}
 
 			.noUi-handle.noUi-active,
 			.noUi-handle:hover {
-				border: var(--token-border-size-025) solid var(--token-semantics-primary-base);
+				border: $token-border-size-025 solid $token-semantics-primary-base;
 			}
 
 			.noUi-handle.noUi-active:before,
 			.noUi-handle.noUi-active:after,
 			.noUi-handle:hover:before,
 			.noUi-handle:hover:after {
-				border-color: var(--token-semantics-primary-base);
+				border-color: $token-semantics-primary-base;
 			}
 		}
 
 		&-vertical {
 			height: var(--range-slider-size);
-			margin: var(--token-scale-600) var(--token-scale-0);
+			margin: $token-scale-600 $token-scale-0;
 			width: var(--range-slider-thickness);
 
 			.noUi-handle {
@@ -139,7 +139,7 @@
 			}
 
 			.noUi-pips {
-				color: var(--token-text-subtlest);
+				color: $token-text-subtlest;
 			}
 
 			.noUi-pips-margin {
@@ -148,11 +148,11 @@
 		}
 
 		&-connects {
-			border-radius: var(--token-border-radius-100);
+			border-radius: $token-border-radius-100;
 		}
 
 		&-connect {
-			background: var(--token-semantics-primary-base);
+			background: $token-semantics-primary-base;
 		}
 
 		&-background {
@@ -168,16 +168,16 @@
 		}
 
 		&-pips-vertical {
-			color: var(--token-text-subtlest);
+			color: $token-text-subtlest;
 			height: 100%;
 			left: 100%;
-			padding: 0 0 0 var(--token-scale-400);
+			padding: 0 0 0 $token-scale-400;
 			top: 0;
 		}
 
 		&-marker {
 			&-large {
-				background-color: var(--token-text-disabled);
+				background-color: $token-text-disabled;
 			}
 
 			&-horizontal {
@@ -195,19 +195,19 @@
 
 		&-value {
 			&-horizontal {
-				top: var(--token-scale-200);
+				top: $token-scale-200;
 			}
 		}
 
 		&-value-vertical {
-			padding-left: var(--token-scale-200);
+			padding-left: $token-scale-200;
 		}
 
 		&-tooltip {
 			background: transparent;
 			border: none;
-			color: var(--token-text-default);
-			padding: var(--token-scale-100);
+			color: $token-text-default;
+			padding: $token-scale-100;
 		}
 
 		&-rtl {
@@ -216,12 +216,12 @@
 			}
 
 			.noUi-value.noUi-value-vertical {
-				padding-left: var(--token-scale-0);
-				padding-right: var(--token-scale-600);
+				padding-left: $token-scale-0;
+				padding-right: $token-scale-600;
 			}
 
 			.noUi-marker.noUi-marker-vertical {
-				margin-right: var(--token-scale-400);
+				margin-right: $token-scale-400;
 			}
 		}
 
@@ -237,28 +237,28 @@
 
 	.osui-range-slider__provider {
 		&[disabled] {
-			--osui-range-slider-handle-background: var(--token-bg-input-disabled);
-			--osui-range-slider-disabled-color:    var(--token-text-disabled);
+			--osui-range-slider-handle-background: #{$token-bg-input-disabled};
+			--osui-range-slider-disabled-color:    #{$token-text-disabled};
 
 			pointer-events: none;
 
 			.noUi {
 				&-target {
-					background-color: var(--token-border-default);
+					background-color: $token-border-default;
 				}
 
 				&-connect {
-					background-color: var(--token-text-disabled);
+					background-color: $token-text-disabled;
 				}
 
 				&-handle {
 					background-color: var(--osui-range-slider-handle-background);
-					border: var(--token-border-size-025) solid var(--token-border-input-default);
+					border: $token-border-size-025 solid $token-border-input-default;
 					box-shadow: none;
 
 					&:before,
 					&:after {
-						border-color: var(--token-text-disabled);
+						border-color: $token-text-disabled;
 					}
 				}
 
@@ -278,7 +278,7 @@
 ///
 .has-accessible-features {
 	.osui-range-slider {
-		border: var(--token-border-size-050) solid transparent;
+		border: $token-border-size-050 solid transparent;
 
 		&:focus-within {
 			border-color: var(--color-focus-outer);
@@ -305,7 +305,7 @@
 
 		.noUi-connect,
 		.noUi-base {
-			border: var(--token-border-size-050) solid var(--token-border-input-default);
+			border: $token-border-size-050 solid $token-border-input-default;
 		}
 	}
 

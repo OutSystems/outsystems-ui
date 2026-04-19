@@ -7,8 +7,8 @@
 .osui-dropdown-serverside-item {
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-dropdown-item-background: transparent;
-	--osui-dropdown-item-color:      var(--token-text-default);
-	--osui-dropdown-item-hover-bg:   var(--token-bg-neutral-subtle-default);
+	--osui-dropdown-item-color:      #{$token-text-default};
+	--osui-dropdown-item-hover-bg:   #{$token-bg-neutral-subtle-default};
 	// ───────────────────────────────────────────────────────────────────
 
 	align-items: center;
@@ -19,7 +19,7 @@
 	flex: 1;
 	min-height: 40px;
 	overflow: hidden;
-	padding: var(--token-scale-200) var(--token-scale-400);
+	padding: $token-scale-200 $token-scale-400;
 	position: relative;
 	transition: background 250ms ease;
 	width: 100%;
@@ -32,7 +32,7 @@
 
 		// Service Studio Preview
 		& {
-			-servicestudio-background-color: var(--token-bg-surface-default);
+			-servicestudio-background-color: $token-bg-surface-default;
 		}
 	}
 
@@ -58,7 +58,7 @@
 .has-accessible-features {
 	.osui-dropdown-serverside-item {
 		&:hover {
-			background-color: var(--token-bg-neutral-subtle-press);
+			background-color: $token-bg-neutral-subtle-press;
 		}
 
 		&:focus {

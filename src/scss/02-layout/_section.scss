@@ -8,7 +8,7 @@
 	position: relative;
 
 	.ThemeGrid_Container {
-		padding: var(--token-scale-0) var(--token-scale-1000);
+		padding: $token-scale-0 $token-scale-1000;
 	}
 }
 

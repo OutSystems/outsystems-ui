@@ -6,11 +6,11 @@
 ///
 .osui-sidebar {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-sidebar-background:  var(--token-bg-surface-default);
-	--osui-sidebar-color:       var(--token-text-default);
-	--osui-sidebar-shadow:      var(--token-elevation-3);
-	--osui-sidebar-padding-x:   var(--token-scale-600);
-	--osui-sidebar-padding-y:   var(--token-scale-400);
+	--osui-sidebar-background:  #{$token-bg-surface-default};
+	--osui-sidebar-color:       #{$token-text-default};
+	--osui-sidebar-shadow:      #{$token-elevation-3};
+	--osui-sidebar-padding-x:   #{$token-scale-600};
+	--osui-sidebar-padding-y:   #{$token-scale-400};
 	// ───────────────────────────────────────────────────────────────────
 
 	--overlay-opacity: 0;
@@ -21,7 +21,7 @@
 	display: flex;
 	flex-direction: column;
 	height: 100%;
-	margin: var(--token-scale-0);
+	margin: $token-scale-0;
 	position: fixed;
 	top: 0;
 	transition: all 130ms ease-in;
@@ -111,7 +111,7 @@
 
 	&--has-overlay {
 		&::before {
-			background-color: var(--token-backdrop);
+			background-color: $token-backdrop;
 			content: '';
 			cursor: pointer;
 			display: block;
@@ -226,8 +226,8 @@
 	.active-screen {
 		.osui-sidebar {
 			&--is-open {
-				@include a11y-high-contrast-outline(true, var(--token-border-size-050), 'left');
-				@include a11y-high-contrast-outline(true, var(--token-border-size-050), 'right');
+				@include a11y-high-contrast-outline(true, $token-border-size-050, 'left');
+				@include a11y-high-contrast-outline(true, $token-border-size-050, 'right');
 			}
 		}
 	}

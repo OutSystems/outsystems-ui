@@ -12,7 +12,7 @@
 	& {
 		-servicestudio-align-items: center;
 		-servicestudio-display: flex;
-		-servicestudio-column-gap: var(--token-scale-600);
+		-servicestudio-column-gap: $token-scale-600;
 	}
 
 	// Service Studio Preview
@@ -21,9 +21,9 @@
 
 		// Service Studio Preview
 		&:after {
-			-servicestudio-color: var(--token-primitives-neutral-700);
+			-servicestudio-color: $token-primitives-neutral-700;
 			-servicestudio-content: 'Drag screens to this container to create menu entries';
-			-servicestudio-font-size: var(--token-font-size-300);
+			-servicestudio-font-size: $token-font-size-300;
 			-servicestudio-left: 50%;
 			-servicestudio-position: absolute;
 			-servicestudio-text-align: center;
@@ -33,16 +33,16 @@
 	}
 
 	a {
-		color: var(--token-text-default);
+		color: $token-text-default;
 
 		// Service Studio Preview
 		& {
-			-servicestudio-color: var(--token-text-default);
+			-servicestudio-color: $token-text-default;
 		}
 
 		&:hover,
 		&.active {
-			color: var(--token-semantics-primary-base);
+			color: $token-semantics-primary-base;
 			text-decoration: none;
 		}
 	}
@@ -55,7 +55,7 @@ body {
 			// Service Studio Preview
 			& {
 				-servicestudio-align-items: flex-start;
-				-servicestudio-padding: var(--token-scale-0);
+				-servicestudio-padding: $token-scale-0;
 				-servicestudio-width: 100% !important;
 			}
 		}
@@ -77,12 +77,12 @@ body {
 	.app-menu-links {
 		a {
 			align-items: center;
-			border-bottom: var(--token-border-size-050) solid transparent;
-			border-top: var(--token-border-size-050) solid transparent;
+			border-bottom: $token-border-size-050 solid transparent;
+			border-top: $token-border-size-050 solid transparent;
 			display: inline-flex;
 
 			&.active {
-				border-bottom: var(--token-border-size-050) solid var(--token-semantics-primary-base);
+				border-bottom: $token-border-size-050 solid $token-semantics-primary-base;
 			}
 		}
 	}
@@ -94,10 +94,10 @@ body {
 	.app-menu-links {
 		a {
 			border-bottom: 0;
-			border-left: var(--token-border-size-050) solid transparent;
+			border-left: $token-border-size-050 solid transparent;
 			border-top: 0;
 			margin-left: 0;
-			padding: var(--token-scale-200) var(--token-scale-600);
+			padding: $token-scale-200 $token-scale-600;
 		}
 	}
 }
@@ -116,11 +116,11 @@ body {
 
 			-webkit-overflow-scrolling: touch;
 			overflow-y: auto;
-			padding-top: var(--token-scale-200);
+			padding-top: $token-scale-200;
 		}
 
 		a.active {
-			border-left: var(--token-border-size-050) solid var(--token-semantics-primary-base);
+			border-left: $token-border-size-050 solid $token-semantics-primary-base;
 		}
 	}
 }
@@ -151,13 +151,13 @@ body {
 		flex-direction: column;
 		-webkit-overflow-scrolling: touch;
 		overflow-y: auto;
-		padding-top: var(--token-scale-200);
+		padding-top: $token-scale-200;
 
 		a {
 			// Service Studio preview
 			& {
-				-servicestudio-margin-left: var(--token-scale-0);
-				-servicestudio-padding: var(--token-scale-200) var(--token-scale-600);
+				-servicestudio-margin-left: $token-scale-0;
+				-servicestudio-padding: $token-scale-200 $token-scale-600;
 				-servicestudio-width: 100%;
 			}
 		}
@@ -171,7 +171,7 @@ body {
 // Accessibility -----------------------------------------------------------------
 .has-accessible-features {
 	.header a.active:focus {
-		color: var(--token-semantics-primary-base);
+		color: $token-semantics-primary-base;
 	}
 
 	.app-menu-links a:focus {

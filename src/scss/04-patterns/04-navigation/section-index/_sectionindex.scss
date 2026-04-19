@@ -6,7 +6,7 @@
 ///
 .osui-section-index {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-section-index-border-color: var(--token-border-default);
+	--osui-section-index-border-color: #{$token-border-default};
 	// ───────────────────────────────────────────────────────────────────
 
 	--top-position: calc(var(--header-size) + var(--header-size-content) + #{android-safe-area-top()});
@@ -32,9 +32,9 @@
 
 .osui-section-index-item {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-section-index-item-color:            var(--token-text-subtlest);
-	--osui-section-index-item-active-color:     var(--token-text-default);
-	--osui-section-index-active-indicator-color: var(--token-semantics-primary-base);
+	--osui-section-index-item-color:            #{$token-text-subtlest};
+	--osui-section-index-item-active-color:     #{$token-text-default};
+	--osui-section-index-active-indicator-color: #{$token-semantics-primary-base};
 	// ───────────────────────────────────────────────────────────────────
 
 	&,
@@ -42,9 +42,9 @@
 		color: var(--osui-section-index-item-color);
 		cursor: pointer;
 		display: flex;
-		padding-bottom: var(--token-scale-100);
-		padding-left: var(--token-scale-600);
-		padding-top: var(--token-scale-100);
+		padding-bottom: $token-scale-100;
+		padding-left: $token-scale-600;
+		padding-top: $token-scale-100;
 		position: relative;
 	}
 
@@ -54,7 +54,7 @@
 
 	&--is-active {
 		color: var(--osui-section-index-item-active-color);
-		font-weight: var(--token-font-weight-semi-bold);
+		font-weight: $token-font-weight-semi-bold;
 		&::before {
 			background-color: var(--osui-section-index-active-indicator-color);
 			bottom: 0;
@@ -86,13 +86,13 @@
 ///
 .os-high-contrast {
 	.osui-section-index::before {
-		@include a11y-high-contrast-outline(true, var(--token-border-size-025), left);
+		@include a11y-high-contrast-outline(true, $token-border-size-025, left);
 	}
 
 	.osui-section-index-item {
 		&--is-active {
 			&::before {
-				@include a11y-high-contrast-outline(true, var(--token-border-size-075), left);
+				@include a11y-high-contrast-outline(true, $token-border-size-075, left);
 			}
 		}
 	}
@@ -111,8 +111,8 @@
 	.osui-section-index-item {
 		&,
 		&:visited {
-			padding-left: var(--token-scale-0);
-			padding-right: var(--token-scale-600);
+			padding-left: $token-scale-0;
+			padding-right: $token-scale-600;
 		}
 
 		&--is-active {
@@ -129,8 +129,8 @@
 .phone {
 	.osui-section-index {
 		&--is-sticky {
-			left: calc(var(--os-safe-area-right) + var(--token-scale-400));
-			padding: 0 var(--token-scale-400) 0 0;
+			left: calc(var(--os-safe-area-right) + $token-scale-400);
+			padding: 0 $token-scale-400 0 0;
 			position: fixed;
 			top: var(--top-position);
 			z-index: var(--layer-local-tier-1);
@@ -141,8 +141,8 @@
 		.osui-section-index {
 			&--is-sticky {
 				left: initial;
-				right: calc(var(--os-safe-area-right) + var(--token-scale-400));
-				padding: 0 0 var(--token-scale-400) 0;
+				right: calc(var(--os-safe-area-right) + $token-scale-400);
+				padding: 0 0 $token-scale-400 0;
 			}
 		}
 	}

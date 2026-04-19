@@ -5,10 +5,10 @@
 
 .osui-overflow-menu {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-overflow-menu-background:         var(--token-bg-surface-default);
-	--osui-overflow-menu-shadow:             var(--token-elevation-2);
-	--osui-overflow-menu-color:              var(--token-text-default);
-	--osui-overflow-menu-trigger-active-bg:  var(--token-bg-neutral-subtle-default);
+	--osui-overflow-menu-background:         #{$token-bg-surface-default};
+	--osui-overflow-menu-shadow:             #{$token-elevation-2};
+	--osui-overflow-menu-color:              #{$token-text-default};
+	--osui-overflow-menu-trigger-active-bg:  #{$token-bg-neutral-subtle-default};
 	// ───────────────────────────────────────────────────────────────────
 
 	display: inline-block;
@@ -16,9 +16,9 @@
 	--border-radius-rounded: 16px;
 
 	&__trigger {
-		--osui-floating-offset: var(--token-scale-200);
+		--osui-floating-offset: #{$token-scale-200};
 
-		border: var(--token-border-size-025) solid transparent;
+		border: $token-border-size-025 solid transparent;
 		border-radius: var(--osui-overflow-menu-shape);
 		color: var(--osui-overflow-menu-color);
 		width: 32px;
@@ -54,14 +54,14 @@
 			& {
 				-servicestudio-align-items: center;
 				-servicestudio-display: inline-flex !important;
-				-servicestudio-color: var(--token-text-default);
-				-servicestudio-padding: var(--token-scale-200) var(--token-scale-400);
+				-servicestudio-color: $token-text-default;
+				-servicestudio-padding: $token-scale-200 $token-scale-400;
 			}
 		}
 
 		// To make extensibility with ExtendedClass easier
 		a:not([class^='padding-']) {
-			padding: var(--token-scale-200) var(--token-scale-400);
+			padding: $token-scale-200 $token-scale-400;
 		}
 	}
 }
@@ -89,7 +89,7 @@ html:has(.popup-backdrop) .osui-overflow-menu__balloon {
 ///
 .os-high-contrast {
 	.osui-overflow-menu__balloon {
-		border: var(--token-border-size-025) solid var(--token-border-input-default);
+		border: $token-border-size-025 solid $token-border-input-default;
 
 		a {
 			&:hover {

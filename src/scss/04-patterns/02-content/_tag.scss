@@ -6,33 +6,33 @@
 ///
 .tag {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-tag-color:             var(--token-text-inverse);
-	--osui-tag-primary-color:     var(--token-semantics-primary-base);
-	--osui-tag-on-light-color:    var(--token-text-default);
+	--osui-tag-color:             #{$token-text-inverse};
+	--osui-tag-primary-color:     #{$token-semantics-primary-base};
+	--osui-tag-on-light-color:    #{$token-text-default};
 	// ───────────────────────────────────────────────────────────────────
 
 	align-items: center;
 	color: var(--osui-tag-color);
 	display: inline-flex;
-	font-weight: var(--token-font-weight-semi-bold);
+	font-weight: $token-font-weight-semi-bold;
 	height: 32px;
 	justify-content: center;
 	line-height: 1;
 	min-width: 32px;
-	padding: var(--token-scale-0) var(--token-scale-400);
+	padding: $token-scale-0 $token-scale-400;
 	word-break: normal;
 
 	&.tag {
 		&-small {
-			font-size: var(--token-font-size-300);
+			font-size: $token-font-size-300;
 			height: 24px;
-			padding: var(--token-scale-0) var(--token-scale-200);
+			padding: $token-scale-0 $token-scale-200;
 		}
 
 		&-medium {
-			font-size: var(--token-font-size-400);
+			font-size: $token-font-size-400;
 			height: 40px;
-			padding: var(--token-scale-0) var(--token-scale-600);
+			padding: $token-scale-0 $token-scale-600;
 		}
 	}
 

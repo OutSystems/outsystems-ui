@@ -5,6 +5,12 @@
 @import '../tokens/variables';
 
 /* ---------------------------------------------------------------------------- */
+/* Token bridges — tokens used in OSUI but not yet in the design-token package  */
+/* Remove each entry once the package generates the corresponding $token-* var. */
+/* ---------------------------------------------------------------------------- */
+$token-backdrop: var(--token-backdrop, rgba(0, 0, 0, 0.25));
+
+/* ---------------------------------------------------------------------------- */
 /* App Settings — layout vars with no token equivalent                          */
 /* ---------------------------------------------------------------------------- */
 $header-size: 56px;

@@ -6,11 +6,11 @@
 ///
 .osui-submenu {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-submenu-items-background:    var(--token-bg-surface-default);
-	--osui-submenu-items-border-color:  var(--token-border-default);
-	--osui-submenu-items-shadow:        var(--token-elevation-2);
-	--osui-submenu-item-color:          var(--token-text-subtlest);
-	--osui-submenu-header-color:        var(--token-text-default);
+	--osui-submenu-items-background:    #{$token-bg-surface-default};
+	--osui-submenu-items-border-color:  #{$token-border-default};
+	--osui-submenu-items-shadow:        #{$token-elevation-2};
+	--osui-submenu-item-color:          #{$token-text-subtlest};
+	--osui-submenu-header-color:        #{$token-text-default};
 	--osui-submenu-active-border-color: var(--osui-submenu-active-border-color);
 	// ───────────────────────────────────────────────────────────────────
 
@@ -42,7 +42,7 @@
 
 		.osui-submenu {
 			&__header {
-				border-bottom: var(--token-border-size-050) solid var(--osui-submenu-active-border-color);
+				border-bottom: $token-border-size-050 solid var(--osui-submenu-active-border-color);
 
 				&__item {
 					&,
@@ -89,10 +89,10 @@
 
 	&__header {
 		align-items: center;
-		border-bottom: var(--token-border-size-050) solid transparent;
-		border-top: var(--token-border-size-050) solid transparent;
+		border-bottom: $token-border-size-050 solid transparent;
+		border-top: $token-border-size-050 solid transparent;
 		display: flex;
-		padding: var(--token-scale-0) var(--token-scale-200);
+		padding: $token-scale-0 $token-scale-200;
 		transition: all 150ms linear;
 
 		&__item {
@@ -104,11 +104,11 @@
 			transition: all 150ms linear;
 
 			-servicestudio-min-width: 100px;
-			-servicestudio-margin-left: calc(var(--token-scale-200) * -1);
+			-servicestudio-margin-left: calc($token-scale-200 * -1);
 
 			a {
 				align-items: center;
-				color: var(--token-text-subtlest);
+				color: $token-text-subtlest;
 				display: flex;
 				height: 100%;
 
@@ -121,18 +121,18 @@
 
 	&__items {
 		background-color: var(--osui-submenu-items-background);
-		border: var(--token-border-size-025) solid var(--osui-submenu-items-border-color);
-		border-radius: var(--token-border-radius-100);
+		border: $token-border-size-025 solid var(--osui-submenu-items-border-color);
+		border-radius: $token-border-radius-100;
 		box-shadow: var(--osui-submenu-items-shadow);
 		display: flex;
 		flex-direction: column;
 		left: 0;
 		min-width: 100px;
 		opacity: 0;
-		padding: var(--token-scale-200) var(--token-scale-0);
+		padding: $token-scale-200 $token-scale-0;
 		pointer-events: none;
 		position: absolute;
-		top: calc(100% + var(--token-scale-100));
+		top: calc(100% + $token-scale-100);
 		transform: translateY(-8px);
 		transition: all 130ms ease-out;
 		z-index: var(--layer-global-elevated);
@@ -148,7 +148,7 @@
 		a {
 			color: var(--osui-submenu-item-color);
 			margin: 0;
-			padding: var(--token-scale-200) var(--token-scale-400);
+			padding: $token-scale-200 $token-scale-400;
 			white-space: nowrap;
 
 			&.active {
@@ -185,7 +185,7 @@
 			width: 100%;
 
 			&.active .osui-submenu__header {
-				border-left: var(--token-border-size-050) solid var(--osui-submenu-active-border-color);
+				border-left: $token-border-size-050 solid var(--osui-submenu-active-border-color);
 			}
 
 			&--is-open > .osui-submenu__items {
@@ -194,9 +194,9 @@
 
 			.osui-submenu__header {
 				border-bottom: 0;
-				border-left: var(--token-border-size-050) solid transparent;
+				border-left: $token-border-size-050 solid transparent;
 				border-top: 0;
-				padding: var(--token-scale-200) var(--token-scale-600);
+				padding: $token-scale-200 $token-scale-600;
 
 				&__item {
 					flex: 1;
@@ -208,14 +208,14 @@
 				box-shadow: none;
 				display: none;
 				opacity: 1;
-				padding: var(--token-scale-100) var(--token-scale-600);
+				padding: $token-scale-100 $token-scale-600;
 				pointer-events: auto;
 				position: relative;
 				top: 0;
 				transform: translateY(0);
 
 				a {
-					padding: var(--token-scale-200) var(--token-scale-400);
+					padding: $token-scale-200 $token-scale-400;
 				}
 			}
 		}
@@ -227,7 +227,7 @@
 .menu-visible {
 	.app-menu-links {
 		.osui-submenu__header a {
-			padding: var(--token-scale-0);
+			padding: $token-scale-0;
 		}
 	}
 }
@@ -250,7 +250,7 @@
 
 		&__header {
 			&:hover {
-				border-bottom: var(--token-border-size-050) solid var(--osui-submenu-active-border-color);
+				border-bottom: $token-border-size-050 solid var(--osui-submenu-active-border-color);
 			}
 
 			&__item {
@@ -263,7 +263,7 @@
 		&__items {
 			a {
 				&:hover {
-					background-color: var(--token-bg-neutral-subtle-default);
+					background-color: $token-bg-neutral-subtle-default;
 					color: var(--osui-submenu-header-color);
 				}
 
@@ -288,7 +288,7 @@
 				&__header {
 					&:hover {
 						border-bottom: none;
-						border-left: var(--token-border-size-050) solid var(--osui-submenu-active-border-color);
+						border-left: $token-border-size-050 solid var(--osui-submenu-active-border-color);
 					}
 				}
 			}
@@ -316,7 +316,7 @@
 		width: 100%;
 
 		&.active .osui-submenu__header {
-			border-left: var(--token-border-size-050) solid var(--osui-submenu-active-border-color);
+			border-left: $token-border-size-050 solid var(--osui-submenu-active-border-color);
 			border-bottom: 0;
 		}
 
@@ -326,9 +326,9 @@
 
 		&__header {
 			border-bottom: 0;
-			border-left: var(--token-border-size-050) solid transparent;
+			border-left: $token-border-size-050 solid transparent;
 			border-top: 0;
-			padding: var(--token-scale-200) var(--token-scale-600);
+			padding: $token-scale-200 $token-scale-600;
 
 			&__item {
 				flex: 1;
@@ -340,7 +340,7 @@
 			box-shadow: none;
 			display: none;
 			opacity: 1;
-			padding: var(--token-scale-100) var(--token-scale-600);
+			padding: $token-scale-100 $token-scale-600;
 			pointer-events: auto;
 			position: relative;
 			top: 0;
@@ -356,12 +356,12 @@
 		.osui-submenu {
 			.osui-submenu__header {
 				border-left: 0;
-				border-right: var(--token-border-size-050) solid transparent;
+				border-right: $token-border-size-050 solid transparent;
 			}
 
 			&.active .osui-submenu__header {
-				border-left: var(--token-border-size-0);
-				border-right: var(--token-border-size-050) solid var(--osui-submenu-active-border-color);
+				border-left: $token-border-size-0;
+				border-right: $token-border-size-050 solid var(--osui-submenu-active-border-color);
 			}
 		}
 	}
@@ -371,12 +371,12 @@
 		.osui-submenu {
 			&.active .osui-submenu__header {
 				border-left: 0;
-				border-right: var(--token-border-size-050) solid var(--osui-submenu-active-border-color);
+				border-right: $token-border-size-050 solid var(--osui-submenu-active-border-color);
 			}
 
 			.osui-submenu__header {
 				border-left: 0;
-				border-right: var(--token-border-size-050) solid transparent;
+				border-right: $token-border-size-050 solid transparent;
 			}
 		}
 	}

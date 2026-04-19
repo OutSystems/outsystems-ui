@@ -19,23 +19,23 @@
 ///
 .popup {
 	&-backdrop {
-		background-color: var(--token-backdrop);
+		background-color: $token-backdrop;
 	}
 
 	&-dialog {
 		// ─── Component CSS API ─────────────────────────────────────────────
-		--osui-popup-background:    var(--token-bg-surface-default);
-		--osui-popup-border-radius: var(--token-border-radius-100);
-		--osui-popup-shadow:        var(--token-elevation-4);
-		--osui-popup-padding:       var(--token-scale-600);
+		--osui-popup-background:    #{$token-bg-surface-default};
+		--osui-popup-border-radius: #{$token-border-radius-100};
+		--osui-popup-shadow:        #{$token-elevation-4};
+		--osui-popup-padding:       #{$token-scale-600};
 		// ───────────────────────────────────────────────────────────────────
 
 		background-color: var(--osui-popup-background);
 		border: 0;
 		border-radius: var(--osui-popup-border-radius);
 		box-shadow: var(--osui-popup-shadow);
-		margin: var(--token-scale-600);
-		max-height: calc(100% - var(--token-scale-1000));
+		margin: $token-scale-600;
+		max-height: calc(100% - $token-scale-1000);
 		max-width: 500px;
 		overflow: visible;
 		padding: var(--osui-popup-padding);
@@ -54,7 +54,7 @@
 	.popup {
 		&-backdrop,
 		&-dialog {
-			padding: var(--token-scale-400);
+			padding: $token-scale-400;
 		}
 	}
 }
@@ -63,7 +63,7 @@
 ///
 .os-high-contrast {
 	.popup-dialog {
-		border: var(--token-border-size-025) solid var(--token-bg-surface-default);
-		border-radius: var(--token-border-radius-100);
+		border: $token-border-size-025 solid $token-bg-surface-default;
+		border-radius: $token-border-radius-100;
 	}
 }

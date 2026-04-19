@@ -5,65 +5,65 @@
 
 /* Input placeholder style */
 ::-webkit-input-placeholder {
-	color: var(--token-text-subtlest);
+	color: $token-text-subtlest;
 }
 
 ::-moz-placeholder {
-	color: var(--token-text-subtlest);
+	color: $token-text-subtlest;
 }
 
 :-ms-input-placeholder {
-	color: var(--token-text-subtlest);
+	color: $token-text-subtlest;
 }
 
 /* Iuput and TextArea */
 ///
 .form-control {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-input-background:          var(--token-bg-input-default);
-	--osui-input-border-color:        var(--token-border-input-default);
-	--osui-input-color:               var(--token-text-default);
-	--osui-input-border-radius:       var(--token-border-radius-100);
-	--osui-input-focus-border-color:  var(--token-semantics-primary-base);
-	--osui-input-error-border-color:  var(--token-semantics-danger-base);
+	--osui-input-background:          #{$token-bg-input-default};
+	--osui-input-border-color:        #{$token-border-input-default};
+	--osui-input-color:               #{$token-text-default};
+	--osui-input-border-radius:       #{$token-border-radius-100};
+	--osui-input-focus-border-color:  #{$token-semantics-primary-base};
+	--osui-input-error-border-color:  #{$token-semantics-danger-base};
 	// ───────────────────────────────────────────────────────────────────
 
 	&[data-input],
 	&[data-textarea] {
 		background-color: var(--osui-input-background);
-		border: var(--token-border-size-025) solid var(--osui-input-border-color);
+		border: $token-border-size-025 solid var(--osui-input-border-color);
 		border-radius: var(--osui-input-border-radius);
 		color: var(--osui-input-color);
-		font-size: var(--token-font-size-350);
+		font-size: $token-font-size-350;
 		transition: all 180ms linear;
 
 		&:hover {
-			border: var(--token-border-size-025) solid var(--token-border-input-default);
+			border: $token-border-size-025 solid $token-border-input-default;
 		}
 
 		&:focus {
-			border: var(--token-border-size-025) solid var(--osui-input-focus-border-color);
+			border: $token-border-size-025 solid var(--osui-input-focus-border-color);
 		}
 
 		&[disabled] {
-			--osui-input-background:   var(--token-bg-input-disabled);
-			--osui-input-border-color: var(--token-border-default);
-			--osui-input-color:        var(--token-text-disabled);
+			--osui-input-background:   #{$token-bg-input-disabled};
+			--osui-input-border-color: #{$token-border-default};
+			--osui-input-color:        #{$token-text-disabled};
 
 			background-color: var(--osui-input-background);
-			border: var(--token-border-size-025) solid var(--osui-input-border-color);
+			border: $token-border-size-025 solid var(--osui-input-border-color);
 			color: var(--osui-input-color);
 		}
 	}
 
 	&[data-input] {
 		height: 40px;
-		padding: var(--token-scale-0) var(--token-scale-400);
+		padding: $token-scale-0 $token-scale-400;
 	}
 
 	&[data-textarea] {
 		height: auto;
-		padding: var(--token-scale-400);
+		padding: $token-scale-400;
 		resize: auto;
 	}
 
@@ -71,26 +71,26 @@
 	&.input {
 		&-small {
 			&[data-input] {
-				font-size: var(--token-font-size-300);
+				font-size: $token-font-size-300;
 				height: 32px;
-				padding: var(--token-scale-0) var(--token-scale-200);
+				padding: $token-scale-0 $token-scale-200;
 			}
 
 			&[data-textarea] {
-				font-size: var(--token-font-size-300);
-				padding: var(--token-scale-200);
+				font-size: $token-font-size-300;
+				padding: $token-scale-200;
 			}
 		}
 
 		/* Large sizes */
 		&-large {
 			&[data-input] {
-				font-size: var(--token-font-size-400);
+				font-size: $token-font-size-400;
 				height: 48px;
 			}
 
 			&[data-textarea] {
-				font-size: var(--token-font-size-400);
+				font-size: $token-font-size-400;
 			}
 		}
 	}
@@ -99,7 +99,7 @@
 	&.not-valid {
 		&[data-input],
 		&[data-textarea] {
-			border: var(--token-border-size-025) solid var(--osui-input-error-border-color);
+			border: $token-border-size-025 solid var(--osui-input-error-border-color);
 		}
 	}
 }
@@ -110,23 +110,23 @@
 .phone {
 	.form-control {
 		&[data-input] {
-			font-size: var(--token-font-size-400);
+			font-size: $token-font-size-400;
 			height: 48px;
 
 			// Repeated selector since the properties above will ends up in a selector with more specificity
 			&.input-small {
-				font-size: var(--token-font-size-300);
+				font-size: $token-font-size-300;
 				height: 32px;
 			}
 		}
 
 		&[data-textarea] {
-			font-size: var(--token-font-size-400);
+			font-size: $token-font-size-400;
 			height: auto;
 
 			// Repeated selector since the properties above will ends up in a selector with more specificity
 			&.input-small {
-				font-size: var(--token-font-size-300);
+				font-size: $token-font-size-300;
 			}
 		}
 	}
@@ -140,11 +140,11 @@
 			&[data-input] {
 				background-color: var(--background-color-header, var(--header-color));
 				border: 0;
-				border-bottom: var(--token-border-size-025) solid transparent;
+				border-bottom: $token-border-size-025 solid transparent;
 				border-radius: 0;
 
 				&:focus {
-					border-bottom: var(--token-border-size-025) solid var(--osui-input-focus-border-color);
+					border-bottom: $token-border-size-025 solid var(--osui-input-focus-border-color);
 				}
 			}
 		}
@@ -157,10 +157,10 @@
 	.form-control {
 		&[data-input],
 		&[data-textarea] {
-			border-color: var(--token-border-input-default);
+			border-color: $token-border-input-default;
 
 			&:hover {
-				border-color: var(--token-border-input-press);
+				border-color: $token-border-input-press;
 			}
 
 			&:focus {

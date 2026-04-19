@@ -6,38 +6,38 @@
 ///
 .btn {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-btn-background:    var(--token-bg-surface-default);
-	--osui-btn-color:         var(--token-semantics-primary-base);
+	--osui-btn-background:    #{$token-bg-surface-default};
+	--osui-btn-color:         #{$token-semantics-primary-base};
 	--osui-btn-border-color:  currentColor;
-	--osui-btn-border-radius: var(--token-border-radius-100);
+	--osui-btn-border-radius: #{$token-border-radius-100};
 	// Primary variant
-	--osui-btn-primary-background:   var(--token-semantics-primary-base);
-	--osui-btn-primary-border-color: var(--token-semantics-primary-base);
-	--osui-btn-primary-color:        var(--token-text-inverse);
+	--osui-btn-primary-background:   #{$token-semantics-primary-base};
+	--osui-btn-primary-border-color: #{$token-semantics-primary-base};
+	--osui-btn-primary-color:        #{$token-text-inverse};
 	// Success variant
-	--osui-btn-success-background:   var(--token-semantics-success-base);
-	--osui-btn-success-border-color: var(--token-semantics-success-base);
-	--osui-btn-success-color:        var(--token-text-inverse);
+	--osui-btn-success-background:   #{$token-semantics-success-base};
+	--osui-btn-success-border-color: #{$token-semantics-success-base};
+	--osui-btn-success-color:        #{$token-text-inverse};
 	// Error variant
-	--osui-btn-error-background:     var(--token-semantics-danger-base);
-	--osui-btn-error-border-color:   var(--token-semantics-danger-base);
-	--osui-btn-error-color:          var(--token-text-inverse);
+	--osui-btn-error-background:     #{$token-semantics-danger-base};
+	--osui-btn-error-border-color:   #{$token-semantics-danger-base};
+	--osui-btn-error-color:          #{$token-text-inverse};
 	// ───────────────────────────────────────────────────────────────────
 
 	align-items: center;
 	background-color: var(--osui-btn-background);
-	border: var(--token-border-size-025) solid var(--osui-btn-border-color);
+	border: $token-border-size-025 solid var(--osui-btn-border-color);
 	border-radius: var(--osui-btn-border-radius);
 	color: var(--osui-btn-color);
 	cursor: pointer;
 	display: inline-flex;
 	filter: brightness(1);
-	font-weight: var(--token-font-weight-semi-bold);
+	font-weight: $token-font-weight-semi-bold;
 	height: 40px;
 	justify-content: center;
 	line-height: 1;
 	margin: 0;
-	padding: var(--token-scale-0) var(--token-scale-400);
+	padding: $token-scale-0 $token-scale-400;
 
 	transition: all 100ms linear;
 
@@ -46,66 +46,66 @@
 	}
 
 	&[class*='background-'] {
-		border: var(--token-border-size-025) solid transparent;
-		color: var(--token-text-inverse);
+		border: $token-border-size-025 solid transparent;
+		color: $token-text-inverse;
 	}
 
 	&[class*='text-'] {
 		background-color: var(--osui-btn-background);
-		border: var(--token-border-size-025) solid currentColor;
+		border: $token-border-size-025 solid currentColor;
 	}
 
 	& + .btn {
-		margin-left: var(--token-scale-600);
+		margin-left: $token-scale-600;
 	}
 
 	// States
 	&-primary {
 		background-color: var(--osui-btn-primary-background);
-		border: var(--token-border-size-025) solid var(--osui-btn-primary-border-color);
+		border: $token-border-size-025 solid var(--osui-btn-primary-border-color);
 		color: var(--osui-btn-primary-color);
 	}
 
 	&-small {
-		font-size: var(--token-font-size-300);
+		font-size: $token-font-size-300;
 		height: 32px;
-		padding: var(--token-scale-0) var(--token-scale-200);
+		padding: $token-scale-0 $token-scale-200;
 	}
 
 	&-large {
-		font-size: var(--token-font-size-400);
+		font-size: $token-font-size-400;
 		height: 48px;
 	}
 
 	&-cancel {
-		--osui-btn-background:   var(--token-bg-surface-default);
-		--osui-btn-color:        var(--token-text-subtlest);
-		--osui-btn-border-color: var(--token-border-input-press);
+		--osui-btn-background:   #{$token-bg-surface-default};
+		--osui-btn-color:        #{$token-text-subtlest};
+		--osui-btn-border-color: #{$token-border-input-press};
 
 		background-color: var(--osui-btn-background);
-		border: var(--token-border-size-025) solid var(--osui-btn-border-color);
+		border: $token-border-size-025 solid var(--osui-btn-border-color);
 		color: var(--osui-btn-color);
 	}
 
 	&-success {
 		background-color: var(--osui-btn-success-background);
-		border: var(--token-border-size-025) solid var(--osui-btn-success-border-color);
+		border: $token-border-size-025 solid var(--osui-btn-success-border-color);
 		color: var(--osui-btn-success-color);
 	}
 
 	&-error {
 		background-color: var(--osui-btn-error-background);
-		border: var(--token-border-size-025) solid var(--osui-btn-error-border-color);
+		border: $token-border-size-025 solid var(--osui-btn-error-border-color);
 		color: var(--osui-btn-error-color);
 	}
 
 	&[disabled] {
-		--osui-btn-background:   var(--token-bg-input-disabled);
-		--osui-btn-color:        var(--token-text-disabled);
-		--osui-btn-border-color: var(--token-border-default);
+		--osui-btn-background:   #{$token-bg-input-disabled};
+		--osui-btn-color:        #{$token-text-disabled};
+		--osui-btn-border-color: #{$token-border-default};
 
 		background-color: var(--osui-btn-background);
-		border: var(--token-border-size-025) solid var(--osui-btn-border-color);
+		border: $token-border-size-025 solid var(--osui-btn-border-color);
 		color: var(--osui-btn-color);
 		pointer-events: none;
 	}
@@ -126,11 +126,11 @@
 .tablet,
 .phone {
 	.btn {
-		font-size: var(--token-font-size-400);
+		font-size: $token-font-size-400;
 		height: 48px;
 
 		&-small {
-			font-size: var(--token-font-size-350);
+			font-size: $token-font-size-350;
 			height: 40px;
 		}
 
@@ -149,14 +149,14 @@
 			width: 100%;
 
 			& + .btn {
-				margin-top: var(--token-scale-400);
+				margin-top: $token-scale-400;
 			}
 		}
 
 		.flex-direction-column-reverse {
 			& + .btn {
-				margin-bottom: var(--token-scale-400);
-				margin-top: var(--token-scale-0);
+				margin-bottom: $token-scale-400;
+				margin-top: $token-scale-0;
 			}
 		}
 	}
@@ -178,7 +178,7 @@
 			background-color: transparent;
 			border: 0;
 			color: var(--osui-btn-color);
-			font-size: var(--token-font-size-400);
+			font-size: $token-font-size-400;
 			padding: 0;
 		}
 	}
@@ -193,7 +193,7 @@
 
 	.bottom-bar {
 		.btn {
-			padding-bottom: var(--token-scale-0);
+			padding-bottom: $token-scale-0;
 		}
 	}
 }

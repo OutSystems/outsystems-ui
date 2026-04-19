@@ -6,8 +6,8 @@
 ///
 .list-item-content {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-list-item-content-title-color: var(--token-text-default);
-	--osui-list-item-content-text-color:  var(--token-primitives-neutral-700);
+	--osui-list-item-content-title-color: #{$token-text-default};
+	--osui-list-item-content-text-color:  #{$token-primitives-neutral-700};
 	// ───────────────────────────────────────────────────────────────────
 
 	align-items: center;
@@ -15,7 +15,7 @@
 
 	&-left {
 		max-width: 120px;
-		padding-right: var(--token-scale-600);
+		padding-right: $token-scale-600;
 	}
 
 	&-center {
@@ -24,7 +24,7 @@
 	}
 
 	&-right {
-		padding-left: var(--token-scale-600);
+		padding-left: $token-scale-600;
 	}
 
 	&-title,
@@ -36,8 +36,8 @@
 
 	&-title {
 		color: var(--osui-list-item-content-title-color);
-		font-size: var(--token-font-size-500);
-		font-weight: var(--token-font-weight-semi-bold);
+		font-size: $token-font-size-500;
+		font-weight: $token-font-weight-semi-bold;
 	}
 
 	&-text {
@@ -49,11 +49,11 @@
 .layout-native {
 	.list-item-content {
 		&-left {
-			padding-right: var(--token-scale-400);
+			padding-right: $token-scale-400;
 		}
 
 		&-right {
-			padding-left: var(--token-scale-400);
+			padding-left: $token-scale-400;
 		}
 	}
 }
@@ -62,14 +62,14 @@
 ///
 .tablet {
 	.list-item-content-title {
-		font-size: calc(var(--token-font-size-500) - 1px);
+		font-size: calc($token-font-size-500 - 1px);
 	}
 }
 
 ///
 .phone {
 	.list-item-content-title {
-		font-size: calc(var(--token-font-size-500) - 2px);
+		font-size: calc($token-font-size-500 - 2px);
 	}
 }
 
@@ -78,26 +78,26 @@
 .is-rtl {
 	.list-item-content {
 		&-left {
-			padding-left: var(--token-scale-600);
+			padding-left: $token-scale-600;
 			padding-right: 0;
 		}
 
 		&-right {
 			padding-left: 0;
-			padding-right: var(--token-scale-600);
+			padding-right: $token-scale-600;
 		}
 	}
 
 	.layout-native {
 		.list-item-content {
 			&-left {
-				padding-left: var(--token-scale-400);
+				padding-left: $token-scale-400;
 				padding-right: 0;
 			}
 
 			&-right {
 				padding-left: 0;
-				padding-right: var(--token-scale-400);
+				padding-right: $token-scale-400;
 			}
 		}
 	}

@@ -11,11 +11,11 @@
 	.badge {
 		@include absolute-left-top(45%, 0);
 
-		border-radius: var(--token-border-radius-full);
-		font-size: var(--token-font-size-300);
+		border-radius: $token-border-radius-full;
+		font-size: $token-font-size-300;
 		height: 18px;
 		min-width: 18px;
-		padding: var(--token-scale-0) var(--token-scale-100);
+		padding: $token-scale-0 $token-scale-100;
 		transform: translateY(-40%);
 		white-space: nowrap;
 
@@ -25,7 +25,7 @@
 	}
 
 	.icon {
-		font-size: var(--token-font-size-550);
+		font-size: $token-font-size-550;
 	}
 
 	div:first-child:empty {

@@ -5,10 +5,10 @@
 
 ///
 .pull-to-refresh {
-	color: var(--token-text-disabled);
-	font-size: var(--token-font-size-650);
+	color: $token-text-disabled;
+	font-size: $token-font-size-650;
 	left: 0;
-	padding: var(--token-scale-200);
+	padding: $token-scale-200;
 	position: absolute;
 	text-align: center;
 	width: 100%;

@@ -58,7 +58,7 @@
 				top: 0;
 
 				& {
-					-servicestudio-border-radius: var(--shape, var(--token-border-radius-full));
+					-servicestudio-border-radius: var(--shape, $token-border-radius-full);
 				}
 			}
 
@@ -67,7 +67,7 @@
 				width: 100%;
 
 				& {
-					-servicestudio-background: var(--trail-color, var(--token-primitives-neutral-300));
+					-servicestudio-background: var(--trail-color, $token-primitives-neutral-300);
 				}
 			}
 
@@ -77,7 +77,7 @@
 				z-index: var(--layer-local-tier-1);
 
 				& {
-					-servicestudio-background: var(--progress-color, var(--token-semantics-primary-base));
+					-servicestudio-background: var(--progress-color, $token-semantics-primary-base);
 					-servicestudio-width: var(--progress-value, 50%);
 				}
 			}
@@ -85,7 +85,7 @@
 
 		&__content {
 			left: 0;
-			padding: var(--token-scale-0) var(--token-scale-200);
+			padding: $token-scale-0 $token-scale-200;
 			position: absolute;
 			top: 50%;
 			transform: translateY(-50%);
@@ -118,14 +118,14 @@
 			}
 
 			&__value {
-				border: var(--token-border-size-050) solid var(--token-border-input-default);
+				border: $token-border-size-050 solid $token-border-input-default;
 				height: calc(2 * var(--thickness));
 
 				&:before,
 				&:after {
-					border: var(--token-border-size-050) solid var(--token-border-input-default);
-					top: calc(-1 * var(--token-border-size-050));
-					left: calc(-1 * var(--token-border-size-050));
+					border: $token-border-size-050 solid $token-border-input-default;
+					top: calc(-1 * $token-border-size-050);
+					left: calc(-1 * $token-border-size-050);
 				}
 			}
 		}

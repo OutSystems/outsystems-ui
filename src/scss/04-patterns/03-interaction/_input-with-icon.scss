@@ -6,8 +6,8 @@
 ///
 .input-with-icon {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-input-with-icon-icon-color:       var(--token-primitives-neutral-700);
-	--osui-input-with-icon-icon-hover-color: var(--token-text-subtlest);
+	--osui-input-with-icon-icon-color:       #{$token-primitives-neutral-700};
+	--osui-input-with-icon-icon-hover-color: #{$token-text-subtlest};
 	// ───────────────────────────────────────────────────────────────────
 
 	display: flex;
@@ -19,8 +19,8 @@
 			right: 0;
 
 			&:not(:empty) + .input-with-icon-input input {
-				padding-left: var(--token-scale-400);
-				padding-right: var(--token-scale-1000);
+				padding-left: $token-scale-400;
+				padding-right: $token-scale-1000;
 			}
 
 			&.search-actions {
@@ -44,7 +44,7 @@
 			}
 
 			&:not(:empty) + .input-with-icon-input input {
-				padding-left: var(--token-scale-1000);
+				padding-left: $token-scale-1000;
 			}
 
 			&.search-actions {
@@ -82,7 +82,7 @@
 .form {
 	.input-with-icon {
 		.input-with-icon-content-icon {
-			padding-bottom: var(--token-scale-600);
+			padding-bottom: $token-scale-600;
 			z-index: var(--layer-local-tier-1);
 		}
 

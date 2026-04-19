@@ -6,11 +6,11 @@
 ///
 .osui-tabs {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-tabs-border-color:               var(--token-border-default);
-	--osui-tabs-header-item-color:          var(--token-text-subtlest);
-	--osui-tabs-header-item-color-active:   var(--token-text-default);
-	--osui-tabs-header-item-color-disabled: var(--token-text-disabled);
-	--osui-tabs-indicator-color:            var(--token-semantics-primary-base);
+	--osui-tabs-border-color:               #{$token-border-default};
+	--osui-tabs-header-item-color:          #{$token-text-subtlest};
+	--osui-tabs-header-item-color-active:   #{$token-text-default};
+	--osui-tabs-header-item-color-disabled: #{$token-text-disabled};
+	--osui-tabs-indicator-color:            #{$token-semantics-primary-base};
 	// ───────────────────────────────────────────────────────────────────
 
 	--header-item-width: fit-content(30%);
@@ -29,7 +29,7 @@
 				grid-column: 2;
 
 				.osui-tabs__header-item {
-					padding: var(--token-scale-200) 0 var(--token-scale-200) var(--token-scale-400);
+					padding: $token-scale-200 0 $token-scale-200 $token-scale-400;
 				}
 
 				& > .osui-tabs__header__indicator {
@@ -38,7 +38,7 @@
 			}
 
 			.osui-tabs__content {
-				border-right: var(--token-border-size-025) solid var(--osui-tabs-border-color);
+				border-right: $token-border-size-025 solid var(--osui-tabs-border-color);
 				margin-right: -1px;
 			}
 		}
@@ -50,7 +50,7 @@
 			& > .osui-tabs__header {
 				.osui-tabs__header-item {
 					justify-content: flex-start;
-					padding: var(--token-scale-200) var(--token-scale-400) var(--token-scale-200) 0;
+					padding: $token-scale-200 $token-scale-400 $token-scale-200 0;
 				}
 
 				& > .osui-tabs__header__indicator {
@@ -59,7 +59,7 @@
 			}
 
 			.osui-tabs__content {
-				border-left: var(--token-border-size-025) solid var(--osui-tabs-border-color);
+				border-left: $token-border-size-025 solid var(--osui-tabs-border-color);
 				margin-left: -1px;
 			}
 		}
@@ -86,7 +86,7 @@
 			width: auto;
 
 			&-item {
-				padding: var(--token-scale-0) var(--token-scale-600);
+				padding: $token-scale-0 $token-scale-600;
 			}
 		}
 	}
@@ -104,7 +104,7 @@
 
 			.osui-tabs__header-item {
 				justify-content: center;
-				padding: var(--token-scale-200) var(--token-scale-400);
+				padding: $token-scale-200 $token-scale-400;
 			}
 		}
 
@@ -116,7 +116,7 @@
 		}
 
 		.osui-tabs__content {
-			border-top: var(--token-border-size-025) solid var(--osui-tabs-border-color);
+			border-top: $token-border-size-025 solid var(--osui-tabs-border-color);
 			margin-top: -1px;
 		}
 	}
@@ -222,7 +222,7 @@
 			z-index: var(--layer-local-tier-1);
 
 			&[disabled] {
-				background-color: var(--token-text-disabled);
+				background-color: $token-text-disabled;
 			}
 		}
 
@@ -230,7 +230,7 @@
 		& {
 			-servicestudio-display: grid;
 			-servicestudio-grid-auto-flow: column;
-			-servicestudio-gap: var(--token-scale-200);
+			-servicestudio-gap: $token-scale-200;
 		}
 	}
 
@@ -250,17 +250,17 @@
 		&-item {
 			height: 100%;
 			overflow-y: var(--tabs-content-item-overflow);
-			padding: var(--token-scale-600) var(--token-scale-0);
+			padding: $token-scale-600 $token-scale-0;
 			scroll-snap-align: start;
 			scroll-snap-stop: always;
 
 			// Service Studio Preview
 			& {
 				-servicestudio-display: block !important;
-				-servicestudio-margin-bottom: var(--token-scale-600);
+				-servicestudio-margin-bottom: $token-scale-600;
 
 				div:empty {
-					-servicestudio-padding: var(--token-scale-600);
+					-servicestudio-padding: $token-scale-600;
 				}
 
 				.uieditor-if-branch-widget:has(> div:empty) {
@@ -280,7 +280,7 @@
 		.osui-tabs__header-item,
 		.osui-tabs__header-item > *,
 		.osui-tabs__content-item {
-			-servicestudio-border: 1px dashed var(--token-border-input-default);
+			-servicestudio-border: 1px dashed $token-border-input-default;
 			-servicestudio-width: 100%;
 		}
 		.osui-tabs__content-item .display-contents {
@@ -297,7 +297,7 @@
 				.osui-tabs__header {
 					&-item {
 						justify-content: flex-start;
-						padding: var(--token-scale-100) var(--token-scale-400) var(--token-scale-100) 0;
+						padding: $token-scale-100 $token-scale-400 $token-scale-100 0;
 					}
 
 					& > .osui-tabs__header__indicator {
@@ -307,7 +307,7 @@
 				}
 
 				.osui-tabs__content {
-					border-left: var(--token-border-size-025) solid var(--osui-tabs-border-color);
+					border-left: $token-border-size-025 solid var(--osui-tabs-border-color);
 					margin-left: -1px;
 					border-right: 0;
 				}
@@ -318,7 +318,7 @@
 					grid-column: 1;
 
 					&-item {
-						padding: var(--token-scale-100) 0 var(--token-scale-100) var(--token-scale-400);
+						padding: $token-scale-100 0 $token-scale-100 $token-scale-400;
 					}
 
 					& > .osui-tabs__header__indicator {
@@ -328,7 +328,7 @@
 				}
 
 				.osui-tabs__content {
-					border-right: var(--token-border-size-025) solid var(--osui-tabs-border-color);
+					border-right: $token-border-size-025 solid var(--osui-tabs-border-color);
 					margin-right: -1px;
 					border-left: 0;
 				}
@@ -355,7 +355,7 @@
 
 			&:focus-visible {
 				background-color: var(--color-focus-outer);
-				color: var(--token-text-default);
+				color: $token-text-default;
 			}
 		}
 
@@ -387,7 +387,7 @@
 	.osui-tabs__header-item.osui-tabs--is-active:before,
 	.osui-tabs__content-item:focus:before,
 	.osui-tabs__content-item.osui-tabs--is-active:before {
-		@include a11y-high-contrast-outline(true, var(--token-border-size-050));
+		@include a11y-high-contrast-outline(true, $token-border-size-050);
 		bottom: 0;
 		content: '';
 		display: block;
@@ -400,11 +400,11 @@
 
 	.osui-tabs__header-item:focus:before,
 	.osui-tabs__content-item:focus:before {
-		border-width: var(--token-border-size-075);
+		border-width: $token-border-size-075;
 	}
 
 	.osui-tabs__content-item {
-		padding: var(--token-scale-400);
+		padding: $token-scale-400;
 	}
 }
 
@@ -478,14 +478,14 @@ html[data-uieditorversion^='1'] .osui-tabs__preview {
 
 	&--is-active::after {
 		-servicestudio-align-items: center;
-		-servicestudio-background-color: var(--token-bg-surface-default);
-		-servicestudio-border: 1px solid var(--token-primitives-neutral-300);
+		-servicestudio-background-color: $token-bg-surface-default;
+		-servicestudio-border: 1px solid $token-primitives-neutral-300;
 		-servicestudio-content: 'TabsContentItems are currently hidden. Use the toggle to preview them inside Service Studio.';
 		-servicestudio-display: flex;
 		-servicestudio-justify-content: center;
-		-servicestudio-font-weight: var(--token-font-weight-semi-bold);
+		-servicestudio-font-weight: $token-font-weight-semi-bold;
 		-servicestudio-height: auto;
-		-servicestudio-padding: var(--token-scale-200);
+		-servicestudio-padding: $token-scale-200;
 		-servicestudio-position: absolute;
 		-servicestudio-width: 100%;
 	}

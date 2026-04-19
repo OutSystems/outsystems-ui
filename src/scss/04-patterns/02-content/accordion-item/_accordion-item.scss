@@ -11,13 +11,13 @@
 ///
 .osui-accordion-item {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-accordion-item-background:             var(--token-bg-surface-default);
-	--osui-accordion-item-border-color:           var(--token-border-default);
-	--osui-accordion-item-border-width:           var(--token-border-size-025);
-	--osui-accordion-item-border-radius:          var(--token-border-radius-100);
-	--osui-accordion-item-color:                  var(--token-text-default);
-	--osui-accordion-item-active-indicator-color: var(--token-semantics-primary-base);
-	--osui-accordion-item-icon-color:             var(--token-semantics-primary-base);
+	--osui-accordion-item-background:             #{$token-bg-surface-default};
+	--osui-accordion-item-border-color:           #{$token-border-default};
+	--osui-accordion-item-border-width:           #{$token-border-size-025};
+	--osui-accordion-item-border-radius:          #{$token-border-radius-100};
+	--osui-accordion-item-color:                  #{$token-text-default};
+	--osui-accordion-item-active-indicator-color: #{$token-semantics-primary-base};
+	--osui-accordion-item-icon-color:             #{$token-semantics-primary-base};
 	// ───────────────────────────────────────────────────────────────────
 
 	--accordion-active-border-size: 2px;
@@ -45,10 +45,10 @@
 		background-color: transparent;
 		border-color: transparent;
 		border-style: solid;
-		border-top-left-radius: var(--token-border-radius-100);
-		border-top-right-radius: var(--token-border-radius-100);
-		border-width: var(--accordion-active-border-size) var(--token-border-size-0) var(--token-border-size-0)
-			var(--token-border-size-0);
+		border-top-left-radius: $token-border-radius-100;
+		border-top-right-radius: $token-border-radius-100;
+		border-width: var(--accordion-active-border-size) $token-border-size-0 $token-border-size-0
+			$token-border-size-0;
 		content: '';
 		left: 0;
 		height: 100%;
@@ -62,7 +62,7 @@
 	&--is {
 		&-open {
 			> .osui-accordion-item__title {
-				font-weight: var(--token-font-weight-semi-bold);
+				font-weight: $token-font-weight-semi-bold;
 
 				> .osui-accordion-item__icon {
 					&--caret {
@@ -77,7 +77,7 @@
 
 			&.osui-accordion-item--is-disabled {
 				&::after {
-					border-color: var(--token-text-disabled);
+					border-color: $token-text-disabled;
 				}
 			}
 
@@ -89,18 +89,18 @@
 		}
 
 		&-disabled {
-			--osui-accordion-item-color: var(--token-text-disabled);
+			--osui-accordion-item-color: #{$token-text-disabled};
 
 			color: var(--osui-accordion-item-color);
 			pointer-events: none;
 
 			.osui-accordion-item__icon {
-				color: var(--token-text-disabled);
+				color: $token-text-disabled;
 
 				&--plus-minus {
 					&:after,
 					&:before {
-						background-color: var(--token-text-disabled);
+						background-color: $token-text-disabled;
 					}
 				}
 			}
@@ -111,9 +111,9 @@
 		align-items: center;
 		direction: ltr;
 		display: flex;
-		font-size: var(--token-font-size-450);
+		font-size: $token-font-size-450;
 		line-height: 1;
-		padding: var(--token-scale-600);
+		padding: $token-scale-600;
 		width: 100%;
 
 		&__placeholder {
@@ -126,7 +126,7 @@
 
 			.osui-accordion-item {
 				&__title__placeholder {
-					padding-left: var(--token-scale-200);
+					padding-left: $token-scale-200;
 				}
 			}
 		}
@@ -137,8 +137,8 @@
 		color: var(--osui-accordion-item-icon-color);
 		display: flex;
 		font-family: FontAwesome;
-		font-size: var(--token-font-size-550);
-		font-weight: var(--token-font-weight-regular);
+		font-size: $token-font-size-550;
+		font-weight: $token-font-weight-regular;
 		height: 16px;
 		justify-content: center;
 		transition: all 300ms ease-in-out;
@@ -179,7 +179,7 @@
 	&__content {
 		display: block;
 		overflow: hidden;
-		padding: var(--token-scale-0) var(--token-scale-600);
+		padding: $token-scale-0 $token-scale-600;
 
 		&--is {
 			&-collapsed {
@@ -194,7 +194,7 @@
 
 			&-expanded {
 				height: auto;
-				padding: var(--token-scale-0) var(--token-scale-600) var(--token-scale-600);
+				padding: $token-scale-0 $token-scale-600 $token-scale-600;
 				visibility: visible;
 			}
 
@@ -205,7 +205,7 @@
 
 		/* Add a margin-top when animated label is the first child */
 		[data-block*='AnimatedLabel']:first-child .animated-label {
-			margin-top: var(--token-scale-200);
+			margin-top: $token-scale-200;
 		}
 	}
 
@@ -224,7 +224,7 @@
 ///
 .phone {
 	.osui-accordion-item .osui-accordion-item__title {
-		font-size: calc(var(--token-font-size-400));
+		font-size: calc($token-font-size-400);
 	}
 }
 
@@ -232,19 +232,19 @@
 .layout-native {
 	.osui-accordion-item {
 		&__title {
-			padding: var(--token-scale-400);
+			padding: $token-scale-400;
 		}
 
 		&__content {
-			padding: var(--token-scale-0) var(--token-scale-400);
+			padding: $token-scale-0 $token-scale-400;
 
 			&--is {
 				&-collapsed {
-					padding: var(--token-scale-0) var(--token-scale-400);
+					padding: $token-scale-0 $token-scale-400;
 				}
 
 				&-expanded {
-					padding: var(--token-scale-0) var(--token-scale-400) var(--token-scale-400);
+					padding: $token-scale-0 $token-scale-400 $token-scale-400;
 				}
 			}
 		}
@@ -262,7 +262,7 @@
 			}
 
 			&:focus-visible {
-				outline: var(--token-border-size-075) solid var(--color-focus-outer);
+				outline: $token-border-size-075 solid var(--color-focus-outer);
 			}
 		}
 	}
@@ -273,6 +273,6 @@
 .is-rtl {
 	.osui-accordion-item__title__placeholder {
 		direction: rtl;
-		margin-right: var(--token-scale-200);
+		margin-right: $token-scale-200;
 	}
 }

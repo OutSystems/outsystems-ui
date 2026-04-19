@@ -47,7 +47,7 @@
 
 					& > .columns-item {
 						margin-bottom: var(#{map-get($osui-space-token-vars, $type)});
-						padding: var(--token-scale-0) calc(var(#{map-get($osui-space-token-vars, $type)}) / 2);
+						padding: $token-scale-0 calc(var(#{map-get($osui-space-token-vars, $type)}) / 2);
 					}
 
 					.tablet &.tablet-break {
@@ -79,7 +79,7 @@
 
 // Override gutters rule
 .columns:only-child > .columns-item {
-	margin-bottom: var(--token-scale-0);
+	margin-bottom: $token-scale-0;
 }
 
 // Responsive --------------------------------------------------------------------

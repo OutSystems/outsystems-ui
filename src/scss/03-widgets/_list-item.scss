@@ -6,15 +6,15 @@
 ///
 .list-item {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-list-item-border-color:        var(--token-border-default);
-	--osui-list-item-background:          var(--token-bg-surface-default);
-	--osui-list-item-hover-background:    var(--token-bg-neutral-subtle-default);
-	--osui-list-item-selected-background: var(--token-semantics-primary-base);
+	--osui-list-item-border-color:        #{$token-border-default};
+	--osui-list-item-background:          #{$token-bg-surface-default};
+	--osui-list-item-hover-background:    #{$token-bg-neutral-subtle-default};
+	--osui-list-item-selected-background: #{$token-semantics-primary-base};
 	// ───────────────────────────────────────────────────────────────────
 
-	border-bottom: var(--token-border-size-025) solid var(--osui-list-item-border-color);
+	border-bottom: $token-border-size-025 solid var(--osui-list-item-border-color);
 	overflow: hidden;
-	padding: var(--token-scale-600);
+	padding: $token-scale-600;
 	position: relative;
 
 	&:last-of-type {
@@ -55,7 +55,7 @@
 ///
 .layout-native {
 	.list-item {
-		padding: var(--token-scale-400);
+		padding: $token-scale-400;
 	}
 }
 
@@ -80,11 +80,11 @@
 
 			.list-item-content {
 				&-title {
-					color: var(--token-text-default);
+					color: $token-text-default;
 				}
 
 				&-text {
-					color: var(--token-text-subtlest);
+					color: $token-text-subtlest;
 				}
 
 				&-right .icon {
@@ -106,9 +106,9 @@
 				position: relative;
 
 				&:before {
-					@include a11y-high-contrast-outline(true, var(--token-border-size-025));
+					@include a11y-high-contrast-outline(true, $token-border-size-025);
 					border-right-width: 0;
-					border-left-width: var(--token-border-size-075);
+					border-left-width: $token-border-size-075;
 					bottom: 0;
 					content: '';
 					display: block;

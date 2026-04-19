@@ -6,8 +6,8 @@
 ///
 .blank-slate {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-blank-slate-description-color: var(--token-text-default);
-	--osui-blank-slate-icon-color:        var(--token-text-disabled);
+	--osui-blank-slate-description-color: #{$token-text-default};
+	--osui-blank-slate-icon-color:        #{$token-text-disabled};
 	// ───────────────────────────────────────────────────────────────────
 
 	display: flex;
@@ -23,17 +23,17 @@
 		}
 
 		& .blank-slate-actions {
-			padding: var(--token-scale-1200) var(--token-scale-400);
+			padding: $token-scale-1200 $token-scale-400;
 		}
 	}
 
 	&-description {
 		color: var(--osui-blank-slate-description-color);
-		padding: var(--token-scale-0) var(--token-scale-400);
+		padding: $token-scale-0 $token-scale-400;
 	}
 
 	&-actions {
-		padding: var(--token-scale-400);
+		padding: $token-scale-400;
 	}
 
 	&-icon {

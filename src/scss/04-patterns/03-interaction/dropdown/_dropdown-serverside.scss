@@ -10,23 +10,23 @@ $balloonMobileTopMargin: 5vh;
 ///
 .osui-dropdown-serverside {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-dropdown-ss-background:          var(--token-bg-surface-default);
-	--osui-dropdown-ss-border-color:        var(--token-border-input-default);
-	--osui-dropdown-ss-color:               var(--token-text-default);
-	--osui-dropdown-ss-disabled-background: var(--token-bg-input-disabled);
-	--osui-dropdown-ss-disabled-color:      var(--token-text-disabled);
+	--osui-dropdown-ss-background:          #{$token-bg-surface-default};
+	--osui-dropdown-ss-border-color:        #{$token-border-input-default};
+	--osui-dropdown-ss-color:               #{$token-text-default};
+	--osui-dropdown-ss-disabled-background: #{$token-bg-input-disabled};
+	--osui-dropdown-ss-disabled-color:      #{$token-text-disabled};
 	// ───────────────────────────────────────────────────────────────────
 
 	--osui-dropdown-ss-balloon-max-height: 300px;
 	--osui-dropdown-min-width: 170px;
-	--osui-floating-offset: var(--token-scale-100);
+	--osui-floating-offset: #{$token-scale-100};
 	--osui-dropdown-ss-scroll-bar-width: 5px;
 	position: relative;
 
 	.osui-balloon {
 		--osui-balloon-shadow: none;
 
-		border: var(--token-border-size-025) solid var(--token-border-input-default);
+		border: $token-border-size-025 solid $token-border-input-default;
 		display: flex;
 		flex-direction: column;
 		flex: 1;
@@ -53,16 +53,16 @@ $balloonMobileTopMargin: 5vh;
 		display: flex;
 		flex: 1;
 		height: inherit;
-		margin-right: var(--token-scale-400);
+		margin-right: $token-scale-400;
 		overflow: hidden;
 
 		&:hover {
-			border-color: var(--token-border-input-default);
+			border-color: $token-border-input-default;
 		}
 
 		&:after {
 			align-items: center;
-			color: var(--token-text-subtlest);
+			color: $token-text-subtlest;
 			display: flex;
 			height: 100%;
 			pointer-events: none;
@@ -88,14 +88,14 @@ $balloonMobileTopMargin: 5vh;
 		&-wrapper {
 			align-items: center;
 			background-color: var(--osui-dropdown-ss-background);
-			border-radius: var(--token-border-radius-100);
-			border: var(--token-border-size-025) solid var(--osui-dropdown-ss-border-color);
+			border-radius: $token-border-radius-100;
+			border: $token-border-size-025 solid var(--osui-dropdown-ss-border-color);
 			color: var(--osui-dropdown-ss-color);
 			cursor: pointer;
 			display: flex;
-			font-size: var(--token-font-size-350);
+			font-size: $token-font-size-350;
 			height: 40px;
-			padding: var(--token-scale-0) var(--token-scale-400);
+			padding: $token-scale-0 $token-scale-400;
 			position: relative;
 			transition: border 250ms ease-in-out;
 			width: 100%;
@@ -117,7 +117,7 @@ $balloonMobileTopMargin: 5vh;
 		// Search Wrapper
 		&-search-wrapper {
 			background-color: var(--osui-dropdown-ss-background);
-			padding: var(--token-scale-0);
+			padding: $token-scale-0;
 			position: relative;
 			display: flex;
 			align-items: center;
@@ -129,10 +129,10 @@ $balloonMobileTopMargin: 5vh;
 
 			&:before {
 				align-items: center;
-				color: var(--token-text-disabled);
+				color: $token-text-disabled;
 				display: flex;
 				height: 100%;
-				left: var(--token-scale-400);
+				left: $token-scale-400;
 				position: absolute;
 				top: 0;
 			}
@@ -144,12 +144,12 @@ $balloonMobileTopMargin: 5vh;
 			input,
 			.form-control[data-input] {
 				background-color: transparent;
-				border-radius: var(--token-border-size-0);
+				border-radius: $token-border-size-0;
 				border: none;
 				color: inherit;
-				font-size: var(--token-font-size-350);
+				font-size: $token-font-size-350;
 				height: 40px;
-				padding: var(--token-scale-0) var(--token-scale-200) var(--token-scale-0) var(--token-scale-1000);
+				padding: $token-scale-0 $token-scale-200 $token-scale-0 $token-scale-1000;
 				width: 100%;
 			}
 		}
@@ -159,29 +159,29 @@ $balloonMobileTopMargin: 5vh;
 			align-items: center;
 			display: flex;
 			height: 100%;
-			padding: var(--token-scale-0) var(--token-scale-400);
+			padding: $token-scale-0 $token-scale-400;
 		}
 
 		// Options placeholder
 		&-content {
-			border-top: var(--token-border-size-025) solid var(--token-border-input-default);
+			border-top: $token-border-size-025 solid $token-border-input-default;
 			flex: 1;
 			height: auto;
 			max-height: var(--osui-dropdown-ss-balloon-max-height);
 			overflow-x: hidden;
 			overflow-y: auto;
-			padding: var(--token-scale-0);
+			padding: $token-scale-0;
 
 			&::-webkit-scrollbar {
 				width: var(--osui-dropdown-ss-scroll-bar-width);
 			}
 
 			&::-webkit-scrollbar-track {
-				background: var(--token-border-default);
+				background: $token-border-default;
 			}
 
 			&::-webkit-scrollbar-thumb {
-				background-color: var(--token-text-disabled);
+				background-color: $token-text-disabled;
 			}
 
 			// Avoid having data-list above other elements in this context, such as a StickyTop SelectAll Option container.
@@ -199,8 +199,8 @@ $balloonMobileTopMargin: 5vh;
 
 		// Footer placeholder
 		&-footer {
-			border-top: var(--token-border-size-025) solid var(--token-border-input-default);
-			padding: var(--token-scale-200) var(--token-scale-400);
+			border-top: $token-border-size-025 solid $token-border-input-default;
+			padding: $token-scale-200 $token-scale-400;
 		}
 	}
 
@@ -209,13 +209,13 @@ $balloonMobileTopMargin: 5vh;
 		.osui-dropdown-serverside {
 			// "Input" section wrapper - SelectedValues container wrapper
 			&__selected-values-wrapper {
-				border-color: var(--token-semantics-primary-base);
+				border-color: $token-semantics-primary-base;
 			}
 
 			// "Input" section - SelectedValues container
 			&__selected-values {
 				&:after {
-					color: var(--token-semantics-primary-base);
+					color: $token-semantics-primary-base;
 					transform: rotate(180deg);
 				}
 			}
@@ -224,13 +224,13 @@ $balloonMobileTopMargin: 5vh;
 
 	// When it's disabled
 	&--is-disabled {
-		--osui-dropdown-ss-background:   var(--token-bg-input-disabled);
-		--osui-dropdown-ss-border-color: var(--token-border-default);
-		--osui-dropdown-ss-color:        var(--token-text-disabled);
+		--osui-dropdown-ss-background:   #{$token-bg-input-disabled};
+		--osui-dropdown-ss-border-color: #{$token-border-default};
+		--osui-dropdown-ss-color:        #{$token-text-disabled};
 
 		.osui-dropdown-serverside__selected-values {
 			&:after {
-				border-color: var(--token-text-disabled);
+				border-color: $token-text-disabled;
 			}
 
 			&-wrapper {
@@ -246,13 +246,13 @@ $balloonMobileTopMargin: 5vh;
 	&--not-valid {
 		.osui-dropdown-serverside__selected-values-wrapper {
 			/* !important should be here in order to grant more specific selectors be overriding border color at this context. */
-			border-color: var(--token-semantics-danger-base) !important;
+			border-color: $token-semantics-danger-base !important;
 		}
 
 		& + .osui-dropdown-serverside-error-message {
-			color: var(--token-semantics-danger-base);
-			font-size: var(--token-font-size-300);
-			margin-left: var(--token-scale-0);
+			color: $token-semantics-danger-base;
+			font-size: $token-font-size-300;
+			margin-left: $token-scale-0;
 			margin-top: 3px;
 		}
 	}
@@ -274,7 +274,7 @@ $balloonMobileTopMargin: 5vh;
 .windows .osui-tabs {
 	// subtracts the size of the border so it doesn't get cut off inside the tabs, in windows
 	.osui-dropdown-serverside__selected-values-wrapper {
-		width: calc(100% - 2 * var(--token-border-size-025));
+		width: calc(100% - 2 * $token-border-size-025);
 	}
 }
 
@@ -287,16 +287,16 @@ $balloonMobileTopMargin: 5vh;
 			&:after,
 			&-wrapper,
 			&-footer {
-				border-color: var(--token-border-input-default);
+				border-color: $token-border-input-default;
 			}
 		}
 
 		&__balloon {
-			border-color: var(--token-border-input-default);
+			border-color: $token-border-input-default;
 
 			&-search {
 				&:before {
-					color: var(--token-border-input-default);
+					color: $token-border-input-default;
 				}
 
 				input,
@@ -311,7 +311,7 @@ $balloonMobileTopMargin: 5vh;
 				--osui-outline-size: 3px;
 
 				&::-webkit-scrollbar-thumb {
-					background-color: var(--token-border-input-default);
+					background-color: $token-border-input-default;
 				}
 
 				&:focus {
@@ -384,11 +384,11 @@ $balloonMobileTopMargin: 5vh;
 .is-rtl {
 	.osui-dropdown-serverside {
 		&__selected-values {
-			margin-left: var(--token-scale-400);
+			margin-left: $token-scale-400;
 			margin-right: initial;
 
 			&:after {
-				left: var(--token-scale-400);
+				left: $token-scale-400;
 				right: auto;
 			}
 		}
@@ -398,12 +398,12 @@ $balloonMobileTopMargin: 5vh;
 			&-search {
 				&:before {
 					left: auto;
-					right: var(--token-scale-400);
+					right: $token-scale-400;
 				}
 
 				input,
 				.form-control[data-input] {
-					padding: var(--token-scale-0) var(--token-scale-1000) var(--token-scale-0) var(--token-scale-200);
+					padding: $token-scale-0 $token-scale-1000 $token-scale-0 $token-scale-200;
 				}
 			}
 		}
@@ -422,7 +422,7 @@ $balloonMobileTopMargin: 5vh;
 		&__balloon-search {
 			input,
 			.form-control[data-input] {
-				font-size: var(--token-font-size-400);
+				font-size: $token-font-size-400;
 				height: 48px;
 			}
 		}
@@ -491,7 +491,7 @@ $balloonMobileTopMargin: 5vh;
 		// Balloon section
 		&__balloon {
 			align-items: center;
-			background-color: var(--token-backdrop);
+			background-color: $token-backdrop;
 			border: none;
 			border-radius: var(--border-radius-sharp);
 			display: flex;
@@ -506,7 +506,7 @@ $balloonMobileTopMargin: 5vh;
 
 			// Service Studio Preview
 			& {
-				-servicestudio-background-color: var(--token-bg-surface-default);
+				-servicestudio-background-color: $token-bg-surface-default;
 				-servicestudio-left: initial;
 				-servicestudio-opacity: 1;
 				-servicestudio-position: relative;
@@ -514,9 +514,9 @@ $balloonMobileTopMargin: 5vh;
 			}
 
 			&-container {
-				background: var(--token-bg-surface-default);
+				background: $token-bg-surface-default;
 				border-radius: var(--osui-balloon-shape);
-				box-shadow: var(--token-elevation-4);
+				box-shadow: $token-elevation-4;
 				display: flex;
 				flex-direction: column;
 				height: auto;
@@ -587,17 +587,17 @@ $balloonMobileTopMargin: 5vh;
 
 				/* Track */
 				&::-webkit-scrollbar-track {
-					background-color: var(--token-bg-neutral-subtle-default);
+					background-color: $token-bg-neutral-subtle-default;
 				}
 
 				/* Handle */
 				&::-webkit-scrollbar-thumb {
-					background-color: var(--token-text-disabled);
+					background-color: $token-text-disabled;
 				}
 
 				/* Handle on hover */
 				&::-webkit-scrollbar-thumb:hover {
-					background-color: var(--token-border-input-press);
+					background-color: $token-border-input-press;
 				}
 			}
 		}

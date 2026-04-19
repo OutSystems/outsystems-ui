@@ -6,24 +6,24 @@
 ///
 .section {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-section-title-color:        var(--token-text-default);
-	--osui-section-title-border-color: var(--token-border-default);
+	--osui-section-title-color:        #{$token-text-default};
+	--osui-section-title-border-color: #{$token-border-default};
 	// ───────────────────────────────────────────────────────────────────
 
 	&-title {
 		background-color: transparent;
-		border-bottom: var(--token-border-size-025) solid var(--osui-section-title-border-color);
+		border-bottom: $token-border-size-025 solid var(--osui-section-title-border-color);
 		color: var(--osui-section-title-color);
-		font-size: var(--token-font-size-700);
-		font-weight: var(--token-font-weight-semi-bold);
-		padding: var(--token-scale-0) var(--token-scale-0) var(--token-scale-200) var(--token-scale-0);
+		font-size: $token-font-size-700;
+		font-weight: $token-font-weight-semi-bold;
+		padding: $token-scale-0 $token-scale-0 $token-scale-200 $token-scale-0;
 		position: relative;
 		text-transform: none;
 		width: 100%;
 	}
 
 	&-content {
-		padding: var(--token-scale-200) var(--token-scale-0) var(--token-scale-0);
+		padding: $token-scale-200 $token-scale-0 $token-scale-0;
 	}
 
 	&-group {
@@ -46,7 +46,7 @@
 .layout-native {
 	.section {
 		&-title {
-			padding: var(--token-scale-200) var(--token-scale-400) var(--token-scale-200) var(--token-scale-400);
+			padding: $token-scale-200 $token-scale-400 $token-scale-200 $token-scale-400;
 		}
 
 		&-content {
@@ -92,13 +92,13 @@
 ///
 .tablet {
 	.section-title {
-		font-size: calc(var(--token-font-size-700) - 2px);
+		font-size: calc($token-font-size-700 - 2px);
 	}
 }
 
 ///
 .phone {
 	.section-title {
-		font-size: calc(var(--token-font-size-700) - 4px);
+		font-size: calc($token-font-size-700 - 4px);
 	}
 }

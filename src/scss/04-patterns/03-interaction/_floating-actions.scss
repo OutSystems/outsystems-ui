@@ -12,18 +12,18 @@
 
 	&-actions-wrapper {
 		// ─── Component CSS API ─────────────────────────────────────────────
-		--osui-floating-actions-button-background: var(--token-semantics-primary-base);
-		--osui-floating-actions-button-color:      var(--token-text-inverse);
-		--osui-floating-actions-button-shadow:     var(--token-elevation-4);
-		--osui-floating-actions-item-background:   var(--token-bg-surface-default);
-		--osui-floating-actions-item-color:        var(--token-semantics-primary-base);
+		--osui-floating-actions-button-background: #{$token-semantics-primary-base};
+		--osui-floating-actions-button-color:      #{$token-text-inverse};
+		--osui-floating-actions-button-shadow:     #{$token-elevation-4};
+		--osui-floating-actions-item-background:   #{$token-bg-surface-default};
+		--osui-floating-actions-item-color:        #{$token-semantics-primary-base};
 		// ───────────────────────────────────────────────────────────────────
 
 		align-items: flex-end;
 		bottom: 0;
 		display: flex;
 		flex-direction: column;
-		margin: var(--token-scale-800);
+		margin: $token-scale-800;
 		position: fixed;
 		right: 0;
 		will-change: transform, opacity;
@@ -58,7 +58,7 @@
 		}
 
 		&.bottom-bar-exists {
-			bottom: calc(var(--bottom-bar-size) + var(--token-scale-400));
+			bottom: calc(var(--bottom-bar-size) + $token-scale-400);
 		}
 
 		&.no-rotation {
@@ -85,17 +85,17 @@
 		align-items: flex-end;
 		display: flex;
 		flex-direction: column;
-		padding-bottom: var(--token-scale-200);
-		padding-right: var(--token-scale-200);
+		padding-bottom: $token-scale-200;
+		padding-right: $token-scale-200;
 	}
 
 	&-actions-item {
 		align-items: center;
 		display: flex;
 		justify-content: flex-end;
-		margin-bottom: var(--token-scale-400);
+		margin-bottom: $token-scale-400;
 		opacity: 0;
-		transform: translateY(var(--token-scale-400)) translateZ(0);
+		transform: translateY($token-scale-400) translateZ(0);
 		transition: all 100ms ease-in;
 
 		// Service Studio Preview
@@ -108,15 +108,15 @@
 	&-actions-item-button {
 		align-items: center;
 		background-color: var(--osui-floating-actions-item-background);
-		border-radius: var(--token-border-radius-full);
-		box-shadow: var(--token-elevation-1);
+		border-radius: $token-border-radius-full;
+		box-shadow: $token-elevation-1;
 		color: var(--osui-floating-actions-item-color);
 		cursor: pointer;
 		display: flex;
-		font-size: var(--token-font-size-400);
+		font-size: $token-font-size-400;
 		height: 40px;
 		justify-content: center;
-		margin-left: var(--token-scale-400);
+		margin-left: $token-scale-400;
 		transform: translateZ(0) scale(0.3);
 		transition: transform 180ms ease-out;
 		transition-delay: calc(var(--delay) * 40ms);
@@ -136,12 +136,12 @@
 	&-button {
 		align-items: center;
 		background-color: var(--osui-floating-actions-button-background);
-		border-radius: var(--token-border-radius-full);
+		border-radius: $token-border-radius-full;
 		box-shadow: var(--osui-floating-actions-button-shadow);
 		color: var(--osui-floating-actions-button-color);
 		cursor: pointer;
 		display: flex;
-		font-size: var(--token-font-size-550);
+		font-size: $token-font-size-550;
 		height: 56px;
 		justify-content: center;
 		pointer-events: auto;
@@ -156,7 +156,7 @@
 	}
 
 	&-overlay {
-		background-color: var(--token-backdrop);
+		background-color: $token-backdrop;
 		cursor: pointer;
 		height: 100vh;
 		opacity: 0;
@@ -187,7 +187,7 @@
 .phone {
 	.layout-native {
 		.floating-actions-wrapper {
-			margin: var(--token-scale-400);
+			margin: $token-scale-400;
 		}
 	}
 
@@ -203,7 +203,7 @@
 		&.landscape {
 			.layout-native {
 				.floating-actions-wrapper {
-					margin-right: calc(var(--os-safe-area-right) + var(--token-scale-400));
+					margin-right: calc(var(--os-safe-area-right) + $token-scale-400);
 				}
 			}
 		}
@@ -225,8 +225,8 @@
 ///
 .is-rtl {
 	.floating-actions-item-button {
-		margin-left: var(--token-scale-0);
-		margin-right: var(--token-scale-400);
+		margin-left: $token-scale-0;
+		margin-right: $token-scale-400;
 	}
 
 	.floating-actions-wrapper {

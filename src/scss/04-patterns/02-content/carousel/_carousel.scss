@@ -9,10 +9,10 @@
 ///
 .osui-carousel {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-carousel-arrow-background:        var(--token-bg-surface-default);
-	--osui-carousel-arrow-shadow:            var(--token-elevation-1);
-	--osui-carousel-arrow-icon-color:        var(--token-primitives-neutral-700);
-	--osui-carousel-pagination-active-color: var(--token-semantics-primary-base);
+	--osui-carousel-arrow-background:        #{$token-bg-surface-default};
+	--osui-carousel-arrow-shadow:            #{$token-elevation-1};
+	--osui-carousel-arrow-icon-color:        #{$token-primitives-neutral-700};
+	--osui-carousel-pagination-active-color: #{$token-semantics-primary-base};
 	// ───────────────────────────────────────────────────────────────────
 
 	--osui-carousel-track-width: 100%;
@@ -140,7 +140,7 @@
 			-servicestudio-left: 0;
 			-servicestudio-width: 100%;
 			-servicestudio-height: 100%;
-			-servicestudio-background-color: var(--token-bg-surface-default);
+			-servicestudio-background-color: $token-bg-surface-default;
 			-servicestudio-background-image: $carousel_helper_img_base64;
 			-servicestudio-background-repeat: no-repeat;
 			-servicestudio-background-position: center;
@@ -166,7 +166,7 @@
 		}
 
 		li {
-			margin: var(--token-scale-0) var(--token-scale-100);
+			margin: $token-scale-0 $token-scale-100;
 		}
 	}
 }

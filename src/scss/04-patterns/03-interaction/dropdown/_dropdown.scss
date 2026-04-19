@@ -9,9 +9,9 @@
 // Common dropdown styles
 .osui-dropdown {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-dropdown-disabled-background:   var(--token-bg-input-disabled);
-	--osui-dropdown-disabled-border-color: var(--token-border-default);
-	--osui-dropdown-disabled-color:        var(--token-text-disabled);
+	--osui-dropdown-disabled-background:   #{$token-bg-input-disabled};
+	--osui-dropdown-disabled-border-color: #{$token-border-default};
+	--osui-dropdown-disabled-color:        #{$token-text-disabled};
 	// ───────────────────────────────────────────────────────────────────
 
 	&-search,
@@ -24,7 +24,7 @@
 			.vscomp {
 				&-toggle-button {
 					background-color: var(--osui-dropdown-disabled-background);
-					border: var(--token-border-size-025) solid var(--osui-dropdown-disabled-border-color);
+					border: $token-border-size-025 solid var(--osui-dropdown-disabled-border-color);
 					color: var(--osui-dropdown-disabled-color);
 					pointer-events: none;
 				}
@@ -48,24 +48,24 @@
 			border-radius: 100%;
 			display: inline-block;
 			height: 24px;
-			margin-right: var(--token-scale-200);
+			margin-right: $token-scale-200;
 			width: 24px;
-			background-color: var(--token-bg-neutral-subtle-default);
+			background-color: $token-bg-neutral-subtle-default;
 			overflow: hidden;
 		}
 
 		&-icon {
-			color: var(--token-text-default);
-			font-size: var(--token-font-size-450);
-			margin-right: var(--token-scale-200);
+			color: $token-text-default;
+			font-size: $token-font-size-450;
+			margin-right: $token-scale-200;
 		}
 	}
 
 	/// Error message
 	&-error-message {
-		color: var(--token-semantics-danger-base);
-		font-size: var(--token-font-size-300);
-		margin-left: var(--token-scale-0);
+		color: $token-semantics-danger-base;
+		font-size: $token-font-size-300;
+		margin-left: $token-scale-0;
 		margin-top: 3px;
 	}
 }
@@ -75,7 +75,7 @@
 	.osui-dropdown {
 		&-option-image,
 		&-option-icon {
-			margin-left: var(--token-scale-200);
+			margin-left: $token-scale-200;
 			margin-right: initial;
 		}
 	}

@@ -177,7 +177,7 @@ body,
 ///
 .phone {
 	.layout:not(.layout-native) [class*='ThemeGrid_Width']:not(.no-responsive) {
-		margin: var(--token-scale-0) var(--token-scale-0) var(--token-scale-400) var(--token-scale-0);
+		margin: $token-scale-0 $token-scale-0 $token-scale-400 $token-scale-0;
 		width: 100%;
 	}
 }
@@ -242,11 +242,11 @@ body,
 // Nested layout SS preview
 ///
 .layout .main-content .layout {
-	-servicestudio-min-width: calc(100vw - (var(--token-scale-1000) * 2));
+	-servicestudio-min-width: calc(100vw - ($token-scale-1000 * 2));
 }
 
 .phone .layout .main-content .layout {
-	-servicestudio-min-width: calc(100vw - (var(--token-scale-400) * 2));
+	-servicestudio-min-width: calc(100vw - ($token-scale-400 * 2));
 
 	&.layout-native {
 		-servicestudio-min-width: 100vw;

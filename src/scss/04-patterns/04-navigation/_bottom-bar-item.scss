@@ -6,14 +6,14 @@
 ///
 .bottom-bar-wrapper {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-bottom-bar-background:         var(--token-bg-surface-default);
-	--osui-bottom-bar-border-color:       var(--token-primitives-neutral-300);
-	--osui-bottom-bar-item-color:         var(--token-text-subtlest);
-	--osui-bottom-bar-item-active-color:  var(--token-semantics-primary-base);
+	--osui-bottom-bar-background:         #{$token-bg-surface-default};
+	--osui-bottom-bar-border-color:       #{$token-primitives-neutral-300};
+	--osui-bottom-bar-item-color:         #{$token-text-subtlest};
+	--osui-bottom-bar-item-active-color:  #{$token-semantics-primary-base};
 	// ───────────────────────────────────────────────────────────────────
 
 	background-color: var(--osui-bottom-bar-background);
-	border-top: var(--token-border-size-025) solid var(--osui-bottom-bar-border-color);
+	border-top: $token-border-size-025 solid var(--osui-bottom-bar-border-color);
 	height: 100%;
 }
 
@@ -21,7 +21,7 @@
 .bottom-bar {
 	display: flex;
 	&:empty:after {
-		color: var(--token-primitives-neutral-700);
+		color: $token-primitives-neutral-700;
 		content: 'Add Bottom Bar Items to this Container';
 		display: block;
 		font-size: 12px;
@@ -46,11 +46,11 @@
 		height: 100%;
 		justify-content: center;
 		overflow: hidden;
-		padding: 0 var(--token-scale-200);
+		padding: 0 $token-scale-200;
 		position: relative;
 		&-icon {
 			display: inline-flex;
-			font-size: var(--token-font-size-450);
+			font-size: $token-font-size-450;
 			height: auto;
 			justify-content: center;
 		}

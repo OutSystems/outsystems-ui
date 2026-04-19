@@ -6,11 +6,11 @@
 ///
 [data-switch] {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-switch-track-color:          var(--token-border-input-default);
-	--osui-switch-track-border-color:   var(--token-border-input-default);
-	--osui-switch-disabled-track-color: var(--token-bg-input-disabled);
-	--osui-switch-checked-track-color:  var(--token-semantics-primary-base);
-	--osui-switch-thumb-color:          var(--token-primitives-base-white);
+	--osui-switch-track-color:          #{$token-border-input-default};
+	--osui-switch-track-border-color:   #{$token-border-input-default};
+	--osui-switch-disabled-track-color: #{$token-bg-input-disabled};
+	--osui-switch-checked-track-color:  #{$token-semantics-primary-base};
+	--osui-switch-thumb-color:          #{$token-primitives-base-white};
 	// ───────────────────────────────────────────────────────────────────
 
 	background-color: transparent;
@@ -22,8 +22,8 @@
 	&:empty {
 		&:before {
 			background-color: var(--osui-switch-track-color);
-			border: var(--token-border-size-025) solid var(--osui-switch-track-border-color);
-			border-radius: var(--token-border-radius-full);
+			border: $token-border-size-025 solid var(--osui-switch-track-border-color);
+			border-radius: $token-border-radius-full;
 			height: 30px;
 			opacity: 1;
 			transition: all 180ms linear;
@@ -47,15 +47,15 @@
 
 	&:hover {
 		&:before {
-			background-color: var(--token-border-input-default);
-			border: var(--token-border-size-025) solid var(--token-border-input-default);
+			background-color: $token-border-input-default;
+			border: $token-border-size-025 solid $token-border-input-default;
 		}
 	}
 
 	&:checked {
 		&:before {
 			background-color: var(--osui-switch-checked-track-color);
-			border: var(--token-border-size-025) solid var(--osui-switch-checked-track-color);
+			border: $token-border-size-025 solid var(--osui-switch-checked-track-color);
 		}
 
 		&:after {
@@ -69,11 +69,11 @@
 		&:empty {
 			&:before {
 				background-color: var(--osui-switch-disabled-track-color);
-				border: var(--token-border-size-025) solid var(--token-border-default);
+				border: $token-border-size-025 solid $token-border-default;
 			}
 
 			&:after {
-				background-color: var(--token-border-input-default);
+				background-color: $token-border-input-default;
 				border: 0;
 			}
 		}
@@ -84,19 +84,19 @@
 ///
 .has-accessible-features {
 	[data-switch] {
-		border-radius: var(--token-border-radius-full);
+		border-radius: $token-border-radius-full;
 
 		&:empty {
 			&:before {
-				background-color: var(--token-border-input-default);
-				border-color: var(--token-border-input-default);
+				background-color: $token-border-input-default;
+				border-color: $token-border-input-default;
 			}
 		}
 
 		&:hover {
 			&:before {
-				background-color: var(--token-border-input-press);
-				border-color: var(--token-border-input-press);
+				background-color: $token-border-input-press;
+				border-color: $token-border-input-press;
 			}
 		}
 
@@ -121,11 +121,11 @@
 	[data-switch] {
 		&:empty:after {
 			align-items: center;
-			border: var(--token-border-size-025) solid var(--token-text-disabled);
+			border: $token-border-size-025 solid $token-text-disabled;
 			content: '0';
 			display: flex;
 			font-family: monospace;
-			font-size: var(--token-font-size-300);
+			font-size: $token-font-size-300;
 			justify-content: center;
 			left: -1px;
 			top: 3px;

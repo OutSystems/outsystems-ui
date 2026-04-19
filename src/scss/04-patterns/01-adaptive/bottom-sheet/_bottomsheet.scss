@@ -6,9 +6,9 @@
 ///
 .osui-bottom-sheet {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-bottom-sheet-background: var(--token-bg-surface-default);
-	--osui-bottom-sheet-shadow:     var(--token-elevation-3);
-	--osui-bottom-sheet-padding:    var(--token-scale-400);
+	--osui-bottom-sheet-background: #{$token-bg-surface-default};
+	--osui-bottom-sheet-shadow:     #{$token-elevation-3};
+	--osui-bottom-sheet-padding:    #{$token-scale-400};
 	// ───────────────────────────────────────────────────────────────────
 
 	--bottom-sheet-max-height: calc(100vh - 54px) /*  general value to account for notch and a bit more extra space*/;
@@ -38,27 +38,27 @@
 
 		.osui-bottom-sheet__content:empty,
 		.osui-bottom-sheet__header__top-bar:empty {
-			-servicestudio-border: 1px dashed var(--token-border-input-default);
-			-servicestudio-margin: var(--token-scale-400);
+			-servicestudio-border: 1px dashed $token-border-input-default;
+			-servicestudio-margin: $token-scale-400;
 		}
 	}
 
 	&--has-handler {
 		.osui-bottom-sheet__header {
 			&::before {
-				background: var(--token-border-input-default);
+				background: $token-border-input-default;
 				border-radius: 100px;
 				content: '';
 				height: 4px;
 				left: 50%;
 				position: absolute;
-				top: var(--token-scale-400);
+				top: $token-scale-400;
 				transform: translateX(-50%);
 				width: 40px;
 			}
 
 			&__top-bar {
-				padding-top: var(--token-scale-800);
+				padding-top: $token-scale-800;
 			}
 		}
 	}
@@ -101,7 +101,7 @@
 	}
 
 	&-overlay {
-		background-color: var(--token-backdrop);
+		background-color: $token-backdrop;
 		height: 100vh;
 		left: 0;
 		opacity: 0;
@@ -134,7 +134,7 @@
 			padding: var(--osui-bottom-sheet-padding);
 
 			&::before {
-				box-shadow: var(--token-elevation-3);
+				box-shadow: $token-elevation-3;
 				content: '';
 				height: 100%;
 				left: 0;
@@ -159,7 +159,7 @@
 		max-height: var(--bottom-sheet-max-height);
 		overflow-y: scroll;
 		padding: var(--osui-bottom-sheet-padding);
-		padding-bottom: calc(var(--bottom-bar-size) + var(--token-scale-600) + var(--os-safe-area-bottom));
+		padding-bottom: calc(var(--bottom-bar-size) + $token-scale-600 + var(--os-safe-area-bottom));
 	}
 }
 
@@ -181,8 +181,8 @@
 .landscape {
 	.osui-bottom-sheet__header__top-bar,
 	.osui-bottom-sheet__content {
-		padding-right: calc(var(--token-scale-400) + var(--os-safe-area-right));
-		padding-left: calc(var(--token-scale-400) + var(--os-safe-area-left));
+		padding-right: calc($token-scale-400 + var(--os-safe-area-right));
+		padding-left: calc($token-scale-400 + var(--os-safe-area-left));
 	}
 }
 
@@ -208,6 +208,6 @@
 ///
 .os-high-contrast {
 	.osui-bottom-sheet {
-		border: var(--token-border-size-025) solid var(--token-text-inverse);
+		border: $token-border-size-025 solid $token-text-inverse;
 	}
 }

@@ -11,9 +11,9 @@
 ///
 .osui-datepicker {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-datepicker-disabled-background:    var(--token-bg-input-disabled);
-	--osui-datepicker-disabled-border-color:  var(--token-border-default);
-	--osui-datepicker-disabled-color:         var(--token-text-disabled);
+	--osui-datepicker-disabled-background:    #{$token-bg-input-disabled};
+	--osui-datepicker-disabled-border-color:  #{$token-border-default};
+	--osui-datepicker-disabled-color:         #{$token-text-disabled};
 	// ───────────────────────────────────────────────────────────────────
 
 	input {
@@ -33,7 +33,7 @@
 		// Disable states for Datepicker
 		&.flatpickr-input[disabled] + input {
 			background-color: var(--osui-datepicker-disabled-background);
-			border: var(--token-border-size-025) solid var(--osui-datepicker-disabled-border-color);
+			border: $token-border-size-025 solid var(--osui-datepicker-disabled-border-color);
 			color: var(--osui-datepicker-disabled-color);
 			pointer-events: none;
 		}
@@ -56,12 +56,12 @@
 
 		// Service Studio Preview
 		& {
-			-servicestudio-background-color: var(--token-bg-surface-default);
+			-servicestudio-background-color: $token-bg-surface-default;
 			-servicestudio-background-position: top center;
 			-servicestudio-background-repeat: no-repeat;
 			-servicestudio-background-size: contain;
-			-servicestudio-border-radius: var(--token-border-radius-100);
-			-servicestudio-border: var(--token-border-size-025) solid var(--token-border-input-default);
+			-servicestudio-border-radius: $token-border-radius-100;
+			-servicestudio-border: $token-border-size-025 solid $token-border-input-default;
 			-servicestudio-display: inline-block;
 			-servicestudio-height: 0;
 			-servicestudio-margin-top: 2px;
@@ -118,7 +118,7 @@
 
 	.not-valid + .input,
 	.not-valid + .flatpickr-mobile {
-		border-color: var(--token-semantics-danger-base);
+		border-color: $token-semantics-danger-base;
 	}
 
 	.flatpickr-mobile ~ span.validation-message {

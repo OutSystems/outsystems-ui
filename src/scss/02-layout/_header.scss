@@ -19,7 +19,7 @@
 	}
 
 	&-logo {
-		padding-right: var(--token-scale-400);
+		padding-right: $token-scale-400;
 
 		.application-name {
 			word-break: break-word;
@@ -34,7 +34,7 @@
 		height: 100%;
 
 		& > [data-block*='ApplicationTitle'] .application-name {
-			margin-right: var(--token-scale-600);
+			margin-right: $token-scale-600;
 		}
 	}
 
@@ -63,12 +63,12 @@
 	flex-direction: column;
 	height: 100%;
 	justify-content: center;
-	margin-right: var(--token-scale-600);
+	margin-right: $token-scale-600;
 	padding: 0;
 	width: 24px;
 
 	&-line {
-		background-color: var(--token-text-subtlest);
+		background-color: $token-text-subtlest;
 		border-radius: 20px;
 		height: 3px;
 		margin: 2px 0;
@@ -78,7 +78,7 @@
 
 ///
 .menu-back {
-	color: var(--token-text-subtlest);
+	color: $token-text-subtlest;
 }
 
 ///
@@ -141,24 +141,24 @@
 .is-rtl {
 	.header {
 		&-logo {
-			padding-left: var(--token-scale-400);
+			padding-left: $token-scale-400;
 			padding-right: 0;
 		}
 
 		.header-content > [data-block*='ApplicationTitle'] .application-name {
 			margin-right: 0;
-			margin-left: var(--token-scale-600);
+			margin-left: $token-scale-600;
 		}
 	}
 
 	.app-logo,
 	.layout-side .app-logo {
-		margin-left: var(--token-scale-200);
+		margin-left: $token-scale-200;
 		margin-right: 0;
 	}
 
 	.menu-icon {
-		margin-left: var(--token-scale-600);
+		margin-left: $token-scale-600;
 		margin-right: 0;
 	}
 }

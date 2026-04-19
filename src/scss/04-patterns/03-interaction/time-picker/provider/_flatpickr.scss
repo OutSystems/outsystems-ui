@@ -3,44 +3,44 @@
 	.numInputWrapper {
 		span {
 			&.arrowUp:after {
-				border-bottom-color: var(--token-border-input-press);
+				border-bottom-color: $token-border-input-press;
 			}
 			&.arrowDown:after {
-				border-top-color: var(--token-border-input-press);
+				border-top-color: $token-border-input-press;
 			}
 		}
 
 		.numInput {
-			color: var(--token-text-default);
+			color: $token-text-default;
 		}
 	}
 
 	.flatpickr-time {
 		.flatpickr-time-separator,
 		.numInputWrapper .numInput {
-			font-weight: var(--token-font-weight-semi-bold);
+			font-weight: $token-font-weight-semi-bold;
 		}
 
 		.flatpickr-time-separator {
-			color: var(--token-primitives-neutral-700);
-			line-height: var(--token-scale-1000);
+			color: $token-primitives-neutral-700;
+			line-height: $token-scale-1000;
 		}
 	}
 
 	// AM/PM selector
 	.flatpickr-am-pm {
-		background-color: var(--token-border-input-default);
-		border-radius: var(--token-border-radius-full);
-		height: var(--token-scale-600);
-		line-height: var(--token-scale-600);
+		background-color: $token-border-input-default;
+		border-radius: $token-border-radius-full;
+		height: $token-scale-600;
+		line-height: $token-scale-600;
 		position: absolute;
-		right: var(--token-scale-100);
+		right: $token-scale-100;
 		text-transform: uppercase;
-		width: var(--token-scale-1000);
+		width: $token-scale-1000;
 
 		&:hover,
 		&:focus {
-			background-color: var(--token-border-input-press);
+			background-color: $token-border-input-press;
 		}
 	}
 }

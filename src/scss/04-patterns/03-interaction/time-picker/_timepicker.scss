@@ -11,9 +11,9 @@
 ///
 .osui-timepicker {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-timepicker-disabled-background:   var(--token-bg-input-disabled);
-	--osui-timepicker-disabled-border-color: var(--token-border-default);
-	--osui-timepicker-disabled-color:        var(--token-text-disabled);
+	--osui-timepicker-disabled-background:   #{$token-bg-input-disabled};
+	--osui-timepicker-disabled-border-color: #{$token-border-default};
+	--osui-timepicker-disabled-color:        #{$token-text-disabled};
 	// ───────────────────────────────────────────────────────────────────
 
 	input {
@@ -33,7 +33,7 @@
 		// Disable states for Datepicker
 		&.flatpickr-input[disabled] + input {
 			background-color: var(--osui-timepicker-disabled-background);
-			border: var(--token-border-size-025) solid var(--osui-timepicker-disabled-border-color);
+			border: $token-border-size-025 solid var(--osui-timepicker-disabled-border-color);
 			color: var(--osui-timepicker-disabled-color);
 			pointer-events: none;
 		}
@@ -61,7 +61,7 @@
 			-servicestudio-background-position: top left;
 			-servicestudio-background-repeat: no-repeat;
 			-servicestudio-background-size: contain;
-			-servicestudio-border-radius: var(--token-border-radius-100);
+			-servicestudio-border-radius: $token-border-radius-100;
 			-servicestudio-display: inline-block;
 			-servicestudio-height: 0;
 			-servicestudio-margin-top: 2px;
@@ -73,12 +73,12 @@
 
 			&.time12h {
 				-servicestudio-background-image: $timepicker_time12h_img_base64;
-				-servicestudio-height: var(--token-scale-1000);
+				-servicestudio-height: $token-scale-1000;
 			}
 
 			&.time24h {
 				-servicestudio-background-image: $timepicker_time24h_img_base64;
-				-servicestudio-height: var(--token-scale-1000);
+				-servicestudio-height: $token-scale-1000;
 			}
 
 			& + .placeholder-ss-preview {
@@ -92,7 +92,7 @@
 
 	.not-valid + .input,
 	.not-valid + .flatpickr-mobile {
-		border-color: var(--token-semantics-danger-base);
+		border-color: $token-semantics-danger-base;
 	}
 
 	.flatpickr-mobile ~ span.validation-message {
@@ -114,7 +114,7 @@ html[data-uieditorversion^='1'] {
 	.osui-timepicker__dropdown-ss-preview {
 		&.time12h,
 		&.time24h {
-			-servicestudio-padding-top: min(var(--token-scale-1000), 100%);
+			-servicestudio-padding-top: min($token-scale-1000, 100%);
 			-servicestudio-height: 0;
 		}
 	}
@@ -124,48 +124,48 @@ html[data-uieditorversion^='1'] {
 	&.hasTime.noCalendar {
 		.flatpickr-time {
 			padding: 0;
-			height: var(--token-scale-1000);
+			height: $token-scale-1000;
 
 			&.time24hr:after {
 				display: none;
 			}
 
 			.numInputWrapper {
-				height: var(--token-scale-1000);
+				height: $token-scale-1000;
 				flex-grow: 1;
 			}
 
 			.flatpickr-am-pm {
 				position: relative;
-				margin-left: var(--token-scale-200);
-				margin-right: var(--token-scale-200);
+				margin-left: $token-scale-200;
+				margin-right: $token-scale-200;
 			}
 		}
 
 		&.dropdown--is-large {
 			.flatpickr-time {
-				height: var(--token-scale-1200);
-				max-height: var(--token-scale-1200);
+				height: $token-scale-1200;
+				max-height: $token-scale-1200;
 
 				.numInputWrapper {
-					height: var(--token-scale-1200);
+					height: $token-scale-1200;
 				}
 				.flatpickr-time-separator {
-					line-height: var(--token-scale-1200);
+					line-height: $token-scale-1200;
 				}
 			}
 		}
 
 		&.dropdown--is-small {
 			.flatpickr-time {
-				height: var(--token-scale-800);
-				max-height: var(--token-scale-800);
+				height: $token-scale-800;
+				max-height: $token-scale-800;
 
 				.numInputWrapper {
-					height: var(--token-scale-800);
+					height: $token-scale-800;
 				}
 				.flatpickr-time-separator {
-					line-height: var(--token-scale-800);
+					line-height: $token-scale-800;
 				}
 			}
 		}

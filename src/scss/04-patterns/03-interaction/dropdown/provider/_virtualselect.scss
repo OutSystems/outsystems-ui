@@ -14,10 +14,10 @@
 
 		&.pop-comp-active {
 			.vscomp-toggle-button {
-				border-color: var(--token-semantics-primary-base);
+				border-color: $token-semantics-primary-base;
 
 				&:after {
-					color: var(--token-semantics-primary-base);
+					color: $token-semantics-primary-base;
 					transform: rotate(180deg) translateY(50%);
 				}
 			}
@@ -48,20 +48,20 @@
 	}
 
 	&-clear-button:hover {
-		background-color: var(--token-primitives-neutral-400);
+		background-color: $token-primitives-neutral-400;
 
 		.vscomp-clear-icon {
 			&::after,
 			&::before {
 				background-color: transparent;
-				color: var(--token-primitives-neutral-700);
+				color: $token-primitives-neutral-700;
 			}
 		}
 	}
 
 	&-search-clear:hover:after {
 		background-color: transparent;
-		color: var(--token-primitives-neutral-700);
+		color: $token-primitives-neutral-700;
 	}
 }
 
@@ -74,32 +74,32 @@
 		}
 
 		.checkbox-icon {
-			border-color: var(--token-border-input-default);
+			border-color: $token-border-input-default;
 		}
 	}
 
 	&.has-value {
 		&.show-value-as-tags {
 			.vscomp-toggle-button {
-				padding-left: var(--token-scale-200);
+				padding-left: $token-scale-200;
 			}
 		}
 		.vscomp-value {
-			margin-right: var(--token-scale-600);
-			margin-left: var(--token-scale-0);
+			margin-right: $token-scale-600;
+			margin-left: $token-scale-0;
 		}
 	}
 
 	&:not(.has-value) {
 		.vscomp-value {
-			color: var(--token-text-subtlest);
+			color: $token-text-subtlest;
 			opacity: 1;
 		}
 	}
 
 	&.multiple {
 		.vscomp-search-container {
-			padding-left: var(--token-scale-400);
+			padding-left: $token-scale-400;
 
 			&:before {
 				display: none;
@@ -109,11 +109,11 @@
 		.vscomp-option {
 			&.selected {
 				.checkbox-icon {
-					background-color: var(--token-semantics-primary-base);
-					border-color: var(--token-semantics-primary-base);
+					background-color: $token-semantics-primary-base;
+					border-color: $token-semantics-primary-base;
 
 					&:after {
-						border-color: var(--token-text-inverse);
+						border-color: $token-text-inverse;
 						border-left-color: transparent;
 						border-top-color: transparent;
 						height: 80%;
@@ -133,7 +133,7 @@
 
 	&:not(.multiple) {
 		.vscomp-option.group-title {
-			height: var(--token-scale-1000) !important; // !important required to override the element style in html
+			height: $token-scale-1000 !important; // !important required to override the element style in html
 		}
 	}
 
@@ -141,15 +141,15 @@
 		.vscomp-toggle-button {
 			height: auto;
 			min-height: var(--vscomp-toogle-btn-height);
-			padding: var(--token-scale-100) var(--token-scale-1200) var(--token-scale-0) var(--token-scale-400);
+			padding: $token-scale-100 $token-scale-1200 $token-scale-0 $token-scale-400;
 		}
 
 		.vscomp-value-tag {
-			background-color: var(--token-primitives-neutral-300);
-			border: var(--token-border-size-0);
-			color: var(--token-primitives-neutral-700);
-			font-size: var(--token-font-size-300);
-			font-weight: var(--token-font-weight-semi-bold);
+			background-color: $token-primitives-neutral-300;
+			border: $token-border-size-0;
+			color: $token-primitives-neutral-700;
+			font-size: $token-font-size-300;
+			font-weight: $token-font-weight-semi-bold;
 			padding: 6px 35px 6px 10px;
 			position: relative;
 
@@ -158,7 +158,7 @@
 			}
 
 			.vscomp-value-tag-clear-button {
-				background-color: var(--token-primitives-neutral-700);
+				background-color: $token-primitives-neutral-700;
 				border-radius: 100%;
 				height: 14px;
 				position: absolute;
@@ -167,14 +167,14 @@
 
 				.vscomp-clear-icon {
 					height: 12px;
-					left: var(--token-scale-0);
+					left: $token-scale-0;
 					position: relative;
-					top: var(--token-scale-0);
+					top: $token-scale-0;
 					width: 12px;
 
 					&:before,
 					&:after {
-						color: var(--token-primitives-neutral-400);
+						color: $token-primitives-neutral-400;
 					}
 				}
 			}
@@ -192,7 +192,7 @@
 			border: none;
 
 			&-container {
-				background-color: var(--token-backdrop);
+				background-color: $token-backdrop;
 				// The !important is needed in order to overwrite the inline style added by library!
 				z-index: var(--layer-global-elevated) !important;
 			}
@@ -211,7 +211,7 @@
 	&.text-direction-rtl {
 		&.multiple {
 			.vscomp-search-container {
-				padding-left: var(--token-scale-200);
+				padding-left: $token-scale-200;
 			}
 
 			.vscomp-option {
@@ -227,29 +227,29 @@
 
 		&:not(.multiple) {
 			.vscomp-search-container {
-				padding: var(--token-scale-0) var(--token-scale-1000) var(--token-scale-0) var(--token-scale-200);
+				padding: $token-scale-0 $token-scale-1000 $token-scale-0 $token-scale-200;
 
 				&:before {
 					left: auto;
-					right: var(--token-scale-400);
+					right: $token-scale-400;
 				}
 			}
 		}
 
 		&.has-value {
 			.vscomp-value {
-				margin-left: var(--token-scale-600);
-				margin-right: var(--token-scale-0);
+				margin-left: $token-scale-600;
+				margin-right: $token-scale-0;
 			}
 		}
 
 		&.show-value-as-tags {
 			&.has-value {
 				.vscomp-clear-button {
-					left: var(--token-scale-800);
+					left: $token-scale-800;
 				}
 				.vscomp-toggle-button {
-					padding-right: var(--token-scale-200);
+					padding-right: $token-scale-200;
 				}
 			}
 
@@ -263,21 +263,21 @@
 			}
 
 			.vscomp-toggle-button {
-				padding: var(--token-scale-100) var(--token-scale-400) var(--token-scale-0) var(--token-scale-1200);
+				padding: $token-scale-100 $token-scale-400 $token-scale-0 $token-scale-1200;
 			}
 		}
 
 		.vscomp-toggle-button {
-			padding: var(--token-scale-100) var(--token-scale-400) var(--token-scale-100) var(--token-scale-1000);
+			padding: $token-scale-100 $token-scale-400 $token-scale-100 $token-scale-1000;
 
 			&:after {
-				left: var(--token-scale-400);
+				left: $token-scale-400;
 				right: auto;
 			}
 		}
 
 		.checkbox-icon {
-			margin-left: var(--token-scale-200);
+			margin-left: $token-scale-200;
 
 			&.checked {
 				&:after {
@@ -290,18 +290,18 @@
 	&:not(.text-direction-rtl) {
 		&.has-value {
 			.vscomp-clear-button {
-				right: var(--token-scale-1000);
+				right: $token-scale-1000;
 			}
 		}
 	}
 
 	// Checkbox
 	.checkbox-icon {
-		background-color: var(--token-bg-input-default);
-		border-radius: var(--token-border-radius-100);
-		border: var(--token-border-size-025) solid var(--token-border-input-default);
+		background-color: $token-bg-input-default;
+		border-radius: $token-border-radius-100;
+		border: $token-border-size-025 solid $token-border-input-default;
 		height: 16px;
-		margin-right: var(--token-scale-200);
+		margin-right: $token-scale-200;
 		overflow: visible;
 		transition: background-color 0.25s ease;
 		width: 16px;
@@ -316,11 +316,11 @@
 		}
 
 		&.checked {
-			background-color: var(--token-semantics-primary-base);
-			border-color: var(--token-semantics-primary-base);
+			background-color: $token-semantics-primary-base;
+			border-color: $token-semantics-primary-base;
 
 			&:after {
-				border-color: var(--token-text-inverse);
+				border-color: $token-text-inverse;
 				border-left-color: transparent;
 				border-top-color: transparent;
 				height: 80%;
@@ -338,16 +338,16 @@
 	--vscomp-toogle-btn-height: 40px;
 	--vscomp-toogle-btn-mobile-height: 48px;
 
-	background-color: var(--token-bg-input-default);
-	border-radius: var(--token-border-radius-100);
-	border: var(--token-border-size-025) solid var(--token-border-input-default);
-	color: var(--token-text-default);
+	background-color: $token-bg-input-default;
+	border-radius: $token-border-radius-100;
+	border: $token-border-size-025 solid $token-border-input-default;
+	color: $token-text-default;
 	cursor: pointer;
 	display: inline-flex;
 	height: var(--vscomp-toogle-btn-height);
 	line-height: var(--vscomp-toogle-btn-height);
 	min-width: 180px;
-	padding: var(--token-scale-100) var(--token-scale-1000) var(--token-scale-100) var(--token-scale-400);
+	padding: $token-scale-100 $token-scale-1000 $token-scale-100 $token-scale-400;
 	position: relative;
 	transition:
 		height,
@@ -357,9 +357,9 @@
 
 	// Create new arrow for all dropdown types
 	&:after {
-		color: var(--token-primitives-neutral-700);
+		color: $token-primitives-neutral-700;
 		position: absolute;
-		right: var(--token-scale-400);
+		right: $token-scale-400;
 		top: 50%;
 		transform: translateY(-50%);
 		transform-origin: center;
@@ -367,13 +367,13 @@
 	}
 
 	&:hover {
-		border-color: var(--token-border-input-default);
+		border-color: $token-border-input-default;
 	}
 }
 
 // Container with the selected value(s)
 .vscomp-value {
-	font-size: var(--token-font-size-350);
+	font-size: $token-font-size-350;
 }
 
 // Default dropdown arrow
@@ -388,11 +388,11 @@
 
 // Wrapper options container
 .vscomp-dropbox {
-	--border-color: #{var(--token-border-input-default)};
-	--border-size: var(--token-border-size-025);
+	--border-color: #{#{$token-border-input-default}};
+	--border-size: #{$token-border-size-025};
 
-	background-color: var(--token-bg-input-default);
-	border-radius: var(--token-border-radius-100);
+	background-color: $token-bg-input-default;
+	border-radius: $token-border-radius-100;
 	/* use inner shadow to workaround the border issue that causes content to be blurry */
 	box-shadow: inset var(--border-color) 0 0 0 var(--border-size);
 	overflow: hidden;
@@ -407,26 +407,26 @@
 
 // Options container input search wrapper
 .vscomp-search-container {
-	border-bottom: var(--token-border-size-025) solid var(--token-border-input-default);
-	padding: var(--token-scale-0) var(--token-scale-200) var(--token-scale-0) var(--token-scale-1000);
+	border-bottom: $token-border-size-025 solid $token-border-input-default;
+	padding: $token-scale-0 $token-scale-200 $token-scale-0 $token-scale-1000;
 	position: relative;
 
 	&:before {
 		align-items: center;
-		color: var(--token-primitives-neutral-700);
+		color: $token-primitives-neutral-700;
 		display: flex;
 		height: 100%;
-		left: var(--token-scale-400);
+		left: $token-scale-400;
 		position: absolute;
 		top: 0;
 	}
 
 	.vscomp-search-clear {
 		border-radius: 50%;
-		color: var(--token-primitives-neutral-700);
+		color: $token-primitives-neutral-700;
 		display: table;
 		font-size: 0;
-		font-weight: var(--token-font-weight-semi-bold);
+		font-weight: $token-font-weight-semi-bold;
 		height: 24px;
 		line-height: 1;
 		text-align: center;
@@ -444,17 +444,17 @@
 		}
 
 		&:hover {
-			background-color: var(--token-primitives-neutral-400);
+			background-color: $token-primitives-neutral-400;
 		}
 	}
 }
 
 // Options container input search
 .vscomp-search-input {
-	font-size: var(--token-font-size-350);
+	font-size: $token-font-size-350;
 
 	&::placeholder {
-		color: var(--token-text-default);
+		color: $token-text-default;
 		opacity: 0.5;
 	}
 }
@@ -468,19 +468,19 @@
 	}
 
 	&::-webkit-scrollbar-track {
-		background: var(--token-border-default);
+		background: $token-border-default;
 	}
 
 	&::-webkit-scrollbar-thumb {
-		background-color: var(--token-text-disabled);
+		background-color: $token-text-disabled;
 	}
 }
 
 // Option Item text
 .vscomp-option-text {
-	color: var(--token-text-default);
+	color: $token-text-default;
 	display: inline-block;
-	font-size: var(--token-font-size-350);
+	font-size: $token-font-size-350;
 
 	// To keep vertical align using inline-block.
 	// This is used so that the text can  get ellipsis if too long
@@ -492,16 +492,16 @@
 // Option Item
 .vscomp-option {
 	align-content: center;
-	background-color: var(--token-bg-input-default);
+	background-color: $token-bg-input-default;
 	transition: background-color 0.25s ease;
 
 	&.focused,
 	&.selected {
-		background-color: var(--token-bg-neutral-subtle-default);
+		background-color: $token-bg-neutral-subtle-default;
 	}
 
 	&.focused {
-		background-color: var(--token-bg-neutral-subtle-default);
+		background-color: $token-bg-neutral-subtle-default;
 	}
 
 	// Style dropdown group title
@@ -511,9 +511,9 @@
 			// Style group title in single select dropdown
 			// this selector is necessary so that the style is not applied when the option has a checkbox
 			&:only-child {
-				color: var(--token-primitives-neutral-700);
-				font-size: var(--token-font-size-275);
-				font-weight: var(--token-font-weight-semi-bold);
+				color: $token-primitives-neutral-700;
+				font-size: $token-font-size-275;
+				font-weight: $token-font-weight-semi-bold;
 				text-transform: uppercase;
 			}
 		}
@@ -522,15 +522,15 @@
 
 // Option Item description
 .vscomp-option-description {
-	color: var(--token-primitives-neutral-700);
-	font-size: var(--token-font-size-275);
+	color: $token-primitives-neutral-700;
+	font-size: $token-font-size-275;
 	margin-top: 1px;
 }
 
 // When using the extensibility property allowNewOption
 .vscomp-new-option-icon {
 	&::before {
-		border: 15px solid var(--token-semantics-primary-base);
+		border: 15px solid $token-semantics-primary-base;
 		border-bottom-color: rgba(0, 0, 0, 0);
 		border-left-color: rgba(0, 0, 0, 0);
 	}
@@ -540,11 +540,11 @@
 ///
 .has-accessible-features {
 	.vscomp-toggle-button {
-		border-color: var(--token-border-input-default);
-		color: var(--token-text-default);
+		border-color: $token-border-input-default;
+		color: $token-text-default;
 
 		&:after {
-			color: var(--token-text-default);
+			color: $token-text-default;
 		}
 	}
 
@@ -567,14 +567,14 @@
 	.vscomp-wrapper {
 		&.show-value-as-tags {
 			.vscomp-value-tag {
-				border: var(--token-border-size-025) solid var(--token-border-input-default);
+				border: $token-border-size-025 solid $token-border-input-default;
 			}
 		}
 
 		.vscomp-option {
 			&.focused {
 				&:before {
-					border: var(--token-border-size-050) solid var(--token-border-input-default);
+					border: $token-border-size-050 solid $token-border-input-default;
 					bottom: 0;
 					content: '';
 					display: block;
@@ -598,7 +598,7 @@
 
 	.pop-comp-content,
 	.vscomp-dropbox-container {
-		border: var(--token-border-size-050) solid var(--token-border-input-default);
+		border: $token-border-size-050 solid $token-border-input-default;
 	}
 
 	.vscomp-options-container {
@@ -607,11 +607,11 @@
 		}
 
 		&::-webkit-scrollbar-track {
-			border: var(--token-border-size-075) solid var(--token-primitives-neutral-400);
+			border: $token-border-size-075 solid $token-primitives-neutral-400;
 		}
 
 		&::-webkit-scrollbar-thumb {
-			border: var(--token-border-size-025) solid var(--token-primitives-neutral-400);
+			border: $token-border-size-025 solid $token-primitives-neutral-400;
 		}
 	}
 }

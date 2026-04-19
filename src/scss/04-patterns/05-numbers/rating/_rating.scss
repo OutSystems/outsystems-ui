@@ -6,8 +6,8 @@
 ///
 .rating {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-rating-disabled-color:       var(--token-text-disabled);
-	--osui-rating-disabled-empty-color: var(--token-border-default);
+	--osui-rating-disabled-color:       #{$token-text-disabled};
+	--osui-rating-disabled-empty-color: #{$token-border-default};
 	// ───────────────────────────────────────────────────────────────────
 
 	position: relative;
@@ -25,7 +25,7 @@
 		--rating-size: 8px;
 
 		.rating-item {
-			padding-right: calc(var(--rating-size) + var(--token-scale-100));
+			padding-right: calc(var(--rating-size) + $token-scale-100);
 		}
 	}
 
@@ -77,7 +77,7 @@
 		display: inline-block;
 		height: var(--rating-size);
 		// Padding is used to avoid flicks on hover due to rating-items gap
-		padding-right: calc(var(--rating-size) + var(--token-scale-200));
+		padding-right: calc(var(--rating-size) + $token-scale-200);
 		position: relative;
 		width: var(--rating-size);
 
@@ -92,7 +92,7 @@
 
 			// Service Studio Preview
 			& {
-				-servicestudio-margin-right: var(--token-scale-200);
+				-servicestudio-margin-right: $token-scale-200;
 				-servicestudio-min-height: 24px;
 				-servicestudio-min-width: 24px;
 				-servicestudio-opacity: 1 !important;
@@ -260,7 +260,7 @@
 .is-rtl {
 	.rating {
 		.rating-item {
-			padding-left: calc(var(--rating-size) + var(--token-scale-200));
+			padding-left: calc(var(--rating-size) + $token-scale-200);
 			padding-right: 0;
 			transform: scaleX(-1);
 		}
@@ -293,18 +293,18 @@
 		.rating-item {
 			&-filled,
 			&-half {
-				color: var(--token-primitives-neutral-700);
+				color: $token-primitives-neutral-700;
 
 				.icon {
-					color: var(--token-primitives-neutral-700);
+					color: $token-primitives-neutral-700;
 				}
 			}
 
 			&-empty {
-				color: var(--token-primitives-neutral-700);
+				color: $token-primitives-neutral-700;
 
 				.icon {
-					color: var(--token-border-input-default);
+					color: $token-border-input-default;
 				}
 			}
 		}

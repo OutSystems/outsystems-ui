@@ -6,10 +6,10 @@
 ///
 .chat {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-chat-message-background:      var(--token-primitives-neutral-300);
-	--osui-chat-message-border-radius:   var(--token-border-radius-100);
-	--osui-chat-message-sent-background: var(--token-semantics-primary-base);
-	--osui-chat-message-sent-color:      var(--token-text-inverse);
+	--osui-chat-message-background:      #{$token-primitives-neutral-300};
+	--osui-chat-message-border-radius:   #{$token-border-radius-100};
+	--osui-chat-message-sent-background: #{$token-semantics-primary-base};
+	--osui-chat-message-sent-color:      #{$token-text-inverse};
 	// ───────────────────────────────────────────────────────────────────
 
 	display: flex;
@@ -19,8 +19,8 @@
 
 		.chat {
 			&-photo {
-				margin-left: var(--token-scale-400);
-				margin-right: var(--token-scale-0);
+				margin-left: $token-scale-400;
+				margin-right: $token-scale-0;
 			}
 
 			&-message {
@@ -32,7 +32,7 @@
 	}
 
 	&-photo {
-		margin-right: var(--token-scale-400);
+		margin-right: $token-scale-400;
 
 		img {
 			border-radius: 50%;
@@ -48,14 +48,14 @@
 		display: flex;
 		flex-direction: column;
 		max-width: 600px;
-		padding: var(--token-scale-400);
+		padding: $token-scale-400;
 		position: relative;
 		word-break: break-word;
 
 		&-status {
 			display: block;
-			font-size: var(--token-font-size-300);
-			margin-top: var(--token-scale-200);
+			font-size: $token-font-size-300;
+			margin-top: $token-scale-200;
 
 			&.hidden {
 				display: none;
@@ -71,14 +71,14 @@
 		&.right {
 			.chat {
 				&-photo {
-					margin-left: var(--token-scale-0);
-					margin-right: var(--token-scale-400);
+					margin-left: $token-scale-0;
+					margin-right: $token-scale-400;
 				}
 			}
 		}
 
 		&-photo {
-			margin-left: var(--token-scale-400);
+			margin-left: $token-scale-400;
 			margin-right: 0;
 		}
 	}

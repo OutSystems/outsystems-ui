@@ -6,15 +6,15 @@
 ///
 .avatar {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-avatar-color:          var(--token-text-inverse);
-	--osui-avatar-primary-color:  var(--token-semantics-primary-base);
-	--osui-avatar-on-light-color: var(--token-text-default);
+	--osui-avatar-color:          #{$token-text-inverse};
+	--osui-avatar-primary-color:  #{$token-semantics-primary-base};
+	--osui-avatar-on-light-color: #{$token-text-default};
 	// ───────────────────────────────────────────────────────────────────
 
 	align-items: center;
 	color: var(--osui-avatar-color);
 	display: inline-flex;
-	font-weight: var(--token-font-weight-semi-bold);
+	font-weight: $token-font-weight-semi-bold;
 	height: 32px;
 	justify-content: center;
 	line-height: 1;
@@ -41,13 +41,13 @@
 	}
 
 	&-small {
-		font-size: var(--token-font-size-300);
+		font-size: $token-font-size-300;
 		height: 24px;
 		width: 24px;
 	}
 
 	&-medium {
-		font-size: var(--token-font-size-400);
+		font-size: $token-font-size-400;
 		height: 40px;
 		width: 40px;
 	}

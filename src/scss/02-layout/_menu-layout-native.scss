@@ -52,7 +52,7 @@
 			&-visible,
 			&-expandable {
 				.app-menu-content {
-					box-shadow: var(--token-elevation-2);
+					box-shadow: $token-elevation-2;
 					z-index: var(--osui-menu-layer);
 				}
 			}
@@ -92,7 +92,7 @@
 				&-visible,
 				&-expandable {
 					.app-menu-content {
-						box-shadow: var(--token-elevation-2);
+						box-shadow: $token-elevation-2;
 						left: 0;
 						z-index: var(--osui-menu-layer);
 					}

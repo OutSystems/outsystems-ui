@@ -16,7 +16,7 @@
 				font-size: 0;
 
 				.osui-btn-loading__spinner-animation {
-					margin-right: var(--token-scale-0);
+					margin-right: $token-scale-0;
 				}
 
 				& > span[data-expression] {
@@ -52,24 +52,24 @@
 
 		& > * {
 			display: inline-block;
-			font-size: var(--token-font-size-350);
+			font-size: $token-font-size-350;
 			vertical-align: middle;
 		}
 
 		.osui-btn-loading__spinner-animation {
 			display: none;
 			animation: loadingSpinner 850ms cubic-bezier(0.7, 1.05, 0.78, 0.78) infinite;
-			border: var(--token-border-size-050) solid currentColor;
+			border: $token-border-size-050 solid currentColor;
 			border-radius: 50%;
 			border-top-color: transparent;
 			height: 16px;
-			margin-right: var(--token-scale-200);
+			margin-right: $token-scale-200;
 			width: 16px;
 			will-change: transform;
 
 			// ServiceStudio Preview
 			& {
-				-servicestudio-margin-right: var(--token-scale-200);
+				-servicestudio-margin-right: $token-scale-200;
 			}
 		}
 
@@ -87,7 +87,7 @@
 			&.osui-btn-loading--is-loading {
 				.btn {
 					.osui-btn-loading__spinner-animation {
-						margin-left: var(--token-scale-0);
+						margin-left: $token-scale-0;
 					}
 				}
 			}
@@ -96,8 +96,8 @@
 		&--is-loading {
 			.btn {
 				.osui-btn-loading__spinner-animation {
-					margin-left: var(--token-scale-200);
-					margin-right: var(--token-scale-0);
+					margin-left: $token-scale-200;
+					margin-right: $token-scale-0;
 				}
 			}
 		}
@@ -118,7 +118,7 @@
 	.osui-btn-loading {
 		.btn {
 			.osui-btn-loading__spinner-animation {
-				border-width: var(--token-border-size-075);
+				border-width: $token-border-size-075;
 				border-bottom: none;
 				border-top: none;
 			}

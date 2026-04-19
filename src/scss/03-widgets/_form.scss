@@ -12,7 +12,7 @@
 	}
 
 	label {
-		margin-bottom: var(--token-scale-200);
+		margin-bottom: $token-scale-200;
 	}
 
 	.dropdown,
@@ -20,7 +20,7 @@
 	input[data-input],
 	textarea[data-textarea],
 	[data-switch] {
-		margin-bottom: var(--token-scale-600);
+		margin-bottom: $token-scale-600;
 	}
 
 	span {
@@ -91,9 +91,9 @@
 
 ///
 span.validation-message {
-	color: var(--token-semantics-danger-base);
-	font-size: var(--token-font-size-300);
-	margin-left: var(--token-scale-0);
+	color: $token-semantics-danger-base;
+	font-size: $token-font-size-300;
+	margin-left: $token-scale-0;
 }
 
 ///

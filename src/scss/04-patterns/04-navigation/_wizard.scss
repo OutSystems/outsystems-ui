@@ -7,14 +7,14 @@
 .wizard {
 	&-wrapper {
 		// ─── Component CSS API ─────────────────────────────────────────────
-		--osui-wizard-icon-background:   var(--token-bg-surface-default);
-		--osui-wizard-icon-border-color: var(--token-border-input-default);
-		--osui-wizard-icon-color:        var(--token-primitives-neutral-700);
-		--osui-wizard-label-color:       var(--token-primitives-neutral-700);
-		--osui-wizard-active-color:      var(--token-semantics-primary-base);
-		--osui-wizard-past-background:   var(--token-semantics-primary-base);
-		--osui-wizard-past-color:        var(--token-text-inverse);
-		--osui-wizard-connector-color:   var(--token-bg-neutral-base-default);
+		--osui-wizard-icon-background:   #{$token-bg-surface-default};
+		--osui-wizard-icon-border-color: #{$token-border-input-default};
+		--osui-wizard-icon-color:        #{$token-primitives-neutral-700};
+		--osui-wizard-label-color:       #{$token-primitives-neutral-700};
+		--osui-wizard-active-color:      #{$token-semantics-primary-base};
+		--osui-wizard-past-background:   #{$token-semantics-primary-base};
+		--osui-wizard-past-color:        #{$token-text-inverse};
+		--osui-wizard-connector-color:   #{$token-bg-neutral-base-default};
 		// ───────────────────────────────────────────────────────────────────
 
 		&.wizard-vertical {
@@ -22,7 +22,7 @@
 				.wizard-wrapper-item {
 					align-items: center;
 					flex-direction: row;
-					margin-bottom: var(--token-scale-800);
+					margin-bottom: $token-scale-800;
 
 					&.label-top {
 						flex-direction: row-reverse;
@@ -30,7 +30,7 @@
 				}
 
 				&:last-child {
-					margin-bottom: var(--token-scale-0);
+					margin-bottom: $token-scale-0;
 				}
 			}
 
@@ -80,7 +80,7 @@
 	&-item-icon {
 		align-items: center;
 		background-color: var(--osui-wizard-icon-background);
-		border: var(--token-border-size-025) solid var(--osui-wizard-icon-border-color);
+		border: $token-border-size-025 solid var(--osui-wizard-icon-border-color);
 		border-radius: 50%;
 		color: var(--osui-wizard-icon-color);
 		display: flex;
@@ -97,7 +97,7 @@
 		}
 
 		&-wrapper {
-			margin: var(--token-scale-200) var(--token-scale-0);
+			margin: $token-scale-200 $token-scale-0;
 			position: relative;
 			width: 100%;
 
@@ -114,7 +114,7 @@
 		}
 
 		.icon {
-			font-size: var(--token-font-size-300);
+			font-size: $token-font-size-300;
 			width: auto;
 		}
 	}
@@ -135,7 +135,7 @@
 				}
 
 				&-label {
-					color: var(--token-text-default);
+					color: $token-text-default;
 				}
 			}
 		}
@@ -155,7 +155,7 @@
 				}
 
 				&-label {
-					color: var(--token-text-subtlest);
+					color: $token-text-subtlest;
 				}
 			}
 		}
@@ -169,7 +169,7 @@
 				}
 
 				.fa-fw {
-					color: var(--token-text-disabled);
+					color: $token-text-disabled;
 				}
 			}
 		}
@@ -177,7 +177,7 @@
 
 	&-vertical {
 		.wizard-item-icon-wrapper {
-			margin: var(--token-scale-0) var(--token-scale-200) var(--token-scale-0) var(--token-scale-0);
+			margin: $token-scale-0 $token-scale-200 $token-scale-0 $token-scale-0;
 			width: auto;
 		}
 
@@ -199,7 +199,7 @@
 				}
 
 				.wizard-item-icon-wrapper {
-					margin: var(--token-scale-0) var(--token-scale-0) var(--token-scale-0) var(--token-scale-200);
+					margin: $token-scale-0 $token-scale-0 $token-scale-0 $token-scale-200;
 				}
 			}
 		}
@@ -244,7 +244,7 @@ html[data-uieditorversion^='1'] {
 
 				&:last-child {
 					& {
-						-servicestudio-margin-bottom: var(--token-scale-0);
+						-servicestudio-margin-bottom: $token-scale-0;
 					}
 				}
 			}
@@ -265,13 +265,13 @@ html[data-uieditorversion^='1'] {
 .is-rtl {
 	.wizard-vertical {
 		.wizard-item-icon-wrapper {
-			margin: var(--token-scale-0) var(--token-scale-0) var(--token-scale-0) var(--token-scale-200);
+			margin: $token-scale-0 $token-scale-0 $token-scale-0 $token-scale-200;
 		}
 
 		.wizard-wrapper-item {
 			&.label-top {
 				.wizard-item-icon-wrapper {
-					margin: var(--token-scale-0) var(--token-scale-200) var(--token-scale-0) var(--token-scale-0);
+					margin: $token-scale-0 $token-scale-200 $token-scale-0 $token-scale-0;
 				}
 			}
 		}
