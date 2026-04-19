@@ -1458,7 +1458,7 @@ The document can be generated semi-automatically:
 
 ---
 
-## Phase 10 — Replace `var(--token-*)` with `$token-*` SCSS variables
+## Phase 10 — Replace `var(--token-*)` with `$token-*` SCSS variables and remove `:root` token block
 
 ### 10.1 Background
 
@@ -1466,10 +1466,14 @@ The document can be generated semi-automatically:
 
 | File | Contains | Purpose |
 |------|----------|---------|
-| `src/scss/tokens/_root.scss` | `:root { --token-* }` CSS custom properties | Runtime theming by DTE |
+| `src/scss/tokens/_root.scss` | `:root { --token-* }` CSS custom properties | Runtime theming override surface |
 | `src/scss/tokens/_variables.scss` | `$token-*: var(--token-*, fallback)` SCSS variables | Compile-time validation + fallback safety |
 
-After Phases 1–9, all component SCSS files reference tokens via `var(--token-*)`. Phase 10 migrates those references to the equivalent `$token-*` SCSS variable. The compiled CSS output is functionally identical — the SCSS variable expands to a `var(--token-*)` with a hardcoded fallback value chain — but the SCSS source gains compile-time safety and IDE support.
+After Phases 1–9, all component SCSS files reference tokens via `var(--token-*)`. Phase 10 is two steps:
+
+**Step A** — Migrate every `var(--token-*)` reference in component SCSS to the equivalent `$token-*` SCSS variable. Because every `$token-*` variable expands to a `var(--token-*, …hardcoded-fallback…)` chain, the compiled CSS still references the custom property, but now with a built-in fallback all the way to a hex value.
+
+**Step B** — Remove the `@import '../tokens/root'` line from `src/scss/01-foundations/_root.scss`. Once Step A is done, every token reference in the codebase includes a complete fallback chain, so the `:root` block of `--token-*` declarations is no longer needed for default rendering. The custom properties still work as theming hooks: any DTE or runtime theme can write `--token-*` values to `:root` (or any scope) and they override the compiled-in fallbacks.
 
 **Example of what the SCSS variable expands to:**
 ```scss
@@ -1480,9 +1484,10 @@ $token-primitives-base-white: var(--token-primitives-base-white, #ffffff);
 
 // So $token-bg-surface-default compiles to:
 // var(--token-bg-surface-default, var(--token-primitives-base-white, #ffffff))
+// — self-sufficient without any :root declaration
 ```
 
-### 10.2 Syntax rules
+### 10.2 Syntax rules (Step A)
 
 Two cases apply depending on where the token value is used:
 
@@ -1510,7 +1515,7 @@ border: $token-border-size-025 solid $token-border-default;
 
 ### 10.3 Scope
 
-**In scope — convert `var(--token-*)` → `$token-*`:**
+**In scope — convert `var(--token-*)` → `$token-*` (Step A):**
 
 | Directory | Notes |
 |-----------|-------|
@@ -1518,45 +1523,68 @@ border: $token-border-size-025 solid $token-border-default;
 | `src/scss/03-widgets/` | All widget partials |
 | `src/scss/04-patterns/**/*.scss` | Pattern files and provider overrides |
 
+**In scope — modify (Step B):**
+
+| File | Change |
+|------|--------|
+| `src/scss/01-foundations/_root.scss` | Remove `@import '../tokens/root'` line; convert `--color-focus-inner: var(--token-text-default)` → `--color-focus-inner: #{$token-text-default}` (this is the only bare `var(--token-*)` in that file lacking a fallback) |
+
 **Out of scope — leave unchanged:**
 
 | Path | Reason |
 |------|--------|
 | `src/scss/tokens/` | Generated files; never manually edited |
-| `src/scss/01-foundations/_root.scss` | Defines `--token-*` vars in `:root {}`; these are declarations, not usages |
 | `src/scss/00-abstract/` | Setup vars that may reference tokens contextually; review per-file but default to leave |
 | `_*_lib.scss` vendor baselines | Never touch |
 | Any `var(--osui-*)` reference | These are component CSS API vars, not token vars — unchanged |
 
-### 10.4 Find/replace strategy
+### 10.4 Find/replace strategy (Step A)
 
 Because `var(--token-` appears in both contexts (regular properties and custom property declarations), a two-pass find/replace is needed:
 
 **Pass 1 — Custom property RHS** (needs `#{...}` interpolation):
-- Find: `(--osui-[\w-]+)\s*:\s*var\((--token-[\w-]+)\)`
+- Find: `(--[\w-]+)\s*:\s*var\((--token-[\w-]+)\)`
 - Replace: `$1: #{$token-<name>}` (strip `--token-` prefix to form the SCSS var name)
-- Scope: lines that match `^\s*--osui-`
+- Scope: lines where the LHS starts with `--` (i.e. custom property declarations)
 
 **Pass 2 — Regular property values**:
 - Find: `var\((--token-[\w-]+)\)`
 - Replace: `$token-<name>` (strip `--token-` prefix)
-- Scope: lines that do NOT start with `--`
+- Scope: lines that are NOT custom property declarations (LHS does not start with `--`)
 
 **Automated approach:** A short script (Python or sed) can perform both passes across all in-scope files. After running, `npm run build` validates correctness.
 
-### 10.5 Verification
+### 10.5 Step B — Remove `:root` token import
 
-After the replacement:
+After Step A passes, apply the following minimal edit to `src/scss/01-foundations/_root.scss`:
 
-1. `grep -r "var(--token-" src/scss/02-layout src/scss/03-widgets src/scss/04-patterns` → must return zero matches
-2. `npm run build` → exits 0 for both O11 and ODC
-3. Visual diff of compiled CSS against pre-Phase-10 snapshot → only difference should be the addition of fallback values (e.g. `var(--token-bg-surface-default)` → `var(--token-bg-surface-default, var(--token-primitives-base-white, #ffffff))`)
+```scss
+// Remove this line:
+@import '../tokens/root';
+
+// And convert this line in the :root block:
+--color-focus-inner: var(--token-text-default);
+// To:
+--color-focus-inner: #{$token-text-default};
+```
+
+The rest of `_root.scss`'s `:root {}` block (app layout vars, safe areas, layer system, other focus colors) is unchanged. The `src/scss/tokens/_root.scss` file itself is not deleted — it continues to be generated by `npx build.tokens` but is simply no longer imported. A DTE or future theming pipeline that wants to inject the full custom-property layer can re-add the import or inject the file separately.
+
+### 10.6 Verification
+
+After both steps:
+
+1. `grep -rn "var(--token-" src/scss/01-foundations src/scss/02-layout src/scss/03-widgets src/scss/04-patterns` → must return zero matches
+2. `grep "tokens/root" src/scss/01-foundations/_root.scss` → must return zero matches
+3. `npm run build` → exits 0 for both O11 and ODC
+4. Visual diff of compiled CSS against pre-Phase-10 snapshot → differences limited to: (a) fallback chains added to token references, (b) the `--token-*` `:root` block removed from output
 
 ### Phase 10 — Full acceptance criteria
 
-- [ ] Zero `var(--token-*)` references remain in `src/scss/02-layout/`, `src/scss/03-widgets/`, `src/scss/04-patterns/`
-- [ ] `_root.scss`, `_variables.scss`, `_utilities.scss` are unchanged
+- [ ] Zero `var(--token-*)` references remain in `src/scss/02-layout/`, `src/scss/03-widgets/`, `src/scss/04-patterns/`, and `src/scss/01-foundations/_root.scss`
+- [ ] `@import '../tokens/root'` removed from `src/scss/01-foundations/_root.scss`
+- [ ] `_variables.scss` and `_utilities.scss` are unchanged; `_root.scss` (generated) still exists but is no longer imported
 - [ ] `var(--osui-*)` references are unchanged throughout
 - [ ] `npm run build` exits 0 (O11 and ODC)
 - [ ] No new SCSS lint errors introduced
-- [ ] Compiled CSS output is visually identical; only difference is the expanded fallback chains on token values
+- [ ] Compiled CSS: no `--token-*` `:root` block; all token references include full fallback chains
