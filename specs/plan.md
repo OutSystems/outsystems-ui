@@ -162,6 +162,7 @@ This is **not** a backwards-compatible migration. We are replacing the OSUI toke
 - Enables full theme customization from the DTE by overriding semantic tokens
 
 > ✅ **Phases 0–3 complete** as of commit `3b66f2e2b` (branch `ROU-12714`).
+> ✅ **Phases 4–7 complete** as of commit `b66c59e35` (branch `ROU-12714`).
 
 ---
 
@@ -210,6 +211,52 @@ This is **not** a backwards-compatible migration. We are replacing the OSUI toke
 **Success criteria:**
 - Button, checkbox, and input interaction states use CSS API vars
 - Grep audit for hardcoded hex values returns zero unresolved matches
+
+> ✅ **Phase 7 complete** as of commit `b66c59e35` (branch `ROU-12714`).
+
+---
+
+### Phase 8 — Consolidate SCSS into one tree
+
+**What:** Move all pattern SCSS (currently co-located with TypeScript in `src/scripts/OSFramework/OSUI/`) and all provider SCSS (`src/scripts/Providers/OSUI/`) into `src/scss/04-patterns/`. Each pattern gets its own named folder inside the appropriate category directory; patterns that include a provider get a `provider/` subfolder inside their folder.
+
+**Why:** A single SCSS tree eliminates the cognitive overhead of two trees, makes import paths self-evident, simplifies documentation generation (Phase 9), and aligns with where all new pattern SCSS will naturally be created going forward.
+
+**Files touched:**
+- 36 pattern SCSS files (move + `@import` path updates inside files that reference provider SCSS)
+- ~10 provider SCSS files (move)
+- `src/scss/O11.OutSystemsUI.scss` — update ~30 `@import '../scripts/...'` lines
+- `src/scss/ODC.OutSystemsUI.scss` — update ~30 `@import '../scripts/...'` lines
+- `gulp/ProjectSpecs/Patterns/*.js` — update `scss` key in all 33 spec files
+
+**Key decision (resolve before implementation):** Where does the shared `_flatpickr_lib.scss` vendor baseline live? DatePicker, TimePicker, and MonthPicker all depend on it. Options: (A) under `date-picker/provider/`, imported by the other two via relative path; (B) a top-level `src/scss/providers/flatpickr/` shared location.
+
+**Success criteria:**
+- Zero SCSS files remain under `src/scripts/`
+- `npm run build` exits 0 (O11 and ODC)
+- Visual output diff against pre-Phase-8 build is empty
+
+See `implementation.md` Phase 8 for the full target folder tree and change-surface table.
+
+---
+
+### Phase 9 — CSS API reference document
+
+**What:** Generate `docs/css-api-reference.md` — a comprehensive listing of every `--osui-*` CSS custom property exposed by the library. One table per component, showing the property name, default token value, and any variant/state context. Organised by the same category structure as `04-patterns/`.
+
+**Why:** Serves two purposes — (1) the canonical reference for DTE engineers integrating the component CSS API, and (2) public documentation for consumers who want to theme individual components without knowing internal token names.
+
+**Method:** Semi-automatic. Grep for `// ─── Component CSS API` blocks across all SCSS files; parse out `--osui-*` declarations; identify root selector from context; render as Markdown tables.
+
+**Files touched:**
+- `docs/css-api-reference.md` (new file, committed)
+
+**Success criteria:**
+- Every component with a CSS API block appears in the document
+- Every `--osui-*` var is listed with its default value
+- Document is complete, accurate, and committed
+
+See `implementation.md` Phase 9 for format spec and generation approach.
 
 ---
 

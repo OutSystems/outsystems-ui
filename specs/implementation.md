@@ -1201,10 +1201,257 @@ Any match that is NOT:
 
 ### Phase 7 — Full acceptance criteria
 
-- [ ] `.btn.btn-primary`, `.btn.btn-success`, `.btn.btn-danger` use CSS API vars for `background-color` and `color`
-- [ ] Checkbox checked state uses `--osui-checkbox-checked-background` and `--osui-checkbox-checked-border-color`
-- [ ] Input focus and error states use `--osui-input-focus-border-color` / `--osui-input-error-border-color`
-- [ ] Input placeholder uses `--osui-input-placeholder-color`
-- [ ] Hardcoded hex audit returns zero unresolved matches
+- [ ] `.btn.btn-primary`, `.btn.btn-success`, `.btn.btn-error` use CSS API vars for `background-color`, `border-color`, and `color`
+- [ ] `.layout-native .header-right .btn { color }` uses `--osui-btn-color` rather than a direct token ref
+- [ ] Checkbox `:checked:before` uses `--osui-checkbox-checked-color` for both `background` and `border`
+- [ ] A11y `.has-accessible-features [data-checkbox]:checked:before { border-color }` also uses `--osui-checkbox-checked-color`
+- [ ] Input `:focus` border uses `--osui-input-focus-border-color` (normal + `.layout-native` header context)
+- [ ] Input `.not-valid` border uses `--osui-input-error-border-color` (normal + a11y context)
+- [ ] Hardcoded hex audit returns zero unresolved matches in component SCSS
 - [ ] `npm run build` exits 0
 - [ ] `npm run lint` exits 0
+
+---
+
+## Phase 8 — Consolidate SCSS into one tree
+
+**Goal:** Eliminate the split between `src/scss/` and `src/scripts/OSFramework/OSUI/` for SCSS files. Move all pattern SCSS and all provider SCSS into `src/scss/04-patterns/`, giving every pattern its own folder and every pattern with a provider a `provider/` subfolder inside it.
+
+**Why:** A single tree is easier to navigate, removes the conceptual overhead of "where does this SCSS live?", and makes Phase 9 (documentation generation) trivial since there's only one place to scan.
+
+---
+
+### 8.1 Target folder structure
+
+Existing flat files in `04-patterns/` stay where they are. Only the files currently in `src/scripts/` move.
+
+```
+src/scss/04-patterns/
+├── 01-adaptive/
+│   └── bottom-sheet/
+│       └── _bottomsheet.scss
+│
+├── 02-content/
+│   ├── accordion/
+│   │   └── _accordion.scss
+│   ├── accordion-item/
+│   │   └── _accordion-item.scss
+│   ├── carousel/
+│   │   ├── _carousel.scss
+│   │   ├── _carousel_ss_preview_imgs.scss
+│   │   └── provider/
+│   │       └── splide-core.scss
+│   ├── flip-content/
+│   │   └── _flipcontent.scss
+│   ├── gallery/
+│   │   └── _gallery.scss
+│   └── video/
+│       ├── _video.scss
+│       └── _video_ss_preview_imgs.scss
+│
+├── 03-interaction/
+│   ├── animated-label/
+│   │   └── _animated-label.scss
+│   ├── balloon/                              ← from Feature/Balloon
+│   │   └── _balloon.scss
+│   ├── button-loading/
+│   │   └── _button-loading.scss
+│   ├── date-picker/
+│   │   ├── _datepicker.scss
+│   │   ├── _datepicker_ss_preview_imgs.scss
+│   │   └── provider/
+│   │       ├── _flatpickr.scss               ← SharedProviderResources base override
+│   │       └── _flatpickr_lib.scss           ← vendor lib (shared — see §8.2)
+│   ├── dropdown/
+│   │   ├── _dropdown.scss
+│   │   ├── _dropdown-search.scss
+│   │   ├── _dropdown-tags.scss
+│   │   ├── _dropdown-serverside.scss
+│   │   ├── _dropdownserversideitem.scss
+│   │   └── provider/
+│   │       ├── _virtualselect.scss
+│   │       └── _virtualselect_lib.scss
+│   ├── month-picker/
+│   │   ├── _monthpicker.scss
+│   │   ├── _monthpicker_ss_preview_image.scss
+│   │   └── provider/
+│   │       └── _flatpickr.scss               ← Monthpicker-specific override
+│   ├── notification/
+│   │   └── _notification.scss
+│   ├── overflow-menu/
+│   │   └── _overflowmenu.scss
+│   ├── range-slider/
+│   │   ├── _rangeslider.scss
+│   │   └── provider/
+│   │       └── _noUiSlider.scss
+│   ├── search/
+│   │   └── _search.scss
+│   ├── time-picker/
+│   │   ├── _timepicker.scss
+│   │   ├── _timepicker_ss_preview_imgs.scss
+│   │   └── provider/
+│   │       └── _flatpickr.scss               ← Timepicker-specific override
+│   └── tooltip/
+│       └── _tooltip.scss
+│
+├── 04-navigation/
+│   ├── section-index/
+│   │   └── _sectionindex.scss
+│   ├── sidebar/
+│   │   └── _sidebar.scss
+│   ├── submenu/
+│   │   └── _submenu.scss
+│   └── tabs/
+│       └── _tabs.scss
+│
+└── 05-numbers/
+    ├── progress/
+    │   ├── _progressbar.scss
+    │   └── _progresscircle.scss
+    └── rating/
+        └── _rating.scss
+```
+
+---
+
+### 8.2 Shared `_flatpickr_lib.scss`
+
+DatePicker, TimePicker, and MonthPicker each have their own `_flatpickr.scss` override but all depend on the same vendor lib baseline (`_flatpickr_lib.scss`, currently in `SharedProviderResources/`).
+
+**Decision needed before implementation** — two options:
+
+**Option A (simpler):** Keep `_flatpickr_lib.scss` under `date-picker/provider/`. The TimePicker and MonthPicker `_flatpickr.scss` overrides import it via relative path (`../../date-picker/provider/_flatpickr_lib`).
+
+**Option B (cleaner):** Extract to a dedicated shared location, e.g. `src/scss/providers/flatpickr/_flatpickr_lib.scss`, and have all three pickers import from there.
+
+---
+
+### 8.3 Change surfaces
+
+| Surface | Count | What changes |
+|---------|-------|-------------|
+| Pattern + provider SCSS files | ~44 | Internal `@import` paths to provider subfolders recalculated |
+| `O11.OutSystemsUI.scss` | 1 | ~30 `@import '../scripts/...'` lines → `04-patterns/{category}/{pattern}/` |
+| `ODC.OutSystemsUI.scss` | 1 | Same as above |
+| `gulp/ProjectSpecs/Patterns/*.js` | 33 | Each `scss` key value updated to `../scss/04-patterns/{category}/{pattern}/` |
+
+**Which pattern SCSS files have internal provider imports** (need path recalculation):
+
+| Pattern file | Currently imports |
+|-------------|------------------|
+| `_dropdown.scss` | `Providers/OSUI/Dropdown/VirtualSelect/scss/_virtualselect.scss` |
+| `_datepicker.scss` | `Providers/OSUI/SharedProviderResources/Flatpickr/scss/flatpickr` |
+| `_timepicker.scss` | `Providers/OSUI/Timepicker/Flatpickr/scss/_flatpickr.scss` |
+| `_monthpicker.scss` | `Providers/OSUI/Monthpicker/Flatpickr/scss/_flatpickr.scss` |
+| `_carousel.scss` | (none — Splide core is imported separately in entry point) |
+| `_rangeslider.scss` | (check — NoUISlider may be separate) |
+
+---
+
+### Phase 8 — Full acceptance criteria
+
+- [ ] Zero SCSS files remain under `src/scripts/OSFramework/OSUI/*/scss/` or `src/scripts/Providers/OSUI/*/scss/`
+- [ ] Every pattern has a named folder inside the appropriate `04-patterns/{category}/` directory
+- [ ] Every pattern with a provider has a `provider/` subfolder containing the provider SCSS
+- [ ] `O11.OutSystemsUI.scss` and `ODC.OutSystemsUI.scss` contain no `../scripts/` import paths
+- [ ] All 33 gulp spec `scss` keys point into `../scss/04-patterns/`
+- [ ] `npm run build` exits 0 (both O11 and ODC)
+- [ ] `npm run lint` exits 0
+- [ ] Visual output diff against pre-Phase-8 build is empty
+
+---
+
+## Phase 9 — CSS API reference document
+
+**Goal:** Produce a single Markdown file that documents every `--osui-*` CSS custom property exposed by the library — its component, default value, and purpose. Serves as the canonical reference for DTE integration and for consumers who want to theme individual components.
+
+---
+
+### 9.1 Input
+
+All SCSS files under `src/scss/` (post Phase-8 consolidation) that contain a `// ─── Component CSS API` block.
+
+---
+
+### 9.2 Output
+
+**File:** `docs/css-api-reference.md`
+
+---
+
+### 9.3 Format
+
+```markdown
+# OutSystemsUI — CSS API Reference
+
+Each component exposes a set of CSS custom properties scoped to its root
+selector. Override them on the component's class to theme a single instance,
+or override them globally by targeting the class in your app stylesheet.
+
+---
+
+## Widgets
+
+### Button (`.btn`)
+_File: `src/scss/03-widgets/_btn.scss`_
+
+| Property | Default | Notes |
+|---|---|---|
+| `--osui-btn-background` | `var(--token-bg-surface-default)` | |
+| `--osui-btn-color` | `var(--token-semantics-primary-base)` | |
+| `--osui-btn-border-color` | `currentColor` | |
+| `--osui-btn-border-radius` | `var(--token-border-radius-100)` | |
+| `--osui-btn-primary-background` | `var(--token-semantics-primary-base)` | Primary variant |
+| `--osui-btn-primary-border-color` | `var(--token-semantics-primary-base)` | Primary variant |
+| `--osui-btn-primary-color` | `var(--token-text-inverse)` | Primary variant |
+...
+
+---
+
+## Patterns — Interaction
+
+### Dropdown (`.osui-dropdown`)
+_File: `src/scss/04-patterns/03-interaction/dropdown/_dropdown.scss`_
+
+| Property | Default | Notes |
+|---|---|---|
+| `--osui-dropdown-background` | `var(--token-bg-input-default)` | |
+...
+```
+
+---
+
+### 9.4 Sections
+
+Organise by the same categories as `04-patterns/`:
+
+1. **Widgets** — `src/scss/03-widgets/`
+2. **Patterns – Adaptive** — `04-patterns/01-adaptive/`
+3. **Patterns – Content** — `04-patterns/02-content/`
+4. **Patterns – Interaction** — `04-patterns/03-interaction/`
+5. **Patterns – Navigation** — `04-patterns/04-navigation/`
+6. **Patterns – Numbers** — `04-patterns/05-numbers/`
+7. **Patterns – Utilities** — `04-patterns/06-utilities/`
+
+---
+
+### 9.5 Generation approach
+
+The document can be generated semi-automatically:
+
+1. Grep for files containing `// ─── Component CSS API`
+2. For each file, extract the block between the opener comment and the `// ───...───` closer
+3. Parse out each `--osui-*` declaration: property name + default value
+4. Identify the root selector from the surrounding context (line above the CSS API block)
+5. Render as a Markdown table per component
+
+---
+
+### Phase 9 — Full acceptance criteria
+
+- [ ] `docs/css-api-reference.md` exists and is committed
+- [ ] Every component with a `// ─── Component CSS API` block appears in the document
+- [ ] Every `--osui-*` var declared in any CSS API block is listed in the document
+- [ ] No `--osui-*` var appears in the document that is not actually declared in the SCSS
+- [ ] Document is organised by the category sections defined in §9.4
+- [ ] Each entry shows the property name, default value, and (where applicable) which variant/state it applies to
