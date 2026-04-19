@@ -4,7 +4,7 @@
 /// Patterns - Interaction - Dropdown
 
 // Import common dropdown styles based on Current provider
-@import '../../../../../Providers/OSUI/Dropdown/VirtualSelect/scss/_virtualselect.scss';
+@import 'provider/virtualselect';
 
 // Common dropdown styles
 .osui-dropdown {
