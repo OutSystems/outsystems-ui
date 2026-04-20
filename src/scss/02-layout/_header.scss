@@ -6,7 +6,7 @@
 ///
 .header {
 	background-color: var(--background-color-header, var(--header-color));
-	box-shadow: 0 1px 5px 0 rgba(21, 24, 26, 0.1);
+	box-shadow: $token-elevation-1;
 	z-index: var(--layer-global-navigation);
 
 	// Service Studio Preview

@@ -5,7 +5,7 @@
 :root {
 	/*! App Settings — overrideable per app theme */
 	--header-color: #{$token-bg-surface-default};
-	--color-background-body: #{$token-bg-body};
+	--color-background-body: #{$token-primitives-neutral-100};
 	--color-background-login: #{$token-bg-surface-default};
 
 	/*! App Layout — not in token system */

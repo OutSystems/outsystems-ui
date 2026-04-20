@@ -8,7 +8,7 @@
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-checkbox-background:     #{$token-bg-input-default};
 	--osui-checkbox-border-color:   #{$token-border-input-default};
-	--osui-checkbox-border-radius:  #{$token-border-radius-100};
+	--osui-checkbox-border-radius:  #{$token-border-radius-200};
 	--osui-checkbox-checked-color:  #{$token-semantics-primary-base};
 	// ───────────────────────────────────────────────────────────────────
 
@@ -93,7 +93,7 @@
 ///
 .has-accessible-features {
 	[data-checkbox] {
-		border-radius: $token-border-radius-100;
+		border-radius: $token-border-radius-200;
 
 		&:before {
 			border-color: $token-border-input-default;

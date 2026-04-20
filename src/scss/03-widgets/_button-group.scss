@@ -28,8 +28,8 @@
 		position: relative;
 
 		&:first-child {
-			border-radius: $token-border-radius-100 $token-border-radius-0 $token-border-radius-0
-				$token-border-radius-100;
+			border-radius: $token-border-radius-200 $token-border-radius-0 $token-border-radius-0
+				$token-border-radius-200;
 		}
 
 		&[disabled] {
@@ -54,7 +54,7 @@
 		}
 
 		&:last-child {
-			border-radius: $token-border-radius-0 $token-border-radius-100 $token-border-radius-100
+			border-radius: $token-border-radius-0 $token-border-radius-200 $token-border-radius-200
 				$token-border-radius-0;
 		}
 
@@ -119,7 +119,7 @@
 .is-rtl {
 	.button-group-item {
 		&:first-child {
-			border-radius: $token-border-radius-0 $token-border-radius-100 $token-border-radius-100
+			border-radius: $token-border-radius-0 $token-border-radius-200 $token-border-radius-200
 				$token-border-radius-0;
 		}
 
@@ -133,8 +133,8 @@
 		}
 
 		&:last-child {
-			border-radius: $token-border-radius-100 $token-border-radius-0 $token-border-radius-0
-				$token-border-radius-100;
+			border-radius: $token-border-radius-200 $token-border-radius-0 $token-border-radius-0
+				$token-border-radius-200;
 		}
 	}
 }

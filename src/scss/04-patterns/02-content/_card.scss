@@ -7,15 +7,17 @@
 .card {
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-card-background:    #{$token-bg-surface-default};
-	--osui-card-border-color:  #{$token-border-default};
+	--osui-card-border-color:  #{$token-border-subtle};
 	--osui-card-border-width:  #{$token-border-size-025};
-	--osui-card-border-radius: #{$token-border-radius-100};
+	--osui-card-border-radius: #{$token-border-radius-200};
 	--osui-card-padding:       #{$token-scale-600};
+	--osui-card-shadow:        #{$token-elevation-1};
 	// ───────────────────────────────────────────────────────────────────
 
 	background-color: var(--osui-card-background);
 	border: var(--osui-card-border-width) solid var(--osui-card-border-color);
 	border-radius: var(--osui-card-border-radius);
+	box-shadow: var(--osui-card-shadow);
 	padding: var(--osui-card-padding);
 }
 

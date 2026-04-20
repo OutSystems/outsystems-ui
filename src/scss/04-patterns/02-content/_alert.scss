@@ -7,13 +7,15 @@
 .alert {
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-alert-background:    transparent;
-	--osui-alert-color:         #{$token-text-inverse};
-	--osui-alert-border-radius: #{$token-border-radius-100};
+	--osui-alert-color:         #{$token-text-default};
+	--osui-alert-accent-color:  #{$token-border-default};
+	--osui-alert-border-radius: #{$token-border-radius-300};
 	--osui-alert-padding:       #{$token-scale-400};
 	// ───────────────────────────────────────────────────────────────────
 
 	align-items: center;
 	background-color: var(--osui-alert-background);
+	border-left: #{$token-border-size-075} solid var(--osui-alert-accent-color);
 	border-radius: var(--osui-alert-border-radius);
 	color: var(--osui-alert-color);
 	display: flex;
@@ -35,20 +37,27 @@
 	}
 
 	&-info {
-		--osui-alert-background: #{$token-semantics-info-base};
+		--osui-alert-background:    #{$token-bg-info-subtle-default};
+		--osui-alert-color:         #{$token-text-info};
+		--osui-alert-accent-color:  #{$token-semantics-info-base};
 	}
 
 	&-success {
-		--osui-alert-background: #{$token-semantics-success-base};
+		--osui-alert-background:    #{$token-bg-success-subtle-default};
+		--osui-alert-color:         #{$token-text-success};
+		--osui-alert-accent-color:  #{$token-semantics-success-base};
 	}
 
 	&-error {
-		--osui-alert-background: #{$token-semantics-danger-base};
+		--osui-alert-background:    #{$token-bg-danger-subtle-default};
+		--osui-alert-color:         #{$token-text-danger};
+		--osui-alert-accent-color:  #{$token-semantics-danger-base};
 	}
 
 	&-warning {
-		--osui-alert-background: #{$token-semantics-warning-base};
-		--osui-alert-color:      #{$token-text-default};
+		--osui-alert-background:    #{$token-bg-warning-subtle-default};
+		--osui-alert-color:         #{$token-text-warning};
+		--osui-alert-accent-color:  #{$token-semantics-warning-base};
 	}
 }
 

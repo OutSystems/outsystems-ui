@@ -7,9 +7,9 @@
 .table {
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-table-border-color:          #{$token-border-default};
-	--osui-table-border-radius:         #{$token-border-radius-100};
-	--osui-table-header-background:     #{$token-bg-surface-default};
-	--osui-table-header-color:          #{$token-text-subtlest};
+	--osui-table-border-radius:         #{$token-border-radius-200};
+	--osui-table-header-background:     #{$token-bg-neutral-subtle-default};
+	--osui-table-header-color:          #{$token-text-subtle};
 	--osui-table-cell-background:       #{$token-bg-surface-default};
 	--osui-table-row-hover-background:  #{$token-bg-input-disabled};
 	--osui-table-row-stripe-background: #{$token-bg-neutral-subtle-default};
@@ -41,12 +41,12 @@
 			text-align: left;
 
 			&:first-child {
-				border-radius: $token-border-radius-100 $token-border-radius-0 $token-border-radius-0
+				border-radius: $token-border-radius-200 $token-border-radius-0 $token-border-radius-0
 					$token-border-radius-0;
 			}
 
 			&:last-child {
-				border-radius: $token-border-radius-0 $token-border-radius-100 $token-border-radius-0
+				border-radius: $token-border-radius-0 $token-border-radius-200 $token-border-radius-0
 					$token-border-radius-0;
 			}
 
@@ -104,14 +104,14 @@
 			border-bottom: none;
 
 			&:last-child {
-				border-radius: $token-border-radius-0 $token-border-radius-0 $token-border-radius-100
+				border-radius: $token-border-radius-0 $token-border-radius-0 $token-border-radius-200
 					$token-border-radius-0;
 			}
 		}
 
 		td:first-child {
 			border-radius: $token-border-radius-0 $token-border-radius-0 $token-border-radius-0
-				$token-border-radius-100;
+				$token-border-radius-200;
 		}
 	}
 }
