@@ -1,0 +1,281 @@
+////
+/// @group Theme-Dark
+/// World-class dark theme. Re-maps design-token CSS custom properties under
+/// a `.theme-dark` scope so every component rendered inside the scope flips
+/// to a dark palette without changing a single component rule.
+///
+/// Usage: add `theme-dark` to the outermost element of the screen
+/// (e.g. `<body class="theme-dark">` or `<div class="layout theme-dark">`).
+
+.theme-dark {
+	/* ---------------------------------------------------------------------- */
+	/* Surface hierarchy — warm near-blacks, inspired by Vercel / Linear      */
+	/* ---------------------------------------------------------------------- */
+	--token-bg-body:                           #{$token-primitives-base-black};
+	--token-bg-surface-default:                #{$token-primitives-neutral-1200};
+	--token-bg-surface-inverse:                #{$token-primitives-neutral-100};
+
+	/* Inputs */
+	--token-bg-input-default:                  #{$token-primitives-neutral-1100};
+	--token-bg-input-read-only:                #{$token-primitives-neutral-1000};
+	--token-bg-input-press:                    #{$token-primitives-neutral-1000};
+	--token-bg-input-disabled:                 #{$token-primitives-neutral-1200};
+	--token-bg-input-bold-default:             #{$token-primitives-neutral-1000};
+	--token-bg-input-bold-press:               #{$token-primitives-neutral-900};
+	--token-bg-input-bold-read-only:           #{$token-primitives-neutral-1000};
+	--token-bg-input-bold-disabled:            #{$token-primitives-neutral-1100};
+
+	/* Neutral tinted rows, table stripes, hovers */
+	--token-bg-neutral-subtle-default:         #{$token-primitives-neutral-1100};
+	--token-bg-neutral-subtle-press:           #{$token-primitives-neutral-1000};
+	--token-bg-neutral-subtlest-default:       #{$token-primitives-neutral-1200};
+	--token-bg-neutral-subtlest-press:         #{$token-primitives-neutral-1100};
+	--token-bg-neutral-base-default:           #{$token-primitives-neutral-700};
+	--token-bg-neutral-base-press:             #{$token-primitives-neutral-500};
+	--token-bg-neutral-bold-default:           #{$token-primitives-neutral-200};
+	--token-bg-neutral-bold-press:             #{$token-primitives-neutral-100};
+	--token-bg-neutral-boldest-default:        #{$token-primitives-neutral-100};
+	--token-bg-neutral-boldest-press:          #{$token-primitives-base-white};
+
+	/* ---------------------------------------------------------------------- */
+	/* Text                                                                   */
+	/* ---------------------------------------------------------------------- */
+	--token-text-default:                      #{$token-primitives-neutral-100};
+	--token-text-subtle:                       #{$token-primitives-neutral-300};
+	--token-text-subtlest:                     #{$token-primitives-neutral-500};
+	--token-text-disabled:                     #{$token-primitives-neutral-700};
+	--token-text-inverse:                      #{$token-primitives-base-black};
+
+	/* Primary / semantic text — use the lighter end of each palette so it
+	   passes WCAG AA against the dark surface. */
+	--token-text-primary:                      #{$token-primitives-blue-400};
+	--token-text-select:                       #{$token-primitives-blue-400};
+	--token-text-info:                         #{$token-primitives-blue-400};
+	--token-text-success:                      #{$token-primitives-green-400};
+	--token-text-danger:                       #{$token-primitives-red-400};
+	--token-text-warning:                      #{$token-primitives-yellow-400};
+	--token-text-link-default:                 #{$token-primitives-blue-400};
+	--token-text-link-press:                   #{$token-primitives-blue-300};
+	--token-text-link-visited:                 #{$token-primitives-blue-500};
+
+	/* Extended palette text */
+	--token-text-extended-pumpkin:             #{$token-primitives-pumpkin-400};
+	--token-text-extended-orange:              #{$token-primitives-orange-400};
+	--token-text-extended-lime:                #{$token-primitives-lime-400};
+	--token-text-extended-teal:                #{$token-primitives-teal-400};
+	--token-text-extended-aqua:                #{$token-primitives-aqua-400};
+	--token-text-extended-indigo:              #{$token-primitives-indigo-400};
+	--token-text-extended-violet:              #{$token-primitives-violet-400};
+	--token-text-extended-purple:              #{$token-primitives-purple-400};
+	--token-text-extended-magenta:             #{$token-primitives-magenta-400};
+	--token-text-extended-pink:                #{$token-primitives-pink-400};
+
+	/* ---------------------------------------------------------------------- */
+	/* Icons mirror text                                                      */
+	/* ---------------------------------------------------------------------- */
+	--token-icon-default:                      #{$token-primitives-neutral-100};
+	--token-icon-subtle:                       #{$token-primitives-neutral-300};
+	--token-icon-subtlest:                     #{$token-primitives-neutral-500};
+	--token-icon-disabled:                     #{$token-primitives-neutral-700};
+	--token-icon-inverse:                      #{$token-primitives-base-black};
+	--token-icon-primary:                      #{$token-primitives-blue-400};
+	--token-icon-select:                       #{$token-primitives-blue-400};
+	--token-icon-info:                         #{$token-primitives-blue-400};
+	--token-icon-success:                      #{$token-primitives-green-400};
+	--token-icon-danger:                       #{$token-primitives-red-400};
+	--token-icon-warning:                      #{$token-primitives-yellow-400};
+
+	/* ---------------------------------------------------------------------- */
+	/* Borders — barely visible hairlines                                     */
+	/* ---------------------------------------------------------------------- */
+	--token-border-default:                    #{$token-primitives-neutral-1000};
+	--token-border-subtle:                     #{$token-primitives-neutral-1100};
+	--token-border-subtlest:                   #{$token-primitives-neutral-1200};
+	--token-border-boldest:                    #{$token-primitives-neutral-100};
+	--token-border-disabled:                   #{$token-primitives-neutral-1000};
+	--token-border-input-default:              #{$token-primitives-neutral-900};
+	--token-border-input-press:                #{$token-primitives-neutral-700};
+	--token-border-input-read-only:            #{$token-primitives-neutral-900};
+	--token-border-focus-default:              #{$token-primitives-blue-500};
+	--token-border-focus-error:                #{$token-primitives-red-500};
+
+	/* ---------------------------------------------------------------------- */
+	/* Primary brand — nudge up one shade so it stays vibrant on black        */
+	/* ---------------------------------------------------------------------- */
+	--token-semantics-primary-base:            #{$token-primitives-blue-600};
+	--token-bg-primary-base-default:           #{$token-primitives-blue-600};
+	--token-bg-primary-base-press:             #{$token-primitives-blue-500};
+	--token-border-primary:                    #{$token-primitives-blue-600};
+
+	/* ---------------------------------------------------------------------- */
+	/* Semantic subtle backgrounds — tints over the dark surface              */
+	/* rgba is used so the tint reads as a "glassy" color wash rather than    */
+	/* the washed-out pastel that the light-theme 100-shades produce.         */
+	/* ---------------------------------------------------------------------- */
+	--token-bg-primary-subtle-default:         rgba(105, 134, 242, 0.14);
+	--token-bg-primary-subtle-press:           rgba(105, 134, 242, 0.24);
+	--token-bg-info-subtle-default:            rgba(105, 134, 242, 0.14);
+	--token-bg-info-subtle-press:              rgba(105, 134, 242, 0.24);
+	--token-bg-success-subtle-default:         rgba(127, 224, 137, 0.12);
+	--token-bg-success-subtle-press:           rgba(127, 224, 137, 0.22);
+	--token-bg-danger-subtle-default:          rgba(250, 161, 161, 0.12);
+	--token-bg-danger-subtle-press:            rgba(250, 161, 161, 0.22);
+	--token-bg-warning-subtle-default:         rgba(255, 224, 123, 0.14);
+	--token-bg-warning-subtle-press:           rgba(255, 224, 123, 0.24);
+	--token-bg-select-default:                 rgba(105, 134, 242, 0.18);
+	--token-bg-select-press:                   rgba(105, 134, 242, 0.28);
+
+	/* Semantic bold backgrounds — shift one step toward brighter for contrast */
+	--token-bg-danger-base-default:            #{$token-primitives-red-600};
+	--token-bg-danger-base-press:              #{$token-primitives-red-500};
+	--token-bg-success-base-default:           #{$token-primitives-green-600};
+	--token-bg-success-base-press:             #{$token-primitives-green-500};
+	--token-bg-info-base-default:              #{$token-primitives-blue-600};
+	--token-bg-info-base-press:                #{$token-primitives-blue-500};
+	--token-bg-warning-base-default:           #{$token-primitives-yellow-500};
+	--token-bg-warning-base-press:             #{$token-primitives-yellow-400};
+
+	/* ---------------------------------------------------------------------- */
+	/* Elevation — much darker shadows to register against the body           */
+	/* ---------------------------------------------------------------------- */
+	--token-shadow-1:                          rgba(0, 0, 0, 0.35);
+	--token-shadow-2:                          rgba(0, 0, 0, 0.40);
+	--token-shadow-3:                          rgba(0, 0, 0, 0.45);
+	--token-shadow-4:                          rgba(0, 0, 0, 0.50);
+	--token-shadow-5:                          rgba(0, 0, 0, 0.55);
+	--token-shadow-6:                          rgba(0, 0, 0, 0.60);
+	--token-shadow-7:                          rgba(0, 0, 0, 0.70);
+	--token-elevation-1: 0 1px 2px 0 rgba(0, 0, 0, 0.40), 0 2px 8px 0 rgba(0, 0, 0, 0.30);
+	--token-elevation-2: 0 2px 6px 0 rgba(0, 0, 0, 0.45), 0 8px 20px 0 rgba(0, 0, 0, 0.40);
+	--token-elevation-3: 0 4px 12px 0 rgba(0, 0, 0, 0.50), 0 12px 28px 0 rgba(0, 0, 0, 0.45);
+	--token-elevation-4: 0 8px 20px 0 rgba(0, 0, 0, 0.55), 0 20px 48px 0 rgba(0, 0, 0, 0.50);
+
+	/* ---------------------------------------------------------------------- */
+	/* State                                                                  */
+	/* ---------------------------------------------------------------------- */
+	--token-state-press:                       rgba(255, 255, 255, 0.08);
+	--token-backdrop:                          rgba(0, 0, 0, 0.7);
+
+	/* ---------------------------------------------------------------------- */
+	/* App-level layout tokens (not part of the design-token system)          */
+	/* These are what body + header + login actually consume.                 */
+	/* ---------------------------------------------------------------------- */
+	--color-background-body:                   #{$token-primitives-base-black};
+	--color-background-login:                  #{$token-primitives-neutral-1200};
+	--header-color:                            #{$token-primitives-neutral-1200};
+
+	/* Focus ring — amber stays, but inner contrast swaps so keyboard focus
+	   is still legible on both light content and dark surfaces. */
+	--color-focus-inner:                       #{$token-primitives-neutral-100};
+
+	/* ====================================================================== */
+	/* Component-scoped refinements — CSS API vars that don't naturally       */
+	/* invert via semantic tokens alone.                                      */
+	/* ====================================================================== */
+
+	/* Card — on dark surfaces a visible border is nicer than a shadow.       */
+	.card {
+		--osui-card-border-color: #{$token-primitives-neutral-1100};
+		--osui-card-shadow:       0 1px 0 rgba(255, 255, 255, 0.03), 0 2px 10px rgba(0, 0, 0, 0.25);
+	}
+
+	/* Alert — in the light theme accent colors are dark; in dark theme they
+	   need to be the lighter palette shade we already remapped above, but
+	   we also pin the background tint to an rgba so it reads as glass. */
+	.alert {
+		&-info {
+			--osui-alert-accent-color: #{$token-primitives-blue-500};
+		}
+		&-success {
+			--osui-alert-accent-color: #{$token-primitives-green-500};
+		}
+		&-error {
+			--osui-alert-accent-color: #{$token-primitives-red-500};
+		}
+		&-warning {
+			--osui-alert-accent-color: #{$token-primitives-yellow-500};
+		}
+	}
+
+	/* Button — the light-theme `filter: brightness(0.9)` hover darkens the
+	   button; on dark surfaces we want the opposite. Override just the
+	   primary/success/error variants' press colors via the CSS API. */
+	.btn {
+		--osui-btn-primary-background:   #{$token-primitives-blue-600};
+		--osui-btn-primary-border-color: #{$token-primitives-blue-600};
+		--osui-btn-success-background:   #{$token-primitives-green-600};
+		--osui-btn-success-border-color: #{$token-primitives-green-600};
+		--osui-btn-error-background:     #{$token-primitives-red-600};
+		--osui-btn-error-border-color:   #{$token-primitives-red-600};
+	}
+
+	/* Table — row hover / selection look better with rgba tints on dark      */
+	.table {
+		--osui-table-border-color:          #{$token-primitives-neutral-1100};
+		--osui-table-header-background:     #{$token-primitives-neutral-1100};
+		--osui-table-header-color:          #{$token-primitives-neutral-300};
+		--osui-table-cell-background:       #{$token-primitives-neutral-1200};
+		--osui-table-row-hover-background:  rgba(255, 255, 255, 0.03);
+		--osui-table-row-stripe-background: rgba(255, 255, 255, 0.02);
+		--osui-table-sorted-color:          #{$token-primitives-blue-400};
+	}
+
+	/* Inputs */
+	.form-control {
+		--osui-input-focus-border-color: #{$token-primitives-blue-500};
+	}
+
+	/* Header — we already use $token-elevation-1 now (which we redefined     */
+	/* above), but also lift a thin top-border hairline to separate from body.*/
+	.header {
+		border-bottom: 1px solid #{$token-primitives-neutral-1100};
+	}
+
+	/* Menu overlay / sidebar surface */
+	.app-menu-content,
+	.aside-navigation {
+		background-color: #{$token-primitives-neutral-1200};
+	}
+
+	/* Menu links */
+	.app-menu-links a {
+		color: #{$token-primitives-neutral-300};
+
+		&:hover,
+		&.active {
+			color: #{$token-primitives-blue-400};
+		}
+	}
+
+	/* Tag / Badge — keep inverse text on bold backgrounds, use the darker
+	   text on subtle-neutral backgrounds. */
+	.badge,
+	.tag {
+		--osui-badge-on-light-color: #{$token-primitives-neutral-1200};
+		--osui-tag-on-light-color:   #{$token-primitives-neutral-1200};
+	}
+
+	/* Validation text */
+	span.validation-message {
+		color: #{$token-primitives-red-400};
+	}
+
+	/* Native input placeholder color */
+	::placeholder {
+		color: #{$token-primitives-neutral-600};
+	}
+
+	/* Labels */
+	label {
+		color: #{$token-primitives-neutral-300};
+	}
+}
+
+/* Button hover lives on the global `.desktop .btn:hover` rule, so its scope
+   has to mirror that. Match whether `.theme-dark` is an ancestor of the btn
+   or shares the same element as `.desktop`. */
+.desktop .theme-dark .btn:hover,
+.desktop.theme-dark .btn:hover,
+.theme-dark .desktop .btn:hover {
+	filter: brightness(1.15);
+}

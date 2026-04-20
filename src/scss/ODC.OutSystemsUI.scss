@@ -28,6 +28,7 @@ Section Index:
 0. Root - CSS Variables
     0.2. Icon library
 1. Resets
+    1.2. Dark Theme (opt-in via .theme-dark class)
 2. HTML Elements
     2.1. Links
     2.2. Images
@@ -226,6 +227,8 @@ Functions & Mixins
 1. Resets
 =============================================================================== */
 @import '01-foundations/resets';
+/*! 1.2. Dark Theme (opt-in via .theme-dark class) */
+@import '01-foundations/theme-dark';
 
 /*! ==============================================================================
 2. HTML Elements

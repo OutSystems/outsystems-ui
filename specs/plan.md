@@ -319,6 +319,61 @@ See `implementation.md` Phase 10 for file-by-file change surface and find/replac
 
 ---
 
+### Phase 11 — Dark Theme via token re-mapping
+
+**What:** Ship an opt-in dark theme for the whole component library by re-mapping CSS custom properties under a single scope class, with **no changes to any component rule, any `$token-*` value, or any `--osui-*` default**. Consumers flip a root class (typically on `<body>`) and every patched component — cards, alerts, tables, inputs, buttons, headers, menu — renders in dark mode.
+
+**Why this phase validates the architecture.** Phases 2b–7 established the invariant that every visual property flows through a two-step chain: component CSS API var → `--token-*` semantic var → `--token-primitives-*` fallback. Phase 11 is the payoff — a complete alternate theme implemented entirely as CSS variable overrides, with zero component-rule edits. If this phase needed to touch a component's property declaration, that would indicate a leak in the CSS API.
+
+**Approach:** A single new partial — `src/scss/01-foundations/_theme-dark.scss` — scopes overrides under `.theme-dark`:
+
+1. **Re-map `--token-*` semantic vars to dark-palette primitives.** This is the high-leverage layer — every component that consumes `$token-bg-surface-default`, `$token-text-default`, `$token-border-default`, etc. automatically flips.
+2. **Use `rgba()` tints for semantic-subtle backgrounds.** The light-theme pastel `*-100` shades produce washed-out pastel rectangles on a dark body; low-alpha rgba over the dark surface produces a "glassy info box" effect instead.
+3. **Re-define `--token-elevation-1..4`.** Light-theme shadows vanish on black; dark-theme elevations use 40–55% black alpha with larger blur radii.
+4. **Component-scoped `--osui-*` refinements for the handful of cases where semantic tokens alone can't produce an elegant result** — card border-color + shadow, alert accent per variant, table header/stripe/hover backgrounds, badge/tag on-light text (so white pills keep dark text), input focus color, menu-link active color, `::placeholder` / `label` colors.
+5. **Invert the button hover filter.** The global `.desktop .btn:hover { filter: brightness(0.9) }` rule darkens the button; dark theme needs `brightness(1.15)`. Handled with three selector variants that cover whichever element carries `.desktop` / `.theme-dark`.
+
+**Surface hierarchy (elevation by colour, not by shadow):**
+- `--token-bg-body` → `$token-primitives-base-black` (`#111111`)
+- `--token-bg-surface-default` (cards, header) → `$token-primitives-neutral-1200` (`#242424`)
+- `--token-bg-input-default` → `$token-primitives-neutral-1100` (`#292929`)
+- Inputs press / read-only → `$token-primitives-neutral-1000`
+
+**Semantic text/icons** pull from the *light* end of each palette (`*-400`) so AA contrast holds against the dark surface without the tint-washing that `*-100` would produce.
+
+**Files touched:**
+- `src/scss/01-foundations/_theme-dark.scss` (new) — all dark-theme overrides, ~280 lines
+- `gulp/ProjectSpecs/ScssStructure/Resets.js` — register the new partial as the second asset under the Resets section so the generated `O11.OutSystemsUI.scss` / `ODC.OutSystemsUI.scss` pick it up on every dev/prod build
+- No component SCSS is touched
+- No `$token-*` value is touched
+- No pre-existing `--osui-*` default is touched
+
+**Key constraint:** the entry files `src/scss/{O11,ODC}.OutSystemsUI.scss` are **auto-generated** on every dev/prod build by `gulp/Tasks/CreateScssFile.js`. New partials must be registered in the `gulp/ProjectSpecs/ScssStructure/*.js` spec files or they will be missing from the compiled bundle. Manual edits to the generated entry files are overwritten.
+
+**Usage:**
+```html
+<body class="theme-dark desktop">
+  <!-- everything below renders in dark mode -->
+</body>
+```
+`.theme-dark` can also be applied to any ancestor of the patterns you want themed (e.g. a specific `.layout` wrapper) to A/B both themes side-by-side.
+
+**Scope — what does NOT change:**
+- All component SCSS files under `02-layout/`, `03-widgets/`, `04-patterns/` remain untouched
+- `src/scss/tokens/` generated files remain untouched
+- `$token-*` SCSS variables in `_variables.scss` remain untouched
+- All `--osui-*` defaults in their respective components remain untouched
+- Light theme remains the default — dark theme is strictly additive and opt-in
+
+**Success criteria:**
+- `npm run dev -- --target ODC` and `npm run dev -- --target O11` both compile with zero new errors (only pre-existing Dart Sass deprecation warnings)
+- Compiled `dist/dev.{ODC,O11}.OutSystemsUI.css` each contain ~40 `.theme-dark`-scoped rules
+- Adding `class="theme-dark"` to `<body>` in the built dev server flips every patched component to dark mode
+- Light theme (default, no class) is visually identical to pre-Phase-11 output
+- No component SCSS file has a git diff after Phase 11 is merged
+
+---
+
 ## Decisions
 
 | # | Decision | Resolution |
