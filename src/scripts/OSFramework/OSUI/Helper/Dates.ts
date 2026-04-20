@@ -12,17 +12,20 @@ namespace OSFramework.OSUI.Helper {
 		 * @return {*}  {string}
 		 * @memberof OSFramework.Helper.Dates
 		 */
-		public static GetJsonDateFromDate(_date: Date): string {
-			const jsonDate = {
-				year: _date.getFullYear(),
-				month: _date.getMonth() + 1,
-				day: _date.getDate(),
-				hours: _date.getHours(),
-				minutes: _date.getMinutes(),
-				seconds: _date.getSeconds(),
-			};
-
-			return JSON.stringify(jsonDate);
+		public static GetJsonDateFromDate(_date: Date): string | undefined {
+			if (_date !== undefined) {
+				const jsonDate = {
+					year: _date.getFullYear(),
+					month: _date.getMonth() + 1,
+					day: _date.getDate(),
+					hours: _date.getHours(),
+					minutes: _date.getMinutes(),
+					seconds: _date.getSeconds(),
+				};
+				return JSON.stringify(jsonDate);
+			} else {
+				return '';
+			}
 		}
 
 		/**
