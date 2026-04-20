@@ -95,11 +95,13 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 
 		// Method to handle the Shape config css variable
 		private _handleShape(shape: GlobalEnum.ShapeTypes): void {
-			Helper.Dom.Styles.SetStyleAttribute(
-				this.selfElement,
-				Enum.CssCustomProperties.Shape,
-				'var(--border-radius-' + shape + ')'
-			);
+			const tokenName = Helper.LegacyTokenMap.ShapeTokenMap[shape];
+			const shapeValue =
+				tokenName !== undefined
+					? `var(--border-radius-${shape}, var(${tokenName}))`
+					: `var(--border-radius-${shape})`;
+
+			Helper.Dom.Styles.SetStyleAttribute(this.selfElement, Enum.CssCustomProperties.Shape, shapeValue);
 		}
 
 		// Method to be called as callback on scroll event, to toggle class on BottomSheet when it has scroll active

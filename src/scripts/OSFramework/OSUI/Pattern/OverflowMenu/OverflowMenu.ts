@@ -84,11 +84,14 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 				this.configs.Shape = shape;
 			}
 
-			Helper.Dom.Styles.SetStyleAttribute(
-				this.selfElement,
-				Enum.CssCustomProperties.Shape,
-				`var(--border-radius-${this.configs.Shape})`
-			);
+			const currentShape = this.configs.Shape;
+			const tokenName = Helper.LegacyTokenMap.ShapeTokenMap[currentShape];
+			const shapeValue =
+				tokenName !== undefined
+					? `var(--border-radius-${currentShape}, var(${tokenName}))`
+					: `var(--border-radius-${currentShape})`;
+
+			Helper.Dom.Styles.SetStyleAttribute(this.selfElement, Enum.CssCustomProperties.Shape, shapeValue);
 		}
 
 		// Method to toggle the Pattern

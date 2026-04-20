@@ -374,6 +374,82 @@ See `implementation.md` Phase 10 for file-by-file change surface and find/replac
 
 ---
 
+### Phase 12 — Append `--token-*` fallback to legacy CSS var references in TypeScript
+
+**What:** Scan every `.ts` file in `src/scripts/` for runtime references to legacy CSS custom properties (`--border-radius-*`, `--space-*`, `--color-*`) still embedded in pattern/feature logic. Where one is found, **augment — not replace —** the emitted value with a fallback chain to the equivalent `--token-*` custom property so apps on the new token system render correctly without needing to define the old vars. The old var stays first in the chain, so any consumer still setting it continues to work untouched.
+
+**Why:** After Phase 2 the SCSS layer stopped emitting the legacy `:root { --space-*; --color-*; --border-radius-*; … }` block. But six TypeScript call sites still emit `var(--legacy-*)` strings or call `getComputedStyle().getPropertyValue('--legacy-*')` at runtime. On a token-only `:root` those references resolve to the empty string — inline-style writes silently break (the target CSS custom property is set to the empty value, and the visual falls through to whatever the SCSS fallback was, typically `0`). This phase closes that gap additively.
+
+**Principle — don't remove the old one.** Every change is additive. The legacy var stays first in the `var()` chain; the `--token-*` var is added as a fallback. Apps that still set `--border-radius-rounded: 12px` at `:root` render with 12px. Apps that only set `--token-*` vars render with the token-system equivalent. No code path is lost.
+
+**Surface — 6 call sites across 5 files, 3 variable families:**
+
+| # | File:line | Legacy var family | Driver |
+|---|-----------|-------------------|--------|
+| 1 | `Feature/Balloon/Balloon.ts:436` | `--border-radius-{shape}` | `GlobalEnum.ShapeTypes` |
+| 2 | `Pattern/BottomSheet/BottomSheet.ts:101` | `--border-radius-{shape}` | `GlobalEnum.ShapeTypes` |
+| 3 | `Pattern/OverflowMenu/OverflowMenu.ts:90` | `--border-radius-{shape}` | `GlobalEnum.ShapeTypes` |
+| 4 | `Helper/Dom.ts:186` `GetBorderRadiusValueFromShapeType` | `--border-radius-{shape}` | ProgressBar/Circle |
+| 5 | `Helper/Dom.ts:197` `GetColorValueFromColorType` | `--color-{name}` | ProgressBar ×3, ProgressCircle ×4 |
+| 6 | `Pattern/Gallery/Gallery.ts:21` | `--space-{size}` | `GalleryConfig.ItemsGap` |
+
+Providers, public `OutSystems/OSUI/*`, Event/Behaviors, Utils — audit is clean.
+
+**Approach per case:**
+
+- **Case A — value written via `SetStyleAttribute` as a CSS `var()` string.** Wrap the legacy var in a fallback chain.
+  ```typescript
+  // Before (BottomSheet.ts:101)
+  'var(--border-radius-' + shape + ')'
+  // After
+  `var(--border-radius-${shape}, var(${SHAPE_TOKEN_MAP[shape]}))`
+  ```
+- **Case B — value read via `getComputedStyle().getPropertyValue()`.** Read legacy first; if empty, read the token equivalent.
+  ```typescript
+  // Before (Helper/Dom.ts:186)
+  return getComputedStyle(document.documentElement).getPropertyValue('--border-radius-' + shapeName);
+  // After
+  const style = getComputedStyle(document.documentElement);
+  const legacy = style.getPropertyValue('--border-radius-' + shapeName);
+  return legacy !== '' ? legacy : style.getPropertyValue(SHAPE_TOKEN_MAP[shapeName] ?? '');
+  ```
+  If neither resolves (unknown key), return the empty string — same as pre-Phase-12 behaviour.
+
+**Mapping data — three small lookups** (ported from `specs/token-mapping.md` into a new `Helper/LegacyTokenMap.ts`):
+
+- **Shape** (`GlobalEnum.ShapeTypes` → `--token-*`):
+  - `none` → `--token-border-radius-0`
+  - `soft` → `--token-border-radius-100`
+  - `rounded` → `--token-border-radius-full` *(D7 100px → 999px, already accepted)*
+- **Space** (Gallery `ItemsGap` → `--token-*`):
+  - `none`→`--token-scale-0`, `xs`→`--token-scale-100`, `s`→`--token-scale-200`, `base`→`--token-scale-400`, `m`→`--token-scale-600`, `l`→`--token-scale-800`, `xl`→`--token-scale-1000`, `xxl`→`--token-scale-1200`
+- **Color** (OSUI palette → `--token-*`): `Record<string, string>` keyed by the legacy suffix — `primary`→`--token-semantics-primary-base`, `error`→`--token-semantics-danger-base`, neutrals 0–10, success/warning/info bases, etc. Entries with no semantic equivalent (`focus-outer`, gradients, `primary-selected`, secondary brand) are **omitted** from the map so the fallback resolves to empty and behaviour matches today.
+
+**Files touched:**
+- `src/scripts/OSFramework/OSUI/Helper/LegacyTokenMap.ts` *(new)* — three maps
+- `src/scripts/OSFramework/OSUI/Helper/Dom.ts` — `GetBorderRadiusValueFromShapeType` + `GetColorValueFromColorType` (Case B)
+- `src/scripts/OSFramework/OSUI/Feature/Balloon/Balloon.ts:436` — Case A
+- `src/scripts/OSFramework/OSUI/Pattern/BottomSheet/BottomSheet.ts:101` — Case A
+- `src/scripts/OSFramework/OSUI/Pattern/OverflowMenu/OverflowMenu.ts:90` — Case A
+- `src/scripts/OSFramework/OSUI/Pattern/Gallery/Gallery.ts:21` — Case A
+
+No SCSS touched. No public API signature changed — `GetBorderRadiusValueFromShapeType` and `GetColorValueFromColorType` keep their existing `(name: string): string` contract.
+
+**Scope — what does NOT change:**
+- Legacy var references remain first in every emitted chain.
+- No new `--osui-*` CSS API layer is introduced in TS — patterns own their CSS API in SCSS; this phase only hardens the values injected via inline style.
+- Providers/vendor TS (`Providers/OSUI/*`) out of scope — audit found zero legacy var refs.
+- ESLint rules and namespace conventions unchanged.
+
+**Success criteria:**
+- `npm run lint` passes with zero new warnings.
+- `npm run build` succeeds for O11 and ODC.
+- With a token-only `:root` (post-Phase-10 reality), Gallery gap, BottomSheet/Balloon/OverflowMenu shape, and ProgressBar progress/trail colour all render at their expected values in the dev server.
+- With a legacy `:root` that still declares `--space-*`/`--color-*`/`--border-radius-*`, values still resolve to the legacy definitions (unchanged behaviour).
+- `git grep -nE 'var\(--(border-radius\|space\|color)-' src/scripts/` shows every remaining occurrence is inside a fallback chain (no bare legacy refs emitted at runtime).
+
+---
+
 ## Decisions
 
 | # | Decision | Resolution |

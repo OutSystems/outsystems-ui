@@ -1744,3 +1744,225 @@ The only two files that should appear in the Phase 11 diff are `src/scss/01-foun
 - [ ] No `$token-*` value has changed in `src/scss/tokens/_variables.scss`
 - [ ] No pre-existing `--osui-*` default has changed in any component file
 - [ ] `npm run lint` passes
+
+---
+
+## Phase 12 — Append `--token-*` fallback to legacy CSS var references in TypeScript
+
+### 12.1 Background
+
+Phases 1–10 migrated the SCSS layer off the hand-rolled OSUI `:root` token block (`--space-*`, `--color-*`, `--border-radius-*`, `--font-size-*`, `--shadow-*`, …) and onto the `--token-*` namespace emitted by `outsystems-design-tokens`. Phase 10 additionally removed the `@import '../tokens/root'` line so the compiled CSS carries full `var(--token-*, fallback)` chains without needing a `:root { --token-* }` block.
+
+**The gap.** Six TypeScript call sites in `src/scripts/` still reference the legacy var names at runtime — either by emitting a `var(--legacy-*)` string to an inline style, or by calling `getComputedStyle().getPropertyValue('--legacy-*')` on `document.documentElement`. On a token-only build those references resolve to the empty string. Inline-style writes set the target CSS custom property to the empty value; the compiled SCSS then has no value to consume.
+
+**Principle.** The fix is strictly additive — the legacy var stays first in every emitted `var()` chain, so any consumer still defining `--border-radius-rounded: 12px` at `:root` renders with 12px. The `--token-*` var is added as a fallback so consumers on the new token system also render correctly.
+
+### 12.2 Audit — complete surface
+
+`rg -n -e '--(space|color|font-size|border-radius|shadow|font-weight|font-family|line-height|letter-spacing|border-size)-' --glob 'src/scripts/**/*.ts'` returns 6 hits across 5 files, in 3 variable families:
+
+| # | File:line | Emitted/read string | Family | Driver |
+|---|-----------|---------------------|--------|--------|
+| 1 | `src/scripts/OSFramework/OSUI/Feature/Balloon/Balloon.ts:436` | `'var(--border-radius-' + this.featureOptions.shape + ')'` | `--border-radius-{shape}` | `GlobalEnum.ShapeTypes` |
+| 2 | `src/scripts/OSFramework/OSUI/Pattern/BottomSheet/BottomSheet.ts:101` | `'var(--border-radius-' + shape + ')'` | `--border-radius-{shape}` | `GlobalEnum.ShapeTypes` |
+| 3 | `src/scripts/OSFramework/OSUI/Pattern/OverflowMenu/OverflowMenu.ts:90` | `` `var(--border-radius-${this.configs.Shape})` `` | `--border-radius-{shape}` | `GlobalEnum.ShapeTypes` |
+| 4 | `src/scripts/OSFramework/OSUI/Helper/Dom.ts:186` (`GetBorderRadiusValueFromShapeType`) | `getPropertyValue('--border-radius-' + shapeName)` | `--border-radius-{shape}` | `ProgressBar.ts:28,52` |
+| 5 | `src/scripts/OSFramework/OSUI/Helper/Dom.ts:197` (`GetColorValueFromColorType`) | `getPropertyValue('--color-' + colorName)` | `--color-{name}` | `ProgressBar.ts:22,34,43,70`, `ProgressCircle.ts:174,188,333,379` |
+| 6 | `src/scripts/OSFramework/OSUI/Pattern/Gallery/Gallery.ts:21` | `` `var(--space-${this.configs.ItemsGap})` `` | `--space-{size}` | `GalleryConfig.ItemsGap` |
+
+Providers, public `src/scripts/OutSystems/OSUI/*`, Event/Behaviors, and Utils directories are clean.
+
+### 12.3 Mapping data
+
+Three `Record<string, string>` lookups, ported from `specs/token-mapping.md`. Keys are the **legacy suffix** that follows the family prefix (e.g. the `rounded` in `--border-radius-rounded`). Values are the full `--token-*` custom property name.
+
+**ShapeTokenMap** — keys are `GlobalEnum.ShapeTypes` values:
+```typescript
+{
+  none:    '--token-border-radius-0',     // 0
+  soft:    '--token-border-radius-100',   // 4px
+  rounded: '--token-border-radius-full',  // 999px (D7 — 100px → 999px accepted)
+}
+```
+
+**SpaceTokenMap** — keys are the space-scale strings passed to `GalleryConfig.ItemsGap`:
+```typescript
+{
+  none: '--token-scale-0',      // 0
+  xs:   '--token-scale-100',    // 4px
+  s:    '--token-scale-200',    // 8px
+  base: '--token-scale-400',    // 16px
+  m:    '--token-scale-600',    // 24px
+  l:    '--token-scale-800',    // 32px
+  xl:   '--token-scale-1000',   // 40px
+  xxl:  '--token-scale-1200',   // 48px
+}
+```
+
+**ColorTokenMap** — keys are the legacy color suffix from `--color-{name}`. Entries with no semantic equivalent in the token system (tracked in `specs/token-mapping.md` with 🔴 status) are **omitted** so the fallback resolves to empty and behaviour matches today:
+```typescript
+{
+  // Brand — semantic base
+  primary:          '--token-semantics-primary-base',
+  'primary-hover':  '--token-semantics-primary-800',
+  // `primary-selected`, `primary-lightest`, `secondary` — OMITTED (no token equivalent)
+
+  // Neutrals — map by hex, not index (OSUI 0–10 ↔ tokens 100–1200)
+  'neutral-0':  '--token-primitives-neutral-100',
+  'neutral-1':  '--token-primitives-neutral-200',
+  'neutral-2':  '--token-primitives-neutral-300',
+  'neutral-3':  '--token-primitives-neutral-400',
+  'neutral-4':  '--token-primitives-neutral-500',
+  'neutral-5':  '--token-primitives-neutral-600',
+  'neutral-6':  '--token-primitives-neutral-700',
+  'neutral-7':  '--token-primitives-neutral-800',
+  'neutral-8':  '--token-primitives-neutral-900',
+  'neutral-9':  '--token-primitives-neutral-1100',
+  'neutral-10': '--token-primitives-neutral-1200',
+
+  // Status — D4 rename: error → danger
+  error:           '--token-semantics-danger-base',
+  'error-light':   '--token-semantics-danger-100',
+  warning:         '--token-semantics-warning-base',
+  'warning-light': '--token-semantics-warning-100',
+  success:         '--token-semantics-success-base',
+  'success-light': '--token-semantics-success-100',
+  info:            '--token-semantics-info-base',
+  'info-light':    '--token-semantics-info-100',
+
+  // focus-outer, focus-inner — OMITTED (no semantic equivalent; focus ring stays as-is)
+}
+```
+
+The final color map is authored by grepping `src/scripts/**/*.ts` for every literal string passed to `GetColorValueFromColorType` (user-facing values come from the progress-color picker enum) and keeping only entries present in `specs/token-mapping.md` with ✅ or ❓ status.
+
+### 12.4 File-by-file contract
+
+#### 12.4.1 `src/scripts/OSFramework/OSUI/Helper/LegacyTokenMap.ts` *(new)*
+
+- Declared under namespace `OSFramework.OSUI.Helper`.
+- Exports three `readonly` `Record<string, string>` constants: `ShapeTokenMap`, `SpaceTokenMap`, `ColorTokenMap`.
+- File header JSDoc notes: "Phase 12 — legacy-to-token lookup tables. Additive fallback only; do not remove legacy var references."
+- No default export (AMD-compatible); consumers import via the namespace.
+
+#### 12.4.2 `src/scripts/OSFramework/OSUI/Helper/Dom.ts`
+
+Two methods updated; both keep their existing public signature `(name: string): string`.
+
+- **`GetBorderRadiusValueFromShapeType(shapeName: string): string`** (line ~185)
+  ```typescript
+  public static GetBorderRadiusValueFromShapeType(shapeName: string): string {
+    const style = getComputedStyle(document.documentElement);
+    const legacy = style.getPropertyValue('--border-radius-' + shapeName);
+    if (legacy !== '') return legacy;
+    const tokenName = Helper.LegacyTokenMap.ShapeTokenMap[shapeName];
+    return tokenName !== undefined ? style.getPropertyValue(tokenName) : '';
+  }
+  ```
+
+- **`GetColorValueFromColorType(colorName: string): string`** (line ~195)
+  - Same Case B pattern: read `--color-{colorName}` first; if empty, look up `ColorTokenMap[colorName]` and read that.
+  - The existing downstream check for HEX/RGB on user-provided raw values (the tail end of the method) is preserved unchanged — it still runs on whatever string is returned.
+
+#### 12.4.3 `src/scripts/OSFramework/OSUI/Feature/Balloon/Balloon.ts:436`
+
+```typescript
+// Before
+Helper.Dom.Styles.SetStyleAttribute(
+  this.featureElem,
+  Enum.CssCustomProperties.Shape,
+  'var(--border-radius-' + this.featureOptions.shape + ')'
+);
+
+// After
+const shape = this.featureOptions.shape;
+const tokenName = Helper.LegacyTokenMap.ShapeTokenMap[shape];
+Helper.Dom.Styles.SetStyleAttribute(
+  this.featureElem,
+  Enum.CssCustomProperties.Shape,
+  tokenName !== undefined
+    ? `var(--border-radius-${shape}, var(${tokenName}))`
+    : `var(--border-radius-${shape})`
+);
+```
+
+The `tokenName !== undefined` guard preserves today's behaviour for any shape value that isn't in the map (defensive — the `ShapeTypes` enum currently has exactly 3 values so this branch is theoretical).
+
+#### 12.4.4 `src/scripts/OSFramework/OSUI/Pattern/BottomSheet/BottomSheet.ts:101`
+
+Same Case A transform as Balloon, inside `_handleShape(shape)`. The `shape` parameter is already in scope.
+
+#### 12.4.5 `src/scripts/OSFramework/OSUI/Pattern/OverflowMenu/OverflowMenu.ts:90`
+
+Same Case A transform, inside `_setOverflowMenuShape`. Uses `this.configs.Shape` as the key.
+
+#### 12.4.6 `src/scripts/OSFramework/OSUI/Pattern/Gallery/Gallery.ts:21`
+
+```typescript
+// Before
+private _setItemsGap(): void {
+  Helper.Dom.Styles.SetStyleAttribute(
+    this.selfElement,
+    Enum.CssVariables.PatternItemsGap,
+    `var(--space-${this.configs.ItemsGap})`
+  );
+}
+
+// After
+private _setItemsGap(): void {
+  const gap = this.configs.ItemsGap;
+  const tokenName = Helper.LegacyTokenMap.SpaceTokenMap[gap];
+  Helper.Dom.Styles.SetStyleAttribute(
+    this.selfElement,
+    Enum.CssVariables.PatternItemsGap,
+    tokenName !== undefined
+      ? `var(--space-${gap}, var(${tokenName}))`
+      : `var(--space-${gap})`
+  );
+}
+```
+
+`GalleryConfig.ItemsGap` is typed `string` (end-user-supplied), so the `undefined` branch is load-bearing: if a consumer passes `'4rem'` or a custom key, the legacy-only `var(--space-4rem)` still resolves to empty in the new token world — same as today — and no crash.
+
+### 12.5 Scope — what does NOT change
+
+- Every legacy var reference remains emitted; the only edit wraps it in a `var(…, var(--token-…))` chain or a Case B fallback read. `git grep -E '(--(border-radius|space|color)-[a-z0-9-]+)' src/scripts/` count is non-decreasing.
+- No SCSS file is touched.
+- Public API signatures of `GetBorderRadiusValueFromShapeType` and `GetColorValueFromColorType` are unchanged.
+- Providers (`src/scripts/Providers/OSUI/*`), public APIs (`src/scripts/OutSystems/OSUI/*`), Event/, Behaviors/, Helper/ (beyond `Dom.ts` + new `LegacyTokenMap.ts`), Interface/, and `osui.ts` — untouched.
+- No ESLint/Prettier rule tweaks. File-order and namespace-member conventions preserved.
+
+### 12.6 Verification
+
+1. **Build passes:**
+   - `npm run build` → O11 and ODC bundles emit without error.
+   - `npm run lint` → zero new warnings.
+2. **Audit is clean:**
+   - `rg -n -e '--(space|color|font-size|border-radius|shadow|font-weight|font-family|line-height|letter-spacing|border-size)-' --glob 'src/scripts/**/*.ts' --glob '!**/LegacyTokenMap.ts'` → every remaining match is inside a `var(…, var(--token-…))` fallback chain or the `getComputedStyle` Case B block. No bare legacy references emitted.
+   - `rg -n '--token-' --glob 'src/scripts/**/*.ts' --glob '!**/LegacyTokenMap.ts'` → zero matches. Token names live only in `LegacyTokenMap.ts`; call sites reference them by lookup, not by string literal.
+3. **Runtime check — token-only `:root` (post-Phase-10 reality):**
+   - Dev server shows Gallery items-gap renders the correct pixel value for each of `xs`/`s`/`base`/`m`/`l`/`xl`/`xxl`.
+   - BottomSheet, Balloon, OverflowMenu shape values render rounded / soft / sharp at expected radii.
+   - ProgressBar / ProgressCircle render their `ProgressColor` + `TrailColor` using the brand/semantic palette when the config is a named color (e.g. `'primary'`, `'success'`).
+4. **Runtime check — legacy `:root` still defining `--space-*`/`--color-*`/`--border-radius-*` via app-level overrides:**
+   - All of the above render using the legacy values (not the token fallback) — fallback chain guarantees legacy wins when defined.
+5. **File diff check:** `git diff --stat src/scripts/` lists exactly 6 files:
+   - `OSFramework/OSUI/Helper/LegacyTokenMap.ts` *(new)*
+   - `OSFramework/OSUI/Helper/Dom.ts`
+   - `OSFramework/OSUI/Feature/Balloon/Balloon.ts`
+   - `OSFramework/OSUI/Pattern/BottomSheet/BottomSheet.ts`
+   - `OSFramework/OSUI/Pattern/OverflowMenu/OverflowMenu.ts`
+   - `OSFramework/OSUI/Pattern/Gallery/Gallery.ts`
+6. **No SCSS diff:** `git diff --stat src/scss/` → empty.
+
+### Phase 12 — Full acceptance criteria
+
+- [ ] `src/scripts/OSFramework/OSUI/Helper/LegacyTokenMap.ts` exists and exports `ShapeTokenMap`, `SpaceTokenMap`, `ColorTokenMap`
+- [ ] `GetBorderRadiusValueFromShapeType` and `GetColorValueFromColorType` in `Dom.ts` use the Case B fallback pattern and keep their existing `(name: string): string` signatures
+- [ ] Balloon, BottomSheet, OverflowMenu, Gallery all emit `var(--legacy-*, var(--token-*))` fallback chains via `SetStyleAttribute`
+- [ ] Zero legacy var reference has been deleted — every pre-Phase-12 legacy var still appears in the diff, just with an appended fallback
+- [ ] `npm run build` succeeds for O11 and ODC
+- [ ] `npm run lint` passes
+- [ ] In a dev build with a token-only `:root`, Gallery gap / BottomSheet / Balloon / OverflowMenu shape / ProgressBar colours render at their expected values
+- [ ] In a dev build that still defines legacy `--space-*`/`--color-*`/`--border-radius-*` on `:root`, values match the legacy definitions (legacy wins first in the chain)
+- [ ] `git diff --stat` after Phase 12 lists exactly six files under `src/scripts/` and zero under `src/scss/`

@@ -15,11 +15,12 @@ namespace OSFramework.OSUI.Patterns.Gallery {
 
 		// Function used to set the Gallery's items gap
 		private _setItemsGap(): void {
-			Helper.Dom.Styles.SetStyleAttribute(
-				this.selfElement,
-				Enum.CssVariables.PatternItemsGap,
-				`var(--space-${this.configs.ItemsGap})`
-			);
+			const gap = this.configs.ItemsGap;
+			const tokenName = Helper.LegacyTokenMap.SpaceTokenMap[gap];
+			const gapValue =
+				tokenName !== undefined ? `var(--space-${gap}, var(${tokenName}))` : `var(--space-${gap})`;
+
+			Helper.Dom.Styles.SetStyleAttribute(this.selfElement, Enum.CssVariables.PatternItemsGap, gapValue);
 		}
 
 		// Function used to set the Gallery's number of items per row in Desktop

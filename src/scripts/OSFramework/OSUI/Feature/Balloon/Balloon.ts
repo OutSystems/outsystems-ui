@@ -430,11 +430,14 @@ namespace OSFramework.OSUI.Feature.Balloon {
 				this.featureOptions.shape = shape;
 			}
 
-			Helper.Dom.Styles.SetStyleAttribute(
-				this.featureElem,
-				Enum.CssCustomProperties.Shape,
-				'var(--border-radius-' + this.featureOptions.shape + ')'
-			);
+			const currentShape = this.featureOptions.shape;
+			const tokenName = Helper.LegacyTokenMap.ShapeTokenMap[currentShape];
+			const shapeValue =
+				tokenName !== undefined
+					? `var(--border-radius-${currentShape}, var(${tokenName}))`
+					: `var(--border-radius-${currentShape})`;
+
+			Helper.Dom.Styles.SetStyleAttribute(this.featureElem, Enum.CssCustomProperties.Shape, shapeValue);
 		}
 
 		/**
