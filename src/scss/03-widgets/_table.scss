@@ -88,7 +88,7 @@
 	}
 
 	.table-row:last-child {
-		& td {
+		& > td {
 			border-bottom: none;
 
 			&:last-child {
@@ -97,7 +97,7 @@
 			}
 		}
 
-		td:first-child {
+		& > td:first-child {
 			border-radius: var(--border-radius-none) var(--border-radius-none) var(--border-radius-none)
 				var(--border-radius-soft);
 		}
