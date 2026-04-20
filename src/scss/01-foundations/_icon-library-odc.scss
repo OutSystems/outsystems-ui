@@ -126,11 +126,12 @@ body.iconLibrary-phosphor {
 		content: var(--osui-icon-search);
 		font-family: var(--osui-icon-font-family);
 		left: var(--space-base);
+		pointer-events: none;
 		position: absolute;
 		top: 50%;
 		transform: translateY(-50%);
 	}
-	
+
 	.form-control[data-input]{
 		padding-left: var(--space-l);
 	}
