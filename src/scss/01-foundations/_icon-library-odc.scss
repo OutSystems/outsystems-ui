@@ -130,6 +130,10 @@ body.iconLibrary-phosphor {
 		top: 50%;
 		transform: translateY(-50%);
 	}
+	
+	.form-control[data-input]{
+		padding-left: var(--space-l);
+	}
 }
 
 // Submenu – header arrow
@@ -156,8 +160,10 @@ body.iconLibrary-phosphor {
 .dropdown-container:after {
 	color: var(--color-neutral-7);
 	content: var(--osui-icon-arrow-down);
+	cursor: pointer;
 	font-family: var(--osui-icon-font-family);
 	font-size: var(--font-size-h5);
+	pointer-events: none;
 	position: absolute;
 	right: var(--space-base);
 	top: 50%;
