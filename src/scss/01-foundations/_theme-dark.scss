@@ -8,6 +8,12 @@
 /// (e.g. `<body class="theme-dark">` or `<div class="layout theme-dark">`).
 
 .theme-dark {
+	/* Re-evaluate text color at this scope — `html { color: $token-text-default }`
+	   resolves at the html element (outside .theme-dark), so the computed value
+	   is the light-theme color and inherits into every descendant, including
+	   headings. Declaring color here picks up the overrides below. */
+	color: $token-text-default;
+
 	/* ---------------------------------------------------------------------- */
 	/* Surface hierarchy — warm near-blacks, inspired by Vercel / Linear      */
 	/* ---------------------------------------------------------------------- */
