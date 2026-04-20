@@ -16,9 +16,10 @@ namespace OSFramework.OSUI.Patterns.Gallery {
 		// Function used to set the Gallery's items gap
 		private _setItemsGap(): void {
 			const gap = this.configs.ItemsGap;
-			const tokenName = Helper.LegacyTokenMap.SpaceTokenMap[gap];
-			const gapValue =
-				tokenName !== undefined ? `var(--space-${gap}, var(${tokenName}))` : `var(--space-${gap})`;
+			const gapValue = Helper.LegacyTokenMap.BuildFallbackChain(
+				'--space-' + gap,
+				Helper.LegacyTokenMap.SpaceTokenMap[gap]
+			);
 
 			Helper.Dom.Styles.SetStyleAttribute(this.selfElement, Enum.CssVariables.PatternItemsGap, gapValue);
 		}

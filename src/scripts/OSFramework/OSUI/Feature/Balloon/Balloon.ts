@@ -431,11 +431,10 @@ namespace OSFramework.OSUI.Feature.Balloon {
 			}
 
 			const currentShape = this.featureOptions.shape;
-			const tokenName = Helper.LegacyTokenMap.ShapeTokenMap[currentShape];
-			const shapeValue =
-				tokenName !== undefined
-					? `var(--border-radius-${currentShape}, var(${tokenName}))`
-					: `var(--border-radius-${currentShape})`;
+			const shapeValue = Helper.LegacyTokenMap.BuildFallbackChain(
+				'--border-radius-' + currentShape,
+				Helper.LegacyTokenMap.ShapeTokenMap[currentShape]
+			);
 
 			Helper.Dom.Styles.SetStyleAttribute(this.featureElem, Enum.CssCustomProperties.Shape, shapeValue);
 		}

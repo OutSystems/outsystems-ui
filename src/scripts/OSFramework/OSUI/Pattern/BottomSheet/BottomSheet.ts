@@ -95,11 +95,10 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 
 		// Method to handle the Shape config css variable
 		private _handleShape(shape: GlobalEnum.ShapeTypes): void {
-			const tokenName = Helper.LegacyTokenMap.ShapeTokenMap[shape];
-			const shapeValue =
-				tokenName !== undefined
-					? `var(--border-radius-${shape}, var(${tokenName}))`
-					: `var(--border-radius-${shape})`;
+			const shapeValue = Helper.LegacyTokenMap.BuildFallbackChain(
+				'--border-radius-' + shape,
+				Helper.LegacyTokenMap.ShapeTokenMap[shape]
+			);
 
 			Helper.Dom.Styles.SetStyleAttribute(this.selfElement, Enum.CssCustomProperties.Shape, shapeValue);
 		}

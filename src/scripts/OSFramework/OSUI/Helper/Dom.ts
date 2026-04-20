@@ -184,12 +184,11 @@ namespace OSFramework.OSUI.Helper {
 		 */
 		public static GetBorderRadiusValueFromShapeType(shapeName: string): string {
 			const style = getComputedStyle(document.documentElement);
-			const legacy = style.getPropertyValue('--border-radius-' + shapeName);
-			if (legacy !== '') {
-				return legacy;
-			}
-			const tokenName = LegacyTokenMap.ShapeTokenMap[shapeName];
-			return tokenName !== undefined ? style.getPropertyValue(tokenName) : '';
+			return LegacyTokenMap.ResolveComputedValue(
+				style,
+				'--border-radius-' + shapeName,
+				LegacyTokenMap.ShapeTokenMap[shapeName]
+			);
 		}
 
 		/**
@@ -200,23 +199,13 @@ namespace OSFramework.OSUI.Helper {
 		 */
 		public static GetColorValueFromColorType(colorName: string): string {
 			const style = getComputedStyle(document.documentElement);
-			// Store the color value based on the CSS variable color
-			const colorValue = style.getPropertyValue('--color-' + colorName);
-
-			// Check if the value isn't empty because of HEX or RGB values
-			if (colorValue !== '') {
-				return colorValue;
-			}
-
-			const tokenName = LegacyTokenMap.ColorTokenMap[colorName];
-			if (tokenName !== undefined) {
-				const tokenValue = style.getPropertyValue(tokenName);
-				if (tokenValue !== '') {
-					return tokenValue;
-				}
-			}
-
-			return colorName;
+			const resolved = LegacyTokenMap.ResolveComputedValue(
+				style,
+				'--color-' + colorName,
+				LegacyTokenMap.ColorTokenMap[colorName]
+			);
+			// Pass-through HEX/RGB values provided directly by the user
+			return resolved !== '' ? resolved : colorName;
 		}
 
 		/**

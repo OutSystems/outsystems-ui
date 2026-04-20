@@ -85,11 +85,10 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 			}
 
 			const currentShape = this.configs.Shape;
-			const tokenName = Helper.LegacyTokenMap.ShapeTokenMap[currentShape];
-			const shapeValue =
-				tokenName !== undefined
-					? `var(--border-radius-${currentShape}, var(${tokenName}))`
-					: `var(--border-radius-${currentShape})`;
+			const shapeValue = Helper.LegacyTokenMap.BuildFallbackChain(
+				'--border-radius-' + currentShape,
+				Helper.LegacyTokenMap.ShapeTokenMap[currentShape]
+			);
 
 			Helper.Dom.Styles.SetStyleAttribute(this.selfElement, Enum.CssCustomProperties.Shape, shapeValue);
 		}
