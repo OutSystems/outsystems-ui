@@ -450,6 +450,101 @@ No SCSS touched. No public API signature changed — `GetBorderRadiusValueFromSh
 
 ---
 
+### Phase 13 — Responsive typography via UX role maps
+
+**What:** Replace the hand-rolled OSUI heading/body scale with the UX-authored **semantic role maps** already shipped by `outsystems-design-tokens` (`$token-heading-h{1-6}-{regular|medium|semi-bold|bold}`, `$token-body-{lg|md|sm}-*`, `$token-body-action-{xs|sm|md|lg}`, `$token-overline-*`, `$token-display-{sm|lg}-*`). Introduce a three-tier responsive system — **desktop** (baseline) → **tablet** (intermediate) → **phone** (most compressed) — using the existing `.desktop` / `.tablet` / `.phone` OSUI body-class convention. Each tier applies a role map that encodes font-size, font-weight, line-height, letter-spacing, font-style, text-transform, and text-decoration in one shot.
+
+**Why:** Three drivers:
+1. **UX alignment.** The role maps are the single source of truth the UX team owns. Wiring the library to them means future typography changes ship via `npx build.tokens` without touching OSUI SCSS.
+2. **"Web-first" sizing.** The current OSUI heading scale (H1=32px baseline, `.phone` shrinks by 4px via `calc(var(--size) - 4px)`) was designed when mobile was the target. The new desktop baseline (H1=28px) matches how modern web apps render and eliminates the "too big" perception flagged against the current system.
+3. **One responsive primitive, not seven.** Today each typography rule touches `font-size` in isolation; `font-weight`, `line-height`, and `letter-spacing` are scattered across components and device tiers. The role-map + mixin approach collapses all seven properties into one mixin call per tier.
+
+**Design — responsive matrix:**
+
+| Semantic role | Desktop | Tablet | Phone |
+|---|---|---|---|
+| **Display Large** | `$token-display-lg-regular` (36/48) | `$token-display-sm-regular` (32/44) | `$token-display-sm-regular` (32/44) |
+| **Display Small** | `$token-display-sm-regular` (32/44) | `$token-heading-h1-regular` (28/36) | `$token-heading-h1-regular` (28/36) |
+| **H1** | `$token-heading-h1-semi-bold` (28/36) | `$token-heading-h2-semi-bold` (26/36) | `$token-heading-h2-semi-bold` (26/36) |
+| **H2** | `$token-heading-h2-semi-bold` (26/36) | `$token-heading-h2-semi-bold` (26/36) | `$token-heading-h3-semi-bold` (24/32) |
+| **H3** | `$token-heading-h3-semi-bold` (24/32) | `$token-heading-h3-semi-bold` (24/32) | `$token-heading-h4-semi-bold` (22/28) |
+| **H4** | `$token-heading-h4-semi-bold` (22/28) | `$token-heading-h4-semi-bold` (22/28) | `$token-heading-h5-semi-bold` (20/28) |
+| **H5** | `$token-heading-h5-semi-bold` (20/28) | `$token-heading-h5-semi-bold` (20/28) | `$token-heading-h6-semi-bold` (18/28) |
+| **H6** | `$token-heading-h6-semi-bold` (18/28) | same as desktop | same (floor) |
+| **Body Large / Default / Small** | unchanged across tiers | unchanged | unchanged |
+| **Action XL** | `$token-body-action-lg` (20/24 medium) | same as desktop | `$token-body-action-md` (16/24 medium) |
+| **Action Large / Medium / Small** | unchanged | unchanged | unchanged |
+| **Overline** | `$token-overline-semi-bold` (12/20) | unchanged | unchanged |
+
+**Design principle — cut line at H1.** Only the hero end of the scale (Display L/S + H1 + Action XL) shrinks going desktop → tablet; the full scale shrinks going tablet → phone. This gives tablet a real intermediate identity without compressing content headings, and preserves the phone-specific shrink for narrow viewports.
+
+**Architecture — role-map + mixin:**
+
+Two SCSS mixins become the single entry point for typography:
+
+```scss
+// Expands a role map to its 7 declarations in-place.
+@mixin apply-typography($role) {
+  font-size: map-get($role, font-size);
+  font-style: map-get($role, font-style);
+  font-weight: map-get($role, font-weight);
+  letter-spacing: map-get($role, letter-spacing);
+  line-height: map-get($role, line-height);
+  text-transform: map-get($role, text-transform);
+  text-decoration: map-get($role, text-decoration);
+}
+
+// Emits the desktop rule plus optional .tablet & / .phone & overrides.
+@mixin apply-typography-responsive($desktop, $tablet: null, $phone: null) {
+  @include apply-typography($desktop);
+  @if $tablet != null and $tablet != $desktop {
+    .tablet & { @include apply-typography($tablet); }
+  }
+  @if $phone != null and $phone != if($tablet == null, $desktop, $tablet) {
+    .phone & { @include apply-typography($phone); }
+  }
+}
+```
+
+Usage example in `_html-elements-headings.scss`:
+```scss
+h1, .heading1, .font-size-h1 {
+  @include apply-typography-responsive(
+    $desktop: $token-heading-h1-semi-bold,
+    $tablet:  $token-heading-h2-semi-bold,
+    $phone:   $token-heading-h2-semi-bold
+  );
+}
+```
+
+**Native font stack.** The UX doc recommends Inter; we **ignore** that suggestion and keep the current native-first stack (`-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, …`) in `_resets.scss`. Font-family is out of scope for Phase 13 — it is a platform-theming decision, not a typography-system decision.
+
+**Files touched:**
+
+| File | Change |
+|---|---|
+| `src/scss/00-abstract/_mixins.scss` | Add `apply-typography` and `apply-typography-responsive` mixins |
+| `src/scss/01-foundations/_html-elements-headings.scss` | Rewrite end-to-end around role maps + mixin; drop `$osui-heading-font-size-token-vars` + `calc(… - Npx)` shrink logic |
+| `src/scss/01-foundations/_resets.scss` | Body rule gets `@include apply-typography($token-body-md-regular)` (size + line-height + weight in one shot). Font-family stack unchanged. |
+| `src/scss/05-useful/_typography.scss` | `.font-size-h1-6` utility classes become responsive via the same mixin; `.font-size-display` becomes responsive; primitive `.font-size-{base,s,xs,label}` and `.font-{light,regular,semi-bold,bold}` utilities stay single-property (design-intent: a consumer reaching for `.font-size-xs` wants exactly 12px, not a responsive size) |
+
+**Scope — what does NOT change:**
+- `src/scss/tokens/_variables.scss` — generated; role maps consumed as-is.
+- Font-family stack in `_resets.scss` — stays native-first; Inter not adopted.
+- Pattern-scoped typography overrides inside `04-patterns/*/scss/` — not yet audited in this phase. Phase 13 establishes the mixin + tier system on the foundation layer (headings, body, utilities). A follow-up could sweep pattern files to adopt the mixin, but each needs to be evaluated for which role is appropriate; out of scope here to avoid premature flattening.
+- `$osui-typography-sizes`, `$osui-typography-heading-sizes`, `$osui-typography-weight` SCSS maps in `00-abstract/_setup-global-vars.scss` — still referenced by `05-useful/_typography.scss` loops, kept as-is.
+- Deprecated `map-get` usage — Dart Sass still accepts it with deprecation warnings. Modernising to `@use 'sass:map'; map.get(...)` is a codebase-wide concern, not typography-specific; deferred.
+
+**Success criteria:**
+- Every `h1`–`h6` element renders with the matrix-specified role on desktop, tablet (`.tablet` body class), and phone (`.phone` body class).
+- `.font-size-h1-6` and `.font-size-display` utility classes follow the same responsive tiers.
+- Body copy picks up `$token-body-md-regular` (14/22 regular) on every tier.
+- `.font-size-base|s|xs|label` and `.font-{light|regular|semi-bold|bold}` utilities remain single-property, fixed-size — unchanged from today.
+- Compile succeeds on both platforms; no new deprecation warnings beyond the three pre-existing `map-get` ones (which the new mixin also uses — same count, same origin).
+- No visible regression on default/desktop rendering beyond the intentional H1–H5 size shifts documented in the matrix.
+
+---
+
 ## Decisions
 
 | # | Decision | Resolution |
@@ -465,6 +560,10 @@ No SCSS touched. No public API signature changed — `GetBorderRadiusValueFromSh
 | D9 | App settings vars (`--color-background-body`, `--header-color`, etc.) | Kept as overrideable vars in `:root`, but sourced from tokens as defaults (e.g. `var(--token-bg-body)`). |
 | D10 | Remove helper functions? | Hard-remove `get-background-color`, `get-text-color`, `get-border-color` in Phase 2. |
 | D11 | Component CSS API — scoped var nomenclature | ✅ Option B: `--osui-{component}-{property}` (e.g. `--osui-sidebar-background`) |
+| D12 | Phase 13 — baseline typography target | ✅ Desktop baseline using UX role maps (H1=28, H2=26, H3=24, H4=22, H5=20, H6=18). Web-first, not mobile-first. |
+| D13 | Phase 13 — responsive breakpoint mechanism | ✅ OSUI `.desktop` / `.tablet` / `.phone` body-class convention. No `@media` query. |
+| D14 | Phase 13 — tablet intermediate tier | ✅ Cut line at H1: Display L/S + H1 + Action XL shrink one role-step going desktop → tablet; everything else keeps its desktop value. Phone then shrinks the full scale. |
+| D15 | Phase 13 — Inter font-family | ❌ Rejected. Native font stack is kept in `_resets.scss`; font-family is out of Phase 13 scope. |
 
 ---
 

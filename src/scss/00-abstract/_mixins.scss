@@ -58,3 +58,43 @@
 	position: absolute;
 	top: $top;
 }
+
+/* ============================================================================ */
+/* Typography                                                                   */
+/* ============================================================================ */
+
+/// Applies all 7 properties of a typography role map in place.
+/// Consumer may still override individual properties after the @include.
+/// @param {Map} $role - A $token-*-* role map (e.g. $token-heading-h1-semi-bold)
+@mixin apply-typography($role) {
+	font-size: map-get($role, font-size);
+	font-style: map-get($role, font-style);
+	font-weight: map-get($role, font-weight);
+	letter-spacing: map-get($role, letter-spacing);
+	line-height: map-get($role, line-height);
+	text-transform: map-get($role, text-transform);
+	text-decoration: map-get($role, text-decoration);
+}
+
+/// Emits the desktop rule at the current selector, plus optional
+/// `.tablet &` / `.phone &` overrides — but only when the tier role
+/// actually differs from the one it would otherwise inherit.
+/// @param {Map} $desktop - Required. Baseline role applied at the selector root.
+/// @param {Map} $tablet  - Optional. If null or == $desktop, no `.tablet &` block emitted.
+/// @param {Map} $phone   - Optional. If null or == (tablet or desktop), no `.phone &` block emitted.
+@mixin apply-typography-responsive($desktop, $tablet: null, $phone: null) {
+	@include apply-typography($desktop);
+
+	@if $tablet != null and $tablet != $desktop {
+		.tablet & {
+			@include apply-typography($tablet);
+		}
+	}
+
+	$phone-parent: if($tablet == null, $desktop, $tablet);
+	@if $phone != null and $phone != $phone-parent {
+		.phone & {
+			@include apply-typography($phone);
+		}
+	}
+}

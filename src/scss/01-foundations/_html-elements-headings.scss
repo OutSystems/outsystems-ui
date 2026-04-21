@@ -3,17 +3,18 @@
 /// @group HTML_Elements-Headings
 /// HTML Elements - Headings (h1 to h6 and font-size-display)
 
-// Maps heading level to token font-size SCSS variables (each expands to var(--token-*, fallback))
-$osui-heading-font-size-token-vars: (
-	1: $token-font-size-800,
-	2: $token-font-size-700,
-	3: $token-font-size-650,
-	4: $token-font-size-550,
-	5: $token-font-size-500,
-	6: $token-font-size-450
+// Maps heading level → (desktop, tablet, phone) role triples.
+// Tier values that equal the previous tier mean "inherit" and emit nothing.
+$osui-heading-tiers: (
+	1: ($token-heading-h1-semi-bold, $token-heading-h2-semi-bold, $token-heading-h2-semi-bold),
+	2: ($token-heading-h2-semi-bold, $token-heading-h2-semi-bold, $token-heading-h3-semi-bold),
+	3: ($token-heading-h3-semi-bold, $token-heading-h3-semi-bold, $token-heading-h4-semi-bold),
+	4: ($token-heading-h4-semi-bold, $token-heading-h4-semi-bold, $token-heading-h5-semi-bold),
+	5: ($token-heading-h5-semi-bold, $token-heading-h5-semi-bold, $token-heading-h6-semi-bold),
+	6: ($token-heading-h6-semi-bold, $token-heading-h6-semi-bold, $token-heading-h6-semi-bold),
 );
 
-/// Default h1, .heading1-6 and font-size-display styles
+/// Shared default for every heading element and utility class
 h1,
 .heading1,
 h2,
@@ -27,65 +28,27 @@ h5,
 h6,
 .heading6,
 .font-size-display {
-	font-weight: $token-font-weight-semi-bold;
-	line-height: 1.25;
 	margin: 0;
 }
 
-/// Default h1 and .heading1-6 sizes
-h,
-.heading {
-	@each $type, $value in $osui-typography-heading-sizes {
-		&#{$type} {
-			font-size: #{map-get($osui-heading-font-size-token-vars, $type)};
-		}
+/// Per-level responsive rules — desktop baseline + optional .tablet / .phone overrides
+@each $level, $tiers in $osui-heading-tiers {
+	$desktop: nth($tiers, 1);
+	$tablet: nth($tiers, 2);
+	$phone: nth($tiers, 3);
+
+	h#{$level},
+	.heading#{$level},
+	.font-size-h#{$level} {
+		@include apply-typography-responsive($desktop, $tablet, $phone);
 	}
 }
 
-/// Default size display value
+/// Display — uses display role maps, not heading roles
 .font-size-display {
-	font-size: $token-font-size-900;
-}
-
-// Default .font-size-h1-6 values
-@each $type, $value in $osui-typography-heading-sizes {
-	.font-size-h#{$type} {
-		font-size: #{map-get($osui-heading-font-size-token-vars, $type)};
-	}
-}
-
-///
-.tablet {
-	@each $type, $value in $osui-typography-heading-sizes {
-		h#{$type},
-		.heading#{$type} {
-			@if $type < 4 {
-				font-size: calc(#{map-get($osui-heading-font-size-token-vars, $type)} - 2px);
-			} @else {
-				font-size: calc(#{map-get($osui-heading-font-size-token-vars, $type)} - 1px);
-			}
-		}
-	}
-
-	.font-size-display {
-		font-size: calc(#{$token-font-size-900} - 2px);
-	}
-}
-
-///
-.phone {
-	@each $type, $value in $osui-typography-heading-sizes {
-		h#{$type},
-		.heading#{$type} {
-			@if $type < 4 {
-				font-size: calc(#{map-get($osui-heading-font-size-token-vars, $type)} - 4px);
-			} @else {
-				font-size: calc(#{map-get($osui-heading-font-size-token-vars, $type)} - 2px);
-			}
-		}
-	}
-
-	.font-size-display {
-		font-size: calc(#{$token-font-size-900} - 4px);
-	}
+	@include apply-typography-responsive(
+		$desktop: $token-display-lg-regular,
+		$tablet: $token-display-sm-regular,
+		$phone: $token-display-sm-regular
+	);
 }

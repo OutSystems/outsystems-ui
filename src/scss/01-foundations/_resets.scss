@@ -37,11 +37,10 @@ html {
 /* ============================================================================ */
 ///
 body {
+	@include apply-typography($token-body-md-regular);
 	background-color: var(--background-color-body, var(--color-background-body));
 	/// iOS devices loses the direction default value when toggle the RTL on the body element. Added the default property of direction to prevent the issue.
 	direction: ltr;
-	font-size: $token-font-size-350;
-	line-height: 1.5;
 	margin: 0;
 }
 
