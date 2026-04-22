@@ -20,28 +20,28 @@ $bottom-bar-size: 56px;
 $footer-height: 0px;
 
 /* ---------------------------------------------------------------------------- */
-/* Build helpers                                                                 */
+/* Build helpers — name lists iterated by @each for utility class generation    */
 /* ---------------------------------------------------------------------------- */
 $osui-devices: 'phone', 'tablet', 'desktop';
 $osui-box-sides: 'top', 'right', 'bottom', 'left';
-$osui-box-x-sides: 'right', 'bottom';
-$osui-box-y-sides: 'top', 'bottom';
 $osui-box-corners: 'top-left', 'top-right', 'bottom-right', 'bottom-left';
+$osui-border-radius-box-sides: 'top' 'left' 'right', 'bottom' 'left' 'right';
 
 /* ---------------------------------------------------------------------------- */
-/* Space / Sizes — kept for @each utility class generation                      */
+/* Utility-class name lists — iterated by @each; values pulled from companion   */
+/* $osui-*-token-vars maps in each 05-useful/_*.scss file                       */
 /* ---------------------------------------------------------------------------- */
-$osui-sizes:
-	'none' 0,
-	'xs' 4px,
-	's' 8px,
-	'base' 16px,
-	'm' 24px,
-	'l' 32px,
-	'xl' 40px,
-	'xxl' 48px;
+$osui-sizes: 'none', 'xs', 's', 'base', 'm', 'l', 'xl', 'xxl';
+$osui-shadow-types: 'none', 'xs', 's', 'm', 'l', 'xl';
+$osui-border-size: 'none', 's', 'm', 'l';
+$osui-border-radius-types: 'none', 'soft', 'rounded', 'circle';
+$osui-typography-sizes: 'base', 's', 'xs', 'label';
+$osui-typography-weight: 'light', 'regular', 'semi-bold', 'bold';
 
-// Maps old size names to token SCSS variables (for utility class generation)
+// Spacing scale — shared by margin/padding utilities and the columns gutter
+// loop in 04-patterns. Kept here (not in 05-useful) because multiple trees
+// consume it. Other $osui-*-token-vars maps live alongside their sole
+// consumer in 05-useful.
 $osui-space-token-vars: (
 	'none': $token-scale-0,
 	'xs': $token-scale-100,
@@ -50,168 +50,164 @@ $osui-space-token-vars: (
 	'm': $token-scale-600,
 	'l': $token-scale-800,
 	'xl': $token-scale-1000,
-	'xxl': $token-scale-1200
+	'xxl': $token-scale-1200,
 );
 
 /* ---------------------------------------------------------------------------- */
-/* Shadows — kept for @each utility class generation                            */
+/* Colors — token-backed maps for utility class generation                      */
+/* Values are $token-primitives-* / $token-semantics-* SCSS variables that      */
+/* expand to `var(--token-*, fallback)` at compile time. Apps can override the  */
+/* CSS custom property to re-skin all generated utility classes at once.        */
 /* ---------------------------------------------------------------------------- */
-$osui-shadow-types:
-	'none' 'none',
-	'xs' '0 1px 2px rgba(0, 0, 0, 0.1)',
-	's' '0 2px 4px rgba(0, 0, 0, 0.1)',
-	'm' '0 4px 6px rgba(0, 0, 0, 0.1)',
-	'l' '0 6px 8px rgba(0, 0, 0, 0.1)',
-	'xl' '0 8px 10px rgba(0, 0, 0, 0.1)';
 
-/* ---------------------------------------------------------------------------- */
-/* Typography — kept for @each utility / foundation class generation            */
-/* ---------------------------------------------------------------------------- */
-$osui-typography-sizes: 'display' 36px, 'base' 16px, 's' 14px, 'xs' 12px, 'label' 11px;
-$osui-typography-heading-sizes: 1 32px, 2 28px, 3 26px, 4 22px, 5 20px, 6 18px;
-$osui-typography-weight: 'light' 300, 'regular' 400, 'semi-bold' 600, 'bold' 700;
+// Neutral scale — closest-hex match against $token-primitives-neutral-*
+$osui-colors-neutral:
+	'0' $token-primitives-base-white,
+	'1' $token-primitives-neutral-100,
+	'2' $token-primitives-neutral-200,
+	'3' $token-primitives-neutral-300,
+	'4' $token-primitives-neutral-400,
+	'5' $token-primitives-neutral-400,
+	'6' $token-primitives-neutral-500,
+	'7' $token-primitives-neutral-700,
+	'8' $token-primitives-neutral-900,
+	'9' $token-primitives-neutral-1100,
+	'10' $token-primitives-base-black;
 
-/* ---------------------------------------------------------------------------- */
-/* Borders — kept for @each utility class generation                            */
-/* ---------------------------------------------------------------------------- */
-$osui-border-size: 'none' 0, 's' 1px, 'm' 2px, 'l' 3px;
-$osui-border-radius-types: 'none' 0, 'soft' 4px, 'rounded' 100px, 'circle' 100%;
-$osui-border-radius-box-sides: 'top' 'left' 'right', 'bottom' 'left' 'right';
+// Semantic palette — binds to $token-semantics-* base/100 tokens
+$osui-colors-semantic:
+	'error-light' $token-semantics-danger-100,
+	'error' $token-semantics-danger-base,
+	'warning-light' $token-semantics-warning-100,
+	'warning' $token-primitives-yellow-700,
+	'success-light' $token-semantics-success-100,
+	'success' $token-semantics-success-base,
+	'info-light' $token-semantics-info-100,
+	'info' $token-semantics-info-base;
 
-/* ---------------------------------------------------------------------------- */
-/* Colors — kept for @each utility class generation (output literal values)     */
-/* ---------------------------------------------------------------------------- */
-$osui-colors-brand: 'primary' #1068eb, 'secondary' #303d60, 'primary-hover' #295fd6,
-	'primary-selected' 'rgba(20, 110, 245, 0.12)',
-	'primary-lightest' 'linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9))';
-
-$osui-colors-focus: 'outer' #ffd337, 'inner' var(--token-text-default);
-
+// Extended palette — 12 families × 7 shades. Each OSUI shade binds to the
+// closest-ranked token primitive (lightest→100, lighter→300, light→500,
+// base→700, dark→800, darker→900, darkest→1000).
+// `grape` key preserved for backward-compat utility class names, but binds
+// to `$token-primitives-purple-*` per token package naming (see D6).
+// `cyan` has no token equivalent; bound to closest `teal` primitives.
 $osui-colors-extended: 'red'
 		(
-			'lightest' #faeaea,
-			'lighter' #e9aaaa,
-			'light' #d96a6a,
-			'' #c92a2a,
-			'dark' #ab2424,
-			'darker' #8d1d1d,
-			'darkest' #6f1717
+			'lightest' $token-primitives-red-100,
+			'lighter' $token-primitives-red-300,
+			'light' $token-primitives-red-500,
+			'' $token-primitives-red-700,
+			'dark' $token-primitives-red-800,
+			'darker' $token-primitives-red-900,
+			'darkest' $token-primitives-red-1000
 		),
 	'orange'
 		(
-			'lightest' #fef0e6,
-			'lighter' #fcc29c,
-			'light' #f99551,
-			'' #f76707,
-			'dark' #d25806,
-			'darker' #ad4805,
-			'darkest' #883904
+			'lightest' $token-primitives-orange-100,
+			'lighter' $token-primitives-orange-300,
+			'light' $token-primitives-orange-500,
+			'' $token-primitives-orange-700,
+			'dark' $token-primitives-orange-800,
+			'darker' $token-primitives-orange-900,
+			'darkest' $token-primitives-orange-1000
 		),
 	'yellow'
 		(
-			'lightest' #fef5e5,
-			'lighter' #fbd999,
-			'light' #f8bc4c,
-			'' #f59f00,
-			'dark' #d08700,
-			'darker' #ac6f00,
-			'darkest' #875700
+			'lightest' $token-primitives-yellow-100,
+			'lighter' $token-primitives-yellow-300,
+			'light' $token-primitives-yellow-500,
+			'' $token-primitives-yellow-700,
+			'dark' $token-primitives-yellow-800,
+			'darker' $token-primitives-yellow-900,
+			'darkest' $token-primitives-yellow-1000
 		),
 	'lime'
 		(
-			'lightest' #f1f8e8,
-			'lighter' #c7e3a2,
-			'light' #9ecd5c,
-			'' #74b816,
-			'dark' #639c13,
-			'darker' #51810f,
-			'darkest' #40650c
+			'lightest' $token-primitives-lime-100,
+			'lighter' $token-primitives-lime-300,
+			'light' $token-primitives-lime-500,
+			'' $token-primitives-lime-700,
+			'dark' $token-primitives-lime-800,
+			'darker' $token-primitives-lime-900,
+			'darkest' $token-primitives-lime-1000
 		),
 	'green'
 		(
-			'lightest' #ebf7ed,
-			'lighter' #afe0b8,
-			'light' #73c982,
-			'' #37b24d,
-			'dark' #2f9741,
-			'darker' #267d36,
-			'darkest' #1e622a
+			'lightest' $token-primitives-green-100,
+			'lighter' $token-primitives-green-300,
+			'light' $token-primitives-green-500,
+			'' $token-primitives-green-700,
+			'dark' $token-primitives-green-800,
+			'darker' $token-primitives-green-900,
+			'darkest' $token-primitives-green-1000
 		),
 	'teal'
 		(
-			'lightest' #e6f2ef,
-			'lighter' #9cccbd,
-			'light' #52a58c,
-			'' #087f5b,
-			'dark' #076c4d,
-			'darker' #065940,
-			'darkest' #044632
+			'lightest' $token-primitives-teal-100,
+			'lighter' $token-primitives-teal-300,
+			'light' $token-primitives-teal-500,
+			'' $token-primitives-teal-700,
+			'dark' $token-primitives-teal-800,
+			'darker' $token-primitives-teal-900,
+			'darkest' $token-primitives-teal-1000
 		),
 	'cyan'
 		(
-			'lightest' #e7f2f4,
-			'lighter' #9eccd3,
-			'light' #56a6b2,
-			'' #0d8091,
-			'dark' #0b6d7b,
-			'darker' #095a66,
-			'darkest' #074650
+			'lightest' $token-primitives-teal-100,
+			'lighter' $token-primitives-teal-300,
+			'light' $token-primitives-teal-500,
+			'' $token-primitives-teal-700,
+			'dark' $token-primitives-teal-800,
+			'darker' $token-primitives-teal-900,
+			'darkest' $token-primitives-teal-1000
 		),
 	'blue'
 		(
-			'lightest' #e8f2fa,
-			'lighter' #a3c9ea,
-			'light' #5fa1db,
-			'' #1a79cb,
-			'dark' #1667ad,
-			'darker' #12558e,
-			'darkest' #0e4370
+			'lightest' $token-primitives-blue-100,
+			'lighter' $token-primitives-blue-300,
+			'light' $token-primitives-blue-500,
+			'' $token-primitives-blue-700,
+			'dark' $token-primitives-blue-800,
+			'darker' $token-primitives-blue-900,
+			'darkest' $token-primitives-blue-1000
 		),
 	'indigo'
 		(
-			'lightest' #eceffd,
-			'lighter' #b3c1f7,
-			'light' #7b92f1,
-			'' #4263eb,
-			'dark' #3854c8,
-			'darker' #2e45a5,
-			'darkest' #243681
+			'lightest' $token-primitives-indigo-100,
+			'lighter' $token-primitives-indigo-300,
+			'light' $token-primitives-indigo-500,
+			'' $token-primitives-indigo-700,
+			'dark' $token-primitives-indigo-800,
+			'darker' $token-primitives-indigo-900,
+			'darkest' $token-primitives-indigo-1000
 		),
 	'violet'
 		(
-			'lightest' #f1edfd,
-			'lighter' #c6b6f6,
-			'light' #9b7fef,
-			'' #7048e8,
-			'dark' #5f3dc5,
-			'darker' #4e32a2,
-			'darkest' #3e2880
+			'lightest' $token-primitives-violet-100,
+			'lighter' $token-primitives-violet-300,
+			'light' $token-primitives-violet-500,
+			'' $token-primitives-violet-700,
+			'dark' $token-primitives-violet-800,
+			'darker' $token-primitives-violet-900,
+			'darkest' $token-primitives-violet-1000
 		),
 	'grape'
 		(
-			'lightest' #f7ecfa,
-			'lighter' #dfb2e9,
-			'light' #c678d9,
-			'' #ae3ec9,
-			'dark' #9435ab,
-			'darker' #7a2b8d,
-			'darkest' #60226f
+			'lightest' $token-primitives-purple-100,
+			'lighter' $token-primitives-purple-300,
+			'light' $token-primitives-purple-500,
+			'' $token-primitives-purple-700,
+			'dark' $token-primitives-purple-800,
+			'darker' $token-primitives-purple-900,
+			'darkest' $token-primitives-purple-1000
 		),
 	'pink'
 		(
-			'lightest' #fbebf0,
-			'lighter' #efadc4,
-			'light' #e27098,
-			'' #d6336c,
-			'dark' #b62b5c,
-			'darker' #96244c,
-			'darkest' #761c3b
+			'lightest' $token-primitives-pink-100,
+			'lighter' $token-primitives-pink-300,
+			'light' $token-primitives-pink-500,
+			'' $token-primitives-pink-700,
+			'dark' $token-primitives-pink-800,
+			'darker' $token-primitives-pink-900,
+			'darkest' $token-primitives-pink-1000
 		);
-
-$osui-colors-neutral: '0' #ffffff, '1' #f8f9fa, '2' #f1f3f5, '3' #e9ecef, '4' #dee2e6, '5' #ced4da, '6' #adb5bd,
-	'7' #6a7178, '8' #4f575e, '9' #272b30, '10' #101213;
-
-$osui-colors-semantic: 'error-light' #fceaea, 'error' #dc2020, 'warning-light' #fdf6e5, 'warning' #e9a100,
-	'success-light' #eaf3eb, 'success' #29823b, 'info-light' #e5f5fc, 'info' #017aad;
-
-$osui-overlay-background: rgba(0, 0, 0, 0.25);
