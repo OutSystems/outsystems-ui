@@ -7,7 +7,7 @@
 .osui-sidebar {
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-sidebar-background:  #{$token-bg-surface-default};
-	--osui-sidebar-color:       #{$token-text-default};
+	--osui-sidebar-color:       $token-text-default;
 	--osui-sidebar-shadow:      #{$token-elevation-3};
 	--osui-sidebar-padding-x:   #{$token-scale-600};
 	--osui-sidebar-padding-y:   #{$token-scale-400};

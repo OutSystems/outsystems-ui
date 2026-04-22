@@ -41,8 +41,8 @@ html[data-uieditorversion^='1'] {
 			-servicestudio-bottom: 0;
 			-servicestudio-position: fixed;
 			-servicestudio-top: 0;
-			-servicestudio-width: var(--side-menu-size);
-			-servicestudio-z-index: var(--layer-global-navigation);
+			-servicestudio-width: var(--os-size-side-menu);
+			-servicestudio-z-index: var(--os-layer-navigation);
 		}
 
 		.app-menu {

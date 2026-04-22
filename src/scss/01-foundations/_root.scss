@@ -1,19 +1,24 @@
 ////
 /// @group Root
-/// Imports design token CSS custom properties and declares app-level overrideable vars.
+/// Framework-wide `--os-*` bridge layer: overrideable at the app level,
+/// consumed by components that need to respect app-wide theming.
+/// Pattern-scoped `--osui-*-layer` vars stay declared here because they're
+/// read off-DOM (portaled patterns) or from sibling layouts.
 
 :root {
-	/*! App Settings — overrideable per app theme */
-	--header-color: #{$token-bg-surface-default};
-	--color-background-body: #{$token-primitives-neutral-100};
-	--color-background-login: #{$token-bg-surface-default};
+	/*! OS Surface Colors */
+	--os-color-background-body: #{$token-bg-body};
+	--os-color-background-header: #{$token-bg-surface-default};
+	--os-color-background-sidemenu: #{$token-bg-surface-default};
+	--os-color-background-footer: #{$token-bg-surface-default};
+	--os-color-background-login: #{$token-bg-surface-default};
 
-	/*! App Layout — not in token system */
-	--header-size: #{$header-size};
-	--header-size-content: #{$header-size-content};
-	--side-menu-size: #{$side-menu-size};
-	--bottom-bar-size: #{$bottom-bar-size};
-	--footer-height: #{$footer-height};
+	/*! OS Layout Sizes */
+	--os-size-header: #{$header-size};
+	--os-size-header-content: #{$header-size-content};
+	--os-size-side-menu: #{$side-menu-size};
+	--os-size-bottom-bar: #{$bottom-bar-size};
+	--os-size-footer: #{$footer-height};
 
 	/*! iOS / Android Safe Areas */
 	--os-safe-area-top: #{safe-area(top)};
@@ -21,34 +26,30 @@
 	--os-safe-area-bottom: #{safe-area(bottom)};
 	--os-safe-area-left: #{safe-area(left)};
 
-	/*! Layer System */
-	--layer-system-scale: 5;
-	--layer-above: var(--layer-system-scale);
-	--layer-below: calc(-1 * var(--layer-system-scale));
+	/*! OS Layer System — calc plumbing preserved, anchors bound to tokens */
+	--os-layer-system-scale: 100;
+	--os-layer-above: var(--os-layer-system-scale);
+	--os-layer-below: calc(-1 * var(--os-layer-system-scale));
 
-	--layer-global-screen: 0;
-	--layer-global-elevated: calc(var(--layer-above) + var(--layer-global-screen));
-	--layer-global-navigation: calc(var(--layer-above) + var(--layer-global-elevated));
-	--layer-global-off-canvas: calc(var(--layer-above) + var(--layer-global-navigation));
-	--layer-global-instant-interaction: calc(var(--layer-above) + var(--layer-global-off-canvas));
+	--os-layer-screen: #{$token-z-index-0};
+	--os-layer-elevated: #{$token-z-index-100};
+	--os-layer-navigation: #{$token-z-index-200};
+	--os-layer-off-canvas: #{$token-z-index-300};
+	--os-layer-instant-interaction: #{$token-z-index-400};
 
-	--layer-global-negative: -1;
-	--layer-global-auto: auto;
+	--os-layer-global-negative: -1;
+	--os-layer-global-auto: auto;
 
-	--layer-local-tier-1: 1;
-	--layer-local-tier-2: 2;
-	--layer-local-tier-3: 3;
-	--layer-local-tier-4: 4;
-	--layer-local-tier-5: 5;
+	--os-layer-local-tier-1: 1;
+	--os-layer-local-tier-2: 2;
+	--os-layer-local-tier-3: 3;
+	--os-layer-local-tier-4: 4;
+	--os-layer-local-tier-5: 5;
 
 	/*! Fixed/Absolute Patterns that need their variables on a global level */
-	--osui-bottom-sheet-layer: var(--layer-global-off-canvas);
-	--osui-notification-layer: var(--layer-global-instant-interaction);
-	--osui-popup-layer: var(--layer-global-off-canvas);
-	--osui-sidebar-layer: var(--layer-global-off-canvas);
-	--osui-menu-layer: calc(var(--layer-global-navigation) + var(--layer-local-tier-2));
-
-	/*! Focus Colors */
-	--color-focus-outer: #ffd337;
-	--color-focus-inner: #{$token-text-default};
+	--osui-bottom-sheet-layer: var(--os-layer-off-canvas);
+	--osui-notification-layer: var(--os-layer-instant-interaction);
+	--osui-popup-layer: var(--os-layer-off-canvas);
+	--osui-sidebar-layer: var(--os-layer-off-canvas);
+	--osui-menu-layer: calc(var(--os-layer-navigation) + var(--os-layer-local-tier-2));
 }

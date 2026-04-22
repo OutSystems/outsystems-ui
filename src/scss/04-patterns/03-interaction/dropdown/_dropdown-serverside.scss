@@ -12,7 +12,7 @@ $balloonMobileTopMargin: 5vh;
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-dropdown-ss-background:          #{$token-bg-surface-default};
 	--osui-dropdown-ss-border-color:        #{$token-border-input-default};
-	--osui-dropdown-ss-color:               #{$token-text-default};
+	--osui-dropdown-ss-color:               $token-text-default;
 	--osui-dropdown-ss-disabled-background: #{$token-bg-input-disabled};
 	--osui-dropdown-ss-disabled-color:      #{$token-text-disabled};
 	// ───────────────────────────────────────────────────────────────────
@@ -33,7 +33,7 @@ $balloonMobileTopMargin: 5vh;
 		height: auto;
 		min-width: var(--osui-dropdown-min-width);
 		overflow: hidden;
-		z-index: var(--layer-global-elevated);
+		z-index: var(--os-layer-elevated);
 
 		// Service Studio Preview
 		& {
@@ -186,7 +186,7 @@ $balloonMobileTopMargin: 5vh;
 
 			// Avoid having data-list above other elements in this context, such as a StickyTop SelectAll Option container.
 			& > *:not([data-list]) {
-				z-index: var(--layer-local-tier-2);
+				z-index: var(--os-layer-local-tier-2);
 			}
 		}
 
@@ -302,7 +302,7 @@ $balloonMobileTopMargin: 5vh;
 				input,
 				.form-control[data-input] {
 					&:focus {
-						box-shadow: inset 0 0 0 3px var(--color-focus-outer);
+						box-shadow: inset 0 0 0 3px $token-primitives-yellow-500;
 					}
 				}
 			}
@@ -323,7 +323,7 @@ $balloonMobileTopMargin: 5vh;
 					&:after,
 					& > *:before,
 					& > *:after {
-						background-color: var(--color-focus-outer);
+						background-color: $token-primitives-yellow-500;
 						content: '';
 						display: block;
 					}
@@ -336,7 +336,7 @@ $balloonMobileTopMargin: 5vh;
 						margin-top: calc(-1 * var(--osui-outline-size));
 						position: sticky;
 						width: 100%;
-						z-index: var(--layer-local-tier-3);
+						z-index: var(--os-layer-local-tier-3);
 					}
 
 					&:before {
@@ -354,7 +354,7 @@ $balloonMobileTopMargin: 5vh;
 						position: absolute;
 						top: 0;
 						width: var(--osui-outline-size);
-						z-index: var(--layer-local-tier-2);
+						z-index: var(--os-layer-local-tier-2);
 					}
 
 					& > *:before {
@@ -439,7 +439,7 @@ $balloonMobileTopMargin: 5vh;
 		}
 
 		.osui-dropdown-serverside__balloon-container {
-			max-height: calc(90vh - $balloonMobileTopMargin - var(--header-size));
+			max-height: calc(90vh - $balloonMobileTopMargin - var(--os-size-header));
 		}
 	}
 
@@ -447,7 +447,7 @@ $balloonMobileTopMargin: 5vh;
 		.osui-dropdown-serverside__search-input--is-focused {
 			.osui-dropdown-serverside__balloon-container {
 				// 100vw because ios split in half the vertical height when keyboard is open!
-				max-height: calc(100vw - $balloonMobileTopMargin - var(--header-size));
+				max-height: calc(100vw - $balloonMobileTopMargin - var(--os-size-header));
 			}
 		}
 	}
@@ -456,7 +456,7 @@ $balloonMobileTopMargin: 5vh;
 		.osui-dropdown-serverside {
 			&--at-content {
 				.osui-dropdown-serverside__balloon-container {
-					--ballon-top-margin-value: calc(var(--header-size) + var(--header-size-content) + 5vw);
+					--ballon-top-margin-value: calc(var(--os-size-header) + var(--os-size-header-content) + 5vw);
 				}
 			}
 		}
@@ -502,7 +502,7 @@ $balloonMobileTopMargin: 5vh;
 			top: 0;
 			transition: opacity 250ms ease;
 			width: 100vw;
-			z-index: var(--layer-global-instant-interaction);
+			z-index: var(--os-layer-instant-interaction);
 
 			// Service Studio Preview
 			& {
@@ -522,7 +522,7 @@ $balloonMobileTopMargin: 5vh;
 				height: auto;
 				margin-top: $balloonMobileTopMargin;
 				// 90vh - maxHeight in order to create a margin top/bottom with 5vh
-				max-height: calc(90vh - $balloonMobileTopMargin - var(--header-size));
+				max-height: calc(90vh - $balloonMobileTopMargin - var(--os-size-header));
 				overflow: hidden;
 				width: 85vw;
 
@@ -544,7 +544,7 @@ $balloonMobileTopMargin: 5vh;
 			&--has-not-search {
 				.osui-dropdown-serverside__balloon-container {
 					margin-top: $balloonMobileTopMargin;
-					max-height: calc(var(--viewport-height) - $balloonMobileTopMargin - var(--header-size));
+					max-height: calc(var(--viewport-height) - $balloonMobileTopMargin - var(--os-size-header));
 				}
 			}
 		}

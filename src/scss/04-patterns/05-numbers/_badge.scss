@@ -8,7 +8,7 @@
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-badge-color:          #{$token-text-inverse};
 	--osui-badge-primary-color:  #{$token-semantics-primary-base};
-	--osui-badge-on-light-color: #{$token-text-default};
+	--osui-badge-on-light-color: $token-text-default;
 	// ───────────────────────────────────────────────────────────────────
 
 	align-items: center;

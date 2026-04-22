@@ -126,7 +126,7 @@
 	.lightbox-item a:focus {
 		background-color: transparent;
 		box-shadow: none;
-		outline: 3px solid var(--color-focus-outer);
+		outline: 3px solid $token-primitives-yellow-500;
 	}
 }
 

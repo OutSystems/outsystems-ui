@@ -8,7 +8,7 @@
 		// ─── Component CSS API ─────────────────────────────────────────────
 		--osui-dropdown-background:    #{$token-bg-input-default};
 		--osui-dropdown-border-color:  #{$token-border-input-default};
-		--osui-dropdown-color:         #{$token-text-default};
+		--osui-dropdown-color:         $token-text-default;
 		--osui-dropdown-border-radius: #{$token-border-radius-100};
 		// ───────────────────────────────────────────────────────────────────
 
@@ -169,8 +169,8 @@ select.dropdown-display[disabled] {
 	.dropdown-container {
 		&.dropdown-expanded {
 			& > div.dropdown-display {
-				border-color: var(--color-focus-inner);
-				box-shadow: 0 0 0 3px var(--color-focus-outer);
+				border-color: $token-text-default;
+				box-shadow: 0 0 0 3px $token-primitives-yellow-500;
 			}
 		}
 
@@ -187,7 +187,7 @@ select.dropdown-display[disabled] {
 
 		& > select {
 			&.dropdown-display:focus {
-				border-color: var(--color-focus-inner);
+				border-color: $token-text-default;
 			}
 		}
 	}

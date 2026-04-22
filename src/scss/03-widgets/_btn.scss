@@ -166,7 +166,7 @@
 ///
 .has-accessible-features {
 	& .btn:focus {
-		border-color: var(--color-focus-inner);
+		border-color: $token-text-default;
 	}
 }
 

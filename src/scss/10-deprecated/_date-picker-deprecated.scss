@@ -18,7 +18,7 @@
 		&.is-bound {
 			box-shadow: $token-elevation-1;
 			position: absolute !important;
-			z-index: var(--layer-global-elevated);
+			z-index: var(--os-layer-elevated);
 		}
 
 		&.is-hidden {
@@ -169,7 +169,7 @@
 		padding: $token-scale-0;
 		position: relative;
 		width: 32px;
-		z-index: var(--layer-local-tier-1);
+		z-index: var(--os-layer-local-tier-1);
 
 		&:hover {
 			background-color: $token-primitives-neutral-300;
@@ -386,7 +386,7 @@ input.OSFillParent.calendar-input {
 
 .portal-class ~ .pika-single.is-bound {
 	/* Fix datepicker when inside Popup Widget */
-	z-index: calc(var(--layer-above) + var(--popup-layer));
+	z-index: calc(var(--os-layer-above) + var(--popup-layer));
 }
 
 // Responsive --------------------------------------------------------------------

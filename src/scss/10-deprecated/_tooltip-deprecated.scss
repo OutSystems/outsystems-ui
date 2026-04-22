@@ -7,7 +7,7 @@
 
 	// Service Studio Preview
 	& {
-		-servicestudio-z-index: var(--layer-global-screen);
+		-servicestudio-z-index: var(--os-layer-screen);
 	}
 
 	&-content {
@@ -25,7 +25,7 @@
 		padding: $token-scale-200 $token-scale-400;
 		position: absolute;
 		text-align: center;
-		z-index: var(--layer-global-elevated);
+		z-index: var(--os-layer-elevated);
 
 		// Service Studio Preview
 		& {
@@ -181,7 +181,7 @@
 		position: fixed;
 		top: 0;
 		width: 100%;
-		z-index: var(--layer-local-tier-1);
+		z-index: var(--os-layer-local-tier-1);
 
 		// Service Studio Preview
 		& {

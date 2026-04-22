@@ -110,7 +110,7 @@
 		top: 0;
 		transition: opacity 350ms ease-in;
 		width: 100vw;
-		z-index: calc(var(--layer-below) + var(--osui-bottom-sheet-layer));
+		z-index: calc(var(--os-layer-below) + var(--osui-bottom-sheet-layer));
 
 		// Service Studio Preview
 		& {
@@ -146,7 +146,7 @@
 					transform 200ms var(--osui-bottom-sheet-transition-function);
 				top: 0;
 				width: 100%;
-				z-index: var(--layer-global-negative);
+				z-index: var(--os-layer-global-negative);
 			}
 
 			&:empty {
@@ -159,7 +159,7 @@
 		max-height: var(--bottom-sheet-max-height);
 		overflow-y: scroll;
 		padding: var(--osui-bottom-sheet-padding);
-		padding-bottom: calc(var(--bottom-bar-size) + $token-scale-600 + var(--os-safe-area-bottom));
+		padding-bottom: calc(var(--os-size-bottom-bar) + $token-scale-600 + var(--os-safe-area-bottom));
 	}
 }
 
@@ -191,7 +191,7 @@
 	// DropdownSearch and DropdownTags
 	.vscomp-wrapper,
 	[data-popup-backdrop] {
-		z-index: calc(var(--layer-above) + var(--osui-bottom-sheet-layer));
+		z-index: calc(var(--os-layer-above) + var(--osui-bottom-sheet-layer));
 	}
 
 	// DatePicker, DatePickerRange, MonthPicker and TimePicker

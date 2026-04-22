@@ -7,7 +7,7 @@
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-overflow-menu-background:         #{$token-bg-surface-default};
 	--osui-overflow-menu-shadow:             #{$token-elevation-2};
-	--osui-overflow-menu-color:              #{$token-text-default};
+	--osui-overflow-menu-color:              $token-text-default;
 	--osui-overflow-menu-trigger-active-bg:  #{$token-bg-neutral-subtle-default};
 	// ───────────────────────────────────────────────────────────────────
 
@@ -40,7 +40,7 @@
 
 		min-width: var(--osui-overflow-menu-min-width);
 		overflow: hidden;
-		z-index: var(--layer-global-instant-interaction);
+		z-index: var(--os-layer-instant-interaction);
 
 		a {
 			color: var(--osui-overflow-menu-color);
@@ -68,7 +68,7 @@
 
 // layer exception when a popup is open on the same screen
 html:has(.popup-backdrop) .osui-overflow-menu__balloon {
-	z-index: var(--layer-global-off-canvas);
+	z-index: var(--os-layer-off-canvas);
 }
 
 .tablet,

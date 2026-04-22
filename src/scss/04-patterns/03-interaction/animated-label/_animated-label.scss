@@ -37,7 +37,7 @@
 		position: absolute;
 		top: 8px;
 		transition: all 300ms ease;
-		z-index: var(--layer-global-screen);
+		z-index: var(--os-layer-screen);
 
 		.icon {
 			padding-right: $token-scale-400;
@@ -176,7 +176,7 @@
 			}
 
 			&:focus {
-				box-shadow: 0 3px 0 0 var(--color-focus-outer);
+				box-shadow: 0 3px 0 0 $token-primitives-yellow-500;
 			}
 		}
 	}

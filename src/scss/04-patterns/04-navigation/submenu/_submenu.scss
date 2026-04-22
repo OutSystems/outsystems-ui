@@ -10,7 +10,7 @@
 	--osui-submenu-items-border-color:  #{$token-border-default};
 	--osui-submenu-items-shadow:        #{$token-elevation-2};
 	--osui-submenu-item-color:          #{$token-text-subtlest};
-	--osui-submenu-header-color:        #{$token-text-default};
+	--osui-submenu-header-color:        $token-text-default;
 	--osui-submenu-active-border-color: var(--osui-submenu-active-border-color);
 	// ───────────────────────────────────────────────────────────────────
 
@@ -135,7 +135,7 @@
 		top: calc(100% + $token-scale-100);
 		transform: translateY(-8px);
 		transition: all 130ms ease-out;
-		z-index: var(--layer-global-elevated);
+		z-index: var(--os-layer-elevated);
 
 		// Service Studio Preview
 		& {
@@ -297,8 +297,8 @@
 }
 
 .has-accessible-features .osui-submenu:focus-within {
-	-webkit-box-shadow: 0 0 0 3px var(--color-focus-outer);
-	box-shadow: 0 0 0 3px var(--color-focus-outer);
+	-webkit-box-shadow: 0 0 0 3px $token-primitives-yellow-500;
+	box-shadow: 0 0 0 3px $token-primitives-yellow-500;
 	outline: 0;
 }
 
@@ -306,8 +306,8 @@
 .tablet,
 .phone {
 	.has-accessible-features .osui-submenu:focus-within {
-		-webkit-box-shadow: 0 0 0 3px var(--color-focus-outer);
-		box-shadow: 0 0 0 3px var(--color-focus-outer);
+		-webkit-box-shadow: 0 0 0 3px $token-primitives-yellow-500;
+		box-shadow: 0 0 0 3px $token-primitives-yellow-500;
 		outline: 0;
 	}
 

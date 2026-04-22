@@ -281,11 +281,11 @@
 		border: $token-border-size-050 solid transparent;
 
 		&:focus-within {
-			border-color: var(--color-focus-outer);
+			border-color: $token-primitives-yellow-500;
 		}
 
 		.noUi-handle:focus {
-			border-color: var(--color-focus-inner);
+			border-color: $token-text-default;
 			@include a11y-default-outline;
 		}
 	}
@@ -329,9 +329,9 @@
 /* Z-index overrides */
 .noUi-origin .noUi-base,
 .noUi-connect {
-	z-index: var(--layer-local-tier-1);
+	z-index: var(--os-layer-local-tier-1);
 }
 
 .noUi-connects {
-	z-index: var(--layer-global-screen);
+	z-index: var(--os-layer-screen);
 }

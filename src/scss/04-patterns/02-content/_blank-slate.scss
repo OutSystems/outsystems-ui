@@ -6,7 +6,7 @@
 ///
 .blank-slate {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-blank-slate-description-color: #{$token-text-default};
+	--osui-blank-slate-description-color: $token-text-default;
 	--osui-blank-slate-icon-color:        #{$token-text-disabled};
 	// ───────────────────────────────────────────────────────────────────
 

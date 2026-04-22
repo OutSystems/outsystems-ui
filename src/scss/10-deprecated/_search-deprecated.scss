@@ -190,7 +190,7 @@
 				&,
 				&:empty {
 					border-radius: $token-border-radius-0;
-					height: var(--header-size);
+					height: var(--os-size-header);
 				}
 			}
 		}

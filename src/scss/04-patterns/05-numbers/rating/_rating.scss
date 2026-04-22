@@ -102,13 +102,13 @@
 
 		&-filled {
 			opacity: 1;
-			z-index: var(--layer-local-tier-1);
+			z-index: var(--os-layer-local-tier-1);
 		}
 
 		&-empty,
 		&-half {
 			opacity: 0;
-			z-index: var(--layer-global-screen);
+			z-index: var(--os-layer-screen);
 		}
 
 		&:last-of-type {
@@ -142,7 +142,7 @@
 		&:first-of-type {
 			+ .rating-item {
 				background: transparent;
-				box-shadow: 0 0 0 3px var(--color-focus-outer);
+				box-shadow: 0 0 0 3px $token-primitives-yellow-500;
 				height: 100%;
 				left: 0;
 				opacity: 0;
@@ -180,7 +180,7 @@
 
 	&.is-half {
 		.rating-item-half {
-			z-index: var(--layer-local-tier-1);
+			z-index: var(--os-layer-local-tier-1);
 		}
 
 		input:checked + .rating-item {
@@ -284,7 +284,7 @@
 		&:not(.is-half) input:focus + .rating-item .rating-item-filled {
 			&,
 			* {
-				box-shadow: 0 0 0 3px var(--color-focus-outer);
+				box-shadow: 0 0 0 3px $token-primitives-yellow-500;
 			}
 		}
 	}

@@ -5,9 +5,9 @@
 
 ///
 .header {
-	background-color: var(--background-color-header, var(--header-color));
+	background-color: var(--background-color-header, var(--os-color-background-header));
 	box-shadow: $token-elevation-1;
-	z-index: var(--layer-global-navigation);
+	z-index: var(--os-layer-navigation);
 
 	// Service Studio Preview
 	& {
@@ -15,7 +15,7 @@
 	}
 
 	&-top {
-		height: var(--header-size);
+		height: var(--os-size-header);
 	}
 
 	&-logo {
@@ -132,7 +132,7 @@
 		left: 0;
 		position: fixed;
 		top: 0;
-		z-index: var(--layer-global-navigation);
+		z-index: var(--os-layer-navigation);
 	}
 }
 

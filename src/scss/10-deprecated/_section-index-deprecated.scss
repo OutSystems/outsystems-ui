@@ -45,7 +45,7 @@
 	.section-index {
 		&.is--sticky {
 			position: fixed;
-			top: calc(var(--header-size) + var(--header-size-content) + var(--top-position) + var(--os-safe-area-top));
+			top: calc(var(--os-size-header) + var(--os-size-header-content) + var(--top-position) + var(--os-safe-area-top));
 		}
 	}
 }
@@ -57,7 +57,7 @@
 		.section-index {
 			&.is--sticky {
 				top: calc(
-					var(--header-size) + var(--header-size-content) + var(--top-position) + #{android-safe-area-top()}
+					var(--os-size-header) + var(--os-size-header-content) + var(--top-position) + #{android-safe-area-top()}
 				);
 			}
 		}
@@ -79,7 +79,7 @@
 		a {
 			&:focus {
 				background-color: transparent;
-				box-shadow: 0 0 0 3px var(--color-focus-outer);
+				box-shadow: 0 0 0 3px $token-primitives-yellow-500;
 			}
 		}
 	}

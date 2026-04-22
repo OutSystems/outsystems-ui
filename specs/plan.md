@@ -545,6 +545,124 @@ h1, .heading1, .font-size-h1 {
 
 ---
 
+### Phase 14 — `_root.scss` clean-up + `--os-*` bridge layer
+
+**What:** Rewrite `src/scss/01-foundations/_root.scss` as a single-prefix cross-framework bridge layer using `--os-*` for every public override point. Vars that add a semantic anchor (app theming override target distinct from the underlying token), hold a literal (not in tokens), or are consumed off-DOM (pattern layer vars referenced from sibling layouts) are kept. Dead plumbing is deleted; everything else renames in one sweep.
+
+**Why:** The current `_root.scss` mixes four prefixes — `--color-*` (app surface/focus), `--header-color` (surface but misnamed), `--{header,side-menu,bottom-bar}-size` / `--footer-height` (layout literals), `--layer-*` (z-index plumbing + semantic tiers), and `--osui-*-layer` (pattern defaults that consumers read from sibling layouts). Migrating to a single `--os-*` prefix for framework-wide bridge vars (while leaving `--osui-*` pattern-scoped defaults as-is per D11) makes the public surface coherent and aligns naming with other OutSystems frameworks (Phoenix IDE, internal product UI) that may adopt the same bridge vocabulary.
+
+**Why pattern-scoped layer vars stay in `_root.scss`:** Bottom sheet, notification, popup, sidebar, and menu render off-DOM (portaled into the document root) or get read from sibling layouts (`--osui-sidebar-layer` read by `_menu-layout-side.scss`, `--osui-menu-layer` read by `_flatpickr.scss`). Declaring these at `:root` guarantees they resolve regardless of where the rendering site lands in the cascade. Moving them into each pattern's CSS API would break the cross-pattern read path.
+
+**Design — final `_root.scss` structure (34 vars, 6 groups):**
+
+```scss
+:root {
+  /*! OS Surface Colors */
+  --os-color-background-body:     #{$token-bg-body};
+  --os-color-background-header:   #{$token-bg-surface-default};
+  --os-color-background-sidemenu: #{$token-bg-surface-default};
+  --os-color-background-footer:   #{$token-bg-surface-default};
+  --os-color-background-login:    #{$token-bg-surface-default};
+
+  /*! OS Layout Sizes */
+  --os-size-header:         #{$header-size};
+  --os-size-header-content: #{$header-size-content};
+  --os-size-side-menu:      #{$side-menu-size};
+  --os-size-bottom-bar:     #{$bottom-bar-size};
+  --os-size-footer:         #{$footer-height};
+
+  /*! OS Safe Areas */
+  --os-safe-area-top:    #{safe-area(top)};
+  --os-safe-area-right:  #{safe-area(right)};
+  --os-safe-area-bottom: #{safe-area(bottom)};
+  --os-safe-area-left:   #{safe-area(left)};
+
+  /*! OS Layer System — calc plumbing preserved, anchors bound to tokens */
+  --os-layer-system-scale: 100;                            // matches token z-index step
+  --os-layer-above: var(--os-layer-system-scale);
+  --os-layer-below: calc(-1 * var(--os-layer-system-scale));
+
+  --os-layer-screen:              #{$token-z-index-0};     // 0
+  --os-layer-elevated:            #{$token-z-index-100};   // 100
+  --os-layer-navigation:          #{$token-z-index-200};   // 200
+  --os-layer-off-canvas:          #{$token-z-index-300};   // 300
+  --os-layer-instant-interaction: #{$token-z-index-400};   // 400
+
+  --os-layer-global-negative: -1;
+  --os-layer-global-auto: auto;
+
+  --os-layer-local-tier-1: 1;
+  --os-layer-local-tier-2: 2;
+  --os-layer-local-tier-3: 3;
+  --os-layer-local-tier-4: 4;
+  --os-layer-local-tier-5: 5;
+
+  /*! Pattern-scoped layer vars — kept global because they're read off-DOM / cross-pattern */
+  --osui-bottom-sheet-layer: var(--os-layer-off-canvas);
+  --osui-notification-layer: var(--os-layer-instant-interaction);
+  --osui-popup-layer:        var(--os-layer-off-canvas);
+  --osui-sidebar-layer:      var(--os-layer-off-canvas);
+  --osui-menu-layer:         calc(var(--os-layer-navigation) + var(--os-layer-local-tier-2));
+}
+```
+
+**Rename mapping — 20 variable families (pure prefix rename, values adjusted where noted):**
+
+| Old | New | Value change? |
+|---|---|---|
+| `--color-background-body` | `--os-color-background-body` | No — same token anchor |
+| `--color-background-login` | `--os-color-background-login` | No |
+| `--header-color` | `--os-color-background-header` | No — rename only clarifies the semantic |
+| — (new) | `--os-color-background-sidemenu` | New — no prior var; `$token-bg-surface-default` |
+| — (new) | `--os-color-background-footer` | New — no prior var; `$token-bg-surface-default` |
+| `--color-focus-outer` | **Removed** | Consumers sweep to `$token-primitives-yellow-500` (`#ffd600`; closest yellow primitive). No mid-layer var — focus colour never needed app-level override. |
+| `--color-focus-inner` | **Removed** | Consumers sweep to `$token-text-default`. Dark-theme contrast preserved automatically: `_theme-dark.scss` already overrides `--token-text-default` → `neutral-100`. |
+| `--header-size` | `--os-size-header` | No |
+| `--header-size-content` | `--os-size-header-content` | No |
+| `--side-menu-size` | `--os-size-side-menu` | No |
+| `--bottom-bar-size` | `--os-size-bottom-bar` | No |
+| `--footer-height` | `--os-size-footer` | No |
+| `--layer-system-scale` | `--os-layer-system-scale` | **Yes — `5` → `100`** (matches token z-index step) |
+| `--layer-above` | `--os-layer-above` | Derived: now `100` (was `5`) |
+| `--layer-below` | `--os-layer-below` | Derived: now `-100` (was `-5`) |
+| `--layer-global-screen` | `--os-layer-screen` | No (always `0`) |
+| `--layer-global-elevated` | `--os-layer-elevated` | `5` → `100` |
+| `--layer-global-navigation` | `--os-layer-navigation` | `10` → `200` |
+| `--layer-global-off-canvas` | `--os-layer-off-canvas` | `15` → `300` |
+| `--layer-global-instant-interaction` | `--os-layer-instant-interaction` | `20` → `400` |
+| `--layer-global-negative` | `--os-layer-global-negative` | No (literal `-1`) |
+| `--layer-global-auto` | `--os-layer-global-auto` | No (literal `auto`) |
+| `--layer-local-tier-1..5` | `--os-layer-local-tier-1..5` | No |
+| `--osui-*-layer` (5 vars) | unchanged name | References rewire to `--os-layer-*`; declarations stay in `_root.scss` |
+
+**Nothing deleted.** Every existing plumbing var is preserved (renamed) because every call site that uses them stays valid after the rename. The `calc(below + navigation)` idiom still produces "one tier down" semantics; only the absolute numeric step changes (5→100), which matches the token z-index scale.
+
+**Non-rename changes:**
+- **Layer scale shifts 5→100.** Token z-index is already 0/100/200/300/400/500 + ±99999. Setting `--os-layer-system-scale: 100` aligns OSUI's step size with the token scale; visual ordering is identical (it's relative z-index that matters, not absolute).
+- **Two new surface vars added** (`--os-color-background-sidemenu`, `--os-color-background-footer`). No consumers today — they're new override surface for apps.
+- **Focus vars eliminated, not bridged.** `--color-focus-outer` / `--color-focus-inner` consumers rewritten directly to `$token-primitives-yellow-500` / `$token-text-default`. Dark-theme behaviour is preserved end-to-end by the existing `--token-text-default: neutral-100` override in `_theme-dark.scss`, removing the need for a redundant `--os-color-focus-inner` override there.
+- **Brand vars excluded.** Reconsidered after initial inclusion: `--os-color-primary` / `--os-color-secondary` would have had zero consumers today and no clear override path distinct from the token. Reintroduce if/when an app-level override pipeline needs them.
+
+**Files touched:** `_root.scss` rewritten + ~50 SCSS files sweeping the rename (including ~16 files swept for focus-inner → `$token-text-default` and ~30 for focus-outer → `$token-primitives-yellow-500`) + `_theme-dark.scss` (drop the redundant focus-inner override) + 1 TS file (`GlobalEnum.ts` — one enum string literal referencing `--header-size-content`). No pattern files migrated. No call-site rewrites beyond the sed pass.
+
+**Scope — what does NOT change:**
+- Token layer (`src/scss/tokens/`) — untouched.
+- Component CSS APIs (`--osui-*` vars) — not migrated to default to `var(--os-*)`. Components still reference `$token-*` directly. Deferred to a future phase if/when wanted.
+- Pattern-scoped `--osui-*-layer` vars — stay declared in `_root.scss`, values rewired to `--os-layer-*`.
+- Dark theme (`_theme-dark.scss`) — only the now-redundant `--os-color-focus-inner` override is dropped; no other changes.
+- Call-site calc expressions using `--layer-above` / `--layer-below` — renamed in the sed sweep, semantically unchanged.
+
+**Success criteria:**
+- `_root.scss` contains exactly 34 `--os-*` / `--osui-*-layer` declarations across the 6 groups, zero legacy `--color-*` / `--header-*` / `--layer-*` names.
+- `grep -rE '\\-\\-(color-focus|color-background-(body|login)|header-color|header-size|side-menu-size|bottom-bar-size|footer-height|layer-(global|local|above|below|system-scale))' src/` returns zero hits.
+- `grep -rE '\\-\\-os-color-(focus|primary|secondary)' src/` returns zero hits — focus + brand vars are fully eliminated, not bridged.
+- Pattern-scoped `--osui-*-layer` vars remain declared in `_root.scss` (D20 re-resolved).
+- `npm run build` succeeds for O11 and ODC.
+- `npm run lint` passes.
+- Visual regression is zero — z-index ordering is preserved by construction (scale shift 5→100 is uniform).
+
+---
+
 ## Decisions
 
 | # | Decision | Resolution |
@@ -564,6 +682,18 @@ h1, .heading1, .font-size-h1 {
 | D13 | Phase 13 — responsive breakpoint mechanism | ✅ OSUI `.desktop` / `.tablet` / `.phone` body-class convention. No `@media` query. |
 | D14 | Phase 13 — tablet intermediate tier | ✅ Cut line at H1: Display L/S + H1 + Action XL shrink one role-step going desktop → tablet; everything else keeps its desktop value. Phone then shrinks the full scale. |
 | D15 | Phase 13 — Inter font-family | ❌ Rejected. Native font stack is kept in `_resets.scss`; font-family is out of Phase 13 scope. |
+| D16 | Phase 14 — hard rename vs additive bridge | ✅ Hard rename. Legacy vars are deleted outright; consumers sweep in the same phase. Additive aliases would muddy `_root.scss` and defeat the clean-up goal. |
+| D17 | Phase 14 — brand primary / secondary in bridge | ❌ **Excluded.** Reconsidered after initial inclusion: zero consumers today and no override path distinct from the underlying token. Apps that want to re-skin brand can override `--token-semantics-primary-base` directly. Reintroduce if a framework-level override surface becomes necessary. |
+| D18 | Phase 14 — border-radius in bridge | ❌ Excluded. Every proposed var would be a pure alias of `$token-border-radius-*`. No semantic anchor justifies a middle layer. |
+| D19 | Phase 14 — shadow in bridge | ❌ Excluded. Same rationale as radius — pure alias of `$token-elevation-*`. |
+| D20 | Phase 14 — pattern-scoped `--osui-*-layer` vars | ✅ **Keep declared in `_root.scss`.** These vars are read off-DOM (portaled patterns) and cross-pattern (sidebar layer read by menu layouts; menu layer read by flatpickr). Moving them into individual pattern CSS APIs would break the cross-pattern read path. Declarations stay; values rewire to `--os-layer-*` bridge. |
+| D21 | Phase 14 — `--os-size-footer: 0px` default | ✅ Keep. Consistent with the other size literals; consumers override per app. |
+| D22 | Phase 14 — status colors in bridge | ❌ Excluded. Same rationale as radius/shadow — no cascade today. Deferred to a future phase. |
+| D23 | Phase 14 — overlay / backdrop in bridge | ❌ Excluded. `$token-backdrop` is already the semantic surface; a bridge adds no override value. |
+| D24 | Phase 14 — internal plumbing (scale/above/below/negative/auto) | ✅ **Preserved as pure rename.** `--os-layer-system-scale`, `--os-layer-above`, `--os-layer-below`, `--os-layer-global-negative`, `--os-layer-global-auto` all kept — call sites use them in `calc()` expressions. Scale value shifts `5` → `100` to match token z-index step; tier anchors bind directly to `$token-z-index-*`. |
+| D25 | Phase 14 — `--os-color-background-footer` | ✅ Added alongside `--os-color-background-body/header/sidemenu/login` in the Surface group. New surface area — no prior var, no call-site sweep. Default `$token-bg-surface-default`. |
+| D26 | Phase 14 — `--os-color-background-sidemenu` | ✅ Added alongside sibling surface vars. New surface area — no sweep. Default `$token-bg-surface-default`. |
+| D27 | Phase 14 — focus outer / inner as bridge vars | ❌ **Excluded.** Consumers sweep directly to `$token-primitives-yellow-500` (focus-outer, `#ffd600` — closest yellow primitive, replacing legacy `#ffd337`) and `$token-text-default` (focus-inner). Dark-theme contrast preserved by the pre-existing `--token-text-default: neutral-100` override in `_theme-dark.scss:49`, which makes the formerly needed `--os-color-focus-inner` dark-theme override redundant. No dedicated focus-outer token exists today (`$token-border-focus-default` is a light blue for input focus rings, not the outer yellow highlight); `$token-semantics-warning-500` resolves to the same `#ffd600` but carries wrong semantics for focus. |
 
 ---
 

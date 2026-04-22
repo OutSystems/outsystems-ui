@@ -6,7 +6,7 @@
 ///
 .section {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-section-title-color:        #{$token-text-default};
+	--osui-section-title-color:        $token-text-default;
 	--osui-section-title-border-color: #{$token-border-default};
 	// ───────────────────────────────────────────────────────────────────
 
@@ -32,12 +32,12 @@
 				position: -webkit-sticky; //Fix for older iPhones
 				position: sticky;
 				top: calc(var(--section-top-position) + var(--os-safe-area-top));
-				z-index: calc(var(--layer-below) + var(--layer-global-navigation));
+				z-index: calc(var(--os-layer-below) + var(--os-layer-navigation));
 			}
 		}
 
 		.section-title {
-			background-color: var(--background-color-body, var(--color-background-body));
+			background-color: var(--background-color-body, var(--os-color-background-body));
 		}
 	}
 }

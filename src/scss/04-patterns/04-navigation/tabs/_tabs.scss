@@ -8,7 +8,7 @@
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-tabs-border-color:               #{$token-border-default};
 	--osui-tabs-header-item-color:          #{$token-text-subtlest};
-	--osui-tabs-header-item-color-active:   #{$token-text-default};
+	--osui-tabs-header-item-color-active:   $token-text-default;
 	--osui-tabs-header-item-color-disabled: #{$token-text-disabled};
 	--osui-tabs-indicator-color:            #{$token-semantics-primary-base};
 	// ───────────────────────────────────────────────────────────────────
@@ -219,7 +219,7 @@
 			transition: transform 200ms linear;
 			transform-origin: 0 0;
 			will-change: transform;
-			z-index: var(--layer-local-tier-1);
+			z-index: var(--os-layer-local-tier-1);
 
 			&[disabled] {
 				background-color: $token-text-disabled;
@@ -354,14 +354,14 @@
 			}
 
 			&:focus-visible {
-				background-color: var(--color-focus-outer);
+				background-color: $token-primitives-yellow-500;
 				color: $token-text-default;
 			}
 		}
 
 		&__content-item {
 			&:focus-visible {
-				box-shadow: 0 0 0 1px var(--color-focus-outer) inset;
+				box-shadow: 0 0 0 1px $token-primitives-yellow-500 inset;
 			}
 		}
 	}

@@ -7,7 +7,7 @@
 .floating {
 	&-actions-wrapper,
 	&-overlay {
-		--osui-floating-actions-layer: var(--layer-global-elevated);
+		--osui-floating-actions-layer: var(--os-layer-elevated);
 	}
 
 	&-actions-wrapper {
@@ -58,7 +58,7 @@
 		}
 
 		&.bottom-bar-exists {
-			bottom: calc(var(--bottom-bar-size) + $token-scale-400);
+			bottom: calc(var(--os-size-bottom-bar) + $token-scale-400);
 		}
 
 		&.no-rotation {
@@ -239,13 +239,13 @@
 ///
 .has-accessible-features {
 	.floating-button:focus {
-		box-shadow: 0 0 0 3px var(--color-focus-outer);
+		box-shadow: 0 0 0 3px $token-primitives-yellow-500;
 	}
 
 	.floating-actions-wrapper {
 		&.is--open {
 			.floating-button:focus {
-				box-shadow: 0 0 0 3px var(--color-focus-outer);
+				box-shadow: 0 0 0 3px $token-primitives-yellow-500;
 			}
 		}
 	}

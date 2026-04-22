@@ -21,17 +21,17 @@
 		}
 
 		.header {
-			left: var(--side-menu-size);
+			left: var(--os-size-side-menu);
 		}
 	}
 
 	&.layout-native.aside-expandable .main .header {
-		z-index: var(--layer-global-navigation);
+		z-index: var(--os-layer-navigation);
 	}
 
 	.aside-expandable {
 		&:not(.fixed-header) .main .header {
-			margin-left: calc(var(--side-menu-size) * -1);
+			margin-left: calc(var(--os-size-side-menu) * -1);
 		}
 
 		&.menu-visible {
@@ -62,7 +62,7 @@
 
 	.aside-expandable {
 		.header {
-			z-index: var(--layer-global-navigation);
+			z-index: var(--os-layer-navigation);
 		}
 	}
 }
@@ -87,7 +87,7 @@
 .tablet {
 	&.portrait {
 		.layout-side.layout-native.aside-expandable .main .header {
-			z-index: var(--layer-global-navigation);
+			z-index: var(--os-layer-navigation);
 		}
 	}
 }
@@ -95,7 +95,7 @@
 ///
 .phone {
 	.layout-side.layout-native.aside-expandable .main .header {
-		z-index: var(--layer-global-navigation);
+		z-index: var(--os-layer-navigation);
 	}
 }
 
@@ -117,7 +117,7 @@
 
 			.header {
 				left: 0;
-				right: var(--side-menu-size);
+				right: var(--os-size-side-menu);
 			}
 		}
 	}

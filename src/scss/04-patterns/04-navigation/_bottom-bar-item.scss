@@ -82,7 +82,7 @@
 		justify-content: center;
 	}
 	.footer {
-		height: var(--bottom-bar-size);
+		height: var(--os-size-bottom-bar);
 	}
 }
 
@@ -92,7 +92,7 @@
 	.bottom-bar {
 		& > a:focus {
 			background-color: transparent;
-			box-shadow: 0 0 0 3px var(--color-focus-outer);
+			box-shadow: 0 0 0 3px $token-primitives-yellow-500;
 		}
 	}
 }

@@ -2248,3 +2248,308 @@ A follow-up phase — "Pattern typography adoption" — should sweep the three b
 - [ ] `.font-size-{base,s,xs,label}` stays 16/14/12/11 regardless of tier
 - [ ] Font-family stack in `_resets.scss` html rule is unchanged (still native-first)
 - [ ] `git diff --stat` after Phase 13 lists exactly 3 SCSS files and 0 TypeScript files
+
+---
+
+## Phase 14 — `_root.scss` clean-up + `--os-*` bridge layer
+
+### 14.1 Background
+
+`src/scss/01-foundations/_root.scss` is today a hybrid of five prefixes:
+- `--color-*` (app settings, focus): `--color-background-body`, `--color-background-login`, `--color-focus-outer`, `--color-focus-inner`
+- `--header-color`: inconsistent naming — this is a surface background, not a colour family
+- `--{header,side-menu,bottom-bar}-size`, `--footer-height`: layout literals
+- `--layer-*` (internal plumbing: scale/above/below + semantic tiers + negative/auto + local-tier offsets)
+- `--osui-*-layer` (pattern-scoped defaults read off-DOM from portaled patterns and sibling layouts)
+
+The audit against the rest of the codebase shows ~250 call sites across ~60 files. Most are name-only rewrites — no SCSS helper functions wrap these vars; exactly one TypeScript file (`GlobalEnum.ts`) references one as a string literal. Focus colours are the only family whose consumers rewrite directly to `$token-*` SCSS vars instead of passing through a `--os-*` bridge: they don't need an intermediate override layer, and dropping the bridge reduces total surface area.
+
+Phase 14 normalises all framework-wide bridge vars onto the `--os-*` prefix via a pure rename, preserves the full layer plumbing (including `calc()`-based `--os-layer-above` / `--os-layer-below` and `--os-layer-global-negative` / `--os-layer-global-auto`), keeps pattern-scoped `--osui-*-layer` vars declared in `_root.scss` (read off-DOM and from sibling layouts), and adds two new framework-wide bridges for app theming (`--os-color-background-sidemenu`, `--os-color-background-footer`). Focus colours and brand colours are **not** bridged — their consumers rewrite directly to the underlying `$token-*` SCSS vars (`$token-primitives-yellow-500` and `$token-text-default` for focus; no change for brand since there were no prior OSUI-level brand bridges).
+
+### 14.2 Final `_root.scss` surface (34 vars, 6 groups)
+
+```scss
+////
+/// @group Root
+/// Framework-wide `--os-*` bridge layer: overrideable at the app level,
+/// consumed by components that need to respect app-wide theming.
+/// Pattern-scoped `--osui-*-layer` vars stay declared here because they're
+/// read off-DOM (portaled patterns) or from sibling layouts.
+
+:root {
+  /*! OS Surface Colors */
+  --os-color-background-body:     #{$token-bg-body};
+  --os-color-background-header:   #{$token-bg-surface-default};
+  --os-color-background-sidemenu: #{$token-bg-surface-default};
+  --os-color-background-footer:   #{$token-bg-surface-default};
+  --os-color-background-login:    #{$token-bg-surface-default};
+
+  /*! OS Layout Sizes */
+  --os-size-header:         #{$header-size};
+  --os-size-header-content: #{$header-size-content};
+  --os-size-side-menu:      #{$side-menu-size};
+  --os-size-bottom-bar:     #{$bottom-bar-size};
+  --os-size-footer:         #{$footer-height};
+
+  /*! OS Safe Areas */
+  --os-safe-area-top:    #{safe-area(top)};
+  --os-safe-area-right:  #{safe-area(right)};
+  --os-safe-area-bottom: #{safe-area(bottom)};
+  --os-safe-area-left:   #{safe-area(left)};
+
+  /*! OS Layer System — calc plumbing preserved, anchors bound to tokens */
+  --os-layer-system-scale: 100;
+  --os-layer-above: var(--os-layer-system-scale);
+  --os-layer-below: calc(-1 * var(--os-layer-system-scale));
+
+  --os-layer-screen:              #{$token-z-index-0};
+  --os-layer-elevated:            #{$token-z-index-100};
+  --os-layer-navigation:          #{$token-z-index-200};
+  --os-layer-off-canvas:          #{$token-z-index-300};
+  --os-layer-instant-interaction: #{$token-z-index-400};
+
+  --os-layer-global-negative: -1;
+  --os-layer-global-auto: auto;
+
+  --os-layer-local-tier-1: 1;
+  --os-layer-local-tier-2: 2;
+  --os-layer-local-tier-3: 3;
+  --os-layer-local-tier-4: 4;
+  --os-layer-local-tier-5: 5;
+
+  /*! Fixed/Absolute Patterns that need their variables at a global level */
+  --osui-bottom-sheet-layer: var(--os-layer-off-canvas);
+  --osui-notification-layer: var(--os-layer-instant-interaction);
+  --osui-popup-layer:        var(--os-layer-off-canvas);
+  --osui-sidebar-layer:      var(--os-layer-off-canvas);
+  --osui-menu-layer:         calc(var(--os-layer-navigation) + var(--os-layer-local-tier-2));
+}
+```
+
+**Var count breakdown (34 total):**
+- Surface Colors: 5 (2 new: `sidemenu`, `footer`)
+- Layout Sizes: 5
+- Safe Areas: 4
+- Layer Plumbing (scale/above/below): 3
+- Layer Tiers: 5
+- Layer Globals (negative/auto): 2
+- Layer Local Tiers: 5
+- Pattern Layers: 5
+
+### 14.3 Rename sweep — sed mappings
+
+Applied in order (longer strings first to avoid prefix-collision). Every rename is value-preserving at the call site; only `--os-layer-system-scale` changes its literal (`5` → `100`) inside `_root.scss`.
+
+```bash
+# Sizes (longest-first within family)
+--header-size-content           →  --os-size-header-content
+--header-size                   →  --os-size-header
+--side-menu-size                →  --os-size-side-menu
+--bottom-bar-size               →  --os-size-bottom-bar
+--footer-height                 →  --os-size-footer
+
+# App surface colours
+--header-color                  →  --os-color-background-header
+--color-background-body         →  --os-color-background-body
+--color-background-login        →  --os-color-background-login
+
+# Layers — global tiers + negative + auto (longer-first inside family)
+--layer-global-instant-interaction →  --os-layer-instant-interaction
+--layer-global-off-canvas          →  --os-layer-off-canvas
+--layer-global-navigation          →  --os-layer-navigation
+--layer-global-elevated            →  --os-layer-elevated
+--layer-global-negative            →  --os-layer-global-negative
+--layer-global-screen              →  --os-layer-screen
+--layer-global-auto                →  --os-layer-global-auto
+
+# Layers — scale / above / below (calc plumbing preserved)
+--layer-system-scale            →  --os-layer-system-scale
+--layer-above                   →  --os-layer-above
+--layer-below                   →  --os-layer-below
+
+# Layers — local tiers (single rule covers 1..5)
+--layer-local-tier-             →  --os-layer-local-tier-
+```
+
+**No deletions.** Every existing plumbing var survives as a renamed equivalent. Call sites that use `calc(var(--layer-below) + var(--layer-global-navigation))` etc. rename in place to `calc(var(--os-layer-below) + var(--os-layer-navigation))` — no hand-patching beyond sed.
+
+**Scope of sweep:** `src/scss/**/*.scss` and `src/scripts/**/*.ts`. `src/scss/tokens/` excluded (generated). `src/scss/01-foundations/_root.scss` excluded (hand-rewritten). `node_modules/` excluded.
+
+**Per-file change volume (from audit):**
+- `_icon-library-odc.scss` — 53 refs to `--color-focus-outer`
+- `_menu-layout-side.scss` — 7 refs to `--side-menu-size`
+- `_layout.scss` — 7 refs to `--side-menu-size`
+- `_floating-content.scss` — 5+5 refs to `--header-size` and `--side-menu-size`
+- `_dropdown-serverside.scss` — 5 refs to `--header-size`
+- `_menu.scss` — 5 refs to `--side-menu-size`
+- `_section.scss`, `_master-detail.scss`, `_bottomsheet.scss` — 4 refs to `--layer-above` / `--layer-below` (renamed by the same sed table; no calc rewrites needed)
+- 40+ other files with 1–4 refs each
+- `GlobalEnum.ts` — 1 string-literal ref to `--header-size-content`
+
+Total ≈ 200 string replacements.
+
+### 14.4 New framework-wide bridges (no call-site sweep)
+
+Two vars are added as new surface area — they have zero prior call sites to rewrite:
+
+| New var | Default | Purpose |
+|---|---|---|
+| `--os-color-background-sidemenu` | `$token-bg-surface-default` | App-theme hook for the side-menu surface |
+| `--os-color-background-footer` | `$token-bg-surface-default` | App-theme hook for the footer surface |
+
+These exist purely as override surface for app-level theming. Brand colours (`--color-primary` / `--color-secondary`) are not bridged: there are no prior OSUI-level brand vars to sweep, and apps that want to reskin brand can override `--token-semantics-primary-base` directly.
+
+### 14.4b Focus colour sweep — direct-to-token, no bridge
+
+Focus vars are eliminated, not renamed. The 40 `var(--os-color-focus-outer)` + 16 `var(--os-color-focus-inner)` call sites rewrite directly to SCSS token vars:
+
+```bash
+find src -type f -name '*.scss' -print0 | xargs -0 sed -i '' \
+  -e 's|var(--os-color-focus-outer)|$token-primitives-yellow-500|g' \
+  -e 's|var(--os-color-focus-inner)|$token-text-default|g'
+```
+
+(Runs after the `--color-focus-*` → `--os-color-focus-*` rename is removed from 14.3 — i.e. this sweep directly replaces the legacy `var(--color-focus-*)` consumers; the sed uses the new names above only because the rename would otherwise land there. In practice the sweep is done against the original `var(--color-focus-*)` references before the main rename sweep runs.)
+
+**Contrast preservation in dark theme:** `_theme-dark.scss:49` already overrides `--token-text-default: $token-primitives-neutral-100`. Any post-sweep `color: $token-text-default` call site (expanding to `var(--token-text-default, #101213)`) automatically resolves to white in dark theme, which is exactly what `--os-color-focus-inner` was previously doing via its own dark-theme override. That dark-theme override in `_theme-dark.scss:175` becomes redundant and is deleted in this phase.
+
+**Focus-outer yellow:** `$token-primitives-yellow-500` resolves to `#ffd600` — closest yellow primitive to legacy `#ffd337`. Uniform shift, no visual regression in focus-ring rendering.
+
+### 14.5 Pattern-scoped layer vars — stay in `_root.scss`
+
+Five `--osui-*-layer` vars are preserved in `_root.scss`; only their values rewire to `--os-layer-*`:
+
+| Var | New value |
+|---|---|
+| `--osui-bottom-sheet-layer` | `var(--os-layer-off-canvas)` |
+| `--osui-notification-layer` | `var(--os-layer-instant-interaction)` |
+| `--osui-popup-layer` | `var(--os-layer-off-canvas)` |
+| `--osui-sidebar-layer` | `var(--os-layer-off-canvas)` |
+| `--osui-menu-layer` | `calc(var(--os-layer-navigation) + var(--os-layer-local-tier-2))` |
+
+**Why these stay in `_root.scss`:** Bottom sheet, notification, popup, and sidebar render via portaled DOM — the pattern's JS attaches elements at `document.body` level. A CSS API block on `.osui-bottom-sheet` wouldn't cascade into the portaled node. Additionally, `--osui-sidebar-layer` is read by `_menu-layout-native.scss` and `_menu-layout-side.scss`; `--osui-menu-layer` is read by `_flatpickr.scss` (date/time/month-picker popups). Keeping declarations at `:root` guarantees resolution across all read sites.
+
+Name stays `--osui-*` (not `--os-*`) because these are pattern-scoped defaults per D11, and external consumers override them by setting `--osui-{pattern}-layer` on the pattern root element.
+
+### 14.6 File-by-file contract
+
+#### 14.6.1 `src/scss/01-foundations/_root.scss`
+
+Replace entire contents with the 34-var block from 14.2. Five groups of `--os-*` bridge vars plus the 5 `--osui-*-layer` pattern-scoped defaults. Layer plumbing (`--os-layer-system-scale`, `--os-layer-above`, `--os-layer-below`, `--os-layer-global-negative`, `--os-layer-global-auto`) preserved.
+
+#### 14.6.2 Mechanical rename sweep
+
+A single sed pass over `src/scss/` and `src/scripts/` executes the 14.3 mapping table in order. The longer-first ordering prevents partial matches — `--header-size-content` must be renamed before `--header-size` to avoid creating malformed substrings.
+
+```bash
+# Step 1 — focus call-site sweep: direct-to-token (executed first, before the rename sweep)
+find src -type f -name '*.scss' \
+  -not -path '*/tokens/*' \
+  -print0 | xargs -0 sed -i '' \
+    -e 's|var(--color-focus-outer)|$token-primitives-yellow-500|g' \
+    -e 's|var(--color-focus-inner)|$token-text-default|g'
+
+# Step 2 — mechanical rename pass
+find src/scss src/scripts -type f \( -name '*.scss' -o -name '*.ts' \) \
+  -not -path '*/tokens/*' \
+  -not -path '*/01-foundations/_root.scss' \
+  -exec sed -i '' \
+    -e 's|--header-size-content|--os-size-header-content|g' \
+    -e 's|--header-size|--os-size-header|g' \
+    -e 's|--side-menu-size|--os-size-side-menu|g' \
+    -e 's|--bottom-bar-size|--os-size-bottom-bar|g' \
+    -e 's|--footer-height|--os-size-footer|g' \
+    -e 's|--header-color|--os-color-background-header|g' \
+    -e 's|--color-background-body|--os-color-background-body|g' \
+    -e 's|--color-background-login|--os-color-background-login|g' \
+    -e 's|--layer-global-instant-interaction|--os-layer-instant-interaction|g' \
+    -e 's|--layer-global-off-canvas|--os-layer-off-canvas|g' \
+    -e 's|--layer-global-navigation|--os-layer-navigation|g' \
+    -e 's|--layer-global-elevated|--os-layer-elevated|g' \
+    -e 's|--layer-global-negative|--os-layer-global-negative|g' \
+    -e 's|--layer-global-screen|--os-layer-screen|g' \
+    -e 's|--layer-global-auto|--os-layer-global-auto|g' \
+    -e 's|--layer-system-scale|--os-layer-system-scale|g' \
+    -e 's|--layer-above|--os-layer-above|g' \
+    -e 's|--layer-below|--os-layer-below|g' \
+    -e 's|--layer-local-tier-|--os-layer-local-tier-|g' \
+    {} +
+
+# Step 3 — drop the now-redundant focus-inner dark-theme override
+# Hand-edit: remove the `--os-color-focus-inner: #{$token-primitives-neutral-100};`
+# declaration (and its preceding comment block) from src/scss/01-foundations/_theme-dark.scss.
+```
+
+Order invariants:
+- Focus sweep (Step 1) runs before the rename sweep (Step 2); otherwise Step 1's `--color-focus-*` pattern wouldn't match after the rename replaces it with `--os-color-focus-*`.
+- Within Step 2: `--layer-global-instant-interaction` before other `--layer-global-*` siblings; `header-size-content` before `header-size`.
+
+**Post-sed manual review:** one — delete the redundant `--os-color-focus-inner` dark-theme override in `_theme-dark.scss`. Every other call site is a name-only replacement; no calc expressions change shape.
+
+#### 14.6.3 `src/scripts/OSFramework/OSUI/GlobalEnum.ts`
+
+One string-literal ref to `--header-size-content` inside an enum. Renamed by the sed sweep to `--os-size-header-content`. No TypeScript signature change — only the string value updates. Consumers reading this enum value at runtime (to pass to `getComputedStyle(document.documentElement).getPropertyValue(...)`) continue to work because `_root.scss` now declares the renamed custom property.
+
+### 14.7 Scope — what does NOT change
+
+- `src/scss/tokens/` generated files — untouched.
+- Component CSS APIs (`--osui-*` vars other than the 5 layer defaults) — untouched. No component is migrated to default from `var(--os-*)` instead of `$token-*` in this phase.
+- Pattern-scoped `--osui-*-layer` vars — stay declared in `_root.scss`; only their values rewire to `--os-layer-*`.
+- `_theme-dark.scss` — only the now-redundant `--os-color-focus-inner` override is deleted. All other dark-theme overrides are untouched. Focus-ring contrast in dark theme is preserved end-to-end via the pre-existing `--token-text-default` override.
+- ESLint rules, Prettier config, gulp specs — unchanged.
+- Compiled z-ordering — preserved (relative ordering identical; absolute z-index values shift from 0/5/10/15/20 to 0/100/200/300/400; `calc(below + navigation)` still produces "one tier down").
+
+### 14.8 Verification
+
+1. **Build:** `npm run build` succeeds for O11 and ODC. `npm run lint` passes.
+2. **No legacy names remain:**
+   ```bash
+   grep -rE '\-\-(color-focus|color-background-(body|login)|header-color|header-size|side-menu-size|bottom-bar-size|footer-height|layer-(global|local|above|below|system-scale))' src/
+   ```
+   Returns zero matches.
+3. **Focus + brand vars fully eliminated (not bridged):**
+   ```bash
+   grep -rE '\-\-os-color-(focus|primary|secondary)' src/
+   ```
+   Returns zero matches.
+4. **34 var declarations in `_root.scss`:**
+   ```bash
+   grep -cE '^\s*--(os|osui)-' src/scss/01-foundations/_root.scss
+   ```
+   Returns `34`.
+5. **Pattern-scoped layer vars still declared in `_root.scss`:**
+   ```bash
+   grep -cE '^\s*--osui-(bottom-sheet|notification|popup|sidebar|menu)-layer:' src/scss/01-foundations/_root.scss
+   ```
+   Returns `5`.
+6. **New bridge vars declared:**
+   ```bash
+   grep -cE '^\s*--os-color-background-(sidemenu|footer):' src/scss/01-foundations/_root.scss
+   ```
+   Returns `2`.
+7. **Dark-theme focus-inner override removed:**
+   ```bash
+   grep -n 'focus-inner' src/scss/01-foundations/_theme-dark.scss
+   ```
+   Returns zero matches.
+8. **Focus-outer yellow rendered in compiled CSS:** grep the compiled `dist/*.css` for `#ffd600` (post-migration) — at least one hit; `#ffd337` (legacy) — zero hits.
+9. **Layer hierarchy preserved** — manual smoke test: open dev server, inspect a bottom-sheet, notification, popup, sidebar, and date-picker popup. Each renders in the same stacking order as pre-Phase-14.
+10. **Dark-theme focus contrast preserved** — open dev server with `class="theme-dark"` on `<body>`; tab through focusable widgets. Focus-inner border still renders as neutral white against the outer yellow ring (inherited via `--token-text-default: $token-primitives-neutral-100` in `_theme-dark.scss:49`).
+11. **Compiled CSS diff:** `diff` between pre- and post-Phase-14 compiled CSS shows variable-name renames, focus var inlining (`var(--color-focus-*)` → direct token references), z-index value scaling (5→100, 10→200, 15→300, 20→400), two new bridge var declarations, and no unexpected selector additions.
+12. **TypeScript compile check:** `GlobalEnum.ts` enum consumers still resolve — no TS error introduced.
+
+### Phase 14 — Full acceptance criteria
+
+- [ ] `src/scss/01-foundations/_root.scss` contains exactly 34 declarations across the 6 groups defined in 14.2 (29 `--os-*` + 5 `--osui-*-layer`)
+- [ ] Zero references to `--color-focus-*`, `--color-background-(body|login)`, `--header-color`, `--header-size*`, `--side-menu-size`, `--bottom-bar-size`, `--footer-height`, `--layer-global-*`, `--layer-local-tier-*`, `--layer-above`, `--layer-below`, `--layer-system-scale` remain anywhere under `src/`
+- [ ] Zero references to `--os-color-focus-*`, `--os-color-primary`, `--os-color-secondary` — focus + brand are not bridged
+- [ ] `--os-color-background-sidemenu`, `--os-color-background-footer` declared in `_root.scss`
+- [ ] `_root.scss` still carries the five `--osui-*-layer` declarations with values routed through `--os-layer-*`
+- [ ] `--os-layer-system-scale`, `--os-layer-above`, `--os-layer-below`, `--os-layer-global-negative`, `--os-layer-global-auto` all declared in `_root.scss`
+- [ ] `GlobalEnum.ts` enum contains `'--os-size-header-content'` (not the old name)
+- [ ] `_theme-dark.scss` no longer declares `--os-color-focus-inner` (the override is redundant with the existing `--token-text-default` override at line 49)
+- [ ] `npm run build` succeeds for O11 and ODC
+- [ ] `npm run lint` passes
+- [ ] Dev server renders bottom-sheet, notification, popup, sidebar, date-picker popup in the same stacking order as pre-Phase-14
+- [ ] Dev server with `<body class="theme-dark">` renders focus-ring contrast as pre-Phase-14 (white inner border over yellow outer ring)
+- [ ] `git diff --stat` after Phase 14 lists ~60 SCSS files and 1 TypeScript file (larger than the pre-focus-sweep count because focus consumers spread across ~20 additional files)

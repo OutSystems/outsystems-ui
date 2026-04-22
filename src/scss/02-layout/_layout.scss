@@ -34,7 +34,7 @@ body,
 
 		&-side {
 			.main {
-				margin-left: var(--side-menu-size);
+				margin-left: var(--os-size-side-menu);
 			}
 
 			&.aside-overlay .main {
@@ -88,7 +88,7 @@ body,
 .android {
 	.layout-native {
 		.footer {
-			height: calc(var(--safe-area-inset-bottom, 0px) + var(--bottom-bar-size));
+			height: calc(var(--safe-area-inset-bottom, 0px) + var(--os-size-bottom-bar));
 		}
 	}
 }
@@ -100,7 +100,7 @@ body,
 		min-height: 100%;
 
 		&-native .footer {
-			height: calc(var(--os-safe-area-bottom) + var(--bottom-bar-size));
+			height: calc(var(--os-safe-area-bottom) + var(--os-size-bottom-bar));
 		}
 
 		.header {
@@ -117,7 +117,7 @@ body,
 		&.aside {
 			&-visible,
 			&-expandable {
-				--side-menu-size: 264px;
+				--os-size-side-menu: 264px;
 			}
 		}
 	}
@@ -130,7 +130,7 @@ body,
 			&-visible,
 			&-expandable {
 				.main {
-					width: calc(100% - var(--side-menu-size));
+					width: calc(100% - var(--os-size-side-menu));
 				}
 			}
 		}
@@ -146,8 +146,8 @@ body,
 					&-visible,
 					&-expandable {
 						.main {
-							margin-left: var(--side-menu-size);
-							width: calc(100% - var(--side-menu-size));
+							margin-left: var(--os-size-side-menu);
+							width: calc(100% - var(--os-size-side-menu));
 						}
 					}
 				}
@@ -156,7 +156,7 @@ body,
 
 		.layout-side.layout-native.aside-expandable {
 			&.menu-visible .main {
-				margin-left: var(--side-menu-size);
+				margin-left: var(--os-size-side-menu);
 			}
 
 			.main {
@@ -205,7 +205,7 @@ body,
 			.layout-side.layout-native.aside-expandable {
 				&.menu-visible .main {
 					margin-left: 0;
-					margin-right: var(--side-menu-size);
+					margin-right: var(--os-size-side-menu);
 				}
 
 				.main {
@@ -224,7 +224,7 @@ body,
 	.layout-side {
 		.main {
 			margin-left: 0;
-			margin-right: var(--side-menu-size);
+			margin-right: var(--os-size-side-menu);
 		}
 
 		&.aside-overlay .main {

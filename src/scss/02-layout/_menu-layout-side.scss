@@ -16,7 +16,7 @@
 		height: auto;
 		position: fixed;
 		top: 0;
-		width: var(--side-menu-size);
+		width: var(--os-size-side-menu);
 		z-index: var(--osui-menu-layer);
 	}
 }
@@ -28,12 +28,12 @@
 		background-color: $token-bg-surface-default;
 		flex-direction: column;
 		height: 100%;
-		left: calc(-1 * var(--side-menu-size));
+		left: calc(-1 * var(--os-size-side-menu));
 		position: fixed;
 		top: 0;
 		transform: translateX(0) translateZ(0);
 		transition: transform 130ms ease-in;
-		width: var(--side-menu-size);
+		width: var(--os-size-side-menu);
 
 		will-change: transform;
 		z-index: var(--osui-menu-layer);
@@ -41,7 +41,7 @@
 
 	&.menu-visible {
 		.app-menu-content {
-			transform: translateX(var(--side-menu-size)) translateZ(0);
+			transform: translateX(var(--os-size-side-menu)) translateZ(0);
 			transition: transform 330ms ease-out;
 		}
 	}
@@ -57,7 +57,7 @@
 		}
 
 		&.aside-expandable:not(.fixed-header) .app-menu-content {
-			padding-top: var(--header-size);
+			padding-top: var(--os-size-header);
 			top: 0;
 		}
 	}
@@ -69,7 +69,7 @@
 			}
 
 			.main {
-				margin-left: var(--side-menu-size);
+				margin-left: var(--os-size-side-menu);
 			}
 		}
 
@@ -101,7 +101,7 @@
 		.aside-expandable.menu-visible {
 			.main {
 				margin-left: 0;
-				margin-right: var(--side-menu-size);
+				margin-right: var(--os-size-side-menu);
 			}
 		}
 	}
@@ -109,7 +109,7 @@
 	&.tablet,
 	&.phone {
 		.app-menu-content {
-			right: calc(-1 * var(--side-menu-size));
+			right: calc(-1 * var(--os-size-side-menu));
 			transition: all 330ms ease-out;
 		}
 	}

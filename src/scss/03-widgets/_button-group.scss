@@ -80,7 +80,7 @@
 .layout-native {
 	.header-top-content {
 		.button-group-item {
-			background-color: var(--background-color-header, var(--header-color));
+			background-color: var(--background-color-header, var(--os-color-background-header));
 			border: 0;
 			border-bottom: $token-border-size-050 solid transparent;
 			color: $token-text-subtlest;
@@ -148,13 +148,13 @@
 
 			&:before {
 				bottom: -1px;
-				box-shadow: 0 0 0 3px var(--color-focus-outer);
+				box-shadow: 0 0 0 3px $token-primitives-yellow-500;
 				content: '';
 				left: -1px;
 				position: absolute;
 				right: -1px;
 				top: -1px;
-				z-index: var(--layer-global-screen);
+				z-index: var(--os-layer-screen);
 			}
 		}
 	}

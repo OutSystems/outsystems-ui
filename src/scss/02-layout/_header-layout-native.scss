@@ -6,7 +6,7 @@
 ///
 .layout-native {
 	&.hide-header-on-scroll .header {
-		top: calc(-1 * (var(--header-size) + var(--os-safe-area-top)));
+		top: calc(-1 * (var(--os-size-header) + var(--os-safe-area-top)));
 	}
 
 	.header {
@@ -60,7 +60,7 @@
 		bottom: 0;
 		position: -webkit-sticky; //Fix for older iPhones
 		position: sticky;
-		z-index: var(--layer-global-navigation);
+		z-index: var(--os-layer-navigation);
 	}
 
 	.menu-icon {
@@ -117,7 +117,7 @@
 .android {
 	.layout-native {
 		&.hide-header-on-scroll .header {
-			top: calc(-1 * (var(--header-size) + #{android-safe-area-top()}));
+			top: calc(-1 * (var(--os-size-header) + #{android-safe-area-top()}));
 		}
 
 		.header,

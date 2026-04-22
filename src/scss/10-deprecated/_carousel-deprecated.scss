@@ -182,7 +182,7 @@
 		transition: opacity 150ms linear;
 		width: 40px;
 		will-change: opacity;
-		z-index: var(--layer-local-tier-2);
+		z-index: var(--os-layer-local-tier-2);
 
 		&.disabled {
 			opacity: 0.3;
@@ -247,7 +247,7 @@
 .has-accessible-features {
 	.carousel {
 		.carousel-navigation:focus {
-			box-shadow: 0 0 0 3px var(--color-focus-outer);
+			box-shadow: 0 0 0 3px $token-primitives-yellow-500;
 		}
 	}
 }

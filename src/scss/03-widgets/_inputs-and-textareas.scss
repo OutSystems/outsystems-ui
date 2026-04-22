@@ -22,7 +22,7 @@
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-input-background:          #{$token-bg-input-default};
 	--osui-input-border-color:        #{$token-border-input-default};
-	--osui-input-color:               #{$token-text-default};
+	--osui-input-color:               $token-text-default;
 	--osui-input-border-radius:       #{$token-border-radius-200};
 	--osui-input-focus-border-color:  #{$token-semantics-primary-base};
 	--osui-input-error-border-color:  #{$token-semantics-danger-base};
@@ -138,7 +138,7 @@
 	.header-top-content {
 		.form-control {
 			&[data-input] {
-				background-color: var(--background-color-header, var(--header-color));
+				background-color: var(--background-color-header, var(--os-color-background-header));
 				border: 0;
 				border-bottom: $token-border-size-025 solid transparent;
 				border-radius: 0;
@@ -164,7 +164,7 @@
 			}
 
 			&:focus {
-				border-color: var(--color-focus-inner);
+				border-color: $token-text-default;
 			}
 
 			&.not-valid {

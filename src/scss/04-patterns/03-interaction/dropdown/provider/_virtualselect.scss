@@ -194,7 +194,7 @@
 			&-container {
 				background-color: $token-backdrop;
 				// The !important is needed in order to overwrite the inline style added by library!
-				z-index: var(--layer-global-elevated) !important;
+				z-index: var(--os-layer-elevated) !important;
 			}
 
 			.vscomp-search-container {
@@ -637,15 +637,15 @@
 body {
 	&.vscomp-popup-active {
 		.vscomp-wrapper:not(.focused) {
-			z-index: var(--layer-global-screen);
+			z-index: var(--os-layer-screen);
 		}
 
 		.vscomp-wrapper {
-			z-index: var(--layer-global-off-canvas);
+			z-index: var(--os-layer-off-canvas);
 		}
 
 		&:has(.osui-notification--is-open) .vscomp-wrapper {
-			z-index: var(--layer-global-instant-interaction);
+			z-index: var(--os-layer-instant-interaction);
 		}
 	}
 }
@@ -654,10 +654,10 @@ body {
 .pop-comp-arrow,
 .pop-comp-wrapper,
 .vscomp-wrapper.keep-always-open .vscomp-dropbox-container {
-	z-index: var(--layer-local-tier-1);
+	z-index: var(--os-layer-local-tier-1);
 }
 
 .pop-comp-content,
 .vscomp-dropbox-container {
-	z-index: var(--layer-local-tier-2);
+	z-index: var(--os-layer-local-tier-2);
 }

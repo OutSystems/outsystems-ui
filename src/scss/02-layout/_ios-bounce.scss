@@ -31,11 +31,11 @@
 				}
 
 				.pull-to-refresh {
-					top: calc(var(--header-size) + var(--header-size-content) + var(--os-safe-area-top));
+					top: calc(var(--os-size-header) + var(--os-size-header-content) + var(--os-safe-area-top));
 				}
 
 				.content {
-					background-color: var(--background-color-body, var(--color-background-body));
+					background-color: var(--background-color-body, var(--os-color-background-body));
 					grid-area: content;
 					overflow-x: hidden;
 					overflow-y: auto;

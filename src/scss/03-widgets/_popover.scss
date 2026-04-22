@@ -19,7 +19,7 @@
 			// ─── Component CSS API ─────────────────────────────────────────────
 			--osui-popover-background:    #{$token-bg-surface-default};
 			--osui-popover-border-color:  #{$token-border-default};
-			--osui-popover-color:         #{$token-text-default};
+			--osui-popover-color:         $token-text-default;
 			--osui-popover-border-radius: #{$token-border-radius-100};
 			--osui-popover-shadow:        #{$token-elevation-1};
 			// ───────────────────────────────────────────────────────────────────
@@ -32,7 +32,7 @@
 			max-width: 350px;
 			min-width: auto;
 			padding: $token-scale-400;
-			z-index: var(--layer-global-elevated);
+			z-index: var(--os-layer-elevated);
 		}
 	}
 }

@@ -92,7 +92,7 @@
 			pointer-events: none;
 			position: absolute;
 			width: 1px;
-			z-index: var(--layer-global-negative);
+			z-index: var(--os-layer-global-negative);
 		}
 	}
 
@@ -162,7 +162,7 @@
 			top: 100%;
 			width: 100%;
 			word-break: break-all;
-			z-index: var(--layer-local-tier-3);
+			z-index: var(--os-layer-local-tier-3);
 
 			&.is-active {
 				display: block;
@@ -378,14 +378,14 @@
 		&.is-open {
 			&.is-focused {
 				.choices__inner {
-					border-color: var(--color-focus-inner);
+					border-color: $token-text-default;
 				}
 			}
 		}
 	}
 
 	.search--wrapper input:focus {
-		border-color: var(--color-focus-inner);
+		border-color: $token-text-default;
 	}
 }
 

@@ -17,7 +17,7 @@
 /* Hide StickyObserve when HideOnScroll is used*/
 ///
 .sticky-observer {
-	height: var(--header-size);
+	height: var(--os-size-header);
 	left: 0;
 	position: absolute;
 	right: 0;

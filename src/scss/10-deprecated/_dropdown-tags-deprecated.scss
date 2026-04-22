@@ -173,8 +173,8 @@
 		&.is-open {
 			&.is-focused {
 				.choices__inner {
-					border-color: var(--color-focus-inner);
-					box-shadow: 0px 0px 0px 3px var(--color-focus-outer);
+					border-color: $token-text-default;
+					box-shadow: 0px 0px 0px 3px $token-primitives-yellow-500;
 				}
 			}
 		}

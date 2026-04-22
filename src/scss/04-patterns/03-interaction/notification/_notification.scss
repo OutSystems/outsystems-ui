@@ -11,7 +11,7 @@
 	--osui-notification-border-width:  #{$token-border-size-025};
 	--osui-notification-border-radius: #{$token-border-radius-100};
 	--osui-notification-shadow:        #{$token-elevation-4};
-	--osui-notification-color:         #{$token-text-default};
+	--osui-notification-color:         $token-text-default;
 	--osui-notification-padding:       #{$token-scale-600};
 	// ───────────────────────────────────────────────────────────────────
 

@@ -283,9 +283,9 @@
 ///
 .has-accessible-features {
 	th.sortable:focus {
-		box-shadow: 0 0 0 3px var(--color-focus-outer);
+		box-shadow: 0 0 0 3px $token-primitives-yellow-500;
 		position: relative;
-		z-index: var(--layer-global-screen);
+		z-index: var(--os-layer-screen);
 	}
 }
 

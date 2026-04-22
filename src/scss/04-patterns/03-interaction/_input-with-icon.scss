@@ -83,7 +83,7 @@
 	.input-with-icon {
 		.input-with-icon-content-icon {
 			padding-bottom: $token-scale-600;
-			z-index: var(--layer-local-tier-1);
+			z-index: var(--os-layer-local-tier-1);
 		}
 
 		.form-control[class*='ThemeGrid_Width'].not-valid ~ span.validation-message {

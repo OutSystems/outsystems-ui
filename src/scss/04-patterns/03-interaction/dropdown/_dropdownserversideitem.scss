@@ -7,7 +7,7 @@
 .osui-dropdown-serverside-item {
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-dropdown-item-background: transparent;
-	--osui-dropdown-item-color:      #{$token-text-default};
+	--osui-dropdown-item-color:      $token-text-default;
 	--osui-dropdown-item-hover-bg:   #{$token-bg-neutral-subtle-default};
 	// ───────────────────────────────────────────────────────────────────
 
@@ -23,12 +23,12 @@
 	position: relative;
 	transition: background 250ms ease;
 	width: 100%;
-	z-index: var(--layer-global-screen);
+	z-index: var(--os-layer-screen);
 
 	&:hover,
 	&--is-selected {
 		background-color: var(--osui-dropdown-item-hover-bg);
-		z-index: var(--layer-local-tier-1);
+		z-index: var(--os-layer-local-tier-1);
 
 		// Service Studio Preview
 		& {
@@ -62,7 +62,7 @@
 		}
 
 		&:focus {
-			box-shadow: inset 0 0 0 3px var(--color-focus-outer);
+			box-shadow: inset 0 0 0 3px $token-primitives-yellow-500;
 		}
 	}
 }

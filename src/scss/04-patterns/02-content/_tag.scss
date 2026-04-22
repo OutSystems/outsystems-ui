@@ -8,7 +8,7 @@
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-tag-color:             #{$token-text-inverse};
 	--osui-tag-primary-color:     #{$token-semantics-primary-base};
-	--osui-tag-on-light-color:    #{$token-text-default};
+	--osui-tag-on-light-color:    $token-text-default;
 	// ───────────────────────────────────────────────────────────────────
 
 	align-items: center;

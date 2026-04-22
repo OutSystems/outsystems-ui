@@ -138,7 +138,7 @@
 	--token-bg-success-base-press:             #{$token-primitives-green-500};
 	--token-bg-info-base-default:              #{$token-primitives-blue-600};
 	--token-bg-info-base-press:                #{$token-primitives-blue-500};
-	--token-bg-warning-base-default:           #{$token-primitives-yellow-500};
+	--token-bg-warning-base-default:           $token-primitives-yellow-500;
 	--token-bg-warning-base-press:             #{$token-primitives-yellow-400};
 
 	/* ---------------------------------------------------------------------- */
@@ -166,13 +166,9 @@
 	/* App-level layout tokens (not part of the design-token system)          */
 	/* These are what body + header + login actually consume.                 */
 	/* ---------------------------------------------------------------------- */
-	--color-background-body:                   #{$token-primitives-base-black};
-	--color-background-login:                  #{$token-primitives-neutral-1200};
-	--header-color:                            #{$token-primitives-neutral-1200};
-
-	/* Focus ring — amber stays, but inner contrast swaps so keyboard focus
-	   is still legible on both light content and dark surfaces. */
-	--color-focus-inner:                       #{$token-primitives-neutral-100};
+	--os-color-background-body:                   #{$token-primitives-base-black};
+	--os-color-background-login:                  #{$token-primitives-neutral-1200};
+	--os-color-background-header:                            #{$token-primitives-neutral-1200};
 
 	/* ====================================================================== */
 	/* Component-scoped refinements — CSS API vars that don't naturally       */
@@ -199,7 +195,7 @@
 			--osui-alert-accent-color: #{$token-primitives-red-500};
 		}
 		&-warning {
-			--osui-alert-accent-color: #{$token-primitives-yellow-500};
+			--osui-alert-accent-color: $token-primitives-yellow-500;
 		}
 	}
 

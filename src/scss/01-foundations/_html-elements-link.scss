@@ -43,8 +43,8 @@ a {
 .has-accessible-features {
 	a {
 		&:focus {
-			background-color: var(--color-focus-outer);
-			box-shadow: 0 2px var(--color-focus-inner);
+			background-color: $token-primitives-yellow-500;
+			box-shadow: 0 2px $token-text-default;
 			color: $token-text-default;
 
 			&,

@@ -42,7 +42,7 @@
 	}
 
 	&:focus:before {
-		box-shadow: 0 0 0 2px var(--color-focus-outer);
+		box-shadow: 0 0 0 2px $token-primitives-yellow-500;
 	}
 
 	&:checked {
@@ -159,7 +159,7 @@
 
 		&:focus:before {
 			background-color: $token-semantics-primary-base;
-			border-color: var(--color-focus-inner);
+			border-color: $token-text-default;
 			box-shadow: none;
 		}
 

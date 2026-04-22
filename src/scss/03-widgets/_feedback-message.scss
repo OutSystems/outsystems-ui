@@ -58,7 +58,7 @@ div.feedback-message-success {
 ///
 div.feedback-message-warning {
 	--osui-feedback-message-background: #{$token-semantics-warning-base};
-	--osui-feedback-message-color:      #{$token-text-default};
+	--osui-feedback-message-color:      $token-text-default;
 }
 
 // Responsive --------------------------------------------------------------------

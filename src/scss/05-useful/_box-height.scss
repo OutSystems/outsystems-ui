@@ -12,7 +12,7 @@
 	}
 
 	&-minus-header {
-		height: calc(100vh - var(--header-size));
+		height: calc(100vh - var(--os-size-header));
 
 		// Service Studio Preview
 		& {

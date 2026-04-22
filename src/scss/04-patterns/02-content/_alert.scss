@@ -7,7 +7,7 @@
 .alert {
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-alert-background:    transparent;
-	--osui-alert-color:         #{$token-text-default};
+	--osui-alert-color:         $token-text-default;
 	--osui-alert-accent-color:  #{$token-border-default};
 	--osui-alert-border-radius: #{$token-border-radius-300};
 	--osui-alert-padding:       #{$token-scale-400};

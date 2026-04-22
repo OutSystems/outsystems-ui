@@ -109,7 +109,7 @@
 
 		&:focus {
 			&:before {
-				border-color: var(--color-focus-inner);
+				border-color: $token-text-default;
 			}
 		}
 	}

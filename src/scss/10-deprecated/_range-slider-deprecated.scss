@@ -52,7 +52,7 @@
 	height: 100%;
 	position: relative;
 	width: 100%;
-	z-index: var(--layer-local-tier-1);
+	z-index: var(--os-layer-local-tier-1);
 }
 
 .range-slider .noUi-connect,
@@ -66,13 +66,13 @@
 	-webkit-transform-style: preserve-3d;
 	transform-style: flat;
 	will-change: transform;
-	z-index: var(--layer-local-tier-1);
+	z-index: var(--os-layer-local-tier-1);
 }
 
 .range-slider .noUi-connects {
 	border-radius: $token-border-radius-100;
 	overflow: hidden;
-	z-index: var(--layer-global-screen);
+	z-index: var(--os-layer-screen);
 }
 
 .range-slider .noUi-horizontal .noUi-handle,
@@ -356,6 +356,6 @@
 
 /* Accessibility Styles */
 .has-accessible-features .range-slider .noUi-handle:focus {
-	border-color: var(--color-focus-inner);
-	box-shadow: 0px 0px 0px 3px var(--color-focus-outer);
+	border-color: $token-text-default;
+	box-shadow: 0px 0px 0px 3px $token-primitives-yellow-500;
 }

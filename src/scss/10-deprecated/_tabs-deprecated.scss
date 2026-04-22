@@ -95,7 +95,7 @@
 		overflow-x: auto;
 		position: relative;
 		width: 100%;
-		z-index: var(--layer-local-tier-1);
+		z-index: var(--os-layer-local-tier-1);
 	}
 
 	&-tab {
@@ -125,7 +125,7 @@
 	padding: $token-scale-600 $token-scale-0;
 	position: relative;
 	width: 100%;
-	z-index: var(--layer-global-auto);
+	z-index: var(--os-layer-global-auto);
 
 	&-tab {
 		&:not(.open) {

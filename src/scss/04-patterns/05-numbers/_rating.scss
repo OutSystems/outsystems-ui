@@ -63,13 +63,13 @@
 
 		&-filled {
 			opacity: 1;
-			z-index: var(--layer-local-tier-1);
+			z-index: var(--os-layer-local-tier-1);
 		}
 
 		&-empty,
 		&-half {
 			opacity: 0;
-			z-index: var(--layer-global-screen);
+			z-index: var(--os-layer-screen);
 		}
 	}
 
@@ -98,7 +98,7 @@
 	}
 
 	&.is-half .rating-item-half {
-		z-index: var(--layer-local-tier-1);
+		z-index: var(--os-layer-local-tier-1);
 	}
 
 	&.is-half input:checked + label .rating-item-half {
@@ -193,6 +193,6 @@
 ///
 .has-accessible-features {
 	input:focus + .rating-item > div {
-		box-shadow: 0 0 0 3px var(--color-focus-outer);
+		box-shadow: 0 0 0 3px $token-primitives-yellow-500;
 	}
 }
