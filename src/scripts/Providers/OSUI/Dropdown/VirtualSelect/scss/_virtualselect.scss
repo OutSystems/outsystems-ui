@@ -241,13 +241,17 @@
 				margin-left: var(--space-m);
 				margin-right: var(--space-none);
 			}
+
+			&,
+			&.show-value-as-tags{
+				.vscomp-clear-button {
+					left: var(--space-xl);
+				}
+			}	
 		}
 
 		&.show-value-as-tags {
 			&.has-value {
-				.vscomp-clear-button {
-					left: var(--space-xl);
-				}
 				.vscomp-toggle-button {
 					padding-right: var(--space-s);
 				}
