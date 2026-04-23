@@ -221,6 +221,13 @@
 	}
 }
 
+.osui-datepicker-calendar-ss-preview, 
+.osui-monthpicker-ss-preview {
+	--osui-icon-font-family: 'FontAwesome';
+	--osui-icon-arrow-left: '\f104';
+	--osui-icon-arrow-right: '\f105';
+}
+
 // DropdownServerSide
 .osui-dropdown-serverside {
 	&__balloon {
