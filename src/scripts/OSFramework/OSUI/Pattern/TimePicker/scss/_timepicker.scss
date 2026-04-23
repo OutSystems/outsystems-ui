@@ -6,8 +6,6 @@
 /// Import Flatpickr library styles
 @import '../../../../../Providers/OSUI/Timepicker/Flatpickr/scss/_flatpickr.scss';
 
-@import 'timepicker_ss_preview_imgs';
-
 ///
 .osui-timepicker {
 	input {
@@ -51,32 +49,39 @@
 
 		// Service Studio Preview
 		& {
-			-servicestudio-background-color: get-background-color('transparent');
-			-servicestudio-background-position: top left;
-			-servicestudio-background-repeat: no-repeat;
-			-servicestudio-background-size: contain;
+			-servicestudio-background-color: var(--color-neutral-0);
 			-servicestudio-border-radius: var(--border-radius-soft);
-			-servicestudio-display: inline-block;
-			-servicestudio-height: 0;
+			-servicestudio-display: flex;
+			-servicestudio-justify-content: space-evenly;
+			-servicestudio-line-height: var(--space-xl);
 			-servicestudio-margin-top: 2px;
 			-servicestudio-max-width: 320px;
-			-servicestudio-overflow: hidden;
 			-servicestudio-position: relative;
-			-servicestudio-width: 100%;
+			-servicestudio-text-align: center;
 			-servicestudio-z-index: var(--layer-local-tier-1);
 
-			&.time12h {
-				-servicestudio-background-image: $timepicker_time12h_img_base64;
-				-servicestudio-height: var(--space-xl);
-			}
+			&.time12h{
+				padding-right: var(--space-xxl);
+				&:after{
+					background-color: var(--color-neutral-7);
+					border-radius: var(--border-radius-rounded);
+					color: var(--color-neutral-0);
+					content:"am";
+					font-size: var(--font-size-xs);
+					font-weight: var(--font-semi-bold);
+					height: var(--space-m);
+					line-height: var(--space-m);
+					position: absolute;
+					right: var(--space-s);
+					top: 50%;
+					transform: translateY(-50%);
+					width: var(--space-xl);
+					text-transform: uppercase;
+				}
 
-			&.time24h {
-				-servicestudio-background-image: $timepicker_time24h_img_base64;
-				-servicestudio-height: var(--space-xl);
 			}
 
 			& + .placeholder-ss-preview {
-				-servicestudio-height: 0;
 				-servicestudio-opacity: 0;
 				-servicestudio-overflow: hidden;
 				-servicestudio-width: 100%;
@@ -99,18 +104,6 @@
 	// Service Studio Preview
 	.osui-timepicker__dropdown-ss-preview {
 		-servicestudio-margin-top: -22px;
-	}
-}
-
-// If Hybrid IDE
-///
-html[data-uieditorversion^='1'] {
-	.osui-timepicker__dropdown-ss-preview {
-		&.time12h,
-		&.time24h {
-			-servicestudio-padding-top: min(var(--space-xl), 100%);
-			-servicestudio-height: 0;
-		}
 	}
 }
 

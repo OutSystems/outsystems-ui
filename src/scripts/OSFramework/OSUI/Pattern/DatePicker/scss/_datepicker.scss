@@ -6,8 +6,6 @@
 /// Import Flatpickr library styles
 @import '../../../../../Providers/OSUI/SharedProviderResources/Flatpickr/scss/flatpickr';
 
-@import 'datepicker_ss_preview_imgs';
-
 ///
 .osui-datepicker {
 	input {
@@ -51,9 +49,6 @@
 		// Service Studio Preview
 		& {
 			-servicestudio-background-color: get-background-color('neutral-0');
-			-servicestudio-background-position: top center;
-			-servicestudio-background-repeat: no-repeat;
-			-servicestudio-background-size: contain;
 			-servicestudio-border-radius: var(--border-radius-soft);
 			-servicestudio-border: var(--border-size-s) solid get-border-color('neutral-5');
 			-servicestudio-display: inline-block;
@@ -65,39 +60,86 @@
 			-servicestudio-width: 100%;
 			-servicestudio-z-index: var(--layer-local-tier-1);
 
+			&:before,
+			&:after {
+				-servicestudio-color: var(--color-indigo);
+				-servicestudio-font-family: var(--osui-icon-font-family);
+				-servicestudio-position: absolute;
+				-servicestudio-height: 34px;
+				-servicestudio-top: var(--space-m); 
+				-servicestudio-width: 34px;
+			}
+
+			&:before {
+				-servicestudio-content: var(--osui-icon-arrow-left);
+				-servicestudio-right: var(--space-xl);
+			}
+
+			&:after {
+				-servicestudio-content: var(--osui-icon-arrow-right);
+				-servicestudio-right: var(--space-s);
+			}
+
+			.osui-datepicker-calendar-ss-preview--time,
+			.osui-datepicker-calendar-ss-preview--today{
+				-servicestudio-display: none;
+			}
+
+			&.time12h,
+			&.time24h {
+				.osui-datepicker-calendar-ss-preview--time {
+					-servicestudio-text-align: center;
+					-servicestudio-display: block;
+					-servicestudio-margin-bottom: var(--space-s);
+					-servicestudio-position: relative;
+				}
+			}
+
+			&.time12h .osui-datepicker-calendar-ss-preview--time::before {
+				-servicestudio-background-color: var(--color-indigo);
+				-servicestudio-border-radius: var(--border-radius-soft);
+				-servicestudio-color: var(--color-neutral-0);
+				-servicestudio-content: "am";
+				-servicestudio-font-size: var(--font-size-xs);
+				-servicestudio-font-weight: var(--font-semi-bold);
+				-servicestudio-height: var(--space-base);
+				-servicestudio-line-height: var(--space-base);
+				-servicestudio-position: absolute;
+				-servicestudio-right: var(--space-s);
+				-servicestudio-top: 50%;
+				-servicestudio-transform: translateY(-50%) translateX(-50%);
+				-servicestudio-vertical-align: middle;
+				-servicestudio-width: var(--space-xl);
+			}
+
+
 			// If has not today btn
 			&:not(.has-today-btn) {
 				&.single {
-					-servicestudio-background-image: $calendar_single_img_base64;
-					-servicestudio-height: 310px;
+					-servicestudio-height: 360px;
 				}
 
-				&.time12h {
-					-servicestudio-background-image: $calendar_time12h_img_base64;
-					-servicestudio-height: 344px;
-				}
-
+				&.time12h,
 				&.time24h {
-					-servicestudio-background-image: $calendar_time24h_img_base64;
-					-servicestudio-height: 344px;
+					-servicestudio-height: 394px;
 				}
 			}
 
 			// If has today btn
 			&.has-today-btn {
 				&.single {
-					-servicestudio-background-image: $calendar_single_hasToday_img_base64;
-					-servicestudio-height: 344px;
+					-servicestudio-height: 394px;
 				}
 
-				&.time12h {
-					-servicestudio-background-image: $calendar_time12h_hasToday_img_base64;
-					-servicestudio-height: 390px;
-				}
-
+				&.time12h,
 				&.time24h {
-					-servicestudio-background-image: $calendar_time24h_hasToday_img_base64;
-					-servicestudio-height: 390px;
+					-servicestudio-height: 440px;
+				}
+
+				.osui-datepicker-calendar-ss-preview--today{
+					display:block;
+					text-align: center;
+					font-size: var(--font-size-s);
 				}
 			}
 
@@ -125,47 +167,5 @@
 	// Service Studio Preview
 	.osui-datepicker-calendar-ss-preview {
 		-servicestudio-margin-top: -22px;
-	}
-}
-
-// If Hybrid IDE
-///
-html[data-uieditorversion^='1'] {
-	.osui-datepicker-calendar-ss-preview {
-		// If has not today btn
-		&:not(.has-today-btn) {
-			&.single {
-				-servicestudio-padding-top: min(300px, 100%);
-				-servicestudio-height: 0;
-			}
-
-			&.time12h {
-				-servicestudio-padding-top: min(344px, 100%);
-				-servicestudio-height: 0;
-			}
-
-			&.time24h {
-				-servicestudio-padding-top: min(344px, 100%);
-				-servicestudio-height: 0;
-			}
-		}
-
-		// If has today btn
-		&.has-today-btn {
-			&.single {
-				-servicestudio-padding-top: min(344px, 100%);
-				-servicestudio-height: 0;
-			}
-
-			&.time12h {
-				-servicestudio-padding-top: min(390px, 100%);
-				-servicestudio-height: 0;
-			}
-
-			&.time24h {
-				-servicestudio-padding-top: min(390px, 100%);
-				-servicestudio-height: 0;
-			}
-		}
 	}
 }
