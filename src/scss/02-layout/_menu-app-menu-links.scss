@@ -127,6 +127,15 @@ body {
 
 // Responsive --------------------------------------------------------------------
 ///
+.landscape {
+	.layout-native {
+		.app-menu-links {
+			padding-left: calc(var(--os-safe-area-left) / 2);
+		}
+	}
+}
+
+///
 .desktop {
 	.layout:not(.layout-side) .app-menu-links {
 		display: flex;
@@ -143,7 +152,6 @@ body {
 		-webkit-overflow-scrolling: touch;
 		overflow-y: auto;
 		padding-top: var(--space-s);
-    padding-left: calc(var(--os-safe-area-left) / 2);
 
 		a {
 			// Service Studio preview
