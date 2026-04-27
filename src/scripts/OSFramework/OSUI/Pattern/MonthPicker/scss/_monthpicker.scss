@@ -6,8 +6,6 @@
 /// Import Flatpickr library styles
 @import '../../../../../Providers/OSUI/Monthpicker/Flatpickr/scss/_flatpickr.scss';
 
-@import 'monthpicker_ss_preview_image';
-
 ///
 .osui-monthpicker {
 	// Service Studio Preview Container Styles
@@ -16,19 +14,10 @@
 
 		// Service Studio Preview
 		& {
-			-servicestudio-background-image: $monthpicker_img_base64;
-			-servicestudio-background-position: top center;
-			-servicestudio-background-repeat: no-repeat;
-			-servicestudio-background-size: contain;
 			-servicestudio-display: inline-block;
-			-servicestudio-height: 0;
-			-servicestudio-margin-left: -3px;
 			-servicestudio-margin-top: 2px;
-			-servicestudio-max-width: 320px;
 			-servicestudio-overflow: hidden;
-			-servicestudio-padding-top: min(250px, 100%);
 			-servicestudio-position: relative;
-			-servicestudio-width: 100%;
 			-servicestudio-z-index: var(--layer-local-tier-1);
 
 			& + .placeholder-ss-preview {
@@ -36,6 +25,26 @@
 				-servicestudio-opacity: 0;
 				-servicestudio-overflow: hidden;
 				-servicestudio-width: 100%;
+			}
+
+			&:before,
+			&:after {
+				-servicestudio-color: var(--color-indigo);
+				-servicestudio-font-family: var(--osui-icon-font-family);
+				-servicestudio-position: absolute;
+				-servicestudio-height: 34px;
+				-servicestudio-top: var(--space-m); 
+				-servicestudio-width: 34px;
+			}
+
+			&:before {
+				-servicestudio-content: var(--osui-icon-arrow-left);
+				-servicestudio-right: var(--space-l);
+			}
+
+			&:after {
+				-servicestudio-content: var(--osui-icon-arrow-right);
+				-servicestudio-right: var(--space-xs);
 			}
 		}
 	}
