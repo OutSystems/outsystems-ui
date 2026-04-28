@@ -2689,3 +2689,487 @@ Expected:
 - [ ] `npm run dev -- --target ODC` succeeds.
 - [ ] `npm run lint` passes.
 - [ ] `08-servicestudio-preview/deprecated-preview.scss` is preserved (independent of `10-deprecated/`).
+
+---
+
+## Phase 16 — UI uplift component-by-component change inventory
+
+Per-component classification of every proposed change in Jessica Mendes's design review (<https://jessicamendesos.github.io/jess-ui-review/>). See `plan.md` Phase 16 for architectural rationale and cross-cutting patterns.
+
+### Classification key
+
+- **`TOKEN_SWAP`** — change one existing `$token-*` to another. Trivial; component SCSS edit only.
+- **`NEW_OSUI_VAR`** — surface a hardcoded value as a new `--osui-{component}-{prop}` CSS API var on the component root. Additive change; expands the component's public theming surface.
+- **`TOKEN_GAP`** — value has no current token equivalent; needs an upstream addition to `outsystems-design-tokens` before the change can land cleanly.
+- **`HARDCODED`** — proposal explicitly uses a raw value (rgba, px) by design rationale. Accepted as-is; document in component header.
+
+### 16.1 Component inventory
+
+#### Accordion
+
+- Outer container removed (dividers only) [`NEW_OSUI_VAR` for the variant toggle]
+- Divider color `#d5d5d5` → `rgba(0,0,0,.07)` [`TOKEN_GAP` → `$token-border-overlay-divider`]
+- Title padding `24px` → `12px 24px` [`TOKEN_SWAP`: `$token-scale-300` + `$token-scale-600`]
+- Title font-size `18px` → `16px` [`TOKEN_SWAP`: `$token-font-size-400`]
+- Hover overlay (new) `rgba(0,0,0,.04)` [`TOKEN_GAP` → `$token-bg-overlay-hover`]
+- Caret `16×16` 1.5 stroke → `20×20` 2 stroke [`HARDCODED`]
+- Animation `instant` → `0.4s grid-rows ease-out` [`TOKEN_GAP` → `$token-motion-duration-400` + `NEW_OSUI_VAR`: `--osui-accordion-animation-duration/easing`]
+
+#### Alert
+
+- Outer border `1px` → `0` [`TOKEN_SWAP`: `$token-border-size-0`]
+- Border-left accent `3px` → `0` [`TOKEN_SWAP`]
+- Icon-to-message gap `16px margin` → `8px flex gap` [`NEW_OSUI_VAR`: `--osui-alert-icon-gap`]
+- Icon size `24×24` → `20×20` [`HARDCODED`]
+- Message font-size `16px` → `14px` [`TOKEN_SWAP`: `$token-font-size-350` / body-sm]
+- Message font-weight `400` → `500` [`TOKEN_SWAP`: `$token-font-weight-medium`]
+
+#### Badge
+
+- All 9 background variants (primary/error/success/warning/info/neutral/purple/pink/indigo): raw palette → `$token-semantics-{color}-base` [`TOKEN_SWAP`]
+- Light variants → `$token-semantics-{color}-light` [`TOKEN_SWAP`]
+- Text colour → `$token-semantics-{color}-text` [`TOKEN_SWAP`]
+- Size small (12/24/24) → (10/16/16) [`TOKEN_SWAP` font + `NEW_OSUI_VAR` for height]
+- Size medium (16/40) → (14/28) [`NEW_OSUI_VAR`: `--osui-badge-height-medium`]
+- Shape full `100px` → `999px` [`TOKEN_SWAP`: `$token-border-radius-full`]
+
+#### Blank State
+
+- `.blank-slate` gap `none` → `24px` [`TOKEN_SWAP`: `$token-scale-600`]
+- Description padding → `0` [`TOKEN_SWAP`]
+- Actions padding → `0` [`TOKEN_SWAP`]
+- Justify-content `space-around` → `center` [`HARDCODED`]
+- Icon colour → `$token-text-placeholder` [`TOKEN_SWAP` — verify token exists, otherwise `TOKEN_GAP`]
+- Description colour → `$token-text-subtle` [`TOKEN_SWAP`]
+
+#### Bottom Sheet
+
+- Background → `$token-bg-surface-default` [`TOKEN_SWAP`]
+- Top corner radius `16px` → `12px` (or alias 16) [`TOKEN_SWAP`: `$token-border-radius-300`]
+- Overlay scrim → unified dim semantic [`TOKEN_GAP` → shared scrim token]
+
+#### Breadcrumbs
+
+- Link colour `primary` → `$token-text-subtlest` [`TOKEN_SWAP`]
+- Current page → `$token-text-default` + `$token-font-weight-semi-bold` [`TOKEN_SWAP`]
+- Separator → `$token-text-subtlest` + outline chevron at `$token-font-size-300` [`TOKEN_SWAP` + icon swap]
+- Hover: underline → colour shift [`TOKEN_SWAP`]
+- Home icon prefix (new) [`NEW_OSUI_VAR`: `--osui-breadcrumbs-home-icon-{size,color}`]
+- Collapsed overflow chip (new) [`TOKEN_SWAP` for colours]
+
+#### Button
+
+- Height default `40` → `36px` [`TOKEN_SWAP`: `$token-scale-900`]
+- Height small `32` → `28`, large `48` → `44` [`NEW_OSUI_VAR`: `--osui-button-height-{small,large}`]
+- Border-radius `4` → `8px` [`TOKEN_SWAP`: `$token-border-radius-200`]
+- Font-weight `600` → `500` [`NEW_OSUI_VAR`: `--osui-button-font-weight`]
+- Hover `filter: brightness(.9)` → shadow + 14% currentColor ring [`HARDCODED` — alpha overlay; consider `--osui-button-hover-overlay` once `color-mix` adopted]
+- Semantic palette → `$token-semantics-{color}-base` chain [`TOKEN_SWAP`]
+- Disabled → `$token-border-subtle` bg + `$token-text-disabled` [`TOKEN_SWAP`]
+
+#### Button Group
+
+- Height `40` → `36px` [`TOKEN_SWAP`: `$token-scale-900`]
+- Rest border `1px primary` → `$token-border-default` [`TOKEN_SWAP`]
+- Rest text → `$token-text-default` [`TOKEN_SWAP`]
+- Border-radius `4` → `8px` [`TOKEN_SWAP`]
+- Hover (new) → `$token-border-subtle` bg [`TOKEN_SWAP`]
+- Item layout `inline-block` → `inline-flex` [`NEW_OSUI_VAR` — layout flag]
+- Selected bg → `$token-semantics-primary-base` [`TOKEN_SWAP`]
+
+#### Card
+
+- Border-radius keep `8px` (already token) [no change]
+- Border colour `subtle` → `neutral-200` [`TOKEN_SWAP`]
+- Shadow `elevation-1` → flatter 2-layer rgba [`TOKEN_GAP` → `$token-elevation-flat` or new step]
+- Title colour (new explicit) → `$token-text-default` [`NEW_OSUI_VAR`: `--osui-card-title-color`]
+- Image flush (padding `0`, image radius `0`) [`NEW_OSUI_VAR`: `--osui-card-image-padding`]
+- Bottom bg → `$token-bg-surface-subtle` [`TOKEN_GAP` → verify, otherwise add token]
+- Bottom border-top (new) `1px solid #f3f4f6` [`NEW_OSUI_VAR`: `--osui-card-bottom-border`]
+- CTA width `auto` → `100%` [`NEW_OSUI_VAR`: `--osui-card-bottom-action-width`]
+
+#### Carousel
+
+- Track radius `4` → `12px` [`TOKEN_SWAP`: `$token-border-radius-300`]
+- Pagination active: scaled dot → `28×8px` bar [`NEW_OSUI_VAR`: `--osui-carousel-indicator-active-{width,height,style}`]
+- Pagination rest → `$token-border-default` [`TOKEN_SWAP`]
+- Pagination gap `3px` → `6px` [`TOKEN_SWAP`: `$token-scale-050`]
+- Arrow size `40` → `38px` [`HARDCODED`]
+- Arrow shadow → deeper 2-layer [`TOKEN_GAP` → `$token-elevation-overlay`]
+- Arrow icon → `$token-text-default` [`TOKEN_SWAP`]
+- Arrow disabled: opacity .3 → icon `#8b8b8b` + opacity .55 [`HARDCODED`]
+
+#### Checkbox
+
+- Hit area `22px` → `24px` around `22px` box [`NEW_OSUI_VAR`: `--osui-checkbox-hit-area`]
+- Border → `$token-border-input-default` [`TOKEN_SWAP`]
+- Checked bg → `$token-semantics-primary-base` [`TOKEN_SWAP`]
+- Focus halo: 22% primary ring [`TOKEN_GAP` → `$token-border-focus-halo` OR `color-mix` derivation]
+- Checkmark glyph: L-border → `10×3px` 2-stroke rotated [`HARDCODED`]
+- Box centering: `top:0;left:0` → translate-50% [`NEW_OSUI_VAR`: layout]
+
+#### Columns
+
+- Gap `8` → `16px` [`TOKEN_SWAP`: `$token-scale-400`]
+- Border-radius `4` → `10px` [`TOKEN_SWAP`: `$token-border-radius-200`]
+- Height (preview only, demo) [`HARDCODED`]
+- Box-shadow → `$token-elevation-1` [`TOKEN_SWAP`]
+
+#### Counter
+
+- All colour variants (primary/success/error/warning) → `$token-semantics-{color}-base` [`TOKEN_SWAP`]
+- Text colour → `$token-text-inverse` [`TOKEN_SWAP`]
+- Font-size → `$token-font-size-900` [`TOKEN_SWAP`]
+
+Pure semantic-token migration — smallest implementation lift on the list.
+
+#### DatePicker
+
+- Input border-radius `4` → `8px` [`TOKEN_SWAP`]
+- Calendar border-radius `4` → `12px` [`TOKEN_SWAP`: `$token-border-radius-300`]
+- Calendar elevation: 1px border + no shadow → no border + 2-layer shadow [`NEW_OSUI_VAR`: `--osui-datepicker-popup-shadow`; depends on `TOKEN_GAP` → `$token-elevation-overlay`]
+- Month/year colour → `$token-text-default` [`TOKEN_SWAP`]
+- Nav arrow → `$token-text-subtlest` [`TOKEN_SWAP`]
+- Day cell: circle on rectangle → square + 8px squircle [`TOKEN_SWAP`]
+- Today button: text-link → outline pill [`TOKEN_SWAP`]
+
+#### Dropdown
+
+- Trigger height `40` → `36px` [`TOKEN_SWAP`]
+- Border-radius `4` → `8px` [`TOKEN_SWAP`]
+- Expanded focus: primary border + halo → primary border only [`TOKEN_SWAP`]
+- Popup elevation: subtle → stronger 2-layer [`TOKEN_GAP` → `$token-elevation-overlay`]
+- Selected row: primary-light bg → `$token-border-subtle` + `$token-font-weight-medium` [`TOKEN_SWAP`]
+
+#### Flip Content
+
+- Face background (new defaults) → `$token-bg-surface-default` / `$token-border-subtle` [`NEW_OSUI_VAR`: `--osui-flip-content-face-bg`, `--osui-flip-content-face-border`]
+- Animation duration `630ms` → `~400ms` [`TOKEN_GAP` → `$token-motion-duration-400`]
+- `prefers-reduced-motion` runtime support [TS-side or CSS `@media` query]
+
+#### Form
+
+- Card chrome (border, padding, radius, shadow): present → none [`NEW_OSUI_VAR`: `--osui-form-surface-{decoration}` toggle]
+- Row spacing `16` → `24px` [`TOKEN_SWAP`: `$token-scale-600`]
+- Column gap `16` → `24px` [`TOKEN_SWAP`]
+- Input height → `36px` [`TOKEN_SWAP`]
+- Focus indicator: border + 18% primary ring [`TOKEN_GAP` → `$token-border-focus-halo`]
+- Field border consistency → `$token-border-input-default` [`TOKEN_SWAP`]
+- Error affix tile (new) `36×36 red, white glyph` [`NEW_OSUI_VAR`: `--osui-form-error-affix-{size,color}`]
+
+#### Gallery
+
+- Image border-radius `4` → `6px` [`TOKEN_SWAP`: `$token-border-radius-100`]
+- Image border + shadow: present → removed [`HARDCODED` — flat media grid by design]
+
+#### Icon Badge
+
+- All variants → `$token-semantics-{color}-base` [`TOKEN_SWAP`]
+- Border-radius `100px` → `9999px` [`TOKEN_SWAP`: `$token-border-radius-full`]
+- Text colour → `$token-text-inverse` [`TOKEN_SWAP`]
+- Ring shadow `0 0 0 2px #ffffff` → `0 0 0 2px $token-bg-surface-default` [`TOKEN_SWAP`]
+
+#### Input
+
+- Height `40` → `36px` [`TOKEN_SWAP`]
+- Border-radius `4` → `8px` [`TOKEN_SWAP`]
+- Border → `$token-border-default` [`TOKEN_SWAP`]
+- Focus: primary border → `2px` outline at `1px` offset [`NEW_OSUI_VAR`: `--osui-input-focus-outline-{width,offset}`]
+- Error → `$token-semantics-danger-base` [`TOKEN_SWAP`]
+- Placeholder → `$token-text-placeholder` [`TOKEN_SWAP` if exists, otherwise `TOKEN_GAP`]
+
+#### Link
+
+- Default underline alpha 35% [`NEW_OSUI_VAR`: `--osui-link-underline-color` via `color-mix`]
+- Underline-offset `0` → `3px` [`HARDCODED`]
+- :focus-visible: `2px` outline + `2px` offset [`TOKEN_SWAP` colour, `NEW_OSUI_VAR` for outline-offset]
+- Colour → `$token-semantics-primary-base` [`TOKEN_SWAP`]
+
+#### List
+
+- Row padding `12px 16px` → `16px` all [`TOKEN_SWAP`: `$token-scale-400`]
+- Divider → `$token-border-subtle` [`TOKEN_SWAP`]
+- Avatar/title gap → `16px` [`TOKEN_SWAP`: `$token-scale-200`]
+- Avatar size `40` → `44px` [`NEW_OSUI_VAR`: `--osui-list-avatar-size`; no `44px` token]
+- Subtext → `$token-text-subtle` [`TOKEN_SWAP`]
+- Hover bg (new) → `$token-bg-overlay-hover` (`TOKEN_GAP` upstream) wrapped in `--osui-list-hover-bg` [`NEW_OSUI_VAR`]
+
+#### Master Detail
+
+- Wrapper shadow/border: present → removed [`NEW_OSUI_VAR`: `--osui-master-detail-surface-style` flush vs floating]
+- Wrapper border-radius `8` → `0` [`NEW_OSUI_VAR` linked to surface-style]
+- List-item padding → `12px 24px` [`TOKEN_SWAP`]
+- Hover `rgba(0,0,0,.05)` [`HARDCODED`-by-design — alpha for surface-adaptability; consider `$token-bg-overlay-hover` once available]
+- Active indicator: 3px left border → full-width tint [`NEW_OSUI_VAR`: `--osui-master-detail-active-indicator-style`]
+- Selected title → `$token-font-weight-semi-bold` [`TOKEN_SWAP`]
+- Trailing indicator: filled arrow → 1.5px stroke chevron [`NEW_OSUI_VAR` — icon swap]
+
+#### Notification
+
+- Border → `$token-border-default` [`TOKEN_SWAP`]
+- Width cap → token-driven max width [`TOKEN_GAP` → e.g. `$token-size-toast-max-width`]
+- Background → `$token-bg-surface-default` [`TOKEN_SWAP`]
+
+#### Pagination
+
+- Button size `32` → `36px` [`TOKEN_SWAP`: `$token-scale-900`]
+- Rest button: 1px grid → no border [`NEW_OSUI_VAR`: `--osui-pagination-button-border-width`]
+- Border-radius `4` → `8px` [`TOKEN_SWAP`]
+- Rest text → `$token-text-default` [`TOKEN_SWAP`]
+- Font-weight → `$token-font-weight-medium` [`TOKEN_SWAP`]
+- Active: primary fill → border + default text (shape, not colour) [`TOKEN_SWAP`]
+- Hover → `$token-border-subtle` bg [`TOKEN_SWAP`]
+- Spacing `8` → `4px` [`TOKEN_SWAP`]
+- Go-to-page chip [`TOKEN_SWAP` for colours; `NEW_OSUI_VAR` for layout if exposed]
+- Ellipsis [`TOKEN_SWAP`]
+
+#### Popup (Modal)
+
+- Border-radius `4` → `12px` [`TOKEN_SWAP`: `$token-border-radius-300`]
+- Elevation: subtle → 2-layer (`24px·8px`) [`TOKEN_GAP` → `$token-elevation-overlay`]
+- Backdrop: `rgba(0,0,0,.5)` flat → slate-tinted + `4px blur` [`HARDCODED`-by-design; wrap in `--osui-popup-backdrop`]
+- Actions: right-aligned inline → flex with `8px` gap [`NEW_OSUI_VAR`: `--osui-popup-actions-gap`]
+- Close: FA times → Phosphor X [`HARDCODED` icon swap]
+
+#### Progress Bar
+
+- Track → `$token-border-subtle` [`TOKEN_SWAP`]
+- Fill variants → `$token-semantics-{color}-base` [`TOKEN_SWAP`]
+- Border-radius → `$token-border-radius-full` [`TOKEN_SWAP`]
+- Height → `$token-scale-100/-200/-400` [`TOKEN_SWAP`]
+- Label → `$token-text-default` flex-end [`TOKEN_SWAP`]
+
+#### Progress Circle
+
+- Trail stroke → `$token-primitives-neutral-300` [`TOKEN_SWAP`]
+- Progress strokes → `$token-semantics-{color}-base` [`TOKEN_SWAP`]
+- Center font-size → `$token-font-size-900` [`TOKEN_SWAP`]
+
+#### Radio
+
+- Rest border → `$token-border-input-default` [`TOKEN_SWAP`]
+- Control size `20` → `24px` [`NEW_OSUI_VAR`: `--osui-radio-control-size`; parity with checkbox]
+- Checked: 5px primary border → 6px solid (thick-ring) [`NEW_OSUI_VAR`: `--osui-radio-checked-style`]
+- Disabled+checked: `#d5d5d5` → `#8b8b8b` [`HARDCODED`]
+- Focus halo: 22% primary [`TOKEN_GAP` → `$token-border-focus-halo`]
+
+#### Range Slider
+
+- Track shape → full pill `$token-border-radius-full` [`TOKEN_SWAP`]
+- Track unfilled → `$token-primitives-neutral-200` [`TOKEN_SWAP`]
+- Range fill → `$token-semantics-primary-base` [`TOKEN_SWAP`]
+- Handle: 1px border + shadow → white + 2px primary border + flat [`NEW_OSUI_VAR`: `--osui-range-slider-handle-{border,shadow,bg}`]
+- Tick markers `1×6` → `2×8px` [`TOKEN_SWAP` colour + `HARDCODED` size]
+- Value label → `$token-text-default` + `$token-font-weight-medium` [`TOKEN_SWAP`]
+
+#### Rating
+
+- Filled stars: primary → dedicated `$token-rating-filled-color` (warning-anchored) [`TOKEN_GAP`]
+- Empty stars → `color-mix(filled 38%, white)` [`TOKEN_GAP` or `NEW_OSUI_VAR` derivation]
+- Vertical-align: baseline → middle [`HARDCODED`]
+- Sizes 8/16/24px → `$token-scale-300/-400/-600` [`TOKEN_SWAP`]
+- Item padding [`TOKEN_SWAP`]
+- Disabled → `$token-text-disabled` [`TOKEN_SWAP`]
+- Label alignment → text-align: start [`HARDCODED`]
+
+#### Section Index
+
+- Active bar → `$token-semantics-primary-base` [`TOKEN_SWAP`]
+- Rest text → `$token-text-subtle` [`TOKEN_SWAP`]
+- Hover text → `$token-text-default` [`TOKEN_SWAP`]
+
+3 lines. Smallest implementation on the list — recommended Phase 16 starting point.
+
+#### Switch
+
+- Track `48×30` → `40×24px` [`NEW_OSUI_VAR`: `--osui-switch-track-{width,height}`]
+- Track border: 1px solid → none [`NEW_OSUI_VAR`: `--osui-switch-track-border-width`]
+- Thumb `24` → `20px` [`NEW_OSUI_VAR`: `--osui-switch-thumb-size`]
+- Off-state bg → `$token-border-default` [`TOKEN_SWAP`]
+- On-state bg → `$token-semantics-primary-base` [`TOKEN_SWAP`]
+- Focus halo: 22% primary [`TOKEN_GAP` → `$token-border-focus-halo`]
+
+#### Tabs
+
+- Active colour → `$token-semantics-primary-base` [`TOKEN_SWAP`]
+- Inactive → `$token-text-subtlest` [`TOKEN_SWAP`]
+- Emphasis: `font-weight: 600` → `text-shadow: 0 0 0.5px currentColor` [`HARDCODED` — avoid layout shift]
+- Hover bg `rgba(0,0,0,.04)` [`TOKEN_GAP` → `$token-bg-overlay-hover`; proposal explicitly notes "pending"]
+- Hover text → `$token-text-default` [`TOKEN_SWAP`]
+- Separator → `$token-border-subtle` via `--osui-tabs-border-color` [`TOKEN_SWAP`]
+
+#### Textarea
+
+- Border-radius `4` → `8px` [`TOKEN_SWAP`]
+- Focus: primary border → 2px outline at 1px offset [`NEW_OSUI_VAR`: `--osui-textarea-focus-outline-*`]
+- Padding `16` all → `12 vertical / 16 horizontal` [`TOKEN_SWAP`]
+- Character counter (new) below, right-aligned, `$token-text-subtlest` [`NEW_OSUI_VAR`: `--osui-textarea-counter-color`]
+
+#### Timeline
+
+- Icon size `24+10` → `28+14` [`NEW_OSUI_VAR`: `--osui-timeline-icon-size`, `--osui-timeline-glyph-size`]
+- Line width 1px → `$token-border-size-050` [`TOKEN_SWAP`]
+- Line colour → `$token-border-default` [`TOKEN_SWAP`]
+- Icon background → `$token-semantics-{color}-base` [`TOKEN_SWAP`]
+- Icon text → `$token-text-inverse` [`TOKEN_SWAP`]
+- Content text → `$token-text-subtle` [`TOKEN_SWAP`]
+- Content margin → `$token-scale-800` [`TOKEN_SWAP`]
+- Upcoming state (new): dashed line + outlined bubble [`NEW_OSUI_VAR`: state variant]
+- Timestamp label (new) → `$token-text-subtlest` + `$token-font-size-300` + `$token-font-weight-semi-bold` [`TOKEN_SWAP`]
+- Orange semantic [`TOKEN_GAP` → `$token-semantics-orange-base`]
+- Comment-card variant (new) [`TOKEN_SWAP` for colours; broader new component proposal — file separately]
+
+#### Tooltip
+
+- Surface bg `neutral-9` → `$token-text-default` [`TOKEN_SWAP`]
+- Body text `neutral-0` → `$token-text-inverse` [`TOKEN_SWAP`]
+- Max width `250` → `280px` [`NEW_OSUI_VAR`: `--osui-tooltip-max-width`]
+- Border radius `4` → `8px` [`TOKEN_SWAP`]
+
+#### Wizard
+
+- Icon size `32px` → `36px` [`TOKEN_SWAP`: `$token-font-size-300`]
+- Icon border `1px` → `2px` [`TOKEN_SWAP`: `$token-border-size-050`]
+- Connector `2px` → `$token-border-size-050` + `$token-semantics-primary-base` [`TOKEN_SWAP`]
+- Past state → `$token-semantics-primary-base` + check glyph [`TOKEN_SWAP`]
+- Active focus halo (new) 18% primary [`TOKEN_GAP` → `$token-border-focus-halo`]
+- Next-state icon text → `$token-text-disabled` [`TOKEN_SWAP`]
+- Label colours → `$token-text-{subtlest,default,subtle}` [`TOKEN_SWAP`]
+- Disabled state (new) opacity .6 [`HARDCODED`]
+- Vertical spacing → `$token-scale-600` [`TOKEN_SWAP`]
+
+### 16.2 Cross-component design primitives — `--osui-*` globals in `_root.scss`
+
+Each `TOKEN_GAP` flagged in §16.1 is resolved by a `--osui-*` global declared in `src/scss/01-foundations/_root.scss` (the "Cross-component design primitives — future-token candidates" block). No upstream coordination required to start Phase 16; each var name maps 1:1 to its eventual `$token-*` equivalent so a future graduation is a rename, not a rewrite.
+
+The 9 declared globals:
+
+| `--osui-*` global | Value | Future token name | Components consuming |
+|---|---|---|---|
+| `--osui-bg-overlay-hover` | `rgba(0, 0, 0, 0.04)` | `--token-bg-overlay-hover` | Tabs, Master Detail, List, Pagination, Accordion, Button Group |
+| `--osui-bg-overlay-press` | `rgba(0, 0, 0, 0.07)` | `--token-bg-overlay-press` | Master Detail (and others on press) |
+| `--osui-border-overlay-divider` | `rgba(0, 0, 0, 0.07)` | `--token-border-overlay-divider` | Accordion, List, Master Detail |
+| `--osui-border-focus-halo` | `color-mix(in srgb, $token-semantics-primary-base 22%, transparent)` | `--token-border-focus-halo` | Switch, Radio, Checkbox, Form, Wizard, Input |
+| `--osui-elevation-overlay` | `0 12px 24px -8px rgba(0,0,0,.12), 0 8px 16px -8px rgba(0,0,0,.08)` | `--token-elevation-overlay` | Dropdown, DatePicker, Popup, Carousel arrows |
+| `--osui-elevation-flat` | `0 1px 2px rgba(16,24,40,.04), 0 1px 3px rgba(16,24,40,.06)` | `--token-elevation-flat` | Card |
+| `--osui-bg-surface-subtle` | `#fafbfc` | `--token-bg-surface-subtle` | Card-bottom |
+| `--osui-motion-duration-400` | `400ms` | `--token-transition-duration-400` | Accordion, Flip Content |
+| `--osui-semantics-orange-base` | `$token-primitives-orange-700` (compiles to `var(--token-primitives-orange-700, #c37100)`) | `--token-semantics-orange-base` | Timeline |
+
+**Reclassified during prep:** `$token-text-placeholder` is **not** declared as a global — `$token-text-subtlest` (`#a2a2a2` via `--token-primitives-neutral-500`) is close enough. Components that proposed `placeholder` swap to `subtlest` instead. This is `TOKEN_SWAP` in §16.1, not a gap.
+
+**Components consume these as plain `var(--osui-*)`:**
+
+```scss
+.osui-tabs__item:hover {
+  background: var(--osui-bg-overlay-hover);
+}
+
+.osui-switch__input:focus-visible + .osui-switch__track {
+  box-shadow: 0 0 0 3px var(--osui-border-focus-halo);
+}
+
+.osui-popup__container {
+  box-shadow: var(--osui-elevation-overlay);
+}
+```
+
+**Per-component override pattern still applies:** components that need a per-instance escape hatch wrap the global behind a component-scoped var:
+
+```scss
+.osui-master-detail {
+  --osui-master-detail-hover-bg: var(--osui-bg-overlay-hover);
+
+  .osui-master-detail__list-item:hover {
+    background: var(--osui-master-detail-hover-bg);
+  }
+}
+```
+
+This means consumers can override the hover overlay either globally (`--osui-bg-overlay-hover`) or per-component (`--osui-master-detail-hover-bg`).
+
+**Future-token graduation path:** when these primitives eventually graduate to `outsystems-design-tokens`, the migration is a sed sweep — `--osui-bg-overlay-hover` → `--token-bg-overlay-hover` across the codebase, then delete the `--osui-*` declarations from `_root.scss`. The 1:1 naming is the contract.
+
+### 16.3 New `--osui-{component}-{prop}` API additions — by archetype
+
+The 38-component review surfaces ~80 candidate new component vars. Grouping them by archetype lets each batch land as a coherent API expansion.
+
+**Archetype 1 — Per-size dimensions** (~15 vars)
+- `--osui-button-height-{small,large}`
+- `--osui-switch-{track-width, track-height, track-border-width, thumb-size}`
+- `--osui-radio-control-size`
+- `--osui-checkbox-hit-area`
+- `--osui-list-avatar-size`
+- `--osui-timeline-{icon-size, glyph-size}`
+- `--osui-badge-height-{small,medium}`
+
+**Archetype 2 — Hover overlays** (~6 vars) — depend on `$token-bg-overlay-hover`
+- `--osui-{tabs,master-detail,list,pagination,accordion,button-group}-hover-bg`
+
+**Archetype 3 — Focus halos** (~6 vars) — depend on `$token-border-focus-halo`
+- `--osui-{switch,radio,checkbox,form,wizard}-focus-halo-{color,width}`
+- `--osui-input-focus-outline-{width,offset}`
+
+**Archetype 4 — Animation timing** (~4 vars)
+- `--osui-{accordion,flip-content}-animation-{duration,easing}`
+
+**Archetype 5 — Popup elevation** (~5 vars) — depend on `$token-elevation-overlay`
+- `--osui-{dropdown,datepicker,popup,carousel,card}-popup-shadow`
+
+**Archetype 6 — Active indicators** (~4 vars)
+- `--osui-{carousel-pagination,master-detail,accordion,tabs}-active-indicator-{width,height,style}`
+
+**Archetype 7 — Per-element decoration** (~10 vars)
+- `--osui-card-{title-color, image-padding, bottom-bg, bottom-border, bottom-action-width}`
+- `--osui-range-slider-{handle-bg, handle-border, handle-shadow}`
+- `--osui-popup-{backdrop, actions-gap}`
+- `--osui-tooltip-max-width`
+
+### 16.4 HARDCODED-by-design adoptions
+
+These are accepted as-proposed, not architectural concerns. Document in component header comments where intentional:
+
+- Caret/icon stroke widths and sizes specified in raw px (Accordion 20×20 / 2-stroke caret; Master Detail 1.5px chevron).
+- Animation curves (`cubic-bezier(...)`) where the curve is core to the component's motion personality.
+- Text-emphasis via `text-shadow` instead of `font-weight` to avoid layout shift (Tabs).
+- Surface-adaptive alphas where the rationale is "must work on any background" (Master Detail hover) — wrap in `--osui-{component}-{prop}` so consumers can override but accept the raw alpha as the default.
+- Specific opacity values for disabled states (Wizard `.6`, Carousel arrow `.55`).
+
+### 16.5 Per-component implementation order (recommended)
+
+Sort ascending by implementation lift to land easy wins first and validate the token-package additions on simple consumers before they reach complex ones.
+
+1. **Section Index** — 3 token swaps
+2. **Counter** — 6 token swaps; pure semantic re-anchoring
+3. **Icon Badge** — token swaps + ring shadow theming
+4. **Progress Bar / Progress Circle** — pure token swaps
+5. **Badge** — 9-variant token swap + 2 size NEW_OSUI_VARs
+6. **Breadcrumbs** — 6 token swaps + new home-icon var
+7. **Pagination** — token swaps + 1 NEW_OSUI_VAR (border-width)
+8. **Tabs** — first consumer of `$token-bg-overlay-hover`
+9. **Wizard** — first consumer of `$token-border-focus-halo`
+10. **Button / Button Group / Input / Textarea / Dropdown** — density + radius batch
+11. **Switch / Radio / Checkbox** — focus halo + sizing batch
+12. **List** — hover overlay + avatar size
+13. **Accordion** — animation + dividers + hover
+14. **Master Detail** — surface-style toggle + hover overlay
+15. **Tooltip / Popup / DatePicker / Dropdown popup / Carousel arrows** — elevation batch
+16. **Range Slider** — handle treatment NEW_OSUI_VARs
+17. **Notification / Bottom Sheet / Alert** — surface + scrim batch
+18. **Form** — most NEW_OSUI_VARs (form decoupled from card chrome)
+19. **Card** — most NEW_OSUI_VARs (image flush, bottom decoration, title colour)
+20. **Timeline** — icon sizing + new states (most novel surface)
+21. **Carousel pagination** — active-indicator NEW_OSUI_VARs
+22. **Rating** — depends on rating-color tokens (`TOKEN_GAP`)
+23. **Flip Content** — depends on `$token-motion-duration-400`
+24. **Columns / Gallery / Blank State / Link** — small token-swap finishers
+
+### 16.6 Phase 16 — Full acceptance criteria (gating execution)
+
+These are the gating criteria for Phase 16 to start executing. Per-component acceptance lives inside each Phase-16-component PR.
+
+- [x] Cross-component design primitives (16.2) declared as `--osui-*` globals in `src/scss/01-foundations/_root.scss`. Build verifies all 9 globals compile with the expected `var(--token-*, fallback)` chains intact.
+- [ ] Visual regression tooling decision recorded: snapshot diff, Chromatic, manual sign-off, etc. Without this, the visual diffs can't be validated.
+- [ ] Per-component implementation order (16.5) confirmed or revised.
+- [ ] Phase 16a–c sub-phase split confirmed (token swaps → new osui vars → hardcoded adoptions + global consumption).
+- [ ] Future-token graduation backlog filed as a follow-up tracker so the `--osui-*` → `--token-*` rename is on the roadmap (no specific date required).

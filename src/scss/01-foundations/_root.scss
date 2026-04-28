@@ -4,6 +4,9 @@
 /// consumed by components that need to respect app-wide theming.
 /// Pattern-scoped `--osui-*-layer` vars stay declared here because they're
 /// read off-DOM (portaled patterns) or from sibling layouts.
+/// Cross-component `--osui-*` design primitives (overlays, focus halos,
+/// extra elevation steps, motion timing) live here as future-token
+/// candidates — see the dedicated block below.
 
 :root {
 	/*! OS Surface Colors */
@@ -52,4 +55,39 @@
 	--osui-popup-layer: var(--os-layer-off-canvas);
 	--osui-sidebar-layer: var(--os-layer-off-canvas);
 	--osui-menu-layer: calc(var(--os-layer-navigation) + var(--os-layer-local-tier-2));
+
+	/* ----------------------------------------------------------------------- */
+	/* Cross-component design primitives — future-token candidates              */
+	/*                                                                          */
+	/* These vars cover recurring needs surfaced by the M3+Radix-inspired UI    */
+	/* uplift (specs/plan.md Phase 16) that do not yet have a $token-* equivalent */
+	/* in the outsystems-design-tokens package. Declared as --osui-* globals so */
+	/* components can consume them today without blocking on upstream coordination. */
+	/*                                                                          */
+	/* Each one is a candidate to graduate into outsystems-design-tokens — the  */
+	/* var name maps 1:1 to its proposed token (e.g. --osui-bg-overlay-hover    */
+	/* → --token-bg-overlay-hover) so the future swap is a rename, not a       */
+	/* rewrite. Comments below pair each var with its proposed token name.      */
+	/* ----------------------------------------------------------------------- */
+
+	/*! Surface overlays — surface-agnostic alpha tints for hover / press / dividers */
+	--osui-bg-overlay-hover: rgba(0, 0, 0, 0.04);            /* future: --token-bg-overlay-hover */
+	--osui-bg-overlay-press: rgba(0, 0, 0, 0.07);            /* future: --token-bg-overlay-press */
+	--osui-border-overlay-divider: rgba(0, 0, 0, 0.07);      /* future: --token-border-overlay-divider */
+
+	/*! Focus halo — primary-derived alpha ring for input-style controls */
+	--osui-border-focus-halo: color-mix(in srgb, #{$token-semantics-primary-base} 22%, transparent);   /* future: --token-border-focus-halo */
+
+	/*! Extra elevation steps beyond $token-elevation-1..4 */
+	--osui-elevation-overlay: 0 12px 24px -8px rgba(0, 0, 0, 0.12), 0 8px 16px -8px rgba(0, 0, 0, 0.08);   /* future: --token-elevation-overlay */
+	--osui-elevation-flat: 0 1px 2px rgba(16, 24, 40, 0.04), 0 1px 3px rgba(16, 24, 40, 0.06);            /* future: --token-elevation-flat */
+
+	/*! Surface variant — subtler than --token-bg-surface-default */
+	--osui-bg-surface-subtle: #fafbfc;                       /* future: --token-bg-surface-subtle */
+
+	/*! Motion duration — fills the gap between $token-transition-duration-300 (300ms) and -500 (500ms) */
+	--osui-motion-duration-400: 400ms;                       /* future: --token-transition-duration-400 */
+
+	/*! Semantic orange — Timeline state variant; no semantics-orange-* family in tokens yet */
+	--osui-semantics-orange-base: #{$token-primitives-orange-700};   /* future: --token-semantics-orange-base */
 }
