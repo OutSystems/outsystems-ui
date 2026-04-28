@@ -148,28 +148,6 @@ Section Index:
     6.7. Advanced
         6.7.1. Dropdown ServerSide
         6.7.2. Dropdown ServerSide Item
-    6.8. Deprecated Patterns
-        6.8.1. Accordion
-        6.8.2. Button Loading
-        6.8.3. Carousel
-        6.8.4. Datepicker
-        6.8.5. Dropdown Search an Tags (Common)
-        6.8.6. Dropdown Search
-        6.8.7. Dropdown Tags
-        6.8.8. Flip Content
-        6.8.9. Gallery
-        6.8.10. Horizontal Scroll
-        6.8.11. Notification
-        6.8.12. Progress Bar
-        6.8.13. Progress Circle
-        6.8.14. Progress Circle Fraction
-        6.8.15. Section Index
-        6.8.16. Sidebar
-        6.8.17. Search
-        6.8.18. Submenu
-        6.8.19. Tabs
-        6.8.20. Tooltip
-        6.8.21. Video
 7. Usefull Classes
     7.1. a11y (Accessibility)
     7.2. Colors - Brand
@@ -469,55 +447,11 @@ Functions & Mixins
 @import '04-patterns/06-utilities/list-updating';
 /*! 6.6.8. Provider Login Button */
 @import '04-patterns/06-utilities/provider-login-button';
-
 /*! 6.7. Advanced */
 /*! 6.7.1. Dropdown ServerSide */
 @import '../scss/04-patterns/03-interaction/dropdown/dropdown-serverside';
 /*! 6.7.2. Dropdown ServerSide Item */
 @import '../scss/04-patterns/03-interaction/dropdown/dropdownserversideitem';
-/*! 6.8. Deprecated Patterns */
-/*! 6.8.1. Accordion */
-@import '10-deprecated/accordion-deprecated';
-/*! 6.8.2. Button Loading */
-@import '10-deprecated/button-loading-deprecated';
-/*! 6.8.3. Carousel */
-@import '10-deprecated/carousel-deprecated';
-/*! 6.8.4. Datepicker */
-@import '10-deprecated/date-picker-deprecated';
-/*! 6.8.5. Dropdown Search an Tags (Common) */
-@import '10-deprecated/dropdown-search-and-tags-deprecated';
-/*! 6.8.6. Dropdown Search */
-@import '10-deprecated/dropdown-search-deprecated';
-/*! 6.8.7. Dropdown Tags */
-@import '10-deprecated/dropdown-tags-deprecated';
-/*! 6.8.8. Flip Content */
-@import '10-deprecated/flip-content-deprecated';
-/*! 6.8.9. Gallery */
-@import '10-deprecated/gallery-deprecated';
-/*! 6.8.10. Horizontal Scroll */
-@import '10-deprecated/horizontal-scroll-deprecated';
-/*! 6.8.11. Notification */
-@import '10-deprecated/notification-deprecated';
-/*! 6.8.12. Progress Bar */
-@import '10-deprecated/progress-bar-deprecated';
-/*! 6.8.13. Progress Circle */
-@import '10-deprecated/progress-circle-deprecated';
-/*! 6.8.14. Progress Circle Fraction */
-@import '10-deprecated/progress-circle-fraction-deprecated';
-/*! 6.8.15. Section Index */
-@import '10-deprecated/section-index-deprecated';
-/*! 6.8.16. Sidebar */
-@import '10-deprecated/sidebar-deprecated';
-/*! 6.8.17. Search */
-@import '10-deprecated/search-deprecated';
-/*! 6.8.18. Submenu */
-@import '10-deprecated/submenu-deprecated';
-/*! 6.8.19. Tabs */
-@import '10-deprecated/tabs-deprecated';
-/*! 6.8.20. Tooltip */
-@import '10-deprecated/tooltip-deprecated';
-/*! 6.8.21. Video */
-@import '10-deprecated/video-deprecated';
 
 /*! ==============================================================================
 7. Usefull Classes

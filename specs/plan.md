@@ -663,6 +663,42 @@ h1, .heading1, .font-size-h1 {
 
 ---
 
+### Phase 15 — Post-migration cleanup: drop deprecated patterns + O11 SCSS bundle
+
+**What:** Two independent housekeeping changes shipped together because they touch the same `gulp/ProjectSpecs/ScssStructure/` and `src/scss/` surface.
+
+**15a — Remove `src/scss/10-deprecated/`:** Delete the 22 deprecated-pattern partials (~3,826 lines) and their gulp wiring (`PatternsDeprecated.js` + the `patternsDeprecated` import in `Patterns.js`). After Phase 11 (dark theme) and Phase 14 (`--os-*` bridge) shipped, the deprecated styles were the last sub-tree still carrying value patterns frozen in time, and the runtime cost (~32KB CSS shipped to every consumer regardless of usage) outweighed the benefit of keeping them.
+
+**15b — Disable O11 SCSS bundle:** Split the existing single `platformTarget` map (used for both TS transpilation and SCSS generation) into two: `platformTarget` (TS, both platforms) and `scssPlatformTarget` (SCSS, ODC only). `gulp/Tasks/CreateScssFile.js` and `gulp/Tasks/ScssTranspile.js` rewire to the new SCSS-only list. `src/scss/O11.OutSystemsUI.scss` deleted; no longer regenerated. **TypeScript builds for both O11 and ODC remain unchanged.**
+
+**Why now:**
+- The token migration left deprecated patterns frozen at pre-token values (verified during Phase 2 sweeps); they would either drift further from tokens or require dedicated migration work that has no payoff.
+- Active OSUI development is ODC-first; the O11 SCSS bundle hadn't received meaningful changes in the migration cycle and only cost build time. Decoupling SCSS generation from the unified platform list is a reversible, surgical disable — restoring O11 SCSS is one line in `DefaultSpecs.js`.
+
+**Files touched:**
+- Deleted: `src/scss/10-deprecated/` (22 files), `src/scss/O11.OutSystemsUI.scss`, `gulp/ProjectSpecs/ScssStructure/PatternsDeprecated.js`
+- Modified: `gulp/ProjectSpecs/ScssStructure/Patterns.js`, `gulp/ProjectSpecs/DefaultSpecs.js`, `gulp/Tasks/CreateScssFile.js`, `gulp/Tasks/ScssTranspile.js`
+- Auto-regenerated: `src/scss/ODC.OutSystemsUI.scss` (deprecated imports gone)
+
+**Scope — what does NOT change:**
+- O11 TypeScript bundle — still emitted from `dist/O11.OutSystemsUI.js`.
+- ODC SCSS bundle — semantically unchanged apart from the deprecated partials being gone.
+- Token layer (`src/scss/tokens/`), component CSS APIs (`--osui-*`), bridge layer (`--os-*`), dark theme — untouched.
+- The `08-servicestudio-preview/deprecated-preview.scss` design-time deprecation badge — kept (it's independent of `10-deprecated/`, just styles a `.osui-deprecated:before` warning).
+
+**Breaking-change note:** Removing `10-deprecated/` is a runtime breaking change for any OutSystems app that still renders deprecated pattern markup. Apps that have already migrated to the current pattern names see no impact. This must be called out in the changelog accompanying the release.
+
+**Success criteria:**
+- `src/scss/10-deprecated/` does not exist.
+- `src/scss/O11.OutSystemsUI.scss` does not exist after a clean `npm run build`.
+- `gulp/ProjectSpecs/DefaultSpecs.js` declares both `platformTarget` (with `o11` + `odc`) and `scssPlatformTarget` (with `odc` only).
+- `dist/` after build contains `ODC.OutSystemsUI.css`, `ODC.OutSystemsUI.js`, `O11.OutSystemsUI.js` — and **no `O11.OutSystemsUI.css`**.
+- `npm run dev -- --target O11` errors with "Given platform 'o11' does not have an SCSS bundle. Platforms available for SCSS: odc". `npm run dev -- --target ODC` works.
+- `grep -c 'deprecated' dist/ODC.OutSystemsUI.css` returns 0 for class selectors (the design-time `.osui-deprecated:before` badge in `_deprecated-preview.scss` may match if apps still set the class, which is fine).
+- `npm run lint` passes.
+
+---
+
 ## Decisions
 
 | # | Decision | Resolution |

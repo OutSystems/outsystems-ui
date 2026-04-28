@@ -13,9 +13,15 @@ const constants = {
             './src/scripts/OutSystems/OSUI/Utils/IconLibrary.ts'
         ]
     },
-    // list of platforms to compile and create scss files.
+    // list of platforms to compile (TypeScript bundles).
     platformTarget: {
         o11: 'O11',
+        odc: 'ODC',
+    },
+    // list of platforms for which to generate + compile SCSS bundles.
+    // Subset of platformTarget; O11 SCSS generation is currently disabled.
+    // Restore O11 SCSS by adding `o11: 'O11'` to this map.
+    scssPlatformTarget: {
         odc: 'ODC',
     },
     // Icon placeholder CSS class per platform (replaced at compile time; do not change token in source).
