@@ -12,7 +12,7 @@
 		position: relative;
 
 		& {
-			-servicestudio-min-height: var(--thickness, 8px);
+			-servicestudio-min-height: var(--thickness, #{$token-scale-200});
 		}
 
 		&__container {
@@ -20,7 +20,7 @@
 			position: relative;
 
 			& {
-				-servicestudio-min-height: var(--thickness, 8px);
+				-servicestudio-min-height: var(--thickness, #{$token-scale-200});
 			}
 
 			&.animate {
@@ -45,7 +45,7 @@
 			right: 0;
 
 			& {
-				-servicestudio-height: var(--thickness, 8px);
+				-servicestudio-height: var(--thickness, #{$token-scale-200});
 			}
 
 			&:after,
@@ -67,7 +67,7 @@
 				width: 100%;
 
 				& {
-					-servicestudio-background: var(--trail-color, $token-primitives-neutral-300);
+					-servicestudio-background: var(--trail-color, #{$token-border-subtle});
 				}
 			}
 

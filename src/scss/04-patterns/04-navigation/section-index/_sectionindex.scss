@@ -32,8 +32,8 @@
 
 .osui-section-index-item {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-section-index-item-color:            #{$token-text-subtlest};
-	--osui-section-index-item-active-color:     $token-text-default;
+	--osui-section-index-item-color:             #{$token-text-subtle};
+	--osui-section-index-item-active-color:      #{$token-text-default};
 	--osui-section-index-active-indicator-color: #{$token-semantics-primary-base};
 	// ───────────────────────────────────────────────────────────────────
 
