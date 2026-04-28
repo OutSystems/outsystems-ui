@@ -7,7 +7,7 @@
 .breadcrumbs {
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-breadcrumbs-item-color:      #{$token-text-subtlest};
-	--osui-breadcrumbs-separator-color: #{$token-primitives-neutral-700};
+	--osui-breadcrumbs-separator-color: #{$token-text-subtlest};
 	// ───────────────────────────────────────────────────────────────────
 
 	&-content {

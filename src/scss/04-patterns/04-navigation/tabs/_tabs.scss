@@ -6,11 +6,12 @@
 ///
 .osui-tabs {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-tabs-border-color:               #{$token-border-default};
-	--osui-tabs-header-item-color:          #{$token-text-subtlest};
-	--osui-tabs-header-item-color-active:   $token-text-default;
-	--osui-tabs-header-item-color-disabled: #{$token-text-disabled};
-	--osui-tabs-indicator-color:            #{$token-semantics-primary-base};
+	--osui-tabs-border-color:                    #{$token-border-subtle};
+	--osui-tabs-header-item-color:               #{$token-text-subtlest};
+	--osui-tabs-header-item-color-active:        #{$token-text-default};
+	--osui-tabs-header-item-color-disabled:      #{$token-text-disabled};
+	--osui-tabs-header-item-hover-background:    var(--osui-bg-overlay-hover);
+	--osui-tabs-indicator-color:                 #{$token-semantics-primary-base};
 	// ───────────────────────────────────────────────────────────────────
 
 	--header-item-width: fit-content(30%);
@@ -193,11 +194,14 @@
 			width: 100%;
 
 			&:hover {
+				background-color: var(--osui-tabs-header-item-hover-background);
+
 				&:not(.osui-tabs--is-active) {
 					color: var(--osui-tabs-header-item-color-active);
 				}
 
 				&[disabled] {
+					background-color: transparent;
 					color: var(--osui-tabs-header-item-color-disabled);
 				}
 			}

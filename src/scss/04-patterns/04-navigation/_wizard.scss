@@ -7,14 +7,17 @@
 .wizard {
 	&-wrapper {
 		// ─── Component CSS API ─────────────────────────────────────────────
-		--osui-wizard-icon-background:   #{$token-bg-surface-default};
-		--osui-wizard-icon-border-color: #{$token-border-input-default};
-		--osui-wizard-icon-color:        #{$token-primitives-neutral-700};
-		--osui-wizard-label-color:       #{$token-primitives-neutral-700};
-		--osui-wizard-active-color:      #{$token-semantics-primary-base};
-		--osui-wizard-past-background:   #{$token-semantics-primary-base};
-		--osui-wizard-past-color:        #{$token-text-inverse};
-		--osui-wizard-connector-color:   #{$token-bg-neutral-base-default};
+		--osui-wizard-icon-background:    #{$token-bg-surface-default};
+		--osui-wizard-icon-border-color:  #{$token-border-input-default};
+		--osui-wizard-icon-border-width:  #{$token-border-size-050};
+		--osui-wizard-icon-color:         #{$token-text-subtle};
+		--osui-wizard-label-color:        #{$token-text-subtle};
+		--osui-wizard-active-color:       #{$token-semantics-primary-base};
+		--osui-wizard-past-background:    #{$token-semantics-primary-base};
+		--osui-wizard-past-color:         #{$token-text-inverse};
+		--osui-wizard-connector-color:    #{$token-bg-neutral-base-default};
+		--osui-wizard-focus-halo-color:   var(--osui-border-focus-halo);
+		--osui-wizard-focus-halo-width:   3px;
 		// ───────────────────────────────────────────────────────────────────
 
 		&.wizard-vertical {
@@ -80,7 +83,7 @@
 	&-item-icon {
 		align-items: center;
 		background-color: var(--osui-wizard-icon-background);
-		border: $token-border-size-025 solid var(--osui-wizard-icon-border-color);
+		border: var(--osui-wizard-icon-border-width) solid var(--osui-wizard-icon-border-color);
 		border-radius: 50%;
 		color: var(--osui-wizard-icon-color);
 		display: flex;
@@ -90,6 +93,11 @@
 		position: relative;
 		width: 32px;
 		z-index: var(--os-layer-local-tier-1);
+
+		[data-block*='WizardItem']:focus-visible & {
+			box-shadow: 0 0 0 var(--osui-wizard-focus-halo-width) var(--osui-wizard-focus-halo-color);
+			outline: none;
+		}
 
 		&:empty {
 			height: 8px;
