@@ -116,3 +116,6 @@ dist/**
 
 # Generated design tokens (built by outsystems-design-tokens before each build)
 src/scss/tokens/
+
+# Per-developer Claude Code permission grants (local only)
+.claude/settings.local.json
