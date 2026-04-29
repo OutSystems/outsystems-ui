@@ -31,20 +31,23 @@
 			&:after {
 				-servicestudio-color: var(--color-indigo);
 				-servicestudio-font-family: var(--osui-icon-font-family);
+				-servicestudio-font-size: clamp(10px, 1.7vw, 20px);
 				-servicestudio-position: absolute;
 				-servicestudio-height: 34px;
-				-servicestudio-top: var(--space-m); 
-				-servicestudio-width: 34px;
+				-servicestudio-padding-top: 6%;
+				-servicestudio-top: 0;
 			}
 
 			&:before {
 				-servicestudio-content: var(--osui-icon-arrow-left);
-				-servicestudio-right: var(--space-l);
+				-servicestudio-padding-right: 20%;
+				-servicestudio-right: 0;
 			}
 
 			&:after {
 				-servicestudio-content: var(--osui-icon-arrow-right);
-				-servicestudio-right: var(--space-xs);
+				-servicestudio-padding-right: 12%;
+				-servicestudio-right: 0;
 			}
 		}
 	}
