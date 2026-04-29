@@ -12,6 +12,8 @@ updates:
           day: monday
           time: '09:00'
           timezone: Europe/Lisbon
+      cooldown:
+          default-days: 7
       open-pull-requests-limit: 3
       rebase-strategy: disabled
       labels:

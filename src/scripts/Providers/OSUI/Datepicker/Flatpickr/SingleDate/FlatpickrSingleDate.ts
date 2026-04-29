@@ -71,7 +71,10 @@ namespace Providers.OSUI.Datepicker.Flatpickr.SingleDate {
 			// Check if values are not beeing updated by UpdateInitialDate API Method!
 			if (this._isUpdatedInitialDateByClientAction === false) {
 				// Trigger platform's onChange callback event
-				this.triggerPlatformEventCallback(this.onSelectedCallbackEvent, _selectedDate);
+				this.triggerPlatformEventCallback(
+					this.onSelectedCallbackEvent,
+					OSFramework.OSUI.Helper.Dates.GetJsonDateFromDate(selectedDates[0])
+				);
 			}
 
 			// Reset Flag value;
