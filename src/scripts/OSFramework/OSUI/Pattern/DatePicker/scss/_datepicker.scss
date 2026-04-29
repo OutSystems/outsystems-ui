@@ -52,7 +52,6 @@
 			-servicestudio-border-radius: var(--border-radius-soft);
 			-servicestudio-border: var(--border-size-s) solid get-border-color('neutral-5');
 			-servicestudio-display: inline-block;
-			-servicestudio-height: 0;
 			-servicestudio-margin-top: 2px;
 			-servicestudio-max-width: 320px;
 			-servicestudio-overflow: hidden;
@@ -64,20 +63,23 @@
 			&:after {
 				-servicestudio-color: var(--color-indigo);
 				-servicestudio-font-family: var(--osui-icon-font-family);
+				-servicestudio-font-size: clamp(10px, 1.7vw, 20px);
 				-servicestudio-position: absolute;
 				-servicestudio-height: 34px;
-				-servicestudio-top: var(--space-m); 
-				-servicestudio-width: 34px;
+				-servicestudio-padding-top: 6%;
+				-servicestudio-top: 0;
 			}
 
 			&:before {
 				-servicestudio-content: var(--osui-icon-arrow-left);
-				-servicestudio-right: var(--space-xl);
+				-servicestudio-padding-right: 20%;
+				-servicestudio-right: 0;
 			}
 
 			&:after {
 				-servicestudio-content: var(--osui-icon-arrow-right);
-				-servicestudio-right: var(--space-s);
+				-servicestudio-padding-right: 12%;
+				-servicestudio-right: 0;
 			}
 
 			.osui-datepicker-calendar-ss-preview--time,
@@ -90,6 +92,7 @@
 				.osui-datepicker-calendar-ss-preview--time {
 					-servicestudio-text-align: center;
 					-servicestudio-display: block;
+					-servicestudio-font-size: clamp(10px, 1.7vw, 14px);
 					-servicestudio-margin-bottom: var(--space-s);
 					-servicestudio-position: relative;
 				}
@@ -100,46 +103,24 @@
 				-servicestudio-border-radius: var(--border-radius-soft);
 				-servicestudio-color: var(--color-neutral-0);
 				-servicestudio-content: "am";
-				-servicestudio-font-size: var(--font-size-xs);
+				-servicestudio-font-size: clamp(10px, 1.7vw, 14px);
 				-servicestudio-font-weight: var(--font-semi-bold);
 				-servicestudio-height: var(--space-base);
 				-servicestudio-line-height: var(--space-base);
 				-servicestudio-position: absolute;
-				-servicestudio-right: var(--space-s);
+				-servicestudio-right: 2%;
 				-servicestudio-top: 50%;
 				-servicestudio-transform: translateY(-50%) translateX(-50%);
 				-servicestudio-vertical-align: middle;
-				-servicestudio-width: var(--space-xl);
-			}
-
-
-			// If has not today btn
-			&:not(.has-today-btn) {
-				&.single {
-					-servicestudio-height: 360px;
-				}
-
-				&.time12h,
-				&.time24h {
-					-servicestudio-height: 394px;
-				}
+				-servicestudio-width: 15%;
 			}
 
 			// If has today btn
 			&.has-today-btn {
-				&.single {
-					-servicestudio-height: 394px;
-				}
-
-				&.time12h,
-				&.time24h {
-					-servicestudio-height: 440px;
-				}
-
 				.osui-datepicker-calendar-ss-preview--today{
 					display:block;
 					text-align: center;
-					font-size: var(--font-size-s);
+					font-size: clamp(10px, 1.7vw, 14px);
 				}
 			}
 

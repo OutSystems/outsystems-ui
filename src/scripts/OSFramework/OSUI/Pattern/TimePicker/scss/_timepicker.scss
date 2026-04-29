@@ -67,15 +67,16 @@
 					border-radius: var(--border-radius-rounded);
 					color: var(--color-neutral-0);
 					content:"am";
-					font-size: var(--font-size-xs);
+					font-size: clamp(10px, 1.5vw, 12px);
 					font-weight: var(--font-semi-bold);
 					height: var(--space-m);
 					line-height: var(--space-m);
+					margin-right: 2%;
 					position: absolute;
-					right: var(--space-s);
+					right: 0;
 					top: 50%;
 					transform: translateY(-50%);
-					width: var(--space-xl);
+					width: 20%;
 					text-transform: uppercase;
 				}
 
