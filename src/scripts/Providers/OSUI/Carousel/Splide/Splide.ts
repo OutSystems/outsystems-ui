@@ -80,13 +80,24 @@ namespace Providers.OSUI.Carousel.Splide {
 		private _prepareCarouselItems(): void {
 			// Define the element that has the items. The List widget if dynamic content, otherwise get from the placeholder directly
 			const _targetList = this._hasList ? this._carouselListWidgetElem : this._carouselPlaceholderElem;
-			const _childrenList = _targetList.children;
+			// Snapshot into a static array: iterating the live HTMLCollection while mutating the DOM skips nodes
+			const _childrenList = Array.from(_targetList.children);
 
 			if (_childrenList.length > 0) {
 				// Add the placeholder content already with the correct html structure per item, expected by the library
 				for (const item of _childrenList) {
 					if (!item.classList.contains(Enum.CssClass.SplideSlide)) {
-						item.classList.add(Enum.CssClass.SplideSlide);
+						// Splide assigns role="tabpanel" to each splide__slide element.
+						// That role is only valid on container elements, not on <img>.
+						// Wrap bare images in a <div> so the role lands on the container.
+						if (item.tagName === 'IMG') {
+							const wrapper = document.createElement(OSFramework.OSUI.GlobalEnum.HTMLElement.Div);
+							item.replaceWith(wrapper);
+							wrapper.appendChild(item);
+							wrapper.classList.add(Enum.CssClass.SplideSlide);
+						} else {
+							item.classList.add(Enum.CssClass.SplideSlide);
+						}
 					}
 				}
 			}
