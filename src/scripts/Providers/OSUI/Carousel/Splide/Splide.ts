@@ -33,6 +33,25 @@ namespace Providers.OSUI.Carousel.Splide {
 			super(uniqueId, new SplideConfig(configs));
 		}
 
+		// Method to apply role="list" and role="listitem" to the list element and its direct children
+		private _applyListRoles(listEl: HTMLElement): void {
+			listEl.setAttribute('role', 'list');
+			listEl.querySelectorAll(':scope > *').forEach((item) => {
+				item.setAttribute('role', 'listitem');
+			});
+		}
+
+		// Method to wait for the OutSystems List widget to finish loading before applying roles
+		private _applyListRolesWhenReady(listEl: HTMLElement): void {
+			if (!listEl.classList.contains('list-loading') && listEl.children.length > 0) {
+				this._applyListRoles(listEl);
+			} else {
+				OSFramework.OSUI.Helper.ApplySetTimeOut(() => {
+					this._applyListRolesWhenReady(listEl);
+				}, 100);
+			}
+		}
+
 		// Method to check if a List Widget is used inside the placeholder and assign the _listWidget variable
 		private _checkListWidget(): void {
 			this._hasList = OutSystems.OSUI.Utils.GetHasListInside(this._carouselPlaceholderElem);
@@ -135,9 +154,27 @@ namespace Providers.OSUI.Carousel.Splide {
 			);
 		}
 
+		// Method to assign correct ARIA list roles so screen readers interpret carousel lists properly
+		private _setListRoles(): void {
+			if (this._hasList && this._carouselListWidgetElem) {
+				// Dynamic content: poll until the List widget finishes loading before applying roles
+				this._applyListRolesWhenReady(this._carouselListWidgetElem);
+			} else {
+				// Static content: apply roles directly to the splide__list element
+				const splideList = OSFramework.OSUI.Helper.Dom.ClassSelector(
+					this.selfElement,
+					Enum.CssClass.SplideList
+				);
+				if (splideList) {
+					this._applyListRoles(splideList);
+				}
+			}
+		}
+
 		// Method to set the OnInitializeEvent
 		private _setOnInitializedEvent(): void {
 			this.provider.on(Enum.SpliderEvents.Mounted, () => {
+				this._setListRoles();
 				this.triggerPlatformInitializedEventCallback();
 			});
 		}
