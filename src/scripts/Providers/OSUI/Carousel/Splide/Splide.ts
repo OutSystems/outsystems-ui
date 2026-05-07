@@ -126,9 +126,9 @@ namespace Providers.OSUI.Carousel.Splide {
 				// Add the placeholder content already with the correct html structure per item, expected by the library
 				for (const item of _childrenList) {
 					if (!item.classList.contains(Enum.CssClass.SplideSlide)) {
-						// Splide assigns role="tabpanel" to each splide__slide element.
-						// That role is only valid on container elements, not on <img>.
-						// Wrap bare images in a <div> so the role lands on the container.
+						// Splide assigns role="tabpanel" to each splide__slide element, which is then
+						// overridden with role="listitem" by the OSUIListRoles extension. Neither role
+						// is valid on an <img>. Wrap bare images in a <div> so the role lands on the container.
 						if (item.tagName === 'IMG') {
 							const wrapper = document.createElement(OSFramework.OSUI.GlobalEnum.HTMLElement.Div);
 							item.replaceWith(wrapper);
