@@ -24,6 +24,8 @@ namespace Providers.OSUI.Carousel.Splide {
 		private _eventOnResize: OSFramework.OSUI.GlobalCallbacks.Generic;
 		// Store if a List widget is used inside the CarouselItems placeholder
 		private _hasList: boolean;
+		// Store the pending list-roles poll timeout id, so it can be cancelled on re-entry
+		private _listRolesPollId: number | undefined;
 		// Store the onSlideMoved event
 		private _platformEventOnSlideMoved: OSFramework.OSUI.Patterns.Carousel.Callbacks.OSOnSlideMovedEvent;
 		// Store initial provider options
@@ -43,10 +45,17 @@ namespace Providers.OSUI.Carousel.Splide {
 
 		// Method to wait for the OutSystems List widget to finish loading before applying roles
 		private _applyListRolesWhenReady(listEl: HTMLElement): void {
+			// Cancel any previously pending poll before starting a new one to prevent loop stacking
+			if (this._listRolesPollId !== undefined) {
+				clearTimeout(this._listRolesPollId);
+				this._listRolesPollId = undefined;
+			}
+
 			if (!listEl.classList.contains('list-loading') && listEl.children.length > 0) {
 				this._applyListRoles(listEl);
 			} else {
-				OSFramework.OSUI.Helper.ApplySetTimeOut(() => {
+				this._listRolesPollId = OSFramework.OSUI.Helper.ApplySetTimeOut(() => {
+					this._listRolesPollId = undefined;
 					this._applyListRolesWhenReady(listEl);
 				}, 100);
 			}
@@ -88,8 +97,22 @@ namespace Providers.OSUI.Carousel.Splide {
 			// Set initial carousel width
 			this._setCarouselWidth();
 
-			// Init the provider
-			this.provider.mount();
+			// Init the provider — pass a custom extension so list roles are re-applied on every
+			// mount cycle, including after provider.refresh() which wipes provider.on() listeners.
+			// The extension's mount() runs after all built-in components (including A11y) have
+			// already mounted, so Splide's ARIA roles are already set and can be overridden directly.
+			// eslint-disable-next-line @typescript-eslint/no-this-alias
+			const self = this;
+			this.provider.mount({
+				// eslint-disable-next-line @typescript-eslint/naming-convention
+				OSUIListRoles: function () {
+					return {
+						mount(): void {
+							self._setListRoles();
+						},
+					};
+				},
+			});
 
 			// Update pagination class, in case navigation was changed
 			this._togglePaginationClass();
@@ -140,6 +163,11 @@ namespace Providers.OSUI.Carousel.Splide {
 					this.redraw();
 					// This needs to be called again, to update the size one final time, to prevent situation where the Carousel wouldn't assume 100% width
 					this._setCarouselWidth();
+				} else {
+					// refresh() reapplies Splide's default ARIA (e.g. tabpanel/presentation) without firing
+					// mounted — e.g. when DevTools toggles and triggers resize. Full redraw remounts and
+					// mounted reapplies list roles; after refresh-only we must restore them here.
+					this._setListRoles();
 				}
 			}, 500);
 		}
@@ -174,7 +202,6 @@ namespace Providers.OSUI.Carousel.Splide {
 		// Method to set the OnInitializeEvent
 		private _setOnInitializedEvent(): void {
 			this.provider.on(Enum.SpliderEvents.Mounted, () => {
-				this._setListRoles();
 				this.triggerPlatformInitializedEventCallback();
 			});
 		}
@@ -387,6 +414,12 @@ namespace Providers.OSUI.Carousel.Splide {
 		 * @memberof Providers.OSUI.Carousel.Splide.OSUISplide
 		 */
 		public dispose(): void {
+			// Cancel any pending list-roles poll to prevent it firing after disposal
+			if (this._listRolesPollId !== undefined) {
+				clearTimeout(this._listRolesPollId);
+				this._listRolesPollId = undefined;
+			}
+
 			// Check if provider is ready
 			if (this.isBuilt) {
 				this.provider.destroy();
@@ -513,6 +546,10 @@ namespace Providers.OSUI.Carousel.Splide {
 
 					this.redraw();
 				}
+			} else if (this._hasList && this._carouselListWidgetElem) {
+				// Even when redraw is blocked (e.g. during a changeProperty call), re-apply list roles
+				// in case the List widget refreshed its content and replaced DOM nodes that had the roles.
+				this._applyListRolesWhenReady(this._carouselListWidgetElem);
 			}
 		}
 	}
