@@ -101,14 +101,11 @@ namespace Providers.OSUI.Carousel.Splide {
 			// mount cycle, including after provider.refresh() which wipes provider.on() listeners.
 			// The extension's mount() runs after all built-in components (including A11y) have
 			// already mounted, so Splide's ARIA roles are already set and can be overridden directly.
-			// eslint-disable-next-line @typescript-eslint/no-this-alias
-			const self = this;
 			this.provider.mount({
-				// eslint-disable-next-line @typescript-eslint/naming-convention
-				OSUIListRoles: function () {
+				OSUIListRoles: () => {
 					return {
-						mount(): void {
-							self._setListRoles();
+						mount: () => {
+							this._setListRoles();
 						},
 					};
 				},
