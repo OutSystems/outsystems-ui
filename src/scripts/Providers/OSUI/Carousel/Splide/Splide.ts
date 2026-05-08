@@ -35,8 +35,17 @@ namespace Providers.OSUI.Carousel.Splide {
 			super(uniqueId, new SplideConfig(configs));
 		}
 
-		// Method to apply role="list" and role="listitem" to the list element and its direct children
+		// Method to apply role="list" and role="listitem" to the list element and its direct children.
+		// Skips native list elements (ul/ol) and elements whose direct children are native list
+		// elements (li/ul/ol), since those already carry implicit list semantics.
 		private _applyListRoles(listEl: HTMLElement): void {
+			const _isNativeList = listEl.tagName === 'UL' || listEl.tagName === 'OL';
+			const _hasNativeListChildren = listEl.querySelector(':scope > li, :scope > ul, :scope > ol') !== null;
+
+			if (_isNativeList || _hasNativeListChildren) {
+				return;
+			}
+
 			listEl.setAttribute('role', 'list');
 			listEl.querySelectorAll(':scope > *').forEach((item) => {
 				item.setAttribute('role', 'listitem');
@@ -181,6 +190,18 @@ namespace Providers.OSUI.Carousel.Splide {
 
 		// Method to assign correct ARIA list roles so screen readers interpret carousel lists properly
 		private _setListRoles(): void {
+			// Remove role="tabpanel" from slides that contain img, ul, ol, or li — elements for
+			// which tabpanel ownership is invalid or creates conflicting semantics
+			this.selfElement.querySelectorAll(OSFramework.OSUI.Constants.Dot + Enum.CssClass.SplideSlide).forEach((slide) => {
+				const _slideEl = slide as HTMLElement;
+				if (
+					OSFramework.OSUI.Helper.Dom.Attribute.Get(_slideEl, OSFramework.OSUI.Constants.A11YAttributes.Role.AttrName) === OSFramework.OSUI.Constants.A11YAttributes.Role.TabPanel &&
+					_slideEl.querySelector('img, ul, ol, li')
+				) {
+					OSFramework.OSUI.Helper.Dom.Attribute.Remove(_slideEl, OSFramework.OSUI.Constants.A11YAttributes.Role.AttrName);
+				}
+			});
+
 			if (this._hasList && this._carouselListWidgetElem) {
 				// Dynamic content: poll until the List widget finishes loading before applying roles
 				this._applyListRolesWhenReady(this._carouselListWidgetElem);
