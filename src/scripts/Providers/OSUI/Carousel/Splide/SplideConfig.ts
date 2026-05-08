@@ -75,6 +75,7 @@ namespace Providers.OSUI.Carousel.Splide {
 		public getProviderConfig(): SplideOpts {
 			this._providerOptions = {
 				arrows: this._getArrowConfig(),
+				role: 'presentation',
 				breakpoints: {
 					768: {
 						perPage: this.ItemsPhone,

@@ -126,7 +126,7 @@ namespace Providers.OSUI.Carousel.Splide {
 				// Add the placeholder content already with the correct html structure per item, expected by the library
 				for (const item of _childrenList) {
 					if (!item.classList.contains(Enum.CssClass.SplideSlide)) {
-						// Splide assigns role="tabpanel" to each splide__slide element, which is then
+						// Splide assigns role="presentation" to each splide__slide element, which is then
 						// overridden with role="listitem" by the OSUIListRoles extension. Neither role
 						// is valid on an <img>. Wrap bare images in a <div> so the role lands on the container.
 						if (item.tagName === 'IMG') {
@@ -161,7 +161,7 @@ namespace Providers.OSUI.Carousel.Splide {
 					// This needs to be called again, to update the size one final time, to prevent situation where the Carousel wouldn't assume 100% width
 					this._setCarouselWidth();
 				} else {
-					// refresh() reapplies Splide's default ARIA (e.g. tabpanel/presentation) without firing
+					// refresh() reapplies Splide's default ARIA (e.g. presentation) without firing
 					// mounted — e.g. when DevTools toggles and triggers resize. Full redraw remounts and
 					// mounted reapplies list roles; after refresh-only we must restore them here.
 					this._setListRoles();
