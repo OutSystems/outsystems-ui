@@ -15,7 +15,9 @@ namespace OSFramework.OSUI.Patterns.Accordion {
 		 * @memberof OSFramework.Patterns.Accordion.Accordion
 		 */
 		protected setA11YProperties(): void {
-			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
+			const roleListElem =
+				Helper.Dom.ClassSelector(this.selfElement, GlobalEnum.CssClassElements.List) || this.selfElement;
+			Helper.A11Y.RoleList(roleListElem);
 		}
 
 		/**
@@ -116,6 +118,8 @@ namespace OSFramework.OSUI.Patterns.Accordion {
 		 */
 		public build(): void {
 			super.build();
+
+			this.setA11YProperties();
 
 			this.finishBuild();
 		}
