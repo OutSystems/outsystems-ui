@@ -1,5 +1,5 @@
 /*!
- * Virtual Select v1.1.5
+ * Virtual Select v1.2.0
  * https://sa-si-dev.github.io/virtual-select
  * Licensed under MIT (https://github.com/sa-si-dev/virtual-select/blob/master/LICENSE)
  */
@@ -221,7 +221,6 @@
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	-webkit-user-select: none;
-	-moz-user-select: none;
 	user-select: none;
 	width: 100%;
 }
@@ -277,7 +276,6 @@
 	height: 30px;
 	justify-content: center;
 	-webkit-user-select: none;
-	-moz-user-select: none;
 	user-select: none;
 	visibility: hidden;
 	width: 30px;
@@ -311,7 +309,6 @@
 .vscomp-ele[disabled] {
 	cursor: not-allowed;
 	-webkit-user-select: none;
-	-moz-user-select: none;
 	user-select: none;
 }
 .vscomp-ele[disabled] .vscomp-wrapper {
