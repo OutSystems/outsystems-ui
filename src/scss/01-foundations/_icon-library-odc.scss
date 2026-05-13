@@ -120,38 +120,6 @@ body.iconLibrary-phosphor {
 	font-family: var(--osui-icon-font-family);
 }
 
-// Search – search icon
-.input-search {
-	position: relative;
-
-	&::after {
-		color: $token-primitives-neutral-600;
-		content: var(--osui-icon-search);
-		font-family: var(--osui-icon-font-family);
-		left: $token-scale-400;
-		pointer-events: none;
-		position: absolute;
-		top: 50%;
-		transform: translateY(-50%);
-	}
-
-	.form-control[data-input] {
-		padding-left: var(--space-xl);
-	}
-}
-
-.is-rtl .input-search {
-	&::after {
-		left: auto;
-		right: var(--space-base);
-	}
-
-	.form-control[data-input] {
-		padding-left: var(--space-base);
-		padding-right: var(--space-xl);
-	}
-}
-
 // Submenu – header arrow
 .osui-submenu {
 	&__header__icon {
