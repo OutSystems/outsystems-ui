@@ -6,14 +6,12 @@
 /// Import Flatpickr library styles
 @import 'provider/flatpickr';
 
-@import 'timepicker_ss_preview_imgs';
-
 ///
 .osui-timepicker {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-timepicker-disabled-background:   #{$token-bg-input-disabled};
+	--osui-timepicker-disabled-background: #{$token-bg-input-disabled};
 	--osui-timepicker-disabled-border-color: #{$token-border-default};
-	--osui-timepicker-disabled-color:        #{$token-text-disabled};
+	--osui-timepicker-disabled-color: #{$token-text-disabled};
 	// ───────────────────────────────────────────────────────────────────
 
 	input {
@@ -57,32 +55,39 @@
 
 		// Service Studio Preview
 		& {
-			-servicestudio-background-color: transparent;
-			-servicestudio-background-position: top left;
-			-servicestudio-background-repeat: no-repeat;
-			-servicestudio-background-size: contain;
-			-servicestudio-border-radius: $token-border-radius-100;
-			-servicestudio-display: inline-block;
-			-servicestudio-height: 0;
+			-servicestudio-background-color: var(--color-neutral-0);
+			-servicestudio-border-radius: var(--border-radius-soft);
+			-servicestudio-display: flex;
+			-servicestudio-justify-content: space-evenly;
+			-servicestudio-line-height: var(--space-xl);
 			-servicestudio-margin-top: 2px;
 			-servicestudio-max-width: 320px;
-			-servicestudio-overflow: hidden;
 			-servicestudio-position: relative;
-			-servicestudio-width: 100%;
-			-servicestudio-z-index: var(--os-layer-local-tier-1);
+			-servicestudio-text-align: center;
+			-servicestudio-z-index: var(--layer-local-tier-1);
 
 			&.time12h {
-				-servicestudio-background-image: $timepicker_time12h_img_base64;
-				-servicestudio-height: $token-scale-1000;
-			}
-
-			&.time24h {
-				-servicestudio-background-image: $timepicker_time24h_img_base64;
-				-servicestudio-height: $token-scale-1000;
+				padding-right: var(--space-xxl);
+				&:after {
+					background-color: var(--color-neutral-7);
+					border-radius: var(--border-radius-rounded);
+					color: var(--color-neutral-0);
+					content: 'am';
+					font-size: clamp(10px, 1.5vw, 12px);
+					font-weight: var(--font-semi-bold);
+					height: var(--space-m);
+					line-height: var(--space-m);
+					margin-right: 2%;
+					position: absolute;
+					right: 0;
+					top: 50%;
+					transform: translateY(-50%);
+					width: 20%;
+					text-transform: uppercase;
+				}
 			}
 
 			& + .placeholder-ss-preview {
-				-servicestudio-height: 0;
 				-servicestudio-opacity: 0;
 				-servicestudio-overflow: hidden;
 				-servicestudio-width: 100%;
@@ -105,18 +110,6 @@
 	// Service Studio Preview
 	.osui-timepicker__dropdown-ss-preview {
 		-servicestudio-margin-top: -22px;
-	}
-}
-
-// If Hybrid IDE
-///
-html[data-uieditorversion^='1'] {
-	.osui-timepicker__dropdown-ss-preview {
-		&.time12h,
-		&.time24h {
-			-servicestudio-padding-top: min($token-scale-1000, 100%);
-			-servicestudio-height: 0;
-		}
 	}
 }
 

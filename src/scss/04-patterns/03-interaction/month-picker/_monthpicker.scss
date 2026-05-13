@@ -6,14 +6,12 @@
 /// Import Flatpickr library styles
 @import 'provider/flatpickr';
 
-@import 'monthpicker_ss_preview_image';
-
 ///
 .osui-monthpicker {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-monthpicker-disabled-background:   #{$token-bg-input-disabled};
+	--osui-monthpicker-disabled-background: #{$token-bg-input-disabled};
 	--osui-monthpicker-disabled-border-color: #{$token-border-default};
-	--osui-monthpicker-disabled-color:        #{$token-text-disabled};
+	--osui-monthpicker-disabled-color: #{$token-text-disabled};
 	// ───────────────────────────────────────────────────────────────────
 
 	// Service Studio Preview Container Styles
@@ -22,19 +20,10 @@
 
 		// Service Studio Preview
 		& {
-			-servicestudio-background-image: $monthpicker_img_base64;
-			-servicestudio-background-position: top center;
-			-servicestudio-background-repeat: no-repeat;
-			-servicestudio-background-size: contain;
 			-servicestudio-display: inline-block;
-			-servicestudio-height: 0;
-			-servicestudio-margin-left: -3px;
 			-servicestudio-margin-top: 2px;
-			-servicestudio-max-width: 320px;
 			-servicestudio-overflow: hidden;
-			-servicestudio-padding-top: min(250px, 100%);
 			-servicestudio-position: relative;
-			-servicestudio-width: 100%;
 			-servicestudio-z-index: var(--os-layer-local-tier-1);
 
 			& + .placeholder-ss-preview {
@@ -42,6 +31,29 @@
 				-servicestudio-opacity: 0;
 				-servicestudio-overflow: hidden;
 				-servicestudio-width: 100%;
+			}
+
+			&:before,
+			&:after {
+				-servicestudio-color: var(--color-indigo);
+				-servicestudio-font-family: var(--osui-icon-font-family);
+				-servicestudio-font-size: clamp(10px, 1.7vw, 20px);
+				-servicestudio-position: absolute;
+				-servicestudio-height: 34px;
+				-servicestudio-padding-top: 6%;
+				-servicestudio-top: 0;
+			}
+
+			&:before {
+				-servicestudio-content: var(--osui-icon-arrow-left);
+				-servicestudio-padding-right: 20%;
+				-servicestudio-right: 0;
+			}
+
+			&:after {
+				-servicestudio-content: var(--osui-icon-arrow-right);
+				-servicestudio-padding-right: 12%;
+				-servicestudio-right: 0;
 			}
 		}
 	}

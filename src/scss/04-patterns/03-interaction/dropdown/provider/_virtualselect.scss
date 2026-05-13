@@ -241,13 +241,17 @@
 				margin-left: $token-scale-600;
 				margin-right: $token-scale-0;
 			}
+
+			&,
+			&.show-value-as-tags {
+				.vscomp-clear-button {
+					left: var(--space-xl);
+				}
+			}
 		}
 
 		&.show-value-as-tags {
 			&.has-value {
-				.vscomp-clear-button {
-					left: $token-scale-800;
-				}
 				.vscomp-toggle-button {
 					padding-right: $token-scale-200;
 				}

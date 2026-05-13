@@ -54,6 +54,12 @@
 			z-index: var(--os-layer-local-tier-1);
 
 			&__page {
+				// WCAG 2.5.8: Target offset of 6px on each side meets the 24px minimum
+				// (12px dot + 6px margin × 2 = 24px total territory per axis)
+				height: 12px;
+				margin: 6px;
+				width: 12px;
+
 				&.is-active {
 					background-color: var(--osui-carousel-pagination-active-color);
 					z-index: var(--os-layer-local-tier-1);

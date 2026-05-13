@@ -136,6 +136,21 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 			}
 		}
 
+		/**
+		 * Method to handle the inert attribute
+		 *
+		 * @param {HTMLElement} element Target element to receive the value atributte
+		 * @returns
+		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
+		 */
+		private _handleInertAttribute(element: HTMLElement): void {
+			if (this._isOpen) {
+				Helper.Dom.Attribute.Remove(element, GlobalEnum.HTMLAttributes.Inert);
+			} else {
+				Helper.Dom.Attribute.Set(element, GlobalEnum.HTMLAttributes.Inert, Constants.EmptyString);
+			}
+		}
+
 		// Method to handle the tabindex values
 		private _handleTabIndex(): void {
 			const titleTabindexValue = this.configs.IsDisabled
@@ -342,6 +357,11 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 				// Set roles
 				Helper.A11Y.RoleButton(this._accordionItemTitleElem);
 				Helper.A11Y.RoleRegion(this._accordionItemContentElem);
+
+				// Make sure the item is a listitem if it is inside an accordion wrapper
+				if (this.selfElement.closest(Constants.Dot + Accordion.Enum.CssClass.Pattern)) {
+					Helper.A11Y.RoleListitem(this.selfElement);
+				}
 			}
 
 			// Set Tabindex
@@ -353,10 +373,8 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 			// Set aria-hidden to content
 			Helper.A11Y.AriaHidden(this._accordionItemContentElem, (!this._isOpen).toString());
 
-			// The focusable elements inside the Accordion Title must be hidden unless the Accordion is expanded
-			for (const child of this._accordionTitleFocusableChildren) {
-				Helper.A11Y.AriaHidden(child, (!this._isOpen).toString());
-			}
+			// Make sure content is fully disabled for accessibility purposes
+			this._handleInertAttribute(this._accordionItemContentElem);
 		}
 
 		/**
@@ -555,6 +573,9 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 			Helper.AsyncInvocation(() => {
 				this._animationAsync(false);
 			});
+
+			// Make sure content is fully disabled for accessibility purposes
+			this._handleInertAttribute(this._accordionItemContentElem);
 		}
 
 		/**
@@ -619,6 +640,9 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 			if (this.parentObject) {
 				this.notifyParent(Accordion.Enum.ChildNotifyActionType.Click);
 			}
+
+			// Make sure content is fully disabled for accessibility purposes
+			this._handleInertAttribute(this._accordionItemContentElem);
 		}
 
 		/**

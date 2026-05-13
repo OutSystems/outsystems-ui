@@ -6,15 +6,15 @@
 ///
 .table {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-table-border-color:          #{$token-border-default};
-	--osui-table-border-radius:         #{$token-border-radius-200};
-	--osui-table-header-background:     #{$token-bg-neutral-subtle-default};
-	--osui-table-header-color:          #{$token-text-subtle};
-	--osui-table-cell-background:       #{$token-bg-surface-default};
-	--osui-table-row-hover-background:  #{$token-bg-input-disabled};
+	--osui-table-border-color: #{$token-border-default};
+	--osui-table-border-radius: #{$token-border-radius-200};
+	--osui-table-header-background: #{$token-bg-neutral-subtle-default};
+	--osui-table-header-color: #{$token-text-subtle};
+	--osui-table-cell-background: #{$token-bg-surface-default};
+	--osui-table-row-hover-background: #{$token-bg-input-disabled};
 	--osui-table-row-stripe-background: #{$token-bg-neutral-subtle-default};
-	--osui-table-sorted-color:              #{$token-semantics-primary-base};
-	--osui-table-row-selected-background:   #{$token-semantics-primary-base};
+	--osui-table-sorted-color: #{$token-semantics-primary-base};
+	--osui-table-row-selected-background: #{$token-semantics-primary-base};
 	// ───────────────────────────────────────────────────────────────────
 
 	border: $token-border-size-025 solid var(--osui-table-border-color);
@@ -66,7 +66,8 @@
 		}
 
 		&.table-row-selected td {
-			background: var(--osui-table-row-selected-background) linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9));
+			background: var(--osui-table-row-selected-background)
+				linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9));
 		}
 
 		td {
@@ -100,7 +101,7 @@
 	}
 
 	.table-row:last-child {
-		& td {
+		& > td {
 			border-bottom: none;
 
 			&:last-child {
@@ -109,9 +110,8 @@
 			}
 		}
 
-		td:first-child {
-			border-radius: $token-border-radius-0 $token-border-radius-0 $token-border-radius-0
-				$token-border-radius-200;
+		& > td:first-child {
+			border-radius: $token-border-radius-0 $token-border-radius-0 $token-border-radius-0 $token-border-radius-200;
 		}
 	}
 }
