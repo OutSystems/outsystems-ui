@@ -12,8 +12,8 @@
 	&-item {
 		// ─── Component CSS API ─────────────────────────────────────────────
 		--osui-button-group-background:    #{$token-bg-surface-default};
-		--osui-button-group-border-color:  #{$token-semantics-primary-base};
-		--osui-button-group-color:         #{$token-semantics-primary-base};
+		--osui-button-group-border-color:  #{$token-border-default};
+		--osui-button-group-color:         #{$token-text-default};
 		// ───────────────────────────────────────────────────────────────────
 
 		background-color: var(--osui-button-group-background);
@@ -23,7 +23,7 @@
 		cursor: pointer;
 		font-size: $token-font-size-350;
 		font-weight: $token-font-weight-semi-bold;
-		height: 40px;
+		height: $token-scale-1000;
 		padding: $token-scale-0 $token-scale-400;
 		position: relative;
 
@@ -110,7 +110,7 @@
 .tablet,
 .phone {
 	.button-group-item {
-		height: 48px;
+		height: $token-scale-1200;
 	}
 }
 

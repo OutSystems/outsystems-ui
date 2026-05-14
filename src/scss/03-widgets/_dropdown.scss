@@ -6,10 +6,11 @@
 .dropdown {
 	&-container {
 		// ─── Component CSS API ─────────────────────────────────────────────
-		--osui-dropdown-background:    #{$token-bg-input-default};
-		--osui-dropdown-border-color:  #{$token-border-input-default};
-		--osui-dropdown-color:         $token-text-default;
-		--osui-dropdown-border-radius: #{$token-border-radius-100};
+		--osui-dropdown-background:         #{$token-bg-input-default};
+		--osui-dropdown-border-color:       #{$token-border-input-default};
+		--osui-dropdown-color:              #{$token-text-default};
+		--osui-dropdown-border-radius:      #{$token-border-radius-100};
+		--osui-dropdown-list-max-height:    300px;
 		// ───────────────────────────────────────────────────────────────────
 
 		cursor: initial;
@@ -30,7 +31,7 @@
 				cursor: pointer;
 				display: flex;
 				font-size: $token-font-size-350;
-				height: 40px;
+				height: $token-scale-1000;
 				padding: $token-scale-0 $token-scale-400;
 				width: 100%;
 
@@ -60,7 +61,7 @@
 			border-radius: $token-border-radius-100;
 			box-shadow: none;
 			left: 0 !important;
-			max-height: 300px;
+			max-height: var(--osui-dropdown-list-max-height);
 			overflow-y: auto;
 			position: absolute;
 			width: 100% !important;
@@ -70,7 +71,7 @@
 			align-items: center;
 			color: $token-text-default;
 			display: flex;
-			height: 40px;
+			height: $token-scale-1000;
 			padding: $token-scale-0 $token-scale-400;
 
 			&:hover,
@@ -152,7 +153,7 @@ select.dropdown-display[disabled] {
 	div.dropdown-display,
 	select.dropdown-display {
 		font-size: $token-font-size-400;
-		height: 48px;
+		height: $token-scale-1200;
 
 		.dropdown-display-content {
 			& > span,

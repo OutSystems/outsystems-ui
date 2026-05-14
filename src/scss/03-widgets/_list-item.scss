@@ -6,10 +6,13 @@
 ///
 .list-item {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-list-item-border-color:        #{$token-border-default};
-	--osui-list-item-background:          #{$token-bg-surface-default};
-	--osui-list-item-hover-background:    #{$token-bg-neutral-subtle-default};
+	--osui-list-item-border-color: #{$token-border-default};
+	--osui-list-item-background: #{$token-bg-surface-default};
+	--osui-list-item-hover-background: #{$token-bg-neutral-subtle-default};
 	--osui-list-item-selected-background: #{$token-semantics-primary-base};
+	--osui-list-item-selected-overlay: rgba(255, 255, 255, 0.9);
+	--osui-list-item-ripple-color: rgba(0, 0, 0, 0.1);
+	--osui-list-item-ripple-size: 10px;
 	// ───────────────────────────────────────────────────────────────────
 
 	border-bottom: $token-border-size-025 solid var(--osui-list-item-border-color);
@@ -30,16 +33,16 @@
 	}
 
 	.scale-animation {
-		animation: list-item-scale-animation 1500ms;
-		background-color: rgba(0, 0, 0, 0.1);
-		border-radius: 100px;
+		animation: list-item-scale-animation $token-transition-time-1500;
+		background-color: var(--osui-list-item-ripple-color);
+		border-radius: $token-border-radius-full;
 		display: block;
-		height: 10px;
+		height: var(--osui-list-item-ripple-size);
 		left: 50%;
 		pointer-events: none;
 		position: absolute;
 		top: 50%;
-		width: 10px;
+		width: var(--osui-list-item-ripple-size);
 		will-change: transform;
 		z-index: var(--os-layer-screen);
 	}
@@ -76,7 +79,8 @@
 .tablet.landscape {
 	.list {
 		.list-item-selected {
-			background: var(--osui-list-item-selected-background) linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9));
+			background: var(--osui-list-item-selected-background)
+				linear-gradient(var(--osui-list-item-selected-overlay), var(--osui-list-item-selected-overlay));
 
 			.list-item-content {
 				&-title {
@@ -107,7 +111,7 @@
 
 				&:before {
 					@include a11y-high-contrast-outline(true, $token-border-size-025);
-					border-right-width: 0;
+					border-right-width: $token-border-size-0;
 					border-left-width: $token-border-size-075;
 					bottom: 0;
 					content: '';

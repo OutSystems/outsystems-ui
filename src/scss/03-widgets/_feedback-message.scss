@@ -9,6 +9,8 @@
 	--osui-feedback-message-background: transparent;
 	--osui-feedback-message-color: #{$token-text-inverse};
 	--osui-feedback-message-border-radius: #{$token-border-radius-100};
+	--osui-feedback-message-max-width: 600px;
+	--osui-feedback-message-min-width: 400px;
 	// ───────────────────────────────────────────────────────────────────
 
 	align-items: center;
@@ -19,8 +21,8 @@
 	font-size: $token-font-size-450;
 	font-weight: $token-font-weight-regular;
 	left: 50%;
-	max-width: 600px;
-	min-width: 400px;
+	max-width: var(--osui-feedback-message-max-width);
+	min-width: var(--osui-feedback-message-min-width);
 	padding: $token-scale-400;
 
 	i {
@@ -58,7 +60,7 @@ div.feedback-message-success {
 ///
 div.feedback-message-warning {
 	--osui-feedback-message-background: #{$token-semantics-warning-base};
-	--osui-feedback-message-color: $token-text-default;
+	--osui-feedback-message-color: #{$token-text-default};
 }
 
 // Responsive --------------------------------------------------------------------

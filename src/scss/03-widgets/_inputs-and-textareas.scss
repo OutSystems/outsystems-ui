@@ -22,7 +22,7 @@
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-input-background:          #{$token-bg-input-default};
 	--osui-input-border-color:        #{$token-border-input-default};
-	--osui-input-color:               $token-text-default;
+	--osui-input-color:               #{$token-text-default};
 	--osui-input-border-radius:       #{$token-border-radius-200};
 	--osui-input-focus-border-color:  #{$token-semantics-primary-base};
 	--osui-input-error-border-color:  #{$token-semantics-danger-base};
@@ -57,7 +57,7 @@
 	}
 
 	&[data-input] {
-		height: 40px;
+		height: $token-scale-1000;
 		padding: $token-scale-0 $token-scale-400;
 	}
 
@@ -72,7 +72,7 @@
 		&-small {
 			&[data-input] {
 				font-size: $token-font-size-300;
-				height: 32px;
+				height: $token-scale-800;
 				padding: $token-scale-0 $token-scale-200;
 			}
 
@@ -86,7 +86,7 @@
 		&-large {
 			&[data-input] {
 				font-size: $token-font-size-400;
-				height: 48px;
+				height: $token-scale-1200;
 			}
 
 			&[data-textarea] {
@@ -104,6 +104,7 @@
 	}
 }
 
+
 /* Responsive ----------------------------------------------------------------- */
 ///
 .tablet,
@@ -111,12 +112,12 @@
 	.form-control {
 		&[data-input] {
 			font-size: $token-font-size-400;
-			height: 48px;
+			height: $token-scale-1200;
 
 			// Repeated selector since the properties above will ends up in a selector with more specificity
 			&.input-small {
 				font-size: $token-font-size-300;
-				height: 32px;
+				height: $token-scale-800;
 			}
 		}
 

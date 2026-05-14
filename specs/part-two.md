@@ -178,27 +178,28 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 ### Token swap
 
-- [ ] `.btn` `height`: `40px` → `$token-scale-900` (36px)
-- [ ] `.btn-small` `height`: already `$token-scale-800` (32px) — confirm tokenized
-- [ ] `.btn-large` `height`: → `$token-scale-1200` (48px)
+- [x] `.btn` `height`: confirmed `$token-scale-1000` (40px) — proposed CSS keeps 40px, **not** 36px
+- [x] `.btn-small` `height`: already `$token-scale-800` (32px) — confirm tokenized
+- [x] `.btn-large` `height`: → `$token-scale-1200` (48px)
 - [ ] `.btn` `border-radius`: `$token-border-radius-100` (4px) → `$token-border-radius-200` (8px)
 - [ ] `.btn` `font-weight`: `$token-font-weight-semi-bold` → `$token-font-weight-medium` on colored variants (primary/success/error)
 - [ ] `.btn-primary` `background-color`: current → `$token-semantics-primary-base`
 - [ ] `.btn-success` `background-color`: current → `$token-semantics-success-base`
 - [ ] `.btn-error` `background-color`: current → `$token-semantics-danger-base`
 - [ ] `.btn-cancel` `background-color`: current → `$token-bg-surface-default`
-- [ ] `.btn-cancel` `border-color`: current → `$token-border-default`
+- [x] `.btn-cancel` `border-color`: current → `$token-border-default` (proposed CSS uses `$token-border-default`, not `$token-border-input-press`)
 - [ ] `.btn-cancel` `color`: current → `$token-text-subtle`
+- [ ] Add `.btn-neutral` variant: `background-color: $token-bg-neutral-subtle-default`; `color: $token-text-default`; `border: none`
+- [ ] Add `.btn-circle` variant: `border-radius: $token-border-radius-full`; `width: var(--osui-btn-height)`; `padding: 0`
 - [ ] `[disabled]` states: replace generic grey with `opacity: var(--token-opacity-disabled, 0.45)` per variant (keeps variant color identity)
-- [ ] `line-height`: set explicit `1` (prevents descender height inflation)
 
 ### New component CSS API vars
 
-- [ ] Declare `--osui-btn-height: #{$token-scale-900}` · `--osui-btn-radius: #{$token-border-radius-200}` at `.btn` root
+- [ ] Declare `--osui-btn-height: #{$token-scale-1000}` · `--osui-btn-radius: #{$token-border-radius-200}` at `.btn` root
 
 ### Motion
 
-- [ ] `.btn` add `transition: background-color $token-transition-time-100 $token-transition-curve-base, border-color $token-transition-time-100 $token-transition-curve-base, color $token-transition-time-100 $token-transition-curve-base`
+- [ ] `.btn` fix `transition: all 100ms linear` → explicit `background-color, border-color, color var(--token-duration-fast, 100ms) var(--token-easing-standard, ease)` (avoid `transition: all`)
 - [ ] `.btn-cancel` extend transition to include `box-shadow $token-transition-time-150 $token-transition-curve-base`
 - [ ] Add `@media (prefers-reduced-motion: reduce)` zero-out
 
@@ -210,9 +211,9 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 ### Token swap
 
-- [ ] `.button-group-item` `height`: `40px` → `$token-scale-900` (36px) — lock-step with Button
-- [ ] `.button-group-item` `border-color` (rest): primary blue → `$token-border-default`
-- [ ] `.button-group-item` `color` (rest): `color-primary` → `$token-text-default`
+- [x] `.button-group-item` `height`: confirmed `$token-scale-1000` (40px) — proposed CSS keeps 40px, lock-step with Button
+- [x] `.button-group-item` `border-color` (rest): primary blue → `$token-border-default`
+- [x] `.button-group-item` `color` (rest): `color-primary` → `$token-text-default`
 - [ ] `.button-group-item` corner `border-radius` (first/last): `$token-border-radius-100` → `$token-border-radius-200`
 - [ ] `.button-group-selected-item` `background-color`: current → `$token-semantics-primary-base`
 - [ ] Item layout: `inline-block` → `inline-flex` (eliminates HTML-whitespace ~4px gap between items)
@@ -335,7 +336,7 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 ### Token swap
 
-- [ ] Trigger `height`: `40px` → `$token-scale-900` (36px)
+- [x] Trigger `height`: confirmed `$token-scale-1000` (40px) — proposed CSS keeps 40px
 - [ ] Trigger `border-radius`: `4px` → `$token-border-radius-200` (8px)
 - [ ] Popup container `border-radius`: `4px` → `$token-border-radius-200`
 - [ ] Selected row `background-color`: primary-light → `$token-border-subtle`
@@ -369,7 +370,7 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 - [ ] Column gap: `16px` → `$token-scale-600` (24px)
 - [ ] Remove card chrome from form wrapper (border + shadow + radius)
 
-> **Note:** form control height (40px → 36px), border, and focus ring are in `_inputs-and-textareas.scss` — see **Input** below.
+> **Note:** form control border and focus ring are in `_inputs-and-textareas.scss` — see **Input** below. Height stays at 40px (`$token-scale-1000`).
 
 ---
 
@@ -405,20 +406,28 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 ### Token swap
 
-- [ ] `[data-input]` `height`: `40px` → `$token-scale-900` (36px)
+- [x] `[data-input]` `height`: confirmed `$token-scale-1000` (40px) — proposed CSS keeps 40px, **not** 36px
 - [ ] `[data-input]` `border-radius`: `4px` → `$token-border-radius-200` (8px)
 - [ ] `[data-input]` `border-color`: `#d5d5d5` or legacy var → `$token-border-input-default`
-- [ ] Hover `border-color`: `#626262` → `$token-text-subtlest`
-- [ ] Focus state: replace border-only focus with `outline: #{$token-border-size-050} solid $token-semantics-primary-base; outline-offset: 1px`
+- [x] `--osui-input-color: $token-text-default` fix missing `#{}` interpolation → `#{$token-text-default}`
+- [ ] Hover `border-color`: current (no visual change) → distinct hover border (check `$token-border-input-hover` or `$token-text-subtlest`)
+- [ ] Focus state: replace `border:` shorthand → `border-color:` only + `outline: none` (proposed CSS pattern); keep existing focus token
 - [ ] Disabled `background-color`: → `$token-border-subtle`
 - [ ] Disabled `color`: → `$token-text-disabled`
 - [ ] Error `border-color`: `#dc2020` → `$token-semantics-danger-base`
-- [ ] `[data-input].input-small` `height`: → `$token-scale-800` (32px)
-- [ ] `[data-input].input-large` `height`: → `$token-scale-1200` (48px)
+- [x] `[data-input].input-small` `height`: → `$token-scale-800` (32px)
+- [x] `[data-input].input-large` `height`: → `$token-scale-1200` (48px)
+
+### Label and helper text (missing rules)
+
+- [ ] Add `.form label` / `[data-label]` `font-size: $token-font-size-350`; `font-weight: $token-font-weight-medium`; `color: $token-text-default`; `margin-bottom: $token-scale-100`
+- [ ] Add `.help-block` / `.input-helper` `font-size: $token-font-size-300`; `color: $token-text-subtle`; `margin-top: $token-scale-100`
+- [ ] Add `span.validation-message` `font-size: $token-font-size-300`; `color: $token-semantics-danger-base`; `margin-top: $token-scale-100`
 
 ### Motion
 
-- [ ] Confirm `transition: 180ms /* token gap */ $token-transition-curve-linear` on border/outline
+- [ ] Fix `transition: all 180ms linear` → explicit `border-color, background-color var(--token-duration-fast, 100ms) var(--token-easing-standard, ease)` (avoid `transition: all`; proposed CSS pattern)
+- [ ] Add `@media (prefers-reduced-motion: reduce)` zero-out
 
 ---
 
@@ -702,9 +711,10 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 - [ ] `.not-valid` `border-color`: `#dc2020` → `$token-semantics-danger-base`
 - [ ] Character counter (new slot): `color: $token-text-subtlest`; `font-size: $token-font-size-300`
 
-### Motion (confirm existing)
+### Motion
 
-- [ ] `transition: 180ms /* token gap */ $token-transition-curve-linear`
+- [ ] Fix `transition: all 180ms linear` → explicit `border-color, background-color var(--token-duration-fast, 100ms) var(--token-easing-standard, ease)` (matches Input)
+- [ ] Add `@media (prefers-reduced-motion: reduce)` zero-out
 
 ---
 
@@ -802,9 +812,51 @@ Each component's changes are complete when:
 
 ---
 
+## Review passes
+
+### Pass 1 — Functional tests (current)
+
+Cross-reference each component's checklist items against the functional test suite at `https://eng-starter-apps-dev.outsystems.app/AT_OSUIFunctional/Home`. For each component, note which checklist items touch something a test exercises, and flag any item that is likely to regress.
+
+Add findings inline under each component section as a **"Functional test notes"** block.
+
+### Pass 2 — Accessibility (todo)
+
+After Pass 1 changes are implemented:
+
+- Verify focus ring visibility meets WCAG 2.1 AA (3:1 contrast ratio against adjacent colours) for every component that received a new focus ring token.
+- Confirm `color-mix()` focus halos are legible — if `$token-semantics-primary-base` (#105cef) at 22% opacity on white does not meet 3:1, switch to a pre-computed `rgba()` fallback.
+- Check keyboard navigation order is unaffected by any layout changes (Button height, Pagination size, etc.).
+- Confirm `aria-*` attributes and roles are not disturbed by structural changes (Accordion, Tabs, Wizard, Section Index).
+- Verify `prefers-reduced-motion` blocks are in place for every new transition added in Pass 1.
+
+### Pass 3 — RTL (todo)
+
+After Pass 2 is signed off:
+
+- Run through each component that has an `.is-rtl` block and confirm new spacing / layout changes mirror correctly.
+- Pay particular attention to: Breadcrumbs (separator direction), Pagination (button order), Accordion (caret), Timeline (connector alignment), Sidebar (left/right transform), Input With Icon (icon slot side).
+- Confirm logical properties (`margin-inline-start`, `inset-inline`) were used where introduced in Pass 1, rather than `margin-left` / `left`.
+
+---
+
 ## Open issues and future work
 
 This section tracks blockers, token gaps, design questions, and cross-cutting concerns that cannot be resolved within this implementation pass. Update it as things are resolved or new issues are found.
+
+---
+
+### Missing foundations — not yet in SCSS
+
+These items exist in the proposed CSS but are absent from the current codebase. They are prerequisites for other component changes.
+
+| Item | Where | Action |
+|---|---|---|
+| `--color-focus-outer` still referenced by some components | Any component file still using it | Migrate to `var(--osui-border-focus-halo)` directly — do **not** re-add `--color-focus-outer` to root |
+| `--osui-bg-neutral-subtlest: #f5f5f5` | `src/scss/01-foundations/_root.scss` | Added as `--osui-*` future-token candidate (never use `--token-*` prefix for hand-declared vars) |
+| Icon library vars (`--osui-icon-font-family`, `--osui-icon-*`) | `src/scss/01-foundations/_root.scss` or new `_icon-library.scss` partial | Entire system is missing; proposed CSS defines FontAwesome and Phosphor vars at root |
+
+**Action:** Implement `_root.scss` additions first (they unblock other components). Icon library vars are a separate partial — create `src/scss/01-foundations/_icon-library.scss` and register it in the ScssStructure spec.
 
 ---
 
@@ -885,6 +937,14 @@ The design review proposes replacing `font-weight: 600` (causes layout reflow) w
 Several components (Checkbox focus ring, Radio focus ring, Switch focus ring, Wizard active halo, Rating focus ring) use `color-mix(in srgb, ...)` for the 18–22% primary halo. This is baseline-available since 2023 but is not supported in browsers below Chrome 111 / Firefox 113 / Safari 16.2.
 
 **Action:** Confirm minimum browser support targets for OSUI. If pre-2023 browsers must be supported, replace `color-mix()` with a pre-computed `rgba()` fallback.
+
+---
+
+### `transition: all` — global find-and-replace needed
+
+The proposed CSS eliminates `transition: all` everywhere in favor of explicit property lists (`background-color, border-color, color …`). The current codebase has `transition: all` in at minimum: `_btn.scss`, `_inputs-and-textareas.scss`, `_floating-actions.scss`, `_submenu.scss`, `_sidebar.scss`, `_stacked-cards.scss`, `_animated-label.scss`.
+
+**Action:** Do a repo-wide grep for `transition: all` in `src/scss/` and `src/scripts/**/scss/` and replace each occurrence with an explicit property list before finalizing any component. Using `transition: all` in production is a performance anti-pattern (triggers unnecessary repaints on every property change).
 
 ---
 
@@ -993,8 +1053,8 @@ Already well tokenized via CSS API vars.
 **File:** `src/scss/04-patterns/03-interaction/_input-with-icon.scss`
 
 - [ ] `--osui-input-with-icon-icon-color: #{$token-primitives-neutral-700}` — `neutral-700` is a primitive; upgrade to `#{$token-icon-default}` or `#{$token-text-subtle}` for semantic intent
-- [ ] Icon slot `width: 40px` — if Input height is moving to `$token-scale-900` (36px), confirm icon slot width also needs to update to match; annotate decision
-- [ ] `padding-left: $token-scale-1000` (40px) on input when icon present — if icon slot shrinks, this padding must track it; consider deriving from a shared `--osui-input-with-icon-slot-width` var
+- [ ] Icon slot `width: 40px` — Input height stays at `$token-scale-1000` (40px); confirm icon slot width is correct and tokenize to `$token-scale-1000`
+- [ ] `padding-left: $token-scale-1000` (40px) on input when icon present — confirm this tracks icon slot; consider deriving from a shared `--osui-input-with-icon-slot-width` var
 
 ---
 
@@ -1015,7 +1075,7 @@ Already well tokenized via CSS API vars.
 - [ ] `--border-radius-rounded: 16px` — this is a legacy-style local var (no `--osui-` prefix); rename to `--osui-overflow-menu-shape` or remove if `--osui-overflow-menu-shape` already covers it; value `16px` has no matching `$token-border-radius-*` (nearest is `$token-border-radius-300` 12px) — annotate or request token
 - [ ] `.tablet, .phone { --border-radius-rounded: 100% }` — same issue; this appears to be overriding a shape for mobile; confirm intent
 - [ ] `--osui-overflow-menu-min-width: 170px` — declared inside the selector without `#{}`, which is fine for a raw number but confirm value is intentional design-spec
-- [ ] Trigger `width: 32px` (desktop) / `40px` (tablet/phone) — if Button height changes to 36px, confirm trigger sizes remain correct; tokenize to `$token-scale-800` / `$token-scale-1000`
+- [ ] Trigger `width: 32px` (desktop) / `40px` (tablet/phone) — Button height stays 40px; tokenize trigger sizes to `$token-scale-800` / `$token-scale-1000`
 
 ---
 
@@ -1059,10 +1119,10 @@ Already well tokenized via CSS API vars.
 #### B15. Table
 **File:** `src/scss/03-widgets/_table.scss`
 
-- [ ] `th { height: 48px }` — tokenize to `$token-scale-1200`
-- [ ] `td { height: 56px }` (default row) — no `$token-scale-*` for 56px; annotate `// token gap: 56px has no exact token` (nearest: `$token-scale-1400` if exists, else keep raw)
-- [ ] `.table-row-small td { height: 48px }` — tokenize to `$token-scale-1200`
-- [ ] `.table-row-medium td { height: 64px }` — check if `$token-scale-1600` exists; annotate if not
+- [x] `th { height: 48px }` — tokenize to `$token-scale-1200`
+- [x] `td { height: 56px }` — tokenized to `$token-scale-1400` (56px token confirmed in `_variables.scss`)
+- [x] `.table-row-small td { height: 48px }` — tokenize to `$token-scale-1200`
+- [x] `.table-row-medium td { height: 64px }` — tokenized to `$token-scale-1600`
 - [ ] `table-row-selected` gradient: `linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9))` — this tints the selected-row background; consider whether `$token-opacity-*` or a surface token covers this; annotate `// design-spec: 90% white overlay for selected row`
 - [ ] `td:before { margin-right: 10px; max-width: 110px; min-width: 110px }` (mobile stacked layout) — hardcoded; annotate `// design-spec: mobile label column width`
 - [ ] `--osui-table-row-hover-background: #{$token-bg-input-disabled}` — `bg-input-disabled` is semantically wrong for a hover state; consider `$token-border-subtle` (matches hover pattern used in List, Pagination)

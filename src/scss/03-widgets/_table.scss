@@ -36,7 +36,7 @@
 			border-bottom: $token-border-size-025 solid var(--osui-table-border-color);
 			color: var(--osui-table-header-color);
 			font-weight: $token-font-weight-semi-bold;
-			height: 48px;
+			height: $token-scale-1200;
 			padding: $token-scale-0 $token-scale-600;
 			text-align: left;
 
@@ -73,20 +73,20 @@
 		td {
 			background: var(--osui-table-cell-background);
 			border-bottom: $token-border-size-025 solid var(--osui-table-border-color);
-			height: 56px;
+			height: $token-scale-1400;
 			padding: $token-scale-200 $token-scale-600;
 			vertical-align: inherit;
 		}
 
 		&-small {
 			td {
-				height: 48px;
+				height: $token-scale-1200;
 			}
 		}
 
 		&-medium {
 			td {
-				height: 64px;
+				height: $token-scale-1600;
 			}
 		}
 

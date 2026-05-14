@@ -6,22 +6,23 @@
 ///
 .btn {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-btn-background:    #{$token-bg-surface-default};
-	--osui-btn-color:         #{$token-semantics-primary-base};
-	--osui-btn-border-color:  currentColor;
+	--osui-btn-height: #{$token-scale-1000};
+	--osui-btn-background: #{$token-bg-surface-default};
+	--osui-btn-color: #{$token-semantics-primary-base};
+	--osui-btn-border-color: currentColor;
 	--osui-btn-border-radius: #{$token-border-radius-200};
 	// Primary variant
-	--osui-btn-primary-background:   #{$token-semantics-primary-base};
+	--osui-btn-primary-background: #{$token-semantics-primary-base};
 	--osui-btn-primary-border-color: #{$token-semantics-primary-base};
-	--osui-btn-primary-color:        #{$token-text-inverse};
+	--osui-btn-primary-color: #{$token-text-inverse};
 	// Success variant
-	--osui-btn-success-background:   #{$token-semantics-success-base};
+	--osui-btn-success-background: #{$token-semantics-success-base};
 	--osui-btn-success-border-color: #{$token-semantics-success-base};
-	--osui-btn-success-color:        #{$token-text-inverse};
+	--osui-btn-success-color: #{$token-text-inverse};
 	// Error variant
-	--osui-btn-error-background:     #{$token-semantics-danger-base};
-	--osui-btn-error-border-color:   #{$token-semantics-danger-base};
-	--osui-btn-error-color:          #{$token-text-inverse};
+	--osui-btn-error-background: #{$token-semantics-danger-base};
+	--osui-btn-error-border-color: #{$token-semantics-danger-base};
+	--osui-btn-error-color: #{$token-text-inverse};
 	// ───────────────────────────────────────────────────────────────────
 
 	align-items: center;
@@ -33,12 +34,11 @@
 	display: inline-flex;
 	filter: brightness(1);
 	font-weight: $token-font-weight-semi-bold;
-	height: 40px;
+	height: var(--osui-btn-height);
 	justify-content: center;
 	line-height: 1;
 	margin: 0;
 	padding: $token-scale-0 $token-scale-400;
-
 	transition: all 100ms linear;
 
 	&:hover:active {
@@ -59,7 +59,7 @@
 		margin-left: $token-scale-600;
 	}
 
-	// States
+	// Variants
 	&-primary {
 		background-color: var(--osui-btn-primary-background);
 		border: $token-border-size-025 solid var(--osui-btn-primary-border-color);
@@ -68,19 +68,19 @@
 
 	&-small {
 		font-size: $token-font-size-300;
-		height: 32px;
+		height: $token-scale-800;
 		padding: $token-scale-0 $token-scale-200;
 	}
 
 	&-large {
 		font-size: $token-font-size-400;
-		height: 48px;
+		height: $token-scale-1200;
 	}
 
 	&-cancel {
-		--osui-btn-background:   #{$token-bg-surface-default};
-		--osui-btn-color:        #{$token-text-subtlest};
-		--osui-btn-border-color: #{$token-border-input-press};
+		--osui-btn-background: #{$token-bg-surface-default};
+		--osui-btn-color: #{$token-text-subtlest};
+		--osui-btn-border-color: #{$token-border-default};
 
 		background-color: var(--osui-btn-background);
 		border: $token-border-size-025 solid var(--osui-btn-border-color);
@@ -100,8 +100,8 @@
 	}
 
 	&[disabled] {
-		--osui-btn-background:   #{$token-bg-input-disabled};
-		--osui-btn-color:        #{$token-text-disabled};
+		--osui-btn-background: #{$token-bg-input-disabled};
+		--osui-btn-color: #{$token-text-disabled};
 		--osui-btn-border-color: #{$token-border-default};
 
 		background-color: var(--osui-btn-background);

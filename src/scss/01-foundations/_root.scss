@@ -82,8 +82,9 @@
 	--osui-elevation-overlay: 0 12px 24px -8px rgba(0, 0, 0, 0.12), 0 8px 16px -8px rgba(0, 0, 0, 0.08);   /* future: --token-elevation-overlay */
 	--osui-elevation-flat: 0 1px 2px rgba(16, 24, 40, 0.04), 0 1px 3px rgba(16, 24, 40, 0.06);            /* future: --token-elevation-flat */
 
-	/*! Surface variant — subtler than --token-bg-surface-default */
+	/*! Surface variants — subtler than --token-bg-surface-default */
 	--osui-bg-surface-subtle: #fafbfc;                       /* future: --token-bg-surface-subtle */
+	--osui-bg-neutral-subtlest: #f5f5f5;                     /* future: --token-bg-neutral-subtlest */
 
 	/*! Motion duration — fills the gap between $token-transition-duration-300 (300ms) and -500 (500ms) */
 	--osui-motion-duration-400: 400ms;                       /* future: --token-transition-duration-400 */

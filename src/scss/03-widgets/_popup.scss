@@ -28,6 +28,7 @@
 		--osui-popup-border-radius: #{$token-border-radius-100};
 		--osui-popup-shadow:        #{$token-elevation-4};
 		--osui-popup-padding:       #{$token-scale-600};
+		--osui-popup-max-width:     500px;
 		// ───────────────────────────────────────────────────────────────────
 
 		background-color: var(--osui-popup-background);
@@ -36,7 +37,7 @@
 		box-shadow: var(--osui-popup-shadow);
 		margin: $token-scale-600;
 		max-height: calc(100% - $token-scale-1000);
-		max-width: 500px;
+		max-width: var(--osui-popup-max-width);
 		overflow: visible;
 		padding: var(--osui-popup-padding);
 		width: 100%;

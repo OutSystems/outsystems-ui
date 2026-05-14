@@ -19,9 +19,10 @@
 			// ─── Component CSS API ─────────────────────────────────────────────
 			--osui-popover-background:    #{$token-bg-surface-default};
 			--osui-popover-border-color:  #{$token-border-default};
-			--osui-popover-color:         $token-text-default;
+			--osui-popover-color:         #{$token-text-default};
 			--osui-popover-border-radius: #{$token-border-radius-100};
 			--osui-popover-shadow:        #{$token-elevation-1};
+			--osui-popover-max-width:     350px;
 			// ───────────────────────────────────────────────────────────────────
 
 			background-color: var(--osui-popover-background);
@@ -29,7 +30,7 @@
 			border-radius: var(--osui-popover-border-radius);
 			box-shadow: var(--osui-popover-shadow);
 			color: var(--osui-popover-color);
-			max-width: 350px;
+			max-width: var(--osui-popover-max-width);
 			min-width: auto;
 			padding: $token-scale-400;
 			z-index: var(--os-layer-elevated);

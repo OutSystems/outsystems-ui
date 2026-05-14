@@ -6,18 +6,20 @@
 ///
 .radio-button {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-radio-background:     #{$token-bg-input-default};
-	--osui-radio-border-color:   #{$token-border-input-default};
-	--osui-radio-checked-color:  #{$token-semantics-primary-base};
+	--osui-radio-size: #{$token-scale-600};
+	--osui-radio-background: #{$token-bg-input-default};
+	--osui-radio-border-color: #{$token-border-input-default};
+	--osui-radio-checked-color: #{$token-semantics-primary-base};
+	--osui-radio-indicator-border: 6px;
 	// ───────────────────────────────────────────────────────────────────
 
 	appearance: none;
 	cursor: pointer;
 	flex-shrink: 0;
-	height: 24px;
+	height: var(--osui-radio-size);
 	position: relative;
 	transition: all 180ms linear;
-	width: 24px;
+	width: var(--osui-radio-size);
 
 	&:before,
 	&:after {
@@ -48,7 +50,7 @@
 	&:checked {
 		&:before {
 			background-color: var(--osui-radio-background);
-			border: 6px solid var(--osui-radio-checked-color);
+			border: var(--osui-radio-indicator-border) solid var(--osui-radio-checked-color);
 		}
 
 		&:hover:before {
@@ -73,7 +75,7 @@
 
 		&:checked:before {
 			background-color: $token-bg-input-disabled;
-			border: 6px solid $token-border-default;
+			border: var(--osui-radio-indicator-border) solid $token-border-default;
 		}
 	}
 }
@@ -108,7 +110,7 @@
 
 		&:checked:before {
 			background-color: var(--osui-radio-background);
-			border: 6px solid var(--osui-radio-checked-color);
+			border: var(--osui-radio-indicator-border) solid var(--osui-radio-checked-color);
 		}
 	}
 
@@ -145,16 +147,16 @@
 
 		&:after {
 			background-color: $token-bg-input-default;
-			border-radius: 100%;
+			border-radius: $token-border-radius-full;
 			content: '';
-			height: 12px;
+			height: $token-scale-300;
 			left: 50%;
-			margin-left: -6px;
-			margin-top: -6px;
+			margin-left: calc(#{$token-scale-300} * -0.5);
+			margin-top: calc(#{$token-scale-300} * -0.5);
 			position: absolute;
 			position: absolute;
 			top: 50%;
-			width: 12px;
+			width: $token-scale-300;
 		}
 
 		&:focus:before {

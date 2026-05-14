@@ -12,14 +12,9 @@
 	}
 
 	[data-checkbox] {
-		display: block;
-		height: 16px;
-		width: 16px;
+		--osui-checkbox-size: #{$token-scale-400};
 
-		&:before {
-			height: 14px;
-			width: 14px;
-		}
+		display: block;
 
 		&:checked:after {
 			border: $token-border-size-050 solid $token-text-inverse;
