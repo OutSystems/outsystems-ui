@@ -897,6 +897,169 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 ---
 
+## 44. Tag
+
+**File:** `src/scss/04-patterns/02-content/_tag.scss`
+
+### Token swap
+
+- [ ] `--osui-tag-on-light-color: $token-text-default` — missing `#{}` interpolation; fix to `#{$token-text-default}`
+- [ ] Height (small) `24px` → `$token-scale-600`; (medium) `32px` → `$token-scale-800`; (large) `40px` → `$token-scale-1000`
+- [ ] `min-width: 32px` → `$token-scale-800`
+- [ ] Icon gap: → `$token-scale-100` (4px)
+- [ ] Solid variant text `color`: → `$token-text-inverse`
+- [ ] `letter-spacing: 0.01em` — no system token; annotate `// design-spec`
+
+---
+
+## 45. User Avatar
+
+**File:** `src/scss/04-patterns/02-content/_user-avatar.scss`
+
+### Token swap
+
+- [ ] `--osui-avatar-on-light-color: $token-text-default` — missing `#{}` interpolation; fix to `#{$token-text-default}`
+- [ ] Size (small) `24px` → `$token-scale-600`; (default) `32px` → `$token-scale-800`; (medium) `40px` → `$token-scale-1000`
+- [ ] `border-radius` variants: full → `$token-border-radius-full`; soft → `$token-border-radius-200`; none → `$token-border-radius-0`
+
+---
+
+## 46. Section
+
+**File:** `src/scss/04-patterns/02-content/_section.scss`
+
+### Token swap
+
+- [ ] `--osui-section-title-color: $token-text-default` — missing `#{}` interpolation; fix to `#{$token-text-default}`
+- [ ] Section title `font-size`: → `$token-font-size-500` (1.25rem / 20px)
+- [ ] Section title `font-weight`: → `$token-font-weight-semi-bold`
+- [ ] Section title `padding-bottom`: → `$token-scale-200` (8px)
+- [ ] Section title `border-bottom`: → `$token-border-size-025 solid $token-border-default`
+- [ ] `.section-group .section-title` `background-color`: legacy `--background-color-body` → `$token-bg-body`
+- [ ] `font-size: calc($token-font-size-700 - 2px)` (tablet) — fragile arithmetic; confirm responsive font-size tokens or annotate `// design-spec`
+
+---
+
+## 47. Chat Message
+
+**File:** `src/scss/04-patterns/02-content/_chat-message.scss`
+
+### Token swap
+
+- [ ] Received bubble `--osui-chat-message-background`: `$token-primitives-neutral-300` → `$token-bg-neutral-subtlest-default` (aligns with `--osui-bg-neutral-subtlest` global)
+- [ ] Sent bubble `background-color`: → `$token-semantics-primary-base`
+- [ ] Sent bubble text `color`: → `$token-text-inverse`
+- [ ] Bubble `border-radius`: → `$token-border-radius-200` (8px)
+- [ ] Bubble `padding`: → `$token-scale-300` (12px)
+- [ ] Status text `color`: → `$token-text-subtlest`
+- [ ] Status text `font-size`: → `$token-font-size-275` (11px — annotate if no exact token match)
+- [ ] Is-read indicator `color`: → `$token-semantics-success-base`
+- [ ] Photo `height`/`width`: `40px` → `$token-scale-800` (32px, matches UserAvatar default)
+- [ ] Photo `border-radius: 50%` — annotate `// design-spec: circular avatar`
+- [ ] Bubble `max-width: 600px` — annotate `// design-spec: max bubble width`
+
+---
+
+## 48. Animated Label
+
+**File:** `src/scss/04-patterns/03-interaction/animated-label/_animated-label.scss`
+
+### Token swap
+
+- [ ] Container `height`: → `$token-scale-1000` (40px)
+- [ ] Container `border`: → `$token-border-size-025 solid $token-border-input-default`
+- [ ] Container `border-radius`: → `$token-border-radius-200` (8px)
+- [ ] Container `background-color`: → `$token-bg-input-default`
+- [ ] Label (rest) `color`: → `$token-text-default`; `font-size`: → `$token-font-size-350`; `font-weight`: → `$token-font-weight-regular`
+- [ ] Label (active/floated) `font-size`: → `$token-font-size-300`; `font-weight`: → `$token-font-weight-medium`
+- [ ] Error `border-color`: → `$token-semantics-danger-base`
+- [ ] `top: 8px` / `top: -10px` label offsets — annotate `// design-spec: pixel-precise label positions`
+- [ ] `top: 14px` (tablet/phone rest) — annotate `// design-spec`
+- [ ] Validation message `bottom: 7px` — annotate `// design-spec`
+
+### Motion
+
+- [ ] Label active: `transition: top $token-transition-time-200, font-size $token-transition-time-200, transform $token-transition-time-200` · `$token-transition-curve-base`; replace `transition: all`
+- [ ] Input: `transition: border-color $token-transition-time-100 $token-transition-curve-base`; replace `transition: all`
+- [ ] Add `@media (prefers-reduced-motion: reduce)` zero-out
+
+---
+
+## 49. Overflow Menu
+
+**File:** `src/scss/04-patterns/03-interaction/overflow-menu/_overflowmenu.scss`
+
+### Token swap
+
+- [ ] Trigger `width` (desktop) `32px` → `$token-scale-800`; (tablet/phone) `40px` → `$token-scale-1000`
+- [ ] Trigger + menu `border-radius`: → `$token-border-radius-200` (8px)
+- [ ] Link row `padding`: → `$token-scale-200` / `$token-scale-400`
+- [ ] Menu `background-color`: → `$token-bg-surface-default`
+- [ ] Menu `color`: → `$token-text-default`
+- [ ] Hover row `background-color`: → `$token-bg-neutral-subtle-default`
+- [ ] Menu `box-shadow`: → `$token-elevation-2`
+- [ ] `--border-radius-rounded: 16px` — legacy-style var, no `--osui-` prefix; rename to `--osui-overflow-menu-shape`; `16px` has no exact token (nearest `$token-border-radius-300` 12px) — confirm with design
+- [ ] `--osui-overflow-menu-min-width: 170px` — annotate `// design-spec: component-specific min-width`
+
+---
+
+## 50. Dropdown Search
+
+**File:** `src/scss/04-patterns/03-interaction/search/_search.scss`
+
+### Token swap
+
+- [ ] Selected row `background-color`: → `$token-bg-surface-active`
+- [ ] Focused row `background-color`: → `$token-bg-surface-hover`
+- [ ] Disabled `color`: → `$token-text-disabled`
+- [ ] Dropdown `box-shadow`: → `$token-elevation-2`
+- [ ] `-servicestudio-border-radius: 4px` → `$token-border-radius-100`
+- [ ] `-servicestudio-height: 40px` (×2) → `$token-scale-1000`
+- [ ] Confirm border-radius inherits correctly from Input when updated to `$token-border-radius-200`
+
+### Motion
+
+- [ ] Border-color: `transition: border-color $token-transition-time-100 $token-transition-curve-base`
+- [ ] Add `@media (prefers-reduced-motion: reduce)` zero-out
+
+---
+
+## 51. Table
+
+**File:** `src/scss/03-widgets/_table.scss`
+
+### Token swap
+
+- [x] `th { height: 48px }` → `$token-scale-1200`
+- [x] `td { height: 56px }` → `$token-scale-1400`
+- [x] `.table-row-small td { height: 48px }` → `$token-scale-1200`
+- [x] `.table-row-medium td { height: 64px }` → `$token-scale-1600`
+- [ ] `--osui-table-row-hover-background`: `#{$token-bg-input-disabled}` is semantically wrong for hover; update to `#{$token-border-subtle}`
+- [ ] `table-row-selected` gradient `linear-gradient(rgba(255,255,255,0.9), ...)` — annotate `// design-spec: 90% white overlay for selected row`
+- [ ] `td:before { margin-right: 10px; max-width: 110px; min-width: 110px }` (mobile stacked) — annotate `// design-spec: mobile label column width`
+
+---
+
+## 52. Sidebar
+
+**File:** `src/scss/04-patterns/04-navigation/sidebar/_sidebar.scss`
+
+### Token swap
+
+- [ ] `--osui-sidebar-color: $token-text-default` — missing `#{}` interpolation; fix to `#{$token-text-default}`
+- [ ] `--overlay-opacity: 0` — rename to `--osui-sidebar-overlay-opacity` for namespace consistency
+- [ ] `max-width: 85vw` (phone) — annotate `// design-spec: max sidebar width on phone`
+- [ ] `padding-top: #{android-safe-area-top()}` — confirm matches `--os-safe-area-top` indirection used elsewhere
+
+### Motion
+
+- [ ] Closed: replace `transition: all 130ms ease-in` → `transform, opacity $token-transition-time-100 $token-transition-curve-base`; annotate `// token gap: 130ms`
+- [ ] Open: `transition: transform $token-transition-time-350 $token-transition-curve-base`; annotate `// token gap: 330ms`
+- [ ] Overlay: `transition: opacity $token-transition-time-100 $token-transition-curve-base`
+- [ ] Add `@media (prefers-reduced-motion: reduce)` zero-out
+
+---
+
 ## Acceptance criteria
 
 Each component's changes are complete when:
@@ -1056,9 +1219,9 @@ Each component section notes adding a `@media (prefers-reduced-motion: reduce)` 
 
 ---
 
-### Blocks not yet in the design review
+### Components not covered by the design review
 
-These components have no design review page. Each checklist below covers issues found in the current SCSS that should be addressed regardless of the design review. Work through them in order — simplest first.
+These components have no design review page. Each checklist covers issues found in the current SCSS that should be addressed regardless of the design review.
 
 ---
 
@@ -1071,121 +1234,49 @@ These components have no design review page. Each checklist below covers issues 
 
 ---
 
-#### B2. Tag
-**File:** `src/scss/04-patterns/02-content/_tag.scss`
-
-- [ ] `--osui-tag-on-light-color: $token-text-default` — missing `#{}` interpolation; should be `#{$token-text-default}`
-- [ ] Height values `24px / 32px / 40px` — confirm these map to `$token-scale-600 / $token-scale-800 / $token-scale-1000` and tokenize
-- [ ] `min-width: 32px` — confirm intentional or tokenize to `$token-scale-800`
-
----
-
-#### B3. User Avatar
-**File:** `src/scss/04-patterns/02-content/_user-avatar.scss`
-
-Near-identical structure to Tag.
-
-- [ ] `--osui-avatar-on-light-color: $token-text-default` — missing `#{}` interpolation; should be `#{$token-text-default}`
-- [ ] Size values `24px / 32px / 40px` (width + height) — tokenize to `$token-scale-600 / $token-scale-800 / $token-scale-1000`
-
----
-
-#### B4. Lightbox Image
+#### B2. Lightbox Image
 **File:** `src/scss/04-patterns/03-interaction/_lightbox-image.scss`
 
 Runtime rules are safe-area and RTL wrappers only; nearly all rules are `-servicestudio-*`.
 
-- [ ] `-servicestudio-background-color: rgba(0, 0, 0, 0.3)` (×2 in SS preview) — replace with `#{$token-backdrop}` or keep as-is if scrim token doesn't match (confirm value)
-- [ ] `padding-bottom: calc(var(--os-safe-area-bottom) + 10px)` — the `10px` offset is hardcoded; annotate `// design-spec`
-- [ ] Focus ring: `outline: 3px solid $token-primitives-yellow-500` — confirm this is the correct a11y token for the high-contrast focus ring or whether a semantic token should be used
+- [ ] `-servicestudio-background-color: rgba(0, 0, 0, 0.3)` (×2) — replace with `#{$token-backdrop}` or annotate if scrim token doesn't match
+- [ ] `padding-bottom: calc(var(--os-safe-area-bottom) + 10px)` — `10px` offset is hardcoded; annotate `// design-spec`
+- [ ] Focus ring: `outline: 3px solid $token-primitives-yellow-500` — confirm correct a11y token
 
 ---
 
-#### B5. Search
-**File:** `src/scss/04-patterns/03-interaction/search/_search.scss`
-
-Thin wrapper — delegates almost entirely to the Input styles.
-
-- [ ] `-servicestudio-border-radius: 4px` — replace with `-servicestudio-border-radius: $token-border-radius-100`
-- [ ] `-servicestudio-height: 40px` (×2) — replace with `-servicestudio-height: $token-scale-1000`
-- [ ] Confirm that when Input `border-radius` is updated to `$token-border-radius-200` (8px) the Search input inherits correctly
-
----
-
-#### B6. Section
-**File:** `src/scss/04-patterns/02-content/_section.scss`
-
-- [ ] `--osui-section-title-color: $token-text-default` — missing `#{}` interpolation; should be `#{$token-text-default}`
-- [ ] `.section-group .section-title { background-color: var(--background-color-body, var(--os-color-background-body)); }` — `--background-color-body` and `--os-color-background-body` are legacy bridge vars; replace with `$token-bg-body` (or the correct body background token)
-- [ ] `font-size: calc($token-font-size-700 - 2px)` (tablet) and `calc($token-font-size-700 - 4px)` (phone) — arithmetic on token values is fragile; confirm whether separate font-size tokens exist for these breakpoints or annotate as `// design-spec`
-
----
-
-#### B7. Chat Message
-**File:** `src/scss/04-patterns/02-content/_chat-message.scss`
-
-Already well tokenized via CSS API vars.
-
-- [ ] `--osui-chat-message-background: #{$token-primitives-neutral-300}` — `neutral-300` is a mid-grey; confirm this is intentional for received messages or whether `$token-bg-neutral-subtle` would be more semantic
-- [ ] Photo `border-radius: 50%` — intentional circle; annotate `// design-spec: circular avatar`
-- [ ] Photo `height: 40px; width: 40px` — tokenize to `$token-scale-1000`
-- [ ] `max-width: 600px` on bubble — annotate `// design-spec: max bubble width`
-
----
-
-#### B8. Bottom Bar Item
+#### B3. Bottom Bar Item
 **File:** `src/scss/04-patterns/04-navigation/_bottom-bar-item.scss`
 
-- [ ] `--osui-bottom-bar-border-color: #{$token-primitives-neutral-300}` — `neutral-300` is a primitive; consider upgrading to `#{$token-border-default}` for semantic consistency
-- [ ] Empty-state `color: $token-primitives-neutral-700` — use `$token-text-subtlest` instead
-- [ ] Empty-state `font-size: 12px` — tokenize to `$token-font-size-300`
-- [ ] Empty-state `padding: 20px` — tokenize to `$token-scale-500` (20px)
-- [ ] `.bottom-bar-item-text { font-size: 10px }` — no `$token-font-size-*` exists for 10px; annotate `// token gap: 10px has no token`
-- [ ] `max-width: 150px` on nav items — annotate `// design-spec`
+- [ ] `--osui-bottom-bar-border-color: #{$token-primitives-neutral-300}` — upgrade to `#{$token-border-default}` for semantic consistency
+- [ ] Empty-state `color: $token-primitives-neutral-700` → `$token-text-subtlest`
+- [ ] Empty-state `font-size: 12px` → `$token-font-size-300`
+- [ ] Empty-state `padding: 20px` → `$token-scale-500`
+- [ ] `.bottom-bar-item-text { font-size: 10px }` — no token for 10px; annotate `// token gap`
+- [ ] `max-width: 150px` — annotate `// design-spec`
 - [ ] Focus ring: `box-shadow: 0 0 0 3px $token-primitives-yellow-500` — confirm correct a11y token
 
 ---
 
-#### B9. Input With Icon
+#### B4. Input With Icon
 **File:** `src/scss/04-patterns/03-interaction/_input-with-icon.scss`
 
-- [ ] `--osui-input-with-icon-icon-color: #{$token-primitives-neutral-700}` — `neutral-700` is a primitive; upgrade to `#{$token-icon-default}` or `#{$token-text-subtle}` for semantic intent
-- [ ] Icon slot `width: 40px` — Input height stays at `$token-scale-1000` (40px); confirm icon slot width is correct and tokenize to `$token-scale-1000`
-- [ ] `padding-left: $token-scale-1000` (40px) on input when icon present — confirm this tracks icon slot; consider deriving from a shared `--osui-input-with-icon-slot-width` var
+- [ ] `--osui-input-with-icon-icon-color: #{$token-primitives-neutral-700}` — upgrade to `#{$token-text-subtle}` for semantic intent
+- [ ] Icon slot `width: 40px` → `$token-scale-1000`
+- [ ] `padding-left: $token-scale-1000` on input when icon present — confirm tracks icon slot; consider `--osui-input-with-icon-slot-width` var
 
 ---
 
-#### B10. Animated Label
-**File:** `src/scss/04-patterns/03-interaction/animated-label/_animated-label.scss`
-
-- [ ] `top: 8px` (label resting position) and `top: -10px` (label floated position) — hardcoded; annotate `// design-spec: pixel-precise label offsets`
-- [ ] `transition: all 300ms ease` on label text — replace duration with `$token-transition-time-300`; replace curve with `$token-transition-curve-base`; avoid `all` (use explicit property list: `top, font-size`)
-- [ ] `transition: all 100ms ease-in-out` on input — replace with `$token-transition-time-100 $token-transition-curve-base`; avoid `all`
-- [ ] `top: 14px` (tablet/phone resting position) — hardcoded; annotate `// design-spec`
-- [ ] `.animated-label-input .form-control[data-textarea] + span.validation-message { bottom: 7px }` — hardcoded offset; annotate `// design-spec`
-
----
-
-#### B11. Overflow Menu
-**File:** `src/scss/04-patterns/03-interaction/overflow-menu/_overflowmenu.scss`
-
-- [ ] `--border-radius-rounded: 16px` — this is a legacy-style local var (no `--osui-` prefix); rename to `--osui-overflow-menu-shape` or remove if `--osui-overflow-menu-shape` already covers it; value `16px` has no matching `$token-border-radius-*` (nearest is `$token-border-radius-300` 12px) — annotate or request token
-- [ ] `.tablet, .phone { --border-radius-rounded: 100% }` — same issue; this appears to be overriding a shape for mobile; confirm intent
-- [ ] `--osui-overflow-menu-min-width: 170px` — declared inside the selector without `#{}`, which is fine for a raw number but confirm value is intentional design-spec
-- [ ] Trigger `width: 32px` (desktop) / `40px` (tablet/phone) — Button height stays 40px; tokenize trigger sizes to `$token-scale-800` / `$token-scale-1000`
-
----
-
-#### B12. Stacked Cards
+#### B5. Stacked Cards
 **File:** `src/scss/04-patterns/03-interaction/_stacked-cards.scss`
 
-- [ ] `&--animatable { transition: all 400ms ease }` — replace with explicit property list; duration `400ms /* token gap */`; curve `$token-transition-curve-base`; avoid `all`
-- [ ] SS preview hardcoded hex colors: `-servicestudio-background-color: #e8f2fa` (top overlay), `#37b24d` (right overlay), `#c92a2a` (left overlay) — replace with the corresponding `--osui-stacked-cards-overlay-*-background` CSS API vars so SS preview reflects actual theme colors
-- [ ] `-servicestudio-min-height: 225px` and `225px` background-size — annotate `// design-spec: SS preview fixed height`
+- [ ] `&--animatable { transition: all 400ms ease }` — replace `all` with explicit properties; duration `400ms /* token gap */`; curve `$token-transition-curve-base`
+- [ ] SS preview hardcoded hex colors (`#e8f2fa`, `#37b24d`, `#c92a2a`) — replace with `--osui-stacked-cards-overlay-*-background` CSS API vars
+- [ ] `-servicestudio-min-height: 225px` — annotate `// design-spec: SS preview fixed height`
 
 ---
 
-#### B13. Floating Actions
+#### B6. Floating Actions
 **File:** `src/scss/04-patterns/03-interaction/_floating-actions.scss`
 
 - [ ] `transition: all 180ms ease-out` on `.is--open .floating-actions-item` — replace `all` with `opacity, transform`; duration `180ms /* token gap */`; curve `$token-transition-curve-base`
@@ -1200,40 +1291,13 @@ Already well tokenized via CSS API vars.
 
 ---
 
-#### B14. Submenu
+#### B7. Submenu
 **File:** `src/scss/04-patterns/04-navigation/submenu/_submenu.scss`
 
-- [ ] `--osui-submenu-header-color: $token-text-default` — missing `#{}` interpolation; should be `#{$token-text-default}`
-- [ ] `--osui-submenu-active-border-color: var(--osui-submenu-active-border-color)` — self-referential declaration; this is a placeholder for consumer override but has no default value; add a `$token-*` fallback: `#{$token-semantics-primary-base}`
+- [ ] `--osui-submenu-header-color: $token-text-default` — missing `#{}` interpolation; fix to `#{$token-text-default}`
+- [ ] `--osui-submenu-active-border-color: var(--osui-submenu-active-border-color)` — self-referential; add `$token-*` fallback: `#{$token-semantics-primary-base}`
 - [ ] `transition: all 150ms linear` (×2 on header/header item) — replace `all` with `color, border-color`; duration `$token-transition-time-150`; curve `$token-transition-curve-linear`
-- [ ] `transition: all 130ms ease-out` on `__items` — replace `all` with `opacity, transform`; duration `$token-transition-time-100` (nearest to 130ms); curve `$token-transition-curve-base`; annotate `// token gap: 130ms`
-- [ ] `__items { border-radius: $token-border-radius-100 }` — confirm whether this should follow the 8px update (`$token-border-radius-200`) that other dropdowns/popups are getting
-- [ ] `__items { transform: translateY(-8px) }` — hardcoded translate offset; annotate `// design-spec`
-- [ ] `a { padding: $token-scale-200 $token-scale-400 }` in items — already tokenized ✓
-
----
-
-#### B15. Table
-**File:** `src/scss/03-widgets/_table.scss`
-
-- [x] `th { height: 48px }` — tokenize to `$token-scale-1200`
-- [x] `td { height: 56px }` — tokenized to `$token-scale-1400` (56px token confirmed in `_variables.scss`)
-- [x] `.table-row-small td { height: 48px }` — tokenize to `$token-scale-1200`
-- [x] `.table-row-medium td { height: 64px }` — tokenized to `$token-scale-1600`
-- [ ] `table-row-selected` gradient: `linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9))` — this tints the selected-row background; consider whether `$token-opacity-*` or a surface token covers this; annotate `// design-spec: 90% white overlay for selected row`
-- [ ] `td:before { margin-right: 10px; max-width: 110px; min-width: 110px }` (mobile stacked layout) — hardcoded; annotate `// design-spec: mobile label column width`
-- [ ] `--osui-table-row-hover-background: #{$token-bg-input-disabled}` — `bg-input-disabled` is semantically wrong for a hover state; consider `$token-border-subtle` (matches hover pattern used in List, Pagination)
-- [ ] Confirm `border-radius` on table corners correctly uses `$token-border-radius-200` (already present, verify no regressions after border-radius system update)
-
----
-
-#### B16. Sidebar
-**File:** `src/scss/04-patterns/04-navigation/sidebar/_sidebar.scss`
-
-- [ ] `transition: all 130ms ease-in` (closed state) — replace `all` with `transform, opacity`; duration `$token-transition-time-100` (nearest to 130ms); curve `$token-transition-curve-base`; annotate `// token gap: 130ms`
-- [ ] `transition: transform 330ms ease-out` (open state) — duration `$token-transition-time-350` (nearest to 330ms); curve `$token-transition-curve-base`; annotate `// token gap: 330ms`
-- [ ] `transition: opacity 130ms ease-in` (overlay) — same as above; duration `$token-transition-time-100`; annotate `// token gap: 130ms`
-- [ ] `--osui-sidebar-color: $token-text-default` — missing `#{}` interpolation; should be `#{$token-text-default}`
-- [ ] `--overlay-opacity: 0` — local var declared without `--osui-` prefix; rename to `--osui-sidebar-overlay-opacity` for namespace consistency
-- [ ] `padding-top: #{android-safe-area-top()}` — SCSS function call; confirm this is the correct indirection and matches the `--os-safe-area-top` pattern used elsewhere
-- [ ] `max-width: 85vw` (phone) — annotate `// design-spec: max sidebar width on phone`
+- [ ] `transition: all 130ms ease-out` on `__items` — replace `all` with `opacity, transform`; duration `$token-transition-time-100`; curve `$token-transition-curve-base`; annotate `// token gap: 130ms`
+- [ ] `__items { border-radius: $token-border-radius-100 }` — confirm whether this should follow the 8px update to `$token-border-radius-200`
+- [ ] `__items { transform: translateY(-8px) }` — annotate `// design-spec`
+- [ ] `a { padding: $token-scale-200 $token-scale-400 }` — already tokenized ✓
