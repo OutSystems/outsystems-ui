@@ -800,6 +800,103 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 ---
 
+## 39. Dropdown Tags
+
+**File:** `src/scss/04-patterns/03-interaction/dropdown/provider/_virtualselect.scss`
+
+### Token swap
+
+- [ ] Tag chip `height`: → `$token-scale-600` (24px)
+- [ ] Tag chip `background-color`: primary-tinted → `$token-bg-surface-active` (or `$token-semantics-primary-base` at low opacity — confirm with design)
+- [ ] Tag chip `color`: → `$token-text-default`
+- [ ] Tag chip `border-radius`: → `$token-border-radius-full` (pill shape)
+- [ ] Clear button `color`: → `$token-text-default`
+- [ ] Trigger `border-radius`: `4px` → `$token-border-radius-200` (8px)
+- [ ] Disabled tag `color`: → `$token-text-disabled`
+
+---
+
+## 40. TimePicker
+
+**Files:**
+- `src/scss/04-patterns/03-interaction/time-picker/_timepicker.scss`
+- `src/scss/04-patterns/03-interaction/time-picker/provider/_flatpickr.scss`
+
+### Token swap
+
+- [ ] Time row `height`: → `$token-scale-1000` (40px)
+- [ ] AM/PM button `background-color`: → `$token-bg-input-default`
+- [ ] AM/PM button `color` (default): → `$token-text-subtlest`
+- [ ] AM/PM button `border-radius`: → `$token-border-radius-200` (8px)
+- [ ] Number input `color`: → `$token-text-default`
+
+### Motion
+
+- [ ] AM/PM button: `transition: background-color, color $token-transition-time-100 $token-transition-curve-base`
+- [ ] Add `@media (prefers-reduced-motion: reduce)` zero-out
+
+---
+
+## 41. MonthPicker
+
+**Files:**
+- `src/scss/04-patterns/03-interaction/month-picker/_monthpicker.scss`
+- `src/scss/04-patterns/03-interaction/month-picker/provider/_flatpickr.scss`
+
+### Token swap
+
+- [ ] Month cell `height`: → `$token-scale-1000` (40px)
+- [ ] Month cell `border-radius`: → `$token-border-radius-200` (8px)
+- [ ] Selected cell `background-color`: → `$token-semantics-primary-base`
+- [ ] Selected cell `color`: → `$token-text-inverse`
+- [ ] Hover cell `background-color`: → `$token-bg-surface-hover` (or `$token-border-subtle`)
+- [ ] Disabled cell `background-color`: → `$token-bg-input-disabled`
+
+> **Hardcoded by design:** `min-width: 70px` on month cells sits between scale steps — keep raw value with `// design-spec` comment.
+
+### Motion
+
+- [ ] Month cell: `transition: background-color $token-transition-time-100 $token-transition-curve-base`
+- [ ] Add `@media (prefers-reduced-motion: reduce)` zero-out
+
+---
+
+## 42. DatePicker Range
+
+**File:** `src/scss/04-patterns/03-interaction/date-picker/provider/_flatpickr.scss`
+
+(Extends the base DatePicker flatpickr override — same file)
+
+### Token swap
+
+- [ ] Range start/end cell `background-color`: → `$token-semantics-primary-base`
+- [ ] In-range band `background-color`: `$token-semantics-primary-base` at low opacity (annotate `// design-spec: no in-range token yet`)
+- [ ] In-range text `color`: → `$token-text-default`
+- [ ] Start/end cell `border-radius`: → `$token-border-radius-200` (8px); continuous in-range band has `border-radius: 0`
+- [ ] Today indicator: border ring only — no fill color change
+
+---
+
+## 43. Header
+
+**Files:** `src/scss/02-layout/_header.scss`, `src/scss/02-layout/_menu-header-logo.scss`
+
+### Token swap
+
+- [ ] Header `background-color`: legacy `--background-color-header` → read through `--os-color-background-header` bridge var (already wired to `$token-bg-surface-default`)
+- [ ] Header `box-shadow`: none → `$token-elevation-1`
+- [ ] Header `padding`: → `$token-scale-200` / `$token-scale-400` / `$token-scale-600` (per breakpoint)
+- [ ] Menu icon line `height`: `3px` → `$token-border-size-075` (annotate if no exact match)
+- [ ] Menu icon line `width`: `24px` → `$token-scale-600`
+- [ ] Menu icon line `margin`: `2px 0` → `$token-scale-050`
+- [ ] Menu icon line `border-radius`: `20px` → `$token-border-radius-full`
+- [ ] Menu icon / back button `color`: → `$token-text-subtlest`
+- [ ] App logo `border-radius`: → `$token-border-radius-100` (4px)
+
+> **Hardcoded by design:** logo `max-width: 120px` — no scale token for this; keep raw value with `// design-spec` comment.
+
+---
+
 ## Acceptance criteria
 
 Each component's changes are complete when:
