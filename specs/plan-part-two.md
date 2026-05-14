@@ -50,14 +50,14 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 ### Token swap
 
-- [ ] `.osui-accordion-item` `border-radius`: `4px` → `$token-border-radius-100`
-- [ ] `.osui-accordion-item` active top indicator `background-color`: hardcoded blue → `$token-semantics-primary-base`
-- [ ] `.osui-accordion-item__title` `padding`: `24px` all → `$token-scale-300` top/bottom · `$token-scale-600` left/right
-- [ ] `.osui-accordion-item__title` `font-size`: `18px` → `$token-font-size-400` (16px)
-- [ ] `.osui-accordion-item__title` (open) `font-weight`: current → `$token-font-weight-semi-bold`
-- [ ] `.osui-accordion-item__title` `color`: current → `$token-text-default`
-- [ ] `.osui-accordion-item__icon` `color`: current → `$token-semantics-primary-base`
-- [ ] `[disabled]` `color`: hardcoded `#a2a2a2` → `$token-text-disabled`
+- [x] `.osui-accordion-item` `border-radius`: `4px` → `$token-border-radius-100`
+- [x] `.osui-accordion-item` active top indicator `background-color`: hardcoded blue → `$token-semantics-primary-base`
+- [x] `.osui-accordion-item__title` `padding`: `24px` all → `$token-scale-300` top/bottom · `$token-scale-600` left/right
+- [x] `.osui-accordion-item__title` `font-size`: `18px` → `$token-font-size-400` (16px)
+- [x] `.osui-accordion-item__title` (open) `font-weight`: current → `$token-font-weight-semi-bold`
+- [x] `.osui-accordion-item__title` `color`: current → `$token-text-default`
+- [x] `.osui-accordion-item__icon` `color`: current → `$token-semantics-primary-base`
+- [x] `[disabled]` `color`: hardcoded `#a2a2a2` → `$token-text-disabled`
 
 ### New component CSS API vars
 
@@ -77,24 +77,24 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 ### Token swap
 
-- [ ] Alert container `border-radius`: current → `$token-border-radius-200` (8px)
-- [ ] Alert container `padding`: `16px` all → `$token-scale-300` top/bottom · `$token-scale-400` left/right
-- [ ] Alert container `border`: remove 1px solid outer border (tonal background sufficient)
-- [ ] `border-left-width` (accent): remove (background alone carries semantic variant)
-- [ ] Icon/message `gap`: `16px` margin → `$token-scale-200` (8px) flex gap
-- [ ] Message `font-size`: `16px` → `$token-font-size-350` (14px/0.875rem)
-- [ ] Message `font-weight`: `400` → `$token-font-weight-medium`
+- [x] Alert container `border-radius`: current → `$token-border-radius-200` (8px)
+- [x] Alert container `padding`: `16px` all → `$token-scale-300` top/bottom · `$token-scale-400` left/right
+- [x] Alert container `border`: remove 1px solid outer border (tonal background sufficient)
+- [x] `border-left-width` (accent): remove (background alone carries semantic variant)
+- [x] Icon/message `gap`: `16px` margin → `$token-scale-200` (8px) flex gap
+- [x] Message `font-size`: `16px` → `$token-font-size-350` (14px/0.875rem)
+- [x] Message `font-weight`: `400` → `$token-font-weight-medium`
 
 ### Variant token migrations
 
-- [ ] Warning `background-color`: current → `$token-bg-warning-subtle-default`
-- [ ] Warning `color`: current → `$token-text-warning`
-- [ ] Success `background-color`: current → `$token-bg-success-subtle-default`
-- [ ] Success `color`: current → `$token-text-success`
-- [ ] Info `background-color`: current → `$token-bg-info-subtle-default`
-- [ ] Info `color`: current → `$token-text-info`
-- [ ] Error/Danger `background-color`: current → `$token-bg-danger-subtle-default`
-- [ ] Error/Danger `color`: current → `$token-text-danger`
+- [x] Warning `background-color`: current → `$token-bg-warning-subtle-default`
+- [x] Warning `color`: current → `$token-text-warning`
+- [x] Success `background-color`: current → `$token-bg-success-subtle-default`
+- [x] Success `color`: current → `$token-text-success`
+- [x] Info `background-color`: current → `$token-bg-info-subtle-default`
+- [x] Info `color`: current → `$token-text-info`
+- [x] Error/Danger `background-color`: current → `$token-bg-danger-subtle-default`
+- [x] Error/Danger `color`: current → `$token-text-danger`
 
 ### Motion
 
