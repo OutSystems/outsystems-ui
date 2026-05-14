@@ -55,28 +55,28 @@
 
 		// Service Studio Preview
 		& {
-			-servicestudio-background-color: var(--color-neutral-0);
-			-servicestudio-border-radius: var(--border-radius-soft);
+			-servicestudio-background-color: $token-primitives-base-white;
+			-servicestudio-border-radius: $token-border-radius-100;
 			-servicestudio-display: flex;
 			-servicestudio-justify-content: space-evenly;
-			-servicestudio-line-height: var(--space-xl);
+			-servicestudio-line-height: $token-scale-1000;
 			-servicestudio-margin-top: 2px;
 			-servicestudio-max-width: 320px;
 			-servicestudio-position: relative;
 			-servicestudio-text-align: center;
-			-servicestudio-z-index: var(--layer-local-tier-1);
+			-servicestudio-z-index: var(--os-layer-local-tier-1);
 
 			&.time12h {
-				padding-right: var(--space-xxl);
+				padding-right: $token-scale-1200;
 				&:after {
-					background-color: var(--color-neutral-7);
-					border-radius: var(--border-radius-rounded);
-					color: var(--color-neutral-0);
+					background-color: $token-primitives-neutral-700;
+					border-radius: $token-border-radius-full;
+					color: $token-primitives-base-white;
 					content: 'am';
 					font-size: clamp(10px, 1.5vw, 12px);
-					font-weight: var(--font-semi-bold);
-					height: var(--space-m);
-					line-height: var(--space-m);
+					font-weight: $token-font-weight-semi-bold;
+					height: $token-scale-600;
+					line-height: $token-scale-600;
 					margin-right: 2%;
 					position: absolute;
 					right: 0;
