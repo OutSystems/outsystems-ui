@@ -7,13 +7,13 @@
 .button-group {
 	background-color: transparent;
 	border-radius: 0;
-	padding: $token-scale-0;
+	padding: $token-scale-200 $token-scale-0;
 
 	&-item {
 		// ─── Component CSS API ─────────────────────────────────────────────
-		--osui-button-group-background:    #{$token-bg-surface-default};
-		--osui-button-group-border-color:  #{$token-border-default};
-		--osui-button-group-color:         #{$token-text-default};
+		--osui-button-group-background: #{$token-bg-surface-default};
+		--osui-button-group-border-color: #{$token-border-default};
+		--osui-button-group-color: #{$token-text-default};
 		// ───────────────────────────────────────────────────────────────────
 
 		background-color: var(--osui-button-group-background);
@@ -26,16 +26,21 @@
 		height: $token-scale-1000;
 		padding: $token-scale-0 $token-scale-400;
 		position: relative;
+		white-space: nowrap;
 
 		&:first-child {
 			border-radius: $token-border-radius-200 $token-border-radius-0 $token-border-radius-0
 				$token-border-radius-200;
 		}
 
+		&:not(.button-group-selected-item):not([disabled]):hover {
+			background-color: $token-primitives-neutral-100;
+		}
+
 		&[disabled] {
-			--osui-button-group-background:   #{$token-bg-surface-default};
+			--osui-button-group-background: #{$token-bg-surface-default};
 			--osui-button-group-border-color: #{$token-border-default};
-			--osui-button-group-color:        #{$token-text-disabled};
+			--osui-button-group-color: #{$token-text-disabled};
 
 			background-color: var(--osui-button-group-background);
 			border: $token-border-size-025 solid var(--osui-button-group-border-color);

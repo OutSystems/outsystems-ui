@@ -59,14 +59,13 @@ body {
 
 ///
 .has-accessible-features :focus {
-	@include a11y-default-outline;
+	box-shadow: 0 0 0 $token-border-size-075 var(--color-focus-outer);
 }
 
 ///
 .os-high-contrast .has-accessible-features :focus {
 	box-shadow: none;
-
-	@include a11y-high-contrast-outline;
+	outline: $token-border-size-075 solid var(--color-focus-outer);
 }
 
 /* ============================================================================ */

@@ -6,12 +6,12 @@
 ///
 .osui-tabs {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-tabs-border-color:                    #{$token-border-subtle};
-	--osui-tabs-header-item-color:               #{$token-text-subtlest};
-	--osui-tabs-header-item-color-active:        #{$token-text-default};
-	--osui-tabs-header-item-color-disabled:      #{$token-text-disabled};
-	--osui-tabs-header-item-hover-background:    var(--osui-bg-overlay-hover);
-	--osui-tabs-indicator-color:                 #{$token-semantics-primary-base};
+	--osui-tabs-border-color: #{$token-border-subtle};
+	--osui-tabs-header-item-color: #{$token-text-subtlest};
+	--osui-tabs-header-item-color-active: #{$token-text-default};
+	--osui-tabs-header-item-color-disabled: #{$token-text-disabled};
+	--osui-tabs-header-item-hover-background: var(--osui-bg-overlay-hover);
+	--osui-tabs-indicator-color: #{$token-semantics-primary-base};
 	// ───────────────────────────────────────────────────────────────────
 
 	--header-item-width: fit-content(30%);
@@ -358,14 +358,14 @@
 			}
 
 			&:focus-visible {
-				background-color: $token-primitives-yellow-500;
+				box-shadow: inset 0 0 0 $token-border-size-075 var(--color-focus-outer);
 				color: $token-text-default;
 			}
 		}
 
 		&__content-item {
 			&:focus-visible {
-				box-shadow: 0 0 0 1px $token-primitives-yellow-500 inset;
+				box-shadow: 0 0 0 $token-border-size-025 $token-semantics-primary-base inset;
 			}
 		}
 	}

@@ -11,6 +11,13 @@ pages; nothing here is speculative.
 Work in `src/scss/` (widgets, layout, pattern SCSS) and the pattern `scss/`
 files. All token values are read from `src/scss/tokens/_variables.scss`.
 
+**Per-component review order:** For each component, check all of the following in one pass:
+1. Token swaps (values → `$token-*`)
+2. A11y (`.has-accessible-features` block — focus rings, outline tokens)
+3. RTL (`.is-rtl` block — logical properties, direction)
+4. Transitions (swap hardcoded `ms`/curve values to `$token-transition-*`; replace `transition: all` with explicit property lists)
+5. TS/JS inline styles (grep pattern TS files for hardcoded style values set via `style.*=`, `setProperty`, `classList` with colour/size literals — replace with token CSS custom properties where possible)
+
 ---
 
 ## Motion token reference
@@ -59,15 +66,26 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 - [x] `.osui-accordion-item__icon` `color`: current → `$token-semantics-primary-base`
 - [x] `[disabled]` `color`: hardcoded `#a2a2a2` → `$token-text-disabled`
 
-### New component CSS API vars
+### Transitions
 
-- [ ] Declare `--osui-accordion-item-border-color: #{$token-border-default}` at root; use `var(--osui-accordion-item-border-color)` in border rules
-- [ ] Declare `--osui-accordion-item-bg: #{$token-bg-surface-default}` and read through it
+- [x] `opacity 300ms ease-in` → `opacity $token-transition-time-300 $token-transition-curve-base`
+- [x] `transition: all` on `__icon` → `transform $token-transition-time-300 ease-in-out` (no token match for ease-in-out)
+- [x] `transform 300ms ease-in-out` on plus-minus → `transform $token-transition-time-300 ease-in-out` (no token match)
+- [x] `transition: all` on `__content--is-animating` → `height $token-transition-time-300 ease-in-out` (no token match; visibility removed — not animatable)
 
-### Motion
+### A11y
 
-- [ ] Add `grid-template-rows: 0fr ↔ 1fr` + `opacity` transition on collapsed/expanded content: `400ms /* token gap */` · `$token-transition-curve-spring`
-- [ ] Add `@media (prefers-reduced-motion: reduce)` block setting transition duration to `0ms`
+- [x] Focus ring: replaced yellow `$token-primitives-yellow-500` with `var(--color-focus-outer)` (semi-transparent primary blue) via `_resets.scss` global fix — applies to all components
+- [x] Accordion title links: always underlined (`text-decoration: underline; text-underline-offset: 3px`); on focus shows `--color-focus-outer` background + underline colour; `box-shadow` and `outline` suppressed to avoid double ring
+- [x] Disabled state: child `<a>` and `<button>` get `opacity: 0.4; pointer-events: none`
+
+### RTL
+
+- [x] `margin-right: $token-scale-200` on placeholder — no changes needed
+
+### TS inline styles
+
+- [x] `AccordionItem.ts` sets `height` (runtime-measured px) and `pointer-events` only — no hardcoded design values
 
 ---
 
@@ -96,10 +114,21 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 - [x] Error/Danger `background-color`: current → `$token-bg-danger-subtle-default`
 - [x] Error/Danger `color`: current → `$token-text-danger`
 
-### Motion
+### Transitions
 
-- [ ] Add `transition: background-color $token-transition-time-100 $token-transition-curve-base, color $token-transition-time-100 $token-transition-curve-base, border-color $token-transition-time-100 $token-transition-curve-base` to the container
-- [ ] Add `@media (prefers-reduced-motion: reduce)` zero-out
+- [x] No existing transitions — none needed
+
+### A11y
+
+- [x] No `.has-accessible-features` block — none needed (static inline element, no interactive focus)
+
+### RTL
+
+- [x] RTL section removed — gap handles direction automatically
+
+### TS inline styles
+
+- [x] No TS pattern — Alert is CSS-only
 
 ---
 
@@ -1112,7 +1141,7 @@ These items exist in the proposed CSS but are absent from the current codebase. 
 
 | Item | Where | Action |
 |---|---|---|
-| `--color-focus-outer` still referenced by some components | Any component file still using it | Migrate to `var(--osui-border-focus-halo)` directly — do **not** re-add `--color-focus-outer` to root |
+| `--color-focus-outer` global a11y token | `src/scss/01-foundations/_root.scss` | **Done.** Added as `--color-focus-outer: var(--osui-border-focus-halo)` — all `has-accessible-features :focus` rules and per-component focus overrides now reference this var. Do **not** reference `$token-primitives-yellow-500` in any new focus rule. |
 | `--osui-bg-neutral-subtlest: #f5f5f5` | `src/scss/01-foundations/_root.scss` | Added as `--osui-*` future-token candidate (never use `--token-*` prefix for hand-declared vars) |
 | Icon library vars (`--osui-icon-font-family`, `--osui-icon-*`) | `src/scss/01-foundations/_root.scss` or new `_icon-library.scss` partial | Entire system is missing; proposed CSS defines FontAwesome and Phosphor vars at root |
 
@@ -1216,6 +1245,17 @@ Each component section notes adding a `@media (prefers-reduced-motion: reduce)` 
 - **B) Global reset** — a single rule in foundations zeroes all transitions/animations for reduced-motion users, and components opt back in explicitly.
 
 **Action:** Agree on approach before implementation starts so all components are consistent.
+
+---
+
+### Components pending design review
+
+These components need a design review before changes can be made.
+
+- **Feedback Message** (`.feedback-message`, `src/scss/03-widgets/_feedback-message.scss`) — currently uses solid semantic background (`$token-semantics-info/danger/success/warning-base`) with white text. Unclear if it should follow the same tonal pattern as Alert. Needs design review.
+- **Popover** (`src/scss/03-widgets/_popover.scss`) — `max-width: 350px` has no token; needs design review to confirm intended width.
+- **Upload** (`src/scss/03-widgets/_upload.scss`) — not reviewed.
+- **Separator** (`src/scss/04-patterns/06-utilities/_separator.scss`) — not reviewed.
 
 ---
 

@@ -6,24 +6,36 @@
 ///
 .alert {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-alert-background:    transparent;
-	--osui-alert-color:         #{$token-text-default};
+	--osui-alert-background: transparent;
+	--osui-alert-color: #{$token-text-default};
+	--osui-alert-accent-color: #{$token-border-default};
 	--osui-alert-border-radius: #{$token-border-radius-200};
-	--osui-alert-padding:       #{$token-scale-300} #{$token-scale-400};
+	--osui-alert-padding: #{$token-scale-300} #{$token-scale-400};
 	// ───────────────────────────────────────────────────────────────────
 
-	align-items: center;
+	align-items: flex-start;
 	background-color: var(--osui-alert-background);
+	border-left: none;
 	border-radius: var(--osui-alert-border-radius);
 	color: var(--osui-alert-color);
 	display: flex;
 	gap: $token-scale-200;
 	padding: var(--osui-alert-padding);
+	transition: background-color $token-transition-time-100 ease; // no token match for ease
 
 	.alert-icon {
 		align-self: flex-start;
 		display: inline-flex;
-		font-size: 24px;
+		flex-shrink: 0;
+		font-size: $token-font-size-500;
+		height: $token-scale-500;
+		line-height: 1;
+		width: $token-scale-500;
+
+		i,
+		&::after {
+			font-size: $token-font-size-500;
+		}
 	}
 
 	.fa-fw {
@@ -34,26 +46,39 @@
 		flex: 1;
 		font-size: $token-font-size-350;
 		font-weight: $token-font-weight-medium;
+		line-height: 1.4; // no token match for line-height-body
 	}
 
 	&-info {
 		--osui-alert-background: #{$token-bg-info-subtle-default};
-		--osui-alert-color:      #{$token-text-info};
+		--osui-alert-color: #{$token-text-info};
+		--osui-alert-accent-color: #{$token-semantics-info-base};
 	}
 
 	&-success {
 		--osui-alert-background: #{$token-bg-success-subtle-default};
-		--osui-alert-color:      #{$token-text-success};
+		--osui-alert-color: #{$token-text-success};
+		--osui-alert-accent-color: #{$token-semantics-success-base};
 	}
 
 	&-error {
 		--osui-alert-background: #{$token-bg-danger-subtle-default};
-		--osui-alert-color:      #{$token-text-danger};
+		--osui-alert-color: #{$token-text-danger};
+		--osui-alert-accent-color: #{$token-semantics-danger-base};
 	}
 
 	&-warning {
 		--osui-alert-background: #{$token-bg-warning-subtle-default};
-		--osui-alert-color:      #{$token-text-warning};
+		--osui-alert-color: #{$token-text-warning};
+		--osui-alert-accent-color: #{$token-semantics-warning-base};
 	}
 }
 
+// IsRTL -------------------------------------------------------------------------
+///
+.is-rtl {
+	.alert-icon {
+		margin-left: $token-scale-400;
+		margin-right: 0;
+	}
+}

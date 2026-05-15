@@ -6,11 +6,11 @@
 ///
 .osui-submenu {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-submenu-items-background:    #{$token-bg-surface-default};
-	--osui-submenu-items-border-color:  #{$token-border-default};
-	--osui-submenu-items-shadow:        #{$token-elevation-2};
-	--osui-submenu-item-color:          #{$token-text-subtlest};
-	--osui-submenu-header-color:        $token-text-default;
+	--osui-submenu-items-background: #{$token-bg-surface-default};
+	--osui-submenu-items-border-color: #{$token-border-default};
+	--osui-submenu-items-shadow: #{$token-elevation-2};
+	--osui-submenu-item-color: #{$token-text-subtlest};
+	--osui-submenu-header-color: $token-text-default;
 	--osui-submenu-active-border-color: var(--osui-submenu-active-border-color);
 	// ───────────────────────────────────────────────────────────────────
 
@@ -297,8 +297,8 @@
 }
 
 .has-accessible-features .osui-submenu:focus-within {
-	-webkit-box-shadow: 0 0 0 3px $token-primitives-yellow-500;
-	box-shadow: 0 0 0 3px $token-primitives-yellow-500;
+	-webkit-box-shadow: 0 0 0 3px var(--color-focus-outer);
+	box-shadow: 0 0 0 3px var(--color-focus-outer);
 	outline: 0;
 }
 
@@ -306,8 +306,8 @@
 .tablet,
 .phone {
 	.has-accessible-features .osui-submenu:focus-within {
-		-webkit-box-shadow: 0 0 0 3px $token-primitives-yellow-500;
-		box-shadow: 0 0 0 3px $token-primitives-yellow-500;
+		-webkit-box-shadow: 0 0 0 3px var(--color-focus-outer);
+		box-shadow: 0 0 0 3px var(--color-focus-outer);
 		outline: 0;
 	}
 
