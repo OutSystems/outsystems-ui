@@ -17,16 +17,56 @@
 
 	&-item {
 		align-items: center;
-		color: var(--osui-breadcrumbs-item-color);
+		color: $token-text-subtle;
 		display: inline-flex;
+		font-size: $token-font-size-350;
+		font-weight: $token-font-weight-regular;
+		line-height: 1;
 
-		.icon {
+		a,
+		a[data-link] {
+			align-items: center;
+			color: var(--osui-breadcrumbs-item-color);
+			display: inline-flex;
+			line-height: 1;
+			text-decoration: none;
+			transition: color $token-transition-time-100 $token-transition-curve-base;
+
+			&:hover {
+				color: $token-text-default;
+				text-decoration: none;
+			}
+
+			.icon {
+				font-size: $token-font-size-400;
+			}
+		}
+
+		> div > .icon {
+			align-items: center;
 			color: var(--osui-breadcrumbs-separator-color);
 			display: inline-flex;
 			font-size: $token-font-size-300;
 			justify-content: center;
+			line-height: 1;
 			margin: $token-scale-0 $token-scale-200;
 			width: auto;
+
+			i {
+				display: inline-block;
+				line-height: 1;
+			}
 		}
 	}
+
+	&-content > &-item:last-child,
+	&-content > *:last-child > &-item {
+		color: $token-text-default;
+		font-weight: $token-font-weight-semi-bold;
+	}
+}
+
+///
+.is-rtl .breadcrumbs-item > div > .icon {
+	transform: scaleX(-1);
 }

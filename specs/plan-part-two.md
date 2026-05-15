@@ -20,6 +20,16 @@ files. All token values are read from `src/scss/tokens/_variables.scss`.
 
 ---
 
+## Missing tokens (not in `outsystems-design-tokens` package)
+
+| Missing token | Expected value | Needed by |
+|---|---|---|
+| `$token-primitives-secondary-100` | `#e8eaf2` | Badge `background-secondary-lightest` |
+| `$token-primitives-secondary-900` | `#303d60` | Badge `background-secondary-lightest` |
+| `$token-font-size-200` | `0.625rem` (10px) | Badge small font size |
+
+---
+
 ## Motion token reference
 
 **Available in package** (`src/scss/tokens/_variables.scss`):
@@ -138,16 +148,11 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 ### Token swap
 
-- [ ] `font-size`: explicit `$token-font-size-300` (12px) — do not inherit body
-- [ ] `font-weight`: `$token-font-weight-semi-bold`
-- [ ] `color`: `$token-text-inverse`
-- [ ] Small size `height`: `24px` → `16px`; padding `1px 4px`
-- [ ] Default size `height`: `32px` → `20px`; padding `$token-scale-050 $token-scale-200`
-- [ ] Medium size `height`: `40px` → `28px`; padding `3px 12px`
-- [ ] `.border-radius-rounded` `border-radius`: `100px` → `$token-border-radius-full` (999px)
-- [ ] `.background-violet` class rename → `.background-purple`; hex `#7048e8` → `$token-semantics-primary-base` purple family (or annotate as hardcoded brand color `#7c3aed`)
-
-> **Hardcoded by design:** badge height values (16/20/28px) sit between scale steps; keep as raw px values with a `// design-spec` comment.
+- [x] Default `height`: `$token-scale-500` (20px); `padding: $token-scale-0 $token-scale-150` (0 6px)
+- [x] Small `height`: `$token-scale-400` (16px); `padding: $token-scale-0 $token-scale-100` (0 4px)
+- [x] Medium `height`: `$token-scale-700` (28px)
+- [x] `background-primary-lightest`: `background-color: $token-semantics-primary-100`; `color: $token-semantics-primary-700` (theme-safe)
+- [x] `background-secondary-lightest`: skipped — no `$token-semantics-secondary-*` in package (logged in missing tokens table)
 
 ---
 
@@ -157,12 +162,7 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 ### Token swap
 
-- [ ] `.blank-slate` `justify-content`: `space-around` → `center`
-- [ ] `.blank-slate` add `gap: $token-scale-600` (replaces per-child padding)
-- [ ] `.blank-slate-description` `padding`: current → `0` (gap handles spacing)
-- [ ] `.blank-slate-actions` `padding`: current → `0` (gap handles spacing)
-- [ ] `.blank-slate-icon` `color` / `--osui-blank-slate-icon-color` default: `$token-text-disabled` → `$token-text-placeholder`
-- [ ] `.blank-slate-description` `color` / `--osui-blank-slate-description-color` default: current → `$token-text-subtle`
+- [ ] Not in design review — skip
 
 ---
 
@@ -172,11 +172,10 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 ### Token swap
 
-- [ ] Sheet `background-color` / `--osui-bottom-sheet-bg` default: palette neutral-0 → `$token-bg-surface-default`
-- [ ] Top corner `border-radius` / `--osui-bottom-sheet-shape` default: current → `$token-border-radius-300` (12px)
-- [ ] Handler pill `background-color`: neutral-5 → `$token-border-default`
-
-> **Note:** `--osui-bottom-sheet-transition-function` is kept (motion continuity). Scrim / overlay color unification with modal/menu is a separate cross-component task tracked in `plan.md`.
+- [x] Background, shadow, padding, border-radius vars — already using correct tokens
+- [x] Handler pill — already `$token-border-input-default` (matches reference; plan was wrong)
+- [x] Open transition: `350ms` → `$token-transition-time-500`
+- [x] `--osui-bottom-sheet-transition-function`: updated easing curve to `cubic-bezier(0.32, 0.72, 0, 1)`
 
 ---
 
@@ -186,18 +185,13 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 ### Token swap
 
-- [ ] Link `color`: `color-primary` / `#1068eb` → `$token-text-subtlest`
-- [ ] Current-page item `color`: `color-neutral-8` → `$token-text-default`
-- [ ] Current-page item `font-weight`: current → `$token-font-weight-semi-bold`
-- [ ] Separator `color`: `color-neutral-7` → `$token-text-subtlest`
-- [ ] Item `font-size`: current → `$token-font-size-350` (13px)
-- [ ] Link `border-radius`: current → `$token-border-radius-100`
-- [ ] Hover state: remove underline; color shift only → `$token-text-default`
-
-### Motion
-
-- [ ] Add `transition: color $token-transition-time-100 $token-transition-curve-base` to link elements
-- [ ] Add `@media (prefers-reduced-motion: reduce)` zero-out
+- [x] Link `color`: → `var(--osui-breadcrumbs-item-color)` (`$token-text-subtlest`)
+- [x] Item `color`: → `$token-text-subtle`; `font-size: $token-font-size-350`; `font-weight: $token-font-weight-regular`
+- [x] Current-page (last) item: `color: $token-text-default`; `font-weight: $token-font-weight-semi-bold`
+- [x] Separator icon: `color: var(--osui-breadcrumbs-separator-color)`; `font-size: $token-font-size-300`; selector updated to `> div > .icon` to match actual HTML structure
+- [x] Hover: `color: $token-text-default`; `text-decoration: none`
+- [x] Transition: `color $token-transition-time-100 $token-transition-curve-base` on links
+- [x] RTL: separator icon `transform: scaleX(-1)` via `.is-rtl .breadcrumbs-item > div > .icon`
 
 ---
 
