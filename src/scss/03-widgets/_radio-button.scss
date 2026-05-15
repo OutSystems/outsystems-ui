@@ -44,7 +44,7 @@
 	}
 
 	&:focus:before {
-		box-shadow: 0 0 0 2px $token-primitives-yellow-500;
+		box-shadow: 0 0 0 2px var(--color-focus-outer);
 	}
 
 	&:checked {

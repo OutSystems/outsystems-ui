@@ -281,12 +281,12 @@
 		border: $token-border-size-050 solid transparent;
 
 		&:focus-within {
-			border-color: $token-primitives-yellow-500;
+			border-color: var(--color-focus-outer);
 		}
 
 		.noUi-handle:focus {
 			border-color: $token-text-default;
-			@include a11y-default-outline;
+			box-shadow: 0 0 0 $token-border-size-075 var(--color-focus-outer);
 		}
 	}
 }

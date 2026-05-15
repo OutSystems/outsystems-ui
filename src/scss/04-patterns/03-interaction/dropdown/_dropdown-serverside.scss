@@ -302,7 +302,7 @@ $balloonMobileTopMargin: 5vh;
 				input,
 				.form-control[data-input] {
 					&:focus {
-						box-shadow: inset 0 0 0 3px $token-primitives-yellow-500;
+						box-shadow: inset 0 0 0 3px var(--color-focus-outer);
 					}
 				}
 			}
@@ -323,7 +323,7 @@ $balloonMobileTopMargin: 5vh;
 					&:after,
 					& > *:before,
 					& > *:after {
-						background-color: $token-primitives-yellow-500;
+						background-color: var(--color-focus-outer);
 						content: '';
 						display: block;
 					}
@@ -375,7 +375,7 @@ $balloonMobileTopMargin: 5vh;
 	.has-accessible-features .osui-dropdown-serverside__balloon-content:focus {
 		--osui-outline-size: 0;
 
-		@include a11y-high-contrast-outline(true);
+		box-shadow: inset 0 0 0 $token-border-size-075 var(--color-focus-outer);
 	}
 }
 

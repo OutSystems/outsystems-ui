@@ -239,13 +239,13 @@
 ///
 .has-accessible-features {
 	.floating-button:focus {
-		box-shadow: 0 0 0 3px $token-primitives-yellow-500;
+		box-shadow: 0 0 0 3px var(--color-focus-outer);
 	}
 
 	.floating-actions-wrapper {
 		&.is--open {
 			.floating-button:focus {
-				box-shadow: 0 0 0 3px $token-primitives-yellow-500;
+				box-shadow: 0 0 0 3px var(--color-focus-outer);
 			}
 		}
 	}

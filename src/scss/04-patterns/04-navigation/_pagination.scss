@@ -164,6 +164,6 @@
 ///
 .os-high-contrast {
 	.pagination-button.is--active {
-		@include a11y-high-contrast-outline;
+		outline: $token-border-size-075 solid var(--color-focus-outer);
 	}
 }

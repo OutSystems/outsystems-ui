@@ -653,12 +653,12 @@ span.flatpickr-weekday {
 	.flatpickr-am-pm,
 	.flatpickr-today-button a {
 		&:focus-visible {
-			box-shadow: 0 0 0 3px $token-primitives-yellow-500;
+			box-shadow: 0 0 0 3px var(--color-focus-outer);
 		}
 	}
 
 	.flatpickr-day:focus-visible {
-		border-color: $token-primitives-yellow-500;
+		border-color: var(--color-focus-outer);
 	}
 }
 
@@ -668,7 +668,7 @@ body:has(.has-accessible-features) .osui-monthpicker__dropdown {
 	.flatpickr-next-month,
 	.flatpickr-monthSelect-month.selected {
 		&:focus-visible {
-			box-shadow: 0 0 0 3px $token-primitives-yellow-500;
+			box-shadow: 0 0 0 3px var(--color-focus-outer);
 		}
 	}
 }
@@ -708,7 +708,7 @@ body:has(.has-accessible-features) .osui-monthpicker__dropdown {
 
 			&:focus,
 			&:active {
-				@include a11y-high-contrast-outline;
+				outline: $token-border-size-075 solid var(--color-focus-outer);
 			}
 		}
 	}
@@ -718,7 +718,7 @@ body:has(.has-accessible-features) .osui-monthpicker__dropdown {
 		.flatpickr-next-month {
 			&:focus,
 			&:active {
-				@include a11y-high-contrast-outline;
+				outline: $token-border-size-075 solid var(--color-focus-outer);
 			}
 		}
 	}
@@ -738,7 +738,7 @@ body:has(.has-accessible-features) .osui-monthpicker__dropdown {
 		}
 
 		&.today {
-			@include a11y-high-contrast-outline(true, $token-border-size-025);
+			border: $token-border-size-025 solid var(--color-focus-outer);
 			z-index: calc(var(--osui-flatpickr-calendar-elems-layer) + var(--os-layer-local-tier-1));
 		}
 
@@ -749,7 +749,7 @@ body:has(.has-accessible-features) .osui-monthpicker__dropdown {
 		&.selected.inRange,
 		&.selected.prevMonthDay,
 		&.selected.nextMonthDay {
-			@include a11y-high-contrast-outline(true, $token-border-size-025);
+			border: $token-border-size-025 solid var(--color-focus-outer);
 			font-size: $token-font-size-400;
 			font-weight: $token-font-weight-semi-bold;
 		}
@@ -767,7 +767,7 @@ body:has(.has-accessible-features) .osui-monthpicker__dropdown {
 		&.today.inRange:focus-visible {
 			font-size: $token-font-size-400;
 			font-weight: $token-font-weight-semi-bold;
-			@include a11y-high-contrast-outline;
+			outline: $token-border-size-075 solid var(--color-focus-outer);
 		}
 
 		&.inRange {
@@ -777,7 +777,7 @@ body:has(.has-accessible-features) .osui-monthpicker__dropdown {
 				border-left: none;
 				border-radius: $token-border-radius-0;
 				border-right: none;
-				@include a11y-high-contrast-outline(true, $token-border-size-025);
+				border: $token-border-size-025 solid var(--color-focus-outer);
 				bottom: -1px;
 				content: '';
 				display: block;
@@ -808,7 +808,7 @@ body:has(.has-accessible-features) .osui-monthpicker__dropdown {
 			&:before {
 				border-radius: 50px 0 0 50px;
 				border-right: none;
-				@include a11y-high-contrast-outline(true, $token-border-size-025);
+				border: $token-border-size-025 solid var(--color-focus-outer);
 				left: 0;
 				right: -2px;
 			}
@@ -819,7 +819,7 @@ body:has(.has-accessible-features) .osui-monthpicker__dropdown {
 			&:before {
 				border-left: none;
 				border-radius: 0 50px 50px 0;
-				@include a11y-high-contrast-outline(true, $token-border-size-025);
+				border: $token-border-size-025 solid var(--color-focus-outer);
 				left: -2px;
 				right: 0;
 			}

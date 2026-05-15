@@ -110,7 +110,7 @@
 				position: relative;
 
 				&:before {
-					@include a11y-high-contrast-outline(true, $token-border-size-025);
+					border: $token-border-size-025 solid var(--color-focus-outer);
 					border-right-width: $token-border-size-0;
 					border-left-width: $token-border-size-075;
 					bottom: 0;

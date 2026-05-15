@@ -77,7 +77,7 @@
 	.osui-section-index-item {
 		&:focus {
 			background-color: transparent;
-			@include a11y-default-outline;
+			box-shadow: 0 0 0 $token-border-size-075 var(--color-focus-outer);
 		}
 	}
 }
@@ -86,13 +86,13 @@
 ///
 .os-high-contrast {
 	.osui-section-index::before {
-		@include a11y-high-contrast-outline(true, $token-border-size-025, left);
+		border-left: $token-border-size-025 solid var(--color-focus-outer);
 	}
 
 	.osui-section-index-item {
 		&--is-active {
 			&::before {
-				@include a11y-high-contrast-outline(true, $token-border-size-075, left);
+				border-left: $token-border-size-075 solid var(--color-focus-outer);
 			}
 		}
 	}

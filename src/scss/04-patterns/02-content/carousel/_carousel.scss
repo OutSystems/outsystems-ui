@@ -168,7 +168,7 @@
 .os-high-contrast {
 	.splide__pagination {
 		&__page {
-			@include a11y-high-contrast-outline;
+			outline: $token-border-size-075 solid var(--color-focus-outer);
 		}
 
 		li {

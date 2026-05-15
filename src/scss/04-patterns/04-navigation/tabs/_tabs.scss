@@ -391,7 +391,7 @@
 	.osui-tabs__header-item.osui-tabs--is-active:before,
 	.osui-tabs__content-item:focus:before,
 	.osui-tabs__content-item.osui-tabs--is-active:before {
-		@include a11y-high-contrast-outline(true, $token-border-size-050);
+		border: $token-border-size-050 solid var(--color-focus-outer);
 		bottom: 0;
 		content: '';
 		display: block;

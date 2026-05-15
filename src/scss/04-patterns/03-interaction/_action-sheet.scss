@@ -161,7 +161,7 @@
 .os-high-contrast {
 	.action-sheet-container--visible .action-sheet {
 		background-color: var(--osui-action-sheet-background);
-		@include a11y-high-contrast-outline(true);
+		box-shadow: inset 0 0 0 $token-border-size-075 var(--color-focus-outer);
 	}
 
 	.action-sheet-actions {
