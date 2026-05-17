@@ -6,8 +6,8 @@
 ///
 .card-detail {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-card-detail-title-color: $token-text-default;
-	--osui-card-detail-text-color:  #{$token-primitives-neutral-700};
+	--osui-card-detail-title-color: #{$token-text-default};
+	--osui-card-detail-text-color:  #{$token-text-subtlest};
 	// ───────────────────────────────────────────────────────────────────
 
 	align-items: center;

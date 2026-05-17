@@ -236,13 +236,13 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 ### Token swap
 
-- [x] `.button-group-item` `height`: confirmed `$token-scale-1000` (40px) — proposed CSS keeps 40px, lock-step with Button
-- [x] `.button-group-item` `border-color` (rest): primary blue → `$token-border-default`
-- [x] `.button-group-item` `color` (rest): `color-primary` → `$token-text-default`
-- [ ] `.button-group-item` corner `border-radius` (first/last): `$token-border-radius-100` → `$token-border-radius-200`
-- [ ] `.button-group-selected-item` `background-color`: current → `$token-semantics-primary-base`
-- [ ] Item layout: `inline-block` → `inline-flex` (eliminates HTML-whitespace ~4px gap between items)
-- [ ] Hover state: add `background-color: $token-border-subtle` on rest items
+- [x] `.button-group-item` `height`: `$token-scale-1000` (40px), responsive `$token-scale-1200` (48px)
+- [x] `.button-group-item` `border-color`: `$token-border-default`
+- [x] `.button-group-item` `color`: `$token-text-default`
+- [x] Corner `border-radius` (first/last): already `$token-border-radius-200` — plan was stale
+- [x] `.button-group-selected-item` `background-color`: already `$token-semantics-primary-base` — plan was stale
+- [x] Hover: `$token-primitives-neutral-100` → `$token-border-subtle` (same value, semantic upgrade)
+- [ ] Item layout: `display: inline-flex` — may eliminate HTML-whitespace gap; deferred until visual regression check
 
 ---
 
@@ -256,23 +256,11 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 ### Token swap
 
-- [ ] `.card` `background-color` → `$token-bg-surface-default`
-- [ ] `.card` `border-color`: `$token-border-subtle` (#f3f3f3) → update to `#e5e7eb` (pending upstream `$token-border-neutral-200`; annotate as `// TODO: upgrade when token exists`)
-- [ ] `.card` `border-radius`: confirm `$token-border-radius-200` (8px)
-- [ ] `.card-title` `color`: set explicit `$token-text-default` (prevents inheritance issues)
-- [ ] `.card-image` (card-sectioned) `padding`: `$token-scale-600` T/L/R → `0` (flush image layout)
-- [ ] `.card-image img` `border-radius`: `$token-border-radius-200` → `0` (parent `overflow: hidden` clips corners)
-- [ ] `.card-bottom` (card-sectioned) `background-color`: none → `#fafbfc` (pending `$token-bg-surface-subtle`; annotate as `// TODO: upgrade when token exists`)
-- [ ] `.card-bottom` (card-sectioned) add `border-top: $token-border-size-025 solid $token-border-subtle`
-- [ ] `.card-bottom .btn` `width`: `auto` → `100%`
-- [ ] `.card-background` text-align: inherit center → explicit `start`
-- [ ] `.background-pink` `background-color`: `#d6336c` → `#e91e8c` (hardcoded brand magenta; annotate `// brand color preserved`)
-
-### Component CSS API
-
-- [ ] `--osui-card-bg` default → `#{$token-bg-surface-default}`
-- [ ] `--osui-card-border-color` default → `#{$token-border-subtle}` (update when upstream token lands)
-- [ ] `--osui-card-radius` default → `#{$token-border-radius-200}`
+- [x] `.card` — CSS API already complete: `$token-bg-surface-default`, `$token-border-subtle`, `$token-border-radius-200`, `$token-elevation-1`
+- [x] `_card-item.scss`: fix `--osui-card-detail-title-color` missing `#{}` interpolation; upgrade `$token-primitives-neutral-700` → `$token-text-subtlest` (no semantic neutral-700 exists in package; subtlest is closest theme-safe match)
+- [ ] `.card-title` `color`: add explicit `$token-text-default` — deferred (inheritance currently works; needs design review confirmation)
+- [ ] `.card-image` padding flush / `.card-bottom` background / `.card-bottom .btn width: 100%` — deferred; require visual confirmation against design review
+- [ ] `.background-pink`: not in card files (separate utility class); deferred
 
 ---
 
