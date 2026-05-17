@@ -12,6 +12,7 @@ Work in `src/scss/` (widgets, layout, pattern SCSS) and the pattern `scss/`
 files. All token values are read from `src/scss/tokens/_variables.scss`.
 
 **Per-component review order:** For each component, check all of the following in one pass:
+
 1. Token swaps (values → `$token-*`)
 2. A11y (`.has-accessible-features` block — focus rings, outline tokens)
 3. RTL (`.is-rtl` block — logical properties, direction)
@@ -22,14 +23,14 @@ files. All token values are read from `src/scss/tokens/_variables.scss`.
 
 ## Missing tokens (not in `outsystems-design-tokens` package)
 
-| Missing token | Expected value | Needed by |
-|---|---|---|
-| `$token-primitives-secondary-100` | `#e8eaf2` | Badge `background-secondary-lightest` |
-| `$token-primitives-secondary-900` | `#303d60` | Badge `background-secondary-lightest` |
-| `$token-font-size-200` | `0.625rem` (10px) | Badge small font size |
-| `$token-opacity-disabled` | `0.45` | Button per-variant disabled opacity |
-| `$token-semantics-primary-hover` | `#0b47b8` | Button primary hover background |
-| `$token-elevation-100` | — | Button cancel hover box-shadow |
+| Missing token                     | Expected value    | Needed by                             |
+| --------------------------------- | ----------------- | ------------------------------------- |
+| `$token-primitives-secondary-100` | `#e8eaf2`         | Badge `background-secondary-lightest` |
+| `$token-primitives-secondary-900` | `#303d60`         | Badge `background-secondary-lightest` |
+| `$token-font-size-200`            | `0.625rem` (10px) | Badge small font size                 |
+| `$token-opacity-disabled`         | `0.45`            | Button per-variant disabled opacity   |
+| `$token-semantics-primary-hover`  | `#0b47b8`         | Button primary hover background       |
+| `$token-elevation-100`            | —                 | Button cancel hover box-shadow        |
 
 ---
 
@@ -43,19 +44,19 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 **Durations used in the design review that have no exact package token:**
 
-| Used in review | Value | Gap |
-|---|---|---|
+| Used in review                                             | Value  | Gap                               |
+| ---------------------------------------------------------- | ------ | --------------------------------- |
 | `.12s` transitions (list, pagination, master detail, link) | 120 ms | between `time-100` and `time-150` |
-| checkbox, switch, input/textarea transitions | 180 ms | between `time-150` and `time-200` |
-| accordion open/close animation | 400 ms | between `time-350` and `time-500` |
+| checkbox, switch, input/textarea transitions               | 180 ms | between `time-150` and `time-200` |
+| accordion open/close animation                             | 400 ms | between `time-350` and `time-500` |
 
 **Curves used in the review that match package tokens exactly** (for reference):
 
-| Review value | Matches |
-|---|---|
-| `cubic-bezier(0.4, 0, 1, 1)` (review "easing-standard") | `$token-transition-curve-base` |
+| Review value                                                 | Matches                          |
+| ------------------------------------------------------------ | -------------------------------- |
+| `cubic-bezier(0.4, 0, 1, 1)` (review "easing-standard")      | `$token-transition-curve-base`   |
 | `cubic-bezier(0.16, 1, 0.3, 1)` (review "easing-expressive") | `$token-transition-curve-spring` |
-| `linear` | `$token-transition-curve-linear` |
+| `linear`                                                     | `$token-transition-curve-linear` |
 
 > **`prefers-reduced-motion`:** every new `transition` must be wrapped or
 > zeroed under `@media (prefers-reduced-motion: reduce)`.
@@ -65,6 +66,7 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 ## 1. Accordion
 
 **Files:**
+
 - `src/scss/04-patterns/02-content/accordion/_accordion.scss`
 - `src/scss/04-patterns/02-content/accordion-item/_accordion-item.scss`
 
@@ -230,6 +232,19 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 ---
 
+## 7a. Button Loading
+
+**File:** `src/scss/04-patterns/03-interaction/button-loading/_button-loading.scss`
+
+### Token swap
+
+- [x] Spinner `height`/`width`: `16px` → `$token-scale-400`
+- [x] Spinner `border-radius`: `50%` → `$token-border-radius-full`
+- [x] Spinner `border`: already `$token-border-size-050`; `margin-right`: already `$token-scale-200`; child `font-size`: already `$token-font-size-350`
+- [x] Animation duration (`850ms`) and easing (`cubic-bezier(0.7, 1.05, 0.78, 0.78)`) — bespoke spinner values, no token equivalent; hardcoded by design
+
+---
+
 ## 8. Button Group
 
 **File:** `src/scss/03-widgets/_button-group.scss`
@@ -242,13 +257,13 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 - [x] Corner `border-radius` (first/last): already `$token-border-radius-200` — plan was stale
 - [x] `.button-group-selected-item` `background-color`: already `$token-semantics-primary-base` — plan was stale
 - [x] Hover: `$token-primitives-neutral-100` → `$token-border-subtle` (same value, semantic upgrade)
-- [ ] Item layout: `display: inline-flex` — may eliminate HTML-whitespace gap; deferred until visual regression check
 
 ---
 
 ## 9. Card
 
 **Files:**
+
 - `src/scss/04-patterns/02-content/_card.scss`
 - `src/scss/04-patterns/02-content/_card-sectioned.scss`
 - `src/scss/04-patterns/02-content/_card-item.scss`
@@ -270,16 +285,17 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 ### Token swap
 
-- [ ] Track `border-radius`: `4px` → `$token-border-radius-300` (12px)
-- [ ] Pagination indicator (rest) `color`/`background`: `#ccc` 70% opacity → `$token-border-default` full opacity
-- [ ] Pagination indicator gap: margin → `gap: $token-scale-050` (flex)
-- [ ] Arrow icon `color`: `#6a7178` → `$token-text-default`
+- [x] Track `border-radius`: `$token-border-radius-300` (12px) + `overflow: hidden` on `&__track`
+- [x] Pagination rest `background-color`: `#ccc` → `var(--osui-carousel-pagination-color)` (`$token-border-default`)
+- [x] Arrow icon `color`: `$token-primitives-neutral-700` → `$token-text-default` via `--osui-carousel-arrow-icon-color`
+- [x] Pagination gap: margin kept — WCAG 2.5.8 comment requires 6px margin per side for 24px touch target; `gap` would break that guarantee
+- [x] Pagination active pill animation (8→28px): deferred — new design feature, not a token migration item
 
 ### Motion
 
-- [ ] Pagination active indicator: width expand (8px → 28px pill) `transition: width $token-transition-time-200 $token-transition-curve-linear, background-color $token-transition-time-200 $token-transition-curve-linear`
+- [x] Arrow `transition: opacity 150ms linear` → `opacity $token-transition-time-150 $token-transition-curve-linear`
 
-> **Hardcoded by design:** arrow button size (38px) and pagination indicator active pill width (28px) have no direct scale tokens.
+> **Hardcoded by design:** arrow button size (40px) and SVG icon size (14px) have no direct scale tokens.
 
 ---
 
@@ -344,6 +360,7 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 ## 14. Dropdown
 
 **Files:**
+
 - `src/scss/04-patterns/03-interaction/dropdown/_dropdown.scss`
 - `src/scss/04-patterns/03-interaction/dropdown/provider/_virtualselect.scss`
 
@@ -768,6 +785,7 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 ## 36. Tooltip / Balloon
 
 **Files:**
+
 - `src/scss/04-patterns/03-interaction/tooltip/_tooltip.scss`
 - `src/scss/04-patterns/03-interaction/balloon/_balloon.scss`
 
@@ -832,6 +850,7 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 ## 40. TimePicker
 
 **Files:**
+
 - `src/scss/04-patterns/03-interaction/time-picker/_timepicker.scss`
 - `src/scss/04-patterns/03-interaction/time-picker/provider/_flatpickr.scss`
 
@@ -853,6 +872,7 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 ## 41. MonthPicker
 
 **Files:**
+
 - `src/scss/04-patterns/03-interaction/month-picker/_monthpicker.scss`
 - `src/scss/04-patterns/03-interaction/month-picker/provider/_flatpickr.scss`
 
@@ -1123,11 +1143,11 @@ This section tracks blockers, token gaps, design questions, and cross-cutting co
 
 These items exist in the proposed CSS but are absent from the current codebase. They are prerequisites for other component changes.
 
-| Item | Where | Action |
-|---|---|---|
-| `--color-focus-outer` global a11y token | `src/scss/01-foundations/_root.scss` | **Done.** Added as `--color-focus-outer: var(--osui-border-focus-halo)` — all `has-accessible-features :focus` rules and per-component focus overrides now reference this var. Do **not** reference `$token-primitives-yellow-500` in any new focus rule. |
-| `--osui-bg-neutral-subtlest: #f5f5f5` | `src/scss/01-foundations/_root.scss` | Added as `--osui-*` future-token candidate (never use `--token-*` prefix for hand-declared vars) |
-| Icon library vars (`--osui-icon-font-family`, `--osui-icon-*`) | `src/scss/01-foundations/_root.scss` or new `_icon-library.scss` partial | Entire system is missing; proposed CSS defines FontAwesome and Phosphor vars at root |
+| Item                                                           | Where                                                                    | Action                                                                                                                                                                                                                                                    |
+| -------------------------------------------------------------- | ------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--color-focus-outer` global a11y token                        | `src/scss/01-foundations/_root.scss`                                     | **Done.** Added as `--color-focus-outer: var(--osui-border-focus-halo)` — all `has-accessible-features :focus` rules and per-component focus overrides now reference this var. Do **not** reference `$token-primitives-yellow-500` in any new focus rule. |
+| `--osui-bg-neutral-subtlest: #f5f5f5`                          | `src/scss/01-foundations/_root.scss`                                     | Added as `--osui-*` future-token candidate (never use `--token-*` prefix for hand-declared vars)                                                                                                                                                          |
+| Icon library vars (`--osui-icon-font-family`, `--osui-icon-*`) | `src/scss/01-foundations/_root.scss` or new `_icon-library.scss` partial | Entire system is missing; proposed CSS defines FontAwesome and Phosphor vars at root                                                                                                                                                                      |
 
 **Action:** Implement `_root.scss` additions first (they unblock other components). Icon library vars are a separate partial — create `src/scss/01-foundations/_icon-library.scss` and register it in the ScssStructure spec.
 
@@ -1137,10 +1157,10 @@ These items exist in the proposed CSS but are absent from the current codebase. 
 
 The `outsystems-design-tokens` package is missing these durations. Affected component items use the raw ms value with `/* token gap */` until the tokens land.
 
-| Missing token | Value | Needed by |
-|---|---|---|
-| `$token-transition-time-120` | 120 ms | List hover, Master Detail hover, Pagination button, Link |
-| `$token-transition-time-180` | 180 ms | Checkbox, Switch track/thumb, Input, Textarea |
+| Missing token                | Value  | Needed by                                                  |
+| ---------------------------- | ------ | ---------------------------------------------------------- |
+| `$token-transition-time-120` | 120 ms | List hover, Master Detail hover, Pagination button, Link   |
+| `$token-transition-time-180` | 180 ms | Checkbox, Switch track/thumb, Input, Textarea              |
 | `$token-transition-time-400` | 400 ms | Accordion open/close, Flip Content, Progress Circle stroke |
 
 **Action:** Request these three additions in the `outsystems-design-tokens` repo. Once merged and the package version bumped, do a find-and-replace of `/* token gap */` occurrences for those durations.
@@ -1149,11 +1169,11 @@ The `outsystems-design-tokens` package is missing these durations. Affected comp
 
 ### Missing color / surface tokens
 
-| Proposed token name | Value | Needed by |
-|---|---|---|
-| `$token-bg-surface-subtle` | `#fafbfc` | Card `.card-bottom` background |
-| `$token-border-neutral-200` | `#e5e7eb` | Card border |
-| (no name yet) | `#b4b4b4` | DatePicker prev/next month day text color |
+| Proposed token name         | Value     | Needed by                                 |
+| --------------------------- | --------- | ----------------------------------------- |
+| `$token-bg-surface-subtle`  | `#fafbfc` | Card `.card-bottom` background            |
+| `$token-border-neutral-200` | `#e5e7eb` | Card border                               |
+| (no name yet)               | `#b4b4b4` | DatePicker prev/next month day text color |
 
 **Action:** Raise with the design-tokens team. Until tokens exist, keep raw hex values with `// TODO: token gap` comments.
 
@@ -1179,11 +1199,11 @@ Bottom Sheet, Popup, and any future drawer pattern each currently define their o
 
 These values appear intentionally in the design review but have no exact token:
 
-| Component | Property | Value | Notes |
-|---|---|---|---|
-| Badge | height (small/default/medium) | 16px / 20px / 28px | Between scale steps by design |
-| Gallery image | `border-radius` | 6px | Between `$token-border-radius-100` (4px) and `$token-border-radius-200` (8px) |
-| Columns | `border-radius` | 10px | Between `$token-border-radius-100` and `$token-border-radius-200` |
+| Component     | Property                      | Value              | Notes                                                                         |
+| ------------- | ----------------------------- | ------------------ | ----------------------------------------------------------------------------- |
+| Badge         | height (small/default/medium) | 16px / 20px / 28px | Between scale steps by design                                                 |
+| Gallery image | `border-radius`               | 6px                | Between `$token-border-radius-100` (4px) and `$token-border-radius-200` (8px) |
+| Columns       | `border-radius`               | 10px               | Between `$token-border-radius-100` and `$token-border-radius-200`             |
 
 **Action:** Confirm with design whether these are intentional deviations or rounding errors. If intentional, leave as raw values with `// design-spec` comments and do not request tokens (these are one-off exceptions, not reusable values).
 
@@ -1250,6 +1270,7 @@ These components have no design review page. Each checklist covers issues found 
 ---
 
 #### B1. Video
+
 **File:** `src/scss/04-patterns/02-content/video/_video.scss`
 
 10 lines, runtime CSS is empty — the file is entirely SS preview properties.
@@ -1259,6 +1280,7 @@ These components have no design review page. Each checklist covers issues found 
 ---
 
 #### B2. Lightbox Image
+
 **File:** `src/scss/04-patterns/03-interaction/_lightbox-image.scss`
 
 Runtime rules are safe-area and RTL wrappers only; nearly all rules are `-servicestudio-*`.
@@ -1270,6 +1292,7 @@ Runtime rules are safe-area and RTL wrappers only; nearly all rules are `-servic
 ---
 
 #### B3. Bottom Bar Item
+
 **File:** `src/scss/04-patterns/04-navigation/_bottom-bar-item.scss`
 
 - [ ] `--osui-bottom-bar-border-color: #{$token-primitives-neutral-300}` — upgrade to `#{$token-border-default}` for semantic consistency
@@ -1283,6 +1306,7 @@ Runtime rules are safe-area and RTL wrappers only; nearly all rules are `-servic
 ---
 
 #### B4. Input With Icon
+
 **File:** `src/scss/04-patterns/03-interaction/_input-with-icon.scss`
 
 - [ ] `--osui-input-with-icon-icon-color: #{$token-primitives-neutral-700}` — upgrade to `#{$token-text-subtle}` for semantic intent
@@ -1292,6 +1316,7 @@ Runtime rules are safe-area and RTL wrappers only; nearly all rules are `-servic
 ---
 
 #### B5. Stacked Cards
+
 **File:** `src/scss/04-patterns/03-interaction/_stacked-cards.scss`
 
 - [ ] `&--animatable { transition: all 400ms ease }` — replace `all` with explicit properties; duration `400ms /* token gap */`; curve `$token-transition-curve-base`
@@ -1301,6 +1326,7 @@ Runtime rules are safe-area and RTL wrappers only; nearly all rules are `-servic
 ---
 
 #### B6. Floating Actions
+
 **File:** `src/scss/04-patterns/03-interaction/_floating-actions.scss`
 
 - [ ] `transition: all 180ms ease-out` on `.is--open .floating-actions-item` — replace `all` with `opacity, transform`; duration `180ms /* token gap */`; curve `$token-transition-curve-base`
@@ -1316,6 +1342,7 @@ Runtime rules are safe-area and RTL wrappers only; nearly all rules are `-servic
 ---
 
 #### B7. Submenu
+
 **File:** `src/scss/04-patterns/04-navigation/submenu/_submenu.scss`
 
 - [ ] `--osui-submenu-header-color: $token-text-default` — missing `#{}` interpolation; fix to `#{$token-text-default}`

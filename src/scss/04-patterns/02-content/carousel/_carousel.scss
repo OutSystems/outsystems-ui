@@ -11,7 +11,8 @@
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-carousel-arrow-background:        #{$token-bg-surface-default};
 	--osui-carousel-arrow-shadow:            #{$token-elevation-1};
-	--osui-carousel-arrow-icon-color:        #{$token-primitives-neutral-700};
+	--osui-carousel-arrow-icon-color:        #{$token-text-default};
+	--osui-carousel-pagination-color:        #{$token-border-default};
 	--osui-carousel-pagination-active-color: #{$token-semantics-primary-base};
 	// ───────────────────────────────────────────────────────────────────
 
@@ -24,7 +25,7 @@
 			box-shadow: var(--osui-carousel-arrow-shadow);
 			height: 40px;
 			opacity: 1;
-			transition: opacity 150ms linear;
+			transition: opacity $token-transition-time-150 $token-transition-curve-linear;
 			width: 40px;
 			will-change: opacity;
 			z-index: var(--os-layer-local-tier-1);
@@ -56,6 +57,7 @@
 			&__page {
 				// WCAG 2.5.8: Target offset of 6px on each side meets the 24px minimum
 				// (12px dot + 6px margin × 2 = 24px total territory per axis)
+				background-color: var(--osui-carousel-pagination-color);
 				height: 12px;
 				margin: 6px;
 				width: 12px;
@@ -125,7 +127,9 @@
 	}
 
 	&__track {
+		border-radius: $token-border-radius-300;
 		max-width: 100%;
+		overflow: hidden;
 		width: var(--osui-carousel-track-width);
 		z-index: var(--os-layer-screen);
 
