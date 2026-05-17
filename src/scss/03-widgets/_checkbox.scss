@@ -23,7 +23,9 @@
 		border-radius: var(--osui-checkbox-border-radius);
 		height: calc(var(--osui-checkbox-size) - 2px);
 		opacity: 1;
-		transition: all 180ms linear;
+		transition:
+			background-color 180ms $token-transition-curve-linear, // 180ms: no exact token (between time-150/time-200)
+			border-color 180ms $token-transition-curve-linear;
 		width: calc(var(--osui-checkbox-size) - 2px);
 	}
 
@@ -56,7 +58,7 @@
 
 		&:before,
 		&:checked:before {
-			background-color: $token-bg-input-disabled;
+			background-color: $token-border-subtle;
 			border: $token-border-size-025 solid $token-border-default;
 		}
 

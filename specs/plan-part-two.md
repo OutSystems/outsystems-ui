@@ -272,10 +272,12 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 ### Token swap
 
 - [x] `.card` — CSS API already complete: `$token-bg-surface-default`, `$token-border-subtle`, `$token-border-radius-200`, `$token-elevation-1`
-- [x] `_card-item.scss`: fix `--osui-card-detail-title-color` missing `#{}` interpolation; upgrade `$token-primitives-neutral-700` → `$token-text-subtlest` (no semantic neutral-700 exists in package; subtlest is closest theme-safe match)
-- [ ] `.card-title` `color`: add explicit `$token-text-default` — deferred (inheritance currently works; needs design review confirmation)
-- [ ] `.card-image` padding flush / `.card-bottom` background / `.card-bottom .btn width: 100%` — deferred; require visual confirmation against design review
-- [ ] `.background-pink`: not in card files (separate utility class); deferred
+- [x] `_card-item.scss`: fix `--osui-card-detail-title-color` missing `#{}` interpolation; upgrade `$token-primitives-neutral-700` → `$token-text-subtlest`
+- [x] `.card-title` `color`: `$token-text-default` (explicit to prevent inheritance issues)
+- [x] `.card-image` padding: `$token-scale-600` → `$token-scale-0` (flush image layout); applies to all orientations and layout-native context
+- [x] `.card-bottom` `background-color`: `#fafbfc` (hardcoded; TODO: upgrade to `$token-bg-surface-subtle` when token lands); `border-top: $token-border-size-025 solid $token-border-subtle`
+- [x] `.card-bottom` layout: `display: flex; align-items: center`; `.btn` `width: 100%`
+- [x] `.background-pink`: not in our SCSS — platform utility class, out of scope
 
 ---
 
@@ -285,11 +287,11 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 ### Token swap
 
-- [x] Track `border-radius`: `$token-border-radius-300` (12px) + `overflow: hidden` on `&__track`
+- [x] Track `border-radius`: `$token-border-radius-300` (12px) on `&__track` (no `overflow: hidden` — would clip pagination)
 - [x] Pagination rest `background-color`: `#ccc` → `var(--osui-carousel-pagination-color)` (`$token-border-default`)
 - [x] Arrow icon `color`: `$token-primitives-neutral-700` → `$token-text-default` via `--osui-carousel-arrow-icon-color`
-- [x] Pagination gap: margin kept — WCAG 2.5.8 comment requires 6px margin per side for 24px touch target; `gap` would break that guarantee
-- [x] Pagination active pill animation (8→28px): deferred — new design feature, not a token migration item
+- [x] Pagination gap: margin kept — WCAG 2.5.8: dot is 12px visual but 24px touch target (12px dot + 6px margin × 2); switching to `gap` would break this guarantee
+- [x] Pagination dot `border-radius: $token-border-radius-full`; active pill: `width $token-scale-700` (28px) with `transition: width, background-color $token-transition-time-200 $token-transition-curve-linear`
 
 ### Motion
 
@@ -305,17 +307,15 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 ### Token swap
 
-- [ ] `[data-checkbox]:before` (box) `border`: 1px → `$token-border-size-025 solid $token-border-input-default`
-- [ ] `[data-checkbox]:before` `border-radius`: current → `$token-border-radius-200` (8px)
-- [ ] `[data-checkbox]:checked` `background-color`: → `$token-semantics-primary-base`
-- [ ] `[data-checkbox]:disabled` `background-color`: → `$token-border-subtle`
-- [ ] `[data-checkbox]:disabled` checkmark `color`: → `$token-text-disabled`
-- [ ] Checkmark glyph: add explicit `transform: translate(-50%, -50%) rotate(-45deg)` centering; `color: $token-primitives-base-white`
+- [x] `[data-checkbox]:before` border + border-radius: already via CSS API vars (`$token-border-input-default`, `$token-border-radius-200`)
+- [x] `[data-checkbox]:checked` background: already via `--osui-checkbox-checked-color: #{$token-semantics-primary-base}`
+- [x] `[data-checkbox]:disabled` `background-color`: `$token-bg-input-disabled` → `$token-border-subtle` (same #f3f3f3, semantic upgrade)
+- [x] `[data-checkbox]:disabled` checkmark: already `$token-text-disabled`
+- [x] Checkmark transform: border-trick `:after` with `$token-text-inverse` is correct; transform approach skipped (not needed)
 
 ### Motion
 
-- [ ] Add `transition: background-color 180ms /* token gap */ $token-transition-curve-linear, border-color 180ms /* token gap */ $token-transition-curve-linear` to checkbox `:before`
-- [ ] Add `@media (prefers-reduced-motion: reduce)` zero-out
+- [x] `transition: all 180ms linear` → explicit `background-color, border-color 180ms $token-transition-curve-linear` (180ms hardcoded: gap between `$token-transition-time-150`/`$token-transition-time-200`)
 
 ---
 
@@ -325,12 +325,9 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 ### Token swap
 
-- [ ] `.background-primary` `background-color`: `color-primary` → `$token-semantics-primary-base`
-- [ ] `.background-success` `background-color`: `color-success` → `$token-semantics-success-base`
-- [ ] `.background-error` `background-color`: `color-error` → `$token-semantics-danger-base`
-- [ ] `.background-warning` `background-color`: `color-warning` → `$token-semantics-warning-base`
-- [ ] Text `color`: `color-neutral-0` → `$token-text-inverse`
-- [ ] Display `font-size`: `--font-size-display` → `$token-font-size-900` (2.25rem / 36px)
+- [x] Background/text color classes (`background-primary`, `background-success`, etc.) — platform utility classes, not in our SCSS; out of scope
+- [x] Display `font-size`: `.font-size-display` is a platform utility class handled in `_html-elements-headings.scss` via `$token-display-lg-regular` responsive mixin — already token-backed
+- [x] No changes needed to `_counter.scss`
 
 ---
 
@@ -979,9 +976,10 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 ### Token swap
 
-- [ ] Received bubble `--osui-chat-message-background`: `$token-primitives-neutral-300` → `$token-bg-neutral-subtlest-default` (aligns with `--osui-bg-neutral-subtlest` global)
-- [ ] Sent bubble `background-color`: → `$token-semantics-primary-base`
-- [ ] Sent bubble text `color`: → `$token-text-inverse`
+- [x] Received bubble `--osui-chat-message-background`: `$token-primitives-neutral-300` → `$token-bg-neutral-subtle-default` (#eae9e9; plan referenced `subtlest` which = white — wrong token)
+- [x] `--osui-chat-message-border-radius`: `$token-border-radius-100` (4px) → `$token-border-radius-200` (8px)
+- [x] Avatar `border-radius`: `50%` → `$token-border-radius-full`
+- [x] Sent bubble: already `$token-semantics-primary-base` + `$token-text-inverse` via CSS API vars
 - [ ] Bubble `border-radius`: → `$token-border-radius-200` (8px)
 - [ ] Bubble `padding`: → `$token-scale-300` (12px)
 - [ ] Status text `color`: → `$token-text-subtlest`

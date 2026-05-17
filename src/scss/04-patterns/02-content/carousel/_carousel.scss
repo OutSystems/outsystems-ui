@@ -58,12 +58,17 @@
 				// WCAG 2.5.8: Target offset of 6px on each side meets the 24px minimum
 				// (12px dot + 6px margin × 2 = 24px total territory per axis)
 				background-color: var(--osui-carousel-pagination-color);
+				border-radius: $token-border-radius-full;
 				height: 12px;
 				margin: 6px;
+				transition:
+					width $token-transition-time-200 $token-transition-curve-linear,
+					background-color $token-transition-time-200 $token-transition-curve-linear;
 				width: 12px;
 
 				&.is-active {
 					background-color: var(--osui-carousel-pagination-active-color);
+					width: $token-scale-700;
 					z-index: var(--os-layer-local-tier-1);
 				}
 			}
@@ -129,7 +134,6 @@
 	&__track {
 		border-radius: $token-border-radius-300;
 		max-width: 100%;
-		overflow: hidden;
 		width: var(--osui-carousel-track-width);
 		z-index: var(--os-layer-screen);
 
