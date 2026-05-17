@@ -16,12 +16,12 @@
 	--osui-btn-primary-border-color: #{$token-semantics-primary-base};
 	--osui-btn-primary-color: #{$token-text-inverse};
 	// Success variant
-	--osui-btn-success-background: #{$token-semantics-success-base};
-	--osui-btn-success-border-color: #{$token-semantics-success-base};
+	--osui-btn-success-background: #{$token-bg-success-base-default};
+	--osui-btn-success-border-color: #{$token-bg-success-base-default};
 	--osui-btn-success-color: #{$token-text-inverse};
 	// Error variant
-	--osui-btn-error-background: #{$token-semantics-danger-base};
-	--osui-btn-error-border-color: #{$token-semantics-danger-base};
+	--osui-btn-error-background: #{$token-bg-danger-base-default};
+	--osui-btn-error-border-color: #{$token-bg-danger-base-default};
 	--osui-btn-error-color: #{$token-text-inverse};
 	// ───────────────────────────────────────────────────────────────────
 
@@ -32,17 +32,26 @@
 	color: var(--osui-btn-color);
 	cursor: pointer;
 	display: inline-flex;
+	margin-left: 0;
 	filter: brightness(1);
 	font-weight: $token-font-weight-semi-bold;
+	gap: $token-scale-200;
 	height: var(--osui-btn-height);
 	justify-content: center;
 	line-height: 1;
 	margin: 0;
 	padding: $token-scale-0 $token-scale-400;
-	transition: all 100ms linear;
+	transition:
+		background-color $token-transition-time-100 $token-transition-curve-base,
+		border-color $token-transition-time-100 $token-transition-curve-base,
+		color $token-transition-time-100 $token-transition-curve-base;
 
 	&:hover:active {
 		filter: brightness(0.8);
+	}
+
+	& > span:empty {
+		display: none;
 	}
 
 	&[class*='background-'] {
@@ -79,7 +88,7 @@
 
 	&-cancel {
 		--osui-btn-background: #{$token-bg-surface-default};
-		--osui-btn-color: #{$token-text-subtlest};
+		--osui-btn-color: #{$token-text-subtle};
 		--osui-btn-border-color: #{$token-border-default};
 
 		background-color: var(--osui-btn-background);
@@ -100,18 +109,12 @@
 	}
 
 	&[disabled] {
-		--osui-btn-background: #{$token-bg-input-disabled};
-		--osui-btn-color: #{$token-text-disabled};
-		--osui-btn-border-color: #{$token-border-default};
-
-		background-color: var(--osui-btn-background);
-		border: $token-border-size-025 solid var(--osui-btn-border-color);
-		color: var(--osui-btn-color);
+		opacity: 0.45; // no $token-opacity-disabled in package
 		pointer-events: none;
 	}
 }
 
-// Responsive --------------------------------------------------------------------
+// Hover -------------------------------------------------------------------------
 
 ///
 .desktop {
@@ -119,19 +122,32 @@
 		&:hover {
 			filter: brightness(0.9);
 		}
+
+		&-primary:hover {
+			background-color: $token-semantics-primary-800;
+			border-color: $token-semantics-primary-800;
+			filter: none;
+		}
+
+		&-cancel:hover {
+			border-color: $token-border-input-default;
+			color: $token-text-default;
+		}
 	}
 }
+
+// Responsive --------------------------------------------------------------------
 
 ///
 .tablet,
 .phone {
 	.btn {
 		font-size: $token-font-size-400;
-		height: 48px;
+		height: $token-scale-1200;
 
 		&-small {
 			font-size: $token-font-size-350;
-			height: 40px;
+			height: $token-scale-1000;
 		}
 
 		&-large {
@@ -166,7 +182,7 @@
 ///
 .has-accessible-features {
 	& .btn:focus {
-		border-color: $token-text-default;
+		border-color: $token-semantics-primary-base;
 	}
 }
 

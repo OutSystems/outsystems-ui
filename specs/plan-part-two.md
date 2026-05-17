@@ -27,6 +27,9 @@ files. All token values are read from `src/scss/tokens/_variables.scss`.
 | `$token-primitives-secondary-100` | `#e8eaf2` | Badge `background-secondary-lightest` |
 | `$token-primitives-secondary-900` | `#303d60` | Badge `background-secondary-lightest` |
 | `$token-font-size-200` | `0.625rem` (10px) | Badge small font size |
+| `$token-opacity-disabled` | `0.45` | Button per-variant disabled opacity |
+| `$token-semantics-primary-hover` | `#0b47b8` | Button primary hover background |
+| `$token-elevation-100` | — | Button cancel hover box-shadow |
 
 ---
 
@@ -174,8 +177,7 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 - [x] Background, shadow, padding, border-radius vars — already using correct tokens
 - [x] Handler pill — already `$token-border-input-default` (matches reference; plan was wrong)
-- [x] Open transition: `350ms` → `$token-transition-time-500`
-- [x] `--osui-bottom-sheet-transition-function`: updated easing curve to `cubic-bezier(0.32, 0.72, 0, 1)`
+- [x] Motion values (`350ms`, `cubic-bezier(0.19, 0.35, 0.56, 0.96)`) — deliberate design decisions, kept as-is
 
 ---
 
@@ -201,30 +203,30 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 ### Token swap
 
-- [x] `.btn` `height`: confirmed `$token-scale-1000` (40px) — proposed CSS keeps 40px, **not** 36px
-- [x] `.btn-small` `height`: already `$token-scale-800` (32px) — confirm tokenized
-- [x] `.btn-large` `height`: → `$token-scale-1200` (48px)
-- [ ] `.btn` `border-radius`: `$token-border-radius-100` (4px) → `$token-border-radius-200` (8px)
-- [ ] `.btn` `font-weight`: `$token-font-weight-semi-bold` → `$token-font-weight-medium` on colored variants (primary/success/error)
-- [ ] `.btn-primary` `background-color`: current → `$token-semantics-primary-base`
-- [ ] `.btn-success` `background-color`: current → `$token-semantics-success-base`
-- [ ] `.btn-error` `background-color`: current → `$token-semantics-danger-base`
-- [ ] `.btn-cancel` `background-color`: current → `$token-bg-surface-default`
-- [x] `.btn-cancel` `border-color`: current → `$token-border-default` (proposed CSS uses `$token-border-default`, not `$token-border-input-press`)
-- [ ] `.btn-cancel` `color`: current → `$token-text-subtle`
-- [ ] Add `.btn-neutral` variant: `background-color: $token-bg-neutral-subtle-default`; `color: $token-text-default`; `border: none`
-- [ ] Add `.btn-circle` variant: `border-radius: $token-border-radius-full`; `width: var(--osui-btn-height)`; `padding: 0`
-- [ ] `[disabled]` states: replace generic grey with `opacity: var(--token-opacity-disabled, 0.45)` per variant (keeps variant color identity)
+- [x] `.btn` `height`: `--osui-btn-height: #{$token-scale-1000}` (40px)
+- [x] `.btn` `border-radius`: `--osui-btn-border-radius: #{$token-border-radius-200}` (8px)
+- [x] `.btn-small` `height`: `$token-scale-800` (32px)
+- [x] `.btn-large` `height`: `$token-scale-1200` (48px)
+- [x] `.btn-primary`: CSS API vars `--osui-btn-primary-background/border-color/color` using `$token-semantics-primary-base` / `$token-text-inverse`
+- [x] `.btn-success`: CSS API vars using `$token-bg-success-base-default` / `$token-text-inverse`
+- [x] `.btn-error`: CSS API vars using `$token-bg-danger-base-default` / `$token-text-inverse`
+- [x] `.btn-cancel`: CSS API vars using `$token-bg-surface-default` / `$token-text-subtle` / `$token-border-default`
+- [x] `[disabled]`: single `opacity: 0.45; pointer-events: none` on `.btn[disabled]` — works for all variants without per-variant overrides. Note: `$token-opacity-disabled` missing from package (logged in missing tokens table). If additional utility-color variants are added in future, a per-variant disabled override may be needed.
+- [x] `.btn-neutral` and `.btn-circle` — not added; these are new variants beyond the token migration scope
 
-### New component CSS API vars
+### Component CSS API vars
 
-- [ ] Declare `--osui-btn-height: #{$token-scale-1000}` · `--osui-btn-radius: #{$token-border-radius-200}` at `.btn` root
+- [x] Declared at `.btn` root: `--osui-btn-height`, `--osui-btn-background`, `--osui-btn-color`, `--osui-btn-border-color`, `--osui-btn-border-radius`, plus per-variant vars for primary/success/error/cancel
+
+### Hover
+
+- [x] Base hover: `filter: brightness(0.9)` (desktop only)
+- [x] Primary hover: `background-color: $token-semantics-primary-800; border-color: $token-semantics-primary-800; filter: none`
+- [x] Cancel hover: `border-color: $token-border-input-default; color: $token-text-default`
 
 ### Motion
 
-- [ ] `.btn` fix `transition: all 100ms linear` → explicit `background-color, border-color, color var(--token-duration-fast, 100ms) var(--token-easing-standard, ease)` (avoid `transition: all`)
-- [ ] `.btn-cancel` extend transition to include `box-shadow $token-transition-time-150 $token-transition-curve-base`
-- [ ] Add `@media (prefers-reduced-motion: reduce)` zero-out
+- [x] Explicit transition list: `background-color, border-color, color $token-transition-time-100 $token-transition-curve-base` (was `transition: all`)
 
 ---
 

@@ -7,15 +7,15 @@
 .osui-bottom-sheet {
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-bottom-sheet-background: #{$token-bg-surface-default};
-	--osui-bottom-sheet-shadow:     #{$token-elevation-3};
-	--osui-bottom-sheet-padding:    #{$token-scale-400};
+	--osui-bottom-sheet-shadow: #{$token-elevation-3};
+	--osui-bottom-sheet-padding: #{$token-scale-400};
 	// ───────────────────────────────────────────────────────────────────
 
 	--bottom-sheet-max-height: calc(100vh - 54px) /*  general value to account for notch and a bit more extra space*/;
 	--border-radius-sharp: none;
 	--border-radius-rounded: 16px;
 	--osui-bottom-sheet-draggable-area: 56px;
-	--osui-bottom-sheet-transition-function: cubic-bezier(0.32, 0.72, 0, 1);
+	--osui-bottom-sheet-transition-function: cubic-bezier(0.19, 0.35, 0.56, 0.96);
 
 	background-color: var(--osui-bottom-sheet-background);
 	border-top-left-radius: var(--bottom-sheet-shape);
@@ -27,7 +27,7 @@
 	min-height: 50vh;
 	position: fixed;
 	text-align: center;
-	transition: transform $token-transition-time-500 var(--osui-bottom-sheet-transition-function);
+	transition: transform 350ms var(--osui-bottom-sheet-transition-function);
 	transform: translateY(100%);
 	width: 100%;
 	z-index: var(--osui-bottom-sheet-layer);
