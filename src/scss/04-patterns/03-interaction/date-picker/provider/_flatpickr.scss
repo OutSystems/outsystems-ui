@@ -61,6 +61,7 @@
 
 		.flatpickr-weekwrapper .flatpickr-weeks {
 			background: $token-border-subtle;
+			box-shadow: none;
 			margin-right: $token-scale-100;
 
 			.flatpickr-day {
