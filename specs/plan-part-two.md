@@ -23,14 +23,21 @@ files. All token values are read from `src/scss/tokens/_variables.scss`.
 
 ## Missing tokens (not in `outsystems-design-tokens` package)
 
-| Missing token                     | Expected value    | Needed by                             |
-| --------------------------------- | ----------------- | ------------------------------------- |
-| `$token-primitives-secondary-100` | `#e8eaf2`         | Badge `background-secondary-lightest` |
-| `$token-primitives-secondary-900` | `#303d60`         | Badge `background-secondary-lightest` |
-| `$token-font-size-200`            | `0.625rem` (10px) | Badge small font size                 |
-| `$token-opacity-disabled`         | `0.45`            | Button per-variant disabled opacity   |
-| `$token-semantics-primary-hover`  | `#0b47b8`         | Button primary hover background       |
-| `$token-elevation-100`            | —                 | Button cancel hover box-shadow        |
+| Missing token | Expected value | Needed by |
+|---|---|---|
+| **Entire secondary semantic layer** — `$token-semantics-secondary-*`, `$token-bg-secondary-*`, `$token-text-secondary`, `$token-border-secondary-*` | — | Any component using secondary color (Badge `background-secondary-lightest`, future secondary variants). Only primitives `$token-primitives-secondary-100` (#e8eaf2) and `$token-primitives-secondary-900` (#303d60) exist in the package. |
+| `$token-font-size-200` | `0.625rem` (10px) | Badge small font size |
+| `$token-opacity-disabled` | `0.45` | Button disabled opacity |
+| `$token-semantics-primary-hover` | `#0b47b8` | Button primary hover background |
+| `$token-elevation-100` | — | Button cancel hover box-shadow |
+| `$token-bg-surface-subtle` | `#fafbfc` | Card bottom background |
+| Scale token for `14px` | `14px` | Card bottom padding (gap between `scale-300` 12px and `scale-400` 16px) |
+| `$token-border-radius-150` | `6px` | Gallery image radius (gap between `border-radius-100` 4px and `border-radius-200` 8px) |
+| `$token-font-size-275` | `11px` | Chat List status text |
+| Muted calendar day color | `#b4b4b4` | DatePicker prev/next month day text |
+| `$token-bg-surface-hover` | `#f3f3f3` (same as `$token-border-subtle`) | DatePicker day hover background |
+| Radio disabled+checked color | `#8b8b8b` | Radio button disabled+checked state |
+| Backdrop-filter blur token | `blur(4px)` | Popup scrim |
 
 ---
 
@@ -335,22 +342,32 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 **File:** `src/scss/04-patterns/03-interaction/date-picker/_datepicker.scss`
 
-### Token swap (input)
+### Token swap (input / flatpickr clone)
 
-- [ ] Input `border-radius`: `4px` → `$token-border-radius-200` (8px)
+- [~] Clone input (`altInput`) styles: added then removed — altInput inherits adequate styling; block was not needed
 
 ### Token swap (calendar popup / flatpickr override)
 
 **File:** `src/scss/04-patterns/03-interaction/date-picker/provider/_flatpickr.scss`
 
-- [ ] Calendar container `border-radius`: `4px` → `$token-border-radius-300` (12px)
-- [ ] Calendar container: remove 1px solid border; add elevation `$token-elevation-2`
-- [ ] Month/year text `color`: primary blue → `$token-text-default`
-- [ ] Nav arrow `color`: primary blue → `$token-text-subtlest`
-- [ ] Day cell `border-radius` (shape): circle → `$token-border-radius-200` (8px squircle)
-- [ ] Today cell `border-color`: `border-neutral-6` → `$token-border-default`
-- [ ] Previous/next month day `color`: current → hardcoded `#b4b4b4` (no semantic token for "muted calendar day"; annotate `// TODO: gap — no token for prev/next-month day color`)
-- [ ] AM/PM pill: `background-color` filled primary → transparent; `color` → `$token-semantics-primary-base`; `border`: add outline
+- [x] Calendar `border-radius`: → `$token-border-radius-200` (8px)
+- [x] Calendar: border `$token-border-size-025 solid $token-border-default`; `box-shadow: var(--osui-elevation-overlay)`
+- [x] Month/year `color`: `$token-semantics-primary-base` → `$token-text-default` (#242424)
+- [x] Nav arrow `stroke`: `$token-text-subtlest` → `$token-semantics-primary-base`
+- [x] Weekday `color`: → `$token-text-subtlest`
+- [x] Day cell: selected/startRange/endRange → `$token-border-radius-200` (8px squircle); `:before` band keeps 50px half-pill shape for range connector
+- [x] Today `border-color`: → `$token-border-default`; hover bg → `$token-border-subtle` (`#f3f3f3`, maps to missing `$token-bg-surface-hover`), color → `$token-semantics-primary-base`
+- [x] Hover/focus background: → `$token-border-subtle` (`#f3f3f3`); border → `$token-border-default`
+- [x] hover/focus/today: `border-radius: $token-border-radius-200` (8px squircle)
+- [x] inRange: `border-radius: $token-border-radius-0` — flat continuous band between start/end caps
+- [x] selected/startRange/endRange: `border-radius: $token-border-radius-200` (8px caps)
+- [x] inRange background: `color-mix(in srgb, #{$token-semantics-primary-base} 12%, #{$token-bg-surface-default})` (light primary tint)
+- [x] inRange `:before` band: same `color-mix` background
+- [x] AM/PM pill: filled `$token-semantics-primary-base` background; hover → `$token-bg-neutral-subtle-default`
+- [x] hasWeeks side column: `.flatpickr-weekwrapper .flatpickr-weeks` background `$token-border-subtle`; `border-radius: $token-border-radius-200`; `margin-right: $token-scale-100`; week number day `color: $token-text-subtlest; opacity: 0.7`
+- [x] Today button (`.osui-datepicker-calendar` scoped): plain centered text link with `border-top: $token-border-size-025 solid $token-border-subtle` separator; no pill styling — overrides the global today pill
+- [x] `numInputWrapper` padding reduced to `0` (was `0 $token-scale-400`) to remove excess whitespace in time segment
+- [x] Timepicker within datepicker (`&.hasTime .flatpickr-time`): segmented input layout — left-rounded hour segment, separator, right-rounded minute segment, AM/PM pill; all segments share top/bottom/connecting borders; focus highlights all segments blue via `:has(.numInput:focus)`; `font-size: $token-font-size-350`; `font-weight: $token-font-weight-medium`; `height: $token-scale-600`; AM/PM `border-radius: var(--osui-input-border-radius, #{$token-border-radius-200})`; `margin-left: $token-scale-150`
 
 ---
 
@@ -435,10 +452,10 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 - [x] `[data-input]` `height`: confirmed `$token-scale-1000` (40px) — proposed CSS keeps 40px, **not** 36px
 - [ ] `[data-input]` `border-radius`: `4px` → `$token-border-radius-200` (8px)
-- [ ] `[data-input]` `border-color`: `#d5d5d5` or legacy var → `$token-border-input-default`
 - [x] `--osui-input-color: $token-text-default` fix missing `#{}` interpolation → `#{$token-text-default}`
-- [ ] Hover `border-color`: current (no visual change) → distinct hover border (check `$token-border-input-hover` or `$token-text-subtlest`)
-- [ ] Focus state: replace `border:` shorthand → `border-color:` only + `outline: none` (proposed CSS pattern); keep existing focus token
+- [ ] `--osui-input-border-color` CSS API var default: `#{$token-border-input-default}` — consider changing to `#{$token-border-default}` to unify inline vs portal'd behavior (portals cannot inherit from `.form-control` ancestor); deferred
+- [ ] Hover `border-color`: current → `border-color: $token-border-input-default` (property only; avoid shorthand to preserve existing border-width/style)
+- [ ] Focus state: replace `border:` shorthand → `border-color: var(--osui-input-focus-border-color); outline: none`
 - [ ] Disabled `background-color`: → `$token-border-subtle`
 - [ ] Disabled `color`: → `$token-text-disabled`
 - [ ] Error `border-color`: `#dc2020` → `$token-semantics-danger-base`
@@ -453,7 +470,7 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 ### Motion
 
-- [ ] Fix `transition: all 180ms linear` → explicit `border-color, background-color var(--token-duration-fast, 100ms) var(--token-easing-standard, ease)` (avoid `transition: all`; proposed CSS pattern)
+- [ ] `transition: all 180ms linear` → explicit `border-color, background-color` list (avoid `transition: all`); deferred with hover/focus changes
 - [ ] Add `@media (prefers-reduced-motion: reduce)` zero-out
 
 ---
@@ -853,15 +870,16 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 ### Token swap
 
-- [ ] Time row `height`: → `$token-scale-1000` (40px)
-- [ ] AM/PM button `background-color`: → `$token-bg-input-default`
-- [ ] AM/PM button `color` (default): → `$token-text-subtlest`
-- [ ] AM/PM button `border-radius`: → `$token-border-radius-200` (8px)
-- [ ] Number input `color`: → `$token-text-default`
+- [x] Time row `height`: `$token-scale-1000` (40px) — standalone no-calendar mode
+- [x] AM/PM button `background-color`: `var(--osui-input-background, #{$token-bg-input-default})`; `border: $token-border-size-025 solid var(--osui-input-border-color, #{$token-border-default})`; `border-radius: $token-border-radius-200`
+- [x] AM/PM button `color` (default): `$token-text-subtlest`; hover/focus → `$token-text-subtle` on `$token-border-subtle` background
+- [x] AM/PM button `border-radius`: `$token-border-radius-200` (8px)
+- [x] Number input `color`: `$token-text-default`; separator `color: $token-primitives-neutral-700`; font-weight `$token-font-weight-semi-bold`
+- [x] Dropdown `border-radius`: `$token-border-radius-100` (from global flatpickr); border/shadow matching datepicker calendar
 
 ### Motion
 
-- [ ] AM/PM button: `transition: background-color, color $token-transition-time-100 $token-transition-curve-base`
+- [x] AM/PM button: `transition: background-color, color $token-transition-time-100 $token-transition-curve-base`
 - [ ] Add `@media (prefers-reduced-motion: reduce)` zero-out
 
 ---
@@ -875,18 +893,18 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 ### Token swap
 
-- [ ] Month cell `height`: → `$token-scale-1000` (40px)
-- [ ] Month cell `border-radius`: → `$token-border-radius-200` (8px)
-- [ ] Selected cell `background-color`: → `$token-semantics-primary-base`
-- [ ] Selected cell `color`: → `$token-text-inverse`
-- [ ] Hover cell `background-color`: → `$token-bg-surface-hover` (or `$token-border-subtle`)
-- [ ] Disabled cell `background-color`: → `$token-bg-input-disabled`
+- [x] Month cell `height`: `$token-scale-1000` (40px)
+- [x] Month cell `border-radius`: `$token-border-radius-200` (8px)
+- [x] Selected cell `background-color`: `$token-semantics-primary-base`
+- [x] Selected cell `color`: `$token-text-inverse`
+- [x] Hover cell `background-color`: `$token-border-subtle` (same as `$token-bg-surface-hover` which is missing from package)
+- [x] Disabled cell `background-color`: `$token-bg-input-disabled`
 
 > **Hardcoded by design:** `min-width: 70px` on month cells sits between scale steps — keep raw value with `// design-spec` comment.
 
 ### Motion
 
-- [ ] Month cell: `transition: background-color $token-transition-time-100 $token-transition-curve-base`
+- [x] Month cell: `transition: background-color $token-transition-time-100 $token-transition-curve-base`
 - [ ] Add `@media (prefers-reduced-motion: reduce)` zero-out
 
 ---
@@ -899,11 +917,13 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 ### Token swap
 
-- [ ] Range start/end cell `background-color`: → `$token-semantics-primary-base`
-- [ ] In-range band `background-color`: `$token-semantics-primary-base` at low opacity (annotate `// design-spec: no in-range token yet`)
-- [ ] In-range text `color`: → `$token-text-default`
-- [ ] Start/end cell `border-radius`: → `$token-border-radius-200` (8px); continuous in-range band has `border-radius: 0`
-- [ ] Today indicator: border ring only — no fill color change
+- [x] Range start/end cell `background-color`: `$token-semantics-primary-base`; `border-color: $token-semantics-primary-base`; `border-radius: $token-border-radius-200`
+- [x] In-range band `background-color`: `color-mix(in srgb, #{$token-semantics-primary-base} 12%, #{$token-bg-surface-default})` — light primary tint; `border-radius: $token-border-radius-0` (flat continuous band)
+- [x] In-range `:before` pseudo-element band: same `color-mix` background; `left: -2px; right: -2px` for seamless connection
+- [x] In-range text `color`: inherits `$token-text-default` (no override needed)
+- [x] Start/end cap `:before` band: `border-radius: 50px 0 0 50px` (start) / `0 50px 50px 0` (end) for half-pill range connector shape
+- [x] Today indicator: `border-color: $token-border-default` ring; hover → `$token-border-subtle` bg + `$token-semantics-primary-base` color; no fill color change at rest
+- [x] Single-day range (start+end same day): `border-radius: $token-border-radius-200`; `:before` has `border-radius: 50px` (full pill)
 
 ---
 

@@ -11,15 +11,15 @@
 
 .flatpickr-monthSelect-months {
 	display: grid;
-	gap: $token-scale-100;
-	grid-template-columns: repeat(3, 1fr);
+	gap: $token-scale-200;
+	grid-template-columns: repeat(3, max-content);
 	justify-items: center;
 	margin: 0;
 
 	.flatpickr-monthSelect-month {
 		align-items: center;
-		border: 1px solid transparent;
-		border-radius: $token-border-radius-100;
+		border: $token-border-size-025 solid transparent;
+		border-radius: $token-border-radius-200;
 		display: flex;
 		height: 40px;
 		margin: 0;
@@ -28,7 +28,7 @@
 
 		&:hover,
 		&:focus {
-			background: $token-bg-neutral-subtle-default;
+			background: $token-border-subtle;
 		}
 
 		&.selected {
@@ -51,15 +51,19 @@
 			}
 		}
 
-		&.today:not(.selected):not(.flatpickr-disabled) {
-			border-color: $token-border-input-default;
+	}
+}
 
-			&:hover,
-			&:focus {
-				background: $token-primitives-neutral-300;
-				border-color: $token-primitives-neutral-300;
-				color: $token-semantics-primary-base;
-			}
+// Today indicator — only visible when no month is selected
+.flatpickr-monthSelect-months:not(:has(.selected)) {
+	.flatpickr-monthSelect-month.today:not(.flatpickr-disabled) {
+		border-color: $token-border-default;
+
+		&:hover,
+		&:focus {
+			background: $token-border-subtle;
+			border-color: $token-border-subtle;
+			color: $token-semantics-primary-base;
 		}
 	}
 }

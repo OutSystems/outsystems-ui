@@ -115,7 +115,10 @@
 
 .osui-timepicker__dropdown {
 	&.hasTime.noCalendar {
+		width: fit-content;
+
 		.flatpickr-time {
+			align-items: center;
 			padding: 0;
 			height: $token-scale-1000;
 
@@ -124,14 +127,37 @@
 			}
 
 			.numInputWrapper {
+				flex: 0 0 $token-scale-1200;
 				height: $token-scale-1000;
-				flex-grow: 1;
+				text-align: center;
+				width: $token-scale-1200;
 			}
 
+			// AM/PM styled as an input pill (no-calendar mode)
 			.flatpickr-am-pm {
-				position: relative;
+				align-items: center;
+				background: var(--osui-input-background, #{$token-bg-input-default});
+				border: $token-border-size-025 solid var(--osui-input-border-color, #{$token-border-default});
+				border-radius: $token-border-radius-200;
+				color: $token-text-subtlest;
+				display: flex;
+				font-size: $token-font-size-350;
+				font-weight: $token-font-weight-medium;
+				height: $token-scale-600;
+				justify-content: center;
 				margin-left: $token-scale-200;
 				margin-right: $token-scale-200;
+				min-width: 44px;
+				padding: $token-scale-0 $token-scale-300;
+				position: relative;
+				text-transform: uppercase;
+				width: auto;
+
+				&:hover,
+				&:focus {
+					background: $token-border-subtle;
+					color: $token-text-subtle;
+				}
 			}
 		}
 
