@@ -25,10 +25,29 @@
 	width: 100%;
 	z-index: var(--os-layer-screen);
 
-	&:hover,
-	&--is-selected {
+	&:hover {
 		background-color: var(--osui-dropdown-item-hover-bg);
 		z-index: var(--os-layer-local-tier-1);
+
+		// Service Studio Preview
+		& {
+			-servicestudio-background-color: $token-bg-surface-default;
+		}
+	}
+
+	&--is-selected {
+		background-color: transparent;
+		z-index: var(--os-layer-local-tier-1);
+
+		// Right-side checkmark — requires --osui-icon-check + --osui-icon-font-family (icon library)
+		&::after {
+			color: $token-semantics-primary-base;
+			content: var(--osui-icon-check);
+			flex-shrink: 0;
+			font-family: var(--osui-icon-font-family);
+			font-size: $token-font-size-400;
+			margin-left: $token-scale-200;
+		}
 
 		// Service Studio Preview
 		& {
@@ -43,6 +62,11 @@
 		height: inherit;
 		overflow: hidden;
 		pointer-events: none;
+
+		// Override platform .bold utility class applied to item text
+		.bold {
+			font-weight: $token-font-weight-regular;
+		}
 
 		& > *:first-child {
 			overflow: hidden;

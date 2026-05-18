@@ -381,11 +381,70 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 ### Token swap
 
 - [x] Trigger `height`: confirmed `$token-scale-1000` (40px) — proposed CSS keeps 40px
-- [ ] Trigger `border-radius`: `4px` → `$token-border-radius-200` (8px)
-- [ ] Popup container `border-radius`: `4px` → `$token-border-radius-200`
-- [ ] Selected row `background-color`: primary-light → `$token-border-subtle`
-- [ ] Selected row `color`: primary → `$token-text-default`
-- [ ] Selected row `font-weight`: current → `$token-font-weight-medium`
+- [x] Trigger `border-radius`: `$token-border-radius-100` → `$token-border-radius-200` (8px)
+- [x] Trigger `border-color`: direct `$token-border-input-default` → `var(--osui-input-border-color, #{$token-border-default})`
+- [x] Trigger `font-size`: → `$token-font-size-350`
+- [x] Trigger `transition`: `height, border-color 0.25s ease` → `border-color $token-transition-time-100 $token-transition-curve-base`
+- [x] Trigger `:hover border-color`: `$token-border-input-default` → `var(--osui-input-focus-border-color, #{$token-semantics-primary-base})` (primary on hover per reference)
+- [x] Trigger arrow `transition`: `all 0.25s ease` → `transform $token-transition-time-100 $token-transition-curve-base`
+- [x] Popup container `border-radius`: `$token-border-radius-100` → `$token-border-radius-200`
+- [x] Popup container: removed `box-shadow` inset border hack → real `border: $token-border-size-025 solid $token-border-default` + `box-shadow: var(--osui-elevation-overlay)`
+- [x] Popup container `background-color`: `$token-bg-input-default` → `$token-bg-surface-default`
+- [x] Popup container `padding`: complex inset-shadow padding → `0`
+- [x] Search container `border-bottom-color`: `$token-border-input-default` → `$token-border-default`
+- [x] Focused row `background-color`: `$token-bg-neutral-subtle-default` → `$token-border-subtle`
+- [x] Selected row `background-color`: → `transparent` (reference: visual indicator is right-side checkmark, not background)
+- [x] Selected row `font-weight`: `$token-font-weight-medium` → `$token-font-weight-regular` (per reference)
+- [x] Selected row `::after` checkmark: `content: var(--osui-icon-check); font-family: var(--osui-icon-font-family); color: $token-semantics-primary-base` — depends on icon library foundation
+- [x] Selected+focused row: `background-color: transparent`
+- [x] Option item: `flex-wrap: nowrap; justify-content: space-between`; `transition` → `background-color $token-transition-time-100 $token-transition-curve-base`
+- [x] Option text: `display: flex; align-items: center; gap: $token-scale-100; min-width: 0; overflow: hidden`
+- [x] Options container `max-height`: `210px` → `240px`
+- [x] Search clear hover `background-color`: `$token-primitives-neutral-400` → `$token-border-default`
+- [x] Clear button hover `background-color`: `$token-primitives-neutral-400` → `$token-border-default`
+- [x] `.vscomp-ele`: `display: inline-block` (lib) → `display: block`; `max-width: 250px` (lib) → `initial`
+- [x] Hide left checkbox icon: `.vscomp-options .vscomp-option .checkbox-icon { display: none }` — right-side `::after` checkmark replaces it for all variants
+- [x] All option `font-weight`: lib defaults bold → `$token-font-weight-regular` on base `.vscomp-option`
+- [x] Focus rings inside dropbox: blanket `*:focus, *:focus-visible { outline: none; box-shadow: none }` scoped to `.vscomp-dropbox-container`; a11y rings explicitly re-applied
+- [x] `.vscomp-wrapper:focus-visible { outline: none }` — wrapper is outside dropbox container so suppressed separately
+- [x] A11y search container: `.has-accessible-features .vscomp-search-container:focus-within { box-shadow: inset 0 0 0 $token-border-size-075 var(--color-focus-outer) }`
+
+---
+
+## 14a. Native Dropdown
+
+**File:** `src/scss/03-widgets/_dropdown.scss`
+
+### Token swap
+
+- [x] `--osui-dropdown-border-color`: `#{$token-border-input-default}` → `#{$token-border-default}`
+- [x] `--osui-dropdown-border-radius`: `#{$token-border-radius-100}` → `#{$token-border-radius-200}`
+- [x] `--osui-dropdown-list-max-height`: `300px` → `240px`
+- [x] Dropdown list `box-shadow`: `none` → `var(--osui-elevation-overlay)`
+- [x] Dropdown list `border-radius`: `$token-border-radius-100` → `$token-border-radius-200`
+- [x] Dropdown list scrollbar: `width: 5px`; track `$token-border-default`; thumb `$token-text-disabled`
+- [x] Popup row `height`: `$token-scale-1000` → `$token-scale-1100` (44px); added `justify-content: space-between`
+- [x] Popup row hover: `$token-bg-input-disabled` → `$token-border-subtle`
+- [x] Selected row: `background-color: $token-bg-input-disabled` → `background: none`; `font-weight: $token-font-weight-semi-bold`; right-side checkmark `::after`
+- [x] Scrollable list `padding`: `$token-scale-200 $token-scale-0` → `$token-scale-0`
+- [x] `div, select.dropdown-display`: `font-weight: $token-font-weight-regular !important` — overrides platform inline `font-weight: bold`
+- [x] A11y expanded border: `$token-text-default` → `var(--color-focus-inner)` + `box-shadow: 0 0 0 3px var(--color-focus-outer)`
+- [x] A11y select focus: `$token-text-default` → `var(--color-focus-inner)`
+
+---
+
+## 14b. Dropdown Server Side
+
+**Files:**
+- `src/scss/04-patterns/03-interaction/dropdown/_dropdown-serverside.scss`
+- `src/scss/04-patterns/03-interaction/dropdown/_dropdownserversideitem.scss`
+
+### Token swap
+
+- [x] Selected item: `background-color: var(--osui-dropdown-item-hover-bg)` → `background-color: transparent`; right-side checkmark `::after` (`--osui-icon-check`, `$token-semantics-primary-base`)
+- [x] Item text bold override: `.bold { font-weight: $token-font-weight-regular }` inside `__content` — overrides platform utility class
+- [x] A11y search wrapper: focus ring moved from `input:focus { box-shadow }` → `__balloon-search-wrapper:focus-within { box-shadow: inset 0 0 0 3px var(--color-focus-outer) }`; input `box-shadow: none` to prevent double ring
+- [x] Search input: `:focus, :focus-visible { box-shadow: none; outline: none }` to suppress browser native rings
 
 ---
 
@@ -851,12 +910,15 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 ### Token swap
 
-- [ ] Tag chip `height`: → `$token-scale-600` (24px)
-- [ ] Tag chip `background-color`: primary-tinted → `$token-bg-surface-active` (or `$token-semantics-primary-base` at low opacity — confirm with design)
-- [ ] Tag chip `color`: → `$token-text-default`
-- [ ] Tag chip `border-radius`: → `$token-border-radius-full` (pill shape)
-- [ ] Clear button `color`: → `$token-text-default`
-- [ ] Trigger `border-radius`: `4px` → `$token-border-radius-200` (8px)
+- [x] Tag chip `height`: `$token-scale-600` (24px); `display: inline-flex; align-items: center`
+- [x] Tag chip `background-color`: `$token-primitives-neutral-300` → `$token-border-subtle` (#f3f3f3)
+- [x] Tag chip `color`: `$token-primitives-neutral-700` → `$token-text-default`
+- [x] Tag chip `border-radius`: `$token-border-radius-100`
+- [x] Tag chip `font-weight`: `$token-font-weight-semi-bold` → `$token-font-weight-medium`
+- [x] Tag chip `padding`: `6px 35px 6px 10px` → `0 $token-scale-200` (inline clear button, no absolute positioning)
+- [x] Clear button: `background-color: transparent`; `opacity: 0.5`; `position: relative`; `margin-left: $token-scale-100`; hover `opacity: 1`
+- [x] Clear icon color: `$token-primitives-neutral-400` → `$token-text-default`
+- [x] Trigger `border-radius`: already updated in section 14 ✓
 - [ ] Disabled tag `color`: → `$token-text-disabled`
 
 ---

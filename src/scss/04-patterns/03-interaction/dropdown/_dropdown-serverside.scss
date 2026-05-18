@@ -294,6 +294,12 @@ $balloonMobileTopMargin: 5vh;
 		&__balloon {
 			border-color: $token-border-input-default;
 
+			&-search-wrapper {
+				&:focus-within {
+					box-shadow: inset 0 0 0 3px var(--color-focus-outer);
+				}
+			}
+
 			&-search {
 				&:before {
 					color: $token-border-input-default;
@@ -302,7 +308,7 @@ $balloonMobileTopMargin: 5vh;
 				input,
 				.form-control[data-input] {
 					&:focus {
-						box-shadow: inset 0 0 0 3px var(--color-focus-outer);
+						box-shadow: none;
 					}
 				}
 			}
