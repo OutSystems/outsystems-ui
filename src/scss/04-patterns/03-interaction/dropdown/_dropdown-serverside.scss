@@ -151,6 +151,12 @@ $balloonMobileTopMargin: 5vh;
 				height: 40px;
 				padding: $token-scale-0 $token-scale-200 $token-scale-0 $token-scale-1000;
 				width: 100%;
+
+				&:focus,
+				&:focus-visible {
+					box-shadow: none;
+					outline: none;
+				}
 			}
 		}
 
@@ -296,20 +302,14 @@ $balloonMobileTopMargin: 5vh;
 
 			&-search-wrapper {
 				&:focus-within {
-					box-shadow: inset 0 0 0 3px var(--color-focus-outer);
+					outline: 3px solid var(--color-focus-outer);
+					outline-offset: -3px;
 				}
 			}
 
 			&-search {
 				&:before {
 					color: $token-border-input-default;
-				}
-
-				input,
-				.form-control[data-input] {
-					&:focus {
-						box-shadow: none;
-					}
 				}
 			}
 

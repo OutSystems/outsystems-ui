@@ -408,7 +408,14 @@
 
 // Wrapper options container
 .vscomp-dropbox-container {
-	// Suppress all browser focus rings inside the dropbox — custom a11y rings are applied selectively below
+	// Suppress ring on container itself (tabindex="-1", briefly focused on open — ring appears around whole popup)
+	&:focus,
+	&:focus-visible {
+		outline: none;
+		box-shadow: none;
+	}
+
+	// Suppress all browser/global focus rings on descendants — custom rings applied selectively below
 	*:focus,
 	*:focus-visible {
 		outline: none;
@@ -590,12 +597,6 @@
 
 		&:after {
 			color: $token-text-default;
-		}
-	}
-
-	.vscomp-search-container {
-		&:focus-within {
-			box-shadow: inset 0 0 0 $token-border-size-075 var(--color-focus-outer);
 		}
 	}
 
