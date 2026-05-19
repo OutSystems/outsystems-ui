@@ -26,7 +26,7 @@ files. All token values are read from `src/scss/tokens/_variables.scss`.
 | Missing token                                                                                                                                       | Expected value                             | Needed by                                                                                                                                                                                                                                 |
 | --------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Entire secondary semantic layer** — `$token-semantics-secondary-*`, `$token-bg-secondary-*`, `$token-text-secondary`, `$token-border-secondary-*` | —                                          | Any component using secondary color (Badge `background-secondary-lightest`, future secondary variants). Only primitives `$token-primitives-secondary-100` (#e8eaf2) and `$token-primitives-secondary-900` (#303d60) exist in the package. |
-| `$token-font-size-200`                                                                                                                              | `0.625rem` (10px)                          | Badge small font size                                                                                                                                                                                                                     |
+| `$token-font-size-200`                                                                                                                              | `0.625rem` (10px)                          | Badge small font size; Icon Badge `.badge` font size (hardcoded `0.625rem` for now)                                                                                                                                                       |
 | `$token-opacity-disabled`                                                                                                                           | `0.45`                                     | Button disabled opacity                                                                                                                                                                                                                   |
 | `$token-semantics-primary-hover`                                                                                                                    | `#0b47b8`                                  | Button primary hover background                                                                                                                                                                                                           |
 | `$token-elevation-100`                                                                                                                              | —                                          | Button cancel hover box-shadow                                                                                                                                                                                                            |
@@ -38,6 +38,7 @@ files. All token values are read from `src/scss/tokens/_variables.scss`.
 | `$token-bg-surface-hover`                                                                                                                           | `#f3f3f3` (same as `$token-border-subtle`) | DatePicker day hover background                                                                                                                                                                                                           |
 | Radio disabled+checked color                                                                                                                        | `#8b8b8b`                                  | Radio button disabled+checked state                                                                                                                                                                                                       |
 | Backdrop-filter blur token                                                                                                                          | `blur(4px)`                                | Popup scrim                                                                                                                                                                                                                               |
+| `$token-font-line-height-default`                                                                                                                   | `1.4`                                      | Input labels, helper text, validation message (hardcoded `1.4` for now)                                                                                                                                                                   |
 
 ---
 
@@ -460,34 +461,75 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 ---
 
+## 16. Form
+
+**File:** `src/scss/03-widgets/_form.scss`
+
+### Token swap
+
+- [~] All proposed values not found in current file — appear to be platform-injected; no changes
+
+---
+
+## 17. Gallery
+
+**File:** `src/scss/04-patterns/02-content/gallery/_gallery.scss`
+
+### Token swap
+
+- [~] `.gallery-img border-radius` — selector not found in current file; no changes
+
+---
+
+## 18. Icon Badge
+
+**File:** `src/scss/04-patterns/05-numbers/_icon-badge.scss`
+
+### Token swap
+
+- [x] Badge position: `@include absolute-left-top(45%, 0)` → `position: absolute; top: 0; right: 0; left: auto`
+- [x] Badge layout: added `display: inline-flex; align-items: center; justify-content: center`
+- [x] `height: 18px` → `$token-scale-400` (16px)
+- [x] `min-width: 18px` → `$token-scale-400` (16px)
+- [x] `font-weight`: added `$token-font-weight-bold`
+- [x] `transform: translateY(-40%)` → `translate(50%, -50%)`
+- [x] Ring shadow: `0 0 0 2px var(--osui-icon-badge-ring-color)` (CSS API var defaulting to `#{$token-bg-surface-default}`)
+- [~] `font-size: 0.625rem` hardcoded — `$token-font-size-200` not in package (see missing tokens table)
+
+---
+
 ## 19. Input
 
 **File:** `src/scss/03-widgets/_inputs-and-textareas.scss`
 
 ### Token swap
 
-- [x] `[data-input]` `height`: confirmed `$token-scale-1000` (40px) — proposed CSS keeps 40px, **not** 36px
-- [ ] `[data-input]` `border-radius`: `4px` → `$token-border-radius-200` (8px)
-- [x] `--osui-input-color: $token-text-default` fix missing `#{}` interpolation → `#{$token-text-default}`
-- [ ] `--osui-input-border-color` CSS API var default: `#{$token-border-input-default}` — consider changing to `#{$token-border-default}` to unify inline vs portal'd behavior (portals cannot inherit from `.form-control` ancestor); deferred
-- [ ] Hover `border-color`: current → `border-color: $token-border-input-default` (property only; avoid shorthand to preserve existing border-width/style)
-- [ ] Focus state: replace `border:` shorthand → `border-color: var(--osui-input-focus-border-color); outline: none`
-- [ ] Disabled `background-color`: → `$token-border-subtle`
-- [ ] Disabled `color`: → `$token-text-disabled`
-- [ ] Error `border-color`: `#dc2020` → `$token-semantics-danger-base`
+- [x] `[data-input]` `height`: confirmed `$token-scale-1000` (40px)
+- [x] `[data-input]` `border-radius`: already `var(--osui-input-border-radius)` → `$token-border-radius-200` ✓
+- [x] `--osui-input-color`: already `#{$token-text-default}` ✓
+- [x] `--osui-input-border-color` default: `#{$token-border-input-default}` → `#{$token-border-default}` (matches reference)
+- [x] Hover: `border:` shorthand → `border-color: $token-border-input-default`
+- [x] Focus: `border:` shorthand → `border-color: var(--osui-input-focus-border-color); outline: none`
+- [x] Disabled: already via CSS API vars (`$token-bg-input-disabled`, `$token-border-default`, `$token-text-disabled`) ✓
+- [x] Error: already via `var(--osui-input-error-border-color)` → `$token-semantics-danger-base` ✓
 - [x] `[data-input].input-small` `height`: → `$token-scale-800` (32px)
 - [x] `[data-input].input-large` `height`: → `$token-scale-1200` (48px)
 
-### Label and helper text (missing rules)
+### Label and helper text
 
-- [ ] Add `.form label` / `[data-label]` `font-size: $token-font-size-350`; `font-weight: $token-font-weight-medium`; `color: $token-text-default`; `margin-bottom: $token-scale-100`
-- [ ] Add `.help-block` / `.input-helper` `font-size: $token-font-size-300`; `color: $token-text-subtle`; `margin-top: $token-scale-100`
-- [ ] Add `span.validation-message` `font-size: $token-font-size-300`; `color: $token-semantics-danger-base`; `margin-top: $token-scale-100`
+- [x] `.form label` / `[data-label]`: `font-size: $token-font-size-350`; `font-weight: $token-font-weight-semi-bold`; `color: $token-text-default`; `line-height: 1.4`
+- [x] `.help-block` / `.input-helper`: `font-size: $token-font-size-300`; `color: $token-text-subtlest`; `margin-top: $token-scale-100`; `line-height: 1.4`
+- [x] `span.validation-message`: `color: $token-semantics-danger-base`; `margin-top: $token-scale-100`; `display: block`
+- [x] `.text-error` `font-size: $token-font-size-300` (12px) — added to `_colors-semantic.scss` as explicit rule after loop
 
 ### Motion
 
-- [ ] `transition: all 180ms linear` → explicit `border-color, background-color` list (avoid `transition: all`); deferred with hover/focus changes
-- [ ] Add `@media (prefers-reduced-motion: reduce)` zero-out
+- [x] `transition: all 180ms linear` → `border-color $token-transition-time-100 $token-transition-curve-base, background-color $token-transition-time-100 $token-transition-curve-base`
+- [x] `@media (prefers-reduced-motion: reduce)` zero-out added
+
+### Token gaps
+
+- [~] `line-height: 1.4` hardcoded on labels/helper — `$token-font-line-height-default` not in package (see missing tokens table)
 
 ---
 
