@@ -174,11 +174,12 @@
 			&:hover {
 				border-color: $token-border-input-press;
 			}
-
-			&:focus {
-				box-shadow: 0 3px 0 0 var(--color-focus-outer);
-			}
 		}
+	}
+
+	.animated-label:focus-within {
+		border-color: var(--osui-animated-label-border-color);
+		box-shadow: 0 0 0 3px var(--color-focus-outer);
 	}
 }
 
@@ -204,5 +205,158 @@
 		.form-control[data-input] {
 			padding: $token-scale-0 $token-scale-200;
 		}
+	}
+}
+
+/* ============================================================
+   Animated Label — outlined variant
+   ============================================================ */
+.animated-label {
+	background-color: var(--osui-input-background, #{$token-bg-input-default});
+	border: $token-border-size-025 solid var(--osui-animated-label-border-color);
+	border-radius: var(--osui-input-border-radius, #{$token-border-radius-200});
+	overflow: visible;
+	transition: border-color $token-transition-time-100 ease;
+
+	&:focus-within {
+		border-color: var(--osui-animated-label-focus-border-color);
+
+		.animated-label-text {
+			color: var(--osui-animated-label-focus-border-color);
+
+			label {
+				color: var(--osui-animated-label-focus-border-color);
+			}
+		}
+	}
+
+	&.active {
+		.animated-label-text {
+			top: 0;
+			transform: translateY(-50%);
+
+			label {
+				color: $token-primitives-neutral-1000;
+				font-size: $token-font-size-300;
+				font-weight: $token-font-weight-medium;
+				letter-spacing: $token-font-letter-spacing-0;
+			}
+		}
+	}
+
+	&:has(.not-valid) {
+		border-color: $token-semantics-danger-base;
+		margin-bottom: $token-scale-900;
+
+		.animated-label-text {
+			color: $token-semantics-danger-base;
+
+			label {
+				color: $token-semantics-danger-base;
+			}
+		}
+	}
+
+	&:has(textarea) {
+		.animated-label-text {
+			top: $token-scale-400;
+			transform: none;
+		}
+	}
+
+	&.active:has(textarea) {
+		.animated-label-text {
+			top: 0;
+			transform: translateY(-50%);
+		}
+	}
+
+	// Nested to raise specificity above global .form-control focus rules
+	.animated-label-input {
+		position: relative;
+
+		span.input-text {
+			display: block;
+		}
+
+		&:not(:has(textarea)) {
+			height: $token-scale-1000;
+
+			span.input-text {
+				height: 100%;
+			}
+		}
+
+		.form-control {
+			&[data-input] {
+				background-color: transparent;
+				border: none;
+				border-radius: 0;
+				height: 100%;
+				padding: 0 $token-scale-400;
+				width: 100%;
+
+				&:focus {
+					border: none;
+					box-shadow: none;
+					outline: none;
+				}
+			}
+
+			&[data-textarea] {
+				background-color: transparent;
+				border: none;
+				border-radius: 0;
+				margin: 0;
+				padding: $token-scale-400 $token-scale-400 0;
+				width: 100%;
+
+				&:focus {
+					border: none;
+					box-shadow: none;
+					outline: none;
+				}
+			}
+		}
+
+		.validation-message {
+			bottom: auto !important;
+			left: 0;
+			position: absolute !important;
+			top: calc(100% + #{$token-scale-100});
+		}
+
+		.input-with-icon {
+			height: $token-scale-1000;
+		}
+	}
+}
+
+.animated-label-text {
+	background-color: var(--osui-input-background, #{$token-bg-input-default});
+	left: $token-scale-300;
+	padding: 0 $token-scale-100;
+	top: 50%;
+	transform: translateY(-50%);
+	transition:
+		top $token-transition-time-200 ease,
+		font-size $token-transition-time-200 ease,
+		color $token-transition-time-100 ease,
+		transform $token-transition-time-200 ease;
+
+	label {
+		color: var(--osui-input-color, #{$token-text-default});
+		font-size: $token-font-size-350;
+		font-weight: $token-font-weight-regular;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.animated-label {
+		transition: none;
+	}
+
+	.animated-label-text {
+		transition: none;
 	}
 }

@@ -23,21 +23,21 @@ files. All token values are read from `src/scss/tokens/_variables.scss`.
 
 ## Missing tokens (not in `outsystems-design-tokens` package)
 
-| Missing token | Expected value | Needed by |
-|---|---|---|
-| **Entire secondary semantic layer** — `$token-semantics-secondary-*`, `$token-bg-secondary-*`, `$token-text-secondary`, `$token-border-secondary-*` | — | Any component using secondary color (Badge `background-secondary-lightest`, future secondary variants). Only primitives `$token-primitives-secondary-100` (#e8eaf2) and `$token-primitives-secondary-900` (#303d60) exist in the package. |
-| `$token-font-size-200` | `0.625rem` (10px) | Badge small font size |
-| `$token-opacity-disabled` | `0.45` | Button disabled opacity |
-| `$token-semantics-primary-hover` | `#0b47b8` | Button primary hover background |
-| `$token-elevation-100` | — | Button cancel hover box-shadow |
-| `$token-bg-surface-subtle` | `#fafbfc` | Card bottom background |
-| Scale token for `14px` | `14px` | Card bottom padding (gap between `scale-300` 12px and `scale-400` 16px) |
-| `$token-border-radius-150` | `6px` | Gallery image radius (gap between `border-radius-100` 4px and `border-radius-200` 8px) |
-| `$token-font-size-275` | `11px` | Chat List status text |
-| Muted calendar day color | `#b4b4b4` | DatePicker prev/next month day text |
-| `$token-bg-surface-hover` | `#f3f3f3` (same as `$token-border-subtle`) | DatePicker day hover background |
-| Radio disabled+checked color | `#8b8b8b` | Radio button disabled+checked state |
-| Backdrop-filter blur token | `blur(4px)` | Popup scrim |
+| Missing token                                                                                                                                       | Expected value                             | Needed by                                                                                                                                                                                                                                 |
+| --------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Entire secondary semantic layer** — `$token-semantics-secondary-*`, `$token-bg-secondary-*`, `$token-text-secondary`, `$token-border-secondary-*` | —                                          | Any component using secondary color (Badge `background-secondary-lightest`, future secondary variants). Only primitives `$token-primitives-secondary-100` (#e8eaf2) and `$token-primitives-secondary-900` (#303d60) exist in the package. |
+| `$token-font-size-200`                                                                                                                              | `0.625rem` (10px)                          | Badge small font size                                                                                                                                                                                                                     |
+| `$token-opacity-disabled`                                                                                                                           | `0.45`                                     | Button disabled opacity                                                                                                                                                                                                                   |
+| `$token-semantics-primary-hover`                                                                                                                    | `#0b47b8`                                  | Button primary hover background                                                                                                                                                                                                           |
+| `$token-elevation-100`                                                                                                                              | —                                          | Button cancel hover box-shadow                                                                                                                                                                                                            |
+| `$token-bg-surface-subtle`                                                                                                                          | `#fafbfc`                                  | Card bottom background                                                                                                                                                                                                                    |
+| Scale token for `14px`                                                                                                                              | `14px`                                     | Card bottom padding (gap between `scale-300` 12px and `scale-400` 16px)                                                                                                                                                                   |
+| `$token-border-radius-150`                                                                                                                          | `6px`                                      | Gallery image radius (gap between `border-radius-100` 4px and `border-radius-200` 8px)                                                                                                                                                    |
+| `$token-font-size-275`                                                                                                                              | `11px`                                     | Chat List status text                                                                                                                                                                                                                     |
+| Muted calendar day color                                                                                                                            | `#b4b4b4`                                  | DatePicker prev/next month day text                                                                                                                                                                                                       |
+| `$token-bg-surface-hover`                                                                                                                           | `#f3f3f3` (same as `$token-border-subtle`) | DatePicker day hover background                                                                                                                                                                                                           |
+| Radio disabled+checked color                                                                                                                        | `#8b8b8b`                                  | Radio button disabled+checked state                                                                                                                                                                                                       |
+| Backdrop-filter blur token                                                                                                                          | `blur(4px)`                                | Popup scrim                                                                                                                                                                                                                               |
 
 ---
 
@@ -405,9 +405,10 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 - [x] `.vscomp-ele`: `display: inline-block` (lib) → `display: block`; `max-width: 250px` (lib) → `initial`
 - [x] Hide left checkbox icon: `.vscomp-options .vscomp-option .checkbox-icon { display: none }` — right-side `::after` checkmark replaces it for all variants
 - [x] All option `font-weight`: lib defaults bold → `$token-font-weight-regular` on base `.vscomp-option`
-- [x] Focus rings inside dropbox: blanket `*:focus, *:focus-visible { outline: none; box-shadow: none }` scoped to `.vscomp-dropbox-container`; a11y rings explicitly re-applied
-- [x] `.vscomp-wrapper:focus-visible { outline: none }` — wrapper is outside dropbox container so suppressed separately
-- [x] A11y search container: `.has-accessible-features .vscomp-search-container:focus-within { box-shadow: inset 0 0 0 $token-border-size-075 var(--color-focus-outer) }`
+- [x] Focus rings inside dropbox: blanket `&:focus, &:focus-visible, *:focus, *:focus-visible { outline: none; box-shadow: none }` on `.vscomp-dropbox-container` (includes container self-ring — `tabindex="-1"`, briefly focused on open)
+- [x] `.vscomp-wrapper:focus-visible { outline: none }` — wrapper is outside dropbox container, suppressed separately
+- [x] A11y focus ring on wrapper: comes from global `.has-accessible-features :focus` rule on `.vscomp-wrapper`; toggle button ring removed (main block keeps `box-shadow: none` on `.vscomp-toggle-button` when focused)
+- [x] A11y search container ring: not implemented — vscomp popup is portaled outside the screen container so page-level `has-accessible-features` is never an ancestor; `vscomp-dropbox-container` always carries the class independently, making CSS-only gating impossible
 
 ---
 
@@ -436,6 +437,7 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 ## 14b. Dropdown Server Side
 
 **Files:**
+
 - `src/scss/04-patterns/03-interaction/dropdown/_dropdown-serverside.scss`
 - `src/scss/04-patterns/03-interaction/dropdown/_dropdownserversideitem.scss`
 
@@ -443,7 +445,7 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 - [x] Selected item: `background-color: var(--osui-dropdown-item-hover-bg)` → `background-color: transparent`; right-side checkmark `::after` (`--osui-icon-check`, `$token-semantics-primary-base`)
 - [x] Item text bold override: `.bold { font-weight: $token-font-weight-regular }` inside `__content` — overrides platform utility class
-- [x] A11y search wrapper: focus ring moved from `input:focus { box-shadow }` → `__balloon-search-wrapper:focus-within { box-shadow: inset 0 0 0 3px var(--color-focus-outer) }`; input `box-shadow: none` to prevent double ring
+- [x] A11y search wrapper: `__balloon-search-wrapper:focus-within { outline: 3px solid var(--color-focus-outer); outline-offset: -3px }` — uses `outline` (not `box-shadow: inset`) to avoid clipping by `.osui-balloon { overflow: hidden }`; input `box-shadow: none; outline: none` to suppress browser native rings
 - [x] Search input: `:focus, :focus-visible { box-shadow: none; outline: none }` to suppress browser native rings
 
 ---
@@ -1079,22 +1081,22 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 ### Token swap
 
-- [ ] Container `height`: → `$token-scale-1000` (40px)
-- [ ] Container `border`: → `$token-border-size-025 solid $token-border-input-default`
-- [ ] Container `border-radius`: → `$token-border-radius-200` (8px)
-- [ ] Container `background-color`: → `$token-bg-input-default`
-- [ ] Label (rest) `color`: → `$token-text-default`; `font-size`: → `$token-font-size-350`; `font-weight`: → `$token-font-weight-regular`
-- [ ] Label (active/floated) `font-size`: → `$token-font-size-300`; `font-weight`: → `$token-font-weight-medium`
-- [ ] Error `border-color`: → `$token-semantics-danger-base`
-- [ ] `top: 8px` / `top: -10px` label offsets — annotate `// design-spec: pixel-precise label positions`
-- [ ] `top: 14px` (tablet/phone rest) — annotate `// design-spec`
-- [ ] Validation message `bottom: 7px` — annotate `// design-spec`
+- [x] Container `height`: → `$token-scale-1000` (40px) — via `.animated-label-input:not(:has(textarea)) { height: $token-scale-1000 }`
+- [x] Container `border`: → `$token-border-size-025 solid var(--osui-animated-label-border-color)` (defaults to `$token-border-input-default`)
+- [x] Container `border-radius`: → `var(--osui-input-border-radius, #{$token-border-radius-200})` — inherits shared input CSS API
+- [x] Container `background-color`: → `var(--osui-input-background, #{$token-bg-input-default})` — inherits shared input CSS API
+- [x] Label (rest) `color`: → `var(--osui-input-color, #{$token-text-default})`; `font-size`: → `$token-font-size-350`; `font-weight`: → `$token-font-weight-regular`
+- [x] Label (active/floated) `font-size`: → `$token-font-size-300`; `font-weight`: → `$token-font-weight-medium`
+- [x] Error `border-color`: → `$token-semantics-danger-base`
+- [x] `top: 8px` / `top: -10px` label offsets — replaced by outlined variant (`top: 50%; transform: translateY(-50%)` at rest; `top: 0; transform: translateY(-50%)` when active)
+- [x] `top: 14px` (tablet/phone rest) — retained as-is for legacy underline context; outlined variant overrides via cascade
+- [x] Validation message `bottom: 7px` — replaced by `position: absolute; top: calc(100% + #{$token-scale-100})`
 
 ### Motion
 
-- [ ] Label active: `transition: top $token-transition-time-200, font-size $token-transition-time-200, transform $token-transition-time-200` · `$token-transition-curve-base`; replace `transition: all`
-- [ ] Input: `transition: border-color $token-transition-time-100 $token-transition-curve-base`; replace `transition: all`
-- [ ] Add `@media (prefers-reduced-motion: reduce)` zero-out
+- [x] Label active: `transition: top $token-transition-time-200 ease, font-size $token-transition-time-200 ease, color $token-transition-time-100 ease, transform $token-transition-time-200 ease`; `transition: all` removed
+- [x] Container: `transition: border-color $token-transition-time-100 ease`
+- [x] Add `@media (prefers-reduced-motion: reduce)` zero-out — added for both `.animated-label` and `.animated-label-text`
 
 ---
 
