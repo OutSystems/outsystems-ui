@@ -289,3 +289,13 @@
 		margin-right: $token-scale-200;
 	}
 }
+
+// Reduced motion ----------------------------------------------------------------
+@media (prefers-reduced-motion: reduce) {
+	.osui-accordion-item {
+		&__icon,
+		&__content {
+			transition: none;
+		}
+	}
+}

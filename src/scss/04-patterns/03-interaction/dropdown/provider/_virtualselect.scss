@@ -713,3 +713,12 @@ body {
 .vscomp-dropbox-container {
 	z-index: var(--os-layer-local-tier-2);
 }
+
+// Reduced motion ----------------------------------------------------------------
+@media (prefers-reduced-motion: reduce) {
+	.vscomp-toggle-button,
+	.vscomp-toggle-button:after,
+	.vscomp-option {
+		transition: none;
+	}
+}

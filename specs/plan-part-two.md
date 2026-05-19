@@ -35,7 +35,7 @@ files. All token values are read from `src/scss/tokens/_variables.scss`.
 | `$token-border-radius-150`                                                                                                                          | `6px`                                      | Gallery image radius (gap between `border-radius-100` 4px and `border-radius-200` 8px)                                                                                                                                                    |
 | `$token-font-size-275`                                                                                                                              | `11px`                                     | Chat List status text                                                                                                                                                                                                                     |
 | Muted calendar day color                                                                                                                            | `#b4b4b4`                                  | DatePicker prev/next month day text                                                                                                                                                                                                       |
-| `$token-bg-surface-hover`                                                                                                                           | `#f3f3f3` (same as `$token-border-subtle`) | DatePicker day hover background                                                                                                                                                                                                           |
+| `$token-bg-surface-hover`                                                                                                                           | `#f3f3f3` (same as `$token-border-subtle`) | DatePicker day hover background; List item hover background (using `$token-border-subtle` as substitute)                                                                                                                                  |
 | Radio disabled+checked color                                                                                                                        | `#8b8b8b`                                  | Radio button disabled+checked state                                                                                                                                                                                                       |
 | Backdrop-filter blur token                                                                                                                          | `blur(4px)`                                | Popup scrim                                                                                                                                                                                                                               |
 | `$token-font-line-height-default`                                                                                                                   | `1.4`                                      | Input labels, helper text, validation message (hardcoded `1.4` for now)                                                                                                                                                                   |
@@ -541,11 +541,8 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 - [x] `color`: already `$token-semantics-primary-base` ✓
 - [~] `[data-link]` text-decoration styles — removed per decision; not applied
-- [ ] `:focus-visible` `outline`: browser default → `#{$token-border-size-050} solid $token-semantics-primary-base; outline-offset: 2px`
-
-### Motion
-
-- [ ] Add `transition: color 120ms /* token gap */ $token-transition-curve-base`
+- [~] `:focus-visible` outline on `[data-link]` — not in reference CSS; skip
+- [~] `transition: color 120ms` — reference keeps `all 180ms linear` on `a`; no change
 
 ---
 
@@ -555,15 +552,19 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 ### Token swap
 
-- [ ] Row `padding`: `12px 16px` → `$token-scale-400` all sides
-- [ ] Divider `border-color`: `#dee2e6` → `$token-border-subtle`
-- [ ] Avatar–text gap: collapse max-width layout → `gap: $token-scale-200` hug-avatar approach
-- [ ] Subtext `color`: `#6a7178` → `$token-text-subtle`
-- [ ] Hover `background-color`: none → `$token-border-subtle`
+- [x] `--osui-list-item-hover-background`: `$token-bg-neutral-subtle-default` → `$token-border-subtle` (#f3f3f3); token gap: `$token-bg-surface-hover` missing (see table)
+- [x] CSS API simplified: removed `--osui-list-item-ripple-color`, `--osui-list-item-ripple-size`, `--osui-list-item-selected-overlay`
+- [x] `.scale-animation` ripple: `rgba(0,0,0,0.1)` → `color-mix(in srgb, #{$token-text-default} 10%, transparent)`; `height/width` hardcoded `10px`
+- [x] Selected state: gradient overlay → `color-mix(in srgb, #{$token-semantics-primary-base} 10%, #{$token-bg-surface-default})`
+- [x] High-contrast border: `var(--color-focus-outer)` → `$token-semantics-primary-base`
+- [~] Row padding: already `$token-scale-600` ✓
+- [~] Divider border-color: already `$token-border-default` ✓
+- [~] Avatar–text gap / subtext color: not found in file
 
 ### Motion
 
-- [ ] Add `transition: background-color 120ms /* token gap */ $token-transition-curve-base` to `.list-item`
+- [x] `transition: background-color $token-transition-time-100 $token-transition-curve-base` added to `.list-item`
+- [x] `@media (prefers-reduced-motion: reduce)` — zeroes transition and animation
 
 ---
 

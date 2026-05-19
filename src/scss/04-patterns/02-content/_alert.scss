@@ -81,3 +81,10 @@
 		margin-right: 0;
 	}
 }
+
+// Reduced motion ----------------------------------------------------------------
+@media (prefers-reduced-motion: reduce) {
+	.alert {
+		transition: none;
+	}
+}

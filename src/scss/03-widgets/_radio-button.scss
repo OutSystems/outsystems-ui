@@ -197,3 +197,11 @@
 		}
 	}
 }
+
+// Reduced motion ----------------------------------------------------------------
+@media (prefers-reduced-motion: reduce) {
+	.radio-button,
+	.radio-button:before {
+		transition: none;
+	}
+}

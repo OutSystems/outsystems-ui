@@ -209,3 +209,13 @@
 		}
 	}
 }
+
+// Reduced motion ----------------------------------------------------------------
+@media (prefers-reduced-motion: reduce) {
+	.osui-carousel {
+		.splide__arrow,
+		.splide__pagination__page {
+			transition: none;
+		}
+	}
+}

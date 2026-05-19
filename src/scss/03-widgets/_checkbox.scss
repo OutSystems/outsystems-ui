@@ -115,3 +115,10 @@
 		}
 	}
 }
+
+// Reduced motion ----------------------------------------------------------------
+@media (prefers-reduced-motion: reduce) {
+	[data-checkbox]:before {
+		transition: none;
+	}
+}
