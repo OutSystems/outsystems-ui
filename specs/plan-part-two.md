@@ -454,54 +454,9 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 **File:** `src/scss/04-patterns/02-content/flip-content/_flipcontent.scss`
 
-### Token swap
-
-- [ ] Face `background-color` defaults: ad-hoc → `$token-bg-surface-default` (front) · `$token-border-subtle` (back)
-
 ### Motion
 
-- [ ] Replace hardcoded `630ms cubic-bezier(0.03, 0.01, 0.67, 1.97)` → `400ms /* token gap */ $token-transition-curve-spring` on the flip transform
-- [ ] Add `@media (prefers-reduced-motion: reduce)` zero-out
-
----
-
-## 16. Form
-
-**File:** `src/scss/03-widgets/_form.scss`
-
-### Token swap
-
-- [ ] Row spacing: `16px` → `$token-scale-600` (24px)
-- [ ] Column gap: `16px` → `$token-scale-600` (24px)
-- [ ] Remove card chrome from form wrapper (border + shadow + radius)
-
-> **Note:** form control border and focus ring are in `_inputs-and-textareas.scss` — see **Input** below. Height stays at 40px (`$token-scale-1000`).
-
----
-
-## 17. Gallery
-
-**File:** `src/scss/04-patterns/02-content/gallery/_gallery.scss`
-
-### Token swap
-
-- [ ] `.gallery-img` `border-radius`: `$token-border-radius-100` (4px) → `6px` (annotate `// design-spec: 6px, between scale-050 2px and scale-100 4px — no exact token`)
-
-> **Hardcoded by design:** 6px sits between `$token-border-radius-100` (4px) and `$token-border-radius-200` (8px); keep raw value with comment.
-
----
-
-## 18. Icon Badge
-
-**File:** `src/scss/04-patterns/05-numbers/_icon-badge.scss`
-
-### Token swap
-
-- [ ] `.background-primary` `background-color`: `color-primary` (#1068eb) → `$token-semantics-primary-base`
-- [ ] `.background-error` `background-color`: `color-red` (#c92a2a) → `$token-semantics-danger-base`
-- [ ] `.border-radius-rounded` `border-radius`: `100px` → `$token-border-radius-full` (999px)
-- [ ] Badge text `color`: `color-neutral-0` → `$token-text-inverse`
-- [ ] Ring shadow: `0 0 0 2px #ffffff` hardcoded → `0 0 0 2px $token-bg-surface-default` (use `#{$token-bg-surface-default}` interpolation)
+- [x] `transition: all` → `transition: transform` — explicit property list; `630ms` and `cubic-bezier(0.03, 0.01, 0.67, 1.97)` kept as-is, no matching tokens
 
 ---
 
@@ -538,13 +493,12 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 ## 20. Link
 
-**File:** `src/scss/03-widgets/` (check for `_link.scss` or within `_inputs-and-textareas.scss`; may be in foundations)
+**File:** `src/scss/01-foundations/_html-elements-link.scss`
 
 ### Token swap
 
-- [ ] `color`: `color-primary` (#1068eb) → `$token-semantics-primary-base`
-- [ ] `text-decoration`: none at rest → `underline` with 35% opacity via `text-decoration-color`
-- [ ] Add `text-underline-offset: 3px`
+- [x] `color`: already `$token-semantics-primary-base` ✓
+- [~] `[data-link]` text-decoration styles — removed per decision; not applied
 - [ ] `:focus-visible` `outline`: browser default → `#{$token-border-size-050} solid $token-semantics-primary-base; outline-offset: 2px`
 
 ### Motion
@@ -1097,6 +1051,8 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 - [x] Label active: `transition: top $token-transition-time-200 ease, font-size $token-transition-time-200 ease, color $token-transition-time-100 ease, transform $token-transition-time-200 ease`; `transition: all` removed
 - [x] Container: `transition: border-color $token-transition-time-100 ease`
 - [x] Add `@media (prefers-reduced-motion: reduce)` zero-out — added for both `.animated-label` and `.animated-label-text`
+- [x] Icon-aware label offset: `.animated-label:has(.input-with-icon-content-icon:not(:empty)) .animated-label-text { left: $token-scale-1000 }`
+- [x] Input padding for icon variants: left-icon `padding-left: $token-scale-1000`; right-icon `padding-right: $token-scale-1000; padding-left: $token-scale-400`
 
 ---
 
@@ -1411,15 +1367,16 @@ Runtime rules are safe-area and RTL wrappers only; nearly all rules are `-servic
 
 **File:** `src/scss/04-patterns/03-interaction/_floating-actions.scss`
 
-- [ ] `transition: all 180ms ease-out` on `.is--open .floating-actions-item` — replace `all` with `opacity, transform`; duration `180ms /* token gap */`; curve `$token-transition-curve-base`
-- [ ] `transition: transform 180ms ease-out` on `.floating-actions-item-button` — duration `180ms /* token gap */`; curve `$token-transition-curve-base`
-- [ ] `transition: all 180ms linear` on `.floating-button` — replace `all` with `transform, box-shadow`; duration `180ms /* token gap */`; curve `$token-transition-curve-linear`
-- [ ] `transition: opacity 180ms ease-out` on `.floating-overlay` — duration `180ms /* token gap */`; curve `$token-transition-curve-base`
-- [ ] `transition-delay: calc(var(--delay) * 40ms)` — `40ms` is a stagger multiplier; annotate `// design-spec: stagger delay`
-- [ ] `filter: brightness(0.9)` for hover — same issue as Button; explicit hover token preferred but no token exists; annotate `// TODO: replace with explicit hover token when available`
-- [ ] `.floating-button { height: 56px; width: 56px }` — no `$token-scale-*` for 56px (sits between `scale-1200` 48px and `scale-1400` 56px if it exists); check `_variables.scss` and tokenize or annotate
-- [ ] `.floating-actions-item-button { height: 40px; width: 40px }` — tokenize to `$token-scale-1000`
-- [ ] Focus ring: `box-shadow: 0 0 0 3px $token-primitives-yellow-500` — confirm correct a11y token
+- [x] `transition: all 180ms ease-out` on `.is--open .floating-actions-item` — replace `all` with `opacity, transform`; duration `180ms /* token gap */`; curve `$token-transition-curve-base`
+- [x] `transition: transform 180ms ease-out` on `.floating-actions-item-button` — duration `180ms /* token gap */`; curve `$token-transition-curve-base`
+- [x] `transition: all 180ms linear` on `.floating-button` — replace `all` with `transform, box-shadow`; duration `180ms /* token gap */`; curve `$token-transition-curve-linear`
+- [x] `transition: opacity 180ms ease-out` on `.floating-overlay` — duration `180ms /* token gap */`; curve `$token-transition-curve-base`
+- [x] `transition-delay: calc(var(--delay) * 40ms)` — `40ms` is a stagger multiplier; annotated `// design-spec: stagger delay`
+- [x] `filter: brightness(0.9)` for hover — annotated `// TODO: replace with explicit hover token when available`
+- [x] `.floating-button { height: 56px; width: 56px }` — tokenized to `$token-scale-1400` (56px)
+- [x] `.floating-actions-item-button { height: 40px; width: 40px }` — tokenized to `$token-scale-1000`
+- [x] Focus ring: already uses `var(--color-focus-outer)` — confirmed correct
+- [x] `[data-link]` within `.floating-actions-item` — `text-decoration: underline; text-decoration-color: color-mix(in srgb, currentColor 35%, transparent); text-underline-offset: 3px`; hover: `text-decoration-color: currentColor`
 
 ---
 

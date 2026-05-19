@@ -42,8 +42,8 @@
 			.floating-actions-item {
 				opacity: 1;
 				transform: translateY(0px) translateZ(0) scale(1);
-				transition: all 180ms ease-out;
-				transition-delay: calc(var(--delay) * 40ms);
+				transition: opacity 180ms /* token gap */ $token-transition-curve-base, transform 180ms /* token gap */ $token-transition-curve-base;
+				transition-delay: calc(var(--delay) * 40ms); // design-spec: stagger delay
 			}
 
 			.floating-actions-item-button {
@@ -96,12 +96,22 @@
 		margin-bottom: $token-scale-400;
 		opacity: 0;
 		transform: translateY($token-scale-400) translateZ(0);
-		transition: all 100ms ease-in;
+		transition: opacity $token-transition-time-100 $token-transition-curve-base, transform $token-transition-time-100 $token-transition-curve-base;
 
 		// Service Studio Preview
 		& {
 			-servicestudio-opacity: 1;
 			-servicestudio-transform: translateY(0);
+		}
+
+		[data-link] {
+			text-decoration: underline;
+			text-decoration-color: color-mix(in srgb, currentColor 35%, transparent);
+			text-underline-offset: 3px;
+
+			&:hover {
+				text-decoration-color: currentColor;
+			}
 		}
 	}
 
@@ -114,13 +124,13 @@
 		cursor: pointer;
 		display: flex;
 		font-size: $token-font-size-400;
-		height: 40px;
+		height: $token-scale-1000;
 		justify-content: center;
 		margin-left: $token-scale-400;
 		transform: translateZ(0) scale(0.3);
-		transition: transform 180ms ease-out;
-		transition-delay: calc(var(--delay) * 40ms);
-		width: 40px;
+		transition: transform 180ms /* token gap */ $token-transition-curve-base;
+		transition-delay: calc(var(--delay) * 40ms); // design-spec: stagger delay
+		width: $token-scale-1000;
 
 		// Service Studio Preview
 		& {
@@ -142,16 +152,16 @@
 		cursor: pointer;
 		display: flex;
 		font-size: $token-font-size-550;
-		height: 56px;
+		height: $token-scale-1400;
 		justify-content: center;
 		pointer-events: auto;
 		transform: rotate(0deg) translateZ(0);
 		transform-origin: center center;
-		transition: all 180ms linear;
-		width: 56px;
+		transition: transform 180ms /* token gap */ $token-transition-curve-linear, box-shadow 180ms /* token gap */ $token-transition-curve-linear;
+		width: $token-scale-1400;
 
 		&:hover {
-			filter: brightness(0.9);
+			filter: brightness(0.9); // TODO: replace with explicit hover token when available
 		}
 	}
 
@@ -164,13 +174,25 @@
 		position: fixed;
 		right: 0;
 		top: 0;
-		transition: opacity 180ms ease-out;
+		transition: opacity 180ms /* token gap */ $token-transition-curve-base;
 		width: 100vw;
 		z-index: var(--osui-floating-actions-layer);
 
 		&.is--open {
 			opacity: 1;
 			pointer-events: auto;
+		}
+	}
+}
+
+// Reduced motion ----------------------------------------------------------------
+@media (prefers-reduced-motion: reduce) {
+	.floating {
+		&-actions-item,
+		&-actions-item-button,
+		&-button,
+		&-overlay {
+			transition: none;
 		}
 	}
 }

@@ -218,6 +218,12 @@
 	overflow: visible;
 	transition: border-color $token-transition-time-100 ease;
 
+	&:has(.input-with-icon-content-icon:not(:empty)) {
+		.animated-label-text {
+			left: $token-scale-1000;
+		}
+	}
+
 	&:focus-within {
 		border-color: var(--osui-animated-label-focus-border-color);
 
@@ -328,6 +334,15 @@
 
 		.input-with-icon {
 			height: $token-scale-1000;
+
+			.input-with-icon-content-icon:not(:empty) + .input-with-icon-input .form-control[data-input] {
+				padding-left: $token-scale-1000;
+			}
+
+			&.input-with-icon-right .input-with-icon-content-icon:not(:empty) + .input-with-icon-input .form-control[data-input] {
+				padding-left: $token-scale-400;
+				padding-right: $token-scale-1000;
+			}
 		}
 	}
 }
