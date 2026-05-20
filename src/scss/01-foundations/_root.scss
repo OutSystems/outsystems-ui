@@ -101,5 +101,7 @@
 	--osui-semantics-orange-base: #{$token-primitives-orange-700}; /* future: --token-semantics-orange-base */
 
 	/*! Legacy shape bridge — used by TS GetBorderRadiusValueFromShapeType() via --border-radius-<shape> */
-	--border-radius-soft: #{$token-border-radius-200}; /* 8px; TS reads this for ShapeType.Soft */
+	--border-radius-none:    #{$token-border-radius-0};    /* 0px;   TS reads this for ShapeType.Sharp */
+	--border-radius-soft:    #{$token-border-radius-200};  /* 8px;   TS reads this for ShapeType.Soft */
+	--border-radius-rounded: #{$token-border-radius-full}; /* 999px; TS reads this for ShapeType.Rounded */
 }
