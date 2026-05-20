@@ -21,6 +21,13 @@ a {
 		text-decoration: underline;
 	}
 
+	&[data-link] {
+		&:hover,
+		&:focus {
+			text-decoration: none;
+		}
+	}
+
 	&[disabled] {
 		color: $token-text-disabled;
 	}

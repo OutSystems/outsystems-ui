@@ -104,15 +104,6 @@
 			-servicestudio-transform: translateY(0);
 		}
 
-		[data-link] {
-			text-decoration: underline;
-			text-decoration-color: color-mix(in srgb, currentColor 35%, transparent);
-			text-underline-offset: 3px;
-
-			&:hover {
-				text-decoration-color: currentColor;
-			}
-		}
 	}
 
 	&-actions-item-button {

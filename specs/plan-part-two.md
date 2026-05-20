@@ -28,8 +28,7 @@ files. All token values are read from `src/scss/tokens/_variables.scss`.
 | **Entire secondary semantic layer** — `$token-semantics-secondary-*`, `$token-bg-secondary-*`, `$token-text-secondary`, `$token-border-secondary-*` | —                                          | Any component using secondary color (Badge `background-secondary-lightest`, future secondary variants). Only primitives `$token-primitives-secondary-100` (#e8eaf2) and `$token-primitives-secondary-900` (#303d60) exist in the package. |
 | `$token-font-size-200`                                                                                                                              | `0.625rem` (10px)                          | Badge small font size; Icon Badge `.badge` font size (hardcoded `0.625rem` for now)                                                                                                                                                       |
 | `$token-opacity-disabled`                                                                                                                           | `0.45`                                     | Button disabled opacity                                                                                                                                                                                                                   |
-| `$token-semantics-primary-hover`                                                                                                                    | `#0b47b8`                                  | Button primary hover background                                                                                                                                                                                                           |
-| `$token-elevation-100`                                                                                                                              | —                                          | Button cancel hover box-shadow                                                                                                                                                                                                            |
+| `$token-semantics-primary-hover`                                                                                                                    | `#0b47b8`                                  | Button primary hover background; Button secondary hover color                                                                                                                                                                             |
 | `$token-bg-surface-subtle`                                                                                                                          | `#fafbfc`                                  | Card bottom background                                                                                                                                                                                                                    |
 | Scale token for `14px`                                                                                                                              | `14px`                                     | Card bottom padding (gap between `scale-300` 12px and `scale-400` 16px)                                                                                                                                                                   |
 | `$token-border-radius-150`                                                                                                                          | `6px`                                      | Gallery image radius (gap between `border-radius-100` 4px and `border-radius-200` 8px)                                                                                                                                                    |
@@ -218,10 +217,10 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 - [x] `.btn-small` `height`: `$token-scale-800` (32px)
 - [x] `.btn-large` `height`: `$token-scale-1200` (48px)
 - [x] `.btn-primary`: CSS API vars `--osui-btn-primary-background/border-color/color` using `$token-semantics-primary-base` / `$token-text-inverse`
-- [x] `.btn-success`: CSS API vars using `$token-bg-success-base-default` / `$token-text-inverse`
-- [x] `.btn-error`: CSS API vars using `$token-bg-danger-base-default` / `$token-text-inverse`
+- [x] `.btn-success`: CSS API vars using `var(--ion-color-success, #{$token-bg-success-base-default})` / `$token-text-inverse` — Ionic fallback first
+- [x] `.btn-error`: CSS API vars using `var(--ion-color-danger, #{$token-bg-danger-base-default})` / `$token-text-inverse` — Ionic fallback first
 - [x] `.btn-cancel`: CSS API vars using `$token-bg-surface-default` / `$token-text-subtle` / `$token-border-default`
-- [x] `[disabled]`: single `opacity: 0.45; pointer-events: none` on `.btn[disabled]` — works for all variants without per-variant overrides. Note: `$token-opacity-disabled` missing from package (logged in missing tokens table). If additional utility-color variants are added in future, a per-variant disabled override may be needed.
+- [x] `[disabled]`: `opacity: 0.45; pointer-events: none` on `.btn[disabled]` — fades any variant in place, no color override needed. Token gap: `$token-opacity-disabled` missing from package.
 - [x] `.btn-neutral` and `.btn-circle` — not added; these are new variants beyond the token migration scope
 
 ### Component CSS API vars
@@ -230,13 +229,16 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 ### Hover
 
-- [x] Base hover: `filter: brightness(0.9)` (desktop only)
-- [x] Primary hover: `background-color: $token-semantics-primary-800; border-color: $token-semantics-primary-800; filter: none`
-- [x] Cancel hover: `border-color: $token-border-input-default; color: $token-text-default`
+- [x] Secondary (default outline) hover: `--osui-btn-border-color: #{$token-semantics-primary-800}` (desktop only) — darkens border via CSS API var; primary/success/error use their own border vars so unaffected
+- [x] Success/error hover: `filter: brightness(0.9)` scoped to `.desktop` — darkens colored background
+- [x] Utility `[class*="background-"]` hover: `filter: brightness(0.9)` scoped to `.desktop`
+- [x] Primary hover: `background-color: #0b47b8; border-color: #0b47b8` (hardcoded; `$token-semantics-primary-hover` missing from package) — global rule, no filter
+- [x] Cancel hover: `border-color: $token-border-input-default` — border darkens (neutral-400 → neutral-600); no background, color, or shadow change
 
 ### Motion
 
-- [x] Explicit transition list: `background-color, border-color, color $token-transition-time-100 $token-transition-curve-base` (was `transition: all`)
+- [x] Base transition: `background-color, border-color, color` at `$token-transition-time-100`
+- [x] Cancel transition: `border-color, color, box-shadow` at `$token-transition-time-150` (separate from base to animate box-shadow on cancel hover)
 
 ---
 
@@ -574,16 +576,16 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 ### Token swap
 
-- [ ] Wrapper `box-shadow` / `border`: remove
-- [ ] Wrapper `border-radius`: `8px` → `0`
-- [ ] List-item `padding`: `16px` all → `$token-scale-300` top/bottom · `$token-scale-600` left/right
-- [ ] Selected item: active indicator left border → full-width tint `$token-bg-primary-base-default` (or `$token-semantics-primary-base` at low opacity)
-- [ ] Selected item `font-weight`: → `$token-font-weight-semi-bold`
-- [ ] Trailing indicator: swap filled arrow → stroked caret glyph
+- [x] Wrapper `box-shadow` / `border`: remove
+- [x] Wrapper `border-radius`: `8px` → `0`
+- [x] List-item `padding`: `16px` all → `$token-scale-300` top/bottom · `$token-scale-600` left/right
+- [x] Selected item: active indicator left border → full-width tint `color-mix(in srgb, #{$token-semantics-primary-base} 8%, transparent)`
+- [x] Selected item `font-weight`: → `$token-font-weight-semi-bold`
+- [x] Trailing indicator: swap filled arrow → stroked caret glyph via `var(--osui-icon-chevron-right)`
 
 ### Motion
 
-- [ ] `.list-item` `transition: background-color 120ms /* token gap */ $token-transition-curve-base`
+- [x] `.list-item` `transition: background-color $token-transition-time-100 $token-transition-curve-base`
 
 ---
 
@@ -593,11 +595,29 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 ### Token swap
 
-- [ ] Container `background-color`: → `$token-bg-surface-default`
-- [ ] Container `border-color`: `--color-neutral-4` → `$token-border-default`
-- [ ] Container `border-radius`: → `$token-border-radius-100` (4px)
-- [ ] Container `padding`: → `$token-scale-600` (24px)
-- [ ] Text `color`: → `$token-text-default`
+- [x] Container `background-color`: → `$token-bg-surface-default`
+- [x] Container `border-radius`: → `$token-border-radius-100` (4px) — kept from original
+- [x] Container `padding`: → `$token-scale-600` (24px) — kept from original
+- [x] Text `color`: → `$token-text-default`
+- [x] Type variants added (info/success/error/warning) matching Alert pattern: `$token-bg-{type}-subtle-default` + `$token-text-{type}`
+
+---
+
+## 23b. Feedback Message
+
+**File:** `src/scss/03-widgets/_feedback-message.scss`
+
+### Token swap
+
+- [x] Default `background`: `transparent` → `$token-bg-surface-default`
+- [x] Default `color`: `$token-text-inverse` → `$token-text-default`
+- [x] `border-radius`: `$token-border-radius-100` → `$token-border-radius-200`
+- [x] `font-size`: `$token-font-size-450` → `$token-font-size-350`
+- [x] `font-weight`: `regular` → `$token-font-weight-medium`
+- [x] `padding`: `$token-scale-400` → `$token-scale-300 $token-scale-400`
+- [x] Layout: added `display: flex`, `gap: $token-scale-200`; removed `padding-left` on `.feedback-message-text`
+- [x] Type variants: solid `$token-semantics-*-base` → `$token-bg-{type}-subtle-default` + `$token-text-{type}`, matching Alert pattern
+- [x] Direct `background-color` + `color` added to each variant rule to override app-level CSS with same specificity
 
 ---
 
@@ -1311,6 +1331,27 @@ The design review proposes replacing `font-weight: 600` (causes layout reflow) w
 Several components (Checkbox focus ring, Radio focus ring, Switch focus ring, Wizard active halo, Rating focus ring) use `color-mix(in srgb, ...)` for the 18–22% primary halo. This is baseline-available since 2023 but is not supported in browsers below Chrome 111 / Firefox 113 / Safari 16.2.
 
 **Action:** Confirm minimum browser support targets for OSUI. If pre-2023 browsers must be supported, replace `color-mix()` with a pre-computed `rgba()` fallback.
+
+---
+
+### A11y audit — further review needed
+
+The current pass adds focus rings and `has-accessible-features` blocks based on the reference CSS. A deeper audit is still needed:
+
+- Verify focus ring visibility across all interactive components (not just the ones explicitly in the reference)
+- Check keyboard navigation order and trap handling for portaled components (Dropdown, DatePicker, Tooltip)
+- Review ARIA attributes wired via TypeScript for correctness against WCAG 2.1 AA
+- Confirm colour contrast ratios for all text/background token combinations in both light and dark themes
+
+**Action:** Schedule a dedicated a11y review pass after the token migration is complete.
+
+---
+
+### Carousel pagination — a11y toggle class
+
+Consider introducing a `.has-accessible-features` variant for carousel pagination styles (e.g. larger pagination dots).
+
+**Action:** Revisit carousel pagination styles — evaluate whether a `.has-accessible-features .osui-carousel` block should override dot size/color
 
 ---
 

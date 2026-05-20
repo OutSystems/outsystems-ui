@@ -32,13 +32,12 @@
 	color: var(--osui-btn-color);
 	cursor: pointer;
 	display: inline-flex;
-	margin-left: 0;
 	filter: brightness(1);
 	font-weight: $token-font-weight-semi-bold;
 	gap: $token-scale-200;
 	height: var(--osui-btn-height);
 	justify-content: center;
-	line-height: 1;
+	line-height: 1; // token gap: $token-font-line-height-full resolves to 100%, not unitless 1
 	margin: 0;
 	padding: $token-scale-0 $token-scale-400;
 	transition:
@@ -94,6 +93,7 @@
 		background-color: var(--osui-btn-background);
 		border: $token-border-size-025 solid var(--osui-btn-border-color);
 		color: var(--osui-btn-color);
+		transition: border-color $token-transition-time-150 $token-transition-curve-base;
 	}
 
 	&-success {
@@ -109,7 +109,7 @@
 	}
 
 	&[disabled] {
-		opacity: 0.45; // no $token-opacity-disabled in package
+		opacity: 0.45; // token gap: $token-opacity-disabled missing from package
 		pointer-events: none;
 	}
 }
@@ -119,19 +119,36 @@
 ///
 .desktop {
 	.btn {
+		// Secondary (default outline): border darkens
 		&:hover {
+			border-color: $token-semantics-primary-800;
+		}
+
+		// Cancel: neutral border darkens (same specificity, later → wins)
+		&-cancel:hover {
+			border-color: $token-border-input-default;
+		}
+
+		// Primary: explicit darker background + border (same specificity, later → wins)
+		&-primary:hover {
+			background-color: #0b47b8; // token gap: $token-semantics-primary-hover missing from package
+			border-color: #0b47b8; // token gap: $token-semantics-primary-hover missing from package
+		}
+
+		// Success + error: darken via filter; restore own border-color so base hover doesn't bleed
+		&-success:hover {
+			border-color: var(--osui-btn-success-border-color);
 			filter: brightness(0.9);
 		}
 
-		&-primary:hover {
-			background-color: $token-semantics-primary-800;
-			border-color: $token-semantics-primary-800;
-			filter: none;
+		&-error:hover {
+			border-color: var(--osui-btn-error-border-color);
+			filter: brightness(0.9);
 		}
 
-		&-cancel:hover {
-			border-color: $token-border-input-default;
-			color: $token-text-default;
+		// Utility background-* classes: darken via filter
+		&[class*='background-']:hover {
+			filter: brightness(0.9);
 		}
 	}
 }
