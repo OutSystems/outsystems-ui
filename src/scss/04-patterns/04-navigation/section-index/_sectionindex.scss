@@ -32,29 +32,35 @@
 
 .osui-section-index-item {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-section-index-item-color:             #{$token-text-subtle};
-	--osui-section-index-item-active-color:      #{$token-text-default};
+	--osui-section-index-item-color:             #{$token-text-subtlest};
+	--osui-section-index-item-color-hover:       #{$token-text-default};
+	--osui-section-index-item-active-color:      #{$token-semantics-primary-base};
+	--osui-section-index-item-hover-background:  color-mix(in srgb, #{$token-text-default} 4%, transparent);
 	--osui-section-index-active-indicator-color: #{$token-semantics-primary-base};
 	// ───────────────────────────────────────────────────────────────────
 
 	&,
 	&:visited {
+		align-items: center;
 		color: var(--osui-section-index-item-color);
 		cursor: pointer;
 		display: flex;
-		padding-bottom: $token-scale-100;
-		padding-left: $token-scale-600;
-		padding-top: $token-scale-100;
+		min-height: $token-scale-1100;
+		padding: $token-scale-200 $token-scale-400 $token-scale-200 $token-scale-600;
 		position: relative;
 	}
 
 	&:hover {
-		color: var(--osui-section-index-item-active-color);
+		background-color: var(--osui-section-index-item-hover-background);
+		color: var(--osui-section-index-item-color-hover);
 	}
 
 	&--is-active {
 		color: var(--osui-section-index-item-active-color);
-		font-weight: $token-font-weight-semi-bold;
+		text-shadow: 0 0 0.5px currentColor; // design-spec: faux-bold avoids layout shift
+		&:hover {
+			color: var(--osui-section-index-item-active-color);
+		}
 		&::before {
 			background-color: var(--osui-section-index-active-indicator-color);
 			bottom: 0;
@@ -111,7 +117,7 @@
 	.osui-section-index-item {
 		&,
 		&:visited {
-			padding-left: $token-scale-0;
+			padding-left: $token-scale-400;
 			padding-right: $token-scale-600;
 		}
 

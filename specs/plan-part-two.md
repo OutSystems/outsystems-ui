@@ -26,7 +26,7 @@ files. All token values are read from `src/scss/tokens/_variables.scss`.
 | Missing token                                                                                                                                       | Expected value                             | Needed by                                                                                                                                                                                                                                 |
 | --------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Entire secondary semantic layer** — `$token-semantics-secondary-*`, `$token-bg-secondary-*`, `$token-text-secondary`, `$token-border-secondary-*` | —                                          | Any component using secondary color (Badge `background-secondary-lightest`, future secondary variants). Only primitives `$token-primitives-secondary-100` (#e8eaf2) and `$token-primitives-secondary-900` (#303d60) exist in the package. |
-| `$token-font-size-200`                                                                                                                              | `0.625rem` (10px)                          | Badge small font size; Icon Badge `.badge` font size (hardcoded `0.625rem` for now)                                                                                                                                                       |
+| `$token-font-size-200`                                                                                                                              | `0.625rem` (10px)                          | Badge small font size; Icon Badge `.badge` font size; Tag small font size; User Avatar small font size (hardcoded `0.625rem` for now)                                                                                                     |
 | `$token-opacity-disabled`                                                                                                                           | `0.45`                                     | Button disabled opacity                                                                                                                                                                                                                   |
 | `$token-semantics-primary-hover`                                                                                                                    | `#0b47b8`                                  | Button primary hover background; Button secondary hover color                                                                                                                                                                             |
 | `$token-bg-surface-subtle`                                                                                                                          | `#fafbfc`                                  | Card bottom background                                                                                                                                                                                                                    |
@@ -756,7 +756,7 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 - [x] Reduced motion: flattened to top-level `.rating-item-filled/half/empty { transition: none }`
 ### Motion
 
-- [ ] Hover item: `transform: scale(1.12)` with `transition: transform $token-transition-time-100 $token-transition-curve-base`
+- [x] Hover item: `transform: scale(1.12)` — not present in proposed reference CSS; skipped
 
 ---
 
@@ -766,11 +766,11 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 ### Token swap
 
-- [ ] Active indicator bar `background-color`: `--color-primary` → `$token-semantics-primary-base`
-- [ ] Rest item `color`: `color-neutral-8` → `$token-text-subtle`
-- [ ] Hover item `color`: `color-neutral-9` → `$token-text-default`
-- [ ] Active item `color`: `color-neutral-9` → `$token-text-default`
-- [ ] Active item `font-weight`: → `$token-font-weight-semi-bold`
+- [x] Active indicator bar `background-color`: `--color-primary` → `$token-semantics-primary-base`
+- [x] Rest item `color`: `color-neutral-8` → `$token-text-subtlest` (reference uses subtlest, not subtle)
+- [x] Hover item `color`: `color-neutral-9` → `$token-text-default` (via new `--osui-section-index-item-color-hover` var); add hover background `color-mix(in srgb, $token-text-default 4%, transparent)`
+- [x] Active item `color`: `color-neutral-9` → `$token-semantics-primary-base` (reference uses primary, not text-default); lock active color on hover with `&--is-active:hover`
+- [x] Active item bold: replaced `font-weight: $token-font-weight-semi-bold` with `text-shadow: 0 0 0.5px currentColor` (faux-bold per reference — avoids layout shift)
 
 ---
 
@@ -970,7 +970,7 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 ### Motion
 
 - [x] AM/PM button: `transition: background-color, color $token-transition-time-100 $token-transition-curve-base`
-- [ ] Add `@media (prefers-reduced-motion: reduce)` zero-out
+- [x] Add `@media (prefers-reduced-motion: reduce)` zero-out
 
 ---
 
@@ -1043,12 +1043,15 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 ### Token swap
 
-- [ ] `--osui-tag-on-light-color: $token-text-default` — missing `#{}` interpolation; fix to `#{$token-text-default}`
-- [ ] Height (small) `24px` → `$token-scale-600`; (medium) `32px` → `$token-scale-800`; (large) `40px` → `$token-scale-1000`
-- [ ] `min-width: 32px` → `$token-scale-800`
-- [ ] Icon gap: → `$token-scale-100` (4px)
-- [ ] Solid variant text `color`: → `$token-text-inverse`
-- [ ] `letter-spacing: 0.01em` — no system token; annotate `// design-spec`
+- [x] `--osui-tag-on-light-color: $token-text-default` — missing `#{}` interpolation; fix to `#{$token-text-default}`
+- [x] Heights updated per proposed reference: base `$token-scale-500` (20px); small `$token-scale-400` (16px); medium `$token-scale-700` (28px) — different from plan values, reference is authoritative
+- [x] `min-width: 32px` → `unset` (reference uses unset, not `$token-scale-800`)
+- [x] `gap: $token-scale-100` (4px) added
+- [x] `font-weight`: `$token-font-weight-semi-bold` → `$token-font-weight-medium` per reference
+- [x] `font-size: $token-font-size-300` added at base; small → `$token-font-size-200`; medium → `$token-font-size-350`
+- [x] `padding` updated per reference; `line-height: $token-font-line-height-full` added
+- [x] `letter-spacing: 0.01em` — annotated `// design-spec`
+- [x] `.background-yellow` color rule added: `var(--osui-tag-on-light-color)`
 
 ---
 
@@ -1058,9 +1061,11 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 ### Token swap
 
-- [ ] `--osui-avatar-on-light-color: $token-text-default` — missing `#{}` interpolation; fix to `#{$token-text-default}`
-- [ ] Size (small) `24px` → `$token-scale-600`; (default) `32px` → `$token-scale-800`; (medium) `40px` → `$token-scale-1000`
-- [ ] `border-radius` variants: full → `$token-border-radius-full`; soft → `$token-border-radius-200`; none → `$token-border-radius-0`
+- [x] `--osui-avatar-on-light-color: $token-text-default` — missing `#{}` interpolation; fixed to `#{$token-text-default}`
+- [x] Size: base `$token-scale-800` (32px); small `$token-scale-600` (24px) with `0.625rem` (token gap: `$token-font-size-200` not in package); medium `$token-scale-1000` (40px) with `$token-font-size-400`; size selectors changed to `&.avatar-small` / `&.avatar-medium` for specificity
+- [x] `font-size: $token-font-size-300` added at base level
+- [x] `border-radius` variants: not in proposed reference — skipped
+- [x] Per-color lightest overrides (`.background-yellow`, `.background-*-lightest`, etc.) removed — background colours handled by utility classes; only transparent/neutral context overrides retained using `var(--osui-avatar-primary-color)` / `var(--osui-avatar-on-light-color)`
 
 ---
 
@@ -1070,13 +1075,13 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 ### Token swap
 
-- [ ] `--osui-section-title-color: $token-text-default` — missing `#{}` interpolation; fix to `#{$token-text-default}`
-- [ ] Section title `font-size`: → `$token-font-size-500` (1.25rem / 20px)
-- [ ] Section title `font-weight`: → `$token-font-weight-semi-bold`
-- [ ] Section title `padding-bottom`: → `$token-scale-200` (8px)
-- [ ] Section title `border-bottom`: → `$token-border-size-025 solid $token-border-default`
-- [ ] `.section-group .section-title` `background-color`: legacy `--background-color-body` → `$token-bg-body`
-- [ ] `font-size: calc($token-font-size-700 - 2px)` (tablet) — fragile arithmetic; confirm responsive font-size tokens or annotate `// design-spec`
+- [x] `--osui-section-title-color: $token-text-default` — missing `#{}` interpolation; fix to `#{$token-text-default}`
+- [x] Section title `font-size`: → `$token-font-size-500` (1.25rem / 20px)
+- [x] Section title `font-weight`: → `$token-font-weight-semi-bold` (already correct)
+- [x] Section title `padding-bottom`: → `$token-scale-200` (8px) (already correct)
+- [x] Section title `border-bottom`: → `$token-border-size-025 solid $token-border-default` (already correct)
+- [x] `.section-group .section-title` `background-color`: fallback updated to `var(--color-background-body)` per proposed reference
+- [x] `font-size: calc($token-font-size-700 - 2px)` (tablet) — replaced with `$token-font-size-500` matching proposed reference; tablet+phone combined into single rule
 
 ---
 

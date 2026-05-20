@@ -6,33 +6,36 @@
 ///
 .tag {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-tag-color:             #{$token-text-inverse};
-	--osui-tag-primary-color:     #{$token-semantics-primary-base};
-	--osui-tag-on-light-color:    $token-text-default;
+	--osui-tag-color: #{$token-text-inverse};
+	--osui-tag-primary-color: #{$token-semantics-primary-base};
+	--osui-tag-on-light-color: #{$token-text-default};
 	// ───────────────────────────────────────────────────────────────────
 
 	align-items: center;
 	color: var(--osui-tag-color);
 	display: inline-flex;
-	font-weight: $token-font-weight-semi-bold;
-	height: 32px;
+	font-size: $token-font-size-300;
+	font-weight: $token-font-weight-medium;
+	gap: $token-scale-100;
+	min-height: $token-scale-500;
 	justify-content: center;
-	line-height: 1;
-	min-width: 32px;
-	padding: $token-scale-0 $token-scale-400;
+	letter-spacing: 0.01em; // design-spec: no letter-spacing token in system
+	line-height: $token-font-line-height-full;
+	min-width: unset;
+	padding: $token-scale-0 $token-scale-200;
 	word-break: normal;
 
 	&.tag {
 		&-small {
-			font-size: $token-font-size-300;
-			height: 24px;
-			padding: $token-scale-0 $token-scale-200;
+			font-size: 0.625rem; // token gap: $token-font-size-200 (10px) not in package
+			min-height: $token-scale-400;
+			padding: $token-scale-0 $token-scale-150;
 		}
 
 		&-medium {
-			font-size: $token-font-size-400;
-			height: 40px;
-			padding: $token-scale-0 $token-scale-600;
+			font-size: $token-font-size-350;
+			min-height: $token-scale-700;
+			padding: $token-scale-0 $token-scale-300;
 		}
 	}
 

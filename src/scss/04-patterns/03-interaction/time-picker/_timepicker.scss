@@ -195,3 +195,10 @@
 		display: none;
 	}
 }
+
+// Reduced motion ----------------------------------------------------------------
+@media (prefers-reduced-motion: reduce) {
+	.flatpickr-time .flatpickr-am-pm {
+		transition: none;
+	}
+}

@@ -6,7 +6,7 @@
 ///
 .section {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-section-title-color:        $token-text-default;
+	--osui-section-title-color:        #{$token-text-default};
 	--osui-section-title-border-color: #{$token-border-default};
 	// ───────────────────────────────────────────────────────────────────
 
@@ -14,7 +14,7 @@
 		background-color: transparent;
 		border-bottom: $token-border-size-025 solid var(--osui-section-title-border-color);
 		color: var(--osui-section-title-color);
-		font-size: $token-font-size-700;
+		font-size: $token-font-size-500;
 		font-weight: $token-font-weight-semi-bold;
 		padding: $token-scale-0 $token-scale-0 $token-scale-200 $token-scale-0;
 		position: relative;
@@ -37,7 +37,7 @@
 		}
 
 		.section-title {
-			background-color: var(--background-color-body, var(--os-color-background-body));
+			background-color: var(--background-color-body, var(--color-background-body));
 		}
 	}
 }
@@ -90,15 +90,9 @@
 }
 
 ///
-.tablet {
-	.section-title {
-		font-size: calc($token-font-size-700 - 2px);
-	}
-}
-
-///
+.tablet,
 .phone {
 	.section-title {
-		font-size: calc($token-font-size-700 - 4px);
+		font-size: $token-font-size-500;
 	}
 }

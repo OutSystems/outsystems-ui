@@ -8,18 +8,19 @@
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-avatar-color:          #{$token-text-inverse};
 	--osui-avatar-primary-color:  #{$token-semantics-primary-base};
-	--osui-avatar-on-light-color: $token-text-default;
+	--osui-avatar-on-light-color: #{$token-text-default};
 	// ───────────────────────────────────────────────────────────────────
 
 	align-items: center;
 	color: var(--osui-avatar-color);
 	display: inline-flex;
+	font-size: $token-font-size-300;
 	font-weight: $token-font-weight-semi-bold;
-	height: 32px;
+	height: $token-scale-800;
 	justify-content: center;
 	line-height: 1;
 	text-transform: uppercase;
-	width: 32px;
+	width: $token-scale-800;
 
 	&.background {
 		&-transparent {
@@ -38,18 +39,17 @@
 				color: var(--osui-avatar-on-light-color);
 			}
 		}
+
+	&.avatar-small {
+		font-size: 0.625rem; // token gap: $token-font-size-200 (10px) not in package — see missing tokens table
+		height: $token-scale-600;
+		width: $token-scale-600;
 	}
 
-	&-small {
-		font-size: $token-font-size-300;
-		height: 24px;
-		width: 24px;
-	}
-
-	&-medium {
+	&.avatar-medium {
 		font-size: $token-font-size-400;
-		height: 40px;
-		width: 40px;
+		height: $token-scale-1000;
+		width: $token-scale-1000;
 	}
 
 	span {
