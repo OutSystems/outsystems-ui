@@ -6,8 +6,14 @@
 ///
 .rating {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-rating-disabled-color:       #{$token-text-disabled};
-	--osui-rating-disabled-empty-color: #{$token-border-default};
+	--osui-rating-filled-color: #{$token-semantics-warning-base};
+	--osui-rating-empty-color: color-mix(
+		in srgb,
+		#{$token-semantics-warning-base} 38%,
+		white
+	); // design-spec: desaturated gold tint
+	--osui-rating-disabled-color: #{$token-text-disabled};
+	--osui-rating-disabled-empty-color: color-mix(in srgb, #{$token-text-disabled} 35%, white);
 	// ───────────────────────────────────────────────────────────────────
 
 	position: relative;
@@ -22,7 +28,7 @@
 	}
 
 	&.rating-small {
-		--rating-size: 8px;
+		--rating-size: #{$token-scale-300}; // design-spec: 12px
 
 		.rating-item {
 			padding-right: calc(var(--rating-size) + $token-scale-100);
@@ -30,7 +36,7 @@
 	}
 
 	&.rating-medium {
-		--rating-size: 24px;
+		--rating-size: #{$token-scale-600};
 	}
 
 	&.is-edit {
@@ -88,7 +94,11 @@
 			line-height: 1;
 			position: absolute;
 			top: 0;
-			transition: opacity linear 150ms;
+			transition: opacity $token-transition-time-100 $token-transition-curve-base;
+
+			.icon {
+				vertical-align: middle;
+			}
 
 			// Service Studio Preview
 			& {
@@ -100,12 +110,30 @@
 			}
 		}
 
+		&-filled,
+		&-half {
+			color: var(--osui-rating-filled-color);
+
+			.text-primary {
+				color: var(--osui-rating-filled-color);
+			}
+		}
+
 		&-filled {
 			opacity: 1;
 			z-index: var(--os-layer-local-tier-1);
 		}
 
-		&-empty,
+		&-empty {
+			color: var(--osui-rating-empty-color);
+			opacity: 0;
+			z-index: var(--os-layer-screen);
+
+			.text-primary {
+				color: var(--osui-rating-empty-color);
+			}
+		}
+
 		&-half {
 			opacity: 0;
 			z-index: var(--os-layer-screen);
@@ -142,7 +170,7 @@
 		&:first-of-type {
 			+ .rating-item {
 				background: transparent;
-				box-shadow: 0 0 0 3px var(--color-focus-outer);
+				box-shadow: 0 0 0 $token-border-size-075 var(--osui-border-focus-halo);
 				height: 100%;
 				left: 0;
 				opacity: 0;
@@ -228,7 +256,7 @@
 		}
 	}
 
-	--rating-size: 16px;
+	--rating-size: #{$token-scale-400};
 }
 
 ///
@@ -318,6 +346,21 @@
 		.rating {
 			.wcag-hide-text {
 				margin: unset;
+			}
+		}
+	}
+}
+
+// Reduced motion ----------------------------------------------------------------
+@media (prefers-reduced-motion: reduce) {
+	.rating {
+		.rating-item {
+			transition: none;
+
+			&-filled,
+			&-half,
+			&-empty {
+				transition: none;
 			}
 		}
 	}

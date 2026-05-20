@@ -6,11 +6,11 @@
 ///
 [data-switch] {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-switch-height:               #{$token-scale-800};
-	--osui-switch-width:                50px;
-	--osui-switch-thumb-size:           #{$token-scale-600};
-	--osui-switch-thumb-offset-start:   4px;
-	--osui-switch-thumb-offset-end:     22px;
+	--osui-switch-height:               #{$token-scale-600};       // 24px
+	--osui-switch-width:                #{$token-scale-1000};      // 40px
+	--osui-switch-thumb-size:           #{$token-scale-500};       // 20px
+	--osui-switch-thumb-offset-start:   2px;
+	--osui-switch-thumb-offset-end:     18px;
 	--osui-switch-track-color:          #{$token-border-input-default};
 	--osui-switch-track-border-color:   #{$token-border-input-default};
 	--osui-switch-disabled-track-color: #{$token-bg-input-disabled};
@@ -27,25 +27,25 @@
 	&:empty {
 		&:before {
 			background-color: var(--osui-switch-track-color);
-			border: $token-border-size-025 solid var(--osui-switch-track-border-color);
+			border: 0;
 			border-radius: $token-border-radius-full;
-			height: calc(var(--osui-switch-height) - 2px);
+			height: var(--osui-switch-height);
 			opacity: 1;
-			transition: all 180ms linear;
-			width: calc(var(--osui-switch-width) - 2px);
+			transition: background-color $token-transition-time-200 $token-transition-curve-linear; // token gap: no $token-transition-time-180, using 200ms
+			width: var(--osui-switch-width);
 		}
 
 		&:after {
 			background-color: var(--osui-switch-thumb-color);
 			border: 0;
 			bottom: 0;
-			box-shadow: none;
+			box-shadow: 0 1px 2px rgba(0, 0, 0, .2); // token gap: $token-elevation-50 missing
 			height: var(--osui-switch-thumb-size);
 			left: 0;
 			margin-left: 0;
 			top: calc((var(--osui-switch-height) - var(--osui-switch-thumb-size)) / 2);
 			transform: translateX(var(--osui-switch-thumb-offset-start)) translateZ(0);
-			transition: all 180ms linear;
+			transition: transform $token-transition-time-200 $token-transition-curve-linear; // token gap: no $token-transition-time-180, using 200ms
 			width: var(--osui-switch-thumb-size);
 		}
 	}
@@ -53,7 +53,7 @@
 	&:hover {
 		&:before {
 			background-color: $token-border-input-default;
-			border: $token-border-size-025 solid $token-border-input-default;
+			border: $token-border-size-025 solid var(--osui-switch-track-border-color);
 		}
 	}
 
@@ -74,14 +74,24 @@
 		&:empty {
 			&:before {
 				background-color: var(--osui-switch-disabled-track-color);
-				border: $token-border-size-025 solid $token-border-default;
+				border: 0;
 			}
 
 			&:after {
-				background-color: $token-border-input-default;
+				background-color: color-mix(in srgb, #{$token-primitives-base-white} 60%, transparent);
 				border: 0;
+				box-shadow: 0 1px 2px rgba(0, 0, 0, .08); // token gap: $token-elevation-25 missing
 			}
 		}
+
+		&:checked:empty:before {
+			background-color: var(--osui-switch-checked-track-color);
+			opacity: 0.45; // token gap: $token-opacity-disabled missing
+		}
+	}
+
+	&:focus-visible:empty:before {
+		box-shadow: 0 0 0 $token-border-size-075 color-mix(in srgb, #{$token-semantics-primary-base} 22%, transparent);
 	}
 }
 
@@ -112,10 +122,8 @@
 			}
 		}
 
-		&:focus {
-			&:before {
-				border-color: $token-text-default;
-			}
+		&:focus:before {
+			border-color: $token-semantics-primary-base;
 		}
 	}
 }

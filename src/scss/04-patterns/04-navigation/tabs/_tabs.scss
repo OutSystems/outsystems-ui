@@ -6,12 +6,13 @@
 ///
 .osui-tabs {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-tabs-border-color: #{$token-border-subtle};
-	--osui-tabs-header-item-color: #{$token-text-subtlest};
-	--osui-tabs-header-item-color-active: #{$token-text-default};
+	--osui-tabs-border-color:             #{$token-border-default};
+	--osui-tabs-header-item-color:        #{$token-text-subtlest};
+	--osui-tabs-header-item-color-active: #{$token-semantics-primary-base};
+	--osui-tabs-header-item-color-hover:  #{$token-text-default};
 	--osui-tabs-header-item-color-disabled: #{$token-text-disabled};
-	--osui-tabs-header-item-hover-background: var(--osui-bg-overlay-hover);
-	--osui-tabs-indicator-color: #{$token-semantics-primary-base};
+	--osui-tabs-header-item-hover-background: color-mix(in srgb, #{$token-text-default} 4%, transparent);
+	--osui-tabs-indicator-color:          #{$token-semantics-primary-base};
 	// ───────────────────────────────────────────────────────────────────
 
 	--header-item-width: fit-content(30%);
@@ -79,7 +80,7 @@
 				position: absolute;
 				top: 0;
 				transform: translateY(var(--tabs-indicator-transform)) translateX(0) translateZ(0);
-				width: 2px;
+				width: $token-border-size-050;
 			}
 		}
 
@@ -111,7 +112,7 @@
 
 		.osui-tabs__header__indicator {
 			bottom: 0;
-			height: 2px;
+			height: $token-border-size-050;
 			transform: translateX(var(--tabs-indicator-transform)) translateY(0) translateZ(0);
 			width: (var(--tabs-indicator-size));
 		}
@@ -184,20 +185,22 @@
 			align-items: center;
 			background-color: transparent;
 			border: none;
+			border-radius: $token-border-radius-100;
 			color: var(--osui-tabs-header-item-color);
 			cursor: pointer;
 			display: inline-flex;
 			height: 100%;
 			position: relative;
-			min-height: 42px;
+			min-height: $token-scale-1100;
 			text-align: unset;
+			transition: color $token-transition-time-200 $token-transition-curve-linear;
 			width: 100%;
 
 			&:hover {
 				background-color: var(--osui-tabs-header-item-hover-background);
 
 				&:not(.osui-tabs--is-active) {
-					color: var(--osui-tabs-header-item-color-active);
+					color: var(--osui-tabs-header-item-color-hover);
 				}
 
 				&[disabled] {
@@ -220,7 +223,7 @@
 		&__indicator {
 			background-color: var(--osui-tabs-indicator-color);
 			position: absolute;
-			transition: transform 200ms linear;
+			transition: transform $token-transition-time-200 $token-transition-curve-linear;
 			transform-origin: 0 0;
 			will-change: transform;
 			z-index: var(--os-layer-local-tier-1);
@@ -358,7 +361,7 @@
 			}
 
 			&:focus-visible {
-				box-shadow: inset 0 0 0 $token-border-size-075 var(--color-focus-outer);
+				box-shadow: inset 0 0 0 $token-border-size-075 color-mix(in srgb, #{$token-semantics-primary-base} 22%, transparent);
 				color: $token-text-default;
 			}
 		}
@@ -391,7 +394,7 @@
 	.osui-tabs__header-item.osui-tabs--is-active:before,
 	.osui-tabs__content-item:focus:before,
 	.osui-tabs__content-item.osui-tabs--is-active:before {
-		border: $token-border-size-050 solid var(--color-focus-outer);
+		border: $token-border-size-050 solid $token-semantics-primary-base;
 		bottom: 0;
 		content: '';
 		display: block;
@@ -409,6 +412,19 @@
 
 	.osui-tabs__content-item {
 		padding: $token-scale-400;
+	}
+}
+
+// Reduced motion ----------------------------------------------------------------
+@media (prefers-reduced-motion: reduce) {
+	.osui-tabs {
+		&__header-item {
+			transition: none;
+		}
+
+		&__header__indicator {
+			transition: none;
+		}
 	}
 }
 

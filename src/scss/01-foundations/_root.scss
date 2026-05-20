@@ -99,4 +99,7 @@
 
 	/*! Semantic orange — Timeline state variant; no semantics-orange-* family in tokens yet */
 	--osui-semantics-orange-base: #{$token-primitives-orange-700}; /* future: --token-semantics-orange-base */
+
+	/*! Legacy shape bridge — used by TS GetBorderRadiusValueFromShapeType() via --border-radius-<shape> */
+	--border-radius-soft: #{$token-border-radius-200}; /* 8px; TS reads this for ShapeType.Soft */
 }

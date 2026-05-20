@@ -127,7 +127,13 @@
 span.validation-message {
 	color: $token-semantics-danger-base;
 	display: block;
+	font-size: $token-font-size-300;
 	margin-top: $token-scale-100;
+}
+
+.char-counter {
+	color: $token-text-subtlest;
+	font-size: $token-font-size-300;
 }
 
 /* Reduced motion ------------------------------------------------------------- */
@@ -200,7 +206,7 @@ span.validation-message {
 			}
 
 			&:focus {
-				border-color: $token-text-default;
+				border-color: $token-semantics-primary-base;
 			}
 
 			&.not-valid {

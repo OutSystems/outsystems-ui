@@ -21,7 +21,6 @@
 		margin: 0 auto;
 		position: relative;
 		width: var(--circle-size);
-		z-index: var(--os-layer-screen);
 
 		> div {
 			display: block;
@@ -44,7 +43,7 @@
 		}
 
 		&__progress-path {
-			stroke: var(--progress-circle-gradient-url, var(--progress-color, $token-semantics-primary-base));
+			stroke: var(--progress-circle-gradient-url, var(--progress-color, #{$token-semantics-primary-base}));
 			stroke-dasharray: var(--stroke-dasharray);
 			stroke-dashoffset: var(--stroke-dashoffset);
 			stroke-linecap: var(--shape);
@@ -63,7 +62,7 @@
 		}
 
 		&__trail-path {
-			stroke: var(--trail-color, $token-primitives-neutral-300);
+			stroke: var(--trail-color, #{$token-primitives-neutral-300});
 		}
 	}
 
