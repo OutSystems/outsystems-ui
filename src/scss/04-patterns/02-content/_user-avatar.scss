@@ -39,6 +39,7 @@
 				color: var(--osui-avatar-on-light-color);
 			}
 		}
+	}
 
 	&.avatar-small {
 		font-size: 0.625rem; // token gap: $token-font-size-200 (10px) not in package — see missing tokens table

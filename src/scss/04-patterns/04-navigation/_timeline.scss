@@ -6,15 +6,20 @@
 ///
 .timeline {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-timeline-line-color:  #{$token-bg-neutral-base-default};
-	--osui-timeline-icon-color:  #{$token-text-inverse};
-	--osui-timeline-text-color:  #{$token-text-subtlest};
+	--osui-timeline-line-color: #{$token-bg-neutral-base-default};
+	--osui-timeline-icon-color: #{$token-text-inverse};
+	--osui-timeline-text-color: #{$token-text-subtlest};
 	// ───────────────────────────────────────────────────────────────────
 
 	&-item {
 		display: flex;
 		justify-content: space-between;
 		position: relative;
+
+		.timeline-content,
+		.timeline-right {
+			padding-top: $token-scale-100;
+		}
 
 		.timeline-content {
 			flex: 1;
@@ -29,7 +34,7 @@
 		position: relative;
 
 		&-line {
-			background-color: var(--osui-timeline-line-color);
+			background-color: var(--osui-timeline-line-color, #{$token-bg-neutral-base-default});
 			flex: 1;
 			margin: $token-scale-200 $token-scale-0 $token-scale-200;
 			width: 1px;
@@ -38,28 +43,36 @@
 		&-container {
 			align-items: center;
 			border-radius: 50%;
-			color: var(--osui-timeline-icon-color);
-			display: -webkit-box;
-			display: -ms-flexbox;
+			color: var(--osui-timeline-icon-color, #{$token-text-inverse});
 			display: flex;
 			font-size: $token-font-size-300;
-			height: 24px;
+			height: $token-scale-700;
 			justify-content: center;
 			margin: $token-scale-0 $token-scale-400;
 			text-align: center;
-			width: 24px;
+			width: $token-scale-700;
 
 			&:empty {
-				height: 8px;
-				margin-top: $token-scale-100;
-				width: 8px;
+				height: 8px; // design-spec: dot size, no token equivalent
+				margin: 10px $token-scale-600 0; // design-spec: 10px top offset
+				width: 8px; // design-spec: dot size, no token equivalent
 			}
 		}
 	}
 
 	&-right,
 	&-content-inner {
-		color: var(--osui-timeline-text-color);
+		color: var(--osui-timeline-text-color, #{$token-text-subtlest});
+	}
+
+	&-right {
+		margin-left: $token-scale-400;
+		white-space: nowrap;
+	}
+
+	.timeline-item .timeline-content .timeline-content-inner {
+		margin: 0;
+		padding: 0;
 	}
 }
 

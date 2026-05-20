@@ -67,6 +67,13 @@
 	}
 }
 
+// Override .desktop .btn:hover blue border — trigger border must stay transparent
+.desktop {
+	.osui-overflow-menu__trigger:hover {
+		border-color: transparent;
+	}
+}
+
 // layer exception when a popup is open on the same screen
 html:has(.popup-backdrop) .osui-overflow-menu__balloon {
 	z-index: var(--os-layer-off-canvas);

@@ -65,14 +65,14 @@
 	justify-content: center;
 	margin-right: $token-scale-600;
 	padding: 0;
-	width: 24px;
+	width: $token-scale-500;
 
 	&-line {
 		background-color: $token-text-subtlest;
-		border-radius: 20px;
-		height: 3px;
-		margin: 2px 0;
-		width: 24px;
+		border-radius: $token-border-radius-full;
+		height: $token-border-size-050;
+		margin: 2px 0; // design-spec: 2px gap between lines
+		width: $token-scale-500;
 	}
 }
 

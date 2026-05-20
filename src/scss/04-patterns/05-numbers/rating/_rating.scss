@@ -116,13 +116,13 @@
 
 		&-filled {
 			opacity: 1;
-			z-index: var(--layer-local-tier-1);
+			z-index: var(--os-layer-local-tier-1);
 		}
 
 		&-empty,
 		&-half {
 			opacity: 0;
-			z-index: var(--layer-global-screen);
+			z-index: var(--os-layer-screen);
 		}
 
 		&:last-of-type {
@@ -194,7 +194,7 @@
 
 	&.is-half {
 		.rating-item-half {
-			z-index: var(--layer-local-tier-1);
+			z-index: var(--os-layer-local-tier-1);
 		}
 
 		input:checked + .rating-item {

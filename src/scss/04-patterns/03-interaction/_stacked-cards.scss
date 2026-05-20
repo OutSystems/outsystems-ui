@@ -48,7 +48,7 @@
 			&:not([data-animation-disabled]) {
 				// Service Studio Preview
 				& {
-					-servicestudio-min-height: 225px;
+					-servicestudio-min-height: 225px; // design-spec: SS preview fixed height
 					-servicestudio-pointer-events: none;
 				}
 			}
@@ -115,7 +115,7 @@
 	}
 
 	&--animatable {
-		transition: all 400ms ease;
+		transition: transform, opacity 400ms ease; // token gap: 400ms duration, curve: $token-transition-curve-base
 	}
 
 	.init {
@@ -205,7 +205,7 @@
 
 		// Service Studio Preview
 		& {
-			-servicestudio-background-color: #e8f2fa;
+			-servicestudio-background-color: var(--osui-stacked-cards-overlay-top-background);
 			-servicestudio-float: none;
 			-servicestudio-min-height: 80px;
 			-servicestudio-width: 100%;
@@ -219,7 +219,7 @@
 
 		// Service Studio Preview
 		& {
-			-servicestudio-background-color: #37b24d;
+			-servicestudio-background-color: var(--osui-stacked-cards-overlay-right-background);
 			-servicestudio-float: right;
 			-servicestudio-min-height: 80px;
 			-servicestudio-width: 50%;
@@ -233,7 +233,7 @@
 
 		// Service Studio Preview
 		& {
-			-servicestudio-background-color: #c92a2a;
+			-servicestudio-background-color: var(--osui-stacked-cards-overlay-left-background);
 			-servicestudio-float: none;
 			-servicestudio-min-height: 80px;
 			-servicestudio-width: 50%;

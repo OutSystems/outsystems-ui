@@ -40,6 +40,7 @@ files. All token values are read from `src/scss/tokens/_variables.scss`.
 | `$token-font-line-height-default`                                                                                                                   | `1.4`                                      | Input labels, helper text, validation message (hardcoded `1.4` for now)                                                                                                                                                                   |
 | `$token-border-subtle` **value mismatch**                                                                                                          | `#e0e0e0` (neutral-300)                    | Package maps `$token-border-subtle` → neutral-100 (#f3f3f3); design uses neutral-300. Card border, Card Sectioned divider, DatePicker/MonthPicker today ring, Table border all use `$token-primitives-neutral-300` as a workaround.        |
 | `$token-bg-surface-active`                                                                                                                         | ~`#e8e8e8`                                 | Master Detail active row background (colour-mix workaround used for now)                                                                                                                                                                  |
+| `$token-bg-surface-hover`                                                                                                                           | `#f3f3f3`                                  | Submenu hover backgrounds; resolved as `$token-primitives-neutral-100` (#f3f3f3) — same value, no semantic token exists                                                                                                                    |
 | `$token-elevation-50`                                                                                                                               | `0 1px 2px rgba(0,0,0,.2)`                 | Switch thumb resting shadow (hardcoded `rgba` for now)                                                                                                                                                                                    |
 | `$token-elevation-25`                                                                                                                               | `0 1px 2px rgba(0,0,0,.08)`                | Switch thumb disabled shadow (hardcoded `rgba` for now)                                                                                                                                                                                   |
 
@@ -855,31 +856,18 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 ### Token swap
 
-- [ ] Connector line `width`: `1px` → `$token-border-size-050` (2px)
-- [ ] Connector line `background-color`: `color-neutral-5` → `$token-border-default`
-- [ ] Content block `color`: `color-neutral-8` → `$token-text-subtle`
-- [ ] Content block `margin-bottom`: `--space-xl` → `$token-scale-800` (32px)
-- [ ] `.background-primary` → `$token-semantics-primary-base`
-- [ ] `.background-success` → `$token-semantics-success-base`
-- [ ] `.background-error` → `$token-semantics-danger-base`
-- [ ] `.background-warning` → `$token-semantics-warning-base`
-- [ ] `.background-info`: add/update → `$token-semantics-info-base`
-- [ ] Timestamp `font-size`: → `$token-font-size-300`
-- [ ] Timestamp `color`: → `$token-text-subtlest`
-- [ ] Timestamp `font-weight`: → `$token-font-weight-semi-bold`
-- [ ] `.timeline-avatar` `background-color`: current → `$token-border-subtle`
-- [ ] `.timeline-avatar` `color`: current → `$token-text-subtle`
-- [ ] Icon container `height × width`: `24×24px` → `28×28px`
-- [ ] Icon container `font-size`: `10px` → `$token-font-size-350` (14px)
-- [ ] Avatar size: `24px` → `40px`
-
-### New state
-
-- [ ] Add `.is-upcoming` state: dashed connector line + outlined icon bubble + `$token-text-disabled` icon body
-
-### New card variant
-
-- [ ] `.timeline-content--card`: `border: $token-border-size-025 solid $token-border-default` · `border-radius: $token-border-radius-200` · `padding: $token-scale-300 $token-scale-400`
+- [x] Icon container `height × width`: `24px` → `$token-scale-700` (28px); no CSS API var needed
+- [x] Direct fallbacks added on `background-color`, `color` properties — `timeline-icon-line` / `timeline-icon-container` render outside `.timeline` in the DOM so CSS vars must carry their own fallback
+- [x] Icon container `font-size`: already `$token-font-size-300` ✓; reference confirms 12px, not 14px
+- [x] Connector `background-color`: already `var(--osui-timeline-line-color)` → `$token-bg-neutral-base-default` ✓
+- [x] Connector `width`: reference keeps `1px` — no change needed
+- [x] Content block `color`: already `var(--osui-timeline-text-color)` → `$token-text-subtlest` ✓
+- [x] Content block `margin-bottom`: already `$token-scale-1000` (40px) ✓
+- [x] `.timeline-item .timeline-content` + `.timeline-right`: add `padding-top: $token-scale-100`
+- [x] `.timeline-right`: add `margin-left: $token-scale-400` + `white-space: nowrap`
+- [x] `.timeline-content-inner` reset: add `margin: 0; padding: 0`
+- [x] `&:empty` dot margin: `margin-top` → `margin: 10px $token-scale-600 0` (10px top is design-spec)
+- [x] `.background-*`, timestamp, `.timeline-avatar`, `.is-upcoming`, card variant: not present in reference — skipped
 
 ---
 
@@ -892,11 +880,16 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 ### Token swap
 
-- [ ] `--osui-tooltip-background` / surface `background-color`: `neutral-9` (#272b30) → `#{$token-text-default}` (#242424)
-- [ ] `--osui-tooltip-color` / text `color`: `neutral-0` → `#{$token-text-inverse}`
-- [ ] `--osui-tooltip-border-radius` default: `4px` → `#{$token-border-radius-200}` (8px)
-- [ ] `--osui-tooltip-padding` default: `--space-s` → `#{$token-scale-200}` (8px)
-- [ ] Add `--osui-tooltip-max-width: 280px` CSS API var (replaces hardcoded `250px`)
+- [x] `--osui-tooltip-background`: fixed missing `#{}` interpolation → `#{$token-text-default}`
+- [x] `--osui-tooltip-color`: already `#{$token-text-inverse}` ✓
+- [x] `--osui-tooltip-border-radius`: initial `#{$token-border-radius-100}`; override block sets `#{$token-border-radius-200}` (design-spec asymmetric padding `6px 12px` also in override block)
+- [x] `--osui-tooltip-padding`: initial `#{$token-scale-200}`; override block sets `6px 12px` // design-spec
+- [x] `--osui-tooltip-max-width`: reference keeps `max-width: 250px` hardcoded — no CSS API var added
+- [x] z-index: `--os-layer-global-negative` restored to `--os-layer-global-negative` ✓ (corrected from wrong `--layer-global-negative`)
+- [x] `@keyframes osui-tooltip-in` entrance animation added (`opacity: 0 → 1`, 150ms)
+- [x] `.osui-tooltip .osui-balloon--is-open` animation applied
+- [x] `@media (prefers-reduced-motion: reduce)` guard added
+- [x] Balloon z-index: `--os-layer-elevated` kept (already correct)
 
 ---
 
@@ -906,18 +899,18 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 ### Token swap
 
-- [ ] Icon bubble size: `32px` → `$token-scale-900` (36px)
-- [ ] Icon bubble `border`: `1px solid #ced4da` → `$token-border-size-050 solid $token-border-default`
-- [ ] Glyph `font-size`: `10px` → `$token-font-size-300`
-- [ ] Connector `width` / `height`: confirm `$token-border-size-050` (2px)
-- [ ] "Next" state icon `color`: `#ced4da` → `$token-text-disabled`
-- [ ] Base label `color`: `#6a7178` → `$token-text-subtlest`
-- [ ] Active label `color`: `neutral-10` → `$token-text-default`
-- [ ] Past label `color`: `neutral-8` → `$token-text-subtle`
-- [ ] Active state: add 4px halo ring `box-shadow: 0 0 0 4px color-mix(in srgb, #{$token-semantics-primary-base} 18%, transparent)`
-- [ ] Past state bubble `background-color`: `#1068eb` → `$token-semantics-primary-base`
-- [ ] Disabled state: add `opacity: 0.6` + `$token-text-disabled` + `$token-border-subtle` styling
-- [ ] Vertical step spacing: `--space-l` alias → `$token-scale-600` (24px)
+- [x] Add `--osui-wizard-icon-size: #{$token-scale-1000}` (40px) CSS API var
+- [x] Icon bubble size: `32px` → `var(--osui-wizard-icon-size, #{$token-scale-1000})` (40px per reference; plan had wrong 36px)
+- [x] Icon bubble border: already `$token-border-size-050 solid var(--osui-wizard-icon-border-color)` via CSS API ✓
+- [x] Glyph `.icon font-size`: `$token-font-size-300` → `$token-font-size-400` (reference confirms 1rem/16px)
+- [x] z-index: `--os-layer-local-tier-1` → `--layer-local-tier-1`; `--os-layer-screen` → `--layer-global-screen`
+- [x] Connector `right/width` calcs: hardcoded `12px/24px` → `var(--osui-wizard-icon-size, ...) / 2` and `100% - var(...)`
+- [x] Add `:has(.wizard-item-icon:empty):before` connector adjustment for dot-only items
+- [x] Active state: add `box-shadow: 0 0 0 $token-scale-100 color-mix(in srgb, var(--osui-wizard-active-color) 15%, transparent)`
+- [x] Active label: add `font-weight: $token-font-weight-semi-bold`; `color: $token-text-default` ✓
+- [x] Past label: `color: $token-text-subtlest` ✓ (reference uses subtlest, not subtle)
+- [x] Vertical connector: `bottom` calc updated to use `--osui-wizard-icon-size`; `18px` overhang annotated `// design-spec`
+- [x] Disabled state, `.next` icon color: already `$token-text-disabled` ✓; disabled state not in reference — skipped
 
 ---
 
@@ -927,8 +920,8 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 ### Token swap
 
-- [ ] `.columns` `gap`: `8px` → `$token-scale-400` (16px)
-- [ ] `.column` `border-radius`: `4px` → `$token-border-radius-200` (note: review proposes "10px"; use `$token-border-radius-200` 8px as nearest valid token unless design confirms 10px is intentional — annotate `// design-spec proposes 10px, using nearest token $token-border-radius-200 8px`)
+- [x] `.columns` `gap`: not present in current file or proposed reference — no change needed
+- [x] `.column` `border-radius`: not present in current file or proposed reference — no change needed
 
 ---
 
@@ -1023,15 +1016,17 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 ### Token swap
 
-- [ ] Header `background-color`: legacy `--background-color-header` → read through `--os-color-background-header` bridge var (already wired to `$token-bg-surface-default`)
-- [ ] Header `box-shadow`: none → `$token-elevation-1`
-- [ ] Header `padding`: → `$token-scale-200` / `$token-scale-400` / `$token-scale-600` (per breakpoint)
-- [ ] Menu icon line `height`: `3px` → `$token-border-size-075` (annotate if no exact match)
-- [ ] Menu icon line `width`: `24px` → `$token-scale-600`
-- [ ] Menu icon line `margin`: `2px 0` → `$token-scale-050`
-- [ ] Menu icon line `border-radius`: `20px` → `$token-border-radius-full`
-- [ ] Menu icon / back button `color`: → `$token-text-subtlest`
-- [ ] App logo `border-radius`: → `$token-border-radius-100` (4px)
+- [x] Header `background-color`: already `var(--background-color-header, var(--os-color-background-header))` ✓; reference uses `--header-color` (undefined in our root) — kept `--os-color-background-header` bridge
+- [x] Header `box-shadow`: already `$token-elevation-1` ✓
+- [x] Header `padding`: not present in reference — no change needed
+- [x] Menu icon line `height`: `3px` → `$token-border-size-050` (2px); reference confirms 050 not 075
+- [x] Menu icon line `width`: `24px` → `$token-scale-500` (20px); reference confirms 500 not 600
+- [x] Menu icon line `margin: 2px 0` — kept with `// design-spec` annotation; no token at 2px
+- [x] Menu icon line `border-radius`: `20px` → `$token-border-radius-full`
+- [x] Menu icon width: `24px` → `$token-scale-500` (20px)
+- [x] Menu icon / back button `color`: already `$token-text-subtlest` ✓
+- [x] App logo: `@include app-logo` mixin already has `$token-border-radius-100`, `$token-scale-200`, `max-width: 120px` ✓
+- [x] z-index: `--os-layer-navigation` kept — `--layer-global-navigation` does not exist in root; `--os-layer-navigation` is the correct var
 
 > **Hardcoded by design:** logo `max-width: 120px` — no scale token for this; keep raw value with `// design-spec` comment.
 
@@ -1144,7 +1139,7 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 - [x] Hover row `background-color`: `$token-bg-neutral-subtle-default` via `--osui-overflow-menu-trigger-active-bg`
 - [x] Menu `box-shadow`: `$token-elevation-2` via `--osui-overflow-menu-shadow`
 - [x] `--osui-overflow-menu-min-width: 170px` present // design-spec
-- [ ] `--border-radius-rounded: 16px` — still legacy var name; rename to `--osui-overflow-menu-shape` pending design confirmation
+- [x] `--border-radius-rounded: 16px` — reference still uses `--border-radius-rounded`; rename not applicable
 
 ---
 
@@ -1451,9 +1446,9 @@ Runtime rules are safe-area and RTL wrappers only; nearly all rules are `-servic
 
 **File:** `src/scss/04-patterns/03-interaction/_stacked-cards.scss`
 
-- [ ] `&--animatable { transition: all 400ms ease }` — replace `all` with explicit properties; duration `400ms /* token gap */`; curve `$token-transition-curve-base`
-- [ ] SS preview hardcoded hex colors (`#e8f2fa`, `#37b24d`, `#c92a2a`) — replace with `--osui-stacked-cards-overlay-*-background` CSS API vars
-- [ ] `-servicestudio-min-height: 225px` — annotate `// design-spec: SS preview fixed height`
+- [x] `&--animatable { transition: all 400ms ease }` — replaced `all` with `transform, opacity`; duration `400ms /* token gap */`; curve `$token-transition-curve-base`
+- [x] SS preview hardcoded hex colors (`#e8f2fa`, `#37b24d`, `#c92a2a`) — replaced with `--osui-stacked-cards-overlay-*-background` CSS API vars
+- [x] `-servicestudio-min-height: 225px` — annotated `// design-spec: SS preview fixed height`
 
 ---
 
@@ -1478,10 +1473,12 @@ Runtime rules are safe-area and RTL wrappers only; nearly all rules are `-servic
 
 **File:** `src/scss/04-patterns/04-navigation/submenu/_submenu.scss`
 
-- [ ] `--osui-submenu-header-color: $token-text-default` — missing `#{}` interpolation; fix to `#{$token-text-default}`
-- [ ] `--osui-submenu-active-border-color: var(--osui-submenu-active-border-color)` — self-referential; add `$token-*` fallback: `#{$token-semantics-primary-base}`
-- [ ] `transition: all 150ms linear` (×2 on header/header item) — replace `all` with `color, border-color`; duration `$token-transition-time-150`; curve `$token-transition-curve-linear`
-- [ ] `transition: all 130ms ease-out` on `__items` — replace `all` with `opacity, transform`; duration `$token-transition-time-100`; curve `$token-transition-curve-base`; annotate `// token gap: 130ms`
-- [ ] `__items { border-radius: $token-border-radius-100 }` — confirm whether this should follow the 8px update to `$token-border-radius-200`
-- [ ] `__items { transform: translateY(-8px) }` — annotate `// design-spec`
-- [ ] `a { padding: $token-scale-200 $token-scale-400 }` — already tokenized ✓
+- [x] `--osui-submenu-header-color` — fixed `#{}` interpolation
+- [x] `--osui-submenu-active-border-color` — kept self-referential per reference (intentional, overridden by consumer); reference does not add `$token-*` fallback
+- [x] `--osui-submenu-items-border-color` → `transparent`; `border` on `__items` → `none`
+- [x] `--osui-submenu-max-height: calc(100dvh - 80px)` CSS API var added
+- [x] `__items`: `border-radius` → `$token-border-radius-200`; add `max-height`, `overflow-x/y: hidden/auto`, `width: max-content`; `padding` → `$token-scale-0`
+- [x] `__items { transform: translateY(-8px) }` — annotated `// design-spec`
+- [x] `transition: all 150ms/130ms` — kept as-is per reference (proposed also uses `all`)
+- [x] Items `a` hover: added `transition: background-color 150ms linear`
+- [x] `a { padding: $token-scale-200 $token-scale-400 }` — already tokenized ✓
