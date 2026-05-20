@@ -6,15 +6,19 @@
 ///
 .rating {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-rating-filled-color: #{$token-semantics-warning-base};
-	--osui-rating-empty-color: color-mix(
-		in srgb,
-		#{$token-semantics-warning-base} 38%,
-		white
-	); // design-spec: desaturated gold tint
 	--osui-rating-disabled-color: #{$token-text-disabled};
-	--osui-rating-disabled-empty-color: color-mix(in srgb, #{$token-text-disabled} 35%, white);
+	--osui-rating-disabled-empty-color: #{$token-border-default};
 	// ───────────────────────────────────────────────────────────────────
+
+	// Internal colour vars — overrideable per-instance
+	--token-rating-filled-color: #{$token-semantics-warning-base};
+	--token-rating-empty-color: color-mix(
+		in srgb,
+		var(--token-rating-filled-color) 38%,
+		#{$token-primitives-base-white}
+	);
+
+	--rating-size: #{$token-scale-400}; // 16px default
 
 	position: relative;
 	display: inline-flex;
@@ -31,7 +35,7 @@
 		--rating-size: #{$token-scale-300}; // design-spec: 12px
 
 		.rating-item {
-			padding-right: calc(var(--rating-size) + $token-scale-100);
+			padding-right: calc(var(--rating-size) + #{$token-scale-100});
 		}
 	}
 
@@ -83,7 +87,7 @@
 		display: inline-block;
 		height: var(--rating-size);
 		// Padding is used to avoid flicks on hover due to rating-items gap
-		padding-right: calc(var(--rating-size) + $token-scale-200);
+		padding-right: calc(var(--rating-size) + #{$token-scale-200});
 		position: relative;
 		width: var(--rating-size);
 
@@ -91,7 +95,7 @@
 		&-half,
 		&-empty {
 			left: 0;
-			line-height: 1;
+			line-height: $token-font-line-height-full;
 			position: absolute;
 			top: 0;
 			transition: opacity $token-transition-time-100 $token-transition-curve-base;
@@ -102,7 +106,7 @@
 
 			// Service Studio Preview
 			& {
-				-servicestudio-margin-right: $token-scale-200;
+				-servicestudio-margin-right: #{$token-scale-200};
 				-servicestudio-min-height: 24px;
 				-servicestudio-min-width: 24px;
 				-servicestudio-opacity: 1 !important;
@@ -110,33 +114,15 @@
 			}
 		}
 
-		&-filled,
-		&-half {
-			color: var(--osui-rating-filled-color);
-
-			.text-primary {
-				color: var(--osui-rating-filled-color);
-			}
-		}
-
 		&-filled {
 			opacity: 1;
-			z-index: var(--os-layer-local-tier-1);
+			z-index: var(--layer-local-tier-1);
 		}
 
-		&-empty {
-			color: var(--osui-rating-empty-color);
-			opacity: 0;
-			z-index: var(--os-layer-screen);
-
-			.text-primary {
-				color: var(--osui-rating-empty-color);
-			}
-		}
-
+		&-empty,
 		&-half {
 			opacity: 0;
-			z-index: var(--os-layer-screen);
+			z-index: var(--layer-global-screen);
 		}
 
 		&:last-of-type {
@@ -170,7 +156,8 @@
 		&:first-of-type {
 			+ .rating-item {
 				background: transparent;
-				box-shadow: 0 0 0 $token-border-size-075 var(--osui-border-focus-halo);
+				box-shadow: 0 0 0 $token-border-size-075
+					color-mix(in srgb, #{$token-semantics-primary-base} 22%, transparent);
 				height: 100%;
 				left: 0;
 				opacity: 0;
@@ -195,7 +182,6 @@
 			opacity: 1;
 		}
 
-		//&:focus + .rating-item .rating-item-empty,
 		&:hover ~ .rating-item .rating-item-filled,
 		&:hover ~ .rating-item .rating-item-half {
 			opacity: 0;
@@ -208,7 +194,7 @@
 
 	&.is-half {
 		.rating-item-half {
-			z-index: var(--os-layer-local-tier-1);
+			z-index: var(--layer-local-tier-1);
 		}
 
 		input:checked + .rating-item {
@@ -255,8 +241,24 @@
 			}
 		}
 	}
+}
 
-	--rating-size: #{$token-scale-400};
+// Icon colour tokens — applied via utility classes on icon elements
+.rating {
+	// Filled and half stars use dedicated gold token
+	.text-primary {
+		color: var(--token-rating-filled-color);
+	}
+
+	// Empty stars: subtle warm tint of filled colour
+	.text-neutral-5 {
+		color: var(--token-rating-empty-color);
+	}
+
+	// Vertical centering: avoids glyph metric shifts between star variants
+	.icon {
+		vertical-align: middle;
+	}
 }
 
 ///
@@ -288,7 +290,7 @@
 .is-rtl {
 	.rating {
 		.rating-item {
-			padding-left: calc(var(--rating-size) + $token-scale-200);
+			padding-left: calc(var(--rating-size) + #{$token-scale-200});
 			padding-right: 0;
 			transform: scaleX(-1);
 		}
@@ -312,7 +314,8 @@
 		&:not(.is-half) input:focus + .rating-item .rating-item-filled {
 			&,
 			* {
-				box-shadow: 0 0 0 3px var(--color-focus-outer);
+				box-shadow: 0 0 0 $token-border-size-075
+					color-mix(in srgb, #{$token-semantics-primary-base} 22%, transparent);
 			}
 		}
 	}
@@ -321,15 +324,15 @@
 		.rating-item {
 			&-filled,
 			&-half {
-				color: $token-primitives-neutral-700;
+				color: $token-text-disabled;
 
 				.icon {
-					color: $token-primitives-neutral-700;
+					color: $token-text-disabled;
 				}
 			}
 
 			&-empty {
-				color: $token-primitives-neutral-700;
+				color: $token-text-disabled;
 
 				.icon {
 					color: $token-border-input-default;
@@ -353,16 +356,10 @@
 
 // Reduced motion ----------------------------------------------------------------
 @media (prefers-reduced-motion: reduce) {
-	.rating {
-		.rating-item {
-			transition: none;
-
-			&-filled,
-			&-half,
-			&-empty {
-				transition: none;
-			}
-		}
+	.rating-item-filled,
+	.rating-item-half,
+	.rating-item-empty {
+		transition: none;
 	}
 }
 
@@ -375,7 +372,7 @@
 			&:not(.is-half) input:focus + .rating-item .rating-item-filled {
 				&,
 				* {
-					outline: $token-border-size-075 solid var(--color-focus-outer);
+					@include a11y-high-contrast-outline;
 				}
 			}
 		}

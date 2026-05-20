@@ -104,4 +104,24 @@
 	--border-radius-none:    #{$token-border-radius-0};    /* 0px;   TS reads this for ShapeType.Sharp */
 	--border-radius-soft:    #{$token-border-radius-200};  /* 8px;   TS reads this for ShapeType.Soft */
 	--border-radius-rounded: #{$token-border-radius-full}; /* 999px; TS reads this for ShapeType.Rounded */
+
+	/*! Legacy color bridge — used by TS GetColorValueFromColorType() via --color-<name> */
+	--color-primary:      #{$token-semantics-primary-base};
+	--color-secondary:    #303d60;
+	--color-neutral:      #{$token-primitives-neutral-500};
+	--color-neutral-0:    #{$token-primitives-neutral-100};
+	--color-neutral-1:    #{$token-primitives-neutral-200};
+	--color-neutral-2:    #{$token-primitives-neutral-300};
+	--color-neutral-3:    #{$token-primitives-neutral-400};
+	--color-neutral-4:    #{$token-primitives-neutral-500};
+	--color-neutral-5:    #{$token-primitives-neutral-600};
+	--color-neutral-6:    #{$token-primitives-neutral-700};
+	--color-neutral-7:    #{$token-primitives-neutral-800};
+	--color-neutral-8:    #{$token-primitives-neutral-900};
+	--color-neutral-9:    #{$token-primitives-neutral-1100};
+	--color-neutral-10:   #{$token-primitives-neutral-1200};
+	--color-error:        #{$token-semantics-danger-base};
+	--color-warning:      #{$token-semantics-warning-base};
+	--color-success:      #{$token-semantics-success-base};
+	--color-info:         #{$token-semantics-info-base};
 }
