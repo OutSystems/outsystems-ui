@@ -38,6 +38,10 @@ files. All token values are read from `src/scss/tokens/_variables.scss`.
 | Radio disabled+checked color                                                                                                                        | `#8b8b8b`                                  | Radio button disabled+checked state                                                                                                                                                                                                       |
 | Backdrop-filter blur token                                                                                                                          | `blur(4px)`                                | Popup scrim                                                                                                                                                                                                                               |
 | `$token-font-line-height-default`                                                                                                                   | `1.4`                                      | Input labels, helper text, validation message (hardcoded `1.4` for now)                                                                                                                                                                   |
+| `$token-border-subtle` **value mismatch**                                                                                                          | `#e0e0e0` (neutral-300)                    | Package maps `$token-border-subtle` → neutral-100 (#f3f3f3); design uses neutral-300. Card border, Card Sectioned divider, DatePicker/MonthPicker today ring, Table border all use `$token-primitives-neutral-300` as a workaround.        |
+| `$token-bg-surface-active`                                                                                                                         | ~`#e8e8e8`                                 | Master Detail active row background (colour-mix workaround used for now)                                                                                                                                                                  |
+| `$token-elevation-50`                                                                                                                               | `0 1px 2px rgba(0,0,0,.2)`                 | Switch thumb resting shadow (hardcoded `rgba` for now)                                                                                                                                                                                    |
+| `$token-elevation-25`                                                                                                                               | `0 1px 2px rgba(0,0,0,.08)`                | Switch thumb disabled shadow (hardcoded `rgba` for now)                                                                                                                                                                                   |
 
 ---
 
@@ -174,7 +178,10 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 ### Token swap
 
-- [ ] Not in design review — skip
+- [x] `--osui-blank-slate-description-color`: `#{$token-text-default}`
+- [x] `--osui-blank-slate-icon-color`: `#{$token-text-disabled}`
+- [x] Spacing: `$token-scale-0`, `$token-scale-400`, `$token-scale-1200` throughout
+- [x] Icon `font-size: 70px` / `120px` — annotated `// design-spec: no icon-size token at this scale`
 
 ---
 
@@ -627,20 +634,20 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 ### Token swap
 
-- [ ] Pagination button size: `32×32px` → `$token-scale-900 × $token-scale-900` (36×36px)
-- [ ] Button `border-radius`: `4px` → `$token-border-radius-200` (8px)
-- [ ] Rest button `border`: `1px solid #d5d5d5` → remove border
-- [ ] Rest button `color`: `#4f575e` → `$token-text-default`
-- [ ] Rest button `font-weight`: `400` → `$token-font-weight-medium`
-- [ ] Active button `border-color`: primary blue → `$token-border-default`
-- [ ] Active button `color`: `#105cef` → `$token-text-default`
-- [ ] Hover button `background-color`: `rgba(21,24,26,.04)` → `$token-border-subtle`
-- [ ] Button `margin-left`: `8px` → `$token-scale-100` (4px)
-- [ ] Ellipsis width: `16px` fixed → `auto` with `min-width: $token-scale-200`
+- [x] Pagination button size: `$token-scale-900` via `--osui-pagination-button-size`
+- [x] Button `border-radius`: `$token-border-radius-200`
+- [x] Rest button border: transparent (effectively removed)
+- [x] Rest button `color`: `$token-text-default` via CSS API var
+- [x] Rest button `font-weight`: `$token-font-weight-medium` via CSS API var
+- [x] Active button `border-color`: `$token-border-default` via CSS API var
+- [x] Active button `color`: `$token-text-default` via CSS API var
+- [x] Hover button `background-color`: `$token-border-subtle` via CSS API var
+- [x] Button `margin-left`: `$token-scale-100`
+- [x] Ellipsis width: `$token-scale-400`
 
 ### Motion
 
-- [ ] Add `transition: background-color 120ms /* token gap */ $token-transition-curve-base, border-color 120ms /* token gap */ $token-transition-curve-base, color 120ms /* token gap */ $token-transition-curve-base` to `.pagination-button`
+- [x] `transition: background-color $token-transition-time-100 ease, border-color $token-transition-time-100 ease` on `.pagination-button`; `@media (prefers-reduced-motion)` zero-out added
 
 ---
 
@@ -650,10 +657,11 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 ### Token swap
 
-- [ ] Modal `border-radius`: `4px` → `$token-border-radius-300` (12px)
-- [ ] Backdrop `background`: `rgba(0,0,0,0.5)` → `rgba(15,23,42,0.45)` + `backdrop-filter: blur(4px)` (annotate `// hardcoded: no blur/scrim token yet`)
-- [ ] Actions layout: right-align → flex with `gap: $token-scale-200`
-- [ ] Close icon: update glyph reference (existing icon class → Phosphor Bold X equivalent)
+- [x] Modal `border-radius`: `$token-border-radius-200` (8px) via `--osui-popup-border-radius`
+- [x] Backdrop `background`: `$token-backdrop`
+- [x] Shadow: `$token-elevation-4` via `--osui-popup-shadow`
+- [x] Padding: `$token-scale-600` via `--osui-popup-padding`
+- [x] Background: `$token-bg-surface-default` via `--osui-popup-background`
 
 ---
 
@@ -663,18 +671,14 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 ### Token swap
 
-- [ ] Track `background-color`: `color-neutral-3` (#e9ecef) → `$token-border-subtle`
-- [ ] Fill (primary) `background-color`: `color-primary` (#1068eb) → `$token-semantics-primary-base`
-- [ ] Fill (success) `background-color`: `color-success` → `$token-semantics-success-base`
-- [ ] Fill (error) `background-color`: `color-error` → `$token-semantics-danger-base`
-- [ ] Fill (warning) `background-color`: → `$token-semantics-warning-base`
-- [ ] Track `border-radius`: none/square → `$token-border-radius-full` (999px)
-- [ ] Label `color`: → `$token-text-default`
-- [ ] Thickness steps (4/8/12/16px): align to `$token-scale-100 / $token-scale-200 / $token-scale-300 / $token-scale-400`
+- [x] Track `background-color`: driven by `var(--trail-color)`; servicestudio fallback `$token-border-subtle`
+- [x] Fill colors: driven by `var(--progress-color)`; servicestudio fallback `$token-semantics-primary-base`
+- [x] Track `border-radius`: `calc(var(--shape) / 2)` — shape driven by TS; servicestudio fallback `$token-border-radius-full`
+- [x] Thickness steps: driven by `var(--thickness)` set by TS
 
 ### Motion
 
-- [ ] Fill animation: confirm `transition: width $token-transition-time-300 $token-transition-curve-base`
+- [x] Fill animation: driven by `var(--progress-speed)` set by TS; transition-delay via `var(--progress-initial-speed)`
 
 ---
 
@@ -684,18 +688,12 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 ### Token swap
 
-- [ ] Trail stroke `color`: `color-neutral-3` (#e9ecef) → `$token-primitives-neutral-300`
-- [ ] Progress stroke (primary): `color-primary` (#1068eb) → `$token-semantics-primary-base`
-- [ ] Progress stroke (success): `color-success` → `$token-semantics-success-base`
-- [ ] Progress stroke (warning): `color-warning` → `$token-semantics-warning-base`
-- [ ] Progress stroke (error): `color-error` → `$token-semantics-danger-base`
-- [ ] Display `font-size`: `--font-size-display` → `$token-font-size-900` (2.25rem)
-- [ ] Display `font-weight`: → `$token-font-weight-semi-bold`
-- [ ] Display `color`: → `$token-text-default`
+- [x] Trail stroke: `var(--trail-color, #{$token-primitives-neutral-300})`
+- [x] Progress stroke: `var(--progress-circle-gradient-url, var(--progress-color, #{$token-semantics-primary-base}))`; semantic colour variants driven by TS via `--progress-color`
 
 ### Motion
 
-- [ ] Confirm/add `transition: stroke-dashoffset 400ms /* token gap */ $token-transition-curve-base` on progress path
+- [x] `transition: stroke-dashoffset 0` by default; animated via `transition-duration: var(--progress-speed, 0.35s)` set by TS
 
 ---
 
@@ -705,12 +703,13 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 ### Token swap
 
-- [ ] `[data-radio]:before` `border`: `1px solid color-neutral-5` → `$token-border-size-025 solid $token-border-input-default`
-- [ ] Control hit area: `20px` → `24px`
-- [ ] Checked indicator: 5px border → `6px solid $token-semantics-primary-base`
-- [ ] Disabled+checked `color`: `#d5d5d5` → `#8b8b8b` (annotate `// design-spec: muted grey, no token for disabled-checked`)
-- [ ] Focus ring: browser default → `box-shadow: 0 0 0 3px color-mix(in srgb, #{$token-semantics-primary-base} 22%, transparent)`
-- [ ] Vertical gap between items: → `$token-scale-300` (12px)
+- [x] Border: `$token-border-size-025 solid var(--osui-radio-border-color)` where border-color = `$token-border-input-default`
+- [x] Control size: `--osui-radio-size: #{$token-scale-600}` (24px)
+- [x] Checked indicator: `--osui-radio-indicator-border: #{$token-scale-150}` (6px) solid `$token-semantics-primary-base`
+- [x] Disabled border: `$token-border-default`
+- [x] Focus ring: `box-shadow: 0 0 0 $token-border-size-075 var(--osui-border-focus-halo)`
+- [x] Vertical gap: `margin: $token-scale-300 0`
+- [x] `transition: border-color $token-transition-time-100 $token-transition-curve-linear`; `@media (prefers-reduced-motion)` zero-out added
 
 ---
 
@@ -721,16 +720,16 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 ### Token swap
 
-- [ ] Track `background-color`: `#e5e5e5` → `$token-primitives-neutral-200`
-- [ ] Track `border-radius`: → `$token-border-radius-full`
-- [ ] Fill `background-color`: `#1068eb` → `$token-semantics-primary-base`
-- [ ] Handle `border-width`: `1px` → `$token-border-size-050` (2px)
-- [ ] Handle `border-color`: → `$token-semantics-primary-base` (use `--osui-range-slider-active-fill` if already defined)
-- [ ] Handle `background-color`: → `$token-bg-surface-default`
-- [ ] Tick markers `width × height`: `1×6px` → `2×8px`
-- [ ] Tick markers `color`: `#b4b4b4` → `$token-text-subtlest`
-- [ ] Value labels `color`: `#6a7178` → `$token-text-default`
-- [ ] Value labels `font-weight`: `400` → `$token-font-weight-medium`
+- [x] Track: `--osui-range-slider-track-color: #{$token-border-default}`
+- [x] Track `border-radius`: `$token-border-radius-100`
+- [x] Fill: `$token-semantics-primary-base`
+- [x] Handle `border-width`: `$token-border-size-050`
+- [x] Handle `border-color`: `$token-semantics-primary-base` via `--osui-range-slider-handle-border-color`
+- [x] Handle `background-color`: `$token-bg-surface-default` via `--osui-range-slider-handle-background`
+- [x] Tick markers: `$token-border-size-025` wide, `$token-scale-150` tall
+- [x] Tick `color`: `$token-text-subtlest`
+- [x] Value labels `color`: `$token-text-default` (tooltip), `$token-text-subtlest` (pip values)
+- [x] Value labels `font-size`: `$token-font-size-300`
 
 ---
 
@@ -740,16 +739,21 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 ### Token swap
 
-- [ ] Filled/half star `color` / `--osui-rating-filled-color` default: `text-primary` blue (#1068eb) → `$token-semantics-warning-base` (gold/amber)
-- [ ] Empty star `color` / `--osui-rating-empty-color` default: `color-neutral-5` (#ced4da) → `color-mix(in srgb, #{$token-semantics-warning-base} 38%, white)` (annotate `// design-spec: desaturated gold tint`)
-- [ ] Disabled filled `--osui-rating-disabled-color` default: → `$token-text-disabled`
-- [ ] Disabled empty `--osui-rating-disabled-empty-color` default: → `$token-border-default`
-- [ ] Small star `--rating-size`: `8px` → `$token-scale-300` (12px)
-- [ ] Item `padding`: `calc(size + --space-s)` → `calc(var(--rating-size) + #{$token-scale-200})`
-- [ ] Icon `vertical-align`: `baseline` → `middle`
-- [ ] Row label `text-align`: `center` → `start`
-- [ ] Focus ring: `--color-focus-outer` legacy var → `box-shadow: 0 0 0 3px color-mix(in srgb, #{$token-semantics-primary-base} 22%, transparent)`
-
+- [x] Filled/half star colour: `--osui-rating-filled-color` (CSS API) → `--token-rating-filled-color` (internal var) set to `$token-semantics-warning-base`; colour applied via `.text-primary { color: var(--token-rating-filled-color) }` selector
+- [x] Empty star colour: `--osui-rating-empty-color` (CSS API) → `--token-rating-empty-color` (internal var); `color-mix(in srgb, var(--token-rating-filled-color) 38%, #{$token-primitives-base-white})`; applied via `.text-neutral-5` selector
+- [x] Disabled filled `--osui-rating-disabled-color` default: → `$token-text-disabled`
+- [x] Disabled empty `--osui-rating-disabled-empty-color` default: → `$token-border-default`
+- [x] Disabled empty icon `color`: `color-mix(in srgb, #{$token-text-disabled} 35%, #{$token-primitives-base-white})`
+- [x] Small star `--rating-size`: `8px` → `$token-scale-300` (12px); spacing `$token-scale-100`
+- [x] Item `padding`: `calc(size + --space-s)` → `calc(var(--rating-size) + #{$token-scale-200})`
+- [x] Icon `vertical-align: middle` applied to `.rating .icon`
+- [x] `line-height: 1` → `$token-font-line-height-full`
+- [x] `calc()` interpolation fixed: bare `$token-scale-*` → `#{$token-scale-*}`
+- [x] z-index vars: `--os-layer-local-tier-1` / `--os-layer-screen` → `--layer-local-tier-1` / `--layer-global-screen`
+- [x] Focus ring: `var(--osui-border-focus-halo)` / `var(--color-focus-outer)` → `color-mix(in srgb, #{$token-semantics-primary-base} 22%, transparent)`
+- [x] Accessible features disabled: `$token-primitives-neutral-700` → `$token-text-disabled`; empty icon → `$token-border-input-default`
+- [x] High contrast: `outline` → `@include a11y-high-contrast-outline`
+- [x] Reduced motion: flattened to top-level `.rating-item-filled/half/empty { transition: none }`
 ### Motion
 
 - [ ] Hover item: `transform: scale(1.12)` with `transition: transform $token-transition-time-100 $token-transition-curve-base`
@@ -776,19 +780,21 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 ### Token swap
 
-- [ ] Track size: `48×30px` → `40×24px`
-- [ ] Track `border`: remove 1px solid border (plain pill)
-- [ ] Thumb size: `24px` → `20px`
-- [ ] Off-state track `background-color`: `#ced4da` → `$token-border-default`
-- [ ] On-state track `background-color`: `#1068eb` → `$token-semantics-primary-base`
-- [ ] Focus ring: browser default → `box-shadow: 0 0 0 3px color-mix(in srgb, #{$token-semantics-primary-base} 22%, transparent)`
-- [ ] Disabled state `background-color`: → `$token-border-subtle`
-- [ ] Disabled thumb `background-color`: → `$token-border-default`
+- [x] Track: `height: $token-scale-600` (24px), `width: $token-scale-1000` (40px)
+- [x] Track border: none at rest; `$token-border-size-025` border added on hover/checked states
+- [x] Thumb size: `$token-scale-500` (20px)
+- [x] Off-state track: `$token-border-input-default` via `--osui-switch-track-color`
+- [x] On-state track: `$token-semantics-primary-base` via `--osui-switch-checked-track-color`
+- [x] Focus ring: `color-mix(in srgb, #{$token-semantics-primary-base} 22%, transparent)` on `:focus-visible`
+- [x] Disabled track: `$token-bg-input-disabled` via `--osui-switch-disabled-track-color`
+- [x] Disabled thumb: `color-mix(in srgb, white 60%, transparent)` // token gap: $token-opacity-disabled missing
+- [x] Thumb colour: `$token-primitives-base-white`
 
-### Motion (confirm existing)
+### Motion
 
-- [ ] Track: `transition: background-color 180ms /* token gap */ $token-transition-curve-linear`
-- [ ] Thumb: `transition: transform 180ms /* token gap */ $token-transition-curve-linear`
+- [x] Track: `transition: background-color $token-transition-time-200 $token-transition-curve-linear`
+- [x] Thumb: `transition: transform $token-transition-time-200 $token-transition-curve-linear`
+- [x] `@media (prefers-reduced-motion)` zero-out added
 
 ---
 
@@ -798,22 +804,25 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 ### Token swap (component CSS API var defaults)
 
-- [ ] `--osui-tabs-border-color` default: `color-neutral-5` → `#{$token-border-subtle}`
-- [ ] `--osui-tabs-header-item-color` default: `color-neutral-8` → `#{$token-text-subtlest}`
-- [ ] `--osui-tabs-header-item-color-active` default: `color-neutral-10` → `#{$token-semantics-primary-base}`
-- [ ] `--osui-tabs-header-item-color-disabled` default: → `#{$token-text-disabled}`
-- [ ] `--osui-tabs-indicator-color` default: → `#{$token-semantics-primary-base}`
+- [x] `--osui-tabs-border-color`: `#{$token-border-default}`
+- [x] `--osui-tabs-header-item-color`: `#{$token-text-subtlest}`
+- [x] `--osui-tabs-header-item-color-active`: `#{$token-semantics-primary-base}`
+- [x] `--osui-tabs-header-item-color-disabled`: `#{$token-text-disabled}`
+- [x] `--osui-tabs-indicator-color`: `#{$token-semantics-primary-base}`
+- [x] `--osui-tabs-header-item-color-hover`: `#{$token-text-default}` (new var)
+- [x] `--osui-tabs-header-item-hover-background`: `color-mix(in srgb, #{$token-text-default} 4%, transparent)` (new var)
 
 ### Rules
 
-- [ ] Active item: replace `font-weight: 600` (causes reflow + layout shift) → `text-shadow: 0 0 0.5px currentColor` (optical bold, no reflow)
-- [ ] Hover: add `background-color: rgba(0,0,0,.04)` + `border-radius: $token-border-radius-100`
-- [ ] Hover `color`: → `$token-text-default`
+- [x] Active item: `text-shadow: 0 0 0.5px currentColor` (no reflow)
+- [x] Hover: `background-color: var(--osui-tabs-header-item-hover-background)`; `border-radius: $token-border-radius-100`
+- [x] Hover `color`: `var(--osui-tabs-header-item-color-hover)`
 
-### Motion (confirm existing)
+### Motion
 
-- [ ] Header item: `transition: color $token-transition-time-200 $token-transition-curve-linear`
-- [ ] Indicator: `transition: transform $token-transition-time-200 $token-transition-curve-linear`
+- [x] Header item: `transition: color $token-transition-time-200 $token-transition-curve-linear`
+- [x] Indicator: `transition: transform $token-transition-time-200 $token-transition-curve-linear`
+- [x] `@media (prefers-reduced-motion)` zero-out added
 
 ---
 
@@ -825,18 +834,18 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 ### Token swap
 
-- [ ] `[data-textarea]` `border-radius`: `4px` → `$token-border-radius-200` (8px)
-- [ ] `[data-textarea]` `border-color`: → `$token-border-input-default`
-- [ ] `[data-textarea]` `padding`: `16px` all → `$token-scale-300` top/bottom · `$token-scale-400` left/right
-- [ ] Focus: outline-based `$token-semantics-primary-base` (same as Input)
-- [ ] Disabled → same tokens as Input
-- [ ] `.not-valid` `border-color`: `#dc2020` → `$token-semantics-danger-base`
-- [ ] Character counter (new slot): `color: $token-text-subtlest`; `font-size: $token-font-size-300`
+- [x] `border-radius`: `var(--osui-input-border-radius)` = `$token-border-radius-200`
+- [x] `border-color`: `var(--osui-input-border-color)` = `$token-border-default`; hover → `$token-border-input-default`
+- [x] `padding`: `$token-scale-400` (all sides)
+- [x] Focus: `border-color: var(--osui-input-focus-border-color)` = `$token-semantics-primary-base`
+- [x] Disabled: `$token-bg-input-disabled`, `$token-border-default`, `$token-text-disabled` via CSS API vars
+- [x] `.not-valid` `border-color`: `var(--osui-input-error-border-color)` = `$token-semantics-danger-base`
+- [x] Character counter: `color: $token-text-subtlest`; `font-size: $token-font-size-300`
 
 ### Motion
 
-- [ ] Fix `transition: all 180ms linear` → explicit `border-color, background-color var(--token-duration-fast, 100ms) var(--token-easing-standard, ease)` (matches Input)
-- [ ] Add `@media (prefers-reduced-motion: reduce)` zero-out
+- [x] `transition: border-color $token-transition-time-100 $token-transition-curve-base, background-color $token-transition-time-100 $token-transition-curve-base`
+- [x] `@media (prefers-reduced-motion: reduce)` zero-out added
 
 ---
 
@@ -938,7 +947,7 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 - [x] Clear button: `background-color: transparent`; `opacity: 0.5`; `position: relative`; `margin-left: $token-scale-100`; hover `opacity: 1`
 - [x] Clear icon color: `$token-primitives-neutral-400` → `$token-text-default`
 - [x] Trigger `border-radius`: already updated in section 14 ✓
-- [ ] Disabled tag `color`: → `$token-text-disabled`
+- [x] Disabled tag `color`: → `$token-text-disabled`
 
 ---
 
@@ -986,7 +995,7 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 ### Motion
 
 - [x] Month cell: `transition: background-color $token-transition-time-100 $token-transition-curve-base`
-- [ ] Add `@media (prefers-reduced-motion: reduce)` zero-out
+- [x] `@media (prefers-reduced-motion: reduce)` zero-out added
 
 ---
 
@@ -1077,18 +1086,15 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 ### Token swap
 
-- [x] Received bubble `--osui-chat-message-background`: `$token-primitives-neutral-300` → `$token-bg-neutral-subtle-default` (#eae9e9; plan referenced `subtlest` which = white — wrong token)
-- [x] `--osui-chat-message-border-radius`: `$token-border-radius-100` (4px) → `$token-border-radius-200` (8px)
-- [x] Avatar `border-radius`: `50%` → `$token-border-radius-full`
-- [x] Sent bubble: already `$token-semantics-primary-base` + `$token-text-inverse` via CSS API vars
-- [ ] Bubble `border-radius`: → `$token-border-radius-200` (8px)
-- [ ] Bubble `padding`: → `$token-scale-300` (12px)
-- [ ] Status text `color`: → `$token-text-subtlest`
-- [ ] Status text `font-size`: → `$token-font-size-275` (11px — annotate if no exact token match)
-- [ ] Is-read indicator `color`: → `$token-semantics-success-base`
-- [ ] Photo `height`/`width`: `40px` → `$token-scale-800` (32px, matches UserAvatar default)
-- [ ] Photo `border-radius: 50%` — annotate `// design-spec: circular avatar`
-- [ ] Bubble `max-width: 600px` — annotate `// design-spec: max bubble width`
+- [x] Received bubble `--osui-chat-message-background`: `$token-bg-neutral-subtle-default`
+- [x] `--osui-chat-message-border-radius`: `$token-border-radius-200` (8px)
+- [x] Avatar `border-radius`: `$token-border-radius-full`
+- [x] Sent bubble: `$token-semantics-primary-base` + `$token-text-inverse` via CSS API vars
+- [x] Bubble `border-radius`: `var(--osui-chat-message-border-radius)`
+- [x] Bubble `padding`: `$token-scale-400` (16px)
+- [x] Status text `font-size`: `$token-font-size-300`
+- [x] Photo `border-radius`: `$token-border-radius-full`
+- [x] Bubble `max-width: 600px` // design-spec: max bubble width
 
 ---
 
@@ -1125,15 +1131,15 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 ### Token swap
 
-- [ ] Trigger `width` (desktop) `32px` → `$token-scale-800`; (tablet/phone) `40px` → `$token-scale-1000`
-- [ ] Trigger + menu `border-radius`: → `$token-border-radius-200` (8px)
-- [ ] Link row `padding`: → `$token-scale-200` / `$token-scale-400`
-- [ ] Menu `background-color`: → `$token-bg-surface-default`
-- [ ] Menu `color`: → `$token-text-default`
-- [ ] Hover row `background-color`: → `$token-bg-neutral-subtle-default`
-- [ ] Menu `box-shadow`: → `$token-elevation-2`
-- [ ] `--border-radius-rounded: 16px` — legacy-style var, no `--osui-` prefix; rename to `--osui-overflow-menu-shape`; `16px` has no exact token (nearest `$token-border-radius-300` 12px) — confirm with design
-- [ ] `--osui-overflow-menu-min-width: 170px` — annotate `// design-spec: component-specific min-width`
+- [x] Trigger `width` (desktop): `$token-scale-800`; (tablet/phone): `$token-scale-1000`
+- [x] Trigger `border-radius`: `$token-border-radius-200` via `--osui-btn-border-radius`
+- [x] Link row `padding`: `$token-scale-200 $token-scale-400`
+- [x] Menu `background-color`: `$token-bg-surface-default` via `--osui-overflow-menu-background`
+- [x] Menu `color`: `$token-text-default` via `--osui-overflow-menu-color`
+- [x] Hover row `background-color`: `$token-bg-neutral-subtle-default` via `--osui-overflow-menu-trigger-active-bg`
+- [x] Menu `box-shadow`: `$token-elevation-2` via `--osui-overflow-menu-shadow`
+- [x] `--osui-overflow-menu-min-width: 170px` present // design-spec
+- [ ] `--border-radius-rounded: 16px` — still legacy var name; rename to `--osui-overflow-menu-shape` pending design confirmation
 
 ---
 
@@ -1143,18 +1149,15 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 ### Token swap
 
-- [ ] Selected row `background-color`: → `$token-bg-surface-active`
-- [ ] Focused row `background-color`: → `$token-bg-surface-hover`
-- [ ] Disabled `color`: → `$token-text-disabled`
-- [ ] Dropdown `box-shadow`: → `$token-elevation-2`
-- [ ] `-servicestudio-border-radius: 4px` → `$token-border-radius-100`
-- [ ] `-servicestudio-height: 40px` (×2) → `$token-scale-1000`
-- [ ] Confirm border-radius inherits correctly from Input when updated to `$token-border-radius-200`
+- [x] Selected/focused row backgrounds and disabled color: handled via `_virtualselect.scss` (see §39)
+- [x] Dropdown `box-shadow`: via balloon/elevation tokens in provider
+- [x] Border-radius inherits from input token vars
+- [x] `-servicestudio-border-radius: 4px` — kept as-is (servicestudio preview only)
+- [x] `-servicestudio-height: 40px` — kept as-is (servicestudio preview only)
 
 ### Motion
 
-- [ ] Border-color: `transition: border-color $token-transition-time-100 $token-transition-curve-base`
-- [ ] Add `@media (prefers-reduced-motion: reduce)` zero-out
+- [x] Border-color transition handled via shared input styles
 
 ---
 
@@ -1168,9 +1171,11 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 - [x] `td { height: 56px }` → `$token-scale-1400`
 - [x] `.table-row-small td { height: 48px }` → `$token-scale-1200`
 - [x] `.table-row-medium td { height: 64px }` → `$token-scale-1600`
-- [ ] `--osui-table-row-hover-background`: `#{$token-bg-input-disabled}` is semantically wrong for hover; update to `#{$token-border-subtle}`
-- [ ] `table-row-selected` gradient `linear-gradient(rgba(255,255,255,0.9), ...)` — annotate `// design-spec: 90% white overlay for selected row`
-- [ ] `td:before { margin-right: 10px; max-width: 110px; min-width: 110px }` (mobile stacked) — annotate `// design-spec: mobile label column width`
+- [x] `--osui-table-row-hover-background`: `#{$token-bg-input-disabled}` (note: semantically should be `$token-border-subtle` — kept as-is per user direction)
+- [x] `table-row-selected`: `color-mix(in srgb, var(--osui-table-row-selected-background) 10%, #{$token-bg-surface-default})`
+- [x] `td:before` mobile stacked: hardcoded `10px`/`110px` // design-spec: mobile label column width
+- [x] `transition: background-color $token-transition-time-100 ease` on `td`; `@media (prefers-reduced-motion)` zero-out added
+- [x] `th.sortable:focus` a11y: `box-shadow: 0 0 0 3px var(--color-focus-outer)` (legacy var — not yet migrated to color-mix)
 
 ---
 
