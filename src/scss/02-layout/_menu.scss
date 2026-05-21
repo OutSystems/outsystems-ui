@@ -147,8 +147,11 @@
 		display: block;
 	}
 
-	.app-menu-content.is--open {
-		left: 0;
+	.app-menu-content {
+		&,
+		&.is--open {
+			left: 0;
+		}
 	}
 }
 
