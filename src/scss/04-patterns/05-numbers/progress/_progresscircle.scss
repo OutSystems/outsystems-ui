@@ -43,15 +43,12 @@
 		}
 
 		&__progress-path {
+			-servicestudio-stroke: var(--progress-color, #{$token-semantics-primary-base});
 			stroke: var(--progress-circle-gradient-url, var(--progress-color));
 			stroke-dasharray: var(--stroke-dasharray);
 			stroke-dashoffset: var(--stroke-dashoffset);
 			stroke-linecap: var(--shape);
 			transition: stroke-dashoffset 0;
-
-			& {
-				-servicestudio-stroke: var(--progress-color, #{$token-semantics-primary-base});
-			}
 
 			&.animate {
 				&-entrance,
