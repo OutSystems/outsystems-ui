@@ -692,7 +692,7 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 ### Token swap
 
 - [x] Trail stroke: `var(--trail-color, #{$token-primitives-neutral-300})`
-- [x] Progress stroke: `var(--progress-circle-gradient-url, var(--progress-color, #{$token-semantics-primary-base}))`; semantic colour variants driven by TS via `--progress-color`
+- [x] Progress stroke: `var(--progress-circle-gradient-url, var(--progress-color))`; CSS fallback removed so color is only set by the user-configured `ProgressColor` property via JS; `-servicestudio-stroke` carries the `#{$token-semantics-primary-base}` default for SS preview
 
 ### Motion
 
