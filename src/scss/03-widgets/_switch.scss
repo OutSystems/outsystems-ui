@@ -141,7 +141,7 @@
 			font-size: $token-font-size-300;
 			justify-content: center;
 			left: -1px;
-			top: 3px;
+			top: $token-scale-075;
 		}
 
 		&:checked:after {

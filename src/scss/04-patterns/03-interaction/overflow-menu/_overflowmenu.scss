@@ -13,7 +13,7 @@
 
 	display: inline-block;
 	--osui-overflow-menu-min-width: 170px;
-	--border-radius-rounded: 16px;
+	--border-radius-rounded: #{$token-border-radius-400};
 
 	&__trigger {
 		--osui-floating-offset: #{$token-scale-200};

@@ -560,12 +560,6 @@
 		color: $token-semantics-primary-base;
 	}
 
-	.has-accessible-features {
-		.osui-submenu:focus-within {
-			box-shadow: 0 0 0 $token-border-size-075 $token-primitives-yellow-500;
-			outline: 0;
-		}
-	}
 }
 
 // IsRTL -------------------------------------------------------------------------
@@ -614,13 +608,6 @@
 }
 
 // Accessibility -----------------------------------------------------------------
-///
-.has-accessible-features {
-	.osui-submenu:focus-within {
-		box-shadow: 0 0 0 $token-border-size-075 $token-primitives-yellow-500;
-		outline: 0;
-	}
-}
 
 // OS HighContrast Enabled -------------------------------------------------------
 ///

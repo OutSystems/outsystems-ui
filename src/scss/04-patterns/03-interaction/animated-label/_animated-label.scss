@@ -306,7 +306,7 @@
 	.form-control {
 		&[data-textarea] {
 			& + span.validation-message {
-				bottom: 10px; // token gap: no 10px token
+				bottom: $token-scale-250;
 			}
 		}
 	}

@@ -259,7 +259,7 @@ $balloonMobileTopMargin: 5vh;
 			color: $token-semantics-danger-base;
 			font-size: $token-font-size-300;
 			margin-left: $token-scale-0;
-			margin-top: 3px;
+			margin-top: $token-scale-075;
 		}
 	}
 }

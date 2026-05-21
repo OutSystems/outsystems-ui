@@ -104,7 +104,7 @@ span.validation-message {
 // Responsive --------------------------------------------------------------------
 .phone {
 	.layout-native .form.OSFillParent .form-control[class*='ThemeGrid_Width'].not-valid + span.validation-message {
-		left: 6px;
+		left: $token-scale-150;
 	}
 
 	.form.OSFillParent span.input-text .form-control[class*='ThemeGrid_Width'].not-valid + span.validation-message,

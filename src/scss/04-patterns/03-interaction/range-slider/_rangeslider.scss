@@ -91,7 +91,7 @@
 			.noUi-handle:after {
 				border-width: $token-border-size-0 $token-border-size-025;
 				left: calc(var(--range-slider-handle-size) / 2.5);
-				width: 3px;
+				width: $token-scale-075;
 			}
 
 			.noUi-handle.noUi-active,
