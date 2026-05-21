@@ -12,7 +12,7 @@
 	--osui-submenu-item-color:          #{$token-text-subtlest};
 	--osui-submenu-header-color:        #{$token-text-default};
 	--osui-submenu-active-border-color: var(--osui-submenu-active-border-color); // intentional: overridden by theme/consumer
-	--osui-submenu-max-height:          calc(100dvh - 80px);
+	--osui-submenu-max-height:          calc(100dvh - 80px); // design-spec: 80px header offset
 	// ───────────────────────────────────────────────────────────────────
 
 	cursor: pointer;
@@ -156,7 +156,7 @@
 
 		// Scrollbar
 		&::-webkit-scrollbar {
-			width: 4px;
+			width: $token-scale-100;
 		}
 
 		&::-webkit-scrollbar-track {
@@ -562,7 +562,7 @@
 
 	.has-accessible-features {
 		.osui-submenu:focus-within {
-			box-shadow: 0 0 0 3px $token-primitives-yellow-500;
+			box-shadow: 0 0 0 $token-border-size-075 $token-primitives-yellow-500;
 			outline: 0;
 		}
 	}
@@ -617,7 +617,7 @@
 ///
 .has-accessible-features {
 	.osui-submenu:focus-within {
-		box-shadow: 0 0 0 3px $token-primitives-yellow-500;
+		box-shadow: 0 0 0 $token-border-size-075 $token-primitives-yellow-500;
 		outline: 0;
 	}
 }

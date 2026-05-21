@@ -300,13 +300,13 @@
 .tablet,
 .phone {
 	.animated-label-text {
-		top: 14px;
+		top: 14px; // token gap: no 14px token
 	}
 
 	.form-control {
 		&[data-textarea] {
 			& + span.validation-message {
-				bottom: 10px;
+				bottom: 10px; // token gap: no 10px token
 			}
 		}
 	}
@@ -327,7 +327,7 @@
 
 	.animated-label:focus-within {
 		border-color: var(--osui-animated-label-border-color);
-		box-shadow: 0 0 0 3px var(--color-focus-outer);
+		box-shadow: 0 0 0 $token-border-size-075 var(--color-focus-outer);
 	}
 }
 
@@ -344,7 +344,7 @@
 			.animated-label-text {
 				background-color: $token-text-subtlest;
 				font-size: $token-font-size-350;
-				top: -16px;
+				top: -16px; // design-spec: high-contrast label lift
 			}
 		}
 	}

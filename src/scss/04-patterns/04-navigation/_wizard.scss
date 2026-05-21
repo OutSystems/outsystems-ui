@@ -18,7 +18,7 @@
 		--osui-wizard-past-color:        #{$token-text-inverse};
 		--osui-wizard-connector-color:   #{$token-bg-neutral-base-default};
 		--osui-wizard-focus-halo-color:  var(--osui-border-focus-halo);
-		--osui-wizard-focus-halo-width:  3px;
+		--osui-wizard-focus-halo-width:  #{$token-border-size-075};
 		// ───────────────────────────────────────────────────────────────────
 
 		&.wizard-vertical {
@@ -122,8 +122,8 @@
 			}
 
 			&:has(.wizard-item-icon:empty):before {
-				right: calc(50% + 4px);
-				width: calc(100% - 8px);
+				right: calc(50% + #{$token-scale-100});
+				width: calc(100% - #{$token-scale-200});
 			}
 		}
 
