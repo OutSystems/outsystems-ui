@@ -36,9 +36,9 @@
 
 		img {
 			border-radius: $token-border-radius-full;
-			height: 40px;
+			height: $token-scale-1000;
 			object-fit: cover;
-			width: 40px;
+			width: $token-scale-1000;
 		}
 	}
 

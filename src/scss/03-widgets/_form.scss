@@ -52,13 +52,13 @@
 	}
 
 	.upload-file span.validation-message {
-		bottom: 8px;
+		bottom: $token-scale-200;
 		position: relative;
 	}
 
 	.dropdown-container {
 		&[class*='ThemeGrid_Width'].not-valid span.validation-message {
-			bottom: 4px;
+			bottom: $token-scale-100;
 		}
 
 		&,
@@ -83,7 +83,7 @@
 	textarea[data-textarea] {
 		& + span {
 			&.validation-message {
-				bottom: 4px;
+				bottom: $token-scale-100;
 			}
 		}
 	}

@@ -46,8 +46,8 @@
 	.btn-provider-login {
 		&-logo {
 			border-radius: 50%;
-			height: 20px;
-			width: 20px;
+			height: $token-scale-500;
+			width: $token-scale-500;
 		}
 		&-text {
 			color: var(--osui-provider-login-button-color);
@@ -63,7 +63,7 @@
 			width: 50px;
 			&.btn- {
 				&small {
-					width: 40px;
+					width: $token-scale-1000;
 				}
 				&large {
 					width: 55px;

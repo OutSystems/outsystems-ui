@@ -92,7 +92,7 @@
 	.bottom-bar {
 		& > a:focus {
 			background-color: transparent;
-			box-shadow: 0 0 0 3px var(--color-focus-outer);
+			box-shadow: 0 0 0 $token-border-size-075 var(--color-focus-outer);
 		}
 	}
 }

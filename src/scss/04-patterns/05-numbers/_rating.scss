@@ -21,11 +21,11 @@
 				padding-right: calc(var(--rating-size) + $token-scale-100);
 			}
 
-			--rating-size: 8px;
+			--rating-size: #{$token-scale-200};
 		}
 
 		&-medium {
-			--rating-size: 24px;
+			--rating-size: #{$token-scale-600};
 		}
 	}
 
@@ -140,7 +140,7 @@
 		opacity: 1;
 	}
 
-	--rating-size: 16px;
+	--rating-size: #{$token-scale-400};
 }
 
 ///
@@ -193,6 +193,6 @@
 ///
 .has-accessible-features {
 	input:focus + .rating-item > div {
-		box-shadow: 0 0 0 3px var(--color-focus-outer);
+		box-shadow: 0 0 0 $token-border-size-075 var(--color-focus-outer);
 	}
 }

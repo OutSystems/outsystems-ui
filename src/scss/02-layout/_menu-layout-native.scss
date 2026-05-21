@@ -21,7 +21,7 @@
 			position: absolute;
 			right: -24px;
 			top: calc(var(--os-size-header) + var(--os-size-header-content));
-			width: 24px;
+			width: $token-scale-600;
 		}
 	}
 }

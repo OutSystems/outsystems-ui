@@ -23,10 +23,10 @@
 		&__arrow {
 			background-color: var(--osui-carousel-arrow-background);
 			box-shadow: var(--osui-carousel-arrow-shadow);
-			height: 40px;
+			height: $token-scale-1000;
 			opacity: 1;
 			transition: opacity $token-transition-time-150 $token-transition-curve-linear;
-			width: 40px;
+			width: $token-scale-1000;
 			will-change: opacity;
 			z-index: var(--os-layer-local-tier-1);
 
@@ -59,12 +59,12 @@
 				// (12px dot + 6px margin × 2 = 24px total territory per axis)
 				background-color: var(--osui-carousel-pagination-color);
 				border-radius: $token-border-radius-full;
-				height: 12px;
+				height: $token-scale-300;
 				margin: 6px;
 				transition:
 					width $token-transition-time-200 $token-transition-curve-linear,
 					background-color $token-transition-time-200 $token-transition-curve-linear;
-				width: 12px;
+				width: $token-scale-300;
 
 				&.is-active {
 					background-color: var(--osui-carousel-pagination-active-color);

@@ -22,7 +22,7 @@
 			border-top: $token-border-size-0 !important;
 			display: block;
 			height: 2px;
-			left: 4px;
+			left: $token-scale-100;
 			top: 5px;
 			width: 7px;
 		}
@@ -42,7 +42,7 @@
 			position: absolute;
 			top: 50%;
 			transform: translateY(-50%) translateX(-50%);
-			width: 8px;
+			width: $token-scale-200;
 
 			// Service Studio Preview
 			& {

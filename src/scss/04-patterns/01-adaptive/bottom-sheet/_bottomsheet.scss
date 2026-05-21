@@ -49,12 +49,12 @@
 				background: $token-border-input-default;
 				border-radius: 100px;
 				content: '';
-				height: 4px;
+				height: $token-scale-100;
 				left: 50%;
 				position: absolute;
 				top: $token-scale-400;
 				transform: translateX(-50%);
-				width: 40px;
+				width: $token-scale-1000;
 			}
 
 			&__top-bar {

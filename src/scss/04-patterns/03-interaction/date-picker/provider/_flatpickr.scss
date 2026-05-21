@@ -31,7 +31,7 @@
 	&.arrowTop {
 		&:before,
 		&::after {
-			left: 40px;
+			left: $token-scale-1000;
 		}
 	}
 
@@ -130,8 +130,8 @@
 		}
 
 		svg {
-			height: 12px;
-			width: 12px;
+			height: $token-scale-300;
+			width: $token-scale-300;
 
 			path {
 				stroke-width: 1px;
@@ -448,7 +448,7 @@ span.flatpickr-weekday {
 		position: absolute;
 		right: $token-scale-800;
 		text-transform: lowercase;
-		width: 40px;
+		width: $token-scale-1000;
 
 		&:hover,
 		&:focus {
@@ -459,7 +459,7 @@ span.flatpickr-weekday {
 
 .firefox .flatpickr-time {
 	input {
-		max-width: 48px; // fix for different input appearance css rules regarding size
+		max-width: $token-scale-1200; // fix for different input appearance css rules regarding size
 	}
 }
 
@@ -532,7 +532,7 @@ span.flatpickr-weekday {
 		&.arrowTop {
 			&:before,
 			&::after {
-				right: 40px;
+				right: $token-scale-1000;
 				left: auto;
 			}
 		}
@@ -836,7 +836,7 @@ span.flatpickr-weekday {
 	.flatpickr-am-pm,
 	.flatpickr-today-button a {
 		&:focus-visible {
-			box-shadow: 0 0 0 3px var(--color-focus-outer);
+			box-shadow: 0 0 0 $token-border-size-075 var(--color-focus-outer);
 		}
 	}
 
@@ -851,7 +851,7 @@ body:has(.has-accessible-features) .osui-monthpicker__dropdown {
 	.flatpickr-next-month,
 	.flatpickr-monthSelect-month.selected {
 		&:focus-visible {
-			box-shadow: 0 0 0 3px var(--color-focus-outer);
+			box-shadow: 0 0 0 $token-border-size-075 var(--color-focus-outer);
 		}
 	}
 }

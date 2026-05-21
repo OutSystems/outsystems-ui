@@ -47,9 +47,9 @@
 		&-image {
 			border-radius: 100%;
 			display: inline-block;
-			height: 24px;
+			height: $token-scale-600;
 			margin-right: $token-scale-200;
-			width: 24px;
+			width: $token-scale-600;
 			background-color: $token-bg-neutral-subtle-default;
 			overflow: hidden;
 		}

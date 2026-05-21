@@ -45,7 +45,7 @@
 		position: absolute;
 		text-indent: 0;
 		top: 0;
-		width: 24px;
+		width: $token-scale-600;
 	}
 
 	&-clear-button:hover {
@@ -183,11 +183,11 @@
 				}
 
 				.vscomp-clear-icon {
-					height: 12px;
+					height: $token-scale-300;
 					left: $token-scale-0;
 					position: relative;
 					top: $token-scale-0;
-					width: 12px;
+					width: $token-scale-300;
 
 					&:before,
 					&:after {
@@ -215,7 +215,7 @@
 			}
 
 			.vscomp-search-container {
-				height: 48px;
+				height: $token-scale-1200;
 			}
 
 			.vscomp-search-input {
@@ -321,11 +321,11 @@
 		background-color: $token-bg-input-default;
 		border-radius: $token-border-radius-100;
 		border: $token-border-size-025 solid $token-border-input-default;
-		height: 16px;
+		height: $token-scale-400;
 		margin-right: $token-scale-200;
 		overflow: visible;
 		transition: background-color 0.25s ease;
-		width: 16px;
+		width: $token-scale-400;
 
 		&:after {
 			backface-visibility: hidden;
@@ -459,10 +459,10 @@
 		display: table;
 		font-size: 0;
 		font-weight: $token-font-weight-semi-bold;
-		height: 24px;
+		height: $token-scale-600;
 		line-height: 1;
 		text-align: center;
-		width: 24px;
+		width: $token-scale-600;
 
 		/* Hide text from provider div in order to keep consistency on styles */
 		text-indent: 100%;

@@ -188,7 +188,7 @@
 .has-accessible-features {
 	.pagination-button:focus {
 		border-color: $token-semantics-primary-base;
-		box-shadow: 0 0 0 3px color-mix(in srgb, #{$token-semantics-primary-base} 22%, transparent);
+		box-shadow: 0 0 0 $token-border-size-075 color-mix(in srgb, #{$token-semantics-primary-base} 22%, transparent);
 	}
 }
 
