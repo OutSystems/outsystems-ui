@@ -116,7 +116,8 @@
 ///
 .phone {
 	.pswp__caption__center {
-		padding-bottom: calc(var(--os-safe-area-bottom) + 10px);
+		padding-bottom: calc(var(--os-safe-area-bottom) + 10px); // design-spec: 10px caption offset
+	}
 }
 
 // Accessibility -----------------------------------------------------------------
