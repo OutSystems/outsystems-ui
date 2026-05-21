@@ -559,6 +559,13 @@
 		background-color: $token-primitives-neutral-100; // token gap: $token-bg-surface-hover not in package — using $token-primitives-neutral-100 (#f3f3f3)
 		color: $token-semantics-primary-base;
 	}
+
+	.has-accessible-features {
+		.osui-submenu:focus-within {
+			box-shadow: 0 0 0 3px $token-primitives-yellow-500;
+			outline: 0;
+		}
+	}
 }
 
 // IsRTL -------------------------------------------------------------------------
@@ -612,16 +619,6 @@
 	.osui-submenu:focus-within {
 		box-shadow: 0 0 0 3px $token-primitives-yellow-500;
 		outline: 0;
-	}
-}
-
-.tablet,
-.phone {
-	.has-accessible-features {
-		.osui-submenu:focus-within {
-			box-shadow: 0 0 0 3px $token-primitives-yellow-500;
-			outline: 0;
-		}
 	}
 }
 

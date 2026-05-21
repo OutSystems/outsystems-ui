@@ -7,7 +7,7 @@
 .osui-dropdown-serverside-item {
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-dropdown-item-background: transparent;
-	--osui-dropdown-item-color:      $token-text-default;
+	--osui-dropdown-item-color:      #{$token-text-default};
 	--osui-dropdown-item-hover-bg:   #{$token-bg-neutral-subtle-default};
 	// ───────────────────────────────────────────────────────────────────
 
@@ -30,14 +30,15 @@
 		z-index: var(--os-layer-local-tier-1);
 
 		// Service Studio Preview
-		& {
-			-servicestudio-background-color: $token-bg-surface-default;
-		}
+		-servicestudio-background-color: $token-bg-surface-default;
 	}
 
 	&--is-selected {
 		background-color: transparent;
 		z-index: var(--os-layer-local-tier-1);
+
+		// Service Studio Preview
+		-servicestudio-background-color: $token-bg-surface-default;
 
 		// Right-side checkmark — requires --osui-icon-check + --osui-icon-font-family (icon library)
 		&::after {
@@ -47,11 +48,6 @@
 			font-family: var(--osui-icon-font-family);
 			font-size: $token-font-size-400;
 			margin-left: $token-scale-200;
-		}
-
-		// Service Studio Preview
-		& {
-			-servicestudio-background-color: $token-bg-surface-default;
 		}
 	}
 

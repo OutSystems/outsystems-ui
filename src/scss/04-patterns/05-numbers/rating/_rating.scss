@@ -241,10 +241,8 @@
 			}
 		}
 	}
-}
 
-// Icon colour tokens — applied via utility classes on icon elements
-.rating {
+	// Icon colour tokens — applied via utility classes on icon elements
 	// Filled and half stars use dedicated gold token
 	.text-primary {
 		color: var(--token-rating-filled-color);

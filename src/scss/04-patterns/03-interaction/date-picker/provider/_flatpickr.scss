@@ -769,6 +769,16 @@ span.flatpickr-weekday {
 			font-weight: $token-font-weight-medium;
 			height: auto;
 			line-height: 1;
+
+			&:focus,
+			&:focus-visible {
+				box-shadow: none;
+				outline: none;
+			}
+
+			&::selection {
+				background: transparent;
+			}
 		}
 
 		// AM/PM pill inside datepicker
@@ -809,17 +819,6 @@ span.flatpickr-weekday {
 			}
 		}
 
-		.numInputWrapper .numInput {
-			&:focus,
-			&:focus-visible {
-				outline: none;
-				box-shadow: none;
-			}
-
-			&::selection {
-				background: transparent;
-			}
-		}
 	}
 }
 

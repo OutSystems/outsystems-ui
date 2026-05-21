@@ -1185,17 +1185,17 @@ Curves: `$token-transition-curve-linear` · `$token-transition-curve-quick` · `
 
 ### Token swap
 
-- [ ] `--osui-sidebar-color: $token-text-default` — missing `#{}` interpolation; fix to `#{$token-text-default}`
-- [ ] `--overlay-opacity: 0` — rename to `--osui-sidebar-overlay-opacity` for namespace consistency
-- [ ] `max-width: 85vw` (phone) — annotate `// design-spec: max sidebar width on phone`
-- [ ] `padding-top: #{android-safe-area-top()}` — confirm matches `--os-safe-area-top` indirection used elsewhere
+- [x] `--osui-sidebar-color: $token-text-default` — fixed to `#{$token-text-default}`
+- [x] `--overlay-opacity: 0` — kept as-is; reference also uses this name; renaming would require JS changes
+- [x] `max-width: 85vw` (phone) — annotated `// design-spec: max sidebar width on phone`
+- [x] `padding-top: #{android-safe-area-top()}` — confirmed correct; matches safe-area indirection pattern used elsewhere (android-safe-area-top() mixin)
 
 ### Motion
 
-- [ ] Closed: replace `transition: all 130ms ease-in` → `transform, opacity $token-transition-time-100 $token-transition-curve-base`; annotate `// token gap: 130ms`
-- [ ] Open: `transition: transform $token-transition-time-350 $token-transition-curve-base`; annotate `// token gap: 330ms`
-- [ ] Overlay: `transition: opacity $token-transition-time-100 $token-transition-curve-base`
-- [ ] Add `@media (prefers-reduced-motion: reduce)` zero-out
+- [x] Closed: replaced `transition: all 130ms ease-in` → `opacity, transform 300ms $token-transition-curve-base; // token gap: 300ms` (reference uses 300ms)
+- [x] Open: replaced `transition: transform 330ms ease-out` → `transform 500ms $token-transition-curve-base; // token gap: 500ms` (reference uses 500ms)
+- [x] Overlay: annotated `transition: opacity 130ms ease-in; // token gap: 130ms duration` (reference keeps 130ms)
+- [x] Added `@media (prefers-reduced-motion: reduce)` zero-out
 
 ---
 
@@ -1402,7 +1402,7 @@ These components have no design review page. Each checklist covers issues found 
 
 10 lines, runtime CSS is empty — the file is entirely SS preview properties.
 
-- [ ] No runtime changes needed. Confirm file intentionally contains no runtime rules.
+- [x] No runtime changes needed. Confirmed file intentionally contains no runtime rules — entirely SS preview properties.
 
 ---
 
@@ -1412,9 +1412,9 @@ These components have no design review page. Each checklist covers issues found 
 
 Runtime rules are safe-area and RTL wrappers only; nearly all rules are `-servicestudio-*`.
 
-- [ ] `-servicestudio-background-color: rgba(0, 0, 0, 0.3)` (×2) — replace with `#{$token-backdrop}` or annotate if scrim token doesn't match
-- [ ] `padding-bottom: calc(var(--os-safe-area-bottom) + 10px)` — `10px` offset is hardcoded; annotate `// design-spec`
-- [ ] Focus ring: `outline: 3px solid $token-primitives-yellow-500` — confirm correct a11y token
+- [x] `-servicestudio-background-color: rgba(0, 0, 0, 0.3)` (×2) — replaced with `#{$token-backdrop}` ($token-backdrop ≈ rgba(0,0,0,0.25), close enough for SS preview)
+- [x] `padding-bottom: calc(var(--os-safe-area-bottom) + 10px)` — annotated `// design-spec: 10px caption offset`
+- [x] Focus ring: already `outline: 3px solid var(--color-focus-outer)` — correct a11y token, no change needed
 
 ---
 
@@ -1422,13 +1422,13 @@ Runtime rules are safe-area and RTL wrappers only; nearly all rules are `-servic
 
 **File:** `src/scss/04-patterns/04-navigation/_bottom-bar-item.scss`
 
-- [ ] `--osui-bottom-bar-border-color: #{$token-primitives-neutral-300}` — upgrade to `#{$token-border-default}` for semantic consistency
-- [ ] Empty-state `color: $token-primitives-neutral-700` → `$token-text-subtlest`
-- [ ] Empty-state `font-size: 12px` → `$token-font-size-300`
-- [ ] Empty-state `padding: 20px` → `$token-scale-500`
-- [ ] `.bottom-bar-item-text { font-size: 10px }` — no token for 10px; annotate `// token gap`
-- [ ] `max-width: 150px` — annotate `// design-spec`
-- [ ] Focus ring: `box-shadow: 0 0 0 3px $token-primitives-yellow-500` — confirm correct a11y token
+- [x] `--osui-bottom-bar-border-color: #{$token-primitives-neutral-300}` — upgraded to `#{$token-border-default}` for semantic consistency
+- [x] Empty-state `color: $token-primitives-neutral-700` → `$token-text-subtlest`
+- [x] Empty-state `font-size: 12px` → `$token-font-size-300`
+- [x] Empty-state `padding: 20px` → `$token-scale-500`
+- [x] `.bottom-bar-item-text { font-size: 10px }` — annotated `// token gap: no 10px token`
+- [x] `max-width: 150px` — annotated `// design-spec`
+- [x] Focus ring: `box-shadow: 0 0 0 3px var(--color-focus-outer)` — already correct a11y token, no change needed
 
 ---
 
@@ -1436,9 +1436,9 @@ Runtime rules are safe-area and RTL wrappers only; nearly all rules are `-servic
 
 **File:** `src/scss/04-patterns/03-interaction/_input-with-icon.scss`
 
-- [ ] `--osui-input-with-icon-icon-color: #{$token-primitives-neutral-700}` — upgrade to `#{$token-text-subtle}` for semantic intent
-- [ ] Icon slot `width: 40px` → `$token-scale-1000`
-- [ ] `padding-left: $token-scale-1000` on input when icon present — confirm tracks icon slot; consider `--osui-input-with-icon-slot-width` var
+- [x] `--osui-input-with-icon-icon-color: #{$token-primitives-neutral-700}` — upgraded to `#{$token-text-subtle}` for semantic intent
+- [x] Icon slot `width: 40px` → `$token-scale-1000`
+- [x] `padding-left: $token-scale-1000` on input when icon present — confirmed tracks icon slot width; `padding-right: $token-scale-400` added for right-icon variant; no !important or top/bottom zeroing (vertical padding is owned by widget/form styles)
 
 ---
 

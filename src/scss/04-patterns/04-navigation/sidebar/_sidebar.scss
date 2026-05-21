@@ -6,11 +6,11 @@
 ///
 .osui-sidebar {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-sidebar-background:  #{$token-bg-surface-default};
-	--osui-sidebar-color:       $token-text-default;
-	--osui-sidebar-shadow:      #{$token-elevation-3};
-	--osui-sidebar-padding-x:   #{$token-scale-600};
-	--osui-sidebar-padding-y:   #{$token-scale-400};
+	--osui-sidebar-background: #{$token-bg-surface-default};
+	--osui-sidebar-color: #{$token-text-default};
+	--osui-sidebar-shadow: #{$token-elevation-3};
+	--osui-sidebar-padding-x: #{$token-scale-600};
+	--osui-sidebar-padding-y: #{$token-scale-400};
 	// ───────────────────────────────────────────────────────────────────
 
 	--overlay-opacity: 0;
@@ -24,7 +24,9 @@
 	margin: $token-scale-0;
 	position: fixed;
 	top: 0;
-	transition: all 130ms ease-in;
+	transition:
+		opacity,
+		transform 300ms $token-transition-curve-base; // token gap: 300ms duration
 	width: var(--sidebar-width);
 	will-change: transform;
 	z-index: var(--osui-sidebar-layer);
@@ -120,7 +122,7 @@
 			pointer-events: none;
 			position: fixed;
 			top: 0;
-			transition: opacity 130ms ease-in;
+			transition: opacity 130ms ease-in; // token gap: 130ms duration
 			width: 200vw;
 			will-change: opacity;
 			z-index: var(--osui-sidebar-layer);
@@ -148,7 +150,7 @@
 		&--is-open {
 			opacity: 1;
 			transform: none;
-			transition: transform 330ms ease-out;
+			transition: transform 500ms $token-transition-curve-base; // token gap: 500ms duration
 			will-change: transform;
 
 			&.osui-sidebar--has-overlay {
@@ -217,6 +219,15 @@
 .phone {
 	.osui-sidebar {
 		max-width: 85vw;
+	}
+}
+
+// Reduced motion ----------------------------------------------------------------
+@media (prefers-reduced-motion: reduce) {
+	.osui-sidebar,
+	.osui-sidebar--has-overlay::before,
+	.active-screen .osui-sidebar--is-open {
+		transition: none;
 	}
 }
 

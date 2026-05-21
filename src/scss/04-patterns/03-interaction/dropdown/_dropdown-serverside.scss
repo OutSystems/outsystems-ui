@@ -12,7 +12,7 @@ $balloonMobileTopMargin: 5vh;
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-dropdown-ss-background:          #{$token-bg-surface-default};
 	--osui-dropdown-ss-border-color:        #{$token-border-input-default};
-	--osui-dropdown-ss-color:               $token-text-default;
+	--osui-dropdown-ss-color:               #{$token-text-default};
 	--osui-dropdown-ss-disabled-background: #{$token-bg-input-disabled};
 	--osui-dropdown-ss-disabled-color:      #{$token-text-disabled};
 	// ───────────────────────────────────────────────────────────────────

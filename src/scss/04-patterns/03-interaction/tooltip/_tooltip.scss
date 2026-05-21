@@ -8,8 +8,8 @@
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-tooltip-background:    #{$token-text-default};
 	--osui-tooltip-color:         #{$token-text-inverse};
-	--osui-tooltip-border-radius: #{$token-border-radius-100};
-	--osui-tooltip-padding:       #{$token-scale-200};
+	--osui-tooltip-border-radius: #{$token-border-radius-200}; // design-spec: overrides token default
+	--osui-tooltip-padding:       6px 12px; // design-spec: asymmetric padding, no token equivalent
 	--osui-tooltip-font-size:     #{$token-font-size-350};
 	// ───────────────────────────────────────────────────────────────────
 
@@ -99,12 +99,6 @@
 	&__balloon-wrapper__balloon {
 		text-wrap: wrap;
 	}
-}
-
-// Override token defaults with design-specified values
-.osui-tooltip {
-	--osui-tooltip-border-radius: #{$token-border-radius-200};
-	--osui-tooltip-padding: 6px 12px; // design-spec: asymmetric padding, no token equivalent
 }
 
 // Entrance animation
