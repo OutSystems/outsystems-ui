@@ -115,7 +115,7 @@
 	}
 
 	&--animatable {
-		transition: transform, opacity 400ms ease; // token gap: 400ms duration, curve: $token-transition-curve-base
+		transition: transform, opacity var(--osui-motion-duration-400) ease;
 	}
 
 	.init {

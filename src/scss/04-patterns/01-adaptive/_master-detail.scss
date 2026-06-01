@@ -50,16 +50,12 @@
 				}
 
 				&:hover {
-					background-color: $token-border-subtle; // token gap: $token-bg-surface-hover (#f3f3f3)
+					background-color: var(--osui-bg-surface-hover);
 				}
 
 				&.active,
 				&[aria-selected='true'] {
-					background-color: color-mix(
-						in srgb,
-						#{$token-semantics-primary-base} 8%,
-						transparent
-					); // token gap: $token-bg-surface-active
+					background-color: var(--osui-bg-surface-active);
 				}
 
 				&.active,

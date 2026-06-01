@@ -55,7 +55,7 @@
 			justify-content: center;
 		}
 		&-text {
-			font-size: 10px; // token gap: no 10px token
+			font-size: var(--osui-font-size-200);
 			overflow: hidden;
 			text-overflow: ellipsis;
 			white-space: nowrap;

@@ -59,7 +59,7 @@
 			&:hover,
 			&:focus {
 				background: $token-border-subtle;
-				border-color: $token-primitives-neutral-300; // token gap: $token-border-subtle maps to neutral-100 in our package
+				border-color: var(--osui-border-subtle);
 				color: $token-semantics-primary-base;
 			}
 		}

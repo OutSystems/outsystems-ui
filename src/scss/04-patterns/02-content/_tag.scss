@@ -27,7 +27,7 @@
 
 	&.tag {
 		&-small {
-			font-size: 0.625rem; // token gap: $token-font-size-200 (10px) not in package
+			font-size: var(--osui-font-size-200);
 			min-height: $token-scale-400;
 			padding: $token-scale-0 $token-scale-150;
 		}

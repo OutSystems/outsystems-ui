@@ -300,7 +300,7 @@
 .tablet,
 .phone {
 	.animated-label-text {
-		top: 14px; // token gap: no 14px token
+		top: var(--osui-scale-350);
 	}
 
 	.form-control {

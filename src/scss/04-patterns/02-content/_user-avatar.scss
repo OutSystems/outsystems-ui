@@ -42,7 +42,7 @@
 	}
 
 	&.avatar-small {
-		font-size: 0.625rem; // token gap: $token-font-size-200 (10px) not in package — see missing tokens table
+		font-size: var(--osui-font-size-200);
 		height: $token-scale-600;
 		width: $token-scale-600;
 	}

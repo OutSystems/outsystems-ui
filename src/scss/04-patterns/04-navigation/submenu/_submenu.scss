@@ -273,7 +273,7 @@
 			padding: $token-scale-200 $token-scale-400 $token-scale-200 $token-scale-600;
 
 			&:hover {
-				background-color: $token-primitives-neutral-100; // token gap: $token-bg-surface-hover not in package — using $token-primitives-neutral-100 (#f3f3f3)
+				background-color: var(--osui-bg-surface-hover);
 				color: $token-text-default;
 			}
 
@@ -343,7 +343,7 @@
 		&__items {
 			a {
 				&:hover {
-					background-color: $token-primitives-neutral-100; // token gap: $token-bg-surface-hover not in package — using $token-primitives-neutral-100 (#f3f3f3)
+					background-color: var(--osui-bg-surface-hover);
 					color: $token-text-default;
 				}
 
@@ -367,7 +367,7 @@
 
 	.app-menu-links .osui-submenu__header:hover,
 	.app-menu-links .osui-submenu--is-open .osui-submenu__header {
-		background-color: $token-primitives-neutral-100; // token gap: $token-bg-surface-hover not in package — using $token-primitives-neutral-100 (#f3f3f3)
+		background-color: var(--osui-bg-surface-hover);
 		border-radius: $token-border-radius-200;
 		color: $token-text-default;
 	}
@@ -387,7 +387,7 @@
 		transition: background-color $token-transition-time-150 linear;
 
 		&:hover {
-			background-color: $token-primitives-neutral-100; // token gap: $token-bg-surface-hover not in package — using $token-primitives-neutral-100 (#f3f3f3)
+			background-color: var(--osui-bg-surface-hover);
 			color: $token-text-default;
 		}
 	}
@@ -410,7 +410,7 @@
 			.osui-submenu {
 				&__header {
 					&:hover {
-						background-color: $token-primitives-neutral-100; // token gap: $token-bg-surface-hover not in package — using $token-primitives-neutral-100 (#f3f3f3)
+						background-color: var(--osui-bg-surface-hover);
 						border-bottom: none;
 						border-left: none;
 						border-radius: $token-border-radius-200;
@@ -421,7 +421,7 @@
 
 		// Side menu: direct link hover
 		.app-menu-links > a:hover {
-			background-color: $token-primitives-neutral-100; // token gap: $token-bg-surface-hover not in package — using $token-primitives-neutral-100 (#f3f3f3)
+			background-color: var(--osui-bg-surface-hover);
 			border-radius: $token-border-radius-200;
 			color: $token-text-default;
 		}
@@ -438,30 +438,30 @@
 
 // Top menu: header navigation direct link
 .desktop .header-navigation .app-menu-links > a.active:hover {
-	background-color: $token-primitives-neutral-100; // token gap: $token-bg-surface-hover not in package — using $token-primitives-neutral-100 (#f3f3f3)
+	background-color: var(--osui-bg-surface-hover);
 	color: $token-semantics-primary-base;
 }
 
 // Top menu: submenu items
 .desktop .osui-submenu__items a.active:hover {
-	background-color: $token-primitives-neutral-100; // token gap: $token-bg-surface-hover not in package — using $token-primitives-neutral-100 (#f3f3f3)
+	background-color: var(--osui-bg-surface-hover);
 }
 
 // Side menu desktop: direct link
 .desktop .layout-side .app-menu-links > a.active:hover {
-	background-color: $token-primitives-neutral-100; // token gap: $token-bg-surface-hover not in package — using $token-primitives-neutral-100 (#f3f3f3)
+	background-color: var(--osui-bg-surface-hover);
 	color: $token-semantics-primary-base;
 }
 
 // Side menu desktop: submenu header
 .desktop .layout-side .app-menu-links .osui-submenu.active .osui-submenu__header:hover {
-	background-color: $token-primitives-neutral-100; // token gap: $token-bg-surface-hover not in package — using $token-primitives-neutral-100 (#f3f3f3)
+	background-color: var(--osui-bg-surface-hover);
 	color: var(--osui-submenu-active-border-color);
 }
 
 // Side menu desktop: submenu items
 .desktop .layout-side .app-menu-links .osui-submenu__items a.active:hover {
-	background-color: $token-primitives-neutral-100; // token gap: $token-bg-surface-hover not in package — using $token-primitives-neutral-100 (#f3f3f3)
+	background-color: var(--osui-bg-surface-hover);
 	color: $token-semantics-primary-base;
 }
 
@@ -497,7 +497,7 @@
 			}
 
 			&:hover {
-				background-color: $token-primitives-neutral-100; // token gap: $token-bg-surface-hover not in package — using $token-primitives-neutral-100 (#f3f3f3)
+				background-color: var(--osui-bg-surface-hover);
 				border-radius: $token-border-radius-200;
 				color: $token-text-default;
 			}
@@ -526,7 +526,7 @@
 				}
 
 				&:hover {
-					background-color: $token-primitives-neutral-100; // token gap: $token-bg-surface-hover not in package — using $token-primitives-neutral-100 (#f3f3f3)
+					background-color: var(--osui-bg-surface-hover);
 					color: $token-text-default;
 				}
 			}
@@ -535,7 +535,7 @@
 
 	.app-menu-links > a {
 		&:hover {
-			background-color: $token-primitives-neutral-100; // token gap: $token-bg-surface-hover not in package — using $token-primitives-neutral-100 (#f3f3f3)
+			background-color: var(--osui-bg-surface-hover);
 			border-radius: $token-border-radius-200;
 			color: $token-text-default;
 		}
@@ -543,20 +543,20 @@
 
 	// Mobile/tablet: submenu header active hover
 	.osui-submenu.active .osui-submenu__header:hover {
-		background-color: $token-primitives-neutral-100; // token gap: $token-bg-surface-hover not in package — using $token-primitives-neutral-100 (#f3f3f3)
+		background-color: var(--osui-bg-surface-hover);
 		border-radius: $token-border-radius-200;
 		color: var(--osui-submenu-active-border-color);
 	}
 
 	// Mobile/tablet: submenu items active hover
 	.osui-submenu__items a.active:hover {
-		background-color: $token-primitives-neutral-100; // token gap: $token-bg-surface-hover not in package — using $token-primitives-neutral-100 (#f3f3f3)
+		background-color: var(--osui-bg-surface-hover);
 		color: $token-semantics-primary-base;
 	}
 
 	// Mobile/tablet: direct link active hover
 	.app-menu-links > a.active:hover {
-		background-color: $token-primitives-neutral-100; // token gap: $token-bg-surface-hover not in package — using $token-primitives-neutral-100 (#f3f3f3)
+		background-color: var(--osui-bg-surface-hover);
 		color: $token-semantics-primary-base;
 	}
 

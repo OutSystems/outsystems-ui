@@ -8,7 +8,7 @@
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-list-item-border-color:            #{$token-border-default};
 	--osui-list-item-background:              #{$token-bg-surface-default};
-	--osui-list-item-hover-background:        #{$token-border-subtle}; // token gap: $token-bg-surface-hover (#f3f3f3) not in package
+	--osui-list-item-hover-background:        var(--osui-bg-surface-hover);
 	--osui-list-item-selected-background:     #{$token-semantics-primary-base};
 	// ───────────────────────────────────────────────────────────────────
 

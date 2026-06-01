@@ -94,11 +94,40 @@
 	--osui-bg-surface-subtle: #fafbfc; /* future: --token-bg-surface-subtle */
 	--osui-bg-neutral-subtlest: #f5f5f5; /* future: --token-bg-neutral-subtlest */
 
-	/*! Motion duration — fills the gap between $token-transition-duration-300 (300ms) and -500 (500ms) */
-	--osui-motion-duration-400: 400ms; /* future: --token-transition-duration-400 */
+	/*! Motion durations with no $token-transition-time-* equivalent (130 / 180 / 400ms) */
+	--osui-motion-duration-130: 130ms; /* future: --token-transition-time-130 */
+	--osui-motion-duration-180: 180ms; /* future: --token-transition-time-180 */
+	--osui-motion-duration-400: 400ms; /* future: --token-transition-time-400 */
 
 	/*! Semantic orange — Timeline state variant; no semantics-orange-* family in tokens yet */
 	--osui-semantics-orange-base: #{$token-primitives-orange-700}; /* future: --token-semantics-orange-base */
+
+	/*! Semantic primary hover — no semantics-primary-hover in tokens yet */
+	--osui-semantics-primary-hover: #0b47b8; /* future: --token-semantics-primary-hover */
+
+	/*! Surface / border states — interim until semantic state tokens land */
+	--osui-bg-surface-hover: #{$token-primitives-neutral-100}; /* future: --token-bg-surface-hover (#f3f3f3) */
+	--osui-bg-surface-active: color-mix(
+		in srgb,
+		#{$token-semantics-primary-base} 8%,
+		transparent
+	); /* future: --token-bg-surface-active */
+	--osui-border-subtle: #{$token-primitives-neutral-300}; /* future: --token-border-subtle (package maps to neutral-100; neutral-300 is the intended value) */
+
+	/*! Disabled opacity — no $token-opacity-* family yet */
+	--osui-opacity-disabled: 0.45; /* future: --token-opacity-disabled */
+
+	/*! Low elevation steps below $token-elevation-1 */
+	--osui-elevation-25: 0 1px 2px rgba(0, 0, 0, 0.08); /* future: --token-elevation-25 */
+	--osui-elevation-50: 0 1px 2px rgba(0, 0, 0, 0.2); /* future: --token-elevation-50 */
+
+	/*! Type-scale gaps */
+	--osui-font-size-200: 0.625rem; /* future: --token-font-size-200 (10px) */
+	--osui-font-line-height-default: 1.4; /* future: --token-font-line-height-default */
+	--osui-font-line-height-full: 1; /* future: --token-font-line-height-full (unitless) */
+
+	/*! Spacing-scale gap between scale-300 (12px) and scale-400 (16px) */
+	--osui-scale-350: 14px; /* future: --token-scale-350 */
 
 	/*! Legacy shape bridge — used by TS GetBorderRadiusValueFromShapeType() via --border-radius-<shape> */
 	--border-radius-none:    #{$token-border-radius-0};    /* 0px;   TS reads this for ShapeType.Sharp */

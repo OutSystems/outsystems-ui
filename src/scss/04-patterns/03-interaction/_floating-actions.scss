@@ -42,7 +42,7 @@
 			.floating-actions-item {
 				opacity: 1;
 				transform: translateY(0px) translateZ(0) scale(1);
-				transition: opacity 180ms /* token gap */ $token-transition-curve-base, transform 180ms /* token gap */ $token-transition-curve-base;
+				transition: opacity var(--osui-motion-duration-180) $token-transition-curve-base, transform var(--osui-motion-duration-180) $token-transition-curve-base;
 				transition-delay: calc(var(--delay) * 40ms); // design-spec: stagger delay
 			}
 
@@ -119,7 +119,7 @@
 		justify-content: center;
 		margin-left: $token-scale-400;
 		transform: translateZ(0) scale(0.3);
-		transition: transform 180ms /* token gap */ $token-transition-curve-base;
+		transition: transform var(--osui-motion-duration-180) $token-transition-curve-base;
 		transition-delay: calc(var(--delay) * 40ms); // design-spec: stagger delay
 		width: $token-scale-1000;
 
@@ -148,7 +148,7 @@
 		pointer-events: auto;
 		transform: rotate(0deg) translateZ(0);
 		transform-origin: center center;
-		transition: transform 180ms /* token gap */ $token-transition-curve-linear, box-shadow 180ms /* token gap */ $token-transition-curve-linear;
+		transition: transform var(--osui-motion-duration-180) $token-transition-curve-linear, box-shadow var(--osui-motion-duration-180) $token-transition-curve-linear;
 		width: $token-scale-1400;
 
 		&:hover {
@@ -165,7 +165,7 @@
 		position: fixed;
 		right: 0;
 		top: 0;
-		transition: opacity 180ms /* token gap */ $token-transition-curve-base;
+		transition: opacity var(--osui-motion-duration-180) $token-transition-curve-base;
 		width: 100vw;
 		z-index: var(--osui-floating-actions-layer);
 

@@ -82,7 +82,7 @@
 
 			a,
 			button {
-				opacity: 0.4; // no $token-opacity-disabled available
+				opacity: var(--osui-opacity-disabled);
 				pointer-events: none;
 			}
 		}
@@ -95,7 +95,7 @@
 		display: flex;
 		font-size: $token-font-size-400;
 		line-height: 1;
-		padding: 14px $token-scale-600; // 14px = scale-350, no $token-scale-350 available
+		padding: var(--osui-scale-350) $token-scale-600;
 		width: 100%;
 
 		&:hover {

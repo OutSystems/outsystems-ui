@@ -22,7 +22,7 @@
 		border-radius: $token-border-radius-full;
 		box-shadow: 0 0 0 2px var(--osui-icon-badge-ring-color);
 		display: inline-flex;
-		font-size: 0.625rem; // token gap: $token-font-size-200 (10px) not yet in package
+		font-size: var(--osui-font-size-200);
 		font-weight: $token-font-weight-bold;
 		height: $token-scale-400;
 		justify-content: center;

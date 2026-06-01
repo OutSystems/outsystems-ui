@@ -31,7 +31,7 @@
 			border-radius: $token-border-radius-full;
 			height: var(--osui-switch-height);
 			opacity: 1;
-			transition: background-color $token-transition-time-200 $token-transition-curve-linear; // token gap: no $token-transition-time-180, using 200ms
+			transition: background-color var(--osui-motion-duration-180) $token-transition-curve-linear;
 			width: var(--osui-switch-width);
 		}
 
@@ -39,13 +39,13 @@
 			background-color: var(--osui-switch-thumb-color);
 			border: 0;
 			bottom: 0;
-			box-shadow: 0 1px 2px rgba(0, 0, 0, .2); // token gap: $token-elevation-50 missing
+			box-shadow: var(--osui-elevation-50);
 			height: var(--osui-switch-thumb-size);
 			left: 0;
 			margin-left: 0;
 			top: calc((var(--osui-switch-height) - var(--osui-switch-thumb-size)) / 2);
 			transform: translateX(var(--osui-switch-thumb-offset-start)) translateZ(0);
-			transition: transform $token-transition-time-200 $token-transition-curve-linear; // token gap: no $token-transition-time-180, using 200ms
+			transition: transform var(--osui-motion-duration-180) $token-transition-curve-linear;
 			width: var(--osui-switch-thumb-size);
 		}
 	}
@@ -80,13 +80,13 @@
 			&:after {
 				background-color: color-mix(in srgb, #{$token-primitives-base-white} 60%, transparent);
 				border: 0;
-				box-shadow: 0 1px 2px rgba(0, 0, 0, .08); // token gap: $token-elevation-25 missing
+				box-shadow: var(--osui-elevation-25);
 			}
 		}
 
 		&:checked:empty:before {
 			background-color: var(--osui-switch-checked-track-color);
-			opacity: 0.45; // token gap: $token-opacity-disabled missing
+			opacity: var(--osui-opacity-disabled);
 		}
 	}
 

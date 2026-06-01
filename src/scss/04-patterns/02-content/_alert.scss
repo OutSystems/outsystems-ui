@@ -45,7 +45,7 @@
 		flex: 1;
 		font-size: $token-font-size-350;
 		font-weight: $token-font-weight-medium;
-		line-height: 1.4; // no token match for line-height-body
+		line-height: var(--osui-font-line-height-default);
 	}
 
 	&-info {

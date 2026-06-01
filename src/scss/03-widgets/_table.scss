@@ -6,7 +6,7 @@
 ///
 .table {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-table-border-color: #{$token-primitives-neutral-300}; // token gap: $token-border-subtle maps to neutral-100 in our package
+	--osui-table-border-color: var(--osui-border-subtle);
 	--osui-table-border-radius: #{$token-border-radius-200};
 	--osui-table-header-background: transparent;
 	--osui-table-header-color: #{$token-text-default};

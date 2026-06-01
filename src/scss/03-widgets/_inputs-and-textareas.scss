@@ -112,14 +112,14 @@
 	color: $token-text-default;
 	font-size: $token-font-size-350;
 	font-weight: $token-font-weight-semi-bold;
-	line-height: 1.4; // token gap: $token-font-line-height-default not in package
+	line-height: var(--osui-font-line-height-default);
 }
 
 .help-block,
 .input-helper {
 	color: $token-text-subtlest;
 	font-size: $token-font-size-300;
-	line-height: 1.4; // token gap: $token-font-line-height-default not in package
+	line-height: var(--osui-font-line-height-default);
 	margin-top: $token-scale-100;
 }
 

@@ -37,7 +37,7 @@
 	gap: $token-scale-200;
 	height: var(--osui-btn-height);
 	justify-content: center;
-	line-height: 1; // token gap: $token-font-line-height-full resolves to 100%, not unitless 1
+	line-height: var(--osui-font-line-height-full);
 	margin: 0;
 	padding: $token-scale-0 $token-scale-400;
 	transition:
@@ -109,7 +109,7 @@
 	}
 
 	&[disabled] {
-		opacity: 0.45; // token gap: $token-opacity-disabled missing from package
+		opacity: var(--osui-opacity-disabled);
 		pointer-events: none;
 	}
 }
@@ -131,8 +131,8 @@
 
 		// Primary: explicit darker background + border (same specificity, later → wins)
 		&-primary:hover {
-			background-color: #0b47b8; // token gap: $token-semantics-primary-hover missing from package
-			border-color: #0b47b8; // token gap: $token-semantics-primary-hover missing from package
+			background-color: var(--osui-semantics-primary-hover);
+			border-color: var(--osui-semantics-primary-hover);
 		}
 
 		// Success + error: darken via filter; restore own border-color so base hover doesn't bleed
