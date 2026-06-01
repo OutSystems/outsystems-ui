@@ -7,7 +7,7 @@
 .bottom-bar-wrapper {
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-bottom-bar-background:         #{$token-bg-surface-default};
-	--osui-bottom-bar-border-color:       #{$token-primitives-neutral-300};
+	--osui-bottom-bar-border-color:       #{$token-border-default};
 	--osui-bottom-bar-item-color:         #{$token-text-subtlest};
 	--osui-bottom-bar-item-active-color:  #{$token-semantics-primary-base};
 	// ───────────────────────────────────────────────────────────────────
@@ -21,17 +21,17 @@
 .bottom-bar {
 	display: flex;
 	&:empty:after {
-		color: $token-primitives-neutral-700;
+		color: $token-text-subtlest;
 		content: 'Add Bottom Bar Items to this Container';
 		display: block;
-		font-size: 12px;
-		padding: 20px;
+		font-size: $token-font-size-300;
+		padding: $token-scale-500;
 		text-align: center;
 	}
 	& > a,
 	& > div {
 		flex: 1;
-		max-width: 150px;
+		max-width: 150px; // design-spec
 		overflow: hidden;
 	}
 	& > a {
@@ -55,7 +55,7 @@
 			justify-content: center;
 		}
 		&-text {
-			font-size: 10px;
+			font-size: var(--osui-font-size-200);
 			overflow: hidden;
 			text-overflow: ellipsis;
 			white-space: nowrap;
@@ -92,7 +92,7 @@
 	.bottom-bar {
 		& > a:focus {
 			background-color: transparent;
-			box-shadow: 0 0 0 3px $token-primitives-yellow-500;
+			box-shadow: 0 0 0 $token-border-size-075 var(--color-focus-outer);
 		}
 	}
 }

@@ -6,7 +6,7 @@
 ///
 .list-item-content {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-list-item-content-title-color: $token-text-default;
+	--osui-list-item-content-title-color: #{$token-text-default};
 	--osui-list-item-content-text-color:  #{$token-primitives-neutral-700};
 	// ───────────────────────────────────────────────────────────────────
 

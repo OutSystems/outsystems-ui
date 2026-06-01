@@ -6,8 +6,8 @@
 ///
 .animated-label {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-animated-label-color:              #{$token-text-subtlest};
-	--osui-animated-label-border-color:       #{$token-border-input-default};
+	--osui-animated-label-color: #{$token-text-subtlest};
+	--osui-animated-label-border-color: #{$token-border-input-default};
 	--osui-animated-label-focus-border-color: #{$token-semantics-primary-base};
 	// ───────────────────────────────────────────────────────────────────
 
@@ -16,7 +16,15 @@
 	&.active {
 		.animated-label-text {
 			font-size: $token-font-size-300;
-			top: -10px;
+			top: 0;
+			transform: translateY(-50%);
+
+			label {
+				color: $token-primitives-neutral-1000;
+				font-size: $token-font-size-300;
+				font-weight: $token-font-weight-medium;
+				letter-spacing: $token-font-letter-spacing-0;
+			}
 		}
 
 		.animated-label-input {
@@ -31,13 +39,27 @@
 	}
 
 	&-text {
+		background-color: var(--osui-input-background, #{$token-bg-input-default});
 		color: var(--osui-animated-label-color);
 		font-size: $token-font-size-350;
+		left: $token-scale-300;
+		padding: 0 $token-scale-100;
 		pointer-events: none;
 		position: absolute;
-		top: 8px;
-		transition: all 300ms ease;
+		top: 50%;
+		transform: translateY(-50%);
+		transition:
+			top $token-transition-time-200 ease,
+			font-size $token-transition-time-200 ease,
+			color $token-transition-time-100 ease,
+			transform $token-transition-time-200 ease;
 		z-index: var(--os-layer-screen);
+
+		label {
+			color: var(--osui-input-color, #{$token-text-default});
+			font-size: $token-font-size-350;
+			font-weight: $token-font-weight-regular;
+		}
 
 		.icon {
 			padding-right: $token-scale-400;
@@ -109,6 +131,132 @@
 			}
 		}
 	}
+
+	/* ============================================================
+	   Outlined variant
+	   ============================================================ */
+	background-color: var(--osui-input-background, #{$token-bg-input-default});
+	border: $token-border-size-025 solid var(--osui-animated-label-border-color);
+	border-radius: var(--osui-input-border-radius, #{$token-border-radius-200});
+	overflow: visible;
+	transition: border-color $token-transition-time-100 ease;
+
+	&:has(.input-with-icon-content-icon:not(:empty)) {
+		.animated-label-text {
+			left: $token-scale-1000;
+		}
+	}
+
+	&:focus-within {
+		border-color: var(--osui-animated-label-focus-border-color);
+
+		.animated-label-text {
+			color: var(--osui-animated-label-focus-border-color);
+
+			label {
+				color: var(--osui-animated-label-focus-border-color);
+			}
+		}
+	}
+
+	&:has(.not-valid) {
+		border-color: $token-semantics-danger-base;
+		margin-bottom: $token-scale-900;
+
+		.animated-label-text {
+			color: $token-semantics-danger-base;
+
+			label {
+				color: $token-semantics-danger-base;
+			}
+		}
+	}
+
+	&:has(textarea) {
+		.animated-label-text {
+			top: $token-scale-400;
+			transform: none;
+		}
+	}
+
+	&.active:has(textarea) {
+		.animated-label-text {
+			top: 0;
+			transform: translateY(-50%);
+		}
+	}
+
+	// Nested to raise specificity above global .form-control focus rules
+	.animated-label-input {
+		position: relative;
+
+		span.input-text {
+			display: block;
+		}
+
+		&:not(:has(textarea)) {
+			height: $token-scale-1000;
+
+			span.input-text {
+				height: 100%;
+			}
+		}
+
+		.form-control {
+			&[data-input] {
+				background-color: transparent;
+				border: none;
+				border-radius: 0;
+				height: 100%;
+				padding: 0 $token-scale-400;
+				width: 100%;
+
+				&:focus {
+					border: none;
+					box-shadow: none;
+					outline: none;
+				}
+			}
+
+			&[data-textarea] {
+				background-color: transparent;
+				border: none;
+				border-radius: 0;
+				margin: 0;
+				padding: $token-scale-400 $token-scale-400 0;
+				width: 100%;
+
+				&:focus {
+					border: none;
+					box-shadow: none;
+					outline: none;
+				}
+			}
+		}
+
+		.validation-message {
+			bottom: auto;
+			left: 0;
+			position: absolute;
+			top: calc(100% + #{$token-scale-100});
+		}
+
+		.input-with-icon {
+			height: $token-scale-1000;
+
+			.input-with-icon-content-icon:not(:empty) + .input-with-icon-input .form-control[data-input] {
+				padding-left: $token-scale-1000;
+			}
+
+			&.input-with-icon-right
+				.input-with-icon-content-icon:not(:empty)
+				+ .input-with-icon-input
+				.form-control[data-input] {
+				padding-left: $token-scale-400;
+				padding-right: $token-scale-1000;
+			}
+		}
+	}
 }
 
 /* Fix for animated labels inside lists */
@@ -152,13 +300,13 @@
 .tablet,
 .phone {
 	.animated-label-text {
-		top: 14px;
+		top: var(--osui-scale-350);
 	}
 
 	.form-control {
 		&[data-textarea] {
 			& + span.validation-message {
-				bottom: 10px;
+				bottom: $token-scale-250;
 			}
 		}
 	}
@@ -174,11 +322,12 @@
 			&:hover {
 				border-color: $token-border-input-press;
 			}
-
-			&:focus {
-				box-shadow: 0 3px 0 0 $token-primitives-yellow-500;
-			}
 		}
+	}
+
+	.animated-label:focus-within {
+		border-color: var(--osui-animated-label-border-color);
+		box-shadow: 0 0 0 $token-border-size-075 var(--color-focus-outer);
 	}
 }
 
@@ -195,7 +344,7 @@
 			.animated-label-text {
 				background-color: $token-text-subtlest;
 				font-size: $token-font-size-350;
-				top: -16px;
+				top: -16px; // design-spec: high-contrast label lift
 			}
 		}
 	}

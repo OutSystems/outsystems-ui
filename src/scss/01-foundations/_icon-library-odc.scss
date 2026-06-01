@@ -156,7 +156,7 @@ body.iconLibrary-phosphor {
 }
 
 .is-rtl .dropdown-container:after {
-	left: var(--space-base);
+	left: $token-scale-400;
 	right: auto;
 }
 

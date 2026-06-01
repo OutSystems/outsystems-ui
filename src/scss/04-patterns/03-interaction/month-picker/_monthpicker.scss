@@ -35,7 +35,7 @@
 
 			&:before,
 			&:after {
-				-servicestudio-color: var(--color-indigo);
+				-servicestudio-color: $token-semantics-primary-base;
 				-servicestudio-font-family: var(--osui-icon-font-family);
 				-servicestudio-font-size: clamp(10px, 1.7vw, 20px);
 				-servicestudio-position: absolute;

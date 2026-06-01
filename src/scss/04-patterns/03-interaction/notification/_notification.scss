@@ -7,21 +7,22 @@
 .osui-notification {
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-notification-background:    #{$token-bg-surface-default};
-	--osui-notification-border-color:  #{$token-border-default};
-	--osui-notification-border-width:  #{$token-border-size-025};
-	--osui-notification-border-radius: #{$token-border-radius-100};
+	--osui-notification-border-radius: #{$token-border-radius-200};
 	--osui-notification-shadow:        #{$token-elevation-4};
-	--osui-notification-color:         $token-text-default;
-	--osui-notification-padding:       #{$token-scale-600};
+	--osui-notification-color:         #{$token-text-default};
+	--osui-notification-padding:       #{$token-scale-300} #{$token-scale-400};
 	// ───────────────────────────────────────────────────────────────────
 
 	--osui-notification-margin: #{$token-scale-600};
 
+	align-items: flex-start;
 	background-color: var(--osui-notification-background);
+	border: 0;
 	border-radius: var(--osui-notification-border-radius);
-	border: var(--osui-notification-border-width) solid var(--osui-notification-border-color);
 	box-shadow: var(--osui-notification-shadow);
 	color: var(--osui-notification-color);
+	display: flex;
+	gap: $token-scale-200;
 	max-width: calc(100vw - (var(--osui-notification-margin) * 2));
 	opacity: 0;
 	padding: var(--osui-notification-padding);
@@ -38,6 +39,27 @@
 	& {
 		-servicestudio-opacity: 1;
 		-servicestudio-position: relative;
+	}
+
+	// Type variants — aligned with Alert and runtime-mobile-widgets-js feedbackMessage
+	&--is-info {
+		--osui-notification-background: #{$token-bg-info-subtle-default};
+		--osui-notification-color:      #{$token-text-info};
+	}
+
+	&--is-success {
+		--osui-notification-background: #{$token-bg-success-subtle-default};
+		--osui-notification-color:      #{$token-text-success};
+	}
+
+	&--is-error {
+		--osui-notification-background: #{$token-bg-danger-subtle-default};
+		--osui-notification-color:      #{$token-text-danger};
+	}
+
+	&--is-warning {
+		--osui-notification-background: #{$token-bg-warning-subtle-default};
+		--osui-notification-color:      #{$token-text-warning};
 	}
 
 	// Service Studio Preview

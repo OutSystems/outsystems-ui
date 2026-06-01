@@ -1,15 +1,6 @@
 // TimePicker
 .osui-timepicker__dropdown {
 	.numInputWrapper {
-		span {
-			&.arrowUp:after {
-				border-bottom-color: $token-border-input-press;
-			}
-			&.arrowDown:after {
-				border-top-color: $token-border-input-press;
-			}
-		}
-
 		.numInput {
 			color: $token-text-default;
 		}

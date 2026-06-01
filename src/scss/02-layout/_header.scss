@@ -55,28 +55,6 @@
 }
 
 ///
-.menu-icon {
-	background-color: transparent;
-	border: none;
-	cursor: pointer;
-	display: flex;
-	flex-direction: column;
-	height: 100%;
-	justify-content: center;
-	margin-right: $token-scale-600;
-	padding: 0;
-	width: 24px;
-
-	&-line {
-		background-color: $token-text-subtlest;
-		border-radius: 20px;
-		height: 3px;
-		margin: 2px 0;
-		width: 24px;
-	}
-}
-
-///
 .menu-back {
 	color: $token-text-subtlest;
 }

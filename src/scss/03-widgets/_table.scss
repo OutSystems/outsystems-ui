@@ -6,19 +6,18 @@
 ///
 .table {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-table-border-color: #{$token-border-default};
+	--osui-table-border-color: var(--osui-border-subtle);
 	--osui-table-border-radius: #{$token-border-radius-200};
-	--osui-table-header-background: #{$token-bg-neutral-subtle-default};
-	--osui-table-header-color: #{$token-text-subtle};
+	--osui-table-header-background: transparent;
+	--osui-table-header-color: #{$token-text-default};
 	--osui-table-cell-background: #{$token-bg-surface-default};
 	--osui-table-row-hover-background: #{$token-bg-input-disabled};
-	--osui-table-row-stripe-background: #{$token-bg-neutral-subtle-default};
+	--osui-table-row-stripe-background: #{$token-bg-neutral-subtlest-default};
 	--osui-table-sorted-color: #{$token-semantics-primary-base};
 	--osui-table-row-selected-background: #{$token-semantics-primary-base};
 	// ───────────────────────────────────────────────────────────────────
 
-	border: $token-border-size-025 solid var(--osui-table-border-color);
-	border-radius: var(--osui-table-border-radius);
+	border: none;
 	border-spacing: 0;
 	empty-cells: show;
 	white-space: nowrap;
@@ -35,20 +34,11 @@
 			background-color: var(--osui-table-header-background);
 			border-bottom: $token-border-size-025 solid var(--osui-table-border-color);
 			color: var(--osui-table-header-color);
+			font-size: $token-font-size-350;
 			font-weight: $token-font-weight-semi-bold;
-			height: 48px;
+			height: $token-scale-1200;
 			padding: $token-scale-0 $token-scale-600;
 			text-align: left;
-
-			&:first-child {
-				border-radius: $token-border-radius-200 $token-border-radius-0 $token-border-radius-0
-					$token-border-radius-0;
-			}
-
-			&:last-child {
-				border-radius: $token-border-radius-0 $token-border-radius-200 $token-border-radius-0
-					$token-border-radius-0;
-			}
 
 			&.sortable {
 				cursor: pointer;
@@ -66,27 +56,29 @@
 		}
 
 		&.table-row-selected td {
-			background: var(--osui-table-row-selected-background)
-				linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9));
+			background: color-mix(in srgb, var(--osui-table-row-selected-background) 10%, #{$token-bg-surface-default});
 		}
 
 		td {
 			background: var(--osui-table-cell-background);
 			border-bottom: $token-border-size-025 solid var(--osui-table-border-color);
-			height: 56px;
+			color: $token-text-default;
+			font-size: $token-font-size-350;
+			height: $token-scale-1400;
 			padding: $token-scale-200 $token-scale-600;
+			transition: background-color $token-transition-time-100 ease; // no token match for ease
 			vertical-align: inherit;
 		}
 
 		&-small {
 			td {
-				height: 48px;
+				height: $token-scale-1200;
 			}
 		}
 
 		&-medium {
 			td {
-				height: 64px;
+				height: $token-scale-1600;
 			}
 		}
 
@@ -103,17 +95,13 @@
 	.table-row:last-child {
 		& > td {
 			border-bottom: none;
-
-			&:last-child {
-				border-radius: $token-border-radius-0 $token-border-radius-0 $token-border-radius-200
-					$token-border-radius-0;
-			}
-		}
-
-		& > td:first-child {
-			border-radius: $token-border-radius-0 $token-border-radius-0 $token-border-radius-0 $token-border-radius-200;
 		}
 	}
+}
+
+///
+.table-cell-secondary {
+	color: $token-text-subtle;
 }
 
 // Responsive --------------------------------------------------------------------
@@ -283,7 +271,7 @@
 ///
 .has-accessible-features {
 	th.sortable:focus {
-		box-shadow: 0 0 0 3px $token-primitives-yellow-500;
+		box-shadow: 0 0 0 $token-border-size-075 var(--color-focus-outer);
 		position: relative;
 		z-index: var(--os-layer-screen);
 	}

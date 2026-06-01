@@ -70,12 +70,12 @@
 
 				&:hover::-webkit-scrollbar-thumb {
 					background-color: rgba(173, 181, 189, 0.5);
-					border-radius: 6px;
+					border-radius: $token-scale-150;
 				}
 
 				&::-webkit-scrollbar-thumb:hover {
 					background-color: rgba(106, 113, 120, 0.5);
-					border-radius: 6px;
+					border-radius: $token-scale-150;
 				}
 			}
 		}
@@ -96,12 +96,12 @@
 
 	&:hover::-webkit-scrollbar-thumb {
 		background-color: rgba(173, 181, 189, 0.5);
-		border-radius: 6px;
+		border-radius: $token-scale-150;
 	}
 
 	&::-webkit-scrollbar-thumb:hover {
 		background-color: rgba(106, 113, 120, 0.5);
-		border-radius: 6px;
+		border-radius: $token-scale-150;
 	}
 }
 

@@ -6,24 +6,27 @@
 ///
 [data-checkbox] {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-checkbox-background:     #{$token-bg-input-default};
-	--osui-checkbox-border-color:   #{$token-border-input-default};
-	--osui-checkbox-border-radius:  #{$token-border-radius-200};
-	--osui-checkbox-checked-color:  #{$token-semantics-primary-base};
+	--osui-checkbox-size: #{$token-scale-600};
+	--osui-checkbox-background: #{$token-bg-input-default};
+	--osui-checkbox-border-color: #{$token-border-input-default};
+	--osui-checkbox-border-radius: #{$token-border-radius-200};
+	--osui-checkbox-checked-color: #{$token-semantics-primary-base};
 	// ───────────────────────────────────────────────────────────────────
 
-	height: 24px;
+	height: var(--osui-checkbox-size);
 	padding: $token-scale-0;
-	width: 24px;
+	width: var(--osui-checkbox-size);
 
 	&:before {
 		background: var(--osui-checkbox-background);
 		border: $token-border-size-025 solid var(--osui-checkbox-border-color);
 		border-radius: var(--osui-checkbox-border-radius);
-		height: 22px;
+		height: calc(var(--osui-checkbox-size) - 2px);
 		opacity: 1;
-		transition: all 180ms linear;
-		width: 22px;
+		transition:
+			background-color var(--osui-motion-duration-180) $token-transition-curve-linear,
+			border-color var(--osui-motion-duration-180) $token-transition-curve-linear;
+		width: calc(var(--osui-checkbox-size) - 2px);
 	}
 
 	&:hover {
@@ -43,10 +46,10 @@
 			border-right: $token-border-size-0 !important;
 			border-top: $token-border-size-0 !important;
 			display: block;
-			height: 4px;
+			height: $token-scale-100;
 			left: 5px;
 			top: 7px;
-			width: 12px;
+			width: $token-scale-300;
 		}
 	}
 
@@ -55,7 +58,7 @@
 
 		&:before,
 		&:checked:before {
-			background-color: $token-bg-input-disabled;
+			background-color: $token-border-subtle;
 			border: $token-border-size-025 solid $token-border-default;
 		}
 
@@ -72,13 +75,7 @@
 .tablet,
 .phone {
 	[data-checkbox] {
-		height: 32px;
-		width: 32px;
-
-		&:before {
-			height: 30px;
-			width: 30px;
-		}
+		--osui-checkbox-size: #{$token-scale-800};
 
 		&:checked {
 			&:after {

@@ -6,8 +6,8 @@
 ///
 .chat {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-chat-message-background:      #{$token-primitives-neutral-300};
-	--osui-chat-message-border-radius:   #{$token-border-radius-100};
+	--osui-chat-message-background:      #{$token-bg-neutral-subtle-default};
+	--osui-chat-message-border-radius:   #{$token-border-radius-200};
 	--osui-chat-message-sent-background: #{$token-semantics-primary-base};
 	--osui-chat-message-sent-color:      #{$token-text-inverse};
 	// ───────────────────────────────────────────────────────────────────
@@ -35,10 +35,10 @@
 		margin-right: $token-scale-400;
 
 		img {
-			border-radius: 50%;
-			height: 40px;
+			border-radius: $token-border-radius-full;
+			height: $token-scale-1000;
 			object-fit: cover;
-			width: 40px;
+			width: $token-scale-1000;
 		}
 	}
 

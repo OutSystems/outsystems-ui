@@ -10,6 +10,7 @@
 // Parent wrapper container
 .vscomp {
 	&-ele {
+		display: block;
 		max-width: initial;
 
 		&.pop-comp-active {
@@ -44,11 +45,11 @@
 		position: absolute;
 		text-indent: 0;
 		top: 0;
-		width: 24px;
+		width: $token-scale-600;
 	}
 
 	&-clear-button:hover {
-		background-color: $token-primitives-neutral-400;
+		background-color: $token-border-default;
 
 		.vscomp-clear-icon {
 			&::after,
@@ -67,6 +68,10 @@
 
 // Wrapper container
 .vscomp-wrapper {
+	&:focus-visible {
+		outline: none;
+	}
+
 	&.focused,
 	&:focus {
 		.vscomp-toggle-button {
@@ -140,17 +145,21 @@
 	&.show-value-as-tags {
 		.vscomp-toggle-button {
 			height: auto;
-			min-height: var(--vscomp-toogle-btn-height);
-			padding: $token-scale-100 $token-scale-1200 $token-scale-0 $token-scale-400;
+			min-height: $token-scale-1000;
+			padding: 6px $token-scale-1200 2px $token-scale-400; // 6px/2px: design-spec vertical rhythm for tag rows, no exact token
 		}
 
 		.vscomp-value-tag {
-			background-color: $token-primitives-neutral-300;
-			border: $token-border-size-0;
-			color: $token-primitives-neutral-700;
+			align-items: center;
+			background-color: $token-border-subtle;
+			border: none;
+			border-radius: $token-border-radius-100;
+			color: $token-text-default;
+			display: inline-flex;
 			font-size: $token-font-size-300;
-			font-weight: $token-font-weight-semi-bold;
-			padding: 6px 35px 6px 10px;
+			font-weight: $token-font-weight-medium;
+			height: $token-scale-600;
+			padding: 0 $token-scale-200;
 			position: relative;
 
 			.vscomp-value-tag-content {
@@ -158,23 +167,31 @@
 			}
 
 			.vscomp-value-tag-clear-button {
-				background-color: $token-primitives-neutral-700;
-				border-radius: 100%;
-				height: 14px;
-				position: absolute;
-				right: 10px;
-				width: 14px;
+				background-color: transparent;
+				border-radius: 0;
+				height: auto;
+				margin-left: $token-scale-100;
+				opacity: 0.5;
+				position: relative;
+				right: auto;
+				top: auto;
+				transform: none;
+				width: auto;
+
+				&:hover {
+					opacity: 1;
+				}
 
 				.vscomp-clear-icon {
-					height: 12px;
+					height: $token-scale-300;
 					left: $token-scale-0;
 					position: relative;
 					top: $token-scale-0;
-					width: 12px;
+					width: $token-scale-300;
 
 					&:before,
 					&:after {
-						color: $token-primitives-neutral-400;
+						color: $token-text-default;
 					}
 				}
 			}
@@ -198,7 +215,7 @@
 			}
 
 			.vscomp-search-container {
-				height: 48px;
+				height: $token-scale-1200;
 			}
 
 			.vscomp-search-input {
@@ -304,11 +321,11 @@
 		background-color: $token-bg-input-default;
 		border-radius: $token-border-radius-100;
 		border: $token-border-size-025 solid $token-border-input-default;
-		height: 16px;
+		height: $token-scale-400;
 		margin-right: $token-scale-200;
 		overflow: visible;
 		transition: background-color 0.25s ease;
-		width: 16px;
+		width: $token-scale-400;
 
 		&:after {
 			backface-visibility: hidden;
@@ -338,24 +355,23 @@
 
 // Top part - Select to open dropdown
 .vscomp-toggle-button {
-	--vscomp-toogle-btn-arrow-size: 22px;
-	--vscomp-toogle-btn-height: 40px;
-	--vscomp-toogle-btn-mobile-height: 48px;
+	--vscomp-toogle-btn-arrow-size: #{$token-font-size-400};
+	--vscomp-toogle-btn-height: #{$token-scale-1000};
+	--vscomp-toogle-btn-mobile-height: #{$token-scale-1200};
 
 	background-color: $token-bg-input-default;
-	border-radius: $token-border-radius-100;
-	border: $token-border-size-025 solid $token-border-input-default;
+	border-radius: $token-border-radius-200;
+	border: $token-border-size-025 solid var(--osui-input-border-color, #{$token-border-default});
 	color: $token-text-default;
 	cursor: pointer;
 	display: inline-flex;
+	font-size: $token-font-size-350;
 	height: var(--vscomp-toogle-btn-height);
 	line-height: var(--vscomp-toogle-btn-height);
 	min-width: 180px;
 	padding: $token-scale-100 $token-scale-1000 $token-scale-100 $token-scale-400;
 	position: relative;
-	transition:
-		height,
-		border-color 0.25s ease;
+	transition: border-color $token-transition-time-100 $token-transition-curve-base;
 	vertical-align: middle;
 	width: 100%;
 
@@ -367,11 +383,11 @@
 		top: 50%;
 		transform: translateY(-50%);
 		transform-origin: center;
-		transition: all 0.25s ease;
+		transition: transform $token-transition-time-100 $token-transition-curve-base;
 	}
 
 	&:hover {
-		border-color: $token-border-input-default;
+		border-color: var(--osui-input-focus-border-color, #{$token-semantics-primary-base});
 	}
 }
 
@@ -391,17 +407,29 @@
 }
 
 // Wrapper options container
-.vscomp-dropbox {
-	--border-color: #{#{$token-border-input-default}};
-	--border-size: #{$token-border-size-025};
+.vscomp-dropbox-container {
+	// Suppress ring on container itself (tabindex="-1", briefly focused on open — ring appears around whole popup)
+	&:focus,
+	&:focus-visible {
+		outline: none;
+		box-shadow: none;
+	}
 
-	background-color: $token-bg-input-default;
-	border-radius: $token-border-radius-100;
-	/* use inner shadow to workaround the border issue that causes content to be blurry */
-	box-shadow: inset var(--border-color) 0 0 0 var(--border-size);
+	// Suppress all browser/global focus rings on descendants — custom rings applied selectively below
+	*:focus,
+	*:focus-visible {
+		outline: none;
+		box-shadow: none;
+	}
+}
+
+.vscomp-dropbox {
+	background-color: $token-bg-surface-default;
+	border: $token-border-size-025 solid $token-border-default;
+	border-radius: $token-border-radius-200;
+	box-shadow: var(--osui-elevation-overlay);
 	overflow: hidden;
-	/* needed so the inner shadow (used as a border) be visible as border-bottom and border-right */
-	padding: 0 var(--border-size) calc(2 * var(--border-size)) var(--border-size);
+	padding: 0;
 
 	// This is an override in order to fix an issue when inside a AlignCenter pattern
 	.vscomp-dropbox-close-button {
@@ -411,7 +439,7 @@
 
 // Options container input search wrapper
 .vscomp-search-container {
-	border-bottom: $token-border-size-025 solid $token-border-input-default;
+	border-bottom: $token-border-size-025 solid $token-border-default;
 	padding: $token-scale-0 $token-scale-200 $token-scale-0 $token-scale-1000;
 	position: relative;
 
@@ -431,10 +459,10 @@
 		display: table;
 		font-size: 0;
 		font-weight: $token-font-weight-semi-bold;
-		height: 24px;
+		height: $token-scale-600;
 		line-height: 1;
 		text-align: center;
-		width: 24px;
+		width: $token-scale-600;
 
 		/* Hide text from provider div in order to keep consistency on styles */
 		text-indent: 100%;
@@ -448,7 +476,7 @@
 		}
 
 		&:hover {
-			background-color: $token-primitives-neutral-400;
+			background-color: $token-border-default;
 		}
 	}
 }
@@ -465,6 +493,7 @@
 
 // Options Container
 .vscomp-options-container {
+	max-height: 240px;
 	z-index: 1;
 
 	&::-webkit-scrollbar {
@@ -482,30 +511,44 @@
 
 // Option Item text
 .vscomp-option-text {
+	align-items: center;
 	color: $token-text-default;
-	display: inline-block;
+	display: flex;
 	font-size: $token-font-size-350;
-
-	// To keep vertical align using inline-block.
-	// This is used so that the text can  get ellipsis if too long
-	* {
-		vertical-align: middle;
-	}
+	gap: $token-scale-100;
+	min-width: 0;
+	overflow: hidden;
 }
 
 // Option Item
 .vscomp-option {
-	align-content: center;
+	align-items: center;
 	background-color: $token-bg-input-default;
-	transition: background-color 0.25s ease;
-
-	&.focused,
-	&.selected {
-		background-color: $token-bg-neutral-subtle-default;
-	}
+	flex-wrap: nowrap;
+	font-weight: $token-font-weight-regular;
+	justify-content: space-between;
+	transition: background-color $token-transition-time-100 $token-transition-curve-base;
 
 	&.focused {
-		background-color: $token-bg-neutral-subtle-default;
+		background-color: $token-border-subtle;
+	}
+
+	&.selected {
+		background-color: transparent;
+
+		&.focused {
+			background-color: transparent;
+		}
+
+		// Right-side checkmark — requires --osui-icon-check + --osui-icon-font-family (icon library)
+		&::after {
+			color: $token-semantics-primary-base;
+			content: var(--osui-icon-check);
+			flex-shrink: 0;
+			font-family: var(--osui-icon-font-family);
+			font-size: $token-font-size-400;
+			margin-left: $token-scale-200;
+		}
 	}
 
 	// Style dropdown group title
@@ -522,6 +565,11 @@
 			}
 		}
 	}
+}
+
+// Hide left checkbox icon — right-side checkmark handles selected state for all variants
+.vscomp-options .vscomp-option .checkbox-icon {
+	display: none;
 }
 
 // Option Item description
@@ -556,12 +604,12 @@
 		box-shadow: none;
 
 		.checkbox-icon {
-			@include a11y-default-outline;
+			box-shadow: 0 0 0 $token-border-size-075 var(--color-focus-outer);
 		}
 	}
 
 	.vscomp-option.focused {
-		@include a11y-default-outline(true);
+		box-shadow: inset 0 0 0 $token-border-size-075 var(--color-focus-outer);
 	}
 }
 

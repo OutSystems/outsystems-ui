@@ -7,14 +7,14 @@
 .osui-bottom-sheet {
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-bottom-sheet-background: #{$token-bg-surface-default};
-	--osui-bottom-sheet-shadow:     #{$token-elevation-3};
-	--osui-bottom-sheet-padding:    #{$token-scale-400};
+	--osui-bottom-sheet-shadow: #{$token-elevation-3};
+	--osui-bottom-sheet-padding: #{$token-scale-400};
 	// ───────────────────────────────────────────────────────────────────
 
 	--bottom-sheet-max-height: calc(100vh - 54px) /*  general value to account for notch and a bit more extra space*/;
 	--border-radius-sharp: none;
-	--border-radius-rounded: 16px;
-	--osui-bottom-sheet-draggable-area: 56px;
+	--border-radius-rounded: #{$token-border-radius-400};
+	--osui-bottom-sheet-draggable-area: #{$token-scale-1400};
 	--osui-bottom-sheet-transition-function: cubic-bezier(0.19, 0.35, 0.56, 0.96);
 
 	background-color: var(--osui-bottom-sheet-background);
@@ -49,12 +49,12 @@
 				background: $token-border-input-default;
 				border-radius: 100px;
 				content: '';
-				height: 4px;
+				height: $token-scale-100;
 				left: 50%;
 				position: absolute;
 				top: $token-scale-400;
 				transform: translateX(-50%);
-				width: 40px;
+				width: $token-scale-1000;
 			}
 
 			&__top-bar {

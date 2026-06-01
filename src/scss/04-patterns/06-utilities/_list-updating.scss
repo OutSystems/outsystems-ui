@@ -5,7 +5,7 @@
 
 ///
 .list-updating {
-	height: 40px;
+	height: $token-scale-1000;
 	margin-top: $token-scale-600;
 	position: relative;
 
@@ -18,11 +18,11 @@
 		border-top-color: $token-primitives-neutral-700;
 		box-sizing: border-box;
 		content: '';
-		height: 40px;
+		height: $token-scale-1000;
 		left: 50%;
 		margin-left: -20px;
 		position: absolute;
-		width: 40px;
+		width: $token-scale-1000;
 
 		// Service Studio Preview
 		& {

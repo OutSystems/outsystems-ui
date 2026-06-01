@@ -82,7 +82,7 @@ body {
 			display: inline-flex;
 
 			&.active {
-				border-bottom: $token-border-size-050 solid $token-semantics-primary-base;
+				border-bottom: $token-border-size-050 solid transparent;
 			}
 		}
 	}
@@ -94,10 +94,11 @@ body {
 	.app-menu-links {
 		a {
 			border-bottom: 0;
-			border-left: $token-border-size-050 solid transparent;
+			border-left: 0;
+			border-radius: $token-border-radius-200;
 			border-top: 0;
 			margin-left: 0;
-			padding: $token-scale-200 $token-scale-600;
+			padding: $token-scale-200 $token-scale-400;
 		}
 	}
 }
@@ -109,19 +110,23 @@ body {
 		& {
 			-servicestudio-align-items: flex-start;
 		}
+	}
+}
 
-		& {
-			display: flex;
-			flex-direction: column;
+.layout-side .app-menu-links,
+.menu-visible .app-menu-links {
+	display: flex;
+	flex-direction: column;
 
-			-webkit-overflow-scrolling: touch;
-			overflow-y: auto;
-			padding-top: $token-scale-200;
-		}
+	-webkit-overflow-scrolling: touch;
+	overflow-y: auto;
+	padding: $token-scale-200;
+	width: 100%;
 
-		a.active {
-			border-left: $token-border-size-050 solid $token-semantics-primary-base;
-		}
+	> a.active {
+		background-color: $token-bg-primary-subtle-default;
+		border-left: 0;
+		border-radius: $token-border-radius-200;
 	}
 }
 
@@ -151,7 +156,8 @@ body {
 		flex-direction: column;
 		-webkit-overflow-scrolling: touch;
 		overflow-y: auto;
-		padding-top: $token-scale-200;
+		padding: $token-scale-200;
+		width: 100%;
 
 		a {
 			// Service Studio preview
@@ -176,6 +182,6 @@ body {
 
 	.app-menu-links a:focus {
 		background-color: transparent;
-		box-shadow: 0 0 0 3px $token-primitives-yellow-500;
+		box-shadow: 0 0 0 $token-border-size-075 var(--color-focus-outer);
 	}
 }

@@ -5,18 +5,30 @@
 
 ///
 .icon-badge {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-icon-badge-ring-color: #{$token-bg-surface-default};
+	// ───────────────────────────────────────────────────────────────────
+
 	display: inline-block;
 	position: relative;
 
 	.badge {
-		@include absolute-left-top(45%, 0);
+		position: absolute;
+		top: 0;
+		right: 0;
+		left: auto;
 
+		align-items: center;
 		border-radius: $token-border-radius-full;
-		font-size: $token-font-size-300;
-		height: 18px;
-		min-width: 18px;
+		box-shadow: 0 0 0 2px var(--osui-icon-badge-ring-color);
+		display: inline-flex;
+		font-size: var(--osui-font-size-200);
+		font-weight: $token-font-weight-bold;
+		height: $token-scale-400;
+		justify-content: center;
+		min-width: $token-scale-400;
 		padding: $token-scale-0 $token-scale-100;
-		transform: translateY(-40%);
+		transform: translate(50%, -50%);
 		white-space: nowrap;
 
 		[data-expression] {

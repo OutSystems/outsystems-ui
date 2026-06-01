@@ -6,13 +6,12 @@
 ///
 .split-screen-wrapper {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-master-detail-background:    #{$token-bg-surface-default};
-	--osui-master-detail-border-color:  #{$token-border-default};
-	--osui-master-detail-border-radius: #{$token-border-radius-100};
+	--osui-master-detail-background: #{$token-bg-surface-default};
+	--osui-master-detail-border-color: #{$token-border-default};
+	--osui-master-detail-border-radius: #{$token-border-radius-0};
 	// ───────────────────────────────────────────────────────────────────
 
 	background-color: var(--osui-master-detail-background);
-	border: $token-border-size-025 solid var(--osui-master-detail-border-color);
 	border-radius: var(--osui-master-detail-border-radius);
 	display: flex;
 	overflow: hidden;
@@ -37,6 +36,35 @@
 
 			.list-item {
 				cursor: pointer;
+				padding: $token-scale-300 $token-scale-600;
+				transition: background-color $token-transition-time-100 $token-transition-curve-base;
+
+				.list-item-content::after {
+					color: $token-text-subtlest;
+					content: var(--osui-icon-chevron-right);
+					flex-shrink: 0;
+					font-family: var(--osui-icon-font-family);
+					font-size: $token-scale-400;
+					margin-left: auto;
+					padding-left: $token-scale-300;
+				}
+
+				&:hover {
+					background-color: var(--osui-bg-surface-hover);
+				}
+
+				&.active,
+				&[aria-selected='true'] {
+					background-color: var(--osui-bg-surface-active);
+				}
+
+				&.active,
+				&[aria-selected='true'],
+				&.list-item-selected {
+					.list-item-content::after {
+						color: $token-semantics-primary-base;
+					}
+				}
 			}
 		}
 
@@ -48,7 +76,7 @@
 			.split-right-close {
 				left: calc(var(--os-safe-area-left) + $token-scale-600);
 				position: fixed;
-				top: 12px;
+				top: $token-scale-300;
 				z-index: var(--os-layer-screen);
 
 				// Service Studio Preview
@@ -82,7 +110,7 @@
 ///
 .layout-native {
 	.split-right-close {
-		left: calc(var(--os-safe-area-left) + 24px);
+		left: calc(var(--os-safe-area-left) + $token-scale-600);
 	}
 }
 
@@ -139,14 +167,14 @@
 				position: fixed;
 				top: 0;
 				transform: translateX(100%) translateZ(0);
-				transition: all 190ms ease-in;
+				transition: transform $token-transition-time-100 $token-transition-curve-base;
 				width: 100%;
 				will-change: transform;
 				z-index: calc(var(--os-layer-above) + var(--os-layer-navigation));
 
 				&.open {
 					transform: translateX(0) translateZ(0);
-					transition: all 330ms ease-out;
+					transition: transform $token-transition-time-200 $token-transition-curve-expressive;
 				}
 
 				// Service Studio Preview
@@ -183,7 +211,7 @@
 	&.ios {
 		.layout-native {
 			.split-right-close {
-				top: calc(var(--os-safe-area-top) + 12px);
+				top: calc(var(--os-safe-area-top) + $token-scale-300);
 			}
 		}
 	}
@@ -192,7 +220,7 @@
 .android {
 	.layout-native {
 		.split-right-close {
-			left: 16px;
+			left: $token-scale-400;
 			top: calc(#{android-safe-area-top()} + 10px);
 		}
 	}
@@ -216,8 +244,9 @@
 				box-shadow: none;
 
 				&:before {
-					border: 3px solid $token-primitives-yellow-500;
 					bottom: 0;
+					box-shadow: inset 0 0 0 $token-border-size-075
+						color-mix(in srgb, #{$token-semantics-primary-base} 100%, transparent);
 					content: '';
 					left: 0;
 					position: absolute;

@@ -6,18 +6,20 @@
 ///
 .radio-button {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-radio-background:     #{$token-bg-input-default};
-	--osui-radio-border-color:   #{$token-border-input-default};
-	--osui-radio-checked-color:  #{$token-semantics-primary-base};
+	--osui-radio-size: #{$token-scale-600};
+	--osui-radio-background: #{$token-bg-input-default};
+	--osui-radio-border-color: #{$token-border-input-default};
+	--osui-radio-checked-color: #{$token-semantics-primary-base};
+	--osui-radio-indicator-border: #{$token-scale-150};
 	// ───────────────────────────────────────────────────────────────────
 
 	appearance: none;
 	cursor: pointer;
 	flex-shrink: 0;
-	height: 24px;
+	height: var(--osui-radio-size);
 	position: relative;
-	transition: all 180ms linear;
-	width: 24px;
+	transition: border-color $token-transition-time-100 $token-transition-curve-linear;
+	width: var(--osui-radio-size);
 
 	&:before,
 	&:after {
@@ -29,26 +31,29 @@
 		border: $token-border-size-025 solid var(--osui-radio-border-color);
 		border-radius: $token-border-radius-full;
 		content: '';
-
 		display: flex;
-		height: 100%;
-
-		transition: all 180ms linear;
-		width: 100%;
+		inset: 0;
+		position: absolute;
+		transition: border-color $token-transition-time-100 $token-transition-curve-linear,
+			background-color $token-transition-time-100 $token-transition-curve-linear;
 	}
 
 	&:hover:before {
-		border: $token-border-size-025 solid $token-border-input-default;
+		border: $token-border-size-025 solid $token-border-input-press;
 	}
 
-	&:focus:before {
-		box-shadow: 0 0 0 2px $token-primitives-yellow-500;
+	&:focus-visible:before {
+		box-shadow: 0 0 0 $token-border-size-075 var(--osui-border-focus-halo);
+	}
+
+	&:focus:not(:focus-visible):before {
+		box-shadow: none;
 	}
 
 	&:checked {
 		&:before {
 			background-color: var(--osui-radio-background);
-			border: 6px solid var(--osui-radio-checked-color);
+			border: var(--osui-radio-indicator-border) solid var(--osui-radio-checked-color);
 		}
 
 		&:hover:before {
@@ -73,7 +78,7 @@
 
 		&:checked:before {
 			background-color: $token-bg-input-disabled;
-			border: 6px solid $token-border-default;
+			border: var(--osui-radio-indicator-border) solid $token-border-default;
 		}
 	}
 }
@@ -93,7 +98,7 @@
 			width: auto;
 
 			&:not(:first-of-type) {
-				margin-left: $token-scale-400;
+				margin-left: $token-scale-500;
 			}
 		}
 	}
@@ -108,14 +113,14 @@
 
 		&:checked:before {
 			background-color: var(--osui-radio-background);
-			border: 6px solid var(--osui-radio-checked-color);
+			border: var(--osui-radio-indicator-border) solid var(--osui-radio-checked-color);
 		}
 	}
 
 	[data-radio-button] {
 		align-items: center;
-		display: inline-flex;
-		margin: $token-scale-200 0;
+		display: flex;
+		margin: $token-scale-300 0;
 
 		label {
 			cursor: pointer;
@@ -145,16 +150,16 @@
 
 		&:after {
 			background-color: $token-bg-input-default;
-			border-radius: 100%;
+			border-radius: $token-border-radius-full;
 			content: '';
-			height: 12px;
+			height: $token-scale-300;
 			left: 50%;
-			margin-left: -6px;
-			margin-top: -6px;
+			margin-left: calc(#{$token-scale-300} * -0.5);
+			margin-top: calc(#{$token-scale-300} * -0.5);
 			position: absolute;
 			position: absolute;
 			top: 50%;
-			width: 12px;
+			width: $token-scale-300;
 		}
 
 		&:focus:before {
@@ -189,7 +194,7 @@
 			[data-radio-button] {
 				&:not(:first-of-type) {
 					margin-left: unset;
-					margin-right: $token-scale-400;
+					margin-right: $token-scale-500;
 				}
 			}
 		}

@@ -138,7 +138,7 @@
 	--token-bg-success-base-press:             #{$token-primitives-green-500};
 	--token-bg-info-base-default:              #{$token-primitives-blue-600};
 	--token-bg-info-base-press:                #{$token-primitives-blue-500};
-	--token-bg-warning-base-default:           $token-primitives-yellow-500;
+	--token-bg-warning-base-default:           #{$token-primitives-yellow-500};
 	--token-bg-warning-base-press:             #{$token-primitives-yellow-400};
 
 	/* ---------------------------------------------------------------------- */
@@ -195,7 +195,7 @@
 			--osui-alert-accent-color: #{$token-primitives-red-500};
 		}
 		&-warning {
-			--osui-alert-accent-color: $token-primitives-yellow-500;
+			--osui-alert-accent-color: #{$token-primitives-yellow-500};
 		}
 	}
 

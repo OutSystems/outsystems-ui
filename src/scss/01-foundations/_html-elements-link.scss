@@ -21,6 +21,13 @@ a {
 		text-decoration: underline;
 	}
 
+	&[data-link] {
+		&:hover,
+		&:focus {
+			text-decoration: none;
+		}
+	}
+
 	&[disabled] {
 		color: $token-text-disabled;
 	}
@@ -43,8 +50,8 @@ a {
 .has-accessible-features {
 	a {
 		&:focus {
-			background-color: $token-primitives-yellow-500;
-			box-shadow: 0 2px $token-text-default;
+			background-color: var(--color-focus-outer);
+			box-shadow: 0 2px var(--color-focus-inner);
 			color: $token-text-default;
 
 			&,

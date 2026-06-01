@@ -6,15 +6,16 @@
 ///
 .pagination {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-pagination-button-background:       #{$token-bg-surface-default};
-	--osui-pagination-button-border-color:     #{$token-border-default};
-	--osui-pagination-button-border-width:     #{$token-border-size-025};
-	--osui-pagination-button-color:            #{$token-text-default};
-	--osui-pagination-button-font-weight:      #{$token-font-weight-medium};
-	--osui-pagination-button-hover-background: #{$token-border-subtle};
-	--osui-pagination-button-size:             #{$token-scale-900};
-	--osui-pagination-active-color:            #{$token-semantics-primary-base};
-	--osui-pagination-counter-color:           #{$token-text-subtlest};
+	--osui-pagination-button-background:        transparent;
+	--osui-pagination-button-border-color:      transparent;
+	--osui-pagination-button-border-width:      #{$token-border-size-025};
+	--osui-pagination-button-color:             #{$token-text-default};
+	--osui-pagination-button-font-weight:       #{$token-font-weight-medium};
+	--osui-pagination-button-hover-background:  #{$token-border-subtle};
+	--osui-pagination-button-size:              #{$token-scale-900};
+	--osui-pagination-active-border-color:      #{$token-border-default};
+	--osui-pagination-active-color:             #{$token-text-default};
+	--osui-pagination-counter-color:            #{$token-text-subtlest};
 	// ───────────────────────────────────────────────────────────────────
 
 	align-items: center;
@@ -30,6 +31,23 @@
 
 		& > .pagination-button:first-child {
 			margin-left: 0;
+		}
+
+		& > .pagination-button:first-child .icon,
+		& > .pagination-button:last-child .icon {
+			display: none;
+		}
+
+		& > .pagination-button:first-child::before {
+			content: var(--osui-icon-chevron-left);
+			font-family: var(--osui-icon-font-family);
+			font-size: $token-scale-400;
+		}
+
+		& > .pagination-button:last-child::before {
+			content: var(--osui-icon-chevron-right);
+			font-family: var(--osui-icon-font-family);
+			font-size: $token-scale-400;
 		}
 
 		.list {
@@ -53,6 +71,9 @@
 		justify-content: center;
 		margin-left: $token-scale-100;
 		padding: 0;
+		transition:
+			background-color $token-transition-time-100 ease,
+			border-color     $token-transition-time-100 ease; // no token match for ease
 		width: var(--osui-pagination-button-size);
 
 		&[disabled] {
@@ -61,7 +82,7 @@
 		}
 
 		&.is--active {
-			border: $token-border-size-025 solid var(--osui-pagination-active-color);
+			border-color: var(--osui-pagination-active-border-color);
 			color: var(--osui-pagination-active-color);
 			cursor: auto;
 			pointer-events: none;
@@ -71,7 +92,7 @@
 			background-color: transparent;
 			border: 0;
 			cursor: auto;
-			width: 16px;
+			width: $token-scale-400;
 		}
 	}
 
@@ -102,12 +123,12 @@
 		width: var(--osui-pagination-button-size);
 	}
 }
+
 // Responsive ---------------------------------------------------------------------------
 ///
 .desktop {
-	.pagination-button:not(.is--ellipsis):hover {
+	.pagination-button:not(.is--ellipsis):not(.is--active):hover {
 		background-color: var(--osui-pagination-button-hover-background);
-		border: var(--osui-pagination-button-border-width) solid var(--osui-pagination-button-border-color);
 	}
 }
 
@@ -116,8 +137,8 @@
 	.pagination {
 		&-button,
 		.form-control[data-input] {
-			height: 40px;
-			width: 40px;
+			height: $token-scale-1000;
+			width: $token-scale-1000;
 		}
 	}
 }
@@ -133,8 +154,8 @@
 
 		&-button,
 		.form-control[data-input] {
-			height: 40px;
-			width: 40px;
+			height: $token-scale-1000;
+			width: $token-scale-1000;
 		}
 	}
 }
@@ -150,13 +171,24 @@
 			transform: rotate(180deg);
 		}
 	}
+
+	.pagination-container {
+		& > .pagination-button:first-child::before {
+			content: var(--osui-icon-chevron-right);
+		}
+
+		& > .pagination-button:last-child::before {
+			content: var(--osui-icon-chevron-left);
+		}
+	}
 }
 
 // Accessibility ---------------------------------------------------------------------------
 ///
 .has-accessible-features {
 	.pagination-button:focus {
-		border-color: $token-text-default;
+		border-color: $token-semantics-primary-base;
+		box-shadow: 0 0 0 $token-border-size-075 color-mix(in srgb, #{$token-semantics-primary-base} 22%, transparent);
 	}
 }
 
@@ -164,6 +196,6 @@
 ///
 .os-high-contrast {
 	.pagination-button.is--active {
-		@include a11y-high-contrast-outline;
+		outline: $token-border-size-075 solid $token-semantics-primary-base;
 	}
 }

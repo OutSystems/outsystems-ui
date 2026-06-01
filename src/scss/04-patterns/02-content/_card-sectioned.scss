@@ -18,7 +18,7 @@
 		&.flex-direction-row {
 			.card {
 				&-image {
-					padding: $token-scale-600 $token-scale-0 $token-scale-600 $token-scale-600;
+					padding: $token-scale-0;
 
 					&.padding-none {
 						padding: $token-scale-0;
@@ -27,7 +27,7 @@
 
 				&-sectioned-right .card-image {
 					order: 2;
-					padding: $token-scale-600 $token-scale-600 $token-scale-600 $token-scale-0;
+					padding: $token-scale-0;
 
 					&.padding-none {
 						padding: $token-scale-0;
@@ -38,7 +38,7 @@
 	}
 
 	&-image {
-		padding: $token-scale-600 $token-scale-600 $token-scale-0;
+		padding: $token-scale-0;
 
 		& img {
 			display: block;
@@ -47,6 +47,7 @@
 	}
 
 	&-title {
+		color: $token-text-default;
 		font-size: $token-font-size-550;
 		font-weight: $token-font-weight-semi-bold;
 		padding: $token-scale-600 $token-scale-600 $token-scale-0 $token-scale-600;
@@ -58,7 +59,15 @@
 	}
 
 	&-bottom {
-		padding: $token-scale-0 $token-scale-600 $token-scale-600;
+		align-items: center;
+		background-color: var(--osui-bg-surface-subtle);
+		border-top: $token-border-size-025 solid var(--osui-border-subtle);
+		display: flex;
+		padding: var(--osui-scale-350) $token-scale-500;
+
+		.btn {
+			width: 100%;
+		}
 	}
 }
 
@@ -69,7 +78,7 @@
 			padding: 0;
 
 			&.flex-direction-row .card-image {
-				padding: $token-scale-400 $token-scale-0 $token-scale-400 $token-scale-400;
+				padding: $token-scale-0;
 
 				&.padding-none {
 					padding: $token-scale-0;
@@ -82,7 +91,7 @@
 		}
 
 		&-image {
-			padding: $token-scale-400 $token-scale-400 $token-scale-0;
+			padding: $token-scale-0;
 
 			&.padding-none {
 				padding: $token-scale-0;

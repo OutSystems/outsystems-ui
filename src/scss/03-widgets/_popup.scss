@@ -25,9 +25,10 @@
 	&-dialog {
 		// ─── Component CSS API ─────────────────────────────────────────────
 		--osui-popup-background:    #{$token-bg-surface-default};
-		--osui-popup-border-radius: #{$token-border-radius-100};
+		--osui-popup-border-radius: #{$token-border-radius-200};
 		--osui-popup-shadow:        #{$token-elevation-4};
 		--osui-popup-padding:       #{$token-scale-600};
+		--osui-popup-max-width:     500px;
 		// ───────────────────────────────────────────────────────────────────
 
 		background-color: var(--osui-popup-background);
@@ -36,7 +37,7 @@
 		box-shadow: var(--osui-popup-shadow);
 		margin: $token-scale-600;
 		max-height: calc(100% - $token-scale-1000);
-		max-width: 500px;
+		max-width: var(--osui-popup-max-width);
 		overflow: visible;
 		padding: var(--osui-popup-padding);
 		width: 100%;
@@ -64,6 +65,6 @@
 .os-high-contrast {
 	.popup-dialog {
 		border: $token-border-size-025 solid $token-bg-surface-default;
-		border-radius: $token-border-radius-100;
+		border-radius: $token-border-radius-200;
 	}
 }

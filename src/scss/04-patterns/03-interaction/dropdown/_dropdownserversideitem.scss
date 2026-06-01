@@ -7,7 +7,7 @@
 .osui-dropdown-serverside-item {
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-dropdown-item-background: transparent;
-	--osui-dropdown-item-color:      $token-text-default;
+	--osui-dropdown-item-color:      #{$token-text-default};
 	--osui-dropdown-item-hover-bg:   #{$token-bg-neutral-subtle-default};
 	// ───────────────────────────────────────────────────────────────────
 
@@ -17,7 +17,7 @@
 	cursor: pointer;
 	display: flex;
 	flex: 1;
-	min-height: 40px;
+	min-height: $token-scale-1000;
 	overflow: hidden;
 	padding: $token-scale-200 $token-scale-400;
 	position: relative;
@@ -25,14 +25,29 @@
 	width: 100%;
 	z-index: var(--os-layer-screen);
 
-	&:hover,
-	&--is-selected {
+	&:hover {
 		background-color: var(--osui-dropdown-item-hover-bg);
 		z-index: var(--os-layer-local-tier-1);
 
 		// Service Studio Preview
-		& {
-			-servicestudio-background-color: $token-bg-surface-default;
+		-servicestudio-background-color: $token-bg-surface-default;
+	}
+
+	&--is-selected {
+		background-color: transparent;
+		z-index: var(--os-layer-local-tier-1);
+
+		// Service Studio Preview
+		-servicestudio-background-color: $token-bg-surface-default;
+
+		// Right-side checkmark — requires --osui-icon-check + --osui-icon-font-family (icon library)
+		&::after {
+			color: $token-semantics-primary-base;
+			content: var(--osui-icon-check);
+			flex-shrink: 0;
+			font-family: var(--osui-icon-font-family);
+			font-size: $token-font-size-400;
+			margin-left: $token-scale-200;
 		}
 	}
 
@@ -43,6 +58,11 @@
 		height: inherit;
 		overflow: hidden;
 		pointer-events: none;
+
+		// Override platform .bold utility class applied to item text
+		.bold {
+			font-weight: $token-font-weight-regular;
+		}
 
 		& > *:first-child {
 			overflow: hidden;
@@ -62,7 +82,7 @@
 		}
 
 		&:focus {
-			box-shadow: inset 0 0 0 3px $token-primitives-yellow-500;
+			box-shadow: inset 0 0 0 $token-border-size-075 var(--color-focus-outer);
 		}
 	}
 }
@@ -76,7 +96,7 @@
 			outline: none;
 
 			&:before {
-				@include a11y-high-contrast-outline(true);
+				box-shadow: inset 0 0 0 $token-border-size-075 var(--color-focus-outer);
 				bottom: 0;
 				content: '';
 				display: block;
@@ -94,6 +114,6 @@
 .tablet,
 .phone {
 	.osui-dropdown-serverside-item {
-		height: 48px;
+		height: $token-scale-1200;
 	}
 }

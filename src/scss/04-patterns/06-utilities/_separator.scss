@@ -14,7 +14,7 @@
 	&-vertical {
 		display: inline-block;
 		height: 100%;
-		min-height: 20px;
+		min-height: $token-scale-500;
 		min-width: 1px;
 		width: 1px;
 	}

@@ -11,20 +11,21 @@
 ///
 .osui-accordion-item {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-accordion-item-background:             #{$token-bg-surface-default};
-	--osui-accordion-item-border-color:           #{$token-border-default};
-	--osui-accordion-item-border-width:           #{$token-border-size-025};
-	--osui-accordion-item-border-radius:          #{$token-border-radius-100};
-	--osui-accordion-item-color:                  $token-text-default;
+	--osui-accordion-item-background: #{$token-bg-surface-default};
+	--osui-accordion-item-border-color: #{$token-border-default};
+	--osui-accordion-item-border-width: #{$token-border-size-025};
+	--osui-accordion-item-border-radius: #{$token-border-radius-100};
+	--osui-accordion-item-color: #{$token-text-default};
 	--osui-accordion-item-active-indicator-color: #{$token-semantics-primary-base};
-	--osui-accordion-item-icon-color:             #{$token-semantics-primary-base};
+	--osui-accordion-item-icon-color: #{$token-semantics-primary-base};
+	--osui-accordion-item-title-hover-background: #{$token-primitives-neutral-100};
 	// ───────────────────────────────────────────────────────────────────
 
-	--accordion-active-border-size: 2px;
+	--accordion-active-border-size: #{$token-border-size-050};
 	background-color: var(--osui-accordion-item-background);
-	border: var(--osui-accordion-item-border-width) solid var(--osui-accordion-item-border-color);
-	border-bottom-width: var(--osui-accordion-item-border-width);
-	border-radius: var(--osui-accordion-item-border-radius);
+	border-radius: $token-border-radius-0;
+	color: var(--osui-accordion-item-color);
+	font-size: $token-font-size-400;
 	position: relative;
 
 	&__click_zone {
@@ -39,24 +40,6 @@
 		& .osui-accordion-item__icon {
 			cursor: pointer;
 		}
-	}
-	// Active border-top
-	&:after {
-		background-color: transparent;
-		border-color: transparent;
-		border-style: solid;
-		border-top-left-radius: $token-border-radius-100;
-		border-top-right-radius: $token-border-radius-100;
-		border-width: var(--accordion-active-border-size) $token-border-size-0 $token-border-size-0
-			$token-border-size-0;
-		content: '';
-		left: 0;
-		height: 100%;
-		pointer-events: none;
-		position: absolute;
-		opacity: 0;
-		top: -1px;
-		width: 100%;
 	}
 
 	&--is {
@@ -74,18 +57,6 @@
 					}
 				}
 			}
-
-			&.osui-accordion-item--is-disabled {
-				&::after {
-					border-color: $token-text-disabled;
-				}
-			}
-
-			&::after {
-				border-color: var(--osui-accordion-item-active-indicator-color);
-				opacity: 1;
-				transition: opacity 300ms ease-in;
-			}
 		}
 
 		&-disabled {
@@ -93,6 +64,10 @@
 
 			color: var(--osui-accordion-item-color);
 			pointer-events: none;
+
+			.osui-accordion-item__title:hover {
+				background-color: transparent;
+			}
 
 			.osui-accordion-item__icon {
 				color: $token-text-disabled;
@@ -104,21 +79,54 @@
 					}
 				}
 			}
+
+			a,
+			button {
+				opacity: var(--osui-opacity-disabled);
+				pointer-events: none;
+			}
 		}
 	}
 
 	&__title {
 		align-items: center;
+		color: var(--osui-accordion-item-color);
 		direction: ltr;
 		display: flex;
-		font-size: $token-font-size-450;
+		font-size: $token-font-size-400;
 		line-height: 1;
-		padding: $token-scale-600;
+		padding: var(--osui-scale-350) $token-scale-600;
 		width: 100%;
 
+		&:hover {
+			background-color: var(--osui-accordion-item-title-hover-background);
+		}
+
+		// Links inside title always underlined; on focus use a11y highlight colour + offset
+		a {
+			text-decoration: underline;
+			text-underline-offset: 3px; // no $token-* available for underline offset
+		}
+
+		a:focus {
+			background-color: var(--color-focus-outer);
+			box-shadow: none;
+			outline: none;
+			text-decoration-color: var(--color-focus-outer);
+		}
+
 		&__placeholder {
-			text-overflow: ellipsis;
+			align-items: center;
+			display: flex;
+			gap: $token-scale-200;
+			overflow: hidden;
 			width: 100%;
+
+			> a,
+			> button {
+				align-self: center;
+				margin-top: unset;
+			}
 		}
 
 		&--is-left {
@@ -139,26 +147,26 @@
 		font-family: FontAwesome;
 		font-size: $token-font-size-550;
 		font-weight: $token-font-weight-regular;
-		height: 16px;
+		height: $token-scale-400;
 		justify-content: center;
-		transition: all 300ms ease-in-out;
-		width: 16px;
+		transition: transform $token-transition-time-300 ease-in-out; // no token match for ease-in-out
+		width: $token-scale-400;
 
 		&--plus-minus {
 			&:after {
 				background-color: var(--osui-accordion-item-icon-color);
 				content: ' ';
 				height: 100%;
-				transition: transform 300ms ease-in-out;
-				width: 2px;
+				transition: transform $token-transition-time-300 ease-in-out; // no token match for ease-in-out
+				width: $token-border-size-050;
 			}
 
 			&:before {
 				background-color: var(--osui-accordion-item-icon-color);
 				content: ' ';
-				height: 2px;
+				height: $token-border-size-050;
 				position: absolute;
-				width: 16px;
+				width: $token-scale-400;
 			}
 		}
 
@@ -178,6 +186,7 @@
 
 	&__content {
 		display: block;
+		font-size: $token-font-size-400;
 		overflow: hidden;
 		padding: $token-scale-0 $token-scale-600;
 
@@ -199,7 +208,7 @@
 			}
 
 			&-animating {
-				transition: all 300ms ease-in-out;
+				transition: height $token-transition-time-300 ease-in-out; // no token match for ease-in-out
 			}
 		}
 
@@ -262,7 +271,7 @@
 			}
 
 			&:focus-visible {
-				outline: $token-border-size-075 solid $token-primitives-yellow-500;
+				outline: $token-border-size-075 solid var(--color-focus-outer);
 			}
 		}
 	}

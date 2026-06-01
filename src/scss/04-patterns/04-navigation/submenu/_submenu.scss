@@ -7,11 +7,12 @@
 .osui-submenu {
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-submenu-items-background:    #{$token-bg-surface-default};
-	--osui-submenu-items-border-color:  #{$token-border-default};
+	--osui-submenu-items-border-color:  transparent;
 	--osui-submenu-items-shadow:        #{$token-elevation-2};
 	--osui-submenu-item-color:          #{$token-text-subtlest};
-	--osui-submenu-header-color:        $token-text-default;
-	--osui-submenu-active-border-color: var(--osui-submenu-active-border-color);
+	--osui-submenu-header-color:        #{$token-text-default};
+	--osui-submenu-active-border-color: var(--osui-submenu-active-border-color); // intentional: overridden by theme/consumer
+	--osui-submenu-max-height:          calc(100dvh - 80px); // design-spec: 80px header offset
 	// ───────────────────────────────────────────────────────────────────
 
 	cursor: pointer;
@@ -72,7 +73,7 @@
 					&__header {
 						position: relative;
 
-						// This is needed for the OpenOnHover feature, to fit in the gap between submenu_header and items
+						// Needed for OpenOnHover — bridges the gap between header and items
 						&:after {
 							content: '';
 							height: 100%;
@@ -93,7 +94,7 @@
 		border-top: $token-border-size-050 solid transparent;
 		display: flex;
 		padding: $token-scale-0 $token-scale-200;
-		transition: all 150ms linear;
+		transition: all $token-transition-time-150 linear;
 
 		&__item {
 			align-items: center;
@@ -101,7 +102,7 @@
 			display: inline-flex;
 			height: 100%;
 			position: relative;
-			transition: all 150ms linear;
+			transition: all $token-transition-time-150 linear;
 
 			-servicestudio-min-width: 100px;
 			-servicestudio-margin-left: calc($token-scale-200 * -1);
@@ -111,31 +112,61 @@
 				color: $token-text-subtlest;
 				display: flex;
 				height: 100%;
+				text-decoration: none;
 
 				&:hover {
 					text-decoration: none;
 				}
 			}
 		}
+
+		&__icon {
+			margin-inline-start: $token-scale-200;
+			transition: transform 200ms ease;
+			transform-origin: center;
+
+			&:after {
+				content: var(--osui-icon-arrow-down);
+				font-family: var(--osui-icon-font-family);
+			}
+		}
 	}
 
 	&__items {
 		background-color: var(--osui-submenu-items-background);
-		border: $token-border-size-025 solid var(--osui-submenu-items-border-color);
-		border-radius: $token-border-radius-100;
+		border: none;
+		border-radius: $token-border-radius-200;
 		box-shadow: var(--osui-submenu-items-shadow);
 		display: flex;
 		flex-direction: column;
 		left: 0;
+		max-height: var(--osui-submenu-max-height);
 		min-width: 100px;
 		opacity: 0;
-		padding: $token-scale-200 $token-scale-0;
+		overflow-x: hidden;
+		overflow-y: auto;
+		padding: $token-scale-0;
 		pointer-events: none;
 		position: absolute;
 		top: calc(100% + $token-scale-100);
-		transform: translateY(-8px);
+		transform: translateY(-8px); // design-spec
 		transition: all 130ms ease-out;
+		width: max-content;
 		z-index: var(--os-layer-elevated);
+
+		// Scrollbar
+		&::-webkit-scrollbar {
+			width: $token-scale-100;
+		}
+
+		&::-webkit-scrollbar-track {
+			background: transparent;
+		}
+
+		&::-webkit-scrollbar-thumb {
+			background-color: $token-border-default;
+			border-radius: $token-border-radius-full;
+		}
 
 		// Service Studio Preview
 		& {
@@ -149,6 +180,8 @@
 			color: var(--osui-submenu-item-color);
 			margin: 0;
 			padding: $token-scale-200 $token-scale-400;
+			text-decoration: none;
+			transition: background-color $token-transition-time-150 linear;
 			white-space: nowrap;
 
 			&.active {
@@ -156,6 +189,17 @@
 			}
 		}
 	}
+}
+
+// Icon rotation on open
+.osui-submenu--is-open .osui-submenu__header__icon {
+	transform: rotate(180deg);
+}
+
+// Data-link reset
+.osui-submenu [data-link],
+.osui-submenu [data-link]:hover {
+	text-decoration: none;
 }
 
 ///
@@ -174,62 +218,98 @@
 }
 
 ///
-.layout-side {
-	.app-menu-links {
-		.osui-submenu a {
-			border-left: none;
+.layout-side .app-menu-links .osui-submenu,
+.menu-visible .app-menu-links .osui-submenu {
+	--osui-submenu-items-background: var(--os-color-background-sidemenu, #{$token-bg-surface-default});
+
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+
+.layout-side .app-menu-links .osui-submenu {
+	a {
+		border-left: none;
+	}
+
+	&.active .osui-submenu__header {
+		background-color: $token-bg-primary-subtle-default;
+		border-radius: $token-border-radius-200;
+	}
+
+	&--is-open > .osui-submenu__items {
+		border-radius: 0;
+		display: flex;
+		height: auto;
+		max-height: none;
+		overflow: hidden;
+		padding: 0;
+		width: 100%;
+	}
+
+	.osui-submenu__header {
+		border: none;
+		padding: $token-scale-200 $token-scale-400;
+		width: 100%;
+
+		&__item {
+			flex: 1;
 		}
+	}
 
-		.osui-submenu {
-			flex-direction: column;
-			width: 100%;
+	.osui-submenu__items {
+		border: none;
+		box-shadow: none;
+		display: none;
+		opacity: 1;
+		padding: $token-scale-100 $token-scale-600;
+		pointer-events: auto;
+		position: relative;
+		top: 0;
+		transform: translateY(0);
 
-			&.active .osui-submenu__header {
-				border-left: $token-border-size-050 solid var(--osui-submenu-active-border-color);
+		a {
+			border-radius: $token-border-radius-200;
+			padding: $token-scale-200 $token-scale-400 $token-scale-200 $token-scale-600;
+
+			&:hover {
+				background-color: var(--osui-bg-surface-hover);
+				color: $token-text-default;
 			}
 
-			&--is-open > .osui-submenu__items {
-				display: flex;
-			}
-
-			.osui-submenu__header {
-				border-bottom: 0;
-				border-left: $token-border-size-050 solid transparent;
-				border-top: 0;
-				padding: $token-scale-200 $token-scale-600;
-
-				&__item {
-					flex: 1;
-				}
-			}
-
-			&__items {
-				border: none;
-				box-shadow: none;
-				display: none;
-				opacity: 1;
-				padding: $token-scale-100 $token-scale-600;
-				pointer-events: auto;
-				position: relative;
-				top: 0;
-				transform: translateY(0);
-
-				a {
-					padding: $token-scale-200 $token-scale-400;
-				}
+			&.active {
+				background-color: $token-bg-primary-subtle-default;
+				color: $token-semantics-primary-base;
 			}
 		}
 	}
 }
 
-///
-.layout-side,
-.menu-visible {
-	.app-menu-links {
-		.osui-submenu__header a {
-			padding: $token-scale-0;
-		}
+.layout-side .app-menu-links .osui-submenu__header a,
+.menu-visible .app-menu-links .osui-submenu__header a {
+	padding: $token-scale-0;
+}
+
+// Columns inside submenu items collapse to single column
+.layout-side .app-menu-links .osui-submenu__items .columns,
+.menu-visible .app-menu-links .osui-submenu__items .columns,
+.tablet .app-menu-links .osui-submenu__items .columns,
+.phone .app-menu-links .osui-submenu__items .columns {
+	flex-direction: column;
+	width: 100%;
+
+	& > .columns-item {
+		flex: none;
+		width: 100%;
 	}
+}
+
+// Items white-space: normal in side/mobile contexts
+.layout-side .app-menu-links .osui-submenu__items a,
+.menu-visible .app-menu-links .osui-submenu__items a,
+.tablet .app-menu-links .osui-submenu__items a,
+.phone .app-menu-links .osui-submenu__items a {
+	white-space: normal;
 }
 
 // Responsive --------------------------------------------------------------------
@@ -250,7 +330,7 @@
 
 		&__header {
 			&:hover {
-				border-bottom: $token-border-size-050 solid var(--osui-submenu-active-border-color);
+				border-bottom: none;
 			}
 
 			&__item {
@@ -263,8 +343,8 @@
 		&__items {
 			a {
 				&:hover {
-					background-color: $token-bg-neutral-subtle-default;
-					color: var(--osui-submenu-header-color);
+					background-color: var(--osui-bg-surface-hover);
+					color: $token-text-default;
 				}
 
 				&.active:hover {
@@ -272,6 +352,49 @@
 				}
 			}
 		}
+	}
+
+	// Pill style for horizontal nav
+	.app-menu-links .osui-submenu__header {
+		align-self: center;
+		border-bottom: none;
+		border-radius: $token-border-radius-200;
+		border-top: none;
+		margin: 0 $token-scale-025;
+		padding: $token-scale-200 $token-scale-300;
+		transition: background-color $token-transition-time-150 linear;
+	}
+
+	.app-menu-links .osui-submenu__header:hover,
+	.app-menu-links .osui-submenu--is-open .osui-submenu__header {
+		background-color: var(--osui-bg-surface-hover);
+		border-radius: $token-border-radius-200;
+		color: $token-text-default;
+	}
+
+	.app-menu-links .osui-submenu.active .osui-submenu__header {
+		border-bottom: none;
+	}
+
+	// Direct links in header navigation
+	.header-navigation .app-menu-links > a {
+		align-self: center;
+		border-bottom: none;
+		border-radius: $token-border-radius-200;
+		border-top: none;
+		margin: 0 $token-scale-025;
+		padding: $token-scale-200 $token-scale-300;
+		transition: background-color $token-transition-time-150 linear;
+
+		&:hover {
+			background-color: var(--osui-bg-surface-hover);
+			color: $token-text-default;
+		}
+	}
+
+	// Force block on submenu items in app-menu-links
+	.app-menu-links .osui-submenu__items a {
+		display: block;
 	}
 
 	.layout:not(.layout-side) {
@@ -287,66 +410,156 @@
 			.osui-submenu {
 				&__header {
 					&:hover {
+						background-color: var(--osui-bg-surface-hover);
 						border-bottom: none;
-						border-left: $token-border-size-050 solid var(--osui-submenu-active-border-color);
+						border-left: none;
+						border-radius: $token-border-radius-200;
 					}
 				}
 			}
 		}
+
+		// Side menu: direct link hover
+		.app-menu-links > a:hover {
+			background-color: var(--osui-bg-surface-hover);
+			border-radius: $token-border-radius-200;
+			color: $token-text-default;
+		}
 	}
 }
 
-.has-accessible-features .osui-submenu:focus-within {
-	-webkit-box-shadow: 0 0 0 3px $token-primitives-yellow-500;
-	box-shadow: 0 0 0 3px $token-primitives-yellow-500;
-	outline: 0;
+// Force block in menu-visible context (overrides display:inline-flex from layout rules)
+.menu-visible .app-menu-links .osui-submenu__items a {
+	display: block;
+}
+
+// Active + hover states ---------------------------------------------------------
+///
+
+// Top menu: header navigation direct link
+.desktop .header-navigation .app-menu-links > a.active:hover {
+	background-color: var(--osui-bg-surface-hover);
+	color: $token-semantics-primary-base;
+}
+
+// Top menu: submenu items
+.desktop .osui-submenu__items a.active:hover {
+	background-color: var(--osui-bg-surface-hover);
+}
+
+// Side menu desktop: direct link
+.desktop .layout-side .app-menu-links > a.active:hover {
+	background-color: var(--osui-bg-surface-hover);
+	color: $token-semantics-primary-base;
+}
+
+// Side menu desktop: submenu header
+.desktop .layout-side .app-menu-links .osui-submenu.active .osui-submenu__header:hover {
+	background-color: var(--osui-bg-surface-hover);
+	color: var(--osui-submenu-active-border-color);
+}
+
+// Side menu desktop: submenu items
+.desktop .layout-side .app-menu-links .osui-submenu__items a.active:hover {
+	background-color: var(--osui-bg-surface-hover);
+	color: $token-semantics-primary-base;
 }
 
 ///
 .tablet,
 .phone {
-	.has-accessible-features .osui-submenu:focus-within {
-		-webkit-box-shadow: 0 0 0 3px $token-primitives-yellow-500;
-		box-shadow: 0 0 0 3px $token-primitives-yellow-500;
-		outline: 0;
-	}
-
 	.osui-submenu {
+		display: flex;
 		flex-direction: column;
 		width: 100%;
 
 		&.active .osui-submenu__header {
-			border-left: $token-border-size-050 solid var(--osui-submenu-active-border-color);
+			background-color: transparent;
 			border-bottom: 0;
+			border-left: none;
 		}
 
 		&--is-open .osui-submenu__items {
 			display: flex;
+			height: auto;
+			max-height: none;
+			overflow: hidden;
+			padding: 0;
+			width: 100%;
 		}
 
 		&__header {
-			border-bottom: 0;
-			border-left: $token-border-size-050 solid transparent;
-			border-top: 0;
-			padding: $token-scale-200 $token-scale-600;
+			border: none;
+			padding: $token-scale-200 $token-scale-400;
 
 			&__item {
 				flex: 1;
+			}
+
+			&:hover {
+				background-color: var(--osui-bg-surface-hover);
+				border-radius: $token-border-radius-200;
+				color: $token-text-default;
 			}
 		}
 
 		&__items {
 			border: none;
+			border-radius: 0;
 			box-shadow: none;
 			display: none;
 			opacity: 1;
-			padding: $token-scale-100 $token-scale-600;
+			padding: 0;
 			pointer-events: auto;
 			position: relative;
 			top: 0;
 			transform: translateY(0);
+			width: 100%;
+
+			a {
+				border-radius: $token-border-radius-200;
+				padding: $token-scale-200 $token-scale-400 $token-scale-200 $token-scale-600;
+
+				&.active {
+					background-color: transparent;
+					color: $token-semantics-primary-base;
+				}
+
+				&:hover {
+					background-color: var(--osui-bg-surface-hover);
+					color: $token-text-default;
+				}
+			}
 		}
 	}
+
+	.app-menu-links > a {
+		&:hover {
+			background-color: var(--osui-bg-surface-hover);
+			border-radius: $token-border-radius-200;
+			color: $token-text-default;
+		}
+	}
+
+	// Mobile/tablet: submenu header active hover
+	.osui-submenu.active .osui-submenu__header:hover {
+		background-color: var(--osui-bg-surface-hover);
+		border-radius: $token-border-radius-200;
+		color: var(--osui-submenu-active-border-color);
+	}
+
+	// Mobile/tablet: submenu items active hover
+	.osui-submenu__items a.active:hover {
+		background-color: var(--osui-bg-surface-hover);
+		color: $token-semantics-primary-base;
+	}
+
+	// Mobile/tablet: direct link active hover
+	.app-menu-links > a.active:hover {
+		background-color: var(--osui-bg-surface-hover);
+		color: $token-semantics-primary-base;
+	}
+
 }
 
 // IsRTL -------------------------------------------------------------------------
@@ -360,9 +573,15 @@
 			}
 
 			&.active .osui-submenu__header {
-				border-left: $token-border-size-0;
-				border-right: $token-border-size-050 solid var(--osui-submenu-active-border-color);
+				background-color: transparent;
+				border-left: none;
+				border-right: none;
 			}
+		}
+
+		.app-menu-links .osui-submenu__items a {
+			padding-left: $token-scale-400;
+			padding-right: $token-scale-600;
 		}
 	}
 
@@ -370,8 +589,9 @@
 	&.phone {
 		.osui-submenu {
 			&.active .osui-submenu__header {
-				border-left: 0;
-				border-right: $token-border-size-050 solid var(--osui-submenu-active-border-color);
+				background-color: transparent;
+				border-left: none;
+				border-right: none;
 			}
 
 			.osui-submenu__header {
@@ -379,8 +599,15 @@
 				border-right: $token-border-size-050 solid transparent;
 			}
 		}
+
+		.osui-submenu__items a {
+			padding-left: $token-scale-400;
+			padding-right: $token-scale-600;
+		}
 	}
 }
+
+// Accessibility -----------------------------------------------------------------
 
 // OS HighContrast Enabled -------------------------------------------------------
 ///

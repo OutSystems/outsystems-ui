@@ -6,7 +6,7 @@
 ///
 .input-with-icon {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-input-with-icon-icon-color:       #{$token-primitives-neutral-700};
+	--osui-input-with-icon-icon-color:       #{$token-text-subtle};
 	--osui-input-with-icon-icon-hover-color: #{$token-text-subtlest};
 	// ───────────────────────────────────────────────────────────────────
 
@@ -36,7 +36,7 @@
 			height: 100%;
 			left: 0;
 			position: absolute;
-			width: 40px;
+			width: $token-scale-1000;
 
 			&,
 			a {

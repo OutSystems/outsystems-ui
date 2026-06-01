@@ -67,7 +67,7 @@
 
 			&:before,
 			&:after {
-				-servicestudio-color: var(--color-indigo);
+				-servicestudio-color: $token-semantics-primary-base;
 				-servicestudio-font-family: var(--osui-icon-font-family);
 				-servicestudio-font-size: clamp(10px, 1.7vw, 20px);
 				-servicestudio-position: absolute;
@@ -99,20 +99,20 @@
 					-servicestudio-text-align: center;
 					-servicestudio-display: block;
 					-servicestudio-font-size: clamp(10px, 1.7vw, 14px);
-					-servicestudio-margin-bottom: var(--space-s);
+					-servicestudio-margin-bottom: $token-scale-200;
 					-servicestudio-position: relative;
 				}
 			}
 
 			&.time12h .osui-datepicker-calendar-ss-preview--time::before {
-				-servicestudio-background-color: var(--color-indigo);
-				-servicestudio-border-radius: var(--border-radius-soft);
-				-servicestudio-color: var(--color-neutral-0);
+				-servicestudio-background-color: $token-semantics-primary-base;
+				-servicestudio-border-radius: $token-border-radius-100;
+				-servicestudio-color: $token-primitives-base-white;
 				-servicestudio-content: 'am';
 				-servicestudio-font-size: clamp(10px, 1.7vw, 14px);
-				-servicestudio-font-weight: var(--font-semi-bold);
-				-servicestudio-height: var(--space-base);
-				-servicestudio-line-height: var(--space-base);
+				-servicestudio-font-weight: $token-font-weight-semi-bold;
+				-servicestudio-height: $token-scale-400;
+				-servicestudio-line-height: $token-scale-400;
 				-servicestudio-position: absolute;
 				-servicestudio-right: 2%;
 				-servicestudio-top: 50%;

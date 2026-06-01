@@ -11,7 +11,8 @@
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-carousel-arrow-background:        #{$token-bg-surface-default};
 	--osui-carousel-arrow-shadow:            #{$token-elevation-1};
-	--osui-carousel-arrow-icon-color:        #{$token-primitives-neutral-700};
+	--osui-carousel-arrow-icon-color:        #{$token-text-default};
+	--osui-carousel-pagination-color:        #{$token-border-default};
 	--osui-carousel-pagination-active-color: #{$token-semantics-primary-base};
 	// ───────────────────────────────────────────────────────────────────
 
@@ -22,10 +23,10 @@
 		&__arrow {
 			background-color: var(--osui-carousel-arrow-background);
 			box-shadow: var(--osui-carousel-arrow-shadow);
-			height: 40px;
+			height: $token-scale-1000;
 			opacity: 1;
-			transition: opacity 150ms linear;
-			width: 40px;
+			transition: opacity $token-transition-time-150 $token-transition-curve-linear;
+			width: $token-scale-1000;
 			will-change: opacity;
 			z-index: var(--os-layer-local-tier-1);
 
@@ -56,12 +57,18 @@
 			&__page {
 				// WCAG 2.5.8: Target offset of 6px on each side meets the 24px minimum
 				// (12px dot + 6px margin × 2 = 24px total territory per axis)
-				height: 12px;
+				background-color: var(--osui-carousel-pagination-color);
+				border-radius: $token-border-radius-full;
+				height: $token-scale-300;
 				margin: 6px;
-				width: 12px;
+				transition:
+					width $token-transition-time-200 $token-transition-curve-linear,
+					background-color $token-transition-time-200 $token-transition-curve-linear;
+				width: $token-scale-300;
 
 				&.is-active {
 					background-color: var(--osui-carousel-pagination-active-color);
+					width: $token-scale-700;
 					z-index: var(--os-layer-local-tier-1);
 				}
 			}
@@ -125,6 +132,7 @@
 	}
 
 	&__track {
+		border-radius: $token-border-radius-300;
 		max-width: 100%;
 		width: var(--osui-carousel-track-width);
 		z-index: var(--os-layer-screen);
@@ -168,7 +176,7 @@
 .os-high-contrast {
 	.splide__pagination {
 		&__page {
-			@include a11y-high-contrast-outline;
+			outline: $token-border-size-075 solid var(--color-focus-outer);
 		}
 
 		li {

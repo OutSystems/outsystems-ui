@@ -5,23 +5,23 @@
 
 .osui-overflow-menu {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-overflow-menu-background:         #{$token-bg-surface-default};
-	--osui-overflow-menu-shadow:             #{$token-elevation-2};
-	--osui-overflow-menu-color:              $token-text-default;
-	--osui-overflow-menu-trigger-active-bg:  #{$token-bg-neutral-subtle-default};
+	--osui-overflow-menu-background:        #{$token-bg-surface-default};
+	--osui-overflow-menu-shadow:            #{$token-elevation-2};
+	--osui-overflow-menu-color:             #{$token-text-default};
+	--osui-overflow-menu-trigger-active-bg: #{$token-bg-neutral-subtle-default};
 	// ───────────────────────────────────────────────────────────────────
 
 	display: inline-block;
 	--osui-overflow-menu-min-width: 170px;
-	--border-radius-rounded: 16px;
+	--border-radius-rounded: #{$token-border-radius-400};
 
 	&__trigger {
 		--osui-floating-offset: #{$token-scale-200};
 
 		border: $token-border-size-025 solid transparent;
-		border-radius: var(--osui-overflow-menu-shape);
+		border-radius: var(--osui-btn-border-radius, #{$token-border-radius-200});
 		color: var(--osui-overflow-menu-color);
-		width: 32px;
+		width: $token-scale-800;
 
 		* {
 			pointer-events: none;
@@ -44,6 +44,7 @@
 
 		a {
 			color: var(--osui-overflow-menu-color);
+			text-decoration: none;
 
 			&:hover {
 				background: var(--osui-overflow-menu-trigger-active-bg);
@@ -66,6 +67,13 @@
 	}
 }
 
+// Override .desktop .btn:hover blue border — trigger border must stay transparent
+.desktop {
+	.osui-overflow-menu__trigger:hover {
+		border-color: transparent;
+	}
+}
+
 // layer exception when a popup is open on the same screen
 html:has(.popup-backdrop) .osui-overflow-menu__balloon {
 	z-index: var(--os-layer-off-canvas);
@@ -79,7 +87,7 @@ html:has(.popup-backdrop) .osui-overflow-menu__balloon {
 		.osui-overflow-menu__trigger {
 			&.btn {
 				// Longer specificity to be able to always override default responsive styles for buttons
-				width: 40px;
+				width: $token-scale-1000;
 			}
 		}
 	}
@@ -93,7 +101,7 @@ html:has(.popup-backdrop) .osui-overflow-menu__balloon {
 
 		a {
 			&:hover {
-				@include a11y-high-contrast-outline;
+				outline: $token-border-size-075 solid var(--color-focus-outer);
 			}
 		}
 	}

@@ -26,7 +26,7 @@
 	&-image:after {
 		// Service Studio Preview
 		& {
-			-servicestudio-background-color: rgba(0, 0, 0, 0.3);
+			-servicestudio-background-color: #{$token-backdrop};
 			-servicestudio-color: $token-text-inverse;
 			-servicestudio-content: 'Image';
 			-servicestudio-font-size: 9px;
@@ -56,7 +56,7 @@
 		&:after {
 			// Service Studio Preview
 			& {
-				-servicestudio-background-color: rgba(0, 0, 0, 0.3);
+				-servicestudio-background-color: #{$token-backdrop};
 				-servicestudio-color: $token-text-inverse;
 				-servicestudio-content: 'Thumbnail';
 				-servicestudio-font-size: 9px;
@@ -116,7 +116,7 @@
 ///
 .phone {
 	.pswp__caption__center {
-		padding-bottom: calc(var(--os-safe-area-bottom) + 10px);
+		padding-bottom: calc(var(--os-safe-area-bottom) + 10px); // design-spec: 10px caption offset
 	}
 }
 
@@ -126,7 +126,7 @@
 	.lightbox-item a:focus {
 		background-color: transparent;
 		box-shadow: none;
-		outline: 3px solid $token-primitives-yellow-500;
+		outline: $token-border-size-075 solid var(--color-focus-outer);
 	}
 }
 

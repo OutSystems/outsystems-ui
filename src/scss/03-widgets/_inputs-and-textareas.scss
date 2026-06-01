@@ -21,8 +21,8 @@
 .form-control {
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-input-background:          #{$token-bg-input-default};
-	--osui-input-border-color:        #{$token-border-input-default};
-	--osui-input-color:               $token-text-default;
+	--osui-input-border-color:        #{$token-border-default};
+	--osui-input-color:               #{$token-text-default};
 	--osui-input-border-radius:       #{$token-border-radius-200};
 	--osui-input-focus-border-color:  #{$token-semantics-primary-base};
 	--osui-input-error-border-color:  #{$token-semantics-danger-base};
@@ -35,14 +35,15 @@
 		border-radius: var(--osui-input-border-radius);
 		color: var(--osui-input-color);
 		font-size: $token-font-size-350;
-		transition: all 180ms linear;
+		transition: border-color $token-transition-time-100 $token-transition-curve-base, background-color $token-transition-time-100 $token-transition-curve-base;
 
 		&:hover {
-			border: $token-border-size-025 solid $token-border-input-default;
+			border-color: $token-border-input-default;
 		}
 
 		&:focus {
-			border: $token-border-size-025 solid var(--osui-input-focus-border-color);
+			border-color: var(--osui-input-focus-border-color);
+			outline: none;
 		}
 
 		&[disabled] {
@@ -57,7 +58,7 @@
 	}
 
 	&[data-input] {
-		height: 40px;
+		height: $token-scale-1000;
 		padding: $token-scale-0 $token-scale-400;
 	}
 
@@ -72,7 +73,7 @@
 		&-small {
 			&[data-input] {
 				font-size: $token-font-size-300;
-				height: 32px;
+				height: $token-scale-800;
 				padding: $token-scale-0 $token-scale-200;
 			}
 
@@ -86,7 +87,7 @@
 		&-large {
 			&[data-input] {
 				font-size: $token-font-size-400;
-				height: 48px;
+				height: $token-scale-1200;
 			}
 
 			&[data-textarea] {
@@ -104,6 +105,35 @@
 	}
 }
 
+/* Label, helper text, validation message ------------------------------------- */
+///
+.form label,
+[data-label] {
+	color: $token-text-default;
+	font-size: $token-font-size-350;
+	font-weight: $token-font-weight-semi-bold;
+	line-height: var(--osui-font-line-height-default);
+}
+
+.help-block,
+.input-helper {
+	color: $token-text-subtlest;
+	font-size: $token-font-size-300;
+	line-height: var(--osui-font-line-height-default);
+	margin-top: $token-scale-100;
+}
+
+span.validation-message {
+	color: $token-semantics-danger-base;
+	display: block;
+	font-size: $token-font-size-300;
+	margin-top: $token-scale-100;
+}
+
+.char-counter {
+	color: $token-text-subtlest;
+	font-size: $token-font-size-300;
+}
 /* Responsive ----------------------------------------------------------------- */
 ///
 .tablet,
@@ -111,12 +141,12 @@
 	.form-control {
 		&[data-input] {
 			font-size: $token-font-size-400;
-			height: 48px;
+			height: $token-scale-1200;
 
 			// Repeated selector since the properties above will ends up in a selector with more specificity
 			&.input-small {
 				font-size: $token-font-size-300;
-				height: 32px;
+				height: $token-scale-800;
 			}
 		}
 
@@ -164,7 +194,7 @@
 			}
 
 			&:focus {
-				border-color: $token-text-default;
+				border-color: $token-semantics-primary-base;
 			}
 
 			&.not-valid {

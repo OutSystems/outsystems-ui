@@ -6,6 +6,11 @@
 ///
 [data-switch] {
 	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-switch-height:               #{$token-scale-600};       // 24px
+	--osui-switch-width:                #{$token-scale-1000};      // 40px
+	--osui-switch-thumb-size:           #{$token-scale-500};       // 20px
+	--osui-switch-thumb-offset-start:   2px;
+	--osui-switch-thumb-offset-end:     18px;
 	--osui-switch-track-color:          #{$token-border-input-default};
 	--osui-switch-track-border-color:   #{$token-border-input-default};
 	--osui-switch-disabled-track-color: #{$token-bg-input-disabled};
@@ -15,40 +20,40 @@
 
 	background-color: transparent;
 	border-radius: 0;
-	height: 32px;
+	height: var(--osui-switch-height);
 	overflow: initial;
-	width: 50px;
+	width: var(--osui-switch-width);
 
 	&:empty {
 		&:before {
 			background-color: var(--osui-switch-track-color);
-			border: $token-border-size-025 solid var(--osui-switch-track-border-color);
+			border: 0;
 			border-radius: $token-border-radius-full;
-			height: 30px;
+			height: var(--osui-switch-height);
 			opacity: 1;
-			transition: all 180ms linear;
-			width: 48px;
+			transition: background-color var(--osui-motion-duration-180) $token-transition-curve-linear;
+			width: var(--osui-switch-width);
 		}
 
 		&:after {
 			background-color: var(--osui-switch-thumb-color);
 			border: 0;
 			bottom: 0;
-			box-shadow: none;
-			height: 24px;
+			box-shadow: var(--osui-elevation-50);
+			height: var(--osui-switch-thumb-size);
 			left: 0;
 			margin-left: 0;
-			top: 4px;
-			transform: translateX(4px) translateZ(0);
-			transition: all 180ms linear;
-			width: 24px;
+			top: calc((var(--osui-switch-height) - var(--osui-switch-thumb-size)) / 2);
+			transform: translateX(var(--osui-switch-thumb-offset-start)) translateZ(0);
+			transition: transform var(--osui-motion-duration-180) $token-transition-curve-linear;
+			width: var(--osui-switch-thumb-size);
 		}
 	}
 
 	&:hover {
 		&:before {
 			background-color: $token-border-input-default;
-			border: $token-border-size-025 solid $token-border-input-default;
+			border: $token-border-size-025 solid var(--osui-switch-track-border-color);
 		}
 	}
 
@@ -59,7 +64,7 @@
 		}
 
 		&:after {
-			transform: translateX(22px) translateZ(0);
+			transform: translateX(var(--osui-switch-thumb-offset-end)) translateZ(0);
 		}
 	}
 
@@ -69,14 +74,24 @@
 		&:empty {
 			&:before {
 				background-color: var(--osui-switch-disabled-track-color);
-				border: $token-border-size-025 solid $token-border-default;
+				border: 0;
 			}
 
 			&:after {
-				background-color: $token-border-input-default;
+				background-color: color-mix(in srgb, #{$token-primitives-base-white} 60%, transparent);
 				border: 0;
+				box-shadow: var(--osui-elevation-25);
 			}
 		}
+
+		&:checked:empty:before {
+			background-color: var(--osui-switch-checked-track-color);
+			opacity: var(--osui-opacity-disabled);
+		}
+	}
+
+	&:focus-visible:empty:before {
+		box-shadow: 0 0 0 $token-border-size-075 color-mix(in srgb, #{$token-semantics-primary-base} 22%, transparent);
 	}
 }
 
@@ -107,10 +122,8 @@
 			}
 		}
 
-		&:focus {
-			&:before {
-				border-color: $token-text-default;
-			}
+		&:focus:before {
+			border-color: $token-semantics-primary-base;
 		}
 	}
 }
@@ -128,7 +141,7 @@
 			font-size: $token-font-size-300;
 			justify-content: center;
 			left: -1px;
-			top: 3px;
+			top: $token-scale-075;
 		}
 
 		&:checked:after {
