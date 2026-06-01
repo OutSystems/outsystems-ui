@@ -41,10 +41,6 @@
 			cursor: pointer;
 		}
 	}
-	// Active border-top — hidden per design review
-	&:after {
-		display: none;
-	}
 
 	&--is {
 		&-open {
