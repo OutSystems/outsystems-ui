@@ -355,13 +355,3 @@
 		}
 	}
 }
-
-@media (prefers-reduced-motion: reduce) {
-	.animated-label {
-		transition: none;
-	}
-
-	.animated-label-text {
-		transition: none;
-	}
-}

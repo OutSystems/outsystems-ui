@@ -199,10 +199,3 @@
 		outline: $token-border-size-075 solid $token-semantics-primary-base;
 	}
 }
-
-// Reduced motion ----------------------------------------------------------------
-@media (prefers-reduced-motion: reduce) {
-	.pagination-button {
-		transition: none;
-	}
-}

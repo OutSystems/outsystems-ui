@@ -351,16 +351,6 @@
 		}
 	}
 }
-
-// Reduced motion ----------------------------------------------------------------
-@media (prefers-reduced-motion: reduce) {
-	.rating-item-filled,
-	.rating-item-half,
-	.rating-item-empty {
-		transition: none;
-	}
-}
-
 // OS HighContrast Enabled -------------------------------------------------------
 ///
 .os-high-contrast {

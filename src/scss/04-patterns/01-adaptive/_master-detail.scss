@@ -261,15 +261,3 @@
 		}
 	}
 }
-
-// Reduced motion ----------------------------------------------------------------
-@media (prefers-reduced-motion: reduce) {
-	.split-screen-wrapper .split-left .list-item {
-		transition: none;
-	}
-
-	.phone .split-screen-wrapper .split-right,
-	.phone .split-screen-wrapper .split-right.open {
-		transition: none;
-	}
-}

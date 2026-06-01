@@ -123,14 +123,3 @@
 		}
 	}
 }
-
-// Reduced motion ----------------------------------------------------------------
-@media (prefers-reduced-motion: reduce) {
-	.list-item {
-		transition: none;
-
-		.scale-animation {
-			animation: none;
-		}
-	}
-}

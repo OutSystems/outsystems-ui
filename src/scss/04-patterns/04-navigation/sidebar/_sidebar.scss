@@ -221,16 +221,6 @@
 		max-width: 85vw;
 	}
 }
-
-// Reduced motion ----------------------------------------------------------------
-@media (prefers-reduced-motion: reduce) {
-	.osui-sidebar,
-	.osui-sidebar--has-overlay::before,
-	.active-screen .osui-sidebar--is-open {
-		transition: none;
-	}
-}
-
 // OS HighContrast Enabled -------------------------------------------------------
 ///
 .os-high-contrast {

@@ -303,10 +303,3 @@
 		right: $token-scale-200;
 	}
 }
-
-// Reduced motion ----------------------------------------------------------------
-@media (prefers-reduced-motion: reduce) {
-	.table-row td {
-		transition: none;
-	}
-}

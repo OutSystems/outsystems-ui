@@ -230,11 +230,3 @@
 		}
 	}
 }
-
-// Reduced motion ----------------------------------------------------------------
-@media (prefers-reduced-motion: reduce) {
-	.btn,
-	.btn-cancel {
-		transition: none;
-	}
-}

@@ -74,10 +74,3 @@
 		}
 	}
 }
-
-// Reduced motion ----------------------------------------------------------------
-@media (prefers-reduced-motion: reduce) {
-	.flatpickr-monthSelect-months .flatpickr-monthSelect-month {
-		transition: none;
-	}
-}

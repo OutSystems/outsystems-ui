@@ -98,10 +98,3 @@
 		}
 	}
 }
-
-// Reduced motion ----------------------------------------------------------------
-@media (prefers-reduced-motion: reduce) {
-	.flip-content-card {
-		transition: none;
-	}
-}

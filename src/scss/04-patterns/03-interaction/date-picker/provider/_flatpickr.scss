@@ -1009,11 +1009,3 @@ body:has(.has-accessible-features) .osui-monthpicker__dropdown {
 		}
 	}
 }
-
-// Reduced motion ----------------------------------------------------------------
-@media (prefers-reduced-motion: reduce) {
-	.flatpickr-today-button a,
-	.flatpickr-time .flatpickr-am-pm {
-		transition: none;
-	}
-}

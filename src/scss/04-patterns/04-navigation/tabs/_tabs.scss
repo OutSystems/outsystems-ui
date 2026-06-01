@@ -414,20 +414,6 @@
 		padding: $token-scale-400;
 	}
 }
-
-// Reduced motion ----------------------------------------------------------------
-@media (prefers-reduced-motion: reduce) {
-	.osui-tabs {
-		&__header-item {
-			transition: none;
-		}
-
-		&__header__indicator {
-			transition: none;
-		}
-	}
-}
-
 // Issue on accordion in webkit
 .windows.chrome,
 .windows.edge,

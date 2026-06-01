@@ -70,10 +70,3 @@
 .is-rtl .breadcrumbs-item > div > .icon {
 	transform: scaleX(-1);
 }
-
-// Reduced motion ----------------------------------------------------------------
-@media (prefers-reduced-motion: reduce) {
-	.breadcrumbs-item a {
-		transition: none;
-	}
-}

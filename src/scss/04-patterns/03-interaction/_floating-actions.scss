@@ -175,19 +175,6 @@
 		}
 	}
 }
-
-// Reduced motion ----------------------------------------------------------------
-@media (prefers-reduced-motion: reduce) {
-	.floating {
-		&-actions-item,
-		&-actions-item-button,
-		&-button,
-		&-overlay {
-			transition: none;
-		}
-	}
-}
-
 // Responsive --------------------------------------------------------------------
 ///
 .desktop {
