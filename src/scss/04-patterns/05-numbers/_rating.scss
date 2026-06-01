@@ -58,7 +58,7 @@
 			line-height: 1;
 			position: absolute;
 			top: 0;
-			transition: opacity linear 150ms;
+			transition: opacity linear $token-transition-time-150;
 		}
 
 		&-filled {

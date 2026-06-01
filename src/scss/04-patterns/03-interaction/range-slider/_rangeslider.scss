@@ -72,7 +72,7 @@
 				cursor: pointer;
 				display: inline-block;
 				height: var(--range-slider-handle-size);
-				transition: transform 150ms ease-out;
+				transition: transform $token-transition-time-150 ease-out;
 				width: var(--range-slider-handle-size);
 			}
 

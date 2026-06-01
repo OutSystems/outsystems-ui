@@ -94,7 +94,7 @@
 		border-top: $token-border-size-050 solid transparent;
 		display: flex;
 		padding: $token-scale-0 $token-scale-200;
-		transition: all 150ms linear;
+		transition: all $token-transition-time-150 linear;
 
 		&__item {
 			align-items: center;
@@ -102,7 +102,7 @@
 			display: inline-flex;
 			height: 100%;
 			position: relative;
-			transition: all 150ms linear;
+			transition: all $token-transition-time-150 linear;
 
 			-servicestudio-min-width: 100px;
 			-servicestudio-margin-left: calc($token-scale-200 * -1);
@@ -181,7 +181,7 @@
 			margin: 0;
 			padding: $token-scale-200 $token-scale-400;
 			text-decoration: none;
-			transition: background-color 150ms linear;
+			transition: background-color $token-transition-time-150 linear;
 			white-space: nowrap;
 
 			&.active {
@@ -362,7 +362,7 @@
 		border-top: none;
 		margin: 0 $token-scale-025;
 		padding: $token-scale-200 $token-scale-300;
-		transition: background-color 150ms linear;
+		transition: background-color $token-transition-time-150 linear;
 	}
 
 	.app-menu-links .osui-submenu__header:hover,
@@ -384,7 +384,7 @@
 		border-top: none;
 		margin: 0 $token-scale-025;
 		padding: $token-scale-200 $token-scale-300;
-		transition: background-color 150ms linear;
+		transition: background-color $token-transition-time-150 linear;
 
 		&:hover {
 			background-color: $token-primitives-neutral-100; // token gap: $token-bg-surface-hover not in package — using $token-primitives-neutral-100 (#f3f3f3)

@@ -77,7 +77,7 @@
 			position: relative;
 			top: -1px;
 			transform: rotate(-45deg);
-			transition: all 150ms linear;
+			transition: all $token-transition-time-150 linear;
 
 			&:before {
 				border: $token-border-size-025 solid $token-primitives-neutral-800;
@@ -86,7 +86,7 @@
 				box-sizing: border-box;
 				content: '';
 				height: 6px;
-				transition: all 150ms linear;
+				transition: all $token-transition-time-150 linear;
 				width: 6px;
 			}
 		}
