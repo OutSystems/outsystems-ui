@@ -1,0 +1,59 @@
+<!--
+  Loaded into the Storybook PREVIEW iframe <head>.
+
+  The OUI bundle and the provider vendor libs are loaded as *classic* <script>
+  tags (not ES imports) on purpose: the compiled bundle is an IIFE that publishes
+  `OutSystems.OSUI.*` / `OSFramework.OSUI.*` via top-level `var`, which only
+  becomes a window global in classic-script scope. The vendor libs likewise
+  publish `window.flatpickr`, `window.Splide`, `window.noUiSlider`,
+  `window.VirtualSelect`. Order: vendors first, OUI bundle last.
+
+  Served via `staticDirs` in main.ts (/osui → dist, /vendor/* → node_modules).
+  Requires a prior build: `npm run build:osui`.
+-->
+
+<!-- Icon fonts — both @font-face families ('FontAwesome', 'Phosphor') are loaded;
+     the active set is chosen at runtime via the "Icons" toolbar toggle, which adds
+     the matching root class (.icon-library-FontAwesome / .iconLibrary-phosphor). -->
+<link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css" />
+<link rel="stylesheet" href="/vendor/phosphor/style.css" />
+
+<!-- Provider vendor CSS -->
+<link rel="stylesheet" href="/vendor/flatpickr/flatpickr.css" />
+<link rel="stylesheet" href="/vendor/splide/css/splide.min.css" />
+<link rel="stylesheet" href="/vendor/nouislider/nouislider.min.css" />
+<link rel="stylesheet" href="/vendor/virtual-select/virtual-select.min.css" />
+
+<!--
+  Core platform base CSS — MUST load before the OUI theme. It establishes the
+  structural form of the data-attribute widgets (the pseudo-element `content`
+  that generates the checkbox box, switch track/thumb, etc.). The OUI bundle
+  below then overrides colours/sizes (so e.g. the switch is OUI blue, not the
+  base layer's legacy green). This mirrors the real platform's load order.
+-->
+<link rel="stylesheet" href="/platform/platform-core.css" />
+
+<!-- OutSystems UI compiled stylesheet (ODC platform) — overrides the base layer -->
+<link rel="stylesheet" href="/osui/ODC.OutSystemsUI.css" />
+
+<!--
+  `defer` is required: these run from <head>, but the OUI bundle attaches a
+  global click listener to `document.body` at load (Event/.../BodyOnClick.ts).
+  Without defer, `document.body` is still null in <head> and the bundle throws.
+  defer also preserves execution order, so vendors initialise before the bundle.
+-->
+
+<!-- Provider vendor JS (window globals) -->
+<script defer src="/vendor/flatpickr/flatpickr.js"></script>
+<!-- flatpickr monthSelect plugin → global `monthSelectPlugin`, used by MonthPicker -->
+<script defer src="/vendor/flatpickr/plugins/monthSelect/index.js"></script>
+<script defer src="/vendor/splide/js/splide.min.js"></script>
+<script defer src="/vendor/wnumb/wNumb.js"></script>
+<script defer src="/vendor/nouislider/nouislider.min.js"></script>
+<!-- FloatingUI (core before dom) → window.FloatingUICore / window.FloatingUIDOM, used for tooltip/balloon positioning -->
+<script defer src="/vendor/floating-ui-core/floating-ui.core.umd.js"></script>
+<script defer src="/vendor/floating-ui-dom/floating-ui.dom.umd.js"></script>
+<script defer src="/vendor/virtual-select/virtual-select.min.js"></script>
+
+<!-- OutSystems UI compiled bundle (exposes OutSystems.OSUI.* / OSFramework.OSUI.*) -->
+<script defer src="/osui/ODC.OutSystemsUI.js"></script>

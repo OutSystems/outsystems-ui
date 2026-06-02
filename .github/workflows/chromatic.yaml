@@ -1,0 +1,121 @@
+name: 'Storybook'
+
+# Publishes the Storybook to Chromatic for visual review.
+on:
+    pull_request:
+        branches: ['dev']
+        types: [opened, reopened, synchronize]
+    push:
+        branches: ['dev']
+    workflow_dispatch: {}
+
+concurrency:
+    group: chromatic-${{ github.ref }}
+    cancel-in-progress: true
+
+permissions:
+    contents: write
+    pull-requests: write
+    id-token: write
+
+jobs:
+    chromatic:
+        name: build chromatic
+        runs-on: ubuntu-latest
+        steps:
+            ### Azure login + ADO token (to install the private @outsystems/* widget deps) ###
+            - name: 🔐 Azure login
+              uses: ./.github/actions/az-login
+              with:
+                  client-id: ${{ secrets.OSUI_AZURE_CLIENT_ID }}
+                  tenant-id: ${{ secrets.OSUI_AZURE_TENANT_ID }}
+                  subscription-id: ${{ secrets.OSUI_AZURE_SUBSCRIPTION_ID }}
+
+            - name: 🔑 Get ADO token from Azure Key Vault
+              id: GetAdoToken
+              uses: ./.github/actions/az-keyvault-get
+              with:
+                  key-name: o11odc-github-ado-token-prd
+
+            ### Checkout and prepare code ###
+            - name: 📥 Checkout code
+              uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+              with:
+                  # Chromatic needs full git history for baselines / TurboSnap.
+                  fetch-depth: 0
+
+            - name: ⭕ Connect to OutSystems Environment
+              # Authenticates npm to the internal Azure Artifacts feed so the
+              # @outsystems/runtime-*-js platform-widget deps can be installed.
+              shell: bash
+              run: npx @outsystems/assistant login --token ${{ steps.GetAdoToken.outputs.az-keyvault-value }}
+
+            - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+              with:
+                  node-version: 24.13.1
+
+            - name: 🕸️ Install dependencies
+              run: npm i
+
+            - name: 🏗️ Run build
+              # Produces dist/ODC.OutSystemsUI.{js,css}, served by Storybook via staticDirs.
+              run: npm run build
+
+            ### Run Chromatic ###
+            - name: 🎨 Run Chromatic
+              id: chromatic
+              uses: chromaui/action@e8cc4c31775280b175a3c440076c00d19a9014d7 # v11.28.2
+              with:
+                  projectToken: ${{ secrets.OSUI_CHROMATIC_TOKEN }}
+                  onlyChanged: true
+                  exitZeroOnChanges: true
+                  skip: 'dependabot/**'
+                  buildScriptName: build-storybook
+                  autoAcceptChanges: 'dev'
+
+            - name: 🔎 Find Chromatic comment
+              if: github.event_name == 'pull_request'
+              uses: peter-evans/find-comment@3eae4d37986fb5a8592848f6a574fdf654e61f9e # v3.1.0
+              id: find_chromatic_comment
+              with:
+                  issue-number: ${{ github.event.pull_request.number }}
+                  comment-author: 'github-actions[bot]'
+                  body-includes: <!-- chromatic-ui-test-comment -->
+
+            - name: 🧹 Delete previous Chromatic comment
+              if: github.event_name == 'pull_request' && steps.find_chromatic_comment.outputs.comment-id != ''
+              uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+              with:
+                  script: |
+                      github.rest.issues.deleteComment({
+                        owner: context.repo.owner,
+                        repo: context.repo.repo,
+                        comment_id: ${{ steps.find_chromatic_comment.outputs.comment-id }}
+                      })
+
+            - name: 💬 Comment Chromatic build URL on PR
+              if: github.event_name == 'pull_request'
+              uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+              with:
+                  script: |
+                      const buildUrl = '${{ steps.chromatic.outputs.buildUrl }}';
+                      const storybookUrl = '${{ steps.chromatic.outputs.storybookUrl }}';
+                      const changeCount = '${{ steps.chromatic.outputs.changeCount }}';
+                      const errorCount = '${{ steps.chromatic.outputs.errorCount }}';
+                      const status = errorCount === '0' ? '✅ **Passed**' : '❌ **Failed**';
+                      let body = `<!-- chromatic-ui-test-comment -->\n`;
+                      body += `### 🖼️ Storybook: Chromatic UI tests result: ${status}\n\n`;
+                      body += `| Metric           | Value |\n`;
+                      body += `|------------------|-------|\n`;
+                      body += `| Visual changes   | ${changeCount} |\n`;
+                      body += `| Errors           | ${errorCount} |\n`;
+                      if (storybookUrl) {
+                        body += `| Storybook        | [Preview](${storybookUrl}) |\n`;
+                      }
+                      body += `| Chromatic Build  | [View Results](${buildUrl}) |\n`;
+                      github.rest.issues.createComment({
+                        issue_number: context.issue.number,
+                        owner: context.repo.owner,
+                        repo: context.repo.repo,
+                        body
+                      });

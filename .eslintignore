@@ -13,3 +13,8 @@ src/static/**
 *.js
 # don't lint settings
 .wiz
+# don't lint the Storybook (separate stack: React widgets, ES imports, story scaffolding —
+# follows Storybook/React conventions, not the OSFramework library rules)
+.storybook
+stories
+storybook-static
