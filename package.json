@@ -6,6 +6,7 @@
 	"scripts": {
 		"prebuild": "npx build.tokens --dest src/scss/tokens/ --prefix token",
 		"build": "gulp createProduction --target && npm run lintfix && npm run lint",
+		"build:tokens": "npx build.tokens --dest src/scss/tokens/ --prefix token",
 		"create-osui-scss": "gulp updateScssFile",
 		"predev": "npx build.tokens --dest src/scss/tokens/ --prefix token",
 		"dev": "gulp startDevelopment --target",
@@ -14,12 +15,12 @@
 		"lintfix": "eslint . --fix --ext .ts",
 		"prettier": "prettier --config ./.prettierrc.json --write \"**/*.+(js|ts|css)\"",
 		"setup": "npm i && npm run dev",
-		"build:osui": "npx build.tokens --dest src/scss/tokens/ --prefix token && gulp createProduction --target ODC",
 		"storybook": "storybook dev -p 6006",
 		"build-storybook": "storybook build",
 		"chromatic": "chromatic --build-script-name=build-storybook",
 		"update-version": "gulp updateVersion",
-		"gta-update-version": "gulp gtaSetVersion --newVersion"
+		"gta-update-version": "gulp gtaSetVersion --newVersion",
+		"tokens:update": "npm install --save-dev outsystems-design-tokens@latest && npm run build:tokens"
 	},
 	"repository": {
 		"type": "git",
