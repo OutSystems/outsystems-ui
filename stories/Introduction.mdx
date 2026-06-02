@@ -1,0 +1,99 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Introduction" />
+
+# OutSystems UI — Storybook
+
+This Storybook documents the **OutSystems UI** pattern library by driving the
+**compiled bundle** exactly the way OutSystems Service Studio does at runtime —
+transcribed to high-code.
+
+## How it works
+
+OUI patterns are not React/Vue components: they are TypeScript behaviour classes
+that attach to HTML that the OutSystems platform renders. At runtime the platform:
+
+1. renders an HTML skeleton (specific classes / `name` attributes per pattern),
+2. calls `OutSystems.OSUI.Patterns.<Pattern>API.Create(id, configsJSON)`,
+3. calls `…Initialize(id)`, which runs the pattern's `build()`.
+
+Each story here reproduces those three steps:
+
+- `.storybook/preview-head.html` loads the compiled bundle
+  (`dist/ODC.OutSystemsUI.{js,css}`) and the provider vendor libs
+  (Flatpickr, Splide, noUiSlider, VirtualSelect) as classic `<script>` tags,
+  exposing `OutSystems.OSUI.*` and `window.flatpickr` etc. as globals.
+- `stories/_helpers/osui.ts` provides `renderPattern(template, init)` — it
+  injects the HTML, runs `init` after mount, and disposes the previous story's
+  instances so the registry doesn't leak.
+- The HTML skeletons are **derived from each pattern's TypeScript contract**
+  (`Enum.ts` classes, `Config` defaults, the selectors `build()` queries) — not
+  from an OML.
+
+## Prerequisite
+
+The compiled bundle must exist before starting Storybook:
+
+```bash
+npm run build:osui      # one-shot gulp production build (ODC)
+npm run storybook
+```
+
+## Patterns covered
+
+Stories exist for every public pattern API, grouped by category:
+
+- **Content** — Accordion, Carousel, FlipContent
+- **Interaction** — AnimatedLabel, BottomSheet, ButtonLoading, DatePicker, Dropdown, MonthPicker, Notification, RangeSlider, Search, TimePicker, Tooltip
+- **Navigation** — OverflowMenu, SectionIndex, Sidebar, Submenu, Tabs
+- **Adaptive** — Gallery
+- **Numbers** — Progress (Bar + Circle), Rating
+- **Utilities** — InlineSvg, Video, SwipeEvents, TouchEvents
+
+Provider-backed patterns load their vendor global first (Flatpickr +
+monthSelect plugin for the pickers, Splide for Carousel, noUiSlider + wNumb for
+RangeSlider, VirtualSelect for Dropdown).
+
+**Not yet storied:** `DropdownServerSideItem` — it's the server-side Dropdown
+variant and needs the server-side parent + a data source to render meaningfully.
+
+## HTML / CSS-only blocks
+
+Many OutSystems UI components have **no JavaScript** — they're pure markup styled
+by the shipped stylesheet (rendered as static blocks in low-code). These are
+storied too, via `renderStatic(template)` (no `Create()`/`Initialize()`), using
+the **shipped** class names taken from each `_*.scss`:
+
+- **Content** — Alert, Card (Basic/Sectioned/Background/Detail), Tag, UserAvatar, ChatMessage, Section, BlankSlate, ListItem, Table
+- **Navigation** — Breadcrumbs, Wizard, Timeline, Pagination
+- **Adaptive** — MasterDetail (`.split-screen-wrapper`), Columns
+- **Numbers** — Badge, IconBadge, Counter
+- **Interaction** — Popup
+
+Note these use shipped classes, which sometimes differ from the proposed
+showcase names (e.g. Master Detail ships as `.split-screen-wrapper`, Chat as
+`.chat`, Breadcrumbs items as `.breadcrumbs-item`).
+
+Every story (JS + static) is smoke-tested headless (loads, initialises / renders,
+no console errors). Use any existing story as the template when adding new ones.
+
+## Platform Widgets (a different stack)
+
+Some OutSystems UI controls are **not** part of this CSS/TS library — they're
+**React** components shipped from `@outsystems/runtime-widgets-js` (the platform
+runtime, installed from the internal Azure Artifacts feed; see `.npmrc`). The
+**`Widgets/`** group mounts the *real* React components: Button, ButtonGroup,
+Checkbox, RadioGroup, Switch, Input, TextArea, Dropdown, Upload, Link, Popup,
+Label, Icon, Image, Text. These replace the earlier hand-written Forms HTML
+stories. (FeedbackMessage also lives under `Widgets/` — a CSS-only block, but
+grouped with the form controls.)
+
+How it works (`stories/_helpers/widget.ts`): these widgets are wrapped in the
+runtime's `withWidget` HOC and bind to runtime objects, so the harness supplies
+them the way the package's own tests do — a `Model.Variable` for the value, a
+`runtimeMock()` Proxy for the other runtime interfaces, and framework
+`_idProps` — then mounts with React 17's `ReactDOM.render`. They share the OUI
+stylesheet (e.g. `[data-input]`, `[data-switch]`, `.btn`).
+
+> Note: the widgets pin **React 17**, so installing them pins React 17 for the
+> whole Storybook (dev-only; the OUI library build is unaffected).

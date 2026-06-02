@@ -119,3 +119,6 @@ src/scss/tokens/
 
 # Per-developer Claude Code permission grants (local only)
 .claude/settings.local.json
+
+# Storybook build output
+storybook-static/
