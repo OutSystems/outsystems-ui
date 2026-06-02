@@ -122,3 +122,4 @@ src/scss/tokens/
 
 # Storybook build output
 storybook-static/
+.npmrc
