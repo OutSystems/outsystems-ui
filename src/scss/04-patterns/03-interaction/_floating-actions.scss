@@ -109,7 +109,7 @@
 	&-actions-item-button {
 		align-items: center;
 		background-color: var(--osui-floating-actions-item-background);
-		border-radius: $token-border-radius-full;
+		border-radius: var(--os-border-radius-circular);
 		box-shadow: $token-elevation-1;
 		color: var(--osui-floating-actions-item-color);
 		cursor: pointer;
@@ -137,7 +137,7 @@
 	&-button {
 		align-items: center;
 		background-color: var(--osui-floating-actions-button-background);
-		border-radius: $token-border-radius-full;
+		border-radius: var(--os-border-radius-circular);
 		box-shadow: var(--osui-floating-actions-button-shadow);
 		color: var(--osui-floating-actions-button-color);
 		cursor: pointer;

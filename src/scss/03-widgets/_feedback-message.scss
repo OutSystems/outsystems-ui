@@ -8,7 +8,7 @@
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-feedback-message-background: #{$token-bg-surface-default};
 	--osui-feedback-message-color: #{$token-text-default};
-	--osui-feedback-message-border-radius: #{$token-border-radius-200};
+	--osui-feedback-message-border-radius: var(--os-border-radius-sm-surfaces);
 	--osui-feedback-message-max-width: 600px;
 	--osui-feedback-message-min-width: 400px;
 	// ───────────────────────────────────────────────────────────────────

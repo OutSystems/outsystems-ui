@@ -63,11 +63,11 @@
 			}
 
 			&:after {
-				background: var(--trail-color);
+				background: var(--trail-color, #{$token-bg-neutral-subtle-default});
 				width: 100%;
 
 				& {
-					-servicestudio-background: var(--trail-color, #{$token-border-subtle});
+					-servicestudio-background: var(--trail-color, #{$token-bg-neutral-subtle-default});
 				}
 			}
 

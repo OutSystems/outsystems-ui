@@ -33,7 +33,7 @@
 	.scale-animation {
 		animation: list-item-scale-animation $token-transition-time-1500;
 		background-color: color-mix(in srgb, #{$token-text-default} 10%, transparent);
-		border-radius: $token-border-radius-full;
+		border-radius: var(--os-border-radius-circular);
 		display: block;
 		height: 10px; // design-spec: fixed ripple size
 		left: 50%;

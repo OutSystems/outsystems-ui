@@ -9,7 +9,7 @@
 		--osui-dropdown-background: #{$token-bg-input-default};
 		--osui-dropdown-border-color: #{$token-border-default};
 		--osui-dropdown-color: #{$token-text-default};
-		--osui-dropdown-border-radius: #{$token-border-radius-200};
+		--osui-dropdown-border-radius: var(--os-border-radius-controls);
 		--osui-dropdown-list-max-height: 240px;
 		// ───────────────────────────────────────────────────────────────────
 
@@ -58,7 +58,7 @@
 
 		& > div.dropdown-list {
 			border: $token-border-size-025 solid $token-border-default;
-			border-radius: $token-border-radius-200;
+			border-radius: var(--os-border-radius-sm-surfaces);
 			box-shadow: var(--osui-elevation-overlay);
 			left: 0 !important;
 			max-height: var(--osui-dropdown-list-max-height);

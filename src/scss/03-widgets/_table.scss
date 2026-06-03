@@ -7,7 +7,7 @@
 .table {
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-table-border-color: var(--osui-border-subtle);
-	--osui-table-border-radius: #{$token-border-radius-200};
+	--osui-table-border-radius: var(--os-border-radius-sm-surfaces);
 	--osui-table-header-background: transparent;
 	--osui-table-header-color: #{$token-text-default};
 	--osui-table-cell-background: #{$token-bg-surface-default};

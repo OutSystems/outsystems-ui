@@ -471,7 +471,7 @@ span.flatpickr-weekday {
 	a {
 		align-items: center;
 		border: $token-border-size-025 solid $token-border-default;
-		border-radius: $token-border-radius-full;
+		border-radius: var(--os-border-radius-circular);
 		color: $token-semantics-primary-base;
 		cursor: pointer;
 		display: inline-flex;

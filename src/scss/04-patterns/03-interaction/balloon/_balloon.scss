@@ -8,7 +8,7 @@
 	--osui-balloon-background: #{$token-bg-surface-default};
 	// ───────────────────────────────────────────────────────────────────
 
-	--border-radius-rounded: #{$token-border-radius-400};
+	--border-radius-rounded: var(--os-border-radius-lg-surfaces);
 	--osui-floating-position-x: 0;
 	--osui-floating-position-y: 0;
 	--osui-balloon-shadow: #{$token-elevation-1};

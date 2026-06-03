@@ -49,6 +49,13 @@
 	--os-layer-local-tier-4: 4;
 	--os-layer-local-tier-5: 5;
 
+	/*! Border-radius — semantic role bridge. Override once to re-radius a whole */
+	/*  role across the framework. Defaults map to the design-tokens radius scale. */
+	--os-border-radius-controls:    #{$token-border-radius-200};  /* 8px;   buttons, inputs, selects, checkboxes */
+	--os-border-radius-sm-surfaces: #{$token-border-radius-200};  /* 8px;   cards, popups, tables, dropdown panels, upload, popover */
+	--os-border-radius-lg-surfaces: #{$token-border-radius-400};  /* 16px;  bottom-sheet, balloon, overflow-menu */
+	--os-border-radius-circular:    #{$token-border-radius-full}; /* 999px; radios, switches, avatars, badges, pills */
+
 	/*! Fixed/Absolute Patterns that need their variables on a global level */
 	--osui-bottom-sheet-layer: var(--os-layer-off-canvas);
 	--osui-notification-layer: var(--os-layer-instant-interaction);
@@ -65,15 +72,10 @@
 	/* components can consume them today without blocking on upstream coordination. */
 	/*                                                                          */
 	/* Each one is a candidate to graduate into outsystems-design-tokens — the  */
-	/* var name maps 1:1 to its proposed token (e.g. --osui-bg-overlay-hover    */
-	/* → --token-bg-overlay-hover) so the future swap is a rename, not a       */
+	/* var name maps 1:1 to its proposed token (e.g. --osui-elevation-overlay   */
+	/* → --token-elevation-overlay) so the future swap is a rename, not a      */
 	/* rewrite. Comments below pair each var with its proposed token name.      */
 	/* ----------------------------------------------------------------------- */
-
-	/*! Surface overlays — surface-agnostic alpha tints for hover / press / dividers */
-	--osui-bg-overlay-hover: rgba(0, 0, 0, 0.04); /* future: --token-bg-overlay-hover */
-	--osui-bg-overlay-press: rgba(0, 0, 0, 0.07); /* future: --token-bg-overlay-press */
-	--osui-border-overlay-divider: rgba(0, 0, 0, 0.07); /* future: --token-border-overlay-divider */
 
 	/*! Focus halo — primary-derived alpha ring for input-style controls */
 	--osui-border-focus-halo: color-mix(
@@ -87,20 +89,14 @@
 	/*! Extra elevation steps beyond $token-elevation-1..4 */
 	--osui-elevation-overlay:
 		0 12px 24px -8px rgba(0, 0, 0, 0.12), 0 8px 16px -8px rgba(0, 0, 0, 0.08); /* future: --token-elevation-overlay */
-	--osui-elevation-flat:
-		0 1px 2px rgba(16, 24, 40, 0.04), 0 1px 3px rgba(16, 24, 40, 0.06); /* future: --token-elevation-flat */
 
 	/*! Surface variants — subtler than --token-bg-surface-default */
 	--osui-bg-surface-subtle: #fafbfc; /* future: --token-bg-surface-subtle */
-	--osui-bg-neutral-subtlest: #f5f5f5; /* future: --token-bg-neutral-subtlest */
 
 	/*! Motion durations with no $token-transition-time-* equivalent (130 / 180 / 400ms) */
 	--osui-motion-duration-130: 130ms; /* future: --token-transition-time-130 */
 	--osui-motion-duration-180: 180ms; /* future: --token-transition-time-180 */
 	--osui-motion-duration-400: 400ms; /* future: --token-transition-time-400 */
-
-	/*! Semantic orange — Timeline state variant; no semantics-orange-* family in tokens yet */
-	--osui-semantics-orange-base: #{$token-primitives-orange-700}; /* future: --token-semantics-orange-base */
 
 	/*! Semantic primary hover — no semantics-primary-hover in tokens yet */
 	--osui-semantics-primary-hover: #0b47b8; /* future: --token-semantics-primary-hover */

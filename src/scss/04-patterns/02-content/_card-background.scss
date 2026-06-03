@@ -6,7 +6,7 @@
 ///
 .card-background {
 	align-items: center;
-	border-radius: $token-border-radius-200;
+	border-radius: var(--os-border-radius-sm-surfaces);
 	color: $token-text-inverse;
 	display: flex;
 	overflow: hidden;

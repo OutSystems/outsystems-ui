@@ -165,7 +165,7 @@
 
 		&::-webkit-scrollbar-thumb {
 			background-color: $token-border-default;
-			border-radius: $token-border-radius-full;
+			border-radius: var(--os-border-radius-circular);
 		}
 
 		// Service Studio Preview

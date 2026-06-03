@@ -28,7 +28,7 @@
 		&:before {
 			background-color: var(--osui-switch-track-color);
 			border: 0;
-			border-radius: $token-border-radius-full;
+			border-radius: var(--os-border-radius-circular);
 			height: var(--osui-switch-height);
 			opacity: 1;
 			transition: background-color var(--osui-motion-duration-180) $token-transition-curve-linear;
@@ -99,7 +99,7 @@
 ///
 .has-accessible-features {
 	[data-switch] {
-		border-radius: $token-border-radius-full;
+		border-radius: var(--os-border-radius-circular);
 
 		&:empty {
 			&:before {

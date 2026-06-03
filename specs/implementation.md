@@ -3042,29 +3042,22 @@ Pure semantic-token migration — smallest implementation lift on the list.
 
 Each `TOKEN_GAP` flagged in §16.1 is resolved by a `--osui-*` global declared in `src/scss/01-foundations/_root.scss` (the "Cross-component design primitives — future-token candidates" block). No upstream coordination required to start Phase 16; each var name maps 1:1 to its eventual `$token-*` equivalent so a future graduation is a rename, not a rewrite.
 
-The 9 declared globals:
+The 4 declared globals (those with a consumer today):
 
 | `--osui-*` global | Value | Future token name | Components consuming |
 |---|---|---|---|
-| `--osui-bg-overlay-hover` | `rgba(0, 0, 0, 0.04)` | `--token-bg-overlay-hover` | Tabs, Master Detail, List, Pagination, Accordion, Button Group |
-| `--osui-bg-overlay-press` | `rgba(0, 0, 0, 0.07)` | `--token-bg-overlay-press` | Master Detail (and others on press) |
-| `--osui-border-overlay-divider` | `rgba(0, 0, 0, 0.07)` | `--token-border-overlay-divider` | Accordion, List, Master Detail |
 | `--osui-border-focus-halo` | `color-mix(in srgb, $token-semantics-primary-base 22%, transparent)` | `--token-border-focus-halo` | Switch, Radio, Checkbox, Form, Wizard, Input |
 | `--osui-elevation-overlay` | `0 12px 24px -8px rgba(0,0,0,.12), 0 8px 16px -8px rgba(0,0,0,.08)` | `--token-elevation-overlay` | Dropdown, DatePicker, Popup, Carousel arrows |
-| `--osui-elevation-flat` | `0 1px 2px rgba(16,24,40,.04), 0 1px 3px rgba(16,24,40,.06)` | `--token-elevation-flat` | Card |
 | `--osui-bg-surface-subtle` | `#fafbfc` | `--token-bg-surface-subtle` | Card-bottom |
 | `--osui-motion-duration-400` | `400ms` | `--token-transition-duration-400` | Accordion, Flip Content |
-| `--osui-semantics-orange-base` | `$token-primitives-orange-700` (compiles to `var(--token-primitives-orange-700, #c37100)`) | `--token-semantics-orange-base` | Timeline |
+
+The alpha-overlay primitives (`--osui-bg-overlay-hover`, `--osui-bg-overlay-press`, `--osui-border-overlay-divider`), the flatter card elevation (`--osui-elevation-flat`), and `--osui-semantics-orange-base` are **not** pre-declared — declaring a global ahead of any consumer just leaves a dead var. They are declared together with the Phase 16c component work that first consumes them (Tabs/Master Detail/List hover, Card, Timeline), each still mapping 1:1 to its proposed `--token-*` name.
 
 **Reclassified during prep:** `$token-text-placeholder` is **not** declared as a global — `$token-text-subtlest` (`#a2a2a2` via `--token-primitives-neutral-500`) is close enough. Components that proposed `placeholder` swap to `subtlest` instead. This is `TOKEN_SWAP` in §16.1, not a gap.
 
 **Components consume these as plain `var(--osui-*)`:**
 
 ```scss
-.osui-tabs__item:hover {
-  background: var(--osui-bg-overlay-hover);
-}
-
 .osui-switch__input:focus-visible + .osui-switch__track {
   box-shadow: 0 0 0 3px var(--osui-border-focus-halo);
 }
@@ -3077,18 +3070,18 @@ The 9 declared globals:
 **Per-component override pattern still applies:** components that need a per-instance escape hatch wrap the global behind a component-scoped var:
 
 ```scss
-.osui-master-detail {
-  --osui-master-detail-hover-bg: var(--osui-bg-overlay-hover);
+.osui-popup {
+  --osui-popup-shadow: var(--osui-elevation-overlay);
 
-  .osui-master-detail__list-item:hover {
-    background: var(--osui-master-detail-hover-bg);
+  .osui-popup__container {
+    box-shadow: var(--osui-popup-shadow);
   }
 }
 ```
 
-This means consumers can override the hover overlay either globally (`--osui-bg-overlay-hover`) or per-component (`--osui-master-detail-hover-bg`).
+This means consumers can override the elevation either globally (`--osui-elevation-overlay`) or per-component (`--osui-popup-shadow`).
 
-**Future-token graduation path:** when these primitives eventually graduate to `outsystems-design-tokens`, the migration is a sed sweep — `--osui-bg-overlay-hover` → `--token-bg-overlay-hover` across the codebase, then delete the `--osui-*` declarations from `_root.scss`. The 1:1 naming is the contract.
+**Future-token graduation path:** when these primitives eventually graduate to `outsystems-design-tokens`, the migration is a sed sweep — `--osui-elevation-overlay` → `--token-elevation-overlay` across the codebase, then delete the `--osui-*` declarations from `_root.scss`. The 1:1 naming is the contract.
 
 ### 16.3 New `--osui-{component}-{prop}` API additions — by archetype
 

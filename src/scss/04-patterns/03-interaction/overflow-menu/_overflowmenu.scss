@@ -13,13 +13,13 @@
 
 	display: inline-block;
 	--osui-overflow-menu-min-width: 170px;
-	--border-radius-rounded: #{$token-border-radius-400};
+	--border-radius-rounded: var(--os-border-radius-lg-surfaces);
 
 	&__trigger {
 		--osui-floating-offset: #{$token-scale-200};
 
 		border: $token-border-size-025 solid transparent;
-		border-radius: var(--osui-btn-border-radius, #{$token-border-radius-200});
+		border-radius: var(--osui-btn-border-radius, var(--os-border-radius-controls));
 		color: var(--osui-overflow-menu-color);
 		width: $token-scale-800;
 

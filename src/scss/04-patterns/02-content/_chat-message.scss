@@ -35,7 +35,7 @@
 		margin-right: $token-scale-400;
 
 		img {
-			border-radius: $token-border-radius-full;
+			border-radius: var(--os-border-radius-circular);
 			height: $token-scale-1000;
 			object-fit: cover;
 			width: $token-scale-1000;

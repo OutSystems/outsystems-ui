@@ -20,7 +20,7 @@
 			--osui-popover-background:    #{$token-bg-surface-default};
 			--osui-popover-border-color:  #{$token-border-default};
 			--osui-popover-color:         #{$token-text-default};
-			--osui-popover-border-radius: #{$token-border-radius-100};
+			--osui-popover-border-radius: var(--os-border-radius-sm-surfaces);
 			--osui-popover-shadow:        #{$token-elevation-1};
 			--osui-popover-max-width:     350px;
 			// ───────────────────────────────────────────────────────────────────

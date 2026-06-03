@@ -41,7 +41,7 @@
 		border-radius: $token-border-radius-100;
 	}
 	&.rounded {
-		border-radius: $token-border-radius-full;
+		border-radius: var(--os-border-radius-circular);
 	}
 	.btn-provider-login {
 		&-logo {

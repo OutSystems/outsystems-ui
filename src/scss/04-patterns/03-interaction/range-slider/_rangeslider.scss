@@ -67,7 +67,7 @@
 			.noUi-handle {
 				background-color: var(--osui-range-slider-handle-background);
 				border: $token-border-size-050 solid var(--osui-range-slider-handle-border-color);
-				border-radius: $token-border-radius-full;
+				border-radius: var(--os-border-radius-circular);
 				box-shadow: var(--osui-range-slider-handle-shadow);
 				cursor: pointer;
 				display: inline-block;

@@ -58,7 +58,7 @@
 				// WCAG 2.5.8: Target offset of 6px on each side meets the 24px minimum
 				// (12px dot + 6px margin × 2 = 24px total territory per axis)
 				background-color: var(--osui-carousel-pagination-color);
-				border-radius: $token-border-radius-full;
+				border-radius: var(--os-border-radius-circular);
 				height: $token-scale-300;
 				margin: 6px;
 				transition:

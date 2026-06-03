@@ -29,7 +29,7 @@
 	&:before {
 		background-color: var(--osui-radio-background);
 		border: $token-border-size-025 solid var(--osui-radio-border-color);
-		border-radius: $token-border-radius-full;
+		border-radius: var(--os-border-radius-circular);
 		content: '';
 		display: flex;
 		inset: 0;
@@ -142,7 +142,7 @@
 // Accessibility -----------------------------------------------------------------
 .has-accessible-features {
 	.radio-button {
-		border-radius: $token-border-radius-full;
+		border-radius: var(--os-border-radius-circular);
 
 		&:before {
 			border-color: $token-border-input-default;
@@ -150,7 +150,7 @@
 
 		&:after {
 			background-color: $token-bg-input-default;
-			border-radius: $token-border-radius-full;
+			border-radius: var(--os-border-radius-circular);
 			content: '';
 			height: $token-scale-300;
 			left: 50%;

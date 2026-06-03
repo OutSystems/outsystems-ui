@@ -9,7 +9,7 @@
 	--osui-card-background:    #{$token-bg-surface-default};
 	--osui-card-border-color:  var(--osui-border-subtle);
 	--osui-card-border-width:  #{$token-border-size-025};
-	--osui-card-border-radius: #{$token-border-radius-200};
+	--osui-card-border-radius: var(--os-border-radius-sm-surfaces);
 	--osui-card-padding:       #{$token-scale-600};
 	--osui-card-shadow:        #{$token-elevation-1};
 	// ───────────────────────────────────────────────────────────────────

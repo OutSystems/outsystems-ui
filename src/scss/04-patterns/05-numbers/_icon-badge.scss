@@ -19,7 +19,7 @@
 		left: auto;
 
 		align-items: center;
-		border-radius: $token-border-radius-full;
+		border-radius: var(--os-border-radius-circular);
 		box-shadow: 0 0 0 2px var(--osui-icon-badge-ring-color);
 		display: inline-flex;
 		font-size: var(--osui-font-size-200);

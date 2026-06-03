@@ -712,7 +712,7 @@ Yes, for the overwhelming majority of changes. The two-layer architecture establ
 Across the 38 components reviewed, the proposed changes break down roughly as:
 - **~70% trivial token swaps** — most "current" values reference legacy variable names that the migration already retired. The proposals are pure swaps to current `$token-semantics-*-base`, `$token-scale-*`, `$token-border-radius-*`, `$token-text-*`, `$token-font-weight-*`. No architectural change required.
 - **~20% new `--osui-{component}-{prop}` vars** — properties that are currently inlined and should become themable per-instance (e.g. button heights per size variant, animation durations, hover-overlay backgrounds, focus halo widths). These are additive: the existing component CSS API just gets more entries. No infrastructure change.
-- **~10% cross-component design primitives** — recurring patterns that genuinely don't have a token equivalent (alpha overlays, deeper popup elevations, an extra motion-duration step, a semantics-orange family). **These are now declared as `--osui-*` globals in `src/scss/01-foundations/_root.scss`** under the "Cross-component design primitives — future-token candidates" block. No upstream coordination required to start Phase 16; each one is named to map 1:1 to its eventual `$token-*` equivalent so a future graduation is a rename, not a rewrite.
+- **~10% cross-component design primitives** — recurring patterns that genuinely don't have a token equivalent (alpha overlays, deeper popup elevations, an extra motion-duration step, a semantics-orange family). **The ones that already have consumers are declared as `--osui-*` globals in `src/scss/01-foundations/_root.scss`** under the "Cross-component design primitives — future-token candidates" block. Primitives with no consumer yet (alpha overlays, semantics-orange) are declared alongside the component work that consumes them (Phase 16c), not pre-declared as dead vars. No upstream coordination required to start Phase 16; each one is named to map 1:1 to its eventual `$token-*` equivalent so a future graduation is a rename, not a rewrite.
 
 **What this phase delivers:**
 1. A consolidated component-by-component change inventory (in `specs/implementation.md` Phase 16) classifying every proposed change as `TOKEN_SWAP`, `NEW_OSUI_VAR`, `TOKEN_GAP`, or `HARDCODED-by-design`.
@@ -728,11 +728,11 @@ Across the 38 components reviewed, the proposed changes break down roughly as:
 | C2 | **Border-radius modernization** `4px → 8px` (controls), `4px → 12px` (calendar/popup), `→ 999px` (pills) | ~25 components | Pure `TOKEN_SWAP` to existing `$token-border-radius-200/300/full`. Trivial. |
 | C3 | **Semantic colour migration** raw `#hex` / palette → `$token-semantics-{color}-base` | All colour-bearing components | Pure `TOKEN_SWAP`. The migration already retired the legacy palette names; proposals just complete the alignment. Trivial. |
 | C4 | **Neutral alpha hover overlay** (e.g. `rgba(0,0,0,.04)`) | Tabs, Master Detail, List, Accordion, Pagination, Button Group, Wizard, Switch (focus), Radio (focus), Checkbox (focus) | **Architectural decision required** — see "Alpha overlays" below. |
-| C5 | **Deeper popup elevation** beyond current `$token-elevation-1..4` | Dropdown popup, DatePicker calendar, Popup modal, Carousel arrows, Card | Resolved via `--osui-elevation-overlay` and `--osui-elevation-flat` globals in `_root.scss`. |
+| C5 | **Deeper popup elevation** beyond current `$token-elevation-1..4` | Dropdown popup, DatePicker calendar, Popup modal, Carousel arrows, Card | Resolved via the `--osui-elevation-overlay` global in `_root.scss`. |
 
-**Alpha overlays — resolved via `--osui-*` globals:**
+**Alpha overlays — deferred to the consuming Phase 16c work:**
 
-Eight components propose `rgba(0,0,0,.04)` or similar neutral-alpha tints for hover/divider/press states, with the explicit rationale that an alpha overlay "adapts to any surface without a fixed hex". Same pattern (Material's surface-tint, Radix's accent-overlay) applied uniformly. Rather than block Phase 16 on upstream token additions, we declare these primitives as `--osui-*` globals in `src/scss/01-foundations/_root.scss` (see the "Cross-component design primitives — future-token candidates" block). The focus-halo uses `color-mix(in srgb, $token-semantics-primary-base 22%, transparent)` so it stays primary-derived and respects theme overrides automatically.
+Eight components propose `rgba(0,0,0,.04)` or similar neutral-alpha tints for hover/divider/press states, with the explicit rationale that an alpha overlay "adapts to any surface without a fixed hex". Same pattern (Material's surface-tint, Radix's accent-overlay) applied uniformly. The alpha-overlay primitives (`--osui-bg-overlay-hover`, `--osui-bg-overlay-press`, `--osui-border-overlay-divider`) were **not** pre-declared in `_root.scss` — pre-declaring globals ahead of any consumer left them as dead vars, so they are declared together with the component work that consumes them (Phase 16c) or once the upstream `--token-bg-overlay-*` tokens land. The focus-halo (`--osui-border-focus-halo`) and popup elevation (`--osui-elevation-overlay`) primitives, which already have consumers, remain declared in the block below; they use `color-mix(in srgb, $token-semantics-primary-base 22%, transparent)` so the focus ring stays primary-derived and respects theme overrides automatically.
 
 **Cross-component design primitives — declared in `_root.scss`:**
 
@@ -740,15 +740,10 @@ Each `--osui-*` global below covers a recurring need across multiple components 
 
 | Global var | Value | Rationale | Future token name | Components affected |
 |---|---|---|---|---|
-| `--osui-bg-overlay-hover` | `rgba(0,0,0,0.04)` | Surface-agnostic hover tint | `--token-bg-overlay-hover` | 7+ |
-| `--osui-bg-overlay-press` | `rgba(0,0,0,0.07)` | Surface-agnostic press tint | `--token-bg-overlay-press` | 5+ |
-| `--osui-border-overlay-divider` | `rgba(0,0,0,0.07)` | Surface-agnostic divider | `--token-border-overlay-divider` | Accordion, List, Master Detail, Tabs |
 | `--osui-border-focus-halo` | `color-mix(in srgb, $token-semantics-primary-base 22%, transparent)` | Primary-derived focus ring | `--token-border-focus-halo` | Switch, Radio, Checkbox, Form, Wizard, Input |
 | `--osui-elevation-overlay` | `0 12px 24px -8px rgba(0,0,0,0.12), 0 8px 16px -8px rgba(0,0,0,0.08)` | Deeper 2-layer for popups over backdrops | `--token-elevation-overlay` | Dropdown, DatePicker, Popup, Card popup, Carousel arrows |
-| `--osui-elevation-flat` | `0 1px 2px rgba(16,24,40,.04), 0 1px 3px rgba(16,24,40,.06)` | Flatter 2-layer for surface-attached cards | `--token-elevation-flat` | Card |
 | `--osui-bg-surface-subtle` | `#fafbfc` | Subtler than `$token-bg-surface-default` | `--token-bg-surface-subtle` | Card-bottom |
 | `--osui-motion-duration-400` | `400ms` | Between `$token-transition-duration-300/500` | `--token-transition-duration-400` | Accordion, Flip Content |
-| `--osui-semantics-orange-base` | `$token-primitives-orange-700` | Timeline state; no `semantics-orange-*` family yet | `--token-semantics-orange-base` | Timeline |
 
 `$token-text-placeholder` is **not** declared as an `--osui-*` global — `$token-text-subtlest` is close enough (`#a2a2a2` per design-tokens). Components that proposed `placeholder` swap to `subtlest` instead. This was reclassified from `TOKEN_GAP` to `TOKEN_SWAP` during Phase 16 prep.
 
@@ -785,9 +780,9 @@ The 38-component review surfaces ~80 candidate new component vars. They cluster 
 **Suggested execution shape:**
 - Phase 16a — pure `TOKEN_SWAP` sweep across all 38 components (no architectural change). Largest blast radius, lowest risk per change.
 - Phase 16b — `NEW_OSUI_VAR` additions, batched by archetype (hover overlays first, then focus halos, etc.).
-- Phase 16c — `HARDCODED-by-design` adoptions (caret strokes, animation curves) and consumption of the new `--osui-*` globals (overlays, focus halos, elevations, motion duration, orange semantic).
+- Phase 16c — `HARDCODED-by-design` adoptions (caret strokes, animation curves), consumption of the already-declared `--osui-*` globals (focus halo, popup elevation, surface-subtle, motion duration), and declaration-plus-consumption of the not-yet-declared primitives (alpha overlays, orange semantic) at the point a component first needs them.
 
-Each sub-phase is independently shippable. The architecture means components can be uplifted one at a time without cross-team coordination dependencies — the alpha-overlay primitives are now in this repo, not blocked on `outsystems-design-tokens`.
+Each sub-phase is independently shippable. The architecture means components can be uplifted one at a time without cross-team coordination dependencies — the design primitives live as `--osui-*` globals in this repo, declared when a consumer needs them, not blocked on `outsystems-design-tokens`.
 
 ---
 
