@@ -133,12 +133,6 @@
 
 		&--is-left {
 			flex-direction: row-reverse;
-
-			.osui-accordion-item {
-				&__title__placeholder {
-					padding-left: $token-scale-200;
-				}
-			}
 		}
 	}
 
