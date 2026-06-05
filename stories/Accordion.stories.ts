@@ -49,6 +49,7 @@ function itemMarkup(id: string, title: string, body: string): string {
 
 const meta: Meta<AccordionArgs> = {
 	title: 'Patterns/Content/Accordion',
+	tags: ['!ui-pending', 'ui-reviewed'],
 	argTypes: {
 		multipleItems: { control: 'boolean', name: 'Accordion.MultipleItems' },
 		icon: { control: 'select', options: ['Caret', 'PlusMinus', 'Custom'], name: 'Item.Icon' },

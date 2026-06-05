@@ -7,7 +7,7 @@ import { renderStatic } from './_helpers/osui';
  * via `content: var(--osui-icon-{status})` (icon-library var → respects the FA/Phosphor toggle),
  * so NO inner `<i>` is needed.
  */
-const meta: Meta = { title: 'Patterns/Content/Alert' };
+const meta: Meta = { title: 'Patterns/Content/Alert', tags: ['!ui-pending', 'ui-reviewed'] };
 export default meta;
 type Story = StoryObj;
 

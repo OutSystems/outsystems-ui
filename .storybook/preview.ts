@@ -64,6 +64,10 @@ const withAppShell: Decorator = (storyFn, context) => {
 
 const preview: Preview = {
 	decorators: [withAppShell],
+	// UI-review tracking: every story starts as `ui-pending`. As a component's UI
+	// is signed off, its meta opts out with `!ui-pending` and adds `ui-reviewed`
+	// (see e.g. Accordion / Alert stories). Filter by either in the sidebar's tag menu.
+	tags: ['ui-pending'],
 	globalTypes: {
 		theme: {
 			description: 'Switch between the new token-based theme and the deprecated pre-migration CSS',
