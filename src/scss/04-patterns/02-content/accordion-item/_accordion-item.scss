@@ -94,6 +94,8 @@
 		direction: ltr;
 		display: flex;
 		font-size: $token-font-size-400;
+		gap: $token-scale-200;
+		justify-content: space-between;
 		line-height: 1;
 		padding: var(--osui-scale-350) $token-scale-600;
 		width: 100%;
