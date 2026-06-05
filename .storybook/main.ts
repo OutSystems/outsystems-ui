@@ -31,6 +31,9 @@ const config: StorybookConfig = {
 		{ from: path.join(__dirname, 'platform'), to: '/platform' },
 		// Compiled OUI bundle (built by gulp) → served at /osui/*
 		{ from: path.join(repoRoot, 'dist'), to: '/osui' },
+		// Pre-migration CSS snapshot (Phase 0 baseline) → served at /deprecated/*
+		// Used by the "Theme" toolbar toggle to compare the deprecated look against the new token theme.
+		{ from: path.join(repoRoot, 'deprecated'), to: '/deprecated' },
 		// FontAwesome 4.7 — the default icon font (font-family: 'FontAwesome').
 		// Serve the whole package so the CSS's relative ../fonts/* URLs resolve.
 		{ from: path.join(repoRoot, 'node_modules/font-awesome'), to: '/vendor/font-awesome' },

@@ -33,8 +33,12 @@
 -->
 <link rel="stylesheet" href="/platform/platform-core.css" />
 
-<!-- OutSystems UI compiled stylesheet (ODC platform) — overrides the base layer -->
-<link rel="stylesheet" href="/osui/ODC.OutSystemsUI.css" />
+<!--
+  OutSystems UI compiled stylesheet (ODC platform) — overrides the base layer.
+  The `id` lets the "Theme" toolbar toggle (see preview.ts) swap this `href`
+  between the new token theme (/osui) and the pre-migration snapshot (/deprecated).
+-->
+<link rel="stylesheet" id="osui-theme" href="/osui/ODC.OutSystemsUI.css" />
 
 <!--
   `defer` is required: these run from <head>, but the OUI bundle attaches a

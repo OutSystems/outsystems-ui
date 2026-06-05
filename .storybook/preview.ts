@@ -11,6 +11,30 @@ const ICON_LIB_FONTAWESOME = 'icon-library-FontAwesome';
 const ICON_LIB_PHOSPHOR_VARS = 'iconLibrary-phosphor';
 const ICON_LIB_PHOSPHOR_FLATPICKR = 'icon-library-Phosphor';
 
+/**
+ * Theme toggle — swaps the `#osui-theme` <link> href between the new token-based
+ * theme (the freshly compiled bundle in /osui) and the pre-migration CSS snapshot
+ * (/deprecated, the Phase 0 baseline). Lets reviewers eyeball the old vs new look
+ * side by side without rebuilding. Both are full self-contained stylesheets, so
+ * swapping the href is enough — no class toggling needed.
+ */
+const THEME_HREF = {
+	new: '/osui/ODC.OutSystemsUI.css',
+	deprecated: '/deprecated/ODC.OutSystemsUI.css',
+} as const;
+
+function applyTheme(theme: string): void {
+	const link = document.getElementById('osui-theme') as HTMLLinkElement | null;
+	if (link === null) {
+		return;
+	}
+	const href = THEME_HREF[theme as keyof typeof THEME_HREF] ?? THEME_HREF.new;
+	// Only reassign when it actually changes to avoid a needless reflow / FOUC.
+	if (!link.href.endsWith(href)) {
+		link.setAttribute('href', href);
+	}
+}
+
 function applyIconLibrary(library: string): void {
 	const root = document.documentElement;
 	if (library === 'Phosphor') {
@@ -34,12 +58,26 @@ const withAppShell: Decorator = (storyFn, context) => {
 	document.body.classList.toggle('has-accessible-features', context.globals.accessibleFeatures === 'on');
 	document.documentElement.setAttribute('dir', 'ltr');
 	applyIconLibrary((context.globals.iconLibrary as string) ?? 'FontAwesome');
+	applyTheme((context.globals.theme as string) ?? 'new');
 	return storyFn();
 };
 
 const preview: Preview = {
 	decorators: [withAppShell],
 	globalTypes: {
+		theme: {
+			description: 'Switch between the new token-based theme and the deprecated pre-migration CSS',
+			defaultValue: 'new',
+			toolbar: {
+				title: 'Theme',
+				icon: 'paintbrush',
+				items: [
+					{ value: 'new', title: 'New theme (tokens)' },
+					{ value: 'deprecated', title: 'Deprecated theme' },
+				],
+				dynamicTitle: true,
+			},
+		},
 		iconLibrary: {
 			description: 'OutSystems UI icon font',
 			defaultValue: 'FontAwesome',
