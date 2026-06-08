@@ -169,24 +169,25 @@ body.iconLibrary-phosphor {
 
 // Table Widget - Sortable Icon
 .sortable-icon {
-	display: inline-block;
+	align-items: center;
+	display: inline-flex;
+	flex-direction: column;
 	font-family: var(--osui-icon-font-family);
 	font-size: $token-font-size-300;
 	height: 11px;
+	justify-content: center;
+	line-height: 0.5; // compress each glyph's line-box so the up/down chevrons stack without overlapping
 	margin-left: $token-scale-200;
 	position: relative;
+	vertical-align: middle;
 	width: 10px;
-
-	&:after {
-		bottom: -65%;
-		content: var(--osui-icon-arrow-down);
-		position: absolute;
-	}
 
 	&:before {
 		content: var(--osui-icon-arrow-up);
-		position: absolute;
-		top: -65%;
+	}
+
+	&:after {
+		content: var(--osui-icon-arrow-down);
 	}
 }
 

@@ -33,10 +33,10 @@ export const Default: Story = {
 	render: (args) => {
 		const id = uid('carousel');
 		const slides = SLIDES.map(
-			(s) => `<div style="display:flex;align-items:center;justify-content:center;min-height:140px;background:#eef;border-radius:8px;font-size:32px;">${s}</div>`
+			(s) => `<div style="display:flex;align-items:center;justify-content:center;min-height:140px;width:100%;background:#eef;border-radius:8px;font-size:32px;">${s}</div>`
 		).join('');
 		const template = `
-			<div ${osuiRoot(id)} class="osui-carousel" style="max-width:480px;">
+			<div ${osuiRoot(id)} class="osui-carousel" >
 				<div class="osui-carousel__track">
 					<div class="osui-carousel__content">${slides}</div>
 				</div>

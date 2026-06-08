@@ -51,20 +51,17 @@
 		}
 
 		&__pagination {
+			gap: $token-scale-150;
 			margin: 0;
 			z-index: var(--os-layer-local-tier-1);
 
 			&__page {
-				// WCAG 2.5.8: Target offset of 6px on each side meets the 24px minimum
-				// (12px dot + 6px margin × 2 = 24px total territory per axis)
 				background-color: var(--osui-carousel-pagination-color);
 				border-radius: var(--os-border-radius-circular);
-				height: $token-scale-300;
-				margin: 6px;
 				transition:
 					width $token-transition-time-200 $token-transition-curve-linear,
 					background-color $token-transition-time-200 $token-transition-curve-linear;
-				width: $token-scale-300;
+	
 
 				&.is-active {
 					background-color: var(--osui-carousel-pagination-active-color);

@@ -15,6 +15,10 @@ import { cls, COLOR_OPTIONS, extendedClassArgType, usePaddingArgType } from './_
 const meta: Meta = { title: 'Patterns/Content/Card' };
 export default meta;
 
+// Real sample photo (seeded → deterministic). Remote URL: needs network in the preview
+// iframe; swap for a bundled asset under .storybook if you need offline / Chromatic stability.
+const CARD_IMG = 'https://picsum.photos/seed/osui-card/640/360';
+
 // ─── Card ──────────────────────────────────────────────────────────────────────
 type CardArgs = { usePadding: boolean; extendedClass: string };
 export const Basic: StoryObj<CardArgs> = {
@@ -36,16 +40,23 @@ export const Sectioned: StoryObj<SectionedArgs> = {
 		imagePadding: { name: 'ImagePadding', control: 'boolean', description: 'When true, image has 24px of padding.' },
 		extendedClass: extendedClassArgType,
 	},
-	render: ({ usePadding, isVertical, imagePadding, extendedClass }) =>
-		renderStatic(`
-			<div class="${cls('card', 'card-sectioned', isVertical ? 'flex-direction-column' : 'flex-direction-row', !usePadding && 'padding-none', extendedClass)}" style="max-width:320px;">
-				<div class="${cls('card-image', !imagePadding && 'padding-none')}"><div style="height:140px;background:linear-gradient(135deg,#3b5bdb,#1098ad);"></div></div>
+	render: ({ usePadding, isVertical, imagePadding, extendedClass }) => {
+		// Vertical → image is a full-width banner with a fixed height.
+		// Horizontal → image is a fixed-width column that stretches to the card's full height.
+		const cardStyle = `max-width:${isVertical ? 320 : 480}px;`;
+		const imgStyle = isVertical
+			? 'display:block;width:100%;height:160px;object-fit:cover;'
+			: 'display:block;width:180px;height:100%;min-height:100%;object-fit:cover;';
+		return renderStatic(`
+			<div class="${cls('card', 'card-sectioned', isVertical ? 'flex-direction-column' : 'flex-direction-row', !usePadding && 'padding-none', extendedClass)}" style="${cardStyle}">
+				<div class="${cls('card-image', !imagePadding && 'padding-none')}"><img src="${CARD_IMG}" alt="Personal plan" style="${imgStyle}" /></div>
 				<div class="card-sectioned-top flex-direction-column">
 					<div class="card-title">Hire our personal plan</div>
 					<div class="card-content">Take control with a plan made for you — manage everything in one place.</div>
+					<div class="card-bottom"><button class="btn btn-primary btn-small"><span>Learn more</span></button></div>
 				</div>
-				<div class="card-bottom"><button class="btn btn-primary btn-small"><span>Learn more</span></button></div>
-			</div>`),
+			</div>`);
+	},
 };
 
 // ─── CardBackground ──────────────────────────────────────────────────────────────
@@ -67,13 +78,13 @@ export const Background: StoryObj<BackgroundArgs> = {
 };
 
 // ─── CardItem ────────────────────────────────────────────────────────────────────
-type DetailArgs = { extendedClass: string };
-export const Detail: StoryObj<DetailArgs> = {
+type ItemArgs = { extendedClass: string };
+export const Item: StoryObj<ItemArgs> = {
 	args: { extendedClass: '' },
 	argTypes: { extendedClass: extendedClassArgType },
 	render: ({ extendedClass }) =>
 		renderStatic(`
-			<div class="${cls('card-detail', extendedClass)}" style="max-width:360px;">
+			<div class="${cls('card card-detail', extendedClass)}" style="max-width:360px;">
 				<div class="card-detail-left"><div class="avatar avatar-small border-radius-rounded background-primary" role="img" aria-label="user initials, JD"><span class="OSFillParent">JD</span></div></div>
 				<div class="card-detail-center">
 					<div class="card-detail-title">Jane Doe</div>
