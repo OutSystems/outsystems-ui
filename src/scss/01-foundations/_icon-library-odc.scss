@@ -110,6 +110,9 @@ body.iconLibrary-phosphor {
 // ---------------------------------------------------------------------------
 // Component selectors – use CSS variables (with FontAwesome as fallback when no library class is set)
 // ---------------------------------------------------------------------------
+.icon.ph{
+	display: inline-block;
+}
 
 // Accordion – caret icon
 .osui-accordion-item__icon--caret:after {
@@ -117,20 +120,6 @@ body.iconLibrary-phosphor {
 	font-family: var(--osui-icon-font-family);
 }
 
-// Search – search icon
-.input-search {
-	position: relative;
-
-	&::after {
-		color: var(--color-neutral-6);
-		content: var(--osui-icon-search);
-		font-family: var(--osui-icon-font-family);
-		left: var(--space-base);
-		position: absolute;
-		top: 50%;
-		transform: translateY(-50%);
-	}
-}
 
 // Submenu – header arrow
 .osui-submenu {
@@ -156,13 +145,20 @@ body.iconLibrary-phosphor {
 .dropdown-container:after {
 	color: var(--color-neutral-7);
 	content: var(--osui-icon-arrow-down);
+	cursor: pointer;
 	font-family: var(--osui-icon-font-family);
 	font-size: var(--font-size-h5);
+	pointer-events: none;
 	position: absolute;
 	right: var(--space-base);
 	top: 50%;
 	transform: translateY(-50%);
 	transition: transform 200ms ease;
+}
+
+.is-rtl .dropdown-container:after { 
+	left: var(--space-base);
+	right: auto;
 }
 
 .dropdown-expanded.dropdown-container {
@@ -343,6 +339,11 @@ body.iconLibrary-phosphor {
 	line-height: 1;
 	display: flex;
 	left: 1px;
+}
+
+.is-rtl .vscomp-wrapper.multiple .vscomp-option.selected .checkbox-icon:after {
+	left: auto;
+	right: 1px;
 }
 
 .osui-dropdown-search {

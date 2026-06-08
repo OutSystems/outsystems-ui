@@ -24,6 +24,8 @@ namespace Providers.OSUI.Carousel.Splide {
 		private _eventOnResize: OSFramework.OSUI.GlobalCallbacks.Generic;
 		// Store if a List widget is used inside the CarouselItems placeholder
 		private _hasList: boolean;
+		// Store the pending list-roles poll timeout id, so it can be cancelled on re-entry
+		private _listRolesPollId: number | undefined;
 		// Store the onSlideMoved event
 		private _platformEventOnSlideMoved: OSFramework.OSUI.Patterns.Carousel.Callbacks.OSOnSlideMovedEvent;
 		// Store initial provider options
@@ -31,6 +33,41 @@ namespace Providers.OSUI.Carousel.Splide {
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new SplideConfig(configs));
+		}
+
+		// Method to apply role="list" and role="listitem" to the list element and its direct children.
+		// Skips native list elements (ul/ol) and elements whose direct children are native list
+		// elements (li/ul/ol), since those already carry implicit list semantics.
+		private _applyListRoles(listEl: HTMLElement): void {
+			const _isNativeList = listEl.tagName === 'UL' || listEl.tagName === 'OL';
+			const _hasNativeListChildren = listEl.querySelector(':scope > li, :scope > ul, :scope > ol') !== null;
+
+			if (_isNativeList || _hasNativeListChildren) {
+				return;
+			}
+
+			listEl.setAttribute('role', 'list');
+			listEl.querySelectorAll(':scope > *').forEach((item) => {
+				item.setAttribute('role', 'listitem');
+			});
+		}
+
+		// Method to wait for the OutSystems List widget to finish loading before applying roles
+		private _applyListRolesWhenReady(listEl: HTMLElement): void {
+			// Cancel any previously pending poll before starting a new one to prevent loop stacking
+			if (this._listRolesPollId !== undefined) {
+				clearTimeout(this._listRolesPollId);
+				this._listRolesPollId = undefined;
+			}
+
+			if (!listEl.classList.contains('list-loading') && listEl.children.length > 0) {
+				this._applyListRoles(listEl);
+			} else {
+				this._listRolesPollId = OSFramework.OSUI.Helper.ApplySetTimeOut(() => {
+					this._listRolesPollId = undefined;
+					this._applyListRolesWhenReady(listEl);
+				}, 100);
+			}
 		}
 
 		// Method to check if a List Widget is used inside the placeholder and assign the _listWidget variable
@@ -69,8 +106,19 @@ namespace Providers.OSUI.Carousel.Splide {
 			// Set initial carousel width
 			this._setCarouselWidth();
 
-			// Init the provider
-			this.provider.mount();
+			// Init the provider — pass a custom extension so list roles are re-applied on every
+			// mount cycle, including after provider.refresh() which wipes provider.on() listeners.
+			// The extension's mount() runs after all built-in components (including A11y) have
+			// already mounted, so Splide's ARIA roles are already set and can be overridden directly.
+			this.provider.mount({
+				OSUIListRoles: () => {
+					return {
+						mount: () => {
+							this._setListRoles();
+						},
+					};
+				},
+			});
 
 			// Update pagination class, in case navigation was changed
 			this._togglePaginationClass();
@@ -80,13 +128,24 @@ namespace Providers.OSUI.Carousel.Splide {
 		private _prepareCarouselItems(): void {
 			// Define the element that has the items. The List widget if dynamic content, otherwise get from the placeholder directly
 			const _targetList = this._hasList ? this._carouselListWidgetElem : this._carouselPlaceholderElem;
-			const _childrenList = _targetList.children;
+			// Snapshot into a static array: iterating the live HTMLCollection while mutating the DOM skips nodes
+			const _childrenList = Array.from(_targetList.children);
 
 			if (_childrenList.length > 0) {
 				// Add the placeholder content already with the correct html structure per item, expected by the library
 				for (const item of _childrenList) {
 					if (!item.classList.contains(Enum.CssClass.SplideSlide)) {
-						item.classList.add(Enum.CssClass.SplideSlide);
+						// Splide assigns role="presentation" to each splide__slide element, which is then
+						// overridden with role="listitem" by the OSUIListRoles extension. Neither role
+						// is valid on an <img>. Wrap bare images in a <div> so the role lands on the container.
+						if (item.tagName === 'IMG') {
+							const wrapper = document.createElement(OSFramework.OSUI.GlobalEnum.HTMLElement.Div);
+							item.replaceWith(wrapper);
+							wrapper.appendChild(item);
+							wrapper.classList.add(Enum.CssClass.SplideSlide);
+						} else {
+							item.classList.add(Enum.CssClass.SplideSlide);
+						}
 					}
 				}
 			}
@@ -110,6 +169,11 @@ namespace Providers.OSUI.Carousel.Splide {
 					this.redraw();
 					// This needs to be called again, to update the size one final time, to prevent situation where the Carousel wouldn't assume 100% width
 					this._setCarouselWidth();
+				} else {
+					// refresh() reapplies Splide's default ARIA (e.g. presentation) without firing
+					// mounted — e.g. when DevTools toggles and triggers resize. Full redraw remounts and
+					// mounted reapplies list roles; after refresh-only we must restore them here.
+					this._setListRoles();
 				}
 			}, 500);
 		}
@@ -122,6 +186,35 @@ namespace Providers.OSUI.Carousel.Splide {
 				OSFramework.OSUI.Patterns.Carousel.Enum.CssVariables.CarouselWidth,
 				this.selfElement.offsetWidth + OSFramework.OSUI.GlobalEnum.Units.Pixel
 			);
+		}
+
+		// Method to assign correct ARIA list roles so screen readers interpret carousel lists properly
+		private _setListRoles(): void {
+			// Remove role="tabpanel" from slides that contain img, ul, ol, or li — elements for
+			// which tabpanel ownership is invalid or creates conflicting semantics
+			this.selfElement.querySelectorAll(OSFramework.OSUI.Constants.Dot + Enum.CssClass.SplideSlide).forEach((slide) => {
+				const _slideEl = slide as HTMLElement;
+				if (
+					OSFramework.OSUI.Helper.Dom.Attribute.Get(_slideEl, OSFramework.OSUI.Constants.A11YAttributes.Role.AttrName) === OSFramework.OSUI.Constants.A11YAttributes.Role.TabPanel &&
+					_slideEl.querySelector('img, ul, ol, li')
+				) {
+					OSFramework.OSUI.Helper.Dom.Attribute.Remove(_slideEl, OSFramework.OSUI.Constants.A11YAttributes.Role.AttrName);
+				}
+			});
+
+			if (this._hasList && this._carouselListWidgetElem) {
+				// Dynamic content: poll until the List widget finishes loading before applying roles
+				this._applyListRolesWhenReady(this._carouselListWidgetElem);
+			} else {
+				// Static content: apply roles directly to the splide__list element
+				const splideList = OSFramework.OSUI.Helper.Dom.ClassSelector(
+					this.selfElement,
+					Enum.CssClass.SplideList
+				);
+				if (splideList) {
+					this._applyListRoles(splideList);
+				}
+			}
 		}
 
 		// Method to set the OnInitializeEvent
@@ -339,6 +432,12 @@ namespace Providers.OSUI.Carousel.Splide {
 		 * @memberof Providers.OSUI.Carousel.Splide.OSUISplide
 		 */
 		public dispose(): void {
+			// Cancel any pending list-roles poll to prevent it firing after disposal
+			if (this._listRolesPollId !== undefined) {
+				clearTimeout(this._listRolesPollId);
+				this._listRolesPollId = undefined;
+			}
+
 			// Check if provider is ready
 			if (this.isBuilt) {
 				this.provider.destroy();
@@ -465,6 +564,10 @@ namespace Providers.OSUI.Carousel.Splide {
 
 					this.redraw();
 				}
+			} else if (this._hasList && this._carouselListWidgetElem) {
+				// Even when redraw is blocked (e.g. during a changeProperty call), re-apply list roles
+				// in case the List widget refreshed its content and replaced DOM nodes that had the roles.
+				this._applyListRolesWhenReady(this._carouselListWidgetElem);
 			}
 		}
 	}

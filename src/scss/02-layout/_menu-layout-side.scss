@@ -39,12 +39,13 @@
 		z-index: var(--osui-menu-layer);
 	}
 
-	&.menu-visible {
-		.app-menu-content {
-			transform: translateX(var(--side-menu-size)) translateZ(0);
-			transition: transform 330ms ease-out;
-		}
+	
+	.app-menu-content.is--open {
+		left: calc(-1 * var(--side-menu-size));
+		transform: translateX(var(--side-menu-size)) translateZ(0);
+		transition: transform 330ms ease-out;
 	}
+	
 }
 
 // Responsive --------------------------------------------------------------------
@@ -54,6 +55,7 @@
 		&:not(.layout-native):not(.aside-overlay) .app-menu-content {
 			left: 0;
 			right: 0;
+			transform: none;
 		}
 
 		&.aside-expandable:not(.fixed-header) .app-menu-content {
@@ -80,19 +82,17 @@
 }
 
 ///
-.tablet {
-	&.landscape {
-		.layout-native {
-			&.aside-expandable.menu-visible {
-				.app-menu-content {
-					display: flex;
-					transform: none;
-					transition: none;
-				}
-			}
+.desktop, 
+.tablet.landscape {
+	.layout-native.aside-expandable.menu-visible {
+		.app-menu-content.is--open {
+			display: flex;
+			transform: none;
+			transition: none;
 		}
-	}
+	}	
 }
+
 
 // IsRTL -------------------------------------------------------------------------
 ///
@@ -105,36 +105,28 @@
 			}
 		}
 	}
-
-	&.tablet,
-	&.phone {
-		.app-menu-content {
-			right: calc(-1 * var(--side-menu-size));
-			transition: all 330ms ease-out;
-		}
-	}
-
-	&:not(.portrait) {
-		.layout-side {
-			&.layout-native {
-				&.aside-visible {
-					.app-menu-content {
-						right: 0;
-					}
-				}
-			}
-		}
-	}
-
 	.layout-side .app-menu-content {
 		left: auto;
 	}
 
-	.aside-overlay.menu-visible {
-		.app-menu-content {
-			right: 0;
-			transform: translateX(0) translateZ(0);
-			transition: all 330ms ease-out;
+	.app-menu-content {
+		right: calc(-1 * var(--side-menu-size));
+		transition: transform 330ms ease-in;
+	}
+	
+	.app-menu-content.is--open {
+		right: 0;
+		transform: translateX(0) translateZ(0);
+		transition: transform 130ms ease-out;
+	}
+
+	&:not(.portrait) {
+		.layout-side.layout-native.aside-visible {
+			.app-menu-content {
+				right: 0;
+			}
 		}
 	}
+
+
 }
