@@ -16,6 +16,13 @@
 	--os-color-background-footer: #{$token-bg-surface-default};
 	--os-color-background-login: #{$token-bg-surface-default};
 
+	/*! Border-radius — semantic role bridge. Override once to re-radius a whole */
+	/*  role across the framework. Defaults map to the design-tokens radius scale. */
+	--os-border-radius-controls:    #{$token-border-radius-200};  /* 8px;   buttons, inputs, selects, checkboxes */
+	--os-border-radius-sm-surfaces: #{$token-border-radius-200};  /* 8px;   cards, popups, tables, dropdown panels, upload, popover */
+	--os-border-radius-lg-surfaces: #{$token-border-radius-400};  /* 16px;  bottom-sheet, balloon, overflow-menu */
+	--os-border-radius-circular:    #{$token-border-radius-full}; /* 999px; radios, switches, avatars, badges, pills */
+
 	/*! OS Layout Sizes */
 	--os-size-header: #{$header-size};
 	--os-size-header-content: #{$header-size-content};
@@ -48,13 +55,6 @@
 	--os-layer-local-tier-3: 3;
 	--os-layer-local-tier-4: 4;
 	--os-layer-local-tier-5: 5;
-
-	/*! Border-radius — semantic role bridge. Override once to re-radius a whole */
-	/*  role across the framework. Defaults map to the design-tokens radius scale. */
-	--os-border-radius-controls:    #{$token-border-radius-200};  /* 8px;   buttons, inputs, selects, checkboxes */
-	--os-border-radius-sm-surfaces: #{$token-border-radius-200};  /* 8px;   cards, popups, tables, dropdown panels, upload, popover */
-	--os-border-radius-lg-surfaces: #{$token-border-radius-400};  /* 16px;  bottom-sheet, balloon, overflow-menu */
-	--os-border-radius-circular:    #{$token-border-radius-full}; /* 999px; radios, switches, avatars, badges, pills */
 
 	/*! Fixed/Absolute Patterns that need their variables on a global level */
 	--osui-bottom-sheet-layer: var(--os-layer-off-canvas);
