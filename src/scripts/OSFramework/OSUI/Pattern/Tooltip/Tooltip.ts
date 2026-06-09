@@ -51,6 +51,14 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 
 		// Method to handle the custom BalloonOnToggle callback
 		private _balloonOnToggleCallback(_args: string, e: CustomEvent): void {
+			// Close when another balloon opens. Body click on document.body never runs for clicks on
+			// another tooltip trigger because _onClick uses stopPropagation, so blur was the only path
+			// and it is not guaranteed (e.g. tab visibility, focus inside balloon).
+			if (e.detail.isOpen && e.detail.balloonElem !== this._balloonElem && this._isOpen) {
+				this._triggerClose(false);
+				return;
+			}
+
 			// If the balloon closed is the one from this pattern, toggle the isOpen
 			if (e.detail.balloonElem === this._balloonElem && e.detail.isOpen !== this._isOpen) {
 				this._triggerClose(true);
