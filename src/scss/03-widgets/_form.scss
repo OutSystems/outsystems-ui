@@ -57,6 +57,10 @@
 	}
 
 	.dropdown-container {
+		&:after {
+			top: calc(50% - var(--space-m) / 2);
+		}
+
 		&[class*='ThemeGrid_Width'].not-valid span.validation-message {
 			bottom: 4px;
 		}
