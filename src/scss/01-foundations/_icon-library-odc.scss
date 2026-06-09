@@ -110,7 +110,7 @@ body.iconLibrary-phosphor {
 // ---------------------------------------------------------------------------
 // Component selectors – use CSS variables (with FontAwesome as fallback when no library class is set)
 // ---------------------------------------------------------------------------
-.icon.ph{
+.icon.ph {
 	display: inline-block;
 }
 
@@ -119,7 +119,6 @@ body.iconLibrary-phosphor {
 	content: var(--osui-icon-arrow-down);
 	font-family: var(--osui-icon-font-family);
 }
-
 
 // Submenu – header arrow
 .osui-submenu {
@@ -156,7 +155,7 @@ body.iconLibrary-phosphor {
 	transition: transform 200ms ease;
 }
 
-.is-rtl .dropdown-container:after { 
+.is-rtl .dropdown-container:after {
 	left: var(--space-base);
 	right: auto;
 }
