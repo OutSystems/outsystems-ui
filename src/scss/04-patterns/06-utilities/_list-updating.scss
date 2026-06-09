@@ -13,7 +13,7 @@
 		animation:
 			spin 1s infinite linear,
 			fade 300ms ease;
-		border: 5px solid $token-border-input-default;
+		border: 5px solid var(--color-border-input);
 		border-radius: 50%;
 		border-top-color: $token-primitives-neutral-700;
 		box-sizing: border-box;

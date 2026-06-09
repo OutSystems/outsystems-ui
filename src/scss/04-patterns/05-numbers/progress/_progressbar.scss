@@ -74,7 +74,7 @@
 			&:before {
 				background: var(--progress-gradient, var(--progress-color));
 				width: var(--progress-value);
-				z-index: var(--os-layer-local-tier-1);
+				z-index: var(--layer-local-tier-1);
 
 				& {
 					-servicestudio-background: var(--progress-color, $token-semantics-primary-base);
@@ -90,7 +90,7 @@
 			top: 50%;
 			transform: translateY(-50%);
 			width: 100%;
-			z-index: var(--os-layer-local-tier-1);
+			z-index: var(--layer-local-tier-1);
 
 			& {
 				-servicestudio-text-align: center;
@@ -118,12 +118,12 @@
 			}
 
 			&__value {
-				border: $token-border-size-050 solid $token-border-input-default;
+				border: $token-border-size-050 solid var(--color-border-input);
 				height: calc(2 * var(--thickness));
 
 				&:before,
 				&:after {
-					border: $token-border-size-050 solid $token-border-input-default;
+					border: $token-border-size-050 solid var(--color-border-input);
 					top: calc(-1 * $token-border-size-050);
 					left: calc(-1 * $token-border-size-050);
 				}

@@ -6,8 +6,8 @@
 ///
 .action-sheet {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-action-sheet-background:         #{$token-bg-surface-default};
-	--osui-action-sheet-cancel-color:       #{$token-text-subtlest};
+	--osui-action-sheet-background:         var(--color-background-surface);
+	--osui-action-sheet-cancel-color:       var(--color-text-subtlest);
 	--osui-action-sheet-overlay-background: #{$token-backdrop};
 	// ───────────────────────────────────────────────────────────────────
 
@@ -23,7 +23,7 @@
 	transform: translateY(100%);
 	width: 100%;
 	will-change: transform;
-	z-index: var(--os-layer-off-canvas);
+	z-index: var(--layer-off-canvas);
 
 	// Service Studio Preview
 	& {
@@ -39,7 +39,7 @@
 		position: fixed;
 		top: 0;
 		width: 100%;
-		z-index: var(--os-layer-off-canvas);
+		z-index: var(--layer-off-canvas);
 
 		// Service Studio Preview
 		& {
@@ -171,7 +171,7 @@
 		z-index: var(--osui-action-sheet-actions-layer);
 
 		&:has(.btn:focus) {
-			z-index: calc(var(--osui-action-sheet-actions-layer) + var(--os-layer-local-tier-1));
+			z-index: calc(var(--osui-action-sheet-actions-layer) + var(--layer-local-tier-1));
 		}
 	}
 

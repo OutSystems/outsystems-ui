@@ -49,7 +49,7 @@
 	}
 
 	&-clear-button:hover {
-		background-color: $token-border-default;
+		background-color: var(--color-border);
 
 		.vscomp-clear-icon {
 			&::after,
@@ -79,7 +79,7 @@
 		}
 
 		.checkbox-icon {
-			border-color: $token-border-input-default;
+			border-color: var(--color-border-input);
 		}
 	}
 
@@ -97,7 +97,7 @@
 
 	&:not(.has-value) {
 		.vscomp-value {
-			color: $token-text-subtlest;
+			color: var(--color-text-subtlest);
 			opacity: 1;
 		}
 	}
@@ -118,7 +118,7 @@
 					border-color: $token-semantics-primary-base;
 
 					&:after {
-						border-color: $token-text-inverse;
+						border-color: var(--color-text-inverse);
 						border-left-color: transparent;
 						border-top-color: transparent;
 						height: 80%;
@@ -151,10 +151,10 @@
 
 		.vscomp-value-tag {
 			align-items: center;
-			background-color: $token-border-subtle;
+			background-color: var(--color-border-subtle);
 			border: none;
 			border-radius: $token-border-radius-100;
-			color: $token-text-default;
+			color: var(--color-text);
 			display: inline-flex;
 			font-size: $token-font-size-300;
 			font-weight: $token-font-weight-medium;
@@ -191,7 +191,7 @@
 
 					&:before,
 					&:after {
-						color: $token-text-default;
+						color: var(--color-text);
 					}
 				}
 			}
@@ -211,7 +211,7 @@
 			&-container {
 				background-color: $token-backdrop;
 				// The !important is needed in order to overwrite the inline style added by library!
-				z-index: var(--os-layer-elevated) !important;
+				z-index: var(--layer-elevated) !important;
 			}
 
 			.vscomp-search-container {
@@ -318,9 +318,9 @@
 
 	// Checkbox
 	.checkbox-icon {
-		background-color: $token-bg-input-default;
+		background-color: var(--color-background-input);
 		border-radius: $token-border-radius-100;
-		border: $token-border-size-025 solid $token-border-input-default;
+		border: $token-border-size-025 solid var(--color-border-input);
 		height: $token-scale-400;
 		margin-right: $token-scale-200;
 		overflow: visible;
@@ -341,7 +341,7 @@
 			border-color: $token-semantics-primary-base;
 
 			&:after {
-				border-color: $token-text-inverse;
+				border-color: var(--color-text-inverse);
 				border-left-color: transparent;
 				border-top-color: transparent;
 				height: 80%;
@@ -359,10 +359,10 @@
 	--vscomp-toogle-btn-height: #{$token-scale-1000};
 	--vscomp-toogle-btn-mobile-height: #{$token-scale-1200};
 
-	background-color: $token-bg-input-default;
+	background-color: var(--color-background-input);
 	border-radius: $token-border-radius-200;
-	border: $token-border-size-025 solid var(--osui-input-border-color, #{$token-border-default});
-	color: $token-text-default;
+	border: $token-border-size-025 solid var(--osui-input-border-color, var(--color-border));
+	color: var(--color-text);
 	cursor: pointer;
 	display: inline-flex;
 	font-size: $token-font-size-350;
@@ -425,7 +425,7 @@
 
 .vscomp-dropbox {
 	background-color: $token-bg-surface-default;
-	border: $token-border-size-025 solid $token-border-default;
+	border: $token-border-size-025 solid var(--color-border);
 	border-radius: $token-border-radius-200;
 	box-shadow: var(--osui-elevation-overlay);
 	overflow: hidden;
@@ -439,7 +439,7 @@
 
 // Options container input search wrapper
 .vscomp-search-container {
-	border-bottom: $token-border-size-025 solid $token-border-default;
+	border-bottom: $token-border-size-025 solid var(--color-border);
 	padding: $token-scale-0 $token-scale-200 $token-scale-0 $token-scale-1000;
 	position: relative;
 
@@ -476,7 +476,7 @@
 		}
 
 		&:hover {
-			background-color: $token-border-default;
+			background-color: var(--color-border);
 		}
 	}
 }
@@ -486,7 +486,7 @@
 	font-size: $token-font-size-350;
 
 	&::placeholder {
-		color: $token-text-default;
+		color: var(--color-text);
 		opacity: 0.5;
 	}
 }
@@ -501,18 +501,18 @@
 	}
 
 	&::-webkit-scrollbar-track {
-		background: $token-border-default;
+		background: var(--color-border);
 	}
 
 	&::-webkit-scrollbar-thumb {
-		background-color: $token-text-disabled;
+		background-color: var(--color-text-disabled);
 	}
 }
 
 // Option Item text
 .vscomp-option-text {
 	align-items: center;
-	color: $token-text-default;
+	color: var(--color-text);
 	display: flex;
 	font-size: $token-font-size-350;
 	gap: $token-scale-100;
@@ -523,14 +523,14 @@
 // Option Item
 .vscomp-option {
 	align-items: center;
-	background-color: $token-bg-input-default;
+	background-color: var(--color-background-input);
 	flex-wrap: nowrap;
 	font-weight: $token-font-weight-regular;
 	justify-content: space-between;
 	transition: background-color $token-transition-time-100 $token-transition-curve-base;
 
 	&.focused {
-		background-color: $token-border-subtle;
+		background-color: var(--color-border-subtle);
 	}
 
 	&.selected {
@@ -592,11 +592,11 @@
 ///
 .has-accessible-features {
 	.vscomp-toggle-button {
-		border-color: $token-border-input-default;
-		color: $token-text-default;
+		border-color: var(--color-border-input);
+		color: var(--color-text);
 
 		&:after {
-			color: $token-text-default;
+			color: var(--color-text);
 		}
 	}
 
@@ -619,14 +619,14 @@
 	.vscomp-wrapper {
 		&.show-value-as-tags {
 			.vscomp-value-tag {
-				border: $token-border-size-025 solid $token-border-input-default;
+				border: $token-border-size-025 solid var(--color-border-input);
 			}
 		}
 
 		.vscomp-option {
 			&.focused {
 				&:before {
-					border: $token-border-size-050 solid $token-border-input-default;
+					border: $token-border-size-050 solid var(--color-border-input);
 					bottom: 0;
 					content: '';
 					display: block;
@@ -650,7 +650,7 @@
 
 	.pop-comp-content,
 	.vscomp-dropbox-container {
-		border: $token-border-size-050 solid $token-border-input-default;
+		border: $token-border-size-050 solid var(--color-border-input);
 	}
 
 	.vscomp-options-container {
@@ -689,15 +689,15 @@
 body {
 	&.vscomp-popup-active {
 		.vscomp-wrapper:not(.focused) {
-			z-index: var(--os-layer-screen);
+			z-index: var(--layer-screen);
 		}
 
 		.vscomp-wrapper {
-			z-index: var(--os-layer-off-canvas);
+			z-index: var(--layer-off-canvas);
 		}
 
 		&:has(.osui-notification--is-open) .vscomp-wrapper {
-			z-index: var(--os-layer-instant-interaction);
+			z-index: var(--layer-instant-interaction);
 		}
 	}
 }
@@ -706,10 +706,10 @@ body {
 .pop-comp-arrow,
 .pop-comp-wrapper,
 .vscomp-wrapper.keep-always-open .vscomp-dropbox-container {
-	z-index: var(--os-layer-local-tier-1);
+	z-index: var(--layer-local-tier-1);
 }
 
 .pop-comp-content,
 .vscomp-dropbox-container {
-	z-index: var(--os-layer-local-tier-2);
+	z-index: var(--layer-local-tier-2);
 }

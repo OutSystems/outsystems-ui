@@ -15,7 +15,7 @@ export const Default: Story = {
 		const template = `
 			<div ${osuiRoot(id)} class="animated-label" style="max-width:280px;">
 				<div class="animated-label-text"><label for="${inputId}" data-label>Full name</label></div>
-				<div class="animated-label-input"><input id="${inputId}" type="text" data-input /></div>
+				<div class="animated-label-input"><input id="${inputId}" class="form-control" type="text" data-input /></div>
 			</div>`;
 		return renderPattern(template, (_root, register) => createAndInit('AnimatedLabelAPI', id, {}, register));
 	},

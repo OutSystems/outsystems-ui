@@ -128,10 +128,10 @@ Consume via the `apply-typography` mixin in `src/scss/00-abstract/_mixins.scss`:
 ## 4. Theme variants and dark mode
 
 - **Light (default):** generated from `tokens/theme/light.json` in the token package. This is what every base `$token-*` resolves to unless overridden.
-- **Dark theme:** activated by adding `class="theme-dark"` to any ancestor (typically `<body>`). Implemented **entirely as CSS custom property overrides** in `src/scss/01-foundations/_theme-dark.scss` — no component rules touched.
+- **Dark theme:** **removed for now** — there is no `.theme-dark` partial currently. (When reintroduced, a theme is implemented entirely as CSS custom property overrides scoped under one class — no component rules touched.)
 - **Shape variants:** the token package can emit `soft`, `round`, or `rectangular` border-radius profiles. OSUI uses the default (soft) variant.
 
-Theme-switching works because `$token-*` expands to `var(--token-*, fallback)`. At runtime, `.theme-dark` reassigns `--token-*` values; every `$token-*` use automatically picks up the new value without a rebuild.
+Theme-switching works because `$token-*` expands to `var(--token-*, fallback)`. A theme partial reassigns `--token-*` (and the framework theme-layer role knobs `--color-*`, `--border-radius-*`, …) at a class scope, and every `$token-*` use picks up the new value without a rebuild.
 
 ## 5. Finding the right token
 

@@ -6,8 +6,8 @@
 ///
 .split-screen-wrapper {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-master-detail-background: #{$token-bg-surface-default};
-	--osui-master-detail-border-color: #{$token-border-default};
+	--osui-master-detail-background: var(--color-background-surface);
+	--osui-master-detail-border-color: var(--color-border);
 	--osui-master-detail-border-radius: #{$token-border-radius-0};
 	// ───────────────────────────────────────────────────────────────────
 
@@ -40,7 +40,7 @@
 				transition: background-color $token-transition-time-100 $token-transition-curve-base;
 
 				.list-item-content::after {
-					color: $token-text-subtlest;
+					color: var(--color-text-subtlest);
 					content: var(--osui-icon-chevron-right);
 					flex-shrink: 0;
 					font-family: var(--osui-icon-font-family);
@@ -77,7 +77,7 @@
 				left: calc(var(--os-safe-area-left) + $token-scale-600);
 				position: fixed;
 				top: $token-scale-300;
-				z-index: var(--os-layer-screen);
+				z-index: var(--layer-screen);
 
 				// Service Studio Preview
 				& {
@@ -85,7 +85,7 @@
 				}
 
 				a {
-					color: $token-text-subtlest;
+					color: var(--color-text-subtlest);
 					font-size: $token-font-size-400;
 				}
 			}
@@ -163,14 +163,14 @@
 				padding-bottom: calc(var(--os-safe-area-bottom) + $token-scale-600);
 				padding-left: calc(var(--os-safe-area-left) + $token-scale-600);
 				padding-right: calc(var(--os-safe-area-right) + $token-scale-600);
-				padding-top: var(--os-size-header);
+				padding-top: var(--size-header);
 				position: fixed;
 				top: 0;
 				transform: translateX(100%) translateZ(0);
 				transition: transform $token-transition-time-100 $token-transition-curve-base;
 				width: 100%;
 				will-change: transform;
-				z-index: calc(var(--os-layer-above) + var(--os-layer-navigation));
+				z-index: calc(var(--layer-above) + var(--layer-navigation));
 
 				&.open {
 					transform: translateX(0) translateZ(0);
@@ -191,7 +191,7 @@
 			padding-bottom: calc(var(--os-safe-area-bottom) + $token-scale-400);
 			padding-left: calc(var(--os-safe-area-left) + $token-scale-400);
 			padding-right: calc(var(--os-safe-area-right) + $token-scale-400);
-			padding-top: calc(var(--os-size-header) + var(--os-safe-area-top));
+			padding-top: calc(var(--size-header) + var(--os-safe-area-top));
 
 			.split-right-close {
 				display: block;
@@ -203,7 +203,7 @@
 	&.android {
 		.layout-native {
 			.split-right {
-				padding-top: calc(var(--os-size-header) + #{android-safe-area-top()});
+				padding-top: calc(var(--size-header) + #{android-safe-area-top()});
 			}
 		}
 	}

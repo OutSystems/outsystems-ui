@@ -11,13 +11,13 @@
 ///
 .osui-accordion-item {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-accordion-item-background: #{$token-bg-surface-default};
-	--osui-accordion-item-border-color: #{$token-border-default};
+	--osui-accordion-item-background: var(--color-background-surface);
+	--osui-accordion-item-border-color: var(--color-border);
 	--osui-accordion-item-border-width: #{$token-border-size-025};
 	--osui-accordion-item-border-radius: #{$token-border-radius-100};
-	--osui-accordion-item-color: #{$token-text-default};
-	--osui-accordion-item-active-indicator-color: #{$token-semantics-primary-base};
-	--osui-accordion-item-icon-color: #{$token-semantics-primary-base};
+	--osui-accordion-item-color: var(--color-text);
+	--osui-accordion-item-active-indicator-color: var(--color-primary);
+	--osui-accordion-item-icon-color: var(--color-primary);
 	--osui-accordion-item-title-hover-background: #{$token-primitives-neutral-100};
 	// ───────────────────────────────────────────────────────────────────
 
@@ -60,7 +60,7 @@
 		}
 
 		&-disabled {
-			--osui-accordion-item-color: #{$token-text-disabled};
+			--osui-accordion-item-color: var(--color-text-disabled);
 
 			color: var(--osui-accordion-item-color);
 			pointer-events: none;
@@ -70,12 +70,12 @@
 			}
 
 			.osui-accordion-item__icon {
-				color: $token-text-disabled;
+				color: var(--color-text-disabled);
 
 				&--plus-minus {
 					&:after,
 					&:before {
-						background-color: $token-text-disabled;
+						background-color: var(--color-text-disabled);
 					}
 				}
 			}
@@ -176,7 +176,7 @@
 			display: none;
 			height: 0;
 			width: 0;
-			-servicestudio-z-index: var(--os-layer-global-negative);
+			-servicestudio-z-index: var(--layer-global-negative);
 		}
 	}
 

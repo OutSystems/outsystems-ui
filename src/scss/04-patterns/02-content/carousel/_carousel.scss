@@ -9,11 +9,11 @@
 ///
 .osui-carousel {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-carousel-arrow-background:        #{$token-bg-surface-default};
+	--osui-carousel-arrow-background:        var(--color-background-surface);
 	--osui-carousel-arrow-shadow:            #{$token-elevation-1};
-	--osui-carousel-arrow-icon-color:        #{$token-text-default};
-	--osui-carousel-pagination-color:        #{$token-border-default};
-	--osui-carousel-pagination-active-color: #{$token-semantics-primary-base};
+	--osui-carousel-arrow-icon-color:        var(--color-text);
+	--osui-carousel-pagination-color:        var(--color-border);
+	--osui-carousel-pagination-active-color: var(--color-primary);
 	// ───────────────────────────────────────────────────────────────────
 
 	--osui-carousel-track-width: 100%;
@@ -28,7 +28,7 @@
 			transition: opacity $token-transition-time-150 $token-transition-curve-linear;
 			width: $token-scale-1000;
 			will-change: opacity;
-			z-index: var(--os-layer-local-tier-1);
+			z-index: var(--layer-local-tier-1);
 
 			&[disabled] {
 				cursor: default;
@@ -53,11 +53,11 @@
 		&__pagination {
 			gap: $token-scale-150;
 			margin: 0;
-			z-index: var(--os-layer-local-tier-1);
+			z-index: var(--layer-local-tier-1);
 
 			&__page {
 				background-color: var(--osui-carousel-pagination-color);
-				border-radius: var(--os-border-radius-circular);
+				border-radius: var(--border-radius-rounded);
 				transition:
 					width $token-transition-time-200 $token-transition-curve-linear,
 					background-color $token-transition-time-200 $token-transition-curve-linear;
@@ -66,7 +66,7 @@
 				&.is-active {
 					background-color: var(--osui-carousel-pagination-active-color);
 					width: $token-scale-700;
-					z-index: var(--os-layer-local-tier-1);
+					z-index: var(--layer-local-tier-1);
 				}
 			}
 		}
@@ -132,7 +132,7 @@
 		border-radius: $token-border-radius-300;
 		max-width: 100%;
 		width: var(--osui-carousel-track-width);
-		z-index: var(--os-layer-screen);
+		z-index: var(--layer-screen);
 
 		& {
 			-servicestudio-position: relative;
@@ -155,7 +155,7 @@
 			-servicestudio-background-image: $carousel_helper_img_base64;
 			-servicestudio-background-repeat: no-repeat;
 			-servicestudio-background-position: center;
-			-servicestudio-z-index: var(--os-layer-local-tier-2);
+			-servicestudio-z-index: var(--layer-local-tier-2);
 		}
 	}
 }
@@ -199,10 +199,10 @@
 // Layer Library Overrides
 .splide__track--fade {
 	& > .splide__list > .splide__slide {
-		z-index: var(--os-layer-screen);
+		z-index: var(--layer-screen);
 
 		&.is-active {
-			z-index: var(--os-layer-local-tier-1);
+			z-index: var(--layer-local-tier-1);
 		}
 	}
 }

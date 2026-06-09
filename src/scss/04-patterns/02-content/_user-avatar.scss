@@ -6,9 +6,9 @@
 ///
 .avatar {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-avatar-color:          #{$token-text-inverse};
-	--osui-avatar-primary-color:  #{$token-semantics-primary-base};
-	--osui-avatar-on-light-color: #{$token-text-default};
+	--osui-avatar-color:          var(--color-text-inverse);
+	--osui-avatar-primary-color:  var(--color-primary);
+	--osui-avatar-on-light-color: var(--color-text);
 	// ───────────────────────────────────────────────────────────────────
 
 	align-items: center;

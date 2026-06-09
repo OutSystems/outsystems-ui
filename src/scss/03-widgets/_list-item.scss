@@ -6,10 +6,10 @@
 ///
 .list-item {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-list-item-border-color:            #{$token-border-default};
-	--osui-list-item-background:              #{$token-bg-surface-default};
+	--osui-list-item-border-color:            var(--color-border);
+	--osui-list-item-background:              var(--color-background-surface);
 	--osui-list-item-hover-background:        var(--osui-bg-surface-hover);
-	--osui-list-item-selected-background:     #{$token-semantics-primary-base};
+	--osui-list-item-selected-background:     var(--color-primary-selected);
 	// ───────────────────────────────────────────────────────────────────
 
 	border-bottom: $token-border-size-025 solid var(--osui-list-item-border-color);
@@ -32,8 +32,8 @@
 
 	.scale-animation {
 		animation: list-item-scale-animation $token-transition-time-1500;
-		background-color: color-mix(in srgb, #{$token-text-default} 10%, transparent);
-		border-radius: var(--os-border-radius-circular);
+		background-color: color-mix(in srgb, var(--color-text) 10%, transparent);
+		border-radius: var(--border-radius-rounded);
 		display: block;
 		height: 10px; // design-spec: fixed ripple size
 		left: 50%;
@@ -42,7 +42,7 @@
 		top: 50%;
 		width: 10px; // design-spec: fixed ripple size
 		will-change: transform;
-		z-index: var(--os-layer-screen);
+		z-index: var(--layer-screen);
 	}
 }
 
@@ -82,11 +82,11 @@
 
 			.list-item-content {
 				&-title {
-					color: $token-text-default;
+					color: var(--color-text);
 				}
 
 				&-text {
-					color: $token-text-subtlest;
+					color: var(--color-text-subtlest);
 				}
 
 				&-right .icon {

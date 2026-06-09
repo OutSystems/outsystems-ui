@@ -6,11 +6,11 @@
 ///
 .stackedcards {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-stacked-cards-background:               #{$token-bg-surface-default};
-	--osui-stacked-cards-overlay-color:            #{$token-text-inverse};
-	--osui-stacked-cards-overlay-top-background:   #{$token-semantics-info-base};
-	--osui-stacked-cards-overlay-right-background: #{$token-semantics-success-base};
-	--osui-stacked-cards-overlay-left-background:  #{$token-semantics-danger-base};
+	--osui-stacked-cards-background:               var(--color-background-surface);
+	--osui-stacked-cards-overlay-color:            var(--color-text-inverse);
+	--osui-stacked-cards-overlay-top-background:   var(--color-info);
+	--osui-stacked-cards-overlay-right-background: var(--color-success);
+	--osui-stacked-cards-overlay-left-background:  var(--color-error);
 	// ───────────────────────────────────────────────────────────────────
 
 	position: relative;
@@ -27,7 +27,7 @@
 		.list.list-group {
 			background-color: transparent;
 			height: 100%;
-			z-index: var(--os-layer-screen);
+			z-index: var(--layer-screen);
 
 			& > :nth-child(1) {
 				display: block;
@@ -209,7 +209,7 @@
 			-servicestudio-float: none;
 			-servicestudio-min-height: 80px;
 			-servicestudio-width: 100%;
-			-servicestudio-z-index: var(--os-layer-local-tier-1);
+			-servicestudio-z-index: var(--layer-local-tier-1);
 		}
 	}
 
@@ -223,7 +223,7 @@
 			-servicestudio-float: right;
 			-servicestudio-min-height: 80px;
 			-servicestudio-width: 50%;
-			-servicestudio-z-index: var(--os-layer-local-tier-2);
+			-servicestudio-z-index: var(--layer-local-tier-2);
 		}
 	}
 
@@ -237,7 +237,7 @@
 			-servicestudio-float: none;
 			-servicestudio-min-height: 80px;
 			-servicestudio-width: 50%;
-			-servicestudio-z-index: var(--os-layer-local-tier-2);
+			-servicestudio-z-index: var(--layer-local-tier-2);
 		}
 	}
 

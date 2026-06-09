@@ -6,10 +6,10 @@
 ///
 [data-upload] {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-upload-background:    #{$token-bg-surface-default};
-	--osui-upload-border-color:  #{$token-border-default};
-	--osui-upload-color:         #{$token-text-default};
-	--osui-upload-border-radius: var(--os-border-radius-sm-surfaces);
+	--osui-upload-background:    var(--color-background-surface);
+	--osui-upload-border-color:  var(--color-border);
+	--osui-upload-color:         var(--color-text);
+	--osui-upload-border-radius: var(--border-radius-soft);
 	// ───────────────────────────────────────────────────────────────────
 
 	align-items: center;
@@ -45,7 +45,7 @@
 
 	[data-icon] {
 		background-color: transparent;
-		color: $token-border-input-default;
+		color: var(--color-border-input);
 		line-height: 1;
 		margin-right: $token-scale-400;
 		width: auto;
@@ -71,6 +71,6 @@
 ///
 .has-accessible-features {
 	[data-upload] {
-		border: $token-border-size-025 solid $token-border-input-default;
+		border: $token-border-size-025 solid var(--color-border-input);
 	}
 }

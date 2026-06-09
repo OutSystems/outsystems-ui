@@ -6,7 +6,7 @@
 ///
 .icon-badge {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-icon-badge-ring-color: #{$token-bg-surface-default};
+	--osui-icon-badge-ring-color: var(--color-background-surface);
 	// ───────────────────────────────────────────────────────────────────
 
 	display: inline-block;
@@ -19,7 +19,7 @@
 		left: auto;
 
 		align-items: center;
-		border-radius: var(--os-border-radius-circular);
+		border-radius: var(--border-radius-rounded);
 		box-shadow: 0 0 0 2px var(--osui-icon-badge-ring-color);
 		display: inline-flex;
 		font-size: var(--osui-font-size-200);

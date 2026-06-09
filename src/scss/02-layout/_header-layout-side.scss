@@ -21,17 +21,17 @@
 		}
 
 		.header {
-			left: var(--os-size-side-menu);
+			left: var(--size-side-menu);
 		}
 	}
 
 	&.layout-native.aside-expandable .main .header {
-		z-index: var(--os-layer-navigation);
+		z-index: var(--layer-navigation);
 	}
 
 	.aside-expandable {
 		&:not(.fixed-header) .main .header {
-			margin-left: calc(var(--os-size-side-menu) * -1);
+			margin-left: calc(var(--size-side-menu) * -1);
 		}
 
 		&.menu-visible {
@@ -62,7 +62,7 @@
 
 	.aside-expandable {
 		.header {
-			z-index: var(--os-layer-navigation);
+			z-index: var(--layer-navigation);
 		}
 	}
 }
@@ -87,7 +87,7 @@
 .tablet {
 	&.portrait {
 		.layout-side.layout-native.aside-expandable .main .header {
-			z-index: var(--os-layer-navigation);
+			z-index: var(--layer-navigation);
 		}
 	}
 }
@@ -95,7 +95,7 @@
 ///
 .phone {
 	.layout-side.layout-native.aside-expandable .main .header {
-		z-index: var(--os-layer-navigation);
+		z-index: var(--layer-navigation);
 	}
 }
 
@@ -117,7 +117,7 @@
 
 			.header {
 				left: 0;
-				right: var(--os-size-side-menu);
+				right: var(--size-side-menu);
 			}
 		}
 	}

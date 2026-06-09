@@ -6,11 +6,11 @@
 ///
 .osui-submenu {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-submenu-items-background:    #{$token-bg-surface-default};
+	--osui-submenu-items-background:    var(--color-background-surface);
 	--osui-submenu-items-border-color:  transparent;
 	--osui-submenu-items-shadow:        #{$token-elevation-2};
-	--osui-submenu-item-color:          #{$token-text-subtlest};
-	--osui-submenu-header-color:        #{$token-text-default};
+	--osui-submenu-item-color:          var(--color-text-subtlest);
+	--osui-submenu-header-color:        var(--color-text);
 	--osui-submenu-active-border-color: var(--osui-submenu-active-border-color); // intentional: overridden by theme/consumer
 	--osui-submenu-max-height:          calc(100dvh - 80px); // design-spec: 80px header offset
 	// ───────────────────────────────────────────────────────────────────
@@ -109,7 +109,7 @@
 
 			a {
 				align-items: center;
-				color: $token-text-subtlest;
+				color: var(--color-text-subtlest);
 				display: flex;
 				height: 100%;
 				text-decoration: none;
@@ -152,7 +152,7 @@
 		transform: translateY(-8px); // design-spec
 		transition: all 130ms ease-out;
 		width: max-content;
-		z-index: var(--os-layer-elevated);
+		z-index: var(--layer-elevated);
 
 		// Scrollbar
 		&::-webkit-scrollbar {
@@ -164,8 +164,8 @@
 		}
 
 		&::-webkit-scrollbar-thumb {
-			background-color: $token-border-default;
-			border-radius: var(--os-border-radius-circular);
+			background-color: var(--color-border);
+			border-radius: var(--border-radius-rounded);
 		}
 
 		// Service Studio Preview
@@ -220,7 +220,7 @@
 ///
 .layout-side .app-menu-links .osui-submenu,
 .menu-visible .app-menu-links .osui-submenu {
-	--osui-submenu-items-background: var(--os-color-background-sidemenu, #{$token-bg-surface-default});
+	--osui-submenu-items-background: var(--color-background-sidemenu, #{$token-bg-surface-default});
 
 	display: flex;
 	flex-direction: column;
@@ -274,7 +274,7 @@
 
 			&:hover {
 				background-color: var(--osui-bg-surface-hover);
-				color: $token-text-default;
+				color: var(--color-text);
 			}
 
 			&.active {
@@ -344,7 +344,7 @@
 			a {
 				&:hover {
 					background-color: var(--osui-bg-surface-hover);
-					color: $token-text-default;
+					color: var(--color-text);
 				}
 
 				&.active:hover {
@@ -369,7 +369,7 @@
 	.app-menu-links .osui-submenu--is-open .osui-submenu__header {
 		background-color: var(--osui-bg-surface-hover);
 		border-radius: $token-border-radius-200;
-		color: $token-text-default;
+		color: var(--color-text);
 	}
 
 	.app-menu-links .osui-submenu.active .osui-submenu__header {
@@ -388,7 +388,7 @@
 
 		&:hover {
 			background-color: var(--osui-bg-surface-hover);
-			color: $token-text-default;
+			color: var(--color-text);
 		}
 	}
 
@@ -423,7 +423,7 @@
 		.app-menu-links > a:hover {
 			background-color: var(--osui-bg-surface-hover);
 			border-radius: $token-border-radius-200;
-			color: $token-text-default;
+			color: var(--color-text);
 		}
 	}
 }
@@ -499,7 +499,7 @@
 			&:hover {
 				background-color: var(--osui-bg-surface-hover);
 				border-radius: $token-border-radius-200;
-				color: $token-text-default;
+				color: var(--color-text);
 			}
 		}
 
@@ -527,7 +527,7 @@
 
 				&:hover {
 					background-color: var(--osui-bg-surface-hover);
-					color: $token-text-default;
+					color: var(--color-text);
 				}
 			}
 		}
@@ -537,7 +537,7 @@
 		&:hover {
 			background-color: var(--osui-bg-surface-hover);
 			border-radius: $token-border-radius-200;
-			color: $token-text-default;
+			color: var(--color-text);
 		}
 	}
 

@@ -6,8 +6,8 @@
 ///
 .breadcrumbs {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-breadcrumbs-item-color:      #{$token-text-subtlest};
-	--osui-breadcrumbs-separator-color: #{$token-text-subtlest};
+	--osui-breadcrumbs-item-color:      var(--color-text-subtlest);
+	--osui-breadcrumbs-separator-color: var(--color-text-subtlest);
 	// ───────────────────────────────────────────────────────────────────
 
 	&-content {
@@ -17,7 +17,7 @@
 
 	&-item {
 		align-items: center;
-		color: $token-text-subtle;
+		color: var(--color-text-subtle);
 		display: inline-flex;
 		font-size: $token-font-size-350;
 		font-weight: $token-font-weight-regular;
@@ -33,7 +33,7 @@
 			transition: color $token-transition-time-100 $token-transition-curve-base;
 
 			&:hover {
-				color: $token-text-default;
+				color: var(--color-text);
 				text-decoration: none;
 			}
 
@@ -61,7 +61,7 @@
 
 	&-content > &-item:last-child,
 	&-content > *:last-child > &-item {
-		color: $token-text-default;
+		color: var(--color-text);
 		font-weight: $token-font-weight-semi-bold;
 	}
 }

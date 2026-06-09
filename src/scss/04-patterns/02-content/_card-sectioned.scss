@@ -47,7 +47,7 @@
 	}
 
 	&-title {
-		color: $token-text-default;
+		color: var(--color-text);
 		font-size: $token-font-size-550;
 		font-weight: $token-font-weight-semi-bold;
 		padding: $token-scale-600 $token-scale-600 $token-scale-0 $token-scale-600;

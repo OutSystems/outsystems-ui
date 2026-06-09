@@ -20,7 +20,7 @@
 			height: 100%;
 			position: absolute;
 			right: -24px;
-			top: calc(var(--os-size-header) + var(--os-size-header-content));
+			top: calc(var(--size-header) + var(--size-header-content));
 			width: $token-scale-600;
 		}
 	}
@@ -34,12 +34,12 @@
 			&.layout-side {
 				&.aside-expandable {
 					.app-menu-content {
-						padding-top: calc(var(--os-size-header) + var(--os-size-header-content) + var(--os-safe-area-top));
+						padding-top: calc(var(--size-header) + var(--size-header-content) + var(--os-safe-area-top));
 					}
 
 					&.hide-header-on-scroll:not(.header-is--visible) {
 						.app-menu-content {
-							padding-top: var(--os-size-header-content);
+							padding-top: var(--size-header-content);
 						}
 					}
 				}
@@ -70,7 +70,7 @@
 					&.aside-expandable {
 						.app-menu-content {
 							padding-top: calc(
-								var(--os-size-header) + var(--os-size-header-content) + #{android-safe-area-top()}
+								var(--size-header) + var(--size-header-content) + #{android-safe-area-top()}
 							);
 						}
 					}
@@ -102,7 +102,7 @@
 			&.layout-side {
 				&.aside-expandable {
 					.app-menu-content {
-						padding-top: calc(var(--os-size-header) + var(--os-size-header-content) + var(--os-safe-area-top));
+						padding-top: calc(var(--size-header) + var(--size-header-content) + var(--os-safe-area-top));
 					}
 				}
 			}
@@ -110,7 +110,7 @@
 
 		.layout-side.layout-native.aside-expandable.hide-header-on-scroll:not(.header-is--visible) {
 			.app-menu-content {
-				padding-top: var(--os-size-header-content);
+				padding-top: var(--size-header-content);
 			}
 		}
 	}

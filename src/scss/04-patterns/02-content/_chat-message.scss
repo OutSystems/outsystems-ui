@@ -8,8 +8,8 @@
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-chat-message-background:      #{$token-bg-neutral-subtle-default};
 	--osui-chat-message-border-radius:   #{$token-border-radius-200};
-	--osui-chat-message-sent-background: #{$token-semantics-primary-base};
-	--osui-chat-message-sent-color:      #{$token-text-inverse};
+	--osui-chat-message-sent-background: var(--color-primary);
+	--osui-chat-message-sent-color:      var(--color-text-inverse);
 	// ───────────────────────────────────────────────────────────────────
 
 	display: flex;
@@ -35,7 +35,7 @@
 		margin-right: $token-scale-400;
 
 		img {
-			border-radius: var(--os-border-radius-circular);
+			border-radius: var(--border-radius-rounded);
 			height: $token-scale-1000;
 			object-fit: cover;
 			width: $token-scale-1000;

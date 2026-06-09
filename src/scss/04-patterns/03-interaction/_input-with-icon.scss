@@ -6,8 +6,8 @@
 ///
 .input-with-icon {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-input-with-icon-icon-color:       #{$token-text-subtle};
-	--osui-input-with-icon-icon-hover-color: #{$token-text-subtlest};
+	--osui-input-with-icon-icon-color:       var(--color-text-subtle);
+	--osui-input-with-icon-icon-hover-color: var(--color-text-subtlest);
 	// ───────────────────────────────────────────────────────────────────
 
 	display: flex;
@@ -83,7 +83,7 @@
 	.input-with-icon {
 		.input-with-icon-content-icon {
 			padding-bottom: $token-scale-600;
-			z-index: var(--os-layer-local-tier-1);
+			z-index: var(--layer-local-tier-1);
 		}
 
 		.form-control[class*='ThemeGrid_Width'].not-valid ~ span.validation-message {

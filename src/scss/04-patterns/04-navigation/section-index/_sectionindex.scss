@@ -6,10 +6,10 @@
 ///
 .osui-section-index {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-section-index-border-color: #{$token-border-default};
+	--osui-section-index-border-color: var(--color-border);
 	// ───────────────────────────────────────────────────────────────────
 
-	--top-position: calc(var(--os-size-header) + var(--os-size-header-content) + #{android-safe-area-top()});
+	--top-position: calc(var(--size-header) + var(--size-header-content) + #{android-safe-area-top()});
 	display: flex;
 	flex-direction: column;
 	position: relative;
@@ -32,11 +32,11 @@
 
 .osui-section-index-item {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-section-index-item-color:             #{$token-text-subtlest};
-	--osui-section-index-item-color-hover:       #{$token-text-default};
-	--osui-section-index-item-active-color:      #{$token-semantics-primary-base};
-	--osui-section-index-item-hover-background:  color-mix(in srgb, #{$token-text-default} 4%, transparent);
-	--osui-section-index-active-indicator-color: #{$token-semantics-primary-base};
+	--osui-section-index-item-color:             var(--color-text-subtlest);
+	--osui-section-index-item-color-hover:       var(--color-text);
+	--osui-section-index-item-active-color:      var(--color-primary-selected);
+	--osui-section-index-item-hover-background:  color-mix(in srgb, var(--color-text) 4%, transparent);
+	--osui-section-index-active-indicator-color: var(--color-primary-selected);
 	// ───────────────────────────────────────────────────────────────────
 
 	&,
@@ -139,7 +139,7 @@
 			padding: 0 $token-scale-400 0 0;
 			position: fixed;
 			top: var(--top-position);
-			z-index: var(--os-layer-local-tier-1);
+			z-index: var(--layer-local-tier-1);
 		}
 	}
 

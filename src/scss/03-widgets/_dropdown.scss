@@ -6,10 +6,10 @@
 .dropdown {
 	&-container {
 		// ─── Component CSS API ─────────────────────────────────────────────
-		--osui-dropdown-background: #{$token-bg-input-default};
-		--osui-dropdown-border-color: #{$token-border-default};
-		--osui-dropdown-color: #{$token-text-default};
-		--osui-dropdown-border-radius: var(--os-border-radius-controls);
+		--osui-dropdown-background: var(--color-background-input);
+		--osui-dropdown-border-color: var(--color-border);
+		--osui-dropdown-color: var(--color-text);
+		--osui-dropdown-border-radius: var(--border-radius-soft);
 		--osui-dropdown-list-max-height: 240px;
 		// ───────────────────────────────────────────────────────────────────
 
@@ -36,7 +36,7 @@
 				width: 100%;
 
 				&:hover {
-					border: $token-border-size-025 solid $token-border-input-default;
+					border: $token-border-size-025 solid var(--color-border-input);
 				}
 
 				&:focus {
@@ -57,8 +57,8 @@
 		}
 
 		& > div.dropdown-list {
-			border: $token-border-size-025 solid $token-border-default;
-			border-radius: var(--os-border-radius-sm-surfaces);
+			border: $token-border-size-025 solid var(--color-border);
+			border-radius: var(--border-radius-soft);
 			box-shadow: var(--osui-elevation-overlay);
 			left: 0 !important;
 			max-height: var(--osui-dropdown-list-max-height);
@@ -71,17 +71,17 @@
 			}
 
 			&::-webkit-scrollbar-track {
-				background: $token-border-default;
+				background: var(--color-border);
 			}
 
 			&::-webkit-scrollbar-thumb {
-				background-color: $token-text-disabled;
+				background-color: var(--color-text-disabled);
 			}
 		}
 
 		.dropdown-popup-row {
 			align-items: center;
-			color: $token-text-default;
+			color: var(--color-text);
 			display: flex;
 			height: $token-scale-1100;
 			justify-content: space-between;
@@ -89,12 +89,12 @@
 
 			&:hover,
 			&-selected:hover {
-				background: $token-border-subtle;
+				background: var(--color-border-subtle);
 			}
 
 			&-selected {
 				background: none;
-				color: $token-text-default;
+				color: var(--color-text);
 				font-weight: $token-font-weight-semi-bold;
 
 				// Right-side checkmark — requires --osui-icon-check + --osui-icon-font-family (icon library)
@@ -151,9 +151,9 @@ select {
 
 		&.dropdown-disabled,
 		&[disabled] {
-			background-color: $token-bg-input-disabled;
-			border: $token-border-size-025 solid $token-border-default;
-			color: $token-text-disabled;
+			background-color: var(--color-background-input-disabled);
+			border: $token-border-size-025 solid var(--color-border);
+			color: var(--color-text-disabled);
 			pointer-events: none;
 		}
 	}
@@ -205,10 +205,10 @@ select.dropdown-display[disabled] {
 		& > div,
 		& > select {
 			&.dropdown-display {
-				border-color: $token-border-input-default;
+				border-color: var(--color-border-input);
 
 				&:hover {
-					border-color: $token-border-input-press;
+					border-color: var(--color-border-input-press);
 				}
 			}
 		}

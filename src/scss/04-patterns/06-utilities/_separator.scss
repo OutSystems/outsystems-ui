@@ -6,7 +6,7 @@
 ///
 .separator {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-separator-color: #{$token-semantics-primary-base};
+	--osui-separator-color: var(--color-primary);
 	// ───────────────────────────────────────────────────────────────────
 
 	background-color: var(--osui-separator-color);

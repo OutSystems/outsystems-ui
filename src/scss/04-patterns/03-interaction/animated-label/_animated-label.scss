@@ -6,9 +6,9 @@
 ///
 .animated-label {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-animated-label-color: #{$token-text-subtlest};
-	--osui-animated-label-border-color: #{$token-border-input-default};
-	--osui-animated-label-focus-border-color: #{$token-semantics-primary-base};
+	--osui-animated-label-color: var(--color-text-subtlest);
+	--osui-animated-label-border-color: var(--color-border-input);
+	--osui-animated-label-focus-border-color: var(--color-primary);
 	// ───────────────────────────────────────────────────────────────────
 
 	position: relative;
@@ -29,7 +29,7 @@
 
 		.animated-label-input {
 			.form-control[data-input]::-webkit-datetime-edit {
-				color: $token-text-default;
+				color: var(--color-text);
 			}
 
 			[data-textarea] {
@@ -39,7 +39,7 @@
 	}
 
 	&-text {
-		background-color: var(--osui-input-background, #{$token-bg-input-default});
+		background-color: var(--osui-input-background, var(--color-background-input));
 		color: var(--osui-animated-label-color);
 		font-size: $token-font-size-350;
 		left: $token-scale-300;
@@ -53,10 +53,10 @@
 			font-size $token-transition-time-200 ease,
 			color $token-transition-time-100 ease,
 			transform $token-transition-time-200 ease;
-		z-index: var(--os-layer-screen);
+		z-index: var(--layer-screen);
 
 		label {
-			color: var(--osui-input-color, #{$token-text-default});
+			color: var(--osui-input-color, var(--color-text));
 			font-size: $token-font-size-350;
 			font-weight: $token-font-weight-regular;
 		}
@@ -91,7 +91,7 @@
 					border-bottom: $token-border-size-025 solid var(--osui-animated-label-focus-border-color);
 
 					&::-webkit-datetime-edit {
-						color: $token-text-default;
+						color: var(--color-text);
 					}
 				}
 
@@ -135,7 +135,7 @@
 	/* ============================================================
 	   Outlined variant
 	   ============================================================ */
-	background-color: var(--osui-input-background, #{$token-bg-input-default});
+	background-color: var(--osui-input-background, var(--color-background-input));
 	border: $token-border-size-025 solid var(--osui-animated-label-border-color);
 	border-radius: var(--osui-input-border-radius, #{$token-border-radius-200});
 	overflow: visible;
@@ -317,10 +317,10 @@
 .has-accessible-features {
 	.animated-label-input {
 		.form-control[data-input] {
-			border-color: $token-border-input-default;
+			border-color: var(--color-border-input);
 
 			&:hover {
-				border-color: $token-border-input-press;
+				border-color: var(--color-border-input-press);
 			}
 		}
 	}
@@ -342,7 +342,7 @@
 	.animated-label {
 		&.active {
 			.animated-label-text {
-				background-color: $token-text-subtlest;
+				background-color: var(--color-text-subtlest);
 				font-size: $token-font-size-350;
 				top: -16px; // design-spec: high-contrast label lift
 			}

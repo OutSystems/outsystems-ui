@@ -27,7 +27,8 @@ Rules of thumb:
 - In a CSS **property value** → write `$token-*` directly: `padding: $token-scale-400;`
 - In a CSS **custom property declaration** → interpolate: `--osui-card-background: #{$token-bg-surface-default};`
 - Never hardcode hex/rem/px if a matching `$token-*` exists.
-- Never reintroduce the old `--color-*`, `--space-*`, `--font-size-*`, `--shadow-*`, `--border-*` names. They were retired in Phase 14.
+- Still retired (do **not** reintroduce): `--space-*`, `--font-size-*`, `--shadow-*`, `--border-size-*`. Use `$token-*` instead.
+- **Exception — the framework theme layer (Part Four).** `--color-*`, `--border-radius-*`, `--size-*`, and `--layer-*` are **not** retired: they are the framework theme layer (Tier 3) — see §13. They were deliberately un-prefixed (dropping the old `--os-` prefix) to stay backward-compatible with the historical public theming surface. Components route through them; each defaults through a `$token-*`.
 
 ## 3. Component CSS API — the `--osui-*` layer
 
@@ -121,9 +122,11 @@ Pattern files that consume a provider import the override SCSS directly:
 @import '../../../../../Providers/OSUI/Dropdown/VirtualSelect/scss/_virtualselect.scss';
 ```
 
-## 11. Dark theme invariant
+## 11. Theme invariant
 
-Dark theme at `src/scss/01-foundations/_theme-dark.scss` is **entirely** CSS-custom-property overrides scoped under `.theme-dark`. No component rule, no `$token-*` value, no pre-existing `--osui-*` default is touched.
+> **Note:** the opt-in dark theme (`_theme-dark.scss`) has been **removed for now** (no `.theme-dark` partial currently ships). The invariant below stands for any theme reintroduced later.
+
+A theme is **entirely** CSS-custom-property overrides scoped under a single class. It overrides theme-layer role knobs (`--color-*`, `--border-radius-*`, …) and/or the underlying `--token-*` — it touches **no** component rule, **no** `$token-*` value, and **no** pre-existing `--osui-*` default.
 
 **If a theme needs to modify a component rule, that indicates a leak in the component's CSS API.** Fix it in the component, not the theme.
 
@@ -135,18 +138,30 @@ Mobile safe-area wrapping pattern — keep the indirection, don't collapse:
 --os-safe-area-top: #{safe-area(top)};  // wraps max(env(safe-area-inset-top, 0px), var(--overridable))
 ```
 
-## 13. App-level vars — `--os-*` bridge
+## 13. Framework theme layer (Tier 3) — `_root.scss`
 
-The `--os-*` namespace in `_root.scss` is the **framework-wide overrideable bridge** for app-level theming (header colour, side-menu size, safe areas, layer system). Components that consume these should `var(--os-*)` through.
+`_root.scss` declares the **framework theme layer**: the stable, framework-owned theming contract that sits between the design tokens and the components. The read chain is:
 
-These are intentionally not `--osui-*`: `--os-*` is for app-layout primitives an end-user theme overrides once; `--osui-*` is per-component.
+```
+property → var(--osui-{component}) → var(--{role}) → $token-* → primitive
+e.g.       --osui-btn-primary-background → --color-primary → $token-semantics-primary-base
+```
+
+Each role knob defaults **through** a `$token-*`, so overriding the token (e.g. dark theme) still cascades. The contract is deliberately **un-prefixed** (no `--os-`) to stay backward-compatible with the historical public theming surface (`--color-primary`, etc.):
+
+- **Brand / status / neutral colors** — `--color-primary`, `--color-secondary`, `--color-error`, `--color-warning`, `--color-success`, `--color-info`, `--color-neutral-0..10`. (Also read by TS `GetColorValueFromColorType`.)
+- **Surfaces / text** — `--color-background-{body,surface,header,sidemenu,footer,login}`, `--color-text`.
+- **Radius** — one shape vocabulary `--border-radius-{none,soft,softer,rounded}` (8px=`soft` for controls + flat surfaces, 16px=`softer` for elevated surfaces, 999px=`rounded` for circular). Each resolves `var(--border-radius-default, <own-default>)`, so setting **`--border-radius-default`** at `:root` re-radiuses the whole framework with one override (undefined by default). `none`/`soft`/`rounded` are also read by TS `GetBorderRadiusValueFromShapeType`; `softer` is CSS-only.
+- **App-layout plumbing (NOT part of the theme contract)** — layout sizes `--size-*`, z-index `--layer-*`, and safe areas `--os-safe-area-*` (the **one** retained `--os-` prefix — see §12).
+
+These are intentionally not `--osui-*`: theme-layer roles are app-level knobs an end-user theme overrides once; `--osui-*` is per-component. See `specs/plan-part-four.md` for the full architecture.
 
 ## 14. Dead-code red flags
 
 Flag in review:
 
 - Hardcoded hex / rgb / rgba where a `$token-*` exists.
-- Re-declaration of retired vars (`--color-*`, `--space-*`, `--font-size-*`, `--shadow-*`, `--border-*`).
+- Re-declaration of genuinely-retired vars (`--space-*`, `--font-size-*`, `--shadow-*`, `--border-size-*`). NOTE: `--color-*`, `--border-radius-*`, `--size-*`, `--layer-*` are **not** retired — they are the framework theme layer (§13).
 - Calls to `get-background-color()` / `get-text-color()` / `get-border-color()`.
 - New rules that touch `.theme-dark` from the component side.
 - Imports of `_*_lib.scss` vendor baselines.

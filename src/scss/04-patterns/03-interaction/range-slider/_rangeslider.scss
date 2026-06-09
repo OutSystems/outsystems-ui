@@ -6,12 +6,12 @@
 ///
 .osui-range-slider {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-range-slider-track-color:           #{$token-border-default};
-	--osui-range-slider-handle-background:     #{$token-bg-surface-default};
-	--osui-range-slider-handle-border-color:   #{$token-semantics-primary-base};
+	--osui-range-slider-track-color:           var(--color-border);
+	--osui-range-slider-handle-background:     var(--color-background-surface);
+	--osui-range-slider-handle-border-color:   var(--color-primary);
 	--osui-range-slider-handle-shadow:         #{$token-elevation-1};
 	--osui-range-slider-disabled-track-color:  #{$token-bg-neutral-subtle-default};
-	--osui-range-slider-disabled-color:        #{$token-text-disabled};
+	--osui-range-slider-disabled-color:        var(--color-text-disabled);
 	// ───────────────────────────────────────────────────────────────────
 
 	--range-slider-handle-size: #{$token-scale-400};
@@ -67,7 +67,7 @@
 			.noUi-handle {
 				background-color: var(--osui-range-slider-handle-background);
 				border: $token-border-size-050 solid var(--osui-range-slider-handle-border-color);
-				border-radius: var(--os-border-radius-circular);
+				border-radius: var(--border-radius-rounded);
 				box-shadow: var(--osui-range-slider-handle-shadow);
 				cursor: pointer;
 				display: inline-block;
@@ -138,7 +138,7 @@
 			}
 
 			.noUi-pips {
-				color: $token-text-subtlest;
+				color: var(--color-text-subtlest);
 			}
 
 			.noUi-pips-margin {
@@ -167,7 +167,7 @@
 		}
 
 		&-pips-vertical {
-			color: $token-text-subtlest;
+			color: var(--color-text-subtlest);
 			height: 100%;
 			left: 100%;
 			padding: 0 0 0 $token-scale-100;
@@ -176,7 +176,7 @@
 
 		&-marker {
 			&-large {
-				background-color: $token-border-default;
+				background-color: var(--color-border);
 			}
 
 			&-horizontal {
@@ -204,7 +204,7 @@
 		}
 
 		&-value-vertical {
-			color: $token-text-subtlest;
+			color: var(--color-text-subtlest);
 			font-size: $token-font-size-300;
 			padding-left: $token-scale-200;
 		}
@@ -212,7 +212,7 @@
 		&-tooltip {
 			background: transparent;
 			border: none;
-			color: $token-text-default;
+			color: var(--color-text);
 			padding: $token-scale-100;
 		}
 
@@ -243,28 +243,28 @@
 
 	.osui-range-slider__provider {
 		&[disabled] {
-			--osui-range-slider-handle-background: #{$token-bg-input-disabled};
-			--osui-range-slider-disabled-color:    #{$token-text-disabled};
+			--osui-range-slider-handle-background: var(--color-background-input-disabled);
+			--osui-range-slider-disabled-color:    var(--color-text-disabled);
 
 			pointer-events: none;
 
 			.noUi {
 				&-target {
-					background-color: $token-border-default;
+					background-color: var(--color-border);
 				}
 
 				&-connect {
-					background-color: $token-text-disabled;
+					background-color: var(--color-text-disabled);
 				}
 
 				&-handle {
 					background-color: var(--osui-range-slider-handle-background);
-					border: $token-border-size-025 solid $token-border-input-default;
+					border: $token-border-size-025 solid var(--color-border-input);
 					box-shadow: none;
 
 					&:before,
 					&:after {
-						border-color: $token-text-disabled;
+						border-color: var(--color-text-disabled);
 					}
 				}
 
@@ -291,7 +291,7 @@
 		}
 
 		.noUi-handle:focus {
-			border-color: $token-text-default;
+			border-color: var(--color-text);
 			box-shadow: 0 0 0 $token-border-size-075 var(--color-focus-outer);
 		}
 	}
@@ -311,7 +311,7 @@
 
 		.noUi-connect,
 		.noUi-base {
-			border: $token-border-size-050 solid $token-border-input-default;
+			border: $token-border-size-050 solid var(--color-border-input);
 		}
 	}
 
@@ -335,9 +335,9 @@
 /* Z-index overrides */
 .noUi-origin .noUi-base,
 .noUi-connect {
-	z-index: var(--os-layer-local-tier-1);
+	z-index: var(--layer-local-tier-1);
 }
 
 .noUi-connects {
-	z-index: var(--os-layer-screen);
+	z-index: var(--layer-screen);
 }

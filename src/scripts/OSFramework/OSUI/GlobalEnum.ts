@@ -54,8 +54,8 @@ namespace OSFramework.OSUI.GlobalEnum {
 	 * OutSystemsUI common css variables
 	 */
 	export enum CSSVariables {
-		FooterHeight = '--os-size-footer',
-		HeaderContentHeight = '--os-size-header-content',
+		FooterHeight = '--size-footer',
+		HeaderContentHeight = '--size-header-content',
 		OverlayOpacity = '--overlay-opacity',
 		ViewportHeight = '--viewport-height',
 	}

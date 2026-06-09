@@ -6,9 +6,9 @@
 ///
 .tag {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-tag-color: #{$token-text-inverse};
-	--osui-tag-primary-color: #{$token-semantics-primary-base};
-	--osui-tag-on-light-color: #{$token-text-default};
+	--osui-tag-color: var(--color-text-inverse);
+	--osui-tag-primary-color: var(--color-primary);
+	--osui-tag-on-light-color: var(--color-text);
 	// ───────────────────────────────────────────────────────────────────
 
 	align-items: center;

@@ -23,7 +23,7 @@ img {
 
 	&.thumbnail {
 		background-color: $token-bg-surface-default;
-		border: $token-border-size-025 solid $token-border-default;
+		border: $token-border-size-025 solid var(--color-border);
 		padding: $token-scale-100;
 	}
 }

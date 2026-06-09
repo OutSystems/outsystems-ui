@@ -7,14 +7,14 @@
 .table {
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-table-border-color: var(--osui-border-subtle);
-	--osui-table-border-radius: var(--os-border-radius-sm-surfaces);
+	--osui-table-border-radius: var(--border-radius-soft);
 	--osui-table-header-background: transparent;
-	--osui-table-header-color: #{$token-text-default};
-	--osui-table-cell-background: #{$token-bg-surface-default};
-	--osui-table-row-hover-background: #{$token-bg-input-disabled};
+	--osui-table-header-color: var(--color-text);
+	--osui-table-cell-background: var(--color-background-surface);
+	--osui-table-row-hover-background: var(--color-background-input-disabled);
 	--osui-table-row-stripe-background: #{$token-bg-neutral-subtlest-default};
-	--osui-table-sorted-color: #{$token-semantics-primary-base};
-	--osui-table-row-selected-background: #{$token-semantics-primary-base};
+	--osui-table-sorted-color: var(--color-primary);
+	--osui-table-row-selected-background: var(--color-primary-selected);
 	// ───────────────────────────────────────────────────────────────────
 
 	border: none;
@@ -62,7 +62,7 @@
 		td {
 			background: var(--osui-table-cell-background);
 			border-bottom: $token-border-size-025 solid var(--osui-table-border-color);
-			color: $token-text-default;
+			color: var(--color-text);
 			font-size: $token-font-size-350;
 			height: $token-scale-1400;
 			padding: $token-scale-200 $token-scale-600;
@@ -101,7 +101,7 @@
 
 ///
 .table-cell-secondary {
-	color: $token-text-subtle;
+	color: var(--color-text-subtle);
 }
 
 // Responsive --------------------------------------------------------------------
@@ -169,7 +169,7 @@
 			}
 
 			tr {
-				border-bottom: $token-border-size-025 solid $token-border-default;
+				border-bottom: $token-border-size-025 solid var(--color-border);
 			}
 
 			td {
@@ -273,7 +273,7 @@
 	th.sortable:focus {
 		box-shadow: 0 0 0 $token-border-size-075 var(--color-focus-outer);
 		position: relative;
-		z-index: var(--os-layer-screen);
+		z-index: var(--layer-screen);
 	}
 }
 

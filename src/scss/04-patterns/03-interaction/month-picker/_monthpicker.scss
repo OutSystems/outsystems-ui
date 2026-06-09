@@ -9,9 +9,9 @@
 ///
 .osui-monthpicker {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-monthpicker-disabled-background: #{$token-bg-input-disabled};
-	--osui-monthpicker-disabled-border-color: #{$token-border-default};
-	--osui-monthpicker-disabled-color: #{$token-text-disabled};
+	--osui-monthpicker-disabled-background: var(--color-background-input-disabled);
+	--osui-monthpicker-disabled-border-color: var(--color-border);
+	--osui-monthpicker-disabled-color: var(--color-text-disabled);
 	// ───────────────────────────────────────────────────────────────────
 
 	// Service Studio Preview Container Styles
@@ -24,7 +24,7 @@
 			-servicestudio-margin-top: 2px;
 			-servicestudio-overflow: hidden;
 			-servicestudio-position: relative;
-			-servicestudio-z-index: var(--os-layer-local-tier-1);
+			-servicestudio-z-index: var(--layer-local-tier-1);
 
 			& + .placeholder-ss-preview {
 				-servicestudio-height: 0;

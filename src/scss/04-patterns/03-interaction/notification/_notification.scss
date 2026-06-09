@@ -6,10 +6,10 @@
 ///
 .osui-notification {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-notification-background:    #{$token-bg-surface-default};
+	--osui-notification-background:    var(--color-background-surface);
 	--osui-notification-border-radius: #{$token-border-radius-200};
 	--osui-notification-shadow:        #{$token-elevation-4};
-	--osui-notification-color:         #{$token-text-default};
+	--osui-notification-color:         var(--color-text);
 	--osui-notification-padding:       #{$token-scale-300} #{$token-scale-400};
 	// ───────────────────────────────────────────────────────────────────
 

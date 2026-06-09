@@ -7,8 +7,8 @@
 .timeline {
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-timeline-line-color: #{$token-bg-neutral-base-default};
-	--osui-timeline-icon-color: #{$token-text-inverse};
-	--osui-timeline-text-color: #{$token-text-subtlest};
+	--osui-timeline-icon-color: var(--color-text-inverse);
+	--osui-timeline-text-color: var(--color-text-subtlest);
 	// ───────────────────────────────────────────────────────────────────
 
 	&-item {
@@ -43,7 +43,7 @@
 		&-container {
 			align-items: center;
 			border-radius: 50%;
-			color: var(--osui-timeline-icon-color, #{$token-text-inverse});
+			color: var(--osui-timeline-icon-color, var(--color-text-inverse));
 			display: flex;
 			font-size: $token-font-size-300;
 			height: $token-scale-700;
@@ -62,7 +62,7 @@
 
 	&-right,
 	&-content-inner {
-		color: var(--osui-timeline-text-color, #{$token-text-subtlest});
+		color: var(--osui-timeline-text-color, var(--color-text-subtlest));
 	}
 
 	&-right {

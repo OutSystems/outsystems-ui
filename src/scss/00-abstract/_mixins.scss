@@ -40,7 +40,7 @@
 @mixin app-logo {
 	border-radius: $token-border-radius-100;
 	margin-right: $token-scale-200;
-	max-height: var(--os-size-header);
+	max-height: var(--size-header);
 	max-width: 120px;
 }
 

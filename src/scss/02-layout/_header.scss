@@ -5,9 +5,9 @@
 
 ///
 .header {
-	background-color: var(--background-color-header, var(--os-color-background-header));
+	background-color: var(--background-color-header, var(--color-background-header));
 	box-shadow: $token-elevation-1;
-	z-index: var(--os-layer-navigation);
+	z-index: var(--layer-navigation);
 
 	// Service Studio Preview
 	& {
@@ -15,7 +15,7 @@
 	}
 
 	&-top {
-		height: var(--os-size-header);
+		height: var(--size-header);
 	}
 
 	&-logo {
@@ -56,7 +56,7 @@
 
 ///
 .menu-back {
-	color: $token-text-subtlest;
+	color: var(--color-text-subtlest);
 }
 
 ///
@@ -110,7 +110,7 @@
 		left: 0;
 		position: fixed;
 		top: 0;
-		z-index: var(--os-layer-navigation);
+		z-index: var(--layer-navigation);
 	}
 }
 

@@ -2,7 +2,7 @@
 .osui-timepicker__dropdown {
 	.numInputWrapper {
 		.numInput {
-			color: $token-text-default;
+			color: var(--color-text);
 		}
 	}
 
@@ -20,8 +20,8 @@
 
 	// AM/PM selector
 	.flatpickr-am-pm {
-		background-color: $token-border-input-default;
-		border-radius: var(--os-border-radius-circular);
+		background-color: var(--color-border-input);
+		border-radius: var(--border-radius-rounded);
 		height: $token-scale-600;
 		line-height: $token-scale-600;
 		position: absolute;
@@ -31,7 +31,7 @@
 
 		&:hover,
 		&:focus {
-			background-color: $token-border-input-press;
+			background-color: var(--color-border-input-press);
 		}
 	}
 }

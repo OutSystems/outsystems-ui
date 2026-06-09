@@ -17,7 +17,7 @@
 		display: block;
 
 		&:checked:after {
-			border: $token-border-size-050 solid $token-text-inverse;
+			border: $token-border-size-050 solid var(--color-text-inverse);
 			border-right: $token-border-size-0 !important;
 			border-top: $token-border-size-0 !important;
 			display: block;
@@ -35,7 +35,7 @@
 		}
 
 		&:after {
-			background-color: $token-text-inverse;
+			background-color: var(--color-text-inverse);
 			content: '';
 			height: 2px;
 			left: 50%;

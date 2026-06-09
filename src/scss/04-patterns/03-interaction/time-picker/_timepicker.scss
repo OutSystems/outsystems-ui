@@ -9,9 +9,9 @@
 ///
 .osui-timepicker {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-timepicker-disabled-background: #{$token-bg-input-disabled};
-	--osui-timepicker-disabled-border-color: #{$token-border-default};
-	--osui-timepicker-disabled-color: #{$token-text-disabled};
+	--osui-timepicker-disabled-background: var(--color-background-input-disabled);
+	--osui-timepicker-disabled-border-color: var(--color-border);
+	--osui-timepicker-disabled-color: var(--color-text-disabled);
 	// ───────────────────────────────────────────────────────────────────
 
 	input {
@@ -64,13 +64,13 @@
 			-servicestudio-max-width: 320px;
 			-servicestudio-position: relative;
 			-servicestudio-text-align: center;
-			-servicestudio-z-index: var(--os-layer-local-tier-1);
+			-servicestudio-z-index: var(--layer-local-tier-1);
 
 			&.time12h {
 				padding-right: $token-scale-1200;
 				&:after {
 					background-color: $token-primitives-neutral-700;
-					border-radius: var(--os-border-radius-circular);
+					border-radius: var(--border-radius-rounded);
 					color: $token-primitives-base-white;
 					content: 'am';
 					font-size: clamp(10px, 1.5vw, 12px);
@@ -136,10 +136,10 @@
 			// AM/PM styled as an input pill (no-calendar mode)
 			.flatpickr-am-pm {
 				align-items: center;
-				background: var(--osui-input-background, #{$token-bg-input-default});
-				border: $token-border-size-025 solid var(--osui-input-border-color, #{$token-border-default});
+				background: var(--osui-input-background, var(--color-background-input));
+				border: $token-border-size-025 solid var(--osui-input-border-color, var(--color-border));
 				border-radius: $token-border-radius-200;
-				color: $token-text-subtlest;
+				color: var(--color-text-subtlest);
 				display: flex;
 				font-size: $token-font-size-350;
 				font-weight: $token-font-weight-medium;
@@ -155,8 +155,8 @@
 
 				&:hover,
 				&:focus {
-					background: $token-border-subtle;
-					color: $token-text-subtle;
+					background: var(--color-border-subtle);
+					color: var(--color-text-subtle);
 				}
 			}
 		}

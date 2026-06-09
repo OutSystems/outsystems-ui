@@ -11,9 +11,9 @@
 
 	&-item {
 		// ─── Component CSS API ─────────────────────────────────────────────
-		--osui-button-group-background: #{$token-bg-surface-default};
-		--osui-button-group-border-color: #{$token-border-default};
-		--osui-button-group-color: #{$token-text-default};
+		--osui-button-group-background: var(--color-background-surface);
+		--osui-button-group-border-color: var(--color-border);
+		--osui-button-group-color: var(--color-text);
 		// ───────────────────────────────────────────────────────────────────
 
 		background-color: var(--osui-button-group-background);
@@ -34,13 +34,13 @@
 		}
 
 		&:not(.button-group-selected-item):not([disabled]):hover {
-			background-color: $token-border-subtle;
+			background-color: var(--color-border-subtle);
 		}
 
 		&[disabled] {
-			--osui-button-group-background: #{$token-bg-surface-default};
-			--osui-button-group-border-color: #{$token-border-default};
-			--osui-button-group-color: #{$token-text-disabled};
+			--osui-button-group-background: var(--color-background-surface);
+			--osui-button-group-border-color: var(--color-border);
+			--osui-button-group-color: var(--color-text-disabled);
 
 			background-color: var(--osui-button-group-background);
 			border: $token-border-size-025 solid var(--osui-button-group-border-color);
@@ -48,8 +48,8 @@
 			pointer-events: none;
 
 			&.button-group-selected-item {
-				background-color: $token-bg-input-disabled;
-				color: $token-text-disabled;
+				background-color: var(--color-background-input-disabled);
+				color: var(--color-text-disabled);
 			}
 		}
 
@@ -65,7 +65,7 @@
 
 		&.button-group-selected-item {
 			background-color: $token-semantics-primary-base;
-			color: $token-text-inverse;
+			color: var(--color-text-inverse);
 		}
 	}
 
@@ -85,10 +85,10 @@
 .layout-native {
 	.header-top-content {
 		.button-group-item {
-			background-color: var(--background-color-header, var(--os-color-background-header));
+			background-color: var(--background-color-header, var(--color-background-header));
 			border: 0;
 			border-bottom: $token-border-size-050 solid transparent;
-			color: $token-text-subtlest;
+			color: var(--color-text-subtlest);
 
 			&:last-child {
 				border-radius: 0;
@@ -96,14 +96,14 @@
 
 			&.button-group-selected-item {
 				border-bottom: $token-border-size-050 solid $token-semantics-primary-base;
-				color: $token-text-default;
+				color: var(--color-text);
 			}
 
 			&[disabled] {
-				color: $token-text-disabled;
+				color: var(--color-text-disabled);
 
 				&.button-group-selected-item {
-					border-bottom: $token-border-size-050 solid $token-text-disabled;
+					border-bottom: $token-border-size-050 solid var(--color-text-disabled);
 				}
 			}
 		}
@@ -133,7 +133,7 @@
 			border-right: $token-border-size-0;
 
 			&[disabled] {
-				border-left: $token-border-size-025 solid $token-border-default;
+				border-left: $token-border-size-025 solid var(--color-border);
 			}
 		}
 
@@ -159,7 +159,7 @@
 				position: absolute;
 				right: -1px;
 				top: -1px;
-				z-index: var(--os-layer-screen);
+				z-index: var(--layer-screen);
 			}
 		}
 	}

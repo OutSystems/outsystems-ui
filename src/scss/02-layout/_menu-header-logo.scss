@@ -6,7 +6,7 @@
 ///
 .layout-side {
 	.header-logo {
-		height: var(--os-size-header);
+		height: var(--size-header);
 		padding: $token-scale-0 $token-scale-600;
 	}
 }
@@ -15,7 +15,7 @@
 .tablet,
 .phone {
 	.header-logo {
-		height: var(--os-size-header);
+		height: var(--size-header);
 		padding: $token-scale-0 $token-scale-600;
 	}
 }

@@ -9,9 +9,9 @@
 ///
 .osui-datepicker {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-datepicker-disabled-background: #{$token-bg-input-disabled};
-	--osui-datepicker-disabled-border-color: #{$token-border-default};
-	--osui-datepicker-disabled-color: #{$token-text-disabled};
+	--osui-datepicker-disabled-background: var(--color-background-input-disabled);
+	--osui-datepicker-disabled-border-color: var(--color-border);
+	--osui-datepicker-disabled-color: var(--color-text-disabled);
 	// ───────────────────────────────────────────────────────────────────
 
 	input {
@@ -56,14 +56,14 @@
 		& {
 			-servicestudio-background-color: $token-bg-surface-default;
 			-servicestudio-border-radius: $token-border-radius-100;
-			-servicestudio-border: $token-border-size-025 solid $token-border-input-default;
+			-servicestudio-border: $token-border-size-025 solid var(--color-border-input);
 			-servicestudio-display: inline-block;
 			-servicestudio-margin-top: 2px;
 			-servicestudio-max-width: 320px;
 			-servicestudio-overflow: hidden;
 			-servicestudio-position: relative;
 			-servicestudio-width: 100%;
-			-servicestudio-z-index: var(--os-layer-local-tier-1);
+			-servicestudio-z-index: var(--layer-local-tier-1);
 
 			&:before,
 			&:after {

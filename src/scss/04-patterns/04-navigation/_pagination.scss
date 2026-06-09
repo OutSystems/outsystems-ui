@@ -9,13 +9,13 @@
 	--osui-pagination-button-background:        transparent;
 	--osui-pagination-button-border-color:      transparent;
 	--osui-pagination-button-border-width:      #{$token-border-size-025};
-	--osui-pagination-button-color:             #{$token-text-default};
+	--osui-pagination-button-color:             var(--color-text);
 	--osui-pagination-button-font-weight:       #{$token-font-weight-medium};
-	--osui-pagination-button-hover-background:  #{$token-border-subtle};
+	--osui-pagination-button-hover-background:  var(--color-border-subtle);
 	--osui-pagination-button-size:              #{$token-scale-900};
-	--osui-pagination-active-border-color:      #{$token-border-default};
-	--osui-pagination-active-color:             #{$token-text-default};
-	--osui-pagination-counter-color:            #{$token-text-subtlest};
+	--osui-pagination-active-border-color:      var(--color-border);
+	--osui-pagination-active-color:             var(--color-text);
+	--osui-pagination-counter-color:            var(--color-text-subtlest);
 	// ───────────────────────────────────────────────────────────────────
 
 	align-items: center;

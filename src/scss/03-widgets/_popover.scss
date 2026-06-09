@@ -17,10 +17,10 @@
 
 		&-bottom {
 			// ─── Component CSS API ─────────────────────────────────────────────
-			--osui-popover-background:    #{$token-bg-surface-default};
-			--osui-popover-border-color:  #{$token-border-default};
-			--osui-popover-color:         #{$token-text-default};
-			--osui-popover-border-radius: var(--os-border-radius-sm-surfaces);
+			--osui-popover-background:    var(--color-background-surface);
+			--osui-popover-border-color:  var(--color-border);
+			--osui-popover-color:         var(--color-text);
+			--osui-popover-border-radius: var(--border-radius-soft);
 			--osui-popover-shadow:        #{$token-elevation-1};
 			--osui-popover-max-width:     350px;
 			// ───────────────────────────────────────────────────────────────────
@@ -33,7 +33,7 @@
 			max-width: var(--osui-popover-max-width);
 			min-width: auto;
 			padding: $token-scale-400;
-			z-index: var(--os-layer-elevated);
+			z-index: var(--layer-elevated);
 		}
 	}
 }

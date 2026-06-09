@@ -6,8 +6,8 @@
 ///
 .blank-slate {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-blank-slate-description-color: #{$token-text-default};
-	--osui-blank-slate-icon-color:        #{$token-text-disabled};
+	--osui-blank-slate-description-color: var(--color-text);
+	--osui-blank-slate-icon-color:        var(--color-text-disabled);
 	// ───────────────────────────────────────────────────────────────────
 
 	display: flex;

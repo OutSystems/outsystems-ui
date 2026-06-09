@@ -29,7 +29,7 @@ a {
 	}
 
 	&[disabled] {
-		color: $token-text-disabled;
+		color: var(--color-text-disabled);
 	}
 }
 
@@ -52,7 +52,7 @@ a {
 		&:focus {
 			background-color: var(--color-focus-outer);
 			box-shadow: 0 2px var(--color-focus-inner);
-			color: $token-text-default;
+			color: var(--color-text);
 
 			&,
 			&:hover {
@@ -61,7 +61,7 @@ a {
 		}
 
 		&[disabled] {
-			color: $token-text-disabled;
+			color: var(--color-text-disabled);
 		}
 	}
 }

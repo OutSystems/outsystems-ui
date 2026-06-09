@@ -6,14 +6,14 @@
 ///
 .osui-bottom-sheet {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-bottom-sheet-background: #{$token-bg-surface-default};
+	--osui-bottom-sheet-background: var(--color-background-surface);
 	--osui-bottom-sheet-shadow: #{$token-elevation-3};
 	--osui-bottom-sheet-padding: #{$token-scale-400};
 	// ───────────────────────────────────────────────────────────────────
 
 	--bottom-sheet-max-height: calc(100vh - 54px) /*  general value to account for notch and a bit more extra space*/;
 	--border-radius-sharp: none;
-	--border-radius-rounded: var(--os-border-radius-lg-surfaces);
+	--border-radius-rounded: var(--border-radius-softer);
 	--osui-bottom-sheet-draggable-area: #{$token-scale-1400};
 	--osui-bottom-sheet-transition-function: cubic-bezier(0.19, 0.35, 0.56, 0.96);
 
@@ -38,7 +38,7 @@
 
 		.osui-bottom-sheet__content:empty,
 		.osui-bottom-sheet__header__top-bar:empty {
-			-servicestudio-border: 1px dashed $token-border-input-default;
+			-servicestudio-border: 1px dashed var(--color-border-input);
 			-servicestudio-margin: $token-scale-400;
 		}
 	}
@@ -46,7 +46,7 @@
 	&--has-handler {
 		.osui-bottom-sheet__header {
 			&::before {
-				background: $token-border-input-default;
+				background: var(--color-border-input);
 				border-radius: 100px;
 				content: '';
 				height: $token-scale-100;
@@ -110,7 +110,7 @@
 		top: 0;
 		transition: opacity 350ms ease-in;
 		width: 100vw;
-		z-index: calc(var(--os-layer-below) + var(--osui-bottom-sheet-layer));
+		z-index: calc(var(--layer-below) + var(--osui-bottom-sheet-layer));
 
 		// Service Studio Preview
 		& {
@@ -146,7 +146,7 @@
 					transform 200ms var(--osui-bottom-sheet-transition-function);
 				top: 0;
 				width: 100%;
-				z-index: var(--os-layer-global-negative);
+				z-index: var(--layer-global-negative);
 			}
 
 			&:empty {
@@ -159,7 +159,7 @@
 		max-height: var(--bottom-sheet-max-height);
 		overflow-y: scroll;
 		padding: var(--osui-bottom-sheet-padding);
-		padding-bottom: calc(var(--os-size-bottom-bar) + $token-scale-600 + var(--os-safe-area-bottom));
+		padding-bottom: calc(var(--size-bottom-bar) + $token-scale-600 + var(--os-safe-area-bottom));
 	}
 }
 
@@ -191,7 +191,7 @@
 	// DropdownSearch and DropdownTags
 	.vscomp-wrapper,
 	[data-popup-backdrop] {
-		z-index: calc(var(--os-layer-above) + var(--osui-bottom-sheet-layer));
+		z-index: calc(var(--layer-above) + var(--osui-bottom-sheet-layer));
 	}
 
 	// DatePicker, DatePickerRange, MonthPicker and TimePicker
@@ -208,6 +208,6 @@
 ///
 .os-high-contrast {
 	.osui-bottom-sheet {
-		border: $token-border-size-025 solid $token-text-inverse;
+		border: $token-border-size-025 solid var(--color-text-inverse);
 	}
 }

@@ -7,10 +7,10 @@
 [data-checkbox] {
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-checkbox-size: #{$token-scale-600};
-	--osui-checkbox-background: #{$token-bg-input-default};
-	--osui-checkbox-border-color: #{$token-border-input-default};
-	--osui-checkbox-border-radius: var(--os-border-radius-controls);
-	--osui-checkbox-checked-color: #{$token-semantics-primary-base};
+	--osui-checkbox-background: var(--color-background-input);
+	--osui-checkbox-border-color: var(--color-border-input);
+	--osui-checkbox-border-radius: var(--border-radius-soft);
+	--osui-checkbox-checked-color: var(--color-primary);
 	// ───────────────────────────────────────────────────────────────────
 
 	height: var(--osui-checkbox-size);
@@ -31,7 +31,7 @@
 
 	&:hover {
 		&:before {
-			border: $token-border-size-025 solid $token-border-input-default;
+			border: $token-border-size-025 solid var(--color-border-input);
 		}
 	}
 
@@ -42,7 +42,7 @@
 		}
 
 		&:after {
-			border: $token-border-size-075 solid $token-text-inverse;
+			border: $token-border-size-075 solid var(--color-text-inverse);
 			border-right: $token-border-size-0 !important;
 			border-top: $token-border-size-0 !important;
 			display: block;
@@ -58,13 +58,13 @@
 
 		&:before,
 		&:checked:before {
-			background-color: $token-border-subtle;
-			border: $token-border-size-025 solid $token-border-default;
+			background-color: var(--color-border-subtle);
+			border: $token-border-size-025 solid var(--color-border);
 		}
 
 		&:checked {
 			&:after {
-				border: $token-border-size-075 solid $token-text-disabled;
+				border: $token-border-size-075 solid var(--color-text-disabled);
 			}
 		}
 	}
@@ -93,12 +93,12 @@
 		border-radius: var(--osui-checkbox-border-radius);
 
 		&:before {
-			border-color: $token-border-input-default;
+			border-color: var(--color-border-input);
 		}
 
 		&:hover {
 			&:before {
-				border-color: $token-border-input-press;
+				border-color: var(--color-border-input-press);
 			}
 		}
 
@@ -110,7 +110,7 @@
 
 		&:focus {
 			&:before {
-				border-color: $token-text-default;
+				border-color: var(--color-text);
 			}
 		}
 	}

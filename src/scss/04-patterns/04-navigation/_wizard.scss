@@ -7,15 +7,15 @@
 .wizard {
 	&-wrapper {
 		// ─── Component CSS API ─────────────────────────────────────────────
-		--osui-wizard-icon-background:   #{$token-bg-surface-default};
-		--osui-wizard-icon-border-color: #{$token-border-input-default};
+		--osui-wizard-icon-background:   var(--color-background-surface);
+		--osui-wizard-icon-border-color: var(--color-border-input);
 		--osui-wizard-icon-border-width: #{$token-border-size-050};
-		--osui-wizard-icon-color:        #{$token-text-subtle};
+		--osui-wizard-icon-color:        var(--color-text-subtle);
 		--osui-wizard-icon-size:         #{$token-scale-1000};
-		--osui-wizard-label-color:       #{$token-text-subtle};
-		--osui-wizard-active-color:      #{$token-semantics-primary-base};
-		--osui-wizard-past-background:   #{$token-semantics-primary-base};
-		--osui-wizard-past-color:        #{$token-text-inverse};
+		--osui-wizard-label-color:       var(--color-text-subtle);
+		--osui-wizard-active-color:      var(--color-primary);
+		--osui-wizard-past-background:   var(--color-primary);
+		--osui-wizard-past-color:        var(--color-text-inverse);
 		--osui-wizard-connector-color:   #{$token-bg-neutral-base-default};
 		--osui-wizard-focus-halo-color:  var(--osui-border-focus-halo);
 		--osui-wizard-focus-halo-width:  #{$token-border-size-075};
@@ -93,7 +93,7 @@
 		margin: 0 auto;
 		position: relative;
 		width: var(--osui-wizard-icon-size, #{$token-scale-1000});
-		z-index: var(--os-layer-local-tier-1);
+		z-index: var(--layer-local-tier-1);
 
 		[data-block*='WizardItem']:focus-visible & {
 			box-shadow: 0 0 0 var(--osui-wizard-focus-halo-width) var(--osui-wizard-focus-halo-color);
@@ -118,7 +118,7 @@
 				top: 50%;
 				transform: translateY(-50%);
 				width: calc(100% - var(--osui-wizard-icon-size, #{$token-scale-1000}));
-				z-index: var(--os-layer-screen);
+				z-index: var(--layer-screen);
 			}
 
 			&:has(.wizard-item-icon:empty):before {
@@ -150,7 +150,7 @@
 				}
 
 				&-label {
-					color: $token-text-default;
+					color: var(--color-text);
 					font-weight: $token-font-weight-semi-bold;
 				}
 			}
@@ -171,7 +171,7 @@
 				}
 
 				&-label {
-					color: $token-text-subtlest;
+					color: var(--color-text-subtlest);
 				}
 			}
 		}
@@ -185,7 +185,7 @@
 				}
 
 				.fa-fw {
-					color: $token-text-disabled;
+					color: var(--color-text-disabled);
 				}
 			}
 		}

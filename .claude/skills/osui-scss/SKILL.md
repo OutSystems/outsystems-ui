@@ -1,6 +1,6 @@
 ---
 name: osui-scss
-description: OutSystemsUI SCSS architecture and conventions. Use this skill any time you read, write, or review SCSS in this repo — whether in src/scss/ (foundations, layout, widgets, utilities) or src/scripts/**/scss/ (pattern and provider styles). Covers the two-tree layout, the $token-* / var(--token-*) two-layer system, the --osui-{component}-{prop} component CSS API, the dark-theme invariant, naming conventions, the auto-generated entry files rule, and provider override patterns. Prefer this skill over searching the codebase blind for styling context.
+description: OutSystemsUI SCSS architecture and conventions. Use this skill any time you read, write, or review SCSS in this repo — whether in src/scss/ (foundations, layout, widgets, utilities) or src/scripts/**/scss/ (pattern and provider styles). Covers the two-tree layout, the $token-* / var(--token-*) two-layer system, the --osui-{component}-{prop} component CSS API, the theme invariant, naming conventions, the auto-generated entry files rule, and provider override patterns. Prefer this skill over searching the codebase blind for styling context.
 ---
 
 # OutSystemsUI SCSS Architecture
@@ -17,7 +17,7 @@ This skill orients you before touching any `.scss` file in the repo. It compleme
 
 4. **Component CSS API — the `--osui-*` layer.** Every visual component declares its own CSS custom properties at its root selector with `$token-*` defaults, then reads them in rules. Nomenclature: `--osui-{component}-{property}`. Property declarations **must** go through the `--osui-*` var, not directly through `$token-*`, so app consumers can override per-instance.
 
-5. **Dark-theme invariant.** `src/scss/01-foundations/_theme-dark.scss` is **entirely** variable overrides scoped under `.theme-dark`. No component rule, no `$token-*` value, and no existing `--osui-*` default is touched. If a theme needs to reach into a component rule, that's a leak in the component's CSS API — fix the component, not the theme.
+5. **Theme invariant.** (The dark theme `_theme-dark.scss` is **removed for now** — no theme partial currently ships.) Any theme is **entirely** variable overrides scoped under one class — overriding theme-layer role knobs (`--color-*`, `--border-radius-*`, …) and/or `--token-*`. No component rule, no `$token-*` value, and no existing `--osui-*` default is touched. If a theme needs to reach into a component rule, that's a leak in the component's CSS API — fix the component, not the theme.
 
 6. **Auto-generated entry files are off-limits.** `src/scss/O11.OutSystemsUI.scss` and `src/scss/ODC.OutSystemsUI.scss` are regenerated on every `npm run dev` / `npm run build` by `gulp/Tasks/CreateScssFile.js`. To add a new SCSS partial, edit the matching section spec in `gulp/ProjectSpecs/ScssStructure/*.js` — never hand-edit the `O11` / `ODC` entry files.
 
@@ -27,16 +27,16 @@ This skill orients you before touching any `.scss` file in the repo. It compleme
 
 1. **Which tree?** `src/scss/` for global / layout / utility, `src/scripts/**/scss/` for patterns / providers.
 2. **Is there a `$token-*` for the value I'm reaching for?** `grep -E '^\$token-' src/scss/tokens/_variables.scss` and pick the closest match.
-3. **Am I introducing a new variable?** If yes, it should be `--osui-{component}-{prop}` in the component root, with a `$token-*` default. Never reintroduce legacy names like `--color-*`, `--space-*`, `--font-size-*`, `--shadow-*`, or `--border-*`.
-4. **Does dark theme still work?** If my change requires touching `.theme-dark`, step back and fix the component's CSS API instead.
+3. **Am I introducing a new variable?** If yes, it should be `--osui-{component}-{prop}` in the component root, with a default that routes through the theme layer (`--color-*`, `--border-radius-*`, …) or a `$token-*`. Still retired — do not reintroduce: `--space-*`, `--font-size-*`, `--shadow-*`, `--border-size-*`. (`--color-*` / `--border-radius-*` / `--size-*` / `--layer-*` are NOT retired — they are the framework theme layer, see `.claude/rules/scss.md` §13.)
+4. **Could a theme still re-skin this via variables alone?** If my change would require a theme to touch a component rule, step back and fix the component's CSS API instead.
 5. **If I'm adding a new partial, did I register it in `gulp/ProjectSpecs/ScssStructure/*.js`?** The generated entry file will ignore partials that aren't declared there.
 
 ## Anti-patterns — flag these in code review
 
 - Hardcoded `#hex`, `rgba(...)`, px, or rem in a property where a `$token-*` equivalent exists.
-- Re-declaration of retired vars: `--color-*`, `--space-*`, `--font-size-*`, `--shadow-*`, `--border-*`.
+- Re-declaration of genuinely-retired vars: `--space-*`, `--font-size-*`, `--shadow-*`, `--border-size-*`. (NOT `--color-*` / `--border-radius-*` / `--size-*` / `--layer-*` — those are the framework theme layer.)
 - Calls to the legacy helper functions: `get-background-color()`, `get-text-color()`, `get-border-color()`, `get-app-settings-background-color()`.
-- New rules under `.theme-dark` that target component selectors instead of overriding variables.
+- New rules under a theme class that target component selectors instead of overriding variables.
 - Imports of `_*_lib.scss` vendor baselines (they're the untouched vendor CSS, not consumable).
 - Hand-edits of `O11.OutSystemsUI.scss` or `ODC.OutSystemsUI.scss`.
 - Style changes to `08-servicestudie-preview/` files (design-time only — leave as-is).

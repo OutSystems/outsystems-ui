@@ -7,8 +7,8 @@
 .alert {
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-alert-background: transparent;
-	--osui-alert-color: #{$token-text-default};
-	--osui-alert-accent-color: #{$token-border-default};
+	--osui-alert-color: var(--color-text);
+	--osui-alert-accent-color: var(--color-border);
 	--osui-alert-border-radius: #{$token-border-radius-200};
 	--osui-alert-padding: #{$token-scale-300} #{$token-scale-400};
 	// ───────────────────────────────────────────────────────────────────
@@ -51,25 +51,25 @@
 	&-info {
 		--osui-alert-background: #{$token-bg-info-subtle-default};
 		--osui-alert-color: #{$token-text-info};
-		--osui-alert-accent-color: #{$token-semantics-info-base};
+		--osui-alert-accent-color: var(--color-info);
 	}
 
 	&-success {
 		--osui-alert-background: #{$token-bg-success-subtle-default};
 		--osui-alert-color: #{$token-text-success};
-		--osui-alert-accent-color: #{$token-semantics-success-base};
+		--osui-alert-accent-color: var(--color-success);
 	}
 
 	&-error {
 		--osui-alert-background: #{$token-bg-danger-subtle-default};
 		--osui-alert-color: #{$token-text-danger};
-		--osui-alert-accent-color: #{$token-semantics-danger-base};
+		--osui-alert-accent-color: var(--color-error);
 	}
 
 	&-warning {
 		--osui-alert-background: #{$token-bg-warning-subtle-default};
 		--osui-alert-color: #{$token-text-warning};
-		--osui-alert-accent-color: #{$token-semantics-warning-base};
+		--osui-alert-accent-color: var(--color-warning);
 	}
 }
 

@@ -6,8 +6,8 @@
 ///
 .osui-tooltip {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-tooltip-background:    #{$token-text-default};
-	--osui-tooltip-color:         #{$token-text-inverse};
+	--osui-tooltip-background:    var(--color-text);
+	--osui-tooltip-color:         var(--color-text-inverse);
 	--osui-tooltip-border-radius: #{$token-border-radius-200}; // design-spec: overrides token default
 	--osui-tooltip-padding:       6px 12px; // design-spec: asymmetric padding, no token equivalent
 	--osui-tooltip-font-size:     #{$token-font-size-350};
@@ -63,7 +63,7 @@
 			top: calc(0px - var(--osui-floating-offset) * 2);
 			width: 100%;
 			height: 100%;
-			z-index: var(--os-layer-global-negative);
+			z-index: var(--layer-global-negative);
 		}
 
 		// Service Studio Preview
@@ -82,7 +82,7 @@
 		height: var(--osui-tooltip-arrow-size);
 		background-color: var(--osui-tooltip-background-color);
 		transform: rotate(45deg);
-		z-index: var(--os-layer-global-negative);
+		z-index: var(--layer-global-negative);
 	}
 
 	&__content {

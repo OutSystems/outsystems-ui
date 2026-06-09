@@ -220,17 +220,11 @@ To add a new SCSS partial to the compiled bundle, edit the matching section spec
 
 The `path` is resolved relative to `src/scss/` and the `_` / `.scss` extension are implicit.
 
-### Dark theme (Phase 11)
+### Themes
 
-Opt-in dark theme at `src/scss/01-foundations/_theme-dark.scss`, registered in `gulp/ProjectSpecs/ScssStructure/Resets.js`. Activated by adding `class="theme-dark"` to any ancestor (typically `<body>`):
+> The opt-in dark theme (`_theme-dark.scss`, originally Phase 11) has been **removed for now** — no theme partial currently ships. The architectural rule below stands for any theme reintroduced later.
 
-```html
-<body class="theme-dark desktop">
-  <!-- every patched component renders in dark mode -->
-</body>
-```
-
-Implemented **entirely** as CSS custom property overrides scoped under `.theme-dark` — no component rule, no `$token-*` value, and no pre-existing `--osui-*` default is touched. This is the architectural invariant: any future theme (light-variant, high-contrast, brand theme) should be expressible as a variable-override partial alone. If a theme needs to touch a component rule, that indicates a leak in the CSS API that should be fixed in the component, not the theme.
+A theme re-skins the whole library as a single class scope (e.g. `<body class="theme-name">`) implemented **entirely** as CSS custom property overrides — overriding theme-layer role knobs (`--color-*`, `--border-radius-*`, …) and/or the underlying `--token-*`. No component rule, no `$token-*` value, and no pre-existing `--osui-*` default is touched. If a theme needs to touch a component rule, that indicates a leak in the CSS API that should be fixed in the component, not the theme. See `specs/plan-part-four.md`.
 
 ## Common Scenarios
 

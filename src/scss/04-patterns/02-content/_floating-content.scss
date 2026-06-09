@@ -7,7 +7,7 @@
 .floating-content {
 	position: fixed;
 	width: auto;
-	z-index: var(--os-layer-elevated);
+	z-index: var(--layer-elevated);
 
 	&.floating-content-full {
 		&-width {
@@ -22,7 +22,7 @@
 
 		&-height {
 			margin-top: 0;
-			top: calc(var(--os-size-header) + $token-scale-400 * 2);
+			top: calc(var(--size-header) + $token-scale-400 * 2);
 
 			&.absolute-top {
 				top: var(--os-safe-area-top);
@@ -36,7 +36,7 @@
 		}
 
 		&-top-plus-header {
-			top: calc(var(--os-size-header) + var(--os-safe-area-top));
+			top: calc(var(--size-header) + var(--os-safe-area-top));
 		}
 	}
 
@@ -51,19 +51,19 @@
 	&-top {
 		left: 50%;
 		margin-top: 0;
-		top: calc(var(--os-size-header) + $token-scale-400 * 2);
+		top: calc(var(--size-header) + $token-scale-400 * 2);
 		transform: translateX(-50%);
 
 		&-left {
 			left: 0;
 			margin-top: 0;
-			top: calc(var(--os-size-header) + $token-scale-400 * 2);
+			top: calc(var(--size-header) + $token-scale-400 * 2);
 		}
 
 		&-right {
 			margin-top: 0;
 			right: 0;
-			top: calc(var(--os-size-header) + $token-scale-400 * 2);
+			top: calc(var(--size-header) + $token-scale-400 * 2);
 		}
 	}
 
@@ -198,7 +198,7 @@
 	&:not(.menu-visible),
 	&.aside-expandable {
 		.floating-content[class*='absolute-']:not(.absolute-top-plus-header) {
-			z-index: calc(var(--os-layer-navigation) + var(--os-layer-local-tier-1));
+			z-index: calc(var(--layer-navigation) + var(--layer-local-tier-1));
 		}
 	}
 }
@@ -212,14 +212,14 @@
 				&-top:not(.absolute-top),
 				&-center:not(.absolute-center),
 				&-bottom:not(.absolute-bottom) {
-					left: calc(50% + ((var(--os-size-side-menu) / 2)));
+					left: calc(50% + ((var(--size-side-menu) / 2)));
 				}
 
 				&.floating-content-full-width,
 				&-left:not(.absolute-left),
 				&-bottom-left:not(.absolute-left),
 				&-top-left:not(.absolute-left) {
-					left: var(--os-size-side-menu);
+					left: var(--size-side-menu);
 				}
 			}
 		}
@@ -235,7 +235,7 @@
 			&-left,
 			&-bottom-left {
 				&:not(.absolute-left) {
-					left: var(--os-size-side-menu);
+					left: var(--size-side-menu);
 				}
 			}
 		}
@@ -244,7 +244,7 @@
 	.layout-native {
 		.aside-visible {
 			.floating-content.floating-content-full-width {
-				left: var(--os-size-side-menu);
+				left: var(--size-side-menu);
 			}
 		}
 	}
@@ -257,7 +257,7 @@
 			.floating-content.floating-content-full-width {
 				.aside-visible.menu-visible {
 					.floating-content.floating-content-full-width {
-						left: var(--os-size-side-menu);
+						left: var(--size-side-menu);
 					}
 				}
 			}
@@ -289,7 +289,7 @@
 				&,
 				&-left,
 				&-right {
-					bottom: calc(var(--os-size-bottom-bar) + var(--os-safe-area-bottom));
+					bottom: calc(var(--size-bottom-bar) + var(--os-safe-area-bottom));
 				}
 			}
 		}

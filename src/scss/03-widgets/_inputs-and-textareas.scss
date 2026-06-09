@@ -5,27 +5,27 @@
 
 /* Input placeholder style */
 ::-webkit-input-placeholder {
-	color: $token-text-subtlest;
+	color: var(--color-text-subtlest);
 }
 
 ::-moz-placeholder {
-	color: $token-text-subtlest;
+	color: var(--color-text-subtlest);
 }
 
 :-ms-input-placeholder {
-	color: $token-text-subtlest;
+	color: var(--color-text-subtlest);
 }
 
 /* Iuput and TextArea */
 ///
 .form-control {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-input-background:          #{$token-bg-input-default};
-	--osui-input-border-color:        #{$token-border-default};
-	--osui-input-color:               #{$token-text-default};
-	--osui-input-border-radius:       var(--os-border-radius-controls);
-	--osui-input-focus-border-color:  #{$token-semantics-primary-base};
-	--osui-input-error-border-color:  #{$token-semantics-danger-base};
+	--osui-input-background:          var(--color-background-input);
+	--osui-input-border-color:        var(--color-border);
+	--osui-input-color:               var(--color-text);
+	--osui-input-border-radius:       var(--border-radius-soft);
+	--osui-input-focus-border-color:  var(--color-primary);
+	--osui-input-error-border-color:  var(--color-error);
 	// ───────────────────────────────────────────────────────────────────
 
 	&[data-input],
@@ -38,7 +38,7 @@
 		transition: border-color $token-transition-time-100 $token-transition-curve-base, background-color $token-transition-time-100 $token-transition-curve-base;
 
 		&:hover {
-			border-color: $token-border-input-default;
+			border-color: var(--color-border-input);
 		}
 
 		&:focus {
@@ -47,9 +47,9 @@
 		}
 
 		&[disabled] {
-			--osui-input-background:   #{$token-bg-input-disabled};
-			--osui-input-border-color: #{$token-border-default};
-			--osui-input-color:        #{$token-text-disabled};
+			--osui-input-background:   var(--color-background-input-disabled);
+			--osui-input-border-color: var(--color-border);
+			--osui-input-color:        var(--color-text-disabled);
 
 			background-color: var(--osui-input-background);
 			border: $token-border-size-025 solid var(--osui-input-border-color);
@@ -109,7 +109,7 @@
 ///
 .form label,
 [data-label] {
-	color: $token-text-default;
+	color: var(--color-text);
 	font-size: $token-font-size-350;
 	font-weight: $token-font-weight-semi-bold;
 	line-height: var(--osui-font-line-height-default);
@@ -117,7 +117,7 @@
 
 .help-block,
 .input-helper {
-	color: $token-text-subtlest;
+	color: var(--color-text-subtlest);
 	font-size: $token-font-size-300;
 	line-height: var(--osui-font-line-height-default);
 	margin-top: $token-scale-100;
@@ -131,7 +131,7 @@ span.validation-message {
 }
 
 .char-counter {
-	color: $token-text-subtlest;
+	color: var(--color-text-subtlest);
 	font-size: $token-font-size-300;
 }
 /* Responsive ----------------------------------------------------------------- */
@@ -168,7 +168,7 @@ span.validation-message {
 	.header-top-content {
 		.form-control {
 			&[data-input] {
-				background-color: var(--background-color-header, var(--os-color-background-header));
+				background-color: var(--background-color-header, var(--color-background-header));
 				border: 0;
 				border-bottom: $token-border-size-025 solid transparent;
 				border-radius: 0;
@@ -187,10 +187,10 @@ span.validation-message {
 	.form-control {
 		&[data-input],
 		&[data-textarea] {
-			border-color: $token-border-input-default;
+			border-color: var(--color-border-input);
 
 			&:hover {
-				border-color: $token-border-input-press;
+				border-color: var(--color-border-input-press);
 			}
 
 			&:focus {

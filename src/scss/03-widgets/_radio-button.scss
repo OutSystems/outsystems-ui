@@ -7,9 +7,9 @@
 .radio-button {
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-radio-size: #{$token-scale-600};
-	--osui-radio-background: #{$token-bg-input-default};
-	--osui-radio-border-color: #{$token-border-input-default};
-	--osui-radio-checked-color: #{$token-semantics-primary-base};
+	--osui-radio-background: var(--color-background-input);
+	--osui-radio-border-color: var(--color-border-input);
+	--osui-radio-checked-color: var(--color-primary);
 	--osui-radio-indicator-border: #{$token-scale-150};
 	// ───────────────────────────────────────────────────────────────────
 
@@ -29,7 +29,7 @@
 	&:before {
 		background-color: var(--osui-radio-background);
 		border: $token-border-size-025 solid var(--osui-radio-border-color);
-		border-radius: var(--os-border-radius-circular);
+		border-radius: var(--border-radius-rounded);
 		content: '';
 		display: flex;
 		inset: 0;
@@ -39,7 +39,7 @@
 	}
 
 	&:hover:before {
-		border: $token-border-size-025 solid $token-border-input-press;
+		border: $token-border-size-025 solid var(--color-border-input-press);
 	}
 
 	&:focus-visible:before {
@@ -68,17 +68,17 @@
 
 		& + label {
 			pointer-events: none;
-			color: $token-text-disabled;
+			color: var(--color-text-disabled);
 		}
 
 		&:before {
-			background-color: $token-bg-input-disabled;
-			border: $token-border-size-025 solid $token-border-default;
+			background-color: var(--color-background-input-disabled);
+			border: $token-border-size-025 solid var(--color-border);
 		}
 
 		&:checked:before {
-			background-color: $token-bg-input-disabled;
-			border: var(--osui-radio-indicator-border) solid $token-border-default;
+			background-color: var(--color-background-input-disabled);
+			border: var(--osui-radio-indicator-border) solid var(--color-border);
 		}
 	}
 }
@@ -142,15 +142,15 @@
 // Accessibility -----------------------------------------------------------------
 .has-accessible-features {
 	.radio-button {
-		border-radius: var(--os-border-radius-circular);
+		border-radius: var(--border-radius-rounded);
 
 		&:before {
-			border-color: $token-border-input-default;
+			border-color: var(--color-border-input);
 		}
 
 		&:after {
-			background-color: $token-bg-input-default;
-			border-radius: var(--os-border-radius-circular);
+			background-color: var(--color-background-input);
+			border-radius: var(--border-radius-rounded);
 			content: '';
 			height: $token-scale-300;
 			left: 50%;
@@ -164,7 +164,7 @@
 
 		&:focus:before {
 			background-color: $token-semantics-primary-base;
-			border-color: $token-text-default;
+			border-color: var(--color-text);
 			box-shadow: none;
 		}
 
@@ -173,7 +173,7 @@
 		}
 
 		&:hover:before {
-			border-color: $token-border-input-press;
+			border-color: var(--color-border-input-press);
 		}
 	}
 

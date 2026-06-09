@@ -5,10 +5,10 @@
 
 .osui-balloon {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-balloon-background: #{$token-bg-surface-default};
+	--osui-balloon-background: var(--color-background-surface);
 	// ───────────────────────────────────────────────────────────────────
 
-	--border-radius-rounded: var(--os-border-radius-lg-surfaces);
+	--border-radius-rounded: var(--border-radius-softer);
 	--osui-floating-position-x: 0;
 	--osui-floating-position-y: 0;
 	--osui-balloon-shadow: #{$token-elevation-1};
@@ -26,7 +26,7 @@
 	top: var(--osui-floating-position-y);
 	visibility: hidden;
 	width: var(--osui-balloon-width);
-	z-index: var(--os-layer-elevated);
+	z-index: var(--layer-elevated);
 
 	&--is-open {
 		visibility: visible;

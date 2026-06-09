@@ -7,22 +7,22 @@
 .btn {
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-btn-height: #{$token-scale-1000};
-	--osui-btn-background: #{$token-bg-surface-default};
-	--osui-btn-color: #{$token-semantics-primary-base};
+	--osui-btn-background: var(--color-background-surface);
+	--osui-btn-color: var(--color-primary);
 	--osui-btn-border-color: currentColor;
-	--osui-btn-border-radius: var(--os-border-radius-controls);
+	--osui-btn-border-radius: var(--border-radius-soft);
 	// Primary variant
-	--osui-btn-primary-background: #{$token-semantics-primary-base};
-	--osui-btn-primary-border-color: #{$token-semantics-primary-base};
-	--osui-btn-primary-color: #{$token-text-inverse};
+	--osui-btn-primary-background: var(--color-primary);
+	--osui-btn-primary-border-color: var(--color-primary);
+	--osui-btn-primary-color: var(--color-text-inverse);
 	// Success variant
 	--osui-btn-success-background: #{$token-bg-success-base-default};
 	--osui-btn-success-border-color: #{$token-bg-success-base-default};
-	--osui-btn-success-color: #{$token-text-inverse};
+	--osui-btn-success-color: var(--color-text-inverse);
 	// Error variant
 	--osui-btn-error-background: #{$token-bg-danger-base-default};
 	--osui-btn-error-border-color: #{$token-bg-danger-base-default};
-	--osui-btn-error-color: #{$token-text-inverse};
+	--osui-btn-error-color: var(--color-text-inverse);
 	// ───────────────────────────────────────────────────────────────────
 
 	align-items: center;
@@ -55,7 +55,7 @@
 
 	&[class*='background-'] {
 		border: $token-border-size-025 solid transparent;
-		color: $token-text-inverse;
+		color: var(--color-text-inverse);
 	}
 
 	&[class*='text-'] {
@@ -86,9 +86,9 @@
 	}
 
 	&-cancel {
-		--osui-btn-background: #{$token-bg-surface-default};
-		--osui-btn-color: #{$token-text-subtle};
-		--osui-btn-border-color: #{$token-border-default};
+		--osui-btn-background: var(--color-background-surface);
+		--osui-btn-color: var(--color-text-subtle);
+		--osui-btn-border-color: var(--color-border);
 
 		background-color: var(--osui-btn-background);
 		border: $token-border-size-025 solid var(--osui-btn-border-color);
@@ -121,18 +121,18 @@
 	.btn {
 		// Secondary (default outline): border darkens
 		&:hover {
-			border-color: $token-semantics-primary-800;
+			border-color: var(--color-primary-hover);
 		}
 
 		// Cancel: neutral border darkens (same specificity, later → wins)
 		&-cancel:hover {
-			border-color: $token-border-input-default;
+			border-color: var(--color-border-input);
 		}
 
 		// Primary: explicit darker background + border (same specificity, later → wins)
 		&-primary:hover {
-			background-color: var(--osui-semantics-primary-hover);
-			border-color: var(--osui-semantics-primary-hover);
+			background-color: var(--color-primary-hover);
+			border-color: var(--color-primary-hover);
 		}
 
 		// Success + error: darken via filter; restore own border-color so base hover doesn't bleed

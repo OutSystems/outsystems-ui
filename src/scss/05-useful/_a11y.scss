@@ -38,7 +38,7 @@
 	position: absolute;
 	text-transform: uppercase;
 	top: 10px;
-	z-index: var(--os-layer-instant-interaction);
+	z-index: var(--layer-instant-interaction);
 
 	&[data-showskipcontent='false'] {
 		display: none;

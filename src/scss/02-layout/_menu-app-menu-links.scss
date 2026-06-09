@@ -33,11 +33,11 @@
 	}
 
 	a {
-		color: $token-text-default;
+		color: var(--color-text);
 
 		// Service Studio Preview
 		& {
-			-servicestudio-color: $token-text-default;
+			-servicestudio-color: var(--color-text);
 		}
 
 		&:hover,

@@ -29,21 +29,21 @@
 
 		&:hover,
 		&:focus {
-			background: $token-border-subtle;
+			background: var(--color-border-subtle);
 		}
 
 		&.selected {
 			background-color: $token-semantics-primary-base;
 			border-color: transparent;
-			color: $token-text-inverse;
+			color: var(--color-text-inverse);
 		}
 
 		&.flatpickr-disabled {
-			background-color: $token-bg-input-disabled;
-			color: $token-border-input-default;
+			background-color: var(--color-background-input-disabled);
+			color: var(--color-border-input);
 
 			&:hover {
-				background-color: $token-bg-input-disabled !important; // override provider !important rule
+				background-color: var(--color-background-input-disabled) !important; // override provider !important rule
 			}
 
 			&.today:hover,
@@ -54,11 +54,11 @@
 
 		// Today indicator — only when not selected or disabled
 		&.today:not(.selected):not(.flatpickr-disabled) {
-			border-color: $token-border-input-default;
+			border-color: var(--color-border-input);
 
 			&:hover,
 			&:focus {
-				background: $token-border-subtle;
+				background: var(--color-border-subtle);
 				border-color: var(--osui-border-subtle);
 				color: $token-semantics-primary-base;
 			}

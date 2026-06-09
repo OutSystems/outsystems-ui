@@ -24,7 +24,7 @@
 		}
 
 		&-plus-header {
-			top: calc(var(--os-size-header) + var(--os-safe-area-top));
+			top: calc(var(--size-header) + var(--os-safe-area-top));
 		}
 	}
 

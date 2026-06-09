@@ -10,11 +10,11 @@ $balloonMobileTopMargin: 5vh;
 ///
 .osui-dropdown-serverside {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-dropdown-ss-background:          #{$token-bg-surface-default};
-	--osui-dropdown-ss-border-color:        #{$token-border-input-default};
-	--osui-dropdown-ss-color:               #{$token-text-default};
-	--osui-dropdown-ss-disabled-background: #{$token-bg-input-disabled};
-	--osui-dropdown-ss-disabled-color:      #{$token-text-disabled};
+	--osui-dropdown-ss-background:          var(--color-background-surface);
+	--osui-dropdown-ss-border-color:        var(--color-border-input);
+	--osui-dropdown-ss-color:               var(--color-text);
+	--osui-dropdown-ss-disabled-background: var(--color-background-input-disabled);
+	--osui-dropdown-ss-disabled-color:      var(--color-text-disabled);
 	// ───────────────────────────────────────────────────────────────────
 
 	--osui-dropdown-ss-balloon-max-height: 300px;
@@ -26,14 +26,14 @@ $balloonMobileTopMargin: 5vh;
 	.osui-balloon {
 		--osui-balloon-shadow: none;
 
-		border: $token-border-size-025 solid $token-border-input-default;
+		border: $token-border-size-025 solid var(--color-border-input);
 		display: flex;
 		flex-direction: column;
 		flex: 1;
 		height: auto;
 		min-width: var(--osui-dropdown-min-width);
 		overflow: hidden;
-		z-index: var(--os-layer-elevated);
+		z-index: var(--layer-elevated);
 
 		// Service Studio Preview
 		& {
@@ -57,12 +57,12 @@ $balloonMobileTopMargin: 5vh;
 		overflow: hidden;
 
 		&:hover {
-			border-color: $token-border-input-default;
+			border-color: var(--color-border-input);
 		}
 
 		&:after {
 			align-items: center;
-			color: $token-text-subtlest;
+			color: var(--color-text-subtlest);
 			display: flex;
 			height: 100%;
 			pointer-events: none;
@@ -129,7 +129,7 @@ $balloonMobileTopMargin: 5vh;
 
 			&:before {
 				align-items: center;
-				color: $token-text-disabled;
+				color: var(--color-text-disabled);
 				display: flex;
 				height: 100%;
 				left: $token-scale-400;
@@ -170,7 +170,7 @@ $balloonMobileTopMargin: 5vh;
 
 		// Options placeholder
 		&-content {
-			border-top: $token-border-size-025 solid $token-border-input-default;
+			border-top: $token-border-size-025 solid var(--color-border-input);
 			flex: 1;
 			height: auto;
 			max-height: var(--osui-dropdown-ss-balloon-max-height);
@@ -183,16 +183,16 @@ $balloonMobileTopMargin: 5vh;
 			}
 
 			&::-webkit-scrollbar-track {
-				background: $token-border-default;
+				background: var(--color-border);
 			}
 
 			&::-webkit-scrollbar-thumb {
-				background-color: $token-text-disabled;
+				background-color: var(--color-text-disabled);
 			}
 
 			// Avoid having data-list above other elements in this context, such as a StickyTop SelectAll Option container.
 			& > *:not([data-list]) {
-				z-index: var(--os-layer-local-tier-2);
+				z-index: var(--layer-local-tier-2);
 			}
 		}
 
@@ -205,7 +205,7 @@ $balloonMobileTopMargin: 5vh;
 
 		// Footer placeholder
 		&-footer {
-			border-top: $token-border-size-025 solid $token-border-input-default;
+			border-top: $token-border-size-025 solid var(--color-border-input);
 			padding: $token-scale-200 $token-scale-400;
 		}
 	}
@@ -230,13 +230,13 @@ $balloonMobileTopMargin: 5vh;
 
 	// When it's disabled
 	&--is-disabled {
-		--osui-dropdown-ss-background:   #{$token-bg-input-disabled};
-		--osui-dropdown-ss-border-color: #{$token-border-default};
-		--osui-dropdown-ss-color:        #{$token-text-disabled};
+		--osui-dropdown-ss-background:   var(--color-background-input-disabled);
+		--osui-dropdown-ss-border-color: var(--color-border);
+		--osui-dropdown-ss-color:        var(--color-text-disabled);
 
 		.osui-dropdown-serverside__selected-values {
 			&:after {
-				border-color: $token-text-disabled;
+				border-color: var(--color-text-disabled);
 			}
 
 			&-wrapper {
@@ -293,12 +293,12 @@ $balloonMobileTopMargin: 5vh;
 			&:after,
 			&-wrapper,
 			&-footer {
-				border-color: $token-border-input-default;
+				border-color: var(--color-border-input);
 			}
 		}
 
 		&__balloon {
-			border-color: $token-border-input-default;
+			border-color: var(--color-border-input);
 
 			&-search-wrapper {
 				&:focus-within {
@@ -309,7 +309,7 @@ $balloonMobileTopMargin: 5vh;
 
 			&-search {
 				&:before {
-					color: $token-border-input-default;
+					color: var(--color-border-input);
 				}
 			}
 
@@ -317,7 +317,7 @@ $balloonMobileTopMargin: 5vh;
 				--osui-outline-size: #{$token-border-size-075};
 
 				&::-webkit-scrollbar-thumb {
-					background-color: $token-border-input-default;
+					background-color: var(--color-border-input);
 				}
 
 				&:focus {
@@ -342,7 +342,7 @@ $balloonMobileTopMargin: 5vh;
 						margin-top: calc(-1 * var(--osui-outline-size));
 						position: sticky;
 						width: 100%;
-						z-index: var(--os-layer-local-tier-3);
+						z-index: var(--layer-local-tier-3);
 					}
 
 					&:before {
@@ -360,7 +360,7 @@ $balloonMobileTopMargin: 5vh;
 						position: absolute;
 						top: 0;
 						width: var(--osui-outline-size);
-						z-index: var(--os-layer-local-tier-2);
+						z-index: var(--layer-local-tier-2);
 					}
 
 					& > *:before {
@@ -445,7 +445,7 @@ $balloonMobileTopMargin: 5vh;
 		}
 
 		.osui-dropdown-serverside__balloon-container {
-			max-height: calc(90vh - $balloonMobileTopMargin - var(--os-size-header));
+			max-height: calc(90vh - $balloonMobileTopMargin - var(--size-header));
 		}
 	}
 
@@ -453,7 +453,7 @@ $balloonMobileTopMargin: 5vh;
 		.osui-dropdown-serverside__search-input--is-focused {
 			.osui-dropdown-serverside__balloon-container {
 				// 100vw because ios split in half the vertical height when keyboard is open!
-				max-height: calc(100vw - $balloonMobileTopMargin - var(--os-size-header));
+				max-height: calc(100vw - $balloonMobileTopMargin - var(--size-header));
 			}
 		}
 	}
@@ -462,7 +462,7 @@ $balloonMobileTopMargin: 5vh;
 		.osui-dropdown-serverside {
 			&--at-content {
 				.osui-dropdown-serverside__balloon-container {
-					--ballon-top-margin-value: calc(var(--os-size-header) + var(--os-size-header-content) + 5vw);
+					--ballon-top-margin-value: calc(var(--size-header) + var(--size-header-content) + 5vw);
 				}
 			}
 		}
@@ -508,7 +508,7 @@ $balloonMobileTopMargin: 5vh;
 			top: 0;
 			transition: opacity 250ms ease;
 			width: 100vw;
-			z-index: var(--os-layer-instant-interaction);
+			z-index: var(--layer-instant-interaction);
 
 			// Service Studio Preview
 			& {
@@ -528,7 +528,7 @@ $balloonMobileTopMargin: 5vh;
 				height: auto;
 				margin-top: $balloonMobileTopMargin;
 				// 90vh - maxHeight in order to create a margin top/bottom with 5vh
-				max-height: calc(90vh - $balloonMobileTopMargin - var(--os-size-header));
+				max-height: calc(90vh - $balloonMobileTopMargin - var(--size-header));
 				overflow: hidden;
 				width: 85vw;
 
@@ -550,7 +550,7 @@ $balloonMobileTopMargin: 5vh;
 			&--has-not-search {
 				.osui-dropdown-serverside__balloon-container {
 					margin-top: $balloonMobileTopMargin;
-					max-height: calc(var(--viewport-height) - $balloonMobileTopMargin - var(--os-size-header));
+					max-height: calc(var(--viewport-height) - $balloonMobileTopMargin - var(--size-header));
 				}
 			}
 		}
@@ -598,12 +598,12 @@ $balloonMobileTopMargin: 5vh;
 
 				/* Handle */
 				&::-webkit-scrollbar-thumb {
-					background-color: $token-text-disabled;
+					background-color: var(--color-text-disabled);
 				}
 
 				/* Handle on hover */
 				&::-webkit-scrollbar-thumb:hover {
-					background-color: $token-border-input-press;
+					background-color: var(--color-border-input-press);
 				}
 			}
 		}

@@ -5,8 +5,8 @@
 
 .btn.btn-provider-login {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-provider-login-button-background:    #{$token-bg-surface-default};
-	--osui-provider-login-button-border-color:  #{$token-border-input-default};
+	--osui-provider-login-button-background:    var(--color-background-surface);
+	--osui-provider-login-button-border-color:  var(--color-border-input);
 	--osui-provider-login-button-color:         #{$token-primitives-neutral-700};
 	// ───────────────────────────────────────────────────────────────────
 
@@ -41,7 +41,7 @@
 		border-radius: $token-border-radius-100;
 	}
 	&.rounded {
-		border-radius: var(--os-border-radius-circular);
+		border-radius: var(--border-radius-rounded);
 	}
 	.btn-provider-login {
 		&-logo {

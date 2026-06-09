@@ -6,13 +6,13 @@
 ///
 .osui-tabs {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-tabs-border-color:             #{$token-border-default};
-	--osui-tabs-header-item-color:        #{$token-text-subtlest};
-	--osui-tabs-header-item-color-active: #{$token-semantics-primary-base};
-	--osui-tabs-header-item-color-hover:  #{$token-text-default};
-	--osui-tabs-header-item-color-disabled: #{$token-text-disabled};
-	--osui-tabs-header-item-hover-background: color-mix(in srgb, #{$token-text-default} 4%, transparent);
-	--osui-tabs-indicator-color:          #{$token-semantics-primary-base};
+	--osui-tabs-border-color:             var(--color-border);
+	--osui-tabs-header-item-color:        var(--color-text-subtlest);
+	--osui-tabs-header-item-color-active: var(--color-primary-selected);
+	--osui-tabs-header-item-color-hover:  var(--color-text);
+	--osui-tabs-header-item-color-disabled: var(--color-text-disabled);
+	--osui-tabs-header-item-hover-background: color-mix(in srgb, var(--color-text) 4%, transparent);
+	--osui-tabs-indicator-color:          var(--color-primary-selected);
 	// ───────────────────────────────────────────────────────────────────
 
 	--header-item-width: fit-content(30%);
@@ -226,10 +226,10 @@
 			transition: transform $token-transition-time-200 $token-transition-curve-linear;
 			transform-origin: 0 0;
 			will-change: transform;
-			z-index: var(--os-layer-local-tier-1);
+			z-index: var(--layer-local-tier-1);
 
 			&[disabled] {
-				background-color: $token-text-disabled;
+				background-color: var(--color-text-disabled);
 			}
 		}
 
@@ -287,7 +287,7 @@
 		.osui-tabs__header-item,
 		.osui-tabs__header-item > *,
 		.osui-tabs__content-item {
-			-servicestudio-border: 1px dashed $token-border-input-default;
+			-servicestudio-border: 1px dashed var(--color-border-input);
 			-servicestudio-width: 100%;
 		}
 		.osui-tabs__content-item .display-contents {
@@ -362,7 +362,7 @@
 
 			&:focus-visible {
 				box-shadow: inset 0 0 0 $token-border-size-075 color-mix(in srgb, #{$token-semantics-primary-base} 22%, transparent);
-				color: $token-text-default;
+				color: var(--color-text);
 			}
 		}
 

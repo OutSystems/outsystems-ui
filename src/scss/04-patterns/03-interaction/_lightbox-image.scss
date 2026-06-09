@@ -27,7 +27,7 @@
 		// Service Studio Preview
 		& {
 			-servicestudio-background-color: #{$token-backdrop};
-			-servicestudio-color: $token-text-inverse;
+			-servicestudio-color: var(--color-text-inverse);
 			-servicestudio-content: 'Image';
 			-servicestudio-font-size: 9px;
 			-servicestudio-left: 0;
@@ -57,7 +57,7 @@
 			// Service Studio Preview
 			& {
 				-servicestudio-background-color: #{$token-backdrop};
-				-servicestudio-color: $token-text-inverse;
+				-servicestudio-color: var(--color-text-inverse);
 				-servicestudio-content: 'Thumbnail';
 				-servicestudio-font-size: 9px;
 				-servicestudio-left: 0;

@@ -9,9 +9,9 @@
 // Common dropdown styles
 .osui-dropdown {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-dropdown-disabled-background:   #{$token-bg-input-disabled};
-	--osui-dropdown-disabled-border-color: #{$token-border-default};
-	--osui-dropdown-disabled-color:        #{$token-text-disabled};
+	--osui-dropdown-disabled-background:   var(--color-background-input-disabled);
+	--osui-dropdown-disabled-border-color: var(--color-border);
+	--osui-dropdown-disabled-color:        var(--color-text-disabled);
 	// ───────────────────────────────────────────────────────────────────
 
 	&-search,
@@ -55,7 +55,7 @@
 		}
 
 		&-icon {
-			color: $token-text-default;
+			color: var(--color-text);
 			font-size: $token-font-size-450;
 			margin-right: $token-scale-200;
 		}
