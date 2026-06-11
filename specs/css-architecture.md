@@ -228,9 +228,33 @@ component rule, **no** `$token-*` value, and **no** pre-existing `--osui-*` defa
 > **leak in that component's CSS API** — fix it in the component (add/route the
 > missing `--osui-*` knob), not in the theme.
 
-> The opt-in dark theme (`_theme-dark.scss`) has been **removed for now** — no
-> theme partial currently ships. The invariant above stands for any theme
-> reintroduced later. See [`plan-part-four.md`](./plan-part-four.md).
+### Dark theme (ships)
+
+`src/scss/01-foundations/_theme-dark.scss` implements a dark theme that activates
+**two ways at once**:
+
+- **Automatic** — `@media (prefers-color-scheme: dark)` flips the whole library
+  to dark when the OS is in dark mode.
+- **Manual override** — `.theme-dark` / `.theme-light` on the screen's outermost
+  element (e.g. `<body>`) forces a mode regardless of the OS. `.theme-light`
+  needs no declarations: it opts the element out of the automatic rule
+  (`:not(.theme-light)`), so the default light palette applies even on a dark OS.
+
+The whole palette lives in one `@mixin osui-theme-dark`, applied at
+`body:not(.theme-light):not(.theme-dark)` (auto) and `.theme-dark` (manual). It
+re-maps the dark `--token-*` **and** re-declares the `--color-*` roles — the
+latter is required because `--color-*` is substituted at `:root`, so a `--token-*`
+override on `<body>` alone wouldn't reach components that read `--color-*`.
+Because the mixin re-declares `--color-*`, the body scope is self-sufficient and
+the auto rule deliberately targets `body` only (not `:root`): keeping the auto
+rule on the same element the manual classes sit on is what lets `.theme-light`
+opt out cleanly even when the OS is dark.
+
+It is mostly invariant-clean (token + `--color-*` + `--osui-*` overrides), with a
+small, clearly-marked **"KNOWN CSS-API LEAKS"** block (`.header`, `.app-menu-*`,
+`label`, `::placeholder`, validation text) — components without a `--osui-*` knob
+for the property, each a FIXME to migrate per Phase E. See
+[`plan-part-four.md`](./plan-part-four.md).
 
 ---
 

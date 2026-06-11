@@ -64,6 +64,29 @@ function applyDirection(rtl: boolean): void {
 }
 
 /**
+ * Appearance toggle — exercises the dark theme (src/scss/01-foundations/_theme-dark.scss).
+ *  • `light` / `dark` force the mode via the `.theme-light` / `.theme-dark` body
+ *    class (the manual-override path).
+ *  • `auto` removes both classes, so the theme follows the OS via
+ *    `@media (prefers-color-scheme: dark)` — flip your OS appearance to see it.
+ * Requires a bundle built AFTER the dark theme was added (the dark CSS lives in
+ * `/osui/ODC.OutSystemsUI.css`); rebuild with `npm run dev -- --target ODC`.
+ */
+const COLOR_SCHEME_DARK = 'theme-dark';
+const COLOR_SCHEME_LIGHT = 'theme-light';
+
+function applyColorScheme(scheme: string): void {
+	const body = document.body;
+	body.classList.remove(COLOR_SCHEME_DARK, COLOR_SCHEME_LIGHT);
+	if (scheme === 'dark') {
+		body.classList.add(COLOR_SCHEME_DARK);
+	} else if (scheme === 'light') {
+		body.classList.add(COLOR_SCHEME_LIGHT);
+	}
+	// 'auto' → no class; the prefers-color-scheme media query decides.
+}
+
+/**
  * OutSystems apps render inside a `<body>` the platform tags with device /
  * accessibility classes; OUI's responsive CSS keys off them (`.desktop`,
  * `.active-screen`). `.has-accessible-features` opts in to focus rings / a11y
@@ -76,6 +99,7 @@ const withAppShell: Decorator = (storyFn, context) => {
 	applyDirection(context.globals.direction === 'rtl');
 	applyIconLibrary((context.globals.iconLibrary as string) ?? 'FontAwesome');
 	applyTheme((context.globals.theme as string) ?? 'new');
+	applyColorScheme((context.globals.colorScheme as string) ?? 'light');
 	return storyFn();
 };
 
@@ -134,6 +158,20 @@ const preview: Preview = {
 				items: [
 					{ value: 'ltr', title: 'LTR (is-rtl: off)' },
 					{ value: 'rtl', title: 'RTL (is-rtl: on)' },
+				],
+				dynamicTitle: true,
+			},
+		},
+		colorScheme: {
+			description: 'Light / dark appearance. Light & Dark force it via .theme-light / .theme-dark; Auto follows the OS (prefers-color-scheme).',
+			defaultValue: 'light',
+			toolbar: {
+				title: 'Appearance',
+				icon: 'contrast',
+				items: [
+					{ value: 'light', title: 'Light', icon: 'sun' },
+					{ value: 'dark', title: 'Dark', icon: 'moon' },
+					{ value: 'auto', title: 'Auto (OS)', icon: 'browser' },
 				],
 				dynamicTitle: true,
 			},
