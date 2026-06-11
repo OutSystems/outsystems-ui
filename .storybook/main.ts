@@ -27,6 +27,8 @@ const config: StorybookConfig = {
 		options: {},
 	},
 	staticDirs: [
+		// Manager-chrome assets (brand logo referenced by Theme.js) → /assets/*
+		{ from: path.join(__dirname, 'assets'), to: '/assets' },
 		// OutSystems core platform base CSS (loaded BEFORE the OUI theme) → /platform/*
 		{ from: path.join(__dirname, 'platform'), to: '/platform' },
 		// Compiled OUI bundle (built by gulp) → served at /osui/*

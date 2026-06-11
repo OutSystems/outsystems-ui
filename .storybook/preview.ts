@@ -1,4 +1,7 @@
 import type { Preview, Decorator } from '@storybook/html-vite';
+// Storybook docs-page chrome (Inter font, sidebar/sbdocs styling) — ported from
+// the design-tokens Storybook. Only styles the docs/MDX surfaces, not the patterns.
+import './docs.scss';
 
 /**
  * Icon-library root classes (see src/scss/01-foundations/_icon-library-odc.scss):
@@ -47,6 +50,20 @@ function applyIconLibrary(library: string): void {
 }
 
 /**
+ * Right-to-left toggle — mirrors how the platform renders an RTL app. OUI's CSS
+ * keys off the `is-rtl` class on `<body>` (OSFramework `Constants.IsRTLClass`),
+ * while newer logical-property rules (`margin-inline-*`, `inset-inline`) respond
+ * to the `dir` attribute — so we set both: the class on the body and `dir` on the
+ * root element.
+ */
+const IS_RTL_CLASS = 'is-rtl';
+
+function applyDirection(rtl: boolean): void {
+	document.body.classList.toggle(IS_RTL_CLASS, rtl);
+	document.documentElement.setAttribute('dir', rtl ? 'rtl' : 'ltr');
+}
+
+/**
  * OutSystems apps render inside a `<body>` the platform tags with device /
  * accessibility classes; OUI's responsive CSS keys off them (`.desktop`,
  * `.active-screen`). `.has-accessible-features` opts in to focus rings / a11y
@@ -56,7 +73,7 @@ function applyIconLibrary(library: string): void {
 const withAppShell: Decorator = (storyFn, context) => {
 	['desktop', 'active-screen'].forEach((c) => document.body.classList.add(c));
 	document.body.classList.toggle('has-accessible-features', context.globals.accessibleFeatures === 'on');
-	document.documentElement.setAttribute('dir', 'ltr');
+	applyDirection(context.globals.direction === 'rtl');
 	applyIconLibrary((context.globals.iconLibrary as string) ?? 'FontAwesome');
 	applyTheme((context.globals.theme as string) ?? 'new');
 	return storyFn();
@@ -104,6 +121,19 @@ const preview: Preview = {
 				items: [
 					{ value: 'off', title: 'has-accessible-features: off' },
 					{ value: 'on', title: 'has-accessible-features: on' },
+				],
+				dynamicTitle: true,
+			},
+		},
+		direction: {
+			description: 'Toggle the `is-rtl` body class + `dir` attribute (right-to-left layout)',
+			defaultValue: 'ltr',
+			toolbar: {
+				title: 'Direction',
+				icon: 'mirror',
+				items: [
+					{ value: 'ltr', title: 'LTR (is-rtl: off)' },
+					{ value: 'rtl', title: 'RTL (is-rtl: on)' },
 				],
 				dynamicTitle: true,
 			},

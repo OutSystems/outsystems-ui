@@ -1,0 +1,86 @@
+<svg width="270" height="54" viewBox="0 0 270 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Drop shadows + inner highlights — same depth style as MobileUI logo -->
+    <filter id="icon-filter" x="-13.9" y="-25" width="74" height="84" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+      <!-- Drop shadow 1 -->
+      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+      <feOffset dy="3.375"/>
+      <feGaussianBlur stdDeviation="1.6875"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.22 0"/>
+      <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
+      <!-- Drop shadow 2 -->
+      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+      <feOffset dy="6.75"/>
+      <feGaussianBlur stdDeviation="1.6875"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.07 0"/>
+      <feBlend mode="normal" in2="effect1_dropShadow" result="effect2_dropShadow"/>
+      <!-- Drop shadow 3 -->
+      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+      <feOffset dy="10.125"/>
+      <feGaussianBlur stdDeviation="1.6875"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.01 0"/>
+      <feBlend mode="normal" in2="effect2_dropShadow" result="effect3_dropShadow"/>
+      <feBlend mode="normal" in="SourceGraphic" in2="effect3_dropShadow" result="shape"/>
+      <!-- Inner highlight top-left: light teal/cyan -->
+      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+      <feOffset dx="-2.953" dy="2.953"/>
+      <feGaussianBlur stdDeviation="5.906"/>
+      <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0.247 0 0 0 0 0.686 0 0 0 0 0.969 0 0 0 1 0"/>
+      <feBlend mode="normal" in2="shape" result="effect4_innerShadow"/>
+      <!-- Inner shadow bottom-right: deep indigo -->
+      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+      <feOffset dx="5.906" dy="-5.906"/>
+      <feGaussianBlur stdDeviation="5.906"/>
+      <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0.063 0 0 0 0 0.118 0 0 0 0 0.729 0 0 0 1 0"/>
+      <feBlend mode="normal" in2="effect4_innerShadow" result="effect5_innerShadow"/>
+    </filter>
+    <!-- Radial gradient: sky blue → OS primary blue -->
+    <radialGradient id="icon-radial" cx="0" cy="0" r="1" gradientTransform="matrix(-27.9589 63.3927 -59.5807 -33.7105 32.3955 -10.2892)" gradientUnits="userSpaceOnUse">
+      <stop offset="0.33" stop-color="#60B5FF"/>
+      <stop offset="0.66" stop-color="#105CEF"/>
+    </radialGradient>
+    <!-- Subtle white shimmer overlay -->
+    <linearGradient id="icon-shimmer" x1="28.757" y1="-1.839" x2="2.228" y2="31.507" gradientUnits="userSpaceOnUse">
+      <stop stop-color="white" stop-opacity="0"/>
+      <stop offset="1" stop-color="white"/>
+    </linearGradient>
+    <!-- Clip icon to rounded square -->
+    <clipPath id="icon-clip">
+      <rect y="-0.274" width="54" height="54" rx="10.125" fill="white"/>
+    </clipPath>
+  </defs>
+
+  <!-- ── Icon (54×54 rounded square) ── -->
+  <g clip-path="url(#icon-clip)">
+    <rect y="-0.274" width="54" height="54" rx="10.125" fill="white"/>
+    <g filter="url(#icon-filter)">
+      <!-- Diamond / hexagonal gradient shape (same path as MobileUI) -->
+      <path d="M6.10549 -13.2312C9.36743 -18.881 16.5918 -20.8168 22.2417 -17.5548L48.3059 -2.50664C53.9558 0.755295 55.8915 7.9797 52.6296 13.6295L37.5814 39.6938C34.3195 45.3436 27.095 47.2794 21.4452 44.0175L-4.61905 28.9693C-10.2689 25.7073 -12.2046 18.4829 -8.94271 12.8331L6.10549 -13.2312Z" fill="url(#icon-radial)"/>
+      <path d="M6.10549 -13.2312C9.36743 -18.881 16.5918 -20.8168 22.2417 -17.5548L48.3059 -2.50664C53.9558 0.755295 55.8915 7.9797 52.6296 13.6295L37.5814 39.6938C34.3195 45.3436 27.095 47.2794 21.4452 44.0175L-4.61905 28.9693C-10.2689 25.7073 -12.2046 18.4829 -8.94271 12.8331L6.10549 -13.2312Z" fill="url(#icon-shimmer)" fill-opacity="0.05"/>
+    </g>
+  </g>
+  <!-- Icon border -->
+  <rect x="0.422" y="0.147" width="53.156" height="53.156" rx="9.703" stroke="#E2E2E2" stroke-width="0.844"/>
+
+  <!-- ── Text: "OutSystems/" (small, gray) ── -->
+  <text
+    x="66" y="19"
+    font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+    font-size="11"
+    font-weight="400"
+    letter-spacing="0.02em"
+    fill="#454545"
+  >OutSystems/</text>
+
+  <!-- ── Text: "OutSystemsUI" (large, bold, black) ── -->
+  <text
+    x="66" y="47"
+    font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+    font-size="24"
+    font-weight="700"
+    fill="#000000"
+  >OutSystemsUI</text>
+</svg>

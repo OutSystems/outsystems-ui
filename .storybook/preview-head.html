@@ -12,6 +12,26 @@
   Requires a prior build: `npm run build:osui`.
 -->
 
+<!-- Inter — the docs-page font (used by docs.scss, scoped to .sbdocs-wrapper).
+     Loaded here so the docs iframe can render Inter; intentionally NOT applied to
+     the story canvas body, so patterns keep their authentic OUI theme typography. -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+  rel="stylesheet"
+/>
+
+<!-- Docs pages (MDX like Introduction) must scroll when content overflows.
+     Scoped via :has(.sbdocs-wrapper) to the docs iframe only, so the story
+     canvas body keeps its default overflow (patterns such as Sidebar /
+     BottomSheet can rely on it). -->
+<style>
+  body:has(.sbdocs-wrapper) {
+    overflow: auto !important;
+  }
+</style>
+
 <!-- Icon fonts — both @font-face families ('FontAwesome', 'Phosphor') are loaded;
      the active set is chosen at runtime via the "Icons" toolbar toggle, which adds
      the matching root class (.icon-library-FontAwesome / .iconLibrary-phosphor). -->

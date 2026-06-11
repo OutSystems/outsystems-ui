@@ -1,0 +1,120 @@
+<title>OutSystems UI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+  rel="stylesheet"
+/>
+<script>
+  (function () {
+    const baseTitle = "OutSystems UI";
+    const titleEl = document.querySelector("title");
+
+    Object.defineProperty(document, "title", {
+      get: function () {
+        return titleEl.textContent;
+      },
+      set: function (value) {
+        if (value.endsWith(" - " + baseTitle)) {
+          titleEl.textContent = value;
+          return;
+        }
+        if (value.includes(" - ") || value.includes(" — ")) {
+          const pageName = value.split(/\s[-—]\s/)[0];
+          titleEl.textContent = pageName + " • " + baseTitle;
+        } else if (value && value !== baseTitle) {
+          titleEl.textContent = value + " • " + baseTitle;
+        } else {
+          titleEl.textContent = baseTitle;
+        }
+      },
+    });
+  })();
+</script>
+<style>
+  /* Sidebar interaction styling closer to runtime Storybook */
+  .css-wkfnut:hover a,
+  .css-wkfnut:focus a {
+    color: #105cef;
+  }
+
+  .css-wkfnut[data-selected="true"]:hover a,
+  .css-wkfnut[data-selected="true"]:focus a {
+    color: white;
+    font-weight: 500 !important;
+  }
+
+  .sidebar-header img {
+    max-width: unset!important
+}
+
+  .sidebar-item {
+    height: 40px;
+    display: flex !important;
+    align-items: center !important;
+    margin-bottom: 4px!important;
+  }
+
+  .sidebar-subheading {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    min-height: 40px;
+  }
+
+  .sidebar-subheading button {
+    color: #242424;
+    text-transform: capitalize;
+    font-weight: 500 !important;
+  }
+
+  .sidebar-subheading button,
+  .sidebar-item a,
+  .sidebar-item button {
+    font-family: "Inter", sans-serif !important;
+    font-size: 15px !important;
+    letter-spacing: normal;
+  }
+
+  /* Don't set padding-left here — Storybook computes it from the tree depth
+     ((isExpandable ? 8 : 22) + depth * 18px). A flat left padding flattens the
+     hierarchy (nested folders like Content/Interaction line up with Patterns).
+     We only tweak the other paddings so the depth indent is preserved. */
+  .sidebar-item button {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-right: 8px;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+  }
+
+  .sidebar-item[data-parent-id] a {
+    font-size: 14px !important;
+    font-weight: 400 !important;
+  }
+
+  .sidebar-item button[aria-expanded="true"] {
+    background-color: #f5f5f5;
+  }
+
+  .sidebar-item[data-selected="true"]:hover {
+    background-color: #3b3b3b !important;
+  }
+
+  .sidebar-item:hover,
+  .sidebar-item:focus {
+    background-color: #f3f3f3 !important;
+  }
+
+  [data-testid="context-menu"] {
+    display: none !important;
+  }
+
+  span[title="Required"] {
+    display: none !important;
+  }
+
+  #storybook-checklist-widget {
+    display: none !important;
+  }
+</style>
