@@ -181,7 +181,7 @@ Use VS Code "Document This" extension (type `/**` above a function/class) for st
 
 ## Styling & Theming Architecture
 
-The SCSS layer is in the middle of a phased migration from hand-rolled OSUI tokens to the `outsystems-design-tokens` package. See `specs/plan.md` and `specs/implementation.md` for the full roadmap.
+The SCSS layer is in the middle of a phased migration from hand-rolled OSUI tokens to the `outsystems-design-tokens` package. See `specs/css-architecture.md` for the consolidated architecture summary (tokens → theme layer → component CSS API and the read chain), and `specs/plan.md` / `specs/implementation.md` for the full migration roadmap.
 
 ### Token system — two layers
 
