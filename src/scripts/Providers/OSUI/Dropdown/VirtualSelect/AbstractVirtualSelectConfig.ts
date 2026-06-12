@@ -7,8 +7,9 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 	 * @class AbstractVirtualSelectConfig
 	 * @extends {AbstractDropdownConfig}
 	 */
-	export abstract class AbstractVirtualSelectConfig extends OSFramework.OSUI.Patterns.Dropdown
-		.AbstractDropdownConfig {
+	export abstract class AbstractVirtualSelectConfig
+		extends OSFramework.OSUI.Patterns.Dropdown.AbstractDropdownConfig
+	{
 		// Store grouped options
 		private _groupedOptionsList: GroupDropDownOption[];
 		// Store the Provider Options
@@ -199,6 +200,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 				selectedValue: this.getSelectedValues() as [],
 				showDropboxAsPopup: this.ShowDropboxAsPopup,
 				popupDropboxBreakpoint: this.PopupDropboxBreakpoint,
+				showSecureTextWarning: false,
 				silentInitialValueSet: true,
 				textDirection: OutSystems.OSUI.Utils.GetIsRTL()
 					? OSFramework.OSUI.GlobalEnum.Direction.RTL

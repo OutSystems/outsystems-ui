@@ -105,6 +105,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		setValueAsArray?: boolean;
 		showDropboxAsPopup?: boolean;
 		showOptionsOnlyOnSearch?: boolean;
+		showSecureTextWarning?: boolean;
 		showSelectedOptionsFirst?: boolean;
 		showValueAsTags?: boolean;
 		silentInitialValueSet?: boolean;
