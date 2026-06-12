@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 /**
- * Generates docs/css-api-reference.md from the SCSS source of truth.
+ * Generates the CSS API reference from the SCSS source of truth, as two files:
+ *   • docs/css-api-reference.md      — the repo reference
+ *   • stories/CssApiReference.mdx    — the Storybook "CSS API Reference" page
  *
  * It walks src/scss, finds every `--osui-*: <default>;` declaration, attributes
  * each to the component root selector that owns it, and emits one table per
@@ -20,6 +22,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(__dirname, '..');
 const scssRoot = path.join(repoRoot, 'src', 'scss');
 const outFile = path.join(repoRoot, 'docs', 'css-api-reference.md');
+const mdxOutFile = path.join(repoRoot, 'stories', 'CssApiReference.mdx');
 
 // Files/dirs that are not part of the runtime component CSS API.
 const SKIP_DIR = new Set(['tokens', '08-servicestudio-preview', '10-deprecated']);
@@ -161,73 +164,122 @@ for (const abs of files) {
 	}
 }
 
-// ── Emit markdown ────────────────────────────────────────────────────────────
+// ── Build shared body (TOC + category tables) ────────────────────────────────
 const sortedCats = [...categories.entries()].sort((a, b) => a[1].order - b[1].order);
 
 const esc = (v) => v.replace(/\|/g, '\\|');
 let totalProps = 0;
 let totalComponents = 0;
 
-const lines = [];
-lines.push('# CSS API Reference');
-lines.push('');
-lines.push('Every `--osui-*` custom property exposed by OutSystemsUI components, with its');
-lines.push('default value. Override any property on the component’s root element (or an');
-lines.push('ancestor) to customise appearance — without touching component rules or tokens.');
-lines.push('');
-lines.push('See [`css-architecture.md`](./css-architecture.md) for how these defaults resolve');
-lines.push('(component CSS API → `--color-*` theme layer → `$token-*` → `--token-*`).');
-lines.push('');
-lines.push('> **Generated file — do not edit by hand.** Regenerate after any `--osui-*`');
-lines.push('> change with `npm run docs:css-api` (source: `scripts/generate-css-api-reference.mjs`).');
-lines.push('');
-lines.push('**Usage example:**');
-lines.push('```css');
-lines.push('.my-page .osui-sidebar {');
-lines.push('  --osui-sidebar-background: #1a1a2e;');
-lines.push('  --osui-sidebar-color: #ffffff;');
-lines.push('}');
-lines.push('```');
-lines.push('');
-lines.push('---');
-lines.push('');
-lines.push('## Table of Contents');
-lines.push('');
-for (const [label] of sortedCats) {
-	const anchor = label
+const anchorFor = (label) =>
+	label
 		.toLowerCase()
 		.replace(/[–—]/g, '')
 		.replace(/[^a-z0-9 ]/g, '')
 		.trim()
 		.replace(/\s+/g, '-');
-	lines.push(`- [${label}](#${anchor})`);
-}
-lines.push('');
-lines.push('---');
-lines.push('');
 
+const toc = ['## Table of Contents', ''];
+for (const [label] of sortedCats) toc.push(`- [${label}](#${anchorFor(label)})`);
+
+const body = [];
 for (const [label, { components }] of sortedCats) {
-	lines.push(`## ${label}`);
-	lines.push('');
+	body.push(`## ${label}`, '');
 	for (const c of components) {
 		totalComponents++;
-		lines.push(`### ${c.name} (\`${c.selector}\`)`);
-		lines.push(`_File: \`${c.file}\`_`);
-		lines.push('');
-		lines.push('| Property | Default |');
-		lines.push('|---|---|');
+		body.push(`### ${c.name} (\`${c.selector}\`)`);
+		body.push(`_File: \`${c.file}\`_`);
+		body.push('');
+		body.push('| Property | Default |');
+		body.push('|---|---|');
 		for (const [name, value] of c.props) {
 			totalProps++;
-			lines.push(`| \`${name}\` | \`${esc(value)}\` |`);
+			body.push(`| \`${name}\` | \`${esc(value)}\` |`);
 		}
-		lines.push('');
+		body.push('');
 	}
-	lines.push('---');
-	lines.push('');
+	body.push('---', '');
 }
+const footer = `<sub>${totalProps} properties across ${totalComponents} components, generated from \`src/scss\`.</sub>`;
 
-lines.push(`<sub>${totalProps} properties across ${totalComponents} components, generated from \`src/scss\`.</sub>`);
-lines.push('');
+// Note inserted after build so the counts are known.
+const note = (cmd, src) =>
+	[
+		`> **Generated file — do not edit by hand.** Regenerate after any \`--osui-*\``,
+		`> change with \`${cmd}\` (source: \`${src}\`).`,
+	].join('\n');
 
-fs.writeFileSync(outFile, lines.join('\n'));
-console.log(`Wrote ${outFile}: ${totalProps} properties across ${totalComponents} components.`);
+// ── Emit: docs/css-api-reference.md (repo reference) ──────────────────────────
+const md = [
+	'# CSS API Reference',
+	'',
+	'Every `--osui-*` custom property exposed by OutSystemsUI components, with its',
+	'default value. Override any property on the component’s root element (or an',
+	'ancestor) to customise appearance — without touching component rules or tokens.',
+	'',
+	'See [`css-architecture.md`](./css-architecture.md) for how these defaults resolve',
+	'(component CSS API → `--color-*` theme layer → `$token-*` → `--token-*`).',
+	'',
+	note('npm run docs:css-api', 'scripts/generate-css-api-reference.mjs'),
+	'',
+	'**Usage example:**',
+	'```css',
+	'.my-page .osui-sidebar {',
+	'  --osui-sidebar-background: #1a1a2e;',
+	'  --osui-sidebar-color: #ffffff;',
+	'}',
+	'```',
+	'',
+	'---',
+	'',
+	...toc,
+	'',
+	'---',
+	'',
+	...body,
+	footer,
+	'',
+].join('\n');
+fs.writeFileSync(outFile, md);
+
+// ── Emit: stories/CssApiReference.mdx (Storybook page) ────────────────────────
+// MDX-safe: every dynamic value sits inside backticks, so `#{…}` interpolation
+// is never parsed as a JSX expression.
+const mdx = [
+	"import { Meta } from '@storybook/addon-docs/blocks';",
+	'',
+	'<Meta title="CSS API Reference" />',
+	'',
+	'# CSS API Reference',
+	'',
+	'Every `--osui-*` custom property exposed by OutSystemsUI components, with its',
+	'default value. Override any property on the component’s root element (or an',
+	'ancestor) to customise appearance — without touching component rules or tokens.',
+	'',
+	'See the **CSS Architecture** page for how these defaults resolve',
+	'(component CSS API → `--color-*` theme layer → `$token-*` → `--token-*`).',
+	'',
+	note('npm run docs:css-api', 'scripts/generate-css-api-reference.mjs'),
+	'',
+	'**Usage example:**',
+	'',
+	'```css',
+	'.my-page .osui-sidebar {',
+	'  --osui-sidebar-background: #1a1a2e;',
+	'  --osui-sidebar-color: #ffffff;',
+	'}',
+	'```',
+	'',
+	'---',
+	'',
+	...toc,
+	'',
+	'---',
+	'',
+	...body,
+	footer,
+	'',
+].join('\n');
+fs.writeFileSync(mdxOutFile, mdx);
+
+console.log(`Wrote ${outFile} and ${mdxOutFile}: ${totalProps} properties across ${totalComponents} components.`);

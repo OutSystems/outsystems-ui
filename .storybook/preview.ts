@@ -163,7 +163,8 @@ const preview: Preview = {
 			},
 		},
 		colorScheme: {
-			description: 'Light / dark appearance. Light & Dark force it via .theme-light / .theme-dark; Auto follows the OS (prefers-color-scheme).',
+			description:
+				'Light / dark appearance. Light & Dark force it via .theme-light / .theme-dark; Auto follows the OS (prefers-color-scheme).',
 			defaultValue: 'light',
 			toolbar: {
 				title: 'Appearance',
@@ -189,6 +190,8 @@ const preview: Preview = {
 			storySort: {
 				order: [
 					'Introduction',
+					'CSS Architecture',
+					'CSS API Reference',
 					'Patterns',
 					['Content', 'Interaction', 'Navigation', 'Adaptive', 'Numbers', 'Utilities'],
 					'Widgets',

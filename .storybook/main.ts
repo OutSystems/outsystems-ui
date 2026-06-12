@@ -1,6 +1,7 @@
 import type { StorybookConfig } from '@storybook/html-vite';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import remarkGfm from 'remark-gfm';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(__dirname, '..');
@@ -21,7 +22,16 @@ const repoRoot = path.resolve(__dirname, '..');
  */
 const config: StorybookConfig = {
 	stories: ['../stories/**/*.mdx', '../stories/**/*.stories.@(js|jsx|ts|tsx)'],
-	addons: ['@storybook/addon-docs', '@chromatic-com/storybook'],
+	addons: [
+		// remark-gfm enables GitHub-flavoured markdown in MDX docs pages — notably
+		// tables (used by the CSS Architecture / CSS API Reference pages). Without
+		// it, MDX renders pipe-tables as literal text.
+		{
+			name: '@storybook/addon-docs',
+			options: { mdxPluginOptions: { mdxCompileOptions: { remarkPlugins: [remarkGfm] } } },
+		},
+		'@chromatic-com/storybook',
+	],
 	framework: {
 		name: '@storybook/html-vite',
 		options: {},

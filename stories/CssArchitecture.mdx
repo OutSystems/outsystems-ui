@@ -1,0 +1,253 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="CSS Architecture" />
+
+export const HOPS = [
+	{ n: 1, layer: 'Component CSS API', form: 'var(--osui-{component}-{prop})', note: 'per-instance override', accent: '#105cef' },
+	{ n: 2, layer: 'Framework theme layer', form: 'var(--{role})', note: ':root · app / theme override', accent: '#7c3aed' },
+	{ n: 3, layer: 'Design-token SCSS vars', form: '$token-{…}', note: 'compile-time', accent: '#0e7490' },
+	{ n: 4, layer: 'Design tokens at :root', form: 'var(--token-{…}, <primitive>)', note: 'runtime override surface', accent: '#059669' },
+];
+
+export const Mono = ({ children, color }) => (
+	<span style={{ fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Consolas, monospace', fontSize: '13px', color: color || '#111827', wordBreak: 'break-word' }}>
+		{children}
+	</span>
+);
+
+export const HopChain = () => (
+	<div style={{ margin: '20px 0', fontFamily: 'Inter, system-ui, sans-serif', maxWidth: '760px' }}>
+		<div style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', color: '#6b7280', marginBottom: '10px' }}>
+			any CSS property reads down ↓
+		</div>
+		{HOPS.map((h, i) => (
+			<div key={h.n}>
+				<div
+					style={{
+						display: 'flex',
+						alignItems: 'center',
+						gap: '14px',
+						padding: '12px 16px',
+						background: '#fff',
+						border: '1px solid #e5e7eb',
+						borderLeft: '4px solid ' + h.accent,
+						borderRadius: '10px',
+						boxShadow: '0 1px 2px rgba(0,0,0,0.05)',
+					}}
+				>
+					<div
+						style={{
+							flex: 'none',
+							width: '26px',
+							height: '26px',
+							borderRadius: '50%',
+							background: h.accent,
+							color: '#fff',
+							fontSize: '13px',
+							fontWeight: 700,
+							display: 'flex',
+							alignItems: 'center',
+							justifyContent: 'center',
+						}}
+					>
+						{h.n}
+					</div>
+					<div style={{ flex: 1, minWidth: 0 }}>
+						<div style={{ fontSize: '13px', fontWeight: 600, color: '#111827', marginBottom: '2px' }}>{h.layer}</div>
+						<Mono color={h.accent}>{h.form}</Mono>
+					</div>
+					<div style={{ flex: 'none', fontSize: '12px', color: '#6b7280', textAlign: 'right', maxWidth: '180px' }}>{h.note}</div>
+				</div>
+				{i < HOPS.length - 1 ? (
+					<div style={{ textAlign: 'center', color: '#9ca3af', fontSize: '12px', padding: '5px 0' }}>↓ falls back to</div>
+				) : null}
+			</div>
+		))}
+	</div>
+);
+
+# CSS Architecture
+
+How OutSystems UI styles every component: three cooperating layers — **design
+tokens**, a **framework theme layer at `:root`**, and a per-component **CSS API** —
+tied together by a single resolution chain. This is the Storybook summary; the
+full write-up lives in `docs/css-architecture.md`, and every `--osui-*` property
+is catalogued on the **CSS API Reference** page.
+
+## The big picture
+
+Every property resolves through a **four-hop chain**. Each hop is one layer with
+one job, and each has a sensible default so the layer below is optional:
+
+<HopChain />
+
+Traced through the Card background, top to bottom:
+
+```scss
+.card {
+  --osui-card-background: var(--color-background-surface); // Component API → theme role
+}
+background-color: var(--osui-card-background);             // property → Component API
+```
+
+```scss
+// Framework theme layer — src/scss/01-foundations/_root.scss
+:root { --color-background-surface: #{$token-bg-surface-default}; } // role → token
+```
+
+```scss
+// Design tokens — src/scss/tokens/_variables.scss  (generated)
+$token-bg-surface-default: var(--token-bg-surface-default, var(--token-primitives-base-white, #ffffff));
+```
+
+**Anyone can intercept at any hop:** an app sets `--token-bg-surface-default` to
+re-skin globally, a theme sets `--color-background-surface` to change just the
+surface role, and a single instance sets `--osui-card-background` to override one
+card — none of them touch a component rule.
+
+---
+
+## Tier 1 — Design tokens (`--token-*` / `$token-*`)
+
+The bottom layer comes from the `outsystems-design-tokens` package and is
+**generated**, never hand-edited:
+
+```bash
+npx build.tokens --dest src/scss/tokens/ --prefix token   # runs in prebuild / predev
+```
+
+It emits two cooperating surfaces (both gitignored):
+
+| Surface | What | Use it when |
+|---|---|---|
+| `$token-*` SCSS vars | each expands to `var(--token-*, <fallback>)` | **writing component SCSS** — gives compile-time checking + a baked-in fallback |
+| `--token-*` at `:root` | raw values | the **runtime theming surface** an app/DTE overrides |
+
+Tokens are themselves layered — **primitives → semantics → component** — and the
+fallback chain encodes it: a semantic token (`bg-surface-default`) falls back
+through a primitive (`primitives-base-white`) which falls back to a literal, so a
+component renders correctly even if no `--token-*` are defined at runtime.
+
+> **Verified:** the compiled bundle does **not** ship the `--token-*` `:root`
+> block — it relies on the `var(--token-*, fallback)` fallbacks. The generated
+> `tokens/_root.scss` is the canonical override set an app supplies at `:root`.
+
+Rules of thumb:
+
+- CSS **property value** → write `$token-*` directly: `padding: $token-scale-600;`
+- CSS **custom-property declaration** → interpolate: `--osui-card-padding: #{$token-scale-600};`
+- Retired, never reintroduce: `--space-*`, `--font-size-*`, `--shadow-*`, `--border-size-*`, and the `get-*-color()` helpers.
+
+---
+
+## Tier 3 — Framework theme layer at `:root`
+
+`src/scss/01-foundations/_root.scss` declares OUI's stable, framework-owned
+theming contract — un-prefixed role knobs that sit between tokens and components.
+Each defaults **through** a `$token-*`, so overriding the token still cascades.
+
+```scss
+:root {
+  --color-background-surface: #{$token-bg-surface-default};
+  --color-text:               #{$token-text-default};
+  --color-primary:            #{$token-semantics-primary-base};
+
+  // one shape vocabulary; set --border-radius-default once to re-radius everything
+  --border-radius-soft:   var(--border-radius-default, #{$token-border-radius-200}); // 8px
+  --border-radius-softer: var(--border-radius-default, #{$token-border-radius-400}); // 16px
+  --border-radius-rounded:var(--border-radius-default, #{$token-border-radius-full});// 999px
+}
+```
+
+| Group | Vars |
+|---|---|
+| Surfaces | `--color-background-{body,surface,header,sidemenu,footer,login,input,…}` |
+| Text | `--color-text`, `--color-text-{subtle,subtlest,disabled,inverse}` |
+| Borders | `--color-border`, `--color-border-{subtle,subtlest,input,…}` |
+| Brand / status / neutral | `--color-{primary,secondary,error,warning,success,info}`, `--color-neutral-0..10` |
+| Radius | `--border-radius-{none,soft,softer,rounded}` |
+
+App-layout plumbing also lives in `_root.scss` but is **not** part of the theme
+contract: `--size-*`, z-index `--layer-*`, and safe areas `--os-safe-area-*`.
+
+---
+
+## Tier 4 — Component CSS API (`--osui-*`)
+
+Every visual component declares its own custom properties at its root selector,
+defaulting either to a theme role (themeable props) or straight to a `$token-*`
+(structural props), then reads them in property values:
+
+```scss
+.card {
+  --osui-card-background:    var(--color-background-surface);   // → theme role (themeable)
+  --osui-card-border-width:  #{$token-border-size-025};         // → token directly (structural)
+  --osui-card-border-radius: var(--border-radius-soft);
+  --osui-card-padding:       #{$token-scale-600};
+  --osui-card-shadow:        #{$token-elevation-1};
+
+  background-color: var(--osui-card-background);
+  border-radius:    var(--osui-card-border-radius);
+  padding:          var(--osui-card-padding);
+}
+```
+
+Rules:
+
+- Naming: `--osui-{component}-{property}`.
+- Property declarations **must** go through the `--osui-*` var (never directly
+  through `$token-*` / `--color-*`), so a consumer can override one instance
+  without touching tokens or the theme.
+- Route **themeable** props through the theme role, **structural** props straight
+  to `$token-*`.
+
+See the **CSS API Reference** page for the full list of every `--osui-*` property
+and its default.
+
+---
+
+## Theming & dark mode
+
+A theme is **entirely CSS-custom-property overrides** scoped under a single class
+(or a media query). It overrides theme-layer roles and/or the underlying tokens —
+never a component rule.
+
+```css
+:root          { --color-primary: #6d28d9; }            /* re-skin one role */
+:root          { --token-bg-surface-default: #1b1b1b; } /* re-skin globally via a token */
+:root          { --border-radius-default: 12px; }       /* round every corner */
+.card.is-promo { --osui-card-shadow: var(--osui-elevation-overlay); } /* one instance */
+```
+
+> **Invariant:** if a theme needs to touch a *component rule*, that's a leak in
+> the component's CSS API — fix it in the component, not the theme.
+
+**Dark theme** (`src/scss/01-foundations/_theme-dark.scss`) ships and activates
+two ways at once:
+
+- **Automatic** — `@media (prefers-color-scheme: dark)` flips the library to dark
+  when the OS is in dark mode.
+- **Manual override** — `.theme-dark` / `.theme-light` on `<body>` forces a mode
+  regardless of the OS. `.theme-light` simply opts the element out of the
+  automatic rule, so light applies even on a dark OS.
+
+One mixin drives both paths; it re-maps the dark `--token-*` **and** re-declares
+the `--color-*` roles (needed because `--color-*` is substituted at `:root`, so a
+token override on `<body>` alone wouldn't reach components reading `--color-*`).
+
+> Try it: use the **Appearance** toolbar control above to switch Light / Dark /
+> Auto across any story.
+
+---
+
+## Authoring quick-reference
+
+Walk **down** the chain only as far as you need:
+
+1. Reading a **themeable** colour/radius? → use the theme role: `var(--color-*)`, `var(--border-radius-*)`.
+2. Reading a **structural** size/space/elevation/border? → use `$token-*` directly.
+3. Exposing it on a component? → declare `--osui-{component}-{prop}` defaulting to (1) or (2), and read the `--osui-*` var in the property.
+
+**Red flags:** hardcoded hex/px where a `$token-*` exists; reintroducing retired
+vars; a property reading `$token-*` / `--color-*` directly instead of via its
+`--osui-*`; a theme touching a component rule.
