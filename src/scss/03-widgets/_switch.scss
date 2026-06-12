@@ -50,17 +50,9 @@
 		}
 	}
 
-	&:hover {
-		&:before {
-			background-color: var(--color-border-input);
-			border: $token-border-size-025 solid var(--osui-switch-track-border-color);
-		}
-	}
-
 	&:checked {
 		&:before {
 			background-color: var(--osui-switch-checked-track-color);
-			border: $token-border-size-025 solid var(--osui-switch-checked-track-color);
 		}
 
 		&:after {
