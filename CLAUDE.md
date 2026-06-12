@@ -222,7 +222,7 @@ The `path` is resolved relative to `src/scss/` and the `_` / `.scss` extension a
 
 ### Themes
 
-> A dark theme **ships**: `src/scss/01-foundations/_theme-dark.scss`. It activates automatically via `@media (prefers-color-scheme: dark)` and can be forced per-screen with `.theme-dark` / `.theme-light`. It is implemented as CSS-custom-property overrides (one `@mixin` driving both paths), with a small flagged set of known CSS-API leaks pending migration (Phase E). The architectural rule below still governs it.
+> A dark theme **ships**: `src/scss/01-foundations/_theme-dark.scss`. It is **opt-in, manual only** — add `.theme-dark` to the screen root to switch to dark (no OS auto-detection; an app that wants to follow `prefers-color-scheme` toggles the class itself). It is implemented as CSS-custom-property overrides (one `@mixin` under `.theme-dark`), with a small flagged set of known CSS-API leaks pending migration (Phase E). The architectural rule below still governs it.
 
 A theme re-skins the whole library as a single class scope (e.g. `<body class="theme-name">`) implemented **entirely** as CSS custom property overrides — overriding theme-layer role knobs (`--color-*`, `--border-radius-*`, …) and/or the underlying `--token-*`. No component rule, no `$token-*` value, and no pre-existing `--osui-*` default is touched. If a theme needs to touch a component rule, that indicates a leak in the CSS API that should be fixed in the component, not the theme. See `specs/plan-part-four.md`.
 

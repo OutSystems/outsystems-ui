@@ -65,25 +65,15 @@ function applyDirection(rtl: boolean): void {
 
 /**
  * Appearance toggle — exercises the dark theme (src/scss/01-foundations/_theme-dark.scss).
- *  • `light` / `dark` force the mode via the `.theme-light` / `.theme-dark` body
- *    class (the manual-override path).
- *  • `auto` removes both classes, so the theme follows the OS via
- *    `@media (prefers-color-scheme: dark)` — flip your OS appearance to see it.
- * Requires a bundle built AFTER the dark theme was added (the dark CSS lives in
- * `/osui/ODC.OutSystemsUI.css`); rebuild with `npm run dev -- --target ODC`.
+ * The dark theme is manual-only: `dark` adds the `.theme-dark` body class, `light`
+ * removes it (light is the default — no class). Requires a bundle built AFTER the
+ * dark theme was added (the dark CSS lives in `/osui/ODC.OutSystemsUI.css`);
+ * rebuild with `npm run dev -- --target ODC`.
  */
 const COLOR_SCHEME_DARK = 'theme-dark';
-const COLOR_SCHEME_LIGHT = 'theme-light';
 
 function applyColorScheme(scheme: string): void {
-	const body = document.body;
-	body.classList.remove(COLOR_SCHEME_DARK, COLOR_SCHEME_LIGHT);
-	if (scheme === 'dark') {
-		body.classList.add(COLOR_SCHEME_DARK);
-	} else if (scheme === 'light') {
-		body.classList.add(COLOR_SCHEME_LIGHT);
-	}
-	// 'auto' → no class; the prefers-color-scheme media query decides.
+	document.body.classList.toggle(COLOR_SCHEME_DARK, scheme === 'dark');
 }
 
 /**
@@ -164,7 +154,7 @@ const preview: Preview = {
 		},
 		colorScheme: {
 			description:
-				'Light / dark appearance. Light & Dark force it via .theme-light / .theme-dark; Auto follows the OS (prefers-color-scheme).',
+				'Appearance. Dark adds the `.theme-dark` body class; Light removes it (the default). Manual only — no OS detection.',
 			defaultValue: 'light',
 			toolbar: {
 				title: 'Appearance',
@@ -172,7 +162,6 @@ const preview: Preview = {
 				items: [
 					{ value: 'light', title: 'Light', icon: 'sun' },
 					{ value: 'dark', title: 'Dark', icon: 'moon' },
-					{ value: 'auto', title: 'Auto (OS)', icon: 'browser' },
 				],
 				dynamicTitle: true,
 			},

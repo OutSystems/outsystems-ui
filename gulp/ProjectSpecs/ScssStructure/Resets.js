@@ -11,7 +11,7 @@ const sectionInfo = {
             "path": "01-foundations/resets"
         },
         {
-            "name": "Dark theme (prefers-color-scheme + .theme-dark / .theme-light override)",
+            "name": "Dark theme (opt-in via .theme-dark class)",
             "path": "01-foundations/theme-dark"
         }
     ]

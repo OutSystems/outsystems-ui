@@ -1,24 +1,23 @@
 ////
 /// @group Theme-Dark
-/// Dark theme — driven by the user's OS preference *and* an explicit opt-in/out.
+/// Dark theme — opt-in, manual only.
 ///
-/// Activation (both supported):
-///   • Automatic — `@media (prefers-color-scheme: dark)` flips the whole library
-///     to dark when the operating system is in dark mode.
-///   • Manual override — add `theme-dark` / `theme-light` to the screen's
-///     outermost element (e.g. `<body class="theme-dark desktop">`) to force a
-///     mode regardless of the OS. `theme-light` simply opts the element out of
-///     the automatic rule, so the default light palette applies even on a dark OS.
+/// Activation:
+///   • Add `theme-dark` to the screen's outermost element (e.g.
+///     `<body class="theme-dark desktop">`) to switch the library to dark. Remove
+///     it to return to the default light palette. There is no OS auto-detection;
+///     an app that wants to follow the OS reads `prefers-color-scheme` itself and
+///     toggles the class.
 ///
 /// How it works (architecture):
-///   The whole palette lives in ONE mixin (`osui-theme-dark`) so the automatic
-///   and manual paths stay in lock-step. It re-maps the design-token CSS custom
-///   properties (`--token-*`) to a dark palette and re-declares the framework
-///   theme-layer roles (`--color-*`) that read them. Re-declaring `--color-*` at
-///   the dark scope is required: those roles are substituted at `:root`, so a
-///   `--token-*` override on `<body>` alone would not reach components that read
-///   `--color-*` (e.g. `.card → var(--color-background-surface)`). Re-declaring
-///   them here makes the value re-resolve against the dark tokens at this scope.
+///   The whole palette lives in ONE mixin (`osui-theme-dark`) applied under the
+///   `.theme-dark` scope. It re-maps the design-token CSS custom properties
+///   (`--token-*`) to a dark palette and re-declares the framework theme-layer
+///   roles (`--color-*`) that read them. Re-declaring `--color-*` at the dark
+///   scope is required: those roles are substituted at `:root`, so a `--token-*`
+///   override on `<body>` alone would not reach components that read `--color-*`
+///   (e.g. `.card → var(--color-background-surface)`). Re-declaring them here
+///   makes the value re-resolve against the dark tokens at this scope.
 ///
 /// Theme invariant (see specs/plan-part-four.md, .claude/rules/scss.md §11):
 ///   A theme overrides variables only — never component rules. The token +
@@ -314,30 +313,14 @@
 }
 
 /* ========================================================================== */
-/* Activation                                                                 */
+/* Activation — manual only                                                   */
 /* ========================================================================== */
 
-/* 1) Automatic — follow the OS preference, UNLESS the app has explicitly forced
-      a mode on <body> (`.theme-light` / `.theme-dark`).
-
-      Scoped to `body` (the carrier the OutSystems platform — and the Storybook
-      decorator — tag with theme/device classes), NOT `:root`. The mixin
-      re-declares the `--color-*` roles, so applying it at body is self-sufficient
-      and dark inherits everywhere. Crucially this keeps the manual override on
-      the SAME element the `:not()` tests, so `.theme-light` on <body> truly opts
-      out. (Adding a `:root:not(...)` arm here would re-break that: a body-level
-      `.theme-light` can't undo dark tokens applied one level up at :root.) */
-@media (prefers-color-scheme: dark) {
-	body:not(.theme-light):not(.theme-dark) {
-		@include osui-theme-dark;
-	}
-}
-
-/* 2) Manual override — force dark on any scope, regardless of the OS. */
+/* Add `.theme-dark` to the screen's outermost element (e.g. <body>) to switch to
+   dark; remove it for the default light palette. The mixin re-declares the
+   `--color-*` roles, so applying it at <body> is self-sufficient and dark
+   inherits everywhere. (No `prefers-color-scheme` rule by design — an app that
+   wants to follow the OS toggles this class itself.) */
 .theme-dark {
 	@include osui-theme-dark;
 }
-
-/* 3) Manual light — no declarations needed: `.theme-light` opts the element out
-      of the automatic rule above (via :not(.theme-light)), so the default light
-      palette applies even when the OS prefers dark. */

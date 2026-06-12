@@ -222,21 +222,20 @@ never a component rule.
 > **Invariant:** if a theme needs to touch a *component rule*, that's a leak in
 > the component's CSS API — fix it in the component, not the theme.
 
-**Dark theme** (`src/scss/01-foundations/_theme-dark.scss`) ships and activates
-two ways at once:
+**Dark theme** (`src/scss/01-foundations/_theme-dark.scss`) ships and is opt-in,
+**manual only**:
 
-- **Automatic** — `@media (prefers-color-scheme: dark)` flips the library to dark
-  when the OS is in dark mode.
-- **Manual override** — `.theme-dark` / `.theme-light` on `<body>` forces a mode
-  regardless of the OS. `.theme-light` simply opts the element out of the
-  automatic rule, so light applies even on a dark OS.
+- Add `.theme-dark` to `<body>` (the screen's outermost element) to switch to
+  dark; remove it for the default light palette.
+- There is **no OS auto-detection** — an app that wants to follow the OS reads
+  `prefers-color-scheme` itself and toggles the class.
 
-One mixin drives both paths; it re-maps the dark `--token-*` **and** re-declares
-the `--color-*` roles (needed because `--color-*` is substituted at `:root`, so a
-token override on `<body>` alone wouldn't reach components reading `--color-*`).
+It re-maps the dark `--token-*` **and** re-declares the `--color-*` roles (needed
+because `--color-*` is substituted at `:root`, so a token override on `<body>`
+alone wouldn't reach components reading `--color-*`).
 
-> Try it: use the **Appearance** toolbar control above to switch Light / Dark /
-> Auto across any story.
+> Try it: use the **Appearance** toolbar control above to switch Light / Dark
+> across any story.
 
 ---
 

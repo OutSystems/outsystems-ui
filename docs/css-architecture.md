@@ -230,25 +230,20 @@ component rule, **no** `$token-*` value, and **no** pre-existing `--osui-*` defa
 
 ### Dark theme (ships)
 
-`src/scss/01-foundations/_theme-dark.scss` implements a dark theme that activates
-**two ways at once**:
+`src/scss/01-foundations/_theme-dark.scss` implements a dark theme that is
+**opt-in, manual only**:
 
-- **Automatic** — `@media (prefers-color-scheme: dark)` flips the whole library
-  to dark when the OS is in dark mode.
-- **Manual override** — `.theme-dark` / `.theme-light` on the screen's outermost
-  element (e.g. `<body>`) forces a mode regardless of the OS. `.theme-light`
-  needs no declarations: it opts the element out of the automatic rule
-  (`:not(.theme-light)`), so the default light palette applies even on a dark OS.
+- Add `.theme-dark` to the screen's outermost element (e.g. `<body>`) to switch
+  the library to dark; remove it for the default light palette.
+- There is **no OS auto-detection**. An app that wants to follow the OS reads
+  `prefers-color-scheme` itself and toggles the class.
 
-The whole palette lives in one `@mixin osui-theme-dark`, applied at
-`body:not(.theme-light):not(.theme-dark)` (auto) and `.theme-dark` (manual). It
-re-maps the dark `--token-*` **and** re-declares the `--color-*` roles — the
-latter is required because `--color-*` is substituted at `:root`, so a `--token-*`
-override on `<body>` alone wouldn't reach components that read `--color-*`.
-Because the mixin re-declares `--color-*`, the body scope is self-sufficient and
-the auto rule deliberately targets `body` only (not `:root`): keeping the auto
-rule on the same element the manual classes sit on is what lets `.theme-light`
-opt out cleanly even when the OS is dark.
+The whole palette lives in one `@mixin osui-theme-dark`, applied under
+`.theme-dark`. It re-maps the dark `--token-*` **and** re-declares the `--color-*`
+roles — the latter is required because `--color-*` is substituted at `:root`, so a
+`--token-*` override on `<body>` alone wouldn't reach components that read
+`--color-*`. Re-declaring `--color-*` makes the body scope self-sufficient, so the
+whole subtree under `.theme-dark` re-resolves to the dark palette.
 
 It is mostly invariant-clean (token + `--color-*` + `--osui-*` overrides), with a
 small, clearly-marked **"KNOWN CSS-API LEAKS"** block (`.header`, `.app-menu-*`,

@@ -124,9 +124,9 @@ Pattern files that consume a provider import the override SCSS directly:
 
 ## 11. Theme invariant
 
-> **Note:** a dark theme **does ship** — `src/scss/01-foundations/_theme-dark.scss`. It activates automatically via `@media (prefers-color-scheme: dark)` and can be forced with `.theme-dark` / `.theme-light` on the screen root. It is mostly invariant-clean (token + `--color-*` + `--osui-*` overrides) but carries a clearly-marked **"KNOWN CSS-API LEAKS"** block (raw rules on `.header`, `.app-menu-*`, `label`, `::placeholder`, validation text) for components that don't yet expose a `--osui-*` knob — each a FIXME to migrate (Phase E). Do **not** add new leaks; add the knob to the component instead.
+> **Note:** a dark theme **does ship** — `src/scss/01-foundations/_theme-dark.scss`. It is **opt-in, manual only**: add `.theme-dark` to the screen root to switch to dark (no OS auto-detection — an app that wants to follow `prefers-color-scheme` toggles the class itself). It is mostly invariant-clean (token + `--color-*` + `--osui-*` overrides) but carries a clearly-marked **"KNOWN CSS-API LEAKS"** block (raw rules on `.header`, `.app-menu-*`, `label`, `::placeholder`, validation text) for components that don't yet expose a `--osui-*` knob — each a FIXME to migrate (Phase E). Do **not** add new leaks; add the knob to the component instead.
 
-A theme is **entirely** CSS-custom-property overrides scoped under a single class (or a `prefers-color-scheme` media query). It overrides theme-layer role knobs (`--color-*`, `--border-radius-*`, …) and/or the underlying `--token-*` — it touches **no** component rule, **no** `$token-*` value, and **no** pre-existing `--osui-*` default.
+A theme is **entirely** CSS-custom-property overrides scoped under a single class. It overrides theme-layer role knobs (`--color-*`, `--border-radius-*`, …) and/or the underlying `--token-*` — it touches **no** component rule, **no** `$token-*` value, and **no** pre-existing `--osui-*` default.
 
 **If a theme needs to modify a component rule, that indicates a leak in the component's CSS API.** Fix it in the component, not the theme.
 
