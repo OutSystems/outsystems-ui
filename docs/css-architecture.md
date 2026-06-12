@@ -7,8 +7,8 @@ theme layer at `:root`**, and the per-component **CSS API** — and the single r
 chain that ties them together.
 
 It is a *summary*; the authoring rules live in [`.claude/rules/scss.md`](../.claude/rules/scss.md),
-the migration history in [`plan.md`](./plan.md) / [`plan-part-two.md`](./plan-part-two.md),
-and the theming rationale in [`plan-part-four.md`](./plan-part-four.md).
+the migration history in [`plan.md`](../specs/plan.md) / [`plan-part-two.md`](../specs/plan-part-two.md),
+and the theming rationale in [`plan-part-four.md`](../specs/plan-part-four.md).
 
 ---
 
@@ -254,7 +254,7 @@ It is mostly invariant-clean (token + `--color-*` + `--osui-*` overrides), with 
 small, clearly-marked **"KNOWN CSS-API LEAKS"** block (`.header`, `.app-menu-*`,
 `label`, `::placeholder`, validation text) — components without a `--osui-*` knob
 for the property, each a FIXME to migrate per Phase E. See
-[`plan-part-four.md`](./plan-part-four.md).
+[`plan-part-four.md`](../specs/plan-part-four.md).
 
 ---
 
