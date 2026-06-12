@@ -48,7 +48,7 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 			// Threshold value to set element as Active
 			const thresholdVal = 40;
 			// Store the offSetValue to be checked
-			const elementOffsetTopVal = this._targetElement.offsetTop - scrollYPosition.value;
+			const elementOffsetTopVal = this._targetElement?.offsetTop - scrollYPosition.value;
 
 			/* Logic behind position validation:
 				- If click to nanvigate into element the calc
