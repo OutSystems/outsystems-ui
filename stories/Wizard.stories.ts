@@ -116,7 +116,8 @@ export const WizardItemStory: StoryObj<WizardItemArgs> = {
 		useTopLabel: {
 			name: 'UseTopLabel',
 			control: 'boolean',
-			description: 'When true, places the label above the icon (`label-top`). When false, label goes below (`label-bottom`).',
+			description:
+				'When true, places the label above the icon (`label-top`). When false, label goes below (`label-bottom`).',
 		},
 		extendedClass: extendedClassArgType,
 	},

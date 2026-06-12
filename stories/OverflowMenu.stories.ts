@@ -9,7 +9,11 @@ interface OverflowMenuArgs {
 const meta: Meta<OverflowMenuArgs> = {
 	title: 'Patterns/Navigation/OverflowMenu',
 	argTypes: {
-		position: { control: 'select', options: ['auto', 'bottom', 'bottom-start', 'bottom-end', 'top'], name: 'Position' },
+		position: {
+			control: 'select',
+			options: ['auto', 'bottom', 'bottom-start', 'bottom-end', 'top'],
+			name: 'Position',
+		},
 		shape: { control: 'inline-radio', options: ['SoftRounded', 'Rounded', 'Sharp'], name: 'Shape' },
 	},
 	args: { position: 'bottom-start', shape: 'SoftRounded' },

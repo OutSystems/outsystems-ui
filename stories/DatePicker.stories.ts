@@ -44,34 +44,42 @@ export default meta;
 
 type Story = StoryObj<DatePickerArgs>;
 
-export const Default: Story = {
-	render: (args) => {
-		const id = uid('datepicker');
-		const template = `
-			<div ${osuiRoot(id)} class="osui-datepicker" data-uniqueid="${id}" style="max-width: 280px;">
-				<label for="${id}-input">Pick a date</label>
-				<input id="${id}-input" class="form-control" type="text" placeholder="Select a date" />
-			</div>
-			<!-- a11y keyboard-instructions container; the provider finds it via
-			     TagSelector(selfElement.parentElement, '.osui-datepicker-a11y') -->
-			<div class="osui-datepicker-a11y"></div>`;
+function renderDatePicker(args: DatePickerArgs): HTMLElement {
+	const id = uid('datepicker');
+	const range = args.mode === 'range';
+	const template = `
+		<div ${osuiRoot(id)} class="osui-datepicker" data-uniqueid="${id}" style="max-width: 280px;">
+			<label for="${id}-input">${range ? 'Pick a date range' : 'Pick a date'}</label>
+			<input id="${id}-input" class="form-control" type="text" placeholder="${range ? 'Select a date range' : 'Select a date'}" />
+		</div>
+		<!-- a11y keyboard-instructions container; the provider finds it via
+		     TagSelector(selfElement.parentElement, '.osui-datepicker-a11y') -->
+		<div class="osui-datepicker-a11y"></div>`;
 
-		return renderPattern(template, (_root, register) => {
-			const P = Patterns();
-			P.DatePickerAPI.Create(
-				id,
-				cfg({
-					DateFormat: args.dateFormat,
-					FirstWeekDay: args.firstWeekDay,
-					ShowTodayButton: args.showTodayButton,
-					ShowWeekNumbers: args.showWeekNumbers,
-					TimeFormat: 'disabled',
-				}),
-				args.mode,
-				'flatpickr'
-			);
-			P.DatePickerAPI.Initialize(id);
-			register(() => P.DatePickerAPI.Dispose?.(id));
-		});
-	},
+	return renderPattern(template, (_root, register) => {
+		const P = Patterns();
+		P.DatePickerAPI.Create(
+			id,
+			cfg({
+				DateFormat: args.dateFormat,
+				FirstWeekDay: args.firstWeekDay,
+				ShowTodayButton: args.showTodayButton,
+				ShowWeekNumbers: args.showWeekNumbers,
+				TimeFormat: 'disabled',
+			}),
+			args.mode,
+			'flatpickr'
+		);
+		P.DatePickerAPI.Initialize(id);
+		register(() => P.DatePickerAPI.Dispose?.(id));
+	});
+}
+
+export const Default: Story = {
+	render: renderDatePicker,
+};
+
+export const Range: Story = {
+	args: { mode: 'range' },
+	render: renderDatePicker,
 };

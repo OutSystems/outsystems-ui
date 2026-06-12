@@ -21,7 +21,8 @@ export const Default: StoryObj<BlankSlateArgs> = {
 		fullHeight: {
 			name: 'FullHeight',
 			control: 'boolean',
-			description: 'When True, displays a larger BlankSlate taking full page height. Maps to `.large` on the root element.',
+			description:
+				'When True, displays a larger BlankSlate taking full page height. Maps to `.large` on the root element.',
 		},
 		extendedClass: extendedClassArgType,
 	},

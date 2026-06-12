@@ -31,30 +31,37 @@ export default meta;
 
 type Story = StoryObj<DropdownArgs>;
 
+function renderDropdown(args: DropdownArgs): HTMLElement {
+	const id = uid('dropdown');
+	const template = `<div ${osuiRoot(id)} class="osui-dropdown" style="max-width:280px;"></div>`;
+	return renderPattern(template, (_root, register) => {
+		const P = Patterns();
+		const mode = args.allowMultipleSelection ? 'tags' : 'search';
+		P.DropdownAPI.Create(
+			id,
+			mode,
+			'virtual-select',
+			cfg({
+				AllowMultipleSelection: args.allowMultipleSelection,
+				IsDisabled: args.isDisabled,
+				OptionsList: OPTIONS,
+				StartingSelection: [],
+				Prompt: 'Choose a fruit',
+				SearchPrompt: 'Search…',
+				NoOptionsText: 'No options',
+				NoResultsText: 'No results',
+			})
+		);
+		P.DropdownAPI.Initialize(id);
+		register(() => P.DropdownAPI.Dispose?.(id));
+	});
+}
+
 export const Default: Story = {
-	render: (args) => {
-		const id = uid('dropdown');
-		const template = `<div ${osuiRoot(id)} class="osui-dropdown" style="max-width:280px;"></div>`;
-		return renderPattern(template, (_root, register) => {
-			const P = Patterns();
-			const mode = args.allowMultipleSelection ? 'tags' : 'search';
-			P.DropdownAPI.Create(
-				id,
-				mode,
-				'virtual-select',
-				cfg({
-					AllowMultipleSelection: args.allowMultipleSelection,
-					IsDisabled: args.isDisabled,
-					OptionsList: OPTIONS,
-					StartingSelection: [],
-					Prompt: 'Choose a fruit',
-					SearchPrompt: 'Search…',
-					NoOptionsText: 'No options',
-					NoResultsText: 'No results',
-				})
-			);
-			P.DropdownAPI.Initialize(id);
-			register(() => P.DropdownAPI.Dispose?.(id));
-		});
-	},
+	render: renderDropdown,
+};
+
+export const Tags: Story = {
+	args: { allowMultipleSelection: true },
+	render: renderDropdown,
 };

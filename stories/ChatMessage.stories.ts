@@ -61,7 +61,8 @@ export const Default: StoryObj<ChatMessageArgs> = {
 		displayOnRight: {
 			name: 'DisplayOnRight',
 			control: 'boolean',
-			description: 'When true, the message bubble aligns to the right (sent); when false, to the left (received).',
+			description:
+				'When true, the message bubble aligns to the right (sent); when false, to the left (received).',
 		},
 		time: {
 			name: 'Time',

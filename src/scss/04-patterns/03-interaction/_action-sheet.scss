@@ -6,9 +6,8 @@
 ///
 .action-sheet {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-action-sheet-background:         var(--color-background-surface);
-	--osui-action-sheet-cancel-color:       var(--color-text-subtlest);
-	--osui-action-sheet-overlay-background: #{$token-backdrop};
+	--osui-action-sheet-background: var(--color-background-surface);
+	--osui-action-sheet-cancel-color: var(--color-text-subtlest);
 	// ───────────────────────────────────────────────────────────────────
 
 	bottom: 0;
@@ -32,6 +31,12 @@
 	}
 
 	&-container {
+		// ─── Component CSS API ─────────────────────────────────────────────
+		// Declared here (not on .action-sheet): the backdrop ::after below reads
+		// it, and .action-sheet is a child — custom properties don't inherit upward.
+		--osui-action-sheet-overlay-background: #{$token-backdrop};
+		// ───────────────────────────────────────────────────────────────────
+
 		height: 100%;
 		left: 0;
 		overflow: hidden;

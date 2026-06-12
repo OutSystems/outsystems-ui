@@ -47,7 +47,15 @@ export const Default: StoryObj<TimelineItemArgs> = {
 		extendedClass: extendedClassArgType,
 	},
 	render: ({ isActive, color, extendedClass }) => {
-		const item = (left: string, icon: string, title: string, desc: string, active: boolean, itemColor: string, extra: string) => `
+		const item = (
+			left: string,
+			icon: string,
+			title: string,
+			desc: string,
+			active: boolean,
+			itemColor: string,
+			extra: string
+		) => `
 			<div class="${cls('timeline-item', active && 'is-active', extra)}" role="listitem">
 				<div class="timeline-left OSInline">${left}</div>
 				<div class="timeline-icon OSInline">

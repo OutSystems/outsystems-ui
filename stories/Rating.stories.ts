@@ -43,7 +43,12 @@ export const Default: Story = {
 				<fieldset></fieldset>
 			</div>`;
 		return renderPattern(template, (_root, register) =>
-			createAndInit('RatingAPI', id, { RatingValue: args.ratingValue, RatingScale: args.ratingScale, IsEdit: args.isEdit, Size: '' }, register)
+			createAndInit(
+				'RatingAPI',
+				id,
+				{ RatingValue: args.ratingValue, RatingScale: args.ratingScale, IsEdit: args.isEdit, Size: '' },
+				register
+			)
 		);
 	},
 };

@@ -6,9 +6,9 @@ import { cls, extendedClassArgType } from './_helpers/lowcode';
  * Columns family. Each story's controls mirror the low-code input parameters of the
  * matching OutSystemsUI block (extracted from the library OML), wired into the
  * shipped markup:
- *   Columns2  → two equal-width columns
- *   Columns3  → three equal-width columns
- *   Columns4  → four equal-width columns
+ *   Columns2..6           → equal-width columns
+ *   Columns Medium L/R    → `columns-medium-{left|right}`: 1/3 + 2/3 split (small side flex:1, wide side flex:2)
+ *   Columns Small L/R     → `columns-small-{left|right}`: 1/4 + 3/4 split (small side flex:1, wide side flex:3)
  *
  * Shared params: GutterSize, TabletBehavior, PhoneBehavior, ExtendedClass.
  * Class mappings come from src/scss/04-patterns/01-adaptive/_columns.scss.
@@ -66,80 +66,44 @@ function colItem(label: string): string {
 	return `<div class="columns-item"><div class="card" style="padding:16px;text-align:center;">${label}</div></div>`;
 }
 
-// ─── Columns2 ─────────────────────────────────────────────────────────────────
+// ─── Story factory (one per low-code Columns block) ──────────────────────────
 
-type Columns2Args = {
+type ColumnsArgs = {
 	gutterSize: GutterOption;
 	tabletBehavior: BehaviorOption;
 	phoneBehavior: BehaviorOption;
 	extendedClass: string;
 };
 
-export const Columns2: StoryObj<Columns2Args> = {
-	args: { gutterSize: 'base', tabletBehavior: 'all', phoneBehavior: 'all', extendedClass: '' },
-	argTypes: {
-		gutterSize: gutterArgType,
-		tabletBehavior: tabletBehaviorArgType,
-		phoneBehavior: phoneBehaviorArgType,
-		extendedClass: extendedClassArgType,
-	},
-	render: ({ gutterSize, tabletBehavior, phoneBehavior, extendedClass }) =>
-		renderStatic(`
-			<div class="${cls('columns', 'columns2', `gutter-${gutterSize}`, breakClass('tablet', tabletBehavior), breakClass('phone', phoneBehavior), extendedClass)}">
-				${colItem('Column 1')}
-				${colItem('Column 2')}
-			</div>`),
-};
+function columnsStory(
+	variantClass: string,
+	labels: string[],
+	defaults: Partial<ColumnsArgs> = {}
+): StoryObj<ColumnsArgs> {
+	return {
+		args: { gutterSize: 'base', tabletBehavior: 'all', phoneBehavior: 'all', extendedClass: '', ...defaults },
+		argTypes: {
+			gutterSize: gutterArgType,
+			tabletBehavior: tabletBehaviorArgType,
+			phoneBehavior: phoneBehaviorArgType,
+			extendedClass: extendedClassArgType,
+		},
+		render: ({ gutterSize, tabletBehavior, phoneBehavior, extendedClass }) =>
+			renderStatic(`
+				<div class="${cls('columns', variantClass, `gutter-${gutterSize}`, breakClass('tablet', tabletBehavior), breakClass('phone', phoneBehavior), extendedClass)}">
+					${labels.map(colItem).join('')}
+				</div>`),
+	};
+}
 
-// ─── Columns3 ─────────────────────────────────────────────────────────────────
+const equalCols = (n: number): string[] => Array.from({ length: n }, (_, i) => `Column ${i + 1}`);
 
-type Columns3Args = {
-	gutterSize: GutterOption;
-	tabletBehavior: BehaviorOption;
-	phoneBehavior: BehaviorOption;
-	extendedClass: string;
-};
-
-export const Columns3: StoryObj<Columns3Args> = {
-	args: { gutterSize: 'base', tabletBehavior: 'all', phoneBehavior: 'all', extendedClass: '' },
-	argTypes: {
-		gutterSize: gutterArgType,
-		tabletBehavior: tabletBehaviorArgType,
-		phoneBehavior: phoneBehaviorArgType,
-		extendedClass: extendedClassArgType,
-	},
-	render: ({ gutterSize, tabletBehavior, phoneBehavior, extendedClass }) =>
-		renderStatic(`
-			<div class="${cls('columns', 'columns3', `gutter-${gutterSize}`, breakClass('tablet', tabletBehavior), breakClass('phone', phoneBehavior), extendedClass)}">
-				${colItem('Column 1')}
-				${colItem('Column 2')}
-				${colItem('Column 3')}
-			</div>`),
-};
-
-// ─── Columns4 ─────────────────────────────────────────────────────────────────
-
-type Columns4Args = {
-	gutterSize: GutterOption;
-	tabletBehavior: BehaviorOption;
-	phoneBehavior: BehaviorOption;
-	extendedClass: string;
-};
-
-export const Columns4: StoryObj<Columns4Args> = {
-	args: { gutterSize: 'base', tabletBehavior: 'middle', phoneBehavior: 'all', extendedClass: '' },
-	argTypes: {
-		gutterSize: gutterArgType,
-		tabletBehavior: tabletBehaviorArgType,
-		phoneBehavior: phoneBehaviorArgType,
-		extendedClass: extendedClassArgType,
-	},
-	render: ({ gutterSize, tabletBehavior, phoneBehavior, extendedClass }) =>
-		renderStatic(`
-			<div class="${cls('columns', 'columns4', `gutter-${gutterSize}`, breakClass('tablet', tabletBehavior), breakClass('phone', phoneBehavior), extendedClass)}">
-				${colItem('Column 1')}
-				${colItem('Column 2')}
-				${colItem('Column 3')}
-				${colItem('Column 4')}
-			</div>`),
-};
+export const Columns2 = columnsStory('columns2', equalCols(2));
+export const Columns3 = columnsStory('columns3', equalCols(3));
+export const Columns4 = columnsStory('columns4', equalCols(4), { tabletBehavior: 'middle' });
+export const Columns5 = columnsStory('columns5', equalCols(5), { tabletBehavior: 'middle' });
+export const Columns6 = columnsStory('columns6', equalCols(6), { tabletBehavior: 'middle' });
+export const ColumnsMediumLeft = columnsStory('columns-medium-left', ['Medium column', 'Wide column']);
+export const ColumnsMediumRight = columnsStory('columns-medium-right', ['Wide column', 'Medium column']);
+export const ColumnsSmallLeft = columnsStory('columns-small-left', ['Small column', 'Wide column']);
+export const ColumnsSmallRight = columnsStory('columns-small-right', ['Wide column', 'Small column']);

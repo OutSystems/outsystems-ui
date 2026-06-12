@@ -104,7 +104,13 @@ export const SingleDisabledItem: Story = {
 			createAndInit(
 				'AccordionItemAPI',
 				id,
-				{ Icon: args.icon, IconPosition: args.iconPosition, IsDisabled: true, StartsExpanded: args.startsExpanded, ToggleWithIcon: false },
+				{
+					Icon: args.icon,
+					IconPosition: args.iconPosition,
+					IsDisabled: true,
+					StartsExpanded: args.startsExpanded,
+					ToggleWithIcon: false,
+				},
 				register
 			)
 		);

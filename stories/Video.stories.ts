@@ -36,7 +36,17 @@ export const Default: Story = {
 			const P = Patterns();
 			P.VideoAPI.Create(
 				id,
-				cfg({ URL: args.url, Controls: args.controls, Muted: args.muted, Loop: args.loop, Autoplay: false, Width: '', Height: '', PosterURL: '', Captions: '[]' })
+				cfg({
+					URL: args.url,
+					Controls: args.controls,
+					Muted: args.muted,
+					Loop: args.loop,
+					Autoplay: false,
+					Width: '',
+					Height: '',
+					PosterURL: '',
+					Captions: '[]',
+				})
 			);
 			P.VideoAPI.Initialize(id);
 			register(() => P.VideoAPI.Dispose?.(id));

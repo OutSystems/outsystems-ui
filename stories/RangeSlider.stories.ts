@@ -31,35 +31,42 @@ export default meta;
 
 type Story = StoryObj<RangeSliderArgs>;
 
+function renderRangeSlider(args: RangeSliderArgs): HTMLElement {
+	const id = uid('range-slider');
+	const interval = args.mode === 'interval';
+	const template = `
+		<div ${osuiRoot(id)} class="osui-range-slider" style="max-width:360px;padding:24px 8px;">
+			<div class="osui-range-slider__provider"></div>
+		</div>`;
+	return renderPattern(template, (_root, register) => {
+		const P = Patterns();
+		P.RangeSliderAPI.Create(
+			id,
+			cfg({
+				MinValue: args.minValue,
+				MaxValue: args.maxValue,
+				Step: args.step,
+				IsInterval: interval,
+				ShowFloatingLabel: args.showFloatingLabel,
+				ShowTickMarks: args.showTickMarks,
+				StartingValueFrom: interval ? args.minValue + (args.maxValue - args.minValue) * 0.25 : args.minValue,
+				StartingValueTo: interval ? args.minValue + (args.maxValue - args.minValue) * 0.75 : 0,
+				Orientation: 'horizontal',
+				Size: '100%',
+			}),
+			args.mode,
+			'noUiSlider'
+		);
+		P.RangeSliderAPI.Initialize(id);
+		register(() => P.RangeSliderAPI.Dispose?.(id));
+	});
+}
+
 export const Default: Story = {
-	render: (args) => {
-		const id = uid('range-slider');
-		const interval = args.mode === 'interval';
-		const template = `
-			<div ${osuiRoot(id)} class="osui-range-slider" style="max-width:360px;padding:24px 8px;">
-				<div class="osui-range-slider__provider"></div>
-			</div>`;
-		return renderPattern(template, (_root, register) => {
-			const P = Patterns();
-			P.RangeSliderAPI.Create(
-				id,
-				cfg({
-					MinValue: args.minValue,
-					MaxValue: args.maxValue,
-					Step: args.step,
-					IsInterval: interval,
-					ShowFloatingLabel: args.showFloatingLabel,
-					ShowTickMarks: args.showTickMarks,
-					StartingValueFrom: interval ? args.minValue + (args.maxValue - args.minValue) * 0.25 : args.minValue,
-					StartingValueTo: interval ? args.minValue + (args.maxValue - args.minValue) * 0.75 : 0,
-					Orientation: 'horizontal',
-					Size: '100%',
-				}),
-				args.mode,
-				'noUiSlider'
-			);
-			P.RangeSliderAPI.Initialize(id);
-			register(() => P.RangeSliderAPI.Dispose?.(id));
-		});
-	},
+	render: renderRangeSlider,
+};
+
+export const Interval: Story = {
+	args: { mode: 'interval' },
+	render: renderRangeSlider,
 };

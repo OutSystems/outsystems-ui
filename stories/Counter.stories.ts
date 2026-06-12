@@ -29,7 +29,8 @@ export const Default: StoryObj<CounterArgs> = {
 		isVertical: {
 			name: 'IsVertical',
 			control: 'boolean',
-			description: 'When True, content is displayed vertically (column). Maps to `flex-direction-column` on `.center-align`; False maps to `flex-direction-row`.',
+			description:
+				'When True, content is displayed vertically (column). Maps to `flex-direction-column` on `.center-align`; False maps to `flex-direction-row`.',
 		},
 		height: {
 			name: 'Height',

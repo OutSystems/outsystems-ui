@@ -25,15 +25,22 @@ type Story = StoryObj<GalleryArgs>;
 export const Default: Story = {
 	render: (args) => {
 		const id = uid('gallery');
-		const cards = Array.from({ length: 6 }, (_, i) =>
-			`<div class="card" style="padding:24px;background:#eef;border-radius:8px;text-align:center;">Item ${i + 1}</div>`
+		const cards = Array.from(
+			{ length: 6 },
+			(_, i) =>
+				`<div class="card" style="padding:24px;background:#eef;border-radius:8px;text-align:center;">Item ${i + 1}</div>`
 		).join('');
 		const template = `<div ${osuiRoot(id)} class="osui-gallery"><div class="list">${cards}</div></div>`;
 		return renderPattern(template, (_root, register) => {
 			const P = Patterns();
 			P.GalleryAPI.Create(
 				id,
-				cfg({ RowItemsDesktop: args.rowItemsDesktop, RowItemsTablet: args.rowItemsTablet, RowItemsPhone: args.rowItemsPhone, ItemsGap: args.itemsGap })
+				cfg({
+					RowItemsDesktop: args.rowItemsDesktop,
+					RowItemsTablet: args.rowItemsTablet,
+					RowItemsPhone: args.rowItemsPhone,
+					ItemsGap: args.itemsGap,
+				})
 			);
 			P.GalleryAPI.Initialize(id);
 			register(() => P.GalleryAPI.Dispose?.(id));

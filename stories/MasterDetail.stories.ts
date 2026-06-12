@@ -49,7 +49,8 @@ export const Default: StoryObj<MasterDetailArgs> = {
 		height: {
 			name: 'Height',
 			control: 'text',
-			description: 'Height of the pattern (any valid CSS value, e.g. "400px", "60vh"). Applied as an inline height style.',
+			description:
+				'Height of the pattern (any valid CSS value, e.g. "400px", "60vh"). Applied as an inline height style.',
 		},
 	},
 	render: ({ leftPercentage, openedOnPhone, height }) => {

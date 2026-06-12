@@ -25,7 +25,8 @@ export const Default: StoryObj<AlertArgs> = {
 			name: 'AlertType',
 			control: 'select',
 			options: ['success', 'info', 'warning', 'error'],
-			description: 'Type of the alert message. Maps to `.alert-{success|info|warning|error}` on the root element.',
+			description:
+				'Type of the alert message. Maps to `.alert-{success|info|warning|error}` on the root element.',
 		},
 		extendedClass: extendedClassArgType,
 	},

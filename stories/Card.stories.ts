@@ -37,7 +37,11 @@ export const Sectioned: StoryObj<SectionedArgs> = {
 	argTypes: {
 		usePadding: usePaddingArgType,
 		isVertical: { name: 'IsVertical', control: 'boolean', description: 'Set the orientation.' },
-		imagePadding: { name: 'ImagePadding', control: 'boolean', description: 'When true, image has 24px of padding.' },
+		imagePadding: {
+			name: 'ImagePadding',
+			control: 'boolean',
+			description: 'When true, image has 24px of padding.',
+		},
 		extendedClass: extendedClassArgType,
 	},
 	render: ({ usePadding, isVertical, imagePadding, extendedClass }) => {
@@ -64,8 +68,17 @@ type BackgroundArgs = { color: string; minHeight: number; extendedClass: string 
 export const Background: StoryObj<BackgroundArgs> = {
 	args: { color: 'primary', minHeight: 200, extendedClass: '' },
 	argTypes: {
-		color: { name: 'Color', control: 'select', options: COLOR_OPTIONS, description: 'Background color of the Block.' },
-		minHeight: { name: 'MinHeight', control: { type: 'number', min: 0, step: 10 }, description: 'Minimum height of the Card, in pixels.' },
+		color: {
+			name: 'Color',
+			control: 'select',
+			options: COLOR_OPTIONS,
+			description: 'Background color of the Block.',
+		},
+		minHeight: {
+			name: 'MinHeight',
+			control: { type: 'number', min: 0, step: 10 },
+			description: 'Minimum height of the Card, in pixels.',
+		},
 		extendedClass: extendedClassArgType,
 	},
 	render: ({ color, minHeight, extendedClass }) =>

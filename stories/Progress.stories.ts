@@ -41,7 +41,15 @@ export const Bar: Story = {
 			P.ProgressAPI.Create(
 				id,
 				'Bar',
-				cfg({ Progress: args.progress, Thickness: args.thickness, Shape: args.shape, ProgressColor: 'primary', TrailColor: 'border-subtle', AnimateInitialProgress: true, InitialProgress: 0 })
+				cfg({
+					Progress: args.progress,
+					Thickness: args.thickness,
+					Shape: args.shape,
+					ProgressColor: 'primary',
+					TrailColor: 'border-subtle',
+					AnimateInitialProgress: true,
+					InitialProgress: 0,
+				})
 			);
 			P.ProgressAPI.Initialize(id);
 			register(() => P.ProgressAPI.Dispose?.(id));
@@ -70,7 +78,16 @@ export const Circle: Story = {
 			P.ProgressAPI.Create(
 				id,
 				'Circle',
-				cfg({ Progress: args.progress, Thickness: args.thickness, Shape: args.shape, ProgressColor: 'primary', TrailColor: 'neutral-300', AnimateInitialProgress: true, InitialProgress: 0, ProgressCircleSize: 'auto' })
+				cfg({
+					Progress: args.progress,
+					Thickness: args.thickness,
+					Shape: args.shape,
+					ProgressColor: 'primary',
+					TrailColor: 'neutral-300',
+					AnimateInitialProgress: true,
+					InitialProgress: 0,
+					ProgressCircleSize: 'auto',
+				})
 			);
 			P.ProgressAPI.Initialize(id);
 			register(() => P.ProgressAPI.Dispose?.(id));

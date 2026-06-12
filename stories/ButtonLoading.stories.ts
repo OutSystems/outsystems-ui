@@ -29,7 +29,12 @@ export const Default: Story = {
 				</button>
 			</div>`;
 		return renderPattern(template, (_root, register) =>
-			createAndInit('ButtonLoadingAPI', id, { IsLoading: args.isLoading, ShowLoadingAndLabel: args.showLoadingAndLabel }, register)
+			createAndInit(
+				'ButtonLoadingAPI',
+				id,
+				{ IsLoading: args.isLoading, ShowLoadingAndLabel: args.showLoadingAndLabel },
+				register
+			)
 		);
 	},
 };

@@ -39,7 +39,10 @@ export const Default: Story = {
 			</div>`;
 		return renderPattern(template, (_root, register) => {
 			const P = Patterns();
-			P.TooltipAPI.Create(id, cfg({ IsHover: args.isHover, Position: args.position, StartVisible: args.startVisible }));
+			P.TooltipAPI.Create(
+				id,
+				cfg({ IsHover: args.isHover, Position: args.position, StartVisible: args.startVisible })
+			);
 			P.TooltipAPI.Initialize(id);
 			register(() => P.TooltipAPI.Dispose?.(id));
 		});
