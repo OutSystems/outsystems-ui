@@ -43,6 +43,9 @@
 		z-index: var(--layer-instant-interaction);
 
 		a {
+			// Items stack vertically — anchors are inline by default, which would
+			// lay them out side-by-side.
+			display: block;
 			color: var(--osui-overflow-menu-color);
 			text-decoration: none;
 

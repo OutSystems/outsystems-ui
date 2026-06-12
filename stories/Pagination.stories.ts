@@ -84,18 +84,23 @@ export const Default: StoryObj<PaginationArgs> = {
 			.join('');
 
 		const goToPage = showGoToPage
-			? `<div class="pagination-input"><label>Go to page<input class="form-control" data-input type="number" min="1" max="${totalPages}" value="${currentPage}" style="margin-left:8px;margin-right:8px;width:56px;height:36px;padding:0;text-align:center;"></label></div>`
+			? `<div class="pagination-input"><label>Go to page <input class="form-control" data-input type="number" min="1" max="${totalPages}" value="${currentPage}"></label></div>`
 			: '';
 
+		// Layout is entirely from the shipped CSS (_pagination.scss):
+		//  • .pagination is flex/space-between → counter (first) sits left, nav (last) right.
+		//  • prev/next are the first/last .pagination-button; their .icon is hidden and a
+		//    chevron is added via ::before — so they're icon-only (no "Prev"/"Next" text).
+		//  • .pagination-button has its own margin-left spacing — no inline gap needed.
 		return renderStatic(`
-			<div class="${cls('pagination', extendedClass)}" style="max-width:480px;">
-				<div class="pagination-container" style="display:flex;gap:4px;align-items:center;">
-					<button class="pagination-button" ${currentPage === 1 ? 'disabled' : ''}>Prev</button>
+			<div class="${cls('pagination', extendedClass)}">
+				<div class="pagination-counter">${rangeStart} to ${rangeEnd} of ${totalCount} items</div>
+				<div class="pagination-container">
+					<button class="pagination-button" aria-label="Previous page"${currentPage === 1 ? ' disabled' : ''}><span class="icon"></span></button>
 					${pageButtons}
-					<button class="pagination-button" ${currentPage === totalPages ? 'disabled' : ''}>Next</button>
+					<button class="pagination-button" aria-label="Next page"${currentPage === totalPages ? ' disabled' : ''}><span class="icon"></span></button>
 				</div>
 				${goToPage}
-				<div class="pagination-counter">Items ${rangeStart}–${rangeEnd} of ${totalCount}</div>
 			</div>`);
 	},
 };
