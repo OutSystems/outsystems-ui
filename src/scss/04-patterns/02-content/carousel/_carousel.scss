@@ -10,7 +10,7 @@
 .osui-carousel {
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-carousel-arrow-background:        var(--color-background-surface);
-	--osui-carousel-arrow-shadow:            #{$token-elevation-1};
+	--osui-carousel-arrow-shadow:            #{$token-elevation-2};
 	--osui-carousel-arrow-icon-color:        var(--color-text);
 	--osui-carousel-pagination-color:        var(--color-border);
 	--osui-carousel-pagination-active-color: var(--color-primary);
