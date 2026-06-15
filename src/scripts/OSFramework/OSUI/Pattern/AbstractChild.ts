@@ -49,9 +49,9 @@ namespace OSFramework.OSUI.Patterns {
 		// eslint-disable-next-line @typescript-eslint/ban-types
 		protected setParentInfo(parentSelector: string, getPatternByIdAPI: Function, canBeOrphan?: boolean): void {
 			try {
-				const findedElement = this.selfElement.closest(parentSelector) as HTMLElement;
+				const findedElement = this.selfElement.closest(parentSelector) as HTMLElement | undefined;
 				// Find for Id at Name or data-uniqueid attribute, data-uniqueid attribute is used at the elements that will be moved outside parent context
-				this._parentId = Helper.Dom.Attribute.Get(findedElement, 'name') || findedElement.dataset.uniqueid;
+				this._parentId = Helper.Dom.Attribute.Get(findedElement, 'name') || findedElement?.dataset.uniqueid;
 
 				this._parentObject = getPatternByIdAPI(this._parentId) as PT;
 			} catch (e) {

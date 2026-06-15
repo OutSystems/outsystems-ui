@@ -215,7 +215,9 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 			const elem = this._elementWithEvents;
 
 			// Set ARIA Controls
-			Helper.A11Y.AriaControls(this._accordionItemTitleElem, this._accordionItemPlaceholder.id);
+			if (this._accordionItemPlaceholder) {
+				Helper.A11Y.AriaControls(this._accordionItemTitleElem, this._accordionItemPlaceholder.id);
+			}
 
 			// Set roles
 			Helper.A11Y.RoleButton(elem);
@@ -343,10 +345,10 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 			// Set the static attributes on page load only
 			if (this.isBuilt === false) {
 				// Set ARIA Controls
-				Helper.A11Y.AriaControls(this._accordionItemTitleElem, this._accordionItemPlaceholder.id);
+				Helper.A11Y.AriaControls(this._accordionItemTitleElem, this._accordionItemPlaceholder?.id ?? '');
 
 				// Set ARIA LabelledBy
-				Helper.A11Y.AriaLabelledBy(this._accordionItemContentElem, this._accordionItemTitleElem.id);
+				Helper.A11Y.AriaLabelledBy(this._accordionItemContentElem, this._accordionItemTitleElem?.id ?? '');
 
 				// Set aria-hidden to icon
 				Helper.A11Y.AriaHiddenTrue(this._accordionItemIconElem);
@@ -404,7 +406,7 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 				this.selfElement,
 				Enum.CssClass.PatternIcon + '.' + GlobalEnum.CssClassElements.Placeholder
 			);
-			this._accordionItemPlaceholder = this._accordionItemContentElem.firstChild as HTMLElement;
+			this._accordionItemPlaceholder = this._accordionItemContentElem?.firstChild as HTMLElement | undefined;
 
 			// Get all focusable elements inside Accordion Title
 			this._accordionTitleFocusableChildren = Helper.Dom.TagSelectorAll(

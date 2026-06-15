@@ -21,7 +21,7 @@ namespace OutSystems.OSUI.Utils {
 					link.type = 'image/x-icon';
 					link.rel = 'shortcut icon';
 					link.href = URL;
-					document.getElementsByTagName('head')[0].appendChild(link);
+					document.getElementsByTagName('head')[0]?.appendChild(link);
 				}
 			},
 		});
@@ -72,8 +72,9 @@ namespace OutSystems.OSUI.Utils {
 
 				const listAnimateItems = function () {
 					setTimeout(function () {
-						const listElement = OSFramework.OSUI.Helper.Dom.GetElementById(ListId)
-							.childNodes[1] as HTMLElement;
+						const listElement = OSFramework.OSUI.Helper.Dom.GetElementById(ListId)?.childNodes[1] as
+							| HTMLElement
+							| undefined;
 						const listItemContentLeft = OSFramework.OSUI.Helper.Dom.TagSelector(
 							listElement,
 							'.active-screen .list-item-left-actions'
@@ -83,7 +84,9 @@ namespace OutSystems.OSUI.Utils {
 							'.active-screen .list-item-right-actions'
 						);
 
-						listElement.style.pointerEvents = 'none';
+						if (listElement) {
+							listElement.style.pointerEvents = 'none';
+						}
 
 						if (HasLeftAction) {
 							OSFramework.OSUI.Helper.Dom.Styles.AddClass(listItemContentLeft, 'has-content-animation');
@@ -103,7 +106,9 @@ namespace OutSystems.OSUI.Utils {
 											'has-content-animation'
 										);
 										OSFramework.OSUI.Helper.Dom.Attribute.Remove(listItemContentLeft, 'style');
-										listElement.style.pointerEvents = '';
+										if (listElement) {
+											listElement.style.pointerEvents = '';
+										}
 									},
 									false
 								);
@@ -119,7 +124,7 @@ namespace OutSystems.OSUI.Utils {
 								'width:75px; transition: all ' +
 									timeAnimation +
 									'ms !important; height: ' +
-									listElement.offsetHeight +
+									(listElement?.offsetHeight ?? 0) +
 									'px;'
 							);
 
@@ -134,7 +139,9 @@ namespace OutSystems.OSUI.Utils {
 											'has-content-animation-right'
 										);
 										OSFramework.OSUI.Helper.Dom.Attribute.Remove(listItemContentRight, 'style');
-										listElement.style.pointerEvents = '';
+										if (listElement) {
+											listElement.style.pointerEvents = '';
+										}
 									},
 									false
 								);
