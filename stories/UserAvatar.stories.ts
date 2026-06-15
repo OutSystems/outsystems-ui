@@ -93,6 +93,10 @@ export const Default: StoryObj<UserAvatarArgs> = {
 	},
 	render: ({ name, image, color, size, shape, isLight, extendedClass }) => {
 		const bgClass = color ? `background-${color}${isLight ? lightBgSuffix(color) : ''}` : '';
+		// IsLight pairs the light background with the color's darker text variant
+		// (semantic colors only expose `text-{color}`, palette/brand use `-darker`).
+		const textClass =
+			color && isLight ? `text-${color}${SEMANTIC_LIGHT_COLORS.has(color) ? '' : '-darker'}` : '';
 		const shapeClass = shape ? `border-radius-${shape}` : '';
 		const sizeClass = size ? `avatar-${size}` : '';
 		const label = `user initials, ${initials(name)}`;
@@ -100,7 +104,7 @@ export const Default: StoryObj<UserAvatarArgs> = {
 			? `<img src="${image}" alt="${name}" style="width:100%;height:100%;object-fit:cover;" />`
 			: `<span class="OSFillParent">${initials(name)}</span>`;
 		return renderStatic(
-			`<div class="${cls('avatar', sizeClass, shapeClass, bgClass, extendedClass)}" role="img" aria-label="${label}">${inner}</div>`
+			`<div class="${cls('avatar', sizeClass, shapeClass, bgClass, textClass, extendedClass)}" role="img" aria-label="${label}">${inner}</div>`
 		);
 	},
 };

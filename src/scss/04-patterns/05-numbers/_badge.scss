@@ -41,8 +41,16 @@
 
 		&-primary-lightest {
 			background-color: $token-semantics-primary-100;
-			color: $token-semantics-primary-700;
 		}
+	}
+
+	// IsLight=true renders `background-{color}-lightest`. Brand and neutral light
+	// variants invert their text to the dark on-light color for readability —
+	// palette colors keep their own darker text via the `text-{color}-darker` class.
+	&.background-primary-lightest,
+	&.background-secondary-lightest,
+	&[class*='background-neutral'][class*='-lightest'] {
+		color: var(--osui-badge-on-light-color);
 	}
 
 	&-small {

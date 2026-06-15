@@ -57,4 +57,14 @@
 			}
 		}
 	}
+
+	// IsLight=true renders `background-{color}-lightest`. The brand and neutral
+	// light variants sit on a plain (untinted) surface, so their text must invert
+	// to the dark on-light color to stay readable — palette colors keep their own
+	// darker text via the `text-{color}-darker` class.
+	&.background-primary-lightest,
+	&.background-secondary-lightest,
+	&[class*='background-neutral'][class*='-lightest'] {
+		color: var(--osui-tag-on-light-color);
+	}
 }

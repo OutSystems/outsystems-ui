@@ -10,22 +10,16 @@
 
 ///
 .background {
-	$i: 0;
 	@each $type, $value in $osui-colors-neutral {
 		&-neutral {
 			&-#{$type} {
 				background-color: #{$value};
 
 				&-lightest {
-					@if ($i < 5) {
-						background-color: $token-primitives-neutral-900;
-					} @else {
-						background-color: $token-primitives-base-white;
-					}
+					background-color: $token-bg-surface-default;
 				}
 			}
 		}
-		$i: $i + 1;
 	}
 }
 
