@@ -7,7 +7,7 @@
 .card {
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-card-background:    var(--color-background-surface);
-	--osui-card-border-color:  var(--osui-border-subtle);
+	--osui-card-border-color:  #{$token-border-subtle};
 	--osui-card-border-width:  #{$token-border-size-025};
 	--osui-card-border-radius: var(--border-radius-soft);
 	--osui-card-padding:       #{$token-scale-600};
