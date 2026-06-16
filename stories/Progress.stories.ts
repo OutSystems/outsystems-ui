@@ -83,7 +83,7 @@ export const Circle: Story = {
 					Thickness: args.thickness,
 					Shape: args.shape,
 					ProgressColor: 'primary',
-					TrailColor: 'neutral-300',
+					TrailColor: 'neutral-2',
 					AnimateInitialProgress: true,
 					InitialProgress: 0,
 					ProgressCircleSize: 'auto',
