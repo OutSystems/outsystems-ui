@@ -7,7 +7,10 @@
 .action-sheet {
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-action-sheet-background: var(--color-background-surface);
-	--osui-action-sheet-cancel-color: var(--color-text-subtlest);
+	--osui-action-sheet-border-radius: #{$token-border-radius-200};
+	--osui-action-sheet-cancel-color: #{$token-text-primary};
+	--osui-action-sheet-divider-color: #{$token-border-subtle};
+	--osui-action-sheet-shadow: #{$token-elevation-2};
 	// ───────────────────────────────────────────────────────────────────
 
 	bottom: 0;
@@ -96,7 +99,9 @@
 	}
 
 	&-buttons {
-		border-radius: $token-border-radius-100;
+		background-color: var(--osui-action-sheet-divider-color);
+		border-radius: var(--osui-action-sheet-border-radius);
+		box-shadow: var(--osui-action-sheet-shadow);
 		display: block;
 		overflow: hidden;
 		position: relative;
@@ -110,8 +115,9 @@
 		}
 
 		.btn {
+			--osui-btn-border-radius: 0;
+
 			border: none;
-			border-radius: 0;
 			margin-top: 1px;
 			width: 100%;
 		}
@@ -121,9 +127,16 @@
 		}
 	}
 
-	&-cancel .btn {
-		border: none;
-		color: var(--osui-action-sheet-cancel-color);
+	&-cancel {
+		margin-top: $token-scale-200;
+
+		.btn {
+			--osui-btn-border-radius: var(--osui-action-sheet-border-radius);
+			--osui-btn-color: var(--osui-action-sheet-cancel-color);
+
+			border: none;
+			box-shadow: var(--osui-action-sheet-shadow);
+		}
 	}
 }
 

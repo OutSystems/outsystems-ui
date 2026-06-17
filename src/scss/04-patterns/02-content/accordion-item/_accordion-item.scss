@@ -12,13 +12,14 @@
 .osui-accordion-item {
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-accordion-item-background: var(--color-background-surface);
-	--osui-accordion-item-border-color: var(--color-border);
+	--osui-accordion-item-border-color: var(--color-border-subtle);
 	--osui-accordion-item-border-width: #{$token-border-size-025};
 	--osui-accordion-item-border-radius: #{$token-border-radius-100};
 	--osui-accordion-item-color: var(--color-text);
 	--osui-accordion-item-active-indicator-color: var(--color-primary);
-	--osui-accordion-item-icon-color: var(--color-primary);
-	--osui-accordion-item-title-hover-background: #{$token-bg-neutral-subtle-default};
+	--osui-accordion-item-icon-color: #{$token-icon-primary};
+	--osui-accordion-item-title-hover-background: #{$token-primitives-neutral-100};
+	--osui-accordion-item-title-hover-border-color: var(--color-border);
 	// ───────────────────────────────────────────────────────────────────
 
 	--accordion-active-border-size: #{$token-border-size-050};
@@ -67,6 +68,7 @@
 
 			.osui-accordion-item__title:hover {
 				background-color: transparent;
+				box-shadow: none;
 			}
 
 			.osui-accordion-item__icon {
@@ -97,11 +99,13 @@
 		gap: $token-scale-200;
 		justify-content: space-between;
 		line-height: 1;
-		padding: var(--osui-scale-350) $token-scale-600;
+		padding: $token-scale-300 $token-scale-600;
 		width: 100%;
 
 		&:hover {
 			background-color: var(--osui-accordion-item-title-hover-background);
+			box-shadow: inset 0 calc(-1 * var(--osui-accordion-item-border-width)) 0 0
+				var(--osui-accordion-item-title-hover-border-color);
 		}
 
 		// Links inside title always underlined; on focus use a11y highlight colour + offset

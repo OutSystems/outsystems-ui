@@ -60,7 +60,7 @@ export const Default: StoryObj<TimelineItemArgs> = {
 				<div class="timeline-left OSInline">${left}</div>
 				<div class="timeline-icon OSInline">
 					<div class="timeline-icon-line OSInline"></div>
-					<div class="${cls('timeline-icon-container', itemColor && `background-${itemColor}`, 'OSInline')}"><i class="icon fa fa-check fa-1x"></i></div>
+					<div class="${cls('timeline-icon-container', itemColor && `background-${itemColor}`, 'OSInline')}"><i class="icon ph ph-check"></i></div>
 				</div>
 				<div class="timeline-content"><div>${title}</div><div class="timeline-content-inner">${desc}</div></div>
 			</div>`;
@@ -71,16 +71,16 @@ export const Default: StoryObj<TimelineItemArgs> = {
 					<div class="timeline-left OSInline">2019</div>
 					<div class="timeline-icon OSInline">
 						<div class="timeline-icon-line OSInline"></div>
-						<div class="timeline-icon-container background-primary OSInline"><i class="icon fa fa-archive fa-1x"></i></div>
+						<div class="timeline-icon-container background-primary OSInline"><i class="icon ph ph-archive"></i></div>
 					</div>
 					<div class="timeline-content"><div>Pending approval</div><div class="timeline-content-inner">This request requires your approval.</div></div>
 				</div>
-				${item('2020', 'fa-check', 'Approved', 'The request was approved by the manager.', isActive, color, extendedClass)}
+				${item('2020', 'ph-check', 'Approved', 'The request was approved by the manager.', isActive, color, extendedClass)}
 				<div class="timeline-item" role="listitem">
 					<div class="timeline-left OSInline">2021</div>
 					<div class="timeline-icon OSInline">
 						<div class="timeline-icon-line OSInline"></div>
-						<div class="timeline-icon-container background-primary OSInline"><i class="icon fa fa-flag fa-1x"></i></div>
+						<div class="timeline-icon-container background-primary OSInline"><i class="icon ph ph-flag"></i></div>
 					</div>
 					<div class="timeline-content"><div>Closed</div><div class="timeline-content-inner">The request lifecycle is complete.</div></div>
 				</div>

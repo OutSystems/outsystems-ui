@@ -29,11 +29,11 @@ const meta: Meta<InputWithIconArgs> = {
 			options: ['left', 'right'],
 			description: 'Side of the input where the icon is rendered.',
 		},
-		icon: { name: 'Icon', control: 'text', description: 'FontAwesome 4 icon class (e.g. fa-search).' },
+		icon: { name: 'Icon', control: 'text', description: 'Phosphor icon class (e.g. ph-magnifying-glass).' },
 		placeholder: { name: 'Placeholder', control: 'text' },
 		extendedClass: extendedClassArgType,
 	},
-	args: { iconPosition: 'left', icon: 'fa-search', placeholder: 'Search…', extendedClass: '' },
+	args: { iconPosition: 'left', icon: 'ph-magnifying-glass', placeholder: 'Search…', extendedClass: '' },
 };
 export default meta;
 
@@ -45,7 +45,7 @@ export const Default: Story = {
 			<div style="max-width: 320px;">
 				<div class="${cls('input-with-icon', iconPosition === 'right' && 'input-with-icon-right', extendedClass)}">
 					<div class="input-with-icon-content-icon" style="align-items: center; justify-content: center;">
-						<i class="icon fa ${icon} fa-1x"></i>
+						<i class="icon ph ${icon}"></i>
 					</div>
 					<div class="input-with-icon-input">
 						<input type="text" class="form-control" data-input placeholder="${placeholder}" />

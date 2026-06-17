@@ -7,16 +7,16 @@ type Story = StoryObj;
 
 const msg = (variant: string, icon: string, text: string) => `
 	<div class="feedback-message ${variant}" style="margin-bottom:8px;">
-		<i class="fa ${icon}"></i>
+		<i class="ph ${icon}"></i>
 		<span class="feedback-message-text">${text}</span>
 	</div>`;
 
 export const Default: Story = {
 	render: () =>
 		renderStatic(
-			msg('feedback-message-success', 'fa-check-circle', 'Operation completed successfully.') +
-				msg('feedback-message-error', 'fa-times-circle', 'Something went wrong.') +
-				msg('feedback-message-warning', 'fa-exclamation-triangle', 'Please review before proceeding.') +
-				msg('feedback-message-info', 'fa-info-circle', "Here's some useful information.")
+			msg('feedback-message-success', 'ph-check-circle', 'Operation completed successfully.') +
+				msg('feedback-message-error', 'ph-x-circle', 'Something went wrong.') +
+				msg('feedback-message-warning', 'ph-warning', 'Please review before proceeding.') +
+				msg('feedback-message-info', 'ph-info', "Here's some useful information.")
 		),
 };

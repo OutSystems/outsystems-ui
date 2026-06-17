@@ -21,7 +21,7 @@ import { cls, extendedClassArgType } from './_helpers/lowcode';
  *   UseTopLabel → `label-top`    on `.wizard-wrapper-item` when true
  *                 `label-bottom` on `.wizard-wrapper-item` when false
  */
-const meta: Meta = { title: 'Patterns/Navigation/Wizard' };
+const meta: Meta = { title: 'Patterns/Navigation/Wizard', tags: ['!ui-pending', 'ui-reviewed'] };
 export default meta;
 
 // ─── WizardItem status type ───────────────────────────────────────────────────

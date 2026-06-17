@@ -10,6 +10,7 @@ interface NotificationArgs {
 
 const meta: Meta<NotificationArgs> = {
 	title: 'Patterns/Interaction/Notification',
+	tags: ['!ui-pending', 'ui-reviewed'],
 	argTypes: {
 		position: { control: 'select', options: ['top', 'bottom', 'left', 'right'], name: 'Position' },
 		width: { control: 'text', name: 'Width' },

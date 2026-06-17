@@ -15,7 +15,7 @@ import { cls, extendedClassArgType } from './_helpers/lowcode';
  * `pagination-input` (`.pagination-input`) is the rendered go-to-page container;
  * the page numbers and counter are computed from StartIndex / MaxRecords / TotalCount.
  */
-const meta: Meta = { title: 'Patterns/Navigation/Pagination' };
+const meta: Meta = { title: 'Patterns/Navigation/Pagination', tags: ['!ui-pending', 'ui-reviewed'] };
 export default meta;
 
 type PaginationArgs = {

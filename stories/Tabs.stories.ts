@@ -26,6 +26,7 @@ const TABS = [
 
 const meta: Meta<TabsArgs> = {
 	title: 'Patterns/Navigation/Tabs',
+	tags: ['!ui-pending', 'ui-reviewed'],
 	argTypes: {
 		startingTab: { control: { type: 'number', min: 0, max: 5 }, name: 'StartingTab' },
 		justifyHeaders: { control: 'boolean', name: 'JustifyHeaders' },

@@ -13,10 +13,15 @@
 	&-actions-wrapper {
 		// ─── Component CSS API ─────────────────────────────────────────────
 		--osui-floating-actions-button-background: var(--color-primary);
-		--osui-floating-actions-button-color:      var(--color-text-inverse);
-		--osui-floating-actions-button-shadow:     #{$token-elevation-4};
-		--osui-floating-actions-item-background:   var(--color-background-surface);
-		--osui-floating-actions-item-color:        var(--color-primary);
+		--osui-floating-actions-button-background-hover: #{$token-semantics-primary-800};
+		--osui-floating-actions-button-background-press: #{$token-bg-primary-base-press};
+		--osui-floating-actions-button-color: var(--color-text-inverse);
+		--osui-floating-actions-button-shadow: #{$token-elevation-3};
+		--osui-floating-actions-item-background: var(--color-background-surface);
+		--osui-floating-actions-item-background-hover: #{$token-primitives-neutral-100};
+		--osui-floating-actions-item-background-press: #{$token-bg-neutral-subtlest-press};
+		--osui-floating-actions-item-color: var(--color-text);
+		--osui-floating-actions-item-shadow: #{$token-elevation-2};
 		// ───────────────────────────────────────────────────────────────────
 
 		align-items: flex-end;
@@ -42,7 +47,9 @@
 			.floating-actions-item {
 				opacity: 1;
 				transform: translateY(0px) translateZ(0) scale(1);
-				transition: opacity var(--osui-motion-duration-180) $token-transition-curve-base, transform var(--osui-motion-duration-180) $token-transition-curve-base;
+				transition:
+					opacity var(--osui-motion-duration-180) $token-transition-curve-base,
+					transform var(--osui-motion-duration-180) $token-transition-curve-base;
 				transition-delay: calc(var(--delay) * 40ms); // design-spec: stagger delay
 			}
 
@@ -96,21 +103,22 @@
 		margin-bottom: $token-scale-400;
 		opacity: 0;
 		transform: translateY($token-scale-400) translateZ(0);
-		transition: opacity $token-transition-time-100 $token-transition-curve-base, transform $token-transition-time-100 $token-transition-curve-base;
+		transition:
+			opacity $token-transition-time-100 $token-transition-curve-base,
+			transform $token-transition-time-100 $token-transition-curve-base;
 
 		// Service Studio Preview
 		& {
 			-servicestudio-opacity: 1;
 			-servicestudio-transform: translateY(0);
 		}
-
 	}
 
 	&-actions-item-button {
 		align-items: center;
 		background-color: var(--osui-floating-actions-item-background);
 		border-radius: var(--border-radius-rounded);
-		box-shadow: $token-elevation-1;
+		box-shadow: var(--osui-floating-actions-item-shadow);
 		color: var(--osui-floating-actions-item-color);
 		cursor: pointer;
 		display: flex;
@@ -129,8 +137,11 @@
 		}
 
 		&:hover {
-			--osui-floating-actions-item-background: var(--osui-floating-actions-button-background);
-			--osui-floating-actions-item-color:      var(--osui-floating-actions-button-color);
+			--osui-floating-actions-item-background: var(--osui-floating-actions-item-background-hover);
+		}
+
+		&:active {
+			--osui-floating-actions-item-background: var(--osui-floating-actions-item-background-press);
 		}
 	}
 
@@ -148,11 +159,17 @@
 		pointer-events: auto;
 		transform: rotate(0deg) translateZ(0);
 		transform-origin: center center;
-		transition: transform var(--osui-motion-duration-180) $token-transition-curve-linear, box-shadow var(--osui-motion-duration-180) $token-transition-curve-linear;
+		transition:
+			transform var(--osui-motion-duration-180) $token-transition-curve-linear,
+			box-shadow var(--osui-motion-duration-180) $token-transition-curve-linear;
 		width: $token-scale-1400;
 
 		&:hover {
-			filter: brightness(0.9); // TODO: replace with explicit hover token when available
+			background-color: var(--osui-floating-actions-button-background-hover);
+		}
+
+		&:active {
+			background-color: var(--osui-floating-actions-button-background-press);
 		}
 	}
 

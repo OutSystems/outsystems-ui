@@ -8,6 +8,7 @@ interface BottomSheetArgs {
 
 const meta: Meta<BottomSheetArgs> = {
 	title: 'Patterns/Interaction/BottomSheet',
+	tags: ['!ui-pending', 'ui-reviewed'],
 	argTypes: {
 		showHandler: { control: 'boolean', name: 'ShowHandler' },
 		shape: { control: 'inline-radio', options: ['SoftRounded', 'Rounded', 'Sharp'], name: 'Shape' },
@@ -25,7 +26,9 @@ export const Default: Story = {
 			<div style="min-height:320px;">
 				<button class="btn btn-primary" data-open type="button">Open bottom sheet</button>
 				<div ${osuiRoot(id)} class="osui-bottom-sheet" aria-hidden="true" tabindex="-1">
-					<div class="osui-bottom-sheet__header" style="padding:12px 16px;"><strong>Sheet title</strong></div>
+					<div class="osui-bottom-sheet__header">
+						<div class="osui-bottom-sheet__header__top-bar"><strong>Sheet title</strong></div>
+					</div>
 					<div class="osui-bottom-sheet__content" style="padding:16px;">
 						<p>Bottom-sheet content slides up from the bottom edge.</p>
 						<button class="btn" data-close type="button">Close</button>

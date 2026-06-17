@@ -34,9 +34,9 @@ interface FloatingActionsArgs {
 }
 
 const ACTIONS: Array<[label: string, icon: string]> = [
-	['New message', 'fa-envelope-o'],
-	['Add contact', 'fa-user-plus'],
-	['Schedule', 'fa-calendar-plus-o'],
+	['New message', 'ph-envelope'],
+	['Add contact', 'ph-user-plus'],
+	['Schedule', 'ph-calendar-plus'],
 ];
 
 function itemMarkup(label: string, icon: string, delay: number): string {
@@ -44,13 +44,14 @@ function itemMarkup(label: string, icon: string, delay: number): string {
 		<div class="floating-actions-item" style="--delay: ${delay}">
 			<span style="background: var(--color-background-surface); border-radius: var(--border-radius-soft); box-shadow: var(--osui-floating-actions-button-shadow, none); font-size: 13px; padding: 4px 12px;">${label}</span>
 			<div class="floating-actions-item-button" role="button" tabindex="0" aria-label="${label}">
-				<i class="icon fa ${icon} fa-1x"></i>
+				<i class="icon ph ${icon}"></i>
 			</div>
 		</div>`;
 }
 
 const meta: Meta<FloatingActionsArgs> = {
 	title: 'Patterns/Interaction/FloatingActions',
+	tags: ['!ui-pending', 'ui-reviewed'],
 	argTypes: {
 		isExpanded: {
 			name: 'IsExpanded',
@@ -81,7 +82,7 @@ export const Default: Story = {
 				<div id="${id}" class="${cls('floating-actions-wrapper', isExpanded && 'is--open', extendedClass)}">
 					<div class="floating-items" aria-hidden="${!isExpanded}">${items}</div>
 					<div class="floating-button" role="button" tabindex="0" aria-expanded="${isExpanded}" aria-label="Toggle actions">
-						<i class="icon fa fa-plus fa-1x"></i>
+						<i class="icon ph ph-plus"></i>
 					</div>
 				</div>
 			</div>`);

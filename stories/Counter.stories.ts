@@ -45,7 +45,7 @@ export const Default: StoryObj<CounterArgs> = {
 				<div class="${cls('center-align', isVertical ? 'flex-direction-column' : 'flex-direction-row')}" style="gap:12px;">
 					<div class="font-size-display text-neutral-0">26</div>
 					<div>Completed requests</div>
-					<div><i class="icon fa fa-check fa-3x"></i></div>
+					<div><i class="icon ph ph-check" style="font-size: 3em;"></i></div>
 				</div>
 			</div>`),
 };

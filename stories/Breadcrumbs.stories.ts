@@ -9,14 +9,14 @@ import { cls, extendedClassArgType } from './_helpers/lowcode';
  *
  * Class mappings come from src/scss/04-patterns/04-navigation/_breadcrumbs.scss.
  * Shipped: `nav.breadcrumbs > .breadcrumbs-content > .breadcrumbs-item > .title > a` +
- * separator `i.icon.fa.fa-angle-right.fa-1x`.
+ * separator `i.icon.ph.ph-caret-right`.
  */
-const meta: Meta = { title: 'Patterns/Navigation/Breadcrumbs' };
+const meta: Meta = { title: 'Patterns/Navigation/Breadcrumbs', tags: ['!ui-pending', 'ui-reviewed'] };
 export default meta;
 
 type BreadcrumbsArgs = { extendedClass: string };
 
-const sep = `<div aria-hidden="true"><i class="icon fa fa-angle-right fa-1x"></i></div>`;
+const sep = `<div aria-hidden="true"><i class="icon ph ph-caret-right"></i></div>`;
 
 export const Default: StoryObj<BreadcrumbsArgs> = {
 	args: { extendedClass: '' },

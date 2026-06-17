@@ -9,6 +9,7 @@ interface TooltipArgs {
 
 const meta: Meta<TooltipArgs> = {
 	title: 'Patterns/Interaction/Tooltip',
+	tags: ['!ui-pending', 'ui-reviewed'],
 	argTypes: {
 		isHover: { control: 'boolean', name: 'IsHover' },
 		position: { control: 'select', options: ['Top', 'Bottom', 'Left', 'Right'], name: 'Position' },

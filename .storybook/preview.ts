@@ -7,8 +7,10 @@ import './docs.scss';
  * Icon-library root classes (see src/scss/01-foundations/_icon-library-odc.scss):
  *  • `.iconLibrary-phosphor` on :root overrides the `--osui-icon-*` vars + font to Phosphor.
  *  • `.icon-library-FontAwesome` / `.icon-library-Phosphor` gate the flatpickr month-nav arrows.
- * FontAwesome is the default (the `:root` block sets it with no class needed), but we still
- * add `.icon-library-FontAwesome` so the flatpickr arrows resolve in that mode too.
+ * Phosphor is the default in this Storybook (the `iconLibrary` toolbar global defaults to
+ * `Phosphor`, adding `.iconLibrary-phosphor`). FontAwesome stays the SCSS `:root` fallback
+ * (no class needed) and remains selectable from the toolbar; in that mode we add
+ * `.icon-library-FontAwesome` so the flatpickr arrows resolve too.
  */
 const ICON_LIB_FONTAWESOME = 'icon-library-FontAwesome';
 const ICON_LIB_PHOSPHOR_VARS = 'iconLibrary-phosphor';
@@ -87,7 +89,7 @@ const withAppShell: Decorator = (storyFn, context) => {
 	['desktop', 'active-screen'].forEach((c) => document.body.classList.add(c));
 	document.body.classList.toggle('has-accessible-features', context.globals.accessibleFeatures === 'on');
 	applyDirection(context.globals.direction === 'rtl');
-	applyIconLibrary((context.globals.iconLibrary as string) ?? 'FontAwesome');
+	applyIconLibrary((context.globals.iconLibrary as string) ?? 'Phosphor');
 	applyTheme((context.globals.theme as string) ?? 'new');
 	applyColorScheme((context.globals.colorScheme as string) ?? 'light');
 	return storyFn();
@@ -115,13 +117,13 @@ const preview: Preview = {
 		},
 		iconLibrary: {
 			description: 'OutSystems UI icon font',
-			defaultValue: 'FontAwesome',
+			defaultValue: 'Phosphor',
 			toolbar: {
 				title: 'Icons',
 				icon: 'star',
 				items: [
-					{ value: 'FontAwesome', title: 'FontAwesome', icon: 'star' },
 					{ value: 'Phosphor', title: 'Phosphor', icon: 'starhollow' },
+					{ value: 'FontAwesome', title: 'FontAwesome', icon: 'star' },
 				],
 				dynamicTitle: true,
 			},

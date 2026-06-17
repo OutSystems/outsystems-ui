@@ -9,6 +9,8 @@
 	--osui-bottom-sheet-background: var(--color-background-surface);
 	--osui-bottom-sheet-shadow: #{$token-elevation-3};
 	--osui-bottom-sheet-padding: #{$token-scale-400};
+	--osui-bottom-sheet-handler-background: #{$token-bg-neutral-subtle-default};
+	--osui-bottom-sheet-handler-width: 44px;
 	// ───────────────────────────────────────────────────────────────────
 
 	--bottom-sheet-max-height: calc(100vh - 54px) /*  general value to account for notch and a bit more extra space*/;
@@ -46,15 +48,15 @@
 	&--has-handler {
 		.osui-bottom-sheet__header {
 			&::before {
-				background: var(--color-border-input);
+				background: var(--osui-bottom-sheet-handler-background);
 				border-radius: 100px;
 				content: '';
 				height: $token-scale-100;
 				left: 50%;
 				position: absolute;
-				top: $token-scale-400;
+				top: $token-scale-300;
 				transform: translateX(-50%);
-				width: $token-scale-1000;
+				width: var(--osui-bottom-sheet-handler-width);
 			}
 
 			&__top-bar {

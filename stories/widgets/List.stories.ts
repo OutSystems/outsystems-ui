@@ -36,7 +36,7 @@ export const Default: Story = {
 		renderStatic(`
 			<div class="list list-group" style="max-width:420px;">
 				${item(false, 'First item', 'A tappable row with a title and supporting text.')}
-				${item(true, 'Selected item', 'This row is selected.', '<i class="icon fa fa-check fa-1x"></i>')}
+				${item(true, 'Selected item', 'This row is selected.', '<i class="icon ph ph-check"></i>')}
 				${item(false, 'Third item', 'Another row.')}
 			</div>`),
 };

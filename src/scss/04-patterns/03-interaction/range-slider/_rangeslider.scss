@@ -6,12 +6,13 @@
 ///
 .osui-range-slider {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-range-slider-track-color:           var(--color-border);
-	--osui-range-slider-handle-background:     var(--color-background-surface);
-	--osui-range-slider-handle-border-color:   var(--color-primary);
-	--osui-range-slider-handle-shadow:         #{$token-elevation-1};
-	--osui-range-slider-disabled-track-color:  #{$token-bg-neutral-subtle-default};
-	--osui-range-slider-disabled-color:        var(--color-text-disabled);
+	--osui-range-slider-track-color: var(--color-border);
+	--osui-range-slider-track-radius: var(--border-radius-rounded);
+	--osui-range-slider-handle-background: var(--color-background-surface);
+	--osui-range-slider-handle-border-color: var(--color-primary);
+	--osui-range-slider-handle-shadow: #{$token-elevation-1};
+	--osui-range-slider-disabled-track-color: #{$token-bg-neutral-subtle-default};
+	--osui-range-slider-disabled-color: var(--color-text-disabled);
 	// ───────────────────────────────────────────────────────────────────
 
 	--range-slider-handle-size: #{$token-scale-400};
@@ -52,13 +53,13 @@
 	.noUi {
 		&-base {
 			background-color: transparent;
-			border-radius: $token-border-radius-100;
+			border-radius: var(--osui-range-slider-track-radius);
 		}
 
 		&-target {
 			background: var(--osui-range-slider-track-color);
 			border: $token-border-size-0;
-			border-radius: $token-border-radius-100;
+			border-radius: var(--osui-range-slider-track-radius);
 			box-shadow: none;
 		}
 
@@ -82,8 +83,7 @@
 			}
 
 			.noUi-handle:before {
-				border-width: $token-border-size-0 $token-border-size-0 $token-border-size-0
-					$token-border-size-025;
+				border-width: $token-border-size-0 $token-border-size-0 $token-border-size-0 $token-border-size-025;
 				left: calc(var(--range-slider-handle-size) / 4);
 				right: auto;
 			}
@@ -100,7 +100,8 @@
 			}
 
 			.noUi-handle.noUi-active {
-				box-shadow: var(--osui-range-slider-handle-shadow),
+				box-shadow:
+					var(--osui-range-slider-handle-shadow),
 					0 0 0 #{$token-scale-150} color-mix(in srgb, #{$token-semantics-primary-base} 15%, transparent);
 			}
 
@@ -147,7 +148,7 @@
 		}
 
 		&-connects {
-			border-radius: $token-border-radius-100;
+			border-radius: var(--osui-range-slider-track-radius);
 		}
 
 		&-connect {
@@ -244,7 +245,7 @@
 	.osui-range-slider__provider {
 		&[disabled] {
 			--osui-range-slider-handle-background: var(--color-background-input-disabled);
-			--osui-range-slider-disabled-color:    var(--color-text-disabled);
+			--osui-range-slider-disabled-color: var(--color-text-disabled);
 
 			pointer-events: none;
 

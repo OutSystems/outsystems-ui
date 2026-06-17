@@ -6,16 +6,17 @@
 ///
 .pagination {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-pagination-button-background:        transparent;
-	--osui-pagination-button-border-color:      transparent;
-	--osui-pagination-button-border-width:      #{$token-border-size-025};
-	--osui-pagination-button-color:             var(--color-text);
-	--osui-pagination-button-font-weight:       #{$token-font-weight-medium};
-	--osui-pagination-button-hover-background:  var(--color-border-subtle);
-	--osui-pagination-button-size:              #{$token-scale-900};
-	--osui-pagination-active-border-color:      var(--color-border);
-	--osui-pagination-active-color:             var(--color-text);
-	--osui-pagination-counter-color:            var(--color-text-subtlest);
+	--osui-pagination-button-background: transparent;
+	--osui-pagination-button-border-color: transparent;
+	--osui-pagination-button-border-width: #{$token-border-size-025};
+	--osui-pagination-button-color: var(--color-text);
+	--osui-pagination-button-font-weight: #{$token-font-weight-medium};
+	--osui-pagination-button-hover-background: var(--color-border-subtle);
+	--osui-pagination-button-padding: #{$token-scale-0} #{$token-scale-100};
+	--osui-pagination-button-size: #{$token-scale-900};
+	--osui-pagination-active-border-color: var(--color-border);
+	--osui-pagination-active-color: var(--color-text-subtlest);
+	--osui-pagination-counter-color: var(--color-text-subtlest);
 	// ───────────────────────────────────────────────────────────────────
 
 	align-items: center;
@@ -70,10 +71,10 @@
 		height: var(--osui-pagination-button-size);
 		justify-content: center;
 		margin-left: $token-scale-100;
-		padding: 0;
+		padding: var(--osui-pagination-button-padding);
 		transition:
 			background-color $token-transition-time-100 ease,
-			border-color     $token-transition-time-100 ease; // no token match for ease
+			border-color $token-transition-time-100 ease; // no token match for ease
 		width: var(--osui-pagination-button-size);
 
 		&[disabled] {

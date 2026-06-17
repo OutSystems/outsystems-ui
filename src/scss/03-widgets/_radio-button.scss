@@ -8,9 +8,11 @@
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-radio-size: #{$token-scale-600};
 	--osui-radio-background: var(--color-background-input);
-	--osui-radio-border-color: var(--color-border-input);
+	--osui-radio-border-color: #{$token-border-default};
 	--osui-radio-checked-color: var(--color-primary);
 	--osui-radio-indicator-border: #{$token-scale-150};
+	--osui-radio-error-border-color: #{$token-border-danger-default};
+	--osui-radio-disabled-border-color: #{$token-border-disabled};
 	// ───────────────────────────────────────────────────────────────────
 
 	appearance: none;
@@ -34,7 +36,8 @@
 		display: flex;
 		inset: 0;
 		position: absolute;
-		transition: border-color $token-transition-time-100 $token-transition-curve-linear,
+		transition:
+			border-color $token-transition-time-100 $token-transition-curve-linear,
 			background-color $token-transition-time-100 $token-transition-curve-linear;
 	}
 
@@ -73,12 +76,12 @@
 
 		&:before {
 			background-color: var(--color-background-input-disabled);
-			border: $token-border-size-025 solid var(--color-border);
+			border: $token-border-size-025 solid var(--osui-radio-disabled-border-color);
 		}
 
 		&:checked:before {
 			background-color: var(--color-background-input-disabled);
-			border: var(--osui-radio-indicator-border) solid var(--color-border);
+			border: var(--osui-radio-indicator-border) solid var(--osui-radio-disabled-border-color);
 		}
 	}
 }
@@ -108,7 +111,7 @@
 [data-radio-group] {
 	&.not-valid [data-radio-button] .radio-button {
 		&:before {
-			border: $token-border-size-025 solid $token-semantics-danger-base;
+			border: $token-border-size-025 solid var(--osui-radio-error-border-color);
 		}
 
 		&:checked:before {

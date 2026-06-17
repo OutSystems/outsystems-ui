@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/html-vite';
 import { Switch } from '@outsystems/runtime-widgets-js';
 import { createVariable, DataTypes, mountWidget, widgetBaseProps } from '../_helpers/widget';
 
-const meta: Meta = { title: 'Widgets/Switch' };
+const meta: Meta = { title: 'Widgets/Switch', tags: ['!ui-pending', 'ui-reviewed'] };
 export default meta;
 type Story = StoryObj;
 

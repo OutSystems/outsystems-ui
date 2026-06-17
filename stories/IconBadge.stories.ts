@@ -55,7 +55,7 @@ export const Default: StoryObj<IconBadgeArgs> = {
 		const bgClass = color ? `background-${color}${isLight ? lightBgSuffix(color) : ''}` : '';
 		return renderStatic(`
 			<div class="${cls('icon-badge', extendedClass)}">
-				<div><i class="icon fa fa-bell fa-2x"></i></div>
+				<div><i class="icon ph ph-bell" style="font-size: 2em;"></i></div>
 				<div class="${cls('badge', 'border-radius-rounded', bgClass, 'OSInline')}"><span class="OSFillParent">${number}</span></div>
 			</div>`);
 	},

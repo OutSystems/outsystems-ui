@@ -6,7 +6,7 @@ import { createAndInit, osuiRoot, renderPattern, uid } from './_helpers/osui';
  * inputs + `.rating-item` labels dynamically from `RatingScale`, cloning the
  * children of `.icon-states` into each star. Those children must be the three
  * state templates `.rating-item-filled` / `.rating-item-half` / `.rating-item-empty`
- * (each an `<i class="icon fa fa-star…">`); the CSS shows the right one per value.
+ * (each an `<i class="icon ph ph-star…">`); the CSS shows the right one per value.
  */
 interface RatingArgs {
 	ratingValue: number;
@@ -16,9 +16,9 @@ interface RatingArgs {
 
 const ICON_STATES = `
 	<div class="icon-states">
-		<div class="rating-item-filled"><i class="icon fa fa-star fa-1x"></i></div>
-		<div class="rating-item-half"><i class="icon fa fa-star-half-o fa-1x"></i></div>
-		<div class="rating-item-empty"><i class="icon fa fa-star-o fa-1x"></i></div>
+		<div class="rating-item-filled"><i class="icon ph-fill ph-star"></i></div>
+		<div class="rating-item-half"><i class="icon ph ph-star-half"></i></div>
+		<div class="rating-item-empty"><i class="icon ph ph-star"></i></div>
 	</div>`;
 
 const meta: Meta<RatingArgs> = {

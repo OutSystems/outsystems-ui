@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/html-vite';
 import { RadioGroup, RadioButton } from '@outsystems/runtime-widgets-js';
 import { createElement, createVariable, DataTypes, mountTree, widgetBaseProps } from '../_helpers/widget';
 
-const meta: Meta = { title: 'Widgets/RadioGroup' };
+const meta: Meta = { title: 'Widgets/RadioGroup', tags: ['!ui-pending', 'ui-reviewed'] };
 export default meta;
 type Story = StoryObj;
 

@@ -6,8 +6,8 @@
 ///
 .breadcrumbs {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-breadcrumbs-item-color:      var(--color-text-subtlest);
-	--osui-breadcrumbs-separator-color: var(--color-text-subtlest);
+	--osui-breadcrumbs-item-color: var(--color-text-subtlest);
+	--osui-breadcrumbs-separator-color: var(--color-text);
 	// ───────────────────────────────────────────────────────────────────
 
 	&-content {
@@ -17,7 +17,7 @@
 
 	&-item {
 		align-items: center;
-		color: var(--color-text-subtle);
+		color: var(--osui-breadcrumbs-item-color);
 		display: inline-flex;
 		font-size: $token-font-size-350;
 		font-weight: $token-font-weight-regular;

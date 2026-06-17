@@ -22,10 +22,10 @@ interface BottomBarArgs {
 }
 
 const ITEMS: Array<[label: string, icon: string]> = [
-	['Home', 'fa-home'],
-	['Search', 'fa-search'],
-	['Alerts', 'fa-bell-o'],
-	['Profile', 'fa-user-o'],
+	['Home', 'ph-house'],
+	['Search', 'ph-magnifying-glass'],
+	['Alerts', 'ph-bell'],
+	['Profile', 'ph-user'],
 ];
 
 const meta: Meta<BottomBarArgs> = {
@@ -54,7 +54,7 @@ export const Default: Story = {
 							([label, icon], i) => `
 							<a href="#" class="${cls(i === activeIndex && 'active')}" style="text-align: center;" onclick="return false">
 								<div class="bottom-bar-item">
-									<div class="bottom-bar-item-icon"><i class="icon fa ${icon} fa-1x"></i></div>
+									<div class="bottom-bar-item-icon"><i class="icon ph ${icon}"></i></div>
 									<div class="bottom-bar-item-text">${label}</div>
 								</div>
 							</a>`

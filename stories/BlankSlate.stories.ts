@@ -30,7 +30,7 @@ export const Default: StoryObj<BlankSlateArgs> = {
 		renderStatic(`
 			<div class="${cls('blank-slate', fullHeight && 'large', extendedClass)}" style="max-width:420px;text-align:center;">
 				<div>
-					<div class="blank-slate-icon"><i class="icon fa fa-inbox fa-3x"></i></div>
+					<div class="blank-slate-icon"><i class="icon ph ph-tray"></i></div>
 					<div class="blank-slate-description">No records have been added yet.</div>
 					<div class="blank-slate-actions"><button class="btn btn-primary"><span>Create item</span></button></div>
 				</div>

@@ -49,9 +49,13 @@ const config: StorybookConfig = {
 		// FontAwesome 4.7 — the default icon font (font-family: 'FontAwesome').
 		// Serve the whole package so the CSS's relative ../fonts/* URLs resolve.
 		{ from: path.join(repoRoot, 'node_modules/font-awesome'), to: '/vendor/font-awesome' },
-		// Phosphor — the alternate icon font (font-family: 'Phosphor'), togglable in the toolbar.
+		// Phosphor — the default icon font (font-family: 'Phosphor'), togglable in the toolbar.
 		// regular/style.css references ./Phosphor.woff2, so serve that folder directly.
 		{ from: path.join(repoRoot, 'node_modules/@phosphor-icons/web/src/regular'), to: '/vendor/phosphor' },
+		// Phosphor fill weight (font-family: 'Phosphor-Fill', class `.ph-fill`) — used where a
+		// solid glyph is needed (e.g. the Rating filled star). Served as its own folder so the
+		// fill style.css can resolve its relative ./Phosphor-Fill.woff2.
+		{ from: path.join(repoRoot, 'node_modules/@phosphor-icons/web/src/fill'), to: '/vendor/phosphor-fill' },
 		// Provider vendor libraries (window globals + CSS) → served at /vendor/*
 		{ from: path.join(repoRoot, 'node_modules/flatpickr/dist'), to: '/vendor/flatpickr' },
 		{ from: path.join(repoRoot, 'node_modules/@splidejs/splide/dist'), to: '/vendor/splide' },

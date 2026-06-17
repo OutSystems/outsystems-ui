@@ -7,18 +7,20 @@
 .wizard {
 	&-wrapper {
 		// ─── Component CSS API ─────────────────────────────────────────────
-		--osui-wizard-icon-background:   var(--color-background-surface);
+		--osui-wizard-icon-background: var(--color-background-surface);
 		--osui-wizard-icon-border-color: var(--color-border-input);
 		--osui-wizard-icon-border-width: #{$token-border-size-050};
-		--osui-wizard-icon-color:        var(--color-text-subtle);
-		--osui-wizard-icon-size:         #{$token-scale-1000};
-		--osui-wizard-label-color:       var(--color-text-subtle);
-		--osui-wizard-active-color:      var(--color-primary);
-		--osui-wizard-past-background:   var(--color-primary);
-		--osui-wizard-past-color:        var(--color-text-inverse);
-		--osui-wizard-connector-color:   #{$token-bg-neutral-base-default};
-		--osui-wizard-focus-halo-color:  var(--osui-border-focus-halo);
-		--osui-wizard-focus-halo-width:  #{$token-border-size-075};
+		--osui-wizard-icon-color: #{$token-text-subtlest};
+		--osui-wizard-icon-size: #{$token-scale-1000};
+		--osui-wizard-label-color: var(--color-text);
+		--osui-wizard-active-color: var(--color-primary);
+		--osui-wizard-active-icon-color: #{$token-text-primary};
+		--osui-wizard-next-icon-color: #{$token-text-subtlest};
+		--osui-wizard-past-background: var(--color-primary);
+		--osui-wizard-past-color: var(--color-text-inverse);
+		--osui-wizard-connector-color: #{$token-bg-neutral-base-default};
+		--osui-wizard-focus-halo-color: var(--osui-border-focus-halo);
+		--osui-wizard-focus-halo-width: #{$token-border-size-075};
 		// ───────────────────────────────────────────────────────────────────
 
 		&.wizard-vertical {
@@ -111,6 +113,7 @@
 			width: 100%;
 
 			&:before {
+				background-color: var(--osui-wizard-connector-color);
 				content: '';
 				height: 2px;
 				position: absolute;
@@ -139,8 +142,9 @@
 				&-icon {
 					background-color: var(--osui-wizard-icon-background);
 					border-color: var(--osui-wizard-active-color);
-					box-shadow: 0 0 0 $token-scale-100 color-mix(in srgb, var(--osui-wizard-active-color) 15%, transparent);
-					color: var(--osui-wizard-active-color);
+					box-shadow: 0 0 0 $token-scale-100
+						color-mix(in srgb, var(--osui-wizard-active-color) 15%, transparent);
+					color: var(--osui-wizard-active-icon-color);
 
 					&-wrapper {
 						&:before {
@@ -151,7 +155,7 @@
 
 				&-label {
 					color: var(--color-text);
-					font-weight: $token-font-weight-semi-bold;
+					font-weight: $token-font-weight-medium;
 				}
 			}
 		}
@@ -171,7 +175,7 @@
 				}
 
 				&-label {
-					color: var(--color-text-subtlest);
+					color: var(--osui-wizard-label-color);
 				}
 			}
 		}
@@ -185,7 +189,7 @@
 				}
 
 				.fa-fw {
-					color: var(--color-text-disabled);
+					color: var(--osui-wizard-next-icon-color);
 				}
 			}
 		}

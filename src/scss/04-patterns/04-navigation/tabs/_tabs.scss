@@ -6,13 +6,14 @@
 ///
 .osui-tabs {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-tabs-border-color:             var(--color-border);
-	--osui-tabs-header-item-color:        var(--color-text-subtlest);
-	--osui-tabs-header-item-color-active: var(--color-primary-selected);
-	--osui-tabs-header-item-color-hover:  var(--color-text);
+	--osui-tabs-border-color: var(--color-border);
+	--osui-tabs-header-item-color: var(--color-text-subtlest);
+	--osui-tabs-header-item-color-active: #{$token-text-select};
+	--osui-tabs-header-item-color-active-hover: var(--color-primary-selected);
+	--osui-tabs-header-item-color-hover: var(--color-text-subtlest);
 	--osui-tabs-header-item-color-disabled: var(--color-text-disabled);
-	--osui-tabs-header-item-hover-background: color-mix(in srgb, var(--color-text) 4%, transparent);
-	--osui-tabs-indicator-color:          var(--color-primary-selected);
+	--osui-tabs-header-item-hover-background: #{$token-bg-neutral-subtle-default};
+	--osui-tabs-indicator-color: var(--color-primary);
 	// ───────────────────────────────────────────────────────────────────
 
 	--header-item-width: fit-content(30%);
@@ -203,6 +204,10 @@
 					color: var(--osui-tabs-header-item-color-hover);
 				}
 
+				&.osui-tabs--is-active {
+					color: var(--osui-tabs-header-item-color-active-hover);
+				}
+
 				&[disabled] {
 					background-color: transparent;
 					color: var(--osui-tabs-header-item-color-disabled);
@@ -361,7 +366,8 @@
 			}
 
 			&:focus-visible {
-				box-shadow: inset 0 0 0 $token-border-size-075 color-mix(in srgb, #{$token-semantics-primary-base} 22%, transparent);
+				box-shadow: inset 0 0 0 $token-border-size-075
+					color-mix(in srgb, #{$token-semantics-primary-base} 22%, transparent);
 				color: var(--color-text);
 			}
 		}
