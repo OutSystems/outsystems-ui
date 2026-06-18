@@ -64,7 +64,7 @@
 			pointer-events: none;
 			position: absolute;
 			top: 0;
-			transition: opacity 0.3s cubic-bezier(0, 0, 0.3, 1);
+			transition: opacity $token-transition-time-300 $token-transition-curve-quick;
 			width: 100%;
 			will-change: opacity;
 
@@ -86,14 +86,14 @@
 			}
 
 			&.action-sheet-container--animatable .action-sheet {
-				transition: all 330ms ease-out;
+				transition: all $token-transition-time-300 $token-transition-curve-quick;
 			}
 		}
 
 		&--animatable {
 			.action-sheet {
-				-webkit-transition: all 130ms ease-in;
-				transition: all 130ms ease-in;
+				-webkit-transition: all var(--osui-motion-duration-130) $token-transition-curve-base;
+				transition: all var(--osui-motion-duration-130) $token-transition-curve-base;
 			}
 		}
 	}

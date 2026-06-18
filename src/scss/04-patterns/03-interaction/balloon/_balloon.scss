@@ -32,7 +32,7 @@
 		visibility: visible;
 		opacity: 1;
 		pointer-events: all;
-		transition: opacity 300ms ease-in;
+		transition: opacity $token-transition-time-300 $token-transition-curve-quick;
 	}
 
 	// Prevent the pattern from occupying space when closed, without interfering with its own open animation

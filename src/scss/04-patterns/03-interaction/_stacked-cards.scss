@@ -6,11 +6,11 @@
 ///
 .stackedcards {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-stacked-cards-background:               var(--color-background-surface);
-	--osui-stacked-cards-overlay-color:            var(--color-text-inverse);
-	--osui-stacked-cards-overlay-top-background:   var(--color-info);
+	--osui-stacked-cards-background: var(--color-background-surface);
+	--osui-stacked-cards-overlay-color: var(--color-text-inverse);
+	--osui-stacked-cards-overlay-top-background: var(--color-info);
 	--osui-stacked-cards-overlay-right-background: var(--color-success);
-	--osui-stacked-cards-overlay-left-background:  var(--color-error);
+	--osui-stacked-cards-overlay-left-background: var(--color-error);
 	// ───────────────────────────────────────────────────────────────────
 
 	position: relative;
@@ -115,7 +115,9 @@
 	}
 
 	&--animatable {
-		transition: transform, opacity var(--osui-motion-duration-400) ease;
+		transition:
+			transform,
+			opacity var(--osui-motion-duration-400) $token-transition-curve-expressive;
 	}
 
 	.init {

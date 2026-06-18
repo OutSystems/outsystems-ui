@@ -1,8 +1,13 @@
 # Motion Mapping — hardcoded / legacy → design tokens
 
-A per-pattern map from the current ad-hoc animation values to the existing motion
-tokens, so the framework converges on one duration + easing vocabulary. This is the
-**plan**; applying it is a follow-up normalization pass.
+A per-pattern map from the (former) ad-hoc animation values to the motion
+tokens, so the framework converges on one duration + easing vocabulary.
+
+> **Status: APPLIED.** This mapping has been implemented across the pattern SCSS.
+> Resolved decisions: (1) entrances **route** to `quick` (decelerate); (2) durations with
+> no token (`130/180/400ms`) stay as `--osui-motion-duration-*` **global variables** —
+> _not_ snapped to a nearby token and _not_ promoted to new tokens — preserving their exact
+> timing; (3) **no** per-component motion CSS-API knobs were added.
 
 Audit context: as of the design-token migration, ~40% of patterns already use
 `$token-transition-time-*` / `$token-transition-curve-*`; the rest hardcode `ms`/`s`
@@ -40,18 +45,19 @@ state-class toggle, then a `transition` — is already consistent; only the valu
 **Duration** — snap to the nearest token; on a tie, round to the value that preserves
 intent (entrances/exits → snappier, reveals → smoother):
 
-| Current                                                             | → Token                                           |
-| ------------------------------------------------------------------- | ------------------------------------------------- |
-| `100ms` / `0.1s`                                                    | `$token-transition-time-100`                      |
-| `130ms`, `--osui-motion-duration-130`                               | `$token-transition-time-150`                      |
-| `180ms`, `--osui-motion-duration-180`                               | `$token-transition-time-200`                      |
-| `200ms` / `0.2s`                                                    | `$token-transition-time-200`                      |
-| `250ms` / `0.25s`                                                   | `$token-transition-time-300`                      |
-| `300ms` / `0.3s` / `330ms` / `350ms` / `0.35s`                      | `$token-transition-time-300`                      |
-| `400ms` / `--osui-motion-duration-400` / `0.5s` / `500ms` / `630ms` | `$token-transition-time-500`                      |
-| `850ms` (looping) / `1000ms`                                        | `$token-transition-time-1000`                     |
-| `1500ms`                                                            | `$token-transition-time-1500`                     |
-| `40ms` (FAB stagger delay)                                          | _leave_ — sub-token micro-delay, not a transition |
+| Current                                        | → Token                                                       |
+| ---------------------------------------------- | ------------------------------------------------------------- |
+| `100ms` / `0.1s`                               | `$token-transition-time-100`                                  |
+| `130ms`                                        | `var(--osui-motion-duration-130)` — no token step, global var |
+| `180ms`                                        | `var(--osui-motion-duration-180)` — no token step, global var |
+| `200ms` / `0.2s`                               | `$token-transition-time-200`                                  |
+| `250ms` / `0.25s`                              | `$token-transition-time-300`                                  |
+| `300ms` / `0.3s` / `330ms` / `350ms` / `0.35s` | `$token-transition-time-300`                                  |
+| `400ms` / `--osui-motion-duration-400`         | `var(--osui-motion-duration-400)` — no token step, global var |
+| `0.5s` / `500ms` / `630ms`                     | `$token-transition-time-500`                                  |
+| `850ms` (looping) / `1000ms` / `1s`            | `$token-transition-time-1000`                                 |
+| `1500ms`                                       | `$token-transition-time-1500`                                 |
+| `40ms` (FAB stagger delay)                     | _leave_ — sub-token micro-delay, not a transition             |
 
 **Easing** — map keywords + ad-hoc béziers to a curve token:
 
@@ -77,7 +83,7 @@ are indicative.
 | ---------------- | ------------------------------------------------ | --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
 | **Action Sheet** | `03-interaction/_action-sheet.scss`              | overlay `opacity 0.3s cubic-bezier(0,0,0.3,1)`                                    | `opacity $token-transition-time-300 $token-transition-curve-quick`                         |
 |                  |                                                  | enter `all 330ms ease-out`                                                        | `all $token-transition-time-300 $token-transition-curve-quick`                             |
-|                  |                                                  | exit `all 130ms ease-in`                                                          | `all $token-transition-time-150 $token-transition-curve-base`                              |
+|                  |                                                  | exit `all 130ms ease-in`                                                          | `all var(--osui-motion-duration-130) $token-transition-curve-base`                         |
 | **Bottom Sheet** | `01-adaptive/bottom-sheet/_bottomsheet.scss`     | `--osui-bottom-sheet-transition-function: cubic-bezier(0.19,0.35,0.56,0.96)`      | `--osui-bottom-sheet-transition-function: #{$token-transition-curve-quick}`                |
 |                  |                                                  | enter `transform 350ms var(func)`                                                 | `transform $token-transition-time-300 var(func)`                                           |
 |                  |                                                  | exit `transform 200ms ease-out`                                                   | `transform $token-transition-time-200 $token-transition-curve-quick`                       |
@@ -87,33 +93,33 @@ are indicative.
 | **Notification** | `03-interaction/notification/_notification.scss` | `transform 300ms ease-out, opacity 300ms ease-out`                                | `transform $token-transition-time-300 $token-transition-curve-quick, opacity …`            |
 | **Sidebar**      | `04-navigation/sidebar/_sidebar.scss`            | enter `transform $token-transition-time-300 $token-transition-curve-base`         | `… $token-transition-curve-quick` (base→quick: decelerate on enter)                        |
 |                  |                                                  | `transform $token-transition-time-500 $token-transition-curve-base`               | `… $token-transition-curve-quick`                                                          |
-|                  |                                                  | overlay `opacity --osui-motion-duration-130 ease-in`                              | `opacity $token-transition-time-150 $token-transition-curve-base`                          |
+|                  |                                                  | overlay `opacity --osui-motion-duration-130 ease-in`                              | `opacity var(--osui-motion-duration-130) $token-transition-curve-base`                     |
 | **Balloon**      | `03-interaction/balloon/_balloon.scss`           | `opacity 300ms ease-in`                                                           | `opacity $token-transition-time-300 $token-transition-curve-quick` (entrance → decelerate) |
 | **Tooltip**      | `03-interaction/tooltip/_tooltip.scss`           | `animation osui-tooltip-in $token-transition-time-150 cubic-bezier(0.16,1,0.3,1)` | `… $token-transition-time-150 $token-transition-curve-quick`                               |
 
 ### Interaction / content
 
-| Pattern                    | File                                                   | Current                                            | → Mapped                                                            |
-| -------------------------- | ------------------------------------------------------ | -------------------------------------------------- | ------------------------------------------------------------------- |
-| **Alert**                  | `02-content/_alert.scss`                               | `background-color $token-transition-time-100 ease` | `… $token-transition-curve-expressive`                              |
-| **Accordion Item**         | `02-content/accordion-item/_accordion-item.scss`       | `… $token-transition-time-300 ease-in-out` (×6)    | `… $token-transition-curve-expressive`                              |
-| **Floating Actions**       | `03-interaction/_floating-actions.scss`                | `--osui-motion-duration-180` (×6)                  | `$token-transition-time-200`                                        |
-|                            |                                                        | enter curves `$token-transition-curve-base`        | `$token-transition-curve-quick` where used on item/button _enter_   |
-| **Stacked Cards**          | `03-interaction/_stacked-cards.scss`                   | `--osui-motion-duration-400 ease`                  | `$token-transition-time-500 $token-transition-curve-expressive`     |
-| **Flip Content**           | `03-interaction/flip-content/_flipcontent.scss`        | `630ms cubic-bezier(0.03,0.01,0.67,1.97)`          | `$token-transition-time-500 $token-transition-curve-bounce`         |
-| **Submenu**                | `04-navigation/submenu/_submenu.scss`                  | `130ms`                                            | `$token-transition-time-150`                                        |
-|                            |                                                        | `200ms ease-out`                                   | `$token-transition-time-200 $token-transition-curve-quick`          |
-|                            |                                                        | `ease`                                             | `$token-transition-curve-expressive`                                |
-| **Dropdown (server-side)** | `03-interaction/dropdown/_dropdown-serverside.scss`    | `transform 200ms ease-in-out`                      | `… $token-transition-time-200 $token-transition-curve-expressive`   |
-|                            |                                                        | `border 250ms ease-in-out`                         | `… $token-transition-time-300 $token-transition-curve-expressive`   |
-|                            |                                                        | `opacity 250ms ease`                               | `… $token-transition-time-300 $token-transition-curve-expressive`   |
-|                            |                                                        | `all 0.25s ease`                                   | `all $token-transition-time-300 $token-transition-curve-expressive` |
-| **Dropdown item**          | `03-interaction/dropdown/_dropdownserversideitem.scss` | `250ms ease`                                       | `$token-transition-time-300 $token-transition-curve-expressive`     |
-| **VirtualSelect override** | `03-interaction/dropdown/provider/_virtualselect.scss` | `0.25s ease` (×2)                                  | `$token-transition-time-300 $token-transition-curve-expressive`     |
-| **Animated Label**         | `03-interaction/animated-label/_animated-label.scss`   | `100ms`, `ease` (×5), `ease-in-out`                | `$token-transition-time-100`, `…-curve-expressive`                  |
-| **List Updating**          | `06-utilities/_list-updating.scss`                     | `300ms ease`                                       | `$token-transition-time-300 $token-transition-curve-expressive`     |
-| **Pull to Refresh**        | `06-utilities/_pull-to-refresh.scss`                   | `0.25s ease` (×2)                                  | `$token-transition-time-300 $token-transition-curve-expressive`     |
-| **Pagination**             | `04-navigation/_pagination.scss`                       | `ease` (×3)                                        | `$token-transition-curve-expressive`                                |
+| Pattern                    | File                                                   | Current                                            | → Mapped                                                               |
+| -------------------------- | ------------------------------------------------------ | -------------------------------------------------- | ---------------------------------------------------------------------- |
+| **Alert**                  | `02-content/_alert.scss`                               | `background-color $token-transition-time-100 ease` | `… $token-transition-curve-expressive`                                 |
+| **Accordion Item**         | `02-content/accordion-item/_accordion-item.scss`       | `… $token-transition-time-300 ease-in-out` (×6)    | `… $token-transition-curve-expressive`                                 |
+| **Floating Actions**       | `03-interaction/_floating-actions.scss`                | `--osui-motion-duration-180` (×6)                  | `var(--osui-motion-duration-180)` (kept) + enter curves `base`→`quick` |
+|                            |                                                        | enter curves `$token-transition-curve-base`        | `$token-transition-curve-quick` where used on item/button _enter_      |
+| **Stacked Cards**          | `03-interaction/_stacked-cards.scss`                   | `--osui-motion-duration-400 ease`                  | `var(--osui-motion-duration-400) $token-transition-curve-expressive`   |
+| **Flip Content**           | `03-interaction/flip-content/_flipcontent.scss`        | `630ms cubic-bezier(0.03,0.01,0.67,1.97)`          | `$token-transition-time-500 $token-transition-curve-bounce`            |
+| **Submenu**                | `04-navigation/submenu/_submenu.scss`                  | `130ms`                                            | `$token-transition-time-150`                                           |
+|                            |                                                        | `200ms ease-out`                                   | `$token-transition-time-200 $token-transition-curve-quick`             |
+|                            |                                                        | `ease`                                             | `$token-transition-curve-expressive`                                   |
+| **Dropdown (server-side)** | `03-interaction/dropdown/_dropdown-serverside.scss`    | `transform 200ms ease-in-out`                      | `… $token-transition-time-200 $token-transition-curve-expressive`      |
+|                            |                                                        | `border 250ms ease-in-out`                         | `… $token-transition-time-300 $token-transition-curve-expressive`      |
+|                            |                                                        | `opacity 250ms ease`                               | `… $token-transition-time-300 $token-transition-curve-expressive`      |
+|                            |                                                        | `all 0.25s ease`                                   | `all $token-transition-time-300 $token-transition-curve-expressive`    |
+| **Dropdown item**          | `03-interaction/dropdown/_dropdownserversideitem.scss` | `250ms ease`                                       | `$token-transition-time-300 $token-transition-curve-expressive`        |
+| **VirtualSelect override** | `03-interaction/dropdown/provider/_virtualselect.scss` | `0.25s ease` (×2)                                  | `$token-transition-time-300 $token-transition-curve-expressive`        |
+| **Animated Label**         | `03-interaction/animated-label/_animated-label.scss`   | `100ms`, `ease` (×5), `ease-in-out`                | `$token-transition-time-100`, `…-curve-expressive`                     |
+| **List Updating**          | `06-utilities/_list-updating.scss`                     | `300ms ease`                                       | `$token-transition-time-300 $token-transition-curve-expressive`        |
+| **Pull to Refresh**        | `06-utilities/_pull-to-refresh.scss`                   | `0.25s ease` (×2)                                  | `$token-transition-time-300 $token-transition-curve-expressive`        |
+| **Pagination**             | `04-navigation/_pagination.scss`                       | `ease` (×3)                                        | `$token-transition-curve-expressive`                                   |
 
 ### Numbers / progress
 
@@ -138,11 +144,13 @@ are indicative.
   tokens but are exposed as utility classes, not pattern transitions.
 - The `40ms` FAB stagger **delay** — a per-item offset, not a transition duration.
 
-## Open decisions before applying
+## Decisions (resolved)
 
-1. **`base` vs `quick` for entrances** — this table routes slide-ins to `quick`
-   (decelerate). Confirm, or rename the curve tokens instead.
-2. **Add a token for `400ms`?** Several patterns sit between `300` and `500`; a `400`
-   duration token would reduce rounding.
-3. **Expose motion via component CSS API** (`--osui-{component}-transition-*`) so themes
-   can retune — bottom-sheet already half-does this with `--osui-bottom-sheet-transition-function`.
+1. **`base` vs `quick` for entrances** — ✅ **routed** slide-ins to `quick` (decelerate);
+   curve tokens were _not_ renamed. The `base`-named-curve caveat above still stands as a
+   future token-rename candidate.
+2. **`400ms` (and `130/180`)** — ✅ kept as `--osui-motion-duration-*` **global variables**
+   rather than adding new tokens or snapping. They graduate to real tokens later (the var
+   name maps 1:1 to its proposed `--token-transition-time-*`).
+3. **Per-component motion CSS-API knobs** — ❌ not added. (bottom-sheet keeps its existing
+   `--osui-bottom-sheet-transition-function`, which predates this pass.)

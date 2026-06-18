@@ -10,11 +10,11 @@ $balloonMobileTopMargin: 5vh;
 ///
 .osui-dropdown-serverside {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-dropdown-ss-background:          var(--color-background-surface);
-	--osui-dropdown-ss-border-color:        var(--color-border-input);
-	--osui-dropdown-ss-color:               var(--color-text);
+	--osui-dropdown-ss-background: var(--color-background-surface);
+	--osui-dropdown-ss-border-color: var(--color-border-input);
+	--osui-dropdown-ss-color: var(--color-text);
 	--osui-dropdown-ss-disabled-background: var(--color-background-input-disabled);
-	--osui-dropdown-ss-disabled-color:      var(--color-text-disabled);
+	--osui-dropdown-ss-disabled-color: var(--color-text-disabled);
 	// ───────────────────────────────────────────────────────────────────
 
 	--osui-dropdown-ss-balloon-max-height: 300px;
@@ -69,7 +69,7 @@ $balloonMobileTopMargin: 5vh;
 			position: absolute;
 			right: $token-scale-400;
 			top: 0;
-			transition: transform 200ms ease-in-out;
+			transition: transform $token-transition-time-200 $token-transition-curve-expressive;
 		}
 
 		& > * {
@@ -97,7 +97,7 @@ $balloonMobileTopMargin: 5vh;
 			height: $token-scale-1000;
 			padding: $token-scale-0 $token-scale-400;
 			position: relative;
-			transition: border 250ms ease-in-out;
+			transition: border $token-transition-time-300 $token-transition-curve-expressive;
 			width: 100%;
 
 			// Service Studio Preview
@@ -230,9 +230,9 @@ $balloonMobileTopMargin: 5vh;
 
 	// When it's disabled
 	&--is-disabled {
-		--osui-dropdown-ss-background:   var(--color-background-input-disabled);
+		--osui-dropdown-ss-background: var(--color-background-input-disabled);
 		--osui-dropdown-ss-border-color: var(--color-border);
-		--osui-dropdown-ss-color:        var(--color-text-disabled);
+		--osui-dropdown-ss-color: var(--color-text-disabled);
 
 		.osui-dropdown-serverside__selected-values {
 			&:after {
@@ -506,7 +506,7 @@ $balloonMobileTopMargin: 5vh;
 			opacity: 0;
 			overflow: hidden;
 			top: 0;
-			transition: opacity 250ms ease;
+			transition: opacity $token-transition-time-300 $token-transition-curve-expressive;
 			width: 100vw;
 			z-index: var(--layer-instant-interaction);
 
@@ -580,7 +580,7 @@ $balloonMobileTopMargin: 5vh;
 				margin-top: var(--ballon-top-margin-value);
 				position: relative;
 				transform: translateY(calc(0.5 * var(--ballon-top-margin-value)));
-				transition: all 0.25s ease;
+				transition: all $token-transition-time-300 $token-transition-curve-expressive;
 			}
 
 			.osui-dropdown-serverside__balloon-content {

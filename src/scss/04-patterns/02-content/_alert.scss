@@ -20,7 +20,7 @@
 	display: flex;
 	gap: $token-scale-200;
 	padding: var(--osui-alert-padding);
-	transition: background-color $token-transition-time-100 ease; // no token match for ease
+	transition: background-color $token-transition-time-100 $token-transition-curve-expressive;
 
 	.alert-icon {
 		align-self: flex-start;

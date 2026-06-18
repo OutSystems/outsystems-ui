@@ -73,8 +73,8 @@
 		margin-left: $token-scale-100;
 		padding: var(--osui-pagination-button-padding);
 		transition:
-			background-color $token-transition-time-100 ease,
-			border-color $token-transition-time-100 ease; // no token match for ease
+			background-color $token-transition-time-100 $token-transition-curve-expressive,
+			border-color $token-transition-time-100 $token-transition-curve-expressive;
 		width: var(--osui-pagination-button-size);
 
 		&[disabled] {

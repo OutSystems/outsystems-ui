@@ -115,7 +115,7 @@
 }
 
 .osui-tooltip .osui-balloon--is-open {
-	animation: osui-tooltip-in $token-transition-time-150 cubic-bezier(0.16, 1, 0.3, 1) forwards;
+	animation: osui-tooltip-in $token-transition-time-150 $token-transition-curve-quick forwards;
 }
 // OS HighContrast Enabled -------------------------------------------------------
 ///

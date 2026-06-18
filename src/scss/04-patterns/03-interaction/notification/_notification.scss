@@ -30,8 +30,8 @@
 	pointer-events: none;
 	position: fixed;
 	transition:
-		transform 300ms ease-out,
-		opacity 300ms ease-out;
+		transform $token-transition-time-300 $token-transition-curve-quick,
+		opacity $token-transition-time-300 $token-transition-curve-quick;
 	user-select: none;
 	width: var(--notification-width);
 	z-index: var(--osui-notification-layer);

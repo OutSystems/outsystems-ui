@@ -40,7 +40,7 @@
 		cursor: default;
 		position: relative;
 		transform-style: preserve-3d;
-		transition: transform 630ms cubic-bezier(0.03, 0.01, 0.67, 1.97);
+		transition: transform $token-transition-time-500 $token-transition-curve-bounce;
 
 		&--flip-self {
 			cursor: pointer;

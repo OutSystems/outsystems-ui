@@ -17,7 +17,7 @@
 	--border-radius-sharp: none;
 	--border-radius-rounded: var(--border-radius-softer);
 	--osui-bottom-sheet-draggable-area: #{$token-scale-1400};
-	--osui-bottom-sheet-transition-function: cubic-bezier(0.19, 0.35, 0.56, 0.96);
+	--osui-bottom-sheet-transition-function: #{$token-transition-curve-quick};
 
 	background-color: var(--osui-bottom-sheet-background);
 	border-top-left-radius: var(--bottom-sheet-shape);
@@ -29,7 +29,7 @@
 	min-height: 50vh;
 	position: fixed;
 	text-align: center;
-	transition: transform 350ms var(--osui-bottom-sheet-transition-function);
+	transition: transform $token-transition-time-300 var(--osui-bottom-sheet-transition-function);
 	transform: translateY(100%);
 	width: 100%;
 	z-index: var(--osui-bottom-sheet-layer);
@@ -95,10 +95,10 @@
 	}
 
 	&:not(.osui-bottom-sheet--is-open) {
-		transition: transform 200ms ease-out;
+		transition: transform $token-transition-time-200 $token-transition-curve-quick;
 
 		+ .osui-bottom-sheet-overlay {
-			transition: opacity 200ms ease-out;
+			transition: opacity $token-transition-time-200 $token-transition-curve-quick;
 		}
 	}
 
@@ -110,7 +110,7 @@
 		pointer-events: none;
 		position: fixed;
 		top: 0;
-		transition: opacity 350ms ease-in;
+		transition: opacity $token-transition-time-300 $token-transition-curve-base;
 		width: 100vw;
 		z-index: calc(var(--layer-below) + var(--osui-bottom-sheet-layer));
 
@@ -144,8 +144,8 @@
 				position: absolute;
 				transform: translateY(-2px);
 				transition:
-					opacity 200ms ease,
-					transform 200ms var(--osui-bottom-sheet-transition-function);
+					opacity $token-transition-time-200 $token-transition-curve-expressive,
+					transform $token-transition-time-200 var(--osui-bottom-sheet-transition-function);
 				top: 0;
 				width: 100%;
 				z-index: var(--layer-global-negative);

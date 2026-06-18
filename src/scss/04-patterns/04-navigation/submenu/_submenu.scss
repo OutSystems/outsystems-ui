@@ -6,13 +6,15 @@
 ///
 .osui-submenu {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-submenu-items-background:    var(--color-background-surface);
-	--osui-submenu-items-border-color:  transparent;
-	--osui-submenu-items-shadow:        #{$token-elevation-2};
-	--osui-submenu-item-color:          var(--color-text-subtlest);
-	--osui-submenu-header-color:        var(--color-text);
-	--osui-submenu-active-border-color: var(--osui-submenu-active-border-color); // intentional: overridden by theme/consumer
-	--osui-submenu-max-height:          calc(100dvh - 80px); // design-spec: 80px header offset
+	--osui-submenu-items-background: var(--color-background-surface);
+	--osui-submenu-items-border-color: transparent;
+	--osui-submenu-items-shadow: #{$token-elevation-2};
+	--osui-submenu-item-color: var(--color-text-subtlest);
+	--osui-submenu-header-color: var(--color-text);
+	--osui-submenu-active-border-color: var(
+		--osui-submenu-active-border-color
+	); // intentional: overridden by theme/consumer
+	--osui-submenu-max-height: calc(100dvh - 80px); // design-spec: 80px header offset
 	// ───────────────────────────────────────────────────────────────────
 
 	cursor: pointer;
@@ -94,7 +96,7 @@
 		border-top: $token-border-size-050 solid transparent;
 		display: flex;
 		padding: $token-scale-0 $token-scale-200;
-		transition: all $token-transition-time-150 linear;
+		transition: all $token-transition-time-150 $token-transition-curve-linear;
 
 		&__item {
 			align-items: center;
@@ -102,7 +104,7 @@
 			display: inline-flex;
 			height: 100%;
 			position: relative;
-			transition: all $token-transition-time-150 linear;
+			transition: all $token-transition-time-150 $token-transition-curve-linear;
 
 			-servicestudio-min-width: 100px;
 			-servicestudio-margin-left: calc($token-scale-200 * -1);
@@ -122,7 +124,7 @@
 
 		&__icon {
 			margin-inline-start: $token-scale-200;
-			transition: transform 200ms ease;
+			transition: transform $token-transition-time-200 $token-transition-curve-expressive;
 			transform-origin: center;
 
 			&:after {
@@ -150,7 +152,7 @@
 		position: absolute;
 		top: calc(100% + $token-scale-100);
 		transform: translateY(-8px); // design-spec
-		transition: all 130ms ease-out;
+		transition: all var(--osui-motion-duration-130) $token-transition-curve-quick;
 		width: max-content;
 		z-index: var(--layer-elevated);
 
@@ -181,7 +183,7 @@
 			margin: 0;
 			padding: $token-scale-200 $token-scale-400;
 			text-decoration: none;
-			transition: background-color $token-transition-time-150 linear;
+			transition: background-color $token-transition-time-150 $token-transition-curve-linear;
 			white-space: nowrap;
 
 			&.active {
@@ -362,7 +364,7 @@
 		border-top: none;
 		margin: 0 $token-scale-025;
 		padding: $token-scale-200 $token-scale-300;
-		transition: background-color $token-transition-time-150 linear;
+		transition: background-color $token-transition-time-150 $token-transition-curve-linear;
 	}
 
 	.app-menu-links .osui-submenu__header:hover,
@@ -384,7 +386,7 @@
 		border-top: none;
 		margin: 0 $token-scale-025;
 		padding: $token-scale-200 $token-scale-300;
-		transition: background-color $token-transition-time-150 linear;
+		transition: background-color $token-transition-time-150 $token-transition-curve-linear;
 
 		&:hover {
 			background-color: var(--osui-bg-surface-hover);
@@ -559,7 +561,6 @@
 		background-color: var(--osui-bg-surface-hover);
 		color: $token-semantics-primary-base;
 	}
-
 }
 
 // IsRTL -------------------------------------------------------------------------

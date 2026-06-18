@@ -7,8 +7,8 @@
 .osui-dropdown-serverside-item {
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-dropdown-item-background: transparent;
-	--osui-dropdown-item-color:      var(--color-text);
-	--osui-dropdown-item-hover-bg:   #{$token-bg-neutral-subtle-default};
+	--osui-dropdown-item-color: var(--color-text);
+	--osui-dropdown-item-hover-bg: #{$token-bg-neutral-subtle-default};
 	// ───────────────────────────────────────────────────────────────────
 
 	align-items: center;
@@ -21,7 +21,7 @@
 	overflow: hidden;
 	padding: $token-scale-200 $token-scale-400;
 	position: relative;
-	transition: background 250ms ease;
+	transition: background $token-transition-time-300 $token-transition-curve-expressive;
 	width: 100%;
 	z-index: var(--layer-screen);
 

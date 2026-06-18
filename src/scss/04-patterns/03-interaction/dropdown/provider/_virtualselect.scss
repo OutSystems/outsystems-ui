@@ -324,7 +324,7 @@
 		height: $token-scale-400;
 		margin-right: $token-scale-200;
 		overflow: visible;
-		transition: background-color 0.25s ease;
+		transition: background-color $token-transition-time-300 $token-transition-curve-expressive;
 		width: $token-scale-400;
 
 		&:after {
@@ -332,7 +332,7 @@
 			border-color: transparent;
 			height: 85%;
 			opacity: 0;
-			transition: opacity 0.25s ease;
+			transition: opacity $token-transition-time-300 $token-transition-curve-expressive;
 			width: 40%;
 		}
 

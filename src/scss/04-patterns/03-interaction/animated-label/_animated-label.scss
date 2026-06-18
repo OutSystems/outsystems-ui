@@ -49,10 +49,10 @@
 		top: 50%;
 		transform: translateY(-50%);
 		transition:
-			top $token-transition-time-200 ease,
-			font-size $token-transition-time-200 ease,
-			color $token-transition-time-100 ease,
-			transform $token-transition-time-200 ease;
+			top $token-transition-time-200 $token-transition-curve-expressive,
+			font-size $token-transition-time-200 $token-transition-curve-expressive,
+			color $token-transition-time-100 $token-transition-curve-expressive,
+			transform $token-transition-time-200 $token-transition-curve-expressive;
 		z-index: var(--layer-screen);
 
 		label {
@@ -85,7 +85,7 @@
 				border-bottom: $token-border-size-025 solid var(--osui-animated-label-border-color);
 				border-radius: $token-border-radius-0;
 				padding: $token-scale-0;
-				transition: all 100ms ease-in-out;
+				transition: all $token-transition-time-100 $token-transition-curve-expressive;
 
 				&:focus {
 					border-bottom: $token-border-size-025 solid var(--osui-animated-label-focus-border-color);
@@ -139,7 +139,7 @@
 	border: $token-border-size-025 solid var(--osui-animated-label-border-color);
 	border-radius: var(--osui-input-border-radius, #{$token-border-radius-200});
 	overflow: visible;
-	transition: border-color $token-transition-time-100 ease;
+	transition: border-color $token-transition-time-100 $token-transition-curve-expressive;
 
 	&:has(.input-with-icon-content-icon:not(:empty)) {
 		.animated-label-text {

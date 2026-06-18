@@ -48,8 +48,8 @@
 				opacity: 1;
 				transform: translateY(0px) translateZ(0) scale(1);
 				transition:
-					opacity var(--osui-motion-duration-180) $token-transition-curve-base,
-					transform var(--osui-motion-duration-180) $token-transition-curve-base;
+					opacity var(--osui-motion-duration-180) $token-transition-curve-quick,
+					transform var(--osui-motion-duration-180) $token-transition-curve-quick;
 				transition-delay: calc(var(--delay) * 40ms); // design-spec: stagger delay
 			}
 
@@ -127,7 +127,7 @@
 		justify-content: center;
 		margin-left: $token-scale-400;
 		transform: translateZ(0) scale(0.3);
-		transition: transform var(--osui-motion-duration-180) $token-transition-curve-base;
+		transition: transform var(--osui-motion-duration-180) $token-transition-curve-quick;
 		transition-delay: calc(var(--delay) * 40ms); // design-spec: stagger delay
 		width: $token-scale-1000;
 

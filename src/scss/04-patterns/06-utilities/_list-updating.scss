@@ -11,8 +11,8 @@
 
 	&:before {
 		animation:
-			spin 1s infinite linear,
-			fade 300ms ease;
+			spin $token-transition-time-1000 infinite $token-transition-curve-linear,
+			fade $token-transition-time-300 $token-transition-curve-expressive;
 		border: 5px solid var(--color-border-input);
 		border-radius: 50%;
 		border-top-color: $token-primitives-neutral-700;

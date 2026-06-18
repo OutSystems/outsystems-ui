@@ -149,7 +149,7 @@
 		font-weight: $token-font-weight-regular;
 		height: $token-scale-400;
 		justify-content: center;
-		transition: transform $token-transition-time-300 ease-in-out; // no token match for ease-in-out
+		transition: transform $token-transition-time-300 $token-transition-curve-expressive;
 		width: $token-scale-400;
 
 		&--plus-minus {
@@ -157,7 +157,7 @@
 				background-color: var(--osui-accordion-item-icon-color);
 				content: ' ';
 				height: 100%;
-				transition: transform $token-transition-time-300 ease-in-out; // no token match for ease-in-out
+				transition: transform $token-transition-time-300 $token-transition-curve-expressive;
 				width: $token-border-size-050;
 			}
 
@@ -208,7 +208,7 @@
 			}
 
 			&-animating {
-				transition: height $token-transition-time-300 ease-in-out; // no token match for ease-in-out
+				transition: height $token-transition-time-300 $token-transition-curve-expressive;
 			}
 		}
 

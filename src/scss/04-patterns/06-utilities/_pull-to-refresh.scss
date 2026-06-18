@@ -24,7 +24,7 @@
 	}
 
 	.genericon {
-		transition: all 0.25s ease;
+		transition: all $token-transition-time-300 $token-transition-curve-expressive;
 	}
 }
 
@@ -34,7 +34,7 @@
 	&-reset {
 		.content,
 		.pull-to-refresh {
-			transition: all 0.25s ease;
+			transition: all $token-transition-time-300 $token-transition-curve-expressive;
 		}
 
 		.pull-to-refresh {
