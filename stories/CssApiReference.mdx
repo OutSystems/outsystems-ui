@@ -272,7 +272,7 @@ _File: `src/scss/04-patterns/01-adaptive/bottom-sheet/_bottomsheet.scss`_
 | `--osui-bottom-sheet-handler-background` | `#{$token-bg-neutral-subtle-default}` |
 | `--osui-bottom-sheet-handler-width` | `44px` |
 | `--osui-bottom-sheet-draggable-area` | `#{$token-scale-1400}` |
-| `--osui-bottom-sheet-transition-function` | `cubic-bezier(0.19, 0.35, 0.56, 0.96)` |
+| `--osui-bottom-sheet-transition-function` | `#{$token-transition-curve-quick}` |
 
 ---
 
@@ -737,7 +737,7 @@ _File: `src/scss/04-patterns/04-navigation/submenu/_submenu.scss`_
 | `--osui-submenu-items-shadow` | `#{$token-elevation-2}` |
 | `--osui-submenu-item-color` | `var(--color-text-subtlest)` |
 | `--osui-submenu-header-color` | `var(--color-text)` |
-| `--osui-submenu-active-border-color` | `var(--osui-submenu-active-border-color)` |
+| `--osui-submenu-active-border-color` | `var( --osui-submenu-active-border-color )` |
 | `--osui-submenu-max-height` | `calc(100dvh - 80px)` |
 
 ### Submenu (`.layout-side .app-menu-links .osui-submenu, .menu-visible .app-menu-links .osui-submenu`)
@@ -886,14 +886,14 @@ _File: `src/scss/01-foundations/_root.scss`_
 | `--osui-popup-layer` | `var(--layer-off-canvas)` |
 | `--osui-sidebar-layer` | `var(--layer-off-canvas)` |
 | `--osui-menu-layer` | `calc(var(--layer-navigation) + var(--layer-local-tier-2))` |
-| `--osui-border-focus-halo` | `color-mix(in srgb, #{$token-semantics-primary-base} 22%, transparent)` |
+| `--osui-border-focus-halo` | `color-mix( in srgb, #{$token-semantics-primary-base} 22%, transparent )` |
 | `--osui-elevation-overlay` | `0 12px 24px -8px rgba(0, 0, 0, 0.12), 0 8px 16px -8px rgba(0, 0, 0, 0.08)` |
 | `--osui-bg-surface-subtle` | `#fafbfc` |
 | `--osui-motion-duration-130` | `130ms` |
 | `--osui-motion-duration-180` | `180ms` |
 | `--osui-motion-duration-400` | `400ms` |
 | `--osui-bg-surface-hover` | `#{$token-primitives-neutral-100}` |
-| `--osui-bg-surface-active` | `color-mix(in srgb, #{$token-semantics-primary-base} 8%, transparent)` |
+| `--osui-bg-surface-active` | `color-mix( in srgb, #{$token-semantics-primary-base} 8%, transparent )` |
 | `--osui-border-subtle` | `#{$token-primitives-neutral-300}` |
 | `--osui-opacity-disabled` | `0.45` |
 | `--osui-elevation-25` | `0 1px 2px rgba(0, 0, 0, 0.08)` |
