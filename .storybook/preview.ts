@@ -1,7 +1,15 @@
 import type { Preview, Decorator } from '@storybook/html-vite';
+import { addons } from 'storybook/preview-api';
 // Storybook docs-page chrome (Inter font, sidebar/sbdocs styling) — ported from
 // the design-tokens Storybook. Only styles the docs/MDX surfaces, not the patterns.
 import './docs.scss';
+import {
+	CH_OVERRIDES_CHANGED,
+	CH_RESET,
+	CH_STATE_REQUEST,
+	clearThemeOverrides,
+	themeOverrideCount,
+} from '../stories/_helpers/theme-roles';
 
 /**
  * Icon-library root classes (see src/scss/01-foundations/_icon-library-odc.scss):
@@ -85,6 +93,25 @@ function applyColorScheme(scheme: string): void {
  * affordances — it's toggled from the toolbar (off by default). We also apply
  * the icon-library choice from the toolbar.
  */
+/**
+ * Theme-Editor channel bridge. The editor (a preview story) overrides `--color-*` /
+ * `--border-radius-*` roles inline on `:root`; the manager's "Reset theme" toolbar button
+ * (see `.storybook/manager.js`) needs to know when any override is active and be able to
+ * clear them. Wire it once, lazily, when the channel is available.
+ */
+let themeChannelReady = false;
+function setupThemeChannel(): void {
+	if (themeChannelReady) return;
+	const channel = addons.getChannel();
+	if (!channel) return;
+	themeChannelReady = true;
+	channel.on(CH_RESET, () => {
+		clearThemeOverrides();
+		channel.emit(CH_OVERRIDES_CHANGED, 0);
+	});
+	channel.on(CH_STATE_REQUEST, () => channel.emit(CH_OVERRIDES_CHANGED, themeOverrideCount()));
+}
+
 const withAppShell: Decorator = (storyFn, context) => {
 	['desktop', 'active-screen'].forEach((c) => document.body.classList.add(c));
 	document.body.classList.toggle('has-accessible-features', context.globals.accessibleFeatures === 'on');
@@ -92,6 +119,13 @@ const withAppShell: Decorator = (storyFn, context) => {
 	applyIconLibrary((context.globals.iconLibrary as string) ?? 'Phosphor');
 	applyTheme((context.globals.theme as string) ?? 'new');
 	applyColorScheme((context.globals.colorScheme as string) ?? 'light');
+	// Keep the toolbar reset button in sync on every story view.
+	setupThemeChannel();
+	try {
+		addons.getChannel().emit(CH_OVERRIDES_CHANGED, themeOverrideCount());
+	} catch {
+		/* channel not ready */
+	}
 	return storyFn();
 };
 
@@ -183,6 +217,7 @@ const preview: Preview = {
 					'Introduction',
 					'CSS Architecture',
 					'CSS API Reference',
+					'Theme Editor',
 					'Patterns',
 					['Content', 'Interaction', 'Navigation', 'Adaptive', 'Numbers', 'Utilities'],
 					'Widgets',
