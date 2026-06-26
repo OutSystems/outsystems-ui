@@ -81,6 +81,11 @@ jobs:
               with:
                   ref: dev
 
+            - name: 📦 Setup Node
+              uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
+              with:
+                  node-version: 24
+
             - name: 📦 Install project dependencies
               run: npm install
 
@@ -318,6 +323,11 @@ jobs:
                   fi
               env:
                   GITHUB_TOKEN: ${{ steps.get-github-token.outputs.az-keyvault-value }}
+
+            - name: 📦 Setup Node
+              uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
+              with:
+                  node-version: 24
 
             - name: 🕸️ Install project dependencies
               run: npm install
