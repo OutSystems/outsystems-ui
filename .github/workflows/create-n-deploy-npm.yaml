@@ -109,7 +109,7 @@ jobs:
             # when gulp prepareToDeploy removes the .github folder
             - name: 🔑 Get GitHub Token from Azure Key Vault
               id: get-github-token
-              uses: azure/cli@089eac9d8cc39f5d003e94f8b65efc51076c9cbd # v2.1.0
+              uses: azure/cli@9eb25b8360668fb0ecbafa808d40e2197b2f5f52 # v3.0.0
               with:
                   inlineScript: |
                       secretValue=$(az keyvault secret show --name "o11odc-github-gitpersonal-token-prd" --vault-name "kv-ui-components" --query "value" --output tsv)
@@ -176,7 +176,7 @@ jobs:
             # when gulp prepareToDeploy removes the .github folder
             - name: 🔑 Get GitHub Token from Azure Key Vault
               id: get-github-token
-              uses: azure/cli@089eac9d8cc39f5d003e94f8b65efc51076c9cbd # v2.1.0
+              uses: azure/cli@9eb25b8360668fb0ecbafa808d40e2197b2f5f52 # v3.0.0
               with:
                   inlineScript: |
                       secretValue=$(az keyvault secret show --name "o11odc-github-gitpersonal-token-prd" --vault-name "kv-ui-components" --query "value" --output tsv)
