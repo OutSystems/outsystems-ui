@@ -46,7 +46,7 @@ namespace OSFramework.OSUI.Patterns {
 		 * @param {boolean} [canBeOrphan] option for patterns that can work without a parent
 		 * @memberof OSFramework.Patterns.AbstractChild
 		 */
-		// eslint-disable-next-line @typescript-eslint/ban-types
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
 		protected setParentInfo(parentSelector: string, getPatternByIdAPI: Function, canBeOrphan?: boolean): void {
 			try {
 				const findedElement = this.selfElement.closest(parentSelector) as HTMLElement | undefined;
@@ -54,7 +54,7 @@ namespace OSFramework.OSUI.Patterns {
 				this._parentId = Helper.Dom.Attribute.Get(findedElement, 'name') || findedElement?.dataset.uniqueid;
 
 				this._parentObject = getPatternByIdAPI(this._parentId) as PT;
-			} catch (e) {
+			} catch {
 				// It means the pattern can be used without the parent, so lets not throw error (ex: accordionItem)
 				if (canBeOrphan) {
 					this._parentObject = undefined;
