@@ -28,11 +28,20 @@
 			}
 		}
 
+		&.is-interactive {
+			[data-block*='WizardItem']:has(.wizard-wrapper-item.past),
+			.wizard-wrapper-item.past {
+				cursor: pointer;
+				pointer-events: auto;
+			}
+		}
+
 		[data-block*='WizardItem'] {
 			align-items: center;
 			display: flex;
-			flex: 1;
 			flex-direction: column;
+			flex: 1;
+			pointer-events: none;
 			position: relative;
 			width: 100%;
 
