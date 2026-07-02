@@ -13,4 +13,10 @@ namespace OSFramework.OSUI.Patterns.InlineSvg.Enum {
 	export enum Properties {
 		SVGCode = 'SVGCode',
 	}
+
+	export enum A11YType {
+		Decorative = 'Decorative',
+		Informative = 'Informative',
+		Interactive = 'Interactive',
+	}
 }

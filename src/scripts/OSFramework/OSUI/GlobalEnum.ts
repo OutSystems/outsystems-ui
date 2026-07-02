@@ -187,6 +187,7 @@ namespace OSFramework.OSUI.GlobalEnum {
 		Inert = 'inert',
 		Lang = 'lang',
 		Name = 'name',
+		Role = 'role',
 		StatusBar = 'data-status-bar-height',
 		Style = 'style',
 		Type = 'type',

@@ -128,4 +128,25 @@ namespace OutSystems.OSUI.Patterns.InlineSvgAPI {
 
 		return result;
 	}
+
+	/**
+	 * Function to set the accessibility properties of the InlineSvg
+	 *
+	 * @export
+	 * @param {string} inlineSvgId
+	 * @param {string} a11yOptions
+	 * @return {*} {string} Return Message Success or message of error info if it's the case.
+	 */
+	export function SetAccessibilityProperties(inlineSvgId: string, a11yOptions: string): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.InlineSvg.FailSetAccessibilityProperties,
+			callback: () => {
+				const _InlineSvgItem = this.GetInlineSvgById(inlineSvgId);
+
+				_InlineSvgItem.applyA11YProperties(a11yOptions);
+			},
+		});
+
+		return result;
+	}
 }
