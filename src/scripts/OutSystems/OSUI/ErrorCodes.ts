@@ -314,6 +314,7 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailChangeProperty: 'OSUI-API-29001',
 		FailDispose: 'OSUI-API-29002',
 		FailRegisterCallback: 'OSUI-API-29003',
+		FailSetAccessibilityProperties: 'OSUI-API-29004',
 	};
 
 	export const OverflowMenu = {
