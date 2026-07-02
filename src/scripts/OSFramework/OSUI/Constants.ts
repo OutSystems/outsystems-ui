@@ -46,6 +46,7 @@ namespace OSFramework.OSUI.Constants {
 			Button: 'button',
 			Complementary: 'complementary',
 			Dialog: 'dialog',
+			Img: 'img',
 			List: 'list',
 			Listbox: 'listbox',
 			Listitem: 'listitem',
