@@ -123,6 +123,7 @@ body.iconLibrary-phosphor {
 // Submenu – header arrow
 .osui-submenu {
 	&__header__icon {
+		display: none;
 		margin-inline-start: var(--space-s);
 		transition: transform 200ms ease;
 		transform-origin: center;
@@ -130,6 +131,12 @@ body.iconLibrary-phosphor {
 		&:after {
 			content: var(--osui-icon-arrow-down);
 			font-family: var(--osui-icon-font-family);
+		}
+	}
+
+	&--is-dropdown {
+		.osui-submenu__header__icon {
+			display: inline-flex;
 		}
 	}
 
@@ -164,6 +171,12 @@ body.iconLibrary-phosphor {
 	&:after {
 		transform: translateY(-50%) rotate(180deg);
 		transform-origin: center;
+	}
+}
+
+.form {
+	.dropdown-container[class*="ThemeGrid_Width"]:has(select):after {
+		top: calc(50% - var(--space-m) / 2);
 	}
 }
 
