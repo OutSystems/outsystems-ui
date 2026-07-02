@@ -113,7 +113,7 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 					// Can't be used the Helper.Dom.GetElementById since we don't want a through error if the element does not exist!
 					this._targetElement = document.getElementById(this.configs.ScrollToWidgetId);
 					this._setTargetAttributes();
-				} catch (e) {
+				} catch {
 					// Was not able to get Target element!
 					throw new Error(
 						`${ErrorCodes.SectionIndexItem.FailToSetTargetElement}: Target Element with the Id '${this.configs.ScrollToWidgetId}' does not exist!`
