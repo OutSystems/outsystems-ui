@@ -50,6 +50,6 @@ jobs:
 
       - name: "🔎 Check PR title follows '${{ inputs.validate-semVer == true && '+semver: <minor|major|patch> ' || '' }}<ticket id> <description>'"
         #uses: OutSystems/rd.github-reusable-workflows/.github/actions/validate-pr-title@v2.0.7
-        uses: OutSystems/rd.github-reusable-workflows/.github/actions/validate-pr-title@ROU-12855
+        uses: OutSystems/rd.github-reusable-workflows/.github/actions/validate-pr-title@ad2f024d9ba70e786fb50af98df165c04360a297
         with:
           validate-semVer: ${{ inputs.validate-semVer }}        
