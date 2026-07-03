@@ -31,6 +31,8 @@ const timePicker = require('./TimePicker');
 const tooltip = require('./Tooltip');
 const touchEvents = require('./TouchEvents');
 const video = require('./Video');
+const wizard = require('./Wizard');
+const wizardItem = require('./WizardItem');
 
 /* 
 * List of all patterns in OSFramework.OSUI.Patterns.*
@@ -75,6 +77,8 @@ const patterns = {
 	"tooltip": tooltip.info,
 	"touch-events": touchEvents.info,
 	"video": video.info,
+	"wizard-item": wizardItem.info,
+	"wizard": wizard.info,
 
 };
 

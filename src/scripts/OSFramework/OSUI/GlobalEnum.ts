@@ -360,6 +360,8 @@ namespace OSFramework.OSUI.GlobalEnum {
 		Tooltip = 'Tooltip',
 		TouchEvents = 'TouchEvents',
 		Video = 'Video',
+		Wizard = 'Wizard',
+		WizardItem = 'Wizard Item',
 	}
 
 	/**
