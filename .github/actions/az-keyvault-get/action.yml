@@ -65,16 +65,14 @@ inputs:
 outputs:
     az-keyvault-value:
         description: 'The Azure key value.'
-        value: ${{ steps.GetAzKeyVaultSecret.outputs.az-keyvault-secret }}
+        value: ${{ steps.GetAzKeyVaultSecret.outputs.az-keyvault-value }}
 
 runs:
     using: composite
     steps:
         - name: Azure KeyVault get Value
-          uses: azure/cli@089eac9d8cc39f5d003e94f8b65efc51076c9cbd # v2.1.0
+          uses: OutSystems/rd.github-reusable-workflows/.github/actions/az-keyvault-get@c8485a9aece78d1de3c56451a0a7a2cab0fb3212 #v2.0.9
           id: GetAzKeyVaultSecret
           with:
-              inlineScript: |
-                  secretValue=$(az keyvault secret show --name "${{ inputs.key-name }}" --vault-name "${{ inputs.keyvault-name }}" --query "value" --output tsv)
-                  echo "::add-mask::$secretValue"
-                  echo "az-keyvault-secret=$secretValue" >> $GITHUB_OUTPUT
+              keyvault-name: ${{ inputs.keyvault-name }}
+              key-name: ${{ inputs.key-name }}

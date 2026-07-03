@@ -1,6 +1,6 @@
 #
 # This action prevents merging pull requests that don't follow the title convention.
-# The title convention is 
+# The title convention is
 # "+semver: <minor|major|patch> <ticket id> <description>"
 # OR
 # "<ticket id> <description>"
@@ -15,7 +15,7 @@
 # on:
 #  pull_request:
 #    types: [opened, reopened, edited]
-#     
+#
 #     (...)
 #     steps:
 #     (...)
@@ -37,7 +37,7 @@ runs:
   using: composite
   steps:
     - name: "Check PR title follows '${{ inputs.validate-semVer == true && '+semver: <minor|major|patch> ' || '' }}<ticket id> <description>'"
-      uses: deepakputhraya/action-pr-title@3864bebc79c5f829d25dd42d3c6579d040b0ef16 #v1.0.2
+      uses: OutSystems/rd.github-reusable-workflows/.github/actions/validate-pr-title@c8485a9aece78d1de3c56451a0a7a2cab0fb3212 #v2.0.9
       with:
-        regex: ^${{ inputs.validate-semVer == true && '(\+semver:\s(minor|major|patch)\s)?' || '' }}([A-Z][A-Z0-9]*-\d+(:)?\s\w)
+        validate-semVer: ${{ inputs.validate-semVer }}
       if: ${{ contains(github.head_ref, 'release/') == false && contains(github.head_ref, 'merge/') == false }}
