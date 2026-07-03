@@ -93,6 +93,8 @@ Section Index:
         6.2.14. Tag
         6.2.15. Tooltip
         6.2.16. User Avatar
+        6.2.17. Wizard
+        6.2.18. Wizard Item
     6.3. Interaction
         6.3.1. Action Sheet
         6.3.2. Animate
@@ -369,6 +371,10 @@ Functions & Mixins
 @import '../scripts/OSFramework/OSUI/Pattern/Tooltip/scss/tooltip';
 /*! 6.2.16. User Avatar */
 @import '04-patterns/02-content/user-avatar';
+/*! 6.2.17. Wizard */
+@import '../scripts/OSFramework/OSUI/Pattern/Wizard/scss/wizard';
+/*! 6.2.18. Wizard Item */
+@import '../scripts/OSFramework/OSUI/Pattern/WizardItem/scss/wizard-item';
 
 /*! 6.3. Interaction */
 /*! 6.3.1. Action Sheet */
