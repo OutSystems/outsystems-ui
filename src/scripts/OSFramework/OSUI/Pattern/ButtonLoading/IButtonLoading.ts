@@ -7,5 +7,5 @@ namespace OSFramework.OSUI.Patterns.ButtonLoading {
 	 * @interface IButtonLoading
 	 * @extends {Interface.IPattern}
 	 */
-	export interface IButtonLoading extends Interface.IPattern {}
+	export type IButtonLoading = Interface.IPattern
 }
