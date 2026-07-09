@@ -10,6 +10,7 @@
 	--osui-btn-background: var(--color-background-surface);
 	--osui-btn-color: var(--color-primary);
 	--osui-btn-border-color: currentColor;
+	--osui-btn-border-width: #{$token-border-size-025};
 	--osui-btn-border-radius: var(--border-radius-soft);
 	// Primary variant
 	--osui-btn-primary-background: var(--color-primary);
@@ -23,11 +24,15 @@
 	--osui-btn-error-background: #{$token-bg-danger-base-default};
 	--osui-btn-error-border-color: #{$token-bg-danger-base-default};
 	--osui-btn-error-color: var(--color-text-inverse);
+	// Focus state
+	--osui-btn-focus-shadow-width: #{$token-border-size-050};
+	--osui-btn-focus-shadow-gap: #{$token-scale-050};
+	--osui-btn-focus-shadow-color: #{$token-border-focus-default};
 	// ───────────────────────────────────────────────────────────────────
 
 	align-items: center;
 	background-color: var(--osui-btn-background);
-	border: $token-border-size-025 solid var(--osui-btn-border-color);
+	border: var(--osui-btn-border-width) solid var(--osui-btn-border-color);
 	border-radius: var(--osui-btn-border-radius);
 	color: var(--osui-btn-color);
 	cursor: pointer;
@@ -43,6 +48,7 @@
 	transition:
 		background-color $token-transition-time-100 $token-transition-curve-base,
 		border-color $token-transition-time-100 $token-transition-curve-base,
+		box-shadow $token-transition-time-100 $token-transition-curve-base,
 		color $token-transition-time-100 $token-transition-curve-base;
 
 	&:hover:active {
@@ -54,13 +60,13 @@
 	}
 
 	&[class*='background-'] {
-		border: $token-border-size-025 solid transparent;
+		border: var(--osui-btn-border-width) solid transparent;
 		color: var(--color-text-inverse);
 	}
 
 	&[class*='text-'] {
 		background-color: var(--osui-btn-background);
-		border: $token-border-size-025 solid currentColor;
+		border: var(--osui-btn-border-width) solid currentColor;
 	}
 
 	& + .btn {
@@ -70,7 +76,7 @@
 	// Variants
 	&-primary {
 		background-color: var(--osui-btn-primary-background);
-		border: $token-border-size-025 solid var(--osui-btn-primary-border-color);
+		border: var(--osui-btn-border-width) solid var(--osui-btn-primary-border-color);
 		color: var(--osui-btn-primary-color);
 	}
 
@@ -91,20 +97,20 @@
 		--osui-btn-border-color: var(--color-border);
 
 		background-color: var(--osui-btn-background);
-		border: $token-border-size-025 solid var(--osui-btn-border-color);
+		border: var(--osui-btn-border-width) solid var(--osui-btn-border-color);
 		color: var(--osui-btn-color);
 		transition: border-color $token-transition-time-150 $token-transition-curve-base;
 	}
 
 	&-success {
 		background-color: var(--osui-btn-success-background);
-		border: $token-border-size-025 solid var(--osui-btn-success-border-color);
+		border: var(--osui-btn-border-width) solid var(--osui-btn-success-border-color);
 		color: var(--osui-btn-success-color);
 	}
 
 	&-error {
 		background-color: var(--osui-btn-error-background);
-		border: $token-border-size-025 solid var(--osui-btn-error-border-color);
+		border: var(--osui-btn-border-width) solid var(--osui-btn-error-border-color);
 		color: var(--osui-btn-error-color);
 	}
 
@@ -199,7 +205,9 @@
 ///
 .has-accessible-features {
 	& .btn:focus {
-		border-color: $token-semantics-primary-base;
+		box-shadow:
+			0 0 0 var(--osui-btn-focus-shadow-gap) var(--color-background-surface),
+			0 0 0 calc(var(--osui-btn-focus-shadow-gap) + var(--osui-btn-focus-shadow-width)) var(--osui-btn-focus-shadow-color);
 	}
 }
 
