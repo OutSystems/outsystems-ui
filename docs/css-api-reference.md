@@ -99,9 +99,12 @@ _File: `src/scss/03-widgets/_dropdown.scss`_
 | Property | Default |
 |---|---|
 | `--osui-dropdown-background` | `var(--color-background-input)` |
-| `--osui-dropdown-border-color` | `var(--color-border)` |
+| `--osui-dropdown-border-color` | `var(--color-border-input)` |
+| `--osui-dropdown-border-width` | `#{$token-border-size-025}` |
 | `--osui-dropdown-color` | `var(--color-text)` |
 | `--osui-dropdown-border-radius` | `var(--border-radius-soft)` |
+| `--osui-dropdown-list-background` | `var(--color-background-surface)` |
+| `--osui-dropdown-list-border-color` | `var(--color-border)` |
 | `--osui-dropdown-list-max-height` | `240px` |
 
 ### Feedback Message (`.feedback-message`)
@@ -904,4 +907,4 @@ _File: `src/scss/01-foundations/_root.scss`_
 
 ---
 
-<sub>389 properties across 75 components, generated from `src/scss`.</sub>
+<sub>392 properties across 75 components, generated from `src/scss`.</sub>
