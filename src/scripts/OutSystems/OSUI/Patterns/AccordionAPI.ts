@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+// test comment
 namespace OutSystems.OSUI.Patterns.AccordionAPI {
 	const _accordionMap = new Map<string, OSFramework.OSUI.Patterns.Accordion.IAccordion>(); //Accordion.uniqueId -> Accordion obj
 
