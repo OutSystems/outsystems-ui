@@ -128,7 +128,6 @@ Section Index:
         6.4.6. Submenu
         6.4.7. Tabs
         6.4.8. Timeline
-        6.4.9. Wizard
     6.5. Numbers
         6.5.1. Badge
         6.5.2. Counter
@@ -171,6 +170,7 @@ Section Index:
         6.8.19. Tabs
         6.8.20. Tooltip
         6.8.21. Video
+        6.8.22. Wizard
 7. Usefull Classes
     7.1. a11y (Accessibility)
     7.2. Colors - Brand
@@ -441,8 +441,6 @@ Functions & Mixins
 @import '../scripts/OSFramework/OSUI/Pattern/Tabs/scss/tabs';
 /*! 6.4.8. Timeline */
 @import '04-patterns/04-navigation/timeline';
-/*! 6.4.9. Wizard */
-@import '04-patterns/04-navigation/wizard';
 
 /*! 6.5. Numbers */
 /*! 6.5.1. Badge */
@@ -525,6 +523,8 @@ Functions & Mixins
 @import '10-deprecated/tooltip-deprecated';
 /*! 6.8.21. Video */
 @import '10-deprecated/video-deprecated';
+/*! 6.8.22. Wizard */
+@import '10-deprecated/wizard-deprecated';
 
 /*! ==============================================================================
 7. Usefull Classes

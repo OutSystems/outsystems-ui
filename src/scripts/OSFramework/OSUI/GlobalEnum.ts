@@ -1,6 +1,17 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSFramework.OSUI.GlobalEnum {
 	/**
+	 * OutSystemsUI A11Y Current Value
+	 */
+	export enum A11YAriaCurrentValues {
+		Page = 'page',
+		Step = 'step',
+		Location = 'location',
+		Date = 'date',
+		Time = 'time',
+	}
+
+	/**
 	 * OutSystemsUI common properties
 	 */
 	export enum CommonPatternsProperties {

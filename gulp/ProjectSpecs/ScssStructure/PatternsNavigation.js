@@ -33,10 +33,6 @@ const sectionInfo = {
         {
             "name": "Timeline",
             "path": "04-patterns/04-navigation/timeline"
-        },
-        {
-            "name": "Wizard",
-            "path": "04-patterns/04-navigation/wizard"
         }
     ]
 };

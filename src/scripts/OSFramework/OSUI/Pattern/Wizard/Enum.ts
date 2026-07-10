@@ -13,5 +13,26 @@ namespace OSFramework.OSUI.Patterns.Wizard.Enum {
 	 */
 	export enum CssClass {
 		Pattern = 'osui-wizard',
+		IsHorizontal = 'is-horizontal',
+		IsInteractive = 'is-interactive',
+		IsProgressOnly = 'is-progress-only',
+		IsVertical = 'is-vertical',
+	}
+
+	/**
+	 * Wizard Enum for Properties
+	 */
+	export enum Properties {
+		ExtendedClass = 'ExtendedClass',
+		IsVertical = 'IsVertical',
+		StepBehavior = 'StepBehavior',
+	}
+
+	/**
+	 * Wizard Enum for Step Behavior
+	 */
+	export enum StepBehavior {
+		Interactive = 'Interactive',
+		ProgressOnly = 'ProgressOnly',
 	}
 }

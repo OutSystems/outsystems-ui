@@ -5,6 +5,11 @@ namespace OSFramework.OSUI.Patterns.Wizard {
 	 */
 	export interface IWizard extends Interface.IParent {
 		/**
+		 * Configuration object
+		 */
+		configs: WizardConfig;
+
+		/**
 		 * Method to add a new wizardItem
 		 *
 		 * @param {WizardItem.IWizardItem} wizardItem

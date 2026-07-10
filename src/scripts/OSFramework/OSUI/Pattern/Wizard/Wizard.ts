@@ -8,6 +8,33 @@ namespace OSFramework.OSUI.Patterns.Wizard {
 			super(uniqueId, new WizardConfig(configs));
 		}
 
+		// Method to set CSS classed to the element
+		private _setCssClasses(): void {
+			// Manage orientation css class
+			Helper.Dom.Styles.RemoveClass(
+				this.selfElement,
+				this.configs.IsVertical ? Enum.CssClass.IsHorizontal : Enum.CssClass.IsVertical
+			);
+			Helper.Dom.Styles.AddClass(
+				this.selfElement,
+				this.configs.IsVertical ? Enum.CssClass.IsVertical : Enum.CssClass.IsHorizontal
+			);
+
+			// Manage type css class
+			Helper.Dom.Styles.RemoveClass(
+				this.selfElement,
+				this.configs.StepBehavior === Enum.StepBehavior.Interactive
+					? Enum.CssClass.IsProgressOnly
+					: Enum.CssClass.IsInteractive
+			);
+			Helper.Dom.Styles.AddClass(
+				this.selfElement,
+				this.configs.StepBehavior === Enum.StepBehavior.Interactive
+					? Enum.CssClass.IsInteractive
+					: Enum.CssClass.IsProgressOnly
+			);
+		}
+
 		/**
 		 * This method has no implementation on this pattern context!
 		 *
@@ -15,7 +42,22 @@ namespace OSFramework.OSUI.Patterns.Wizard {
 		 * @memberof OSFramework.Patterns.Wizard.Wizard
 		 */
 		protected setA11YProperties(): void {
-			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
+			// Clean up aria-* attributes
+			Helper.Dom.Attribute.Remove(this.selfElement, Constants.A11YAttributes.Aria.Orientation);
+
+			// Set the role property based on StepBehavior property value
+			if (this.configs.StepBehavior === Enum.StepBehavior.Interactive) {
+				Helper.A11Y.RoleTabList(this.selfElement);
+
+				// Set the aria-orientation property based on IsVertical property value
+				if (this.configs.IsVertical) {
+					Helper.A11Y.AriaOrientationVertical(this.selfElement);
+				} else {
+					Helper.A11Y.AriaOrientationHorizontal(this.selfElement);
+				}
+			} else {
+				Helper.A11Y.RoleList(this.selfElement);
+			}
 		}
 
 		/**
@@ -29,13 +71,14 @@ namespace OSFramework.OSUI.Patterns.Wizard {
 		}
 
 		/**
-		 * This method has no implementation on this pattern context!
+		 * Manage HTML elements
 		 *
 		 * @protected
 		 * @memberof OSFramework.Patterns.Wizard.Wizard
 		 */
 		protected setHtmlElements(): void {
-			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
+			// Set CSS classes to the element
+			this._setCssClasses();
 		}
 
 		/**
@@ -105,6 +148,10 @@ namespace OSFramework.OSUI.Patterns.Wizard {
 		public build(): void {
 			super.build();
 
+			this.setHtmlElements();
+
+			this.setA11YProperties();
+
 			this.finishBuild();
 		}
 
@@ -117,6 +164,12 @@ namespace OSFramework.OSUI.Patterns.Wizard {
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
+
+			if (propertyName !== Enum.Properties.ExtendedClass) {
+				this._setCssClasses();
+				this.setA11YProperties();
+				this.notifyChildren(WizardItem.Enum.ParentNotifyActionType.HasNewProps);
+			}
 		}
 
 		/**

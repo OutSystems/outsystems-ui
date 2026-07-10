@@ -6,6 +6,16 @@ namespace OSFramework.OSUI.Constants {
 	export const A11YAttributes = {
 		Aria: {
 			Atomic: 'aria-atomic',
+			Current: {
+				prop: 'aria-current',
+				value: {
+					Page: 'page',
+					Step: 'step',
+					Location: 'location',
+					Date: 'date',
+					Time: 'time',
+				},
+			},
 			Orientation: 'aria-orientation',
 			Modal: 'aria-modal',
 			Busy: 'aria-busy',

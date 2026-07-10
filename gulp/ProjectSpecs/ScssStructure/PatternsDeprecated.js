@@ -89,6 +89,10 @@ const sectionInfo = {
         {
             "name": "Video",
             "path": "10-deprecated/video-deprecated"
+        },
+        {
+            "name": "Wizard",
+            "path": "10-deprecated/wizard-deprecated"
         }
     ]
 };
