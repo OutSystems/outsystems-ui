@@ -47,28 +47,28 @@
 ///
 div.feedback-message-error {
 	--osui-feedback-message-background: #{$token-bg-danger-subtle-default};
-	--osui-feedback-message-icon-color: #{$token-text-danger};
+	--osui-feedback-message-icon-color: #{$token-icon-danger};
 }
 
 // Mantain due to Retro Compatibility
 ///
 div.feedback-message-info {
 	--osui-feedback-message-background: #{$token-bg-info-subtle-default};
-	--osui-feedback-message-icon-color: #{$token-text-info};
+	--osui-feedback-message-icon-color: #{$token-icon-info};
 }
 
 // Mantain due to Retro Compatibility
 ///
 div.feedback-message-success {
 	--osui-feedback-message-background: #{$token-bg-success-subtle-default};
-	--osui-feedback-message-icon-color: #{$token-text-success};
+	--osui-feedback-message-icon-color: #{$token-icon-success};
 }
 
 // Mantain due to Retro Compatibility
 ///
 div.feedback-message-warning {
 	--osui-feedback-message-background: #{$token-bg-warning-subtle-default};
-	--osui-feedback-message-icon-color: #{$token-text-warning};
+	--osui-feedback-message-icon-color: #{$token-icon-warning};
 }
 
 // Responsive --------------------------------------------------------------------
