@@ -15,8 +15,8 @@ const meta: Meta = { title: 'Widgets/Table' };
 export default meta;
 type Story = StoryObj;
 
-const row = (selected: boolean, name: string, status: string, email: string) => `
-	<tr class="table-row table-row-stripping ${selected ? 'table-row-selected' : ''}">
+const row = (name: string, status: string, email: string) => `
+	<tr class="table-row table-row-stripping">
 		<td data-header="Name">${name}</td>
 		<td data-header="Status">${status}</td>
 		<td data-header="Email" class="table-cell-secondary">${email}</td>
@@ -34,13 +34,13 @@ export const Default: Story = {
 					</tr>
 				</thead>
 				<tbody>
-					${row(false, 'John Doe', 'Active', 'john@example.com')}
-					${row(false, 'Jane Smith', 'Inactive', 'jane@example.com')}
-					${row(true, 'Bob Johnson', 'Active', 'bob@example.com')}
-					${row(false, 'Alice Brown', 'Active', 'alice@example.com')}
-					${row(false, 'James Sullivan', 'Active', 'james@example.com')}
-					${row(false, 'William Cullen', 'Active', 'william@example.com')}
-					${row(false, 'Amanda Lawrence', 'Active', 'amanda@example.com')}
+					${row('John Doe', 'Active', 'john@example.com')}
+					${row('Jane Smith', 'Inactive', 'jane@example.com')}
+					${row('Bob Johnson', 'Active', 'bob@example.com')}
+					${row('Alice Brown', 'Active', 'alice@example.com')}
+					${row('James Sullivan', 'Active', 'james@example.com')}
+					${row('William Cullen', 'Active', 'william@example.com')}
+					${row('Amanda Lawrence', 'Active', 'amanda@example.com')}
 				</tbody>
 			</table>`),
 };
