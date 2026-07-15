@@ -51,6 +51,8 @@
 	--color-neutral-9: #{$token-primitives-neutral-1100};
 	--color-neutral-10: #{$token-primitives-neutral-1200};
 	--color-error: #{$token-semantics-danger-base};
+	--color-border-danger: #{$token-border-danger-default}; // border-specific danger tier (form validation)
+	--color-text-danger: #{$token-text-danger}; // text-specific danger tier (form validation)
 	--color-warning: #{$token-semantics-warning-base};
 	--color-success: #{$token-semantics-success-base};
 	--color-info: #{$token-semantics-info-base};
