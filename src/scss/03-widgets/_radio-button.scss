@@ -71,7 +71,6 @@
 
 		& + label {
 			pointer-events: none;
-			color: var(--color-text-disabled);
 		}
 
 		&:before {
@@ -80,8 +79,10 @@
 		}
 
 		&:checked:before {
-			background-color: var(--color-background-input-disabled);
-			border: var(--osui-radio-indicator-border) solid var(--osui-radio-disabled-border-color);
+			background-color: var(--osui-radio-background);
+			// the indicator is drawn as a border, so the disabled overlay is blended into its color directly —
+			// an inset box-shadow would be clipped to the padding box and never paint over the border itself
+			border: var(--osui-radio-indicator-border) solid color-mix(in srgb, var(--osui-radio-checked-color) 40%, #{$token-primitives-base-white} 60%);
 		}
 	}
 }
