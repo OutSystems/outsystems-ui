@@ -45,9 +45,9 @@
 		}
 
 		&.not-valid {
-			&.dropdown-expanded > div.dropdown-display,
+			div.dropdown-display,
 			& > select.dropdown-display {
-				border: var(--osui-dropdown-border-width) solid $token-semantics-danger-base;
+				border: var(--osui-dropdown-border-width) solid var(--color-border-danger);
 			}
 		}
 
