@@ -65,6 +65,12 @@ const sectionInfo = {
         {
             "name": "User Avatar",
             "path": "04-patterns/02-content/user-avatar"
+        },
+        {
+            "key": "wizard"
+        },
+        {
+            "key": "wizard-item"
         }
     ]
 };

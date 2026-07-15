@@ -42,12 +42,15 @@ namespace OSFramework.OSUI.Patterns {
 		 *
 		 * @protected
 		 * @param {string} parentSelector Selector to find for parent Element
-		 * @param {Function} getPatternByIdAPI API reference method from Parent Pattern that will return the PatternById
+		 * @param {(patternId: string) => PT} getPatternByIdAPI API reference method from Parent Pattern that will return the PatternById
 		 * @param {boolean} [canBeOrphan] option for patterns that can work without a parent
 		 * @memberof OSFramework.Patterns.AbstractChild
 		 */
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
-		protected setParentInfo(parentSelector: string, getPatternByIdAPI: Function, canBeOrphan?: boolean): void {
+		protected setParentInfo(
+			parentSelector: string,
+			getPatternByIdAPI: (patternId: string) => PT,
+			canBeOrphan?: boolean
+		): void {
 			try {
 				const findedElement = this.selfElement.closest(parentSelector) as HTMLElement | undefined;
 				// Find for Id at Name or data-uniqueid attribute, data-uniqueid attribute is used at the elements that will be moved outside parent context

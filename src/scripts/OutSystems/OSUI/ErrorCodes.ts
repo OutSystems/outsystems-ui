@@ -337,6 +337,18 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailSetTime: 'OSUI-API-31007',
 	};
 
+	export const Wizard = {
+		FailChangeProperty: 'OSUI-API-32001',
+		FailDispose: 'OSUI-API-32002',
+		FailRegisterCallback: 'OSUI-API-32003',
+	};
+
+	export const WizardItem = {
+		FailChangeProperty: 'OSUI-API-33001',
+		FailDispose: 'OSUI-API-33002',
+		FailRegisterCallback: 'OSUI-API-33003',
+	};
+
 	// Error Codes used in Legacy Client Action
 	export const Legacy = {
 		FailAddFavicon_Legacy: 'OSUI-LEG-000001',
