@@ -11,7 +11,7 @@
 	--osui-radio-border-color: #{$token-border-default};
 	--osui-radio-checked-color: var(--color-primary);
 	--osui-radio-indicator-border: #{$token-scale-150};
-	--osui-radio-error-border-color: #{$token-border-danger-default};
+	--osui-radio-error-border-color: var(--color-border-danger);
 	--osui-radio-disabled-border-color: #{$token-border-disabled};
 	// ───────────────────────────────────────────────────────────────────
 
