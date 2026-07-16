@@ -13,7 +13,8 @@
 		// ─── Component CSS API ─────────────────────────────────────────────
 		--osui-button-group-background: var(--color-background-surface);
 		--osui-button-group-border-color: var(--color-border);
-		--osui-button-group-color: var(--color-text);
+		--osui-button-group-color: var(--color-text-subtle);
+		--osui-button-group-disabled-overlay: #{$token-state-disabled};
 		// ───────────────────────────────────────────────────────────────────
 
 		background-color: var(--osui-button-group-background);
@@ -21,9 +22,9 @@
 		border-radius: 0;
 		color: var(--osui-button-group-color);
 		cursor: pointer;
-		font-size: $token-font-size-350;
-		font-weight: $token-font-weight-semi-bold;
-		height: $token-scale-1000;
+		font-size: $token-font-size-400;
+		font-weight: $token-font-weight-medium;
+		height: $token-scale-1200;
 		padding: $token-scale-0 $token-scale-400;
 		position: relative;
 		white-space: nowrap;
@@ -38,18 +39,13 @@
 		}
 
 		&[disabled] {
-			--osui-button-group-background: var(--color-background-surface);
-			--osui-button-group-border-color: var(--color-border);
-			--osui-button-group-color: var(--color-text-disabled);
-
-			background-color: var(--osui-button-group-background);
-			border: $token-border-size-025 solid var(--osui-button-group-border-color);
-			color: var(--osui-button-group-color);
 			pointer-events: none;
 
-			&.button-group-selected-item {
-				background-color: var(--color-background-input-disabled);
-				color: var(--color-text-disabled);
+			&:after {
+				background-color: var(--osui-button-group-disabled-overlay);
+				content: '';
+				inset: 0;
+				position: absolute;
 			}
 		}
 
