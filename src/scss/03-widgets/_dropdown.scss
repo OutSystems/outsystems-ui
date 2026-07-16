@@ -14,6 +14,8 @@
 		--osui-dropdown-list-background: var(--color-background-surface);
 		--osui-dropdown-list-border-color: var(--color-border);
 		--osui-dropdown-list-max-height: 240px;
+		--osui-dropdown-focus-border-color: var(--color-border-primary);
+		--osui-dropdown-focus-ring-color: #{$token-border-focus-default};
 		// ───────────────────────────────────────────────────────────────────
 
 		cursor: initial;
@@ -39,7 +41,9 @@
 				width: 100%;
 
 				&:focus {
-					border: var(--osui-dropdown-border-width) solid $token-semantics-primary-base;
+					border: var(--osui-dropdown-border-width) solid var(--osui-dropdown-focus-border-color);
+					box-shadow: 0 0 0 $token-border-size-050 var(--osui-dropdown-focus-ring-color);
+					outline: none;
 				}
 			}
 		}
@@ -52,7 +56,8 @@
 		}
 
 		&.dropdown-expanded > div.dropdown-display {
-			border: var(--osui-dropdown-border-width) solid $token-semantics-primary-base;
+			border: var(--osui-dropdown-border-width) solid var(--osui-dropdown-focus-border-color);
+			box-shadow: 0 0 0 $token-border-size-050 var(--osui-dropdown-focus-ring-color);
 		}
 
 		& > div.dropdown-list {
