@@ -188,21 +188,6 @@
 	}
 }
 
-///
-.table-header {
-	th.sorted {
-		.sortable-icon {
-			&:before {
-				border-bottom: 4px solid $token-semantics-primary-base;
-			}
-
-			&:after {
-				border-top: 4px solid $token-semantics-primary-base;
-			}
-		}
-	}
-}
-
 // Responsive --------------------------------------------------------------------
 ///
 .desktop {
