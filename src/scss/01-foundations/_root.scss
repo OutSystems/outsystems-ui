@@ -32,6 +32,7 @@
 	--color-border-subtlest: #{$token-border-subtlest};
 	--color-border-input: #{$token-border-input-default};
 	--color-border-input-press: #{$token-border-input-press};
+	--color-border-primary: #{$token-border-primary}; // border-specific primary tier (focus rings)
 
 	// ─── Theme layer · brand / status / neutral (also read by TS GetColorValueFromColorType) ──
 	--color-primary: #{$token-semantics-primary-base};
