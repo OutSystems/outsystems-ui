@@ -178,31 +178,15 @@
 		position: absolute;
 	}
 
+	// currentColor keeps the arrow in lockstep with the header text color
+	// (default/hover/.sorted) without a separate state rule per color
 	&:before {
-		border-bottom: 4px solid $token-primitives-neutral-800;
+		border-bottom: 4px solid currentColor;
 	}
 
 	&:after {
-		border-top: 4px solid $token-primitives-neutral-800;
+		border-top: 4px solid currentColor;
 		bottom: 0;
-	}
-}
-
-// Responsive --------------------------------------------------------------------
-///
-.desktop {
-	.table-header {
-		th.sortable:hover {
-			.sortable-icon {
-				&:before {
-					border-bottom: 4px solid $token-semantics-primary-base;
-				}
-
-				&:after {
-					border-top: 4px solid $token-semantics-primary-base;
-				}
-			}
-		}
 	}
 }
 
