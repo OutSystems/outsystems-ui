@@ -6,18 +6,19 @@
 ///
 .table {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-table-border-color: var(--osui-border-subtle);
+	--osui-table-border-color: var(--color-border);
 	--osui-table-border-radius: var(--border-radius-soft);
 	--osui-table-header-background: transparent;
-	--osui-table-header-color: var(--color-text);
+	--osui-table-header-color: var(--color-text-subtlest);
 	--osui-table-cell-background: var(--color-background-surface);
 	--osui-table-row-hover-background: var(--color-background-input-disabled);
-	--osui-table-row-stripe-background: #{$token-bg-neutral-subtlest-default};
-	--osui-table-sorted-color: var(--color-primary);
+	--osui-table-row-stripe-background: #{$token-bg-neutral-subtle-default};
+	--osui-table-sorted-color: var(--color-text);
 	--osui-table-row-selected-background: var(--color-primary-selected);
 	// ───────────────────────────────────────────────────────────────────
 
-	border: none;
+	border: $token-border-size-025 solid var(--osui-table-border-color);
+	border-radius: var(--osui-table-border-radius);
 	border-spacing: 0;
 	empty-cells: show;
 	white-space: nowrap;
@@ -35,7 +36,7 @@
 			border-bottom: $token-border-size-025 solid var(--osui-table-border-color);
 			color: var(--osui-table-header-color);
 			font-size: $token-font-size-350;
-			font-weight: $token-font-weight-semi-bold;
+			font-weight: $token-font-weight-regular;
 			height: $token-scale-1200;
 			padding: $token-scale-0 $token-scale-600;
 			text-align: left;
@@ -46,6 +47,7 @@
 
 			&.sorted {
 				color: var(--osui-table-sorted-color);
+				font-weight: $token-font-weight-semi-bold;
 			}
 		}
 	}
@@ -64,7 +66,7 @@
 			border-bottom: $token-border-size-025 solid var(--osui-table-border-color);
 			color: var(--color-text);
 			font-size: $token-font-size-350;
-			height: $token-scale-1400;
+			height: $token-scale-1600;
 			padding: $token-scale-200 $token-scale-600;
 			transition: background-color $token-transition-time-100 ease; // no token match for ease
 			vertical-align: inherit;
@@ -72,13 +74,13 @@
 
 		&-small {
 			td {
-				height: $token-scale-1200;
+				height: $token-scale-1000;
 			}
 		}
 
 		&-medium {
 			td {
-				height: $token-scale-1600;
+				height: $token-scale-1200;
 			}
 		}
 
