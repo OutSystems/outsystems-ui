@@ -108,15 +108,15 @@
 					font-family: var(--osui-icon-font-family);
 					font-size: $token-font-size-400;
 					margin-left: $token-scale-200;
-						}
+				}
 			}
 
 			span {
 				overflow: hidden;
 				text-overflow: ellipsis;
 				white-space: nowrap;
-				}
 			}
+		}
 
 		.scrollable-list-with-scroll {
 			background: none;
@@ -129,7 +129,7 @@
 				content: none;
 			}
 		}
-		}
+	}
 
 	// Is expanded
 	&-expanded {
