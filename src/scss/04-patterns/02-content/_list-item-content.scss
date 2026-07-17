@@ -7,7 +7,7 @@
 .list-item-content {
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-list-item-content-title-color: var(--color-text);
-	--osui-list-item-content-text-color:  #{$token-primitives-neutral-700};
+	--osui-list-item-content-text-color: #{$token-primitives-neutral-700};
 	// ───────────────────────────────────────────────────────────────────
 
 	align-items: center;
@@ -15,7 +15,7 @@
 
 	&-left {
 		max-width: 120px;
-		padding-right: $token-scale-600;
+		padding-right: $token-scale-400;
 	}
 
 	&-center {
@@ -24,7 +24,7 @@
 	}
 
 	&-right {
-		padding-left: $token-scale-600;
+		padding-left: $token-scale-400;
 	}
 
 	&-title,
@@ -78,13 +78,13 @@
 .is-rtl {
 	.list-item-content {
 		&-left {
-			padding-left: $token-scale-600;
+			padding-left: $token-scale-400;
 			padding-right: 0;
 		}
 
 		&-right {
 			padding-left: 0;
-			padding-right: $token-scale-600;
+			padding-right: $token-scale-400;
 		}
 	}
 
