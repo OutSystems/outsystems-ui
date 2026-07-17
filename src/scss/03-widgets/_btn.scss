@@ -6,11 +6,21 @@
 ///
 .btn {
 	// ─── Component CSS API ─────────────────────────────────────────────
+	// Unmodified .btn maps to the Figma "Secondary" type: solid neutral-bold fill,
+	// inverse text, border-color matching the fill (no visible outline).
 	--osui-btn-height: #{$token-scale-1000};
-	--osui-btn-background: var(--color-background-surface);
-	--osui-btn-color: var(--color-primary);
-	--osui-btn-border-color: currentColor;
+	--osui-btn-background: #{$token-bg-neutral-bold-default};
+	--osui-btn-color: var(--color-text-inverse);
+	--osui-btn-border-color: #{$token-bg-neutral-bold-default};
+	// Hover/active read through these two vars regardless of variant — each
+	// variant below only needs to override them with its own token tier.
+	--osui-btn-hover-background: #{$token-bg-neutral-bold-hover};
+	--osui-btn-active-background: #{$token-bg-neutral-bold-press};
+	--osui-btn-border-width: #{$token-border-size-025};
 	--osui-btn-border-radius: var(--border-radius-soft);
+	// Disabled keeps the variant's own color visible underneath this wash,
+	// instead of dimming toward the page background via opacity.
+	--osui-btn-disabled-overlay: #{$token-state-disabled};
 	// Primary variant
 	--osui-btn-primary-background: var(--color-primary);
 	--osui-btn-primary-border-color: var(--color-primary);
@@ -23,11 +33,15 @@
 	--osui-btn-error-background: #{$token-bg-danger-base-default};
 	--osui-btn-error-border-color: #{$token-bg-danger-base-default};
 	--osui-btn-error-color: var(--color-text-inverse);
+	// Focus state
+	--osui-btn-focus-shadow-width: #{$token-border-size-050};
+	--osui-btn-focus-shadow-gap: #{$token-scale-050};
+	--osui-btn-focus-shadow-color: #{$token-border-focus-default};
 	// ───────────────────────────────────────────────────────────────────
 
 	align-items: center;
 	background-color: var(--osui-btn-background);
-	border: $token-border-size-025 solid var(--osui-btn-border-color);
+	border: var(--osui-btn-border-width) solid var(--osui-btn-border-color);
 	border-radius: var(--osui-btn-border-radius);
 	color: var(--osui-btn-color);
 	cursor: pointer;
@@ -40,13 +54,23 @@
 	line-height: var(--osui-font-line-height-full);
 	margin: 0;
 	padding: $token-scale-0 $token-scale-400;
+	position: relative;
 	transition:
 		background-color $token-transition-time-100 $token-transition-curve-base,
 		border-color $token-transition-time-100 $token-transition-curve-base,
+		box-shadow $token-transition-time-100 $token-transition-curve-base,
 		color $token-transition-time-100 $token-transition-curve-base;
 
-	&:hover:active {
-		filter: brightness(0.8);
+	&:active {
+		background-color: var(--osui-btn-active-background);
+		border-color: var(--osui-btn-active-background);
+	}
+
+	&:focus-visible {
+		box-shadow:
+			0 0 0 var(--osui-btn-focus-shadow-gap) var(--color-background-surface),
+			0 0 0 calc(var(--osui-btn-focus-shadow-gap) + var(--osui-btn-focus-shadow-width)) var(--osui-btn-focus-shadow-color);
+		outline: none;
 	}
 
 	& > span:empty {
@@ -54,13 +78,17 @@
 	}
 
 	&[class*='background-'] {
-		border: $token-border-size-025 solid transparent;
+		border: var(--osui-btn-border-width) solid transparent;
 		color: var(--color-text-inverse);
+
+		&:active {
+			filter: brightness(0.8);
+		}
 	}
 
 	&[class*='text-'] {
 		background-color: var(--osui-btn-background);
-		border: $token-border-size-025 solid currentColor;
+		border: var(--osui-btn-border-width) solid currentColor;
 	}
 
 	& + .btn {
@@ -69,8 +97,11 @@
 
 	// Variants
 	&-primary {
+		--osui-btn-hover-background: var(--color-primary-hover);
+		--osui-btn-active-background: var(--color-primary-active);
+
 		background-color: var(--osui-btn-primary-background);
-		border: $token-border-size-025 solid var(--osui-btn-primary-border-color);
+		border: var(--osui-btn-border-width) solid var(--osui-btn-primary-border-color);
 		color: var(--osui-btn-primary-color);
 	}
 
@@ -89,28 +120,52 @@
 		--osui-btn-background: var(--color-background-surface);
 		--osui-btn-color: var(--color-text-subtle);
 		--osui-btn-border-color: var(--color-border);
+		// Cancel's border never changes across states — only the background
+		// steps through the neutral-subtlest tiers, so the shared :active
+		// rule's border-color needs undoing right here.
+		--osui-btn-hover-background: #{$token-bg-neutral-subtlest-hover};
+		--osui-btn-active-background: #{$token-bg-neutral-subtlest-press};
 
 		background-color: var(--osui-btn-background);
-		border: $token-border-size-025 solid var(--osui-btn-border-color);
+		border: var(--osui-btn-border-width) solid var(--osui-btn-border-color);
 		color: var(--osui-btn-color);
 		transition: border-color $token-transition-time-150 $token-transition-curve-base;
+
+		&:active {
+			border-color: var(--color-border);
+		}
 	}
 
 	&-success {
+		--osui-btn-hover-background: #{$token-bg-success-base-hover};
+		--osui-btn-active-background: #{$token-bg-success-base-press};
+
 		background-color: var(--osui-btn-success-background);
-		border: $token-border-size-025 solid var(--osui-btn-success-border-color);
+		border: var(--osui-btn-border-width) solid var(--osui-btn-success-border-color);
 		color: var(--osui-btn-success-color);
 	}
 
 	&-error {
+		--osui-btn-hover-background: #{$token-bg-danger-base-hover};
+		--osui-btn-active-background: #{$token-bg-danger-base-press};
+
 		background-color: var(--osui-btn-error-background);
-		border: $token-border-size-025 solid var(--osui-btn-error-border-color);
+		border: var(--osui-btn-border-width) solid var(--osui-btn-error-border-color);
 		color: var(--osui-btn-error-color);
 	}
 
 	&[disabled] {
-		opacity: var(--osui-opacity-disabled);
 		pointer-events: none;
+
+		&:after {
+			background-color: var(--osui-btn-disabled-overlay);
+			border-radius: inherit;
+			content: '';
+			// extends past the padding box by the border width so the wash covers
+			// the border ring too, not just the fill inside it
+			inset: calc(var(--osui-btn-border-width) * -1);
+			position: absolute;
+		}
 	}
 }
 
@@ -119,36 +174,31 @@
 ///
 .desktop {
 	.btn {
-		// Secondary (default outline): border darkens
+		// Background + border darken to each variant's own hover tier
 		&:hover {
-			border-color: var(--color-primary-hover);
+			background-color: var(--osui-btn-hover-background);
+			border-color: var(--osui-btn-hover-background);
 		}
 
-		// Cancel: neutral border darkens (same specificity, later → wins)
+		// Cancel: background darkens through its own tiers, border stays fixed
+		// (same specificity as the base rules above, later → wins)
 		&-cancel:hover {
-			border-color: var(--color-border-input);
-		}
-
-		// Primary: explicit darker background + border (same specificity, later → wins)
-		&-primary:hover {
-			background-color: var(--color-primary-hover);
-			border-color: var(--color-primary-hover);
-		}
-
-		// Success + error: darken via filter; restore own border-color so base hover doesn't bleed
-		&-success:hover {
-			border-color: var(--osui-btn-success-border-color);
-			filter: brightness(0.9);
-		}
-
-		&-error:hover {
-			border-color: var(--osui-btn-error-border-color);
-			filter: brightness(0.9);
+			border-color: var(--color-border);
 		}
 
 		// Utility background-* classes: darken via filter
 		&[class*='background-']:hover {
 			filter: brightness(0.9);
+		}
+
+		// Pressed while hovering: higher specificity than :hover above, always wins
+		&:hover:active {
+			background-color: var(--osui-btn-active-background);
+			border-color: var(--osui-btn-active-background);
+		}
+
+		&-cancel:hover:active {
+			border-color: var(--color-border);
 		}
 	}
 }
@@ -168,7 +218,7 @@
 		}
 
 		&-large {
-			height: 56px;
+			height: $token-scale-1400;
 		}
 	}
 }
@@ -199,7 +249,9 @@
 ///
 .has-accessible-features {
 	& .btn:focus {
-		border-color: $token-semantics-primary-base;
+		box-shadow:
+			0 0 0 var(--osui-btn-focus-shadow-gap) var(--color-background-surface),
+			0 0 0 calc(var(--osui-btn-focus-shadow-gap) + var(--osui-btn-focus-shadow-width)) var(--osui-btn-focus-shadow-color);
 	}
 }
 

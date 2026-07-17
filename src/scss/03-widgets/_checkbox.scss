@@ -92,13 +92,15 @@
 	[data-checkbox] {
 		border-radius: var(--osui-checkbox-border-radius);
 
-		&:before {
-			border-color: var(--color-border-input);
-		}
-
 		&:hover {
 			&:before {
 				border-color: var(--color-border-input-press);
+			}
+		}
+
+		&[disabled]:checked {
+			&:before {
+				border-color: var(--color-border);
 			}
 		}
 
