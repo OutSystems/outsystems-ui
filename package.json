@@ -71,7 +71,7 @@
 		"gulp-typescript": "^6.0.0-alpha.1",
 		"json-fixer": "^1.6.15",
 		"nouislider": "^15.8.1",
-		"outsystems-design-tokens": "^1.3.7",
+		"outsystems-design-tokens": "^1.4.0",
 		"postcss": "^8.4.38",
 		"postcss-discard-comments": "^5.1.2",
 		"postcss-discard-duplicates": "^5.1.0",
