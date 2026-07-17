@@ -91,7 +91,7 @@
 
 ///
 span.validation-message {
-	color: $token-semantics-danger-base;
+	color: var(--color-text-danger);
 	font-size: $token-font-size-300;
 	margin-left: $token-scale-0;
 }
