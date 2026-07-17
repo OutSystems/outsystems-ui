@@ -120,13 +120,20 @@
 		--osui-btn-background: var(--color-background-surface);
 		--osui-btn-color: var(--color-text-subtle);
 		--osui-btn-border-color: var(--color-border);
-		--osui-btn-hover-background: var(--color-background-surface);
+		// Cancel's border never changes across states — only the background
+		// steps through the neutral-subtlest tiers, so the shared :active
+		// rule's border-color needs undoing right here.
+		--osui-btn-hover-background: #{$token-bg-neutral-subtlest-hover};
 		--osui-btn-active-background: #{$token-bg-neutral-subtlest-press};
 
 		background-color: var(--osui-btn-background);
 		border: var(--osui-btn-border-width) solid var(--osui-btn-border-color);
 		color: var(--osui-btn-color);
 		transition: border-color $token-transition-time-150 $token-transition-curve-base;
+
+		&:active {
+			border-color: var(--color-border);
+		}
 	}
 
 	&-success {
@@ -173,9 +180,10 @@
 			border-color: var(--osui-btn-hover-background);
 		}
 
-		// Cancel: neutral border darkens instead (same specificity, later → wins)
+		// Cancel: background darkens through its own tiers, border stays fixed
+		// (same specificity as the base rules above, later → wins)
 		&-cancel:hover {
-			border-color: var(--color-border-input);
+			border-color: var(--color-border);
 		}
 
 		// Utility background-* classes: darken via filter
@@ -187,6 +195,10 @@
 		&:hover:active {
 			background-color: var(--osui-btn-active-background);
 			border-color: var(--osui-btn-active-background);
+		}
+
+		&-cancel:hover:active {
+			border-color: var(--color-border);
 		}
 	}
 }
