@@ -253,8 +253,11 @@ _File: `src/scss/03-widgets/_upload.scss`_
 |---|---|
 | `--osui-upload-background` | `var(--color-background-surface)` |
 | `--osui-upload-border-color` | `var(--color-border)` |
-| `--osui-upload-color` | `var(--color-text)` |
+| `--osui-upload-border-width` | `#{$token-border-size-025}` |
+| `--osui-upload-color` | `#{$token-text-primary}` |
 | `--osui-upload-border-radius` | `var(--border-radius-soft)` |
+| `--osui-upload-padding` | `#{$token-scale-400}` |
+| `--osui-upload-icon-color` | `#{$token-icon-subtlest}` |
 
 ---
 
@@ -913,4 +916,4 @@ _File: `src/scss/01-foundations/_root.scss`_
 
 ---
 
-<sub>398 properties across 75 components, generated from `src/scss`.</sub>
+<sub>401 properties across 75 components, generated from `src/scss`.</sub>
