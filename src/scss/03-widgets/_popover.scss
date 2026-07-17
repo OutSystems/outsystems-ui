@@ -17,22 +17,20 @@
 
 		&-bottom {
 			// ─── Component CSS API ─────────────────────────────────────────────
-			--osui-popover-background:    var(--color-background-surface);
-			--osui-popover-border-color:  var(--color-border);
-			--osui-popover-color:         var(--color-text);
-			--osui-popover-border-radius: var(--border-radius-soft);
-			--osui-popover-shadow:        #{$token-elevation-1};
-			--osui-popover-max-width:     350px;
+			--osui-popover-background:     var(--color-background-surface);
+			--osui-popover-color:          var(--color-text);
+			--osui-popover-border-radius:  var(--border-radius-soft);
+			--osui-popover-shadow:         #{$token-elevation-2};
+			--osui-popover-max-width:      350px;
 			// ───────────────────────────────────────────────────────────────────
 
 			background-color: var(--osui-popover-background);
-			border: $token-border-size-025 solid var(--osui-popover-border-color);
 			border-radius: var(--osui-popover-border-radius);
 			box-shadow: var(--osui-popover-shadow);
 			color: var(--osui-popover-color);
 			max-width: var(--osui-popover-max-width);
 			min-width: auto;
-			padding: $token-scale-400;
+			padding: $token-scale-600;
 			z-index: var(--layer-elevated);
 		}
 	}
