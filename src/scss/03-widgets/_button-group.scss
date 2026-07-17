@@ -76,9 +76,11 @@
 ///
 .desktop {
 	.button-group-item {
-		// Neutral (non-selected): border darkens — same technique as .btn-cancel:hover
+		// Neutral (non-selected): matches .btn-cancel:hover — background darkens
+		// one tier, border stays on the resting --color-border role
 		&:not(.button-group-selected-item):not([disabled]):hover {
-			border-color: var(--color-border-input);
+			background-color: $token-bg-neutral-subtlest-hover;
+			border-color: var(--color-border);
 		}
 
 		// Selected: darker background + border — same technique as .btn-primary:hover
