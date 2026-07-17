@@ -107,7 +107,9 @@ _File: `src/scss/03-widgets/_feedback-message.scss`_
 |---|---|
 | `--osui-feedback-message-background` | `var(--color-background-surface)` |
 | `--osui-feedback-message-color` | `var(--color-text)` |
+| `--osui-feedback-message-icon-color` | `var(--color-text)` |
 | `--osui-feedback-message-border-radius` | `var(--border-radius-soft)` |
+| `--osui-feedback-message-box-shadow` | `#{$token-elevation-3}` |
 | `--osui-feedback-message-max-width` | `600px` |
 | `--osui-feedback-message-min-width` | `400px` |
 
@@ -117,7 +119,7 @@ _File: `src/scss/03-widgets/_feedback-message.scss`_
 | Property | Default |
 |---|---|
 | `--osui-feedback-message-background` | `#{$token-bg-danger-subtle-default}` |
-| `--osui-feedback-message-color` | `#{$token-text-danger}` |
+| `--osui-feedback-message-icon-color` | `#{$token-icon-danger}` |
 
 ### Feedback Message (`div.feedback-message-info`)
 _File: `src/scss/03-widgets/_feedback-message.scss`_
@@ -125,7 +127,7 @@ _File: `src/scss/03-widgets/_feedback-message.scss`_
 | Property | Default |
 |---|---|
 | `--osui-feedback-message-background` | `#{$token-bg-info-subtle-default}` |
-| `--osui-feedback-message-color` | `#{$token-text-info}` |
+| `--osui-feedback-message-icon-color` | `#{$token-icon-info}` |
 
 ### Feedback Message (`div.feedback-message-success`)
 _File: `src/scss/03-widgets/_feedback-message.scss`_
@@ -133,7 +135,7 @@ _File: `src/scss/03-widgets/_feedback-message.scss`_
 | Property | Default |
 |---|---|
 | `--osui-feedback-message-background` | `#{$token-bg-success-subtle-default}` |
-| `--osui-feedback-message-color` | `#{$token-text-success}` |
+| `--osui-feedback-message-icon-color` | `#{$token-icon-success}` |
 
 ### Feedback Message (`div.feedback-message-warning`)
 _File: `src/scss/03-widgets/_feedback-message.scss`_
@@ -141,7 +143,7 @@ _File: `src/scss/03-widgets/_feedback-message.scss`_
 | Property | Default |
 |---|---|
 | `--osui-feedback-message-background` | `#{$token-bg-warning-subtle-default}` |
-| `--osui-feedback-message-color` | `#{$token-text-warning}` |
+| `--osui-feedback-message-icon-color` | `#{$token-icon-warning}` |
 
 ### Inputs And Textareas (`.form-control`)
 _File: `src/scss/03-widgets/_inputs-and-textareas.scss`_
@@ -240,8 +242,11 @@ _File: `src/scss/03-widgets/_upload.scss`_
 |---|---|
 | `--osui-upload-background` | `var(--color-background-surface)` |
 | `--osui-upload-border-color` | `var(--color-border)` |
-| `--osui-upload-color` | `var(--color-text)` |
+| `--osui-upload-border-width` | `#{$token-border-size-025}` |
+| `--osui-upload-color` | `#{$token-text-primary}` |
 | `--osui-upload-border-radius` | `var(--border-radius-soft)` |
+| `--osui-upload-padding` | `#{$token-scale-400}` |
+| `--osui-upload-icon-color` | `#{$token-icon-subtlest}` |
 
 ---
 
@@ -900,4 +905,4 @@ _File: `src/scss/01-foundations/_root.scss`_
 
 ---
 
-<sub>385 properties across 75 components, generated from `src/scss`.</sub>
+<sub>390 properties across 75 components, generated from `src/scss`.</sub>

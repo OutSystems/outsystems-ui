@@ -8,7 +8,9 @@
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-feedback-message-background: var(--color-background-surface);
 	--osui-feedback-message-color: var(--color-text);
+	--osui-feedback-message-icon-color: var(--color-text);
 	--osui-feedback-message-border-radius: var(--border-radius-soft);
+	--osui-feedback-message-box-shadow: #{$token-elevation-3};
 	--osui-feedback-message-max-width: 600px;
 	--osui-feedback-message-min-width: 400px;
 	// ───────────────────────────────────────────────────────────────────
@@ -16,6 +18,7 @@
 	align-items: center;
 	background-color: var(--osui-feedback-message-background);
 	border-radius: var(--osui-feedback-message-border-radius);
+	box-shadow: var(--osui-feedback-message-box-shadow);
 	color: var(--osui-feedback-message-color);
 	display: flex;
 	font-size: $token-font-size-350;
@@ -28,8 +31,9 @@
 
 	i {
 		align-self: flex-start;
+		color: var(--osui-feedback-message-icon-color);
 		font-size: $token-font-size-500;
-		margin-top: 2px;
+		margin-top: #{$token-scale-050}; // 2px icon vertical offset
 		position: relative;
 	}
 }
@@ -43,36 +47,28 @@
 ///
 div.feedback-message-error {
 	--osui-feedback-message-background: #{$token-bg-danger-subtle-default};
-	--osui-feedback-message-color:      #{$token-text-danger};
-	background-color: $token-bg-danger-subtle-default;
-	color: $token-text-danger;
+	--osui-feedback-message-icon-color: #{$token-icon-danger};
 }
 
 // Mantain due to Retro Compatibility
 ///
 div.feedback-message-info {
 	--osui-feedback-message-background: #{$token-bg-info-subtle-default};
-	--osui-feedback-message-color:      #{$token-text-info};
-	background-color: $token-bg-info-subtle-default;
-	color: $token-text-info;
+	--osui-feedback-message-icon-color: #{$token-icon-info};
 }
 
 // Mantain due to Retro Compatibility
 ///
 div.feedback-message-success {
 	--osui-feedback-message-background: #{$token-bg-success-subtle-default};
-	--osui-feedback-message-color:      #{$token-text-success};
-	background-color: $token-bg-success-subtle-default;
-	color: $token-text-success;
+	--osui-feedback-message-icon-color: #{$token-icon-success};
 }
 
 // Mantain due to Retro Compatibility
 ///
 div.feedback-message-warning {
 	--osui-feedback-message-background: #{$token-bg-warning-subtle-default};
-	--osui-feedback-message-color:      #{$token-text-warning};
-	background-color: $token-bg-warning-subtle-default;
-	color: $token-text-warning;
+	--osui-feedback-message-icon-color: #{$token-icon-warning};
 }
 
 // Responsive --------------------------------------------------------------------
