@@ -60,7 +60,7 @@
 
 		&-right {
 			border-left: $token-border-size-025 solid var(--osui-master-detail-border-color);
-			padding: $token-scale-1000;
+			padding: $token-scale-600;
 			width: calc(100% - var(--left-percentage));
 
 			.split-right-close {
