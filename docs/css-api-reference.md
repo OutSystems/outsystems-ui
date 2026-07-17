@@ -41,11 +41,14 @@ _File: `src/scss/03-widgets/_btn.scss`_
 | Property | Default |
 |---|---|
 | `--osui-btn-height` | `#{$token-scale-1000}` |
-| `--osui-btn-background` | `var(--color-background-surface)` |
-| `--osui-btn-color` | `var(--color-primary)` |
-| `--osui-btn-border-color` | `currentColor` |
+| `--osui-btn-background` | `#{$token-bg-neutral-bold-default}` |
+| `--osui-btn-color` | `var(--color-text-inverse)` |
+| `--osui-btn-border-color` | `#{$token-bg-neutral-bold-default}` |
+| `--osui-btn-hover-background` | `#{$token-bg-neutral-bold-hover}` |
+| `--osui-btn-active-background` | `#{$token-bg-neutral-bold-press}` |
 | `--osui-btn-border-width` | `#{$token-border-size-025}` |
 | `--osui-btn-border-radius` | `var(--border-radius-soft)` |
+| `--osui-btn-disabled-overlay` | `#{$token-state-disabled}` |
 | `--osui-btn-primary-background` | `var(--color-primary)` |
 | `--osui-btn-primary-border-color` | `var(--color-primary)` |
 | `--osui-btn-primary-color` | `var(--color-text-inverse)` |
@@ -917,4 +920,4 @@ _File: `src/scss/01-foundations/_root.scss`_
 
 ---
 
-<sub>402 properties across 75 components, generated from `src/scss`.</sub>
+<sub>405 properties across 75 components, generated from `src/scss`.</sub>
