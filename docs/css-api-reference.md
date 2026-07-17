@@ -186,10 +186,9 @@ _File: `src/scss/03-widgets/_popover.scss`_
 | Property | Default |
 |---|---|
 | `--osui-popover-background` | `var(--color-background-surface)` |
-| `--osui-popover-border-color` | `var(--color-border)` |
 | `--osui-popover-color` | `var(--color-text)` |
 | `--osui-popover-border-radius` | `var(--border-radius-soft)` |
-| `--osui-popover-shadow` | `#{$token-elevation-1}` |
+| `--osui-popover-shadow` | `#{$token-elevation-2}` |
 | `--osui-popover-max-width` | `350px` |
 
 ### Popup (`.popup`)
@@ -198,6 +197,8 @@ _File: `src/scss/03-widgets/_popup.scss`_
 | Property | Default |
 |---|---|
 | `--osui-popup-background` | `var(--color-background-surface)` |
+| `--osui-popup-border-color` | `transparent` |
+| `--osui-popup-border-width` | `#{$token-border-size-025}` |
 | `--osui-popup-border-radius` | `var(--border-radius-soft)` |
 | `--osui-popup-shadow` | `#{$token-elevation-4}` |
 | `--osui-popup-padding` | `#{$token-scale-600}` |
@@ -914,4 +915,4 @@ _File: `src/scss/01-foundations/_root.scss`_
 
 ---
 
-<sub>399 properties across 75 components, generated from `src/scss`.</sub>
+<sub>400 properties across 75 components, generated from `src/scss`.</sub>
