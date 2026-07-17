@@ -32,11 +32,13 @@
 	--color-border-subtlest: #{$token-border-subtlest};
 	--color-border-input: #{$token-border-input-default};
 	--color-border-input-press: #{$token-border-input-press};
+	--color-border-primary: #{$token-border-primary}; // border-specific primary tier (focus rings)
 
 	// ─── Theme layer · brand / status / neutral (also read by TS GetColorValueFromColorType) ──
 	--color-primary: #{$token-semantics-primary-base};
 	--color-primary-hover: #{$token-semantics-primary-800};
-	--color-primary-selected: #{$token-semantics-primary-900};
+	--color-primary-selected: #{$token-semantics-primary-900}; // translucent-wash role for selected rows/items; apps override this
+	--color-primary-active: #{$token-semantics-primary-900}; // solid pressed/active-state role — do not alias to -selected above
 	--color-secondary: #303d60;
 	--color-neutral: #{$token-primitives-neutral-500};
 	--color-neutral-0: #{$token-primitives-neutral-100};
@@ -51,6 +53,8 @@
 	--color-neutral-9: #{$token-primitives-neutral-1100};
 	--color-neutral-10: #{$token-primitives-neutral-1200};
 	--color-error: #{$token-semantics-danger-base};
+	--color-border-danger: #{$token-border-danger-default}; // border-specific danger tier (form validation)
+	--color-text-danger: #{$token-text-danger}; // text-specific danger tier (form validation)
 	--color-warning: #{$token-semantics-warning-base};
 	--color-success: #{$token-semantics-success-base};
 	--color-info: #{$token-semantics-info-base};
