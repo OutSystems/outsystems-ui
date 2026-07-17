@@ -6,7 +6,7 @@ export default meta;
 type Story = StoryObj;
 
 const msg = (variant: string, icon: string, text: string) => `
-	<div class="feedback-message ${variant}" style="margin-bottom:8px;">
+	<div class="feedback-message ${variant}" style="margin-bottom:50px;">
 		<i class="ph ${icon}"></i>
 		<span class="feedback-message-text">${text}</span>
 	</div>`;
