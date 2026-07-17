@@ -41,10 +41,14 @@ _File: `src/scss/03-widgets/_btn.scss`_
 | Property | Default |
 |---|---|
 | `--osui-btn-height` | `#{$token-scale-1000}` |
-| `--osui-btn-background` | `var(--color-background-surface)` |
-| `--osui-btn-color` | `var(--color-primary)` |
-| `--osui-btn-border-color` | `currentColor` |
+| `--osui-btn-background` | `#{$token-bg-neutral-bold-default}` |
+| `--osui-btn-color` | `var(--color-text-inverse)` |
+| `--osui-btn-border-color` | `#{$token-bg-neutral-bold-default}` |
+| `--osui-btn-hover-background` | `#{$token-bg-neutral-bold-hover}` |
+| `--osui-btn-active-background` | `#{$token-bg-neutral-bold-press}` |
+| `--osui-btn-border-width` | `#{$token-border-size-025}` |
 | `--osui-btn-border-radius` | `var(--border-radius-soft)` |
+| `--osui-btn-disabled-overlay` | `#{$token-state-disabled}` |
 | `--osui-btn-primary-background` | `var(--color-primary)` |
 | `--osui-btn-primary-border-color` | `var(--color-primary)` |
 | `--osui-btn-primary-color` | `var(--color-text-inverse)` |
@@ -54,6 +58,9 @@ _File: `src/scss/03-widgets/_btn.scss`_
 | `--osui-btn-error-background` | `#{$token-bg-danger-base-default}` |
 | `--osui-btn-error-border-color` | `#{$token-bg-danger-base-default}` |
 | `--osui-btn-error-color` | `var(--color-text-inverse)` |
+| `--osui-btn-focus-shadow-width` | `#{$token-border-size-050}` |
+| `--osui-btn-focus-shadow-gap` | `#{$token-scale-050}` |
+| `--osui-btn-focus-shadow-color` | `#{$token-border-focus-default}` |
 
 ### Bulk Actions (`.table`)
 _File: `src/scss/03-widgets/_bulk-actions.scss`_
@@ -69,7 +76,8 @@ _File: `src/scss/03-widgets/_button-group.scss`_
 |---|---|
 | `--osui-button-group-background` | `var(--color-background-surface)` |
 | `--osui-button-group-border-color` | `var(--color-border)` |
-| `--osui-button-group-color` | `var(--color-text)` |
+| `--osui-button-group-color` | `var(--color-text-subtle)` |
+| `--osui-button-group-disabled-overlay` | `#{$token-state-disabled}` |
 
 ### Checkbox (`[data-checkbox]`)
 _File: `src/scss/03-widgets/_checkbox.scss`_
@@ -95,10 +103,15 @@ _File: `src/scss/03-widgets/_dropdown.scss`_
 | Property | Default |
 |---|---|
 | `--osui-dropdown-background` | `var(--color-background-input)` |
-| `--osui-dropdown-border-color` | `var(--color-border)` |
+| `--osui-dropdown-border-color` | `var(--color-border-input)` |
+| `--osui-dropdown-border-width` | `#{$token-border-size-025}` |
 | `--osui-dropdown-color` | `var(--color-text)` |
 | `--osui-dropdown-border-radius` | `var(--border-radius-soft)` |
+| `--osui-dropdown-list-background` | `var(--color-background-surface)` |
+| `--osui-dropdown-list-border-color` | `var(--color-border)` |
 | `--osui-dropdown-list-max-height` | `240px` |
+| `--osui-dropdown-focus-border-color` | `var(--color-border-primary)` |
+| `--osui-dropdown-focus-ring-color` | `#{$token-border-focus-default}` |
 
 ### Feedback Message (`.feedback-message`)
 _File: `src/scss/03-widgets/_feedback-message.scss`_
@@ -107,7 +120,9 @@ _File: `src/scss/03-widgets/_feedback-message.scss`_
 |---|---|
 | `--osui-feedback-message-background` | `var(--color-background-surface)` |
 | `--osui-feedback-message-color` | `var(--color-text)` |
+| `--osui-feedback-message-icon-color` | `var(--color-text)` |
 | `--osui-feedback-message-border-radius` | `var(--border-radius-soft)` |
+| `--osui-feedback-message-box-shadow` | `#{$token-elevation-3}` |
 | `--osui-feedback-message-max-width` | `600px` |
 | `--osui-feedback-message-min-width` | `400px` |
 
@@ -117,7 +132,7 @@ _File: `src/scss/03-widgets/_feedback-message.scss`_
 | Property | Default |
 |---|---|
 | `--osui-feedback-message-background` | `#{$token-bg-danger-subtle-default}` |
-| `--osui-feedback-message-color` | `#{$token-text-danger}` |
+| `--osui-feedback-message-icon-color` | `#{$token-icon-danger}` |
 
 ### Feedback Message (`div.feedback-message-info`)
 _File: `src/scss/03-widgets/_feedback-message.scss`_
@@ -125,7 +140,7 @@ _File: `src/scss/03-widgets/_feedback-message.scss`_
 | Property | Default |
 |---|---|
 | `--osui-feedback-message-background` | `#{$token-bg-info-subtle-default}` |
-| `--osui-feedback-message-color` | `#{$token-text-info}` |
+| `--osui-feedback-message-icon-color` | `#{$token-icon-info}` |
 
 ### Feedback Message (`div.feedback-message-success`)
 _File: `src/scss/03-widgets/_feedback-message.scss`_
@@ -133,7 +148,7 @@ _File: `src/scss/03-widgets/_feedback-message.scss`_
 | Property | Default |
 |---|---|
 | `--osui-feedback-message-background` | `#{$token-bg-success-subtle-default}` |
-| `--osui-feedback-message-color` | `#{$token-text-success}` |
+| `--osui-feedback-message-icon-color` | `#{$token-icon-success}` |
 
 ### Feedback Message (`div.feedback-message-warning`)
 _File: `src/scss/03-widgets/_feedback-message.scss`_
@@ -141,7 +156,7 @@ _File: `src/scss/03-widgets/_feedback-message.scss`_
 | Property | Default |
 |---|---|
 | `--osui-feedback-message-background` | `#{$token-bg-warning-subtle-default}` |
-| `--osui-feedback-message-color` | `#{$token-text-warning}` |
+| `--osui-feedback-message-icon-color` | `#{$token-icon-warning}` |
 
 ### Inputs And Textareas (`.form-control`)
 _File: `src/scss/03-widgets/_inputs-and-textareas.scss`_
@@ -149,11 +164,13 @@ _File: `src/scss/03-widgets/_inputs-and-textareas.scss`_
 | Property | Default |
 |---|---|
 | `--osui-input-background` | `var(--color-background-input)` |
-| `--osui-input-border-color` | `var(--color-border)` |
+| `--osui-input-border-color` | `var(--color-border-input)` |
+| `--osui-input-hover-border-color` | `var(--color-border-input-press)` |
 | `--osui-input-color` | `var(--color-text)` |
 | `--osui-input-border-radius` | `var(--border-radius-soft)` |
-| `--osui-input-focus-border-color` | `var(--color-primary)` |
-| `--osui-input-error-border-color` | `var(--color-error)` |
+| `--osui-input-focus-border-color` | `var(--color-border-primary)` |
+| `--osui-input-focus-ring-color` | `#{$token-border-focus-default}` |
+| `--osui-input-error-border-color` | `var(--color-border-danger)` |
 
 ### List Item (`.list-item`)
 _File: `src/scss/03-widgets/_list-item.scss`_
@@ -171,10 +188,9 @@ _File: `src/scss/03-widgets/_popover.scss`_
 | Property | Default |
 |---|---|
 | `--osui-popover-background` | `var(--color-background-surface)` |
-| `--osui-popover-border-color` | `var(--color-border)` |
 | `--osui-popover-color` | `var(--color-text)` |
 | `--osui-popover-border-radius` | `var(--border-radius-soft)` |
-| `--osui-popover-shadow` | `#{$token-elevation-1}` |
+| `--osui-popover-shadow` | `#{$token-elevation-2}` |
 | `--osui-popover-max-width` | `350px` |
 
 ### Popup (`.popup`)
@@ -183,6 +199,8 @@ _File: `src/scss/03-widgets/_popup.scss`_
 | Property | Default |
 |---|---|
 | `--osui-popup-background` | `var(--color-background-surface)` |
+| `--osui-popup-border-color` | `transparent` |
+| `--osui-popup-border-width` | `#{$token-border-size-025}` |
 | `--osui-popup-border-radius` | `var(--border-radius-soft)` |
 | `--osui-popup-shadow` | `#{$token-elevation-4}` |
 | `--osui-popup-padding` | `#{$token-scale-600}` |
@@ -198,7 +216,7 @@ _File: `src/scss/03-widgets/_radio-button.scss`_
 | `--osui-radio-border-color` | `#{$token-border-default}` |
 | `--osui-radio-checked-color` | `var(--color-primary)` |
 | `--osui-radio-indicator-border` | `#{$token-scale-150}` |
-| `--osui-radio-error-border-color` | `#{$token-border-danger-default}` |
+| `--osui-radio-error-border-color` | `var(--color-border-danger)` |
 | `--osui-radio-disabled-border-color` | `#{$token-border-disabled}` |
 
 ### Switch (`[data-switch]`)
@@ -212,9 +230,8 @@ _File: `src/scss/03-widgets/_switch.scss`_
 | `--osui-switch-thumb-offset-start` | `2px` |
 | `--osui-switch-thumb-offset-end` | `18px` |
 | `--osui-switch-track-color` | `#{$token-bg-neutral-base-default}` |
-| `--osui-switch-track-border-color` | `#{$token-bg-neutral-base-default}` |
-| `--osui-switch-disabled-track-color` | `var(--color-background-input-disabled)` |
 | `--osui-switch-checked-track-color` | `var(--color-primary)` |
+| `--osui-switch-disabled-overlay` | `#{$token-state-disabled}` |
 | `--osui-switch-thumb-color` | `#{$token-bg-surface-inverse}` |
 | `--osui-switch-thumb-shadow` | `#{$token-elevation-1}` |
 
@@ -223,14 +240,14 @@ _File: `src/scss/03-widgets/_table.scss`_
 
 | Property | Default |
 |---|---|
-| `--osui-table-border-color` | `var(--osui-border-subtle)` |
+| `--osui-table-border-color` | `var(--color-border)` |
 | `--osui-table-border-radius` | `var(--border-radius-soft)` |
 | `--osui-table-header-background` | `transparent` |
-| `--osui-table-header-color` | `var(--color-text)` |
+| `--osui-table-header-color` | `var(--color-text-subtlest)` |
 | `--osui-table-cell-background` | `var(--color-background-surface)` |
 | `--osui-table-row-hover-background` | `var(--color-background-input-disabled)` |
-| `--osui-table-row-stripe-background` | `#{$token-bg-neutral-subtlest-default}` |
-| `--osui-table-sorted-color` | `var(--color-primary)` |
+| `--osui-table-row-stripe-background` | `#{$token-bg-neutral-subtle-default}` |
+| `--osui-table-sorted-color` | `var(--color-text)` |
 | `--osui-table-row-selected-background` | `var(--color-primary-selected)` |
 
 ### Upload (`[data-upload]`)
@@ -240,8 +257,11 @@ _File: `src/scss/03-widgets/_upload.scss`_
 |---|---|
 | `--osui-upload-background` | `var(--color-background-surface)` |
 | `--osui-upload-border-color` | `var(--color-border)` |
-| `--osui-upload-color` | `var(--color-text)` |
+| `--osui-upload-border-width` | `#{$token-border-size-025}` |
+| `--osui-upload-color` | `#{$token-text-primary}` |
 | `--osui-upload-border-radius` | `var(--border-radius-soft)` |
+| `--osui-upload-padding` | `#{$token-scale-400}` |
+| `--osui-upload-icon-color` | `#{$token-icon-subtlest}` |
 
 ---
 
@@ -900,4 +920,4 @@ _File: `src/scss/01-foundations/_root.scss`_
 
 ---
 
-<sub>385 properties across 75 components, generated from `src/scss`.</sub>
+<sub>405 properties across 75 components, generated from `src/scss`.</sub>

@@ -6,22 +6,26 @@
 ///
 [data-upload] {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-upload-background:    var(--color-background-surface);
-	--osui-upload-border-color:  var(--color-border);
-	--osui-upload-color:         var(--color-text);
-	--osui-upload-border-radius: var(--border-radius-soft);
+	--osui-upload-background:     var(--color-background-surface);
+	--osui-upload-border-color:   var(--color-border);
+	--osui-upload-border-width:   #{$token-border-size-025};
+	--osui-upload-color:          #{$token-text-primary};
+	--osui-upload-border-radius:  var(--border-radius-soft);
+	--osui-upload-padding:        #{$token-scale-400};
+	--osui-upload-icon-color:     #{$token-icon-subtlest};
 	// ───────────────────────────────────────────────────────────────────
 
 	align-items: center;
 	background: var(--osui-upload-background);
-	border: $token-border-size-025 solid var(--osui-upload-border-color);
+	border: var(--osui-upload-border-width) solid var(--osui-upload-border-color);
 	border-radius: var(--osui-upload-border-radius);
 	color: var(--osui-upload-color);
 	display: flex;
 	font-size: $token-font-size-350;
+	font-weight: $token-font-weight-medium;
 	margin-bottom: 0;
 	min-height: auto;
-	padding: $token-scale-400;
+	padding: var(--osui-upload-padding);
 	position: relative;
 
 	&.upload-image-withoverlay {
@@ -45,9 +49,9 @@
 
 	[data-icon] {
 		background-color: transparent;
-		color: var(--color-border-input);
+		color: var(--osui-upload-icon-color);
 		line-height: 1;
-		margin-right: $token-scale-400;
+		margin-right: $token-scale-200;
 		width: auto;
 	}
 
@@ -61,7 +65,7 @@
 .is-rtl {
 	[data-upload] {
 		[data-icon] {
-			margin-left: $token-scale-400;
+			margin-left: $token-scale-200;
 			margin-right: $token-scale-0;
 		}
 	}

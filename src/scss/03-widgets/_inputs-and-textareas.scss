@@ -21,11 +21,13 @@
 .form-control {
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-input-background:          var(--color-background-input);
-	--osui-input-border-color:        var(--color-border);
+	--osui-input-border-color:        var(--color-border-input);
+	--osui-input-hover-border-color:  var(--color-border-input-press);
 	--osui-input-color:               var(--color-text);
 	--osui-input-border-radius:       var(--border-radius-soft);
-	--osui-input-focus-border-color:  var(--color-primary);
-	--osui-input-error-border-color:  var(--color-error);
+	--osui-input-focus-border-color:  var(--color-border-primary);
+	--osui-input-focus-ring-color:    #{$token-border-focus-default};
+	--osui-input-error-border-color:  var(--color-border-danger);
 	// ───────────────────────────────────────────────────────────────────
 
 	&[data-input],
@@ -38,17 +40,18 @@
 		transition: border-color $token-transition-time-100 $token-transition-curve-base, background-color $token-transition-time-100 $token-transition-curve-base;
 
 		&:hover {
-			border-color: var(--color-border-input);
+			border-color: var(--osui-input-hover-border-color);
 		}
 
 		&:focus {
 			border-color: var(--osui-input-focus-border-color);
+			box-shadow: 0 0 0 $token-border-size-050 var(--osui-input-focus-ring-color);
 			outline: none;
 		}
 
 		&[disabled] {
 			--osui-input-background:   var(--color-background-input-disabled);
-			--osui-input-border-color: var(--color-border);
+			--osui-input-border-color: var(--color-border-input);
 			--osui-input-color:        var(--color-text-disabled);
 
 			background-color: var(--osui-input-background);
@@ -109,9 +112,9 @@
 ///
 .form label,
 [data-label] {
-	color: var(--color-text);
+	color: var(--color-text-subtlest);
 	font-size: $token-font-size-350;
-	font-weight: $token-font-weight-semi-bold;
+	font-weight: $token-font-weight-regular;
 	line-height: var(--osui-font-line-height-default);
 }
 
@@ -124,7 +127,7 @@
 }
 
 span.validation-message {
-	color: $token-semantics-danger-base;
+	color: var(--color-text-danger);
 	display: block;
 	font-size: $token-font-size-300;
 	margin-top: $token-scale-100;
