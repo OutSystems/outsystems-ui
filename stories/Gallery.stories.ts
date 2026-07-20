@@ -8,13 +8,31 @@ interface GalleryArgs {
 	itemsGap: string;
 }
 
+const ITEMS_GAP_OPTIONS = ['none', 'xs', 's', 'base', 'm', 'l', 'xl', 'xxl'] as const;
+
 const meta: Meta<GalleryArgs> = {
 	title: 'Patterns/Adaptive/Gallery',
 	argTypes: {
 		rowItemsDesktop: { control: { type: 'number', min: 1, max: 8 }, name: 'RowItemsDesktop' },
 		rowItemsTablet: { control: { type: 'number', min: 1, max: 8 }, name: 'RowItemsTablet' },
 		rowItemsPhone: { control: { type: 'number', min: 1, max: 8 }, name: 'RowItemsPhone' },
-		itemsGap: { control: 'select', options: ['none', 'small', 'base', 'large'], name: 'ItemsGap' },
+		itemsGap: {
+			options: [...ITEMS_GAP_OPTIONS],
+			control: {
+				type: 'select',
+				labels: {
+					none: 'None',
+					xs: 'Extra Small',
+					s: 'Small',
+					base: 'Base',
+					m: 'Medium',
+					l: 'Large',
+					xl: 'Extra Large',
+					xxl: 'XXLarge',
+				},
+			},
+			name: 'ItemsGap',
+		},
 	},
 	args: { rowItemsDesktop: 3, rowItemsTablet: 2, rowItemsPhone: 1, itemsGap: 'base' },
 };
@@ -28,7 +46,7 @@ export const Default: Story = {
 		const cards = Array.from(
 			{ length: 6 },
 			(_, i) =>
-				`<div class="card" style="padding:24px;background:#eef;border-radius:8px;text-align:center;">Item ${i + 1}</div>`
+				`<div data-container=""><img data-image="" style="height:100%;" src="https://fastly.picsum.photos/id/58/1280/853.jpg?hmac=YO3QnOm9TpyM5DqsJjoM4CHg8oIq4cMWLpd9ALoP908" alt=""></div>`
 		).join('');
 		const template = `<div ${osuiRoot(id)} class="osui-gallery"><div class="list">${cards}</div></div>`;
 		return renderPattern(template, (_root, register) => {

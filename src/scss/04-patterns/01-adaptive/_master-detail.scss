@@ -39,16 +39,6 @@
 				padding: $token-scale-300 $token-scale-600;
 				transition: background-color $token-transition-time-100 $token-transition-curve-base;
 
-				.list-item-content::after {
-					color: var(--color-text-subtlest);
-					content: var(--osui-icon-chevron-right);
-					flex-shrink: 0;
-					font-family: var(--osui-icon-font-family);
-					font-size: $token-scale-400;
-					margin-left: auto;
-					padding-left: $token-scale-300;
-				}
-
 				&:hover {
 					background-color: var(--osui-bg-surface-hover);
 				}
@@ -70,7 +60,7 @@
 
 		&-right {
 			border-left: $token-border-size-025 solid var(--osui-master-detail-border-color);
-			padding: $token-scale-1000;
+			padding: $token-scale-600;
 			width: calc(100% - var(--left-percentage));
 
 			.split-right-close {
