@@ -8,6 +8,7 @@ namespace OSFramework.OSUI.Patterns.ButtonLoading.Enum {
 	 */
 	export enum Properties {
 		IsLoading = 'IsLoading',
+		ManageDisabledAttribute = 'ManageDisabledAttribute',
 		ShowLoadingAndLabel = 'ShowLoadingAndLabel',
 	}
 

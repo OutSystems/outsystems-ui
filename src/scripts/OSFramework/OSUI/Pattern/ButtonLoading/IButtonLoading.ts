@@ -7,5 +7,12 @@ namespace OSFramework.OSUI.Patterns.ButtonLoading {
 	 * @interface IButtonLoading
 	 * @extends {Interface.IPattern}
 	 */
-	export type IButtonLoading = Interface.IPattern
+	export interface IButtonLoading extends Interface.IPattern {
+		/**
+		 * Forces the disabled attribute on the button element to be managed when IsLoading is true.
+		 *
+		 * @param {boolean} isDisabled When true, the button is disabled while IsLoading is true.
+		 */
+		disabledStateOnIsLoading(isDisabled: boolean): void;
+	}
 }

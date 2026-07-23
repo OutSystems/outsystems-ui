@@ -170,6 +170,7 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailChangeProperty: 'OSUI-API-15001',
 		FailDispose: 'OSUI-API-15002',
 		FailRegisterCallback: 'OSUI-API-15003',
+		FailForceDisabledStateOnIsLoading: 'OSUI-API-15004',
 	};
 
 	export const DropdownServerSideItem = {
