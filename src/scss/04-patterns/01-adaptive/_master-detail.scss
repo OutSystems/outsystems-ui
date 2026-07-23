@@ -66,8 +66,9 @@
 			.split-right-close {
 				left: calc(var(--os-safe-area-left) + $token-scale-600);
 				position: fixed;
-				top: $token-scale-300;
+				top: calc(var(--os-safe-area-right) + (var(--size-header) + var(--token-scale-600, 24px)) / 2);
 				z-index: var(--layer-screen);
+				transform: translateY(-50%);
 
 				// Service Studio Preview
 				& {
@@ -153,7 +154,7 @@
 				padding-bottom: calc(var(--os-safe-area-bottom) + $token-scale-600);
 				padding-left: calc(var(--os-safe-area-left) + $token-scale-600);
 				padding-right: calc(var(--os-safe-area-right) + $token-scale-600);
-				padding-top: var(--size-header);
+				padding-top: calc(var(--os-safe-area-right) + var(--size-header) + var(--token-scale-600, 24px));
 				position: fixed;
 				top: 0;
 				transform: translateX(100%) translateZ(0);
