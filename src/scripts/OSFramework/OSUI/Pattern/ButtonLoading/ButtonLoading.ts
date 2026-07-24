@@ -13,11 +13,27 @@ namespace OSFramework.OSUI.Patterns.ButtonLoading {
 		// Store the button html element that must exist inside ButtonLoading placeholder
 		private _buttonElement: HTMLElement;
 
+		// Flag to disable the management of the disabled attribute on the button element when the button is loading.
+		private _disableBtnWhenIsLoading = true;
+
 		// Store the spinner html element that shoul also exist since we've input params for it
 		private _spinnerElement: HTMLElement;
 
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new ButtonLoadingConfig(configs));
+		}
+
+		// Sets or removes the disabled attribute on the button element when management is enabled.
+		private _setButtonDisabled(isDisabled: boolean): void {
+			if (this._disableBtnWhenIsLoading === false || this.isBuilt === false) {
+				return;
+			}
+
+			if (isDisabled) {
+				Helper.Dom.Attribute.Set(this._buttonElement, GlobalEnum.HTMLAttributes.Disabled, 'true');
+			} else {
+				Helper.Dom.Attribute.Remove(this._buttonElement, GlobalEnum.HTMLAttributes.Disabled);
+			}
 		}
 
 		// Set the cssClasses that should be assigned to the element on it's initialization
@@ -30,16 +46,16 @@ namespace OSFramework.OSUI.Patterns.ButtonLoading {
 
 		// Sets the new state of the button. If it's loading or not loading.
 		private _setIsLoading(isLoading: boolean): void {
+			// Set the disabled attribute on the button element if expected
+			this._setButtonDisabled(isLoading);
+
 			if (isLoading) {
 				Helper.Dom.Styles.AddClass(this.selfElement, Enum.CssClass.IsLoading);
 				Helper.A11Y.AriaBusyTrue(this.selfElement);
-				this.isBuilt &&
-					Helper.Dom.Attribute.Set(this._buttonElement, GlobalEnum.HTMLAttributes.Disabled, 'true');
 				this._buttonElement.blur();
 			} else {
 				Helper.Dom.Styles.RemoveClass(this.selfElement, Enum.CssClass.IsLoading);
 				Helper.A11Y.AriaBusyFalse(this.selfElement);
-				this.isBuilt && Helper.Dom.Attribute.Remove(this._buttonElement, GlobalEnum.HTMLAttributes.Disabled);
 			}
 		}
 
@@ -163,6 +179,27 @@ namespace OSFramework.OSUI.Patterns.ButtonLoading {
 						this._setLoadingLabel(propertyValue as boolean);
 						break;
 				}
+			}
+		}
+
+		/**
+		 * Method to force the disabled attribute on the button element to be managed by IsLoading property.
+		 *
+		 * @param {boolean} isDisabled When true, the button is disabled while IsLoading is true.
+		 * @memberof OSFramework.Patterns.ButtonLoading.ButtonLoading
+		 */
+		public disabledStateOnIsLoading(isDisabled: boolean): void {
+			// Grant value is different from the current one
+			if (this._disableBtnWhenIsLoading === isDisabled) {
+				return;
+			}
+
+			// Update it
+			this._disableBtnWhenIsLoading = isDisabled;
+
+			// Make sure to set the disabled attribute on the button element if expected
+			if (this.isBuilt) {
+				this._setButtonDisabled(this.configs.IsLoading);
 			}
 		}
 
