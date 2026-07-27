@@ -33,8 +33,8 @@
 	"devDependencies": {
 		"@floating-ui/dom": "^1.6.5",
 		"@splidejs/splide": "4.1.4",
-		"@typescript-eslint/eslint-plugin": "8.62.1",
-		"@typescript-eslint/parser": "8.62.1",
+		"@typescript-eslint/eslint-plugin": "8.64.0",
+		"@typescript-eslint/parser": "8.64.0",
 		"branch-name": "^1.0.0",
 		"browser-sync": "^3.0.4",
 		"eslint": "^8.57.1",
