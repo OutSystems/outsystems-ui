@@ -10,11 +10,17 @@ $balloonMobileTopMargin: 5vh;
 ///
 .osui-dropdown-serverside {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-dropdown-ss-background: var(--color-background-surface);
+	--osui-dropdown-ss-arrow-color: #{$token-icon-subtlest};
+	--osui-dropdown-ss-background: var(--color-background-input);
 	--osui-dropdown-ss-border-color: var(--color-border-input);
+	--osui-dropdown-ss-border-radius: var(--border-radius-soft);
 	--osui-dropdown-ss-color: var(--color-text);
 	--osui-dropdown-ss-disabled-background: var(--color-background-input-disabled);
 	--osui-dropdown-ss-disabled-color: var(--color-text-disabled);
+	--osui-dropdown-ss-focus-border-color: var(--color-border-primary);
+	--osui-dropdown-ss-focus-ring-color: #{$token-border-focus-default};
+	--osui-dropdown-ss-hover-border-color: var(--color-border-input-hover);
+	--osui-dropdown-ss-prompt-color: var(--color-text-subtlest);
 	// ───────────────────────────────────────────────────────────────────
 
 	--osui-dropdown-ss-balloon-max-height: 300px;
@@ -24,9 +30,11 @@ $balloonMobileTopMargin: 5vh;
 	position: relative;
 
 	.osui-balloon {
-		--osui-balloon-shadow: none;
+		// Match the widget Dropdown list container: soft radius, overlay shadow, neutral border
+		--osui-balloon-shadow: var(--osui-elevation-overlay);
+		--osui-balloon-shape: var(--border-radius-soft);
 
-		border: $token-border-size-025 solid var(--color-border-input);
+		border: $token-border-size-025 solid var(--color-border);
 		display: flex;
 		flex-direction: column;
 		flex: 1;
@@ -56,13 +64,9 @@ $balloonMobileTopMargin: 5vh;
 		margin-right: $token-scale-400;
 		overflow: hidden;
 
-		&:hover {
-			border-color: var(--color-border-input);
-		}
-
 		&:after {
 			align-items: center;
-			color: var(--color-text-subtlest);
+			color: var(--osui-dropdown-ss-arrow-color);
 			display: flex;
 			height: 100%;
 			pointer-events: none;
@@ -88,7 +92,7 @@ $balloonMobileTopMargin: 5vh;
 		&-wrapper {
 			align-items: center;
 			background-color: var(--osui-dropdown-ss-background);
-			border-radius: $token-border-radius-100;
+			border-radius: var(--osui-dropdown-ss-border-radius);
 			border: $token-border-size-025 solid var(--osui-dropdown-ss-border-color);
 			color: var(--osui-dropdown-ss-color);
 			cursor: pointer;
@@ -99,6 +103,19 @@ $balloonMobileTopMargin: 5vh;
 			position: relative;
 			transition: border $token-transition-time-300 $token-transition-curve-expressive;
 			width: 100%;
+
+			// Hover — border darkens (matches Figma border/input/hover)
+			&:hover {
+				border-color: var(--osui-dropdown-ss-hover-border-color);
+			}
+
+			// Focus ring
+			&:focus,
+			&:focus-visible {
+				border-color: var(--osui-dropdown-ss-focus-border-color);
+				box-shadow: 0 0 0 $token-border-size-050 var(--osui-dropdown-ss-focus-ring-color);
+				outline: none;
+			}
 
 			// Service Studio Preview
 			& {
@@ -149,7 +166,7 @@ $balloonMobileTopMargin: 5vh;
 				color: inherit;
 				font-size: $token-font-size-350;
 				height: $token-scale-1000;
-				padding: $token-scale-0 $token-scale-200 $token-scale-0 $token-scale-1000;
+				padding: $token-scale-0 $token-scale-200 $token-scale-0 $token-scale-400;
 				width: 100%;
 
 				&:focus,
@@ -215,13 +232,13 @@ $balloonMobileTopMargin: 5vh;
 		.osui-dropdown-serverside {
 			// "Input" section wrapper - SelectedValues container wrapper
 			&__selected-values-wrapper {
-				border-color: $token-semantics-primary-base;
+				border-color: var(--osui-dropdown-ss-focus-border-color);
+				box-shadow: 0 0 0 $token-border-size-050 var(--osui-dropdown-ss-focus-ring-color);
 			}
 
 			// "Input" section - SelectedValues container
 			&__selected-values {
 				&:after {
-					color: $token-semantics-primary-base;
 					transform: rotate(180deg);
 				}
 			}
@@ -252,7 +269,7 @@ $balloonMobileTopMargin: 5vh;
 	&--not-valid {
 		.osui-dropdown-serverside__selected-values-wrapper {
 			/* !important should be here in order to grant more specific selectors be overriding border color at this context. */
-			border-color: $token-semantics-danger-base !important;
+			border-color: var(--color-border-danger) !important;
 		}
 
 		& + .osui-dropdown-serverside-error-message {
@@ -260,6 +277,18 @@ $balloonMobileTopMargin: 5vh;
 			font-size: $token-font-size-300;
 			margin-left: $token-scale-0;
 			margin-top: $token-scale-075;
+		}
+	}
+
+	// Prompt (empty) state — muted text by default, darkens to text-default on hover (matches Figma).
+	// Empty is detected by the absence of a selected option item under the root.
+	&:not(.osui-dropdown-serverside--is-disabled):not(:has(.osui-dropdown-serverside-item--is-selected)) {
+		.osui-dropdown-serverside__text {
+			color: var(--osui-dropdown-ss-prompt-color);
+		}
+
+		.osui-dropdown-serverside__selected-values-wrapper:hover .osui-dropdown-serverside__text {
+			color: var(--osui-dropdown-ss-color);
 		}
 	}
 }
@@ -409,7 +438,7 @@ $balloonMobileTopMargin: 5vh;
 
 				input,
 				.form-control[data-input] {
-					padding: $token-scale-0 $token-scale-1000 $token-scale-0 $token-scale-200;
+					padding: $token-scale-0 $token-scale-400 $token-scale-0 $token-scale-200;
 				}
 			}
 		}
