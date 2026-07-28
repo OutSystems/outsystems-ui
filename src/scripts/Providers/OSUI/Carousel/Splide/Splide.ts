@@ -48,7 +48,13 @@ namespace Providers.OSUI.Carousel.Splide {
 
 			listEl.setAttribute('role', 'list');
 			listEl.querySelectorAll(':scope > *').forEach((item) => {
-				item.setAttribute('role', 'listitem');
+				// Never assign a list role to a bare <img> slide: neither role="listitem" nor Splide's
+				// role="presentation" is valid on an image. Strip any assigned role instead (ROU-12937).
+				if (item.tagName === 'IMG') {
+					item.removeAttribute('role');
+				} else {
+					item.setAttribute('role', 'listitem');
+				}
 			});
 		}
 
@@ -135,17 +141,11 @@ namespace Providers.OSUI.Carousel.Splide {
 				// Add the placeholder content already with the correct html structure per item, expected by the library
 				for (const item of _childrenList) {
 					if (!item.classList.contains(Enum.CssClass.SplideSlide)) {
-						// Splide assigns role="presentation" to each splide__slide element, which is then
-						// overridden with role="listitem" by the OSUIListRoles extension. Neither role
-						// is valid on an <img>. Wrap bare images in a <div> so the role lands on the container.
-						if (item.tagName === 'IMG') {
-							const wrapper = document.createElement(OSFramework.OSUI.GlobalEnum.HTMLElement.Div);
-							item.replaceWith(wrapper);
-							wrapper.appendChild(item);
-							wrapper.classList.add(Enum.CssClass.SplideSlide);
-						} else {
-							item.classList.add(Enum.CssClass.SplideSlide);
-						}
+						// Never create or move platform-owned nodes here (ROU-12937): reparenting an <img>
+						// (e.g. wrapping it in a <div>) invalidates React's fiber bookkeeping on ODC and
+						// crashes the next reconcile with NotFoundError on removeChild. Only mutate classes;
+						// invalid ARIA roles on <img> slides are handled non-destructively in _setListRoles.
+						item.classList.add(Enum.CssClass.SplideSlide);
 					}
 				}
 			}
@@ -194,6 +194,13 @@ namespace Providers.OSUI.Carousel.Splide {
 			// which tabpanel ownership is invalid or creates conflicting semantics
 			this.selfElement.querySelectorAll(OSFramework.OSUI.Constants.Dot + Enum.CssClass.SplideSlide).forEach((slide) => {
 				const _slideEl = slide as HTMLElement;
+				// A bare <img> slide (no wrapper — see ROU-12937) can hold no valid list/tab role, so
+				// strip whatever role Splide assigned to it (e.g. presentation/tabpanel). Mirrors the
+				// tabpanel strip below for slides that merely contain media — attribute-only, no reparenting.
+				if (_slideEl.tagName === 'IMG') {
+					OSFramework.OSUI.Helper.Dom.Attribute.Remove(_slideEl, OSFramework.OSUI.Constants.A11YAttributes.Role.AttrName);
+					return;
+				}
 				if (
 					OSFramework.OSUI.Helper.Dom.Attribute.Get(_slideEl, OSFramework.OSUI.Constants.A11YAttributes.Role.AttrName) === OSFramework.OSUI.Constants.A11YAttributes.Role.TabPanel &&
 					_slideEl.querySelector('img, ul, ol, li')
