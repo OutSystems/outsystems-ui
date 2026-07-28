@@ -11,6 +11,8 @@
 		--osui-dropdown-border-width: #{$token-border-size-025};
 		--osui-dropdown-color: var(--color-text);
 		--osui-dropdown-border-radius: var(--border-radius-soft);
+		--osui-dropdown-hover-border-color: var(--color-border-input-hover);
+		--osui-dropdown-prompt-color: var(--color-text-subtlest);
 		--osui-dropdown-list-background: var(--color-background-surface);
 		--osui-dropdown-list-border-color: var(--color-border);
 		--osui-dropdown-list-max-height: 240px;
@@ -40,11 +42,26 @@
 				padding: $token-scale-0 $token-scale-400;
 				width: 100%;
 
+				&:hover {
+					border-color: var(--osui-dropdown-hover-border-color);
+				}
+
 				&:focus {
 					border: var(--osui-dropdown-border-width) solid var(--osui-dropdown-focus-border-color);
 					box-shadow: 0 0 0 $token-border-size-050 var(--osui-dropdown-focus-ring-color);
 					outline: none;
 				}
+			}
+		}
+
+		// Prompt (empty) state for the native <select> variant — muted by default,
+		// darkens to text-default on hover (matches Figma). Detected by the empty-value
+		// prompt option being the checked one.
+		& > select.dropdown-display:has(option:checked[value='']) {
+			color: var(--osui-dropdown-prompt-color);
+
+			&:hover {
+				color: var(--osui-dropdown-color);
 			}
 		}
 
