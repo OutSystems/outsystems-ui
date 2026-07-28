@@ -199,6 +199,18 @@
 
 // DropdownServerSide
 .osui-dropdown-serverside {
+	&__balloon {
+		// Search placeholder
+		&-search {
+			&:before {
+				content: '\f002';
+				font: normal normal normal 14px/1 FontAwesome;
+			}
+		}
+	}
+}
+
+.osui-dropdown-serverside {
 	&__selected-values {
 		&:after {
 			content: '\f107';
