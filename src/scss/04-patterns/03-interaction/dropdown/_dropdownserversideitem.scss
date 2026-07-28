@@ -8,7 +8,7 @@
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-dropdown-item-background: transparent;
 	--osui-dropdown-item-color: var(--color-text);
-	--osui-dropdown-item-hover-bg: #{$token-bg-neutral-subtle-default};
+	--osui-dropdown-item-hover-bg: var(--color-border-subtle);
 	// ───────────────────────────────────────────────────────────────────
 
 	align-items: center;
