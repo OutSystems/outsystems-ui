@@ -43,22 +43,44 @@ namespace Providers.OSUI.Carousel.Splide {
 		// aren't list items is invalid — the images stay exposed to screen readers via alt text.
 		private _applyListRoles(listEl: HTMLElement): void {
 			const _isNativeList = listEl.tagName === 'UL' || listEl.tagName === 'OL';
-			const _hasNativeListChildren = listEl.querySelector(':scope > li, :scope > ul, :scope > ol') !== null;
-			const _hasImageSlides = listEl.querySelector(':scope > img') !== null;
+			// The direct children are the slides that would receive the list item role. This check
+			// must stay direct-child-only (a wrapped image, div > img, must still get list roles),
+			// which the Dom helpers can't express — ClassSelector matches by class, TagSelector
+			// matches any descendant — so read the direct children and check them by tag.
+			const _slides = Array.from(listEl.children);
+			const _hasNativeListChildren = _slides.some((slide) => ['LI', 'OL', 'UL'].includes(slide.tagName));
+			const _hasImageSlides = _slides.some((slide) => slide.tagName === 'IMG');
 
 			if (_isNativeList || _hasNativeListChildren || _hasImageSlides) {
 				// Content can change across platform refreshes (e.g. List widget data) — drop a list
 				// role applied on a previous pass so it never wraps children that aren't list items
-				if (_hasImageSlides && listEl.getAttribute('role') === 'list') {
-					listEl.removeAttribute('role');
+				if (
+					_hasImageSlides &&
+					OSFramework.OSUI.Helper.Dom.Attribute.Get(
+						listEl,
+						OSFramework.OSUI.Constants.A11YAttributes.Role.AttrName
+					) === OSFramework.OSUI.Constants.A11YAttributes.Role.List
+				) {
+					OSFramework.OSUI.Helper.Dom.Attribute.Remove(
+						listEl,
+						OSFramework.OSUI.Constants.A11YAttributes.Role.AttrName
+					);
 				}
 				return;
 			}
 
-			listEl.setAttribute('role', 'list');
-			listEl.querySelectorAll(':scope > *').forEach((item) => {
-				item.setAttribute('role', 'listitem');
-			});
+			OSFramework.OSUI.Helper.Dom.Attribute.Set(
+				listEl,
+				OSFramework.OSUI.Constants.A11YAttributes.Role.AttrName,
+				OSFramework.OSUI.Constants.A11YAttributes.Role.List
+			);
+			for (const slide of _slides) {
+				OSFramework.OSUI.Helper.Dom.Attribute.Set(
+					slide as HTMLElement,
+					OSFramework.OSUI.Constants.A11YAttributes.Role.AttrName,
+					OSFramework.OSUI.Constants.A11YAttributes.Role.Listitem
+				);
+			}
 		}
 
 		// Method to wait for the OutSystems List widget to finish loading before applying roles
@@ -143,12 +165,12 @@ namespace Providers.OSUI.Carousel.Splide {
 			if (_childrenList.length > 0) {
 				// Add the placeholder content already with the correct html structure per item, expected by the library
 				for (const item of _childrenList) {
-					if (!item.classList.contains(Enum.CssClass.SplideSlide)) {
+					if (!OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(item as HTMLElement, Enum.CssClass.SplideSlide)) {
 						// Never create or move platform-owned nodes here: reparenting an <img>
 						// (e.g. wrapping it in a <div>) invalidates React's fiber bookkeeping and crashes
 						// the next reconcile with NotFoundError on removeChild. Only mutate classes;
 						// ARIA roles on <img> slides are stripped non-destructively in _setListRoles.
-						item.classList.add(Enum.CssClass.SplideSlide);
+						OSFramework.OSUI.Helper.Dom.Styles.AddClass(item as HTMLElement, Enum.CssClass.SplideSlide);
 					}
 				}
 			}
