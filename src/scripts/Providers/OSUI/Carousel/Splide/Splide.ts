@@ -43,13 +43,10 @@ namespace Providers.OSUI.Carousel.Splide {
 		// aren't list items is invalid — the images stay exposed to screen readers via alt text.
 		private _applyListRoles(listEl: HTMLElement): void {
 			const _isNativeList = listEl.tagName === 'UL' || listEl.tagName === 'OL';
-			// The direct children are the slides that would receive the list item role. This check
-			// must stay direct-child-only (a wrapped image, div > img, must still get list roles),
-			// which the Dom helpers can't express — ClassSelector matches by class, TagSelector
-			// matches any descendant — so read the direct children and check them by tag.
-			const _slides = Array.from(listEl.children);
-			const _hasNativeListChildren = _slides.some((slide) => ['LI', 'OL', 'UL'].includes(slide.tagName));
-			const _hasImageSlides = _slides.some((slide) => slide.tagName === 'IMG');
+			const _hasNativeListChildren = listEl.querySelector(':scope > li, :scope > ul, :scope > ol') !== null;
+			// Direct-child <img> slides only: a wrapped image (div > img) must still get list roles,
+			// so this can't use ClassSelector (class-based) or TagSelector (matches any descendant).
+			const _hasImageSlides = listEl.querySelector(':scope > img') !== null;
 
 			if (_isNativeList || _hasNativeListChildren || _hasImageSlides) {
 				// Content can change across platform refreshes (e.g. List widget data) — drop a list
@@ -74,13 +71,13 @@ namespace Providers.OSUI.Carousel.Splide {
 				OSFramework.OSUI.Constants.A11YAttributes.Role.AttrName,
 				OSFramework.OSUI.Constants.A11YAttributes.Role.List
 			);
-			for (const slide of _slides) {
+			listEl.querySelectorAll(':scope > *').forEach((item) => {
 				OSFramework.OSUI.Helper.Dom.Attribute.Set(
-					slide as HTMLElement,
+					item as HTMLElement,
 					OSFramework.OSUI.Constants.A11YAttributes.Role.AttrName,
 					OSFramework.OSUI.Constants.A11YAttributes.Role.Listitem
 				);
-			}
+			});
 		}
 
 		// Method to wait for the OutSystems List widget to finish loading before applying roles
