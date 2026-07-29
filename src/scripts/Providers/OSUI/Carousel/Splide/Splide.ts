@@ -43,10 +43,11 @@ namespace Providers.OSUI.Carousel.Splide {
 		// aren't list items is invalid — the images stay exposed to screen readers via alt text.
 		private _applyListRoles(listEl: HTMLElement): void {
 			const _isNativeList = listEl.tagName === 'UL' || listEl.tagName === 'OL';
-			const _hasNativeListChildren = listEl.querySelector(':scope > li, :scope > ul, :scope > ol') !== null;
-			// Direct-child <img> slides only: a wrapped image (div > img) must still get list roles,
-			// so this can't use ClassSelector (class-based) or TagSelector (matches any descendant).
-			const _hasImageSlides = listEl.querySelector(':scope > img') !== null;
+			const _hasNativeListChildren =
+				OSFramework.OSUI.Helper.Dom.TagSelector(listEl, ':scope > li, :scope > ul, :scope > ol') !== undefined;
+			// Direct-child <img> slides only — a wrapped image (div > img) must still get list roles,
+			// so the selector is scoped with ':scope >' instead of matching any descendant.
+			const _hasImageSlides = OSFramework.OSUI.Helper.Dom.TagSelector(listEl, ':scope > img') !== undefined;
 
 			if (_isNativeList || _hasNativeListChildren || _hasImageSlides) {
 				// Content can change across platform refreshes (e.g. List widget data) — drop a list
@@ -71,9 +72,9 @@ namespace Providers.OSUI.Carousel.Splide {
 				OSFramework.OSUI.Constants.A11YAttributes.Role.AttrName,
 				OSFramework.OSUI.Constants.A11YAttributes.Role.List
 			);
-			listEl.querySelectorAll(':scope > *').forEach((slide) => {
+			OSFramework.OSUI.Helper.Dom.TagSelectorAll(listEl, ':scope > *')?.forEach((slide) => {
 				OSFramework.OSUI.Helper.Dom.Attribute.Set(
-					slide as HTMLElement,
+					slide,
 					OSFramework.OSUI.Constants.A11YAttributes.Role.AttrName,
 					OSFramework.OSUI.Constants.A11YAttributes.Role.Listitem
 				);
