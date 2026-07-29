@@ -71,9 +71,9 @@ namespace Providers.OSUI.Carousel.Splide {
 				OSFramework.OSUI.Constants.A11YAttributes.Role.AttrName,
 				OSFramework.OSUI.Constants.A11YAttributes.Role.List
 			);
-			listEl.querySelectorAll(':scope > *').forEach((item) => {
+			listEl.querySelectorAll(':scope > *').forEach((slide) => {
 				OSFramework.OSUI.Helper.Dom.Attribute.Set(
-					item as HTMLElement,
+					slide as HTMLElement,
 					OSFramework.OSUI.Constants.A11YAttributes.Role.AttrName,
 					OSFramework.OSUI.Constants.A11YAttributes.Role.Listitem
 				);
@@ -103,9 +103,12 @@ namespace Providers.OSUI.Carousel.Splide {
 			this._hasList = OutSystems.OSUI.Utils.GetHasListInside(this._carouselPlaceholderElem);
 
 			if (this._hasList) {
-				this._carouselListWidgetElem = this.selfElement.querySelector(
+				const listElem = this.selfElement.querySelector(
 					OSFramework.OSUI.Constants.Dot + OSFramework.OSUI.GlobalEnum.CssClassElements.List
 				);
+				if (listElem) {
+					this._carouselListWidgetElem = listElem as HTMLElement;
+				}
 
 				this._carouselProviderElem = this._carouselTrackElem;
 			} else {
@@ -162,7 +165,12 @@ namespace Providers.OSUI.Carousel.Splide {
 			if (_childrenList.length > 0) {
 				// Add the placeholder content already with the correct html structure per item, expected by the library
 				for (const item of _childrenList) {
-					if (!OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(item as HTMLElement, Enum.CssClass.SplideSlide)) {
+					if (
+						!OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(
+							item as HTMLElement,
+							Enum.CssClass.SplideSlide
+						)
+					) {
 						// Never create or move platform-owned nodes here: reparenting an <img>
 						// (e.g. wrapping it in a <div>) invalidates React's fiber bookkeeping and crashes
 						// the next reconcile with NotFoundError on removeChild. Only mutate classes;
