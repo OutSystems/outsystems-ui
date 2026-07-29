@@ -37,18 +37,47 @@ namespace Providers.OSUI.Carousel.Splide {
 
 		// Method to apply role="list" and role="listitem" to the list element and its direct children.
 		// Skips native list elements (ul/ol) and elements whose direct children are native list
-		// elements (li/ul/ol), since those already carry implicit list semantics.
+		// elements (li/ul/ol), since those already carry implicit list semantics. Also skips lists
+		// with bare <img> slides: images can't take role="listitem" without replacing their image
+		// semantics, wrapping them is off-limits, and a role="list" whose children
+		// aren't list items is invalid — the images stay exposed to screen readers via alt text.
 		private _applyListRoles(listEl: HTMLElement): void {
 			const _isNativeList = listEl.tagName === 'UL' || listEl.tagName === 'OL';
-			const _hasNativeListChildren = listEl.querySelector(':scope > li, :scope > ul, :scope > ol') !== null;
+			const _hasNativeListChildren =
+				OSFramework.OSUI.Helper.Dom.TagSelector(listEl, ':scope > li, :scope > ul, :scope > ol') !== undefined;
+			// Direct-child <img> slides only — a wrapped image (div > img) must still get list roles,
+			// so the selector is scoped with ':scope >' instead of matching any descendant.
+			const _hasImageSlides = OSFramework.OSUI.Helper.Dom.TagSelector(listEl, ':scope > img') !== undefined;
 
-			if (_isNativeList || _hasNativeListChildren) {
+			if (_isNativeList || _hasNativeListChildren || _hasImageSlides) {
+				// Content can change across platform refreshes (e.g. List widget data) — drop a list
+				// role applied on a previous pass so it never wraps children that aren't list items
+				if (
+					_hasImageSlides &&
+					OSFramework.OSUI.Helper.Dom.Attribute.Get(
+						listEl,
+						OSFramework.OSUI.Constants.A11YAttributes.Role.AttrName
+					) === OSFramework.OSUI.Constants.A11YAttributes.Role.List
+				) {
+					OSFramework.OSUI.Helper.Dom.Attribute.Remove(
+						listEl,
+						OSFramework.OSUI.Constants.A11YAttributes.Role.AttrName
+					);
+				}
 				return;
 			}
 
-			listEl.setAttribute('role', 'list');
-			listEl.querySelectorAll(':scope > *').forEach((item) => {
-				item.setAttribute('role', 'listitem');
+			OSFramework.OSUI.Helper.Dom.Attribute.Set(
+				listEl,
+				OSFramework.OSUI.Constants.A11YAttributes.Role.AttrName,
+				OSFramework.OSUI.Constants.A11YAttributes.Role.List
+			);
+			OSFramework.OSUI.Helper.Dom.TagSelectorAll(listEl, ':scope > *')?.forEach((slide) => {
+				OSFramework.OSUI.Helper.Dom.Attribute.Set(
+					slide,
+					OSFramework.OSUI.Constants.A11YAttributes.Role.AttrName,
+					OSFramework.OSUI.Constants.A11YAttributes.Role.Listitem
+				);
 			});
 		}
 
@@ -134,18 +163,17 @@ namespace Providers.OSUI.Carousel.Splide {
 			if (_childrenList.length > 0) {
 				// Add the placeholder content already with the correct html structure per item, expected by the library
 				for (const item of _childrenList) {
-					if (!item.classList.contains(Enum.CssClass.SplideSlide)) {
-						// Splide assigns role="presentation" to each splide__slide element, which is then
-						// overridden with role="listitem" by the OSUIListRoles extension. Neither role
-						// is valid on an <img>. Wrap bare images in a <div> so the role lands on the container.
-						if (item.tagName === 'IMG') {
-							const wrapper = document.createElement(OSFramework.OSUI.GlobalEnum.HTMLElement.Div);
-							item.replaceWith(wrapper);
-							wrapper.appendChild(item);
-							wrapper.classList.add(Enum.CssClass.SplideSlide);
-						} else {
-							item.classList.add(Enum.CssClass.SplideSlide);
-						}
+					if (
+						!OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(
+							item as HTMLElement,
+							Enum.CssClass.SplideSlide
+						)
+					) {
+						// Never create or move platform-owned nodes here: reparenting an <img>
+						// (e.g. wrapping it in a <div>) invalidates React's fiber bookkeeping and crashes
+						// the next reconcile with NotFoundError on removeChild. Only mutate classes;
+						// ARIA roles on <img> slides are stripped non-destructively in _setListRoles.
+						OSFramework.OSUI.Helper.Dom.Styles.AddClass(item as HTMLElement, Enum.CssClass.SplideSlide);
 					}
 				}
 			}
@@ -190,17 +218,36 @@ namespace Providers.OSUI.Carousel.Splide {
 
 		// Method to assign correct ARIA list roles so screen readers interpret carousel lists properly
 		private _setListRoles(): void {
-			// Remove role="tabpanel" from slides that contain img, ul, ol, or li — elements for
-			// which tabpanel ownership is invalid or creates conflicting semantics
-			this.selfElement.querySelectorAll(OSFramework.OSUI.Constants.Dot + Enum.CssClass.SplideSlide).forEach((slide) => {
-				const _slideEl = slide as HTMLElement;
-				if (
-					OSFramework.OSUI.Helper.Dom.Attribute.Get(_slideEl, OSFramework.OSUI.Constants.A11YAttributes.Role.AttrName) === OSFramework.OSUI.Constants.A11YAttributes.Role.TabPanel &&
-					_slideEl.querySelector('img, ul, ol, li')
-				) {
-					OSFramework.OSUI.Helper.Dom.Attribute.Remove(_slideEl, OSFramework.OSUI.Constants.A11YAttributes.Role.AttrName);
-				}
-			});
+			// Remove role="tabpanel" from slides that are native list elements (ul/ol/li) — the same
+			// cases where _applyListRoles skips custom roles, so nothing overrides the conflicting
+			// tabpanel afterwards
+			this.selfElement
+				.querySelectorAll(OSFramework.OSUI.Constants.Dot + Enum.CssClass.SplideSlide)
+				.forEach((slide) => {
+					const _slideEl = slide as HTMLElement;
+					// A bare <img> slide keeps no assigned role (ROU-12937): role="presentation" is valid
+					// on an image, but it removes the image from the accessibility tree, hiding it from
+					// screen readers. Stripping the role keeps the image announced via its alt text.
+					if (_slideEl.tagName === 'IMG') {
+						OSFramework.OSUI.Helper.Dom.Attribute.Remove(
+							_slideEl,
+							OSFramework.OSUI.Constants.A11YAttributes.Role.AttrName
+						);
+						return;
+					}
+					if (
+						OSFramework.OSUI.Helper.Dom.Attribute.Get(
+							_slideEl,
+							OSFramework.OSUI.Constants.A11YAttributes.Role.AttrName
+						) === OSFramework.OSUI.Constants.A11YAttributes.Role.TabPanel &&
+						['UL', 'OL', 'LI'].includes(_slideEl.tagName)
+					) {
+						OSFramework.OSUI.Helper.Dom.Attribute.Remove(
+							_slideEl,
+							OSFramework.OSUI.Constants.A11YAttributes.Role.AttrName
+						);
+					}
+				});
 
 			if (this._hasList && this._carouselListWidgetElem) {
 				// Dynamic content: poll until the List widget finishes loading before applying roles
