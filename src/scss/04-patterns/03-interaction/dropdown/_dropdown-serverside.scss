@@ -11,6 +11,7 @@ $balloonMobileTopMargin: 5vh;
 .osui-dropdown-serverside {
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-dropdown-ss-arrow-color: #{$token-icon-subtlest};
+	--osui-dropdown-ss-arrow-size: #{$token-scale-400};
 	--osui-dropdown-ss-background: var(--color-background-input);
 	--osui-dropdown-ss-border-color: var(--color-border-input);
 	--osui-dropdown-ss-border-radius: var(--border-radius-soft);
@@ -68,12 +69,16 @@ $balloonMobileTopMargin: 5vh;
 			align-items: center;
 			color: var(--osui-dropdown-ss-arrow-color);
 			display: flex;
-			height: 100%;
+			height: var(--osui-dropdown-ss-arrow-size);
+			justify-content: center;
+			line-height: 1;
 			pointer-events: none;
 			position: absolute;
 			right: $token-scale-400;
-			top: 0;
+			top: 50%;
+			transform: translateY(-50%);
 			transition: transform $token-transition-time-200 $token-transition-curve-expressive;
+			width: var(--osui-dropdown-ss-arrow-size);
 		}
 
 		& > * {
@@ -239,7 +244,8 @@ $balloonMobileTopMargin: 5vh;
 			// "Input" section - SelectedValues container
 			&__selected-values {
 				&:after {
-					transform: rotate(180deg);
+					transform: translateY(-50%) rotate(180deg);
+					transform-origin: center;
 				}
 			}
 		}

@@ -5,11 +5,23 @@
 
 ///
 .osui-dropdown-search {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-dropdown-border-radius:       var(--border-radius-soft);
+	--osui-dropdown-background:          var(--color-background-input);
+	--osui-dropdown-border-color:        var(--color-border-input);
+	--osui-dropdown-hover-border-color:  var(--color-border-input-hover);
+	--osui-dropdown-focus-border-color:  var(--color-border-primary);
+	--osui-dropdown-focus-ring-color:    #{$token-border-focus-default};
+	--osui-dropdown-list-background:     var(--color-background-surface);
+	--osui-dropdown-arrow-color:        #{$token-icon-subtlest};
+	--osui-dropdown-arrow-size:         #{$token-scale-400};
+	// ───────────────────────────────────────────────────────────────────
+
 	// If not valid
 	&.osui-dropdown--not-valid {
 		// Virtual Select provider
 		.vscomp-toggle-button {
-			border-color: $token-semantics-danger-base;
+			border-color: var(--color-border-danger);
 		}
 	}
 }

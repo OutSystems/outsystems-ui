@@ -142,17 +142,23 @@ body.iconLibrary-phosphor {
 
 // Dropdown Widget
 .dropdown-container:after {
-	color: $token-primitives-neutral-700;
+	align-items: center;
+	color: var(--osui-dropdown-arrow-color, #{$token-icon-subtlest});
 	content: var(--osui-icon-arrow-down);
 	cursor: pointer;
+	display: flex;
 	font-family: var(--osui-icon-font-family);
-	font-size: $token-font-size-500;
+	font-size: var(--osui-dropdown-arrow-size, #{$token-scale-400});
+	height: var(--osui-dropdown-arrow-size, #{$token-scale-400});
+	justify-content: center;
+	line-height: 1;
 	pointer-events: none;
 	position: absolute;
 	right: $token-scale-400;
 	top: 50%;
 	transform: translateY(-50%);
 	transition: transform 200ms ease;
+	width: var(--osui-dropdown-arrow-size, #{$token-scale-400});
 }
 
 .is-rtl .dropdown-container:after {
@@ -297,12 +303,11 @@ body.iconLibrary-phosphor {
 .osui-dropdown-serverside__selected-values:after {
 	content: var(--osui-icon-arrow-down);
 	font-family: var(--osui-icon-font-family);
-	font-size: $token-font-size-500;
+	font-size: var(--osui-dropdown-ss-arrow-size, #{$token-scale-400});
 }
 
 // DropdownSearch (VirtualSelect)
 .vscomp-toggle-button:after,
-.vscomp-search-container:before,
 .vscomp-search-clear:after,
 .vscomp-ele .vscomp-clear-icon:after {
 	font-family: var(--osui-icon-font-family);
@@ -312,11 +317,6 @@ body.iconLibrary-phosphor {
 .vscomp-toggle-button:after {
 	content: var(--osui-icon-arrow-down);
 	font-size: var(--vscomp-toogle-btn-arrow-size);
-}
-
-.vscomp-search-container:before {
-	content: var(--osui-icon-search);
-	font-size: 14px;
 }
 
 .vscomp-search-clear:after,
