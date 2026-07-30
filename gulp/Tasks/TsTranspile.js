@@ -1,11 +1,11 @@
-const gulp = require('gulp');
 const {series} = require('gulp');
+const {spawnSync} = require('child_process');
 const fs = require('fs');
-const sourcemaps = require('gulp-sourcemaps');
-const ts = require('gulp-typescript');
+const path = require('path');
 
 const distFolder = './dist';
 const project = require('../ProjectSpecs/DefaultSpecs');
+const tscPath = require.resolve('typescript/bin/tsc');
 
 let defaultTsConfigText = '';
 let filesPath = {};
@@ -70,30 +70,38 @@ function tsTranspile(cb, envMode, platformType) {
 
 // Method that will trigger the transpile of Ts according if it's development or production mode and platform type (O11 or ODC)
 async function tsTranspileBasedOnPlatform(cb, envMode, platformType, shouldCreateAll) {
-    let tsProject = ts.createProject('tsconfig.json', {
-        outDir: distFolder,
-        declaration: envMode === project.globalConsts.envType.production ? true : false,
-        outFile: `${envMode === project.globalConsts.envType.production ? '' : envMode + "."}${platformType}.OutSystemsUI.js`,
-    }); 
+    const outFile = path.join(distFolder, `${envMode === project.globalConsts.envType.production ? '' : envMode + "."}${platformType}.OutSystemsUI.js`);
 
     if(envMode === project.globalConsts.envType.development) {
-        tsProject
-            .src()
-            .pipe(sourcemaps.init())
-            .pipe(tsProject()).js
-            .pipe(sourcemaps.write("."))
-            .pipe(gulp.dest(distFolder))
-            .on('finish', () => {
-				onTsCompileFinish(platformType, cb, shouldCreateAll);
-			});
+        const result = spawnSync(process.execPath, [tscPath, '--project', 'tsconfig.json', '--outFile', outFile, '--sourceMap', '--declaration', 'false'], {
+            stdio: 'inherit',
+            cwd: path.resolve(__dirname, '../..'),
+        });
+
+        if(result.error) {
+            throw result.error;
+        }
+
+        if(result.status !== 0) {
+            throw new Error('TypeScript compilation failed');
+        }
+
+        onTsCompileFinish(platformType, cb, shouldCreateAll);
     } else {
-        tsProject
-            .src()
-            .pipe(tsProject())
-            .pipe(gulp.dest(distFolder))
-            .on('finish', () => {
-                onTsCompileFinish(platformType, cb, shouldCreateAll);
-			});
+        const result = spawnSync(process.execPath, [tscPath, '--project', 'tsconfig.json', '--outFile', outFile], {
+            stdio: 'inherit',
+            cwd: path.resolve(__dirname, '../..'),
+        });
+
+        if(result.error) {
+            throw result.error;
+        }
+
+        if(result.status !== 0) {
+            throw new Error('TypeScript compilation failed');
+        }
+
+        onTsCompileFinish(platformType, cb, shouldCreateAll);
     }
 
     // Rollback tsconfig file to the default state
