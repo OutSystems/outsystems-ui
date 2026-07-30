@@ -21,6 +21,7 @@ interface DatePickerArgs {
 	firstWeekDay: number;
 	showTodayButton: boolean;
 	showWeekNumbers: boolean;
+	timeFormat: 'disabled' | '12' | '24';
 }
 
 const meta: Meta<DatePickerArgs> = {
@@ -31,6 +32,11 @@ const meta: Meta<DatePickerArgs> = {
 		firstWeekDay: { control: { type: 'number', min: 0, max: 6 }, name: 'FirstWeekDay' },
 		showTodayButton: { control: 'boolean', name: 'ShowTodayButton' },
 		showWeekNumbers: { control: 'boolean', name: 'ShowWeekNumbers' },
+		timeFormat: {
+			control: 'inline-radio',
+			options: ['disabled', '12', '24'],
+			name: 'TimeFormat',
+		},
 	},
 	args: {
 		mode: 'single',
@@ -38,6 +44,7 @@ const meta: Meta<DatePickerArgs> = {
 		firstWeekDay: 1,
 		showTodayButton: true,
 		showWeekNumbers: false,
+		timeFormat: 'disabled',
 	},
 };
 export default meta;
@@ -49,7 +56,6 @@ function renderDatePicker(args: DatePickerArgs): HTMLElement {
 	const range = args.mode === 'range';
 	const template = `
 		<div ${osuiRoot(id)} class="osui-datepicker" data-uniqueid="${id}" style="max-width: 280px;">
-			<label for="${id}-input">${range ? 'Pick a date range' : 'Pick a date'}</label>
 			<input id="${id}-input" class="form-control" type="text" placeholder="${range ? 'Select a date range' : 'Select a date'}" />
 		</div>
 		<!-- a11y keyboard-instructions container; the provider finds it via
@@ -65,7 +71,7 @@ function renderDatePicker(args: DatePickerArgs): HTMLElement {
 				FirstWeekDay: args.firstWeekDay,
 				ShowTodayButton: args.showTodayButton,
 				ShowWeekNumbers: args.showWeekNumbers,
-				TimeFormat: 'disabled',
+				TimeFormat: args.timeFormat,
 			}),
 			args.mode,
 			'flatpickr'
