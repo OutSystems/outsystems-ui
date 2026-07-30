@@ -457,6 +457,8 @@ body.iconLibrary-phosphor {
 	color: $token-primitives-neutral-700;
 	font-family: var(--osui-icon-font-family);
 	position: absolute;
+	font-size: $token-font-size-600;
+	color: $token-primitives-neutral-1000
 }
 
 .splide__arrow--next:after {
