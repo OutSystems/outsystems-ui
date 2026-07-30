@@ -54,7 +54,23 @@ We highly recommend the usage of the following tools:
     - Document This
     - ESLint
     - Prettier - Code formatter
-- [Node v12.0+](https://nodejs.org/en)
+- [Volta](https://volta.sh/) — manages Node.js and npm versions for this project
+
+#### Node.js and npm (Volta)
+
+This project pins Node.js and npm versions in `package.json`. Install [Volta](https://volta.sh/) once and the correct versions are applied automatically when you work in this repository.
+
+**Install Volta:** follow the official [Getting Started guide](https://docs.volta.sh/guide/getting-started) (macOS, Windows, and Linux).
+
+**Verify Volta is active:**
+
+```bash
+volta --version          # Volta is installed
+volta which node         # pinned Node version for this project
+volta which npm          # pinned npm version for this project
+node -v
+npm -v
+```
 
 ### How to change this code?
 

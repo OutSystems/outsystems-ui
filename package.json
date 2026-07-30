@@ -22,6 +22,10 @@
 	"engines": {
 		"node": ">=12"
 	},
+	"volta": {
+		"node": "24.13.1",
+		"npm": "11.18.0"
+	},
 	"author": "UI Components Team",
 	"keywords": [
 		"OutSystems",
