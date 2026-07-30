@@ -14,17 +14,16 @@
 	}
 
 	.center-align {
+		align-items: center;
 		display: flex;
 		width: 100%;
 
 		&.flex-direction {
 			&-column {
-				align-items: center;
 				justify-content: center;
 			}
 
 			&-row {
-				align-items: center;
 				justify-content: space-between;
 			}
 		}
