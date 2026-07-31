@@ -9,6 +9,9 @@
 	--osui-checkbox-size: #{$token-scale-600};
 	--osui-checkbox-background: var(--color-background-input);
 	--osui-checkbox-border-color: var(--color-border-input);
+	// Same hover tier as .form-control[data-input], so a checkbox and an input
+	// react identically to the pointer
+	--osui-checkbox-hover-border-color: var(--color-border-input-press);
 	--osui-checkbox-border-radius: var(--border-radius-soft);
 	--osui-checkbox-checked-color: var(--color-primary);
 	// ───────────────────────────────────────────────────────────────────
@@ -31,7 +34,7 @@
 
 	&:hover {
 		&:before {
-			border: $token-border-size-025 solid var(--color-border-input);
+			border-color: var(--osui-checkbox-hover-border-color);
 		}
 	}
 
@@ -94,7 +97,7 @@
 
 		&:hover {
 			&:before {
-				border-color: var(--color-border-input-press);
+				border-color: var(--osui-checkbox-hover-border-color);
 			}
 		}
 
