@@ -121,7 +121,7 @@ body.iconLibrary-phosphor {
 }
 
 // Search – search icon
-.osui-search .input-search {
+.osui-search .osui-search__input > span {
 	position: relative;
 
 	&::after {
@@ -140,7 +140,7 @@ body.iconLibrary-phosphor {
 	}
 }
 
-.is-rtl .osui-search .input-search {
+.is-rtl .osui-search .osui-search__input > span {
 	&::after {
 		left: auto;
 		right: var(--space-base);
