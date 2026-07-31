@@ -3,7 +3,11 @@
 /// Layout
 
 ///
-html,
+html {
+	height: 100vh;
+	height: 100dvh;
+}
+
 body,
 #reactContainer,
 #transitionContainer,
