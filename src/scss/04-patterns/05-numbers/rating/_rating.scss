@@ -11,7 +11,7 @@
 	// ───────────────────────────────────────────────────────────────────
 
 	// Internal colour vars — overrideable per-instance
-	--token-rating-filled-color: var(--color-primary};
+	--token-rating-filled-color: var(--color-primary);
 	--token-rating-empty-color: #{$token-bg-neutral-base-default};
 
 	--rating-size: #{$token-scale-400}; // 16px default
