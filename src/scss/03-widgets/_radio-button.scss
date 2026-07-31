@@ -8,7 +8,10 @@
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-radio-size: #{$token-scale-600};
 	--osui-radio-background: var(--color-background-input);
-	--osui-radio-border-color: #{$token-border-default};
+	// Same resting + hover tiers as [data-checkbox] and .form-control[data-input],
+	// so all three form controls share one border progression
+	--osui-radio-border-color: var(--color-border-input);
+	--osui-radio-hover-border-color: var(--color-border-input-hover);
 	--osui-radio-checked-color: var(--color-primary);
 	--osui-radio-indicator-border: #{$token-scale-150};
 	--osui-radio-error-border-color: var(--color-border-danger);
@@ -42,7 +45,7 @@
 	}
 
 	&:hover:before {
-		border: $token-border-size-025 solid var(--color-border-input-press);
+		border-color: var(--osui-radio-hover-border-color);
 	}
 
 	&:focus-visible:before {
@@ -177,7 +180,7 @@
 		}
 
 		&:hover:before {
-			border-color: var(--color-border-input-press);
+			border-color: var(--osui-radio-hover-border-color);
 		}
 	}
 

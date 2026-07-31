@@ -22,7 +22,7 @@
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-input-background:          var(--color-background-input);
 	--osui-input-border-color:        var(--color-border-input);
-	--osui-input-hover-border-color:  var(--color-border-input-press);
+	--osui-input-hover-border-color:  var(--color-border-input-hover);
 	--osui-input-color:               var(--color-text);
 	--osui-input-border-radius:       var(--border-radius-soft);
 	--osui-input-focus-border-color:  var(--color-border-primary);
@@ -193,7 +193,7 @@ span.validation-message {
 			border-color: var(--color-border-input);
 
 			&:hover {
-				border-color: var(--color-border-input-press);
+				border-color: var(--osui-input-hover-border-color);
 			}
 
 			&:focus {

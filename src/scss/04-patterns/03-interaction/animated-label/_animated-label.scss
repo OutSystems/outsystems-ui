@@ -329,7 +329,7 @@
 			border-color: var(--color-border-input);
 
 			&:hover {
-				border-color: var(--color-border-input-press);
+				border-color: var(--osui-animated-label-hover-border-color);
 			}
 		}
 	}
