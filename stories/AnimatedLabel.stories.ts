@@ -67,7 +67,7 @@ export const Default: StoryObj<DefaultArgs> = {
 	render: ({ disabled }) => animatedLabel({ label: 'Full name', disabled }),
 };
 
-export const Error: Story = {
+export const ErrorState: Story = {
 	render: () => animatedLabel({ label: 'Full name', value: 'Filled text', invalid: true }),
 };
 
