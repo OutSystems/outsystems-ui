@@ -1,7 +1,7 @@
 const {series} = require('gulp');
-const {spawnSync} = require('child_process');
+const {spawnSync} = require('node:child_process');
 const fs = require('fs');
-const path = require('path');
+const path = require('node:path');
 
 const distFolder = './dist';
 const project = require('../ProjectSpecs/DefaultSpecs');
