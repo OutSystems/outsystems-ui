@@ -47,10 +47,61 @@
 	// IsLight=true renders `background-{color}-lightest`. Brand and neutral light
 	// variants invert their text to the dark on-light color for readability —
 	// palette colors keep their own darker text via the `text-{color}-darker` class.
-	&.background-primary-lightest,
-	&.background-secondary-lightest,
-	&[class*='background-neutral'][class*='-lightest'] {
+	// Backgrounds come from the `background-*-lightest` utility classes (subtle tokens).
+
+	// Semantic colors (primary, danger, success, info, warning)
+	&.background-primary-lightest {
+		background-color: #{$token-bg-primary-subtle-default};
 		color: var(--osui-badge-on-light-color);
+	}
+
+	&.background-danger-lightest {
+		background-color: #{$token-bg-danger-subtle-default};
+		color: var(--osui-badge-on-light-color);
+	}
+
+	&.background-success-lightest {
+		background-color: #{$token-bg-success-subtle-default};
+		color: var(--osui-badge-on-light-color);
+	}
+
+	&.background-info-lightest {
+		background-color: #{$token-bg-info-subtle-default};
+		color: var(--osui-badge-on-light-color);
+	}
+
+	&.background-warning-lightest {
+		background-color: #{$token-bg-warning-subtle-default};
+		color: var(--osui-badge-on-light-color);
+	}
+
+	&.background-secondary-lightest {
+		background-color: #{$token-bg-neutral-base-default};
+		color: var(--osui-badge-on-light-color);
+	}
+
+	&.background-transparent-lightest {
+		color: var(--osui-badge-primary-color);
+	}
+
+	// Extended palette colors (red, orange, yellow, etc.)
+	@each $color, $variations in $osui-colors-extended {
+		$base-color: null;
+		$lightest-value: null;
+		@each $type, $value in $variations {
+			@if ($type == '') {
+				$base-color: $value;
+			}
+			@if ($type == 'lightest') {
+				$lightest-value: $value;
+			}
+		}
+		@if ($lightest-value != null and $base-color != null) {
+			&.background-#{$color}-lightest {
+				background-color: #{$lightest-value};
+				color: #{$base-color};
+			}
+		}
 	}
 
 	&-small {
