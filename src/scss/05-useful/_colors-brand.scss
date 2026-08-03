@@ -14,7 +14,7 @@
 	}
 
 	&-secondary {
-		background-color: #303d60;
+		background-color: $token-bg-neutral-bold-default;
 
 		&-lightest {
 			background-color: $token-bg-surface-default;
@@ -34,7 +34,7 @@
 	&-secondary {
 		&,
 		&-darker {
-			color: #303d60;
+			color: $token-text-subtle;
 		}
 	}
 }

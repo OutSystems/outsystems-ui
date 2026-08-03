@@ -3,11 +3,30 @@
 /// @group Patterns-Badge
 /// Patterns - Numbers - Badge
 
+// Per-family IsLight=true text colors, per the Figma Badge spec: families
+// mapped to a semantic read the semantic text token, token-backed extended
+// families read text-extended-*, and cyan/grape read the primitives matching
+// their background family (no text token exists for them).
+$osui-badge-lightest-text-colors: (
+	'red': $token-text-danger,
+	'orange': $token-text-extended-orange,
+	'yellow': $token-text-warning,
+	'lime': $token-text-extended-lime,
+	'green': $token-text-success,
+	'teal': $token-text-extended-teal,
+	'cyan': $token-primitives-aqua-900,
+	'blue': $token-text-info,
+	'indigo': $token-text-extended-indigo,
+	'violet': $token-text-extended-violet,
+	'grape': $token-primitives-purple-900,
+	'pink': $token-text-extended-pink,
+);
+
 ///
 .badge {
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-badge-color: var(--color-text-inverse);
-	--osui-badge-primary-color: var(--color-primary);
+	--osui-badge-primary-color: #{$token-text-primary};
 	--osui-badge-on-light-color: var(--color-text);
 	// ───────────────────────────────────────────────────────────────────
 
@@ -23,56 +42,85 @@
 
 	&.background {
 		&-neutral {
-			&-0 {
-				color: var(--osui-badge-primary-color);
-			}
-
+			&-0,
 			&-1,
 			&-2,
 			&-3,
-			&-4 {
-				color: var(--osui-badge-on-light-color);
+			&-4,
+			&-5 {
+				background-color: $token-bg-neutral-base-default;
+				color: $token-text-default;
 			}
+
+			&-6,
+			&-7,
+			&-8,
+			&-9,
+			&-10 {
+				background-color: $token-bg-neutral-bold-default;
+				color: $token-text-inverse;
+			}
+
+			&-0-lightest,
+			&-1-lightest,
+			&-2-lightest,
+			&-3-lightest,
+			&-4-lightest,
+			&-5-lightest {
+				background-color: $token-bg-neutral-subtle-default;
+				color: $token-text-subtle;
+			}
+
+			&-6-lightest,
+			&-7-lightest,
+			&-8-lightest,
+			&-9-lightest,
+			&-10-lightest {
+				background-color: $token-bg-neutral-base-default;
+				color: $token-text-default;
+			}
+		}
+
+		// Warning backgrounds are light enough to need dark text (Figma).
+		&-warning,
+		&-yellow {
+			color: var(--osui-badge-on-light-color);
 		}
 
 		&-transparent {
 			color: var(--osui-badge-primary-color);
 		}
-
-		&-primary-lightest {
-			background-color: $token-semantics-primary-100;
-		}
 	}
 
-	// IsLight=true renders `background-{color}-lightest`. Brand and neutral light
-	// variants invert their text to the dark on-light color for readability —
-	// palette colors keep their own darker text via the `text-{color}-darker` class.
+	// IsLight=true renders `background-{color}-lightest`. Text switches to the
+	// per-family text token (semantic families use text-{semantic}; extended
+	// families use text-extended-{family} via $osui-badge-lightest-text-colors).
 	// Backgrounds come from the `background-*-lightest` utility classes (subtle tokens).
 
 	// Semantic colors (primary, danger, success, info, warning)
 	&.background-primary-lightest {
 		background-color: #{$token-bg-primary-subtle-default};
-		color: var(--osui-badge-on-light-color);
+		color: $token-text-primary;
 	}
 
 	&.background-danger-lightest {
 		background-color: #{$token-bg-danger-subtle-default};
-		color: var(--osui-badge-on-light-color);
+		color: $token-text-danger;
 	}
 
 	&.background-success-lightest {
 		background-color: #{$token-bg-success-subtle-default};
-		color: var(--osui-badge-on-light-color);
+		color: $token-text-success;
 	}
 
 	&.background-info-lightest {
 		background-color: #{$token-bg-info-subtle-default};
-		color: var(--osui-badge-on-light-color);
+		color: $token-text-info;
 	}
 
 	&.background-warning-lightest {
 		background-color: #{$token-bg-warning-subtle-default};
-		color: var(--osui-badge-on-light-color);
+		color: $token-text-warning;
 	}
 
 	&.background-secondary-lightest {
@@ -81,25 +129,21 @@
 	}
 
 	&.background-transparent-lightest {
-		color: var(--osui-badge-primary-color);
+		color: $token-text-inverse;
 	}
 
 	// Extended palette colors (red, orange, yellow, etc.)
 	@each $color, $variations in $osui-colors-extended {
-		$base-color: null;
 		$lightest-value: null;
 		@each $type, $value in $variations {
-			@if ($type == '') {
-				$base-color: $value;
-			}
 			@if ($type == 'lightest') {
 				$lightest-value: $value;
 			}
 		}
-		@if ($lightest-value != null and $base-color != null) {
+		@if ($lightest-value != null) {
 			&.background-#{$color}-lightest {
 				background-color: #{$lightest-value};
-				color: #{$base-color};
+				color: #{map-get($osui-badge-lightest-text-colors, $color)};
 			}
 		}
 	}
