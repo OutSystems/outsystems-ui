@@ -533,7 +533,6 @@ $balloonMobileTopMargin: 5vh;
 				.osui-dropdown-serverside__balloon-container {
 					margin-top: $balloonMobileTopMargin;
 					max-height: calc(var(--viewport-height, 100vh) - $balloonMobileTopMargin - var(--header-size));
-					max-height: calc(var(--viewport-height, 100dvh) - $balloonMobileTopMargin - var(--header-size));
 				}
 			}
 		}

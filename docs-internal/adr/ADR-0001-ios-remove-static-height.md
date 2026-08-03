@@ -1,6 +1,6 @@
 <!-- This is an ADR template, follow the same convention for future ADRs -->
 
-# ADR-0001: Replace JS-forced pixel viewport height with CSS dynamic viewport units on iOS
+# ADR-0001: Replace JS-forced pixel viewport height with CSS viewport units on iOS
 
 ## Status
 
@@ -54,25 +54,33 @@ changing the global layout reset in `_layout.scss:6-12`
   detection, non-web-app header/footer sizing) must continue to work unchanged.
 - `npm run build` and `npm run lint` must pass clean for both O11 and ODC platform targets.
 - The public `OutSystems.OSUI.*` API surface must not change.
-- Browsers/webviews without dynamic viewport unit (`dvh`) support must still get a working
-  (if legacy-behaved) layout via a `100vh` fallback.
+- OutSystems UI only supports `viewport-fit=cover` (no `viewport-fit=auto`/`contain` mode is
+  supported), so `100vh` already reflects the full visual viewport; dynamic viewport units
+  (`dvh`/`svh`/`lvh`) are not required to solve the reported defect.
 - Fix must not regress the newly-discovered second consumer (`_dropdown-serverside.scss`) on any
   phone platform, even though that consumer wasn't part of the originally reported defect.
 
 ## Considered Options
 
-- **Dynamic viewport unit: `100dvh` vs `100svh`**
+- **Dynamic viewport unit (`100dvh`/`100svh`) vs plain `100vh`**
     - `100dvh` (dynamic viewport height, grows/shrinks live with browser/URL-bar visibility)
         - Pros: matches the previous "fill visible area" intent; layout expands to use all
           available space once browser chrome hides.
-        - Cons: content can still be transiently obscured while browser UI is visible/transitioning.
+        - Cons: content can still be transiently obscured while browser UI is visible/transitioning;
+          not needed given OutSystems UI's `viewport-fit=cover`-only support.
     - `100svh` (small viewport height, always the smallest possible viewport)
         - Pros: content is never obscured by browser UI, regardless of chrome state.
         - Cons: wastes available space when browser chrome is hidden; behavior change from what the
-          layout previously aimed for.
+          layout previously aimed for; not needed given OutSystems UI's `viewport-fit=cover`-only
+          support.
+    - `100vh` (status quo unit, no dynamic tracking)
+        - Pros: no new CSS feature dependency; consistent with OutSystems UI only ever running under
+          `viewport-fit=cover`, where `100vh` already reflects the full visual viewport.
+        - Cons: none identified for this defect — the root cause was the JS pixel-forcing, not the
+          `100vh` unit itself.
 
 - **Keep or drop the `--viewport-height` CSS custom property**
-    - Drop it, use `100dvh`/`100vh` directly in SCSS
+    - Drop it, use `100vh` directly in SCSS
         - Pros: simplest; no dead variable left behind.
         - Cons: removes a CSS override hook, however unused today, that a consuming app could
           theoretically rely on.
@@ -86,7 +94,7 @@ changing the global layout reset in `_layout.scss:6-12`
     - Out of scope for this change (defer to a separate, confirmed fix)
         - Pros: minimizes blast radius to exactly what the primary root-cause analysis covered.
         - Cons: leaves a related, independently-observed defect unaddressed in the same release.
-    - Include it, applying the same layered `vh`/`dvh` pattern to `html` for consistency
+    - Include it, giving `html` its own `100vh` height for consistency with the rest of this change
         - Pros: addresses both known reports of the same underlying class of bug in one pass;
           consistent technical approach across all three touched files.
         - Cons: expands scope beyond the ticket's original technical analysis; the exploratory
@@ -106,14 +114,14 @@ changing the global layout reset in `_layout.scss:6-12`
 
 Chosen options:
 
-- **`100dvh`**, layered after a `100vh` fallback, because it matches the pre-existing "fill visible
-  area" intent and is the safer default absent a stated product requirement to never obscure
-  content behind browser UI.
-- **Keep `--viewport-height`** as `var(--viewport-height, <fallback>)` in all three touched SCSS
+- **Plain `100vh`**, with no `dvh`/`svh` layering, because OutSystems UI only supports
+  `viewport-fit=cover` — under that mode `100vh` already reflects the full visual viewport, so
+  dynamic viewport units add a new CSS feature dependency without solving anything the root-cause
+  analysis identified.
+- **Keep `--viewport-height`** as `var(--viewport-height, 100vh)` in all three touched SCSS
   locations, preserving a CSS override hook even though no TS code sets it after this change.
 - **Include the `_layout.scss` global reset fix**, splitting `html` out of the shared `height: 100%`
-  rule and giving it the same layered `100vh`/`100dvh` treatment, for consistency with the rest of
-  this change.
+  rule and giving it its own `height: 100vh;`, for consistency with the rest of this change.
 - **Fix the `_dropdown-serverside.scss:535` second consumer** in the same pass, applying the
   identical layered-fallback pattern inside its `calc()`.
 
@@ -128,20 +136,21 @@ viewport-height logic.
 
 | File                                                                                          | Change |
 | ------------------------------------------------------------------------------------------------| -------|
-| `src/scss/02-layout/_ios-bounce.scss`                                                          | Layer `max-height: var(--viewport-height, 100vh);` then `max-height: var(--viewport-height, 100dvh);` on `.main` (line 15). |
-| `src/scripts/OSFramework/OSUI/Pattern/Dropdown/ServerSide/scss/_dropdown-serverside.scss`      | Layer the same fallback pattern inside the `calc()` at line 535 (`--has-not-search` balloon `max-height`). |
-| `src/scss/02-layout/_layout.scss`                                                              | Split `html` out of the shared reset (lines 6-12); give it `height: 100vh; height: 100dvh;`, keep `body, #reactContainer, #transitionContainer, .screen-container { height: 100%; }`. |
+| `src/scss/02-layout/_ios-bounce.scss`                                                          | No change — `.main`'s `max-height` already had the `var(--viewport-height, 100vh)` fallback (line 15) before this ticket. |
+| `src/scripts/OSFramework/OSUI/Pattern/Dropdown/ServerSide/scss/_dropdown-serverside.scss`      | Add a `var(--viewport-height, 100vh)` fallback inside the `calc()` at line 535 (`--has-not-search` balloon `max-height`), which previously had none. |
+| `src/scss/02-layout/_layout.scss`                                                              | Split `html` out of the shared reset (lines 6-12); give it `height: 100vh;` (OutSystems UI only supports `viewport-fit=cover`, so no `dvh` layering is needed), keep `body, #reactContainer, #transitionContainer, .screen-container { height: 100%; }`. |
 | `src/scripts/OutSystems/OSUI/Utils/LayoutPrivateBodyCssVars.ts`                                | Delete `_isPhoneOrTablet()` (lines 48-55) and its call site in `_setCssVars()` (lines 64-76). No other method changes. |
 | `src/scripts/OutSystems/OSUI/Utils/LayoutPrivateOnOrientationChange.ts`                        | No change (verified as safe — no other dependency on the viewport-height re-`Set()`). |
 | `src/scripts/OSFramework/OSUI/GlobalEnum.ts`                                                   | No change — `CSSVariables.ViewportHeight` (line 71) is kept as the documented CSS variable name, even though no TS sets it after this change. |
 
 Positive consequences:
 
-- iOS `ios-bounce` layout tracks the real visible viewport continuously, without waiting for an
-  orientation-change event or a stale 500ms-old snapshot.
+- iOS `ios-bounce` layout no longer clips/overflows because of a stale, JS-forced pixel snapshot
+  that always won over the CSS fallback — the CSS `100vh` fallback now actually applies, which is
+  sufficient given OutSystems UI's `viewport-fit=cover`-only support.
 - The previously-undiscovered `_dropdown-serverside.scss` regression is prevented instead of shipped.
-- Legacy browsers/webviews without `dvh` support still get the previous (if imperfect) `100vh`
-  behavior, satisfying the non-functional fallback requirement.
+- No new CSS feature dependency (`dvh`/`svh`) is introduced, so there's no minimum-browser-version
+  floor to track for this fix.
 - No change to the public `OutSystems.OSUI.*` API surface.
 - Consuming apps retain a (currently unused) CSS override hook via `--viewport-height`.
 
@@ -151,10 +160,9 @@ Negative consequences:
   it anymore) — accepted as low-risk since it's still meaningful documentation of the CSS variable
   name and removing it isn't required by any acceptance criterion.
 - The `_layout.scss` change expands scope beyond the ticket's original root-cause analysis, and its
-  specific interpretation (layered `vh`/`dvh` on `html` vs. the exploratory finding's proposed
-  static `100vh`) has not yet been confirmed with the finding's author (Gonçalo Martins).
-- Devices below iOS Safari 15.4 (2022) fall back to the previous `100vh` behavior (the original bug
-  can still occur there); no compilation guard is introduced to change behavior by platform version.
+  specific interpretation (a real `height: 100vh` on `html` vs. the exploratory finding's proposed
+  static `100vh`) has not yet been confirmed with the finding's author (Gonçalo Martins) — though
+  in this case the two interpretations are now identical.
 - No automated test coverage exists locally for this code path; verification relies on manual
   iOS device/simulator testing and the separate `outsystems-ui-tests` E2E repo.
 
