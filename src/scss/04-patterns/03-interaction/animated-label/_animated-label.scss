@@ -11,6 +11,7 @@
 	--osui-animated-label-hover-border-color: var(--color-border-input-hover);
 	--osui-animated-label-focus-border-color: var(--color-border-primary);
 	--osui-animated-label-focus-ring-color: #{$token-border-focus-default};
+	--osui-animated-label-focus-shadow: 0 0 0 #{$token-border-size-050} var(--osui-animated-label-focus-ring-color);
 	--osui-animated-label-error-color: var(--color-text-danger);
 	--osui-animated-label-disabled-background: var(--color-background-input-disabled);
 	--osui-animated-label-disabled-color: var(--color-text-disabled);
@@ -159,7 +160,7 @@
 
 	&:focus-within {
 		border-color: var(--osui-animated-label-focus-border-color);
-		box-shadow: 0 0 0 $token-border-size-050 var(--osui-animated-label-focus-ring-color);
+		box-shadow: var(--osui-animated-label-focus-shadow);
 	}
 
 	// Disabled — muted surface + label
@@ -335,8 +336,9 @@
 	}
 
 	.animated-label:focus-within {
+		--osui-animated-label-focus-shadow: 0 0 0 #{$token-border-size-075} var(--color-focus-outer);
+
 		border-color: var(--osui-animated-label-border-color);
-		box-shadow: 0 0 0 $token-border-size-075 var(--color-focus-outer);
 	}
 }
 

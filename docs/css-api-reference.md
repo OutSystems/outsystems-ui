@@ -78,7 +78,7 @@ _File: `src/scss/03-widgets/_button-group.scss`_
 | `--osui-button-group-border-color` | `var(--color-border)` |
 | `--osui-button-group-color` | `var(--color-text-subtle)` |
 | `--osui-button-group-disabled-overlay` | `#{$token-state-disabled}` |
-| `--osui-button-group-height` | `#{$token-scale-1000}` |
+| `--osui-button-group-min-height` | `#{$token-scale-1000}` |
 
 ### Checkbox (`[data-checkbox]`)
 _File: `src/scss/03-widgets/_checkbox.scss`_
@@ -488,9 +488,17 @@ _File: `src/scss/04-patterns/03-interaction/animated-label/_animated-label.scss`
 | `--osui-animated-label-hover-border-color` | `var(--color-border-input-hover)` |
 | `--osui-animated-label-focus-border-color` | `var(--color-border-primary)` |
 | `--osui-animated-label-focus-ring-color` | `#{$token-border-focus-default}` |
+| `--osui-animated-label-focus-shadow` | `0 0 0 #{$token-border-size-050} var(--osui-animated-label-focus-ring-color)` |
 | `--osui-animated-label-error-color` | `var(--color-text-danger)` |
 | `--osui-animated-label-disabled-background` | `var(--color-background-input-disabled)` |
 | `--osui-animated-label-disabled-color` | `var(--color-text-disabled)` |
+
+### Animated Label (`.has-accessible-features`)
+_File: `src/scss/04-patterns/03-interaction/animated-label/_animated-label.scss`_
+
+| Property | Default |
+|---|---|
+| `--osui-animated-label-focus-shadow` | `0 0 0 #{$token-border-size-075} var(--color-focus-outer)` |
 
 ### Balloon (`.osui-balloon`)
 _File: `src/scss/04-patterns/03-interaction/balloon/_balloon.scss`_
@@ -989,4 +997,4 @@ _File: `src/scss/01-foundations/_root.scss`_
 
 ---
 
-<sub>456 properties across 78 components, generated from `src/scss`.</sub>
+<sub>458 properties across 79 components, generated from `src/scss`.</sub>
