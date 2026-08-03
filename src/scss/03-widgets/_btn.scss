@@ -77,7 +77,7 @@
 		display: none;
 	}
 
-	&[class*='background-'] {
+	&[class*='background-']:not(.background-white) {
 		border: var(--osui-btn-border-width) solid transparent;
 		color: var(--color-text-inverse);
 

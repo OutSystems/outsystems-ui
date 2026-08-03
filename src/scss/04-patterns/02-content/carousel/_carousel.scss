@@ -9,15 +9,17 @@
 ///
 .osui-carousel {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-carousel-arrow-background:        var(--color-background-surface);
-	--osui-carousel-arrow-shadow:            #{$token-elevation-2};
-	--osui-carousel-arrow-icon-color:        var(--color-text);
-	--osui-carousel-pagination-color:        var(--color-border);
-	--osui-carousel-pagination-active-color: var(--color-primary);
+	--osui-carousel-arrow-background:         var(--color-background-surface);
+	--osui-carousel-arrow-shadow:             #{$token-elevation-2};
+	--osui-carousel-arrow-icon-color:         var(--color-text);
+	--osui-carousel-arrow-disabled-overlay:   #{$token-state-disabled};
+	--osui-carousel-pagination-color:         var(--color-border);
+	--osui-carousel-pagination-active-color:  var(--color-primary);
+	--osui-carousel-track-width: 100%;
+	// Reserved space below the track: pagination row height ($token-scale-600) + 16px gap ($token-scale-400)
+	--osui-carousel-pagination-margin: #{$token-scale-1000};
 	// ───────────────────────────────────────────────────────────────────
 
-	--osui-carousel-track-width: 100%;
-	--osui-carousel-pagination-margin: 30px;
 
 	.splide {
 		&__arrow {
@@ -32,12 +34,23 @@
 
 			&[disabled] {
 				cursor: default;
-				opacity: 0.3;
+				opacity: 1;
+
+				// ::before (not ::after) — the ODC icon library already renders the
+				// arrow glyph via ::after on .splide__arrow--next/--prev
+				&::before {
+					background-color: var(--osui-carousel-arrow-disabled-overlay);
+					border-radius: inherit;
+					content: '';
+					inset: 0;
+					position: absolute;
+					z-index: var(--layer-local-tier-1);
+				}
 			}
 
 			svg {
-				height: 14px;
-				width: 14px;
+				height: $token-scale-600;
+				width: $token-scale-600;
 
 				path {
 					fill: var(--osui-carousel-arrow-icon-color);
@@ -51,22 +64,28 @@
 		}
 
 		&__pagination {
-			gap: $token-scale-150;
+			gap: $token-space-200;
 			margin: 0;
 			z-index: var(--layer-local-tier-1);
+			
+			li {
+				align-items: center;
+				display: flex;
+				height: $token-scale-600;
+				justify-content: center;
+				width: $token-scale-600;
+			}
 
 			&__page {
 				background-color: var(--osui-carousel-pagination-color);
 				border-radius: var(--border-radius-rounded);
-				transition:
-					width $token-transition-time-200 $token-transition-curve-linear,
-					background-color $token-transition-time-200 $token-transition-curve-linear;
-	
+				height: $token-scale-300;
+				width: $token-scale-300;
+				transition: background-color $token-transition-time-200 $token-transition-curve-linear;
 
 				&.is-active {
 					background-color: var(--osui-carousel-pagination-active-color);
-					width: $token-scale-700;
-					z-index: var(--layer-local-tier-1);
+					z-index: var(--layer-local-tier-1);	
 				}
 			}
 		}

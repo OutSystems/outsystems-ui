@@ -18,6 +18,8 @@
 		--osui-dropdown-list-max-height: 240px;
 		--osui-dropdown-focus-border-color: var(--color-border-primary);
 		--osui-dropdown-focus-ring-color: #{$token-border-focus-default};
+		--osui-dropdown-arrow-color: #{$token-icon-subtlest};
+		--osui-dropdown-arrow-size: #{$token-scale-400};
 		// ───────────────────────────────────────────────────────────────────
 
 		cursor: initial;

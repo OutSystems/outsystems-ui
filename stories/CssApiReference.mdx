@@ -83,6 +83,7 @@ _File: `src/scss/03-widgets/_button-group.scss`_
 | `--osui-button-group-border-color` | `var(--color-border)` |
 | `--osui-button-group-color` | `var(--color-text-subtle)` |
 | `--osui-button-group-disabled-overlay` | `#{$token-state-disabled}` |
+| `--osui-button-group-min-height` | `#{$token-scale-1000}` |
 
 ### Checkbox (`[data-checkbox]`)
 _File: `src/scss/03-widgets/_checkbox.scss`_
@@ -92,6 +93,7 @@ _File: `src/scss/03-widgets/_checkbox.scss`_
 | `--osui-checkbox-size` | `#{$token-scale-600}` |
 | `--osui-checkbox-background` | `var(--color-background-input)` |
 | `--osui-checkbox-border-color` | `var(--color-border-input)` |
+| `--osui-checkbox-hover-border-color` | `var(--color-border-input-hover)` |
 | `--osui-checkbox-border-radius` | `var(--border-radius-soft)` |
 | `--osui-checkbox-checked-color` | `var(--color-primary)` |
 
@@ -112,11 +114,15 @@ _File: `src/scss/03-widgets/_dropdown.scss`_
 | `--osui-dropdown-border-width` | `#{$token-border-size-025}` |
 | `--osui-dropdown-color` | `var(--color-text)` |
 | `--osui-dropdown-border-radius` | `var(--border-radius-soft)` |
+| `--osui-dropdown-hover-border-color` | `var(--color-border-input-hover)` |
+| `--osui-dropdown-prompt-color` | `var(--color-text-subtlest)` |
 | `--osui-dropdown-list-background` | `var(--color-background-surface)` |
 | `--osui-dropdown-list-border-color` | `var(--color-border)` |
 | `--osui-dropdown-list-max-height` | `240px` |
 | `--osui-dropdown-focus-border-color` | `var(--color-border-primary)` |
 | `--osui-dropdown-focus-ring-color` | `#{$token-border-focus-default}` |
+| `--osui-dropdown-arrow-color` | `#{$token-icon-subtlest}` |
+| `--osui-dropdown-arrow-size` | `#{$token-scale-400}` |
 
 ### Feedback Message (`.feedback-message`)
 _File: `src/scss/03-widgets/_feedback-message.scss`_
@@ -170,7 +176,7 @@ _File: `src/scss/03-widgets/_inputs-and-textareas.scss`_
 |---|---|
 | `--osui-input-background` | `var(--color-background-input)` |
 | `--osui-input-border-color` | `var(--color-border-input)` |
-| `--osui-input-hover-border-color` | `var(--color-border-input-press)` |
+| `--osui-input-hover-border-color` | `var(--color-border-input-hover)` |
 | `--osui-input-color` | `var(--color-text)` |
 | `--osui-input-border-radius` | `var(--border-radius-soft)` |
 | `--osui-input-focus-border-color` | `var(--color-border-primary)` |
@@ -218,7 +224,8 @@ _File: `src/scss/03-widgets/_radio-button.scss`_
 |---|---|
 | `--osui-radio-size` | `#{$token-scale-600}` |
 | `--osui-radio-background` | `var(--color-background-input)` |
-| `--osui-radio-border-color` | `#{$token-border-default}` |
+| `--osui-radio-border-color` | `var(--color-border-input)` |
+| `--osui-radio-hover-border-color` | `var(--color-border-input-hover)` |
 | `--osui-radio-checked-color` | `var(--color-primary)` |
 | `--osui-radio-indicator-border` | `#{$token-scale-150}` |
 | `--osui-radio-error-border-color` | `var(--color-border-danger)` |
@@ -404,10 +411,11 @@ _File: `src/scss/04-patterns/02-content/carousel/_carousel.scss`_
 | `--osui-carousel-arrow-background` | `var(--color-background-surface)` |
 | `--osui-carousel-arrow-shadow` | `#{$token-elevation-2}` |
 | `--osui-carousel-arrow-icon-color` | `var(--color-text)` |
+| `--osui-carousel-arrow-disabled-overlay` | `#{$token-state-disabled}` |
 | `--osui-carousel-pagination-color` | `var(--color-border)` |
 | `--osui-carousel-pagination-active-color` | `var(--color-primary)` |
 | `--osui-carousel-track-width` | `100%` |
-| `--osui-carousel-pagination-margin` | `30px` |
+| `--osui-carousel-pagination-margin` | `#{$token-scale-1000}` |
 
 ---
 
@@ -421,11 +429,16 @@ _File: `src/scss/04-patterns/03-interaction/_action-sheet.scss`_
 | `--osui-action-sheet-background` | `var(--color-background-surface)` |
 | `--osui-action-sheet-border-radius` | `#{$token-border-radius-200}` |
 | `--osui-action-sheet-cancel-color` | `#{$token-text-primary}` |
+| `--osui-action-sheet-color` | `#{$token-text-primary}` |
 | `--osui-action-sheet-divider-color` | `#{$token-border-subtle}` |
-| `--osui-action-sheet-shadow` | `#{$token-elevation-2}` |
+| `--osui-action-sheet-shadow` | `#{$token-elevation-3}` |
 | `--osui-action-sheet-overlay-background` | `#{$token-backdrop}` |
+| `--osui-btn-background` | `var(--osui-action-sheet-background)` |
 | `--osui-btn-border-radius` | `0` |
-| `--osui-btn-color` | `var(--osui-action-sheet-cancel-color)` |
+| `--osui-btn-color` | `var(--osui-action-sheet-color)` |
+| `--osui-btn-height` | `#{$token-scale-1100}` |
+| `--osui-btn-hover-background` | `#{$token-bg-neutral-subtlest-hover}` |
+| `--osui-btn-active-background` | `#{$token-bg-neutral-subtlest-press}` |
 
 ### Action Sheet (`.os-high-contrast`)
 _File: `src/scss/04-patterns/03-interaction/_action-sheet.scss`_
@@ -477,7 +490,20 @@ _File: `src/scss/04-patterns/03-interaction/animated-label/_animated-label.scss`
 |---|---|
 | `--osui-animated-label-color` | `var(--color-text-subtlest)` |
 | `--osui-animated-label-border-color` | `var(--color-border-input)` |
-| `--osui-animated-label-focus-border-color` | `var(--color-primary)` |
+| `--osui-animated-label-hover-border-color` | `var(--color-border-input-hover)` |
+| `--osui-animated-label-focus-border-color` | `var(--color-border-primary)` |
+| `--osui-animated-label-focus-ring-color` | `#{$token-border-focus-default}` |
+| `--osui-animated-label-focus-shadow` | `0 0 0 #{$token-border-size-050} var(--osui-animated-label-focus-ring-color)` |
+| `--osui-animated-label-error-color` | `var(--color-text-danger)` |
+| `--osui-animated-label-disabled-background` | `var(--color-background-input-disabled)` |
+| `--osui-animated-label-disabled-color` | `var(--color-text-disabled)` |
+
+### Animated Label (`.has-accessible-features`)
+_File: `src/scss/04-patterns/03-interaction/animated-label/_animated-label.scss`_
+
+| Property | Default |
+|---|---|
+| `--osui-animated-label-focus-shadow` | `0 0 0 #{$token-border-size-075} var(--color-focus-outer)` |
 
 ### Balloon (`.osui-balloon`)
 _File: `src/scss/04-patterns/03-interaction/balloon/_balloon.scss`_
@@ -514,6 +540,19 @@ _File: `src/scss/04-patterns/03-interaction/date-picker/provider/_flatpickr.scss
 |---|---|
 | `--osui-flatpickr-layer` | `calc(var(--osui-menu-layer) + var(--layer-local-tier-1))` |
 
+### Flatpickr (`.osui-datepicker-calendar`)
+_File: `src/scss/04-patterns/03-interaction/date-picker/provider/_flatpickr.scss`_
+
+| Property | Default |
+|---|---|
+| `--osui-datepicker-time-background` | `var(--osui-input-background, var(--color-background-input))` |
+| `--osui-datepicker-time-border-color` | `var(--osui-input-border-color, var(--color-border))` |
+| `--osui-datepicker-time-border-radius` | `#{$token-border-radius-100}` |
+| `--osui-datepicker-time-color` | `var(--color-text-subtlest)` |
+| `--osui-datepicker-time-focus-color` | `#{$token-semantics-primary-base}` |
+| `--osui-datepicker-time-height` | `#{$token-scale-1000}` |
+| `--osui-datepicker-time-segment-width` | `#{$token-scale-1200}` |
+
 ### Flatpickr (`.os-high-contrast`)
 _File: `src/scss/04-patterns/03-interaction/date-picker/provider/_flatpickr.scss`_
 
@@ -521,21 +560,44 @@ _File: `src/scss/04-patterns/03-interaction/date-picker/provider/_flatpickr.scss
 |---|---|
 | `--osui-flatpickr-calendar-elems-layer` | `0` |
 
+### Dropdown Search (`.osui-dropdown-search`)
+_File: `src/scss/04-patterns/03-interaction/dropdown/_dropdown-search.scss`_
+
+| Property | Default |
+|---|---|
+| `--osui-dropdown-border-radius` | `var(--border-radius-soft)` |
+| `--osui-dropdown-background` | `var(--color-background-input)` |
+| `--osui-dropdown-border-color` | `var(--color-border-input)` |
+| `--osui-dropdown-hover-border-color` | `var(--color-border-input-hover)` |
+| `--osui-dropdown-focus-border-color` | `var(--color-border-primary)` |
+| `--osui-dropdown-focus-ring-color` | `#{$token-border-focus-default}` |
+| `--osui-dropdown-list-background` | `var(--color-background-surface)` |
+| `--osui-dropdown-arrow-color` | `#{$token-icon-subtlest}` |
+| `--osui-dropdown-arrow-size` | `#{$token-scale-400}` |
+
 ### Dropdown Serverside (`.osui-dropdown-serverside`)
 _File: `src/scss/04-patterns/03-interaction/dropdown/_dropdown-serverside.scss`_
 
 | Property | Default |
 |---|---|
-| `--osui-dropdown-ss-background` | `var(--color-background-surface)` |
+| `--osui-dropdown-ss-arrow-color` | `#{$token-icon-subtlest}` |
+| `--osui-dropdown-ss-arrow-size` | `#{$token-scale-400}` |
+| `--osui-dropdown-ss-background` | `var(--color-background-input)` |
 | `--osui-dropdown-ss-border-color` | `var(--color-border-input)` |
+| `--osui-dropdown-ss-border-radius` | `var(--border-radius-soft)` |
 | `--osui-dropdown-ss-color` | `var(--color-text)` |
 | `--osui-dropdown-ss-disabled-background` | `var(--color-background-input-disabled)` |
 | `--osui-dropdown-ss-disabled-color` | `var(--color-text-disabled)` |
+| `--osui-dropdown-ss-focus-border-color` | `var(--color-border-primary)` |
+| `--osui-dropdown-ss-focus-ring-color` | `#{$token-border-focus-default}` |
+| `--osui-dropdown-ss-hover-border-color` | `var(--color-border-input-hover)` |
+| `--osui-dropdown-ss-prompt-color` | `var(--color-text-subtlest)` |
 | `--osui-dropdown-ss-balloon-max-height` | `300px` |
 | `--osui-dropdown-min-width` | `170px` |
 | `--osui-floating-offset` | `#{$token-scale-100}` |
 | `--osui-dropdown-ss-scroll-bar-width` | `5px` |
-| `--osui-balloon-shadow` | `none` |
+| `--osui-balloon-shadow` | `var(--osui-elevation-overlay)` |
+| `--osui-balloon-shape` | `var(--border-radius-soft)` |
 
 ### Dropdown Serverside (`.has-accessible-features`)
 _File: `src/scss/04-patterns/03-interaction/dropdown/_dropdown-serverside.scss`_
@@ -550,6 +612,21 @@ _File: `src/scss/04-patterns/03-interaction/dropdown/_dropdown-serverside.scss`_
 | Property | Default |
 |---|---|
 | `--osui-outline-size` | `0` |
+
+### Dropdown Tags (`.osui-dropdown-tags`)
+_File: `src/scss/04-patterns/03-interaction/dropdown/_dropdown-tags.scss`_
+
+| Property | Default |
+|---|---|
+| `--osui-dropdown-border-radius` | `var(--border-radius-soft)` |
+| `--osui-dropdown-background` | `var(--color-background-input)` |
+| `--osui-dropdown-border-color` | `var(--color-border-input)` |
+| `--osui-dropdown-hover-border-color` | `var(--color-border-input-hover)` |
+| `--osui-dropdown-focus-border-color` | `var(--color-border-primary)` |
+| `--osui-dropdown-focus-ring-color` | `#{$token-border-focus-default}` |
+| `--osui-dropdown-list-background` | `var(--color-background-surface)` |
+| `--osui-dropdown-arrow-color` | `#{$token-icon-subtlest}` |
+| `--osui-dropdown-arrow-size` | `#{$token-scale-400}` |
 
 ### Dropdown (`.osui-dropdown`)
 _File: `src/scss/04-patterns/03-interaction/dropdown/_dropdown.scss`_
@@ -567,7 +644,7 @@ _File: `src/scss/04-patterns/03-interaction/dropdown/_dropdownserversideitem.scs
 |---|---|
 | `--osui-dropdown-item-background` | `transparent` |
 | `--osui-dropdown-item-color` | `var(--color-text)` |
-| `--osui-dropdown-item-hover-bg` | `#{$token-bg-neutral-subtle-default}` |
+| `--osui-dropdown-item-hover-bg` | `var(--color-border-subtle)` |
 
 ### Monthpicker (`.osui-monthpicker`)
 _File: `src/scss/04-patterns/03-interaction/month-picker/_monthpicker.scss`_
@@ -925,4 +1002,4 @@ _File: `src/scss/01-foundations/_root.scss`_
 
 ---
 
-<sub>405 properties across 75 components, generated from `src/scss`.</sub>
+<sub>458 properties across 79 components, generated from `src/scss`.</sub>

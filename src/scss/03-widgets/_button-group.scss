@@ -15,6 +15,10 @@
 		--osui-button-group-border-color: var(--color-border);
 		--osui-button-group-color: var(--color-text-subtle);
 		--osui-button-group-disabled-overlay: #{$token-state-disabled};
+		// Matches the default .btn height so a button group sits flush with
+		// buttons placed alongside it, while still growing with larger font
+		// sizes and accessibility settings
+		--osui-button-group-min-height: #{$token-scale-1000};
 		// ───────────────────────────────────────────────────────────────────
 
 		background-color: var(--osui-button-group-background);
@@ -24,7 +28,7 @@
 		cursor: pointer;
 		font-size: $token-font-size-400;
 		font-weight: $token-font-weight-medium;
-		height: $token-scale-1200;
+		min-height: var(--osui-button-group-min-height);
 		padding: $token-scale-0 $token-scale-400;
 		position: relative;
 		white-space: nowrap;
@@ -118,15 +122,6 @@
 				}
 			}
 		}
-	}
-}
-
-// Responsive --------------------------------------------------------------------
-///
-.tablet,
-.phone {
-	.button-group-item {
-		height: $token-scale-1200;
 	}
 }
 

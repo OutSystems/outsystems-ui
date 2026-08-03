@@ -9,8 +9,9 @@
 	--osui-action-sheet-background: var(--color-background-surface);
 	--osui-action-sheet-border-radius: #{$token-border-radius-200};
 	--osui-action-sheet-cancel-color: #{$token-text-primary};
+	--osui-action-sheet-color: #{$token-text-primary};
 	--osui-action-sheet-divider-color: #{$token-border-subtle};
-	--osui-action-sheet-shadow: #{$token-elevation-2};
+	--osui-action-sheet-shadow: #{$token-elevation-3};
 	// ───────────────────────────────────────────────────────────────────
 
 	bottom: 0;
@@ -115,7 +116,14 @@
 		}
 
 		.btn {
+			--osui-btn-background: var(--osui-action-sheet-background);
 			--osui-btn-border-radius: 0;
+			--osui-btn-color: var(--osui-action-sheet-color);
+			--osui-btn-height: #{$token-scale-1100};
+			--osui-btn-hover-background: #{$token-bg-neutral-subtlest-hover};
+			--osui-btn-active-background: #{$token-bg-neutral-subtlest-press};
+
+			@include apply-typography($token-body-action-sm);
 
 			border: none;
 			margin-top: 1px;
@@ -131,8 +139,14 @@
 		margin-top: $token-scale-200;
 
 		.btn {
+			--osui-btn-background: var(--osui-action-sheet-background);
 			--osui-btn-border-radius: var(--osui-action-sheet-border-radius);
 			--osui-btn-color: var(--osui-action-sheet-cancel-color);
+			--osui-btn-height: #{$token-scale-1100};
+			--osui-btn-hover-background: #{$token-bg-neutral-subtlest-hover};
+			--osui-btn-active-background: #{$token-bg-neutral-subtlest-press};
+
+			@include apply-typography($token-body-action-sm);
 
 			border: none;
 			box-shadow: var(--osui-action-sheet-shadow);

@@ -14,12 +14,14 @@
 		max-width: initial;
 
 		&.pop-comp-active {
-			.vscomp-toggle-button {
-				border-color: $token-semantics-primary-base;
+			// The extra `.vscomp-wrapper` is required to outrank the focus elevation reset below
+			.vscomp-wrapper .vscomp-toggle-button {
+				border-color: var(--osui-dropdown-focus-border-color, #{$token-semantics-primary-base});
+				box-shadow: 0 0 0 $token-border-size-050 var(--osui-dropdown-focus-ring-color, #{$token-border-focus-default});
 
+				// Arrow keeps its resting colour while open — only the rotation changes
 				&:after {
-					color: $token-semantics-primary-base;
-					transform: rotate(180deg) translateY(50%);
+					transform: translateY(-50%) rotate(180deg);
 				}
 			}
 		}
@@ -103,14 +105,6 @@
 	}
 
 	&.multiple {
-		.vscomp-search-container {
-			padding-left: $token-scale-400;
-
-			&:before {
-				display: none;
-			}
-		}
-
 		.vscomp-option {
 			&.selected {
 				.checkbox-icon {
@@ -151,9 +145,9 @@
 
 		.vscomp-value-tag {
 			align-items: center;
-			background-color: var(--color-border-subtle);
+			background-color: $token-bg-neutral-subtlest-hover;
 			border: none;
-			border-radius: $token-border-radius-100;
+			border-radius: var(--border-radius-rounded);
 			color: var(--color-text);
 			display: inline-flex;
 			font-size: $token-font-size-300;
@@ -226,11 +220,11 @@
 
 	// RTL Text
 	&.text-direction-rtl {
-		&.multiple {
-			.vscomp-search-container {
-				padding-left: $token-scale-200;
-			}
+		.vscomp-search-container {
+			padding: $token-scale-0 $token-scale-400 $token-scale-0 $token-scale-200;
+		}
 
+		&.multiple {
 			.vscomp-option {
 				&.selected {
 					.checkbox-icon {
@@ -238,17 +232,6 @@
 							@include IsRTL_CheckBoxCheckIconTransform;
 						}
 					}
-				}
-			}
-		}
-
-		&:not(.multiple) {
-			.vscomp-search-container {
-				padding: $token-scale-0 $token-scale-1000 $token-scale-0 $token-scale-200;
-
-				&:before {
-					left: auto;
-					right: $token-scale-400;
 				}
 			}
 		}
@@ -355,13 +338,13 @@
 
 // Top part - Select to open dropdown
 .vscomp-toggle-button {
-	--vscomp-toogle-btn-arrow-size: #{$token-font-size-400};
+	--vscomp-toogle-btn-arrow-size: var(--osui-dropdown-arrow-size, #{$token-scale-400});
 	--vscomp-toogle-btn-height: #{$token-scale-1000};
 	--vscomp-toogle-btn-mobile-height: #{$token-scale-1200};
 
-	background-color: var(--color-background-input);
-	border-radius: $token-border-radius-200;
-	border: $token-border-size-025 solid var(--osui-input-border-color, var(--color-border));
+	background-color: var(--osui-dropdown-background, var(--color-background-input));
+	border-radius: var(--osui-dropdown-border-radius, $token-border-radius-200);
+	border: $token-border-size-025 solid var(--osui-dropdown-border-color, var(--color-border-input));
 	color: var(--color-text);
 	cursor: pointer;
 	display: inline-flex;
@@ -377,17 +360,23 @@
 
 	// Create new arrow for all dropdown types
 	&:after {
-		color: $token-primitives-neutral-700;
+		align-items: center;
+		color: var(--osui-dropdown-arrow-color, #{$token-icon-subtlest});
+		display: flex;
+		height: var(--vscomp-toogle-btn-arrow-size);
+		justify-content: center;
+		line-height: 1;
 		position: absolute;
 		right: $token-scale-400;
 		top: 50%;
 		transform: translateY(-50%);
 		transform-origin: center;
 		transition: transform $token-transition-time-100 $token-transition-curve-base;
+		width: var(--vscomp-toogle-btn-arrow-size);
 	}
 
 	&:hover {
-		border-color: var(--osui-input-focus-border-color, #{$token-semantics-primary-base});
+		border-color: var(--osui-dropdown-hover-border-color, var(--color-border-input-hover));
 	}
 }
 
@@ -424,9 +413,9 @@
 }
 
 .vscomp-dropbox {
-	background-color: $token-bg-surface-default;
+	background-color: var(--osui-dropdown-list-background, $token-bg-surface-default);
 	border: $token-border-size-025 solid var(--color-border);
-	border-radius: $token-border-radius-200;
+	border-radius: var(--osui-dropdown-border-radius, $token-border-radius-200);
 	box-shadow: var(--osui-elevation-overlay);
 	overflow: hidden;
 	padding: 0;
@@ -440,18 +429,8 @@
 // Options container input search wrapper
 .vscomp-search-container {
 	border-bottom: $token-border-size-025 solid var(--color-border);
-	padding: $token-scale-0 $token-scale-200 $token-scale-0 $token-scale-1000;
+	padding: $token-scale-0 $token-scale-200 $token-scale-0 $token-scale-400;
 	position: relative;
-
-	&:before {
-		align-items: center;
-		color: $token-primitives-neutral-700;
-		display: flex;
-		height: 100%;
-		left: $token-scale-400;
-		position: absolute;
-		top: 0;
-	}
 
 	.vscomp-search-clear {
 		border-radius: 50%;

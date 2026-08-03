@@ -8,7 +8,13 @@
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-animated-label-color: var(--color-text-subtlest);
 	--osui-animated-label-border-color: var(--color-border-input);
-	--osui-animated-label-focus-border-color: var(--color-primary);
+	--osui-animated-label-hover-border-color: var(--color-border-input-hover);
+	--osui-animated-label-focus-border-color: var(--color-border-primary);
+	--osui-animated-label-focus-ring-color: #{$token-border-focus-default};
+	--osui-animated-label-focus-shadow: 0 0 0 #{$token-border-size-050} var(--osui-animated-label-focus-ring-color);
+	--osui-animated-label-error-color: var(--color-text-danger);
+	--osui-animated-label-disabled-background: var(--color-background-input-disabled);
+	--osui-animated-label-disabled-color: var(--color-text-disabled);
 	// ───────────────────────────────────────────────────────────────────
 
 	position: relative;
@@ -20,9 +26,9 @@
 			transform: translateY(-50%);
 
 			label {
-				color: $token-primitives-neutral-1000;
+				color: var(--osui-animated-label-color);
 				font-size: $token-font-size-300;
-				font-weight: $token-font-weight-medium;
+				font-weight: $token-font-weight-semi-bold;
 				letter-spacing: $token-font-letter-spacing-0;
 			}
 		}
@@ -56,7 +62,7 @@
 		z-index: var(--layer-screen);
 
 		label {
-			color: var(--osui-input-color, var(--color-text));
+			color: var(--osui-animated-label-color);
 			font-size: $token-font-size-350;
 			font-weight: $token-font-weight-regular;
 		}
@@ -147,29 +153,33 @@
 		}
 	}
 
+	// Hover — subtle border emphasis
+	&:hover:not(:focus-within):not(:has([disabled])) {
+		border-color: var(--osui-animated-label-hover-border-color);
+	}
+
 	&:focus-within {
 		border-color: var(--osui-animated-label-focus-border-color);
+		box-shadow: var(--osui-animated-label-focus-shadow);
+	}
+
+	// Disabled — muted surface + label
+	&:has([disabled]) {
+		background-color: var(--osui-animated-label-disabled-background);
+		border-color: var(--osui-animated-label-border-color);
 
 		.animated-label-text {
-			color: var(--osui-animated-label-focus-border-color);
+			background-color: var(--osui-animated-label-disabled-background);
 
 			label {
-				color: var(--osui-animated-label-focus-border-color);
+				color: var(--osui-animated-label-disabled-color);
 			}
 		}
 	}
 
 	&:has(.not-valid) {
-		border-color: $token-semantics-danger-base;
+		border-color: var(--osui-animated-label-error-color);
 		margin-bottom: $token-scale-900;
-
-		.animated-label-text {
-			color: $token-semantics-danger-base;
-
-			label {
-				color: $token-semantics-danger-base;
-			}
-		}
 	}
 
 	&:has(textarea) {
@@ -320,14 +330,15 @@
 			border-color: var(--color-border-input);
 
 			&:hover {
-				border-color: var(--color-border-input-press);
+				border-color: var(--osui-animated-label-hover-border-color);
 			}
 		}
 	}
 
 	.animated-label:focus-within {
+		--osui-animated-label-focus-shadow: 0 0 0 #{$token-border-size-075} var(--color-focus-outer);
+
 		border-color: var(--osui-animated-label-border-color);
-		box-shadow: 0 0 0 $token-border-size-075 var(--color-focus-outer);
 	}
 }
 
