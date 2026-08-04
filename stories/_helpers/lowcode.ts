@@ -18,7 +18,20 @@ export const cls = (...parts: (string | false | null | undefined)[]): string => 
  * `Color` / `BackgroundColor` low-code enum → `background-{value}` utility class.
  * Subset of the OUI palette (the full Color static entity is large); '' = none.
  */
-export const COLOR_OPTIONS = ['', 'primary', 'secondary', 'success', 'warning', 'error', 'info', 'neutral-0', 'blue', 'green', 'grape', 'cyan'];
+export const COLOR_OPTIONS = [
+	'',
+	'primary',
+	'secondary',
+	'success',
+	'warning',
+	'error',
+	'info',
+	'neutral-0',
+	'blue',
+	'green',
+	'grape',
+	'cyan',
+];
 
 /** Shared `ExtendedClass` control — present on essentially every OUI block. */
 export const extendedClassArgType = {

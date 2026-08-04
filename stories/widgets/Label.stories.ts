@@ -9,6 +9,10 @@ type Story = StoryObj;
 export const Default: Story = {
 	render: () =>
 		mountTree(
-			createElement(Label as never, { ...widgetBaseProps('label'), targetWidget: 'someInput', mandatory: true, style: '' }, 'Email address')
+			createElement(
+				Label as never,
+				{ ...widgetBaseProps('label'), targetWidget: 'someInput', mandatory: true, style: '' },
+				'Email address'
+			)
 		),
 };

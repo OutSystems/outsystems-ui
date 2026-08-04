@@ -76,8 +76,7 @@ export const Default: StoryObj<BadgeArgs> = {
 		const bgClass = color ? `background-${color}${isLight ? lightBgSuffix(color) : ''}` : '';
 		// IsLight pairs the light background with the color's darker text variant
 		// (semantic colors only expose `text-{color}`, palette/brand use `-darker`).
-		const textClass =
-			color && isLight ? `text-${color}${SEMANTIC_LIGHT_COLORS.has(color) ? '' : '-darker'}` : '';
+		const textClass = color && isLight ? `text-${color}${SEMANTIC_LIGHT_COLORS.has(color) ? '' : '-darker'}` : '';
 		const shapeClass = shape ? `border-radius-${shape}` : '';
 		const sizeClass = size ? `badge-${size}` : '';
 		return renderStatic(

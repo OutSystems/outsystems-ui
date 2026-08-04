@@ -8,7 +8,13 @@ export default meta;
 type Story = StoryObj;
 
 const icon = (name: string, size: number) =>
-	createElement(Icon as never, { ...widgetBaseProps('icon'), icon: name, iconSize: size, style: '', key: name + size });
+	createElement(Icon as never, {
+		...widgetBaseProps('icon'),
+		icon: name,
+		iconSize: size,
+		style: '',
+		key: name + size,
+	});
 
 export const Default: Story = {
 	render: () =>

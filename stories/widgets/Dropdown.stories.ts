@@ -1,7 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
 import { Fragment } from 'react';
 import { Dropdown } from '@outsystems/runtime-widgets-js';
-import { createVariable, DataTypes, createElement, mountWidget, runtimeMock, widgetBaseProps } from '../_helpers/widget';
+import {
+	createVariable,
+	DataTypes,
+	createElement,
+	mountWidget,
+	runtimeMock,
+	widgetBaseProps,
+} from '../_helpers/widget';
 
 // DropdownMode const enum → numeric: Text(native) 0, Custom 1.
 const OPTIONS = [
@@ -17,7 +24,9 @@ type Story = StoryObj;
 function DropdownsWrapper(props: any) {
 	const list = runtimeMock({ length: OPTIONS.length, getItem: (i: number) => OPTIONS[i] });
 
-	return createElement(Fragment, null,
+	return createElement(
+		Fragment,
+		null,
 		// Container
 		createElement(
 			'div',
@@ -53,7 +62,7 @@ function DropdownsWrapper(props: any) {
 							},
 						}),
 					}),
-				}),
+				})
 			),
 			// Native column
 			createElement(
@@ -74,9 +83,9 @@ function DropdownsWrapper(props: any) {
 					style: '',
 					onChange: () => {},
 					placeholders: null,
-				}),
-			),
-		),
+				})
+			)
+		)
 	);
 }
 
