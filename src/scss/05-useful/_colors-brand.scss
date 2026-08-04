@@ -1,5 +1,3 @@
-@use "../tokens/variables";
-
 /* Usefull - Colors Brand */
 ////
 /// @group UsefullClasses-Colors_Brand
@@ -8,18 +6,18 @@
 ///
 .background {
 	&-primary {
-		background-color: variables.$token-semantics-primary-base;
+		background-color: var(--color-primary);
 
 		&-lightest {
-			background-color: variables.$token-bg-surface-default;
+			background-color: $token-bg-surface-default; // TODO review need to theme layer variable for lightest
 		}
 	}
 
 	&-secondary {
-		background-color: #303d60;
+		background-color: var(--color-secondary);
 
 		&-lightest {
-			background-color: variables.$token-bg-surface-default;
+			background-color: $token-bg-surface-default;
 		}
 	}
 }
@@ -29,14 +27,14 @@
 	&-primary {
 		&,
 		&-darker {
-			color: variables.$token-semantics-primary-base;
+			color: $token-semantics-primary-base;
 		}
 	}
 
 	&-secondary {
 		&,
 		&-darker {
-			color: #303d60;
+			color: var(--color-text-subtle)
 		}
 	}
 }
