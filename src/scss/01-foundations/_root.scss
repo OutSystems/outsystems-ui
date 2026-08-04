@@ -40,7 +40,7 @@
 	--color-primary-hover: #{$token-semantics-primary-800};
 	--color-primary-selected: #{$token-semantics-primary-900}; // translucent-wash role for selected rows/items; apps override this
 	--color-primary-active: #{$token-semantics-primary-900}; // solid pressed/active-state role — do not alias to -selected above
-	--color-secondary: #303d60;
+	--color-secondary: #{$token-bg-neutral-bold-default};
 	--color-neutral: #{$token-primitives-neutral-500};
 	--color-neutral-0: #{$token-primitives-neutral-100};
 	--color-neutral-1: #{$token-primitives-neutral-200};

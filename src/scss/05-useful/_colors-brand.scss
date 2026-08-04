@@ -6,15 +6,15 @@
 ///
 .background {
 	&-primary {
-		background-color: $token-semantics-primary-base;
+		background-color: var(--color-primary);
 
 		&-lightest {
-			background-color: $token-bg-surface-default;
+			background-color: $token-bg-surface-default; // TODO review need to theme layer variable for lightest
 		}
 	}
 
 	&-secondary {
-		background-color: #303d60;
+		background-color: var(--color-secondary);
 
 		&-lightest {
 			background-color: $token-bg-surface-default;
@@ -34,7 +34,7 @@
 	&-secondary {
 		&,
 		&-darker {
-			color: #303d60;
+			color: var(--color-text-subtle)
 		}
 	}
 }
