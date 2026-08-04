@@ -6,7 +6,7 @@
 ///
 .background {
 	&-primary {
-		background-color: $token-semantics-primary-base;
+		background-color: var(--color-primary);
 
 		&-lightest {
 			background-color: $token-bg-surface-default;
@@ -14,7 +14,7 @@
 	}
 
 	&-secondary {
-		background-color: $token-bg-neutral-bold-default;
+		background-color: var(--color-secondary);
 
 		&-lightest {
 			background-color: $token-bg-surface-default;
@@ -34,7 +34,7 @@
 	&-secondary {
 		&,
 		&-darker {
-			color: $token-text-subtle;
+			color: var(--color-text-subtle)
 		}
 	}
 }
