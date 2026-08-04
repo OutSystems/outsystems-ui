@@ -321,6 +321,7 @@ body.iconLibrary-phosphor {
 
 .vscomp-search-clear:after,
 .vscomp-ele .vscomp-clear-icon:after {
+	color: $token-icon-subtlest;
 	content: var(--osui-icon-clear);
 	font-size: 13px;
 }
@@ -357,10 +358,11 @@ body.iconLibrary-phosphor {
 		-servicestudio-height: 40px;
 		-servicestudio-line-height: 40px;
 		-servicestudio-min-width: 180px;
-		-servicestudio-padding: 0 $token-scale-600;
+		-servicestudio-padding: 0 $token-space-400;
 		-servicestudio-position: relative;
 		-servicestudio-vertical-align: middle;
 		-servicestudio-width: 100%;
+		-servicestudio-align-items: center;
 
 		&__arrow-icon {
 			-servicestudio-position: relative;
@@ -391,10 +393,11 @@ body.iconLibrary-phosphor {
 		-servicestudio-display: flex;
 		-servicestudio-height: 40px;
 		-servicestudio-min-width: 180px;
-		-servicestudio-padding: 0 $token-scale-600;
+		-servicestudio-padding: 0 $token-space-400;
 		-servicestudio-position: relative;
 		-servicestudio-vertical-align: middle;
 		-servicestudio-width: 100%;
+		-servicestudio-align-items: center;
 
 		&-as-tag {
 			-servicestudio-align-items: center;
@@ -408,8 +411,6 @@ body.iconLibrary-phosphor {
 			-servicestudio-height: 30px;
 			-servicestudio-padding: 8px;
 			-servicestudio-position: relative;
-			-servicestudio-top: 50%;
-			-servicestudio-transform: translateY(-50%);
 			-servicestudio-width: 70px;
 
 			&__clear-icon {

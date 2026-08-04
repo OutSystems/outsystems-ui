@@ -148,12 +148,12 @@
 			background-color: $token-bg-neutral-subtlest-hover;
 			border: none;
 			border-radius: var(--border-radius-rounded);
-			color: var(--color-text);
+			color: $token-text-subtlest;
 			display: inline-flex;
 			font-size: $token-font-size-300;
 			font-weight: $token-font-weight-medium;
 			height: $token-scale-600;
-			padding: 0 $token-scale-200;
+			padding: 0 $token-space-200 0 $token-space-300;
 			position: relative;
 
 			.vscomp-value-tag-content {
@@ -163,18 +163,14 @@
 			.vscomp-value-tag-clear-button {
 				background-color: transparent;
 				border-radius: 0;
+				color: $token-icon-subtlest;
 				height: auto;
 				margin-left: $token-scale-100;
-				opacity: 0.5;
 				position: relative;
 				right: auto;
 				top: auto;
 				transform: none;
 				width: auto;
-
-				&:hover {
-					opacity: 1;
-				}
 
 				.vscomp-clear-icon {
 					height: $token-scale-300;
@@ -185,7 +181,16 @@
 
 					&:before,
 					&:after {
-						color: var(--color-text);
+						color: $token-icon-subtlest;
+					}
+				}
+
+				&:hover {
+					.vscomp-clear-icon {
+						&:before,
+						&:after {
+							color: $token-icon-default;
+						}
 					}
 				}
 			}
@@ -509,14 +514,14 @@
 	transition: background-color $token-transition-time-100 $token-transition-curve-base;
 
 	&.focused {
-		background-color: var(--color-border-subtle);
+		background-color: $token-bg-neutral-subtlest-hover;
 	}
 
 	&.selected {
 		background-color: transparent;
 
 		&.focused {
-			background-color: transparent;
+			background-color: $token-bg-neutral-subtlest-hover;
 		}
 
 		// Right-side checkmark — requires --osui-icon-check + --osui-icon-font-family (icon library)
