@@ -9,7 +9,7 @@
 		background-color: var(--color-primary);
 
 		&-lightest {
-			background-color: $token-bg-surface-default;
+			background-color: $token-bg-surface-default; // TODO review need to theme layer variable for lightest
 		}
 	}
 
