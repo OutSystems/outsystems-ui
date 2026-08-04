@@ -1,3 +1,5 @@
+@use "../tokens/variables";
+
 /* Page Layout - Menu - App Menu Link */
 ////
 /// @group Layout-Menu-App_Menu_Link
@@ -12,7 +14,7 @@
 	& {
 		-servicestudio-align-items: center;
 		-servicestudio-display: flex;
-		-servicestudio-column-gap: $token-scale-600;
+		-servicestudio-column-gap: variables.$token-scale-600;
 	}
 
 	// Service Studio Preview
@@ -21,9 +23,9 @@
 
 		// Service Studio Preview
 		&:after {
-			-servicestudio-color: $token-primitives-neutral-700;
+			-servicestudio-color: variables.$token-primitives-neutral-700;
 			-servicestudio-content: 'Drag screens to this container to create menu entries';
-			-servicestudio-font-size: $token-font-size-300;
+			-servicestudio-font-size: variables.$token-font-size-300;
 			-servicestudio-left: 50%;
 			-servicestudio-position: absolute;
 			-servicestudio-text-align: center;
@@ -42,7 +44,7 @@
 
 		&:hover,
 		&.active {
-			color: $token-semantics-primary-base;
+			color: variables.$token-semantics-primary-base;
 			text-decoration: none;
 		}
 	}
@@ -55,7 +57,7 @@ body {
 			// Service Studio Preview
 			& {
 				-servicestudio-align-items: flex-start;
-				-servicestudio-padding: $token-scale-0;
+				-servicestudio-padding: variables.$token-scale-0;
 				-servicestudio-width: 100% !important;
 			}
 		}
@@ -77,12 +79,12 @@ body {
 	.app-menu-links {
 		a {
 			align-items: center;
-			border-bottom: $token-border-size-050 solid transparent;
-			border-top: $token-border-size-050 solid transparent;
+			border-bottom: variables.$token-border-size-050 solid transparent;
+			border-top: variables.$token-border-size-050 solid transparent;
 			display: inline-flex;
 
 			&.active {
-				border-bottom: $token-border-size-050 solid transparent;
+				border-bottom: variables.$token-border-size-050 solid transparent;
 			}
 		}
 	}
@@ -95,10 +97,10 @@ body {
 		a {
 			border-bottom: 0;
 			border-left: 0;
-			border-radius: $token-border-radius-200;
+			border-radius: variables.$token-border-radius-200;
 			border-top: 0;
 			margin-left: 0;
-			padding: $token-scale-200 $token-scale-400;
+			padding: variables.$token-scale-200 variables.$token-scale-400;
 		}
 	}
 }
@@ -120,13 +122,13 @@ body {
 
 	-webkit-overflow-scrolling: touch;
 	overflow-y: auto;
-	padding: $token-scale-200;
+	padding: variables.$token-scale-200;
 	width: 100%;
 
 	> a.active {
-		background-color: $token-bg-primary-subtle-default;
+		background-color: variables.$token-bg-primary-subtle-default;
 		border-left: 0;
-		border-radius: $token-border-radius-200;
+		border-radius: variables.$token-border-radius-200;
 	}
 }
 
@@ -156,14 +158,14 @@ body {
 		flex-direction: column;
 		-webkit-overflow-scrolling: touch;
 		overflow-y: auto;
-		padding: $token-scale-200;
+		padding: variables.$token-scale-200;
 		width: 100%;
 
 		a {
 			// Service Studio preview
 			& {
-				-servicestudio-margin-left: $token-scale-0;
-				-servicestudio-padding: $token-scale-200 $token-scale-600;
+				-servicestudio-margin-left: variables.$token-scale-0;
+				-servicestudio-padding: variables.$token-scale-200 variables.$token-scale-600;
 				-servicestudio-width: 100%;
 			}
 		}
@@ -177,11 +179,11 @@ body {
 // Accessibility -----------------------------------------------------------------
 .has-accessible-features {
 	.header a.active:focus {
-		color: $token-semantics-primary-base;
+		color: variables.$token-semantics-primary-base;
 	}
 
 	.app-menu-links a:focus {
 		background-color: transparent;
-		box-shadow: 0 0 0 $token-border-size-075 var(--color-focus-outer);
+		box-shadow: 0 0 0 variables.$token-border-size-075 var(--color-focus-outer);
 	}
 }

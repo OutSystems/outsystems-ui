@@ -1,3 +1,5 @@
+@use "../../tokens/variables";
+
 /*! Patterns - Utilities - Provider Login Button */
 ////
 /// @group Utilities-Provider_Login_Button
@@ -7,7 +9,7 @@
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-provider-login-button-background:    var(--color-background-surface);
 	--osui-provider-login-button-border-color:  var(--color-border-input);
-	--osui-provider-login-button-color:         #{$token-primitives-neutral-700};
+	--osui-provider-login-button-color:         #{variables.$token-primitives-neutral-700};
 	// ───────────────────────────────────────────────────────────────────
 
 	background: var(--osui-provider-login-button-background);
@@ -38,7 +40,7 @@
 		}
 	}
 	&.soft {
-		border-radius: $token-border-radius-100;
+		border-radius: variables.$token-border-radius-100;
 	}
 	&.rounded {
 		border-radius: var(--border-radius-rounded);
@@ -46,8 +48,8 @@
 	.btn-provider-login {
 		&-logo {
 			border-radius: 50%;
-			height: $token-scale-500;
-			width: $token-scale-500;
+			height: variables.$token-scale-500;
+			width: variables.$token-scale-500;
 		}
 		&-text {
 			color: var(--osui-provider-login-button-color);
@@ -63,7 +65,7 @@
 			width: 50px;
 			&.btn- {
 				&small {
-					width: $token-scale-1000;
+					width: variables.$token-scale-1000;
 				}
 				&large {
 					width: 55px;

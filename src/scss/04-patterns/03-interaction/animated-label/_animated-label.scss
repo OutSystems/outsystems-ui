@@ -1,3 +1,5 @@
+@use "../../../tokens/variables";
+
 /* Patterns - Interaction - Animated Label */
 ////
 /// @group Patterns-Animated_Label
@@ -10,8 +12,8 @@
 	--osui-animated-label-border-color: var(--color-border-input);
 	--osui-animated-label-hover-border-color: var(--color-border-input-hover);
 	--osui-animated-label-focus-border-color: var(--color-border-primary);
-	--osui-animated-label-focus-ring-color: #{$token-border-focus-default};
-	--osui-animated-label-focus-shadow: 0 0 0 #{$token-border-size-050} var(--osui-animated-label-focus-ring-color);
+	--osui-animated-label-focus-ring-color: #{variables.$token-border-focus-default};
+	--osui-animated-label-focus-shadow: 0 0 0 #{variables.$token-border-size-050} var(--osui-animated-label-focus-ring-color);
 	--osui-animated-label-error-color: var(--color-text-danger);
 	--osui-animated-label-disabled-background: var(--color-background-input-disabled);
 	--osui-animated-label-disabled-color: var(--color-text-disabled);
@@ -21,15 +23,15 @@
 
 	&.active {
 		.animated-label-text {
-			font-size: $token-font-size-300;
+			font-size: variables.$token-font-size-300;
 			top: 0;
 			transform: translateY(-50%);
 
 			label {
 				color: var(--osui-animated-label-color);
-				font-size: $token-font-size-300;
-				font-weight: $token-font-weight-semi-bold;
-				letter-spacing: $token-font-letter-spacing-0;
+				font-size: variables.$token-font-size-300;
+				font-weight: variables.$token-font-weight-semi-bold;
+				letter-spacing: variables.$token-font-letter-spacing-0;
 			}
 		}
 
@@ -39,7 +41,7 @@
 			}
 
 			[data-textarea] {
-				padding-bottom: $token-scale-100;
+				padding-bottom: variables.$token-scale-100;
 			}
 		}
 	}
@@ -47,28 +49,28 @@
 	&-text {
 		background-color: var(--osui-input-background, var(--color-background-input));
 		color: var(--osui-animated-label-color);
-		font-size: $token-font-size-350;
-		left: $token-scale-300;
-		padding: 0 $token-scale-100;
+		font-size: variables.$token-font-size-350;
+		left: variables.$token-scale-300;
+		padding: 0 variables.$token-scale-100;
 		pointer-events: none;
 		position: absolute;
 		top: 50%;
 		transform: translateY(-50%);
 		transition:
-			top $token-transition-time-200 $token-transition-curve-expressive,
-			font-size $token-transition-time-200 $token-transition-curve-expressive,
-			color $token-transition-time-100 $token-transition-curve-expressive,
-			transform $token-transition-time-200 $token-transition-curve-expressive;
+			top variables.$token-transition-time-200 variables.$token-transition-curve-expressive,
+			font-size variables.$token-transition-time-200 variables.$token-transition-curve-expressive,
+			color variables.$token-transition-time-100 variables.$token-transition-curve-expressive,
+			transform variables.$token-transition-time-200 variables.$token-transition-curve-expressive;
 		z-index: var(--layer-screen);
 
 		label {
 			color: var(--osui-animated-label-color);
-			font-size: $token-font-size-350;
-			font-weight: $token-font-weight-regular;
+			font-size: variables.$token-font-size-350;
+			font-weight: variables.$token-font-weight-regular;
 		}
 
 		.icon {
-			padding-right: $token-scale-400;
+			padding-right: variables.$token-scale-400;
 		}
 
 		// Service Studio Preview
@@ -87,14 +89,14 @@
 			&[data-input],
 			&[data-textarea] {
 				background-color: transparent;
-				border: $token-border-size-0;
-				border-bottom: $token-border-size-025 solid var(--osui-animated-label-border-color);
-				border-radius: $token-border-radius-0;
-				padding: $token-scale-0;
-				transition: all $token-transition-time-100 $token-transition-curve-expressive;
+				border: variables.$token-border-size-0;
+				border-bottom: variables.$token-border-size-025 solid var(--osui-animated-label-border-color);
+				border-radius: variables.$token-border-radius-0;
+				padding: variables.$token-scale-0;
+				transition: all variables.$token-transition-time-100 variables.$token-transition-curve-expressive;
 
 				&:focus {
-					border-bottom: $token-border-size-025 solid var(--osui-animated-label-focus-border-color);
+					border-bottom: variables.$token-border-size-025 solid var(--osui-animated-label-focus-border-color);
 
 					&::-webkit-datetime-edit {
 						color: var(--color-text);
@@ -102,11 +104,11 @@
 				}
 
 				&.not-valid {
-					border-bottom: $token-border-size-025 solid $token-semantics-danger-base;
+					border-bottom: variables.$token-border-size-025 solid variables.$token-semantics-danger-base;
 
 					&:focus {
-						border: $token-border-size-0;
-						border-bottom: $token-border-size-025 solid $token-semantics-danger-base;
+						border: variables.$token-border-size-0;
+						border-bottom: variables.$token-border-size-025 solid variables.$token-semantics-danger-base;
 					}
 				}
 
@@ -129,7 +131,7 @@
 			}
 
 			&[data-textarea] {
-				margin-top: $token-scale-200;
+				margin-top: variables.$token-scale-200;
 
 				& + span.validation-message {
 					bottom: 7px;
@@ -142,14 +144,14 @@
 	   Outlined variant
 	   ============================================================ */
 	background-color: var(--osui-input-background, var(--color-background-input));
-	border: $token-border-size-025 solid var(--osui-animated-label-border-color);
-	border-radius: var(--osui-input-border-radius, #{$token-border-radius-200});
+	border: variables.$token-border-size-025 solid var(--osui-animated-label-border-color);
+	border-radius: var(--osui-input-border-radius, #{variables.$token-border-radius-200});
 	overflow: visible;
-	transition: border-color $token-transition-time-100 $token-transition-curve-expressive;
+	transition: border-color variables.$token-transition-time-100 variables.$token-transition-curve-expressive;
 
 	&:has(.input-with-icon-content-icon:not(:empty)) {
 		.animated-label-text {
-			left: $token-scale-1000;
+			left: variables.$token-scale-1000;
 		}
 	}
 
@@ -179,12 +181,12 @@
 
 	&:has(.not-valid) {
 		border-color: var(--osui-animated-label-error-color);
-		margin-bottom: $token-scale-900;
+		margin-bottom: variables.$token-scale-900;
 	}
 
 	&:has(textarea) {
 		.animated-label-text {
-			top: $token-scale-400;
+			top: variables.$token-scale-400;
 			transform: none;
 		}
 	}
@@ -205,7 +207,7 @@
 		}
 
 		&:not(:has(textarea)) {
-			height: $token-scale-1000;
+			height: variables.$token-scale-1000;
 
 			span.input-text {
 				height: 100%;
@@ -218,7 +220,7 @@
 				border: none;
 				border-radius: 0;
 				height: 100%;
-				padding: 0 $token-scale-400;
+				padding: 0 variables.$token-scale-400;
 				width: 100%;
 
 				&:focus {
@@ -233,7 +235,7 @@
 				border: none;
 				border-radius: 0;
 				margin: 0;
-				padding: $token-scale-400 $token-scale-400 0;
+				padding: variables.$token-scale-400 variables.$token-scale-400 0;
 				width: 100%;
 
 				&:focus {
@@ -248,22 +250,22 @@
 			bottom: auto;
 			left: 0;
 			position: absolute;
-			top: calc(100% + #{$token-scale-100});
+			top: calc(100% + #{variables.$token-scale-100});
 		}
 
 		.input-with-icon {
-			height: $token-scale-1000;
+			height: variables.$token-scale-1000;
 
 			.input-with-icon-content-icon:not(:empty) + .input-with-icon-input .form-control[data-input] {
-				padding-left: $token-scale-1000;
+				padding-left: variables.$token-scale-1000;
 			}
 
 			&.input-with-icon-right
 				.input-with-icon-content-icon:not(:empty)
 				+ .input-with-icon-input
 				.form-control[data-input] {
-				padding-left: $token-scale-400;
-				padding-right: $token-scale-1000;
+				padding-left: variables.$token-scale-400;
+				padding-right: variables.$token-scale-1000;
 			}
 		}
 	}
@@ -271,7 +273,7 @@
 
 /* Fix for animated labels inside lists */
 .list.list-group > [data-block*='AnimatedLabel']:first-child .animated-label {
-	margin-top: $token-scale-200;
+	margin-top: variables.$token-scale-200;
 }
 
 ///
@@ -279,7 +281,7 @@
 	.animated-label {
 		&-input .form-control[data-textarea] + span.validation-message {
 			position: relative;
-			bottom: $token-scale-600;
+			bottom: variables.$token-scale-600;
 		}
 	}
 }
@@ -316,7 +318,7 @@
 	.form-control {
 		&[data-textarea] {
 			& + span.validation-message {
-				bottom: $token-scale-250;
+				bottom: variables.$token-scale-250;
 			}
 		}
 	}
@@ -336,7 +338,7 @@
 	}
 
 	.animated-label:focus-within {
-		--osui-animated-label-focus-shadow: 0 0 0 #{$token-border-size-075} var(--color-focus-outer);
+		--osui-animated-label-focus-shadow: 0 0 0 #{variables.$token-border-size-075} var(--color-focus-outer);
 
 		border-color: var(--osui-animated-label-border-color);
 	}
@@ -346,15 +348,15 @@
 ///
 .os-high-contrast {
 	.animated-label-text {
-		font-weight: $token-font-weight-semi-bold;
-		padding: $token-scale-0 $token-scale-200;
+		font-weight: variables.$token-font-weight-semi-bold;
+		padding: variables.$token-scale-0 variables.$token-scale-200;
 	}
 
 	.animated-label {
 		&.active {
 			.animated-label-text {
 				background-color: var(--color-text-subtlest);
-				font-size: $token-font-size-350;
+				font-size: variables.$token-font-size-350;
 				top: -16px; // design-spec: high-contrast label lift
 			}
 		}
@@ -362,7 +364,7 @@
 
 	.animated-label-input {
 		.form-control[data-input] {
-			padding: $token-scale-0 $token-scale-200;
+			padding: variables.$token-scale-0 variables.$token-scale-200;
 		}
 	}
 }

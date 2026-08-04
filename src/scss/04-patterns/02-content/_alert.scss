@@ -1,3 +1,5 @@
+@use "../../tokens/variables";
+
 /* Patterns - Content - Alert */
 ////
 /// @group Patterns-Alert
@@ -9,8 +11,8 @@
 	--osui-alert-background: transparent;
 	--osui-alert-color: var(--color-text);
 	--osui-alert-accent-color: var(--color-border);
-	--osui-alert-border-radius: #{$token-border-radius-200};
-	--osui-alert-padding: #{$token-scale-300} #{$token-scale-400};
+	--osui-alert-border-radius: #{variables.$token-border-radius-200};
+	--osui-alert-padding: #{variables.$token-scale-300} #{variables.$token-scale-400};
 	// ───────────────────────────────────────────────────────────────────
 
 	align-items: flex-start;
@@ -18,22 +20,22 @@
 	border-radius: var(--osui-alert-border-radius);
 	color: var(--osui-alert-color);
 	display: flex;
-	gap: $token-scale-200;
+	gap: variables.$token-scale-200;
 	padding: var(--osui-alert-padding);
-	transition: background-color $token-transition-time-100 $token-transition-curve-expressive;
+	transition: background-color variables.$token-transition-time-100 variables.$token-transition-curve-expressive;
 
 	.alert-icon {
 		align-self: flex-start;
 		display: inline-flex;
 		flex-shrink: 0;
-		font-size: $token-font-size-500;
-		height: $token-scale-500;
+		font-size: variables.$token-font-size-500;
+		height: variables.$token-scale-500;
 		line-height: 1;
-		width: $token-scale-500;
+		width: variables.$token-scale-500;
 
 		i,
 		&::after {
-			font-size: $token-font-size-500;
+			font-size: variables.$token-font-size-500;
 		}
 	}
 
@@ -43,32 +45,32 @@
 
 	.alert-message {
 		flex: 1;
-		font-size: $token-font-size-350;
-		font-weight: $token-font-weight-medium;
+		font-size: variables.$token-font-size-350;
+		font-weight: variables.$token-font-weight-medium;
 		line-height: var(--osui-font-line-height-default);
 	}
 
 	&-info {
-		--osui-alert-background: #{$token-bg-info-subtle-default};
-		--osui-alert-color: #{$token-text-info};
+		--osui-alert-background: #{variables.$token-bg-info-subtle-default};
+		--osui-alert-color: #{variables.$token-text-info};
 		--osui-alert-accent-color: var(--color-info);
 	}
 
 	&-success {
-		--osui-alert-background: #{$token-bg-success-subtle-default};
-		--osui-alert-color: #{$token-text-success};
+		--osui-alert-background: #{variables.$token-bg-success-subtle-default};
+		--osui-alert-color: #{variables.$token-text-success};
 		--osui-alert-accent-color: var(--color-success);
 	}
 
 	&-error {
-		--osui-alert-background: #{$token-bg-danger-subtle-default};
-		--osui-alert-color: #{$token-text-danger};
+		--osui-alert-background: #{variables.$token-bg-danger-subtle-default};
+		--osui-alert-color: #{variables.$token-text-danger};
 		--osui-alert-accent-color: var(--color-error);
 	}
 
 	&-warning {
-		--osui-alert-background: #{$token-bg-warning-subtle-default};
-		--osui-alert-color: #{$token-text-warning};
+		--osui-alert-background: #{variables.$token-bg-warning-subtle-default};
+		--osui-alert-color: #{variables.$token-text-warning};
 		--osui-alert-accent-color: var(--color-warning);
 	}
 }
@@ -77,7 +79,7 @@
 ///
 .is-rtl {
 	.alert-icon {
-		margin-left: $token-scale-400;
+		margin-left: variables.$token-scale-400;
 		margin-right: 0;
 	}
 }

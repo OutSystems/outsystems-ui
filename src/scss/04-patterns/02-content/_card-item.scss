@@ -1,3 +1,5 @@
+@use "../../tokens/variables";
+
 /* Patterns - Content - CardItem */
 ////
 /// @group Patterns-Card_Item
@@ -15,7 +17,7 @@
 
 	&-left {
 		max-width: 120px;
-		padding-right: $token-scale-400;
+		padding-right: variables.$token-scale-400;
 	}
 
 	&-center {
@@ -23,13 +25,13 @@
 	}
 
 	&-right {
-		padding-left: $token-scale-400;
+		padding-left: variables.$token-scale-400;
 	}
 
 	&-title {
 		color: var(--osui-card-detail-title-color);
-		font-size: $token-font-size-500;
-		font-weight: $token-font-weight-semi-bold;
+		font-size: variables.$token-font-size-500;
+		font-weight: variables.$token-font-weight-semi-bold;
 	}
 
 	&-text {
@@ -44,13 +46,13 @@
 .is-rtl {
 	.card-detail {
 		&-left {
-			padding-left: $token-scale-400;
+			padding-left: variables.$token-scale-400;
 			padding-right: 0;
 		}
 
 		&-right {
 			padding-left: 0;
-			padding-right: $token-scale-400;
+			padding-right: variables.$token-scale-400;
 		}
 	}
 }

@@ -1,3 +1,5 @@
+@use "../../../tokens/variables";
+
 /* Patterns - Numbers - ProgressBar */
 ////
 /// @group Patterns-ProgressBar
@@ -12,7 +14,7 @@
 		position: relative;
 
 		& {
-			-servicestudio-min-height: var(--thickness, #{$token-scale-200});
+			-servicestudio-min-height: var(--thickness, #{variables.$token-scale-200});
 		}
 
 		&__container {
@@ -20,7 +22,7 @@
 			position: relative;
 
 			& {
-				-servicestudio-min-height: var(--thickness, #{$token-scale-200});
+				-servicestudio-min-height: var(--thickness, #{variables.$token-scale-200});
 			}
 
 			&.animate {
@@ -45,7 +47,7 @@
 			right: 0;
 
 			& {
-				-servicestudio-height: var(--thickness, #{$token-scale-200});
+				-servicestudio-height: var(--thickness, #{variables.$token-scale-200});
 			}
 
 			&:after,
@@ -58,16 +60,16 @@
 				top: 0;
 
 				& {
-					-servicestudio-border-radius: var(--shape, $token-border-radius-full);
+					-servicestudio-border-radius: var(--shape, variables.$token-border-radius-full);
 				}
 			}
 
 			&:after {
-				background: var(--trail-color, #{$token-bg-neutral-subtle-default});
+				background: var(--trail-color, #{variables.$token-bg-neutral-subtle-default});
 				width: 100%;
 
 				& {
-					-servicestudio-background: var(--trail-color, #{$token-bg-neutral-subtle-default});
+					-servicestudio-background: var(--trail-color, #{variables.$token-bg-neutral-subtle-default});
 				}
 			}
 
@@ -77,7 +79,7 @@
 				z-index: var(--layer-local-tier-1);
 
 				& {
-					-servicestudio-background: var(--progress-color, $token-semantics-primary-base);
+					-servicestudio-background: var(--progress-color, variables.$token-semantics-primary-base);
 					-servicestudio-width: var(--progress-value, 50%);
 				}
 			}
@@ -85,7 +87,7 @@
 
 		&__content {
 			left: 0;
-			padding: $token-scale-0 $token-scale-200;
+			padding: variables.$token-scale-0 variables.$token-scale-200;
 			position: absolute;
 			top: 50%;
 			transform: translateY(-50%);
@@ -118,14 +120,14 @@
 			}
 
 			&__value {
-				border: $token-border-size-050 solid var(--color-border-input);
+				border: variables.$token-border-size-050 solid var(--color-border-input);
 				height: calc(2 * var(--thickness));
 
 				&:before,
 				&:after {
-					border: $token-border-size-050 solid var(--color-border-input);
-					top: calc(-1 * $token-border-size-050);
-					left: calc(-1 * $token-border-size-050);
+					border: variables.$token-border-size-050 solid var(--color-border-input);
+					top: calc(-1 * variables.$token-border-size-050);
+					left: calc(-1 * variables.$token-border-size-050);
 				}
 			}
 		}

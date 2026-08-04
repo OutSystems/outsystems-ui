@@ -1,3 +1,5 @@
+@use "../../tokens/variables";
+
 /* Patterns - Content - Card Sectioned */
 ////
 /// @group Patterns-Card_Sectioned
@@ -8,7 +10,7 @@
 	&-sectioned {
 		display: flex;
 		justify-content: space-between;
-		padding: $token-scale-0;
+		padding: variables.$token-scale-0;
 
 		&-top {
 			display: flex;
@@ -18,19 +20,19 @@
 		&.flex-direction-row {
 			.card {
 				&-image {
-					padding: $token-scale-0;
+					padding: variables.$token-scale-0;
 
 					&.padding-none {
-						padding: $token-scale-0;
+						padding: variables.$token-scale-0;
 					}
 				}
 
 				&-sectioned-right .card-image {
 					order: 2;
-					padding: $token-scale-0;
+					padding: variables.$token-scale-0;
 
 					&.padding-none {
-						padding: $token-scale-0;
+						padding: variables.$token-scale-0;
 					}
 				}
 			}
@@ -38,7 +40,7 @@
 	}
 
 	&-image {
-		padding: $token-scale-0;
+		padding: variables.$token-scale-0;
 
 		& img {
 			display: block;
@@ -48,22 +50,22 @@
 
 	&-title {
 		color: var(--color-text);
-		font-size: $token-font-size-550;
-		font-weight: $token-font-weight-semi-bold;
-		padding: $token-scale-600 $token-scale-600 $token-scale-0 $token-scale-600;
+		font-size: variables.$token-font-size-550;
+		font-weight: variables.$token-font-weight-semi-bold;
+		padding: variables.$token-scale-600 variables.$token-scale-600 variables.$token-scale-0 variables.$token-scale-600;
 	}
 
 	&-content {
 		flex: 1;
-		padding: $token-scale-600;
+		padding: variables.$token-scale-600;
 	}
 
 	&-bottom {
 		align-items: center;
 		background-color: var(--osui-bg-surface-subtle);
-		border-top: $token-border-size-025 solid var(--osui-border-subtle);
+		border-top: variables.$token-border-size-025 solid var(--osui-border-subtle);
 		display: flex;
-		padding: var(--osui-scale-350) $token-scale-500;
+		padding: var(--osui-scale-350) variables.$token-scale-500;
 
 		.btn {
 			width: 100%;
@@ -78,36 +80,36 @@
 			padding: 0;
 
 			&.flex-direction-row .card-image {
-				padding: $token-scale-0;
+				padding: variables.$token-scale-0;
 
 				&.padding-none {
-					padding: $token-scale-0;
+					padding: variables.$token-scale-0;
 				}
 			}
 		}
 
 		&-title {
-			padding: $token-scale-400 $token-scale-400 $token-scale-0 $token-scale-400;
+			padding: variables.$token-scale-400 variables.$token-scale-400 variables.$token-scale-0 variables.$token-scale-400;
 		}
 
 		&-image {
-			padding: $token-scale-0;
+			padding: variables.$token-scale-0;
 
 			&.padding-none {
-				padding: $token-scale-0;
+				padding: variables.$token-scale-0;
 			}
 		}
 
 		&-content {
-			padding: $token-scale-400;
+			padding: variables.$token-scale-400;
 
 			&.padding-none {
-				padding: $token-scale-0;
+				padding: variables.$token-scale-0;
 			}
 		}
 
 		&-bottom {
-			padding: $token-scale-0 $token-scale-400 $token-scale-400;
+			padding: variables.$token-scale-0 variables.$token-scale-400 variables.$token-scale-400;
 		}
 	}
 }
@@ -116,12 +118,12 @@
 ///
 .tablet {
 	.card-title {
-		font-size: calc($token-font-size-550 - 1px);
+		font-size: calc(variables.$token-font-size-550 - 1px);
 	}
 }
 
 .phone {
 	.card-title {
-		font-size: calc($token-font-size-550 - 2px);
+		font-size: calc(variables.$token-font-size-550 - 2px);
 	}
 }

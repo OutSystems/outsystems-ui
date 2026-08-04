@@ -1,3 +1,5 @@
+@use "../tokens/variables";
+
 /* Widgets - Inputs and TextAreas */
 ////
 /// @group Widgets-Input_And_Textarea
@@ -26,18 +28,18 @@
 	--osui-input-color:               var(--color-text);
 	--osui-input-border-radius:       var(--border-radius-soft);
 	--osui-input-focus-border-color:  var(--color-border-primary);
-	--osui-input-focus-ring-color:    #{$token-border-focus-default};
+	--osui-input-focus-ring-color:    #{variables.$token-border-focus-default};
 	--osui-input-error-border-color:  var(--color-border-danger);
 	// ───────────────────────────────────────────────────────────────────
 
 	&[data-input],
 	&[data-textarea] {
 		background-color: var(--osui-input-background);
-		border: $token-border-size-025 solid var(--osui-input-border-color);
+		border: variables.$token-border-size-025 solid var(--osui-input-border-color);
 		border-radius: var(--osui-input-border-radius);
 		color: var(--osui-input-color);
-		font-size: $token-font-size-350;
-		transition: border-color $token-transition-time-100 $token-transition-curve-base, background-color $token-transition-time-100 $token-transition-curve-base;
+		font-size: variables.$token-font-size-350;
+		transition: border-color variables.$token-transition-time-100 variables.$token-transition-curve-base, background-color variables.$token-transition-time-100 variables.$token-transition-curve-base;
 
 		&:hover {
 			border-color: var(--osui-input-hover-border-color);
@@ -45,7 +47,7 @@
 
 		&:focus {
 			border-color: var(--osui-input-focus-border-color);
-			box-shadow: 0 0 0 $token-border-size-050 var(--osui-input-focus-ring-color);
+			box-shadow: 0 0 0 variables.$token-border-size-050 var(--osui-input-focus-ring-color);
 			outline: none;
 		}
 
@@ -55,19 +57,19 @@
 			--osui-input-color:        var(--color-text-disabled);
 
 			background-color: var(--osui-input-background);
-			border: $token-border-size-025 solid var(--osui-input-border-color);
+			border: variables.$token-border-size-025 solid var(--osui-input-border-color);
 			color: var(--osui-input-color);
 		}
 	}
 
 	&[data-input] {
-		height: $token-scale-1000;
-		padding: $token-scale-0 $token-scale-400;
+		height: variables.$token-scale-1000;
+		padding: variables.$token-scale-0 variables.$token-scale-400;
 	}
 
 	&[data-textarea] {
 		height: auto;
-		padding: $token-scale-400;
+		padding: variables.$token-scale-400;
 		resize: auto;
 	}
 
@@ -75,26 +77,26 @@
 	&.input {
 		&-small {
 			&[data-input] {
-				font-size: $token-font-size-300;
-				height: $token-scale-800;
-				padding: $token-scale-0 $token-scale-200;
+				font-size: variables.$token-font-size-300;
+				height: variables.$token-scale-800;
+				padding: variables.$token-scale-0 variables.$token-scale-200;
 			}
 
 			&[data-textarea] {
-				font-size: $token-font-size-300;
-				padding: $token-scale-200;
+				font-size: variables.$token-font-size-300;
+				padding: variables.$token-scale-200;
 			}
 		}
 
 		/* Large sizes */
 		&-large {
 			&[data-input] {
-				font-size: $token-font-size-400;
-				height: $token-scale-1200;
+				font-size: variables.$token-font-size-400;
+				height: variables.$token-scale-1200;
 			}
 
 			&[data-textarea] {
-				font-size: $token-font-size-400;
+				font-size: variables.$token-font-size-400;
 			}
 		}
 	}
@@ -103,7 +105,7 @@
 	&.not-valid {
 		&[data-input],
 		&[data-textarea] {
-			border: $token-border-size-025 solid var(--osui-input-error-border-color);
+			border: variables.$token-border-size-025 solid var(--osui-input-error-border-color);
 		}
 	}
 }
@@ -113,29 +115,29 @@
 .form label,
 [data-label] {
 	color: var(--color-text-subtlest);
-	font-size: $token-font-size-350;
-	font-weight: $token-font-weight-regular;
+	font-size: variables.$token-font-size-350;
+	font-weight: variables.$token-font-weight-regular;
 	line-height: var(--osui-font-line-height-default);
 }
 
 .help-block,
 .input-helper {
 	color: var(--color-text-subtlest);
-	font-size: $token-font-size-300;
+	font-size: variables.$token-font-size-300;
 	line-height: var(--osui-font-line-height-default);
-	margin-top: $token-scale-100;
+	margin-top: variables.$token-scale-100;
 }
 
 span.validation-message {
 	color: var(--color-text-danger);
 	display: block;
-	font-size: $token-font-size-300;
-	margin-top: $token-scale-100;
+	font-size: variables.$token-font-size-300;
+	margin-top: variables.$token-scale-100;
 }
 
 .char-counter {
 	color: var(--color-text-subtlest);
-	font-size: $token-font-size-300;
+	font-size: variables.$token-font-size-300;
 }
 /* Responsive ----------------------------------------------------------------- */
 ///
@@ -143,23 +145,23 @@ span.validation-message {
 .phone {
 	.form-control {
 		&[data-input] {
-			font-size: $token-font-size-400;
-			height: $token-scale-1200;
+			font-size: variables.$token-font-size-400;
+			height: variables.$token-scale-1200;
 
 			// Repeated selector since the properties above will ends up in a selector with more specificity
 			&.input-small {
-				font-size: $token-font-size-300;
-				height: $token-scale-800;
+				font-size: variables.$token-font-size-300;
+				height: variables.$token-scale-800;
 			}
 		}
 
 		&[data-textarea] {
-			font-size: $token-font-size-400;
+			font-size: variables.$token-font-size-400;
 			height: auto;
 
 			// Repeated selector since the properties above will ends up in a selector with more specificity
 			&.input-small {
-				font-size: $token-font-size-300;
+				font-size: variables.$token-font-size-300;
 			}
 		}
 	}
@@ -173,11 +175,11 @@ span.validation-message {
 			&[data-input] {
 				background-color: var(--background-color-header, var(--color-background-header));
 				border: 0;
-				border-bottom: $token-border-size-025 solid transparent;
+				border-bottom: variables.$token-border-size-025 solid transparent;
 				border-radius: 0;
 
 				&:focus {
-					border-bottom: $token-border-size-025 solid var(--osui-input-focus-border-color);
+					border-bottom: variables.$token-border-size-025 solid var(--osui-input-focus-border-color);
 				}
 			}
 		}
@@ -197,7 +199,7 @@ span.validation-message {
 			}
 
 			&:focus {
-				border-color: $token-semantics-primary-base;
+				border-color: variables.$token-semantics-primary-base;
 			}
 
 			&.not-valid {

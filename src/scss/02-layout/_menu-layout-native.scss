@@ -1,3 +1,6 @@
+@use '../00-abstract/index' as *;
+@use "../tokens/variables";
+
 /* Page Layout - Layout Native - Menu */
 ////
 /// @group Layout-Native-Menu
@@ -21,7 +24,7 @@
 			position: absolute;
 			right: -24px;
 			top: calc(var(--size-header) + var(--size-header-content));
-			width: $token-scale-600;
+			width: variables.$token-scale-600;
 		}
 	}
 }
@@ -52,7 +55,7 @@
 			&-visible,
 			&-expandable {
 				.app-menu-content {
-					box-shadow: $token-elevation-2;
+					box-shadow: variables.$token-elevation-2;
 					z-index: var(--osui-menu-layer);
 				}
 			}
@@ -92,7 +95,7 @@
 				&-visible,
 				&-expandable {
 					.app-menu-content {
-						box-shadow: $token-elevation-2;
+						box-shadow: variables.$token-elevation-2;
 						left: 0;
 						z-index: var(--osui-menu-layer);
 					}

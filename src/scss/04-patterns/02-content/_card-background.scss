@@ -1,3 +1,6 @@
+@use '../../00-abstract/index' as *;
+@use "../../tokens/variables";
+
 /* Patterns - Content - Card Background */
 ////
 /// @group Patterns-Card_Background
@@ -10,7 +13,7 @@
 	color: var(--color-text-inverse);
 	display: flex;
 	overflow: hidden;
-	padding: $token-scale-600;
+	padding: variables.$token-scale-600;
 	position: relative;
 
 	// Service Studio Preview
@@ -94,10 +97,10 @@
 ///
 .layout-native {
 	.card-background {
-		padding: $token-scale-400;
+		padding: variables.$token-scale-400;
 
 		&.padding-none {
-			padding: $token-scale-0;
+			padding: variables.$token-scale-0;
 		}
 	}
 }

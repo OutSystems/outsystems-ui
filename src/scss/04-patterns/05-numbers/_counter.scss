@@ -1,3 +1,5 @@
+@use "../../tokens/variables";
+
 /* Patterns - Numbers - Counter */
 ////
 /// @group Patterns-Counter
@@ -6,7 +8,7 @@
 ///
 .counter {
 	display: flex;
-	padding: $token-scale-0 $token-scale-600;
+	padding: variables.$token-scale-0 variables.$token-scale-600;
 	word-break: keep-all;
 
 	&.background-transparent {

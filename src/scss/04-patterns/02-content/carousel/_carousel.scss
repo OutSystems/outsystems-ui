@@ -3,21 +3,22 @@
 /// @group Patterns-Carousel
 /// Patterns - Interaction - Carousel
 
-@import 'carousel_ss_preview_imgs';
+@use 'carousel_ss_preview_imgs';
+@use "../../../tokens/variables";
 
 /* OutSystems UI Carousel customization */
 ///
 .osui-carousel {
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-carousel-arrow-background:         var(--color-background-surface);
-	--osui-carousel-arrow-shadow:             #{$token-elevation-2};
+	--osui-carousel-arrow-shadow:             #{variables.$token-elevation-2};
 	--osui-carousel-arrow-icon-color:         var(--color-text);
-	--osui-carousel-arrow-disabled-overlay:   #{$token-state-disabled};
+	--osui-carousel-arrow-disabled-overlay:   #{variables.$token-state-disabled};
 	--osui-carousel-pagination-color:         var(--color-border);
 	--osui-carousel-pagination-active-color:  var(--color-primary);
 	--osui-carousel-track-width: 100%;
 	// Reserved space below the track: pagination row height ($token-scale-600) + 16px gap ($token-scale-400)
-	--osui-carousel-pagination-margin: #{$token-scale-1000};
+	--osui-carousel-pagination-margin: #{variables.$token-scale-1000};
 	// ───────────────────────────────────────────────────────────────────
 
 
@@ -25,10 +26,10 @@
 		&__arrow {
 			background-color: var(--osui-carousel-arrow-background);
 			box-shadow: var(--osui-carousel-arrow-shadow);
-			height: $token-scale-1000;
+			height: variables.$token-scale-1000;
 			opacity: 1;
-			transition: opacity $token-transition-time-150 $token-transition-curve-linear;
-			width: $token-scale-1000;
+			transition: opacity variables.$token-transition-time-150 variables.$token-transition-curve-linear;
+			width: variables.$token-scale-1000;
 			will-change: opacity;
 			z-index: var(--layer-local-tier-1);
 
@@ -49,8 +50,8 @@
 			}
 
 			svg {
-				height: $token-scale-600;
-				width: $token-scale-600;
+				height: variables.$token-scale-600;
+				width: variables.$token-scale-600;
 
 				path {
 					fill: var(--osui-carousel-arrow-icon-color);
@@ -64,24 +65,24 @@
 		}
 
 		&__pagination {
-			gap: $token-space-200;
+			gap: variables.$token-space-200;
 			margin: 0;
 			z-index: var(--layer-local-tier-1);
 			
 			li {
 				align-items: center;
 				display: flex;
-				height: $token-scale-600;
+				height: variables.$token-scale-600;
 				justify-content: center;
-				width: $token-scale-600;
+				width: variables.$token-scale-600;
 			}
 
 			&__page {
 				background-color: var(--osui-carousel-pagination-color);
 				border-radius: var(--border-radius-rounded);
-				height: $token-scale-300;
-				width: $token-scale-300;
-				transition: background-color $token-transition-time-200 $token-transition-curve-linear;
+				height: variables.$token-scale-300;
+				width: variables.$token-scale-300;
+				transition: background-color variables.$token-transition-time-200 variables.$token-transition-curve-linear;
 
 				&.is-active {
 					background-color: var(--osui-carousel-pagination-active-color);
@@ -148,7 +149,7 @@
 	}
 
 	&__track {
-		border-radius: $token-border-radius-300;
+		border-radius: variables.$token-border-radius-300;
 		max-width: 100%;
 		width: var(--osui-carousel-track-width);
 		z-index: var(--layer-screen);
@@ -170,8 +171,8 @@
 			-servicestudio-left: 0;
 			-servicestudio-width: 100%;
 			-servicestudio-height: 100%;
-			-servicestudio-background-color: $token-bg-surface-default;
-			-servicestudio-background-image: $carousel_helper_img_base64;
+			-servicestudio-background-color: variables.$token-bg-surface-default;
+			-servicestudio-background-image: carousel_ss_preview_imgs.$carousel_helper_img_base64;
 			-servicestudio-background-repeat: no-repeat;
 			-servicestudio-background-position: center;
 			-servicestudio-z-index: var(--layer-local-tier-2);
@@ -192,11 +193,11 @@
 .os-high-contrast {
 	.splide__pagination {
 		&__page {
-			outline: $token-border-size-075 solid var(--color-focus-outer);
+			outline: variables.$token-border-size-075 solid var(--color-focus-outer);
 		}
 
 		li {
-			margin: $token-scale-0 $token-scale-100;
+			margin: variables.$token-scale-0 variables.$token-scale-100;
 		}
 	}
 }

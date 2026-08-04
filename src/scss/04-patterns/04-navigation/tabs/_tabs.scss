@@ -1,3 +1,5 @@
+@use "../../../tokens/variables";
+
 /* Patterns - Navigation - Tabs */
 ////
 /// @group Patterns-Tabs
@@ -8,11 +10,11 @@
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-tabs-border-color: var(--color-border);
 	--osui-tabs-header-item-color: var(--color-text-subtlest);
-	--osui-tabs-header-item-color-active: #{$token-text-select};
+	--osui-tabs-header-item-color-active: #{variables.$token-text-select};
 	--osui-tabs-header-item-color-active-hover: var(--color-primary-selected);
 	--osui-tabs-header-item-color-hover: var(--color-text-subtlest);
 	--osui-tabs-header-item-color-disabled: var(--color-text-disabled);
-	--osui-tabs-header-item-hover-background: #{$token-bg-neutral-subtle-default};
+	--osui-tabs-header-item-hover-background: #{variables.$token-bg-neutral-subtle-default};
 	--osui-tabs-indicator-color: var(--color-primary);
 	// ───────────────────────────────────────────────────────────────────
 
@@ -32,7 +34,7 @@
 				grid-column: 2;
 
 				.osui-tabs__header-item {
-					padding: $token-scale-200 0 $token-scale-200 $token-scale-400;
+					padding: variables.$token-scale-200 0 variables.$token-scale-200 variables.$token-scale-400;
 				}
 
 				& > .osui-tabs__header__indicator {
@@ -41,7 +43,7 @@
 			}
 
 			.osui-tabs__content {
-				border-right: $token-border-size-025 solid var(--osui-tabs-border-color);
+				border-right: variables.$token-border-size-025 solid var(--osui-tabs-border-color);
 				margin-right: -1px;
 			}
 		}
@@ -53,7 +55,7 @@
 			& > .osui-tabs__header {
 				.osui-tabs__header-item {
 					justify-content: flex-start;
-					padding: $token-scale-200 $token-scale-400 $token-scale-200 0;
+					padding: variables.$token-scale-200 variables.$token-scale-400 variables.$token-scale-200 0;
 				}
 
 				& > .osui-tabs__header__indicator {
@@ -62,7 +64,7 @@
 			}
 
 			.osui-tabs__content {
-				border-left: $token-border-size-025 solid var(--osui-tabs-border-color);
+				border-left: variables.$token-border-size-025 solid var(--osui-tabs-border-color);
 				margin-left: -1px;
 			}
 		}
@@ -81,7 +83,7 @@
 				position: absolute;
 				top: 0;
 				transform: translateY(var(--tabs-indicator-transform)) translateX(0) translateZ(0);
-				width: $token-border-size-050;
+				width: variables.$token-border-size-050;
 			}
 		}
 
@@ -89,7 +91,7 @@
 			width: auto;
 
 			&-item {
-				padding: $token-scale-0 $token-scale-600;
+				padding: variables.$token-scale-0 variables.$token-scale-600;
 			}
 		}
 	}
@@ -107,19 +109,19 @@
 
 			.osui-tabs__header-item {
 				justify-content: center;
-				padding: $token-scale-200 $token-scale-400;
+				padding: variables.$token-scale-200 variables.$token-scale-400;
 			}
 		}
 
 		.osui-tabs__header__indicator {
 			bottom: 0;
-			height: $token-border-size-050;
+			height: variables.$token-border-size-050;
 			transform: translateX(var(--tabs-indicator-transform)) translateY(0) translateZ(0);
 			width: (var(--tabs-indicator-size));
 		}
 
 		.osui-tabs__content {
-			border-top: $token-border-size-025 solid var(--osui-tabs-border-color);
+			border-top: variables.$token-border-size-025 solid var(--osui-tabs-border-color);
 			margin-top: -1px;
 		}
 	}
@@ -186,15 +188,15 @@
 			align-items: center;
 			background-color: transparent;
 			border: none;
-			border-radius: $token-border-radius-100;
+			border-radius: variables.$token-border-radius-100;
 			color: var(--osui-tabs-header-item-color);
 			cursor: pointer;
 			display: inline-flex;
 			height: 100%;
 			position: relative;
-			min-height: $token-scale-1100;
+			min-height: variables.$token-scale-1100;
 			text-align: unset;
-			transition: color $token-transition-time-200 $token-transition-curve-linear;
+			transition: color variables.$token-transition-time-200 variables.$token-transition-curve-linear;
 			width: 100%;
 
 			&:hover {
@@ -228,7 +230,7 @@
 		&__indicator {
 			background-color: var(--osui-tabs-indicator-color);
 			position: absolute;
-			transition: transform $token-transition-time-200 $token-transition-curve-linear;
+			transition: transform variables.$token-transition-time-200 variables.$token-transition-curve-linear;
 			transform-origin: 0 0;
 			will-change: transform;
 			z-index: var(--layer-local-tier-1);
@@ -242,7 +244,7 @@
 		& {
 			-servicestudio-display: grid;
 			-servicestudio-grid-auto-flow: column;
-			-servicestudio-gap: $token-scale-200;
+			-servicestudio-gap: variables.$token-scale-200;
 		}
 	}
 
@@ -262,17 +264,17 @@
 		&-item {
 			height: 100%;
 			overflow-y: var(--tabs-content-item-overflow);
-			padding: $token-scale-600 $token-scale-0;
+			padding: variables.$token-scale-600 variables.$token-scale-0;
 			scroll-snap-align: start;
 			scroll-snap-stop: always;
 
 			// Service Studio Preview
 			& {
 				-servicestudio-display: block !important;
-				-servicestudio-margin-bottom: $token-scale-600;
+				-servicestudio-margin-bottom: variables.$token-scale-600;
 
 				div:empty {
-					-servicestudio-padding: $token-scale-600;
+					-servicestudio-padding: variables.$token-scale-600;
 				}
 
 				.uieditor-if-branch-widget:has(> div:empty) {
@@ -309,7 +311,7 @@
 				.osui-tabs__header {
 					&-item {
 						justify-content: flex-start;
-						padding: $token-scale-100 $token-scale-400 $token-scale-100 0;
+						padding: variables.$token-scale-100 variables.$token-scale-400 variables.$token-scale-100 0;
 					}
 
 					& > .osui-tabs__header__indicator {
@@ -319,7 +321,7 @@
 				}
 
 				.osui-tabs__content {
-					border-left: $token-border-size-025 solid var(--osui-tabs-border-color);
+					border-left: variables.$token-border-size-025 solid var(--osui-tabs-border-color);
 					margin-left: -1px;
 					border-right: 0;
 				}
@@ -330,7 +332,7 @@
 					grid-column: 1;
 
 					&-item {
-						padding: $token-scale-100 0 $token-scale-100 $token-scale-400;
+						padding: variables.$token-scale-100 0 variables.$token-scale-100 variables.$token-scale-400;
 					}
 
 					& > .osui-tabs__header__indicator {
@@ -340,7 +342,7 @@
 				}
 
 				.osui-tabs__content {
-					border-right: $token-border-size-025 solid var(--osui-tabs-border-color);
+					border-right: variables.$token-border-size-025 solid var(--osui-tabs-border-color);
 					margin-right: -1px;
 					border-left: 0;
 				}
@@ -366,15 +368,15 @@
 			}
 
 			&:focus-visible {
-				box-shadow: inset 0 0 0 $token-border-size-075
-					color-mix(in srgb, #{$token-semantics-primary-base} 22%, transparent);
+				box-shadow: inset 0 0 0 variables.$token-border-size-075
+					color-mix(in srgb, #{variables.$token-semantics-primary-base} 22%, transparent);
 				color: var(--color-text);
 			}
 		}
 
 		&__content-item {
 			&:focus-visible {
-				box-shadow: 0 0 0 $token-border-size-025 $token-semantics-primary-base inset;
+				box-shadow: 0 0 0 variables.$token-border-size-025 variables.$token-semantics-primary-base inset;
 			}
 		}
 	}
@@ -400,7 +402,7 @@
 	.osui-tabs__header-item.osui-tabs--is-active:before,
 	.osui-tabs__content-item:focus:before,
 	.osui-tabs__content-item.osui-tabs--is-active:before {
-		border: $token-border-size-050 solid $token-semantics-primary-base;
+		border: variables.$token-border-size-050 solid variables.$token-semantics-primary-base;
 		bottom: 0;
 		content: '';
 		display: block;
@@ -413,11 +415,11 @@
 
 	.osui-tabs__header-item:focus:before,
 	.osui-tabs__content-item:focus:before {
-		border-width: $token-border-size-075;
+		border-width: variables.$token-border-size-075;
 	}
 
 	.osui-tabs__content-item {
-		padding: $token-scale-400;
+		padding: variables.$token-scale-400;
 	}
 }
 // Issue on accordion in webkit
@@ -490,14 +492,14 @@ html[data-uieditorversion^='1'] .osui-tabs__preview {
 
 	&--is-active::after {
 		-servicestudio-align-items: center;
-		-servicestudio-background-color: $token-bg-surface-default;
-		-servicestudio-border: 1px solid $token-primitives-neutral-300;
+		-servicestudio-background-color: variables.$token-bg-surface-default;
+		-servicestudio-border: 1px solid variables.$token-primitives-neutral-300;
 		-servicestudio-content: 'TabsContentItems are currently hidden. Use the toggle to preview them inside Service Studio.';
 		-servicestudio-display: flex;
 		-servicestudio-justify-content: center;
-		-servicestudio-font-weight: $token-font-weight-semi-bold;
+		-servicestudio-font-weight: variables.$token-font-weight-semi-bold;
 		-servicestudio-height: auto;
-		-servicestudio-padding: $token-scale-200;
+		-servicestudio-padding: variables.$token-scale-200;
 		-servicestudio-position: absolute;
 		-servicestudio-width: 100%;
 	}

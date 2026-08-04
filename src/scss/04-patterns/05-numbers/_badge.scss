@@ -1,3 +1,6 @@
+@use '../../00-abstract/index' as *;
+@use "../../tokens/variables";
+
 /* Patterns - Numbers - Badge */
 ////
 /// @group Patterns-Badge
@@ -14,12 +17,12 @@
 	align-items: center;
 	color: var(--osui-badge-color);
 	display: inline-flex;
-	font-weight: $token-font-weight-semi-bold;
-	height: $token-scale-500;
+	font-weight: variables.$token-font-weight-semi-bold;
+	height: variables.$token-scale-500;
 	justify-content: center;
 	line-height: 1;
-	min-width: $token-scale-500;
-	padding: $token-scale-0 $token-scale-150;
+	min-width: variables.$token-scale-500;
+	padding: variables.$token-scale-0 variables.$token-scale-150;
 
 	&.background {
 		&-neutral {
@@ -40,7 +43,7 @@
 		}
 
 		&-primary-lightest {
-			background-color: $token-semantics-primary-100;
+			background-color: variables.$token-semantics-primary-100;
 		}
 	}
 
@@ -51,32 +54,32 @@
 
 	// Semantic colors (primary, danger, success, info, warning)
 	&.background-primary-lightest {
-		background-color: #{$token-bg-primary-subtle-default};
+		background-color: #{variables.$token-bg-primary-subtle-default};
 		color: var(--osui-badge-on-light-color);
 	}
 
 	&.background-danger-lightest {
-		background-color: #{$token-bg-danger-subtle-default};
+		background-color: #{variables.$token-bg-danger-subtle-default};
 		color: var(--osui-badge-on-light-color);
 	}
 
 	&.background-success-lightest {
-		background-color: #{$token-bg-success-subtle-default};
+		background-color: #{variables.$token-bg-success-subtle-default};
 		color: var(--osui-badge-on-light-color);
 	}
 
 	&.background-info-lightest {
-		background-color: #{$token-bg-info-subtle-default};
+		background-color: #{variables.$token-bg-info-subtle-default};
 		color: var(--osui-badge-on-light-color);
 	}
 
 	&.background-warning-lightest {
-		background-color: #{$token-bg-warning-subtle-default};
+		background-color: #{variables.$token-bg-warning-subtle-default};
 		color: var(--osui-badge-on-light-color);
 	}
 
 	&.background-secondary-lightest {
-		background-color: #{$token-bg-neutral-base-default};
+		background-color: #{variables.$token-bg-neutral-base-default};
 		color: var(--osui-badge-on-light-color);
 	}
 
@@ -105,16 +108,16 @@
 	}
 
 	&-small {
-		font-size: $token-font-size-300;
-		height: $token-scale-400;
-		min-width: $token-scale-400;
-		padding: $token-scale-0 $token-scale-100;
+		font-size: variables.$token-font-size-300;
+		height: variables.$token-scale-400;
+		min-width: variables.$token-scale-400;
+		padding: variables.$token-scale-0 variables.$token-scale-100;
 	}
 
 	&-medium {
-		font-size: $token-font-size-400;
-		height: $token-scale-700;
-		min-width: $token-scale-700;
+		font-size: variables.$token-font-size-400;
+		height: variables.$token-scale-700;
+		min-width: variables.$token-scale-700;
 	}
 
 	span {

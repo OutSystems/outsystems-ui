@@ -1,3 +1,5 @@
+@use "../../../tokens/variables";
+
 /* Patterns - Interaction - Balloon */
 ////
 /// @group Patterns-Balloon
@@ -11,7 +13,7 @@
 	--border-radius-rounded: var(--border-radius-softer);
 	--osui-floating-position-x: 0;
 	--osui-floating-position-y: 0;
-	--osui-balloon-shadow: #{$token-elevation-1};
+	--osui-balloon-shadow: #{variables.$token-elevation-1};
 	--osui-balloon-width: max-content;
 	--osui-balloon-position: fixed;
 
@@ -32,7 +34,7 @@
 		visibility: visible;
 		opacity: 1;
 		pointer-events: all;
-		transition: opacity $token-transition-time-300 $token-transition-curve-quick;
+		transition: opacity variables.$token-transition-time-300 variables.$token-transition-curve-quick;
 	}
 
 	// Prevent the pattern from occupying space when closed, without interfering with its own open animation

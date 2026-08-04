@@ -1,3 +1,6 @@
+@use '../00-abstract/index' as *;
+@use "../tokens/variables";
+
 /* Usefull - Colors Neutral */
 ////
 /// @group UsefullClasses-Colors_Neutral
@@ -16,7 +19,7 @@
 				background-color: #{$value};
 
 				&-lightest {
-					background-color: $token-bg-surface-default;
+					background-color: variables.$token-bg-surface-default;
 				}
 			}
 		}

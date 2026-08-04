@@ -10,12 +10,12 @@ const sass = require('gulp-sass')(require('sass'));
 const sourcemaps = require('gulp-sourcemaps');
 
 // Silence known, pre-existing Dart Sass deprecation warnings so the build output
-// stays clean and real errors stand out. These are architectural/tooling-level:
-// the SCSS uses @import across every partial + the auto-generated entry files
-// (migrating to @use/@forward is a separate effort), plus the legacy-js-api
-// notice from gulp-sass's renderSync. Requires Dart Sass >= 1.80.
+// stays clean and real errors stand out. 'import' was dropped once ROU-12911 migrated
+// all first-party SCSS to @use/@forward - keep it out so a regression isn't masked.
+// The rest are unrelated: legacy-js-api is gulp-sass's renderSync notice; global-builtin
+// and if-function are pre-existing, unrelated Sass API deprecations. Requires Dart Sass >= 1.80.
 const sassOptions = {
-	silenceDeprecations: ['import', 'global-builtin', 'if-function', 'legacy-js-api'],
+	silenceDeprecations: ['global-builtin', 'if-function', 'legacy-js-api'],
 	quietDeps: true,
 };
 

@@ -1,3 +1,6 @@
+@use '../../../00-abstract/index' as *;
+@use "../../../tokens/variables";
+
 /* Patterns - section - SectionIndex */
 ////
 /// @group Patterns-SectionIndex
@@ -45,8 +48,8 @@
 		color: var(--osui-section-index-item-color);
 		cursor: pointer;
 		display: flex;
-		min-height: $token-scale-1100;
-		padding: $token-scale-200 $token-scale-400 $token-scale-200 $token-scale-600;
+		min-height: variables.$token-scale-1100;
+		padding: variables.$token-scale-200 variables.$token-scale-400 variables.$token-scale-200 variables.$token-scale-600;
 		position: relative;
 	}
 
@@ -83,7 +86,7 @@
 	.osui-section-index-item {
 		&:focus {
 			background-color: transparent;
-			box-shadow: 0 0 0 $token-border-size-075 var(--color-focus-outer);
+			box-shadow: 0 0 0 variables.$token-border-size-075 var(--color-focus-outer);
 		}
 	}
 }
@@ -92,13 +95,13 @@
 ///
 .os-high-contrast {
 	.osui-section-index::before {
-		border-left: $token-border-size-025 solid var(--color-focus-outer);
+		border-left: variables.$token-border-size-025 solid var(--color-focus-outer);
 	}
 
 	.osui-section-index-item {
 		&--is-active {
 			&::before {
-				border-left: $token-border-size-075 solid var(--color-focus-outer);
+				border-left: variables.$token-border-size-075 solid var(--color-focus-outer);
 			}
 		}
 	}
@@ -117,8 +120,8 @@
 	.osui-section-index-item {
 		&,
 		&:visited {
-			padding-left: $token-scale-400;
-			padding-right: $token-scale-600;
+			padding-left: variables.$token-scale-400;
+			padding-right: variables.$token-scale-600;
 		}
 
 		&--is-active {
@@ -135,8 +138,8 @@
 .phone {
 	.osui-section-index {
 		&--is-sticky {
-			left: calc(var(--os-safe-area-right) + $token-scale-400);
-			padding: 0 $token-scale-400 0 0;
+			left: calc(var(--os-safe-area-right) + variables.$token-scale-400);
+			padding: 0 variables.$token-scale-400 0 0;
 			position: fixed;
 			top: var(--top-position);
 			z-index: var(--layer-local-tier-1);
@@ -147,8 +150,8 @@
 		.osui-section-index {
 			&--is-sticky {
 				left: initial;
-				right: calc(var(--os-safe-area-right) + $token-scale-400);
-				padding: 0 0 $token-scale-400 0;
+				right: calc(var(--os-safe-area-right) + variables.$token-scale-400);
+				padding: 0 0 variables.$token-scale-400 0;
 			}
 		}
 	}

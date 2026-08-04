@@ -1,3 +1,5 @@
+@use "../tokens/variables";
+
 /* Usefull - Colors Brand */
 ////
 /// @group UsefullClasses-Colors_Brand
@@ -6,10 +8,10 @@
 ///
 .background {
 	&-primary {
-		background-color: $token-semantics-primary-base;
+		background-color: variables.$token-semantics-primary-base;
 
 		&-lightest {
-			background-color: $token-bg-surface-default;
+			background-color: variables.$token-bg-surface-default;
 		}
 	}
 
@@ -17,7 +19,7 @@
 		background-color: #303d60;
 
 		&-lightest {
-			background-color: $token-bg-surface-default;
+			background-color: variables.$token-bg-surface-default;
 		}
 	}
 }
@@ -27,7 +29,7 @@
 	&-primary {
 		&,
 		&-darker {
-			color: $token-semantics-primary-base;
+			color: variables.$token-semantics-primary-base;
 		}
 	}
 

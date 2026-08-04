@@ -1,3 +1,5 @@
+@use "../../../../tokens/variables";
+
 /*
 	Overriding styles for Flatpickr library.
 	Shared between SingleDatePicker, RangeDatePicker and TimePicker
@@ -6,8 +8,8 @@
 .flatpickr-calendar {
 	--osui-flatpickr-layer: var(--layer-elevated);
 
-	border: $token-border-size-025 solid var(--color-border);
-	border-radius: $token-border-radius-200;
+	border: variables.$token-border-size-025 solid var(--color-border);
+	border-radius: variables.$token-border-radius-200;
 	box-shadow: var(--osui-elevation-overlay);
 	width: 320px;
 
@@ -49,10 +51,10 @@
 	// Has Time
 	&.hasTime {
 		.flatpickr-time {
-			border: $token-border-size-0;
+			border: variables.$token-border-size-0;
 			height: 30px;
 			overflow: visible;
-			padding: $token-scale-0 $token-scale-400 $token-scale-400;
+			padding: variables.$token-scale-0 variables.$token-scale-400 variables.$token-scale-400;
 		}
 	}
 
@@ -63,10 +65,10 @@
 		.flatpickr-weekwrapper .flatpickr-weeks {
 			background: var(--color-border-subtle);
 			box-shadow: none;
-			margin-right: $token-scale-100;
+			margin-right: variables.$token-scale-100;
 
 			.flatpickr-day {
-				color: $token-primitives-neutral-500;
+				color: variables.$token-primitives-neutral-500;
 			}
 		}
 
@@ -101,8 +103,8 @@
 	align-items: center;
 	display: grid;
 	grid-template-areas: 'date prev next';
-	grid-template-columns: 1fr $token-scale-1000 $token-scale-1000;
-	padding: $token-scale-200 $token-scale-400;
+	grid-template-columns: 1fr variables.$token-scale-1000 variables.$token-scale-1000;
+	padding: variables.$token-scale-200 variables.$token-scale-400;
 	position: relative;
 
 	.flatpickr-month {
@@ -122,30 +124,30 @@
 		display: flex;
 		justify-content: center;
 		justify-self: flex-end;
-		height: $token-scale-1000;
+		height: variables.$token-scale-1000;
 		padding: 0;
 		position: static;
 		top: unset;
-		width: $token-scale-1000;
+		width: variables.$token-scale-1000;
 		z-index: calc(var(--osui-flatpickr-layer) + var(--layer-local-tier-1));
 
 		&:hover {
-			background-color: $token-bg-neutral-subtle-default;
+			background-color: variables.$token-bg-neutral-subtle-default;
 			border-radius: 50%;
 		}
 
 		// Icon-font glyph (icon library replaces the inline svg with a :before)
 		&:before {
-			font-size: $token-scale-400;
+			font-size: variables.$token-scale-400;
 		}
 
 		svg {
-			height: $token-scale-400;
-			width: $token-scale-400;
+			height: variables.$token-scale-400;
+			width: variables.$token-scale-400;
 
 			path {
 				stroke-width: 1px;
-				stroke: $token-semantics-primary-base;
+				stroke: variables.$token-semantics-primary-base;
 			}
 		}
 	}
@@ -166,9 +168,9 @@
 	align-items: center;
 	color: var(--color-text);
 	display: inline-flex;
-	font-size: $token-font-size-350;
+	font-size: variables.$token-font-size-350;
 	// Keeps the year and month hover/focus surfaces from touching each other
-	gap: $token-scale-200;
+	gap: variables.$token-scale-200;
 	justify-content: flex-start;
 	left: unset;
 	padding: 0;
@@ -180,17 +182,17 @@
 	// Month Select
 	.flatpickr-monthDropdown-months {
 		appearance: none;
-		border-radius: $token-border-radius-100;
-		font-weight: $token-font-weight-medium;
-		height: $token-scale-1000;
+		border-radius: variables.$token-border-radius-100;
+		font-weight: variables.$token-font-weight-medium;
+		height: variables.$token-scale-1000;
 		line-height: normal;
 		margin: 0;
 		order: 2;
-		padding: $token-scale-0 $token-scale-200;
+		padding: variables.$token-scale-0 variables.$token-scale-200;
 
 		&:hover,
 		&:focus {
-			background-color: $token-bg-neutral-subtle-default;
+			background-color: variables.$token-bg-neutral-subtle-default;
 		}
 	}
 
@@ -207,15 +209,15 @@
 		}
 
 		input {
-			border: $token-border-size-025 solid transparent;
-			border-radius: $token-border-radius-100;
-			font-size: $token-font-size-350;
-			font-weight: $token-font-weight-medium;
-			height: $token-scale-1000;
-			padding: $token-scale-0 $token-scale-200;
+			border: variables.$token-border-size-025 solid transparent;
+			border-radius: variables.$token-border-radius-100;
+			font-size: variables.$token-font-size-350;
+			font-weight: variables.$token-font-weight-medium;
+			height: variables.$token-scale-1000;
+			padding: variables.$token-scale-0 variables.$token-scale-200;
 
 			&:hover {
-				background-color: $token-bg-neutral-subtle-default;
+				background-color: variables.$token-bg-neutral-subtle-default;
 			}
 		}
 	}
@@ -223,7 +225,7 @@
 
 // Flatpickr - Days container
 .flatpickr-innerContainer {
-	padding: 0 $token-scale-400 $token-scale-400;
+	padding: 0 variables.$token-scale-400 variables.$token-scale-400;
 }
 
 .flatpickr-rContainer,
@@ -239,7 +241,7 @@
 
 // Flatpickr - WeekDays
 .flatpickr-weekdays {
-	height: $token-scale-1000;
+	height: variables.$token-scale-1000;
 }
 .flatpickr-weekwrapper {
 	.flatpickr-weekday {
@@ -250,16 +252,16 @@
 // Flatpickr - WeekDay Element
 span.flatpickr-weekday {
 	color: var(--color-text-subtlest);
-	font-size: $token-font-size-350;
-	font-weight: $token-font-weight-regular;
+	font-size: variables.$token-font-size-350;
+	font-weight: variables.$token-font-weight-regular;
 	user-select: none;
 }
 
 // Flatpickr - DayElem
 .flatpickr-day {
 	color: var(--color-text);
-	font-size: $token-font-size-350;
-	font-weight: $token-font-weight-regular;
+	font-size: variables.$token-font-size-350;
+	font-weight: variables.$token-font-weight-regular;
 	user-select: none;
 	line-height: 37px;
 
@@ -269,7 +271,7 @@ span.flatpickr-weekday {
 
 		&:hover,
 		&:focus {
-			color: $token-primitives-neutral-700;
+			color: variables.$token-primitives-neutral-700;
 		}
 	}
 
@@ -284,13 +286,13 @@ span.flatpickr-weekday {
 
 	&.today {
 		border-color: var(--color-border);
-		border-radius: $token-border-radius-100;
+		border-radius: variables.$token-border-radius-100;
 
 		&:hover,
 		&:focus {
 			background: var(--color-border-subtle);
 			border-color: var(--osui-border-subtle);
-			color: $token-semantics-primary-base;
+			color: variables.$token-semantics-primary-base;
 		}
 
 		&.inRange {
@@ -300,18 +302,18 @@ span.flatpickr-weekday {
 
 	&:hover,
 	&:focus {
-		background: $token-bg-neutral-subtle-default;
+		background: variables.$token-bg-neutral-subtle-default;
 		border-color: transparent;
-		border-radius: $token-border-radius-100;
+		border-radius: variables.$token-border-radius-100;
 	}
 
 	&.prevMonthDay:hover,
 	&.prevMonthDay:focus,
 	&.nextMonthDay:hover,
 	&.nextMonthDay:focus {
-		background: $token-bg-neutral-subtle-default;
+		background: variables.$token-bg-neutral-subtle-default;
 		border-color: transparent;
-		border-radius: $token-border-radius-100;
+		border-radius: variables.$token-border-radius-100;
 	}
 
 	&.inRange,
@@ -321,9 +323,9 @@ span.flatpickr-weekday {
 	&.nextMonthDay.inRange,
 	&.nextMonthDay.today.inRange {
 		// Flat neutral band for the connecting in-range cells
-		background: $token-bg-neutral-subtle-default;
-		border-color: $token-bg-neutral-subtle-default;
-		border-radius: $token-border-radius-0;
+		background: variables.$token-bg-neutral-subtle-default;
+		border-color: variables.$token-bg-neutral-subtle-default;
+		border-radius: variables.$token-border-radius-0;
 	}
 
 	&.selected,
@@ -344,9 +346,9 @@ span.flatpickr-weekday {
 	&.endRange.inRange,
 	&.endRange.prevMonthDay,
 	&.endRange.nextMonthDay {
-		background: $token-semantics-primary-base;
-		border-color: $token-semantics-primary-base;
-		border-radius: $token-border-radius-100;
+		background: variables.$token-semantics-primary-base;
+		border-color: variables.$token-semantics-primary-base;
+		border-radius: variables.$token-border-radius-100;
 
 		&.today {
 			color: var(--color-text-inverse);
@@ -365,7 +367,7 @@ span.flatpickr-weekday {
 			display: block;
 			top: -1px;
 			bottom: -1px;
-			background-color: $token-bg-neutral-subtle-default;
+			background-color: variables.$token-bg-neutral-subtle-default;
 			position: absolute;
 			z-index: var(--layer-global-negative);
 		}
@@ -375,19 +377,19 @@ span.flatpickr-weekday {
 	&.startRange.endRange,
 	&.selected.endRange.startRange,
 	&.endRange.startRange {
-		border-radius: $token-border-radius-100;
+		border-radius: variables.$token-border-radius-100;
 
 		&:before {
-			border-radius: $token-border-radius-100;
+			border-radius: variables.$token-border-radius-100;
 		}
 	}
 
 	&.selected.startRange,
 	&.startRange.startRange {
-		border-radius: $token-border-radius-100;
+		border-radius: variables.$token-border-radius-100;
 
 		&:before {
-			border-radius: $token-border-radius-100 0 0 $token-border-radius-100;
+			border-radius: variables.$token-border-radius-100 0 0 variables.$token-border-radius-100;
 			left: 0;
 			right: -2px;
 		}
@@ -395,10 +397,10 @@ span.flatpickr-weekday {
 
 	&.selected.endRange,
 	&.endRange.endRange {
-		border-radius: $token-border-radius-100;
+		border-radius: variables.$token-border-radius-100;
 
 		&:before {
-			border-radius: 0 $token-border-radius-100 $token-border-radius-100 0;
+			border-radius: 0 variables.$token-border-radius-100 variables.$token-border-radius-100 0;
 			right: 0;
 			left: -2px;
 		}
@@ -444,11 +446,11 @@ span.flatpickr-weekday {
 
 		&:hover,
 		&:focus {
-			border-radius: $token-border-radius-100;
+			border-radius: variables.$token-border-radius-100;
 		}
 
 		.numInput {
-			font-size: $token-font-size-350;
+			font-size: variables.$token-font-size-350;
 		}
 	}
 
@@ -460,51 +462,51 @@ span.flatpickr-weekday {
 
 	// AM/PM selector
 	.flatpickr-am-pm {
-		background-color: $token-semantics-primary-base;
-		border-radius: $token-border-radius-100;
+		background-color: variables.$token-semantics-primary-base;
+		border-radius: variables.$token-border-radius-100;
 		color: var(--color-text-inverse);
-		font-size: $token-font-size-300;
-		font-weight: $token-font-weight-semi-bold;
+		font-size: variables.$token-font-size-300;
+		font-weight: variables.$token-font-weight-semi-bold;
 		height: 18px;
 		line-height: 16px;
 		position: absolute;
-		right: $token-scale-800;
+		right: variables.$token-scale-800;
 		text-transform: lowercase;
-		width: $token-scale-1000;
+		width: variables.$token-scale-1000;
 
 		&:hover,
 		&:focus {
-			background-color: $token-bg-neutral-subtle-default;
+			background-color: variables.$token-bg-neutral-subtle-default;
 		}
 	}
 }
 
 .firefox .flatpickr-time {
 	input {
-		max-width: $token-scale-1200; // fix for different input appearance css rules regarding size
+		max-width: variables.$token-scale-1200; // fix for different input appearance css rules regarding size
 	}
 }
 
 // Flatpickr - TodayBtn
 .flatpickr-today-button {
-	padding: $token-scale-0 $token-scale-400 $token-scale-400;
+	padding: variables.$token-scale-0 variables.$token-scale-400 variables.$token-scale-400;
 	user-select: none;
 
 	a {
 		align-items: center;
-		border: $token-border-size-025 solid var(--color-border);
+		border: variables.$token-border-size-025 solid var(--color-border);
 		border-radius: var(--border-radius-rounded);
-		color: $token-semantics-primary-base;
+		color: variables.$token-semantics-primary-base;
 		cursor: pointer;
 		display: inline-flex;
-		font-size: $token-font-size-350;
-		font-weight: $token-font-weight-medium;
+		font-size: variables.$token-font-size-350;
+		font-weight: variables.$token-font-weight-medium;
 		justify-content: center;
-		padding: $token-scale-100 $token-scale-400;
+		padding: variables.$token-scale-100 variables.$token-scale-400;
 		transition: border-color 100ms ease, background-color 100ms ease;
 
 		&:hover {
-			background-color: $token-bg-neutral-subtle-default;
+			background-color: variables.$token-bg-neutral-subtle-default;
 			border-color: var(--color-border);
 			text-decoration: none;
 		}
@@ -523,7 +525,7 @@ span.flatpickr-weekday {
 	.flatpickr-current-month .numInputWrapper .numInput,
 	.flatpickr-time .numInputWrapper .numInput {
 		// Hack to disable zoom focus on mobile
-		font-size: $token-font-size-400;
+		font-size: variables.$token-font-size-400;
 	}
 
 	// Hack to force alignment left on iOS 15+
@@ -573,8 +575,8 @@ span.flatpickr-weekday {
 
 	.flatpickr-current-month {
 		.flatpickr-monthDropdown-months {
-			margin-left: $token-scale-400;
-			margin-right: $token-scale-0;
+			margin-left: variables.$token-scale-400;
+			margin-right: variables.$token-scale-0;
 		}
 	}
 
@@ -631,7 +633,7 @@ span.flatpickr-weekday {
 		grid-gap: 2px;
 		max-width: 307.875px;
 		min-width: 307.875px;
-		padding: 0 $token-scale-100;
+		padding: 0 variables.$token-scale-100;
 		width: initial;
 	}
 
@@ -654,12 +656,12 @@ span.flatpickr-weekday {
 		.flatpickr-prev-month,
 		.flatpickr-next-month {
 			position: absolute;
-			margin: $token-scale-100;
+			margin: variables.$token-scale-100;
 		}
 	}
 
 	.flatpickr-innerContainer {
-		padding: 0 0 $token-scale-100 0;
+		padding: 0 0 variables.$token-scale-100 0;
 	}
 
 	.flatpickr-current-month {
@@ -681,16 +683,16 @@ span.flatpickr-weekday {
 	// to the body, detached from the pattern root.
 	--osui-datepicker-time-background:     var(--osui-input-background, var(--color-background-input));
 	--osui-datepicker-time-border-color:   var(--osui-input-border-color, var(--color-border));
-	--osui-datepicker-time-border-radius:  #{$token-border-radius-100};
+	--osui-datepicker-time-border-radius:  #{variables.$token-border-radius-100};
 	--osui-datepicker-time-color:          var(--color-text-subtlest);
-	--osui-datepicker-time-focus-color:    #{$token-semantics-primary-base};
-	--osui-datepicker-time-height:         #{$token-scale-1000};
-	--osui-datepicker-time-segment-width:  #{$token-scale-1200};
+	--osui-datepicker-time-focus-color:    #{variables.$token-semantics-primary-base};
+	--osui-datepicker-time-height:         #{variables.$token-scale-1000};
+	--osui-datepicker-time-segment-width:  #{variables.$token-scale-1200};
 	// ───────────────────────────────────────────────────────────────────
 
 	// ─── hasWeeks side column ───────────────────────────────────────────
 	&.hasWeeks .flatpickr-weekwrapper .flatpickr-weeks {
-		border-radius: $token-border-radius-200;
+		border-radius: variables.$token-border-radius-200;
 	}
 
 	&.hasWeeks .flatpickr-weekwrapper .flatpickr-weeks .flatpickr-day {
@@ -700,8 +702,8 @@ span.flatpickr-weekday {
 
 	// ─── Today button ───────────────────────────────────────────────────
 	.flatpickr-today-button {
-		border-top: $token-border-size-025 solid var(--osui-border-subtle);
-		padding: $token-scale-200 $token-scale-400;
+		border-top: variables.$token-border-size-025 solid var(--osui-border-subtle);
+		padding: variables.$token-scale-200 variables.$token-scale-400;
 
 		a,
 		a:hover,
@@ -714,10 +716,10 @@ span.flatpickr-weekday {
 			background: transparent;
 			border: none;
 			border-radius: 0;
-			color: $token-semantics-primary-base;
+			color: variables.$token-semantics-primary-base;
 			display: block;
-			font-size: $token-font-size-350;
-			font-weight: $token-font-weight-medium;
+			font-size: variables.$token-font-size-350;
+			font-weight: variables.$token-font-weight-medium;
 			padding: 0;
 			text-align: center;
 			width: 100%;
@@ -738,7 +740,7 @@ span.flatpickr-weekday {
 		border-radius: 0;
 		height: var(--osui-datepicker-time-height);
 		justify-content: flex-end;
-		margin: 0 $token-scale-400 $token-scale-300;
+		margin: 0 variables.$token-scale-400 variables.$token-scale-300;
 		padding: 0;
 		width: auto;
 	}
@@ -751,8 +753,8 @@ span.flatpickr-weekday {
 		.numInputWrapper:nth-child(3) {
 			align-items: center;
 			background: var(--osui-datepicker-time-background);
-			border-bottom: $token-border-size-025 solid var(--osui-datepicker-time-border-color);
-			border-top: $token-border-size-025 solid var(--osui-datepicker-time-border-color);
+			border-bottom: variables.$token-border-size-025 solid var(--osui-datepicker-time-border-color);
+			border-top: variables.$token-border-size-025 solid var(--osui-datepicker-time-border-color);
 			display: flex;
 			height: var(--osui-datepicker-time-height);
 			justify-content: center;
@@ -760,7 +762,7 @@ span.flatpickr-weekday {
 
 		// Hour wrapper (first numInputWrapper) — left-rounded input segment
 		.numInputWrapper:first-child {
-			border-left: $token-border-size-025 solid var(--osui-datepicker-time-border-color);
+			border-left: variables.$token-border-size-025 solid var(--osui-datepicker-time-border-color);
 			border-radius: var(--osui-datepicker-time-border-radius) 0 0 var(--osui-datepicker-time-border-radius);
 			padding: 0;
 			width: var(--osui-datepicker-time-segment-width);
@@ -772,13 +774,13 @@ span.flatpickr-weekday {
 			border-right: none;
 			border-radius: 0;
 			color: var(--osui-datepicker-time-color);
-			padding: 0 $token-scale-100;
+			padding: 0 variables.$token-scale-100;
 			width: auto;
 		}
 
 		// Minute wrapper (third child) — right-rounded input segment
 		.numInputWrapper:nth-child(3) {
-			border-right: $token-border-size-025 solid var(--osui-datepicker-time-border-color);
+			border-right: variables.$token-border-size-025 solid var(--osui-datepicker-time-border-color);
 			border-radius: 0 var(--osui-datepicker-time-border-radius) var(--osui-datepicker-time-border-radius) 0;
 			padding: 0;
 			width: var(--osui-datepicker-time-segment-width);
@@ -786,7 +788,7 @@ span.flatpickr-weekday {
 
 		.numInputWrapper .numInput {
 			color: var(--osui-datepicker-time-color);
-			font-weight: $token-font-weight-medium;
+			font-weight: variables.$token-font-weight-medium;
 			height: auto;
 			line-height: 1;
 
@@ -805,17 +807,17 @@ span.flatpickr-weekday {
 		.flatpickr-am-pm {
 			align-items: center;
 			background: var(--osui-datepicker-time-background);
-			border: $token-border-size-025 solid var(--osui-datepicker-time-border-color);
+			border: variables.$token-border-size-025 solid var(--osui-datepicker-time-border-color);
 			border-radius: var(--osui-datepicker-time-border-radius);
 			color: var(--osui-datepicker-time-color);
 			display: flex;
 			// flex: none — keeps the fixed width from being shrunk by the flex row
 			flex: none;
-			font-size: $token-font-size-350;
-			font-weight: $token-font-weight-medium;
+			font-size: variables.$token-font-size-350;
+			font-weight: variables.$token-font-weight-medium;
 			height: var(--osui-datepicker-time-height);
 			justify-content: center;
-			margin-left: $token-scale-150;
+			margin-left: variables.$token-scale-150;
 			padding: 0;
 			position: static;
 			text-transform: uppercase;
@@ -853,7 +855,7 @@ span.flatpickr-weekday {
 	.flatpickr-am-pm,
 	.flatpickr-today-button a {
 		&:focus-visible {
-			box-shadow: 0 0 0 $token-border-size-075 var(--color-focus-outer);
+			box-shadow: 0 0 0 variables.$token-border-size-075 var(--color-focus-outer);
 		}
 	}
 
@@ -868,7 +870,7 @@ body:has(.has-accessible-features) .osui-monthpicker__dropdown {
 	.flatpickr-next-month,
 	.flatpickr-monthSelect-month.selected {
 		&:focus-visible {
-			box-shadow: 0 0 0 $token-border-size-075 var(--color-focus-outer);
+			box-shadow: 0 0 0 variables.$token-border-size-075 var(--color-focus-outer);
 		}
 	}
 }
@@ -879,7 +881,7 @@ body:has(.has-accessible-features) .osui-monthpicker__dropdown {
 	.flatpickr-rContainer,
 	.flatpickr-days,
 	.flatpickr-monthSelect-months {
-		padding: $token-scale-100;
+		padding: variables.$token-scale-100;
 	}
 
 	.flatpickr-calendar {
@@ -893,7 +895,7 @@ body:has(.has-accessible-features) .osui-monthpicker__dropdown {
 
 	.flatpickr-current-month {
 		.numInputWrapper input {
-			padding: $token-scale-0 $token-scale-100;
+			padding: variables.$token-scale-0 variables.$token-scale-100;
 		}
 
 		.flatpickr-monthDropdown-months {
@@ -901,7 +903,7 @@ body:has(.has-accessible-features) .osui-monthpicker__dropdown {
 
 			&:focus,
 			&:active {
-				outline: $token-border-size-075 solid var(--color-focus-outer);
+				outline: variables.$token-border-size-075 solid var(--color-focus-outer);
 			}
 		}
 	}
@@ -911,7 +913,7 @@ body:has(.has-accessible-features) .osui-monthpicker__dropdown {
 		.flatpickr-next-month {
 			&:focus,
 			&:active {
-				outline: $token-border-size-075 solid var(--color-focus-outer);
+				outline: variables.$token-border-size-075 solid var(--color-focus-outer);
 			}
 		}
 	}
@@ -931,7 +933,7 @@ body:has(.has-accessible-features) .osui-monthpicker__dropdown {
 		}
 
 		&.today {
-			border: $token-border-size-025 solid var(--color-focus-outer);
+			border: variables.$token-border-size-025 solid var(--color-focus-outer);
 			z-index: calc(var(--osui-flatpickr-calendar-elems-layer) + var(--layer-local-tier-1));
 		}
 
@@ -942,9 +944,9 @@ body:has(.has-accessible-features) .osui-monthpicker__dropdown {
 		&.selected.inRange,
 		&.selected.prevMonthDay,
 		&.selected.nextMonthDay {
-			border: $token-border-size-025 solid var(--color-focus-outer);
-			font-size: $token-font-size-400;
-			font-weight: $token-font-weight-semi-bold;
+			border: variables.$token-border-size-025 solid var(--color-focus-outer);
+			font-size: variables.$token-font-size-400;
+			font-weight: variables.$token-font-weight-semi-bold;
 		}
 
 		&:hover,
@@ -958,9 +960,9 @@ body:has(.has-accessible-features) .osui-monthpicker__dropdown {
 		&.today.inRange:hover,
 		&.today.inRange:focus,
 		&.today.inRange:focus-visible {
-			font-size: $token-font-size-400;
-			font-weight: $token-font-weight-semi-bold;
-			outline: $token-border-size-075 solid var(--color-focus-outer);
+			font-size: variables.$token-font-size-400;
+			font-weight: variables.$token-font-weight-semi-bold;
+			outline: variables.$token-border-size-075 solid var(--color-focus-outer);
 		}
 
 		&.inRange {
@@ -968,9 +970,9 @@ body:has(.has-accessible-features) .osui-monthpicker__dropdown {
 
 			&:before {
 				border-left: none;
-				border-radius: $token-border-radius-0;
+				border-radius: variables.$token-border-radius-0;
 				border-right: none;
-				border: $token-border-size-025 solid var(--color-focus-outer);
+				border: variables.$token-border-size-025 solid var(--color-focus-outer);
 				bottom: -1px;
 				content: '';
 				display: block;
@@ -989,7 +991,7 @@ body:has(.has-accessible-features) .osui-monthpicker__dropdown {
 		&.startRange.endRange,
 		&.endRange.endRange {
 			border: none;
-			border-radius: $token-border-radius-0;
+			border-radius: variables.$token-border-radius-0;
 
 			&:before {
 				right: initial;
@@ -1001,7 +1003,7 @@ body:has(.has-accessible-features) .osui-monthpicker__dropdown {
 			&:before {
 				border-radius: 50px 0 0 50px;
 				border-right: none;
-				border: $token-border-size-025 solid var(--color-focus-outer);
+				border: variables.$token-border-size-025 solid var(--color-focus-outer);
 				left: 0;
 				right: -2px;
 			}
@@ -1012,7 +1014,7 @@ body:has(.has-accessible-features) .osui-monthpicker__dropdown {
 			&:before {
 				border-left: none;
 				border-radius: 0 50px 50px 0;
-				border: $token-border-size-025 solid var(--color-focus-outer);
+				border: variables.$token-border-size-025 solid var(--color-focus-outer);
 				left: -2px;
 				right: 0;
 			}

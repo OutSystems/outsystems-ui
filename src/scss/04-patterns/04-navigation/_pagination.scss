@@ -1,3 +1,5 @@
+@use "../../tokens/variables";
+
 /* Patterns - Navigation - Pagination */
 ////
 /// @group Patterns-Pagination
@@ -8,12 +10,12 @@
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-pagination-button-background: transparent;
 	--osui-pagination-button-border-color: transparent;
-	--osui-pagination-button-border-width: #{$token-border-size-025};
+	--osui-pagination-button-border-width: #{variables.$token-border-size-025};
 	--osui-pagination-button-color: var(--color-text);
-	--osui-pagination-button-font-weight: #{$token-font-weight-medium};
+	--osui-pagination-button-font-weight: #{variables.$token-font-weight-medium};
 	--osui-pagination-button-hover-background: var(--color-border-subtle);
-	--osui-pagination-button-padding: #{$token-scale-0} #{$token-scale-100};
-	--osui-pagination-button-size: #{$token-scale-900};
+	--osui-pagination-button-padding: #{variables.$token-scale-0} #{variables.$token-scale-100};
+	--osui-pagination-button-size: #{variables.$token-scale-900};
 	--osui-pagination-active-border-color: var(--color-border);
 	--osui-pagination-active-color: var(--color-text-subtlest);
 	--osui-pagination-counter-color: var(--color-text-subtlest);
@@ -22,7 +24,7 @@
 	align-items: center;
 	display: flex;
 	justify-content: space-between;
-	margin-top: $token-scale-600;
+	margin-top: variables.$token-scale-600;
 
 	// pagination-container
 	&-container {
@@ -42,13 +44,13 @@
 		& > .pagination-button:first-child::before {
 			content: var(--osui-icon-chevron-left);
 			font-family: var(--osui-icon-font-family);
-			font-size: $token-scale-400;
+			font-size: variables.$token-scale-400;
 		}
 
 		& > .pagination-button:last-child::before {
 			content: var(--osui-icon-chevron-right);
 			font-family: var(--osui-icon-font-family);
-			font-size: $token-scale-400;
+			font-size: variables.$token-scale-400;
 		}
 
 		.list {
@@ -63,18 +65,18 @@
 		align-items: center;
 		background-color: var(--osui-pagination-button-background);
 		border: var(--osui-pagination-button-border-width) solid var(--osui-pagination-button-border-color);
-		border-radius: $token-border-radius-200;
+		border-radius: variables.$token-border-radius-200;
 		color: var(--osui-pagination-button-color);
 		cursor: pointer;
 		display: inline-flex;
 		font-weight: var(--osui-pagination-button-font-weight);
 		height: var(--osui-pagination-button-size);
 		justify-content: center;
-		margin-left: $token-scale-100;
+		margin-left: variables.$token-scale-100;
 		padding: var(--osui-pagination-button-padding);
 		transition:
-			background-color $token-transition-time-100 $token-transition-curve-expressive,
-			border-color $token-transition-time-100 $token-transition-curve-expressive;
+			background-color variables.$token-transition-time-100 variables.$token-transition-curve-expressive,
+			border-color variables.$token-transition-time-100 variables.$token-transition-curve-expressive;
 		width: var(--osui-pagination-button-size);
 
 		&[disabled] {
@@ -93,7 +95,7 @@
 			background-color: transparent;
 			border: 0;
 			cursor: auto;
-			width: $token-scale-400;
+			width: variables.$token-scale-400;
 		}
 	}
 
@@ -118,7 +120,7 @@
 
 	.form-control[data-input] {
 		height: var(--osui-pagination-button-size);
-		margin: $token-scale-0 $token-scale-100;
+		margin: variables.$token-scale-0 variables.$token-scale-100;
 		padding: 0;
 		text-align: center;
 		width: var(--osui-pagination-button-size);
@@ -138,8 +140,8 @@
 	.pagination {
 		&-button,
 		.form-control[data-input] {
-			height: $token-scale-1000;
-			width: $token-scale-1000;
+			height: variables.$token-scale-1000;
+			width: variables.$token-scale-1000;
 		}
 	}
 }
@@ -150,13 +152,13 @@
 		flex-direction: column;
 
 		&-container {
-			margin-top: $token-scale-400;
+			margin-top: variables.$token-scale-400;
 		}
 
 		&-button,
 		.form-control[data-input] {
-			height: $token-scale-1000;
-			width: $token-scale-1000;
+			height: variables.$token-scale-1000;
+			width: variables.$token-scale-1000;
 		}
 	}
 }
@@ -166,7 +168,7 @@
 .is-rtl {
 	.pagination-button {
 		margin-left: 0;
-		margin-right: $token-scale-100;
+		margin-right: variables.$token-scale-100;
 
 		.icon {
 			transform: rotate(180deg);
@@ -188,8 +190,8 @@
 ///
 .has-accessible-features {
 	.pagination-button:focus {
-		border-color: $token-semantics-primary-base;
-		box-shadow: 0 0 0 $token-border-size-075 color-mix(in srgb, #{$token-semantics-primary-base} 22%, transparent);
+		border-color: variables.$token-semantics-primary-base;
+		box-shadow: 0 0 0 variables.$token-border-size-075 color-mix(in srgb, #{variables.$token-semantics-primary-base} 22%, transparent);
 	}
 }
 
@@ -197,6 +199,6 @@
 ///
 .os-high-contrast {
 	.pagination-button.is--active {
-		outline: $token-border-size-075 solid $token-semantics-primary-base;
+		outline: variables.$token-border-size-075 solid variables.$token-semantics-primary-base;
 	}
 }

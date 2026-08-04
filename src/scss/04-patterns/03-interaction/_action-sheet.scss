@@ -1,3 +1,6 @@
+@use '../../00-abstract/index' as *;
+@use "../../tokens/variables";
+
 /* Patterns - Interaction - Action Sheet */
 ////
 /// @group Patterns-Action_Sheet
@@ -7,20 +10,20 @@
 .action-sheet {
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-action-sheet-background: var(--color-background-surface);
-	--osui-action-sheet-border-radius: #{$token-border-radius-200};
-	--osui-action-sheet-cancel-color: #{$token-text-primary};
-	--osui-action-sheet-color: #{$token-text-primary};
-	--osui-action-sheet-divider-color: #{$token-border-subtle};
-	--osui-action-sheet-shadow: #{$token-elevation-3};
+	--osui-action-sheet-border-radius: #{variables.$token-border-radius-200};
+	--osui-action-sheet-cancel-color: #{variables.$token-text-primary};
+	--osui-action-sheet-color: #{variables.$token-text-primary};
+	--osui-action-sheet-divider-color: #{variables.$token-border-subtle};
+	--osui-action-sheet-shadow: #{variables.$token-elevation-3};
 	// ───────────────────────────────────────────────────────────────────
 
 	bottom: 0;
 	left: 0;
 	margin-top: 0;
-	padding-bottom: calc(var(--os-safe-area-bottom) + $token-scale-400);
-	padding-left: calc(var(--os-safe-area-left) + $token-scale-400);
-	padding-right: calc(var(--os-safe-area-right) + $token-scale-400);
-	padding-top: $token-scale-400;
+	padding-bottom: calc(var(--os-safe-area-bottom) + variables.$token-scale-400);
+	padding-left: calc(var(--os-safe-area-left) + variables.$token-scale-400);
+	padding-right: calc(var(--os-safe-area-right) + variables.$token-scale-400);
+	padding-top: variables.$token-scale-400;
 	pointer-events: auto;
 	position: absolute;
 	transform: translateY(100%);
@@ -38,7 +41,7 @@
 		// ─── Component CSS API ─────────────────────────────────────────────
 		// Declared here (not on .action-sheet): the backdrop ::after below reads
 		// it, and .action-sheet is a child — custom properties don't inherit upward.
-		--osui-action-sheet-overlay-background: #{$token-backdrop};
+		--osui-action-sheet-overlay-background: #{variables.$token-backdrop};
 		// ───────────────────────────────────────────────────────────────────
 
 		height: 100%;
@@ -65,7 +68,7 @@
 			pointer-events: none;
 			position: absolute;
 			top: 0;
-			transition: opacity $token-transition-time-300 $token-transition-curve-quick;
+			transition: opacity variables.$token-transition-time-300 variables.$token-transition-curve-quick;
 			width: 100%;
 			will-change: opacity;
 
@@ -87,14 +90,14 @@
 			}
 
 			&.action-sheet-container--animatable .action-sheet {
-				transition: all $token-transition-time-300 $token-transition-curve-quick;
+				transition: all variables.$token-transition-time-300 variables.$token-transition-curve-quick;
 			}
 		}
 
 		&--animatable {
 			.action-sheet {
-				-webkit-transition: all var(--osui-motion-duration-130) $token-transition-curve-base;
-				transition: all var(--osui-motion-duration-130) $token-transition-curve-base;
+				-webkit-transition: all var(--osui-motion-duration-130) variables.$token-transition-curve-base;
+				transition: all var(--osui-motion-duration-130) variables.$token-transition-curve-base;
 			}
 		}
 	}
@@ -119,11 +122,11 @@
 			--osui-btn-background: var(--osui-action-sheet-background);
 			--osui-btn-border-radius: 0;
 			--osui-btn-color: var(--osui-action-sheet-color);
-			--osui-btn-height: #{$token-scale-1100};
-			--osui-btn-hover-background: #{$token-bg-neutral-subtlest-hover};
-			--osui-btn-active-background: #{$token-bg-neutral-subtlest-press};
+			--osui-btn-height: #{variables.$token-scale-1100};
+			--osui-btn-hover-background: #{variables.$token-bg-neutral-subtlest-hover};
+			--osui-btn-active-background: #{variables.$token-bg-neutral-subtlest-press};
 
-			@include apply-typography($token-body-action-sm);
+			@include apply-typography(variables.$token-body-action-sm);
 
 			border: none;
 			margin-top: 1px;
@@ -136,17 +139,17 @@
 	}
 
 	&-cancel {
-		margin-top: $token-scale-200;
+		margin-top: variables.$token-scale-200;
 
 		.btn {
 			--osui-btn-background: var(--osui-action-sheet-background);
 			--osui-btn-border-radius: var(--osui-action-sheet-border-radius);
 			--osui-btn-color: var(--osui-action-sheet-cancel-color);
-			--osui-btn-height: #{$token-scale-1100};
-			--osui-btn-hover-background: #{$token-bg-neutral-subtlest-hover};
-			--osui-btn-active-background: #{$token-bg-neutral-subtlest-press};
+			--osui-btn-height: #{variables.$token-scale-1100};
+			--osui-btn-hover-background: #{variables.$token-bg-neutral-subtlest-hover};
+			--osui-btn-active-background: #{variables.$token-bg-neutral-subtlest-press};
 
-			@include apply-typography($token-body-action-sm);
+			@include apply-typography(variables.$token-body-action-sm);
 
 			border: none;
 			box-shadow: var(--osui-action-sheet-shadow);
@@ -171,11 +174,11 @@
 	.action-sheet {
 		&-buttons,
 		&-cancel {
-			margin: $token-scale-0 auto;
+			margin: variables.$token-scale-0 auto;
 		}
 
 		&-cancel {
-			margin: $token-scale-400 auto $token-scale-0;
+			margin: variables.$token-scale-400 auto variables.$token-scale-0;
 		}
 	}
 }
@@ -194,7 +197,7 @@
 .os-high-contrast {
 	.action-sheet-container--visible .action-sheet {
 		background-color: var(--osui-action-sheet-background);
-		box-shadow: inset 0 0 0 $token-border-size-075 var(--color-focus-outer);
+		box-shadow: inset 0 0 0 variables.$token-border-size-075 var(--color-focus-outer);
 	}
 
 	.action-sheet-actions {

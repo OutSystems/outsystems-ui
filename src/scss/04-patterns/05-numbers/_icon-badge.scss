@@ -1,3 +1,5 @@
+@use "../../tokens/variables";
+
 /* Patterns - Numbers - Icon Badge */
 ////
 /// @group Patterns-Icon_Badge
@@ -23,11 +25,11 @@
 		box-shadow: 0 0 0 2px var(--osui-icon-badge-ring-color);
 		display: inline-flex;
 		font-size: var(--osui-font-size-200);
-		font-weight: $token-font-weight-bold;
-		height: $token-scale-400;
+		font-weight: variables.$token-font-weight-bold;
+		height: variables.$token-scale-400;
 		justify-content: center;
-		min-width: $token-scale-400;
-		padding: $token-scale-0 $token-scale-100;
+		min-width: variables.$token-scale-400;
+		padding: variables.$token-scale-0 variables.$token-scale-100;
 		transform: translate(50%, -50%);
 		white-space: nowrap;
 
@@ -37,7 +39,7 @@
 	}
 
 	.icon {
-		font-size: $token-font-size-550;
+		font-size: variables.$token-font-size-550;
 	}
 
 	div:first-child:empty {
