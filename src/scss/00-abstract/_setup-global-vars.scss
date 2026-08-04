@@ -8,7 +8,7 @@
 /* Token bridges — tokens used in OSUI but not yet in the design-token package  */
 /* Remove each entry once the package generates the corresponding $token-* var. */
 /* ---------------------------------------------------------------------------- */
-variables.$token-backdrop: var(--token-backdrop, rgba(0, 0, 0, 0.25));
+$token-backdrop: var(--token-backdrop, rgba(0, 0, 0, 0.25));
 
 /* ---------------------------------------------------------------------------- */
 /* App Settings — layout vars with no token equivalent                          */
@@ -57,12 +57,12 @@ $osui-space-token-vars: (
 
 /* ---------------------------------------------------------------------------- */
 /* Colors — token-backed maps for utility class generation                      */
-/* Values are $token-primitives-* / $token-semantics-* SCSS variables that      */
+/* Values are variables.$token-primitives-* / variables.$token-semantics-* SCSS variables that      */
 /* expand to `var(--token-*, fallback)` at compile time. Apps can override the  */
 /* CSS custom property to re-skin all generated utility classes at once.        */
 /* ---------------------------------------------------------------------------- */
 
-// Neutral scale — closest-hex match against $token-primitives-neutral-*
+// Neutral scale — closest-hex match against variables.$token-primitives-neutral-*
 $osui-colors-neutral:
 	'0' variables.$token-primitives-base-white,
 	'1' variables.$token-primitives-neutral-100,
@@ -76,7 +76,7 @@ $osui-colors-neutral:
 	'9' variables.$token-primitives-neutral-1100,
 	'10' variables.$token-primitives-base-black;
 
-// Semantic palette — binds to $token-semantics-* base/100 tokens
+// Semantic palette — binds to variables.$token-semantics-* base/100 tokens
 $osui-colors-semantic:
 	'error-light' variables.$token-semantics-danger-100,
 	'error' variables.$token-semantics-danger-base,
@@ -94,127 +94,127 @@ $osui-colors-semantic:
 // intermediate shades keep their closest-ranked primitives (no component
 // token exists for them).
 // `grape` key preserved for backward-compat utility class names, but binds
-// to `$token-primitives-purple-*` per token package naming (see D6).
+// to `variables.$token-primitives-purple-*` per token package naming (see D6).
 // `cyan` binds to `aqua` primitives on base/lightest (per Figma) and to the
 // closest `teal` primitives on the intermediate shades.
 $osui-colors-extended:
 	'red'
 		(
-			'lightest' $token-bg-danger-subtle-default,
-			'lighter' $token-primitives-red-300,
-			'light' $token-primitives-red-500,
-			'' $token-bg-danger-base-default,
-			'dark' $token-primitives-red-800,
-			'darker' $token-primitives-red-900,
-			'darkest' $token-primitives-red-1000
+			'lightest' variables.$token-bg-danger-subtle-default,
+			'lighter' variables.$token-primitives-red-300,
+			'light' variables.$token-primitives-red-500,
+			'' variables.$token-bg-danger-base-default,
+			'dark' variables.$token-primitives-red-800,
+			'darker' variables.$token-primitives-red-900,
+			'darkest' variables.$token-primitives-red-1000
 		),
 	'orange'
 		(
-			'lightest' $token-bg-extended-orange-subtle-default,
-			'lighter' $token-primitives-orange-300,
-			'light' $token-primitives-orange-500,
-			'' $token-bg-extended-orange-base-default,
-			'dark' $token-primitives-orange-800,
-			'darker' $token-primitives-orange-900,
-			'darkest' $token-primitives-orange-1000
+			'lightest' variables.$token-bg-extended-orange-subtle-default,
+			'lighter' variables.$token-primitives-orange-300,
+			'light' variables.$token-primitives-orange-500,
+			'' variables.$token-bg-extended-orange-base-default,
+			'dark' variables.$token-primitives-orange-800,
+			'darker' variables.$token-primitives-orange-900,
+			'darkest' variables.$token-primitives-orange-1000
 		),
 	'yellow'
 		(
-			'lightest' $token-bg-warning-subtle-default,
-			'lighter' $token-primitives-yellow-300,
-			'light' $token-primitives-yellow-500,
-			'' $token-bg-warning-base-default,
-			'dark' $token-primitives-yellow-800,
-			'darker' $token-primitives-yellow-900,
-			'darkest' $token-primitives-yellow-1000
+			'lightest' variables.$token-bg-warning-subtle-default,
+			'lighter' variables.$token-primitives-yellow-300,
+			'light' variables.$token-primitives-yellow-500,
+			'' variables.$token-bg-warning-base-default,
+			'dark' variables.$token-primitives-yellow-800,
+			'darker' variables.$token-primitives-yellow-900,
+			'darkest' variables.$token-primitives-yellow-1000
 		),
 	'lime'
 		(
-			'lightest' $token-bg-extended-lime-subtle-default,
-			'lighter' $token-primitives-lime-300,
-			'light' $token-primitives-lime-500,
-			'' $token-bg-extended-lime-base-default,
-			'dark' $token-primitives-lime-800,
-			'darker' $token-primitives-lime-900,
-			'darkest' $token-primitives-lime-1000
+			'lightest' variables.$token-bg-extended-lime-subtle-default,
+			'lighter' variables.$token-primitives-lime-300,
+			'light' variables.$token-primitives-lime-500,
+			'' variables.$token-bg-extended-lime-base-default,
+			'dark' variables.$token-primitives-lime-800,
+			'darker' variables.$token-primitives-lime-900,
+			'darkest' variables.$token-primitives-lime-1000
 		),
 	'green'
 		(
-			'lightest' $token-bg-success-subtle-default,
-			'lighter' $token-primitives-green-300,
-			'light' $token-primitives-green-500,
-			'' $token-bg-success-base-default,
-			'dark' $token-primitives-green-800,
-			'darker' $token-primitives-green-900,
-			'darkest' $token-primitives-green-1000
+			'lightest' variables.$token-bg-success-subtle-default,
+			'lighter' variables.$token-primitives-green-300,
+			'light' variables.$token-primitives-green-500,
+			'' variables.$token-bg-success-base-default,
+			'dark' variables.$token-primitives-green-800,
+			'darker' variables.$token-primitives-green-900,
+			'darkest' variables.$token-primitives-green-1000
 		),
 	'teal'
 		(
-			'lightest' $token-bg-extended-teal-subtle-default,
-			'lighter' $token-primitives-teal-300,
-			'light' $token-primitives-teal-500,
-			'' $token-bg-extended-teal-base-default,
-			'dark' $token-primitives-teal-800,
-			'darker' $token-primitives-teal-900,
-			'darkest' $token-primitives-teal-1000
+			'lightest' variables.$token-bg-extended-teal-subtle-default,
+			'lighter' variables.$token-primitives-teal-300,
+			'light' variables.$token-primitives-teal-500,
+			'' variables.$token-bg-extended-teal-base-default,
+			'dark' variables.$token-primitives-teal-800,
+			'darker' variables.$token-primitives-teal-900,
+			'darkest' variables.$token-primitives-teal-1000
 		),
 	'cyan'
 		(
-			'lightest' $token-primitives-aqua-100,
-			'lighter' $token-primitives-teal-300,
-			'light' $token-primitives-teal-500,
-			'' $token-primitives-aqua-900,
-			'dark' $token-primitives-teal-800,
-			'darker' $token-primitives-teal-900,
-			'darkest' $token-primitives-teal-1000
+			'lightest' variables.$token-primitives-aqua-100,
+			'lighter' variables.$token-primitives-teal-300,
+			'light' variables.$token-primitives-teal-500,
+			'' variables.$token-primitives-aqua-900,
+			'dark' variables.$token-primitives-teal-800,
+			'darker' variables.$token-primitives-teal-900,
+			'darkest' variables.$token-primitives-teal-1000
 		),
 	'blue'
 		(
-			'lightest' $token-bg-info-subtle-default,
-			'lighter' $token-primitives-blue-300,
-			'light' $token-primitives-blue-500,
-			'' $token-bg-info-base-default,
-			'dark' $token-primitives-blue-800,
-			'darker' $token-primitives-blue-900,
-			'darkest' $token-primitives-blue-1000
+			'lightest' variables.$token-bg-info-subtle-default,
+			'lighter' variables.$token-primitives-blue-300,
+			'light' variables.$token-primitives-blue-500,
+			'' variables.$token-bg-info-base-default,
+			'dark' variables.$token-primitives-blue-800,
+			'darker' variables.$token-primitives-blue-900,
+			'darkest' variables.$token-primitives-blue-1000
 		),
 	'indigo'
 		(
-			'lightest' $token-bg-extended-indigo-subtle-default,
-			'lighter' $token-primitives-indigo-300,
-			'light' $token-primitives-indigo-500,
-			'' $token-bg-extended-indigo-base-default,
-			'dark' $token-primitives-indigo-800,
-			'darker' $token-primitives-indigo-900,
-			'darkest' $token-primitives-indigo-1000
+			'lightest' variables.$token-bg-extended-indigo-subtle-default,
+			'lighter' variables.$token-primitives-indigo-300,
+			'light' variables.$token-primitives-indigo-500,
+			'' variables.$token-bg-extended-indigo-base-default,
+			'dark' variables.$token-primitives-indigo-800,
+			'darker' variables.$token-primitives-indigo-900,
+			'darkest' variables.$token-primitives-indigo-1000
 		),
 	'violet'
 		(
-			'lightest' $token-bg-extended-violet-subtle-default,
-			'lighter' $token-primitives-violet-300,
-			'light' $token-primitives-violet-500,
-			'' $token-bg-extended-violet-base-default,
-			'dark' $token-primitives-violet-800,
-			'darker' $token-primitives-violet-900,
-			'darkest' $token-primitives-violet-1000
+			'lightest' variables.$token-bg-extended-violet-subtle-default,
+			'lighter' variables.$token-primitives-violet-300,
+			'light' variables.$token-primitives-violet-500,
+			'' variables.$token-bg-extended-violet-base-default,
+			'dark' variables.$token-primitives-violet-800,
+			'darker' variables.$token-primitives-violet-900,
+			'darkest' variables.$token-primitives-violet-1000
 		),
 	'grape'
 		(
-			'lightest' $token-primitives-purple-100,
-			'lighter' $token-primitives-purple-300,
-			'light' $token-primitives-purple-500,
-			'' $token-primitives-purple-800,
-			'dark' $token-primitives-purple-800,
-			'darker' $token-primitives-purple-900,
-			'darkest' $token-primitives-purple-1000
+			'lightest' variables.$token-primitives-purple-100,
+			'lighter' variables.$token-primitives-purple-300,
+			'light' variables.$token-primitives-purple-500,
+			'' variables.$token-primitives-purple-800,
+			'dark' variables.$token-primitives-purple-800,
+			'darker' variables.$token-primitives-purple-900,
+			'darkest' variables.$token-primitives-purple-1000
 		),
 	'pink'
 		(
-			'lightest' $token-bg-extended-pink-subtle-default,
-			'lighter' $token-primitives-pink-300,
-			'light' $token-primitives-pink-500,
-			'' $token-bg-extended-pink-base-default,
-			'dark' $token-primitives-pink-800,
-			'darker' $token-primitives-pink-900,
-			'darkest' $token-primitives-pink-1000
+			'lightest' variables.$token-bg-extended-pink-subtle-default,
+			'lighter' variables.$token-primitives-pink-300,
+			'light' variables.$token-primitives-pink-500,
+			'' variables.$token-bg-extended-pink-base-default,
+			'dark' variables.$token-primitives-pink-800,
+			'darker' variables.$token-primitives-pink-900,
+			'darkest' variables.$token-primitives-pink-1000
 		);
