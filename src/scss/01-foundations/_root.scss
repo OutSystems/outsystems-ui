@@ -130,7 +130,7 @@
 		#{$token-semantics-primary-base} 8%,
 		transparent
 	); // future: --token-bg-surface-active
-	--osui-border-subtle: #{$token-primitives-neutral-300}; // future: --token-border-subtle (intended neutral-300)
+	--osui-border-subtle: #{$token-border-subtle}; // resolves to neutral-300 once outsystems-design-tokens ships the border.subtle fix (PR #99)
 	--osui-opacity-disabled: 0.45; // future: --token-opacity-disabled
 	--osui-elevation-25: 0 1px 2px rgba(0, 0, 0, 0.08); // future: --token-elevation-25
 	--osui-elevation-50: 0 1px 2px rgba(0, 0, 0, 0.2); // future: --token-elevation-50
