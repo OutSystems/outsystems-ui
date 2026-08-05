@@ -45,34 +45,11 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 			}
 		}
 
-		// Method to set body css variables for a phone or tablet app
-		private static _isPhoneOrTablet(): void {
-			OSFramework.OSUI.Helper.Dom.Styles.SetStyleAttribute(
-				document.body,
-				OSFramework.OSUI.GlobalEnum.CSSVariables.ViewportHeight,
-				window.innerHeight + OSFramework.OSUI.GlobalEnum.Units.Pixel
-			);
-		}
-
 		// Method that will set the css variables to body element
 		private static _setCssVars(): void {
 			// Ensure app is not a web app
 			if (OSUI.Utils.DeviceDetection.IsWebApp() === false) {
 				this._setNotWebApp();
-			}
-
-			// Check if app is running on a phone or tablet device
-			if (
-				OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(
-					document.body,
-					OSFramework.OSUI.GlobalEnum.DeviceType.phone
-				) ||
-				OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(
-					document.body,
-					OSFramework.OSUI.GlobalEnum.DeviceType.tablet
-				)
-			) {
-				this._isPhoneOrTablet();
 			}
 
 			// Check if highContrast mode is active
