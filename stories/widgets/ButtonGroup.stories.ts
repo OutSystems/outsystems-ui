@@ -7,28 +7,36 @@ export default meta;
 type Story = StoryObj;
 
 const item = (value: string, label: string, selected: boolean) =>
-	createElement(ButtonGroupItem as never, {
-		...widgetBaseProps('button-group-item'),
-		value,
-		style: 'button-group-item',
-		isSelected: selected,
-		enabled: true,
-		tabIndex: -1,
-		updateValueInParent: () => {},
-		getFocusableElementId: () => '',
-		key: value,
-	}, label);
+	createElement(
+		ButtonGroupItem as never,
+		{
+			...widgetBaseProps('button-group-item'),
+			value,
+			style: 'button-group-item',
+			isSelected: selected,
+			enabled: true,
+			tabIndex: -1,
+			updateValueInParent: () => {},
+			getFocusableElementId: () => '',
+			key: value,
+		},
+		label
+	);
 
 export const Default: Story = {
 	render: () =>
 		mountTree(
-			createElement(ButtonGroup as never, {
-				...widgetBaseProps('button-group'),
-				variable: createVariable(DataTypes.DataTypes.Text, 'week'),
-				enabled: true,
-				mandatory: false,
-				style: 'button-group',
-				onChange: () => {},
-			}, [item('day', 'Day', false), item('week', 'Week', true), item('month', 'Month', false)])
+			createElement(
+				ButtonGroup as never,
+				{
+					...widgetBaseProps('button-group'),
+					variable: createVariable(DataTypes.DataTypes.Text, 'week'),
+					enabled: true,
+					mandatory: false,
+					style: 'button-group',
+					onChange: () => {},
+				},
+				[item('day', 'Day', false), item('week', 'Week', true), item('month', 'Month', false)]
+			)
 		),
 };

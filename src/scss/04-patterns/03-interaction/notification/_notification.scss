@@ -1,3 +1,6 @@
+@use '../../../00-abstract/index' as *;
+@use "../../../tokens/variables";
+
 /* Patterns - Interaction - Notification */
 ////
 /// @group Patterns-Notification
@@ -7,14 +10,14 @@
 .osui-notification {
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-notification-background: var(--color-background-surface);
-	--osui-notification-border-radius: #{$token-border-radius-100};
-	--osui-notification-shadow: #{$token-elevation-3};
+	--osui-notification-border-radius: #{variables.$token-border-radius-100};
+	--osui-notification-shadow: #{variables.$token-elevation-3};
 	--osui-notification-color: var(--color-text);
-	--osui-notification-gap: #{$token-scale-400};
-	--osui-notification-padding: #{$token-scale-400};
+	--osui-notification-gap: #{variables.$token-scale-400};
+	--osui-notification-padding: #{variables.$token-scale-400};
 	// ───────────────────────────────────────────────────────────────────
 
-	--osui-notification-margin: #{$token-scale-600};
+	--osui-notification-margin: #{variables.$token-scale-600};
 
 	align-items: center;
 	background-color: var(--osui-notification-background);
@@ -30,8 +33,8 @@
 	pointer-events: none;
 	position: fixed;
 	transition:
-		transform $token-transition-time-300 $token-transition-curve-quick,
-		opacity $token-transition-time-300 $token-transition-curve-quick;
+		transform variables.$token-transition-time-300 variables.$token-transition-curve-quick,
+		opacity variables.$token-transition-time-300 variables.$token-transition-curve-quick;
 	user-select: none;
 	width: var(--notification-width);
 	z-index: var(--osui-notification-layer);
@@ -44,23 +47,23 @@
 
 	// Type variants — aligned with Alert and runtime-mobile-widgets-js feedbackMessage
 	&--is-info {
-		--osui-notification-background: #{$token-bg-info-subtle-default};
-		--osui-notification-color: #{$token-text-info};
+		--osui-notification-background: #{variables.$token-bg-info-subtle-default};
+		--osui-notification-color: #{variables.$token-text-info};
 	}
 
 	&--is-success {
-		--osui-notification-background: #{$token-bg-success-subtle-default};
-		--osui-notification-color: #{$token-text-success};
+		--osui-notification-background: #{variables.$token-bg-success-subtle-default};
+		--osui-notification-color: #{variables.$token-text-success};
 	}
 
 	&--is-error {
-		--osui-notification-background: #{$token-bg-danger-subtle-default};
-		--osui-notification-color: #{$token-text-danger};
+		--osui-notification-background: #{variables.$token-bg-danger-subtle-default};
+		--osui-notification-color: #{variables.$token-text-danger};
 	}
 
 	&--is-warning {
-		--osui-notification-background: #{$token-bg-warning-subtle-default};
-		--osui-notification-color: #{$token-text-warning};
+		--osui-notification-background: #{variables.$token-bg-warning-subtle-default};
+		--osui-notification-color: #{variables.$token-text-warning};
 	}
 
 	// Service Studio Preview
@@ -204,7 +207,7 @@
 // Responsive --------------------------------------------------------------------
 .phone {
 	.osui-notification {
-		--osui-notification-margin: #{$token-scale-400};
+		--osui-notification-margin: #{variables.$token-scale-400};
 	}
 }
 

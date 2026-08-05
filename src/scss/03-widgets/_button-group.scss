@@ -1,3 +1,5 @@
+@use "../tokens/variables";
+
 /* Widgets - Button Group */
 ////
 /// @group Widgets-Button_Group
@@ -7,35 +9,35 @@
 .button-group {
 	background-color: transparent;
 	border-radius: 0;
-	padding: $token-scale-200 $token-scale-0;
+	padding: variables.$token-scale-200 variables.$token-scale-0;
 
 	&-item {
 		// ─── Component CSS API ─────────────────────────────────────────────
 		--osui-button-group-background: var(--color-background-surface);
 		--osui-button-group-border-color: var(--color-border);
 		--osui-button-group-color: var(--color-text-subtle);
-		--osui-button-group-disabled-overlay: #{$token-state-disabled};
+		--osui-button-group-disabled-overlay: #{variables.$token-state-disabled};
 		// Matches the default .btn height so a button group sits flush with
 		// buttons placed alongside it, while still growing with larger font
 		// sizes and accessibility settings
-		--osui-button-group-min-height: #{$token-scale-1000};
+		--osui-button-group-min-height: #{variables.$token-scale-1000};
 		// ───────────────────────────────────────────────────────────────────
 
 		background-color: var(--osui-button-group-background);
-		border: $token-border-size-025 solid var(--osui-button-group-border-color);
+		border: variables.$token-border-size-025 solid var(--osui-button-group-border-color);
 		border-radius: 0;
 		color: var(--osui-button-group-color);
 		cursor: pointer;
-		font-size: $token-font-size-400;
-		font-weight: $token-font-weight-medium;
+		font-size: variables.$token-font-size-400;
+		font-weight: variables.$token-font-weight-medium;
 		min-height: var(--osui-button-group-min-height);
-		padding: $token-scale-0 $token-scale-400;
+		padding: variables.$token-scale-0 variables.$token-scale-400;
 		position: relative;
 		white-space: nowrap;
 
 		&:first-child {
-			border-radius: $token-border-radius-200 $token-border-radius-0 $token-border-radius-0
-				$token-border-radius-200;
+			border-radius: variables.$token-border-radius-200 variables.$token-border-radius-0 variables.$token-border-radius-0
+				variables.$token-border-radius-200;
 		}
 
 		&[disabled] {
@@ -51,12 +53,12 @@
 
 		&[disabled]:not(:first-child),
 		&:not(:first-child) {
-			border-left: $token-border-size-0;
+			border-left: variables.$token-border-size-0;
 		}
 
 		&:last-child {
-			border-radius: $token-border-radius-0 $token-border-radius-200 $token-border-radius-200
-				$token-border-radius-0;
+			border-radius: variables.$token-border-radius-0 variables.$token-border-radius-200 variables.$token-border-radius-200
+				variables.$token-border-radius-0;
 		}
 
 		&.button-group-selected-item {
@@ -83,7 +85,7 @@
 		// Neutral (non-selected): matches .btn-cancel:hover — background darkens
 		// one tier, border stays on the resting --color-border role
 		&:not(.button-group-selected-item):not([disabled]):hover {
-			background-color: $token-bg-neutral-subtlest-hover;
+			background-color: variables.$token-bg-neutral-subtlest-hover;
 			border-color: var(--color-border);
 		}
 
@@ -102,7 +104,7 @@
 		.button-group-item {
 			background-color: var(--background-color-header, var(--color-background-header));
 			border: 0;
-			border-bottom: $token-border-size-050 solid transparent;
+			border-bottom: variables.$token-border-size-050 solid transparent;
 			color: var(--color-text-subtlest);
 
 			&:last-child {
@@ -110,7 +112,7 @@
 			}
 
 			&.button-group-selected-item {
-				border-bottom: $token-border-size-050 solid $token-semantics-primary-base;
+				border-bottom: variables.$token-border-size-050 solid variables.$token-semantics-primary-base;
 				color: var(--color-text);
 			}
 
@@ -118,7 +120,7 @@
 				color: var(--color-text-disabled);
 
 				&.button-group-selected-item {
-					border-bottom: $token-border-size-050 solid var(--color-text-disabled);
+					border-bottom: variables.$token-border-size-050 solid var(--color-text-disabled);
 				}
 			}
 		}
@@ -130,22 +132,22 @@
 .is-rtl {
 	.button-group-item {
 		&:first-child {
-			border-radius: $token-border-radius-0 $token-border-radius-200 $token-border-radius-200
-				$token-border-radius-0;
+			border-radius: variables.$token-border-radius-0 variables.$token-border-radius-200 variables.$token-border-radius-200
+				variables.$token-border-radius-0;
 		}
 
 		&:not(:first-child) {
-			border-left: $token-border-size-025 solid $token-semantics-primary-base;
-			border-right: $token-border-size-0;
+			border-left: variables.$token-border-size-025 solid variables.$token-semantics-primary-base;
+			border-right: variables.$token-border-size-0;
 
 			&[disabled] {
-				border-left: $token-border-size-025 solid var(--color-border);
+				border-left: variables.$token-border-size-025 solid var(--color-border);
 			}
 		}
 
 		&:last-child {
-			border-radius: $token-border-radius-200 $token-border-radius-0 $token-border-radius-0
-				$token-border-radius-200;
+			border-radius: variables.$token-border-radius-200 variables.$token-border-radius-0 variables.$token-border-radius-0
+				variables.$token-border-radius-200;
 		}
 	}
 }
@@ -159,7 +161,7 @@
 
 			&:before {
 				bottom: -1px;
-				box-shadow: 0 0 0 $token-border-size-075 var(--color-focus-outer);
+				box-shadow: 0 0 0 variables.$token-border-size-075 var(--color-focus-outer);
 				content: '';
 				left: -1px;
 				position: absolute;
@@ -183,7 +185,7 @@
 			right: 0;
 			bottom: 0;
 			left: 0;
-			border: $token-border-size-075 solid $token-semantics-primary-base;
+			border: variables.$token-border-size-075 solid variables.$token-semantics-primary-base;
 		}
 	}
 }

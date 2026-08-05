@@ -1,3 +1,5 @@
+@use "../../tokens/variables";
+
 /* Patterns - Content - Blank Slate */
 ////
 /// @group Patterns-Blank_Slate
@@ -23,17 +25,17 @@
 		}
 
 		& .blank-slate-actions {
-			padding: $token-scale-1200 $token-scale-400;
+			padding: variables.$token-scale-1200 variables.$token-scale-400;
 		}
 	}
 
 	&-description {
 		color: var(--osui-blank-slate-description-color);
-		padding: $token-scale-0 $token-scale-400;
+		padding: variables.$token-scale-0 variables.$token-scale-400;
 	}
 
 	&-actions {
-		padding: $token-scale-400;
+		padding: variables.$token-scale-400;
 	}
 
 	&-icon {

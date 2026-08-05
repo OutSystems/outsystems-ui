@@ -1,3 +1,5 @@
+@use "../../../tokens/variables";
+
 /* Patterns - Interaction - DropdownTags */
 ////
 /// @group Patterns-DropdownTags
@@ -11,11 +13,11 @@
 	--osui-dropdown-border-color:        var(--color-border-input);
 	--osui-dropdown-hover-border-color:  var(--color-border-input-hover);
 	--osui-dropdown-focus-border-color:  var(--color-border-primary);
-	--osui-dropdown-focus-ring-color:    #{$token-border-focus-default};
+	--osui-dropdown-focus-ring-color:    #{variables.$token-border-focus-default};
 	--osui-dropdown-list-background:     var(--color-background-surface);
-	--osui-dropdown-arrow-color:        #{$token-icon-subtlest};
-	--osui-dropdown-arrow-size:         #{$token-scale-400};
-	--osui-dropdown-tag-color:          #{$token-text-subtlest};
+	--osui-dropdown-arrow-color:        #{variables.$token-icon-subtlest};
+	--osui-dropdown-arrow-size:         #{variables.$token-scale-400};
+	--osui-dropdown-tag-color:          #{variables.$token-text-subtlest};
 	// ───────────────────────────────────────────────────────────────────
 
 	// If not valid

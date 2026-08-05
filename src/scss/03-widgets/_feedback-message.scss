@@ -1,3 +1,6 @@
+@use '../00-abstract/index' as *;
+@use "../tokens/variables";
+
 /* Widgets - Feedback Message */
 ////
 /// @group Widgets-Feedback_Message
@@ -10,7 +13,7 @@
 	--osui-feedback-message-color: var(--color-text);
 	--osui-feedback-message-icon-color: var(--color-text);
 	--osui-feedback-message-border-radius: var(--border-radius-soft);
-	--osui-feedback-message-box-shadow: #{$token-elevation-3};
+	--osui-feedback-message-box-shadow: #{variables.$token-elevation-3};
 	--osui-feedback-message-max-width: 600px;
 	--osui-feedback-message-min-width: 400px;
 	// ───────────────────────────────────────────────────────────────────
@@ -21,19 +24,19 @@
 	box-shadow: var(--osui-feedback-message-box-shadow);
 	color: var(--osui-feedback-message-color);
 	display: flex;
-	font-size: $token-font-size-350;
-	font-weight: $token-font-weight-medium;
-	gap: $token-scale-200;
+	font-size: variables.$token-font-size-350;
+	font-weight: variables.$token-font-weight-medium;
+	gap: variables.$token-scale-200;
 	left: 50%;
 	max-width: var(--osui-feedback-message-max-width);
 	min-width: var(--osui-feedback-message-min-width);
-	padding: $token-scale-300 $token-scale-400;
+	padding: variables.$token-scale-300 variables.$token-scale-400;
 
 	i {
 		align-self: flex-start;
 		color: var(--osui-feedback-message-icon-color);
-		font-size: $token-font-size-500;
-		margin-top: #{$token-scale-050}; // 2px icon vertical offset
+		font-size: variables.$token-font-size-500;
+		margin-top: #{variables.$token-scale-050}; // 2px icon vertical offset
 		position: relative;
 	}
 }
@@ -46,29 +49,29 @@
 // Mantain due to Retro Compatibility
 ///
 div.feedback-message-error {
-	--osui-feedback-message-background: #{$token-bg-danger-subtle-default};
-	--osui-feedback-message-icon-color: #{$token-icon-danger};
+	--osui-feedback-message-background: #{variables.$token-bg-danger-subtle-default};
+	--osui-feedback-message-icon-color: #{variables.$token-icon-danger};
 }
 
 // Mantain due to Retro Compatibility
 ///
 div.feedback-message-info {
-	--osui-feedback-message-background: #{$token-bg-info-subtle-default};
-	--osui-feedback-message-icon-color: #{$token-icon-info};
+	--osui-feedback-message-background: #{variables.$token-bg-info-subtle-default};
+	--osui-feedback-message-icon-color: #{variables.$token-icon-info};
 }
 
 // Mantain due to Retro Compatibility
 ///
 div.feedback-message-success {
-	--osui-feedback-message-background: #{$token-bg-success-subtle-default};
-	--osui-feedback-message-icon-color: #{$token-icon-success};
+	--osui-feedback-message-background: #{variables.$token-bg-success-subtle-default};
+	--osui-feedback-message-icon-color: #{variables.$token-icon-success};
 }
 
 // Mantain due to Retro Compatibility
 ///
 div.feedback-message-warning {
-	--osui-feedback-message-background: #{$token-bg-warning-subtle-default};
-	--osui-feedback-message-icon-color: #{$token-icon-warning};
+	--osui-feedback-message-background: #{variables.$token-bg-warning-subtle-default};
+	--osui-feedback-message-icon-color: #{variables.$token-icon-warning};
 }
 
 // Responsive --------------------------------------------------------------------
@@ -86,13 +89,13 @@ div.feedback-message-warning {
 
 	&.ios {
 		.feedback-message {
-			padding-top: calc(var(--os-safe-area-top) + $token-scale-400);
+			padding-top: calc(var(--os-safe-area-top) + variables.$token-scale-400);
 		}
 	}
 }
 
 .android .feedback-message {
-	padding-top: calc(#{android-safe-area-top()} + $token-scale-400);
+	padding-top: calc(#{android-safe-area-top()} + variables.$token-scale-400);
 }
 
 // IsRTL -------------------------------------------------------------------------
@@ -116,20 +119,20 @@ div.feedback-message-warning {
 ///
 .os-high-contrast {
 	.feedback-message {
-		border-width: $token-border-size-075;
+		border-width: variables.$token-border-size-075;
 		border-style: solid;
 
 		&.feedback-message-error {
-			border-color: $token-semantics-danger-base;
+			border-color: variables.$token-semantics-danger-base;
 		}
 		&.feedback-message-info {
-			border-color: $token-semantics-info-base;
+			border-color: variables.$token-semantics-info-base;
 		}
 		&.feedback-message-success {
-			border-color: $token-semantics-success-base;
+			border-color: variables.$token-semantics-success-base;
 		}
 		&.feedback-message-warning {
-			border-color: $token-semantics-warning-base;
+			border-color: variables.$token-semantics-warning-base;
 		}
 	}
 }

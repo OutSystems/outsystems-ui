@@ -1,3 +1,5 @@
+@use "../../../tokens/variables";
+
 /* Patterns - Content - Tooltip */
 ////
 /// @group Patterns-Tooltip
@@ -6,18 +8,18 @@
 ///
 .osui-tooltip {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-tooltip-background: #{$token-bg-neutral-boldest-default};
+	--osui-tooltip-background: #{variables.$token-bg-neutral-boldest-default};
 	--osui-tooltip-color: var(--color-text-inverse);
-	--osui-tooltip-border-radius: #{$token-border-radius-100};
-	--osui-tooltip-padding: #{$token-scale-200} #{$token-scale-400};
-	--osui-tooltip-font-size: #{$token-font-size-350};
-	--osui-tooltip-shadow: #{$token-elevation-2};
+	--osui-tooltip-border-radius: #{variables.$token-border-radius-100};
+	--osui-tooltip-padding: #{variables.$token-scale-200} #{variables.$token-scale-400};
+	--osui-tooltip-font-size: #{variables.$token-font-size-350};
+	--osui-tooltip-shadow: #{variables.$token-elevation-2};
 	--osui-tooltip-max-width: 184px;
 	// ───────────────────────────────────────────────────────────────────
 
 	--osui-tooltip-background-color: var(--osui-tooltip-background);
 	--osui-tooltip-arrow-size: 10px;
-	--osui-floating-offset: #{$token-scale-200};
+	--osui-floating-offset: #{variables.$token-scale-200};
 
 	display: inline-block;
 	position: relative;
@@ -33,7 +35,7 @@
 		color: var(--osui-tooltip-color);
 		font-size: var(--osui-tooltip-font-size);
 		box-shadow: var(--osui-tooltip-shadow);
-		font-weight: $token-font-weight-regular;
+		font-weight: variables.$token-font-weight-regular;
 		line-height: initial;
 		max-width: var(--osui-tooltip-max-width);
 		padding: var(--osui-tooltip-padding);
@@ -115,20 +117,20 @@
 }
 
 .osui-tooltip .osui-balloon--is-open {
-	animation: osui-tooltip-in $token-transition-time-150 $token-transition-curve-quick forwards;
+	animation: osui-tooltip-in variables.$token-transition-time-150 variables.$token-transition-curve-quick forwards;
 }
 // OS HighContrast Enabled -------------------------------------------------------
 ///
 .os-high-contrast {
 	.osui-tooltip {
 		.osui-balloon {
-			border: $token-border-size-025 solid var(--osui-tooltip-background-color);
+			border: variables.$token-border-size-025 solid var(--osui-tooltip-background-color);
 		}
 
 		&__balloon-arrow {
 			border: 0 solid var(--osui-tooltip-background-color);
-			border-right-width: $token-border-size-025;
-			border-bottom-width: $token-border-size-025;
+			border-right-width: variables.$token-border-size-025;
+			border-bottom-width: variables.$token-border-size-025;
 		}
 	}
 }

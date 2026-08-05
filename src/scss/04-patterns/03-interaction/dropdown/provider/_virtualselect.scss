@@ -1,3 +1,5 @@
+@use "../../../../tokens/variables";
+
 // Set the transform values to checkBox Checked Icon
 @mixin CheckBoxCheckIconTransform {
 	transform: rotate(45deg) translate(3px, -3px);
@@ -16,8 +18,8 @@
 		&.pop-comp-active {
 			// The extra `.vscomp-wrapper` is required to outrank the focus elevation reset below
 			.vscomp-wrapper .vscomp-toggle-button {
-				border-color: var(--osui-dropdown-focus-border-color, #{$token-semantics-primary-base});
-				box-shadow: 0 0 0 $token-border-size-050 var(--osui-dropdown-focus-ring-color, #{$token-border-focus-default});
+				border-color: var(--osui-dropdown-focus-border-color, #{variables.$token-semantics-primary-base});
+				box-shadow: 0 0 0 variables.$token-border-size-050 var(--osui-dropdown-focus-ring-color, #{variables.$token-border-focus-default});
 
 				// Arrow keeps its resting colour while open — only the rotation changes
 				&:after {
@@ -40,14 +42,14 @@
 	&-ele .vscomp-clear-icon:after,
 	&-search-clear:after {
 		align-items: center;
-		color: $token-icon-subtlest;
+		color: variables.$token-icon-subtlest;
 		display: flex;
 		height: 100%;
 		justify-content: center;
 		position: absolute;
 		text-indent: 0;
 		top: 0;
-		width: $token-scale-600;
+		width: variables.$token-scale-600;
 	}
 
 	&-clear-button:hover {
@@ -57,13 +59,14 @@
 			&::after,
 			&::before {
 				background-color: transparent;
+				color: variables.$token-primitives-neutral-700;
 			}
 		}
 	}
 
 	&-search-clear:hover:after {
 		background-color: transparent;
-		color: $token-primitives-neutral-700;
+		color: variables.$token-primitives-neutral-700;
 	}
 }
 
@@ -87,13 +90,13 @@
 	&.has-value {
 		&.show-value-as-tags {
 			.vscomp-toggle-button {
-				padding-left: $token-scale-200;
+				padding-left: variables.$token-scale-200;
 			}
 		}
 		.vscomp-value {
 			color: var(--color-text);
-			margin-right: $token-scale-600;
-			margin-left: $token-scale-0;
+			margin-right: variables.$token-scale-600;
+			margin-left: variables.$token-scale-0;
 		}
 	}
 
@@ -108,8 +111,8 @@
 		.vscomp-option {
 			&.selected {
 				.checkbox-icon {
-					background-color: $token-semantics-primary-base;
-					border-color: $token-semantics-primary-base;
+					background-color: variables.$token-semantics-primary-base;
+					border-color: variables.$token-semantics-primary-base;
 
 					&:after {
 						border-color: var(--color-text-inverse);
@@ -132,28 +135,28 @@
 
 	&:not(.multiple) {
 		.vscomp-option.group-title {
-			height: $token-scale-1000 !important; // !important required to override the element style in html
+			height: variables.$token-scale-1000 !important; // !important required to override the element style in html
 		}
 	}
 
 	&.show-value-as-tags {
 		.vscomp-toggle-button {
 			height: auto;
-			min-height: $token-scale-1000;
-			padding: 6px $token-scale-1200 2px $token-scale-400; // 6px/2px: design-spec vertical rhythm for tag rows, no exact token
+			min-height: variables.$token-scale-1000;
+			padding: 6px variables.$token-scale-1200 2px variables.$token-scale-400; // 6px/2px: design-spec vertical rhythm for tag rows, no exact token
 		}
 
 		.vscomp-value-tag {
 			align-items: center;
-			background-color: $token-bg-neutral-subtlest-hover;
+			background-color: variables.$token-bg-neutral-subtlest-hover;
 			border: none;
 			border-radius: var(--border-radius-rounded);
 			color: var(--color-text-subtlest);
 			display: inline-flex;
-			font-size: $token-font-size-300;
-			font-weight: $token-font-weight-medium;
-			height: $token-scale-700;
-			padding: 0 $token-space-200 0 $token-space-300;
+			font-size: variables.$token-font-size-300;
+			font-weight: variables.$token-font-weight-medium;
+			height: variables.$token-scale-700;
+			padding: 0 variables.$token-scale-200 0 variables.$token-scale-300;
 			position: relative;
 
 			.vscomp-value-tag-content {
@@ -163,9 +166,10 @@
 			.vscomp-value-tag-clear-button {
 				background-color: transparent;
 				border-radius: 0;
-				color: $token-icon-subtlest;
+				color: variables.$token-icon-subtlest;
 				height: auto;
-				margin-left: $token-scale-100;
+				margin-left: variables.$token-scale-100;
+				opacity: 0.5;
 				position: relative;
 				right: auto;
 				top: auto;
@@ -173,15 +177,15 @@
 				width: auto;
 
 				.vscomp-clear-icon {
-					height: $token-scale-300;
-					left: $token-scale-0;
+					height: variables.$token-scale-300;
+					left: variables.$token-scale-0;
 					position: relative;
-					top: $token-scale-0;
-					width: $token-scale-300;
+					top: variables.$token-scale-0;
+					width: variables.$token-scale-300;
 
 					&:before,
 					&:after {
-						color: $token-icon-subtlest;
+						color: variables.$token-icon-subtlest;
 					}
 				}
 
@@ -189,7 +193,7 @@
 					.vscomp-clear-icon {
 						&:before,
 						&:after {
-							color: $token-icon-default;
+							color: variables.$token-icon-default;
 						}
 					}
 				}
@@ -208,13 +212,13 @@
 			border: none;
 
 			&-container {
-				background-color: $token-backdrop;
+				background-color: variables.$token-backdrop;
 				// The !important is needed in order to overwrite the inline style added by library!
 				z-index: var(--layer-elevated) !important;
 			}
 
 			.vscomp-search-container {
-				height: $token-scale-1200;
+				height: variables.$token-scale-1200;
 			}
 
 			.vscomp-search-input {
@@ -226,7 +230,7 @@
 	// RTL Text
 	&.text-direction-rtl {
 		.vscomp-search-container {
-			padding: $token-space-0 $token-space-400;
+			padding: variables.$token-scale-0 variables.$token-scale-400;
 		}
 
 		&.multiple {
@@ -243,8 +247,8 @@
 
 		&.has-value {
 			.vscomp-value {
-				margin-left: $token-scale-600;
-				margin-right: $token-scale-0;
+				margin-left: variables.$token-scale-600;
+				margin-right: variables.$token-scale-0;
 			}
 
 			&,
@@ -258,7 +262,7 @@
 		&.show-value-as-tags {
 			&.has-value {
 				.vscomp-toggle-button {
-					padding-right: $token-scale-200;
+					padding-right: variables.$token-scale-200;
 				}
 			}
 
@@ -272,20 +276,22 @@
 			}
 
 			.vscomp-toggle-button {
-				padding: $token-scale-100 $token-scale-400 $token-scale-0 $token-scale-1200;
+				padding: variables.$token-scale-100 variables.$token-scale-400 variables.$token-scale-0 variables.$token-scale-1200;
 			}
 		}
 
 		.vscomp-toggle-button {
-			padding: $token-scale-100 $token-scale-400 $token-scale-100 $token-scale-1000;
+			padding: variables.$token-scale-100 variables.$token-scale-400 variables.$token-scale-100 variables.$token-scale-1000;
 
 			&:after {
-				left: $token-scale-400;
+				left: variables.$token-scale-400;
 				right: auto;
 			}
 		}
 
 		.checkbox-icon {
+			margin-left: variables.$token-scale-200;
+
 			&.checked {
 				&:after {
 					@include IsRTL_CheckBoxCheckIconTransform;
@@ -297,7 +303,7 @@
 	&:not(.text-direction-rtl) {
 		&.has-value {
 			.vscomp-clear-button {
-				right: $token-scale-1000;
+				right: variables.$token-scale-1000;
 			}
 		}
 	}
@@ -305,26 +311,26 @@
 	// Checkbox
 	.checkbox-icon {
 		background-color: var(--color-background-input);
-		border-radius: $token-border-radius-100;
-		border: $token-border-size-025 solid var(--color-border-input);
-		height: $token-scale-400;
+		border-radius: variables.$token-border-radius-100;
+		border: variables.$token-border-size-025 solid var(--color-border-input);
+		height: variables.$token-scale-400;
 		margin-right: 0px;
 		overflow: visible;
-		transition: background-color $token-transition-time-300 $token-transition-curve-expressive;
-		width: $token-scale-400;
+		transition: background-color variables.$token-transition-time-300 variables.$token-transition-curve-expressive;
+		width: variables.$token-scale-400;
 
 		&:after {
 			backface-visibility: hidden;
 			border-color: transparent;
 			height: 85%;
 			opacity: 0;
-			transition: opacity $token-transition-time-300 $token-transition-curve-expressive;
+			transition: opacity variables.$token-transition-time-300 variables.$token-transition-curve-expressive;
 			width: 40%;
 		}
 
 		&.checked {
-			background-color: $token-semantics-primary-base;
-			border-color: $token-semantics-primary-base;
+			background-color: variables.$token-semantics-primary-base;
+			border-color: variables.$token-semantics-primary-base;
 
 			&:after {
 				border-color: var(--color-text-inverse);
@@ -341,40 +347,40 @@
 
 // Top part - Select to open dropdown
 .vscomp-toggle-button {
-	--vscomp-toogle-btn-arrow-size: var(--osui-dropdown-arrow-size, #{$token-scale-400});
-	--vscomp-toogle-btn-height: #{$token-scale-1000};
-	--vscomp-toogle-btn-mobile-height: #{$token-scale-1200};
+	--vscomp-toogle-btn-arrow-size: var(--osui-dropdown-arrow-size, #{variables.$token-scale-400});
+	--vscomp-toogle-btn-height: #{variables.$token-scale-1000};
+	--vscomp-toogle-btn-mobile-height: #{variables.$token-scale-1200};
 
 	background-color: var(--osui-dropdown-background, var(--color-background-input));
-	border-radius: var(--osui-dropdown-border-radius, $token-border-radius-200);
-	border: $token-border-size-025 solid var(--osui-dropdown-border-color, var(--color-border-input));
+	border-radius: var(--osui-dropdown-border-radius, variables.$token-border-radius-200);
+	border: variables.$token-border-size-025 solid var(--osui-dropdown-border-color, var(--color-border-input));
 	color: var(--color-text);
 	cursor: pointer;
 	display: inline-flex;
-	font-size: $token-font-size-350;
+	font-size: variables.$token-font-size-350;
 	height: var(--vscomp-toogle-btn-height);
 	line-height: var(--vscomp-toogle-btn-height);
 	min-width: 180px;
-	padding: $token-scale-100 $token-scale-1000 $token-scale-100 $token-scale-400;
+	padding: variables.$token-scale-100 variables.$token-scale-1000 variables.$token-scale-100 variables.$token-scale-400;
 	position: relative;
-	transition: border-color $token-transition-time-100 $token-transition-curve-base;
+	transition: border-color variables.$token-transition-time-100 variables.$token-transition-curve-base;
 	vertical-align: middle;
 	width: 100%;
 
 	// Create new arrow for all dropdown types
 	&:after {
 		align-items: center;
-		color: var(--osui-dropdown-arrow-color, #{$token-icon-subtlest});
+		color: var(--osui-dropdown-arrow-color, #{variables.$token-icon-subtlest});
 		display: flex;
 		height: var(--vscomp-toogle-btn-arrow-size);
 		justify-content: center;
 		line-height: 1;
 		position: absolute;
-		right: $token-scale-400;
+		right: variables.$token-scale-400;
 		top: 50%;
 		transform: translateY(-50%);
 		transform-origin: center;
-		transition: transform $token-transition-time-100 $token-transition-curve-base;
+		transition: transform variables.$token-transition-time-100 variables.$token-transition-curve-base;
 		width: var(--vscomp-toogle-btn-arrow-size);
 	}
 
@@ -390,7 +396,7 @@
 // Container with the selected value(s)
 .vscomp-value {
 	color: var(--color-text-subtlest);
-	font-size: $token-font-size-350;
+	font-size: variables.$token-font-size-350;
 }
 
 // Default dropdown arrow
@@ -421,9 +427,9 @@
 }
 
 .vscomp-dropbox {
-	background-color: var(--osui-dropdown-list-background, $token-bg-surface-default);
-	border: $token-border-size-025 solid var(--color-border);
-	border-radius: var(--osui-dropdown-border-radius, $token-border-radius-200);
+	background-color: var(--osui-dropdown-list-background, variables.$token-bg-surface-default);
+	border: variables.$token-border-size-025 solid var(--color-border);
+	border-radius: var(--osui-dropdown-border-radius, variables.$token-border-radius-200);
 	box-shadow: var(--osui-elevation-overlay);
 	overflow: hidden;
 	padding: 0;
@@ -436,20 +442,20 @@
 
 // Options container input search wrapper
 .vscomp-search-container {
-	border-bottom: $token-border-size-025 solid var(--color-border);
-	padding: $token-scale-0 $token-scale-200 $token-scale-0 $token-scale-400;
+	border-bottom: variables.$token-border-size-025 solid var(--color-border);
+	padding: variables.$token-scale-0 variables.$token-scale-200 variables.$token-scale-0 variables.$token-scale-400;
 	position: relative;
 
 	.vscomp-search-clear {
 		border-radius: 50%;
-		color: $token-primitives-neutral-700;
+		color: variables.$token-primitives-neutral-700;
 		display: table;
 		font-size: 0;
-		font-weight: $token-font-weight-semi-bold;
-		height: $token-scale-600;
+		font-weight: variables.$token-font-weight-semi-bold;
+		height: variables.$token-scale-600;
 		line-height: 1;
 		text-align: center;
-		width: $token-scale-600;
+		width: variables.$token-scale-600;
 
 		/* Hide text from provider div in order to keep consistency on styles */
 		text-indent: 100%;
@@ -470,13 +476,13 @@
 	// Move "Toggle all" checkbox to the end of the search container
 	.vscomp-toggle-all-button {
 		order: 1;
-		margin-left: $token-space-200;
+		margin-left: variables.$token-scale-200;
 	}
 }
 
 // Options container input search
 .vscomp-search-input {
-	font-size: $token-font-size-350;
+	font-size: variables.$token-font-size-350;
 
 	&::placeholder {
 		color: var(--color-text-subtlest);
@@ -506,8 +512,8 @@
 	align-items: center;
 	color: var(--color-text);
 	display: flex;
-	font-size: $token-font-size-350;
-	gap: $token-scale-100;
+	font-size: variables.$token-font-size-350;
+	gap: variables.$token-scale-100;
 	min-width: 0;
 	overflow: hidden;
 }
@@ -517,29 +523,29 @@
 	align-items: center;
 	background-color: var(--color-background-input);
 	flex-wrap: nowrap;
-	font-weight: $token-font-weight-regular;
+	font-weight: variables.$token-font-weight-regular;
 	justify-content: space-between;
-	transition: background-color $token-transition-time-100 $token-transition-curve-base;
+	transition: background-color variables.$token-transition-time-100 variables.$token-transition-curve-base;
 
 	&.focused {
-		background-color: $token-bg-neutral-subtlest-hover;
+		background-color: variables.$token-bg-neutral-subtlest-hover;
 	}
 
 	&.selected {
 		background-color: transparent;
 
 		&.focused {
-			background-color: $token-bg-neutral-subtlest-hover;
+			background-color: variables.$token-bg-neutral-subtlest-hover;
 		}
 
 		// Right-side checkmark — requires --osui-icon-check + --osui-icon-font-family (icon library)
 		&::after {
-			color: $token-semantics-primary-base;
+			color: variables.$token-semantics-primary-base;
 			content: var(--osui-icon-check);
 			flex-shrink: 0;
 			font-family: var(--osui-icon-font-family);
-			font-size: $token-font-size-400;
-			margin-left: $token-scale-200;
+			font-size: variables.$token-font-size-400;
+			margin-left: variables.$token-scale-200;
 		}
 	}
 
@@ -550,9 +556,9 @@
 			// Style group title in single select dropdown
 			// this selector is necessary so that the style is not applied when the option has a checkbox
 			&:only-child {
-				color: $token-primitives-neutral-700;
-				font-size: $token-font-size-275;
-				font-weight: $token-font-weight-semi-bold;
+				color: variables.$token-primitives-neutral-700;
+				font-size: variables.$token-font-size-275;
+				font-weight: variables.$token-font-weight-semi-bold;
 				text-transform: uppercase;
 			}
 		}
@@ -566,15 +572,15 @@
 
 // Option Item description
 .vscomp-option-description {
-	color: $token-primitives-neutral-700;
-	font-size: $token-font-size-275;
+	color: variables.$token-primitives-neutral-700;
+	font-size: variables.$token-font-size-275;
 	margin-top: 1px;
 }
 
 // When using the extensibility property allowNewOption
 .vscomp-new-option-icon {
 	&::before {
-		border: 15px solid $token-semantics-primary-base;
+		border: 15px solid variables.$token-semantics-primary-base;
 		border-bottom-color: rgba(0, 0, 0, 0);
 		border-left-color: rgba(0, 0, 0, 0);
 	}
@@ -596,12 +602,12 @@
 		box-shadow: none;
 
 		.checkbox-icon {
-			box-shadow: 0 0 0 $token-border-size-075 var(--color-focus-outer);
+			box-shadow: 0 0 0 variables.$token-border-size-075 var(--color-focus-outer);
 		}
 	}
 
 	.vscomp-option.focused {
-		box-shadow: inset 0 0 0 $token-border-size-075 var(--color-focus-outer);
+		box-shadow: inset 0 0 0 variables.$token-border-size-075 var(--color-focus-outer);
 	}
 }
 
@@ -611,14 +617,14 @@
 	.vscomp-wrapper {
 		&.show-value-as-tags {
 			.vscomp-value-tag {
-				border: $token-border-size-025 solid var(--color-border-input);
+				border: variables.$token-border-size-025 solid var(--color-border-input);
 			}
 		}
 
 		.vscomp-option {
 			&.focused {
 				&:before {
-					border: $token-border-size-050 solid var(--color-border-input);
+					border: variables.$token-border-size-050 solid var(--color-border-input);
 					bottom: 0;
 					content: '';
 					display: block;
@@ -642,7 +648,7 @@
 
 	.pop-comp-content,
 	.vscomp-dropbox-container {
-		border: $token-border-size-050 solid var(--color-border-input);
+		border: variables.$token-border-size-050 solid var(--color-border-input);
 	}
 
 	.vscomp-options-container {
@@ -651,11 +657,11 @@
 		}
 
 		&::-webkit-scrollbar-track {
-			border: $token-border-size-075 solid $token-primitives-neutral-400;
+			border: variables.$token-border-size-075 solid variables.$token-primitives-neutral-400;
 		}
 
 		&::-webkit-scrollbar-thumb {
-			border: $token-border-size-025 solid $token-primitives-neutral-400;
+			border: variables.$token-border-size-025 solid variables.$token-primitives-neutral-400;
 		}
 	}
 }

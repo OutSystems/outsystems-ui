@@ -1,3 +1,5 @@
+@use "../tokens/variables";
+
 /* Widgets - Dropdown */
 ////
 /// @group Widgets-Dropdown
@@ -8,7 +10,7 @@
 		// ─── Component CSS API ─────────────────────────────────────────────
 		--osui-dropdown-background: var(--color-background-input);
 		--osui-dropdown-border-color: var(--color-border-input);
-		--osui-dropdown-border-width: #{$token-border-size-025};
+		--osui-dropdown-border-width: #{variables.$token-border-size-025};
 		--osui-dropdown-color: var(--color-text);
 		--osui-dropdown-border-radius: var(--border-radius-soft);
 		--osui-dropdown-hover-border-color: var(--color-border-input-hover);
@@ -17,9 +19,9 @@
 		--osui-dropdown-list-border-color: var(--color-border);
 		--osui-dropdown-list-max-height: 240px;
 		--osui-dropdown-focus-border-color: var(--color-border-primary);
-		--osui-dropdown-focus-ring-color: #{$token-border-focus-default};
-		--osui-dropdown-arrow-color: #{$token-icon-subtlest};
-		--osui-dropdown-arrow-size: #{$token-scale-400};
+		--osui-dropdown-focus-ring-color: #{variables.$token-border-focus-default};
+		--osui-dropdown-arrow-color: #{variables.$token-icon-subtlest};
+		--osui-dropdown-arrow-size: #{variables.$token-scale-400};
 		// ───────────────────────────────────────────────────────────────────
 
 		cursor: initial;
@@ -39,9 +41,9 @@
 				color: var(--osui-dropdown-color);
 				cursor: pointer;
 				display: flex;
-				font-size: $token-font-size-350;
-				height: $token-scale-1000;
-				padding: $token-scale-0 $token-scale-400;
+				font-size: variables.$token-font-size-350;
+				height: variables.$token-scale-1000;
+				padding: variables.$token-scale-0 variables.$token-scale-400;
 				width: 100%;
 
 				&:hover {
@@ -50,7 +52,7 @@
 
 				&:focus {
 					border: var(--osui-dropdown-border-width) solid var(--osui-dropdown-focus-border-color);
-					box-shadow: 0 0 0 $token-border-size-050 var(--osui-dropdown-focus-ring-color);
+					box-shadow: 0 0 0 variables.$token-border-size-050 var(--osui-dropdown-focus-ring-color);
 					outline: none;
 				}
 			}
@@ -76,7 +78,7 @@
 
 		&.dropdown-expanded > div.dropdown-display {
 			border: var(--osui-dropdown-border-width) solid var(--osui-dropdown-focus-border-color);
-			box-shadow: 0 0 0 $token-border-size-050 var(--osui-dropdown-focus-ring-color);
+			box-shadow: 0 0 0 variables.$token-border-size-050 var(--osui-dropdown-focus-ring-color);
 		}
 
 		& > div.dropdown-list {
@@ -109,7 +111,7 @@
 			cursor: pointer;
 			display: flex;
 			justify-content: space-between;
-			padding: #{$token-scale-200} #{$token-scale-400};
+			padding: #{variables.$token-scale-200} #{variables.$token-scale-400};
 
 			&:hover,
 			&-selected:hover {
@@ -122,12 +124,12 @@
 
 				// Right-side checkmark — requires --osui-icon-check + --osui-icon-font-family (icon library)
 				&::after {
-					color: $token-semantics-primary-base;
+					color: variables.$token-semantics-primary-base;
 					content: var(--osui-icon-check);
 					flex-shrink: 0;
 					font-family: var(--osui-icon-font-family);
-					font-size: $token-font-size-400;
-					margin-left: $token-scale-200;
+					font-size: variables.$token-font-size-400;
+					margin-left: variables.$token-scale-200;
 				}
 			}
 
@@ -142,7 +144,7 @@
 			background: none;
 			max-height: 100%;
 			overflow-y: hidden;
-			padding: $token-scale-0;
+			padding: variables.$token-scale-0;
 
 			&:before,
 			&:after {
@@ -154,13 +156,13 @@
 	// Is expanded
 	&-expanded {
 		&-down div.dropdown-list {
-			margin-top: $token-scale-100;
+			margin-top: variables.$token-scale-100;
 			top: 100% !important;
 		}
 
 		&-up div.dropdown-list {
 			bottom: 100% !important;
-			margin-bottom: $token-scale-100;
+			margin-bottom: variables.$token-scale-100;
 			top: auto !important;
 		}
 	}
@@ -170,12 +172,12 @@ div,
 select {
 	&.dropdown-display {
 		// Platform sets font-weight: bold as inline style — !important required to override it
-		font-weight: $token-font-weight-regular !important;
+		font-weight: variables.$token-font-weight-regular !important;
 
 		&.dropdown-disabled,
 		&[disabled] {
 			background-color: var(--color-background-input-disabled);
-			border: $token-border-size-025 solid var(--color-border);
+			border: variables.$token-border-size-025 solid var(--color-border);
 			color: var(--color-text-disabled);
 			pointer-events: none;
 		}
@@ -188,7 +190,7 @@ div {
 
 		& > span,
 		& > div {
-			font-size: $token-font-size-350;
+			font-size: variables.$token-font-size-350;
 		}
 	}
 }
@@ -202,13 +204,13 @@ select.dropdown-display[disabled] {
 .phone {
 	div.dropdown-display,
 	select.dropdown-display {
-		font-size: $token-font-size-400;
-		height: $token-scale-1200;
+		font-size: variables.$token-font-size-400;
+		height: variables.$token-scale-1200;
 
 		.dropdown-display-content {
 			& > span,
 			& > div {
-				font-size: $token-font-size-400;
+				font-size: variables.$token-font-size-400;
 			}
 		}
 	}
@@ -221,7 +223,7 @@ select.dropdown-display[disabled] {
 		&.dropdown-expanded {
 			& > div.dropdown-display {
 				border-color: var(--color-focus-inner);
-				box-shadow: 0 0 0 $token-border-size-075 var(--color-focus-outer);
+				box-shadow: 0 0 0 variables.$token-border-size-075 var(--color-focus-outer);
 			}
 		}
 

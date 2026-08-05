@@ -1,3 +1,5 @@
+@use "../../tokens/variables";
+
 /* Patterns - Content - Tag */
 ////
 /// @group Patterns-Tag
@@ -14,28 +16,28 @@
 	align-items: center;
 	color: var(--osui-tag-color);
 	display: inline-flex;
-	font-size: $token-font-size-300;
-	font-weight: $token-font-weight-medium;
-	gap: $token-scale-100;
-	min-height: $token-scale-500;
+	font-size: variables.$token-font-size-300;
+	font-weight: variables.$token-font-weight-medium;
+	gap: variables.$token-scale-100;
+	min-height: variables.$token-scale-500;
 	justify-content: center;
 	letter-spacing: 0.01em; // design-spec: no letter-spacing token in system
-	line-height: $token-font-line-height-full;
+	line-height: variables.$token-font-line-height-full;
 	min-width: unset;
-	padding: $token-scale-0 $token-scale-200;
+	padding: variables.$token-scale-0 variables.$token-scale-200;
 	word-break: normal;
 
 	&.tag {
 		&-small {
 			font-size: var(--osui-font-size-200);
-			min-height: $token-scale-400;
-			padding: $token-scale-0 $token-scale-150;
+			min-height: variables.$token-scale-400;
+			padding: variables.$token-scale-0 variables.$token-scale-150;
 		}
 
 		&-medium {
-			font-size: $token-font-size-350;
-			min-height: $token-scale-700;
-			padding: $token-scale-0 $token-scale-300;
+			font-size: variables.$token-font-size-350;
+			min-height: variables.$token-scale-700;
+			padding: variables.$token-scale-0 variables.$token-scale-300;
 		}
 	}
 

@@ -7,8 +7,9 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 	 * @class AbstractVirtualSelectConfig
 	 * @extends {AbstractDropdownConfig}
 	 */
-	export abstract class AbstractVirtualSelectConfig extends OSFramework.OSUI.Patterns.Dropdown
-		.AbstractDropdownConfig {
+	export abstract class AbstractVirtualSelectConfig
+		extends OSFramework.OSUI.Patterns.Dropdown.AbstractDropdownConfig
+	{
 		// Store grouped options
 		private _groupedOptionsList: GroupDropDownOption[];
 		// Store the Provider Options

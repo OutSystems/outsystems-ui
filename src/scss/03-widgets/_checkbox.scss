@@ -1,3 +1,5 @@
+@use "../tokens/variables";
+
 /* Widgets - Checkbox */
 ////
 /// @group Widgets-Checkbox
@@ -6,7 +8,7 @@
 ///
 [data-checkbox] {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-checkbox-size: #{$token-scale-600};
+	--osui-checkbox-size: #{variables.$token-scale-600};
 	--osui-checkbox-background: var(--color-background-input);
 	--osui-checkbox-border-color: var(--color-border-input);
 	// Same hover tier as .form-control[data-input], so a checkbox and an input
@@ -17,18 +19,18 @@
 	// ───────────────────────────────────────────────────────────────────
 
 	height: var(--osui-checkbox-size);
-	padding: $token-scale-0;
+	padding: variables.$token-scale-0;
 	width: var(--osui-checkbox-size);
 
 	&:before {
 		background: var(--osui-checkbox-background);
-		border: $token-border-size-025 solid var(--osui-checkbox-border-color);
+		border: variables.$token-border-size-025 solid var(--osui-checkbox-border-color);
 		border-radius: var(--osui-checkbox-border-radius);
 		height: calc(var(--osui-checkbox-size) - 2px);
 		opacity: 1;
 		transition:
-			background-color var(--osui-motion-duration-180) $token-transition-curve-linear,
-			border-color var(--osui-motion-duration-180) $token-transition-curve-linear;
+			background-color var(--osui-motion-duration-180) variables.$token-transition-curve-linear,
+			border-color var(--osui-motion-duration-180) variables.$token-transition-curve-linear;
 		width: calc(var(--osui-checkbox-size) - 2px);
 	}
 
@@ -41,18 +43,18 @@
 	&:checked {
 		&:before {
 			background: var(--osui-checkbox-checked-color);
-			border: $token-border-size-025 solid var(--osui-checkbox-checked-color);
+			border: variables.$token-border-size-025 solid var(--osui-checkbox-checked-color);
 		}
 
 		&:after {
-			border: $token-border-size-075 solid var(--color-text-inverse);
-			border-right: $token-border-size-0 !important;
-			border-top: $token-border-size-0 !important;
+			border: variables.$token-border-size-075 solid var(--color-text-inverse);
+			border-right: variables.$token-border-size-0 !important;
+			border-top: variables.$token-border-size-0 !important;
 			display: block;
-			height: $token-scale-100;
+			height: variables.$token-scale-100;
 			left: 5px;
 			top: 7px;
-			width: $token-scale-300;
+			width: variables.$token-scale-300;
 		}
 	}
 
@@ -62,12 +64,12 @@
 		&:before,
 		&:checked:before {
 			background-color: var(--color-border-subtle);
-			border: $token-border-size-025 solid var(--color-border);
+			border: variables.$token-border-size-025 solid var(--color-border);
 		}
 
 		&:checked {
 			&:after {
-				border: $token-border-size-075 solid var(--color-text-disabled);
+				border: variables.$token-border-size-075 solid var(--color-text-disabled);
 			}
 		}
 	}
@@ -78,7 +80,7 @@
 .tablet,
 .phone {
 	[data-checkbox] {
-		--osui-checkbox-size: #{$token-scale-800};
+		--osui-checkbox-size: #{variables.$token-scale-800};
 
 		&:checked {
 			&:after {

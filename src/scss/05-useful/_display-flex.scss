@@ -1,3 +1,5 @@
+@use "../tokens/variables";
+
 /* Usefull - Display Flex */
 ////
 /// @group UsefullClasses-Display_Flex
@@ -78,72 +80,72 @@
 
 .gap {
 	&-xs {
-		gap: $token-scale-100;
+		gap: variables.$token-scale-100;
 	}
 	&-s {
-		gap: $token-scale-200;
+		gap: variables.$token-scale-200;
 	}
 	&-base {
-		gap: $token-scale-400;
+		gap: variables.$token-scale-400;
 	}
 	&-m {
-		gap: $token-scale-600;
+		gap: variables.$token-scale-600;
 	}
 	&-l {
-		gap: $token-scale-800;
+		gap: variables.$token-scale-800;
 	}
 	&-xl {
-		gap: $token-scale-1000;
+		gap: variables.$token-scale-1000;
 	}
 	&-xxl {
-		gap: $token-scale-1200;
+		gap: variables.$token-scale-1200;
 	}
 }
 
 .row-gap {
 	&-xs {
-		row-gap: $token-scale-100;
+		row-gap: variables.$token-scale-100;
 	}
 	&-s {
-		row-gap: $token-scale-200;
+		row-gap: variables.$token-scale-200;
 	}
 	&-base {
-		row-gap: $token-scale-400;
+		row-gap: variables.$token-scale-400;
 	}
 	&-m {
-		row-gap: $token-scale-600;
+		row-gap: variables.$token-scale-600;
 	}
 	&-l {
-		row-gap: $token-scale-800;
+		row-gap: variables.$token-scale-800;
 	}
 	&-xl {
-		row-gap: $token-scale-1000;
+		row-gap: variables.$token-scale-1000;
 	}
 	&-xxl {
-		row-gap: $token-scale-1200;
+		row-gap: variables.$token-scale-1200;
 	}
 }
 
 .column-gap {
 	&-xs {
-		column-gap: $token-scale-100;
+		column-gap: variables.$token-scale-100;
 	}
 	&-s {
-		column-gap: $token-scale-200;
+		column-gap: variables.$token-scale-200;
 	}
 	&-base {
-		column-gap: $token-scale-400;
+		column-gap: variables.$token-scale-400;
 	}
 	&-m {
-		column-gap: $token-scale-600;
+		column-gap: variables.$token-scale-600;
 	}
 	&-l {
-		column-gap: $token-scale-800;
+		column-gap: variables.$token-scale-800;
 	}
 	&-xl {
-		column-gap: $token-scale-1000;
+		column-gap: variables.$token-scale-1000;
 	}
 	&-xxl {
-		column-gap: $token-scale-1200;
+		column-gap: variables.$token-scale-1200;
 	}
 }

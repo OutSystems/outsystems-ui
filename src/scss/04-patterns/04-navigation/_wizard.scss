@@ -1,3 +1,5 @@
+@use "../../tokens/variables";
+
 /* Patterns - Navigation - Wizard */
 ////
 /// @group Patterns-Wizard
@@ -9,18 +11,18 @@
 		// ─── Component CSS API ─────────────────────────────────────────────
 		--osui-wizard-icon-background: var(--color-background-surface);
 		--osui-wizard-icon-border-color: var(--color-border-input);
-		--osui-wizard-icon-border-width: #{$token-border-size-050};
-		--osui-wizard-icon-color: #{$token-text-subtlest};
-		--osui-wizard-icon-size: #{$token-scale-1000};
+		--osui-wizard-icon-border-width: #{variables.$token-border-size-050};
+		--osui-wizard-icon-color: #{variables.$token-text-subtlest};
+		--osui-wizard-icon-size: #{variables.$token-scale-1000};
 		--osui-wizard-label-color: var(--color-text);
 		--osui-wizard-active-color: var(--color-primary);
-		--osui-wizard-active-icon-color: #{$token-text-primary};
-		--osui-wizard-next-icon-color: #{$token-text-subtlest};
+		--osui-wizard-active-icon-color: #{variables.$token-text-primary};
+		--osui-wizard-next-icon-color: #{variables.$token-text-subtlest};
 		--osui-wizard-past-background: var(--color-primary);
 		--osui-wizard-past-color: var(--color-text-inverse);
-		--osui-wizard-connector-color: #{$token-bg-neutral-base-default};
+		--osui-wizard-connector-color: #{variables.$token-bg-neutral-base-default};
 		--osui-wizard-focus-halo-color: var(--osui-border-focus-halo);
-		--osui-wizard-focus-halo-width: #{$token-border-size-075};
+		--osui-wizard-focus-halo-width: #{variables.$token-border-size-075};
 		// ───────────────────────────────────────────────────────────────────
 
 		&.wizard-vertical {
@@ -28,7 +30,7 @@
 				.wizard-wrapper-item {
 					align-items: center;
 					flex-direction: row;
-					margin-bottom: $token-scale-800;
+					margin-bottom: variables.$token-scale-800;
 
 					&.label-top {
 						flex-direction: row-reverse;
@@ -36,7 +38,7 @@
 				}
 
 				&:last-child {
-					margin-bottom: $token-scale-0;
+					margin-bottom: variables.$token-scale-0;
 				}
 			}
 
@@ -90,11 +92,11 @@
 		border-radius: 50%;
 		color: var(--osui-wizard-icon-color);
 		display: flex;
-		height: var(--osui-wizard-icon-size, #{$token-scale-1000});
+		height: var(--osui-wizard-icon-size, #{variables.$token-scale-1000});
 		justify-content: center;
 		margin: 0 auto;
 		position: relative;
-		width: var(--osui-wizard-icon-size, #{$token-scale-1000});
+		width: var(--osui-wizard-icon-size, #{variables.$token-scale-1000});
 		z-index: var(--layer-local-tier-1);
 
 		[data-block*='WizardItem']:focus-visible & {
@@ -108,7 +110,7 @@
 		}
 
 		&-wrapper {
-			margin: $token-scale-200 $token-scale-0;
+			margin: variables.$token-scale-200 variables.$token-scale-0;
 			position: relative;
 			width: 100%;
 
@@ -117,21 +119,21 @@
 				content: '';
 				height: 2px;
 				position: absolute;
-				right: calc(50% + var(--osui-wizard-icon-size, #{$token-scale-1000}) / 2);
+				right: calc(50% + var(--osui-wizard-icon-size, #{variables.$token-scale-1000}) / 2);
 				top: 50%;
 				transform: translateY(-50%);
-				width: calc(100% - var(--osui-wizard-icon-size, #{$token-scale-1000}));
+				width: calc(100% - var(--osui-wizard-icon-size, #{variables.$token-scale-1000}));
 				z-index: var(--layer-screen);
 			}
 
 			&:has(.wizard-item-icon:empty):before {
-				right: calc(50% + #{$token-scale-100});
-				width: calc(100% - #{$token-scale-200});
+				right: calc(50% + #{variables.$token-scale-100});
+				width: calc(100% - #{variables.$token-scale-200});
 			}
 		}
 
 		.icon {
-			font-size: $token-font-size-400;
+			font-size: variables.$token-font-size-400;
 			width: auto;
 		}
 	}
@@ -142,7 +144,7 @@
 				&-icon {
 					background-color: var(--osui-wizard-icon-background);
 					border-color: var(--osui-wizard-active-color);
-					box-shadow: 0 0 0 $token-scale-100
+					box-shadow: 0 0 0 variables.$token-scale-100
 						color-mix(in srgb, var(--osui-wizard-active-color) 15%, transparent);
 					color: var(--osui-wizard-active-icon-color);
 
@@ -155,7 +157,7 @@
 
 				&-label {
 					color: var(--color-text);
-					font-weight: $token-font-weight-medium;
+					font-weight: variables.$token-font-weight-medium;
 				}
 			}
 		}
@@ -197,14 +199,14 @@
 
 	&-vertical {
 		.wizard-item-icon-wrapper {
-			margin: $token-scale-0 $token-scale-200 $token-scale-0 $token-scale-0;
+			margin: variables.$token-scale-0 variables.$token-scale-200 variables.$token-scale-0 variables.$token-scale-0;
 			width: auto;
 		}
 
 		.wizard-wrapper-item {
 			.wizard-item-icon-wrapper {
 				&:before {
-					bottom: calc(50% + var(--osui-wizard-icon-size, #{$token-scale-1000}) / 2);
+					bottom: calc(50% + var(--osui-wizard-icon-size, #{variables.$token-scale-1000}) / 2);
 					height: calc(100% + 18px); // design-spec: 18px connector overhang
 					left: 50%;
 					top: auto;
@@ -219,7 +221,7 @@
 				}
 
 				.wizard-item-icon-wrapper {
-					margin: $token-scale-0 $token-scale-0 $token-scale-0 $token-scale-200;
+					margin: variables.$token-scale-0 variables.$token-scale-0 variables.$token-scale-0 variables.$token-scale-200;
 				}
 			}
 		}
@@ -264,7 +266,7 @@ html[data-uieditorversion^='1'] {
 
 				&:last-child {
 					& {
-						-servicestudio-margin-bottom: $token-scale-0;
+						-servicestudio-margin-bottom: variables.$token-scale-0;
 					}
 				}
 			}
@@ -285,13 +287,13 @@ html[data-uieditorversion^='1'] {
 .is-rtl {
 	.wizard-vertical {
 		.wizard-item-icon-wrapper {
-			margin: $token-scale-0 $token-scale-0 $token-scale-0 $token-scale-200;
+			margin: variables.$token-scale-0 variables.$token-scale-0 variables.$token-scale-0 variables.$token-scale-200;
 		}
 
 		.wizard-wrapper-item {
 			&.label-top {
 				.wizard-item-icon-wrapper {
-					margin: $token-scale-0 $token-scale-200 $token-scale-0 $token-scale-0;
+					margin: variables.$token-scale-0 variables.$token-scale-200 variables.$token-scale-0 variables.$token-scale-0;
 				}
 			}
 		}

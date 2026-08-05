@@ -1,3 +1,7 @@
+@use "sass:map";
+@use '../00-abstract/index' as *;
+@use "../tokens/variables";
+
 /* Usefull - Padding */
 ////
 /// @group UsefullClasses-Padding
@@ -7,23 +11,23 @@
 .padding {
 	@each $type, $value in $osui-sizes {
 		&-#{$type} {
-			padding: #{map-get($osui-space-token-vars, $type)};
+			padding: #{map.get($osui-space-token-vars, $type)};
 		}
 
 		@each $osui-box-side in $osui-box-sides {
 			&-#{$osui-box-side}-#{$type} {
-				padding-#{$osui-box-side}: #{map-get($osui-space-token-vars, $type)};
+				padding-#{$osui-box-side}: #{map.get($osui-space-token-vars, $type)};
 			}
 		}
 
 		&-x-#{$type} {
-			padding-left: #{map-get($osui-space-token-vars, $type)};
-			padding-right: #{map-get($osui-space-token-vars, $type)};
+			padding-left: #{map.get($osui-space-token-vars, $type)};
+			padding-right: #{map.get($osui-space-token-vars, $type)};
 		}
 
 		&-y-#{$type} {
-			padding-bottom: #{map-get($osui-space-token-vars, $type)};
-			padding-top: #{map-get($osui-space-token-vars, $type)};
+			padding-bottom: #{map.get($osui-space-token-vars, $type)};
+			padding-top: #{map.get($osui-space-token-vars, $type)};
 		}
 	}
 
@@ -38,13 +42,13 @@
 	@each $type, $value in $osui-sizes {
 		.padding {
 			&-right-#{$type} {
-				padding-left: #{map-get($osui-space-token-vars, $type)};
-				padding-right: $token-scale-0;
+				padding-left: #{map.get($osui-space-token-vars, $type)};
+				padding-right: variables.$token-scale-0;
 			}
 
 			&-left-#{$type} {
-				padding-left: $token-scale-0;
-				padding-right: #{map-get($osui-space-token-vars, $type)};
+				padding-left: variables.$token-scale-0;
+				padding-right: #{map.get($osui-space-token-vars, $type)};
 			}
 		}
 	}

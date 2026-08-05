@@ -1,3 +1,5 @@
+@use "../../tokens/variables";
+
 /* Patterns - Navigation - Timeline */
 ////
 /// @group Patterns-Timeline
@@ -6,7 +8,7 @@
 ///
 .timeline {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-timeline-line-color: #{$token-bg-neutral-base-default};
+	--osui-timeline-line-color: #{variables.$token-bg-neutral-base-default};
 	--osui-timeline-icon-color: var(--color-text-inverse);
 	--osui-timeline-text-color: var(--color-text-subtlest);
 	// ───────────────────────────────────────────────────────────────────
@@ -18,12 +20,12 @@
 
 		.timeline-content,
 		.timeline-right {
-			padding-top: $token-scale-100;
+			padding-top: variables.$token-scale-100;
 		}
 
 		.timeline-content {
 			flex: 1;
-			margin-bottom: $token-scale-1000;
+			margin-bottom: variables.$token-scale-1000;
 		}
 	}
 
@@ -34,9 +36,9 @@
 		position: relative;
 
 		&-line {
-			background-color: var(--osui-timeline-line-color, #{$token-bg-neutral-base-default});
+			background-color: var(--osui-timeline-line-color, #{variables.$token-bg-neutral-base-default});
 			flex: 1;
-			margin: $token-scale-200 $token-scale-0 $token-scale-200;
+			margin: variables.$token-scale-200 variables.$token-scale-0 variables.$token-scale-200;
 			width: 1px;
 		}
 
@@ -45,16 +47,16 @@
 			border-radius: 50%;
 			color: var(--osui-timeline-icon-color, var(--color-text-inverse));
 			display: flex;
-			font-size: $token-font-size-300;
-			height: $token-scale-700;
+			font-size: variables.$token-font-size-300;
+			height: variables.$token-scale-700;
 			justify-content: center;
-			margin: $token-scale-0 $token-scale-400;
+			margin: variables.$token-scale-0 variables.$token-scale-400;
 			text-align: center;
-			width: $token-scale-700;
+			width: variables.$token-scale-700;
 
 			&:empty {
 				height: 8px; // design-spec: dot size, no token equivalent
-				margin: 10px $token-scale-600 0; // design-spec: 10px top offset
+				margin: 10px variables.$token-scale-600 0; // design-spec: 10px top offset
 				width: 8px; // design-spec: dot size, no token equivalent
 			}
 		}
@@ -66,7 +68,7 @@
 	}
 
 	&-right {
-		margin-left: $token-scale-400;
+		margin-left: variables.$token-scale-400;
 		white-space: nowrap;
 	}
 

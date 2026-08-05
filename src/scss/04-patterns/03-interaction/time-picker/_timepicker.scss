@@ -4,7 +4,8 @@
 /// Patterns - Interaction - TimePicker
 
 /// Import Flatpickr library styles
-@import 'provider/flatpickr';
+@use 'provider/flatpickr';
+@use "../../../tokens/variables";
 
 ///
 .osui-timepicker {
@@ -31,7 +32,7 @@
 		// Disable states for Datepicker
 		&.flatpickr-input[disabled] + input {
 			background-color: var(--osui-timepicker-disabled-background);
-			border: $token-border-size-025 solid var(--osui-timepicker-disabled-border-color);
+			border: variables.$token-border-size-025 solid var(--osui-timepicker-disabled-border-color);
 			color: var(--osui-timepicker-disabled-color);
 			pointer-events: none;
 		}
@@ -55,11 +56,11 @@
 
 		// Service Studio Preview
 		& {
-			-servicestudio-background-color: $token-primitives-base-white;
-			-servicestudio-border-radius: $token-border-radius-100;
+			-servicestudio-background-color: variables.$token-primitives-base-white;
+			-servicestudio-border-radius: variables.$token-border-radius-100;
 			-servicestudio-display: flex;
 			-servicestudio-justify-content: space-evenly;
-			-servicestudio-line-height: $token-scale-1000;
+			-servicestudio-line-height: variables.$token-scale-1000;
 			-servicestudio-margin-top: 2px;
 			-servicestudio-max-width: 320px;
 			-servicestudio-position: relative;
@@ -67,16 +68,16 @@
 			-servicestudio-z-index: var(--layer-local-tier-1);
 
 			&.time12h {
-				padding-right: $token-scale-1200;
+				padding-right: variables.$token-scale-1200;
 				&:after {
-					background-color: $token-primitives-neutral-700;
+					background-color: variables.$token-primitives-neutral-700;
 					border-radius: var(--border-radius-rounded);
-					color: $token-primitives-base-white;
+					color: variables.$token-primitives-base-white;
 					content: 'am';
 					font-size: clamp(10px, 1.5vw, 12px);
-					font-weight: $token-font-weight-semi-bold;
-					height: $token-scale-600;
-					line-height: $token-scale-600;
+					font-weight: variables.$token-font-weight-semi-bold;
+					height: variables.$token-scale-600;
+					line-height: variables.$token-scale-600;
 					margin-right: 2%;
 					position: absolute;
 					right: 0;
@@ -97,7 +98,7 @@
 
 	.not-valid + .input,
 	.not-valid + .flatpickr-mobile {
-		border-color: $token-semantics-danger-base;
+		border-color: variables.$token-semantics-danger-base;
 	}
 
 	.flatpickr-mobile ~ span.validation-message {
@@ -120,35 +121,35 @@
 		.flatpickr-time {
 			align-items: center;
 			padding: 0;
-			height: $token-scale-1000;
+			height: variables.$token-scale-1000;
 
 			&.time24hr:after {
 				display: none;
 			}
 
 			.numInputWrapper {
-				flex: 0 0 $token-scale-1200;
-				height: $token-scale-1000;
+				flex: 0 0 variables.$token-scale-1200;
+				height: variables.$token-scale-1000;
 				text-align: center;
-				width: $token-scale-1200;
+				width: variables.$token-scale-1200;
 			}
 
 			// AM/PM styled as an input pill (no-calendar mode)
 			.flatpickr-am-pm {
 				align-items: center;
 				background: var(--osui-input-background, var(--color-background-input));
-				border: $token-border-size-025 solid var(--osui-input-border-color, var(--color-border));
-				border-radius: $token-border-radius-200;
+				border: variables.$token-border-size-025 solid var(--osui-input-border-color, var(--color-border));
+				border-radius: variables.$token-border-radius-200;
 				color: var(--color-text-subtlest);
 				display: flex;
-				font-size: $token-font-size-350;
-				font-weight: $token-font-weight-medium;
-				height: $token-scale-600;
+				font-size: variables.$token-font-size-350;
+				font-weight: variables.$token-font-weight-medium;
+				height: variables.$token-scale-600;
 				justify-content: center;
-				margin-left: $token-scale-200;
-				margin-right: $token-scale-200;
+				margin-left: variables.$token-scale-200;
+				margin-right: variables.$token-scale-200;
 				min-width: 44px;
-				padding: $token-scale-0 $token-scale-300;
+				padding: variables.$token-scale-0 variables.$token-scale-300;
 				position: relative;
 				text-transform: uppercase;
 				width: auto;
@@ -163,28 +164,28 @@
 
 		&.dropdown--is-large {
 			.flatpickr-time {
-				height: $token-scale-1200;
-				max-height: $token-scale-1200;
+				height: variables.$token-scale-1200;
+				max-height: variables.$token-scale-1200;
 
 				.numInputWrapper {
-					height: $token-scale-1200;
+					height: variables.$token-scale-1200;
 				}
 				.flatpickr-time-separator {
-					line-height: $token-scale-1200;
+					line-height: variables.$token-scale-1200;
 				}
 			}
 		}
 
 		&.dropdown--is-small {
 			.flatpickr-time {
-				height: $token-scale-800;
-				max-height: $token-scale-800;
+				height: variables.$token-scale-800;
+				max-height: variables.$token-scale-800;
 
 				.numInputWrapper {
-					height: $token-scale-800;
+					height: variables.$token-scale-800;
 				}
 				.flatpickr-time-separator {
-					line-height: $token-scale-800;
+					line-height: variables.$token-scale-800;
 				}
 			}
 		}

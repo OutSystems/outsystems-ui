@@ -1,3 +1,5 @@
+@use "../../tokens/variables";
+
 /* Patterns - Navigation - Breadcrumbs */
 ////
 /// @group Patterns-Breadcrumbs
@@ -19,8 +21,8 @@
 		align-items: center;
 		color: var(--osui-breadcrumbs-item-color);
 		display: inline-flex;
-		font-size: $token-font-size-350;
-		font-weight: $token-font-weight-regular;
+		font-size: variables.$token-font-size-350;
+		font-weight: variables.$token-font-weight-regular;
 		line-height: 1;
 
 		a,
@@ -30,7 +32,7 @@
 			display: inline-flex;
 			line-height: 1;
 			text-decoration: none;
-			transition: color $token-transition-time-100 $token-transition-curve-base;
+			transition: color variables.$token-transition-time-100 variables.$token-transition-curve-base;
 
 			&:hover {
 				color: var(--color-text);
@@ -38,7 +40,7 @@
 			}
 
 			.icon {
-				font-size: $token-font-size-400;
+				font-size: variables.$token-font-size-400;
 			}
 		}
 
@@ -46,10 +48,10 @@
 			align-items: center;
 			color: var(--osui-breadcrumbs-separator-color);
 			display: inline-flex;
-			font-size: $token-font-size-300;
+			font-size: variables.$token-font-size-300;
 			justify-content: center;
 			line-height: 1;
-			margin: $token-scale-0 $token-scale-200;
+			margin: variables.$token-scale-0 variables.$token-scale-200;
 			width: auto;
 
 			i {
@@ -62,7 +64,7 @@
 	&-content > &-item:last-child,
 	&-content > *:last-child > &-item {
 		color: var(--color-text);
-		font-weight: $token-font-weight-semi-bold;
+		font-weight: variables.$token-font-weight-semi-bold;
 	}
 }
 

@@ -122,12 +122,7 @@ export function renderStatic(template: string): HTMLElement {
 }
 
 /** Create + Initialize a single pattern and register its Dispose for cleanup. */
-export function createAndInit(
-	apiName: string,
-	id: string,
-	configs: Record<string, unknown>,
-	register: Register
-): any {
+export function createAndInit(apiName: string, id: string, configs: Record<string, unknown>, register: Register): any {
 	const api = Patterns()[apiName];
 	if (!api) throw new Error(`OUI API not found: OutSystems.OSUI.Patterns.${apiName} (is the bundle loaded?)`);
 	const instance = api.Create(id, cfg(configs));

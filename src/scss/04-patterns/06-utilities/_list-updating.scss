@@ -1,3 +1,5 @@
+@use "../../tokens/variables";
+
 /* Patterns - Utilities - List Updating */
 ////
 /// @group Utilities-List_Updating
@@ -5,24 +7,24 @@
 
 ///
 .list-updating {
-	height: $token-scale-1000;
-	margin-top: $token-scale-600;
+	height: variables.$token-scale-1000;
+	margin-top: variables.$token-scale-600;
 	position: relative;
 
 	&:before {
 		animation:
-			spin $token-transition-time-1000 infinite $token-transition-curve-linear,
-			fade $token-transition-time-300 $token-transition-curve-expressive;
+			spin variables.$token-transition-time-1000 infinite variables.$token-transition-curve-linear,
+			fade variables.$token-transition-time-300 variables.$token-transition-curve-expressive;
 		border: 5px solid var(--color-border-input);
 		border-radius: 50%;
-		border-top-color: $token-primitives-neutral-700;
+		border-top-color: variables.$token-primitives-neutral-700;
 		box-sizing: border-box;
 		content: '';
-		height: $token-scale-1000;
+		height: variables.$token-scale-1000;
 		left: 50%;
 		margin-left: -20px;
 		position: absolute;
-		width: $token-scale-1000;
+		width: variables.$token-scale-1000;
 
 		// Service Studio Preview
 		& {

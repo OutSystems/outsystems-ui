@@ -1,3 +1,5 @@
+@use "../../../tokens/variables";
+
 /* Patterns - Navigation - OverflowMenu */
 ////
 /// @group Patterns-OverflowMenu
@@ -6,9 +8,9 @@
 .osui-overflow-menu {
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-overflow-menu-background:        var(--color-background-surface);
-	--osui-overflow-menu-shadow:            #{$token-elevation-2};
+	--osui-overflow-menu-shadow:            #{variables.$token-elevation-2};
 	--osui-overflow-menu-color:             var(--color-text);
-	--osui-overflow-menu-trigger-active-bg: #{$token-bg-neutral-subtle-default};
+	--osui-overflow-menu-trigger-active-bg: #{variables.$token-bg-neutral-subtle-default};
 	// ───────────────────────────────────────────────────────────────────
 
 	display: inline-block;
@@ -16,12 +18,12 @@
 	--border-radius-rounded: var(--border-radius-softer);
 
 	&__trigger {
-		--osui-floating-offset: #{$token-scale-200};
+		--osui-floating-offset: #{variables.$token-scale-200};
 
-		border: $token-border-size-025 solid transparent;
+		border: variables.$token-border-size-025 solid transparent;
 		border-radius: var(--osui-btn-border-radius, var(--border-radius-soft));
 		color: var(--osui-overflow-menu-color);
-		width: $token-scale-800;
+		width: variables.$token-scale-800;
 
 		* {
 			pointer-events: none;
@@ -59,13 +61,13 @@
 				-servicestudio-align-items: center;
 				-servicestudio-display: inline-flex !important;
 				-servicestudio-color: var(--color-text);
-				-servicestudio-padding: $token-scale-200 $token-scale-400;
+				-servicestudio-padding: variables.$token-scale-200 variables.$token-scale-400;
 			}
 		}
 
 		// To make extensibility with ExtendedClass easier
 		a:not([class^='padding-']) {
-			padding: $token-scale-200 $token-scale-400;
+			padding: variables.$token-scale-200 variables.$token-scale-400;
 		}
 	}
 }
@@ -90,7 +92,7 @@ html:has(.popup-backdrop) .osui-overflow-menu__balloon {
 		.osui-overflow-menu__trigger {
 			&.btn {
 				// Longer specificity to be able to always override default responsive styles for buttons
-				width: $token-scale-1000;
+				width: variables.$token-scale-1000;
 			}
 		}
 	}
@@ -100,11 +102,11 @@ html:has(.popup-backdrop) .osui-overflow-menu__balloon {
 ///
 .os-high-contrast {
 	.osui-overflow-menu__balloon {
-		border: $token-border-size-025 solid var(--color-border-input);
+		border: variables.$token-border-size-025 solid var(--color-border-input);
 
 		a {
 			&:hover {
-				outline: $token-border-size-075 solid var(--color-focus-outer);
+				outline: variables.$token-border-size-075 solid var(--color-focus-outer);
 			}
 		}
 	}

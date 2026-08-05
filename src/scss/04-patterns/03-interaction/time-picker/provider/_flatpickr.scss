@@ -1,3 +1,5 @@
+@use "../../../../tokens/variables";
+
 // TimePicker
 .osui-timepicker__dropdown {
 	.numInputWrapper {
@@ -9,12 +11,12 @@
 	.flatpickr-time {
 		.flatpickr-time-separator,
 		.numInputWrapper .numInput {
-			font-weight: $token-font-weight-semi-bold;
+			font-weight: variables.$token-font-weight-semi-bold;
 		}
 
 		.flatpickr-time-separator {
-			color: $token-primitives-neutral-700;
-			line-height: $token-scale-1000;
+			color: variables.$token-primitives-neutral-700;
+			line-height: variables.$token-scale-1000;
 		}
 	}
 
@@ -22,12 +24,12 @@
 	.flatpickr-am-pm {
 		background-color: var(--color-border-input);
 		border-radius: var(--border-radius-rounded);
-		height: $token-scale-600;
-		line-height: $token-scale-600;
+		height: variables.$token-scale-600;
+		line-height: variables.$token-scale-600;
 		position: absolute;
-		right: $token-scale-100;
+		right: variables.$token-scale-100;
 		text-transform: uppercase;
-		width: $token-scale-1000;
+		width: variables.$token-scale-1000;
 
 		&:hover,
 		&:focus {
