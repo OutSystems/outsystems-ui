@@ -321,6 +321,7 @@ body.iconLibrary-phosphor {
 
 .vscomp-search-clear:after,
 .vscomp-ele .vscomp-clear-icon:after {
+	color: $token-icon-subtlest;
 	content: var(--osui-icon-clear);
 	font-size: 13px;
 }
@@ -350,17 +351,19 @@ body.iconLibrary-phosphor {
 	// Service Studio Preview
 	&-ss-preview {
 		-servicestudio-background-color: $token-primitives-base-white;
-		-servicestudio-border-radius: $token-border-radius-100;
+		-servicestudio-border-radius: $token-border-radius-200;
 		-servicestudio-border: $token-border-size-025 solid $token-primitives-neutral-500;
+		-servicestudio-color: $token-text-subtlest;
 		-servicestudio-display: inline-flex;
 		-servicestudio-justify-content: space-between;
 		-servicestudio-height: 40px;
 		-servicestudio-line-height: 40px;
 		-servicestudio-min-width: 180px;
-		-servicestudio-padding: 0 $token-scale-600;
+		-servicestudio-padding: 0 $token-space-400;
 		-servicestudio-position: relative;
 		-servicestudio-vertical-align: middle;
 		-servicestudio-width: 100%;
+		-servicestudio-align-items: center;
 
 		&__arrow-icon {
 			-servicestudio-position: relative;
@@ -385,16 +388,17 @@ body.iconLibrary-phosphor {
 	&-ss-preview {
 		-servicestudio-justify-content: space-between;
 		-servicestudio-background-color: $token-primitives-base-white;
-		-servicestudio-border-radius: $token-border-radius-100;
+		-servicestudio-border-radius: $token-border-radius-200;
 		-servicestudio-border: $token-border-size-025 solid $token-primitives-neutral-500;
-		-servicestudio-color: $token-primitives-neutral-300;
+		-servicestudio-color: $token-text-subtlest;
 		-servicestudio-display: flex;
 		-servicestudio-height: 40px;
 		-servicestudio-min-width: 180px;
-		-servicestudio-padding: 0 $token-scale-600;
+		-servicestudio-padding: 0 $token-space-400;
 		-servicestudio-position: relative;
 		-servicestudio-vertical-align: middle;
 		-servicestudio-width: 100%;
+		-servicestudio-align-items: center;
 
 		&-as-tag {
 			-servicestudio-align-items: center;
@@ -408,8 +412,6 @@ body.iconLibrary-phosphor {
 			-servicestudio-height: 30px;
 			-servicestudio-padding: 8px;
 			-servicestudio-position: relative;
-			-servicestudio-top: 50%;
-			-servicestudio-transform: translateY(-50%);
 			-servicestudio-width: 70px;
 
 			&__clear-icon {
