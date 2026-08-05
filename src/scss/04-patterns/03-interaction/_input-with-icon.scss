@@ -30,10 +30,26 @@
 		}
 	}
 
+	/* A trailing `.search-actions` slot is absolutely positioned over the input, so
+	   reserve room for it or long values run underneath the icon. Matched with
+	   `:has()` rather than a sibling combinator so it holds whichever side of
+	   `.input-with-icon-input` the slot is authored on. Scoped away from
+	   `.input-with-icon-right`, where `.search-actions` docks to the LEFT instead
+	   and the padding pair is already set in that block. */
+	&:not(.input-with-icon-right):has(.input-with-icon-content-icon.search-actions:not(:empty)) {
+		.input-with-icon-input input {
+			padding-right: $token-scale-1000;
+		}
+	}
+
 	.input-with-icon {
 		&-content-icon {
+			/* The slot is a fixed 40px box the glyph sits inside; without these the
+			   glyph stretches full-height and hugs the slot's leading edge. */
+			align-items: center;
 			display: inline-flex;
 			height: 100%;
+			justify-content: center;
 			left: 0;
 			position: absolute;
 			width: $token-scale-1000;
