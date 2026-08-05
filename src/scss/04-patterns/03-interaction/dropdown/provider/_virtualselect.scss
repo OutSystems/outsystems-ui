@@ -42,7 +42,7 @@
 	&-ele .vscomp-clear-icon:after,
 	&-search-clear:after {
 		align-items: center;
-		color: #91999e;
+		color: variables.$token-icon-subtlest;
 		display: flex;
 		height: 100%;
 		justify-content: center;
@@ -94,6 +94,7 @@
 			}
 		}
 		.vscomp-value {
+			color: var(--color-text);
 			margin-right: variables.$token-scale-600;
 			margin-left: variables.$token-scale-0;
 		}
@@ -150,12 +151,12 @@
 			background-color: variables.$token-bg-neutral-subtlest-hover;
 			border: none;
 			border-radius: var(--border-radius-rounded);
-			color: var(--color-text);
+			color: var(--color-text-subtlest);
 			display: inline-flex;
 			font-size: variables.$token-font-size-300;
 			font-weight: variables.$token-font-weight-medium;
-			height: variables.$token-scale-600;
-			padding: 0 variables.$token-scale-200;
+			height: variables.$token-scale-700;
+			padding: 0 variables.$token-scale-200 0 variables.$token-scale-300;
 			position: relative;
 
 			.vscomp-value-tag-content {
@@ -165,6 +166,7 @@
 			.vscomp-value-tag-clear-button {
 				background-color: transparent;
 				border-radius: 0;
+				color: variables.$token-icon-subtlest;
 				height: auto;
 				margin-left: variables.$token-scale-100;
 				opacity: 0.5;
@@ -173,10 +175,6 @@
 				top: auto;
 				transform: none;
 				width: auto;
-
-				&:hover {
-					opacity: 1;
-				}
 
 				.vscomp-clear-icon {
 					height: variables.$token-scale-300;
@@ -187,7 +185,16 @@
 
 					&:before,
 					&:after {
-						color: var(--color-text);
+						color: variables.$token-icon-subtlest;
+					}
+				}
+
+				&:hover {
+					.vscomp-clear-icon {
+						&:before,
+						&:after {
+							color: variables.$token-icon-default;
+						}
 					}
 				}
 			}
@@ -223,7 +230,7 @@
 	// RTL Text
 	&.text-direction-rtl {
 		.vscomp-search-container {
-			padding: variables.$token-scale-0 variables.$token-scale-400 variables.$token-scale-0 variables.$token-scale-200;
+			padding: variables.$token-scale-0 variables.$token-scale-400;
 		}
 
 		&.multiple {
@@ -307,7 +314,7 @@
 		border-radius: variables.$token-border-radius-100;
 		border: variables.$token-border-size-025 solid var(--color-border-input);
 		height: variables.$token-scale-400;
-		margin-right: variables.$token-scale-200;
+		margin-right: 0px;
 		overflow: visible;
 		transition: background-color variables.$token-transition-time-300 variables.$token-transition-curve-expressive;
 		width: variables.$token-scale-400;
@@ -379,11 +386,16 @@
 
 	&:hover {
 		border-color: var(--osui-dropdown-hover-border-color, var(--color-border-input-hover));
+
+		.vscomp-value {
+			color: var(--color-text);
+		}
 	}
 }
 
 // Container with the selected value(s)
 .vscomp-value {
+	color: var(--color-text-subtlest);
 	font-size: variables.$token-font-size-350;
 }
 
@@ -460,6 +472,12 @@
 			background-color: var(--color-border);
 		}
 	}
+
+	// Move "Toggle all" checkbox to the end of the search container
+	.vscomp-toggle-all-button {
+		order: 1;
+		margin-left: variables.$token-scale-200;
+	}
 }
 
 // Options container input search
@@ -467,8 +485,7 @@
 	font-size: variables.$token-font-size-350;
 
 	&::placeholder {
-		color: var(--color-text);
-		opacity: 0.5;
+		color: var(--color-text-subtlest);
 	}
 }
 
@@ -511,14 +528,14 @@
 	transition: background-color variables.$token-transition-time-100 variables.$token-transition-curve-base;
 
 	&.focused {
-		background-color: var(--color-border-subtle);
+		background-color: variables.$token-bg-neutral-subtlest-hover;
 	}
 
 	&.selected {
 		background-color: transparent;
 
 		&.focused {
-			background-color: transparent;
+			background-color: variables.$token-bg-neutral-subtlest-hover;
 		}
 
 		// Right-side checkmark — requires --osui-icon-check + --osui-icon-font-family (icon library)

@@ -33,7 +33,9 @@ type Story = StoryObj<DropdownArgs>;
 
 function renderDropdown(args: DropdownArgs): HTMLElement {
 	const id = uid('dropdown');
-	const template = `<div ${osuiRoot(id)} class="osui-dropdown" style="max-width:280px;"></div>`;
+	// Platform markup parity: the widget root carries the mode class (osui-dropdown-search / osui-dropdown-tags)
+	const modeClass = args.allowMultipleSelection ? 'osui-dropdown-tags' : 'osui-dropdown-search';
+	const template = `<div ${osuiRoot(id)} class="osui-dropdown ${modeClass}" style="max-width:280px;"></div>`;
 	return renderPattern(template, (_root, register) => {
 		const P = Patterns();
 		const mode = args.allowMultipleSelection ? 'tags' : 'search';

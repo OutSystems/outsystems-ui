@@ -311,10 +311,6 @@
 ///
 .tablet,
 .phone {
-	.animated-label-text {
-		top: var(--osui-scale-350);
-	}
-
 	.form-control {
 		&[data-textarea] {
 			& + span.validation-message {

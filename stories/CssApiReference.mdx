@@ -627,6 +627,7 @@ _File: `src/scss/04-patterns/03-interaction/dropdown/_dropdown-tags.scss`_
 | `--osui-dropdown-list-background` | `var(--color-background-surface)` |
 | `--osui-dropdown-arrow-color` | `#{$token-icon-subtlest}` |
 | `--osui-dropdown-arrow-size` | `#{$token-scale-400}` |
+| `--osui-dropdown-tag-color` | `#{$token-text-subtlest}` |
 
 ### Dropdown (`.osui-dropdown`)
 _File: `src/scss/04-patterns/03-interaction/dropdown/_dropdown.scss`_
@@ -634,7 +635,7 @@ _File: `src/scss/04-patterns/03-interaction/dropdown/_dropdown.scss`_
 | Property | Default |
 |---|---|
 | `--osui-dropdown-disabled-background` | `var(--color-background-input-disabled)` |
-| `--osui-dropdown-disabled-border-color` | `var(--color-border)` |
+| `--osui-dropdown-disabled-border-color` | `var(--color-border-input)` |
 | `--osui-dropdown-disabled-color` | `var(--color-text-disabled)` |
 
 ### Dropdownserversideitem (`.osui-dropdown-serverside-item`)
@@ -868,7 +869,7 @@ _File: `src/scss/04-patterns/05-numbers/_badge.scss`_
 | Property | Default |
 |---|---|
 | `--osui-badge-color` | `var(--color-text-inverse)` |
-| `--osui-badge-primary-color` | `var(--color-primary)` |
+| `--osui-badge-primary-color` | `#{$token-text-primary}` |
 | `--osui-badge-on-light-color` | `var(--color-text)` |
 
 ### Icon Badge (`.icon-badge`)
@@ -876,7 +877,8 @@ _File: `src/scss/04-patterns/05-numbers/_icon-badge.scss`_
 
 | Property | Default |
 |---|---|
-| `--osui-icon-badge-ring-color` | `var(--color-background-surface)` |
+| `--osui-icon-badge-ring-color` | `#{$token-border-subtlest}` |
+| `--osui-icon-badge-shadow` | `0 0 0 1px var(--osui-icon-badge-ring-color)` |
 
 ### Rating (`.rating`)
 _File: `src/scss/04-patterns/05-numbers/rating/_rating.scss`_
@@ -991,7 +993,7 @@ _File: `src/scss/01-foundations/_root.scss`_
 | `--osui-motion-duration-400` | `400ms` |
 | `--osui-bg-surface-hover` | `#{$token-primitives-neutral-100}` |
 | `--osui-bg-surface-active` | `color-mix( in srgb, #{$token-semantics-primary-base} 8%, transparent )` |
-| `--osui-border-subtle` | `#{$token-primitives-neutral-300}` |
+| `--osui-border-subtle` | `#{$token-border-subtle}` |
 | `--osui-opacity-disabled` | `0.45` |
 | `--osui-elevation-25` | `0 1px 2px rgba(0, 0, 0, 0.08)` |
 | `--osui-elevation-50` | `0 1px 2px rgba(0, 0, 0, 0.2)` |
@@ -1002,4 +1004,4 @@ _File: `src/scss/01-foundations/_root.scss`_
 
 ---
 
-<sub>458 properties across 79 components, generated from `src/scss`.</sub>
+<sub>460 properties across 79 components, generated from `src/scss`.</sub>
