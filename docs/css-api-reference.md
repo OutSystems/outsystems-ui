@@ -630,7 +630,7 @@ _File: `src/scss/04-patterns/03-interaction/dropdown/_dropdown.scss`_
 | Property | Default |
 |---|---|
 | `--osui-dropdown-disabled-background` | `var(--color-background-input-disabled)` |
-| `--osui-dropdown-disabled-border-color` | `var(--color-border)` |
+| `--osui-dropdown-disabled-border-color` | `var(--color-border-input)` |
 | `--osui-dropdown-disabled-color` | `var(--color-text-disabled)` |
 
 ### Dropdownserversideitem (`.osui-dropdown-serverside-item`)
