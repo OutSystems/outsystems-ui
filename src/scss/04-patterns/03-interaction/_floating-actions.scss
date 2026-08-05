@@ -13,12 +13,12 @@
 	&-actions-wrapper {
 		// ─── Component CSS API ─────────────────────────────────────────────
 		--osui-floating-actions-button-background: var(--color-primary);
-		--osui-floating-actions-button-background-hover: #{$token-semantics-primary-800};
+		--osui-floating-actions-button-background-hover: #{$token-bg-primary-base-hover};
 		--osui-floating-actions-button-background-press: #{$token-bg-primary-base-press};
 		--osui-floating-actions-button-color: var(--color-text-inverse);
 		--osui-floating-actions-button-shadow: #{$token-elevation-3};
 		--osui-floating-actions-item-background: var(--color-background-surface);
-		--osui-floating-actions-item-background-hover: #{$token-primitives-neutral-100};
+		--osui-floating-actions-item-background-hover: #{$token-bg-neutral-subtlest-hover};
 		--osui-floating-actions-item-background-press: #{$token-bg-neutral-subtlest-press};
 		--osui-floating-actions-item-color: var(--color-text);
 		--osui-floating-actions-item-shadow: #{$token-elevation-2};
@@ -153,7 +153,7 @@
 		color: var(--osui-floating-actions-button-color);
 		cursor: pointer;
 		display: flex;
-		font-size: $token-font-size-550;
+		font-size: $token-font-size-800;
 		height: $token-scale-1400;
 		justify-content: center;
 		pointer-events: auto;
