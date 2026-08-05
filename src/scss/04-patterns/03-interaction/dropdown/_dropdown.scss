@@ -7,39 +7,41 @@
 @import 'provider/virtualselect';
 
 // Common dropdown styles
-.osui-dropdown {
+.osui-dropdown,
+.osui-dropdown-search,
+.osui-dropdown-tags {
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-dropdown-disabled-background:   var(--color-background-input-disabled);
 	--osui-dropdown-disabled-border-color: var(--color-border-input);
 	--osui-dropdown-disabled-color:        var(--color-text-disabled);
 	// ───────────────────────────────────────────────────────────────────
 
-	&-search,
-	&-tags {
-		/// Disable states for dropdowns
-		&.vscomp-ele[disabled] {
-			// Override of library cursor on disable states
-			cursor: initial;
 
-			.vscomp {
-				&-toggle-button {
-					background-color: var(--osui-dropdown-disabled-background);
-					border: $token-border-size-025 solid var(--osui-dropdown-disabled-border-color);
+	/// Disable states for dropdowns
+	&.vscomp-ele[disabled] {
+		// Override of library cursor on disable states
+		cursor: initial;
+
+		.vscomp {
+			&-toggle-button {
+				background-color: var(--osui-dropdown-disabled-background);
+				border: $token-border-size-025 solid var(--osui-dropdown-disabled-border-color);
+				pointer-events: none;
+				.vscomp-value {
 					color: var(--osui-dropdown-disabled-color);
-					pointer-events: none;
-				}
-
-				&-wrapper,
-				&-wrapper:not(.has-value) .vscomp-value {
-					opacity: inherit;
 				}
 			}
-		}
 
-		// Override the font-family of provider
-		.vscomp-wrapper {
-			font-family: inherit;
+			&-wrapper,
+			&-wrapper:not(.has-value) .vscomp-value {
+				opacity: inherit;
+			}
 		}
+	}
+
+	// Override the font-family of provider
+	.vscomp-wrapper {
+		font-family: inherit;
 	}
 
 	/// Dropdown Option Item image
