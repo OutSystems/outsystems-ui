@@ -351,8 +351,9 @@ body.iconLibrary-phosphor {
 	// Service Studio Preview
 	&-ss-preview {
 		-servicestudio-background-color: $token-primitives-base-white;
-		-servicestudio-border-radius: $token-border-radius-100;
+		-servicestudio-border-radius: $token-border-radius-200;
 		-servicestudio-border: $token-border-size-025 solid $token-primitives-neutral-500;
+		-servicestudio-color: $token-text-subtlest;
 		-servicestudio-display: inline-flex;
 		-servicestudio-justify-content: space-between;
 		-servicestudio-height: 40px;
@@ -387,9 +388,9 @@ body.iconLibrary-phosphor {
 	&-ss-preview {
 		-servicestudio-justify-content: space-between;
 		-servicestudio-background-color: $token-primitives-base-white;
-		-servicestudio-border-radius: $token-border-radius-100;
+		-servicestudio-border-radius: $token-border-radius-200;
 		-servicestudio-border: $token-border-size-025 solid $token-primitives-neutral-500;
-		-servicestudio-color: $token-primitives-neutral-300;
+		-servicestudio-color: $token-text-subtlest;
 		-servicestudio-display: flex;
 		-servicestudio-height: 40px;
 		-servicestudio-min-width: 180px;
