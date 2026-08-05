@@ -148,7 +148,7 @@
 			background-color: $token-bg-neutral-subtlest-hover;
 			border: none;
 			border-radius: var(--border-radius-rounded);
-			color: $token-text-subtlest;
+			color: var(--color-text-subtlest);
 			display: inline-flex;
 			font-size: $token-font-size-300;
 			font-weight: $token-font-weight-medium;
