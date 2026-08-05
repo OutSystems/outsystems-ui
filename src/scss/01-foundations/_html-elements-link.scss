@@ -1,3 +1,5 @@
+@use "../tokens/variables";
+
 /* HTML Elements - Links */
 ////
 /// @group HTML_Elements-Link
@@ -11,13 +13,13 @@ a {
 
 	&,
 	&:visited {
-		color: $token-semantics-primary-base;
+		color: variables.$token-semantics-primary-base;
 		transition: all 180ms linear;
 	}
 
 	&:hover,
 	&:focus {
-		color: $token-semantics-primary-900;
+		color: variables.$token-semantics-primary-900;
 		text-decoration: underline;
 	}
 

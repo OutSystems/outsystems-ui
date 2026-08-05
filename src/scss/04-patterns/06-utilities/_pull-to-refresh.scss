@@ -1,3 +1,5 @@
+@use "../../tokens/variables";
+
 /* Patterns - Utilities - Pull to Refresh */
 ////
 /// @group Utilities-Pull_To_Refresh
@@ -6,9 +8,9 @@
 ///
 .pull-to-refresh {
 	color: var(--color-text-disabled);
-	font-size: $token-font-size-650;
+	font-size: variables.$token-font-size-650;
 	left: 0;
-	padding: $token-scale-200;
+	padding: variables.$token-scale-200;
 	position: absolute;
 	text-align: center;
 	width: 100%;
@@ -24,7 +26,7 @@
 	}
 
 	.genericon {
-		transition: all $token-transition-time-300 $token-transition-curve-expressive;
+		transition: all variables.$token-transition-time-300 variables.$token-transition-curve-expressive;
 	}
 }
 
@@ -34,7 +36,7 @@
 	&-reset {
 		.content,
 		.pull-to-refresh {
-			transition: all $token-transition-time-300 $token-transition-curve-expressive;
+			transition: all variables.$token-transition-time-300 variables.$token-transition-curve-expressive;
 		}
 
 		.pull-to-refresh {

@@ -1,3 +1,6 @@
+@use '../00-abstract/index' as *;
+@use "../tokens/variables";
+
 ////
 /// @group Resets
 /// Normalize - Reset default and native styles
@@ -54,7 +57,7 @@ html {
 /* ============================================================================ */
 ///
 body {
-	@include apply-typography($token-body-md-regular);
+	@include apply-typography(variables.$token-body-md-regular);
 	background-color: var(--background-color-body, var(--color-background-body));
 	/// iOS devices loses the direction default value when toggle the RTL on the body element. Added the default property of direction to prevent the issue.
 	direction: ltr;
@@ -76,13 +79,13 @@ body {
 
 ///
 .has-accessible-features :focus {
-	box-shadow: 0 0 0 $token-border-size-075 var(--color-focus-outer);
+	box-shadow: 0 0 0 variables.$token-border-size-075 var(--color-focus-outer);
 }
 
 ///
 .os-high-contrast .has-accessible-features :focus {
 	box-shadow: none;
-	outline: $token-border-size-075 solid var(--color-focus-outer);
+	outline: variables.$token-border-size-075 solid var(--color-focus-outer);
 }
 
 /* ============================================================================ */
@@ -112,8 +115,8 @@ label {
 
 ///
 [data-label].mandatory:after {
-	color: $token-semantics-danger-base;
-	margin-left: $token-scale-100;
+	color: variables.$token-semantics-danger-base;
+	margin-left: variables.$token-scale-100;
 }
 
 /* ============================================================================ */

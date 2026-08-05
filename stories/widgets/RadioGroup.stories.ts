@@ -7,31 +7,43 @@ export default meta;
 type Story = StoryObj;
 
 const radio = (value: string, label: string, selected: boolean) =>
-	createElement(RadioButton as never, {
-		...widgetBaseProps('radio-button'),
-		value,
-		// OUI styles the radio via the `.radio-button` CLASS (not a data-attr like
-		// checkbox/switch); the widget puts `style` onto the input's className.
-		style: 'radio-button',
-		isSelected: selected,
-		enabled: true,
-		groupName: 'radiogroup',
-		tabIndex: -1,
-		updateValueInParent: () => {},
-		getFocusableElementId: () => '',
-		key: value,
-	}, label);
+	createElement(
+		RadioButton as never,
+		{
+			...widgetBaseProps('radio-button'),
+			value,
+			// OUI styles the radio via the `.radio-button` CLASS (not a data-attr like
+			// checkbox/switch); the widget puts `style` onto the input's className.
+			style: 'radio-button',
+			isSelected: selected,
+			enabled: true,
+			groupName: 'radiogroup',
+			tabIndex: -1,
+			updateValueInParent: () => {},
+			getFocusableElementId: () => '',
+			key: value,
+		},
+		label
+	);
 
 export const Default: Story = {
 	render: () =>
 		mountTree(
-			createElement(RadioGroup as never, {
-				...widgetBaseProps('radio-group'),
-				variable: createVariable(DataTypes.DataTypes.Text, 'two'),
-				enabled: true,
-				mandatory: false,
-				style: 'radio-group',
-				onChange: () => {},
-			}, [radio('one', 'Option one', false), radio('two', 'Option two', true), radio('three', 'Option three', false)])
+			createElement(
+				RadioGroup as never,
+				{
+					...widgetBaseProps('radio-group'),
+					variable: createVariable(DataTypes.DataTypes.Text, 'two'),
+					enabled: true,
+					mandatory: false,
+					style: 'radio-group',
+					onChange: () => {},
+				},
+				[
+					radio('one', 'Option one', false),
+					radio('two', 'Option two', true),
+					radio('three', 'Option three', false),
+				]
+			)
 		),
 };

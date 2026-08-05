@@ -1,3 +1,5 @@
+@use "../../../tokens/variables";
+
 /* Patterns - Content - Accordion Item */
 ////
 /// @group Patterns-Accordion_Item
@@ -13,20 +15,20 @@
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-accordion-item-background: var(--color-background-surface);
 	--osui-accordion-item-border-color: var(--color-border-subtle);
-	--osui-accordion-item-border-width: #{$token-border-size-025};
-	--osui-accordion-item-border-radius: #{$token-border-radius-100};
+	--osui-accordion-item-border-width: #{variables.$token-border-size-025};
+	--osui-accordion-item-border-radius: #{variables.$token-border-radius-100};
 	--osui-accordion-item-color: var(--color-text);
 	--osui-accordion-item-active-indicator-color: var(--color-primary);
-	--osui-accordion-item-icon-color: #{$token-icon-primary};
-	--osui-accordion-item-title-hover-background: #{$token-primitives-neutral-100};
+	--osui-accordion-item-icon-color: #{variables.$token-icon-primary};
+	--osui-accordion-item-title-hover-background: #{variables.$token-primitives-neutral-100};
 	--osui-accordion-item-title-hover-border-color: var(--color-border);
 	// ───────────────────────────────────────────────────────────────────
 
-	--accordion-active-border-size: #{$token-border-size-050};
+	--accordion-active-border-size: #{variables.$token-border-size-050};
 	background-color: var(--osui-accordion-item-background);
-	border-radius: $token-border-radius-0;
+	border-radius: variables.$token-border-radius-0;
 	color: var(--osui-accordion-item-color);
-	font-size: $token-font-size-400;
+	font-size: variables.$token-font-size-400;
 	position: relative;
 
 	&__click_zone {
@@ -46,7 +48,7 @@
 	&--is {
 		&-open {
 			> .osui-accordion-item__title {
-				font-weight: $token-font-weight-semi-bold;
+				font-weight: variables.$token-font-weight-semi-bold;
 
 				> .osui-accordion-item__icon {
 					&--caret {
@@ -95,11 +97,11 @@
 		color: var(--osui-accordion-item-color);
 		direction: ltr;
 		display: flex;
-		font-size: $token-font-size-400;
-		gap: $token-scale-200;
+		font-size: variables.$token-font-size-400;
+		gap: variables.$token-scale-200;
 		justify-content: space-between;
 		line-height: 1;
-		padding: $token-scale-300 $token-scale-600;
+		padding: variables.$token-scale-300 variables.$token-scale-600;
 		width: 100%;
 
 		&:hover {
@@ -124,7 +126,7 @@
 		&__placeholder {
 			align-items: center;
 			display: flex;
-			gap: $token-scale-200;
+			gap: variables.$token-scale-200;
 			overflow: hidden;
 			width: 100%;
 
@@ -145,28 +147,28 @@
 		color: var(--osui-accordion-item-icon-color);
 		display: flex;
 		font-family: FontAwesome;
-		font-size: $token-font-size-550;
-		font-weight: $token-font-weight-regular;
-		height: $token-scale-400;
+		font-size: variables.$token-font-size-550;
+		font-weight: variables.$token-font-weight-regular;
+		height: variables.$token-scale-400;
 		justify-content: center;
-		transition: transform $token-transition-time-300 $token-transition-curve-expressive;
-		width: $token-scale-400;
+		transition: transform variables.$token-transition-time-300 variables.$token-transition-curve-expressive;
+		width: variables.$token-scale-400;
 
 		&--plus-minus {
 			&:after {
 				background-color: var(--osui-accordion-item-icon-color);
 				content: ' ';
 				height: 100%;
-				transition: transform $token-transition-time-300 $token-transition-curve-expressive;
-				width: $token-border-size-050;
+				transition: transform variables.$token-transition-time-300 variables.$token-transition-curve-expressive;
+				width: variables.$token-border-size-050;
 			}
 
 			&:before {
 				background-color: var(--osui-accordion-item-icon-color);
 				content: ' ';
-				height: $token-border-size-050;
+				height: variables.$token-border-size-050;
 				position: absolute;
-				width: $token-scale-400;
+				width: variables.$token-scale-400;
 			}
 		}
 
@@ -186,9 +188,9 @@
 
 	&__content {
 		display: block;
-		font-size: $token-font-size-400;
+		font-size: variables.$token-font-size-400;
 		overflow: hidden;
-		padding: $token-scale-0 $token-scale-600;
+		padding: variables.$token-scale-0 variables.$token-scale-600;
 
 		&--is {
 			&-collapsed {
@@ -203,18 +205,18 @@
 
 			&-expanded {
 				height: auto;
-				padding: $token-scale-0 $token-scale-600 $token-scale-600;
+				padding: variables.$token-scale-0 variables.$token-scale-600 variables.$token-scale-600;
 				visibility: visible;
 			}
 
 			&-animating {
-				transition: height $token-transition-time-300 $token-transition-curve-expressive;
+				transition: height variables.$token-transition-time-300 variables.$token-transition-curve-expressive;
 			}
 		}
 
 		/* Add a margin-top when animated label is the first child */
 		[data-block*='AnimatedLabel']:first-child .animated-label {
-			margin-top: $token-scale-200;
+			margin-top: variables.$token-scale-200;
 		}
 	}
 
@@ -233,7 +235,7 @@
 ///
 .phone {
 	.osui-accordion-item .osui-accordion-item__title {
-		font-size: calc($token-font-size-400);
+		font-size: calc(variables.$token-font-size-400);
 	}
 }
 
@@ -241,19 +243,19 @@
 .layout-native {
 	.osui-accordion-item {
 		&__title {
-			padding: $token-scale-400;
+			padding: variables.$token-scale-400;
 		}
 
 		&__content {
-			padding: $token-scale-0 $token-scale-400;
+			padding: variables.$token-scale-0 variables.$token-scale-400;
 
 			&--is {
 				&-collapsed {
-					padding: $token-scale-0 $token-scale-400;
+					padding: variables.$token-scale-0 variables.$token-scale-400;
 				}
 
 				&-expanded {
-					padding: $token-scale-0 $token-scale-400 $token-scale-400;
+					padding: variables.$token-scale-0 variables.$token-scale-400 variables.$token-scale-400;
 				}
 			}
 		}
@@ -271,7 +273,7 @@
 			}
 
 			&:focus-visible {
-				outline: $token-border-size-075 solid var(--color-focus-outer);
+				outline: variables.$token-border-size-075 solid var(--color-focus-outer);
 			}
 		}
 	}
@@ -282,6 +284,6 @@
 .is-rtl {
 	.osui-accordion-item__title__placeholder {
 		direction: rtl;
-		margin-right: $token-scale-200;
+		margin-right: variables.$token-scale-200;
 	}
 }

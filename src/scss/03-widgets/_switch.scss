@@ -1,3 +1,5 @@
+@use "../tokens/variables";
+
 /* Widgets - Switch */
 ////
 /// @group Widgets-Switch
@@ -6,16 +8,16 @@
 ///
 [data-switch] {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-switch-height: #{$token-scale-600}; // 24px
-	--osui-switch-width: #{$token-scale-1000}; // 40px
-	--osui-switch-thumb-size: #{$token-scale-500}; // 20px
+	--osui-switch-height: #{variables.$token-scale-600}; // 24px
+	--osui-switch-width: #{variables.$token-scale-1000}; // 40px
+	--osui-switch-thumb-size: #{variables.$token-scale-500}; // 20px
 	--osui-switch-thumb-offset-start: 2px;
 	--osui-switch-thumb-offset-end: 18px;
-	--osui-switch-track-color: #{$token-bg-neutral-base-default};
+	--osui-switch-track-color: #{variables.$token-bg-neutral-base-default};
 	--osui-switch-checked-track-color: var(--color-primary);
-	--osui-switch-disabled-overlay: #{$token-state-disabled};
-	--osui-switch-thumb-color: #{$token-bg-surface-inverse};
-	--osui-switch-thumb-shadow: #{$token-elevation-1};
+	--osui-switch-disabled-overlay: #{variables.$token-state-disabled};
+	--osui-switch-thumb-color: #{variables.$token-bg-surface-inverse};
+	--osui-switch-thumb-shadow: #{variables.$token-elevation-1};
 	// ───────────────────────────────────────────────────────────────────
 
 	background-color: transparent;
@@ -31,7 +33,7 @@
 			border-radius: var(--border-radius-rounded);
 			height: var(--osui-switch-height);
 			opacity: 1;
-			transition: background-color var(--osui-motion-duration-180) $token-transition-curve-linear;
+			transition: background-color var(--osui-motion-duration-180) variables.$token-transition-curve-linear;
 			width: var(--osui-switch-width);
 		}
 
@@ -45,7 +47,7 @@
 			margin-left: 0;
 			top: calc((var(--osui-switch-height) - var(--osui-switch-thumb-size)) / 2);
 			transform: translateX(var(--osui-switch-thumb-offset-start)) translateZ(0);
-			transition: transform var(--osui-motion-duration-180) $token-transition-curve-linear;
+			transition: transform var(--osui-motion-duration-180) variables.$token-transition-curve-linear;
 			width: var(--osui-switch-thumb-size);
 		}
 	}
@@ -83,7 +85,7 @@
 	}
 
 	&:focus-visible:empty:before {
-		box-shadow: 0 0 0 $token-border-size-075 color-mix(in srgb, #{$token-semantics-primary-base} 22%, transparent);
+		box-shadow: 0 0 0 variables.$token-border-size-075 color-mix(in srgb, #{variables.$token-semantics-primary-base} 22%, transparent);
 	}
 }
 
@@ -115,7 +117,7 @@
 		}
 
 		&:focus:before {
-			border-color: $token-semantics-primary-base;
+			border-color: variables.$token-semantics-primary-base;
 		}
 	}
 }
@@ -126,14 +128,14 @@
 	[data-switch] {
 		&:empty:after {
 			align-items: center;
-			border: $token-border-size-025 solid var(--color-text-disabled);
+			border: variables.$token-border-size-025 solid var(--color-text-disabled);
 			content: '0';
 			display: flex;
 			font-family: monospace;
-			font-size: $token-font-size-300;
+			font-size: variables.$token-font-size-300;
 			justify-content: center;
 			left: -1px;
-			top: $token-scale-075;
+			top: variables.$token-scale-075;
 		}
 
 		&:checked:after {

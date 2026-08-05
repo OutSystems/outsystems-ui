@@ -1,3 +1,5 @@
+@use "../../../tokens/variables";
+
 /* Patterns - Navigation - Submenu */
 ////
 /// @group Patterns-Submenu
@@ -8,7 +10,7 @@
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-submenu-items-background: var(--color-background-surface);
 	--osui-submenu-items-border-color: transparent;
-	--osui-submenu-items-shadow: #{$token-elevation-2};
+	--osui-submenu-items-shadow: #{variables.$token-elevation-2};
 	--osui-submenu-item-color: var(--color-text-subtlest);
 	--osui-submenu-header-color: var(--color-text);
 	--osui-submenu-active-border-color: var(
@@ -45,7 +47,7 @@
 
 		.osui-submenu {
 			&__header {
-				border-bottom: $token-border-size-050 solid var(--osui-submenu-active-border-color);
+				border-bottom: variables.$token-border-size-050 solid var(--osui-submenu-active-border-color);
 
 				&__item {
 					&,
@@ -92,11 +94,11 @@
 
 	&__header {
 		align-items: center;
-		border-bottom: $token-border-size-050 solid transparent;
-		border-top: $token-border-size-050 solid transparent;
+		border-bottom: variables.$token-border-size-050 solid transparent;
+		border-top: variables.$token-border-size-050 solid transparent;
 		display: flex;
-		padding: $token-scale-0 $token-scale-200;
-		transition: all $token-transition-time-150 $token-transition-curve-linear;
+		padding: variables.$token-scale-0 variables.$token-scale-200;
+		transition: all variables.$token-transition-time-150 variables.$token-transition-curve-linear;
 
 		&__item {
 			align-items: center;
@@ -104,10 +106,10 @@
 			display: inline-flex;
 			height: 100%;
 			position: relative;
-			transition: all $token-transition-time-150 $token-transition-curve-linear;
+			transition: all variables.$token-transition-time-150 variables.$token-transition-curve-linear;
 
 			-servicestudio-min-width: 100px;
-			-servicestudio-margin-left: calc($token-scale-200 * -1);
+			-servicestudio-margin-left: calc(variables.$token-scale-200 * -1);
 
 			a {
 				align-items: center;
@@ -123,8 +125,8 @@
 		}
 
 		&__icon {
-			margin-inline-start: $token-scale-200;
-			transition: transform $token-transition-time-200 $token-transition-curve-expressive;
+			margin-inline-start: variables.$token-scale-200;
+			transition: transform variables.$token-transition-time-200 variables.$token-transition-curve-expressive;
 			transform-origin: center;
 
 			&:after {
@@ -137,7 +139,7 @@
 	&__items {
 		background-color: var(--osui-submenu-items-background);
 		border: none;
-		border-radius: $token-border-radius-200;
+		border-radius: variables.$token-border-radius-200;
 		box-shadow: var(--osui-submenu-items-shadow);
 		display: flex;
 		flex-direction: column;
@@ -147,18 +149,18 @@
 		opacity: 0;
 		overflow-x: hidden;
 		overflow-y: auto;
-		padding: $token-scale-0;
+		padding: variables.$token-scale-0;
 		pointer-events: none;
 		position: absolute;
-		top: calc(100% + $token-scale-100);
+		top: calc(100% + variables.$token-scale-100);
 		transform: translateY(-8px); // design-spec
-		transition: all var(--osui-motion-duration-130) $token-transition-curve-quick;
+		transition: all var(--osui-motion-duration-130) variables.$token-transition-curve-quick;
 		width: max-content;
 		z-index: var(--layer-elevated);
 
 		// Scrollbar
 		&::-webkit-scrollbar {
-			width: $token-scale-100;
+			width: variables.$token-scale-100;
 		}
 
 		&::-webkit-scrollbar-track {
@@ -181,9 +183,9 @@
 		a {
 			color: var(--osui-submenu-item-color);
 			margin: 0;
-			padding: $token-scale-200 $token-scale-400;
+			padding: variables.$token-scale-200 variables.$token-scale-400;
 			text-decoration: none;
-			transition: background-color $token-transition-time-150 $token-transition-curve-linear;
+			transition: background-color variables.$token-transition-time-150 variables.$token-transition-curve-linear;
 			white-space: nowrap;
 
 			&.active {
@@ -222,7 +224,7 @@
 ///
 .layout-side .app-menu-links .osui-submenu,
 .menu-visible .app-menu-links .osui-submenu {
-	--osui-submenu-items-background: var(--color-background-sidemenu, #{$token-bg-surface-default});
+	--osui-submenu-items-background: var(--color-background-sidemenu, #{variables.$token-bg-surface-default});
 
 	display: flex;
 	flex-direction: column;
@@ -235,8 +237,8 @@
 	}
 
 	&.active .osui-submenu__header {
-		background-color: $token-bg-primary-subtle-default;
-		border-radius: $token-border-radius-200;
+		background-color: variables.$token-bg-primary-subtle-default;
+		border-radius: variables.$token-border-radius-200;
 	}
 
 	&--is-open > .osui-submenu__items {
@@ -251,7 +253,7 @@
 
 	.osui-submenu__header {
 		border: none;
-		padding: $token-scale-200 $token-scale-400;
+		padding: variables.$token-scale-200 variables.$token-scale-400;
 		width: 100%;
 
 		&__item {
@@ -264,15 +266,15 @@
 		box-shadow: none;
 		display: none;
 		opacity: 1;
-		padding: $token-scale-100 $token-scale-600;
+		padding: variables.$token-scale-100 variables.$token-scale-600;
 		pointer-events: auto;
 		position: relative;
 		top: 0;
 		transform: translateY(0);
 
 		a {
-			border-radius: $token-border-radius-200;
-			padding: $token-scale-200 $token-scale-400 $token-scale-200 $token-scale-600;
+			border-radius: variables.$token-border-radius-200;
+			padding: variables.$token-scale-200 variables.$token-scale-400 variables.$token-scale-200 variables.$token-scale-600;
 
 			&:hover {
 				background-color: var(--osui-bg-surface-hover);
@@ -280,8 +282,8 @@
 			}
 
 			&.active {
-				background-color: $token-bg-primary-subtle-default;
-				color: $token-semantics-primary-base;
+				background-color: variables.$token-bg-primary-subtle-default;
+				color: variables.$token-semantics-primary-base;
 			}
 		}
 	}
@@ -289,7 +291,7 @@
 
 .layout-side .app-menu-links .osui-submenu__header a,
 .menu-visible .app-menu-links .osui-submenu__header a {
-	padding: $token-scale-0;
+	padding: variables.$token-scale-0;
 }
 
 // Columns inside submenu items collapse to single column
@@ -360,17 +362,17 @@
 	.app-menu-links .osui-submenu__header {
 		align-self: center;
 		border-bottom: none;
-		border-radius: $token-border-radius-200;
+		border-radius: variables.$token-border-radius-200;
 		border-top: none;
-		margin: 0 $token-scale-025;
-		padding: $token-scale-200 $token-scale-300;
-		transition: background-color $token-transition-time-150 $token-transition-curve-linear;
+		margin: 0 variables.$token-scale-025;
+		padding: variables.$token-scale-200 variables.$token-scale-300;
+		transition: background-color variables.$token-transition-time-150 variables.$token-transition-curve-linear;
 	}
 
 	.app-menu-links .osui-submenu__header:hover,
 	.app-menu-links .osui-submenu--is-open .osui-submenu__header {
 		background-color: var(--osui-bg-surface-hover);
-		border-radius: $token-border-radius-200;
+		border-radius: variables.$token-border-radius-200;
 		color: var(--color-text);
 	}
 
@@ -382,11 +384,11 @@
 	.header-navigation .app-menu-links > a {
 		align-self: center;
 		border-bottom: none;
-		border-radius: $token-border-radius-200;
+		border-radius: variables.$token-border-radius-200;
 		border-top: none;
-		margin: 0 $token-scale-025;
-		padding: $token-scale-200 $token-scale-300;
-		transition: background-color $token-transition-time-150 $token-transition-curve-linear;
+		margin: 0 variables.$token-scale-025;
+		padding: variables.$token-scale-200 variables.$token-scale-300;
+		transition: background-color variables.$token-transition-time-150 variables.$token-transition-curve-linear;
 
 		&:hover {
 			background-color: var(--osui-bg-surface-hover);
@@ -415,7 +417,7 @@
 						background-color: var(--osui-bg-surface-hover);
 						border-bottom: none;
 						border-left: none;
-						border-radius: $token-border-radius-200;
+						border-radius: variables.$token-border-radius-200;
 					}
 				}
 			}
@@ -424,7 +426,7 @@
 		// Side menu: direct link hover
 		.app-menu-links > a:hover {
 			background-color: var(--osui-bg-surface-hover);
-			border-radius: $token-border-radius-200;
+			border-radius: variables.$token-border-radius-200;
 			color: var(--color-text);
 		}
 	}
@@ -441,7 +443,7 @@
 // Top menu: header navigation direct link
 .desktop .header-navigation .app-menu-links > a.active:hover {
 	background-color: var(--osui-bg-surface-hover);
-	color: $token-semantics-primary-base;
+	color: variables.$token-semantics-primary-base;
 }
 
 // Top menu: submenu items
@@ -452,7 +454,7 @@
 // Side menu desktop: direct link
 .desktop .layout-side .app-menu-links > a.active:hover {
 	background-color: var(--osui-bg-surface-hover);
-	color: $token-semantics-primary-base;
+	color: variables.$token-semantics-primary-base;
 }
 
 // Side menu desktop: submenu header
@@ -464,7 +466,7 @@
 // Side menu desktop: submenu items
 .desktop .layout-side .app-menu-links .osui-submenu__items a.active:hover {
 	background-color: var(--osui-bg-surface-hover);
-	color: $token-semantics-primary-base;
+	color: variables.$token-semantics-primary-base;
 }
 
 ///
@@ -492,7 +494,7 @@
 
 		&__header {
 			border: none;
-			padding: $token-scale-200 $token-scale-400;
+			padding: variables.$token-scale-200 variables.$token-scale-400;
 
 			&__item {
 				flex: 1;
@@ -500,7 +502,7 @@
 
 			&:hover {
 				background-color: var(--osui-bg-surface-hover);
-				border-radius: $token-border-radius-200;
+				border-radius: variables.$token-border-radius-200;
 				color: var(--color-text);
 			}
 		}
@@ -519,12 +521,12 @@
 			width: 100%;
 
 			a {
-				border-radius: $token-border-radius-200;
-				padding: $token-scale-200 $token-scale-400 $token-scale-200 $token-scale-600;
+				border-radius: variables.$token-border-radius-200;
+				padding: variables.$token-scale-200 variables.$token-scale-400 variables.$token-scale-200 variables.$token-scale-600;
 
 				&.active {
 					background-color: transparent;
-					color: $token-semantics-primary-base;
+					color: variables.$token-semantics-primary-base;
 				}
 
 				&:hover {
@@ -538,7 +540,7 @@
 	.app-menu-links > a {
 		&:hover {
 			background-color: var(--osui-bg-surface-hover);
-			border-radius: $token-border-radius-200;
+			border-radius: variables.$token-border-radius-200;
 			color: var(--color-text);
 		}
 	}
@@ -546,20 +548,20 @@
 	// Mobile/tablet: submenu header active hover
 	.osui-submenu.active .osui-submenu__header:hover {
 		background-color: var(--osui-bg-surface-hover);
-		border-radius: $token-border-radius-200;
+		border-radius: variables.$token-border-radius-200;
 		color: var(--osui-submenu-active-border-color);
 	}
 
 	// Mobile/tablet: submenu items active hover
 	.osui-submenu__items a.active:hover {
 		background-color: var(--osui-bg-surface-hover);
-		color: $token-semantics-primary-base;
+		color: variables.$token-semantics-primary-base;
 	}
 
 	// Mobile/tablet: direct link active hover
 	.app-menu-links > a.active:hover {
 		background-color: var(--osui-bg-surface-hover);
-		color: $token-semantics-primary-base;
+		color: variables.$token-semantics-primary-base;
 	}
 }
 
@@ -570,7 +572,7 @@
 		.osui-submenu {
 			.osui-submenu__header {
 				border-left: 0;
-				border-right: $token-border-size-050 solid transparent;
+				border-right: variables.$token-border-size-050 solid transparent;
 			}
 
 			&.active .osui-submenu__header {
@@ -581,8 +583,8 @@
 		}
 
 		.app-menu-links .osui-submenu__items a {
-			padding-left: $token-scale-400;
-			padding-right: $token-scale-600;
+			padding-left: variables.$token-scale-400;
+			padding-right: variables.$token-scale-600;
 		}
 	}
 
@@ -597,13 +599,13 @@
 
 			.osui-submenu__header {
 				border-left: 0;
-				border-right: $token-border-size-050 solid transparent;
+				border-right: variables.$token-border-size-050 solid transparent;
 			}
 		}
 
 		.osui-submenu__items a {
-			padding-left: $token-scale-400;
-			padding-right: $token-scale-600;
+			padding-left: variables.$token-scale-400;
+			padding-right: variables.$token-scale-600;
 		}
 	}
 }

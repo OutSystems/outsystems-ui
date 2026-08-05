@@ -4,7 +4,8 @@
 /// Patterns - Interaction - DatePicker
 
 /// Import Flatpickr library styles
-@import 'provider/flatpickr';
+@use 'provider/flatpickr';
+@use "../../../tokens/variables";
 
 ///
 .osui-datepicker {
@@ -31,7 +32,7 @@
 		// Disable states for Datepicker
 		&.flatpickr-input[disabled] + input {
 			background-color: var(--osui-datepicker-disabled-background);
-			border: $token-border-size-025 solid var(--osui-datepicker-disabled-border-color);
+			border: variables.$token-border-size-025 solid var(--osui-datepicker-disabled-border-color);
 			color: var(--osui-datepicker-disabled-color);
 			pointer-events: none;
 		}
@@ -54,9 +55,9 @@
 
 		// Service Studio Preview
 		& {
-			-servicestudio-background-color: $token-bg-surface-default;
-			-servicestudio-border-radius: $token-border-radius-100;
-			-servicestudio-border: $token-border-size-025 solid var(--color-border-input);
+			-servicestudio-background-color: variables.$token-bg-surface-default;
+			-servicestudio-border-radius: variables.$token-border-radius-100;
+			-servicestudio-border: variables.$token-border-size-025 solid var(--color-border-input);
 			-servicestudio-display: inline-block;
 			-servicestudio-margin-top: 2px;
 			-servicestudio-max-width: 320px;
@@ -67,7 +68,7 @@
 
 			&:before,
 			&:after {
-				-servicestudio-color: $token-semantics-primary-base;
+				-servicestudio-color: variables.$token-semantics-primary-base;
 				-servicestudio-font-family: var(--osui-icon-font-family);
 				-servicestudio-font-size: clamp(10px, 1.7vw, 20px);
 				-servicestudio-position: absolute;
@@ -99,20 +100,20 @@
 					-servicestudio-text-align: center;
 					-servicestudio-display: block;
 					-servicestudio-font-size: clamp(10px, 1.7vw, 14px);
-					-servicestudio-margin-bottom: $token-scale-200;
+					-servicestudio-margin-bottom: variables.$token-scale-200;
 					-servicestudio-position: relative;
 				}
 			}
 
 			&.time12h .osui-datepicker-calendar-ss-preview--time::before {
-				-servicestudio-background-color: $token-semantics-primary-base;
-				-servicestudio-border-radius: $token-border-radius-100;
-				-servicestudio-color: $token-primitives-base-white;
+				-servicestudio-background-color: variables.$token-semantics-primary-base;
+				-servicestudio-border-radius: variables.$token-border-radius-100;
+				-servicestudio-color: variables.$token-primitives-base-white;
 				-servicestudio-content: 'am';
 				-servicestudio-font-size: clamp(10px, 1.7vw, 14px);
-				-servicestudio-font-weight: $token-font-weight-semi-bold;
-				-servicestudio-height: $token-scale-400;
-				-servicestudio-line-height: $token-scale-400;
+				-servicestudio-font-weight: variables.$token-font-weight-semi-bold;
+				-servicestudio-height: variables.$token-scale-400;
+				-servicestudio-line-height: variables.$token-scale-400;
 				-servicestudio-position: absolute;
 				-servicestudio-right: 2%;
 				-servicestudio-top: 50%;
@@ -141,7 +142,7 @@
 
 	.not-valid + .input,
 	.not-valid + .flatpickr-mobile {
-		border-color: $token-semantics-danger-base;
+		border-color: variables.$token-semantics-danger-base;
 	}
 
 	.flatpickr-mobile ~ span.validation-message {

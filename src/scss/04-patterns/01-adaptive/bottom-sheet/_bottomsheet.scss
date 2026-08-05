@@ -1,3 +1,5 @@
+@use "../../../tokens/variables";
+
 /* Patterns - section - BottomSheet */
 ////
 /// @group Patterns-BottomSheet
@@ -7,17 +9,17 @@
 .osui-bottom-sheet {
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-bottom-sheet-background: var(--color-background-surface);
-	--osui-bottom-sheet-shadow: #{$token-elevation-3};
-	--osui-bottom-sheet-padding: #{$token-scale-400};
-	--osui-bottom-sheet-handler-background: #{$token-bg-neutral-subtle-default};
+	--osui-bottom-sheet-shadow: #{variables.$token-elevation-3};
+	--osui-bottom-sheet-padding: #{variables.$token-scale-400};
+	--osui-bottom-sheet-handler-background: #{variables.$token-bg-neutral-subtle-default};
 	--osui-bottom-sheet-handler-width: 44px;
 	// ───────────────────────────────────────────────────────────────────
 
 	--bottom-sheet-max-height: calc(100vh - 54px) /*  general value to account for notch and a bit more extra space*/;
 	--border-radius-sharp: none;
 	--border-radius-rounded: var(--border-radius-softer);
-	--osui-bottom-sheet-draggable-area: #{$token-scale-1400};
-	--osui-bottom-sheet-transition-function: #{$token-transition-curve-quick};
+	--osui-bottom-sheet-draggable-area: #{variables.$token-scale-1400};
+	--osui-bottom-sheet-transition-function: #{variables.$token-transition-curve-quick};
 
 	background-color: var(--osui-bottom-sheet-background);
 	border-top-left-radius: var(--bottom-sheet-shape);
@@ -29,7 +31,7 @@
 	min-height: 50vh;
 	position: fixed;
 	text-align: center;
-	transition: transform $token-transition-time-300 var(--osui-bottom-sheet-transition-function);
+	transition: transform variables.$token-transition-time-300 var(--osui-bottom-sheet-transition-function);
 	transform: translateY(100%);
 	width: 100%;
 	z-index: var(--osui-bottom-sheet-layer);
@@ -41,7 +43,7 @@
 		.osui-bottom-sheet__content:empty,
 		.osui-bottom-sheet__header__top-bar:empty {
 			-servicestudio-border: 1px dashed var(--color-border-input);
-			-servicestudio-margin: $token-scale-400;
+			-servicestudio-margin: variables.$token-scale-400;
 		}
 	}
 
@@ -51,16 +53,16 @@
 				background: var(--osui-bottom-sheet-handler-background);
 				border-radius: 100px;
 				content: '';
-				height: $token-scale-100;
+				height: variables.$token-scale-100;
 				left: 50%;
 				position: absolute;
-				top: $token-scale-300;
+				top: variables.$token-scale-300;
 				transform: translateX(-50%);
 				width: var(--osui-bottom-sheet-handler-width);
 			}
 
 			&__top-bar {
-				padding-top: $token-scale-800;
+				padding-top: variables.$token-scale-800;
 			}
 		}
 	}
@@ -95,22 +97,22 @@
 	}
 
 	&:not(.osui-bottom-sheet--is-open) {
-		transition: transform $token-transition-time-200 $token-transition-curve-quick;
+		transition: transform variables.$token-transition-time-200 variables.$token-transition-curve-quick;
 
 		+ .osui-bottom-sheet-overlay {
-			transition: opacity $token-transition-time-200 $token-transition-curve-quick;
+			transition: opacity variables.$token-transition-time-200 variables.$token-transition-curve-quick;
 		}
 	}
 
 	&-overlay {
-		background-color: $token-backdrop;
+		background-color: variables.$token-backdrop;
 		height: 100vh;
 		left: 0;
 		opacity: 0;
 		pointer-events: none;
 		position: fixed;
 		top: 0;
-		transition: opacity $token-transition-time-300 $token-transition-curve-base;
+		transition: opacity variables.$token-transition-time-300 variables.$token-transition-curve-base;
 		width: 100vw;
 		z-index: calc(var(--layer-below) + var(--osui-bottom-sheet-layer));
 
@@ -136,7 +138,7 @@
 			padding: var(--osui-bottom-sheet-padding);
 
 			&::before {
-				box-shadow: $token-elevation-3;
+				box-shadow: variables.$token-elevation-3;
 				content: '';
 				height: 100%;
 				left: 0;
@@ -144,8 +146,8 @@
 				position: absolute;
 				transform: translateY(-2px);
 				transition:
-					opacity $token-transition-time-200 $token-transition-curve-expressive,
-					transform $token-transition-time-200 var(--osui-bottom-sheet-transition-function);
+					opacity variables.$token-transition-time-200 variables.$token-transition-curve-expressive,
+					transform variables.$token-transition-time-200 var(--osui-bottom-sheet-transition-function);
 				top: 0;
 				width: 100%;
 				z-index: var(--layer-global-negative);
@@ -161,7 +163,7 @@
 		max-height: var(--bottom-sheet-max-height);
 		overflow-y: scroll;
 		padding: var(--osui-bottom-sheet-padding);
-		padding-bottom: calc(var(--size-bottom-bar) + $token-scale-600 + var(--os-safe-area-bottom));
+		padding-bottom: calc(var(--size-bottom-bar) + variables.$token-scale-600 + var(--os-safe-area-bottom));
 	}
 }
 
@@ -183,8 +185,8 @@
 .landscape {
 	.osui-bottom-sheet__header__top-bar,
 	.osui-bottom-sheet__content {
-		padding-right: calc($token-scale-400 + var(--os-safe-area-right));
-		padding-left: calc($token-scale-400 + var(--os-safe-area-left));
+		padding-right: calc(variables.$token-scale-400 + var(--os-safe-area-right));
+		padding-left: calc(variables.$token-scale-400 + var(--os-safe-area-left));
 	}
 }
 
@@ -210,6 +212,6 @@
 ///
 .os-high-contrast {
 	.osui-bottom-sheet {
-		border: $token-border-size-025 solid var(--color-text-inverse);
+		border: variables.$token-border-size-025 solid var(--color-text-inverse);
 	}
 }

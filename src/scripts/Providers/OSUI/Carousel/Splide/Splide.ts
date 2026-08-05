@@ -192,15 +192,23 @@ namespace Providers.OSUI.Carousel.Splide {
 		private _setListRoles(): void {
 			// Remove role="tabpanel" from slides that contain img, ul, ol, or li — elements for
 			// which tabpanel ownership is invalid or creates conflicting semantics
-			this.selfElement.querySelectorAll(OSFramework.OSUI.Constants.Dot + Enum.CssClass.SplideSlide).forEach((slide) => {
-				const _slideEl = slide as HTMLElement;
-				if (
-					OSFramework.OSUI.Helper.Dom.Attribute.Get(_slideEl, OSFramework.OSUI.Constants.A11YAttributes.Role.AttrName) === OSFramework.OSUI.Constants.A11YAttributes.Role.TabPanel &&
-					_slideEl.querySelector('img, ul, ol, li')
-				) {
-					OSFramework.OSUI.Helper.Dom.Attribute.Remove(_slideEl, OSFramework.OSUI.Constants.A11YAttributes.Role.AttrName);
-				}
-			});
+			this.selfElement
+				.querySelectorAll(OSFramework.OSUI.Constants.Dot + Enum.CssClass.SplideSlide)
+				.forEach((slide) => {
+					const _slideEl = slide as HTMLElement;
+					if (
+						OSFramework.OSUI.Helper.Dom.Attribute.Get(
+							_slideEl,
+							OSFramework.OSUI.Constants.A11YAttributes.Role.AttrName
+						) === OSFramework.OSUI.Constants.A11YAttributes.Role.TabPanel &&
+						_slideEl.querySelector('img, ul, ol, li')
+					) {
+						OSFramework.OSUI.Helper.Dom.Attribute.Remove(
+							_slideEl,
+							OSFramework.OSUI.Constants.A11YAttributes.Role.AttrName
+						);
+					}
+				});
 
 			if (this._hasList && this._carouselListWidgetElem) {
 				// Dynamic content: poll until the List widget finishes loading before applying roles

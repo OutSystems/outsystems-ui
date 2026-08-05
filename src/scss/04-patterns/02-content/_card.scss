@@ -1,3 +1,5 @@
+@use "../../tokens/variables";
+
 /* Patterns - Content - Card */
 ////
 /// @group Patterns-Card
@@ -7,11 +9,11 @@
 .card {
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-card-background:    var(--color-background-surface);
-	--osui-card-border-color:  #{$token-border-subtle};
-	--osui-card-border-width:  #{$token-border-size-025};
+	--osui-card-border-color:  #{variables.$token-border-subtle};
+	--osui-card-border-width:  #{variables.$token-border-size-025};
 	--osui-card-border-radius: var(--border-radius-soft);
-	--osui-card-padding:       #{$token-scale-600};
-	--osui-card-shadow:        #{$token-elevation-1};
+	--osui-card-padding:       #{variables.$token-scale-600};
+	--osui-card-shadow:        #{variables.$token-elevation-1};
 	// ───────────────────────────────────────────────────────────────────
 
 	background-color: var(--osui-card-background);
@@ -26,6 +28,6 @@
 ///
 .layout-native {
 	& .card {
-		padding: $token-scale-400;
+		padding: variables.$token-scale-400;
 	}
 }

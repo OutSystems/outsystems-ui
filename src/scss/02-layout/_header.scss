@@ -1,3 +1,6 @@
+@use '../00-abstract/index' as *;
+@use "../tokens/variables";
+
 /* Page Layout - Header */
 ////
 /// @group Layout-Header
@@ -6,7 +9,7 @@
 ///
 .header {
 	background-color: var(--background-color-header, var(--color-background-header));
-	box-shadow: $token-elevation-1;
+	box-shadow: variables.$token-elevation-1;
 	z-index: var(--layer-navigation);
 
 	// Service Studio Preview
@@ -19,7 +22,7 @@
 	}
 
 	&-logo {
-		padding-right: $token-scale-400;
+		padding-right: variables.$token-scale-400;
 
 		.application-name {
 			word-break: break-word;
@@ -34,7 +37,7 @@
 		height: 100%;
 
 		& > [data-block*='ApplicationTitle'] .application-name {
-			margin-right: $token-scale-600;
+			margin-right: variables.$token-scale-600;
 		}
 	}
 
@@ -119,24 +122,24 @@
 .is-rtl {
 	.header {
 		&-logo {
-			padding-left: $token-scale-400;
+			padding-left: variables.$token-scale-400;
 			padding-right: 0;
 		}
 
 		.header-content > [data-block*='ApplicationTitle'] .application-name {
 			margin-right: 0;
-			margin-left: $token-scale-600;
+			margin-left: variables.$token-scale-600;
 		}
 	}
 
 	.app-logo,
 	.layout-side .app-logo {
-		margin-left: $token-scale-200;
+		margin-left: variables.$token-scale-200;
 		margin-right: 0;
 	}
 
 	.menu-icon {
-		margin-left: $token-scale-600;
+		margin-left: variables.$token-scale-600;
 		margin-right: 0;
 	}
 }

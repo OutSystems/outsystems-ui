@@ -1,3 +1,5 @@
+@use "../tokens/variables";
+
 /* Widgets - Table - Bulk Actions */
 ////
 /// @group Widgets-Table-Bulk_Actions
@@ -12,17 +14,17 @@
 	}
 
 	[data-checkbox] {
-		--osui-checkbox-size: #{$token-scale-400};
+		--osui-checkbox-size: #{variables.$token-scale-400};
 
 		display: block;
 
 		&:checked:after {
-			border: $token-border-size-050 solid var(--color-text-inverse);
-			border-right: $token-border-size-0 !important;
-			border-top: $token-border-size-0 !important;
+			border: variables.$token-border-size-050 solid var(--color-text-inverse);
+			border-right: variables.$token-border-size-0 !important;
+			border-top: variables.$token-border-size-0 !important;
 			display: block;
-			height: $token-scale-050;
-			left: $token-scale-100;
+			height: variables.$token-scale-050;
+			left: variables.$token-scale-100;
 			top: 5px;
 			width: 7px;
 		}
@@ -30,8 +32,8 @@
 
 	.checkbox-intermediate {
 		&:before {
-			background-color: $token-semantics-primary-base;
-			border: $token-border-size-025 solid $token-semantics-primary-base;
+			background-color: variables.$token-semantics-primary-base;
+			border: variables.$token-border-size-025 solid variables.$token-semantics-primary-base;
 		}
 
 		&:after {
@@ -42,7 +44,7 @@
 			position: absolute;
 			top: 50%;
 			transform: translateY(-50%) translateX(-50%);
-			width: $token-scale-200;
+			width: variables.$token-scale-200;
 
 			// Service Studio Preview
 			& {

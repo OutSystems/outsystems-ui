@@ -1,3 +1,5 @@
+@use "../tokens/variables";
+
 /* Widgets - Popover */
 ////
 /// @group Widgets-Popover
@@ -11,8 +13,8 @@
 
 	& > .popover {
 		&-top {
-			border: $token-border-size-0;
-			padding: $token-scale-0;
+			border: variables.$token-border-size-0;
+			padding: variables.$token-scale-0;
 		}
 
 		&-bottom {
@@ -20,7 +22,7 @@
 			--osui-popover-background:     var(--color-background-surface);
 			--osui-popover-color:          var(--color-text);
 			--osui-popover-border-radius:  var(--border-radius-soft);
-			--osui-popover-shadow:         #{$token-elevation-2};
+			--osui-popover-shadow:         #{variables.$token-elevation-2};
 			--osui-popover-max-width:      350px;
 			// ───────────────────────────────────────────────────────────────────
 
@@ -30,7 +32,7 @@
 			color: var(--osui-popover-color);
 			max-width: var(--osui-popover-max-width);
 			min-width: auto;
-			padding: $token-scale-600;
+			padding: variables.$token-scale-600;
 			z-index: var(--layer-elevated);
 		}
 	}

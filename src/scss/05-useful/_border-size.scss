@@ -1,3 +1,7 @@
+@use "sass:map";
+@use '../00-abstract/index' as *;
+@use "../tokens/variables";
+
 /* Usefull - Border Size */
 ////
 /// @group UsefullClasses-Border_Size
@@ -5,10 +9,10 @@
 
 // Maps old border-size names to token SCSS variables
 $osui-border-size-token-vars: (
-	'none': $token-border-size-0,
-	's': $token-border-size-025,
-	'm': $token-border-size-050,
-	'l': $token-border-size-075
+	'none': variables.$token-border-size-0,
+	's': variables.$token-border-size-025,
+	'm': variables.$token-border-size-050,
+	'l': variables.$token-border-size-075
 );
 
 ///
@@ -18,9 +22,9 @@ $osui-border-size-token-vars: (
 			// Generated - Eg: .border-size-none
 			&-#{$type} {
 				@if $type == 'none' {
-					border-width: #{map-get($osui-border-size-token-vars, $type)};
+					border-width: #{map.get($osui-border-size-token-vars, $type)};
 				} @else {
-					border: #{map-get($osui-border-size-token-vars, $type)} solid currentColor;
+					border: #{map.get($osui-border-size-token-vars, $type)} solid currentColor;
 				}
 			}
 		}
@@ -33,7 +37,7 @@ $osui-border-size-token-vars: (
 					// Generated - Eg: .border-top-s
 					&-#{$osui-box-side}-#{$type}:not(.columns),
 					&-#{$osui-box-side}-#{$type}.columns > .columns-item:not(:last-child) {
-						border-#{$osui-box-side}: #{map-get($osui-border-size-token-vars, $type)} solid currentColor;
+						border-#{$osui-box-side}: #{map.get($osui-border-size-token-vars, $type)} solid currentColor;
 					}
 				}
 			}

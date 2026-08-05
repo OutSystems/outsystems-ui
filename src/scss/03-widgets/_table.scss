@@ -1,3 +1,5 @@
+@use "../tokens/variables";
+
 /* Widgets - Table */
 ////
 /// @group Widgets-Table
@@ -12,12 +14,12 @@
 	--osui-table-header-color: var(--color-text-subtlest);
 	--osui-table-cell-background: var(--color-background-surface);
 	--osui-table-row-hover-background: var(--color-background-input-disabled);
-	--osui-table-row-stripe-background: #{$token-bg-neutral-subtle-default};
+	--osui-table-row-stripe-background: #{variables.$token-bg-neutral-subtle-default};
 	--osui-table-sorted-color: var(--color-text);
 	--osui-table-row-selected-background: var(--color-primary-selected);
 	// ───────────────────────────────────────────────────────────────────
 
-	border: $token-border-size-025 solid var(--osui-table-border-color);
+	border: variables.$token-border-size-025 solid var(--osui-table-border-color);
 	border-radius: var(--osui-table-border-radius);
 	border-spacing: 0;
 	empty-cells: show;
@@ -33,12 +35,12 @@
 
 		th {
 			background-color: var(--osui-table-header-background);
-			border-bottom: $token-border-size-025 solid var(--osui-table-border-color);
+			border-bottom: variables.$token-border-size-025 solid var(--osui-table-border-color);
 			color: var(--osui-table-header-color);
-			font-size: $token-font-size-350;
-			font-weight: $token-font-weight-regular;
-			height: $token-scale-1200;
-			padding: $token-scale-0 $token-scale-600;
+			font-size: variables.$token-font-size-350;
+			font-weight: variables.$token-font-weight-regular;
+			height: variables.$token-scale-1200;
+			padding: variables.$token-scale-0 variables.$token-scale-600;
 			text-align: left;
 
 			&.sortable {
@@ -47,7 +49,7 @@
 
 			&.sorted {
 				color: var(--osui-table-sorted-color);
-				font-weight: $token-font-weight-semi-bold;
+				font-weight: variables.$token-font-weight-semi-bold;
 			}
 		}
 	}
@@ -58,29 +60,29 @@
 		}
 
 		&.table-row-selected td {
-			background: color-mix(in srgb, var(--osui-table-row-selected-background) 10%, #{$token-bg-surface-default});
+			background: color-mix(in srgb, var(--osui-table-row-selected-background) 10%, #{variables.$token-bg-surface-default});
 		}
 
 		td {
 			background: var(--osui-table-cell-background);
-			border-bottom: $token-border-size-025 solid var(--osui-table-border-color);
+			border-bottom: variables.$token-border-size-025 solid var(--osui-table-border-color);
 			color: var(--color-text);
-			font-size: $token-font-size-350;
-			height: $token-scale-1600;
-			padding: $token-scale-200 $token-scale-600;
-			transition: background-color $token-transition-time-100 ease; // no token match for ease
+			font-size: variables.$token-font-size-350;
+			height: variables.$token-scale-1600;
+			padding: variables.$token-scale-200 variables.$token-scale-600;
+			transition: background-color variables.$token-transition-time-100 ease; // no token match for ease
 			vertical-align: inherit;
 		}
 
 		&-small {
 			td {
-				height: $token-scale-1000;
+				height: variables.$token-scale-1000;
 			}
 		}
 
 		&-medium {
 			td {
-				height: $token-scale-1200;
+				height: variables.$token-scale-1200;
 			}
 		}
 
@@ -171,7 +173,7 @@
 			}
 
 			tr {
-				border-bottom: $token-border-size-025 solid var(--color-border);
+				border-bottom: variables.$token-border-size-025 solid var(--color-border);
 			}
 
 			td {
@@ -214,9 +216,9 @@
 
 			td {
 				background: var(--osui-table-cell-background);
-				border-bottom: $token-border-size-025 solid var(--osui-table-border-color);
+				border-bottom: variables.$token-border-size-025 solid var(--osui-table-border-color);
 				display: table-cell;
-				padding: $token-scale-200 $token-scale-600;
+				padding: variables.$token-scale-200 variables.$token-scale-600;
 				vertical-align: inherit;
 				width: auto !important;
 
@@ -273,7 +275,7 @@
 ///
 .has-accessible-features {
 	th.sortable:focus {
-		box-shadow: 0 0 0 $token-border-size-075 var(--color-focus-outer);
+		box-shadow: 0 0 0 variables.$token-border-size-075 var(--color-focus-outer);
 		position: relative;
 		z-index: var(--layer-screen);
 	}
@@ -301,7 +303,7 @@
 	}
 
 	.sortable-icon {
-		margin-left: $token-scale-0;
-		right: $token-scale-200;
+		margin-left: variables.$token-scale-0;
+		right: variables.$token-scale-200;
 	}
 }

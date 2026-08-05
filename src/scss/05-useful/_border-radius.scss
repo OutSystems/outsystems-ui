@@ -1,3 +1,7 @@
+@use "sass:map";
+@use '../00-abstract/index' as *;
+@use "../tokens/variables";
+
 /* Usefull - Border Radius */
 ////
 /// @group UsefullClasses-Border_Radius
@@ -5,16 +9,16 @@
 
 // Maps old border-radius names to token SCSS variables (or plain CSS values)
 $osui-border-radius-token-vars: (
-	'none': $token-border-radius-0,
-	'soft': $token-border-radius-100,
-	'rounded': $token-border-radius-full,
+	'none': variables.$token-border-radius-0,
+	'soft': variables.$token-border-radius-100,
+	'rounded': variables.$token-border-radius-full,
 	'circle': 50%
 );
 
 ///
 .border-radius {
 	@each $type, $value in $osui-border-radius-types {
-		$token: map-get($osui-border-radius-token-vars, $type);
+		$token: map.get($osui-border-radius-token-vars, $type);
 		// Generated - Eg: .border-radius-none
 		&-#{$type} {
 			border-radius: #{$token};

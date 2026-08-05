@@ -1,3 +1,5 @@
+@use "../tokens/variables";
+
 ////
 /// @group Theme-Dark
 /// Dark theme — opt-in, manual only.
@@ -30,136 +32,136 @@
 	/* Re-evaluate native text color at this scope — `html { color: … }` resolves
 	   at the html element, so without this the computed (light) color inherits
 	   into descendants, including headings. */
-	color: $token-text-default;
+	color: variables.$token-text-default;
 
 	/* ────────────────────────────────────────────────────────────────────── */
 	/* Framework theme-layer roles — re-declared so components that read         */
 	/* `--color-*` re-resolve against the dark `--token-*` set below.            */
 	/* ────────────────────────────────────────────────────────────────────── */
-	--color-background-body: #{$token-bg-body};
-	--color-background-surface: #{$token-bg-surface-default};
-	--color-background-header: #{$token-bg-surface-default};
-	--color-background-sidemenu: #{$token-bg-surface-default};
-	--color-background-footer: #{$token-bg-surface-default};
-	--color-background-login: #{$token-bg-surface-default};
-	--color-background-input: #{$token-bg-input-default};
-	--color-background-input-disabled: #{$token-bg-input-disabled};
+	--color-background-body: #{variables.$token-bg-body};
+	--color-background-surface: #{variables.$token-bg-surface-default};
+	--color-background-header: #{variables.$token-bg-surface-default};
+	--color-background-sidemenu: #{variables.$token-bg-surface-default};
+	--color-background-footer: #{variables.$token-bg-surface-default};
+	--color-background-login: #{variables.$token-bg-surface-default};
+	--color-background-input: #{variables.$token-bg-input-default};
+	--color-background-input-disabled: #{variables.$token-bg-input-disabled};
 
-	--color-text: #{$token-text-default};
-	--color-text-subtle: #{$token-text-subtle};
-	--color-text-subtlest: #{$token-text-subtlest};
-	--color-text-disabled: #{$token-text-disabled};
-	--color-text-inverse: #{$token-text-inverse};
+	--color-text: #{variables.$token-text-default};
+	--color-text-subtle: #{variables.$token-text-subtle};
+	--color-text-subtlest: #{variables.$token-text-subtlest};
+	--color-text-disabled: #{variables.$token-text-disabled};
+	--color-text-inverse: #{variables.$token-text-inverse};
 
-	--color-border: #{$token-border-default};
-	--color-border-subtle: #{$token-border-subtle};
-	--color-border-subtlest: #{$token-border-subtlest};
-	--color-border-input: #{$token-border-input-default};
-	--color-border-input-press: #{$token-border-input-press};
+	--color-border: #{variables.$token-border-default};
+	--color-border-subtle: #{variables.$token-border-subtle};
+	--color-border-subtlest: #{variables.$token-border-subtlest};
+	--color-border-input: #{variables.$token-border-input-default};
+	--color-border-input-press: #{variables.$token-border-input-press};
 
-	--color-primary: #{$token-semantics-primary-base};
-	--color-error: #{$token-semantics-danger-base};
-	--color-warning: #{$token-semantics-warning-base};
-	--color-success: #{$token-semantics-success-base};
-	--color-info: #{$token-semantics-info-base};
+	--color-primary: #{variables.$token-semantics-primary-base};
+	--color-error: #{variables.$token-semantics-danger-base};
+	--color-warning: #{variables.$token-semantics-warning-base};
+	--color-success: #{variables.$token-semantics-success-base};
+	--color-info: #{variables.$token-semantics-info-base};
 
 	/* ────────────────────────────────────────────────────────────────────── */
 	/* Surface hierarchy — warm near-blacks, inspired by Vercel / Linear         */
 	/* ────────────────────────────────────────────────────────────────────── */
-	--token-bg-body: #{$token-primitives-base-black};
-	--token-bg-surface-default: #{$token-primitives-neutral-1200};
-	--token-bg-surface-inverse: #{$token-primitives-neutral-100};
+	--token-bg-body: #{variables.$token-primitives-base-black};
+	--token-bg-surface-default: #{variables.$token-primitives-neutral-1200};
+	--token-bg-surface-inverse: #{variables.$token-primitives-neutral-100};
 
 	/* Inputs */
-	--token-bg-input-default: #{$token-primitives-neutral-1100};
-	--token-bg-input-read-only: #{$token-primitives-neutral-1000};
-	--token-bg-input-press: #{$token-primitives-neutral-1000};
-	--token-bg-input-disabled: #{$token-primitives-neutral-1200};
-	--token-bg-input-bold-default: #{$token-primitives-neutral-1000};
-	--token-bg-input-bold-press: #{$token-primitives-neutral-900};
-	--token-bg-input-bold-read-only: #{$token-primitives-neutral-1000};
-	--token-bg-input-bold-disabled: #{$token-primitives-neutral-1100};
+	--token-bg-input-default: #{variables.$token-primitives-neutral-1100};
+	--token-bg-input-read-only: #{variables.$token-primitives-neutral-1000};
+	--token-bg-input-press: #{variables.$token-primitives-neutral-1000};
+	--token-bg-input-disabled: #{variables.$token-primitives-neutral-1200};
+	--token-bg-input-bold-default: #{variables.$token-primitives-neutral-1000};
+	--token-bg-input-bold-press: #{variables.$token-primitives-neutral-900};
+	--token-bg-input-bold-read-only: #{variables.$token-primitives-neutral-1000};
+	--token-bg-input-bold-disabled: #{variables.$token-primitives-neutral-1100};
 
 	/* Neutral tinted rows, table stripes, hovers */
-	--token-bg-neutral-subtle-default: #{$token-primitives-neutral-1100};
-	--token-bg-neutral-subtle-press: #{$token-primitives-neutral-1000};
-	--token-bg-neutral-subtlest-default: #{$token-primitives-neutral-1200};
-	--token-bg-neutral-subtlest-press: #{$token-primitives-neutral-1100};
-	--token-bg-neutral-base-default: #{$token-primitives-neutral-700};
-	--token-bg-neutral-base-press: #{$token-primitives-neutral-500};
-	--token-bg-neutral-bold-default: #{$token-primitives-neutral-200};
-	--token-bg-neutral-bold-press: #{$token-primitives-neutral-100};
-	--token-bg-neutral-boldest-default: #{$token-primitives-neutral-100};
-	--token-bg-neutral-boldest-press: #{$token-primitives-base-white};
+	--token-bg-neutral-subtle-default: #{variables.$token-primitives-neutral-1100};
+	--token-bg-neutral-subtle-press: #{variables.$token-primitives-neutral-1000};
+	--token-bg-neutral-subtlest-default: #{variables.$token-primitives-neutral-1200};
+	--token-bg-neutral-subtlest-press: #{variables.$token-primitives-neutral-1100};
+	--token-bg-neutral-base-default: #{variables.$token-primitives-neutral-700};
+	--token-bg-neutral-base-press: #{variables.$token-primitives-neutral-500};
+	--token-bg-neutral-bold-default: #{variables.$token-primitives-neutral-200};
+	--token-bg-neutral-bold-press: #{variables.$token-primitives-neutral-100};
+	--token-bg-neutral-boldest-default: #{variables.$token-primitives-neutral-100};
+	--token-bg-neutral-boldest-press: #{variables.$token-primitives-base-white};
 
 	/* ────────────────────────────────────────────────────────────────────── */
 	/* Text                                                                      */
 	/* ────────────────────────────────────────────────────────────────────── */
-	--token-text-default: #{$token-primitives-neutral-100};
-	--token-text-subtle: #{$token-primitives-neutral-300};
-	--token-text-subtlest: #{$token-primitives-neutral-500};
-	--token-text-disabled: #{$token-primitives-neutral-700};
-	--token-text-inverse: #{$token-primitives-base-black};
+	--token-text-default: #{variables.$token-primitives-neutral-100};
+	--token-text-subtle: #{variables.$token-primitives-neutral-300};
+	--token-text-subtlest: #{variables.$token-primitives-neutral-500};
+	--token-text-disabled: #{variables.$token-primitives-neutral-700};
+	--token-text-inverse: #{variables.$token-primitives-base-black};
 
 	/* Primary / semantic text — lighter palette end for WCAG AA on dark. */
-	--token-text-primary: #{$token-primitives-blue-400};
-	--token-text-select: #{$token-primitives-blue-400};
-	--token-text-info: #{$token-primitives-blue-400};
-	--token-text-success: #{$token-primitives-green-400};
-	--token-text-danger: #{$token-primitives-red-400};
-	--token-text-warning: #{$token-primitives-yellow-400};
-	--token-text-link-default: #{$token-primitives-blue-400};
-	--token-text-link-press: #{$token-primitives-blue-300};
-	--token-text-link-visited: #{$token-primitives-blue-500};
+	--token-text-primary: #{variables.$token-primitives-blue-400};
+	--token-text-select: #{variables.$token-primitives-blue-400};
+	--token-text-info: #{variables.$token-primitives-blue-400};
+	--token-text-success: #{variables.$token-primitives-green-400};
+	--token-text-danger: #{variables.$token-primitives-red-400};
+	--token-text-warning: #{variables.$token-primitives-yellow-400};
+	--token-text-link-default: #{variables.$token-primitives-blue-400};
+	--token-text-link-press: #{variables.$token-primitives-blue-300};
+	--token-text-link-visited: #{variables.$token-primitives-blue-500};
 
 	/* Extended palette text */
-	--token-text-extended-pumpkin: #{$token-primitives-pumpkin-400};
-	--token-text-extended-orange: #{$token-primitives-orange-400};
-	--token-text-extended-lime: #{$token-primitives-lime-400};
-	--token-text-extended-teal: #{$token-primitives-teal-400};
-	--token-text-extended-aqua: #{$token-primitives-aqua-400};
-	--token-text-extended-indigo: #{$token-primitives-indigo-400};
-	--token-text-extended-violet: #{$token-primitives-violet-400};
-	--token-text-extended-purple: #{$token-primitives-purple-400};
-	--token-text-extended-magenta: #{$token-primitives-magenta-400};
-	--token-text-extended-pink: #{$token-primitives-pink-400};
+	--token-text-extended-pumpkin: #{variables.$token-primitives-pumpkin-400};
+	--token-text-extended-orange: #{variables.$token-primitives-orange-400};
+	--token-text-extended-lime: #{variables.$token-primitives-lime-400};
+	--token-text-extended-teal: #{variables.$token-primitives-teal-400};
+	--token-text-extended-aqua: #{variables.$token-primitives-aqua-400};
+	--token-text-extended-indigo: #{variables.$token-primitives-indigo-400};
+	--token-text-extended-violet: #{variables.$token-primitives-violet-400};
+	--token-text-extended-purple: #{variables.$token-primitives-purple-400};
+	--token-text-extended-magenta: #{variables.$token-primitives-magenta-400};
+	--token-text-extended-pink: #{variables.$token-primitives-pink-400};
 
 	/* ────────────────────────────────────────────────────────────────────── */
 	/* Icons mirror text                                                         */
 	/* ────────────────────────────────────────────────────────────────────── */
-	--token-icon-default: #{$token-primitives-neutral-100};
-	--token-icon-subtle: #{$token-primitives-neutral-300};
-	--token-icon-subtlest: #{$token-primitives-neutral-500};
-	--token-icon-disabled: #{$token-primitives-neutral-700};
-	--token-icon-inverse: #{$token-primitives-base-black};
-	--token-icon-primary: #{$token-primitives-blue-400};
-	--token-icon-select: #{$token-primitives-blue-400};
-	--token-icon-info: #{$token-primitives-blue-400};
-	--token-icon-success: #{$token-primitives-green-400};
-	--token-icon-danger: #{$token-primitives-red-400};
-	--token-icon-warning: #{$token-primitives-yellow-400};
+	--token-icon-default: #{variables.$token-primitives-neutral-100};
+	--token-icon-subtle: #{variables.$token-primitives-neutral-300};
+	--token-icon-subtlest: #{variables.$token-primitives-neutral-500};
+	--token-icon-disabled: #{variables.$token-primitives-neutral-700};
+	--token-icon-inverse: #{variables.$token-primitives-base-black};
+	--token-icon-primary: #{variables.$token-primitives-blue-400};
+	--token-icon-select: #{variables.$token-primitives-blue-400};
+	--token-icon-info: #{variables.$token-primitives-blue-400};
+	--token-icon-success: #{variables.$token-primitives-green-400};
+	--token-icon-danger: #{variables.$token-primitives-red-400};
+	--token-icon-warning: #{variables.$token-primitives-yellow-400};
 
 	/* ────────────────────────────────────────────────────────────────────── */
 	/* Borders — barely visible hairlines                                        */
 	/* ────────────────────────────────────────────────────────────────────── */
-	--token-border-default: #{$token-primitives-neutral-1000};
-	--token-border-subtle: #{$token-primitives-neutral-1100};
-	--token-border-subtlest: #{$token-primitives-neutral-1200};
-	--token-border-boldest: #{$token-primitives-neutral-100};
-	--token-border-disabled: #{$token-primitives-neutral-1000};
-	--token-border-input-default: #{$token-primitives-neutral-900};
-	--token-border-input-press: #{$token-primitives-neutral-700};
-	--token-border-input-read-only: #{$token-primitives-neutral-900};
-	--token-border-focus-default: #{$token-primitives-blue-500};
-	--token-border-focus-error: #{$token-primitives-red-500};
+	--token-border-default: #{variables.$token-primitives-neutral-1000};
+	--token-border-subtle: #{variables.$token-primitives-neutral-1100};
+	--token-border-subtlest: #{variables.$token-primitives-neutral-1200};
+	--token-border-boldest: #{variables.$token-primitives-neutral-100};
+	--token-border-disabled: #{variables.$token-primitives-neutral-1000};
+	--token-border-input-default: #{variables.$token-primitives-neutral-900};
+	--token-border-input-press: #{variables.$token-primitives-neutral-700};
+	--token-border-input-read-only: #{variables.$token-primitives-neutral-900};
+	--token-border-focus-default: #{variables.$token-primitives-blue-500};
+	--token-border-focus-error: #{variables.$token-primitives-red-500};
 
 	/* ────────────────────────────────────────────────────────────────────── */
 	/* Primary brand — nudge up one shade so it stays vibrant on black           */
 	/* ────────────────────────────────────────────────────────────────────── */
-	--token-semantics-primary-base: #{$token-primitives-blue-600};
-	--token-bg-primary-base-default: #{$token-primitives-blue-600};
-	--token-bg-primary-base-press: #{$token-primitives-blue-500};
-	--token-border-primary: #{$token-primitives-blue-600};
+	--token-semantics-primary-base: #{variables.$token-primitives-blue-600};
+	--token-bg-primary-base-default: #{variables.$token-primitives-blue-600};
+	--token-bg-primary-base-press: #{variables.$token-primitives-blue-500};
+	--token-border-primary: #{variables.$token-primitives-blue-600};
 
 	/* ────────────────────────────────────────────────────────────────────── */
 	/* Semantic subtle backgrounds — glassy rgba tints over the dark surface     */
@@ -178,14 +180,14 @@
 	--token-bg-select-press: rgba(105, 134, 242, 0.28);
 
 	/* Semantic bold backgrounds — one step brighter for contrast */
-	--token-bg-danger-base-default: #{$token-primitives-red-600};
-	--token-bg-danger-base-press: #{$token-primitives-red-500};
-	--token-bg-success-base-default: #{$token-primitives-green-600};
-	--token-bg-success-base-press: #{$token-primitives-green-500};
-	--token-bg-info-base-default: #{$token-primitives-blue-600};
-	--token-bg-info-base-press: #{$token-primitives-blue-500};
-	--token-bg-warning-base-default: #{$token-primitives-yellow-500};
-	--token-bg-warning-base-press: #{$token-primitives-yellow-400};
+	--token-bg-danger-base-default: #{variables.$token-primitives-red-600};
+	--token-bg-danger-base-press: #{variables.$token-primitives-red-500};
+	--token-bg-success-base-default: #{variables.$token-primitives-green-600};
+	--token-bg-success-base-press: #{variables.$token-primitives-green-500};
+	--token-bg-info-base-default: #{variables.$token-primitives-blue-600};
+	--token-bg-info-base-press: #{variables.$token-primitives-blue-500};
+	--token-bg-warning-base-default: #{variables.$token-primitives-yellow-500};
+	--token-bg-warning-base-press: #{variables.$token-primitives-yellow-400};
 
 	/* ────────────────────────────────────────────────────────────────────── */
 	/* Elevation — much darker shadows to register against the body             */
@@ -215,57 +217,57 @@
 
 	/* Card — on dark surfaces a visible border reads better than a shadow. */
 	.card {
-		--osui-card-border-color: #{$token-primitives-neutral-1100};
+		--osui-card-border-color: #{variables.$token-primitives-neutral-1100};
 		--osui-card-shadow: 0 1px 0 rgba(255, 255, 255, 0.03), 0 2px 10px rgba(0, 0, 0, 0.25);
 	}
 
 	/* Alert — accent colors shift to the lighter palette shade. */
 	.alert {
 		&-info {
-			--osui-alert-accent-color: #{$token-primitives-blue-500};
+			--osui-alert-accent-color: #{variables.$token-primitives-blue-500};
 		}
 		&-success {
-			--osui-alert-accent-color: #{$token-primitives-green-500};
+			--osui-alert-accent-color: #{variables.$token-primitives-green-500};
 		}
 		&-error {
-			--osui-alert-accent-color: #{$token-primitives-red-500};
+			--osui-alert-accent-color: #{variables.$token-primitives-red-500};
 		}
 		&-warning {
-			--osui-alert-accent-color: #{$token-primitives-yellow-500};
+			--osui-alert-accent-color: #{variables.$token-primitives-yellow-500};
 		}
 	}
 
 	/* Button — keep bold variant colors vibrant on dark. */
 	.btn {
-		--osui-btn-primary-background: #{$token-primitives-blue-600};
-		--osui-btn-primary-border-color: #{$token-primitives-blue-600};
-		--osui-btn-success-background: #{$token-primitives-green-600};
-		--osui-btn-success-border-color: #{$token-primitives-green-600};
-		--osui-btn-error-background: #{$token-primitives-red-600};
-		--osui-btn-error-border-color: #{$token-primitives-red-600};
+		--osui-btn-primary-background: #{variables.$token-primitives-blue-600};
+		--osui-btn-primary-border-color: #{variables.$token-primitives-blue-600};
+		--osui-btn-success-background: #{variables.$token-primitives-green-600};
+		--osui-btn-success-border-color: #{variables.$token-primitives-green-600};
+		--osui-btn-error-background: #{variables.$token-primitives-red-600};
+		--osui-btn-error-border-color: #{variables.$token-primitives-red-600};
 	}
 
 	/* Table — rgba tints read better than solid stripes/hovers on dark. */
 	.table {
-		--osui-table-border-color: #{$token-primitives-neutral-1100};
-		--osui-table-header-background: #{$token-primitives-neutral-1100};
-		--osui-table-header-color: #{$token-primitives-neutral-300};
-		--osui-table-cell-background: #{$token-primitives-neutral-1200};
+		--osui-table-border-color: #{variables.$token-primitives-neutral-1100};
+		--osui-table-header-background: #{variables.$token-primitives-neutral-1100};
+		--osui-table-header-color: #{variables.$token-primitives-neutral-300};
+		--osui-table-cell-background: #{variables.$token-primitives-neutral-1200};
 		--osui-table-row-hover-background: rgba(255, 255, 255, 0.03);
 		--osui-table-row-stripe-background: rgba(255, 255, 255, 0.02);
-		--osui-table-sorted-color: #{$token-primitives-blue-400};
+		--osui-table-sorted-color: #{variables.$token-primitives-blue-400};
 	}
 
 	/* Inputs */
 	.form-control {
-		--osui-input-focus-border-color: #{$token-primitives-blue-500};
+		--osui-input-focus-border-color: #{variables.$token-primitives-blue-500};
 	}
 
 	/* Tag / Badge — keep the darker text on subtle-neutral backgrounds. */
 	.badge,
 	.tag {
-		--osui-badge-on-light-color: #{$token-primitives-neutral-1200};
-		--osui-tag-on-light-color: #{$token-primitives-neutral-1200};
+		--osui-badge-on-light-color: #{variables.$token-primitives-neutral-1200};
+		--osui-tag-on-light-color: #{variables.$token-primitives-neutral-1200};
 	}
 
 	/* ══════════════════════════════════════════════════════════════════════ */
@@ -277,38 +279,38 @@
 
 	/* Header — thin hairline to separate from the body. */
 	.header {
-		border-bottom: 1px solid #{$token-primitives-neutral-1100};
+		border-bottom: 1px solid #{variables.$token-primitives-neutral-1100};
 	}
 
 	/* Menu overlay / sidebar surface */
 	.app-menu-content,
 	.aside-navigation {
-		background-color: #{$token-primitives-neutral-1200};
+		background-color: #{variables.$token-primitives-neutral-1200};
 	}
 
 	/* Menu links */
 	.app-menu-links a {
-		color: #{$token-primitives-neutral-300};
+		color: #{variables.$token-primitives-neutral-300};
 
 		&:hover,
 		&.active {
-			color: #{$token-primitives-blue-400};
+			color: #{variables.$token-primitives-blue-400};
 		}
 	}
 
 	/* Validation text */
 	span.validation-message {
-		color: #{$token-primitives-red-400};
+		color: #{variables.$token-primitives-red-400};
 	}
 
 	/* Native input placeholder color */
 	::placeholder {
-		color: #{$token-primitives-neutral-600};
+		color: #{variables.$token-primitives-neutral-600};
 	}
 
 	/* Labels */
 	label {
-		color: #{$token-primitives-neutral-300};
+		color: #{variables.$token-primitives-neutral-300};
 	}
 }
 

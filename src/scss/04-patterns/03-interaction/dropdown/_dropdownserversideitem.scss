@@ -1,3 +1,5 @@
+@use "../../../tokens/variables";
+
 /* Patterns - section - DropdownServerSideItem */
 ////
 /// @group Patterns-DropdownServerSideItem
@@ -17,11 +19,11 @@
 	cursor: pointer;
 	display: flex;
 	flex: 1;
-	min-height: $token-scale-1000;
+	min-height: variables.$token-scale-1000;
 	overflow: hidden;
-	padding: $token-scale-200 $token-scale-400;
+	padding: variables.$token-scale-200 variables.$token-scale-400;
 	position: relative;
-	transition: background $token-transition-time-300 $token-transition-curve-expressive;
+	transition: background variables.$token-transition-time-300 variables.$token-transition-curve-expressive;
 	width: 100%;
 	z-index: var(--layer-screen);
 
@@ -30,7 +32,7 @@
 		z-index: var(--layer-local-tier-1);
 
 		// Service Studio Preview
-		-servicestudio-background-color: $token-bg-surface-default;
+		-servicestudio-background-color: variables.$token-bg-surface-default;
 	}
 
 	&--is-selected {
@@ -38,16 +40,16 @@
 		z-index: var(--layer-local-tier-1);
 
 		// Service Studio Preview
-		-servicestudio-background-color: $token-bg-surface-default;
+		-servicestudio-background-color: variables.$token-bg-surface-default;
 
 		// Right-side checkmark — requires --osui-icon-check + --osui-icon-font-family (icon library)
 		&::after {
-			color: $token-semantics-primary-base;
+			color: variables.$token-semantics-primary-base;
 			content: var(--osui-icon-check);
 			flex-shrink: 0;
 			font-family: var(--osui-icon-font-family);
-			font-size: $token-font-size-400;
-			margin-left: $token-scale-200;
+			font-size: variables.$token-font-size-400;
+			margin-left: variables.$token-scale-200;
 		}
 	}
 
@@ -61,7 +63,7 @@
 
 		// Override platform .bold utility class applied to item text
 		.bold {
-			font-weight: $token-font-weight-regular;
+			font-weight: variables.$token-font-weight-regular;
 		}
 
 		& > *:first-child {
@@ -78,11 +80,11 @@
 .has-accessible-features {
 	.osui-dropdown-serverside-item {
 		&:hover {
-			background-color: $token-bg-neutral-subtle-press;
+			background-color: variables.$token-bg-neutral-subtle-press;
 		}
 
 		&:focus {
-			box-shadow: inset 0 0 0 $token-border-size-075 var(--color-focus-outer);
+			box-shadow: inset 0 0 0 variables.$token-border-size-075 var(--color-focus-outer);
 		}
 	}
 }
@@ -96,7 +98,7 @@
 			outline: none;
 
 			&:before {
-				box-shadow: inset 0 0 0 $token-border-size-075 var(--color-focus-outer);
+				box-shadow: inset 0 0 0 variables.$token-border-size-075 var(--color-focus-outer);
 				bottom: 0;
 				content: '';
 				display: block;
@@ -114,6 +116,6 @@
 .tablet,
 .phone {
 	.osui-dropdown-serverside-item {
-		height: $token-scale-1200;
+		height: variables.$token-scale-1200;
 	}
 }

@@ -1,3 +1,5 @@
+@use "../../tokens/variables";
+
 /* Patterns - Utilities - Margin Container */
 ////
 /// @group Patterns-Margin_Container
@@ -5,13 +7,13 @@
 
 ///
 .margin-container {
-	padding: $token-scale-600;
+	padding: variables.$token-scale-600;
 }
 
 ///
 .layout-native {
 	.margin-container {
-		padding: $token-scale-800;
+		padding: variables.$token-scale-800;
 	}
 }
 
@@ -20,7 +22,7 @@
 .tablet {
 	.layout-native {
 		.margin-container {
-			padding: $token-scale-600;
+			padding: variables.$token-scale-600;
 		}
 	}
 }
@@ -29,7 +31,7 @@
 .phone {
 	.layout-native {
 		.margin-container {
-			padding: $token-scale-400;
+			padding: variables.$token-scale-400;
 		}
 	}
 }

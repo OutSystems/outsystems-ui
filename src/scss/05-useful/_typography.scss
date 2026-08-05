@@ -1,3 +1,7 @@
+@use "sass:map";
+@use '../00-abstract/index' as *;
+@use "../tokens/variables";
+
 /* Usefull - Typography */
 ////
 /// @group UsefullClasses-Typography
@@ -5,18 +9,18 @@
 
 // Maps old typography size names to token SCSS variables
 $osui-typography-size-token-vars: (
-	'base': $token-font-size-400,
-	's': $token-font-size-350,
-	'xs': $token-font-size-300,
-	'label': $token-font-size-275
+	'base': variables.$token-font-size-400,
+	's': variables.$token-font-size-350,
+	'xs': variables.$token-font-size-300,
+	'label': variables.$token-font-size-275
 );
 
 // Maps old typography weight names to token SCSS variables
 $osui-typography-weight-token-vars: (
-	'light': $token-font-weight-light,
-	'regular': $token-font-weight-regular,
-	'semi-bold': $token-font-weight-semi-bold,
-	'bold': $token-font-weight-bold
+	'light': variables.$token-font-weight-light,
+	'regular': variables.$token-font-weight-regular,
+	'semi-bold': variables.$token-font-weight-semi-bold,
+	'bold': variables.$token-font-weight-bold
 );
 
 ///
@@ -25,7 +29,7 @@ $osui-typography-weight-token-vars: (
 		@each $type, $value in $osui-typography-sizes {
 			@if ($type != 'display') {
 				&-#{$type} {
-					font-size: #{map-get($osui-typography-size-token-vars, $type)};
+					font-size: #{map.get($osui-typography-size-token-vars, $type)};
 				}
 			}
 		}
@@ -35,7 +39,7 @@ $osui-typography-weight-token-vars: (
 	& {
 		@each $type, $value in $osui-typography-weight {
 			&-#{$type} {
-				font-weight: #{map-get($osui-typography-weight-token-vars, $type)};
+				font-weight: #{map.get($osui-typography-weight-token-vars, $type)};
 			}
 		}
 	}
@@ -43,7 +47,7 @@ $osui-typography-weight-token-vars: (
 
 ///
 .bold {
-	font-weight: $token-font-weight-bold;
+	font-weight: variables.$token-font-weight-bold;
 }
 
 ///

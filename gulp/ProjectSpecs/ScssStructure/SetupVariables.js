@@ -2,12 +2,12 @@
 * Section Info
 **/
 const sectionInfo = {
-    "name": "SCSS Setup variables",
+    "name": "SCSS Setup variables, Functions & Mixins",
     "addToSectionIndex": false,
 
     "assets": [
         {
-            "path": "00-abstract/setup-global-vars"
+            "path": "00-abstract/index"
         }
     ]
 };

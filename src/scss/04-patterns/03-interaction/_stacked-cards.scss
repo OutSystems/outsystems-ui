@@ -1,3 +1,5 @@
+@use "../../tokens/variables";
+
 /* Patterns - Interaction - Stacked Cards */
 ////
 /// @group Patterns-StackedCards
@@ -21,7 +23,7 @@
 
 	.stackedcards-container {
 		.OSAutoMarginTop {
-			margin-top: $token-scale-0;
+			margin-top: variables.$token-scale-0;
 		}
 
 		.list.list-group {
@@ -57,7 +59,7 @@
 			&:not([data-animation-disabled]):after {
 				// Service Studio Preview
 				& {
-					-servicestudio-background-color: $token-bg-surface-default;
+					-servicestudio-background-color: variables.$token-bg-surface-default;
 					-servicestudio-background-position: center;
 					-servicestudio-background-repeat: no-repeat;
 					-servicestudio-background-size: 291px 225px;
@@ -117,7 +119,7 @@
 	&--animatable {
 		transition:
 			transform,
-			opacity var(--osui-motion-duration-400) $token-transition-curve-expressive;
+			opacity var(--osui-motion-duration-400) variables.$token-transition-curve-expressive;
 	}
 
 	.init {

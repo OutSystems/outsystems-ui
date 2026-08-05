@@ -1,3 +1,6 @@
+@use '../../../00-abstract/index' as *;
+@use "../../../tokens/variables";
+
 /* Patterns - Numbers - Rating */
 ////
 /// @group Patterns-Rating
@@ -12,9 +15,9 @@
 
 	// Internal colour vars — overrideable per-instance
 	--token-rating-filled-color: var(--color-primary);
-	--token-rating-empty-color: #{$token-bg-neutral-base-default};
+	--token-rating-empty-color: #{variables.$token-bg-neutral-base-default};
 
-	--rating-size: #{$token-scale-400}; // 16px default
+	--rating-size: #{variables.$token-scale-400}; // 16px default
 
 	position: relative;
 	display: inline-flex;
@@ -28,15 +31,15 @@
 	}
 
 	&.rating-small {
-		--rating-size: #{$token-scale-300}; // design-spec: 12px
+		--rating-size: #{variables.$token-scale-300}; // design-spec: 12px
 
 		.rating-item {
-			padding-right: calc(var(--rating-size) + #{$token-scale-100});
+			padding-right: calc(var(--rating-size) + #{variables.$token-scale-100});
 		}
 	}
 
 	&.rating-medium {
-		--rating-size: #{$token-scale-600};
+		--rating-size: #{variables.$token-scale-600};
 	}
 
 	&.is-edit {
@@ -83,7 +86,7 @@
 		display: inline-block;
 		height: var(--rating-size);
 		// Padding is used to avoid flicks on hover due to rating-items gap
-		padding-right: calc(var(--rating-size) + #{$token-scale-200});
+		padding-right: calc(var(--rating-size) + #{variables.$token-scale-200});
 		position: relative;
 		width: var(--rating-size);
 
@@ -91,10 +94,10 @@
 		&-half,
 		&-empty {
 			left: 0;
-			line-height: $token-font-line-height-full;
+			line-height: variables.$token-font-line-height-full;
 			position: absolute;
 			top: 0;
-			transition: opacity $token-transition-time-100 $token-transition-curve-base;
+			transition: opacity variables.$token-transition-time-100 variables.$token-transition-curve-base;
 
 			.icon {
 				vertical-align: middle;
@@ -102,7 +105,7 @@
 
 			// Service Studio Preview
 			& {
-				-servicestudio-margin-right: #{$token-scale-200};
+				-servicestudio-margin-right: #{variables.$token-scale-200};
 				-servicestudio-min-height: 24px;
 				-servicestudio-min-width: 24px;
 				-servicestudio-opacity: 1 !important;
@@ -152,8 +155,8 @@
 		&:first-of-type {
 			+ .rating-item {
 				background: transparent;
-				box-shadow: 0 0 0 $token-border-size-075
-					color-mix(in srgb, #{$token-semantics-primary-base} 22%, transparent);
+				box-shadow: 0 0 0 variables.$token-border-size-075
+					color-mix(in srgb, #{variables.$token-semantics-primary-base} 22%, transparent);
 				height: 100%;
 				left: 0;
 				opacity: 0;
@@ -284,7 +287,7 @@
 .is-rtl {
 	.rating {
 		.rating-item {
-			padding-left: calc(var(--rating-size) + #{$token-scale-200});
+			padding-left: calc(var(--rating-size) + #{variables.$token-scale-200});
 			padding-right: 0;
 			transform: scaleX(-1);
 		}
@@ -308,8 +311,8 @@
 		&:not(.is-half) input:focus + .rating-item .rating-item-filled {
 			&,
 			* {
-				box-shadow: 0 0 0 $token-border-size-075
-					color-mix(in srgb, #{$token-semantics-primary-base} 22%, transparent);
+				box-shadow: 0 0 0 variables.$token-border-size-075
+					color-mix(in srgb, #{variables.$token-semantics-primary-base} 22%, transparent);
 			}
 		}
 	}

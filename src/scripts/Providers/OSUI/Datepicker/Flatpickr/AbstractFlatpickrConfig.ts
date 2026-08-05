@@ -15,7 +15,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 
 		// Store a integer list of weekdays
 		private _disabledWeekDays = [];
-		
+
 		// Store the language that will be assigned as a locale to the DatePicker
 		private _dynamicLang: string;
 

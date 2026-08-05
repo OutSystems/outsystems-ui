@@ -1,3 +1,5 @@
+@use "../../../tokens/variables";
+
 /* Patterns - Content - Flip_Content */
 ////
 /// @group Patterns-Flip_Content
@@ -40,7 +42,7 @@
 		cursor: default;
 		position: relative;
 		transform-style: preserve-3d;
-		transition: transform $token-transition-time-500 $token-transition-curve-bounce;
+		transition: transform variables.$token-transition-time-500 variables.$token-transition-curve-bounce;
 
 		&--flip-self {
 			cursor: pointer;

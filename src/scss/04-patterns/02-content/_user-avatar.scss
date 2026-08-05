@@ -1,3 +1,5 @@
+@use "../../tokens/variables";
+
 /* Patterns - Content - User Avatar */
 ////
 /// @group Patterns-User_Avatar
@@ -14,13 +16,13 @@
 	align-items: center;
 	color: var(--osui-avatar-color);
 	display: inline-flex;
-	font-size: $token-font-size-300;
-	font-weight: $token-font-weight-semi-bold;
-	height: $token-scale-800;
+	font-size: variables.$token-font-size-300;
+	font-weight: variables.$token-font-weight-semi-bold;
+	height: variables.$token-scale-800;
 	justify-content: center;
 	line-height: 1;
 	text-transform: uppercase;
-	width: $token-scale-800;
+	width: variables.$token-scale-800;
 
 	&.background {
 		&-transparent {
@@ -53,14 +55,14 @@
 
 	&.avatar-small {
 		font-size: var(--osui-font-size-200);
-		height: $token-scale-600;
-		width: $token-scale-600;
+		height: variables.$token-scale-600;
+		width: variables.$token-scale-600;
 	}
 
 	&.avatar-medium {
-		font-size: $token-font-size-400;
-		height: $token-scale-1000;
-		width: $token-scale-1000;
+		font-size: variables.$token-font-size-400;
+		height: variables.$token-scale-1000;
+		width: variables.$token-scale-1000;
 	}
 
 	span {

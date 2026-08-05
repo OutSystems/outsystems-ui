@@ -1,3 +1,6 @@
+@use '../00-abstract/index' as *;
+@use '../tokens/variables';
+
 ////
 /// @group Root
 /// Framework theme layer (Tier 3) + app-layout plumbing.
@@ -10,64 +13,64 @@
 
 :root {
 	// ─── Theme layer · surfaces ──────────────────────────────────────────
-	--color-background-body: #{$token-bg-body};
-	--color-background-surface: #{$token-bg-surface-default}; // cards, popups, menus, panels…
-	--color-background-header: #{$token-bg-surface-default};
-	--color-background-sidemenu: #{$token-bg-surface-default};
-	--color-background-footer: #{$token-bg-surface-default};
-	--color-background-login: #{$token-bg-surface-default};
-	--color-background-input: #{$token-bg-input-default};
-	--color-background-input-disabled: #{$token-bg-input-disabled};
+	--color-background-body: #{variables.$token-bg-body};
+	--color-background-surface: #{variables.$token-bg-surface-default}; // cards, popups, menus, panels…
+	--color-background-header: #{variables.$token-bg-surface-default};
+	--color-background-sidemenu: #{variables.$token-bg-surface-default};
+	--color-background-footer: #{variables.$token-bg-surface-default};
+	--color-background-login: #{variables.$token-bg-surface-default};
+	--color-background-input: #{variables.$token-bg-input-default};
+	--color-background-input-disabled: #{variables.$token-bg-input-disabled};
 
 	// ─── Theme layer · text ──────────────────────────────────────────────
-	--color-text: #{$token-text-default};
-	--color-text-subtle: #{$token-text-subtle};
-	--color-text-subtlest: #{$token-text-subtlest};
-	--color-text-disabled: #{$token-text-disabled};
-	--color-text-inverse: #{$token-text-inverse}; // text on a bold/colored background
+	--color-text: #{variables.$token-text-default};
+	--color-text-subtle: #{variables.$token-text-subtle};
+	--color-text-subtlest: #{variables.$token-text-subtlest};
+	--color-text-disabled: #{variables.$token-text-disabled};
+	--color-text-inverse: #{variables.$token-text-inverse}; // text on a bold/colored background
 
 	// ─── Theme layer · borders (status borders follow their --color-* role) ──
-	--color-border: #{$token-border-default};
-	--color-border-subtle: #{$token-border-subtle};
-	--color-border-subtlest: #{$token-border-subtlest};
-	--color-border-input: #{$token-border-input-default};
-	--color-border-input-hover: #{$token-border-input-hover};
-	--color-border-input-press: #{$token-border-input-press};
-	--color-border-primary: #{$token-border-primary}; // border-specific primary tier (focus rings)
+	--color-border: #{variables.$token-border-default};
+	--color-border-subtle: #{variables.$token-border-subtle};
+	--color-border-subtlest: #{variables.$token-border-subtlest};
+	--color-border-input: #{variables.$token-border-input-default};
+	--color-border-input-hover: #{variables.$token-border-input-hover};
+	--color-border-input-press: #{variables.$token-border-input-press};
+	--color-border-primary: #{variables.$token-border-primary}; // border-specific primary tier (focus rings)
 
 	// ─── Theme layer · brand / status / neutral (also read by TS GetColorValueFromColorType) ──
-	--color-primary: #{$token-semantics-primary-base};
-	--color-primary-hover: #{$token-semantics-primary-800};
-	--color-primary-selected: #{$token-semantics-primary-900}; // translucent-wash role for selected rows/items; apps override this
-	--color-primary-active: #{$token-semantics-primary-900}; // solid pressed/active-state role — do not alias to -selected above
-	--color-secondary: #{$token-bg-neutral-bold-default};
-	--color-neutral: #{$token-primitives-neutral-500};
-	--color-neutral-0: #{$token-primitives-neutral-100};
-	--color-neutral-1: #{$token-primitives-neutral-200};
-	--color-neutral-2: #{$token-primitives-neutral-300};
-	--color-neutral-3: #{$token-primitives-neutral-400};
-	--color-neutral-4: #{$token-primitives-neutral-500};
-	--color-neutral-5: #{$token-primitives-neutral-600};
-	--color-neutral-6: #{$token-primitives-neutral-700};
-	--color-neutral-7: #{$token-primitives-neutral-800};
-	--color-neutral-8: #{$token-primitives-neutral-900};
-	--color-neutral-9: #{$token-primitives-neutral-1100};
-	--color-neutral-10: #{$token-primitives-neutral-1200};
-	--color-error: #{$token-semantics-danger-base};
-	--color-border-danger: #{$token-border-danger-default}; // border-specific danger tier (form validation)
-	--color-text-danger: #{$token-text-danger}; // text-specific danger tier (form validation)
-	--color-warning: #{$token-semantics-warning-base};
-	--color-success: #{$token-semantics-success-base};
-	--color-info: #{$token-semantics-info-base};
+	--color-primary: #{variables.$token-semantics-primary-base};
+	--color-primary-hover: #{variables.$token-semantics-primary-800};
+	--color-primary-selected: #{variables.$token-semantics-primary-900}; // translucent-wash role for selected rows/items; apps override this
+	--color-primary-active: #{variables.$token-semantics-primary-900}; // solid pressed/active-state role — do not alias to -selected above
+	--color-secondary: #{variables.$token-bg-neutral-bold-default};
+	--color-neutral: #{variables.$token-primitives-neutral-500};
+	--color-neutral-0: #{variables.$token-primitives-neutral-100};
+	--color-neutral-1: #{variables.$token-primitives-neutral-200};
+	--color-neutral-2: #{variables.$token-primitives-neutral-300};
+	--color-neutral-3: #{variables.$token-primitives-neutral-400};
+	--color-neutral-4: #{variables.$token-primitives-neutral-500};
+	--color-neutral-5: #{variables.$token-primitives-neutral-600};
+	--color-neutral-6: #{variables.$token-primitives-neutral-700};
+	--color-neutral-7: #{variables.$token-primitives-neutral-800};
+	--color-neutral-8: #{variables.$token-primitives-neutral-900};
+	--color-neutral-9: #{variables.$token-primitives-neutral-1100};
+	--color-neutral-10: #{variables.$token-primitives-neutral-1200};
+	--color-error: #{variables.$token-semantics-danger-base};
+	--color-border-danger: #{variables.$token-border-danger-default}; // border-specific danger tier (form validation)
+	--color-text-danger: #{variables.$token-text-danger}; // text-specific danger tier (form validation)
+	--color-warning: #{variables.$token-semantics-warning-base};
+	--color-success: #{variables.$token-semantics-success-base};
+	--color-info: #{variables.$token-semantics-info-base};
 
 	// ─── Theme layer · radius ────────────────────────────────────────────
 	// Each falls back to --border-radius-default (unset by default → own value);
 	// set --border-radius-default once to re-radius the whole framework.
 	// none/soft/rounded ↔ ShapeType (TS GetBorderRadiusValueFromShapeType); softer is CSS-only.
-	--border-radius-none: var(--border-radius-default, #{$token-border-radius-0}); // 0px
-	--border-radius-soft: var(--border-radius-default, #{$token-border-radius-200}); // 8px · controls + flat surfaces
-	--border-radius-softer: var(--border-radius-default, #{$token-border-radius-400}); // 16px · elevated surfaces
-	--border-radius-rounded: var(--border-radius-default, #{$token-border-radius-full}); // 999px · circular
+	--border-radius-none: var(--border-radius-default, #{variables.$token-border-radius-0}); // 0px
+	--border-radius-soft: var(--border-radius-default, #{variables.$token-border-radius-200}); // 8px · controls + flat surfaces
+	--border-radius-softer: var(--border-radius-default, #{variables.$token-border-radius-400}); // 16px · elevated surfaces
+	--border-radius-rounded: var(--border-radius-default, #{variables.$token-border-radius-full}); // 999px · circular
 
 	// ─── App-layout plumbing (NOT part of the theme contract) ────────────
 	// Layout sizes
@@ -87,11 +90,11 @@
 	--layer-system-scale: 100;
 	--layer-above: var(--layer-system-scale);
 	--layer-below: calc(-1 * var(--layer-system-scale));
-	--layer-screen: #{$token-z-index-0};
-	--layer-elevated: #{$token-z-index-100};
-	--layer-navigation: #{$token-z-index-200};
-	--layer-off-canvas: #{$token-z-index-300};
-	--layer-instant-interaction: #{$token-z-index-400};
+	--layer-screen: #{variables.$token-z-index-0};
+	--layer-elevated: #{variables.$token-z-index-100};
+	--layer-navigation: #{variables.$token-z-index-200};
+	--layer-off-canvas: #{variables.$token-z-index-300};
+	--layer-instant-interaction: #{variables.$token-z-index-400};
 	--layer-global-negative: -1;
 	--layer-global-auto: auto;
 	--layer-local-tier-1: 1;
@@ -112,25 +115,25 @@
 	// upstream by rename (var name maps 1:1 to its proposed --token-*).
 	--osui-border-focus-halo: color-mix(
 		in srgb,
-		#{$token-semantics-primary-base} 22%,
+		#{variables.$token-semantics-primary-base} 22%,
 		transparent
 	); // future: --token-border-focus-halo
 	--color-focus-outer: var(--osui-border-focus-halo); // consumed by .has-accessible-features :focus
 	--osui-elevation-overlay:
 		0 12px 24px -8px rgba(0, 0, 0, 0.12), 0 8px 16px -8px rgba(0, 0, 0, 0.08); // future: --token-elevation-overlay
 	--osui-bg-surface-subtle: #fafbfc; // future: --token-bg-surface-subtle
-	// Motion durations with no matching $token-transition-time-* yet. Interim global vars
+	// Motion durations with no matching variables.$token-transition-time-* yet. Interim global vars
 	// (the single home for these timings) until the token scale gains 130/180/400 steps.
 	--osui-motion-duration-130: 130ms; // future: --token-transition-time-130
 	--osui-motion-duration-180: 180ms; // future: --token-transition-time-180
 	--osui-motion-duration-400: 400ms; // future: --token-transition-time-400
-	--osui-bg-surface-hover: #{$token-primitives-neutral-100}; // future: --token-bg-surface-hover (#f3f3f3)
+	--osui-bg-surface-hover: #{variables.$token-primitives-neutral-100}; // future: --token-bg-surface-hover (#f3f3f3)
 	--osui-bg-surface-active: color-mix(
 		in srgb,
-		#{$token-semantics-primary-base} 8%,
+		#{variables.$token-semantics-primary-base} 8%,
 		transparent
 	); // future: --token-bg-surface-active
-	--osui-border-subtle: #{$token-primitives-neutral-300}; // future: --token-border-subtle (intended neutral-300)
+	--osui-border-subtle: #{variables.$token-primitives-neutral-300}; // future: --token-border-subtle (intended neutral-300)
 	--osui-opacity-disabled: 0.45; // future: --token-opacity-disabled
 	--osui-elevation-25: 0 1px 2px rgba(0, 0, 0, 0.08); // future: --token-elevation-25
 	--osui-elevation-50: 0 1px 2px rgba(0, 0, 0, 0.2); // future: --token-elevation-50

@@ -1,3 +1,6 @@
+@use '../../00-abstract/index' as *;
+@use "../../tokens/variables";
+
 /* Patterns - Content - Section */
 ////
 /// @group Patterns-Section
@@ -12,18 +15,18 @@
 
 	&-title {
 		background-color: transparent;
-		border-bottom: $token-border-size-025 solid var(--osui-section-title-border-color);
+		border-bottom: variables.$token-border-size-025 solid var(--osui-section-title-border-color);
 		color: var(--osui-section-title-color);
-		font-size: $token-font-size-500;
-		font-weight: $token-font-weight-semi-bold;
-		padding: $token-scale-0 $token-scale-0 $token-scale-200 $token-scale-0;
+		font-size: variables.$token-font-size-500;
+		font-weight: variables.$token-font-weight-semi-bold;
+		padding: variables.$token-scale-0 variables.$token-scale-0 variables.$token-scale-200 variables.$token-scale-0;
 		position: relative;
 		text-transform: none;
 		width: 100%;
 	}
 
 	&-content {
-		padding: $token-scale-200 $token-scale-0 $token-scale-0;
+		padding: variables.$token-scale-200 variables.$token-scale-0 variables.$token-scale-0;
 	}
 
 	&-group {
@@ -46,7 +49,7 @@
 .layout-native {
 	.section {
 		&-title {
-			padding: $token-scale-200 $token-scale-400 $token-scale-200 $token-scale-400;
+			padding: variables.$token-scale-200 variables.$token-scale-400 variables.$token-scale-200 variables.$token-scale-400;
 		}
 
 		&-content {
@@ -93,6 +96,6 @@
 .tablet,
 .phone {
 	.section-title {
-		font-size: $token-font-size-500;
+		font-size: variables.$token-font-size-500;
 	}
 }
