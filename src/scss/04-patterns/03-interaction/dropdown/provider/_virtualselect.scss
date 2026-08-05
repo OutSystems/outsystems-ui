@@ -379,11 +379,16 @@
 
 	&:hover {
 		border-color: var(--osui-dropdown-hover-border-color, var(--color-border-input-hover));
+
+		.vscomp-value {
+			color: var(--color-text);
+		}
 	}
 }
 
 // Container with the selected value(s)
 .vscomp-value {
+	color: var(--color-text-subtlest);
 	font-size: $token-font-size-350;
 }
 
