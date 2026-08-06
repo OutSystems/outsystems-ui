@@ -295,8 +295,13 @@
 			border-color: var(--color-focus-outer);
 		}
 
+		// Keep the handle's own border colour on focus — the focus affordance is the halo
+		// below, not a recolour. This rule comes after the `.noUi-active` / `:hover`
+		// primary border at equal specificity, so hardcoding a colour here silently wins
+		// over it and turns the pressed handle black. Routing through the CSS API var also
+		// means a disabled handle (which overrides it) stays grey when focused.
 		.noUi-handle:focus {
-			border-color: var(--color-text);
+			border-color: var(--osui-range-slider-handle-border-color);
 			box-shadow: 0 0 0 $token-border-size-075 var(--color-focus-outer);
 		}
 	}
