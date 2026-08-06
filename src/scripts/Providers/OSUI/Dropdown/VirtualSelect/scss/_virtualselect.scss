@@ -65,6 +65,24 @@
 	}
 }
 
+// Validation message
+// VirtualSelect 1.4.0 renders its own validation message as a sibling of .vscomp-wrapper and
+// reveals it whenever the library's internal validate() sets .has-error. OSUI owns validation
+// messaging: the platform calls validation(), which applies .osui-dropdown--not-valid and appends
+// its own .osui-dropdown-error-message styled with OSUI tokens. The library's copy is suppressed so
+// a Dropdown can never show two messages, and so no unthemed message can appear.
+//
+// Dormant today - getProviderConfig() passes neither `required` nor `minValues`, so the library's
+// validate() never flags an error - but a page can reach that path through the extensibility
+// configs, which merge arbitrary provider props straight through.
+//
+// Specificity is 0,4,0 against the library's 0,3,0 reveal rule
+// (.vscomp-wrapper.has-error ~ .vscomp-error-message), so no !important is needed. If OSUI ever
+// adopts the library's validation instead of its own, theme this element rather than hiding it.
+.vscomp-ele .vscomp-wrapper.has-error ~ .vscomp-error-message {
+	display: none;
+}
+
 // Wrapper container
 .vscomp-wrapper {
 	&.focused,
