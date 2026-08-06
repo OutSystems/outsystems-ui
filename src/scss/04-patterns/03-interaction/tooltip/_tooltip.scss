@@ -11,10 +11,11 @@
 	--osui-tooltip-background: #{variables.$token-bg-neutral-boldest-default};
 	--osui-tooltip-color: var(--color-text-inverse);
 	--osui-tooltip-border-radius: #{variables.$token-border-radius-100};
-	--osui-tooltip-padding: #{variables.$token-scale-200} #{variables.$token-scale-400};
+	--osui-tooltip-padding: #{variables.$token-space-200} #{variables.$token-space-400};
 	--osui-tooltip-font-size: #{variables.$token-font-size-350};
-	--osui-tooltip-shadow: #{variables.$token-elevation-2};
-	--osui-tooltip-max-width: 184px;
+	--osui-tooltip-shadow: #{variables.$token-elevation-3};
+	--osui-tooltip-min-height: #{variables.$token-scale-900};
+	--osui-tooltip-max-width: #{variables.$token-scale-5000};
 	// ───────────────────────────────────────────────────────────────────
 
 	--osui-tooltip-background-color: var(--osui-tooltip-background);
@@ -37,6 +38,7 @@
 		box-shadow: var(--osui-tooltip-shadow);
 		font-weight: variables.$token-font-weight-regular;
 		line-height: initial;
+		min-height: var(--osui-tooltip-min-height);
 		max-width: var(--osui-tooltip-max-width);
 		padding: var(--osui-tooltip-padding);
 
