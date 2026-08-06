@@ -49,23 +49,19 @@ const PALETTE_FAMILIES = [
 ];
 
 /**
- * The FULL `Color` static entity → `background-{value}` utility class: brand,
- * transparent, semantic, neutral-0..10, and the 12-family extended palette in
- * all 7 shades (lightest → darkest). '' = none. Note: IsLight is only
- * meaningful for base colors — combining it with a shade variant (e.g.
- * `red-dark`) yields a class with no CSS rule, mirroring platform behavior.
+ * The FULL `Color` set → `background-{value}` utility class: brand,
+ * transparent, neutral-0..10, and the 12 extended palette families (base
+ * shade). '' = none. Shade variants (`-lightest`…`-darkest`) and the semantic
+ * colors (error/warning/success/info) are left to the IsLight toggle /
+ * ExtendedClass.
  */
 export const COLOR_OPTIONS_FULL = [
 	'',
 	'primary',
 	'secondary',
 	'transparent',
-	'error',
-	'warning',
-	'success',
-	'info',
 	...Array.from({ length: 11 }, (_, i) => `neutral-${i}`),
-	...PALETTE_FAMILIES.flatMap((family) => `${family}`)
+	...PALETTE_FAMILIES,
 ];
 
 /** Shared `ExtendedClass` control — present on essentially every OUI block. */
