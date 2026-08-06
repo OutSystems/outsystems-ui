@@ -1,3 +1,5 @@
+@use "../tokens/variables";
+
 /* Widgets - Radio Button */
 ////
 /// @group Widgets-Radio_Button
@@ -6,16 +8,16 @@
 ///
 .radio-button {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-radio-size: #{$token-scale-600};
+	--osui-radio-size: #{variables.$token-scale-600};
 	--osui-radio-background: var(--color-background-input);
 	// Same resting + hover tiers as [data-checkbox] and .form-control[data-input],
 	// so all three form controls share one border progression
 	--osui-radio-border-color: var(--color-border-input);
 	--osui-radio-hover-border-color: var(--color-border-input-hover);
 	--osui-radio-checked-color: var(--color-primary);
-	--osui-radio-indicator-border: #{$token-scale-150};
+	--osui-radio-indicator-border: #{variables.$token-scale-150};
 	--osui-radio-error-border-color: var(--color-border-danger);
-	--osui-radio-disabled-border-color: #{$token-border-disabled};
+	--osui-radio-disabled-border-color: #{variables.$token-border-disabled};
 	// ───────────────────────────────────────────────────────────────────
 
 	appearance: none;
@@ -23,7 +25,7 @@
 	flex-shrink: 0;
 	height: var(--osui-radio-size);
 	position: relative;
-	transition: border-color $token-transition-time-100 $token-transition-curve-linear;
+	transition: border-color variables.$token-transition-time-100 variables.$token-transition-curve-linear;
 	width: var(--osui-radio-size);
 
 	&:before,
@@ -33,15 +35,15 @@
 
 	&:before {
 		background-color: var(--osui-radio-background);
-		border: $token-border-size-025 solid var(--osui-radio-border-color);
+		border: variables.$token-border-size-025 solid var(--osui-radio-border-color);
 		border-radius: var(--border-radius-rounded);
 		content: '';
 		display: flex;
 		inset: 0;
 		position: absolute;
 		transition:
-			border-color $token-transition-time-100 $token-transition-curve-linear,
-			background-color $token-transition-time-100 $token-transition-curve-linear;
+			border-color variables.$token-transition-time-100 variables.$token-transition-curve-linear,
+			background-color variables.$token-transition-time-100 variables.$token-transition-curve-linear;
 	}
 
 	&:hover:before {
@@ -49,7 +51,7 @@
 	}
 
 	&:focus-visible:before {
-		box-shadow: 0 0 0 $token-border-size-075 var(--osui-border-focus-halo);
+		box-shadow: 0 0 0 variables.$token-border-size-075 var(--osui-border-focus-halo);
 	}
 
 	&:focus:not(:focus-visible):before {
@@ -78,14 +80,14 @@
 
 		&:before {
 			background-color: var(--color-background-input-disabled);
-			border: $token-border-size-025 solid var(--osui-radio-disabled-border-color);
+			border: variables.$token-border-size-025 solid var(--osui-radio-disabled-border-color);
 		}
 
 		&:checked:before {
 			background-color: var(--osui-radio-background);
 			// the indicator is drawn as a border, so the disabled overlay is blended into its color directly —
 			// an inset box-shadow would be clipped to the padding box and never paint over the border itself
-			border: var(--osui-radio-indicator-border) solid color-mix(in srgb, var(--osui-radio-checked-color) 40%, #{$token-primitives-base-white} 60%);
+			border: var(--osui-radio-indicator-border) solid color-mix(in srgb, var(--osui-radio-checked-color) 40%, #{variables.$token-primitives-base-white} 60%);
 		}
 	}
 }
@@ -105,7 +107,7 @@
 			width: auto;
 
 			&:not(:first-of-type) {
-				margin-left: $token-scale-500;
+				margin-left: variables.$token-scale-500;
 			}
 		}
 	}
@@ -115,7 +117,7 @@
 [data-radio-group] {
 	&.not-valid [data-radio-button] .radio-button {
 		&:before {
-			border: $token-border-size-025 solid var(--osui-radio-error-border-color);
+			border: variables.$token-border-size-025 solid var(--osui-radio-error-border-color);
 		}
 
 		&:checked:before {
@@ -127,13 +129,13 @@
 	[data-radio-button] {
 		align-items: center;
 		display: flex;
-		margin: $token-scale-300 0;
+		margin: variables.$token-scale-300 0;
 
 		label {
 			cursor: pointer;
 			line-height: 1;
 			margin-bottom: 0;
-			margin-left: $token-scale-200;
+			margin-left: variables.$token-scale-200;
 		}
 	}
 }
@@ -159,24 +161,24 @@
 			background-color: var(--color-background-input);
 			border-radius: var(--border-radius-rounded);
 			content: '';
-			height: $token-scale-300;
+			height: variables.$token-scale-300;
 			left: 50%;
-			margin-left: calc(#{$token-scale-300} * -0.5);
-			margin-top: calc(#{$token-scale-300} * -0.5);
+			margin-left: calc(#{variables.$token-scale-300} * -0.5);
+			margin-top: calc(#{variables.$token-scale-300} * -0.5);
 			position: absolute;
 			position: absolute;
 			top: 50%;
-			width: $token-scale-300;
+			width: variables.$token-scale-300;
 		}
 
 		&:focus:before {
-			background-color: $token-semantics-primary-base;
+			background-color: variables.$token-semantics-primary-base;
 			border-color: var(--color-text);
 			box-shadow: none;
 		}
 
 		&:checked:before {
-			border-color: $token-semantics-primary-base;
+			border-color: variables.$token-semantics-primary-base;
 		}
 
 		&:hover:before {
@@ -185,15 +187,15 @@
 	}
 
 	[data-radio-group].not-valid [data-radio-button] .radio-button:checked:before {
-		border-color: $token-semantics-primary-base;
+		border-color: variables.$token-semantics-primary-base;
 	}
 }
 
 // IsRTL -------------------------------------------------------------------------
 .is-rtl {
 	[data-radio-group] label {
-		margin-left: $token-scale-0;
-		margin-right: $token-scale-200;
+		margin-left: variables.$token-scale-0;
+		margin-right: variables.$token-scale-200;
 	}
 
 	.radio-group {
@@ -201,7 +203,7 @@
 			[data-radio-button] {
 				&:not(:first-of-type) {
 					margin-left: unset;
-					margin-right: $token-scale-500;
+					margin-right: variables.$token-scale-500;
 				}
 			}
 		}

@@ -1,3 +1,5 @@
+@use '../tokens/variables';
+
 ////
 /// @group Root
 /// Icon library CSS variables (FontAwesome vs Phosphor) and component overrides.
@@ -125,7 +127,7 @@ body.iconLibrary-phosphor {
 // Submenu – header arrow
 .osui-submenu {
 	&__header__icon {
-		margin-inline-start: $token-scale-200;
+		margin-inline-start: variables.$token-scale-200;
 		transition: transform 200ms ease;
 		transform-origin: center;
 
@@ -145,26 +147,26 @@ body.iconLibrary-phosphor {
 // Dropdown Widget
 .dropdown-container:after {
 	align-items: center;
-	color: var(--osui-dropdown-arrow-color, #{$token-icon-subtlest});
+	color: var(--osui-dropdown-arrow-color, #{variables.$token-icon-subtlest});
 	content: var(--osui-icon-arrow-down);
 	cursor: pointer;
 	display: flex;
 	font-family: var(--osui-icon-font-family);
-	font-size: var(--osui-dropdown-arrow-size, #{$token-scale-400});
-	height: var(--osui-dropdown-arrow-size, #{$token-scale-400});
+	font-size: var(--osui-dropdown-arrow-size, #{variables.$token-scale-400});
+	height: var(--osui-dropdown-arrow-size, #{variables.$token-scale-400});
 	justify-content: center;
 	line-height: 1;
 	pointer-events: none;
 	position: absolute;
-	right: $token-scale-400;
+	right: variables.$token-scale-400;
 	top: 50%;
 	transform: translateY(-50%);
 	transition: transform 200ms ease;
-	width: var(--osui-dropdown-arrow-size, #{$token-scale-400});
+	width: var(--osui-dropdown-arrow-size, #{variables.$token-scale-400});
 }
 
 .is-rtl .dropdown-container:after {
-	left: $token-scale-400;
+	left: variables.$token-scale-400;
 	right: auto;
 }
 
@@ -181,11 +183,11 @@ body.iconLibrary-phosphor {
 	display: inline-flex;
 	flex-direction: column;
 	font-family: var(--osui-icon-font-family);
-	font-size: $token-font-size-300;
+	font-size: variables.$token-font-size-300;
 	height: 11px;
 	justify-content: center;
 	line-height: 0.5; // compress each glyph's line-box so the up/down chevrons stack without overlapping
-	margin-left: $token-scale-200;
+	margin-left: variables.$token-scale-200;
 	position: relative;
 	vertical-align: middle;
 	width: 10px;
@@ -206,7 +208,7 @@ body.iconLibrary-phosphor {
 	&:after {
 		content: var(--osui-icon-chevron-left);
 		font-family: var(--osui-icon-font-family);
-		font-size: $token-font-size-450;
+		font-size: variables.$token-font-size-450;
 	}
 }
 
@@ -264,7 +266,7 @@ body.iconLibrary-phosphor {
 // ChatMessage
 .chat-message-wrapper .chat-message-status {
 	display: inline-flex;
-	gap: $token-scale-100;
+	gap: variables.$token-scale-100;
 	padding: none;
 }
 
@@ -305,7 +307,7 @@ body.iconLibrary-phosphor {
 .osui-dropdown-serverside__selected-values:after {
 	content: var(--osui-icon-arrow-down);
 	font-family: var(--osui-icon-font-family);
-	font-size: var(--osui-dropdown-ss-arrow-size, #{$token-scale-400});
+	font-size: var(--osui-dropdown-ss-arrow-size, #{variables.$token-scale-400});
 }
 
 // DropdownSearch (VirtualSelect)
@@ -323,7 +325,6 @@ body.iconLibrary-phosphor {
 
 .vscomp-search-clear:after,
 .vscomp-ele .vscomp-clear-icon:after {
-	color: $token-icon-subtlest;
 	content: var(--osui-icon-clear);
 	font-size: 13px;
 }
@@ -332,13 +333,13 @@ body.iconLibrary-phosphor {
 	border: none;
 	content: var(--osui-icon-checkbox-checked);
 	font-family: var(--osui-icon-font-family);
-	color: $token-primitives-base-white;
+	color: variables.$token-primitives-base-white;
 	transform: none !important; // !important required to override the element from provider
 	position: absolute;
 	width: 100%;
 	height: 100%;
 	top: 1px;
-	font-size: $token-font-size-300;
+	font-size: variables.$token-font-size-300;
 	line-height: 1;
 	display: flex;
 	left: 1px;
@@ -352,16 +353,16 @@ body.iconLibrary-phosphor {
 .osui-dropdown-search {
 	// Service Studio Preview
 	&-ss-preview {
-		-servicestudio-background-color: $token-primitives-base-white;
-		-servicestudio-border-radius: $token-border-radius-200;
-		-servicestudio-border: $token-border-size-025 solid $token-primitives-neutral-500;
-		-servicestudio-color: $token-text-subtlest;
+		-servicestudio-background-color: variables.$token-primitives-base-white;
+		-servicestudio-border-radius: variables.$token-border-radius-200;
+		-servicestudio-border: variables.$token-border-size-025 solid variables.$token-primitives-neutral-500;
+		-servicestudio-color: variables.$token-text-subtlest;
 		-servicestudio-display: inline-flex;
 		-servicestudio-justify-content: space-between;
 		-servicestudio-height: 40px;
 		-servicestudio-line-height: 40px;
 		-servicestudio-min-width: 180px;
-		-servicestudio-padding: 0 $token-space-400;
+		-servicestudio-padding: 0 variables.$token-scale-400;
 		-servicestudio-position: relative;
 		-servicestudio-vertical-align: middle;
 		-servicestudio-width: 100%;
@@ -372,14 +373,14 @@ body.iconLibrary-phosphor {
 			-servicestudio-width: 12px;
 
 			&::after {
-				-servicestudio-color: $token-primitives-neutral-700;
+				-servicestudio-color: variables.$token-primitives-neutral-700;
 				-servicestudio-position: absolute;
 				-servicestudio-top: 50%;
 				-servicestudio-left: 0;
 				-servicestudio-content: var(--osui-icon-arrow-down);
 				-servicestudio-font-family: var(--osui-icon-font-family);
 				-servicestudio-transform: translateY(-50%);
-				-servicestudio-font-size: $token-font-size-500;
+				-servicestudio-font-size: variables.$token-font-size-500;
 			}
 		}
 	}
@@ -389,14 +390,14 @@ body.iconLibrary-phosphor {
 	// Service Studio Preview
 	&-ss-preview {
 		-servicestudio-justify-content: space-between;
-		-servicestudio-background-color: $token-primitives-base-white;
-		-servicestudio-border-radius: $token-border-radius-200;
-		-servicestudio-border: $token-border-size-025 solid $token-primitives-neutral-500;
-		-servicestudio-color: $token-text-subtlest;
+		-servicestudio-background-color: variables.$token-primitives-base-white;
+		-servicestudio-border-radius: variables.$token-border-radius-200;
+		-servicestudio-border: variables.$token-border-size-025 solid variables.$token-primitives-neutral-500;
+		-servicestudio-color: variables.$token-text-subtlest;
 		-servicestudio-display: flex;
 		-servicestudio-height: 40px;
 		-servicestudio-min-width: 180px;
-		-servicestudio-padding: 0 $token-space-400;
+		-servicestudio-padding: 0 variables.$token-scale-400;
 		-servicestudio-position: relative;
 		-servicestudio-vertical-align: middle;
 		-servicestudio-width: 100%;
@@ -405,15 +406,17 @@ body.iconLibrary-phosphor {
 		&-as-tag {
 			-servicestudio-align-items: center;
 			-servicestudio-justify-content: space-between;
-			-servicestudio-background-color: $token-primitives-neutral-300;
+			-servicestudio-background-color: variables.$token-primitives-neutral-300;
 			-servicestudio-border-radius: 30px;
-			-servicestudio-color: $token-primitives-neutral-700;
+			-servicestudio-color: variables.$token-primitives-neutral-700;
 			-servicestudio-display: flex;
-			-servicestudio-font-size: $token-font-size-350;
-			-servicestudio-font-weight: $token-font-weight-semi-bold;
+			-servicestudio-font-size: variables.$token-font-size-350;
+			-servicestudio-font-weight: variables.$token-font-weight-semi-bold;
 			-servicestudio-height: 30px;
 			-servicestudio-padding: 8px;
 			-servicestudio-position: relative;
+			-servicestudio-top: 50%;
+			-servicestudio-transform: translateY(-50%);
 			-servicestudio-width: 70px;
 
 			&__clear-icon {
@@ -432,9 +435,9 @@ body.iconLibrary-phosphor {
 
 			&__arrow-icon {
 				-servicestudio-align-self: center;
-				-servicestudio-color: $token-primitives-neutral-700;
+				-servicestudio-color: variables.$token-primitives-neutral-700;
 				-servicestudio-position: relative;
-				-servicestudio-font-size: $token-font-size-500;
+				-servicestudio-font-size: variables.$token-font-size-500;
 				-servicestudio-font-weight: normal;
 				-servicestudio-width: 12px;
 
@@ -458,11 +461,10 @@ body.iconLibrary-phosphor {
 
 .splide__arrow--next:after,
 .splide__arrow--prev:after {
-	color: $token-primitives-neutral-700;
 	font-family: var(--osui-icon-font-family);
 	position: absolute;
-	font-size: $token-font-size-600;
-	color: $token-primitives-neutral-1000
+	font-size: variables.$token-font-size-600;
+	color: variables.$token-primitives-neutral-1000;
 }
 
 .splide__arrow--next:after {
@@ -483,18 +485,18 @@ body.iconLibrary-phosphor {
 
 .flatpickr-months .flatpickr-prev-month:before,
 .flatpickr-months .flatpickr-next-month:before {
-	color: $token-semantics-primary-base;
+	color: variables.$token-semantics-primary-base;
 	font-family: var(--osui-icon-font-family);
 }
 
 .icon-library-FontAwesome .flatpickr-months .flatpickr-prev-month:before,
 .icon-library-FontAwesome .flatpickr-months .flatpickr-next-month:before {
-	font-size: $token-font-size-500;
+	font-size: variables.$token-font-size-500;
 }
 
 .icon-library-Phosphor .flatpickr-months .flatpickr-prev-month:before,
 .icon-library-Phosphor .flatpickr-months .flatpickr-next-month:before {
-	font-weight: $token-font-weight-semi-bold;
+	font-weight: variables.$token-font-weight-semi-bold;
 }
 
 .flatpickr-prev-month:before {
@@ -534,9 +536,9 @@ body.iconLibrary-phosphor {
 // which is what these absolute glyphs are positioned against.
 .pswp__button.pswp__button--close:before,
 .pswp__button.pswp__button--zoom:before {
-	color: $token-icon-inverse;
+	color: variables.$token-icon-inverse;
 	font-family: var(--osui-icon-font-family);
-	font-size: $token-font-size-700; 
+	font-size: variables.$token-font-size-700;
 	position: absolute;
 	top: 50%;
 	transform: translateY(-50%) translateX(-50%);
@@ -563,27 +565,27 @@ body.iconLibrary-phosphor {
 .pswp__button--arrow--right:before,
 .pswp__button--arrow--left:before {
 	align-items: center;
-	background-color: $token-backdrop;
+	background-color: variables.$token-backdrop;
 	background-image: none !important;
-	color: $token-icon-inverse;
+	color: variables.$token-icon-inverse;
 	display: flex;
 	font-family: var(--osui-icon-font-family);
-	font-size: $token-font-size-450;
-	height: $token-scale-800;
+	font-size: variables.$token-font-size-450;
+	height: variables.$token-scale-800;
 	justify-content: center;
 	top: 50%;
 	transform: translateY(-50%);
-	width: $token-scale-800;
+	width: variables.$token-scale-800;
 }
 
 .pswp__button--arrow--right:before {
 	content: var(--osui-icon-arrow-next);
-	right: $token-scale-100;
+	right: variables.$token-scale-100;
 }
 
 .pswp__button--arrow--left:before {
 	content: var(--osui-icon-arrow-previous);
-	left: $token-scale-100;
+	left: variables.$token-scale-100;
 }
 
 // Password Policy

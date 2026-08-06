@@ -97,12 +97,12 @@ namespace OSFramework.OSUI.Feature.Balloon {
 			this._focusManagerInstance = new Behaviors.FocusManager();
 		}
 
-	// Validates if the feature parent is of parent type
-	private _isParentType(patternClassName: string) {
-		return (
-			this.featurePattern as unknown as Patterns.AbstractPattern<Patterns.AbstractConfiguration>
-		).selfElement.classList.contains(patternClassName);
-	}
+		// Validates if the feature parent is of parent type
+		private _isParentType(patternClassName: string) {
+			return (
+				this.featurePattern as unknown as Patterns.AbstractPattern<Patterns.AbstractConfiguration>
+			).selfElement.classList.contains(patternClassName);
+		}
 
 		// Manage the focus of the elements inside the Balloon
 		private _manageFocusInsideBalloon(
@@ -213,7 +213,7 @@ namespace OSFramework.OSUI.Feature.Balloon {
 				if (Helper.DeviceInfo.IsMobileDevice === false) {
 					// Will handle the tabindex value of the elements inside pattern
 					Helper.A11Y.SetElementsTabIndex(this.isOpen, this._focusTrapInstance.focusableElements);
-				} 
+				}
 
 				Helper.A11Y.RoleDialog(this.featureElem);
 

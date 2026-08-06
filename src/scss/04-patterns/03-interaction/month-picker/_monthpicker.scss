@@ -4,7 +4,8 @@
 /// Patterns - Interaction - MonthPicker
 
 /// Import Flatpickr library styles
-@import 'provider/flatpickr';
+@use 'provider/flatpickr';
+@use "../../../tokens/variables";
 
 ///
 .osui-monthpicker {
@@ -35,7 +36,7 @@
 
 			&:before,
 			&:after {
-				-servicestudio-color: $token-semantics-primary-base;
+				-servicestudio-color: variables.$token-semantics-primary-base;
 				-servicestudio-font-family: var(--osui-icon-font-family);
 				-servicestudio-font-size: clamp(10px, 1.7vw, 20px);
 				-servicestudio-position: absolute;
@@ -60,14 +61,14 @@
 
 	.not-valid + .input,
 	.not-valid + .flatpickr-mobile {
-		border-color: $token-semantics-danger-base;
+		border-color: variables.$token-semantics-danger-base;
 	}
 
 	input {
 		// Disable states for Datepicker
 		&[disabled] + input {
 			background-color: var(--osui-monthpicker-disabled-background);
-			border: $token-border-size-025 solid var(--osui-monthpicker-disabled-border-color);
+			border: variables.$token-border-size-025 solid var(--osui-monthpicker-disabled-border-color);
 			color: var(--osui-monthpicker-disabled-color);
 			pointer-events: none;
 		}

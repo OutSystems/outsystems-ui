@@ -1,3 +1,6 @@
+@use '../../00-abstract/index' as *;
+@use "../../tokens/variables";
+
 /* Patterns - Interaction - Lightbox Image */
 ////
 /// @group Patterns-Lightbox_Image
@@ -26,7 +29,7 @@
 	&-image:after {
 		// Service Studio Preview
 		& {
-			-servicestudio-background-color: #{$token-backdrop};
+			-servicestudio-background-color: #{variables.$token-backdrop};
 			-servicestudio-color: var(--color-text-inverse);
 			-servicestudio-content: 'Image';
 			-servicestudio-font-size: 9px;
@@ -56,7 +59,7 @@
 		&:after {
 			// Service Studio Preview
 			& {
-				-servicestudio-background-color: #{$token-backdrop};
+				-servicestudio-background-color: #{variables.$token-backdrop};
 				-servicestudio-color: var(--color-text-inverse);
 				-servicestudio-content: 'Thumbnail';
 				-servicestudio-font-size: 9px;
@@ -126,7 +129,7 @@
 	.lightbox-item a:focus {
 		background-color: transparent;
 		box-shadow: none;
-		outline: $token-border-size-075 solid var(--color-focus-outer);
+		outline: variables.$token-border-size-075 solid var(--color-focus-outer);
 	}
 }
 

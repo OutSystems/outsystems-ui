@@ -1,3 +1,5 @@
+@use "../../tokens/variables";
+
 /* Patterns - Interaction - Floating Actions */
 ////
 /// @group Patterns-Floating_Actions
@@ -13,22 +15,22 @@
 	&-actions-wrapper {
 		// ─── Component CSS API ─────────────────────────────────────────────
 		--osui-floating-actions-button-background: var(--color-primary);
-		--osui-floating-actions-button-background-hover: #{$token-bg-primary-base-hover};
-		--osui-floating-actions-button-background-press: #{$token-bg-primary-base-press};
+		--osui-floating-actions-button-background-hover: #{variables.$token-bg-primary-base-hover};
+		--osui-floating-actions-button-background-press: #{variables.$token-bg-primary-base-press};
 		--osui-floating-actions-button-color: var(--color-text-inverse);
-		--osui-floating-actions-button-shadow: #{$token-elevation-3};
+		--osui-floating-actions-button-shadow: #{variables.$token-elevation-3};
 		--osui-floating-actions-item-background: var(--color-background-surface);
-		--osui-floating-actions-item-background-hover: #{$token-bg-neutral-subtlest-hover};
-		--osui-floating-actions-item-background-press: #{$token-bg-neutral-subtlest-press};
+		--osui-floating-actions-item-background-hover: #{variables.$token-bg-neutral-subtlest-hover};
+		--osui-floating-actions-item-background-press: #{variables.$token-bg-neutral-subtlest-press};
 		--osui-floating-actions-item-color: var(--color-text);
-		--osui-floating-actions-item-shadow: #{$token-elevation-2};
+		--osui-floating-actions-item-shadow: #{variables.$token-elevation-2};
 		// ───────────────────────────────────────────────────────────────────
 
 		align-items: flex-end;
 		bottom: 0;
 		display: flex;
 		flex-direction: column;
-		margin: $token-scale-800;
+		margin: variables.$token-scale-800;
 		position: fixed;
 		right: 0;
 		will-change: transform, opacity;
@@ -48,8 +50,8 @@
 				opacity: 1;
 				transform: translateY(0px) translateZ(0) scale(1);
 				transition:
-					opacity var(--osui-motion-duration-180) $token-transition-curve-quick,
-					transform var(--osui-motion-duration-180) $token-transition-curve-quick;
+					opacity var(--osui-motion-duration-180) variables.$token-transition-curve-quick,
+					transform var(--osui-motion-duration-180) variables.$token-transition-curve-quick;
 				transition-delay: calc(var(--delay) * 40ms); // design-spec: stagger delay
 			}
 
@@ -65,7 +67,7 @@
 		}
 
 		&.bottom-bar-exists {
-			bottom: calc(var(--size-bottom-bar) + $token-scale-400);
+			bottom: calc(var(--size-bottom-bar) + variables.$token-scale-400);
 		}
 
 		&.no-rotation {
@@ -92,20 +94,20 @@
 		align-items: flex-end;
 		display: flex;
 		flex-direction: column;
-		padding-bottom: $token-scale-200;
-		padding-right: $token-scale-200;
+		padding-bottom: variables.$token-scale-200;
+		padding-right: variables.$token-scale-200;
 	}
 
 	&-actions-item {
 		align-items: center;
 		display: flex;
 		justify-content: flex-end;
-		margin-bottom: $token-scale-400;
+		margin-bottom: variables.$token-scale-400;
 		opacity: 0;
-		transform: translateY($token-scale-400) translateZ(0);
+		transform: translateY(variables.$token-scale-400) translateZ(0);
 		transition:
-			opacity $token-transition-time-100 $token-transition-curve-base,
-			transform $token-transition-time-100 $token-transition-curve-base;
+			opacity variables.$token-transition-time-100 variables.$token-transition-curve-base,
+			transform variables.$token-transition-time-100 variables.$token-transition-curve-base;
 
 		// Service Studio Preview
 		& {
@@ -122,14 +124,14 @@
 		color: var(--osui-floating-actions-item-color);
 		cursor: pointer;
 		display: flex;
-		font-size: $token-font-size-400;
-		height: $token-scale-1000;
+		font-size: variables.$token-font-size-400;
+		height: variables.$token-scale-1000;
 		justify-content: center;
-		margin-left: $token-scale-400;
+		margin-left: variables.$token-scale-400;
 		transform: translateZ(0) scale(0.3);
-		transition: transform var(--osui-motion-duration-180) $token-transition-curve-quick;
+		transition: transform var(--osui-motion-duration-180) variables.$token-transition-curve-quick;
 		transition-delay: calc(var(--delay) * 40ms); // design-spec: stagger delay
-		width: $token-scale-1000;
+		width: variables.$token-scale-1000;
 
 		// Service Studio Preview
 		& {
@@ -153,16 +155,16 @@
 		color: var(--osui-floating-actions-button-color);
 		cursor: pointer;
 		display: flex;
-		font-size: $token-font-size-800;
-		height: $token-scale-1400;
+		font-size: variables.$token-font-size-800;
+		height: variables.$token-scale-1400;
 		justify-content: center;
 		pointer-events: auto;
 		transform: rotate(0deg) translateZ(0);
 		transform-origin: center center;
 		transition:
-			transform var(--osui-motion-duration-180) $token-transition-curve-linear,
-			box-shadow var(--osui-motion-duration-180) $token-transition-curve-linear;
-		width: $token-scale-1400;
+			transform var(--osui-motion-duration-180) variables.$token-transition-curve-linear,
+			box-shadow var(--osui-motion-duration-180) variables.$token-transition-curve-linear;
+		width: variables.$token-scale-1400;
 
 		&:hover {
 			background-color: var(--osui-floating-actions-button-background-hover);
@@ -174,7 +176,7 @@
 	}
 
 	&-overlay {
-		background-color: $token-backdrop;
+		background-color: variables.$token-backdrop;
 		cursor: pointer;
 		height: 100vh;
 		opacity: 0;
@@ -182,7 +184,7 @@
 		position: fixed;
 		right: 0;
 		top: 0;
-		transition: opacity var(--osui-motion-duration-180) $token-transition-curve-base;
+		transition: opacity var(--osui-motion-duration-180) variables.$token-transition-curve-base;
 		width: 100vw;
 		z-index: var(--osui-floating-actions-layer);
 
@@ -204,7 +206,7 @@
 .phone {
 	.layout-native {
 		.floating-actions-wrapper {
-			margin: $token-scale-400;
+			margin: variables.$token-scale-400;
 		}
 	}
 
@@ -220,7 +222,7 @@
 		&.landscape {
 			.layout-native {
 				.floating-actions-wrapper {
-					margin-right: calc(var(--os-safe-area-right) + $token-scale-400);
+					margin-right: calc(var(--os-safe-area-right) + variables.$token-scale-400);
 				}
 			}
 		}
@@ -242,8 +244,8 @@
 ///
 .is-rtl {
 	.floating-actions-item-button {
-		margin-left: $token-scale-0;
-		margin-right: $token-scale-400;
+		margin-left: variables.$token-scale-0;
+		margin-right: variables.$token-scale-400;
 	}
 
 	.floating-actions-wrapper {
@@ -256,13 +258,13 @@
 ///
 .has-accessible-features {
 	.floating-button:focus {
-		box-shadow: 0 0 0 $token-border-size-075 var(--color-focus-outer);
+		box-shadow: 0 0 0 variables.$token-border-size-075 var(--color-focus-outer);
 	}
 
 	.floating-actions-wrapper {
 		&.is--open {
 			.floating-button:focus {
-				box-shadow: 0 0 0 $token-border-size-075 var(--color-focus-outer);
+				box-shadow: 0 0 0 variables.$token-border-size-075 var(--color-focus-outer);
 			}
 		}
 	}

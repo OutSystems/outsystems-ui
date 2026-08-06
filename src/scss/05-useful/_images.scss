@@ -1,3 +1,5 @@
+@use "../tokens/variables";
+
 /* Usefull - Images */
 ////
 /// @group UsefullClasses-Image
@@ -22,8 +24,8 @@ img {
 	}
 
 	&.thumbnail {
-		background-color: $token-bg-surface-default;
-		border: $token-border-size-025 solid var(--color-border);
-		padding: $token-scale-100;
+		background-color: variables.$token-bg-surface-default;
+		border: variables.$token-border-size-025 solid var(--color-border);
+		padding: variables.$token-scale-100;
 	}
 }

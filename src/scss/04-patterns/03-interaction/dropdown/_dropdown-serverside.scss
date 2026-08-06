@@ -1,3 +1,5 @@
+@use "../../../tokens/variables";
+
 /* Patterns - Interaction - DropdownServerSide */
 ////
 /// @group Patterns-DropdownServerSide
@@ -10,8 +12,8 @@ $balloonMobileTopMargin: 5vh;
 ///
 .osui-dropdown-serverside {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-dropdown-ss-arrow-color: #{$token-icon-subtlest};
-	--osui-dropdown-ss-arrow-size: #{$token-scale-400};
+	--osui-dropdown-ss-arrow-color: #{variables.$token-icon-subtlest};
+	--osui-dropdown-ss-arrow-size: #{variables.$token-scale-400};
 	--osui-dropdown-ss-background: var(--color-background-input);
 	--osui-dropdown-ss-border-color: var(--color-border-input);
 	--osui-dropdown-ss-border-radius: var(--border-radius-soft);
@@ -19,14 +21,14 @@ $balloonMobileTopMargin: 5vh;
 	--osui-dropdown-ss-disabled-background: var(--color-background-input-disabled);
 	--osui-dropdown-ss-disabled-color: var(--color-text-disabled);
 	--osui-dropdown-ss-focus-border-color: var(--color-border-primary);
-	--osui-dropdown-ss-focus-ring-color: #{$token-border-focus-default};
+	--osui-dropdown-ss-focus-ring-color: #{variables.$token-border-focus-default};
 	--osui-dropdown-ss-hover-border-color: var(--color-border-input-hover);
 	--osui-dropdown-ss-prompt-color: var(--color-text-subtlest);
 	// ───────────────────────────────────────────────────────────────────
 
 	--osui-dropdown-ss-balloon-max-height: 300px;
 	--osui-dropdown-min-width: 170px;
-	--osui-floating-offset: #{$token-scale-100};
+	--osui-floating-offset: #{variables.$token-scale-100};
 	--osui-dropdown-ss-scroll-bar-width: 5px;
 	position: relative;
 
@@ -35,7 +37,7 @@ $balloonMobileTopMargin: 5vh;
 		--osui-balloon-shadow: var(--osui-elevation-overlay);
 		--osui-balloon-shape: var(--border-radius-soft);
 
-		border: $token-border-size-025 solid var(--color-border);
+		border: variables.$token-border-size-025 solid var(--color-border);
 		display: flex;
 		flex-direction: column;
 		flex: 1;
@@ -62,7 +64,7 @@ $balloonMobileTopMargin: 5vh;
 		display: flex;
 		flex: 1;
 		height: inherit;
-		margin-right: $token-scale-400;
+		margin-right: variables.$token-scale-400;
 		overflow: hidden;
 
 		&:after {
@@ -74,10 +76,10 @@ $balloonMobileTopMargin: 5vh;
 			line-height: 1;
 			pointer-events: none;
 			position: absolute;
-			right: $token-scale-400;
+			right: variables.$token-scale-400;
 			top: 50%;
 			transform: translateY(-50%);
-			transition: transform $token-transition-time-200 $token-transition-curve-expressive;
+			transition: transform variables.$token-transition-time-200 variables.$token-transition-curve-expressive;
 			width: var(--osui-dropdown-ss-arrow-size);
 		}
 
@@ -98,15 +100,15 @@ $balloonMobileTopMargin: 5vh;
 			align-items: center;
 			background-color: var(--osui-dropdown-ss-background);
 			border-radius: var(--osui-dropdown-ss-border-radius);
-			border: $token-border-size-025 solid var(--osui-dropdown-ss-border-color);
+			border: variables.$token-border-size-025 solid var(--osui-dropdown-ss-border-color);
 			color: var(--osui-dropdown-ss-color);
 			cursor: pointer;
 			display: flex;
-			font-size: $token-font-size-350;
-			height: $token-scale-1000;
-			padding: $token-scale-0 $token-scale-400;
+			font-size: variables.$token-font-size-350;
+			height: variables.$token-scale-1000;
+			padding: variables.$token-scale-0 variables.$token-scale-400;
 			position: relative;
-			transition: border $token-transition-time-300 $token-transition-curve-expressive;
+			transition: border variables.$token-transition-time-300 variables.$token-transition-curve-expressive;
 			width: 100%;
 
 			// Hover — border darkens (matches Figma border/input/hover)
@@ -118,7 +120,7 @@ $balloonMobileTopMargin: 5vh;
 			&:focus,
 			&:focus-visible {
 				border-color: var(--osui-dropdown-ss-focus-border-color);
-				box-shadow: 0 0 0 $token-border-size-050 var(--osui-dropdown-ss-focus-ring-color);
+				box-shadow: 0 0 0 variables.$token-border-size-050 var(--osui-dropdown-ss-focus-ring-color);
 				outline: none;
 			}
 
@@ -139,7 +141,7 @@ $balloonMobileTopMargin: 5vh;
 		// Search Wrapper
 		&-search-wrapper {
 			background-color: var(--osui-dropdown-ss-background);
-			padding: $token-scale-0;
+			padding: variables.$token-scale-0;
 			position: relative;
 			display: flex;
 			align-items: center;
@@ -154,7 +156,7 @@ $balloonMobileTopMargin: 5vh;
 				color: var(--color-text-disabled);
 				display: flex;
 				height: 100%;
-				left: $token-scale-400;
+				left: variables.$token-scale-400;
 				position: absolute;
 				top: 0;
 			}
@@ -166,12 +168,12 @@ $balloonMobileTopMargin: 5vh;
 			input,
 			.form-control[data-input] {
 				background-color: transparent;
-				border-radius: $token-border-size-0;
+				border-radius: variables.$token-border-size-0;
 				border: none;
 				color: inherit;
-				font-size: $token-font-size-350;
-				height: $token-scale-1000;
-				padding: $token-scale-0 $token-scale-200 $token-scale-0 $token-scale-400;
+				font-size: variables.$token-font-size-350;
+				height: variables.$token-scale-1000;
+				padding: variables.$token-scale-0 variables.$token-scale-200 variables.$token-scale-0 variables.$token-scale-400;
 				width: 100%;
 
 				&:focus,
@@ -187,18 +189,18 @@ $balloonMobileTopMargin: 5vh;
 			align-items: center;
 			display: flex;
 			height: 100%;
-			padding: $token-scale-0 $token-scale-400;
+			padding: variables.$token-scale-0 variables.$token-scale-400;
 		}
 
 		// Options placeholder
 		&-content {
-			border-top: $token-border-size-025 solid var(--color-border-input);
+			border-top: variables.$token-border-size-025 solid var(--color-border-input);
 			flex: 1;
 			height: auto;
 			max-height: var(--osui-dropdown-ss-balloon-max-height);
 			overflow-x: hidden;
 			overflow-y: auto;
-			padding: $token-scale-0;
+			padding: variables.$token-scale-0;
 
 			&::-webkit-scrollbar {
 				width: var(--osui-dropdown-ss-scroll-bar-width);
@@ -227,8 +229,8 @@ $balloonMobileTopMargin: 5vh;
 
 		// Footer placeholder
 		&-footer {
-			border-top: $token-border-size-025 solid var(--color-border-input);
-			padding: $token-scale-200 $token-scale-400;
+			border-top: variables.$token-border-size-025 solid var(--color-border-input);
+			padding: variables.$token-scale-200 variables.$token-scale-400;
 		}
 	}
 
@@ -238,7 +240,7 @@ $balloonMobileTopMargin: 5vh;
 			// "Input" section wrapper - SelectedValues container wrapper
 			&__selected-values-wrapper {
 				border-color: var(--osui-dropdown-ss-focus-border-color);
-				box-shadow: 0 0 0 $token-border-size-050 var(--osui-dropdown-ss-focus-ring-color);
+				box-shadow: 0 0 0 variables.$token-border-size-050 var(--osui-dropdown-ss-focus-ring-color);
 			}
 
 			// "Input" section - SelectedValues container
@@ -279,10 +281,10 @@ $balloonMobileTopMargin: 5vh;
 		}
 
 		& + .osui-dropdown-serverside-error-message {
-			color: $token-semantics-danger-base;
-			font-size: $token-font-size-300;
-			margin-left: $token-scale-0;
-			margin-top: $token-scale-075;
+			color: variables.$token-semantics-danger-base;
+			font-size: variables.$token-font-size-300;
+			margin-left: variables.$token-scale-0;
+			margin-top: variables.$token-scale-075;
 		}
 	}
 
@@ -315,7 +317,7 @@ $balloonMobileTopMargin: 5vh;
 .windows .osui-tabs {
 	// subtracts the size of the border so it doesn't get cut off inside the tabs, in windows
 	.osui-dropdown-serverside__selected-values-wrapper {
-		width: calc(100% - 2 * $token-border-size-025);
+		width: calc(100% - 2 * variables.$token-border-size-025);
 	}
 }
 
@@ -337,8 +339,8 @@ $balloonMobileTopMargin: 5vh;
 
 			&-search-wrapper {
 				&:focus-within {
-					outline: $token-border-size-075 solid var(--color-focus-outer);
-					outline-offset: -$token-border-size-075;
+					outline: variables.$token-border-size-075 solid var(--color-focus-outer);
+					outline-offset: -(variables.$token-border-size-075);
 				}
 			}
 
@@ -349,7 +351,7 @@ $balloonMobileTopMargin: 5vh;
 			}
 
 			&-content {
-				--osui-outline-size: #{$token-border-size-075};
+				--osui-outline-size: #{variables.$token-border-size-075};
 
 				&::-webkit-scrollbar-thumb {
 					background-color: var(--color-border-input);
@@ -416,7 +418,7 @@ $balloonMobileTopMargin: 5vh;
 	.has-accessible-features .osui-dropdown-serverside__balloon-content:focus {
 		--osui-outline-size: 0;
 
-		box-shadow: inset 0 0 0 $token-border-size-075 var(--color-focus-outer);
+		box-shadow: inset 0 0 0 variables.$token-border-size-075 var(--color-focus-outer);
 	}
 }
 
@@ -425,11 +427,11 @@ $balloonMobileTopMargin: 5vh;
 .is-rtl {
 	.osui-dropdown-serverside {
 		&__selected-values {
-			margin-left: $token-scale-400;
+			margin-left: variables.$token-scale-400;
 			margin-right: initial;
 
 			&:after {
-				left: $token-scale-400;
+				left: variables.$token-scale-400;
 				right: auto;
 			}
 		}
@@ -439,12 +441,12 @@ $balloonMobileTopMargin: 5vh;
 			&-search {
 				&:before {
 					left: auto;
-					right: $token-scale-400;
+					right: variables.$token-scale-400;
 				}
 
 				input,
 				.form-control[data-input] {
-					padding: $token-scale-0 $token-scale-400 $token-scale-0 $token-scale-200;
+					padding: variables.$token-scale-0 variables.$token-scale-400 variables.$token-scale-0 variables.$token-scale-200;
 				}
 			}
 		}
@@ -457,14 +459,14 @@ $balloonMobileTopMargin: 5vh;
 .phone {
 	.osui-dropdown-serverside {
 		&__selected-values-wrapper {
-			height: $token-scale-1200;
+			height: variables.$token-scale-1200;
 		}
 
 		&__balloon-search {
 			input,
 			.form-control[data-input] {
-				font-size: $token-font-size-400;
-				height: $token-scale-1200;
+				font-size: variables.$token-font-size-400;
+				height: variables.$token-scale-1200;
 			}
 		}
 	}
@@ -532,7 +534,7 @@ $balloonMobileTopMargin: 5vh;
 		// Balloon section
 		&__balloon {
 			align-items: center;
-			background-color: $token-backdrop;
+			background-color: variables.$token-backdrop;
 			border: none;
 			border-radius: var(--border-radius-sharp);
 			display: flex;
@@ -541,13 +543,13 @@ $balloonMobileTopMargin: 5vh;
 			opacity: 0;
 			overflow: hidden;
 			top: 0;
-			transition: opacity $token-transition-time-300 $token-transition-curve-expressive;
+			transition: opacity variables.$token-transition-time-300 variables.$token-transition-curve-expressive;
 			width: 100vw;
 			z-index: var(--layer-instant-interaction);
 
 			// Service Studio Preview
 			& {
-				-servicestudio-background-color: $token-bg-surface-default;
+				-servicestudio-background-color: variables.$token-bg-surface-default;
 				-servicestudio-left: initial;
 				-servicestudio-opacity: 1;
 				-servicestudio-position: relative;
@@ -555,9 +557,9 @@ $balloonMobileTopMargin: 5vh;
 			}
 
 			&-container {
-				background: $token-bg-surface-default;
+				background: variables.$token-bg-surface-default;
 				border-radius: var(--osui-balloon-shape);
-				box-shadow: $token-elevation-4;
+				box-shadow: variables.$token-elevation-4;
 				display: flex;
 				flex-direction: column;
 				height: auto;
@@ -615,7 +617,7 @@ $balloonMobileTopMargin: 5vh;
 				margin-top: var(--ballon-top-margin-value);
 				position: relative;
 				transform: translateY(calc(0.5 * var(--ballon-top-margin-value)));
-				transition: all $token-transition-time-300 $token-transition-curve-expressive;
+				transition: all variables.$token-transition-time-300 variables.$token-transition-curve-expressive;
 			}
 
 			.osui-dropdown-serverside__balloon-content {
@@ -628,7 +630,7 @@ $balloonMobileTopMargin: 5vh;
 
 				/* Track */
 				&::-webkit-scrollbar-track {
-					background-color: $token-bg-neutral-subtle-default;
+					background-color: variables.$token-bg-neutral-subtle-default;
 				}
 
 				/* Handle */

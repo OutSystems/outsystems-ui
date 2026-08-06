@@ -1,3 +1,5 @@
+@use "../tokens/variables";
+
 /* Page Layout - Menu - App Login Info */
 ////
 /// @group Layout-Header-App_Login_Info
@@ -6,7 +8,7 @@
 ///
 .layout-side {
 	.app-login-info {
-		padding: $token-scale-400 $token-scale-600;
+		padding: variables.$token-scale-400 variables.$token-scale-600;
 	}
 
 	.user-info {
@@ -18,7 +20,7 @@
 .tablet,
 .phone {
 	.app-login-info {
-		padding: $token-scale-400 $token-scale-600;
+		padding: variables.$token-scale-400 variables.$token-scale-600;
 	}
 
 	.user-info {

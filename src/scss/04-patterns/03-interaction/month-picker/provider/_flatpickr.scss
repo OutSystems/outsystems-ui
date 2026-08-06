@@ -1,3 +1,5 @@
+@use "../../../../tokens/variables";
+
 // Flatpickr - MonthPicker
 .osui-monthpicker__dropdown {
 	&.flatpickr-calendar {
@@ -11,20 +13,20 @@
 
 .flatpickr-monthSelect-months {
 	display: grid;
-	gap: $token-scale-200;
+	gap: variables.$token-scale-200;
 	grid-template-columns: repeat(3, max-content);
 	justify-items: center;
 	margin: 0;
 
 	.flatpickr-monthSelect-month {
 		align-items: center;
-		border: $token-border-size-025 solid transparent;
-		border-radius: $token-border-radius-200;
+		border: variables.$token-border-size-025 solid transparent;
+		border-radius: variables.$token-border-radius-200;
 		display: flex;
-		height: $token-scale-1000;
+		height: variables.$token-scale-1000;
 		margin: 0;
 		min-width: 70px;
-		transition: background-color $token-transition-time-100 $token-transition-curve-base;
+		transition: background-color variables.$token-transition-time-100 variables.$token-transition-curve-base;
 		width: 100%;
 
 		&:hover,
@@ -33,7 +35,7 @@
 		}
 
 		&.selected {
-			background-color: $token-semantics-primary-base;
+			background-color: variables.$token-semantics-primary-base;
 			border-color: transparent;
 			color: var(--color-text-inverse);
 		}
@@ -60,7 +62,7 @@
 			&:focus {
 				background: var(--color-border-subtle);
 				border-color: var(--osui-border-subtle);
-				color: $token-semantics-primary-base;
+				color: variables.$token-semantics-primary-base;
 			}
 		}
 	}

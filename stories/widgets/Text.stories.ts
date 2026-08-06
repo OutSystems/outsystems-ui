@@ -8,5 +8,9 @@ type Story = StoryObj;
 
 export const Default: Story = {
 	render: () =>
-		mountWidget(Text as never, { ...widgetBaseProps('text'), text: 'Plain platform Text widget output.', style: '' }),
+		mountWidget(Text as never, {
+			...widgetBaseProps('text'),
+			text: 'Plain platform Text widget output.',
+			style: '',
+		}),
 };

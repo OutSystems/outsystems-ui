@@ -11,6 +11,21 @@ type Story = StoryObj;
 export const Default: Story = {
 	render: () =>
 		mountTree(
-			createElement(MemoryRouter as never, null, createElement(Link as never, { ...widgetBaseProps('link'), url: '/somewhere', enabled: true, confirmationMessage: '', onClick: () => {}, style: '' }, 'Go to page'))
+			createElement(
+				MemoryRouter as never,
+				null,
+				createElement(
+					Link as never,
+					{
+						...widgetBaseProps('link'),
+						url: '/somewhere',
+						enabled: true,
+						confirmationMessage: '',
+						onClick: () => {},
+						style: '',
+					},
+					'Go to page'
+				)
+			)
 		),
 };

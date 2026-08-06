@@ -1,3 +1,6 @@
+@use '../../00-abstract/index' as *;
+@use '../../tokens/variables';
+
 /* Patterns - Numbers - Badge */
 ////
 /// @group Patterns-Badge
@@ -8,37 +11,37 @@
 // families read text-extended-*, and cyan/grape read the primitives matching
 // their background family (no text token exists for them).
 $osui-badge-lightest-text-colors: (
-	'red': $token-text-danger,
-	'orange': $token-text-extended-orange,
-	'yellow': $token-text-warning,
-	'lime': $token-text-extended-lime,
-	'green': $token-text-success,
-	'teal': $token-text-extended-teal,
-	'cyan': $token-primitives-aqua-900,
-	'blue': $token-text-info,
-	'indigo': $token-text-extended-indigo,
-	'violet': $token-text-extended-violet,
-	'grape': $token-primitives-purple-900,
-	'pink': $token-text-extended-pink,
+	'red': variables.$token-text-danger,
+	'orange': variables.$token-text-extended-orange,
+	'yellow': variables.$token-text-warning,
+	'lime': variables.$token-text-extended-lime,
+	'green': variables.$token-text-success,
+	'teal': variables.$token-text-extended-teal,
+	'cyan': variables.$token-primitives-aqua-900,
+	'blue': variables.$token-text-info,
+	'indigo': variables.$token-text-extended-indigo,
+	'violet': variables.$token-text-extended-violet,
+	'grape': variables.$token-primitives-purple-900,
+	'pink': variables.$token-text-extended-pink,
 );
 
 ///
 .badge {
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-badge-color: var(--color-text-inverse);
-	--osui-badge-primary-color: #{$token-text-primary};
+	--osui-badge-primary-color: #{variables.$token-text-primary};
 	--osui-badge-on-light-color: var(--color-text);
 	// ───────────────────────────────────────────────────────────────────
 
 	align-items: center;
 	color: var(--osui-badge-color);
 	display: inline-flex;
-	font-weight: $token-font-weight-semi-bold;
-	height: $token-scale-500;
+	font-weight: variables.$token-font-weight-semi-bold;
+	height: variables.$token-scale-500;
 	justify-content: center;
 	line-height: 1;
-	min-width: $token-scale-500;
-	padding: $token-scale-0 $token-scale-150;
+	min-width: variables.$token-scale-500;
+	padding: variables.$token-scale-0 variables.$token-scale-150;
 
 	&.background {
 		&-neutral {
@@ -48,8 +51,8 @@ $osui-badge-lightest-text-colors: (
 			&-3,
 			&-4,
 			&-5 {
-				background-color: $token-bg-neutral-base-default;
-				color: $token-text-default;
+				background-color: variables.$token-bg-neutral-base-default;
+				color: variables.$token-text-default;
 			}
 
 			&-6,
@@ -57,8 +60,8 @@ $osui-badge-lightest-text-colors: (
 			&-8,
 			&-9,
 			&-10 {
-				background-color: $token-bg-neutral-bold-default;
-				color: $token-text-inverse;
+				background-color: variables.$token-bg-neutral-bold-default;
+				color: variables.$token-text-inverse;
 			}
 
 			&-0-lightest,
@@ -67,8 +70,8 @@ $osui-badge-lightest-text-colors: (
 			&-3-lightest,
 			&-4-lightest,
 			&-5-lightest {
-				background-color: $token-bg-neutral-subtle-default;
-				color: $token-text-subtle;
+				background-color: variables.$token-bg-neutral-subtle-default;
+				color: variables.$token-text-subtle;
 			}
 
 			&-6-lightest,
@@ -76,8 +79,8 @@ $osui-badge-lightest-text-colors: (
 			&-8-lightest,
 			&-9-lightest,
 			&-10-lightest {
-				background-color: $token-bg-neutral-base-default;
-				color: $token-text-default;
+				background-color: variables.$token-bg-neutral-base-default;
+				color: variables.$token-text-default;
 			}
 		}
 
@@ -99,37 +102,37 @@ $osui-badge-lightest-text-colors: (
 
 	// Semantic colors (primary, danger, success, info, warning)
 	&.background-primary-lightest {
-		background-color: #{$token-bg-primary-subtle-default};
-		color: $token-text-primary;
+		background-color: #{variables.$token-bg-primary-subtle-default};
+		color: variables.$token-text-primary;
 	}
 
 	&.background-danger-lightest {
-		background-color: #{$token-bg-danger-subtle-default};
-		color: $token-text-danger;
+		background-color: #{variables.$token-bg-danger-subtle-default};
+		color: variables.$token-text-danger;
 	}
 
 	&.background-success-lightest {
-		background-color: #{$token-bg-success-subtle-default};
-		color: $token-text-success;
+		background-color: #{variables.$token-bg-success-subtle-default};
+		color: variables.$token-text-success;
 	}
 
 	&.background-info-lightest {
-		background-color: #{$token-bg-info-subtle-default};
-		color: $token-text-info;
+		background-color: #{variables.$token-bg-info-subtle-default};
+		color: variables.$token-text-info;
 	}
 
 	&.background-warning-lightest {
-		background-color: #{$token-bg-warning-subtle-default};
-		color: $token-text-warning;
+		background-color: #{variables.$token-bg-warning-subtle-default};
+		color: variables.$token-text-warning;
 	}
 
 	&.background-secondary-lightest {
-		background-color: #{$token-bg-neutral-base-default};
+		background-color: #{variables.$token-bg-neutral-base-default};
 		color: var(--osui-badge-on-light-color);
 	}
 
 	&.background-transparent-lightest {
-		color: $token-text-inverse;
+		color: variables.$token-text-inverse;
 	}
 
 	// Extended palette colors (red, orange, yellow, etc.)
@@ -149,16 +152,16 @@ $osui-badge-lightest-text-colors: (
 	}
 
 	&-small {
-		font-size: $token-font-size-300;
-		height: $token-scale-400;
-		min-width: $token-scale-400;
-		padding: $token-scale-0 $token-scale-100;
+		font-size: variables.$token-font-size-300;
+		height: variables.$token-scale-400;
+		min-width: variables.$token-scale-400;
+		padding: variables.$token-scale-0 variables.$token-scale-100;
 	}
 
 	&-medium {
-		font-size: $token-font-size-400;
-		height: $token-scale-700;
-		min-width: $token-scale-700;
+		font-size: variables.$token-font-size-400;
+		height: variables.$token-scale-700;
+		min-width: variables.$token-scale-700;
 	}
 
 	span {

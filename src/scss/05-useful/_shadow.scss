@@ -1,3 +1,7 @@
+@use "sass:map";
+@use '../00-abstract/index' as *;
+@use "../tokens/variables";
+
 /* Usefull - Shadow */
 ////
 /// @group UsefullClasses-Shadow
@@ -6,17 +10,17 @@
 // Maps old shadow names to token SCSS variables (null = no box-shadow / 'none')
 $osui-shadow-token-vars: (
 	'none': null,
-	'xs': $token-elevation-1,
-	's': $token-elevation-1,
-	'm': $token-elevation-2,
-	'l': $token-elevation-3,
-	'xl': $token-elevation-4
+	'xs': variables.$token-elevation-1,
+	's': variables.$token-elevation-1,
+	'm': variables.$token-elevation-2,
+	'l': variables.$token-elevation-3,
+	'xl': variables.$token-elevation-4
 );
 
 ///
 .shadow {
 	@each $type, $value in $osui-shadow-types {
-		$token: map-get($osui-shadow-token-vars, $type);
+		$token: map.get($osui-shadow-token-vars, $type);
 		&-#{$type} {
 			@if $token == null {
 				box-shadow: none;

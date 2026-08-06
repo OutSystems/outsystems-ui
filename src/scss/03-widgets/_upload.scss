@@ -1,3 +1,5 @@
+@use "../tokens/variables";
+
 /* Widgets - Upload */
 ////
 /// @group Widgets-Upload
@@ -8,11 +10,11 @@
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-upload-background:     var(--color-background-surface);
 	--osui-upload-border-color:   var(--color-border);
-	--osui-upload-border-width:   #{$token-border-size-025};
-	--osui-upload-color:          #{$token-text-primary};
+	--osui-upload-border-width:   #{variables.$token-border-size-025};
+	--osui-upload-color:          #{variables.$token-text-primary};
 	--osui-upload-border-radius:  var(--border-radius-soft);
-	--osui-upload-padding:        #{$token-scale-400};
-	--osui-upload-icon-color:     #{$token-icon-subtlest};
+	--osui-upload-padding:        #{variables.$token-scale-400};
+	--osui-upload-icon-color:     #{variables.$token-icon-subtlest};
 	// ───────────────────────────────────────────────────────────────────
 
 	align-items: center;
@@ -21,8 +23,8 @@
 	border-radius: var(--osui-upload-border-radius);
 	color: var(--osui-upload-color);
 	display: flex;
-	font-size: $token-font-size-350;
-	font-weight: $token-font-weight-medium;
+	font-size: variables.$token-font-size-350;
+	font-weight: variables.$token-font-weight-medium;
 	margin-bottom: 0;
 	min-height: auto;
 	padding: var(--osui-upload-padding);
@@ -33,9 +35,9 @@
 
 		.change-image {
 			background-color: transparent;
-			color: $token-semantics-primary-base;
+			color: variables.$token-semantics-primary-base;
 			height: auto;
-			margin-top: $token-scale-400;
+			margin-top: variables.$token-scale-400;
 			opacity: 1;
 			position: relative;
 		}
@@ -51,12 +53,12 @@
 		background-color: transparent;
 		color: var(--osui-upload-icon-color);
 		line-height: 1;
-		margin-right: $token-scale-200;
+		margin-right: variables.$token-scale-200;
 		width: auto;
 	}
 
 	&:focus-visible {
-		border: $token-border-size-025 solid $token-semantics-primary-base;
+		border: variables.$token-border-size-025 solid variables.$token-semantics-primary-base;
 	}
 }
 
@@ -65,8 +67,8 @@
 .is-rtl {
 	[data-upload] {
 		[data-icon] {
-			margin-left: $token-scale-200;
-			margin-right: $token-scale-0;
+			margin-left: variables.$token-scale-200;
+			margin-right: variables.$token-scale-0;
 		}
 	}
 }
@@ -75,6 +77,6 @@
 ///
 .has-accessible-features {
 	[data-upload] {
-		border: $token-border-size-025 solid var(--color-border-input);
+		border: variables.$token-border-size-025 solid var(--color-border-input);
 	}
 }

@@ -1,3 +1,5 @@
+@use "../tokens/variables";
+
 /* Page Layout - Menu - Header Logo */
 ////
 /// @group Layout-Menu-Header_Logo
@@ -7,7 +9,7 @@
 .layout-side {
 	.header-logo {
 		height: var(--size-header);
-		padding: $token-scale-0 $token-scale-600;
+		padding: variables.$token-scale-0 variables.$token-scale-600;
 	}
 }
 
@@ -16,6 +18,6 @@
 .phone {
 	.header-logo {
 		height: var(--size-header);
-		padding: $token-scale-0 $token-scale-600;
+		padding: variables.$token-scale-0 variables.$token-scale-600;
 	}
 }

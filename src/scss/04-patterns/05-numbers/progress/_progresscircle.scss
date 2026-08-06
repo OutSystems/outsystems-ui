@@ -1,3 +1,5 @@
+@use "../../../tokens/variables";
+
 /* Patterns - Numbers - ProgressCircle */
 ////
 /// @group Patterns-ProgressCircle
@@ -43,7 +45,7 @@
 		}
 
 		&__progress-path {
-			-servicestudio-stroke: var(--progress-color, #{$token-semantics-primary-base});
+			-servicestudio-stroke: var(--progress-color, #{variables.$token-semantics-primary-base});
 			stroke: var(--progress-circle-gradient-url, var(--progress-color));
 			stroke-dasharray: var(--stroke-dasharray);
 			stroke-dashoffset: var(--stroke-dashoffset);
@@ -63,7 +65,7 @@
 		}
 
 		&__trail-path {
-			stroke: var(--trail-color, #{$token-primitives-neutral-300});
+			stroke: var(--trail-color, #{variables.$token-primitives-neutral-300});
 		}
 	}
 

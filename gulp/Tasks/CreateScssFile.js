@@ -44,8 +44,10 @@ function getFileText(platformType, envType) {
 	const sectionIndexText = envType === project.globalConsts.envType.production ? getSectionIndexText.textProd(platformType) : getSectionIndexText.textDev(platformType);
 	// Store the Partials List generated text
 	const partialsText = envType === project.globalConsts.envType.production ? getPartialsList.textProd(platformType) : getPartialsList.textDev(platformType);
+	// The abstracts barrel '@use' must be the file's very first statement, ahead of the
+	// header comments below - see GetPartialsList.js's getAbstractsUseLine() for why.
 	// Combine text to create the hole file
-	return `${getNotesText()}\n${sectionIndexText}\n${partialsText}`;
+	return `${getPartialsList.abstractsUseLine()}\n${getNotesText()}\n${sectionIndexText}\n${partialsText}`;
 }
 
 // Method used to Create SCSS file structure dynamically

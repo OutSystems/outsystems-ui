@@ -1,3 +1,6 @@
+@use '../00-abstract/index' as *;
+@use "../tokens/variables";
+
 /* Page Layout - Layout Native - Header */
 ////
 /// @group Layout-Native-Header
@@ -15,12 +18,12 @@
 		top: 0;
 
 		&-top {
-			padding: 0 $token-scale-800;
+			padding: 0 variables.$token-scale-800;
 		}
 
 		&-title {
-			font-size: $token-font-size-500;
-			font-weight: $token-font-weight-regular;
+			font-size: variables.$token-font-size-500;
+			font-weight: variables.$token-font-weight-regular;
 
 			// Service Studio Preview
 			& {
@@ -31,14 +34,14 @@
 
 		&-left {
 			flex: 1;
-			margin-right: $token-scale-400;
+			margin-right: variables.$token-scale-400;
 		}
 
 		&-right {
 			display: flex;
 			flex: 1;
 			justify-content: flex-end;
-			margin-left: $token-scale-400;
+			margin-left: variables.$token-scale-400;
 			margin-right: auto;
 
 			// ServiceStudio Preview
@@ -90,7 +93,7 @@
 .phone {
 	.layout-native {
 		.header-top {
-			padding: 0 $token-scale-600;
+			padding: 0 variables.$token-scale-600;
 		}
 	}
 }
@@ -99,7 +102,7 @@
 .tablet {
 	.layout-native {
 		.header-title {
-			font-size: calc($token-font-size-500 - 1px);
+			font-size: calc(variables.$token-font-size-500 - 1px);
 		}
 	}
 }
@@ -108,7 +111,7 @@
 .phone {
 	.layout-native {
 		.header-title {
-			font-size: calc($token-font-size-500 - 2px);
+			font-size: calc(variables.$token-font-size-500 - 2px);
 		}
 	}
 }
@@ -141,13 +144,13 @@
 .is-rtl {
 	.layout-native {
 		.header-left {
-			margin-left: $token-scale-400;
+			margin-left: variables.$token-scale-400;
 			margin-right: 0;
 		}
 
 		.header-right {
 			margin-left: auto;
-			margin-right: $token-scale-400;
+			margin-right: variables.$token-scale-400;
 		}
 	}
 }

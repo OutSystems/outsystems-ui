@@ -1,3 +1,5 @@
+@use "../tokens/variables";
+
 /* Widgets - Form */
 ////
 /// @group Widgets-Form
@@ -12,7 +14,7 @@
 	}
 
 	label {
-		margin-bottom: $token-scale-200;
+		margin-bottom: variables.$token-scale-200;
 	}
 
 	.dropdown,
@@ -20,7 +22,7 @@
 	input[data-input],
 	textarea[data-textarea],
 	[data-switch] {
-		margin-bottom: $token-scale-600;
+		margin-bottom: variables.$token-scale-600;
 	}
 
 	span {
@@ -52,13 +54,13 @@
 	}
 
 	.upload-file span.validation-message {
-		bottom: $token-scale-200;
+		bottom: variables.$token-scale-200;
 		position: relative;
 	}
 
 	.dropdown-container {
 		&[class*='ThemeGrid_Width'].not-valid span.validation-message {
-			bottom: $token-scale-100;
+			bottom: variables.$token-scale-100;
 		}
 
 		&,
@@ -83,7 +85,7 @@
 	textarea[data-textarea] {
 		& + span {
 			&.validation-message {
-				bottom: $token-scale-100;
+				bottom: variables.$token-scale-100;
 			}
 		}
 	}
@@ -92,8 +94,8 @@
 ///
 span.validation-message {
 	color: var(--color-text-danger);
-	font-size: $token-font-size-300;
-	margin-left: $token-scale-0;
+	font-size: variables.$token-font-size-300;
+	margin-left: variables.$token-scale-0;
 }
 
 ///
@@ -104,7 +106,7 @@ span.validation-message {
 // Responsive --------------------------------------------------------------------
 .phone {
 	.layout-native .form.OSFillParent .form-control[class*='ThemeGrid_Width'].not-valid + span.validation-message {
-		left: $token-scale-150;
+		left: variables.$token-scale-150;
 	}
 
 	.form.OSFillParent span.input-text .form-control[class*='ThemeGrid_Width'].not-valid + span.validation-message,

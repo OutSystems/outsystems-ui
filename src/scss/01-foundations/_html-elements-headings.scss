@@ -1,3 +1,7 @@
+@use "sass:list";
+@use '../00-abstract/index' as *;
+@use "../tokens/variables";
+
 /* HTML Elements - Headings */
 ////
 /// @group HTML_Elements-Headings
@@ -6,12 +10,12 @@
 // Maps heading level → (desktop, tablet, phone) role triples.
 // Tier values that equal the previous tier mean "inherit" and emit nothing.
 $osui-heading-tiers: (
-	1: ($token-heading-h1-semi-bold, $token-heading-h2-semi-bold, $token-heading-h2-semi-bold),
-	2: ($token-heading-h2-semi-bold, $token-heading-h2-semi-bold, $token-heading-h3-semi-bold),
-	3: ($token-heading-h3-semi-bold, $token-heading-h3-semi-bold, $token-heading-h4-semi-bold),
-	4: ($token-heading-h4-semi-bold, $token-heading-h4-semi-bold, $token-heading-h5-semi-bold),
-	5: ($token-heading-h5-semi-bold, $token-heading-h5-semi-bold, $token-heading-h6-semi-bold),
-	6: ($token-heading-h6-semi-bold, $token-heading-h6-semi-bold, $token-heading-h6-semi-bold),
+	1: (variables.$token-heading-h1-semi-bold, variables.$token-heading-h2-semi-bold, variables.$token-heading-h2-semi-bold),
+	2: (variables.$token-heading-h2-semi-bold, variables.$token-heading-h2-semi-bold, variables.$token-heading-h3-semi-bold),
+	3: (variables.$token-heading-h3-semi-bold, variables.$token-heading-h3-semi-bold, variables.$token-heading-h4-semi-bold),
+	4: (variables.$token-heading-h4-semi-bold, variables.$token-heading-h4-semi-bold, variables.$token-heading-h5-semi-bold),
+	5: (variables.$token-heading-h5-semi-bold, variables.$token-heading-h5-semi-bold, variables.$token-heading-h6-semi-bold),
+	6: (variables.$token-heading-h6-semi-bold, variables.$token-heading-h6-semi-bold, variables.$token-heading-h6-semi-bold),
 );
 
 /// Shared default for every heading element and utility class
@@ -33,9 +37,9 @@ h6,
 
 /// Per-level responsive rules — desktop baseline + optional .tablet / .phone overrides
 @each $level, $tiers in $osui-heading-tiers {
-	$desktop: nth($tiers, 1);
-	$tablet: nth($tiers, 2);
-	$phone: nth($tiers, 3);
+	$desktop: list.nth($tiers, 1);
+	$tablet: list.nth($tiers, 2);
+	$phone: list.nth($tiers, 3);
 
 	h#{$level},
 	.heading#{$level},
@@ -47,8 +51,8 @@ h6,
 /// Display — uses display role maps, not heading roles
 .font-size-display {
 	@include apply-typography-responsive(
-		$desktop: $token-display-lg-regular,
-		$tablet: $token-display-sm-regular,
-		$phone: $token-display-sm-regular
+		$desktop: variables.$token-display-lg-regular,
+		$tablet: variables.$token-display-sm-regular,
+		$phone: variables.$token-display-sm-regular
 	);
 }

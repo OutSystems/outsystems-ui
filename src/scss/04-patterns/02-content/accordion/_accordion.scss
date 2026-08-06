@@ -1,3 +1,5 @@
+@use "../../../tokens/variables";
+
 /* Patterns - Content - Accordion */
 ////
 /// @group Patterns-Accordion
@@ -8,7 +10,7 @@
 	// All items inside accordion: no radius
 	& &-item,
 	.list .osui-accordion-item {
-		border-radius: $token-border-radius-0;
+		border-radius: variables.$token-border-radius-0;
 	}
 
 	// Divider: add top border only to items that are not the first
@@ -23,8 +25,8 @@
 	:first-child:not(.list) >,
 	.list :first-child > {
 		.osui-accordion-item {
-			border-top-left-radius: $token-border-radius-100;
-			border-top-right-radius: $token-border-radius-100;
+			border-top-left-radius: variables.$token-border-radius-100;
+			border-top-right-radius: variables.$token-border-radius-100;
 		}
 	}
 
@@ -32,8 +34,8 @@
 	:last-child:not(.list) >,
 	.list :last-child > {
 		.osui-accordion-item {
-			border-bottom-left-radius: $token-border-radius-100;
-			border-bottom-right-radius: $token-border-radius-100;
+			border-bottom-left-radius: variables.$token-border-radius-100;
+			border-bottom-right-radius: variables.$token-border-radius-100;
 		}
 	}
 
@@ -41,14 +43,14 @@
 	:only-child >,
 	.list :only-child > {
 		.osui-accordion-item {
-			border-radius: $token-border-radius-100;
+			border-radius: variables.$token-border-radius-100;
 		}
 	}
 
 	// ServiceStudio Preview
 	& &-item {
 		& {
-			-servicestudio-border-bottom-width: $token-border-size-025;
+			-servicestudio-border-bottom-width: variables.$token-border-size-025;
 		}
 	}
 }

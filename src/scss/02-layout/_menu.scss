@@ -1,3 +1,6 @@
+@use '../00-abstract/index' as *;
+@use "../tokens/variables";
+
 /* Page Layout - Menu */
 ////
 /// @group Layout-Menu
@@ -16,7 +19,7 @@
 
 ///
 .app-menu-overlay {
-	background-color: $token-backdrop;
+	background-color: variables.$token-backdrop;
 	height: 100vh;
 	left: 0;
 	opacity: 0;
@@ -80,7 +83,7 @@
 	.aside-navigation {
 		// Service Studio Preview
 		& {
-			-servicestudio-background-color: $token-bg-surface-default;
+			-servicestudio-background-color: variables.$token-bg-surface-default;
 			-servicestudio-height: 100%;
 			-servicestudio-position: fixed;
 			-servicestudio-width: var(--size-side-menu);
@@ -141,11 +144,11 @@
 .tablet,
 .phone {
 	.app-login-info {
-		padding: $token-scale-200 $token-scale-600;
+		padding: variables.$token-scale-200 variables.$token-scale-600;
 	}
 
 	.app-menu-content {
-		background-color: $token-bg-surface-default;
+		background-color: variables.$token-bg-surface-default;
 		flex-direction: column;
 		height: 100%;
 		left: calc(-1 * var(--size-side-menu));

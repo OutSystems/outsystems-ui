@@ -1,3 +1,5 @@
+@use "../../tokens/variables";
+
 /* Patterns - Interaction - Input With Icon */
 ////
 /// @group Patterns-Input_With_Icon
@@ -19,8 +21,8 @@
 			right: 0;
 
 			&:not(:empty) + .input-with-icon-input input {
-				padding-left: $token-scale-400;
-				padding-right: $token-scale-1000;
+				padding-left: variables.$token-scale-400;
+				padding-right: variables.$token-scale-1000;
 			}
 
 			&.search-actions {
@@ -38,7 +40,7 @@
 	   and the padding pair is already set in that block. */
 	&:not(.input-with-icon-right):has(.input-with-icon-content-icon.search-actions:not(:empty)) {
 		.input-with-icon-input input {
-			padding-right: $token-scale-1000;
+			padding-right: variables.$token-scale-1000;
 		}
 	}
 
@@ -52,7 +54,7 @@
 			justify-content: center;
 			left: 0;
 			position: absolute;
-			width: $token-scale-1000;
+			width: variables.$token-scale-1000;
 
 			&,
 			a {
@@ -60,7 +62,7 @@
 			}
 
 			&:not(:empty) + .input-with-icon-input input {
-				padding-left: $token-scale-1000;
+				padding-left: variables.$token-scale-1000;
 			}
 
 			&.search-actions {
@@ -98,7 +100,7 @@
 .form {
 	.input-with-icon {
 		.input-with-icon-content-icon {
-			padding-bottom: $token-scale-600;
+			padding-bottom: variables.$token-scale-600;
 			z-index: var(--layer-local-tier-1);
 		}
 
