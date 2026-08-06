@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
 import { renderStatic } from './_helpers/osui';
-import { cls, COLOR_OPTIONS, extendedClassArgType } from './_helpers/lowcode';
+import { cls, COLOR_OPTIONS_FULL, extendedClassArgType } from './_helpers/lowcode';
 
 /**
  * Tag — low-code input parameters from the library OML wired as Storybook controls.
@@ -10,6 +10,9 @@ import { cls, COLOR_OPTIONS, extendedClassArgType } from './_helpers/lowcode';
  *   Size     → tag-small | tag-medium (no class = default compact size)
  *   Shape    → border-radius-none | border-radius-soft | border-radius-rounded | border-radius-circle
  *   IsLight  → appends -lightest for palette colors; -light for semantic colors (success/warning/error/info)
+ *
+ * The pattern SCSS now owns the IsLight text colors (per-family text tokens per the
+ * Figma spec); the text-{color} classes below are kept only for platform markup parity.
  */
 const meta: Meta = { title: 'Patterns/Content/Tag' };
 export default meta;
@@ -46,7 +49,7 @@ export const Default: StoryObj<TagArgs> = {
 		color: {
 			name: 'Color',
 			control: 'select',
-			options: COLOR_OPTIONS,
+			options: COLOR_OPTIONS_FULL,
 			description: 'Background color of the Block.',
 		},
 		size: {
