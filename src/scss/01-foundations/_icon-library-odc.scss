@@ -49,6 +49,7 @@
 	// Lightbox
 	--osui-icon-arrow-next: '\f061';
 	--osui-icon-arrow-previous: '\f060';
+	--osui-icon-zoom-in: '\f00e'; // fa-search-plus
 
 	// Password Policy
 	--osui-icon-circle-x: '\f057';
@@ -101,6 +102,7 @@ body.iconLibrary-phosphor {
 	// Lightbox
 	--osui-icon-arrow-next: '\e06c';
 	--osui-icon-arrow-previous: '\e058';
+	--osui-icon-zoom-in: '\e310'; // ph-magnifying-glass-plus
 
 	// Password Policy
 	--osui-icon-circle-x: '\e4f8';
@@ -519,36 +521,69 @@ body.iconLibrary-phosphor {
 }
 
 // Lightbox
-.pswp__button,
-.pswp__button--arrow--left:before,
-.pswp__button--arrow--right:before {
+// Drop the vendor sprite so the glyphs below show through. On the button itself the
+// `background` shorthand is fine, but NOT on the arrow pseudo-elements: default-skin.css
+// paints both the sprite AND the arrows' translucent square in that one shorthand, so
+// resetting it wholesale silently removes the square too (see the arrow rule below).
+.pswp__button {
 	background: none !important;
 }
 
-.pswp__button.pswp__button--close:before {
-	color: $token-primitives-base-white;
-	content: var(--osui-icon-clear);
+// Top-bar buttons share one glyph box so they stay aligned with each other; only
+// the `content` differs. `.pswp__button` is `position: relative` in photoswipe.css,
+// which is what these absolute glyphs are positioned against.
+.pswp__button.pswp__button--close:before,
+.pswp__button.pswp__button--zoom:before {
+	color: $token-icon-inverse;
 	font-family: var(--osui-icon-font-family);
-	font-size: $token-font-size-500;
+	font-size: $token-font-size-700; 
 	position: absolute;
-	right: 25%;
 	top: 50%;
 	transform: translateY(-50%) translateX(-50%);
 }
 
+.pswp__button.pswp__button--close:before {
+	content: var(--osui-icon-clear);
+}
+
+.pswp__button.pswp__button--zoom:before {
+	content: var(--osui-icon-zoom-in);
+}
+
+// The arrows' translucent square lives on the pseudo-element; the button itself is
+// only a 70x100 hit area. Only the sprite is dropped here — `background-image`, not
+// the shorthand, which would take the square with it. `!important` is required
+// because `.pswp--svg …:before` swaps in the SVG sprite at higher specificity.
+//
+// Geometry is 32x32 inset 4px, replacing the vendor's 30x32 inset 6px. 32px is the
+// design's icon container (an 18x18 glyph with 7px padding all round); the 4px inset is
+// measured off the design frame and snapped to the ramp. Centred with
+// `top: 50%`/`translateY` rather than the vendor's hardcoded `top: 35px`, so the
+// square stays centred regardless of the button's height.
 .pswp__button--arrow--right:before,
 .pswp__button--arrow--left:before {
-	color: $token-primitives-base-white;
+	align-items: center;
+	background-color: $token-backdrop;
+	background-image: none !important;
+	color: $token-icon-inverse;
+	display: flex;
 	font-family: var(--osui-icon-font-family);
-	font-size: $token-font-size-500;
+	font-size: $token-font-size-450;
+	height: $token-scale-800;
+	justify-content: center;
+	top: 50%;
+	transform: translateY(-50%);
+	width: $token-scale-800;
 }
 
 .pswp__button--arrow--right:before {
 	content: var(--osui-icon-arrow-next);
+	right: $token-scale-100;
 }
 
 .pswp__button--arrow--left:before {
 	content: var(--osui-icon-arrow-previous);
+	left: $token-scale-100;
 }
 
 // Password Policy

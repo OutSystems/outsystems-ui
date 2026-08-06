@@ -23,6 +23,10 @@ declare global {
 		Splide: any;
 		noUiSlider: any;
 		VirtualSelect: any;
+		// PhotoSwipe 4.1.0 — the version the platform ships for Lightbox Image.
+		// Core and default-UI are two separate globals; both are needed to construct a gallery.
+		PhotoSwipe: any;
+		PhotoSwipeUI_Default: any;
 	}
 }
 
@@ -122,12 +126,7 @@ export function renderStatic(template: string): HTMLElement {
 }
 
 /** Create + Initialize a single pattern and register its Dispose for cleanup. */
-export function createAndInit(
-	apiName: string,
-	id: string,
-	configs: Record<string, unknown>,
-	register: Register
-): any {
+export function createAndInit(apiName: string, id: string, configs: Record<string, unknown>, register: Register): any {
 	const api = Patterns()[apiName];
 	if (!api) throw new Error(`OUI API not found: OutSystems.OSUI.Patterns.${apiName} (is the bundle loaded?)`);
 	const instance = api.Create(id, cfg(configs));

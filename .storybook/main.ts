@@ -66,6 +66,11 @@ const config: StorybookConfig = {
 		{ from: path.join(repoRoot, 'node_modules/@floating-ui/core/dist'), to: '/vendor/floating-ui-core' },
 		{ from: path.join(repoRoot, 'node_modules/@floating-ui/dom/dist'), to: '/vendor/floating-ui-dom' },
 		{ from: path.join(repoRoot, 'node_modules/virtual-select-plugin/dist'), to: '/vendor/virtual-select' },
+		// PhotoSwipe 4.1.0 — the version the OutSystems platform ships for the Lightbox
+		// Image block. Not bundled by this library (the block is low-code only); OUI only
+		// restyles the overlay chrome. Serve the whole `dist` so `default-skin.css` can
+		// resolve its relative sprite URLs (default-skin.png/.svg, preloader.gif).
+		{ from: path.join(repoRoot, 'node_modules/photoswipe/dist'), to: '/vendor/photoswipe' },
 	],
 };
 
