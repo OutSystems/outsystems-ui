@@ -7,8 +7,9 @@ namespace OutSystems.OSUI.Utils {
 			return;
 		}
 
-		const foundElement =
-			_hasSomeParentTheClass(target, 'list-item') || _hasSomeParentTheClass(target, 'bottom-bar-item');
+		// 'list-item' is intentionally not handled here: the List Item click feedback is now a
+		// pure CSS `:active` background (see src/scss/03-widgets/_list-item.scss).
+		const foundElement = _hasSomeParentTheClass(target, 'bottom-bar-item');
 
 		if (foundElement) {
 			_clickEffect(foundElement);
