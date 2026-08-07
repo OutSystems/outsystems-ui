@@ -1,3 +1,4 @@
+@use '../../00-abstract/index' as *;
 @use "../../tokens/variables";
 
 /* Patterns - Navigation - Bottom Bar Item */
@@ -10,7 +11,9 @@
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-bottom-bar-background:         var(--color-background-surface);
 	--osui-bottom-bar-border-color:       var(--color-border);
-	--osui-bottom-bar-item-color:         var(--color-text-subtlest);
+	// Inactive items are full-strength text, not a muted grey — the design pairs a
+	// dark inactive item against the primary active one, so both read as first-class.
+	--osui-bottom-bar-item-color:         var(--color-text);
 	--osui-bottom-bar-item-active-color:  var(--color-primary);
 	// ───────────────────────────────────────────────────────────────────
 
@@ -30,19 +33,24 @@
 		padding: variables.$token-scale-500;
 		text-align: center;
 	}
+	// The BottomBarItem block renders a plain container, not a link, so colour and the
+	// active state must land on whichever element it emits. Scoping them to `> a` alone
+	// meant a `div` item silently inherited ambient text colour and `.active` never
+	// matched — leaving the selected item visually identical to the rest.
 	& > a,
 	& > div {
+		color: var(--osui-bottom-bar-item-color);
 		flex: 1;
 		max-width: 150px; // design-spec
 		overflow: hidden;
-	}
-	& > a {
-		color: var(--osui-bottom-bar-item-color);
+
 		&.active {
 			color: var(--osui-bottom-bar-item-active-color);
 		}
 	}
 	&-item {
+		@include apply-typography(variables.$token-body-action-xs);
+
 		display: flex;
 		flex-direction: column;
 		height: 100%;
@@ -50,6 +58,7 @@
 		overflow: hidden;
 		padding: 0 variables.$token-scale-200;
 		position: relative;
+		text-align: center;
 		&-icon {
 			display: inline-flex;
 			font-size: variables.$token-font-size-450;
@@ -57,7 +66,6 @@
 			justify-content: center;
 		}
 		&-text {
-			font-size: var(--osui-font-size-200);
 			overflow: hidden;
 			text-overflow: ellipsis;
 			white-space: nowrap;
