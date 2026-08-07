@@ -16,7 +16,7 @@ namespace OSFramework.OSUI.Helper {
 				if (parserError.length > 0 || doc.documentElement.tagName !== GlobalEnum.SVGHelperConstants.SVG) {
 					return false;
 				}
-			} catch (error) {
+			} catch {
 				return false;
 			}
 			return true;

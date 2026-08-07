@@ -200,6 +200,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 				selectedValue: this.getSelectedValues() as [],
 				showDropboxAsPopup: this.ShowDropboxAsPopup,
 				popupDropboxBreakpoint: this.PopupDropboxBreakpoint,
+				showSecureTextWarning: false,
 				silentInitialValueSet: true,
 				textDirection: OutSystems.OSUI.Utils.GetIsRTL()
 					? OSFramework.OSUI.GlobalEnum.Direction.RTL

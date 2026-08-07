@@ -125,3 +125,6 @@ storybook-static/
 
 # npmrc file
 .npmrc
+
+# Generated TypeDoc output
+docs/

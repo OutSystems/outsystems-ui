@@ -48,7 +48,7 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 			// Threshold value to set element as Active
 			const thresholdVal = 40;
 			// Store the offSetValue to be checked
-			const elementOffsetTopVal = this._targetElement.offsetTop - scrollYPosition.value;
+			const elementOffsetTopVal = this._targetElement?.offsetTop - scrollYPosition.value;
 
 			/* Logic behind position validation:
 				- If click to nanvigate into element the calc
@@ -113,7 +113,7 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 					// Can't be used the Helper.Dom.GetElementById since we don't want a through error if the element does not exist!
 					this._targetElement = document.getElementById(this.configs.ScrollToWidgetId);
 					this._setTargetAttributes();
-				} catch (e) {
+				} catch {
 					// Was not able to get Target element!
 					throw new Error(
 						`${ErrorCodes.SectionIndexItem.FailToSetTargetElement}: Target Element with the Id '${this.configs.ScrollToWidgetId}' does not exist!`

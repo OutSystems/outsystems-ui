@@ -175,7 +175,10 @@ namespace OSFramework.OSUI.Patterns.DropdownServerSideItem {
 			// Store parent info
 			this.setParentInfo(
 				Constants.Dot + Enum.CssClass.DropdownParentBalloon,
-				OutSystems.OSUI.Patterns.DropdownAPI.GetDropdownById
+				(patternId: string) =>
+					OutSystems.OSUI.Patterns.DropdownAPI.GetDropdownById(
+						patternId
+					) as Dropdown.ServerSide.IDropdownServerSide
 			);
 
 			// Notify parent about a new instance of this child has been created!

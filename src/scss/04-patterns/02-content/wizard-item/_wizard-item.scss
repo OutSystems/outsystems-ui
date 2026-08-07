@@ -1,0 +1,130 @@
+@use "../../../tokens/variables";
+
+/* Patterns - Content - Wizard */
+////
+/// @group Patterns-Wizard
+/// Patterns - Content - Wizard
+
+///
+.osui-wizard-item {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+
+	&.is-reversed {
+		flex-direction: column-reverse;
+	}
+
+	&.is-past {
+		.osui-wizard-item-icon {
+			background-color: var(--color-primary);
+			border-color: var(--color-border-primary);
+			color: var(--color-neutral-0);
+		}
+
+		.osui-wizard-item-icon-wrapper:before {
+			background-color: var(--color-primary);
+		}
+	}
+
+	&.is-active {
+		.osui-wizard-item-icon {
+			background-color: var(--color-neutral-0);
+			border-color: var(--color-border-primary);
+			color: var(--color-primary);
+		}
+
+		.osui-wizard-item-icon-wrapper:before {
+			background-color: var(--color-primary);
+		}
+
+		.osui-wizard-item-label {
+			color: var(--color-neutral-10);
+		}
+	}
+
+	&.is-next {
+		.osui-wizard-item-icon-wrapper:before {
+			background-color: var(--color-neutral-5);
+		}
+
+		.icon {
+			color: var(--color-neutral-5);
+		}
+	}
+
+	&-icon-wrapper {
+		margin: variables.$token-scale-200 variables.$token-scale-0;
+		position: relative;
+		width: 100%;
+
+		&:before {
+			content: '';
+			height: 2px;
+			position: absolute;
+			right: calc(50% + 12px);
+			top: 50%;
+			transform: translateY(-50%);
+			width: calc(100% - 24px);
+			z-index: var(--layer-screen);
+		}
+	}
+
+	&-icon {
+		align-items: center;
+		background-color: var(--color-neutral-0);
+		border: variables.$token-border-size-025 solid var(--color-neutral-5);
+		border-radius: var(--border-radius-rounded);
+		color: var(--color-neutral-7);
+		display: flex;
+		height: 32px;
+		justify-content: center;
+		margin: 0 auto;
+		position: relative;
+		width: 32px;
+		z-index: var(--layer-local-tier-1);
+
+		&:empty {
+			height: 8px;
+			width: 8px;
+		}
+
+		.icon {
+			font-size: variables.$token-font-size-300;
+			width: auto;
+		}
+	}
+
+	&-label {
+		color: var(--color-neutral-7);
+		text-align: center;
+	}
+}
+
+// IsRTL ---------------------------------------------------------------------------
+///
+.is-rtl {
+	.osui-wizard-item {
+		&-icon-wrapper {
+			&:before {
+				left: calc(50% + 12px);
+				right: auto;
+			}
+		}
+	}
+}
+
+/* Hybrid Service Studio => Service Studio Preview */
+html[data-uieditorversion^='1'] {
+	.osui-wizard-item {
+		& {
+			-servicestudio-display: flex;
+			-servicestudio-flex-direction: column;
+			-servicestudio-width: 100%;
+
+			&.is-reversed {
+				-servicestudio-flex-direction: column-reverse;
+			}
+		}
+	}
+}
