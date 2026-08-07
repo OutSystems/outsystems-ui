@@ -76,6 +76,7 @@
 		&__back {
 			position: absolute;
 			width: 100%;
+			transform: rotateY(180deg);
 
 			// Service Studio preview
 			& {
