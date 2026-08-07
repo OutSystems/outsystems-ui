@@ -11,6 +11,7 @@
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-section-title-color:        var(--color-text);
 	--osui-section-title-border-color: var(--color-border);
+	--osui-section-content-color:      var(--color-text-subtlest);
 	// ───────────────────────────────────────────────────────────────────
 
 	&-title {
@@ -18,18 +19,27 @@
 		border-bottom: variables.$token-border-size-025 solid var(--osui-section-title-border-color);
 		color: var(--osui-section-title-color);
 		font-size: variables.$token-font-size-500;
-		font-weight: variables.$token-font-weight-semi-bold;
-		padding: variables.$token-scale-0 variables.$token-scale-0 variables.$token-scale-200 variables.$token-scale-0;
+		font-weight: variables.$token-font-weight-medium;
+		padding: variables.$token-scale-0 variables.$token-scale-0 variables.$token-space-200 variables.$token-scale-0;
 		position: relative;
 		text-transform: none;
 		width: 100%;
 	}
 
 	&-content {
-		padding: variables.$token-scale-200 variables.$token-scale-0 variables.$token-scale-0;
+		color: var(--osui-section-content-color);
+		padding: variables.$token-space-200 variables.$token-scale-0 variables.$token-scale-0;
 	}
 
 	&-group {
+		// ─── Component CSS API ─────────────────────────────────────────────
+		--osui-section-group-gap: #{variables.$token-space-400};
+		// ───────────────────────────────────────────────────────────────────
+
+		display: flex;
+		flex-direction: column;
+		gap: var(--osui-section-group-gap);
+
 		&.is--sticky {
 			.section-title {
 				position: -webkit-sticky; //Fix for older iPhones

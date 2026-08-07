@@ -62,7 +62,7 @@ export const Group: StoryObj<SectionGroupArgs> = {
 	},
 	render: ({ isSticky, extendedClass }) =>
 		renderStatic(`
-			<div style="max-width:480px; height:280px; overflow-y:auto; --section-top-position: 0px; border:1px dashed var(--color-border); border-radius: var(--border-radius-soft); padding: 0 16px;">
+			<div style="max-width:480px; height:280px; --section-top-position: 0px; padding: 0 16px;">
 				<div class="${cls('section-group', isSticky && 'is--sticky', extendedClass)}">
 					${groupSection('Profile', 6)}
 					${groupSection('Notifications', 6)}
