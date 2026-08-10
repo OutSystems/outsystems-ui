@@ -185,6 +185,14 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 				ele: this.ElementId,
 				enableSecureText: this.SanitizeDropdownValues,
 				disabled: this.IsDisabled,
+				/* OSUI owns validation: the platform calls validation(), which applies
+				.osui-dropdown--not-valid and appends its own .osui-dropdown-error-message. Turning the
+				library's validate() off keeps that ownership explicit and prevents a half-applied state
+				where the library marks the combobox aria-invalid and points aria-describedby at its own
+				message element, which OSUI hides. An app that deliberately wants the library's
+				validation can still set `disableValidation: false` through the extensibility configs,
+				since those are merged last. */
+				disableValidation: true,
 				dropboxWrapper: OSFramework.OSUI.GlobalEnum.HTMLElement.Body,
 				hasOptionDescription: hasDescription,
 				hideClearButton: false,

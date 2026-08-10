@@ -69,6 +69,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		disabledOptions?: [];
 		disableOptionGroupCheckbox?: boolean;
 		disableSelectAll?: boolean;
+		disableValidation?: boolean;
 		dropboxWidth?: string;
 		dropboxWrapper?: string;
 		ele?: string | HTMLElement;
