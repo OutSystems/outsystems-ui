@@ -31,9 +31,12 @@ export const Default: Story = {
 		const itemIds = SECTIONS.map(() => uid('section-index-item'));
 		const targetIds = SECTIONS.map(() => uid('section-target'));
 
+		// No inline padding/cursor here — an inline style would beat the pattern's own
+		// `padding: 8px 16px 8px 24px` (which is what insets the label from the rail) and
+		// its `cursor: pointer`. Let _sectionindex.scss own the box.
 		const items = SECTIONS.map(
 			(label, i) =>
-				`<div ${osuiRoot(itemIds[i])} class="osui-section-index-item" data-item="${targetIds[i]}" style="cursor:pointer;padding:6px 0;">${label}</div>`
+				`<div ${osuiRoot(itemIds[i])} class="osui-section-index-item" data-item="${targetIds[i]}">${label}</div>`
 		).join('');
 		const targets = SECTIONS.map(
 			(label, i) =>
@@ -42,7 +45,7 @@ export const Default: Story = {
 
 		const template = `
 			<div style="display:flex;gap:24px;" class="osui-main-content">
-				<nav ${osuiRoot(id)} class="osui-section-index" style="flex:0 0 160px;align-self:flex-start;">${items}</nav>
+				<nav ${osuiRoot(id)} class="osui-section-index" style="flex:0 0 200px;align-self:flex-start;">${items}</nav>
 				<div style="flex:1;max-height:320px;overflow:auto;">${targets}</div>
 			</div>`;
 
