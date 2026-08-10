@@ -11,9 +11,9 @@
 	--osui-pagination-button-background: transparent;
 	--osui-pagination-button-border-color: transparent;
 	--osui-pagination-button-border-width: #{variables.$token-border-size-025};
-	--osui-pagination-button-color: var(--color-text);
+	--osui-pagination-button-color: var(--color-text-subtlest);
 	--osui-pagination-button-font-weight: #{variables.$token-font-weight-medium};
-	--osui-pagination-button-hover-background: var(--color-border-subtle);
+	--osui-pagination-button-hover-background: #{variables.$token-bg-neutral-subtlest-hover};
 	--osui-pagination-button-padding: #{variables.$token-scale-0} #{variables.$token-scale-100};
 	--osui-pagination-button-size: #{variables.$token-scale-900};
 	--osui-pagination-active-border-color: var(--color-border);
