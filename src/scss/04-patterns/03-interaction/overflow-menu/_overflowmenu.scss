@@ -11,14 +11,16 @@
 	--osui-overflow-menu-shadow:            #{variables.$token-elevation-2};
 	--osui-overflow-menu-color:             var(--color-text);
 	--osui-overflow-menu-trigger-active-bg: #{variables.$token-bg-neutral-subtle-default};
+	--osui-overflow-menu-min-width: 170px;
 	// ───────────────────────────────────────────────────────────────────
 
-	display: inline-block;
-	--osui-overflow-menu-min-width: 170px;
 	--border-radius-rounded: var(--border-radius-softer);
+
+	display: inline-block;
 
 	&__trigger {
 		--osui-btn-background: transparent;
+		--osui-btn-height: #{variables.$token-scale-800};
 		--osui-btn-hover-background: var(--osui-overflow-menu-trigger-active-bg);
 		--osui-btn-active-background: var(--osui-overflow-menu-trigger-active-bg);
 		--osui-floating-offset: #{variables.$token-scale-200};
@@ -26,7 +28,8 @@
 		border: variables.$token-border-size-025 solid transparent;
 		border-radius: var(--osui-btn-border-radius, var(--border-radius-soft));
 		color: var(--osui-overflow-menu-color);
-		width: variables.$token-scale-800;
+		padding: 0;
+		min-width: variables.$token-scale-800;
 
 		* {
 			pointer-events: none;

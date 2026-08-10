@@ -1,9 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
 import { createAndInit, osuiRoot, renderPattern, uid } from './_helpers/osui';
 
+/**
+ * OverflowMenu — the low-code block exposes a `Trigger` placeholder where an Icon
+ * widget is dropped; that's what renders inside `.osui-overflow-menu__trigger`.
+ * `_overflowmenu.scss` sets `.osui-overflow-menu__trigger * { pointer-events: none }`
+ * so the icon never swallows the click that toggles the balloon.
+ */
 interface OverflowMenuArgs {
 	position: string;
 	shape: string;
+	icon: string;
 }
 
 const meta: Meta<OverflowMenuArgs> = {
@@ -24,8 +31,13 @@ const meta: Meta<OverflowMenuArgs> = {
 			options: ['soft', 'rounded', 'none'],
 			name: 'Shape',
 		},
+		icon: {
+			name: 'Trigger (Icon)',
+			control: 'text',
+			description: 'Phosphor icon class for the Icon widget in the Trigger placeholder.',
+		},
 	},
-	args: { position: 'bottom-start', shape: 'soft' },
+	args: { position: 'bottom-start', shape: 'soft', icon: 'ph-dots-three-vertical' },
 };
 export default meta;
 
@@ -36,7 +48,7 @@ export const Default: Story = {
 		const id = uid('overflow-menu');
 		const template = `
 			<div ${osuiRoot(id)} class="osui-overflow-menu">
-				<button class="osui-overflow-menu__trigger btn" type="button" aria-label="More actions">⋯</button>
+				<button class="osui-overflow-menu__trigger btn" type="button" aria-label="More actions"><i class="icon ph ${args.icon}"></i></button>
 				<div class="osui-overflow-menu__balloon osui-balloon" id="${id}-balloon">
 					<a href="#edit">Edit</a>
 					<a href="#duplicate">Duplicate</a>
