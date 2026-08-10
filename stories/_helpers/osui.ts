@@ -23,6 +23,10 @@ declare global {
 		Splide: any;
 		noUiSlider: any;
 		VirtualSelect: any;
+		// PhotoSwipe 4.1.0 — the version the platform ships for Lightbox Image.
+		// Core and default-UI are two separate globals; both are needed to construct a gallery.
+		PhotoSwipe: any;
+		PhotoSwipeUI_Default: any;
 	}
 }
 

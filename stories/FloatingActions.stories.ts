@@ -42,7 +42,7 @@ const ACTIONS: Array<[label: string, icon: string]> = [
 function itemMarkup(label: string, icon: string, delay: number): string {
 	return `
 		<div class="floating-actions-item" style="--delay: ${delay}">
-			<span style="background: var(--color-background-surface); border-radius: var(--border-radius-soft); box-shadow: var(--osui-floating-actions-button-shadow, none); font-size: 13px; padding: 4px 12px;">${label}</span>
+			<span >${label}</span>
 			<div class="floating-actions-item-button" role="button" tabindex="0" aria-label="${label}">
 				<i class="icon ph ${icon}"></i>
 			</div>

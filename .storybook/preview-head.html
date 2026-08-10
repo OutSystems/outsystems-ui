@@ -45,6 +45,15 @@
 <link rel="stylesheet" href="/vendor/splide/css/splide.min.css" />
 <link rel="stylesheet" href="/vendor/nouislider/nouislider.min.css" />
 <link rel="stylesheet" href="/vendor/virtual-select/virtual-select.min.css" />
+<!--
+  PhotoSwipe 4.1.0 (Lightbox Image). The vendor skin loads BEFORE the OUI theme on
+  purpose — that is the real platform order, and it is what lets OUI strip the
+  sprite backgrounds and repaint the overlay chrome with icon-font glyphs
+  (src/scss/01-foundations/_icon-library-odc.scss). Load it after the OUI theme and
+  the sprite would win, hiding the very layer the Lightbox stories exercise.
+-->
+<link rel="stylesheet" href="/vendor/photoswipe/photoswipe.css" />
+<link rel="stylesheet" href="/vendor/photoswipe/default-skin/default-skin.css" />
 
 <!--
   Core platform base CSS — MUST load before the OUI theme. It establishes the
@@ -80,6 +89,9 @@
 <script defer src="/vendor/floating-ui-core/floating-ui.core.umd.js"></script>
 <script defer src="/vendor/floating-ui-dom/floating-ui.dom.umd.js"></script>
 <script defer src="/vendor/virtual-select/virtual-select.min.js"></script>
+<!-- PhotoSwipe → window.PhotoSwipe + window.PhotoSwipeUI_Default (core before UI), used by Lightbox Image -->
+<script defer src="/vendor/photoswipe/photoswipe.min.js"></script>
+<script defer src="/vendor/photoswipe/photoswipe-ui-default.min.js"></script>
 
 <!-- OutSystems UI compiled bundle (exposes OutSystems.OSUI.* / OSFramework.OSUI.*) -->
 <script defer src="/osui/ODC.OutSystemsUI.js"></script>
