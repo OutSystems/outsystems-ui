@@ -217,6 +217,7 @@ const preview: Preview = {
 					'Introduction',
 					'CSS Architecture',
 					'CSS API Reference',
+					'Migration',
 					'Theme Editor',
 					'Patterns',
 					['Content', 'Interaction', 'Navigation', 'Adaptive', 'Numbers', 'Utilities'],

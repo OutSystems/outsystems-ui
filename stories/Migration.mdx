@@ -1,0 +1,1041 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Migration" />
+
+export const Mono = ({ children, color, bg }) => (
+	<code
+		style={{
+			fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Consolas, monospace',
+			fontSize: '12.5px',
+			color: color || '#111827',
+			background: bg || 'rgba(17,24,39,0.05)',
+			padding: '1px 5px',
+			borderRadius: '4px',
+			whiteSpace: 'nowrap',
+		}}
+	>
+		{children}
+	</code>
+);
+
+export const CALLOUT_STYLES = {
+	warn: { bg: '#fff8e6', border: '#f0b429', label: '⚠️' },
+	stop: { bg: '#fdeceb', border: '#d82424', label: '🚫' },
+	tip: { bg: '#eef6ff', border: '#105cef', label: '💡' },
+	ok: { bg: '#edfaef', border: '#1ba433', label: '✅' },
+};
+
+export const Callout = ({ type = 'tip', title, children }) => {
+	const s = CALLOUT_STYLES[type];
+	return (
+		<div
+			style={{
+				background: s.bg,
+				borderLeft: `4px solid ${s.border}`,
+				borderRadius: '8px',
+				padding: '12px 16px',
+				margin: '18px 0',
+				fontSize: '14px',
+				lineHeight: 1.6,
+				color: '#1f2937',
+			}}
+		>
+			{title ? (
+				<div style={{ fontWeight: 700, marginBottom: '4px' }}>
+					{s.label} {title}
+				</div>
+			) : null}
+			<div>{children}</div>
+		</div>
+	);
+};
+
+export const Swatch = ({ color, size = 22 }) => (
+	<span
+		title={color}
+		style={{
+			display: 'inline-block',
+			width: `${size}px`,
+			height: `${size}px`,
+			borderRadius: '5px',
+			background: color,
+			border: '1px solid rgba(0,0,0,0.12)',
+			verticalAlign: 'middle',
+		}}
+	/>
+);
+
+export const SHADES = ['lightest', 'lighter', 'light', 'base', 'dark', 'darker', 'darkest'];
+
+export const PALETTE = [
+	// Verified against deprecated/ODC.OutSystemsUI.css (old) and the generated token
+	// root + the $osui-colors-extended map (new): [family, oldHexes, newHexes].
+	[
+		'red',
+		['#faeaea', '#e9aaaa', '#d96a6a', '#c92a2a', '#ab2424', '#8d1d1d', '#6f1717'],
+		['#ffecec', '#fcc1c1', '#f97d7d', '#d82424', '#cf1e1e', '#991b1b', '#761515'],
+	],
+	[
+		'orange',
+		['#fef0e6', '#fcc29c', '#f99551', '#f76707', '#d25806', '#ad4805', '#883904'],
+		['#fdf0ea', '#ffd7be', '#f9aa84', '#c15700', '#d9711d', '#c15700', '#9f4904'],
+	],
+	[
+		'yellow',
+		['#fef5e5', '#fbd999', '#f8bc4c', '#f59f00', '#d08700', '#ac6f00', '#875700'],
+		['#fff3d5', '#ffebb1', '#ffd600', '#ffd600', '#ba8200', '#a57107', '#925f00'],
+	],
+	[
+		'lime',
+		['#f1f8e8', '#c7e3a2', '#9ecd5c', '#74b816', '#639c13', '#51810f', '#40650c'],
+		['#f3fecd', '#deeeaa', '#c7d981', '#6d7d05', '#6d7d05', '#606f00', '#4f5b01'],
+	],
+	[
+		'green',
+		['#ebf7ed', '#afe0b8', '#73c982', '#37b24d', '#2f9741', '#267d36', '#1e622a'],
+		['#e9ffeb', '#b3ebb7', '#23d643', '#0c830c', '#0c830c', '#126f23', '#0e531a'],
+	],
+	[
+		'teal',
+		['#e6f2ef', '#9cccbd', '#52a58c', '#087f5b', '#076c4d', '#065940', '#044632'],
+		['#d5f9f1', '#b1e7dd', '#00cfb7', '#008576', '#008576', '#006b5f', '#005147'],
+	],
+	[
+		'cyan',
+		['#e7f2f4', '#9eccd3', '#56a6b2', '#0d8091', '#0b6d7b', '#095a66', '#074650'],
+		['#d9f5ff', '#b1e7dd', '#00cfb7', '#127f98', '#008576', '#006b5f', '#005147'],
+	],
+	[
+		'blue',
+		['#e8f2fa', '#a3c9ea', '#5fa1db', '#1a79cb', '#1667ad', '#12558e', '#0e4370'],
+		['#f0f2ff', '#d0d7fa', '#94a5f4', '#0f54da', '#0f54da', '#0d4bc3', '#0b41a9'],
+	],
+	[
+		'indigo',
+		['#eceffd', '#b3c1f7', '#7b92f1', '#4263eb', '#3854c8', '#2e45a5', '#243681'],
+		['#ebe8ff', '#d3d1f2', '#9d95e4', '#5832ed', '#3b19c3', '#3516ae', '#2e1397'],
+	],
+	[
+		'violet',
+		['#f1edfd', '#c6b6f6', '#9b7fef', '#7048e8', '#5f3dc5', '#4e32a2', '#3e2880'],
+		['#ece6ff', '#dcd1fb', '#b396f6', '#7c20f2', '#711ddd', '#651ac5', '#5817ab'],
+	],
+	[
+		'grape',
+		['#f7ecfa', '#dfb2e9', '#c678d9', '#ae3ec9', '#9435ab', '#7a2b8d', '#60226f'],
+		['#f5eafd', '#e9d3fa', '#d29bf6', '#a737dc', '#a737dc', '#9531c5', '#812aaa'],
+	],
+	[
+		'pink',
+		['#fbebf0', '#efadc4', '#e27098', '#d6336c', '#b62b5c', '#96244c', '#761c3b'],
+		['#ffedf4', '#fdccde', '#f0a8c3', '#df1b87', '#df1b87', '#cc0d7e', '#a70565'],
+	],
+];
+
+export const PaletteGrid = () => (
+	<div style={{ overflowX: 'auto', margin: '20px 0' }}>
+		<table style={{ borderCollapse: 'collapse', fontSize: '12px', fontFamily: 'Inter, system-ui, sans-serif' }}>
+			<thead>
+				<tr>
+					<th style={{ textAlign: 'left', padding: '6px 10px', color: '#6b7280', fontWeight: 600 }}>
+						family
+					</th>
+					{SHADES.map((s) => (
+						<th key={s} style={{ padding: '6px 8px', color: '#6b7280', fontWeight: 600, fontSize: '11px' }}>
+							{s}
+						</th>
+					))}
+				</tr>
+			</thead>
+			<tbody>
+				{PALETTE.map(([fam, oldRow, newRow]) => (
+					<tr key={fam}>
+						<td style={{ padding: '4px 10px', fontWeight: 600, color: '#111827', whiteSpace: 'nowrap' }}>
+							{fam}
+						</td>
+						{SHADES.map((s, i) => (
+							<td key={s} style={{ padding: '4px 8px', textAlign: 'center' }}>
+								<div
+									style={{
+										display: 'flex',
+										flexDirection: 'column',
+										gap: '2px',
+										alignItems: 'center',
+									}}
+								>
+									<Swatch color={oldRow[i]} size={20} />
+									<span style={{ color: '#9ca3af', fontSize: '9px', lineHeight: 1 }}>↓</span>
+									<Swatch color={newRow[i]} size={20} />
+								</div>
+							</td>
+						))}
+					</tr>
+				))}
+			</tbody>
+		</table>
+		<div style={{ fontSize: '12px', color: '#6b7280', marginTop: '8px' }}>
+			Top chip = old OutSystems UI value · bottom chip = what the same name resolves to today. Hover a chip for
+			its hex.
+		</div>
+	</div>
+);
+
+export const Stat = ({ n, label, accent }) => (
+	<div
+		style={{
+			flex: '1 1 150px',
+			background: '#fff',
+			border: '1px solid #e5e7eb',
+			borderTop: `3px solid ${accent}`,
+			borderRadius: '10px',
+			padding: '14px 16px',
+		}}
+	>
+		<div style={{ fontSize: '26px', fontWeight: 700, color: accent, lineHeight: 1.1 }}>{n}</div>
+		<div style={{ fontSize: '12.5px', color: '#4b5563', marginTop: '4px' }}>{label}</div>
+	</div>
+);
+
+export const TOC = [
+	{
+		href: '#the-shape-of-the-change',
+		label: 'The shape of the change',
+		note: 'what the rebuild actually changed',
+	},
+	{
+		href: '#triage-your-custom-css',
+		label: 'Triage your custom CSS',
+		note: 'find which sections apply to you',
+	},
+	{
+		href: '#shortcut--the-compatibility-snippet',
+		label: 'Shortcut — the compatibility snippet',
+		note: 'paste-in CSS that revives all 136 retired names',
+	},
+	{
+		href: '#retired-variables',
+		label: 'Retired variables',
+		note: 'gone, with their replacements',
+		children: [
+			{ href: '#spacing', label: 'Spacing' },
+			{ href: '#typography', label: 'Typography' },
+			{ href: '#elevation--shadows', label: 'Elevation / shadows' },
+			{ href: '#border-size', label: 'Border size' },
+			{ href: '#border-radius', label: 'Border radius' },
+			{ href: '#the-extended-palette', label: 'The extended palette' },
+			{ href: '#semantic-light-shades', label: 'Semantic light shades' },
+			{ href: '#layout-layers--misc', label: 'Layout, layers & misc' },
+		],
+	},
+	{
+		href: '#same-name-new-value',
+		label: 'Same name, new value',
+		note: 'kept, but they resolve differently',
+		children: [{ href: '#the-neutral-trap', label: 'The neutral trap' }],
+	},
+	{
+		href: '#utility-classes-same-names-new-plumbing',
+		label: 'Utility classes: same names, new plumbing',
+		note: 'every class survived, its wiring did not',
+	},
+	{
+		href: '#recipes--i-used-to-do-x',
+		label: 'Recipes — "I used to do X"',
+		note: 'the common customisations, redone',
+		children: [
+			{ href: '#i-re-branded-the-app-by-overriding---color-primary', label: 'Re-branding' },
+			{ href: '#i-rounded-or-squared-every-corner-by-hand', label: 'Corner radius, globally' },
+			{ href: '#i-restyled-one-component-with-important', label: 'Replacing !important overrides' },
+			{ href: '#i-set-my-own-body--header--menu-backgrounds', label: 'Body / header / menu backgrounds' },
+			{ href: '#i-hand-built-a-dark-mode', label: 'Dark mode' },
+			{
+				href: '#i-changed-all-the-shadows--all-the-spacing--all-the-type',
+				label: 'Global shadows / spacing / type',
+			},
+			{ href: '#i-styled-form-validation-states', label: 'Form validation states' },
+			{ href: '#i-customised-focus-outlines-for-accessibility', label: 'Focus outlines' },
+		],
+	},
+	{
+		href: '#new-knobs-you-didnt-have-before',
+		label: "New knobs you didn't have before",
+		note: 'overrides you no longer have to hand-roll',
+	},
+	{ href: '#verifying-your-app', label: 'Verifying your app', note: 'how to check your app against both themes' },
+];
+
+export const Toc = () => (
+	<nav
+		aria-label="On this page"
+		style={{
+			margin: '24px 0',
+			padding: '18px 20px',
+			background: '#fbfbfd',
+			border: '1px solid #e5e7eb',
+			borderRadius: '12px',
+			fontFamily: 'Inter, system-ui, sans-serif',
+		}}
+	>
+		<div
+			style={{
+				fontSize: '11px',
+				fontWeight: 700,
+				letterSpacing: '0.05em',
+				textTransform: 'uppercase',
+				color: '#6b7280',
+				marginBottom: '14px',
+			}}
+		>
+			On this page
+		</div>
+		<ol
+			style={{
+				display: 'grid',
+				gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+				gap: '16px 28px',
+				listStyle: 'none',
+				margin: 0,
+				padding: 0,
+			}}
+		>
+			{TOC.map((s, i) => (
+				<li key={s.href} style={{ margin: 0, display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
+					<span
+						aria-hidden="true"
+						style={{
+							flex: 'none',
+							width: '22px',
+							height: '22px',
+							borderRadius: '50%',
+							background: '#eef3ff',
+							color: '#105cef',
+							fontSize: '12px',
+							fontWeight: 700,
+							display: 'flex',
+							alignItems: 'center',
+							justifyContent: 'center',
+							marginTop: '1px',
+						}}
+					>
+						{i + 1}
+					</span>
+					<div style={{ minWidth: 0 }}>
+						<a
+							href={s.href}
+							style={{ fontSize: '14px', fontWeight: 600, color: '#105cef', textDecoration: 'none' }}
+						>
+							{s.label}
+						</a>
+						{s.note ? (
+							<div style={{ fontSize: '12px', color: '#6b7280', marginTop: '2px' }}>{s.note}</div>
+						) : null}
+						{s.children ? (
+							<div style={{ marginTop: '6px', display: 'flex', flexWrap: 'wrap', gap: '4px 10px' }}>
+								{s.children.map((c) => (
+									<a
+										key={c.href}
+										href={c.href}
+										style={{ fontSize: '12px', color: '#4b5563', textDecoration: 'none' }}
+									>
+										{c.label}
+									</a>
+								))}
+							</div>
+						) : null}
+					</div>
+				</li>
+			))}
+		</ol>
+	</nav>
+);
+
+export const Stats = () => (
+	<div
+		style={{
+			display: 'flex',
+			gap: '12px',
+			flexWrap: 'wrap',
+			margin: '20px 0',
+			fontFamily: 'Inter, system-ui, sans-serif',
+		}}
+	>
+		<Stat n="136" label="root variables retired" accent="#d82424" />
+		<Stat n="31" label="kept, but resolve to a new value" accent="#f0b429" />
+		<Stat n="34" label="kept, byte-identical" accent="#1ba433" />
+		<Stat n="460" label={'new --osui-* component knobs'} accent="#105cef" />
+	</div>
+);
+
+# Migrating custom CSS
+
+OutSystems UI's styling was rebuilt on the **`outsystems-design-tokens`** package.
+If your app ships custom CSS that overrode OutSystems UI variables or targeted its
+classes, most of it still works — but a specific, enumerable set of things moved.
+
+This page is the complete inventory: **what was retired and what replaces it**,
+**what kept its name but changed its value**, and **the new variables that let you
+stop writing overrides you previously had to hand-roll**.
+
+<Stats />
+
+<Toc />
+
+## The shape of the change
+
+The old library published one flat layer: a `:root` block of ~200 variables
+(`--color-red-dark`, `--space-base`, `--shadow-m`, `--font-size-h3`) that components
+read directly. Re-skinning meant overriding those, and anything they didn't cover
+meant writing a rule against a component class.
+
+Today there are four layers, and each is an override point (see **CSS Architecture**):
+
+```
+--osui-{component}-{prop}     per-component / per-instance   ← 460 knobs
+        ↓ defaults to
+--color-*, --border-radius-*  framework theme roles at :root ← app-wide re-skin
+        ↓ defaults to
+$token-* / --token-*          design tokens                  ← whole-system re-skin
+        ↓ defaults to
+primitive literal
+```
+
+The practical consequence: **the flat palette variables are gone, the role
+variables stayed, and a large new component layer appeared.**
+
+---
+
+## Triage your custom CSS
+
+Search your stylesheets for each pattern below. That tells you which sections
+of this page you actually need.
+
+| If your CSS contains…                                              | Verdict                                                             | Go to                                                       |
+| ------------------------------------------------------------------ | ------------------------------------------------------------------- | ----------------------------------------------------------- |
+| `var(--space-*)`, `--font-size-*`, `--shadow-*`, `--border-size-*` | 🚫 **Retired** — no fallback, the declaration resolves to nothing   | [Retired variables](#retired-variables)                     |
+| `--color-red`, `--color-indigo-light`, any extended-palette name   | 🚫 **Retired** — plus every hex changed                             | [The extended palette](#the-extended-palette)               |
+| `--color-primary`, `--color-error`, `--color-background-body`      | ⚠️ **Still works**, resolves to a different colour                  | [Same name, new value](#same-name-new-value)                |
+| `--color-neutral-0` … `-10`                                        | ⚠️ **Still works**, scale re-based — `neutral-0` is no longer white | [The neutral trap](#the-neutral-trap)                       |
+| `--header-size`, `--side-menu-size`, `--layer-global-*`            | 🚫 **Renamed** — mechanical find/replace                            | [Layout, layers & misc](#layout-layers--misc)               |
+| `.shadow-m`, `.margin-base`, `.background-red`, `.font-size-h1`    | ✅ **Still shipped** — but no longer driven by the old variables    | [Utility classes](#utility-classes-same-names-new-plumbing) |
+| A rule against a component class + `!important`                    | 💡 **Probably deletable** — there's a variable for it now           | [Recipes](#recipes--i-used-to-do-x)                         |
+
+---
+
+## Shortcut — the compatibility snippet
+
+If you have a lot of custom CSS and want it working again before you have time to
+rewrite it, paste this into your app's stylesheet. It re-declares **all 136
+retired variables** and points each one at its design-token replacement, so
+`var(--space-base)`, `var(--color-indigo-light)` and friends resolve again.
+
+<Callout type="warn" title="It's a bridge, not a destination">
+	The snippet restores the <em>names</em>, not the old <em>values</em> — each one now resolves through the token
+	chain, so colours follow the new palette. That's deliberate: your CSS stays theme-aware and keeps working if the app
+	is re-skinned. It also only serves <em>your</em> stylesheet — OutSystems UI's own components read tokens directly,
+	so overriding one of these names will not restyle the library.
+</Callout>
+
+<details>
+<summary><strong>Show the snippet</strong> — 136 declarations, drop-in</summary>
+
+```css
+:root {
+	/* Spacing */
+	--space-none: var(--token-scale-0);
+	--space-xs: var(--token-scale-100);
+	--space-s: var(--token-scale-200);
+	--space-base: var(--token-scale-400);
+	--space-m: var(--token-scale-600);
+	--space-l: var(--token-scale-800);
+	--space-xl: var(--token-scale-1000);
+	--space-xxl: var(--token-scale-1200);
+
+	/* Typography */
+	--font-size-display: var(--token-font-size-900);
+	--font-size-h1: var(--token-font-size-800);
+	--font-size-h2: var(--token-font-size-700);
+	--font-size-h3: var(--token-font-size-650);
+	--font-size-h4: var(--token-font-size-550);
+	--font-size-h5: var(--token-font-size-500);
+	--font-size-h6: var(--token-font-size-450);
+	--font-size-base: var(--token-font-size-400);
+	--font-size-s: var(--token-font-size-350);
+	--font-size-xs: var(--token-font-size-300);
+	--font-size-label: var(--token-font-size-275);
+	--font-light: var(--token-font-weight-light);
+	--font-regular: var(--token-font-weight-regular);
+	--font-semi-bold: var(--token-font-weight-semi-bold);
+	--font-bold: var(--token-font-weight-bold);
+
+	/* Elevation */
+	--shadow-none: none;
+	--shadow-xs: var(--token-elevation-1);
+	--shadow-s: var(--token-elevation-1);
+	--shadow-m: var(--token-elevation-2);
+	--shadow-l: var(--token-elevation-3);
+	--shadow-xl: var(--token-elevation-4);
+
+	/* Borders */
+	--border-size-none: var(--token-border-size-0);
+	--border-size-s: var(--token-border-size-025);
+	--border-size-m: var(--token-border-size-050);
+	--border-size-l: var(--token-border-size-075);
+	--border-radius-circle: 50%;
+
+	/* Extended palette */
+	--color-red-lightest: var(--token-bg-danger-subtle-default);
+	--color-red-lighter: var(--token-primitives-red-300);
+	--color-red-light: var(--token-primitives-red-500);
+	--color-red: var(--token-bg-danger-base-default);
+	--color-red-dark: var(--token-primitives-red-800);
+	--color-red-darker: var(--token-primitives-red-900);
+	--color-red-darkest: var(--token-primitives-red-1000);
+	--color-orange-lightest: var(--token-bg-extended-orange-subtle-default);
+	--color-orange-lighter: var(--token-primitives-orange-300);
+	--color-orange-light: var(--token-primitives-orange-500);
+	--color-orange: var(--token-bg-extended-orange-base-default);
+	--color-orange-dark: var(--token-primitives-orange-800);
+	--color-orange-darker: var(--token-primitives-orange-900);
+	--color-orange-darkest: var(--token-primitives-orange-1000);
+	--color-yellow-lightest: var(--token-bg-warning-subtle-default);
+	--color-yellow-lighter: var(--token-primitives-yellow-300);
+	--color-yellow-light: var(--token-primitives-yellow-500);
+	--color-yellow: var(--token-bg-warning-base-default);
+	--color-yellow-dark: var(--token-primitives-yellow-800);
+	--color-yellow-darker: var(--token-primitives-yellow-900);
+	--color-yellow-darkest: var(--token-primitives-yellow-1000);
+	--color-lime-lightest: var(--token-bg-extended-lime-subtle-default);
+	--color-lime-lighter: var(--token-primitives-lime-300);
+	--color-lime-light: var(--token-primitives-lime-500);
+	--color-lime: var(--token-bg-extended-lime-base-default);
+	--color-lime-dark: var(--token-primitives-lime-800);
+	--color-lime-darker: var(--token-primitives-lime-900);
+	--color-lime-darkest: var(--token-primitives-lime-1000);
+	--color-green-lightest: var(--token-bg-success-subtle-default);
+	--color-green-lighter: var(--token-primitives-green-300);
+	--color-green-light: var(--token-primitives-green-500);
+	--color-green: var(--token-bg-success-base-default);
+	--color-green-dark: var(--token-primitives-green-800);
+	--color-green-darker: var(--token-primitives-green-900);
+	--color-green-darkest: var(--token-primitives-green-1000);
+	--color-teal-lightest: var(--token-bg-extended-teal-subtle-default);
+	--color-teal-lighter: var(--token-primitives-teal-300);
+	--color-teal-light: var(--token-primitives-teal-500);
+	--color-teal: var(--token-bg-extended-teal-base-default);
+	--color-teal-dark: var(--token-primitives-teal-800);
+	--color-teal-darker: var(--token-primitives-teal-900);
+	--color-teal-darkest: var(--token-primitives-teal-1000);
+	--color-cyan-lightest: var(--token-primitives-aqua-100);
+	--color-cyan-lighter: var(--token-primitives-teal-300);
+	--color-cyan-light: var(--token-primitives-teal-500);
+	--color-cyan: var(--token-primitives-aqua-900);
+	--color-cyan-dark: var(--token-primitives-teal-800);
+	--color-cyan-darker: var(--token-primitives-teal-900);
+	--color-cyan-darkest: var(--token-primitives-teal-1000);
+	--color-blue-lightest: var(--token-bg-info-subtle-default);
+	--color-blue-lighter: var(--token-primitives-blue-300);
+	--color-blue-light: var(--token-primitives-blue-500);
+	--color-blue: var(--token-bg-info-base-default);
+	--color-blue-dark: var(--token-primitives-blue-800);
+	--color-blue-darker: var(--token-primitives-blue-900);
+	--color-blue-darkest: var(--token-primitives-blue-1000);
+	--color-indigo-lightest: var(--token-bg-extended-indigo-subtle-default);
+	--color-indigo-lighter: var(--token-primitives-indigo-300);
+	--color-indigo-light: var(--token-primitives-indigo-500);
+	--color-indigo: var(--token-bg-extended-indigo-base-default);
+	--color-indigo-dark: var(--token-primitives-indigo-800);
+	--color-indigo-darker: var(--token-primitives-indigo-900);
+	--color-indigo-darkest: var(--token-primitives-indigo-1000);
+	--color-violet-lightest: var(--token-bg-extended-violet-subtle-default);
+	--color-violet-lighter: var(--token-primitives-violet-300);
+	--color-violet-light: var(--token-primitives-violet-500);
+	--color-violet: var(--token-bg-extended-violet-base-default);
+	--color-violet-dark: var(--token-primitives-violet-800);
+	--color-violet-darker: var(--token-primitives-violet-900);
+	--color-violet-darkest: var(--token-primitives-violet-1000);
+	--color-grape-lightest: var(--token-primitives-purple-100);
+	--color-grape-lighter: var(--token-primitives-purple-300);
+	--color-grape-light: var(--token-primitives-purple-500);
+	--color-grape: var(--token-primitives-purple-800);
+	--color-grape-dark: var(--token-primitives-purple-800);
+	--color-grape-darker: var(--token-primitives-purple-900);
+	--color-grape-darkest: var(--token-primitives-purple-1000);
+	--color-pink-lightest: var(--token-bg-extended-pink-subtle-default);
+	--color-pink-lighter: var(--token-primitives-pink-300);
+	--color-pink-light: var(--token-primitives-pink-500);
+	--color-pink: var(--token-bg-extended-pink-base-default);
+	--color-pink-dark: var(--token-primitives-pink-800);
+	--color-pink-darker: var(--token-primitives-pink-900);
+	--color-pink-darkest: var(--token-primitives-pink-1000);
+
+	/* Semantic light shades + retired one-offs */
+	--color-error-light: var(--token-semantics-danger-100);
+	--color-warning-light: var(--token-semantics-warning-100);
+	--color-success-light: var(--token-semantics-success-100);
+	--color-info-light: var(--token-semantics-info-100);
+	--color-primary-lightest: var(--token-bg-primary-subtle-default);
+	--color-focus-inner: var(--color-neutral-10);
+
+	/* Layout sizes */
+	--header-size: var(--size-header);
+	--header-size-content: var(--size-header-content);
+	--side-menu-size: var(--size-side-menu);
+	--bottom-bar-size: var(--size-bottom-bar);
+	--footer-height: var(--size-footer);
+	--header-color: var(--color-background-header);
+
+	/* Z-index layers */
+	--layer-global-screen: var(--layer-screen);
+	--layer-global-elevated: var(--layer-elevated);
+	--layer-global-navigation: var(--layer-navigation);
+	--layer-global-off-canvas: var(--layer-off-canvas);
+	--layer-global-instant-interaction: var(--layer-instant-interaction);
+
+	/* Overlay */
+	--overlay-background: var(--token-backdrop);
+}
+```
+
+</details>
+
+Two names in there are approximations rather than aliases, because nothing
+equivalent survived: `--border-radius-circle` becomes a literal `50%`, and
+`--color-primary-lightest` (a white-gradient hack) becomes the primary subtle
+background. Everything else is a true redirect.
+
+Treat the snippet as a migration aid with an expiry date — the rest of this page is
+what you replace it with, section by section.
+
+---
+
+## Retired variables
+
+These names are **no longer declared** anywhere in the bundle. A
+`var(--space-base)` in your CSS now resolves to nothing and the declaration is
+dropped — this is the category that breaks silently.
+
+### Spacing
+
+`--space-*` → `--token-scale-*`. Values are unchanged, so this is a pure rename.
+
+| Retired        | Value  | Replacement          |
+| -------------- | ------ | -------------------- |
+| `--space-none` | `0`    | `--token-scale-0`    |
+| `--space-xs`   | `4px`  | `--token-scale-100`  |
+| `--space-s`    | `8px`  | `--token-scale-200`  |
+| `--space-base` | `16px` | `--token-scale-400`  |
+| `--space-m`    | `24px` | `--token-scale-600`  |
+| `--space-l`    | `32px` | `--token-scale-800`  |
+| `--space-xl`   | `40px` | `--token-scale-1000` |
+| `--space-xxl`  | `48px` | `--token-scale-1200` |
+
+<Callout type="tip">
+	The scale is now continuous, not t-shirt sized — <Mono>--token-scale-150</Mono> (6px),{' '}
+	<Mono>--token-scale-300</Mono> (12px), <Mono>--token-scale-500</Mono> (20px) and steps up to{' '}
+	<Mono>--token-scale-9000</Mono> (360px) exist. Semantic aliases <Mono>{'--token-space-*'}</Mono> mirror the same
+	values if you prefer spacing-flavoured names.
+</Callout>
+
+### Typography
+
+Every size has an exact-value replacement — including the 26 / 22 / 18px steps
+the old scale had.
+
+| Retired               | Value  | Replacement                     |
+| --------------------- | ------ | ------------------------------- |
+| `--font-size-display` | `36px` | `--token-font-size-900`         |
+| `--font-size-h1`      | `32px` | `--token-font-size-800`         |
+| `--font-size-h2`      | `28px` | `--token-font-size-700`         |
+| `--font-size-h3`      | `26px` | `--token-font-size-650`         |
+| `--font-size-h4`      | `22px` | `--token-font-size-550`         |
+| `--font-size-h5`      | `20px` | `--token-font-size-500`         |
+| `--font-size-h6`      | `18px` | `--token-font-size-450`         |
+| `--font-size-base`    | `16px` | `--token-font-size-400`         |
+| `--font-size-s`       | `14px` | `--token-font-size-350`         |
+| `--font-size-xs`      | `12px` | `--token-font-size-300`         |
+| `--font-size-label`   | `11px` | `--token-font-size-275`         |
+| `--font-light`        | `300`  | `--token-font-weight-light`     |
+| `--font-regular`      | `400`  | `--token-font-weight-regular`   |
+| `--font-semi-bold`    | `600`  | `--token-font-weight-semi-bold` |
+| `--font-bold`         | `700`  | `--token-font-weight-bold`      |
+
+<Callout type="warn" title="Heading sizes shrank independently of this rename">
+	The default heading scale is now responsive (H1 = 28px on desktop, shrinking on tablet/phone via the{' '}
+	<Mono>.desktop</Mono> / <Mono>.tablet</Mono> / <Mono>.phone</Mono> body classes). So <Mono>h1</Mono> renders smaller
+	than before even though <Mono>--token-font-size-800</Mono> is still 32px. If you had CSS compensating for the old
+	fixed scale, re-check it.
+</Callout>
+
+### Elevation / shadows
+
+`--shadow-*` → `--token-elevation-*`. The new elevations are two-layer shadows,
+so they are **similar but not identical** in appearance.
+
+| Retired         | Old value                   | Replacement                |
+| --------------- | --------------------------- | -------------------------- |
+| `--shadow-none` | `none`                      | _(use `box-shadow: none`)_ |
+| `--shadow-xs`   | `0 1px 2px rgba(0,0,0,.1)`  | `--token-elevation-1`      |
+| `--shadow-s`    | `0 2px 4px rgba(0,0,0,.1)`  | `--token-elevation-1`      |
+| `--shadow-m`    | `0 4px 6px rgba(0,0,0,.1)`  | `--token-elevation-2`      |
+| `--shadow-l`    | `0 6px 8px rgba(0,0,0,.1)`  | `--token-elevation-3`      |
+| `--shadow-xl`   | `0 8px 10px rgba(0,0,0,.1)` | `--token-elevation-4`      |
+
+There are only four elevation steps, so `xs`/`s` collapse onto `elevation-1`.
+For popups and menus floating over a backdrop there is also
+`--osui-elevation-overlay`, a deeper two-layer shadow the library uses for
+dropdowns, date pickers and modals.
+
+### Border size
+
+| Retired              | Value | Replacement               |
+| -------------------- | ----- | ------------------------- |
+| `--border-size-none` | `0`   | `--token-border-size-0`   |
+| `--border-size-s`    | `1px` | `--token-border-size-025` |
+| `--border-size-m`    | `2px` | `--token-border-size-050` |
+| `--border-size-l`    | `3px` | `--token-border-size-075` |
+
+### Border radius
+
+The radius names survived as **theme roles** — but one was dropped and the
+values changed:
+
+| Name                      | Old     | Now                                                                 |
+| ------------------------- | ------- | ------------------------------------------------------------------- |
+| `--border-radius-none`    | `0`     | `0` — unchanged                                                     |
+| `--border-radius-soft`    | `4px`   | **`8px`**                                                           |
+| `--border-radius-rounded` | `100px` | **`999px`** (visually equivalent)                                   |
+| `--border-radius-circle`  | `100%`  | 🚫 retired — use `--border-radius-rounded`, or `border-radius: 50%` |
+| `--border-radius-softer`  | —       | 🆕 `16px`, for elevated surfaces (cards, popups)                    |
+| `--border-radius-default` | —       | 🆕 **global override** — see [Recipes](#recipes--i-used-to-do-x)    |
+
+### The extended palette
+
+All 12 families × 7 shades (`--color-red-lightest` … `--color-pink-darkest`) are
+**retired as variables**, and the palette itself was replaced — so the same
+family name is a visibly different colour:
+
+<PaletteGrid />
+
+Replacement rule, by shade:
+
+| Old shade  | Replacement token                                                                                                                            |
+| ---------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| `lightest` | `--token-bg-{role}-subtle-default` — e.g. `red` → `--token-bg-danger-subtle-default`, `orange` → `--token-bg-extended-orange-subtle-default` |
+| `lighter`  | `--token-primitives-{family}-300`                                                                                                            |
+| `light`    | `--token-primitives-{family}-500`                                                                                                            |
+| _(base)_   | `--token-bg-{role}-base-default` — e.g. `green` → `--token-bg-success-base-default`                                                          |
+| `dark`     | `--token-primitives-{family}-800`                                                                                                            |
+| `darker`   | `--token-primitives-{family}-900`                                                                                                            |
+| `darkest`  | `--token-primitives-{family}-1000`                                                                                                           |
+
+Family renames in the token package: **`grape` → `purple`**, **`cyan` → `aqua`**,
+**`error` → `danger`**. Two families are new: `pumpkin` and `magenta`.
+
+<Callout type="tip" title="Prefer the role, not the family">
+	<Mono>--color-red</Mono> was a literal colour. Its real replacement is usually semantic: <Mono>--color-error</Mono>{' '}
+	(theme role) or <Mono>--token-bg-danger-base-default</Mono> (token). Route through those and your CSS follows any
+	theme the app later applies; hardcode a family primitive and it won't.
+</Callout>
+
+### Semantic light shades
+
+| Retired                 | Old       | Replacement                     | New value |
+| ----------------------- | --------- | ------------------------------- | --------- |
+| `--color-error-light`   | `#fceaea` | `--token-semantics-danger-100`  | `#ffecec` |
+| `--color-warning-light` | `#fdf6e5` | `--token-semantics-warning-100` | `#fff3d5` |
+| `--color-success-light` | `#eaf3eb` | `--token-semantics-success-100` | `#e9ffeb` |
+| `--color-info-light`    | `#e5f5fc` | `--token-semantics-info-100`    | `#f0f2ff` |
+
+### Layout, layers & misc
+
+Mechanical renames — same concept, new name:
+
+| Retired                              | Replacement                         | Note                                                              |
+| ------------------------------------ | ----------------------------------- | ----------------------------------------------------------------- |
+| `--header-size`                      | `--size-header`                     |                                                                   |
+| `--header-size-content`              | `--size-header-content`             |                                                                   |
+| `--side-menu-size`                   | `--size-side-menu`                  |                                                                   |
+| `--bottom-bar-size`                  | `--size-bottom-bar`                 |                                                                   |
+| `--footer-height`                    | `--size-footer`                     |                                                                   |
+| `--header-color`                     | `--color-background-header`         | Was read as `var(--background-color-header, var(--header-color))` |
+| `--layer-global-screen`              | `--layer-screen`                    |                                                                   |
+| `--layer-global-elevated`            | `--layer-elevated`                  |                                                                   |
+| `--layer-global-navigation`          | `--layer-navigation`                |                                                                   |
+| `--layer-global-off-canvas`          | `--layer-off-canvas`                |                                                                   |
+| `--layer-global-instant-interaction` | `--layer-instant-interaction`       |                                                                   |
+| `--overlay-background`               | `--token-backdrop`                  | Same value, `rgba(0,0,0,0.25)`                                    |
+| `--color-focus-inner`                | —                                   | Focus is now a single primary-derived halo                        |
+| `--color-primary-lightest`           | `--token-bg-primary-subtle-default` | The old value was a white-gradient hack                           |
+
+`--layer-above`, `--layer-below`, `--layer-global-negative`, `--layer-global-auto`
+and `--layer-local-tier-1…5` kept their names. The z-index step changed from
+**5 to 100** (`--layer-system-scale`), so hand-computed z-index values that
+assumed the old spacing may need revisiting.
+
+---
+
+## Same name, new value
+
+These 31 variables still exist — your overrides still apply — but with no
+override they now resolve through the token chain to a **different colour**.
+Nothing to change in your CSS; this is here so unexpected visual diffs make sense.
+
+| Variable                   | Old                    | Now resolves to                            |
+| -------------------------- | ---------------------- | ------------------------------------------ |
+| `--color-primary`          | `#1068eb`              | `#105cef`                                  |
+| `--color-primary-hover`    | `#295fd6`              | `#0f54da`                                  |
+| `--color-primary-selected` | `rgba(20,110,245,.12)` | `#0d4bc3` — **now solid, not translucent** |
+| `--color-secondary`        | `#303d60`              | `#3b3b3b`                                  |
+| `--color-error`            | `#dc2020`              | `#d82424`                                  |
+| `--color-warning`          | `#e9a100`              | `#ffd600`                                  |
+| `--color-success`          | `#29823b`              | `#1ba433`                                  |
+| `--color-info`             | `#017aad`              | `#105cef` — info is now blue-primary       |
+| `--color-background-body`  | `#f3f6f8`              | `#ffffff`                                  |
+| `--color-background-login` | `#ffffff`              | `#ffffff`                                  |
+| `--color-focus-outer`      | `#ffd337`              | primary halo at 22%                        |
+
+<Callout type="warn" title="--color-primary-selected changed meaning">
+	It used to be a translucent wash you could layer over a row background. It is now a solid pressed-state colour. If
+	you relied on the transparency, use <Mono>--osui-bg-surface-active</Mono> (a primary tint at 8%) or define your own.
+</Callout>
+
+### The neutral trap
+
+`--color-neutral-0` … `-10` survived, but the scale was re-based onto the token
+neutral ramp — and it **no longer starts at white**:
+
+| Variable             | Old       | Now           | `.text-neutral-N` class |
+| -------------------- | --------- | ------------- | ----------------------- |
+| `--color-neutral-0`  | `#ffffff` | **`#f9f9f9`** | `#ffffff`               |
+| `--color-neutral-1`  | `#f8f9fa` | `#f2f2f2`     | `#f9f9f9`               |
+| `--color-neutral-2`  | `#f1f3f5` | `#e8e8e8`     | `#f2f2f2`               |
+| `--color-neutral-3`  | `#e9ecef` | `#e1e1e1`     | `#e8e8e8`               |
+| `--color-neutral-4`  | `#dee2e6` | `#cecece`     | `#e1e1e1`               |
+| `--color-neutral-5`  | `#ced4da` | `#a2a2a2`     | `#e1e1e1`               |
+| `--color-neutral-6`  | `#adb5bd` | `#8d8d8d`     | `#cecece`               |
+| `--color-neutral-7`  | `#6a7178` | `#838383`     | `#8d8d8d`               |
+| `--color-neutral-8`  | `#4f575e` | `#646464`     | `#646464`               |
+| `--color-neutral-9`  | `#272b30` | `#303030`     | `#303030`               |
+| `--color-neutral-10` | `#101213` | `#242424`     | `#111111`               |
+
+<Callout type="stop" title="var(--color-neutral-0) is not white any more">
+	The <Mono>.text-neutral-0</Mono> / <Mono>.background-neutral-0</Mono> utility classes still resolve to pure white,
+	but the <em>variable</em> does not — the two diverged. If you used <Mono>color: var(--color-neutral-0)</Mono> for
+	text on a coloured background, switch to <Mono>--color-text-inverse</Mono> (the role that means "text on a bold
+	surface") or <Mono>--token-primitives-base-white</Mono>.
+</Callout>
+
+---
+
+## Utility classes: same names, new plumbing
+
+Good news first: **every utility class kept its name**. `.shadow-m`,
+`.margin-base`, `.padding-l`, `.border-radius-soft`, `.font-size-h1`,
+`.background-primary`, `.text-neutral-0`, `.background-red-lightest` — all still
+ship and still work in Service Studio.
+
+What changed is what they read. They now inline the token directly instead of
+going through the old variable:
+
+```css
+/* before */
+.shadow-m {
+	box-shadow: var(--shadow-m);
+}
+
+/* now */
+.shadow-m {
+	box-shadow: var(--token-elevation-2, …);
+}
+```
+
+<Callout type="stop" title="Overriding the old variable no longer re-skins the class">
+	Setting <Mono>--shadow-m</Mono> at <Mono>:root</Mono> used to change every <Mono>.shadow-m</Mono> element. It does
+	nothing now — override <Mono>--token-elevation-2</Mono> instead. Same for <Mono>{'--space-*'}</Mono> →{' '}
+	<Mono>{'--token-scale-*'}</Mono> and <Mono>{'--font-size-*'}</Mono> → <Mono>{'--token-font-size-*'}</Mono>.
+</Callout>
+
+Two behaviour notes: `.border-radius-circle` is now a literal `50%` (not a
+variable), and `.font-size-h1` applies the full typography role — weight, line
+height and letter spacing, not just `font-size`.
+
+---
+
+## Recipes — "I used to do X"
+
+### "I re-branded the app by overriding `--color-primary`"
+
+Still works, and it's still the right knob for a single brand colour. But
+primary now has a **hover** and **pressed** tier, and borders/focus rings derive
+from their own tokens — overriding only `--color-primary` leaves those on the
+default blue.
+
+```css
+:root {
+	/* Option A — theme roles: brand colour + its interaction tiers */
+	--color-primary: #7c20f2;
+	--color-primary-hover: #651ac5;
+	--color-primary-active: #5817ab;
+	--color-border-primary: #7c20f2;
+}
+```
+
+```css
+:root {
+	/* Option B — one level down: every primary-derived token follows,
+     including focus halos, subtle backgrounds and component defaults */
+	--token-semantics-primary-base: #7c20f2;
+	--token-semantics-primary-800: #651ac5;
+	--token-semantics-primary-900: #5817ab;
+}
+```
+
+Prefer **B** for a real re-brand — the focus halo is `color-mix()`-derived from
+`--token-semantics-primary-base`, so it recolours automatically.
+
+### "I rounded (or squared) every corner by hand"
+
+There is now one switch for the whole library:
+
+```css
+:root {
+	--border-radius-default: 0;
+} /* everything square */
+:root {
+	--border-radius-default: 12px;
+} /* everything softer */
+```
+
+Every radius role (`none`, `soft`, `softer`, `rounded`) falls back to it, so a
+single line re-radiuses buttons, inputs, cards, popups and pattern chrome.
+
+### "I restyled one component with `!important`"
+
+That's the case the component CSS API exists for. Each component declares its own
+`--osui-{component}-{prop}` variables at its root — 460 of them across the
+library (full list on the **CSS API Reference** page). Override the variable
+instead of fighting specificity:
+
+```css
+/* before */
+.my-page .osui-sidebar {
+	background: #1a1a2e !important;
+}
+
+/* now */
+.my-page .osui-sidebar {
+	--osui-sidebar-background: #1a1a2e;
+	--osui-sidebar-color: #ffffff;
+}
+```
+
+Because they're custom properties, they cascade: set them on an ancestor to scope
+a whole screen, or inline on one element to change a single instance.
+
+### "I set my own body / header / menu backgrounds"
+
+The surface roles are the supported way, and they cover more surfaces than
+before:
+
+```css
+:root {
+	--color-background-body: #f6f7fb;
+	--color-background-surface: #ffffff; /* cards, popups, menus, panels */
+	--color-background-header: #101828;
+	--color-background-sidemenu: #101828;
+	--color-background-footer: #101828;
+	--color-background-login: #ffffff;
+	--color-background-input: #ffffff;
+}
+```
+
+### "I hand-built a dark mode"
+
+Ship the built-in one instead — add `theme-dark` to the screen's root element:
+
+```html
+<div class="theme-dark">…</div>
+```
+
+It's implemented purely as variable overrides, so it composes with your own
+`--osui-*` and `--color-*` customisations. It is **opt-in and manual** — there is
+no `prefers-color-scheme` auto-switch; toggle the class yourself if you want to
+follow the OS.
+
+### "I changed all the shadows / all the spacing / all the type"
+
+Override the tokens, not the components:
+
+```css
+:root {
+	--token-elevation-2: 0 2px 8px rgba(0, 0, 0, 0.12);
+	--token-scale-400: 20px; /* every 16px gap becomes 20px */
+	--token-font-size-400: 15px;
+}
+```
+
+### "I styled form validation states"
+
+These are roles now, split by the property they colour:
+
+```css
+:root {
+	--color-error: #d82424; /* fills / accents */
+	--color-text-danger: #b91c1c; /* the validation message */
+	--color-border-danger: #d82424; /* the field outline */
+}
+```
+
+### "I customised focus outlines for accessibility"
+
+Focus is a single primary-derived halo, exposed as
+`--osui-border-focus-halo` (and read by `--color-focus-outer`). The old
+yellow/inner pair is gone:
+
+```css
+:root {
+	--osui-border-focus-halo: color-mix(in srgb, #7c20f2 30%, transparent);
+}
+```
+
+Remember the `has-accessible-features` body class still gates the enhanced focus
+affordances — you can toggle it in this Storybook's **A11y features** toolbar.
+
+---
+
+## New knobs you didn't have before
+
+Worth a scan even if nothing in your CSS broke — several of these replace
+workarounds people commonly hand-rolled:
+
+| Variable                                                                           | What it gives you                                               |
+| ---------------------------------------------------------------------------------- | --------------------------------------------------------------- |
+| `--border-radius-default`                                                          | Re-radius the entire library with one declaration               |
+| `--border-radius-softer`                                                           | A 16px step for elevated surfaces                               |
+| `--color-text-subtle` / `-subtlest` / `-disabled` / `-inverse`                     | Named text tiers instead of picking neutrals by number          |
+| `--color-border-subtle` / `-subtlest` / `-input` / `-input-hover` / `-input-press` | Border tiers, including input states                            |
+| `--color-background-surface` / `-footer` / `-input-disabled`                       | Surfaces the old set didn't name                                |
+| `--osui-elevation-overlay`                                                         | The deeper popup/modal shadow                                   |
+| `--osui-bg-surface-hover` / `-active`                                              | The hover and pressed washes used across rows, tabs and menus   |
+| `--osui-opacity-disabled`                                                          | One disabled-state opacity for everything                       |
+| `--osui-motion-duration-130/180/400`                                               | The animation timings patterns use                              |
+| `--osui-*-layer` (bottom sheet, notification, popup, sidebar, menu)                | Re-stack portaled patterns without `z-index` guesswork          |
+| 460 × `--osui-{component}-{prop}`                                                  | Per-component, per-instance theming — see **CSS API Reference** |
+
+---
+
+## Verifying your app
+
+1. **Flip between the two themes right here.** The **Theme** toolbar control at the
+   top of any story switches between _New theme (tokens)_ and _Deprecated theme_ —
+   the latter loads the pre-migration CSS snapshot. Use it to confirm whether a
+   difference you're seeing is intended.
+2. **Grep before you look.** The retired names are a finite list; searching your
+   stylesheets for `--space-`, `--font-size-`, `--shadow-`, `--border-size-` and
+   `--color-` followed by a family name will find most of the work mechanically.
+3. **Expect silent failures, not build errors.** A declaration that reads a retired
+   variable is simply dropped. Those are the ones that show up as "the page looks
+   slightly off" rather than as something obviously broken.
+4. **Delete, don't port, the `!important` overrides.** Most of them existed because
+   there was no variable. Check the **CSS API Reference** for the component first —
+   there usually is one now.
