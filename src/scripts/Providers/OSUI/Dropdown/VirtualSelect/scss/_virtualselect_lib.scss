@@ -294,7 +294,7 @@
 	width: 100%;
 }
 .vscomp-error-message::before {
-	content: '⚠';
+	content: '\26A0';
 	flex: none;
 	font-size: 1.1em;
 	line-height: 1.2;
