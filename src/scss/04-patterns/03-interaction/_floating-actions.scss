@@ -15,8 +15,8 @@
 	&-actions-wrapper {
 		// ─── Component CSS API ─────────────────────────────────────────────
 		--osui-floating-actions-button-background: var(--color-primary);
-		--osui-floating-actions-button-background-hover: #{variables.$token-bg-primary-base-hover};
-		--osui-floating-actions-button-background-press: #{variables.$token-bg-primary-base-press};
+		--osui-floating-actions-button-background-hover: var(--color-primary-hover);
+--osui-floating-actions-button-background-press: var(--color-primary-selected);
 		--osui-floating-actions-button-color: var(--color-text-inverse);
 		--osui-floating-actions-button-shadow: #{variables.$token-elevation-3};
 		--osui-floating-actions-item-background: var(--color-background-surface);
