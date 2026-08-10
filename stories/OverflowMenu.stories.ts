@@ -14,9 +14,18 @@ const meta: Meta<OverflowMenuArgs> = {
 			options: ['auto', 'bottom', 'bottom-start', 'bottom-end', 'top'],
 			name: 'Position',
 		},
-		shape: { control: 'inline-radio', options: ['SoftRounded', 'Rounded', 'Sharp'], name: 'Shape' },
+		shape: {
+			// `GlobalEnum.ShapeTypes` maps the low-code names onto CSS-ish VALUES:
+			// SoftRounded → 'soft', Rounded → 'rounded', Sharp → 'none'. The API validates
+			// against those values, and `validateInRange` silently falls back to the default
+			// on a miss — so passing the enum KEY names makes every option resolve to 'soft'
+			// and the control look broken. `labels` keeps the low-code names on screen.
+			control: { type: 'inline-radio', labels: { soft: 'SoftRounded', rounded: 'Rounded', none: 'Sharp' } },
+			options: ['soft', 'rounded', 'none'],
+			name: 'Shape',
+		},
 	},
-	args: { position: 'bottom-start', shape: 'SoftRounded' },
+	args: { position: 'bottom-start', shape: 'soft' },
 };
 export default meta;
 
