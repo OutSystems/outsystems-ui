@@ -171,9 +171,17 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		public getProviderConfig(): VirtualSelectOpts {
 			/* In order to avoid XSS let's sanitize the label of each all options
 			- This must be done here since If we do this at the renderer option we will remain with the
-			library value unSanitized, that said we must do it before adding the list of options to the library! */
+			library value unSanitized, that said we must do it before adding the list of options to the library!
+			- Description gets the same treatment: the library renders it as HTML into the option row
+			(and secureText is a no-op while SanitizeDropdownValues is False), so an unsanitized
+			description is an XSS sink. Sanitizing before _groupOptions() runs also keeps the copy it
+			places on customData consistent with what is rendered. */
 			for (const option of this.OptionsList) {
 				option.label = OSFramework.OSUI.Helper.Sanitize(option.label);
+
+				if (option.description) {
+					option.description = OSFramework.OSUI.Helper.Sanitize(option.description);
+				}
 			}
 
 			// We need to keep the _groupedOptionsList in order to use it in this._getOptionInfo method
