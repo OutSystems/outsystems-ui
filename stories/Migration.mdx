@@ -70,6 +70,7 @@ export const SHADES = ['lightest', 'lighter', 'light', 'base', 'dark', 'darker',
 export const PALETTE = [
 	// Verified against deprecated/ODC.OutSystemsUI.css (old) and the generated token
 	// root + the $osui-colors-extended map (new): [family, oldHexes, newHexes].
+	// <generated:palette>
 	[
 		'red',
 		['#faeaea', '#e9aaaa', '#d96a6a', '#c92a2a', '#ab2424', '#8d1d1d', '#6f1717'],
@@ -130,6 +131,7 @@ export const PALETTE = [
 		['#fbebf0', '#efadc4', '#e27098', '#d6336c', '#b62b5c', '#96244c', '#761c3b'],
 		['#ffedf4', '#fdccde', '#f0a8c3', '#df1b87', '#df1b87', '#cc0d7e', '#a70565'],
 	],
+	// </generated:palette>
 ];
 
 export const PaletteGrid = () => (
@@ -359,10 +361,12 @@ export const Stats = () => (
 			fontFamily: 'Inter, system-ui, sans-serif',
 		}}
 	>
+		{/* <generated:stats> */}
 		<Stat n="136" label="root variables retired" accent="#d82424" />
 		<Stat n="31" label="kept, but resolve to a new value" accent="#f0b429" />
 		<Stat n="34" label="kept, byte-identical" accent="#1ba433" />
 		<Stat n="460" label={'new --osui-* component knobs'} accent="#105cef" />
+		{/* </generated:stats> */}
 	</div>
 );
 
@@ -375,6 +379,13 @@ classes, most of it still works — but a specific, enumerable set of things mov
 This page is the complete inventory: **what was retired and what replaces it**,
 **what kept its name but changed its value**, and **the new variables that let you
 stop writing overrides you previously had to hand-roll**.
+
+> **Partly generated — do not hand-edit the counts, colour tables or the
+> compatibility snippet.** They are computed by diffing the pre-migration CSS
+> snapshot (`deprecated/`) against the current bundle and resolving the result
+> through the design tokens. Regenerate with `npm run docs:migration` (source:
+> `scripts/generate-migration-reference.mjs`); everything outside the
+> `<generated:…>` markers is hand-written prose.
 
 <Stats />
 
@@ -437,6 +448,8 @@ retired variables** and points each one at its design-token replacement, so
 
 <details>
 <summary><strong>Show the snippet</strong> — 136 declarations, drop-in</summary>
+
+{/* <generated:snippet> */}
 
 ```css
 :root {
@@ -596,6 +609,8 @@ retired variables** and points each one at its design-token replacement, so
 }
 ```
 
+{/* </generated:snippet> */}
+
 </details>
 
 Two names in there are approximations rather than aliases, because nothing
@@ -739,12 +754,14 @@ Family renames in the token package: **`grape` → `purple`**, **`cyan` → `aqu
 
 ### Semantic light shades
 
-| Retired                 | Old       | Replacement                     | New value |
-| ----------------------- | --------- | ------------------------------- | --------- |
-| `--color-error-light`   | `#fceaea` | `--token-semantics-danger-100`  | `#ffecec` |
+{/* <generated:semantic-light> */}
+| Retired | Old | Replacement | New value |
+|---|---|---|---|
+| `--color-error-light` | `#fceaea` | `--token-semantics-danger-100` | `#ffecec` |
 | `--color-warning-light` | `#fdf6e5` | `--token-semantics-warning-100` | `#fff3d5` |
 | `--color-success-light` | `#eaf3eb` | `--token-semantics-success-100` | `#e9ffeb` |
-| `--color-info-light`    | `#e5f5fc` | `--token-semantics-info-100`    | `#f0f2ff` |
+| `--color-info-light` | `#e5f5fc` | `--token-semantics-info-100` | `#f0f2ff` |
+{/* </generated:semantic-light> */}
 
 ### Layout, layers & misc
 
@@ -780,19 +797,21 @@ These 31 variables still exist — your overrides still apply — but with no
 override they now resolve through the token chain to a **different colour**.
 Nothing to change in your CSS; this is here so unexpected visual diffs make sense.
 
-| Variable                   | Old                    | Now resolves to                            |
-| -------------------------- | ---------------------- | ------------------------------------------ |
-| `--color-primary`          | `#1068eb`              | `#105cef`                                  |
-| `--color-primary-hover`    | `#295fd6`              | `#0f54da`                                  |
-| `--color-primary-selected` | `rgba(20,110,245,.12)` | `#0d4bc3` — **now solid, not translucent** |
-| `--color-secondary`        | `#303d60`              | `#3b3b3b`                                  |
-| `--color-error`            | `#dc2020`              | `#d82424`                                  |
-| `--color-warning`          | `#e9a100`              | `#ffd600`                                  |
-| `--color-success`          | `#29823b`              | `#1ba433`                                  |
-| `--color-info`             | `#017aad`              | `#105cef` — info is now blue-primary       |
-| `--color-background-body`  | `#f3f6f8`              | `#ffffff`                                  |
-| `--color-background-login` | `#ffffff`              | `#ffffff`                                  |
-| `--color-focus-outer`      | `#ffd337`              | primary halo at 22%                        |
+{/* <generated:revalued> */}
+| Variable | Old | Now resolves to |
+|---|---|---|
+| `--color-primary` | `#1068eb` | `#105cef` |
+| `--color-primary-hover` | `#295fd6` | `#0f54da` |
+| `--color-primary-selected` | `rgba(20, 110, 245, 0.12)` | `#0d4bc3` — **now solid, not translucent** |
+| `--color-secondary` | `#303d60` | `#3b3b3b` |
+| `--color-error` | `#dc2020` | `#d82424` |
+| `--color-warning` | `#e9a100` | `#ffd600` |
+| `--color-success` | `#29823b` | `#1ba433` |
+| `--color-info` | `#017aad` | `#105cef` — info is now blue-primary |
+| `--color-background-body` | `#f3f6f8` | `#ffffff` |
+| `--color-background-login` | `#ffffff` | `#ffffff` |
+| `--color-focus-outer` | `#ffd337` | primary halo at 22% |
+{/* </generated:revalued> */}
 
 <Callout type="warn" title="--color-primary-selected changed meaning">
 	It used to be a translucent wash you could layer over a row background. It is now a solid pressed-state colour. If
@@ -804,19 +823,21 @@ Nothing to change in your CSS; this is here so unexpected visual diffs make sens
 `--color-neutral-0` … `-10` survived, but the scale was re-based onto the token
 neutral ramp — and it **no longer starts at white**:
 
-| Variable             | Old       | Now           | `.text-neutral-N` class |
-| -------------------- | --------- | ------------- | ----------------------- |
-| `--color-neutral-0`  | `#ffffff` | **`#f9f9f9`** | `#ffffff`               |
-| `--color-neutral-1`  | `#f8f9fa` | `#f2f2f2`     | `#f9f9f9`               |
-| `--color-neutral-2`  | `#f1f3f5` | `#e8e8e8`     | `#f2f2f2`               |
-| `--color-neutral-3`  | `#e9ecef` | `#e1e1e1`     | `#e8e8e8`               |
-| `--color-neutral-4`  | `#dee2e6` | `#cecece`     | `#e1e1e1`               |
-| `--color-neutral-5`  | `#ced4da` | `#a2a2a2`     | `#e1e1e1`               |
-| `--color-neutral-6`  | `#adb5bd` | `#8d8d8d`     | `#cecece`               |
-| `--color-neutral-7`  | `#6a7178` | `#838383`     | `#8d8d8d`               |
-| `--color-neutral-8`  | `#4f575e` | `#646464`     | `#646464`               |
-| `--color-neutral-9`  | `#272b30` | `#303030`     | `#303030`               |
-| `--color-neutral-10` | `#101213` | `#242424`     | `#111111`               |
+{/* <generated:neutral> */}
+| Variable | Old | Now | `.text-neutral-N` class |
+|---|---|---|---|
+| `--color-neutral-0` | `#ffffff` | **`#f9f9f9`** | `#ffffff` |
+| `--color-neutral-1` | `#f8f9fa` | `#f2f2f2` | `#f9f9f9` |
+| `--color-neutral-2` | `#f1f3f5` | `#e8e8e8` | `#f2f2f2` |
+| `--color-neutral-3` | `#e9ecef` | `#e1e1e1` | `#e8e8e8` |
+| `--color-neutral-4` | `#dee2e6` | `#cecece` | `#e1e1e1` |
+| `--color-neutral-5` | `#ced4da` | `#a2a2a2` | `#e1e1e1` |
+| `--color-neutral-6` | `#adb5bd` | `#8d8d8d` | `#cecece` |
+| `--color-neutral-7` | `#6a7178` | `#838383` | `#8d8d8d` |
+| `--color-neutral-8` | `#4f575e` | `#646464` | `#646464` |
+| `--color-neutral-9` | `#272b30` | `#303030` | `#303030` |
+| `--color-neutral-10` | `#101213` | `#242424` | `#111111` |
+{/* </generated:neutral> */}
 
 <Callout type="stop" title="var(--color-neutral-0) is not white any more">
 	The <Mono>.text-neutral-0</Mono> / <Mono>.background-neutral-0</Mono> utility classes still resolve to pure white,
