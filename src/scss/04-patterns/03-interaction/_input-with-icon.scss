@@ -8,7 +8,7 @@
 ///
 .input-with-icon {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-input-with-icon-icon-color:       var(--color-text-subtle);
+	--osui-input-with-icon-icon-color:       variables.$token-icon-default;
 	--osui-input-with-icon-icon-hover-color: var(--color-text-subtlest);
 	// ───────────────────────────────────────────────────────────────────
 
