@@ -681,6 +681,10 @@ _File: `src/scss/04-patterns/03-interaction/overflow-menu/_overflowmenu.scss`_
 | `--osui-overflow-menu-color` | `var(--color-text)` |
 | `--osui-overflow-menu-trigger-active-bg` | `#{$token-bg-neutral-subtle-default}` |
 | `--osui-overflow-menu-min-width` | `170px` |
+| `--osui-btn-background` | `transparent` |
+| `--osui-btn-height` | `#{$token-scale-800}` |
+| `--osui-btn-hover-background` | `var(--osui-overflow-menu-trigger-active-bg)` |
+| `--osui-btn-active-background` | `var(--osui-overflow-menu-trigger-active-bg)` |
 | `--osui-floating-offset` | `#{$token-scale-200}` |
 | `--osui-balloon-background` | `var(--osui-overflow-menu-background)` |
 | `--osui-balloon-shadow` | `var(--osui-overflow-menu-shadow)` |
@@ -734,7 +738,7 @@ _File: `src/scss/04-patterns/04-navigation/_bottom-bar-item.scss`_
 |---|---|
 | `--osui-bottom-bar-background` | `var(--color-background-surface)` |
 | `--osui-bottom-bar-border-color` | `var(--color-border)` |
-| `--osui-bottom-bar-item-color` | `var(--color-text-subtlest)` |
+| `--osui-bottom-bar-item-color` | `var(--color-text)` |
 | `--osui-bottom-bar-item-active-color` | `var(--color-primary)` |
 
 ### Breadcrumbs (`.breadcrumbs`)
@@ -753,11 +757,11 @@ _File: `src/scss/04-patterns/04-navigation/_pagination.scss`_
 | `--osui-pagination-button-background` | `transparent` |
 | `--osui-pagination-button-border-color` | `transparent` |
 | `--osui-pagination-button-border-width` | `#{$token-border-size-025}` |
-| `--osui-pagination-button-color` | `var(--color-text)` |
 | `--osui-pagination-button-font-weight` | `#{$token-font-weight-medium}` |
-| `--osui-pagination-button-hover-background` | `var(--color-border-subtle)` |
+| `--osui-pagination-button-hover-background` | `#{$token-bg-neutral-subtlest-hover}` |
 | `--osui-pagination-button-padding` | `#{$token-scale-0} #{$token-scale-100}` |
 | `--osui-pagination-button-size` | `#{$token-scale-900}` |
+| `--osui-pagination-button-text-color` | `var(--color-text-subtlest)` |
 | `--osui-pagination-active-border-color` | `var(--color-border)` |
 | `--osui-pagination-active-color` | `var(--color-text-subtlest)` |
 | `--osui-pagination-counter-color` | `var(--color-text-subtlest)` |
@@ -797,6 +801,7 @@ _File: `src/scss/04-patterns/04-navigation/section-index/_sectionindex.scss`_
 | Property | Default |
 |---|---|
 | `--osui-section-index-border-color` | `var(--color-border)` |
+| `--osui-section-index-border-width` | `#{$token-border-size-025}` |
 
 ### Sectionindex (`.osui-section-index-item`)
 _File: `src/scss/04-patterns/04-navigation/section-index/_sectionindex.scss`_
@@ -806,8 +811,12 @@ _File: `src/scss/04-patterns/04-navigation/section-index/_sectionindex.scss`_
 | `--osui-section-index-item-color` | `var(--color-text-subtlest)` |
 | `--osui-section-index-item-color-hover` | `var(--color-text)` |
 | `--osui-section-index-item-active-color` | `var(--color-primary-selected)` |
-| `--osui-section-index-item-hover-background` | `color-mix(in srgb, var(--color-text) 4%, transparent)` |
+| `--osui-section-index-item-border-radius` | `#{$token-border-radius-0}` |
+| `--osui-section-index-item-hover-background` | `#{$token-bg-neutral-subtlest-hover}` |
+| `--osui-section-index-item-press-background` | `#{$token-bg-neutral-subtlest-press}` |
 | `--osui-section-index-active-indicator-color` | `var(--color-primary-selected)` |
+| `--osui-section-index-active-indicator-width` | `#{$token-border-size-025}` |
+| `--osui-section-index-active-indicator-offset` | `calc(var(--osui-section-index-border-width, #{$token-border-size-025}) / 2)` |
 
 ### Sidebar (`.osui-sidebar`)
 _File: `src/scss/04-patterns/04-navigation/sidebar/_sidebar.scss`_
@@ -988,7 +997,7 @@ _File: `src/scss/01-foundations/_root.scss`_
 | `--osui-motion-duration-400` | `400ms` |
 | `--osui-bg-surface-hover` | `#{$token-primitives-neutral-100}` |
 | `--osui-bg-surface-active` | `color-mix( in srgb, #{$token-semantics-primary-base} 8%, transparent )` |
-| `--osui-border-subtle` | `#{$token-border-subtle}` |
+| `--osui-border-subtle` | `#{$token-primitives-neutral-300}` |
 | `--osui-opacity-disabled` | `0.45` |
 | `--osui-elevation-25` | `0 1px 2px rgba(0, 0, 0, 0.08)` |
 | `--osui-elevation-50` | `0 1px 2px rgba(0, 0, 0, 0.2)` |
@@ -999,4 +1008,4 @@ _File: `src/scss/01-foundations/_root.scss`_
 
 ---
 
-<sub>460 properties across 79 components, generated from `src/scss`.</sub>
+<sub>469 properties across 79 components, generated from `src/scss`.</sub>
