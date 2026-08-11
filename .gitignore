@@ -125,3 +125,7 @@ storybook-static/
 
 # npmrc file
 .npmrc
+
+# Storybook platform base CSS — generated at Storybook startup by .storybook/main.ts
+# from @outsystems/runtime-widgets-js (internal feed); stub when that package is absent
+.storybook/platform/

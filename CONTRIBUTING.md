@@ -128,6 +128,31 @@ For test setup and configuration: [UI End2End Testing Documentation](https://out
 
 Note: Visual tests require `APPLITOOLS_API_KEY` environment variable.
 
+## Storybook and Visual Testing (Chromatic)
+
+The repo ships a Storybook that drives the **compiled** library bundle — each story renders a pattern's HTML skeleton and calls its public `Create(id, configs)` API, exactly as OutSystems Service Studio does at runtime.
+
+```bash
+npm run build            # prerequisite: Storybook serves the compiled dist/ bundle
+npm run storybook        # dev server on http://localhost:6006
+npm run build-storybook  # static build (what CI publishes to Chromatic)
+```
+
+### Optional story group: platform Widgets
+
+The `Widgets/` story group mounts the platform's real React widgets from `@outsystems/runtime-core-js`, `runtime-view-js` and `runtime-widgets-js`. These are **optionalDependencies published only to the OutSystems-internal package feed**:
+
+- **External clones**: `npm install` skips them automatically — the build, the OUI pattern stories and the docs pages all work with no internal access. Storybook logs a one-line notice and omits the `Widgets/` group.
+- **Internal developers**: with npm authenticated to the internal feed (scope mapping in `~/.npmrc`), `npm install` picks them up and the group appears.
+
+The same packages also provide the **platform base CSS** (`/platform/platform-core.css`): it is not vendored in the repo — `.storybook/main.ts` regenerates it on every Storybook startup from `@outsystems/runtime-widgets-js`. Without the packages a stub is written instead, so Storybook still runs but the data-attribute form controls (`[data-checkbox]`, `[data-switch]`, …) render without their platform-provided structure.
+
+### Chromatic CI
+
+`.github/workflows/chromatic.yaml` publishes the Storybook to [Chromatic](https://www.chromatic.com/) on every PR into (and merge to) the long-living branches. PRs get a visual diff against the base-branch baseline plus a PR comment with the build/preview links; merges auto-accept the new baseline.
+
+Fork PRs receive no repository secrets, so the internal-infra and Chromatic steps are skipped (never failed). To run Chromatic against your own fork, create a free Chromatic project and run `npx chromatic --project-token=<your-token>` (see `npm run chromatic`).
+
 ## Code Standards
 
 ### TypeScript Conventions
