@@ -6,7 +6,7 @@
 	"scripts": {
 		"prebuild": "npx build.tokens --dest src/scss/tokens/ --prefix token",
 		"build": "gulp createProduction --target && npm run lintfix && npm run lint",
-		"build:tokens": "npx build.tokens --dest src/scss/tokens/ --prefix token",
+		"build:tokens": "npx build.tokens --dest src/scss/tokens/ --prefix token --utilities false --root false",
 		"create-osui-scss": "gulp updateScssFile",
 		"predev": "npx build.tokens --dest src/scss/tokens/ --prefix token",
 		"dev": "gulp startDevelopment --target",
@@ -69,7 +69,7 @@
 		"gulp-typescript": "^6.0.0-alpha.1",
 		"json-fixer": "^1.6.15",
 		"nouislider": "^15.8.1",
-		"outsystems-design-tokens": "^1.4.1",
+		"outsystems-design-tokens": "^1.4.2",
 		"photoswipe": "^4.1.0",
 		"postcss": "^8.4.38",
 		"postcss-discard-comments": "^5.1.2",
