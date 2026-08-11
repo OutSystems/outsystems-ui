@@ -96,7 +96,21 @@ jobs:
               uses: chromaui/action@e8cc4c31775280b175a3c440076c00d19a9014d7 # v11.28.2
               with:
                   projectToken: ${{ secrets.OSUI_CHROMATIC_TOKEN }}
+                  # TurboSnap: only snapshot stories whose module graph changed.
                   onlyChanged: true
+                  # MANDATORY companion to onlyChanged in this repo — do not remove.
+                  # TurboSnap traces changed files through Storybook's module graph, and the
+                  # OUI library is NOT in that graph: stories load the compiled bundle from
+                  # dist/ via <script>/<link> tags in preview-head.html, so no story ever
+                  # imports anything under src/. A changed file that isn't in the graph is
+                  # silently ignored, so without this list a pure-SCSS PR would snapshot
+                  # NOTHING and still report green. A change to any path below disables
+                  # TurboSnap for that build, forcing a full re-snapshot.
+                  # (package.json/lockfile and .storybook/** already force one automatically.)
+                  externals: |
+                      src/**
+                      gulp/**
+                      deprecated/**
                   exitZeroOnChanges: true
                   skip: 'dependabot/**'
                   buildScriptName: build-storybook

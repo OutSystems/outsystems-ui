@@ -153,6 +153,8 @@ The same packages also provide the **platform base CSS** (`/platform/platform-co
 
 Fork PRs receive no repository secrets, so the internal-infra and Chromatic steps are skipped (never failed). To run Chromatic against your own fork, create a free Chromatic project and run `npx chromatic --project-token=<your-token>` (see `npm run chromatic`).
 
+**TurboSnap and the `externals` list.** The workflow enables TurboSnap (`onlyChanged`), which snapshots only the stories whose module graph changed. Because Storybook here loads the **compiled** bundle from `dist/` through `<script>`/`<link>` tags rather than importing it, nothing under `src/` is part of that graph — and TurboSnap silently ignores a changed file it cannot trace. The `externals` list in the workflow (`src/**`, `gulp/**`, `deprecated/**`) is what closes that hole: a change to any of those paths disables TurboSnap for the build and forces a full re-snapshot. **Do not remove it** — without it a SCSS-only PR would snapshot nothing and still report green.
+
 ## Code Standards
 
 ### TypeScript Conventions
