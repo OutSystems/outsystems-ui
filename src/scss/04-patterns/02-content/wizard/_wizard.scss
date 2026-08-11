@@ -64,8 +64,8 @@
 				width: auto;
 
 				&:before {
-					bottom: calc(50% + 12px);
-					height: calc(100% + 18px);
+					bottom: calc(50% + var(--osui-wizard-icon-size, #{variables.$token-scale-1000}) / 2);
+					height: calc(100% + 18px); // design-spec: 18px connector overhang
 					left: 50%;
 					top: auto;
 					transform: translateY(0) translateX(-50%);
