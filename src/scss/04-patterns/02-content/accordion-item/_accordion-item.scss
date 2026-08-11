@@ -199,7 +199,8 @@
 
 				// This is to avoid reflowing the content when collapsed
 				& > div {
-					display: none;
+					visibility: hidden;
+					contain: layout;
 				}
 			}
 
