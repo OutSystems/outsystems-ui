@@ -55,6 +55,6 @@ namespace Providers.OSUI.Carousel.Splide.Enum {
 	 * Splide provider console warnings
 	 */
 	export enum WarningMessages {
-		BareImageSlidesNeedHost = 'Bare <img> slides were found without a host wrapper. ARIA role "listitem" cannot be applied to <img> (ARIA in HTML / axe). Wrap each image in a container so list semantics can be applied.',
+		BareImageSlidesNeedHost = 'Bare <img> slides were found without a host wrapper. ARIA role "listitem" cannot be applied to <img> (ARIA in HTML). Wrap each image in a container so list semantics can be applied.',
 	}
 }
