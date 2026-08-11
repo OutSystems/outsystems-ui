@@ -1,4 +1,10 @@
 {
+	// Use the workspace TypeScript (matches the build) instead of VS Code's bundled
+	// one. VS Code's TS 6.x errors on this repo's tsconfig (module=amd and
+	// moduleResolution=node10 are deprecated there), and with the tsconfig failing
+	// to load it falls back to strict implicit-project defaults — producing phantom
+	// TS2564 "no initializer" errors the real build never reports.
+	"typescript.tsdk": "node_modules/typescript/lib",
 	"diffEditor.ignoreTrimWhitespace": true,
 	"files.autoSave": "off",
 	"editor.minimap.maxColumn": 170,
