@@ -94,20 +94,6 @@ html:has(.popup-backdrop) .osui-overflow-menu__balloon {
 	z-index: var(--layer-off-canvas);
 }
 
-.tablet,
-.phone {
-	.osui-overflow-menu {
-		--border-radius-rounded: 100%;
-
-		.osui-overflow-menu__trigger {
-			&.btn {
-				// Longer specificity to be able to always override default responsive styles for buttons
-				width: variables.$token-scale-1000;
-			}
-		}
-	}
-}
-
 // OS HighContrast Enabled -------------------------------------------------------
 ///
 .os-high-contrast {
