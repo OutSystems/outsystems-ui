@@ -36,6 +36,10 @@ jobs:
             # True only for PRs opened from a fork. Fork runs get no secrets, so all
             # internal-infra steps below are conditioned on this being 'false'.
             IS_FORK: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository }}
+            # The `secrets` context is NOT available in a step-level `if` (only in job-level
+            # `env`), and referencing it there invalidates the whole workflow file. So the
+            # token check is evaluated once here and tested as a plain env flag below.
+            HAS_CHROMATIC_TOKEN: ${{ secrets.OSUI_CHROMATIC_TOKEN != '' }}
         steps:
             ### Checkout and prepare code ###
             - name: 📥 Checkout code
@@ -91,7 +95,7 @@ jobs:
             ### Run Chromatic ###
             - name: 🎨 Run Chromatic
               # Skipped (not failed) when the Chromatic token is unavailable — i.e. fork PRs.
-              if: ${{ secrets.OSUI_CHROMATIC_TOKEN != '' }}
+              if: env.HAS_CHROMATIC_TOKEN == 'true'
               id: chromatic
               uses: chromaui/action@e8cc4c31775280b175a3c440076c00d19a9014d7 # v11.28.2
               with:
