@@ -1,151 +1,119 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
-import { renderStatic } from './_helpers/osui';
-import { cls, extendedClassArgType } from './_helpers/lowcode';
+import { cfg, osuiRoot, Patterns, renderPattern, uid } from './_helpers/osui';
 
 /**
- * Wizard family. Controls mirror the low-code input parameters of the
- * `Wizard` and `WizardItem` blocks (extracted from the library OML).
+ * Wizard (parent) + WizardItem (children) — the TS pattern that replaced the old
+ * CSS-only `.wizard` block (ROU-125682).
  *
- * Class mappings from src/scss/04-patterns/04-navigation/_wizard.scss:
+ * Runtime contract (from OSFramework/.../Pattern/Wizard + WizardItem):
+ *  • Parent root: `.osui-wizard`, located by `name=<id>`. The pattern itself adds
+ *    `is-horizontal`/`is-vertical` (IsVertical) and `is-interactive`/`is-progress-only`
+ *    (StepBehavior), plus role list/tablist + aria-orientation.
+ *  • Each item lives inside a `[data-block*='WizardItem']` wrapper (the SCSS flex
+ *    column and the a11y roles/click target land on that wrapper — WizardItem reads
+ *    it as `selfElement.parentElement`, so the wrapper must be a distinct element).
+ *  • Item root: `.osui-wizard-item` (name=<id>), containing
+ *      .osui-wizard-item-icon-wrapper > .osui-wizard-item-icon  (connector + circle)
+ *      .osui-wizard-item-label                                   (required — read for aria-label)
+ *    The pattern adds `is-past`/`is-active`/`is-next` (Status) and `is-reversed`
+ *    (ReverseLabelPosition).
+ *  • Call order: Create parent → Create items → Initialize parent → Initialize items.
+ *    Items self-register with the parent via `.closest('.osui-wizard')` during build.
  *
- * Wizard block:
- *   IsVertical   → `wizard-vertical` added to `.wizard-wrapper` (changes layout to column,
- *                   connectors become vertical lines)
- *
- * WizardItem block:
- *   Status:
- *     Active → `active`  on `.wizard-wrapper-item` (primary-coloured border + label bold)
- *     Next   → `next`    on `.wizard-wrapper-item` (neutral connector, disabled icon colour)
- *     Past   → `past`    on `.wizard-wrapper-item` (filled primary icon + connector)
- *     (none) → no status class (default upcoming state: neutral border, no fill)
- *   UseTopLabel → `label-top`    on `.wizard-wrapper-item` when true
- *                 `label-bottom` on `.wizard-wrapper-item` when false
+ * Stays `ui-pending`: new pattern + restyle, needs UI sign-off.
  */
-const meta: Meta = { title: 'Patterns/Navigation/Wizard', tags: ['!ui-pending', 'ui-reviewed'] };
-export default meta;
 
-// ─── WizardItem status type ───────────────────────────────────────────────────
+type WizardItemStatus = 'past' | 'active' | 'next';
 
-type WizardItemStatus = 'none' | 'Active' | 'Next' | 'Past';
-const WIZARD_STATUS_OPTIONS: WizardItemStatus[] = ['none', 'Active', 'Next', 'Past'];
-
-function statusClass(status: WizardItemStatus): string {
-	switch (status) {
-		case 'Active':
-			return 'active';
-		case 'Next':
-			return 'next';
-		case 'Past':
-			return 'past';
-		default:
-			return '';
-	}
+interface WizardArgs {
+	isVertical: boolean;
+	stepBehavior: 'ProgressOnly' | 'Interactive';
+	reverseLabelPosition: boolean;
 }
 
-// ─── Wizard ───────────────────────────────────────────────────────────────────
+const STEPS: Array<[WizardItemStatus, string, string]> = [
+	['past', '1', 'Account'],
+	['active', '2', 'Profile'],
+	['next', '3', 'Address'],
+	['next', '4', 'Confirm'],
+];
 
-type WizardArgs = {
-	isVertical: boolean;
-	extendedClass: string;
+// Wrapper carries the widgetId (id + data-block); the item carries the uniqueId
+// (name) + class. The SCSS flex-item rules target `[data-block*='WizardItem']`,
+// and WizardItem applies roles/click handling to that wrapper element.
+function itemMarkup(id: string, glyph: string, label: string): string {
+	return `
+		<div id="${id}" data-block="WizardItem.WizardItem">
+			<div name="${id}" class="osui-wizard-item">
+				<div class="osui-wizard-item-icon-wrapper">
+					<div class="osui-wizard-item-icon">${glyph}</div>
+				</div>
+				<div class="osui-wizard-item-label">${label}</div>
+			</div>
+		</div>`;
+}
+
+const meta: Meta<WizardArgs> = {
+	title: 'Patterns/Navigation/Wizard',
+	argTypes: {
+		isVertical: { control: 'boolean', name: 'Wizard.IsVertical' },
+		stepBehavior: {
+			control: 'inline-radio',
+			options: ['ProgressOnly', 'Interactive'],
+			name: 'Wizard.StepBehavior',
+			description: 'Interactive makes past steps clickable (role=tablist); ProgressOnly renders a plain list.',
+		},
+		reverseLabelPosition: {
+			control: 'boolean',
+			name: 'Item.ReverseLabelPosition',
+			description: 'Places the label before the icon (`is-reversed`).',
+		},
+	},
+	args: { isVertical: false, stepBehavior: 'ProgressOnly', reverseLabelPosition: false },
 };
+export default meta;
 
-export const WizardStory: StoryObj<WizardArgs> = {
+type Story = StoryObj<WizardArgs>;
+
+function renderWizard(args: WizardArgs, statuses: Array<[WizardItemStatus, string, string]>): HTMLElement {
+	const wizId = uid('wizard');
+	const itemIds = statuses.map(() => uid('wizard-item'));
+	const template = `
+		<div ${osuiRoot(wizId)} class="osui-wizard">
+			<div class="list">
+				${statuses.map(([, glyph, label], i) => itemMarkup(itemIds[i], glyph, label)).join('')}
+			</div>
+		</div>`;
+
+	return renderPattern(template, (_root, register) => {
+		const P = Patterns();
+		// 1. parent, 2. items
+		P.WizardAPI.Create(wizId, cfg({ IsVertical: args.isVertical, StepBehavior: args.stepBehavior }));
+		itemIds.forEach((id, i) =>
+			P.WizardItemAPI.Create(id, cfg({ Status: statuses[i][0], ReverseLabelPosition: args.reverseLabelPosition }))
+		);
+		// 3. initialize parent, 4. initialize items
+		P.WizardAPI.Initialize(wizId);
+		itemIds.forEach((id) => P.WizardItemAPI.Initialize(id));
+		// teardown: items before parent
+		register(() => {
+			itemIds.forEach((id) => P.WizardItemAPI.Dispose?.(id));
+			P.WizardAPI.Dispose?.(wizId);
+		});
+	});
+}
+
+export const WizardStory: Story = {
 	name: 'Wizard',
-	args: {
-		isVertical: false,
-		extendedClass: '',
-	},
-	argTypes: {
-		isVertical: {
-			name: 'IsVertical',
-			control: 'boolean',
-			description: 'When true, sets a vertical orientation. Adds `wizard-vertical` to `.wizard-wrapper`.',
-		},
-		extendedClass: extendedClassArgType,
-	},
-	render: ({ isVertical, extendedClass }) => {
-		const orientation = isVertical ? 'column' : 'row';
-		const ariaOrientation = isVertical ? 'vertical' : 'horizontal';
-
-		const step = (state: string, n: string, label: string) => `
-			<div data-block="Navigation.WizardItem" style="${isVertical ? 'display:flex;flex:1;flex-direction:column;align-items:center;position:relative;width:100%;' : ''}">
-				<div class="${cls('wizard-wrapper-item', state, 'label-bottom', 'OSInline')}" role="tab" tabindex="0" aria-label="${label}">
-					<div class="wizard-item-icon-wrapper OSInline"><div class="wizard-item-icon">${n}</div></div>
-					<div class="wizard-item-label">${label}</div>
-				</div>
-			</div>`;
-
-		return renderStatic(`
-			<div class="${cls('wizard-wrapper', 'display-flex', `flex-direction-${orientation}`, isVertical && 'wizard-vertical', extendedClass)} OSInline" role="tablist" aria-orientation="${ariaOrientation}">
-				<div class="list ${isVertical ? '' : 'display-flex'}">
-					${step('past', '1', 'Account')}
-					${step('active', '2', 'Profile')}
-					${step('', '3', 'Confirm')}
-				</div>
-			</div>`);
-	},
+	render: (args) => renderWizard(args, STEPS),
 };
 
-// ─── WizardItem ───────────────────────────────────────────────────────────────
-
-type WizardItemArgs = {
-	status: WizardItemStatus;
-	useTopLabel: boolean;
-	extendedClass: string;
+export const Vertical: Story = {
+	args: { isVertical: true },
+	render: (args) => renderWizard(args, STEPS),
 };
 
-export const WizardItemStory: StoryObj<WizardItemArgs> = {
-	name: 'WizardItem',
-	args: {
-		status: 'Active',
-		useTopLabel: false,
-		extendedClass: '',
-	},
-	argTypes: {
-		status: {
-			name: 'Status',
-			control: 'select',
-			options: WIZARD_STATUS_OPTIONS,
-			description:
-				'Visual state of the wizard step. ' +
-				'Active → `.active` (primary border + bold label); ' +
-				'Next → `.next` (neutral connector); ' +
-				'Past → `.past` (filled primary icon + connector); ' +
-				'none → default upcoming appearance.',
-		},
-		useTopLabel: {
-			name: 'UseTopLabel',
-			control: 'boolean',
-			description:
-				'When true, places the label above the icon (`label-top`). When false, label goes below (`label-bottom`).',
-		},
-		extendedClass: extendedClassArgType,
-	},
-	render: ({ status, useTopLabel, extendedClass }) => {
-		const labelClass = useTopLabel ? 'label-top' : 'label-bottom';
-
-		return renderStatic(`
-			<div class="wizard-wrapper display-flex flex-direction-row OSInline" role="tablist" aria-orientation="horizontal" style="max-width:480px;">
-				<div class="list display-flex">
-					<div data-block="Navigation.WizardItem" style="display:flex;flex:1;flex-direction:column;align-items:center;position:relative;width:100%;">
-						<div class="wizard-wrapper-item past ${labelClass} OSInline" role="tab" tabindex="0" aria-label="Account">
-							<div class="wizard-item-icon-wrapper OSInline"><div class="wizard-item-icon">1</div></div>
-							<div class="wizard-item-label">Account</div>
-						</div>
-					</div>
-					<div data-block="Navigation.WizardItem" style="display:flex;flex:1;flex-direction:column;align-items:center;position:relative;width:100%;">
-						<div class="${cls('wizard-wrapper-item', statusClass(status), labelClass, 'OSInline', extendedClass)}" role="tab" tabindex="0" aria-label="Profile">
-							<div class="wizard-item-icon-wrapper OSInline"><div class="wizard-item-icon">2</div></div>
-							<div class="wizard-item-label">Profile</div>
-						</div>
-					</div>
-					<div data-block="Navigation.WizardItem" style="display:flex;flex:1;flex-direction:column;align-items:center;position:relative;width:100%;">
-						<div class="${cls('wizard-wrapper-item', labelClass, 'OSInline')}" role="tab" tabindex="0" aria-label="Confirm">
-							<div class="wizard-item-icon-wrapper OSInline"><div class="wizard-item-icon">3</div></div>
-							<div class="wizard-item-label">Confirm</div>
-						</div>
-					</div>
-				</div>
-			</div>`);
-	},
+export const Interactive: Story = {
+	args: { stepBehavior: 'Interactive' },
+	render: (args) => renderWizard(args, STEPS),
 };
