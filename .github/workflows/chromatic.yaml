@@ -1,12 +1,22 @@
 name: 'Storybook'
 
-# Publishes the Storybook to Chromatic for visual review.
+# Publishes the Storybook to Chromatic for visual review and UI tests.
+#
+# Runs on every PR into (and every merge to) the long-living branches, so each PR
+# gets a visual diff against the base-branch baseline, and each merge advances that
+# baseline (auto-accepted below).
+#
+# Fork PRs receive no repository secrets, so every step needing internal access
+# (Azure login, ADO token, internal npm feed, Chromatic token) is skipped rather
+# than failed — the job stays neutral for external contributors.
 on:
     pull_request:
-        branches: ['dev']
+        # ROU-12714 is the "Make Great UI" long-living integration branch; drop it
+        # from these lists once it merges into dev (ROU-12955).
+        branches: ['dev', 'ROU-12714']
         types: [opened, reopened, synchronize]
     push:
-        branches: ['dev']
+        branches: ['dev', 'ROU-12714']
     workflow_dispatch: {}
 
 concurrency:
@@ -22,21 +32,15 @@ jobs:
     chromatic:
         name: build chromatic
         runs-on: ubuntu-latest
+        env:
+            # True only for PRs opened from a fork. Fork runs get no secrets, so all
+            # internal-infra steps below are conditioned on this being 'false'.
+            IS_FORK: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository }}
+            # The `secrets` context is NOT available in a step-level `if` (only in job-level
+            # `env`), and referencing it there invalidates the whole workflow file. So the
+            # token check is evaluated once here and tested as a plain env flag below.
+            HAS_CHROMATIC_TOKEN: ${{ secrets.OSUI_CHROMATIC_TOKEN != '' }}
         steps:
-            ### Azure login + ADO token (to install the private @outsystems/* widget deps) ###
-            - name: 🔐 Azure login
-              uses: ./.github/actions/az-login
-              with:
-                  client-id: ${{ secrets.OSUI_AZURE_CLIENT_ID }}
-                  tenant-id: ${{ secrets.OSUI_AZURE_TENANT_ID }}
-                  subscription-id: ${{ secrets.OSUI_AZURE_SUBSCRIPTION_ID }}
-
-            - name: 🔑 Get ADO token from Azure Key Vault
-              id: GetAdoToken
-              uses: ./.github/actions/az-keyvault-get
-              with:
-                  key-name: o11odc-github-ado-token-prd
-
             ### Checkout and prepare code ###
             - name: 📥 Checkout code
               uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
@@ -44,9 +48,26 @@ jobs:
                   # Chromatic needs full git history for baselines / TurboSnap.
                   fetch-depth: 0
 
+            ### Azure login + ADO token (to install the private @outsystems/* widget deps) ###
+            - name: 🔐 Azure login
+              if: env.IS_FORK == 'false'
+              uses: ./.github/actions/az-login
+              with:
+                  client-id: ${{ secrets.OSUI_AZURE_CLIENT_ID }}
+                  tenant-id: ${{ secrets.OSUI_AZURE_TENANT_ID }}
+                  subscription-id: ${{ secrets.OSUI_AZURE_SUBSCRIPTION_ID }}
+
+            - name: 🔑 Get ADO token from Azure Key Vault
+              if: env.IS_FORK == 'false'
+              id: GetAdoToken
+              uses: ./.github/actions/az-keyvault-get
+              with:
+                  key-name: o11odc-github-ado-token-prd
+
             - name: ⭕ Connect to OutSystems Environment
               # Authenticates npm to the internal Azure Artifacts feed so the
               # @outsystems/runtime-*-js platform-widget deps can be installed.
+              if: env.IS_FORK == 'false'
               shell: bash
               run: npx @outsystems/assistant login --token ${{ steps.GetAdoToken.outputs.az-keyvault-value }}
 
@@ -55,7 +76,17 @@ jobs:
                   node-version: 24.13.1
 
             - name: 🕸️ Install dependencies
+              # The @outsystems/runtime-*-js platform-widget packages are
+              # optionalDependencies: without internal-feed auth (fork PRs) npm skips
+              # them and Storybook drops the Widgets story group.
               run: npm i
+
+            - name: 🔎 Verify platform-widget deps (internal runs)
+              # On internal runs the widget packages MUST be present — otherwise a silent
+              # auth failure would publish a Storybook missing the Widgets group and, on a
+              # push, auto-accept that reduced set as the new baseline.
+              if: env.IS_FORK == 'false'
+              run: node -e "['@outsystems/runtime-core-js','@outsystems/runtime-view-js','@outsystems/runtime-widgets-js'].forEach(p => require.resolve(p + '/package.json'))"
 
             - name: 🏗️ Run build
               # Produces dist/ODC.OutSystemsUI.{js,css}, served by Storybook via staticDirs.
@@ -63,18 +94,36 @@ jobs:
 
             ### Run Chromatic ###
             - name: 🎨 Run Chromatic
+              # Skipped (not failed) when the Chromatic token is unavailable — i.e. fork PRs.
+              if: env.HAS_CHROMATIC_TOKEN == 'true'
               id: chromatic
               uses: chromaui/action@e8cc4c31775280b175a3c440076c00d19a9014d7 # v11.28.2
               with:
                   projectToken: ${{ secrets.OSUI_CHROMATIC_TOKEN }}
+                  # TurboSnap: only snapshot stories whose module graph changed.
                   onlyChanged: true
+                  # MANDATORY companion to onlyChanged in this repo — do not remove.
+                  # TurboSnap traces changed files through Storybook's module graph, and the
+                  # OUI library is NOT in that graph: stories load the compiled bundle from
+                  # dist/ via <script>/<link> tags in preview-head.html, so no story ever
+                  # imports anything under src/. A changed file that isn't in the graph is
+                  # silently ignored, so without this list a pure-SCSS PR would snapshot
+                  # NOTHING and still report green. A change to any path below disables
+                  # TurboSnap for that build, forcing a full re-snapshot.
+                  # (package.json/lockfile and .storybook/** already force one automatically.)
+                  externals: |
+                      src/**
+                      gulp/**
+                      deprecated/**
                   exitZeroOnChanges: true
                   skip: 'dependabot/**'
                   buildScriptName: build-storybook
-                  autoAcceptChanges: 'dev'
+                  # Merges to a long-living branch auto-accept the build as the new
+                  # baseline; PRs still require review in Chromatic.
+                  autoAcceptChanges: '{dev,ROU-12714}'
 
             - name: 🔎 Find Chromatic comment
-              if: github.event_name == 'pull_request'
+              if: github.event_name == 'pull_request' && steps.chromatic.outcome == 'success'
               uses: peter-evans/find-comment@3eae4d37986fb5a8592848f6a574fdf654e61f9e # v3.1.0
               id: find_chromatic_comment
               with:
@@ -83,7 +132,7 @@ jobs:
                   body-includes: <!-- chromatic-ui-test-comment -->
 
             - name: 🧹 Delete previous Chromatic comment
-              if: github.event_name == 'pull_request' && steps.find_chromatic_comment.outputs.comment-id != ''
+              if: github.event_name == 'pull_request' && steps.chromatic.outcome == 'success' && steps.find_chromatic_comment.outputs.comment-id != ''
               uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
               with:
                   script: |
@@ -94,7 +143,7 @@ jobs:
                       })
 
             - name: 💬 Comment Chromatic build URL on PR
-              if: github.event_name == 'pull_request'
+              if: github.event_name == 'pull_request' && steps.chromatic.outcome == 'success'
               uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
               with:
                   script: |

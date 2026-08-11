@@ -6,7 +6,7 @@
 	"scripts": {
 		"prebuild": "npx build.tokens --dest src/scss/tokens/ --prefix token",
 		"build": "gulp createProduction --target && npm run lintfix && npm run lint",
-		"build:tokens": "npx build.tokens --dest src/scss/tokens/ --prefix token",
+		"build:tokens": "npx build.tokens --dest src/scss/tokens/ --prefix token --utilities false --root false",
 		"create-osui-scss": "gulp updateScssFile",
 		"predev": "npx build.tokens --dest src/scss/tokens/ --prefix token",
 		"dev": "gulp startDevelopment --target",
@@ -45,9 +45,6 @@
 	"devDependencies": {
 		"@chromatic-com/storybook": "^5.2.1",
 		"@floating-ui/dom": "^1.6.5",
-		"@outsystems/runtime-core-js": "^6.71.4",
-		"@outsystems/runtime-view-js": "^6.35.0",
-		"@outsystems/runtime-widgets-js": "^6.23.0",
 		"@phosphor-icons/web": "^2.1.2",
 		"@splidejs/splide": "4.1.4",
 		"@storybook/addon-docs": "^10.4.1",
@@ -72,7 +69,7 @@
 		"gulp-sourcemaps": "^3.0.0",
 		"json-fixer": "^1.6.15",
 		"nouislider": "^15.8.1",
-		"outsystems-design-tokens": "^1.4.1",
+		"outsystems-design-tokens": "^1.4.2",
 		"photoswipe": "^4.1.0",
 		"postcss": "^8.4.38",
 		"postcss-discard-comments": "^5.1.2",
@@ -93,5 +90,10 @@
 		"virtual-select-plugin": "^1.1.0",
 		"vite": "^6.4.2",
 		"wnumb": "^1.2.0"
+	},
+	"optionalDependencies": {
+		"@outsystems/runtime-core-js": "^6.71.4",
+		"@outsystems/runtime-view-js": "^6.35.0",
+		"@outsystems/runtime-widgets-js": "^6.23.0"
 	}
 }
