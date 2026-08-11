@@ -4,11 +4,11 @@
 	"description": "OutSystems UI Framework",
 	"license": "BSD-3-Clause",
 	"scripts": {
-		"prebuild": "npx build.tokens --dest src/scss/tokens/ --prefix token",
+		"prebuild": "npm run build:tokens",
 		"build": "gulp createProduction --target && npm run lintfix && npm run lint",
 		"build:tokens": "npx build.tokens --dest src/scss/tokens/ --prefix token --utilities false --root false",
 		"create-osui-scss": "gulp updateScssFile",
-		"predev": "npx build.tokens --dest src/scss/tokens/ --prefix token",
+		"predev": "npm run build:tokens",
 		"dev": "gulp startDevelopment --target",
 		"docs": "npx typedoc",
 		"lint": "eslint . --ext .ts",
