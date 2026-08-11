@@ -125,3 +125,9 @@ storybook-static/
 
 # npmrc file
 .npmrc
+
+# Generated TypeDoc output
+# NOTE: docs/ also holds hand-written architecture docs (css-architecture.md,
+# css-api-reference.md, motion-mapping.md) — those are already tracked, so this
+# ignore does not affect them; add new hand-written docs with `git add -f`.
+docs/

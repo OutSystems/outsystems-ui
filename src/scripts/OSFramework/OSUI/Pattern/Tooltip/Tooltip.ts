@@ -51,6 +51,14 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 
 		// Method to handle the custom BalloonOnToggle callback
 		private _balloonOnToggleCallback(_args: string, e: CustomEvent): void {
+			// Close when another balloon opens. Body click on document.body never runs for clicks on
+			// another tooltip trigger because _onClick uses stopPropagation, so blur was the only path
+			// and it is not guaranteed (e.g. tab visibility, focus inside balloon).
+			if (e.detail.isOpen && e.detail.balloonElem !== this._balloonElem && this._isOpen) {
+				this._triggerClose(false);
+				return;
+			}
+
 			// If the balloon closed is the one from this pattern, toggle the isOpen
 			if (e.detail.balloonElem === this._balloonElem && e.detail.isOpen !== this._isOpen) {
 				this._triggerClose(true);
@@ -113,7 +121,7 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 				}
 
 				// Get the closest element in order to check if the activeElement is inside this TooltipBalloon
-				const _closestElem = document.activeElement.closest(Constants.Dot + Enum.CssClass.Pattern);
+				const _closestElem = document.activeElement?.closest(Constants.Dot + Enum.CssClass.Pattern);
 				if (
 					_closestElem !== this.selfElement &&
 					_closestElem?.contains(_closestElem.querySelector(Constants.AllowPropagationAttr)) === false
@@ -122,8 +130,8 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 					this._triggerClose();
 				} else {
 					// Add the blur event in order to proper close the tooltip after its blur
-					this._tooltipBalloonContentActiveElem = document.activeElement as HTMLElement;
-					this._tooltipBalloonContentActiveElem.addEventListener(
+					this._tooltipBalloonContentActiveElem = document.activeElement as HTMLElement | undefined;
+					this._tooltipBalloonContentActiveElem?.addEventListener(
 						GlobalEnum.HTMLEvent.Blur,
 						this._eventOnBlur
 					);

@@ -3,5 +3,5 @@ namespace OSFramework.OSUI.Patterns.Search {
 	/**
 	 * Defines the interface for OutSystemsUI Search Pattern
 	 */
-	export interface ISearch extends Interface.IPattern {}
+	export type ISearch = Interface.IPattern
 }

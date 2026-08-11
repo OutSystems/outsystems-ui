@@ -5,11 +5,43 @@
         "./src/scripts/Providers/OSUI//*.ts"
     ],
     "entryPointStrategy": "expand",
+    "plugin": [
+        "typedoc-umlclass",
+        "typedoc-plugin-merge-modules"
+    ],
     "includeVersion": true,
     "hideGenerator": true,
     "out": "./docs",
     "sort": [
         "source-order"
+    ],
+    "blockTags": [
+        "@alpha",
+        "@beta",
+        "@defaultValue",
+        "@deprecated",
+        "@example",
+        "@experimental",
+        "@internal",
+        "@override",
+        "@param",
+        "@privateRemarks",
+        "@public",
+        "@remarks",
+        "@returns",
+        "@sealed",
+        "@see",
+        "@throws",
+        "@virtual",
+        "@memberof",
+        "@export",
+        "@static",
+        "@todo",
+        "@return",
+        "@extends",
+        "@template",
+        "@type",
+        "@implements"
     ],
     "umlClassDiagram": {
         "type": "detailed",
@@ -19,5 +51,10 @@
         "boxBackgroundColor": "#fff",
         "boxBorderColor": "#272b30",
         "arrowColor": "#272b30"
+    },
+    "validation": {
+        "notExported": false,
+        "invalidLink": true,
+        "notDocumented": false
     }
 }

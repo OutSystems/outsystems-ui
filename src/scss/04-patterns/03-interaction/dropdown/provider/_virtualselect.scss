@@ -254,7 +254,7 @@
 			&,
 			&.show-value-as-tags {
 				.vscomp-clear-button {
-					left: var(--space-xl);
+					left: variables.$token-scale-1000;
 				}
 			}
 		}
@@ -710,4 +710,36 @@ body {
 .pop-comp-content,
 .vscomp-dropbox-container {
 	z-index: var(--layer-local-tier-2);
+}
+
+// Validation message
+// VirtualSelect 1.4.0 renders its own validation message as a sibling of .vscomp-wrapper and
+// reveals it whenever the library's internal validate() sets .has-error. OSUI owns validation
+// messaging: the platform calls validation(), which applies .osui-dropdown--not-valid and appends
+// its own .osui-dropdown-error-message styled with OSUI tokens. The library's copy is suppressed so
+// a Dropdown can never show two messages, and so no unthemed message can appear.
+//
+// Belt-and-braces: getProviderConfig() sets `disableValidation: true`, so validate() returns early
+// and never applies .has-error. This rule only matters if an app re-enables the library's validation
+// through the extensibility configs, which merge arbitrary provider props straight through.
+//
+// Specificity is 0,4,0 against the library's 0,3,0 reveal rule
+// (.vscomp-wrapper.has-error ~ .vscomp-error-message), so no !important is needed. If OSUI ever
+// adopts the library's validation instead of its own, theme this element rather than hiding it.
+.vscomp-ele .vscomp-wrapper.has-error ~ .vscomp-error-message {
+	display: none;
+}
+
+// Reduced Motion ----------------------------------------------------------------
+///
+// VirtualSelect 1.4.0 honours prefers-reduced-motion for its own transitions, but only for the
+// dropbox, the dropbox container/wrapper and the toggle button. The transitions declared above are
+// OSUI's own and are not covered by the library's media query, so they are zeroed here.
+@media (prefers-reduced-motion: reduce) {
+	.vscomp-option,
+	.vscomp-toggle-button:after,
+	.vscomp-wrapper .checkbox-icon,
+	.vscomp-wrapper .checkbox-icon:after {
+		transition-duration: 0s;
+	}
 }

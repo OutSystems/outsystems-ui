@@ -248,12 +248,15 @@ namespace OutSystems.OSUI.Utils.Menu {
 		if (_appProp.menu.isOpen) {
 			OSFramework.OSUI.Helper.A11Y.TabIndexTrue(menu);
 			OSFramework.OSUI.Helper.A11Y.AriaExpandedTrue(menu);
+			OSFramework.OSUI.Helper.Dom.Styles.AddClass(menu, 'is--open');
 		} else if (OSFramework.OSUI.Helper.DeviceInfo.IsDesktop) {
 			OSFramework.OSUI.Helper.Dom.Attribute.Remove(menu, OSFramework.OSUI.Constants.A11YAttributes.TabIndex);
 			OSFramework.OSUI.Helper.Dom.Attribute.Remove(menu, OSFramework.OSUI.Constants.A11YAttributes.Aria.Expanded);
+			OSFramework.OSUI.Helper.Dom.Styles.RemoveClass(menu, 'is--open');
 		} else {
 			OSFramework.OSUI.Helper.A11Y.TabIndexFalse(menu);
 			OSFramework.OSUI.Helper.A11Y.AriaExpandedFalse(menu);
+			OSFramework.OSUI.Helper.Dom.Styles.RemoveClass(menu, 'is--open');
 		}
 	};
 

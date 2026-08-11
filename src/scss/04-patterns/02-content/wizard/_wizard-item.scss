@@ -1,0 +1,148 @@
+@use '../../../tokens/variables';
+
+/* Patterns - Content - Wizard Item */
+////
+/// @group Patterns-Wizard
+/// Patterns - Content - Wizard Item
+
+///
+.osui-wizard-item {
+	// ─── Component CSS API ─────────────────────────────────────────────────────
+	// Carried over from the pre-merge (CSS-only) wizard restyle so the design
+	// language and any theme overrides survive the move to the TS pattern.
+	--osui-wizard-icon-background: var(--color-background-surface);
+	--osui-wizard-icon-border-color: var(--color-border-input);
+	--osui-wizard-icon-border-width: #{variables.$token-border-size-050};
+	--osui-wizard-icon-color: #{variables.$token-text-subtlest};
+	--osui-wizard-icon-size: #{variables.$token-scale-800};
+	--osui-wizard-label-color: #{variables.$token-text-subtle};
+	--osui-wizard-active-color: var(--color-primary);
+	--osui-wizard-active-icon-color: #{variables.$token-text-primary};
+	--osui-wizard-active-label-color: var(--color-text);
+	--osui-wizard-past-background: var(--color-primary);
+	--osui-wizard-past-color: var(--color-text-inverse);
+	--osui-wizard-next-icon-color: #{variables.$token-text-subtlest};
+	--osui-wizard-connector-color: #{variables.$token-bg-neutral-base-default};
+	// ───────────────────────────────────────────────────────────────────────────
+
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+
+	&.is-reversed {
+		flex-direction: column-reverse;
+	}
+
+	&.is-past {
+		.osui-wizard-item-icon {
+			background-color: var(--osui-wizard-past-background);
+			border-color: var(--osui-wizard-past-background);
+			color: var(--osui-wizard-past-color);
+		}
+
+		.osui-wizard-item-icon-wrapper:before {
+			background-color: var(--osui-wizard-past-background);
+		}
+	}
+
+	&.is-active {
+		.osui-wizard-item-icon {
+			background-color: var(--osui-wizard-icon-background);
+			border-color: var(--osui-wizard-active-color);
+			color: var(--osui-wizard-active-icon-color);
+		}
+
+		.osui-wizard-item-icon-wrapper:before {
+			background-color: var(--osui-wizard-past-background);
+		}
+
+		.osui-wizard-item-label {
+			color: var(--osui-wizard-active-label-color);
+		}
+	}
+
+	&.is-next {
+		.osui-wizard-item-icon-wrapper:before {
+			background-color: var(--osui-wizard-connector-color);
+		}
+
+		.icon {
+			color: var(--osui-wizard-next-icon-color);
+		}
+	}
+
+	&-icon-wrapper {
+		margin: variables.$token-scale-200 variables.$token-scale-0;
+		position: relative;
+		width: 100%;
+
+		&:before {
+			content: '';
+			height: 2px;
+			position: absolute;
+			right: calc(50% + 12px);
+			top: 50%;
+			transform: translateY(-50%);
+			width: calc(100% - 24px);
+			z-index: var(--layer-screen);
+		}
+	}
+
+	&-icon {
+		align-items: center;
+		background-color: var(--osui-wizard-icon-background);
+		border: var(--osui-wizard-icon-border-width) solid var(--osui-wizard-icon-border-color);
+		border-radius: var(--border-radius-rounded);
+		color: var(--osui-wizard-icon-color);
+		display: flex;
+		height: var(--osui-wizard-icon-size);
+		justify-content: center;
+		margin: 0 auto;
+		position: relative;
+		width: var(--osui-wizard-icon-size);
+		z-index: var(--layer-local-tier-1);
+
+		&:empty {
+			height: variables.$token-scale-200;
+			width: variables.$token-scale-200;
+		}
+
+		.icon {
+			font-size: variables.$token-font-size-300;
+			width: auto;
+		}
+	}
+
+	&-label {
+		color: var(--osui-wizard-label-color);
+		text-align: center;
+	}
+}
+
+// IsRTL ---------------------------------------------------------------------------
+///
+.is-rtl {
+	.osui-wizard-item {
+		&-icon-wrapper {
+			&:before {
+				left: calc(50% + 12px);
+				right: auto;
+			}
+		}
+	}
+}
+
+/* Hybrid Service Studio => Service Studio Preview */
+html[data-uieditorversion^='1'] {
+	.osui-wizard-item {
+		& {
+			-servicestudio-display: flex;
+			-servicestudio-flex-direction: column;
+			-servicestudio-width: 100%;
+
+			&.is-reversed {
+				-servicestudio-flex-direction: column-reverse;
+			}
+		}
+	}
+}
