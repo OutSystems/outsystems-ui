@@ -8,6 +8,8 @@ namespace Providers.OSUI.Carousel.Splide.Enum {
 		SplideTrack = 'splide__track',
 		SplideList = 'splide__list',
 		SplideSlide = 'splide__slide',
+		SplideSlideActive = 'is-active',
+		SplideSlideClone = 'splide__slide--clone',
 	}
 
 	/**
@@ -47,5 +49,12 @@ namespace Providers.OSUI.Carousel.Splide.Enum {
 	export enum TypeOptions {
 		Loop = 'loop',
 		Slide = 'slide',
+	}
+
+	/**
+	 * Splide provider console warnings
+	 */
+	export enum WarningMessages {
+		BareImageSlidesNeedHost = 'Bare <img> slides were found without a host wrapper. ARIA role "listitem" cannot be applied to <img> (ARIA in HTML / axe). Wrap each image in a container so list semantics can be applied.',
 	}
 }
