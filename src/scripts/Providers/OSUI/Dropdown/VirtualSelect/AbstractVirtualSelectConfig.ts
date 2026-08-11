@@ -57,6 +57,9 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 
 			for (const key in groupedOptions) {
 				options.push({
+					/* The key is the group_name exactly as the app set it. Escaping it is the library's job
+					through enableSecureText, which SanitizeDropdownValues maps to: it runs every option
+					label - group titles included - through secureText() before storing it. */
 					label: key,
 					options: groupedOptions[key],
 
@@ -74,14 +77,28 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 
 		// Method used to generate the HTML String to be attached at the option label
 		private _getOptionIconPrefix(option: DropDownOption): string {
-			return `<i class="${Enum.CssClass.OptionItemIcon} ${option.image_url_or_class}"></i>`;
+			/* The returned String is written into the dropbox innerHTML by the library, so the element is
+			built through the DOM and only then serialized: that way the browser escapes the class attribute
+			for us and an image_url_or_class carrying a double quote can not close the attribute and inject
+			markup of its own. Assigning className keeps the exact same class list this used to produce. */
+			const icon = document.createElement(OSFramework.OSUI.GlobalEnum.HTMLElement.Icon);
+			icon.className = `${Enum.CssClass.OptionItemIcon} ${option.image_url_or_class}`;
+
+			return icon.outerHTML;
 		}
 
 		// Method used to generate the HTML String to be attached at the option label
 		private _getOptionImagePrefix(option: DropDownOption): string {
-			// Since we'll add a src attribute, lets sanitize the given url to avoid XSS
-			const sanitizedUrl = OSFramework.OSUI.Helper.Sanitize(option.image_url_or_class);
-			return `<img class="${Enum.CssClass.OptionItemImage}" src="${sanitizedUrl}">`;
+			/* Built through the DOM for the same reason as the icon prefix: Sanitize() does not escape the
+			double quote, and IsImage() accepts an image extension followed by a query String, so an url
+			such as `photo.png?" onerror="` used to break out of the src attribute. Serializing an element
+			leaves the url itself untouched - the serializer only escapes what would be ambiguous inside the
+			attribute - unlike Sanitize(), which would replace any angle bracket the url legitimately has. */
+			const image = document.createElement(OSFramework.OSUI.GlobalEnum.HTMLElement.Image);
+			image.className = Enum.CssClass.OptionItemImage;
+			image.setAttribute(OSFramework.OSUI.GlobalEnum.HTMLAttributes.Src, option.image_url_or_class);
+
+			return image.outerHTML;
 		}
 
 		// Method used to generate the option info that will be added
@@ -145,7 +162,10 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 
 				option.customData = {};
 
-				// We need to set the customData to obtain it when getSelectedOptions() invoked
+				/* We need to set the customData to obtain it when getSelectedOptions() invoked.
+				Both entries are kept exactly as the app set them: the library escapes them where it uses
+				them - it runs them through secureText() and then through the aria-label boundary - and
+				getSelectedValues() should hand an app back the values it provided. */
 				if (description !== '') {
 					option.customData = { description: description };
 					hasDescription = true;
@@ -169,20 +189,19 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		 * @memberof Providers.OSUI.Dropdown.VirtualSelect.AbstractVirtualSelectConfig
 		 */
 		public getProviderConfig(): VirtualSelectOpts {
-			/* In order to avoid XSS let's sanitize the label of each all options
-			- This must be done here since If we do this at the renderer option we will remain with the
-			library value unSanitized, that said we must do it before adding the list of options to the library!
-			- Description gets the same treatment: the library renders it as HTML into the option row
-			(and secureText is a no-op while SanitizeDropdownValues is False), so an unsanitized
-			description is an XSS sink. Sanitizing before _groupOptions() runs also keeps the copy it
-			places on customData consistent with what is rendered. */
-			for (const option of this.OptionsList) {
-				option.label = OSFramework.OSUI.Helper.Sanitize(option.label);
-
-				if (option.description) {
-					option.description = OSFramework.OSUI.Helper.Sanitize(option.description);
-				}
-			}
+			/* The option text - label, description and group_name - is handed to the library exactly as the
+			app set it, and escaping it is what SanitizeDropdownValues is for: it maps to enableSecureText,
+			under which the library runs every label (group titles included) and every description through
+			secureText() before storing them, and escapes them again at each attribute boundary it writes.
+			OSUI used to sanitize these three here instead, unconditionally, which put it on the wrong side
+			of the property in both positions: with SanitizeDropdownValues True the library already escapes
+			them, so the extra pass was redundant; with it False the app has asked for its markup to render,
+			and the extra pass was the only thing stopping it. It was also lossier than the library's - the
+			`<` to `‹` substitution is never undone, so it reaches the app back through getSelectedValues(),
+			is announced as a guillemet by assistive technology, and makes the text unsearchable, while the
+			library escapes to entities, derives labelNormalized from the raw text and decodes the entities
+			back for accessible names. What stays ours is the icon and image prefix, since
+			image_url_or_class never reaches the library at all. */
 
 			// We need to keep the _groupedOptionsList in order to use it in this._getOptionInfo method
 			const [hasDescription, groupedOptionsList] = this._getGroupedOptionsList();

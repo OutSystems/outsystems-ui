@@ -28,3 +28,5 @@ Each ADR should follow the template in `ADR-0000-Title-of-ADR.md`.
 | :--------- | :--------------------------------------------------------------------- | :------- | :--------- |
 | ADR-0000   | Template for ADRs                                                      | Meta     | 2026-07-29 |
 | ADR-0001   | Replace JS-forced pixel viewport height with CSS viewport units on iOS | Proposed | 2026-07-29 |
+| ADR-0002   | VirtualSelect 1.4.0 upgrade and OSUI validation ownership              | Accepted (section B superseded by ADR-0003) | 2026-08-10 |
+| ADR-0003   | Dropdown option text sanitization follows SanitizeDropdownValues       | Accepted | 2026-08-12 |

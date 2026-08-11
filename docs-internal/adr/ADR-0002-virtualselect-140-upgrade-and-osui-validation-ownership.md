@@ -4,7 +4,7 @@
 
 ## Status
 
-Accepted
+Accepted - section B (Security: HTML in Description Field) superseded by [ADR-0003](./ADR-0003-dropdown-option-text-sanitization-follows-sanitizedropdownvalues.md)
 
 ## Context
 
