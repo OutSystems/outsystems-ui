@@ -12,6 +12,7 @@ OutSystems UI is a UI component library providing TypeScript behaviors and CSS s
 - See [CONTRIBUTING.md](./CONTRIBUTING.md) for development setup, workflow, code standards, PR requirements, and testing procedures
 - See [specs/plan.md](./specs/plan.md) for the phased SCSS token-migration roadmap (Phases 0–11, current state, decisions table)
 - See [specs/implementation.md](./specs/implementation.md) for the per-phase contract (file-by-file change surface, acceptance criteria)
+- See [docs-internal/adr/](./docs-internal/adr/Readme.md) for Architecture Decision Records — cross-cutting decisions (public-repo readiness, Chromatic/visual testing, dev reconciliation policy, the O11 bundle + icon-library boundary, build hygiene) with their rejected alternatives
 
 ## Command Quick Reference
 
@@ -19,8 +20,8 @@ OutSystems UI is a UI component library providing TypeScript behaviors and CSS s
 # Setup and development
 npm run setup              # Install dependencies + start dev server
 npm run dev                # Start dev server for all platforms (http://localhost:3000)
-npm run dev -- --target O11    # Start dev server for O11 platform only
-npm run dev -- --target ODC    # Start dev server for ODC platform only
+npm run dev --target=o11    # Start dev server for O11 platform only
+npm run dev --target=odc    # Start dev server for ODC platform only
 
 # Building and quality checks
 npm run build              # Production build (all platforms) + lint + format
@@ -181,7 +182,7 @@ Use VS Code "Document This" extension (type `/**` above a function/class) for st
 
 ## Styling & Theming Architecture
 
-The SCSS layer is in the middle of a phased migration from hand-rolled OSUI tokens to the `outsystems-design-tokens` package. See `docs/css-architecture.md` for the consolidated architecture summary (tokens → theme layer → component CSS API and the read chain), `docs/css-api-reference.md` for the generated list of every `--osui-*` component property, and `specs/plan.md` / `specs/implementation.md` for the full migration roadmap.
+The SCSS layer is in the middle of a phased migration from hand-rolled OSUI tokens to the `outsystems-design-tokens` package. See `CSS-ARCHITECTURE.md` for the consolidated architecture summary (tokens → theme layer → component CSS API and the read chain), the Storybook "CSS API Reference" page (`stories/CssApiReference.mdx`, regenerated via `npm run docs:css-api`) for every `--osui-*` component property, and `specs/plan.md` / `specs/implementation.md` for the full migration roadmap.
 
 ### Token system — two layers
 
@@ -235,7 +236,7 @@ A theme re-skins the whole library as a single class scope (e.g. `<body class="t
 3. Create public API in `OutSystems/OSUI/Patterns/<PatternName>API.ts`
 4. Add pattern styles in `src/scss/04-patterns/` (categorized by type)
 5. Register the new partial in the matching `gulp/ProjectSpecs/ScssStructure/Patterns*.js` spec — **do not** hand-edit `O11.OutSystemsUI.scss` / `ODC.OutSystemsUI.scss` (they are regenerated on every build)
-6. Test with `npm run dev -- --target O11` and `npm run dev -- --target ODC`
+6. Test with `npm run dev --target=o11` and `npm run dev --target=odc`
 7. Document with JSDoc comments
 8. Verify with `npm run build` (must pass linting)
 
@@ -246,7 +247,7 @@ A theme re-skins the whole library as a single class scope (e.g. `<body class="t
    ```js
    { "name": "Foo description", "path": "01-foundations/foo" }
    ```
-3. Run `npm run dev -- --target ODC` — the generated `ODC.OutSystemsUI.scss` will now include `@import '01-foundations/foo';`
+3. Run `npm run dev --target=odc` — the generated `ODC.OutSystemsUI.scss` will now include `@import '01-foundations/foo';`
 4. Verify the partial compiled into `dist/dev.ODC.OutSystemsUI.css` (grep for a distinctive selector or custom property)
 
 ### Upgrading a provider library
@@ -260,7 +261,7 @@ A theme re-skins the whole library as a single class scope (e.g. `<body class="t
 
 ### Debugging in browser
 
-1. Run `npm run dev -- --target O11` (or ODC)
+1. Run `npm run dev --target=o11` (or ODC)
 2. Open `http://localhost:3000` in browser
 3. Development build includes sourcemaps
 4. Use browser DevTools to debug TypeScript source files

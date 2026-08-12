@@ -160,9 +160,8 @@ body.iconLibrary-phosphor {
 // Submenu – header arrow
 .osui-submenu {
 	&__header__icon {
-		// Hidden by default; revealed via .osui-submenu--is-dropdown (set by Submenu TS
-		// when there are child items — dev fix ROU-12882)
-		display: none;
+		// Visibility (display/--is-dropdown) lives in _submenu.scss — platform-agnostic
+		// behaviour; this file owns only the glyph.
 		margin-inline-start: variables.$token-scale-200;
 		transition: transform 200ms ease;
 		transform-origin: center;
@@ -170,12 +169,6 @@ body.iconLibrary-phosphor {
 		&:after {
 			content: var(--osui-icon-arrow-down);
 			font-family: var(--osui-icon-font-family);
-		}
-	}
-
-	&--is-dropdown {
-		.osui-submenu__header__icon {
-			display: inline-flex;
 		}
 	}
 

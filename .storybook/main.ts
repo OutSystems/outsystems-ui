@@ -88,7 +88,7 @@ if (hasPlatformWidgets) {
  * calls its public `Create(id, configs)` API — exactly what OutSystems Service
  * Studio does at runtime, transcribed to high-code.
  *
- * Prerequisite: run `npm run build:osui` (or `npm run dev -- --target ODC`)
+ * Prerequisite: run `npm run build:osui` (or `npm run dev --target=odc`)
  * once so `dist/ODC.OutSystemsUI.{js,css}` exist. They are served from `/osui`.
  */
 const config: StorybookConfig = {
