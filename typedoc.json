@@ -7,7 +7,7 @@
     "entryPointStrategy": "expand",
     "includeVersion": true,
     "hideGenerator": true,
-    "out": "./docs",
+    "out": "./docs/typedoc",
     "sort": [
         "source-order"
     ],

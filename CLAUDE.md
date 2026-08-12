@@ -19,8 +19,8 @@ OutSystems UI is a UI component library providing TypeScript behaviors and CSS s
 # Setup and development
 npm run setup              # Install dependencies + start dev server
 npm run dev                # Start dev server for all platforms (http://localhost:3000)
-npm run dev -- --target O11    # Start dev server for O11 platform only
-npm run dev -- --target ODC    # Start dev server for ODC platform only
+npm run dev --target=o11    # Start dev server for O11 platform only
+npm run dev --target=odc    # Start dev server for ODC platform only
 
 # Building and quality checks
 npm run build              # Production build (all platforms) + lint + format
@@ -235,7 +235,7 @@ A theme re-skins the whole library as a single class scope (e.g. `<body class="t
 3. Create public API in `OutSystems/OSUI/Patterns/<PatternName>API.ts`
 4. Add pattern styles in `src/scss/04-patterns/` (categorized by type)
 5. Register the new partial in the matching `gulp/ProjectSpecs/ScssStructure/Patterns*.js` spec — **do not** hand-edit `O11.OutSystemsUI.scss` / `ODC.OutSystemsUI.scss` (they are regenerated on every build)
-6. Test with `npm run dev -- --target O11` and `npm run dev -- --target ODC`
+6. Test with `npm run dev --target=o11` and `npm run dev --target=odc`
 7. Document with JSDoc comments
 8. Verify with `npm run build` (must pass linting)
 
@@ -246,7 +246,7 @@ A theme re-skins the whole library as a single class scope (e.g. `<body class="t
    ```js
    { "name": "Foo description", "path": "01-foundations/foo" }
    ```
-3. Run `npm run dev -- --target ODC` — the generated `ODC.OutSystemsUI.scss` will now include `@import '01-foundations/foo';`
+3. Run `npm run dev --target=odc` — the generated `ODC.OutSystemsUI.scss` will now include `@import '01-foundations/foo';`
 4. Verify the partial compiled into `dist/dev.ODC.OutSystemsUI.css` (grep for a distinctive selector or custom property)
 
 ### Upgrading a provider library
@@ -260,7 +260,7 @@ A theme re-skins the whole library as a single class scope (e.g. `<body class="t
 
 ### Debugging in browser
 
-1. Run `npm run dev -- --target O11` (or ODC)
+1. Run `npm run dev --target=o11` (or ODC)
 2. Open `http://localhost:3000` in browser
 3. Development build includes sourcemaps
 4. Use browser DevTools to debug TypeScript source files

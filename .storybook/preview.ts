@@ -78,7 +78,7 @@ function applyDirection(rtl: boolean): void {
  * The dark theme is manual-only: `dark` adds the `.theme-dark` body class, `light`
  * removes it (light is the default — no class). Requires a bundle built AFTER the
  * dark theme was added (the dark CSS lives in `/osui/ODC.OutSystemsUI.css`);
- * rebuild with `npm run dev -- --target ODC`.
+ * rebuild with `npm run dev --target=odc`.
  */
 const COLOR_SCHEME_DARK = 'theme-dark';
 

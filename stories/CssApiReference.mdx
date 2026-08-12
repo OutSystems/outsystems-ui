@@ -454,12 +454,12 @@ _File: `src/scss/04-patterns/03-interaction/_floating-actions.scss`_
 |---|---|
 | `--osui-floating-actions-layer` | `var(--layer-elevated)` |
 | `--osui-floating-actions-button-background` | `var(--color-primary)` |
-| `--osui-floating-actions-button-background-hover` | `#{$token-semantics-primary-800}` |
-| `--osui-floating-actions-button-background-press` | `#{$token-bg-primary-base-press}` |
+| `--osui-floating-actions-button-background-hover` | `var(--color-primary-hover)` |
+| `--osui-floating-actions-button-background-press` | `var(--color-primary-selected)` |
 | `--osui-floating-actions-button-color` | `var(--color-text-inverse)` |
 | `--osui-floating-actions-button-shadow` | `#{$token-elevation-3}` |
 | `--osui-floating-actions-item-background` | `var(--color-background-surface)` |
-| `--osui-floating-actions-item-background-hover` | `#{$token-primitives-neutral-100}` |
+| `--osui-floating-actions-item-background-hover` | `#{$token-bg-neutral-subtlest-hover}` |
 | `--osui-floating-actions-item-background-press` | `#{$token-bg-neutral-subtlest-press}` |
 | `--osui-floating-actions-item-color` | `var(--color-text)` |
 | `--osui-floating-actions-item-shadow` | `#{$token-elevation-2}` |
@@ -469,7 +469,7 @@ _File: `src/scss/04-patterns/03-interaction/_input-with-icon.scss`_
 
 | Property | Default |
 |---|---|
-| `--osui-input-with-icon-icon-color` | `var(--color-text-subtle)` |
+| `--osui-input-with-icon-icon-color` | `$token-icon-default` |
 | `--osui-input-with-icon-icon-hover-color` | `var(--color-text-subtlest)` |
 
 ### Stacked Cards (`.stackedcards`)
@@ -704,7 +704,8 @@ _File: `src/scss/04-patterns/03-interaction/range-slider/_rangeslider.scss`_
 | `--osui-range-slider-handle-background` | `var(--color-background-surface)` |
 | `--osui-range-slider-handle-border-color` | `var(--color-primary)` |
 | `--osui-range-slider-handle-shadow` | `#{$token-elevation-1}` |
-| `--osui-range-slider-disabled-track-color` | `#{$token-bg-neutral-subtle-default}` |
+| `--osui-range-slider-disabled-track-color` | `var(--osui-range-slider-track-color)` |
+| `--osui-range-slider-disabled-connect-color` | `#{$token-bg-neutral-base-default}` |
 | `--osui-range-slider-disabled-color` | `var(--color-text-disabled)` |
 
 ### Timepicker (`.osui-timepicker`)
@@ -766,7 +767,7 @@ _File: `src/scss/04-patterns/04-navigation/_pagination.scss`_
 | `--osui-pagination-button-hover-background` | `#{$token-bg-neutral-subtlest-hover}` |
 | `--osui-pagination-button-padding` | `#{$token-scale-0} #{$token-scale-100}` |
 | `--osui-pagination-button-size` | `#{$token-scale-900}` |
-| `--osui-pagination-button-text-color` | `var(--color-text-subtlest)` |
+| `--osui-pagination-button-text-color` | `var(--color-text)` |
 | `--osui-pagination-active-border-color` | `var(--color-border)` |
 | `--osui-pagination-active-color` | `var(--color-text-subtlest)` |
 | `--osui-pagination-counter-color` | `var(--color-text-subtlest)` |
@@ -921,6 +922,34 @@ _File: `src/scss/04-patterns/06-utilities/_separator.scss`_
 
 ## Foundations
 
+### Icon Library O11 (`:root`)
+_File: `src/scss/01-foundations/_icon-library-o11.scss`_
+
+| Property | Default |
+|---|---|
+| `--osui-icon-font-family` | `'FontAwesome'` |
+| `--osui-icon-arrow-down` | `'\f107'` |
+| `--osui-icon-arrow-up` | `'\f106'` |
+| `--osui-icon-arrow-left` | `'\f104'` |
+| `--osui-icon-arrow-right` | `'\f105'` |
+| `--osui-icon-search` | `'\f002'` |
+| `--osui-icon-clear` | `'\f00d'` |
+| `--osui-icon-chevron-right` | `'\f054'` |
+| `--osui-icon-chevron-left` | `'\f053'` |
+| `--osui-icon-check` | `'\f00c'` |
+| `--osui-icon-info` | `'\f05a'` |
+| `--osui-icon-success` | `'\f058'` |
+| `--osui-icon-error` | `'\f057'` |
+| `--osui-icon-warning` | `'\f071'` |
+| `--osui-icon-sent` | `'\f00c'` |
+| `--osui-icon-time` | `'\f017'` |
+| `--osui-icon-checkbox-checked` | `'\f00c'` |
+| `--osui-icon-arrow-next` | `'\f061'` |
+| `--osui-icon-arrow-previous` | `'\f060'` |
+| `--osui-icon-zoom-in` | `'\f00e'` |
+| `--osui-icon-circle-x` | `'\f057'` |
+| `--osui-icon-circle-check` | `'\f058'` |
+
 ### Icon Library O11 (`.osui-datepicker-calendar-ss-preview, .osui-monthpicker-ss-preview`)
 _File: `src/scss/01-foundations/_icon-library-o11.scss`_
 
@@ -954,6 +983,7 @@ _File: `src/scss/01-foundations/_icon-library-odc.scss`_
 | `--osui-icon-checkbox-checked` | `'\f00c'` |
 | `--osui-icon-arrow-next` | `'\f061'` |
 | `--osui-icon-arrow-previous` | `'\f060'` |
+| `--osui-icon-zoom-in` | `'\f00e'` |
 | `--osui-icon-circle-x` | `'\f057'` |
 | `--osui-icon-circle-check` | `'\f058'` |
 
@@ -981,6 +1011,7 @@ _File: `src/scss/01-foundations/_icon-library-odc.scss`_
 | `--osui-icon-checkbox-checked` | `'\e182'` |
 | `--osui-icon-arrow-next` | `'\e06c'` |
 | `--osui-icon-arrow-previous` | `'\e058'` |
+| `--osui-icon-zoom-in` | `'\e310'` |
 | `--osui-icon-circle-x` | `'\e4f8'` |
 | `--osui-icon-circle-check` | `'\e184'` |
 
@@ -1013,4 +1044,4 @@ _File: `src/scss/01-foundations/_root.scss`_
 
 ---
 
-<sub>469 properties across 79 components, generated from `src/scss`.</sub>
+<sub>494 properties across 80 components, generated from `src/scss`.</sub>

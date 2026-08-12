@@ -64,7 +64,7 @@ See `src/README.md` for detailed structure documentation.
 Start the development server with live reload:
 
 ```bash
-npm run dev -- --target <platform>
+npm run dev --target=<o11|odc>
 ```
 
 Where `<platform>` is optional. If not provided, builds for all platforms. The development server runs at `http://localhost:3000`.
