@@ -56,7 +56,7 @@ namespace Providers.OSUI.SharedProviderResources.Flatpickr {
 					 */
 					if (
 						this._isTimePicker ||
-						document.activeElement.closest(
+						document.activeElement?.closest(
 							`${OSFramework.OSUI.Constants.Dot}${Enum.CssClasses.CalendarContainer}`
 						) === this._picker.provider.calendarContainer
 					) {

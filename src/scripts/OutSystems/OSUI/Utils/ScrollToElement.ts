@@ -69,7 +69,8 @@ namespace OutSystems.OSUI.Utils {
 						}
 
 						// Set the base value to apply on scroll, calculating the difference between the current scroll position and element to scroll
-						let top = scrollableElement.scrollTop + elementToScrollTo.getBoundingClientRect().top + OffSet;
+						let top =
+							scrollableElement?.scrollTop + elementToScrollTo?.getBoundingClientRect().top + OffSet;
 
 						// If fixed header, get the header height so that in the end it won't be covered by the header
 						if (isHeaderFixed) {
@@ -78,10 +79,10 @@ namespace OutSystems.OSUI.Utils {
 								OSFramework.OSUI.GlobalEnum.CssClassElements.Header
 							);
 
-							top = -header.offsetHeight + top;
+							top = -(header?.offsetHeight ?? 0) + top;
 						}
 
-						scrollableElement.scrollTo({
+						scrollableElement?.scrollTo({
 							top: top,
 							left: 0,
 							behavior: scrollBehavior,

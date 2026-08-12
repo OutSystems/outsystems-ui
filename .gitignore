@@ -126,6 +126,12 @@ storybook-static/
 # npmrc file
 .npmrc
 
+# Generated TypeDoc output
+# NOTE: docs/ also holds hand-written architecture docs (css-architecture.md,
+# css-api-reference.md, motion-mapping.md) — those are already tracked, so this
+# ignore does not affect them; add new hand-written docs with `git add -f`.
+docs/
+
 # Storybook platform base CSS — generated at Storybook startup by .storybook/main.ts
 # from @outsystems/runtime-widgets-js (internal feed); stub when that package is absent
 .storybook/platform/

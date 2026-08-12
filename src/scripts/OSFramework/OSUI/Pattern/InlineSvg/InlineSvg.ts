@@ -1,9 +1,18 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSFramework.OSUI.Patterns.InlineSvg {
+	// Type for the A11Y options
+	export type InlineSvgA11YOptions = {
+		label?: string;
+		type: Enum.A11YType;
+	};
+
 	/**
 	 * Defines the interface for OutSystemsUI Patterns
 	 */
 	export class InlineSvg extends AbstractPattern<InlineSvgConfig> implements IInlineSvg {
+		// Store the svg html element
+		private _svgElement: HTMLElement;
+
 		/**
 		 * Creates an instance of InlineSvg.
 		 *
@@ -22,6 +31,7 @@ namespace OSFramework.OSUI.Patterns.InlineSvg {
 				console.error('Please provide a valid SVGCode.');
 			} else {
 				this.selfElement.innerHTML = this.configs.SVGCode;
+				this._svgElement = this.selfElement.querySelector('svg') as unknown as HTMLElement;
 			}
 		}
 
@@ -73,6 +83,53 @@ namespace OSFramework.OSUI.Patterns.InlineSvg {
 		 */
 		protected unsetHtmlElements(): void {
 			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
+		}
+
+		/**
+		 * Method to apply the A11Y properties to the InlineSvg
+		 *
+		 * @param {string} options
+		 * @memberof OSFramework.Patterns.InlineSvg.InlineSvg
+		 */
+		public applyA11YProperties(options: string): void {
+			try {
+				const a11yOptions = JSON.parse(options) as InlineSvgA11YOptions;
+
+				switch (a11yOptions.type) {
+					case Enum.A11YType.Decorative:
+						Helper.A11Y.AriaHiddenTrue(this._svgElement);
+						Helper.Dom.Attribute.Remove(this._svgElement, GlobalEnum.HTMLAttributes.Role);
+						break;
+
+					case Enum.A11YType.Informative:
+						Helper.Dom.Attribute.Set(
+							this._svgElement,
+							GlobalEnum.HTMLAttributes.Role,
+							Constants.A11YAttributes.Role.Img
+						);
+						if (a11yOptions.label) Helper.A11Y.AriaLabel(this._svgElement, a11yOptions.label);
+						break;
+
+					case Enum.A11YType.Interactive:
+						Helper.Dom.Attribute.Set(
+							this._svgElement,
+							GlobalEnum.HTMLAttributes.Role,
+							Constants.A11YAttributes.Role.Button
+						);
+						Helper.Dom.Attribute.Set(
+							this._svgElement,
+							Constants.A11YAttributes.TabIndex,
+							Constants.A11YAttributes.States.TabIndexShow
+						);
+						if (a11yOptions.label) Helper.A11Y.AriaLabel(this._svgElement, a11yOptions.label);
+						break;
+
+					default:
+						throw new Error(`Invalid accessibility type: ${a11yOptions.type}`);
+				}
+			} catch (error) {
+				throw new Error(`Error on set accessibility properties: ${error}`);
+			}
 		}
 
 		/**

@@ -611,6 +611,24 @@
 }
 
 // Accessibility -----------------------------------------------------------------
+///
+.has-accessible-features {
+	.osui-submenu:focus-within {
+		box-shadow: 0 0 0 variables.$token-border-size-075 var(--color-focus-outer);
+		outline: 0;
+	}
+}
+
+// Ported from dev: re-asserts the focus ring over the tablet/phone link styles.
+.tablet,
+.phone {
+	.has-accessible-features {
+		.osui-submenu:focus-within {
+			box-shadow: 0 0 0 variables.$token-border-size-075 var(--color-focus-outer);
+			outline: 0;
+		}
+	}
+}
 
 // OS HighContrast Enabled -------------------------------------------------------
 ///

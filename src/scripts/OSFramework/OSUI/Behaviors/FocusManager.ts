@@ -29,7 +29,7 @@ namespace OSFramework.OSUI.Behaviors {
 				this._lastFocusedElem.hasAttribute(GlobalEnum.HTMLAttributes.Disabled) ||
 				this._lastFocusedElem.tabIndex < 0
 			) {
-				(document.querySelector(OSFramework.OSUI.Constants.FocusableElems) as HTMLElement).focus();
+				(document.querySelector(OSFramework.OSUI.Constants.FocusableElems) as HTMLElement)?.focus();
 			}
 			// Otherwise, return the focus to the stored element.
 			else {

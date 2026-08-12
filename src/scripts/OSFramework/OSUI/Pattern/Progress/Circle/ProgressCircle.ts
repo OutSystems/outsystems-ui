@@ -98,11 +98,13 @@ namespace OSFramework.OSUI.Patterns.Progress.Circle {
 				this._circleSize = this.selfElement.clientWidth;
 				this._needsResizeObserver = false;
 			} else {
-				// Get the pattern parent size, based on lower size by priority (to avoid overflowing the parent, as this will always be a square)
-				if (this._blockParent.clientWidth > this._blockParent.clientHeight) {
-					this._circleSize = this._blockParent.clientHeight;
-				} else {
-					this._circleSize = this._blockParent.clientWidth;
+				if (this._blockParent) {
+					// Get the pattern parent size, based on lower size by priority (to avoid overflowing the parent, as this will always be a square)
+					if (this._blockParent.clientWidth > this._blockParent.clientHeight) {
+						this._circleSize = this._blockParent.clientHeight;
+					} else {
+						this._circleSize = this._blockParent.clientWidth;
+					}
 				}
 
 				// Set the Progress Circle Size variable for calculations
@@ -286,7 +288,7 @@ namespace OSFramework.OSUI.Patterns.Progress.Circle {
 		 * @memberof OSFramework.Patterns.Progress.Circle.Circle
 		 */
 		protected setHtmlElements(): void {
-			this._blockParent = document.getElementById(this.widgetId).parentElement;
+			this._blockParent = document.getElementById(this.widgetId)?.parentElement;
 			// Set the html reference that will be used to do all the needed calcs
 			this.progressElem = this.selfElement.querySelector(Constants.Dot + Enum.CssClass.Progress);
 			// Set Progress Bar content element id
@@ -295,7 +297,7 @@ namespace OSFramework.OSUI.Patterns.Progress.Circle {
 			);
 			// Set the <defs> element when using a svg gradient. Only after built, as the gradient is only available through Client Action
 			if (this.isBuilt) {
-				this._gradientElem = this.progressElem.parentElement.querySelector('defs');
+				this._gradientElem = this.progressElem?.parentElement?.querySelector('defs');
 			}
 		}
 
