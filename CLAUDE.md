@@ -12,6 +12,7 @@ OutSystems UI is a UI component library providing TypeScript behaviors and CSS s
 - See [CONTRIBUTING.md](./CONTRIBUTING.md) for development setup, workflow, code standards, PR requirements, and testing procedures
 - See [specs/plan.md](./specs/plan.md) for the phased SCSS token-migration roadmap (Phases 0–11, current state, decisions table)
 - See [specs/implementation.md](./specs/implementation.md) for the per-phase contract (file-by-file change surface, acceptance criteria)
+- See [docs-internal/adr/](./docs-internal/adr/Readme.md) for Architecture Decision Records — cross-cutting decisions (public-repo readiness, Chromatic/visual testing, dev reconciliation policy, the O11 bundle + icon-library boundary, build hygiene) with their rejected alternatives
 
 ## Command Quick Reference
 
