@@ -1,0 +1,523 @@
+@use '00-abstract/index' as *;
+
+/* ===============================================================================
+IMPORTANT NOTE:
+• This file is generated automatically through npm scripts: 
+├── npm run create-osui-scss 
+|	└── Which will recreate this file as a Dev mode. 
+|
+├── npm run build 
+|	└── When Prod mode is being start, it will be recreated before it's compilation. 
+|
+└── npm run dev 
+	└── When Dev mode is being start, it will be recreated, than the compilation will occurs as usually. 
+
+• In order to proper manage this file, use:
+└── './gulp/ProjectSpecs/ScssStructure/#All.js' 
+
+PS: This comment block will not be visible in the compiled version!
+=============================================================================== */
+
+/*!
+OutSystems UI 2.29.0 • O11 Platform
+Website:
+ • https://www.outsystems.com/outsystems-ui
+GitHub:
+ • https://github.com/OutSystems/outsystems-ui
+*/ 
+/*!
+Section Index:
+0. Root - CSS Variables
+    0.2. Icon library
+1. Resets
+    1.2. Dark theme (opt-in via .theme-dark class)
+2. HTML Elements
+    2.1. Links
+    2.2. Images
+    2.3. Headings
+3. Page Layout
+    3.1. Layout
+    3.2. Header
+    3.3. Layout Native - Header
+    3.4. Layout Side - Header
+    3.5. Menu
+    3.6. Layout Native - Menu
+    3.7. Layout Side - Menu
+    3.8. Menu - Header Logo
+    3.9. Menu - App Menu Link
+    3.10. Menu - App Login Info
+    3.11. Content
+    3.12. ThemeGrid_Container
+    3.13. Section
+    3.14. Login
+    3.15. iOS Scroll Bounce
+4. Widgets
+    4.1. Inputs and TextAreas
+    4.2. Switch
+    4.3. Checkbox
+    4.4. Dropdown
+    4.5. Button
+    4.6. List
+    4.7. List Item
+    4.8. Table
+    4.9. Table - Bulk Actions
+    4.10. Form
+    4.11. Upload
+    4.12. Button Group
+    4.13. Popover
+    4.14. Popup
+    4.15. Feedback Message
+    4.16. Radio Button
+5. Providers
+    5.1. Flatpickr
+    5.2. NoUiSlider
+    5.3. Splide
+    5.4. VirtualSelect
+6. Patterns
+    6.1. Adaptive
+        6.1.1. Columns
+        6.1.2. Gallery
+        6.1.3. Master Detail
+    6.2. Content
+        6.2.1. Accordion
+        6.2.2. Accordion Item
+        6.2.3. Alert
+        6.2.4. Blank Slate
+        6.2.5. Card
+        6.2.6. Card Background
+        6.2.7. Card Item
+        6.2.8. Card Sectioned
+        6.2.9. Chat Message
+        6.2.10. Flip Content
+        6.2.11. Floating Content
+        6.2.12. List Item Content
+        6.2.13. Section
+        6.2.14. Tag
+        6.2.15. Tooltip
+        6.2.16. User Avatar
+    6.3. Interaction
+        6.3.1. Action Sheet
+        6.3.2. Animate
+        6.3.3. Animated Label
+        6.3.4. Balloon
+        6.3.5. Bottom Sheet
+        6.3.6. Carousel
+        6.3.7. DatePicker
+        6.3.8. Dropdown
+            6.3.8.1 Dropdown Search
+            6.3.8.2 Dropdown Tags
+        6.3.9. Floating Actions
+        6.3.10. Input With Icon
+        6.3.11. Lightbox Image
+        6.3.12. MonthPicker
+        6.3.13. Notification
+        6.3.14. RangeSlider
+        6.3.15. Scrollable Area
+        6.3.16. Sidebar
+        6.3.17. Search
+        6.3.18. Stacked Cards
+        6.3.19. TimePicker
+        6.3.20. Video
+    6.4. Navigation
+        6.4.1. Bottom Bar Item
+        6.4.2. Breadcrumbs
+        6.4.3. OverflowMenu
+        6.4.4. Pagination
+        6.4.5. Section Index
+        6.4.6. Submenu
+        6.4.7. Tabs
+        6.4.8. Timeline
+        6.4.9. Wizard
+    6.5. Numbers
+        6.5.1. Badge
+        6.5.2. Counter
+        6.5.3. Icon Badge
+        6.5.4. Progress
+            6.5.4.1 Progress Bar
+            6.5.4.2 Progress Circle
+        6.5.5. Rating
+    6.6. Utilities
+        6.6.1. Align Center
+        6.6.2. Button Loading
+        6.6.3. Center Content
+        6.6.4. Margin Container
+        6.6.5. Separator
+        6.6.6. Pull to Refresh
+        6.6.7. List Updating
+    6.7. Advanced
+        6.7.1. Dropdown ServerSide
+        6.7.2. Dropdown ServerSide Item
+7. Usefull Classes
+    7.1. a11y (Accessibility)
+    7.2. Colors - Brand
+    7.3. Colors - Neutral
+    7.4. Colors - Palette
+    7.5. Colors - Semantic
+    7.6. Colors - Others
+    7.7. Text
+    7.8. Typography
+    7.9. Border Size
+    7.10. Border Radius
+    7.11. Space - Margin
+    7.12. Space - Padding
+    7.13. Shadow
+    7.14. Box Width
+    7.15. Box Height
+    7.16. Display
+    7.17. Display - Flex
+    7.18. Display - Align
+    7.19. Images
+    7.20. Overflow
+    7.21. Visibility
+    7.22. Position
+    7.23. Position - Absolute
+    7.24. Miscellaneous
+8. Screen Transitions
+9. Keyframes - Animations
+    9.1. Animate
+    9.2. Button Loading
+    9.3. List Item
+    9.4. Feedback Message
+    9.5. Pull To Refresh
+    9.6. Miscellaneous
+10. Service Studio Preview
+*/
+
+/*! ==============================================================================
+0. Root - CSS Variables
+=============================================================================== */
+@use '01-foundations/root' as *;
+/*! 0.2. Icon library */
+@use '01-foundations/icon-library-o11' as *;
+
+/*! ==============================================================================
+1. Resets
+=============================================================================== */
+@use '01-foundations/resets' as *;
+/*! 1.2. Dark theme (opt-in via .theme-dark class) */
+@use '01-foundations/theme-dark' as *;
+
+/*! ==============================================================================
+2. HTML Elements
+=============================================================================== */
+/*! 2.1. Links */
+@use '01-foundations/html-elements-link' as *;
+/*! 2.2. Images */
+@use '01-foundations/html-elements-img' as *;
+/*! 2.3. Headings */
+@use '01-foundations/html-elements-headings' as *;
+
+/*! ==============================================================================
+3. Page Layout
+=============================================================================== */
+/*! 3.1. Layout */
+@use '02-layout/layout' as *;
+/*! 3.2. Header */
+@use '02-layout/header' as *;
+/*! 3.3. Layout Native - Header */
+@use '02-layout/header-layout-native' as *;
+/*! 3.4. Layout Side - Header */
+@use '02-layout/header-layout-side' as *;
+/*! 3.5. Menu */
+@use '02-layout/menu' as *;
+/*! 3.6. Layout Native - Menu */
+@use '02-layout/menu-layout-native' as *;
+/*! 3.7. Layout Side - Menu */
+@use '02-layout/menu-layout-side' as *;
+/*! 3.8. Menu - Header Logo */
+@use '02-layout/menu-header-logo' as *;
+/*! 3.9. Menu - App Menu Link */
+@use '02-layout/menu-app-menu-links' as *;
+/*! 3.10. Menu - App Login Info */
+@use '02-layout/menu-app-login-info' as *;
+/*! 3.11. Content */
+@use '02-layout/content' as *;
+/*! 3.12. ThemeGrid_Container */
+@use '02-layout/themegrid-container' as *;
+/*! 3.13. Section */
+@use '02-layout/section' as *;
+/*! 3.14. Login */
+@use '02-layout/login' as *;
+/*! 3.15. iOS Scroll Bounce */
+@use '02-layout/ios-bounce' as *;
+
+/*! ==============================================================================
+4. Widgets
+=============================================================================== */
+/*! 4.1. Inputs and TextAreas */
+@use '03-widgets/inputs-and-textareas' as *;
+/*! 4.2. Switch */
+@use '03-widgets/switch' as *;
+/*! 4.3. Checkbox */
+@use '03-widgets/checkbox' as *;
+/*! 4.4. Dropdown */
+@use '03-widgets/dropdown' as *;
+/*! 4.5. Button */
+@use '03-widgets/btn' as *;
+/*! 4.6. List */
+@use '03-widgets/list' as *;
+/*! 4.7. List Item */
+@use '03-widgets/list-item' as *;
+/*! 4.8. Table */
+@use '03-widgets/table' as *;
+/*! 4.9. Table - Bulk Actions */
+@use '03-widgets/bulk-actions' as *;
+/*! 4.10. Form */
+@use '03-widgets/form' as *;
+/*! 4.11. Upload */
+@use '03-widgets/upload' as *;
+/*! 4.12. Button Group */
+@use '03-widgets/button-group' as *;
+/*! 4.13. Popover */
+@use '03-widgets/popover' as *;
+/*! 4.14. Popup */
+@use '03-widgets/popup' as *;
+/*! 4.15. Feedback Message */
+@use '03-widgets/feedback-message' as *;
+/*! 4.16. Radio Button */
+@use '03-widgets/radio-button' as *;
+
+/*! ==============================================================================
+5. Providers
+=============================================================================== */
+/*! 5.1. Flatpickr */
+@use '04-patterns/03-interaction/date-picker/provider/_flatpickr_lib.scss' as *;
+/*! 5.2. NoUiSlider */
+@use '04-patterns/03-interaction/range-slider/provider/_noUiSlider.scss' as *;
+/*! 5.3. Splide */
+@use '04-patterns/02-content/carousel/provider/splide-core.scss' as *;
+/*! 5.4. VirtualSelect */
+@use '04-patterns/03-interaction/dropdown/provider/_virtualselect_lib.scss' as *;
+
+/*! ==============================================================================
+6. Patterns
+=============================================================================== */
+/*! 6.1. Adaptive */
+/*! 6.1.1. Columns */
+@use '04-patterns/01-adaptive/columns' as *;
+/*! 6.1.2. Gallery */
+@use '../scss/04-patterns/01-adaptive/gallery/gallery' as *;
+/*! 6.1.3. Master Detail */
+@use '04-patterns/01-adaptive/master-detail' as *;
+
+/*! 6.2. Content */
+/*! 6.2.1. Accordion */
+@use '../scss/04-patterns/02-content/accordion/accordion' as *;
+/*! 6.2.2. Accordion Item */
+@use '../scss/04-patterns/02-content/accordion-item/accordion-item' as *;
+/*! 6.2.3. Alert */
+@use '04-patterns/02-content/alert' as *;
+/*! 6.2.4. Blank Slate */
+@use '04-patterns/02-content/blank-slate' as *;
+/*! 6.2.5. Card */
+@use '04-patterns/02-content/card' as *;
+/*! 6.2.6. Card Background */
+@use '04-patterns/02-content/card-background' as *;
+/*! 6.2.7. Card Item */
+@use '04-patterns/02-content/card-item' as *;
+/*! 6.2.8. Card Sectioned */
+@use '04-patterns/02-content/card-sectioned' as *;
+/*! 6.2.9. Chat Message */
+@use '04-patterns/02-content/chat-message' as *;
+/*! 6.2.10. Flip Content */
+@use '../scss/04-patterns/02-content/flip-content/flipcontent' as *;
+/*! 6.2.11. Floating Content */
+@use '04-patterns/02-content/floating-content' as *;
+/*! 6.2.12. List Item Content */
+@use '04-patterns/02-content/list-item-content' as *;
+/*! 6.2.13. Section */
+@use '04-patterns/02-content/section' as *;
+/*! 6.2.14. Tag */
+@use '04-patterns/02-content/tag' as *;
+/*! 6.2.15. Tooltip */
+@use '../scss/04-patterns/03-interaction/tooltip/tooltip' as *;
+/*! 6.2.16. User Avatar */
+@use '04-patterns/02-content/user-avatar' as *;
+
+/*! 6.3. Interaction */
+/*! 6.3.1. Action Sheet */
+@use '04-patterns/03-interaction/action-sheet' as *;
+/*! 6.3.2. Animate */
+@use '04-patterns/03-interaction/animate' as *;
+/*! 6.3.3. Animated Label */
+@use '../scss/04-patterns/03-interaction/animated-label/animated-label' as *;
+/*! 6.3.4. Balloon */
+@use '../scss/04-patterns/03-interaction/balloon/balloon' as *;
+/*! 6.3.5. Bottom Sheet */
+@use '../scss/04-patterns/01-adaptive/bottom-sheet/bottomsheet' as *;
+/*! 6.3.6. Carousel */
+@use '../scss/04-patterns/02-content/carousel/carousel' as *;
+/*! 6.3.7. DatePicker */
+@use '../scss/04-patterns/03-interaction/date-picker/datepicker' as *;
+/*! 6.3.8. Dropdown */
+@use '../scss/04-patterns/03-interaction/dropdown/dropdown' as *;
+/*! 6.3.8.1 Dropdown Search */
+@use '../scss/04-patterns/03-interaction/dropdown/dropdown-search' as *;
+/*! 6.3.8.2 Dropdown Tags */
+@use '../scss/04-patterns/03-interaction/dropdown/dropdown-tags' as *;
+/*! 6.3.9. Floating Actions */
+@use '04-patterns/03-interaction/floating-actions' as *;
+/*! 6.3.10. Input With Icon */
+@use '04-patterns/03-interaction/input-with-icon' as *;
+/*! 6.3.11. Lightbox Image */
+@use '04-patterns/03-interaction/lightbox-image' as *;
+/*! 6.3.12. MonthPicker */
+@use '../scss/04-patterns/03-interaction/month-picker/monthpicker' as *;
+/*! 6.3.13. Notification */
+@use '../scss/04-patterns/03-interaction/notification/notification' as *;
+/*! 6.3.14. RangeSlider */
+@use '../scss/04-patterns/03-interaction/range-slider/rangeslider' as *;
+/*! 6.3.15. Scrollable Area */
+@use '04-patterns/03-interaction/scrollable-area' as *;
+/*! 6.3.16. Sidebar */
+@use '../scss/04-patterns/04-navigation/sidebar/sidebar' as *;
+/*! 6.3.17. Search */
+@use '../scss/04-patterns/03-interaction/search/search' as *;
+/*! 6.3.18. Stacked Cards */
+@use '04-patterns/03-interaction/stacked-cards' as *;
+/*! 6.3.19. TimePicker */
+@use '../scss/04-patterns/03-interaction/time-picker/timepicker' as *;
+/*! 6.3.20. Video */
+@use '../scss/04-patterns/02-content/video/video' as *;
+
+/*! 6.4. Navigation */
+/*! 6.4.1. Bottom Bar Item */
+@use '04-patterns/04-navigation/bottom-bar-item' as *;
+/*! 6.4.2. Breadcrumbs */
+@use '04-patterns/04-navigation/breadcrumbs' as *;
+/*! 6.4.3. OverflowMenu */
+@use '../scss/04-patterns/03-interaction/overflow-menu/overflowmenu' as *;
+/*! 6.4.4. Pagination */
+@use '04-patterns/04-navigation/pagination' as *;
+/*! 6.4.5. Section Index */
+@use '../scss/04-patterns/04-navigation/section-index/sectionindex' as *;
+/*! 6.4.6. Submenu */
+@use '../scss/04-patterns/04-navigation/submenu/submenu' as *;
+/*! 6.4.7. Tabs */
+@use '../scss/04-patterns/04-navigation/tabs/tabs' as *;
+/*! 6.4.8. Timeline */
+@use '04-patterns/04-navigation/timeline' as *;
+/*! 6.4.9. Wizard */
+@use '04-patterns/04-navigation/wizard' as *;
+
+/*! 6.5. Numbers */
+/*! 6.5.1. Badge */
+@use '04-patterns/05-numbers/badge' as *;
+/*! 6.5.2. Counter */
+@use '04-patterns/05-numbers/counter' as *;
+/*! 6.5.3. Icon Badge */
+@use '04-patterns/05-numbers/icon-badge' as *;
+/*! 6.5.4. Progress */
+/*! 6.5.4.1 Progress Bar */
+@use '../scss/04-patterns/05-numbers/progress/progressbar' as *;
+/*! 6.5.4.2 Progress Circle */
+@use '../scss/04-patterns/05-numbers/progress/progresscircle' as *;
+/*! 6.5.5. Rating */
+@use '../scss/04-patterns/05-numbers/rating/rating' as *;
+
+/*! 6.6. Utilities */
+/*! 6.6.1. Align Center */
+@use '04-patterns/06-utilities/align-center' as *;
+/*! 6.6.2. Button Loading */
+@use '../scss/04-patterns/03-interaction/button-loading/button-loading' as *;
+/*! 6.6.3. Center Content */
+@use '04-patterns/06-utilities/center-content' as *;
+/*! 6.6.4. Margin Container */
+@use '04-patterns/06-utilities/margin-container' as *;
+/*! 6.6.5. Separator */
+@use '04-patterns/06-utilities/separator' as *;
+/*! 6.6.6. Pull to Refresh */
+@use '04-patterns/06-utilities/pull-to-refresh' as *;
+/*! 6.6.7. List Updating */
+@use '04-patterns/06-utilities/list-updating' as *;
+/*! 6.7. Advanced */
+/*! 6.7.1. Dropdown ServerSide */
+@use '../scss/04-patterns/03-interaction/dropdown/dropdown-serverside' as *;
+/*! 6.7.2. Dropdown ServerSide Item */
+@use '../scss/04-patterns/03-interaction/dropdown/dropdownserversideitem' as *;
+
+/*! ==============================================================================
+7. Usefull Classes
+=============================================================================== */
+/*! 7.1. a11y (Accessibility) */
+@use '05-useful/a11y' as *;
+/*! 7.2. Colors - Brand */
+@use '05-useful/colors-brand' as *;
+/*! 7.3. Colors - Neutral */
+@use '05-useful/colors-neutral' as *;
+/*! 7.4. Colors - Palette */
+@use '05-useful/colors-palette' as *;
+/*! 7.5. Colors - Semantic */
+@use '05-useful/colors-semantic' as *;
+/*! 7.6. Colors - Others */
+@use '05-useful/colors-others' as *;
+/*! 7.7. Text */
+@use '05-useful/text' as *;
+/*! 7.8. Typography */
+@use '05-useful/typography' as *;
+/*! 7.9. Border Size */
+@use '05-useful/border-size' as *;
+/*! 7.10. Border Radius */
+@use '05-useful/border-radius' as *;
+/*! 7.11. Space - Margin */
+@use '05-useful/space-margin' as *;
+/*! 7.12. Space - Padding */
+@use '05-useful/space-padding' as *;
+/*! 7.13. Shadow */
+@use '05-useful/shadow' as *;
+/*! 7.14. Box Width */
+@use '05-useful/box-width' as *;
+/*! 7.15. Box Height */
+@use '05-useful/box-height' as *;
+/*! 7.16. Display */
+@use '05-useful/display' as *;
+/*! 7.17. Display - Flex */
+@use '05-useful/display-flex' as *;
+/*! 7.18. Display - Align */
+@use '05-useful/display-align' as *;
+/*! 7.19. Images */
+@use '05-useful/images' as *;
+/*! 7.20. Overflow */
+@use '05-useful/overflow' as *;
+/*! 7.21. Visibility */
+@use '05-useful/visibility' as *;
+/*! 7.22. Position */
+@use '05-useful/positioning' as *;
+/*! 7.23. Position - Absolute */
+@use '05-useful/positioning-absolute' as *;
+/*! 7.24. Miscellaneous */
+@use '05-useful/miscellaneous' as *;
+
+/*! ==============================================================================
+8. Screen Transitions
+=============================================================================== */
+@use '06-screen-transitions/screen-transitions' as *;
+
+/*! ==============================================================================
+9. Keyframes - Animations
+=============================================================================== */
+/*! 9.1. Animate */
+@use '07-keyframes/animate' as *;
+/*! 9.2. Button Loading */
+@use '07-keyframes/btn-loading' as *;
+/*! 9.3. List Item */
+@use '07-keyframes/list-item' as *;
+/*! 9.4. Feedback Message */
+@use '07-keyframes/feedback-message' as *;
+/*! 9.5. Pull To Refresh */
+@use '07-keyframes/pull-to-refresh' as *;
+/*! 9.6. Miscellaneous */
+@use '07-keyframes/miscellaneous' as *;
+
+/*! ==============================================================================
+10. Service Studio Preview
+=============================================================================== */
+@use '08-servicestudio-preview/servicestudiopreview' as *;
+@use '08-servicestudio-preview/placeholder-empty-o11' as *;
+@use '08-servicestudio-preview/deprecated-preview' as *;
+
+/* ===============================================================================
+Excluders
+=============================================================================== */
+@use '09-excluders/excluders' as *;
+
