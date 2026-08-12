@@ -58,6 +58,18 @@ namespace OSFramework.OSUI.Helper {
 		}
 
 		/**
+		 * Method that will define the aria-current
+		 *
+		 * @param {HTMLElement} element Target element to receive the value atributte
+		 * @param {GlobalEnum.A11YAriaCurrentValues} value Value that will be set on aria atributte
+		 * @returns
+		 * @memberof OSFramework.Helper.A11Y
+		 */
+		public static AriaCurrent(element: HTMLElement, value: GlobalEnum.A11YAriaCurrentValues): void {
+			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Current.prop, value);
+		}
+
+		/**
 		 * Method that will define the aria-describedby
 		 *
 		 * @param {HTMLElement} element Target element to receive the value atributte

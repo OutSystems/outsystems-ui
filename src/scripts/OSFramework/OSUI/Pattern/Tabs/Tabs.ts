@@ -238,8 +238,8 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 					// Set the target index element based on enabled tabs header elements
 					targetHeaderItemIndex =
 						this._tabsHeadersEnabled[currentTabHeader + 1] === undefined
-							? this._tabsHeadersEnabled[0].getDataTab()
-							: this._tabsHeadersEnabled[currentTabHeader + 1].getDataTab();
+							? this._tabsHeadersEnabled[0]?.getDataTab()
+							: this._tabsHeadersEnabled[currentTabHeader + 1]?.getDataTab();
 
 					this.changeTab(targetHeaderItemIndex, undefined, true);
 
@@ -780,7 +780,7 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 		protected setA11YProperties(): void {
 			if (this.isBuilt) {
 				// Set aria-role to TabsHeader
-				Helper.A11Y.RoleTabList(this._tabsHeaderElement.firstElementChild as HTMLElement);
+				Helper.A11Y.RoleTabList(this._tabsHeaderElement?.firstElementChild as HTMLElement | undefined);
 				// Set aria-hidden to tabs indicator
 				Helper.A11Y.AriaHiddenTrue(this._tabsIndicatorElement);
 			}
