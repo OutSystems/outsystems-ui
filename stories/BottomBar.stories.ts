@@ -7,10 +7,13 @@ import { cls, extendedClassArgType } from './_helpers/lowcode';
  * from src/scss/04-patterns/04-navigation/_bottom-bar-item.scss:
  *
  *   .bottom-bar-wrapper                    surface + top border (height: 100%)
- *     .bottom-bar > a[.active]             one anchor per item (flex: 1)
+ *     .bottom-bar > div[.active]           one container per item (flex: 1)
  *       .bottom-bar-item                   column layout
  *         .bottom-bar-item-icon            icon slot
  *         .bottom-bar-item-text            ellipsized label
+ *
+ * The item wrapper is a plain container — the BottomBarItem block does not render an
+ * `<a>` — so the mock uses `div`. The SCSS covers `> a, > div` for that reason.
  *
  * In the native layout the wrapper lives in a `.footer` sized by
  * `--size-bottom-bar`; the demo box reproduces that height.
@@ -52,12 +55,12 @@ export const Default: Story = {
 					<div class="bottom-bar" style="height: 100%;">
 						${ITEMS.map(
 							([label, icon], i) => `
-							<a href="#" class="${cls(i === activeIndex && 'active')}" style="text-align: center;" onclick="return false">
+							<div class="${cls(i === activeIndex && 'active')}">
 								<div class="bottom-bar-item">
 									<div class="bottom-bar-item-icon"><i class="icon ph ${icon}"></i></div>
 									<div class="bottom-bar-item-text">${label}</div>
 								</div>
-							</a>`
+							</div>`
 						).join('')}
 					</div>
 				</div>

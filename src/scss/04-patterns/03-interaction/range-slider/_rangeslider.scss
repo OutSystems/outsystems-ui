@@ -13,7 +13,10 @@
 	--osui-range-slider-handle-background: var(--color-background-surface);
 	--osui-range-slider-handle-border-color: var(--color-primary);
 	--osui-range-slider-handle-shadow: #{variables.$token-elevation-1};
-	--osui-range-slider-disabled-track-color: #{variables.$token-bg-neutral-subtle-default};
+	// Disabled: the track lightens from the enabled `--color-border` (#cecece), and the
+	// filled connect lightens further still so it recedes rather than standing out.
+	--osui-range-slider-disabled-track-color: var(--osui-range-slider-track-color);
+	--osui-range-slider-disabled-connect-color: #{variables.$token-bg-neutral-base-default};
 	--osui-range-slider-disabled-color: var(--color-text-disabled);
 	// ───────────────────────────────────────────────────────────────────
 
@@ -249,20 +252,21 @@
 			--osui-range-slider-handle-background: var(--color-background-input-disabled);
 			--osui-range-slider-disabled-color: var(--color-text-disabled);
 
+			// noUiSlider turns the provider element itself into `.noUi-target`, so the
+			// disabled track colour belongs HERE and not on a descendant — a nested
+			// `.noUi-target` rule matches nothing and silently leaves the track at its
+			// enabled colour.
+			background-color: var(--osui-range-slider-disabled-track-color);
 			pointer-events: none;
 
 			.noUi {
-				&-target {
-					background-color: var(--color-border);
-				}
-
 				&-connect {
-					background-color: var(--color-text-disabled);
+					background-color: var(--osui-range-slider-disabled-connect-color);
 				}
 
 				&-handle {
-					background-color: var(--osui-range-slider-handle-background);
-					border: variables.$token-border-size-025 solid var(--color-border-input);
+					--osui-range-slider-handle-border-color: #{variables.$token-border-input-default};
+
 					box-shadow: none;
 
 					&:before,
@@ -276,9 +280,9 @@
 				}
 			}
 
-			.noUi-tooltip {
-				color: var(--osui-range-slider-disabled-color);
-			}
+			// The floating value label deliberately keeps its default `--color-text` and is
+			// NOT dimmed: the current value stays readable while disabled. Only the scale
+			// (pips) recedes. Don't add a `.noUi-tooltip` colour override here.
 		}
 	}
 }
@@ -293,8 +297,13 @@
 			border-color: var(--color-focus-outer);
 		}
 
+		// Keep the handle's own border colour on focus — the focus affordance is the halo
+		// below, not a recolour. This rule comes after the `.noUi-active` / `:hover`
+		// primary border at equal specificity, so hardcoding a colour here silently wins
+		// over it and turns the pressed handle black. Routing through the CSS API var also
+		// means a disabled handle (which overrides it) stays grey when focused.
 		.noUi-handle:focus {
-			border-color: var(--color-text);
+			border-color: var(--osui-range-slider-handle-border-color);
 			box-shadow: 0 0 0 variables.$token-border-size-075 var(--color-focus-outer);
 		}
 	}

@@ -21,7 +21,11 @@ const watchTsFiles = 'src/**/*.ts';
 
 // Clean Dist Folder
 function cleanOldFiles() {
-    return gulp.src(distFolder + "/*", {read: false}).pipe(clean());
+    if(fs.existsSync(distFolder) === false) {
+        return Promise.resolve();
+    }
+
+    return gulp.src(distFolder + "/*", {read: false, allowEmpty: true}).pipe(clean());
 }
 
 // Starts a Browser instance

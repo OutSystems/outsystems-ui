@@ -934,7 +934,7 @@ Also replaces the hardcoded `rgba(21, 24, 26, 0.04)` hover background.
     // ─── Component CSS API ─────────────────────────────────────────────
     --osui-pagination-button-background:       var(--token-bg-surface-default);
     --osui-pagination-button-border-color:     var(--token-border-default);
-    --osui-pagination-button-color:            var(--token-text-subtlest);
+    --osui-pagination-button-text-color:       var(--token-text-subtlest);
     --osui-pagination-button-border-radius:    var(--token-border-radius-100);
     --osui-pagination-button-hover-background: var(--token-bg-neutral-subtle-default);
     --osui-pagination-active-border-color:     var(--token-semantics-primary-base);
@@ -944,11 +944,11 @@ Also replaces the hardcoded `rgba(21, 24, 26, 0.04)` hover background.
     background-color: var(--osui-pagination-button-background);
     border-color: var(--osui-pagination-button-border-color);
     border-radius: var(--osui-pagination-button-border-radius);
-    color: var(--osui-pagination-button-color);
+    color: var(--osui-pagination-button-text-color);
 
     &.is--active {
       --osui-pagination-button-border-color: var(--osui-pagination-active-border-color);
-      --osui-pagination-button-color:        var(--osui-pagination-active-color);
+      --osui-pagination-button-text-color:   var(--osui-pagination-active-color);
     }
   }
 }

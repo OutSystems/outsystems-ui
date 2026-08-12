@@ -109,7 +109,14 @@ function extract(src) {
 			if (m) {
 				// Outermost non-at-rule selector owns the declaration.
 				const root = stack.find((s) => s && !s.startsWith('@')) ?? stack[0] ?? '(root)';
-				out.push({ root, name: m[1], value: m[2].trim().replace(/\s+/g, ' '), order: order++ });
+				// Since the @use/@forward migration (ROU-12911) token vars are reached through
+				// the module namespace (`variables.$token-x`). The reference documents the
+				// authoring form, so the namespace accessor is dropped.
+				const value = m[2]
+					.trim()
+					.replace(/\s+/g, ' ')
+					.replace(/\bvariables\.\$/g, '$');
+				out.push({ root, name: m[1], value, order: order++ });
 			}
 			buf = '';
 		} else {
