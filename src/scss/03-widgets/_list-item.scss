@@ -24,6 +24,23 @@
 	&:last-of-type {
 		border-bottom: none;
 	}
+
+	// ButtonsEffect.ts still injects a `.scale-animation` span on click and relies on the
+	// `animationend` event to remove it. Click feedback is now the `:active` background
+	// below, so the animation is kept running but paints nothing: a zero-sized transparent
+	// box. 
+	.scale-animation {
+		animation: list-item-scale-animation variables.$token-transition-time-1500;
+		background: transparent;
+		display: block;
+		height: 0;
+		left: 50%;
+		opacity: 0;
+		pointer-events: none;
+		position: absolute;
+		top: 50%;
+		width: 0;
+	}
 }
 
 ///

@@ -15,6 +15,10 @@ const sectionInfo = {
             "path": "07-keyframes/btn-loading"
         },
         {
+            "name": "List Item",
+            "path": "07-keyframes/list-item"
+        },
+        {
             "name": "Feedback Message",
             "path": "07-keyframes/feedback-message"
         },
