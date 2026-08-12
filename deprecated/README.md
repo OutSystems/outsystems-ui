@@ -1,1 +1,1 @@
-Last compiled CSS output before the token migration (Make Great UI). For reference and visual regression comparison only.
+Last compiled CSS output before the token migration, with the old theme snapshot.
