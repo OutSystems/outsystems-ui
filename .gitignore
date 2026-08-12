@@ -130,6 +130,5 @@ storybook-static/
 # from @outsystems/runtime-widgets-js (internal feed); stub when that package is absent
 .storybook/platform/
 
-# Generated TypeDoc output (docs/ root holds hand-written architecture docs — tracked;
-# typedoc.json points "out" at this subdirectory so `npm run docs` cannot clobber them)
-docs/typedoc/
+# Generated TypeDoc output
+docs/
