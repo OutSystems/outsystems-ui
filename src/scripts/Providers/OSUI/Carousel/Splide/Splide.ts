@@ -40,12 +40,12 @@ namespace Providers.OSUI.Carousel.Splide {
 		}
 
 		// Announce the active slide via the hidden aria-live status element
-		private _announceActiveSlide(activeIndex?: number): void {
+		private _announceActiveSlide(): void {
 			if (this._a11yStatusElem === undefined) {
 				return;
 			}
 
-			const activeSlide = this._resolveActiveSlideElem(activeIndex);
+			const activeSlide = this._resolveActiveSlideElem();
 			if (activeSlide === undefined) {
 				return;
 			}
@@ -153,9 +153,15 @@ namespace Providers.OSUI.Carousel.Splide {
 			);
 		}
 
-		// Resolve slide by Splide index — safe inside Moved handlers that run before .is-active updates
+		// Resolve slide by Splide index — safe inside Moved handlers that run before .is-active updates.
 		private _getSlideElemByIndex(index: number): HTMLElement {
-			return this.provider?.Components?.Slides?.getAt(index)?.slide;
+			const slides = this.provider?.Components?.Slides;
+			if (slides === undefined) {
+				return undefined;
+			}
+
+			const original = slides.get(true)?.find((slide) => slide.index === index);
+			return original?.slide ?? slides.getAt(index)?.slide;
 		}
 
 		// Method to init the provider
@@ -250,9 +256,9 @@ namespace Providers.OSUI.Carousel.Splide {
 			}, 500);
 		}
 
-		// Prefer event/provider index; fall back to .is-active when index is unavailable (e.g. pre-mount)
+		// Resolve via provider.index (or explicit index); fall back to .is-active when unavailable
 		private _resolveActiveSlideElem(activeIndex?: number): HTMLElement {
-			const index = activeIndex ?? this.provider?.index;
+			const index = activeIndex ?? this.provider.index;
 
 			if (index !== undefined && index !== null && this.provider?.Components?.Slides) {
 				const slideByIndex = this._getSlideElemByIndex(index);
@@ -357,19 +363,21 @@ namespace Providers.OSUI.Carousel.Splide {
 				if (index !== this._currentIndex) {
 					this.triggerPlatformEventCallback(this._platformEventOnSlideMoved, index);
 					this._currentIndex = index;
-					// Only sync selection state on move — full setA11YProperties runs on mount/refresh
-					this._syncActiveSlideAriaCurrent(index);
 
-					// Skip the first move (page load) and suppress announcements while autoplay is playing
-					if (this.provider.Components.Autoplay.isPaused()) {
-						this._announceActiveSlide(index);
-					}
+					OSFramework.OSUI.Helper.AsyncInvocation(() => {
+						this._syncActiveSlideAriaCurrent();
+
+						// Suppress announcements while autoplay is playing
+						if (this.provider.Components.Autoplay.isPaused()) {
+							this._announceActiveSlide();
+						}
+					});
 				}
 			});
 		}
 
 		// Set aria-current on the active non-clone slide and clear it from every other slide
-		private _syncActiveSlideAriaCurrent(activeIndex?: number): void {
+		private _syncActiveSlideAriaCurrent(): void {
 			this.selfElement
 				.querySelectorAll(OSFramework.OSUI.Constants.Dot + Enum.CssClass.SplideSlide)
 				.forEach((slide) =>
@@ -379,7 +387,7 @@ namespace Providers.OSUI.Carousel.Splide {
 					)
 				);
 
-			const activeSlide = this._resolveActiveSlideElem(activeIndex);
+			const activeSlide = this._resolveActiveSlideElem();
 			if (activeSlide) {
 				OSFramework.OSUI.Helper.Dom.Attribute.Set(
 					activeSlide,
@@ -442,6 +450,11 @@ namespace Providers.OSUI.Carousel.Splide {
 		protected setA11YProperties(): void {
 			this._setA11yStatusElem();
 			this._setListRoles();
+
+			// Splide emits mounted/ready after our sync and clearsaria-current via Slide.updateActivity when isNavigation is false — re-apply after.
+			OSFramework.OSUI.Helper.AsyncInvocation(() => {
+				this._syncActiveSlideAriaCurrent();
+			});
 		}
 
 		/**
