@@ -16,6 +16,8 @@
 	--osui-timeline-icon-color: var(--color-text-inverse);
 	--osui-timeline-icon-size: #{variables.$token-scale-600};
 	--osui-timeline-line-color: var(--color-border);
+	// TODO: needs a line-height token
+	--osui-timeline-line-height: 21px;
 	--osui-timeline-text-color: var(--color-text-subtlest);
 	--osui-timeline-title-color: var(--color-text);
 	--osui-timeline-title-font-weight: #{variables.$token-font-weight-medium};
@@ -28,6 +30,8 @@
 		display: flex;
 		font-size: var(--osui-timeline-font-size);
 		justify-content: space-between;
+		line-height: var(--osui-timeline-line-height);
+		margin-bottom: var(--osui-timeline-gap);
 		position: relative;
 
 		.timeline-content {
@@ -52,7 +56,7 @@
 		&-line {
 			background-color: var(--osui-timeline-line-color);
 			flex: 1;
-			margin: variables.$token-space-200 variables.$token-space-0;
+			margin: variables.$token-space-200 variables.$token-space-0 variables.$token-space-0;
 			width: variables.$token-border-size-025;
 		}
 
