@@ -4,7 +4,7 @@
 
 ## Status
 
-Proposed — section **A** and section **B → Option 1** are accepted and implemented (commit `d6a895d97`); section **C** is open pending a call on the widget stories.
+Proposed — section **A** and section **B → Option 1** are accepted and implemented on `.github/workflows/chromatic.yaml`; section **C** is open pending a call on the widget stories.
 
 ## Context
 
@@ -86,7 +86,8 @@ Two properties of those stories matter for section C. They **mount the real plat
 ### A. Preventing silent no-op builds
 
 - **Option 1: leave ADR-0004's config as-is** — Pros: none beyond inertia. Cons: demonstrated to report green having captured 0 snapshots. Rejected.
-- **Option 2: disable TurboSnap for `ROU-12714` (PRs into it and pushes to it)** — Pros: correctness does not depend on TurboSnap resolving a parent build across squash-merges; ~100 stories is a cheap full build. Cons: loses the savings ADR-0004 §A Option 3 was protecting, for this branch only.
+- **Option 2: disable TurboSnap for `ROU-12714` only** (`onlyChanged` gated on the branch, `externals` retained for the `dev` path) — Pros: keeps ADR-0004's savings wherever TurboSnap still resolves. Cons: **the two options are coupled** — the CLI rejects `--externals` unless `--only-changed` is set (`✖ Invalid --externals`), so a branch-conditional `onlyChanged` fails the build outright on the branch it is meant to protect. Tried and reverted.
+- **Option 2a: disable TurboSnap unconditionally and drop `externals` with it** — Pros: no conditional inputs and no coupled pair to get wrong; every build snapshots every story on every branch. Cons: loses the savings ADR-0004 §A Option 3 was protecting, including on the future `dev` path.
 - **Option 3: fail the job when the PR touched the visual surface but `actualCaptureCount` is 0** — Pros: converts any future silent no-op — from any cause, not just this one — into a red check. Cons: one more step to understand.
 
 ### B. Restoring authentication on `push`
@@ -105,11 +106,11 @@ Two properties of those stories matter for section C. They **mount the real plat
 
 ## Decision Outcome
 
-**A → Options 2 + 3 (accepted, implemented). B → Option 1 (accepted, external ask). C → open.**
+**A → Options 2a + 3 (accepted, implemented). B → Option 1 (accepted, external ask). C → open.**
 
-Implemented in `d6a895d97` on `.github/workflows/chromatic.yaml`:
+Implemented on `.github/workflows/chromatic.yaml`:
 
-- `onlyChanged: ${{ github.base_ref != 'ROU-12714' && github.ref_name != 'ROU-12714' }}` — TurboSnap stays on for the `dev` path, off for the integration branch.
+- `onlyChanged` and `externals` both removed from the `chromaui/action` inputs — every build snapshots every story. The branch-conditional form (Option 2) was tried first and failed the build: `externals` is only accepted alongside `onlyChanged: true`, so the two must be added or removed together. A comment on the step records that constraint.
 - A `🔍 Detect changes to the visual surface` step counting changes under `src/`, `stories/`, `.storybook/`, and a final `🛡️ Verify Chromatic actually captured snapshots` step that fails the job when that count is non-zero and `actualCaptureCount` is `0`. It runs after the PR comment so reviewers keep the build link, and is gated on `pull_request` so fork runs stay neutral.
 
 Section B is a request to the owners of the `OSUI_AZURE_CLIENT_ID` registration; until it lands, no baseline exists and section C decides whether we wait.
@@ -121,13 +122,13 @@ Positive consequences:
 
 Negative consequences:
 
-- Full snapshots on every PR into `ROU-12714` until the initiative moves to `dev`.
+- Full snapshots on every build, on every branch — including docs-only PRs and the future `dev` path, not just `ROU-12714`. Re-enabling TurboSnap later means restoring `onlyChanged` **and** `externals` as a pair.
 - The capture guard only covers `pull_request`; push builds would need a different changed-file base (`github.event.before`) to be covered too.
 - Baselines remain absent until B lands or C is decided — every PR diff on the branch is provisional in the meantime.
 
 ## Links
 
-- Amends ADR-0004 §A: `onlyChanged` + `externals` is retained for `dev` but replaced by a full build on `ROU-12714`, because `externals` cannot fire when the changed-file list is empty.
+- Supersedes ADR-0004 §A: `onlyChanged` + `externals` is removed outright rather than retained for `dev`, because `externals` cannot fire when the changed-file list is empty and the CLI will not accept it without `onlyChanged`.
 - Builds on ADR-0003 (public-repo readiness): the optional-dependency + glob-narrowing path is what makes C Option 2 viable, and ADR-0003 §B is what C Options 3 and 4 would reopen.
 - Failing run: <https://github.com/OutSystems/outsystems-ui/actions/runs/31690540261> · Silent-pass build #31: <https://www.chromatic.com/build?appId=6a1eb7050a5a593505d96954&number=31>
 - Entra workload-identity federation: <https://learn.microsoft.com/entra/workload-id/workload-identity-federation>
