@@ -9,12 +9,12 @@
 ///
 .bottom-bar-wrapper {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-bottom-bar-background:         var(--color-background-surface);
-	--osui-bottom-bar-border-color:       var(--color-border);
-	// Inactive items are full-strength text, not a muted grey — the design pairs a
-	// dark inactive item against the primary active one, so both read as first-class.
-	--osui-bottom-bar-item-color:         var(--color-text);
-	--osui-bottom-bar-item-active-color:  var(--color-primary);
+	--osui-bottom-bar-background:              var(--color-background-surface);
+	--osui-bottom-bar-border-color:            var(--color-border);
+	--osui-bottom-bar-item-color:              var(--color-text-subtlest);
+	--osui-bottom-bar-item-active-color:       var(--color-primary);
+	--osui-bottom-bar-item-icon-color:         #{variables.$token-icon-subtlest};
+	--osui-bottom-bar-item-icon-active-color:  var(--osui-bottom-bar-item-active-color);
 	// ───────────────────────────────────────────────────────────────────
 
 	background-color: var(--osui-bottom-bar-background);
@@ -25,6 +25,7 @@
 ///
 .bottom-bar {
 	display: flex;
+	
 	&:empty:after {
 		color: var(--color-text-subtlest);
 		content: 'Add Bottom Bar Items to this Container';
@@ -46,6 +47,10 @@
 
 		&.active {
 			color: var(--osui-bottom-bar-item-active-color);
+
+			.bottom-bar-item-icon {
+				color: var(--osui-bottom-bar-item-icon-active-color);
+			}
 		}
 	}
 	&-item {
@@ -59,12 +64,15 @@
 		padding: 0 variables.$token-scale-200;
 		position: relative;
 		text-align: center;
+
 		&-icon {
+			color: var(--osui-bottom-bar-item-icon-color);
 			display: inline-flex;
 			font-size: variables.$token-font-size-600;
 			height: auto;
 			justify-content: center;
 		}
+
 		&-text {
 			overflow: hidden;
 			text-overflow: ellipsis;
