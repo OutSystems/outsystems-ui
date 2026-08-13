@@ -92,8 +92,9 @@ export const Default: StoryObj<UserAvatarArgs> = {
 		const shapeClass = shape ? `border-radius-${shape}` : '';
 		const sizeClass = size ? `avatar-${size}` : '';
 		const label = `user initials, ${initials(name)}`;
+		// Image sizing/fit/radius is owned by the pattern SCSS (Type=Image in Figma).
 		const inner = image
-			? `<img src="${image}" alt="${name}" style="width:100%;height:100%;object-fit:cover;" />`
+			? `<img src="${image}" alt="${name}" />`
 			: `<span class="OSFillParent">${initials(name)}</span>`;
 		return renderStatic(
 			`<div class="${cls('avatar', sizeClass, shapeClass, bgClass, textClass, extendedClass)}" role="img" aria-label="${label}">${inner}</div>`

@@ -127,7 +127,7 @@
 	--osui-motion-duration-130: 130ms; // future: --token-transition-time-130
 	--osui-motion-duration-180: 180ms; // future: --token-transition-time-180
 	--osui-motion-duration-400: 400ms; // future: --token-transition-time-400
-	--osui-bg-surface-hover: #{variables.$token-primitives-neutral-100}; // future: --token-bg-surface-hover (#f3f3f3)
+	--osui-bg-surface-hover: #{variables.$token-bg-neutral-subtlest-hover};
 	--osui-bg-surface-active: color-mix(
 		in srgb,
 		#{variables.$token-semantics-primary-base} 8%,

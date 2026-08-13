@@ -22,9 +22,11 @@ import { cls, extendedClassArgType } from './_helpers/lowcode';
  * `.pagination-input` + `.pagination-counter` inside `.pagination-container` under the
  * comment "With ShowGoToPage parameter, this container is in this context".
  *
- * The prev/next chevrons must stay the first and last children of `.pagination-container`
- * in both modes — `_pagination.scss` draws them with
- * `.pagination-container > .pagination-button:first-child/:last-child::before`.
+ * The prev/next buttons stay the first and last children of `.pagination-container` in both
+ * modes. They hold an **Icon widget placeholder** in the low-code block, so the story renders
+ * a real icon element (`i.icon.ph.ph-caret-left` / `ph-caret-right`) inside each button —
+ * `_pagination.scss` no longer draws the chevrons with `::before` (commit 39b522d75).
+ * `.is-rtl .pagination-button .icon` rotates them 180° for RTL.
  */
 type PaginationArgs = {
 	startIndex: number;
@@ -75,8 +77,11 @@ const meta: Meta<PaginationArgs> = {
 		const rangeEnd = Math.min(currentPage * maxRecords, totalCount);
 
 		const counter = `<div class="pagination-counter">${rangeStart} to ${rangeEnd} of ${totalCount} items</div>`;
-		const prev = `<button class="pagination-button" aria-label="Previous page"${currentPage === 1 ? ' disabled' : ''}><span class="icon"></span></button>`;
-		const next = `<button class="pagination-button" aria-label="Next page"${currentPage === totalPages ? ' disabled' : ''}><span class="icon"></span></button>`;
+		// Prev/next hold Icon widget placeholders in the low-code block — rendered here as the
+		// same `i.icon.ph.*` markup the Icon widget outputs, so the chevrons come from the
+		// icon font rather than from CSS.
+		const prev = `<button class="pagination-button" aria-label="Previous page"${currentPage === 1 ? ' disabled' : ''}><i class="icon ph ph-caret-left"></i></button>`;
+		const next = `<button class="pagination-button" aria-label="Next page"${currentPage === totalPages ? ' disabled' : ''}><i class="icon ph ph-caret-right"></i></button>`;
 
 		// Build a compact page-button list (up to 5 pages with ellipsis). Only used when
 		// ShowGoToPage is False — the input replaces this whole list.
@@ -104,8 +109,8 @@ const meta: Meta<PaginationArgs> = {
 		// Layout is entirely from the shipped CSS (_pagination.scss):
 		//  • .pagination is flex/space-between → the range counter (first child) sits left
 		//    and .pagination-container (last child) right, in both modes.
-		//  • prev/next are the first/last .pagination-button of .pagination-container; their
-		//    .icon is hidden there and a chevron added via ::before — so they're icon-only.
+		//  • prev/next are the first/last .pagination-button of .pagination-container; they are
+		//    icon-only, the chevron coming from the Icon widget placeholder inside the button.
 		//  • .pagination-button has its own margin-left spacing — no inline gap needed.
 		//  • .pagination .form-control[data-input] carries margin on BOTH sides: the gap from
 		//    the prev arrow and the gap to the "of N pages" label.

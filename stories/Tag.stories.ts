@@ -10,6 +10,9 @@ import { backgroundClass, cls, COLOR_OPTIONS, extendedClassArgType, lightTextCla
  *   Size     → tag-small | tag-medium (no class = default compact size)
  *   Shape    → border-radius-none | border-radius-soft | border-radius-rounded | border-radius-circle
  *   IsLight  → appends -lightest to the background class (`transparent` has no variant)
+ *
+ * The pattern SCSS now owns the IsLight text colors (per-family text tokens per the
+ * Figma spec); the text-{color} classes below are kept only for platform markup parity.
  */
 const meta: Meta = { title: 'Patterns/Content/Tag' };
 export default meta;

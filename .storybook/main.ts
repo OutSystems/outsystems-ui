@@ -4,9 +4,11 @@ import { createRequire } from 'node:module';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import remarkGfm from 'remark-gfm';
+import type { Plugin } from 'vite';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(__dirname, '..');
+const distFolder = path.join(repoRoot, 'dist');
 const require = createRequire(import.meta.url);
 
 // The `stories/widgets/` group mounts the platform's real React widgets, which come
@@ -78,6 +80,52 @@ if (hasPlatformWidgets) {
 }
 
 /**
+ * Dev-bundle fallback for /osui/*.
+ *
+ * `preview-head.html` (and the Theme toolbar toggle) load the PRODUCTION file
+ * names (`ODC.OutSystemsUI.{css,js}`), but `npm run dev -- --target ODC` wipes
+ * `dist/` and emits only `dev.`-prefixed files. Without this fallback, running
+ * Storybook against a dev watch build 404s the whole OUI bundle.
+ *
+ * When a requested `/osui/<name>` is missing from `dist/` but `dist/dev.<name>`
+ * exists, serve the dev file instead. Static-dir serving (sirv) falls through
+ * to the Vite middleware chain on a miss, which is where this plugin runs.
+ * Dev-server only — `storybook build` copies staticDirs verbatim and expects a
+ * prior production build, as before.
+ */
+function osuiDevBundleFallback(): Plugin {
+	const contentTypes: Record<string, string> = {
+		'.css': 'text/css',
+		'.js': 'text/javascript',
+		'.map': 'application/json',
+	};
+	return {
+		name: 'osui-dev-bundle-fallback',
+		configureServer(server) {
+			server.middlewares.use((req, res, next) => {
+				const url = (req.url ?? '').split('?')[0];
+				if (!url.startsWith('/osui/')) {
+					return next();
+				}
+				const requested = url.slice('/osui/'.length);
+				// Only flat file names — no nested paths, no traversal, not already dev-prefixed.
+				if (requested === '' || /[/\\]/.test(requested) || requested.includes('..') || requested.startsWith('dev.')) {
+					return next();
+				}
+				const prodPath = path.join(distFolder, requested);
+				const devPath = path.join(distFolder, `dev.${requested}`);
+				if (fs.existsSync(prodPath) || !fs.existsSync(devPath)) {
+					return next();
+				}
+				res.setHeader('Content-Type', contentTypes[path.extname(requested)] ?? 'application/octet-stream');
+				res.setHeader('Cache-Control', 'no-store');
+				fs.createReadStream(devPath).pipe(res);
+			});
+		},
+	};
+}
+
+/**
  * Storybook for OutSystems UI.
  *
  * Unlike the design-tokens Storybook (React, docs-only), this one drives the
@@ -88,8 +136,10 @@ if (hasPlatformWidgets) {
  * calls its public `Create(id, configs)` API — exactly what OutSystems Service
  * Studio does at runtime, transcribed to high-code.
  *
- * Prerequisite: run `npm run build:osui` (or `npm run dev --target=odc`)
- * once so `dist/ODC.OutSystemsUI.{js,css}` exist. They are served from `/osui`.
+ * Prerequisite: build the library so `dist/` is populated — either `npm run build`
+ * (production names, `ODC.OutSystemsUI.{js,css}`) or `npm run dev -- --target ODC`
+ * (dev watch, `dev.`-prefixed names — resolved by the osuiDevBundleFallback plugin
+ * above). Files are served from `/osui`.
  */
 const config: StorybookConfig = {
 	// `stories/widgets/` (and its `_helpers/widget.ts` harness) is only reachable when
@@ -147,6 +197,10 @@ const config: StorybookConfig = {
 		// resolve its relative sprite URLs (default-skin.png/.svg, preloader.gif).
 		{ from: path.join(repoRoot, 'node_modules/photoswipe/dist'), to: '/vendor/photoswipe' },
 	],
+	viteFinal(viteConfig) {
+		viteConfig.plugins = [...(viteConfig.plugins ?? []), osuiDevBundleFallback()];
+		return viteConfig;
+	},
 };
 
 export default config;
