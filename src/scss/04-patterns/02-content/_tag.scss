@@ -32,6 +32,7 @@ $osui-tag-lightest-text-colors: (
 	--osui-tag-primary-color: var(--color-primary);
 	--osui-tag-on-light-color: var(--color-text);
 	--osui-tag-soft-border-radius: #{variables.$token-border-radius-100};
+	--osui-tag-medium-soft-border-radius: #{variables.$token-border-radius-200};
 	// ───────────────────────────────────────────────────────────────────
 
 	align-items: center;
@@ -44,7 +45,7 @@ $osui-tag-lightest-text-colors: (
 	line-height: variables.$token-font-line-height-full;
 	min-height: variables.$token-scale-500;
 	min-width: unset;
-	padding: variables.$token-space-0 variables.$token-space-300;
+	padding: variables.$token-space-0 variables.$token-space-200;
 	word-break: normal;
 
 	// Figma Tag spec: Soft shape uses the 4px radius token (border/border-radius/100),
@@ -63,7 +64,13 @@ $osui-tag-lightest-text-colors: (
 		&-medium {
 			font-size: variables.$token-font-size-350;
 			min-height: variables.$token-scale-700;
-			padding: variables.$token-space-0 variables.$token-space-300;
+			padding: variables.$token-space-0 variables.$token-space-250;
+
+			// Figma Tag spec: the Medium size steps the Soft shape up to the 8px
+			// radius token (border/border-radius/200), unlike the 4px default.
+			&.border-radius-soft {
+				border-radius: var(--osui-tag-medium-soft-border-radius);
+			}
 		}
 	}
 
