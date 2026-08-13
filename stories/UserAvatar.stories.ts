@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
 import { renderStatic } from './_helpers/osui';
-import { cls, COLOR_OPTIONS, extendedClassArgType } from './_helpers/lowcode';
+import { cls, COLOR_OPTIONS_FULL, extendedClassArgType } from './_helpers/lowcode';
 
 /**
  * UserAvatar — low-code input parameters from the library OML wired as Storybook controls.
@@ -69,7 +69,7 @@ export const Default: StoryObj<UserAvatarArgs> = {
 		color: {
 			name: 'Color',
 			control: 'select',
-			options: COLOR_OPTIONS,
+			options: COLOR_OPTIONS_FULL,
 			description: 'Background color of the Block.',
 		},
 		size: {
@@ -100,8 +100,9 @@ export const Default: StoryObj<UserAvatarArgs> = {
 		const shapeClass = shape ? `border-radius-${shape}` : '';
 		const sizeClass = size ? `avatar-${size}` : '';
 		const label = `user initials, ${initials(name)}`;
+		// Image sizing/fit/radius is owned by the pattern SCSS (Type=Image in Figma).
 		const inner = image
-			? `<img src="${image}" alt="${name}" style="width:100%;height:100%;object-fit:cover;" />`
+			? `<img src="${image}" alt="${name}" />`
 			: `<span class="OSFillParent">${initials(name)}</span>`;
 		return renderStatic(
 			`<div class="${cls('avatar', sizeClass, shapeClass, bgClass, textClass, extendedClass)}" role="img" aria-label="${label}">${inner}</div>`

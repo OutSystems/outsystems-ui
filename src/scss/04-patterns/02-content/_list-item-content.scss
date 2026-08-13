@@ -9,7 +9,9 @@
 .list-item-content {
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-list-item-content-title-color: var(--color-text);
-	--osui-list-item-content-text-color: #{variables.$token-primitives-neutral-700};
+	--osui-list-item-content-text-color: #{variables.$token-text-subtlest};
+	--osui-list-item-content-icon-size: #{variables.$token-scale-500};
+	--osui-list-item-content-icon-color: #{variables.$token-icon-subtlest};
 	// ───────────────────────────────────────────────────────────────────
 
 	align-items: center;
@@ -17,7 +19,7 @@
 
 	&-left {
 		max-width: 120px;
-		padding-right: variables.$token-scale-400;
+		padding-right: variables.$token-space-400;
 	}
 
 	&-center {
@@ -26,7 +28,16 @@
 	}
 
 	&-right {
-		padding-left: variables.$token-scale-400;
+		padding-left: variables.$token-space-600;
+
+		// Trailing icon renders in a 20px box (Figma CaretRight); `line-height: 1`
+		// keeps the glyph box square instead of inheriting the row's line-height.
+		// The selected row overrides the color via --osui-list-item-selected-icon-color.
+		.icon {
+			color: var(--osui-list-item-content-icon-color);
+			font-size: var(--osui-list-item-content-icon-size);
+			line-height: 1;
+		}
 	}
 
 	&-title,
@@ -38,12 +49,14 @@
 
 	&-title {
 		color: var(--osui-list-item-content-title-color);
-		line-height: variables.$token-font-line-height-500;
+		font-size: variables.$token-font-size-400;
 		font-weight: variables.$token-font-weight-semi-bold;
+		line-height: variables.$token-font-line-height-600;
 	}
 
 	&-text {
 		color: var(--osui-list-item-content-text-color);
+		font-size: variables.$token-font-size-350;
 	}
 }
 
@@ -51,27 +64,12 @@
 .layout-native {
 	.list-item-content {
 		&-left {
-			padding-right: variables.$token-scale-400;
+			padding-right: variables.$token-space-400;
 		}
 
 		&-right {
-			padding-left: variables.$token-scale-400;
+			padding-left: variables.$token-space-600;
 		}
-	}
-}
-
-// Responsive --------------------------------------------------------------------
-///
-.tablet {
-	.list-item-content-title {
-		font-size: calc(variables.$token-font-size-500 - 1px);
-	}
-}
-
-///
-.phone {
-	.list-item-content-title {
-		font-size: calc(variables.$token-font-size-500 - 2px);
 	}
 }
 
@@ -80,26 +78,26 @@
 .is-rtl {
 	.list-item-content {
 		&-left {
-			padding-left: variables.$token-scale-400;
+			padding-left: variables.$token-space-400;
 			padding-right: 0;
 		}
 
 		&-right {
 			padding-left: 0;
-			padding-right: variables.$token-scale-400;
+			padding-right: variables.$token-space-600;
 		}
 	}
 
 	.layout-native {
 		.list-item-content {
 			&-left {
-				padding-left: variables.$token-scale-400;
+				padding-left: variables.$token-space-400;
 				padding-right: 0;
 			}
 
 			&-right {
 				padding-left: 0;
-				padding-right: variables.$token-scale-400;
+				padding-right: variables.$token-space-600;
 			}
 		}
 	}

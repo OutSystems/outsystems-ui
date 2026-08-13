@@ -33,6 +33,37 @@ export const COLOR_OPTIONS = [
 	'cyan',
 ];
 
+const PALETTE_FAMILIES = [
+	'red',
+	'orange',
+	'yellow',
+	'lime',
+	'green',
+	'teal',
+	'cyan',
+	'blue',
+	'indigo',
+	'violet',
+	'grape',
+	'pink',
+];
+
+/**
+ * The FULL `Color` set → `background-{value}` utility class: brand,
+ * transparent, neutral-0..10, and the 12 extended palette families (base
+ * shade). '' = none. Shade variants (`-lightest`…`-darkest`) and the semantic
+ * colors (error/warning/success/info) are left to the IsLight toggle /
+ * ExtendedClass.
+ */
+export const COLOR_OPTIONS_FULL = [
+	'',
+	'primary',
+	'secondary',
+	'transparent',
+	...Array.from({ length: 11 }, (_, i) => `neutral-${i}`),
+	...PALETTE_FAMILIES,
+];
+
 /** Shared `ExtendedClass` control — present on essentially every OUI block. */
 export const extendedClassArgType = {
 	name: 'ExtendedClass',

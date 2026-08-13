@@ -12,6 +12,7 @@
 	--osui-chat-message-border-radius:   #{variables.$token-border-radius-200};
 	--osui-chat-message-sent-background: var(--color-primary);
 	--osui-chat-message-sent-color:      var(--color-text-inverse);
+	--osui-chat-message-status-color:    #{variables.$token-text-subtlest};
 	// ───────────────────────────────────────────────────────────────────
 
 	display: flex;
@@ -21,26 +22,25 @@
 
 		.chat {
 			&-photo {
-				margin-left: variables.$token-scale-400;
+				margin-left: variables.$token-space-400;
 				margin-right: variables.$token-scale-0;
 			}
 
 			&-message {
 				background-color: var(--osui-chat-message-sent-background);
 				color: var(--osui-chat-message-sent-color);
-				text-align: right;
 			}
 		}
 	}
 
 	&-photo {
-		margin-right: variables.$token-scale-400;
+		margin-right: variables.$token-space-400;
 
 		img {
 			border-radius: var(--border-radius-rounded);
-			height: variables.$token-scale-1000;
+			height: variables.$token-scale-800;
 			object-fit: cover;
-			width: variables.$token-scale-1000;
+			width: variables.$token-scale-800;
 		}
 	}
 
@@ -50,14 +50,15 @@
 		display: flex;
 		flex-direction: column;
 		max-width: 600px;
-		padding: variables.$token-scale-400;
+		padding: variables.$token-space-300;
 		position: relative;
 		word-break: break-word;
 
 		&-status {
+			color: var(--osui-chat-message-status-color);
 			display: block;
-			font-size: variables.$token-font-size-300;
-			margin-top: variables.$token-scale-200;
+			font-size: variables.$token-font-size-275;
+			margin-top: variables.$token-space-100;
 
 			&.hidden {
 				display: none;
@@ -74,13 +75,13 @@
 			.chat {
 				&-photo {
 					margin-left: variables.$token-scale-0;
-					margin-right: variables.$token-scale-400;
+					margin-right: variables.$token-space-400;
 				}
 			}
 		}
 
 		&-photo {
-			margin-left: variables.$token-scale-400;
+			margin-left: variables.$token-space-400;
 			margin-right: 0;
 		}
 	}

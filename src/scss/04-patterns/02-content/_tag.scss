@@ -1,3 +1,5 @@
+@use "sass:map";
+@use '../../00-abstract/index' as *;
 @use "../../tokens/variables";
 
 /* Patterns - Content - Tag */
@@ -5,12 +7,31 @@
 /// @group Patterns-Tag
 /// Patterns - Content - Tag
 
+// Per-family IsLight=true text colors, per the Figma Tag spec: families mapped
+// to a semantic read the semantic text token, extended families read the
+// matching text-extended-* token (cyan→aqua, grape→purple per token naming).
+$osui-tag-lightest-text-colors: (
+	'red': variables.$token-text-danger,
+	'orange': variables.$token-text-extended-orange,
+	'yellow': variables.$token-text-warning,
+	'lime': variables.$token-text-extended-lime,
+	'green': variables.$token-text-success,
+	'teal': variables.$token-text-extended-teal,
+	'cyan': variables.$token-text-extended-aqua,
+	'blue': variables.$token-text-info,
+	'indigo': variables.$token-text-extended-indigo,
+	'violet': variables.$token-text-extended-violet,
+	'grape': variables.$token-text-extended-purple,
+	'pink': variables.$token-text-extended-pink,
+);
+
 ///
 .tag {
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-tag-color: var(--color-text-inverse);
 	--osui-tag-primary-color: var(--color-primary);
 	--osui-tag-on-light-color: var(--color-text);
+	--osui-tag-soft-border-radius: #{variables.$token-border-radius-100};
 	// ───────────────────────────────────────────────────────────────────
 
 	align-items: center;
@@ -18,55 +39,141 @@
 	display: inline-flex;
 	font-size: variables.$token-font-size-300;
 	font-weight: variables.$token-font-weight-medium;
-	gap: variables.$token-scale-100;
-	min-height: variables.$token-scale-500;
+	gap: variables.$token-space-200;
 	justify-content: center;
-	letter-spacing: 0.01em; // design-spec: no letter-spacing token in system
 	line-height: variables.$token-font-line-height-full;
+	min-height: variables.$token-scale-500;
 	min-width: unset;
-	padding: variables.$token-scale-0 variables.$token-scale-200;
+	padding: variables.$token-space-0 variables.$token-space-300;
 	word-break: normal;
+
+	// Figma Tag spec: Soft shape uses the 4px radius token (border/border-radius/100),
+	// narrower than the global 8px .border-radius-soft utility.
+	&.border-radius-soft {
+		border-radius: var(--osui-tag-soft-border-radius);
+	}
 
 	&.tag {
 		&-small {
-			font-size: var(--osui-font-size-200);
 			min-height: variables.$token-scale-400;
-			padding: variables.$token-scale-0 variables.$token-scale-150;
+			min-width: variables.$token-scale-400;
+			padding: variables.$token-space-0 variables.$token-space-150;
 		}
 
 		&-medium {
 			font-size: variables.$token-font-size-350;
 			min-height: variables.$token-scale-700;
-			padding: variables.$token-scale-0 variables.$token-scale-300;
+			padding: variables.$token-space-0 variables.$token-space-300;
 		}
 	}
 
 	&.background {
 		&-transparent {
 			color: var(--osui-tag-primary-color);
+
+			&-lightest {
+				color: variables.$token-text-inverse;
+			}
 		}
 
 		&-neutral {
-			&-0 {
-				color: var(--osui-tag-primary-color);
-			}
-
+			&-0,
 			&-1,
 			&-2,
 			&-3,
-			&-4 {
-				color: var(--osui-tag-on-light-color);
+			&-4,
+			&-5 {
+				background-color: variables.$token-bg-neutral-base-default;
+				color: variables.$token-text-default;
 			}
+
+			&-6,
+			&-7,
+			&-8,
+			&-9,
+			&-10 {
+				background-color: variables.$token-bg-neutral-bold-default;
+				color: variables.$token-text-inverse;
+			}
+
+			&-0-lightest,
+			&-1-lightest,
+			&-2-lightest,
+			&-3-lightest,
+			&-4-lightest,
+			&-5-lightest {
+				background-color: variables.$token-bg-neutral-subtle-default;
+				color: variables.$token-text-subtle;
+			}
+
+			&-6-lightest,
+			&-7-lightest,
+			&-8-lightest,
+			&-9-lightest,
+			&-10-lightest {
+				background-color: variables.$token-bg-neutral-base-default;
+				color: variables.$token-text-default;
+			}
+		}
+
+		&-error {
+			background-color: variables.$token-bg-danger-base-default;
+		}
+
+		&-success {
+			background-color: variables.$token-bg-success-base-default;
+		}
+
+		&-info {
+			background-color: variables.$token-bg-info-base-default;
+		}
+
+		&-warning {
+			background-color: variables.$token-bg-warning-base-default;
+		}
+
+		// Warning backgrounds are light enough to need dark text (Figma).
+		&-warning,
+		&-yellow {
+			color: var(--osui-tag-on-light-color);
 		}
 	}
 
-	// IsLight=true renders `background-{color}-lightest`. The brand and neutral
-	// light variants sit on a plain (untinted) surface, so their text must invert
-	// to the dark on-light color to stay readable — palette colors keep their own
-	// darker text via the `text-{color}-darker` class.
-	&.background-primary-lightest,
-	&.background-secondary-lightest,
-	&[class*='background-neutral'][class*='-lightest'] {
+	// IsLight=true — semantic colors render `background-{semantic}-light`;
+	// the utility class provides the subtle background, only text is set here.
+	&.background-error-light {
+		color: variables.$token-text-danger;
+	}
+
+	&.background-success-light {
+		color: variables.$token-text-success;
+	}
+
+	&.background-info-light {
+		color: variables.$token-text-info;
+	}
+
+	&.background-warning-light {
+		color: variables.$token-text-warning;
+	}
+
+	// The background-primary-lightest utility is still surface-white (pending
+	// theme-layer review), so the Figma subtle background is set locally.
+	&.background-primary-lightest {
+		background-color: variables.$token-bg-primary-subtle-default;
+		color: variables.$token-text-primary;
+	}
+
+	&.background-secondary-lightest {
+		background-color: variables.$token-bg-neutral-base-default;
 		color: var(--osui-tag-on-light-color);
+	}
+
+	// Extended palette IsLight=true — background comes from the token-backed
+	// background-{color}-lightest utility; only the per-family text token is set.
+	@each $color, $variations in $osui-colors-extended {
+		&.background-#{$color}-lightest {
+			color: #{map.get($osui-tag-lightest-text-colors, $color)};
+		}
 	}
 }
