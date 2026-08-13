@@ -59,6 +59,7 @@
 	}
 
 	.dropdown-container {
+
 		&[class*='ThemeGrid_Width'].not-valid span.validation-message {
 			bottom: variables.$token-scale-100;
 		}

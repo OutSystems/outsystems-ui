@@ -180,14 +180,16 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 		const layout = document.querySelector('.active-screen .layout');
 		const stickyObserver = document.querySelector('.active-screen .sticky-observer');
 
-		const observer = new IntersectionObserver(function (entries) {
-			if (entries[0].isIntersecting) {
-				layout.classList.add(OSFramework.OSUI.GlobalEnum.CssClassElements.HeaderIsVisible);
-			} else {
-				layout.classList.remove(OSFramework.OSUI.GlobalEnum.CssClassElements.HeaderIsVisible);
-			}
-		});
+		if (layout && stickyObserver) {
+			const observer = new IntersectionObserver(function (entries) {
+				if (entries[0].isIntersecting) {
+					layout.classList.add(OSFramework.OSUI.GlobalEnum.CssClassElements.HeaderIsVisible);
+				} else {
+					layout.classList.remove(OSFramework.OSUI.GlobalEnum.CssClassElements.HeaderIsVisible);
+				}
+			});
 
-		observer.observe(stickyObserver);
+			observer.observe(stickyObserver);
+		}
 	}
 }

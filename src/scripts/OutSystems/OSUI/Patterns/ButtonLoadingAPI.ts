@@ -115,6 +115,27 @@ namespace OutSystems.OSUI.Patterns.ButtonLoadingAPI {
 	}
 
 	/**
+	 * Sets whether the disabled attribute on the button element should be managed when IsLoading is true.
+	 *
+	 * @export
+	 * @param {string} buttonLoadingId ID of the ButtonLoading instance.
+	 * @param {boolean} isDisabled When true, the button is disabled while loading.
+	 * @return {*}  {string}
+	 */
+	export function ForceIsLoadingDisabledState(buttonLoadingId: string, isDisabled: boolean): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.ButtonLoading.FailForceDisabledStateOnIsLoading,
+			callback: () => {
+				const buttonLoading = GetButtonLoadingById(buttonLoadingId);
+
+				buttonLoading.disabledStateOnIsLoading(isDisabled);
+			},
+		});
+
+		return result;
+	}
+
+	/**
 	 * Function to register a provider callback
 	 *
 	 * @export

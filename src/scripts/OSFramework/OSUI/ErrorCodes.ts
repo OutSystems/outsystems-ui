@@ -84,4 +84,10 @@ namespace OSFramework.OSUI.ErrorCodes {
 		FailSavedEventRemoval: 'OSUI-GEN-12003',
 		FailSavingEvent: 'OSUI-GEN-12004',
 	};
+
+	export const Wizard = {
+		FailSetNewChildItem: 'OSUI-GEN-13001',
+		FailToSetChildItemAction: 'OSUI-GEN-13002',
+		FailUnsetNewChildItem: 'OSUI-GEN-13003',
+	};
 }

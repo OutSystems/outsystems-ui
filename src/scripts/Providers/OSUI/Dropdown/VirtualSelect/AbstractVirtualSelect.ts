@@ -135,12 +135,6 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		 * @memberof Providers.OSUI.Dropdown.VirtualSelect.AbstractVirtualSelect
 		 */
 		protected createProviderInstance(): void {
-			// Stores the values selected before provider recreation
-			// when there is a rerender of this component.
-			if (this.provider !== undefined) {
-				this.configs.StartingSelection = this.provider.getSelectedOptions();
-			}
-
 			// Create the provider instance
 			this.provider = window.VirtualSelect.init(this.virtualselectOpts);
 
@@ -190,6 +184,26 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 			 * - This way, Initialized Event will be triggered every time a redraw occurs.
 			 */
 			this.triggerPlatformInitializedEventCallback();
+		}
+
+		/**
+		 * Syncs selection from the live provider into {@link AbstractVirtualSelectConfig.StartingSelection},
+		 * then builds provider options and creates the instance.
+		 *
+		 * @protected
+		 * @memberof Providers.OSUI.Dropdown.VirtualSelect.AbstractVirtualSelect
+		 */
+		protected prepareConfigs(): void {
+			const selected = this.provider?.getSelectedOptions();
+			if (selected) {
+				this.configs.StartingSelection = [selected].flat() as DropDownOption[];
+			}
+
+			// Get the library configurations
+			this.virtualselectOpts = this.configs.getProviderConfig();
+
+			// Instance will be Created!
+			this.createProviderInstance();
 		}
 
 		/**
@@ -528,6 +542,5 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 
 		// Common methods all Dropdowns must implement!
 		protected abstract getSelectedOptionsStructure(): DropDownOption[];
-		protected abstract prepareConfigs(): void;
 	}
 }
