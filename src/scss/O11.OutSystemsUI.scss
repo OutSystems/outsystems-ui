@@ -177,9 +177,10 @@ Section Index:
 9. Keyframes - Animations
     9.1. Animate
     9.2. Button Loading
-    9.3. Feedback Message
-    9.4. Pull To Refresh
-    9.5. Miscellaneous
+    9.3. List Item
+    9.4. Feedback Message
+    9.5. Pull To Refresh
+    9.6. Miscellaneous
 10. Service Studio Preview
 */
 
@@ -502,11 +503,13 @@ Section Index:
 @use '07-keyframes/animate' as *;
 /*! 9.2. Button Loading */
 @use '07-keyframes/btn-loading' as *;
-/*! 9.3. Feedback Message */
+/*! 9.3. List Item */
+@use '07-keyframes/list-item' as *;
+/*! 9.4. Feedback Message */
 @use '07-keyframes/feedback-message' as *;
-/*! 9.4. Pull To Refresh */
+/*! 9.5. Pull To Refresh */
 @use '07-keyframes/pull-to-refresh' as *;
-/*! 9.5. Miscellaneous */
+/*! 9.6. Miscellaneous */
 @use '07-keyframes/miscellaneous' as *;
 
 /*! ==============================================================================
