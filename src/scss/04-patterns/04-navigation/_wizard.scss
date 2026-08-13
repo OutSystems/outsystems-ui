@@ -10,14 +10,17 @@
 	&-wrapper {
 		// ─── Component CSS API ─────────────────────────────────────────────
 		--osui-wizard-font-size: #{variables.$token-font-size-350};
-		--osui-wizard-icon-background: var(--color-background-surface);
+		--osui-wizard-icon-background: #{variables.$token-bg-neutral-subtlest-default};
 		--osui-wizard-icon-border-color: var(--color-border-input);
 		--osui-wizard-icon-border-width: #{variables.$token-border-size-050};
 		--osui-wizard-icon-color: #{variables.$token-text-subtlest};
 		--osui-wizard-icon-font-weight: #{variables.$token-font-weight-medium};
 		--osui-wizard-icon-glyph-size: #{variables.$token-font-size-500};
+		--osui-wizard-icon-padding: #{variables.$token-space-200};
 		--osui-wizard-icon-size: #{variables.$token-scale-1000};
 		--osui-wizard-label-color: var(--color-text);
+		//TODO: needs a line-height token
+		--osui-wizard-label-line-height: 21px;
 		--osui-wizard-active-color: var(--color-primary);
 		--osui-wizard-active-icon-color: #{variables.$token-text-primary};
 		--osui-wizard-next-icon-color: #{variables.$token-text-subtlest};
@@ -81,6 +84,7 @@
 			.wizard-item-label {
 				color: var(--osui-wizard-label-color);
 				font-size: var(--osui-wizard-font-size);
+				line-height: var(--osui-wizard-label-line-height);
 				text-align: center;
 			}
 		}
@@ -103,6 +107,7 @@
 		height: var(--osui-wizard-icon-size, #{variables.$token-scale-1000});
 		justify-content: center;
 		margin: 0 auto;
+		padding: var(--osui-wizard-icon-padding);
 		position: relative;
 		width: var(--osui-wizard-icon-size, #{variables.$token-scale-1000});
 		z-index: var(--layer-local-tier-1);
@@ -114,6 +119,7 @@
 
 		&:empty {
 			height: variables.$token-scale-200;
+			padding: variables.$token-space-0;
 			width: variables.$token-scale-200;
 		}
 
