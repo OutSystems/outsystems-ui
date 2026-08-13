@@ -48,6 +48,20 @@ jobs:
                   # Chromatic needs full git history for baselines / TurboSnap.
                   fetch-depth: 0
 
+            - name: 🔍 Detect changes to the visual surface
+              # Feeds the capture guard at the end of the job. Anything under src/ (the
+              # compiled library), stories/ or .storybook/ can move a snapshot, so if any
+              # of them changed, Chromatic must actually photograph something.
+              if: github.event_name == 'pull_request'
+              id: visual_surface
+              shell: bash
+              run: |
+                  changed=$(git diff --name-only \
+                    "${{ github.event.pull_request.base.sha }}...HEAD" \
+                    -- src stories .storybook | wc -l | tr -d ' ')
+                  echo "changed=$changed" >> "$GITHUB_OUTPUT"
+                  echo "Visual-surface files changed: $changed"
+
             ### Azure login + ADO token (to install the private @outsystems/* widget deps) ###
             - name: 🔐 Azure login
               if: env.IS_FORK == 'false'
@@ -101,7 +115,16 @@ jobs:
               with:
                   projectToken: ${{ secrets.OSUI_CHROMATIC_TOKEN }}
                   # TurboSnap: only snapshot stories whose module graph changed.
-                  onlyChanged: true
+                  #
+                  # DISABLED for ROU-12714 (PRs into it and pushes to it). That branch is
+                  # the "Make Great UI" integration branch: almost every PR is a pure-SCSS
+                  # change, which TurboSnap cannot see (see `externals` below), and its
+                  # history is squash-merged, which routinely leaves TurboSnap unable to
+                  # resolve a parent-build commit. When that happens it reports "Found 0
+                  # changed files" and skips EVERY snapshot while the build still goes
+                  # green — a PR then passes having photographed nothing (build #31).
+                  # A full build is ~100 stories, so correctness beats the saving here.
+                  onlyChanged: ${{ github.base_ref != 'ROU-12714' && github.ref_name != 'ROU-12714' }}
                   # MANDATORY companion to onlyChanged in this repo — do not remove.
                   # TurboSnap traces changed files through Storybook's module graph, and the
                   # OUI library is NOT in that graph: stories load the compiled bundle from
@@ -168,3 +191,20 @@ jobs:
                         repo: context.repo.repo,
                         body
                       });
+
+            - name: 🛡️ Verify Chromatic actually captured snapshots
+              # Fail closed. A build that captures nothing reports "N tests unchanged" and
+              # goes green, which is indistinguishable from "nothing regressed" — that is
+              # how a separator changing from primary to grey shipped unflagged. If the PR
+              # touched the visual surface, at least one snapshot must have been taken.
+              # Runs last so the comment above still gives reviewers the build link.
+              if: github.event_name == 'pull_request' && steps.chromatic.outcome == 'success' && steps.visual_surface.outputs.changed != '0'
+              shell: bash
+              env:
+                  CAPTURED: ${{ steps.chromatic.outputs.actualCaptureCount }}
+              run: |
+                  if [ "${CAPTURED:-0}" -eq 0 ]; then
+                    echo "::error::This PR changed ${{ steps.visual_surface.outputs.changed }} file(s) under src/, stories/ or .storybook/, but Chromatic captured 0 snapshots — every test was inherited, so nothing was actually compared. Re-run with TurboSnap disabled before trusting this result."
+                    exit 1
+                  fi
+                  echo "Chromatic captured $CAPTURED snapshot(s)."
