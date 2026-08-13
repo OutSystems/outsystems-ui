@@ -7,11 +7,11 @@
 
 ///
 .separator {
-	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-separator-color: var(--color-primary);
-	// ───────────────────────────────────────────────────────────────────
-
-	background-color: var(--osui-separator-color);
+	// No component CSS API for the colour: the low-code Separator block exposes a `Color`
+	// input parameter that emits a `background-*` utility class, and 05-useful is imported
+	// after 04-patterns, so the low-code value always wins. This is only the fallback for
+	// when no Color is passed.
+	background-color: variables.$token-border-default;
 
 	&-vertical {
 		display: inline-block;
