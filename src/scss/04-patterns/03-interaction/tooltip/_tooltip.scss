@@ -11,7 +11,7 @@
 	--osui-tooltip-background: #{variables.$token-bg-neutral-boldest-default};
 	--osui-tooltip-color: var(--color-text-inverse);
 	--osui-tooltip-border-radius: #{variables.$token-border-radius-200};
-	--osui-tooltip-padding: #{variables.$token-space-200} #{variables.$token-space-400};
+	--osui-tooltip-padding: #{variables.$token-space-0} #{variables.$token-space-100};
 	--osui-tooltip-font-size: #{variables.$token-font-size-350};
 	--osui-tooltip-shadow: #{variables.$token-elevation-3};
 	--osui-tooltip-min-height: #{variables.$token-scale-900};
