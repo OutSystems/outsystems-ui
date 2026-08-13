@@ -17,7 +17,7 @@
 	--osui-pagination-button-size: #{variables.$token-scale-900};
 	--osui-pagination-button-text-color: var(--color-text);
 	--osui-pagination-active-border-color: var(--color-border);
-	--osui-pagination-active-color: var(--color-text-subtlest);
+	--osui-pagination-active-color: var(--color-text);
 	--osui-pagination-counter-color: var(--color-text-subtlest);
 	// ───────────────────────────────────────────────────────────────────
 
@@ -34,23 +34,6 @@
 
 		& > .pagination-button:first-child {
 			margin-left: 0;
-		}
-
-		& > .pagination-button:first-child .icon,
-		& > .pagination-button:last-child .icon {
-			display: none;
-		}
-
-		& > .pagination-button:first-child::before {
-			content: var(--osui-icon-chevron-left);
-			font-family: var(--osui-icon-font-family);
-			font-size: variables.$token-scale-400;
-		}
-
-		& > .pagination-button:last-child::before {
-			content: var(--osui-icon-chevron-right);
-			font-family: var(--osui-icon-font-family);
-			font-size: variables.$token-scale-400;
 		}
 
 		.list {
@@ -82,6 +65,11 @@
 		&[disabled] {
 			opacity: 0.5;
 			pointer-events: none;
+		}
+
+		&:focus {
+			border-color: variables.$token-semantics-primary-base;
+			box-shadow: 0 0 0 variables.$token-border-size-075 color-mix(in srgb, #{variables.$token-semantics-primary-base} 22%, transparent);
 		}
 
 		&.is--active {
@@ -173,25 +161,6 @@
 		.icon {
 			transform: rotate(180deg);
 		}
-	}
-
-	.pagination-container {
-		& > .pagination-button:first-child::before {
-			content: var(--osui-icon-chevron-right);
-		}
-
-		& > .pagination-button:last-child::before {
-			content: var(--osui-icon-chevron-left);
-		}
-	}
-}
-
-// Accessibility ---------------------------------------------------------------------------
-///
-.has-accessible-features {
-	.pagination-button:focus {
-		border-color: variables.$token-semantics-primary-base;
-		box-shadow: 0 0 0 variables.$token-border-size-075 color-mix(in srgb, #{variables.$token-semantics-primary-base} 22%, transparent);
 	}
 }
 
