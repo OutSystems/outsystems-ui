@@ -7,7 +7,7 @@ interface ButtonLoadingArgs {
 }
 
 const meta: Meta<ButtonLoadingArgs> = {
-	title: 'Patterns/Interaction/ButtonLoading',
+	title: 'Patterns/Utilities/ButtonLoading',
 	argTypes: {
 		isLoading: { control: 'boolean', name: 'IsLoading' },
 		showLoadingAndLabel: { control: 'boolean', name: 'ShowLoadingAndLabel' },
