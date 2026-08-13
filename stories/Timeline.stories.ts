@@ -23,67 +23,81 @@ export default meta;
 type TimelineItemArgs = {
 	isActive: boolean;
 	color: string;
+	showIcon: boolean;
 	extendedClass: string;
+};
+
+const timelineItemArgTypes: StoryObj<TimelineItemArgs>['argTypes'] = {
+	showIcon: {
+		name: 'Icon',
+		control: 'boolean',
+		description:
+			'Fills the Icon placeholder. When empty, `.timeline-icon-container:empty` collapses to the 8px dot (Figma `Type=No icon`).',
+	},
+	isActive: {
+		name: 'IsActive',
+		control: 'boolean',
+		description: 'Set item as active in the timeline. Adds `.is-active` to `.timeline-item`.',
+	},
+	color: {
+		name: 'Color',
+		control: 'select',
+		options: COLOR_OPTIONS,
+		description: 'Color of the icon circle. Maps to `background-{value}` on `.timeline-icon-container`.',
+	},
+	extendedClass: extendedClassArgType,
+};
+
+const renderTimeline: NonNullable<StoryObj<TimelineItemArgs>['render']> = ({
+	isActive,
+	color,
+	showIcon,
+	extendedClass,
+}) => {
+	const item = (
+		left: string,
+		icon: string,
+		title: string,
+		desc: string,
+		active: boolean,
+		itemColor: string,
+		extra: string
+	) => `
+		<div class="${cls('timeline-item', active && 'is-active', extra)}" role="listitem">
+			<div class="timeline-left OSInline">${left}</div>
+			<div class="timeline-icon OSInline">
+				<div class="timeline-icon-line OSInline"></div>
+				<div class="${cls('timeline-icon-container', itemColor && `background-${itemColor}`, 'OSInline')}">${showIcon ? `<i class="icon ph ${icon}"></i>` : ''}</div>
+			</div>
+			<div class="timeline-content"><div>${title}</div><div class="timeline-content-inner">${desc}</div></div>
+		</div>`;
+
+	return renderStatic(`
+		<div class="timeline" role="list" style="max-width:480px;">
+			${item('2019', 'ph-archive', 'Pending approval', 'This request requires your approval.', false, 'primary', '')}
+			${item('2020', 'ph-check', 'Approved', 'The request was approved by the manager.', isActive, color, extendedClass)}
+			${item('2021', 'ph-flag', 'Closed', 'The request lifecycle is complete.', false, 'primary', '')}
+		</div>`);
 };
 
 export const Default: StoryObj<TimelineItemArgs> = {
 	args: {
 		isActive: false,
 		color: 'primary',
+		showIcon: true,
 		extendedClass: '',
 	},
-	argTypes: {
-		isActive: {
-			name: 'IsActive',
-			control: 'boolean',
-			description: 'Set item as active in the timeline. Adds `.is-active` to `.timeline-item`.',
-		},
-		color: {
-			name: 'Color',
-			control: 'select',
-			options: COLOR_OPTIONS,
-			description: 'Color of the icon circle. Maps to `background-{value}` on `.timeline-icon-container`.',
-		},
-		extendedClass: extendedClassArgType,
-	},
-	render: ({ isActive, color, extendedClass }) => {
-		const item = (
-			left: string,
-			icon: string,
-			title: string,
-			desc: string,
-			active: boolean,
-			itemColor: string,
-			extra: string
-		) => `
-			<div class="${cls('timeline-item', active && 'is-active', extra)}" role="listitem">
-				<div class="timeline-left OSInline">${left}</div>
-				<div class="timeline-icon OSInline">
-					<div class="timeline-icon-line OSInline"></div>
-					<div class="${cls('timeline-icon-container', itemColor && `background-${itemColor}`, 'OSInline')}"><i class="icon ph ph-check"></i></div>
-				</div>
-				<div class="timeline-content"><div>${title}</div><div class="timeline-content-inner">${desc}</div></div>
-			</div>`;
+	argTypes: timelineItemArgTypes,
+	render: renderTimeline,
+};
 
-		return renderStatic(`
-			<div class="timeline" role="list" style="max-width:480px;">
-				<div class="timeline-item" role="listitem">
-					<div class="timeline-left OSInline">2019</div>
-					<div class="timeline-icon OSInline">
-						<div class="timeline-icon-line OSInline"></div>
-						<div class="timeline-icon-container background-primary OSInline"><i class="icon ph ph-archive"></i></div>
-					</div>
-					<div class="timeline-content"><div>Pending approval</div><div class="timeline-content-inner">This request requires your approval.</div></div>
-				</div>
-				${item('2020', 'ph-check', 'Approved', 'The request was approved by the manager.', isActive, color, extendedClass)}
-				<div class="timeline-item" role="listitem">
-					<div class="timeline-left OSInline">2021</div>
-					<div class="timeline-icon OSInline">
-						<div class="timeline-icon-line OSInline"></div>
-						<div class="timeline-icon-container background-primary OSInline"><i class="icon ph ph-flag"></i></div>
-					</div>
-					<div class="timeline-content"><div>Closed</div><div class="timeline-content-inner">The request lifecycle is complete.</div></div>
-				</div>
-			</div>`);
-	},
+/**
+ * Figma `Type=No icon`. The Icon placeholder is left unfilled, so
+ * `.timeline-icon-container:empty` collapses the 24px circle to an 8px dot
+ * (offset 10px from the top to optically centre it on the first text line).
+ * The `Color` control still paints the dot via `background-{value}`.
+ */
+export const NoIcon: StoryObj<TimelineItemArgs> = {
+	...Default,
+	args: { ...Default.args, showIcon: false },
 };
