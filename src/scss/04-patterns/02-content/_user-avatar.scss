@@ -139,11 +139,12 @@ $osui-avatar-lightest-text-colors: (
 		color: variables.$token-text-warning;
 	}
 
-	// Per Figma, the light primary avatar keeps the plain white background the
-	// background-primary-lightest utility already provides (bg/neutral/subtlest)
-	// — only the text follows the brand primary color.
+	// The background-primary-lightest utility is still surface-white (pending
+	// theme-layer review), so the Figma subtle background is set locally.
+	// Matches the Tag pattern's primary treatment.
 	&.background-primary-lightest {
-		color: var(--osui-avatar-primary-color);
+		background-color: variables.$token-bg-primary-subtle-default;
+		color: variables.$token-text-primary;
 	}
 
 	&.background-secondary-lightest {

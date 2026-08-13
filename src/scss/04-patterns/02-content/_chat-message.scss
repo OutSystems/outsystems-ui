@@ -8,11 +8,13 @@
 ///
 .chat {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-chat-message-background:      #{variables.$token-bg-neutral-subtle-default};
-	--osui-chat-message-border-radius:   #{variables.$token-border-radius-200};
-	--osui-chat-message-sent-background: var(--color-primary);
-	--osui-chat-message-sent-color:      var(--color-text-inverse);
-	--osui-chat-message-status-color:    #{variables.$token-text-subtlest};
+	--osui-chat-message-background:         #{variables.$token-bg-neutral-subtle-default};
+	--osui-chat-message-border-radius:      #{variables.$token-border-radius-200};
+	--osui-chat-message-sent-background:    var(--color-primary);
+	--osui-chat-message-sent-color:         var(--color-text-inverse);
+	--osui-chat-message-status-color:       #{variables.$token-text-subtlest};
+	// TODO: needs a line-height token — the font-line-height scale has no 18px step (Figma ChatMessage status).
+	--osui-chat-message-status-line-height: 18px;
 	// ───────────────────────────────────────────────────────────────────
 
 	display: flex;
@@ -58,7 +60,9 @@
 			color: var(--osui-chat-message-status-color);
 			display: block;
 			font-size: variables.$token-font-size-275;
+			line-height: var(--osui-chat-message-status-line-height);
 			margin-top: variables.$token-space-100;
+			width: 100%;
 
 			&.hidden {
 				display: none;
