@@ -62,6 +62,7 @@
 			font-size: variables.$token-font-size-275;
 			line-height: var(--osui-chat-message-status-line-height);
 			margin-top: variables.$token-space-100;
+			width: 100%;
 
 			&.hidden {
 				display: none;
