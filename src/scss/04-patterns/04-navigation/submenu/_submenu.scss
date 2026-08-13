@@ -10,10 +10,12 @@
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-submenu-items-background: var(--color-background-surface);
 	--osui-submenu-items-border-color: var(--color-border);
-	--osui-submenu-items-border-radius: #{variables.$token-border-radius-100};
+	--osui-submenu-items-border-radius: #{variables.$token-border-radius-300};
 	--osui-submenu-items-shadow: #{variables.$token-elevation-3};
 	--osui-submenu-item-color: var(--color-text);
 	--osui-submenu-item-font-size: #{variables.$token-font-size-350};
+	// TODO: needs a line-height token
+	--osui-submenu-item-line-height: 21px;
 	--osui-submenu-item-border-radius: #{variables.$token-border-radius-100};
 	--osui-submenu-item-selected-background: #{variables.$token-bg-primary-subtle-default};
 	// Named `pressed` (not `active`) because `.active` already means "selected" in this pattern.
@@ -189,6 +191,7 @@
 			border-radius: var(--osui-submenu-item-border-radius);
 			color: var(--osui-submenu-item-color);
 			font-size: var(--osui-submenu-item-font-size);
+			line-height: var(--osui-submenu-item-line-height);
 			margin: 0;
 			padding: variables.$token-space-200 variables.$token-space-400;
 			text-decoration: none;
