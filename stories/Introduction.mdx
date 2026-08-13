@@ -45,7 +45,7 @@ Stories exist for every public pattern API, grouped by category:
 
 - **Content** — Accordion, Carousel, FlipContent
 - **Interaction** — AnimatedLabel, BottomSheet, ButtonLoading, DatePicker, Dropdown, MonthPicker, Notification, RangeSlider, Search, TimePicker, Tooltip
-- **Navigation** — OverflowMenu, SectionIndex, Sidebar, Submenu, Tabs
+- **Navigation** — OverflowMenu, SectionIndex, Sidebar, Submenu, Tabs, Wizard (+ WizardItem)
 - **Adaptive** — Gallery
 - **Numbers** — Progress (Bar + Circle), Rating
 - **Utilities** — InlineSvg, Video, SwipeEvents, TouchEvents
@@ -65,7 +65,7 @@ storied too, via `renderStatic(template)` (no `Create()`/`Initialize()`), using
 the **shipped** class names taken from each `_*.scss`:
 
 - **Content** — Alert, Card (Basic/Sectioned/Background/Detail), Tag, UserAvatar, ChatMessage, Section, BlankSlate, ListItem, Table
-- **Navigation** — Breadcrumbs, Wizard, Timeline, Pagination
+- **Navigation** — Breadcrumbs, Timeline, Pagination
 - **Adaptive** — MasterDetail (`.split-screen-wrapper`), Columns
 - **Numbers** — Badge, IconBadge, Counter
 - **Interaction** — Popup
@@ -81,8 +81,11 @@ no console errors). Use any existing story as the template when adding new ones.
 
 Some OutSystems UI controls are **not** part of this CSS/TS library — they're
 **React** components shipped from `@outsystems/runtime-widgets-js` (the platform
-runtime, installed from the internal Azure Artifacts feed; see `.npmrc`). The
-**`Widgets/`** group mounts the *real* React components: Button, ButtonGroup,
+runtime, published only to the OutSystems-internal package feed). These packages
+are **optional**: when they aren't installed — e.g. on an external clone of this
+public repo — the `Widgets/` group simply doesn't appear, and everything else in
+this Storybook works as usual. When present, the **`Widgets/`** group mounts the
+*real* React components: Button, ButtonGroup,
 Checkbox, RadioGroup, Switch, Input, TextArea, Dropdown, Upload, Link, Popup,
 Label, Icon, Image, Text. These replace the earlier hand-written Forms HTML
 stories. (FeedbackMessage also lives under `Widgets/` — a CSS-only block, but

@@ -8,6 +8,8 @@ namespace Providers.OSUI.Carousel.Splide {
 		extends OSFramework.OSUI.Patterns.Carousel.AbstractCarousel<Splide, Splide.SplideConfig>
 		implements OSFramework.OSUI.Patterns.Carousel.ICarousel
 	{
+		// Store the hidden aria-live status element used to announce the active slide
+		private _a11yStatusElem: HTMLElement;
 		// Store if the render callback should be prevented
 		private _blockOnRender = false;
 		// Store the List widget element
@@ -24,6 +26,8 @@ namespace Providers.OSUI.Carousel.Splide {
 		private _eventOnResize: OSFramework.OSUI.GlobalCallbacks.Generic;
 		// Store if a List widget is used inside the CarouselItems placeholder
 		private _hasList: boolean;
+		// Ensure the bare-image host-wrapper warning is logged only once per instance
+		private _hasWarnedBareImageSlides = false;
 		// Store the pending list-roles poll timeout id, so it can be cancelled on re-entry
 		private _listRolesPollId: number | undefined;
 		// Store the onSlideMoved event
@@ -35,21 +39,70 @@ namespace Providers.OSUI.Carousel.Splide {
 			super(uniqueId, new SplideConfig(configs));
 		}
 
-		// Method to apply role="list" and role="listitem" to the list element and its direct children.
-		// Skips native list elements (ul/ol) and elements whose direct children are native list
-		// elements (li/ul/ol), since those already carry implicit list semantics.
-		private _applyListRoles(listEl: HTMLElement): void {
-			const _isNativeList = listEl.tagName === 'UL' || listEl.tagName === 'OL';
-			const _hasNativeListChildren = listEl.querySelector(':scope > li, :scope > ul, :scope > ol') !== null;
-
-			if (_isNativeList || _hasNativeListChildren) {
+		// Announce the active slide via the hidden aria-live status element
+		private _announceActiveSlide(): void {
+			if (this._a11yStatusElem === undefined) {
 				return;
 			}
 
-			listEl.setAttribute('role', 'list');
-			listEl.querySelectorAll(':scope > *').forEach((item) => {
-				item.setAttribute('role', 'listitem');
-			});
+			const activeSlide = this._resolveActiveSlideElem();
+			if (activeSlide === undefined) {
+				return;
+			}
+
+			const ariaLabel = OSFramework.OSUI.Helper.Dom.Attribute.Get(
+				activeSlide,
+				OSFramework.OSUI.Constants.A11YAttributes.Aria.Label
+			);
+
+			if (ariaLabel) {
+				this._a11yStatusElem.textContent = ariaLabel;
+			}
+		}
+
+		// Method to apply role="list" and role="listitem" to the list element and its direct children.
+		// Skips native list elements (ul/ol) and elements whose direct children are native list
+		// elements (li/ul/ol), since those already carry implicit list semantics. Also skips lists
+		// with bare <img> slides: ARIA in HTML (and axe) disallow role="listitem" on <img>, and
+		// wrapping/reparenting those nodes is off-limits (ROU-12937). Callers should wrap each
+		// image in a platform-owned host (Container/Block); when that host is missing we warn once
+		// and fall back to image semantics + aria-current / live status for selection feedback.
+		private _applyListRoles(listEl: HTMLElement): void {
+			const _isNativeList = listEl.tagName === 'UL' || listEl.tagName === 'OL';
+			const _hasNativeListChildren =
+				OSFramework.OSUI.Helper.Dom.TagSelector(listEl, ':scope > li, :scope > ul, :scope > ol') !== undefined;
+			// Direct-child <img> slides only — a wrapped image (div > img) must still get list roles,
+			// so the selector is scoped with ':scope >' instead of matching any descendant.
+			const _hasImageSlides = OSFramework.OSUI.Helper.Dom.TagSelector(listEl, ':scope > img') !== undefined;
+
+			if (_hasImageSlides) {
+				this._warnBareImageSlidesNeedHost();
+			}
+
+			if (_isNativeList || _hasNativeListChildren || _hasImageSlides) {
+				// Content can change across platform refreshes (e.g. List widget data) — drop a list
+				// role applied on a previous pass so it never wraps children that aren't list items
+				if (
+					_hasImageSlides &&
+					OSFramework.OSUI.Helper.Dom.Attribute.Get(
+						listEl,
+						OSFramework.OSUI.Constants.A11YAttributes.Role.AttrName
+					) === OSFramework.OSUI.Constants.A11YAttributes.Role.List
+				) {
+					OSFramework.OSUI.Helper.Dom.Attribute.Remove(
+						listEl,
+						OSFramework.OSUI.Constants.A11YAttributes.Role.AttrName
+					);
+				}
+			} else {
+				OSFramework.OSUI.Helper.A11Y.RoleList(listEl);
+				OSFramework.OSUI.Helper.Dom.TagSelectorAll(listEl, ':scope > *')?.forEach((slide) =>
+					OSFramework.OSUI.Helper.A11Y.RoleListitem(slide as HTMLElement)
+				);
+			}
+
+			// List-widget polls can re-apply roles asynchronously; keep aria-current in sync
+			this._syncActiveSlideAriaCurrent();
 		}
 
 		// Method to wait for the OutSystems List widget to finish loading before applying roles
@@ -85,6 +138,32 @@ namespace Providers.OSUI.Carousel.Splide {
 			}
 		}
 
+		// Resolve the true active (non-clone) slide element from the DOM (post-Splide update)
+		private _getActiveSlideElem(): HTMLElement {
+			return OSFramework.OSUI.Helper.Dom.TagSelector(
+				this.selfElement,
+				OSFramework.OSUI.Constants.Dot +
+					Enum.CssClass.SplideSlide +
+					OSFramework.OSUI.Constants.Dot +
+					Enum.CssClass.SplideSlideActive +
+					':not(' +
+					OSFramework.OSUI.Constants.Dot +
+					Enum.CssClass.SplideSlideClone +
+					')'
+			);
+		}
+
+		// Resolve slide by Splide index — safe inside Moved handlers that run before .is-active updates.
+		private _getSlideElemByIndex(index: number): HTMLElement {
+			const slides = this.provider?.Components?.Slides;
+			if (slides === undefined) {
+				return undefined;
+			}
+
+			const original = slides.get(true)?.find((slide) => slide.index === index);
+			return original?.slide ?? slides.getAt(index)?.slide;
+		}
+
 		// Method to init the provider
 		private _initProvider(): void {
 			// Init provider
@@ -106,15 +185,15 @@ namespace Providers.OSUI.Carousel.Splide {
 			// Set initial carousel width
 			this._setCarouselWidth();
 
-			// Init the provider — pass a custom extension so list roles are re-applied on every
-			// mount cycle, including after provider.refresh() which wipes provider.on() listeners.
+			// Init the provider — pass a custom extension so a11y is re-applied on every mount
+			// cycle, including after provider.refresh() which wipes provider.on() listeners.
 			// The extension's mount() runs after all built-in components (including A11y) have
 			// already mounted, so Splide's ARIA roles are already set and can be overridden directly.
 			this.provider.mount({
 				OSUIListRoles: () => {
 					return {
 						mount: () => {
-							this._setListRoles();
+							this.setA11YProperties();
 						},
 					};
 				},
@@ -134,18 +213,17 @@ namespace Providers.OSUI.Carousel.Splide {
 			if (_childrenList.length > 0) {
 				// Add the placeholder content already with the correct html structure per item, expected by the library
 				for (const item of _childrenList) {
-					if (!item.classList.contains(Enum.CssClass.SplideSlide)) {
-						// Splide assigns role="presentation" to each splide__slide element, which is then
-						// overridden with role="listitem" by the OSUIListRoles extension. Neither role
-						// is valid on an <img>. Wrap bare images in a <div> so the role lands on the container.
-						if (item.tagName === 'IMG') {
-							const wrapper = document.createElement(OSFramework.OSUI.GlobalEnum.HTMLElement.Div);
-							item.replaceWith(wrapper);
-							wrapper.appendChild(item);
-							wrapper.classList.add(Enum.CssClass.SplideSlide);
-						} else {
-							item.classList.add(Enum.CssClass.SplideSlide);
-						}
+					if (
+						!OSFramework.OSUI.Helper.Dom.Styles.ContainsClass(
+							item as HTMLElement,
+							Enum.CssClass.SplideSlide
+						)
+					) {
+						// Never create or move platform-owned nodes here: reparenting an <img>
+						// (e.g. wrapping it in a <div>) invalidates React's fiber bookkeeping and crashes
+						// the next reconcile with NotFoundError on removeChild. Only mutate classes;
+						// invalid ARIA roles on <img> slides are stripped in setA11YProperties.
+						OSFramework.OSUI.Helper.Dom.Styles.AddClass(item as HTMLElement, Enum.CssClass.SplideSlide);
 					}
 				}
 			}
@@ -172,10 +250,40 @@ namespace Providers.OSUI.Carousel.Splide {
 				} else {
 					// refresh() reapplies Splide's default ARIA (e.g. presentation) without firing
 					// mounted — e.g. when DevTools toggles and triggers resize. Full redraw remounts and
-					// mounted reapplies list roles; after refresh-only we must restore them here.
-					this._setListRoles();
+					// mounted reapplies a11y; after refresh-only we must restore them here.
+					this.setA11YProperties();
 				}
 			}, 500);
+		}
+
+		// Resolve via provider.index (or explicit index); fall back to .is-active when unavailable
+		private _resolveActiveSlideElem(activeIndex?: number): HTMLElement {
+			const index = activeIndex ?? this.provider.index;
+
+			if (index !== undefined && index !== null && this.provider?.Components?.Slides) {
+				const slideByIndex = this._getSlideElemByIndex(index);
+				if (slideByIndex) {
+					return slideByIndex;
+				}
+			}
+
+			return this._getActiveSlideElem();
+		}
+
+		// Ensure a persistent, visually-hidden aria-live status element exists for slide announcements
+		private _setA11yStatusElem(): void {
+			if (this._a11yStatusElem === undefined) {
+				this._a11yStatusElem = document.createElement(OSFramework.OSUI.GlobalEnum.HTMLElement.Div);
+				OSFramework.OSUI.Helper.Dom.Styles.AddClass(
+					this._a11yStatusElem,
+					OSFramework.OSUI.Constants.AccessibilityHideElementClass
+				);
+				this.selfElement.appendChild(this._a11yStatusElem);
+			}
+
+			OSFramework.OSUI.Helper.A11Y.RoleStatus(this._a11yStatusElem);
+			OSFramework.OSUI.Helper.A11Y.AriaLivePolite(this._a11yStatusElem);
+			OSFramework.OSUI.Helper.A11Y.AriaAtomicTrue(this._a11yStatusElem);
 		}
 
 		// Ensure that the splide track maintains the correct width
@@ -190,18 +298,30 @@ namespace Providers.OSUI.Carousel.Splide {
 
 		// Method to assign correct ARIA list roles so screen readers interpret carousel lists properly
 		private _setListRoles(): void {
-			// Remove role="tabpanel" from slides that contain img, ul, ol, or li — elements for
-			// which tabpanel ownership is invalid or creates conflicting semantics
+			// Remove role="tabpanel" from slides that are native list elements (ul/ol/li) — the same
+			// cases where _applyListRoles skips custom roles, so nothing overrides the conflicting
+			// tabpanel afterwards
 			this.selfElement
 				.querySelectorAll(OSFramework.OSUI.Constants.Dot + Enum.CssClass.SplideSlide)
 				.forEach((slide) => {
 					const _slideEl = slide as HTMLElement;
+					// Bare <img> slides must not carry an explicit role: ARIA in HTML disallows
+					// listitem/group/tabpanel on <img> (axe: "ARIA role listitem is not allowed"),
+					// and role="presentation" would remove the image from the a11y tree. Stripping
+					// the role keeps the image announced via its accessible name (aria-label/alt).
+					if (_slideEl.tagName === 'IMG') {
+						OSFramework.OSUI.Helper.Dom.Attribute.Remove(
+							_slideEl,
+							OSFramework.OSUI.Constants.A11YAttributes.Role.AttrName
+						);
+						return;
+					}
 					if (
 						OSFramework.OSUI.Helper.Dom.Attribute.Get(
 							_slideEl,
 							OSFramework.OSUI.Constants.A11YAttributes.Role.AttrName
 						) === OSFramework.OSUI.Constants.A11YAttributes.Role.TabPanel &&
-						_slideEl.querySelector('img, ul, ol, li')
+						['UL', 'OL', 'LI'].includes(_slideEl.tagName)
 					) {
 						OSFramework.OSUI.Helper.Dom.Attribute.Remove(
 							_slideEl,
@@ -223,6 +343,9 @@ namespace Providers.OSUI.Carousel.Splide {
 					this._applyListRoles(splideList);
 				}
 			}
+
+			// Keep aria-current aligned after every list-role re-application point (mount, refresh, redraw)
+			this._syncActiveSlideAriaCurrent();
 		}
 
 		// Method to set the OnInitializeEvent
@@ -234,12 +357,44 @@ namespace Providers.OSUI.Carousel.Splide {
 
 		// Method to set the OnSlideMoved event
 		private _setOnSlideMovedEvent(): void {
+			// Registered before mount, so this runs before Splide updates .is-active — always use
+			// the event index (via Slides.getAt) instead of querying .is-active in the DOM.
 			this.provider.on(Enum.SpliderEvents.Moved, (index) => {
 				if (index !== this._currentIndex) {
 					this.triggerPlatformEventCallback(this._platformEventOnSlideMoved, index);
 					this._currentIndex = index;
+
+					OSFramework.OSUI.Helper.AsyncInvocation(() => {
+						this._syncActiveSlideAriaCurrent();
+
+						// Suppress announcements while autoplay is playing
+						if (this.provider.Components.Autoplay.isPaused()) {
+							this._announceActiveSlide();
+						}
+					});
 				}
 			});
+		}
+
+		// Set aria-current on the active non-clone slide and clear it from every other slide
+		private _syncActiveSlideAriaCurrent(): void {
+			this.selfElement
+				.querySelectorAll(OSFramework.OSUI.Constants.Dot + Enum.CssClass.SplideSlide)
+				.forEach((slide) =>
+					OSFramework.OSUI.Helper.Dom.Attribute.Remove(
+						slide as HTMLElement,
+						OSFramework.OSUI.Constants.A11YAttributes.Aria.Current.prop
+					)
+				);
+
+			const activeSlide = this._resolveActiveSlideElem();
+			if (activeSlide) {
+				OSFramework.OSUI.Helper.Dom.Attribute.Set(
+					activeSlide,
+					OSFramework.OSUI.Constants.A11YAttributes.Aria.Current.prop,
+					OSFramework.OSUI.Constants.A11YAttributes.States.True
+				);
+			}
 		}
 
 		// Method to toggle class when pagination is present
@@ -261,6 +416,16 @@ namespace Providers.OSUI.Carousel.Splide {
 			}
 		}
 
+		// Warn once when bare <img> slides lack a platform-owned host for listitem semantics
+		private _warnBareImageSlidesNeedHost(): void {
+			if (this._hasWarnedBareImageSlides) {
+				return;
+			}
+
+			this._hasWarnedBareImageSlides = true;
+			console.warn(`Carousel (${this.widgetId}): ${Enum.WarningMessages.BareImageSlidesNeedHost}`);
+		}
+
 		/**
 		 * Method that encapsulates all methods needed to create a new Carousel
 		 *
@@ -276,13 +441,20 @@ namespace Providers.OSUI.Carousel.Splide {
 		}
 
 		/**
-		 * This method has no implementation on this pattern context!
+		 * Apply all Carousel ARIA attributes (status live region, list roles, aria-current).
+		 * Invoked after Splide mount/refresh and whenever slide state changes.
 		 *
 		 * @protected
 		 * @memberof Providers.OSUI.Carousel.Splide.OSUISplide
 		 */
 		protected setA11YProperties(): void {
-			console.warn(OSFramework.OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
+			this._setA11yStatusElem();
+			this._setListRoles();
+
+			// Splide emits mounted/ready after our sync and clearsaria-current via Slide.updateActivity when isNavigation is false — re-apply after.
+			OSFramework.OSUI.Helper.AsyncInvocation(() => {
+				this._syncActiveSlideAriaCurrent();
+			});
 		}
 
 		/**
@@ -446,6 +618,11 @@ namespace Providers.OSUI.Carousel.Splide {
 				this._listRolesPollId = undefined;
 			}
 
+			if (this._a11yStatusElem) {
+				this._a11yStatusElem.remove();
+				this._a11yStatusElem = undefined;
+			}
+
 			// Check if provider is ready
 			if (this.isBuilt) {
 				this.provider.destroy();
@@ -573,9 +750,9 @@ namespace Providers.OSUI.Carousel.Splide {
 					this.redraw();
 				}
 			} else if (this._hasList && this._carouselListWidgetElem) {
-				// Even when redraw is blocked (e.g. during a changeProperty call), re-apply list roles
-				// in case the List widget refreshed its content and replaced DOM nodes that had the roles.
-				this._applyListRolesWhenReady(this._carouselListWidgetElem);
+				// Even when redraw is blocked (e.g. during a changeProperty call), re-apply a11y
+				// in case the List widget refreshed its content and replaced DOM nodes that had roles.
+				this.setA11YProperties();
 			}
 		}
 	}

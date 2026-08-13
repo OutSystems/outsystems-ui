@@ -4,8 +4,12 @@
 /// @group Layout
 /// Layout
 
-///
-html,
+// OutSystems UI only supports viewport-fit=cover, so 100vh already reflects the full visual
+// viewport here; dynamic viewport units (dvh/svh/lvh) are intentionally not used.
+html {
+	height: 100vh;
+}
+
 body,
 #reactContainer,
 #transitionContainer,

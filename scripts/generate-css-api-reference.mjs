@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 /**
- * Generates the CSS API reference from the SCSS source of truth, as two files:
- *   • docs/css-api-reference.md      — the repo reference
+ * Generates the CSS API reference from the SCSS source of truth:
  *   • stories/CssApiReference.mdx    — the Storybook "CSS API Reference" page
  *
  * It walks src/scss, finds every `--osui-*: <default>;` declaration, attributes
@@ -21,7 +20,6 @@ import { fileURLToPath } from 'node:url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(__dirname, '..');
 const scssRoot = path.join(repoRoot, 'src', 'scss');
-const outFile = path.join(repoRoot, 'docs', 'css-api-reference.md');
 const mdxOutFile = path.join(repoRoot, 'stories', 'CssApiReference.mdx');
 
 // Files/dirs that are not part of the runtime component CSS API.
@@ -109,7 +107,14 @@ function extract(src) {
 			if (m) {
 				// Outermost non-at-rule selector owns the declaration.
 				const root = stack.find((s) => s && !s.startsWith('@')) ?? stack[0] ?? '(root)';
-				out.push({ root, name: m[1], value: m[2].trim().replace(/\s+/g, ' '), order: order++ });
+				// Since the @use/@forward migration (ROU-12911) token vars are reached through
+				// the module namespace (`variables.$token-x`). The reference documents the
+				// authoring form, so the namespace accessor is dropped.
+				const value = m[2]
+					.trim()
+					.replace(/\s+/g, ' ')
+					.replace(/\bvariables\.\$/g, '$');
+				out.push({ root, name: m[1], value, order: order++ });
 			}
 			buf = '';
 		} else {
@@ -209,39 +214,6 @@ const note = (cmd, src) =>
 		`> change with \`${cmd}\` (source: \`${src}\`).`,
 	].join('\n');
 
-// ── Emit: docs/css-api-reference.md (repo reference) ──────────────────────────
-const md = [
-	'# CSS API Reference',
-	'',
-	'Every `--osui-*` custom property exposed by OutSystemsUI components, with its',
-	'default value. Override any property on the component’s root element (or an',
-	'ancestor) to customise appearance — without touching component rules or tokens.',
-	'',
-	'See [`css-architecture.md`](./css-architecture.md) for how these defaults resolve',
-	'(component CSS API → `--color-*` theme layer → `$token-*` → `--token-*`).',
-	'',
-	note('npm run docs:css-api', 'scripts/generate-css-api-reference.mjs'),
-	'',
-	'**Usage example:**',
-	'```css',
-	'.my-page .osui-sidebar {',
-	'  --osui-sidebar-background: #1a1a2e;',
-	'  --osui-sidebar-color: #ffffff;',
-	'}',
-	'```',
-	'',
-	'---',
-	'',
-	...toc,
-	'',
-	'---',
-	'',
-	...body,
-	footer,
-	'',
-].join('\n');
-fs.writeFileSync(outFile, md);
-
 // ── Emit: stories/CssApiReference.mdx (Storybook page) ────────────────────────
 // MDX-safe: every dynamic value sits inside backticks, so `#{…}` interpolation
 // is never parsed as a JSX expression.
@@ -282,4 +254,4 @@ const mdx = [
 ].join('\n');
 fs.writeFileSync(mdxOutFile, mdx);
 
-console.log(`Wrote ${outFile} and ${mdxOutFile}: ${totalProps} properties across ${totalComponents} components.`);
+console.log(`Wrote ${mdxOutFile}: ${totalProps} properties across ${totalComponents} components.`);

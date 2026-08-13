@@ -19,9 +19,10 @@ const constants = {
         odc: 'ODC',
     },
     // list of platforms for which to generate + compile SCSS bundles.
-    // Subset of platformTarget; O11 SCSS generation is currently disabled.
-    // Restore O11 SCSS by adding `o11: 'O11'` to this map.
+    // Subset of platformTarget. O11 was disabled during the token migration
+    // (Phase 15b) and re-enabled once the new theme was ready to ship to O11 (ROU-12974).
     scssPlatformTarget: {
+        o11: 'O11',
         odc: 'ODC',
     },
     // Icon placeholder CSS class per platform (replaced at compile time; do not change token in source).
@@ -33,7 +34,7 @@ const constants = {
 
 // Store the default project specifications
 const specs = {
-    "version": "2.29.0",
+    "version": "2.30.0",
     "name": "OutSystems UI",
     "description": "",
     "url": "Website:\n • https://www.outsystems.com/outsystems-ui",

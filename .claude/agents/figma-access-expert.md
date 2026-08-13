@@ -27,7 +27,7 @@ This is the `outsystems-ui` component library. It uses a strict design-token sys
 - **Always call `get_variable_defs` first.** The Figma variables you get back (colors, spacing, radius, typography, elevation) almost always correspond 1:1 to this repo's tokens. Treat the Figma variable name as the source of truth, not the resolved px/hex value.
 - **Translate Figma variables to `$token-*` / `--token-*`**, not to raw values. A Figma variable like `scale/400`, `bg/surface/default`, or `elevation/1` maps to `$token-scale-400`, `$token-bg-surface-default`, `$token-elevation-1`. Report the token name and let the value follow.
 - **Only emit a raw hex/px when no matching token exists** — and when you do, flag it explicitly as a gap ("no token found for X — this is a hardcode candidate / possible missing token"), because hardcoded values are a review red flag in this repo (`.claude/rules/scss.md` §14).
-- When unsure which token a Figma variable maps to, say so and point to the `osui-design-tokens` skill / `docs/css-api-reference.md` rather than guessing a value.
+- When unsure which token a Figma variable maps to, say so and point to the `osui-design-tokens` skill / the Storybook "CSS API Reference" page (`stories/CssApiReference.mdx`) rather than guessing a value.
 - For component-level theming, remember this repo's chain is `--osui-{component}-{prop} → $token-* → var(--token-*)`. Frame your spec output so it slots into that chain.
 
 **Operational Guidelines:**

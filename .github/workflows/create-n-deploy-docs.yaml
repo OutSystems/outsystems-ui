@@ -38,9 +38,14 @@ jobs:
             contents: read
         steps:
             - name: 📥 Checkout into ${{ inputs.branch-name }}
-              uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+              uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
               with:
                   ref: ${{ inputs.branch-name }}
+
+            - name: 📦 Setup Node
+              uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
+              with:
+                  node-version: 24
 
             - name: 🕸️ Install project dependencies
               if: ${{ inputs.run-lint == true }}
@@ -59,7 +64,7 @@ jobs:
 
         steps:
             - name: 📥 Checkout repository
-              uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+              uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
 
             - name: 🔐 Azure Login
               uses: ./.github/actions/az-login
@@ -75,7 +80,7 @@ jobs:
                   key-name: o11odc-github-gitpersonal-token-prd
 
             - name: 📥 Checkout into ${{ inputs.branch-name }}
-              uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+              uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
               with:
                   ref: ${{ inputs.branch-name }}
                   token: ${{ steps.get-github-token.outputs.az-keyvault-value }}
@@ -94,7 +99,7 @@ jobs:
 
         steps:
             - name: 📥 Checkout repository
-              uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+              uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
 
             - name: 🔐 Azure Login
               uses: ./.github/actions/az-login
@@ -115,10 +120,15 @@ jobs:
                   git config --global user.name "UiComponentsBot"
 
             - name: 📥 Checkout into deploy-docs
-              uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+              uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
               with:
                   ref: deploy-docs
                   token: ${{ steps.get-github-token.outputs.az-keyvault-value }}
+
+            - name: 📦 Setup Node
+              uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
+              with:
+                  node-version: 24
 
             - name: 🕸️ Install project dependencies
               run: npm install
@@ -156,7 +166,7 @@ jobs:
 
         steps:
             - name: 📥 Checkout repository
-              uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+              uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
 
             - name: 🔐 Azure Login
               uses: ./.github/actions/az-login
@@ -172,7 +182,7 @@ jobs:
                   key-name: o11odc-github-gitpersonal-token-prd
 
             - name: 📥 Checkout into deploy-docs
-              uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+              uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
               with:
                   ref: deploy-docs
                   token: ${{ steps.get-github-token.outputs.az-keyvault-value }}
@@ -197,7 +207,7 @@ jobs:
         if: ${{ inputs.delete-branch == true }}
         steps:
             - name: 📥 Checkout branch dev
-              uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+              uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
               with:
                   ref: dev
 

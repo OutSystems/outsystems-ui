@@ -58,7 +58,7 @@ graph TB
 | Splide (4.1.3)            | Sync (JavaScript API) | Carousel/slider provider implementation                    |
 | Flatpickr (4.6.13)        | Sync (JavaScript API) | DatePicker, TimePicker, MonthPicker provider               |
 | noUiSlider (15.8.1)       | Sync (JavaScript API) | RangeSlider provider implementation                        |
-| VirtualSelect (1.1.0)     | Sync (JavaScript API) | Dropdown with search/tags provider                         |
+| VirtualSelect (1.4.0)     | Sync (JavaScript API) | Dropdown with search/tags provider                         |
 | Floating UI (1.6.5)       | Sync (JavaScript API) | Positioning engine for Balloon/Tooltip patterns            |
 
 ## Build & Compilation

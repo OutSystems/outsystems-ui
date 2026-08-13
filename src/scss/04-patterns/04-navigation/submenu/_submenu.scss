@@ -223,6 +223,18 @@
 	}
 }
 
+// Header arrow visibility (ROU-12882) — platform-agnostic behaviour, so it lives here
+// rather than in either icon library: the arrow is hidden until Submenu's TS adds
+// .osui-submenu--is-dropdown (i.e. the submenu actually has child items). Only the
+// glyph itself (content/font-family) is icon-library territory.
+.osui-submenu__header__icon {
+	display: none;
+}
+
+.osui-submenu--is-dropdown .osui-submenu__header__icon {
+	display: inline-flex;
+}
+
 // Icon rotation on open
 .osui-submenu--is-open .osui-submenu__header__icon {
 	transform: rotate(180deg);
@@ -656,6 +668,24 @@
 }
 
 // Accessibility -----------------------------------------------------------------
+///
+.has-accessible-features {
+	.osui-submenu:focus-within {
+		box-shadow: 0 0 0 variables.$token-border-size-075 var(--color-focus-outer);
+		outline: 0;
+	}
+}
+
+// Ported from dev: re-asserts the focus ring over the tablet/phone link styles.
+.tablet,
+.phone {
+	.has-accessible-features {
+		.osui-submenu:focus-within {
+			box-shadow: 0 0 0 variables.$token-border-size-075 var(--color-focus-outer);
+			outline: 0;
+		}
+	}
+}
 
 // OS HighContrast Enabled -------------------------------------------------------
 ///

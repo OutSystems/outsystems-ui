@@ -79,6 +79,19 @@ namespace OSFramework.OSUI.Patterns {
 		}
 
 		/**
+		 * Method used to notify all children about a given notification type
+		 *
+		 * @param notificationType Notification type
+		 * @memberof OSFramework.Patterns.AbstractParent
+		 */
+		protected notifyChildren(notificationType: string): void {
+			const children = this.getChildItems();
+			children.forEach((child) => {
+				child.beNotifiedByParent(notificationType);
+			});
+		}
+
+		/**
 		 * Method that is used to set a given child as a Parent child.
 		 *
 		 * @protected

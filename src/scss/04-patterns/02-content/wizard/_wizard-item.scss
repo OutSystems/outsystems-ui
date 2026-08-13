@@ -1,0 +1,183 @@
+@use '../../../tokens/variables';
+
+/* Patterns - Content - Wizard Item */
+////
+/// @group Patterns-Wizard
+/// Patterns - Content - Wizard Item
+
+///
+.osui-wizard-item {
+	// ─── Component CSS API ─────────────────────────────────────────────────────
+	// Design language carried over from the pre-merge wizard restyle (Figma-aligned);
+	// applied to the new TS pattern's markup contract.
+	--osui-wizard-font-size: #{variables.$token-font-size-350};
+	--osui-wizard-icon-background: #{variables.$token-bg-neutral-subtlest-default};
+	--osui-wizard-icon-border-color: var(--color-border-input);
+	--osui-wizard-icon-border-width: #{variables.$token-border-size-050};
+	--osui-wizard-icon-color: #{variables.$token-text-subtlest};
+	--osui-wizard-icon-font-weight: #{variables.$token-font-weight-medium};
+	--osui-wizard-icon-glyph-size: #{variables.$token-font-size-500};
+	--osui-wizard-icon-padding: #{variables.$token-space-200};
+	--osui-wizard-icon-size: #{variables.$token-scale-1000};
+	--osui-wizard-label-color: var(--color-text);
+	// TODO: needs a line-height token — the font-line-height scale has no 21px step (Figma Wizard label).
+	--osui-wizard-label-line-height: 21px;
+	--osui-wizard-active-color: var(--color-primary);
+	--osui-wizard-active-icon-color: #{variables.$token-text-primary};
+	--osui-wizard-next-icon-color: #{variables.$token-text-subtlest};
+	--osui-wizard-past-background: var(--color-primary);
+	--osui-wizard-past-color: var(--color-text-inverse);
+	// Figma spec is primitives/neutral/600 — the token set has no semantic role for a
+	// progress-track neutral yet, so the primitive is cited directly (design-system gap).
+	--osui-wizard-connector-color: #{variables.$token-primitives-neutral-600};
+	--osui-wizard-connector-radius: #{variables.$token-border-radius-full};
+	--osui-wizard-connector-size: #{variables.$token-border-size-050};
+	--osui-wizard-focus-halo-color: var(--osui-border-focus-halo);
+	--osui-wizard-focus-halo-width: #{variables.$token-border-size-075};
+	// ───────────────────────────────────────────────────────────────────────────
+
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+
+	&.is-reversed {
+		flex-direction: column-reverse;
+	}
+
+	&.is-past {
+		.osui-wizard-item-icon {
+			background-color: var(--osui-wizard-past-background);
+			border-color: var(--osui-wizard-past-background);
+			color: var(--osui-wizard-past-color);
+		}
+
+		.osui-wizard-item-icon-wrapper:before {
+			background-color: var(--osui-wizard-past-background);
+		}
+	}
+
+	&.is-active {
+		.osui-wizard-item-icon {
+			background-color: var(--osui-wizard-icon-background);
+			border-color: var(--osui-wizard-active-color);
+			box-shadow: 0 0 0 variables.$token-scale-100
+				color-mix(in srgb, var(--osui-wizard-active-color) 15%, transparent);
+			color: var(--osui-wizard-active-icon-color);
+		}
+
+		.osui-wizard-item-icon-wrapper:before {
+			background-color: var(--osui-wizard-active-color);
+		}
+
+		.osui-wizard-item-label {
+			color: var(--color-text);
+			font-weight: variables.$token-font-weight-medium;
+		}
+	}
+
+	&.is-next {
+		.osui-wizard-item-icon-wrapper:before {
+			background-color: var(--osui-wizard-connector-color);
+		}
+
+		.icon {
+			color: var(--osui-wizard-next-icon-color);
+		}
+	}
+
+	&-icon-wrapper {
+		margin: variables.$token-space-200 variables.$token-space-0;
+		position: relative;
+		width: 100%;
+
+		// The connector runs marker-centre to marker-centre, not edge to edge: a 2px
+		// line stopping at a circle's edge meets it at a tangent, and the curve notches
+		// the joint so the track reads as broken. Running to the centre lets the line
+		// pass *behind* each marker, which sits on a higher layer and covers the
+		// overlap — so the joint looks continuous for every marker type (number, icon
+		// or the empty 8px dot) without depending on `--osui-wizard-icon-size`.
+		&:before {
+			background-color: var(--osui-wizard-connector-color);
+			border-radius: var(--osui-wizard-connector-radius);
+			content: '';
+			height: var(--osui-wizard-connector-size);
+			position: absolute;
+			right: 50%;
+			top: 50%;
+			transform: translateY(-50%);
+			width: 100%;
+			z-index: var(--layer-screen);
+		}
+	}
+
+	&-icon {
+		align-items: center;
+		background-color: var(--osui-wizard-icon-background);
+		border: var(--osui-wizard-icon-border-width) solid var(--osui-wizard-icon-border-color);
+		border-radius: var(--border-radius-rounded);
+		color: var(--osui-wizard-icon-color);
+		display: flex;
+		font-size: var(--osui-wizard-font-size);
+		font-weight: var(--osui-wizard-icon-font-weight);
+		height: var(--osui-wizard-icon-size, #{variables.$token-scale-1000});
+		justify-content: center;
+		margin: 0 auto;
+		padding: var(--osui-wizard-icon-padding);
+		position: relative;
+		width: var(--osui-wizard-icon-size, #{variables.$token-scale-1000});
+		z-index: var(--layer-local-tier-1);
+
+		[data-block*='WizardItem']:focus-visible & {
+			box-shadow: 0 0 0 var(--osui-wizard-focus-halo-width) var(--osui-wizard-focus-halo-color);
+			outline: none;
+		}
+
+		&:empty {
+			height: variables.$token-scale-200;
+			// `box-sizing: border-box` is global, but when padding + border exceed the box the
+			// used size falls back to padding + border — which would blow the 8px dot up to 20px.
+			padding: variables.$token-space-0;
+			width: variables.$token-scale-200;
+		}
+
+		.icon {
+			font-size: var(--osui-wizard-icon-glyph-size);
+			width: auto;
+		}
+	}
+
+	&-label {
+		color: var(--osui-wizard-label-color);
+		font-size: var(--osui-wizard-font-size);
+		line-height: var(--osui-wizard-label-line-height);
+		text-align: center;
+	}
+}
+
+// IsRTL ---------------------------------------------------------------------------
+///
+.is-rtl {
+	.osui-wizard-item {
+		&-icon-wrapper {
+			&:before {
+				left: calc(50% + var(--osui-wizard-icon-size, #{variables.$token-scale-1000}) / 2);
+				right: auto;
+			}
+		}
+	}
+}
+
+/* Hybrid Service Studio => Service Studio Preview */
+html[data-uieditorversion^='1'] {
+	.osui-wizard-item {
+		& {
+			-servicestudio-display: flex;
+			-servicestudio-flex-direction: column;
+			-servicestudio-width: 100%;
+
+			&.is-reversed {
+				-servicestudio-flex-direction: column-reverse;
+			}
+		}
+	}
+}

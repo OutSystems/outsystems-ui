@@ -10,6 +10,7 @@
 .osui-section-index {
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-section-index-border-color: var(--color-border);
+	--osui-section-index-border-width: #{variables.$token-border-size-025};
 	// ───────────────────────────────────────────────────────────────────
 
 	--top-position: calc(var(--size-header) + var(--size-header-content) + #{android-safe-area-top()});
@@ -17,6 +18,9 @@
 	flex-direction: column;
 	position: relative;
 
+	// The rail. Items are later siblings of this pseudo-element and are positioned, so
+	// without a z-index their (hover/press) backgrounds would paint over the rail and
+	// break the line. tier-1 lifts it above them; the active indicator sits on tier-2.
 	&::before {
 		background-color: var(--osui-section-index-border-color);
 		bottom: 0;
@@ -24,7 +28,8 @@
 		left: 0;
 		position: absolute;
 		top: 0;
-		width: 1px;
+		width: var(--osui-section-index-border-width);
+		z-index: var(--layer-local-tier-1);
 	}
 
 	&.osui-section-index--is-sticky {
@@ -38,24 +43,46 @@
 	--osui-section-index-item-color:             var(--color-text-subtlest);
 	--osui-section-index-item-color-hover:       var(--color-text);
 	--osui-section-index-item-active-color:      var(--color-primary-selected);
-	--osui-section-index-item-hover-background:  color-mix(in srgb, var(--color-text) 4%, transparent);
+	--osui-section-index-item-border-radius:     #{variables.$token-border-radius-0};
+	--osui-section-index-item-hover-background:  #{variables.$token-bg-neutral-subtlest-hover};
+	--osui-section-index-item-press-background:  #{variables.$token-bg-neutral-subtlest-press};
 	--osui-section-index-active-indicator-color: var(--color-primary-selected);
+	--osui-section-index-active-indicator-width: #{variables.$token-border-size-025};
+	// Half a rail-width, so the marker only partially covers the rail (design spec).
+	// Reads the rail knob off .osui-section-index (custom properties inherit) and keeps
+	// its own token fallback for an item rendered outside the nav.
+	--osui-section-index-active-indicator-offset: calc(var(--osui-section-index-border-width, #{variables.$token-border-size-025}) / 2);
 	// ───────────────────────────────────────────────────────────────────
 
 	&,
 	&:visited {
 		align-items: center;
+		border-radius: var(--osui-section-index-item-border-radius);
 		color: var(--osui-section-index-item-color);
 		cursor: pointer;
 		display: flex;
 		min-height: variables.$token-scale-1100;
 		padding: variables.$token-scale-200 variables.$token-scale-400 variables.$token-scale-200 variables.$token-scale-600;
 		position: relative;
+		transition:
+			background-color variables.$token-transition-time-100 variables.$token-transition-curve-expressive,
+			color variables.$token-transition-time-100 variables.$token-transition-curve-expressive;
 	}
 
+	// text-decoration: none overrides the global `a:hover` underline
+	// (01-foundations/_html-elements-link.scss) — the design has none.
 	&:hover {
 		background-color: var(--osui-section-index-item-hover-background);
 		color: var(--osui-section-index-item-color-hover);
+		text-decoration: none;
+	}
+
+	// Pressed — must stay after :hover, same specificity so source order wins.
+	// Distinct from the `--is-active` (selected) modifier below.
+	&:active {
+		background-color: var(--osui-section-index-item-press-background);
+		color: var(--osui-section-index-item-color-hover);
+		text-decoration: none;
 	}
 
 	&--is-active {
@@ -64,14 +91,17 @@
 		&:hover {
 			color: var(--osui-section-index-item-active-color);
 		}
+		// tier-2 so the selected marker covers the rail underneath it — one blue bar,
+		// not a grey hairline bleeding through the blue.
 		&::before {
 			background-color: var(--osui-section-index-active-indicator-color);
 			bottom: 0;
 			content: '';
-			left: 0;
+			left: var(--osui-section-index-active-indicator-offset);
 			position: absolute;
 			top: 0;
-			width: 2px;
+			width: var(--osui-section-index-active-indicator-width);
+			z-index: var(--layer-local-tier-2);
 		}
 	}
 
@@ -87,6 +117,7 @@
 		&:focus {
 			background-color: transparent;
 			box-shadow: 0 0 0 variables.$token-border-size-075 var(--color-focus-outer);
+			text-decoration: none;
 		}
 	}
 }
@@ -127,7 +158,7 @@
 		&--is-active {
 			&::before {
 				left: auto;
-				right: 0;
+				right: var(--osui-section-index-active-indicator-offset);
 			}
 		}
 	}

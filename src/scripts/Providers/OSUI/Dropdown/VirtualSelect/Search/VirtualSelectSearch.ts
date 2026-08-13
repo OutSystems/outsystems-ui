@@ -32,20 +32,6 @@ namespace Providers.OSUI.Dropdown.VirtualSelect.Search {
 		}
 
 		/**
-		 * Method that will set the provider configurations in order to properly create its instance
-		 *
-		 * @protected
-		 * @memberof Providers.OSUI.Dropdown.VirtualSelect.Search.OSUIVirtualSelectSearch
-		 */
-		protected prepareConfigs(): void {
-			// Get the library configurations
-			this.virtualselectOpts = this.configs.getProviderConfig();
-
-			// Instance will be Created!
-			this.createProviderInstance();
-		}
-
-		/**
 		 * Update property value from a given property name at OnParametersChange
 		 *
 		 * @param {string} propertyName the name of the property that will be changed

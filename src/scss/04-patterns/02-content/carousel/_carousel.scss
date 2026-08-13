@@ -186,6 +186,18 @@
 	.splide__slide {
 		box-shadow: none;
 	}
+
+	.osui-carousel {
+		.splide {
+			&__pagination__page {
+				// WCAG 2.5.8: Target offset of 6px on each side meets the 24px minimum
+				// (12px dot + 6px margin × 2 = 24px total territory per axis)
+				height: variables.$token-scale-300;
+				margin: variables.$token-scale-150;
+				width: variables.$token-scale-300;
+			}
+		}
+	}
 }
 
 // OS HighContrast Enabled -------------------------------------------------------

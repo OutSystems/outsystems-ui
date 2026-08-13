@@ -170,6 +170,7 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailChangeProperty: 'OSUI-API-15001',
 		FailDispose: 'OSUI-API-15002',
 		FailRegisterCallback: 'OSUI-API-15003',
+		FailForceDisabledStateOnIsLoading: 'OSUI-API-15004',
 	};
 
 	export const DropdownServerSideItem = {
@@ -314,6 +315,7 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailChangeProperty: 'OSUI-API-29001',
 		FailDispose: 'OSUI-API-29002',
 		FailRegisterCallback: 'OSUI-API-29003',
+		FailSetAccessibilityProperties: 'OSUI-API-29004',
 	};
 
 	export const OverflowMenu = {
@@ -334,6 +336,18 @@ namespace OutSystems.OSUI.ErrorCodes {
 		FailPause: 'OSUI-API-31005',
 		FailPlay: 'OSUI-API-31006',
 		FailSetTime: 'OSUI-API-31007',
+	};
+
+	export const Wizard = {
+		FailChangeProperty: 'OSUI-API-32001',
+		FailDispose: 'OSUI-API-32002',
+		FailRegisterCallback: 'OSUI-API-32003',
+	};
+
+	export const WizardItem = {
+		FailChangeProperty: 'OSUI-API-33001',
+		FailDispose: 'OSUI-API-33002',
+		FailRegisterCallback: 'OSUI-API-33003',
 	};
 
 	// Error Codes used in Legacy Client Action

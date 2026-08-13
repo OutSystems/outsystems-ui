@@ -19,7 +19,7 @@ PS: This comment block will not be visible in the compiled version!
 =============================================================================== */
 
 /*!
-OutSystems UI 2.29.0 • ODC Platform
+OutSystems UI 2.30.0 • ODC Platform
 Website:
  • https://www.outsystems.com/outsystems-ui
 GitHub:
@@ -96,6 +96,8 @@ Section Index:
         6.2.14. Tag
         6.2.15. Tooltip
         6.2.16. User Avatar
+        6.2.17. Wizard
+        6.2.18. Wizard Item
     6.3. Interaction
         6.3.1. Action Sheet
         6.3.2. Animate
@@ -129,7 +131,6 @@ Section Index:
         6.4.6. Submenu
         6.4.7. Tabs
         6.4.8. Timeline
-        6.4.9. Wizard
     6.5. Numbers
         6.5.1. Badge
         6.5.2. Counter
@@ -337,6 +338,10 @@ Section Index:
 @use '../scss/04-patterns/03-interaction/tooltip/tooltip' as *;
 /*! 6.2.16. User Avatar */
 @use '04-patterns/02-content/user-avatar' as *;
+/*! 6.2.17. Wizard */
+@use '../scss/04-patterns/02-content/wizard/wizard' as *;
+/*! 6.2.18. Wizard Item */
+@use '../scss/04-patterns/02-content/wizard/wizard-item' as *;
 
 /*! 6.3. Interaction */
 /*! 6.3.1. Action Sheet */
@@ -403,8 +408,6 @@ Section Index:
 @use '../scss/04-patterns/04-navigation/tabs/tabs' as *;
 /*! 6.4.8. Timeline */
 @use '04-patterns/04-navigation/timeline' as *;
-/*! 6.4.9. Wizard */
-@use '04-patterns/04-navigation/wizard' as *;
 
 /*! 6.5. Numbers */
 /*! 6.5.1. Badge */
