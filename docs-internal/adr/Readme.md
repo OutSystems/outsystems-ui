@@ -34,6 +34,7 @@ Each ADR should follow the template in `ADR-0000-Title-of-ADR.md`.
 | ADR-0005   | Reconciling the new-theme branch with `dev`                            | Accepted | 2026-08-12 |
 | ADR-0006   | O11 SCSS bundle and per-platform icon libraries                        | Accepted | 2026-08-12 |
 | ADR-0007   | Build and tooling hygiene                                              | Accepted | 2026-08-12 |
+| ADR-0008   | Chromatic baseline builds on `ROU-12714` and the widget-story dependency | Proposed | 2026-08-13 |
 
 > The **"Make Great UI"** initiative (epic ROU-12776) also has a phase-by-phase decision
 > history in `specs/plan.md` (D1–D28) and `specs/plan-part-four.md` (D28–D37, theme
