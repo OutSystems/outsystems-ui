@@ -1,27 +1,18 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
 import { renderStatic } from './_helpers/osui';
-import { cls, COLOR_OPTIONS, extendedClassArgType } from './_helpers/lowcode';
+import { backgroundClass, cls, COLOR_OPTIONS, extendedClassArgType, lightTextClass } from './_helpers/lowcode';
 
 /**
  * Tag — low-code input parameters from the library OML wired as Storybook controls.
  * Class mappings come from src/scss/04-patterns/02-content/_tag.scss.
  *
- *   Color    → background-{value} (or background-{value}-light(est) when IsLight=true)
+ *   Color    → background-{value} (or background-{value}-lightest when IsLight=true)
  *   Size     → tag-small | tag-medium (no class = default compact size)
  *   Shape    → border-radius-none | border-radius-soft | border-radius-rounded | border-radius-circle
- *   IsLight  → appends -lightest for palette colors; -light for semantic colors (success/warning/error/info)
+ *   IsLight  → appends -lightest to the background class (`transparent` has no variant)
  */
 const meta: Meta = { title: 'Patterns/Content/Tag' };
 export default meta;
-
-/**
- * Semantic status colors only have a `-light` variant in the compiled CSS;
- * all palette colors (primary, secondary, blue, green, …) have `-lightest`.
- */
-const SEMANTIC_LIGHT_COLORS = new Set(['success', 'warning', 'error', 'info']);
-function lightBgSuffix(color: string): string {
-	return SEMANTIC_LIGHT_COLORS.has(color) ? '-light' : '-lightest';
-}
 
 type TagArgs = {
 	color: string;
@@ -69,11 +60,8 @@ export const Default: StoryObj<TagArgs> = {
 		extendedClass: extendedClassArgType,
 	},
 	render: ({ color, size, shape, isLight, extendedClass }) => {
-		const bgClass = color ? `background-${color}${isLight ? lightBgSuffix(color) : ''}` : '';
-		// IsLight pairs the light background with the color's darker text variant
-		// (semantic colors only expose `text-{color}`, palette/brand use `-darker`).
-		const textSuffix = SEMANTIC_LIGHT_COLORS.has(color) ? '' : '-darker';
-		const textClass = color && isLight ? `text-${color}${textSuffix}` : '';
+		const bgClass = backgroundClass(color, isLight);
+		const textClass = isLight ? lightTextClass(color) : '';
 		const shapeClass = shape ? `border-radius-${shape}` : '';
 		const sizeClass = size ? `tag-${size}` : '';
 		return renderStatic(
