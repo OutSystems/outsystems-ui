@@ -9,10 +9,13 @@
 .wizard {
 	&-wrapper {
 		// ─── Component CSS API ─────────────────────────────────────────────
+		--osui-wizard-font-size: #{variables.$token-font-size-350};
 		--osui-wizard-icon-background: var(--color-background-surface);
 		--osui-wizard-icon-border-color: var(--color-border-input);
 		--osui-wizard-icon-border-width: #{variables.$token-border-size-050};
 		--osui-wizard-icon-color: #{variables.$token-text-subtlest};
+		--osui-wizard-icon-font-weight: #{variables.$token-font-weight-medium};
+		--osui-wizard-icon-glyph-size: #{variables.$token-font-size-500};
 		--osui-wizard-icon-size: #{variables.$token-scale-1000};
 		--osui-wizard-label-color: var(--color-text);
 		--osui-wizard-active-color: var(--color-primary);
@@ -20,7 +23,9 @@
 		--osui-wizard-next-icon-color: #{variables.$token-text-subtlest};
 		--osui-wizard-past-background: var(--color-primary);
 		--osui-wizard-past-color: var(--color-text-inverse);
-		--osui-wizard-connector-color: #{variables.$token-bg-neutral-base-default};
+		--osui-wizard-connector-color: #{variables.$token-primitives-neutral-600};
+		--osui-wizard-connector-radius: #{variables.$token-border-radius-full};
+		--osui-wizard-connector-size: #{variables.$token-border-size-050};
 		--osui-wizard-focus-halo-color: var(--osui-border-focus-halo);
 		--osui-wizard-focus-halo-width: #{variables.$token-border-size-075};
 		// ───────────────────────────────────────────────────────────────────
@@ -75,6 +80,7 @@
 
 			.wizard-item-label {
 				color: var(--osui-wizard-label-color);
+				font-size: var(--osui-wizard-font-size);
 				text-align: center;
 			}
 		}
@@ -89,9 +95,11 @@
 		align-items: center;
 		background-color: var(--osui-wizard-icon-background);
 		border: var(--osui-wizard-icon-border-width) solid var(--osui-wizard-icon-border-color);
-		border-radius: 50%;
+		border-radius: var(--border-radius-rounded);
 		color: var(--osui-wizard-icon-color);
 		display: flex;
+		font-size: var(--osui-wizard-font-size);
+		font-weight: var(--osui-wizard-icon-font-weight);
 		height: var(--osui-wizard-icon-size, #{variables.$token-scale-1000});
 		justify-content: center;
 		margin: 0 auto;
@@ -105,35 +113,37 @@
 		}
 
 		&:empty {
-			height: 8px;
-			width: 8px;
+			height: variables.$token-scale-200;
+			width: variables.$token-scale-200;
 		}
 
 		&-wrapper {
-			margin: variables.$token-scale-200 variables.$token-scale-0;
+			margin: variables.$token-space-200 variables.$token-space-0;
 			position: relative;
 			width: 100%;
 
+			// The connector runs marker-centre to marker-centre, not edge to edge: a 2px
+			// line stopping at a circle's edge meets it at a tangent, and the curve notches
+			// the joint so the track reads as broken. Running to the centre lets the line
+			// pass *behind* each marker, which sits on a higher layer and covers the
+			// overlap — so the joint looks continuous for every marker type (number, icon
+			// or the empty 8px dot) without depending on `--osui-wizard-icon-size`.
 			&:before {
 				background-color: var(--osui-wizard-connector-color);
+				border-radius: var(--osui-wizard-connector-radius);
 				content: '';
-				height: 2px;
+				height: var(--osui-wizard-connector-size);
 				position: absolute;
-				right: calc(50% + var(--osui-wizard-icon-size, #{variables.$token-scale-1000}) / 2);
+				right: 50%;
 				top: 50%;
 				transform: translateY(-50%);
-				width: calc(100% - var(--osui-wizard-icon-size, #{variables.$token-scale-1000}));
+				width: 100%;
 				z-index: var(--layer-screen);
-			}
-
-			&:has(.wizard-item-icon:empty):before {
-				right: calc(50% + #{variables.$token-scale-100});
-				width: calc(100% - #{variables.$token-scale-200});
 			}
 		}
 
 		.icon {
-			font-size: variables.$token-font-size-400;
+			font-size: var(--osui-wizard-icon-glyph-size);
 			width: auto;
 		}
 	}
@@ -205,13 +215,24 @@
 
 		.wizard-wrapper-item {
 			.wizard-item-icon-wrapper {
+				// Same marker-centre-to-marker-centre rule as the horizontal connector, on
+				// the block axis. Here `100%` is the marker itself (the wrapper shrinks to
+				// it), so the item's own `margin-bottom` is what carries the line up to the
+				// previous marker's centre.
 				&:before {
-					bottom: calc(50% + var(--osui-wizard-icon-size, #{variables.$token-scale-1000}) / 2);
-					height: calc(100% + 18px); // design-spec: 18px connector overhang
+					bottom: 50%;
+					height: calc(100% + #{variables.$token-scale-800});
 					left: 50%;
 					top: auto;
 					transform: translateY(0) translateX(-50%);
-					width: 2px;
+					width: var(--osui-wizard-connector-size);
+				}
+
+				// With an empty marker the 8px dot no longer sets the row height — the
+				// label's line-height does — so `100%` falls short of the previous centre.
+				&:has(.wizard-item-icon:empty):before {
+					// design-spec: 24px label line-height + 32px item margin − the 8px dot
+					height: calc(100% + 48px);
 				}
 			}
 
@@ -300,8 +321,9 @@ html[data-uieditorversion^='1'] {
 	}
 
 	.wizard-item-icon-wrapper {
+		// Mirror of the LTR connector: same marker-centre anchor, extended the other way.
 		&:before {
-			left: calc(50% + 12px);
+			left: 50%;
 			right: auto;
 		}
 	}
