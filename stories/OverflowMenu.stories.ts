@@ -70,12 +70,12 @@ type Story = StoryObj<OverflowMenuArgs>;
 export const Default: Story = {
 	render: (args) => {
 		const id = uid('overflow-menu');
-		// Separator sits above the last item; its default color is --color-primary,
-		// so the instance override dials it down to the subtle border role.
+		// Separator sits above the last item. It has no CSS-API var (colour is a low-code
+		// param), so an instance tweak goes straight on background-color.
 		const items = ITEMS.map(([label, icon], i) =>
 			i === ITEMS.length - 1
 				? `
-					<div class="separator separator-horizontal" style="--osui-separator-color: var(--color-border-subtle);"></div>${itemMarkup(label, icon)}`
+					<div class="separator separator-horizontal" style="background-color: var(--color-border-subtle);"></div>${itemMarkup(label, icon)}`
 				: itemMarkup(label, icon)
 		).join('');
 		const template = `
