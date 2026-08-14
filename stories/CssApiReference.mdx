@@ -191,7 +191,9 @@ _File: `src/scss/03-widgets/_list-item.scss`_
 | `--osui-list-item-border-color` | `var(--color-border)` |
 | `--osui-list-item-background` | `var(--color-background-surface)` |
 | `--osui-list-item-hover-background` | `var(--osui-bg-surface-hover)` |
-| `--osui-list-item-selected-background` | `var(--color-primary-selected)` |
+| `--osui-list-item-active-background` | `#{$token-bg-neutral-subtlest-press}` |
+| `--osui-list-item-selected-background` | `var(--osui-list-item-background)` |
+| `--osui-list-item-selected-icon-color` | `#{$token-icon-select}` |
 
 ### Popover (`[data-popover]`)
 _File: `src/scss/03-widgets/_popover.scss`_
@@ -353,6 +355,8 @@ _File: `src/scss/04-patterns/02-content/_chat-message.scss`_
 | `--osui-chat-message-border-radius` | `#{$token-border-radius-200}` |
 | `--osui-chat-message-sent-background` | `var(--color-primary)` |
 | `--osui-chat-message-sent-color` | `var(--color-text-inverse)` |
+| `--osui-chat-message-status-color` | `#{$token-text-subtlest}` |
+| `--osui-chat-message-status-line-height` | `18px` |
 
 ### List Item Content (`.list-item-content`)
 _File: `src/scss/04-patterns/02-content/_list-item-content.scss`_
@@ -360,7 +364,10 @@ _File: `src/scss/04-patterns/02-content/_list-item-content.scss`_
 | Property | Default |
 |---|---|
 | `--osui-list-item-content-title-color` | `var(--color-text)` |
-| `--osui-list-item-content-text-color` | `#{$token-primitives-neutral-700}` |
+| `--osui-list-item-content-text-color` | `#{$token-text-subtlest}` |
+| `--osui-list-item-content-text-line-height` | `21px` |
+| `--osui-list-item-content-icon-size` | `#{$token-scale-500}` |
+| `--osui-list-item-content-icon-color` | `#{$token-icon-subtlest}` |
 
 ### Section (`.section`)
 _File: `src/scss/04-patterns/02-content/_section.scss`_
@@ -369,6 +376,10 @@ _File: `src/scss/04-patterns/02-content/_section.scss`_
 |---|---|
 | `--osui-section-title-color` | `var(--color-text)` |
 | `--osui-section-title-border-color` | `var(--color-border)` |
+| `--osui-section-content-color` | `var(--color-text-subtlest)` |
+| `--osui-section-title-line-height` | `25px` |
+| `--osui-section-content-line-height` | `21px` |
+| `--osui-section-group-gap` | `#{$token-space-400}` |
 
 ### Tag (`.tag`)
 _File: `src/scss/04-patterns/02-content/_tag.scss`_
@@ -378,6 +389,8 @@ _File: `src/scss/04-patterns/02-content/_tag.scss`_
 | `--osui-tag-color` | `var(--color-text-inverse)` |
 | `--osui-tag-primary-color` | `var(--color-primary)` |
 | `--osui-tag-on-light-color` | `var(--color-text)` |
+| `--osui-tag-soft-border-radius` | `#{$token-border-radius-100}` |
+| `--osui-tag-medium-soft-border-radius` | `#{$token-border-radius-200}` |
 
 ### User Avatar (`.avatar`)
 _File: `src/scss/04-patterns/02-content/_user-avatar.scss`_
@@ -387,6 +400,7 @@ _File: `src/scss/04-patterns/02-content/_user-avatar.scss`_
 | `--osui-avatar-color` | `var(--color-text-inverse)` |
 | `--osui-avatar-primary-color` | `var(--color-primary)` |
 | `--osui-avatar-on-light-color` | `var(--color-text)` |
+| `--osui-avatar-soft-border-radius` | `#{$token-border-radius-100}` |
 
 ### Accordion Item (`.osui-accordion-item`)
 _File: `src/scss/04-patterns/02-content/accordion-item/_accordion-item.scss`_
@@ -422,18 +436,26 @@ _File: `src/scss/04-patterns/02-content/wizard/_wizard-item.scss`_
 
 | Property | Default |
 |---|---|
-| `--osui-wizard-icon-background` | `var(--color-background-surface)` |
+| `--osui-wizard-font-size` | `#{$token-font-size-350}` |
+| `--osui-wizard-icon-background` | `#{$token-bg-neutral-subtlest-default}` |
 | `--osui-wizard-icon-border-color` | `var(--color-border-input)` |
 | `--osui-wizard-icon-border-width` | `#{$token-border-size-050}` |
 | `--osui-wizard-icon-color` | `#{$token-text-subtlest}` |
+| `--osui-wizard-icon-font-weight` | `#{$token-font-weight-medium}` |
+| `--osui-wizard-icon-glyph-size` | `#{$token-font-size-500}` |
+| `--osui-wizard-icon-padding` | `#{$token-space-200}` |
 | `--osui-wizard-icon-size` | `#{$token-scale-1000}` |
+| `--osui-wizard-item-spacing` | `#{$token-scale-800}` |
 | `--osui-wizard-label-color` | `var(--color-text)` |
+| `--osui-wizard-label-line-height` | `#{$token-font-line-height-500}` |
 | `--osui-wizard-active-color` | `var(--color-primary)` |
 | `--osui-wizard-active-icon-color` | `#{$token-text-primary}` |
 | `--osui-wizard-next-icon-color` | `#{$token-text-subtlest}` |
 | `--osui-wizard-past-background` | `var(--color-primary)` |
 | `--osui-wizard-past-color` | `var(--color-text-inverse)` |
-| `--osui-wizard-connector-color` | `#{$token-bg-neutral-base-default}` |
+| `--osui-wizard-connector-color` | `#{$token-primitives-neutral-600}` |
+| `--osui-wizard-connector-radius` | `#{$token-border-radius-full}` |
+| `--osui-wizard-connector-size` | `#{$token-border-size-050}` |
 | `--osui-wizard-focus-halo-color` | `var(--osui-border-focus-halo)` |
 | `--osui-wizard-focus-halo-width` | `#{$token-border-size-075}` |
 
@@ -744,11 +766,12 @@ _File: `src/scss/04-patterns/03-interaction/tooltip/_tooltip.scss`_
 |---|---|
 | `--osui-tooltip-background` | `#{$token-bg-neutral-boldest-default}` |
 | `--osui-tooltip-color` | `var(--color-text-inverse)` |
-| `--osui-tooltip-border-radius` | `#{$token-border-radius-100}` |
-| `--osui-tooltip-padding` | `#{$token-scale-200} #{$token-scale-400}` |
+| `--osui-tooltip-border-radius` | `#{$token-border-radius-200}` |
+| `--osui-tooltip-padding` | `#{$token-space-0} #{$token-space-100}` |
 | `--osui-tooltip-font-size` | `#{$token-font-size-350}` |
-| `--osui-tooltip-shadow` | `#{$token-elevation-2}` |
-| `--osui-tooltip-max-width` | `184px` |
+| `--osui-tooltip-shadow` | `#{$token-elevation-3}` |
+| `--osui-tooltip-min-height` | `#{$token-scale-900}` |
+| `--osui-tooltip-max-width` | `#{$token-scale-5000}` |
 | `--osui-tooltip-background-color` | `var(--osui-tooltip-background)` |
 | `--osui-tooltip-arrow-size` | `10px` |
 | `--osui-floating-offset` | `#{$token-scale-200}` |
@@ -791,7 +814,7 @@ _File: `src/scss/04-patterns/04-navigation/_pagination.scss`_
 | `--osui-pagination-button-size` | `#{$token-scale-900}` |
 | `--osui-pagination-button-text-color` | `var(--color-text)` |
 | `--osui-pagination-active-border-color` | `var(--color-border)` |
-| `--osui-pagination-active-color` | `var(--color-text-subtlest)` |
+| `--osui-pagination-active-color` | `var(--color-text)` |
 | `--osui-pagination-counter-color` | `var(--color-text-subtlest)` |
 
 ### Timeline (`.timeline`)
@@ -799,9 +822,18 @@ _File: `src/scss/04-patterns/04-navigation/_timeline.scss`_
 
 | Property | Default |
 |---|---|
-| `--osui-timeline-line-color` | `#{$token-bg-neutral-base-default}` |
+| `--osui-timeline-content-gap` | `#{$token-space-100}` |
+| `--osui-timeline-content-spacing` | `#{$token-space-600}` |
+| `--osui-timeline-font-size` | `#{$token-font-size-350}` |
+| `--osui-timeline-gap` | `#{$token-space-200}` |
+| `--osui-timeline-gutter` | `#{$token-space-400}` |
 | `--osui-timeline-icon-color` | `var(--color-text-inverse)` |
+| `--osui-timeline-icon-size` | `#{$token-scale-600}` |
+| `--osui-timeline-line-color` | `var(--color-border)` |
+| `--osui-timeline-line-height` | `#{$token-font-line-height-500}` |
 | `--osui-timeline-text-color` | `var(--color-text-subtlest)` |
+| `--osui-timeline-title-color` | `var(--color-text)` |
+| `--osui-timeline-title-font-weight` | `#{$token-font-weight-medium}` |
 
 ### Sectionindex (`.osui-section-index`)
 _File: `src/scss/04-patterns/04-navigation/section-index/_sectionindex.scss`_
@@ -843,11 +875,18 @@ _File: `src/scss/04-patterns/04-navigation/submenu/_submenu.scss`_
 | Property | Default |
 |---|---|
 | `--osui-submenu-items-background` | `var(--color-background-surface)` |
-| `--osui-submenu-items-border-color` | `transparent` |
-| `--osui-submenu-items-shadow` | `#{$token-elevation-2}` |
-| `--osui-submenu-item-color` | `var(--color-text-subtlest)` |
+| `--osui-submenu-items-border-color` | `var(--color-border)` |
+| `--osui-submenu-items-border-radius` | `#{$token-border-radius-300}` |
+| `--osui-submenu-items-shadow` | `#{$token-elevation-3}` |
+| `--osui-submenu-item-color` | `var(--color-text)` |
+| `--osui-submenu-item-font-size` | `#{$token-font-size-350}` |
+| `--osui-submenu-item-line-height` | `#{$token-font-line-height-500}` |
+| `--osui-submenu-item-border-radius` | `#{$token-border-radius-100}` |
+| `--osui-submenu-item-selected-background` | `#{$token-bg-primary-subtle-default}` |
+| `--osui-submenu-item-pressed-background` | `#{$token-bg-neutral-subtlest-press}` |
+| `--osui-submenu-item-color-disabled` | `var(--color-text-disabled)` |
 | `--osui-submenu-header-color` | `var(--color-text)` |
-| `--osui-submenu-active-border-color` | `var( --osui-submenu-active-border-color )` |
+| `--osui-submenu-active-border-color` | `var(--color-primary)` |
 | `--osui-submenu-max-height` | `calc(100dvh - 80px)` |
 
 ### Submenu (`.layout-side .app-menu-links .osui-submenu, .menu-visible .app-menu-links .osui-submenu`)
@@ -863,7 +902,11 @@ _File: `src/scss/04-patterns/04-navigation/tabs/_tabs.scss`_
 | Property | Default |
 |---|---|
 | `--osui-tabs-border-color` | `var(--color-border)` |
+| `--osui-tabs-header-gap` | `#{$token-space-800}` |
 | `--osui-tabs-header-item-color` | `var(--color-text-subtlest)` |
+| `--osui-tabs-header-item-font-size` | `#{$token-font-size-350}` |
+| `--osui-tabs-header-item-border-radius` | `#{$token-border-radius-100} #{$token-border-radius-100} 0 0` |
+| `--osui-tabs-header-item-line-height` | `#{$token-font-line-height-500}` |
 | `--osui-tabs-header-item-color-active` | `#{$token-text-select}` |
 | `--osui-tabs-header-item-color-active-hover` | `var(--color-primary-selected)` |
 | `--osui-tabs-header-item-color-hover` | `var(--color-text-subtlest)` |
@@ -1033,7 +1076,7 @@ _File: `src/scss/01-foundations/_root.scss`_
 | `--osui-motion-duration-130` | `130ms` |
 | `--osui-motion-duration-180` | `180ms` |
 | `--osui-motion-duration-400` | `400ms` |
-| `--osui-bg-surface-hover` | `#{$token-primitives-neutral-100}` |
+| `--osui-bg-surface-hover` | `#{$token-bg-neutral-subtlest-hover}` |
 | `--osui-bg-surface-active` | `color-mix( in srgb, #{$token-semantics-primary-base} 8%, transparent )` |
 | `--osui-border-subtle` | `#{$token-primitives-neutral-300}` |
 | `--osui-opacity-disabled` | `0.45` |
@@ -1046,4 +1089,4 @@ _File: `src/scss/01-foundations/_root.scss`_
 
 ---
 
-<sub>496 properties across 80 components, generated from `src/scss`.</sub>
+<sub>539 properties across 80 components, generated from `src/scss`.</sub>
