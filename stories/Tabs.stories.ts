@@ -13,7 +13,12 @@ interface TabsArgs {
 	startingTab: number;
 	justifyHeaders: boolean;
 	orientation: 'horizontal' | 'vertical';
+	verticalPosition: 'left' | 'right';
+	disabledTab: number;
 }
+
+/** Index of the header item disabled by default — exercises `[disabled]` styling. */
+const DEFAULT_DISABLED_TAB = 3;
 
 const TABS = [
 	['Overview', 'The Tabs pattern switches between sibling content panes.'],
@@ -31,8 +36,19 @@ const meta: Meta<TabsArgs> = {
 		startingTab: { control: { type: 'number', min: 0, max: 5 }, name: 'StartingTab' },
 		justifyHeaders: { control: 'boolean', name: 'JustifyHeaders' },
 		orientation: { control: 'inline-radio', options: ['horizontal', 'vertical'], name: 'TabsOrientation' },
+		verticalPosition: { control: 'inline-radio', options: ['left', 'right'], name: 'TabsVerticalPosition' },
+		disabledTab: {
+			control: { type: 'number', min: -1, max: 5 },
+			name: 'DisabledTab (story-only, -1 = none)',
+		},
 	},
-	args: { startingTab: 0, justifyHeaders: false, orientation: 'horizontal' },
+	args: {
+		startingTab: 0,
+		justifyHeaders: false,
+		orientation: 'horizontal',
+		verticalPosition: 'left',
+		disabledTab: DEFAULT_DISABLED_TAB,
+	},
 };
 export default meta;
 
@@ -76,7 +92,7 @@ export const Default: Story = {
 					StartingTab: args.startingTab,
 					JustifyHeaders: args.justifyHeaders,
 					TabsOrientation: args.orientation,
-					TabsVerticalPosition: 'left',
+					TabsVerticalPosition: args.verticalPosition,
 					Height: 'auto',
 				})
 			);
@@ -85,6 +101,13 @@ export const Default: Story = {
 			P.TabsAPI.Initialize(tabsId);
 			headerIds.forEach((id) => P.TabsHeaderItemAPI.Initialize(id));
 			contentIds.forEach((id) => P.TabsContentItemAPI.Initialize(id));
+
+			// Disabled header item — `DisableTabItem` sets the `disabled` attribute the
+			// pattern styles against, and drops the item out of keyboard navigation.
+			// Must run after Initialize so the child is already registered on the parent.
+			if (args.disabledTab >= 0 && args.disabledTab < headerIds.length) {
+				P.TabsHeaderItemAPI.DisableTabItem(headerIds[args.disabledTab]);
+			}
 			register(() => {
 				headerIds.forEach((id) => P.TabsHeaderItemAPI.Dispose?.(id));
 				contentIds.forEach((id) => P.TabsContentItemAPI.Dispose?.(id));

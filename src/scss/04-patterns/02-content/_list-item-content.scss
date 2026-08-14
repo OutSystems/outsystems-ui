@@ -10,8 +10,8 @@
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-list-item-content-title-color: var(--color-text);
 	--osui-list-item-content-text-color: #{variables.$token-text-subtlest};
-	// TODO: needs a line-height token — the font-line-height scale has no 21px step (Figma ListItemContent text).
-	--osui-list-item-content-text-line-height: 21px;
+	// Figma says 21px; the scale's nearest step is 20px.
+	--osui-list-item-content-text-line-height: #{variables.$token-font-line-height-500};
 	--osui-list-item-content-icon-size: #{variables.$token-scale-500};
 	--osui-list-item-content-icon-color: #{variables.$token-icon-subtlest};
 	// ───────────────────────────────────────────────────────────────────

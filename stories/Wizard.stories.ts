@@ -38,6 +38,21 @@ const STEPS: Array<[WizardItemStatus, string, string]> = [
 	['next', '4', 'Confirm'],
 ];
 
+// The step marker is whatever fills `.osui-wizard-item-icon`: the step number
+// (above), an icon glyph, or nothing at all.
+const ICON_STEPS: Array<[WizardItemStatus, string, string]> = [
+	['past', '<i class="icon ph ph-user"></i>', 'Account'],
+	['active', '<i class="icon ph ph-identification-card"></i>', 'Profile'],
+	['next', '<i class="icon ph ph-map-pin"></i>', 'Address'],
+	['next', '<i class="icon ph ph-check"></i>', 'Confirm'],
+];
+
+// An unfilled marker collapses the 40px circle to an 8px dot via
+// `.osui-wizard-item-icon:empty`.
+const EMPTY_STEPS: Array<[WizardItemStatus, string, string]> = STEPS.map(
+	([status, , label]) => [status, '', label] as [WizardItemStatus, string, string]
+);
+
 // Wrapper carries the widgetId (id + data-block); the item carries the uniqueId
 // (name) + class. The SCSS flex-item rules target `[data-block*='WizardItem']`,
 // and WizardItem applies roles/click handling to that wrapper element.
@@ -116,4 +131,14 @@ export const Vertical: Story = {
 export const Interactive: Story = {
 	args: { stepBehavior: 'Interactive' },
 	render: (args) => renderWizard(args, STEPS),
+};
+
+export const MarkerIcon: Story = {
+	name: 'Marker: icon',
+	render: (args) => renderWizard(args, ICON_STEPS),
+};
+
+export const MarkerEmpty: Story = {
+	name: 'Marker: empty (dot)',
+	render: (args) => renderWizard(args, EMPTY_STEPS),
 };

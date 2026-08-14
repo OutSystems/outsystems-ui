@@ -9,13 +9,20 @@
 .osui-submenu {
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-submenu-items-background: var(--color-background-surface);
-	--osui-submenu-items-border-color: transparent;
-	--osui-submenu-items-shadow: #{variables.$token-elevation-2};
-	--osui-submenu-item-color: var(--color-text-subtlest);
+	--osui-submenu-items-border-color: var(--color-border);
+	--osui-submenu-items-border-radius: #{variables.$token-border-radius-300};
+	--osui-submenu-items-shadow: #{variables.$token-elevation-3};
+	--osui-submenu-item-color: var(--color-text);
+	--osui-submenu-item-font-size: #{variables.$token-font-size-350};
+	// Figma says 21px; the scale's nearest step is 20px.
+	--osui-submenu-item-line-height: #{variables.$token-font-line-height-500};
+	--osui-submenu-item-border-radius: #{variables.$token-border-radius-100};
+	--osui-submenu-item-selected-background: #{variables.$token-bg-primary-subtle-default};
+	// Named `pressed` (not `active`) because `.active` already means "selected" in this pattern.
+	--osui-submenu-item-pressed-background: #{variables.$token-bg-neutral-subtlest-press};
+	--osui-submenu-item-color-disabled: var(--color-text-disabled);
 	--osui-submenu-header-color: var(--color-text);
-	--osui-submenu-active-border-color: var(
-		--osui-submenu-active-border-color
-	); // intentional: overridden by theme/consumer
+	--osui-submenu-active-border-color: var(--color-primary);
 	--osui-submenu-max-height: calc(100dvh - 80px); // design-spec: 80px header offset
 	// ───────────────────────────────────────────────────────────────────
 
@@ -138,8 +145,8 @@
 
 	&__items {
 		background-color: var(--osui-submenu-items-background);
-		border: none;
-		border-radius: variables.$token-border-radius-200;
+		border: variables.$token-border-size-025 solid var(--osui-submenu-items-border-color);
+		border-radius: var(--osui-submenu-items-border-radius);
 		box-shadow: var(--osui-submenu-items-shadow);
 		display: flex;
 		flex-direction: column;
@@ -149,7 +156,7 @@
 		opacity: 0;
 		overflow-x: hidden;
 		overflow-y: auto;
-		padding: variables.$token-scale-0;
+		padding: variables.$token-space-0;
 		pointer-events: none;
 		position: absolute;
 		top: calc(100% + variables.$token-scale-100);
@@ -181,15 +188,36 @@
 		}
 
 		a {
+			border-radius: var(--osui-submenu-item-border-radius);
 			color: var(--osui-submenu-item-color);
+			font-size: var(--osui-submenu-item-font-size);
+			line-height: var(--osui-submenu-item-line-height);
 			margin: 0;
-			padding: variables.$token-scale-200 variables.$token-scale-400;
+			padding: variables.$token-space-200 variables.$token-space-400;
 			text-decoration: none;
 			transition: background-color variables.$token-transition-time-150 variables.$token-transition-curve-linear;
 			white-space: nowrap;
 
 			&.active {
+				background-color: var(--osui-submenu-item-selected-background);
 				color: var(--osui-submenu-active-border-color);
+			}
+
+			// Pressed state — declared after `.active` so it wins on equal specificity.
+			// Context rules that also paint these items carry `:not(:active)` so they
+			// stop masking it.
+			&:active {
+				background-color: var(--osui-submenu-item-pressed-background);
+			}
+
+			// Disabled state — `pointer-events: none` is what keeps the hover and
+			// pressed rules from ever firing, so they need no `.is-disabled` guard.
+			// Declared last so its color wins over `.active`.
+			&.is-disabled {
+				background-color: transparent;
+				color: var(--osui-submenu-item-color-disabled);
+				cursor: auto;
+				pointer-events: none;
 			}
 		}
 	}
@@ -288,14 +316,18 @@
 			border-radius: variables.$token-border-radius-200;
 			padding: variables.$token-scale-200 variables.$token-scale-400 variables.$token-scale-200 variables.$token-scale-600;
 
-			&:hover {
+			// `:not(:active)` — let the pressed background through
+			&:not(:active):hover {
 				background-color: var(--osui-bg-surface-hover);
 				color: var(--color-text);
 			}
 
+			&.active:not(:active) {
+				background-color: var(--osui-submenu-item-selected-background);
+			}
+
 			&.active {
-				background-color: variables.$token-bg-primary-subtle-default;
-				color: variables.$token-semantics-primary-base;
+				color: var(--osui-submenu-active-border-color);
 			}
 		}
 	}
@@ -358,7 +390,8 @@
 
 		&__items {
 			a {
-				&:hover {
+				// `:not(:active)` — let the pressed background through
+				&:not(:active):hover {
 					background-color: var(--osui-bg-surface-hover);
 					color: var(--color-text);
 				}
@@ -458,8 +491,8 @@
 	color: variables.$token-semantics-primary-base;
 }
 
-// Top menu: submenu items
-.desktop .osui-submenu__items a.active:hover {
+// Top menu: submenu items — `:not(:active)` lets the pressed background through
+.desktop .osui-submenu__items a.active:not(:active):hover {
 	background-color: var(--osui-bg-surface-hover);
 }
 
@@ -475,9 +508,13 @@
 	color: var(--osui-submenu-active-border-color);
 }
 
-// Side menu desktop: submenu items
-.desktop .layout-side .app-menu-links .osui-submenu__items a.active:hover {
+// Side menu desktop: submenu items — `:not(:active)` lets the pressed background through
+.desktop .layout-side .app-menu-links .osui-submenu__items a.active:not(:active):hover {
 	background-color: var(--osui-bg-surface-hover);
+	color: variables.$token-semantics-primary-base;
+}
+
+.desktop .layout-side .app-menu-links .osui-submenu__items a.active:hover {
 	color: variables.$token-semantics-primary-base;
 }
 
@@ -536,12 +573,16 @@
 				border-radius: variables.$token-border-radius-200;
 				padding: variables.$token-scale-200 variables.$token-scale-400 variables.$token-scale-200 variables.$token-scale-600;
 
-				&.active {
+				// `:not(:active)` — let the pressed background through
+				&.active:not(:active) {
 					background-color: transparent;
+				}
+
+				&.active {
 					color: variables.$token-semantics-primary-base;
 				}
 
-				&:hover {
+				&:not(:active):hover {
 					background-color: var(--osui-bg-surface-hover);
 					color: var(--color-text);
 				}
@@ -564,9 +605,13 @@
 		color: var(--osui-submenu-active-border-color);
 	}
 
-	// Mobile/tablet: submenu items active hover
-	.osui-submenu__items a.active:hover {
+	// Mobile/tablet: submenu items active hover — `:not(:active)` lets the pressed background through
+	.osui-submenu__items a.active:not(:active):hover {
 		background-color: var(--osui-bg-surface-hover);
+		color: variables.$token-semantics-primary-base;
+	}
+
+	.osui-submenu__items a.active:hover {
 		color: variables.$token-semantics-primary-base;
 	}
 

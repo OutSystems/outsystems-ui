@@ -13,8 +13,9 @@
 	--osui-chat-message-sent-background:    var(--color-primary);
 	--osui-chat-message-sent-color:         var(--color-text-inverse);
 	--osui-chat-message-status-color:       #{variables.$token-text-subtlest};
-	// TODO: needs a line-height token — the font-line-height scale has no 18px step (Figma ChatMessage status).
-	--osui-chat-message-status-line-height: 18px;
+	// Figma says 18px, which sits exactly between the 16px and 20px steps; 16px keeps
+	// the 11px status text at a caption-like 1.45 ratio rather than 1.82.
+	--osui-chat-message-status-line-height: #{variables.$token-font-line-height-400};
 	// ───────────────────────────────────────────────────────────────────
 
 	display: flex;
