@@ -1,24 +1,19 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
 import { renderStatic } from './_helpers/osui';
-import { cls, COLOR_OPTIONS, extendedClassArgType } from './_helpers/lowcode';
+import { backgroundClass, cls, COLOR_OPTIONS, extendedClassArgType, lightTextClass } from './_helpers/lowcode';
 
 /**
  * Badge — low-code input parameters from the library OML wired as Storybook controls.
  * Class mappings come from src/scss/04-patterns/05-numbers/_badge.scss.
  *
  *   Number   → text content of the badge span
- *   Color    → background-{value} (or background-{value}-light(est) when IsLight=true)
+ *   Color    → background-{value} (or background-{value}-lightest when IsLight=true)
  *   Size     → badge-small | badge-medium (no class = default size)
  *   Shape    → border-radius-none | border-radius-soft | border-radius-rounded | border-radius-circle
- *   IsLight  → appends -lightest for palette colors; -light for semantic colors (success/warning/error/info)
+ *   IsLight  → appends -lightest to the background class (`transparent` has no variant)
  */
 const meta: Meta = { title: 'Patterns/Numbers/Badge' };
 export default meta;
-
-const SEMANTIC_LIGHT_COLORS = new Set(['success', 'warning', 'error', 'info']);
-function lightBgSuffix(color: string): string {
-	return SEMANTIC_LIGHT_COLORS.has(color) ? '-light' : '-lightest';
-}
 
 type BadgeArgs = {
 	number: number;
@@ -73,11 +68,8 @@ export const Default: StoryObj<BadgeArgs> = {
 		extendedClass: extendedClassArgType,
 	},
 	render: ({ number, color, size, shape, isLight, extendedClass }) => {
-		const bgClass = color ? `background-${color}${isLight ? lightBgSuffix(color) : ''}` : '';
-		// IsLight pairs the light background with the color's darker text variant
-		// (semantic colors only expose `text-{color}`, palette/brand use `-darker`).
-		const textSuffix = SEMANTIC_LIGHT_COLORS.has(color) ? '' : '-darker';
-		const textClass = color && isLight ? `text-${color}${textSuffix}` : '';
+		const bgClass = backgroundClass(color, isLight);
+		const textClass = isLight ? lightTextClass(color) : '';
 		const shapeClass = shape ? `border-radius-${shape}` : '';
 		const sizeClass = size ? `badge-${size}` : '';
 		return renderStatic(

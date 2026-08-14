@@ -4,7 +4,7 @@
 
 ## Status
 
-Accepted
+Accepted — §A amended by ADR-0008 (the `externals` guard cannot fire when TurboSnap reports an empty changed-file list, so `onlyChanged` is disabled on `ROU-12714`).
 
 ## Context
 
