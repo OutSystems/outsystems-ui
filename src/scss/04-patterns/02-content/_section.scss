@@ -12,9 +12,9 @@
 	--osui-section-title-color:         var(--color-text);
 	--osui-section-title-border-color:  var(--color-border);
 	--osui-section-content-color:       var(--color-text-subtlest);
-	// TODO: needs line-height tokens — the font-line-height scale has no 25px / 21px steps (Figma Section).
-	--osui-section-title-line-height:   25px;
-	--osui-section-content-line-height: 21px;
+	// Figma says 25px / 21px; the scale's nearest steps are 24px / 20px.
+	--osui-section-title-line-height:   #{variables.$token-font-line-height-600};
+	--osui-section-content-line-height: #{variables.$token-font-line-height-500};
 	// ───────────────────────────────────────────────────────────────────
 
 	&-title {
