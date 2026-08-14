@@ -19,9 +19,12 @@
 	--osui-wizard-icon-glyph-size: #{variables.$token-font-size-500};
 	--osui-wizard-icon-padding: #{variables.$token-space-200};
 	--osui-wizard-icon-size: #{variables.$token-scale-1000};
+	// Gap between consecutive steps when vertical. Read both by the item's own
+	// `margin-bottom` and by the vertical connector's length, so the two cannot drift.
+	--osui-wizard-item-spacing: #{variables.$token-scale-800};
 	--osui-wizard-label-color: var(--color-text);
-	// TODO: needs a line-height token — the font-line-height scale has no 21px step (Figma Wizard label).
-	--osui-wizard-label-line-height: 21px;
+	// Figma says 21px; the scale's nearest step is 20px.
+	--osui-wizard-label-line-height: #{variables.$token-font-line-height-500};
 	--osui-wizard-active-color: var(--color-primary);
 	--osui-wizard-active-icon-color: #{variables.$token-text-primary};
 	--osui-wizard-next-icon-color: #{variables.$token-text-subtlest};

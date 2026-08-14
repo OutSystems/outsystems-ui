@@ -13,8 +13,8 @@
 	--osui-tabs-header-item-color: var(--color-text-subtlest);
 	--osui-tabs-header-item-font-size: #{variables.$token-font-size-350};
 	--osui-tabs-header-item-border-radius: #{variables.$token-border-radius-100} #{variables.$token-border-radius-100} 0 0;
-	// TODO: needs a line-height token
-	--osui-tabs-header-item-line-height: 21px;
+	// Figma says 21px; the scale's nearest step is 20px.
+	--osui-tabs-header-item-line-height: #{variables.$token-font-line-height-500};
 	--osui-tabs-header-item-color-active: #{variables.$token-text-select};
 	--osui-tabs-header-item-color-active-hover: var(--color-primary-selected);
 	--osui-tabs-header-item-color-hover: var(--color-text-subtlest);

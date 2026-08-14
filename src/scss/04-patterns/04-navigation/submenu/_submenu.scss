@@ -14,8 +14,8 @@
 	--osui-submenu-items-shadow: #{variables.$token-elevation-3};
 	--osui-submenu-item-color: var(--color-text);
 	--osui-submenu-item-font-size: #{variables.$token-font-size-350};
-	// TODO: needs a line-height token
-	--osui-submenu-item-line-height: 21px;
+	// Figma says 21px; the scale's nearest step is 20px.
+	--osui-submenu-item-line-height: #{variables.$token-font-line-height-500};
 	--osui-submenu-item-border-radius: #{variables.$token-border-radius-100};
 	--osui-submenu-item-selected-background: #{variables.$token-bg-primary-subtle-default};
 	// Named `pressed` (not `active`) because `.active` already means "selected" in this pattern.

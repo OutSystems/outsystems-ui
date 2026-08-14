@@ -45,7 +45,7 @@
 		.osui-wizard-item {
 			align-items: center;
 			flex-direction: row;
-			margin-bottom: variables.$token-scale-800;
+			margin-bottom: var(--osui-wizard-item-spacing);
 
 			&.is-reversed {
 				flex-direction: row-reverse;
@@ -76,11 +76,13 @@
 					width: var(--osui-wizard-connector-size);
 				}
 
-				// With an empty marker the 8px dot no longer sets the row height — the
-				// label's line-height does — so `100%` falls short of the previous centre.
+				// With an empty marker the dot no longer sets the row height — the label's
+				// line-height does — so `100%` (the marker) falls short of the previous
+				// centre. Centre-to-centre is the row pitch, which here is the label plus
+				// the item's own spacing; both are read from their knobs so the connector
+				// follows any change to either.
 				&:has(.osui-wizard-item-icon:empty):before {
-					// design-spec: 24px label line-height + 32px item margin − the 8px dot
-					height: calc(100% + 48px);
+					height: calc(var(--osui-wizard-label-line-height) + var(--osui-wizard-item-spacing));
 				}
 			}
 		}
