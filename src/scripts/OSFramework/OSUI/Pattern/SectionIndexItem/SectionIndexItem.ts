@@ -138,14 +138,13 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 
 		// Method to remove scroll margin styles on the item target
 		private _unsetTargetAttributes(): void {
-			if (!this._targetElement) {
-				return;
+			// Check if the target element is defined
+			if (this._targetElement) {
+				// Set class to target, to avoid inline property styles
+				Helper.Dom.Styles.RemoveClass(this._targetElement, Enum.CssClass.ItemTarget);
+				// Add CSS Variable with the offset value for the scroll target, to be used on the CSS
+				Helper.Dom.Styles.RemoveStyleAttribute(this._targetElement, Enum.CssVariable.ScrollMargin);
 			}
-
-			// Set class to target, to avoid inline property styles
-			Helper.Dom.Styles.RemoveClass(this._targetElement, Enum.CssClass.ItemTarget);
-			// Add CSS Variable with the offset value for the scroll target, to be used on the CSS
-			Helper.Dom.Styles.RemoveStyleAttribute(this._targetElement, Enum.CssVariable.ScrollMargin);
 		}
 
 		/**
