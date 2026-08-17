@@ -79,8 +79,11 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 
 		// Method to remove Pattern events
 		private _removeEvents(): void {
-			this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
-			this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyBoardPress);
+			if (this.selfElement) {
+				this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
+				this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyBoardPress);
+			}
+
 			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
 				Event.DOMEvents.Listeners.Type.ScreenOnScroll,
 				this._eventOnScreenScroll
@@ -135,6 +138,10 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 
 		// Method to remove scroll margin styles on the item target
 		private _unsetTargetAttributes(): void {
+			if (!this._targetElement) {
+				return;
+			}
+
 			// Set class to target, to avoid inline property styles
 			Helper.Dom.Styles.RemoveClass(this._targetElement, Enum.CssClass.ItemTarget);
 			// Add CSS Variable with the offset value for the scroll target, to be used on the CSS
