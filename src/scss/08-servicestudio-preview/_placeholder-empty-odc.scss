@@ -9,5 +9,10 @@
 		& > .placeholder-empty > .list.list-group {
 			display: contents;
 		}
+		&-item {
+			.placeholder-empty:empty {
+				-servicestudio-padding: var(--space-m);
+			}
+		}
 	}
 }
