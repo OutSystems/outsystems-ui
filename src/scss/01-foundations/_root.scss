@@ -135,8 +135,6 @@
 	); // future: --token-bg-surface-active
 	--osui-border-subtle: #{variables.$token-primitives-neutral-300}; // future: --token-border-subtle (intended neutral-300)
 	--osui-opacity-disabled: 0.45; // future: --token-opacity-disabled
-	--osui-elevation-25: 0 1px 2px rgba(0, 0, 0, 0.08); // future: --token-elevation-25
-	--osui-elevation-50: 0 1px 2px rgba(0, 0, 0, 0.2); // future: --token-elevation-50
 	--osui-font-size-200: 0.625rem; // future: --token-font-size-200 (10px)
 	--osui-font-line-height-default: 1.4; // future: --token-font-line-height-default
 	--osui-font-line-height-full: 1; // future: --token-font-line-height-full
