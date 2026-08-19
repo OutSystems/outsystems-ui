@@ -12,7 +12,20 @@ namespace Providers.OSUI.SharedProviderResources.Flatpickr.Enum {
 	}
 
 	export enum Position {
+		Auto = 'auto',
+		AutoLeft = 'auto left',
+		AutoCenter = 'auto center',
+		AutoRight = 'auto right',
+		Above = 'above',
+		AboveLeft = 'above left',
+		AboveCenter = 'above center',
+		AboveRight = 'above right',
+		Below = 'below',
+		BelowLeft = 'below left',
+		BelowCenter = 'below center',
+		BelowRight = 'below right',
 		Left = 'below left',
+		Center = 'below center',
 		Right = 'below right',
 	}
 
