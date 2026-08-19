@@ -29,7 +29,7 @@
 		.list.list-group {
 			background-color: transparent;
 			height: 100%;
-			z-index: var(--layer-screen);
+			z-index: var(--layer-global-screen);
 
 			& > :nth-child(1) {
 				display: block;

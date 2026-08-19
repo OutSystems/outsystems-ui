@@ -70,7 +70,7 @@
 
 		&__front {
 			position: relative;
-			z-index: var(--layer-screen);
+			z-index: var(--layer-global-screen);
 		}
 
 		&__back {

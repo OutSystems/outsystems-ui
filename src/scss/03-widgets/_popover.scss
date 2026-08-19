@@ -33,7 +33,7 @@
 			max-width: var(--osui-popover-max-width);
 			min-width: auto;
 			padding: variables.$token-scale-600;
-			z-index: var(--layer-elevated);
+			z-index: var(--layer-global-elevated);
 		}
 	}
 }

@@ -6,7 +6,7 @@
 */
 
 .flatpickr-calendar {
-	--osui-flatpickr-layer: var(--layer-elevated);
+	--osui-flatpickr-layer: var(--layer-global-elevated);
 
 	border: variables.$token-border-size-025 solid var(--color-border);
 	border-radius: variables.$token-border-radius-200;
@@ -89,7 +89,7 @@
 	}
 
 	&.inline {
-		--osui-flatpickr-layer: var(--layer-screen);
+		--osui-flatpickr-layer: var(--layer-global-screen);
 		display: inline-block;
 
 		.flatpickr-weekwrapper {

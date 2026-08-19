@@ -29,7 +29,7 @@
 		box-shadow: variables.$token-elevation-3;
 		min-width: 435px;
 		padding: variables.$token-scale-1200;
-		z-index: var(--layer-screen);
+		z-index: var(--layer-global-screen);
 	}
 }
 

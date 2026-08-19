@@ -61,7 +61,7 @@
 			font-size variables.$token-transition-time-200 variables.$token-transition-curve-expressive,
 			color variables.$token-transition-time-100 variables.$token-transition-curve-expressive,
 			transform variables.$token-transition-time-200 variables.$token-transition-curve-expressive;
-		z-index: var(--layer-screen);
+		z-index: var(--layer-global-screen);
 
 		label {
 			color: var(--osui-animated-label-color);

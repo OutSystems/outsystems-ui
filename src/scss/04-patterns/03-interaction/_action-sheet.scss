@@ -29,7 +29,7 @@
 	transform: translateY(100%);
 	width: 100%;
 	will-change: transform;
-	z-index: var(--layer-off-canvas);
+	z-index: var(--layer-global-off-canvas);
 
 	// Service Studio Preview
 	& {
@@ -51,7 +51,7 @@
 		position: fixed;
 		top: 0;
 		width: 100%;
-		z-index: var(--layer-off-canvas);
+		z-index: var(--layer-global-off-canvas);
 
 		// Service Studio Preview
 		& {

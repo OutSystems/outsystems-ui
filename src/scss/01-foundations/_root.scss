@@ -90,11 +90,11 @@
 	--layer-system-scale: 100;
 	--layer-above: var(--layer-system-scale);
 	--layer-below: calc(-1 * var(--layer-system-scale));
-	--layer-screen: #{variables.$token-z-index-0};
-	--layer-elevated: #{variables.$token-z-index-100};
-	--layer-navigation: #{variables.$token-z-index-200};
-	--layer-off-canvas: #{variables.$token-z-index-300};
-	--layer-instant-interaction: #{variables.$token-z-index-400};
+	--layer-global-screen: #{variables.$token-z-index-0};
+	--layer-global-elevated: #{variables.$token-z-index-100};
+	--layer-global-navigation: #{variables.$token-z-index-200};
+	--layer-global-off-canvas: #{variables.$token-z-index-300};
+	--layer-global-instant-interaction: #{variables.$token-z-index-400};
 	--layer-global-negative: -1;
 	--layer-global-auto: auto;
 	--layer-local-tier-1: 1;
@@ -104,11 +104,11 @@
 	--layer-local-tier-5: 5;
 
 	// Portaled / cross-pattern layer vars (read off-DOM)
-	--osui-bottom-sheet-layer: var(--layer-off-canvas);
-	--osui-notification-layer: var(--layer-instant-interaction);
-	--osui-popup-layer: var(--layer-off-canvas);
-	--osui-sidebar-layer: var(--layer-off-canvas);
-	--osui-menu-layer: calc(var(--layer-navigation) + var(--layer-local-tier-2));
+	--osui-bottom-sheet-layer: var(--layer-global-off-canvas);
+	--osui-notification-layer: var(--layer-global-instant-interaction);
+	--osui-popup-layer: var(--layer-global-off-canvas);
+	--osui-sidebar-layer: var(--layer-global-off-canvas);
+	--osui-menu-layer: calc(var(--layer-global-navigation) + var(--layer-local-tier-2));
 
 	// ─── Cross-component primitives — future-token candidates ────────────
 	// Theme-contract entries with no $token-* equivalent yet; each graduates

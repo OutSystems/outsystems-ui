@@ -70,7 +70,7 @@
 				left: calc(var(--os-safe-area-left) + variables.$token-scale-600);
 				position: fixed;
 				top: calc(var(--os-safe-area-right) + (var(--size-header) + var(--token-scale-600, 24px)) / 2);
-				z-index: var(--layer-screen);
+				z-index: var(--layer-global-screen);
 				transform: translateY(-50%);
 
 				// Service Studio Preview
@@ -164,7 +164,7 @@
 				transition: transform variables.$token-transition-time-100 variables.$token-transition-curve-base;
 				width: 100%;
 				will-change: transform;
-				z-index: calc(var(--layer-above) + var(--layer-navigation));
+				z-index: calc(var(--layer-above) + var(--layer-global-navigation));
 
 				&.open {
 					transform: translateX(0) translateZ(0);

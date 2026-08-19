@@ -163,7 +163,7 @@
 		transform: translateY(-8px); // design-spec
 		transition: all var(--osui-motion-duration-130) variables.$token-transition-curve-quick;
 		width: max-content;
-		z-index: var(--layer-elevated);
+		z-index: var(--layer-global-elevated);
 
 		// Scrollbar
 		&::-webkit-scrollbar {

@@ -214,7 +214,7 @@
 			&-container {
 				background-color: variables.$token-backdrop;
 				// The !important is needed in order to overwrite the inline style added by library!
-				z-index: var(--layer-elevated) !important;
+				z-index: var(--layer-global-elevated) !important;
 			}
 
 			.vscomp-search-container {
@@ -687,15 +687,15 @@
 body {
 	&.vscomp-popup-active {
 		.vscomp-wrapper:not(.focused) {
-			z-index: var(--layer-screen);
+			z-index: var(--layer-global-screen);
 		}
 
 		.vscomp-wrapper {
-			z-index: var(--layer-off-canvas);
+			z-index: var(--layer-global-off-canvas);
 		}
 
 		&:has(.osui-notification--is-open) .vscomp-wrapper {
-			z-index: var(--layer-instant-interaction);
+			z-index: var(--layer-global-instant-interaction);
 		}
 	}
 }

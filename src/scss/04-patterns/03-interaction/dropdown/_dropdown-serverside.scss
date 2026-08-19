@@ -44,7 +44,7 @@ $balloonMobileTopMargin: 5vh;
 		height: auto;
 		min-width: var(--osui-dropdown-min-width);
 		overflow: hidden;
-		z-index: var(--layer-elevated);
+		z-index: var(--layer-global-elevated);
 
 		// Service Studio Preview
 		& {
@@ -545,7 +545,7 @@ $balloonMobileTopMargin: 5vh;
 			top: 0;
 			transition: opacity variables.$token-transition-time-300 variables.$token-transition-curve-expressive;
 			width: 100vw;
-			z-index: var(--layer-instant-interaction);
+			z-index: var(--layer-global-instant-interaction);
 
 			// Service Studio Preview
 			& {
