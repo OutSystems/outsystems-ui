@@ -24,9 +24,6 @@ namespace Providers.OSUI.SharedProviderResources.Flatpickr.Enum {
 		BelowLeft = 'below left',
 		BelowCenter = 'below center',
 		BelowRight = 'below right',
-		Left = 'below left',
-		Center = 'below center',
-		Right = 'below right',
 	}
 
 	export enum AriaDateFormat {
