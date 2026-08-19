@@ -105,7 +105,7 @@ correct even if *no* `--token-*` are defined at runtime.
 > without it. Wiring: only `tokens/_variables` is `@import`ed into the bundle (via
 > `00-abstract/_setup-global-vars.scss`).
 
-**Retired — never reintroduce:** `--space-*`, `--font-size-*`, `--shadow-*`,
+**Retired — never reintroduce:** `--font-size-*`, `--shadow-*`,
 `--border-size-*`, and the helper functions `get-background-color()` /
 `get-text-color()` / `get-border-color()`. Use `$token-*` instead.
 
@@ -284,7 +284,7 @@ When writing any SCSS line, walk **down** the chain only as far as you need:
 4. Need a value with no token yet? → add a **future-token candidate** `--osui-*` in `_root.scss` with a `// future: --token-*` comment.
 
 **Red flags** (see `.claude/rules/scss.md` §14): hardcoded hex/rem/px where a
-`$token-*` exists; reintroducing retired `--space-*`/`--font-size-*`/`--shadow-*`/`--border-size-*`;
+`$token-*` exists; reintroducing retired `--font-size-*`/`--shadow-*`/`--border-size-*`;
 `get-*-color()` calls; a property reading `$token-*`/`--color-*` directly instead
 of via its `--osui-*`; a theme touching a component rule; hand-edits to the
 generated entry files.

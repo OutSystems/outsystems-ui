@@ -72,6 +72,14 @@
 	--border-radius-softer: var(--border-radius-default, #{variables.$token-border-radius-400}); // 16px · elevated surfaces
 	--border-radius-rounded: var(--border-radius-default, #{variables.$token-border-radius-full}); // 999px · circular
 
+	// ─── Theme layer · space scale ───────────────────────────────────────
+	// Public spacing vocabulary, restored to the historical --space-* names and
+	// token-backed via $osui-space-token-vars (none→scale-0 … xxl→scale-1200).
+	// App-overridable, and read at runtime by Gallery's ItemsGap property.
+	@each $type, $value in $osui-space-token-vars {
+		--space-#{$type}: #{$value};
+	}
+
 	// ─── App-layout plumbing (NOT part of the theme contract) ────────────
 	// Layout sizes
 	--size-header: #{$header-size};

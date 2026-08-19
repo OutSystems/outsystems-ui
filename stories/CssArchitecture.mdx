@@ -136,7 +136,8 @@ Rules of thumb:
 
 - CSS **property value** → write `$token-*` directly: `padding: $token-scale-600;`
 - CSS **custom-property declaration** → interpolate: `--osui-card-padding: #{$token-scale-600};`
-- Retired, never reintroduce: `--space-*`, `--font-size-*`, `--shadow-*`, `--border-size-*`, and the `get-*-color()` helpers.
+- Retired, never reintroduce: `--font-size-*`, `--shadow-*`, `--border-size-*`, and the `get-*-color()` helpers.
+- `--space-none` … `--space-xxl` are the public spacing vocabulary, token-backed onto `$token-scale-*` (restored ROU-12975).
 
 ---
 

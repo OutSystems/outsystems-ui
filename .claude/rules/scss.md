@@ -1,6 +1,6 @@
 # SCSS Conventions — OutSystemsUI
 
-Evergreen rules for any SCSS work in this repo. Derived from the codebase as of Phase 14 of the design-token migration (ROU-12714), after which all `--color-*` / `--space-*` / `--font-*` / `--shadow-*` / `--border-*` legacy vars have been token-backed.
+Evergreen rules for any SCSS work in this repo. Derived from the codebase as of Phase 14 of the design-token migration (ROU-12714), after which all `--color-*` / `--space-*` / `--font-*` / `--shadow-*` / `--border-*` legacy vars have been token-backed. ROU-12975 then restored the `--space-*` and `--layer-global-*` public names on top of those token-backed values.
 
 ---
 
@@ -27,7 +27,8 @@ Rules of thumb:
 - In a CSS **property value** → write `$token-*` directly: `padding: $token-scale-400;`
 - In a CSS **custom property declaration** → interpolate: `--osui-card-background: #{$token-bg-surface-default};`
 - Never hardcode hex/rem/px if a matching `$token-*` exists.
-- Still retired (do **not** reintroduce): `--space-*`, `--font-size-*`, `--shadow-*`, `--border-size-*`. Use `$token-*` instead.
+- Still retired (do **not** reintroduce): `--font-size-*`, `--shadow-*`, `--border-size-*`. Use `$token-*` instead.
+- **`--space-*` is NOT retired** (restored ROU-12975). It is the public spacing vocabulary — `--space-none` … `--space-xxl`, generated in `_root.scss` from `$osui-space-token-vars` and token-backed onto `$token-scale-*`. Prefer `$token-scale-*` directly in new component SCSS; `--space-*` exists so apps (and Gallery's runtime `ItemsGap`) keep a stable override surface.
 - **Exception — the framework theme layer (Part Four).** `--color-*`, `--border-radius-*`, `--size-*`, and `--layer-*` are **not** retired: they are the framework theme layer (Tier 3) — see §13. They were deliberately un-prefixed (dropping the old `--os-` prefix) to stay backward-compatible with the historical public theming surface. Components route through them; each defaults through a `$token-*`.
 
 ## 3. Component CSS API — the `--osui-*` layer
@@ -161,7 +162,7 @@ These are intentionally not `--osui-*`: theme-layer roles are app-level knobs an
 Flag in review:
 
 - Hardcoded hex / rgb / rgba where a `$token-*` exists.
-- Re-declaration of genuinely-retired vars (`--space-*`, `--font-size-*`, `--shadow-*`, `--border-size-*`). NOTE: `--color-*`, `--border-radius-*`, `--size-*`, `--layer-*` are **not** retired — they are the framework theme layer (§13).
+- Re-declaration of genuinely-retired vars (`--font-size-*`, `--shadow-*`, `--border-size-*`). NOTE: `--color-*`, `--space-*`, `--border-radius-*`, `--size-*`, `--layer-*` are **not** retired — they are the framework theme layer (§13).
 - Calls to `get-background-color()` / `get-text-color()` / `get-border-color()`.
 - New rules that touch `.theme-dark` from the component side.
 - Imports of `_*_lib.scss` vendor baselines.
