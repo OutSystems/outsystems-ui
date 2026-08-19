@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
 import { renderStatic } from './_helpers/osui';
-import { cls, COLOR_OPTIONS_FULL, extendedClassArgType } from './_helpers/lowcode';
+import { backgroundClass, cls, COLOR_OPTIONS, extendedClassArgType, lightTextClass } from './_helpers/lowcode';
 
 /**
  * UserAvatar — low-code input parameters from the library OML wired as Storybook controls.
@@ -8,18 +8,13 @@ import { cls, COLOR_OPTIONS_FULL, extendedClassArgType } from './_helpers/lowcod
  *
  *   Name     → used as aria-label and to derive initials (first letters of each word)
  *   Image    → when non-empty, renders an <img> instead of initials text
- *   Color    → background-{value} (or background-{value}-light(est) when IsLight=true)
+ *   Color    → background-{value} (or background-{value}-lightest when IsLight=true)
  *   Size     → avatar-small | avatar-medium (no class = default 32px size)
  *   Shape    → border-radius-none | border-radius-soft | border-radius-rounded | border-radius-circle
- *   IsLight  → appends -lightest for palette colors; -light for semantic colors (success/warning/error/info)
+ *   IsLight  → appends -lightest to the background class (`transparent` has no variant)
  */
 const meta: Meta = { title: 'Patterns/Content/UserAvatar' };
 export default meta;
-
-const SEMANTIC_LIGHT_COLORS = new Set(['success', 'warning', 'error', 'info']);
-function lightBgSuffix(color: string): string {
-	return SEMANTIC_LIGHT_COLORS.has(color) ? '-light' : '-lightest';
-}
 
 type UserAvatarArgs = {
 	name: string;
@@ -69,7 +64,7 @@ export const Default: StoryObj<UserAvatarArgs> = {
 		color: {
 			name: 'Color',
 			control: 'select',
-			options: COLOR_OPTIONS_FULL,
+			options: COLOR_OPTIONS,
 			description: 'Background color of the Block.',
 		},
 		size: {
@@ -92,11 +87,8 @@ export const Default: StoryObj<UserAvatarArgs> = {
 		extendedClass: extendedClassArgType,
 	},
 	render: ({ name, image, color, size, shape, isLight, extendedClass }) => {
-		const bgClass = color ? `background-${color}${isLight ? lightBgSuffix(color) : ''}` : '';
-		// IsLight pairs the light background with the color's darker text variant
-		// (semantic colors only expose `text-{color}`, palette/brand use `-darker`).
-		const textSuffix = SEMANTIC_LIGHT_COLORS.has(color) ? '' : '-darker';
-		const textClass = color && isLight ? `text-${color}${textSuffix}` : '';
+		const bgClass = backgroundClass(color, isLight);
+		const textClass = isLight ? lightTextClass(color) : '';
 		const shapeClass = shape ? `border-radius-${shape}` : '';
 		const sizeClass = size ? `avatar-${size}` : '';
 		const label = `user initials, ${initials(name)}`;

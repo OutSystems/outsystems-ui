@@ -16,6 +16,12 @@
 		&.osui-btn-loading--is-loading {
 			.btn {
 				font-size: 0;
+				// A label written as plain text (rather than an Expression widget) is an
+				// anonymous flex item, so `font-size: 0` only collapses it to zero width —
+				// it does not remove it, and `.btn`'s `gap` still reserves space after the
+				// spinner, pushing it off-centre. Drop the gap so the spinner is the only
+				// thing `justify-content: center` has to place.
+				gap: variables.$token-scale-0;
 
 				.osui-btn-loading__spinner-animation {
 					margin-right: variables.$token-scale-0;

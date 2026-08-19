@@ -1,22 +1,17 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
 import { renderStatic } from './_helpers/osui';
-import { cls, COLOR_OPTIONS, extendedClassArgType } from './_helpers/lowcode';
+import { backgroundClass, cls, COLOR_OPTIONS, extendedClassArgType } from './_helpers/lowcode';
 
 /**
  * IconBadge — low-code input parameters from the library OML wired as Storybook controls.
  * Class mappings come from src/scss/04-patterns/05-numbers/_icon-badge.scss and _badge.scss.
  *
  *   Number   → text content of the inner badge span
- *   Color    → background-{value} on the inner .badge (or background-{value}-light(est) when IsLight=true)
- *   IsLight  → appends -lightest for palette colors; -light for semantic colors (success/warning/error/info)
+ *   Color    → background-{value} on the inner .badge (or background-{value}-lightest when IsLight=true)
+ *   IsLight  → appends -lightest to the background class (`transparent` has no variant)
  */
 const meta: Meta = { title: 'Patterns/Numbers/IconBadge' };
 export default meta;
-
-const SEMANTIC_LIGHT_COLORS = new Set(['success', 'warning', 'error', 'info']);
-function lightBgSuffix(color: string): string {
-	return SEMANTIC_LIGHT_COLORS.has(color) ? '-light' : '-lightest';
-}
 
 type IconBadgeArgs = {
 	number: number;
@@ -52,7 +47,7 @@ export const Default: StoryObj<IconBadgeArgs> = {
 		extendedClass: extendedClassArgType,
 	},
 	render: ({ number, color, isLight, extendedClass }) => {
-		const bgClass = color ? `background-${color}${isLight ? lightBgSuffix(color) : ''}` : '';
+		const bgClass = backgroundClass(color, isLight);
 		return renderStatic(`
 			<div class="${cls('icon-badge', extendedClass)}">
 				<div><i class="icon ph ph-bell" style="font-size: 2em;"></i></div>

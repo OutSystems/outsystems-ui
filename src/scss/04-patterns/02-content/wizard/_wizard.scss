@@ -45,7 +45,7 @@
 		.osui-wizard-item {
 			align-items: center;
 			flex-direction: row;
-			margin-bottom: variables.$token-scale-800;
+			margin-bottom: var(--osui-wizard-item-spacing);
 
 			&.is-reversed {
 				flex-direction: row-reverse;
@@ -63,13 +63,26 @@
 				margin: variables.$token-scale-0 variables.$token-scale-200 variables.$token-scale-0 variables.$token-scale-0;
 				width: auto;
 
+				// Same marker-centre-to-marker-centre rule as the horizontal connector, on
+				// the block axis. Here `100%` is the marker itself (the wrapper shrinks to
+				// it), so the item's own `margin-bottom` is what carries the line up to the
+				// previous marker's centre.
 				&:before {
-					bottom: calc(50% + var(--osui-wizard-icon-size, #{variables.$token-scale-1000}) / 2);
-					height: calc(100% + 18px); // design-spec: 18px connector overhang
+					bottom: 50%;
+					height: calc(100% + #{variables.$token-scale-800});
 					left: 50%;
 					top: auto;
 					transform: translateY(0) translateX(-50%);
-					width: 2px;
+					width: var(--osui-wizard-connector-size);
+				}
+
+				// With an empty marker the dot no longer sets the row height — the label's
+				// line-height does — so `100%` (the marker) falls short of the previous
+				// centre. Centre-to-centre is the row pitch, which here is the label plus
+				// the item's own spacing; both are read from their knobs so the connector
+				// follows any change to either.
+				&:has(.osui-wizard-item-icon:empty):before {
+					height: calc(var(--osui-wizard-label-line-height) + var(--osui-wizard-item-spacing));
 				}
 			}
 		}
@@ -112,6 +125,14 @@
 ///
 .is-rtl {
 	.osui-wizard {
+		// Mirror of the LTR connector: same marker-centre anchor, extended the other way.
+		// `right`/`width` are physical, so without this the horizontal connector would
+		// point away from the previous step.
+		.osui-wizard-item-icon-wrapper:before {
+			left: 50%;
+			right: auto;
+		}
+
 		&.is-vertical {
 			.osui-wizard-item {
 				.osui-wizard-item-icon-wrapper {

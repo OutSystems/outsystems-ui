@@ -10,6 +10,8 @@
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-list-item-content-title-color: var(--color-text);
 	--osui-list-item-content-text-color: #{variables.$token-text-subtlest};
+	// Figma says 21px; the scale's nearest step is 20px.
+	--osui-list-item-content-text-line-height: #{variables.$token-font-line-height-500};
 	--osui-list-item-content-icon-size: #{variables.$token-scale-500};
 	--osui-list-item-content-icon-color: #{variables.$token-icon-subtlest};
 	// ───────────────────────────────────────────────────────────────────
@@ -57,6 +59,7 @@
 	&-text {
 		color: var(--osui-list-item-content-text-color);
 		font-size: variables.$token-font-size-350;
+		line-height: var(--osui-list-item-content-text-line-height);
 	}
 }
 

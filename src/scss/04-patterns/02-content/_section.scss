@@ -9,9 +9,12 @@
 ///
 .section {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-section-title-color:        var(--color-text);
-	--osui-section-title-border-color: var(--color-border);
-	--osui-section-content-color:      var(--color-text-subtlest);
+	--osui-section-title-color:         var(--color-text);
+	--osui-section-title-border-color:  var(--color-border);
+	--osui-section-content-color:       var(--color-text-subtlest);
+	// Figma says 25px / 21px; the scale's nearest steps are 24px / 20px.
+	--osui-section-title-line-height:   #{variables.$token-font-line-height-600};
+	--osui-section-content-line-height: #{variables.$token-font-line-height-500};
 	// ───────────────────────────────────────────────────────────────────
 
 	&-title {
@@ -19,7 +22,8 @@
 		border-bottom: variables.$token-border-size-025 solid var(--osui-section-title-border-color);
 		color: var(--osui-section-title-color);
 		font-size: variables.$token-font-size-500;
-		font-weight: variables.$token-font-weight-medium;
+		font-weight: variables.$token-font-weight-semi-bold;
+		line-height: var(--osui-section-title-line-height);
 		padding: variables.$token-scale-0 variables.$token-scale-0 variables.$token-space-200 variables.$token-scale-0;
 		position: relative;
 		text-transform: none;
@@ -28,6 +32,7 @@
 
 	&-content {
 		color: var(--osui-section-content-color);
+		line-height: var(--osui-section-content-line-height);
 		padding: variables.$token-space-200 variables.$token-scale-0 variables.$token-scale-0;
 	}
 

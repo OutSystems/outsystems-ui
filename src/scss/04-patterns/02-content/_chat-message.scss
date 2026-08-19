@@ -8,11 +8,14 @@
 ///
 .chat {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-chat-message-background:      #{variables.$token-bg-neutral-subtle-default};
-	--osui-chat-message-border-radius:   #{variables.$token-border-radius-200};
-	--osui-chat-message-sent-background: var(--color-primary);
-	--osui-chat-message-sent-color:      var(--color-text-inverse);
-	--osui-chat-message-status-color:    #{variables.$token-text-subtlest};
+	--osui-chat-message-background:         #{variables.$token-bg-neutral-subtle-default};
+	--osui-chat-message-border-radius:      #{variables.$token-border-radius-200};
+	--osui-chat-message-sent-background:    var(--color-primary);
+	--osui-chat-message-sent-color:         var(--color-text-inverse);
+	--osui-chat-message-status-color:       #{variables.$token-text-subtlest};
+	// Figma says 18px, which sits exactly between the 16px and 20px steps; 16px keeps
+	// the 11px status text at a caption-like 1.45 ratio rather than 1.82.
+	--osui-chat-message-status-line-height: #{variables.$token-font-line-height-400};
 	// ───────────────────────────────────────────────────────────────────
 
 	display: flex;
@@ -58,7 +61,9 @@
 			color: var(--osui-chat-message-status-color);
 			display: block;
 			font-size: variables.$token-font-size-275;
+			line-height: var(--osui-chat-message-status-line-height);
 			margin-top: variables.$token-space-100;
+			width: 100%;
 
 			&.hidden {
 				display: none;
