@@ -1,3 +1,5 @@
+@use '../../../tokens/variables';
+
 .placeholder-empty:empty {
 	display: none;
 }
@@ -8,6 +10,11 @@
 		& > .placeholder-empty > .OSBlockWidget,
 		& > .placeholder-empty > .list.list-group {
 			display: contents;
+		}
+	}
+	&__content-item {
+		.placeholder-empty:empty {
+			-servicestudio-padding: var(--space-m);
 		}
 	}
 }
