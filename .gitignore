@@ -114,5 +114,8 @@ new-version-artf.txt
 # Distribution files folder
 dist/**
 
+# Local tool configuration
+.claude/settings.local.json
+
 # Generated TypeDoc output
 docs/

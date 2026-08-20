@@ -1,34 +1,20 @@
 # Contributing to OutSystems UI
 
-Thank you for your interest in contributing to OutSystems UI, a framework providing UI patterns and screen templates for Reactive Web and Native Mobile applications.
+OutSystems UI provides the TypeScript behaviors and SCSS styles for the UI patterns used in OutSystems Reactive Web and Native Mobile applications. Contributions are welcome from both the UI Components team and external contributors.
 
 ## Development Setup
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org/en) v12.0 or higher
-- [Visual Studio Code](https://code.visualstudio.com/) (recommended)
-
-### Recommended VS Code Extensions
-
-- Prettier - Code formatter (`esbenp.prettier-vscode`)
-- ESLint (`dbaeumer.vscode-eslint`)
-- Stylelint (`stylelint.vscode-stylelint`)
-- Document This (`oouo-diogo-perdigao.docthis`)
+- **Node.js 24** — the toolchain is pinned via [Volta](https://volta.sh) (`volta` field in `package.json`, Node 24.13.1 / npm 11.18.0), and CI builds on Node 24. The `engines` field still allows older Node, but use 24 to match CI.
+- [Visual Studio Code](https://code.visualstudio.com/) is recommended. Accept the workspace extension recommendations in `.vscode/extensions.json` (Prettier, ESLint, Stylelint, Document This, Git Blame).
 
 ### Installation
 
-1. Fork this repository
-2. Clone your fork locally
-3. Install dependencies and start development:
+1. Fork the repository (external contributors) and clone it locally.
+2. Run `npm run setup` — installs dependencies and immediately starts the dev server at `http://localhost:3000`.
 
-```bash
-npm run setup
-```
-
-This command installs all dependencies and starts the development server.
-
-## Project Structure
+Note: `.npmrc` sets `min-release-age=7`, so freshly published package versions are not installable for 7 days. This is intentional; do not remove it when bumping dependencies.
 
 ```
 src/
@@ -48,222 +34,136 @@ src/
 └── scss/                 SCSS styles (non-pattern specific)
 ```
 
-See `src/README.md` for detailed structure documentation.
+Source lives under `src/scripts` (TypeScript) and `src/scss` (styles). See `src/README.md` for the full directory breakdown and [ARCHITECTURE.md](./ARCHITECTURE.md) for the layering rules between `OSFramework`, `OutSystems`, and `Providers`.
 
 ## Development Workflow
 
-### Branch Strategy
+### Branching and commits
 
-- Base branch: `dev` (main development branch)
-- Create feature branches from `dev`
-- Branch naming: Use JIRA ticket IDs (e.g., `ROU-12619`)
-- Keep your branch updated with `dev`
+- Base branch is `dev`. Create your branch from `dev` and keep it rebased/merged up to date.
+- Branch name is the JIRA ticket ID, optionally with a suffix: `ROU-12960`, `ROU-12946_v2`.
+- Commit messages use `ROU-12345: Short description`. Dependency and small chore commits without a ticket are accepted but PR title rules still apply.
+- `release/*` and `merge/*` branches are used by the release automation, not for feature work.
 
-### Starting Development
-
-Start the development server with live reload:
+### Running the dev server
 
 ```bash
-npm run dev -- --target <platform>
+npm run dev                    # all platform targets
+npm run dev -- --target O11    # O11 only
+npm run dev -- --target ODC    # ODC only
 ```
 
-Where `<platform>` is optional. If not provided, builds for all platforms. The development server runs at `http://localhost:3000`.
+Gulp cleans `dist/`, generates the platform SCSS entry files, transpiles TS and SCSS in dev mode (with sourcemaps), then serves `dist/` with browser-sync and watches `src/**/*.ts` and `src/**/*.scss`. The generated `dist/index.html` links the per-platform bundles (`dev.O11.OutSystemsUI.js`, `dev.ODC.OutSystemsUI.css`, etc.).
 
-### Build System
+Platform targets, per-platform file exclusions, and compile-time placeholder tokens are declared in `gulp/ProjectSpecs/DefaultSpecs.js`. Add new platform-specific exclusions there rather than with runtime checks. See `gulp/README.md` for build system details.
 
-The project uses Gulp for build orchestration:
+### Before opening a PR
 
-- TypeScript files from `src/scripts/` compile to JavaScript (AMD modules)
-- SCSS files from `src/scss/` compile to CSS
-- Output written to the `dist/` directory
+1. `npm run build` succeeds (production build for all targets, then `lintfix` + `lint`).
+2. `npm run lint` reports zero errors and zero warnings.
+3. Public APIs carry JSDoc comments.
+4. Behavior verified locally in both O11 and ODC when the pattern differs per platform.
 
 ## Building and Testing
 
-| Command            | Description                                                         |
-| ------------------ | ------------------------------------------------------------------- |
-| `npm run build`    | Production build for all platforms, includes linting and formatting |
-| `npm run dev`      | Start development server with file watching                         |
-| `npm run lint`     | Run ESLint to check for code style issues                           |
-| `npm run lintfix`  | Automatically fix ESLint issues                                     |
-| `npm run prettier` | Format all code with Prettier                                       |
-| `npm run docs`     | Generate TypeDoc documentation                                      |
+| Command                    | Description                                                          |
+| -------------------------- | -------------------------------------------------------------------- |
+| `npm run setup`            | Install dependencies and start the dev server                        |
+| `npm run dev`              | Dev build + browser-sync server on port 3000 with file watching       |
+| `npm run build`            | Production build for all platforms, then `lintfix` and `lint`         |
+| `npm run lint`             | ESLint over all `.ts` files                                          |
+| `npm run lintfix`          | ESLint with `--fix`                                                  |
+| `npm run prettier`         | Format all `js`, `ts`, and `css` files                               |
+| `npm run docs`             | Generate TypeDoc output into `docs/`                                 |
+| `npm run create-osui-scss` | Regenerate the platform SCSS entry files                             |
+| `npm run update-version`   | Interactive version bump across project files                         |
 
-### Pre-commit Checklist
+### Automated tests
 
-Before submitting your changes:
+There is no unit test suite in this repository (`run-vitest` is disabled in the build workflow). End-to-end coverage lives in the separate private [outsystems-ui-tests](https://github.com/OutSystems/outsystems-ui-tests) repository (WebDriverIO + Cucumber, Applitools for visual regression).
 
-1. Build succeeds without errors: `npm run build`
-2. No linting warnings or errors: `npm run lint`
-3. Code is properly documented with JSDoc comments
-4. All changes are tested locally
-
-## Testing
-
-### Automated Testing Repository
-
-OutSystems UI has a separate automated testing repository:
-
-- **Repository**: [outsystems-ui-tests](https://github.com/OutSystems/outsystems-ui-tests) (private)
-- **Framework**: WebDriverIO with Cucumber for BDD-style scenarios
-- **Visual Testing**: Applitools for visual regression (screenshot comparison)
-
-### Test Types
-
-- **Functional tests** (`tests/functional-tests/`) - Non-visual component behavior
-- **Visual tests** (`tests/visual-tests/`) - Screenshot-based visual regression
-
-Tests verify component behavior across platforms (O11/ODC) and catch unintended UI regressions.
-
-### Running Tests Locally
-
-```bash
-npm run web-tests -- --environment=<dev|qa> --viewport=<Phone|Tablet|Desktop> --browsers=<chrome|firefox|edge|safari>
-```
-
-Tests can target specific branches: `--branch=ROU1234`
-
-### Test Setup Documentation
-
-For test setup and configuration: [UI End2End Testing Documentation](https://outsystemsrd.atlassian.net/wiki/spaces/EP/pages/1316586046/UI+End2End+Testing)
-
-Note: Visual tests require `APPLITOOLS_API_KEY` environment variable.
+`pipelines/pr-pipeline.yaml` (Azure DevOps) drives those tests for a PR: it diffs against `origin/dev`, derives Cucumber tags from the changed pattern folders under `src/scripts/OSFramework/OSUI/Pattern`, `src/scripts/OutSystems/OSUI/Patterns`, `src/scripts/Providers/OSUI`, and `src/scss/04-patterns`, then runs the matching functional tests on Chrome and Safari against the PR source branch. Consequence: if a change touches files outside those paths, no E2E tests run — verify manually. Run and debug the suites from the tests repository; see the internal [UI End2End Testing](https://outsystemsrd.atlassian.net/wiki/spaces/EP/pages/1316586046/UI+End2End+Testing) documentation for setup.
 
 ## Code Standards
 
-### TypeScript Conventions
+There is no `.claude/rules/` directory in this repository; standards are enforced by the config files below.
 
-**Naming:**
+### TypeScript (`.eslintrc.json`)
 
-- Classes: `StrictPascalCase`
-- Interfaces: `IPascalCase` or `UPPER_CASE` with `I` prefix
-- Exported functions: `StrictPascalCase`
-- Private class properties: `_strictCamelCase` (leading underscore required)
-- Public/protected properties: `strictCamelCase` (no underscore)
-- Private methods: `_strictCamelCase` (leading underscore required)
-- Public/protected methods: `strictCamelCase` (no underscore)
+Naming (`@typescript-eslint/naming-convention`, error level):
 
-**Class member ordering:**
+| Selector                     | Format                          | Underscore |
+| ---------------------------- | ------------------------------- | ---------- |
+| Class                        | `StrictPascalCase`              | —          |
+| Exported function            | `StrictPascalCase`              | —          |
+| Interface                    | `StrictPascalCase`/`UPPER_CASE` with `I` prefix | — |
+| Private property / method    | `strictCamelCase`               | required   |
+| Public / protected property / method | `strictCamelCase`       | forbidden  |
 
-1. Private fields
-2. Protected fields
-3. Public fields
-4. Constructor
-5. Private methods
-6. Protected methods
-7. Public methods
+Class member ordering (`member-ordering`, warn): signature → private fields → protected fields → public fields → constructor → private methods → protected methods → public methods → abstract methods, alphabetical within each group. Explicit accessibility modifiers are required on members other than the constructor.
 
-Within each category, members are ordered alphabetically.
+Also enforced: `no-var`, `no-eval`, `no-extend-native`, `no-cond-assign`, `no-unmodified-loop-condition`, mandatory semicolons, at most one consecutive blank line, and no trailing blank line at EOF.
 
-**Documentation:**
+Compiler settings are in `tsconfig.json`: target `es2017`, module `amd`, comments stripped from output. Strict mode is currently off — do not rely on it to catch null issues.
 
-- All public APIs must be documented with JSDoc comments
-- Use the "Document This" VS Code extension for starter templates (type `/**` above a function/class)
-- Include `@param`, `@returns`, and `@description` tags
+### Formatting (`.prettierrc.json`)
 
-**Configuration:**
+Tabs with width 4, print width 120, single quotes, semicolons, ES5 trailing commas, `endOfLine: auto`. Run `npm run prettier` before committing; ESLint extends `prettier`, so formatting conflicts are not reported as lint errors.
 
-TypeScript settings in `tsconfig.json`:
+### SCSS (`.stylelintrc.json`)
 
-- Target: ES2017
-- Module: AMD
-- Strict mode enabled
+Properties in alphabetical order, declaration order `dollar-variables → at-rules → declarations → rules → custom-properties`, max line length 170.
 
-### Formatting
+### Documentation
 
-- Indent: Tabs (width: 4)
-- Line length: 120 characters maximum
-- Semicolons: Required
-- Quotes: Single quotes
-- Trailing commas: ES5 style
-- End of line: Auto (LF recommended)
-
-Run `npm run prettier` to automatically format your code.
-
-### SCSS Conventions
-
-- Properties must be in alphabetical order
-- Declaration order: variables → at-rules → declarations → rules → custom properties
-- Line length: 170 characters maximum
-- Stylelint enforces these rules (see `.stylelintrc.json`)
+- JSDoc with `@param` and `@returns` on every public API. The Document This extension (`/**` above a declaration) generates the scaffold.
+- Significant design decisions are recorded as ADRs in `docs-internal/adr/` — copy `ADR-0000-Title-of-ADR.md`, number it sequentially, and update the ADR log table in `docs-internal/adr/Readme.md`.
 
 ## Pull Request Process
 
-### PR Title Format
+Target `dev`. Three checks gate every PR:
 
-PR titles must follow this convention:
+**PR title** (`validate-pr-title.yaml`) must match `^[A-Z][A-Z0-9]*-[0-9]+:?\s\w`, i.e. a JIRA ticket ID followed by a description — `ROU-12960: Add full Flatpickr position options`. Branches whose head ref contains `release/` or `merge/` are skipped. The `+semver:` prefix is not enabled in this repository.
 
-```
-<TICKET-ID> <description>
-```
+**PR labels** (`validate-pr-labels.yaml`) require at least one of `feature`, `bug`, `bugfix`, `dependencies`, `dependency`, `chore`, and forbid the `do not merge` label. Labels also drive the release version bump:
 
-Example: `ROU-12619 Fix carousel icon alignment`
-
-- `<TICKET-ID>`: JIRA issue identifier (e.g., `ROU-1234`)
-- Branches named `release/*` or `merge/*` are exempt from this requirement
-
-### Required PR Labels
-
-Every PR must have at least one of these labels:
-
-- `feature` - New features
-- `bug` / `bugfix` - Bug fixes
-- `chore` - Maintenance tasks
-- `dependencies` / `dependency` - Dependency updates
-
-**Do not use:** `do not merge` label (blocks PR from merging)
-
-### Label-to-Version Mapping
-
-| Labels                                                                  | SemVer Impact           |
+| Labels                                                                  | SemVer impact           |
 | ----------------------------------------------------------------------- | ----------------------- |
 | `breaking`, `major`                                                     | Major version (X+1.0.0) |
 | `feat`, `feature`, `minor`                                              | Minor version (0.X+1.0) |
 | `revert`, `perf`, `test`, `refactor`, `fix`, `bugfix`, `patch`, `chore` | Patch version (0.0.X+1) |
 | `ci`, `none`, `docs`, `style`, `skip`                                   | No version change       |
 
-### PR Template
+**Build** (`build.yaml`) runs `npm install` and `npm run build` on Node 24 for PRs into `dev`. SonarCloud analysis is configured (`sonar-project.properties`) but currently disabled in the workflow.
 
-When creating a PR, fill out the provided template:
+Fill in the template from `.github/pull_request_template.md`: sample page link, what was happening, what was done, test steps, screenshots (animated GIF preferred), and the checklist — including whether the change requires an accompanying OutSystems module or a new sample page.
 
-- **Sample page:** Link to a working demo showing the fix or new feature
-- **What was happening:** Describe the issue or motivation
-- **What was done:** Explain your changes
-- **Test steps:** Provide step-by-step testing instructions
-- **Screenshots:** Include visual evidence (animated GIFs preferred)
-- **Checklist:**
-    - Tested locally
-    - Documented the code
-    - No ESLint warnings/errors
-    - Indicate if OutSystems module changes are required
+Review: `.github/CODEOWNERS` assigns `@OutSystems/rd-ui-components` to the whole repository; PRs need approval from 2 team members.
 
-### Review Requirements
+Workflows prefixed `template-` are vendored copies of shared reusable workflows (see `.github/workflows/README.md`). Do not edit them directly.
 
-- PRs require approval from 2 team members (repository owners)
-- All PR checks must pass (title validation, label validation, build)
+## Releases
 
-## Release Process
+Releases are manual `workflow_dispatch` GitHub Actions:
 
-Releases are managed through GitHub Actions workflows:
+- `pre-release.yaml` — creates a release candidate branch and version (inputs: new version, release date, optional next dev version).
+- `release.yaml` — promotes a release candidate to latest and optionally deletes the `rc*` branch.
+- `create-n-deploy-npm.yaml` / `create-n-deploy-docs.yaml` — publish the npm package and the TypeDoc site from a given branch.
 
-- `pre-release.yaml`: Creates release candidates (manual trigger, requires version and release date)
-- `release.yaml`: Publishes releases (manual trigger)
-
-Version numbers follow semantic versioning based on PR labels (see table above).
+Dependabot opens grouped weekly minor/patch npm PRs labeled `chore`; major upgrades and `*outsystems*` packages are ignored and must be bumped by hand.
 
 ## Getting Help
 
-- Trusted Committers: [UI Components team on support rotation](mailto:rd.uicomponents.team@outsystems.com)
-- Internal Slack: `#rd-uicomponents-contributors` (business days 2PM-3PM PT)
+- Trusted Committers: [UI Components team member on support rotation](mailto:rd.uicomponents.team@outsystems.com)
+- Internal Slack: `#rd-uicomponents-contributors`, business days 2PM-3PM PT
 
 ## Additional Resources
 
-- [OutSystems UI Website](https://outsystemsui.outsystems.com/OutsystemsUiWebsite/)
-- [OutSystems UI Documentation](https://success.outsystems.com/Documentation/11/Developing_an_Application/Design_UI/Patterns)
-- [TypeDoc Generated Docs](https://outsystems-ui-docs.github.io/)
-- [Forge component - O11:](https://www.outsystems.com/forge/component-overview/1385/outsystems-ui-o11)
-- [Forge component - ODC:](https://www.outsystems.com/forge/component-overview/15931/outsystems-ui-odc)
-- [NPM Package](https://www.npmjs.com/package/outsystems-ui)
+- [OutSystems UI Website](https://outsystemsui.outsystems.com/OutsystemsUiWebsite/) — live demos
+- [TypeDoc API reference](https://outsystems-ui-docs.github.io/)
+- [Pattern documentation](https://success.outsystems.com/Documentation/11/Developing_an_Application/Design_UI/Patterns)
+- Forge: [O11](https://www.outsystems.com/forge/component-overview/1385/outsystems-ui-o11) · [ODC](https://www.outsystems.com/forge/component-overview/15931/outsystems-ui-odc) · [npm package](https://www.npmjs.com/package/outsystems-ui)
 
 ## License
 
-This repository belongs to OutSystems and all rights are reserved. See [LICENSE](LICENSE) for details.
+This repository belongs to OutSystems. See [LICENSE](LICENSE).
