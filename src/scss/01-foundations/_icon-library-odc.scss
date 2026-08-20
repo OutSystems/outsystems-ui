@@ -213,7 +213,7 @@ body.iconLibrary-phosphor {
 }
 
 .form {
-	.dropdown-container[class*="ThemeGrid_Width"]:has(select):after {
+	.dropdown-container:has(> select.dropdown-display):after {
 		top: calc(50% - var(--token-scale-600, 24px) / 2);
 	}
 }
