@@ -1,0 +1,481 @@
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { addons } from 'storybook/preview-api';
+import {
+	CH_OVERRIDES_CHANGED,
+	CH_RESET,
+	THEME_ROLE_GROUPS,
+	THEME_ROLE_NAMES,
+	type Role,
+	type RoleGroup,
+} from './theme-roles';
+import {
+	applyOverride,
+	buildCss,
+	clearOverride,
+	contrastGrade,
+	contrastRatio,
+	currentOverride,
+	effectiveValue,
+	isChanged,
+	resolveDefault,
+} from './theme-editor-utils';
+import { CH_APP_APPEARANCE, readStoredAppearance } from './storybook-appearance.js';
+import { ThemeEditorPreview } from './ThemeEditorPreview';
+
+const SEARCH_ICON = (
+	<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+		<circle cx="11" cy="11" r="7" />
+		<path d="m20 20-3.5-3.5" />
+	</svg>
+);
+
+const CONTRAST_PAIRS: Array<{ label: string; fg: string; bg: string }> = [
+	{ label: 'Text on Surface', fg: '--color-text', bg: '--color-background-surface' },
+	{ label: 'Text subtle on Surface', fg: '--color-text-subtle', bg: '--color-background-surface' },
+	{ label: 'Inverse on Primary', fg: '--color-text-inverse', bg: '--color-primary' },
+];
+
+function roleByToken(token: string): Role | undefined {
+	for (const g of THEME_ROLE_GROUPS) {
+		const role = g.roles.find((r) => r.name === token);
+		if (role) return role;
+	}
+	return undefined;
+}
+
+function curValue(token: string, dark: boolean): string {
+	const role = roleByToken(token);
+	if (!role) return '';
+	return effectiveValue(role, dark);
+}
+
+function RoleRow({
+	role,
+	groupKind,
+	dark,
+	surfaceHex,
+	onChange,
+}: {
+	role: Role;
+	groupKind?: 'length';
+	dark: boolean;
+	surfaceHex: string;
+	onChange: () => void;
+}) {
+	const def = useMemo(() => resolveDefault(role, dark), [role, dark]);
+	const [text, setText] = useState(() => currentOverride(role.name) || def);
+	const changed = isChanged(role.name);
+
+	useEffect(() => {
+		if (!changed) setText(def);
+		else setText(currentOverride(role.name));
+	}, [def, changed, role.name]);
+
+	const colorHex = /^#[0-9a-f]{6}$/i.test(text) ? text : def || '#000000';
+
+	const setValue = (v: string) => {
+		const trimmed = v.trim();
+		if (trimmed === '' || trimmed === def) {
+			clearOverride(role.name);
+			setText(def);
+		} else {
+			applyOverride(role.name, trimmed);
+			setText(trimmed);
+		}
+		onChange();
+	};
+
+	const contrastBadge = useMemo(() => {
+		if (role.type !== 'color' || !role.name.startsWith('--color-text-') || role.name === '--color-text-inverse') {
+			return null;
+		}
+		const ratio = contrastRatio(text, surfaceHex);
+		if (ratio === null) return null;
+		const [grade, label] = contrastGrade(ratio);
+		return { grade, label: `${label} ${ratio.toFixed(1)}` };
+	}, [role, text, surfaceHex]);
+
+	return (
+		<div className={`te-role${changed ? ' is-changed' : ''}`} data-token={role.name} data-label={role.label}>
+			{groupKind === 'length' ? (
+				<span className="te-role__sw te-role__sw--size">px</span>
+			) : (
+				<span className="te-role__sw" style={{ background: colorHex }}>
+					<input
+						type="color"
+						value={colorHex}
+						aria-label={`Pick colour for ${role.label}`}
+						onInput={(e) => setValue((e.target as HTMLInputElement).value)}
+					/>
+				</span>
+			)}
+			<span className="te-role__meta">
+				<span className="te-role__name">
+					{role.label}
+					{contrastBadge ? (
+						<span className={`te-badge te-badge--${contrastBadge.grade}`}>{contrastBadge.label}</span>
+					) : null}
+				</span>
+				<code>{role.name}</code>
+			</span>
+			<span className="te-role__val">
+				<input
+					type="text"
+					value={text}
+					spellCheck={false}
+					placeholder={role.note ?? def}
+					onChange={(e) => setText(e.target.value)}
+					onBlur={(e) => setValue(e.target.value)}
+					onKeyDown={(e) => {
+						if (e.key === 'Enter') setValue((e.target as HTMLInputElement).value);
+					}}
+				/>
+				<button
+					type="button"
+					className="te-role__reset"
+					title="Reset to default"
+					hidden={!changed}
+					onClick={() => {
+						clearOverride(role.name);
+						setText(def);
+						onChange();
+					}}
+				>
+					↺
+				</button>
+			</span>
+		</div>
+	);
+}
+
+function GroupSection({
+	group,
+	dark,
+	surfaceHex,
+	query,
+	onChange,
+	sectionRef,
+}: {
+	group: RoleGroup;
+	dark: boolean;
+	surfaceHex: string;
+	query: string;
+	onChange: () => void;
+	sectionRef: (el: HTMLElement | null) => void;
+}) {
+	const q = query.trim().toLowerCase();
+	const visibleRoles = group.roles.filter(
+		(r) => !q || r.label.toLowerCase().includes(q) || r.name.includes(q)
+	);
+	if (visibleRoles.length === 0) return null;
+
+	const kind = group.id === 'radius' ? ('length' as const) : undefined;
+
+	return (
+		<section className="te-grp" id={group.id} ref={sectionRef}>
+			<h2>{group.title}</h2>
+			{group.blurb ? <p>{group.blurb}</p> : null}
+			{visibleRoles.map((role) => (
+				<RoleRow
+					key={role.name}
+					role={role}
+					groupKind={kind}
+					dark={dark}
+					surfaceHex={surfaceHex}
+					onChange={onChange}
+				/>
+			))}
+		</section>
+	);
+}
+
+export function ThemeEditorPage(): React.ReactElement {
+	const [query, setQuery] = useState('');
+	const [previewDark, setPreviewDark] = useState(false);
+	const [changeTick, setChangeTick] = useState(0);
+	const [feedback, setFeedback] = useState('');
+	const [activeGroup, setActiveGroup] = useState(THEME_ROLE_GROUPS[0]?.id ?? '');
+	const [docsDark, setDocsDark] = useState(() => readStoredAppearance() === 'dark');
+
+	const searchRef = useRef<HTMLInputElement>(null);
+	const sectionRefs = useRef<Map<string, HTMLElement>>(new Map());
+
+	const changedCount = useMemo(() => {
+		void changeTick;
+		return THEME_ROLE_NAMES.filter(isChanged).length;
+	}, [changeTick]);
+
+	const cssOutput = useMemo(() => {
+		void changeTick;
+		return buildCss();
+	}, [changeTick]);
+
+	const surfaceHex = useMemo(() => {
+		void changeTick;
+		return curValue('--color-background-surface', previewDark);
+	}, [changeTick, previewDark]);
+
+	const emitState = useCallback(() => {
+		try {
+			addons.getChannel().emit(CH_OVERRIDES_CHANGED, THEME_ROLE_NAMES.filter(isChanged).length);
+		} catch {
+			/* channel not ready */
+		}
+	}, []);
+
+	const bump = useCallback(() => {
+		setChangeTick((n) => n + 1);
+		emitState();
+	}, [emitState]);
+
+	const showFeedback = (msg: string, ms = 1800) => {
+		setFeedback(msg);
+		window.setTimeout(() => setFeedback(''), ms);
+	};
+
+	const resetAll = () => {
+		THEME_ROLE_NAMES.forEach(clearOverride);
+		bump();
+		showFeedback('Reset all roles.', 1500);
+	};
+
+	const exportCss = async () => {
+		try {
+			await navigator.clipboard.writeText(buildCss());
+			showFeedback(changedCount > 0 ? 'Copied to clipboard.' : 'Copied (no overrides yet).');
+		} catch {
+			showFeedback('Copy failed — select the output manually.');
+		}
+	};
+
+	// Channel: toolbar reset + announce state on mount
+	useEffect(() => {
+		const resync = () => bump();
+		try {
+			const ch = addons.getChannel();
+			ch.on(CH_RESET, resync);
+			emitState();
+			return () => ch.off(CH_RESET, resync);
+		} catch {
+			emitState();
+			return undefined;
+		}
+	}, [bump, emitState]);
+
+	// Docs appearance sync (story canvas, not MDX)
+	useEffect(() => {
+		const sync = () => setDocsDark(readStoredAppearance() === 'dark');
+		sync();
+		try {
+			const ch = addons.getChannel();
+			ch.on(CH_APP_APPEARANCE, sync);
+			return () => ch.off(CH_APP_APPEARANCE, sync);
+		} catch {
+			return undefined;
+		}
+	}, []);
+
+	// Cmd/Ctrl+K focuses role filter (no hint in UI).
+	useEffect(() => {
+		const onKey = (e: KeyboardEvent) => {
+			if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+				e.preventDefault();
+				searchRef.current?.focus();
+			}
+		};
+		document.addEventListener('keydown', onKey);
+		return () => document.removeEventListener('keydown', onKey);
+	}, []);
+
+	// Scroll spy for rail active group (page scroll, like CSS API Reference)
+	useEffect(() => {
+		const observer = new IntersectionObserver(
+			(entries) => {
+				for (const entry of entries) {
+					if (entry.isIntersecting) setActiveGroup(entry.target.id);
+				}
+			},
+			{ root: null, rootMargin: '-81px 0px -65% 0px', threshold: 0 }
+		);
+
+		sectionRefs.current.forEach((el) => observer.observe(el));
+		return () => observer.disconnect();
+	}, [query]);
+
+	const groupsWithChanges = useMemo(() => {
+		void changeTick;
+		const set = new Set<string>();
+		THEME_ROLE_GROUPS.forEach((g) => {
+			if (g.roles.some((r) => isChanged(r.name))) set.add(g.id);
+		});
+		return set;
+	}, [changeTick]);
+
+	const filteredGroupCount = useMemo(() => {
+		const q = query.trim().toLowerCase();
+		if (!q) return THEME_ROLE_GROUPS.length;
+		return THEME_ROLE_GROUPS.filter((g) =>
+			g.roles.some((r) => r.label.toLowerCase().includes(q) || r.name.includes(q))
+		).length;
+	}, [query]);
+
+	const totalRoles = THEME_ROLE_NAMES.length;
+
+	const contrastRows = useMemo(() => {
+		void changeTick;
+		return CONTRAST_PAIRS.map(({ label, fg, bg }) => {
+			const ratio = contrastRatio(curValue(fg, previewDark), curValue(bg, previewDark));
+			if (ratio === null) return null;
+			const [grade, txt] = contrastGrade(ratio);
+			return { label, grade, txt, ratio: ratio.toFixed(2) };
+		}).filter(Boolean) as Array<{ label: string; grade: string; txt: string; ratio: string }>;
+	}, [changeTick, previewDark]);
+
+	const scrollToGroup = (id: string) => {
+		const section = sectionRefs.current.get(id);
+		if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+		setActiveGroup(id);
+	};
+
+	return (
+		<div className={`osui-theme-editor sb-unstyled${docsDark ? ' docs-dark' : ''}`}>
+			<header className="te-head">
+				<div className="te-head-in">
+					<span className="te-eyebrow">Tools · Theme Editor</span>
+					<h1>
+						Edit theme roles,
+						<br />
+						<em>see it live.</em>
+					</h1>
+					<p className="te-lede">
+						Override <code>--color-*</code> and <code>--border-radius-*</code> roles at{' '}
+						<code>:root</code>. Export CSS for your app.
+					</p>
+				</div>
+			</header>
+
+			<div className="te-toolbar">
+				<div className="te-toolbar-in">
+					<div className="te-seg" role="group" aria-label="Preview mode">
+						<button
+							type="button"
+							aria-pressed={!previewDark}
+							onClick={() => setPreviewDark(false)}
+						>
+							Light
+						</button>
+						<button
+							type="button"
+							aria-pressed={previewDark}
+							onClick={() => setPreviewDark(true)}
+						>
+							Dark
+						</button>
+					</div>
+				{changedCount > 0 ? (
+					<span className="te-chip-diff">
+						<span>{changedCount}</span> changed
+					</span>
+				) : null}
+				<span className="te-spacer" />
+				{feedback ? <span className="te-feedback">{feedback}</span> : null}
+				<button type="button" className="te-btn te-btn--quiet" onClick={resetAll}>
+					Reset all
+				</button>
+				<button type="button" className="te-btn te-btn--primary" onClick={exportCss}>
+					Export
+				</button>
+				</div>
+			</div>
+
+			<div className="te-wrap">
+				<nav className="te-rail" aria-label="Role groups">
+					<label className="te-search">
+						{SEARCH_ICON}
+						<input
+							ref={searchRef}
+							type="search"
+							placeholder="Filter roles"
+							value={query}
+							onChange={(e) => setQuery(e.target.value)}
+							aria-label="Filter roles"
+						/>
+					</label>
+					<div className="te-nav">
+						{THEME_ROLE_GROUPS.map((g) => {
+							const q = query.trim().toLowerCase();
+							const count = q
+								? g.roles.filter((r) => r.label.toLowerCase().includes(q) || r.name.includes(q)).length
+								: g.roles.length;
+							if (q && count === 0) return null;
+							return (
+								<button
+									key={g.id}
+									type="button"
+									className={`te-nav-item${activeGroup === g.id ? ' is-active' : ''}${groupsWithChanges.has(g.id) ? ' has-changes' : ''}`}
+									aria-current={activeGroup === g.id ? 'true' : undefined}
+									onClick={() => scrollToGroup(g.id)}
+								>
+									<span>{g.title}</span>
+									<i>{count}</i>
+								</button>
+							);
+						})}
+					</div>
+					<p className="te-rail__hint">
+						{totalRoles} roles. Type to filter by name or token, for example <code>radius</code> or{' '}
+						<code>--color-text</code>.
+					</p>
+				</nav>
+
+				<main className="te-roles">
+					{filteredGroupCount === 0 ? (
+						<p className="te-empty">No roles match your filter.</p>
+					) : (
+						THEME_ROLE_GROUPS.map((group) => (
+							<GroupSection
+								key={group.id}
+								group={group}
+								dark={previewDark}
+								surfaceHex={surfaceHex}
+								query={query}
+								onChange={bump}
+								sectionRef={(el) => {
+									if (el) sectionRefs.current.set(group.id, el);
+									else sectionRefs.current.delete(group.id);
+								}}
+							/>
+						))
+					)}
+				</main>
+
+				<aside className="te-side">
+					<div className={`te-preview-zone${previewDark ? ' theme-dark' : ''}`}>
+						<h3>
+							Preview <span className="te-live">live</span>
+						</h3>
+						<ThemeEditorPreview />
+					</div>
+
+					<div className="te-panel">
+						<h4>Contrast</h4>
+						<div className="te-contrast">
+							{contrastRows.map((row) => (
+								<div key={row.label} className="te-contrast-row">
+									<span className="te-contrast-pair">{row.label}</span>
+									<span className={`te-badge te-badge--${row.grade}`}>{row.txt}</span>
+									<span className="te-contrast-ratio">{row.ratio}:1</span>
+								</div>
+							))}
+						</div>
+					</div>
+
+					<div className="te-panel">
+						<h4>CSS output (changed roles only)</h4>
+						<pre className="te-output">{cssOutput}</pre>
+					</div>
+				</aside>
+			</div>
+		</div>
+	);
+}

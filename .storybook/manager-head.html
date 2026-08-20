@@ -32,64 +32,184 @@
   })();
 </script>
 <style>
-  /* Sidebar interaction styling closer to runtime Storybook */
+  /* Sidebar styling aligned with Mobile UI Storybook
+     (https://mobileui.outsystems.com)
+     Depth map (text start ≈):
+       root docs/stories ………… 12px   (Welcome-style, no icon)
+       root groups …………………  9px   (Patterns)
+       nested groups …………… 18px   (Content / Interaction / …)
+       components ……………… 28px   (Accordion under Content)
+       nested docs/stories …… 40px   (Docs / Default, with icon)
+  */
+
   .css-wkfnut:hover a,
   .css-wkfnut:focus a {
     color: #105cef;
   }
 
-  .css-wkfnut[data-selected="true"]:hover a,
-  .css-wkfnut[data-selected="true"]:focus a {
-    color: white;
-    font-weight: 500 !important;
+  /* Sidebar column — Storybook default is 300px */
+  #root > div[style*="--nav-width"] {
+    --nav-width: 240px !important;
   }
 
+  #storybook-explorer-searchfield {
+    font-size: 13px !important;
+  }
+
+  /* Match light SVG intrinsic size (190×45) — dark PNG is 493×97 and scales wider otherwise */
   .sidebar-header img {
-    max-width: unset!important
-}
+    width: 160px !important;
+    height: 38px !important;
+    max-width: 160px !important;
+    max-height: 38px !important;
+    object-fit: contain;
+    object-position: left center;
+  }
+
+  /* brandTitle is empty — hide any leftover text; keep only the latest brand image */
+  .sidebar-header a span,
+  .sidebar-header a div:not(:has(img)) {
+    display: none !important;
+  }
+
+  .sidebar-header a img:not(:last-of-type) {
+    display: none !important;
+  }
+
+  /* App appearance toggle — canvas toolbar (next to viewport controls) */
+  .osui-app-appearance-tool {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    margin: 0 2px;
+    border: none;
+    border-radius: 4px;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+  }
+
+  .osui-app-appearance-tool.is-dark {
+    color: #ededed;
+  }
+
+  .osui-app-appearance-tool svg {
+    display: block;
+  }
+
+  .osui-app-appearance-tool:hover {
+    background: rgba(0, 0, 0, 0.06);
+  }
+
+  html.osui-sb-dark .osui-app-appearance-tool:hover {
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  /* Canvas toolbar globals (Theme, Icons, A11y, Direction, Appearance) */
+  html:not(.osui-sb-dark) .sb-bar [role="toolbar"] button {
+    color: #242424 !important;
+    border-color: #e8e8e8 !important;
+  }
+
+  html:not(.osui-sb-dark) .sb-bar [role="toolbar"] button svg {
+    color: #242424 !important;
+  }
+
+  html.osui-sb-dark .sb-bar [role="toolbar"] button {
+    color: #c8c8c8 !important;
+    border-color: #333333 !important;
+  }
+
+  html.osui-sb-dark .sb-bar [role="toolbar"] button svg {
+    color: #c8c8c8 !important;
+  }
 
   .sidebar-item {
-    height: 40px;
+    height: 32px !important;
+    min-height: 32px !important;
+    max-height: 32px !important;
+    box-sizing: border-box !important;
     display: flex !important;
     align-items: center !important;
-    margin-bottom: 4px!important;
+    overflow: hidden;
+  }
+
+  /* Hide default Storybook type icons — keep expand chevrons on group buttons */
+  .sidebar-item a svg,
+  .sidebar-item button svg[type="component"],
+  .sidebar-item button svg[type="group"] {
+    display: none !important;
+  }
+
+  /* Skip-to-content link is rendered inside the selected leaf row — hide it in the sidebar */
+  #storybook-explorer-tree .sidebar-item > a[href="#storybook-preview-wrapper"] {
+    display: none !important;
+    visibility: hidden !important;
+    width: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+    pointer-events: none !important;
   }
 
   .sidebar-subheading {
     margin-top: 0 !important;
     margin-bottom: 0 !important;
-    min-height: 40px;
+    height: 32px;
   }
 
   .sidebar-subheading button {
+    font-family: "Inter", sans-serif !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
     color: #242424;
     text-transform: capitalize;
-    font-weight: 500 !important;
-  }
-
-  .sidebar-subheading button,
-  .sidebar-item a,
-  .sidebar-item button {
-    font-family: "Inter", sans-serif !important;
-    font-size: 15px !important;
     letter-spacing: normal;
   }
 
-  /* Don't set padding-left here — Storybook computes it from the tree depth
-     ((isExpandable ? 8 : 22) + depth * 18px). A flat left padding flattens the
-     hierarchy (nested folders like Content/Interaction line up with Patterns).
-     We only tweak the other paddings so the depth indent is preserved. */
+  /* Nav links + expand buttons only — exclude status/context chrome (display:flex !important
+     was beating [data-testid="tree-change-status-button"] { display:none !important }). */
+  .sidebar-item a,
+  .sidebar-item button:not([data-testid="tree-change-status-button"]):not([data-testid="tree-status-button"]):not([data-testid="context-menu"]):not([aria-label="Open context menu"]) {
+    font-family: "Inter", sans-serif !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    letter-spacing: normal;
+    box-sizing: border-box !important;
+    height: 32px !important;
+    min-height: 32px !important;
+    max-height: 32px !important;
+    display: flex !important;
+    align-items: center !important;
+    margin: 0 !important;
+  }
+
+  /* Root groups (Patterns) — flush like Mobile UI "Components" */
+  .sidebar-item[data-nodetype="group"]:not([data-parent-id]) button {
+    padding: 0 8px 0 9px !important;
+  }
+
+  /* Nested groups (Content, Interaction, … under Patterns) */
+  .sidebar-item[data-nodetype="group"][data-parent-id] button {
+    font-weight: 600;
+    padding: 0 8px 0 18px !important;
+  }
+
+  /* Default expandable button (components under a root group) */
   .sidebar-item button {
-    padding-top: 8px;
-    padding-bottom: 8px;
-    padding-right: 8px;
-    min-height: 40px;
-    display: flex;
-    align-items: center;
+    font-weight: 600;
+    padding: 0 8px 0 18px;
+  }
+
+  /* Components under a nested category (Patterns/Content/Accordion) */
+  .sidebar-item[data-nodetype="component"][data-parent-id*="-"] button {
+    padding: 0 8px 0 28px !important;
   }
 
   .sidebar-item[data-parent-id] a {
-    font-size: 14px !important;
+    font-size: 12px !important;
     font-weight: 400 !important;
   }
 
@@ -97,17 +217,81 @@
     background-color: #f5f5f5;
   }
 
-  .sidebar-item[data-selected="true"]:hover {
-    background-color: #3b3b3b !important;
+  /* Top-level docs / stories — no icon, align with Mobile UI Welcome pages */
+  .sidebar-item[data-nodetype="document"]:not([data-parent-id]) a,
+  .sidebar-item[data-nodetype="story"]:not([data-parent-id]) a {
+    background-image: none !important;
+    padding: 0 12px !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
   }
 
-  .sidebar-item:hover,
-  .sidebar-item:focus {
+  /* Nested docs under a component */
+  .sidebar-item[data-nodetype="document"][data-parent-id] a {
+    background-image: url(/assets/document.svg);
+    padding: 0 8px 0 40px !important;
+    background-repeat: no-repeat;
+    background-size: 15px;
+    background-position: 24px center;
+  }
+
+  /* Nested stories under a component */
+  .sidebar-item[data-nodetype="story"][data-parent-id] a {
+    background-image: url(/assets/sample.svg);
+    padding: 0 8px 0 40px !important;
+    background-repeat: no-repeat;
+    background-size: 15px;
+    background-position: 24px center;
+  }
+
+  /* Selected row — beat Storybook LeafNodeStyleWrapper (emotion injects after manager-head) */
+  #storybook-explorer-tree .sidebar-item[data-selected="true"] {
+    background-color: #f3f3f3 !important;
+    color: #242424 !important;
+    border-radius: 8px;
+    font-weight: 500 !important;
+    box-shadow: none !important;
+  }
+
+  #storybook-explorer-tree .sidebar-item[data-selected="true"] a,
+  #storybook-explorer-tree .sidebar-item[data-selected="true"] > button:not([data-testid="tree-change-status-button"]):not([data-testid="tree-status-button"]):not([data-testid="context-menu"]) {
+    color: #242424 !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    font-weight: 500 !important;
+    box-shadow: none !important;
+  }
+
+  #storybook-explorer-tree .sidebar-item:hover,
+  #storybook-explorer-tree .sidebar-item:focus,
+  #storybook-explorer-tree .sidebar-item[data-parent-id][data-selected="true"] {
     background-color: #f3f3f3 !important;
   }
 
-  [data-testid="context-menu"] {
+  #storybook-explorer-tree .sidebar-item[data-parent-id][data-selected="true"] a {
+    color: #242424 !important;
+  }
+
+  /* Status chips (+), context menu, and their glow — hide completely */
+  #storybook-explorer-tree .sidebar-item button[data-testid="tree-change-status-button"],
+  #storybook-explorer-tree .sidebar-item button[data-testid="tree-status-button"],
+  #storybook-explorer-tree .sidebar-item button[data-testid="context-menu"],
+  #storybook-explorer-tree .sidebar-item button[aria-label="Open context menu"],
+  #storybook-explorer-tree .sidebar-item button[aria-label^="Change status"],
+  #storybook-explorer-tree .sidebar-item button[aria-label^="Test status"] {
     display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    width: 0 !important;
+    min-width: 0 !important;
+    max-width: 0 !important;
+    height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: 0 !important;
+    overflow: hidden !important;
+    box-shadow: none !important;
+    opacity: 0 !important;
   }
 
   span[title="Required"] {
@@ -116,5 +300,64 @@
 
   #storybook-checklist-widget {
     display: none !important;
+  }
+
+  #storybook-testing-module {
+    display: none !important;
+  }
+
+  /* App appearance — sidebar overrides for Storybook light-theme hardcodes */
+  html.osui-sb-dark .sidebar-header,
+  html.osui-sb-dark .sidebar-header a {
+    color: #ededed !important;
+  }
+
+  html.osui-sb-dark .sidebar-header a span,
+  html.osui-sb-dark .sidebar-header div {
+    color: #ededed !important;
+  }
+
+  html.osui-sb-dark .sidebar-subheading button {
+    color: #ededed !important;
+  }
+
+  html.osui-sb-dark .sidebar-item a,
+  html.osui-sb-dark .sidebar-item button {
+    color: #c8c8c8 !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+  }
+
+  html.osui-sb-dark .sidebar-item button[aria-expanded="true"] {
+    background-color: #2a2a2a !important;
+  }
+
+  html.osui-sb-dark #storybook-explorer-tree .sidebar-item[data-selected="true"],
+  html.osui-sb-dark #storybook-explorer-tree .sidebar-item[data-selected="true"]:hover,
+  html.osui-sb-dark #storybook-explorer-tree .sidebar-item[data-selected="true"]:focus {
+    background-color: #2a2a2a !important;
+    color: #ededed !important;
+    box-shadow: none !important;
+  }
+
+  html.osui-sb-dark #storybook-explorer-tree .sidebar-item:hover,
+  html.osui-sb-dark #storybook-explorer-tree .sidebar-item:focus,
+  html.osui-sb-dark #storybook-explorer-tree .sidebar-item[data-parent-id][data-selected="true"] {
+    background-color: #2a2a2a !important;
+  }
+
+  html.osui-sb-dark #storybook-explorer-tree .sidebar-item[data-selected="true"] a,
+  html.osui-sb-dark #storybook-explorer-tree .sidebar-item[data-selected="true"] > button:not([data-testid="tree-change-status-button"]):not([data-testid="tree-status-button"]):not([data-testid="context-menu"]),
+  html.osui-sb-dark #storybook-explorer-tree .sidebar-item[data-parent-id][data-selected="true"] a {
+    color: #ededed !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+  }
+
+  html.osui-sb-dark .css-wkfnut:hover a,
+  html.osui-sb-dark .css-wkfnut:focus a {
+    color: #7cb3ff;
   }
 </style>

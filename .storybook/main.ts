@@ -142,6 +142,11 @@ function osuiDevBundleFallback(): Plugin {
  * above). Files are served from `/osui`.
  */
 const config: StorybookConfig = {
+	// Storybook 10 change detection marks unattached MDX docs as "New" (+ icon in sidebar).
+	// We track UI review via story tags instead; keep the sidebar clean like Mobile UI.
+	features: {
+		changeDetection: false,
+	},
 	// `stories/widgets/` (and its `_helpers/widget.ts` harness) is only reachable when
 	// the platform runtime packages resolved — the top-level globs exclude it otherwise.
 	stories: hasPlatformWidgets

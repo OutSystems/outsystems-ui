@@ -288,6 +288,12 @@ p.body-small {
 .sbdocs-content {
     max-width: 1000px;
 
+    &:has(.osui-css-api-reference),
+    &:has(.osui-theme-editor) {
+        max-width: none !important;
+        width: 100% !important;
+    }
+
     /* Theme Editor: needs more width for token names, controls, and preview/output. */
     &:has(.theme-editor) {
         max-width: 1440px;

@@ -1,0 +1,272 @@
+/* Getting Started docs page — ported from oui-mockup/getting-started.html.
+   Scoped under .osui-getting-started so nothing leaks into pattern canvases. */
+
+.sbdocs-wrapper:has(.osui-getting-started) {
+  padding: 0 !important;
+  background: #fff;
+  max-width: none !important;
+  width: 100% !important;
+}
+
+.sbdocs-wrapper:has(.osui-getting-started) .sbdocs-content {
+  max-width: none !important;
+  width: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.sbdocs-wrapper:has(.osui-getting-started) .sbdocs {
+  max-width: none !important;
+  padding: 0 !important;
+}
+
+.sbdocs-wrapper:has(.osui-getting-started) .sbdocs-title,
+.sbdocs-wrapper:has(.osui-getting-started) h1.sbdocs-title {
+  display: none !important;
+}
+
+.osui-getting-started {
+  --gs-primary-100: #f0f2ff;
+  --gs-primary-200: #e4e8ff;
+  --gs-primary-700: #105cef;
+  --gs-n-0: #fff;
+  --gs-n-100: #f9f9f9;
+  --gs-n-200: #f2f2f2;
+  --gs-n-300: #e8e8e8;
+  --gs-n-400: #e1e1e1;
+  --gs-n-500: #cecece;
+  --gs-n-600: #a2a2a2;
+  --gs-n-700: #8d8d8d;
+  --gs-ink: #242424;
+  --gs-ink-2: #454545;
+  --gs-ink-3: #6b6b6b;
+  --gs-ok: #126f23;
+  --gs-navy: #303d60;
+  --gs-amber: #e9a100;
+  --gs-r-100: 4px;
+  --gs-r-200: 8px;
+  --gs-r-300: 12px;
+  --gs-r-400: 16px;
+  --gs-r-500: 20px;
+  --gs-r-full: 999px;
+  --gs-brand-a: #ff5e3e;
+  --gs-brand-b: #d8161e;
+  --gs-brand-c: #96082c;
+  --gs-brand-d: #04053d;
+  --gs-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --gs-shadow-md: 0 8px 24px rgba(0, 0, 0, 0.06);
+
+  font-family: "Inter", -apple-system, system-ui, sans-serif;
+  color: var(--gs-ink);
+  background: #fff;
+  -webkit-font-smoothing: antialiased;
+}
+
+.sbdocs-wrapper .osui-getting-started h1 {
+  font-size: 34px !important;
+  line-height: 1.1 !important;
+  letter-spacing: -0.026em !important;
+  margin: 0 0 12px !important;
+  font-weight: 780 !important;
+  border: none !important;
+  color: var(--gs-ink) !important;
+}
+
+.sbdocs-wrapper .osui-getting-started h2 {
+  font-size: 23px !important;
+  letter-spacing: -0.02em !important;
+  margin: 0 0 16px !important;
+  font-weight: 750 !important;
+  line-height: 1.2 !important;
+  border: none !important;
+  color: var(--gs-ink) !important;
+  scroll-margin-top: 24px;
+}
+
+.sbdocs-wrapper .osui-getting-started h3 {
+  font-size: 15.5px !important;
+  margin: 26px 0 8px !important;
+  font-weight: 680 !important;
+  letter-spacing: -0.01em !important;
+  border: none !important;
+  color: var(--gs-ink) !important;
+}
+
+/* Beat docs.scss 16px body type — content reads at 14.5px */
+.sbdocs-wrapper .osui-getting-started p,
+.sbdocs-wrapper .osui-getting-started li {
+  font-size: 14.5px !important;
+  line-height: 1.55 !important;
+  font-family: "Inter", -apple-system, system-ui, sans-serif !important;
+}
+
+.sbdocs-wrapper .osui-getting-started .lede {
+  font-size: 15px !important;
+  line-height: 1.55 !important;
+  color: var(--gs-ink-3) !important;
+}
+
+.sbdocs-wrapper .osui-getting-started .note p,
+.sbdocs-wrapper .osui-getting-started .st p,
+.sbdocs-wrapper .osui-getting-started .standout p,
+.sbdocs-wrapper .osui-getting-started .tech p,
+.sbdocs-wrapper .osui-getting-started .howto li {
+  font-size: 13.5px !important;
+}
+
+/* Open up vertical rhythm — mockup felt tight in the Storybook iframe */
+.sbdocs-wrapper .osui-getting-started h2 {
+  margin: 0 0 20px !important;
+}
+
+.sbdocs-wrapper .osui-getting-started h3 {
+  margin: 36px 0 12px !important;
+}
+
+.sbdocs-wrapper .osui-getting-started p {
+  margin: 0 0 18px !important;
+  line-height: 1.65 !important;
+}
+
+.sbdocs-wrapper .osui-getting-started li {
+  line-height: 1.65 !important;
+}
+
+/* Standout callout — keep compact; don't inherit section h3/p rhythm */
+.sbdocs-wrapper .osui-getting-started .standout h3,
+.sbdocs-wrapper .osui-getting-started #technical .standout h3 {
+  margin: 0 0 6px !important;
+  font-size: 15px !important;
+}
+
+.sbdocs-wrapper .osui-getting-started .standout p {
+  margin: 0 0 8px !important;
+  line-height: 1.55 !important;
+}
+
+.sbdocs-wrapper .osui-getting-started .standout p:last-child {
+  margin: 0 !important;
+}
+
+.sbdocs-wrapper .osui-getting-started .note p,
+.sbdocs-wrapper .osui-getting-started .st p,
+.sbdocs-wrapper .osui-getting-started .tech p {
+  margin: 0 !important;
+  line-height: 1.55 !important;
+}
+
+.osui-getting-started a { color: inherit; text-decoration: none; }
+.osui-getting-started article :where(p, li, td) > a[href^="http"],
+.osui-getting-started article :where(p, li, td) > b > a[href^="http"] {
+  color: var(--gs-primary-700);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+}
+.osui-getting-started article :where(p, li, td) > a[href^="http"]:hover,
+.osui-getting-started article :where(p, li, td) > b > a[href^="http"]:hover {
+  color: var(--gs-ink);
+}
+.osui-getting-started .st,
+.osui-getting-started .st:hover,
+.osui-getting-started .st * {
+  text-decoration: none !important;
+}
+.osui-getting-started code {
+  font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  font-size: 12.5px;
+  color: var(--gs-ink-2);
+  background: var(--gs-n-200);
+  border-radius: 4px;
+  padding: 1px 5px;
+}
+
+/* Beat Storybook .sbdocs-content code { color: #105cef } on this page only */
+.sbdocs-wrapper .sbdocs-content .osui-getting-started code:not(pre code),
+.sbdocs-wrapper .osui-getting-started code:not(pre code) {
+  font-family: "JetBrains Mono", ui-monospace, Menlo, monospace !important;
+  font-size: 12.5px !important;
+  color: var(--gs-ink-2) !important;
+  background: var(--gs-n-200) !important;
+  border: 0 !important;
+  border-radius: 4px;
+  padding: 1px 5px;
+}
+
+.osui-getting-started .head{position:relative;overflow:hidden;padding:56px 36px 44px;border-bottom:1px solid var(--gs-n-300);margin-bottom:52px}.osui-getting-started .head::before{content:"";position:absolute;inset:-70% -10% auto -10%;height:460px;pointer-events:none;
+  background:
+    radial-gradient(50% 46% at 18% 34%, rgba(16,92,239,.12), transparent 70%),
+    radial-gradient(42% 44% at 74% 12%, rgba(255,94,62,.18), transparent 68%),
+    radial-gradient(38% 40% at 52% 66%, rgba(150,8,44,.09), transparent 70%);
+  filter:blur(6px)}.osui-getting-started .head-in{position:relative}.osui-getting-started .eyebrow{display:inline-flex;align-items:center;height:23px;padding:0 10px;border-radius:var(--gs-r-full);
+  background:var(--gs-primary-100);color:var(--gs-primary-700);font-size:11.5px;font-weight:600;margin-bottom:14px}.osui-getting-started h1{font-size:34px;line-height:1.1;letter-spacing:-.026em;margin:0 0 12px;font-weight:780}.osui-getting-started h1 em{font-style:normal;background:linear-gradient(96deg,var(--gs-brand-b),var(--gs-brand-a));
+  -webkit-background-clip:text;background-clip:text;color:transparent}.osui-getting-started .lede{font-size:16px;color:var(--gs-ink-3);margin:0;line-height:1.55}.osui-getting-started .jump{display:flex;gap:8px;flex-wrap:wrap}.osui-getting-started .jump a{display:inline-flex;align-items:center;gap:9px;background:#fff;border:1px solid var(--gs-n-300);
+  border-radius:var(--gs-r-full);padding:7px 14px 7px 8px;font-size:13px;font-weight:600;box-shadow:var(--gs-shadow-sm);transition:.15s}.osui-getting-started .jump a:hover{border-color:var(--gs-ink);transform:translateY(-1px)}.osui-getting-started .jump a i{font-style:normal;width:20px;height:20px;border-radius:50%;background:var(--gs-ink);color:#fff;
+  display:grid;place-items:center;font-size:11px;font-weight:700}.osui-getting-started .kicker{font-size:10.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--gs-primary-700);margin:0 0 12px}.osui-getting-started h2{font-size:23px;letter-spacing:-.02em;margin:0 0 16px;font-weight:750;line-height:1.2;scroll-margin-top:24px}.osui-getting-started h3{font-size:15.5px;margin:26px 0 8px;font-weight:680;letter-spacing:-.01em}.osui-getting-started p{margin:0 0 14px;color:var(--gs-ink-2);font-size:14.5px}.osui-getting-started .sec{padding:0 0 64px}.osui-getting-started ul{margin:8px 0 24px;padding-left:22px;color:var(--gs-ink-2)}.osui-getting-started ul li{margin-bottom:14px;font-size:14.5px;line-height:1.65}.osui-getting-started li b{color:var(--gs-ink)}.osui-getting-started .feat{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin:24px 0 0}.osui-getting-started .feat div{border:1px solid var(--gs-n-300);border-radius:var(--gs-r-400);padding:22px;transition:.16s}.osui-getting-started .feat div:hover{box-shadow:var(--gs-shadow-md);border-color:var(--gs-n-500)}.osui-getting-started .feat .t{width:38px;height:38px;border-radius:var(--gs-r-300);background:var(--gs-n-200);color:var(--gs-ink-2);
+  display:grid;place-items:center;margin-bottom:16px}.osui-getting-started .feat .t svg{width:18px;height:18px}.osui-getting-started .feat b{display:block;font-size:15.5px;font-weight:680;margin-bottom:6px}.osui-getting-started .feat span{font-size:14px;color:var(--gs-ink-3);line-height:1.5}.osui-getting-started .steps4{display:grid;gap:0;margin:24px 0 0;border-top:1px solid var(--gs-n-300)}.osui-getting-started .st{display:grid;grid-template-columns:28px 104px minmax(0,1fr) max-content;grid-template-rows:auto auto;
+  column-gap:18px;row-gap:6px;padding:18px 6px;border-bottom:1px solid var(--gs-n-300);transition:.15s}.osui-getting-started .st:hover{background:var(--gs-n-100)}.osui-getting-started .st .top{grid-area:1 / 1 / 3 / 2;align-self:center;display:flex;align-items:center;margin:0}.osui-getting-started .st .top svg{display:none}.osui-getting-started .st .pic{grid-area:1 / 2 / 3 / 3;align-self:center;width:104px;height:62px;display:block;
+  border:1px solid var(--gs-n-300);border-radius:var(--gs-r-200);background:var(--gs-n-100)}.osui-getting-started .st b{grid-area:1 / 3 / 2 / 4}.osui-getting-started .st p{grid-area:2 / 3 / 3 / 4}.osui-getting-started .st .go{grid-area:1 / 4 / 3 / 5;align-self:center;font-size:12.5px;white-space:nowrap}.osui-getting-started .st .n{width:28px;height:28px;border-radius:50%;background:var(--gs-ink);color:#fff;display:grid;place-items:center;
+  font-size:13px;font-weight:750;flex:none}.osui-getting-started .st b{font-size:14.5px;font-weight:700;letter-spacing:-.01em;margin-bottom:3px}.osui-getting-started .st p{margin:0;font-size:13.5px;color:var(--gs-ink-3);line-height:1.5}.osui-getting-started .st .go{margin:0;font-size:13.5px;font-weight:680;color:var(--gs-primary-700);text-align:right}.osui-getting-started .journey{position:relative}.osui-getting-started .step{position:relative;display:grid;grid-template-columns:52px minmax(0,1fr);gap:24px;padding:0 0 44px}.osui-getting-started .step::before{content:"";position:absolute;left:21px;top:44px;bottom:-6px;width:2px;background:var(--gs-n-300)}.osui-getting-started .step:last-child::before{display:none}.osui-getting-started .step .n{width:44px;height:44px;border-radius:50%;background:var(--gs-ink);color:#fff;display:grid;place-items:center;
+  font-size:17px;font-weight:750;box-shadow:0 0 0 5px #fff;position:relative;z-index:1}.osui-getting-started .step .body{padding-top:4px;min-width:0}.osui-getting-started .step h3{margin:0 0 8px;font-size:21px;font-weight:740;letter-spacing:-.02em}.osui-getting-started .more{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:680;color:var(--gs-primary-700)}.osui-getting-started .more:hover{text-decoration:underline;text-underline-offset:3px}.osui-getting-started .viz{border:1px solid var(--gs-n-300);border-radius:var(--gs-r-400);background:var(--gs-n-100);padding:18px;margin:18px 0 16px}.osui-getting-started .viz-lab{font-size:10.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--gs-n-700);margin-bottom:14px}.osui-getting-started .devices{display:flex;gap:14px;flex-wrap:wrap}.osui-getting-started .dev{background:#fff;border:1px solid var(--gs-n-300);border-radius:var(--gs-r-300);padding:14px;flex:1;min-width:120px;text-align:center}.osui-getting-started .dev .frame{margin:0 auto 10px;border:1.5px solid var(--gs-n-500);border-radius:6px;background:linear-gradient(180deg,var(--gs-primary-100),#fff)}.osui-getting-started .dev.phone .frame{width:34px;height:58px}.osui-getting-started .dev.web .frame{width:82px;height:52px}.osui-getting-started .dev b{display:block;font-size:13px;font-weight:650}.osui-getting-started .dev span{font-size:11.5px;color:var(--gs-ink-3)}.osui-getting-started .thumbs{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.osui-getting-started .thumb{background:#fff;border:1px solid var(--gs-n-300);border-radius:var(--gs-r-300);overflow:hidden}.osui-getting-started .thumb .pic{height:62px;padding:8px;display:grid;gap:5px;background:#fff;border-bottom:1px solid var(--gs-n-300)}.osui-getting-started .thumb .r{display:flex;gap:5px;flex:1}.osui-getting-started .thumb .b{background:var(--gs-n-200);border-radius:4px;flex:1}.osui-getting-started .thumb .b.acc{background:var(--gs-primary-200)}.osui-getting-started .thumb small{display:block;padding:8px 10px;font-size:11.5px;color:var(--gs-ink-2);font-weight:600}.osui-getting-started .flow{display:grid;grid-template-columns:1fr 34px 1fr;gap:14px;align-items:center}.osui-getting-started .box{background:#fff;border:1px solid var(--gs-n-300);border-radius:var(--gs-r-300);overflow:hidden}.osui-getting-started .box .bar{display:flex;align-items:center;gap:8px;padding:9px 11px;border-bottom:1px solid var(--gs-n-300);font-size:11.5px;color:var(--gs-ink-3)}.osui-getting-started .box .item{display:flex;align-items:center;gap:10px;padding:9px 11px;font-size:12.5px;font-weight:600;color:var(--gs-ink-2)}.osui-getting-started .box .item + .item{border-top:1px solid var(--gs-n-200)}.osui-getting-started .box .item.pick{background:var(--gs-primary-100);color:var(--gs-primary-700)}.osui-getting-started .box .item svg{width:22px;height:17px;color:var(--gs-n-600);flex:none}.osui-getting-started .box .item.pick svg{color:var(--gs-primary-700)}.osui-getting-started .arrow-mid{display:grid;place-items:center;color:var(--gs-n-600)}.osui-getting-started .screen{padding:11px;display:grid;gap:7px}.osui-getting-started .screen .ln{height:9px;border-radius:4px;background:var(--gs-n-200)}.osui-getting-started .screen .ln.s{width:55%}.osui-getting-started .screen .drop{border:1.5px dashed var(--gs-primary-700);border-radius:var(--gs-r-200);background:var(--gs-primary-100);
+  height:52px;display:grid;place-items:center;font-size:11px;font-weight:700;color:var(--gs-primary-700)}.osui-getting-started .tokens{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.osui-getting-started .tk{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--gs-n-300);border-radius:var(--gs-r-full);
+  padding:6px 12px 6px 6px;font-size:11.5px;font-weight:600;color:var(--gs-ink-2)}.osui-getting-started .tk i{width:20px;height:20px;border-radius:50%;display:block}.osui-getting-started .mini-card{background:#fff;border:1px solid var(--gs-n-300);border-radius:var(--gs-r-300);padding:14px;margin-top:14px;max-width:280px}.osui-getting-started .mini-card b{display:block;font-size:13.5px;margin-bottom:3px}.osui-getting-started .mini-card p{margin:0 0 12px;font-size:12.5px;color:var(--gs-ink-3)}.osui-getting-started .mini-card .btns{display:flex;gap:8px}.osui-getting-started .mini-card button{height:30px;padding:0 13px;border:1px solid transparent;border-radius:var(--gs-r-full);font-size:12px;font-weight:600}.osui-getting-started .mini-card .p1{background:var(--gs-primary-700);color:#fff}.osui-getting-started .mini-card .p2{background:#fff;border-color:var(--gs-n-400);color:var(--gs-ink)}.osui-getting-started .howto{list-style:none;margin:18px 0 24px;padding:0;counter-reset:h}.osui-getting-started .howto li{counter-increment:h;position:relative;padding:12px 0 12px 34px;
+  border-bottom:1px solid var(--gs-n-200);font-size:14px;color:var(--gs-ink-2);line-height:1.5}.osui-getting-started .howto li:last-child{border-bottom:0}.osui-getting-started .howto li::before{content:counter(h);position:absolute;left:0;top:12px;width:23px;height:23px;border-radius:50%;
+  background:var(--gs-n-200);color:var(--gs-ink-2);display:grid;place-items:center;font-size:12px;font-weight:700}.osui-getting-started .props{display:grid;gap:10px;margin:14px 0 18px}.osui-getting-started .prop{display:grid;grid-template-columns:120px 1fr;gap:16px;border:1px solid var(--gs-n-300);border-radius:var(--gs-r-300);padding:14px 16px}.osui-getting-started .prop .fam{font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--gs-ink)}.osui-getting-started .prop p{margin:0;font-size:14px;color:var(--gs-ink-3)}.osui-getting-started #technical{margin-top:24px;padding-top:52px;border-top:1px solid var(--gs-n-300)}.osui-getting-started #technical .kicker{color:var(--gs-n-700)}.osui-getting-started #technical h2{font-size:20px}.osui-getting-started #technical h3{margin-top:32px;font-size:14.5px}.osui-getting-started #technical > p:first-of-type{color:var(--gs-ink-3)}.osui-getting-started table.split{width:100%;border-collapse:collapse;font-size:13px;margin:28px 0 20px;table-layout:fixed}.osui-getting-started table.split th{text-align:left;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--gs-n-700);
+  padding:0 12px 8px 0;border-bottom:1px solid var(--gs-n-300);font-weight:700}.osui-getting-started table.split td{padding:11px 12px 11px 0;border-bottom:1px solid var(--gs-n-200);color:var(--gs-ink-3);
+  vertical-align:top;line-height:1.5}.osui-getting-started table.split td:first-child{color:var(--gs-ink);font-weight:650}.osui-getting-started table.split th:first-child{width:104px}.osui-getting-started table.split th:nth-child(2){width:42%}.osui-getting-started table.split td+td{padding-left:0;padding-right:24px}.osui-getting-started table.split .child{color:var(--gs-n-600)}.osui-getting-started .legend{font-size:12.5px;color:var(--gs-ink-3);margin:0 0 24px}.osui-getting-started .standout{border:1px solid var(--gs-n-400);border-left:3px solid var(--gs-navy);border-radius:var(--gs-r-300);
+  padding:14px 16px;margin:20px 0;background:#fff}.osui-getting-started #technical .standout h3{margin:0 0 8px;font-size:16px;font-weight:720}.osui-getting-started .standout p{margin:0 0 10px;font-size:13.5px}.osui-getting-started .standout p:last-child{margin:0}.osui-getting-started .tech{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:20px 0 0}.osui-getting-started .tech div{border:1px solid var(--gs-n-300);border-radius:var(--gs-r-300);padding:18px}.osui-getting-started .tech b{display:block;font-size:13.5px;font-weight:680;margin-bottom:4px}.osui-getting-started .tech p{margin:0;font-size:13px;color:var(--gs-ink-3);line-height:1.5}.osui-getting-started .tech code{font-size:12.5px;color:var(--gs-ink-2);background:var(--gs-n-200);border-radius:4px;padding:1px 5px}.osui-getting-started .code{position:relative;margin:0 0 24px}.osui-getting-started #technical .code{margin-top:20px}.osui-getting-started .code pre{margin:0;background:#12131a;color:#c8ccd8;border-radius:var(--gs-r-200);padding:14px 16px;
+  font-family:"JetBrains Mono",monospace;font-size:11.5px;line-height:1.75;overflow:auto}.osui-getting-started .code .c{color:#6b7280}.osui-getting-started .code .f{color:#7cb3ff}.osui-getting-started .code .s{color:#8ad6a0}.osui-getting-started .code button{position:absolute;top:12px;right:12px;height:26px;padding:0 10px;border:1px solid rgba(255,255,255,.18);
+  background:rgba(255,255,255,.07);color:#c8ccd8;border-radius:var(--gs-r-100);font-size:11.5px;font-weight:600;cursor:pointer}.osui-getting-started .code button:hover{background:rgba(255,255,255,.15)}.osui-getting-started .res{display:grid;grid-template-columns:1fr 1fr;gap:16px}.osui-getting-started .res a{display:grid;grid-template-columns:38px 1fr;gap:14px;border:1px solid var(--gs-n-300);border-radius:var(--gs-r-400);
+  padding:20px;transition:.16s}.osui-getting-started .res a:hover{border-color:var(--gs-n-500);box-shadow:var(--gs-shadow-md);transform:translateY(-1px)}.osui-getting-started .res .t{width:38px;height:38px;border-radius:var(--gs-r-300);background:var(--gs-n-200);color:var(--gs-ink-2);display:grid;place-items:center}.osui-getting-started .res .t svg{width:17px;height:17px}.osui-getting-started .res b{display:block;font-size:15px;font-weight:680;margin-bottom:4px}.osui-getting-started .res span{font-size:13.5px;color:var(--gs-ink-3);line-height:1.5}.osui-getting-started .res .go{display:block;margin-top:10px;font-size:13px;font-weight:680;color:var(--gs-primary-700)}.osui-getting-started .toc{position:sticky;top:28px;font-size:13px;padding-top:8px}.osui-getting-started .toc b{display:block;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gs-n-700);margin-bottom:12px}.osui-getting-started .toc a{display:block;padding:8px 0 8px 14px;border-left:2px solid var(--gs-n-300);color:var(--gs-ink-3)}.osui-getting-started .toc a:hover{color:var(--gs-ink);border-color:var(--gs-n-600)}.osui-getting-started .toc a.is-active{color:var(--gs-primary-700);border-color:var(--gs-primary-700);font-weight:650}
+
+
+
+/* How-to numbers (light grey) — flex keeps badge + text together; padding
+   clears the divider so the circle isn't clipped */
+.osui-getting-started .howto li {
+  display: flex !important;
+  align-items: flex-start;
+  gap: 11px;
+  padding: 16px 0 !important;
+  overflow: visible !important;
+}
+
+.osui-getting-started .howto li::before {
+  position: static !important;
+  left: auto !important;
+  top: auto !important;
+  margin: 0 !important;
+  flex: 0 0 23px;
+  width: 23px !important;
+  min-width: 23px !important;
+  height: 23px !important;
+  min-height: 23px !important;
+  box-sizing: border-box !important;
+  line-height: 23px !important;
+  border-radius: 50% !important;
+  overflow: visible !important;
+  display: grid !important;
+  place-items: center;
+  /* optical align with Inter cap height */
+  transform: translateY(1px);
+}
+@media (max-width: 860px) {
+  .osui-getting-started .st {
+    grid-template-columns: 30px 1fr;
+    gap: 16px;
+  }
+  .osui-getting-started .st .go {
+    grid-column: 2;
+    text-align: left;
+    margin-top: 8px;
+  }
+  .osui-getting-started .st .pic {
+    display: none;
+  }
+  .sbdocs-wrapper .osui-getting-started h1 {
+    font-size: 34px !important;
+  }
+  .sbdocs-wrapper .osui-getting-started h2 {
+    font-size: 26px !important;
+  }
+}

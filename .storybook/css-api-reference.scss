@@ -1,0 +1,791 @@
+/* CSS API Reference — sidebar nav + property rows (mockup layout). */
+
+.sbdocs-wrapper:has(.osui-css-api-reference) {
+  padding: 0 !important;
+  background: #fff;
+  max-width: none !important;
+  width: 100% !important;
+}
+
+.sbdocs-wrapper:has(.osui-css-api-reference) .sbdocs-content,
+.sbdocs-wrapper:has(.osui-css-api-reference) .sbdocs {
+  max-width: none !important;
+  width: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.sbdocs-wrapper:has(.osui-css-api-reference) .sbdocs-title,
+.sbdocs-wrapper:has(.osui-css-api-reference) h1.sbdocs-title {
+  display: none !important;
+}
+
+.osui-css-api-reference {
+  --api-primary-100: #f0f2ff;
+  --api-primary-700: #105cef;
+  --api-n-100: #f9f9f9;
+  --api-n-200: #f2f2f2;
+  --api-n-300: #e8e8e8;
+  --api-n-700: #8d8d8d;
+  --api-ink: #242424;
+  --api-ink-2: #454545;
+  --api-ink-3: #6b6b6b;
+  --api-r-200: 8px;
+  --api-r-300: 12px;
+  --api-r-full: 999px;
+  --api-code-bg: rgb(247, 250, 252);
+  --api-code-border: rgb(236, 244, 249);
+  --api-code-ink: rgba(46, 52, 56, 0.9);
+  --api-nav-w: 216px;
+  /* Toolbar sticky height + rail chrome — nav fills viewport when scrolled to browser */
+  --api-toolbar-h: 65px;
+  --api-rail-pad-top: 20px;
+  --api-rail-pad-bottom: 16px;
+  --api-search-block: 52px;
+  --api-nav-max-h: calc(
+    100dvh - var(--api-toolbar-h) - var(--api-rail-pad-top) - var(--api-search-block) - var(--api-rail-pad-bottom)
+  );
+
+  box-sizing: border-box;
+  color: var(--api-ink);
+  font-family: "Inter", -apple-system, system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  width: 100%;
+
+  *, *::before, *::after { box-sizing: border-box; }
+}
+
+/* ── Hero ─────────────────────────────────────────────────────────── */
+
+.osui-css-api-reference .api-head {
+  position: relative;
+  overflow: hidden;
+  padding: 56px 36px 44px;
+  border-bottom: 1px solid var(--api-n-300);
+  margin-bottom: 0;
+}
+
+.osui-css-api-reference .api-head::before {
+  content: "";
+  position: absolute;
+  inset: -70% -10% auto -10%;
+  height: 460px;
+  pointer-events: none;
+  background:
+    radial-gradient(50% 46% at 18% 34%, rgba(16, 92, 239, 0.12), transparent 70%),
+    radial-gradient(42% 44% at 74% 12%, rgba(255, 94, 62, 0.18), transparent 68%);
+  filter: blur(6px);
+}
+
+.osui-css-api-reference .api-head-in {
+  position: relative;
+  max-width: var(--docs-head-max, 988px);
+  margin: 0 auto;
+}
+
+.osui-css-api-reference .api-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  height: 23px;
+  padding: 0 10px;
+  border-radius: var(--api-r-full);
+  background: var(--api-primary-100);
+  color: var(--api-primary-700);
+  font-size: 11.5px;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+.sbdocs-wrapper .osui-css-api-reference .api-head h1 {
+  font-size: 34px !important;
+  line-height: 1.1 !important;
+  letter-spacing: -0.026em !important;
+  margin: 0 0 12px !important;
+  font-weight: 780 !important;
+  border: none !important;
+  color: var(--api-ink) !important;
+}
+
+.osui-css-api-reference .api-head h1 em {
+  font-style: normal;
+  background: linear-gradient(96deg, #d8161e, #ff5e3e);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.osui-css-api-reference .api-lede {
+  font-size: 16px !important;
+  color: var(--api-ink-3) !important;
+  margin: 0 !important;
+  line-height: 1.55 !important;
+  max-width: var(--docs-prose-max, 44em);
+}
+
+.osui-css-api-reference .api-lede a {
+  color: var(--api-primary-700);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ── Prose (How to use) ───────────────────────────────────────────── */
+
+.osui-css-api-reference .api-guide {
+  margin-bottom: 0;
+}
+
+.sbdocs-wrapper .osui-css-api-reference .api-guide h2 {
+  font-size: 22px !important;
+  font-weight: 750 !important;
+  margin: 48px 0 16px !important;
+  padding-top: 0;
+  border-top: 0;
+  color: var(--api-ink) !important;
+}
+
+.sbdocs-wrapper .osui-css-api-reference .api-guide p {
+  font-size: 15px !important;
+  line-height: 1.55 !important;
+  color: var(--api-ink-2) !important;
+  margin: 0 0 14px !important;
+}
+
+.sbdocs-wrapper .osui-css-api-reference .api-guide a {
+  color: var(--api-primary-700);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ── Browser (search divider + sidebar) ───────────────────────────── */
+
+.osui-css-api-reference .api-browser {
+  margin-top: 40px;
+}
+
+.osui-css-api-reference .api-toolbar {
+  border-top: 1px solid var(--api-n-300);
+  border-bottom: 1px solid var(--api-n-300);
+  background: var(--api-n-100);
+  padding: 16px 0;
+  position: sticky;
+  top: 0;
+  z-index: 3;
+}
+
+.osui-css-api-reference .api-toolbar-in {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 var(--docs-shell-pad-x, 36px);
+}
+
+.osui-css-api-reference .api-toolbar-label {
+  flex: none;
+  font: 650 13px/1 "Inter", sans-serif;
+  color: var(--api-ink-2);
+  margin-right: 2px;
+}
+
+/* ── Rail + main (Theme Editor pattern) ───────────────────────────── */
+
+.osui-css-api-reference .api-wrap {
+  display: grid;
+  grid-template-columns: var(--api-nav-w) minmax(0, 1fr);
+  gap: 0;
+  align-items: start;
+  min-height: 520px;
+}
+
+.osui-css-api-reference .api-rail {
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: var(--api-toolbar-h);
+  align-self: start;
+  max-height: calc(100dvh - var(--api-toolbar-h));
+  min-height: 0;
+  overflow: visible;
+  border-right: 1px solid var(--api-n-300);
+  padding: var(--api-rail-pad-top) 12px var(--api-rail-pad-bottom);
+}
+
+.osui-css-api-reference .api-search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: none;
+  width: 100%;
+  padding: 0 12px;
+  height: 36px;
+  border: 1px solid var(--api-n-300);
+  border-radius: var(--api-r-200);
+  background: #fff;
+  color: var(--api-ink-3);
+  margin-bottom: 16px;
+}
+
+.osui-css-api-reference .api-search input {
+  flex: 1;
+  border: 0;
+  background: transparent;
+  font: 500 13.5px/1 "Inter", sans-serif;
+  color: var(--api-ink);
+  outline: none;
+  min-width: 0;
+}
+
+.osui-css-api-reference .api-search input::placeholder {
+  color: var(--api-ink-3);
+}
+
+.osui-css-api-reference .api-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1 1 auto;
+  min-height: 0;
+  max-height: var(--api-nav-max-h);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  margin: 0 -4px;
+  padding: 0 4px;
+}
+
+.osui-css-api-reference .api-nav-group {
+  margin-bottom: 18px;
+}
+
+.osui-css-api-reference .api-nav-group:last-child {
+  margin-bottom: 0;
+}
+
+.osui-css-api-reference .api-nav-group__label {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--api-n-700);
+  margin: 0 0 6px;
+  padding: 0 10px;
+}
+
+.osui-css-api-reference .api-nav-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 8px;
+  padding: 7px 10px;
+  border: 0;
+  border-radius: var(--api-r-200);
+  background: transparent;
+  color: var(--api-ink-2);
+  font: 500 13.5px/1.3 "Inter", sans-serif;
+  text-align: left;
+  cursor: pointer;
+}
+
+.osui-css-api-reference .api-nav-item span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.osui-css-api-reference .api-nav-item i {
+  flex: none;
+  font-style: normal;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--api-n-700);
+}
+
+.osui-css-api-reference .api-nav-item:hover {
+  background: var(--api-n-100);
+  color: var(--api-ink);
+}
+
+.osui-css-api-reference .api-nav-item.is-active {
+  background: var(--api-primary-100);
+  color: var(--api-primary-700);
+  font-weight: 650;
+}
+
+.osui-css-api-reference .api-nav-item.is-active i {
+  color: var(--api-primary-700);
+  opacity: 0.75;
+}
+
+.osui-css-api-reference .api-shell__main {
+  min-width: 0;
+  padding: 48px 36px 120px 28px;
+}
+
+/* Windows — thin overlay-style scrollbar on component list */
+html.os-windows .osui-css-api-reference .api-nav {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(36, 36, 36, 0.28) transparent;
+}
+
+html.os-windows .osui-css-api-reference .api-nav::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+html.os-windows .osui-css-api-reference .api-nav::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+html.os-windows .osui-css-api-reference .api-nav::-webkit-scrollbar-thumb {
+  background-color: rgba(36, 36, 36, 0.24);
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background-clip: padding-box;
+}
+
+html.os-windows .osui-css-api-reference .api-nav::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(36, 36, 36, 0.38);
+}
+
+html.os-windows.sb-app-dark .osui-css-api-reference .api-nav {
+  scrollbar-color: rgba(237, 237, 237, 0.32) transparent;
+}
+
+html.os-windows.sb-app-dark .osui-css-api-reference .api-nav::-webkit-scrollbar-thumb {
+  background-color: rgba(237, 237, 237, 0.28);
+}
+
+html.os-windows.sb-app-dark .osui-css-api-reference .api-nav::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(237, 237, 237, 0.42);
+}
+
+/* ── Toolbar chips ────────────────────────────────────────────────── */
+
+.osui-css-api-reference .api-chips {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 6px;
+  flex: none;
+}
+
+.osui-css-api-reference .api-chip {
+  height: 32px;
+  padding: 0 14px;
+  border: 1px solid var(--api-n-300);
+  border-radius: var(--api-r-full);
+  background: #fff;
+  color: var(--api-ink);
+  font: 600 13px/1 "Inter", sans-serif;
+  cursor: pointer;
+  transition: background 0.12s, border-color 0.12s, color 0.12s;
+  white-space: nowrap;
+}
+
+.osui-css-api-reference .api-chip:hover {
+  border-color: #c8c8c8;
+  color: var(--api-ink);
+}
+
+.osui-css-api-reference .api-chip--color.is-active {
+  background: #e8f2ff;
+  border-color: #b8d4ff;
+  color: #105cef;
+}
+
+.osui-css-api-reference .api-chip--spacing.is-active {
+  background: #edf8ee;
+  border-color: #b8e0bc;
+  color: #1a7a28;
+}
+
+.osui-css-api-reference .api-chip--shadow.is-active {
+  background: #f3f0ff;
+  border-color: #d4c8ff;
+  color: #5b3fd4;
+}
+
+.osui-css-api-reference .api-chip--border.is-active {
+  background: #fff4e6;
+  border-color: #f0c987;
+  color: #b45309;
+}
+
+.osui-css-api-reference .api-chip--other.is-active {
+  background: var(--api-n-200);
+  border-color: #c8c8c8;
+  color: var(--api-ink-2);
+}
+
+.osui-css-api-reference .api-clear {
+  border: 0;
+  background: transparent;
+  color: var(--api-primary-700);
+  font: 600 12px/1 "Inter", sans-serif;
+  cursor: pointer;
+  padding: 0 6px;
+  margin-left: 2px;
+}
+
+/* ── Component panel ──────────────────────────────────────────────── */
+
+.osui-css-api-reference .api-panel {
+  padding-top: 0;
+}
+
+.osui-css-api-reference .api-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.osui-css-api-reference .api-panel-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.sbdocs-wrapper .osui-css-api-reference .api-panel-title h2 {
+  font-size: 28px !important;
+  font-weight: 780 !important;
+  margin: 0 !important;
+  line-height: 1 !important;
+  color: var(--api-ink) !important;
+  border: none !important;
+}
+
+/* ── Inline code (API Reference only — beats Storybook blue default) ─ */
+
+.sbdocs-wrapper .sbdocs-content .osui-css-api-reference code:not(pre code),
+.sbdocs-wrapper .osui-css-api-reference code:not(pre code),
+.osui-css-api-reference code:not(pre code) {
+  font-family: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, monospace !important;
+  display: inline-block;
+  width: auto;
+  border: 1px solid var(--api-code-border) !important;
+  color: var(--api-code-ink) !important;
+  background-color: var(--api-code-bg) !important;
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 11px !important;
+  line-height: 12px;
+  font-weight: 500;
+  word-break: break-word;
+}
+
+.osui-css-api-reference .api-panel-title code:not(pre code) {
+  flex: none;
+  align-self: center;
+  margin: 0;
+  transform: translateY(1px);
+}
+
+.osui-css-api-reference .api-panel-links a {
+  flex: none;
+  font: 600 13px/1.4 "Inter", sans-serif;
+  color: var(--api-primary-700);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.osui-css-api-reference .api-panel-links a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.osui-css-api-reference .api-panel-hint {
+  font-size: 14px !important;
+  color: var(--api-ink-3) !important;
+  margin: 0 0 28px !important;
+  line-height: 1.5 !important;
+}
+
+.osui-css-api-reference .api-panel-foot {
+  margin: 20px 0 0;
+  font-size: 12.5px;
+  color: var(--api-n-700);
+}
+
+/* ── Property rows ────────────────────────────────────────────────── */
+
+.osui-css-api-reference .api-prop-list {
+  margin-bottom: 16px;
+}
+
+.osui-css-api-reference .api-prop-list + .api-prop-list {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--api-n-200);
+}
+
+.osui-css-api-reference .api-prop-head {
+  display: grid;
+  grid-template-columns: minmax(200px, 1.15fr) 80px minmax(0, 1.85fr) 32px;
+  gap: 24px;
+  align-items: end;
+  padding: 0 0 14px;
+  border-bottom: 1px solid var(--api-n-300);
+}
+
+.osui-css-api-reference .api-prop-head > span {
+  font: 700 10.5px/1 "Inter", sans-serif;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--api-n-700);
+}
+
+.osui-css-api-reference .api-prop-head__action {
+  /* Snippet column — no visible label */
+}
+
+.osui-css-api-reference .api-prop-list__selector {
+  font-size: 12.5px;
+  color: var(--api-ink-3);
+  margin-bottom: 14px;
+}
+
+.osui-css-api-reference .api-prop-row {
+  display: grid;
+  grid-template-columns: minmax(200px, 1.15fr) 80px minmax(0, 1.85fr) 32px;
+  gap: 24px;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--api-n-200);
+}
+
+.osui-css-api-reference .api-prop-row__name {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-width: 0;
+}
+
+.osui-css-api-reference .api-prop-row__label {
+  font: 650 13px/1.4 "Inter", sans-serif;
+  color: var(--api-ink);
+  word-break: break-word;
+}
+
+.osui-css-api-reference .api-kind {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 22px;
+  padding: 0 8px;
+  border-radius: 4px;
+  font: 700 9.5px/1 "Inter", sans-serif;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.osui-css-api-reference .api-kind--color {
+  background: #e8f2ff;
+  color: #105cef;
+}
+
+.osui-css-api-reference .api-kind--spacing {
+  background: #edf8ee;
+  color: #1a7a28;
+}
+
+.osui-css-api-reference .api-kind--shadow {
+  background: #f3f0ff;
+  color: #5b3fd4;
+}
+
+.osui-css-api-reference .api-kind--border {
+  background: #fff4e6;
+  color: #b45309;
+}
+
+.osui-css-api-reference .api-kind--other {
+  background: var(--api-n-200);
+  color: var(--api-ink-3);
+}
+
+.osui-css-api-reference .api-prop-row__default {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  min-width: 0;
+  font-size: 13px;
+  color: var(--api-ink-3);
+}
+
+.osui-css-api-reference .api-prop-row__snippet {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+/* ── Copy icon ────────────────────────────────────────────────────── */
+
+.osui-css-api-reference .api-copy-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 24px;
+  height: 24px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--api-ink-3);
+  cursor: pointer;
+}
+
+.osui-css-api-reference .api-copy-icon__stack {
+  position: relative;
+  width: 14px;
+  height: 14px;
+  display: block;
+}
+
+.osui-css-api-reference .api-copy-icon__stack svg {
+  position: absolute;
+  inset: 0;
+  display: block;
+  transition: opacity 0.12s ease;
+}
+
+.osui-css-api-reference .api-copy-icon__stack svg:last-child {
+  opacity: 0;
+}
+
+.osui-css-api-reference .api-copy-icon.is-copied .api-copy-icon__stack svg:first-child {
+  opacity: 0;
+}
+
+.osui-css-api-reference .api-copy-icon.is-copied .api-copy-icon__stack svg:last-child {
+  opacity: 1;
+}
+
+.osui-css-api-reference .api-copy-icon:hover {
+  color: var(--api-ink);
+  background: var(--api-n-200);
+}
+
+.osui-css-api-reference .api-copy-icon.is-copied {
+  color: var(--api-primary-700);
+}
+
+/* ── Code blocks (How to use) ─────────────────────────────────────── */
+
+.osui-css-api-reference .code {
+  position: relative;
+  margin: 0;
+}
+
+.osui-css-api-reference .code pre {
+  margin: 0;
+  background: #12131a;
+  color: #e8eaed;
+  border-radius: var(--api-r-300);
+  padding: 16px 18px;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11.5px;
+  line-height: 1.75;
+  overflow: auto;
+  border: 0;
+  white-space: pre-wrap;
+}
+
+.osui-css-api-reference .code button {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  height: 26px;
+  padding: 0 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.07);
+  color: #c8ccd8;
+  border-radius: 4px;
+  font-size: 11.5px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: "Inter", sans-serif;
+}
+
+.osui-css-api-reference .code button:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.osui-css-api-reference .api-empty {
+  padding: 48px 24px;
+  text-align: center;
+  color: var(--api-ink-3);
+  border: 1px dashed var(--api-n-300);
+  border-radius: var(--api-r-300);
+}
+
+/* ── Responsive ───────────────────────────────────────────────────── */
+
+@media (max-width: 960px) {
+  .osui-css-api-reference .api-toolbar-in {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .osui-css-api-reference .api-chips {
+    flex-wrap: wrap;
+  }
+
+  .osui-css-api-reference .api-wrap {
+    grid-template-columns: 1fr;
+  }
+
+  .osui-css-api-reference .api-rail {
+    position: static;
+    max-height: none;
+    border-right: 0;
+    border-bottom: 1px solid var(--api-n-300);
+    padding-bottom: 16px;
+  }
+
+  .osui-css-api-reference .api-nav {
+    max-height: calc(100dvh - var(--api-toolbar-h) - 100px);
+  }
+
+  .osui-css-api-reference .api-shell__main {
+    padding: 28px 24px 80px;
+  }
+
+  html.os-windows .osui-css-api-reference .api-nav {
+    scrollbar-color: rgba(36, 36, 36, 0.28) transparent;
+  }
+
+  html.os-windows.sb-app-dark .osui-css-api-reference .api-nav {
+    scrollbar-color: rgba(237, 237, 237, 0.32) transparent;
+  }
+
+  .osui-css-api-reference .api-nav-group {
+    flex: none;
+    margin-bottom: 0;
+  }
+
+  .osui-css-api-reference .api-prop-head,
+  .osui-css-api-reference .api-prop-row {
+    grid-template-columns: 1fr;
+    gap: 6px;
+    align-items: start;
+  }
+
+  .osui-css-api-reference .api-prop-head {
+    display: none;
+  }
+
+  .osui-css-api-reference .api-prop-row__snippet {
+    justify-content: flex-start;
+  }
+}
