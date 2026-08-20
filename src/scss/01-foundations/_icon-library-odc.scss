@@ -135,7 +135,7 @@ body.iconLibrary-phosphor {
 		transform: translateY(-50%);
 	}
 
-	.form-control[data-input]{
+	.form-control[data-input] {
 		padding-left: var(--space-xl);
 	}
 }
@@ -146,7 +146,7 @@ body.iconLibrary-phosphor {
 		right: var(--space-base);
 	}
 
-	.form-control[data-input]{
+	.form-control[data-input] {
 		padding-left: var(--space-base);
 		padding-right: var(--space-xl);
 	}
@@ -207,7 +207,7 @@ body.iconLibrary-phosphor {
 }
 
 .form {
-	.dropdown-container[class*="ThemeGrid_Width"]:has(select):after {
+	.dropdown-container[class*='ThemeGrid_Width']:has(select):after {
 		top: calc(50% - var(--space-m) / 2);
 	}
 }
@@ -488,6 +488,13 @@ body.iconLibrary-phosphor {
 				}
 			}
 		}
+	}
+}
+
+.form {
+	// Service Studio Preview
+	.dropdown-container:has(> select.dropdown-display):after {
+		-servicestudio-top: calc(50% - var(--space-m) / 2);
 	}
 }
 
