@@ -207,8 +207,7 @@ body.iconLibrary-phosphor {
 }
 
 .form {
-	// Option Content = Text Only (native select), not Custom (div.dropdown-display)
-	.dropdown-container:has(> select.dropdown-display):after {
+	.dropdown-container[class*='ThemeGrid_Width']:has(select):after {
 		top: calc(50% - var(--space-m) / 2);
 	}
 }
@@ -489,6 +488,13 @@ body.iconLibrary-phosphor {
 				}
 			}
 		}
+	}
+}
+
+.form {
+	// Service Studio Preview
+	.dropdown-container:has(> select.dropdown-display):after {
+		-servicestudio-top: calc(50% - var(--space-m) / 2);
 	}
 }
 
