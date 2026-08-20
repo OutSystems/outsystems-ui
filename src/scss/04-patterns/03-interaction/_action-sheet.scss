@@ -96,8 +96,8 @@
 
 		&--animatable {
 			.action-sheet {
-				-webkit-transition: all var(--osui-motion-duration-130) variables.$token-transition-curve-base;
-				transition: all var(--osui-motion-duration-130) variables.$token-transition-curve-base;
+				-webkit-transition: all variables.$token-transition-time-150 variables.$token-transition-curve-base;
+				transition: all variables.$token-transition-time-150 variables.$token-transition-curve-base;
 			}
 		}
 	}

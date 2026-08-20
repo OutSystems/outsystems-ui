@@ -51,7 +51,7 @@
 	}
 
 	&:focus-visible:before {
-		box-shadow: 0 0 0 variables.$token-border-size-075 var(--osui-border-focus-halo);
+		box-shadow: 0 0 0 variables.$token-border-size-075 var(--color-focus-outer);
 	}
 
 	&:focus:not(:focus-visible):before {

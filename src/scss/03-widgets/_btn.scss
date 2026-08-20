@@ -53,7 +53,7 @@
 	gap: variables.$token-scale-200;
 	height: var(--osui-btn-height);
 	justify-content: center;
-	line-height: var(--osui-font-line-height-full);
+	line-height: 1;
 	margin: 0;
 	padding: variables.$token-scale-0 variables.$token-scale-400;
 	position: relative;

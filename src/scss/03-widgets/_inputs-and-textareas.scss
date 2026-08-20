@@ -117,14 +117,14 @@
 	color: var(--color-text-subtlest);
 	font-size: variables.$token-font-size-350;
 	font-weight: variables.$token-font-weight-regular;
-	line-height: var(--osui-font-line-height-default);
+	line-height: 1.4;
 }
 
 .help-block,
 .input-helper {
 	color: var(--color-text-subtlest);
 	font-size: variables.$token-font-size-300;
-	line-height: var(--osui-font-line-height-default);
+	line-height: 1.4;
 	margin-top: variables.$token-scale-100;
 }
 

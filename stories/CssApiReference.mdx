@@ -190,7 +190,7 @@ _File: `src/scss/03-widgets/_list-item.scss`_
 |---|---|
 | `--osui-list-item-border-color` | `var(--color-border)` |
 | `--osui-list-item-background` | `var(--color-background-surface)` |
-| `--osui-list-item-hover-background` | `var(--osui-bg-surface-hover)` |
+| `--osui-list-item-hover-background` | `#{$token-bg-neutral-subtlest-hover}` |
 | `--osui-list-item-active-background` | `#{$token-bg-neutral-subtlest-press}` |
 | `--osui-list-item-selected-background` | `var(--osui-list-item-background)` |
 | `--osui-list-item-selected-icon-color` | `#{$token-icon-select}` |
@@ -456,7 +456,7 @@ _File: `src/scss/04-patterns/02-content/wizard/_wizard-item.scss`_
 | `--osui-wizard-connector-color` | `#{$token-primitives-neutral-600}` |
 | `--osui-wizard-connector-radius` | `#{$token-border-radius-full}` |
 | `--osui-wizard-connector-size` | `#{$token-border-size-050}` |
-| `--osui-wizard-focus-halo-color` | `var(--osui-border-focus-halo)` |
+| `--osui-wizard-focus-halo-color` | `var(--color-focus-outer)` |
 | `--osui-wizard-focus-halo-width` | `#{$token-border-size-075}` |
 
 ---
@@ -1058,26 +1058,8 @@ _File: `src/scss/01-foundations/_root.scss`_
 
 | Property | Default |
 |---|---|
-| `--osui-bottom-sheet-layer` | `var(--layer-global-off-canvas)` |
-| `--osui-notification-layer` | `var(--layer-global-instant-interaction)` |
-| `--osui-popup-layer` | `var(--layer-global-off-canvas)` |
-| `--osui-sidebar-layer` | `var(--layer-global-off-canvas)` |
-| `--osui-menu-layer` | `calc(var(--layer-global-navigation) + var(--layer-local-tier-2))` |
-| `--osui-border-focus-halo` | `color-mix( in srgb, #{$token-semantics-primary-base} 22%, transparent )` |
 | `--osui-elevation-overlay` | `0 12px 24px -8px rgba(0, 0, 0, 0.12), 0 8px 16px -8px rgba(0, 0, 0, 0.08)` |
-| `--osui-bg-surface-subtle` | `#fafbfc` |
-| `--osui-motion-duration-130` | `130ms` |
-| `--osui-motion-duration-180` | `180ms` |
-| `--osui-motion-duration-400` | `400ms` |
-| `--osui-bg-surface-hover` | `#{$token-bg-neutral-subtlest-hover}` |
-| `--osui-bg-surface-active` | `color-mix( in srgb, #{$token-semantics-primary-base} 8%, transparent )` |
-| `--osui-border-subtle` | `#{$token-primitives-neutral-300}` |
-| `--osui-opacity-disabled` | `0.45` |
-| `--osui-font-size-200` | `0.625rem` |
-| `--osui-font-line-height-default` | `1.4` |
-| `--osui-font-line-height-full` | `1` |
-| `--osui-scale-350` | `14px` |
 
 ---
 
-<sub>536 properties across 79 components, generated from `src/scss`.</sub>
+<sub>518 properties across 79 components, generated from `src/scss`.</sub>

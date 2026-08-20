@@ -32,6 +32,10 @@
 	--color-border-input-hover: #{variables.$token-border-input-hover};
 	--color-border-input-press: #{variables.$token-border-input-press};
 	--color-border-primary: #{variables.$token-border-primary};
+	// Focus halo — a translucent primary wash. No $token-* equivalent: the focus
+	// tokens ($token-border-focus-default/-error) are solid colours. Public dev-era
+	// name (dev's $osui-colors-focus), read by .has-accessible-features :focus.
+	--color-focus-outer: color-mix(in srgb, #{variables.$token-semantics-primary-base} 22%, transparent);
 
 	// ─── Theme layer · brand / status / neutral ──────────────────────────
 	--color-primary: #{variables.$token-semantics-primary-base};
@@ -113,40 +117,11 @@
 	--layer-local-tier-4: 4;
 	--layer-local-tier-5: 5;
 
-	// ─── Cross-component primitives — future-token candidates ────────────
-	--osui-bottom-sheet-layer: var(--layer-global-off-canvas);
-	--osui-notification-layer: var(--layer-global-instant-interaction);
-	--osui-popup-layer: var(--layer-global-off-canvas);
-	--osui-sidebar-layer: var(--layer-global-off-canvas);
-	--osui-menu-layer: calc(var(--layer-global-navigation) + var(--layer-local-tier-2));
-
-	// ─── Cross-component primitives — future-token candidates ────────────
-	// Theme-contract entries with no $token-* equivalent yet; each graduates
-	// upstream by rename (var name maps 1:1 to its proposed --token-*).
-	--osui-border-focus-halo: color-mix(
-		in srgb,
-		#{variables.$token-semantics-primary-base} 22%,
-		transparent
-	); // future: --token-border-focus-halo
-	--color-focus-outer: var(--osui-border-focus-halo); // consumed by .has-accessible-features :focus
+	// ─── Cross-component primitive — still pending a token ───────────────
+	// Overlay shadow for portaled surfaces (dropdown, date-picker, balloon, popup).
+	// Deliberately NOT mapped: $token-elevation-1..4 all use a different
+	// offset/blur/opacity profile, so adopting one is a visible design change
+	// rather than a like-for-like swap. Needs a design call (ROU-12975).
 	--osui-elevation-overlay:
 		0 12px 24px -8px rgba(0, 0, 0, 0.12), 0 8px 16px -8px rgba(0, 0, 0, 0.08); // future: --token-elevation-overlay
-	--osui-bg-surface-subtle: #fafbfc; // future: --token-bg-surface-subtle
-	// Motion durations with no matching variables.$token-transition-time-* yet. Interim global vars
-	// (the single home for these timings) until the token scale gains 130/180/400 steps.
-	--osui-motion-duration-130: 130ms; // future: --token-transition-time-130
-	--osui-motion-duration-180: 180ms; // future: --token-transition-time-180
-	--osui-motion-duration-400: 400ms; // future: --token-transition-time-400
-	--osui-bg-surface-hover: #{variables.$token-bg-neutral-subtlest-hover};
-	--osui-bg-surface-active: color-mix(
-		in srgb,
-		#{variables.$token-semantics-primary-base} 8%,
-		transparent
-	); // future: --token-bg-surface-active
-	--osui-border-subtle: #{variables.$token-primitives-neutral-300}; // future: --token-border-subtle (intended neutral-300)
-	--osui-opacity-disabled: 0.45; // future: --token-opacity-disabled
-	--osui-font-size-200: 0.625rem; // future: --token-font-size-200 (10px)
-	--osui-font-line-height-default: 1.4; // future: --token-font-line-height-default
-	--osui-font-line-height-full: 1; // future: --token-font-line-height-full
-	--osui-scale-350: 14px; // future: --token-scale-350
 }

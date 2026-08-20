@@ -43,12 +43,12 @@
 				transition: background-color variables.$token-transition-time-100 variables.$token-transition-curve-base;
 
 				&:hover {
-					background-color: var(--osui-bg-surface-hover);
+					background-color: variables.$token-bg-neutral-subtlest-hover;
 				}
 
 				&.active,
 				&[aria-selected='true'] {
-					background-color: var(--osui-bg-surface-active);
+					background-color: color-mix(in srgb, variables.$token-semantics-primary-base 8%, transparent);
 				}
 
 				&.active,

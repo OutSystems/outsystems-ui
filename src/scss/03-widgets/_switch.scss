@@ -33,7 +33,7 @@
 			border-radius: var(--border-radius-rounded);
 			height: var(--osui-switch-height);
 			opacity: 1;
-			transition: background-color var(--osui-motion-duration-180) variables.$token-transition-curve-linear;
+			transition: background-color variables.$token-transition-time-200 variables.$token-transition-curve-linear;
 			width: var(--osui-switch-width);
 		}
 
@@ -47,7 +47,7 @@
 			margin-left: 0;
 			top: calc((var(--osui-switch-height) - var(--osui-switch-thumb-size)) / 2);
 			transform: translateX(var(--osui-switch-thumb-offset-start)) translateZ(0);
-			transition: transform var(--osui-motion-duration-180) variables.$token-transition-curve-linear;
+			transition: transform variables.$token-transition-time-200 variables.$token-transition-curve-linear;
 			width: var(--osui-switch-thumb-size);
 		}
 	}

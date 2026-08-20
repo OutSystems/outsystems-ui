@@ -291,7 +291,7 @@ span.flatpickr-weekday {
 		&:hover,
 		&:focus {
 			background: var(--color-border-subtle);
-			border-color: var(--osui-border-subtle);
+			border-color: variables.$token-border-subtle;
 			color: variables.$token-semantics-primary-base;
 		}
 
@@ -702,7 +702,7 @@ span.flatpickr-weekday {
 
 	// ─── Today button ───────────────────────────────────────────────────
 	.flatpickr-today-button {
-		border-top: variables.$token-border-size-025 solid var(--osui-border-subtle);
+		border-top: variables.$token-border-size-025 solid variables.$token-border-subtle;
 		padding: variables.$token-scale-200 variables.$token-scale-400;
 
 		a,
