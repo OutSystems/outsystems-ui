@@ -32,10 +32,13 @@
 	--color-border-input-hover: #{variables.$token-border-input-hover};
 	--color-border-input-press: #{variables.$token-border-input-press};
 	--color-border-primary: #{variables.$token-border-primary};
-	// Focus halo — a translucent primary wash. No $token-* equivalent: the focus
-	// tokens ($token-border-focus-default/-error) are solid colours. Public dev-era
-	// name (dev's $osui-colors-focus), read by .has-accessible-features :focus.
+	// Focus ring — the dev-era public pair (dev's $osui-colors-focus), both read by
+	// .has-accessible-features :focus. `outer` is the translucent wash/halo, `inner`
+	// the solid line drawn on top of it. No $token-* covers the wash: the focus
+	// tokens ($token-border-focus-default/-error) are solid light colours, which is
+	// what `inner` needs, not `outer`.
 	--color-focus-outer: color-mix(in srgb, #{variables.$token-semantics-primary-base} 22%, transparent);
+	--color-focus-inner: #{variables.$token-border-boldest};
 
 	// ─── Theme layer · brand / status / neutral ──────────────────────────
 	--color-primary: #{variables.$token-semantics-primary-base};
