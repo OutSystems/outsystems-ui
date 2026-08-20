@@ -72,7 +72,7 @@
 		&.not-valid {
 			div.dropdown-display,
 			& > select.dropdown-display {
-				border: var(--osui-dropdown-border-width) solid var(--color-border-danger);
+				border: var(--osui-dropdown-border-width) solid variables.$token-border-danger-default;
 			}
 		}
 

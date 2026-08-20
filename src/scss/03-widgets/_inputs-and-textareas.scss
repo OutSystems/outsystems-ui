@@ -29,7 +29,7 @@
 	--osui-input-border-radius:       var(--border-radius-soft);
 	--osui-input-focus-border-color:  var(--color-border-primary);
 	--osui-input-focus-ring-color:    #{variables.$token-border-focus-default};
-	--osui-input-error-border-color:  var(--color-border-danger);
+	--osui-input-error-border-color:  #{variables.$token-border-danger-default};
 	// ───────────────────────────────────────────────────────────────────
 
 	&[data-input],
@@ -129,7 +129,7 @@
 }
 
 span.validation-message {
-	color: var(--color-text-danger);
+	color: variables.$token-text-danger;
 	display: block;
 	font-size: variables.$token-font-size-300;
 	margin-top: variables.$token-scale-100;

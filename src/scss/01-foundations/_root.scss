@@ -29,7 +29,10 @@
 	--color-text-disabled: #{variables.$token-text-disabled};
 	--color-text-inverse: #{variables.$token-text-inverse}; // text on a bold/colored background
 
-	// ─── Theme layer · borders (status borders follow their --color-* role) ──
+	// ─── Theme layer · borders ───────────────────────────────────────────
+	// Status-specific border/text tiers (danger, warning…) are NOT roles here:
+	// components read $token-border-danger-default / $token-text-danger direct.
+	// Only names in the low-code Color entity earn a --color-* role — see below.
 	--color-border: #{variables.$token-border-default};
 	--color-border-subtle: #{variables.$token-border-subtle};
 	--color-border-subtlest: #{variables.$token-border-subtlest};
@@ -38,7 +41,13 @@
 	--color-border-input-press: #{variables.$token-border-input-press};
 	--color-border-primary: #{variables.$token-border-primary}; // border-specific primary tier (focus rings)
 
-	// ─── Theme layer · brand / status / neutral (also read by TS GetColorValueFromColorType) ──
+	// ─── Theme layer · brand / status / neutral ──────────────────────────
+	// Every name below is a member of the low-code Color entity: TS builds
+	// '--color-' + <entity value> at runtime (Helper.Dom.GetColorValueFromColorType,
+	// used by Progress ProgressColor/TrailColor). The var name IS that contract —
+	// renaming one silently falls back to writing the literal name as a colour.
+	// This is why the fill tier stays `error` (entity word) while the CSS-only
+	// text/border tiers use the token word `danger` and skip this layer entirely.
 	--color-primary: #{variables.$token-semantics-primary-base};
 	--color-primary-hover: #{variables.$token-semantics-primary-800};
 	--color-primary-selected: #{variables.$token-semantics-primary-900}; // translucent-wash role for selected rows/items; apps override this
@@ -57,8 +66,6 @@
 	--color-neutral-9: #{variables.$token-primitives-neutral-1100};
 	--color-neutral-10: #{variables.$token-primitives-neutral-1200};
 	--color-error: #{variables.$token-semantics-danger-base};
-	--color-border-danger: #{variables.$token-border-danger-default}; // border-specific danger tier (form validation)
-	--color-text-danger: #{variables.$token-text-danger}; // text-specific danger tier (form validation)
 	--color-warning: #{variables.$token-semantics-warning-base};
 	--color-success: #{variables.$token-semantics-success-base};
 	--color-info: #{variables.$token-semantics-info-base};

@@ -181,7 +181,7 @@ _File: `src/scss/03-widgets/_inputs-and-textareas.scss`_
 | `--osui-input-border-radius` | `var(--border-radius-soft)` |
 | `--osui-input-focus-border-color` | `var(--color-border-primary)` |
 | `--osui-input-focus-ring-color` | `#{$token-border-focus-default}` |
-| `--osui-input-error-border-color` | `var(--color-border-danger)` |
+| `--osui-input-error-border-color` | `#{$token-border-danger-default}` |
 
 ### List Item (`.list-item`)
 _File: `src/scss/03-widgets/_list-item.scss`_
@@ -230,7 +230,7 @@ _File: `src/scss/03-widgets/_radio-button.scss`_
 | `--osui-radio-hover-border-color` | `var(--color-border-input-hover)` |
 | `--osui-radio-checked-color` | `var(--color-primary)` |
 | `--osui-radio-indicator-border` | `#{$token-scale-150}` |
-| `--osui-radio-error-border-color` | `var(--color-border-danger)` |
+| `--osui-radio-error-border-color` | `#{$token-border-danger-default}` |
 | `--osui-radio-disabled-border-color` | `#{$token-border-disabled}` |
 
 ### Switch (`[data-switch]`)
@@ -536,7 +536,7 @@ _File: `src/scss/04-patterns/03-interaction/animated-label/_animated-label.scss`
 | `--osui-animated-label-focus-border-color` | `var(--color-border-primary)` |
 | `--osui-animated-label-focus-ring-color` | `#{$token-border-focus-default}` |
 | `--osui-animated-label-focus-shadow` | `0 0 0 #{$token-border-size-050} var(--osui-animated-label-focus-ring-color)` |
-| `--osui-animated-label-error-color` | `var(--color-text-danger)` |
+| `--osui-animated-label-error-color` | `#{$token-text-danger}` |
 | `--osui-animated-label-disabled-background` | `var(--color-background-input-disabled)` |
 | `--osui-animated-label-disabled-color` | `var(--color-text-disabled)` |
 
@@ -1073,8 +1073,6 @@ _File: `src/scss/01-foundations/_root.scss`_
 | `--osui-bg-surface-active` | `color-mix( in srgb, #{$token-semantics-primary-base} 8%, transparent )` |
 | `--osui-border-subtle` | `#{$token-primitives-neutral-300}` |
 | `--osui-opacity-disabled` | `0.45` |
-| `--osui-elevation-25` | `0 1px 2px rgba(0, 0, 0, 0.08)` |
-| `--osui-elevation-50` | `0 1px 2px rgba(0, 0, 0, 0.2)` |
 | `--osui-font-size-200` | `0.625rem` |
 | `--osui-font-line-height-default` | `1.4` |
 | `--osui-font-line-height-full` | `1` |
@@ -1082,4 +1080,4 @@ _File: `src/scss/01-foundations/_root.scss`_
 
 ---
 
-<sub>538 properties across 79 components, generated from `src/scss`.</sub>
+<sub>536 properties across 79 components, generated from `src/scss`.</sub>
