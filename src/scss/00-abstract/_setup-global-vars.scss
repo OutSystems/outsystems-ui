@@ -62,7 +62,10 @@ $osui-space-token-vars: (
 /* CSS custom property to re-skin all generated utility classes at once.        */
 /* ---------------------------------------------------------------------------- */
 
-// Neutral scale — closest-hex match against variables.$token-primitives-neutral-*
+// Neutral scale. NOTE (ROU-12975): the utility classes in 05-useful/_colors-neutral
+// now read `var(--color-neutral-<key>)` from :root, so only the KEYS below are
+// live — the values are no longer what .background-neutral-*/.text-neutral-*
+// render. :root (01-foundations/_root.scss) is the single source for the ramp.
 $osui-colors-neutral:
 	'0' variables.$token-primitives-base-white,
 	'1' variables.$token-primitives-neutral-100,
