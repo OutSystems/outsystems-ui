@@ -32,11 +32,8 @@
 	--color-border-input-hover: #{variables.$token-border-input-hover};
 	--color-border-input-press: #{variables.$token-border-input-press};
 	--color-border-primary: #{variables.$token-border-primary};
-	// Focus ring — the dev-era public pair (dev's $osui-colors-focus), both read by
-	// .has-accessible-features :focus. `outer` is the translucent wash/halo, `inner`
-	// the solid line drawn on top of it. No $token-* covers the wash: the focus
-	// tokens ($token-border-focus-default/-error) are solid light colours, which is
-	// what `inner` needs, not `outer`.
+	// Focus ring pair (dev's $osui-colors-focus), read by .has-accessible-features
+	// :focus — `outer` is the translucent wash, `inner` the solid line on top.
 	--color-focus-outer: color-mix(in srgb, #{variables.$token-semantics-primary-base} 22%, transparent);
 	--color-focus-inner: #{variables.$token-border-boldest};
 
@@ -120,11 +117,10 @@
 	--layer-local-tier-4: 4;
 	--layer-local-tier-5: 5;
 
-	// ─── Cross-component primitive — still pending a token ───────────────
-	// Overlay shadow for portaled surfaces (dropdown, date-picker, balloon, popup).
-	// Deliberately NOT mapped: $token-elevation-1..4 all use a different
-	// offset/blur/opacity profile, so adopting one is a visible design change
-	// rather than a like-for-like swap. Needs a design call (ROU-12975).
-	--osui-elevation-overlay:
-		0 12px 24px -8px rgba(0, 0, 0, 0.12), 0 8px 16px -8px rgba(0, 0, 0, 0.08); // future: --token-elevation-overlay
+	// Portaled / cross-pattern layer vars (read off-DOM)
+	--osui-bottom-sheet-layer: var(--layer-global-off-canvas);
+	--osui-notification-layer: var(--layer-global-instant-interaction);
+	--osui-popup-layer: var(--layer-global-off-canvas);
+	--osui-sidebar-layer: var(--layer-global-off-canvas);
+	--osui-menu-layer: calc(var(--layer-global-navigation) + var(--layer-local-tier-2));
 }

@@ -638,7 +638,7 @@ _File: `src/scss/04-patterns/03-interaction/dropdown/_dropdown-serverside.scss`_
 | `--osui-dropdown-min-width` | `170px` |
 | `--osui-floating-offset` | `#{$token-scale-100}` |
 | `--osui-dropdown-ss-scroll-bar-width` | `5px` |
-| `--osui-balloon-shadow` | `var(--osui-elevation-overlay)` |
+| `--osui-balloon-shadow` | `0 12px 24px -8px #{$token-backdrop}` |
 | `--osui-balloon-shape` | `var(--border-radius-soft)` |
 
 ### Dropdown Serverside (`.has-accessible-features`)
@@ -1058,8 +1058,12 @@ _File: `src/scss/01-foundations/_root.scss`_
 
 | Property | Default |
 |---|---|
-| `--osui-elevation-overlay` | `0 12px 24px -8px rgba(0, 0, 0, 0.12), 0 8px 16px -8px rgba(0, 0, 0, 0.08)` |
+| `--osui-bottom-sheet-layer` | `var(--layer-global-off-canvas)` |
+| `--osui-notification-layer` | `var(--layer-global-instant-interaction)` |
+| `--osui-popup-layer` | `var(--layer-global-off-canvas)` |
+| `--osui-sidebar-layer` | `var(--layer-global-off-canvas)` |
+| `--osui-menu-layer` | `calc(var(--layer-global-navigation) + var(--layer-local-tier-2))` |
 
 ---
 
-<sub>518 properties across 79 components, generated from `src/scss`.</sub>
+<sub>522 properties across 79 components, generated from `src/scss`.</sub>

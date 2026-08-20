@@ -85,7 +85,7 @@
 			background-color: var(--osui-dropdown-list-background);
 			border: var(--osui-dropdown-border-width) solid var(--osui-dropdown-list-border-color);
 			border-radius: var(--osui-dropdown-border-radius);
-			box-shadow: var(--osui-elevation-overlay);
+			box-shadow: 0 12px 24px -8px variables.$token-backdrop;
 			left: 0 !important;
 			max-height: var(--osui-dropdown-list-max-height);
 			overflow-y: auto;
