@@ -3,13 +3,8 @@
 
 ////
 /// @group Root
-/// Framework theme layer (Tier 3) + app-layout plumbing.
+/// Framework theme layer
 ///
-/// Theme-layer role knobs use un-prefixed names (--color-*, --border-radius-*,
-/// --size-*, --layer-*); each defaults through a Tier-2 $token-*. A theme
-/// re-skins by overriding these (and/or --token-*) — never a component rule.
-/// Read chain: --osui-{component} → --{role} → $token-* → primitive.
-/// See specs/plan-part-four.md.
 
 :root {
 	// ─── Theme layer · surfaces ──────────────────────────────────────────
@@ -27,36 +22,22 @@
 	--color-text-subtle: #{variables.$token-text-subtle};
 	--color-text-subtlest: #{variables.$token-text-subtlest};
 	--color-text-disabled: #{variables.$token-text-disabled};
-	--color-text-inverse: #{variables.$token-text-inverse}; // text on a bold/colored background
+	--color-text-inverse: #{variables.$token-text-inverse};
 
 	// ─── Theme layer · borders ───────────────────────────────────────────
-	// Status-specific border/text tiers (danger, warning…) are NOT roles here:
-	// components read $token-border-danger-default / $token-text-danger direct.
-	// Only names in the low-code Color entity earn a --color-* role — see below.
 	--color-border: #{variables.$token-border-default};
 	--color-border-subtle: #{variables.$token-border-subtle};
 	--color-border-subtlest: #{variables.$token-border-subtlest};
 	--color-border-input: #{variables.$token-border-input-default};
 	--color-border-input-hover: #{variables.$token-border-input-hover};
 	--color-border-input-press: #{variables.$token-border-input-press};
-	--color-border-primary: #{variables.$token-border-primary}; // border-specific primary tier (focus rings)
+	--color-border-primary: #{variables.$token-border-primary};
 
 	// ─── Theme layer · brand / status / neutral ──────────────────────────
-	// Mixed provenance — check before renaming anything here:
-	//   • Color-entity members (primary, secondary, neutral-0…10, plus the
-	//     extended palette below): TS builds '--color-' + <entity value> at
-	//     runtime in Helper.Dom.GetColorValueFromColorType, used by Progress
-	//     ProgressColor/TrailColor. The var name IS that contract — rename one
-	//     and the lookup misses, writing the literal name as a colour.
-	//   • NOT entity members (error, warning, success, info, primary-hover,
-	//     primary-selected, primary-active, bare neutral): CSS-only roles, but
-	//     still public :root names inherited from dev, so apps may override them.
-	// Status text/border tiers deliberately skip this layer — components read
-	// $token-text-danger / $token-border-danger-default directly.
 	--color-primary: #{variables.$token-semantics-primary-base};
 	--color-primary-hover: #{variables.$token-semantics-primary-800};
-	--color-primary-selected: #{variables.$token-semantics-primary-900}; // translucent-wash role for selected rows/items; apps override this
-	--color-primary-active: #{variables.$token-semantics-primary-900}; // solid pressed/active-state role — do not alias to -selected above
+	--color-primary-selected: #{variables.$token-semantics-primary-900};
+	--color-primary-active: #{variables.$token-semantics-primary-900};
 	--color-secondary: #{variables.$token-bg-neutral-bold-default};
 	--color-neutral: #{variables.$token-primitives-neutral-500};
 	--color-neutral-0: #{variables.$token-primitives-neutral-100};
@@ -76,53 +57,46 @@
 	--color-info: #{variables.$token-semantics-info-base};
 
 	// ─── Theme layer · extended palette ──────────────────────────────────
-	// The 12 Color-entity families (Red…Pink) plus dev's light/dark variants,
-	// token-backed via $osui-colors-extended. Restored ROU-12975: without these
-	// GetColorValueFromColorType falls through to the bare entity name, so
-	// Progress rendered the CSS keyword `red` (#ff0000) instead of the token
-	// red, and `grape` — not a CSS colour — rendered nothing at all.
+	// The 12 Color-entity families (Red…Pink) only — the base ('') entry of each,
+	// token-backed via $osui-colors-extended. Without these,
+	// GetColorValueFromColorType falls through to the bare entity name: Progress
+	// rendered the CSS keyword `red` (#ff0000) instead of the token red, and
+	// `grape` — not a CSS colour — rendered nothing.
+	// dev's light/dark variants are deliberately NOT roles: no entity record, so
+	// their utility classes read $token-* directly.
 	@each $color, $variations in $osui-colors-extended {
 		@each $type, $value in $variations {
 			@if ($type == '') {
 				--color-#{$color}: #{$value};
-			} @else {
-				--color-#{$color}-#{$type}: #{$value};
 			}
 		}
 	}
 
 	// ─── Theme layer · radius ────────────────────────────────────────────
-	// Each falls back to --border-radius-default (unset by default → own value);
-	// set --border-radius-default once to re-radius the whole framework.
-	// none/soft/rounded ↔ ShapeType (TS GetBorderRadiusValueFromShapeType); softer is CSS-only.
 	--border-radius-none: var(--border-radius-default, #{variables.$token-border-radius-0}); // 0px
 	--border-radius-soft: var(--border-radius-default, #{variables.$token-border-radius-200}); // 8px · controls + flat surfaces
 	--border-radius-softer: var(--border-radius-default, #{variables.$token-border-radius-400}); // 16px · elevated surfaces
 	--border-radius-rounded: var(--border-radius-default, #{variables.$token-border-radius-full}); // 999px · circular
 
 	// ─── Theme layer · space scale ───────────────────────────────────────
-	// Public spacing vocabulary, restored to the historical --space-* names and
-	// token-backed via $osui-space-token-vars (none→scale-0 … xxl→scale-1200).
-	// App-overridable, and read at runtime by Gallery's ItemsGap property.
 	@each $type, $value in $osui-space-token-vars {
 		--space-#{$type}: #{$value};
 	}
 
-	// ─── App-layout plumbing (NOT part of the theme contract) ────────────
-	// Layout sizes
+	// ─── Theme layer · layout sizes ──────────────────────────────────────
 	--size-header: #{$header-size};
 	--size-header-content: #{$header-size-content};
 	--size-side-menu: #{$side-menu-size};
 	--size-bottom-bar: #{$bottom-bar-size};
 	--size-footer: #{$footer-height};
 
-	// Safe areas (the one retained --os- prefix)
+	// ─── Theme layer · safe areas ────────────────────────────────────────
 	--os-safe-area-top: #{safe-area(top)};
 	--os-safe-area-right: #{safe-area(right)};
 	--os-safe-area-bottom: #{safe-area(bottom)};
 	--os-safe-area-left: #{safe-area(left)};
 
-	// Z-index layer system
+	// ─── Theme layer · z-index system ────────────────────────────────────
 	--layer-system-scale: 100;
 	--layer-above: var(--layer-system-scale);
 	--layer-below: calc(-1 * var(--layer-system-scale));
@@ -139,7 +113,7 @@
 	--layer-local-tier-4: 4;
 	--layer-local-tier-5: 5;
 
-	// Portaled / cross-pattern layer vars (read off-DOM)
+	// ─── Cross-component primitives — future-token candidates ────────────
 	--osui-bottom-sheet-layer: var(--layer-global-off-canvas);
 	--osui-notification-layer: var(--layer-global-instant-interaction);
 	--osui-popup-layer: var(--layer-global-off-canvas);

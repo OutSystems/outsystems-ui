@@ -33,7 +33,8 @@
 				@each $variation-type, $variation-value in $variations {
 					@if ($variation-type == '') {
 						&-#{$box-side-type}-#{$color-type} {
-							border-#{$box-side-type}-color: #{$variation-value};
+							// entity colour → inherit the :root role
+							border-#{$box-side-type}-color: var(--color-#{$color-type});
 						}
 					} @else {
 						&-#{$box-side-type}-#{$color-type}-#{$variation-type} {
