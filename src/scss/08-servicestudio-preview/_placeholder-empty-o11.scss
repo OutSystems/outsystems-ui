@@ -13,4 +13,10 @@
 			display: contents;
 		}
 	}
+	&__content-item {
+		.ph:empty,
+		.placeholder-empty:empty {
+			-servicestudio-padding: var(--space-m);
+		}
+	}
 }

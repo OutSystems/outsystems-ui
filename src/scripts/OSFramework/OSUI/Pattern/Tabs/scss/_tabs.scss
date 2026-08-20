@@ -251,10 +251,6 @@
 				-servicestudio-display: block !important;
 				-servicestudio-margin-bottom: var(--space-m);
 
-				div:empty {
-					-servicestudio-padding: var(--space-m);
-				}
-
 				.uieditor-if-branch-widget:has(> div:empty) {
 					-servicestudio-height: 0;
 				}
