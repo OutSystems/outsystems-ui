@@ -213,7 +213,7 @@ body.iconLibrary-phosphor {
 }
 
 .form {
-	.dropdown-container:has(> select.dropdown-display):after {
+	.dropdown-container[class*='ThemeGrid_Width']:has(select):after {
 		top: calc(50% - var(--token-scale-600, 24px) / 2);
 	}
 }
@@ -491,6 +491,13 @@ body.iconLibrary-phosphor {
 				}
 			}
 		}
+	}
+}
+
+.form {
+	// Service Studio Preview
+	.dropdown-container:has(> select.dropdown-display):after {
+		-servicestudio-top: calc(50% - var(--space-m) / 2);
 	}
 }
 
