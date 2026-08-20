@@ -120,6 +120,16 @@ html[data-uieditorversion^='1'] {
 		}
 	}
 
+	.chat-message-status {
+		.uieditor-if-branch-widget {
+			-servicestudio-display: inline-flex;
+
+			&:empty {
+				-servicestudio-display: none;
+			}
+		}
+	}
+
 	.phone {
 		.table:not(.table-responsive) {
 			display: block;
