@@ -147,16 +147,32 @@ What lives here:
 | **Surfaces** | `--color-background-{body,surface,header,sidemenu,footer,login,input,…}` | |
 | **Text** | `--color-text`, `--color-text-{subtle,subtlest,disabled,inverse}` | |
 | **Borders** | `--color-border`, `--color-border-{subtle,subtlest,input,…}` | |
-| **Brand / status / neutral** | `--color-{primary,secondary,error,warning,success,info}`, `--color-neutral-0..10` | also read by TS `GetColorValueFromColorType` |
+| **Brand / status / neutral** | `--color-{primary,primary-hover,primary-selected,primary-active,secondary,error,warning,success,info}`, `--color-neutral-0..10` | brand + neutrals are Color-entity records read by TS `GetColorValueFromColorType`; the four status roles are **not** entity records, just public O11 names |
+| **Palette** | `--color-{red,orange,yellow,lime,green,teal,cyan,blue,indigo,violet,grape,pink}` | the 12 Color-entity families; entity-bound, so the names cannot change. The light/dark variants (`-lightest` … `-darkest`) are deliberately **not** roles — their utility classes read `$token-*` directly |
+| **Focus ring** | `--color-focus-outer` (translucent wash), `--color-focus-inner` (solid line on top) | read by `.has-accessible-features :focus` |
 | **Radius** | `--border-radius-{none,soft,softer,rounded}` | set **`--border-radius-default`** once at `:root` to re-radius everything; `none/soft/rounded` ↔ TS `GetBorderRadiusValueFromShapeType`, `softer` is CSS-only |
+| **Spacing** | `--space-{none,xs,s,base,m,l,xl,xxl}` | token-backed onto `$token-scale-*`; also read at runtime by Gallery `ItemsGap`. Prefer `$token-scale-*` in new component SCSS |
+
+> **Renaming any entity-bound name is a breaking change.**
+> `Helper.Dom.GetColorValueFromColorType` builds `'--color-' + <Color entity value>` at
+> runtime (Progress `ProgressColor` / `TrailColor`). If the var is missing the helper
+> falls through to `return colorName`, writing the literal entity name out as a colour —
+> silently, with no build error. Same shape for
+> `GetBorderRadiusValueFromShapeType` → `--border-radius-{none,soft,rounded}` and
+> Gallery `ItemsGap` → `--space-*`.
+
+Status **text/border** tiers are intentionally absent from the theme layer:
+components read `$token-text-danger` / `$token-border-danger-default` directly,
+because neither has an entity record or a cross-component consumer.
 
 **Also in `_root.scss` but NOT part of the theme contract** (app-layout
-plumbing): layout sizes `--size-*`, z-index `--layer-*`, safe areas
-`--os-safe-area-*` (the one retained `--os-` prefix), the portaled-pattern
-`--osui-*-layer` vars, and a block of **cross-component future-token candidates**
-(`--osui-border-focus-halo`, `--osui-elevation-overlay`, `--osui-motion-duration-*`, …)
-— theme-contract entries that have no `$token-*` equivalent *yet*; each graduates
-upstream by a 1:1 rename to a `--token-*` when the package adds it.
+plumbing): layout sizes `--size-*`, z-index `--layer-global-*` / `--layer-local-*`,
+safe areas `--os-safe-area-*` (the one retained `--os-` prefix), and the
+portaled-pattern `--osui-*-layer` vars (read off-DOM, so they must live at `:root`).
+
+The old block of **cross-component future-token candidates** is gone (ROU-12975):
+each entry either moved to the token that now exists, or was inlined at its call
+site where no token does. Nothing in `_root.scss` is a placeholder any more.
 
 ---
 
@@ -281,7 +297,7 @@ When writing any SCSS line, walk **down** the chain only as far as you need:
 1. Reading a **themeable** colour/radius? → use the **Tier-3 role**: `var(--color-*)`, `var(--border-radius-*)`.
 2. Reading a **structural** size/space/elevation/border? → use **`$token-*`** directly.
 3. Exposing it on a component? → declare a **`--osui-{component}-{prop}`** that defaults to (1) or (2), and have the property read the `--osui-*` var.
-4. Need a value with no token yet? → add a **future-token candidate** `--osui-*` in `_root.scss` with a `// future: --token-*` comment.
+4. Need a value with no token yet? → keep it **local**: inline it in the property value, or declare an `--osui-{component}-{prop}` on the component root. Do **not** add a global placeholder to `_root.scss` — that block existed and was retired in ROU-12975, because a global with one reader is harder to find than a literal at its call site. If the value is genuinely cross-component, file the gap upstream in `outsystems-design-tokens`.
 
 **Red flags** (see `.claude/rules/scss.md` §14): hardcoded hex/rem/px where a
 `$token-*` exists; reintroducing retired `--font-size-*`/`--shadow-*`/`--border-size-*`;

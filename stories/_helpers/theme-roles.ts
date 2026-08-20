@@ -22,6 +22,12 @@ export const THEME_ROLE_GROUPS: RoleGroup[] = [
 			{ name: '--color-primary', label: 'Primary', type: 'color' },
 			{ name: '--color-primary-hover', label: 'Primary · hover', type: 'color' },
 			{ name: '--color-primary-selected', label: 'Primary · selected', type: 'color' },
+			{
+				name: '--color-primary-active',
+				label: 'Primary · active',
+				type: 'color',
+				note: 'solid pressed state — not an alias of selected',
+			},
 			{ name: '--color-secondary', label: 'Secondary', type: 'color' },
 		],
 	},
@@ -69,7 +75,18 @@ export const THEME_ROLE_GROUPS: RoleGroup[] = [
 			{ name: '--color-border-subtle', label: 'Subtle', type: 'color' },
 			{ name: '--color-border-subtlest', label: 'Subtlest', type: 'color' },
 			{ name: '--color-border-input', label: 'Input', type: 'color' },
+			{ name: '--color-border-input-hover', label: 'Input · hover', type: 'color' },
 			{ name: '--color-border-input-press', label: 'Input · press', type: 'color' },
+			{ name: '--color-border-primary', label: 'Primary (focus rings)', type: 'color' },
+		],
+	},
+	{
+		id: 'focus',
+		title: 'Focus ring',
+		blurb: 'Read by .has-accessible-features :focus — outer is the wash, inner the solid line on top.',
+		roles: [
+			{ name: '--color-focus-outer', label: 'Outer (wash)', type: 'color' },
+			{ name: '--color-focus-inner', label: 'Inner (line)', type: 'color' },
 		],
 	},
 	{
@@ -84,6 +101,29 @@ export const THEME_ROLE_GROUPS: RoleGroup[] = [
 				type: 'color' as const,
 			})),
 		],
+	},
+	{
+		id: 'palette',
+		title: 'Palette',
+		blurb: 'The 12 extended families. These are Color static-entity records, so the TS colour API resolves them by name — renaming one breaks low-code.',
+		roles: [
+			'red',
+			'orange',
+			'yellow',
+			'lime',
+			'green',
+			'teal',
+			'cyan',
+			'blue',
+			'indigo',
+			'violet',
+			'grape',
+			'pink',
+		].map((c) => ({
+			name: `--color-${c}`,
+			label: c.charAt(0).toUpperCase() + c.slice(1),
+			type: 'color' as const,
+		})),
 	},
 	{
 		id: 'radius',
@@ -101,6 +141,23 @@ export const THEME_ROLE_GROUPS: RoleGroup[] = [
 			{ name: '--border-radius-softer', label: 'Softer (elevated)', type: 'length' },
 			{ name: '--border-radius-rounded', label: 'Rounded (circular)', type: 'length' },
 		],
+	},
+	{
+		id: 'space',
+		title: 'Spacing',
+		blurb: 'The public spacing vocabulary, token-backed onto $token-scale-*. Also read at runtime by Gallery ItemsGap.',
+		roles: (
+			[
+				['none', 'None'],
+				['xs', 'XS'],
+				['s', 'S'],
+				['base', 'Base'],
+				['m', 'M'],
+				['l', 'L'],
+				['xl', 'XL'],
+				['xxl', 'XXL'],
+			] as const
+		).map(([k, label]) => ({ name: `--space-${k}`, label, type: 'length' as const })),
 	},
 ];
 
