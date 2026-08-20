@@ -42,12 +42,17 @@
 	--color-border-primary: #{variables.$token-border-primary}; // border-specific primary tier (focus rings)
 
 	// ─── Theme layer · brand / status / neutral ──────────────────────────
-	// Every name below is a member of the low-code Color entity: TS builds
-	// '--color-' + <entity value> at runtime (Helper.Dom.GetColorValueFromColorType,
-	// used by Progress ProgressColor/TrailColor). The var name IS that contract —
-	// renaming one silently falls back to writing the literal name as a colour.
-	// This is why the fill tier stays `error` (entity word) while the CSS-only
-	// text/border tiers use the token word `danger` and skip this layer entirely.
+	// Mixed provenance — check before renaming anything here:
+	//   • Color-entity members (primary, secondary, neutral-0…10, plus the
+	//     extended palette below): TS builds '--color-' + <entity value> at
+	//     runtime in Helper.Dom.GetColorValueFromColorType, used by Progress
+	//     ProgressColor/TrailColor. The var name IS that contract — rename one
+	//     and the lookup misses, writing the literal name as a colour.
+	//   • NOT entity members (error, warning, success, info, primary-hover,
+	//     primary-selected, primary-active, bare neutral): CSS-only roles, but
+	//     still public :root names inherited from dev, so apps may override them.
+	// Status text/border tiers deliberately skip this layer — components read
+	// $token-text-danger / $token-border-danger-default directly.
 	--color-primary: #{variables.$token-semantics-primary-base};
 	--color-primary-hover: #{variables.$token-semantics-primary-800};
 	--color-primary-selected: #{variables.$token-semantics-primary-900}; // translucent-wash role for selected rows/items; apps override this
@@ -69,6 +74,22 @@
 	--color-warning: #{variables.$token-semantics-warning-base};
 	--color-success: #{variables.$token-semantics-success-base};
 	--color-info: #{variables.$token-semantics-info-base};
+
+	// ─── Theme layer · extended palette ──────────────────────────────────
+	// The 12 Color-entity families (Red…Pink) plus dev's light/dark variants,
+	// token-backed via $osui-colors-extended. Restored ROU-12975: without these
+	// GetColorValueFromColorType falls through to the bare entity name, so
+	// Progress rendered the CSS keyword `red` (#ff0000) instead of the token
+	// red, and `grape` — not a CSS colour — rendered nothing at all.
+	@each $color, $variations in $osui-colors-extended {
+		@each $type, $value in $variations {
+			@if ($type == '') {
+				--color-#{$color}: #{$value};
+			} @else {
+				--color-#{$color}-#{$type}: #{$value};
+			}
+		}
+	}
 
 	// ─── Theme layer · radius ────────────────────────────────────────────
 	// Each falls back to --border-radius-default (unset by default → own value);
