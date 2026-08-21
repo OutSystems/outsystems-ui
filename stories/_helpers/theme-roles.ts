@@ -126,12 +126,6 @@ export const THEME_ROLE_GROUPS: RoleGroup[] = [
 		})),
 	},
 	{
-		id: 'transparent',
-		title: 'Transparent',
-		blurb: 'The 26th Color-entity record. Declared so the entity set does not depend on the TS name-lookup fallback.',
-		roles: [{ name: '--color-transparent', label: 'Transparent', type: 'color', note: 'keyword, rarely themed' }],
-	},
-	{
 		id: 'radius',
 		title: 'Radius',
 		blurb: 'The shape vocabulary. Set "All" to re-radius the whole framework with one value.',

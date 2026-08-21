@@ -68,6 +68,11 @@
 	// `grape` — not a CSS colour — rendered nothing.
 	// dev's light/dark variants are deliberately NOT roles: no entity record, so
 	// their utility classes read $token-* directly.
+	// The entity's 26th record, Transparent, is deliberately NOT declared: the
+	// helper's `return colorName` fallback resolves it to the CSS keyword, which
+	// keeps it non-overridable. Declaring it would let an app theme `transparent`
+	// into an actual colour. dev enforced the same thing in code
+	// (`@if ($colorName == 'transparent') { @return transparent; }`).
 	@each $color, $variations in $osui-colors-extended {
 		@each $type, $value in $variations {
 			@if ($type == '') {
@@ -75,12 +80,6 @@
 			}
 		}
 	}
-	// Transparent — the 26th Color-entity record. Declared rather than left to
-	// GetColorValueFromColorType's `return colorName` fallback: that path is what
-	// silently mis-rendered red/grape above, so the entity set is complete here
-	// instead of relying on it. (dev special-cased 'transparent' inside
-	// get-background-color(); that helper is gone.)
-	--color-transparent: transparent;
 
 	// ─── Theme layer · radius ────────────────────────────────────────────
 	--border-radius-none: var(--border-radius-default, #{variables.$token-border-radius-0}); // 0px
