@@ -1,4 +1,4 @@
-@use "../../tokens/variables";
+@use '../../tokens/variables';
 
 /* Patterns - Content - Card Sectioned */
 ////
@@ -8,28 +8,35 @@
 ///
 .card {
 	&-sectioned {
+		--card-sectioned-gap: #{variables.$token-scale-600};
+		--card-sectioned-top-padding: #{variables.$token-scale-600} #{variables.$token-scale-0}
+			#{variables.$token-scale-600} #{variables.$token-scale-600};
+		--card-sectioned-image-padding: variables.$token-scale-600 variables.$token-scale-600 variables.$token-scale-600
+			variables.$token-scale-0;
+		--card-sectioned-bottom-padding: #{variables.$token-scale-600} #{variables.$token-scale-600}
+			#{variables.$token-scale-0} #{variables.$token-scale-600};
+
 		display: flex;
+		gap: var(--card-sectioned-gap);
 		justify-content: space-between;
 		padding: variables.$token-scale-0;
 
 		&-top {
 			display: flex;
 			flex: 1;
+			padding: var(--card-sectioned-top-padding);
+
+			&.no-padding {
+				padding: variables.$token-scale-0;
+			}
 		}
 
+		// Horizontal
 		&.flex-direction-row {
 			.card {
 				&-image {
-					padding: variables.$token-scale-0;
-
-					&.padding-none {
-						padding: variables.$token-scale-0;
-					}
-				}
-
-				&-sectioned-right .card-image {
-					order: 2;
-					padding: variables.$token-scale-0;
+					--card-sectioned-image-padding: #{variables.$token-scale-600} #{variables.$token-scale-600}
+						#{variables.$token-scale-600} #{variables.$token-scale-0};
 
 					&.padding-none {
 						padding: variables.$token-scale-0;
@@ -37,14 +44,52 @@
 				}
 			}
 		}
+
+		// Vertical: image always renders last, after the title/content/footer block
+		&.flex-direction-column {
+			.card-image {
+				--card-sectioned-image-padding: #{variables.$token-scale-0} #{variables.$token-scale-600}
+					#{variables.$token-scale-600} #{variables.$token-scale-600};
+
+				order: 1;
+
+				&.padding-none {
+					padding: variables.$token-scale-0;
+				}
+			}
+
+			.card-sectioned-top {
+				--card-sectioned-top-padding: #{variables.$token-scale-600} #{variables.$token-scale-600}
+					#{variables.$token-scale-0} #{variables.$token-scale-600};
+
+				&.no-padding {
+					padding: variables.$token-scale-0;
+				}
+			}
+		}
+
+		// UsePadding=False removes all padding — the image's own padding no longer follows
+		// ImagePadding independently in this case (must come after .flex-direction-column above
+		// for the cascade to win when both classes are present).
+		&.padding-none {
+			.card-sectioned-top,
+			.card-image {
+				padding: variables.$token-scale-0;
+			}
+		}
 	}
 
 	&-image {
-		padding: variables.$token-scale-0;
+		flex: 1;
+		order: 1;
+		padding: var(--card-sectioned-image-padding);
 
 		& img {
 			display: block;
+			height: 100%;
 			margin: 0 auto;
+			object-fit: cover;
+			width: 100%;
 		}
 	}
 
@@ -52,20 +97,17 @@
 		color: var(--color-text);
 		font-size: variables.$token-font-size-550;
 		font-weight: variables.$token-font-weight-semi-bold;
-		padding: variables.$token-scale-600 variables.$token-scale-600 variables.$token-scale-0 variables.$token-scale-600;
+		margin-bottom: variables.$token-scale-600;
 	}
 
 	&-content {
 		flex: 1;
-		padding: variables.$token-scale-600;
 	}
 
 	&-bottom {
 		align-items: center;
-		background-color: var(--osui-bg-surface-subtle);
-		border-top: variables.$token-border-size-025 solid var(--osui-border-subtle);
 		display: flex;
-		padding: var(--osui-scale-350) variables.$token-scale-500;
+		margin-top: variables.$token-scale-1000;
 
 		.btn {
 			width: 100%;
@@ -77,39 +119,39 @@
 .layout-native {
 	.card {
 		&-sectioned {
-			padding: 0;
+			--card-sectioned-gap: #{variables.$token-scale-400};
+			--card-sectioned-padding: #{variables.$token-scale-400};
+			--card-sectioned-top-padding: #{variables.$token-scale-400} #{variables.$token-scale-0}
+				#{variables.$token-scale-400} #{variables.$token-scale-400};
+			--card-sectioned-image-padding: variables.$token-scale-400 variables.$token-scale-400
+				variables.$token-scale-400 variables.$token-scale-0;
+			--card-sectioned-bottom-padding: #{variables.$token-scale-400} #{variables.$token-scale-400}
+				#{variables.$token-scale-0} #{variables.$token-scale-400};
 
-			&.flex-direction-row .card-image {
-				padding: variables.$token-scale-0;
-
-				&.padding-none {
-					padding: variables.$token-scale-0;
-				}
-			}
-		}
-
-		&-title {
-			padding: variables.$token-scale-400 variables.$token-scale-400 variables.$token-scale-0 variables.$token-scale-400;
-		}
-
-		&-image {
 			padding: variables.$token-scale-0;
 
-			&.padding-none {
-				padding: variables.$token-scale-0;
+			// Horizontal
+			&.flex-direction-row {
+				.card {
+					&-image {
+						--card-sectioned-image-padding: #{variables.$token-scale-400} #{variables.$token-scale-400}
+							#{variables.$token-scale-400} #{variables.$token-scale-0};
+					}
+				}
 			}
-		}
 
-		&-content {
-			padding: variables.$token-scale-400;
+			// Vertical: image always renders last, after the title/content/footer block
+			&.flex-direction-column {
+				.card-image {
+					--card-sectioned-image-padding: #{variables.$token-scale-0} #{variables.$token-scale-400}
+						#{variables.$token-scale-400} #{variables.$token-scale-400};
+				}
 
-			&.padding-none {
-				padding: variables.$token-scale-0;
+				.card-sectioned-top {
+					--card-sectioned-top-padding: #{variables.$token-scale-400} #{variables.$token-scale-400}
+						#{variables.$token-scale-0} #{variables.$token-scale-400};
+				}
 			}
-		}
-
-		&-bottom {
-			padding: variables.$token-scale-0 variables.$token-scale-400 variables.$token-scale-400;
 		}
 	}
 }

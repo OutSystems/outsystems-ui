@@ -1,4 +1,4 @@
-@use "../../../tokens/variables";
+@use '../../../tokens/variables';
 
 /* Patterns - Content - Accordion */
 ////
@@ -7,46 +7,6 @@
 
 ///
 .osui-accordion {
-	// All items inside accordion: no radius
-	& &-item,
-	.list .osui-accordion-item {
-		border-radius: variables.$token-border-radius-0;
-	}
-
-	// Divider: add top border only to items that are not the first
-	:not(:first-child):not(.list) >,
-	.list :not(:first-child) > {
-		.osui-accordion-item {
-			border-top: var(--osui-accordion-item-border-width) solid var(--osui-accordion-item-border-color);
-		}
-	}
-
-	// First item: top corners rounded
-	:first-child:not(.list) >,
-	.list :first-child > {
-		.osui-accordion-item {
-			border-top-left-radius: variables.$token-border-radius-100;
-			border-top-right-radius: variables.$token-border-radius-100;
-		}
-	}
-
-	// Last item: bottom corners rounded
-	:last-child:not(.list) >,
-	.list :last-child > {
-		.osui-accordion-item {
-			border-bottom-left-radius: variables.$token-border-radius-100;
-			border-bottom-right-radius: variables.$token-border-radius-100;
-		}
-	}
-
-	// Only child: all corners rounded
-	:only-child >,
-	.list :only-child > {
-		.osui-accordion-item {
-			border-radius: variables.$token-border-radius-100;
-		}
-	}
-
 	// ServiceStudio Preview
 	& &-item {
 		& {

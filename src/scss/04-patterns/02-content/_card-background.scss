@@ -1,5 +1,5 @@
 @use '../../00-abstract/index' as *;
-@use "../../tokens/variables";
+@use '../../tokens/variables';
 
 /* Patterns - Content - Card Background */
 ////
@@ -8,8 +8,15 @@
 
 ///
 .card-background {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-card-background-border-color: #{variables.$token-border-subtle};
+	--osui-card-background-border-width: #{variables.$token-border-size-025};
+	--osui-card-background-border-radius: var(--border-radius-softer);
+	// ───────────────────────────────────────────────────────────────────
+
 	align-items: center;
-	border-radius: var(--border-radius-soft);
+	border: var(--osui-card-background-border-width) solid var(--osui-card-background-border-color);
+	border-radius: var(--osui-card-background-border-radius);
 	color: var(--color-text-inverse);
 	display: flex;
 	overflow: hidden;
@@ -22,7 +29,10 @@
 	}
 
 	&-content {
+		align-items: center;
 		display: flex;
+		flex-direction: column;
+		justify-content: center;
 		position: relative;
 		width: 100%;
 		z-index: var(--layer-local-tier-1);
