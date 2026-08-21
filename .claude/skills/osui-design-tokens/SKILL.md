@@ -128,7 +128,7 @@ Consume via the `apply-typography` mixin in `src/scss/00-abstract/_mixins.scss`:
 ## 4. Theme variants and dark mode
 
 - **Light (default):** generated from `tokens/theme/light.json` in the token package. This is what every base `$token-*` resolves to unless overridden.
-- **Dark theme:** **removed for now** — there is no `.theme-dark` partial currently. (When reintroduced, a theme is implemented entirely as CSS custom property overrides scoped under one class — no component rules touched.)
+- **Dark theme:** ships as a **generated** partial — `src/scss/tokens/_theme-dark.scss` (`npm run build:tokens`), which re-maps the ~447 `--token-*` values that differ in dark and self-applies them under `.theme-dark`. It is registered in `ScssStructure/Root.js`. Apply it by putting `.theme-dark` on **`<html>`** — `--color-*` is declared at `:root` and substitutes its `var(--token-…)` against that element, so a `<body>`-level override resolves too late. Scoped to `<html>`, 43 of the 44 `--color-*` roles follow dark. No hand-written theme partial exists; the old `01-foundations/_theme-dark.scss` and its `--color-*` role bridge were deleted, the bridge being exactly what `<html>` scoping replaces.
 - **Shape variants:** the token package can emit `soft`, `round`, or `rectangular` border-radius profiles. OSUI uses the default (soft) variant.
 
 Theme-switching works because `$token-*` expands to `var(--token-*, fallback)`. A theme partial reassigns `--token-*` (and the framework theme-layer role knobs `--color-*`, `--border-radius-*`, …) at a class scope, and every `$token-*` use picks up the new value without a rebuild.
