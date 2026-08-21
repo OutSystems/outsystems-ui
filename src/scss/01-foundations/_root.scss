@@ -75,6 +75,12 @@
 			}
 		}
 	}
+	// Transparent — the 26th Color-entity record. Declared rather than left to
+	// GetColorValueFromColorType's `return colorName` fallback: that path is what
+	// silently mis-rendered red/grape above, so the entity set is complete here
+	// instead of relying on it. (dev special-cased 'transparent' inside
+	// get-background-color(); that helper is gone.)
+	--color-transparent: transparent;
 
 	// ─── Theme layer · radius ────────────────────────────────────────────
 	--border-radius-none: var(--border-radius-default, #{variables.$token-border-radius-0}); // 0px

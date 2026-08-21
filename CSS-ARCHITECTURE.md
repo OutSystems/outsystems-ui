@@ -148,7 +148,7 @@ What lives here:
 | **Text** | `--color-text`, `--color-text-{subtle,subtlest,disabled,inverse}` | |
 | **Borders** | `--color-border`, `--color-border-{subtle,subtlest,input,…}` | |
 | **Brand / status / neutral** | `--color-{primary,primary-hover,primary-selected,primary-active,secondary,error,warning,success,info}`, `--color-neutral-0..10` | brand + neutrals are Color-entity records read by TS `GetColorValueFromColorType`; the four status roles are **not** entity records, just public O11 names |
-| **Palette** | `--color-{red,orange,yellow,lime,green,teal,cyan,blue,indigo,violet,grape,pink}` | the 12 Color-entity families; entity-bound, so the names cannot change. The light/dark variants (`-lightest` … `-darkest`) are deliberately **not** roles — their utility classes read `$token-*` directly |
+| **Palette** | `--color-{red,orange,yellow,lime,green,teal,cyan,blue,indigo,violet,grape,pink}`, `--color-transparent` | the 12 Color-entity families; entity-bound, so the names cannot change. The light/dark variants (`-lightest` … `-darkest`) are deliberately **not** roles — their utility classes read `$token-*` directly |
 | **Focus ring** | `--color-focus-outer` (translucent wash), `--color-focus-inner` (solid line on top) | read by `.has-accessible-features :focus` |
 | **Radius** | `--border-radius-{none,soft,softer,rounded}` | set **`--border-radius-default`** once at `:root` to re-radius everything; `none/soft/rounded` ↔ TS `GetBorderRadiusValueFromShapeType`, `softer` is CSS-only |
 | **Spacing** | `--space-{none,xs,s,base,m,l,xl,xxl}` | token-backed onto `$token-scale-*`; also read at runtime by Gallery `ItemsGap`. Prefer `$token-scale-*` in new component SCSS |
