@@ -250,10 +250,24 @@ re-capturing or reading the markup:
   `.storybook/platform/platform-core.css` and loaded **before** the OUI
   stylesheet — the same order a real app uses.
 
-**States are now stories, not clicks.** Chromatic only ever photographed the
-initial render, so interactive states were never actually snapshotted even while
-the stories mounted live widgets. Expanded Dropdown, expanded Popover, and the
-unchecked/disabled Checkbox and Switch are therefore separate stories.
+**Behaviour is re-wired, not dropped.** The native-control widgets (Checkbox, Switch,
+RadioGroup, Input, TextArea, Upload, native Dropdown, Link) keep working by construction —
+RadioGroup is actually fixed, since the capture's `name=""` meant no grouping at all. The
+three JS-driven ones (ButtonGroup selection, custom Dropdown expand/pick/collapse, Popover
+expand/outside-collapse) get a few listeners via `renderPattern` that apply exactly the
+mutations the widget applies; the check is that the post-click DOM is byte-identical to the
+live widget's captured expanded DOM. Link `preventDefault()`s so its real `href` doesn't
+navigate the canvas away (react-router used to intercept that).
+
+**States are also stories.** Chromatic only ever photographed the initial render, so
+interactive states were never actually snapshotted even while the stories mounted live
+widgets. Expanded Dropdown, expanded Popover, and the unchecked/disabled Checkbox and
+Switch are therefore pinned-open stories as well.
+
+**`Widgets/Icon` does not react to the `iconLibrary` toggle** — pre-existing, not a
+regression. The toggle rewrites `--osui-icon-*` (read only by OUI's own pseudo-element
+icons); the platform widget emits `fa fa-<name>` and the ODC bundle has no `.fa-*` rule.
+The story shows the `fa` and `ph` rows side by side instead.
 
 ---
 

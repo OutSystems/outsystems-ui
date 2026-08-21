@@ -1,12 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
-import { renderStatic } from '../_helpers/osui';
+import { renderPattern, renderStatic } from '../_helpers/osui';
 
 /**
  * Popover — the OutSystems platform **widget**, transcribed to static markup
  * (see Widgets/Button for why the Widgets group is static; ADR-0009).
  *
- * Captured from @outsystems/runtime-widgets-js@6.25.4 under React 17. The widget
- * renders its two placeholders into two regions and toggles a class on the root:
+ * Captured from @outsystems/runtime-widgets-js@6.25.4 under React 17, in both
+ * states (the expanded one by dispatching a real click before reading the DOM).
+ * The widget renders its two placeholders into two regions and toggles a class
+ * on the root:
  *
  *   collapsed → `div[data-popover].""`
  *                 > `.popover-top`      ← trigger placeholder
@@ -17,11 +19,13 @@ import { renderStatic } from '../_helpers/osui';
  * The leading space in `class=" popover-expanded"` is emitted verbatim (empty
  * `style` + appended state class) and reproduced.
  *
- * Both states get a story. Previously only the collapsed one was ever
- * snapshotted — Chromatic captures the initial render, so mounting the live
- * widget never photographed `.popover-bottom` at all, and
- * src/scss/03-widgets/_popover.scss / _popover-odc.scss went untested. Splitting
- * the state into a second story is how a static transcription buys that back.
+ * `Default` re-wires the toggle — expand on trigger click, collapse on an outside
+ * click, matching the widget's own behaviour — by adding and removing exactly the
+ * captured `.popover-bottom` node and the `popover-expanded` class. `Expanded` is
+ * the state pinned open, because Chromatic photographs the initial render only:
+ * without it the expanded DOM would never be snapshotted, which is how
+ * `_popover.scss` / `_popover-odc.scss` went untested even while this story
+ * mounted the live widget.
  */
 const meta: Meta = { title: 'Widgets/Popover' };
 export default meta;
@@ -38,14 +42,45 @@ const content = `
 		</div>`;
 
 export const Default: Story = {
-	render: () => renderStatic(`<div data-popover="" class="">${trigger}</div>`),
+	render: () =>
+		renderPattern(
+			`<div style="padding:20px;min-height:220px;">
+				<div data-popover="" class="">${trigger}</div>
+			</div>`,
+			(root, register) => {
+				const popover = root.querySelector<HTMLElement>('[data-popover]')!;
+				const top = popover.querySelector<HTMLElement>('.popover-top')!;
+
+				const setOpen = (open: boolean): void => {
+					// The widget appends/removes the content region rather than hiding it,
+					// and its root className keeps the leading space from an empty `style`.
+					popover.className = open ? ' popover-expanded' : '';
+					popover.querySelector('.popover-bottom')?.remove();
+					if (open) {
+						popover.insertAdjacentHTML('beforeend', content);
+					}
+				};
+
+				top.addEventListener('click', () => setOpen(!popover.classList.contains('popover-expanded')));
+
+				// Outside click collapses, as the live widget does via a document listener.
+				// Registered for teardown so it does not survive a story switch.
+				const onDocClick = (e: MouseEvent): void => {
+					if (!popover.contains(e.target as Node)) {
+						setOpen(false);
+					}
+				};
+				document.addEventListener('click', onDocClick);
+				register(() => document.removeEventListener('click', onDocClick));
+			}
+		),
 };
 
-/** The expanded state — `.popover-bottom` is what carries the widget's own CSS. */
+/** Pinned open — the state that carries the widget's own CSS, so Chromatic sees it. */
 export const Expanded: Story = {
 	render: () =>
 		renderStatic(`
-			<div style="padding:20px;min-height:200px;">
+			<div style="padding:20px;min-height:220px;">
 				<div data-popover="" class=" popover-expanded">
 					${trigger}
 					${content}

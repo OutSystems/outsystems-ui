@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
-import { renderStatic } from '../_helpers/osui';
+import { renderPattern } from '../_helpers/osui';
 
 /**
  * Link — the OutSystems platform **widget**, transcribed to static markup
@@ -14,11 +14,21 @@ import { renderStatic } from '../_helpers/osui';
  * react-router-dom is no longer needed by the Storybook at all.
  *
  * A disabled Link emits `aria-disabled="true"` and drops `href`.
+ *
+ * The click handler below only calls `preventDefault()`. `href` is real markup and
+ * is kept, but a bare `<a href="/somewhere">` inside the Storybook iframe would
+ * navigate the canvas to a 404 — the live widget never did that, because
+ * react-router intercepted the click (the old story wrapped it in a
+ * `MemoryRouter` for exactly this reason). Swallowing the navigation is the
+ * static equivalent of that interception, and it changes no attribute.
  */
 const meta: Meta = { title: 'Widgets/Link' };
 export default meta;
 type Story = StoryObj;
 
 export const Default: Story = {
-	render: () => renderStatic(`<a data-link="" aria-disabled="false" class="" href="/somewhere">Go to page</a>`),
+	render: () =>
+		renderPattern(`<a data-link="" aria-disabled="false" class="" href="/somewhere">Go to page</a>`, (root) => {
+			root.querySelector<HTMLElement>('[data-link]')?.addEventListener('click', (e) => e.preventDefault());
+		}),
 };

@@ -79,14 +79,24 @@ ADR-0003's external-clone simulation predates the Storybook 10 upgrade and no lo
 - **Option 2: re-vendor it as a tracked, Storybook-only file** — Pros: the only option that actually severs the chain. Cons: reverses ADR-0003 §B; platform-owned CSS lives in a public repo again; ages against the platform.
 - **Option 3: hand-write a minimal OUI-owned structural layer covering just the controls the stories exercise** — Pros: sidesteps the source-ownership question entirely; ours to maintain. Cons: the necessary subset was never measured (ADR-0003 §B Option 2 said as much); a subset we invent stops being the platform baseline, so the stories would validate OUI against our own approximation — the same fidelity trap as option A2, moved into CSS.
 
-### C. The capture guard on `push`
+### C. Behaviour the transcription removed
+
+Three widgets changed state through their own JavaScript: ButtonGroup (selection),
+custom-mode Dropdown (expand / pick a row / collapse) and Popover (expand, collapse on
+outside click). Transcribing the DOM removes that code.
+
+- **Option 1: accept static-only stories** — Pros: nothing to maintain; the markup cannot lie about the widget's DOM. Cons: three controls in the Storybook look broken to anyone who clicks them, and reviewers use this Storybook to *judge* components. Rejected after review feedback.
+- **Option 2: re-wire the state change with a few inline listeners**, performing exactly the class/DOM mutations the widget performs and nothing more — no state model, no re-render, no framework. Pros: matches the house style already used by the CSS-only pattern stories (`renderPattern` + `addEventListener`, e.g. FloatingActions, DropdownServerSide); the mutations are known precisely, because the expanded DOM was captured by dispatching a real click at the live widget. Cons: the behaviour is now a hand-written approximation and can drift from the widget's interaction contract the same way the markup can drift from its DOM.
+- **Option 3: keep only pinned-open state stories** — Pros: cheapest. Cons: still nothing to click; a reviewer cannot check hover, focus or the transition between states.
+
+### D. The capture guard on `push`
 
 - **Option 1: leave it `pull_request`-only** — Cons: the baseline-advancing build is the one that must not silently photograph nothing. ADR-0008 recorded this as an open negative consequence.
 - **Option 2: extend it, selecting the base commit per event** (`pull_request.base.sha` vs `event.before`) — Cons: `event.before` is all-zeros on branch creation, absent on `workflow_dispatch`, and can be unreachable after a force-push, so it needs a fail-safe.
 
 ## Decision Outcome
 
-**A → Option 3; B → Option 2; C → Option 2.**
+**A → Option 3; B → Option 2; C → Option 2; D (the `push` capture guard) → Option 2.**
 
 ### What was implemented
 
@@ -97,6 +107,49 @@ ADR-0003's external-clone simulation predates the Storybook 10 upgrade and no lo
 - **`package.json`** drops the `optionalDependencies` block entirely and `react-router-dom` (only the Link story needed it). `react` and `react-dom` are now declared **explicitly** as public devDependencies at ^19 — see Context C4; they were previously supplied only by the private packages.
 - **`.github/workflows/chromatic.yaml`** loses `🔐 Azure login`, `🔑 Get ADO token from Azure Key Vault`, `⭕ Connect to OutSystems Environment`, the `🔎 Verify platform-widget deps` guard, the `IS_FORK` env and the `id-token: write` permission. A header comment records why an Azure login must not come back.
 - **The capture guard now covers `push`**, choosing its base commit per event and treating an unusable base as "assume the surface changed" so it fails safe rather than disarming itself.
+
+### Behaviour: re-wired, not lost
+
+Most of the group needs nothing — the widgets are built on native controls, so
+transcribing them keeps them working: Checkbox and Switch still toggle `:checked` (which
+is what drives the base layer's pseudo-elements), the radios are mutually exclusive, Input
+and TextArea are editable, Upload opens a file dialog, the native Dropdown is a real
+`<select>`. RadioGroup is in fact **better** than the live story was: the capture emitted
+`name=""`, which browsers treat as no group at all, so the real widget's radios were not
+mutually exclusive under the story harness. Real names fixed that.
+
+Two places needed work:
+
+- **The three JS-driven widgets** (ButtonGroup, custom Dropdown, Popover) get a handful of
+  listeners via `renderPattern`, applying exactly the mutations the widget applies. The
+  standard is objective, not aesthetic: **the DOM after a scripted click is byte-identical
+  to the DOM captured from the live widget after a real click.** Where the widget uses an
+  in-DOM click-catcher (`.dropdown-background-window`) the story uses it too, rather than
+  inventing a document listener; where it genuinely uses a document listener (Popover's
+  outside-click) the story registers a teardown so it cannot outlive the story.
+- **Link** swallows its own click. `href` is real markup and is kept, but a bare
+  `<a href="/somewhere">` in the Storybook iframe navigates the canvas to a 404 — the live
+  widget never did, because react-router intercepted it (hence the old story's
+  `MemoryRouter`). `preventDefault()` is the static equivalent and changes no attribute.
+
+The pinned-open stories stay regardless: Chromatic photographs the **initial** render, so
+an interactive story alone would only ever snapshot the collapsed state.
+
+### Icon and the `iconLibrary` toggle — a pre-existing limitation, not a regression
+
+The Storybook's `iconLibrary` toolbar toggle does not affect the Icon widget, and never
+could. The toggle adds `.iconLibrary-phosphor` to `<html>`, which rewrites the
+`--osui-icon-*` custom properties in `_icon-library-odc.scss`; those are read only by
+**OUI's own** pseudo-element icons (dropdown caret, search glyph, checkbox check,
+flatpickr arrows). The compiled ODC bundle contains **no `.fa-*` selector at all**, so an
+`<i class="fa fa-star">` takes its glyph straight from the FontAwesome stylesheet. The
+platform widget hardcodes that `fa fa-` prefix — the capture proves it — so the live
+widget behaved identically. ODC's `Utils.IconLibrary.ApplyIconLibraryClass` does not change
+this either; it only stamps the same class on `<html>`.
+
+Rather than leave that looking like a broken story, `Widgets/Icon` now renders both rows
+explicitly: the `fa fa-*` markup the widget emits, and the `ph ph-*` equivalent an app on
+the Phosphor library renders. Flipping the toolbar is *expected* to leave both unchanged.
 
 ### Verification
 
@@ -114,6 +167,12 @@ Then, simulating an external clone — the private packages and every React pack
 - `npm run build-storybook` **completes successfully** (it failed before this change, on `react`; see C4).
 - The published Storybook contains **110 stories, 24 of them under `Widgets/`** — up from 103/20, because states that previously required a click are now their own stories.
 - `npm run lint` clean; `tsc --noEmit` over `.storybook/main.ts` and every widget story clean.
+
+Behaviour is covered by **42 assertions** driven in jsdom against the story modules
+themselves — every widget story mounted, every re-wired interaction exercised, and the
+resulting DOM compared against the live-widget captures. Notably: the expanded custom
+Dropdown produced by clicking the story is byte-identical to the live widget's expanded
+DOM, and Popover's matches once the story's own inline padding is discounted.
 
 ### Coverage deliberately added
 
@@ -137,6 +196,10 @@ Negative consequences:
 - Platform-owned CSS is redistributed from a public repo again, reversing ADR-0003 §B. It is Storybook-only, never enters `dist/`, and carries provenance — but the source-ownership objection recorded there stands and is knowingly accepted.
 - `platform-core.css` ages against the platform, as ADR-0003 §B Option 1 warned.
 - The widget markup is a point-in-time transcription of `6.25.4`, not a live binding.
+- **Interaction is now a hand-written approximation too.** The re-wired listeners reproduce
+  the widget's mutations as captured, but if the platform changes *how* a control behaves —
+  not just what it renders — the story will not know. Same drift risk as the markup, same
+  refresh trigger.
 
 ### Refresh trigger
 

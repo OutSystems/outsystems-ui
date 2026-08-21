@@ -104,14 +104,30 @@ in a real app: it generates the checkbox box and the switch track/thumb with
 pseudo-element `content`, and OUI then recolours and resizes them. That override
 is precisely what these stories exist to catch.
 
+**They are still usable.** Most of these widgets are native controls underneath, so
+transcribing them changed nothing: the checkbox and switch toggle, the radios are
+mutually exclusive, the inputs are editable, Upload opens a file dialog, the native
+Dropdown is a real `<select>`. The three that changed state through their own
+JavaScript — ButtonGroup selection, the custom Dropdown's expand/pick/collapse, and
+Popover's expand/outside-collapse — are re-wired with a handful of listeners that apply
+exactly the class and DOM mutations the real widget applies, verified by comparing the
+result against the live widget's DOM captured after a real click. `Dropdown → Custom
+Expanded` and `Popover → Expanded` additionally pin those states open, because Chromatic
+photographs the initial render only.
+
+Note that the **`iconLibrary` toolbar toggle does not change `Widgets/Icon`**, and never
+could: the platform Icon widget hardcodes FontAwesome classes (`fa fa-star`), and OUI's
+bundle carries no `.fa-*` rule for the toggle to reach — it only swaps the `--osui-icon-*`
+properties OUI's own pseudo-element icons read. The story therefore shows both libraries
+side by side instead of pretending the toggle applies.
+
 **Consequence worth knowing:** the whole Storybook builds from a plain
 `git clone && npm i && npm run build && npm run build-storybook`, with no
 internal access, on any branch, from any fork. What you see locally is what CI
 snapshots.
 
-> Trade-off: static markup cannot drift-detect the platform. If the platform
-> changes a widget's DOM, these stories keep passing against the old shape. The
-> refresh trigger and re-capture method are documented in
-> `docs-internal/adr/ADR-0009`. States that used to need a click — an expanded
-> Dropdown, an expanded Popover, an unchecked or disabled Checkbox/Switch — are
-> now their own stories, so they are snapshotted rather than merely reachable.
+> Trade-off: static markup cannot drift-detect the platform. If the platform changes a
+> widget's DOM — or how a control behaves — these stories keep passing against the old
+> shape. The refresh trigger and re-capture method are documented in
+> `docs-internal/adr/ADR-0009`. States that used to need a click are now their own
+> stories too, so they are snapshotted rather than merely reachable.
