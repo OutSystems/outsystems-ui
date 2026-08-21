@@ -199,6 +199,8 @@ Section Index:
 =============================================================================== */
 @use '01-foundations/resets' as *;
 /*! 1.2. Dark theme (opt-in via .theme-dark class) */
+/* Generated token values for dark mode (from Figma), then the framework role mapping. */
+@use 'tokens/theme-dark' as *;
 @use '01-foundations/theme-dark' as *;
 
 /*! ==============================================================================
