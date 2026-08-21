@@ -109,7 +109,12 @@ function osuiDevBundleFallback(): Plugin {
 				}
 				const requested = url.slice('/osui/'.length);
 				// Only flat file names — no nested paths, no traversal, not already dev-prefixed.
-				if (requested === '' || /[/\\]/.test(requested) || requested.includes('..') || requested.startsWith('dev.')) {
+				if (
+					requested === '' ||
+					/[/\\]/.test(requested) ||
+					requested.includes('..') ||
+					requested.startsWith('dev.')
+				) {
 					return next();
 				}
 				const prodPath = path.join(distFolder, requested);

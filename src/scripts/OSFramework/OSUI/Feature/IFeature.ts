@@ -3,5 +3,5 @@ namespace OSFramework.OSUI.Feature {
 	/**
 	 * Defines the interface for OutSystemsUI Features
 	 */
-	export type IFeature = Interface.IDisposable
+	export type IFeature = Interface.IDisposable;
 }
