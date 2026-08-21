@@ -117,14 +117,14 @@
 	color: var(--color-text-subtlest);
 	font-size: variables.$token-font-size-350;
 	font-weight: variables.$token-font-weight-regular;
-	line-height: 1.4;
+	line-height: variables.$token-font-line-height-500;
 }
 
 .help-block,
 .input-helper {
 	color: var(--color-text-subtlest);
 	font-size: variables.$token-font-size-300;
-	line-height: 1.4;
+	line-height: variables.$token-font-line-height-400;
 	margin-top: variables.$token-scale-100;
 }
 

@@ -47,7 +47,7 @@
 		flex: 1;
 		font-size: variables.$token-font-size-350;
 		font-weight: variables.$token-font-weight-medium;
-		line-height: 1.4;
+		line-height: variables.$token-font-line-height-500;
 	}
 
 	&-info {
