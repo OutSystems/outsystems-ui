@@ -169,3 +169,21 @@
 		font-size: calc(variables.$token-font-size-550 - 2px);
 	}
 }
+
+// IsRTL ------------------------------------------------------------------------------
+///
+.is-rtl {
+	.card-sectioned {
+		&.flex-direction-row {
+			.card-image {
+				--card-sectioned-image-padding: #{variables.$token-scale-600} #{variables.$token-scale-0}
+					#{variables.$token-scale-600} #{variables.$token-scale-600};
+			}
+
+			.card-sectioned-top {
+				--card-sectioned-top-padding: #{variables.$token-scale-600} #{variables.$token-scale-600}
+					#{variables.$token-scale-600} #{variables.$token-scale-0};
+			}
+		}
+	}
+}
