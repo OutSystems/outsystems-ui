@@ -1,20 +1,25 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
-import { Image } from '@outsystems/runtime-widgets-js';
-import { mountWidget, widgetBaseProps } from '../_helpers/widget';
+import { renderStatic } from '../_helpers/osui';
 
-// Image Type const enum → numeric: Static 0, External 1, Binary 2.
+/**
+ * Image — the OutSystems platform **widget**, transcribed to static markup
+ * (see Widgets/Button for why the Widgets group is static; ADR-0009).
+ *
+ * Captured from @outsystems/runtime-widgets-js@6.25.4 under React 17 with
+ * `type: 1` (External):
+ *   `img[data-image][src][alt=""]`
+ *
+ * The widget's three `type` values (Static 0, External 1, Binary 2) only change
+ * how `src` is resolved — Binary builds a data URI from a runtime BinaryData
+ * object — so they share this one DOM shape.
+ */
 const meta: Meta = { title: 'Widgets/Image' };
 export default meta;
 type Story = StoryObj;
 
 export const Default: Story = {
 	render: () =>
-		mountWidget(Image as never, {
-			...widgetBaseProps('image'),
-			type: 1, // External
-			url: 'https://outsystemsui.outsystems.com/OutSystemsUIWebsite/img/logo.png',
-			image: '',
-			defaultImage: null,
-			style: '',
-		}),
+		renderStatic(
+			`<img data-image="" class="" src="https://outsystemsui.outsystems.com/OutSystemsUIWebsite/img/logo.png" alt="">`
+		),
 };

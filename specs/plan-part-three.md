@@ -212,41 +212,48 @@ Timeline, Wizard, Pagination, Breadcrumbs, ListItem, MasterDetail, Columns.
 
 ### Platform Widgets — `Widgets/` group (a different stack)
 
-Some controls are **React** components from `@outsystems/runtime-widgets-js`
-(the platform runtime — **not public npm**; installed from the internal Azure
-Artifacts feed configured in `.npmrc`). The `Widgets/` group mounts the *real*
-React components (15): Button, ButtonGroup, Checkbox, RadioGroup, Switch, Input,
-TextArea, Dropdown, Upload, Link, Popup, Label, Icon, Image, Text. (FeedbackMessage
-is a CSS-only block but lives in this group.) These replaced the earlier
-hand-written Forms HTML stories.
+Some controls are **React** components from `@outsystems/runtime-widgets-js` (the
+platform runtime, published only to the internal Azure Artifacts feed). This repo
+is public and **no longer depends on those packages at all** — the `Widgets/`
+group renders each widget's real DOM as static markup instead of mounting the
+components. See `docs-internal/adr/ADR-0009` for why (the dependency was what
+blocked every Chromatic baseline build on this branch) and for the capture
+method and refresh trigger.
 
-Harness (`stories/_helpers/widget.ts`): the widgets are wrapped in the runtime's
-`withWidget` HOC and bind to runtime objects, so the harness supplies them the
-way the package's own `.spec.tsx` tests do:
+Group contents (20 stories, 24 including added states): Button, ButtonGroup,
+Checkbox, RadioGroup, Switch, Input, TextArea, Dropdown, Upload, Link, Popup,
+Popover, Label, Icon, Image, Text, plus the CSS-only FeedbackMessage, List and
+Table blocks.
 
-- **`runtimeMock(overrides)`** — a Proxy stand-in for `jest-mock-extended`'s
-  `mock<T>()`; any property access returns a chainable proxy so deep runtime
-  calls don't blow up.
-- **`createVariable(dataType, value, setter)`** — a real `Model.Variable`. Since
-  `Model.Variable`'s setter never writes `_value` itself (the real runtime
-  re-creates the variable and re-renders), the harness bridges it: the setter
-  persists the converted value onto `_value` and re-renders the active root so
-  controlled inputs pick the new value up.
-- **`StoryRoot`** — a stateful wrapper feeding a monotonic `nonce` into the
-  widget's `_dependencies` array. Every widget's `withWidget` wraps it in a
-  `React.memo`; with no platform generation node and an in-place-mutated
-  `variable`, the memo would bail on re-render. A fresh `[nonce]` array is the
-  supported lever to force the re-render (`_dependencies` is `affectsRender`-
-  ignored).
-- Mounted with **React 17** (`render` / `unmountComponentAtNode` from
-  `react-dom`), via `createElement` (no JSX → no extra Storybook JSX config).
+The markup is a transcription of DOM captured from
+`@outsystems/runtime-widgets-js@6.25.4` mounted under React 17 with the harness
+that used to live in `stories/_helpers/widget.ts` (a `runtimeMock()` Proxy for the
+runtime interfaces, a bridged `Model.Variable`, and a `_dependencies` nonce to
+defeat each widget's `React.memo`). That harness is deleted; the knowledge it
+encoded now lives in the captured markup and in each story's doc comment, which
+records the source version and the DOM contract it reproduces.
 
-**Key gotchas:** installing the widgets pins **React 17** for the whole
-Storybook (dev-only; the OUI gulp build is unaffected). `const enum`s
-(`InputType`, `IconSize`, `Accept`, Image `Type`, `DropdownMode`) aren't
-runtime-exported → pass numeric literals. All exports are NAMED. Widgets take a
-`style` prop that is a className (pass OUI classes, e.g. `'btn btn-primary'`).
-Dropdown needs a runtime `IList`; Link needs a `MemoryRouter` wrapper.
+**Durable facts about the platform widgets**, still worth knowing when
+re-capturing or reading the markup:
+
+- The `style` prop is a **className**, emitted verbatim (so an empty `style`
+  yields `class=""`, which the stories reproduce).
+- `const enum`s (`InputType`, `IconSize`, `Accept`, Image `Type`, `DropdownMode`)
+  are not runtime-exported → a re-capture must pass numeric literals.
+- Dropdown has two modes with **different DOM**: custom (div-based) and native
+  (`<select>`). Popup renders through a **React portal** onto `document.body`.
+  Link routes through react-router (no DOM footprint beyond `href`).
+- `mandatory` adds `required` + `aria-required="true"`; on Label it appends
+  ` mandatory` to the className (hence the leading space).
+- The visible form of `[data-checkbox]`, `[data-switch]` and `[data-upload]` is
+  pseudo-element `content` from the platform base layer, vendored at
+  `.storybook/platform/platform-core.css` and loaded **before** the OUI
+  stylesheet — the same order a real app uses.
+
+**States are now stories, not clicks.** Chromatic only ever photographed the
+initial render, so interactive states were never actually snapshotted even while
+the stories mounted live widgets. Expanded Dropdown, expanded Popover, and the
+unchecked/disabled Checkbox and Switch are therefore separate stories.
 
 ---
 

@@ -79,24 +79,39 @@ no console errors). Use any existing story as the template when adding new ones.
 
 ## Platform Widgets (a different stack)
 
-Some OutSystems UI controls are **not** part of this CSS/TS library — they're
-**React** components shipped from `@outsystems/runtime-widgets-js` (the platform
-runtime, published only to the OutSystems-internal package feed). These packages
-are **optional**: when they aren't installed — e.g. on an external clone of this
-public repo — the `Widgets/` group simply doesn't appear, and everything else in
-this Storybook works as usual. When present, the **`Widgets/`** group mounts the
-*real* React components: Button, ButtonGroup,
-Checkbox, RadioGroup, Switch, Input, TextArea, Dropdown, Upload, Link, Popup,
-Label, Icon, Image, Text. These replace the earlier hand-written Forms HTML
-stories. (FeedbackMessage also lives under `Widgets/` — a CSS-only block, but
-grouped with the form controls.)
+Some OutSystems UI controls are **not** part of this CSS/TS library — they are
+**React** components shipped from `@outsystems/runtime-widgets-js`, the platform
+runtime, published only to the OutSystems-internal package feed.
 
-How it works (`stories/_helpers/widget.ts`): these widgets are wrapped in the
-runtime's `withWidget` HOC and bind to runtime objects, so the harness supplies
-them the way the package's own tests do — a `Model.Variable` for the value, a
-`runtimeMock()` Proxy for the other runtime interfaces, and framework
-`_idProps` — then mounts with React 17's `ReactDOM.render`. They share the OUI
-stylesheet (e.g. `[data-input]`, `[data-switch]`, `.btn`).
+This repository is public, so it does **not** depend on those packages. Instead
+the **`Widgets/`** group renders each widget's real DOM as static markup:
+Button, ButtonGroup, Checkbox, RadioGroup, Switch, Input, TextArea, Dropdown,
+Upload, Link, Popup, Popover, Label, Icon, Image, Text, plus the CSS-only
+FeedbackMessage, List and Table blocks.
 
-> Note: the widgets pin **React 17**, so installing them pins React 17 for the
-> whole Storybook (dev-only; the OUI library build is unaffected).
+The markup is not guesswork. Each story is a transcription of the DOM captured
+from `@outsystems/runtime-widgets-js@6.25.4` mounted under React 17 — every tag,
+class, `data-` attribute and ARIA attribute the widget actually emits, with the
+provenance recorded in the story's own doc comment. Where a story deliberately
+departs from the capture (real `id`s instead of the harness's empty ones, a
+`selected` attribute the DOM `value` property could not express) the comment says
+so and why.
+
+The visible form of the data-attribute controls comes from the **platform base
+CSS** (`/platform/platform-core.css`), a tracked Storybook-only copy of the
+platform's base layer. It loads *before* the OUI stylesheet, exactly as it does
+in a real app: it generates the checkbox box and the switch track/thumb with
+pseudo-element `content`, and OUI then recolours and resizes them. That override
+is precisely what these stories exist to catch.
+
+**Consequence worth knowing:** the whole Storybook builds from a plain
+`git clone && npm i && npm run build && npm run build-storybook`, with no
+internal access, on any branch, from any fork. What you see locally is what CI
+snapshots.
+
+> Trade-off: static markup cannot drift-detect the platform. If the platform
+> changes a widget's DOM, these stories keep passing against the old shape. The
+> refresh trigger and re-capture method are documented in
+> `docs-internal/adr/ADR-0009`. States that used to need a click — an expanded
+> Dropdown, an expanded Popover, an unchecked or disabled Checkbox/Switch — are
+> now their own stories, so they are snapshotted rather than merely reachable.
