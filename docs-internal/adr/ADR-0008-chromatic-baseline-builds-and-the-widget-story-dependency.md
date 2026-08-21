@@ -4,7 +4,14 @@
 
 ## Status
 
-Proposed — section **A** and section **B → Option 1** are accepted and implemented on `.github/workflows/chromatic.yaml`; section **C** is open pending a call on the widget stories.
+Accepted — section **A** is implemented on `.github/workflows/chromatic.yaml`. Section **C
+is now resolved by ADR-0009**: Option 3 was taken (the widget stories are static
+transcriptions of the platform DOM) together with re-vendoring `platform-core.css`, which
+removed the internal-package dependency entirely and unblocked `push` builds. Section
+**B → Option 1** (registering the missing federated identity credentials) is consequently
+**no longer needed by Chromatic**, though it remains valid for the other workflows in this
+repo that still use `.github/actions/az-login`. The negative consequence noted below —
+that the capture guard covered only `pull_request` — was also closed by ADR-0009.
 
 ## Context
 
