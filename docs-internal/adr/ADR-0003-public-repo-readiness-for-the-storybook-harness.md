@@ -4,7 +4,15 @@
 
 ## Status
 
-Accepted
+Accepted — **superseded by ADR-0009.** §A is moot (the `@outsystems/runtime-*-js`
+packages are no longer dependencies of this repo in any form) and §B is **reversed**
+(`platform-core.css` is vendored again as a tracked, Storybook-only file). The
+source-ownership objection recorded below stands and was knowingly accepted in order to
+sever the internal-feed dependency that had blocked Chromatic baseline builds — see
+ADR-0009. Note also that the external-clone simulation cited under "Positive
+consequences" no longer held after the Storybook 10 upgrade: `react` was present only
+transitively via the private packages, so `build-storybook` failed on an external clone
+until ADR-0009 declared it explicitly.
 
 ## Context
 
