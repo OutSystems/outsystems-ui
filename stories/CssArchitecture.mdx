@@ -136,7 +136,8 @@ Rules of thumb:
 
 - CSS **property value** → write `$token-*` directly: `padding: $token-scale-600;`
 - CSS **custom-property declaration** → interpolate: `--osui-card-padding: #{$token-scale-600};`
-- Retired, never reintroduce: `--space-*`, `--font-size-*`, `--shadow-*`, `--border-size-*`, and the `get-*-color()` helpers.
+- Retired, never reintroduce: `--font-size-*`, `--shadow-*`, `--border-size-*`, and the `get-*-color()` helpers.
+- `--space-none` … `--space-xxl` are the public spacing vocabulary, token-backed onto `$token-scale-*` (restored ROU-12975).
 
 ---
 
@@ -164,11 +165,25 @@ Each defaults **through** a `$token-*`, so overriding the token still cascades.
 | Surfaces | `--color-background-{body,surface,header,sidemenu,footer,login,input,…}` |
 | Text | `--color-text`, `--color-text-{subtle,subtlest,disabled,inverse}` |
 | Borders | `--color-border`, `--color-border-{subtle,subtlest,input,…}` |
-| Brand / status / neutral | `--color-{primary,secondary,error,warning,success,info}`, `--color-neutral-0..10` |
+| Brand / status / neutral | `--color-{primary,primary-hover,primary-selected,primary-active,secondary,error,warning,success,info}`, `--color-neutral-0..10` |
+| Palette | `--color-{red,orange,yellow,lime,green,teal,cyan,blue,indigo,violet,grape,pink}` — the 12 Color-entity families |
+| Focus ring | `--color-focus-outer` (wash), `--color-focus-inner` (line) |
 | Radius | `--border-radius-{none,soft,softer,rounded}` |
+| Spacing | `--space-{none,xs,s,base,m,l,xl,xxl}` |
+
+Some of these names are a **low-code contract**, not just CSS: `Helper.Dom.GetColorValueFromColorType`
+builds `'--color-' + <Color entity value>` at runtime (used by Progress `ProgressColor` /
+`TrailColor`), so `--color-primary`, `--color-secondary`, `--color-neutral-0..10` and the 12
+palette families must keep their names. Rename one and the lookup misses, writing the literal
+name out as a colour. `error`/`warning`/`success`/`info` are *not* entity records — they are
+CSS-only roles that are nonetheless public `:root` names inherited from O11.
+
+Status **text/border** tiers deliberately have no role: components read
+`$token-text-danger` / `$token-border-danger-default` directly.
 
 App-layout plumbing also lives in `_root.scss` but is **not** part of the theme
-contract: `--size-*`, z-index `--layer-*`, and safe areas `--os-safe-area-*`.
+contract: `--size-*`, z-index `--layer-global-*` / `--layer-local-*`, and safe
+areas `--os-safe-area-*`.
 
 ---
 

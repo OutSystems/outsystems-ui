@@ -40,7 +40,7 @@
 	position: absolute;
 	text-transform: uppercase;
 	top: 10px;
-	z-index: var(--layer-instant-interaction);
+	z-index: var(--layer-global-instant-interaction);
 
 	&[data-showskipcontent='false'] {
 		display: none;

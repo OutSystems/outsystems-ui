@@ -158,7 +158,7 @@ When you need a value:
 ## 6. Anti-patterns
 
 - Hardcoded hex / rgb / rgba / px / rem in a property value where a token exists.
-- Reintroducing retired OSUI-native vars: `--color-*`, `--space-*`, `--font-size-*`, `--shadow-*`, `--border-*`. These were migrated out in the Make Great UI initiative (ROU-12714) and must not come back.
+- Reintroducing retired OSUI-native vars: `--font-size-*`, `--shadow-*`. These were migrated out in the Make Great UI initiative (ROU-12714) and must not come back. `--color-*`, `--space-*`, `--border-radius-*`, `--size-*` and `--layer-*` are the framework theme layer and are deliberately kept — see `.claude/rules/scss.md` §13.
 - Using `var(--token-*, fallback)` directly in source when the `$token-*` form is available. The SCSS var is always the correct citation.
 - Hand-editing `src/scss/tokens/_root.scss`, `_variables.scss`, or `_utilities.scss`. They are generated output.
 - Bypassing the `--osui-{component}-{prop}` CSS API layer by consuming `$token-*` directly in a component's property value. Always route through the component var so consumers can override.

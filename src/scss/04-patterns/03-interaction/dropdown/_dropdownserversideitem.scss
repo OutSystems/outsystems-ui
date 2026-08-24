@@ -25,7 +25,7 @@
 	position: relative;
 	transition: background variables.$token-transition-time-300 variables.$token-transition-curve-expressive;
 	width: 100%;
-	z-index: var(--layer-screen);
+	z-index: var(--layer-global-screen);
 
 	&:hover {
 		background-color: var(--osui-dropdown-item-hover-bg);

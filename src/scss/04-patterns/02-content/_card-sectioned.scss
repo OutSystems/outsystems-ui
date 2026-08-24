@@ -62,10 +62,10 @@
 
 	&-bottom {
 		align-items: center;
-		background-color: var(--osui-bg-surface-subtle);
-		border-top: variables.$token-border-size-025 solid var(--osui-border-subtle);
+		background-color: variables.$token-primitives-neutral-100;
+		border-top: variables.$token-border-size-025 solid variables.$token-border-subtle;
 		display: flex;
-		padding: var(--osui-scale-350) variables.$token-scale-500;
+		padding: 14px variables.$token-scale-500;
 
 		.btn {
 			width: 100%;

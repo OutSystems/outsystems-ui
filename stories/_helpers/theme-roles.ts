@@ -1,107 +1,168 @@
 /**
  * Shared catalog of the framework's themeable **role globals** (the `--color-*` /
- * `--border-radius-*` theme-layer contract from `src/scss/01-foundations/_root.scss`,
- * see `.claude/rules/scss.md` §13) plus the small runtime helpers the Theme Editor,
- * the preview decorator, and the manager toolbar all share.
+ * `--border-radius-*` / `--space-*` theme-layer contract from
+ * `src/scss/01-foundations/_root.scss`, see `.claude/rules/scss.md` §13) plus the small
+ * runtime helpers the Theme Editor, the preview decorator, and the manager toolbar share.
  *
  * Overrides are applied as inline custom properties on `document.documentElement`, so
  * they re-skin every story. Counting/clearing them lives here so the "Reset theme"
  * toolbar button (manager) and the editor (preview) stay in sync via the channel.
+ *
+ * The catalog is data, so it is written as `[name, label, note?]` tuples fed through
+ * `group()` rather than repeated object literals — the type is carried once per group
+ * instead of once per role.
  */
 
 export type RoleType = 'color' | 'length';
 export type Role = { name: string; label: string; type: RoleType; note?: string };
 export type RoleGroup = { id: string; title: string; blurb?: string; roles: Role[] };
 
+/** `[cssVarName, label, note?]` */
+type Entry = readonly [string, string, string?];
+type GroupMeta = { id: string; title: string; type: RoleType; blurb?: string };
+
+const group = ({ id, title, type, blurb }: GroupMeta, entries: readonly Entry[]): RoleGroup => ({
+	id,
+	title,
+	...(blurb === undefined ? {} : { blurb }),
+	roles: entries.map(([name, label, note]) =>
+		note === undefined ? { name, label, type } : { name, label, type, note }
+	),
+});
+
+const NEUTRAL_STEPS = 11;
+const PALETTE_FAMILIES = [
+	'red',
+	'orange',
+	'yellow',
+	'lime',
+	'green',
+	'teal',
+	'cyan',
+	'blue',
+	'indigo',
+	'violet',
+	'grape',
+	'pink',
+] as const;
+const SPACE_STEPS: readonly Entry[] = [
+	['--space-none', 'None'],
+	['--space-xs', 'XS'],
+	['--space-s', 'S'],
+	['--space-base', 'Base'],
+	['--space-m', 'M'],
+	['--space-l', 'L'],
+	['--space-xl', 'XL'],
+	['--space-xxl', 'XXL'],
+];
+
+const titleCase = (s: string): string => s.charAt(0).toUpperCase() + s.slice(1);
+
 export const THEME_ROLE_GROUPS: RoleGroup[] = [
-	{
-		id: 'brand',
-		title: 'Brand',
-		blurb: 'Primary brand colour + its interaction shades, and the secondary accent.',
-		roles: [
-			{ name: '--color-primary', label: 'Primary', type: 'color' },
-			{ name: '--color-primary-hover', label: 'Primary · hover', type: 'color' },
-			{ name: '--color-primary-selected', label: 'Primary · selected', type: 'color' },
-			{ name: '--color-secondary', label: 'Secondary', type: 'color' },
-		],
-	},
-	{
-		id: 'status',
-		title: 'Status',
-		roles: [
-			{ name: '--color-error', label: 'Error', type: 'color' },
-			{ name: '--color-warning', label: 'Warning', type: 'color' },
-			{ name: '--color-success', label: 'Success', type: 'color' },
-			{ name: '--color-info', label: 'Info', type: 'color' },
-		],
-	},
-	{
-		id: 'surface',
-		title: 'Surfaces',
-		blurb: 'Page + component backgrounds.',
-		roles: [
-			{ name: '--color-background-body', label: 'Body', type: 'color' },
-			{ name: '--color-background-surface', label: 'Surface (cards, popups…)', type: 'color' },
-			{ name: '--color-background-header', label: 'Header', type: 'color' },
-			{ name: '--color-background-sidemenu', label: 'Side menu', type: 'color' },
-			{ name: '--color-background-footer', label: 'Footer', type: 'color' },
-			{ name: '--color-background-login', label: 'Login', type: 'color' },
-			{ name: '--color-background-input', label: 'Input', type: 'color' },
-			{ name: '--color-background-input-disabled', label: 'Input · disabled', type: 'color' },
-		],
-	},
-	{
-		id: 'text',
-		title: 'Text',
-		roles: [
-			{ name: '--color-text', label: 'Default', type: 'color' },
-			{ name: '--color-text-subtle', label: 'Subtle', type: 'color' },
-			{ name: '--color-text-subtlest', label: 'Subtlest', type: 'color' },
-			{ name: '--color-text-disabled', label: 'Disabled', type: 'color' },
-			{ name: '--color-text-inverse', label: 'Inverse (on bold bg)', type: 'color' },
-		],
-	},
-	{
-		id: 'border',
-		title: 'Borders',
-		roles: [
-			{ name: '--color-border', label: 'Default', type: 'color' },
-			{ name: '--color-border-subtle', label: 'Subtle', type: 'color' },
-			{ name: '--color-border-subtlest', label: 'Subtlest', type: 'color' },
-			{ name: '--color-border-input', label: 'Input', type: 'color' },
-			{ name: '--color-border-input-press', label: 'Input · press', type: 'color' },
-		],
-	},
-	{
-		id: 'neutral',
-		title: 'Neutrals',
-		blurb: 'The neutral ramp (also read by the TS colour API).',
-		roles: [
-			{ name: '--color-neutral', label: 'Neutral', type: 'color' },
-			...Array.from({ length: 11 }, (_, i) => ({
-				name: `--color-neutral-${i}`,
-				label: `Neutral ${i}`,
-				type: 'color' as const,
-			})),
-		],
-	},
-	{
-		id: 'radius',
-		title: 'Radius',
-		blurb: 'The shape vocabulary. Set "All" to re-radius the whole framework with one value.',
-		roles: [
-			{
-				name: '--border-radius-default',
-				label: 'All (master override)',
-				type: 'length',
-				note: 'unset by default',
-			},
-			{ name: '--border-radius-none', label: 'None', type: 'length' },
-			{ name: '--border-radius-soft', label: 'Soft (controls, flat)', type: 'length' },
-			{ name: '--border-radius-softer', label: 'Softer (elevated)', type: 'length' },
-			{ name: '--border-radius-rounded', label: 'Rounded (circular)', type: 'length' },
-		],
-	},
+	group(
+		{
+			id: 'brand',
+			title: 'Brand',
+			type: 'color',
+			blurb: 'Primary brand colour + its interaction shades, and the secondary accent.',
+		},
+		[
+			['--color-primary', 'Primary'],
+			['--color-primary-hover', 'Primary · hover'],
+			['--color-primary-selected', 'Primary · selected'],
+			['--color-primary-active', 'Primary · active', 'solid pressed state — not an alias of selected'],
+			['--color-secondary', 'Secondary'],
+		]
+	),
+	group({ id: 'status', title: 'Status', type: 'color' }, [
+		['--color-error', 'Error'],
+		['--color-warning', 'Warning'],
+		['--color-success', 'Success'],
+		['--color-info', 'Info'],
+	]),
+	group({ id: 'surface', title: 'Surfaces', type: 'color', blurb: 'Page + component backgrounds.' }, [
+		['--color-background-body', 'Body'],
+		['--color-background-surface', 'Surface (cards, popups…)'],
+		['--color-background-header', 'Header'],
+		['--color-background-sidemenu', 'Side menu'],
+		['--color-background-footer', 'Footer'],
+		['--color-background-login', 'Login'],
+		['--color-background-input', 'Input'],
+		['--color-background-input-disabled', 'Input · disabled'],
+	]),
+	group({ id: 'text', title: 'Text', type: 'color' }, [
+		['--color-text', 'Default'],
+		['--color-text-subtle', 'Subtle'],
+		['--color-text-subtlest', 'Subtlest'],
+		['--color-text-disabled', 'Disabled'],
+		['--color-text-inverse', 'Inverse (on bold bg)'],
+	]),
+	group({ id: 'border', title: 'Borders', type: 'color' }, [
+		['--color-border', 'Default'],
+		['--color-border-subtle', 'Subtle'],
+		['--color-border-subtlest', 'Subtlest'],
+		['--color-border-input', 'Input'],
+		['--color-border-input-hover', 'Input · hover'],
+		['--color-border-input-press', 'Input · press'],
+		['--color-border-primary', 'Primary (focus rings)'],
+	]),
+	group(
+		{
+			id: 'focus',
+			title: 'Focus ring',
+			type: 'color',
+			blurb: 'Read by .has-accessible-features :focus — outer is the wash, inner the solid line on top.',
+		},
+		[
+			['--color-focus-outer', 'Outer (wash)'],
+			['--color-focus-inner', 'Inner (line)'],
+		]
+	),
+	group(
+		{
+			id: 'neutral',
+			title: 'Neutrals',
+			type: 'color',
+			blurb: 'The neutral ramp (also read by the TS colour API).',
+		},
+		[
+			['--color-neutral', 'Neutral'],
+			...Array.from({ length: NEUTRAL_STEPS }, (_, i): Entry => [`--color-neutral-${i}`, `Neutral ${i}`]),
+		]
+	),
+	group(
+		{
+			id: 'palette',
+			title: 'Palette',
+			type: 'color',
+			blurb: 'The 12 extended families. These are Color static-entity records, so the TS colour API resolves them by name — renaming one breaks low-code.',
+		},
+		PALETTE_FAMILIES.map((c): Entry => [`--color-${c}`, titleCase(c)])
+	),
+	group(
+		{
+			id: 'radius',
+			title: 'Radius',
+			type: 'length',
+			blurb: 'The shape vocabulary. Set "All" to re-radius the whole framework with one value.',
+		},
+		[
+			['--border-radius-default', 'All (master override)', 'unset by default'],
+			['--border-radius-none', 'None'],
+			['--border-radius-soft', 'Soft (controls, flat)'],
+			['--border-radius-softer', 'Softer (elevated)'],
+			['--border-radius-rounded', 'Rounded (circular)'],
+		]
+	),
+	group(
+		{
+			id: 'space',
+			title: 'Spacing',
+			type: 'length',
+			blurb: 'The public spacing vocabulary, token-backed onto $token-scale-*. Also read at runtime by Gallery ItemsGap.',
+		},
+		SPACE_STEPS
+	),
 ];
 
 export const THEME_ROLE_NAMES: string[] = THEME_ROLE_GROUPS.flatMap((g) => g.roles.map((r) => r.name));

@@ -53,6 +53,7 @@ Positive consequences:
 
 - The artifact diff caught defects the source review missed: two retired-var leaks, the silently deleted Wizard styles, and (on a later sync) a platform-specific behaviour regression — see ADR-0006.
 - It also produced a durable statement of the branch's true delta: the compiled JS differs from `dev` by only ~102 lines, all deliberate — the `LegacyTokenMap` runtime shim, two `GlobalEnum` var renames (`--footer-height` → `--size-footer`, `--header-size-content` → `--size-header-content`), a few behaviour tweaks, and prettier-only formatting noise. That list is the agenda for the eventual merge-to-`dev` review.
+  > **Update (ROU-12975, 2026-08-20):** the `LegacyTokenMap` shim has since been deleted — `--space-*` was restored to `:root`, which was the only gap it genuinely covered — so the JS delta is now smaller than recorded above. The two `GlobalEnum` renames still stand.
 
 Negative consequences:
 

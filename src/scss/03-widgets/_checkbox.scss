@@ -29,8 +29,8 @@
 		height: calc(var(--osui-checkbox-size) - 2px);
 		opacity: 1;
 		transition:
-			background-color var(--osui-motion-duration-180) variables.$token-transition-curve-linear,
-			border-color var(--osui-motion-duration-180) variables.$token-transition-curve-linear;
+			background-color variables.$token-transition-time-200 variables.$token-transition-curve-linear,
+			border-color variables.$token-transition-time-200 variables.$token-transition-curve-linear;
 		width: calc(var(--osui-checkbox-size) - 2px);
 	}
 

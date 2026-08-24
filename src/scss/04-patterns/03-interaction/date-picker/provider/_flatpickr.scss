@@ -6,11 +6,12 @@
 */
 
 .flatpickr-calendar {
-	--osui-flatpickr-layer: var(--layer-elevated);
+	--osui-flatpickr-layer: var(--layer-global-elevated);
+	--osui-flatpickr-shadow: #{variables.$token-elevation-3};
 
 	border: variables.$token-border-size-025 solid var(--color-border);
 	border-radius: variables.$token-border-radius-200;
-	box-shadow: var(--osui-elevation-overlay);
+	box-shadow: var(--osui-flatpickr-shadow);
 	width: 320px;
 
 	&.open {
@@ -89,7 +90,7 @@
 	}
 
 	&.inline {
-		--osui-flatpickr-layer: var(--layer-screen);
+		--osui-flatpickr-layer: var(--layer-global-screen);
 		display: inline-block;
 
 		.flatpickr-weekwrapper {
@@ -291,7 +292,7 @@ span.flatpickr-weekday {
 		&:hover,
 		&:focus {
 			background: var(--color-border-subtle);
-			border-color: var(--osui-border-subtle);
+			border-color: variables.$token-border-subtle;
 			color: variables.$token-semantics-primary-base;
 		}
 
@@ -702,7 +703,7 @@ span.flatpickr-weekday {
 
 	// ─── Today button ───────────────────────────────────────────────────
 	.flatpickr-today-button {
-		border-top: variables.$token-border-size-025 solid var(--osui-border-subtle);
+		border-top: variables.$token-border-size-025 solid variables.$token-border-subtle;
 		padding: variables.$token-scale-200 variables.$token-scale-400;
 
 		a,

@@ -10,7 +10,7 @@
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-list-item-border-color:            var(--color-border);
 	--osui-list-item-background:              var(--color-background-surface);
-	--osui-list-item-hover-background:        var(--osui-bg-surface-hover);
+	--osui-list-item-hover-background:        #{variables.$token-bg-neutral-subtlest-hover};
 	--osui-list-item-active-background:       #{variables.$token-bg-neutral-subtlest-press};
 	--osui-list-item-selected-background:     var(--osui-list-item-background);
 	--osui-list-item-selected-icon-color:     #{variables.$token-icon-select};

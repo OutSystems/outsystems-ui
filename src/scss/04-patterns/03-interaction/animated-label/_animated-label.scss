@@ -14,7 +14,7 @@
 	--osui-animated-label-focus-border-color: var(--color-border-primary);
 	--osui-animated-label-focus-ring-color: #{variables.$token-border-focus-default};
 	--osui-animated-label-focus-shadow: 0 0 0 #{variables.$token-border-size-050} var(--osui-animated-label-focus-ring-color);
-	--osui-animated-label-error-color: var(--color-text-danger);
+	--osui-animated-label-error-color: #{variables.$token-text-danger};
 	--osui-animated-label-disabled-background: var(--color-background-input-disabled);
 	--osui-animated-label-disabled-color: var(--color-text-disabled);
 	// ───────────────────────────────────────────────────────────────────
@@ -61,7 +61,7 @@
 			font-size variables.$token-transition-time-200 variables.$token-transition-curve-expressive,
 			color variables.$token-transition-time-100 variables.$token-transition-curve-expressive,
 			transform variables.$token-transition-time-200 variables.$token-transition-curve-expressive;
-		z-index: var(--layer-screen);
+		z-index: var(--layer-global-screen);
 
 		label {
 			color: var(--osui-animated-label-color);
