@@ -6,9 +6,18 @@ name: 'Storybook'
 # gets a visual diff against the base-branch baseline, and each merge advances that
 # baseline (auto-accepted below).
 #
-# Fork PRs receive no repository secrets, so every step needing internal access
-# (Azure login, ADO token, internal npm feed, Chromatic token) is skipped rather
-# than failed — the job stays neutral for external contributors.
+# This job needs NO internal infrastructure: every dependency resolves from the
+# public npm registry, and the Widgets stories are static transcriptions of the
+# platform widgets' DOM rather than live mounts of internal packages (ADR-0009).
+# The only secret involved is the Chromatic token, and the Chromatic step is
+# skipped — not failed — when it is absent, so fork PRs stay neutral while still
+# proving the public build works.
+#
+# Do not reintroduce an Azure login here. It existed solely to reach the internal
+# Azure Artifacts feed for @outsystems/runtime-*-js, and it is why every `push`
+# build on this branch failed for months (no federated-identity credential exists
+# for a `ref:refs/heads/*` subject), which left the branch with no Chromatic
+# baseline at all. See ADR-0008 and ADR-0009.
 on:
     pull_request:
         # ROU-12714 is the "Make Great UI" long-living integration branch; drop it
@@ -26,16 +35,12 @@ concurrency:
 permissions:
     contents: write
     pull-requests: write
-    id-token: write
 
 jobs:
     chromatic:
         name: build chromatic
         runs-on: ubuntu-latest
         env:
-            # True only for PRs opened from a fork. Fork runs get no secrets, so all
-            # internal-infra steps below are conditioned on this being 'false'.
-            IS_FORK: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository }}
             # The `secrets` context is NOT available in a step-level `if` (only in job-level
             # `env`), and referencing it there invalidates the whole workflow file. So the
             # token check is evaluated once here and tested as a plain env flag below.
@@ -52,55 +57,37 @@ jobs:
               # Feeds the capture guard at the end of the job. Anything under src/ (the
               # compiled library), stories/ or .storybook/ can move a snapshot, so if any
               # of them changed, Chromatic must actually photograph something.
-              if: github.event_name == 'pull_request'
+              #
+              # Covers pushes as well as PRs — the base commit differs by event. Now that
+              # push builds actually run (no Azure login to fail on, ADR-0009), the
+              # baseline-advancing build is guarded too; ADR-0008 flagged that gap.
               id: visual_surface
               shell: bash
+              env:
+                  BASE: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || github.event.before }}
               run: |
-                  changed=$(git diff --name-only \
-                    "${{ github.event.pull_request.base.sha }}...HEAD" \
-                    -- src stories .storybook | wc -l | tr -d ' ')
+                  # No usable base (branch creation pushes all-zeros, workflow_dispatch has
+                  # none, force-pushes can leave it unreachable) → assume the surface moved,
+                  # so the guard stays armed rather than silently disarming itself.
+                  if [ -z "$BASE" ] || [ "$BASE" = "0000000000000000000000000000000000000000" ] \
+                     || ! git cat-file -e "$BASE^{commit}" 2>/dev/null; then
+                    echo "changed=1" >> "$GITHUB_OUTPUT"
+                    echo "No usable base commit for this event — assuming the visual surface changed."
+                    exit 0
+                  fi
+                  changed=$(git diff --name-only "$BASE...HEAD" -- src stories .storybook | wc -l | tr -d ' ')
                   echo "changed=$changed" >> "$GITHUB_OUTPUT"
                   echo "Visual-surface files changed: $changed"
-
-            ### Azure login + ADO token (to install the private @outsystems/* widget deps) ###
-            - name: 🔐 Azure login
-              if: env.IS_FORK == 'false'
-              uses: ./.github/actions/az-login
-              with:
-                  client-id: ${{ secrets.OSUI_AZURE_CLIENT_ID }}
-                  tenant-id: ${{ secrets.OSUI_AZURE_TENANT_ID }}
-                  subscription-id: ${{ secrets.OSUI_AZURE_SUBSCRIPTION_ID }}
-
-            - name: 🔑 Get ADO token from Azure Key Vault
-              if: env.IS_FORK == 'false'
-              id: GetAdoToken
-              uses: ./.github/actions/az-keyvault-get
-              with:
-                  key-name: o11odc-github-ado-token-prd
-
-            - name: ⭕ Connect to OutSystems Environment
-              # Authenticates npm to the internal Azure Artifacts feed so the
-              # @outsystems/runtime-*-js platform-widget deps can be installed.
-              if: env.IS_FORK == 'false'
-              shell: bash
-              run: npx @outsystems/assistant login --token ${{ steps.GetAdoToken.outputs.az-keyvault-value }}
 
             - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
               with:
                   node-version: 24.13.1
 
             - name: 🕸️ Install dependencies
-              # The @outsystems/runtime-*-js platform-widget packages are
-              # optionalDependencies: without internal-feed auth (fork PRs) npm skips
-              # them and Storybook drops the Widgets story group.
+              # Every dependency is public. There is no internal feed, no auth step, and
+              # therefore no way for a silent auth failure to publish a reduced story set
+              # and auto-accept it as the new baseline.
               run: npm i
-
-            - name: 🔎 Verify platform-widget deps (internal runs)
-              # On internal runs the widget packages MUST be present — otherwise a silent
-              # auth failure would publish a Storybook missing the Widgets group and, on a
-              # push, auto-accept that reduced set as the new baseline.
-              if: env.IS_FORK == 'false'
-              run: node -e "['@outsystems/runtime-core-js','@outsystems/runtime-view-js','@outsystems/runtime-widgets-js'].forEach(p => require.resolve(p + '/package.json'))"
 
             - name: 🏗️ Run build
               # Produces dist/ODC.OutSystemsUI.{js,css}, served by Storybook via staticDirs.
@@ -191,13 +178,13 @@ jobs:
               # how a separator changing from primary to grey shipped unflagged. If the PR
               # touched the visual surface, at least one snapshot must have been taken.
               # Runs last so the comment above still gives reviewers the build link.
-              if: github.event_name == 'pull_request' && steps.chromatic.outcome == 'success' && steps.visual_surface.outputs.changed != '0'
+              if: steps.chromatic.outcome == 'success' && steps.visual_surface.outputs.changed != '0'
               shell: bash
               env:
                   CAPTURED: ${{ steps.chromatic.outputs.actualCaptureCount }}
               run: |
                   if [ "${CAPTURED:-0}" -eq 0 ]; then
-                    echo "::error::This PR changed ${{ steps.visual_surface.outputs.changed }} file(s) under src/, stories/ or .storybook/, but Chromatic captured 0 snapshots — every test was inherited, so nothing was actually compared. Re-run with TurboSnap disabled before trusting this result."
+                    echo "::error::This build changed ${{ steps.visual_surface.outputs.changed }} file(s) under src/, stories/ or .storybook/, but Chromatic captured 0 snapshots — every test was inherited, so nothing was actually compared. Re-run with TurboSnap disabled before trusting this result."
                     exit 1
                   fi
                   echo "Chromatic captured $CAPTURED snapshot(s)."

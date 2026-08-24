@@ -1,3 +1,5 @@
+@use '../tokens/variables';
+
 .ph:empty,
 .placeholder-empty:empty {
 	display: none;
@@ -11,6 +13,12 @@
 		& > .ph > .list.list-group,
 		& > .placeholder-empty > .list.list-group {
 			display: contents;
+		}
+	}
+	&__content-item {
+		.ph:empty,
+		.placeholder-empty:empty {
+			-servicestudio-padding: variables.$token-scale-600;
 		}
 	}
 }

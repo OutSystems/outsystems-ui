@@ -74,16 +74,33 @@ function applyDirection(rtl: boolean): void {
 }
 
 /**
- * Appearance toggle — exercises the dark theme (src/scss/01-foundations/_theme-dark.scss).
- * The dark theme is manual-only: `dark` adds the `.theme-dark` body class, `light`
- * removes it (light is the default — no class). Requires a bundle built AFTER the
- * dark theme was added (the dark CSS lives in `/osui/ODC.OutSystemsUI.css`);
- * rebuild with `npm run dev --target=odc`.
+ * Appearance toggle — exercises the dark theme
+ * (src/scss/tokens/_theme-dark.scss, generated from the design tokens' dark mode;
+ * it re-maps the --token-* set and self-applies under `.theme-dark`).
+ *
+ * The class goes on `<html>`, NOT `<body>`, and that is load-bearing rather than
+ * stylistic. The framework theme-layer roles (`--color-*`) are declared at
+ * `:root`, i.e. on `<html>`, as `var(--token-…, <light fallback>)`. A custom
+ * property's `var()` is substituted using the computed values on the element the
+ * declaration applies to — so overriding `--token-*` on `<body>` comes too late:
+ * `--color-background-surface` has already resolved to its light fallback on
+ * `<html>` and inherits down as that literal. Put the class on `<html>` and the
+ * tokens are defined on the very element the roles resolve on, so 43 of the 44
+ * `--color-*` knobs (~488 reads across the bundle) flip to dark for free.
+ * `--color-focus-outer` is a deliberate hardcoded yellow and stays put.
+ *
+ * `.theme-dark` is an element-agnostic class selector, so no CSS change was
+ * needed for this — only the choice of element. Light is the default and has no
+ * class at all (there are no light `--token-*` declarations anywhere; light is
+ * the fallback baked into every `$token-*`).
+ *
+ * Requires a bundle built AFTER the dark theme was added (the dark CSS lives in
+ * `/osui/ODC.OutSystemsUI.css`); rebuild with `npm run dev --target=odc`.
  */
 const COLOR_SCHEME_DARK = 'theme-dark';
 
 function applyColorScheme(scheme: string): void {
-	document.body.classList.toggle(COLOR_SCHEME_DARK, scheme === 'dark');
+	document.documentElement.classList.toggle(COLOR_SCHEME_DARK, scheme === 'dark');
 }
 
 /**
@@ -190,7 +207,7 @@ const preview: Preview = {
 		},
 		colorScheme: {
 			description:
-				'Appearance. Dark adds the `.theme-dark` body class; Light removes it (the default). Manual only — no OS detection.',
+				'Appearance. Dark adds the `.theme-dark` class to `<html>`; Light removes it (the default). Manual only — no OS detection.',
 			defaultValue: 'light',
 			toolbar: {
 				title: 'Appearance',

@@ -246,26 +246,87 @@ component rule, **no** `$token-*` value, and **no** pre-existing `--osui-*` defa
 
 ### Dark theme (ships)
 
-`src/scss/01-foundations/_theme-dark.scss` implements a dark theme that is
-**opt-in, manual only**:
+The dark theme is **generated, not authored**. `src/scss/tokens/_theme-dark.scss`
+is written by `npm run build:tokens` from the design tokens' dark mode (the whole
+`src/scss/tokens/` directory is generated and gitignored). It re-maps the ~447
+`--token-*` values that differ in dark and ends with its own
+`.theme-dark { @include token-theme-dark; }`, so importing the file is all that
+dark mode requires.
 
-- Add `.theme-dark` to the screen's outermost element (e.g. `<body>`) to switch
-  the library to dark; remove it for the default light palette.
+It is **opt-in, manual only**:
+
+- Add `.theme-dark` to **`<html>`** (`document.documentElement`) to switch the
+  library to dark; remove it for the default light palette.
 - There is **no OS auto-detection**. An app that wants to follow the OS reads
   `prefers-color-scheme` itself and toggles the class.
 
-The whole palette lives in one `@mixin osui-theme-dark`, applied under
-`.theme-dark`. It re-maps the dark `--token-*` **and** re-declares the `--color-*`
-roles — the latter is required because `--color-*` is substituted at `:root`, so a
-`--token-*` override on `<body>` alone wouldn't reach components that read
-`--color-*`. Re-declaring `--color-*` makes the body scope self-sufficient, so the
-whole subtree under `.theme-dark` re-resolves to the dark palette.
+It is registered as a normal partial in
+`gulp/ProjectSpecs/ScssStructure/Root.js` — the CSS-variables section, since that
+is what it is. That placement matters twice over. The import was previously
+hand-added straight into `O11/ODC.OutSystemsUI.scss`, which every build
+regenerates — so the dark token values were silently dropped from the bundle on
+any rebuild. And it must stay **after** `01-foundations/root`; see below.
 
-It is mostly invariant-clean (token + `--color-*` + `--osui-*` overrides), with a
-small, clearly-marked **"KNOWN CSS-API LEAKS"** block (`.header`, `.app-menu-*`,
-`label`, `::placeholder`, validation text) — components without a `--osui-*` knob
-for the property, each a FIXME to migrate per Phase E. See
-[`plan-part-four.md`](../specs/plan-part-four.md).
+#### Why light needs no declarations — and what that means for order
+
+There is no light theme block. `.theme-dark` is the **only** selector in the
+bundle that declares `--token-*`; the light values are the hardcoded fallbacks
+baked into every `$token-*` expansion (`$token-text-default` →
+`var(--token-text-default, #101213)`). Light is "no declaration".
+
+A consequence that is easy to get backwards: the dark block's **source position is
+currently a no-op**. `:root` declares only the 44 `--color-*` role knobs (plus
+`--osui-*`); `tokens/_theme-dark.scss` declares only `--token-*`. They never
+declare the same property, so they cannot compete, and custom-property
+substitution happens per element at computed-value time rather than by source
+order. Moving dark earlier or later changes nothing today.
+
+It stops being a no-op the moment light `--token-*` values *are* emitted at
+`:root` — i.e. if `build:tokens` is ever run with `--root true`. `:root` and
+`.theme-dark` are both specificity `0-1-0`, so at that point **later wins**, and
+dark placed ahead of root would silently lose to light. Hence: after root.
+
+#### Why the class goes on `<html>`
+
+What decides whether dark reaches a component is not source order but **which
+element carries the class**, because that is where `--color-*` gets substituted.
+A `var()` inside a custom-property declaration is substituted using the computed
+custom properties of the element the declaration applies to — and `--color-*` is
+declared at `:root`, i.e. on `<html>`:
+
+| `.theme-dark` on | `--token-*` readers | `--color-*` readers (~488 reads) |
+| :--- | :--- | :--- |
+| `<body>` | dark ✅ | **stay light** — the roles already resolved to their light fallbacks on `<html>` and inherit down as literals |
+| **`<html>`** ← what we do | dark ✅ | **dark ✅** — the tokens are defined on the very element the roles resolve on |
+
+So the class is applied to `document.documentElement`. **43 of the 44 `--color-*`
+knobs** follow the theme this way; the exception is `--color-focus-outer`, a
+deliberate hardcoded yellow. This is what replaced the deleted theme's
+`--color-*` role bridge — the bridge existed only to compensate for a
+`<body>`-level scope. `.theme-dark` is an element-agnostic class selector, so
+nothing in the CSS had to change; only the element.
+
+**What still will not follow the theme.** 17 of the 21 `--osui-*` defaults
+declared at `:root` are hardcoded literals rather than token reads — each already
+carries a `// future: --token-*` note in `_root.scss`. Also `--size-*` and
+`--layer-*`, but those are layout plumbing, not colour (§Framework theme layer).
+Routing the remaining literals onto tokens is Phase E work.
+
+**What was removed.** The hand-written `01-foundations/_theme-dark.scss` is gone.
+It carried two things beyond the palette, and both went with it:
+
+- The `--color-*` **role bridge**. Because `--color-*` is substituted at `:root`,
+  a `--token-*` override on `<body>` does not reach a component that reads
+  `--color-*`; the bridge re-declared those roles at the dark scope to force a
+  re-resolve. Without it, dark reaches only what reads `--token-*` / `$token-*`
+  directly. Components still routing through `--color-*` keep their light values
+  under `.theme-dark`.
+- The **"KNOWN CSS-API LEAKS"** block (`.header`, `.app-menu-*`, `label`,
+  `::placeholder`, validation text) — raw component rules for components with no
+  `--osui-*` knob. Their removal makes the theme invariant above structurally
+  true: the shipped theme is nothing but variable overrides.
+
+See [`plan-part-four.md`](../specs/plan-part-four.md).
 
 ---
 
