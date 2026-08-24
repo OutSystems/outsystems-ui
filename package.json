@@ -71,7 +71,7 @@
 		"gulp-sourcemaps": "^3.0.0",
 		"json-fixer": "^1.6.15",
 		"nouislider": "^15.8.1",
-		"outsystems-design-tokens": "^1.4.2",
+		"outsystems-design-tokens": "^2.0.0",
 		"photoswipe": "^4.1.0",
 		"postcss": "^8.4.38",
 		"postcss-discard-comments": "^5.1.2",

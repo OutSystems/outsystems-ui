@@ -124,7 +124,11 @@ Pattern files that consume a provider import the override SCSS directly:
 
 ## 11. Theme invariant
 
-> **Note:** a dark theme **does ship** — `src/scss/01-foundations/_theme-dark.scss`. It is **opt-in, manual only**: add `.theme-dark` to the screen root to switch to dark (no OS auto-detection — an app that wants to follow `prefers-color-scheme` toggles the class itself). It is mostly invariant-clean (token + `--color-*` + `--osui-*` overrides) but carries a clearly-marked **"KNOWN CSS-API LEAKS"** block (raw rules on `.header`, `.app-menu-*`, `label`, `::placeholder`, validation text) for components that don't yet expose a `--osui-*` knob — each a FIXME to migrate (Phase E). Do **not** add new leaks; add the knob to the component instead.
+> **Note:** a dark theme **does ship**, and it is **fully generated** — `src/scss/tokens/_theme-dark.scss`, written by `npm run build:tokens` from the design tokens' dark mode (that directory is gitignored). It re-maps the ~447 `--token-*` values that differ in dark and self-applies them under `.theme-dark`. Registered in `gulp/ProjectSpecs/ScssStructure/Root.js`; never hand-add it to the entry files (§9).
+>
+> Opt-in, manual only: add `.theme-dark` to **`<html>`** (`document.documentElement`) — no OS auto-detection (an app that wants to follow `prefers-color-scheme` toggles the class itself). It must be `<html>`, not `<body>`: `--color-*` is declared at `:root` and substitutes its `var(--token-…)` against that element, so a `<body>`-level token override lands after the roles have already resolved light. `.theme-dark` is an element-agnostic class selector — the element is the whole mechanism, no CSS change involved.
+>
+> The hand-written `01-foundations/_theme-dark.scss` has been **deleted**, and with it both the `--color-*` role bridge (made redundant by scoping the class to `<html>`) and the old **"KNOWN CSS-API LEAKS"** block. The invariant below is therefore now structurally true rather than aspirational: the shipped theme is nothing but `--token-*` overrides. Do **not** reintroduce a hand-written theme partial to patch a component; add the `--osui-*` knob to the component instead.
 
 A theme is **entirely** CSS-custom-property overrides scoped under a single class. It overrides theme-layer role knobs (`--color-*`, `--border-radius-*`, …) and/or the underlying `--token-*` — it touches **no** component rule, **no** `$token-*` value, and **no** pre-existing `--osui-*` default.
 
