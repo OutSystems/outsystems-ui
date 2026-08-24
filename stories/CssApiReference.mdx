@@ -119,6 +119,7 @@ _File: `src/scss/03-widgets/_dropdown.scss`_
 | `--osui-dropdown-list-background` | `var(--color-background-surface)` |
 | `--osui-dropdown-list-border-color` | `var(--color-border)` |
 | `--osui-dropdown-list-max-height` | `240px` |
+| `--osui-dropdown-list-shadow` | `#{$token-elevation-3}` |
 | `--osui-dropdown-focus-border-color` | `var(--color-border-primary)` |
 | `--osui-dropdown-focus-ring-color` | `#{$token-border-focus-default}` |
 | `--osui-dropdown-arrow-color` | `#{$token-icon-subtlest}` |
@@ -574,6 +575,7 @@ _File: `src/scss/04-patterns/03-interaction/date-picker/provider/_flatpickr.scss
 | Property | Default |
 |---|---|
 | `--osui-flatpickr-layer` | `var(--layer-global-elevated)` |
+| `--osui-flatpickr-shadow` | `#{$token-elevation-3}` |
 
 ### Flatpickr (`.is-rtl`)
 _File: `src/scss/04-patterns/03-interaction/date-picker/provider/_flatpickr.scss`_
@@ -625,6 +627,7 @@ _File: `src/scss/04-patterns/03-interaction/dropdown/_dropdown-serverside.scss`_
 | `--osui-dropdown-ss-arrow-color` | `#{$token-icon-subtlest}` |
 | `--osui-dropdown-ss-arrow-size` | `#{$token-scale-400}` |
 | `--osui-dropdown-ss-background` | `var(--color-background-input)` |
+| `--osui-dropdown-ss-balloon-max-height` | `300px` |
 | `--osui-dropdown-ss-border-color` | `var(--color-border-input)` |
 | `--osui-dropdown-ss-border-radius` | `var(--border-radius-soft)` |
 | `--osui-dropdown-ss-color` | `var(--color-text)` |
@@ -633,12 +636,11 @@ _File: `src/scss/04-patterns/03-interaction/dropdown/_dropdown-serverside.scss`_
 | `--osui-dropdown-ss-focus-border-color` | `var(--color-border-primary)` |
 | `--osui-dropdown-ss-focus-ring-color` | `#{$token-border-focus-default}` |
 | `--osui-dropdown-ss-hover-border-color` | `var(--color-border-input-hover)` |
+| `--osui-dropdown-ss-min-width` | `170px` |
 | `--osui-dropdown-ss-prompt-color` | `var(--color-text-subtlest)` |
-| `--osui-dropdown-ss-balloon-max-height` | `300px` |
-| `--osui-dropdown-min-width` | `170px` |
-| `--osui-floating-offset` | `#{$token-scale-100}` |
 | `--osui-dropdown-ss-scroll-bar-width` | `5px` |
-| `--osui-balloon-shadow` | `0 12px 24px -8px #{$token-backdrop}` |
+| `--osui-floating-offset` | `#{$token-scale-100}` |
+| `--osui-balloon-shadow` | `#{$token-elevation-3}` |
 | `--osui-balloon-shape` | `var(--border-radius-soft)` |
 
 ### Dropdown Serverside (`.has-accessible-features`)
@@ -1066,4 +1068,4 @@ _File: `src/scss/01-foundations/_root.scss`_
 
 ---
 
-<sub>522 properties across 79 components, generated from `src/scss`.</sub>
+<sub>524 properties across 79 components, generated from `src/scss`.</sub>

@@ -18,6 +18,7 @@
 		--osui-dropdown-list-background: var(--color-background-surface);
 		--osui-dropdown-list-border-color: var(--color-border);
 		--osui-dropdown-list-max-height: 240px;
+		--osui-dropdown-list-shadow: #{variables.$token-elevation-3};
 		--osui-dropdown-focus-border-color: var(--color-border-primary);
 		--osui-dropdown-focus-ring-color: #{variables.$token-border-focus-default};
 		--osui-dropdown-arrow-color: #{variables.$token-icon-subtlest};
@@ -85,7 +86,7 @@
 			background-color: var(--osui-dropdown-list-background);
 			border: var(--osui-dropdown-border-width) solid var(--osui-dropdown-list-border-color);
 			border-radius: var(--osui-dropdown-border-radius);
-			box-shadow: 0 12px 24px -8px variables.$token-backdrop;
+			box-shadow: var(--osui-dropdown-list-shadow);
 			left: 0 !important;
 			max-height: var(--osui-dropdown-list-max-height);
 			overflow-y: auto;

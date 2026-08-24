@@ -7,10 +7,11 @@
 
 .flatpickr-calendar {
 	--osui-flatpickr-layer: var(--layer-global-elevated);
+	--osui-flatpickr-shadow: #{variables.$token-elevation-3};
 
 	border: variables.$token-border-size-025 solid var(--color-border);
 	border-radius: variables.$token-border-radius-200;
-	box-shadow: 0 12px 24px -8px variables.$token-backdrop;
+	box-shadow: var(--osui-flatpickr-shadow);
 	width: 320px;
 
 	&.open {
