@@ -45,12 +45,16 @@
   --te-r-full: 999px;
   --te-shadow-sm: 0 1px 2px rgba(21, 21, 21, 0.05), 0 1px 3px rgba(21, 21, 21, 0.04);
   --te-rail-w: 216px;
+  --te-rail-w-collapsed: 40px;
+  --te-rail-handle-w: 22px;
   --te-side-w: 380px;
   --te-toolbar-h: 69px;
   --te-rail-pad-top: 20px;
   --te-rail-pad-bottom: 16px;
   --te-search-block: 52px;
+  --te-rail-head-block: 38px;
   --te-rail-hint-block: 76px;
+  --te-rail-available-h: calc(100dvh - var(--te-toolbar-h));
   --te-nav-max-h: calc(
     100dvh - var(--te-toolbar-h) - var(--te-rail-pad-top) - var(--te-search-block) -
       var(--te-rail-hint-block) - var(--te-rail-pad-bottom)
@@ -58,6 +62,8 @@
   --te-code-bg: rgb(247, 250, 252);
   --te-code-border: rgb(236, 244, 249);
   --te-code-ink: rgba(46, 52, 56, 0.9);
+  --te-brand-a: #ff5e3e;
+  --te-brand-b: #d8161e;
 
   box-sizing: border-box;
   color: var(--te-ink);
@@ -140,7 +146,7 @@
 
 .osui-theme-editor .te-head h1 em {
   font-style: normal;
-  background: linear-gradient(96deg, #d8161e, #ff5e3e);
+  background: linear-gradient(96deg, var(--te-brand-b), var(--te-brand-a));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -196,6 +202,96 @@
   background: #fff;
   color: var(--te-ink);
   box-shadow: var(--te-shadow-sm);
+}
+
+.osui-theme-editor .te-theme-mode {
+  display: inline-flex;
+  align-items: center;
+}
+
+.osui-theme-editor .te-theme-mode__label {
+  margin-right: 8px;
+  font-size: 12px;
+  font-weight: 650;
+  color: var(--te-ink-3);
+  letter-spacing: 0.02em;
+}
+
+.osui-theme-editor .te-theme-mode__group {
+  display: inline-flex;
+  align-items: center;
+}
+
+.osui-theme-editor .te-theme-mode__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 11px;
+  border: 1px solid var(--te-n-400);
+  border-radius: 0;
+  background: #fff;
+  color: var(--te-ink-3);
+  font: 600 12.5px/1 "Inter", sans-serif;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.osui-theme-editor .te-theme-mode__btn + .te-theme-mode__btn {
+  margin-left: -1px;
+}
+
+.osui-theme-editor .te-theme-mode__group .te-theme-mode__btn:first-child {
+  border-radius: var(--te-r-200) 0 0 var(--te-r-200);
+}
+
+.osui-theme-editor .te-theme-mode__group .te-theme-mode__btn:last-child {
+  border-radius: 0 var(--te-r-200) var(--te-r-200) 0;
+}
+
+.osui-theme-editor .te-theme-mode__btn svg {
+  flex: none;
+  opacity: 0.72;
+}
+
+.osui-theme-editor .te-theme-mode__btn[aria-pressed="true"] {
+  position: relative;
+  z-index: 1;
+  background: var(--te-primary-100);
+  border-color: color-mix(in srgb, var(--te-primary-700) 35%, var(--te-n-400));
+  color: var(--te-primary-700);
+}
+
+.osui-theme-editor .te-theme-mode__btn[aria-pressed="true"] svg {
+  opacity: 1;
+}
+
+.osui-theme-editor .te-theme-mode--compact .te-theme-mode__btn span {
+  display: none;
+}
+
+.osui-theme-editor .te-theme-mode--compact .te-theme-mode__btn {
+  width: 34px;
+  padding: 0;
+  justify-content: center;
+}
+
+.osui-theme-editor .te-editor-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 0 0 22px;
+  padding: 10px 14px;
+  border: 1px solid var(--te-n-300);
+  border-radius: var(--te-r-300);
+  background: var(--te-n-100);
+}
+
+.osui-theme-editor .te-editor-bar p {
+  margin: 0;
+  font-size: 13px;
+  color: var(--te-ink-3);
 }
 
 .osui-theme-editor .te-chip-diff {
@@ -268,25 +364,189 @@
 
 .osui-theme-editor .te-wrap {
   display: grid;
-  grid-template-columns: var(--te-rail-w) minmax(0, 1fr) var(--te-side-w);
+  grid-template-columns: var(--te-rail-w) minmax(0, 1fr);
   gap: 0;
-  align-items: start;
-  min-height: 520px;
+  align-items: stretch;
+  min-height: var(--te-rail-available-h);
+  transition: grid-template-columns 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.osui-theme-editor .te-wrap.is-rail-collapsed {
+  grid-template-columns: var(--te-rail-w-collapsed) minmax(0, 1fr);
+}
+
+.osui-theme-editor .te-wrap.is-view-editor .te-side {
+  display: none;
+}
+
+.osui-theme-editor .te-wrap.is-view-preview .te-roles {
+  display: none;
+}
+
+.osui-theme-editor .te-wrap.is-view-preview .te-side {
+  padding: 24px 36px 120px;
+  border-left: 0;
+}
+
+.osui-theme-editor .te-wrap.is-view-preview.is-rail-collapsed .te-side {
+  padding-left: calc(var(--te-rail-handle-w) + 32px);
 }
 
 /* ── Rail (left sidebar) ─────────────────────────────────────────── */
 
 .osui-theme-editor .te-rail {
-  display: flex;
-  flex-direction: column;
   position: sticky;
   top: var(--te-toolbar-h);
-  align-self: start;
-  max-height: calc(100dvh - var(--te-toolbar-h));
-  min-height: 0;
-  overflow: visible;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  height: var(--te-rail-available-h);
+  min-height: var(--te-rail-available-h);
+  max-height: var(--te-rail-available-h);
+  min-width: 0;
   border-right: 1px solid var(--te-n-300);
+  background: linear-gradient(180deg, var(--te-n-100) 0%, #fff 120px);
+  transition: background 0.22s ease;
+  isolation: isolate;
+}
+
+.osui-theme-editor .te-rail.is-rail-collapsed {
+  background: var(--te-n-100);
+  overflow: visible;
+}
+
+.osui-theme-editor .te-rail-inner {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  height: 100%;
   padding: var(--te-rail-pad-top) 12px var(--te-rail-pad-bottom);
+  overflow: hidden;
+}
+
+.osui-theme-editor .te-rail.is-rail-collapsed .te-rail-inner {
+  padding: 22px 0 0;
+  align-items: stretch;
+  overflow: visible;
+}
+
+.osui-theme-editor .te-rail-handle {
+  position: absolute;
+  top: 22px;
+  right: 0;
+  z-index: 4;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--te-rail-handle-w);
+  height: 44px;
+  padding: 0;
+  border: 1px solid var(--te-n-300);
+  border-left: 0;
+  border-radius: 0 var(--te-r-300) var(--te-r-300) 0;
+  background: #fff;
+  color: var(--te-ink-3);
+  cursor: pointer;
+  box-shadow: 2px 0 10px rgba(36, 36, 36, 0.06);
+  transform: translateX(calc(100% - 1px));
+  transition: color 0.12s ease, border-color 0.12s ease, box-shadow 0.12s ease;
+}
+
+.osui-theme-editor .te-rail-handle:hover {
+  color: var(--te-primary-700);
+  border-color: #c8d8f8;
+  box-shadow: 2px 0 14px rgba(16, 92, 239, 0.12);
+}
+
+.osui-theme-editor .te-rail-handle__icon {
+  display: flex;
+  transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.osui-theme-editor .te-rail-handle__icon.is-collapsed {
+  transform: rotate(180deg);
+}
+
+.osui-theme-editor .te-rail-head {
+  flex: none;
+  margin-bottom: 14px;
+  padding: 0 2px;
+}
+
+.osui-theme-editor .te-rail-head__title {
+  display: block;
+  font: 700 12px/1.2 "Inter", sans-serif;
+  letter-spacing: 0.02em;
+  color: var(--te-ink);
+}
+
+.osui-theme-editor .te-rail-head__meta {
+  display: block;
+  margin-top: 3px;
+  font: 500 11px/1.2 "Inter", sans-serif;
+  color: var(--te-n-700);
+}
+
+.osui-theme-editor .te-rail-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  min-width: 0;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.18s ease, visibility 0.18s ease;
+}
+
+.osui-theme-editor .te-rail.is-rail-collapsed .te-rail-body {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+}
+
+.osui-theme-editor .te-rail-peek {
+  display: none;
+  position: relative;
+  flex: none;
+  width: 100%;
+  min-height: 44px;
+  overflow: visible;
+}
+
+.osui-theme-editor .te-rail.is-rail-collapsed .te-rail-peek {
+  display: block;
+}
+
+.osui-theme-editor .te-rail-peek__label {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  translate: -50% 0;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: transparent;
+  font: 600 9px/1.35 "Inter", sans-serif;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--te-n-700);
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  user-select: none;
+  cursor: pointer;
+  transition: color 0.12s ease;
+  white-space: nowrap;
+  line-height: 1.35;
+}
+
+.osui-theme-editor .te-rail-peek__label:hover {
+  color: var(--te-primary-700);
 }
 
 .osui-theme-editor .te-search {
@@ -324,7 +584,6 @@
   gap: 2px;
   flex: 1 1 auto;
   min-height: 0;
-  max-height: var(--te-nav-max-h);
   overflow-y: auto;
   overscroll-behavior: contain;
   margin: 0 -4px;
@@ -486,7 +745,11 @@ html.os-windows .osui-theme-editor.docs-dark .te-nav::-webkit-scrollbar-thumb:ho
 
 .osui-theme-editor .te-roles {
   min-width: 0;
-  padding: 24px 28px 120px;
+  padding: 24px 28px 120px 36px;
+}
+
+.osui-theme-editor .te-wrap.is-rail-collapsed .te-roles {
+  padding-left: calc(var(--te-rail-handle-w) + 32px);
 }
 
 .osui-theme-editor .te-empty {
@@ -682,6 +945,24 @@ html.os-windows .osui-theme-editor.docs-dark .te-nav::-webkit-scrollbar-thumb:ho
   margin-bottom: 14px;
 }
 
+.osui-theme-editor .te-preview-zone__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.osui-theme-editor .te-preview-zone__head h3 {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: inherit;
+}
+
 .osui-theme-editor .te-preview-zone h3 {
   margin: 0 0 12px;
   font-size: 13px;
@@ -822,16 +1103,19 @@ html.os-windows .osui-theme-editor.docs-dark .te-nav::-webkit-scrollbar-thumb:ho
   white-space: pre-wrap;
 }
 
-/* Narrower columns in the Storybook canvas — keep 3 zones side-by-side. */
+/* Narrower columns in the Storybook canvas — keep rail + main side-by-side. */
 @media (max-width: 1100px) {
   .osui-theme-editor {
     --te-rail-w: 188px;
-    --te-side-w: 300px;
     --te-rail-hint-block: 0px;
   }
 
   .osui-theme-editor .te-roles {
-    padding: 20px 18px 40px;
+    padding: 20px 18px 40px 28px;
+  }
+
+  .osui-theme-editor .te-wrap.is-rail-collapsed .te-roles {
+    padding-left: calc(var(--te-rail-handle-w) + 24px);
   }
 
   .osui-theme-editor .te-rail__hint {
@@ -845,11 +1129,39 @@ html.os-windows .osui-theme-editor.docs-dark .te-nav::-webkit-scrollbar-thumb:ho
     grid-template-columns: 1fr;
   }
 
+  .osui-theme-editor .te-wrap.is-rail-collapsed {
+    grid-template-columns: 1fr;
+  }
+
   .osui-theme-editor .te-rail {
     position: static;
+    height: auto;
+    min-height: 0;
     max-height: none;
     border-right: 0;
     border-bottom: 1px solid var(--te-n-300);
+  }
+
+  .osui-theme-editor .te-rail-inner {
+    max-height: none;
+    height: auto;
+    padding-bottom: 16px;
+  }
+
+  .osui-theme-editor .te-rail-handle,
+  .osui-theme-editor .te-rail-peek {
+    display: none !important;
+  }
+
+  .osui-theme-editor .te-rail.is-rail-collapsed .te-rail-body {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    position: static;
+    width: auto;
+    height: auto;
+    clip: auto;
+    overflow: visible;
   }
 
   .osui-theme-editor .te-nav {
@@ -861,5 +1173,10 @@ html.os-windows .osui-theme-editor.docs-dark .te-nav::-webkit-scrollbar-thumb:ho
     max-height: none;
     border-left: 0;
     border-top: 1px solid var(--te-n-300);
+  }
+
+  .osui-theme-editor .te-wrap.is-rail-collapsed .te-roles,
+  .osui-theme-editor .te-wrap.is-view-preview.is-rail-collapsed .te-side {
+    padding-left: 28px;
   }
 }

@@ -34,6 +34,7 @@ const SKIP_FILE = (rel, base) =>
 	base === '_utilities.scss';
 
 function categoryFor(rel) {
+	if (rel.startsWith('01-foundations/')) return { order: 0, label: 'Foundations', id: 'foundations' };
 	if (rel.startsWith('03-widgets/')) return { order: 1, label: 'Widgets', id: 'widgets' };
 	if (rel.startsWith('04-patterns/01-adaptive/'))
 		return { order: 2, label: 'Patterns – Adaptive', id: 'patterns-adaptive' };
@@ -49,7 +50,6 @@ function categoryFor(rel) {
 		return { order: 7, label: 'Patterns – Utilities', id: 'patterns-utilities' };
 	if (rel.startsWith('02-layout/')) return { order: 8, label: 'Layout', id: 'layout' };
 	if (rel.startsWith('05-useful/')) return { order: 9, label: 'Utility Classes', id: 'utility-classes' };
-	if (rel.startsWith('01-foundations/')) return { order: 10, label: 'Foundations', id: 'foundations' };
 	return { order: 99, label: 'Other', id: 'other' };
 }
 
@@ -287,12 +287,26 @@ for (const abs of files) {
 
 const sortedCats = [...categories.values()].sort((a, b) => a.order - b.order);
 
+function compareComponents(a, b, catId) {
+	if (catId === 'foundations') {
+		const rank = (c) => {
+			if (c.file.endsWith('_root.scss')) return 0;
+			if (c.file.includes('icon-library-o11')) return 1;
+			if (c.file.includes('icon-library-odc')) return 2;
+			return 3;
+		};
+		const diff = rank(a) - rank(b);
+		if (diff !== 0) return diff;
+	}
+	return a.name.localeCompare(b.name);
+}
+
 let totalProps = 0;
 let totalComponents = 0;
 
 const manifestCategories = sortedCats.map((cat) => {
 	const components = [...cat.components.values()]
-		.sort((a, b) => a.name.localeCompare(b.name))
+		.sort((a, b) => compareComponents(a, b, cat.id))
 		.map((c) => {
 			totalComponents++;
 			const variants = [...c.variants.values()]

@@ -43,6 +43,9 @@ export function resolveDefault(role: Role, dark = false): string {
 	if (role.type === 'color') {
 		probe.style.color = `var(${role.name})`;
 		resolved = rgbToHex(getComputedStyle(probe).color) ?? '';
+	} else if (role.name.startsWith('--space-')) {
+		probe.style.width = `var(${role.name})`;
+		resolved = getComputedStyle(probe).width;
 	} else {
 		probe.style.borderTopLeftRadius = `var(${role.name})`;
 		const v = getComputedStyle(probe).borderTopLeftRadius;
@@ -65,7 +68,7 @@ export function clearOverride(name: string): void {
 
 export function buildCss(): string {
 	const names = THEME_ROLE_NAMES.filter(isChanged);
-	if (names.length === 0) return '/* No overrides yet. Edit a role to see the CSS. */';
+	if (names.length === 0) return '/* No overrides yet. Edit a token to see the CSS. */';
 	return `:root {\n${names.map((n) => `  ${n}: ${currentOverride(n).trim()};`).join('\n')}\n}`;
 }
 
@@ -108,7 +111,7 @@ export function contrastGrade(ratio: number): [ContrastGrade, string] {
 export function parseThemeImport(text: string): Map<string, string> {
 	const out = new Map<string, string>();
 	const block = text.match(/:root\s*\{([^}]*)\}/s)?.[1] ?? text;
-	const re = /(--(?:color|border-radius)-[\w-]+)\s*:\s*([^;]+)/g;
+	const re = /(--(?:color|border-radius|space)-[\w-]+)\s*:\s*([^;]+)/g;
 	let m: RegExpExecArray | null;
 	while ((m = re.exec(block)) !== null) {
 		const name = m[1].trim();

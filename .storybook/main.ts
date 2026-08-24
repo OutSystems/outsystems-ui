@@ -99,11 +99,8 @@ const config: StorybookConfig = {
 	features: {
 		changeDetection: false,
 	},
-	// `stories/widgets/` (and its `_helpers/widget.ts` harness) is only reachable when
-	// the platform runtime packages resolved — the top-level globs exclude it otherwise.
-	stories: hasPlatformWidgets
-		? ['../stories/**/*.mdx', '../stories/**/*.stories.@(js|jsx|ts|tsx)']
-		: ['../stories/*.mdx', '../stories/*.stories.@(js|jsx|ts|tsx)'],
+	// Widget stories are static transcriptions (ADR-0009) — always include the full tree.
+	stories: ['../stories/**/*.mdx', '../stories/**/*.stories.@(js|jsx|ts|tsx)'],
 	addons: [
 		// remark-gfm enables GitHub-flavoured markdown in MDX docs pages — notably
 		// tables (used by the CSS Architecture / CSS API Reference pages). Without

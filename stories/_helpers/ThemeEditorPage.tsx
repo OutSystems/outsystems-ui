@@ -29,6 +29,25 @@ const SEARCH_ICON = (
 	</svg>
 );
 
+const RAIL_HANDLE_ICON = (
+	<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.25" aria-hidden="true">
+		<path d="M15 6l-6 6 6 6" />
+	</svg>
+);
+
+const SUN_ICON = (
+	<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+		<circle cx="12" cy="12" r="4" />
+		<path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+	</svg>
+);
+
+const MOON_ICON = (
+	<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+		<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+	</svg>
+);
+
 const CONTRAST_PAIRS: Array<{ label: string; fg: string; bg: string }> = [
 	{ label: 'Text on Surface', fg: '--color-text', bg: '--color-background-surface' },
 	{ label: 'Text subtle on Surface', fg: '--color-text-subtle', bg: '--color-background-surface' },
@@ -51,13 +70,11 @@ function curValue(token: string, dark: boolean): string {
 
 function RoleRow({
 	role,
-	groupKind,
 	dark,
 	surfaceHex,
 	onChange,
 }: {
 	role: Role;
-	groupKind?: 'length';
 	dark: boolean;
 	surfaceHex: string;
 	onChange: () => void;
@@ -97,7 +114,7 @@ function RoleRow({
 
 	return (
 		<div className={`te-role${changed ? ' is-changed' : ''}`} data-token={role.name} data-label={role.label}>
-			{groupKind === 'length' ? (
+			{role.type === 'length' ? (
 				<span className="te-role__sw te-role__sw--size">px</span>
 			) : (
 				<span className="te-role__sw" style={{ background: colorHex }}>
@@ -148,6 +165,44 @@ function RoleRow({
 	);
 }
 
+function ThemeModeToggle({
+	previewDark,
+	onChange,
+	compact = false,
+}: {
+	previewDark: boolean;
+	onChange: (dark: boolean) => void;
+	compact?: boolean;
+}) {
+	return (
+		<div className={`te-theme-mode${compact ? ' te-theme-mode--compact' : ''}`} role="group" aria-label="Theme mode">
+			{compact ? null : <span className="te-theme-mode__label">Theme</span>}
+			<div className="te-theme-mode__group">
+				<button
+					type="button"
+					className="te-theme-mode__btn"
+					aria-pressed={!previewDark}
+					title="Light theme"
+					onClick={() => onChange(false)}
+				>
+					{SUN_ICON}
+					<span>Light</span>
+				</button>
+				<button
+					type="button"
+					className="te-theme-mode__btn"
+					aria-pressed={previewDark}
+					title="Dark theme"
+					onClick={() => onChange(true)}
+				>
+					{MOON_ICON}
+					<span>Dark</span>
+				</button>
+			</div>
+		</div>
+	);
+}
+
 function GroupSection({
 	group,
 	dark,
@@ -169,8 +224,6 @@ function GroupSection({
 	);
 	if (visibleRoles.length === 0) return null;
 
-	const kind = group.id === 'radius' ? ('length' as const) : undefined;
-
 	return (
 		<section className="te-grp" id={group.id} ref={sectionRef}>
 			<h2>{group.title}</h2>
@@ -179,7 +232,6 @@ function GroupSection({
 				<RoleRow
 					key={role.name}
 					role={role}
-					groupKind={kind}
 					dark={dark}
 					surfaceHex={surfaceHex}
 					onChange={onChange}
@@ -196,6 +248,8 @@ export function ThemeEditorPage(): React.ReactElement {
 	const [feedback, setFeedback] = useState('');
 	const [activeGroup, setActiveGroup] = useState(THEME_ROLE_GROUPS[0]?.id ?? '');
 	const [docsDark, setDocsDark] = useState(() => readStoredAppearance() === 'dark');
+	const [railCollapsed, setRailCollapsed] = useState(false);
+	const [viewMode, setViewMode] = useState<'editor' | 'preview'>('editor');
 
 	const searchRef = useRef<HTMLInputElement>(null);
 	const sectionRefs = useRef<Map<string, HTMLElement>>(new Map());
@@ -236,7 +290,7 @@ export function ThemeEditorPage(): React.ReactElement {
 	const resetAll = () => {
 		THEME_ROLE_NAMES.forEach(clearOverride);
 		bump();
-		showFeedback('Reset all roles.', 1500);
+		showFeedback('Reset all tokens.', 1500);
 	};
 
 	const exportCss = async () => {
@@ -319,7 +373,7 @@ export function ThemeEditorPage(): React.ReactElement {
 		).length;
 	}, [query]);
 
-	const totalRoles = THEME_ROLE_NAMES.length;
+	const totalTokens = THEME_ROLE_NAMES.length;
 
 	const contrastRows = useMemo(() => {
 		void changeTick;
@@ -331,11 +385,34 @@ export function ThemeEditorPage(): React.ReactElement {
 		}).filter(Boolean) as Array<{ label: string; grade: string; txt: string; ratio: string }>;
 	}, [changeTick, previewDark]);
 
-	const scrollToGroup = (id: string) => {
+	const scrollToGroup = useCallback((id: string) => {
 		const section = sectionRefs.current.get(id);
 		if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
 		setActiveGroup(id);
-	};
+	}, []);
+
+	const navigateToGroup = useCallback(
+		(id: string) => {
+			if (viewMode === 'preview') {
+				setViewMode('editor');
+				setActiveGroup(id);
+				requestAnimationFrame(() => sectionRefs.current.get(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+			} else {
+				scrollToGroup(id);
+			}
+		},
+		[viewMode, scrollToGroup]
+	);
+
+	const switchView = useCallback(
+		(mode: 'editor' | 'preview') => {
+			setViewMode(mode);
+			if (mode === 'editor') {
+				requestAnimationFrame(() => scrollToGroup(activeGroup));
+			}
+		},
+		[activeGroup, scrollToGroup]
+	);
 
 	return (
 		<div className={`osui-theme-editor sb-unstyled${docsDark ? ' docs-dark' : ''}`}>
@@ -343,12 +420,12 @@ export function ThemeEditorPage(): React.ReactElement {
 				<div className="te-head-in">
 					<span className="te-eyebrow">Tools · Theme Editor</span>
 					<h1>
-						Edit theme roles,
+						Edit theme tokens,
 						<br />
 						<em>see it live.</em>
 					</h1>
 					<p className="te-lede">
-						Override <code>--color-*</code> and <code>--border-radius-*</code> roles at{' '}
+						Override <code>--color-*</code> and <code>--border-radius-*</code> tokens at{' '}
 						<code>:root</code>. Export CSS for your app.
 					</p>
 				</div>
@@ -356,20 +433,12 @@ export function ThemeEditorPage(): React.ReactElement {
 
 			<div className="te-toolbar">
 				<div className="te-toolbar-in">
-					<div className="te-seg" role="group" aria-label="Preview mode">
-						<button
-							type="button"
-							aria-pressed={!previewDark}
-							onClick={() => setPreviewDark(false)}
-						>
-							Light
+					<div className="te-seg te-seg--view" role="group" aria-label="View">
+						<button type="button" aria-pressed={viewMode === 'editor'} onClick={() => switchView('editor')}>
+							Editor
 						</button>
-						<button
-							type="button"
-							aria-pressed={previewDark}
-							onClick={() => setPreviewDark(true)}
-						>
-							Dark
+						<button type="button" aria-pressed={viewMode === 'preview'} onClick={() => switchView('preview')}>
+							Preview
 						</button>
 					</div>
 				{changedCount > 0 ? (
@@ -388,49 +457,91 @@ export function ThemeEditorPage(): React.ReactElement {
 				</div>
 			</div>
 
-			<div className="te-wrap">
-				<nav className="te-rail" aria-label="Role groups">
-					<label className="te-search">
-						{SEARCH_ICON}
-						<input
-							ref={searchRef}
-							type="search"
-							placeholder="Filter roles"
-							value={query}
-							onChange={(e) => setQuery(e.target.value)}
-							aria-label="Filter roles"
-						/>
-					</label>
-					<div className="te-nav">
-						{THEME_ROLE_GROUPS.map((g) => {
-							const q = query.trim().toLowerCase();
-							const count = q
-								? g.roles.filter((r) => r.label.toLowerCase().includes(q) || r.name.includes(q)).length
-								: g.roles.length;
-							if (q && count === 0) return null;
-							return (
-								<button
-									key={g.id}
-									type="button"
-									className={`te-nav-item${activeGroup === g.id ? ' is-active' : ''}${groupsWithChanges.has(g.id) ? ' has-changes' : ''}`}
-									aria-current={activeGroup === g.id ? 'true' : undefined}
-									onClick={() => scrollToGroup(g.id)}
-								>
-									<span>{g.title}</span>
-									<i>{count}</i>
-								</button>
-							);
-						})}
+			<div className={`te-wrap${railCollapsed ? ' is-rail-collapsed' : ''} is-view-${viewMode}`}>
+				<nav className={`te-rail${railCollapsed ? ' is-rail-collapsed' : ''}`} aria-label="Token groups">
+					<div className="te-rail-inner">
+						<div className="te-rail-body" id="te-role-nav">
+							<div className="te-rail-head">
+								<div className="te-rail-head__copy">
+									<span className="te-rail-head__title">Token groups</span>
+									<span className="te-rail-head__meta">{totalTokens} tokens</span>
+								</div>
+							</div>
+							<label className="te-search">
+								{SEARCH_ICON}
+								<input
+									ref={searchRef}
+									type="search"
+									placeholder="Filter tokens"
+									value={query}
+									onChange={(e) => setQuery(e.target.value)}
+									aria-label="Filter tokens"
+								/>
+							</label>
+							<div className="te-nav">
+								{THEME_ROLE_GROUPS.map((g) => {
+									const q = query.trim().toLowerCase();
+									const count = q
+										? g.roles.filter((r) => r.label.toLowerCase().includes(q) || r.name.includes(q)).length
+										: g.roles.length;
+									if (q && count === 0) return null;
+									return (
+										<button
+											key={g.id}
+											type="button"
+											className={`te-nav-item${activeGroup === g.id ? ' is-active' : ''}${groupsWithChanges.has(g.id) ? ' has-changes' : ''}`}
+											aria-current={activeGroup === g.id ? 'true' : undefined}
+											onClick={() => navigateToGroup(g.id)}
+										>
+											<span>{g.title}</span>
+											<i>{count}</i>
+										</button>
+									);
+								})}
+							</div>
+							<p className="te-rail__hint">
+								{totalTokens} tokens. Type to filter by label or name, for example <code>radius</code> or{' '}
+								<code>--color-text</code>.
+							</p>
+						</div>
+
+						<div className="te-rail-peek" aria-hidden={!railCollapsed}>
+							<button
+								type="button"
+								className="te-rail-peek__label"
+								onClick={() => setRailCollapsed(false)}
+								title="Browse tokens"
+								aria-label="Browse tokens"
+							>
+								Browse tokens
+							</button>
+						</div>
 					</div>
-					<p className="te-rail__hint">
-						{totalRoles} roles. Type to filter by name or token, for example <code>radius</code> or{' '}
-						<code>--color-text</code>.
-					</p>
+
+					<button
+						type="button"
+						className="te-rail-handle"
+						aria-expanded={!railCollapsed}
+						aria-controls="te-role-nav"
+						onClick={() => setRailCollapsed((collapsed) => !collapsed)}
+						title={railCollapsed ? 'Expand token list' : 'Collapse token list'}
+						aria-label={railCollapsed ? 'Expand token list' : 'Collapse token list'}
+					>
+						<span className={`te-rail-handle__icon${railCollapsed ? ' is-collapsed' : ''}`}>
+							{RAIL_HANDLE_ICON}
+						</span>
+					</button>
 				</nav>
 
 				<main className="te-roles">
+					{viewMode === 'editor' ? (
+						<div className="te-editor-bar">
+							<p>Token defaults for the active theme.</p>
+							<ThemeModeToggle previewDark={previewDark} onChange={setPreviewDark} compact />
+						</div>
+					) : null}
 					{filteredGroupCount === 0 ? (
-						<p className="te-empty">No roles match your filter.</p>
+						<p className="te-empty">No tokens match your filter.</p>
 					) : (
 						THEME_ROLE_GROUPS.map((group) => (
 							<GroupSection
@@ -451,9 +562,12 @@ export function ThemeEditorPage(): React.ReactElement {
 
 				<aside className="te-side">
 					<div className={`te-preview-zone${previewDark ? ' theme-dark' : ''}`}>
-						<h3>
-							Preview <span className="te-live">live</span>
-						</h3>
+						<div className="te-preview-zone__head">
+							<h3>
+								Preview <span className="te-live">live</span>
+							</h3>
+							<ThemeModeToggle previewDark={previewDark} onChange={setPreviewDark} compact />
+						</div>
 						<ThemeEditorPreview />
 					</div>
 
@@ -471,7 +585,7 @@ export function ThemeEditorPage(): React.ReactElement {
 					</div>
 
 					<div className="te-panel">
-						<h4>CSS output (changed roles only)</h4>
+						<h4>CSS output (changed tokens only)</h4>
 						<pre className="te-output">{cssOutput}</pre>
 					</div>
 				</aside>

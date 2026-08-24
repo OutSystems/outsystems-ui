@@ -55,6 +55,15 @@
   --gs-brand-d: #04053d;
   --gs-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
   --gs-shadow-md: 0 8px 24px rgba(0, 0, 0, 0.06);
+  --gs-pic-canvas: var(--gs-n-100);
+  --gs-pic-surface: #fff;
+  --gs-pic-stroke: var(--gs-n-500);
+  --gs-pic-accent: var(--gs-primary-100);
+  --gs-pic-muted: var(--gs-n-300);
+  --gs-pic-muted2: var(--gs-n-200);
+  --gs-pic-primary: var(--gs-primary-700);
+  --gs-pic-arrow: var(--gs-n-600);
+  --gs-pic-focus: var(--gs-primary-100);
 
   font-family: "Inter", -apple-system, system-ui, sans-serif;
   color: var(--gs-ink);
@@ -250,6 +259,45 @@
   /* optical align with Inter cap height */
   transform: translateY(1px);
 }
+
+/* Step thumbnails — SVG fills follow theme tokens (dark overrides in docs-dark.scss) */
+.osui-getting-started .st .pic {
+  background: var(--gs-pic-canvas);
+  border-color: var(--gs-n-300);
+}
+
+.osui-getting-started .st .pic .ps {
+  fill: var(--gs-pic-surface);
+  stroke: var(--gs-pic-stroke);
+  stroke-width: 1;
+}
+
+.osui-getting-started .st .pic .pa {
+  fill: var(--gs-pic-accent);
+}
+
+.osui-getting-started .st .pic .pm {
+  fill: var(--gs-pic-muted);
+}
+
+.osui-getting-started .st .pic .pm2 {
+  fill: var(--gs-pic-muted2);
+}
+
+.osui-getting-started .st .pic .pp {
+  fill: var(--gs-pic-primary);
+}
+
+.osui-getting-started .st .pic .paf {
+  fill: var(--gs-pic-focus);
+  stroke: var(--gs-pic-primary);
+}
+
+.osui-getting-started .st .pic .par {
+  fill: none;
+  stroke: var(--gs-pic-arrow);
+}
+
 @media (max-width: 860px) {
   .osui-getting-started .st {
     grid-template-columns: 30px 1fr;

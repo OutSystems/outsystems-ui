@@ -59,9 +59,28 @@ function flattenComponents(data: CssApiCategory[]) {
 }
 
 function defaultSelectedSlug(): string {
-	const all = flattenComponents(categories);
-	return all.find((e) => e.component.slug === 'widgets-btn')?.component.slug ?? all[0]?.component.slug ?? '';
+	const foundations = categories.find((cat) => cat.id === 'foundations');
+	return foundations?.components.find((c) => c.slug === 'foundations-root')?.slug ?? foundations?.components[0]?.slug ?? '';
 }
+
+function categoryIdForSlug(slug: string): string | null {
+	for (const cat of categories) {
+		if (cat.components.some((component) => component.slug === slug)) return cat.id;
+	}
+	return null;
+}
+
+const RAIL_HANDLE_ICON = (
+	<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.25" aria-hidden="true">
+		<path d="M15 6l-6 6 6 6" />
+	</svg>
+);
+
+const NAV_CHEVRON = (
+	<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
+		<path d="m9 18 6-6-6-6" />
+	</svg>
+);
 
 function storyHref(id: string): string {
 	return `?path=/story/${id}`;
@@ -186,8 +205,8 @@ function HowToUseSection() {
 		<section className="api-guide" id="how-to-use">
 			<h2>How to use</h2>
 			<p>
-				Pick a component in the sidebar, then override any <strong>property</strong> on its root selector (or
-				a wrapper above it). Defaults resolve through the chain on{' '}
+				Scroll the list below or pick a component in the sidebar, then override any <strong>property</strong>{' '}
+				on its root selector (or a wrapper above it). Defaults resolve through the chain on{' '}
 				<a href="?path=/docs/css-architecture--docs">CSS Architecture</a>.
 			</p>
 			<DocsCodeBlock code={CODE_INSTANCE} />
@@ -239,6 +258,34 @@ function PropertyRow({ prop, selector }: { prop: CssApiProperty; selector: strin
 				<CopyIconButton text={snippet} label="Copy snippet" icon="snippet" />
 			</div>
 		</div>
+	);
+}
+
+function componentHasVisibleProperties(
+	component: CssApiComponent,
+	query: string,
+	kinds: Set<CssApiPropertyKind>
+): boolean {
+	return filterProperties(component, query, kinds).length > 0;
+}
+
+function ComponentSection({
+	component,
+	query,
+	kinds,
+	sectionRef,
+}: {
+	component: CssApiComponent;
+	query: string;
+	kinds: Set<CssApiPropertyKind>;
+	sectionRef: (el: HTMLElement | null) => void;
+}) {
+	if (!componentHasVisibleProperties(component, query, kinds)) return null;
+
+	return (
+		<section id={component.slug} className="api-section" ref={sectionRef}>
+			<ComponentPanel component={component} query={query} kinds={kinds} />
+		</section>
 	);
 }
 
@@ -298,6 +345,10 @@ function ComponentPanel({
 	);
 }
 
+function allCategoryIds(): Set<string> {
+	return new Set(categories.map((cat) => cat.id));
+}
+
 function SidebarNav({
 	selectedSlug,
 	onSelect,
@@ -308,6 +359,17 @@ function SidebarNav({
 	query: string;
 }) {
 	const q = query.trim().toLowerCase();
+	const searching = Boolean(q);
+	const [expanded, setExpanded] = React.useState<Set<string>>(allCategoryIds);
+
+	const toggleCategory = React.useCallback((categoryId: string) => {
+		setExpanded((prev) => {
+			const next = new Set(prev);
+			if (next.has(categoryId)) next.delete(categoryId);
+			else next.add(categoryId);
+			return next;
+		});
+	}, []);
 
 	return (
 		<nav className="api-nav">
@@ -322,25 +384,40 @@ function SidebarNav({
 
 				if (!items.length) return null;
 
+				const isExpanded = searching || expanded.has(cat.id);
+
 				return (
-					<div key={cat.id} className="api-nav-group">
-						<div className="api-nav-group__label">{navCategoryLabel(cat.label)}</div>
-						{items.map((component) => {
-							const count = countComponentProperties(component);
-							const active = component.slug === selectedSlug;
-							return (
-								<button
-									key={component.slug}
-									type="button"
-									className={`api-nav-item${active ? ' is-active' : ''}`}
-									aria-current={active ? 'page' : undefined}
-									onClick={() => onSelect(component.slug)}
-								>
-									<span>{component.name}</span>
-									<i>{count}</i>
-								</button>
-							);
-						})}
+					<div key={cat.id} className={`api-nav-group${isExpanded ? ' is-expanded' : ''}`}>
+						<button
+							type="button"
+							className="api-nav-group__toggle"
+							aria-expanded={isExpanded}
+							onClick={() => toggleCategory(cat.id)}
+						>
+							<span className="api-nav-group__chevron">{NAV_CHEVRON}</span>
+							<span className="api-nav-group__label">{navCategoryLabel(cat.label)}</span>
+							<span className="api-nav-group__count">{items.length}</span>
+						</button>
+						{isExpanded ? (
+							<div className="api-nav-group__items">
+								{items.map((component) => {
+									const count = countComponentProperties(component);
+									const active = component.slug === selectedSlug;
+									return (
+										<button
+											key={component.slug}
+											type="button"
+											className={`api-nav-item${active ? ' is-active' : ''}`}
+											aria-current={active ? 'page' : undefined}
+											onClick={() => onSelect(component.slug)}
+										>
+											<span>{component.name}</span>
+											<i>{count}</i>
+										</button>
+									);
+								})}
+							</div>
+						) : null}
 					</div>
 				);
 			})}
@@ -354,9 +431,11 @@ function SidebarNav({
  */
 export function CssApiReferencePage() {
 	const searchRef = React.useRef<HTMLInputElement>(null);
+	const sectionRefs = React.useRef<Map<string, HTMLElement>>(new Map());
 	const [selectedSlug, setSelectedSlug] = React.useState(defaultSelectedSlug);
 	const [query, setQuery] = React.useState('');
 	const [kinds, setKinds] = React.useState<Set<CssApiPropertyKind>>(() => new Set());
+	const [railCollapsed, setRailCollapsed] = React.useState(false);
 
 	React.useEffect(() => {
 		const onKeyDown = (event: KeyboardEvent) => {
@@ -371,10 +450,33 @@ export function CssApiReferencePage() {
 	}, []);
 
 	const allEntries = React.useMemo(() => flattenComponents(categories), []);
-	const selected = React.useMemo(
-		() => allEntries.find((e) => e.component.slug === selectedSlug)?.component ?? allEntries[0]?.component,
-		[allEntries, selectedSlug]
+	const visibleComponents = React.useMemo(
+		() =>
+			allEntries
+				.map((entry) => entry.component)
+				.filter((component) => componentHasVisibleProperties(component, query, kinds)),
+		[allEntries, query, kinds]
 	);
+
+	const scrollToComponent = React.useCallback((slug: string) => {
+		const section = sectionRefs.current.get(slug);
+		if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+		setSelectedSlug(slug);
+	}, []);
+
+	React.useEffect(() => {
+		const observer = new IntersectionObserver(
+			(entries) => {
+				for (const entry of entries) {
+					if (entry.isIntersecting) setSelectedSlug(entry.target.id);
+				}
+			},
+			{ root: null, rootMargin: '-81px 0px -65% 0px', threshold: 0 }
+		);
+
+		sectionRefs.current.forEach((el) => observer.observe(el));
+		return () => observer.disconnect();
+	}, [query, kinds, visibleComponents.length]);
 
 	const toggleKind = (kind: CssApiPropertyKind) => {
 		setKinds((prev) => {
@@ -444,24 +546,77 @@ export function CssApiReferencePage() {
 					</div>
 				</div>
 
-				<div className="api-wrap">
-					<aside className="api-rail" aria-label="Components">
-						<label className="api-search">
-							{SEARCH_ICON}
-							<input
-								ref={searchRef}
-								type="search"
-								value={query}
-								onChange={(e) => setQuery(e.target.value)}
-								placeholder="Filter components"
-								aria-label="Filter components"
-							/>
-						</label>
-						<SidebarNav selectedSlug={selectedSlug} onSelect={setSelectedSlug} query={query} />
+				<div className={`api-wrap${railCollapsed ? ' is-rail-collapsed' : ''}`}>
+					<aside className={`api-rail${railCollapsed ? ' is-rail-collapsed' : ''}`} aria-label="Components">
+						<div className="api-rail-inner">
+							<div className="api-rail-body" id="api-component-nav">
+								<div className="api-rail-head">
+									<div className="api-rail-head__copy">
+										<span className="api-rail-head__title">Components</span>
+										<span className="api-rail-head__meta">{totals.components} total</span>
+									</div>
+								</div>
+								<label className="api-search">
+									{SEARCH_ICON}
+									<input
+										ref={searchRef}
+										type="search"
+										value={query}
+										onChange={(e) => setQuery(e.target.value)}
+										placeholder="Filter components"
+										aria-label="Filter components"
+									/>
+								</label>
+								<SidebarNav selectedSlug={selectedSlug} onSelect={scrollToComponent} query={query} />
+							</div>
+
+							<div className="api-rail-peek" aria-hidden={!railCollapsed}>
+								<button
+									type="button"
+									className="api-rail-peek__label"
+									onClick={() => setRailCollapsed(false)}
+									title="Browse components"
+									aria-label="Browse components"
+								>
+									Browse components
+								</button>
+							</div>
+						</div>
+
+						<button
+							type="button"
+							className="api-rail-handle"
+							aria-expanded={!railCollapsed}
+							aria-controls="api-component-nav"
+							onClick={() => setRailCollapsed((collapsed) => !collapsed)}
+							title={railCollapsed ? 'Expand component list' : 'Collapse component list'}
+							aria-label={railCollapsed ? 'Expand component list' : 'Collapse component list'}
+						>
+							<span className={`api-rail-handle__icon${railCollapsed ? ' is-collapsed' : ''}`}>
+								{RAIL_HANDLE_ICON}
+							</span>
+						</button>
 					</aside>
 
 					<div className="api-shell__main">
-						{selected ? <ComponentPanel component={selected} query={query} kinds={kinds} /> : null}
+						{visibleComponents.length ? (
+							<div className="api-catalog">
+								{visibleComponents.map((component) => (
+									<ComponentSection
+										key={component.slug}
+										component={component}
+										query={query}
+										kinds={kinds}
+										sectionRef={(el) => {
+											if (el) sectionRefs.current.set(component.slug, el);
+											else sectionRefs.current.delete(component.slug);
+										}}
+									/>
+								))}
+							</div>
+						) : (
+							<div className="api-empty">No components match your filters.</div>
+						)}
 					</div>
 				</div>
 			</div>

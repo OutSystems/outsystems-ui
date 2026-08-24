@@ -36,14 +36,21 @@
   --api-code-bg: rgb(247, 250, 252);
   --api-code-border: rgb(236, 244, 249);
   --api-code-ink: rgba(46, 52, 56, 0.9);
+  --api-brand-a: #ff5e3e;
+  --api-brand-b: #d8161e;
   --api-nav-w: 216px;
+  --api-nav-w-collapsed: 40px;
+  --api-rail-handle-w: 22px;
   /* Toolbar sticky height + rail chrome — nav fills viewport when scrolled to browser */
   --api-toolbar-h: 65px;
   --api-rail-pad-top: 20px;
   --api-rail-pad-bottom: 16px;
   --api-search-block: 52px;
+  --api-rail-head-block: 38px;
+  --api-rail-available-h: calc(100dvh - var(--api-toolbar-h));
   --api-nav-max-h: calc(
-    100dvh - var(--api-toolbar-h) - var(--api-rail-pad-top) - var(--api-search-block) - var(--api-rail-pad-bottom)
+    var(--api-rail-available-h) - var(--api-rail-pad-top) - var(--api-rail-pad-bottom) -
+      var(--api-rail-head-block) - var(--api-search-block)
   );
 
   box-sizing: border-box;
@@ -110,7 +117,7 @@
 
 .osui-css-api-reference .api-head h1 em {
   font-style: normal;
-  background: linear-gradient(96deg, #d8161e, #ff5e3e);
+  background: linear-gradient(96deg, var(--api-brand-b), var(--api-brand-a));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -194,21 +201,170 @@
   display: grid;
   grid-template-columns: var(--api-nav-w) minmax(0, 1fr);
   gap: 0;
-  align-items: start;
-  min-height: 520px;
+  align-items: stretch;
+  min-height: var(--api-rail-available-h);
+  transition: grid-template-columns 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.osui-css-api-reference .api-wrap.is-rail-collapsed {
+  grid-template-columns: var(--api-nav-w-collapsed) minmax(0, 1fr);
 }
 
 .osui-css-api-reference .api-rail {
-  display: flex;
-  flex-direction: column;
   position: sticky;
   top: var(--api-toolbar-h);
-  align-self: start;
-  max-height: calc(100dvh - var(--api-toolbar-h));
-  min-height: 0;
-  overflow: visible;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  height: var(--api-rail-available-h);
+  min-height: var(--api-rail-available-h);
+  max-height: var(--api-rail-available-h);
+  min-width: 0;
   border-right: 1px solid var(--api-n-300);
+  background: linear-gradient(180deg, var(--api-n-100) 0%, #fff 120px);
+  transition: background 0.22s ease;
+  isolation: isolate;
+}
+
+.osui-css-api-reference .api-rail.is-rail-collapsed {
+  background: var(--api-n-100);
+  overflow: visible;
+}
+
+.osui-css-api-reference .api-rail-inner {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  height: 100%;
   padding: var(--api-rail-pad-top) 12px var(--api-rail-pad-bottom);
+  overflow: hidden;
+}
+
+.osui-css-api-reference .api-rail.is-rail-collapsed .api-rail-inner {
+  padding: 22px 0 0;
+  align-items: stretch;
+  overflow: visible;
+}
+
+/* Drawer handle — sits on the rail edge */
+.osui-css-api-reference .api-rail-handle {
+  position: absolute;
+  top: 22px;
+  right: 0;
+  z-index: 4;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--api-rail-handle-w);
+  height: 44px;
+  padding: 0;
+  border: 1px solid var(--api-n-300);
+  border-left: 0;
+  border-radius: 0 var(--api-r-300) var(--api-r-300) 0;
+  background: #fff;
+  color: var(--api-ink-3);
+  cursor: pointer;
+  box-shadow: 2px 0 10px rgba(36, 36, 36, 0.06);
+  transform: translateX(calc(100% - 1px));
+  transition: color 0.12s ease, border-color 0.12s ease, box-shadow 0.12s ease;
+}
+
+.osui-css-api-reference .api-rail-handle:hover {
+  color: var(--api-primary-700);
+  border-color: #c8d8f8;
+  box-shadow: 2px 0 14px rgba(16, 92, 239, 0.12);
+}
+
+.osui-css-api-reference .api-rail-handle__icon {
+  display: flex;
+  transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.osui-css-api-reference .api-rail-handle__icon.is-collapsed {
+  transform: rotate(180deg);
+}
+
+.osui-css-api-reference .api-rail-head {
+  flex: none;
+  margin-bottom: 14px;
+  padding: 0 2px;
+}
+
+.osui-css-api-reference .api-rail-head__title {
+  display: block;
+  font: 700 12px/1.2 "Inter", sans-serif;
+  letter-spacing: 0.02em;
+  color: var(--api-ink);
+}
+
+.osui-css-api-reference .api-rail-head__meta {
+  display: block;
+  margin-top: 3px;
+  font: 500 11px/1.2 "Inter", sans-serif;
+  color: var(--api-n-700);
+}
+
+.osui-css-api-reference .api-rail-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  min-width: 0;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.18s ease, visibility 0.18s ease;
+}
+
+.osui-css-api-reference .api-rail.is-rail-collapsed .api-rail-body {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+}
+
+/* Collapsed strip — label end flush to handle start (rail edge, top of row) */
+.osui-css-api-reference .api-rail-peek {
+  display: none;
+  position: relative;
+  flex: none;
+  width: 100%;
+  min-height: 44px;
+  overflow: visible;
+}
+
+.osui-css-api-reference .api-rail.is-rail-collapsed .api-rail-peek {
+  display: block;
+}
+
+.osui-css-api-reference .api-rail-peek__label {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  translate: -50% 0;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: transparent;
+  font: 600 9px/1.35 "Inter", sans-serif;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--api-n-700);
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  user-select: none;
+  cursor: pointer;
+  transition: color 0.12s ease;
+  white-space: nowrap;
+  line-height: 1.35;
+}
+
+.osui-css-api-reference .api-rail-peek__label:hover {
+  color: var(--api-primary-700);
 }
 
 .osui-css-api-reference .api-search {
@@ -246,7 +402,6 @@
   gap: 2px;
   flex: 1 1 auto;
   min-height: 0;
-  max-height: var(--api-nav-max-h);
   overflow-y: auto;
   overscroll-behavior: contain;
   margin: 0 -4px;
@@ -254,21 +409,73 @@
 }
 
 .osui-css-api-reference .api-nav-group {
-  margin-bottom: 18px;
+  margin-bottom: 4px;
 }
 
 .osui-css-api-reference .api-nav-group:last-child {
   margin-bottom: 0;
 }
 
-.osui-css-api-reference .api-nav-group__label {
-  font-size: 10.5px;
-  font-weight: 700;
+.osui-css-api-reference .api-nav-group__toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  padding: 7px 10px;
+  border: 0;
+  border-radius: var(--api-r-200);
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  color: var(--api-n-700);
+  font: 700 10.5px/1 "Inter", sans-serif;
   letter-spacing: 0.07em;
   text-transform: uppercase;
-  color: var(--api-n-700);
-  margin: 0 0 6px;
-  padding: 0 10px;
+  transition: background 0.12s, color 0.12s;
+}
+
+.osui-css-api-reference .api-nav-group__toggle:hover {
+  background: var(--api-n-100);
+  color: var(--api-ink-2);
+}
+
+.osui-css-api-reference .api-nav-group__chevron {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 12px;
+  height: 12px;
+  opacity: 0.55;
+  transition: transform 0.15s ease;
+}
+
+.osui-css-api-reference .api-nav-group.is-expanded .api-nav-group__chevron {
+  transform: rotate(90deg);
+}
+
+.osui-css-api-reference .api-nav-group__label {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.osui-css-api-reference .api-nav-group__count {
+  flex: none;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+  opacity: 0.7;
+}
+
+.osui-css-api-reference .api-nav-group__items {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 2px 0 8px;
 }
 
 .osui-css-api-reference .api-nav-item {
@@ -320,7 +527,21 @@
 
 .osui-css-api-reference .api-shell__main {
   min-width: 0;
-  padding: 48px 36px 120px 28px;
+  padding: 48px 36px 120px 36px;
+}
+
+.osui-css-api-reference .api-section {
+  margin-bottom: 56px;
+  scroll-margin-top: calc(var(--api-toolbar-h) + 12px);
+}
+
+.osui-css-api-reference .api-section:last-child {
+  margin-bottom: 0;
+}
+
+.osui-css-api-reference .api-wrap.is-rail-collapsed .api-shell__main {
+  /* Clear the drawer handle that overlaps from the collapsed rail */
+  padding-left: calc(var(--api-rail-handle-w) + 32px);
 }
 
 /* Windows — thin overlay-style scrollbar on component list */
@@ -745,12 +966,47 @@ html.os-windows.sb-app-dark .osui-css-api-reference .api-nav::-webkit-scrollbar-
     grid-template-columns: 1fr;
   }
 
+  .osui-css-api-reference .api-wrap.is-rail-collapsed {
+    grid-template-columns: 1fr;
+  }
+
   .osui-css-api-reference .api-rail {
     position: static;
+    height: auto;
+    min-height: 0;
     max-height: none;
     border-right: 0;
     border-bottom: 1px solid var(--api-n-300);
+  }
+
+  .osui-css-api-reference .api-wrap {
+    min-height: 0;
+  }
+
+  .osui-css-api-reference .api-rail-inner {
+    max-height: none;
+    height: auto;
     padding-bottom: 16px;
+  }
+
+  .osui-css-api-reference .api-nav {
+    max-height: var(--api-nav-max-h);
+  }
+
+  .osui-css-api-reference .api-rail-handle,
+  .osui-css-api-reference .api-rail-peek {
+    display: none !important;
+  }
+
+  .osui-css-api-reference .api-rail.is-rail-collapsed .api-rail-body {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    position: static;
+    width: auto;
+    height: auto;
+    clip: auto;
+    overflow: visible;
   }
 
   .osui-css-api-reference .api-nav {
