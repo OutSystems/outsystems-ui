@@ -61,7 +61,7 @@
 			&:hover,
 			&:focus {
 				background: var(--color-border-subtle);
-				border-color: var(--osui-border-subtle);
+				border-color: variables.$token-border-subtle;
 				color: variables.$token-semantics-primary-base;
 			}
 		}

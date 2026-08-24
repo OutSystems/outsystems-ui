@@ -1,6 +1,6 @@
 # SCSS Conventions — OutSystemsUI
 
-Evergreen rules for any SCSS work in this repo. Derived from the codebase as of Phase 14 of the design-token migration (ROU-12714), after which all `--color-*` / `--space-*` / `--font-*` / `--shadow-*` / `--border-*` legacy vars have been token-backed.
+Evergreen rules for any SCSS work in this repo. Derived from the codebase as of Phase 14 of the design-token migration (ROU-12714), after which all `--color-*` / `--space-*` / `--font-*` / `--shadow-*` / `--border-*` legacy vars have been token-backed. ROU-12975 then restored the `--space-*` and `--layer-global-*` public names on top of those token-backed values.
 
 ---
 
@@ -27,7 +27,8 @@ Rules of thumb:
 - In a CSS **property value** → write `$token-*` directly: `padding: $token-scale-400;`
 - In a CSS **custom property declaration** → interpolate: `--osui-card-background: #{$token-bg-surface-default};`
 - Never hardcode hex/rem/px if a matching `$token-*` exists.
-- Still retired (do **not** reintroduce): `--space-*`, `--font-size-*`, `--shadow-*`, `--border-size-*`. Use `$token-*` instead.
+- Still retired (do **not** reintroduce): `--font-size-*`, `--shadow-*`, `--border-size-*`. Use `$token-*` instead.
+- **`--space-*` is NOT retired** (restored ROU-12975). It is the public spacing vocabulary — `--space-none` … `--space-xxl`, generated in `_root.scss` from `$osui-space-token-vars` and token-backed onto `$token-scale-*`. Prefer `$token-scale-*` directly in new component SCSS; `--space-*` exists so apps (and Gallery's runtime `ItemsGap`) keep a stable override surface.
 - **Exception — the framework theme layer (Part Four).** `--color-*`, `--border-radius-*`, `--size-*`, and `--layer-*` are **not** retired: they are the framework theme layer (Tier 3) — see §13. They were deliberately un-prefixed (dropping the old `--os-` prefix) to stay backward-compatible with the historical public theming surface. Components route through them; each defaults through a `$token-*`.
 
 ## 3. Component CSS API — the `--osui-*` layer
@@ -124,7 +125,11 @@ Pattern files that consume a provider import the override SCSS directly:
 
 ## 11. Theme invariant
 
-> **Note:** a dark theme **does ship** — `src/scss/01-foundations/_theme-dark.scss`. It is **opt-in, manual only**: add `.theme-dark` to the screen root to switch to dark (no OS auto-detection — an app that wants to follow `prefers-color-scheme` toggles the class itself). It is mostly invariant-clean (token + `--color-*` + `--osui-*` overrides) but carries a clearly-marked **"KNOWN CSS-API LEAKS"** block (raw rules on `.header`, `.app-menu-*`, `label`, `::placeholder`, validation text) for components that don't yet expose a `--osui-*` knob — each a FIXME to migrate (Phase E). Do **not** add new leaks; add the knob to the component instead.
+> **Note:** a dark theme **does ship**, and it is **fully generated** — `src/scss/tokens/_theme-dark.scss`, written by `npm run build:tokens` from the design tokens' dark mode (that directory is gitignored). It re-maps the ~447 `--token-*` values that differ in dark and self-applies them under `.theme-dark`. Registered in `gulp/ProjectSpecs/ScssStructure/Root.js`; never hand-add it to the entry files (§9).
+>
+> Opt-in, manual only: add `.theme-dark` to **`<html>`** (`document.documentElement`) — no OS auto-detection (an app that wants to follow `prefers-color-scheme` toggles the class itself). It must be `<html>`, not `<body>`: `--color-*` is declared at `:root` and substitutes its `var(--token-…)` against that element, so a `<body>`-level token override lands after the roles have already resolved light. `.theme-dark` is an element-agnostic class selector — the element is the whole mechanism, no CSS change involved.
+>
+> The hand-written `01-foundations/_theme-dark.scss` has been **deleted**, and with it both the `--color-*` role bridge (made redundant by scoping the class to `<html>`) and the old **"KNOWN CSS-API LEAKS"** block. The invariant below is therefore now structurally true rather than aspirational: the shipped theme is nothing but `--token-*` overrides. Do **not** reintroduce a hand-written theme partial to patch a component; add the `--osui-*` knob to the component instead.
 
 A theme is **entirely** CSS-custom-property overrides scoped under a single class. It overrides theme-layer role knobs (`--color-*`, `--border-radius-*`, …) and/or the underlying `--token-*` — it touches **no** component rule, **no** `$token-*` value, and **no** pre-existing `--osui-*` default.
 
@@ -161,7 +166,7 @@ These are intentionally not `--osui-*`: theme-layer roles are app-level knobs an
 Flag in review:
 
 - Hardcoded hex / rgb / rgba where a `$token-*` exists.
-- Re-declaration of genuinely-retired vars (`--space-*`, `--font-size-*`, `--shadow-*`, `--border-size-*`). NOTE: `--color-*`, `--border-radius-*`, `--size-*`, `--layer-*` are **not** retired — they are the framework theme layer (§13).
+- Re-declaration of genuinely-retired vars (`--font-size-*`, `--shadow-*`, `--border-size-*`). NOTE: `--color-*`, `--space-*`, `--border-radius-*`, `--size-*`, `--layer-*` are **not** retired — they are the framework theme layer (§13).
 - Calls to `get-background-color()` / `get-text-color()` / `get-border-color()`.
 - New rules that touch `.theme-dark` from the component side.
 - Imports of `_*_lib.scss` vendor baselines.

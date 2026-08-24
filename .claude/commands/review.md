@@ -30,7 +30,7 @@ Review the changes currently staged for commit (`git diff --cached`) against thi
 
 3. **Apply the rules file that matches each hunk**
    - TypeScript hunks → TypeScript rules (naming, namespaces, provider isolation, JSDoc, CreateApiResponse wrapper, ErrorCodes, registry pattern, AMD/no-imports, no `enum`).
-   - SCSS hunks → SCSS rules (`$token-*` preference, `--osui-{component}-{prop}` API, no `--color-*`/`--space-*`/`--font-size-*` reintroduction, no helper-function use, dark-theme invariant, no hand-edit of generated entry files, data-attribute widgets).
+   - SCSS hunks → SCSS rules (`$token-*` preference, `--osui-{component}-{prop}` API, no `--font-size-*`/`--shadow-*` reintroduction (`--color-*`/`--space-*` are the theme layer, not retired), no helper-function use, dark-theme invariant, no hand-edit of generated entry files, data-attribute widgets).
 
 4. **Cross-file checks** (things the per-hunk view misses)
    - New pattern? Verify it has all four pieces: `<Name>.ts` + `<Name>Config.ts` + `I<Name>.ts` + `<Name>API.ts` (+ `<Name>Factory.ts` if provider-backed).

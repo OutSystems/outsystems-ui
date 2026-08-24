@@ -105,7 +105,7 @@ correct even if *no* `--token-*` are defined at runtime.
 > without it. Wiring: only `tokens/_variables` is `@import`ed into the bundle (via
 > `00-abstract/_setup-global-vars.scss`).
 
-**Retired — never reintroduce:** `--space-*`, `--font-size-*`, `--shadow-*`,
+**Retired — never reintroduce:** `--font-size-*`, `--shadow-*`,
 `--border-size-*`, and the helper functions `get-background-color()` /
 `get-text-color()` / `get-border-color()`. Use `$token-*` instead.
 
@@ -147,16 +147,32 @@ What lives here:
 | **Surfaces** | `--color-background-{body,surface,header,sidemenu,footer,login,input,…}` | |
 | **Text** | `--color-text`, `--color-text-{subtle,subtlest,disabled,inverse}` | |
 | **Borders** | `--color-border`, `--color-border-{subtle,subtlest,input,…}` | |
-| **Brand / status / neutral** | `--color-{primary,secondary,error,warning,success,info}`, `--color-neutral-0..10` | also read by TS `GetColorValueFromColorType` |
+| **Brand / status / neutral** | `--color-{primary,primary-hover,primary-selected,primary-active,secondary,error,warning,success,info}`, `--color-neutral-0..10` | brand + neutrals are Color-entity records read by TS `GetColorValueFromColorType`; the four status roles are **not** entity records, just public O11 names |
+| **Palette** | `--color-{red,orange,yellow,lime,green,teal,cyan,blue,indigo,violet,grape,pink}` | the 12 Color-entity families; entity-bound, so the names cannot change. The light/dark variants (`-lightest` … `-darkest`) are deliberately **not** roles — their utility classes read `$token-*` directly |
+| **Focus ring** | `--color-focus-outer` (translucent wash), `--color-focus-inner` (solid line on top) | read by `.has-accessible-features :focus` |
 | **Radius** | `--border-radius-{none,soft,softer,rounded}` | set **`--border-radius-default`** once at `:root` to re-radius everything; `none/soft/rounded` ↔ TS `GetBorderRadiusValueFromShapeType`, `softer` is CSS-only |
+| **Spacing** | `--space-{none,xs,s,base,m,l,xl,xxl}` | token-backed onto `$token-scale-*`; also read at runtime by Gallery `ItemsGap`. Prefer `$token-scale-*` in new component SCSS |
+
+> **Renaming any entity-bound name is a breaking change.**
+> `Helper.Dom.GetColorValueFromColorType` builds `'--color-' + <Color entity value>` at
+> runtime (Progress `ProgressColor` / `TrailColor`). If the var is missing the helper
+> falls through to `return colorName`, writing the literal entity name out as a colour —
+> silently, with no build error. Same shape for
+> `GetBorderRadiusValueFromShapeType` → `--border-radius-{none,soft,rounded}` and
+> Gallery `ItemsGap` → `--space-*`.
+
+Status **text/border** tiers are intentionally absent from the theme layer:
+components read `$token-text-danger` / `$token-border-danger-default` directly,
+because neither has an entity record or a cross-component consumer.
 
 **Also in `_root.scss` but NOT part of the theme contract** (app-layout
-plumbing): layout sizes `--size-*`, z-index `--layer-*`, safe areas
-`--os-safe-area-*` (the one retained `--os-` prefix), the portaled-pattern
-`--osui-*-layer` vars, and a block of **cross-component future-token candidates**
-(`--osui-border-focus-halo`, `--osui-elevation-overlay`, `--osui-motion-duration-*`, …)
-— theme-contract entries that have no `$token-*` equivalent *yet*; each graduates
-upstream by a 1:1 rename to a `--token-*` when the package adds it.
+plumbing): layout sizes `--size-*`, z-index `--layer-global-*` / `--layer-local-*`,
+safe areas `--os-safe-area-*` (the one retained `--os-` prefix), and the
+portaled-pattern `--osui-*-layer` vars (read off-DOM, so they must live at `:root`).
+
+The old block of **cross-component future-token candidates** is gone (ROU-12975):
+each entry either moved to the token that now exists, or was inlined at its call
+site where no token does. Nothing in `_root.scss` is a placeholder any more.
 
 ---
 
@@ -230,26 +246,87 @@ component rule, **no** `$token-*` value, and **no** pre-existing `--osui-*` defa
 
 ### Dark theme (ships)
 
-`src/scss/01-foundations/_theme-dark.scss` implements a dark theme that is
-**opt-in, manual only**:
+The dark theme is **generated, not authored**. `src/scss/tokens/_theme-dark.scss`
+is written by `npm run build:tokens` from the design tokens' dark mode (the whole
+`src/scss/tokens/` directory is generated and gitignored). It re-maps the ~447
+`--token-*` values that differ in dark and ends with its own
+`.theme-dark { @include token-theme-dark; }`, so importing the file is all that
+dark mode requires.
 
-- Add `.theme-dark` to the screen's outermost element (e.g. `<body>`) to switch
-  the library to dark; remove it for the default light palette.
+It is **opt-in, manual only**:
+
+- Add `.theme-dark` to **`<html>`** (`document.documentElement`) to switch the
+  library to dark; remove it for the default light palette.
 - There is **no OS auto-detection**. An app that wants to follow the OS reads
   `prefers-color-scheme` itself and toggles the class.
 
-The whole palette lives in one `@mixin osui-theme-dark`, applied under
-`.theme-dark`. It re-maps the dark `--token-*` **and** re-declares the `--color-*`
-roles — the latter is required because `--color-*` is substituted at `:root`, so a
-`--token-*` override on `<body>` alone wouldn't reach components that read
-`--color-*`. Re-declaring `--color-*` makes the body scope self-sufficient, so the
-whole subtree under `.theme-dark` re-resolves to the dark palette.
+It is registered as a normal partial in
+`gulp/ProjectSpecs/ScssStructure/Root.js` — the CSS-variables section, since that
+is what it is. That placement matters twice over. The import was previously
+hand-added straight into `O11/ODC.OutSystemsUI.scss`, which every build
+regenerates — so the dark token values were silently dropped from the bundle on
+any rebuild. And it must stay **after** `01-foundations/root`; see below.
 
-It is mostly invariant-clean (token + `--color-*` + `--osui-*` overrides), with a
-small, clearly-marked **"KNOWN CSS-API LEAKS"** block (`.header`, `.app-menu-*`,
-`label`, `::placeholder`, validation text) — components without a `--osui-*` knob
-for the property, each a FIXME to migrate per Phase E. See
-[`plan-part-four.md`](../specs/plan-part-four.md).
+#### Why light needs no declarations — and what that means for order
+
+There is no light theme block. `.theme-dark` is the **only** selector in the
+bundle that declares `--token-*`; the light values are the hardcoded fallbacks
+baked into every `$token-*` expansion (`$token-text-default` →
+`var(--token-text-default, #101213)`). Light is "no declaration".
+
+A consequence that is easy to get backwards: the dark block's **source position is
+currently a no-op**. `:root` declares only the 44 `--color-*` role knobs (plus
+`--osui-*`); `tokens/_theme-dark.scss` declares only `--token-*`. They never
+declare the same property, so they cannot compete, and custom-property
+substitution happens per element at computed-value time rather than by source
+order. Moving dark earlier or later changes nothing today.
+
+It stops being a no-op the moment light `--token-*` values *are* emitted at
+`:root` — i.e. if `build:tokens` is ever run with `--root true`. `:root` and
+`.theme-dark` are both specificity `0-1-0`, so at that point **later wins**, and
+dark placed ahead of root would silently lose to light. Hence: after root.
+
+#### Why the class goes on `<html>`
+
+What decides whether dark reaches a component is not source order but **which
+element carries the class**, because that is where `--color-*` gets substituted.
+A `var()` inside a custom-property declaration is substituted using the computed
+custom properties of the element the declaration applies to — and `--color-*` is
+declared at `:root`, i.e. on `<html>`:
+
+| `.theme-dark` on | `--token-*` readers | `--color-*` readers (~488 reads) |
+| :--- | :--- | :--- |
+| `<body>` | dark ✅ | **stay light** — the roles already resolved to their light fallbacks on `<html>` and inherit down as literals |
+| **`<html>`** ← what we do | dark ✅ | **dark ✅** — the tokens are defined on the very element the roles resolve on |
+
+So the class is applied to `document.documentElement`. **43 of the 44 `--color-*`
+knobs** follow the theme this way; the exception is `--color-focus-outer`, a
+deliberate hardcoded yellow. This is what replaced the deleted theme's
+`--color-*` role bridge — the bridge existed only to compensate for a
+`<body>`-level scope. `.theme-dark` is an element-agnostic class selector, so
+nothing in the CSS had to change; only the element.
+
+**What still will not follow the theme.** 17 of the 21 `--osui-*` defaults
+declared at `:root` are hardcoded literals rather than token reads — each already
+carries a `// future: --token-*` note in `_root.scss`. Also `--size-*` and
+`--layer-*`, but those are layout plumbing, not colour (§Framework theme layer).
+Routing the remaining literals onto tokens is Phase E work.
+
+**What was removed.** The hand-written `01-foundations/_theme-dark.scss` is gone.
+It carried two things beyond the palette, and both went with it:
+
+- The `--color-*` **role bridge**. Because `--color-*` is substituted at `:root`,
+  a `--token-*` override on `<body>` does not reach a component that reads
+  `--color-*`; the bridge re-declared those roles at the dark scope to force a
+  re-resolve. Without it, dark reaches only what reads `--token-*` / `$token-*`
+  directly. Components still routing through `--color-*` keep their light values
+  under `.theme-dark`.
+- The **"KNOWN CSS-API LEAKS"** block (`.header`, `.app-menu-*`, `label`,
+  `::placeholder`, validation text) — raw component rules for components with no
+  `--osui-*` knob. Their removal makes the theme invariant above structurally
+  true: the shipped theme is nothing but variable overrides.
+
+See [`plan-part-four.md`](../specs/plan-part-four.md).
 
 ---
 
@@ -281,10 +358,10 @@ When writing any SCSS line, walk **down** the chain only as far as you need:
 1. Reading a **themeable** colour/radius? → use the **Tier-3 role**: `var(--color-*)`, `var(--border-radius-*)`.
 2. Reading a **structural** size/space/elevation/border? → use **`$token-*`** directly.
 3. Exposing it on a component? → declare a **`--osui-{component}-{prop}`** that defaults to (1) or (2), and have the property read the `--osui-*` var.
-4. Need a value with no token yet? → add a **future-token candidate** `--osui-*` in `_root.scss` with a `// future: --token-*` comment.
+4. Need a value with no token yet? → keep it **local**: inline it in the property value, or declare an `--osui-{component}-{prop}` on the component root. Do **not** add a global placeholder to `_root.scss` — that block existed and was retired in ROU-12975, because a global with one reader is harder to find than a literal at its call site. If the value is genuinely cross-component, file the gap upstream in `outsystems-design-tokens`.
 
 **Red flags** (see `.claude/rules/scss.md` §14): hardcoded hex/rem/px where a
-`$token-*` exists; reintroducing retired `--space-*`/`--font-size-*`/`--shadow-*`/`--border-size-*`;
+`$token-*` exists; reintroducing retired `--font-size-*`/`--shadow-*`/`--border-size-*`;
 `get-*-color()` calls; a property reading `$token-*`/`--color-*` directly instead
 of via its `--osui-*`; a theme touching a component rule; hand-edits to the
 generated entry files.

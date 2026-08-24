@@ -9,13 +9,11 @@
 ///
 .rating {
 	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-rating-filled-color: var(--color-primary);
+	--osui-rating-empty-color: #{variables.$token-bg-neutral-base-default};
 	--osui-rating-disabled-color: var(--color-text-disabled);
 	--osui-rating-disabled-empty-color: var(--color-border);
 	// ───────────────────────────────────────────────────────────────────
-
-	// Internal colour vars — overrideable per-instance
-	--token-rating-filled-color: var(--color-primary);
-	--token-rating-empty-color: #{variables.$token-bg-neutral-base-default};
 
 	--rating-size: #{variables.$token-scale-400}; // 16px default
 
@@ -94,7 +92,7 @@
 		&-half,
 		&-empty {
 			left: 0;
-			line-height: variables.$token-font-line-height-full;
+			line-height: var(--osui-font-line-height-full);
 			position: absolute;
 			top: 0;
 			transition: opacity variables.$token-transition-time-100 variables.$token-transition-curve-base;
@@ -121,7 +119,7 @@
 		&-empty,
 		&-half {
 			opacity: 0;
-			z-index: var(--layer-screen);
+			z-index: var(--layer-global-screen);
 		}
 
 		&:last-of-type {
@@ -244,12 +242,12 @@
 	// Icon colour tokens — applied via utility classes on icon elements
 	// Filled and half stars use dedicated gold token
 	.text-primary {
-		color: var(--token-rating-filled-color);
+		color: var(--osui-rating-filled-color);
 	}
 
 	// Empty stars: subtle warm tint of filled colour
 	.text-neutral-5 {
-		color: var(--token-rating-empty-color);
+		color: var(--osui-rating-empty-color);
 	}
 
 	// Vertical centering: avoids glyph metric shifts between star variants

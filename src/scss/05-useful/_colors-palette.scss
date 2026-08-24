@@ -17,10 +17,12 @@
 			&-#{$color} {
 				@if ($type == '') {
 					& {
-						background-color: #{$value};
+						// entity colour → inherit the :root role so apps can re-skin it
+						background-color: var(--color-#{$color});
 					}
 				} @else {
 					&-#{$type} {
+						// no entity record → no role; read the token directly
 						background-color: #{$value};
 					}
 				}
@@ -36,10 +38,12 @@
 			&-#{$color} {
 				@if ($type == '') {
 					& {
-						color: #{$value};
+						// entity colour → inherit the :root role so apps can re-skin it
+						color: var(--color-#{$color});
 					}
 				} @else {
 					&-#{$type} {
+						// no entity record → no role; read the token directly
 						color: #{$value};
 					}
 				}

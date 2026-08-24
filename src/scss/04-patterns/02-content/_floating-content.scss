@@ -9,7 +9,7 @@
 .floating-content {
 	position: fixed;
 	width: auto;
-	z-index: var(--layer-elevated);
+	z-index: var(--layer-global-elevated);
 
 	&.floating-content-full {
 		&-width {
@@ -200,7 +200,7 @@
 	&:not(.menu-visible),
 	&.aside-expandable {
 		.floating-content[class*='absolute-']:not(.absolute-top-plus-header) {
-			z-index: calc(var(--layer-navigation) + var(--layer-local-tier-1));
+			z-index: calc(var(--layer-global-navigation) + var(--layer-local-tier-1));
 		}
 	}
 }

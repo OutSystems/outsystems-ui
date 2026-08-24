@@ -183,12 +183,7 @@ namespace OSFramework.OSUI.Helper {
 		 * @returns
 		 */
 		public static GetBorderRadiusValueFromShapeType(shapeName: string): string {
-			const style = getComputedStyle(document.documentElement);
-			return LegacyTokenMap.ResolveComputedValue(
-				style,
-				'--border-radius-' + shapeName,
-				LegacyTokenMap.ShapeTokenMap[shapeName]
-			);
+			return getComputedStyle(document.documentElement).getPropertyValue('--border-radius-' + shapeName);
 		}
 
 		/**
@@ -198,14 +193,15 @@ namespace OSFramework.OSUI.Helper {
 		 * @returns
 		 */
 		public static GetColorValueFromColorType(colorName: string): string {
-			const style = getComputedStyle(document.documentElement);
-			const resolved = LegacyTokenMap.ResolveComputedValue(
-				style,
-				'--color-' + colorName,
-				LegacyTokenMap.ColorTokenMap[colorName]
-			);
-			// Pass-through HEX/RGB values provided directly by the user
-			return resolved !== '' ? resolved : colorName;
+			// Store the color value based on the CSS variable color
+			const colorValue = getComputedStyle(document.documentElement).getPropertyValue('--color-' + colorName);
+
+			// Check if the value isn't empty because of HEX or RGB values
+			if (colorValue !== '') {
+				return colorValue;
+			}
+
+			return colorName;
 		}
 
 		/**

@@ -5,12 +5,24 @@ OutSystems UI and a phased plan to formalize it. Parts One/Two (`plan.md`,
 `plan-part-two.md`) put a real design-token system under OSUI; Part Four is about
 the *theming* story on top of it — making "a theme" a first-class, enumerable,
 
-> **Update:** the opt-in **dark theme has been removed for now** (`_theme-dark.scss`
-> deleted, unregistered from the gulp spec). The leak inventory below is retained
-> as the historical evidence that motivated the theme layer; **Phase C is therefore
-> superseded** — the leak-closing work is now folded into Phase E, to be done when
-> a theme is (re)introduced. Phases A and B (theme layer + component routing) are
-> implemented.
+> **Update (2026-08-21):** the hand-written dark theme is **gone for good**, and dark
+> mode now ships **generated**. `01-foundations/_theme-dark.scss` is deleted; the gulp
+> spec (`ScssStructure/Root.js`) instead registers `tokens/_theme-dark.scss`, which
+> `npm run build:tokens` writes from the design tokens' dark mode and which
+> self-applies its ~447 `--token-*` overrides under `.theme-dark`.
+>
+> Two consequences for this document. First, the `--color-*` **role bridge** is gone —
+> and is no longer needed: the class is now applied to **`<html>`** rather than
+> `<body>`, so `--color-*` (declared at `:root`) substitutes its `var(--token-…)`
+> against an element that already carries the dark tokens. 43 of the 44 role knobs
+> follow the theme that way, `--color-focus-outer` being a deliberate hardcoded yellow.
+> What remains stuck light is the residual set of hardcoded literals at `:root` — 17 of
+> 21 `--osui-*` defaults, each already flagged `// future: --token-*`. Routing those onto
+> tokens is the surviving Phase E work. Second, the leak inventory below is now purely
+> historical — those raw component rules no longer exist anywhere, so the shipped theme
+> satisfies the invariant structurally.
+>
+> Phases A and B (theme layer + component routing) are implemented.
 framework-owned concept rather than the four overlapping ad-hoc layers it is today.
 
 ---
@@ -237,10 +249,11 @@ build/lint pass.
 
 ### Phase C — Close the theme leaks (~~dark-theme~~ — SUPERSEDED)
 
-> **Superseded.** The dark theme was removed, so there is no `_theme-dark.scss`
-> to de-leak today. The work below is retained as a checklist and folded into
-> **Phase E** — when a theme is (re)introduced it must be authorable as variables
-> alone, which requires these same component-API fixes:
+> **Superseded.** There is no hand-written `_theme-dark.scss` to de-leak: the shipped
+> dark theme is generated and consists of `--token-*` overrides only, applied at
+> `<html>`. The work below is retained as a checklist and folded into **Phase E**, whose
+> remaining substance is the hardcoded `--osui-*` literals at `:root` and any component
+> knob not yet routed through a token:
 >
 > - **Hard leaks → variables.** For each row in the (now-historical) leak table,
 >   add the missing `--osui-*` component var + its default on the component root
@@ -280,7 +293,7 @@ partial scoped under its own class. This is the same validation role Phase 11
 component rule, that's a leak to fix in the component, not the theme.
 
 **Files:** new `src/scss/01-foundations/_theme-*.scss` partial (registered in
-`gulp/ProjectSpecs/ScssStructure/Resets.js`) + the manifest doc.
+`gulp/ProjectSpecs/ScssStructure/Root.js`) + the manifest doc.
 
 **Acceptance:** the example theme is component-rule-free; toggling its class
 re-skins the library; the manifest enumerates exactly the variables both themes
@@ -300,7 +313,7 @@ touch.
 | D33 | Non-theme plumbing (layout/safe-area/z-index) | ✅ Kept (`--size-*`, `--layer-*`, `--os-safe-area-*`), but explicitly **excluded from the theme contract** and documented as app-layout plumbing. |
 | D34 | Literal override of a role knob | ✅ Accepted trade-off: overriding a knob with a literal (not a token) opts that role out of theme-following. Documented, not prevented. |
 | D35 | Theme-layer naming — prefix | ✅ **Un-prefixed.** Drop the `--os-` prefix from the whole theme layer + plumbing so the contract reuses the historical public names (`--color-primary`, `--border-radius-*`, `--size-*`, `--layer-*`) → instant backward compatibility, no duplication with the existing `--color-*` block, and TS already reads `--color-*`. The danger role reuses `--color-error`. **Only** `--os-safe-area-*` keeps the prefix (build constraint). This restates the naming in D29/D30/D31 (which referenced `--os-*`). |
-| D36 | Dark theme | ✅ **Removed for now.** `_theme-dark.scss` deleted + unregistered from the gulp spec. The leak inventory is kept as historical motivation; closing those leaks moves to Phase E (authoring a clean theme). The theme layer (Phases A–B) ships regardless. |
+| D36 | Dark theme | ✅ **Generated, not authored.** The hand-written `01-foundations/_theme-dark.scss` is deleted; `gulp/ProjectSpecs/ScssStructure/Root.js` now registers the generated `tokens/_theme-dark.scss` (`npm run build:tokens`), which self-applies ~447 `--token-*` overrides under `.theme-dark`. Registering it in the spec — rather than hand-adding the `@use` to the regenerated entry files, as had been done — is what makes it survive a build. Dropping the file also dropped its `--color-*` role bridge, so components reading `--color-*` stay light under `.theme-dark`; closing that is Phase E. The leak inventory is now historical. |
 | D37 | Global radius override | ✅ Each `--border-radius-*` resolves `var(--border-radius-default, <own-default>)`; setting `--border-radius-default` at `:root` re-radiuses the whole framework with one override (undefined by default). |
 
 ---

@@ -161,9 +161,9 @@
 		position: absolute;
 		top: calc(100% + variables.$token-scale-100);
 		transform: translateY(-8px); // design-spec
-		transition: all var(--osui-motion-duration-130) variables.$token-transition-curve-quick;
+		transition: all variables.$token-transition-time-150 variables.$token-transition-curve-quick;
 		width: max-content;
-		z-index: var(--layer-elevated);
+		z-index: var(--layer-global-elevated);
 
 		// Scrollbar
 		&::-webkit-scrollbar {
@@ -318,7 +318,7 @@
 
 			// `:not(:active)` — let the pressed background through
 			&:not(:active):hover {
-				background-color: var(--osui-bg-surface-hover);
+				background-color: variables.$token-bg-neutral-subtlest-hover;
 				color: var(--color-text);
 			}
 
@@ -392,7 +392,7 @@
 			a {
 				// `:not(:active)` — let the pressed background through
 				&:not(:active):hover {
-					background-color: var(--osui-bg-surface-hover);
+					background-color: variables.$token-bg-neutral-subtlest-hover;
 					color: var(--color-text);
 				}
 
@@ -416,7 +416,7 @@
 
 	.app-menu-links .osui-submenu__header:hover,
 	.app-menu-links .osui-submenu--is-open .osui-submenu__header {
-		background-color: var(--osui-bg-surface-hover);
+		background-color: variables.$token-bg-neutral-subtlest-hover;
 		border-radius: variables.$token-border-radius-200;
 		color: var(--color-text);
 	}
@@ -436,7 +436,7 @@
 		transition: background-color variables.$token-transition-time-150 variables.$token-transition-curve-linear;
 
 		&:hover {
-			background-color: var(--osui-bg-surface-hover);
+			background-color: variables.$token-bg-neutral-subtlest-hover;
 			color: var(--color-text);
 		}
 	}
@@ -459,7 +459,7 @@
 			.osui-submenu {
 				&__header {
 					&:hover {
-						background-color: var(--osui-bg-surface-hover);
+						background-color: variables.$token-bg-neutral-subtlest-hover;
 						border-bottom: none;
 						border-left: none;
 						border-radius: variables.$token-border-radius-200;
@@ -470,7 +470,7 @@
 
 		// Side menu: direct link hover
 		.app-menu-links > a:hover {
-			background-color: var(--osui-bg-surface-hover);
+			background-color: variables.$token-bg-neutral-subtlest-hover;
 			border-radius: variables.$token-border-radius-200;
 			color: var(--color-text);
 		}
@@ -487,30 +487,30 @@
 
 // Top menu: header navigation direct link
 .desktop .header-navigation .app-menu-links > a.active:hover {
-	background-color: var(--osui-bg-surface-hover);
+	background-color: variables.$token-bg-neutral-subtlest-hover;
 	color: variables.$token-semantics-primary-base;
 }
 
 // Top menu: submenu items — `:not(:active)` lets the pressed background through
 .desktop .osui-submenu__items a.active:not(:active):hover {
-	background-color: var(--osui-bg-surface-hover);
+	background-color: variables.$token-bg-neutral-subtlest-hover;
 }
 
 // Side menu desktop: direct link
 .desktop .layout-side .app-menu-links > a.active:hover {
-	background-color: var(--osui-bg-surface-hover);
+	background-color: variables.$token-bg-neutral-subtlest-hover;
 	color: variables.$token-semantics-primary-base;
 }
 
 // Side menu desktop: submenu header
 .desktop .layout-side .app-menu-links .osui-submenu.active .osui-submenu__header:hover {
-	background-color: var(--osui-bg-surface-hover);
+	background-color: variables.$token-bg-neutral-subtlest-hover;
 	color: var(--osui-submenu-active-border-color);
 }
 
 // Side menu desktop: submenu items — `:not(:active)` lets the pressed background through
 .desktop .layout-side .app-menu-links .osui-submenu__items a.active:not(:active):hover {
-	background-color: var(--osui-bg-surface-hover);
+	background-color: variables.$token-bg-neutral-subtlest-hover;
 	color: variables.$token-semantics-primary-base;
 }
 
@@ -550,7 +550,7 @@
 			}
 
 			&:hover {
-				background-color: var(--osui-bg-surface-hover);
+				background-color: variables.$token-bg-neutral-subtlest-hover;
 				border-radius: variables.$token-border-radius-200;
 				color: var(--color-text);
 			}
@@ -583,7 +583,7 @@
 				}
 
 				&:not(:active):hover {
-					background-color: var(--osui-bg-surface-hover);
+					background-color: variables.$token-bg-neutral-subtlest-hover;
 					color: var(--color-text);
 				}
 			}
@@ -592,7 +592,7 @@
 
 	.app-menu-links > a {
 		&:hover {
-			background-color: var(--osui-bg-surface-hover);
+			background-color: variables.$token-bg-neutral-subtlest-hover;
 			border-radius: variables.$token-border-radius-200;
 			color: var(--color-text);
 		}
@@ -600,14 +600,14 @@
 
 	// Mobile/tablet: submenu header active hover
 	.osui-submenu.active .osui-submenu__header:hover {
-		background-color: var(--osui-bg-surface-hover);
+		background-color: variables.$token-bg-neutral-subtlest-hover;
 		border-radius: variables.$token-border-radius-200;
 		color: var(--osui-submenu-active-border-color);
 	}
 
 	// Mobile/tablet: submenu items active hover — `:not(:active)` lets the pressed background through
 	.osui-submenu__items a.active:not(:active):hover {
-		background-color: var(--osui-bg-surface-hover);
+		background-color: variables.$token-bg-neutral-subtlest-hover;
 		color: variables.$token-semantics-primary-base;
 	}
 
@@ -617,7 +617,7 @@
 
 	// Mobile/tablet: direct link active hover
 	.app-menu-links > a.active:hover {
-		background-color: var(--osui-bg-surface-hover);
+		background-color: variables.$token-bg-neutral-subtlest-hover;
 		color: variables.$token-semantics-primary-base;
 	}
 }

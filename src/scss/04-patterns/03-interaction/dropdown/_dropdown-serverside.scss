@@ -15,6 +15,7 @@ $balloonMobileTopMargin: 5vh;
 	--osui-dropdown-ss-arrow-color: #{variables.$token-icon-subtlest};
 	--osui-dropdown-ss-arrow-size: #{variables.$token-scale-400};
 	--osui-dropdown-ss-background: var(--color-background-input);
+	--osui-dropdown-ss-balloon-max-height: 300px;
 	--osui-dropdown-ss-border-color: var(--color-border-input);
 	--osui-dropdown-ss-border-radius: var(--border-radius-soft);
 	--osui-dropdown-ss-color: var(--color-text);
@@ -23,18 +24,20 @@ $balloonMobileTopMargin: 5vh;
 	--osui-dropdown-ss-focus-border-color: var(--color-border-primary);
 	--osui-dropdown-ss-focus-ring-color: #{variables.$token-border-focus-default};
 	--osui-dropdown-ss-hover-border-color: var(--color-border-input-hover);
+	--osui-dropdown-ss-min-width: 170px;
 	--osui-dropdown-ss-prompt-color: var(--color-text-subtlest);
+	--osui-dropdown-ss-scroll-bar-width: 5px;
 	// ───────────────────────────────────────────────────────────────────
 
-	--osui-dropdown-ss-balloon-max-height: 300px;
-	--osui-dropdown-min-width: 170px;
+	// Shared FloatingPosition contract — read by name from TS
+	// (Utils/FloatingPosition/Enum.ts `CssCustomProperties.Offset`), so it keeps
+	// the generic `--osui-floating-offset` name and is NOT part of this pattern's API.
 	--osui-floating-offset: #{variables.$token-scale-100};
-	--osui-dropdown-ss-scroll-bar-width: 5px;
 	position: relative;
 
 	.osui-balloon {
-		// Match the widget Dropdown list container: soft radius, overlay shadow, neutral border
-		--osui-balloon-shadow: var(--osui-elevation-overlay);
+		// Match the widget Dropdown list container: soft radius, overlay elevation, neutral border
+		--osui-balloon-shadow: #{variables.$token-elevation-3};
 		--osui-balloon-shape: var(--border-radius-soft);
 
 		border: variables.$token-border-size-025 solid var(--color-border);
@@ -42,9 +45,9 @@ $balloonMobileTopMargin: 5vh;
 		flex-direction: column;
 		flex: 1;
 		height: auto;
-		min-width: var(--osui-dropdown-min-width);
+		min-width: var(--osui-dropdown-ss-min-width);
 		overflow: hidden;
-		z-index: var(--layer-elevated);
+		z-index: var(--layer-global-elevated);
 
 		// Service Studio Preview
 		& {
@@ -277,7 +280,7 @@ $balloonMobileTopMargin: 5vh;
 	&--not-valid {
 		.osui-dropdown-serverside__selected-values-wrapper {
 			/* !important should be here in order to grant more specific selectors be overriding border color at this context. */
-			border-color: var(--color-border-danger) !important;
+			border-color: variables.$token-border-danger-default !important;
 		}
 
 		& + .osui-dropdown-serverside-error-message {
@@ -545,7 +548,7 @@ $balloonMobileTopMargin: 5vh;
 			top: 0;
 			transition: opacity variables.$token-transition-time-300 variables.$token-transition-curve-expressive;
 			width: 100vw;
-			z-index: var(--layer-instant-interaction);
+			z-index: var(--layer-global-instant-interaction);
 
 			// Service Studio Preview
 			& {

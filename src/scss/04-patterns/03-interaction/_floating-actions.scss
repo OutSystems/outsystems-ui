@@ -9,7 +9,7 @@
 .floating {
 	&-actions-wrapper,
 	&-overlay {
-		--osui-floating-actions-layer: var(--layer-elevated);
+		--osui-floating-actions-layer: var(--layer-global-elevated);
 	}
 
 	&-actions-wrapper {
@@ -50,8 +50,8 @@
 				opacity: 1;
 				transform: translateY(0px) translateZ(0) scale(1);
 				transition:
-					opacity var(--osui-motion-duration-180) variables.$token-transition-curve-quick,
-					transform var(--osui-motion-duration-180) variables.$token-transition-curve-quick;
+					opacity variables.$token-transition-time-200 variables.$token-transition-curve-quick,
+					transform variables.$token-transition-time-200 variables.$token-transition-curve-quick;
 				transition-delay: calc(var(--delay) * 40ms); // design-spec: stagger delay
 			}
 
@@ -129,7 +129,7 @@
 		justify-content: center;
 		margin-left: variables.$token-scale-400;
 		transform: translateZ(0) scale(0.3);
-		transition: transform var(--osui-motion-duration-180) variables.$token-transition-curve-quick;
+		transition: transform variables.$token-transition-time-200 variables.$token-transition-curve-quick;
 		transition-delay: calc(var(--delay) * 40ms); // design-spec: stagger delay
 		width: variables.$token-scale-1000;
 
@@ -162,8 +162,8 @@
 		transform: rotate(0deg) translateZ(0);
 		transform-origin: center center;
 		transition:
-			transform var(--osui-motion-duration-180) variables.$token-transition-curve-linear,
-			box-shadow var(--osui-motion-duration-180) variables.$token-transition-curve-linear;
+			transform variables.$token-transition-time-200 variables.$token-transition-curve-linear,
+			box-shadow variables.$token-transition-time-200 variables.$token-transition-curve-linear;
 		width: variables.$token-scale-1400;
 
 		&:hover {
@@ -184,7 +184,7 @@
 		position: fixed;
 		right: 0;
 		top: 0;
-		transition: opacity var(--osui-motion-duration-180) variables.$token-transition-curve-base;
+		transition: opacity variables.$token-transition-time-200 variables.$token-transition-curve-base;
 		width: 100vw;
 		z-index: var(--osui-floating-actions-layer);
 

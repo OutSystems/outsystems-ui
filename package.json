@@ -71,14 +71,15 @@
 		"gulp-sourcemaps": "^3.0.0",
 		"json-fixer": "^1.6.15",
 		"nouislider": "^15.8.1",
-		"outsystems-design-tokens": "^1.4.2",
+		"outsystems-design-tokens": "^2.0.0",
 		"photoswipe": "^4.1.0",
 		"postcss": "^8.4.38",
 		"postcss-discard-comments": "^5.1.2",
 		"postcss-discard-duplicates": "^5.1.0",
 		"prettier": "^3.9.6",
 		"prompts": "^2.4.2",
-		"react-router-dom": "^6.30.3",
+		"react": "^19.2.8",
+		"react-dom": "^19.2.8",
 		"remark-gfm": "^4.0.1",
 		"sass": "^1.77.4",
 		"storybook": "10.5.9",
@@ -92,10 +93,5 @@
 		"virtual-select-plugin": "^1.1.0",
 		"vite": "^6.4.2",
 		"wnumb": "^1.2.0"
-	},
-	"optionalDependencies": {
-		"@outsystems/runtime-core-js": "^6.71.4",
-		"@outsystems/runtime-view-js": "^6.35.0",
-		"@outsystems/runtime-widgets-js": "^6.23.0"
 	}
 }

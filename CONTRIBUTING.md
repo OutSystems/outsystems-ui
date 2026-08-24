@@ -138,22 +138,23 @@ npm run storybook        # dev server on http://localhost:6006
 npm run build-storybook  # static build (what CI publishes to Chromatic)
 ```
 
-### Optional story group: platform Widgets
+### Story group: platform Widgets
 
-The `Widgets/` story group mounts the platform's real React widgets from `@outsystems/runtime-core-js`, `runtime-view-js` and `runtime-widgets-js`. These are **optionalDependencies published only to the OutSystems-internal package feed**:
+The `Widgets/` story group covers controls that are **not** part of this library — the platform's React widgets from `@outsystems/runtime-widgets-js`. This repo does **not** depend on those packages: every widget story is a static transcription of the DOM the real widget emits, captured from `@outsystems/runtime-widgets-js@6.25.4` under React 17 and recorded with its provenance in each story's doc comment. See `docs-internal/adr/ADR-0009` for the capture method and the refresh trigger.
 
-- **External clones**: `npm install` skips them automatically — the build, the OUI pattern stories and the docs pages all work with no internal access. Storybook logs a one-line notice and omits the `Widgets/` group.
-- **Internal developers**: with npm authenticated to the internal feed (scope mapping in `~/.npmrc`), `npm install` picks them up and the group appears.
+`/platform/platform-core.css` — the platform base layer that gives the data-attribute controls (`[data-checkbox]`, `[data-switch]`, `[data-upload]`, …) their structural pseudo-elements — is a tracked, Storybook-only copy at `.storybook/platform/platform-core.css`. It is not part of the library build and nothing in `dist/` reads it.
 
-The same packages also provide the **platform base CSS** (`/platform/platform-core.css`): it is not vendored in the repo — `.storybook/main.ts` regenerates it on every Storybook startup from `@outsystems/runtime-widgets-js`. Without the packages a stub is written instead, so Storybook still runs but the data-attribute form controls (`[data-checkbox]`, `[data-switch]`, …) render without their platform-provided structure.
+The upshot: `git clone && npm i && npm run build && npm run build-storybook` produces the **complete** Storybook for anyone — no internal package feed, no Azure login, no scope mapping in `~/.npmrc`. External clones, fork PRs and CI all render the identical story set.
+
+If a widget's platform DOM changes, re-capture rather than hand-editing: the stories are meant to stay faithful to the package, not to be tuned until they look right.
 
 ### Chromatic CI
 
 `.github/workflows/chromatic.yaml` publishes the Storybook to [Chromatic](https://www.chromatic.com/) on every PR into (and merge to) the long-living branches. PRs get a visual diff against the base-branch baseline plus a PR comment with the build/preview links; merges auto-accept the new baseline.
 
-Fork PRs receive no repository secrets, so the internal-infra and Chromatic steps are skipped (never failed). To run Chromatic against your own fork, create a free Chromatic project and run `npx chromatic --project-token=<your-token>` (see `npm run chromatic`).
+The job needs no internal infrastructure — the only secret involved is the Chromatic token, and the Chromatic step is skipped (never failed) when it is absent, so fork PRs stay neutral while still proving the public build works. To run Chromatic against your own fork, create a free Chromatic project and run `npx chromatic --project-token=<your-token>` (see `npm run chromatic`).
 
-**TurboSnap and the `externals` list.** The workflow enables TurboSnap (`onlyChanged`), which snapshots only the stories whose module graph changed. Because Storybook here loads the **compiled** bundle from `dist/` through `<script>`/`<link>` tags rather than importing it, nothing under `src/` is part of that graph — and TurboSnap silently ignores a changed file it cannot trace. The `externals` list in the workflow (`src/**`, `gulp/**`, `deprecated/**`) is what closes that hole: a change to any of those paths disables TurboSnap for the build and forces a full re-snapshot. **Do not remove it** — without it a SCSS-only PR would snapshot nothing and still report green.
+**TurboSnap is deliberately OFF.** Every build snapshots every story. Storybook here loads the **compiled** bundle from `dist/` through `<script>`/`<link>` tags rather than importing it, so nothing under `src/` is in Storybook's module graph — and TurboSnap silently ignores a changed file it cannot trace, which would make a SCSS-only PR (nearly every PR in the theme migration) snapshot nothing and still report green. An `externals` list was tried as a fix and was not enough: it only classifies files already in the changed-file list, and that list itself came back empty against this branch's squash-merged history. A `🛡️ Verify Chromatic actually captured snapshots` step now fails the build whenever the visual surface changed but zero snapshots were taken. **Do not re-enable `onlyChanged` without reading `docs-internal/adr/ADR-0008`** — and note `externals` is only accepted alongside `onlyChanged: true`, so the two must be added or removed together.
 
 ## Code Standards
 

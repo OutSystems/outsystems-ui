@@ -29,8 +29,8 @@ GitHub:
 Section Index:
 0. Root - CSS Variables
     0.2. Icon library
+    0.3. Dark theme (opt-in via .theme-dark class)
 1. Resets
-    1.2. Dark theme (opt-in via .theme-dark class)
 2. HTML Elements
     2.1. Links
     2.2. Images
@@ -193,13 +193,13 @@ Section Index:
 @use '01-foundations/root' as *;
 /*! 0.2. Icon library */
 @use '01-foundations/icon-library-odc' as *;
+/*! 0.3. Dark theme (opt-in via .theme-dark class) */
+@use 'tokens/theme-dark' as *;
 
 /*! ==============================================================================
 1. Resets
 =============================================================================== */
 @use '01-foundations/resets' as *;
-/*! 1.2. Dark theme (opt-in via .theme-dark class) */
-@use '01-foundations/theme-dark' as *;
 
 /*! ==============================================================================
 2. HTML Elements

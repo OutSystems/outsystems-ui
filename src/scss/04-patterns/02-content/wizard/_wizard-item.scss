@@ -35,7 +35,7 @@
 	--osui-wizard-connector-color: #{variables.$token-primitives-neutral-600};
 	--osui-wizard-connector-radius: #{variables.$token-border-radius-full};
 	--osui-wizard-connector-size: #{variables.$token-border-size-050};
-	--osui-wizard-focus-halo-color: var(--osui-border-focus-halo);
+	--osui-wizard-focus-halo-color: var(--color-focus-outer);
 	--osui-wizard-focus-halo-width: #{variables.$token-border-size-075};
 	// ───────────────────────────────────────────────────────────────────────────
 
@@ -109,7 +109,7 @@
 			top: 50%;
 			transform: translateY(-50%);
 			width: 100%;
-			z-index: var(--layer-screen);
+			z-index: var(--layer-global-screen);
 		}
 	}
 

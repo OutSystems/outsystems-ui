@@ -29,7 +29,7 @@
 		.list.list-group {
 			background-color: transparent;
 			height: 100%;
-			z-index: var(--layer-screen);
+			z-index: var(--layer-global-screen);
 
 			& > :nth-child(1) {
 				display: block;
@@ -119,7 +119,7 @@
 	&--animatable {
 		transition:
 			transform,
-			opacity var(--osui-motion-duration-400) variables.$token-transition-curve-expressive;
+			opacity variables.$token-transition-time-300 variables.$token-transition-curve-expressive;
 	}
 
 	.init {

@@ -62,9 +62,12 @@
   below then overrides colours/sizes (so e.g. the switch is OUI blue, not the
   base layer's legacy green). This mirrors the real platform's load order.
 
-  The file is NOT vendored: main.ts regenerates it on every Storybook startup
-  from @outsystems/runtime-widgets-js (or writes a stub when that internal
-  package is absent).
+  The file is a tracked, Storybook-only copy of the platform base layer
+  (.storybook/platform/platform-core.css) — its header records the source package
+  version and the refresh trigger. It used to be generated at startup from the
+  internal @outsystems/runtime-widgets-js package; vendoring it is what lets this
+  public repo render the Widgets stories with no internal feed access at all.
+  See docs-internal/adr/ADR-0009.
 -->
 <link rel="stylesheet" href="/platform/platform-core.css" />
 
