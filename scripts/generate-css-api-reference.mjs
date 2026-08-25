@@ -172,6 +172,9 @@ for (const abs of files) {
 // ── Build shared body (TOC + category tables) ────────────────────────────────
 const sortedCats = [...categories.entries()].sort((a, b) => a[1].order - b[1].order);
 
+// Values come from our own SCSS at build time; only `|` needs escaping for the
+// markdown table. Backslashes must pass through untouched — values land inside a
+// code span (e.g. `'\f107'`), where backslash is literal, so escaping them corrupts output.
 const esc = (v) => v.replace(/\|/g, '\\|');
 let totalProps = 0;
 let totalComponents = 0;
