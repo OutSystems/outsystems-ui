@@ -105,59 +105,47 @@ jobs:
               with:
                   key-name: o11odc-github-gitpersonal-token-prd
 
-            - name: 🔄 Create release PR and auto-merge rc${{ inputs.new-version }} into main
+            - name: 🔄 Create release PR for rc${{ inputs.new-version }} into main
               env:
                   GH_TOKEN: ${{ steps.get-github-token.outputs.az-keyvault-value }}
               run: |
                   SOURCE_BRANCH="rc${{ inputs.new-version }}"
-                  PR_TITLE="Merge ${SOURCE_BRANCH} into main [skip ci]"
+                  BASE_BRANCH="main"
+                  PR_TITLE="Merge ${SOURCE_BRANCH} into ${BASE_BRANCH} [skip ci]"
 
                   COMPARE_STATUS=$(gh api \
-                    "repos/${{ github.repository }}/compare/main...${SOURCE_BRANCH}" \
-                    --jq -r '.status')
+                    "repos/${{ github.repository }}/compare/${BASE_BRANCH}...${SOURCE_BRANCH}" \
+                    --template '{{.status}}')
 
                   if [ "${COMPARE_STATUS}" = "identical" ] || [ "${COMPARE_STATUS}" = "behind" ]; then
-                    echo "${SOURCE_BRANCH} is already merged into main."
+                    echo "${SOURCE_BRANCH} is already merged into ${BASE_BRANCH}."
                     exit 0
                   fi
 
-                  if ! gh pr view "${SOURCE_BRANCH}" --json number --jq .number >/dev/null 2>&1; then
-                    gh pr create \
-                      --base main \
+                  PR_NUMBER=$(gh pr list \
+                    --head "${SOURCE_BRANCH}" \
+                    --base "${BASE_BRANCH}" \
+                    --state open \
+                    --limit 1 \
+                    --json number \
+                    --jq '.[0].number // empty')
+
+                  if [ -z "${PR_NUMBER}" ]; then
+                    PR_NUMBER=$(gh pr create \
+                      --base "${BASE_BRANCH}" \
                       --head "${SOURCE_BRANCH}" \
                       --title "${PR_TITLE}" \
                       --body "$(cat <<EOF
-                  This PR merges ${SOURCE_BRANCH} into main.
+                  This PR merges ${SOURCE_BRANCH} into ${BASE_BRANCH}.
 
                   This PR was automatically created by the Release workflow.
-                  Auto-merge is enabled after required checks pass.
                   EOF
-                  )"
-                  fi
-
-                  PR_NUMBER=$(gh pr view "${SOURCE_BRANCH}" --json number --jq .number)
-                  PR_STATE=$(gh pr view "${SOURCE_BRANCH}" --json state --jq -r '.state')
-
-                  if [ "${PR_STATE}" = "MERGED" ]; then
-                    echo "Pull request #${PR_NUMBER} is already merged."
-                    exit 0
+                  )" \
+                      --json number \
+                      --jq .number)
                   fi
 
                   echo "Release PR: https://github.com/${{ github.repository }}/pull/${PR_NUMBER}"
-                  gh pr merge "${PR_NUMBER}" --auto --merge
-
-                  for attempt in $(seq 1 60); do
-                    STATE=$(gh pr view "${PR_NUMBER}" --json state --jq -r '.state')
-                    if [ "${STATE}" = "MERGED" ]; then
-                      echo "Pull request #${PR_NUMBER} merged."
-                      exit 0
-                    fi
-                    echo "Waiting for required checks and auto-merge (${attempt}/60)..."
-                    sleep 30
-                  done
-
-                  echo "::error::Timed out waiting for pull request #${PR_NUMBER} to auto-merge."
-                  exit 1
 
     set-pre-release-as-lts:
         name: Set pre-release as LTS
