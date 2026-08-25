@@ -76,8 +76,8 @@ jobs:
             - name: 🏗️ Run build
               run: npm run build
 
-    merge-rc-into-main:
-        name: Merge rc branch into main
+    merge-rc-into-test-release-action:
+        name: Merge rc branch into test-release-action
         needs: run-lint-on-rc
         runs-on: ubuntu-latest
         permissions:
@@ -104,20 +104,20 @@ jobs:
               with:
                   key-name: o11odc-github-gitpersonal-token-prd
 
-            - name: 🔄 Merge rc${{ inputs.new-version }} into main
+            - name: 🔄 Merge rc${{ inputs.new-version }} into test-release-action
               env:
                   GH_TOKEN: ${{ steps.get-github-token.outputs.az-keyvault-value }}
               run: |
                   gh api \
                     --method POST \
                     "repos/${{ github.repository }}/merges" \
-                    -f base=main \
+                    -f base=test-release-action \
                     -f head=rc${{ inputs.new-version }} \
-                    -f commit_message="Merged rc${{ inputs.new-version }} into main. [skip ci]"
+                    -f commit_message="Merged rc${{ inputs.new-version }} into test-release-action. [skip ci]"
 
     set-pre-release-as-lts:
         name: Set pre-release as LTS
-        needs: merge-rc-into-main
+        needs: merge-rc-into-test-release-action
         runs-on: ubuntu-latest
         permissions:
             id-token: write
@@ -153,7 +153,7 @@ jobs:
 
     delete-rc-branch:
         name: Delete rc branch
-        needs: merge-rc-into-main
+        needs: merge-rc-into-test-release-action
         runs-on: ubuntu-latest
         permissions:
             contents: write
