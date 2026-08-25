@@ -105,7 +105,7 @@ jobs:
               with:
                   key-name: o11odc-github-gitpersonal-token-prd
 
-            - name: 🔄 Create release PR and auto-merge rc${{ inputs.new-version }} into test-release-action
+            - name: 🔄 Create release PR for rc${{ inputs.new-version }} into test-release-action
               env:
                   GH_TOKEN: ${{ steps.get-github-token.outputs.az-keyvault-value }}
               run: |
@@ -131,7 +131,6 @@ jobs:
                   This PR merges ${SOURCE_BRANCH} into ${BASE_BRANCH}.
 
                   This PR was automatically created by the Release workflow.
-                  Auto-merge is enabled after required checks pass.
                   EOF
                   )"
                   fi
@@ -145,20 +144,6 @@ jobs:
                   fi
 
                   echo "Release PR: https://github.com/${{ github.repository }}/pull/${PR_NUMBER}"
-                  gh pr merge "${PR_NUMBER}" --auto --merge
-
-                  for attempt in $(seq 1 60); do
-                    STATE=$(gh pr view "${PR_NUMBER}" --json state --jq '.state')
-                    if [ "${STATE}" = "MERGED" ]; then
-                      echo "Pull request #${PR_NUMBER} merged."
-                      exit 0
-                    fi
-                    echo "Waiting for required checks and auto-merge (${attempt}/60)..."
-                    sleep 30
-                  done
-
-                  echo "::error::Timed out waiting for pull request #${PR_NUMBER} to auto-merge."
-                  exit 1
 
     set-pre-release-as-lts:
         name: Set pre-release as LTS
