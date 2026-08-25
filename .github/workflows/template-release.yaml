@@ -115,7 +115,7 @@ jobs:
 
                   COMPARE_STATUS=$(gh api \
                     "repos/${{ github.repository }}/compare/${BASE_BRANCH}...${SOURCE_BRANCH}" \
-                    --jq -r '.status')
+                    --template '{{.status}}')
 
                   if [ "${COMPARE_STATUS}" = "identical" ] || [ "${COMPARE_STATUS}" = "behind" ]; then
                     echo "${SOURCE_BRANCH} is already merged into ${BASE_BRANCH}."
@@ -137,7 +137,7 @@ jobs:
                   fi
 
                   PR_NUMBER=$(gh pr view "${SOURCE_BRANCH}" --json number --jq .number)
-                  PR_STATE=$(gh pr view "${SOURCE_BRANCH}" --json state --jq -r '.state')
+                  PR_STATE=$(gh pr view "${SOURCE_BRANCH}" --json state --jq '.state')
 
                   if [ "${PR_STATE}" = "MERGED" ]; then
                     echo "Pull request #${PR_NUMBER} is already merged."
@@ -148,7 +148,7 @@ jobs:
                   gh pr merge "${PR_NUMBER}" --auto --merge
 
                   for attempt in $(seq 1 60); do
-                    STATE=$(gh pr view "${PR_NUMBER}" --json state --jq -r '.state')
+                    STATE=$(gh pr view "${PR_NUMBER}" --json state --jq '.state')
                     if [ "${STATE}" = "MERGED" ]; then
                       echo "Pull request #${PR_NUMBER} merged."
                       exit 0
