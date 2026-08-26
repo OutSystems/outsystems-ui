@@ -1,4 +1,4 @@
-@use "../../../tokens/variables";
+@use '../../../tokens/variables';
 
 /* Patterns - Interaction - Animated Label */
 ////
@@ -13,7 +13,8 @@
 	--osui-animated-label-hover-border-color: var(--color-border-input-hover);
 	--osui-animated-label-focus-border-color: var(--color-border-primary);
 	--osui-animated-label-focus-ring-color: #{variables.$token-border-focus-default};
-	--osui-animated-label-focus-shadow: 0 0 0 #{variables.$token-border-size-050} var(--osui-animated-label-focus-ring-color);
+	--osui-animated-label-focus-shadow: 0 0 0 #{variables.$token-border-size-050}
+		var(--osui-animated-label-focus-ring-color);
 	--osui-animated-label-error-color: #{variables.$token-text-danger};
 	--osui-animated-label-disabled-background: var(--color-background-input-disabled);
 	--osui-animated-label-disabled-color: var(--color-text-disabled);
@@ -26,6 +27,7 @@
 			font-size: variables.$token-font-size-300;
 			top: 0;
 			transform: translateY(-50%);
+			z-index: 1;
 
 			label {
 				color: var(--osui-animated-label-color);
@@ -177,6 +179,14 @@
 				color: var(--osui-animated-label-disabled-color);
 			}
 		}
+
+		&.active .animated-label-text {
+			background-image: -webkit-linear-gradient(
+				bottom,
+				var(--osui-animated-label-disabled-background) 50%,
+				var(--osui-input-background, var(--color-background-input)) 50%
+			);
+		}
 	}
 
 	&:has(.not-valid) {
@@ -200,10 +210,15 @@
 
 	// Nested to raise specificity above global .form-control focus rules
 	.animated-label-input {
+		border-radius: inherit;
 		position: relative;
 
 		span.input-text {
 			display: block;
+		}
+
+		span {
+			border-radius: inherit;
 		}
 
 		&:not(:has(textarea)) {
@@ -218,7 +233,7 @@
 			&[data-input] {
 				background-color: transparent;
 				border: none;
-				border-radius: 0;
+				border-radius: inherit;
 				height: 100%;
 				padding: 0 variables.$token-scale-400;
 				width: 100%;
@@ -233,7 +248,7 @@
 			&[data-textarea] {
 				background-color: transparent;
 				border: none;
-				border-radius: 0;
+				border-radius: inherit;
 				margin: 0;
 				padding: variables.$token-scale-400 variables.$token-scale-400 0;
 				width: 100%;
