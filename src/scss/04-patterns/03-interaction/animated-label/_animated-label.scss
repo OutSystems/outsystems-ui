@@ -189,6 +189,12 @@
 		}
 	}
 
+	// Autofill — bottom half transparent so field/autocomplete color shows through the label
+	&:has(.form-control:-webkit-autofill).active .animated-label-text {
+		background-color: transparent;
+		background-image: linear-gradient(to top, transparent 50%, var(--color-background-body) 50%);
+	}
+
 	&:has(.not-valid) {
 		border-color: var(--osui-animated-label-error-color);
 		margin-bottom: variables.$token-scale-900;
