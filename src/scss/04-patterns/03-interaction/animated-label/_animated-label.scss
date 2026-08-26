@@ -27,7 +27,7 @@
 			font-size: variables.$token-font-size-300;
 			top: 0;
 			transform: translateY(-50%);
-			z-index: 1;
+			z-index: var(--layer-local-tier-1);
 
 			label {
 				color: var(--osui-animated-label-color);
@@ -93,7 +93,6 @@
 				background-color: transparent;
 				border: variables.$token-border-size-0;
 				border-bottom: variables.$token-border-size-025 solid var(--osui-animated-label-border-color);
-				border-radius: variables.$token-border-radius-0;
 				padding: variables.$token-scale-0;
 				transition: all variables.$token-transition-time-100 variables.$token-transition-curve-expressive;
 
@@ -181,8 +180,8 @@
 		}
 
 		&.active .animated-label-text {
-			background-image: -webkit-linear-gradient(
-				bottom,
+			background-image: linear-gradient(
+				to top,
 				var(--osui-animated-label-disabled-background) 50%,
 				var(--osui-input-background, var(--color-background-input)) 50%
 			);
@@ -216,15 +215,15 @@
 
 	// Nested to raise specificity above global .form-control focus rules
 	.animated-label-input {
-		border-radius: inherit;
 		position: relative;
+
+		&,
+		* {
+			border-radius: inherit;
+		}
 
 		span.input-text {
 			display: block;
-		}
-
-		span {
-			border-radius: inherit;
 		}
 
 		&:not(:has(textarea)) {
@@ -239,7 +238,6 @@
 			&[data-input] {
 				background-color: transparent;
 				border: none;
-				border-radius: inherit;
 				height: 100%;
 				padding: 0 variables.$token-scale-400;
 				width: 100%;
@@ -254,7 +252,6 @@
 			&[data-textarea] {
 				background-color: transparent;
 				border: none;
-				border-radius: inherit;
 				margin: 0;
 				padding: variables.$token-scale-400 variables.$token-scale-400 0;
 				width: 100%;
