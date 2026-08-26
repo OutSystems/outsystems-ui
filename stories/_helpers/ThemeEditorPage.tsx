@@ -48,6 +48,11 @@ const MOON_ICON = (
 	</svg>
 );
 
+const CONTRAST_EXEMPT_TEXT_ROLES = new Set([
+	'--color-text-inverse',
+	'--color-text-disabled', // WCAG — inactive/disabled UI is exempt from contrast requirements
+]);
+
 const CONTRAST_PAIRS: Array<{ label: string; fg: string; bg: string }> = [
 	{ label: 'Text on Surface', fg: '--color-text', bg: '--color-background-surface' },
 	{ label: 'Text subtle on Surface', fg: '--color-text-subtle', bg: '--color-background-surface' },
@@ -103,7 +108,10 @@ function RoleRow({
 	};
 
 	const contrastBadge = useMemo(() => {
-		if (role.type !== 'color' || !role.name.startsWith('--color-text-') || role.name === '--color-text-inverse') {
+		if (role.type !== 'color' || !role.name.startsWith('--color-text-')) {
+			return null;
+		}
+		if (CONTRAST_EXEMPT_TEXT_ROLES.has(role.name)) {
 			return null;
 		}
 		const ratio = contrastRatio(text, surfaceHex);
@@ -418,7 +426,7 @@ export function ThemeEditorPage(): React.ReactElement {
 		<div className={`osui-theme-editor sb-unstyled${docsDark ? ' docs-dark' : ''}`}>
 			<header className="te-head">
 				<div className="te-head-in">
-					<span className="te-eyebrow">Tools · Theme Editor</span>
+					<span className="te-eyebrow">Design system · Theme Editor</span>
 					<h1>
 						Edit theme tokens,
 						<br />

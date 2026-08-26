@@ -65,16 +65,16 @@ const WELCOME_SECTIONS = `
       <a class="piece" href="#"><span class="k">Step 1</span><b>App templates</b><span>Two starting points, optimised per device and adaptive from the first screen.</span></a>
       <a class="piece" href="#"><span class="k">Step 2</span><b>Screen templates</b><span>Whole screens with layout, logic and sample data. Swap in your entities.</span></a>
       <a class="piece" href="?path=/docs/component-library--docs"><span class="k">Step 3</span><b>Patterns</b><span>The building blocks. Configure properties, bind data and actions.</span></a>
-      <a class="piece" href="?path=/docs/css-architecture--docs"><span class="k">Step 4</span><b>Theme &amp; tokens</b><span>Change tokens once; colour, type and spacing follow everywhere.</span></a>
+      <a class="piece" href="?path=/docs/design-system-css-architecture--docs"><span class="k">Step 4</span><b>Theme &amp; tokens</b><span>Change tokens once; colour, type and spacing follow everywhere.</span></a>
     </div>
   </div>
 `;
 
 const WELCOME_TAIL = `
-  <!-- FOUNDATIONS -->
-  <div class="sec" id="foundations">
+  <!-- DESIGN SYSTEM -->
+  <div class="sec" id="design-system">
     <div class="sec-head">
-      <div class="sec-kicker">Foundations</div>
+      <div class="sec-kicker">Design system</div>
       <h2>The layer everything else is built on</h2>
       <p>Tokens are the contract: patterns consume them, themes override them, dark mode is a re-mapping rather than a second stylesheet.</p>
     </div>
@@ -100,7 +100,7 @@ const WELCOME_TAIL = `
           <div class="type-row"><span class="lbl">Caption</span><span style="font-size:12px;color:var(--w-ink-3)">Aa</span></div>
         </div>
       </div>
-      <a class="w-card" href="?path=/docs/css-architecture--docs">
+      <a class="w-card" href="?path=/docs/design-system-css-architecture--docs">
         <h3>Tokens</h3>
         <p>Change one in the theme editor and every pattern that uses it follows.</p>
         <div style="margin-top:8px" class="mono">
@@ -167,7 +167,7 @@ const WELCOME_TAIL = `
         <p>Styles, patterns, widgets and layouts for Figma, Sketch and Adobe XD, mirroring the token layer.</p>
         <div class="arrow">Open kits →</div>
       </a>
-      <a class="w-card" href="?path=/docs/css-architecture--docs">
+      <a class="w-card" href="?path=/docs/design-system-css-architecture--docs">
         <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h10M4 17h7"/></svg></div>
         <h3>CSS architecture</h3>
         <p>How tokens, the theme layer and the <code>--osui-*</code> component API fit together.</p>

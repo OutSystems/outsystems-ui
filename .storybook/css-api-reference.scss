@@ -850,7 +850,8 @@ html.os-windows.sb-app-dark .osui-css-api-reference .api-nav::-webkit-scrollbar-
 
 /* ── Copy icon ────────────────────────────────────────────────────── */
 
-.osui-css-api-reference .api-copy-icon {
+.osui-css-api-reference .api-copy-icon,
+.osui-foundations .api-copy-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -892,12 +893,14 @@ html.os-windows.sb-app-dark .osui-css-api-reference .api-nav::-webkit-scrollbar-
   opacity: 1;
 }
 
-.osui-css-api-reference .api-copy-icon:hover {
+.osui-css-api-reference .api-copy-icon:hover,
+.osui-foundations .api-copy-icon:hover {
   color: var(--api-ink);
   background: var(--api-n-200);
 }
 
-.osui-css-api-reference .api-copy-icon.is-copied {
+.osui-css-api-reference .api-copy-icon.is-copied,
+.osui-foundations .api-copy-icon.is-copied {
   color: var(--api-primary-700);
 }
 

@@ -207,7 +207,7 @@ function HowToUseSection() {
 			<p>
 				Scroll the list below or pick a component in the sidebar, then override any <strong>property</strong>{' '}
 				on its root selector (or a wrapper above it). Defaults resolve through the chain on{' '}
-				<a href="?path=/docs/css-architecture--docs">CSS Architecture</a>.
+				<a href="?path=/docs/design-system-css-architecture--docs">CSS Architecture</a>.
 			</p>
 			<DocsCodeBlock code={CODE_INSTANCE} />
 		</section>
@@ -493,7 +493,7 @@ export function CssApiReferencePage() {
 		<div className="osui-css-api-reference sb-unstyled">
 			<header className="api-head">
 				<div className="api-head-in">
-					<span className="api-eyebrow">Reference · CSS API</span>
+					<span className="api-eyebrow">Design system · CSS API Reference</span>
 					<h1>
 						Customize any component,
 						<br />
@@ -501,7 +501,7 @@ export function CssApiReferencePage() {
 					</h1>
 					<p className="api-lede">
 						{totals.properties} properties across {totals.components} components. See{' '}
-						<a href="?path=/docs/css-architecture--docs">CSS Architecture</a> for how defaults resolve.
+						<a href="?path=/docs/design-system-css-architecture--docs">CSS Architecture</a> for how defaults resolve.
 					</p>
 				</div>
 			</header>

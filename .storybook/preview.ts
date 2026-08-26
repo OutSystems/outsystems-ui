@@ -11,6 +11,7 @@ import './component-library.scss';
 import './css-architecture.scss';
 import './css-api-reference.scss';
 import './theme-editor.scss';
+import './foundations.scss';
 import './docs-dark.scss';
 import {
 	CH_OVERRIDES_CHANGED,
@@ -294,9 +295,19 @@ const preview: Preview = {
 					'Welcome',
 					'Getting Started',
 					'Component Library',
-					'CSS Architecture',
-					'CSS API Reference',
-					'Theme Editor',
+					'Design system',
+					[
+						'Colors',
+						'Typography',
+						'Spacing',
+						'Borders',
+						'Shape',
+						'Elevation',
+						'Transitions',
+						'CSS Architecture',
+						'CSS API Reference',
+						'Theme Editor',
+					],
 					'Patterns',
 					['Content', 'Interaction', 'Navigation', 'Adaptive', 'Numbers', 'Utilities'],
 					'Widgets',

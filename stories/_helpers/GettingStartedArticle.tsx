@@ -27,7 +27,7 @@ const STEPS_SECTION = `
             <p>Drag any of the 56 patterns from the toolbox, then configure it in the properties panel and bind your data.</p>
             <span class="go">Working with patterns →</span>
           </a>
-          <a class="st" href="?path=/docs/theme-editor--docs">
+          <a class="st" href="?path=/docs/design-system-theme-editor--docs">
             <span class="top"><span class="n">4</span></span>
             <svg class="pic" viewBox="0 0 124 74" fill="none" aria-hidden="true"><circle cx="22" cy="20" r="7" fill="#105cef"/><circle cx="42" cy="20" r="7" fill="#737373"/><circle cx="62" cy="20" r="7" fill="#1ba433"/><circle cx="82" cy="20" r="7" fill="#d82424"/><rect class="ps" x="16" y="36" width="92" height="26" rx="4"/><rect class="pm" x="22" y="42" width="40" height="4" rx="2"/><rect class="pp" x="22" y="50" width="26" height="7" rx="3.5"/><rect class="ps" x="52" y="50" width="26" height="7" rx="3.5"/></svg>
             <b>Make it yours</b>

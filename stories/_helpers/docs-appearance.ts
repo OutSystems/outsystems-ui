@@ -10,7 +10,7 @@ export const APP_DARK_CLASS = 'sb-app-dark';
 export const APP_WINDOWS_CLASS = 'os-windows';
 
 export const DOCS_PAGE_SELECTOR =
-	'.osui-welcome, .osui-getting-started, .osui-component-library, .osui-css-architecture, .osui-css-api-reference, .osui-theme-editor';
+	'.osui-welcome, .osui-getting-started, .osui-component-library, .osui-css-architecture, .osui-css-api-reference, .osui-theme-editor, .osui-foundations';
 
 let currentScheme = readStoredAppearance();
 let appearanceSyncReady = false;

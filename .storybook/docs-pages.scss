@@ -4,7 +4,8 @@
 .osui-getting-started,
 .osui-css-architecture,
 .osui-css-api-reference,
-.osui-component-library {
+.osui-component-library,
+.osui-foundations {
   --docs-shell-max: 1060px;
   --docs-shell-pad-x: 36px;
   --docs-head-max: 988px;
@@ -15,7 +16,8 @@
 
 .osui-getting-started .docs-inner,
 .osui-css-architecture .ca-inner,
-.osui-css-api-reference .api-inner {
+.osui-css-api-reference .api-inner,
+.osui-foundations .fd-inner {
   max-width: var(--docs-shell-max);
   margin: 0 auto;
   padding: 0 var(--docs-shell-pad-x) 120px;
@@ -64,7 +66,8 @@
 .osui-getting-started .head-in,
 .osui-css-architecture .ca-head-in,
 .osui-css-api-reference .api-head-in,
-.osui-component-library .cl-head-in {
+.osui-component-library .cl-head-in,
+.osui-foundations .fd-head-in {
   max-width: var(--docs-head-max);
   margin: 0 auto;
 }
@@ -104,13 +107,14 @@
 ),
 .osui-getting-started article .sec :is(table, .code, .standout, .tech),
 .osui-css-architecture .ca-body > :is(table, .code, .ca-hops, .note),
-.osui-css-api-reference .api-body > :is(.api-toolbar, .api-table-wrap, .note, .code, .api-guide) {
+.osui-css-api-reference .api-body > :is(.api-toolbar, .api-table-wrap, .note, .code, .api-guide),
+.osui-foundations .fd-body > :is(.fd-table, .note, .fd-color-line, .fd-color-cards, .fd-shape-container, .fd-elevation-container) {
   max-width: none;
   width: 100%;
 }
 
 /* Info callouts — shared with Getting Started */
-:is(.osui-getting-started, .osui-css-architecture, .osui-css-api-reference) .note {
+:is(.osui-getting-started, .osui-css-architecture, .osui-css-api-reference, .osui-foundations) .note {
   display: grid;
   grid-template-columns: 28px 1fr;
   gap: 12px;
@@ -121,7 +125,7 @@
   background: linear-gradient(180deg, #fbfcff, #fff);
 }
 
-:is(.osui-getting-started, .osui-css-architecture, .osui-css-api-reference) .note .ic {
+:is(.osui-getting-started, .osui-css-architecture, .osui-css-api-reference, .osui-foundations) .note .ic {
   width: 28px;
   height: 28px;
   border-radius: 50%;
@@ -131,12 +135,12 @@
   place-items: center;
 }
 
-:is(.osui-getting-started, .osui-css-architecture, .osui-css-api-reference) .note .ic svg {
+:is(.osui-getting-started, .osui-css-architecture, .osui-css-api-reference, .osui-foundations) .note .ic svg {
   width: 15px;
   height: 15px;
 }
 
-:is(.osui-getting-started, .osui-css-architecture, .osui-css-api-reference) .note b {
+:is(.osui-getting-started, .osui-css-architecture, .osui-css-api-reference, .osui-foundations) .note b {
   display: block;
   font-size: 13.5px;
   margin-bottom: 3px;
@@ -144,7 +148,7 @@
   font-weight: 650;
 }
 
-.sbdocs-wrapper :is(.osui-getting-started, .osui-css-architecture, .osui-css-api-reference) .note p {
+.sbdocs-wrapper :is(.osui-getting-started, .osui-css-architecture, .osui-css-api-reference, .osui-foundations) .note p {
   margin: 0 !important;
   font-size: 13.5px !important;
   color: #6b6b6b !important;
@@ -152,24 +156,24 @@
   max-width: none !important;
 }
 
-.sbdocs-wrapper :is(.osui-getting-started, .osui-css-architecture, .osui-css-api-reference) .note p + p {
+.sbdocs-wrapper :is(.osui-getting-started, .osui-css-architecture, .osui-css-api-reference, .osui-foundations) .note p + p {
   margin-top: 8px !important;
 }
 
-:is(.osui-getting-started, .osui-css-architecture, .osui-css-api-reference) .note.alt {
+:is(.osui-getting-started, .osui-css-architecture, .osui-css-api-reference, .osui-foundations) .note.alt {
   background: linear-gradient(180deg, #fffdf5, #fff);
 }
 
-:is(.osui-getting-started, .osui-css-architecture, .osui-css-api-reference) .note.alt .ic {
+:is(.osui-getting-started, .osui-css-architecture, .osui-css-api-reference, .osui-foundations) .note.alt .ic {
   background: #fff6de;
   color: #7a5600;
 }
 
-:is(.osui-getting-started, .osui-css-architecture, .osui-css-api-reference) .note.error {
+:is(.osui-getting-started, .osui-css-architecture, .osui-css-api-reference, .osui-foundations) .note.error {
   background: linear-gradient(180deg, #fff5f5, #fff);
 }
 
-:is(.osui-getting-started, .osui-css-architecture, .osui-css-api-reference) .note.error .ic {
+:is(.osui-getting-started, .osui-css-architecture, .osui-css-api-reference, .osui-foundations) .note.error .ic {
   background: #ffe4e4;
   color: #b91c1c;
 }

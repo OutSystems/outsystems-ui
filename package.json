@@ -22,8 +22,9 @@
 		"chromatic": "chromatic --build-script-name=build-storybook",
 		"update-version": "gulp updateVersion",
 		"gta-update-version": "gulp gtaSetVersion --newVersion",
-		"tokens:update": "npm install --save-dev outsystems-design-tokens@latest && npm run build:tokens",
-		"docs:css-api": "node scripts/generate-css-api-reference.mjs"
+		"tokens:update": "npm install --save-dev outsystems-design-tokens@latest && npm run build:tokens && npm run docs:tokens",
+		"docs:css-api": "node scripts/generate-css-api-reference.mjs",
+		"docs:tokens": "node scripts/generate-token-data.mjs"
 	},
 	"repository": {
 		"type": "git",

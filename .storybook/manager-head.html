@@ -227,22 +227,47 @@
     font-weight: 500 !important;
   }
 
-  /* Nested docs under a component */
-  .sidebar-item[data-nodetype="document"][data-parent-id] a {
-    background-image: url(/assets/document.svg);
-    padding: 0 8px 0 40px !important;
-    background-repeat: no-repeat;
-    background-size: 15px;
-    background-position: 24px center;
+  /* Nested docs/stories — icon on the row (::before), not the link. Storybook emotion
+     injects `background` on the selected <a> and wipes background-image. */
+  .sidebar-item[data-nodetype="document"][data-parent-id],
+  .sidebar-item[data-nodetype="story"][data-parent-id] {
+    position: relative;
   }
 
-  /* Nested stories under a component */
+  .sidebar-item[data-nodetype="document"][data-parent-id]::before {
+    content: "";
+    position: absolute;
+    left: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 15px;
+    height: 15px;
+    background-color: #242424;
+    -webkit-mask: url(/assets/document.svg) no-repeat center / contain;
+    mask: url(/assets/document.svg) no-repeat center / contain;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .sidebar-item[data-nodetype="story"][data-parent-id]::before {
+    content: "";
+    position: absolute;
+    left: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 15px;
+    height: 15px;
+    background-color: #242424;
+    -webkit-mask: url(/assets/sample.svg) no-repeat center / contain;
+    mask: url(/assets/sample.svg) no-repeat center / contain;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .sidebar-item[data-nodetype="document"][data-parent-id] a,
   .sidebar-item[data-nodetype="story"][data-parent-id] a {
-    background-image: url(/assets/sample.svg);
+    background-image: none !important;
     padding: 0 8px 0 40px !important;
-    background-repeat: no-repeat;
-    background-size: 15px;
-    background-position: 24px center;
   }
 
   /* Selected row — beat Storybook LeafNodeStyleWrapper (emotion injects after manager-head) */
@@ -257,7 +282,6 @@
   #storybook-explorer-tree .sidebar-item[data-selected="true"] a,
   #storybook-explorer-tree .sidebar-item[data-selected="true"] > button:not([data-testid="tree-change-status-button"]):not([data-testid="tree-status-button"]):not([data-testid="context-menu"]) {
     color: #242424 !important;
-    background: transparent !important;
     background-color: transparent !important;
     font-weight: 500 !important;
     box-shadow: none !important;
@@ -326,7 +350,6 @@
   html.osui-sb-dark .sidebar-item a,
   html.osui-sb-dark .sidebar-item button {
     color: #c8c8c8 !important;
-    background: transparent !important;
     background-color: transparent !important;
     box-shadow: none !important;
   }
@@ -354,9 +377,17 @@
   html.osui-sb-dark #storybook-explorer-tree .sidebar-item[data-selected="true"] > button:not([data-testid="tree-change-status-button"]):not([data-testid="tree-status-button"]):not([data-testid="context-menu"]),
   html.osui-sb-dark #storybook-explorer-tree .sidebar-item[data-parent-id][data-selected="true"] a {
     color: #ededed !important;
-    background: transparent !important;
     background-color: transparent !important;
     box-shadow: none !important;
+  }
+
+  html.osui-sb-dark .sidebar-item[data-nodetype="document"][data-parent-id]::before,
+  html.osui-sb-dark .sidebar-item[data-nodetype="story"][data-parent-id]::before {
+    background-color: #c8c8c8;
+  }
+
+  html.osui-sb-dark #storybook-explorer-tree .sidebar-item[data-parent-id][data-selected="true"]::before {
+    background-color: #ededed;
   }
 
   html.osui-sb-dark .css-wkfnut:hover a,

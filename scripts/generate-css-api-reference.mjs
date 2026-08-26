@@ -433,7 +433,7 @@ const mdx = [
 	"import { CssApiReferencePage } from './_helpers/CssApiReferencePage';",
 	'',
 	'<Meta',
-	'\ttitle="CSS API Reference"',
+	'\ttitle="Design system/CSS API Reference"',
 	"\ttags={['!ui-pending']}",
 	'\tparameters={{',
 	'\t\toptions: { showPanel: false },',

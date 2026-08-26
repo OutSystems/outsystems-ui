@@ -166,7 +166,7 @@ export function CssArchitecturePage() {
 		<div ref={rootRef} className="osui-css-architecture sb-unstyled">
 			<header className="ca-head">
 				<div className="ca-head-in">
-					<span className="ca-eyebrow">Overview · CSS Architecture</span>
+					<span className="ca-eyebrow">Design system · CSS Architecture</span>
 					<h1>CSS Architecture</h1>
 					<p className="ca-lede">
 						How OutSystems UI styles every component: three cooperating layers —{' '}
