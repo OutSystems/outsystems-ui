@@ -28,7 +28,7 @@
 	top: var(--osui-floating-position-y);
 	visibility: hidden;
 	width: var(--osui-balloon-width);
-	z-index: var(--layer-elevated);
+	z-index: var(--layer-global-elevated);
 
 	&--is-open {
 		visibility: visible;

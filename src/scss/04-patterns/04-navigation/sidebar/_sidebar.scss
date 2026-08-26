@@ -125,7 +125,7 @@
 			pointer-events: none;
 			position: fixed;
 			top: 0;
-			transition: opacity var(--osui-motion-duration-130) variables.$token-transition-curve-base;
+			transition: opacity variables.$token-transition-time-150 variables.$token-transition-curve-base;
 			width: 200vw;
 			will-change: opacity;
 			z-index: var(--osui-sidebar-layer);

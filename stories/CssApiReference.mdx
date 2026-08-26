@@ -119,6 +119,7 @@ _File: `src/scss/03-widgets/_dropdown.scss`_
 | `--osui-dropdown-list-background` | `var(--color-background-surface)` |
 | `--osui-dropdown-list-border-color` | `var(--color-border)` |
 | `--osui-dropdown-list-max-height` | `240px` |
+| `--osui-dropdown-list-shadow` | `#{$token-elevation-3}` |
 | `--osui-dropdown-focus-border-color` | `var(--color-border-primary)` |
 | `--osui-dropdown-focus-ring-color` | `#{$token-border-focus-default}` |
 | `--osui-dropdown-arrow-color` | `#{$token-icon-subtlest}` |
@@ -181,7 +182,7 @@ _File: `src/scss/03-widgets/_inputs-and-textareas.scss`_
 | `--osui-input-border-radius` | `var(--border-radius-soft)` |
 | `--osui-input-focus-border-color` | `var(--color-border-primary)` |
 | `--osui-input-focus-ring-color` | `#{$token-border-focus-default}` |
-| `--osui-input-error-border-color` | `var(--color-border-danger)` |
+| `--osui-input-error-border-color` | `#{$token-border-danger-default}` |
 
 ### List Item (`.list-item`)
 _File: `src/scss/03-widgets/_list-item.scss`_
@@ -190,7 +191,7 @@ _File: `src/scss/03-widgets/_list-item.scss`_
 |---|---|
 | `--osui-list-item-border-color` | `var(--color-border)` |
 | `--osui-list-item-background` | `var(--color-background-surface)` |
-| `--osui-list-item-hover-background` | `var(--osui-bg-surface-hover)` |
+| `--osui-list-item-hover-background` | `#{$token-bg-neutral-subtlest-hover}` |
 | `--osui-list-item-active-background` | `#{$token-bg-neutral-subtlest-press}` |
 | `--osui-list-item-selected-background` | `var(--osui-list-item-background)` |
 | `--osui-list-item-selected-icon-color` | `#{$token-icon-select}` |
@@ -230,7 +231,7 @@ _File: `src/scss/03-widgets/_radio-button.scss`_
 | `--osui-radio-hover-border-color` | `var(--color-border-input-hover)` |
 | `--osui-radio-checked-color` | `var(--color-primary)` |
 | `--osui-radio-indicator-border` | `#{$token-scale-150}` |
-| `--osui-radio-error-border-color` | `var(--color-border-danger)` |
+| `--osui-radio-error-border-color` | `#{$token-border-danger-default}` |
 | `--osui-radio-disabled-border-color` | `#{$token-border-disabled}` |
 
 ### Switch (`[data-switch]`)
@@ -465,7 +466,7 @@ _File: `src/scss/04-patterns/02-content/wizard/_wizard-item.scss`_
 | `--osui-wizard-connector-color` | `#{$token-primitives-neutral-600}` |
 | `--osui-wizard-connector-radius` | `#{$token-border-radius-full}` |
 | `--osui-wizard-connector-size` | `#{$token-border-size-050}` |
-| `--osui-wizard-focus-halo-color` | `var(--osui-border-focus-halo)` |
+| `--osui-wizard-focus-halo-color` | `var(--color-focus-outer)` |
 | `--osui-wizard-focus-halo-width` | `#{$token-border-size-075}` |
 
 ---
@@ -503,7 +504,7 @@ _File: `src/scss/04-patterns/03-interaction/_floating-actions.scss`_
 
 | Property | Default |
 |---|---|
-| `--osui-floating-actions-layer` | `var(--layer-elevated)` |
+| `--osui-floating-actions-layer` | `var(--layer-global-elevated)` |
 | `--osui-floating-actions-button-background` | `var(--color-primary)` |
 | `--osui-floating-actions-button-background-hover` | `var(--color-primary-hover)` |
 | `--osui-floating-actions-button-background-press` | `var(--color-primary-selected)` |
@@ -545,7 +546,7 @@ _File: `src/scss/04-patterns/03-interaction/animated-label/_animated-label.scss`
 | `--osui-animated-label-focus-border-color` | `var(--color-border-primary)` |
 | `--osui-animated-label-focus-ring-color` | `#{$token-border-focus-default}` |
 | `--osui-animated-label-focus-shadow` | `0 0 0 #{$token-border-size-050} var(--osui-animated-label-focus-ring-color)` |
-| `--osui-animated-label-error-color` | `var(--color-text-danger)` |
+| `--osui-animated-label-error-color` | `#{$token-text-danger}` |
 | `--osui-animated-label-disabled-background` | `var(--color-background-input-disabled)` |
 | `--osui-animated-label-disabled-color` | `var(--color-text-disabled)` |
 
@@ -582,7 +583,8 @@ _File: `src/scss/04-patterns/03-interaction/date-picker/provider/_flatpickr.scss
 
 | Property | Default |
 |---|---|
-| `--osui-flatpickr-layer` | `var(--layer-elevated)` |
+| `--osui-flatpickr-layer` | `var(--layer-global-elevated)` |
+| `--osui-flatpickr-shadow` | `#{$token-elevation-3}` |
 
 ### Flatpickr (`.is-rtl`)
 _File: `src/scss/04-patterns/03-interaction/date-picker/provider/_flatpickr.scss`_
@@ -634,6 +636,7 @@ _File: `src/scss/04-patterns/03-interaction/dropdown/_dropdown-serverside.scss`_
 | `--osui-dropdown-ss-arrow-color` | `#{$token-icon-subtlest}` |
 | `--osui-dropdown-ss-arrow-size` | `#{$token-scale-400}` |
 | `--osui-dropdown-ss-background` | `var(--color-background-input)` |
+| `--osui-dropdown-ss-balloon-max-height` | `300px` |
 | `--osui-dropdown-ss-border-color` | `var(--color-border-input)` |
 | `--osui-dropdown-ss-border-radius` | `var(--border-radius-soft)` |
 | `--osui-dropdown-ss-color` | `var(--color-text)` |
@@ -642,12 +645,11 @@ _File: `src/scss/04-patterns/03-interaction/dropdown/_dropdown-serverside.scss`_
 | `--osui-dropdown-ss-focus-border-color` | `var(--color-border-primary)` |
 | `--osui-dropdown-ss-focus-ring-color` | `#{$token-border-focus-default}` |
 | `--osui-dropdown-ss-hover-border-color` | `var(--color-border-input-hover)` |
+| `--osui-dropdown-ss-min-width` | `170px` |
 | `--osui-dropdown-ss-prompt-color` | `var(--color-text-subtlest)` |
-| `--osui-dropdown-ss-balloon-max-height` | `300px` |
-| `--osui-dropdown-min-width` | `170px` |
-| `--osui-floating-offset` | `#{$token-scale-100}` |
 | `--osui-dropdown-ss-scroll-bar-width` | `5px` |
-| `--osui-balloon-shadow` | `var(--osui-elevation-overlay)` |
+| `--osui-floating-offset` | `#{$token-scale-100}` |
+| `--osui-balloon-shadow` | `#{$token-elevation-3}` |
 | `--osui-balloon-shape` | `var(--border-radius-soft)` |
 
 ### Dropdown Serverside (`.has-accessible-features`)
@@ -949,6 +951,8 @@ _File: `src/scss/04-patterns/05-numbers/rating/_rating.scss`_
 
 | Property | Default |
 |---|---|
+| `--osui-rating-filled-color` | `var(--color-primary)` |
+| `--osui-rating-empty-color` | `#{$token-bg-neutral-base-default}` |
 | `--osui-rating-disabled-color` | `var(--color-text-disabled)` |
 | `--osui-rating-disabled-empty-color` | `var(--color-border)` |
 
@@ -1067,27 +1071,11 @@ _File: `src/scss/01-foundations/_root.scss`_
 
 | Property | Default |
 |---|---|
-| `--osui-bottom-sheet-layer` | `var(--layer-off-canvas)` |
-| `--osui-notification-layer` | `var(--layer-instant-interaction)` |
-| `--osui-popup-layer` | `var(--layer-off-canvas)` |
-| `--osui-sidebar-layer` | `var(--layer-off-canvas)` |
-| `--osui-menu-layer` | `calc(var(--layer-navigation) + var(--layer-local-tier-2))` |
-| `--osui-border-focus-halo` | `color-mix( in srgb, #{$token-semantics-primary-base} 22%, transparent )` |
-| `--osui-elevation-overlay` | `0 12px 24px -8px rgba(0, 0, 0, 0.12), 0 8px 16px -8px rgba(0, 0, 0, 0.08)` |
-| `--osui-bg-surface-subtle` | `#fafbfc` |
-| `--osui-motion-duration-130` | `130ms` |
-| `--osui-motion-duration-180` | `180ms` |
-| `--osui-motion-duration-400` | `400ms` |
-| `--osui-bg-surface-hover` | `#{$token-bg-neutral-subtlest-hover}` |
-| `--osui-bg-surface-active` | `color-mix( in srgb, #{$token-semantics-primary-base} 8%, transparent )` |
-| `--osui-border-subtle` | `#{$token-primitives-neutral-300}` |
-| `--osui-opacity-disabled` | `0.45` |
-| `--osui-elevation-25` | `0 1px 2px rgba(0, 0, 0, 0.08)` |
-| `--osui-elevation-50` | `0 1px 2px rgba(0, 0, 0, 0.2)` |
-| `--osui-font-size-200` | `0.625rem` |
-| `--osui-font-line-height-default` | `1.4` |
-| `--osui-font-line-height-full` | `1` |
-| `--osui-scale-350` | `14px` |
+| `--osui-bottom-sheet-layer` | `var(--layer-global-off-canvas)` |
+| `--osui-notification-layer` | `var(--layer-global-instant-interaction)` |
+| `--osui-popup-layer` | `var(--layer-global-off-canvas)` |
+| `--osui-sidebar-layer` | `var(--layer-global-off-canvas)` |
+| `--osui-menu-layer` | `calc(var(--layer-global-navigation) + var(--layer-local-tier-2))` |
 
 ---
 

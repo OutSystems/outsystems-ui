@@ -52,7 +52,7 @@
 
 		min-width: var(--osui-overflow-menu-min-width);
 		overflow: hidden;
-		z-index: var(--layer-instant-interaction);
+		z-index: var(--layer-global-instant-interaction);
 
 		a {
 			// Items stack vertically — anchors are inline by default, which would
@@ -91,7 +91,7 @@
 
 // layer exception when a popup is open on the same screen
 html:has(.popup-backdrop) .osui-overflow-menu__balloon {
-	z-index: var(--layer-off-canvas);
+	z-index: var(--layer-global-off-canvas);
 }
 
 // OS HighContrast Enabled -------------------------------------------------------

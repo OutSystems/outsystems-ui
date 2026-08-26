@@ -152,7 +152,7 @@
 		border-radius: variables.$token-border-radius-300;
 		max-width: 100%;
 		width: var(--osui-carousel-track-width);
-		z-index: var(--layer-screen);
+		z-index: var(--layer-global-screen);
 
 		& {
 			-servicestudio-position: relative;
@@ -231,7 +231,7 @@
 // Layer Library Overrides
 .splide__track--fade {
 	& > .splide__list > .splide__slide {
-		z-index: var(--layer-screen);
+		z-index: var(--layer-global-screen);
 
 		&.is-active {
 			z-index: var(--layer-local-tier-1);

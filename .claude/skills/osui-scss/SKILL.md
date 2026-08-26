@@ -17,7 +17,7 @@ This skill orients you before touching any `.scss` file in the repo. It compleme
 
 4. **Component CSS API — the `--osui-*` layer.** Every visual component declares its own CSS custom properties at its root selector with `$token-*` defaults, then reads them in rules. Nomenclature: `--osui-{component}-{property}`. Property declarations **must** go through the `--osui-*` var, not directly through `$token-*`, so app consumers can override per-instance.
 
-5. **Theme invariant.** (The dark theme `_theme-dark.scss` is **removed for now** — no theme partial currently ships.) Any theme is **entirely** variable overrides scoped under one class — overriding theme-layer role knobs (`--color-*`, `--border-radius-*`, …) and/or `--token-*`. No component rule, no `$token-*` value, and no existing `--osui-*` default is touched. If a theme needs to reach into a component rule, that's a leak in the component's CSS API — fix the component, not the theme.
+5. **Theme invariant.** (A dark theme ships, fully **generated**: `src/scss/tokens/_theme-dark.scss` from `npm run build:tokens`, re-mapping the `--token-*` set and self-applying under `.theme-dark`, registered via `ScssStructure/Root.js`. The class goes on **`<html>`**, not `<body>` — `--color-*` is declared at `:root` and resolves its `var(--token-…)` against that element, so a `<body>`-level override is too late. No hand-written theme partial ships — `01-foundations/_theme-dark.scss` was deleted, along with its `--color-*` role bridge and CSS-API-leak rules.) Any theme is **entirely** variable overrides scoped under one class — overriding theme-layer role knobs (`--color-*`, `--border-radius-*`, …) and/or `--token-*`. No component rule, no `$token-*` value, and no existing `--osui-*` default is touched. If a theme needs to reach into a component rule, that's a leak in the component's CSS API — fix the component, not the theme.
 
 6. **Auto-generated entry files are off-limits.** `src/scss/O11.OutSystemsUI.scss` and `src/scss/ODC.OutSystemsUI.scss` are regenerated on every `npm run dev` / `npm run build` by `gulp/Tasks/CreateScssFile.js`. To add a new SCSS partial, edit the matching section spec in `gulp/ProjectSpecs/ScssStructure/*.js` — never hand-edit the `O11` / `ODC` entry files.
 
@@ -27,14 +27,14 @@ This skill orients you before touching any `.scss` file in the repo. It compleme
 
 1. **Which tree?** `src/scss/` for global / layout / utility, `src/scripts/**/scss/` for patterns / providers.
 2. **Is there a `$token-*` for the value I'm reaching for?** `grep -E '^\$token-' src/scss/tokens/_variables.scss` and pick the closest match.
-3. **Am I introducing a new variable?** If yes, it should be `--osui-{component}-{prop}` in the component root, with a default that routes through the theme layer (`--color-*`, `--border-radius-*`, …) or a `$token-*`. Still retired — do not reintroduce: `--space-*`, `--font-size-*`, `--shadow-*`, `--border-size-*`. (`--color-*` / `--border-radius-*` / `--size-*` / `--layer-*` are NOT retired — they are the framework theme layer, see `.claude/rules/scss.md` §13.)
+3. **Am I introducing a new variable?** If yes, it should be `--osui-{component}-{prop}` in the component root, with a default that routes through the theme layer (`--color-*`, `--border-radius-*`, …) or a `$token-*`. Still retired — do not reintroduce: `--font-size-*`, `--shadow-*`, `--border-size-*`. (`--color-*` / `--space-*` / `--border-radius-*` / `--size-*` / `--layer-*` are NOT retired — they are the framework theme layer, see `.claude/rules/scss.md` §13.)
 4. **Could a theme still re-skin this via variables alone?** If my change would require a theme to touch a component rule, step back and fix the component's CSS API instead.
 5. **If I'm adding a new partial, did I register it in `gulp/ProjectSpecs/ScssStructure/*.js`?** The generated entry file will ignore partials that aren't declared there.
 
 ## Anti-patterns — flag these in code review
 
 - Hardcoded `#hex`, `rgba(...)`, px, or rem in a property where a `$token-*` equivalent exists.
-- Re-declaration of genuinely-retired vars: `--space-*`, `--font-size-*`, `--shadow-*`, `--border-size-*`. (NOT `--color-*` / `--border-radius-*` / `--size-*` / `--layer-*` — those are the framework theme layer.)
+- Re-declaration of genuinely-retired vars: `--font-size-*`, `--shadow-*`, `--border-size-*`. (NOT `--color-*` / `--space-*` / `--border-radius-*` / `--size-*` / `--layer-*` — those are the framework theme layer.)
 - Calls to the legacy helper functions: `get-background-color()`, `get-text-color()`, `get-border-color()`, `get-app-settings-background-color()`.
 - New rules under a theme class that target component selectors instead of overriding variables.
 - Imports of `_*_lib.scss` vendor baselines (they're the untouched vendor CSS, not consumable).

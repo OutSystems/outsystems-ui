@@ -1,4 +1,4 @@
-@use "../tokens/variables";
+@use '../tokens/variables';
 
 ////
 /// @group ServiceStudio_Preview
@@ -44,7 +44,7 @@ html[data-uieditorversion^='1'] {
 			-servicestudio-position: fixed;
 			-servicestudio-top: 0;
 			-servicestudio-width: var(--size-side-menu);
-			-servicestudio-z-index: var(--layer-navigation);
+			-servicestudio-z-index: var(--layer-global-navigation);
 		}
 
 		.app-menu {
@@ -113,6 +113,16 @@ html[data-uieditorversion^='1'] {
 	}
 
 	.icon-states {
+		.uieditor-if-branch-widget {
+			-servicestudio-display: inline-flex;
+
+			&:empty {
+				-servicestudio-display: none;
+			}
+		}
+	}
+
+	.chat-message-status {
 		.uieditor-if-branch-widget {
 			-servicestudio-display: inline-flex;
 

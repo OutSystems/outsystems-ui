@@ -215,8 +215,8 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 				ariaDateFormat:
 					Providers.OSUI.SharedProviderResources.Flatpickr.Enum.AriaDateFormat.WeekdayDayMonthYear,
 				position: OutSystems.OSUI.Utils.GetIsRTL()
-					? Providers.OSUI.SharedProviderResources.Flatpickr.Enum.Position.Right
-					: Providers.OSUI.SharedProviderResources.Flatpickr.Enum.Position.Left,
+					? Providers.OSUI.SharedProviderResources.Flatpickr.Enum.Position.AutoRight
+					: Providers.OSUI.SharedProviderResources.Flatpickr.Enum.Position.AutoLeft,
 			} as FlatpickrOptions;
 
 			// Make sure locale is not undefined, as when defining the providerOptions defaults in the costructor, the window.locale is no yet available

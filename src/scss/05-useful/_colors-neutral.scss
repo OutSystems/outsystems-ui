@@ -16,7 +16,8 @@
 	@each $type, $value in $osui-colors-neutral {
 		&-neutral {
 			&-#{$type} {
-				background-color: #{$value};
+				// entity colour (Neutral0…10) → inherit the :root role
+				background-color: var(--color-neutral-#{$type});
 
 				&-lightest {
 					background-color: variables.$token-bg-surface-default;
@@ -31,12 +32,14 @@
 	$i: 0;
 	@each $type, $value in $osui-colors-neutral {
 		&-neutral-#{$type} {
-			color: #{$value};
+			// entity colour (Neutral0…10) → inherit the :root role
+			color: var(--color-neutral-#{$type});
 
 			& {
 				@if ($i > 4) {
 					&-darker {
-						color: #{$value};
+						// dev emitted the base value here too — keep them identical
+						color: var(--color-neutral-#{$type});
 					}
 				}
 			}

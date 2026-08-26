@@ -26,7 +26,7 @@
 	}
 
 	&.layout-native.aside-expandable .main .header {
-		z-index: var(--layer-navigation);
+		z-index: var(--layer-global-navigation);
 	}
 
 	.aside-expandable {
@@ -62,7 +62,7 @@
 
 	.aside-expandable {
 		.header {
-			z-index: var(--layer-navigation);
+			z-index: var(--layer-global-navigation);
 		}
 	}
 }
@@ -87,7 +87,7 @@
 .tablet {
 	&.portrait {
 		.layout-side.layout-native.aside-expandable .main .header {
-			z-index: var(--layer-navigation);
+			z-index: var(--layer-global-navigation);
 		}
 	}
 }
@@ -95,7 +95,7 @@
 ///
 .phone {
 	.layout-side.layout-native.aside-expandable .main .header {
-		z-index: var(--layer-navigation);
+		z-index: var(--layer-global-navigation);
 	}
 }
 

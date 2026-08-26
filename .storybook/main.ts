@@ -1,6 +1,5 @@
 import type { StorybookConfig } from '@storybook/html-vite';
 import fs from 'node:fs';
-import { createRequire } from 'node:module';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import remarkGfm from 'remark-gfm';
@@ -9,75 +8,23 @@ import type { Plugin } from 'vite';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(__dirname, '..');
 const distFolder = path.join(repoRoot, 'dist');
-const require = createRequire(import.meta.url);
 
-// The `stories/widgets/` group mounts the platform's real React widgets, which come
-// from @outsystems/runtime-{core,view,widgets}-js — optionalDependencies published only
-// to the internal Azure Artifacts feed. On an external clone they are absent (npm skips
-// unresolvable optional deps), so the group is dropped and the rest of the Storybook
-// (~57 OUI pattern stories) works with no internal access.
-const hasPlatformWidgets = [
-	'@outsystems/runtime-core-js',
-	'@outsystems/runtime-view-js',
-	'@outsystems/runtime-widgets-js',
-].every((pkg) => {
-	try {
-		require.resolve(`${pkg}/package.json`);
-		return true;
-	} catch {
-		return false;
-	}
-});
-
-if (!hasPlatformWidgets) {
-	console.info(
-		'[storybook] @outsystems/runtime-*-js not installed (internal Azure Artifacts feed) — skipping the Widgets story group.'
-	);
-}
-
-// ─── Platform base CSS (generated, gitignored) ─────────────────────────────────
+// ─── Platform base CSS (vendored, Storybook-only) ──────────────────────────────
 // In a real OutSystems app the platform loads a base layer BEFORE the theme (OUI).
 // It establishes the structural form of the data-attribute widgets ([data-checkbox],
-// [data-switch], [data-input], …) — including the pseudo-element `content` that
-// generates the checkbox box / switch track + thumb. `preview-head.html` links it
-// as /platform/platform-core.css ahead of the OUI stylesheet.
+// [data-switch], [data-input], [data-upload], …) — including the pseudo-element
+// `content` that generates the checkbox box and the switch track + thumb.
+// `.storybook/platform/platform-core.css` is a tracked, Storybook-only copy of it,
+// served below via `staticDirs` and linked by `preview-head.html` ahead of the OUI
+// stylesheet. Its header records the source package version and the refresh trigger.
 //
-// Rather than vendoring that platform-owned CSS into this (public) repo, it is
-// regenerated here on every Storybook startup from the installed
-// @outsystems/runtime-widgets-js package, stripping only the FontAwesome @font-face
-// (its relative ../fonts/* URLs would 404, and the icon fonts are served separately
-// from /vendor/*). Without the internal packages a stub is written instead — the
-// affected form controls then render without their platform-provided structure.
-const platformDir = path.join(__dirname, 'platform');
-const platformCssFile = path.join(platformDir, 'platform-core.css');
-fs.mkdirSync(platformDir, { recursive: true });
-
-if (hasPlatformWidgets) {
-	// The package's `exports` map doesn't expose the CSS subpath, so resolve
-	// package.json (which it does export) and locate the file on disk from there.
-	const widgetsPkgJson = require.resolve('@outsystems/runtime-widgets-js/package.json');
-	const widgetsPkg = require(widgetsPkgJson);
-	const sourceCss = path.join(path.dirname(widgetsPkgJson), 'dist', 'OutSystemsReactWidgets.css');
-	if (!fs.existsSync(sourceCss)) {
-		throw new Error(
-			`[storybook] expected platform base CSS at ${sourceCss} — did runtime-widgets-js change layout?`
-		);
-	}
-	const css = fs
-		.readFileSync(sourceCss, 'utf8')
-		.replace(/\/\*hubedition:[\s\S]*?\*\/\s*/, '')
-		.replace(/\/\*![\s\S]*?Font Awesome[\s\S]*?\*\/\s*/, '')
-		.replace(/@font-face\s*\{[^{}]*FontAwesome[^{}]*\}\s*/, '');
-	fs.writeFileSync(
-		platformCssFile,
-		`/*!\n * OutSystems core platform widget base styles.\n *\n * GENERATED FILE — do not edit (gitignored). Written on Storybook startup by\n * .storybook/main.ts from @outsystems/runtime-widgets-js@${widgetsPkg.version}\n * (dist/OutSystemsReactWidgets.css, FontAwesome @font-face stripped).\n */\n${css}`
-	);
-} else {
-	fs.writeFileSync(
-		platformCssFile,
-		'/*!\n * GENERATED STUB — the OutSystems platform base CSS could not be generated because\n * @outsystems/runtime-widgets-js (internal package feed) is not installed. The\n * data-attribute form controls ([data-checkbox], [data-switch], …) will render\n * without their platform-provided structure.\n */\n'
-	);
-}
+// It used to be generated here on every startup from @outsystems/runtime-widgets-js,
+// which made the whole Storybook — and therefore the Chromatic workflow — depend on
+// the internal Azure Artifacts feed. The Widgets stories are now static
+// transcriptions of the widgets' real DOM, so this repo needs no internal package at
+// all: `npm i && npm run build && npm run build-storybook` works from any clone, and
+// every branch, fork and CI event renders the identical, complete story set.
+// See docs-internal/adr/ADR-0009.
 
 /**
  * Dev-bundle fallback for /osui/*.
@@ -147,11 +94,7 @@ function osuiDevBundleFallback(): Plugin {
  * above). Files are served from `/osui`.
  */
 const config: StorybookConfig = {
-	// `stories/widgets/` (and its `_helpers/widget.ts` harness) is only reachable when
-	// the platform runtime packages resolved — the top-level globs exclude it otherwise.
-	stories: hasPlatformWidgets
-		? ['../stories/**/*.mdx', '../stories/**/*.stories.@(js|jsx|ts|tsx)']
-		: ['../stories/*.mdx', '../stories/*.stories.@(js|jsx|ts|tsx)'],
+	stories: ['../stories/**/*.mdx', '../stories/**/*.stories.@(js|jsx|ts|tsx)'],
 	addons: [
 		// remark-gfm enables GitHub-flavoured markdown in MDX docs pages — notably
 		// tables (used by the CSS Architecture / CSS API Reference pages). Without
@@ -169,7 +112,7 @@ const config: StorybookConfig = {
 	staticDirs: [
 		// Manager-chrome assets (brand logo referenced by Theme.js) → /assets/*
 		{ from: path.join(__dirname, 'assets'), to: '/assets' },
-		// OutSystems core platform base CSS (generated above, loaded BEFORE the OUI theme) → /platform/*
+		// OutSystems core platform base CSS (vendored, loaded BEFORE the OUI theme) → /platform/*
 		{ from: path.join(__dirname, 'platform'), to: '/platform' },
 		// Compiled OUI bundle (built by gulp) → served at /osui/*
 		{ from: path.join(repoRoot, 'dist'), to: '/osui' },

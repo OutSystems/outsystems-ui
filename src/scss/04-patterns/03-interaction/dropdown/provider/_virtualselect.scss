@@ -1,4 +1,4 @@
-@use "../../../../tokens/variables";
+@use '../../../../tokens/variables';
 
 // Set the transform values to checkBox Checked Icon
 @mixin CheckBoxCheckIconTransform {
@@ -19,7 +19,8 @@
 			// The extra `.vscomp-wrapper` is required to outrank the focus elevation reset below
 			.vscomp-wrapper .vscomp-toggle-button {
 				border-color: var(--osui-dropdown-focus-border-color, #{variables.$token-semantics-primary-base});
-				box-shadow: 0 0 0 variables.$token-border-size-050 var(--osui-dropdown-focus-ring-color, #{variables.$token-border-focus-default});
+				box-shadow: 0 0 0 variables.$token-border-size-050
+					var(--osui-dropdown-focus-ring-color, #{variables.$token-border-focus-default});
 
 				// Arrow keeps its resting colour while open — only the rotation changes
 				&:after {
@@ -88,15 +89,8 @@
 	}
 
 	&.has-value {
-		&.show-value-as-tags {
-			.vscomp-toggle-button {
-				padding-left: variables.$token-scale-200;
-			}
-		}
 		.vscomp-value {
 			color: var(--color-text);
-			margin-right: variables.$token-scale-600;
-			margin-left: variables.$token-scale-0;
 		}
 	}
 
@@ -140,10 +134,16 @@
 	}
 
 	&.show-value-as-tags {
-		.vscomp-toggle-button {
+		&.has-value .vscomp-toggle-button {
 			height: auto;
 			min-height: variables.$token-scale-1000;
-			padding: 6px variables.$token-scale-1200 2px variables.$token-scale-400; // 6px/2px: design-spec vertical rhythm for tag rows, no exact token
+			padding-block: variables.$token-scale-100;
+			padding-inline-end: variables.$token-scale-1600;
+			padding-inline-start: variables.$token-scale-200;
+		}
+
+		.vscomp-value {
+			gap: variables.$token-scale-100;
 		}
 
 		.vscomp-value-tag {
@@ -156,7 +156,10 @@
 			font-size: variables.$token-font-size-300;
 			font-weight: variables.$token-font-weight-medium;
 			height: variables.$token-scale-700;
-			padding: 0 variables.$token-scale-200 0 variables.$token-scale-300;
+			margin: 0;
+			padding-block: 0;
+			padding-inline-end: variables.$token-scale-200;
+			padding-inline-start: variables.$token-scale-300;
 			position: relative;
 
 			.vscomp-value-tag-content {
@@ -168,7 +171,8 @@
 				border-radius: 0;
 				color: variables.$token-icon-subtlest;
 				height: auto;
-				margin-left: variables.$token-scale-100;
+				left: auto;
+				margin-inline-start: variables.$token-scale-100;
 				opacity: 0.5;
 				position: relative;
 				right: auto;
@@ -198,11 +202,19 @@
 					}
 				}
 			}
+
+			&.more-value-count {
+				padding-inline-end: variables.$token-scale-200;
+			}
 		}
-		.vscomp-clear-button {
-			margin-top: 0;
-			top: 50%;
-			transform: translateY(-50%);
+
+		&.has-value {
+			.vscomp-clear-button {
+				margin-top: 0;
+				top: 50%;
+				transform: translateY(-50%);
+				right: variables.$token-scale-1000;
+			}
 		}
 	}
 
@@ -214,7 +226,7 @@
 			&-container {
 				background-color: variables.$token-backdrop;
 				// The !important is needed in order to overwrite the inline style added by library!
-				z-index: var(--layer-elevated) !important;
+				z-index: var(--layer-global-elevated) !important;
 			}
 
 			.vscomp-search-container {
@@ -245,44 +257,21 @@
 			}
 		}
 
-		&.has-value {
-			.vscomp-value {
-				margin-left: variables.$token-scale-600;
-				margin-right: variables.$token-scale-0;
+		&.show-value-as-tags {
+			.vscomp-value-tag {
+				margin: 0;
+				padding-inline-end: variables.$token-scale-200;
+				padding-inline-start: variables.$token-scale-300;
 			}
 
-			&,
-			&.show-value-as-tags {
+			&.has-value {
 				.vscomp-clear-button {
 					left: variables.$token-scale-1000;
 				}
 			}
 		}
 
-		&.show-value-as-tags {
-			&.has-value {
-				.vscomp-toggle-button {
-					padding-right: variables.$token-scale-200;
-				}
-			}
-
-			.vscomp-value-tag {
-				padding: 6px 10px 6px 35px;
-			}
-
-			.vscomp-value-tag-clear-button {
-				left: 10px;
-				right: auto;
-			}
-
-			.vscomp-toggle-button {
-				padding: variables.$token-scale-100 variables.$token-scale-400 variables.$token-scale-0 variables.$token-scale-1200;
-			}
-		}
-
 		.vscomp-toggle-button {
-			padding: variables.$token-scale-100 variables.$token-scale-400 variables.$token-scale-100 variables.$token-scale-1000;
-
 			&:after {
 				left: variables.$token-scale-400;
 				right: auto;
@@ -296,14 +285,6 @@
 				&:after {
 					@include IsRTL_CheckBoxCheckIconTransform;
 				}
-			}
-		}
-	}
-
-	&:not(.text-direction-rtl) {
-		&.has-value {
-			.vscomp-clear-button {
-				right: variables.$token-scale-1000;
 			}
 		}
 	}
@@ -361,7 +342,8 @@
 	height: var(--vscomp-toogle-btn-height);
 	line-height: var(--vscomp-toogle-btn-height);
 	min-width: 180px;
-	padding: variables.$token-scale-100 variables.$token-scale-1000 variables.$token-scale-100 variables.$token-scale-400;
+	padding: variables.$token-scale-100 variables.$token-scale-1000 variables.$token-scale-100
+		variables.$token-scale-400;
 	position: relative;
 	transition: border-color variables.$token-transition-time-100 variables.$token-transition-curve-base;
 	vertical-align: middle;
@@ -430,7 +412,7 @@
 	background-color: var(--osui-dropdown-list-background, variables.$token-bg-surface-default);
 	border: variables.$token-border-size-025 solid var(--color-border);
 	border-radius: var(--osui-dropdown-border-radius, variables.$token-border-radius-200);
-	box-shadow: var(--osui-elevation-overlay);
+	box-shadow: var(--osui-dropdown-list-shadow, #{variables.$token-elevation-3});
 	overflow: hidden;
 	padding: 0;
 
@@ -445,6 +427,11 @@
 	border-bottom: variables.$token-border-size-025 solid var(--color-border);
 	padding: variables.$token-scale-0 variables.$token-scale-200 variables.$token-scale-0 variables.$token-scale-400;
 	position: relative;
+
+	&::before {
+		content: none;
+		display: none;
+	}
 
 	.vscomp-search-clear {
 		border-radius: 50%;
@@ -670,12 +657,9 @@
 ///
 .phone,
 .tablet {
-	.vscomp-wrapper {
-		&.show-value-as-tags {
-			.vscomp-toggle-button {
-				min-height: var(--vscomp-toogle-btn-mobile-height);
-			}
-		}
+	.vscomp-wrapper.show-value-as-tags.has-value .vscomp-toggle-button {
+		min-height: var(--vscomp-toogle-btn-mobile-height);
+		padding-block: variables.$token-scale-200;
 	}
 
 	.vscomp-toggle-button {
@@ -687,15 +671,15 @@
 body {
 	&.vscomp-popup-active {
 		.vscomp-wrapper:not(.focused) {
-			z-index: var(--layer-screen);
+			z-index: var(--layer-global-screen);
 		}
 
 		.vscomp-wrapper {
-			z-index: var(--layer-off-canvas);
+			z-index: var(--layer-global-off-canvas);
 		}
 
 		&:has(.osui-notification--is-open) .vscomp-wrapper {
-			z-index: var(--layer-instant-interaction);
+			z-index: var(--layer-global-instant-interaction);
 		}
 	}
 }

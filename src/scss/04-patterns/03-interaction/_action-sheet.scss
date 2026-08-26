@@ -29,7 +29,7 @@
 	transform: translateY(100%);
 	width: 100%;
 	will-change: transform;
-	z-index: var(--layer-off-canvas);
+	z-index: var(--layer-global-off-canvas);
 
 	// Service Studio Preview
 	& {
@@ -51,7 +51,7 @@
 		position: fixed;
 		top: 0;
 		width: 100%;
-		z-index: var(--layer-off-canvas);
+		z-index: var(--layer-global-off-canvas);
 
 		// Service Studio Preview
 		& {
@@ -96,8 +96,8 @@
 
 		&--animatable {
 			.action-sheet {
-				-webkit-transition: all var(--osui-motion-duration-130) variables.$token-transition-curve-base;
-				transition: all var(--osui-motion-duration-130) variables.$token-transition-curve-base;
+				-webkit-transition: all variables.$token-transition-time-150 variables.$token-transition-curve-base;
+				transition: all variables.$token-transition-time-150 variables.$token-transition-curve-base;
 			}
 		}
 	}
