@@ -5,6 +5,51 @@ const scssStructure = require('../../ProjectSpecs/ScssStructure/#All');
 // Store the text to be exposed!
 let partialsListText;
 
+// ─── CSS cascade sublayers (Option B — see specs/cascade-layers.md) ──────────────
+// Each bundle section is routed into a named sublayer of the outer `outsystems-ui`
+// layer (CreateScssFile.js adds the outer `@layer outsystems-ui { … }` wrap, so
+// `@layer reset { … }` here compiles to `outsystems-ui.reset`). Across sublayers,
+// layer order wins and specificity is ignored; within a sublayer, specificity +
+// source order behave as before.
+//
+// Order is declared up front (lowest priority first). It preserves today's relative
+// order with two deliberate changes: vendor baselines drop to the bottom (so OSUI's
+// own provider overrides always beat them) and utilities rise to the top (so a
+// single utility class always wins).
+const sublayerOrder = ['vendor', 'root', 'reset', 'base', 'patterns', 'utilities'];
+
+// Map each section key (see ScssStructure/#All.js) to its sublayer. `null` means the
+// section is emitted OUTSIDE the sublayers, at the top level of the outer layer, so
+// its SCSS variables/mixins/functions stay globally visible to every sublayer block
+// (only the definition-only 00-abstract files — they emit no CSS). Confirmed by audit:
+// every cross-section SCSS dependency flows from these files.
+const sectionSublayers = {
+	'css-variables-setup': null, // 00-abstract/setup-global-vars — definitions only
+	'functions-mixins': null, // 00-abstract/mixins — definitions only
+	'root': 'root',
+	'resets': 'reset',
+	'html-elements': 'reset',
+	'page-layout': 'base',
+	'widgets': 'base',
+	'providers': 'vendor',
+	'patterns': 'patterns',
+	'usefull-classes': 'utilities',
+	'screen-transitions': 'patterns',
+	'keyframes-animations': 'patterns',
+	'ss-preview': 'utilities', // editor-only; kept high so preview wins in Service Studio (decision D5)
+	'excluders': 'utilities',
+};
+
+// Wrap a section's generated text in its sublayer block, or return it unwrapped for
+// definition-only sections (sublayer === null).
+function wrapSectionInSublayer(sectionKey, sectionText) {
+	const sublayer = sectionSublayers[sectionKey];
+	if (!sublayer) {
+		return sectionText;
+	}
+	return `@layer ${sublayer} {\n${sectionText}}\n`;
+}
+
 function createPartialsListDev(platformType) {
     partialsListText = '';
     return createPartialsList(project.globalConsts.envType.development, platformType);
@@ -49,19 +94,26 @@ function createSectionCommentTitle(text, type) {
 }
 
 // Method that will create the text for the SectionIndex section dynamically
-function createPartialsList(env, platformType) {	
+function createPartialsList(env, platformType) {
     // Section iteractor
     let sectionIndex = 0;
+
+    // Declare the cascade sublayer order up front (lowest priority first).
+    partialsListText += `@layer ${sublayerOrder.join(', ')};\n\n`;
 
     // 0. Go through all the Sections
     for (const section in scssStructure.structure) {
         const sectionInfo = scssStructure.structure[section];
 
+        // Accumulate this section's imports separately so the whole block can be
+        // wrapped in its cascade sublayer once complete.
+        let sectionText = '';
+
         // Create Block comment
         if (sectionInfo.addToSectionIndex) {
-            partialsListText += createSectionCommentTitle(`${sectionIndex}. ${sectionInfo.name}`, 0);
+            sectionText += createSectionCommentTitle(`${sectionIndex}. ${sectionInfo.name}`, 0);
         } else {
-            partialsListText += createSectionCommentTitle(`${sectionInfo.name}`, 1);
+            sectionText += createSectionCommentTitle(`${sectionInfo.name}`, 1);
         }
 
         // Check if the current section contains assets to be included!
@@ -77,12 +129,12 @@ function createPartialsList(env, platformType) {
                     // Check if Asset is also present at the SectionIndex
                     if (sectionInfo.addToSectionIndex && sectionInfo.assets.length > 1 && asset.name !== '') {
                         // Create a asset SubComment
-                        partialsListText += createSectionCommentTitle(`${sectionIndex}.${assetIndex}. ${asset.name}`, 2);
+                        sectionText += createSectionCommentTitle(`${sectionIndex}.${assetIndex}. ${asset.name}`, 2);
                     }
 
                     // Check if the current asset do not have other assets assigned (Patterns case)
                     if (asset.path !== undefined) {
-                        partialsListText += getImportLineText(asset.path);
+                        sectionText += getImportLineText(asset.path);
                     }
                 }
 
@@ -96,9 +148,9 @@ function createPartialsList(env, platformType) {
                         if(subAsset.platform !== undefined && subAsset.platform !== platformType) {
                             continue;
                         } else if (subAsset.key === undefined) {
-                            partialsListText += createSectionCommentTitle(`${sectionIndex}.${assetIndex}.${subAssetIndex}. ${subAsset.name}`, 2);
+                            sectionText += createSectionCommentTitle(`${sectionIndex}.${assetIndex}.${subAssetIndex}. ${subAsset.name}`, 2);
 
-                            partialsListText += getImportLineText(subAsset.path);
+                            sectionText += getImportLineText(subAsset.path);
                         } else {
 
                             // Get the info about the current object key (Pattern)
@@ -116,13 +168,13 @@ function createPartialsList(env, platformType) {
                             ) {
                                 // Common asset info
                                 if (assetInfo.name) {
-                                    partialsListText += createSectionCommentTitle(`${sectionIndex}.${assetIndex}.${subAssetIndex}. ${assetInfo.name}`, 2);
+                                    sectionText += createSectionCommentTitle(`${sectionIndex}.${assetIndex}.${subAssetIndex}. ${assetInfo.name}`, 2);
                                 } else if (assetInfo.codeName) { // In case it's a Group!
-                                    partialsListText += createSectionCommentTitle(`${sectionIndex}.${assetIndex}.${subAssetIndex}. ${assetInfo.codeName}`, 2);
+                                    sectionText += createSectionCommentTitle(`${sectionIndex}.${assetIndex}.${subAssetIndex}. ${assetInfo.codeName}`, 2);
                                 }
 
                                 if (assetInfo.scss) {
-                                    partialsListText += getImportLineText(assetInfo.scss);
+                                    sectionText += getImportLineText(assetInfo.scss);
                                 }
 
                                 // Check if the current asset is a group (Ex: DatePicker case)
@@ -137,9 +189,9 @@ function createPartialsList(env, platformType) {
                                             env === project.globalConsts.envType.development || assetItem.inDevelopment === false
                                         ) {
                                             if (assetItem.scss) {
-                                                partialsListText += createSectionCommentTitle(`${sectionIndex}.${assetIndex}.${subAssetIndex}.${assetInfoItemIndex} ${assetItem.name}`, 2);
+                                                sectionText += createSectionCommentTitle(`${sectionIndex}.${assetIndex}.${subAssetIndex}.${assetInfoItemIndex} ${assetItem.name}`, 2);
 
-                                                partialsListText += getImportLineText(assetItem.scss);
+                                                sectionText += getImportLineText(assetItem.scss);
 
                                                 // Increase AssetItem iteractor
                                                 assetInfoItemIndex++;
@@ -155,7 +207,7 @@ function createPartialsList(env, platformType) {
                     }
 
                     if (assetIndex < sectionInfo.assets.length - 1) {
-                        partialsListText += "\n";
+                        sectionText += "\n";
                     }
                 }
 
@@ -164,7 +216,10 @@ function createPartialsList(env, platformType) {
             }
         }
 
-        partialsListText += "\n";
+        sectionText += "\n";
+
+        // Wrap the section in its cascade sublayer (or emit raw for definition-only sections)
+        partialsListText += wrapSectionInSublayer(section, sectionText);
 
         // Increase section iteractor!
         if (sectionInfo.addToSectionIndex) {

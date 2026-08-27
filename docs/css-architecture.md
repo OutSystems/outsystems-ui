@@ -288,3 +288,57 @@ When writing any SCSS line, walk **down** the chain only as far as you need:
 `get-*-color()` calls; a property reading `$token-*`/`--color-*` directly instead
 of via its `--osui-*`; a theme touching a component rule; hand-edits to the
 generated entry files.
+
+---
+
+## 8. Overriding the library from an app (CSS cascade layer)
+
+The whole compiled bundle ships inside a CSS cascade layer, `outsystems-ui`, with
+ordered sublayers inside it:
+
+```css
+@layer outsystems-ui {
+  @layer vendor, root, reset, base, patterns, utilities;
+  /* every OutSystems UI rule, routed into one of the sublayers above */
+}
+```
+
+Because **unlayered styles always beat layered styles regardless of specificity**,
+any ordinary CSS an app writes overrides OutSystems UI **without a specificity
+war and without `!important`** — even against a deeply-nested framework selector:
+
+```css
+/* App CSS (unlayered) — wins over the layered framework rule despite lower specificity */
+.osui-dropdown-serverside__selected-values-wrapper { border-color: blue; }
+```
+
+Guidance for consumers:
+
+1. **Prefer the custom-property APIs first** (Tiers 1–4 above). Overriding a
+   `--osui-*` / `--color-*` / `--token-*` value is the cleanest path and survives
+   restructuring. Reach for a raw rule override only when no property is exposed.
+2. **Keep your overrides unlayered** and they always win. If your app organises
+   its *own* CSS into layers, declare the order up front so your layers stay above
+   the framework:
+   ```css
+   @layer outsystems-ui, app;   /* app layer beats outsystems-ui */
+   ```
+   You can also target a single sublayer — e.g. reskin only the vendor baselines
+   with `@layer outsystems-ui.vendor { … }` — but unlayered app CSS beating the
+   whole framework is the common case. The sublayers exist mainly so the framework's
+   own precedence is explicit: `utilities` (top) always beats `patterns`, and
+   `vendor` (bottom) always loses to OSUI's own provider overrides.
+3. **Two things a cascade layer cannot beat** (unchanged from before):
+   - **Inline styles** the platform injects on some widgets — still need `!important`.
+   - **`!important`** declarations inside the framework — importance outranks layer
+     origin, so your rule must also use `!important` to win. (The framework keeps a
+     small set of these, mostly to beat platform inline styles.)
+
+Internal note: the outer layer is emitted by `gulp/Tasks/CreateScssFile.js`
+(`wrapInCascadeLayer`); the sublayers and section routing live in
+`gulp/Tasks/CreateScss/GetPartialsList.js` (`sectionSublayers` + `sublayerOrder`).
+The definition-only `00-abstract/*` partials are hoisted outside the sublayers so
+their SCSS members stay global. Within a sublayer, specificity + source order
+behave as before; across sublayers, order wins. Adjust precedence via
+`sectionSublayers`, never by editing component CSS.
+See [`specs/cascade-layers.md`](../specs/cascade-layers.md).

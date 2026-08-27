@@ -184,6 +184,10 @@ Section Index:
 10. Service Studio Preview
 */
 
+@layer outsystems-ui {
+
+@layer vendor, root, reset, base, patterns, utilities;
+
 /* ===============================================================================
 SCSS Setup variables
 =============================================================================== */
@@ -194,6 +198,7 @@ Functions & Mixins
 =============================================================================== */
 @import '00-abstract/mixins';
 
+@layer root {
 /*! ==============================================================================
 0. Root - CSS Variables
 =============================================================================== */
@@ -201,6 +206,8 @@ Functions & Mixins
 /*! 0.2. Icon library */
 @import '01-foundations/icon-library-odc';
 
+}
+@layer reset {
 /*! ==============================================================================
 1. Resets
 =============================================================================== */
@@ -208,6 +215,8 @@ Functions & Mixins
 /*! 1.2. Dark theme (opt-in via .theme-dark class) */
 @import '01-foundations/theme-dark';
 
+}
+@layer reset {
 /*! ==============================================================================
 2. HTML Elements
 =============================================================================== */
@@ -218,6 +227,8 @@ Functions & Mixins
 /*! 2.3. Headings */
 @import '01-foundations/html-elements-headings';
 
+}
+@layer base {
 /*! ==============================================================================
 3. Page Layout
 =============================================================================== */
@@ -252,6 +263,8 @@ Functions & Mixins
 /*! 3.15. iOS Scroll Bounce */
 @import '02-layout/ios-bounce';
 
+}
+@layer base {
 /*! ==============================================================================
 4. Widgets
 =============================================================================== */
@@ -290,6 +303,8 @@ Functions & Mixins
 /*! 4.17. Radio Button */
 @import '03-widgets/radio-button';
 
+}
+@layer vendor {
 /*! ==============================================================================
 5. Providers
 =============================================================================== */
@@ -302,6 +317,8 @@ Functions & Mixins
 /*! 5.4. VirtualSelect */
 @import '04-patterns/03-interaction/dropdown/provider/_virtualselect_lib.scss';
 
+}
+@layer patterns {
 /*! ==============================================================================
 6. Patterns
 =============================================================================== */
@@ -453,6 +470,8 @@ Functions & Mixins
 /*! 6.7.2. Dropdown ServerSide Item */
 @import '../scss/04-patterns/03-interaction/dropdown/dropdownserversideitem';
 
+}
+@layer utilities {
 /*! ==============================================================================
 7. Usefull Classes
 =============================================================================== */
@@ -505,11 +524,15 @@ Functions & Mixins
 /*! 7.24. Miscellaneous */
 @import '05-useful/miscellaneous';
 
+}
+@layer patterns {
 /*! ==============================================================================
 8. Screen Transitions
 =============================================================================== */
 @import '06-screen-transitions/screen-transitions';
 
+}
+@layer patterns {
 /*! ==============================================================================
 9. Keyframes - Animations
 =============================================================================== */
@@ -526,6 +549,8 @@ Functions & Mixins
 /*! 9.6. Miscellaneous */
 @import '07-keyframes/miscellaneous';
 
+}
+@layer utilities {
 /*! ==============================================================================
 10. Service Studio Preview
 =============================================================================== */
@@ -533,8 +558,13 @@ Functions & Mixins
 @import '08-servicestudio-preview/placeholder-empty-odc';
 @import '08-servicestudio-preview/deprecated-preview';
 
+}
+@layer utilities {
 /* ===============================================================================
 Excluders
 =============================================================================== */
 @import '09-excluders/excluders';
 
+}
+
+}

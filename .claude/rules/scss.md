@@ -111,6 +111,14 @@ To add a new SCSS partial:
    ```
 3. Run `npm run dev -- --target ODC` and verify the partial appears in `dist/dev.ODC.OutSystemsUI.css`.
 
+The whole `@import` block is wrapped in a CSS cascade layer, `@layer outsystems-ui { … }` (`wrapInCascadeLayer` in `gulp/Tasks/CreateScssFile.js`), with ordered **sublayers** inside it — `vendor, root, reset, base, patterns, utilities` — assigned per section by `sectionSublayers` in `gulp/Tasks/CreateScss/GetPartialsList.js`. So **every partial you register lands inside its section's sublayer automatically**; a new partial inherits the sublayer of the section spec you add it to. Notes for contributors:
+
+- **Never add rules outside the layer** — unlayered framework rules become un-overridable by consumers.
+- **Across sublayers, order wins over specificity; within a sublayer it's unchanged.** `utilities` beats `patterns`; `vendor` loses to everything. To change a section's precedence, edit `sectionSublayers` — never reach for `!important` or component-rule hacks to win a cross-section fight.
+- **Cross-section shared SCSS members** (`$vars`/`@mixin`/`@function` used in a different section) must live in the top-level `00-abstract/*` defs (hoisted outside the sublayers). A shared definition placed inside a section's sublayer block is invisible to other sublayers and will fail to compile.
+
+Consumer-override semantics: `docs/css-architecture.md` §8; design rationale: `specs/cascade-layers.md`.
+
 ## 10. Provider files
 
 - `Providers/OSUI/*/scss/_<provider>.scss` — override files, use OSUI tokens and follow OSUI naming.

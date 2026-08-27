@@ -66,13 +66,58 @@ export const HopChain = () => (
 	</div>
 );
 
+export const LAYERS = [
+	{ name: 'your app CSS — unlayered', note: 'anything you write wins — no !important, any specificity', accent: '#059669', app: true },
+	{ name: 'outsystems-ui.utilities', note: 'useful classes · Service Studio preview · always win', accent: '#105cef' },
+	{ name: 'outsystems-ui.patterns', note: 'the 75 patterns · screen transitions · keyframes', accent: '#3b82f6' },
+	{ name: 'outsystems-ui.base', note: 'layout · widgets', accent: '#6366f1' },
+	{ name: 'outsystems-ui.reset', note: 'resets · dark theme · html elements', accent: '#7c3aed' },
+	{ name: 'outsystems-ui.root', note: ':root tokens / theme roles · icon library', accent: '#0e7490' },
+	{ name: 'outsystems-ui.vendor', note: 'Splide · Flatpickr · NoUiSlider · VirtualSelect · always lose', accent: '#9ca3af' },
+];
+
+export const LayerStack = () => (
+	<div style={{ margin: '20px 0', fontFamily: 'Inter, system-ui, sans-serif', maxWidth: '760px' }}>
+		<div style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', color: '#6b7280', marginBottom: '10px' }}>
+			higher = wins ↑
+		</div>
+		{LAYERS.map((l) => (
+			<div
+				key={l.name}
+				style={{
+					display: 'flex',
+					alignItems: 'center',
+					gap: '14px',
+					padding: '11px 16px',
+					marginBottom: '6px',
+					background: l.app ? '#ecfdf5' : '#fff',
+					border: '1px solid ' + (l.app ? '#a7f3d0' : '#e5e7eb'),
+					borderLeft: '4px solid ' + l.accent,
+					borderRadius: '10px',
+					borderStyle: l.app ? 'dashed' : 'solid',
+					boxShadow: '0 1px 2px rgba(0,0,0,0.05)',
+				}}
+			>
+				<div style={{ flex: 1, minWidth: 0 }}>
+					<Mono color={l.accent}>{l.name}</Mono>
+				</div>
+				<div style={{ flex: 'none', fontSize: '12px', color: '#6b7280', textAlign: 'right', maxWidth: '260px' }}>{l.note}</div>
+			</div>
+		))}
+		<div style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', color: '#6b7280', marginTop: '4px' }}>
+			lower = loses ↓
+		</div>
+	</div>
+);
+
 # CSS Architecture
 
 How OutSystems UI styles every component: three cooperating layers — **design
 tokens**, a **framework theme layer at `:root`**, and a per-component **CSS API** —
-tied together by a single resolution chain. This is the Storybook summary; the
-full write-up lives in `docs/css-architecture.md`, and every `--osui-*` property
-is catalogued on the **CSS API Reference** page.
+tied together by a single resolution chain, and all shipped inside a **CSS cascade
+layer** so apps can override it without specificity fights. This is the Storybook
+summary; the full write-up lives in `docs/css-architecture.md`, and every
+`--osui-*` property is catalogued on the **CSS API Reference** page.
 
 ## The big picture
 
@@ -236,6 +281,53 @@ alone wouldn't reach components reading `--color-*`).
 
 > Try it: use the **Appearance** toolbar control above to switch Light / Dark
 > across any story.
+
+---
+
+## Overriding the library — cascade layers
+
+The three tiers above are for overriding **values**. But when you need to override
+a **rule** with no `--osui-*` knob — a layout, a pseudo-element, a deep state
+selector — the whole compiled bundle ships inside a CSS **cascade layer**, with
+ordered sublayers:
+
+```css
+@layer outsystems-ui {
+  @layer vendor, root, reset, base, patterns, utilities;
+  /* every OutSystems UI rule, routed into one of the sublayers above */
+}
+```
+
+Because **unlayered styles always beat layered styles regardless of specificity**,
+any ordinary CSS your app writes wins — no specificity match, no `!important`:
+
+```css
+/* App CSS (unlayered) — beats the layered framework rule despite lower specificity */
+.osui-dropdown-serverside__selected-values-wrapper { border-color: blue; }
+```
+
+<LayerStack />
+
+The sublayers make the framework's own precedence explicit: **`utilities` always
+beats `patterns`** (a single utility class wins over a deeply nested pattern rule),
+and **`vendor` always loses** to OSUI's own provider overrides. You can target one
+slice — e.g. reskin only the vendor baselines with `@layer outsystems-ui.vendor { … }` —
+but the common case is just writing unlayered app CSS.
+
+**Guidance:**
+
+1. **Prefer the custom-property APIs** (the tiers above) — cleanest and survives
+   restructuring. Reach for a raw rule override only when no property is exposed.
+2. **Keep your overrides unlayered** and they always win. If your app uses its own
+   layers, declare order up front so yours stay on top: `@layer outsystems-ui, app;`
+3. **Two things a layer cannot beat:** platform-injected **inline styles** (still
+   need `!important`) and the framework's own `!important` declarations (importance
+   outranks layer origin, so match it with `!important`).
+
+> **Verified:** the bundle is entirely inside the layer (no stray unlayered rules),
+> and layering does not change the framework's own rendering — within a sublayer,
+> specificity + source order behave as before; only cross-sublayer precedence is
+> made explicit. See `specs/cascade-layers.md`.
 
 ---
 
