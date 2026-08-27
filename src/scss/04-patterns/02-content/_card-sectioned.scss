@@ -26,7 +26,7 @@
 			flex: 1;
 			padding: var(--card-sectioned-top-padding);
 
-			&.no-padding {
+			&:has(.padding-none) {
 				padding: variables.$token-scale-0;
 			}
 		}
@@ -62,7 +62,7 @@
 				--card-sectioned-top-padding: #{variables.$token-scale-600} #{variables.$token-scale-600}
 					#{variables.$token-scale-0} #{variables.$token-scale-600};
 
-				&.no-padding {
+				&:has(.padding-none) {
 					padding: variables.$token-scale-0;
 				}
 			}
