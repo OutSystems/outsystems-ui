@@ -7,5 +7,5 @@ namespace OSFramework.OSUI.Patterns.SectionIndex {
 	 * @interface ISectionIndex
 	 * @extends {Interface.IPattern}
 	 */
-	export type ISectionIndex = Interface.IParent
+	export type ISectionIndex = Interface.IParent;
 }

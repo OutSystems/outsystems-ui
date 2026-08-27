@@ -42,7 +42,7 @@ function itemMarkup(id: string, title: string, body: string): string {
 					<div class="osui-accordion-item__icon placeholder-empty"></div>
 					<span>${title}</span>
 				</div>
-				<div class="osui-accordion-item__content"><div id="${id}-content" style="padding: 12px 16px;">${body}</div></div>
+				<div class="osui-accordion-item__content"><div id="${id}-content">${body}</div></div>
 			</div>
 		</div>`;
 }
@@ -56,7 +56,7 @@ const meta: Meta<AccordionArgs> = {
 		iconPosition: { control: 'inline-radio', options: ['left', 'right'], name: 'Item.IconPosition' },
 		startsExpanded: { control: 'boolean', name: 'Item.StartsExpanded' },
 	},
-	args: { multipleItems: false, icon: 'Caret', iconPosition: 'right', startsExpanded: false },
+	args: { multipleItems: false, icon: 'Caret', iconPosition: 'left', startsExpanded: false },
 };
 export default meta;
 
@@ -99,7 +99,10 @@ export const SingleDisabledItem: Story = {
 	args: { startsExpanded: true },
 	render: (args) => {
 		const id = uid('accordion-item');
-		const template = `<div class="osui-accordion">${itemMarkup(id, 'Standalone item (disabled)', 'AccordionItem also works without a parent Accordion.')}</div>`;
+		const template = `
+			<div class="osui-accordion">
+				${itemMarkup(id, 'Standalone item (disabled)', 'AccordionItem also works without a parent Accordion.')}
+			</div>`;
 		return renderPattern(template, (_root, register) =>
 			createAndInit(
 				'AccordionItemAPI',

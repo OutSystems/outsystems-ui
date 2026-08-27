@@ -316,7 +316,7 @@ _File: `src/scss/04-patterns/02-content/_alert.scss`_
 | `--osui-alert-background` | `transparent` |
 | `--osui-alert-color` | `var(--color-text)` |
 | `--osui-alert-accent-color` | `var(--color-border)` |
-| `--osui-alert-border-radius` | `#{$token-border-radius-200}` |
+| `--osui-alert-border-radius` | `var(--border-radius-rounded)` |
 | `--osui-alert-padding` | `#{$token-scale-300} #{$token-scale-400}` |
 
 ### Blank Slate (`.blank-slate`)
@@ -326,6 +326,15 @@ _File: `src/scss/04-patterns/02-content/_blank-slate.scss`_
 |---|---|
 | `--osui-blank-slate-description-color` | `var(--color-text)` |
 | `--osui-blank-slate-icon-color` | `var(--color-text-disabled)` |
+
+### Card Background (`.card-background`)
+_File: `src/scss/04-patterns/02-content/_card-background.scss`_
+
+| Property | Default |
+|---|---|
+| `--osui-card-background-border-color` | `#{$token-border-subtle}` |
+| `--osui-card-background-border-width` | `#{$token-border-size-025}` |
+| `--osui-card-background-border-radius` | `var(--border-radius-softer)` |
 
 ### Card Item (`.card-detail`)
 _File: `src/scss/04-patterns/02-content/_card-item.scss`_
@@ -343,7 +352,7 @@ _File: `src/scss/04-patterns/02-content/_card.scss`_
 | `--osui-card-background` | `var(--color-background-surface)` |
 | `--osui-card-border-color` | `#{$token-border-subtle}` |
 | `--osui-card-border-width` | `#{$token-border-size-025}` |
-| `--osui-card-border-radius` | `var(--border-radius-soft)` |
+| `--osui-card-border-radius` | `var(--border-radius-softer)` |
 | `--osui-card-padding` | `#{$token-scale-600}` |
 | `--osui-card-shadow` | `#{$token-elevation-1}` |
 
@@ -414,9 +423,9 @@ _File: `src/scss/04-patterns/02-content/accordion-item/_accordion-item.scss`_
 | `--osui-accordion-item-border-radius` | `#{$token-border-radius-100}` |
 | `--osui-accordion-item-color` | `var(--color-text)` |
 | `--osui-accordion-item-active-indicator-color` | `var(--color-primary)` |
-| `--osui-accordion-item-icon-color` | `#{$token-icon-primary}` |
-| `--osui-accordion-item-title-hover-background` | `#{$token-primitives-neutral-100}` |
-| `--osui-accordion-item-title-hover-border-color` | `var(--color-border)` |
+| `--osui-accordion-item-icon-color` | `#{$token-icon-subtle}` |
+| `--osui-accordion-item-title-hover-background` | `#{$token-bg-neutral-subtlest-hover}` |
+| `--osui-accordion-item-title-hover-border-color` | `#{$token-border-default}` |
 
 ### Carousel (`.osui-carousel`)
 _File: `src/scss/04-patterns/02-content/carousel/_carousel.scss`_
@@ -1070,4 +1079,4 @@ _File: `src/scss/01-foundations/_root.scss`_
 
 ---
 
-<sub>526 properties across 79 components, generated from `src/scss`.</sub>
+<sub>529 properties across 80 components, generated from `src/scss`.</sub>

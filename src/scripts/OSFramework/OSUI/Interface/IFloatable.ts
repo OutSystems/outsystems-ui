@@ -6,5 +6,5 @@ namespace OSFramework.OSUI.Interface {
 	 * @export
 	 * @interface IFloatable
 	 */
-	export type IFloatable = IOpenable
+	export type IFloatable = IOpenable;
 }
