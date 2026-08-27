@@ -16,7 +16,7 @@
 	--osui-accordion-item-background: var(--color-background-surface);
 	--osui-accordion-item-border-color: var(--color-border-subtle);
 	--osui-accordion-item-border-width: #{variables.$token-border-size-025};
-	--osui-accordion-item-border-radius: #{variables.$token-border-radius-400};
+	--osui-accordion-item-border-radius: #{variables.$token-border-radius-100};
 	--osui-accordion-item-color: var(--color-text);
 	--osui-accordion-item-active-indicator-color: var(--color-primary);
 	--osui-accordion-item-icon-color: #{variables.$token-icon-subtle};
@@ -26,11 +26,9 @@
 	// ───────────────────────────────────────────────────────────────────
 
 	background-color: var(--osui-accordion-item-background);
-	border-bottom: var(--osui-accordion-item-border-width) solid var(--osui-accordion-item-border-color);
-	border-radius: var(--osui-accordion-item-border-radius);
+	border-radius: variables.$token-border-radius-0;
 	color: var(--osui-accordion-item-color);
 	font-size: variables.$token-font-size-400;
-	overflow: hidden;
 	position: relative;
 
 	&__click_zone {
@@ -53,7 +51,8 @@
 				font-weight: variables.$token-font-weight-semi-bold;
 
 				&:hover {
-					border-radius: variables.$token-border-radius-0;
+					box-shadow: inset 0 calc(-1 * var(--osui-accordion-item-border-width)) 0 0
+						var(--osui-accordion-item-title-hover-border-color);
 				}
 
 				> .osui-accordion-item__icon {
@@ -111,10 +110,7 @@
 		width: 100%;
 
 		&:hover {
-			background: var(--osui-accordion-item-title-hover-background);
-			border-radius: var(--osui-accordion-item-border-radius);
-			box-shadow: inset 0 calc(-1 * var(--osui-accordion-item-border-width)) 0 0
-				var(--osui-accordion-item-title-hover-border-color);
+			background-color: var(--osui-accordion-item-title-hover-background);
 		}
 
 		// Links inside title always underlined; on focus use a11y highlight colour + offset
@@ -156,10 +152,10 @@
 		font-family: FontAwesome;
 		font-size: variables.$token-font-size-550;
 		font-weight: variables.$token-font-weight-regular;
-		height: variables.$token-scale-400;
+		height: variables.$token-scale-500;
 		justify-content: center;
 		transition: transform variables.$token-transition-time-300 variables.$token-transition-curve-expressive;
-		width: variables.$token-scale-400;
+		width: variables.$token-scale-500;
 
 		&--plus-minus {
 			&:after {
@@ -175,7 +171,7 @@
 				content: ' ';
 				height: variables.$token-border-size-050;
 				position: absolute;
-				width: variables.$token-scale-400;
+				width: variables.$token-scale-500;
 			}
 		}
 
@@ -235,6 +231,12 @@
 	.choices__list.choices__list--dropdown,
 	[data-dropdown] > div.dropdown-list {
 		position: initial;
+	}
+
+	&:not(.osui-accordion-item--is-open) {
+		&:hover {
+			box-shadow: none;
+		}
 	}
 
 	// Accordion inside accordion

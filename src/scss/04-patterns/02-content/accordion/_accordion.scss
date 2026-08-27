@@ -7,6 +7,58 @@
 
 ///
 .osui-accordion {
+	// All items inside accordion: no radius
+	& &-item,
+	.list .osui-accordion-item {
+		border-radius: variables.$token-border-radius-0;
+	}
+
+	// Divider: add top border only to items that are not the first
+	:not(:last-child):not(.list) >,
+	.list :not(:last-child) > {
+		.osui-accordion-item {
+			border-bottom: var(--osui-accordion-item-border-width) solid var(--osui-accordion-item-border-color);
+
+			&:not(.osui-accordion-item--is-open):hover {
+				border-bottom-color: var(--osui-accordion-item-title-hover-border-color);
+			}
+		}
+	}
+
+	// First item: top corners rounded
+	:first-child:not(.list) >,
+	.list :first-child > {
+		.osui-accordion-item {
+			border-top-left-radius: variables.$token-border-radius-400;
+			border-top-right-radius: variables.$token-border-radius-400;
+			overflow: hidden;
+		}
+	}
+
+	// Last item: bottom corners rounded
+	:last-child:not(.list) >,
+	.list :last-child > {
+		.osui-accordion-item {
+			border-bottom-left-radius: variables.$token-border-radius-400;
+			border-bottom-right-radius: variables.$token-border-radius-400;
+			overflow: hidden;
+
+			&:not(.osui-accordion-item--is-open) {
+				.osui-accordion-item__title:hover {
+					box-shadow: none;
+				}
+			}
+		}
+	}
+
+	// Only child: all corners rounded
+	:only-child >,
+	.list :only-child > {
+		.osui-accordion-item {
+			border-radius: variables.$token-border-radius-400;
+		}
+	}
+
 	// ServiceStudio Preview
 	& &-item {
 		& {
