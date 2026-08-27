@@ -21,3 +21,6 @@ Procedure: `/port-to-deprecated` (see `.claude/skills/osui-deprecated-theme/SKIL
   `$token-border-size-025` (1px) → `--border-size-s`.
   Approximations: `$token-border-subtle` (#e6eaee) → `var(--color-neutral-4)` (#dee2e6) —
   nearest step on the old neutral ramp, which was rebased by the token migration.
+- **2026-08-27 — ROU-12992 (working tree)** — added
+  `.layout.layout-side-no-header .app-menu-links{gap}` in both bundles.
+  Mapping: `$token-space-200` (8px) → `--space-s`. Approximations: none (exact match).

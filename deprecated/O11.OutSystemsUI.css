@@ -973,6 +973,9 @@ body,
 .layout.layout-side-no-header .app-menu-content{
   border-inline-end:var(--osui-layout-aside-lines);
 }
+.layout.layout-side-no-header .app-menu-links{
+  gap:var(--space-s);
+}
 .layout.layout-side-no-header .app-login-info{
   border-block-start:var(--osui-layout-aside-lines);
 }

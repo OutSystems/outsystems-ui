@@ -62,6 +62,10 @@ body,
 				border-inline-end: var(--osui-layout-aside-lines);
 			}
 
+			.app-menu-links {
+				gap: variables.$token-space-200;
+			}
+
 			.app-login-info {
 				border-block-start: var(--osui-layout-aside-lines);
 			}
