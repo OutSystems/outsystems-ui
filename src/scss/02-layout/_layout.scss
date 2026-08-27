@@ -50,8 +50,8 @@ body,
 
 		&-side-no-header {
 			// ─── Component CSS API ─────────────────────────────────────────────
-			--osui-layout-main-padding: variables.$token-space-1000;
-			--osui-layout-aside-lines: variables.$token-border-size-100 solid variables.$token-border-subtle;
+			--osui-layout-main-padding: #{variables.$token-space-1000};
+			--osui-layout-aside-lines: #{variables.$token-border-size-025} solid #{variables.$token-border-subtle};
 			// ───────────────────────────────────────────────────────────────────
 
 			.main-content {
@@ -203,7 +203,7 @@ body,
 	}
 
 	.layout-side-no-header {
-		--osui-layout-main-padding: 0 variables.$token-space-600 variables.$token-space-600;
+		--osui-layout-main-padding: 0 #{variables.$token-space-600} #{variables.$token-space-600};
 	}
 }
 
