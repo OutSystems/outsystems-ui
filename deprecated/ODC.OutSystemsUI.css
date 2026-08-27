@@ -1176,6 +1176,22 @@ body,
 .layout.layout-side.aside-overlay .main{
   margin-left:0;
 }
+.layout.layout-side-no-header{
+  --osui-layout-main-padding:var(--space-xl);
+  --osui-layout-aside-lines:var(--border-size-s) solid var(--color-neutral-4);
+}
+.layout.layout-side-no-header .main-content{
+  padding:var(--osui-layout-main-padding);
+}
+.layout.layout-side-no-header .app-menu-content{
+  border-inline-end:var(--osui-layout-aside-lines);
+}
+.layout.layout-side-no-header .app-login-info{
+  border-block-start:var(--osui-layout-aside-lines);
+}
+.layout.layout-side-no-header .menu-icon{
+  margin:var(--space-base) var(--space-m);
+}
 .layout.layout-native{
   -servicestudio-min-height:100vh !important;
 }
@@ -1238,6 +1254,10 @@ body,
 .tablet .layout-side .main,
 .phone .layout-side .main{
   margin-left:0;
+}
+.tablet .layout-side-no-header,
+.phone .layout-side-no-header{
+  --osui-layout-main-padding:0 var(--space-m) var(--space-m);
 }
 .phone .layout:not(.layout-native) [class*=ThemeGrid_Width]:not(.no-responsive){
   margin:var(--space-none) var(--space-none) var(--space-base) var(--space-none);
