@@ -4,66 +4,90 @@
 ////
 /// @group Widgets-Button_Group
 /// Widgets - Button Group
+/// v3.0.0 — pill items on a neutral subtle track (Figma node 20015249:20).
 
 ///
 .button-group {
-	background-color: transparent;
-	border-radius: 0;
-	padding: variables.$token-scale-200 variables.$token-scale-0;
+	// ─── Component CSS API (container) ─────────────────────────────────
+	--osui-button-group-container-background: #{variables.$token-bg-neutral-subtle-default};
+	--osui-button-group-container-padding: #{variables.$token-scale-100};
+	--osui-button-group-container-gap: #{variables.$token-scale-200};
+	--osui-button-group-container-border-radius: #{variables.$token-border-radius-200};
+	// ───────────────────────────────────────────────────────────────────
+
+	background-color: var(--osui-button-group-container-background);
+	border-radius: var(--osui-button-group-container-border-radius);
+	display: inline-block;
+	padding: var(--osui-button-group-container-padding);
+
+	// Platform baseline sets display:flex on this wrapper; gap belongs here.
+	> div {
+		display: flex;
+		gap: var(--osui-button-group-container-gap);
+	}
 
 	&-item {
-		// ─── Component CSS API ─────────────────────────────────────────────
-		--osui-button-group-background: var(--color-background-surface);
-		--osui-button-group-border-color: var(--color-border);
+		// ─── Component CSS API (item) ──────────────────────────────────────
+		--osui-button-group-background: transparent;
+		--osui-button-group-border-color: transparent;
+		--osui-button-group-border-width: #{variables.$token-border-size-025};
 		--osui-button-group-color: var(--color-text-subtle);
+		--osui-button-group-border-radius: #{variables.$token-border-radius-200};
+		--osui-button-group-font-size: #{variables.$token-font-size-300};
+		--osui-button-group-height: #{variables.$token-scale-800};
+		--osui-button-group-min-width: #{variables.$token-scale-1200};
+		--osui-button-group-padding-inline: #{variables.$token-scale-200};
+		--osui-button-group-selected-background: #{variables.$token-bg-neutral-subtlest-default};
+		--osui-button-group-selected-border-color: #{variables.$token-border-default};
+		--osui-button-group-selected-color: var(--color-text-subtle);
+		// Hover — Figma bg/neutral/subtlest/press; same for selected and unselected
+		--osui-button-group-hover-background: #{variables.$token-bg-neutral-subtlest-press};
+		--osui-button-group-disabled-color: #{variables.$token-text-disabled};
 		--osui-button-group-disabled-overlay: #{variables.$token-state-disabled};
-		// Matches the default .btn height so a button group sits flush with
-		// buttons placed alongside it, while still growing with larger font
-		// sizes and accessibility settings
-		--osui-button-group-min-height: #{variables.$token-scale-1000};
 		// ───────────────────────────────────────────────────────────────────
 
+		align-items: center;
 		background-color: var(--osui-button-group-background);
-		border: variables.$token-border-size-025 solid var(--osui-button-group-border-color);
-		border-radius: 0;
+		border: var(--osui-button-group-border-width) solid var(--osui-button-group-border-color);
+		border-radius: var(--osui-button-group-border-radius);
 		color: var(--osui-button-group-color);
 		cursor: pointer;
-		font-size: variables.$token-font-size-400;
+		display: inline-flex;
+		flex: 1;
+		font-size: var(--osui-button-group-font-size);
 		font-weight: variables.$token-font-weight-medium;
-		min-height: var(--osui-button-group-min-height);
-		padding: variables.$token-scale-0 variables.$token-scale-400;
+		height: var(--osui-button-group-height);
+		justify-content: center;
+		line-height: variables.$token-font-line-height-500;
+		min-width: var(--osui-button-group-min-width);
+		padding: variables.$token-scale-0 var(--osui-button-group-padding-inline);
 		position: relative;
+		transition:
+			background-color variables.$token-transition-time-100 variables.$token-transition-curve-base,
+			border-color variables.$token-transition-time-100 variables.$token-transition-curve-base,
+			color variables.$token-transition-time-100 variables.$token-transition-curve-base;
 		white-space: nowrap;
 
-		&:first-child {
-			border-radius: variables.$token-border-radius-200 variables.$token-border-radius-0 variables.$token-border-radius-0
-				variables.$token-border-radius-200;
+		&.button-group-selected-item {
+			background-color: var(--osui-button-group-selected-background);
+			border-color: var(--osui-button-group-selected-border-color);
+			color: var(--osui-button-group-selected-color);
 		}
 
 		&[disabled] {
 			pointer-events: none;
 
-			&:after {
+			&:not(.button-group-selected-item) {
+				color: var(--osui-button-group-disabled-color);
+			}
+
+			&.button-group-selected-item:after {
 				background-color: var(--osui-button-group-disabled-overlay);
+				border-radius: var(--osui-button-group-border-radius);
 				content: '';
-				inset: 0;
+				inset: -1px;
 				position: absolute;
 			}
-		}
-
-		&[disabled]:not(:first-child),
-		&:not(:first-child) {
-			border-left: variables.$token-border-size-0;
-		}
-
-		&:last-child {
-			border-radius: variables.$token-border-radius-0 variables.$token-border-radius-200 variables.$token-border-radius-200
-				variables.$token-border-radius-0;
-		}
-
-		&.button-group-selected-item {
-			background-color: var(--color-primary);
-			color: var(--color-text-inverse);
 		}
 	}
 
@@ -82,72 +106,14 @@
 ///
 .desktop {
 	.button-group-item {
-		// Neutral (non-selected): matches .btn-cancel:hover — background darkens
-		// one tier, border stays on the resting --color-border role
 		&:not(.button-group-selected-item):not([disabled]):hover {
-			background-color: variables.$token-bg-neutral-subtlest-hover;
-			border-color: var(--color-border);
+			background-color: var(--osui-button-group-hover-background);
+			border-color: transparent;
 		}
 
-		// Selected: darker background + border — same technique as .btn-primary:hover
-		&.button-group-selected-item:hover {
-			background-color: var(--color-primary-hover);
-			border-color: var(--color-primary-hover);
-		}
-	}
-}
-
-/* Button Group when used inside Header Content Placeholder */
-///
-.layout-native {
-	.header-top-content {
-		.button-group-item {
-			background-color: var(--background-color-header, var(--color-background-header));
-			border: 0;
-			border-bottom: variables.$token-border-size-050 solid transparent;
-			color: var(--color-text-subtlest);
-
-			&:last-child {
-				border-radius: 0;
-			}
-
-			&.button-group-selected-item {
-				border-bottom: variables.$token-border-size-050 solid variables.$token-semantics-primary-base;
-				color: var(--color-text);
-			}
-
-			&[disabled] {
-				color: var(--color-text-disabled);
-
-				&.button-group-selected-item {
-					border-bottom: variables.$token-border-size-050 solid var(--color-text-disabled);
-				}
-			}
-		}
-	}
-}
-
-// IsRTL -------------------------------------------------------------------------
-///
-.is-rtl {
-	.button-group-item {
-		&:first-child {
-			border-radius: variables.$token-border-radius-0 variables.$token-border-radius-200 variables.$token-border-radius-200
-				variables.$token-border-radius-0;
-		}
-
-		&:not(:first-child) {
-			border-left: variables.$token-border-size-025 solid variables.$token-semantics-primary-base;
-			border-right: variables.$token-border-size-0;
-
-			&[disabled] {
-				border-left: variables.$token-border-size-025 solid var(--color-border);
-			}
-		}
-
-		&:last-child {
-			border-radius: variables.$token-border-radius-200 variables.$token-border-radius-0 variables.$token-border-radius-0
-				variables.$token-border-radius-200;
+		&.button-group-selected-item:not([disabled]):hover {
+			background-color: var(--osui-button-group-hover-background);
+			border-color: var(--osui-button-group-selected-border-color);
 		}
 	}
 }
@@ -158,8 +124,10 @@
 	.button-group-item {
 		&:focus {
 			box-shadow: none;
+			outline: none;
 
 			&:before {
+				border-radius: var(--osui-button-group-border-radius);
 				bottom: -1px;
 				box-shadow: 0 0 0 variables.$token-border-size-075 var(--color-focus-outer);
 				content: '';
@@ -178,14 +146,15 @@
 .os-high-contrast {
 	.button-group-item {
 		&.button-group-selected-item:before {
+			border: variables.$token-border-size-075 solid variables.$token-semantics-primary-base;
+			border-radius: var(--osui-button-group-border-radius);
+			bottom: 0;
 			content: '';
 			display: block;
-			position: absolute;
-			top: 0;
-			right: 0;
-			bottom: 0;
 			left: 0;
-			border: variables.$token-border-size-075 solid variables.$token-semantics-primary-base;
+			position: absolute;
+			right: 0;
+			top: 0;
 		}
 	}
 }
