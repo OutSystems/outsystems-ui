@@ -19,12 +19,13 @@
 
 	&-title {
 		background-color: transparent;
-		border-bottom: variables.$token-border-size-025 solid var(--osui-section-title-border-color);
+		border-block-end: variables.$token-border-size-025 solid var(--osui-section-title-border-color);
 		color: var(--osui-section-title-color);
 		font-size: variables.$token-font-size-500;
 		font-weight: variables.$token-font-weight-semi-bold;
 		line-height: var(--osui-section-title-line-height);
-		padding: variables.$token-scale-0 variables.$token-scale-0 variables.$token-space-200 variables.$token-scale-0;
+		padding-block: variables.$token-scale-0 variables.$token-space-200;
+		padding-inline: variables.$token-scale-0;
 		position: relative;
 		text-transform: none;
 		width: 100%;
@@ -33,7 +34,8 @@
 	&-content {
 		color: var(--osui-section-content-color);
 		line-height: var(--osui-section-content-line-height);
-		padding: variables.$token-space-200 variables.$token-scale-0 variables.$token-scale-0;
+		padding-block: variables.$token-space-200 variables.$token-scale-0;
+		padding-inline: variables.$token-scale-0;
 	}
 
 	&-group {
@@ -64,7 +66,8 @@
 .layout-native {
 	.section {
 		&-title {
-			padding: variables.$token-scale-200 variables.$token-scale-400 variables.$token-scale-200 variables.$token-scale-400;
+			padding-block: variables.$token-scale-200;
+			padding-inline: variables.$token-scale-400;
 		}
 
 		&-content {

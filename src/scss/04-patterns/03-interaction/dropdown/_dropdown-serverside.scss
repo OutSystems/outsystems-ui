@@ -67,7 +67,7 @@ $balloonMobileTopMargin: 5vh;
 		display: flex;
 		flex: 1;
 		height: inherit;
-		margin-right: variables.$token-scale-400;
+		margin-inline-end: variables.$token-scale-400;
 		overflow: hidden;
 
 		&:after {
@@ -79,7 +79,7 @@ $balloonMobileTopMargin: 5vh;
 			line-height: 1;
 			pointer-events: none;
 			position: absolute;
-			right: variables.$token-scale-400;
+			inset-inline-end: variables.$token-scale-400;
 			top: 50%;
 			transform: translateY(-50%);
 			transition: transform variables.$token-transition-time-200 variables.$token-transition-curve-expressive;
@@ -109,7 +109,8 @@ $balloonMobileTopMargin: 5vh;
 			display: flex;
 			font-size: variables.$token-font-size-350;
 			height: variables.$token-scale-1000;
-			padding: variables.$token-scale-0 variables.$token-scale-400;
+			padding-block: variables.$token-scale-0;
+			padding-inline: variables.$token-scale-400;
 			position: relative;
 			transition: border variables.$token-transition-time-300 variables.$token-transition-curve-expressive;
 			width: 100%;
@@ -159,7 +160,7 @@ $balloonMobileTopMargin: 5vh;
 				color: var(--color-text-disabled);
 				display: flex;
 				height: 100%;
-				left: variables.$token-scale-400;
+				inset-inline-start: variables.$token-scale-400;
 				position: absolute;
 				top: 0;
 			}
@@ -176,7 +177,9 @@ $balloonMobileTopMargin: 5vh;
 				color: inherit;
 				font-size: variables.$token-font-size-350;
 				height: variables.$token-scale-1000;
-				padding: variables.$token-scale-0 variables.$token-scale-200 variables.$token-scale-0 variables.$token-scale-400;
+				padding-block: variables.$token-scale-0;
+				padding-inline-end: variables.$token-scale-200;
+				padding-inline-start: variables.$token-scale-400;
 				width: 100%;
 
 				&:focus,
@@ -192,12 +195,13 @@ $balloonMobileTopMargin: 5vh;
 			align-items: center;
 			display: flex;
 			height: 100%;
-			padding: variables.$token-scale-0 variables.$token-scale-400;
+			padding-block: variables.$token-scale-0;
+			padding-inline: variables.$token-scale-400;
 		}
 
 		// Options placeholder
 		&-content {
-			border-top: variables.$token-border-size-025 solid var(--color-border-input);
+			border-block-start: variables.$token-border-size-025 solid var(--color-border-input);
 			flex: 1;
 			height: auto;
 			max-height: var(--osui-dropdown-ss-balloon-max-height);
@@ -226,14 +230,15 @@ $balloonMobileTopMargin: 5vh;
 		// If Search input do not exist, this modifier will be added!
 		&--has-not-search {
 			.osui-dropdown-serverside__balloon-content {
-				border-top: none;
+				border-block-start: none;
 			}
 		}
 
 		// Footer placeholder
 		&-footer {
-			border-top: variables.$token-border-size-025 solid var(--color-border-input);
-			padding: variables.$token-scale-200 variables.$token-scale-400;
+			border-block-start: variables.$token-border-size-025 solid var(--color-border-input);
+			padding-block: variables.$token-scale-200;
+			padding-inline: variables.$token-scale-400;
 		}
 	}
 
@@ -286,8 +291,8 @@ $balloonMobileTopMargin: 5vh;
 		& + .osui-dropdown-serverside-error-message {
 			color: variables.$token-semantics-danger-base;
 			font-size: variables.$token-font-size-300;
-			margin-left: variables.$token-scale-0;
-			margin-top: variables.$token-scale-075;
+			margin-inline-start: variables.$token-scale-0;
+			margin-block-start: variables.$token-scale-075;
 		}
 	}
 
@@ -307,7 +312,7 @@ $balloonMobileTopMargin: 5vh;
 // Inside Form
 .form {
 	.osui-dropdown-serverside__balloon-search-wrapper input[data-input] {
-		margin-bottom: 0;
+		margin-block-end: 0;
 	}
 
 	.osui-dropdown-serverside__balloon .wcag-hide-text {
@@ -379,7 +384,7 @@ $balloonMobileTopMargin: 5vh;
 					&:after {
 						height: var(--osui-outline-size);
 						/* This negative margin will avoid having sticky element on pushing down the elements */
-						margin-top: calc(-1 * var(--osui-outline-size));
+						margin-block-start: calc(-1 * var(--osui-outline-size));
 						position: sticky;
 						width: 100%;
 						z-index: var(--layer-local-tier-3);
@@ -404,10 +409,10 @@ $balloonMobileTopMargin: 5vh;
 					}
 
 					& > *:before {
-						left: 0;
+						inset-inline-start: 0;
 					}
 					& > *:after {
-						right: 0;
+						inset-inline-end: 0;
 					}
 				}
 			}
@@ -422,37 +427,6 @@ $balloonMobileTopMargin: 5vh;
 		--osui-outline-size: 0;
 
 		box-shadow: inset 0 0 0 variables.$token-border-size-075 var(--color-focus-outer);
-	}
-}
-
-// IsRTL -------------------------------------------------------------------------
-///
-.is-rtl {
-	.osui-dropdown-serverside {
-		&__selected-values {
-			margin-left: variables.$token-scale-400;
-			margin-right: initial;
-
-			&:after {
-				left: variables.$token-scale-400;
-				right: auto;
-			}
-		}
-
-		// Balloon States
-		&__balloon {
-			&-search {
-				&:before {
-					left: auto;
-					right: variables.$token-scale-400;
-				}
-
-				input,
-				.form-control[data-input] {
-					padding: variables.$token-scale-0 variables.$token-scale-400 variables.$token-scale-0 variables.$token-scale-200;
-				}
-			}
-		}
 	}
 }
 
@@ -541,7 +515,7 @@ $balloonMobileTopMargin: 5vh;
 			border: none;
 			border-radius: var(--border-radius-sharp);
 			display: flex;
-			left: 0;
+			inset-inline-start: 0;
 			max-width: 100vw;
 			opacity: 0;
 			overflow: hidden;
@@ -566,7 +540,7 @@ $balloonMobileTopMargin: 5vh;
 				display: flex;
 				flex-direction: column;
 				height: auto;
-				margin-top: $balloonMobileTopMargin;
+				margin-block-start: $balloonMobileTopMargin;
 				// 90vh - maxHeight in order to create a margin top/bottom with 5vh
 				max-height: calc(90vh - $balloonMobileTopMargin - var(--size-header));
 				overflow: hidden;
@@ -589,7 +563,7 @@ $balloonMobileTopMargin: 5vh;
 			// If do not exist a input search inside balloon
 			&--has-not-search {
 				.osui-dropdown-serverside__balloon-container {
-					margin-top: $balloonMobileTopMargin;
+					margin-block-start: $balloonMobileTopMargin;
 					max-height: calc(var(--viewport-height, 100vh) - $balloonMobileTopMargin - var(--size-header));
 				}
 			}
@@ -617,7 +591,7 @@ $balloonMobileTopMargin: 5vh;
 			}
 
 			.osui-dropdown-serverside__balloon-container {
-				margin-top: var(--ballon-top-margin-value);
+				margin-block-start: var(--ballon-top-margin-value);
 				position: relative;
 				transform: translateY(calc(0.5 * var(--ballon-top-margin-value)));
 				transition: all variables.$token-transition-time-300 variables.$token-transition-curve-expressive;

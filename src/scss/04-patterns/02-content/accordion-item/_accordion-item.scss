@@ -100,13 +100,13 @@
 	&__title {
 		align-items: center;
 		color: var(--osui-accordion-item-color);
-		direction: ltr;
 		display: flex;
 		font-size: variables.$token-font-size-400;
 		gap: variables.$token-scale-200;
 		justify-content: space-between;
 		line-height: 1;
-		padding: variables.$token-scale-300 variables.$token-scale-600;
+		padding-block: variables.$token-scale-300;
+		padding-inline: variables.$token-scale-600;
 		width: 100%;
 
 		&:hover {
@@ -136,7 +136,7 @@
 			> a,
 			> button {
 				align-self: center;
-				margin-top: unset;
+				margin-block-start: unset;
 			}
 		}
 
@@ -193,7 +193,8 @@
 		display: block;
 		font-size: variables.$token-font-size-400;
 		overflow: hidden;
-		padding: variables.$token-scale-0 variables.$token-scale-600;
+		padding-block: variables.$token-scale-0;
+		padding-inline: variables.$token-scale-600;
 
 		&--is {
 			&-collapsed {
@@ -209,7 +210,8 @@
 
 			&-expanded {
 				height: auto;
-				padding: variables.$token-scale-0 variables.$token-scale-600 variables.$token-scale-600;
+				padding-block: variables.$token-scale-0 variables.$token-scale-600;
+				padding-inline: variables.$token-scale-600;
 				visibility: visible;
 			}
 
@@ -219,12 +221,12 @@
 		}
 
 		& > div {
-			padding-top: variables.$token-scale-300;
+			padding-block-start: variables.$token-scale-300;
 		}
 
 		/* Add a margin-top when animated label is the first child */
 		[data-block*='AnimatedLabel']:first-child .animated-label {
-			margin-top: variables.$token-scale-200;
+			margin-block-start: variables.$token-scale-200;
 		}
 	}
 
@@ -241,7 +243,7 @@
 
 	// Accordion inside accordion
 	.osui-accordion {
-		margin-top: var(--accordion-active-border-size);
+		margin-block-start: var(--accordion-active-border-size);
 	}
 }
 
@@ -261,15 +263,18 @@
 		}
 
 		&__content {
-			padding: variables.$token-scale-0 variables.$token-scale-400;
+			padding-block: variables.$token-scale-0;
+			padding-inline: variables.$token-scale-400;
 
 			&--is {
 				&-collapsed {
-					padding: variables.$token-scale-0 variables.$token-scale-400;
+					padding-block: variables.$token-scale-0;
+					padding-inline: variables.$token-scale-400;
 				}
 
 				&-expanded {
-					padding: variables.$token-scale-0 variables.$token-scale-400 variables.$token-scale-400;
+					padding-block: variables.$token-scale-0 variables.$token-scale-400;
+					padding-inline: variables.$token-scale-400;
 				}
 			}
 		}
@@ -293,11 +298,3 @@
 	}
 }
 
-// IsRTL -------------------------------------------------------------------------
-///
-.is-rtl {
-	.osui-accordion-item__title__placeholder {
-		direction: rtl;
-		margin-right: variables.$token-scale-200;
-	}
-}

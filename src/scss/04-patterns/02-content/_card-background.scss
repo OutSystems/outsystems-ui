@@ -45,7 +45,7 @@
 		&.top-left,
 		&.center-left,
 		&.bottom-left {
-			text-align: left;
+			text-align: start;
 		}
 
 		&.top-center,
@@ -57,7 +57,7 @@
 		&.top-right,
 		&.center-right,
 		&.bottom-right {
-			text-align: right;
+			text-align: end;
 		}
 	}
 
@@ -85,7 +85,7 @@
 			background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%);
 			content: '';
 			height: 100%;
-			left: 0;
+			inset-inline-start: 0;
 			opacity: 1;
 			position: absolute;
 			top: 0;

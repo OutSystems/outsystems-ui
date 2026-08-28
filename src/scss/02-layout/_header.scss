@@ -22,7 +22,7 @@
 	}
 
 	&-logo {
-		padding-right: variables.$token-scale-400;
+		padding-inline-end: variables.$token-scale-400;
 
 		.application-name {
 			word-break: break-word;
@@ -37,7 +37,7 @@
 		height: 100%;
 
 		& > [data-block*='ApplicationTitle'] .application-name {
-			margin-right: variables.$token-scale-600;
+			margin-inline-end: variables.$token-scale-600;
 		}
 	}
 
@@ -49,10 +49,10 @@
 ///
 .fixed-header {
 	.header {
-		left: 0;
+		inset-inline-start: 0;
 		position: -webkit-sticky; //Fix for older iPhones
 		position: sticky;
-		right: 0;
+		inset-inline-end: 0;
 		top: 0;
 	}
 }
@@ -110,37 +110,10 @@
 .phone {
 	.layout-top .header-navigation {
 		height: 100vh;
-		left: 0;
+		inset-inline-start: 0;
 		position: fixed;
 		top: 0;
 		z-index: var(--layer-global-navigation);
-	}
-}
-
-// IsRTL -------------------------------------------------------------------------
-///
-.is-rtl {
-	.header {
-		&-logo {
-			padding-left: variables.$token-scale-400;
-			padding-right: 0;
-		}
-
-		.header-content > [data-block*='ApplicationTitle'] .application-name {
-			margin-right: 0;
-			margin-left: variables.$token-scale-600;
-		}
-	}
-
-	.app-logo,
-	.layout-side .app-logo {
-		margin-left: variables.$token-scale-200;
-		margin-right: 0;
-	}
-
-	.menu-icon {
-		margin-left: variables.$token-scale-600;
-		margin-right: 0;
 	}
 }
 

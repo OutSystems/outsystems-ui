@@ -32,7 +32,7 @@
 .app-menu-overlay {
 	background-color: variables.$token-backdrop;
 	height: 100vh;
-	left: 0;
+	inset-inline-start: 0;
 	opacity: 0;
 	pointer-events: none;
 	position: fixed;
@@ -153,7 +153,7 @@
 	.app-menu-content {
 		&,
 		&.is--open {
-			left: 0;
+			inset-inline-start: 0;
 		}
 	}
 }
@@ -162,7 +162,8 @@
 .tablet,
 .phone {
 	.app-login-info {
-		padding: variables.$token-scale-200 variables.$token-scale-600;
+		padding-block: variables.$token-scale-200;
+		padding-inline: variables.$token-scale-600;
 	}
 
 	.app-menu-content {
@@ -199,8 +200,8 @@
 ///
 .phone {
 	.app-menu-content {
-		padding-bottom: var(--os-safe-area-bottom);
-		padding-left: var(--os-safe-area-left);
+		padding-block-end: var(--os-safe-area-bottom);
+		padding-inline-start: var(--os-safe-area-inline-start);
 	}
 }
 
@@ -208,16 +209,16 @@
 .android {
 	&.portrait {
 		.app-menu-content {
-			padding-top: #{android-safe-area-top()};
+			padding-block-start: #{android-safe-area-top()};
 		}
 	}
 
 	&.landscape {
 		.app-menu-content {
-			padding-left: max(var(--os-safe-area-left), var(--safe-area-status-bar, 0px));
-			padding-right: max(var(--os-safe-area-right), 0px);
-			padding-top: var(--safe-area-inset-top, 0px);
-			padding-bottom: var(--safe-area-inset-bottom, 0px);
+			padding-inline-start: max(var(--os-safe-area-inline-start), var(--safe-area-status-bar, 0px));
+			padding-inline-end: max(var(--os-safe-area-inline-end), 0px);
+			padding-block-start: var(--safe-area-inset-top, 0px);
+			padding-block-end: var(--safe-area-inset-bottom, 0px);
 		}
 	}
 }
@@ -225,8 +226,8 @@
 ///
 .ios {
 	.app-menu-content {
-		padding-bottom: var(--os-safe-area-bottom);
-		padding-top: var(--os-safe-area-top);
+		padding-block-end: var(--os-safe-area-bottom);
+		padding-block-start: var(--os-safe-area-top);
 	}
 }
 
@@ -234,14 +235,10 @@
 ///
 .is-rtl {
 	.app-menu-content {
-		left: auto;
-		right: calc(-1 * var(--size-side-menu));
 		transition: transform 130ms ease-in;
 	}
 
 	.app-menu-content.is--open {
-		left: auto;
-		right: 0;
 		transform: translateX(0) translateZ(0);
 		transition: transform 130ms ease-out;
 	}

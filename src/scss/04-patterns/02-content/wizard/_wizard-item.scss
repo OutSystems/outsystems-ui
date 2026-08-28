@@ -89,7 +89,8 @@
 	}
 
 	&-icon-wrapper {
-		margin: variables.$token-space-200 variables.$token-space-0;
+		margin-block: variables.$token-space-200;
+		margin-inline: variables.$token-space-0;
 		position: relative;
 		width: 100%;
 
@@ -105,7 +106,7 @@
 			content: '';
 			height: var(--osui-wizard-connector-size);
 			position: absolute;
-			right: 50%;
+			inset-inline-end: 50%;
 			top: 50%;
 			transform: translateY(-50%);
 			width: 100%;
@@ -124,7 +125,8 @@
 		font-weight: var(--osui-wizard-icon-font-weight);
 		height: var(--osui-wizard-icon-size, #{variables.$token-scale-1000});
 		justify-content: center;
-		margin: 0 auto;
+		margin-block: 0;
+		margin-inline: auto;
 		padding: var(--osui-wizard-icon-padding);
 		position: relative;
 		width: var(--osui-wizard-icon-size, #{variables.$token-scale-1000});
@@ -154,19 +156,6 @@
 		font-size: var(--osui-wizard-font-size);
 		line-height: var(--osui-wizard-label-line-height);
 		text-align: center;
-	}
-}
-
-// IsRTL ---------------------------------------------------------------------------
-///
-.is-rtl {
-	.osui-wizard-item {
-		&-icon-wrapper {
-			&:before {
-				left: calc(50% + var(--osui-wizard-icon-size, #{variables.$token-scale-1000}) / 2);
-				right: auto;
-			}
-		}
 	}
 }
 

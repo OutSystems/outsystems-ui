@@ -25,7 +25,8 @@
 	--range-slider-handle-size-half: calc(var(--range-slider-handle-size) / 2);
 	--range-slider-thickness-half: calc(var(--range-slider-thickness) / 2);
 	--range-slider-handle-sliding-position: calc(var(--range-slider-handle-size-half) * -1);
-	padding: 0 variables.$token-scale-400;
+	padding-block: 0;
+	padding-inline: variables.$token-scale-400;
 
 	&--is-vertical {
 		height: var(--range-slider-size);
@@ -35,7 +36,8 @@
 	&--has-ticks {
 		.noUi {
 			&-target {
-				margin: variables.$token-scale-600 variables.$token-scale-0 variables.$token-scale-1000;
+				margin-block: variables.$token-scale-600 variables.$token-scale-1000;
+				margin-inline: variables.$token-scale-0;
 			}
 		}
 	}
@@ -43,7 +45,8 @@
 	&:not(.osui-range-slider--has-ticks) {
 		.noUi {
 			&-target {
-				margin: variables.$token-scale-600 variables.$token-scale-0;
+				margin-block: variables.$token-scale-600;
+				margin-inline: variables.$token-scale-0;
 			}
 		}
 	}
@@ -89,13 +92,13 @@
 
 			.noUi-handle:before {
 				border-width: variables.$token-border-size-0 variables.$token-border-size-0 variables.$token-border-size-0 variables.$token-border-size-025;
-				left: calc(var(--range-slider-handle-size) / 4);
-				right: auto;
+				inset-inline-start: calc(var(--range-slider-handle-size) / 4);
+				inset-inline-end: auto;
 			}
 
 			.noUi-handle:after {
 				border-width: variables.$token-border-size-0 variables.$token-border-size-025;
-				left: calc(var(--range-slider-handle-size) / 2.5);
+				inset-inline-start: calc(var(--range-slider-handle-size) / 2.5);
 				width: variables.$token-scale-075;
 			}
 
@@ -120,12 +123,13 @@
 
 		&-vertical {
 			height: var(--range-slider-size);
-			margin: variables.$token-scale-600 variables.$token-scale-0;
+			margin-block: variables.$token-scale-600;
+			margin-inline: variables.$token-scale-0;
 			width: var(--range-slider-thickness);
 
 			.noUi-handle {
 				bottom: var(--range-slider-handle-sliding-position);
-				left: calc((var(--range-slider-handle-size-half) + var(--range-slider-thickness-half)) * -1);
+				inset-inline-start: calc((var(--range-slider-handle-size-half) + var(--range-slider-thickness-half)) * -1);
 
 				// Service Studio Preview
 				& {
@@ -139,7 +143,7 @@
 			width: var(--range-slider-size);
 
 			.noUi-handle {
-				right: var(--range-slider-handle-sliding-position);
+				inset-inline-end: var(--range-slider-handle-sliding-position);
 				top: calc((var(--range-slider-handle-size-half) - var(--range-slider-thickness-half)) * -1);
 			}
 
@@ -148,7 +152,7 @@
 			}
 
 			.noUi-pips-margin {
-				margin-bottom: 60px;
+				margin-block-end: 60px;
 			}
 		}
 
@@ -166,8 +170,9 @@
 
 		&-pips-horizontal {
 			height: variables.$token-scale-1000;
-			left: 0;
-			padding: variables.$token-scale-100 0 0;
+			inset-inline-start: 0;
+			padding-block: variables.$token-scale-100 0;
+			padding-inline: 0;
 			top: 100%;
 			width: 100%;
 		}
@@ -175,8 +180,10 @@
 		&-pips-vertical {
 			color: var(--color-text-subtlest);
 			height: 100%;
-			left: 100%;
-			padding: 0 0 0 variables.$token-scale-100;
+			inset-inline-start: 100%;
+			padding-block: 0;
+			padding-inline-end: 0;
+			padding-inline-start: variables.$token-scale-100;
 			top: 0;
 		}
 
@@ -212,7 +219,7 @@
 		&-value-vertical {
 			color: var(--color-text-subtlest);
 			font-size: variables.$token-font-size-300;
-			padding-left: variables.$token-scale-200;
+			padding-inline-start: variables.$token-scale-200;
 		}
 
 		&-tooltip {
@@ -224,24 +231,24 @@
 
 		&-rtl {
 			&.noUi-vertical .noUi-handle {
-				right: unset;
+				inset-inline-end: unset;
 			}
 
 			.noUi-value.noUi-value-vertical {
-				padding-left: variables.$token-scale-0;
-				padding-right: variables.$token-scale-600;
+				padding-inline-start: variables.$token-scale-0;
+				padding-inline-end: variables.$token-scale-600;
 			}
 
 			.noUi-marker.noUi-marker-vertical {
-				margin-right: variables.$token-scale-400;
+				margin-inline-end: variables.$token-scale-400;
 			}
 		}
 
 		&-txt-dir-rtl {
 			&.noUi-horizontal {
 				.noUi-origin {
-					left: inherit;
-					right: inherit;
+					inset-inline-start: inherit;
+					inset-inline-end: inherit;
 				}
 			}
 		}

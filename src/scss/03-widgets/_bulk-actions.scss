@@ -20,11 +20,11 @@
 
 		&:checked:after {
 			border: variables.$token-border-size-050 solid var(--color-text-inverse);
-			border-right: variables.$token-border-size-0 !important;
-			border-top: variables.$token-border-size-0 !important;
+			border-block-start: variables.$token-border-size-0 !important;
+			border-inline-end: variables.$token-border-size-0 !important;
 			display: block;
 			height: variables.$token-scale-050;
-			left: variables.$token-scale-100;
+			inset-inline-start: variables.$token-scale-100;
 			top: 5px;
 			width: 7px;
 		}

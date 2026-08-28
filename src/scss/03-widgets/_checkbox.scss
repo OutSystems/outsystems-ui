@@ -48,11 +48,11 @@
 
 		&:after {
 			border: variables.$token-border-size-075 solid var(--color-text-inverse);
-			border-right: variables.$token-border-size-0 !important;
-			border-top: variables.$token-border-size-0 !important;
+			border-inline-end: variables.$token-border-size-0 !important;
+			border-block-start: variables.$token-border-size-0 !important;
 			display: block;
 			height: variables.$token-scale-100;
-			left: 5px;
+			inset-inline-start: 5px;
 			top: 7px;
 			width: variables.$token-scale-300;
 		}
@@ -84,7 +84,7 @@
 
 		&:checked {
 			&:after {
-				left: 9px;
+				inset-inline-start: 9px;
 				top: 11px;
 			}
 		}

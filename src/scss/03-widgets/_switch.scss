@@ -43,6 +43,9 @@
 			bottom: 0;
 			box-shadow: var(--osui-switch-thumb-shadow);
 			height: var(--osui-switch-thumb-size);
+			// Physical on purpose: the thumb offset is a `translateX`, which has no logical
+			// form. A logical inset would flip the anchor in RTL while the transform kept
+			// pushing the same way, sliding the thumb outside the track.
 			left: 0;
 			margin-left: 0;
 			top: calc((var(--osui-switch-height) - var(--osui-switch-thumb-size)) / 2);
@@ -134,7 +137,7 @@
 			font-family: monospace;
 			font-size: variables.$token-font-size-300;
 			justify-content: center;
-			left: -1px;
+			inset-inline-start: -1px;
 			top: variables.$token-scale-075;
 		}
 

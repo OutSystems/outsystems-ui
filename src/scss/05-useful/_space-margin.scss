@@ -14,42 +14,23 @@
 			margin: #{map.get($osui-space-token-vars, $type)};
 		}
 
-		@each $osui-box-side in $osui-box-sides {
+		@each $osui-box-side, $osui-logical-side in $osui-box-sides {
 			&-#{$osui-box-side}-#{$type} {
-				margin-#{$osui-box-side}: #{map.get($osui-space-token-vars, $type)};
+				margin-#{$osui-logical-side}: #{map.get($osui-space-token-vars, $type)};
 			}
 		}
 
 		&-x-#{$type} {
-			margin-left: #{map.get($osui-space-token-vars, $type)};
-			margin-right: #{map.get($osui-space-token-vars, $type)};
+			margin-inline: #{map.get($osui-space-token-vars, $type)};
 		}
 
 		&-y-#{$type} {
-			margin-bottom: #{map.get($osui-space-token-vars, $type)};
-			margin-top: #{map.get($osui-space-token-vars, $type)};
+			margin-block: #{map.get($osui-space-token-vars, $type)};
 		}
 	}
 
 	&-auto {
-		margin: 0 auto;
-	}
-}
-
-// IsRTL -------------------------------------------------------------------------
-///
-.is-rtl {
-	@each $type, $value in $osui-sizes {
-		.margin {
-			&-right-#{$type} {
-				margin-left: #{map.get($osui-space-token-vars, $type)};
-				margin-right: variables.$token-scale-0;
-			}
-
-			&-left-#{$type} {
-				margin-left: variables.$token-scale-0;
-				margin-right: #{map.get($osui-space-token-vars, $type)};
-			}
-		}
+		margin-block: 0;
+		margin-inline: auto;
 	}
 }

@@ -22,11 +22,11 @@
 	--osui-bottom-sheet-transition-function: #{variables.$token-transition-curve-quick};
 
 	background-color: var(--osui-bottom-sheet-background);
-	border-top-left-radius: var(--bottom-sheet-shape);
-	border-top-right-radius: var(--bottom-sheet-shape);
+	border-start-start-radius: var(--bottom-sheet-shape);
+	border-start-end-radius: var(--bottom-sheet-shape);
 	bottom: 0;
 	box-shadow: var(--osui-bottom-sheet-shadow);
-	left: 0;
+	inset-inline-start: 0;
 	max-height: var(--bottom-sheet-max-height);
 	min-height: 50vh;
 	position: fixed;
@@ -62,7 +62,7 @@
 			}
 
 			&__top-bar {
-				padding-top: variables.$token-scale-800;
+				padding-block-start: variables.$token-scale-800;
 			}
 		}
 	}
@@ -84,7 +84,7 @@
 			background-color: var(--osui-bottom-sheet-background);
 			content: '';
 			height: 100%;
-			left: 0;
+			inset-inline-start: 0;
 			position: absolute;
 			top: 100%;
 			width: 100%;
@@ -107,7 +107,7 @@
 	&-overlay {
 		background-color: variables.$token-backdrop;
 		height: 100vh;
-		left: 0;
+		inset-inline-start: 0;
 		opacity: 0;
 		pointer-events: none;
 		position: fixed;
@@ -128,7 +128,7 @@
 		&::after {
 			content: '';
 			height: var(--osui-bottom-sheet-draggable-area);
-			left: 0;
+			inset-inline-start: 0;
 			position: absolute;
 			top: 100%;
 			width: 100%;
@@ -141,7 +141,7 @@
 				box-shadow: variables.$token-elevation-3;
 				content: '';
 				height: 100%;
-				left: 0;
+				inset-inline-start: 0;
 				opacity: 0;
 				position: absolute;
 				transform: translateY(-2px);
@@ -154,7 +154,7 @@
 			}
 
 			&:empty {
-				padding-bottom: unset;
+				padding-block-end: unset;
 			}
 		}
 	}
@@ -163,7 +163,7 @@
 		max-height: var(--bottom-sheet-max-height);
 		overflow-y: scroll;
 		padding: var(--osui-bottom-sheet-padding);
-		padding-bottom: calc(var(--size-bottom-bar) + variables.$token-scale-600 + var(--os-safe-area-bottom));
+		padding-block-end: calc(var(--size-bottom-bar) + variables.$token-scale-600 + var(--os-safe-area-bottom));
 	}
 }
 
@@ -185,8 +185,8 @@
 .landscape {
 	.osui-bottom-sheet__header__top-bar,
 	.osui-bottom-sheet__content {
-		padding-right: calc(variables.$token-scale-400 + var(--os-safe-area-right));
-		padding-left: calc(variables.$token-scale-400 + var(--os-safe-area-left));
+		padding-inline-end: calc(variables.$token-scale-400 + var(--os-safe-area-inline-end));
+		padding-inline-start: calc(variables.$token-scale-400 + var(--os-safe-area-inline-start));
 	}
 }
 

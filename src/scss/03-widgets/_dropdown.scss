@@ -44,7 +44,8 @@
 				display: flex;
 				font-size: variables.$token-font-size-350;
 				height: variables.$token-scale-1000;
-				padding: variables.$token-scale-0 variables.$token-scale-400;
+				padding-block: variables.$token-scale-0;
+				padding-inline: variables.$token-scale-400;
 				width: 100%;
 
 				&:hover {
@@ -87,7 +88,7 @@
 			border: var(--osui-dropdown-border-width) solid var(--osui-dropdown-list-border-color);
 			border-radius: var(--osui-dropdown-border-radius);
 			box-shadow: var(--osui-dropdown-list-shadow);
-			left: 0 !important;
+			inset-inline-start: 0 !important;
 			max-height: var(--osui-dropdown-list-max-height);
 			overflow-y: auto;
 			position: absolute;
@@ -112,7 +113,8 @@
 			cursor: pointer;
 			display: flex;
 			justify-content: space-between;
-			padding: #{variables.$token-scale-200} #{variables.$token-scale-400};
+			padding-block: #{variables.$token-scale-200};
+			padding-inline: #{variables.$token-scale-400};
 
 			&:hover,
 			&-selected:hover {
@@ -130,7 +132,7 @@
 					flex-shrink: 0;
 					font-family: var(--osui-icon-font-family);
 					font-size: variables.$token-font-size-400;
-					margin-left: variables.$token-scale-200;
+					margin-inline-start: variables.$token-scale-200;
 				}
 			}
 
@@ -157,13 +159,13 @@
 	// Is expanded
 	&-expanded {
 		&-down div.dropdown-list {
-			margin-top: variables.$token-scale-100;
+			margin-block-start: variables.$token-scale-100;
 			top: 100% !important;
 		}
 
 		&-up div.dropdown-list {
 			bottom: 100% !important;
-			margin-bottom: variables.$token-scale-100;
+			margin-block-end: variables.$token-scale-100;
 			top: auto !important;
 		}
 	}

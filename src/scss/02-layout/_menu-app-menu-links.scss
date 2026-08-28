@@ -13,8 +13,8 @@
 	// Service Studio Preview
 	& {
 		-servicestudio-align-items: center;
-		-servicestudio-display: flex;
 		-servicestudio-column-gap: variables.$token-scale-600;
+		-servicestudio-display: flex;
 	}
 
 	// Service Studio Preview
@@ -79,12 +79,12 @@ body {
 	.app-menu-links {
 		a {
 			align-items: center;
-			border-bottom: variables.$token-border-size-050 solid transparent;
-			border-top: variables.$token-border-size-050 solid transparent;
+			border-block-end: variables.$token-border-size-050 solid transparent;
+			border-block-start: variables.$token-border-size-050 solid transparent;
 			display: inline-flex;
 
 			&.active {
-				border-bottom: variables.$token-border-size-050 solid transparent;
+				border-block-end: variables.$token-border-size-050 solid transparent;
 			}
 		}
 	}
@@ -95,12 +95,13 @@ body {
 .menu-visible {
 	.app-menu-links {
 		a {
-			border-bottom: 0;
-			border-left: 0;
+			border-block-end: 0;
+			border-block-start: 0;
+			border-inline-start: 0;
 			border-radius: variables.$token-border-radius-200;
-			border-top: 0;
-			margin-left: 0;
-			padding: variables.$token-scale-200 variables.$token-scale-400;
+			margin-inline-start: 0;
+			padding-block: variables.$token-scale-200;
+			padding-inline: variables.$token-scale-400;
 		}
 	}
 }
@@ -127,7 +128,7 @@ body {
 
 	> a.active {
 		background-color: variables.$token-bg-primary-subtle-default;
-		border-left: 0;
+		border-inline-start: 0;
 		border-radius: variables.$token-border-radius-200;
 	}
 }
@@ -137,7 +138,7 @@ body {
 .landscape {
 	.layout-native {
 		.app-menu-links {
-			padding-left: calc(var(--os-safe-area-left) / 2);
+			padding-inline-start: calc(var(--os-safe-area-inline-start) / 2);
 		}
 	}
 }
@@ -154,9 +155,9 @@ body {
 .phone,
 .tablet {
 	.app-menu-links {
+		-webkit-overflow-scrolling: touch;
 		display: flex;
 		flex-direction: column;
-		-webkit-overflow-scrolling: touch;
 		overflow-y: auto;
 		padding: variables.$token-scale-200;
 		width: 100%;
@@ -172,7 +173,7 @@ body {
 	}
 
 	.layout:not(.layout-side) .app-menu-links a.active {
-		border-bottom: 0;
+		border-block-end: 0;
 	}
 }
 

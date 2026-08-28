@@ -31,13 +31,13 @@ $osui-border-size-token-vars: (
 	}
 
 	& {
-		@each $osui-box-side in $osui-box-sides {
+		@each $osui-box-side, $osui-logical-side in $osui-box-sides {
 			@each $type, $value in $osui-border-size {
 				@if $type != 'none' {
 					// Generated - Eg: .border-top-s
 					&-#{$osui-box-side}-#{$type}:not(.columns),
 					&-#{$osui-box-side}-#{$type}.columns > .columns-item:not(:last-child) {
-						border-#{$osui-box-side}: #{map.get($osui-border-size-token-vars, $type)} solid currentColor;
+						border-#{$osui-logical-side}: #{map.get($osui-border-size-token-vars, $type)} solid currentColor;
 					}
 				}
 			}

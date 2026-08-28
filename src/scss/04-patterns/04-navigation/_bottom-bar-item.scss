@@ -18,7 +18,7 @@
 	// ───────────────────────────────────────────────────────────────────
 
 	background-color: var(--osui-bottom-bar-background);
-	border-top: variables.$token-border-size-025 solid var(--osui-bottom-bar-border-color);
+	border-block-start: variables.$token-border-size-025 solid var(--osui-bottom-bar-border-color);
 	height: 100%;
 }
 
@@ -61,7 +61,8 @@
 		height: 100%;
 		justify-content: center;
 		overflow: hidden;
-		padding: 0 variables.$token-scale-200;
+		padding-block: 0;
+		padding-inline: variables.$token-scale-200;
 		position: relative;
 		text-align: center;
 
@@ -85,7 +86,7 @@
 .android {
 	.layout-native {
 		.bottom-bar-wrapper {
-			padding-bottom: var(--safe-area-inset-bottom, 0px);
+			padding-block-end: var(--safe-area-inset-bottom, 0px);
 		}
 	}
 }
@@ -93,7 +94,7 @@
 ///
 .layout-native {
 	.bottom-bar-wrapper {
-		padding-bottom: var(--os-safe-area-bottom);
+		padding-block-end: var(--os-safe-area-bottom);
 	}
 	.bottom-bar {
 		height: 100%;

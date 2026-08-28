@@ -68,7 +68,7 @@
 			-servicestudio-z-index: var(--layer-local-tier-1);
 
 			&.time12h {
-				padding-right: variables.$token-scale-1200;
+				padding-inline-end: variables.$token-scale-1200;
 				&:after {
 					background-color: variables.$token-primitives-neutral-700;
 					border-radius: var(--border-radius-rounded);
@@ -78,9 +78,9 @@
 					font-weight: variables.$token-font-weight-semi-bold;
 					height: variables.$token-scale-600;
 					line-height: variables.$token-scale-600;
-					margin-right: 2%;
+					margin-inline-end: 2%;
 					position: absolute;
-					right: 0;
+					inset-inline-end: 0;
 					top: 50%;
 					transform: translateY(-50%);
 					width: 20%;
@@ -146,10 +146,11 @@
 				font-weight: variables.$token-font-weight-medium;
 				height: variables.$token-scale-600;
 				justify-content: center;
-				margin-left: variables.$token-scale-200;
-				margin-right: variables.$token-scale-200;
+				margin-inline-start: variables.$token-scale-200;
+				margin-inline-end: variables.$token-scale-200;
 				min-width: 44px;
-				padding: variables.$token-scale-0 variables.$token-scale-300;
+				padding-block: variables.$token-scale-0;
+				padding-inline: variables.$token-scale-300;
 				position: relative;
 				text-transform: uppercase;
 				width: auto;

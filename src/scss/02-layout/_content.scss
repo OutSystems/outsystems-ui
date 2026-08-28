@@ -13,7 +13,7 @@
 	position: relative;
 
 	&-breadcrumbs {
-		margin-bottom: variables.$token-scale-400;
+		margin-block-end: variables.$token-scale-400;
 	}
 
 	&-top {
@@ -21,7 +21,7 @@
 
 		&-title {
 			flex: 1;
-			margin-bottom: variables.$token-scale-800;
+			margin-block-end: variables.$token-scale-800;
 
 			// Retro Compatilibity
 			.Title_Links {
@@ -33,8 +33,8 @@
 		&-actions {
 			flex: 1;
 			justify-content: flex-end;
-			margin-bottom: variables.$token-scale-800;
-			text-align: right;
+			margin-block-end: variables.$token-scale-800;
+			text-align: end;
 		}
 
 		&-title,

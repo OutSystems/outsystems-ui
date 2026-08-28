@@ -8,7 +8,8 @@
 ///
 .layout-side {
 	.app-login-info {
-		padding: variables.$token-scale-400 variables.$token-scale-600;
+		padding-block: variables.$token-scale-400;
+		padding-inline: variables.$token-scale-600;
 	}
 
 	.user-info {
@@ -20,7 +21,8 @@
 .tablet,
 .phone {
 	.app-login-info {
-		padding: variables.$token-scale-400 variables.$token-scale-600;
+		padding-block: variables.$token-scale-400;
+		padding-inline: variables.$token-scale-600;
 	}
 
 	.user-info {

@@ -18,12 +18,12 @@
 	// ───────────────────────────────────────────────────────────────────
 
 	bottom: 0;
-	left: 0;
-	margin-top: 0;
-	padding-bottom: calc(var(--os-safe-area-bottom) + variables.$token-scale-400);
-	padding-left: calc(var(--os-safe-area-left) + variables.$token-scale-400);
-	padding-right: calc(var(--os-safe-area-right) + variables.$token-scale-400);
-	padding-top: variables.$token-scale-400;
+	inset-inline-start: 0;
+	margin-block-start: 0;
+	padding-block-end: calc(var(--os-safe-area-bottom) + variables.$token-scale-400);
+	padding-inline-start: calc(var(--os-safe-area-inline-start) + variables.$token-scale-400);
+	padding-inline-end: calc(var(--os-safe-area-inline-end) + variables.$token-scale-400);
+	padding-block-start: variables.$token-scale-400;
 	pointer-events: auto;
 	position: absolute;
 	transform: translateY(100%);
@@ -45,7 +45,7 @@
 		// ───────────────────────────────────────────────────────────────────
 
 		height: 100%;
-		left: 0;
+		inset-inline-start: 0;
 		overflow: hidden;
 		pointer-events: none;
 		position: fixed;
@@ -63,7 +63,7 @@
 			content: '';
 			display: block;
 			height: 100%;
-			left: 0;
+			inset-inline-start: 0;
 			opacity: 0;
 			pointer-events: none;
 			position: absolute;
@@ -129,17 +129,17 @@
 			@include apply-typography(variables.$token-body-action-sm);
 
 			border: none;
-			margin-top: 1px;
+			margin-block-start: 1px;
 			width: 100%;
 		}
 
 		&:first-child .btn {
-			margin-top: 0;
+			margin-block-start: 0;
 		}
 	}
 
 	&-cancel {
-		margin-top: variables.$token-scale-200;
+		margin-block-start: variables.$token-scale-200;
 
 		.btn {
 			--osui-btn-background: var(--osui-action-sheet-background);
@@ -174,11 +174,13 @@
 	.action-sheet {
 		&-buttons,
 		&-cancel {
-			margin: variables.$token-scale-0 auto;
+			margin-block: variables.$token-scale-0;
+			margin-inline: auto;
 		}
 
 		&-cancel {
-			margin: variables.$token-scale-400 auto variables.$token-scale-0;
+			margin-block: variables.$token-scale-400 variables.$token-scale-0;
+			margin-inline: auto;
 		}
 	}
 }

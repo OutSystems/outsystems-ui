@@ -55,7 +55,8 @@
 	justify-content: center;
 	line-height: variables.$token-font-line-height-400;
 	margin: 0;
-	padding: variables.$token-scale-0 variables.$token-scale-400;
+	padding-block: variables.$token-scale-0;
+	padding-inline: variables.$token-scale-400;
 	position: relative;
 	transition:
 		background-color variables.$token-transition-time-100 variables.$token-transition-curve-base,
@@ -94,7 +95,7 @@
 	}
 
 	& + .btn {
-		margin-left: variables.$token-scale-600;
+		margin-inline-start: variables.$token-scale-600;
 	}
 
 	// Variants
@@ -110,7 +111,8 @@
 	&-small {
 		font-size: variables.$token-font-size-300;
 		height: variables.$token-scale-800;
-		padding: variables.$token-scale-0 variables.$token-scale-200;
+		padding-block: variables.$token-scale-0;
+		padding-inline: variables.$token-scale-200;
 	}
 
 	&-large {
@@ -230,18 +232,18 @@
 	.layout:not(.layout-native) {
 		.btn {
 			display: inline-flex;
-			margin-left: 0;
+			margin-inline-start: 0;
 			width: 100%;
 
 			& + .btn {
-				margin-top: variables.$token-scale-400;
+				margin-block-start: variables.$token-scale-400;
 			}
 		}
 
 		.flex-direction-column-reverse {
 			& + .btn {
-				margin-bottom: variables.$token-scale-400;
-				margin-top: variables.$token-scale-0;
+				margin-block-end: variables.$token-scale-400;
+				margin-block-start: variables.$token-scale-0;
 			}
 		}
 	}
@@ -274,13 +276,13 @@
 		> .btn {
 			border-radius: 0;
 			height: 100%;
-			padding-bottom: var(--os-safe-area-bottom);
+			padding-block-end: var(--os-safe-area-bottom);
 		}
 	}
 
 	.bottom-bar {
 		.btn {
-			padding-bottom: variables.$token-scale-0;
+			padding-block-end: variables.$token-scale-0;
 		}
 	}
 }

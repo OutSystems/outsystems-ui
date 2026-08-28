@@ -40,18 +40,19 @@
 				grid-column: 2;
 
 				.osui-tabs__header-item {
-					padding: variables.$token-space-200 variables.$token-space-200 variables.$token-space-200
-						variables.$token-space-400;
+					padding-block: variables.$token-space-200;
+					padding-inline-end: variables.$token-space-200;
+					padding-inline-start: variables.$token-space-400;
 				}
 
 				& > .osui-tabs__header__indicator {
-					left: 0;
+					inset-inline-start: 0;
 				}
 			}
 
 			.osui-tabs__content {
-				border-right: variables.$token-border-size-025 solid var(--osui-tabs-border-color);
-				margin-right: -1px;
+				border-inline-end: variables.$token-border-size-025 solid var(--osui-tabs-border-color);
+				margin-inline-end: -1px;
 			}
 		}
 
@@ -62,18 +63,19 @@
 			& > .osui-tabs__header {
 				.osui-tabs__header-item {
 					justify-content: flex-start;
-					padding: variables.$token-space-200 variables.$token-space-400 variables.$token-space-200
-						variables.$token-space-200;
+					padding-block: variables.$token-space-200;
+					padding-inline-end: variables.$token-space-400;
+					padding-inline-start: variables.$token-space-200;
 				}
 
 				& > .osui-tabs__header__indicator {
-					right: 0;
+					inset-inline-end: 0;
 				}
 			}
 
 			.osui-tabs__content {
-				border-left: variables.$token-border-size-025 solid var(--osui-tabs-border-color);
-				margin-left: -1px;
+				border-inline-start: variables.$token-border-size-025 solid var(--osui-tabs-border-color);
+				margin-inline-start: -1px;
 			}
 		}
 
@@ -99,7 +101,8 @@
 			width: auto;
 
 			&-item {
-				padding: variables.$token-scale-0 variables.$token-scale-600;
+				padding-block: variables.$token-scale-0;
+				padding-inline: variables.$token-scale-600;
 			}
 		}
 	}
@@ -118,7 +121,8 @@
 
 			.osui-tabs__header-item {
 				justify-content: center;
-				padding: variables.$token-space-200 variables.$token-space-400;
+				padding-block: variables.$token-space-200;
+				padding-inline: variables.$token-space-400;
 			}
 		}
 
@@ -130,8 +134,8 @@
 		}
 
 		.osui-tabs__content {
-			border-top: variables.$token-border-size-025 solid var(--osui-tabs-border-color);
-			margin-top: -1px;
+			border-block-start: variables.$token-border-size-025 solid var(--osui-tabs-border-color);
+			margin-block-start: -1px;
 		}
 	}
 
@@ -278,7 +282,8 @@
 		&-item {
 			height: 100%;
 			overflow-y: var(--tabs-content-item-overflow);
-			padding: variables.$token-scale-600 variables.$token-scale-0;
+			padding-block: variables.$token-scale-600;
+			padding-inline: variables.$token-scale-0;
 			scroll-snap-align: start;
 			scroll-snap-stop: always;
 
@@ -321,42 +326,7 @@
 				.osui-tabs__header {
 					&-item {
 						justify-content: flex-start;
-						padding: variables.$token-space-200 variables.$token-space-400 variables.$token-space-200
-							variables.$token-space-200;
 					}
-
-					& > .osui-tabs__header__indicator {
-						left: unset;
-						right: 0;
-					}
-				}
-
-				.osui-tabs__content {
-					border-left: variables.$token-border-size-025 solid var(--osui-tabs-border-color);
-					margin-left: -1px;
-					border-right: 0;
-				}
-			}
-
-			&.osui-tabs--is-left {
-				.osui-tabs__header {
-					grid-column: 1;
-
-					&-item {
-						padding: variables.$token-space-200 variables.$token-space-200 variables.$token-space-200
-							variables.$token-space-400;
-					}
-
-					& > .osui-tabs__header__indicator {
-						left: 0;
-						right: unset;
-					}
-				}
-
-				.osui-tabs__content {
-					border-right: variables.$token-border-size-025 solid var(--osui-tabs-border-color);
-					margin-right: -1px;
-					border-left: 0;
 				}
 			}
 		}
@@ -418,10 +388,10 @@
 		bottom: 0;
 		content: '';
 		display: block;
-		left: 0;
+		inset-inline-start: 0;
 		pointer-events: none;
 		position: absolute;
-		right: 0;
+		inset-inline-end: 0;
 		top: 0;
 	}
 

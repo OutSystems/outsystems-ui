@@ -11,7 +11,8 @@
 	position: relative;
 
 	.ThemeGrid_Container {
-		padding: variables.$token-scale-0 variables.$token-scale-1000;
+		padding-block: variables.$token-scale-0;
+		padding-inline: variables.$token-scale-1000;
 	}
 }
 

@@ -21,7 +21,6 @@
 	--osui-carousel-pagination-margin: #{variables.$token-scale-1000};
 	// ───────────────────────────────────────────────────────────────────
 
-
 	.splide {
 		&__arrow {
 			background-color: var(--osui-carousel-arrow-background);
@@ -109,7 +108,7 @@
 
 	&--has-pagination {
 		// To fix pagination position so that it appears below Carousel
-		padding-bottom: var(--osui-carousel-pagination-margin);
+		padding-block-end: var(--osui-carousel-pagination-margin);
 
 		// Adjust rule when using List inside
 		&:not(.splide) {
@@ -209,7 +208,8 @@
 		}
 
 		li {
-			margin: variables.$token-scale-0 variables.$token-scale-100;
+			margin-block: variables.$token-scale-0;
+			margin-inline: variables.$token-scale-100;
 		}
 	}
 }

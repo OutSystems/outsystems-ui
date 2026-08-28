@@ -21,7 +21,7 @@
 
 	&-left {
 		max-width: 120px;
-		padding-right: variables.$token-space-400;
+		padding-inline-end: variables.$token-space-400;
 	}
 
 	&-center {
@@ -30,7 +30,7 @@
 	}
 
 	&-right {
-		padding-left: variables.$token-space-600;
+		padding-inline-start: variables.$token-space-600;
 
 		// Trailing icon renders in a 20px box (Figma CaretRight); `line-height: 1`
 		// keeps the glyph box square instead of inheriting the row's line-height.
@@ -67,11 +67,11 @@
 .layout-native {
 	.list-item-content {
 		&-left {
-			padding-right: variables.$token-space-400;
+			padding-inline-end: variables.$token-space-400;
 		}
 
 		&-right {
-			padding-left: variables.$token-space-600;
+			padding-inline-start: variables.$token-space-600;
 		}
 	}
 }
@@ -79,31 +79,6 @@
 // IsRTL -------------------------------------------------------------------------
 ///
 .is-rtl {
-	.list-item-content {
-		&-left {
-			padding-left: variables.$token-space-400;
-			padding-right: 0;
-		}
-
-		&-right {
-			padding-left: 0;
-			padding-right: variables.$token-space-600;
-		}
-	}
-
-	.layout-native {
-		.list-item-content {
-			&-left {
-				padding-left: variables.$token-space-400;
-				padding-right: 0;
-			}
-
-			&-right {
-				padding-left: 0;
-				padding-right: variables.$token-space-600;
-			}
-		}
-	}
 
 	[data-list-item] {
 		.list-item-float {

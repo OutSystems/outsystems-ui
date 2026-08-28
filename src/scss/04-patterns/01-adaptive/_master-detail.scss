@@ -39,7 +39,8 @@
 
 			.list-item {
 				cursor: pointer;
-				padding: variables.$token-scale-300 variables.$token-scale-600;
+				padding-block: variables.$token-scale-300;
+				padding-inline: variables.$token-scale-600;
 				transition: background-color variables.$token-transition-time-100 variables.$token-transition-curve-base;
 
 				&:hover {
@@ -62,12 +63,12 @@
 		}
 
 		&-right {
-			border-left: variables.$token-border-size-025 solid var(--osui-master-detail-border-color);
+			border-inline-start: variables.$token-border-size-025 solid var(--osui-master-detail-border-color);
 			padding: variables.$token-scale-600;
 			width: calc(100% - var(--left-percentage));
 
 			.split-right-close {
-				left: calc(var(--os-safe-area-left) + variables.$token-scale-600);
+				inset-inline-start: calc(var(--os-safe-area-inline-start) + variables.$token-scale-600);
 				position: fixed;
 				top: calc(var(--os-safe-area-right) + (var(--size-header) + var(--token-scale-600, 24px)) / 2);
 				z-index: var(--layer-global-screen);
@@ -104,7 +105,7 @@
 ///
 .layout-native {
 	.split-right-close {
-		left: calc(var(--os-safe-area-left) + variables.$token-scale-600);
+		inset-inline-start: calc(var(--os-safe-area-inline-start) + variables.$token-scale-600);
 	}
 }
 
@@ -151,13 +152,13 @@
 
 			&-right {
 				background-color: var(--osui-master-detail-background);
-				border-left: variables.$token-border-size-0;
+				border-inline-start: variables.$token-border-size-0;
 				height: 100%;
 				left: 0;
-				padding-bottom: calc(var(--os-safe-area-bottom) + variables.$token-scale-600);
-				padding-left: calc(var(--os-safe-area-left) + variables.$token-scale-600);
-				padding-right: calc(var(--os-safe-area-right) + variables.$token-scale-600);
-				padding-top: calc(var(--os-safe-area-right) + var(--size-header) + var(--token-scale-600, 24px));
+				padding-block-end: calc(var(--os-safe-area-bottom) + variables.$token-scale-600);
+				padding-inline-start: calc(var(--os-safe-area-inline-start) + variables.$token-scale-600);
+				padding-inline-end: calc(var(--os-safe-area-inline-end) + variables.$token-scale-600);
+				padding-block-start: calc(var(--os-safe-area-right) + var(--size-header) + var(--token-scale-600, 24px));
 				position: fixed;
 				top: 0;
 				transform: translateX(100%) translateZ(0);
@@ -182,14 +183,14 @@
 
 	.layout-native {
 		.split-right {
-			padding-bottom: calc(var(--os-safe-area-bottom) + variables.$token-scale-400);
-			padding-left: calc(var(--os-safe-area-left) + variables.$token-scale-400);
-			padding-right: calc(var(--os-safe-area-right) + variables.$token-scale-400);
-			padding-top: calc(var(--size-header) + var(--os-safe-area-top));
+			padding-block-end: calc(var(--os-safe-area-bottom) + variables.$token-scale-400);
+			padding-inline-start: calc(var(--os-safe-area-inline-start) + variables.$token-scale-400);
+			padding-inline-end: calc(var(--os-safe-area-inline-end) + variables.$token-scale-400);
+			padding-block-start: calc(var(--size-header) + var(--os-safe-area-top));
 
 			.split-right-close {
 				display: block;
-				left: calc(var(--os-safe-area-left) + variables.$token-scale-400);
+				inset-inline-start: calc(var(--os-safe-area-inline-start) + variables.$token-scale-400);
 			}
 		}
 	}
@@ -197,7 +198,7 @@
 	&.android {
 		.layout-native {
 			.split-right {
-				padding-top: calc(var(--size-header) + #{android-safe-area-top()});
+				padding-block-start: calc(var(--size-header) + #{android-safe-area-top()});
 			}
 		}
 	}
@@ -214,18 +215,9 @@
 .android {
 	.layout-native {
 		.split-right-close {
-			left: variables.$token-scale-400;
+			inset-inline-start: variables.$token-scale-400;
 			top: calc(#{android-safe-area-top()} + 10px);
 		}
-	}
-}
-
-// IsRTL --------------------------------------------------------------------
-///
-.is-rtl {
-	.split-right {
-		border-left: 0;
-		border-right: variables.$token-border-size-025 solid var(--osui-master-detail-border-color);
 	}
 }
 
@@ -242,9 +234,9 @@
 					box-shadow: inset 0 0 0 variables.$token-border-size-075
 						color-mix(in srgb, #{variables.$token-semantics-primary-base} 100%, transparent);
 					content: '';
-					left: 0;
+					inset-inline-start: 0;
 					position: absolute;
-					right: 0;
+					inset-inline-end: 0;
 					top: 0;
 				}
 			}

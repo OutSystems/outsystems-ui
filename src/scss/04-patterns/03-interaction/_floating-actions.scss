@@ -32,7 +32,7 @@
 		flex-direction: column;
 		margin: variables.$token-scale-800;
 		position: fixed;
-		right: 0;
+		inset-inline-end: 0;
 		will-change: transform, opacity;
 		z-index: var(--osui-floating-actions-layer);
 
@@ -94,15 +94,15 @@
 		align-items: flex-end;
 		display: flex;
 		flex-direction: column;
-		padding-bottom: variables.$token-scale-200;
-		padding-right: variables.$token-scale-200;
+		padding-block-end: variables.$token-scale-200;
+		padding-inline-end: variables.$token-scale-200;
 	}
 
 	&-actions-item {
 		align-items: center;
 		display: flex;
 		justify-content: flex-end;
-		margin-bottom: variables.$token-scale-400;
+		margin-block-end: variables.$token-scale-400;
 		opacity: 0;
 		transform: translateY(variables.$token-scale-400) translateZ(0);
 		transition:
@@ -127,7 +127,7 @@
 		font-size: variables.$token-font-size-500;
 		height: variables.$token-scale-1000;
 		justify-content: center;
-		margin-left: variables.$token-scale-400;
+		margin-inline-start: variables.$token-scale-400;
 		transform: translateZ(0) scale(0.3);
 		transition: transform variables.$token-transition-time-200 variables.$token-transition-curve-quick;
 		transition-delay: calc(var(--delay) * 40ms); // design-spec: stagger delay
@@ -182,7 +182,7 @@
 		opacity: 0;
 		pointer-events: none;
 		position: fixed;
-		right: 0;
+		inset-inline-end: 0;
 		top: 0;
 		transition: opacity variables.$token-transition-time-200 variables.$token-transition-curve-base;
 		width: 100vw;
@@ -214,7 +214,7 @@
 		&.portrait {
 			.layout-native {
 				.floating-actions-wrapper {
-					margin-bottom: var(--os-safe-area-bottom);
+					margin-block-end: var(--os-safe-area-bottom);
 				}
 			}
 		}
@@ -222,7 +222,7 @@
 		&.landscape {
 			.layout-native {
 				.floating-actions-wrapper {
-					margin-right: calc(var(--os-safe-area-right) + variables.$token-scale-400);
+					margin-inline-end: calc(var(--os-safe-area-inline-end) + variables.$token-scale-400);
 				}
 			}
 		}
@@ -234,23 +234,9 @@
 	&.ios {
 		.floating-actions-wrapper {
 			&.bottom-bar-exists {
-				margin-bottom: 0;
+				margin-block-end: 0;
 			}
 		}
-	}
-}
-
-// IsRTL --------------------------------------------------------------------
-///
-.is-rtl {
-	.floating-actions-item-button {
-		margin-left: variables.$token-scale-0;
-		margin-right: variables.$token-scale-400;
-	}
-
-	.floating-actions-wrapper {
-		left: 0;
-		right: auto;
 	}
 }
 

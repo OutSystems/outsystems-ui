@@ -45,7 +45,8 @@ $osui-tag-lightest-text-colors: (
 	line-height: var(--osui-font-line-height-full);
 	min-height: variables.$token-scale-500;
 	min-width: unset;
-	padding: variables.$token-space-0 variables.$token-space-200;
+	padding-block: variables.$token-space-0;
+	padding-inline: variables.$token-space-200;
 	word-break: normal;
 
 	// Figma Tag spec: Soft shape uses the 4px radius token (border/border-radius/100),
@@ -58,13 +59,15 @@ $osui-tag-lightest-text-colors: (
 		&-small {
 			min-height: variables.$token-scale-400;
 			min-width: variables.$token-scale-400;
-			padding: variables.$token-space-0 variables.$token-space-150;
+			padding-block: variables.$token-space-0;
+			padding-inline: variables.$token-space-150;
 		}
 
 		&-medium {
 			font-size: variables.$token-font-size-350;
 			min-height: variables.$token-scale-700;
-			padding: variables.$token-space-0 variables.$token-space-250;
+			padding-block: variables.$token-space-0;
+			padding-inline: variables.$token-space-250;
 
 			// Figma Tag spec: the Medium size steps the Soft shape up to the 8px
 			// radius token (border/border-radius/200), unlike the 4px default.

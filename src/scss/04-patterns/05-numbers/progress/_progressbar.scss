@@ -41,10 +41,10 @@
 		&__value {
 			border-radius: calc(var(--shape) / 2);
 			height: var(--thickness);
-			left: 0;
+			inset-inline-end: 0;
+			inset-inline-start: 0;
 			overflow: hidden;
 			position: absolute;
-			right: 0;
 
 			& {
 				-servicestudio-height: var(--thickness, #{variables.$token-scale-200});
@@ -55,7 +55,7 @@
 				border-radius: calc(var(--shape) / 2);
 				content: '';
 				height: 100%;
-				left: 0;
+				inset-inline-start: 0;
 				position: absolute;
 				top: 0;
 
@@ -86,8 +86,9 @@
 		}
 
 		&__content {
-			left: 0;
-			padding: variables.$token-scale-0 variables.$token-scale-200;
+			inset-inline-start: 0;
+			padding-block: variables.$token-scale-0;
+			padding-inline: variables.$token-scale-200;
 			position: absolute;
 			top: 50%;
 			transform: translateY(-50%);
@@ -98,15 +99,6 @@
 				-servicestudio-text-align: center;
 			}
 		}
-	}
-}
-
-// IsRTL -------------------------------------------------------------------------
-///
-.is-rtl {
-	.osui-progress-bar__value:before {
-		left: inherit;
-		right: 0;
 	}
 }
 
@@ -126,8 +118,8 @@
 				&:before,
 				&:after {
 					border: variables.$token-border-size-050 solid var(--color-border-input);
+					inset-inline-start: calc(-1 * variables.$token-border-size-050);
 					top: calc(-1 * variables.$token-border-size-050);
-					left: calc(-1 * variables.$token-border-size-050);
 				}
 			}
 		}

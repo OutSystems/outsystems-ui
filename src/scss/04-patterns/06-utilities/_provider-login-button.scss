@@ -30,13 +30,15 @@
 	}
 	&.btn- {
 		&small {
-			padding: 0 16px;
+			padding-block: 0;
+			padding-inline: 16px;
 			&.btn-provider-login-logo-only {
 				padding: 5px;
 			}
 		}
 		&large {
-			padding: 10px 15px;
+			padding-block: 10px;
+			padding-inline: 15px;
 		}
 	}
 	&.soft {
@@ -53,7 +55,7 @@
 		}
 		&-text {
 			color: var(--osui-provider-login-button-color);
-			margin-left: 10px;
+			margin-inline-start: 10px;
 			white-space: nowrap;
 		}
 	}
@@ -73,7 +75,7 @@
 			}
 		}
 		.btn-provider-login-text-name {
-			text-align: left;
+			text-align: start;
 			width: 70px;
 			-servicestudio-display: inline-block;
 		}

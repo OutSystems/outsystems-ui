@@ -43,7 +43,7 @@
 /// AppLogo
 @mixin app-logo {
 	border-radius: variables.$token-border-radius-100;
-	margin-right: variables.$token-scale-200;
+	margin-inline-end: variables.$token-scale-200;
 	max-height: var(--size-header);
 	max-width: 120px;
 }
@@ -58,7 +58,7 @@
 
 ///
 @mixin absolute-left-top($left: 0, $top: 0) {
-	left: $left;
+	inset-inline-start: $left;
 	position: absolute;
 	top: $top;
 }

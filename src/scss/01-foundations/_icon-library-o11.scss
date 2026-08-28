@@ -86,8 +86,8 @@
 	&-container {
 		&:after {
 			border: variables.$token-border-size-050 solid variables.$token-primitives-neutral-700;
-			border-right: variables.$token-border-size-0 !important;
-			border-top: variables.$token-border-size-0 !important;
+			border-inline-end: variables.$token-border-size-0 !important;
+			border-block-start: variables.$token-border-size-0 !important;
 			bottom: 0;
 			box-sizing: border-box;
 			content: '';
@@ -116,8 +116,8 @@
 		&.dropdown-container {
 			&:after {
 				border: variables.$token-border-size-050 solid variables.$token-primitives-neutral-700;
-				border-right: variables.$token-border-size-0 !important;
-				border-top: variables.$token-border-size-0 !important;
+				border-inline-end: variables.$token-border-size-0 !important;
+				border-block-start: variables.$token-border-size-0 !important;
 				transform: rotate(-45deg) translateY(0) translateX(0);
 			}
 		}
@@ -133,40 +133,31 @@
 	}
 }
 
-.is-rtl {
-	.dropdown-container {
-		&:after {
-			left: 16px;
-			right: auto;
-		}
-	}
-}
-
 // Table Widget - Sortable Icon
 .sortable-icon {
 	display: inline-block;
 	height: 11px;
-	margin-left: variables.$token-scale-200;
+	margin-inline-start: variables.$token-scale-200;
 	position: relative;
 	width: 10px;
 
 	&:before,
 	&:after {
-		border-left: 4px solid transparent;
-		border-right: 4px solid transparent;
+		border-inline-start: 4px solid transparent;
+		border-inline-end: 4px solid transparent;
 		content: '';
-		left: 0;
+		inset-inline-start: 0;
 		position: absolute;
 	}
 
 	// currentColor keeps the arrow in lockstep with the header text color
 	// (default/hover/.sorted) without a separate state rule per color
 	&:before {
-		border-bottom: 4px solid currentColor;
+		border-block-end: 4px solid currentColor;
 	}
 
 	&:after {
-		border-top: 4px solid currentColor;
+		border-block-start: 4px solid currentColor;
 		bottom: 0;
 	}
 }

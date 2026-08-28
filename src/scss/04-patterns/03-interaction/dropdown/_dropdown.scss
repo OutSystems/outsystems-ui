@@ -49,7 +49,7 @@
 			border-radius: 100%;
 			display: inline-block;
 			height: variables.$token-scale-600;
-			margin-right: variables.$token-scale-200;
+			margin-inline-end: variables.$token-scale-200;
 			width: variables.$token-scale-600;
 			background-color: variables.$token-bg-neutral-subtle-default;
 			overflow: hidden;
@@ -58,7 +58,7 @@
 		&-icon {
 			color: var(--color-text);
 			font-size: variables.$token-font-size-450;
-			margin-right: variables.$token-scale-200;
+			margin-inline-end: variables.$token-scale-200;
 		}
 	}
 
@@ -66,18 +66,7 @@
 	&-error-message {
 		color: variables.$token-semantics-danger-base;
 		font-size: variables.$token-font-size-300;
-		margin-left: variables.$token-scale-0;
-		margin-top: variables.$token-scale-075;
-	}
-}
-
-// IsRTL -------------------------------------------------------------------------
-.is-rtl {
-	.osui-dropdown {
-		&-option-image,
-		&-option-icon {
-			margin-left: variables.$token-scale-200;
-			margin-right: initial;
-		}
+		margin-inline-start: variables.$token-scale-0;
+		margin-block-start: variables.$token-scale-075;
 	}
 }

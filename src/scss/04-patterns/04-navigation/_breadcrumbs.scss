@@ -51,7 +51,8 @@
 			font-size: variables.$token-font-size-300;
 			justify-content: center;
 			line-height: 1;
-			margin: variables.$token-scale-0 variables.$token-scale-200;
+			margin-block: variables.$token-scale-0;
+			margin-inline: variables.$token-scale-200;
 			width: auto;
 
 			i {

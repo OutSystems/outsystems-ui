@@ -107,7 +107,7 @@
 			width: auto;
 
 			&:not(:first-of-type) {
-				margin-left: variables.$token-scale-500;
+				margin-inline-start: variables.$token-scale-500;
 			}
 		}
 	}
@@ -129,13 +129,14 @@
 	[data-radio-button] {
 		align-items: center;
 		display: flex;
-		margin: variables.$token-scale-300 0;
+		margin-block: variables.$token-scale-300;
+		margin-inline: 0;
 
 		label {
 			cursor: pointer;
 			line-height: 1;
-			margin-bottom: 0;
-			margin-left: variables.$token-scale-200;
+			margin-block-end: 0;
+			margin-inline-start: variables.$token-scale-200;
 		}
 	}
 }
@@ -162,9 +163,9 @@
 			border-radius: var(--border-radius-rounded);
 			content: '';
 			height: variables.$token-scale-300;
-			left: 50%;
-			margin-left: calc(#{variables.$token-scale-300} * -0.5);
-			margin-top: calc(#{variables.$token-scale-300} * -0.5);
+			inset-inline-start: 50%;
+			margin-inline-start: calc(#{variables.$token-scale-300} * -0.5);
+			margin-block-start: calc(#{variables.$token-scale-300} * -0.5);
 			position: absolute;
 			position: absolute;
 			top: 50%;
@@ -188,24 +189,5 @@
 
 	[data-radio-group].not-valid [data-radio-button] .radio-button:checked:before {
 		border-color: variables.$token-semantics-primary-base;
-	}
-}
-
-// IsRTL -------------------------------------------------------------------------
-.is-rtl {
-	[data-radio-group] label {
-		margin-left: variables.$token-scale-0;
-		margin-right: variables.$token-scale-200;
-	}
-
-	.radio-group {
-		&.is-horizontal {
-			[data-radio-button] {
-				&:not(:first-of-type) {
-					margin-left: unset;
-					margin-right: variables.$token-scale-500;
-				}
-			}
-		}
 	}
 }

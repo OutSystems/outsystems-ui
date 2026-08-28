@@ -40,11 +40,11 @@ body,
 
 		&-side {
 			.main {
-				margin-left: var(--size-side-menu);
+				margin-inline-start: var(--size-side-menu);
 			}
 
 			&.aside-overlay .main {
-				margin-left: 0;
+				margin-inline-start: 0;
 			}
 		}
 
@@ -62,7 +62,7 @@ body,
 
 	&.aside-expandable {
 		.main {
-			margin-left: 0;
+			margin-inline-start: 0;
 		}
 	}
 
@@ -75,7 +75,7 @@ body,
 
 .main,
 .fixed-header .main {
-	padding-top: 0;
+	padding-block-start: 0;
 }
 
 ///
@@ -110,7 +110,7 @@ body,
 		}
 
 		.header {
-			padding-top: var(--os-safe-area-top);
+			padding-block-start: var(--os-safe-area-top);
 		}
 	}
 }
@@ -152,7 +152,7 @@ body,
 					&-visible,
 					&-expandable {
 						.main {
-							margin-left: var(--size-side-menu);
+							margin-inline-start: var(--size-side-menu);
 							width: calc(100% - var(--size-side-menu));
 						}
 					}
@@ -162,11 +162,11 @@ body,
 
 		.layout-side.layout-native.aside-expandable {
 			&.menu-visible .main {
-				margin-left: var(--size-side-menu);
+				margin-inline-start: var(--size-side-menu);
 			}
 
 			.main {
-				margin-right: 0;
+				margin-inline-end: 0;
 			}
 		}
 	}
@@ -176,72 +176,16 @@ body,
 .tablet,
 .phone {
 	.layout-side .main {
-		margin-left: 0;
+		margin-inline-start: 0;
 	}
 }
 
 ///
 .phone {
 	.layout:not(.layout-native) [class*='ThemeGrid_Width']:not(.no-responsive) {
-		margin: variables.$token-scale-0 variables.$token-scale-0 variables.$token-scale-400 variables.$token-scale-0;
+		margin-block: variables.$token-scale-0 variables.$token-scale-400;
+		margin-inline: variables.$token-scale-0;
 		width: 100%;
-	}
-}
-
-// IsRTL -------------------------------------------------------------------------
-///
-.is-rtl {
-	&.tablet {
-		.layout-native {
-			&.aside {
-				&-visible,
-				&-expandable {
-					.main {
-						margin-left: 0;
-					}
-				}
-			}
-		}
-
-		.layout-side .main {
-			margin-right: 0;
-		}
-
-		&.landscape {
-			.layout-side.layout-native.aside-expandable {
-				&.menu-visible .main {
-					margin-left: 0;
-					margin-right: var(--size-side-menu);
-				}
-
-				.main {
-					margin-right: 0;
-				}
-			}
-		}
-	}
-
-	&.phone {
-		.layout-side .main {
-			margin-right: 0;
-		}
-	}
-
-	.layout-side {
-		.main {
-			margin-left: 0;
-			margin-right: var(--size-side-menu);
-		}
-
-		&.aside-overlay .main {
-			margin-right: 0;
-		}
-	}
-
-	.aside-expandable {
-		.main {
-			margin-right: 0;
-		}
 	}
 }
 

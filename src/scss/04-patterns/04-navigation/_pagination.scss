@@ -24,7 +24,7 @@
 	align-items: center;
 	display: flex;
 	justify-content: space-between;
-	margin-top: variables.$token-scale-600;
+	margin-block-start: variables.$token-scale-600;
 
 	// pagination-container
 	&-container {
@@ -33,7 +33,7 @@
 		justify-content: center;
 
 		& > .pagination-button:first-child {
-			margin-left: 0;
+			margin-inline-start: 0;
 		}
 
 		.list {
@@ -55,7 +55,7 @@
 		font-weight: var(--osui-pagination-button-font-weight);
 		height: var(--osui-pagination-button-size);
 		justify-content: center;
-		margin-left: variables.$token-scale-100;
+		margin-inline-start: variables.$token-scale-100;
 		padding: var(--osui-pagination-button-padding);
 		transition:
 			background-color variables.$token-transition-time-100 variables.$token-transition-curve-expressive,
@@ -108,7 +108,8 @@
 
 	.form-control[data-input] {
 		height: var(--osui-pagination-button-size);
-		margin: variables.$token-scale-0 variables.$token-scale-100;
+		margin-block: variables.$token-scale-0;
+		margin-inline: variables.$token-scale-100;
 		padding: 0;
 		text-align: center;
 		width: var(--osui-pagination-button-size);
@@ -140,7 +141,7 @@
 		flex-direction: column;
 
 		&-container {
-			margin-top: variables.$token-scale-400;
+			margin-block-start: variables.$token-scale-400;
 		}
 
 		&-button,
@@ -155,8 +156,6 @@
 ///
 .is-rtl {
 	.pagination-button {
-		margin-left: 0;
-		margin-right: variables.$token-scale-100;
 
 		.icon {
 			transform: rotate(180deg);

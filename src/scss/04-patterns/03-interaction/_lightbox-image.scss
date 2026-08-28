@@ -89,8 +89,8 @@
 
 ///
 .pswp__top-bar {
-	padding-left: var(--os-safe-area-left);
-	padding-right: var(--os-safe-area-right);
+	padding-inline-start: var(--os-safe-area-inline-start);
+	padding-inline-end: var(--os-safe-area-inline-end);
 }
 
 // Responsive --------------------------------------------------------------------
@@ -98,20 +98,20 @@
 .android {
 	.pswp__top-bar {
 		top: #{android-safe-area-top()};
-		padding-left: var(--safe-area-inset-left, 0px);
-		padding-right: var(--safe-area-inset-right, 0px);
+		padding-inline-start: var(--safe-area-inset-left, 0px);
+		padding-inline-end: var(--safe-area-inset-right, 0px);
 	}
 }
 
 ///
 .ios {
 	.pswp__top-bar {
-		padding-left: var(--os-safe-area-left);
-		padding-right: var(--os-safe-area-right);
+		padding-inline-start: var(--os-safe-area-inline-start);
+		padding-inline-end: var(--os-safe-area-inline-end);
 		top: var(--os-safe-area-top);
 
 		.pswp__counter {
-			left: var(--os-safe-area-left);
+			inset-inline-start: var(--os-safe-area-inline-start);
 		}
 	}
 }
@@ -119,7 +119,7 @@
 ///
 .phone {
 	.pswp__caption__center {
-		padding-bottom: calc(var(--os-safe-area-bottom) + 10px); // design-spec: 10px caption offset
+		padding-block-end: calc(var(--os-safe-area-bottom) + 10px); // design-spec: 10px caption offset
 	}
 }
 
@@ -137,10 +137,6 @@
 ///
 .is-rtl {
 	.pswp {
-		&__counter {
-			left: inherit;
-			right: 0;
-		}
 
 		&__top-bar {
 			display: flex;

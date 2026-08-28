@@ -9,7 +9,8 @@
 .button-group {
 	background-color: transparent;
 	border-radius: 0;
-	padding: variables.$token-scale-200 variables.$token-scale-0;
+	padding-block: variables.$token-scale-200;
+	padding-inline: variables.$token-scale-0;
 
 	&-item {
 		// ─── Component CSS API ─────────────────────────────────────────────
@@ -31,13 +32,16 @@
 		font-size: variables.$token-font-size-400;
 		font-weight: variables.$token-font-weight-medium;
 		min-height: var(--osui-button-group-min-height);
-		padding: variables.$token-scale-0 variables.$token-scale-400;
+		padding-block: variables.$token-scale-0;
+		padding-inline: variables.$token-scale-400;
 		position: relative;
 		white-space: nowrap;
 
 		&:first-child {
-			border-radius: variables.$token-border-radius-200 variables.$token-border-radius-0 variables.$token-border-radius-0
-				variables.$token-border-radius-200;
+			border-end-end-radius: variables.$token-border-radius-0;
+			border-end-start-radius: variables.$token-border-radius-200;
+			border-start-end-radius: variables.$token-border-radius-0;
+			border-start-start-radius: variables.$token-border-radius-200;
 		}
 
 		&[disabled] {
@@ -53,12 +57,14 @@
 
 		&[disabled]:not(:first-child),
 		&:not(:first-child) {
-			border-left: variables.$token-border-size-0;
+			border-inline-start: variables.$token-border-size-0;
 		}
 
 		&:last-child {
-			border-radius: variables.$token-border-radius-0 variables.$token-border-radius-200 variables.$token-border-radius-200
-				variables.$token-border-radius-0;
+			border-end-end-radius: variables.$token-border-radius-200;
+			border-end-start-radius: variables.$token-border-radius-0;
+			border-start-end-radius: variables.$token-border-radius-200;
+			border-start-start-radius: variables.$token-border-radius-0;
 		}
 
 		&.button-group-selected-item {
@@ -104,7 +110,7 @@
 		.button-group-item {
 			background-color: var(--background-color-header, var(--color-background-header));
 			border: 0;
-			border-bottom: variables.$token-border-size-050 solid transparent;
+			border-block-end: variables.$token-border-size-050 solid transparent;
 			color: var(--color-text-subtlest);
 
 			&:last-child {
@@ -112,7 +118,7 @@
 			}
 
 			&.button-group-selected-item {
-				border-bottom: variables.$token-border-size-050 solid variables.$token-semantics-primary-base;
+				border-block-end: variables.$token-border-size-050 solid variables.$token-semantics-primary-base;
 				color: var(--color-text);
 			}
 
@@ -120,34 +126,9 @@
 				color: var(--color-text-disabled);
 
 				&.button-group-selected-item {
-					border-bottom: variables.$token-border-size-050 solid var(--color-text-disabled);
+					border-block-end: variables.$token-border-size-050 solid var(--color-text-disabled);
 				}
 			}
-		}
-	}
-}
-
-// IsRTL -------------------------------------------------------------------------
-///
-.is-rtl {
-	.button-group-item {
-		&:first-child {
-			border-radius: variables.$token-border-radius-0 variables.$token-border-radius-200 variables.$token-border-radius-200
-				variables.$token-border-radius-0;
-		}
-
-		&:not(:first-child) {
-			border-left: variables.$token-border-size-025 solid variables.$token-semantics-primary-base;
-			border-right: variables.$token-border-size-0;
-
-			&[disabled] {
-				border-left: variables.$token-border-size-025 solid var(--color-border);
-			}
-		}
-
-		&:last-child {
-			border-radius: variables.$token-border-radius-200 variables.$token-border-radius-0 variables.$token-border-radius-0
-				variables.$token-border-radius-200;
 		}
 	}
 }
@@ -163,9 +144,9 @@
 				bottom: -1px;
 				box-shadow: 0 0 0 variables.$token-border-size-075 var(--color-focus-outer);
 				content: '';
-				left: -1px;
+				inset-inline-start: -1px;
 				position: absolute;
-				right: -1px;
+				inset-inline-end: -1px;
 				top: -1px;
 				z-index: var(--layer-global-screen);
 			}
@@ -182,9 +163,9 @@
 			display: block;
 			position: absolute;
 			top: 0;
-			right: 0;
+			inset-inline-end: 0;
 			bottom: 0;
-			left: 0;
+			inset-inline-start: 0;
 			border: variables.$token-border-size-075 solid variables.$token-semantics-primary-base;
 		}
 	}

@@ -21,8 +21,8 @@
 			background: transparent;
 			content: '';
 			height: 100%;
+			inset-inline-end: -24px;
 			position: absolute;
-			right: -24px;
 			top: calc(var(--size-header) + var(--size-header-content));
 			width: variables.$token-scale-600;
 		}
@@ -37,12 +37,12 @@
 			&.layout-side {
 				&.aside-expandable {
 					.app-menu-content {
-						padding-top: calc(var(--size-header) + var(--size-header-content) + var(--os-safe-area-top));
+						padding-block-start: calc(var(--size-header) + var(--size-header-content) + var(--os-safe-area-top));
 					}
 
 					&.hide-header-on-scroll:not(.header-is--visible) {
 						.app-menu-content {
-							padding-top: var(--size-header-content);
+							padding-block-start: var(--size-header-content);
 						}
 					}
 				}
@@ -72,9 +72,7 @@
 				&.layout-side {
 					&.aside-expandable {
 						.app-menu-content {
-							padding-top: calc(
-								var(--size-header) + var(--size-header-content) + #{android-safe-area-top()}
-							);
+							padding-block-start: calc( var(--size-header) + var(--size-header-content) + #{android-safe-area-top()} );
 						}
 					}
 				}
@@ -96,7 +94,7 @@
 				&-expandable {
 					.app-menu-content {
 						box-shadow: variables.$token-elevation-2;
-						left: 0;
+						inset-inline-start: 0;
 						z-index: var(--osui-menu-layer);
 					}
 				}
@@ -105,7 +103,7 @@
 			&.layout-side {
 				&.aside-expandable {
 					.app-menu-content {
-						padding-top: calc(var(--size-header) + var(--size-header-content) + var(--os-safe-area-top));
+						padding-block-start: calc(var(--size-header) + var(--size-header-content) + var(--os-safe-area-top));
 					}
 				}
 			}
@@ -113,26 +111,7 @@
 
 		.layout-side.layout-native.aside-expandable.hide-header-on-scroll:not(.header-is--visible) {
 			.app-menu-content {
-				padding-top: var(--size-header-content);
-			}
-		}
-	}
-}
-
-// IsRTL -------------------------------------------------------------------------
-///
-.is-rtl {
-	.tablet {
-		&.landscape {
-			&.landscape {
-				&.aside {
-					&-visible,
-					&-expandable {
-						.app-menu-content {
-							right: 0;
-						}
-					}
-				}
+				padding-block-start: var(--size-header-content);
 			}
 		}
 	}

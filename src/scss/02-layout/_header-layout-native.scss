@@ -18,7 +18,8 @@
 		top: 0;
 
 		&-top {
-			padding: 0 variables.$token-scale-800;
+			padding-block: 0;
+			padding-inline: variables.$token-scale-800;
 		}
 
 		&-title {
@@ -34,15 +35,15 @@
 
 		&-left {
 			flex: 1;
-			margin-right: variables.$token-scale-400;
+			margin-inline-end: variables.$token-scale-400;
 		}
 
 		&-right {
 			display: flex;
 			flex: 1;
 			justify-content: flex-end;
-			margin-left: variables.$token-scale-400;
-			margin-right: auto;
+			margin-inline-start: variables.$token-scale-400;
+			margin-inline-end: auto;
 
 			// ServiceStudio Preview
 			& {
@@ -67,7 +68,7 @@
 	}
 
 	.menu-icon {
-		margin-right: 0;
+		margin-inline-end: 0;
 	}
 }
 
@@ -77,8 +78,8 @@
 		.header,
 		&:not(.blank) .main-content,
 		.bottom-bar-wrapper {
-			padding-left: var(--os-safe-area-left);
-			padding-right: var(--os-safe-area-right);
+			padding-inline-start: var(--os-safe-area-inline-start);
+			padding-inline-end: var(--os-safe-area-inline-end);
 		}
 	}
 }
@@ -89,7 +90,8 @@
 .phone {
 	.layout-native {
 		.header-top {
-			padding: 0 variables.$token-scale-600;
+			padding-block: 0;
+			padding-inline: variables.$token-scale-600;
 		}
 	}
 }
@@ -121,9 +123,9 @@
 
 		.header,
 		.app-menu-content {
-			padding-top: #{android-safe-area-top()};
-			padding-right: var(--safe-area-inset-right, 0px);
-			padding-left: var(--safe-area-inset-left, 0px);
+			padding-block-start: #{android-safe-area-top()};
+			padding-inline-end: var(--safe-area-inset-right, 0px);
+			padding-inline-start: var(--safe-area-inset-left, 0px);
 		}
 	}
 }
@@ -131,22 +133,6 @@
 ///
 .ios {
 	.layout-native .header {
-		padding-top: var(--os-safe-area-top);
-	}
-}
-
-// IsRTL -------------------------------------------------------------------------
-///
-.is-rtl {
-	.layout-native {
-		.header-left {
-			margin-left: variables.$token-scale-400;
-			margin-right: 0;
-		}
-
-		.header-right {
-			margin-left: auto;
-			margin-right: variables.$token-scale-400;
-		}
+		padding-block-start: var(--os-safe-area-top);
 	}
 }
