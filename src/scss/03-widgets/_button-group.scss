@@ -118,44 +118,6 @@
 	}
 }
 
-/* Button Group when used inside Header Content Placeholder */
-///
-.layout-native {
-	.header-top-content {
-		.button-group {
-			--osui-button-group-container-background: transparent;
-			--osui-button-group-container-padding: #{variables.$token-scale-0};
-			--osui-button-group-container-gap: #{variables.$token-scale-0};
-			--osui-button-group-container-border-radius: #{variables.$token-border-radius-0};
-		}
-
-		.button-group-item {
-			--osui-button-group-background: var(--background-color-header, var(--color-background-header));
-			--osui-button-group-border-color: transparent;
-			--osui-button-group-border-radius: #{variables.$token-border-radius-0};
-			--osui-button-group-border-width: #{variables.$token-border-size-0};
-			--osui-button-group-color: var(--color-text-subtlest);
-			--osui-button-group-selected-background: var(--background-color-header, var(--color-background-header));
-			--osui-button-group-selected-border-color: transparent;
-
-			border-bottom: variables.$token-border-size-050 solid transparent;
-
-			&.button-group-selected-item {
-				border-bottom-color: variables.$token-semantics-primary-base;
-				color: var(--color-text);
-			}
-
-			&[disabled] {
-				color: var(--color-text-disabled);
-
-				&.button-group-selected-item {
-					border-bottom-color: var(--color-text-disabled);
-				}
-			}
-		}
-	}
-}
-
 // Accessinility -----------------------------------------------------------------
 ///
 .has-accessible-features {
