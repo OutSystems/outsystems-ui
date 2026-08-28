@@ -1,243 +1,48 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+OutSystems UI is a browser-side library providing the TypeScript behaviors and SCSS for the 70+ UI patterns used by OutSystems Reactive Web and Native Mobile applications. It has no server component: the build emits one AMD JS bundle and one CSS bundle per platform target.
 
-## Overview
+**Read first:**
 
-OutSystems UI is a UI component library providing TypeScript behaviors and CSS styles for 70+ patterns used in OutSystems Reactive Web and Native Mobile applications. The compiled library runs in end users' browsers and is consumed by applications built in OutSystems Service Studio.
-
-**Key references:**
-
-- See [ARCHITECTURE.md](./ARCHITECTURE.md) for system design, architectural tenets (Provider Pattern Isolation, Two-Tier Namespace Separation, Pattern Registry, Platform-Specific Compilation Guards, Factory Pattern), and external integrations table
-- See [CONTRIBUTING.md](./CONTRIBUTING.md) for development setup, workflow, code standards, PR requirements, and testing procedures
+- [ARCHITECTURE.md](./ARCHITECTURE.md) — layering (`OutSystems → OSFramework → Providers`), the six tenets (provider isolation, public-API envelope, ID registry, symmetric build/dispose, build-time platform resolution, factories), the External Integrations table, and the Compilation Boundary section.
+- [CONTRIBUTING.md](./CONTRIBUTING.md) — setup, dev-server behavior, ESLint/Prettier/Stylelint rules, PR title/label gates, E2E pipeline, release workflows.
+- `src/README.md` for the directory breakdown, `gulp/README.md` for the build system.
 
 ## Command Quick Reference
 
-```bash
-# Setup and development
-npm run setup              # Install dependencies + start dev server
-npm run dev                # Start dev server for all platforms (http://localhost:3000)
-npm run dev -- --target O11    # Start dev server for O11 platform only
-npm run dev -- --target ODC    # Start dev server for ODC platform only
+| Command | Purpose |
+| --- | --- |
+| `npm run setup` | `npm i` + start dev server on `http://localhost:3000` |
+| `npm run dev -- --target O11` | Dev build/watch for one target (`O11` or `ODC`); omit `--target` for both |
+| `npm run build` | Production build for all targets, then `lintfix` + `lint` |
+| `npm run lint` / `lintfix` / `prettier` | Quality gates (lint must be zero errors *and* zero warnings) |
+| `npm run create-osui-scss` | Regenerate the per-platform SCSS entry files |
+| `npm run update-version` | Interactive version bump across project files |
+| `npm run docs` | TypeDoc output into `docs/` |
 
-# Building and quality checks
-npm run build              # Production build (all platforms) + lint + format
-npm run lint               # Check ESLint rules
-npm run lintfix            # Auto-fix ESLint issues
-npm run prettier           # Format all code
+There is no test runner in this repository — nothing to run locally beyond build and lint.
 
-# Documentation
-npm run docs               # Generate TypeDoc documentation
-```
+## Domain Terminology
 
-**Build output location:** `dist/` directory contains compiled JavaScript and CSS bundles per platform.
+- **O11** — OutSystems 11, the traditional platform. **ODC** — OutSystems Developer Cloud. Every build produces a bundle per target.
+- **Pattern** — a public UI component with its own `*API.ts` entry point (Accordion, Carousel, DatePicker, …).
+- **Feature** — a composable capability with no public API of its own, reused by several patterns (`OSFramework/OSUI/Feature/Balloon/`).
+- **Provider** — a third-party library wrapped under `src/scripts/Providers/OSUI/` (Splide, Flatpickr, noUiSlider, VirtualSelect, Floating UI).
+- **Service Studio** — the OutSystems IDE where developers drag patterns onto screens. **Forge** — the marketplace where the compiled component is distributed.
 
-## Directory Structure
+## Gotchas
 
-```
-src/
-├── scripts/
-│   ├── OSFramework/           # Internal framework (not invoked directly)
-│   │   └── OSUI/
-│   │       ├── Behaviors/      # Pattern behavior classes
-│   │       ├── Event/         # Event management (DOM, Gesture, Provider)
-│   │       ├── Helper/        # Utilities (Dom, Dates, Device, Sanitize)
-│   │       ├── Interface/     # Generic interfaces
-│   │       ├── Pattern/       # Pattern implementations (Accordion, Carousel, etc.)
-│   │       ├── Constants.ts   # Framework constants
-│   │       ├── ErrorCodes.ts  # Internal error codes
-│   │       └── GlobalEnum.ts  # Framework enumerations
-│   │
-│   ├── OutSystems/            # Public APIs (consumed by OutSystems apps)
-│   │   └── OSUI/
-│   │       ├── Patterns/      # Pattern APIs (AccordionAPI.ts, CarouselAPI.ts, etc.)
-│   │       ├── Utils/         # Public utility APIs
-│   │       └── ErrorCodes.ts  # Public error codes
-│   │
-│   ├── Providers/             # Third-party library integrations
-│   │   └── OSUI/
-│   │       ├── Carousel/            # Splide provider for Carousel
-│   │       ├── Datepicker/          # Flatpickr for DatePicker
-│   │       ├── Dropdown/            # VirtualSelect for Dropdown
-│   │       ├── Monthpicker/         # Flatpickr for MonthPicker
-│   │       ├── RangeSlider/         # NoUiSlider for RangeSlider
-│   │       ├── Timepicker/          # Flatpickr for TimePicker
-│   │       ├── SharedProviderResources/  # Shared Flatpickr resources
-│   │       └── Utils/               # FloatingUI for positioning
-│   │
-│   └── osui.ts                # Deprecated API (redirects to OutSystems.OSUI.*)
-│
-├── scss/                      # Styles (non-pattern specific)
-│   ├── 00-abstract/           # Variables, mixins, functions
-│   ├── 01-foundations/        # Base styles, typography, colors
-│   ├── 02-layout/             # Grid, layout utilities
-│   ├── 03-widgets/            # Widget-specific styles
-│   ├── 04-patterns/           # Pattern styles by category
-│   └── 05-useful/             # Utility classes
-│
-gulp/                          # Build system configuration
-├── Tasks/                     # Gulp tasks (TsTranspile, ScssTranspile, etc.)
-├── ProjectSpecs/              # Build specifications
-└── Template/                  # index.html template for dev server
-```
+- **Providers are not bundled.** They are reached as browser globals (`window.Splide`, `window.flatpickr`, `window.FloatingUIDOM`, …) typed in `src/scripts/Global.d.ts`; the host application loads the scripts. `package.json` devDependencies only supply typings and SCSS sources, so bumping a devDependency does not change what runs in the browser. The version a wrapper targets is the `ProviderInfo.Version` constant in the provider directory — update it deliberately, and note ARCHITECTURE.md flags known drift between devDependency and in-code versions.
+- **TypeScript `strict` is off.** Null/undefined bugs are not caught by the compiler; guard defensively, especially in `dispose` paths where the platform may have already removed the DOM.
+- **Platform differences belong in `gulp/ProjectSpecs/DefaultSpecs.js`** (per-target file exclusions and placeholder tokens), not in runtime `if (platform === …)` branches.
+- **E2E coverage is path-derived.** `pipelines/pr-pipeline.yaml` builds Cucumber tags from changed folders under `src/scripts/OSFramework/OSUI/Pattern`, `src/scripts/OutSystems/OSUI/Patterns`, `src/scripts/Providers/OSUI`, and `src/scss/04-patterns`. Changes elsewhere trigger **no** tests — say so explicitly and describe manual verification.
+- **`.npmrc` sets `min-release-age=7`.** A package published in the last 7 days cannot be installed; do not remove the setting to work around it.
+- **`src/scripts/osui.ts` is a deprecated shim.** Never add entries; new surface goes in `OutSystems.OSUI.*`.
+- Public API functions must return the serialized envelope from `OutSystems/OSUI/Utils/CreateApiResponse.ts` with a code from `OutSystems/OSUI/ErrorCodes.ts` — do not let exceptions escape (only `Create` throws).
 
-See `src/README.md` for detailed directory structure documentation.
+## Adding or Changing a Pattern
 
-## OutSystems Domain Concepts
-
-**Pattern:** A reusable UI component (e.g., Accordion, Carousel, DatePicker). Each pattern has:
-
-- Internal implementation in `OSFramework/OSUI/Pattern/<PatternName>/`
-- Public API in `OutSystems/OSUI/Patterns/<PatternName>API.ts`
-- Configuration class ending in `Config.ts`
-- Optional provider integration for complex patterns
-
-**Provider:** Third-party library wrapped by the framework (Splide, Flatpickr, NoUiSlider, VirtualSelect, FloatingUI). Providers are isolated from public APIs using the Provider Pattern (see ARCHITECTURE.md T1. Provider Pattern Isolation).
-
-**Platform Targets:**
-
-- **O11** - OutSystems 11 (traditional platform)
-- **ODC** - OutSystems Developer Cloud (cloud-native platform)
-
-Build system compiles separate bundles for each platform with platform-specific code exclusions and placeholder replacements.
-
-**Forge:** OutSystems component marketplace where this library is distributed.
-
-**Service Studio:** OutSystems IDE where developers drag/drop UI patterns from this library.
-
-## Code Patterns and Conventions
-
-### TypeScript Naming (enforced by ESLint)
-
-```typescript
-// Classes: StrictPascalCase
-class AccordionConfig { }
-
-// Interfaces: IPascalCase or UPPER_CASE with I prefix
-interface IAccordion { }
-
-// Exported functions: StrictPascalCase
-export function CreateAccordion() { }
-
-// Private class members: _strictCamelCase (underscore required)
-private _uniqueId: string;
-private _initialize(): void { }
-
-// Public/protected members: strictCamelCase (no underscore)
-public widgetId: string;
-protected updateConfig(): void { }
-```
-
-**Class member ordering:** Private fields → Protected fields → Public fields → Constructor → Private methods → Protected methods → Public methods (alphabetical within each group).
-
-### Pattern Implementation Structure
-
-Each pattern follows this structure:
-
-1. **Internal pattern class** in `OSFramework/OSUI/Pattern/<Name>/<Name>.ts`
-    - Extends `AbstractPattern` or `AbstractProviderPattern`
-    - Implements pattern-specific interface
-2. **Configuration class** in `OSFramework/OSUI/Pattern/<Name>/<Name>Config.ts`
-    - Extends `AbstractConfiguration`
-3. **Interface** in `OSFramework/OSUI/Pattern/<Name>/I<Name>.ts`
-4. **Public API** in `OutSystems/OSUI/Patterns/<Name>API.ts`
-    - Manages pattern registry (Map of instances)
-    - Exports functions: `Create()`, `Initialize()`, `Dispose()`, etc.
-5. **Factory** (for provider patterns) in `OSFramework/OSUI/Pattern/<Name>/<Name>Factory.ts`
-
-### Provider Pattern Structure
-
-Provider-based patterns have additional components:
-
-- Provider implementation in `Providers/OSUI/<Name>/<ProviderLibrary>/`
-- Provider extends internal pattern class
-- Provider-specific configuration and event handling
-
-### Documentation Requirements
-
-**All public APIs must have JSDoc comments:**
-
-```typescript
-/**
- * Creates a new Accordion pattern instance.
- * @param accordionId Unique identifier for the accordion
- * @param configs JSON string with configuration options
- * @returns Accordion instance
- */
-export function Create(accordionId: string, configs: string): OSFramework.OSUI.Patterns.Accordion.IAccordion {
-	// implementation
-}
-```
-
-Use VS Code "Document This" extension (type `/**` above a function/class) for starter templates.
-
-### Build System Notes
-
-- **Module format:** AMD (`tsconfig.json` specifies `"module": "amd"`)
-- **Single bundle per platform:** No code splitting; entire framework compiles to one JS file
-- **Platform-specific exclusions:** Files excluded via `gulp/ProjectSpecs/DefaultSpecs.js` (e.g., IconLibrary excluded from O11)
-
-## Common Scenarios
-
-### Adding a new pattern
-
-1. Create pattern directory under `OSFramework/OSUI/Pattern/<PatternName>/`
-2. Implement pattern class, config, interface, and enum (if needed)
-3. Create public API in `OutSystems/OSUI/Patterns/<PatternName>API.ts`
-4. Add pattern styles in `src/scss/04-patterns/` (categorized by type)
-5. Update imports in platform-specific SCSS files
-6. Test with `npm run dev -- --target O11` and `npm run dev -- --target ODC`
-7. Document with JSDoc comments
-8. Verify with `npm run build` (must pass linting)
-
-### Upgrading a provider library
-
-1. Update dependency version in `package.json`
-2. Modify provider-specific code in `Providers/OSUI/<PatternName>/<ProviderLibrary>/`
-3. Update provider config and event handling if API changed
-4. Test pattern behavior with `npm run dev`
-5. Check TypeScript compilation: `npm run build`
-6. Verify provider version in ARCHITECTURE.md External Integrations table
-
-### Debugging in browser
-
-1. Run `npm run dev -- --target O11` (or ODC)
-2. Open `http://localhost:3000` in browser
-3. Development build includes sourcemaps
-4. Use browser DevTools to debug TypeScript source files
-5. Changes auto-recompile and trigger browser reload
-
-### Running linters before commit
-
-```bash
-npm run lintfix    # Fix auto-fixable issues
-npm run lint       # Check remaining issues (must be clean)
-npm run prettier   # Format all files
-```
-
-## Key Differences from Typical TypeScript Projects
-
-1. **AMD modules, not ES6/CommonJS:** Build outputs AMD-format modules for Service Studio compatibility
-2. **No tree-shaking:** Entire library ships as one bundle per platform
-3. **Platform-specific compilation:** Same source compiled differently for O11 vs ODC
-4. **Unique ID-based registry:** Pattern instances stored in Maps, accessed by string IDs (not direct references)
-5. **Two-tier namespace:** `OSFramework.*` (internal) vs `OutSystems.OSUI.*` (public API)
-6. **Provider abstraction:** Third-party libraries never exposed directly to consumers
-
-## Testing and Quality Gates
-
-**Before submitting PR:**
-
-- `npm run build` succeeds without errors
-- `npm run lint` passes with zero warnings/errors
-- Code is documented with JSDoc comments
-- Tested locally in both O11 and ODC modes (if pattern differs by platform)
-
-**PR requirements:** See [CONTRIBUTING.md](./CONTRIBUTING.md) for PR title format, required labels, and review requirements.
-
-**Automated testing:** Separate test repository ([outsystems-ui-tests](https://github.com/OutSystems/outsystems-ui-tests)) with E2E tests using WebDriverIO and Cucumber. See ARCHITECTURE.md Quality Assurance section and CONTRIBUTING.md Testing section for details.
-
-## Additional Resources
+Mirror an existing pattern of the same shape rather than inventing structure. A pattern spans: the class/config/interface (and factory, for provider or multi-mode patterns) under `OSFramework/OSUI/Pattern/<Name>/`, the public API in `OutSystems/OSUI/Patterns/<Name>API.ts`, any wrapper under `Providers/OSUI/<Name>/<Library>/`, and styles in `src/scss/04-patterns/` which must also be imported by the platform SCSS entry files (`npm run create-osui-scss` regenerates them). Verify in both `--target O11` and `--target ODC` when behavior differs per platform.
 
 - [OutSystems UI Website](https://outsystemsui.outsystems.com/OutsystemsUiWebsite/) - Live demos and documentation
 - [TypeDoc Generated Docs](https://outsystems-ui-docs.github.io/) - Auto-generated API reference with UML diagrams
@@ -245,3 +50,4 @@ npm run prettier   # Format all files
 - [Forge component - ODC:](https://www.outsystems.com/forge/component-overview/15931/outsystems-ui-odc) - Component download and versioning
 - [Product Documentation](https://success.outsystems.com/Documentation/11/Developing_an_Application/Design_UI/Patterns) - OutSystems official docs
 - `gulp/README.md` - Build system documentation
+Record significant design decisions as an ADR — see CONTRIBUTING.md's Documentation section for the procedure.

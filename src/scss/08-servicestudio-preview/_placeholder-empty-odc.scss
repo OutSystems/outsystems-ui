@@ -10,4 +10,10 @@
 			display: contents;
 		}
 	}
+
+	&__content-item {
+		.placeholder-empty:empty {
+			-servicestudio-padding: var(--space-m);
+		}
+	}
 }

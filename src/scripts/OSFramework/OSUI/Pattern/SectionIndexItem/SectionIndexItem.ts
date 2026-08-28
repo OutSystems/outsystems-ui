@@ -48,7 +48,7 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 			// Threshold value to set element as Active
 			const thresholdVal = 40;
 			// Store the offSetValue to be checked
-			const elementOffsetTopVal = this._targetElement.offsetTop - scrollYPosition.value;
+			const elementOffsetTopVal = this._targetElement?.offsetTop - scrollYPosition.value;
 
 			/* Logic behind position validation:
 				- If click to nanvigate into element the calc
@@ -79,8 +79,11 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 
 		// Method to remove Pattern events
 		private _removeEvents(): void {
-			this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
-			this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyBoardPress);
+			if (this.selfElement) {
+				this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.Click, this._eventOnClick);
+				this.selfElement.removeEventListener(GlobalEnum.HTMLEvent.keyDown, this._eventOnkeyBoardPress);
+			}
+
 			Event.DOMEvents.Listeners.GlobalListenerManager.Instance.removeHandler(
 				Event.DOMEvents.Listeners.Type.ScreenOnScroll,
 				this._eventOnScreenScroll
@@ -113,7 +116,7 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 					// Can't be used the Helper.Dom.GetElementById since we don't want a through error if the element does not exist!
 					this._targetElement = document.getElementById(this.configs.ScrollToWidgetId);
 					this._setTargetAttributes();
-				} catch (e) {
+				} catch {
 					// Was not able to get Target element!
 					throw new Error(
 						`${ErrorCodes.SectionIndexItem.FailToSetTargetElement}: Target Element with the Id '${this.configs.ScrollToWidgetId}' does not exist!`
@@ -135,10 +138,13 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 
 		// Method to remove scroll margin styles on the item target
 		private _unsetTargetAttributes(): void {
-			// Set class to target, to avoid inline property styles
-			Helper.Dom.Styles.RemoveClass(this._targetElement, Enum.CssClass.ItemTarget);
-			// Add CSS Variable with the offset value for the scroll target, to be used on the CSS
-			Helper.Dom.Styles.RemoveStyleAttribute(this._targetElement, Enum.CssVariable.ScrollMargin);
+			// Check if the target element is defined
+			if (this._targetElement) {
+				// Set class to target, to avoid inline property styles
+				Helper.Dom.Styles.RemoveClass(this._targetElement, Enum.CssClass.ItemTarget);
+				// Add CSS Variable with the offset value for the scroll target, to be used on the CSS
+				Helper.Dom.Styles.RemoveStyleAttribute(this._targetElement, Enum.CssVariable.ScrollMargin);
+			}
 		}
 
 		/**

@@ -27,11 +27,6 @@
 	}
 
 	&.osui-btn-loading--is-loading {
-		&,
-		& * {
-			pointer-events: none;
-		}
-
 		.btn {
 			.osui-btn-loading__spinner-animation {
 				display: inline-block;

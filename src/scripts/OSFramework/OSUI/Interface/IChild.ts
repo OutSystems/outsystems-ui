@@ -7,6 +7,14 @@ namespace OSFramework.OSUI.Interface {
 	 * @interface IChild
 	 */
 	export interface IChild extends IPattern {
+		/**
+		 * Method used to be notified by the parent
+		 *
+		 * @param notificationType Notification type
+		 * @memberof OSFramework.Interface.IChild
+		 */
+		beNotifiedByParent?(notificationType: string): void;
+
 		get isFirstChild(): boolean;
 		set isFirstChild(value: boolean);
 		get isLastChild(): boolean;

@@ -7,8 +7,9 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 	 * @class AbstractVirtualSelectConfig
 	 * @extends {AbstractDropdownConfig}
 	 */
-	export abstract class AbstractVirtualSelectConfig extends OSFramework.OSUI.Patterns.Dropdown
-		.AbstractDropdownConfig {
+	export abstract class AbstractVirtualSelectConfig
+		extends OSFramework.OSUI.Patterns.Dropdown.AbstractDropdownConfig
+	{
 		// Store grouped options
 		private _groupedOptionsList: GroupDropDownOption[];
 		// Store the Provider Options
@@ -170,9 +171,17 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		public getProviderConfig(): VirtualSelectOpts {
 			/* In order to avoid XSS let's sanitize the label of each all options
 			- This must be done here since If we do this at the renderer option we will remain with the
-			library value unSanitized, that said we must do it before adding the list of options to the library! */
+			library value unSanitized, that said we must do it before adding the list of options to the library!
+			- Description gets the same treatment: the library renders it as HTML into the option row
+			(and secureText is a no-op while SanitizeDropdownValues is False), so an unsanitized
+			description is an XSS sink. Sanitizing before _groupOptions() runs also keeps the copy it
+			places on customData consistent with what is rendered. */
 			for (const option of this.OptionsList) {
 				option.label = OSFramework.OSUI.Helper.Sanitize(option.label);
+
+				if (option.description) {
+					option.description = OSFramework.OSUI.Helper.Sanitize(option.description);
+				}
 			}
 
 			// We need to keep the _groupedOptionsList in order to use it in this._getOptionInfo method
@@ -184,6 +193,14 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 				ele: this.ElementId,
 				enableSecureText: this.SanitizeDropdownValues,
 				disabled: this.IsDisabled,
+				/* OSUI owns validation: the platform calls validation(), which applies
+				.osui-dropdown--not-valid and appends its own .osui-dropdown-error-message. Turning the
+				library's validate() off keeps that ownership explicit and prevents a half-applied state
+				where the library marks the combobox aria-invalid and points aria-describedby at its own
+				message element, which OSUI hides. An app that deliberately wants the library's
+				validation can still set `disableValidation: false` through the extensibility configs,
+				since those are merged last. */
+				disableValidation: true,
 				dropboxWrapper: OSFramework.OSUI.GlobalEnum.HTMLElement.Body,
 				hasOptionDescription: hasDescription,
 				hideClearButton: false,
@@ -199,6 +216,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 				selectedValue: this.getSelectedValues() as [],
 				showDropboxAsPopup: this.ShowDropboxAsPopup,
 				popupDropboxBreakpoint: this.PopupDropboxBreakpoint,
+				showSecureTextWarning: false,
 				silentInitialValueSet: true,
 				textDirection: OutSystems.OSUI.Utils.GetIsRTL()
 					? OSFramework.OSUI.GlobalEnum.Direction.RTL

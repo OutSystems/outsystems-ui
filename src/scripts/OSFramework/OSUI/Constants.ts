@@ -6,6 +6,16 @@ namespace OSFramework.OSUI.Constants {
 	export const A11YAttributes = {
 		Aria: {
 			Atomic: 'aria-atomic',
+			Current: {
+				prop: 'aria-current',
+				value: {
+					Page: 'page',
+					Step: 'step',
+					Location: 'location',
+					Date: 'date',
+					Time: 'time',
+				},
+			},
 			Orientation: 'aria-orientation',
 			Modal: 'aria-modal',
 			Busy: 'aria-busy',
@@ -46,7 +56,10 @@ namespace OSFramework.OSUI.Constants {
 			Button: 'button',
 			Complementary: 'complementary',
 			Dialog: 'dialog',
+			Img: 'img',
+			List: 'list',
 			Listbox: 'listbox',
+			Listitem: 'listitem',
 			Main: 'main',
 			Menu: 'menu',
 			MenuItem: 'menuitem',
@@ -173,7 +186,7 @@ namespace OSFramework.OSUI.Constants {
 	export const OSPlatform = '<->platformType<->';
 
 	/* OSUI Version */
-	export const OSUIVersion = '2.28.1';
+	export const OSUIVersion = '2.30.0';
 
 	/* Constant to be used across project as the zero value*/
 	export const ZeroValue = 0;

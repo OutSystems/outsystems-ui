@@ -58,6 +58,18 @@ namespace OSFramework.OSUI.Helper {
 		}
 
 		/**
+		 * Method that will define the aria-current
+		 *
+		 * @param {HTMLElement} element Target element to receive the value atributte
+		 * @param {GlobalEnum.A11YAriaCurrentValues} value Value that will be set on aria atributte
+		 * @returns
+		 * @memberof OSFramework.Helper.A11Y
+		 */
+		public static AriaCurrent(element: HTMLElement, value: GlobalEnum.A11YAriaCurrentValues): void {
+			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Current.prop, value);
+		}
+
+		/**
 		 * Method that will define the aria-describedby
 		 *
 		 * @param {HTMLElement} element Target element to receive the value atributte
@@ -328,9 +340,13 @@ namespace OSFramework.OSUI.Helper {
 		 * @memberof OSFramework.Helper.A11Y
 		 */
 		public static AriaOrientationHorizontal(element: HTMLElement): void {
-			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Orientation, Constants.A11YAttributes.States.Horizontal);
+			Dom.Attribute.Set(
+				element,
+				Constants.A11YAttributes.Aria.Orientation,
+				Constants.A11YAttributes.States.Horizontal
+			);
 		}
-		
+
 		/**
 		 * Method that will set the aria-orientation to vertical
 		 *
@@ -339,7 +355,11 @@ namespace OSFramework.OSUI.Helper {
 		 * @memberof OSFramework.Helper.A11Y
 		 */
 		public static AriaOrientationVertical(element: HTMLElement): void {
-			Dom.Attribute.Set(element, Constants.A11YAttributes.Aria.Orientation, Constants.A11YAttributes.States.Vertical);
+			Dom.Attribute.Set(
+				element,
+				Constants.A11YAttributes.Aria.Orientation,
+				Constants.A11YAttributes.States.Vertical
+			);
 		}
 
 		/**
@@ -463,11 +483,18 @@ namespace OSFramework.OSUI.Helper {
 		 * @memberof OSFramework.Helper.A11Y
 		 */
 		public static RoleDialog(element: HTMLElement): void {
-			Dom.Attribute.Set(
-				element,
-				Constants.A11YAttributes.Role.AttrName,
-				Constants.A11YAttributes.Role.Dialog
-			);
+			Dom.Attribute.Set(element, Constants.A11YAttributes.Role.AttrName, Constants.A11YAttributes.Role.Dialog);
+		}
+
+		/**
+		 * Method that will set the list role
+		 *
+		 * @param {HTMLElement} element Target element to receive the role atributte
+		 * @returns
+		 * @memberof OSFramework.Helper.A11Y
+		 */
+		public static RoleList(element: HTMLElement): void {
+			Dom.Attribute.Set(element, Constants.A11YAttributes.Role.AttrName, Constants.A11YAttributes.Role.List);
 		}
 
 		/**
@@ -479,6 +506,17 @@ namespace OSFramework.OSUI.Helper {
 		 */
 		public static RoleListbox(element: HTMLElement): void {
 			Dom.Attribute.Set(element, Constants.A11YAttributes.Role.AttrName, Constants.A11YAttributes.Role.Listbox);
+		}
+
+		/**
+		 * Method that will set the listitem role
+		 *
+		 * @param {HTMLElement} element Target element to receive the role atributte
+		 * @returns
+		 * @memberof OSFramework.Helper.A11Y
+		 */
+		public static RoleListitem(element: HTMLElement): void {
+			Dom.Attribute.Set(element, Constants.A11YAttributes.Role.AttrName, Constants.A11YAttributes.Role.Listitem);
 		}
 
 		/**

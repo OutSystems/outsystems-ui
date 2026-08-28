@@ -17,7 +17,7 @@ PS: This comment block will not be visible in the compiled version!
 =============================================================================== */
 
 /*!
-OutSystems UI 2.29.0 • O11 Platform
+OutSystems UI 2.30.0 • O11 Platform
 Website:
  • https://www.outsystems.com/outsystems-ui
 GitHub:
@@ -92,6 +92,8 @@ Section Index:
         6.2.14. Tag
         6.2.15. Tooltip
         6.2.16. User Avatar
+        6.2.17. Wizard
+        6.2.18. Wizard Item
     6.3. Interaction
         6.3.1. Action Sheet
         6.3.2. Animate
@@ -124,7 +126,6 @@ Section Index:
         6.4.6. Submenu
         6.4.7. Tabs
         6.4.8. Timeline
-        6.4.9. Wizard
     6.5. Numbers
         6.5.1. Badge
         6.5.2. Counter
@@ -166,6 +167,7 @@ Section Index:
         6.8.19. Tabs
         6.8.20. Tooltip
         6.8.21. Video
+        6.8.22. Wizard
 7. Usefull Classes
     7.1. a11y (Accessibility)
     7.2. Colors - Brand
@@ -364,6 +366,10 @@ Functions & Mixins
 @import '../scripts/OSFramework/OSUI/Pattern/Tooltip/scss/tooltip';
 /*! 6.2.16. User Avatar */
 @import '04-patterns/02-content/user-avatar';
+/*! 6.2.17. Wizard */
+@import '../scripts/OSFramework/OSUI/Pattern/Wizard/scss/wizard';
+/*! 6.2.18. Wizard Item */
+@import '../scripts/OSFramework/OSUI/Pattern/WizardItem/scss/wizard-item';
 
 /*! 6.3. Interaction */
 /*! 6.3.1. Action Sheet */
@@ -428,8 +434,6 @@ Functions & Mixins
 @import '../scripts/OSFramework/OSUI/Pattern/Tabs/scss/tabs';
 /*! 6.4.8. Timeline */
 @import '04-patterns/04-navigation/timeline';
-/*! 6.4.9. Wizard */
-@import '04-patterns/04-navigation/wizard';
 
 /*! 6.5. Numbers */
 /*! 6.5.1. Badge */
@@ -510,6 +514,8 @@ Functions & Mixins
 @import '10-deprecated/tooltip-deprecated';
 /*! 6.8.21. Video */
 @import '10-deprecated/video-deprecated';
+/*! 6.8.22. Wizard */
+@import '10-deprecated/wizard-deprecated';
 
 /*! ==============================================================================
 7. Usefull Classes

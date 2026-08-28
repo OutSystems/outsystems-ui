@@ -14,6 +14,17 @@
 	}
 }
 
+.app-menu-content {
+	left: calc(-1 * var(--side-menu-size));
+	transform: translateX(0) translateZ(0);
+	transition: transform 130ms ease-in;
+
+	&.is--open {
+		transform: translateX(var(--side-menu-size)) translateZ(0);
+		transition: transform 330ms ease-out;
+	}
+}
+
 ///
 .app-menu-overlay {
 	background-color: get-background-color('overlay');
@@ -135,6 +146,13 @@
 	.aside-overlay .app-menu-overlay {
 		display: block;
 	}
+
+	.app-menu-content {
+		&,
+		&.is--open {
+			left: 0;
+		}
+	}
 }
 
 ///
@@ -148,21 +166,11 @@
 		background-color: get-background-color('neutral-0');
 		flex-direction: column;
 		height: 100%;
-		left: calc(-1 * var(--side-menu-size));
 		position: fixed;
 		top: 0;
-		transform: translateX(0) translateZ(0);
-		transition: transform 130ms ease-in;
 		width: var(--side-menu-size);
-
 		will-change: transform;
 		z-index: var(--osui-menu-layer);
-	}
-
-	// .menu-visible is a class added into the .layout element
-	.menu-visible .app-menu-content {
-		transform: translateX(var(--side-menu-size)) translateZ(0);
-		transition: transform 330ms ease-out;
 	}
 
 	.layout-side {
@@ -225,22 +233,13 @@
 	.app-menu-content {
 		left: auto;
 		right: calc(-1 * var(--side-menu-size));
+		transition: transform 130ms ease-in;
 	}
 
-	.menu-visible {
-		.app-menu-content {
-			right: 0;
-			-webkit-transform: translateX(0) translateZ(0);
-			transform: translateX(0) translateZ(0);
-		}
-	}
-
-	&.tablet,
-	&.phone {
-		.menu-visible .app-menu-content {
-			right: 0;
-			transform: translateX(0) translateZ(0);
-			transition: all 330ms ease-out;
-		}
+	.app-menu-content.is--open {
+		left: auto;
+		right: 0;
+		transform: translateX(0) translateZ(0);
+		transition: transform 130ms ease-out;
 	}
 }

@@ -110,7 +110,7 @@ body.iconLibrary-phosphor {
 // ---------------------------------------------------------------------------
 // Component selectors – use CSS variables (with FontAwesome as fallback when no library class is set)
 // ---------------------------------------------------------------------------
-.icon.ph{
+.icon.ph {
 	display: inline-block;
 }
 
@@ -121,7 +121,7 @@ body.iconLibrary-phosphor {
 }
 
 // Search – search icon
-.input-search {
+.osui-search .osui-search__input > span {
 	position: relative;
 
 	&::after {
@@ -135,27 +135,27 @@ body.iconLibrary-phosphor {
 		transform: translateY(-50%);
 	}
 
-	.form-control[data-input]{
+	.form-control[data-input] {
 		padding-left: var(--space-xl);
 	}
 }
 
-.is-rtl .input-search {
+.is-rtl .osui-search .osui-search__input > span {
 	&::after {
 		left: auto;
 		right: var(--space-base);
 	}
 
-	.form-control[data-input]{
+	.form-control[data-input] {
 		padding-left: var(--space-base);
 		padding-right: var(--space-xl);
 	}
 }
 
-
 // Submenu – header arrow
 .osui-submenu {
 	&__header__icon {
+		display: none;
 		margin-inline-start: var(--space-s);
 		transition: transform 200ms ease;
 		transform-origin: center;
@@ -163,6 +163,12 @@ body.iconLibrary-phosphor {
 		&:after {
 			content: var(--osui-icon-arrow-down);
 			font-family: var(--osui-icon-font-family);
+		}
+	}
+
+	&--is-dropdown {
+		.osui-submenu__header__icon {
+			display: inline-flex;
 		}
 	}
 
@@ -188,7 +194,7 @@ body.iconLibrary-phosphor {
 	transition: transform 200ms ease;
 }
 
-.is-rtl .dropdown-container:after { 
+.is-rtl .dropdown-container:after {
 	left: var(--space-base);
 	right: auto;
 }
@@ -197,6 +203,12 @@ body.iconLibrary-phosphor {
 	&:after {
 		transform: translateY(-50%) rotate(180deg);
 		transform-origin: center;
+	}
+}
+
+.form {
+	.dropdown-container[class*='ThemeGrid_Width']:has(select):after {
+		top: calc(50% - var(--space-m) / 2);
 	}
 }
 
@@ -476,6 +488,13 @@ body.iconLibrary-phosphor {
 				}
 			}
 		}
+	}
+}
+
+.form {
+	// Service Studio Preview
+	.dropdown-container:has(> select.dropdown-display):after {
+		-servicestudio-top: calc(50% - var(--space-m) / 2);
 	}
 }
 

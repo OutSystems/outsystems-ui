@@ -1,5 +1,5 @@
 /*!
- * Virtual Select v1.1.5
+ * Virtual Select v1.4.0
  * https://sa-si-dev.github.io/virtual-select
  * Licensed under MIT (https://github.com/sa-si-dev/virtual-select/blob/master/LICENSE)
  */
@@ -221,7 +221,6 @@
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	-webkit-user-select: none;
-	-moz-user-select: none;
 	user-select: none;
 	width: 100%;
 }
@@ -277,13 +276,28 @@
 	height: 30px;
 	justify-content: center;
 	-webkit-user-select: none;
-	-moz-user-select: none;
 	user-select: none;
 	visibility: hidden;
 	width: 30px;
 }
 .vscomp-search-clear:hover {
 	color: inherit;
+}
+.vscomp-error-message {
+	align-items: flex-start;
+	color: #b00020;
+	display: none;
+	font-size: 13px;
+	gap: 4px;
+	line-height: 1.4;
+	padding-top: 4px;
+	width: 100%;
+}
+.vscomp-error-message::before {
+	content: '\26A0';
+	flex: none;
+	font-size: 1.1em;
+	line-height: 1.2;
 }
 .vscomp-no-options,
 .vscomp-no-search-results {
@@ -311,7 +325,6 @@
 .vscomp-ele[disabled] {
 	cursor: not-allowed;
 	-webkit-user-select: none;
-	-moz-user-select: none;
 	user-select: none;
 }
 .vscomp-ele[disabled] .vscomp-wrapper {
@@ -374,6 +387,8 @@
 	align-items: center;
 	cursor: pointer;
 	display: flex;
+	min-height: 24px;
+	min-width: 24px;
 }
 .vscomp-wrapper.has-select-all .vscomp-search-input,
 .vscomp-wrapper.has-select-all .vscomp-toggle-all-label {
@@ -473,6 +488,9 @@
 .vscomp-wrapper.has-error .vscomp-toggle-button {
 	border-color: #b00020;
 }
+.vscomp-wrapper.has-error ~ .vscomp-error-message {
+	display: flex;
+}
 .vscomp-wrapper.show-value-as-tags .vscomp-toggle-button {
 	padding: 4px 22px 0 10px;
 }
@@ -506,14 +524,14 @@
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
-	width: calc(100% - 20px);
+	width: calc(100% - 24px);
 }
 .vscomp-wrapper.show-value-as-tags .vscomp-value-tag-clear-button {
 	align-items: center;
 	display: flex;
-	height: 20px;
+	height: 24px;
 	justify-content: center;
-	width: 20px;
+	width: 24px;
 }
 .vscomp-wrapper.show-value-as-tags .vscomp-value-tag-clear-button .vscomp-clear-icon {
 	transform: scale(0.8);
@@ -537,6 +555,14 @@
 .vscomp-wrapper.show-value-as-tags:not(.has-value) .vscomp-value {
 	align-items: center;
 	padding-bottom: 3px;
+}
+@media (prefers-reduced-motion: reduce) {
+	.vscomp-dropbox-container,
+	.vscomp-dropbox,
+	.vscomp-wrapper .vscomp-toggle-button,
+	.vscomp-dropbox-wrapper {
+		transition-duration: 0s !important;
+	}
 }
 .vscomp-wrapper.text-direction-rtl {
 	direction: rtl;
