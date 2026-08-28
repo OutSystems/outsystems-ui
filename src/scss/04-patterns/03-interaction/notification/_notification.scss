@@ -99,11 +99,11 @@
 			}
 
 			&-right {
-				right: calc(var(--os-safe-area-inline-end) + var(--osui-notification-margin));
+				right: calc(var(--os-safe-area-right) + var(--osui-notification-margin));
 				transform: translateX(100%);
 			}
 			&-left {
-				left: calc(var(--os-safe-area-inline-start) + var(--osui-notification-margin));
+				left: calc(var(--os-safe-area-left) + var(--osui-notification-margin));
 				transform: translateX(-100%);
 			}
 		}
@@ -120,11 +120,11 @@
 		}
 
 		&-right {
-			right: calc(var(--os-safe-area-inline-end) + var(--osui-notification-margin));
+			right: calc(var(--os-safe-area-right) + var(--osui-notification-margin));
 			transform: translate(100%, -50%);
 		}
 		&-left {
-			left: calc(var(--os-safe-area-inline-start) + var(--osui-notification-margin));
+			left: calc(var(--os-safe-area-left) + var(--osui-notification-margin));
 			transform: translate(-100%, -50%);
 		}
 
@@ -139,11 +139,11 @@
 			}
 
 			&-right {
-				right: calc(var(--os-safe-area-inline-end) + var(--osui-notification-margin));
+				right: calc(var(--os-safe-area-right) + var(--osui-notification-margin));
 				transform: translateX(100%);
 			}
 			&-left {
-				left: calc(var(--os-safe-area-inline-start) + var(--osui-notification-margin));
+				left: calc(var(--os-safe-area-left) + var(--osui-notification-margin));
 				transform: translateX(-100%);
 			}
 		}

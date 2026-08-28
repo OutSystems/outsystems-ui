@@ -193,8 +193,8 @@
 .ios {
 	.layout-native {
 		.osui-sidebar {
-			padding-block-end: var(--os-safe-area-bottom);
-			padding-block-start: var(--os-safe-area-top);
+			padding-bottom: var(--os-safe-area-bottom);
+			padding-top: var(--os-safe-area-top);
 		}
 	}
 
@@ -202,7 +202,7 @@
 		&.landscape {
 			.layout-native {
 				.osui-sidebar:before {
-					inset-inline-start: calc((var(--os-safe-area-inline-start) + 12px) * -1);
+					left: calc((var(--os-safe-area-left) + 12px) * -1);
 					width: calc(var(--os-safe-area-left) + 12px);
 				}
 			}
@@ -214,7 +214,7 @@
 .landscape {
 	.layout-native {
 		.osui-sidebar {
-			padding-block-end: var(--os-safe-area-bottom);
+			padding-bottom: var(--os-safe-area-bottom);
 		}
 	}
 }

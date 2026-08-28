@@ -78,8 +78,8 @@
 		.header,
 		&:not(.blank) .main-content,
 		.bottom-bar-wrapper {
-			padding-inline-start: var(--os-safe-area-inline-start);
-			padding-inline-end: var(--os-safe-area-inline-end);
+			padding-left: var(--os-safe-area-left);
+			padding-right: var(--os-safe-area-right);
 		}
 	}
 }
@@ -133,6 +133,6 @@
 ///
 .ios {
 	.layout-native .header {
-		padding-block-start: var(--os-safe-area-top);
+		padding-top: var(--os-safe-area-top);
 	}
 }

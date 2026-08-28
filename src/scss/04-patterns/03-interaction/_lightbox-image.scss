@@ -89,8 +89,8 @@
 
 ///
 .pswp__top-bar {
-	padding-inline-start: var(--os-safe-area-inline-start);
-	padding-inline-end: var(--os-safe-area-inline-end);
+	padding-left: var(--os-safe-area-left);
+	padding-right: var(--os-safe-area-right);
 }
 
 // Responsive --------------------------------------------------------------------
@@ -106,12 +106,12 @@
 ///
 .ios {
 	.pswp__top-bar {
-		padding-inline-start: var(--os-safe-area-inline-start);
-		padding-inline-end: var(--os-safe-area-inline-end);
+		padding-left: var(--os-safe-area-left);
+		padding-right: var(--os-safe-area-right);
 		top: var(--os-safe-area-top);
 
 		.pswp__counter {
-			inset-inline-start: var(--os-safe-area-inline-start);
+			left: var(--os-safe-area-left);
 		}
 	}
 }
@@ -119,7 +119,7 @@
 ///
 .phone {
 	.pswp__caption__center {
-		padding-block-end: calc(var(--os-safe-area-bottom) + 10px); // design-spec: 10px caption offset
+		padding-bottom: calc(var(--os-safe-area-bottom) + 10px); // design-spec: 10px caption offset
 	}
 }
 

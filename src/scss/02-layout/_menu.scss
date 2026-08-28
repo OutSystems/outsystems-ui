@@ -200,8 +200,8 @@
 ///
 .phone {
 	.app-menu-content {
-		padding-block-end: var(--os-safe-area-bottom);
-		padding-inline-start: var(--os-safe-area-inline-start);
+		padding-bottom: var(--os-safe-area-bottom);
+		padding-left: var(--os-safe-area-left);
 	}
 }
 
@@ -215,8 +215,8 @@
 
 	&.landscape {
 		.app-menu-content {
-			padding-inline-start: max(var(--os-safe-area-inline-start), var(--safe-area-status-bar, 0px));
-			padding-inline-end: max(var(--os-safe-area-inline-end), 0px);
+			padding-left: max(var(--os-safe-area-left), var(--safe-area-status-bar, 0px));
+			padding-right: max(var(--os-safe-area-right), 0px);
 			padding-block-start: var(--safe-area-inset-top, 0px);
 			padding-block-end: var(--safe-area-inset-bottom, 0px);
 		}
@@ -226,8 +226,8 @@
 ///
 .ios {
 	.app-menu-content {
-		padding-block-end: var(--os-safe-area-bottom);
-		padding-block-start: var(--os-safe-area-top);
+		padding-bottom: var(--os-safe-area-bottom);
+		padding-top: var(--os-safe-area-top);
 	}
 }
 

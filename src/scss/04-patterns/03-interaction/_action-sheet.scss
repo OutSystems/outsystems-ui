@@ -20,9 +20,9 @@
 	bottom: 0;
 	inset-inline-start: 0;
 	margin-block-start: 0;
-	padding-block-end: calc(var(--os-safe-area-bottom) + variables.$token-scale-400);
-	padding-inline-start: calc(var(--os-safe-area-inline-start) + variables.$token-scale-400);
-	padding-inline-end: calc(var(--os-safe-area-inline-end) + variables.$token-scale-400);
+	padding-bottom: calc(var(--os-safe-area-bottom) + variables.$token-scale-400);
+	padding-left: calc(var(--os-safe-area-left) + variables.$token-scale-400);
+	padding-right: calc(var(--os-safe-area-right) + variables.$token-scale-400);
 	padding-block-start: variables.$token-scale-400;
 	pointer-events: auto;
 	position: absolute;

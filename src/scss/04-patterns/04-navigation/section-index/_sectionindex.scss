@@ -145,13 +145,26 @@
 .phone {
 	.osui-section-index {
 		&--is-sticky {
-			inset-inline-start: calc(var(--os-safe-area-right) + variables.$token-scale-400);
+			left: calc(var(--os-safe-area-right) + variables.$token-scale-400);
 			padding-block: 0;
 			padding-inline-end: variables.$token-scale-400;
 			padding-inline-start: 0;
 			position: fixed;
 			top: var(--top-position);
 			z-index: var(--layer-local-tier-1);
+		}
+	}
+
+	// IsRTL -----------------------------------------------------------------
+	/// Anchored off `env(safe-area-inset-right)`, which is physical and has no logical
+	/// form — so the mirror stays a physical override.
+	.is-rtl {
+		.osui-section-index {
+			&--is-sticky {
+				left: initial;
+				right: calc(var(--os-safe-area-right) + variables.$token-scale-400);
+				padding: 0 0 variables.$token-scale-400 0;
+			}
 		}
 	}
 }

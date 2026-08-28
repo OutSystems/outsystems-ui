@@ -303,12 +303,12 @@
 	.floating-content {
 		&-top-left,
 		&-left {
-			inset-inline-start: var(--os-safe-area-inline-start);
+			left: var(--os-safe-area-left);
 		}
 
 		&-top-right,
 		&-right {
-			inset-inline-end: var(--os-safe-area-inline-end);
+			right: var(--os-safe-area-right);
 		}
 
 		&-bottom {
@@ -316,12 +316,12 @@
 
 			&-left {
 				bottom: var(--os-safe-area-bottom);
-				inset-inline-start: var(--os-safe-area-inline-start);
+				left: var(--os-safe-area-left);
 			}
 
 			&-right {
 				bottom: var(--os-safe-area-bottom);
-				inset-inline-end: var(--os-safe-area-inline-end);
+				right: var(--os-safe-area-right);
 			}
 		}
 	}

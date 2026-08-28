@@ -187,7 +187,6 @@ comment saying why.
 | `border-start-start-radius` … | `border-top-left-radius` … |
 | `inset-inline-start` / `-end` | `left` / `right` |
 | `text-align: start` / `end` | `text-align: left` / `right` |
-| `var(--os-safe-area-inline-start)` | `var(--os-safe-area-left)` |
 
 Corollaries:
 
@@ -233,8 +232,9 @@ Scrollable Area are the two kept for this reason.
 `transform` (`translateX`, `scaleX`, `rotate`), `transform-origin`, `box-shadow` /
 `text-shadow` offsets, `background-position`, `linear-gradient(to right)`,
 `flex-direction: row-reverse`, `float` (the logical keywords need Chrome 118 / Safari 16.4),
-positional `top` / `bottom`, `env(safe-area-inset-*)`, everything `-servicestudio-*`, and
-the vendor baselines.
+positional `top` / `bottom`, **every declaration reading a `--os-safe-area-*` var** (the
+value is a physical `env()`, so a logical property would flip the side but not the value),
+everything `-servicestudio-*`, and the vendor baselines.
 
 ### Direction-pinned subtrees
 

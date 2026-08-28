@@ -163,7 +163,7 @@
 		max-height: var(--bottom-sheet-max-height);
 		overflow-y: scroll;
 		padding: var(--osui-bottom-sheet-padding);
-		padding-block-end: calc(var(--size-bottom-bar) + variables.$token-scale-600 + var(--os-safe-area-bottom));
+		padding-bottom: calc(var(--size-bottom-bar) + variables.$token-scale-600 + var(--os-safe-area-bottom));
 	}
 }
 
@@ -185,8 +185,8 @@
 .landscape {
 	.osui-bottom-sheet__header__top-bar,
 	.osui-bottom-sheet__content {
-		padding-inline-end: calc(variables.$token-scale-400 + var(--os-safe-area-inline-end));
-		padding-inline-start: calc(variables.$token-scale-400 + var(--os-safe-area-inline-start));
+		padding-right: calc(variables.$token-scale-400 + var(--os-safe-area-right));
+		padding-left: calc(variables.$token-scale-400 + var(--os-safe-area-left));
 	}
 }
 

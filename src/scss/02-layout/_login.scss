@@ -38,9 +38,8 @@
 	.login {
 		&-screen {
 			background-color: var(--background-color-login, var(--color-background-login));
-			padding-block: var(--os-safe-area-top) var(--os-safe-area-bottom);
-			padding-inline-end: var(--os-safe-area-inline-end);
-			padding-inline-start: var(--os-safe-area-inline-start);
+			padding: var(--os-safe-area-top) var(--os-safe-area-right) var(--os-safe-area-bottom)
+				var(--os-safe-area-left);
 		}
 
 		&-form {
@@ -88,7 +87,7 @@
 			}
 
 			&-button .btn {
-				padding-block-end: var(--os-safe-area-bottom);
+				padding-bottom: var(--os-safe-area-bottom);
 			}
 		}
 

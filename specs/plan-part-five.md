@@ -73,7 +73,8 @@ corner radii: Chrome 89 · Safari 15 · FF 66) — below anything OSUI 2.x suppo
 - **Properties with no logical form:** `transform` (`translateX`, `scaleX`, `rotate`),
   `transform-origin`, `box-shadow` / `text-shadow` offsets, `background-position`,
   `linear-gradient(to right)`, `flex-direction: row-reverse`, `float` (D4),
-  `env(safe-area-inset-left|right)` (D5). These keep their `.is-rtl` rules.
+  and every declaration reading a `--os-safe-area-*` var (D5). These keep their
+  `.is-rtl` rules.
 - **Vendor-owned geometry.** Where a provider mirrors itself (Splide's `--ltr` / `--rtl`,
   VirtualSelect's `text-direction-rtl`), follow the provider rather than fight it.
 
@@ -125,10 +126,10 @@ Plus, by hand:
 
 - **`_card-sectioned.scss`** — the six 4-value shorthand custom properties became twelve
   `…-padding-block` / `…-padding-inline` pairs, and its `.is-rtl` block went with them.
-- **Safe areas (D5)** — `--os-safe-area-inline-start` / `-inline-end` added to `_root.scss`
-  and swapped under `.is-rtl`; **42** consumers now read the logical pair. Four reads of
-  the physical vars remain, each a pre-existing mismatch (a `right` safe area used for a
-  `top` offset, and similar) left exactly as it was.
+- **Safe areas — deliberately untouched (D5).** Every declaration reading a
+  `--os-safe-area-*` var keeps both its physical property and its physical var, and the
+  `.is-rtl` rules that mirror them stay. `env()` has no logical form, so a logical property
+  reading it would flip the side without flipping the value.
 - **Utility loops** — `$osui-box-sides` became a physical-name → logical-side map, so
   `.margin-left-s`, `.padding-top-m` and `.border-left-s` keep their public class names but
   emit `margin-inline-start`, `padding-block-start`, `border-inline-start`.
@@ -148,8 +149,8 @@ Both bundles were compiled before and after and compared with a normaliser that 
 logical properties back to physical LTR longhands:
 
 - **LTR: zero value differences** on ODC and O11. Every remaining textual difference is a
-  custom-property rename (`--os-safe-area-left` → `--os-safe-area-inline-start`, the
-  card-sectioned split, the sidebar rename) or a newly added rule — no computed value moved.
+  custom-property rename (the card-sectioned split, the sidebar rename) or a newly added
+  rule — no computed value moved.
 - `npx gulp createProduction --target` builds both platforms clean.
 - stylelint: net **zero** new violations (26 ordering violations introduced by the renamed
   properties were re-sorted away). Note the repo's stylelint 14 setup has no
@@ -172,8 +173,8 @@ logical properties back to physical LTR longhands:
 | `rotateY` | `_flipcontent.scss` |
 | `float` — kept physical per D4 | `_list-item-content.scss` |
 | vendor quirk / unrelated | `_rangeslider.scss`, `_resets.scss` (`.is-rtl-device`), `_popover.scss` (`display: inline`, still unexplained), `_submenu.scss` (two `background-color`) |
+| anchored off a `--os-safe-area-*` var (D5) | `section-index/_sectionindex.scss` |
 | **documented exception** — direction-pinned Flatpickr calendar | `date-picker/provider/_flatpickr.scss` |
-| new — the safe-area inline remap (D5) | `_root.scss` |
 
 ---
 
@@ -210,14 +211,18 @@ pins exist:
 to the RTL rule starts winning once it is gone. Check components with app-level override
 hooks — Header, Menu, Table — after each deletion.
 
-### 6.4 Safe areas cannot be expressed logically — D5
+### 6.4 Safe areas stay physical, end to end — D5
 
-`env(safe-area-inset-left|right)` is physical and has no logical form.
-`--os-safe-area-left` / `-right` (`_root.scss:104-106`) are read physically in 9 places
-(Menu, Header-native, ThemeGrid, Login, Floating Content, Sidebar, Section Index). Declare
-`--os-safe-area-inline-start` / `-inline-end` at `:root`, swap the pair once under
-`.is-rtl`, and have components read only the logical names. One three-line rule then
-replaces every physical safe-area mirror.
+`env(safe-area-inset-*)` is physical and has no logical form, and
+`--os-safe-area-top/right/bottom/left` (`_root.scss`) carry those values. A logical
+property reading one of them is the §6.5 mismatch in another guise: `padding-inline-start:
+var(--os-safe-area-left)` flips to the right edge in RTL while still spending the *left*
+inset.
+
+So the whole safe-area surface is out of scope: the vars keep their physical names, the
+**44** declarations that read them keep their physical properties, and the `.is-rtl` rules
+that mirror them — Section Index's sticky rail — stay. This is settled, sensible code; it
+is not what the ticket is about.
 
 ### 6.5 A logical inset must never meet a physical x-transform
 
@@ -320,7 +325,7 @@ Everything below is intentional; LTR is untouched in all cases.
 | D2 | Convert `text-align: left/right`? | Yes (9 base + 4 RTL) | Trivial, and it is what blocks `_table.scss` and `_text.scss` from REMOVE |
 | D3 | Convert `*-top` / `*-bottom`? | Yes for `padding`/`margin`/`border` (185); **no** for positional `top`/`bottom` insets (218) | The ticket says "inline/block"; a half-logical box model is worse than a fully logical one. `inset-inline-start` next to `top` is idiomatic, so insets stay physical |
 | D4 | `float: inline-start`? | No — keep physical, or replace the float with flex | Chrome 118 / Safari 16.4 is the only support floor above our baseline. 2 declarations, `_list-item-content.scss` |
-| D5 | Safe areas | Add `--os-safe-area-inline-start` / `-inline-end`, swapped once under `.is-rtl` | `env()` is physical; a variable remap keeps the theme invariant intact |
+| D5 | Safe areas | Out of scope — vars, properties and `.is-rtl` mirrors all left as they are | `env()` is physical, so a logical property reading it flips the side but not the value. Existing code already handles this correctly |
 | D6 | `border-radius` shorthands | Convert only when inline-asymmetric | `8px 8px 0 0` mirrors to itself |
 | D7 | Component CSS API naming | Axis suffixes (`-inline`, `-block`, `-inline-start`); no `-x` / `-y` / `-left` / `-right` | Mirror-correct by construction. Renames are breaking for apps setting them directly, so batch them in one PR and document them |
 | D8 | Vendor baselines | Never edited; mirror from the override file, lifting a `direction` pin there when needed | Existing rule (`.claude/rules/scss.md` §10) |

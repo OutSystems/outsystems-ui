@@ -57,21 +57,21 @@
 .phone {
 	.header {
 		.ThemeGrid_Container {
-			padding-inline-end: calc(var(--os-safe-area-inline-end) + variables.$token-scale-400);
-			padding-inline-start: calc(var(--os-safe-area-inline-start) + variables.$token-scale-400);
+			padding-right: calc(var(--os-safe-area-right) + variables.$token-scale-400);
+			padding-left: calc(var(--os-safe-area-left) + variables.$token-scale-400);
 		}
 	}
 
 	.main-content.ThemeGrid_Container {
 		padding-block-end: variables.$token-scale-400;
 		padding-block-start: variables.$token-scale-400;
-		padding-inline-end: calc(var(--os-safe-area-inline-end) + variables.$token-scale-400);
-		padding-inline-start: calc(var(--os-safe-area-inline-start) + variables.$token-scale-400);
+		padding-right: calc(var(--os-safe-area-right) + variables.$token-scale-400);
+		padding-left: calc(var(--os-safe-area-left) + variables.$token-scale-400);
 	}
 
 	.footer.ThemeGrid_Container {
-		padding-inline-end: calc(var(--os-safe-area-inline-end) + variables.$token-scale-400);
-		padding-inline-start: calc(var(--os-safe-area-inline-start) + variables.$token-scale-400);
+		padding-right: calc(var(--os-safe-area-right) + variables.$token-scale-400);
+		padding-left: calc(var(--os-safe-area-left) + variables.$token-scale-400);
 	}
 }
 

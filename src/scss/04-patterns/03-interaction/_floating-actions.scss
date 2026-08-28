@@ -214,7 +214,7 @@
 		&.portrait {
 			.layout-native {
 				.floating-actions-wrapper {
-					margin-block-end: var(--os-safe-area-bottom);
+					margin-bottom: var(--os-safe-area-bottom);
 				}
 			}
 		}
@@ -222,7 +222,7 @@
 		&.landscape {
 			.layout-native {
 				.floating-actions-wrapper {
-					margin-inline-end: calc(var(--os-safe-area-inline-end) + variables.$token-scale-400);
+					margin-right: calc(var(--os-safe-area-right) + variables.$token-scale-400);
 				}
 			}
 		}

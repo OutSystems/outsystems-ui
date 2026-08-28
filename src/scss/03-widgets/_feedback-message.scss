@@ -90,7 +90,7 @@ div.feedback-message-warning {
 
 	&.ios {
 		.feedback-message {
-			padding-block-start: calc(var(--os-safe-area-top) + variables.$token-scale-400);
+			padding-top: calc(var(--os-safe-area-top) + variables.$token-scale-400);
 		}
 	}
 }

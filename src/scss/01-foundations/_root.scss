@@ -104,10 +104,6 @@
 	--os-safe-area-right: #{safe-area(right)};
 	--os-safe-area-bottom: #{safe-area(bottom)};
 	--os-safe-area-left: #{safe-area(left)};
-	// env() is physical and has no logical form, so the inline pair is remapped by
-	// direction below. Components read only these two, never -left / -right.
-	--os-safe-area-inline-start: var(--os-safe-area-left);
-	--os-safe-area-inline-end: var(--os-safe-area-right);
 
 	// ─── Theme layer · z-index system ────────────────────────────────────
 	--layer-system-scale: 100;
@@ -132,13 +128,4 @@
 	--osui-popup-layer: var(--layer-global-off-canvas);
 	--osui-sidebar-layer: var(--layer-global-off-canvas);
 	--osui-menu-layer: calc(var(--layer-global-navigation) + var(--layer-local-tier-2));
-}
-
-/* ============================================================================ */
-/* Safe areas · inline axis follows the reading direction                       */
-/* ============================================================================ */
-///
-.is-rtl {
-	--os-safe-area-inline-start: var(--os-safe-area-right);
-	--os-safe-area-inline-end: var(--os-safe-area-left);
 }

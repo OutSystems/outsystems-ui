@@ -37,7 +37,7 @@
 			&.layout-side {
 				&.aside-expandable {
 					.app-menu-content {
-						padding-block-start: calc(var(--size-header) + var(--size-header-content) + var(--os-safe-area-top));
+						padding-top: calc(var(--size-header) + var(--size-header-content) + var(--os-safe-area-top));
 					}
 
 					&.hide-header-on-scroll:not(.header-is--visible) {
@@ -103,7 +103,7 @@
 			&.layout-side {
 				&.aside-expandable {
 					.app-menu-content {
-						padding-block-start: calc(var(--size-header) + var(--size-header-content) + var(--os-safe-area-top));
+						padding-top: calc(var(--size-header) + var(--size-header-content) + var(--os-safe-area-top));
 					}
 				}
 			}

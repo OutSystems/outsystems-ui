@@ -68,7 +68,7 @@
 			width: calc(100% - var(--left-percentage));
 
 			.split-right-close {
-				inset-inline-start: calc(var(--os-safe-area-inline-start) + variables.$token-scale-600);
+				left: calc(var(--os-safe-area-left) + variables.$token-scale-600);
 				position: fixed;
 				top: calc(var(--os-safe-area-right) + (var(--size-header) + var(--token-scale-600, 24px)) / 2);
 				z-index: var(--layer-global-screen);
@@ -105,7 +105,7 @@
 ///
 .layout-native {
 	.split-right-close {
-		inset-inline-start: calc(var(--os-safe-area-inline-start) + variables.$token-scale-600);
+		left: calc(var(--os-safe-area-left) + variables.$token-scale-600);
 	}
 }
 
@@ -155,10 +155,10 @@
 				border-inline-start: variables.$token-border-size-0;
 				height: 100%;
 				left: 0;
-				padding-block-end: calc(var(--os-safe-area-bottom) + variables.$token-scale-600);
-				padding-inline-start: calc(var(--os-safe-area-inline-start) + variables.$token-scale-600);
-				padding-inline-end: calc(var(--os-safe-area-inline-end) + variables.$token-scale-600);
-				padding-block-start: calc(var(--os-safe-area-right) + var(--size-header) + var(--token-scale-600, 24px));
+				padding-bottom: calc(var(--os-safe-area-bottom) + variables.$token-scale-600);
+				padding-left: calc(var(--os-safe-area-left) + variables.$token-scale-600);
+				padding-right: calc(var(--os-safe-area-right) + variables.$token-scale-600);
+				padding-top: calc(var(--os-safe-area-right) + var(--size-header) + var(--token-scale-600, 24px));
 				position: fixed;
 				top: 0;
 				transform: translateX(100%) translateZ(0);
@@ -183,14 +183,14 @@
 
 	.layout-native {
 		.split-right {
-			padding-block-end: calc(var(--os-safe-area-bottom) + variables.$token-scale-400);
-			padding-inline-start: calc(var(--os-safe-area-inline-start) + variables.$token-scale-400);
-			padding-inline-end: calc(var(--os-safe-area-inline-end) + variables.$token-scale-400);
-			padding-block-start: calc(var(--size-header) + var(--os-safe-area-top));
+			padding-bottom: calc(var(--os-safe-area-bottom) + variables.$token-scale-400);
+			padding-left: calc(var(--os-safe-area-left) + variables.$token-scale-400);
+			padding-right: calc(var(--os-safe-area-right) + variables.$token-scale-400);
+			padding-top: calc(var(--size-header) + var(--os-safe-area-top));
 
 			.split-right-close {
 				display: block;
-				inset-inline-start: calc(var(--os-safe-area-inline-start) + variables.$token-scale-400);
+				left: calc(var(--os-safe-area-left) + variables.$token-scale-400);
 			}
 		}
 	}
