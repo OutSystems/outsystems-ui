@@ -11,10 +11,6 @@ on:
                 description: 'Update pre-release into latest.'
                 type: boolean
                 default: true
-            delete-rc-branch:
-                description: 'Delete rc* branch at the end of process.'
-                type: boolean
-                default: true
 
 permissions:
     contents: read
@@ -31,7 +27,6 @@ jobs:
         with:
             new-version: ${{ inputs.new-version }}
             update-prerelease-into-latest: ${{ inputs.update-prerelease-into-latest }}
-            delete-rc-branch: ${{ inputs.delete-rc-branch }}
         secrets:
             OSUI_AZURE_CLIENT_ID: ${{ secrets.OSUI_AZURE_CLIENT_ID }}
             OSUI_AZURE_TENANT_ID: ${{ secrets.OSUI_AZURE_TENANT_ID }}

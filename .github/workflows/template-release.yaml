@@ -19,7 +19,6 @@
 #         with:
 #             new-version: ${{ inputs.new-version }}
 #             update-prerelease-into-latest: true
-#             delete-rc-branch: true
 #
 # ======================================================================
 #
@@ -34,10 +33,6 @@ on:
                 required: true
             update-prerelease-into-latest:
                 description: 'Update pre-release into latest.'
-                type: boolean
-                default: true
-            delete-rc-branch:
-                description: 'Delete rc* branch at the end of process.'
                 type: boolean
                 default: true
         secrets:
@@ -66,7 +61,7 @@ jobs:
                   ref: rc${{ inputs.new-version }}
 
             - name: 📦 Setup Node
-              uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
+              uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
               with:
                   node-version: 24
 
@@ -87,9 +82,6 @@ jobs:
 
         if: ${{ inputs.new-version }}
         steps:
-            - name: 📥 Checkout repository
-              uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
-
             - name: 🔐 Azure login
               #uses: OutSystems/rd.github-reusable-workflows/.github/actions/az-login@9d497d1c5bc6e355aa8f4663539e6b75c212f6b4 #v2.0.7
               uses: ./.github/actions/az-login
@@ -135,12 +127,7 @@ jobs:
                       --base "${BASE_BRANCH}" \
                       --head "${SOURCE_BRANCH}" \
                       --title "${PR_TITLE}" \
-                      --body "$(cat <<EOF
-                  This PR merges ${SOURCE_BRANCH} into ${BASE_BRANCH}.
-
-                  This PR was automatically created by the Release workflow.
-                  EOF
-                  )" \
+                      --body "$(printf 'This PR merges %s into %s.\n\nThis PR was automatically created by the Release workflow.\n' "${SOURCE_BRANCH}" "${BASE_BRANCH}")" \
                       --json number \
                       --jq .number)
                   fi
@@ -156,9 +143,6 @@ jobs:
             contents: read
 
         steps:
-            - name: 📥 Checkout repository
-              uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
-
             - name: 🔐 Azure login
               #uses: OutSystems/rd.github-reusable-workflows/.github/actions/az-login@9d497d1c5bc6e355aa8f4663539e6b75c212f6b4 #v2.0.7
               uses: ./.github/actions/az-login
@@ -182,22 +166,4 @@ jobs:
                   prerelease: false
                   token: ${{ steps.get-github-token.outputs.az-keyvault-value }}
                   make_latest: true
-
-    delete-rc-branch:
-        name: Delete rc branch
-        needs: merge-rc-into-main
-        runs-on: ubuntu-latest
-        permissions:
-            contents: write
-
-        if: ${{ inputs.delete-rc-branch == true }}
-        steps:
-            - name: 📥 Checkout branch dev
-              uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
-              with:
-                  ref: dev
-
-            - name: 🗑️ Delete branch rc${{ inputs.new-version }}
-              shell: bash
-              run: |
-                  git push origin -d rc${{ inputs.new-version }}
+                  token: ${{ steps.get-github-token.outputs.az-keyvault-value }}
