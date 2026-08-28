@@ -126,16 +126,15 @@ jobs:
                     --jq '.[0].number // empty')
 
                   if [ -z "${PR_NUMBER}" ]; then
-                    PR_NUMBER=$(gh pr create \
+                    PR_URL=$(gh pr create \
                       --base "${BASE_BRANCH}" \
                       --head "${SOURCE_BRANCH}" \
                       --title "${PR_TITLE}" \
-                      --body "$(printf 'This PR merges %s into %s.\n\nThis PR was automatically created by the Release workflow.\n' "${SOURCE_BRANCH}" "${BASE_BRANCH}")" \
-                      --json number \
-                      --jq .number)
+                      --body "$(printf 'This PR merges %s into %s.\n\nThis PR was automatically created by the Release workflow.\n' "${SOURCE_BRANCH}" "${BASE_BRANCH}")")
+                    echo "Release PR: ${PR_URL}"
+                  else
+                    echo "Release PR: https://github.com/${{ github.repository }}/pull/${PR_NUMBER}"
                   fi
-
-                  echo "Release PR: https://github.com/${{ github.repository }}/pull/${PR_NUMBER}"
 
     set-pre-release-as-lts:
         name: Set pre-release as LTS
