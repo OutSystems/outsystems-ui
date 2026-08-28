@@ -48,6 +48,34 @@ body,
 			}
 		}
 
+		&-side-no-header {
+			// ─── Component CSS API ─────────────────────────────────────────────
+			--osui-layout-main-padding: #{variables.$token-space-1000};
+			--osui-layout-aside-lines: #{variables.$token-border-size-025} solid #{variables.$token-border-subtle};
+			// ───────────────────────────────────────────────────────────────────
+
+			.main-content {
+				padding: var(--osui-layout-main-padding);
+			}
+
+			.app-menu-content {
+				border-inline-end: var(--osui-layout-aside-lines);
+			}
+
+			.app-menu-links {
+				gap: variables.$token-space-200;
+			}
+
+			.app-login-info {
+				border-block-start: var(--osui-layout-aside-lines);
+			}
+
+			.menu-icon {
+				margin-block: variables.$token-space-400;
+				margin-inline: variables.$token-space-600;
+			}
+		}
+
 		&-native {
 			// Service Studio Preview
 			& {
@@ -177,6 +205,10 @@ body,
 .phone {
 	.layout-side .main {
 		margin-inline-start: 0;
+	}
+
+	.layout-side-no-header {
+		--osui-layout-main-padding: 0 #{variables.$token-space-600} #{variables.$token-space-600};
 	}
 }
 

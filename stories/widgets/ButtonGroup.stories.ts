@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
-import { renderPattern } from '../_helpers/osui';
+import { renderPattern, renderStatic } from '../_helpers/osui';
 
 /**
  * Button Group — the OutSystems platform **widget**, transcribed to static markup
@@ -10,43 +10,35 @@ import { renderPattern } from '../_helpers/osui';
  *     > `div`                              ← the widget's own inner wrapper
  *       > `button[data-button-group-item].button-group-item[role=radio][aria-checked]`
  *
- * The selected item additionally carries `.button-group-selected-item`. The
- * `tabindex` values are the widget's roving-tabindex output, reproduced as
- * emitted (it emits `0` for the first two items and `-1` for the third — a
- * widget quirk, not a transcription slip).
- *
- * Selection is re-wired below. Transcribing the DOM removes the React component
- * but not the need to *use* the control: the widget's visible state change on
- * click is two class/attribute mutations, so the story performs exactly those
- * and nothing else — no state model, no re-render. `tabindex` is deliberately
- * left alone, so what you see at rest stays byte-identical to the capture — which
- * is also what Chromatic snapshots, since it photographs the initial render.
+ * v3.0.0 visual contract: Figma node 20015249:20 — pill items on a neutral subtle
+ * track; selected item is white with a default border, not primary-filled.
  *
  * CSS contract: src/scss/03-widgets/_button-group.scss, plus the flex layout the
  * platform base layer puts on `[data-button-group] > div`.
  */
-const meta: Meta = { title: 'Widgets/ButtonGroup' };
+const meta: Meta = {
+	title: 'Widgets/ButtonGroup',
+	tags: ['!ui-pending', 'ui-reviewed'],
+};
 export default meta;
 type Story = StoryObj;
 
-const item = (label: string, selected: boolean, tabindex: number) =>
+const item = (label: string, selected: boolean, disabled = false, tabindex = 0) =>
 	`<button data-button-group-item="" class="button-group-item${selected ? ' button-group-selected-item' : ''}"
-		aria-checked="${selected}" role="radio" tabindex="${tabindex}">${label}</button>`;
+		aria-checked="${selected}" role="radio" tabindex="${tabindex}"${disabled ? ' disabled=""' : ''}>${label}</button>`;
 
-const template = `
-	<div data-button-group="" class="button-group" role="radiogroup">
-		<div>
-			${item('Day', false, 0)}
-			${item('Week', true, 0)}
-			${item('Month', false, -1)}
-		</div>
+const group = (items: string, extraClass = '') =>
+	`<div data-button-group="" class="button-group${extraClass ? ` ${extraClass}` : ''}" role="radiogroup">
+		<div>${items}</div>
 	</div>`;
+
+const sixItems = (selectedIndex: number, disabled = false) =>
+	Array.from({ length: 6 }, (_, i) => item('Button', i === selectedIndex, disabled, i === 0 ? 0 : -1)).join('');
 
 export const Default: Story = {
 	render: () =>
-		renderPattern(template, (root) => {
+		renderPattern(group(item('Day', false) + item('Week', true) + item('Month', false)), (root) => {
 			const items = [...root.querySelectorAll<HTMLElement>('[data-button-group-item]')];
-			// The two mutations the widget makes when a different item wins selection.
 			const select = (chosen: HTMLElement): void => {
 				for (const el of items) {
 					const isChosen = el === chosen;
@@ -54,9 +46,24 @@ export const Default: Story = {
 					el.setAttribute('aria-checked', String(isChosen));
 				}
 			};
-			// `<button>` already fires click for Enter/Space, so keyboard works for free.
 			for (const el of items) {
 				el.addEventListener('click', () => select(el));
 			}
 		}),
+};
+
+export const States: Story = {
+	render: () =>
+		renderStatic(`
+			<div style="display:flex;flex-direction:column;gap:16px;">
+				${group(sixItems(0))}
+				${group(sixItems(2))}
+				${group(sixItems(5))}
+				${group(item('Only', true))}
+				${group(
+					item('Enabled', false) +
+						item('Selected disabled', true, true) +
+						item('Disabled', false, true),
+				)}
+			</div>`),
 };

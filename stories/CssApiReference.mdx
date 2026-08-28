@@ -46,11 +46,11 @@ _File: `src/scss/03-widgets/_btn.scss`_
 | Property | Default |
 |---|---|
 | `--osui-btn-height` | `#{$token-scale-1000}` |
-| `--osui-btn-background` | `#{$token-bg-neutral-bold-default}` |
-| `--osui-btn-color` | `var(--color-text-inverse)` |
-| `--osui-btn-border-color` | `#{$token-bg-neutral-bold-default}` |
-| `--osui-btn-hover-background` | `#{$token-bg-neutral-bold-hover}` |
-| `--osui-btn-active-background` | `#{$token-bg-neutral-bold-press}` |
+| `--osui-btn-background` | `var(--color-background-surface)` |
+| `--osui-btn-color` | `var(--color-text-subtle)` |
+| `--osui-btn-border-color` | `var(--color-border)` |
+| `--osui-btn-hover-background` | `#{$token-bg-neutral-subtlest-hover}` |
+| `--osui-btn-active-background` | `#{$token-bg-neutral-subtlest-press}` |
 | `--osui-btn-border-width` | `#{$token-border-size-025}` |
 | `--osui-btn-border-radius` | `var(--border-radius-soft)` |
 | `--osui-btn-disabled-overlay` | `#{$token-state-disabled}` |
@@ -79,11 +79,25 @@ _File: `src/scss/03-widgets/_button-group.scss`_
 
 | Property | Default |
 |---|---|
-| `--osui-button-group-background` | `var(--color-background-surface)` |
-| `--osui-button-group-border-color` | `var(--color-border)` |
+| `--osui-button-group-container-background` | `#{$token-bg-neutral-subtle-default}` |
+| `--osui-button-group-container-padding` | `#{$token-scale-100}` |
+| `--osui-button-group-container-gap` | `#{$token-scale-200}` |
+| `--osui-button-group-container-border-radius` | `#{$token-border-radius-200}` |
+| `--osui-button-group-background` | `transparent` |
+| `--osui-button-group-border-color` | `transparent` |
+| `--osui-button-group-border-width` | `#{$token-border-size-025}` |
 | `--osui-button-group-color` | `var(--color-text-subtle)` |
+| `--osui-button-group-border-radius` | `#{$token-border-radius-200}` |
+| `--osui-button-group-font-size` | `#{$token-font-size-300}` |
+| `--osui-button-group-height` | `#{$token-scale-800}` |
+| `--osui-button-group-min-width` | `#{$token-scale-1200}` |
+| `--osui-button-group-padding-inline` | `#{$token-scale-200}` |
+| `--osui-button-group-selected-background` | `#{$token-bg-neutral-subtlest-default}` |
+| `--osui-button-group-selected-border-color` | `#{$token-border-default}` |
+| `--osui-button-group-selected-color` | `var(--color-text-subtle)` |
+| `--osui-button-group-hover-background` | `#{$token-bg-neutral-subtlest-press}` |
+| `--osui-button-group-disabled-color` | `#{$token-text-disabled}` |
 | `--osui-button-group-disabled-overlay` | `#{$token-state-disabled}` |
-| `--osui-button-group-min-height` | `#{$token-scale-1000}` |
 
 ### Checkbox (`[data-checkbox]`)
 _File: `src/scss/03-widgets/_checkbox.scss`_
@@ -316,7 +330,7 @@ _File: `src/scss/04-patterns/02-content/_alert.scss`_
 | `--osui-alert-background` | `transparent` |
 | `--osui-alert-color` | `var(--color-text)` |
 | `--osui-alert-accent-color` | `var(--color-border)` |
-| `--osui-alert-border-radius` | `var(--border-radius-rounded)` |
+| `--osui-alert-border-radius` | `#{$token-border-radius-300}` |
 | `--osui-alert-padding` | `#{$token-scale-300} #{$token-scale-400}` |
 
 ### Blank Slate (`.blank-slate`)
@@ -421,7 +435,7 @@ _File: `src/scss/04-patterns/02-content/accordion-item/_accordion-item.scss`_
 | `--osui-accordion-item-border-color` | `var(--color-border-subtle)` |
 | `--osui-accordion-item-border-width` | `#{$token-border-size-025}` |
 | `--osui-accordion-item-border-radius` | `#{$token-border-radius-100}` |
-| `--osui-accordion-item-color` | `var(--color-text)` |
+| `--osui-accordion-item-color` | `var(--color-text-subtle)` |
 | `--osui-accordion-item-active-indicator-color` | `var(--color-primary)` |
 | `--osui-accordion-item-icon-color` | `#{$token-icon-subtle}` |
 | `--osui-accordion-item-title-hover-background` | `#{$token-bg-neutral-subtlest-hover}` |
@@ -1079,4 +1093,4 @@ _File: `src/scss/01-foundations/_root.scss`_
 
 ---
 
-<sub>529 properties across 80 components, generated from `src/scss`.</sub>
+<sub>543 properties across 80 components, generated from `src/scss`.</sub>
