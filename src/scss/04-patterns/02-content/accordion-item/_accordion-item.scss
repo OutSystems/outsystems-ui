@@ -17,7 +17,7 @@
 	--osui-accordion-item-border-color: var(--color-border-subtle);
 	--osui-accordion-item-border-width: #{variables.$token-border-size-025};
 	--osui-accordion-item-border-radius: #{variables.$token-border-radius-100};
-	--osui-accordion-item-color: var(--color-text);
+	--osui-accordion-item-color: var(--color-text-subtle);
 	--osui-accordion-item-active-indicator-color: var(--color-primary);
 	--osui-accordion-item-icon-color: #{variables.$token-icon-subtle};
 	--osui-accordion-item-title-hover-background: #{variables.$token-bg-neutral-subtlest-hover};
@@ -105,7 +105,7 @@
 		font-size: variables.$token-font-size-400;
 		gap: variables.$token-scale-200;
 		justify-content: space-between;
-		line-height: 1;
+		line-height: variables.$token-font-line-height-600;
 		padding: variables.$token-scale-300 variables.$token-scale-600;
 		width: 100%;
 
