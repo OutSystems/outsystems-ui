@@ -19,7 +19,6 @@
 #         with:
 #             new-version: ${{ inputs.new-version }}
 #             update-prerelease-into-latest: true
-#             delete-rc-branch: true
 #
 # ======================================================================
 #
@@ -34,10 +33,6 @@ on:
                 required: true
             update-prerelease-into-latest:
                 description: 'Update pre-release into latest.'
-                type: boolean
-                default: true
-            delete-rc-branch:
-                description: 'Delete rc* branch at the end of process.'
                 type: boolean
                 default: true
         secrets:
@@ -66,7 +61,7 @@ jobs:
                   ref: rc${{ inputs.new-version }}
 
             - name: 📦 Setup Node
-              uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
+              uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
               with:
                   node-version: 24
 
@@ -83,12 +78,10 @@ jobs:
         permissions:
             id-token: write
             contents: read
+            pull-requests: write
 
         if: ${{ inputs.new-version }}
         steps:
-            - name: 📥 Checkout repository
-              uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
-
             - name: 🔐 Azure login
               #uses: OutSystems/rd.github-reusable-workflows/.github/actions/az-login@9d497d1c5bc6e355aa8f4663539e6b75c212f6b4 #v2.0.7
               uses: ./.github/actions/az-login
@@ -104,16 +97,42 @@ jobs:
               with:
                   key-name: o11odc-github-gitpersonal-token-prd
 
-            - name: 🔄 Merge rc${{ inputs.new-version }} into main
+            - name: 🔄 Create release PR for rc${{ inputs.new-version }} into main
               env:
                   GH_TOKEN: ${{ steps.get-github-token.outputs.az-keyvault-value }}
               run: |
-                  gh api \
-                    --method POST \
-                    "repos/${{ github.repository }}/merges" \
-                    -f base=main \
-                    -f head=rc${{ inputs.new-version }} \
-                    -f commit_message="Merged rc${{ inputs.new-version }} into main. [skip ci]"
+                  SOURCE_BRANCH="rc${{ inputs.new-version }}"
+                  BASE_BRANCH="main"
+                  PR_TITLE="Merge ${SOURCE_BRANCH} into ${BASE_BRANCH} [skip ci]"
+
+                  COMPARE_STATUS=$(gh api \
+                    "repos/${{ github.repository }}/compare/${BASE_BRANCH}...${SOURCE_BRANCH}" \
+                    --template '{{.status}}')
+
+                  if [ "${COMPARE_STATUS}" = "identical" ] || [ "${COMPARE_STATUS}" = "behind" ]; then
+                    echo "${SOURCE_BRANCH} is already merged into ${BASE_BRANCH}."
+                    exit 0
+                  fi
+
+                  PR_NUMBER=$(gh pr list \
+                    --head "${SOURCE_BRANCH}" \
+                    --base "${BASE_BRANCH}" \
+                    --state open \
+                    --limit 1 \
+                    --json number \
+                    --jq '.[0].number // empty')
+
+                  if [ -z "${PR_NUMBER}" ]; then
+                    PR_NUMBER=$(gh pr create \
+                      --base "${BASE_BRANCH}" \
+                      --head "${SOURCE_BRANCH}" \
+                      --title "${PR_TITLE}" \
+                      --body "$(printf 'This PR merges %s into %s.\n\nThis PR was automatically created by the Release workflow.\n' "${SOURCE_BRANCH}" "${BASE_BRANCH}")" \
+                      --json number \
+                      --jq .number)
+                  fi
+
+                  echo "Release PR: https://github.com/${{ github.repository }}/pull/${PR_NUMBER}"
 
     set-pre-release-as-lts:
         name: Set pre-release as LTS
@@ -124,9 +143,6 @@ jobs:
             contents: read
 
         steps:
-            - name: 📥 Checkout repository
-              uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
-
             - name: 🔐 Azure login
               #uses: OutSystems/rd.github-reusable-workflows/.github/actions/az-login@9d497d1c5bc6e355aa8f4663539e6b75c212f6b4 #v2.0.7
               uses: ./.github/actions/az-login
@@ -150,22 +166,4 @@ jobs:
                   prerelease: false
                   token: ${{ steps.get-github-token.outputs.az-keyvault-value }}
                   make_latest: true
-
-    delete-rc-branch:
-        name: Delete rc branch
-        needs: merge-rc-into-main
-        runs-on: ubuntu-latest
-        permissions:
-            contents: write
-
-        if: ${{ inputs.delete-rc-branch == true }}
-        steps:
-            - name: 📥 Checkout branch dev
-              uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
-              with:
-                  ref: dev
-
-            - name: 🗑️ Delete branch rc${{ inputs.new-version }}
-              shell: bash
-              run: |
-                  git push origin -d rc${{ inputs.new-version }}
+                  token: ${{ steps.get-github-token.outputs.az-keyvault-value }}
