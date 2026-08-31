@@ -27,23 +27,24 @@
 	font-size: variables.$token-font-size-350;
 	font-weight: variables.$token-font-weight-medium;
 	gap: variables.$token-scale-200;
-	left: 50%;
+	left: 50%; // physical: centring pair with the keyframes' translateX(-50%), which never mirrors
 	max-width: var(--osui-feedback-message-max-width);
 	min-width: var(--osui-feedback-message-min-width);
-	padding: variables.$token-scale-300 variables.$token-scale-400;
+	padding-block: variables.$token-scale-300;
+	padding-inline: variables.$token-scale-400;
 
 	i {
 		align-self: flex-start;
 		color: var(--osui-feedback-message-icon-color);
 		font-size: variables.$token-font-size-500;
-		margin-top: #{variables.$token-scale-050}; // 2px icon vertical offset
+		margin-block-start: #{variables.$token-scale-050}; // 2px icon vertical offset
 		position: relative;
 	}
 }
 
 ///
 .feedback-message-text {
-	padding-left: 0;
+	padding-inline-start: 0;
 }
 
 // Mantain due to Retro Compatibility
@@ -95,7 +96,7 @@ div.feedback-message-warning {
 }
 
 .android .feedback-message {
-	padding-top: calc(#{android-safe-area-top()} + variables.$token-scale-400);
+	padding-block-start: calc(#{android-safe-area-top()} + variables.$token-scale-400);
 }
 
 // IsRTL -------------------------------------------------------------------------
@@ -104,7 +105,7 @@ div.feedback-message-warning {
 		.feedback-message {
 			animation-name: feedbackMessageSlideDownPhoneRTL;
 			border-radius: 0;
-			left: 0;
+			left: 0; // physical: the RTL phone keyframes use translateX(0), so the base left: 50% must be re-anchored
 			max-width: 100%;
 			min-width: 100%;
 

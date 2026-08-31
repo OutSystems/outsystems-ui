@@ -17,10 +17,10 @@
 	:not(:last-child):not(.list) >,
 	.list :not(:last-child) > {
 		.osui-accordion-item {
-			border-bottom: var(--osui-accordion-item-border-width) solid var(--osui-accordion-item-border-color);
+			border-block-end: var(--osui-accordion-item-border-width) solid var(--osui-accordion-item-border-color);
 
 			&:not(.osui-accordion-item--is-open):hover {
-				border-bottom-color: var(--osui-accordion-item-title-hover-border-color);
+				border-block-end-color: var(--osui-accordion-item-title-hover-border-color);
 			}
 		}
 	}
@@ -29,8 +29,8 @@
 	:first-child:not(.list) >,
 	.list :first-child > {
 		.osui-accordion-item {
-			border-top-left-radius: variables.$token-border-radius-400;
-			border-top-right-radius: variables.$token-border-radius-400;
+			border-start-end-radius: variables.$token-border-radius-400;
+			border-start-start-radius: variables.$token-border-radius-400;
 			overflow: hidden;
 		}
 	}
@@ -39,8 +39,8 @@
 	:last-child:not(.list) >,
 	.list :last-child > {
 		.osui-accordion-item {
-			border-bottom-left-radius: variables.$token-border-radius-400;
-			border-bottom-right-radius: variables.$token-border-radius-400;
+			border-end-end-radius: variables.$token-border-radius-400;
+			border-end-start-radius: variables.$token-border-radius-400;
 			overflow: hidden;
 
 			&:not(.osui-accordion-item--is-open) {

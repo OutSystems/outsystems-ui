@@ -16,13 +16,14 @@
 	--osui-list-item-selected-icon-color:     #{variables.$token-icon-select};
 	// ───────────────────────────────────────────────────────────────────
 
-	border-bottom: variables.$token-border-size-025 solid var(--osui-list-item-border-color);
-	padding: variables.$token-space-300 variables.$token-space-600;
+	border-block-end: variables.$token-border-size-025 solid var(--osui-list-item-border-color);
+	padding-block: variables.$token-space-300;
+	padding-inline: variables.$token-space-600;
 	position: relative;
 	transition: background-color variables.$token-transition-time-100 variables.$token-transition-curve-base;
 
 	&:last-of-type {
-		border-bottom: none;
+		border-block-end: none;
 	}
 
 	// ButtonsEffect.ts still injects a `.scale-animation` span on click and relies on the
@@ -34,7 +35,7 @@
 		background: transparent;
 		display: block;
 		height: 0;
-		left: 50%;
+		inset-inline-start: 50%;
 		opacity: 0;
 		pointer-events: none;
 		position: absolute;
@@ -109,15 +110,15 @@
 
 				&:before {
 					border: variables.$token-border-size-025 solid variables.$token-semantics-primary-base;
-					border-right-width: variables.$token-border-size-0;
-					border-left-width: variables.$token-border-size-075;
+					border-inline-end-width: variables.$token-border-size-0;
+					border-inline-start-width: variables.$token-border-size-075;
 					bottom: 0;
 					content: '';
 					display: block;
-					left: 0;
+					inset-inline-start: 0;
 					pointer-events: none;
 					position: absolute;
-					right: 0;
+					inset-inline-end: 0;
 					top: 0;
 				}
 			}

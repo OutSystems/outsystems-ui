@@ -9,12 +9,12 @@
 .form {
 	&.OSFillParent {
 		.form-control[class*='ThemeGrid_Width'].not-valid ~ span.validation-message {
-			left: 22px;
+			inset-inline-start: 22px;
 		}
 	}
 
 	label {
-		margin-bottom: variables.$token-scale-200;
+		margin-block-end: variables.$token-scale-200;
 	}
 
 	.dropdown,
@@ -22,7 +22,7 @@
 	input[data-input],
 	textarea[data-textarea],
 	[data-switch] {
-		margin-bottom: variables.$token-scale-600;
+		margin-block-end: variables.$token-scale-600;
 	}
 
 	span {
@@ -30,7 +30,7 @@
 
 		&.validation-message {
 			bottom: -32px;
-			left: 0;
+			inset-inline-start: 0;
 			position: absolute;
 			white-space: nowrap;
 			width: 100%;
@@ -40,7 +40,7 @@
 	& > span.input-text {
 		.form-control[class*='ThemeGrid_Width'].not-valid {
 			& + span.validation-message {
-				left: 0;
+				inset-inline-start: 0;
 			}
 		}
 	}
@@ -96,18 +96,18 @@
 span.validation-message {
 	color: variables.$token-text-danger;
 	font-size: variables.$token-font-size-300;
-	margin-left: variables.$token-scale-0;
+	margin-inline-start: variables.$token-scale-0;
 }
 
 ///
 .form-control[class*='ThemeGrid_Width'].not-valid + span.validation-message {
-	left: 10px;
+	inset-inline-start: 10px;
 }
 
 // Responsive --------------------------------------------------------------------
 .phone {
 	.layout-native .form.OSFillParent .form-control[class*='ThemeGrid_Width'].not-valid + span.validation-message {
-		left: variables.$token-scale-150;
+		inset-inline-start: variables.$token-scale-150;
 	}
 
 	.form.OSFillParent span.input-text .form-control[class*='ThemeGrid_Width'].not-valid + span.validation-message,
@@ -116,19 +116,6 @@ span.validation-message {
 		.form-control[class*='ThemeGrid_Width'].not-valid.ThemeGrid_MarginGutter
 		+ span.validation-message,
 	.form-control[class*='ThemeGrid_Width'].not-valid + span.validation-message {
-		left: 0;
-	}
-}
-
-// IsRTL -------------------------------------------------------------------------
-///
-.is-rtl {
-	form {
-		&.OSFillParent {
-			.form-control[class*='ThemeGrid_Width'].not-valid ~ span.validation-message {
-				left: initial;
-				right: 22px;
-			}
-		}
+		inset-inline-start: 0;
 	}
 }

@@ -7,14 +7,16 @@
 
 ///
 .ThemeGrid_Container {
-	margin: variables.$token-scale-0 auto;
+	margin-block: variables.$token-scale-0;
+	margin-inline: auto;
 	width: 100%;
 }
 
 ///
 .header {
 	.ThemeGrid_Container {
-		padding: variables.$token-scale-0 variables.$token-scale-1000;
+		padding-block: variables.$token-scale-0;
+		padding-inline: variables.$token-scale-1000;
 	}
 }
 
@@ -25,7 +27,8 @@
 	}
 
 	.footer.ThemeGrid_Container {
-		padding: variables.$token-scale-400 variables.$token-scale-1000;
+		padding-block: variables.$token-scale-400;
+		padding-inline: variables.$token-scale-1000;
 	}
 }
 
@@ -35,7 +38,8 @@
 .tablet {
 	.header {
 		.ThemeGrid_Container {
-			padding: variables.$token-scale-0 variables.$token-scale-600;
+			padding-block: variables.$token-scale-0;
+			padding-inline: variables.$token-scale-600;
 		}
 	}
 
@@ -44,7 +48,8 @@
 	}
 
 	.footer.ThemeGrid_Container {
-		padding: variables.$token-scale-400 variables.$token-scale-600;
+		padding-block: variables.$token-scale-400;
+		padding-inline: variables.$token-scale-600;
 	}
 }
 
@@ -52,21 +57,21 @@
 .phone {
 	.header {
 		.ThemeGrid_Container {
-			padding-left: calc(var(--os-safe-area-left) + variables.$token-scale-400);
 			padding-right: calc(var(--os-safe-area-right) + variables.$token-scale-400);
+			padding-left: calc(var(--os-safe-area-left) + variables.$token-scale-400);
 		}
 	}
 
 	.main-content.ThemeGrid_Container {
-		padding-bottom: variables.$token-scale-400;
-		padding-left: calc(var(--os-safe-area-left) + variables.$token-scale-400);
+		padding-block-end: variables.$token-scale-400;
+		padding-block-start: variables.$token-scale-400;
 		padding-right: calc(var(--os-safe-area-right) + variables.$token-scale-400);
-		padding-top: variables.$token-scale-400;
+		padding-left: calc(var(--os-safe-area-left) + variables.$token-scale-400);
 	}
 
 	.footer.ThemeGrid_Container {
-		padding-left: calc(var(--os-safe-area-left) + variables.$token-scale-400);
 		padding-right: calc(var(--os-safe-area-right) + variables.$token-scale-400);
+		padding-left: calc(var(--os-safe-area-left) + variables.$token-scale-400);
 	}
 }
 
@@ -82,5 +87,5 @@
 // Android
 // Gives a padding to the content, this avoids some content to be unreachable under the bottom bar
 .android .main:has(.footer:empty) .content {
-	padding-bottom: var(--safe-area-inset-bottom, 0px);
+	padding-block-end: var(--safe-area-inset-bottom, 0px);
 }

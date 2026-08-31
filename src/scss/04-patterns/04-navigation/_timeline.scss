@@ -31,7 +31,7 @@
 		font-size: var(--osui-timeline-font-size);
 		justify-content: space-between;
 		line-height: var(--osui-timeline-line-height);
-		margin-bottom: var(--osui-timeline-gap);
+		margin-block-end: var(--osui-timeline-gap);
 		position: relative;
 
 		.timeline-content {
@@ -43,7 +43,7 @@
 			flex-direction: column;
 			font-weight: var(--osui-timeline-title-font-weight);
 			gap: var(--osui-timeline-content-gap);
-			padding-bottom: var(--osui-timeline-content-spacing);
+			padding-block-end: var(--osui-timeline-content-spacing);
 		}
 	}
 
@@ -56,7 +56,8 @@
 		&-line {
 			background-color: var(--osui-timeline-line-color);
 			flex: 1;
-			margin: variables.$token-space-200 variables.$token-space-0 variables.$token-space-0;
+			margin-block: variables.$token-space-200 variables.$token-space-0;
+			margin-inline: variables.$token-space-0;
 			width: variables.$token-border-size-025;
 		}
 
@@ -68,7 +69,8 @@
 			font-size: variables.$token-font-size-300;
 			height: var(--osui-timeline-icon-size);
 			justify-content: center;
-			margin: variables.$token-space-0 var(--osui-timeline-gutter);
+			margin-block: variables.$token-space-0;
+			margin-inline: var(--osui-timeline-gutter);
 			text-align: center;
 			width: var(--osui-timeline-icon-size);
 

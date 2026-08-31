@@ -35,13 +35,14 @@
 
 		th {
 			background-color: var(--osui-table-header-background);
-			border-bottom: variables.$token-border-size-025 solid var(--osui-table-border-color);
+			border-block-end: variables.$token-border-size-025 solid var(--osui-table-border-color);
 			color: var(--osui-table-header-color);
 			font-size: variables.$token-font-size-350;
 			font-weight: variables.$token-font-weight-regular;
 			height: variables.$token-scale-1200;
-			padding: variables.$token-scale-0 variables.$token-scale-600;
-			text-align: left;
+			padding-block: variables.$token-scale-0;
+			padding-inline: variables.$token-scale-600;
+			text-align: start;
 
 			&.sortable {
 				cursor: pointer;
@@ -65,11 +66,12 @@
 
 		td {
 			background: var(--osui-table-cell-background);
-			border-bottom: variables.$token-border-size-025 solid var(--osui-table-border-color);
+			border-block-end: variables.$token-border-size-025 solid var(--osui-table-border-color);
 			color: var(--color-text);
 			font-size: variables.$token-font-size-350;
 			height: variables.$token-scale-1600;
-			padding: variables.$token-scale-200 variables.$token-scale-600;
+			padding-block: variables.$token-scale-200;
+			padding-inline: variables.$token-scale-600;
 			transition: background-color variables.$token-transition-time-100 ease; // no token match for ease
 			vertical-align: inherit;
 		}
@@ -98,7 +100,7 @@
 
 	.table-row:last-child {
 		& > td {
-			border-bottom: none;
+			border-block-end: none;
 		}
 	}
 }
@@ -173,22 +175,22 @@
 			}
 
 			tr {
-				border-bottom: variables.$token-border-size-025 solid var(--color-border);
+				border-block-end: variables.$token-border-size-025 solid var(--color-border);
 			}
 
 			td {
-				border-bottom: 0;
+				border-block-end: 0;
 				display: flex;
 				height: auto;
 				position: relative;
-				text-align: left !important;
+				text-align: start !important;
 				width: 100% !important;
 
 				&:before {
 					content: attr(data-header);
 					display: block;
 					font-weight: bold;
-					margin-right: 10px;
+					margin-inline-end: 10px;
 					max-width: 110px;
 					min-width: 110px;
 					word-break: break-word;
@@ -216,9 +218,10 @@
 
 			td {
 				background: var(--osui-table-cell-background);
-				border-bottom: variables.$token-border-size-025 solid var(--osui-table-border-color);
+				border-block-end: variables.$token-border-size-025 solid var(--osui-table-border-color);
 				display: table-cell;
-				padding: variables.$token-scale-200 variables.$token-scale-600;
+				padding-block: variables.$token-scale-200;
+				padding-inline: variables.$token-scale-600;
 				vertical-align: inherit;
 				width: auto !important;
 
@@ -278,32 +281,5 @@
 		box-shadow: 0 0 0 variables.$token-border-size-075 var(--color-focus-outer);
 		position: relative;
 		z-index: var(--layer-global-screen);
-	}
-}
-
-// IsRTL --------------------------------------------------------------------
-///
-.is-rtl {
-	&.phone,
-	&.tablet {
-		.table:not(.table-no-responsive) {
-			td {
-				text-align: right !important;
-			}
-
-			td:before {
-				margin-left: 10px;
-				margin-right: 0px;
-			}
-		}
-	}
-
-	.table-header th {
-		text-align: right;
-	}
-
-	.sortable-icon {
-		margin-left: variables.$token-scale-0;
-		right: variables.$token-scale-200;
 	}
 }

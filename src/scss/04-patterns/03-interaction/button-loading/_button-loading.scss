@@ -24,7 +24,7 @@
 				gap: variables.$token-scale-0;
 
 				.osui-btn-loading__spinner-animation {
-					margin-right: variables.$token-scale-0;
+					margin-inline-end: variables.$token-scale-0;
 				}
 
 				& > span[data-expression] {
@@ -63,9 +63,9 @@
 			animation: loadingSpinner variables.$token-transition-time-1000 cubic-bezier(0.7, 1.05, 0.78, 0.78) infinite;
 			border: variables.$token-border-size-050 solid currentColor;
 			border-radius: var(--border-radius-rounded);
-			border-top-color: transparent;
+			border-block-start-color: transparent;
 			height: variables.$token-scale-400;
-			margin-right: variables.$token-scale-200;
+			margin-inline-end: variables.$token-scale-200;
 			width: variables.$token-scale-400;
 			will-change: transform;
 
@@ -77,31 +77,6 @@
 
 		& > span[data-expression] {
 			white-space: nowrap;
-		}
-	}
-}
-
-// IsRTL -------------------------------------------------------------------------
-///
-.is-rtl {
-	.osui-btn-loading {
-		&-show-spinner {
-			&.osui-btn-loading--is-loading {
-				.btn {
-					.osui-btn-loading__spinner-animation {
-						margin-left: variables.$token-scale-0;
-					}
-				}
-			}
-		}
-
-		&--is-loading {
-			.btn {
-				.osui-btn-loading__spinner-animation {
-					margin-left: variables.$token-scale-200;
-					margin-right: variables.$token-scale-0;
-				}
-			}
 		}
 	}
 }
@@ -121,8 +96,8 @@
 		.btn {
 			.osui-btn-loading__spinner-animation {
 				border-width: variables.$token-border-size-075;
-				border-bottom: none;
-				border-top: none;
+				border-block-end: none;
+				border-block-start: none;
 			}
 		}
 	}

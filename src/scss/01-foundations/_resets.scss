@@ -93,7 +93,7 @@ body {
 /* ============================================================================ */
 ///
 abbr[title] {
-	border-bottom: 0;
+	border-block-end: 0;
 	text-decoration: underline;
 }
 
@@ -116,7 +116,7 @@ label {
 ///
 [data-label].mandatory:after {
 	color: variables.$token-semantics-danger-base;
-	margin-left: variables.$token-scale-100;
+	margin-inline-start: variables.$token-scale-100;
 }
 
 /* ============================================================================ */

@@ -25,7 +25,7 @@
 		background-color: var(--osui-section-index-border-color);
 		bottom: 0;
 		content: '';
-		left: 0;
+		inset-inline-start: 0;
 		position: absolute;
 		top: 0;
 		width: var(--osui-section-index-border-width);
@@ -62,7 +62,9 @@
 		cursor: pointer;
 		display: flex;
 		min-height: variables.$token-scale-1100;
-		padding: variables.$token-scale-200 variables.$token-scale-400 variables.$token-scale-200 variables.$token-scale-600;
+		padding-block: variables.$token-scale-200;
+		padding-inline-end: variables.$token-scale-400;
+		padding-inline-start: variables.$token-scale-600;
 		position: relative;
 		transition:
 			background-color variables.$token-transition-time-100 variables.$token-transition-curve-expressive,
@@ -97,7 +99,7 @@
 			background-color: var(--osui-section-index-active-indicator-color);
 			bottom: 0;
 			content: '';
-			left: var(--osui-section-index-active-indicator-offset);
+			inset-inline-start: var(--osui-section-index-active-indicator-offset);
 			position: absolute;
 			top: 0;
 			width: var(--osui-section-index-active-indicator-width);
@@ -126,39 +128,13 @@
 ///
 .os-high-contrast {
 	.osui-section-index::before {
-		border-left: variables.$token-border-size-025 solid var(--color-focus-outer);
+		border-inline-start: variables.$token-border-size-025 solid var(--color-focus-outer);
 	}
 
 	.osui-section-index-item {
 		&--is-active {
 			&::before {
-				border-left: variables.$token-border-size-075 solid var(--color-focus-outer);
-			}
-		}
-	}
-}
-
-// IsRTL -------------------------------------------------------------------------
-///
-.is-rtl {
-	.osui-section-index {
-		&::before {
-			left: auto;
-			right: 0;
-		}
-	}
-
-	.osui-section-index-item {
-		&,
-		&:visited {
-			padding-left: variables.$token-scale-400;
-			padding-right: variables.$token-scale-600;
-		}
-
-		&--is-active {
-			&::before {
-				left: auto;
-				right: var(--osui-section-index-active-indicator-offset);
+				border-inline-start: variables.$token-border-size-075 solid var(--color-focus-outer);
 			}
 		}
 	}
@@ -170,13 +146,18 @@
 	.osui-section-index {
 		&--is-sticky {
 			left: calc(var(--os-safe-area-right) + variables.$token-scale-400);
-			padding: 0 variables.$token-scale-400 0 0;
+			padding-block: 0;
+			padding-inline-end: variables.$token-scale-400;
+			padding-inline-start: 0;
 			position: fixed;
 			top: var(--top-position);
 			z-index: var(--layer-local-tier-1);
 		}
 	}
 
+	// IsRTL -----------------------------------------------------------------
+	/// Anchored off `env(safe-area-inset-right)`, which is physical and has no logical
+	/// form — so the mirror stays a physical override.
 	.is-rtl {
 		.osui-section-index {
 			&--is-sticky {

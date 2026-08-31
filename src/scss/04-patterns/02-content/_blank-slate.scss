@@ -26,13 +26,15 @@
 		}
 
 		& .blank-slate-actions {
-			padding: variables.$token-scale-1200 variables.$token-scale-400;
+			padding-block: variables.$token-scale-1200;
+			padding-inline: variables.$token-scale-400;
 		}
 	}
 
 	&-description {
 		color: var(--osui-blank-slate-description-color);
-		padding: variables.$token-scale-0 variables.$token-scale-400;
+		padding-block: variables.$token-scale-0;
+		padding-inline: variables.$token-scale-400;
 	}
 
 	&-actions {

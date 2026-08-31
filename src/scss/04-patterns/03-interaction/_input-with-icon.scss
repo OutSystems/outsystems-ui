@@ -17,17 +17,17 @@
 
 	&.input-with-icon-right {
 		.input-with-icon-content-icon {
-			left: auto;
-			right: 0;
+			inset-inline-start: auto;
+			inset-inline-end: 0;
 
 			&:not(:empty) + .input-with-icon-input input {
-				padding-left: variables.$token-scale-400;
-				padding-right: variables.$token-scale-1000;
+				padding-inline-start: variables.$token-scale-400;
+				padding-inline-end: variables.$token-scale-1000;
 			}
 
 			&.search-actions {
-				left: 0;
-				right: auto;
+				inset-inline-start: 0;
+				inset-inline-end: auto;
 			}
 		}
 	}
@@ -40,7 +40,7 @@
 	   and the padding pair is already set in that block. */
 	&:not(.input-with-icon-right):has(.input-with-icon-content-icon.search-actions:not(:empty)) {
 		.input-with-icon-input input {
-			padding-right: variables.$token-scale-1000;
+			padding-inline-end: variables.$token-scale-1000;
 		}
 	}
 
@@ -52,7 +52,7 @@
 			display: inline-flex;
 			height: 100%;
 			justify-content: center;
-			left: 0;
+			inset-inline-start: 0;
 			position: absolute;
 			width: variables.$token-scale-1000;
 
@@ -62,12 +62,12 @@
 			}
 
 			&:not(:empty) + .input-with-icon-input input {
-				padding-left: variables.$token-scale-1000;
+				padding-inline-start: variables.$token-scale-1000;
 			}
 
 			&.search-actions {
-				left: auto;
-				right: 0;
+				inset-inline-start: auto;
+				inset-inline-end: 0;
 
 				&:hover {
 					color: var(--osui-input-with-icon-icon-hover-color);
@@ -100,12 +100,12 @@
 .form {
 	.input-with-icon {
 		.input-with-icon-content-icon {
-			padding-bottom: variables.$token-scale-600;
+			padding-block-end: variables.$token-scale-600;
 			z-index: var(--layer-local-tier-1);
 		}
 
 		.form-control[class*='ThemeGrid_Width'].not-valid ~ span.validation-message {
-			left: 0;
+			inset-inline-start: 0;
 		}
 	}
 }

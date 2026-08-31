@@ -86,6 +86,8 @@
 	&-container {
 		&:after {
 			border: variables.$token-border-size-050 solid variables.$token-primitives-neutral-700;
+			// physical sides: these borders draw the chevron glyph under a physical
+			// rotate transform, and its position is deliberately physical (right: 16px)
 			border-right: variables.$token-border-size-0 !important;
 			border-top: variables.$token-border-size-0 !important;
 			bottom: 0;
@@ -116,6 +118,7 @@
 		&.dropdown-container {
 			&:after {
 				border: variables.$token-border-size-050 solid variables.$token-primitives-neutral-700;
+				// physical sides: chevron glyph under a physical rotate (see above)
 				border-right: variables.$token-border-size-0 !important;
 				border-top: variables.$token-border-size-0 !important;
 				transform: rotate(-45deg) translateY(0) translateX(0);
@@ -133,6 +136,8 @@
 	}
 }
 
+// IsRTL — the chevron's base position is deliberately physical (right: 16px,
+// paired with a physical rotate), so it needs a hand-written mirror
 .is-rtl {
 	.dropdown-container {
 		&:after {
@@ -146,27 +151,27 @@
 .sortable-icon {
 	display: inline-block;
 	height: 11px;
-	margin-left: variables.$token-scale-200;
+	margin-inline-start: variables.$token-scale-200;
 	position: relative;
 	width: 10px;
 
 	&:before,
 	&:after {
-		border-left: 4px solid transparent;
-		border-right: 4px solid transparent;
+		border-inline-start: 4px solid transparent;
+		border-inline-end: 4px solid transparent;
 		content: '';
-		left: 0;
+		inset-inline-start: 0;
 		position: absolute;
 	}
 
 	// currentColor keeps the arrow in lockstep with the header text color
 	// (default/hover/.sorted) without a separate state rule per color
 	&:before {
-		border-bottom: 4px solid currentColor;
+		border-block-end: 4px solid currentColor;
 	}
 
 	&:after {
-		border-top: 4px solid currentColor;
+		border-block-start: 4px solid currentColor;
 		bottom: 0;
 	}
 }

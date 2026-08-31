@@ -77,7 +77,8 @@
 
 		// To make extensibility with ExtendedClass easier
 		a:not([class^='padding-']) {
-			padding: variables.$token-scale-200 variables.$token-scale-400;
+			padding-block: variables.$token-scale-200;
+			padding-inline: variables.$token-scale-400;
 		}
 	}
 }

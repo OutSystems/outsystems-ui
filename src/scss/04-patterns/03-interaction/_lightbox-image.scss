@@ -98,8 +98,8 @@
 .android {
 	.pswp__top-bar {
 		top: #{android-safe-area-top()};
-		padding-left: var(--safe-area-inset-left, 0px);
-		padding-right: var(--safe-area-inset-right, 0px);
+		padding-inline-start: var(--safe-area-inset-left, 0px);
+		padding-inline-end: var(--safe-area-inset-right, 0px);
 	}
 }
 
@@ -137,10 +137,6 @@
 ///
 .is-rtl {
 	.pswp {
-		&__counter {
-			left: inherit;
-			right: 0;
-		}
 
 		&__top-bar {
 			display: flex;

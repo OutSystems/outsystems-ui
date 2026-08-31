@@ -110,6 +110,7 @@
 
 					&:after {
 						border-color: var(--color-text-inverse);
+						// physical: these sides shape the check glyph under rotate(45deg) — a checkmark must not mirror in RTL
 						border-left-color: transparent;
 						border-top-color: transparent;
 						height: 80%;
@@ -171,18 +172,18 @@
 				border-radius: 0;
 				color: variables.$token-icon-subtlest;
 				height: auto;
-				left: auto;
+				inset-inline-start: auto;
 				margin-inline-start: variables.$token-scale-100;
 				opacity: 0.5;
 				position: relative;
-				right: auto;
+				inset-inline-end: auto;
 				top: auto;
 				transform: none;
 				width: auto;
 
 				.vscomp-clear-icon {
 					height: variables.$token-scale-300;
-					left: variables.$token-scale-0;
+					inset-inline-start: variables.$token-scale-0;
 					position: relative;
 					top: variables.$token-scale-0;
 					width: variables.$token-scale-300;
@@ -210,10 +211,10 @@
 
 		&.has-value {
 			.vscomp-clear-button {
-				margin-top: 0;
+				margin-block-start: 0;
 				top: 50%;
 				transform: translateY(-50%);
-				right: variables.$token-scale-1000;
+				inset-inline-end: variables.$token-scale-1000;
 			}
 		}
 	}
@@ -239,10 +240,10 @@
 		}
 	}
 
-	// RTL Text
 	&.text-direction-rtl {
 		.vscomp-search-container {
-			padding: variables.$token-scale-0 variables.$token-scale-400;
+			padding-block: variables.$token-scale-0;
+			padding-inline: variables.$token-scale-400;
 		}
 
 		&.multiple {
@@ -266,19 +267,15 @@
 
 			&.has-value {
 				.vscomp-clear-button {
+					// physical: counters the vendor lib's `left: 2px` under .text-direction-rtl,
+					// which outranks our logical base (inset-inline-end) in specificity
 					left: variables.$token-scale-1000;
 				}
 			}
 		}
 
-		.vscomp-toggle-button {
-			&:after {
-				left: variables.$token-scale-400;
-				right: auto;
-			}
-		}
-
 		.checkbox-icon {
+			// physical: counters the vendor lib's `margin-left: 10px` under .text-direction-rtl
 			margin-left: variables.$token-scale-200;
 
 			&.checked {
@@ -295,7 +292,7 @@
 		border-radius: variables.$token-border-radius-100;
 		border: variables.$token-border-size-025 solid var(--color-border-input);
 		height: variables.$token-scale-400;
-		margin-right: 0px;
+		margin-inline-end: 0px;
 		overflow: visible;
 		transition: background-color variables.$token-transition-time-300 variables.$token-transition-curve-expressive;
 		width: variables.$token-scale-400;
@@ -315,6 +312,7 @@
 
 			&:after {
 				border-color: var(--color-text-inverse);
+				// physical: these sides shape the check glyph under rotate(45deg) — a checkmark must not mirror in RTL
 				border-left-color: transparent;
 				border-top-color: transparent;
 				height: 80%;
@@ -342,8 +340,9 @@
 	height: var(--vscomp-toogle-btn-height);
 	line-height: var(--vscomp-toogle-btn-height);
 	min-width: 180px;
-	padding: variables.$token-scale-100 variables.$token-scale-1000 variables.$token-scale-100
-		variables.$token-scale-400;
+	padding-block: variables.$token-scale-100;
+	padding-inline-end: variables.$token-scale-1000;
+	padding-inline-start: variables.$token-scale-400;
 	position: relative;
 	transition: border-color variables.$token-transition-time-100 variables.$token-transition-curve-base;
 	vertical-align: middle;
@@ -358,7 +357,7 @@
 		justify-content: center;
 		line-height: 1;
 		position: absolute;
-		right: variables.$token-scale-400;
+		inset-inline-end: variables.$token-scale-400;
 		top: 50%;
 		transform: translateY(-50%);
 		transform-origin: center;
@@ -424,8 +423,10 @@
 
 // Options container input search wrapper
 .vscomp-search-container {
-	border-bottom: variables.$token-border-size-025 solid var(--color-border);
-	padding: variables.$token-scale-0 variables.$token-scale-200 variables.$token-scale-0 variables.$token-scale-400;
+	border-block-end: variables.$token-border-size-025 solid var(--color-border);
+	padding-block: variables.$token-scale-0;
+	padding-inline-end: variables.$token-scale-200;
+	padding-inline-start: variables.$token-scale-400;
 	position: relative;
 
 	&::before {
@@ -463,7 +464,7 @@
 	// Move "Toggle all" checkbox to the end of the search container
 	.vscomp-toggle-all-button {
 		order: 1;
-		margin-left: variables.$token-scale-200;
+		margin-inline-start: variables.$token-scale-200;
 	}
 }
 
@@ -532,7 +533,7 @@
 			flex-shrink: 0;
 			font-family: var(--osui-icon-font-family);
 			font-size: variables.$token-font-size-400;
-			margin-left: variables.$token-scale-200;
+			margin-inline-start: variables.$token-scale-200;
 		}
 	}
 
@@ -561,15 +562,15 @@
 .vscomp-option-description {
 	color: variables.$token-primitives-neutral-700;
 	font-size: variables.$token-font-size-275;
-	margin-top: 1px;
+	margin-block-start: 1px;
 }
 
 // When using the extensibility property allowNewOption
 .vscomp-new-option-icon {
 	&::before {
 		border: 15px solid variables.$token-semantics-primary-base;
-		border-bottom-color: rgba(0, 0, 0, 0);
-		border-left-color: rgba(0, 0, 0, 0);
+		border-block-end-color: rgba(0, 0, 0, 0);
+		border-inline-start-color: rgba(0, 0, 0, 0);
 	}
 }
 
@@ -615,9 +616,9 @@
 					bottom: 0;
 					content: '';
 					display: block;
-					left: 0;
+					inset-inline-start: 0;
 					position: absolute;
-					right: 0;
+					inset-inline-end: 0;
 					top: 0;
 				}
 			}
@@ -626,8 +627,8 @@
 		&.multiple .vscomp-option {
 			&.selected .checkbox-icon {
 				&:after {
-					border-top: none;
-					border-left: none;
+					border-block-start: none;
+					border-inline-start: none;
 				}
 			}
 		}

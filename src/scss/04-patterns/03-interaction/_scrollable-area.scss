@@ -108,7 +108,9 @@
 }
 
 // IsRTL -------------------------------------------------------------------------
-///
+/// The LTR counterpart of this spacing is not declared in the OSUI bundle (it comes from
+/// the consuming list/carousel), so there is no logical declaration for RTL to mirror.
+/// Kept physical until that owner is found.
 .is-rtl {
 	.horizontal-scroll {
 		& > :not(:first-child),

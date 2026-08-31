@@ -133,7 +133,7 @@ body.iconLibrary-phosphor {
 		color: variables.$token-icon-subtlest;
 		content: var(--osui-icon-search);
 		font-family: var(--osui-icon-font-family);
-		left: variables.$token-scale-400;
+		inset-inline-start: variables.$token-scale-400;
 		pointer-events: none;
 		position: absolute;
 		top: 50%;
@@ -141,19 +141,7 @@ body.iconLibrary-phosphor {
 	}
 
 	.form-control[data-input] {
-		padding-left: variables.$token-scale-1000;
-	}
-}
-
-.is-rtl .osui-search .osui-search__input > span {
-	&::after {
-		left: auto;
-		right: variables.$token-scale-400;
-	}
-
-	.form-control[data-input] {
-		padding-left: variables.$token-scale-400;
-		padding-right: variables.$token-scale-1000;
+		padding-inline-start: variables.$token-scale-1000;
 	}
 }
 
@@ -193,16 +181,11 @@ body.iconLibrary-phosphor {
 	line-height: 1;
 	pointer-events: none;
 	position: absolute;
-	right: variables.$token-scale-400;
+	inset-inline-end: variables.$token-scale-400;
 	top: 50%;
 	transform: translateY(-50%);
 	transition: transform 200ms ease;
 	width: var(--osui-dropdown-arrow-size, #{variables.$token-scale-400});
-}
-
-.is-rtl .dropdown-container:after {
-	left: variables.$token-scale-400;
-	right: auto;
 }
 
 .dropdown-expanded.dropdown-container {
@@ -228,7 +211,7 @@ body.iconLibrary-phosphor {
 	height: 11px;
 	justify-content: center;
 	line-height: 0.5; // compress each glyph's line-box so the up/down chevrons stack without overlapping
-	margin-left: variables.$token-scale-200;
+	margin-inline-start: variables.$token-scale-200;
 	position: relative;
 	vertical-align: middle;
 	width: 10px;
@@ -264,7 +247,7 @@ body.iconLibrary-phosphor {
 			font-family: var(--osui-icon-font-family);
 			font-size: 24px;
 			height: 100%;
-			left: 0;
+			inset-inline-start: 0;
 			line-height: 1;
 			position: absolute;
 			top: 0;
@@ -319,7 +302,7 @@ body.iconLibrary-phosphor {
 			content: var(--osui-icon-sent);
 			position: absolute;
 			top: 0;
-			left: 0;
+			inset-inline-start: 0;
 			font-family: var(--osui-icon-font-family);
 		}
 
@@ -335,7 +318,7 @@ body.iconLibrary-phosphor {
 			&:after {
 				content: var(--osui-icon-time);
 				font-family: var(--osui-icon-font-family);
-				left: 0;
+				inset-inline-start: 0;
 				position: absolute;
 				top: 0;
 			}
@@ -382,12 +365,7 @@ body.iconLibrary-phosphor {
 	font-size: variables.$token-font-size-300;
 	line-height: 1;
 	display: flex;
-	left: 1px;
-}
-
-.is-rtl .vscomp-wrapper.multiple .vscomp-option.selected .checkbox-icon:after {
-	left: auto;
-	right: 1px;
+	inset-inline-start: 1px;
 }
 
 .osui-dropdown-search {
@@ -507,6 +485,21 @@ body.iconLibrary-phosphor {
 	color: variables.$token-primitives-neutral-1000;
 }
 
+// Splide swaps the arrow BUTTONS when it runs RTL (`.splide__arrows--rtl`), but the glyph
+// is `content` on ::after and does not follow — leaving both arrows pointing inward.
+// Swap the glyphs to match the buttons.
+.splide--rtl {
+	.splide__arrow--next:after {
+		content: var(--osui-icon-chevron-left);
+		transform: translateX(-1px);
+	}
+
+	.splide__arrow--prev:after {
+		content: var(--osui-icon-chevron-right);
+		transform: translateX(1px);
+	}
+}
+
 .splide__arrow--next:after {
 	content: var(--osui-icon-chevron-right);
 	transform: translateX(1px);
@@ -620,12 +613,12 @@ body.iconLibrary-phosphor {
 
 .pswp__button--arrow--right:before {
 	content: var(--osui-icon-arrow-next);
-	right: variables.$token-scale-100;
+	inset-inline-end: variables.$token-scale-100;
 }
 
 .pswp__button--arrow--left:before {
 	content: var(--osui-icon-arrow-previous);
-	left: variables.$token-scale-100;
+	inset-inline-start: variables.$token-scale-100;
 }
 
 // Password Policy
@@ -638,7 +631,7 @@ body.iconLibrary-phosphor {
 		content: var(--osui-icon-circle-x);
 		font-family: var(--osui-icon-font-family);
 		top: 0;
-		left: 0;
+		inset-inline-start: 0;
 	}
 
 	&.is-valid::after {

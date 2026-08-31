@@ -17,7 +17,7 @@
 
 	&-left {
 		max-width: 120px;
-		padding-right: variables.$token-scale-400;
+		padding-inline-end: variables.$token-scale-400;
 	}
 
 	&-center {
@@ -25,7 +25,7 @@
 	}
 
 	&-right {
-		padding-left: variables.$token-scale-400;
+		padding-inline-start: variables.$token-scale-400;
 	}
 
 	&-title {
@@ -38,21 +38,5 @@
 		color: var(--osui-card-detail-text-color);
 		overflow: hidden;
 		text-overflow: ellipsis;
-	}
-}
-
-// IsRTL -------------------------------------------------------------------------
-///
-.is-rtl {
-	.card-detail {
-		&-left {
-			padding-left: variables.$token-scale-400;
-			padding-right: 0;
-		}
-
-		&-right {
-			padding-left: 0;
-			padding-right: variables.$token-scale-400;
-		}
 	}
 }

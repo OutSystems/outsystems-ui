@@ -25,8 +25,8 @@
 
 		.chat {
 			&-photo {
-				margin-left: variables.$token-space-400;
-				margin-right: variables.$token-scale-0;
+				margin-inline-start: variables.$token-space-400;
+				margin-inline-end: variables.$token-scale-0;
 			}
 
 			&-message {
@@ -37,7 +37,7 @@
 	}
 
 	&-photo {
-		margin-right: variables.$token-space-400;
+		margin-inline-end: variables.$token-space-400;
 
 		img {
 			border-radius: var(--border-radius-rounded);
@@ -62,32 +62,12 @@
 			display: block;
 			font-size: variables.$token-font-size-275;
 			line-height: var(--osui-chat-message-status-line-height);
-			margin-top: variables.$token-space-100;
+			margin-block-start: variables.$token-space-100;
 			width: 100%;
 
 			&.hidden {
 				display: none;
 			}
-		}
-	}
-}
-
-// IsRTL --------------------------------------------------------------------
-///
-.is-rtl {
-	.chat {
-		&.right {
-			.chat {
-				&-photo {
-					margin-left: variables.$token-scale-0;
-					margin-right: variables.$token-space-400;
-				}
-			}
-		}
-
-		&-photo {
-			margin-left: variables.$token-space-400;
-			margin-right: 0;
 		}
 	}
 }

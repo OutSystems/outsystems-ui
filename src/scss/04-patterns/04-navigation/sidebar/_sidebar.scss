@@ -12,8 +12,8 @@
 	--osui-sidebar-background: var(--color-background-surface);
 	--osui-sidebar-color: var(--color-text);
 	--osui-sidebar-shadow: #{variables.$token-elevation-3};
-	--osui-sidebar-padding-x: #{variables.$token-scale-600};
-	--osui-sidebar-padding-y: #{variables.$token-scale-400};
+	--osui-sidebar-padding-inline: #{variables.$token-scale-600};
+	--osui-sidebar-padding-block: #{variables.$token-scale-400};
 	// ───────────────────────────────────────────────────────────────────
 
 	--overlay-opacity: 0;
@@ -56,12 +56,12 @@
 		transform: translateX(102%);
 
 		&:after {
-			left: -24px;
+			inset-inline-start: -24px;
 		}
 
 		&.osui-sidebar--has-overlay {
 			&::before {
-				right: 100%;
+				inset-inline-end: 100%;
 
 				// Service Studio Preview
 				& {
@@ -82,12 +82,12 @@
 		transform: translateX(-102%);
 
 		&:after {
-			right: -24px;
+			inset-inline-end: -24px;
 		}
 
 		&.osui-sidebar--has-overlay {
 			&::before {
-				left: 100%;
+				inset-inline-start: 100%;
 
 				// Service Studio Preview
 				& {
@@ -105,7 +105,8 @@
 
 	&__header,
 	&__content {
-		padding: var(--osui-sidebar-padding-y) var(--osui-sidebar-padding-x);
+		padding-block: var(--osui-sidebar-padding-block);
+		padding-inline: var(--osui-sidebar-padding-inline);
 	}
 
 	&__content {
@@ -180,10 +181,10 @@
 .android {
 	.layout-native {
 		.osui-sidebar {
-			padding-top: #{android-safe-area-top()};
-			padding-right: var(--safe-area-inset-right, 0px);
-			padding-bottom: var(--safe-area-inset-bottom, 0px);
-			padding-left: var(--safe-area-inset-left, 0px);
+			padding-block-start: #{android-safe-area-top()};
+			padding-inline-end: var(--safe-area-inset-right, 0px);
+			padding-block-end: var(--safe-area-inset-bottom, 0px);
+			padding-inline-start: var(--safe-area-inset-left, 0px);
 		}
 	}
 }
@@ -230,8 +231,8 @@
 	.active-screen {
 		.osui-sidebar {
 			&--is-open {
-				border-left: variables.$token-border-size-050 solid var(--color-focus-outer);
-				border-right: variables.$token-border-size-050 solid var(--color-focus-outer);
+				border-inline-start: variables.$token-border-size-050 solid var(--color-focus-outer);
+				border-inline-end: variables.$token-border-size-050 solid var(--color-focus-outer);
 			}
 		}
 	}

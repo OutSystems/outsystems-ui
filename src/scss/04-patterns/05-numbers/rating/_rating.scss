@@ -32,6 +32,7 @@
 		--rating-size: #{variables.$token-scale-300}; // design-spec: 12px
 
 		.rating-item {
+			// physical: the item is flipped with scaleX(-1) in RTL, so logical props double-flip
 			padding-right: calc(var(--rating-size) + #{variables.$token-scale-100});
 		}
 	}
@@ -84,6 +85,8 @@
 		display: inline-block;
 		height: var(--rating-size);
 		// Padding is used to avoid flicks on hover due to rating-items gap
+		// physical: the item is flipped with scaleX(-1) in RTL (see .is-rtl block), so
+		// logical props inside it double-flip; the .is-rtl block mirrors this by hand
 		padding-right: calc(var(--rating-size) + #{variables.$token-scale-200});
 		position: relative;
 		width: var(--rating-size);
@@ -91,7 +94,7 @@
 		&-filled,
 		&-half,
 		&-empty {
-			left: 0;
+			left: 0; // physical: inside the scaleX(-1)-flipped item
 			line-height: var(--osui-font-line-height-full);
 			position: absolute;
 			top: 0;
@@ -123,7 +126,7 @@
 		}
 
 		&:last-of-type {
-			padding-right: 0;
+			padding-right: 0; // physical: see the scaleX(-1) note above
 		}
 
 		img {
@@ -156,7 +159,7 @@
 				box-shadow: 0 0 0 variables.$token-border-size-075
 					color-mix(in srgb, #{variables.$token-semantics-primary-base} 22%, transparent);
 				height: 100%;
-				left: 0;
+				left: 0; // physical: full-width overlay on the scaleX(-1)-flipped item
 				opacity: 0;
 				pointer-events: none;
 				position: absolute;
@@ -285,6 +288,9 @@
 .is-rtl {
 	.rating {
 		.rating-item {
+			// The item is mirrored as a whole, so the gap padding is moved to the
+			// physical left by hand — logical properties cannot express this because
+			// scaleX(-1) flips the rendered box after layout.
 			padding-left: calc(var(--rating-size) + #{variables.$token-scale-200});
 			padding-right: 0;
 			transform: scaleX(-1);

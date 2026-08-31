@@ -25,7 +25,7 @@
 	display: flex;
 	font-size: variables.$token-font-size-350;
 	font-weight: variables.$token-font-weight-medium;
-	margin-bottom: 0;
+	margin-block-end: 0;
 	min-height: auto;
 	padding: var(--osui-upload-padding);
 	position: relative;
@@ -37,7 +37,7 @@
 			background-color: transparent;
 			color: variables.$token-semantics-primary-base;
 			height: auto;
-			margin-top: variables.$token-scale-400;
+			margin-block-start: variables.$token-scale-400;
 			opacity: 1;
 			position: relative;
 		}
@@ -53,23 +53,12 @@
 		background-color: transparent;
 		color: var(--osui-upload-icon-color);
 		line-height: 1;
-		margin-right: variables.$token-scale-200;
+		margin-inline-end: variables.$token-scale-200;
 		width: auto;
 	}
 
 	&:focus-visible {
 		border: variables.$token-border-size-025 solid variables.$token-semantics-primary-base;
-	}
-}
-
-// IsRTL --------------------------------------------------------------------
-///
-.is-rtl {
-	[data-upload] {
-		[data-icon] {
-			margin-left: variables.$token-scale-200;
-			margin-right: variables.$token-scale-0;
-		}
 	}
 }
 

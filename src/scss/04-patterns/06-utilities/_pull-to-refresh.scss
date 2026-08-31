@@ -9,7 +9,7 @@
 .pull-to-refresh {
 	color: var(--color-text-disabled);
 	font-size: variables.$token-font-size-650;
-	left: 0;
+	inset-inline-start: 0;
 	padding: variables.$token-scale-200;
 	position: absolute;
 	text-align: center;

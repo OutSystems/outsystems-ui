@@ -60,7 +60,8 @@
 		justify-content: center;
 		line-height: variables.$token-font-line-height-500;
 		min-width: var(--osui-button-group-min-width);
-		padding: variables.$token-scale-0 var(--osui-button-group-padding-inline);
+		padding-block: variables.$token-scale-0;
+		padding-inline: var(--osui-button-group-padding-inline);
 		position: relative;
 		transition:
 			background-color variables.$token-transition-time-100 variables.$token-transition-curve-base,
@@ -131,9 +132,9 @@
 				bottom: -1px;
 				box-shadow: 0 0 0 variables.$token-border-size-075 var(--color-focus-outer);
 				content: '';
-				left: -1px;
+				inset-inline-end: -1px;
+				inset-inline-start: -1px;
 				position: absolute;
-				right: -1px;
 				top: -1px;
 				z-index: var(--layer-global-screen);
 			}
@@ -151,9 +152,9 @@
 			bottom: 0;
 			content: '';
 			display: block;
-			left: 0;
+			inset-inline-end: 0;
+			inset-inline-start: 0;
 			position: absolute;
-			right: 0;
 			top: 0;
 		}
 	}

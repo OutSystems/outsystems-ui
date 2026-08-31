@@ -27,7 +27,7 @@
 
 	.form-control {
 		&[data-input] {
-			padding-left: variables.$token-scale-1000;
+			padding-inline-start: variables.$token-scale-1000;
 		}
 	}
 }
@@ -35,23 +35,7 @@
 .form {
 	.osui-search {
 		input[data-input] {
-			margin-bottom: variables.$token-scale-0;
-		}
-	}
-}
-
-// IsRTL -------------------------------------------------------------------------
-///
-.is-rtl {
-	.osui-search {
-		&__input:after {
-			left: auto;
-			right: variables.$token-scale-400;
-		}
-
-		.form-control[data-input] {
-			padding-left: variables.$token-scale-400;
-			padding-right: variables.$token-scale-1000;
+			margin-block-end: variables.$token-scale-0;
 		}
 	}
 }
@@ -66,7 +50,7 @@
 				&,
 				&:empty {
 					border: variables.$token-border-size-0;
-					padding-left: variables.$token-scale-1000;
+					padding-inline-start: variables.$token-scale-1000;
 				}
 			}
 		}

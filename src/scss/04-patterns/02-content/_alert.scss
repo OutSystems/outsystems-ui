@@ -76,12 +76,3 @@
 		--osui-alert-accent-color: var(--color-warning);
 	}
 }
-
-// IsRTL -------------------------------------------------------------------------
-///
-.is-rtl {
-	.alert-icon {
-		margin-left: variables.$token-scale-400;
-		margin-right: 0;
-	}
-}

@@ -8,7 +8,7 @@
 ///
 .list-updating {
 	height: variables.$token-scale-1000;
-	margin-top: variables.$token-scale-600;
+	margin-block-start: variables.$token-scale-600;
 	position: relative;
 
 	&:before {
@@ -16,13 +16,13 @@
 			spin variables.$token-transition-time-1000 infinite variables.$token-transition-curve-linear,
 			fade variables.$token-transition-time-300 variables.$token-transition-curve-expressive;
 		border: 5px solid var(--color-border-input);
+		border-block-start-color: variables.$token-primitives-neutral-700;
 		border-radius: 50%;
-		border-top-color: variables.$token-primitives-neutral-700;
 		box-sizing: border-box;
 		content: '';
 		height: variables.$token-scale-1000;
-		left: 50%;
-		margin-left: -20px;
+		inset-inline-start: 50%;
+		margin-inline-start: -20px;
 		position: absolute;
 		width: variables.$token-scale-1000;
 

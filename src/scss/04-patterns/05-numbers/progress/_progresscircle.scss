@@ -20,7 +20,8 @@
 	&__container {
 		display: inline-block;
 		height: var(--circle-size);
-		margin: 0 auto;
+		margin-block: 0;
+		margin-inline: auto;
 		position: relative;
 		width: var(--circle-size);
 
@@ -35,7 +36,7 @@
 			cx: 50%;
 			cy: 50%;
 			fill: transparent;
-			left: 0;
+			inset-inline-start: 0;
 			position: absolute;
 			r: var(--radius);
 			stroke-width: var(--thickness);

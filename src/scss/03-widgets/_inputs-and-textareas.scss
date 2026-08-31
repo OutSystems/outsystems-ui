@@ -64,7 +64,8 @@
 
 	&[data-input] {
 		height: variables.$token-scale-1000;
-		padding: variables.$token-scale-0 variables.$token-scale-400;
+		padding-block: variables.$token-scale-0;
+		padding-inline: variables.$token-scale-400;
 	}
 
 	&[data-textarea] {
@@ -79,7 +80,8 @@
 			&[data-input] {
 				font-size: variables.$token-font-size-300;
 				height: variables.$token-scale-800;
-				padding: variables.$token-scale-0 variables.$token-scale-200;
+				padding-block: variables.$token-scale-0;
+				padding-inline: variables.$token-scale-200;
 			}
 
 			&[data-textarea] {
@@ -125,14 +127,14 @@
 	color: var(--color-text-subtlest);
 	font-size: variables.$token-font-size-300;
 	line-height: variables.$token-font-line-height-400;
-	margin-top: variables.$token-scale-100;
+	margin-block-start: variables.$token-scale-100;
 }
 
 span.validation-message {
 	color: variables.$token-text-danger;
 	display: block;
 	font-size: variables.$token-font-size-300;
-	margin-top: variables.$token-scale-100;
+	margin-block-start: variables.$token-scale-100;
 }
 
 .char-counter {
@@ -175,11 +177,11 @@ span.validation-message {
 			&[data-input] {
 				background-color: var(--background-color-header, var(--color-background-header));
 				border: 0;
-				border-bottom: variables.$token-border-size-025 solid transparent;
+				border-block-end: variables.$token-border-size-025 solid transparent;
 				border-radius: 0;
 
 				&:focus {
-					border-bottom: variables.$token-border-size-025 solid var(--osui-input-focus-border-color);
+					border-block-end: variables.$token-border-size-025 solid var(--osui-input-focus-border-color);
 				}
 			}
 		}

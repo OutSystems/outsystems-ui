@@ -38,29 +38,33 @@
 	&.is-vertical {
 		[data-block*='WizardItem']:last-child {
 			.osui-wizard-item {
-				margin-bottom: variables.$token-scale-0;
+				margin-block-end: variables.$token-scale-0;
 			}
 		}
 
 		.osui-wizard-item {
 			align-items: center;
 			flex-direction: row;
-			margin-bottom: var(--osui-wizard-item-spacing);
+			margin-block-end: var(--osui-wizard-item-spacing);
 
 			&.is-reversed {
 				flex-direction: row-reverse;
 
 				.osui-wizard-item-label {
-					text-align: right;
+					text-align: end;
 				}
 
 				.osui-wizard-item-icon-wrapper {
-					margin: variables.$token-scale-0 variables.$token-scale-0 variables.$token-scale-0 variables.$token-scale-200;
+					margin-block: variables.$token-scale-0;
+					margin-inline-end: variables.$token-scale-0;
+					margin-inline-start: variables.$token-scale-200;
 				}
 			}
 
 			.osui-wizard-item-icon-wrapper {
-				margin: variables.$token-scale-0 variables.$token-scale-200 variables.$token-scale-0 variables.$token-scale-0;
+				margin-block: variables.$token-scale-0;
+				margin-inline-end: variables.$token-scale-200;
+				margin-inline-start: variables.$token-scale-0;
 				width: auto;
 
 				// Same marker-centre-to-marker-centre rule as the horizontal connector, on
@@ -115,34 +119,6 @@
 			.osui-wizard-item-icon-wrapper {
 				&:before {
 					content: none;
-				}
-			}
-		}
-	}
-}
-
-// IsRTL ---------------------------------------------------------------------------
-///
-.is-rtl {
-	.osui-wizard {
-		// Mirror of the LTR connector: same marker-centre anchor, extended the other way.
-		// `right`/`width` are physical, so without this the horizontal connector would
-		// point away from the previous step.
-		.osui-wizard-item-icon-wrapper:before {
-			left: 50%;
-			right: auto;
-		}
-
-		&.is-vertical {
-			.osui-wizard-item {
-				.osui-wizard-item-icon-wrapper {
-					margin: variables.$token-scale-0 variables.$token-scale-0 variables.$token-scale-0 variables.$token-scale-200;
-				}
-
-				&.is-reversed {
-					.osui-wizard-item-icon-wrapper {
-						margin: variables.$token-scale-0 variables.$token-scale-200 variables.$token-scale-0 variables.$token-scale-0;
-					}
 				}
 			}
 		}

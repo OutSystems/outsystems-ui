@@ -30,7 +30,8 @@
 		height: variables.$token-scale-400;
 		justify-content: center;
 		min-width: variables.$token-scale-400;
-		padding: variables.$token-scale-0 variables.$token-scale-100;
+		padding-block: variables.$token-scale-0;
+		padding-inline: variables.$token-scale-100;
 		transform: translate(50%, -50%);
 		white-space: nowrap;
 

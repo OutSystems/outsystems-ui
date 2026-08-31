@@ -233,6 +233,25 @@
 
 /* Right-To-Left Support */
 
+/*
+ * ADDED FOR STORYBOOK — not present in the vendored source.
+ *
+ * A real RTL app renders <html lang="ar" dir="rtl"> with <body class="… is-rtl …">, and
+ * the running platform gives the document an author-level `direction: rtl`. That rule is
+ * NOT in the extracted widget CSS this file was copied from, and without it OutSystems
+ * UI's own `body { direction: ltr }` reset (01-foundations/_resets.scss — an author
+ * declaration, so it outranks the UA mapping of the `dir` attribute) wins at <body> and
+ * every logical property in the bundle resolves LTR. The RTL toolbar toggle then appears
+ * to do nothing.
+ *
+ * Both selectors are (0,1,1), so they beat `body` (0,0,1) regardless of load order.
+ */
+[dir='rtl'] body,
+body.is-rtl {
+    direction: rtl;
+}
+
+
 .is-rtl [data-dropdown] > .dropdown-display:after {
     left: 5px;
     right: auto;

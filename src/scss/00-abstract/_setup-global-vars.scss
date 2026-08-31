@@ -17,7 +17,15 @@ $footer-height: 0px;
 /* Build helpers — name lists iterated by @each for utility class generation    */
 /* ---------------------------------------------------------------------------- */
 $osui-devices: 'phone', 'tablet', 'desktop';
-$osui-box-sides: 'top', 'right', 'bottom', 'left';
+// Physical class-name suffix -> logical box side. The generated class names are public
+// API (`.margin-left-s`, `.border-top-m`) and keep their physical spelling; the property
+// they emit is logical, so the utilities mirror in RTL without an `.is-rtl` duplicate.
+$osui-box-sides: (
+	'top': 'block-start',
+	'right': 'inline-end',
+	'bottom': 'block-end',
+	'left': 'inline-start',
+);
 $osui-box-corners: 'top-left', 'top-right', 'bottom-right', 'bottom-left';
 $osui-border-radius-box-sides:
 	'top' 'left' 'right',

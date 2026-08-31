@@ -63,16 +63,17 @@
 // Responsive --------------------------------------------------------------------
 ///
 .android .layout-native .login-screen {
-	padding-top: #{android-safe-area-top()};
-	padding-bottom: var(--safe-area-inset-bottom, 0px);
-	padding-left: var(--safe-area-inset-left, 0px);
-	padding-right: var(--safe-area-inset-right, 0px);
+	padding-block-start: #{android-safe-area-top()};
+	padding-block-end: var(--safe-area-inset-bottom, 0px);
+	padding-inline-start: var(--safe-area-inset-left, 0px);
+	padding-inline-end: var(--safe-area-inset-right, 0px);
 }
 
 ///
 .phone {
 	.login-form {
-		margin: variables.$token-scale-0 variables.$token-scale-400;
+		margin-block: variables.$token-scale-0;
+		margin-inline: variables.$token-scale-400;
 		min-width: auto;
 		padding: variables.$token-scale-800;
 		width: 100%;
@@ -91,7 +92,7 @@
 		}
 
 		&.blank .login-button .btn {
-			padding-bottom: variables.$token-scale-0;
+			padding-block-end: variables.$token-scale-0;
 		}
 	}
 }

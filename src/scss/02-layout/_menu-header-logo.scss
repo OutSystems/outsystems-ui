@@ -9,7 +9,8 @@
 .layout-side {
 	.header-logo {
 		height: var(--size-header);
-		padding: variables.$token-scale-0 variables.$token-scale-600;
+		padding-block: variables.$token-scale-0;
+		padding-inline: variables.$token-scale-600;
 	}
 }
 
@@ -18,6 +19,7 @@
 .phone {
 	.header-logo {
 		height: var(--size-header);
-		padding: variables.$token-scale-0 variables.$token-scale-600;
+		padding-block: variables.$token-scale-0;
+		padding-inline: variables.$token-scale-600;
 	}
 }

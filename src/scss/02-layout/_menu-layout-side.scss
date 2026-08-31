@@ -54,13 +54,13 @@
 .desktop {
 	.layout-side {
 		&:not(.layout-native):not(.aside-overlay) .app-menu-content {
-			left: 0;
-			right: 0;
+			inset-inline-end: 0;
+			inset-inline-start: 0;
 			transform: none;
 		}
 
 		&.aside-expandable:not(.fixed-header) .app-menu-content {
-			padding-top: var(--size-header);
+			padding-block-start: var(--size-header);
 			top: 0;
 		}
 	}
@@ -72,7 +72,7 @@
 			}
 
 			.main {
-				margin-left: var(--size-side-menu);
+				margin-inline-start: var(--size-side-menu);
 			}
 		}
 
@@ -94,38 +94,16 @@
 	}	
 }
 
-
 // IsRTL -------------------------------------------------------------------------
 ///
 .is-rtl {
-	&.desktop {
-		.aside-expandable.menu-visible {
-			.main {
-				margin-left: 0;
-				margin-right: var(--size-side-menu);
-			}
-		}
-	}
-	.layout-side .app-menu-content {
-		left: auto;
-	}
 
 	.app-menu-content {
-		right: calc(-1 * var(--size-side-menu));
 		transition: transform 330ms ease-in;
 	}
 
 	.app-menu-content.is--open {
-		right: 0;
 		transform: translateX(0) translateZ(0);
 		transition: transform 130ms ease-out;
-	}
-
-	&:not(.portrait) {
-		.layout-side.layout-native.aside-visible {
-			.app-menu-content {
-				right: 0;
-			}
-		}
 	}
 }

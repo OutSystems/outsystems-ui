@@ -21,7 +21,8 @@
 	flex: 1;
 	min-height: variables.$token-scale-1000;
 	overflow: hidden;
-	padding: variables.$token-scale-200 variables.$token-scale-400;
+	padding-block: variables.$token-scale-200;
+	padding-inline: variables.$token-scale-400;
 	position: relative;
 	transition: background variables.$token-transition-time-300 variables.$token-transition-curve-expressive;
 	width: 100%;
@@ -49,7 +50,7 @@
 			flex-shrink: 0;
 			font-family: var(--osui-icon-font-family);
 			font-size: variables.$token-font-size-400;
-			margin-left: variables.$token-scale-200;
+			margin-inline-start: variables.$token-scale-200;
 		}
 	}
 
@@ -102,9 +103,9 @@
 				bottom: 0;
 				content: '';
 				display: block;
-				left: 0;
+				inset-inline-start: 0;
 				position: absolute;
-				right: 0;
+				inset-inline-end: 0;
 				top: 0;
 			}
 		}

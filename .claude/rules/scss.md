@@ -83,7 +83,7 @@ Form controls are styled via data attributes: `[data-input]`, `[data-textarea]`,
 
 `.is-active`, `.is-disabled`, `.is-open`, `.is-hidden`, `.is-selected`, `.is-focused`, `.is-inline`, `.is-rtl`, `.has-accessible-features`, `.has-event`.
 
-`.is-rtl` is used as a context selector throughout; prefer logical properties (`margin-inline-start`, `inset-inline`) in new code.
+`.is-rtl` is a context selector for the handful of genuinely physical properties only — see §15.
 
 ## 8. Pattern-scoped custom properties
 
@@ -172,3 +172,89 @@ Flag in review:
 - Imports of `_*_lib.scss` vendor baselines.
 - Hand-edits of `O11.OutSystemsUI.scss` / `ODC.OutSystemsUI.scss`.
 - Style rules on `08-servicestudio-preview/` files (read-only for runtime code).
+
+## 15. Logical box model — the default since ROU-13013
+
+`padding`, `margin`, `border` and `inset` are written **logically**. A physical side needs a
+comment saying why.
+
+| Write this | Not this |
+|---|---|
+| `padding-inline-start` / `-end` | `padding-left` / `-right` |
+| `padding-block-start` / `-end` | `padding-top` / `-bottom` |
+| `padding-block: a; padding-inline: b` | `padding: a b` |
+| `border-inline-start` (+ `-width` / `-style` / `-color`) | `border-left` |
+| `border-start-start-radius` … | `border-top-left-radius` … |
+| `inset-inline-start` / `-end` | `left` / `right` |
+| `text-align: start` / `end` | `text-align: left` / `right` |
+
+Corollaries:
+
+- **Component CSS API names carry the axis, never the side** — `--osui-x-padding-inline`,
+  `--osui-x-padding-block`, `--osui-x-padding-inline-start`. No `-x` / `-y` / `-left` / `-right`.
+- **Never put a multi-value box shorthand in a custom property.** It cannot mirror without
+  restating the whole value. Split it into `…-block` + `…-inline-start` + `…-inline-end`.
+- **Convert whole rules.** Logical and physical longhands that resolve to the same side have
+  no specificity relationship — the later declaration wins — so a half-converted rule fails
+  silently.
+- **`border-radius` shorthand only when the inline axis is asymmetric.** `8px 8px 0 0`
+  mirrors to itself.
+
+### Two traps that produce wrong RTL
+
+**1. Never mix a logical inset with a physical x-axis transform on the same element.**
+`transform` has no logical form, so it never mirrors. Pair it with `inset-inline-*` and the
+anchor flips in RTL while the transform does not:
+
+```scss
+// WRONG - in RTL the anchor moves to the right edge, translateX still pushes right
+inset-inline-start: 0;
+transform: translateX(8px);
+
+// RIGHT - both halves in the same coordinate system
+left: 0;
+transform: translateX(8px);
+```
+
+This bit the Switch (thumb slid outside its track in RTL) and every use of the centring
+idiom `left: 50%; transform: translateX(-50%)`. No grep catches this — it needs to know
+both declarations are on the same element — so it is a review check: **a rule with an
+x-axis transform keeps its inset physical.**
+
+**2. Before deleting an `.is-rtl` rule, check the base declaration is ours.** Some `.is-rtl`
+rules mirror physical CSS owned by the **platform** stylesheet or a vendor baseline, not by
+OSUI. Making our side logical does nothing for those - the physical base never mirrors, so
+the `.is-rtl` rule is still load-bearing. Popover ODC (platform's `margin-left: -50%`) and
+Scrollable Area are the two kept for this reason.
+
+### Still physical, on purpose
+
+`transform` (`translateX`, `scaleX`, `rotate`), `transform-origin`, `box-shadow` /
+`text-shadow` offsets, `background-position`, `linear-gradient(to right)`,
+`flex-direction: row-reverse`, `float` (the logical keywords need Chrome 118 / Safari 16.4),
+positional `top` / `bottom`, **every declaration reading a `--os-safe-area-*` var** (the
+value is a physical `env()`, so a logical property would flip the side but not the value),
+everything `-servicestudio-*`, and the vendor baselines.
+
+### Direction-pinned subtrees
+
+Inside an element whose computed `direction` is `ltr`, a logical property resolves LTR and
+does **not** mirror. Three such islands exist: `.flatpickr-calendar` (vendor —
+`date-picker` / `month-picker` / `time-picker` provider SCSS is therefore excluded from the
+conversion and stays physical), `.osui-accordion-item__title`, and `.is-rtl .splide--ltr`.
+Check for a pin before converting anything inside a provider subtree.
+
+### Finding stragglers
+
+```bash
+grep -rnE '^[[:space:]]*(padding|margin|border)-(left|right|top|bottom)|^[[:space:]]*(left|right):' \
+  src/scss --include='*.scss' \
+  | grep -vE '_lib\.scss|splide-core|08-servicestudio|09-excluders|provider/_flatpickr|-servicestudio-'
+```
+
+Everything it returns should either be converted or carry a comment saying why it is
+physical. The durable guard is the stylelint `property-disallowed-list` rule described in
+`specs/plan-part-five.md` §7 — not yet wired, because stylelint 14 here has no
+`customSyntax: postcss-scss` and cannot parse `//` comments.
+
+See `specs/plan-part-five.md` for the full rationale and the follow-ups.
