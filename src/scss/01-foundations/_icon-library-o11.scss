@@ -136,6 +136,17 @@
 	}
 }
 
+// IsRTL — the chevron's base position is deliberately physical (right: 16px,
+// paired with a physical rotate), so it needs a hand-written mirror
+.is-rtl {
+	.dropdown-container {
+		&:after {
+			left: 16px;
+			right: auto;
+		}
+	}
+}
+
 // Table Widget - Sortable Icon
 .sortable-icon {
 	display: inline-block;
