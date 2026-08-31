@@ -205,83 +205,86 @@ export const BorderRadius = ${JSON.stringify(borderRadii, null, 4)};
 }
 
 /**
+ * Look ahead a few lines from a class opening for the declaration that reveals
+ * the spacing scale, e.g. margin-block-start: $token-space-100.
+ */
+function findScaleAhead(lines, start, valueRegex, maxAhead) {
+    for (let j = start + 1; j < Math.min(start + maxAhead, lines.length); j++) {
+        const valueMatch = lines[j].match(valueRegex);
+        if (valueMatch) {
+            return valueMatch[1];
+        }
+    }
+    return null;
+}
+
+/**
+ * Match a .token-margin-* / .token-padding-* class opening at lines[i] and
+ * resolve its scale from the following declarations.
+ */
+function matchBoxSpacingClass(lines, i, property) {
+    const classRegex = new RegExp(
+        `^\\.token-(${property}(?:-top|-end|-bottom|-start|-vertical|-horizontal)?(?:-(\\d+|050|025|075))?)\\s*\\{`
+    );
+    const classMatch = lines[i].match(classRegex);
+    if (!classMatch) {
+        return null;
+    }
+
+    const valueRegex = new RegExp(`${property}-(?:block|inline)-(?:start|end):\\s*\\$token-space-(\\d+|050|025|075)`);
+    const scale = findScaleAhead(lines, i, valueRegex, 10);
+    return scale ? { className: `.token-${classMatch[1]}`, scale } : null;
+}
+
+/**
+ * Match a .token-gap-* class opening at lines[i] and resolve its scale.
+ */
+function matchGapClass(lines, i) {
+    const gapMatch = lines[i].match(/^\.token-gap-(\d+|050|025|075)\s*\{/);
+    if (!gapMatch) {
+        return null;
+    }
+
+    const scale = findScaleAhead(lines, i, /gap:\s*#\{\$token-space-(\d+|050|025|075)\}/, 5);
+    return scale ? { className: `.token-gap-${gapMatch[1]}`, scale } : null;
+}
+
+/**
  * Parse margin, padding, and gap utilities from SCSS
  */
 function parseSpacingUtilities(content) {
     const margins = [];
     const paddings = [];
     const gaps = [];
-    
+
     // Match patterns like .token-margin-100 { ... margin-block-start: $token-space-100; }
     const lines = content.split('\n');
-    
+
     for (let i = 0; i < lines.length; i++) {
-        const line = lines[i];
-        
-        // Match margin classes
-        const marginMatch = line.match(/^\.token-(margin(?:-top|-end|-bottom|-start|-vertical|-horizontal)?(?:-(\d+|050|025|075))?)\s*\{/);
-        if (marginMatch) {
-            const className = marginMatch[1];
-            const scale = marginMatch[2] || '400'; // default is 400
-            
-            // Look ahead a few lines to find the value
-            for (let j = i + 1; j < Math.min(i + 10, lines.length); j++) {
-                const valueMatch = lines[j].match(/margin-(?:block|inline)-(?:start|end):\s*\$token-space-(\d+|050|025|075)/);
-                if (valueMatch) {
-                    margins.push({
-                        className: `.token-${className}`,
-                        scale: valueMatch[1]
-                    });
-                    break;
-                }
-            }
+        const margin = matchBoxSpacingClass(lines, i, 'margin');
+        if (margin) {
+            margins.push(margin);
         }
-        
-        // Match padding classes
-        const paddingMatch = line.match(/^\.token-(padding(?:-top|-end|-bottom|-start|-vertical|-horizontal)?(?:-(\d+|050|025|075))?)\s*\{/);
-        if (paddingMatch) {
-            const className = paddingMatch[1];
-            const scale = paddingMatch[2] || '400'; // default is 400
-            
-            // Look ahead a few lines to find the value
-            for (let j = i + 1; j < Math.min(i + 10, lines.length); j++) {
-                const valueMatch = lines[j].match(/padding-(?:block|inline)-(?:start|end):\s*\$token-space-(\d+|050|025|075)/);
-                if (valueMatch) {
-                    paddings.push({
-                        className: `.token-${className}`,
-                        scale: valueMatch[1]
-                    });
-                    break;
-                }
-            }
+
+        const padding = matchBoxSpacingClass(lines, i, 'padding');
+        if (padding) {
+            paddings.push(padding);
         }
-        
-        // Match gap classes
-        const gapMatch = line.match(/^\.token-gap-(\d+|050|025|075)\s*\{/);
-        if (gapMatch) {
-            const scale = gapMatch[1];
-            // Look ahead to find the value
-            for (let j = i + 1; j < Math.min(i + 5, lines.length); j++) {
-                const valueMatch = lines[j].match(/gap:\s*#\{\$token-space-(\d+|050|025|075)\}/);
-                if (valueMatch) {
-                    gaps.push({
-                        className: `.token-gap-${scale}`,
-                        scale: valueMatch[1]
-                    });
-                    break;
-                }
-            }
+
+        const gap = matchGapClass(lines, i);
+        if (gap) {
+            gaps.push(gap);
         }
-        
+
         // Match no-margin and no-padding
-        if (line.match(/^\.token-no-margin\s*\{/)) {
+        if (lines[i].match(/^\.token-no-margin\s*\{/)) {
             margins.push({ className: '.token-no-margin', scale: '0' });
         }
-        if (line.match(/^\.token-no-padding\s*\{/)) {
+        if (lines[i].match(/^\.token-no-padding\s*\{/)) {
             paddings.push({ className: '.token-no-padding', scale: '0' });
         }
     }
-    
+
     return { margins, paddings, gaps };
 }
 
@@ -460,6 +463,30 @@ export const Gap = ${JSON.stringify(gaps, null, 4)};
 }
 
 /**
+ * Usage blurb for a token-bg-{category}-{variant} background token.
+ */
+function bgUsage(category, variant) {
+    if (variant.includes('base-default')) return `Default ${category} background`;
+    if (variant.includes('base-press')) return `Pressed state ${category} background`;
+    if (variant.includes('subtle-default')) return `Subtle ${category} background`;
+    if (variant.includes('subtle-press')) return `Pressed state subtle ${category} background`;
+    return '';
+}
+
+/** Capitalize the first letter (primary -> Primary). */
+function capitalize(value) {
+    return value.charAt(0).toUpperCase() + value.slice(1);
+}
+
+/** Flat color roles collected by prefix into a top-level colors.* array. */
+const COLOR_ROLE_GROUPS = [
+    { key: 'text', prefix: 'token-text-' },
+    { key: 'surface', prefix: 'token-surface-' },
+    { key: 'border', prefix: 'token-border-', exclude: /-(size|radius|style)-/ },
+    { key: 'icon', prefix: 'token-icon-' },
+];
+
+/**
  * Generate colors.js
  */
 function generateColors(variables, utilities) {
@@ -503,147 +530,83 @@ function generateColors(variables, utilities) {
         icon: [],
     };
     
+    // Shared trailing fields of every color entry (values are always lowercased)
+    const entryFields = (varName, data) => ({
+        token: tokenToDotNotation(varName),
+        css_variable: data.css_variable,
+        utility_class: utilities[varName] ? utilities[varName][0] : `.${varName}`,
+        value: resolveValue(data.value, variables).toLowerCase(),
+    });
+
+    const namedEntry = (name, varName, data) => ({
+        name,
+        usage: ' ',
+        ...entryFields(varName, data),
+    });
+
+    // Background colors (bg-primary-*, bg-danger-*, etc.)
+    const collectBackground = (varName, data) => {
+        const match = varName.match(/^token-bg-(primary|danger|success|info|warning)-(.+)$/);
+        if (!match) return false;
+        colors.bg[match[1]].push({
+            ...entryFields(varName, data),
+            usage: bgUsage(match[1], match[2]),
+        });
+        return true;
+    };
+
+    // Semantics base colors
+    const collectSemanticsBase = (varName, data) => {
+        const match = varName.match(/^token-semantics-(primary|info|success|danger|warning)-base$/);
+        if (!match) return false;
+        colors.semanticsbase.push(namedEntry(capitalize(match[1]), varName, data));
+        return true;
+    };
+
+    // Semantics color scales
+    const collectSemanticsScale = (varName, data) => {
+        const match = varName.match(/^token-semantics-(primary|info|success|danger|warning)-(\d+)$/);
+        if (!match || !colors.semantics[match[1]]) return false;
+        colors.semantics[match[1]].push(namedEntry(`${capitalize(match[1])} ${match[2]}`, varName, data));
+        return true;
+    };
+
+    // Primitives
+    const collectPrimitiveScale = (varName, data) => {
+        const match = varName.match(
+            /^token-primitives-(neutral|red|pumpkin|orange|yellow|lime|green|teal|aqua|blue|indigo|violet|purple|magenta|pink)-(\d+)$/
+        );
+        if (!match || !colors.primitives[match[1]]) return false;
+        colors.primitives[match[1]].push(namedEntry(`${capitalize(match[1])} ${match[2]}`, varName, data));
+        return true;
+    };
+
+    // Base colors (white, black)
+    const collectPrimitiveBase = (varName, data) => {
+        const match = varName.match(/^token-primitives-base-(white|black)$/);
+        if (!match) return false;
+        colors.primitives.base.push(namedEntry(capitalize(match[1]), varName, data));
+        return true;
+    };
+
+    // Text / surface / border / icon colors
+    const collectRole = (varName, data) => {
+        for (const { key, prefix, exclude } of COLOR_ROLE_GROUPS) {
+            if (!varName.startsWith(prefix) || (exclude && exclude.test(varName))) continue;
+            colors[key].push(namedEntry(varName.replace(prefix, '').replace(/-/g, ' '), varName, data));
+            return true;
+        }
+        return false;
+    };
+
     Object.entries(variables).forEach(([varName, data]) => {
-        // Background colors (bg-primary-*, bg-danger-*, etc.)
-        if (varName.match(/^token-bg-(primary|danger|success|info|warning)-/) && !varName.includes('-rgb')) {
-            const match = varName.match(/^token-bg-(primary|danger|success|info|warning)-(.+)$/);
-            if (match) {
-                const category = match[1];
-                const variant = match[2];
-                const resolvedValue = resolveValue(data.value, variables);
-                
-                // Create usage description
-                let usage = '';
-                if (variant.includes('base-default')) {
-                    usage = `Default ${category} background`;
-                } else if (variant.includes('base-press')) {
-                    usage = `Pressed state ${category} background`;
-                } else if (variant.includes('subtle-default')) {
-                    usage = `Subtle ${category} background`;
-                } else if (variant.includes('subtle-press')) {
-                    usage = `Pressed state subtle ${category} background`;
-                }
-                
-                colors.bg[category].push({
-                    token: tokenToDotNotation(varName),
-                    css_variable: data.css_variable,
-                    utility_class: utilities[varName] ? utilities[varName][0] : `.${varName}`,
-                    value: resolvedValue.toLowerCase(),
-                    usage: usage,
-                });
-            }
-        }
-        // Semantics base colors
-        else if (varName.match(/^token-semantics-(primary|info|success|danger|warning)-base$/)) {
-            const type = varName.match(/semantics-([a-z]+)-base/)[1];
-            const resolvedValue = resolveValue(data.value, variables);
-            colors.semanticsbase.push({
-                name: type.charAt(0).toUpperCase() + type.slice(1),
-                usage: " ",
-                token: tokenToDotNotation(varName),
-                css_variable: data.css_variable,
-                utility_class: utilities[varName] ? utilities[varName][0] : `.${varName}`,
-                value: resolvedValue.toLowerCase(),
-            });
-        }
-        // Semantics color scales
-        else if (varName.match(/^token-semantics-(primary|info|success|danger|warning)-\d+$/)) {
-            const match = varName.match(/semantics-([a-z]+)-(\d+)/);
-            const type = match[1];
-            const scale = match[2];
-            const resolvedValue = resolveValue(data.value, variables);
-            
-            if (colors.semantics[type]) {
-                colors.semantics[type].push({
-                    name: `${type.charAt(0).toUpperCase() + type.slice(1)} ${scale}`,
-                    usage: " ",
-                    token: tokenToDotNotation(varName),
-                    css_variable: data.css_variable,
-                    utility_class: utilities[varName] ? utilities[varName][0] : `.${varName}`,
-                    value: resolvedValue.toLowerCase(),
-                });
-            }
-        }
-        // Primitives
-        else if (varName.match(/^token-primitives-(neutral|red|pumpkin|orange|yellow|lime|green|teal|aqua|blue|indigo|violet|purple|magenta|pink)-\d+$/)) {
-            const match = varName.match(/primitives-([a-z]+)-(\d+)/);
-            const colorName = match[1];
-            const scale = match[2];
-            const resolvedValue = resolveValue(data.value, variables);
-            
-            if (colors.primitives[colorName]) {
-                colors.primitives[colorName].push({
-                    name: `${colorName.charAt(0).toUpperCase() + colorName.slice(1)} ${scale}`,
-                    usage: " ",
-                    token: tokenToDotNotation(varName),
-                    css_variable: data.css_variable,
-                    utility_class: utilities[varName] ? utilities[varName][0] : `.${varName}`,
-                    value: resolvedValue.toLowerCase(),
-                });
-            }
-        }
-        // Base colors (white, black)
-        else if (varName.match(/^token-primitives-base-(white|black)$/)) {
-            const colorName = varName.match(/base-([a-z]+)/)[1];
-            const resolvedValue = resolveValue(data.value, variables);
-            colors.primitives.base.push({
-                name: colorName.charAt(0).toUpperCase() + colorName.slice(1),
-                usage: " ",
-                token: tokenToDotNotation(varName),
-                css_variable: data.css_variable,
-                utility_class: utilities[varName] ? utilities[varName][0] : `.${varName}`,
-                value: resolvedValue.toLowerCase(),
-            });
-        }
-        // Text colors
-        else if (varName.startsWith('token-text-') && !varName.includes('-rgb')) {
-            const resolvedValue = resolveValue(data.value, variables);
-            colors.text.push({
-                name: varName.replace('token-text-', '').replace(/-/g, ' '),
-                usage: " ",
-                token: tokenToDotNotation(varName),
-                css_variable: data.css_variable,
-                utility_class: utilities[varName] ? utilities[varName][0] : `.${varName}`,
-                value: resolvedValue.toLowerCase(),
-            });
-        }
-        // Surface colors
-        else if (varName.startsWith('token-surface-') && !varName.includes('-rgb')) {
-            const resolvedValue = resolveValue(data.value, variables);
-            colors.surface.push({
-                name: varName.replace('token-surface-', '').replace(/-/g, ' '),
-                usage: " ",
-                token: tokenToDotNotation(varName),
-                css_variable: data.css_variable,
-                utility_class: utilities[varName] ? utilities[varName][0] : `.${varName}`,
-                value: resolvedValue.toLowerCase(),
-            });
-        }
-        // Border colors
-        else if (varName.startsWith('token-border-') && !varName.includes('-rgb') && 
-                 !varName.includes('-size-') && !varName.includes('-radius-') && !varName.includes('-style-')) {
-            const resolvedValue = resolveValue(data.value, variables);
-            colors.border.push({
-                name: varName.replace('token-border-', '').replace(/-/g, ' '),
-                usage: " ",
-                token: tokenToDotNotation(varName),
-                css_variable: data.css_variable,
-                utility_class: utilities[varName] ? utilities[varName][0] : `.${varName}`,
-                value: resolvedValue.toLowerCase(),
-            });
-        }
-        // Icon colors
-        else if (varName.startsWith('token-icon-') && !varName.includes('-rgb')) {
-            const resolvedValue = resolveValue(data.value, variables);
-            colors.icon.push({
-                name: varName.replace('token-icon-', '').replace(/-/g, ' '),
-                usage: " ",
-                token: tokenToDotNotation(varName),
-                css_variable: data.css_variable,
-                utility_class: utilities[varName] ? utilities[varName][0] : `.${varName}`,
-                value: resolvedValue.toLowerCase(),
-            });
-        }
+        if (varName.includes('-rgb')) return; // rgb triplet variants are never documented
+        if (collectBackground(varName, data)) return;
+        if (collectSemanticsBase(varName, data)) return;
+        if (collectSemanticsScale(varName, data)) return;
+        if (collectPrimitiveScale(varName, data)) return;
+        if (collectPrimitiveBase(varName, data)) return;
+        collectRole(varName, data);
     });
     
     const content = `export const Colors = ${JSON.stringify(colors, null, 4)};
@@ -827,6 +790,41 @@ function generateShape(variables, utilities) {
 }
 
 /**
+ * Parse the properties of one SCSS map body into a plain object.
+ */
+function parseScssMapProps(mapContent) {
+    const props = {};
+    for (const propMatch of mapContent.matchAll(/([a-z-]+):\s*\$?([^,\n]+)/g)) {
+        const [, propName, propValue] = propMatch;
+        props[propName.trim()] = propValue.trim().replace(/,\s*$/, '');
+    }
+    return props;
+}
+
+/**
+ * Resolve one part of a composite typography token (font-size / font-weight /
+ * line-height) into its scale token and actual value.
+ */
+function typographyPart(props, propName, tokenGroup, variables) {
+    const ref = props[propName];
+    const token = ref ? ref.replace(new RegExp(`^\\$?token-${tokenGroup}-`), '') : '';
+    const varName = `token-${tokenGroup}-${token}`;
+    const value = variables[varName] ? resolveValue(variables[varName].value, variables) : '';
+    return { token, value };
+}
+
+/**
+ * Human-readable name for a typography variant (e.g. Heading 1 bold).
+ */
+function formatTypographyName(category, variantParts) {
+    if (category === 'display') return `Display ${variantParts[0]} ${variantParts[1]}`;
+    if (category === 'heading') return `Heading ${variantParts[0].toUpperCase().replace('H', '')} ${variantParts[1]}`;
+    if (category === 'body' && variantParts[0] === 'action') return `Body action ${variantParts[1]}`;
+    if (category === 'body') return `Body ${variantParts[0]} ${variantParts[1]}`;
+    return '';
+}
+
+/**
  * Parse composite typography tokens (SCSS maps)
  * Matches patterns like: $token-display-lg-regular: ( font-size: $token-font-size-900, ... );
  */
@@ -836,79 +834,38 @@ function parseTypographyMaps(content, variables) {
         heading: [],
         body: []
     };
-    
+
     // Match SCSS maps for typography
     const mapRegex = /\$token-(display|heading|body)-([a-z0-9-]+):\s*\(([\s\S]*?)\);/g;
-    
+
     let match;
     while ((match = mapRegex.exec(content)) !== null) {
         const [, category, variant, mapContent] = match;
-        
-        // Parse map properties
-        const props = {};
-        const propMatches = mapContent.matchAll(/([a-z-]+):\s*\$?([^,\n]+)/g);
-        for (const propMatch of propMatches) {
-            const [, propName, propValue] = propMatch;
-            props[propName.trim()] = propValue.trim().replace(/,\s*$/, '');
-        }
-        
-        // Get the scale/size from font-size reference
-        const fontSizeRef = props['font-size'];
-        const fontWeightRef = props['font-weight'];
-        const lineHeightRef = props['line-height'];
-        
-        // Resolve values
-        const sizeToken = fontSizeRef ? fontSizeRef.replace(/^\$?token-font-size-/, '') : '';
-        const weightToken = fontWeightRef ? fontWeightRef.replace(/^\$?token-font-weight-/, '') : '';
-        const lineHeightToken = lineHeightRef ? lineHeightRef.replace(/^\$?token-font-line-height-/, '') : '';
-        
-        // Get actual values from variables
-        const sizeVar = `token-font-size-${sizeToken}`;
-        const weightVar = `token-font-weight-${weightToken}`;
-        const lineHeightVar = `token-font-line-height-${lineHeightToken}`;
-        
-        const sizeValue = variables[sizeVar] ? resolveValue(variables[sizeVar].value, variables) : '';
-        const weightValue = variables[weightVar] ? resolveValue(variables[weightVar].value, variables) : '';
-        const lineHeightValue = variables[lineHeightVar] ? resolveValue(variables[lineHeightVar].value, variables) : '';
-        
-        // Format the variant name
-        const variantParts = variant.split('-');
-        let name = '';
-        if (category === 'display') {
-            name = `Display ${variantParts[0]} ${variantParts[1]}`;
-        } else if (category === 'heading') {
-            const level = variantParts[0].toUpperCase();
-            const weight = variantParts[1];
-            name = `Heading ${level.replace('H', '')} ${weight}`;
-        } else if (category === 'body') {
-            if (variantParts[0] === 'action') {
-                name = `Body action ${variantParts[1]}`;
-            } else {
-                name = `Body ${variantParts[0]} ${variantParts[1]}`;
-            }
-        }
-        
-        const tokenEntry = {
+
+        const props = parseScssMapProps(mapContent);
+        const size = typographyPart(props, 'font-size', 'font-size', variables);
+        const weight = typographyPart(props, 'font-weight', 'font-weight', variables);
+        const lineHeight = typographyPart(props, 'line-height', 'font-line-height', variables);
+
+        typographyTokens[category].push({
             token: `${category}.${variant.replace(/-/g, '.')}`,
-            name: name,
+            name: formatTypographyName(category, variant.split('-')),
             typeface: "Inter",
             size: {
-                token: `scale.${sizeToken}`,
-                value: sizeValue,
+                token: `scale.${size.token}`,
+                value: size.value,
             },
             line_height: {
-                token: `scale.${lineHeightToken}`,
-                value: lineHeightValue,
+                token: `scale.${lineHeight.token}`,
+                value: lineHeight.value,
             },
             weight: {
-                token: `font-weight.${weightToken}`,
-                value: weightValue,
+                token: `font-weight.${weight.token}`,
+                value: weight.value,
             },
-        };
-        
-        typographyTokens[category].push(tokenEntry);
+        });
     }
-    
+
     return typographyTokens;
 }
 

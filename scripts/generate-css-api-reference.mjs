@@ -69,6 +69,36 @@ function stripComments(src) {
 	return src.replace(/\/\*[\s\S]*?\*\//g, '').replace(/(^|[^:])\/\/[^\n]*/g, '$1');
 }
 
+/** Consume a #{...} interpolation starting at src[start] === '#'. Returns [text, indexAfter]. */
+function readInterpolation(src, start) {
+	let depth = 1;
+	let text = '#{';
+	let i = start + 2;
+	while (i < src.length && depth > 0) {
+		if (src[i] === '{') depth++;
+		else if (src[i] === '}') depth--;
+		if (depth > 0) text += src[i];
+		i++;
+	}
+	return [text + '}', i];
+}
+
+/** Parse one buffered declaration into a --osui-* entry, or null if it isn't one. */
+function parseOsuiDeclaration(decl, stack, order) {
+	const m = decl.match(/^(--osui-[a-z0-9-]+)\s*:\s*([\s\S]+)$/i);
+	if (!m) return null;
+
+	const root = stack.find((s) => s && !s.startsWith('@')) ?? stack[0] ?? '(root)';
+	// Since the @use/@forward migration (ROU-12911) token vars are reached through
+	// the module namespace (`variables.$token-x`). The reference documents the
+	// authoring form, so the namespace accessor is dropped.
+	const value = m[2]
+		.trim()
+		.replace(/\s+/g, ' ')
+		.replace(/\bvariables\.\$/g, '$');
+	return { root, name: m[1], value, order };
+}
+
 function extract(src) {
 	const out = [];
 	const stack = [];
@@ -79,17 +109,9 @@ function extract(src) {
 		const ch = src[i];
 
 		if (ch === '#' && src[i + 1] === '{') {
-			let depth = 1;
-			buf += '#{';
-			i += 2;
-			while (i < src.length && depth > 0) {
-				if (src[i] === '{') depth++;
-				else if (src[i] === '}') depth--;
-				if (depth > 0) buf += src[i];
-				i++;
-			}
-			buf += '}';
-			i--;
+			const [text, next] = readInterpolation(src, i);
+			buf += text;
+			i = next - 1;
 			continue;
 		}
 
@@ -100,18 +122,10 @@ function extract(src) {
 			stack.pop();
 			buf = '';
 		} else if (ch === ';') {
-			const decl = buf.trim();
-			const m = decl.match(/^(--osui-[a-z0-9-]+)\s*:\s*([\s\S]+)$/i);
-			if (m) {
-				const root = stack.find((s) => s && !s.startsWith('@')) ?? stack[0] ?? '(root)';
-				// Since the @use/@forward migration (ROU-12911) token vars are reached through
-				// the module namespace (`variables.$token-x`). The reference documents the
-				// authoring form, so the namespace accessor is dropped.
-				const value = m[2]
-					.trim()
-					.replace(/\s+/g, ' ')
-					.replace(/\bvariables\.\$/g, '$');
-				out.push({ root, name: m[1], value, order: order++ });
+			const entry = parseOsuiDeclaration(buf.trim(), stack, order);
+			if (entry) {
+				out.push(entry);
+				order++;
 			}
 			buf = '';
 		} else {
