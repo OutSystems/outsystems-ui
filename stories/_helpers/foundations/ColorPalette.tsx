@@ -111,12 +111,32 @@ function ColorModal({
 	onClose: () => void;
 }) {
 	const swatchFill = useTokenColorFill(color?.value ?? '', color?.css_variable ?? '');
+	const panelRef = React.useRef<HTMLDivElement>(null);
+
+	React.useEffect(() => {
+		if (open && color) panelRef.current?.focus();
+	}, [open, color]);
 
 	if (!open || !color) return null;
 
+	const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
+		// Only clicks on the backdrop itself close the modal; clicks inside the panel bubble up here too.
+		if (e.target === e.currentTarget) onClose();
+	};
+
+	const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+		if (e.key === 'Escape') onClose();
+	};
+
 	return (
-		<div className="fd-color-modal" role="dialog" aria-modal="true" onClick={onClose}>
-			<div className="fd-color-modal__panel" onClick={(e) => e.stopPropagation()}>
+		<div
+			className="fd-color-modal"
+			role="dialog"
+			aria-modal="true"
+			onClick={handleBackdropClick}
+			onKeyDown={handleKeyDown}
+		>
+			<div className="fd-color-modal__panel" ref={panelRef} tabIndex={-1}>
 				<div className="fd-color-modal__swatch" style={{ backgroundColor: swatchFill }} />
 				<div className="fd-color-modal__body">
 					<h3>{color.name ?? color.token}</h3>
