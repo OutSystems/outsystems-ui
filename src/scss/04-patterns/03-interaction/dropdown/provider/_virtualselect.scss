@@ -266,20 +266,16 @@
 
 			&.has-value {
 				.vscomp-clear-button {
-					inset-inline-start: variables.$token-scale-1000;
+					// physical: counters the vendor lib's `left: 2px` under .text-direction-rtl,
+					// which outranks our logical base (inset-inline-end) in specificity
+					left: variables.$token-scale-1000;
 				}
 			}
 		}
 
-		.vscomp-toggle-button {
-			&:after {
-				inset-inline-start: variables.$token-scale-400;
-				inset-inline-end: auto;
-			}
-		}
-
 		.checkbox-icon {
-			margin-inline-start: variables.$token-scale-200;
+			// physical: counters the vendor lib's `margin-left: 10px` under .text-direction-rtl
+			margin-left: variables.$token-scale-200;
 
 			&.checked {
 				&:after {
