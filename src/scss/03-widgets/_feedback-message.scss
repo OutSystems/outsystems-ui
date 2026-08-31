@@ -27,7 +27,7 @@
 	font-size: variables.$token-font-size-350;
 	font-weight: variables.$token-font-weight-medium;
 	gap: variables.$token-scale-200;
-	inset-inline-start: 50%;
+	left: 50%; // physical: centring pair with the keyframes' translateX(-50%), which never mirrors
 	max-width: var(--osui-feedback-message-max-width);
 	min-width: var(--osui-feedback-message-min-width);
 	padding-block: variables.$token-scale-300;
@@ -105,6 +105,7 @@ div.feedback-message-warning {
 		.feedback-message {
 			animation-name: feedbackMessageSlideDownPhoneRTL;
 			border-radius: 0;
+			left: 0; // physical: the RTL phone keyframes use translateX(0), so the base left: 50% must be re-anchored
 			max-width: 100%;
 			min-width: 100%;
 
