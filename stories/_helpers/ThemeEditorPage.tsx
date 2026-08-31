@@ -262,20 +262,14 @@ export function ThemeEditorPage(): React.ReactElement {
 	const searchRef = useRef<HTMLInputElement>(null);
 	const sectionRefs = useRef<Map<string, HTMLElement>>(new Map());
 
-	const changedCount = useMemo(() => {
-		void changeTick;
-		return THEME_ROLE_NAMES.filter(isChanged).length;
-	}, [changeTick]);
+	// changeTick is deliberately listed in deps below without being read in the
+	// callbacks: these memos read the external override store, and the tick is
+	// what invalidates them after a mutation.
+	const changedCount = useMemo(() => THEME_ROLE_NAMES.filter(isChanged).length, [changeTick]);
 
-	const cssOutput = useMemo(() => {
-		void changeTick;
-		return buildCss();
-	}, [changeTick]);
+	const cssOutput = useMemo(() => buildCss(), [changeTick]);
 
-	const surfaceHex = useMemo(() => {
-		void changeTick;
-		return curValue('--color-background-surface', previewDark);
-	}, [changeTick, previewDark]);
+	const surfaceHex = useMemo(() => curValue('--color-background-surface', previewDark), [changeTick, previewDark]);
 
 	const emitState = useCallback(() => {
 		try {
@@ -365,7 +359,6 @@ export function ThemeEditorPage(): React.ReactElement {
 	}, [query]);
 
 	const groupsWithChanges = useMemo(() => {
-		void changeTick;
 		const set = new Set<string>();
 		THEME_ROLE_GROUPS.forEach((g) => {
 			if (g.roles.some((r) => isChanged(r.name))) set.add(g.id);
@@ -384,7 +377,6 @@ export function ThemeEditorPage(): React.ReactElement {
 	const totalTokens = THEME_ROLE_NAMES.length;
 
 	const contrastRows = useMemo(() => {
-		void changeTick;
 		return CONTRAST_PAIRS.map(({ label, fg, bg }) => {
 			const ratio = contrastRatio(curValue(fg, previewDark), curValue(bg, previewDark));
 			if (ratio === null) return null;
