@@ -1,4 +1,4 @@
-@use "../../../tokens/variables";
+@use '../../../tokens/variables';
 
 /* Patterns - Content - Accordion */
 ////
@@ -14,10 +14,14 @@
 	}
 
 	// Divider: add top border only to items that are not the first
-	:not(:first-child):not(.list) >,
-	.list :not(:first-child) > {
+	:not(:last-child):not(.list) >,
+	.list :not(:last-child) > {
 		.osui-accordion-item {
-			border-top: var(--osui-accordion-item-border-width) solid var(--osui-accordion-item-border-color);
+			border-bottom: var(--osui-accordion-item-border-width) solid var(--osui-accordion-item-border-color);
+
+			&:not(.osui-accordion-item--is-open):hover {
+				border-bottom-color: var(--osui-accordion-item-title-hover-border-color);
+			}
 		}
 	}
 
@@ -25,8 +29,9 @@
 	:first-child:not(.list) >,
 	.list :first-child > {
 		.osui-accordion-item {
-			border-top-left-radius: variables.$token-border-radius-100;
-			border-top-right-radius: variables.$token-border-radius-100;
+			border-top-left-radius: variables.$token-border-radius-400;
+			border-top-right-radius: variables.$token-border-radius-400;
+			overflow: hidden;
 		}
 	}
 
@@ -34,8 +39,15 @@
 	:last-child:not(.list) >,
 	.list :last-child > {
 		.osui-accordion-item {
-			border-bottom-left-radius: variables.$token-border-radius-100;
-			border-bottom-right-radius: variables.$token-border-radius-100;
+			border-bottom-left-radius: variables.$token-border-radius-400;
+			border-bottom-right-radius: variables.$token-border-radius-400;
+			overflow: hidden;
+
+			&:not(.osui-accordion-item--is-open) {
+				.osui-accordion-item__title:hover {
+					box-shadow: none;
+				}
+			}
 		}
 	}
 
@@ -43,7 +55,7 @@
 	:only-child >,
 	.list :only-child > {
 		.osui-accordion-item {
-			border-radius: variables.$token-border-radius-100;
+			border-radius: variables.$token-border-radius-400;
 		}
 	}
 

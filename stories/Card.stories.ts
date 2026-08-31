@@ -31,6 +31,17 @@ export const Basic: StoryObj<CardArgs> = {
 };
 
 // ─── CardSectioned ───────────────────────────────────────────────────────────────
+// Layout notes (confirmed against Figma + the live TaskSample_DEV_ROU12874/Cards sample,
+// and against ticket-owner decisions for this ticket's scope):
+//  • Vertical → image always renders last, after title/content/card-bottom; enforced by
+//    `.flex-direction-column .card-image { order: 1; }` in _card-sectioned.scss, so the
+//    DOM order here doesn't need to change.
+//  • Horizontal → image always renders first (Figma's "Last"/image-on-the-right variation
+//    is explicitly out of scope for this ticket — not exposed as a story control).
+//  • card-bottom is a real footer slot (confirmed, not superseded) — its content here is
+//    a text-link CTA ("Simulate Loan"), matching what's actually shown, not a button.
+//  • UsePadding=False removes all padding, including the image's, regardless of
+//    ImagePadding's own value — enforced by `.card-sectioned.padding-none` in the SCSS.
 type SectionedArgs = { usePadding: boolean; isVertical: boolean; imagePadding: boolean; extendedClass: string };
 export const Sectioned: StoryObj<SectionedArgs> = {
 	args: { usePadding: true, isVertical: true, imagePadding: true, extendedClass: '' },
@@ -40,7 +51,7 @@ export const Sectioned: StoryObj<SectionedArgs> = {
 		imagePadding: {
 			name: 'ImagePadding',
 			control: 'boolean',
-			description: 'When true, image has 24px of padding.',
+			description: 'When true, image has 24px of padding. Has no effect while UsePadding is false.',
 		},
 		extendedClass: extendedClassArgType,
 	},
@@ -48,16 +59,13 @@ export const Sectioned: StoryObj<SectionedArgs> = {
 		// Vertical → image is a full-width banner with a fixed height.
 		// Horizontal → image is a fixed-width column that stretches to the card's full height.
 		const cardStyle = `max-width:${isVertical ? 320 : 480}px;`;
-		const imgStyle = isVertical
-			? 'display:block;width:100%;height:160px;object-fit:cover;'
-			: 'display:block;width:180px;height:100%;min-height:100%;object-fit:cover;';
 		return renderStatic(`
 			<div class="${cls('card', 'card-sectioned', isVertical ? 'flex-direction-column' : 'flex-direction-row', !usePadding && 'padding-none', extendedClass)}" style="${cardStyle}">
-				<div class="${cls('card-image', !imagePadding && 'padding-none')}"><img src="${CARD_IMG}" alt="Personal plan" style="${imgStyle}" /></div>
+				<div class="${cls('card-image', !imagePadding && 'padding-none')}"><img src="${CARD_IMG}" alt="Personal plan" /></div>
 				<div class="card-sectioned-top flex-direction-column">
 					<div class="card-title">Hire our personal plan</div>
 					<div class="card-content">Take control with a plan made for you — manage everything in one place.</div>
-					<div class="card-bottom"><button class="btn btn-primary btn-small"><span>Learn more</span></button></div>
+					<div class="card-bottom"><a href="#">Simulate Loan</a></div>
 				</div>
 			</div>`);
 	},

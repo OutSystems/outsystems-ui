@@ -1,4 +1,4 @@
-@use "../tokens/variables";
+@use '../tokens/variables';
 
 /* Widgets - Button */
 ////
@@ -8,16 +8,19 @@
 ///
 .btn {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	// Unmodified .btn maps to the Figma "Secondary" type: solid neutral-bold fill,
-	// inverse text, border-color matching the fill (no visible outline).
+	// Unmodified .btn maps to the Figma "Secondary" type: surface (white) fill,
+	// subtle text, default border — an outlined button, no solid fill.
+	// Confirmed against Figma file mMqGdwjw4xuQv2shvFVNMB, node 2812:23083
+	// (ROU-13008) — previously this matched the wrong Figma type (see git log
+	// for the pre-ROU-13008 solid-fill version this replaced).
 	--osui-btn-height: #{variables.$token-scale-1000};
-	--osui-btn-background: #{variables.$token-bg-neutral-bold-default};
-	--osui-btn-color: var(--color-text-inverse);
-	--osui-btn-border-color: #{variables.$token-bg-neutral-bold-default};
+	--osui-btn-background: var(--color-background-surface);
+	--osui-btn-color: var(--color-text-subtle);
+	--osui-btn-border-color: var(--color-border);
 	// Hover/active read through these two vars regardless of variant — each
 	// variant below only needs to override them with its own token tier.
-	--osui-btn-hover-background: #{variables.$token-bg-neutral-bold-hover};
-	--osui-btn-active-background: #{variables.$token-bg-neutral-bold-press};
+	--osui-btn-hover-background: #{variables.$token-bg-neutral-subtlest-hover};
+	--osui-btn-active-background: #{variables.$token-bg-neutral-subtlest-press};
 	--osui-btn-border-width: #{variables.$token-border-size-025};
 	--osui-btn-border-radius: var(--border-radius-soft);
 	// Disabled keeps the variant's own color visible underneath this wash,
@@ -49,7 +52,7 @@
 	cursor: pointer;
 	display: inline-flex;
 	filter: brightness(1);
-	font-weight: variables.$token-font-weight-semi-bold;
+	font-weight: variables.$token-font-weight-medium;
 	gap: variables.$token-scale-200;
 	height: var(--osui-btn-height);
 	justify-content: center;
@@ -63,15 +66,18 @@
 		box-shadow variables.$token-transition-time-100 variables.$token-transition-curve-base,
 		color variables.$token-transition-time-100 variables.$token-transition-curve-base;
 
+	// Border-color is intentionally not touched here — Figma pins Secondary's
+	// (and Cancel's, transparent) border across every state; only the solid-fill
+	// variants below (primary/success/error) additionally track it to their fill.
 	&:active {
 		background-color: var(--osui-btn-active-background);
-		border-color: var(--osui-btn-active-background);
 	}
 
 	&:focus-visible {
 		box-shadow:
 			0 0 0 var(--osui-btn-focus-shadow-gap) var(--color-background-surface),
-			0 0 0 calc(var(--osui-btn-focus-shadow-gap) + var(--osui-btn-focus-shadow-width)) var(--osui-btn-focus-shadow-color);
+			0 0 0 calc(var(--osui-btn-focus-shadow-gap) + var(--osui-btn-focus-shadow-width))
+				var(--osui-btn-focus-shadow-color);
 		outline: none;
 	}
 
@@ -105,6 +111,10 @@
 		background-color: var(--osui-btn-primary-background);
 		border: var(--osui-btn-border-width) solid var(--osui-btn-primary-border-color);
 		color: var(--osui-btn-primary-color);
+
+		&:active {
+			border-color: var(--osui-btn-active-background);
+		}
 	}
 
 	&-small {
@@ -119,22 +129,26 @@
 	}
 
 	&-cancel {
-		--osui-btn-background: var(--color-background-surface);
+		// Figma's "Cancel" type is transparent/text-only — no fill, no border,
+		// in every state (confirmed against node 2812:23083, ROU-13008).
+		--osui-btn-background: transparent;
 		--osui-btn-color: var(--color-text-subtle);
-		--osui-btn-border-color: var(--color-border);
-		// Cancel's border never changes across states — only the background
-		// steps through the neutral-subtlest tiers, so the shared :active
-		// rule's border-color needs undoing right here.
+		--osui-btn-border-color: transparent;
 		--osui-btn-hover-background: #{variables.$token-bg-neutral-subtlest-hover};
 		--osui-btn-active-background: #{variables.$token-bg-neutral-subtlest-press};
 
 		background-color: var(--osui-btn-background);
 		border: var(--osui-btn-border-width) solid var(--osui-btn-border-color);
 		color: var(--osui-btn-color);
-		transition: border-color variables.$token-transition-time-150 variables.$token-transition-curve-base;
 
-		&:active {
-			border-color: var(--color-border);
+		// No fill to wash over when disabled — Figma fades the text/icon
+		// instead, so the shared overlay would show as a stray box.
+		&[disabled] {
+			color: var(--color-text-disabled);
+
+			&:after {
+				content: none;
+			}
 		}
 	}
 
@@ -145,6 +159,10 @@
 		background-color: var(--osui-btn-success-background);
 		border: var(--osui-btn-border-width) solid var(--osui-btn-success-border-color);
 		color: var(--osui-btn-success-color);
+
+		&:active {
+			border-color: var(--osui-btn-active-background);
+		}
 	}
 
 	&-error {
@@ -154,6 +172,10 @@
 		background-color: var(--osui-btn-error-background);
 		border: var(--osui-btn-border-width) solid var(--osui-btn-error-border-color);
 		color: var(--osui-btn-error-color);
+
+		&:active {
+			border-color: var(--osui-btn-active-background);
+		}
 	}
 
 	&[disabled] {
@@ -176,16 +198,17 @@
 ///
 .desktop {
 	.btn {
-		// Background + border darken to each variant's own hover tier
+		// Background darkens to each variant's own hover tier. Border-color is
+		// deliberately not touched here — see the base :active rule's comment;
+		// only primary/success/error additionally track it, just below.
 		&:hover {
 			background-color: var(--osui-btn-hover-background);
-			border-color: var(--osui-btn-hover-background);
 		}
 
-		// Cancel: background darkens through its own tiers, border stays fixed
-		// (same specificity as the base rules above, later → wins)
-		&-cancel:hover {
-			border-color: var(--color-border);
+		&-primary:hover,
+		&-success:hover,
+		&-error:hover {
+			border-color: var(--osui-btn-hover-background);
 		}
 
 		// Utility background-* classes: darken via filter
@@ -196,11 +219,12 @@
 		// Pressed while hovering: higher specificity than :hover above, always wins
 		&:hover:active {
 			background-color: var(--osui-btn-active-background);
-			border-color: var(--osui-btn-active-background);
 		}
 
-		&-cancel:hover:active {
-			border-color: var(--color-border);
+		&-primary:hover:active,
+		&-success:hover:active,
+		&-error:hover:active {
+			border-color: var(--osui-btn-active-background);
 		}
 	}
 }
@@ -253,7 +277,8 @@
 	& .btn:focus {
 		box-shadow:
 			0 0 0 var(--osui-btn-focus-shadow-gap) var(--color-background-surface),
-			0 0 0 calc(var(--osui-btn-focus-shadow-gap) + var(--osui-btn-focus-shadow-width)) var(--osui-btn-focus-shadow-color);
+			0 0 0 calc(var(--osui-btn-focus-shadow-gap) + var(--osui-btn-focus-shadow-width))
+				var(--osui-btn-focus-shadow-color);
 	}
 }
 
