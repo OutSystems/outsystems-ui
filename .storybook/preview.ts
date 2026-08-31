@@ -1,8 +1,18 @@
 import type { Preview, Decorator } from '@storybook/html-vite';
 import { addons } from 'storybook/preview-api';
+import { GLOBALS_UPDATED } from 'storybook/internal/core-events';
 // Storybook docs-page chrome (Inter font, sidebar/sbdocs styling) — ported from
 // the design-tokens Storybook. Only styles the docs/MDX surfaces, not the patterns.
 import './docs.scss';
+import './docs-pages.scss';
+import './welcome.scss';
+import './getting-started.scss';
+import './component-library.scss';
+import './css-architecture.scss';
+import './css-api-reference.scss';
+import './theme-editor.scss';
+import './foundations.scss';
+import './docs-dark.scss';
 import {
 	CH_OVERRIDES_CHANGED,
 	CH_RESET,
@@ -10,6 +20,8 @@ import {
 	clearThemeOverrides,
 	themeOverrideCount,
 } from '../stories/_helpers/theme-roles';
+import { initDocsAppearanceSync, applyAppAppearance } from '../stories/_helpers/docs-appearance';
+import { readStoredAppearance } from '../stories/_helpers/storybook-appearance.js';
 
 /**
  * Icon-library root classes (see src/scss/01-foundations/_icon-library-odc.scss):
@@ -97,19 +109,66 @@ function applyDirection(rtl: boolean): void {
  * Requires a bundle built AFTER the dark theme was added (the dark CSS lives in
  * `/osui/ODC.OutSystemsUI.css`); rebuild with `npm run dev --target=odc`.
  */
-const COLOR_SCHEME_DARK = 'theme-dark';
+const PATTERN_DARK_CLASS = 'theme-dark';
 
 function applyColorScheme(scheme: string): void {
-	document.documentElement.classList.toggle(COLOR_SCHEME_DARK, scheme === 'dark');
+	document.documentElement.classList.toggle(PATTERN_DARK_CLASS, scheme === 'dark');
+}
+
+const PREVIEW_GLOBAL_DEFAULTS = {
+	iconLibrary: 'Phosphor',
+	theme: 'new',
+	direction: 'ltr',
+	colorScheme: 'light',
+	accessibleFeatures: 'off',
+} as const;
+
+/** Toolbar globals shared by story decorators and MDX docs pages. */
+function applyPreviewGlobals(globals: Record<string, unknown>): void {
+	['desktop', 'active-screen'].forEach((c) => document.body.classList.add(c));
+	document.body.classList.toggle('has-accessible-features', globals.accessibleFeatures === 'on');
+	applyDirection(globals.direction === 'rtl');
+	applyIconLibrary((globals.iconLibrary as string) ?? PREVIEW_GLOBAL_DEFAULTS.iconLibrary);
+	applyTheme((globals.theme as string) ?? PREVIEW_GLOBAL_DEFAULTS.theme);
+	applyColorScheme((globals.colorScheme as string) ?? PREVIEW_GLOBAL_DEFAULTS.colorScheme);
 }
 
 /**
- * OutSystems apps render inside a `<body>` the platform tags with device /
- * accessibility classes; OUI's responsive CSS keys off them (`.desktop`,
- * `.active-screen`). `.has-accessible-features` opts in to focus rings / a11y
- * affordances — it's toggled from the toolbar (off by default). We also apply
- * the icon-library choice from the toolbar.
+ * MDX docs pages skip preview story decorators — sync toolbar globals (icon font,
+ * theme href, RTL, pattern dark mode, a11y body class) via the preview channel.
  */
+let previewToolbarSyncReady = false;
+
+function wirePreviewToolbarSync(): boolean {
+	let channel;
+	try {
+		channel = addons.getChannel();
+	} catch {
+		return false;
+	}
+	if (!channel) return false;
+
+	channel.on(GLOBALS_UPDATED, ({ globals }: { globals?: Record<string, unknown> }) => {
+		if (globals) {
+			applyPreviewGlobals(globals);
+		}
+	});
+
+	applyPreviewGlobals(PREVIEW_GLOBAL_DEFAULTS);
+	return true;
+}
+
+function initPreviewToolbarSync(): void {
+	if (previewToolbarSyncReady) return;
+	if (wirePreviewToolbarSync()) {
+		previewToolbarSyncReady = true;
+		return;
+	}
+	if (typeof document !== 'undefined') {
+		document.addEventListener('DOMContentLoaded', () => initPreviewToolbarSync(), { once: true });
+	}
+}
+
 /**
  * Theme-Editor channel bridge. The editor (a preview story) overrides `--color-*` /
  * `--border-radius-*` roles inline on `:root`; the manager's "Reset theme" toolbar button
@@ -129,13 +188,15 @@ function setupThemeChannel(): void {
 	channel.on(CH_STATE_REQUEST, () => channel.emit(CH_OVERRIDES_CHANGED, themeOverrideCount()));
 }
 
+initDocsAppearanceSync();
+initPreviewToolbarSync();
+
 const withAppShell: Decorator = (storyFn, context) => {
-	['desktop', 'active-screen'].forEach((c) => document.body.classList.add(c));
-	document.body.classList.toggle('has-accessible-features', context.globals.accessibleFeatures === 'on');
-	applyDirection(context.globals.direction === 'rtl');
-	applyIconLibrary((context.globals.iconLibrary as string) ?? 'Phosphor');
-	applyTheme((context.globals.theme as string) ?? 'new');
-	applyColorScheme((context.globals.colorScheme as string) ?? 'light');
+	applyPreviewGlobals(context.globals);
+	applyAppAppearance(readStoredAppearance());
+	// Channel may not be ready at preview module load — wire docs sync from the decorator too.
+	initDocsAppearanceSync();
+	initPreviewToolbarSync();
 	// Keep the toolbar reset button in sync on every story view.
 	setupThemeChannel();
 	try {
@@ -231,10 +292,22 @@ const preview: Preview = {
 		options: {
 			storySort: {
 				order: [
-					'Introduction',
-					'CSS Architecture',
-					'CSS API Reference',
-					'Theme Editor',
+					'Welcome',
+					'Getting Started',
+					'Component Library',
+					'Design system',
+					[
+						'Colors',
+						'Typography',
+						'Spacing',
+						'Borders',
+						'Shape',
+						'Elevation',
+						'Transitions',
+						'CSS Architecture',
+						'CSS API Reference',
+						'Theme Editor',
+					],
 					'Patterns',
 					['Content', 'Interaction', 'Navigation', 'Adaptive', 'Numbers', 'Utilities'],
 					'Widgets',

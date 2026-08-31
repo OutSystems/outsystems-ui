@@ -22,10 +22,12 @@ interface StackedCardsArgs {
 	extendedClass: string;
 }
 
+// Static placeholders bundled under .storybook/assets (served via staticDirs at /assets/*):
+// no network dependency in the preview iframe, deterministic for Chromatic.
 const CARDS = [
-	['Aurora Station', 'https://picsum.photos/seed/osui-stack1/480/280'],
-	['Basalt Cliffs', 'https://picsum.photos/seed/osui-stack2/480/280'],
-	['Cedar Valley', 'https://picsum.photos/seed/osui-stack3/480/280'],
+	['Aurora Station', '/assets/placeholder-stack-1.svg'],
+	['Basalt Cliffs', '/assets/placeholder-stack-2.svg'],
+	['Cedar Valley', '/assets/placeholder-stack-3.svg'],
 ];
 
 // Runtime-equivalent stack transforms (back cards peek out behind the front one).

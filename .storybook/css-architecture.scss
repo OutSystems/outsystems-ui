@@ -1,0 +1,424 @@
+/* CSS Architecture docs page — chrome aligned with Getting Started / Component Library. */
+
+.sbdocs-wrapper:has(.osui-css-architecture) {
+  padding: 0 !important;
+  background: #fff;
+  max-width: none !important;
+  width: 100% !important;
+}
+
+.sbdocs-wrapper:has(.osui-css-architecture) .sbdocs-content {
+  max-width: none !important;
+  width: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.sbdocs-wrapper:has(.osui-css-architecture) .sbdocs {
+  max-width: none !important;
+  padding: 0 !important;
+}
+
+.sbdocs-wrapper:has(.osui-css-architecture) .sbdocs-title,
+.sbdocs-wrapper:has(.osui-css-architecture) h1.sbdocs-title {
+  display: none !important;
+}
+
+.osui-css-architecture {
+  --ca-primary-100: #f0f2ff;
+  --ca-primary-700: #105cef;
+  --ca-n-100: #f9f9f9;
+  --ca-n-200: #f2f2f2;
+  --ca-n-300: #e8e8e8;
+  --ca-n-400: #e1e1e1;
+  --ca-n-700: #8d8d8d;
+  --ca-ink: #242424;
+  --ca-ink-2: #454545;
+  --ca-ink-3: #6b6b6b;
+  --ca-brand-a: #ff5e3e;
+  --ca-brand-b: #d8161e;
+  --ca-r-200: 8px;
+  --ca-r-300: 12px;
+  --ca-r-full: 999px;
+  --ca-hop-api: #105cef;
+  --ca-hop-theme: #0d9488;
+  --ca-hop-scss: #0e7490;
+  --ca-hop-token: #15803d;
+
+  box-sizing: border-box;
+  color: var(--ca-ink);
+  font-family: "Inter", -apple-system, system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+
+  *, *::before, *::after { box-sizing: border-box; }
+}
+
+.osui-css-architecture .ca-head {
+  position: relative;
+  overflow: hidden;
+  padding: 56px 36px 44px;
+  border-bottom: 1px solid var(--ca-n-300);
+  margin-bottom: 52px;
+}
+
+.osui-css-architecture .ca-head::before {
+  content: "";
+  position: absolute;
+  inset: -70% -10% auto -10%;
+  height: 460px;
+  pointer-events: none;
+  background:
+    radial-gradient(50% 46% at 18% 34%, rgba(16, 92, 239, 0.12), transparent 70%),
+    radial-gradient(42% 44% at 74% 12%, rgba(255, 94, 62, 0.18), transparent 68%),
+    radial-gradient(38% 40% at 52% 66%, rgba(150, 8, 44, 0.09), transparent 70%);
+  filter: blur(6px);
+}
+
+.osui-css-architecture .ca-head-in {
+  position: relative;
+}
+
+.osui-css-architecture .ca-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  height: 23px;
+  padding: 0 10px;
+  border-radius: var(--ca-r-full);
+  background: var(--ca-primary-100);
+  color: var(--ca-primary-700);
+  font-size: 11.5px;
+  font-weight: 600;
+  margin-bottom: 14px;
+  font-family: "Inter", sans-serif;
+}
+
+.sbdocs-wrapper .osui-css-architecture .ca-head h1 {
+  font-size: 34px !important;
+  line-height: 1.1 !important;
+  letter-spacing: -0.026em !important;
+  margin: 0 0 12px !important;
+  font-weight: 780 !important;
+  border: none !important;
+  color: var(--ca-ink) !important;
+  font-family: "Inter", sans-serif !important;
+}
+
+.osui-css-architecture .ca-lede {
+  font-size: 16px !important;
+  color: var(--ca-ink-3) !important;
+  margin: 0 !important;
+  line-height: 1.55 !important;
+  font-family: "Inter", sans-serif !important;
+}
+
+.osui-css-architecture .ca-lede code {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.9em;
+  background: var(--ca-n-200);
+  border-radius: 4px;
+  padding: 1px 5px;
+  color: var(--ca-ink-2);
+}
+
+/* Beat Storybook .sbdocs-content code { color: #105cef } — body + lede inline code */
+.sbdocs-wrapper .sbdocs-content .osui-css-architecture code:not(pre code):not(.ca-hop-form),
+.sbdocs-wrapper .osui-css-architecture code:not(pre code):not(.ca-hop-form),
+.osui-css-architecture code:not(pre code):not(.ca-hop-form) {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace !important;
+  font-size: 12.5px !important;
+  color: var(--ca-ink-2) !important;
+  background: var(--ca-n-200) !important;
+  border: 0 !important;
+  border-radius: 4px;
+  padding: 1px 5px;
+}
+
+.osui-css-architecture .ca-body {
+  font-family: "Inter", sans-serif;
+  color: var(--ca-ink);
+}
+
+.sbdocs-wrapper .osui-css-architecture .ca-body h2 {
+  font-size: 23px !important;
+  letter-spacing: -0.02em !important;
+  margin: 0 0 16px !important;
+  font-weight: 750 !important;
+  line-height: 1.2 !important;
+  border: none !important;
+  color: var(--ca-ink) !important;
+  font-family: "Inter", sans-serif !important;
+  scroll-margin-top: 24px;
+}
+
+.sbdocs-wrapper .osui-css-architecture .ca-body h2:not(:first-child) {
+  margin-top: 52px !important;
+  padding-top: 52px !important;
+  border-top: 1px solid var(--ca-n-300) !important;
+}
+
+.sbdocs-wrapper .osui-css-architecture .ca-body hr {
+  display: none !important;
+}
+
+.osui-css-architecture .toc {
+  position: sticky;
+  top: 28px;
+  font-size: 13px;
+  padding-top: 8px;
+}
+
+.osui-css-architecture .toc b {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ca-n-700);
+  margin-bottom: 12px;
+}
+
+.osui-css-architecture .toc a {
+  display: block;
+  padding: 8px 0 8px 14px;
+  border-left: 2px solid var(--ca-n-300);
+  color: var(--ca-ink-3);
+  text-decoration: none;
+}
+
+.osui-css-architecture .toc a:hover {
+  color: var(--ca-ink);
+  border-color: #a2a2a2;
+}
+
+.osui-css-architecture .toc a.is-active {
+  color: var(--ca-primary-700);
+  border-color: var(--ca-primary-700);
+  font-weight: 650;
+}
+
+.sbdocs-wrapper .osui-css-architecture .ca-body p {
+  margin: 0 0 14px !important;
+  color: var(--ca-ink-2) !important;
+  font-size: 14.5px !important;
+  line-height: 1.65 !important;
+  font-family: "Inter", sans-serif !important;
+}
+
+.sbdocs-wrapper .osui-css-architecture .ca-body ul,
+.sbdocs-wrapper .osui-css-architecture .ca-body ol {
+  margin: 8px 0 24px !important;
+  padding-left: 22px !important;
+  color: var(--ca-ink-2) !important;
+}
+
+.sbdocs-wrapper .osui-css-architecture .ca-body li {
+  margin-bottom: 10px !important;
+  font-size: 14.5px !important;
+  line-height: 1.65 !important;
+  font-family: "Inter", sans-serif !important;
+}
+
+.sbdocs-wrapper .osui-css-architecture .ca-body strong,
+.sbdocs-wrapper .osui-css-architecture .ca-body b {
+  color: var(--ca-ink) !important;
+  font-weight: 650 !important;
+}
+
+.sbdocs-wrapper .osui-css-architecture .ca-body a {
+  color: var(--ca-primary-700) !important;
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.sbdocs-wrapper .osui-css-architecture .ca-body a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Code blocks: same dark panel + Copy as Getting Started */
+.osui-css-architecture .code {
+  position: relative;
+  margin: 0 0 24px;
+}
+
+.osui-css-architecture .code pre {
+  margin: 0;
+  background: #12131a;
+  color: #e8eaed;
+  border-radius: var(--ca-r-300);
+  padding: 16px 18px;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11.5px;
+  line-height: 1.75;
+  overflow: auto;
+  border: 0;
+}
+
+.osui-css-architecture .code .c { color: #6b7280; }
+.osui-css-architecture .code .f { color: #7cb3ff; }
+.osui-css-architecture .code .s { color: #8ad6a0; }
+
+.osui-css-architecture .code button {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  height: 26px;
+  padding: 0 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.07);
+  color: #c8ccd8;
+  border-radius: 4px;
+  font-size: 11.5px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: "Inter", sans-serif;
+}
+
+.osui-css-architecture .code button:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.sbdocs-wrapper .osui-css-architecture .ca-body table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px !important;
+  margin: 16px 0 28px !important;
+  font-family: "Inter", sans-serif !important;
+}
+
+.sbdocs-wrapper .osui-css-architecture .ca-body th {
+  text-align: left;
+  padding: 0 12px 8px 0 !important;
+  border-bottom: 1px solid var(--ca-n-300) !important;
+  font-weight: 700 !important;
+  color: var(--ca-ink) !important;
+  font-size: 12px !important;
+}
+
+.sbdocs-wrapper .osui-css-architecture .ca-body td {
+  padding: 11px 12px 11px 0 !important;
+  border-bottom: 1px solid var(--ca-n-200) !important;
+  color: var(--ca-ink-3) !important;
+  vertical-align: top;
+  line-height: 1.5 !important;
+  font-size: 13.5px !important;
+}
+
+.sbdocs-wrapper .osui-css-architecture .ca-body td:first-child {
+  color: var(--ca-ink) !important;
+  font-weight: 650 !important;
+}
+
+/* Hop chain */
+.osui-css-architecture .ca-hops {
+  margin: 20px 0 28px;
+  font-family: "Inter", sans-serif;
+}
+
+.osui-css-architecture .ca-hops-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ca-n-700);
+  margin-bottom: 10px;
+}
+
+.osui-css-architecture .ca-hop {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 0;
+  background: transparent;
+  border: 0;
+}
+
+.osui-css-architecture .ca-hop-n {
+  flex: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.osui-css-architecture .ca-hop--api .ca-hop-n { background: var(--ca-hop-api); }
+.osui-css-architecture .ca-hop--theme .ca-hop-n { background: var(--ca-hop-theme); }
+.osui-css-architecture .ca-hop--scss .ca-hop-n { background: var(--ca-hop-scss); }
+.osui-css-architecture .ca-hop--token .ca-hop-n { background: var(--ca-hop-token); }
+
+.osui-css-architecture .ca-hop-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.osui-css-architecture .ca-hop-layer {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ca-ink);
+  margin-bottom: 2px;
+}
+
+.osui-css-architecture .ca-hop-form {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace !important;
+  font-size: 13px !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  word-break: break-word;
+}
+
+.osui-css-architecture .ca-hop--api .ca-hop-form { color: var(--ca-hop-api) !important; }
+.osui-css-architecture .ca-hop--theme .ca-hop-form { color: var(--ca-hop-theme) !important; }
+.osui-css-architecture .ca-hop--scss .ca-hop-form { color: var(--ca-hop-scss) !important; }
+.osui-css-architecture .ca-hop--token .ca-hop-form { color: var(--ca-hop-token) !important; }
+
+.osui-css-architecture .ca-hop-note {
+  flex: none;
+  font-size: 12px;
+  color: var(--ca-ink-3);
+  text-align: right;
+  max-width: 160px;
+}
+
+.osui-css-architecture .ca-hop-fall {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--ca-n-700);
+  font-size: 12px;
+  padding: 10px 0;
+  margin: 2px 0;
+}
+
+.osui-css-architecture .ca-hop-fall::before,
+.osui-css-architecture .ca-hop-fall::after {
+  content: '';
+  flex: 1;
+  height: 0;
+  border-top: 1px solid var(--ca-n-300);
+}
+
+.osui-css-architecture .ca-hop-fall span {
+  flex-shrink: 0;
+}
+
+@media (max-width: 720px) {
+  .osui-css-architecture .ca-hop-note {
+    display: none;
+  }
+  .sbdocs-wrapper .osui-css-architecture .ca-head h1 {
+    font-size: 28px !important;
+  }
+}

@@ -15,9 +15,9 @@ import { cls, COLOR_OPTIONS, extendedClassArgType, usePaddingArgType } from './_
 const meta: Meta = { title: 'Patterns/Content/Card' };
 export default meta;
 
-// Real sample photo (seeded → deterministic). Remote URL: needs network in the preview
-// iframe; swap for a bundled asset under .storybook if you need offline / Chromatic stability.
-const CARD_IMG = 'https://picsum.photos/seed/osui-card/640/360';
+// Static placeholder bundled under .storybook/assets (served via staticDirs at /assets/*):
+// no network dependency in the preview iframe, deterministic for Chromatic.
+const CARD_IMG = '/assets/placeholder-card.svg';
 
 // ─── Card ──────────────────────────────────────────────────────────────────────
 type CardArgs = { usePadding: boolean; extendedClass: string };

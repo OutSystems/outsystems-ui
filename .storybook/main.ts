@@ -94,6 +94,12 @@ function osuiDevBundleFallback(): Plugin {
  * above). Files are served from `/osui`.
  */
 const config: StorybookConfig = {
+	// Storybook 10 change detection marks unattached MDX docs as "New" (+ icon in sidebar).
+	// We track UI review via story tags instead; keep the sidebar clean like Mobile UI.
+	features: {
+		changeDetection: false,
+	},
+	// Widget stories are static transcriptions (ADR-0009) — always include the full tree.
 	stories: ['../stories/**/*.mdx', '../stories/**/*.stories.@(js|jsx|ts|tsx)'],
 	addons: [
 		// remark-gfm enables GitHub-flavoured markdown in MDX docs pages — notably

@@ -22,8 +22,9 @@
 		"chromatic": "chromatic --build-script-name=build-storybook",
 		"update-version": "gulp updateVersion",
 		"gta-update-version": "gulp gtaSetVersion --newVersion",
-		"tokens:update": "npm install --save-dev outsystems-design-tokens@latest && npm run build:tokens",
-		"docs:css-api": "node scripts/generate-css-api-reference.mjs"
+		"tokens:update": "npm install --save-dev outsystems-design-tokens@latest && npm run build:tokens && npm run docs:tokens",
+		"docs:css-api": "node scripts/generate-css-api-reference.mjs",
+		"docs:tokens": "node scripts/generate-token-data.mjs"
 	},
 	"repository": {
 		"type": "git",
@@ -49,8 +50,8 @@
 		"@floating-ui/dom": "^1.6.5",
 		"@phosphor-icons/web": "^2.1.2",
 		"@splidejs/splide": "4.1.4",
-		"@storybook/addon-docs": "10.4.6",
-		"@storybook/html-vite": "10.4.6",
+		"@storybook/addon-docs": "10.5.9",
+		"@storybook/html-vite": "10.5.9",
 		"@typescript-eslint/eslint-plugin": "8.64.0",
 		"@typescript-eslint/parser": "8.64.0",
 		"branch-name": "^1.0.0",
@@ -82,7 +83,7 @@
 		"react-dom": "^19.2.8",
 		"remark-gfm": "^4.0.1",
 		"sass": "^1.77.4",
-		"storybook": "10.4.6",
+		"storybook": "10.5.9",
 		"stylelint": "^14.16.1",
 		"stylelint-config-prettier": "^9.0.5",
 		"stylelint-order": "^6.0.4",
