@@ -86,8 +86,10 @@
 	&-container {
 		&:after {
 			border: variables.$token-border-size-050 solid variables.$token-primitives-neutral-700;
-			border-inline-end: variables.$token-border-size-0 !important;
-			border-block-start: variables.$token-border-size-0 !important;
+			// physical sides: these borders draw the chevron glyph under a physical
+			// rotate transform, and its position is deliberately physical (right: 16px)
+			border-right: variables.$token-border-size-0 !important;
+			border-top: variables.$token-border-size-0 !important;
 			bottom: 0;
 			box-sizing: border-box;
 			content: '';
@@ -116,8 +118,9 @@
 		&.dropdown-container {
 			&:after {
 				border: variables.$token-border-size-050 solid variables.$token-primitives-neutral-700;
-				border-inline-end: variables.$token-border-size-0 !important;
-				border-block-start: variables.$token-border-size-0 !important;
+				// physical sides: chevron glyph under a physical rotate (see above)
+				border-right: variables.$token-border-size-0 !important;
+				border-top: variables.$token-border-size-0 !important;
 				transform: rotate(-45deg) translateY(0) translateX(0);
 			}
 		}

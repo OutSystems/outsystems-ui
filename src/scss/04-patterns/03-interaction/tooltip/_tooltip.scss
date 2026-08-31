@@ -134,8 +134,10 @@
 
 		&__balloon-arrow {
 			border: 0 solid var(--osui-tooltip-background-color);
-			border-inline-end-width: variables.$token-border-size-025;
-			border-block-end-width: variables.$token-border-size-025;
+			// physical sides: the arrow is a square under rotate(45deg); which edges
+			// show depends on the rotation, not on text direction
+			border-right-width: variables.$token-border-size-025;
+			border-bottom-width: variables.$token-border-size-025;
 		}
 	}
 }

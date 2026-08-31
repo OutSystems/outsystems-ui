@@ -21,7 +21,9 @@
 	border-radius: var(--osui-balloon-shape);
 	background-color: var(--osui-balloon-background);
 	height: auto;
-	inset-inline-start: var(--osui-floating-position-x);
+	// physical: FloatingUI computes --osui-floating-position-x as a physical
+	// from-the-left coordinate; a logical inset would mirror it in RTL
+	left: var(--osui-floating-position-x);
 	opacity: 0;
 	position: var(--osui-balloon-position);
 	pointer-events: none;

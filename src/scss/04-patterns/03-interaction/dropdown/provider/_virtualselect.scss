@@ -110,8 +110,9 @@
 
 					&:after {
 						border-color: var(--color-text-inverse);
-						border-inline-start-color: transparent;
-						border-block-start-color: transparent;
+						// physical: these sides shape the check glyph under rotate(45deg) — a checkmark must not mirror in RTL
+						border-left-color: transparent;
+						border-top-color: transparent;
 						height: 80%;
 						opacity: 1;
 						@include CheckBoxCheckIconTransform;
@@ -311,8 +312,9 @@
 
 			&:after {
 				border-color: var(--color-text-inverse);
-				border-inline-start-color: transparent;
-				border-block-start-color: transparent;
+				// physical: these sides shape the check glyph under rotate(45deg) — a checkmark must not mirror in RTL
+				border-left-color: transparent;
+				border-top-color: transparent;
 				height: 80%;
 				opacity: 1;
 				@include CheckBoxCheckIconTransform;

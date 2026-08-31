@@ -47,12 +47,14 @@
 		}
 
 		&:after {
+			// physical sides: these borders draw the check glyph under the platform's
+			// physical rotate transform — a checkmark must not mirror in RTL
 			border: variables.$token-border-size-075 solid var(--color-text-inverse);
-			border-inline-end: variables.$token-border-size-0 !important;
-			border-block-start: variables.$token-border-size-0 !important;
+			border-right: variables.$token-border-size-0 !important;
+			border-top: variables.$token-border-size-0 !important;
 			display: block;
 			height: variables.$token-scale-100;
-			inset-inline-start: 5px;
+			left: 5px; // physical: positions the rotated glyph
 			top: 7px;
 			width: variables.$token-scale-300;
 		}
@@ -84,7 +86,7 @@
 
 		&:checked {
 			&:after {
-				inset-inline-start: 9px;
+				left: 9px; // physical: positions the rotated check glyph (see above)
 				top: 11px;
 			}
 		}

@@ -92,13 +92,15 @@
 
 			.noUi-handle:before {
 				border-width: variables.$token-border-size-0 variables.$token-border-size-0 variables.$token-border-size-0 variables.$token-border-size-025;
-				inset-inline-start: calc(var(--range-slider-handle-size) / 4);
-				inset-inline-end: auto;
+				// physical: noUiSlider positions handles physically and does its own
+				// RTL via .noUi-txt-dir-rtl — logical props here would double-flip
+				left: calc(var(--range-slider-handle-size) / 4);
+				right: auto;
 			}
 
 			.noUi-handle:after {
 				border-width: variables.$token-border-size-0 variables.$token-border-size-025;
-				inset-inline-start: calc(var(--range-slider-handle-size) / 2.5);
+				left: calc(var(--range-slider-handle-size) / 2.5); // physical: see note above
 				width: variables.$token-scale-075;
 			}
 
@@ -129,7 +131,8 @@
 
 			.noUi-handle {
 				bottom: var(--range-slider-handle-sliding-position);
-				inset-inline-start: calc((var(--range-slider-handle-size-half) + var(--range-slider-thickness-half)) * -1);
+				// physical: pairs with the vendor's physical handle placement
+				left: calc((var(--range-slider-handle-size-half) + var(--range-slider-thickness-half)) * -1);
 
 				// Service Studio Preview
 				& {
@@ -143,7 +146,8 @@
 			width: var(--range-slider-size);
 
 			.noUi-handle {
-				inset-inline-end: var(--range-slider-handle-sliding-position);
+				// physical: the vendor's .noUi-txt-dir-rtl swaps this to `left` itself
+				right: var(--range-slider-handle-sliding-position);
 				top: calc((var(--range-slider-handle-size-half) - var(--range-slider-thickness-half)) * -1);
 			}
 
@@ -170,7 +174,7 @@
 
 		&-pips-horizontal {
 			height: variables.$token-scale-1000;
-			inset-inline-start: 0;
+			left: 0; // physical: noUiSlider geometry — the vendor mirrors RTL itself
 			padding-block: variables.$token-scale-100 0;
 			padding-inline: 0;
 			top: 100%;
@@ -180,10 +184,9 @@
 		&-pips-vertical {
 			color: var(--color-text-subtlest);
 			height: 100%;
-			inset-inline-start: 100%;
-			padding-block: 0;
-			padding-inline-end: 0;
-			padding-inline-start: variables.$token-scale-100;
+			// physical: noUiSlider geometry — mirrored by the .noUi-rtl rules below
+			left: 100%;
+			padding: 0 0 0 variables.$token-scale-100;
 			top: 0;
 		}
 
@@ -219,7 +222,7 @@
 		&-value-vertical {
 			color: var(--color-text-subtlest);
 			font-size: variables.$token-font-size-300;
-			padding-inline-start: variables.$token-scale-200;
+			padding-left: variables.$token-scale-200; // physical: mirrored by .noUi-rtl below
 		}
 
 		&-tooltip {
@@ -229,26 +232,27 @@
 			padding: variables.$token-scale-100;
 		}
 
+		// physical: hand-written RTL counters for the physical vendor geometry above
 		&-rtl {
 			&.noUi-vertical .noUi-handle {
-				inset-inline-end: unset;
+				right: unset;
 			}
 
 			.noUi-value.noUi-value-vertical {
-				padding-inline-start: variables.$token-scale-0;
-				padding-inline-end: variables.$token-scale-600;
+				padding-left: variables.$token-scale-0;
+				padding-right: variables.$token-scale-600;
 			}
 
 			.noUi-marker.noUi-marker-vertical {
-				margin-inline-end: variables.$token-scale-400;
+				margin-right: variables.$token-scale-400;
 			}
 		}
 
 		&-txt-dir-rtl {
 			&.noUi-horizontal {
 				.noUi-origin {
-					inset-inline-start: inherit;
-					inset-inline-end: inherit;
+					left: inherit;
+					right: inherit;
 				}
 			}
 		}
