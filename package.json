@@ -8,7 +8,7 @@
 		"build": "gulp createProduction --target && npm run lintfix && npm run lint",
 		"prebuild:osui": "npm run build:tokens",
 		"build:osui": "gulp createProduction --target",
-		"build:tokens": "npx build.tokens --dest src/scss/tokens/ --prefix token --utilities false --root false",
+		"build:tokens": "npx build.tokens --dest src/scss/tokens/ --prefix token --utilities true --root false",
 		"create-osui-scss": "gulp updateScssFile",
 		"predev": "npm run build:tokens",
 		"dev": "gulp startDevelopment --target",
