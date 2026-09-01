@@ -117,7 +117,18 @@ $osui-avatar-lightest-text-colors: (
 		// Warning backgrounds are light enough to need dark text (Figma).
 		&-warning,
 		&-yellow {
-			color: var(--osui-avatar-on-light-color);
+			color: var(--color-text-dark);
+		}
+
+		&-secondary {
+			color: var(--osui-avatar-primary-color);
+		}
+
+		&-primary,
+		&-blue,
+		&-green,
+		&-red {
+			color: var(--color-text-light);
 		}
 	}
 

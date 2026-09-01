@@ -145,7 +145,18 @@ $osui-tag-lightest-text-colors: (
 		// Warning backgrounds are light enough to need dark text (Figma).
 		&-warning,
 		&-yellow {
-			color: var(--osui-tag-on-light-color);
+			color: var(--color-text-dark);
+		}
+
+		&-secondary {
+			color: var(--osui-tag-primary-color);
+		}
+
+		&-primary,
+		&-blue,
+		&-green,
+		&-red {
+			color: var(--color-text-light);
 		}
 	}
 

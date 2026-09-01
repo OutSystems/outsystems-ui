@@ -88,11 +88,22 @@ $osui-badge-lightest-text-colors: (
 		// Warning backgrounds are light enough to need dark text (Figma).
 		&-warning,
 		&-yellow {
-			color: var(--osui-badge-on-light-color);
+			color: var(--color-text-dark);
 		}
 
 		&-transparent {
 			color: var(--osui-badge-primary-color);
+		}
+
+		&-secondary {
+			color: var(--osui-badge-primary-color);
+		}
+
+		&-primary,
+		&-blue,
+		&-green,
+		&-red {
+			color: var(--color-text-light);
 		}
 	}
 
