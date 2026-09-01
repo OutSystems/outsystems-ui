@@ -27,7 +27,7 @@
 	transition: background-color variables.$token-transition-time-100 variables.$token-transition-curve-expressive;
 
 	.alert-icon {
-		align-self: flex-start;
+		align-self: center;
 		color: var(--osui-alert-icon-color);
 		display: inline-flex;
 		flex-shrink: 0;
