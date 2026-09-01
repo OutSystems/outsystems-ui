@@ -31,10 +31,12 @@ $osui-avatar-lightest-text-colors: (
 	--osui-avatar-color: var(--color-text-inverse);
 	--osui-avatar-primary-color: var(--color-primary);
 	--osui-avatar-on-light-color: var(--color-text);
+	--osui-avatar-border-radius: var(--border-radius, var(--border-radius-none));
 	--osui-avatar-soft-border-radius: #{variables.$token-border-radius-100};
 	// ───────────────────────────────────────────────────────────────────
 
 	align-items: center;
+	border-radius: var(--osui-avatar-border-radius);
 	color: var(--osui-avatar-color);
 	display: inline-flex;
 	font-size: variables.$token-font-size-350;

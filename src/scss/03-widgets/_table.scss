@@ -9,7 +9,7 @@
 .table {
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-table-border-color: var(--color-border);
-	--osui-table-border-radius: var(--border-radius-soft);
+	--osui-table-border-radius: var(--border-radius, var(--border-radius-soft));
 	--osui-table-header-background: transparent;
 	--osui-table-header-color: var(--color-text-subtlest);
 	--osui-table-cell-background: var(--color-background-surface);

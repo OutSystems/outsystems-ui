@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
+import { extendedClassArgType } from './_helpers/lowcode';
 import { cfg, osuiRoot, Patterns, renderPattern, uid } from './_helpers/osui';
 
 /**
@@ -20,6 +21,7 @@ interface SidebarArgs {
 	width: string;
 	hasOverlay: boolean;
 	startsOpen: boolean;
+	extendedClass: string;
 }
 
 const meta: Meta<SidebarArgs> = {
@@ -29,8 +31,9 @@ const meta: Meta<SidebarArgs> = {
 		width: { control: 'text', name: 'Width' },
 		hasOverlay: { control: 'boolean', name: 'HasOverlay' },
 		startsOpen: { control: 'boolean', name: 'StartsOpen' },
+		extendedClass: extendedClassArgType,
 	},
-	args: { direction: 'left', width: '320px', hasOverlay: true, startsOpen: false },
+	args: { direction: 'left', width: '320px', hasOverlay: true, startsOpen: false, extendedClass: '' },
 };
 export default meta;
 
@@ -70,6 +73,7 @@ export const Default: Story = {
 					Width: args.width,
 					HasOverlay: args.hasOverlay,
 					StartsOpen: args.startsOpen,
+					ExtendedClass: args.extendedClass,
 				})
 			);
 			P.SidebarAPI.Initialize(id);

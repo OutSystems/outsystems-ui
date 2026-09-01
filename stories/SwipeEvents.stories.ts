@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
+import { extendedClassArgType } from './_helpers/lowcode';
 import { cfg, osuiRoot, Patterns, renderPattern, uid } from './_helpers/osui';
 
 /**
@@ -6,15 +7,19 @@ import { cfg, osuiRoot, Patterns, renderPattern, uid } from './_helpers/osui';
  * listeners to the element named by `WidgetId`. Best exercised on a touch
  * device / device-emulation; here we wire it to the demo box and log swipes.
  */
-const meta: Meta = {
+type SwipeEventsArgs = { extendedClass: string };
+
+const meta: Meta<SwipeEventsArgs> = {
 	title: 'Patterns/Utilities/SwipeEvents',
+	args: { extendedClass: '' },
+	argTypes: { extendedClass: extendedClassArgType },
 };
 export default meta;
 
-type Story = StoryObj;
+type Story = StoryObj<SwipeEventsArgs>;
 
 export const Default: Story = {
-	render: () => {
+	render: ({ extendedClass }) => {
 		const id = uid('swipe');
 		const template = `
 			<div ${osuiRoot(id)} style="display:flex;align-items:center;justify-content:center;min-height:200px;background:#eef;border-radius:8px;user-select:none;touch-action:none;">
@@ -22,7 +27,7 @@ export const Default: Story = {
 			</div>`;
 		return renderPattern(template, (root, register) => {
 			const P = Patterns();
-			P.SwipeEventsAPI.Create(id, cfg({ WidgetId: id }));
+			P.SwipeEventsAPI.Create(id, cfg({ WidgetId: id, ExtendedClass: extendedClass }));
 			P.SwipeEventsAPI.Initialize(id);
 			const out = root.querySelector('[data-output]')!;
 			['SwipeUp', 'SwipeDown', 'SwipeLeft', 'SwipeRight'].forEach((evt) =>

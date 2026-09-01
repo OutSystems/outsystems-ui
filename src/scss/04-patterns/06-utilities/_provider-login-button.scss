@@ -42,10 +42,10 @@
 		}
 	}
 	&.soft {
-		border-radius: variables.$token-border-radius-100;
+		border-radius: var(--border-radius, #{variables.$token-border-radius-100});
 	}
 	&.rounded {
-		border-radius: var(--border-radius-rounded);
+		border-radius: var(--border-radius, var(--border-radius-rounded));
 	}
 	.btn-provider-login {
 		&-logo {

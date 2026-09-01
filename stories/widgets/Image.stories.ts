@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
+import { cls, styleClassesArgType } from '../_helpers/lowcode';
 import { renderStatic } from '../_helpers/osui';
 
 /**
@@ -13,13 +14,19 @@ import { renderStatic } from '../_helpers/osui';
  * how `src` is resolved — Binary builds a data URI from a runtime BinaryData
  * object — so they share this one DOM shape.
  */
-const meta: Meta = { title: 'Widgets/Image' };
+type WidgetArgs = { styleClasses: string };
+
+const meta: Meta<WidgetArgs> = {
+	title: 'Widgets/Image',
+	args: { styleClasses: '' },
+	argTypes: { styleClasses: styleClassesArgType },
+};
 export default meta;
-type Story = StoryObj;
+type Story = StoryObj<WidgetArgs>;
 
 export const Default: Story = {
-	render: () =>
+	render: ({ styleClasses }) =>
 		renderStatic(
-			`<img data-image="" class="" src="https://outsystemsui.outsystems.com/OutSystemsUIWebsite/img/logo.png" alt="">`
+			`<img data-image="" class="${cls(styleClasses)}" src="https://outsystemsui.outsystems.com/OutSystemsUIWebsite/img/logo.png" alt="">`
 		),
 };

@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
+import { extendedClassArgType } from './_helpers/lowcode';
 import { cfg, createAndInit, osuiRoot, Patterns, renderPattern, uid } from './_helpers/osui';
 
 /**
@@ -19,6 +20,7 @@ interface AccordionArgs {
 	icon: 'Caret' | 'PlusMinus' | 'Custom';
 	iconPosition: 'left' | 'right';
 	startsExpanded: boolean;
+	extendedClass: string;
 }
 
 const FAQ: Array<[string, string]> = [
@@ -55,8 +57,9 @@ const meta: Meta<AccordionArgs> = {
 		icon: { control: 'select', options: ['Caret', 'PlusMinus', 'Custom'], name: 'Item.Icon' },
 		iconPosition: { control: 'inline-radio', options: ['left', 'right'], name: 'Item.IconPosition' },
 		startsExpanded: { control: 'boolean', name: 'Item.StartsExpanded' },
+		extendedClass: extendedClassArgType,
 	},
-	args: { multipleItems: false, icon: 'Caret', iconPosition: 'left', startsExpanded: false },
+	args: { multipleItems: false, icon: 'Caret', iconPosition: 'left', startsExpanded: false, extendedClass: '' },
 };
 export default meta;
 
@@ -74,7 +77,7 @@ export const Default: Story = {
 		return renderPattern(template, (_root, register) => {
 			const P = Patterns();
 			// 1. parent, 2. items
-			P.AccordionAPI.Create(accId, cfg({ MultipleItems: args.multipleItems }));
+			P.AccordionAPI.Create(accId, cfg({ MultipleItems: args.multipleItems, ExtendedClass: args.extendedClass }));
 			const itemConfig = cfg({
 				Icon: args.icon,
 				IconPosition: args.iconPosition,
@@ -113,6 +116,7 @@ export const SingleDisabledItem: Story = {
 					IsDisabled: true,
 					StartsExpanded: args.startsExpanded,
 					ToggleWithIcon: false,
+					ExtendedClass: args.extendedClass,
 				},
 				register
 			)

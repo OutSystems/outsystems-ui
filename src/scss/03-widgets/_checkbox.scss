@@ -14,7 +14,7 @@
 	// Same hover tier as .form-control[data-input], so a checkbox and an input
 	// react identically to the pointer
 	--osui-checkbox-hover-border-color: var(--color-border-input-hover);
-	--osui-checkbox-border-radius: var(--border-radius-soft);
+	--osui-checkbox-border-radius: var(--border-radius, var(--border-radius-soft));
 	--osui-checkbox-checked-color: var(--color-primary);
 	// ───────────────────────────────────────────────────────────────────
 

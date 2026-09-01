@@ -21,7 +21,7 @@
 			// ─── Component CSS API ─────────────────────────────────────────────
 			--osui-popover-background:     var(--color-background-surface);
 			--osui-popover-color:          var(--color-text);
-			--osui-popover-border-radius:  var(--border-radius-soft);
+			--osui-popover-border-radius:  var(--border-radius, var(--border-radius-soft));
 			--osui-popover-shadow:         #{variables.$token-elevation-2};
 			--osui-popover-max-width:      350px;
 			// ───────────────────────────────────────────────────────────────────

@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
+import { cls, styleClassesArgType } from '../_helpers/lowcode';
 import { renderStatic } from '../_helpers/osui';
 
 /**
@@ -19,14 +20,20 @@ import { renderStatic } from '../_helpers/osui';
  * CSS contract: src/scss/03-widgets/_upload.scss (plus the `.upload-file
  * span.validation-message` rule in _form.scss).
  */
-const meta: Meta = { title: 'Widgets/Upload' };
+type WidgetArgs = { styleClasses: string };
+
+const meta: Meta<WidgetArgs> = {
+	title: 'Widgets/Upload',
+	args: { styleClasses: '' },
+	argTypes: { styleClasses: styleClassesArgType },
+};
 export default meta;
-type Story = StoryObj;
+type Story = StoryObj<WidgetArgs>;
 
 export const Default: Story = {
-	render: () =>
+	render: ({ styleClasses }) =>
 		renderStatic(`
-			<span class="upload-file">
+			<span class="${cls('upload-file', styleClasses)}">
 				<label data-upload="" class="" tabindex="0">
 					<input type="file" accept="image/*" style="display: none;">
 				</label>

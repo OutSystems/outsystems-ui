@@ -31,9 +31,11 @@ $osui-badge-lightest-text-colors: (
 	--osui-badge-color: var(--color-text-inverse);
 	--osui-badge-primary-color: #{variables.$token-text-primary};
 	--osui-badge-on-light-color: var(--color-text);
+	--osui-badge-border-radius: var(--border-radius, var(--border-radius-none));
 	// ───────────────────────────────────────────────────────────────────
 
 	align-items: center;
+	border-radius: var(--osui-badge-border-radius);
 	color: var(--osui-badge-color);
 	display: inline-flex;
 	font-weight: variables.$token-font-weight-semi-bold;

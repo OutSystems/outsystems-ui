@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
+import { extendedClassArgType } from './_helpers/lowcode';
 import { createAndInit, osuiRoot, renderPattern, uid } from './_helpers/osui';
 
 /**
@@ -12,6 +13,7 @@ interface RatingArgs {
 	ratingValue: number;
 	ratingScale: number;
 	isEdit: boolean;
+	extendedClass: string;
 }
 
 const ICON_STATES = `
@@ -27,8 +29,9 @@ const meta: Meta<RatingArgs> = {
 		ratingValue: { control: { type: 'number', min: 0, max: 5, step: 0.5 }, name: 'RatingValue' },
 		ratingScale: { control: { type: 'number', min: 1, max: 10 }, name: 'RatingScale' },
 		isEdit: { control: 'boolean', name: 'IsEdit' },
+		extendedClass: extendedClassArgType,
 	},
-	args: { ratingValue: 3, ratingScale: 5, isEdit: true },
+	args: { ratingValue: 3, ratingScale: 5, isEdit: true, extendedClass: '' },
 };
 export default meta;
 
@@ -46,7 +49,7 @@ export const Default: Story = {
 			createAndInit(
 				'RatingAPI',
 				id,
-				{ RatingValue: args.ratingValue, RatingScale: args.ratingScale, IsEdit: args.isEdit, Size: '' },
+				{ RatingValue: args.ratingValue, RatingScale: args.ratingScale, IsEdit: args.isEdit, Size: '', ExtendedClass: args.extendedClass },
 				register
 			)
 		);

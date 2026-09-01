@@ -23,13 +23,19 @@ const SHAPE_THEME_VARIABLES = [
 		themeVariable: '--border-radius-soft',
 		label: 'Soft',
 		tokenKey: 'border.radius.200',
-		usage: 'Controls and flat surfaces — buttons, inputs, checkboxes, cards.',
+		usage: 'Controls and flat surfaces — buttons, inputs, checkboxes.',
 	},
 	{
 		themeVariable: '--border-radius-softer',
 		label: 'Softer',
+		tokenKey: 'border.radius.300',
+		usage: '12px chrome — alerts, submenu panel, carousel track.',
+	},
+	{
+		themeVariable: '--border-radius-softest',
+		label: 'Softest',
 		tokenKey: 'border.radius.400',
-		usage: 'Elevated surfaces — dropdowns, popovers, balloons.',
+		usage: 'Elevated surfaces — cards, accordion group ends, balloon/bottom-sheet remap.',
 	},
 	{
 		themeVariable: '--border-radius-rounded',
@@ -42,6 +48,7 @@ const SHAPE_THEME_VARIABLES = [
 /** Hero strip order — most rounded first, like Mobile UI Shape docs. */
 const HERO_THEME_VARIABLE_ORDER = [
 	'--border-radius-rounded',
+	'--border-radius-softest',
 	'--border-radius-softer',
 	'--border-radius-soft',
 	'--border-radius-none',
@@ -78,7 +85,7 @@ export function ShapePage() {
 		<FoundationsShell
 			eyebrow="Design system · Shape"
 			title="Shape"
-			lede="OutSystems UI expresses shape through theme variables — semantic corner radii that components read via the CSS API. Set --border-radius-default once at :root to re-radius the whole framework."
+			lede="OutSystems UI expresses shape through theme variables — semantic corner radii that components read via the CSS API. Add .shape-rectangular, .shape-soft, .shape-softer, .shape-softest, or .shape-rounded to restyle chrome via --border-radius."
 		>
 			<div className="fd-shape-container">
 				{heroDemos.map(({ themeVariable, label, value }) => (
@@ -149,8 +156,8 @@ export function ShapePage() {
 			<DocsNote title="Primitive scale">
 				The full <code>--token-border-radius-*</code> scale (0 through full) lives on the{' '}
 				<strong>Borders</strong> page. OutSystems UI does not ship Mobile UI-style shape families (
-				<code>token-soft-*</code>, <code>token-round-*</code>) — use the theme variables above or override{' '}
-				<code>--border-radius-default</code> in the Theme Editor.
+				<code>token-soft-*</code>, <code>token-round-*</code>) — use the theme variables above or a{' '}
+				<code>.shape-*</code> class.
 			</DocsNote>
 		</FoundationsShell>
 	);

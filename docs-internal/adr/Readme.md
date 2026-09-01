@@ -36,6 +36,7 @@ Each ADR should follow the template in `ADR-0000-Title-of-ADR.md`.
 | ADR-0007   | Build and tooling hygiene                                              | Accepted | 2026-08-12 |
 | ADR-0008   | Chromatic baseline builds on `ROU-12714` and the widget-story dependency | Accepted (§C resolved by ADR-0009) | 2026-08-13 |
 | ADR-0009   | Static widget stories and zero private dependencies                    | Accepted | 2026-08-21 |
+| ADR-0010   | Border-radius theme layer and shape utilities                          | Accepted | 2026-09-01 |
 
 > The **"Make Great UI"** initiative (epic ROU-12776) also has a phase-by-phase decision
 > history in `specs/plan.md` (D1–D28) and `specs/plan-part-four.md` (D28–D37, theme

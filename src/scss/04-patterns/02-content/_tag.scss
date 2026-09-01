@@ -31,11 +31,13 @@ $osui-tag-lightest-text-colors: (
 	--osui-tag-color: var(--color-text-inverse);
 	--osui-tag-primary-color: var(--color-primary);
 	--osui-tag-on-light-color: var(--color-text);
+	--osui-tag-border-radius: var(--border-radius, var(--border-radius-none));
 	--osui-tag-soft-border-radius: #{variables.$token-border-radius-100};
 	--osui-tag-medium-soft-border-radius: #{variables.$token-border-radius-200};
 	// ───────────────────────────────────────────────────────────────────
 
 	align-items: center;
+	border-radius: var(--osui-tag-border-radius);
 	color: var(--osui-tag-color);
 	display: inline-flex;
 	font-size: variables.$token-font-size-300;

@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
+import { extendedClassArgType } from './_helpers/lowcode';
 import { cfg, osuiRoot, Patterns, renderPattern, uid } from './_helpers/osui';
 
 /**
@@ -26,6 +27,7 @@ import { cfg, osuiRoot, Patterns, renderPattern, uid } from './_helpers/osui';
 interface DropdownServerSideArgs {
 	allowMultipleSelection: boolean;
 	isDisabled: boolean;
+	extendedClass: string;
 }
 
 const OPTIONS = [
@@ -39,8 +41,9 @@ const meta: Meta<DropdownServerSideArgs> = {
 	argTypes: {
 		allowMultipleSelection: { control: 'boolean', name: 'AllowMultipleSelection' },
 		isDisabled: { control: 'boolean', name: 'IsDisabled' },
+		extendedClass: extendedClassArgType,
 	},
-	args: { allowMultipleSelection: false, isDisabled: false },
+	args: { allowMultipleSelection: false, isDisabled: false, extendedClass: '' },
 };
 export default meta;
 
@@ -83,7 +86,11 @@ export const Default: Story = {
 				id,
 				'server-side',
 				'osui-components',
-				cfg({ AllowMultipleSelection: args.allowMultipleSelection, IsDisabled: args.isDisabled })
+				cfg({
+					AllowMultipleSelection: args.allowMultipleSelection,
+					IsDisabled: args.isDisabled,
+					ExtendedClass: args.extendedClass,
+				})
 			);
 			itemIds.forEach((itemId, i) =>
 				P.DropdownServerSideItemAPI.Create(itemId, cfg({ ItemId: OPTIONS[i].value, IsSelected: false }))

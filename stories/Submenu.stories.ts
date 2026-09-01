@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
+import { extendedClassArgType } from './_helpers/lowcode';
 import { createAndInit, osuiRoot, Patterns, renderPattern, uid } from './_helpers/osui';
 
 /**
@@ -13,12 +14,16 @@ import { createAndInit, osuiRoot, Patterns, renderPattern, uid } from './_helper
 
 interface SubmenuArgs {
 	openOnHover: boolean;
+	extendedClass: string;
 }
 
 const meta: Meta<SubmenuArgs> = {
 	title: 'Patterns/Navigation/Submenu',
-	argTypes: { openOnHover: { control: 'boolean', name: 'OpenOnHover' } },
-	args: { openOnHover: false },
+	argTypes: {
+		openOnHover: { control: 'boolean', name: 'OpenOnHover' },
+		extendedClass: extendedClassArgType,
+	},
+	args: { openOnHover: false, extendedClass: '' },
 };
 export default meta;
 
@@ -41,7 +46,12 @@ export const Default: Story = {
 				</div>
 			</div>`;
 		return renderPattern(template, (_root, register) => {
-			const instance = createAndInit('SubmenuAPI', id, { OpenOnHover: args.openOnHover }, register);
+			const instance = createAndInit(
+				'SubmenuAPI',
+				id,
+				{ OpenOnHover: args.openOnHover, ExtendedClass: args.extendedClass },
+				register
+			);
 			// Submenu only wires its click/hover listeners once `_hasValidChildren()` can
 			// see a built pattern — `setHtmlElements()` runs before `finishBuild()`, so the
 			// check always fails at init. The platform recovers by calling UpdateOnRender on

@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
+import { cls, styleClassesArgType } from '../_helpers/lowcode';
 import { renderStatic } from '../_helpers/osui';
 
 /**
@@ -23,14 +24,20 @@ import { renderStatic } from '../_helpers/osui';
  * CSS contract: src/scss/03-widgets/_popup.scss — `[data-popup-backdrop]` z-index
  * and the `.popup-dialog` component CSS API (`--osui-popup-*`).
  */
-const meta: Meta = { title: 'Widgets/Popup' };
+type WidgetArgs = { styleClasses: string };
+
+const meta: Meta<WidgetArgs> = {
+	title: 'Widgets/Popup',
+	args: { styleClasses: '' },
+	argTypes: { styleClasses: styleClassesArgType },
+};
 export default meta;
-type Story = StoryObj;
+type Story = StoryObj<WidgetArgs>;
 
 export const Default: Story = {
-	render: () =>
+	render: ({ styleClasses }) =>
 		renderStatic(`
-			<div class="portal-class" style="display: inline;">
+			<div class="${cls('portal-class', styleClasses)}" style="display: inline;">
 				<div>
 					<div class="popup-backdrop" data-popup-backdrop="">
 						<div data-popup="" class="popup-dialog " role="dialog" aria-modal="true">

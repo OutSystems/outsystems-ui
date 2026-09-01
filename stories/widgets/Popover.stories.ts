@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
+import { cls, styleClassesArgType } from '../_helpers/lowcode';
 import { renderPattern, renderStatic } from '../_helpers/osui';
 
 /**
@@ -27,9 +28,15 @@ import { renderPattern, renderStatic } from '../_helpers/osui';
  * `_popover.scss` / `_popover-odc.scss` went untested even while this story
  * mounted the live widget.
  */
-const meta: Meta = { title: 'Widgets/Popover' };
+type WidgetArgs = { styleClasses: string };
+
+const meta: Meta<WidgetArgs> = {
+	title: 'Widgets/Popover',
+	args: { styleClasses: '' },
+	argTypes: { styleClasses: styleClassesArgType },
+};
 export default meta;
-type Story = StoryObj;
+type Story = StoryObj<WidgetArgs>;
 
 const trigger = `<div class="popover-top"><button class="btn" type="button">Open popover ▾</button></div>`;
 const content = `
@@ -42,10 +49,10 @@ const content = `
 		</div>`;
 
 export const Default: Story = {
-	render: () =>
+	render: ({ styleClasses }) =>
 		renderPattern(
 			`<div style="padding:20px;min-height:220px;">
-				<div data-popover="" class="">${trigger}</div>
+				<div data-popover="" class="${cls(styleClasses)}">${trigger}</div>
 			</div>`,
 			(root, register) => {
 				const popover = root.querySelector<HTMLElement>('[data-popover]')!;
@@ -54,7 +61,7 @@ export const Default: Story = {
 				const setOpen = (open: boolean): void => {
 					// The widget appends/removes the content region rather than hiding it,
 					// and its root className keeps the leading space from an empty `style`.
-					popover.className = open ? ' popover-expanded' : '';
+					popover.className = cls(styleClasses, open && 'popover-expanded');
 					popover.querySelector('.popover-bottom')?.remove();
 					if (open) {
 						popover.insertAdjacentHTML('beforeend', content);
@@ -78,10 +85,10 @@ export const Default: Story = {
 
 /** Pinned open — the state that carries the widget's own CSS, so Chromatic sees it. */
 export const Expanded: Story = {
-	render: () =>
+	render: ({ styleClasses }) =>
 		renderStatic(`
 			<div style="padding:20px;min-height:220px;">
-				<div data-popover="" class=" popover-expanded">
+				<div data-popover="" class="${cls('popover-expanded', styleClasses)}">
 					${trigger}
 					${content}
 				</div>

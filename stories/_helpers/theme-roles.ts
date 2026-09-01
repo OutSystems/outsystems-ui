@@ -144,13 +144,13 @@ export const THEME_ROLE_GROUPS: RoleGroup[] = [
 			id: 'radius',
 			title: 'Radius',
 			type: 'length',
-			blurb: 'The shape vocabulary. Set "All" to re-radius the whole framework with one value.',
+			blurb: 'The shape vocabulary. .shape-* sets --border-radius on a subtree; see ADR-0010.',
 		},
 		[
-			['--border-radius-default', 'All (master override)', 'unset by default'],
-			['--border-radius-none', 'None'],
-			['--border-radius-soft', 'Soft (controls, flat)'],
-			['--border-radius-softer', 'Softer (elevated)'],
+			['--border-radius-none', 'None (0px; class is .shape-rectangular)'],
+			['--border-radius-soft', 'Soft (8px, controls)'],
+			['--border-radius-softer', 'Softer (12px)'],
+			['--border-radius-softest', 'Softest (16px, elevated)'],
 			['--border-radius-rounded', 'Rounded (circular)'],
 		]
 	),

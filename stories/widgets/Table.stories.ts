@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
+import { cls, styleClassesArgType } from '../_helpers/lowcode';
 import { renderStatic } from '../_helpers/osui';
 
 /**
@@ -11,9 +12,15 @@ import { renderStatic } from '../_helpers/osui';
  *   `table.table[role=grid]` > `thead > tr.table-header > th(.sortable.sorted + .sortable-icon)`;
  *   `tbody > tr.table-row(.table-row-selected|.table-row-stripping) > td[data-header](.table-cell-secondary)`.
  */
-const meta: Meta = { title: 'Widgets/Table' };
+type WidgetArgs = { styleClasses: string };
+
+const meta: Meta<WidgetArgs> = {
+	title: 'Widgets/Table',
+	args: { styleClasses: '' },
+	argTypes: { styleClasses: styleClassesArgType },
+};
 export default meta;
-type Story = StoryObj;
+type Story = StoryObj<WidgetArgs>;
 
 const row = (name: string, status: string, email: string) => `
 	<tr class="table-row table-row-stripping">
@@ -23,9 +30,9 @@ const row = (name: string, status: string, email: string) => `
 	</tr>`;
 
 export const Default: Story = {
-	render: () =>
+	render: ({ styleClasses }) =>
 		renderStatic(`
-			<table class="table" role="grid" style="width:100%;max-width:560px;">
+			<table class="${cls('table', styleClasses)}" role="grid" style="width:100%;max-width:560px;">
 				<thead>
 					<tr class="table-header">
 						<th class="sortable sorted" tabindex="0">Name<div class="sortable-icon"></div></th>

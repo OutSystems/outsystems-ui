@@ -21,7 +21,7 @@
 	.flatpickr-monthSelect-month {
 		align-items: center;
 		border: variables.$token-border-size-025 solid transparent;
-		border-radius: variables.$token-border-radius-200;
+		border-radius: var(--border-radius, var(--border-radius-soft));
 		display: flex;
 		height: variables.$token-scale-1000;
 		margin: 0;

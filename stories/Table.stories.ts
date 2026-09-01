@@ -1,10 +1,17 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
+import { cls, extendedClassArgType } from './_helpers/lowcode';
 import { renderStatic } from './_helpers/osui';
 
 /** Table — shipped: `table.table` (role=grid) > thead > `tr.table-header` > `th.sortable` (+ `.sortable-icon`); tbody > `tr.table-row` > `td[data-header]`. */
-const meta: Meta = { title: 'Patterns/Content/Table' };
+type TableArgs = { extendedClass: string };
+
+const meta: Meta<TableArgs> = {
+	title: 'Patterns/Content/Table',
+	args: { extendedClass: '' },
+	argTypes: { extendedClass: extendedClassArgType },
+};
 export default meta;
-type Story = StoryObj;
+type Story = StoryObj<TableArgs>;
 
 const row = (selected: boolean, a: string, b: string, c: string) => `
 	<tr class="table-row ${selected ? 'table-row-selected' : ''}">
@@ -12,9 +19,9 @@ const row = (selected: boolean, a: string, b: string, c: string) => `
 	</tr>`;
 
 export const Default: Story = {
-	render: () =>
+	render: ({ extendedClass }) =>
 		renderStatic(`
-			<table class="table" role="grid" style="width:100%;max-width:560px;">
+			<table class="${cls('table', extendedClass)}" role="grid" style="width:100%;max-width:560px;">
 				<thead>
 					<tr class="table-header">
 						<th class="sortable" tabindex="0">Name<div class="sortable-icon"></div></th>

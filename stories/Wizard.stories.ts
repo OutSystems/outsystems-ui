@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
+import { extendedClassArgType } from './_helpers/lowcode';
 import { cfg, osuiRoot, Patterns, renderPattern, uid } from './_helpers/osui';
 
 /**
@@ -29,6 +30,7 @@ interface WizardArgs {
 	isVertical: boolean;
 	stepBehavior: 'ProgressOnly' | 'Interactive';
 	reverseLabelPosition: boolean;
+	extendedClass: string;
 }
 
 const STEPS: Array<[WizardItemStatus, string, string]> = [
@@ -83,8 +85,9 @@ const meta: Meta<WizardArgs> = {
 			name: 'Item.ReverseLabelPosition',
 			description: 'Places the label before the icon (`is-reversed`).',
 		},
+		extendedClass: extendedClassArgType,
 	},
-	args: { isVertical: false, stepBehavior: 'ProgressOnly', reverseLabelPosition: false },
+	args: { isVertical: false, stepBehavior: 'ProgressOnly', reverseLabelPosition: false, extendedClass: '' },
 };
 export default meta;
 
@@ -103,7 +106,10 @@ function renderWizard(args: WizardArgs, statuses: Array<[WizardItemStatus, strin
 	return renderPattern(template, (_root, register) => {
 		const P = Patterns();
 		// 1. parent, 2. items
-		P.WizardAPI.Create(wizId, cfg({ IsVertical: args.isVertical, StepBehavior: args.stepBehavior }));
+		P.WizardAPI.Create(
+			wizId,
+			cfg({ IsVertical: args.isVertical, StepBehavior: args.stepBehavior, ExtendedClass: args.extendedClass })
+		);
 		itemIds.forEach((id, i) =>
 			P.WizardItemAPI.Create(id, cfg({ Status: statuses[i][0], ReverseLabelPosition: args.reverseLabelPosition }))
 		);

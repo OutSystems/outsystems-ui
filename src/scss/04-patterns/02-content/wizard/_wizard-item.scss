@@ -33,7 +33,7 @@
 	// Figma spec is primitives/neutral/600 — the token set has no semantic role for a
 	// progress-track neutral yet, so the primitive is cited directly (design-system gap).
 	--osui-wizard-connector-color: #{variables.$token-primitives-neutral-600};
-	--osui-wizard-connector-radius: #{variables.$token-border-radius-full};
+	--osui-wizard-icon-border-radius: var(--border-radius, var(--border-radius-rounded));
 	--osui-wizard-connector-size: #{variables.$token-border-size-050};
 	--osui-wizard-focus-halo-color: var(--color-focus-outer);
 	--osui-wizard-focus-halo-width: #{variables.$token-border-size-075};
@@ -102,7 +102,6 @@
 		// or the empty 8px dot) without depending on `--osui-wizard-icon-size`.
 		&:before {
 			background-color: var(--osui-wizard-connector-color);
-			border-radius: var(--osui-wizard-connector-radius);
 			content: '';
 			height: var(--osui-wizard-connector-size);
 			position: absolute;
@@ -118,7 +117,7 @@
 		align-items: center;
 		background-color: var(--osui-wizard-icon-background);
 		border: var(--osui-wizard-icon-border-width) solid var(--osui-wizard-icon-border-color);
-		border-radius: var(--border-radius-rounded);
+		border-radius: var(--osui-wizard-icon-border-radius);
 		color: var(--osui-wizard-icon-color);
 		display: flex;
 		font-size: var(--osui-wizard-font-size);

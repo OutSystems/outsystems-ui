@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
+import { cls, styleClassesArgType } from '../_helpers/lowcode';
 import { renderStatic } from '../_helpers/osui';
 
 /**
@@ -35,14 +36,22 @@ import { renderStatic } from '../_helpers/osui';
  * the widget does not emit, so the sizes are not represented. If a future package
  * version starts emitting a size class, re-capture and extend this story.
  */
-const meta: Meta = { title: 'Widgets/Icon' };
+type WidgetArgs = { styleClasses: string };
+
+const meta: Meta<WidgetArgs> = {
+	title: 'Widgets/Icon',
+	args: { styleClasses: '' },
+	argTypes: { styleClasses: styleClassesArgType },
+};
 export default meta;
-type Story = StoryObj;
+type Story = StoryObj<WidgetArgs>;
 
 /** Exactly what the widget emits, for the four icons the original story used. */
-const faIcon = (name: string) => `<i class="fa fa-${name}" aria-hidden="true" data-icon=""></i>`;
+const faIcon = (name: string, styleClasses = '') =>
+	`<i class="${cls('fa', `fa-${name}`, styleClasses)}" aria-hidden="true" data-icon=""></i>`;
 /** The same glyphs as an app on the Phosphor library would render them. */
-const phIcon = (name: string) => `<i class="ph ph-${name}" aria-hidden="true" data-icon=""></i>`;
+const phIcon = (name: string, styleClasses = '') =>
+	`<i class="${cls('ph', `ph-${name}`, styleClasses)}" aria-hidden="true" data-icon=""></i>`;
 
 const row = (label: string, icons: string) => `
 	<div style="display:flex;gap:20px;align-items:center;">
@@ -51,10 +60,10 @@ const row = (label: string, icons: string) => `
 	</div>`;
 
 export const Default: Story = {
-	render: () =>
+	render: ({ styleClasses }) =>
 		renderStatic(`
 			<div style="display:flex;flex-direction:column;gap:16px;">
-				${row('fa fa-*', ['star', 'bell', 'check', 'cog'].map(faIcon).join('\n\t\t\t\t'))}
-				${row('ph ph-*', ['star', 'bell', 'check', 'gear'].map(phIcon).join('\n\t\t\t\t'))}
+				${row('fa fa-*', ['star', 'bell', 'check', 'cog'].map((n) => faIcon(n, styleClasses)).join('\n\t\t\t\t'))}
+				${row('ph ph-*', ['star', 'bell', 'check', 'gear'].map((n) => phIcon(n, styleClasses)).join('\n\t\t\t\t'))}
 			</div>`),
 };

@@ -29,7 +29,7 @@
 		--osui-popup-background:    var(--color-background-surface);
 		--osui-popup-border-color:  transparent;
 		--osui-popup-border-width:  #{variables.$token-border-size-025};
-		--osui-popup-border-radius: var(--border-radius-soft);
+		--osui-popup-border-radius: var(--border-radius, var(--border-radius-soft));
 		--osui-popup-shadow:        #{variables.$token-elevation-4};
 		--osui-popup-padding:       #{variables.$token-scale-600};
 		--osui-popup-max-width:     500px;
@@ -69,6 +69,6 @@
 .os-high-contrast {
 	.popup-dialog {
 		border: variables.$token-border-size-025 solid #{variables.$token-bg-surface-default};
-		border-radius: var(--border-radius-soft);
+		border-radius: var(--osui-popup-border-radius);
 	}
 }

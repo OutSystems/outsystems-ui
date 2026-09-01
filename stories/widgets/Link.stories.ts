@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
+import { cls, styleClassesArgType } from '../_helpers/lowcode';
 import { renderPattern } from '../_helpers/osui';
 
 /**
@@ -22,13 +23,20 @@ import { renderPattern } from '../_helpers/osui';
  * `MemoryRouter` for exactly this reason). Swallowing the navigation is the
  * static equivalent of that interception, and it changes no attribute.
  */
-const meta: Meta = { title: 'Widgets/Link' };
+type WidgetArgs = { styleClasses: string };
+
+const meta: Meta<WidgetArgs> = {
+	title: 'Widgets/Link',
+	args: { styleClasses: '' },
+	argTypes: { styleClasses: styleClassesArgType },
+};
 export default meta;
-type Story = StoryObj;
+type Story = StoryObj<WidgetArgs>;
 
 export const Default: Story = {
-	render: () =>
-		renderPattern(`<a data-link="" aria-disabled="false" class="" href="/somewhere">Go to page</a>`, (root) => {
+	render: ({ styleClasses }) =>
+		renderPattern(
+			`<a data-link="" aria-disabled="false" class="${cls(styleClasses)}" href="/somewhere">Go to page</a>`, (root) => {
 			root.querySelector<HTMLElement>('[data-link]')?.addEventListener('click', (e) => e.preventDefault());
 		}),
 };

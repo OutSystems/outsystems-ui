@@ -95,6 +95,16 @@ export const extendedClassArgType = {
 	description: 'Add custom style classes to the Pattern (space-separated CSS class names).',
 } as const;
 
+/**
+ * Shared `StyleClasses` control — the platform widget `style` / StyleClasses
+ * input. Applied on the widget root element (not a pattern config property).
+ */
+export const styleClassesArgType = {
+	name: 'StyleClasses',
+	control: 'text',
+	description: 'Add custom style classes to the Widget (space-separated CSS class names).',
+} as const;
+
 /** Shared `UsePadding` control (Card, Section, …). */
 export const usePaddingArgType = {
 	name: 'UsePadding',

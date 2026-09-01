@@ -82,10 +82,13 @@
 	}
 
 	// ─── Theme layer · radius ────────────────────────────────────────────
-	--border-radius-none: var(--border-radius-default, #{variables.$token-border-radius-0}); // 0px
-	--border-radius-soft: var(--border-radius-default, #{variables.$token-border-radius-200}); // 8px · controls + flat surfaces
-	--border-radius-softer: var(--border-radius-default, #{variables.$token-border-radius-400}); // 16px · elevated surfaces
-	--border-radius-rounded: var(--border-radius-default, #{variables.$token-border-radius-full}); // 999px · circular
+	// Named `none` (not `rectangular`) so it matches ShapeTypes.Sharp = 'none'
+	// (`--border-radius-' + shape`) and the legacy `.border-radius-none` class.
+	--border-radius-none: #{variables.$token-border-radius-0}; // 0px
+	--border-radius-soft: #{variables.$token-border-radius-200}; // 8px · controls + flat surfaces
+	--border-radius-softer: #{variables.$token-border-radius-300}; // 12px
+	--border-radius-softest: #{variables.$token-border-radius-400}; // 16px · elevated surfaces
+	--border-radius-rounded: #{variables.$token-border-radius-full}; // 999px · circular
 
 	// ─── Theme layer · space scale ───────────────────────────────────────
 	@each $type, $value in $osui-space-token-vars {

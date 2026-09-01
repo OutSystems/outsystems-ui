@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
+import { cls, styleClassesArgType } from '../_helpers/lowcode';
 import { renderStatic } from '../_helpers/osui';
 
 /**
@@ -23,9 +24,16 @@ import { renderStatic } from '../_helpers/osui';
  *
  * CSS contract: src/scss/03-widgets/_radio-button.scss.
  */
-const meta: Meta = { title: 'Widgets/RadioGroup', tags: ['!ui-pending', 'ui-reviewed'] };
+type WidgetArgs = { styleClasses: string };
+
+const meta: Meta<WidgetArgs> = {
+	title: 'Widgets/RadioGroup',
+	tags: ['!ui-pending', 'ui-reviewed'],
+	args: { styleClasses: '' },
+	argTypes: { styleClasses: styleClassesArgType },
+};
 export default meta;
-type Story = StoryObj;
+type Story = StoryObj<WidgetArgs>;
 
 const radio = (value: string, label: string, selected: boolean, tabindex: number) => `
 		<div data-radio-button="">
@@ -35,9 +43,9 @@ const radio = (value: string, label: string, selected: boolean, tabindex: number
 		</div>`;
 
 export const Default: Story = {
-	render: () =>
+	render: ({ styleClasses }) =>
 		renderStatic(`
-			<div data-radio-group="" class="radio-group" role="radiogroup">
+			<div data-radio-group="" class="${cls('radio-group', styleClasses)}" role="radiogroup">
 				<div>
 					${radio('one', 'Option one', false, 0)}
 					${radio('two', 'Option two', true, 0)}

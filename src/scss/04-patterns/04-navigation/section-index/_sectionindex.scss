@@ -43,7 +43,7 @@
 	--osui-section-index-item-color:             var(--color-text-subtlest);
 	--osui-section-index-item-color-hover:       var(--color-text);
 	--osui-section-index-item-active-color:      var(--color-primary-selected);
-	--osui-section-index-item-border-radius:     #{variables.$token-border-radius-0};
+	--osui-section-index-item-border-radius:     var(--border-radius, var(--border-radius-none));
 	--osui-section-index-item-hover-background:  #{variables.$token-bg-neutral-subtlest-hover};
 	--osui-section-index-item-press-background:  #{variables.$token-bg-neutral-subtlest-press};
 	--osui-section-index-active-indicator-color: var(--color-primary-selected);

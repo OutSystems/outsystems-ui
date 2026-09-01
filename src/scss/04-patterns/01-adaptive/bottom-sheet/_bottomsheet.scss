@@ -17,7 +17,7 @@
 
 	--bottom-sheet-max-height: calc(100vh - 54px) /*  general value to account for notch and a bit more extra space*/;
 	--border-radius-sharp: none;
-	--border-radius-rounded: var(--border-radius-softer);
+	--border-radius-rounded: var(--border-radius-softest);
 	--osui-bottom-sheet-draggable-area: #{variables.$token-scale-1400};
 	--osui-bottom-sheet-transition-function: #{variables.$token-transition-curve-quick};
 

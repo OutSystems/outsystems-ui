@@ -1,9 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
-import { cfg, createAndInit, osuiRoot, renderPattern, uid } from './_helpers/osui';
+import { extendedClassArgType } from './_helpers/lowcode';
+import { createAndInit, osuiRoot, renderPattern, uid } from './_helpers/osui';
 
 interface FlipContentArgs {
 	flipSelf: boolean;
 	isFlipped: boolean;
+	extendedClass: string;
 }
 
 const meta: Meta<FlipContentArgs> = {
@@ -11,8 +13,9 @@ const meta: Meta<FlipContentArgs> = {
 	argTypes: {
 		flipSelf: { control: 'boolean', name: 'FlipSelf (click to flip)' },
 		isFlipped: { control: 'boolean', name: 'IsFlipped' },
+		extendedClass: extendedClassArgType,
 	},
-	args: { flipSelf: true, isFlipped: false },
+	args: { flipSelf: true, isFlipped: false, extendedClass: '' },
 };
 export default meta;
 
@@ -30,7 +33,12 @@ export const Default: Story = {
 				</div>
 			</div>`;
 		return renderPattern(template, (_root, register) =>
-			createAndInit('FlipContentAPI', id, { FlipSelf: args.flipSelf, IsFlipped: args.isFlipped }, register)
+			createAndInit(
+				'FlipContentAPI',
+				id,
+				{ FlipSelf: args.flipSelf, IsFlipped: args.isFlipped, ExtendedClass: args.extendedClass },
+				register
+			)
 		);
 	},
 };

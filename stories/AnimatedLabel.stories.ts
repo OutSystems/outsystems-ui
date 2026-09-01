@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
+import { extendedClassArgType } from './_helpers/lowcode';
 import { createAndInit, osuiRoot, renderPattern, uid } from './_helpers/osui';
 
 const meta: Meta = {
@@ -21,6 +22,7 @@ type AnimatedLabelArgs = {
 	value?: string;
 	disabled?: boolean;
 	invalid?: boolean;
+	extendedClass?: string;
 };
 
 function animatedLabel({
@@ -28,6 +30,7 @@ function animatedLabel({
 	value = '',
 	disabled = false,
 	invalid = false,
+	extendedClass = '',
 }: AnimatedLabelArgs): HTMLElement {
 	const id = uid('animated-label');
 	const inputId = `${id}-input`;
@@ -41,7 +44,7 @@ function animatedLabel({
 			</div>
 		</div>`;
 	return renderPattern(template, (_root, register) => {
-		const instance = createAndInit('AnimatedLabelAPI', id, {}, register);
+		const instance = createAndInit('AnimatedLabelAPI', id, { ExtendedClass: extendedClass }, register);
 		// A pre-filled input only floats once the framework calls updateOnRender():
 		// build() runs _inputStateToggle() before `isBuilt` is set, so it no-ops.
 		// Service Studio calls updateOnRender() after render; mirror that here.
@@ -51,11 +54,13 @@ function animatedLabel({
 
 type DefaultArgs = {
 	disabled: boolean;
+	extendedClass: string;
 };
 
 export const Default: StoryObj<DefaultArgs> = {
 	args: {
 		disabled: false,
+		extendedClass: '',
 	},
 	argTypes: {
 		disabled: {
@@ -63,8 +68,9 @@ export const Default: StoryObj<DefaultArgs> = {
 			control: 'boolean',
 			description: 'Disables the input and mutes the field surface + label.',
 		},
+		extendedClass: extendedClassArgType,
 	},
-	render: ({ disabled }) => animatedLabel({ label: 'Full name', disabled }),
+	render: ({ disabled, extendedClass }) => animatedLabel({ label: 'Full name', disabled, extendedClass }),
 };
 
 export const ErrorState: Story = {

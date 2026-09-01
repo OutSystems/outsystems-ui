@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
+import { cls, styleClassesArgType } from '../_helpers/lowcode';
 import { renderStatic } from '../_helpers/osui';
 
 /**
@@ -15,14 +16,20 @@ import { renderStatic } from '../_helpers/osui';
  * CSS contract: `.form-control[data-input]` from
  * src/scss/03-widgets/_inputs-and-textareas.scss.
  */
-const meta: Meta = { title: 'Widgets/Input' };
+type WidgetArgs = { styleClasses: string };
+
+const meta: Meta<WidgetArgs> = {
+	title: 'Widgets/Input',
+	args: { styleClasses: '' },
+	argTypes: { styleClasses: styleClassesArgType },
+};
 export default meta;
-type Story = StoryObj;
+type Story = StoryObj<WidgetArgs>;
 
 export const Default: Story = {
-	render: () =>
+	render: ({ styleClasses }) =>
 		renderStatic(`
-			<span class="input-text">
+			<span class="${cls('input-text', styleClasses)}">
 				<input data-input="" class="form-control" type="text" placeholder="Enter your name"
 					aria-required="false" maxlength="100" value="">
 			</span>`),

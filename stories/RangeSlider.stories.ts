@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
+import { extendedClassArgType } from './_helpers/lowcode';
 import { cfg, osuiRoot, Patterns, renderPattern, uid } from './_helpers/osui';
 
 /**
@@ -13,6 +14,7 @@ interface RangeSliderArgs {
 	step: number;
 	showFloatingLabel: boolean;
 	showTickMarks: boolean;
+	extendedClass: string;
 }
 
 const meta: Meta<RangeSliderArgs> = {
@@ -25,8 +27,17 @@ const meta: Meta<RangeSliderArgs> = {
 		step: { control: 'number', name: 'Step' },
 		showFloatingLabel: { control: 'boolean', name: 'ShowFloatingLabel' },
 		showTickMarks: { control: 'boolean', name: 'ShowTickMarks' },
+		extendedClass: extendedClassArgType,
 	},
-	args: { mode: 'single', minValue: 0, maxValue: 100, step: 1, showFloatingLabel: true, showTickMarks: false },
+	args: {
+		mode: 'single',
+		minValue: 0,
+		maxValue: 100,
+		step: 1,
+		showFloatingLabel: true,
+		showTickMarks: false,
+		extendedClass: '',
+	},
 };
 export default meta;
 
@@ -54,6 +65,7 @@ function renderRangeSlider(args: RangeSliderArgs): HTMLElement {
 				StartingValueTo: interval ? args.minValue + (args.maxValue - args.minValue) * 0.75 : 0,
 				Orientation: 'horizontal',
 				Size: '100%',
+				ExtendedClass: args.extendedClass,
 			}),
 			args.mode,
 			'noUiSlider'
