@@ -1,42 +1,84 @@
-@use "sass:map";
+@use 'sass:map';
 @use '../00-abstract/index' as *;
-@use "../tokens/variables";
+@use '../tokens/variables';
 
 /* Usefull - Border Radius */
 ////
 /// @group UsefullClasses-Border_Radius
 /// Usefull - Border Radius
 
-// Maps old border-radius names to token SCSS variables (or plain CSS values)
+// `.shape-*` class suffix → theme-layer CSS var.
+// `rectangular` is the public class name; the CSS var stays `--border-radius-none`
+// (ShapeTypes.Sharp = 'none'). See ADR-0010.
 $osui-border-radius-token-vars: (
+	'rectangular': var(--border-radius-none),
+	'soft': var(--border-radius-soft),
+	'softer': var(--border-radius-softer),
+	'softest': var(--border-radius-softest),
+	'rounded': var(--border-radius-rounded),
+);
+
+// Legacy `.border-radius-{none,soft,rounded,circle}` property utilities — HEAD
+// sizes. Soft is 4px here (`$token-border-radius-100`), not the 8px theme-layer
+// `--border-radius-soft`. Service Studio still emits these class names on Tag,
+// Avatar and Badge. See ADR-0010.
+$osui-border-radius-legacy-property: (
 	'none': variables.$token-border-radius-0,
 	'soft': variables.$token-border-radius-100,
 	'rounded': variables.$token-border-radius-full,
-	'circle': 50%
+	'circle': 50%,
 );
 
 ///
-.border-radius {
-	@each $type, $value in $osui-border-radius-types {
+.shape {
+	@each $type in $osui-border-radius-types {
 		$token: map.get($osui-border-radius-token-vars, $type);
-		// Generated - Eg: .border-radius-none
+		// Generated - Eg: .shape-rectangular
 		&-#{$type} {
-			border-radius: #{$token};
+			--border-radius: #{$token};
 		}
+	}
+}
 
+///
+.border-radius {
+	// All-corners property setters — HEAD names and sizes (not `.shape-*`).
+	@each $type, $value in $osui-border-radius-legacy-property {
+		&-#{$type} {
+			border-radius: #{$value};
+		}
+	}
+
+	@each $type in $osui-border-radius-types {
+		$token: map.get($osui-border-radius-token-vars, $type);
 		@each $osui-box-corner in $osui-box-corners {
-			// Generated - Eg: .border-radius-top-left-none
+			// Generated - Eg: .border-radius-top-left-rectangular
 			&-#{$osui-box-corner}-#{$type} {
 				border-#{$osui-box-corner}-radius: #{$token};
 			}
 		}
 
 		@each $osui-border-side, $osui-border-corner1, $osui-border-corner2 in $osui-border-radius-box-sides {
-			// Generated - Eg: .border-radius-top-none
+			// Generated - Eg: .border-radius-top-rectangular
 			&-#{$osui-border-side}-#{$type} {
 				border-#{$osui-border-side}-#{$osui-border-corner1}-radius: #{$token};
 				border-#{$osui-border-side}-#{$osui-border-corner2}-radius: #{$token};
 			}
+		}
+	}
+
+	// HEAD `.border-radius-*-none` aliases of rectangular (no `.shape-none`).
+	$none-token: var(--border-radius-none);
+	@each $osui-box-corner in $osui-box-corners {
+		&-#{$osui-box-corner}-none {
+			border-#{$osui-box-corner}-radius: #{$none-token};
+		}
+	}
+
+	@each $osui-border-side, $osui-border-corner1, $osui-border-corner2 in $osui-border-radius-box-sides {
+		&-#{$osui-border-side}-none {
+			border-#{$osui-border-side}-#{$osui-border-corner1}-radius: #{$none-token};
+			border-#{$osui-border-side}-#{$osui-border-corner2}-radius: #{$none-token};
 		}
 	}
 }

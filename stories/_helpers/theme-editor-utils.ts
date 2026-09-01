@@ -49,7 +49,7 @@ export function resolveDefault(role: Role, dark = false): string {
 	} else {
 		probe.style.borderTopLeftRadius = `var(${role.name})`;
 		const v = getComputedStyle(probe).borderTopLeftRadius;
-		resolved = role.name === '--border-radius-default' && v === '0px' ? '' : v;
+		resolved = v;
 	}
 
 	document.body.removeChild(scope);
