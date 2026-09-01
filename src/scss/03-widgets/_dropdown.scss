@@ -12,7 +12,7 @@
 		--osui-dropdown-border-color: var(--color-border-input);
 		--osui-dropdown-border-width: #{variables.$token-border-size-025};
 		--osui-dropdown-color: var(--color-text);
-		--osui-dropdown-border-radius: var(--border-radius-soft);
+		--osui-dropdown-border-radius: var(--border-radius, var(--border-radius-soft));
 		--osui-dropdown-hover-border-color: var(--color-border-input-hover);
 		--osui-dropdown-prompt-color: var(--color-text-subtlest);
 		--osui-dropdown-list-background: var(--color-background-surface);

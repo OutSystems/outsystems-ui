@@ -18,6 +18,7 @@
 	--osui-switch-disabled-overlay: #{variables.$token-state-disabled};
 	--osui-switch-thumb-color: #{variables.$token-bg-surface-inverse};
 	--osui-switch-thumb-shadow: #{variables.$token-elevation-1};
+	--osui-switch-border-radius: var(--border-radius, var(--border-radius-rounded));
 	// ───────────────────────────────────────────────────────────────────
 
 	background-color: transparent;
@@ -30,7 +31,7 @@
 		&:before {
 			background-color: var(--osui-switch-track-color);
 			border: 0;
-			border-radius: var(--border-radius-rounded);
+			border-radius: var(--osui-switch-border-radius);
 			height: var(--osui-switch-height);
 			opacity: 1;
 			transition: background-color variables.$token-transition-time-200 variables.$token-transition-curve-linear;
@@ -96,7 +97,7 @@
 ///
 .has-accessible-features {
 	[data-switch] {
-		border-radius: var(--border-radius-rounded);
+		border-radius: var(--osui-switch-border-radius);
 
 		&:empty {
 			&:before {

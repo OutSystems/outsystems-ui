@@ -18,6 +18,7 @@
 	--osui-radio-indicator-border: #{variables.$token-scale-150};
 	--osui-radio-error-border-color: #{variables.$token-border-danger-default};
 	--osui-radio-disabled-border-color: #{variables.$token-border-disabled};
+	--osui-radio-border-radius: var(--border-radius, var(--border-radius-rounded));
 	// ───────────────────────────────────────────────────────────────────
 
 	appearance: none;
@@ -36,7 +37,7 @@
 	&:before {
 		background-color: var(--osui-radio-background);
 		border: variables.$token-border-size-025 solid var(--osui-radio-border-color);
-		border-radius: var(--border-radius-rounded);
+		border-radius: var(--osui-radio-border-radius);
 		content: '';
 		display: flex;
 		inset: 0;
@@ -152,7 +153,7 @@
 // Accessibility -----------------------------------------------------------------
 .has-accessible-features {
 	.radio-button {
-		border-radius: var(--border-radius-rounded);
+		border-radius: var(--osui-radio-border-radius);
 
 		&:before {
 			border-color: var(--color-border-input);
@@ -160,7 +161,7 @@
 
 		&:after {
 			background-color: var(--color-background-input);
-			border-radius: var(--border-radius-rounded);
+			border-radius: var(--osui-radio-border-radius);
 			content: '';
 			height: variables.$token-scale-300;
 			inset-inline-start: 50%;

@@ -22,7 +22,7 @@
 	--osui-btn-hover-background: #{variables.$token-bg-neutral-subtlest-hover};
 	--osui-btn-active-background: #{variables.$token-bg-neutral-subtlest-press};
 	--osui-btn-border-width: #{variables.$token-border-size-025};
-	--osui-btn-border-radius: var(--border-radius-soft);
+	--osui-btn-border-radius: var(--border-radius, var(--border-radius-soft));
 	// Disabled keeps the variant's own color visible underneath this wash,
 	// instead of dimming toward the page background via opacity.
 	--osui-btn-disabled-overlay: #{variables.$token-state-disabled};

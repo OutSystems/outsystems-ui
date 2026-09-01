@@ -12,7 +12,7 @@
 	--osui-button-group-container-background: #{variables.$token-bg-neutral-subtle-default};
 	--osui-button-group-container-padding: #{variables.$token-scale-100};
 	--osui-button-group-container-gap: #{variables.$token-scale-200};
-	--osui-button-group-container-border-radius: #{variables.$token-border-radius-200};
+	--osui-button-group-container-border-radius: var(--border-radius, var(--border-radius-soft));
 	// ───────────────────────────────────────────────────────────────────
 
 	background-color: var(--osui-button-group-container-background);
@@ -32,7 +32,7 @@
 		--osui-button-group-border-color: transparent;
 		--osui-button-group-border-width: #{variables.$token-border-size-025};
 		--osui-button-group-color: var(--color-text-subtle);
-		--osui-button-group-border-radius: #{variables.$token-border-radius-200};
+		--osui-button-group-border-radius: var(--border-radius, var(--border-radius-soft));
 		--osui-button-group-font-size: #{variables.$token-font-size-300};
 		--osui-button-group-height: #{variables.$token-scale-800};
 		--osui-button-group-min-width: #{variables.$token-scale-1200};
