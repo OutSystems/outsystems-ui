@@ -3938,10 +3938,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-tooltip-background',
-								default: '#{$token-bg-neutral-boldest-default}',
+								default: '#{$token-bg-surface-default}',
 								kind: 'color',
 								chain: 'token',
-								hint: '#{$token-bg-neutral-boldest-default}',
+								hint: '#{$token-bg-surface-default}',
 							},
 							{
 								name: '--osui-tooltip-background-color',
@@ -3959,10 +3959,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-tooltip-color',
-								default: 'var(--color-text-inverse)',
+								default: 'var(--color-text)',
 								kind: 'color',
 								chain: 'theme-role',
-								hint: 'var(--color-text-inverse)',
+								hint: 'var(--color-text)',
 							},
 							{
 								name: '--osui-tooltip-font-size',
