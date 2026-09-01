@@ -32,12 +32,6 @@ const meta: Meta<TooltipArgs> = {
 		startVisible: { control: 'boolean', name: 'StartVisible' },
 	},
 	args: { isHover: true, position: 'bottom', startVisible: false },
-};
-export default meta;
-
-type Story = StoryObj<TooltipArgs>;
-
-export const Default: Story = {
 	render: (args) => {
 		const id = uid('tooltip');
 		const id2 = uid('tooltip');
@@ -80,5 +74,19 @@ export const Default: Story = {
 				register(() => P.TooltipAPI.Dispose?.(tooltipId));
 			});
 		});
+	},
+};
+export default meta;
+
+type Story = StoryObj<TooltipArgs>;
+
+export const Default: Story = {};
+
+/** Pinned open so Chromatic photographs the balloon, not just the trigger. */
+export const Visible: Story = {
+	args: { startVisible: true },
+	parameters: {
+		// Entrance animation is 150ms; wait it out so the snapshot is not mid-fade.
+		chromatic: { delay: 300 },
 	},
 };
