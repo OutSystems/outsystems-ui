@@ -16,6 +16,7 @@
 	--osui-timeline-icon-color: var(--color-text-inverse);
 	--osui-timeline-icon-size: #{variables.$token-scale-600};
 	--osui-timeline-line-color: var(--color-border);
+	--osui-timeline-icon-border-radius: var(--border-radius, var(--border-radius-rounded));
 	// Figma says 21px; the scale's nearest step is 20px.
 	--osui-timeline-line-height: #{variables.$token-font-line-height-500};
 	--osui-timeline-text-color: var(--color-text-subtlest);
@@ -63,7 +64,7 @@
 
 		&-container {
 			align-items: center;
-			border-radius: var(--border-radius-rounded);
+			border-radius: var(--osui-timeline-icon-border-radius);
 			color: var(--osui-timeline-icon-color);
 			display: flex;
 			font-size: variables.$token-font-size-300;

@@ -8,9 +8,10 @@
 .flatpickr-calendar {
 	--osui-flatpickr-layer: var(--layer-global-elevated);
 	--osui-flatpickr-shadow: #{variables.$token-elevation-3};
+	--osui-datepicker-border-radius: var(--border-radius, var(--border-radius-soft));
 
 	border: variables.$token-border-size-025 solid var(--color-border);
-	border-radius: variables.$token-border-radius-200;
+	border-radius: var(--osui-datepicker-border-radius);
 	box-shadow: var(--osui-flatpickr-shadow);
 	width: 320px;
 
@@ -684,7 +685,7 @@ span.flatpickr-weekday {
 	// to the body, detached from the pattern root.
 	--osui-datepicker-time-background:     var(--osui-input-background, var(--color-background-input));
 	--osui-datepicker-time-border-color:   var(--osui-input-border-color, var(--color-border));
-	--osui-datepicker-time-border-radius:  #{variables.$token-border-radius-100};
+	--osui-datepicker-time-border-radius:  var(--border-radius, #{variables.$token-border-radius-100});
 	--osui-datepicker-time-color:          var(--color-text-subtlest);
 	--osui-datepicker-time-focus-color:    #{variables.$token-semantics-primary-base};
 	--osui-datepicker-time-height:         #{variables.$token-scale-1000};
@@ -693,7 +694,7 @@ span.flatpickr-weekday {
 
 	// ─── hasWeeks side column ───────────────────────────────────────────
 	&.hasWeeks .flatpickr-weekwrapper .flatpickr-weeks {
-		border-radius: variables.$token-border-radius-200;
+		border-radius: var(--osui-datepicker-border-radius);
 	}
 
 	&.hasWeeks .flatpickr-weekwrapper .flatpickr-weeks .flatpickr-day {

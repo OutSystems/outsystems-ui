@@ -22,7 +22,7 @@
 		left: auto;
 
 		align-items: center;
-		border-radius: var(--border-radius-rounded);
+		border-radius: var(--border-radius, var(--border-radius-rounded));
 		box-shadow: var(--osui-icon-badge-shadow);
 		display: inline-flex;
 		font-size: variables.$token-font-size-250;

@@ -16,6 +16,8 @@
 	--osui-carousel-arrow-disabled-overlay:   #{variables.$token-state-disabled};
 	--osui-carousel-pagination-color:         var(--color-border);
 	--osui-carousel-pagination-active-color:  var(--color-primary);
+	--osui-carousel-pagination-border-radius: var(--border-radius, var(--border-radius-rounded));
+	--osui-carousel-track-border-radius: var(--border-radius, var(--border-radius-softer));
 	--osui-carousel-track-width: 100%;
 	// Reserved space below the track: pagination row height ($token-scale-600) + 16px gap ($token-scale-400)
 	--osui-carousel-pagination-margin: #{variables.$token-scale-1000};
@@ -78,7 +80,7 @@
 
 			&__page {
 				background-color: var(--osui-carousel-pagination-color);
-				border-radius: var(--border-radius-rounded);
+				border-radius: var(--osui-carousel-pagination-border-radius);
 				height: variables.$token-scale-300;
 				width: variables.$token-scale-300;
 				transition: background-color variables.$token-transition-time-200 variables.$token-transition-curve-linear;
@@ -148,7 +150,7 @@
 	}
 
 	&__track {
-		border-radius: variables.$token-border-radius-300;
+		border-radius: var(--osui-carousel-track-border-radius);
 		max-width: 100%;
 		width: var(--osui-carousel-track-width);
 		z-index: var(--layer-global-screen);

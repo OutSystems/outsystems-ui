@@ -10,7 +10,7 @@
 .osui-notification {
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-notification-background: var(--color-background-surface);
-	--osui-notification-border-radius: #{variables.$token-border-radius-100};
+	--osui-notification-border-radius: var(--border-radius, #{variables.$token-border-radius-100});
 	--osui-notification-shadow: #{variables.$token-elevation-3};
 	--osui-notification-color: var(--color-text);
 	--osui-notification-gap: #{variables.$token-scale-400};

@@ -147,7 +147,7 @@
 	   ============================================================ */
 	background-color: var(--osui-input-background, var(--color-background-input));
 	border: variables.$token-border-size-025 solid var(--osui-animated-label-border-color);
-	border-radius: var(--osui-input-border-radius, #{variables.$token-border-radius-200});
+	border-radius: var(--osui-input-border-radius, var(--border-radius, var(--border-radius-soft)));
 	overflow: visible;
 	transition: border-color variables.$token-transition-time-100 variables.$token-transition-curve-expressive;
 

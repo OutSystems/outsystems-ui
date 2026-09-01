@@ -11,7 +11,7 @@
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-master-detail-background: var(--color-background-surface);
 	--osui-master-detail-border-color: var(--color-border);
-	--osui-master-detail-border-radius: #{variables.$token-border-radius-0};
+	--osui-master-detail-border-radius: var(--border-radius, var(--border-radius-none));
 	// ───────────────────────────────────────────────────────────────────
 
 	background-color: var(--osui-master-detail-background);

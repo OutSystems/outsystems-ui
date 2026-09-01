@@ -62,7 +62,7 @@
 			display: none;
 			animation: loadingSpinner variables.$token-transition-time-1000 cubic-bezier(0.7, 1.05, 0.78, 0.78) infinite;
 			border: variables.$token-border-size-050 solid currentColor;
-			border-radius: var(--border-radius-rounded);
+			border-radius: var(--border-radius, var(--border-radius-rounded));
 			border-block-start-color: transparent;
 			height: variables.$token-scale-400;
 			margin-inline-end: variables.$token-scale-200;

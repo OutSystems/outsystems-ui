@@ -61,7 +61,7 @@
 			input[data-input] {
 				&,
 				&:empty {
-					border-radius: variables.$token-border-radius-0;
+					border-radius: var(--border-radius, var(--border-radius-none));
 				}
 			}
 		}

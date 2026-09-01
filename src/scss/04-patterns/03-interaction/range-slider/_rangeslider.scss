@@ -9,7 +9,7 @@
 .osui-range-slider {
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-range-slider-track-color: var(--color-border);
-	--osui-range-slider-track-radius: var(--border-radius-rounded);
+	--osui-range-slider-track-radius: var(--border-radius, var(--border-radius-rounded));
 	--osui-range-slider-handle-background: var(--color-background-surface);
 	--osui-range-slider-handle-border-color: var(--color-primary);
 	--osui-range-slider-handle-shadow: #{variables.$token-elevation-1};
@@ -76,7 +76,7 @@
 			.noUi-handle {
 				background-color: var(--osui-range-slider-handle-background);
 				border: variables.$token-border-size-050 solid var(--osui-range-slider-handle-border-color);
-				border-radius: var(--border-radius-rounded);
+				border-radius: var(--border-radius, var(--border-radius-rounded));
 				box-shadow: var(--osui-range-slider-handle-shadow);
 				cursor: pointer;
 				display: inline-block;

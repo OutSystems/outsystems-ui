@@ -11,7 +11,7 @@
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-card-background-border-color: #{variables.$token-border-subtle};
 	--osui-card-background-border-width: #{variables.$token-border-size-025};
-	--osui-card-background-border-radius: var(--border-radius-softer);
+	--osui-card-background-border-radius: var(--border-radius, var(--border-radius-softest));
 	// ───────────────────────────────────────────────────────────────────
 
 	align-items: center;

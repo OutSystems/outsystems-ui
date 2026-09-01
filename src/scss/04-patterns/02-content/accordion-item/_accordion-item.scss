@@ -16,7 +16,7 @@
 	--osui-accordion-item-background: var(--color-background-surface);
 	--osui-accordion-item-border-color: var(--color-border-subtle);
 	--osui-accordion-item-border-width: #{variables.$token-border-size-025};
-	--osui-accordion-item-border-radius: #{variables.$token-border-radius-100};
+	--osui-accordion-item-border-radius: var(--border-radius, var(--border-radius-none));
 	--osui-accordion-item-color: var(--color-text-subtle);
 	--osui-accordion-item-active-indicator-color: var(--color-primary);
 	--osui-accordion-item-icon-color: #{variables.$token-icon-subtle};
@@ -26,7 +26,7 @@
 	// ───────────────────────────────────────────────────────────────────
 
 	background-color: var(--osui-accordion-item-background);
-	border-radius: variables.$token-border-radius-0;
+	border-radius: var(--osui-accordion-item-border-radius);
 	color: var(--osui-accordion-item-color);
 	font-size: variables.$token-font-size-400;
 	position: relative;

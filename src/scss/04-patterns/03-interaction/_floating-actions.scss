@@ -16,13 +16,14 @@
 		// ─── Component CSS API ─────────────────────────────────────────────
 		--osui-floating-actions-button-background: var(--color-primary);
 		--osui-floating-actions-button-background-hover: var(--color-primary-hover);
---osui-floating-actions-button-background-press: var(--color-primary-selected);
+		--osui-floating-actions-button-background-press: var(--color-primary-selected);
 		--osui-floating-actions-button-color: var(--color-text-inverse);
 		--osui-floating-actions-button-shadow: #{variables.$token-elevation-3};
 		--osui-floating-actions-item-background: var(--color-background-surface);
 		--osui-floating-actions-item-background-hover: #{variables.$token-bg-neutral-subtlest-hover};
 		--osui-floating-actions-item-background-press: #{variables.$token-bg-neutral-subtlest-press};
 		--osui-floating-actions-item-color: var(--color-text);
+		--osui-floating-actions-border-radius: var(--border-radius, var(--border-radius-rounded));
 		--osui-floating-actions-item-shadow: #{variables.$token-elevation-2};
 		// ───────────────────────────────────────────────────────────────────
 
@@ -119,7 +120,7 @@
 	&-actions-item-button {
 		align-items: center;
 		background-color: var(--osui-floating-actions-item-background);
-		border-radius: var(--border-radius-rounded);
+		border-radius: var(--osui-floating-actions-border-radius);
 		box-shadow: var(--osui-floating-actions-item-shadow);
 		color: var(--osui-floating-actions-item-color);
 		cursor: pointer;
@@ -150,7 +151,7 @@
 	&-button {
 		align-items: center;
 		background-color: var(--osui-floating-actions-button-background);
-		border-radius: var(--border-radius-rounded);
+		border-radius: var(--osui-floating-actions-border-radius);
 		box-shadow: var(--osui-floating-actions-button-shadow);
 		color: var(--osui-floating-actions-button-color);
 		cursor: pointer;

@@ -8,7 +8,7 @@
 ///
 .osui-dropdown-tags {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-dropdown-border-radius:       var(--border-radius-soft);
+	--osui-dropdown-border-radius:       var(--border-radius, var(--border-radius-soft));
 	--osui-dropdown-background:          var(--color-background-input);
 	--osui-dropdown-border-color:        var(--color-border-input);
 	--osui-dropdown-hover-border-color:  var(--color-border-input-hover);

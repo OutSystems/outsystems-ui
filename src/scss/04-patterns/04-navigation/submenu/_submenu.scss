@@ -10,13 +10,14 @@
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-submenu-items-background: var(--color-background-surface);
 	--osui-submenu-items-border-color: var(--color-border);
-	--osui-submenu-items-border-radius: #{variables.$token-border-radius-300};
+	--osui-submenu-items-border-radius: var(--border-radius, var(--border-radius-softer));
 	--osui-submenu-items-shadow: #{variables.$token-elevation-3};
 	--osui-submenu-item-color: var(--color-text);
 	--osui-submenu-item-font-size: #{variables.$token-font-size-350};
 	// Figma says 21px; the scale's nearest step is 20px.
 	--osui-submenu-item-line-height: #{variables.$token-font-line-height-500};
-	--osui-submenu-item-border-radius: #{variables.$token-border-radius-100};
+	--osui-submenu-item-border-radius: var(--border-radius, #{variables.$token-border-radius-100});
+	--osui-submenu-border-radius: var(--border-radius, var(--border-radius-soft));
 	--osui-submenu-item-selected-background: #{variables.$token-bg-primary-subtle-default};
 	// Named `pressed` (not `active`) because `.active` already means "selected" in this pattern.
 	--osui-submenu-item-pressed-background: #{variables.$token-bg-neutral-subtlest-press};
@@ -177,7 +178,7 @@
 
 		&::-webkit-scrollbar-thumb {
 			background-color: var(--color-border);
-			border-radius: var(--border-radius-rounded);
+			border-radius: var(--border-radius, var(--border-radius-rounded));
 		}
 
 		// Service Studio Preview
@@ -280,7 +281,7 @@
 
 	&.active .osui-submenu__header {
 		background-color: variables.$token-bg-primary-subtle-default;
-		border-radius: variables.$token-border-radius-200;
+		border-radius: var(--osui-submenu-border-radius);
 	}
 
 	&--is-open > .osui-submenu__items {
@@ -317,7 +318,7 @@
 		transform: translateY(0);
 
 		a {
-			border-radius: variables.$token-border-radius-200;
+			border-radius: var(--osui-submenu-border-radius);
 			padding-block: variables.$token-scale-200;
 			padding-inline-end: variables.$token-scale-400;
 			padding-inline-start: variables.$token-scale-600;
@@ -413,7 +414,7 @@
 	.app-menu-links .osui-submenu__header {
 		align-self: center;
 		border-block-end: none;
-		border-radius: variables.$token-border-radius-200;
+		border-radius: var(--osui-submenu-border-radius);
 		border-block-start: none;
 		margin-block: 0;
 		margin-inline: variables.$token-scale-025;
@@ -425,7 +426,7 @@
 	.app-menu-links .osui-submenu__header:hover,
 	.app-menu-links .osui-submenu--is-open .osui-submenu__header {
 		background-color: variables.$token-bg-neutral-subtlest-hover;
-		border-radius: variables.$token-border-radius-200;
+		border-radius: var(--osui-submenu-border-radius);
 		color: var(--color-text);
 	}
 
@@ -437,7 +438,7 @@
 	.header-navigation .app-menu-links > a {
 		align-self: center;
 		border-block-end: none;
-		border-radius: variables.$token-border-radius-200;
+		border-radius: var(--osui-submenu-border-radius);
 		border-block-start: none;
 		margin-block: 0;
 		margin-inline: variables.$token-scale-025;
@@ -472,7 +473,7 @@
 						background-color: variables.$token-bg-neutral-subtlest-hover;
 						border-block-end: none;
 						border-inline-start: none;
-						border-radius: variables.$token-border-radius-200;
+						border-radius: var(--osui-submenu-border-radius);
 					}
 				}
 			}
@@ -481,7 +482,7 @@
 		// Side menu: direct link hover
 		.app-menu-links > a:hover {
 			background-color: variables.$token-bg-neutral-subtlest-hover;
-			border-radius: variables.$token-border-radius-200;
+			border-radius: var(--osui-submenu-border-radius);
 			color: var(--color-text);
 		}
 	}
@@ -562,7 +563,7 @@
 
 			&:hover {
 				background-color: variables.$token-bg-neutral-subtlest-hover;
-				border-radius: variables.$token-border-radius-200;
+				border-radius: var(--osui-submenu-border-radius);
 				color: var(--color-text);
 			}
 		}
@@ -581,7 +582,7 @@
 			width: 100%;
 
 			a {
-				border-radius: variables.$token-border-radius-200;
+				border-radius: var(--osui-submenu-border-radius);
 				padding-block: variables.$token-scale-200;
 				padding-inline-end: variables.$token-scale-400;
 				padding-inline-start: variables.$token-scale-600;
@@ -606,7 +607,7 @@
 	.app-menu-links > a {
 		&:hover {
 			background-color: variables.$token-bg-neutral-subtlest-hover;
-			border-radius: variables.$token-border-radius-200;
+			border-radius: var(--osui-submenu-border-radius);
 			color: var(--color-text);
 		}
 	}
@@ -614,7 +615,7 @@
 	// Mobile/tablet: submenu header active hover
 	.osui-submenu.active .osui-submenu__header:hover {
 		background-color: variables.$token-bg-neutral-subtlest-hover;
-		border-radius: variables.$token-border-radius-200;
+		border-radius: var(--osui-submenu-border-radius);
 		color: var(--osui-submenu-active-border-color);
 	}
 

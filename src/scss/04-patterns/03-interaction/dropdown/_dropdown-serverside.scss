@@ -17,7 +17,7 @@ $balloonMobileTopMargin: 5vh;
 	--osui-dropdown-ss-background: var(--color-background-input);
 	--osui-dropdown-ss-balloon-max-height: 300px;
 	--osui-dropdown-ss-border-color: var(--color-border-input);
-	--osui-dropdown-ss-border-radius: var(--border-radius-soft);
+	--osui-dropdown-ss-border-radius: var(--border-radius, var(--border-radius-soft));
 	--osui-dropdown-ss-color: var(--color-text);
 	--osui-dropdown-ss-disabled-background: var(--color-background-input-disabled);
 	--osui-dropdown-ss-disabled-color: var(--color-text-disabled);
@@ -38,7 +38,7 @@ $balloonMobileTopMargin: 5vh;
 	.osui-balloon {
 		// Match the widget Dropdown list container: soft radius, overlay elevation, neutral border
 		--osui-balloon-shadow: #{variables.$token-elevation-3};
-		--osui-balloon-shape: var(--border-radius-soft);
+		--osui-balloon-shape: var(--border-radius, var(--border-radius-soft));
 
 		border: variables.$token-border-size-025 solid var(--color-border);
 		display: flex;

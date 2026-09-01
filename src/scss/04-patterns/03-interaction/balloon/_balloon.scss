@@ -10,7 +10,7 @@
 	--osui-balloon-background: var(--color-background-surface);
 	// ───────────────────────────────────────────────────────────────────
 
-	--border-radius-rounded: var(--border-radius-softer);
+	--border-radius-rounded: var(--border-radius-softest);
 	--osui-floating-position-x: 0;
 	--osui-floating-position-y: 0;
 	--osui-balloon-shadow: #{variables.$token-elevation-1};
@@ -18,7 +18,7 @@
 	--osui-balloon-position: fixed;
 
 	box-shadow: var(--osui-balloon-shadow);
-	border-radius: var(--osui-balloon-shape);
+	border-radius: var(--border-radius, var(--osui-balloon-shape));
 	background-color: var(--osui-balloon-background);
 	height: auto;
 	// physical: FloatingUI computes --osui-floating-position-x as a physical

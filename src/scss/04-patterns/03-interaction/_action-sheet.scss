@@ -10,7 +10,7 @@
 .action-sheet {
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-action-sheet-background: var(--color-background-surface);
-	--osui-action-sheet-border-radius: #{variables.$token-border-radius-200};
+	--osui-action-sheet-border-radius: var(--border-radius, var(--border-radius-soft));
 	--osui-action-sheet-cancel-color: #{variables.$token-text-primary};
 	--osui-action-sheet-color: #{variables.$token-text-primary};
 	--osui-action-sheet-divider-color: #{variables.$token-border-subtle};

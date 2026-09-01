@@ -331,7 +331,7 @@
 	--vscomp-toogle-btn-mobile-height: #{variables.$token-scale-1200};
 
 	background-color: var(--osui-dropdown-background, var(--color-background-input));
-	border-radius: var(--osui-dropdown-border-radius, variables.$token-border-radius-200);
+	border-radius: var(--osui-dropdown-border-radius, var(--border-radius, var(--border-radius-soft)));
 	border: variables.$token-border-size-025 solid var(--osui-dropdown-border-color, var(--color-border-input));
 	color: var(--color-text);
 	cursor: pointer;
@@ -410,7 +410,7 @@
 .vscomp-dropbox {
 	background-color: var(--osui-dropdown-list-background, variables.$token-bg-surface-default);
 	border: variables.$token-border-size-025 solid var(--color-border);
-	border-radius: var(--osui-dropdown-border-radius, variables.$token-border-radius-200);
+	border-radius: var(--osui-dropdown-border-radius, var(--border-radius, var(--border-radius-soft)));
 	box-shadow: var(--osui-dropdown-list-shadow, #{variables.$token-elevation-3});
 	overflow: hidden;
 	padding: 0;
