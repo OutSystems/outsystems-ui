@@ -1,9 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
+import { extendedClassArgType } from './_helpers/lowcode';
 import { createAndInit, osuiRoot, renderPattern, uid } from './_helpers/osui';
 
 interface ButtonLoadingArgs {
 	isLoading: boolean;
 	showLoadingAndLabel: boolean;
+	extendedClass: string;
 }
 
 const meta: Meta<ButtonLoadingArgs> = {
@@ -11,8 +13,9 @@ const meta: Meta<ButtonLoadingArgs> = {
 	argTypes: {
 		isLoading: { control: 'boolean', name: 'IsLoading' },
 		showLoadingAndLabel: { control: 'boolean', name: 'ShowLoadingAndLabel' },
+		extendedClass: extendedClassArgType,
 	},
-	args: { isLoading: true, showLoadingAndLabel: true },
+	args: { isLoading: true, showLoadingAndLabel: true, extendedClass: '' },
 };
 export default meta;
 
@@ -32,7 +35,7 @@ export const Default: Story = {
 			createAndInit(
 				'ButtonLoadingAPI',
 				id,
-				{ IsLoading: args.isLoading, ShowLoadingAndLabel: args.showLoadingAndLabel },
+				{ IsLoading: args.isLoading, ShowLoadingAndLabel: args.showLoadingAndLabel, ExtendedClass: args.extendedClass },
 				register
 			)
 		);

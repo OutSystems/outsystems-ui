@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
+import { extendedClassArgType } from './_helpers/lowcode';
 import { cfg, osuiRoot, Patterns, renderPattern, uid } from './_helpers/osui';
 
 /**
@@ -11,6 +12,7 @@ interface ProgressArgs {
 	progress: number;
 	thickness: number;
 	shape: string;
+	extendedClass: string;
 }
 
 const meta: Meta<ProgressArgs> = {
@@ -19,8 +21,9 @@ const meta: Meta<ProgressArgs> = {
 		progress: { control: { type: 'range', min: 0, max: 100 }, name: 'Progress' },
 		thickness: { control: { type: 'number', min: 1, max: 24 }, name: 'Thickness' },
 		shape: { control: 'inline-radio', options: ['sharp', 'soft', 'rounded', 'round'], name: 'Shape' },
+		extendedClass: extendedClassArgType,
 	},
-	args: { progress: 60, thickness: 8, shape: 'rounded' },
+	args: { progress: 60, thickness: 8, shape: 'rounded', extendedClass: '' },
 };
 export default meta;
 
@@ -49,6 +52,7 @@ export const Bar: Story = {
 					TrailColor: 'border-subtle',
 					AnimateInitialProgress: true,
 					InitialProgress: 0,
+					ExtendedClass: args.extendedClass,
 				})
 			);
 			P.ProgressAPI.Initialize(id);
@@ -87,6 +91,7 @@ export const Circle: Story = {
 					AnimateInitialProgress: true,
 					InitialProgress: 0,
 					ProgressCircleSize: 'auto',
+					ExtendedClass: args.extendedClass,
 				})
 			);
 			P.ProgressAPI.Initialize(id);

@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
+import { cls, styleClassesArgType } from '../_helpers/lowcode';
 import { renderStatic } from '../_helpers/osui';
 
 /**
@@ -16,22 +17,28 @@ import { renderStatic } from '../_helpers/osui';
  *
  * CSS contract: `.btn` and its variants from src/scss/03-widgets/_btn.scss.
  */
-const meta: Meta = { title: 'Widgets/Button' };
-export default meta;
-type Story = StoryObj;
+type WidgetArgs = { styleClasses: string };
 
-const btn = (style: string, label: string, disabled = false) =>
-	`<button data-button="" class="${style}" type="button"${disabled ? ' disabled=""' : ''}>${label}</button>`;
+const meta: Meta<WidgetArgs> = {
+	title: 'Widgets/Button',
+	args: { styleClasses: '' },
+	argTypes: { styleClasses: styleClassesArgType },
+};
+export default meta;
+type Story = StoryObj<WidgetArgs>;
+
+const btn = (style: string, label: string, disabled = false, styleClasses = '') =>
+	`<button data-button="" class="${cls(style, styleClasses)}" type="button"${disabled ? ' disabled=""' : ''}>${label}</button>`;
 
 export const Variants: Story = {
-	render: () =>
+	render: ({ styleClasses }) =>
 		renderStatic(`
 			<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
-				${btn('btn btn-primary', 'Primary')}
-				${btn('btn', 'Secondary')}
-				${btn('btn btn-cancel', 'Cancel')}
-				${btn('btn btn-success', 'Confirm')}
-				${btn('btn btn-error', 'Delete')}
-				${btn('btn btn-primary', 'Disabled', true)}
+				${btn('btn btn-primary', 'Primary', false, styleClasses)}
+				${btn('btn', 'Secondary', false, styleClasses)}
+				${btn('btn btn-cancel', 'Cancel', false, styleClasses)}
+				${btn('btn btn-success', 'Confirm', false, styleClasses)}
+				${btn('btn btn-error', 'Delete', false, styleClasses)}
+				${btn('btn btn-primary', 'Disabled', true, styleClasses)}
 			</div>`),
 };

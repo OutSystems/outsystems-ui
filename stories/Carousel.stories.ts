@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
+import { extendedClassArgType } from './_helpers/lowcode';
 import { cfg, osuiRoot, Patterns, renderPattern, uid } from './_helpers/osui';
 
 /**
@@ -11,6 +12,7 @@ interface CarouselArgs {
 	loop: boolean;
 	navigation: string;
 	autoPlay: boolean;
+	extendedClass: string;
 }
 
 const SLIDES = ['#1', '#2', '#3', '#4', '#5'];
@@ -22,8 +24,9 @@ const meta: Meta<CarouselArgs> = {
 		loop: { control: 'boolean', name: 'Loop' },
 		navigation: { control: 'inline-radio', options: ['arrows', 'dots', 'both', 'none'], name: 'Navigation' },
 		autoPlay: { control: 'boolean', name: 'AutoPlay' },
+		extendedClass: extendedClassArgType,
 	},
-	args: { itemsDesktop: 1, loop: true, navigation: 'both', autoPlay: false },
+	args: { itemsDesktop: 1, loop: true, navigation: 'both', autoPlay: false, extendedClass: '' },
 };
 export default meta;
 
@@ -56,6 +59,7 @@ export const Default: Story = {
 					ItemsGap: '8px',
 					Height: 'auto',
 					StartingPosition: 0,
+					ExtendedClass: args.extendedClass,
 				}),
 				'Splide'
 			);

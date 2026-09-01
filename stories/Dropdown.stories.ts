@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
+import { extendedClassArgType } from './_helpers/lowcode';
 import { cfg, osuiRoot, Patterns, renderPattern, uid } from './_helpers/osui';
 
 /**
@@ -11,6 +12,7 @@ import { cfg, osuiRoot, Patterns, renderPattern, uid } from './_helpers/osui';
 interface DropdownArgs {
 	allowMultipleSelection: boolean;
 	isDisabled: boolean;
+	extendedClass: string;
 }
 
 const OPTIONS = [
@@ -24,8 +26,9 @@ const meta: Meta<DropdownArgs> = {
 	argTypes: {
 		allowMultipleSelection: { control: 'boolean', name: 'AllowMultipleSelection' },
 		isDisabled: { control: 'boolean', name: 'IsDisabled' },
+		extendedClass: extendedClassArgType,
 	},
-	args: { allowMultipleSelection: false, isDisabled: false },
+	args: { allowMultipleSelection: false, isDisabled: false, extendedClass: '' },
 };
 export default meta;
 
@@ -52,6 +55,7 @@ function renderDropdown(args: DropdownArgs): HTMLElement {
 				SearchPrompt: 'Search…',
 				NoOptionsText: 'No options',
 				NoResultsText: 'No results',
+				ExtendedClass: args.extendedClass,
 			})
 		);
 		P.DropdownAPI.Initialize(id);

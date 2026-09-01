@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
+import { extendedClassArgType } from './_helpers/lowcode';
 import { cfg, osuiRoot, Patterns, renderPattern, uid } from './_helpers/osui';
 
 /**
@@ -15,6 +16,7 @@ interface TabsArgs {
 	orientation: 'horizontal' | 'vertical';
 	verticalPosition: 'left' | 'right';
 	disabledTab: number;
+	extendedClass: string;
 }
 
 /** Index of the header item disabled by default — exercises `[disabled]` styling. */
@@ -41,6 +43,7 @@ const meta: Meta<TabsArgs> = {
 			control: { type: 'number', min: -1, max: 5 },
 			name: 'DisabledTab (story-only, -1 = none)',
 		},
+		extendedClass: extendedClassArgType,
 	},
 	args: {
 		startingTab: 0,
@@ -48,6 +51,7 @@ const meta: Meta<TabsArgs> = {
 		orientation: 'horizontal',
 		verticalPosition: 'left',
 		disabledTab: DEFAULT_DISABLED_TAB,
+		extendedClass: '',
 	},
 };
 export default meta;
@@ -94,6 +98,7 @@ export const Default: Story = {
 					TabsOrientation: args.orientation,
 					TabsVerticalPosition: args.verticalPosition,
 					Height: 'auto',
+					ExtendedClass: args.extendedClass,
 				})
 			);
 			headerIds.forEach((id) => P.TabsHeaderItemAPI.Create(id, cfg()));

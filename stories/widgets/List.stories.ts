@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
+import { cls, styleClassesArgType } from '../_helpers/lowcode';
 import { renderStatic } from '../_helpers/osui';
 
 /**
@@ -21,9 +22,15 @@ import { renderStatic } from '../_helpers/osui';
  * Hover, pressed and selected styling key off the `.desktop` body class set by
  * the Storybook preview decorator.
  */
-const meta: Meta = { title: 'Widgets/List' };
+type WidgetArgs = { styleClasses: string };
+
+const meta: Meta<WidgetArgs> = {
+	title: 'Widgets/List',
+	args: { styleClasses: '' },
+	argTypes: { styleClasses: styleClassesArgType },
+};
 export default meta;
-type Story = StoryObj;
+type Story = StoryObj<WidgetArgs>;
 
 /** Derive initials: first letter of each word, up to 2 characters, uppercased. */
 function initials(name: string): string {
@@ -58,9 +65,9 @@ const item = (selected: boolean, title: string, text: string): string => `
 	</div>`;
 
 export const Default: Story = {
-	render: () =>
+	render: ({ styleClasses }) =>
 		renderStatic(`
-			<div class="list list-group" style="max-width:420px;">
+			<div class="${cls('list', 'list-group', styleClasses)}" style="max-width:420px;">
 				${item(false, 'First item', 'A tappable row with a title and supporting text.')}
 				${item(true, 'Selected item', 'This row is selected.')}
 				${item(false, 'Third item', 'Another row.')}

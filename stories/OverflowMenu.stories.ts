@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
+import { extendedClassArgType } from './_helpers/lowcode';
 import { createAndInit, osuiRoot, renderPattern, uid } from './_helpers/osui';
 
 /**
@@ -11,6 +12,7 @@ interface OverflowMenuArgs {
 	position: string;
 	shape: string;
 	icon: string;
+	extendedClass: string;
 }
 
 /**
@@ -60,8 +62,9 @@ const meta: Meta<OverflowMenuArgs> = {
 			control: 'text',
 			description: 'Phosphor icon class for the Icon widget in the Trigger placeholder.',
 		},
+		extendedClass: extendedClassArgType,
 	},
-	args: { position: 'bottom-start', shape: 'soft', icon: 'ph-dots-three-vertical' },
+	args: { position: 'bottom-start', shape: 'soft', icon: 'ph-dots-three-vertical', extendedClass: '' },
 };
 export default meta;
 
@@ -88,7 +91,12 @@ export const Default: Story = {
 				</div>
 			</div>`;
 		return renderPattern(template, (_root, register) =>
-			createAndInit('OverflowMenuAPI', id, { Position: args.position, Shape: args.shape }, register)
+			createAndInit(
+				'OverflowMenuAPI',
+				id,
+				{ Position: args.position, Shape: args.shape, ExtendedClass: args.extendedClass },
+				register
+			)
 		);
 	},
 };

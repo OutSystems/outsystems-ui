@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
+import { cls, styleClassesArgType } from '../_helpers/lowcode';
 import { renderStatic } from '../_helpers/osui';
 
 /**
@@ -18,10 +19,17 @@ import { renderStatic } from '../_helpers/osui';
  * exists to snapshot the `.mandatory` treatment, and Widgets/Form covers a label
  * genuinely bound to an input.
  */
-const meta: Meta = { title: 'Widgets/Label' };
+type WidgetArgs = { styleClasses: string };
+
+const meta: Meta<WidgetArgs> = {
+	title: 'Widgets/Label',
+	args: { styleClasses: '' },
+	argTypes: { styleClasses: styleClassesArgType },
+};
 export default meta;
-type Story = StoryObj;
+type Story = StoryObj<WidgetArgs>;
 
 export const Default: Story = {
-	render: () => renderStatic(`<label data-label="" class=" mandatory" for="">Email address</label>`),
+	render: ({ styleClasses }) =>
+		renderStatic(`<label data-label="" class="${cls('mandatory', styleClasses)}" for="">Email address</label>`),
 };

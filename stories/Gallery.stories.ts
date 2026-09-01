@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
+import { extendedClassArgType } from './_helpers/lowcode';
 import { cfg, osuiRoot, Patterns, renderPattern, uid } from './_helpers/osui';
 
 interface GalleryArgs {
@@ -6,6 +7,7 @@ interface GalleryArgs {
 	rowItemsTablet: number;
 	rowItemsPhone: number;
 	itemsGap: string;
+	extendedClass: string;
 }
 
 const ITEMS_GAP_OPTIONS = ['none', 'xs', 's', 'base', 'm', 'l', 'xl', 'xxl'] as const;
@@ -33,8 +35,9 @@ const meta: Meta<GalleryArgs> = {
 			},
 			name: 'ItemsGap',
 		},
+		extendedClass: extendedClassArgType,
 	},
-	args: { rowItemsDesktop: 3, rowItemsTablet: 2, rowItemsPhone: 1, itemsGap: 'base' },
+	args: { rowItemsDesktop: 3, rowItemsTablet: 2, rowItemsPhone: 1, itemsGap: 'base', extendedClass: '' },
 };
 export default meta;
 
@@ -58,6 +61,7 @@ export const Default: Story = {
 					RowItemsTablet: args.rowItemsTablet,
 					RowItemsPhone: args.rowItemsPhone,
 					ItemsGap: args.itemsGap,
+					ExtendedClass: args.extendedClass,
 				})
 			);
 			P.GalleryAPI.Initialize(id);

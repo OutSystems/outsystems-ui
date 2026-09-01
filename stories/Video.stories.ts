@@ -1,12 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
+import { extendedClassArgType } from './_helpers/lowcode';
 import { cfg, osuiRoot, Patterns, renderPattern, uid } from './_helpers/osui';
 
-/** Video — the pattern root is a `<video>` element; it appends a `<source>` from URL. */
+/** Video — the pattern root is a video element; it appends a source from URL. */
 interface VideoArgs {
 	url: string;
 	controls: boolean;
 	muted: boolean;
 	loop: boolean;
+	extendedClass: string;
 }
 
 const meta: Meta<VideoArgs> = {
@@ -16,12 +18,14 @@ const meta: Meta<VideoArgs> = {
 		controls: { control: 'boolean', name: 'Controls' },
 		muted: { control: 'boolean', name: 'Muted' },
 		loop: { control: 'boolean', name: 'Loop' },
+		extendedClass: extendedClassArgType,
 	},
 	args: {
 		url: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4',
 		controls: true,
 		muted: true,
 		loop: false,
+		extendedClass: '',
 	},
 };
 export default meta;
@@ -46,6 +50,7 @@ export const Default: Story = {
 					Height: '',
 					PosterURL: '',
 					Captions: '[]',
+					ExtendedClass: args.extendedClass,
 				})
 			);
 			P.VideoAPI.Initialize(id);

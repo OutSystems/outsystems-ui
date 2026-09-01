@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
+import { cls, styleClassesArgType } from '../_helpers/lowcode';
 import { renderStatic } from '../_helpers/osui';
 
 /**
@@ -14,12 +15,19 @@ import { renderStatic } from '../_helpers/osui';
  * repaints them (notably to OUI blue rather than the base layer's legacy green),
  * which is exactly the override this story is here to catch.
  */
-const meta: Meta = { title: 'Widgets/Switch', tags: ['!ui-pending', 'ui-reviewed'] };
-export default meta;
-type Story = StoryObj;
+type WidgetArgs = { styleClasses: string };
 
-const sw = (id: string, label: string, checked: boolean, disabled = false) => `
-	<span style="display:flex;align-items:center;gap:8px;">
+const meta: Meta<WidgetArgs> = {
+	title: 'Widgets/Switch',
+	tags: ['!ui-pending', 'ui-reviewed'],
+	args: { styleClasses: '' },
+	argTypes: { styleClasses: styleClassesArgType },
+};
+export default meta;
+type Story = StoryObj<WidgetArgs>;
+
+const sw = (id: string, label: string, checked: boolean, disabled = false, styleClasses = '') => `
+	<span class="${cls(styleClasses)}" style="display:flex;align-items:center;gap:8px;">
 		<input data-switch="" class="" type="checkbox" id="${id}"${checked ? ' checked=""' : ''}${
 			disabled ? ' disabled=""' : ''
 		}>
@@ -27,17 +35,18 @@ const sw = (id: string, label: string, checked: boolean, disabled = false) => `
 	</span>`;
 
 export const Default: Story = {
-	render: () => renderStatic(`<span><input data-switch="" class="" type="checkbox" checked=""></span>`),
+	render: ({ styleClasses }) =>
+		renderStatic(`<span class="${cls(styleClasses)}"><input data-switch="" class="" type="checkbox" checked=""></span>`),
 };
 
 /** The widget's four states, same captured DOM with the attributes it emits for each. */
 export const States: Story = {
-	render: () =>
+	render: ({ styleClasses }) =>
 		renderStatic(`
 			<div style="display:flex;flex-direction:column;gap:12px;">
-				${sw('sw-on', 'On', true)}
-				${sw('sw-off', 'Off', false)}
-				${sw('sw-on-disabled', 'On, disabled', true, true)}
-				${sw('sw-off-disabled', 'Off, disabled', false, true)}
+				${sw('sw-on', 'On', true, false, styleClasses)}
+				${sw('sw-off', 'Off', false, false, styleClasses)}
+				${sw('sw-on-disabled', 'On, disabled', true, true, styleClasses)}
+				${sw('sw-off-disabled', 'Off, disabled', false, true, styleClasses)}
 			</div>`),
 };

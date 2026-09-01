@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
+import { cls, styleClassesArgType } from '../_helpers/lowcode';
 import { renderPattern, renderStatic } from '../_helpers/osui';
 
 /**
@@ -40,15 +41,21 @@ import { renderPattern, renderStatic } from '../_helpers/osui';
  *      It is invisible (the platform base layer gives it z-index and nothing
  *      else), but it is only added while expanded, exactly as the widget does it.
  */
-const meta: Meta = { title: 'Widgets/Dropdown' };
+type WidgetArgs = { styleClasses: string };
+
+const meta: Meta<WidgetArgs> = {
+	title: 'Widgets/Dropdown',
+	args: { styleClasses: '' },
+	argTypes: { styleClasses: styleClassesArgType },
+};
 export default meta;
-type Story = StoryObj;
+type Story = StoryObj<WidgetArgs>;
 
 const OPTIONS = ['Apple', 'Banana', 'Cherry'];
 const EMPTY_LABEL = '-- Select --';
 
-const nativeSelect = (id: string, selectedIndex: number) => `
-	<div id="${id}-container" class="dropdown-container" data-dropdown="">
+const nativeSelect = (id: string, selectedIndex: number, styleClasses = '') => `
+	<div id="${id}-container" class="${cls('dropdown-container', styleClasses)}" data-dropdown="">
 		<select class="dropdown-display " aria-disabled="false" id="${id}">
 			<option value="-1">${EMPTY_LABEL}</option>
 			${OPTIONS.map((o, i) => `<option value="${i}"${i === selectedIndex ? ' selected=""' : ''}>${o}</option>`).join(
@@ -57,8 +64,8 @@ const nativeSelect = (id: string, selectedIndex: number) => `
 		</select>
 	</div>`;
 
-const customDisplay = (value: string) => `
-	<div data-dropdown="" class="dropdown-container">
+const customDisplay = (value: string, styleClasses = '') => `
+	<div data-dropdown="" class="${cls('dropdown-container', styleClasses)}">
 		<div class="dropdown-display" tabindex="0">
 			<div class="dropdown-display-content">${value}</div>
 		</div>
@@ -85,16 +92,16 @@ const customList = (selected: string) => `
  * form control and already works.
  */
 export const Default: Story = {
-	render: () =>
+	render: ({ styleClasses }) =>
 		renderPattern(
 			`<div style="display:flex;gap:40px;padding:20px;position:relative;">
 				<div style="flex:1;overflow:visible;position:relative;">
 					<h3>Custom (Mode 1)</h3>
-					${customDisplay('Banana')}
+					${customDisplay('Banana', styleClasses)}
 				</div>
 				<div style="flex:1;">
 					<h3>Native (Mode 0)</h3>
-					${nativeSelect('dropdown-native', 1)}
+					${nativeSelect('dropdown-native', 1, styleClasses)}
 				</div>
 			</div>`,
 			(root) => {
@@ -103,13 +110,13 @@ export const Default: Story = {
 				const content = container.querySelector<HTMLElement>('.dropdown-display-content')!;
 
 				const collapse = (): void => {
-					container.className = 'dropdown-container';
+					container.className = cls('dropdown-container', styleClasses);
 					container.querySelector('.dropdown-list')?.remove();
 					container.querySelector('.dropdown-background-window')?.remove();
 				};
 
 				const expand = (): void => {
-					container.className = 'dropdown-container dropdown-expanded dropdown-expanded-down';
+					container.className = cls('dropdown-container', 'dropdown-expanded', 'dropdown-expanded-down', styleClasses);
 					container.insertAdjacentHTML('beforeend', customList(content.textContent ?? ''));
 
 					for (const row of container.querySelectorAll<HTMLElement>('.dropdown-popup-row')) {
@@ -142,10 +149,10 @@ export const Default: Story = {
  * snapshotted, which was true even while this story mounted the live widget.
  */
 export const CustomExpanded: Story = {
-	render: () =>
+	render: ({ styleClasses }) =>
 		renderStatic(`
 			<div style="padding:20px;position:relative;height:260px;">
-				<div data-dropdown="" class="dropdown-container dropdown-expanded dropdown-expanded-down">
+				<div data-dropdown="" class="${cls('dropdown-container', 'dropdown-expanded', 'dropdown-expanded-down', styleClasses)}">
 					<div class="dropdown-display" tabindex="0">
 						<div class="dropdown-display-content">Banana</div>
 					</div>

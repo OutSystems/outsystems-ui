@@ -1,9 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
+import { extendedClassArgType } from './_helpers/lowcode';
 import { cfg, osuiRoot, Patterns, renderPattern, uid } from './_helpers/osui';
 
 interface BottomSheetArgs {
 	showHandler: boolean;
 	shape: string;
+	extendedClass: string;
 }
 
 const meta: Meta<BottomSheetArgs> = {
@@ -12,8 +14,9 @@ const meta: Meta<BottomSheetArgs> = {
 	argTypes: {
 		showHandler: { control: 'boolean', name: 'ShowHandler' },
 		shape: { control: 'inline-radio', options: ['SoftRounded', 'Rounded', 'Sharp'], name: 'Shape' },
+		extendedClass: extendedClassArgType,
 	},
-	args: { showHandler: true, shape: 'Rounded' },
+	args: { showHandler: true, shape: 'Rounded', extendedClass: '' },
 };
 export default meta;
 
@@ -37,7 +40,10 @@ export const Default: Story = {
 			</div>`;
 		return renderPattern(template, (root, register) => {
 			const P = Patterns();
-			P.BottomSheetAPI.Create(id, cfg({ ShowHandler: args.showHandler, Shape: args.shape }));
+			P.BottomSheetAPI.Create(
+				id,
+				cfg({ ShowHandler: args.showHandler, Shape: args.shape, ExtendedClass: args.extendedClass })
+			);
 			P.BottomSheetAPI.Initialize(id);
 			root.querySelector('[data-open]')?.addEventListener('click', () => P.BottomSheetAPI.Open(id));
 			root.querySelector('[data-close]')?.addEventListener('click', () => P.BottomSheetAPI.Close(id));

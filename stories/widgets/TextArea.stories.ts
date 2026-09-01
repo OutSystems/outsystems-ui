@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
+import { cls, styleClassesArgType } from '../_helpers/lowcode';
 import { renderStatic } from '../_helpers/osui';
 
 /**
@@ -16,14 +17,20 @@ import { renderStatic } from '../_helpers/osui';
  * styles `[data-input]` but not `[data-textarea]`, so this control's look is
  * entirely OUI's.
  */
-const meta: Meta = { title: 'Widgets/TextArea' };
+type WidgetArgs = { styleClasses: string };
+
+const meta: Meta<WidgetArgs> = {
+	title: 'Widgets/TextArea',
+	args: { styleClasses: '' },
+	argTypes: { styleClasses: styleClassesArgType },
+};
 export default meta;
-type Story = StoryObj;
+type Story = StoryObj<WidgetArgs>;
 
 export const Default: Story = {
-	render: () =>
+	render: ({ styleClasses }) =>
 		renderStatic(`
-			<span>
+			<span class="${cls(styleClasses)}">
 				<textarea data-textarea="" class="form-control" rows="3" placeholder="Write a comment…"
 					maxlength="500"></textarea>
 			</span>`),

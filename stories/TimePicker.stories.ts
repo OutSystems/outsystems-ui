@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
+import { extendedClassArgType } from './_helpers/lowcode';
 import { cfg, osuiRoot, Patterns, renderPattern, uid } from './_helpers/osui';
 
 /**
@@ -8,6 +9,7 @@ import { cfg, osuiRoot, Patterns, renderPattern, uid } from './_helpers/osui';
 interface TimePickerArgs {
 	is24Hours: boolean;
 	timeFormat: string;
+	extendedClass: string;
 }
 
 const meta: Meta<TimePickerArgs> = {
@@ -15,8 +17,9 @@ const meta: Meta<TimePickerArgs> = {
 	argTypes: {
 		is24Hours: { control: 'boolean', name: 'Is24Hours' },
 		timeFormat: { control: 'text', name: 'TimeFormat' },
+		extendedClass: extendedClassArgType,
 	},
-	args: { is24Hours: true, timeFormat: 'HH:mm' },
+	args: { is24Hours: true, timeFormat: 'HH:mm', extendedClass: '' },
 };
 export default meta;
 
@@ -32,7 +35,11 @@ export const Default: Story = {
 			</div>`;
 		return renderPattern(template, (_root, register) => {
 			const P = Patterns();
-			P.TimePickerAPI.Create(id, cfg({ Is24Hours: args.is24Hours, TimeFormat: args.timeFormat }), 'flatpickr');
+			P.TimePickerAPI.Create(
+				id,
+				cfg({ Is24Hours: args.is24Hours, TimeFormat: args.timeFormat, ExtendedClass: args.extendedClass }),
+				'flatpickr'
+			);
 			P.TimePickerAPI.Initialize(id);
 			register(() => P.TimePickerAPI.Dispose?.(id));
 		});

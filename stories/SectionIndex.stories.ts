@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
+import { extendedClassArgType } from './_helpers/lowcode';
 import { cfg, osuiRoot, Patterns, renderPattern, uid } from './_helpers/osui';
 
 /**
@@ -9,6 +10,7 @@ import { cfg, osuiRoot, Patterns, renderPattern, uid } from './_helpers/osui';
 interface SectionIndexArgs {
 	smoothScrolling: boolean;
 	isFixed: boolean;
+	extendedClass: string;
 }
 
 const SECTIONS = ['Introduction', 'Installation', 'Usage'];
@@ -18,8 +20,9 @@ const meta: Meta<SectionIndexArgs> = {
 	argTypes: {
 		smoothScrolling: { control: 'boolean', name: 'SmoothScrolling' },
 		isFixed: { control: 'boolean', name: 'IsFixed' },
+		extendedClass: extendedClassArgType,
 	},
-	args: { smoothScrolling: true, isFixed: false },
+	args: { smoothScrolling: true, isFixed: false, extendedClass: '' },
 };
 export default meta;
 
@@ -51,7 +54,10 @@ export const Default: Story = {
 
 		return renderPattern(template, (_root, register) => {
 			const P = Patterns();
-			P.SectionIndexAPI.Create(id, cfg({ SmoothScrolling: args.smoothScrolling, IsFixed: args.isFixed }));
+			P.SectionIndexAPI.Create(
+				id,
+				cfg({ SmoothScrolling: args.smoothScrolling, IsFixed: args.isFixed, ExtendedClass: args.extendedClass })
+			);
 			itemIds.forEach((itemId, i) =>
 				P.SectionIndexItemAPI.Create(itemId, cfg({ ScrollToWidgetId: targetIds[i] }))
 			);

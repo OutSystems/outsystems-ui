@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
+import { extendedClassArgType } from './_helpers/lowcode';
 import { cfg, osuiRoot, Patterns, renderPattern, uid } from './_helpers/osui';
 
 interface NotificationArgs {
@@ -6,6 +7,7 @@ interface NotificationArgs {
 	width: string;
 	interactToClose: boolean;
 	closeAfterTime: number;
+	extendedClass: string;
 }
 
 const meta: Meta<NotificationArgs> = {
@@ -16,8 +18,9 @@ const meta: Meta<NotificationArgs> = {
 		width: { control: 'text', name: 'Width' },
 		interactToClose: { control: 'boolean', name: 'InteractToClose' },
 		closeAfterTime: { control: 'number', name: 'CloseAfterTime (ms, 0 = off)' },
+		extendedClass: extendedClassArgType,
 	},
-	args: { position: 'top', width: '370px', interactToClose: true, closeAfterTime: 0 },
+	args: { position: 'top', width: '370px', interactToClose: true, closeAfterTime: 0, extendedClass: '' },
 };
 export default meta;
 
@@ -44,6 +47,7 @@ export const Default: Story = {
 					CloseAfterTime: args.closeAfterTime,
 					NeedsSwipes: false,
 					StartsOpen: false,
+					ExtendedClass: args.extendedClass,
 				})
 			);
 			P.NotificationAPI.Initialize(id);

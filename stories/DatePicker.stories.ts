@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
+import { extendedClassArgType } from './_helpers/lowcode';
 import { cfg, osuiRoot, Patterns, renderPattern, uid } from './_helpers/osui';
 
 /**
@@ -22,6 +23,7 @@ interface DatePickerArgs {
 	showTodayButton: boolean;
 	showWeekNumbers: boolean;
 	timeFormat: 'disabled' | '12' | '24';
+	extendedClass: string;
 }
 
 const meta: Meta<DatePickerArgs> = {
@@ -37,6 +39,7 @@ const meta: Meta<DatePickerArgs> = {
 			options: ['disabled', '12', '24'],
 			name: 'TimeFormat',
 		},
+		extendedClass: extendedClassArgType,
 	},
 	args: {
 		mode: 'single',
@@ -45,6 +48,7 @@ const meta: Meta<DatePickerArgs> = {
 		showTodayButton: true,
 		showWeekNumbers: false,
 		timeFormat: 'disabled',
+		extendedClass: '',
 	},
 };
 export default meta;
@@ -72,6 +76,7 @@ function renderDatePicker(args: DatePickerArgs): HTMLElement {
 				ShowTodayButton: args.showTodayButton,
 				ShowWeekNumbers: args.showWeekNumbers,
 				TimeFormat: args.timeFormat,
+				ExtendedClass: args.extendedClass,
 			}),
 			args.mode,
 			'flatpickr'

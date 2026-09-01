@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
+import { cls, styleClassesArgType } from '../_helpers/lowcode';
 import { renderPattern, renderStatic } from '../_helpers/osui';
 
 /**
@@ -16,19 +17,23 @@ import { renderPattern, renderStatic } from '../_helpers/osui';
  * CSS contract: src/scss/03-widgets/_button-group.scss, plus the flex layout the
  * platform base layer puts on `[data-button-group] > div`.
  */
-const meta: Meta = {
+type WidgetArgs = { styleClasses: string };
+
+const meta: Meta<WidgetArgs> = {
 	title: 'Widgets/ButtonGroup',
 	tags: ['!ui-pending', 'ui-reviewed'],
+	args: { styleClasses: '' },
+	argTypes: { styleClasses: styleClassesArgType },
 };
 export default meta;
-type Story = StoryObj;
+type Story = StoryObj<WidgetArgs>;
 
 const item = (label: string, selected: boolean, disabled = false, tabindex = 0) =>
 	`<button data-button-group-item="" class="button-group-item${selected ? ' button-group-selected-item' : ''}"
 		aria-checked="${selected}" role="radio" tabindex="${tabindex}"${disabled ? ' disabled=""' : ''}>${label}</button>`;
 
-const group = (items: string, extraClass = '') =>
-	`<div data-button-group="" class="button-group${extraClass ? ` ${extraClass}` : ''}" role="radiogroup">
+const group = (items: string, extraClass = '', styleClasses = '') =>
+	`<div data-button-group="" class="${cls('button-group', extraClass, styleClasses)}" role="radiogroup">
 		<div>${items}</div>
 	</div>`;
 
@@ -36,8 +41,8 @@ const sixItems = (selectedIndex: number, disabled = false) =>
 	Array.from({ length: 6 }, (_, i) => item('Button', i === selectedIndex, disabled, i === 0 ? 0 : -1)).join('');
 
 export const Default: Story = {
-	render: () =>
-		renderPattern(group(item('Day', false) + item('Week', true) + item('Month', false)), (root) => {
+	render: ({ styleClasses }) =>
+		renderPattern(group(item('Day', false) + item('Week', true) + item('Month', false), '', styleClasses), (root) => {
 			const items = [...root.querySelectorAll<HTMLElement>('[data-button-group-item]')];
 			const select = (chosen: HTMLElement): void => {
 				for (const el of items) {
@@ -53,17 +58,19 @@ export const Default: Story = {
 };
 
 export const States: Story = {
-	render: () =>
+	render: ({ styleClasses }) =>
 		renderStatic(`
 			<div style="display:flex;flex-direction:column;gap:16px;">
-				${group(sixItems(0))}
-				${group(sixItems(2))}
-				${group(sixItems(5))}
-				${group(item('Only', true))}
+				${group(sixItems(0), '', styleClasses)}
+				${group(sixItems(2), '', styleClasses)}
+				${group(sixItems(5), '', styleClasses)}
+				${group(item('Only', true), '', styleClasses)}
 				${group(
 					item('Enabled', false) +
 						item('Selected disabled', true, true) +
 						item('Disabled', false, true),
+					'',
+					styleClasses,
 				)}
 			</div>`),
 };

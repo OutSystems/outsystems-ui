@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
+import { cls, styleClassesArgType } from '../_helpers/lowcode';
 import { renderStatic } from '../_helpers/osui';
 
 /**
@@ -11,10 +12,17 @@ import { renderStatic } from '../_helpers/osui';
  * The plainest widget in the set: it exists in the Storybook so the base
  * typography the rest of the widgets inherit is snapshotted somewhere.
  */
-const meta: Meta = { title: 'Widgets/Text' };
+type WidgetArgs = { styleClasses: string };
+
+const meta: Meta<WidgetArgs> = {
+	title: 'Widgets/Text',
+	args: { styleClasses: '' },
+	argTypes: { styleClasses: styleClassesArgType },
+};
 export default meta;
-type Story = StoryObj;
+type Story = StoryObj<WidgetArgs>;
 
 export const Default: Story = {
-	render: () => renderStatic(`<span class="">Plain platform Text widget output.</span>`),
+	render: ({ styleClasses }) =>
+		renderStatic(`<span class="${cls(styleClasses)}">Plain platform Text widget output.</span>`),
 };

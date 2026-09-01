@@ -1,10 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
+import { extendedClassArgType } from './_helpers/lowcode';
 import { cfg, osuiRoot, Patterns, renderPattern, uid } from './_helpers/osui';
 
 interface TooltipArgs {
 	isHover: boolean;
 	position: string;
 	startVisible: boolean;
+	extendedClass: string;
 }
 
 const meta: Meta<TooltipArgs> = {
@@ -30,8 +32,9 @@ const meta: Meta<TooltipArgs> = {
 			name: 'Position',
 		},
 		startVisible: { control: 'boolean', name: 'StartVisible' },
+		extendedClass: extendedClassArgType,
 	},
-	args: { isHover: true, position: 'bottom', startVisible: false },
+	args: { isHover: true, position: 'bottom', startVisible: false, extendedClass: '' },
 };
 export default meta;
 
@@ -74,7 +77,12 @@ export const Default: Story = {
 			[id, id2].forEach((tooltipId) => {
 				P.TooltipAPI.Create(
 					tooltipId,
-					cfg({ IsHover: args.isHover, Position: args.position, StartVisible: args.startVisible })
+					cfg({
+						IsHover: args.isHover,
+						Position: args.position,
+						StartVisible: args.startVisible,
+						ExtendedClass: args.extendedClass,
+					})
 				);
 				P.TooltipAPI.Initialize(tooltipId);
 				register(() => P.TooltipAPI.Dispose?.(tooltipId));

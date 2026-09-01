@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
+import { extendedClassArgType } from './_helpers/lowcode';
 import { cfg, osuiRoot, Patterns, renderPattern, uid } from './_helpers/osui';
 
 /**
@@ -8,12 +9,13 @@ import { cfg, osuiRoot, Patterns, renderPattern, uid } from './_helpers/osui';
  */
 interface MonthPickerArgs {
 	dateFormat: string;
+	extendedClass: string;
 }
 
 const meta: Meta<MonthPickerArgs> = {
 	title: 'Patterns/Interaction/MonthPicker',
-	argTypes: { dateFormat: { control: 'text', name: 'DateFormat' } },
-	args: { dateFormat: 'MM/YYYY' },
+	argTypes: { dateFormat: { control: 'text', name: 'DateFormat' }, extendedClass: extendedClassArgType },
+	args: { dateFormat: 'MM/YYYY', extendedClass: '' },
 };
 export default meta;
 
@@ -38,6 +40,7 @@ export const Default: Story = {
 					InitialMonth: { Month: '', Year: -1 },
 					MaxMonth: { Month: '', Year: -1 },
 					MinMonth: { Month: '', Year: -1 },
+					ExtendedClass: args.extendedClass,
 				}),
 				'flatpickr'
 			);

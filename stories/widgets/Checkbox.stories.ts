@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/html-vite';
+import { cls, styleClassesArgType } from '../_helpers/lowcode';
 import { renderStatic } from '../_helpers/osui';
 
 /**
@@ -17,12 +18,18 @@ import { renderStatic } from '../_helpers/osui';
  * with pseudo-element `content`, and src/scss/03-widgets/_checkbox.scss then
  * recolours and resizes it. That is why the base layer must load first.
  */
-const meta: Meta = { title: 'Widgets/Checkbox' };
-export default meta;
-type Story = StoryObj;
+type WidgetArgs = { styleClasses: string };
 
-const checkbox = (id: string, label: string, checked: boolean, disabled = false) => `
-	<span style="display:flex;align-items:center;gap:8px;">
+const meta: Meta<WidgetArgs> = {
+	title: 'Widgets/Checkbox',
+	args: { styleClasses: '' },
+	argTypes: { styleClasses: styleClassesArgType },
+};
+export default meta;
+type Story = StoryObj<WidgetArgs>;
+
+const checkbox = (id: string, label: string, checked: boolean, disabled = false, styleClasses = '') => `
+	<span class="${cls(styleClasses)}" style="display:flex;align-items:center;gap:8px;">
 		<input data-checkbox="" class="" type="checkbox" id="${id}"${checked ? ' checked=""' : ''}${
 			disabled ? ' disabled=""' : ''
 		}>
@@ -30,7 +37,8 @@ const checkbox = (id: string, label: string, checked: boolean, disabled = false)
 	</span>`;
 
 export const Default: Story = {
-	render: () => renderStatic(`<span><input data-checkbox="" class="" type="checkbox" checked=""></span>`),
+	render: ({ styleClasses }) =>
+		renderStatic(`<span class="${cls(styleClasses)}"><input data-checkbox="" class="" type="checkbox" checked=""></span>`),
 };
 
 /**
@@ -39,12 +47,12 @@ export const Default: Story = {
  * a `[data-label]` so the states are readable in the snapshot.
  */
 export const States: Story = {
-	render: () =>
+	render: ({ styleClasses }) =>
 		renderStatic(`
 			<div style="display:flex;flex-direction:column;gap:12px;">
-				${checkbox('cb-checked', 'Checked', true)}
-				${checkbox('cb-unchecked', 'Unchecked', false)}
-				${checkbox('cb-checked-disabled', 'Checked, disabled', true, true)}
-				${checkbox('cb-unchecked-disabled', 'Unchecked, disabled', false, true)}
+				${checkbox('cb-checked', 'Checked', true, false, styleClasses)}
+				${checkbox('cb-unchecked', 'Unchecked', false, false, styleClasses)}
+				${checkbox('cb-checked-disabled', 'Checked, disabled', true, true, styleClasses)}
+				${checkbox('cb-unchecked-disabled', 'Unchecked, disabled', false, true, styleClasses)}
 			</div>`),
 };
