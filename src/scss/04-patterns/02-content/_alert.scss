@@ -61,7 +61,7 @@
 
 		&.vivid {
 			--osui-alert-background: #{variables.$token-bg-info-base-default};
-			--osui-alert-color: #{variables.$token-text-inverse};
+			--osui-alert-color: var(--color-text-light);
 			--osui-alert-accent-color: var(--osui-alert-background);
 			--osui-alert-icon-color: currentColor;
 		}
@@ -75,7 +75,7 @@
 
 		&.vivid {
 			--osui-alert-background: #{variables.$token-bg-success-base-default};
-			--osui-alert-color: #{variables.$token-text-inverse};
+			--osui-alert-color: var(--color-text-light);
 			--osui-alert-accent-color: var(--osui-alert-background);
 			--osui-alert-icon-color: currentColor;
 		}
@@ -89,7 +89,7 @@
 
 		&.vivid {
 			--osui-alert-background: #{variables.$token-bg-danger-base-default};
-			--osui-alert-color: #{variables.$token-text-inverse};
+			--osui-alert-color: var(--color-text-light);
 			--osui-alert-accent-color: var(--osui-alert-background);
 			--osui-alert-icon-color: currentColor;
 		}
@@ -105,7 +105,7 @@
 			--osui-alert-background: #{variables.$token-bg-warning-base-default};
 			// Warning's solid background is a light yellow — keep dark text for contrast,
 			// unlike the other three types which use light text on a darker solid background.
-			--osui-alert-color: var(--color-text);
+			--osui-alert-color: var(--color-text-dark);
 			--osui-alert-accent-color: var(--osui-alert-background);
 			--osui-alert-icon-color: currentColor;
 		}
