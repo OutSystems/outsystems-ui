@@ -176,6 +176,7 @@ Section Index:
     7.22. Position
     7.23. Position - Absolute
     7.24. Miscellaneous
+    7.25. Design tokens - .token-* classes
 8. Screen Transitions
 9. Keyframes - Animations
     9.1. Animate
@@ -499,6 +500,8 @@ Section Index:
 @use '05-useful/positioning-absolute' as *;
 /*! 7.24. Miscellaneous */
 @use '05-useful/miscellaneous' as *;
+/*! 7.25. Design tokens - .token-* classes */
+@use 'tokens/utilities' as *;
 
 /*! ==============================================================================
 8. Screen Transitions
