@@ -3952,10 +3952,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-tooltip-color',
-								default: 'var(--color-text-inverse)',
+								default: 'var(--color-text)',
 								kind: 'color',
 								chain: 'theme-role',
-								hint: 'var(--color-text-inverse)',
+								hint: 'var(--color-text)',
 							},
 							{
 								name: '--osui-tooltip-font-size',
@@ -3980,10 +3980,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-tooltip-padding',
-								default: '#{$token-space-0} #{$token-space-100}',
+								default: '#{$token-space-200} #{$token-space-400}',
 								kind: 'spacing',
 								chain: 'token',
-								hint: '#{$token-space-0} #{$token-space-100}',
+								hint: '#{$token-space-200} #{$token-space-400}',
 							},
 							{
 								name: '--osui-tooltip-shadow',
