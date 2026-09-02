@@ -29,7 +29,6 @@ $osui-tag-lightest-text-colors: (
 .tag {
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-tag-color: var(--color-text-inverse);
-	--osui-tag-primary-color: var(--color-primary);
 	--osui-tag-on-light-color: var(--color-text);
 	--osui-tag-soft-border-radius: #{variables.$token-border-radius-100};
 	--osui-tag-medium-soft-border-radius: #{variables.$token-border-radius-200};
@@ -79,10 +78,10 @@ $osui-tag-lightest-text-colors: (
 
 	&.background {
 		&-transparent {
-			color: var(--osui-tag-primary-color);
+			--osui-tag-color: var(--color-primary);
 
 			&-lightest {
-				color: variables.$token-text-inverse;
+				--osui-tag-color: var(--color-text-inverse);
 			}
 		}
 
@@ -145,18 +144,18 @@ $osui-tag-lightest-text-colors: (
 		// Warning backgrounds are light enough to need dark text (Figma).
 		&-warning,
 		&-yellow {
-			color: var(--color-text-dark);
+			--osui-tag-color: var(--color-text-dark);
 		}
 
 		&-secondary {
-			color: var(--osui-tag-primary-color);
+			--osui-tag-color: var(--color-primary);
 		}
 
 		&-primary,
 		&-blue,
 		&-green,
 		&-red {
-			color: var(--color-text-light);
+			--osui-tag-color: var(--color-text-light);
 		}
 	}
 
