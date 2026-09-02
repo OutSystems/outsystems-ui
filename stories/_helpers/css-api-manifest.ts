@@ -39,9 +39,9 @@ export type CssApiManifest = {
 };
 
 export const CSS_API_MANIFEST: CssApiManifest = {
-	generatedAt: '2026-08-31T07:39:37.679Z',
+	generatedAt: '2026-09-01T10:14:07.077Z',
 	totals: {
-		properties: 546,
+		properties: 547,
 		components: 63,
 		categories: 9,
 	},
@@ -2007,6 +2007,13 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 								kind: 'color',
 								chain: 'theme-role',
 								hint: 'var(--color-text)',
+							},
+							{
+								name: '--osui-alert-icon-color',
+								default: 'currentColor',
+								kind: 'color',
+								chain: 'other',
+								hint: 'currentColor',
 							},
 							{
 								name: '--osui-alert-padding',
@@ -4301,18 +4308,18 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 								hint: 'var(--color-text)',
 							},
 							{
-								name: '--osui-sidebar-padding-x',
-								default: '#{$token-scale-600}',
-								kind: 'spacing',
-								chain: 'token',
-								hint: '#{$token-scale-600}',
-							},
-							{
-								name: '--osui-sidebar-padding-y',
+								name: '--osui-sidebar-padding-block',
 								default: '#{$token-scale-400}',
 								kind: 'spacing',
 								chain: 'token',
 								hint: '#{$token-scale-400}',
+							},
+							{
+								name: '--osui-sidebar-padding-inline',
+								default: '#{$token-scale-600}',
+								kind: 'spacing',
+								chain: 'token',
+								hint: '#{$token-scale-600}',
 							},
 							{
 								name: '--osui-sidebar-shadow',
