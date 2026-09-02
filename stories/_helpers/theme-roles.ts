@@ -96,6 +96,8 @@ export const THEME_ROLE_GROUPS: RoleGroup[] = [
 		['--color-text-subtlest', 'Subtlest'],
 		['--color-text-disabled', 'Disabled'],
 		['--color-text-inverse', 'Inverse (on bold bg)'],
+		['--color-text-light', 'Light (always white)'],
+		['--color-text-dark', 'Dark (always near-black)'],
 	]),
 	group({ id: 'border', title: 'Borders', type: 'color' }, [
 		['--color-border', 'Default'],
