@@ -23,6 +23,8 @@
 	--color-text-subtlest: #{variables.$token-text-subtlest};
 	--color-text-disabled: #{variables.$token-text-disabled};
 	--color-text-inverse: #{variables.$token-text-inverse};
+	--color-text-light: #{variables.$token-text-light};
+	--color-text-dark: #{variables.$token-text-dark};
 
 	// ─── Theme layer · borders ───────────────────────────────────────────
 	--color-border: #{variables.$token-border-default};

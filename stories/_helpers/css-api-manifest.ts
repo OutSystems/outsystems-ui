@@ -39,9 +39,9 @@ export type CssApiManifest = {
 };
 
 export const CSS_API_MANIFEST: CssApiManifest = {
-	generatedAt: '2026-08-31T07:39:37.679Z',
+	generatedAt: '2026-09-02T09:35:17.634Z',
 	totals: {
-		properties: 546,
+		properties: 543,
 		components: 63,
 		categories: 9,
 	},
@@ -699,10 +699,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-btn-error-color',
-								default: 'var(--color-text-inverse)',
+								default: 'var(--color-text-light)',
 								kind: 'color',
 								chain: 'theme-role',
-								hint: 'var(--color-text-inverse)',
+								hint: 'var(--color-text-light)',
 							},
 							{
 								name: '--osui-btn-focus-shadow-color',
@@ -755,10 +755,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-btn-primary-color',
-								default: 'var(--color-text-inverse)',
+								default: 'var(--color-text-light)',
 								kind: 'color',
 								chain: 'theme-role',
-								hint: 'var(--color-text-inverse)',
+								hint: 'var(--color-text-light)',
 							},
 							{
 								name: '--osui-btn-success-background',
@@ -776,10 +776,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-btn-success-color',
-								default: 'var(--color-text-inverse)',
+								default: 'var(--color-text-light)',
 								kind: 'color',
 								chain: 'theme-role',
-								hint: 'var(--color-text-inverse)',
+								hint: 'var(--color-text-light)',
 							},
 						],
 					},
@@ -2009,6 +2009,13 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 								hint: 'var(--color-text)',
 							},
 							{
+								name: '--osui-alert-icon-color',
+								default: 'currentColor',
+								kind: 'color',
+								chain: 'other',
+								hint: 'currentColor',
+							},
+							{
 								name: '--osui-alert-padding',
 								default: '#{$token-scale-300} #{$token-scale-400}',
 								kind: 'spacing',
@@ -2263,10 +2270,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-chat-message-sent-color',
-								default: 'var(--color-text-inverse)',
+								default: 'var(--color-text-light)',
 								kind: 'color',
 								chain: 'theme-role',
-								hint: 'var(--color-text-inverse)',
+								hint: 'var(--color-text-light)',
 							},
 							{
 								name: '--osui-chat-message-status-color',
@@ -2420,13 +2427,6 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 								hint: 'var(--color-text)',
 							},
 							{
-								name: '--osui-tag-primary-color',
-								default: 'var(--color-primary)',
-								kind: 'color',
-								chain: 'theme-role',
-								hint: 'var(--color-primary)',
-							},
-							{
 								name: '--osui-tag-soft-border-radius',
 								default: '#{$token-border-radius-100}',
 								kind: 'border',
@@ -2459,13 +2459,6 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 								kind: 'color',
 								chain: 'theme-role',
 								hint: 'var(--color-text)',
-							},
-							{
-								name: '--osui-avatar-primary-color',
-								default: 'var(--color-primary)',
-								kind: 'color',
-								chain: 'theme-role',
-								hint: 'var(--color-primary)',
 							},
 							{
 								name: '--osui-avatar-soft-border-radius',
@@ -3959,10 +3952,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-tooltip-color',
-								default: 'var(--color-text-inverse)',
+								default: 'var(--color-text)',
 								kind: 'color',
 								chain: 'theme-role',
-								hint: 'var(--color-text-inverse)',
+								hint: 'var(--color-text)',
 							},
 							{
 								name: '--osui-tooltip-font-size',
@@ -3987,10 +3980,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-tooltip-padding',
-								default: '#{$token-space-0} #{$token-space-100}',
+								default: '#{$token-space-200} #{$token-space-400}',
 								kind: 'spacing',
 								chain: 'token',
-								hint: '#{$token-space-0} #{$token-space-100}',
+								hint: '#{$token-space-200} #{$token-space-400}',
 							},
 							{
 								name: '--osui-tooltip-shadow',
@@ -4301,18 +4294,18 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 								hint: 'var(--color-text)',
 							},
 							{
-								name: '--osui-sidebar-padding-x',
-								default: '#{$token-scale-600}',
-								kind: 'spacing',
-								chain: 'token',
-								hint: '#{$token-scale-600}',
-							},
-							{
-								name: '--osui-sidebar-padding-y',
+								name: '--osui-sidebar-padding-block',
 								default: '#{$token-scale-400}',
 								kind: 'spacing',
 								chain: 'token',
 								hint: '#{$token-scale-400}',
+							},
+							{
+								name: '--osui-sidebar-padding-inline',
+								default: '#{$token-scale-600}',
+								kind: 'spacing',
+								chain: 'token',
+								hint: '#{$token-scale-600}',
 							},
 							{
 								name: '--osui-sidebar-shadow',
@@ -4671,13 +4664,6 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 								kind: 'color',
 								chain: 'theme-role',
 								hint: 'var(--color-text)',
-							},
-							{
-								name: '--osui-badge-primary-color',
-								default: '#{$token-text-primary}',
-								kind: 'color',
-								chain: 'token',
-								hint: '#{$token-text-primary}',
 							},
 						],
 					},

@@ -32,12 +32,6 @@ const meta: Meta<TooltipArgs> = {
 		startVisible: { control: 'boolean', name: 'StartVisible' },
 	},
 	args: { isHover: true, position: 'bottom', startVisible: false },
-};
-export default meta;
-
-type Story = StoryObj<TooltipArgs>;
-
-export const Default: Story = {
 	render: (args) => {
 		const id = uid('tooltip');
 		const id2 = uid('tooltip');
@@ -49,7 +43,7 @@ export const Default: Story = {
 							<i class="icon ph ph-question" style="font-size: 2em;"></i>
 						</div>
 						<div class="osui-tooltip__balloon-wrapper osui-balloon" role="tooltip">
-							<div class="osui-tooltip__balloon-wrapper__balloon" id="${id}-balloon" style="padding:8px 12px;">
+							<div class="osui-tooltip__balloon-wrapper__balloon" id="${id}-balloon">
 								Helpful hint text
 							</div>
 							<div class="osui-tooltip__balloon-arrow"></div>
@@ -60,7 +54,7 @@ export const Default: Story = {
 							<span class="btn">Hover me</span>
 						</div>
 						<div class="osui-tooltip__balloon-wrapper osui-balloon" role="tooltip">
-							<div class="osui-tooltip__balloon-wrapper__balloon" id="${id2}-balloon" style="padding:8px 12px;">
+							<div class="osui-tooltip__balloon-wrapper__balloon" id="${id2}-balloon">
 								This is a helpful but long tip that will explain to you a lot of interesting things in your application.
 							</div>
 							<div class="osui-tooltip__balloon-arrow"></div>
@@ -80,5 +74,19 @@ export const Default: Story = {
 				register(() => P.TooltipAPI.Dispose?.(tooltipId));
 			});
 		});
+	},
+};
+export default meta;
+
+type Story = StoryObj<TooltipArgs>;
+
+export const Default: Story = {};
+
+/** Pinned open so Chromatic photographs the balloon, not just the trigger. */
+export const Visible: Story = {
+	args: { startVisible: true },
+	parameters: {
+		// Entrance animation is 150ms; wait it out so the snapshot is not mid-fade.
+		chromatic: { delay: 300 },
 	},
 };

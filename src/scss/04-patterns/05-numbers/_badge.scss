@@ -30,7 +30,6 @@ $osui-badge-lightest-text-colors: (
 .badge {
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-badge-color: var(--color-text-inverse);
-	--osui-badge-primary-color: #{variables.$token-text-primary};
 	--osui-badge-on-light-color: var(--color-text);
 	// ───────────────────────────────────────────────────────────────────
 
@@ -89,11 +88,22 @@ $osui-badge-lightest-text-colors: (
 		// Warning backgrounds are light enough to need dark text (Figma).
 		&-warning,
 		&-yellow {
-			color: var(--osui-badge-on-light-color);
+			--osui-badge-color: var(--color-text-dark);
 		}
 
 		&-transparent {
-			color: var(--osui-badge-primary-color);
+			--osui-badge-color: var(--color-primary);
+		}
+
+		&-secondary {
+			--osui-badge-color: var(--color-primary);
+		}
+
+		&-primary,
+		&-blue,
+		&-green,
+		&-red {
+			--osui-badge-color: var(--color-text-light);
 		}
 	}
 
@@ -134,7 +144,7 @@ $osui-badge-lightest-text-colors: (
 	}
 
 	&.background-transparent-lightest {
-		color: variables.$token-text-inverse;
+		--osui-badge-color: var(--color-text-inverse);
 	}
 
 	// Extended palette colors (red, orange, yellow, etc.)

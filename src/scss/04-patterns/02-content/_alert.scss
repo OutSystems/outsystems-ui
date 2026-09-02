@@ -11,21 +11,24 @@
 	--osui-alert-background: transparent;
 	--osui-alert-color: var(--color-text);
 	--osui-alert-accent-color: var(--color-border);
+	--osui-alert-icon-color: currentColor;
 	--osui-alert-border-radius: #{variables.$token-border-radius-300};
 	--osui-alert-padding: #{variables.$token-scale-300} #{variables.$token-scale-400};
 	// ───────────────────────────────────────────────────────────────────
 
 	align-items: flex-start;
 	background-color: var(--osui-alert-background);
+	border: variables.$token-border-size-025 solid var(--osui-alert-accent-color);
 	border-radius: var(--osui-alert-border-radius);
 	color: var(--osui-alert-color);
 	display: flex;
-	gap: variables.$token-scale-200;
+	gap: variables.$token-space-300;
 	padding: var(--osui-alert-padding);
 	transition: background-color variables.$token-transition-time-100 variables.$token-transition-curve-expressive;
 
 	.alert-icon {
-		align-self: flex-start;
+		align-self: center;
+		color: var(--osui-alert-icon-color);
 		display: inline-flex;
 		flex-shrink: 0;
 		font-size: variables.$token-font-size-500;
@@ -46,33 +49,65 @@
 	.alert-message {
 		flex: 1;
 		font-size: variables.$token-font-size-350;
-		font-weight: variables.$token-font-weight-medium;
-		line-height: variables.$token-font-line-height-500;
+		font-weight: variables.$token-font-weight-regular;
+		line-height: variables.$token-font-line-height-600;
 	}
 
 	&-info {
-		--osui-alert-background: #{variables.$token-bg-info-base-default};
-		--osui-alert-color: #{variables.$token-text-inverse};
-		--osui-alert-accent-color: var(--color-info);
+		--osui-alert-background: #{variables.$token-bg-info-subtle-default};
+		--osui-alert-color: var(--color-text);
+		--osui-alert-accent-color: #{variables.$token-border-info};
+		--osui-alert-icon-color: #{variables.$token-icon-info};
+
+		&.vivid {
+			--osui-alert-background: #{variables.$token-bg-info-base-default};
+			--osui-alert-color: var(--color-text-light);
+			--osui-alert-accent-color: var(--osui-alert-background);
+			--osui-alert-icon-color: currentColor;
+		}
 	}
 
 	&-success {
-		--osui-alert-background: #{variables.$token-bg-success-base-default};
-		--osui-alert-color: #{variables.$token-text-inverse};
-		--osui-alert-accent-color: var(--color-success);
+		--osui-alert-background: #{variables.$token-bg-success-subtle-default};
+		--osui-alert-color: var(--color-text);
+		--osui-alert-accent-color: #{variables.$token-border-success};
+		--osui-alert-icon-color: #{variables.$token-icon-success};
+
+		&.vivid {
+			--osui-alert-background: #{variables.$token-bg-success-base-default};
+			--osui-alert-color: var(--color-text-light);
+			--osui-alert-accent-color: var(--osui-alert-background);
+			--osui-alert-icon-color: currentColor;
+		}
 	}
 
 	&-error {
-		--osui-alert-background: #{variables.$token-bg-danger-base-default};
-		--osui-alert-color: #{variables.$token-text-inverse};
-		--osui-alert-accent-color: var(--color-error);
+		--osui-alert-background: #{variables.$token-bg-danger-subtle-default};
+		--osui-alert-color: var(--color-text);
+		--osui-alert-accent-color: #{variables.$token-border-danger-default};
+		--osui-alert-icon-color: #{variables.$token-icon-danger};
+
+		&.vivid {
+			--osui-alert-background: #{variables.$token-bg-danger-base-default};
+			--osui-alert-color: var(--color-text-light);
+			--osui-alert-accent-color: var(--osui-alert-background);
+			--osui-alert-icon-color: currentColor;
+		}
 	}
 
 	&-warning {
-		--osui-alert-background: #{variables.$token-bg-warning-base-default};
-		// Warning's solid background is a light yellow — keep dark text for contrast,
-		// unlike the other three types which use light text on a darker solid background.
+		--osui-alert-background: #{variables.$token-bg-warning-subtle-default};
 		--osui-alert-color: var(--color-text);
-		--osui-alert-accent-color: var(--color-warning);
+		--osui-alert-accent-color: #{variables.$token-border-warning};
+		--osui-alert-icon-color: #{variables.$token-icon-warning};
+
+		&.vivid {
+			--osui-alert-background: #{variables.$token-bg-warning-base-default};
+			// Warning's solid background is a light yellow — keep dark text for contrast,
+			// unlike the other three types which use light text on a darker solid background.
+			--osui-alert-color: var(--color-text-dark);
+			--osui-alert-accent-color: var(--osui-alert-background);
+			--osui-alert-icon-color: currentColor;
+		}
 	}
 }

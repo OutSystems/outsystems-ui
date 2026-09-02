@@ -29,15 +29,15 @@
 	// Primary variant
 	--osui-btn-primary-background: var(--color-primary);
 	--osui-btn-primary-border-color: var(--color-primary);
-	--osui-btn-primary-color: var(--color-text-inverse);
+	--osui-btn-primary-color: var(--color-text-light);
 	// Success variant
 	--osui-btn-success-background: #{variables.$token-bg-success-base-default};
 	--osui-btn-success-border-color: #{variables.$token-bg-success-base-default};
-	--osui-btn-success-color: var(--color-text-inverse);
+	--osui-btn-success-color: var(--color-text-light);
 	// Error variant
 	--osui-btn-error-background: #{variables.$token-bg-danger-base-default};
 	--osui-btn-error-border-color: #{variables.$token-bg-danger-base-default};
-	--osui-btn-error-color: var(--color-text-inverse);
+	--osui-btn-error-color: var(--color-text-light);
 	// Focus state
 	--osui-btn-focus-shadow-width: #{variables.$token-border-size-050};
 	--osui-btn-focus-shadow-gap: #{variables.$token-scale-050};
