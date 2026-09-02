@@ -43,7 +43,7 @@ const meta: Meta<TooltipArgs> = {
 							<i class="icon ph ph-question" style="font-size: 2em;"></i>
 						</div>
 						<div class="osui-tooltip__balloon-wrapper osui-balloon" role="tooltip">
-							<div class="osui-tooltip__balloon-wrapper__balloon" id="${id}-balloon" style="padding:8px 12px;">
+							<div class="osui-tooltip__balloon-wrapper__balloon" id="${id}-balloon">
 								Helpful hint text
 							</div>
 							<div class="osui-tooltip__balloon-arrow"></div>
@@ -54,7 +54,7 @@ const meta: Meta<TooltipArgs> = {
 							<span class="btn">Hover me</span>
 						</div>
 						<div class="osui-tooltip__balloon-wrapper osui-balloon" role="tooltip">
-							<div class="osui-tooltip__balloon-wrapper__balloon" id="${id2}-balloon" style="padding:8px 12px;">
+							<div class="osui-tooltip__balloon-wrapper__balloon" id="${id2}-balloon">
 								This is a helpful but long tip that will explain to you a lot of interesting things in your application.
 							</div>
 							<div class="osui-tooltip__balloon-arrow"></div>

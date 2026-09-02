@@ -39,7 +39,7 @@ export type CssApiManifest = {
 };
 
 export const CSS_API_MANIFEST: CssApiManifest = {
-	generatedAt: '2026-08-31T07:39:37.679Z',
+	generatedAt: '2026-09-02T01:04:28.279Z',
 	totals: {
 		properties: 546,
 		components: 63,
@@ -3987,10 +3987,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-tooltip-padding',
-								default: '#{$token-space-0} #{$token-space-100}',
+								default: '#{$token-space-200} #{$token-space-400}',
 								kind: 'spacing',
 								chain: 'token',
-								hint: '#{$token-space-0} #{$token-space-100}',
+								hint: '#{$token-space-200} #{$token-space-400}',
 							},
 							{
 								name: '--osui-tooltip-shadow',
@@ -4301,18 +4301,18 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 								hint: 'var(--color-text)',
 							},
 							{
-								name: '--osui-sidebar-padding-x',
-								default: '#{$token-scale-600}',
-								kind: 'spacing',
-								chain: 'token',
-								hint: '#{$token-scale-600}',
-							},
-							{
-								name: '--osui-sidebar-padding-y',
+								name: '--osui-sidebar-padding-block',
 								default: '#{$token-scale-400}',
 								kind: 'spacing',
 								chain: 'token',
 								hint: '#{$token-scale-400}',
+							},
+							{
+								name: '--osui-sidebar-padding-inline',
+								default: '#{$token-scale-600}',
+								kind: 'spacing',
+								chain: 'token',
+								hint: '#{$token-scale-600}',
 							},
 							{
 								name: '--osui-sidebar-shadow',
