@@ -2009,6 +2009,13 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 								hint: 'var(--color-text)',
 							},
 							{
+								name: '--osui-alert-icon-color',
+								default: 'currentColor',
+								kind: 'color',
+								chain: 'other',
+								hint: 'currentColor',
+							},
+							{
 								name: '--osui-alert-padding',
 								default: '#{$token-scale-300} #{$token-scale-400}',
 								kind: 'spacing',
