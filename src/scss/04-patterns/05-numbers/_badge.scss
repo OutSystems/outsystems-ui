@@ -1,3 +1,4 @@
+@use 'sass:map';
 @use '../../00-abstract/index' as *;
 @use '../../tokens/variables';
 
@@ -157,7 +158,7 @@ $osui-badge-lightest-text-colors: (
 		@if ($lightest-value != null) {
 			&.background-#{$color}-lightest {
 				background-color: #{$lightest-value};
-				color: #{map-get($osui-badge-lightest-text-colors, $color)};
+				color: #{map.get($osui-badge-lightest-text-colors, $color)};
 			}
 		}
 	}

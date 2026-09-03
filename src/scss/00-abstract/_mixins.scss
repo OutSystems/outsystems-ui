@@ -95,7 +95,17 @@
 		}
 	}
 
-	$phone-parent: if($tablet == null, $desktop, $tablet);
+	// The phone block is only emitted when it differs from what it would inherit,
+	// which is the tablet role when there is one and the desktop role otherwise.
+	// Written as @if rather than the if() function: that function is deprecated
+	// (sass-lang.com/d/if-function) in favour of a newer if(sass(...)) syntax that
+	// this repo's declared Sass range (^1.77.4) does not guarantee. @if has never
+	// been deprecated and behaves identically here - assigning inside the block
+	// updates the local declared just above it rather than shadowing it.
+	$phone-parent: $desktop;
+	@if $tablet != null {
+		$phone-parent: $tablet;
+	}
 	@if $phone != null and $phone != $phone-parent {
 		.phone & {
 			@include apply-typography($phone);
