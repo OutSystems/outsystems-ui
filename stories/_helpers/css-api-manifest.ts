@@ -39,9 +39,9 @@ export type CssApiManifest = {
 };
 
 export const CSS_API_MANIFEST: CssApiManifest = {
-	generatedAt: '2026-09-02T09:35:17.634Z',
+	generatedAt: '2026-09-03T14:04:18.913Z',
 	totals: {
-		properties: 543,
+		properties: 544,
 		components: 63,
 		categories: 9,
 	},
@@ -1962,10 +1962,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-accordion-item-title-hover-border-color',
-								default: '#{$token-border-default}',
+								default: 'var(--osui-accordion-item-border-color)',
 								kind: 'color',
-								chain: 'token',
-								hint: '#{$token-border-default}',
+								chain: 'theme-role',
+								hint: 'var(--osui-accordion-item-border-color)',
 							},
 						],
 					},
