@@ -45,6 +45,7 @@
 	border: 1px solid #ddd;
 	cursor: pointer;
 	display: flex;
+	padding: 7px 30px 7px 10px;
 	position: relative;
 	width: 100%;
 }
@@ -432,7 +433,7 @@
 .vscomp-wrapper.has-clear-button.has-value .vscomp-clear-button {
 	display: flex;
 }
-.vscomp-wrapper.has-clear-button:not(.text-direction-rtl) .vscomp-toggle-button {
+.vscomp-wrapper.has-clear-button .vscomp-toggle-button {
 	padding-right: 54px;
 }
 .vscomp-wrapper.has-no-options .vscomp-options-container,
@@ -490,6 +491,9 @@
 .vscomp-wrapper.has-error ~ .vscomp-error-message {
 	display: flex;
 }
+.vscomp-wrapper.show-value-as-tags .vscomp-toggle-button {
+	padding: 4px 22px 0 10px;
+}
 .vscomp-wrapper.show-value-as-tags .vscomp-value {
 	display: flex;
 	flex-wrap: wrap;
@@ -545,8 +549,12 @@
 .vscomp-wrapper.show-value-as-tags.has-value .vscomp-clear-button {
 	right: 2px;
 }
+.vscomp-wrapper.show-value-as-tags:not(.has-value) .vscomp-toggle-button {
+	padding-bottom: 2px;
+}
 .vscomp-wrapper.show-value-as-tags:not(.has-value) .vscomp-value {
 	align-items: center;
+	padding-bottom: 3px;
 }
 @media (prefers-reduced-motion: reduce) {
 	.vscomp-dropbox-container,
@@ -558,6 +566,9 @@
 }
 .vscomp-wrapper.text-direction-rtl {
 	direction: rtl;
+}
+.vscomp-wrapper.text-direction-rtl .vscomp-toggle-button {
+	padding: 7px 10px 7px 30px;
 }
 .vscomp-wrapper.text-direction-rtl .vscomp-arrow {
 	left: 0;
@@ -609,6 +620,9 @@
 }
 .vscomp-wrapper.text-direction-rtl.keep-always-open .vscomp-clear-button {
 	left: 5px;
+}
+.vscomp-wrapper.text-direction-rtl.show-value-as-tags .vscomp-toggle-button {
+	padding: 4px 10px 0 22px;
 }
 .vscomp-wrapper.text-direction-rtl.show-value-as-tags .vscomp-value-tag {
 	margin: 0 0 4px 4px;
