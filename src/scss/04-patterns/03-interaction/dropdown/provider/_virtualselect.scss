@@ -38,6 +38,16 @@
 				}
 			}
 		}
+
+		.vscomp-wrapper.show-value-as-tags:not(.has-value) .vscomp-toggle-button {
+			padding-block: 0;
+			padding-inline-end: 54px;
+			padding-inline-start: variables.$token-scale-400;
+		}
+
+		.vscomp-wrapper.show-value-as-tags:not(.has-value) .vscomp-value {
+			padding-block-end: 0;
+		}
 	}
 
 	&-ele .vscomp-clear-icon:after,
@@ -95,6 +105,12 @@
 	}
 
 	&:not(.has-value) {
+		.vscomp-toggle-button {
+			padding-block: 0;
+			padding-inline-end: 54px;
+			padding-inline-start: variables.$token-scale-400;
+		}
+
 		.vscomp-value {
 			color: var(--color-text-subtlest);
 			opacity: 1;
@@ -340,7 +356,6 @@
 	height: var(--vscomp-toogle-btn-height);
 	line-height: var(--vscomp-toogle-btn-height);
 	min-width: 180px;
-	padding-block: variables.$token-scale-100;
 	padding-inline-end: variables.$token-scale-1000;
 	padding-inline-start: variables.$token-scale-400;
 	position: relative;
