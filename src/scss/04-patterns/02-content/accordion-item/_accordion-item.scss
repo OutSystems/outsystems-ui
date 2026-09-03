@@ -22,6 +22,9 @@
 	--osui-accordion-item-icon-color: #{variables.$token-icon-subtle};
 	--osui-accordion-item-title-hover-background: #{variables.$token-bg-neutral-subtlest-hover};
 	--osui-accordion-item-title-hover-border-color: var(--osui-accordion-item-border-color);
+	//Using tokens to set the height and width of the plus/minus icon doesn't make sense,
+	// since it would change the size of the icon if tokens values change.
+	--osui-accordion-item-plus-minus-size: 20px;
 	--accordion-active-border-size: #{variables.$token-border-size-050};
 	// ───────────────────────────────────────────────────────────────────
 
@@ -151,23 +154,20 @@
 		width: variables.$token-scale-500;
 
 		&--plus-minus {
-			//Using tokens to set the height and width of the plus/minus icon doesn't make sence,
-			// since it would change the size of the icon if tokens values change.
 			&:after {
 				background-color: var(--osui-accordion-item-icon-color);
 				content: ' ';
-				height: 20px;
+				height: var(--osui-accordion-item-plus-minus-size);
 				transition: transform variables.$token-transition-time-300 variables.$token-transition-curve-expressive;
 				width: variables.$token-border-size-050;
 			}
-			//Using tokens to set the height and width of the plus/minus icon doesn't make sense,
-			// since it would change the size of the icon if tokens values change.
+
 			&:before {
 				background-color: var(--osui-accordion-item-icon-color);
 				content: ' ';
 				height: variables.$token-border-size-050;
 				position: absolute;
-				width: variables.$token-scale-500;
+				width: var(--osui-accordion-item-plus-minus-size);
 			}
 
 			// Font Awesome bars are visually heavier — round the bar caps and scale the bars only
@@ -177,7 +177,7 @@
 			body.iconLibrary-phosphor & {
 				&:before,
 				&:after {
-					border-radius: 8px;
+					border-radius: variables.$token-border-radius-200;
 					transform: scale(0.75);
 				}
 			}

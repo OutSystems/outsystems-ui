@@ -39,9 +39,9 @@ export type CssApiManifest = {
 };
 
 export const CSS_API_MANIFEST: CssApiManifest = {
-	generatedAt: '2026-09-03T14:04:18.913Z',
+	generatedAt: '2026-09-03T15:34:10.011Z',
 	totals: {
-		properties: 544,
+		properties: 545,
 		components: 63,
 		categories: 9,
 	},
@@ -1952,6 +1952,13 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 								kind: 'color',
 								chain: 'token',
 								hint: '#{$token-icon-subtle}',
+							},
+							{
+								name: '--osui-accordion-item-plus-minus-size',
+								default: '20px',
+								kind: 'spacing',
+								chain: 'literal',
+								hint: '20px',
 							},
 							{
 								name: '--osui-accordion-item-title-hover-background',
