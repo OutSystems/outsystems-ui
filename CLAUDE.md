@@ -10,8 +10,6 @@ OutSystems UI is a UI component library providing TypeScript behaviors and CSS s
 
 - See [ARCHITECTURE.md](./ARCHITECTURE.md) for system design, architectural tenets (Provider Pattern Isolation, Two-Tier Namespace Separation, Pattern Registry, Platform-Specific Compilation Guards, Factory Pattern), and external integrations table
 - See [CONTRIBUTING.md](./CONTRIBUTING.md) for development setup, workflow, code standards, PR requirements, and testing procedures
-- See [specs/plan.md](./specs/plan.md) for the phased SCSS token-migration roadmap (Phases 0–11, current state, decisions table)
-- See [specs/implementation.md](./specs/implementation.md) for the per-phase contract (file-by-file change surface, acceptance criteria)
 - See [docs-internal/adr/](./docs-internal/adr/Readme.md) for Architecture Decision Records — cross-cutting decisions (public-repo readiness, Chromatic/visual testing, dev reconciliation policy, the O11 bundle + icon-library boundary, build hygiene) with their rejected alternatives
 
 ## Command Quick Reference
@@ -182,7 +180,7 @@ Use VS Code "Document This" extension (type `/**` above a function/class) for st
 
 ## Styling & Theming Architecture
 
-The SCSS layer is in the middle of a phased migration from hand-rolled OSUI tokens to the `outsystems-design-tokens` package. See `CSS-ARCHITECTURE.md` for the consolidated architecture summary (tokens → theme layer → component CSS API and the read chain), the Storybook "CSS API Reference" page (`stories/CssApiReference.mdx`, regenerated via `npm run docs:css-api`) for every `--osui-*` component property, and `specs/plan.md` / `specs/implementation.md` for the full migration roadmap.
+The SCSS layer is in the middle of a phased migration from hand-rolled OSUI tokens to the `outsystems-design-tokens` package. See `CSS-ARCHITECTURE.md` for the consolidated architecture summary (tokens → theme layer → component CSS API and the read chain), the Storybook "CSS API Reference" page (`stories/CssApiReference.mdx`, regenerated via `npm run docs:css-api`) for every `--osui-*` component property.
 
 ### Token system — two layers
 
@@ -231,7 +229,7 @@ The `path` is resolved relative to `src/scss/` and the `_` / `.scss` extension a
 >
 > The hand-written `src/scss/01-foundations/_theme-dark.scss` is **gone**, along with its `--color-*` role bridge and its "KNOWN CSS-API LEAKS" block. The bridge existed only to work around the class being on `<body>`; scoping to `<html>` replaces it structurally. What still will not follow the theme is the residual set of hardcoded literals at `:root` — 17 of the 21 `--osui-*` defaults there, each already marked `// future: --token-*`. The theme invariant below is now satisfied by construction: the theme is pure token overrides and touches no component rule.
 
-A theme re-skins the whole library as a single class scope (e.g. `<body class="theme-name">`) implemented **entirely** as CSS custom property overrides — overriding theme-layer role knobs (`--color-*`, `--border-radius-*`, …) and/or the underlying `--token-*`. No component rule, no `$token-*` value, and no pre-existing `--osui-*` default is touched. If a theme needs to touch a component rule, that indicates a leak in the CSS API that should be fixed in the component, not the theme. See `specs/plan-part-four.md`.
+A theme re-skins the whole library as a single class scope (e.g. `<body class="theme-name">`) implemented **entirely** as CSS custom property overrides — overriding theme-layer role knobs (`--color-*`, `--border-radius-*`, …) and/or the underlying `--token-*`. No component rule, no `$token-*` value, and no pre-existing `--osui-*` default is touched. If a theme needs to touch a component rule, that indicates a leak in the CSS API that should be fixed in the component, not the theme. See `CSS-ARCHITECTURE.md` §5.
 
 ## Common Scenarios
 

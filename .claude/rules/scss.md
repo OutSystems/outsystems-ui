@@ -159,7 +159,7 @@ Each role knob defaults **through** a `$token-*`, so overriding the token (e.g. 
 - **Radius** — one shape vocabulary `--border-radius-{none,soft,softer,rounded}` (8px=`soft` for controls + flat surfaces, 16px=`softer` for elevated surfaces, 999px=`rounded` for circular). Each resolves `var(--border-radius-default, <own-default>)`, so setting **`--border-radius-default`** at `:root` re-radiuses the whole framework with one override (undefined by default). `none`/`soft`/`rounded` are also read by TS `GetBorderRadiusValueFromShapeType`; `softer` is CSS-only.
 - **App-layout plumbing (NOT part of the theme contract)** — layout sizes `--size-*`, z-index `--layer-*`, and safe areas `--os-safe-area-*` (the **one** retained `--os-` prefix — see §12).
 
-These are intentionally not `--osui-*`: theme-layer roles are app-level knobs an end-user theme overrides once; `--osui-*` is per-component. See `specs/plan-part-four.md` for the full architecture.
+These are intentionally not `--osui-*`: theme-layer roles are app-level knobs an end-user theme overrides once; `--osui-*` is per-component. See `CSS-ARCHITECTURE.md` §3 for the full architecture.
 
 ## 14. Dead-code red flags
 
@@ -253,8 +253,6 @@ grep -rnE '^[[:space:]]*(padding|margin|border)-(left|right|top|bottom)|^[[:spac
 ```
 
 Everything it returns should either be converted or carry a comment saying why it is
-physical. The durable guard is the stylelint `property-disallowed-list` rule described in
-`specs/plan-part-five.md` §7 — not yet wired, because stylelint 14 here has no
-`customSyntax: postcss-scss` and cannot parse `//` comments.
-
-See `specs/plan-part-five.md` for the full rationale and the follow-ups.
+physical. The durable guard would be a stylelint `property-disallowed-list` rule — not yet wired,
+because stylelint 14 here has no `customSyntax: postcss-scss` and cannot parse `//`
+comments. Until it is, the grep above is the check.

@@ -16,7 +16,7 @@ until ADR-0009 declared it explicitly.
 
 ## Context
 
-`OutSystems/outsystems-ui` is a **public** GitHub repository. The Storybook harness built for the token migration (see `specs/plan-part-three.md`) introduced two dependencies on OutSystems-internal resources:
+`OutSystems/outsystems-ui` is a **public** GitHub repository. The Storybook harness built for the token migration introduced two dependencies on OutSystems-internal resources:
 
 1. **Private npm packages.** The `stories/widgets/` group mounts the platform's real React widgets from `@outsystems/runtime-core-js`, `runtime-view-js` and `runtime-widgets-js`, published only to the internal Azure Artifacts feed. They sat in `devDependencies`, so their `404` aborted `npm install` **entirely** for any external clone — breaking `npm run build` and all outside contribution, not merely the widget stories.
 
@@ -66,7 +66,6 @@ Negative consequences:
 
 ## Links
 
-- `specs/plan-part-three.md` — the Storybook harness this hardens
 - `.storybook/main.ts`, `stories/Introduction.mdx`, `CONTRIBUTING.md` (Storybook section)
 - ADR-0004 — the CI half of the same problem (fork PRs)
 

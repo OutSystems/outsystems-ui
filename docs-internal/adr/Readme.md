@@ -37,9 +37,10 @@ Each ADR should follow the template in `ADR-0000-Title-of-ADR.md`.
 | ADR-0008   | Chromatic baseline builds on `ROU-12714` and the widget-story dependency | Accepted (§C resolved by ADR-0009) | 2026-08-13 |
 | ADR-0009   | Static widget stories and zero private dependencies                    | Accepted | 2026-08-21 |
 
-> The **"Make Great UI"** initiative (epic ROU-12776) also has a phase-by-phase decision
-> history in `specs/plan.md` (D1–D28) and `specs/plan-part-four.md` (D28–D37, theme
-> layer). Those `D-n` numbers are per-document and independent of the `ADR-NNNN` series
-> here — note that both spec files happen to contain a **D28**, so always cite the source
-> document alongside the number. ADR-0003…0007 record the cross-cutting decisions from
-> that initiative which do not belong to a single migration phase.
+> The **"Make Great UI"** initiative (epic ROU-12776) also kept a phase-by-phase decision
+> history (`D-n` numbers) in its `specs/` working notes. That folder was removed once the
+> migration landed and survives only in git history, so a `D-n` citation in an older commit
+> or ADR refers there — those numbers were per-document and independent of the `ADR-NNNN`
+> series here. The durable outcome lives in `CSS-ARCHITECTURE.md` and `.claude/rules/scss.md`;
+> ADR-0003…0007 record the cross-cutting decisions from that initiative which do not belong
+> to a single migration phase.

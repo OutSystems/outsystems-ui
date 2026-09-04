@@ -21,7 +21,7 @@ Review the changes currently staged for commit (`git diff --cached`) against thi
      - `*.scss` → SCSS rules apply
      - Generated entry files (`O11.OutSystemsUI.scss`, `ODC.OutSystemsUI.scss`, `O11.OSUIFramework.ts`, `ODC.OSUIFramework.ts`) → flag as likely hand-edit, should be regenerated instead
      - `gulp/ProjectSpecs/**` → structural build changes, call out explicitly
-     - `specs/**`, `*.md` → documentation; sanity-check only
+     - `*.md` → documentation; sanity-check only
    - If a file type falls outside TypeScript / SCSS / docs, note it and keep going — don't block.
 
 2. **Read the actual diff**

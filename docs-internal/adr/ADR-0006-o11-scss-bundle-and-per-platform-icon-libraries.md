@@ -70,7 +70,7 @@ Negative consequences:
 
 - `gulp/ProjectSpecs/DefaultSpecs.js` (`platformTarget` / `scssPlatformTarget` / `excludeFromTsTranspile`)
 - `gulp/ProjectSpecs/ScssStructure/Root.js` — the platform-tagged icon-library assets
-- `specs/plan.md` Phase 15b — the original gate this reverses
+- The token-migration Phase 15b gate this reverses (recorded in the removed `specs/` notes; see git history)
 - ADR-0005 — the reconciliation that exposed the submenu regression
 
 ## Date

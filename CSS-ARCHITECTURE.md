@@ -6,9 +6,10 @@ It documents the three cooperating layers — **design tokens**, the **framework
 theme layer at `:root`**, and the per-component **CSS API** — and the single read
 chain that ties them together.
 
-It is a *summary*; the authoring rules live in [`.claude/rules/scss.md`](../.claude/rules/scss.md),
-the migration history in [`plan.md`](../specs/plan.md) / [`plan-part-two.md`](../specs/plan-part-two.md),
-and the theming rationale in [`plan-part-four.md`](../specs/plan-part-four.md).
+It is a *summary*; the authoring rules live in [`.claude/rules/scss.md`](./.claude/rules/scss.md)
+and the cross-cutting decisions in [`docs-internal/adr/`](./docs-internal/adr/Readme.md).
+The phase-by-phase migration working notes (`specs/`) were removed once the migration
+landed; they remain in git history.
 
 ---
 
@@ -325,8 +326,6 @@ It carried two things beyond the palette, and both went with it:
   `::placeholder`, validation text) — raw component rules for components with no
   `--osui-*` knob. Their removal makes the theme invariant above structurally
   true: the shipped theme is nothing but variable overrides.
-
-See [`plan-part-four.md`](../specs/plan-part-four.md).
 
 ---
 
