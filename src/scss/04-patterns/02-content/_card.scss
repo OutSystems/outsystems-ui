@@ -13,12 +13,13 @@
 	--osui-card-border-width: #{variables.$token-border-size-025};
 	--osui-card-border-radius: var(--border-radius-softer);
 	--osui-card-padding: #{variables.$token-scale-600};
-	--osui-card-shadow: #{variables.$token-elevation-1};
+	--osui-card-shadow: none;
 	// ───────────────────────────────────────────────────────────────────
 
 	background-color: var(--osui-card-background);
 	border: var(--osui-card-border-width) solid var(--osui-card-border-color);
 	border-radius: var(--osui-card-border-radius);
+	box-shadow: var(--osui-card-shadow);
 	overflow: hidden;
 	padding: var(--osui-card-padding);
 }

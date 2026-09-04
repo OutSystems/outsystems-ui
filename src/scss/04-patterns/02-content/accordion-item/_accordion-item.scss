@@ -21,7 +21,10 @@
 	--osui-accordion-item-active-indicator-color: var(--color-primary);
 	--osui-accordion-item-icon-color: #{variables.$token-icon-subtle};
 	--osui-accordion-item-title-hover-background: #{variables.$token-bg-neutral-subtlest-hover};
-	--osui-accordion-item-title-hover-border-color: #{variables.$token-border-default};
+	--osui-accordion-item-title-hover-border-color: var(--osui-accordion-item-border-color);
+	//Using tokens to set the height and width of the plus/minus icon doesn't make sense,
+	// since it would change the size of the icon if tokens values change.
+	--osui-accordion-item-plus-minus-size: 20px;
 	--accordion-active-border-size: #{variables.$token-border-size-050};
 	// ───────────────────────────────────────────────────────────────────
 
@@ -48,13 +51,6 @@
 	&--is {
 		&-open {
 			> .osui-accordion-item__title {
-				font-weight: variables.$token-font-weight-semi-bold;
-
-				&:hover {
-					box-shadow: inset 0 calc(-1 * var(--osui-accordion-item-border-width)) 0 0
-						var(--osui-accordion-item-title-hover-border-color);
-				}
-
 				> .osui-accordion-item__icon {
 					&--caret {
 						transform: rotate(180deg);
@@ -161,7 +157,7 @@
 			&:after {
 				background-color: var(--osui-accordion-item-icon-color);
 				content: ' ';
-				height: 100%;
+				height: var(--osui-accordion-item-plus-minus-size);
 				transition: transform variables.$token-transition-time-300 variables.$token-transition-curve-expressive;
 				width: variables.$token-border-size-050;
 			}
@@ -171,7 +167,27 @@
 				content: ' ';
 				height: variables.$token-border-size-050;
 				position: absolute;
-				width: variables.$token-scale-500;
+				width: var(--osui-accordion-item-plus-minus-size);
+			}
+
+			// Font Awesome bars are visually heavier — round the bar caps and scale the bars only
+			// (not the icon box) so layout size stays on $token-scale-500.
+			// Gated by the ODC icon-library root class (see _icon-library-odc.scss); inert on O11.
+			:root.iconLibrary-phosphor &,
+			body.iconLibrary-phosphor & {
+				&:before,
+				&:after {
+					border-radius: variables.$token-border-radius-200;
+					transform: scale(0.75);
+				}
+			}
+
+			// Open :after needs both transforms — a later rotate-only rule would drop scale(0.75).
+			:root.iconLibrary-phosphor .osui-accordion-item--is-open > .osui-accordion-item__title > &,
+			body.iconLibrary-phosphor .osui-accordion-item--is-open > .osui-accordion-item__title > & {
+				&:after {
+					transform: scale(0.75) rotate(90deg);
+				}
 			}
 		}
 
@@ -221,7 +237,7 @@
 		}
 
 		& > div {
-			padding-block-start: variables.$token-scale-300;
+			padding-block-start: variables.$token-scale-200;
 		}
 
 		/* Add a margin-top when animated label is the first child */
@@ -297,4 +313,3 @@
 		}
 	}
 }
-
