@@ -87,7 +87,14 @@ jobs:
               # Every dependency is public. There is no internal feed, no auth step, and
               # therefore no way for a silent auth failure to publish a reduced story set
               # and auto-accept it as the new baseline.
-              run: npm i
+              #
+              # --ignore-scripts because this workflow is `pull_request`-triggered and so
+              # installs the dependency manifest of the PR under review. No install script
+              # is needed to build: `npm i --ignore-scripts && npm run build &&
+              # npm run build-storybook` was verified to emit byte-identical dist/ output.
+              # (npm 11 already withholds unapproved install scripts, so this only makes
+              # the guarantee explicit and version-independent.)
+              run: npm i --ignore-scripts
 
             - name: 🏗️ Run build
               # Produces dist/ODC.OutSystemsUI.{js,css}, served by Storybook via staticDirs.
