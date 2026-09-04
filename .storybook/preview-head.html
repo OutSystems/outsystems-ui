@@ -1,0 +1,104 @@
+<!--
+  Loaded into the Storybook PREVIEW iframe <head>.
+
+  The OUI bundle and the provider vendor libs are loaded as *classic* <script>
+  tags (not ES imports) on purpose: the compiled bundle is an IIFE that publishes
+  `OutSystems.OSUI.*` / `OSFramework.OSUI.*` via top-level `var`, which only
+  becomes a window global in classic-script scope. The vendor libs likewise
+  publish `window.flatpickr`, `window.Splide`, `window.noUiSlider`,
+  `window.VirtualSelect`. Order: vendors first, OUI bundle last.
+
+  Served via `staticDirs` in main.ts (/osui → dist, /vendor/* → node_modules).
+  Requires a prior build: `npm run build:osui`.
+-->
+
+<!-- Inter — the docs-page font (used by docs.scss, scoped to .sbdocs-wrapper).
+     Loaded here so the docs iframe can render Inter; intentionally NOT applied to
+     the story canvas body, so patterns keep their authentic OUI theme typography. -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+	href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:wght@400;500&display=swap"
+	rel="stylesheet"
+/>
+
+<!-- Docs pages (MDX like Introduction) must scroll when content overflows.
+     Scoped via :has(.sbdocs-wrapper) to the docs iframe only, so the story
+     canvas body keeps its default overflow (patterns such as Sidebar /
+     BottomSheet can rely on it). -->
+<style>
+	body:has(.sbdocs-wrapper) {
+		overflow: auto !important;
+	}
+</style>
+
+<!-- Icon fonts — both @font-face families ('FontAwesome', 'Phosphor') are loaded;
+     the active set is chosen at runtime via the "Icons" toolbar toggle, which adds
+     the matching root class (.icon-library-FontAwesome / .iconLibrary-phosphor). -->
+<link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css" />
+<link rel="stylesheet" href="/vendor/phosphor/style.css" />
+<!-- Phosphor fill weight (.ph-fill) — for solid glyphs such as the Rating filled star. -->
+<link rel="stylesheet" href="/vendor/phosphor-fill/style.css" />
+
+<!-- Provider vendor CSS -->
+<link rel="stylesheet" href="/vendor/flatpickr/flatpickr.css" />
+<link rel="stylesheet" href="/vendor/splide/css/splide.min.css" />
+<link rel="stylesheet" href="/vendor/nouislider/nouislider.min.css" />
+<link rel="stylesheet" href="/vendor/virtual-select/virtual-select.min.css" />
+<!--
+  PhotoSwipe 4.1.0 (Lightbox Image). The vendor skin loads BEFORE the OUI theme on
+  purpose — that is the real platform order, and it is what lets OUI strip the
+  sprite backgrounds and repaint the overlay chrome with icon-font glyphs
+  (src/scss/01-foundations/_icon-library-odc.scss). Load it after the OUI theme and
+  the sprite would win, hiding the very layer the Lightbox stories exercise.
+-->
+<link rel="stylesheet" href="/vendor/photoswipe/photoswipe.css" />
+<link rel="stylesheet" href="/vendor/photoswipe/default-skin/default-skin.css" />
+
+<!--
+  Core platform base CSS — MUST load before the OUI theme. It establishes the
+  structural form of the data-attribute widgets (the pseudo-element `content`
+  that generates the checkbox box, switch track/thumb, etc.). The OUI bundle
+  below then overrides colours/sizes (so e.g. the switch is OUI blue, not the
+  base layer's legacy green). This mirrors the real platform's load order.
+
+  The file is a tracked, Storybook-only copy of the platform base layer
+  (.storybook/platform/platform-core.css) — its header records the source package
+  version and the refresh trigger. It used to be generated at startup from the
+  internal @outsystems/runtime-widgets-js package; vendoring it is what lets this
+  public repo render the Widgets stories with no internal feed access at all.
+  See docs-internal/adr/ADR-0009.
+-->
+<link rel="stylesheet" href="/platform/platform-core.css" />
+
+<!--
+  OutSystems UI compiled stylesheet (ODC platform) — overrides the base layer.
+  The `id` lets the "Theme" toolbar toggle (see preview.ts) swap this `href`
+  between the new token theme (/osui) and the pre-migration snapshot (/legacy).
+-->
+<link rel="stylesheet" id="osui-theme" href="/osui/ODC.OutSystemsUI.css" />
+
+<!--
+  `defer` is required: these run from <head>, but the OUI bundle attaches a
+  global click listener to `document.body` at load (Event/.../BodyOnClick.ts).
+  Without defer, `document.body` is still null in <head> and the bundle throws.
+  defer also preserves execution order, so vendors initialise before the bundle.
+-->
+
+<!-- Provider vendor JS (window globals) -->
+<script defer src="/vendor/flatpickr/flatpickr.js"></script>
+<!-- flatpickr monthSelect plugin → global `monthSelectPlugin`, used by MonthPicker -->
+<script defer src="/vendor/flatpickr/plugins/monthSelect/index.js"></script>
+<script defer src="/vendor/splide/js/splide.min.js"></script>
+<script defer src="/vendor/wnumb/wNumb.js"></script>
+<script defer src="/vendor/nouislider/nouislider.min.js"></script>
+<!-- FloatingUI (core before dom) → window.FloatingUICore / window.FloatingUIDOM, used for tooltip/balloon positioning -->
+<script defer src="/vendor/floating-ui-core/floating-ui.core.umd.js"></script>
+<script defer src="/vendor/floating-ui-dom/floating-ui.dom.umd.js"></script>
+<script defer src="/vendor/virtual-select/virtual-select.min.js"></script>
+<!-- PhotoSwipe → window.PhotoSwipe + window.PhotoSwipeUI_Default (core before UI), used by Lightbox Image -->
+<script defer src="/vendor/photoswipe/photoswipe.min.js"></script>
+<script defer src="/vendor/photoswipe/photoswipe-ui-default.min.js"></script>
+
+<!-- OutSystems UI compiled bundle (exposes OutSystems.OSUI.* / OSFramework.OSUI.*) -->
+<script defer src="/osui/ODC.OutSystemsUI.js"></script>

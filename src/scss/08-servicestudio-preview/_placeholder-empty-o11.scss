@@ -1,3 +1,5 @@
+@use '../tokens/variables';
+
 .ph:empty,
 .placeholder-empty:empty {
 	display: none;
@@ -16,7 +18,7 @@
 	&__content-item {
 		.ph:empty,
 		.placeholder-empty:empty {
-			-servicestudio-padding: var(--space-m);
+			-servicestudio-padding: variables.$token-scale-600;
 		}
 	}
 }

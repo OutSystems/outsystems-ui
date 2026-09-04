@@ -5,7 +5,7 @@ const patternInfo = {
     "codeName": "Search",
     "inDevelopment": false,
     "name": "Search",
-    "scss": "../scripts/OSFramework/OSUI/Pattern/Search/scss/search",
+    "scss": "../scss/04-patterns/03-interaction/search/search",
     "section": "Interaction"
 };
 

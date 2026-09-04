@@ -1,3 +1,6 @@
+@use '../00-abstract/index' as *;
+@use "../tokens/variables";
+
 /* Widgets - Feedback Message */
 ////
 /// @group Widgets-Feedback_Message
@@ -5,52 +8,71 @@
 
 ///
 .feedback-message {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-feedback-message-background: var(--color-background-surface);
+	--osui-feedback-message-color: var(--color-text);
+	--osui-feedback-message-icon-color: var(--color-text);
+	--osui-feedback-message-border-radius: var(--border-radius-soft);
+	--osui-feedback-message-box-shadow: #{variables.$token-elevation-3};
+	--osui-feedback-message-max-width: 600px;
+	--osui-feedback-message-min-width: 400px;
+	// ───────────────────────────────────────────────────────────────────
+
 	align-items: center;
-	border-radius: var(--border-radius-soft);
+	background-color: var(--osui-feedback-message-background);
+	border-radius: var(--osui-feedback-message-border-radius);
+	box-shadow: var(--osui-feedback-message-box-shadow);
+	color: var(--osui-feedback-message-color);
 	display: flex;
-	font-size: var(--font-size-h6);
-	font-weight: var(--font-regular);
-	left: 50%;
-	max-width: 600px;
-	min-width: 400px;
-	padding: var(--space-base);
+	font-size: variables.$token-font-size-350;
+	font-weight: variables.$token-font-weight-medium;
+	gap: variables.$token-scale-200;
+	left: 50%; // physical: centring pair with the keyframes' translateX(-50%), which never mirrors
+	max-width: var(--osui-feedback-message-max-width);
+	min-width: var(--osui-feedback-message-min-width);
+	padding-block: variables.$token-scale-300;
+	padding-inline: variables.$token-scale-400;
 
 	i {
 		align-self: flex-start;
-		font-size: var(--font-size-h5);
-		margin-top: 2px;
+		color: var(--osui-feedback-message-icon-color);
+		font-size: variables.$token-font-size-500;
+		margin-block-start: #{variables.$token-scale-050}; // 2px icon vertical offset
 		position: relative;
 	}
 }
 
 ///
 .feedback-message-text {
-	padding-left: var(--space-base);
+	padding-inline-start: 0;
 }
 
 // Mantain due to Retro Compatibility
 ///
 div.feedback-message-error {
-	background-color: get-background-color('error');
+	--osui-feedback-message-background: #{variables.$token-bg-danger-subtle-default};
+	--osui-feedback-message-icon-color: #{variables.$token-icon-danger};
 }
 
 // Mantain due to Retro Compatibility
 ///
 div.feedback-message-info {
-	background-color: get-background-color('info');
+	--osui-feedback-message-background: #{variables.$token-bg-info-subtle-default};
+	--osui-feedback-message-icon-color: #{variables.$token-icon-info};
 }
 
 // Mantain due to Retro Compatibility
 ///
 div.feedback-message-success {
-	background-color: get-background-color('success');
+	--osui-feedback-message-background: #{variables.$token-bg-success-subtle-default};
+	--osui-feedback-message-icon-color: #{variables.$token-icon-success};
 }
 
 // Mantain due to Retro Compatibility
 ///
 div.feedback-message-warning {
-	background-color: get-background-color('warning');
-	color: get-text-color('neutral-10');
+	--osui-feedback-message-background: #{variables.$token-bg-warning-subtle-default};
+	--osui-feedback-message-icon-color: #{variables.$token-icon-warning};
 }
 
 // Responsive --------------------------------------------------------------------
@@ -68,13 +90,13 @@ div.feedback-message-warning {
 
 	&.ios {
 		.feedback-message {
-			padding-top: calc(var(--os-safe-area-top) + var(--space-base));
+			padding-top: calc(var(--os-safe-area-top) + variables.$token-scale-400);
 		}
 	}
 }
 
 .android .feedback-message {
-  padding-top: calc(#{android-safe-area-top()} + var(--space-base));
+	padding-block-start: calc(#{android-safe-area-top()} + variables.$token-scale-400);
 }
 
 // IsRTL -------------------------------------------------------------------------
@@ -83,7 +105,7 @@ div.feedback-message-warning {
 		.feedback-message {
 			animation-name: feedbackMessageSlideDownPhoneRTL;
 			border-radius: 0;
-			left: 0;
+			left: 0; // physical: the RTL phone keyframes use translateX(0), so the base left: 50% must be re-anchored
 			max-width: 100%;
 			min-width: 100%;
 
@@ -98,20 +120,20 @@ div.feedback-message-warning {
 ///
 .os-high-contrast {
 	.feedback-message {
-		border-width: var(--border-size-l);
+		border-width: variables.$token-border-size-075;
 		border-style: solid;
 
 		&.feedback-message-error {
-			border-color: get-border-color('error');
+			border-color: variables.$token-semantics-danger-base;
 		}
 		&.feedback-message-info {
-			border-color: get-border-color('info');
+			border-color: variables.$token-semantics-info-base;
 		}
 		&.feedback-message-success {
-			border-color: get-border-color('success');
+			border-color: variables.$token-semantics-success-base;
 		}
 		&.feedback-message-warning {
-			border-color: get-border-color('warning');
+			border-color: variables.$token-semantics-warning-base;
 		}
 	}
 }

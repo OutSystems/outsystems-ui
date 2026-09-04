@@ -1,0 +1,197 @@
+name: 'Storybook'
+
+# Publishes the Storybook to Chromatic for visual review and UI tests.
+#
+# Runs on every PR into (and every merge to) the long-living branches, so each PR
+# gets a visual diff against the base-branch baseline, and each merge advances that
+# baseline (auto-accepted below).
+#
+# This job needs NO internal infrastructure: every dependency resolves from the
+# public npm registry, and the Widgets stories are static transcriptions of the
+# platform widgets' DOM rather than live mounts of internal packages (ADR-0009).
+# The only secret involved is the Chromatic token, and the Chromatic step is
+# skipped — not failed — when it is absent, so fork PRs stay neutral while still
+# proving the public build works.
+#
+# Do not reintroduce an Azure login here. It existed solely to reach the internal
+# Azure Artifacts feed for @outsystems/runtime-*-js, and it is why every `push`
+# build on this branch failed for months (no federated-identity credential exists
+# for a `ref:refs/heads/*` subject), which left the branch with no Chromatic
+# baseline at all. See ADR-0008 and ADR-0009.
+on:
+    pull_request:
+        # ROU-12714 is the "Make Great UI" long-living integration branch; drop it
+        # from these lists once it merges into dev (ROU-12955).
+        branches: ['dev', 'ROU-12714']
+        types: [opened, reopened, synchronize]
+    push:
+        branches: ['dev', 'ROU-12714']
+    workflow_dispatch: {}
+
+concurrency:
+    group: chromatic-${{ github.ref }}
+    cancel-in-progress: true
+
+permissions:
+    contents: write
+    pull-requests: write
+
+jobs:
+    chromatic:
+        name: build chromatic
+        runs-on: ubuntu-latest
+        env:
+            # The `secrets` context is NOT available in a step-level `if` (only in job-level
+            # `env`), and referencing it there invalidates the whole workflow file. So the
+            # token check is evaluated once here and tested as a plain env flag below.
+            HAS_CHROMATIC_TOKEN: ${{ secrets.OSUI_CHROMATIC_TOKEN != '' }}
+        steps:
+            ### Checkout and prepare code ###
+            - name: 📥 Checkout code
+              uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+              with:
+                  # Chromatic needs full git history for baselines / TurboSnap.
+                  fetch-depth: 0
+
+            - name: 🔍 Detect changes to the visual surface
+              # Feeds the capture guard at the end of the job. Anything under src/ (the
+              # compiled library), stories/ or .storybook/ can move a snapshot, so if any
+              # of them changed, Chromatic must actually photograph something.
+              #
+              # Covers pushes as well as PRs — the base commit differs by event. Now that
+              # push builds actually run (no Azure login to fail on, ADR-0009), the
+              # baseline-advancing build is guarded too; ADR-0008 flagged that gap.
+              id: visual_surface
+              shell: bash
+              env:
+                  BASE: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || github.event.before }}
+              run: |
+                  # No usable base (branch creation pushes all-zeros, workflow_dispatch has
+                  # none, force-pushes can leave it unreachable) → assume the surface moved,
+                  # so the guard stays armed rather than silently disarming itself.
+                  if [ -z "$BASE" ] || [ "$BASE" = "0000000000000000000000000000000000000000" ] \
+                     || ! git cat-file -e "$BASE^{commit}" 2>/dev/null; then
+                    echo "changed=1" >> "$GITHUB_OUTPUT"
+                    echo "No usable base commit for this event — assuming the visual surface changed."
+                    exit 0
+                  fi
+                  changed=$(git diff --name-only "$BASE...HEAD" -- src stories .storybook | wc -l | tr -d ' ')
+                  echo "changed=$changed" >> "$GITHUB_OUTPUT"
+                  echo "Visual-surface files changed: $changed"
+
+            - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+              with:
+                  node-version: 24.13.1
+
+            - name: 🕸️ Install dependencies
+              # Every dependency is public. There is no internal feed, no auth step, and
+              # therefore no way for a silent auth failure to publish a reduced story set
+              # and auto-accept it as the new baseline.
+              #
+              # --ignore-scripts because this workflow is `pull_request`-triggered and so
+              # installs the dependency manifest of the PR under review. No install script
+              # is needed to build: `npm i --ignore-scripts && npm run build &&
+              # npm run build-storybook` was verified to emit byte-identical dist/ output.
+              # (npm 11 already withholds unapproved install scripts, so this only makes
+              # the guarantee explicit and version-independent.)
+              run: npm i --ignore-scripts
+
+            - name: 🏗️ Run build
+              # Produces dist/ODC.OutSystemsUI.{js,css}, served by Storybook via staticDirs.
+              run: npm run build
+
+            ### Run Chromatic ###
+            - name: 🎨 Run Chromatic
+              # Skipped (not failed) when the Chromatic token is unavailable — i.e. fork PRs.
+              if: env.HAS_CHROMATIC_TOKEN == 'true'
+              id: chromatic
+              uses: chromaui/action@e8cc4c31775280b175a3c440076c00d19a9014d7 # v11.28.2
+              with:
+                  projectToken: ${{ secrets.OSUI_CHROMATIC_TOKEN }}
+                  # TurboSnap (`onlyChanged`) is deliberately OFF, so every build snapshots
+                  # every story. Do not re-enable it without reading ADR-0008.
+                  #
+                  # It cannot be made trustworthy here. Stories load the compiled bundle from
+                  # dist/ via <script>/<link> tags in preview-head.html, so nothing under src/
+                  # is in Storybook's module graph and a SCSS-only PR — i.e. nearly every PR
+                  # in this initiative — traces to no story at all. ADR-0004 mitigated that
+                  # with an `externals` list (src/**, gulp/**, legacy/**), but that only
+                  # classifies entries already in the changed-file list: on build #31 the list
+                  # itself came back empty ("Found 0 changed files", against a squash-merged
+                  # history TurboSnap could not resolve a parent build for), so it captured 0
+                  # of 103 snapshots and still reported green. A full build is ~100 snapshots;
+                  # correctness beats that saving.
+                  #
+                  # NOTE: `externals` is only accepted alongside `onlyChanged: true` — the CLI
+                  # errors with "Invalid --externals" otherwise. The two must be added or
+                  # removed together.
+                  exitZeroOnChanges: true
+                  skip: 'dependabot/**'
+                  buildScriptName: build-storybook
+                  # Merges to a long-living branch auto-accept the build as the new
+                  # baseline; PRs still require review in Chromatic.
+                  autoAcceptChanges: '{dev,ROU-12714}'
+
+            - name: 🔎 Find Chromatic comment
+              if: github.event_name == 'pull_request' && steps.chromatic.outcome == 'success'
+              uses: peter-evans/find-comment@3eae4d37986fb5a8592848f6a574fdf654e61f9e # v3.1.0
+              id: find_chromatic_comment
+              with:
+                  issue-number: ${{ github.event.pull_request.number }}
+                  comment-author: 'github-actions[bot]'
+                  body-includes: <!-- chromatic-ui-test-comment -->
+
+            - name: 🧹 Delete previous Chromatic comment
+              if: github.event_name == 'pull_request' && steps.chromatic.outcome == 'success' && steps.find_chromatic_comment.outputs.comment-id != ''
+              uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+              with:
+                  script: |
+                      github.rest.issues.deleteComment({
+                        owner: context.repo.owner,
+                        repo: context.repo.repo,
+                        comment_id: ${{ steps.find_chromatic_comment.outputs.comment-id }}
+                      })
+
+            - name: 💬 Comment Chromatic build URL on PR
+              if: github.event_name == 'pull_request' && steps.chromatic.outcome == 'success'
+              uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+              with:
+                  script: |
+                      const buildUrl = '${{ steps.chromatic.outputs.buildUrl }}';
+                      const storybookUrl = '${{ steps.chromatic.outputs.storybookUrl }}';
+                      const changeCount = '${{ steps.chromatic.outputs.changeCount }}';
+                      const errorCount = '${{ steps.chromatic.outputs.errorCount }}';
+                      const status = errorCount === '0' ? '✅ **Passed**' : '❌ **Failed**';
+                      let body = `<!-- chromatic-ui-test-comment -->\n`;
+                      body += `### 🖼️ Storybook: Chromatic UI tests result: ${status}\n\n`;
+                      body += `| Metric           | Value |\n`;
+                      body += `|------------------|-------|\n`;
+                      body += `| Visual changes   | ${changeCount} |\n`;
+                      body += `| Errors           | ${errorCount} |\n`;
+                      if (storybookUrl) {
+                        body += `| Storybook        | [Preview](${storybookUrl}) |\n`;
+                      }
+                      body += `| Chromatic Build  | [View Results](${buildUrl}) |\n`;
+                      github.rest.issues.createComment({
+                        issue_number: context.issue.number,
+                        owner: context.repo.owner,
+                        repo: context.repo.repo,
+                        body
+                      });
+
+            - name: 🛡️ Verify Chromatic actually captured snapshots
+              # Fail closed. A build that captures nothing reports "N tests unchanged" and
+              # goes green, which is indistinguishable from "nothing regressed" — that is
+              # how a separator changing from primary to grey shipped unflagged. If the PR
+              # touched the visual surface, at least one snapshot must have been taken.
+              # Runs last so the comment above still gives reviewers the build link.
+              if: steps.chromatic.outcome == 'success' && steps.visual_surface.outputs.changed != '0'
+              shell: bash
+              env:
+                  CAPTURED: ${{ steps.chromatic.outputs.actualCaptureCount }}
+              run: |
+                  if [ "${CAPTURED:-0}" -eq 0 ]; then
+                    echo "::error::This build changed ${{ steps.visual_surface.outputs.changed }} file(s) under src/, stories/ or .storybook/, but Chromatic captured 0 snapshots — every test was inherited, so nothing was actually compared. Re-run with TurboSnap disabled before trusting this result."
+                    exit 1
+                  fi
+                  echo "Chromatic captured $CAPTURED snapshot(s)."

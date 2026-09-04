@@ -1,0 +1,745 @@
+@use '../../../../tokens/variables';
+
+// Set the transform values to checkBox Checked Icon
+@mixin CheckBoxCheckIconTransform {
+	transform: rotate(45deg) translate(3px, -3px);
+}
+@mixin IsRTL_CheckBoxCheckIconTransform {
+	transform: rotate(45deg) translate(-2px, 3px);
+}
+
+// VirtualSelect overriding styles
+// Parent wrapper container
+.vscomp {
+	&-ele {
+		display: block;
+		max-width: initial;
+
+		&.pop-comp-active {
+			// The extra `.vscomp-wrapper` is required to outrank the focus elevation reset below
+			.vscomp-wrapper .vscomp-toggle-button {
+				border-color: var(--osui-dropdown-focus-border-color, #{variables.$token-semantics-primary-base});
+				box-shadow: 0 0 0 variables.$token-border-size-050
+					var(--osui-dropdown-focus-ring-color, #{variables.$token-border-focus-default});
+
+				// Arrow keeps its resting colour while open — only the rotation changes
+				&:after {
+					transform: translateY(-50%) rotate(180deg);
+				}
+			}
+		}
+		.vscomp {
+			&-clear-icon {
+				&::after,
+				&::before {
+					background-color: inherit;
+					left: 50%;
+					transform: translateX(-50%);
+				}
+			}
+		}
+
+		.vscomp-wrapper.show-value-as-tags:not(.has-value) .vscomp-toggle-button {
+			padding-block: 0;
+			padding-inline-end: 54px;
+			padding-inline-start: variables.$token-scale-400;
+		}
+
+		.vscomp-wrapper.show-value-as-tags:not(.has-value) .vscomp-value {
+			padding-block-end: 0;
+		}
+	}
+
+	&-ele .vscomp-clear-icon:after,
+	&-search-clear:after {
+		align-items: center;
+		color: variables.$token-icon-subtlest;
+		display: flex;
+		height: 100%;
+		justify-content: center;
+		position: absolute;
+		text-indent: 0;
+		top: 0;
+		width: variables.$token-scale-600;
+	}
+
+	&-clear-button:hover {
+		background-color: var(--color-border);
+
+		.vscomp-clear-icon {
+			&::after,
+			&::before {
+				background-color: transparent;
+				color: variables.$token-primitives-neutral-700;
+			}
+		}
+	}
+
+	&-search-clear:hover:after {
+		background-color: transparent;
+		color: variables.$token-primitives-neutral-700;
+	}
+}
+
+// Wrapper container
+.vscomp-wrapper {
+	&:focus-visible {
+		outline: none;
+	}
+
+	&.focused,
+	&:focus {
+		.vscomp-toggle-button {
+			box-shadow: none;
+		}
+
+		.checkbox-icon {
+			border-color: var(--color-border-input);
+		}
+	}
+
+	&.has-value {
+		.vscomp-value {
+			color: var(--color-text);
+		}
+	}
+
+	&:not(.has-value) {
+		.vscomp-toggle-button {
+			padding-block: 0;
+			padding-inline-end: 54px;
+			padding-inline-start: variables.$token-scale-400;
+		}
+
+		.vscomp-value {
+			color: var(--color-text-subtlest);
+			opacity: 1;
+		}
+	}
+
+	&.multiple {
+		.vscomp-option {
+			&.selected {
+				.checkbox-icon {
+					background-color: variables.$token-semantics-primary-base;
+					border-color: variables.$token-semantics-primary-base;
+
+					&:after {
+						border-color: var(--color-text-inverse);
+						// physical: these sides shape the check glyph under rotate(45deg) — a checkmark must not mirror in RTL
+						border-left-color: transparent;
+						border-top-color: transparent;
+						height: 80%;
+						opacity: 1;
+						@include CheckBoxCheckIconTransform;
+						width: 45%;
+					}
+				}
+			}
+
+			.vscomp-option-text {
+				flex: 1;
+				width: auto;
+			}
+		}
+	}
+
+	&:not(.multiple) {
+		.vscomp-option.group-title {
+			height: variables.$token-scale-1000 !important; // !important required to override the element style in html
+		}
+	}
+
+	&.show-value-as-tags {
+		&.has-value .vscomp-toggle-button {
+			height: auto;
+			min-height: variables.$token-scale-1000;
+			padding-block: variables.$token-scale-100;
+			padding-inline-end: variables.$token-scale-1600;
+			padding-inline-start: variables.$token-scale-200;
+		}
+
+		.vscomp-value {
+			gap: variables.$token-scale-100;
+		}
+
+		.vscomp-value-tag {
+			align-items: center;
+			background-color: variables.$token-bg-neutral-subtlest-hover;
+			border: none;
+			border-radius: var(--border-radius-rounded);
+			color: var(--color-text-subtlest);
+			display: inline-flex;
+			font-size: variables.$token-font-size-300;
+			font-weight: variables.$token-font-weight-medium;
+			height: variables.$token-scale-700;
+			margin: 0;
+			padding-block: 0;
+			padding-inline-end: variables.$token-scale-200;
+			padding-inline-start: variables.$token-scale-300;
+			position: relative;
+
+			.vscomp-value-tag-content {
+				width: 100%;
+			}
+
+			.vscomp-value-tag-clear-button {
+				background-color: transparent;
+				border-radius: 0;
+				color: variables.$token-icon-subtlest;
+				height: auto;
+				inset-inline-start: auto;
+				margin-inline-start: variables.$token-scale-100;
+				opacity: 0.5;
+				position: relative;
+				inset-inline-end: auto;
+				top: auto;
+				transform: none;
+				width: auto;
+
+				.vscomp-clear-icon {
+					height: variables.$token-scale-300;
+					inset-inline-start: variables.$token-scale-0;
+					position: relative;
+					top: variables.$token-scale-0;
+					width: variables.$token-scale-300;
+
+					&:before,
+					&:after {
+						color: variables.$token-icon-subtlest;
+					}
+				}
+
+				&:hover {
+					.vscomp-clear-icon {
+						&:before,
+						&:after {
+							color: variables.$token-icon-default;
+						}
+					}
+				}
+			}
+
+			&.more-value-count {
+				padding-inline-end: variables.$token-scale-200;
+			}
+		}
+
+		&.has-value {
+			.vscomp-clear-button {
+				margin-block-start: 0;
+				top: 50%;
+				transform: translateY(-50%);
+				inset-inline-end: variables.$token-scale-1000;
+			}
+		}
+	}
+
+	// When Show as Popup (mobile behaviour)
+	&.show-as-popup {
+		.vscomp-dropbox {
+			border: none;
+
+			&-container {
+				background-color: variables.$token-backdrop;
+				// The !important is needed in order to overwrite the inline style added by library!
+				z-index: var(--layer-global-elevated) !important;
+			}
+
+			.vscomp-search-container {
+				height: variables.$token-scale-1200;
+			}
+
+			.vscomp-search-input {
+				height: inherit;
+			}
+		}
+	}
+
+	&.text-direction-rtl {
+		.vscomp-search-container {
+			padding-block: variables.$token-scale-0;
+			padding-inline: variables.$token-scale-400;
+		}
+
+		&.multiple {
+			.vscomp-option {
+				&.selected {
+					.checkbox-icon {
+						&:after {
+							@include IsRTL_CheckBoxCheckIconTransform;
+						}
+					}
+				}
+			}
+		}
+
+		&.show-value-as-tags {
+			.vscomp-value-tag {
+				margin: 0;
+				padding-inline-end: variables.$token-scale-200;
+				padding-inline-start: variables.$token-scale-300;
+			}
+
+			&.has-value {
+				.vscomp-clear-button {
+					// physical: counters the vendor lib's `left: 2px` under .text-direction-rtl,
+					// which outranks our logical base (inset-inline-end) in specificity
+					left: variables.$token-scale-1000;
+				}
+			}
+		}
+
+		.checkbox-icon {
+			// physical: counters the vendor lib's `margin-left: 10px` under .text-direction-rtl
+			margin-left: variables.$token-scale-200;
+
+			&.checked {
+				&:after {
+					@include IsRTL_CheckBoxCheckIconTransform;
+				}
+			}
+		}
+	}
+
+	// Checkbox
+	.checkbox-icon {
+		background-color: var(--color-background-input);
+		border-radius: variables.$token-border-radius-100;
+		border: variables.$token-border-size-025 solid var(--color-border-input);
+		height: variables.$token-scale-400;
+		margin-inline-end: 0px;
+		overflow: visible;
+		transition: background-color variables.$token-transition-time-300 variables.$token-transition-curve-expressive;
+		width: variables.$token-scale-400;
+
+		&:after {
+			backface-visibility: hidden;
+			border-color: transparent;
+			height: 85%;
+			opacity: 0;
+			transition: opacity variables.$token-transition-time-300 variables.$token-transition-curve-expressive;
+			width: 40%;
+		}
+
+		&.checked {
+			background-color: variables.$token-semantics-primary-base;
+			border-color: variables.$token-semantics-primary-base;
+
+			&:after {
+				border-color: var(--color-text-inverse);
+				// physical: these sides shape the check glyph under rotate(45deg) — a checkmark must not mirror in RTL
+				border-left-color: transparent;
+				border-top-color: transparent;
+				height: 80%;
+				opacity: 1;
+				@include CheckBoxCheckIconTransform;
+				width: 45%;
+			}
+		}
+	}
+}
+
+// Top part - Select to open dropdown
+.vscomp-toggle-button {
+	--vscomp-toogle-btn-arrow-size: var(--osui-dropdown-arrow-size, #{variables.$token-scale-400});
+	--vscomp-toogle-btn-height: #{variables.$token-scale-1000};
+	--vscomp-toogle-btn-mobile-height: #{variables.$token-scale-1200};
+
+	background-color: var(--osui-dropdown-background, var(--color-background-input));
+	border-radius: var(--osui-dropdown-border-radius, variables.$token-border-radius-200);
+	border: variables.$token-border-size-025 solid var(--osui-dropdown-border-color, var(--color-border-input));
+	color: var(--color-text);
+	cursor: pointer;
+	display: inline-flex;
+	font-size: variables.$token-font-size-350;
+	height: var(--vscomp-toogle-btn-height);
+	line-height: var(--vscomp-toogle-btn-height);
+	min-width: 180px;
+	padding-inline-end: variables.$token-scale-1000;
+	padding-inline-start: variables.$token-scale-400;
+	position: relative;
+	transition: border-color variables.$token-transition-time-100 variables.$token-transition-curve-base;
+	vertical-align: middle;
+	width: 100%;
+
+	// Create new arrow for all dropdown types
+	&:after {
+		align-items: center;
+		color: var(--osui-dropdown-arrow-color, #{variables.$token-icon-subtlest});
+		display: flex;
+		height: var(--vscomp-toogle-btn-arrow-size);
+		justify-content: center;
+		line-height: 1;
+		position: absolute;
+		inset-inline-end: variables.$token-scale-400;
+		top: 50%;
+		transform: translateY(-50%);
+		transform-origin: center;
+		transition: transform variables.$token-transition-time-100 variables.$token-transition-curve-base;
+		width: var(--vscomp-toogle-btn-arrow-size);
+	}
+
+	&:hover {
+		border-color: var(--osui-dropdown-hover-border-color, var(--color-border-input-hover));
+
+		.vscomp-value {
+			color: var(--color-text);
+		}
+	}
+}
+
+// Container with the selected value(s)
+.vscomp-value {
+	color: var(--color-text-subtlest);
+	font-size: variables.$token-font-size-350;
+}
+
+// Default dropdown arrow
+.vscomp-arrow {
+	display: none;
+}
+
+// Bottom part - Parent wrapper Options container
+.pop-comp-wrapper {
+	box-shadow: none;
+}
+
+// Wrapper options container
+.vscomp-dropbox-container {
+	// Suppress ring on container itself (tabindex="-1", briefly focused on open — ring appears around whole popup)
+	&:focus,
+	&:focus-visible {
+		outline: none;
+		box-shadow: none;
+	}
+
+	// Suppress all browser/global focus rings on descendants — custom rings applied selectively below
+	*:focus,
+	*:focus-visible {
+		outline: none;
+		box-shadow: none;
+	}
+}
+
+.vscomp-dropbox {
+	background-color: var(--osui-dropdown-list-background, variables.$token-bg-surface-default);
+	border: variables.$token-border-size-025 solid var(--color-border);
+	border-radius: var(--osui-dropdown-border-radius, variables.$token-border-radius-200);
+	box-shadow: var(--osui-dropdown-list-shadow, #{variables.$token-elevation-3});
+	overflow: hidden;
+	padding: 0;
+
+	// This is an override in order to fix an issue when inside a AlignCenter pattern
+	.vscomp-dropbox-close-button {
+		display: none;
+	}
+}
+
+// Options container input search wrapper
+.vscomp-search-container {
+	border-block-end: variables.$token-border-size-025 solid var(--color-border);
+	padding-block: variables.$token-scale-0;
+	padding-inline-end: variables.$token-scale-200;
+	padding-inline-start: variables.$token-scale-400;
+	position: relative;
+
+	&::before {
+		content: none;
+		display: none;
+	}
+
+	.vscomp-search-clear {
+		border-radius: 50%;
+		color: variables.$token-primitives-neutral-700;
+		display: table;
+		font-size: 0;
+		font-weight: variables.$token-font-weight-semi-bold;
+		height: variables.$token-scale-600;
+		line-height: 1;
+		text-align: center;
+		width: variables.$token-scale-600;
+
+		/* Hide text from provider div in order to keep consistency on styles */
+		text-indent: 100%;
+		white-space: nowrap;
+		overflow: hidden;
+
+		// Fix vertical alignemnt differences due to system fonts usage
+		.osx &,
+		.ios & {
+			line-height: 1.1;
+		}
+
+		&:hover {
+			background-color: var(--color-border);
+		}
+	}
+
+	// Move "Toggle all" checkbox to the end of the search container
+	.vscomp-toggle-all-button {
+		order: 1;
+		margin-inline-start: variables.$token-scale-200;
+	}
+}
+
+// Options container input search
+.vscomp-search-input {
+	font-size: variables.$token-font-size-350;
+
+	&::placeholder {
+		color: var(--color-text-subtlest);
+	}
+}
+
+// Options Container
+.vscomp-options-container {
+	max-height: 240px;
+	z-index: 1;
+
+	&::-webkit-scrollbar {
+		width: 5px;
+	}
+
+	&::-webkit-scrollbar-track {
+		background: var(--color-border);
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background-color: var(--color-text-disabled);
+	}
+}
+
+// Option Item text
+.vscomp-option-text {
+	align-items: center;
+	color: var(--color-text);
+	display: flex;
+	font-size: variables.$token-font-size-350;
+	gap: variables.$token-scale-100;
+	min-width: 0;
+	overflow: hidden;
+}
+
+// Option Item
+.vscomp-option {
+	align-items: center;
+	background-color: var(--color-background-input);
+	flex-wrap: nowrap;
+	font-weight: variables.$token-font-weight-regular;
+	justify-content: space-between;
+	transition: background-color variables.$token-transition-time-100 variables.$token-transition-curve-base;
+
+	&.focused {
+		background-color: variables.$token-bg-neutral-subtlest-hover;
+	}
+
+	&.selected {
+		background-color: transparent;
+
+		&.focused {
+			background-color: variables.$token-bg-neutral-subtlest-hover;
+		}
+
+		// Right-side checkmark — requires --osui-icon-check + --osui-icon-font-family (icon library)
+		&::after {
+			color: variables.$token-semantics-primary-base;
+			content: var(--osui-icon-check);
+			flex-shrink: 0;
+			font-family: var(--osui-icon-font-family);
+			font-size: variables.$token-font-size-400;
+			margin-inline-start: variables.$token-scale-200;
+		}
+	}
+
+	// Style dropdown group title
+	&.group-title {
+		.vscomp-option-text {
+			opacity: 1;
+			// Style group title in single select dropdown
+			// this selector is necessary so that the style is not applied when the option has a checkbox
+			&:only-child {
+				color: variables.$token-primitives-neutral-700;
+				font-size: variables.$token-font-size-275;
+				font-weight: variables.$token-font-weight-semi-bold;
+				text-transform: uppercase;
+			}
+		}
+	}
+}
+
+// Hide left checkbox icon — right-side checkmark handles selected state for all variants
+.vscomp-options .vscomp-option .checkbox-icon {
+	display: none;
+}
+
+// Option Item description
+.vscomp-option-description {
+	color: variables.$token-primitives-neutral-700;
+	font-size: variables.$token-font-size-275;
+	margin-block-start: 1px;
+}
+
+// When using the extensibility property allowNewOption
+.vscomp-new-option-icon {
+	&::before {
+		border: 15px solid variables.$token-semantics-primary-base;
+		border-block-end-color: rgba(0, 0, 0, 0);
+		border-inline-start-color: rgba(0, 0, 0, 0);
+	}
+}
+
+// Accessibility -----------------------------------------------------------------
+///
+.has-accessible-features {
+	.vscomp-toggle-button {
+		border-color: var(--color-border-input);
+		color: var(--color-text);
+
+		&:after {
+			color: var(--color-text);
+		}
+	}
+
+	.vscomp-toggle-all-button:focus {
+		box-shadow: none;
+
+		.checkbox-icon {
+			box-shadow: 0 0 0 variables.$token-border-size-075 var(--color-focus-outer);
+		}
+	}
+
+	.vscomp-option.focused {
+		box-shadow: inset 0 0 0 variables.$token-border-size-075 var(--color-focus-outer);
+	}
+}
+
+// OS HighContrast Enabled -------------------------------------------------------
+///
+.os-high-contrast {
+	.vscomp-wrapper {
+		&.show-value-as-tags {
+			.vscomp-value-tag {
+				border: variables.$token-border-size-025 solid var(--color-border-input);
+			}
+		}
+
+		.vscomp-option {
+			&.focused {
+				&:before {
+					border: variables.$token-border-size-050 solid var(--color-border-input);
+					bottom: 0;
+					content: '';
+					display: block;
+					inset-inline-start: 0;
+					position: absolute;
+					inset-inline-end: 0;
+					top: 0;
+				}
+			}
+		}
+
+		&.multiple .vscomp-option {
+			&.selected .checkbox-icon {
+				&:after {
+					border-block-start: none;
+					border-inline-start: none;
+				}
+			}
+		}
+	}
+
+	.pop-comp-content,
+	.vscomp-dropbox-container {
+		border: variables.$token-border-size-050 solid var(--color-border-input);
+	}
+
+	.vscomp-options-container {
+		&::-webkit-scrollbar {
+			width: 5px;
+		}
+
+		&::-webkit-scrollbar-track {
+			border: variables.$token-border-size-075 solid variables.$token-primitives-neutral-400;
+		}
+
+		&::-webkit-scrollbar-thumb {
+			border: variables.$token-border-size-025 solid variables.$token-primitives-neutral-400;
+		}
+	}
+}
+
+// Responsive --------------------------------------------------------------------
+///
+.phone,
+.tablet {
+	.vscomp-wrapper.show-value-as-tags.has-value .vscomp-toggle-button {
+		min-height: var(--vscomp-toogle-btn-mobile-height);
+		padding-block: variables.$token-scale-200;
+	}
+
+	.vscomp-toggle-button {
+		height: var(--vscomp-toogle-btn-mobile-height);
+	}
+}
+
+// Popup Mode --------------------------------------------------------
+body {
+	&.vscomp-popup-active {
+		.vscomp-wrapper:not(.focused) {
+			z-index: var(--layer-global-screen);
+		}
+
+		.vscomp-wrapper {
+			z-index: var(--layer-global-off-canvas);
+		}
+
+		&:has(.osui-notification--is-open) .vscomp-wrapper {
+			z-index: var(--layer-global-instant-interaction);
+		}
+	}
+}
+
+// Layer Library Overrides
+.pop-comp-arrow,
+.pop-comp-wrapper,
+.vscomp-wrapper.keep-always-open .vscomp-dropbox-container {
+	z-index: var(--layer-local-tier-1);
+}
+
+.pop-comp-content,
+.vscomp-dropbox-container {
+	z-index: var(--layer-local-tier-2);
+}
+
+// Validation message
+// VirtualSelect 1.4.0 renders its own validation message as a sibling of .vscomp-wrapper and
+// reveals it whenever the library's internal validate() sets .has-error. OSUI owns validation
+// messaging: the platform calls validation(), which applies .osui-dropdown--not-valid and appends
+// its own .osui-dropdown-error-message styled with OSUI tokens. The library's copy is suppressed so
+// a Dropdown can never show two messages, and so no unthemed message can appear.
+//
+// Belt-and-braces: getProviderConfig() sets `disableValidation: true`, so validate() returns early
+// and never applies .has-error. This rule only matters if an app re-enables the library's validation
+// through the extensibility configs, which merge arbitrary provider props straight through.
+//
+// Specificity is 0,4,0 against the library's 0,3,0 reveal rule
+// (.vscomp-wrapper.has-error ~ .vscomp-error-message), so no !important is needed. If OSUI ever
+// adopts the library's validation instead of its own, theme this element rather than hiding it.
+.vscomp-ele .vscomp-wrapper.has-error ~ .vscomp-error-message {
+	display: none;
+}
+
+// Reduced Motion ----------------------------------------------------------------
+///
+// VirtualSelect 1.4.0 honours prefers-reduced-motion for its own transitions, but only for the
+// dropbox, the dropbox container/wrapper and the toggle button. The transitions declared above are
+// OSUI's own and are not covered by the library's media query, so they are zeroed here.
+@media (prefers-reduced-motion: reduce) {
+	.vscomp-option,
+	.vscomp-toggle-button:after,
+	.vscomp-wrapper .checkbox-icon,
+	.vscomp-wrapper .checkbox-icon:after {
+		transition-duration: 0s;
+	}
+}

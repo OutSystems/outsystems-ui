@@ -1,3 +1,6 @@
+@use '../00-abstract/index' as *;
+@use "../tokens/variables";
+
 /* Page Layout Side - Layout Side - Menu */
 ////
 /// @group Layout-Side-Menu
@@ -10,13 +13,13 @@
 	}
 
 	.app-menu-content {
-		background-color: get-background-color('neutral-0');
+		background-color: variables.$token-bg-surface-default;
 		bottom: 0;
 		flex-direction: column;
 		height: auto;
 		position: fixed;
 		top: 0;
-		width: var(--side-menu-size);
+		width: var(--size-side-menu);
 		z-index: var(--osui-menu-layer);
 	}
 }
@@ -25,27 +28,25 @@
 ///
 .aside-overlay {
 	.app-menu-content {
-		background-color: get-background-color('neutral-0');
+		background-color: variables.$token-bg-surface-default;
 		flex-direction: column;
 		height: 100%;
-		left: calc(-1 * var(--side-menu-size));
+		left: calc(-1 * var(--size-side-menu));
 		position: fixed;
 		top: 0;
 		transform: translateX(0) translateZ(0);
 		transition: transform 130ms ease-in;
-		width: var(--side-menu-size);
+		width: var(--size-side-menu);
 
 		will-change: transform;
 		z-index: var(--osui-menu-layer);
 	}
 
-	
 	.app-menu-content.is--open {
-		left: calc(-1 * var(--side-menu-size));
-		transform: translateX(var(--side-menu-size)) translateZ(0);
+		left: calc(-1 * var(--size-side-menu));
+		transform: translateX(var(--size-side-menu)) translateZ(0);
 		transition: transform 330ms ease-out;
 	}
-	
 }
 
 // Responsive --------------------------------------------------------------------
@@ -53,13 +54,13 @@
 .desktop {
 	.layout-side {
 		&:not(.layout-native):not(.aside-overlay) .app-menu-content {
-			left: 0;
-			right: 0;
+			inset-inline-end: 0;
+			inset-inline-start: 0;
 			transform: none;
 		}
 
 		&.aside-expandable:not(.fixed-header) .app-menu-content {
-			padding-top: var(--header-size);
+			padding-block-start: var(--size-header);
 			top: 0;
 		}
 	}
@@ -71,7 +72,7 @@
 			}
 
 			.main {
-				margin-left: var(--side-menu-size);
+				margin-inline-start: var(--size-side-menu);
 			}
 		}
 
@@ -93,40 +94,16 @@
 	}	
 }
 
-
 // IsRTL -------------------------------------------------------------------------
 ///
 .is-rtl {
-	&.desktop {
-		.aside-expandable.menu-visible {
-			.main {
-				margin-left: 0;
-				margin-right: var(--side-menu-size);
-			}
-		}
-	}
-	.layout-side .app-menu-content {
-		left: auto;
-	}
 
 	.app-menu-content {
-		right: calc(-1 * var(--side-menu-size));
 		transition: transform 330ms ease-in;
 	}
-	
+
 	.app-menu-content.is--open {
-		right: 0;
 		transform: translateX(0) translateZ(0);
 		transition: transform 130ms ease-out;
 	}
-
-	&:not(.portrait) {
-		.layout-side.layout-native.aside-visible {
-			.app-menu-content {
-				right: 0;
-			}
-		}
-	}
-
-
 }

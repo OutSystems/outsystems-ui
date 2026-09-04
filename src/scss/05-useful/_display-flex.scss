@@ -1,3 +1,5 @@
+@use "../tokens/variables";
+
 /* Usefull - Display Flex */
 ////
 /// @group UsefullClasses-Display_Flex
@@ -78,72 +80,72 @@
 
 .gap {
 	&-xs {
-		gap: var(--space-xs);
+		gap: variables.$token-scale-100;
 	}
 	&-s {
-		gap: var(--space-s);
+		gap: variables.$token-scale-200;
 	}
 	&-base {
-		gap: var(--space-base);
+		gap: variables.$token-scale-400;
 	}
 	&-m {
-		gap: var(--space-m);
+		gap: variables.$token-scale-600;
 	}
 	&-l {
-		gap: var(--space-l);
+		gap: variables.$token-scale-800;
 	}
 	&-xl {
-		gap: var(--space-xl);
+		gap: variables.$token-scale-1000;
 	}
 	&-xxl {
-		gap: var(--space-xxl);
+		gap: variables.$token-scale-1200;
 	}
 }
 
 .row-gap {
 	&-xs {
-		row-gap: var(--space-xs);
+		row-gap: variables.$token-scale-100;
 	}
 	&-s {
-		row-gap: var(--space-s);
+		row-gap: variables.$token-scale-200;
 	}
 	&-base {
-		row-gap: var(--space-base);
+		row-gap: variables.$token-scale-400;
 	}
 	&-m {
-		row-gap: var(--space-m);
+		row-gap: variables.$token-scale-600;
 	}
 	&-l {
-		row-gap: var(--space-l);
+		row-gap: variables.$token-scale-800;
 	}
 	&-xl {
-		row-gap: var(--space-xl);
+		row-gap: variables.$token-scale-1000;
 	}
 	&-xxl {
-		row-gap: var(--space-xxl);
+		row-gap: variables.$token-scale-1200;
 	}
 }
 
 .column-gap {
 	&-xs {
-		column-gap: var(--space-xs);
+		column-gap: variables.$token-scale-100;
 	}
 	&-s {
-		column-gap: var(--space-s);
+		column-gap: variables.$token-scale-200;
 	}
 	&-base {
-		column-gap: var(--space-base);
+		column-gap: variables.$token-scale-400;
 	}
 	&-m {
-		column-gap: var(--space-m);
+		column-gap: variables.$token-scale-600;
 	}
 	&-l {
-		column-gap: var(--space-l);
+		column-gap: variables.$token-scale-800;
 	}
 	&-xl {
-		column-gap: var(--space-xl);
+		column-gap: variables.$token-scale-1000;
 	}
 	&-xxl {
-		column-gap: var(--space-xxl);
+		column-gap: variables.$token-scale-1200;
 	}
 }

@@ -1,0 +1,315 @@
+@use '../../../tokens/variables';
+
+/* Patterns - Content - Accordion Item */
+////
+/// @group Patterns-Accordion_Item
+/// Patterns - Content - Accordion Item
+
+/* NOTE:
+	- Do not forget this pattern can be used outside of the accordion pattern.
+	Thats why at accordion partial, there are styles that could be seen as duplicated, but threre aren't!
+*/
+
+///
+.osui-accordion-item {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-accordion-item-background: var(--color-background-surface);
+	--osui-accordion-item-border-color: var(--color-border-subtle);
+	--osui-accordion-item-border-width: #{variables.$token-border-size-025};
+	--osui-accordion-item-border-radius: #{variables.$token-border-radius-100};
+	--osui-accordion-item-color: var(--color-text-subtle);
+	--osui-accordion-item-active-indicator-color: var(--color-primary);
+	--osui-accordion-item-icon-color: #{variables.$token-icon-subtle};
+	--osui-accordion-item-title-hover-background: #{variables.$token-bg-neutral-subtlest-hover};
+	--osui-accordion-item-title-hover-border-color: var(--osui-accordion-item-border-color);
+	//Using tokens to set the height and width of the plus/minus icon doesn't make sense,
+	// since it would change the size of the icon if tokens values change.
+	--osui-accordion-item-plus-minus-size: 20px;
+	--accordion-active-border-size: #{variables.$token-border-size-050};
+	// ───────────────────────────────────────────────────────────────────
+
+	background-color: var(--osui-accordion-item-background);
+	border-radius: variables.$token-border-radius-0;
+	color: var(--osui-accordion-item-color);
+	font-size: variables.$token-font-size-400;
+	position: relative;
+
+	&__click_zone {
+		cursor: pointer;
+	}
+
+	// Toggle on icon click
+	&--toggle-with-icon {
+		& .osui-accordion-item__title {
+			cursor: default;
+		}
+		& .osui-accordion-item__icon {
+			cursor: pointer;
+		}
+	}
+
+	&--is {
+		&-open {
+			> .osui-accordion-item__title {
+				> .osui-accordion-item__icon {
+					&--caret {
+						transform: rotate(180deg);
+					}
+
+					&--plus-minus:after {
+						transform: rotate(90deg);
+					}
+				}
+			}
+		}
+
+		&-disabled {
+			--osui-accordion-item-color: var(--color-text-disabled);
+
+			color: var(--osui-accordion-item-color);
+			pointer-events: none;
+
+			.osui-accordion-item__title:hover {
+				background-color: transparent;
+				box-shadow: none;
+			}
+
+			.osui-accordion-item__icon {
+				color: var(--color-text-disabled);
+
+				&--plus-minus {
+					&:after,
+					&:before {
+						background-color: var(--color-text-disabled);
+					}
+				}
+			}
+
+			a,
+			button {
+				opacity: 0.45;
+				pointer-events: none;
+			}
+		}
+	}
+
+	&__title {
+		align-items: center;
+		color: var(--osui-accordion-item-color);
+		display: flex;
+		font-size: variables.$token-font-size-400;
+		gap: variables.$token-scale-200;
+		justify-content: space-between;
+		line-height: variables.$token-font-line-height-600;
+		padding-block: variables.$token-scale-300;
+		padding-inline: variables.$token-scale-600;
+		width: 100%;
+
+		&:hover {
+			background-color: var(--osui-accordion-item-title-hover-background);
+		}
+
+		// Links inside title always underlined; on focus use a11y highlight colour + offset
+		a {
+			text-decoration: underline;
+			text-underline-offset: 3px; // no $token-* available for underline offset
+		}
+
+		a:focus {
+			background-color: var(--color-focus-outer);
+			box-shadow: none;
+			outline: none;
+			text-decoration-color: var(--color-focus-outer);
+		}
+
+		&__placeholder {
+			align-items: center;
+			display: flex;
+			gap: variables.$token-scale-200;
+			overflow: hidden;
+			width: 100%;
+
+			> a,
+			> button {
+				align-self: center;
+				margin-block-start: unset;
+			}
+		}
+
+		&--is-left {
+			flex-direction: row-reverse;
+		}
+	}
+
+	&__icon {
+		align-items: center;
+		color: var(--osui-accordion-item-icon-color);
+		display: flex;
+		font-family: FontAwesome;
+		font-size: variables.$token-font-size-550;
+		font-weight: variables.$token-font-weight-regular;
+		height: variables.$token-scale-500;
+		justify-content: center;
+		transition: transform variables.$token-transition-time-300 variables.$token-transition-curve-expressive;
+		width: variables.$token-scale-500;
+
+		&--plus-minus {
+			&:after {
+				background-color: var(--osui-accordion-item-icon-color);
+				content: ' ';
+				height: var(--osui-accordion-item-plus-minus-size);
+				transition: transform variables.$token-transition-time-300 variables.$token-transition-curve-expressive;
+				width: variables.$token-border-size-050;
+			}
+
+			&:before {
+				background-color: var(--osui-accordion-item-icon-color);
+				content: ' ';
+				height: variables.$token-border-size-050;
+				position: absolute;
+				width: var(--osui-accordion-item-plus-minus-size);
+			}
+
+			// Font Awesome bars are visually heavier — round the bar caps and scale the bars only
+			// (not the icon box) so layout size stays on $token-scale-500.
+			// Gated by the ODC icon-library root class (see _icon-library-odc.scss); inert on O11.
+			:root.iconLibrary-phosphor &,
+			body.iconLibrary-phosphor & {
+				&:before,
+				&:after {
+					border-radius: variables.$token-border-radius-200;
+					transform: scale(0.75);
+				}
+			}
+
+			// Open :after needs both transforms — a later rotate-only rule would drop scale(0.75).
+			:root.iconLibrary-phosphor .osui-accordion-item--is-open > .osui-accordion-item__title > &,
+			body.iconLibrary-phosphor .osui-accordion-item--is-open > .osui-accordion-item__title > & {
+				&:after {
+					transform: scale(0.75) rotate(90deg);
+				}
+			}
+		}
+
+		&--custom:not(.osui-accordion-item__click_zone) {
+			pointer-events: none;
+			-servicestudio-height: auto;
+			-servicestudio-width: auto;
+		}
+
+		&--hidden {
+			display: none;
+			height: 0;
+			width: 0;
+			-servicestudio-z-index: var(--layer-global-negative);
+		}
+	}
+
+	&__content {
+		display: block;
+		font-size: variables.$token-font-size-400;
+		overflow: hidden;
+		padding-block: variables.$token-scale-0;
+		padding-inline: variables.$token-scale-600;
+
+		&--is {
+			&-collapsed {
+				height: 0;
+				visibility: hidden;
+
+				// This is to avoid reflowing the content when collapsed
+				& > div {
+					visibility: hidden;
+					contain: layout;
+				}
+			}
+
+			&-expanded {
+				height: auto;
+				padding-block: variables.$token-scale-0 variables.$token-scale-600;
+				padding-inline: variables.$token-scale-600;
+				visibility: visible;
+			}
+
+			&-animating {
+				transition: height variables.$token-transition-time-300 variables.$token-transition-curve-expressive;
+			}
+		}
+
+		& > div {
+			padding-block-start: variables.$token-scale-200;
+		}
+
+		/* Add a margin-top when animated label is the first child */
+		[data-block*='AnimatedLabel']:first-child .animated-label {
+			margin-block-start: variables.$token-scale-200;
+		}
+	}
+
+	.choices__list.choices__list--dropdown,
+	[data-dropdown] > div.dropdown-list {
+		position: initial;
+	}
+
+	&:not(.osui-accordion-item--is-open) {
+		&:hover {
+			box-shadow: none;
+		}
+	}
+
+	// Accordion inside accordion
+	.osui-accordion {
+		margin-block-start: var(--accordion-active-border-size);
+	}
+}
+
+// Responsive -------------------------------------------------------------------------
+///
+.phone {
+	.osui-accordion-item .osui-accordion-item__title {
+		font-size: calc(variables.$token-font-size-400);
+	}
+}
+
+///
+.layout-native {
+	.osui-accordion-item {
+		&__title {
+			padding: variables.$token-scale-400;
+		}
+
+		&__content {
+			padding-block: variables.$token-scale-0;
+			padding-inline: variables.$token-scale-400;
+
+			&--is {
+				&-collapsed {
+					padding-block: variables.$token-scale-0;
+					padding-inline: variables.$token-scale-400;
+				}
+
+				&-expanded {
+					padding-block: variables.$token-scale-0 variables.$token-scale-400;
+					padding-inline: variables.$token-scale-400;
+				}
+			}
+		}
+	}
+}
+
+// Accessibility -----------------------------------------------------------------
+///
+.has-accessible-features {
+	.osui-accordion-item {
+		&__title,
+		&__content {
+			&:focus {
+				box-shadow: none;
+			}
+
+			&:focus-visible {
+				outline: variables.$token-border-size-075 solid var(--color-focus-outer);
+			}
+		}
+	}
+}

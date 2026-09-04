@@ -1,0 +1,74 @@
+import type { Meta, StoryObj } from '@storybook/html-vite';
+import { renderStatic } from './_helpers/osui';
+import { backgroundClass, cls, COLOR_OPTIONS, extendedClassArgType, lightTextClass } from './_helpers/lowcode';
+
+/**
+ * Tag — low-code input parameters from the library OML wired as Storybook controls.
+ * Class mappings come from src/scss/04-patterns/02-content/_tag.scss.
+ *
+ *   Color    → background-{value} (or background-{value}-lightest when IsLight=true)
+ *   Size     → tag-small | tag-medium (no class = default compact size)
+ *   Shape    → border-radius-none | border-radius-soft | border-radius-rounded | border-radius-circle
+ *   IsLight  → appends -lightest to the background class (`transparent` has no variant)
+ *
+ * The pattern SCSS now owns the IsLight text colors (per-family text tokens per the
+ * Figma spec); the text-{color} classes below are kept only for platform markup parity.
+ */
+const meta: Meta = { title: 'Patterns/Content/Tag' };
+export default meta;
+
+type TagArgs = {
+	color: string;
+	size: string;
+	shape: string;
+	isLight: boolean;
+	extendedClass: string;
+};
+
+const SIZE_OPTIONS = ['', 'small', 'medium'];
+const SHAPE_OPTIONS = ['none', 'soft', 'rounded', 'circle'];
+
+export const Default: StoryObj<TagArgs> = {
+	args: {
+		color: 'primary',
+		size: 'medium',
+		shape: 'rounded',
+		isLight: false,
+		extendedClass: '',
+	},
+	argTypes: {
+		color: {
+			name: 'Color',
+			control: 'select',
+			options: COLOR_OPTIONS,
+			description: 'Background color of the Block.',
+		},
+		size: {
+			name: 'Size',
+			control: 'select',
+			options: SIZE_OPTIONS,
+			description: 'Set the size of the Tag (small / medium).',
+		},
+		shape: {
+			name: 'Shape',
+			control: 'select',
+			options: SHAPE_OPTIONS,
+			description: 'Set the shape of the Tag (border-radius variant).',
+		},
+		isLight: {
+			name: 'IsLight',
+			control: 'boolean',
+			description: 'Use the lightest color version for the background and the darker color version for text.',
+		},
+		extendedClass: extendedClassArgType,
+	},
+	render: ({ color, size, shape, isLight, extendedClass }) => {
+		const bgClass = backgroundClass(color, isLight);
+		const textClass = isLight ? lightTextClass(color) : '';
+		const shapeClass = shape ? `border-radius-${shape}` : '';
+		const sizeClass = size ? `tag-${size}` : '';
+		return renderStatic(
+			`<div class="${cls('tag', sizeClass, shapeClass, bgClass, textClass, 'OSInline', extendedClass)}">Label</div>`
+		);
+	},
+};

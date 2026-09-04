@@ -1,0 +1,217 @@
+@use "../../../tokens/variables";
+
+/* Patterns - section - BottomSheet */
+////
+/// @group Patterns-BottomSheet
+/// Patterns - section - BottomSheet
+
+///
+.osui-bottom-sheet {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-bottom-sheet-background: var(--color-background-surface);
+	--osui-bottom-sheet-shadow: #{variables.$token-elevation-3};
+	--osui-bottom-sheet-padding: #{variables.$token-scale-400};
+	--osui-bottom-sheet-handler-background: #{variables.$token-bg-neutral-subtle-default};
+	--osui-bottom-sheet-handler-width: 44px;
+	// ───────────────────────────────────────────────────────────────────
+
+	--bottom-sheet-max-height: calc(100vh - 54px) /*  general value to account for notch and a bit more extra space*/;
+	--border-radius-sharp: none;
+	--border-radius-rounded: var(--border-radius-softer);
+	--osui-bottom-sheet-draggable-area: #{variables.$token-scale-1400};
+	--osui-bottom-sheet-transition-function: #{variables.$token-transition-curve-quick};
+
+	background-color: var(--osui-bottom-sheet-background);
+	border-start-start-radius: var(--bottom-sheet-shape);
+	border-start-end-radius: var(--bottom-sheet-shape);
+	bottom: 0;
+	box-shadow: var(--osui-bottom-sheet-shadow);
+	inset-inline-start: 0;
+	max-height: var(--bottom-sheet-max-height);
+	min-height: 50vh;
+	position: fixed;
+	text-align: center;
+	transition: transform variables.$token-transition-time-300 var(--osui-bottom-sheet-transition-function);
+	transform: translateY(100%);
+	width: 100%;
+	z-index: var(--osui-bottom-sheet-layer);
+
+	// Service Studio Preview
+	& {
+		-servicestudio-transform: none;
+
+		.osui-bottom-sheet__content:empty,
+		.osui-bottom-sheet__header__top-bar:empty {
+			-servicestudio-border: 1px dashed var(--color-border-input);
+			-servicestudio-margin: variables.$token-scale-400;
+		}
+	}
+
+	&--has-handler {
+		.osui-bottom-sheet__header {
+			&::before {
+				background: var(--osui-bottom-sheet-handler-background);
+				border-radius: 100px;
+				content: '';
+				height: variables.$token-scale-100;
+				left: 50%;
+				position: absolute;
+				top: variables.$token-scale-300;
+				transform: translateX(-50%);
+				width: var(--osui-bottom-sheet-handler-width);
+			}
+
+			&__top-bar {
+				padding-block-start: variables.$token-scale-800;
+			}
+		}
+	}
+
+	&--has-scroll {
+		--osui-bottom-sheet-draggable-area: 0;
+
+		.osui-bottom-sheet__header__top-bar::before {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	&--is-open {
+		transform: translateY(0);
+
+		// to simulate bigger height extended when spring animation is playing
+		&::before {
+			background-color: var(--osui-bottom-sheet-background);
+			content: '';
+			height: 100%;
+			inset-inline-start: 0;
+			position: absolute;
+			top: 100%;
+			width: 100%;
+		}
+
+		+ .osui-bottom-sheet-overlay {
+			opacity: 1;
+			pointer-events: all;
+		}
+	}
+
+	&:not(.osui-bottom-sheet--is-open) {
+		transition: transform variables.$token-transition-time-200 variables.$token-transition-curve-quick;
+
+		+ .osui-bottom-sheet-overlay {
+			transition: opacity variables.$token-transition-time-200 variables.$token-transition-curve-quick;
+		}
+	}
+
+	&-overlay {
+		background-color: variables.$token-backdrop;
+		height: 100vh;
+		inset-inline-start: 0;
+		opacity: 0;
+		pointer-events: none;
+		position: fixed;
+		top: 0;
+		transition: opacity variables.$token-transition-time-300 variables.$token-transition-curve-base;
+		width: 100vw;
+		z-index: calc(var(--layer-below) + var(--osui-bottom-sheet-layer));
+
+		// Service Studio Preview
+		& {
+			-servicestudio-opacity: 1;
+		}
+	}
+
+	&__header {
+		position: relative;
+
+		&::after {
+			content: '';
+			height: var(--osui-bottom-sheet-draggable-area);
+			inset-inline-start: 0;
+			position: absolute;
+			top: 100%;
+			width: 100%;
+		}
+
+		&__top-bar {
+			padding: var(--osui-bottom-sheet-padding);
+
+			&::before {
+				box-shadow: variables.$token-elevation-3;
+				content: '';
+				height: 100%;
+				inset-inline-start: 0;
+				opacity: 0;
+				position: absolute;
+				transform: translateY(-2px);
+				transition:
+					opacity variables.$token-transition-time-200 variables.$token-transition-curve-expressive,
+					transform variables.$token-transition-time-200 var(--osui-bottom-sheet-transition-function);
+				top: 0;
+				width: 100%;
+				z-index: var(--layer-global-negative);
+			}
+
+			&:empty {
+				padding-block-end: unset;
+			}
+		}
+	}
+
+	&__content {
+		max-height: var(--bottom-sheet-max-height);
+		overflow-y: scroll;
+		padding: var(--osui-bottom-sheet-padding);
+		padding-bottom: calc(var(--size-bottom-bar) + variables.$token-scale-600 + var(--os-safe-area-bottom));
+	}
+}
+
+///
+.layout:not(.layout-native) {
+	.osui-bottom-sheet {
+		--bottom-sheet-max-height: 85vh;
+	}
+}
+
+///
+.desktop {
+	.osui-bottom-sheet__header::after {
+		display: none;
+	}
+}
+
+///
+.landscape {
+	.osui-bottom-sheet__header__top-bar,
+	.osui-bottom-sheet__content {
+		padding-right: calc(variables.$token-scale-400 + var(--os-safe-area-right));
+		padding-left: calc(variables.$token-scale-400 + var(--os-safe-area-left));
+	}
+}
+
+// Body absolute patterns when used inside a BottomSheet
+.osui-bottom-sheet--is-active {
+	// DropdownSearch and DropdownTags
+	.vscomp-wrapper,
+	[data-popup-backdrop] {
+		z-index: calc(var(--layer-above) + var(--osui-bottom-sheet-layer));
+	}
+
+	// DatePicker, DatePickerRange, MonthPicker and TimePicker
+	.osui-bottom-sheet__content {
+		.osui-datepicker,
+		.osui-monthpicker,
+		.osui-timepicker {
+			position: relative;
+		}
+	}
+}
+
+// OS HighContrast Enabled -------------------------------------------------------
+///
+.os-high-contrast {
+	.osui-bottom-sheet {
+		border: variables.$token-border-size-025 solid var(--color-text-inverse);
+	}
+}

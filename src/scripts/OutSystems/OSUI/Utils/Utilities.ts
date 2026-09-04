@@ -73,8 +73,7 @@ namespace OutSystems.OSUI.Utils {
 				const listAnimateItems = function () {
 					setTimeout(function () {
 						const listElement = OSFramework.OSUI.Helper.Dom.GetElementById(ListId)?.childNodes[1] as
-							| HTMLElement
-							| undefined;
+							HTMLElement | undefined;
 						const listItemContentLeft = OSFramework.OSUI.Helper.Dom.TagSelector(
 							listElement,
 							'.active-screen .list-item-left-actions'

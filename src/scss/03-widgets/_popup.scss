@@ -1,3 +1,5 @@
+@use "../tokens/variables";
+
 /* Widgets - Popup */
 ////
 /// @group Widgets-Popup
@@ -19,18 +21,29 @@
 ///
 .popup {
 	&-backdrop {
-		background-color: get-background-color('overlay');
+		background-color: variables.$token-backdrop;
 	}
 
 	&-dialog {
-		border: 0;
-		border-radius: var(--border-radius-soft);
-		box-shadow: var(--shadow-xl);
-		margin: var(--space-m);
-		max-height: calc(100% - var(--space-xl));
-		max-width: 500px;
+		// ─── Component CSS API ─────────────────────────────────────────────
+		--osui-popup-background:    var(--color-background-surface);
+		--osui-popup-border-color:  transparent;
+		--osui-popup-border-width:  #{variables.$token-border-size-025};
+		--osui-popup-border-radius: var(--border-radius-soft);
+		--osui-popup-shadow:        #{variables.$token-elevation-4};
+		--osui-popup-padding:       #{variables.$token-scale-600};
+		--osui-popup-max-width:     500px;
+		// ───────────────────────────────────────────────────────────────────
+
+		background-color: var(--osui-popup-background);
+		border: var(--osui-popup-border-width) solid var(--osui-popup-border-color);
+		border-radius: var(--osui-popup-border-radius);
+		box-shadow: var(--osui-popup-shadow);
+		margin: variables.$token-scale-600;
+		max-height: calc(100% - variables.$token-scale-1000);
+		max-width: var(--osui-popup-max-width);
 		overflow: visible;
-		padding: var(--space-m);
+		padding: var(--osui-popup-padding);
 		width: 100%;
 
 		// Service Studio Preview
@@ -46,7 +59,7 @@
 	.popup {
 		&-backdrop,
 		&-dialog {
-			padding: var(--space-base);
+			padding: variables.$token-scale-400;
 		}
 	}
 }
@@ -55,7 +68,7 @@
 ///
 .os-high-contrast {
 	.popup-dialog {
-		border: var(--border-size-s) solid get-border-color('neutral-0');
+		border: variables.$token-border-size-025 solid #{variables.$token-bg-surface-default};
 		border-radius: var(--border-radius-soft);
 	}
 }

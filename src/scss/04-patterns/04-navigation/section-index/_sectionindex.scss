@@ -1,0 +1,180 @@
+@use '../../../00-abstract/index' as *;
+@use "../../../tokens/variables";
+
+/* Patterns - section - SectionIndex */
+////
+/// @group Patterns-SectionIndex
+/// Patterns - section - SectionIndex
+
+///
+.osui-section-index {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-section-index-border-color: var(--color-border);
+	--osui-section-index-border-width: #{variables.$token-border-size-025};
+	// ───────────────────────────────────────────────────────────────────
+
+	--top-position: calc(var(--size-header) + var(--size-header-content) + #{android-safe-area-top()});
+	display: flex;
+	flex-direction: column;
+	position: relative;
+
+	// The rail. Items are later siblings of this pseudo-element and are positioned, so
+	// without a z-index their (hover/press) backgrounds would paint over the rail and
+	// break the line. tier-1 lifts it above them; the active indicator sits on tier-2.
+	&::before {
+		background-color: var(--osui-section-index-border-color);
+		bottom: 0;
+		content: '';
+		inset-inline-start: 0;
+		position: absolute;
+		top: 0;
+		width: var(--osui-section-index-border-width);
+		z-index: var(--layer-local-tier-1);
+	}
+
+	&.osui-section-index--is-sticky {
+		position: sticky;
+		top: var(--top-position);
+	}
+}
+
+.osui-section-index-item {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-section-index-item-color:             var(--color-text-subtlest);
+	--osui-section-index-item-color-hover:       var(--color-text);
+	--osui-section-index-item-active-color:      var(--color-primary-selected);
+	--osui-section-index-item-border-radius:     #{variables.$token-border-radius-0};
+	--osui-section-index-item-hover-background:  #{variables.$token-bg-neutral-subtlest-hover};
+	--osui-section-index-item-press-background:  #{variables.$token-bg-neutral-subtlest-press};
+	--osui-section-index-active-indicator-color: var(--color-primary-selected);
+	--osui-section-index-active-indicator-width: #{variables.$token-border-size-025};
+	// Half a rail-width, so the marker only partially covers the rail (design spec).
+	// Reads the rail knob off .osui-section-index (custom properties inherit) and keeps
+	// its own token fallback for an item rendered outside the nav.
+	--osui-section-index-active-indicator-offset: calc(var(--osui-section-index-border-width, #{variables.$token-border-size-025}) / 2);
+	// ───────────────────────────────────────────────────────────────────
+
+	&,
+	&:visited {
+		align-items: center;
+		border-radius: var(--osui-section-index-item-border-radius);
+		color: var(--osui-section-index-item-color);
+		cursor: pointer;
+		display: flex;
+		min-height: variables.$token-scale-1100;
+		padding-block: variables.$token-scale-200;
+		padding-inline-end: variables.$token-scale-400;
+		padding-inline-start: variables.$token-scale-600;
+		position: relative;
+		transition:
+			background-color variables.$token-transition-time-100 variables.$token-transition-curve-expressive,
+			color variables.$token-transition-time-100 variables.$token-transition-curve-expressive;
+	}
+
+	// text-decoration: none overrides the global `a:hover` underline
+	// (01-foundations/_html-elements-link.scss) — the design has none.
+	&:hover {
+		background-color: var(--osui-section-index-item-hover-background);
+		color: var(--osui-section-index-item-color-hover);
+		text-decoration: none;
+	}
+
+	// Pressed — must stay after :hover, same specificity so source order wins.
+	// Distinct from the `--is-active` (selected) modifier below.
+	&:active {
+		background-color: var(--osui-section-index-item-press-background);
+		color: var(--osui-section-index-item-color-hover);
+		text-decoration: none;
+	}
+
+	&--is-active {
+		color: var(--osui-section-index-item-active-color);
+		text-shadow: 0 0 0.5px currentColor; // design-spec: faux-bold avoids layout shift
+		&:hover {
+			color: var(--osui-section-index-item-active-color);
+		}
+		// tier-2 so the selected marker covers the rail underneath it — one blue bar,
+		// not a grey hairline bleeding through the blue.
+		&::before {
+			background-color: var(--osui-section-index-active-indicator-color);
+			bottom: 0;
+			content: '';
+			inset-inline-start: var(--osui-section-index-active-indicator-offset);
+			position: absolute;
+			top: 0;
+			width: var(--osui-section-index-active-indicator-width);
+			z-index: var(--layer-local-tier-2);
+		}
+	}
+
+	&__target {
+		scroll-margin: var(--target-scroll-margin);
+	}
+}
+
+// Accessibility -----------------------------------------------------------------
+///
+.has-accessible-features {
+	.osui-section-index-item {
+		&:focus {
+			background-color: transparent;
+			box-shadow: 0 0 0 variables.$token-border-size-075 var(--color-focus-outer);
+			text-decoration: none;
+		}
+	}
+}
+
+// OS HighContrast Enabled -------------------------------------------------------
+///
+.os-high-contrast {
+	.osui-section-index::before {
+		border-inline-start: variables.$token-border-size-025 solid var(--color-focus-outer);
+	}
+
+	.osui-section-index-item {
+		&--is-active {
+			&::before {
+				border-inline-start: variables.$token-border-size-075 solid var(--color-focus-outer);
+			}
+		}
+	}
+}
+
+// Responsive --------------------------------------------------------------------
+///
+.phone {
+	.osui-section-index {
+		&--is-sticky {
+			left: calc(var(--os-safe-area-right) + variables.$token-scale-400);
+			padding-block: 0;
+			padding-inline-end: variables.$token-scale-400;
+			padding-inline-start: 0;
+			position: fixed;
+			top: var(--top-position);
+			z-index: var(--layer-local-tier-1);
+		}
+	}
+
+	// IsRTL -----------------------------------------------------------------
+	/// Anchored off `env(safe-area-inset-right)`, which is physical and has no logical
+	/// form — so the mirror stays a physical override.
+	.is-rtl {
+		.osui-section-index {
+			&--is-sticky {
+				left: initial;
+				right: calc(var(--os-safe-area-right) + variables.$token-scale-400);
+				padding: 0 0 variables.$token-scale-400 0;
+			}
+		}
+	}
+}
+
+// Browser -----------------------------------------------------------------------
+
+// Fixes the sticky problem on Safari 14.1
+///
+.safari {
+	[data-block*='SectionIndex'] {
+		display: contents;
+	}
+}

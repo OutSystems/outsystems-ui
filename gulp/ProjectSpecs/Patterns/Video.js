@@ -5,7 +5,7 @@ const patternInfo = {
     "codeName": "Video",
     "inDevelopment": false,
     "name": "Video",
-    "scss": "../scripts/OSFramework/OSUI/Pattern/Video/scss/video",
+    "scss": "../scss/04-patterns/02-content/video/video",
     "section": "Interaction"
 };
 

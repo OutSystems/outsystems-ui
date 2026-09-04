@@ -114,8 +114,17 @@ new-version-artf.txt
 # Distribution files folder
 dist/**
 
-# Local tool configuration
+# Generated design tokens (built by outsystems-design-tokens before each build)
+src/scss/tokens/
+
+# Per-developer Claude Code permission grants (local only)
 .claude/settings.local.json
+
+# Storybook build output
+storybook-static/
+
+# npmrc file
+.npmrc
 
 # Generated TypeDoc output
 docs/

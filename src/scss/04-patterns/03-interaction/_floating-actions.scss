@@ -1,3 +1,5 @@
+@use "../../tokens/variables";
+
 /* Patterns - Interaction - Floating Actions */
 ////
 /// @group Patterns-Floating_Actions
@@ -11,13 +13,26 @@
 	}
 
 	&-actions-wrapper {
+		// ─── Component CSS API ─────────────────────────────────────────────
+		--osui-floating-actions-button-background: var(--color-primary);
+		--osui-floating-actions-button-background-hover: var(--color-primary-hover);
+--osui-floating-actions-button-background-press: var(--color-primary-selected);
+		--osui-floating-actions-button-color: var(--color-text-inverse);
+		--osui-floating-actions-button-shadow: #{variables.$token-elevation-3};
+		--osui-floating-actions-item-background: var(--color-background-surface);
+		--osui-floating-actions-item-background-hover: #{variables.$token-bg-neutral-subtlest-hover};
+		--osui-floating-actions-item-background-press: #{variables.$token-bg-neutral-subtlest-press};
+		--osui-floating-actions-item-color: var(--color-text);
+		--osui-floating-actions-item-shadow: #{variables.$token-elevation-2};
+		// ───────────────────────────────────────────────────────────────────
+
 		align-items: flex-end;
 		bottom: 0;
 		display: flex;
 		flex-direction: column;
-		margin: var(--space-l);
+		margin: variables.$token-scale-800;
 		position: fixed;
-		right: 0;
+		inset-inline-end: 0;
 		will-change: transform, opacity;
 		z-index: var(--osui-floating-actions-layer);
 
@@ -34,8 +49,10 @@
 			.floating-actions-item {
 				opacity: 1;
 				transform: translateY(0px) translateZ(0) scale(1);
-				transition: all 180ms ease-out;
-				transition-delay: calc(var(--delay) * 40ms);
+				transition:
+					opacity variables.$token-transition-time-200 variables.$token-transition-curve-quick,
+					transform variables.$token-transition-time-200 variables.$token-transition-curve-quick;
+				transition-delay: calc(var(--delay) * 40ms); // design-spec: stagger delay
 			}
 
 			.floating-actions-item-button {
@@ -43,14 +60,14 @@
 			}
 
 			.floating-button {
-				box-shadow: var(--shadow-none);
+				box-shadow: none;
 				filter: brightness(0.9);
 				transform: rotate(135deg) translateZ(0);
 			}
 		}
 
 		&.bottom-bar-exists {
-			bottom: calc(var(--bottom-bar-size) + var(--space-base));
+			bottom: calc(var(--size-bottom-bar) + variables.$token-scale-400);
 		}
 
 		&.no-rotation {
@@ -77,18 +94,20 @@
 		align-items: flex-end;
 		display: flex;
 		flex-direction: column;
-		padding-bottom: var(--space-s);
-		padding-right: var(--space-s);
+		padding-block-end: variables.$token-scale-200;
+		padding-inline-end: variables.$token-scale-200;
 	}
 
 	&-actions-item {
 		align-items: center;
 		display: flex;
 		justify-content: flex-end;
-		margin-bottom: var(--space-base);
+		margin-block-end: variables.$token-scale-400;
 		opacity: 0;
-		transform: translateY(var(--space-base)) translateZ(0);
-		transition: all 100ms ease-in;
+		transform: translateY(variables.$token-scale-400) translateZ(0);
+		transition:
+			opacity variables.$token-transition-time-100 variables.$token-transition-curve-base,
+			transform variables.$token-transition-time-100 variables.$token-transition-curve-base;
 
 		// Service Studio Preview
 		& {
@@ -99,20 +118,20 @@
 
 	&-actions-item-button {
 		align-items: center;
-		background-color: get-background-color('neutral-0');
+		background-color: var(--osui-floating-actions-item-background);
 		border-radius: var(--border-radius-rounded);
-		box-shadow: var(--shadow-s);
-		color: get-text-color('primary');
+		box-shadow: var(--osui-floating-actions-item-shadow);
+		color: var(--osui-floating-actions-item-color);
 		cursor: pointer;
 		display: flex;
-		font-size: var(--font-size-base);
-		height: 40px;
+		font-size: variables.$token-font-size-500;
+		height: variables.$token-scale-1000;
 		justify-content: center;
-		margin-left: var(--space-base);
+		margin-inline-start: variables.$token-scale-400;
 		transform: translateZ(0) scale(0.3);
-		transition: transform 180ms ease-out;
-		transition-delay: calc(var(--delay) * 40ms);
-		width: 40px;
+		transition: transform variables.$token-transition-time-200 variables.$token-transition-curve-quick;
+		transition-delay: calc(var(--delay) * 40ms); // design-spec: stagger delay
+		width: variables.$token-scale-1000;
 
 		// Service Studio Preview
 		& {
@@ -120,43 +139,52 @@
 		}
 
 		&:hover {
-			background-color: get-background-color('primary');
-			color: get-text-color('neutral-0');
+			--osui-floating-actions-item-background: var(--osui-floating-actions-item-background-hover);
+		}
+
+		&:active {
+			--osui-floating-actions-item-background: var(--osui-floating-actions-item-background-press);
 		}
 	}
 
 	&-button {
 		align-items: center;
-		background-color: get-background-color('primary');
+		background-color: var(--osui-floating-actions-button-background);
 		border-radius: var(--border-radius-rounded);
-		box-shadow: var(--shadow-xl);
-		color: get-text-color('neutral-0');
+		box-shadow: var(--osui-floating-actions-button-shadow);
+		color: var(--osui-floating-actions-button-color);
 		cursor: pointer;
 		display: flex;
-		font-size: var(--font-size-h4);
-		height: 56px;
+		font-size: variables.$token-font-size-800;
+		height: variables.$token-scale-1400;
 		justify-content: center;
 		pointer-events: auto;
 		transform: rotate(0deg) translateZ(0);
 		transform-origin: center center;
-		transition: all 180ms linear;
-		width: 56px;
+		transition:
+			transform variables.$token-transition-time-200 variables.$token-transition-curve-linear,
+			box-shadow variables.$token-transition-time-200 variables.$token-transition-curve-linear;
+		width: variables.$token-scale-1400;
 
 		&:hover {
-			filter: brightness(0.9);
+			background-color: var(--osui-floating-actions-button-background-hover);
+		}
+
+		&:active {
+			background-color: var(--osui-floating-actions-button-background-press);
 		}
 	}
 
 	&-overlay {
-		background-color: get-background-color('overlay');
+		background-color: variables.$token-backdrop;
 		cursor: pointer;
 		height: 100vh;
 		opacity: 0;
 		pointer-events: none;
 		position: fixed;
-		right: 0;
+		inset-inline-end: 0;
 		top: 0;
-		transition: opacity 180ms ease-out;
+		transition: opacity variables.$token-transition-time-200 variables.$token-transition-curve-base;
 		width: 100vw;
 		z-index: var(--osui-floating-actions-layer);
 
@@ -166,7 +194,6 @@
 		}
 	}
 }
-
 // Responsive --------------------------------------------------------------------
 ///
 .desktop {
@@ -179,7 +206,7 @@
 .phone {
 	.layout-native {
 		.floating-actions-wrapper {
-			margin: var(--space-base);
+			margin: variables.$token-scale-400;
 		}
 	}
 
@@ -195,7 +222,7 @@
 		&.landscape {
 			.layout-native {
 				.floating-actions-wrapper {
-					margin-right: calc(var(--os-safe-area-right) + var(--space-base));
+					margin-right: calc(var(--os-safe-area-right) + variables.$token-scale-400);
 				}
 			}
 		}
@@ -207,23 +234,9 @@
 	&.ios {
 		.floating-actions-wrapper {
 			&.bottom-bar-exists {
-				margin-bottom: 0;
+				margin-block-end: 0;
 			}
 		}
-	}
-}
-
-// IsRTL --------------------------------------------------------------------
-///
-.is-rtl {
-	.floating-actions-item-button {
-		margin-left: var(--space-none);
-		margin-right: var(--space-base);
-	}
-
-	.floating-actions-wrapper {
-		left: 0;
-		right: auto;
 	}
 }
 
@@ -231,13 +244,13 @@
 ///
 .has-accessible-features {
 	.floating-button:focus {
-		box-shadow: 0 0 0 3px get-background-color('focus-outer');
+		box-shadow: 0 0 0 variables.$token-border-size-075 var(--color-focus-outer);
 	}
 
 	.floating-actions-wrapper {
 		&.is--open {
 			.floating-button:focus {
-				box-shadow: 0 0 0 3px get-background-color('focus-outer');
+				box-shadow: 0 0 0 variables.$token-border-size-075 var(--color-focus-outer);
 			}
 		}
 	}

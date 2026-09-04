@@ -1,3 +1,5 @@
+@use "../../tokens/variables";
+
 /* Patterns - Content - Blank Slate */
 ////
 /// @group Patterns-Blank_Slate
@@ -5,9 +7,15 @@
 
 ///
 .blank-slate {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-blank-slate-description-color: var(--color-text);
+	--osui-blank-slate-icon-color:        var(--color-text-disabled);
+	// ───────────────────────────────────────────────────────────────────
+
 	display: flex;
 	flex-direction: column;
-	justify-content: space-around;
+	gap: variables.$token-scale-400;
+	justify-content: center;
 	text-align: center;
 
 	&.large {
@@ -18,21 +26,23 @@
 		}
 
 		& .blank-slate-actions {
-			padding: var(--space-xxl) var(--space-base);
+			padding-block: variables.$token-scale-1200;
+			padding-inline: variables.$token-scale-400;
 		}
 	}
 
 	&-description {
-		color: get-text-color('neutral-9');
-		padding: var(--space-none) var(--space-base);
+		color: var(--osui-blank-slate-description-color);
+		padding-block: variables.$token-scale-0;
+		padding-inline: variables.$token-scale-400;
 	}
 
 	&-actions {
-		padding: var(--space-base);
+		padding: variables.$token-scale-400;
 	}
 
 	&-icon {
-		color: get-text-color('neutral-6');
+		color: var(--osui-blank-slate-icon-color);
 		font-size: 70px;
 	}
 }

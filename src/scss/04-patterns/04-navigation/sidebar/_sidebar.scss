@@ -1,0 +1,239 @@
+@use '../../../00-abstract/index' as *;
+@use "../../../tokens/variables";
+
+/* Patterns - Interaction - Sidebar */
+////
+/// @group Patterns-Sidebar
+/// Patterns - Interaction - Sidebar
+
+///
+.osui-sidebar {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-sidebar-background: var(--color-background-surface);
+	--osui-sidebar-color: var(--color-text);
+	--osui-sidebar-shadow: #{variables.$token-elevation-3};
+	--osui-sidebar-padding-inline: #{variables.$token-scale-600};
+	--osui-sidebar-padding-block: #{variables.$token-scale-400};
+	// ───────────────────────────────────────────────────────────────────
+
+	--overlay-opacity: 0;
+
+	background-color: var(--osui-sidebar-background);
+	box-shadow: var(--osui-sidebar-shadow);
+	color: var(--osui-sidebar-color);
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	margin: variables.$token-scale-0;
+	position: fixed;
+	top: 0;
+	transition:
+		opacity,
+		transform variables.$token-transition-time-300 variables.$token-transition-curve-quick;
+	width: var(--sidebar-width);
+	will-change: transform;
+	z-index: var(--osui-sidebar-layer);
+
+	&:not(.osui-sidebar--is-open):not(.no-transition) {
+		opacity: 0;
+
+		// Service Studio Preview
+		& {
+			-servicestudio-opacity: 1;
+		}
+	}
+
+	&:after {
+		background-color: transparent;
+		content: '';
+		height: 100%;
+		position: fixed;
+		width: variables.$token-scale-600;
+	}
+
+	&--is-right {
+		right: 0;
+		transform: translateX(102%);
+
+		&:after {
+			inset-inline-start: -24px;
+		}
+
+		&.osui-sidebar--has-overlay {
+			&::before {
+				inset-inline-end: 100%;
+
+				// Service Studio Preview
+				& {
+					-servicestudio-right: 100%;
+				}
+			}
+		}
+
+		// Service Studio Preview
+		& {
+			-servicestudio-left: 100%;
+			-servicestudio-transform: translateX(-100%);
+		}
+	}
+
+	&--is-left {
+		left: 0;
+		transform: translateX(-102%);
+
+		&:after {
+			inset-inline-end: -24px;
+		}
+
+		&.osui-sidebar--has-overlay {
+			&::before {
+				inset-inline-start: 100%;
+
+				// Service Studio Preview
+				& {
+					-servicestudio-left: 100%;
+				}
+			}
+		}
+
+		// Service Studio Preview
+		& {
+			-servicestudio-left: 0;
+			-servicestudio-transform: none;
+		}
+	}
+
+	&__header,
+	&__content {
+		padding-block: var(--osui-sidebar-padding-block);
+		padding-inline: var(--osui-sidebar-padding-inline);
+	}
+
+	&__content {
+		flex: 1;
+		overflow: auto;
+		-webkit-overflow-scrolling: touch;
+	}
+
+	&--has-overlay {
+		&::before {
+			background-color: variables.$token-backdrop;
+			content: '';
+			cursor: pointer;
+			display: block;
+			height: 100vh;
+			opacity: var(--overlay-opacity);
+			pointer-events: none;
+			position: fixed;
+			top: 0;
+			transition: opacity variables.$token-transition-time-150 variables.$token-transition-curve-base;
+			width: 200vw;
+			will-change: opacity;
+			z-index: var(--osui-sidebar-layer);
+
+			// Service Studio Preview
+			& {
+				-servicestudio-width: 100%;
+				-servicestudio-height: 100%;
+				-servicestudio-opacity: 1;
+			}
+		}
+	}
+
+	// Service Studio Preview
+	& {
+		-servicestudio-display: inline-block;
+		-servicestudio-position: relative;
+		-servicestudio-width: unset;
+	}
+}
+
+///
+.active-screen {
+	.osui-sidebar {
+		&--is-open {
+			opacity: 1;
+			transform: none;
+			transition: transform variables.$token-transition-time-500 variables.$token-transition-curve-quick;
+			will-change: transform;
+
+			&.osui-sidebar--has-overlay {
+				&::before {
+					opacity: 1;
+					pointer-events: initial;
+				}
+			}
+		}
+	}
+}
+
+// Responsive --------------------------------------------------------------------
+///
+.desktop {
+	.osui-sidebar {
+		&:after {
+			display: none;
+		}
+	}
+}
+
+///
+.android {
+	.layout-native {
+		.osui-sidebar {
+			padding-block-start: #{android-safe-area-top()};
+			padding-inline-end: var(--safe-area-inset-right, 0px);
+			padding-block-end: var(--safe-area-inset-bottom, 0px);
+			padding-inline-start: var(--safe-area-inset-left, 0px);
+		}
+	}
+}
+
+///
+.ios {
+	.layout-native {
+		.osui-sidebar {
+			padding-bottom: var(--os-safe-area-bottom);
+			padding-top: var(--os-safe-area-top);
+		}
+	}
+
+	.phone {
+		&.landscape {
+			.layout-native {
+				.osui-sidebar:before {
+					left: calc((var(--os-safe-area-left) + 12px) * -1);
+					width: calc(var(--os-safe-area-left) + 12px);
+				}
+			}
+		}
+	}
+}
+
+///
+.landscape {
+	.layout-native {
+		.osui-sidebar {
+			padding-bottom: var(--os-safe-area-bottom);
+		}
+	}
+}
+
+///
+.phone {
+	.osui-sidebar {
+		max-width: 85vw;
+	}
+}
+// OS HighContrast Enabled -------------------------------------------------------
+///
+.os-high-contrast {
+	.active-screen {
+		.osui-sidebar {
+			&--is-open {
+				border-inline-start: variables.$token-border-size-050 solid var(--color-focus-outer);
+				border-inline-end: variables.$token-border-size-050 solid var(--color-focus-outer);
+			}
+		}
+	}
+}

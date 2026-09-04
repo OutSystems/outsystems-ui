@@ -1,3 +1,5 @@
+@use "../tokens/variables";
+
 /* Widgets - Inputs and TextAreas */
 ////
 /// @group Widgets-Input_And_Textarea
@@ -5,52 +7,70 @@
 
 /* Input placeholder style */
 ::-webkit-input-placeholder {
-	color: get-text-color('neutral-7');
+	color: var(--color-text-subtlest);
 }
 
 ::-moz-placeholder {
-	color: get-text-color('neutral-7');
+	color: var(--color-text-subtlest);
 }
 
 :-ms-input-placeholder {
-	color: get-text-color('neutral-7');
+	color: var(--color-text-subtlest);
 }
 
 /* Iuput and TextArea */
 ///
 .form-control {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-input-background:          var(--color-background-input);
+	--osui-input-border-color:        var(--color-border-input);
+	--osui-input-hover-border-color:  var(--color-border-input-hover);
+	--osui-input-color:               var(--color-text);
+	--osui-input-border-radius:       var(--border-radius-soft);
+	--osui-input-focus-border-color:  var(--color-border-primary);
+	--osui-input-focus-ring-color:    #{variables.$token-border-focus-default};
+	--osui-input-error-border-color:  #{variables.$token-border-danger-default};
+	// ───────────────────────────────────────────────────────────────────
+
 	&[data-input],
 	&[data-textarea] {
-		background-color: get-background-color('neutral-0');
-		border: var(--border-size-s) solid get-border-color('neutral-5');
-		border-radius: var(--border-radius-soft);
-		color: get-text-color('neutral-9');
-		font-size: var(--font-size-s);
-		transition: all 180ms linear;
+		background-color: var(--osui-input-background);
+		border: variables.$token-border-size-025 solid var(--osui-input-border-color);
+		border-radius: var(--osui-input-border-radius);
+		color: var(--osui-input-color);
+		font-size: variables.$token-font-size-350;
+		transition: border-color variables.$token-transition-time-100 variables.$token-transition-curve-base, background-color variables.$token-transition-time-100 variables.$token-transition-curve-base;
 
 		&:hover {
-			border: var(--border-size-s) solid get-border-color('neutral-6');
+			border-color: var(--osui-input-hover-border-color);
 		}
 
 		&:focus {
-			border: var(--border-size-s) solid get-border-color('primary');
+			border-color: var(--osui-input-focus-border-color);
+			box-shadow: 0 0 0 variables.$token-border-size-050 var(--osui-input-focus-ring-color);
+			outline: none;
 		}
 
 		&[disabled] {
-			background-color: get-background-color('neutral-2');
-			border: var(--border-size-s) solid get-border-color('neutral-4');
-			color: get-text-color('neutral-6');
+			--osui-input-background:   var(--color-background-input-disabled);
+			--osui-input-border-color: var(--color-border-input);
+			--osui-input-color:        var(--color-text-disabled);
+
+			background-color: var(--osui-input-background);
+			border: variables.$token-border-size-025 solid var(--osui-input-border-color);
+			color: var(--osui-input-color);
 		}
 	}
 
 	&[data-input] {
-		height: 40px;
-		padding: var(--space-none) var(--space-base);
+		height: variables.$token-scale-1000;
+		padding-block: variables.$token-scale-0;
+		padding-inline: variables.$token-scale-400;
 	}
 
 	&[data-textarea] {
 		height: auto;
-		padding: var(--space-base);
+		padding: variables.$token-scale-400;
 		resize: auto;
 	}
 
@@ -58,26 +78,27 @@
 	&.input {
 		&-small {
 			&[data-input] {
-				font-size: var(--font-size-xs);
-				height: 32px;
-				padding: var(--space-none) var(--space-s);
+				font-size: variables.$token-font-size-300;
+				height: variables.$token-scale-800;
+				padding-block: variables.$token-scale-0;
+				padding-inline: variables.$token-scale-200;
 			}
 
 			&[data-textarea] {
-				font-size: var(--font-size-xs);
-				padding: var(--space-s);
+				font-size: variables.$token-font-size-300;
+				padding: variables.$token-scale-200;
 			}
 		}
 
 		/* Large sizes */
 		&-large {
 			&[data-input] {
-				font-size: var(--font-size-base);
-				height: 48px;
+				font-size: variables.$token-font-size-400;
+				height: variables.$token-scale-1200;
 			}
 
 			&[data-textarea] {
-				font-size: var(--font-size-base);
+				font-size: variables.$token-font-size-400;
 			}
 		}
 	}
@@ -86,34 +107,63 @@
 	&.not-valid {
 		&[data-input],
 		&[data-textarea] {
-			border: var(--border-size-s) solid get-border-color('error');
+			border: variables.$token-border-size-025 solid var(--osui-input-error-border-color);
 		}
 	}
 }
 
+/* Label, helper text, validation message ------------------------------------- */
+///
+.form label,
+[data-label] {
+	color: var(--color-text-subtlest);
+	font-size: variables.$token-font-size-350;
+	font-weight: variables.$token-font-weight-regular;
+	line-height: variables.$token-font-line-height-500;
+}
+
+.help-block,
+.input-helper {
+	color: var(--color-text-subtlest);
+	font-size: variables.$token-font-size-300;
+	line-height: variables.$token-font-line-height-400;
+	margin-block-start: variables.$token-scale-100;
+}
+
+span.validation-message {
+	color: variables.$token-text-danger;
+	display: block;
+	font-size: variables.$token-font-size-300;
+	margin-block-start: variables.$token-scale-100;
+}
+
+.char-counter {
+	color: var(--color-text-subtlest);
+	font-size: variables.$token-font-size-300;
+}
 /* Responsive ----------------------------------------------------------------- */
 ///
 .tablet,
 .phone {
 	.form-control {
 		&[data-input] {
-			font-size: var(--font-size-base);
-			height: 48px;
+			font-size: variables.$token-font-size-400;
+			height: variables.$token-scale-1200;
 
 			// Repeated selector since the properties above will ends up in a selector with more specificity
 			&.input-small {
-				font-size: var(--font-size-xs);
-				height: 32px;
+				font-size: variables.$token-font-size-300;
+				height: variables.$token-scale-800;
 			}
 		}
 
 		&[data-textarea] {
-			font-size: var(--font-size-base);
+			font-size: variables.$token-font-size-400;
 			height: auto;
 
 			// Repeated selector since the properties above will ends up in a selector with more specificity
 			&.input-small {
-				font-size: var(--font-size-xs);
+				font-size: variables.$token-font-size-300;
 			}
 		}
 	}
@@ -125,13 +175,13 @@
 	.header-top-content {
 		.form-control {
 			&[data-input] {
-				background-color: get-app-settings-background-color('header', --header-color);
+				background-color: var(--background-color-header, var(--color-background-header));
 				border: 0;
-				border-bottom: var(--border-size-s) solid get-border-color('transparent');
+				border-block-end: variables.$token-border-size-025 solid transparent;
 				border-radius: 0;
 
 				&:focus {
-					border-bottom: var(--border-size-s) solid get-border-color('primary');
+					border-block-end: variables.$token-border-size-025 solid var(--osui-input-focus-border-color);
 				}
 			}
 		}
@@ -144,21 +194,21 @@
 	.form-control {
 		&[data-input],
 		&[data-textarea] {
-			border-color: get-border-color('neutral-7');
+			border-color: var(--color-border-input);
 
 			&:hover {
-				border-color: get-border-color('neutral-8');
+				border-color: var(--osui-input-hover-border-color);
 			}
 
 			&:focus {
-				border-color: get-border-color('focus-inner');
+				border-color: variables.$token-semantics-primary-base;
 			}
 
 			&.not-valid {
 				&,
 				&:hover,
 				&:focus {
-					border-color: get-border-color('error');
+					border-color: var(--osui-input-error-border-color);
 				}
 			}
 		}

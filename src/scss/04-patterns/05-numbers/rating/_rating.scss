@@ -1,0 +1,371 @@
+@use '../../../00-abstract/index' as *;
+@use "../../../tokens/variables";
+
+/* Patterns - Numbers - Rating */
+////
+/// @group Patterns-Rating
+/// Patterns - Numbers - Rating
+
+///
+.rating {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-rating-filled-color: var(--color-primary);
+	--osui-rating-empty-color: #{variables.$token-bg-neutral-base-default};
+	--osui-rating-disabled-color: var(--color-text-disabled);
+	--osui-rating-disabled-empty-color: var(--color-border);
+	// ───────────────────────────────────────────────────────────────────
+
+	--rating-size: #{variables.$token-scale-400}; // 16px default
+
+	position: relative;
+	display: inline-flex;
+	flex-wrap: wrap;
+	font-size: var(--rating-size);
+	pointer-events: none;
+
+	// Service Studio Preview
+	& {
+		-servicestudio-display: inline-flex;
+	}
+
+	&.rating-small {
+		--rating-size: #{variables.$token-scale-300}; // design-spec: 12px
+
+		.rating-item {
+			// physical: the item is flipped with scaleX(-1) in RTL, so logical props double-flip
+			padding-right: calc(var(--rating-size) + #{variables.$token-scale-100});
+		}
+	}
+
+	&.rating-medium {
+		--rating-size: #{variables.$token-scale-600};
+	}
+
+	&.is-edit {
+		// Ensure edit mode will only be available when fieldset is not disabled
+		&:not(:has(fieldset[disabled='true'])) {
+			pointer-events: initial;
+
+			.rating-item {
+				cursor: pointer;
+				pointer-events: auto;
+			}
+		}
+	}
+
+	fieldset {
+		border: none;
+		display: contents;
+		margin: 0;
+		padding: 0;
+
+		&[disabled='true'] {
+			.rating-item {
+				&-filled,
+				&-half {
+					color: var(--osui-rating-disabled-color);
+
+					.icon {
+						color: var(--osui-rating-disabled-color);
+					}
+				}
+
+				&-empty {
+					color: var(--osui-rating-disabled-color);
+
+					.icon {
+						color: var(--osui-rating-disabled-empty-color);
+					}
+				}
+			}
+		}
+	}
+
+	&-item {
+		display: inline-block;
+		height: var(--rating-size);
+		// Padding is used to avoid flicks on hover due to rating-items gap
+		// physical: the item is flipped with scaleX(-1) in RTL (see .is-rtl block), so
+		// logical props inside it double-flip; the .is-rtl block mirrors this by hand
+		padding-right: calc(var(--rating-size) + #{variables.$token-scale-200});
+		position: relative;
+		width: var(--rating-size);
+
+		&-filled,
+		&-half,
+		&-empty {
+			left: 0; // physical: inside the scaleX(-1)-flipped item
+			line-height: var(--osui-font-line-height-full);
+			position: absolute;
+			top: 0;
+			transition: opacity variables.$token-transition-time-100 variables.$token-transition-curve-base;
+
+			.icon {
+				vertical-align: middle;
+			}
+
+			// Service Studio Preview
+			& {
+				-servicestudio-margin-right: #{variables.$token-scale-200};
+				-servicestudio-min-height: 24px;
+				-servicestudio-min-width: 24px;
+				-servicestudio-opacity: 1 !important;
+				-servicestudio-position: relative;
+			}
+		}
+
+		&-filled {
+			opacity: 1;
+			z-index: var(--layer-local-tier-1);
+		}
+
+		&-empty,
+		&-half {
+			opacity: 0;
+			z-index: var(--layer-global-screen);
+		}
+
+		&:last-of-type {
+			padding-right: 0; // physical: see the scaleX(-1) note above
+		}
+
+		img {
+			max-width: none;
+		}
+	}
+
+	input {
+		&:checked + .rating-item .rating-item-empty,
+		&:checked ~ .rating-item .rating-item-filled {
+			opacity: 0;
+		}
+	}
+
+	&.is-half {
+		input:checked ~ .rating-item .rating-item-half {
+			opacity: 0;
+		}
+	}
+
+	/* Selected Styles*/
+	&:hover input + .rating-item .rating-item-filled {
+		opacity: 1;
+	}
+
+	input {
+		&:first-of-type {
+			+ .rating-item {
+				background: transparent;
+				box-shadow: 0 0 0 variables.$token-border-size-075
+					color-mix(in srgb, #{variables.$token-semantics-primary-base} 22%, transparent);
+				height: 100%;
+				left: 0; // physical: full-width overlay on the scaleX(-1)-flipped item
+				opacity: 0;
+				pointer-events: none;
+				position: absolute;
+				top: 0;
+				width: 100%;
+			}
+			&:focus:checked + .rating-item {
+				opacity: 1;
+			}
+		}
+
+		// These need to be separated, to keep exact CSS specificty, for the hover/ checked styles to work as intended
+		/* Checked styles*/
+		&:checked + .rating-item .rating-item-filled,
+		&:checked + .rating-item .rating-item-half,
+		&:checked ~ .rating-item .rating-item-empty,
+		&:hover ~ .rating-item .rating-item-empty,
+		&:focus ~ .rating-item .rating-item-empty,
+		&:focus + .rating-item .rating-item-filled {
+			opacity: 1;
+		}
+
+		&:hover ~ .rating-item .rating-item-filled,
+		&:hover ~ .rating-item .rating-item-half {
+			opacity: 0;
+		}
+
+		&:hover + .rating-item .rating-item-filled {
+			opacity: 1;
+		}
+	}
+
+	&.is-half {
+		.rating-item-half {
+			z-index: var(--layer-local-tier-1);
+		}
+
+		input:checked + .rating-item {
+			.rating-item-half {
+				opacity: 1;
+			}
+
+			.rating-item-filled {
+				opacity: 0;
+			}
+		}
+
+		input:hover ~ .rating-item {
+			.rating-item-filled,
+			.rating-item-half {
+				opacity: 0;
+			}
+		}
+
+		&:hover input:checked + .rating-item .rating-item-filled,
+		input:hover + .rating-item .rating-item-filled {
+			opacity: 1;
+		}
+
+		&:hover input:hover ~ .rating-item .rating-item-filled {
+			opacity: 0;
+		}
+
+		&:hover input:hover + .rating-item .rating-item-filled {
+			opacity: 1;
+		}
+	}
+
+	.icon-states {
+		// Service Studio Preview
+		& {
+			-servicestudio-display: flex;
+		}
+
+		span {
+			// Service Studio Preview
+			& {
+				-servicestudio-display: flex;
+			}
+		}
+	}
+
+	// Icon colour tokens — applied via utility classes on icon elements
+	// Filled and half stars use dedicated gold token
+	.text-primary {
+		color: var(--osui-rating-filled-color);
+	}
+
+	// Empty stars: subtle warm tint of filled colour
+	.text-neutral-5 {
+		color: var(--osui-rating-empty-color);
+	}
+
+	// Vertical centering: avoids glyph metric shifts between star variants
+	.icon {
+		vertical-align: middle;
+	}
+}
+
+///
+.form {
+	.rating {
+		span.wcag-hide-text {
+			position: absolute;
+		}
+	}
+}
+
+// Responsive -------------------------------------------------------------------------
+///
+.ios {
+	.rating {
+		.rating-item {
+			//Fix for preventing FastClick issues on iOS
+			// Check here for details: https://github.com/ftlabs/fastclick/issues/60 */
+			& > * {
+				display: block;
+				pointer-events: none;
+			}
+		}
+	}
+}
+
+// IsRTL -------------------------------------------------------------------------
+///
+.is-rtl {
+	.rating {
+		.rating-item {
+			// The item is mirrored as a whole, so the gap padding is moved to the
+			// physical left by hand — logical properties cannot express this because
+			// scaleX(-1) flips the rendered box after layout.
+			padding-left: calc(var(--rating-size) + #{variables.$token-scale-200});
+			padding-right: 0;
+			transform: scaleX(-1);
+		}
+	}
+}
+
+// Accessibility -----------------------------------------------------------------
+///
+.has-accessible-features {
+	.rating {
+		&.is-half input:focus + .rating-item .rating-item-filled,
+		&:not(.is-half) input:focus + .rating-item .rating-item-half,
+		input:checked + .rating-item .rating-item-empty {
+			&,
+			* {
+				box-shadow: none;
+			}
+		}
+
+		&.is-half input:focus + .rating-item .rating-item-half,
+		&:not(.is-half) input:focus + .rating-item .rating-item-filled {
+			&,
+			* {
+				box-shadow: 0 0 0 variables.$token-border-size-075
+					color-mix(in srgb, #{variables.$token-semantics-primary-base} 22%, transparent);
+			}
+		}
+	}
+
+	fieldset[disabled='true'] {
+		.rating-item {
+			&-filled,
+			&-half {
+				color: var(--color-text-disabled);
+
+				.icon {
+					color: var(--color-text-disabled);
+				}
+			}
+
+			&-empty {
+				color: var(--color-text-disabled);
+
+				.icon {
+					color: var(--color-border-input);
+				}
+			}
+		}
+	}
+}
+
+// Fix issue on chromium based browsers, related with css snap and the complex combination of HTML and CSS properties used by the Rating
+.chrome,
+.edge {
+	.osui-tabs {
+		.rating {
+			.wcag-hide-text {
+				margin: unset;
+			}
+		}
+	}
+}
+// OS HighContrast Enabled -------------------------------------------------------
+///
+.os-high-contrast {
+	.has-accessible-features {
+		.rating {
+			&.is-half input:focus + .rating-item .rating-item-half,
+			&:not(.is-half) input:focus + .rating-item .rating-item-filled {
+				&,
+				* {
+					@include a11y-high-contrast-outline;
+				}
+			}
+		}
+	}
+}

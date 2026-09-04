@@ -1,3 +1,6 @@
+@use '../../00-abstract/index' as *;
+@use "../../tokens/variables";
+
 /* Patterns - Content - Section */
 ////
 /// @group Patterns-Section
@@ -5,23 +8,45 @@
 
 ///
 .section {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-section-title-color:         var(--color-text);
+	--osui-section-title-border-color:  var(--color-border);
+	--osui-section-content-color:       var(--color-text-subtlest);
+	// Figma says 25px / 21px; the scale's nearest steps are 24px / 20px.
+	--osui-section-title-line-height:   #{variables.$token-font-line-height-600};
+	--osui-section-content-line-height: #{variables.$token-font-line-height-500};
+	// ───────────────────────────────────────────────────────────────────
+
 	&-title {
-		background-color: get-background-color('transparent');
-		border-bottom: var(--border-size-s) solid get-border-color('neutral-4');
-		color: get-text-color('neutral-9');
-		font-size: var(--font-size-h2);
-		font-weight: var(--font-semi-bold);
-		padding: var(--space-none) var(--space-none) var(--space-s) var(--space-none);
+		background-color: transparent;
+		border-block-end: variables.$token-border-size-025 solid var(--osui-section-title-border-color);
+		color: var(--osui-section-title-color);
+		font-size: variables.$token-font-size-500;
+		font-weight: variables.$token-font-weight-semi-bold;
+		line-height: var(--osui-section-title-line-height);
+		padding-block: variables.$token-scale-0 variables.$token-space-200;
+		padding-inline: variables.$token-scale-0;
 		position: relative;
 		text-transform: none;
 		width: 100%;
 	}
 
 	&-content {
-		padding: var(--space-s) var(--space-none) var(--space-none);
+		color: var(--osui-section-content-color);
+		line-height: var(--osui-section-content-line-height);
+		padding-block: variables.$token-space-200 variables.$token-scale-0;
+		padding-inline: variables.$token-scale-0;
 	}
 
 	&-group {
+		// ─── Component CSS API ─────────────────────────────────────────────
+		--osui-section-group-gap: #{variables.$token-space-400};
+		// ───────────────────────────────────────────────────────────────────
+
+		display: flex;
+		flex-direction: column;
+		gap: var(--osui-section-group-gap);
+
 		&.is--sticky {
 			.section-title {
 				position: -webkit-sticky; //Fix for older iPhones
@@ -32,7 +57,7 @@
 		}
 
 		.section-title {
-			background-color: get-app-settings-background-color('body', --color-background-body);
+			background-color: var(--background-color-body, var(--color-background-body));
 		}
 	}
 }
@@ -41,7 +66,8 @@
 .layout-native {
 	.section {
 		&-title {
-			padding: var(--space-s) var(--space-base) var(--space-s) var(--space-base);
+			padding-block: variables.$token-scale-200;
+			padding-inline: variables.$token-scale-400;
 		}
 
 		&-content {
@@ -85,15 +111,9 @@
 }
 
 ///
-.tablet {
-	.section-title {
-		font-size: calc(var(--font-size-h2) - 2px);
-	}
-}
-
-///
+.tablet,
 .phone {
 	.section-title {
-		font-size: calc(var(--font-size-h2) - 4px);
+		font-size: variables.$token-font-size-500;
 	}
 }

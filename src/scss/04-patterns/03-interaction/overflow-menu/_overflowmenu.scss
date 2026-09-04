@@ -1,0 +1,110 @@
+@use "../../../tokens/variables";
+
+/* Patterns - Navigation - OverflowMenu */
+////
+/// @group Patterns-OverflowMenu
+/// Patterns - Navigation - OverflowMenu
+
+.osui-overflow-menu {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-overflow-menu-background:        var(--color-background-surface);
+	--osui-overflow-menu-shadow:            #{variables.$token-elevation-2};
+	--osui-overflow-menu-color:             var(--color-text);
+	--osui-overflow-menu-trigger-active-bg: #{variables.$token-bg-neutral-subtle-default};
+	--osui-overflow-menu-min-width: 170px;
+	// ───────────────────────────────────────────────────────────────────
+
+	--border-radius-rounded: var(--border-radius-softer);
+
+	display: inline-block;
+
+	&__trigger {
+		--osui-btn-background: transparent;
+		--osui-btn-height: #{variables.$token-scale-800};
+		--osui-btn-hover-background: var(--osui-overflow-menu-trigger-active-bg);
+		--osui-btn-active-background: var(--osui-overflow-menu-trigger-active-bg);
+		--osui-floating-offset: #{variables.$token-scale-200};
+
+		border: variables.$token-border-size-025 solid transparent;
+		border-radius: var(--osui-btn-border-radius, var(--border-radius-soft));
+		color: var(--osui-overflow-menu-color);
+		padding: 0;
+		min-width: variables.$token-scale-800;
+
+		&:hover:active {
+			filter: brightness(0.8);
+		}
+
+		* {
+			pointer-events: none;
+		}
+	}
+
+	&--is-open {
+		.osui-overflow-menu__trigger {
+			background-color: var(--osui-overflow-menu-trigger-active-bg);
+		}
+	}
+
+	&__balloon {
+		--osui-balloon-background: var(--osui-overflow-menu-background);
+		--osui-balloon-shadow:     var(--osui-overflow-menu-shadow);
+
+		min-width: var(--osui-overflow-menu-min-width);
+		overflow: hidden;
+		z-index: var(--layer-global-instant-interaction);
+
+		a {
+			// Items stack vertically — anchors are inline by default, which would
+			// lay them out side-by-side.
+			display: block;
+			color: var(--osui-overflow-menu-color);
+			text-decoration: none;
+
+			&:hover {
+				background: var(--osui-overflow-menu-trigger-active-bg);
+				text-decoration: none;
+			}
+
+			// Service Studio Preview
+			& {
+				-servicestudio-align-items: center;
+				-servicestudio-display: inline-flex !important;
+				-servicestudio-color: var(--color-text);
+				-servicestudio-padding: variables.$token-scale-200 variables.$token-scale-400;
+			}
+		}
+
+		// To make extensibility with ExtendedClass easier
+		a:not([class^='padding-']) {
+			padding-block: variables.$token-scale-200;
+			padding-inline: variables.$token-scale-400;
+		}
+	}
+}
+
+// Override .desktop .btn:hover blue border — trigger border must stay transparent
+.desktop {
+	.osui-overflow-menu__trigger:hover {
+		border-color: transparent;
+	}
+}
+
+// layer exception when a popup is open on the same screen
+html:has(.popup-backdrop) .osui-overflow-menu__balloon {
+	z-index: var(--layer-global-off-canvas);
+}
+
+// OS HighContrast Enabled -------------------------------------------------------
+///
+.os-high-contrast {
+	.osui-overflow-menu__balloon {
+		border: variables.$token-border-size-025 solid var(--color-border-input);
+
+		a {
+			&:hover {
+				outline: variables.$token-border-size-075 solid var(--color-focus-outer);
+			}
+		}
+	}
+}

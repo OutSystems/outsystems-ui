@@ -1,3 +1,5 @@
+@use "../tokens/variables";
+
 /* Widgets - Upload */
 ////
 /// @group Widgets-Upload
@@ -5,26 +7,37 @@
 
 ///
 [data-upload] {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-upload-background:     var(--color-background-surface);
+	--osui-upload-border-color:   var(--color-border);
+	--osui-upload-border-width:   #{variables.$token-border-size-025};
+	--osui-upload-color:          #{variables.$token-text-primary};
+	--osui-upload-border-radius:  var(--border-radius-soft);
+	--osui-upload-padding:        #{variables.$token-scale-400};
+	--osui-upload-icon-color:     #{variables.$token-icon-subtlest};
+	// ───────────────────────────────────────────────────────────────────
+
 	align-items: center;
-	background: get-background-color('neutral-0');
-	border: var(--border-size-s) solid get-border-color('neutral-4');
-	border-radius: var(--border-radius-soft);
-	color: get-text-color('neutral-9');
+	background: var(--osui-upload-background);
+	border: var(--osui-upload-border-width) solid var(--osui-upload-border-color);
+	border-radius: var(--osui-upload-border-radius);
+	color: var(--osui-upload-color);
 	display: flex;
-	font-size: var(--font-size-s);
-	margin-bottom: 0;
+	font-size: variables.$token-font-size-350;
+	font-weight: variables.$token-font-weight-medium;
+	margin-block-end: 0;
 	min-height: auto;
-	padding: var(--space-base);
+	padding: var(--osui-upload-padding);
 	position: relative;
 
 	&.upload-image-withoverlay {
 		flex-direction: column;
 
 		.change-image {
-			background-color: get-background-color('transparent');
-			color: get-text-color('primary');
+			background-color: transparent;
+			color: variables.$token-semantics-primary-base;
 			height: auto;
-			margin-top: var(--space-base);
+			margin-block-start: variables.$token-scale-400;
 			opacity: 1;
 			position: relative;
 		}
@@ -32,31 +45,20 @@
 
 	&.uploaded {
 		[data-icon] {
-			background-color: get-background-color('transparent');
+			background-color: transparent;
 		}
 	}
 
 	[data-icon] {
-		background-color: get-background-color('transparent');
-		color: get-text-color('neutral-5');
+		background-color: transparent;
+		color: var(--osui-upload-icon-color);
 		line-height: 1;
-		margin-right: var(--space-base);
+		margin-inline-end: variables.$token-scale-200;
 		width: auto;
 	}
 
 	&:focus-visible {
-		border: var(--border-size-s) solid get-border-color('primary');
-	}
-}
-
-// IsRTL --------------------------------------------------------------------
-///
-.is-rtl {
-	[data-upload] {
-		[data-icon] {
-			margin-left: var(--space-base);
-			margin-right: var(--space-none);
-		}
+		border: variables.$token-border-size-025 solid variables.$token-semantics-primary-base;
 	}
 }
 
@@ -64,6 +66,6 @@
 ///
 .has-accessible-features {
 	[data-upload] {
-		border: var(--border-size-s) solid get-border-color('neutral-7');
+		border: variables.$token-border-size-025 solid var(--color-border-input);
 	}
 }

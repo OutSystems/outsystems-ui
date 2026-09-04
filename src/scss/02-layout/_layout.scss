@@ -1,3 +1,5 @@
+@use "../tokens/variables";
+
 ////
 /// @group Layout
 /// Layout
@@ -38,11 +40,39 @@ body,
 
 		&-side {
 			.main {
-				margin-left: var(--side-menu-size);
+				margin-inline-start: var(--size-side-menu);
 			}
 
 			&.aside-overlay .main {
-				margin-left: 0;
+				margin-inline-start: 0;
+			}
+		}
+
+		&-side-no-header {
+			// ─── Component CSS API ─────────────────────────────────────────────
+			--osui-layout-main-padding: #{variables.$token-space-1000};
+			--osui-layout-aside-lines: #{variables.$token-border-size-025} solid #{variables.$token-border-subtle};
+			// ───────────────────────────────────────────────────────────────────
+
+			.main-content {
+				padding: var(--osui-layout-main-padding);
+			}
+
+			.app-menu-content {
+				border-inline-end: var(--osui-layout-aside-lines);
+			}
+
+			.app-menu-links {
+				gap: variables.$token-space-200;
+			}
+
+			.app-login-info {
+				border-block-start: var(--osui-layout-aside-lines);
+			}
+
+			.menu-icon {
+				margin-block: variables.$token-space-400;
+				margin-inline: variables.$token-space-600;
 			}
 		}
 
@@ -60,7 +90,7 @@ body,
 
 	&.aside-expandable {
 		.main {
-			margin-left: 0;
+			margin-inline-start: 0;
 		}
 	}
 
@@ -73,7 +103,7 @@ body,
 
 .main,
 .fixed-header .main {
-	padding-top: 0;
+	padding-block-start: 0;
 }
 
 ///
@@ -92,7 +122,7 @@ body,
 .android {
 	.layout-native {
 		.footer {
-			height: calc(var(--safe-area-inset-bottom, 0px) + var(--bottom-bar-size));
+			height: calc(var(--safe-area-inset-bottom, 0px) + var(--size-bottom-bar));
 		}
 	}
 }
@@ -104,7 +134,7 @@ body,
 		min-height: 100%;
 
 		&-native .footer {
-			height: calc(var(--os-safe-area-bottom) + var(--bottom-bar-size));
+			height: calc(var(--os-safe-area-bottom) + var(--size-bottom-bar));
 		}
 
 		.header {
@@ -121,7 +151,7 @@ body,
 		&.aside {
 			&-visible,
 			&-expandable {
-				--side-menu-size: 264px;
+				--size-side-menu: 264px;
 			}
 		}
 	}
@@ -134,7 +164,7 @@ body,
 			&-visible,
 			&-expandable {
 				.main {
-					width: calc(100% - var(--side-menu-size));
+					width: calc(100% - var(--size-side-menu));
 				}
 			}
 		}
@@ -150,8 +180,8 @@ body,
 					&-visible,
 					&-expandable {
 						.main {
-							margin-left: var(--side-menu-size);
-							width: calc(100% - var(--side-menu-size));
+							margin-inline-start: var(--size-side-menu);
+							width: calc(100% - var(--size-side-menu));
 						}
 					}
 				}
@@ -160,11 +190,11 @@ body,
 
 		.layout-side.layout-native.aside-expandable {
 			&.menu-visible .main {
-				margin-left: var(--side-menu-size);
+				margin-inline-start: var(--size-side-menu);
 			}
 
 			.main {
-				margin-right: 0;
+				margin-inline-end: 0;
 			}
 		}
 	}
@@ -174,83 +204,31 @@ body,
 .tablet,
 .phone {
 	.layout-side .main {
-		margin-left: 0;
+		margin-inline-start: 0;
+	}
+
+	.layout-side-no-header {
+		--osui-layout-main-padding: 0 #{variables.$token-space-600} #{variables.$token-space-600};
 	}
 }
 
 ///
 .phone {
 	.layout:not(.layout-native) [class*='ThemeGrid_Width']:not(.no-responsive) {
-		margin: var(--space-none) var(--space-none) var(--space-base) var(--space-none);
+		margin-block: variables.$token-scale-0 variables.$token-scale-400;
+		margin-inline: variables.$token-scale-0;
 		width: 100%;
-	}
-}
-
-// IsRTL -------------------------------------------------------------------------
-///
-.is-rtl {
-	&.tablet {
-		.layout-native {
-			&.aside {
-				&-visible,
-				&-expandable {
-					.main {
-						margin-left: 0;
-					}
-				}
-			}
-		}
-
-		.layout-side .main {
-			margin-right: 0;
-		}
-
-		&.landscape {
-			.layout-side.layout-native.aside-expandable {
-				&.menu-visible .main {
-					margin-left: 0;
-					margin-right: var(--side-menu-size);
-				}
-
-				.main {
-					margin-right: 0;
-				}
-			}
-		}
-	}
-
-	&.phone {
-		.layout-side .main {
-			margin-right: 0;
-		}
-	}
-
-	.layout-side {
-		.main {
-			margin-left: 0;
-			margin-right: var(--side-menu-size);
-		}
-
-		&.aside-overlay .main {
-			margin-right: 0;
-		}
-	}
-
-	.aside-expandable {
-		.main {
-			margin-right: 0;
-		}
 	}
 }
 
 // Nested layout SS preview
 ///
 .layout .main-content .layout {
-	-servicestudio-min-width: calc(100vw - (var(--space-xl) * 2));
+	-servicestudio-min-width: calc(100vw - (variables.$token-scale-1000 * 2));
 }
 
 .phone .layout .main-content .layout {
-	-servicestudio-min-width: calc(100vw - (var(--space-base) * 2));
+	-servicestudio-min-width: calc(100vw - (variables.$token-scale-400 * 2));
 
 	&.layout-native {
 		-servicestudio-min-width: 100vw;

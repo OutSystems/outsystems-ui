@@ -1,3 +1,5 @@
+@use "../../tokens/variables";
+
 /* Patterns - Navigation - Pagination */
 ////
 /// @group Patterns-Pagination
@@ -5,10 +7,24 @@
 
 ///
 .pagination {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-pagination-button-background: transparent;
+	--osui-pagination-button-border-color: transparent;
+	--osui-pagination-button-border-width: #{variables.$token-border-size-025};
+	--osui-pagination-button-font-weight: #{variables.$token-font-weight-medium};
+	--osui-pagination-button-hover-background: #{variables.$token-bg-neutral-subtlest-hover};
+	--osui-pagination-button-padding: #{variables.$token-scale-0} #{variables.$token-scale-100};
+	--osui-pagination-button-size: #{variables.$token-scale-900};
+	--osui-pagination-button-text-color: var(--color-text);
+	--osui-pagination-active-border-color: var(--color-border);
+	--osui-pagination-active-color: var(--color-text);
+	--osui-pagination-counter-color: var(--color-text-subtlest);
+	// ───────────────────────────────────────────────────────────────────
+
 	align-items: center;
 	display: flex;
 	justify-content: space-between;
-	margin-top: var(--space-m);
+	margin-block-start: variables.$token-scale-600;
 
 	// pagination-container
 	&-container {
@@ -17,7 +33,7 @@
 		justify-content: center;
 
 		& > .pagination-button:first-child {
-			margin-left: 0;
+			margin-inline-start: 0;
 		}
 
 		.list {
@@ -30,35 +46,44 @@
 
 	&-button {
 		align-items: center;
-		background-color: get-background-color('neutral-0');
-		border: var(--border-size-s) solid get-border-color('neutral-4');
-		border-radius: var(--border-radius-soft);
-		color: get-text-color('neutral-8');
+		background-color: var(--osui-pagination-button-background);
+		border: var(--osui-pagination-button-border-width) solid var(--osui-pagination-button-border-color);
+		border-radius: variables.$token-border-radius-200;
+		color: var(--osui-pagination-button-text-color);
 		cursor: pointer;
 		display: inline-flex;
-		height: 32px;
+		font-weight: var(--osui-pagination-button-font-weight);
+		height: var(--osui-pagination-button-size);
 		justify-content: center;
-		margin-left: var(--space-s);
-		padding: 0;
-		width: 32px;
+		margin-inline-start: variables.$token-scale-100;
+		padding: var(--osui-pagination-button-padding);
+		transition:
+			background-color variables.$token-transition-time-100 variables.$token-transition-curve-expressive,
+			border-color variables.$token-transition-time-100 variables.$token-transition-curve-expressive;
+		width: var(--osui-pagination-button-size);
 
 		&[disabled] {
 			opacity: 0.5;
 			pointer-events: none;
 		}
 
+		&:focus {
+			border-color: variables.$token-semantics-primary-base;
+			box-shadow: 0 0 0 variables.$token-border-size-075 color-mix(in srgb, #{variables.$token-semantics-primary-base} 22%, transparent);
+		}
+
 		&.is--active {
-			border: var(--border-size-s) solid get-border-color('primary');
-			color: get-text-color('primary');
+			border-color: var(--osui-pagination-active-border-color);
+			color: var(--osui-pagination-active-color);
 			cursor: auto;
 			pointer-events: none;
 		}
 
 		&.is--ellipsis {
-			background-color: get-background-color('transparent');
+			background-color: transparent;
 			border: 0;
 			cursor: auto;
-			width: 16px;
+			width: variables.$token-scale-400;
 		}
 	}
 
@@ -74,7 +99,7 @@
 
 	// pagination-counter
 	&-counter {
-		color: get-text-color('neutral-7');
+		color: var(--osui-pagination-counter-color);
 	}
 
 	.list.list-group {
@@ -82,19 +107,20 @@
 	}
 
 	.form-control[data-input] {
-		height: 32px;
-		margin: var(--space-none) var(--space-s);
+		height: var(--osui-pagination-button-size);
+		margin-block: variables.$token-scale-0;
+		margin-inline: variables.$token-scale-100;
 		padding: 0;
 		text-align: center;
-		width: 32px;
+		width: var(--osui-pagination-button-size);
 	}
 }
+
 // Responsive ---------------------------------------------------------------------------
 ///
 .desktop {
-	.pagination-button:not(.is--ellipsis):hover {
-		background-color: rgba(21, 24, 26, 0.04);
-		border: var(--border-size-s) solid get-border-color('neutral-4');
+	.pagination-button:not(.is--ellipsis):not(.is--active):hover {
+		background-color: var(--osui-pagination-button-hover-background);
 	}
 }
 
@@ -103,8 +129,8 @@
 	.pagination {
 		&-button,
 		.form-control[data-input] {
-			height: 40px;
-			width: 40px;
+			height: variables.$token-scale-1000;
+			width: variables.$token-scale-1000;
 		}
 	}
 }
@@ -115,13 +141,13 @@
 		flex-direction: column;
 
 		&-container {
-			margin-top: var(--space-base);
+			margin-block-start: variables.$token-scale-400;
 		}
 
 		&-button,
 		.form-control[data-input] {
-			height: 40px;
-			width: 40px;
+			height: variables.$token-scale-1000;
+			width: variables.$token-scale-1000;
 		}
 	}
 }
@@ -130,8 +156,6 @@
 ///
 .is-rtl {
 	.pagination-button {
-		margin-left: 0;
-		margin-right: var(--space-s);
 
 		.icon {
 			transform: rotate(180deg);
@@ -139,18 +163,10 @@
 	}
 }
 
-// Accessibility ---------------------------------------------------------------------------
-///
-.has-accessible-features {
-	.pagination-button:focus {
-		border-color: get-border-color('focus-inner');
-	}
-}
-
 // OS HighContrast Enabled -------------------------------------------------------
 ///
 .os-high-contrast {
 	.pagination-button.is--active {
-		@include a11y-high-contrast-outline;
+		outline: variables.$token-border-size-075 solid variables.$token-semantics-primary-base;
 	}
 }

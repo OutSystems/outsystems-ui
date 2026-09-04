@@ -1,51 +1,199 @@
+@use "sass:map";
+@use '../../00-abstract/index' as *;
+@use "../../tokens/variables";
+
 /* Patterns - Content - Tag */
 ////
 /// @group Patterns-Tag
 /// Patterns - Content - Tag
 
+// Per-family IsLight=true text colors, per the Figma Tag spec: families mapped
+// to a semantic read the semantic text token, extended families read the
+// matching text-extended-* token (cyan→aqua, grape→purple per token naming).
+$osui-tag-lightest-text-colors: (
+	'red': variables.$token-text-danger,
+	'orange': variables.$token-text-extended-orange,
+	'yellow': variables.$token-text-warning,
+	'lime': variables.$token-text-extended-lime,
+	'green': variables.$token-text-success,
+	'teal': variables.$token-text-extended-teal,
+	'cyan': variables.$token-text-extended-aqua,
+	'blue': variables.$token-text-info,
+	'indigo': variables.$token-text-extended-indigo,
+	'violet': variables.$token-text-extended-violet,
+	'grape': variables.$token-text-extended-purple,
+	'pink': variables.$token-text-extended-pink,
+);
+
 ///
 .tag {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-tag-color: var(--color-text-inverse);
+	--osui-tag-on-light-color: var(--color-text);
+	--osui-tag-soft-border-radius: #{variables.$token-border-radius-100};
+	--osui-tag-medium-soft-border-radius: #{variables.$token-border-radius-200};
+	// ───────────────────────────────────────────────────────────────────
+
 	align-items: center;
-	color: get-text-color('neutral-0');
+	color: var(--osui-tag-color);
 	display: inline-flex;
-	font-weight: var(--font-semi-bold);
-	height: 32px;
+	font-size: variables.$token-font-size-300;
+	font-weight: variables.$token-font-weight-medium;
+	gap: variables.$token-space-200;
 	justify-content: center;
-	line-height: 1;
-	min-width: 32px;
-	padding: var(--space-none) var(--space-base);
+	line-height: var(--osui-font-line-height-full);
+	min-height: variables.$token-scale-500;
+	min-width: unset;
+	padding-block: variables.$token-space-0;
+	padding-inline: variables.$token-space-200;
 	word-break: normal;
+
+	// Figma Tag spec: Soft shape uses the 4px radius token (border/border-radius/100),
+	// narrower than the global 8px .border-radius-soft utility.
+	&.border-radius-soft {
+		border-radius: var(--osui-tag-soft-border-radius);
+	}
 
 	&.tag {
 		&-small {
-			font-size: var(--font-size-xs);
-			height: 24px;
-			padding: var(--space-none) var(--space-s);
+			min-height: variables.$token-scale-400;
+			min-width: variables.$token-scale-400;
+			padding-block: variables.$token-space-0;
+			padding-inline: variables.$token-space-150;
 		}
 
 		&-medium {
-			font-size: var(--font-size-base);
-			height: 40px;
-			padding: var(--space-none) var(--space-m);
+			font-size: variables.$token-font-size-350;
+			min-height: variables.$token-scale-700;
+			padding-block: variables.$token-space-0;
+			padding-inline: variables.$token-space-250;
+
+			// Figma Tag spec: the Medium size steps the Soft shape up to the 8px
+			// radius token (border/border-radius/200), unlike the 4px default.
+			&.border-radius-soft {
+				border-radius: var(--osui-tag-medium-soft-border-radius);
+			}
 		}
 	}
 
 	&.background {
 		&-transparent {
-			color: get-text-color('primary');
+			--osui-tag-color: var(--color-primary);
+
+			&-lightest {
+				--osui-tag-color: var(--color-text-inverse);
+			}
 		}
 
 		&-neutral {
-			&-0 {
-				color: get-text-color('primary');
-			}
-
+			&-0,
 			&-1,
 			&-2,
 			&-3,
-			&-4 {
-				color: get-text-color('neutral-9');
+			&-4,
+			&-5 {
+				background-color: variables.$token-bg-neutral-base-default;
+				color: variables.$token-text-default;
 			}
+
+			&-6,
+			&-7,
+			&-8,
+			&-9,
+			&-10 {
+				background-color: variables.$token-bg-neutral-bold-default;
+				color: variables.$token-text-inverse;
+			}
+
+			&-0-lightest,
+			&-1-lightest,
+			&-2-lightest,
+			&-3-lightest,
+			&-4-lightest,
+			&-5-lightest {
+				background-color: variables.$token-bg-neutral-subtle-default;
+				color: variables.$token-text-subtle;
+			}
+
+			&-6-lightest,
+			&-7-lightest,
+			&-8-lightest,
+			&-9-lightest,
+			&-10-lightest {
+				background-color: variables.$token-bg-neutral-base-default;
+				color: variables.$token-text-default;
+			}
+		}
+
+		&-error {
+			background-color: variables.$token-bg-danger-base-default;
+		}
+
+		&-success {
+			background-color: variables.$token-bg-success-base-default;
+		}
+
+		&-info {
+			background-color: variables.$token-bg-info-base-default;
+		}
+
+		&-warning {
+			background-color: variables.$token-bg-warning-base-default;
+		}
+
+		// Warning backgrounds are light enough to need dark text (Figma).
+		&-warning,
+		&-yellow {
+			--osui-tag-color: var(--color-text-dark);
+		}
+
+		&-secondary {
+			--osui-tag-color: var(--color-primary);
+		}
+
+		&-primary,
+		&-blue,
+		&-green,
+		&-red {
+			--osui-tag-color: var(--color-text-light);
+		}
+	}
+
+	// IsLight=true — semantic colors render `background-{semantic}-light`;
+	// the utility class provides the subtle background, only text is set here.
+	&.background-error-light {
+		color: variables.$token-text-danger;
+	}
+
+	&.background-success-light {
+		color: variables.$token-text-success;
+	}
+
+	&.background-info-light {
+		color: variables.$token-text-info;
+	}
+
+	&.background-warning-light {
+		color: variables.$token-text-warning;
+	}
+
+	// The background-primary-lightest utility is still surface-white (pending
+	// theme-layer review), so the Figma subtle background is set locally.
+	&.background-primary-lightest {
+		background-color: variables.$token-bg-primary-subtle-default;
+		color: variables.$token-text-primary;
+	}
+
+	&.background-secondary-lightest {
+		background-color: variables.$token-bg-neutral-base-default;
+		color: var(--osui-tag-on-light-color);
+	}
+
+	// Extended palette IsLight=true — background comes from the token-backed
+	// background-{color}-lightest utility; only the per-family text token is set.
+	@each $color, $variations in $osui-colors-extended {
+		&.background-#{$color}-lightest {
+			color: #{map.get($osui-tag-lightest-text-colors, $color)};
 		}
 	}
 }

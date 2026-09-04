@@ -1,3 +1,6 @@
+@use '../00-abstract/index' as *;
+@use "../tokens/variables";
+
 ////
 /// @group Resets
 /// Normalize - Reset default and native styles
@@ -12,10 +15,27 @@
 }
 
 /* ============================================================================ */
+/* Reduced Motion                                                               */
+/* ============================================================================ */
+/// Single global opt-out for users who prefer reduced motion. Near-zero
+/// durations (instead of `none`) keep transitionend / animationend events
+/// firing so JS-driven patterns that await them still complete.
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		scroll-behavior: auto !important;
+		transition-duration: 0.01ms !important;
+	}
+}
+
+/* ============================================================================ */
 /* HTML                                                                         */
 /* ============================================================================ */
 html {
-	color: get-text-color('neutral-9');
+	color: var(--color-text);
 	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif,
 		'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
 	-moz-osx-font-smoothing: grayscale;
@@ -37,11 +57,10 @@ html {
 /* ============================================================================ */
 ///
 body {
-	background-color: get-app-settings-background-color('body', --color-background-body);
+	@include apply-typography(variables.$token-body-md-regular);
+	background-color: var(--background-color-body, var(--color-background-body));
 	/// iOS devices loses the direction default value when toggle the RTL on the body element. Added the default property of direction to prevent the issue.
 	direction: ltr;
-	font-size: var(--font-size-s);
-	line-height: 1.5;
 	margin: 0;
 }
 
@@ -60,14 +79,13 @@ body {
 
 ///
 .has-accessible-features :focus {
-	@include a11y-default-outline;
+	box-shadow: 0 0 0 variables.$token-border-size-075 var(--color-focus-outer);
 }
 
 ///
 .os-high-contrast .has-accessible-features :focus {
 	box-shadow: none;
-
-	@include a11y-high-contrast-outline;
+	outline: variables.$token-border-size-075 solid var(--color-focus-outer);
 }
 
 /* ============================================================================ */
@@ -75,7 +93,7 @@ body {
 /* ============================================================================ */
 ///
 abbr[title] {
-	border-bottom: 0;
+	border-block-end: 0;
 	text-decoration: underline;
 }
 
@@ -92,13 +110,13 @@ div[onclick] {
 /* ============================================================================ */
 ///
 label {
-	color: get-text-color('neutral-8');
+	color: var(--color-text-subtlest);
 }
 
 ///
 [data-label].mandatory:after {
-	color: get-text-color('error');
-	margin-left: var(--space-xs);
+	color: variables.$token-semantics-danger-base;
+	margin-inline-start: variables.$token-scale-100;
 }
 
 /* ============================================================================ */

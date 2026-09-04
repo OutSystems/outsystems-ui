@@ -1,0 +1,39 @@
+@use "../../../../tokens/variables";
+
+// TimePicker
+.osui-timepicker__dropdown {
+	.numInputWrapper {
+		.numInput {
+			color: var(--color-text);
+		}
+	}
+
+	.flatpickr-time {
+		.flatpickr-time-separator,
+		.numInputWrapper .numInput {
+			font-weight: variables.$token-font-weight-semi-bold;
+		}
+
+		.flatpickr-time-separator {
+			color: variables.$token-primitives-neutral-700;
+			line-height: variables.$token-scale-1000;
+		}
+	}
+
+	// AM/PM selector
+	.flatpickr-am-pm {
+		background-color: var(--color-border-input);
+		border-radius: var(--border-radius-rounded);
+		height: variables.$token-scale-600;
+		line-height: variables.$token-scale-600;
+		position: absolute;
+		right: variables.$token-scale-100;
+		text-transform: uppercase;
+		width: variables.$token-scale-1000;
+
+		&:hover,
+		&:focus {
+			background-color: var(--color-border-input-press);
+		}
+	}
+}

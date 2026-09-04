@@ -17,10 +17,10 @@
 /* Hide StickyObserve when HideOnScroll is used*/
 ///
 .sticky-observer {
-	height: var(--header-size);
-	left: 0;
+	height: var(--size-header);
+	inset-inline-end: 0;
+	inset-inline-start: 0;
 	position: absolute;
-	right: 0;
 	top: 0;
 	visibility: hidden;
 }
@@ -37,6 +37,6 @@ Example can be checked at Tooltip since we can have clickable containers. */
 ///
 .tablet .tablet-full-width,
 .phone .phone-full-width {
-	margin-left: 0;
+	margin-inline-start: 0;
 	width: 100%;
 }

@@ -1,3 +1,7 @@
+@use "sass:map";
+@use '../00-abstract/index' as *;
+@use "../tokens/variables";
+
 /* Usefull - Padding */
 ////
 /// @group UsefullClasses-Padding
@@ -7,45 +11,29 @@
 .padding {
 	@each $type, $value in $osui-sizes {
 		&-#{$type} {
-			padding: var(--space-#{$type});
+			padding: #{map.get($osui-space-token-vars, $type)};
 		}
 
-		@each $osui-box-side in $osui-box-sides {
+		@each $osui-box-side, $osui-logical-side in $osui-box-sides {
 			&-#{$osui-box-side}-#{$type} {
-				padding-#{$osui-box-side}: var(--space-#{$type});
+				padding-#{$osui-logical-side}: #{map.get($osui-space-token-vars, $type)};
 			}
 		}
 
 		&-x-#{$type} {
-			padding-left: var(--space-#{$type});
-			padding-right: var(--space-#{$type});
+			padding-inline: #{map.get($osui-space-token-vars, $type)};
 		}
 
 		&-y-#{$type} {
-			padding-bottom: var(--space-#{$type});
-			padding-top: var(--space-#{$type});
+			padding-block: #{map.get($osui-space-token-vars, $type)};
 		}
 	}
 
 	&-auto {
-		padding: 0 auto;
-	}
-}
-
-// IsRTL -------------------------------------------------------------------------
-///
-.is-rtl {
-	@each $type, $value in $osui-sizes {
-		.padding {
-			&-right-#{$type} {
-				padding-left: var(--space-#{$type});
-				padding-right: var(--space-none);
-			}
-
-			&-left-#{$type} {
-				padding-left: var(--space-none);
-				padding-right: var(--space-#{$type});
-			}
-		}
+		// `auto` is not a valid padding value, so this declaration has always been
+		// dropped by the browser. Left physical on purpose: splitting it into
+		// padding-block/padding-inline would make the `0` half suddenly apply.
+		padding-block: 0;
+		padding-inline: auto;
 	}
 }

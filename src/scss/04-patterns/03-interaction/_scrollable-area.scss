@@ -1,3 +1,5 @@
+@use "../../tokens/variables";
+
 /* Patterns - Interaction - Scrollable Area */
 ////
 /// @group Patterns-Scrollable_Area
@@ -65,17 +67,17 @@
 				&::-webkit-scrollbar-track,
 				&::-webkit-scrollbar-thumb,
 				&:hover::-webkit-scrollbar-track {
-					background-color: get-background-color('transparent');
+					background-color: transparent;
 				}
 
 				&:hover::-webkit-scrollbar-thumb {
 					background-color: rgba(173, 181, 189, 0.5);
-					border-radius: 6px;
+					border-radius: variables.$token-scale-150;
 				}
 
 				&::-webkit-scrollbar-thumb:hover {
 					background-color: rgba(106, 113, 120, 0.5);
-					border-radius: 6px;
+					border-radius: variables.$token-scale-150;
 				}
 			}
 		}
@@ -91,28 +93,30 @@
 	&::-webkit-scrollbar-track,
 	&::-webkit-scrollbar-thumb,
 	&:hover::-webkit-scrollbar-track {
-		background-color: get-background-color('transparent');
+		background-color: transparent;
 	}
 
 	&:hover::-webkit-scrollbar-thumb {
 		background-color: rgba(173, 181, 189, 0.5);
-		border-radius: 6px;
+		border-radius: variables.$token-scale-150;
 	}
 
 	&::-webkit-scrollbar-thumb:hover {
 		background-color: rgba(106, 113, 120, 0.5);
-		border-radius: 6px;
+		border-radius: variables.$token-scale-150;
 	}
 }
 
 // IsRTL -------------------------------------------------------------------------
-///
+/// The LTR counterpart of this spacing is not declared in the OSUI bundle (it comes from
+/// the consuming list/carousel), so there is no logical declaration for RTL to mirror.
+/// Kept physical until that owner is found.
 .is-rtl {
 	.horizontal-scroll {
 		& > :not(:first-child),
 		.list > :not(:first-child) {
 			margin-left: unset;
-			margin-right: var(--space-base);
+			margin-right: variables.$token-scale-400;
 		}
 	}
 }

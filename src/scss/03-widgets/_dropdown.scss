@@ -1,3 +1,5 @@
+@use "../tokens/variables";
+
 /* Widgets - Dropdown */
 ////
 /// @group Widgets-Dropdown
@@ -5,6 +7,24 @@
 
 .dropdown {
 	&-container {
+		// ─── Component CSS API ─────────────────────────────────────────────
+		--osui-dropdown-background: var(--color-background-input);
+		--osui-dropdown-border-color: var(--color-border-input);
+		--osui-dropdown-border-width: #{variables.$token-border-size-025};
+		--osui-dropdown-color: var(--color-text);
+		--osui-dropdown-border-radius: var(--border-radius-soft);
+		--osui-dropdown-hover-border-color: var(--color-border-input-hover);
+		--osui-dropdown-prompt-color: var(--color-text-subtlest);
+		--osui-dropdown-list-background: var(--color-background-surface);
+		--osui-dropdown-list-border-color: var(--color-border);
+		--osui-dropdown-list-max-height: 240px;
+		--osui-dropdown-list-shadow: #{variables.$token-elevation-3};
+		--osui-dropdown-focus-border-color: var(--color-border-primary);
+		--osui-dropdown-focus-ring-color: #{variables.$token-border-focus-default};
+		--osui-dropdown-arrow-color: #{variables.$token-icon-subtlest};
+		--osui-dropdown-arrow-size: #{variables.$token-scale-400};
+		// ───────────────────────────────────────────────────────────────────
+
 		cursor: initial;
 		position: relative;
 
@@ -16,64 +36,104 @@
 		& > select {
 			&.dropdown-display {
 				align-items: center;
-				background-color: get-background-color('neutral-0');
-				border: var(--border-size-s) solid get-border-color('neutral-5');
-				border-radius: var(--border-radius-soft);
-				color: get-text-color('neutral-9');
+				background-color: var(--osui-dropdown-background);
+				border: var(--osui-dropdown-border-width) solid var(--osui-dropdown-border-color);
+				border-radius: var(--osui-dropdown-border-radius);
+				color: var(--osui-dropdown-color);
 				cursor: pointer;
 				display: flex;
-				font-size: var(--font-size-s);
-				height: 40px;
-				padding: var(--space-none) var(--space-base);
+				font-size: variables.$token-font-size-350;
+				height: variables.$token-scale-1000;
+				padding-block: variables.$token-scale-0;
+				padding-inline: variables.$token-scale-400;
 				width: 100%;
 
 				&:hover {
-					border: var(--border-size-s) solid get-border-color('neutral-6');
+					border-color: var(--osui-dropdown-hover-border-color);
 				}
 
 				&:focus {
-					border: var(--border-size-s) solid get-border-color('primary');
+					border: var(--osui-dropdown-border-width) solid var(--osui-dropdown-focus-border-color);
+					box-shadow: 0 0 0 variables.$token-border-size-050 var(--osui-dropdown-focus-ring-color);
+					outline: none;
 				}
+			}
+		}
+
+		// Prompt (empty) state for the native <select> variant — muted by default,
+		// darkens to text-default on hover (matches Figma). Detected by the empty-value
+		// prompt option being the checked one.
+		& > select.dropdown-display:has(option:checked[value='']) {
+			color: var(--osui-dropdown-prompt-color);
+
+			&:hover {
+				color: var(--osui-dropdown-color);
 			}
 		}
 
 		&.not-valid {
-			&.dropdown-expanded > div.dropdown-display,
+			div.dropdown-display,
 			& > select.dropdown-display {
-				border: var(--border-size-s) solid get-border-color('error');
+				border: var(--osui-dropdown-border-width) solid variables.$token-border-danger-default;
 			}
 		}
 
 		&.dropdown-expanded > div.dropdown-display {
-			border: var(--border-size-s) solid get-border-color('primary');
+			border: var(--osui-dropdown-border-width) solid var(--osui-dropdown-focus-border-color);
+			box-shadow: 0 0 0 variables.$token-border-size-050 var(--osui-dropdown-focus-ring-color);
 		}
 
 		& > div.dropdown-list {
-			border: var(--border-size-s) solid get-border-color('neutral-4');
-			border-radius: var(--border-radius-soft);
-			box-shadow: none;
-			left: 0 !important;
-			max-height: 300px;
+			background-color: var(--osui-dropdown-list-background);
+			border: var(--osui-dropdown-border-width) solid var(--osui-dropdown-list-border-color);
+			border-radius: var(--osui-dropdown-border-radius);
+			box-shadow: var(--osui-dropdown-list-shadow);
+			inset-inline-start: 0 !important;
+			max-height: var(--osui-dropdown-list-max-height);
 			overflow-y: auto;
 			position: absolute;
 			width: 100% !important;
+
+			&::-webkit-scrollbar {
+				width: 5px;
+			}
+
+			&::-webkit-scrollbar-track {
+				background: var(--color-border);
+			}
+
+			&::-webkit-scrollbar-thumb {
+				background-color: var(--color-text-disabled);
+			}
 		}
 
 		.dropdown-popup-row {
 			align-items: center;
-			color: get-text-color('neutral-9');
+			color: var(--color-text);
+			cursor: pointer;
 			display: flex;
-			height: 40px;
-			padding: var(--space-none) var(--space-base);
+			justify-content: space-between;
+			padding-block: #{variables.$token-scale-200};
+			padding-inline: #{variables.$token-scale-400};
 
 			&:hover,
 			&-selected:hover {
-				background: get-background-color('neutral-2');
+				background: var(--color-border-subtle);
 			}
 
 			&-selected {
-				background-color: get-background-color('neutral-2');
-				color: get-text-color('neutral-9');
+				background: none;
+				color: var(--color-text);
+
+				// Right-side checkmark — requires --osui-icon-check + --osui-icon-font-family (icon library)
+				&::after {
+					color: variables.$token-semantics-primary-base;
+					content: var(--osui-icon-check);
+					flex-shrink: 0;
+					font-family: var(--osui-icon-font-family);
+					font-size: variables.$token-font-size-400;
+					margin-inline-start: variables.$token-scale-200;
+				}
 			}
 
 			span {
@@ -87,7 +147,7 @@
 			background: none;
 			max-height: 100%;
 			overflow-y: hidden;
-			padding: var(--space-s) var(--space-none);
+			padding: variables.$token-scale-0;
 
 			&:before,
 			&:after {
@@ -99,13 +159,13 @@
 	// Is expanded
 	&-expanded {
 		&-down div.dropdown-list {
-			margin-top: var(--space-xs);
+			margin-block-start: variables.$token-scale-100;
 			top: 100% !important;
 		}
 
 		&-up div.dropdown-list {
 			bottom: 100% !important;
-			margin-bottom: var(--space-xs);
+			margin-block-end: variables.$token-scale-100;
 			top: auto !important;
 		}
 	}
@@ -114,11 +174,14 @@
 div,
 select {
 	&.dropdown-display {
+		// Platform sets font-weight: bold as inline style — !important required to override it
+		font-weight: variables.$token-font-weight-regular !important;
+
 		&.dropdown-disabled,
 		&[disabled] {
-			background-color: get-background-color('neutral-2');
-			border: var(--border-size-s) solid get-border-color('neutral-4');
-			color: get-text-color('neutral-6');
+			background-color: var(--color-background-input-disabled);
+			border: variables.$token-border-size-025 solid var(--color-border);
+			color: var(--color-text-disabled);
 			pointer-events: none;
 		}
 	}
@@ -130,7 +193,7 @@ div {
 
 		& > span,
 		& > div {
-			font-size: var(--font-size-s);
+			font-size: variables.$token-font-size-350;
 		}
 	}
 }
@@ -144,13 +207,13 @@ select.dropdown-display[disabled] {
 .phone {
 	div.dropdown-display,
 	select.dropdown-display {
-		font-size: var(--font-size-base);
-		height: 48px;
+		font-size: variables.$token-font-size-400;
+		height: variables.$token-scale-1200;
 
 		.dropdown-display-content {
 			& > span,
 			& > div {
-				font-size: var(--font-size-base);
+				font-size: variables.$token-font-size-400;
 			}
 		}
 	}
@@ -162,25 +225,21 @@ select.dropdown-display[disabled] {
 	.dropdown-container {
 		&.dropdown-expanded {
 			& > div.dropdown-display {
-				border-color: get-border-color('focus-inner');
-				box-shadow: 0 0 0 3px get-background-color('focus-outer');
+				border-color: var(--color-focus-inner);
+				box-shadow: 0 0 0 variables.$token-border-size-075 var(--color-focus-outer);
 			}
 		}
 
 		& > div,
 		& > select {
 			&.dropdown-display {
-				border-color: get-border-color('neutral-7');
-
-				&:hover {
-					border-color: get-border-color('neutral-8');
-				}
+				border-color: var(--color-border-input);
 			}
 		}
 
 		& > select {
 			&.dropdown-display:focus {
-				border-color: get-border-color('focus-inner');
+				border-color: var(--color-focus-inner);
 			}
 		}
 	}

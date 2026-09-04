@@ -1,3 +1,5 @@
+@use "../../tokens/variables";
+
 /* Patterns - Numbers - Counter */
 ////
 /// @group Patterns-Counter
@@ -6,7 +8,8 @@
 ///
 .counter {
 	display: flex;
-	padding: var(--space-none) var(--space-m);
+	padding-block: variables.$token-scale-0;
+	padding-inline: variables.$token-scale-600;
 	word-break: keep-all;
 
 	&.background-transparent {
@@ -14,17 +17,16 @@
 	}
 
 	.center-align {
+		align-items: center;
 		display: flex;
 		width: 100%;
 
 		&.flex-direction {
 			&-column {
-				align-items: center;
 				justify-content: center;
 			}
 
 			&-row {
-				align-items: center;
 				justify-content: space-between;
 			}
 		}

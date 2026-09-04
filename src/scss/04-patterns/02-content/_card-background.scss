@@ -1,3 +1,6 @@
+@use '../../00-abstract/index' as *;
+@use '../../tokens/variables';
+
 /* Patterns - Content - Card Background */
 ////
 /// @group Patterns-Card_Background
@@ -5,12 +8,19 @@
 
 ///
 .card-background {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-card-background-border-color: #{variables.$token-border-subtle};
+	--osui-card-background-border-width: #{variables.$token-border-size-025};
+	--osui-card-background-border-radius: var(--border-radius-softer);
+	// ───────────────────────────────────────────────────────────────────
+
 	align-items: center;
-	border-radius: var(--border-radius-soft);
-	color: get-text-color('neutral-0');
+	border: var(--osui-card-background-border-width) solid var(--osui-card-background-border-color);
+	border-radius: var(--osui-card-background-border-radius);
+	color: var(--color-text-light);
 	display: flex;
 	overflow: hidden;
-	padding: var(--space-m);
+	padding: variables.$token-scale-600;
 	position: relative;
 
 	// Service Studio Preview
@@ -19,7 +29,10 @@
 	}
 
 	&-content {
+		align-items: center;
 		display: flex;
+		flex-direction: column;
+		justify-content: center;
 		position: relative;
 		width: 100%;
 		z-index: var(--layer-local-tier-1);
@@ -32,7 +45,7 @@
 		&.top-left,
 		&.center-left,
 		&.bottom-left {
-			text-align: left;
+			text-align: start;
 		}
 
 		&.top-center,
@@ -44,7 +57,7 @@
 		&.top-right,
 		&.center-right,
 		&.bottom-right {
-			text-align: right;
+			text-align: end;
 		}
 	}
 
@@ -72,7 +85,7 @@
 			background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%);
 			content: '';
 			height: 100%;
-			left: 0;
+			inset-inline-start: 0;
 			opacity: 1;
 			position: absolute;
 			top: 0;
@@ -94,10 +107,10 @@
 ///
 .layout-native {
 	.card-background {
-		padding: var(--space-base);
+		padding: variables.$token-scale-400;
 
 		&.padding-none {
-			padding: var(--space-none);
+			padding: variables.$token-scale-0;
 		}
 	}
 }

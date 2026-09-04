@@ -1,49 +1,181 @@
+@use "sass:map";
+@use '../../00-abstract/index' as *;
+@use "../../tokens/variables";
+
 /* Patterns - Content - User Avatar */
 ////
 /// @group Patterns-User_Avatar
 /// Patterns - Content - User Avatar
 
+// Per-family IsLight=true text colors, per the Figma UserAvatar spec (same
+// matrix as Tag): families mapped to a semantic read the semantic text token,
+// extended families read text-extended-* (cyan→aqua, grape→purple).
+$osui-avatar-lightest-text-colors: (
+	'red': variables.$token-text-danger,
+	'orange': variables.$token-text-extended-orange,
+	'yellow': variables.$token-text-warning,
+	'lime': variables.$token-text-extended-lime,
+	'green': variables.$token-text-success,
+	'teal': variables.$token-text-extended-teal,
+	'cyan': variables.$token-text-extended-aqua,
+	'blue': variables.$token-text-info,
+	'indigo': variables.$token-text-extended-indigo,
+	'violet': variables.$token-text-extended-violet,
+	'grape': variables.$token-text-extended-purple,
+	'pink': variables.$token-text-extended-pink,
+);
+
 ///
 .avatar {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-avatar-color: var(--color-text-inverse);
+	--osui-avatar-on-light-color: var(--color-text);
+	--osui-avatar-soft-border-radius: #{variables.$token-border-radius-100};
+	// ───────────────────────────────────────────────────────────────────
+
 	align-items: center;
-	color: get-text-color('neutral-0');
+	color: var(--osui-avatar-color);
 	display: inline-flex;
-	font-weight: var(--font-semi-bold);
-	height: 32px;
+	font-size: variables.$token-font-size-350;
+	font-weight: variables.$token-font-weight-semi-bold;
+	height: variables.$token-scale-800;
 	justify-content: center;
 	line-height: 1;
 	text-transform: uppercase;
-	width: 32px;
+	width: variables.$token-scale-800;
+
+	// Figma UserAvatar spec: Soft shape uses the 4px radius token
+	// (border/border-radius/100), narrower than the global 8px utility.
+	&.border-radius-soft {
+		border-radius: var(--osui-avatar-soft-border-radius);
+	}
+
+	&.avatar-small {
+		font-size: variables.$token-font-size-300;
+		font-weight: variables.$token-font-weight-medium;
+		height: variables.$token-scale-600;
+		width: variables.$token-scale-600;
+	}
+
+	&.avatar-medium {
+		font-size: variables.$token-font-size-400;
+		font-weight: variables.$token-font-weight-medium;
+		height: variables.$token-scale-1000;
+		width: variables.$token-scale-1000;
+	}
 
 	&.background {
 		&-transparent {
-			color: get-text-color('primary');
+			--osui-avatar-color: var(--color-primary);
+
+			&-lightest {
+				--osui-avatar-color: var(--color-text-inverse);
+			}
 		}
 
 		&-neutral {
-			&-0 {
-				color: get-text-color('primary');
-			}
-
+			&-0,
 			&-1,
 			&-2,
 			&-3,
-			&-4 {
-				color: get-text-color('neutral-9');
+			&-4,
+			&-5 {
+				background-color: variables.$token-bg-neutral-base-default;
+				color: variables.$token-text-default;
 			}
+
+			&-6,
+			&-7,
+			&-8,
+			&-9,
+			&-10 {
+				background-color: variables.$token-bg-neutral-bold-default;
+				color: variables.$token-text-inverse;
+			}
+
+			&-0-lightest,
+			&-1-lightest,
+			&-2-lightest,
+			&-3-lightest,
+			&-4-lightest,
+			&-5-lightest {
+				background-color: variables.$token-bg-neutral-subtle-default;
+				color: variables.$token-text-subtle;
+			}
+
+			&-6-lightest,
+			&-7-lightest,
+			&-8-lightest,
+			&-9-lightest,
+			&-10-lightest {
+				background-color: variables.$token-bg-neutral-base-default;
+				color: variables.$token-text-default;
+			}
+		}
+
+		// Warning backgrounds are light enough to need dark text (Figma).
+		&-warning,
+		&-yellow {
+			--osui-avatar-color: var(--color-text-dark);
+		}
+
+		&-secondary {
+			--osui-avatar-color: var(--color-primary);
+		}
+
+		&-primary,
+		&-blue,
+		&-green,
+		&-red {
+			--osui-avatar-color: var(--color-text-light);
 		}
 	}
 
-	&-small {
-		font-size: var(--font-size-xs);
-		height: 24px;
-		width: 24px;
+	// IsLight=true — semantic colors render `background-{semantic}-light`;
+	// the utility class provides the subtle background, only text is set here.
+	&.background-error-light {
+		color: variables.$token-text-danger;
 	}
 
-	&-medium {
-		font-size: var(--font-size-base);
-		height: 40px;
-		width: 40px;
+	&.background-success-light {
+		color: variables.$token-text-success;
+	}
+
+	&.background-info-light {
+		color: variables.$token-text-info;
+	}
+
+	&.background-warning-light {
+		color: variables.$token-text-warning;
+	}
+
+	// The background-primary-lightest utility is still surface-white (pending
+	// theme-layer review), so the Figma subtle background is set locally.
+	// Matches the Tag pattern's primary treatment.
+	&.background-primary-lightest {
+		background-color: variables.$token-bg-primary-subtle-default;
+		color: variables.$token-text-primary;
+	}
+
+	&.background-secondary-lightest {
+		background-color: variables.$token-bg-neutral-base-default;
+		color: var(--osui-avatar-on-light-color);
+	}
+
+	// Extended palette IsLight=true — background comes from the token-backed
+	// background-{color}-lightest utility; only the per-family text token is set.
+	@each $color, $variations in $osui-colors-extended {
+		&.background-#{$color}-lightest {
+			color: #{map.get($osui-avatar-lightest-text-colors, $color)};
+		}
+	}
+
+	// Type=Image — the photo fills the avatar box and follows its shape.
+	img {
+		border-radius: inherit;
+		height: 100%;
+		object-fit: cover;
+		width: 100%;
 	}
 
 	span {

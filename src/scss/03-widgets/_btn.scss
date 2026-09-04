@@ -1,3 +1,5 @@
+@use '../tokens/variables';
+
 /* Widgets - Button */
 ////
 /// @group Widgets-Button
@@ -5,110 +7,246 @@
 
 ///
 .btn {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	// Unmodified .btn maps to the Figma "Secondary" type: surface (white) fill,
+	// subtle text, default border — an outlined button, no solid fill.
+	// Confirmed against Figma file mMqGdwjw4xuQv2shvFVNMB, node 2812:23083
+	// (ROU-13008) — previously this matched the wrong Figma type (see git log
+	// for the pre-ROU-13008 solid-fill version this replaced).
+	--osui-btn-height: #{variables.$token-scale-1000};
+	--osui-btn-background: var(--color-background-surface);
+	--osui-btn-color: var(--color-text-subtle);
+	--osui-btn-border-color: var(--color-border);
+	// Hover/active read through these two vars regardless of variant — each
+	// variant below only needs to override them with its own token tier.
+	--osui-btn-hover-background: #{variables.$token-bg-neutral-subtlest-hover};
+	--osui-btn-active-background: #{variables.$token-bg-neutral-subtlest-press};
+	--osui-btn-border-width: #{variables.$token-border-size-025};
+	--osui-btn-border-radius: var(--border-radius-soft);
+	// Disabled keeps the variant's own color visible underneath this wash,
+	// instead of dimming toward the page background via opacity.
+	--osui-btn-disabled-overlay: #{variables.$token-state-disabled};
+	// Primary variant
+	--osui-btn-primary-background: var(--color-primary);
+	--osui-btn-primary-border-color: var(--color-primary);
+	--osui-btn-primary-color: var(--color-text-light);
+	// Success variant
+	--osui-btn-success-background: #{variables.$token-bg-success-base-default};
+	--osui-btn-success-border-color: #{variables.$token-bg-success-base-default};
+	--osui-btn-success-color: var(--color-text-light);
+	// Error variant
+	--osui-btn-error-background: #{variables.$token-bg-danger-base-default};
+	--osui-btn-error-border-color: #{variables.$token-bg-danger-base-default};
+	--osui-btn-error-color: var(--color-text-light);
+	// Focus state
+	--osui-btn-focus-shadow-width: #{variables.$token-border-size-050};
+	--osui-btn-focus-shadow-gap: #{variables.$token-scale-050};
+	--osui-btn-focus-shadow-color: #{variables.$token-border-focus-default};
+	// ───────────────────────────────────────────────────────────────────
+
 	align-items: center;
-	background-color: get-background-color('neutral-0');
-	border: var(--border-size-s) solid currentColor;
-	border-radius: var(--border-radius-soft);
-	color: get-text-color('primary');
+	background-color: var(--osui-btn-background);
+	border: var(--osui-btn-border-width) solid var(--osui-btn-border-color);
+	border-radius: var(--osui-btn-border-radius);
+	color: var(--osui-btn-color);
 	cursor: pointer;
 	display: inline-flex;
 	filter: brightness(1);
-	font-weight: var(--font-semi-bold);
-	height: 40px;
+	font-weight: variables.$token-font-weight-medium;
+	gap: variables.$token-scale-200;
+	height: var(--osui-btn-height);
 	justify-content: center;
-	line-height: 1;
+	line-height: variables.$token-font-line-height-400;
 	margin: 0;
-	padding: var(--space-none) var(--space-base);
+	padding-block: variables.$token-scale-0;
+	padding-inline: variables.$token-scale-400;
+	position: relative;
+	transition:
+		background-color variables.$token-transition-time-100 variables.$token-transition-curve-base,
+		border-color variables.$token-transition-time-100 variables.$token-transition-curve-base,
+		box-shadow variables.$token-transition-time-100 variables.$token-transition-curve-base,
+		color variables.$token-transition-time-100 variables.$token-transition-curve-base;
 
-	transition: all 100ms linear;
-
-	&:hover:active {
-		filter: brightness(0.8);
+	// Border-color is intentionally not touched here — Figma pins Secondary's
+	// (and Cancel's, transparent) border across every state; only the solid-fill
+	// variants below (primary/success/error) additionally track it to their fill.
+	&:active {
+		background-color: var(--osui-btn-active-background);
 	}
 
-	&[class*='background-'] {
-		border: var(--border-size-s) solid get-border-color('transparent');
-		color: get-text-color('neutral-0');
+	&:focus-visible {
+		box-shadow:
+			0 0 0 var(--osui-btn-focus-shadow-gap) var(--color-background-surface),
+			0 0 0 calc(var(--osui-btn-focus-shadow-gap) + var(--osui-btn-focus-shadow-width))
+				var(--osui-btn-focus-shadow-color);
+		outline: none;
+	}
+
+	& > span:empty {
+		display: none;
+	}
+
+	&[class*='background-']:not(.background-white) {
+		border: var(--osui-btn-border-width) solid transparent;
+		color: var(--color-text-inverse);
+
+		&:active {
+			filter: brightness(0.8);
+		}
 	}
 
 	&[class*='text-'] {
-		background-color: get-background-color('neutral-0');
-		border: var(--border-size-s) solid get-border-color(currentColor);
+		background-color: var(--osui-btn-background);
+		border: var(--osui-btn-border-width) solid currentColor;
 	}
 
 	& + .btn {
-		margin-left: var(--space-m);
+		margin-inline-start: variables.$token-scale-600;
 	}
 
-	// States
+	// Variants
 	&-primary {
-		background-color: get-background-color('primary');
-		border: var(--border-size-s) solid get-border-color('primary');
-		color: get-text-color('neutral-0');
+		--osui-btn-hover-background: var(--color-primary-hover);
+		--osui-btn-active-background: var(--color-primary-active);
+
+		background-color: var(--osui-btn-primary-background);
+		border: var(--osui-btn-border-width) solid var(--osui-btn-primary-border-color);
+		color: var(--osui-btn-primary-color);
+
+		&:active {
+			border-color: var(--osui-btn-active-background);
+		}
 	}
 
 	&-small {
-		font-size: var(--font-size-xs);
-		height: 32px;
-		padding: var(--space-none) var(--space-s);
+		font-size: variables.$token-font-size-300;
+		height: variables.$token-scale-800;
+		padding-block: variables.$token-scale-0;
+		padding-inline: variables.$token-scale-200;
 	}
 
 	&-large {
-		font-size: var(--font-size-base);
-		height: 48px;
+		font-size: variables.$token-font-size-400;
+		height: variables.$token-scale-1200;
 	}
 
 	&-cancel {
-		background-color: get-background-color('neutral-0');
-		border: var(--border-size-s) solid get-border-color('neutral-8');
-		color: get-text-color('neutral-7');
+		// Figma's "Cancel" type is transparent/text-only — no fill, no border,
+		// in every state (confirmed against node 2812:23083, ROU-13008).
+		--osui-btn-background: transparent;
+		--osui-btn-color: var(--color-text-subtle);
+		--osui-btn-border-color: transparent;
+		--osui-btn-hover-background: #{variables.$token-bg-neutral-subtlest-hover};
+		--osui-btn-active-background: #{variables.$token-bg-neutral-subtlest-press};
+
+		background-color: var(--osui-btn-background);
+		border: var(--osui-btn-border-width) solid var(--osui-btn-border-color);
+		color: var(--osui-btn-color);
+
+		// No fill to wash over when disabled — Figma fades the text/icon
+		// instead, so the shared overlay would show as a stray box.
+		&[disabled] {
+			color: var(--color-text-disabled);
+
+			&:after {
+				content: none;
+			}
+		}
 	}
 
 	&-success {
-		background-color: get-background-color('success');
-		border: var(--border-size-s) solid get-border-color('success');
-		color: get-text-color('neutral-0');
+		--osui-btn-hover-background: #{variables.$token-bg-success-base-hover};
+		--osui-btn-active-background: #{variables.$token-bg-success-base-press};
+
+		background-color: var(--osui-btn-success-background);
+		border: var(--osui-btn-border-width) solid var(--osui-btn-success-border-color);
+		color: var(--osui-btn-success-color);
+
+		&:active {
+			border-color: var(--osui-btn-active-background);
+		}
 	}
 
 	&-error {
-		background-color: get-background-color('error');
-		border: var(--border-size-s) solid get-border-color('error');
-		color: get-text-color('neutral-0');
+		--osui-btn-hover-background: #{variables.$token-bg-danger-base-hover};
+		--osui-btn-active-background: #{variables.$token-bg-danger-base-press};
+
+		background-color: var(--osui-btn-error-background);
+		border: var(--osui-btn-border-width) solid var(--osui-btn-error-border-color);
+		color: var(--osui-btn-error-color);
+
+		&:active {
+			border-color: var(--osui-btn-active-background);
+		}
 	}
 
 	&[disabled] {
-		background-color: get-background-color('neutral-2');
-		border: var(--border-size-s) solid get-border-color('neutral-4');
-		color: get-text-color('neutral-6');
 		pointer-events: none;
+
+		&:after {
+			background-color: var(--osui-btn-disabled-overlay);
+			border-radius: inherit;
+			content: '';
+			// extends past the padding box by the border width so the wash covers
+			// the border ring too, not just the fill inside it
+			inset: calc(var(--osui-btn-border-width) * -1);
+			position: absolute;
+		}
+	}
+}
+
+// Hover -------------------------------------------------------------------------
+
+///
+.desktop {
+	.btn {
+		// Background darkens to each variant's own hover tier. Border-color is
+		// deliberately not touched here — see the base :active rule's comment;
+		// only primary/success/error additionally track it, just below.
+		&:hover {
+			background-color: var(--osui-btn-hover-background);
+		}
+
+		&-primary:hover,
+		&-success:hover,
+		&-error:hover {
+			border-color: var(--osui-btn-hover-background);
+		}
+
+		// Utility background-* classes: darken via filter
+		&[class*='background-']:hover {
+			filter: brightness(0.9);
+		}
+
+		// Pressed while hovering: higher specificity than :hover above, always wins
+		&:hover:active {
+			background-color: var(--osui-btn-active-background);
+		}
+
+		&-primary:hover:active,
+		&-success:hover:active,
+		&-error:hover:active {
+			border-color: var(--osui-btn-active-background);
+		}
 	}
 }
 
 // Responsive --------------------------------------------------------------------
 
 ///
-.desktop {
-	.btn {
-		&:hover {
-			filter: brightness(0.9);
-		}
-	}
-}
-
-///
 .tablet,
 .phone {
 	.btn {
-		font-size: var(--font-size-base);
-		height: 48px;
+		font-size: variables.$token-font-size-400;
+		height: variables.$token-scale-1200;
 
 		&-small {
-			font-size: var(--font-size-s);
-			height: 40px;
+			font-size: variables.$token-font-size-350;
+			height: variables.$token-scale-1000;
 		}
 
 		&-large {
-			height: 56px;
+			height: variables.$token-scale-1400;
 		}
 	}
 }
@@ -118,18 +256,18 @@
 	.layout:not(.layout-native) {
 		.btn {
 			display: inline-flex;
-			margin-left: 0;
+			margin-inline-start: 0;
 			width: 100%;
 
 			& + .btn {
-				margin-top: var(--space-base);
+				margin-block-start: variables.$token-scale-400;
 			}
 		}
 
 		.flex-direction-column-reverse {
 			& + .btn {
-				margin-bottom: var(--space-base);
-				margin-top: var(--space-none);
+				margin-block-end: variables.$token-scale-400;
+				margin-block-start: variables.$token-scale-0;
 			}
 		}
 	}
@@ -139,7 +277,10 @@
 ///
 .has-accessible-features {
 	& .btn:focus {
-		border-color: get-background-color('focus-inner');
+		box-shadow:
+			0 0 0 var(--osui-btn-focus-shadow-gap) var(--color-background-surface),
+			0 0 0 calc(var(--osui-btn-focus-shadow-gap) + var(--osui-btn-focus-shadow-width))
+				var(--osui-btn-focus-shadow-color);
 	}
 }
 
@@ -148,10 +289,10 @@
 .layout-native {
 	.header-right {
 		.btn {
-			background-color: get-background-color('transparent');
+			background-color: transparent;
 			border: 0;
-			color: get-text-color('primary');
-			font-size: var(--font-size-base);
+			color: var(--osui-btn-color);
+			font-size: variables.$token-font-size-400;
 			padding: 0;
 		}
 	}
@@ -166,7 +307,7 @@
 
 	.bottom-bar {
 		.btn {
-			padding-bottom: var(--space-none);
+			padding-block-end: variables.$token-scale-0;
 		}
 	}
 }

@@ -1,3 +1,6 @@
+@use '../00-abstract/index' as *;
+@use "../tokens/variables";
+
 /* Page Layout - Menu */
 ////
 /// @group Layout-Menu
@@ -9,27 +12,27 @@
 
 	// Service Studio Preview
 	& {
-		-servicestudio-background-color: get-app-settings-background-color('header', --header-color);
+		-servicestudio-background-color: var(--background-color-header, var(--color-background-header));
 		-servicestudio-height: auto !important;
 	}
 }
 
 .app-menu-content {
-	left: calc(-1 * var(--side-menu-size));
+	left: calc(-1 * var(--size-side-menu));
 	transform: translateX(0) translateZ(0);
 	transition: transform 130ms ease-in;
 
 	&.is--open {
-		transform: translateX(var(--side-menu-size)) translateZ(0);
+		transform: translateX(var(--size-side-menu)) translateZ(0);
 		transition: transform 330ms ease-out;
 	}
 }
 
 ///
 .app-menu-overlay {
-	background-color: get-background-color('overlay');
+	background-color: variables.$token-backdrop;
 	height: 100vh;
-	left: 0;
+	inset-inline-start: 0;
 	opacity: 0;
 	pointer-events: none;
 	position: fixed;
@@ -91,10 +94,10 @@
 	.aside-navigation {
 		// Service Studio Preview
 		& {
-			-servicestudio-background-color: get-background-color('neutral-0');
+			-servicestudio-background-color: variables.$token-bg-surface-default;
 			-servicestudio-height: 100%;
 			-servicestudio-position: fixed;
-			-servicestudio-width: var(--side-menu-size);
+			-servicestudio-width: var(--size-side-menu);
 			-servicestudio-z-index: var(--layer-global-navigation);
 		}
 
@@ -150,7 +153,7 @@
 	.app-menu-content {
 		&,
 		&.is--open {
-			left: 0;
+			inset-inline-start: 0;
 		}
 	}
 }
@@ -159,16 +162,17 @@
 .tablet,
 .phone {
 	.app-login-info {
-		padding: var(--space-s) var(--space-m);
+		padding-block: variables.$token-scale-200;
+		padding-inline: variables.$token-scale-600;
 	}
 
 	.app-menu-content {
-		background-color: get-background-color('neutral-0');
+		background-color: variables.$token-bg-surface-default;
 		flex-direction: column;
 		height: 100%;
 		position: fixed;
 		top: 0;
-		width: var(--side-menu-size);
+		width: var(--size-side-menu);
 		will-change: transform;
 		z-index: var(--osui-menu-layer);
 	}
@@ -205,7 +209,7 @@
 .android {
 	&.portrait {
 		.app-menu-content {
-			padding-top: #{android-safe-area-top()};
+			padding-block-start: #{android-safe-area-top()};
 		}
 	}
 
@@ -213,8 +217,8 @@
 		.app-menu-content {
 			padding-left: max(var(--os-safe-area-left), var(--safe-area-status-bar, 0px));
 			padding-right: max(var(--os-safe-area-right), 0px);
-			padding-top: var(--safe-area-inset-top, 0px);
-			padding-bottom: var(--safe-area-inset-bottom, 0px);
+			padding-block-start: var(--safe-area-inset-top, 0px);
+			padding-block-end: var(--safe-area-inset-bottom, 0px);
 		}
 	}
 }
@@ -231,14 +235,10 @@
 ///
 .is-rtl {
 	.app-menu-content {
-		left: auto;
-		right: calc(-1 * var(--side-menu-size));
 		transition: transform 130ms ease-in;
 	}
 
 	.app-menu-content.is--open {
-		left: auto;
-		right: 0;
 		transform: translateX(0) translateZ(0);
 		transition: transform 130ms ease-out;
 	}

@@ -3,7 +3,7 @@
 **/
 const patternInfo = {
     "codeName": "Dropdown",
-    "scss": "../scripts/OSFramework/OSUI/Pattern/Dropdown/scss/dropdown",
+    "scss": "../scss/04-patterns/03-interaction/dropdown/dropdown",
     "section": "Advanced",
 
     "assets": [
@@ -11,14 +11,14 @@ const patternInfo = {
             "codeName": "Search",
             "inDevelopment": false,
             "name": "Dropdown Search",
-            "scss": "../scripts/OSFramework/OSUI/Pattern/Dropdown/scss/dropdown-search"
+            "scss": "../scss/04-patterns/03-interaction/dropdown/dropdown-search"
         },
         
         {
             "codeName": "Tags",
             "inDevelopment": false,
             "name": "Dropdown Tags",
-            "scss": "../scripts/OSFramework/OSUI/Pattern/Dropdown/scss/dropdown-tags"
+            "scss": "../scss/04-patterns/03-interaction/dropdown/dropdown-tags"
         }
     ]
 };

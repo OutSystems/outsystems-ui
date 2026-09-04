@@ -1,3 +1,5 @@
+@use "../../tokens/variables";
+
 /* Patterns - Interaction - Input With Icon */
 ////
 /// @group Patterns-Input_With_Icon
@@ -5,49 +7,70 @@
 
 ///
 .input-with-icon {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-input-with-icon-icon-color:       variables.$token-icon-default;
+	--osui-input-with-icon-icon-hover-color: var(--color-text-subtlest);
+	// ───────────────────────────────────────────────────────────────────
+
 	display: flex;
 	position: relative;
 
 	&.input-with-icon-right {
 		.input-with-icon-content-icon {
-			left: auto;
-			right: 0;
+			inset-inline-start: auto;
+			inset-inline-end: 0;
 
 			&:not(:empty) + .input-with-icon-input input {
-				padding-left: var(--space-base);
-				padding-right: var(--space-xl);
+				padding-inline-start: variables.$token-scale-400;
+				padding-inline-end: variables.$token-scale-1000;
 			}
 
 			&.search-actions {
-				left: 0;
-				right: auto;
+				inset-inline-start: 0;
+				inset-inline-end: auto;
 			}
+		}
+	}
+
+	/* A trailing `.search-actions` slot is absolutely positioned over the input, so
+	   reserve room for it or long values run underneath the icon. Matched with
+	   `:has()` rather than a sibling combinator so it holds whichever side of
+	   `.input-with-icon-input` the slot is authored on. Scoped away from
+	   `.input-with-icon-right`, where `.search-actions` docks to the LEFT instead
+	   and the padding pair is already set in that block. */
+	&:not(.input-with-icon-right):has(.input-with-icon-content-icon.search-actions:not(:empty)) {
+		.input-with-icon-input input {
+			padding-inline-end: variables.$token-scale-1000;
 		}
 	}
 
 	.input-with-icon {
 		&-content-icon {
+			/* The slot is a fixed 40px box the glyph sits inside; without these the
+			   glyph stretches full-height and hugs the slot's leading edge. */
+			align-items: center;
 			display: inline-flex;
 			height: 100%;
-			left: 0;
+			justify-content: center;
+			inset-inline-start: 0;
 			position: absolute;
-			width: 40px;
+			width: variables.$token-scale-1000;
 
 			&,
 			a {
-				color: get-text-color('neutral-7');
+				color: var(--osui-input-with-icon-icon-color);
 			}
 
 			&:not(:empty) + .input-with-icon-input input {
-				padding-left: var(--space-xl);
+				padding-inline-start: variables.$token-scale-1000;
 			}
 
 			&.search-actions {
-				left: auto;
-				right: 0;
+				inset-inline-start: auto;
+				inset-inline-end: 0;
 
 				&:hover {
-					color: get-text-color('neutral-8');
+					color: var(--osui-input-with-icon-icon-hover-color);
 					cursor: pointer;
 				}
 			}
@@ -77,12 +100,12 @@
 .form {
 	.input-with-icon {
 		.input-with-icon-content-icon {
-			padding-bottom: var(--space-m);
+			padding-block-end: variables.$token-scale-600;
 			z-index: var(--layer-local-tier-1);
 		}
 
 		.form-control[class*='ThemeGrid_Width'].not-valid ~ span.validation-message {
-			left: 0;
+			inset-inline-start: 0;
 		}
 	}
 }

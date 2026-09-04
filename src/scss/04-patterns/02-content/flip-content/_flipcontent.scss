@@ -1,0 +1,103 @@
+@use "../../../tokens/variables";
+
+/* Patterns - Content - Flip_Content */
+////
+/// @group Patterns-Flip_Content
+/// Patterns - Content - Flip_Content
+
+///
+.osui-flip-content {
+	perspective: 200vw;
+	position: relative;
+	overflow: hidden;
+
+	// Service Studio preview
+	& {
+		-servicestudio--webkit-perspective: initial;
+		-servicestudio-perspective: initial;
+	}
+
+	// when inside firefox
+	.firefox & {
+		transform: perspective(200vw);
+		transform-style: preserve-3d;
+	}
+
+	&--flipped {
+		.osui-flip-content__container {
+			transform: rotateY(-90deg);
+
+			&__front {
+				position: absolute;
+			}
+
+			&__back {
+				position: relative;
+				transform: rotateY(90deg);
+			}
+		}
+	}
+
+	&__container {
+		cursor: default;
+		position: relative;
+		transform-style: preserve-3d;
+		transition: transform variables.$token-transition-time-500 variables.$token-transition-curve-bounce;
+
+		&--flip-self {
+			cursor: pointer;
+		}
+
+		// Service Studio preview
+		& {
+			-servicestudio--webkit-transform-style: initial;
+			-servicestudio-transform-style: initial;
+		}
+
+		&__front,
+		&__back {
+			backface-visibility: hidden;
+			inset-inline-start: 0;
+			top: 0;
+
+			&:empty {
+				// Service Studio preview
+				& {
+					-servicestudio-min-height: 80px;
+				}
+			}
+		}
+
+		&__front {
+			position: relative;
+			z-index: var(--layer-global-screen);
+		}
+
+		&__back {
+			position: absolute;
+			width: 100%;
+			transform: rotateY(180deg);
+
+			// Service Studio preview
+			& {
+				-servicestudio-position: static;
+			}
+		}
+	}
+}
+
+// IsRTL ---------------------------------------------------------------------------
+///
+.is-rtl {
+	.osui-flip-content {
+		&--flipped {
+			.osui-flip-content__container {
+				transform: rotateY(90deg);
+
+				&__back {
+					transform: rotateY(-90deg);
+				}
+			}
+		}
+	}
+}

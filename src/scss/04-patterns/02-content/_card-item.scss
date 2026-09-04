@@ -1,3 +1,5 @@
+@use "../../tokens/variables";
+
 /* Patterns - Content - CardItem */
 ////
 /// @group Patterns-Card_Item
@@ -5,12 +7,17 @@
 
 ///
 .card-detail {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-card-detail-title-color: var(--color-text);
+	--osui-card-detail-text-color:  var(--color-text-subtlest);
+	// ───────────────────────────────────────────────────────────────────
+
 	align-items: center;
 	display: flex;
 
 	&-left {
 		max-width: 120px;
-		padding-right: var(--space-base);
+		padding-inline-end: variables.$token-scale-400;
 	}
 
 	&-center {
@@ -18,34 +25,18 @@
 	}
 
 	&-right {
-		padding-left: var(--space-base);
+		padding-inline-start: variables.$token-scale-400;
 	}
 
 	&-title {
-		color: get-text-color('neutral-10');
-		font-size: var(--font-size-h5);
-		font-weight: var(--font-semi-bold);
+		color: var(--osui-card-detail-title-color);
+		font-size: variables.$token-font-size-650;
+		font-weight: variables.$token-font-weight-semi-bold;
 	}
 
 	&-text {
-		color: get-text-color('neutral-7');
+		color: var(--osui-card-detail-text-color);
 		overflow: hidden;
 		text-overflow: ellipsis;
-	}
-}
-
-// IsRTL -------------------------------------------------------------------------
-///
-.is-rtl {
-	.card-detail {
-		&-left {
-			padding-left: var(--space-base);
-			padding-right: 0;
-		}
-
-		&-right {
-			padding-left: 0;
-			padding-right: var(--space-base);
-		}
 	}
 }

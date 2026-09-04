@@ -1,0 +1,221 @@
+@use '../../../00-abstract/index' as *;
+@use "../../../tokens/variables";
+
+/* Patterns - Interaction - Notification */
+////
+/// @group Patterns-Notification
+/// Patterns - Interaction - Notification
+
+///
+.osui-notification {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-notification-background: var(--color-background-surface);
+	--osui-notification-border-radius: #{variables.$token-border-radius-100};
+	--osui-notification-shadow: #{variables.$token-elevation-3};
+	--osui-notification-color: var(--color-text);
+	--osui-notification-gap: #{variables.$token-scale-400};
+	--osui-notification-padding: #{variables.$token-scale-400};
+	// ───────────────────────────────────────────────────────────────────
+
+	--osui-notification-margin: #{variables.$token-scale-600};
+
+	align-items: center;
+	background-color: var(--osui-notification-background);
+	border: 0;
+	border-radius: var(--osui-notification-border-radius);
+	box-shadow: var(--osui-notification-shadow);
+	color: var(--osui-notification-color);
+	display: flex;
+	gap: var(--osui-notification-gap);
+	max-width: calc(100vw - (var(--osui-notification-margin) * 2));
+	opacity: 0;
+	padding: var(--osui-notification-padding);
+	pointer-events: none;
+	position: fixed;
+	transition:
+		transform variables.$token-transition-time-300 variables.$token-transition-curve-quick,
+		opacity variables.$token-transition-time-300 variables.$token-transition-curve-quick;
+	user-select: none;
+	width: var(--notification-width);
+	z-index: var(--osui-notification-layer);
+
+	// Service Studio Preview
+	& {
+		-servicestudio-opacity: 1;
+		-servicestudio-position: relative;
+	}
+
+	// Type variants — aligned with Alert and runtime-mobile-widgets-js feedbackMessage
+	&--is-info {
+		--osui-notification-background: #{variables.$token-bg-info-subtle-default};
+		--osui-notification-color: #{variables.$token-text-info};
+	}
+
+	&--is-success {
+		--osui-notification-background: #{variables.$token-bg-success-subtle-default};
+		--osui-notification-color: #{variables.$token-text-success};
+	}
+
+	&--is-error {
+		--osui-notification-background: #{variables.$token-bg-danger-subtle-default};
+		--osui-notification-color: #{variables.$token-text-danger};
+	}
+
+	&--is-warning {
+		--osui-notification-background: #{variables.$token-bg-warning-subtle-default};
+		--osui-notification-color: #{variables.$token-text-warning};
+	}
+
+	// Service Studio Preview
+	&-preview {
+		-servicestudio-position: relative;
+
+		&.bottom .is-bottom,
+		&.bottom-right .is-bottom-right,
+		&.bottom-left .is-bottom-left,
+		&.center .is-center,
+		&.right .is-right,
+		&.left .is-left,
+		&.top .is-top,
+		&.top-right .is-top-right,
+		&.top-left .is-top-left {
+			-servicestudio-display: block;
+		}
+
+		[class*='is-'] {
+			-servicestudio-display: none;
+		}
+	}
+
+	&--is {
+		&-top {
+			left: 50%;
+			transform: translate(-50%, -100%);
+
+			&,
+			&-right,
+			&-left {
+				top: calc(var(--os-safe-area-top) + var(--osui-notification-margin));
+			}
+
+			&-right {
+				right: calc(var(--os-safe-area-right) + var(--osui-notification-margin));
+				transform: translateX(100%);
+			}
+			&-left {
+				left: calc(var(--os-safe-area-left) + var(--osui-notification-margin));
+				transform: translateX(-100%);
+			}
+		}
+
+		&-center {
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -100%);
+		}
+
+		&-right,
+		&-left {
+			top: 50%;
+		}
+
+		&-right {
+			right: calc(var(--os-safe-area-right) + var(--osui-notification-margin));
+			transform: translate(100%, -50%);
+		}
+		&-left {
+			left: calc(var(--os-safe-area-left) + var(--osui-notification-margin));
+			transform: translate(-100%, -50%);
+		}
+
+		&-bottom {
+			left: 50%;
+			transform: translate(-50%, 100%);
+
+			&,
+			&-right,
+			&-left {
+				bottom: calc(var(--os-safe-area-bottom) + var(--osui-notification-margin));
+			}
+
+			&-right {
+				right: calc(var(--os-safe-area-right) + var(--osui-notification-margin));
+				transform: translateX(100%);
+			}
+			&-left {
+				left: calc(var(--os-safe-area-left) + var(--osui-notification-margin));
+				transform: translateX(-100%);
+			}
+		}
+
+		&-open {
+			opacity: 1;
+			pointer-events: auto;
+
+			&.osui-notification {
+				&--is {
+					&-top {
+						transform: translate(-50%);
+
+						&-right,
+						&-left {
+							transform: translate(0, 0);
+						}
+					}
+
+					&-center {
+						transform: translate(-50%, -50%);
+					}
+
+					&-right,
+					&-left {
+						transform: translate(0, -50%);
+					}
+
+					&-bottom {
+						transform: translate(-50%, 0);
+
+						&-right,
+						&-left {
+							transform: translateX(0);
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+///
+.slide-from-left-enter,
+.slide-from-left-leave,
+.slide-from-right-enter,
+.slide-from-right-leave,
+.slide-from-top-enter,
+.slide-from-top-leave,
+.slide-from-bottom-enter,
+.slide-from-bottom-leave,
+.fade-enter,
+.fade-leave {
+	.layout-native {
+		.osui-notification {
+			display: none;
+		}
+	}
+}
+
+// Responsive --------------------------------------------------------------------
+.phone {
+	.osui-notification {
+		--osui-notification-margin: #{variables.$token-scale-400};
+	}
+}
+
+///
+.android {
+	.layout-native {
+		.osui-notification--is-open {
+			margin-block-start: #{android-safe-area-top()};
+		}
+	}
+}

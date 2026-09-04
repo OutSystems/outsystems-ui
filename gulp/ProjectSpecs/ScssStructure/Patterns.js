@@ -6,9 +6,8 @@ const patternsInteraction = require('./PatternsInteraction');
 const patternsNavigation = require('./PatternsNavigation');
 const patternsNumbers = require('./PatternsNumbers');
 const patternsUtilities = require('./PatternsUtilities');
-const patternsDeprecated = require('./PatternsDeprecated');
 
-/* 
+/*
 * Section Info
 **/
 const sectionInfo = {
@@ -22,8 +21,7 @@ const sectionInfo = {
         patternsNavigation.info,
         patternsNumbers.info,
         patternsUtilities.info,
-        patternsAdvanced.info,
-        patternsDeprecated.info
+        patternsAdvanced.info
     ]
 };
 

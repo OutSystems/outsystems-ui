@@ -1,0 +1,375 @@
+@use '../../../tokens/variables';
+
+/* Patterns - Interaction - Animated Label */
+////
+/// @group Patterns-Animated_Label
+/// Patterns - Interaction - Animated Label
+
+///
+.animated-label {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-animated-label-color: var(--color-text-subtlest);
+	--osui-animated-label-border-color: var(--color-border-input);
+	--osui-animated-label-hover-border-color: var(--color-border-input-hover);
+	--osui-animated-label-focus-border-color: var(--color-border-primary);
+	--osui-animated-label-focus-ring-color: #{variables.$token-border-focus-default};
+	--osui-animated-label-focus-shadow: 0 0 0 #{variables.$token-border-size-050}
+		var(--osui-animated-label-focus-ring-color);
+	--osui-animated-label-error-color: #{variables.$token-text-danger};
+	--osui-animated-label-disabled-background: var(--color-background-input-disabled);
+	--osui-animated-label-disabled-color: var(--color-text-disabled);
+	// ───────────────────────────────────────────────────────────────────
+
+	position: relative;
+
+	&.active {
+		.animated-label-text {
+			font-size: variables.$token-font-size-300;
+			top: 0;
+			transform: translateY(-50%);
+			z-index: var(--layer-local-tier-1);
+
+			label {
+				color: var(--osui-animated-label-color);
+				font-size: variables.$token-font-size-300;
+				font-weight: variables.$token-font-weight-semi-bold;
+				letter-spacing: variables.$token-font-letter-spacing-0;
+			}
+		}
+
+		.animated-label-input {
+			.form-control[data-input]::-webkit-datetime-edit {
+				color: var(--color-text);
+			}
+
+			[data-textarea] {
+				padding-block-end: variables.$token-scale-100;
+			}
+		}
+	}
+
+	&-text {
+		background-color: var(--osui-input-background, var(--color-background-input));
+		color: var(--osui-animated-label-color);
+		font-size: variables.$token-font-size-350;
+		inset-inline-start: variables.$token-scale-300;
+		padding-block: 0;
+		padding-inline: variables.$token-scale-100;
+		pointer-events: none;
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+		transition:
+			top variables.$token-transition-time-200 variables.$token-transition-curve-expressive,
+			font-size variables.$token-transition-time-200 variables.$token-transition-curve-expressive,
+			color variables.$token-transition-time-100 variables.$token-transition-curve-expressive,
+			transform variables.$token-transition-time-200 variables.$token-transition-curve-expressive;
+		z-index: var(--layer-global-screen);
+
+		label {
+			color: var(--osui-animated-label-color);
+			font-size: variables.$token-font-size-350;
+			font-weight: variables.$token-font-weight-regular;
+		}
+
+		.icon {
+			padding-inline-end: variables.$token-scale-400;
+		}
+
+		// Service Studio Preview
+		& {
+			-servicestudio-left: 0 !important;
+			-servicestudio-position: static !important;
+		}
+	}
+
+	&-input {
+		&:empty {
+			-servicestudio-min-height: 40px;
+		}
+
+		.form-control {
+			&[data-input],
+			&[data-textarea] {
+				background-color: transparent;
+				border: variables.$token-border-size-0;
+				border-block-end: variables.$token-border-size-025 solid var(--osui-animated-label-border-color);
+				padding: variables.$token-scale-0;
+				transition: all variables.$token-transition-time-100 variables.$token-transition-curve-expressive;
+
+				&:focus {
+					border-block-end: variables.$token-border-size-025 solid var(--osui-animated-label-focus-border-color);
+
+					&::-webkit-datetime-edit {
+						color: var(--color-text);
+					}
+				}
+
+				&.not-valid {
+					border-block-end: variables.$token-border-size-025 solid variables.$token-semantics-danger-base;
+
+					&:focus {
+						border: variables.$token-border-size-0;
+						border-block-end: variables.$token-border-size-025 solid variables.$token-semantics-danger-base;
+					}
+				}
+
+				/* Removes placeholder text for input type date and time*/
+				&::-webkit-datetime-edit {
+					color: transparent;
+				}
+
+				&::-webkit-calendar-picker-indicator {
+					display: none;
+				}
+
+				&:-webkit-autofill {
+					animation-name: onAutoFillStart;
+				}
+
+				&:not(:-webkit-autofill) {
+					animation-name: onAutoFillCancel;
+				}
+			}
+
+			&[data-textarea] {
+				margin-block-start: variables.$token-scale-200;
+
+				& + span.validation-message {
+					bottom: 7px;
+				}
+			}
+		}
+	}
+
+	/* ============================================================
+	   Outlined variant
+	   ============================================================ */
+	background-color: var(--osui-input-background, var(--color-background-input));
+	border: variables.$token-border-size-025 solid var(--osui-animated-label-border-color);
+	border-radius: var(--osui-input-border-radius, #{variables.$token-border-radius-200});
+	overflow: visible;
+	transition: border-color variables.$token-transition-time-100 variables.$token-transition-curve-expressive;
+
+	&:has(.input-with-icon-content-icon:not(:empty)) {
+		.animated-label-text {
+			inset-inline-start: variables.$token-scale-1000;
+		}
+	}
+
+	// Hover — subtle border emphasis
+	&:hover:not(:focus-within):not(:has([disabled])) {
+		border-color: var(--osui-animated-label-hover-border-color);
+	}
+
+	&:focus-within {
+		border-color: var(--osui-animated-label-focus-border-color);
+		box-shadow: var(--osui-animated-label-focus-shadow);
+	}
+
+	// Disabled — muted surface + label
+	&:has([disabled]) {
+		background-color: var(--osui-animated-label-disabled-background);
+		border-color: var(--osui-animated-label-border-color);
+
+		.animated-label-text {
+			background-color: var(--osui-animated-label-disabled-background);
+
+			label {
+				color: var(--osui-animated-label-disabled-color);
+			}
+		}
+
+		&.active .animated-label-text {
+			background-image: linear-gradient(
+				to top,
+				var(--osui-animated-label-disabled-background) 50%,
+				var(--osui-input-background, var(--color-background-input)) 50%
+			);
+		}
+	}
+
+	// Autofill — bottom half transparent so field/autocomplete color shows through the label
+	&:has(.form-control:-webkit-autofill).active .animated-label-text {
+		background-color: transparent;
+		background-image: linear-gradient(to top, transparent 50%, var(--color-background-body) 50%);
+	}
+
+	&:has(.not-valid) {
+		border-color: var(--osui-animated-label-error-color);
+		margin-block-end: variables.$token-scale-900;
+	}
+
+	&:has(textarea) {
+		.animated-label-text {
+			top: variables.$token-scale-400;
+			transform: none;
+		}
+	}
+
+	&.active:has(textarea) {
+		.animated-label-text {
+			top: 0;
+			transform: translateY(-50%);
+		}
+	}
+
+	// Nested to raise specificity above global .form-control focus rules
+	.animated-label-input {
+		position: relative;
+
+		&,
+		* {
+			border-radius: inherit;
+		}
+
+		span.input-text {
+			display: block;
+		}
+
+		&:not(:has(textarea)) {
+			height: variables.$token-scale-1000;
+
+			span.input-text {
+				height: 100%;
+			}
+		}
+
+		.form-control {
+			&[data-input] {
+				background-color: transparent;
+				border: none;
+				height: 100%;
+				padding-block: 0;
+				padding-inline: variables.$token-scale-400;
+				width: 100%;
+
+				&:focus {
+					border: none;
+					box-shadow: none;
+					outline: none;
+				}
+			}
+
+			&[data-textarea] {
+				background-color: transparent;
+				border: none;
+				margin: 0;
+				padding-block: variables.$token-scale-400 0;
+				padding-inline: variables.$token-scale-400;
+				width: 100%;
+
+				&:focus {
+					border: none;
+					box-shadow: none;
+					outline: none;
+				}
+			}
+		}
+
+		.validation-message {
+			bottom: auto;
+			inset-inline-start: 0;
+			position: absolute;
+			top: calc(100% + #{variables.$token-scale-100});
+		}
+
+		.input-with-icon {
+			height: variables.$token-scale-1000;
+
+			.input-with-icon-content-icon:not(:empty) + .input-with-icon-input .form-control[data-input] {
+				padding-inline-start: variables.$token-scale-1000;
+			}
+
+			&.input-with-icon-right
+				.input-with-icon-content-icon:not(:empty)
+				+ .input-with-icon-input
+				.form-control[data-input] {
+				padding-inline-start: variables.$token-scale-400;
+				padding-inline-end: variables.$token-scale-1000;
+			}
+		}
+	}
+}
+
+/* Fix for animated labels inside lists */
+.list.list-group > [data-block*='AnimatedLabel']:first-child .animated-label {
+	margin-block-start: variables.$token-scale-200;
+}
+
+///
+.form {
+	.animated-label {
+		&-input .form-control[data-textarea] + span.validation-message {
+			position: relative;
+			bottom: variables.$token-scale-600;
+		}
+	}
+}
+
+/* Chrome autofill hack ----------------------------------------
+	This is an hack to solve the autoFill when Chrome at windows.
+	An event added throught JS was added to proper manage the input behaviour based on this animation.
+*/
+
+// End of Chrome autofill hack -----------------------------------
+
+// Responsive --------------------------------------------------------------------
+///
+.tablet,
+.phone {
+	.form-control {
+		&[data-textarea] {
+			& + span.validation-message {
+				bottom: variables.$token-scale-250;
+			}
+		}
+	}
+}
+
+// Accessibility --------------------------------------------------------------------
+///
+.has-accessible-features {
+	.animated-label-input {
+		.form-control[data-input] {
+			border-color: var(--color-border-input);
+
+			&:hover {
+				border-color: var(--osui-animated-label-hover-border-color);
+			}
+		}
+	}
+
+	.animated-label:focus-within {
+		--osui-animated-label-focus-shadow: 0 0 0 #{variables.$token-border-size-075} var(--color-focus-outer);
+
+		border-color: var(--osui-animated-label-border-color);
+	}
+}
+
+// OS HighContrast Enabled -------------------------------------------------------
+///
+.os-high-contrast {
+	.animated-label-text {
+		font-weight: variables.$token-font-weight-semi-bold;
+		padding-block: variables.$token-scale-0;
+		padding-inline: variables.$token-scale-200;
+	}
+
+	.animated-label {
+		&.active {
+			.animated-label-text {
+				background-color: var(--color-text-subtlest);
+				font-size: variables.$token-font-size-350;
+				top: -16px; // design-spec: high-contrast label lift
+			}
+		}
+	}
+
+	.animated-label-input {
+		.form-control[data-input] {
+			padding-block: variables.$token-scale-0;
+			padding-inline: variables.$token-scale-200;
+		}
+	}
+}

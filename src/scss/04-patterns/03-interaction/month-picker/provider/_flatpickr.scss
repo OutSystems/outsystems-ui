@@ -1,0 +1,78 @@
+@use "../../../../tokens/variables";
+
+// Flatpickr - MonthPicker
+.osui-monthpicker__dropdown {
+	&.flatpickr-calendar {
+		width: auto;
+	}
+
+	.flatpickr-months {
+		padding-bottom: 0;
+	}
+}
+
+.flatpickr-monthSelect-months {
+	display: grid;
+	gap: variables.$token-scale-200;
+	grid-template-columns: repeat(3, max-content);
+	justify-items: center;
+	margin: 0;
+
+	.flatpickr-monthSelect-month {
+		align-items: center;
+		border: variables.$token-border-size-025 solid transparent;
+		border-radius: variables.$token-border-radius-200;
+		display: flex;
+		height: variables.$token-scale-1000;
+		margin: 0;
+		min-width: 70px;
+		transition: background-color variables.$token-transition-time-100 variables.$token-transition-curve-base;
+		width: 100%;
+
+		&:hover,
+		&:focus {
+			background: var(--color-border-subtle);
+		}
+
+		&.selected {
+			background-color: variables.$token-semantics-primary-base;
+			border-color: transparent;
+			color: var(--color-text-inverse);
+		}
+
+		&.flatpickr-disabled {
+			background-color: var(--color-background-input-disabled);
+			color: var(--color-border-input);
+
+			&:hover {
+				background-color: var(--color-background-input-disabled) !important; // override provider !important rule
+			}
+
+			&.today:hover,
+			&.today:focus {
+				border: none;
+			}
+		}
+
+		// Today indicator — only when not selected or disabled
+		&.today:not(.selected):not(.flatpickr-disabled) {
+			border-color: var(--color-border-input);
+
+			&:hover,
+			&:focus {
+				background: var(--color-border-subtle);
+				border-color: variables.$token-border-subtle;
+				color: variables.$token-semantics-primary-base;
+			}
+		}
+	}
+}
+
+// RTL
+.is-rtl {
+	.osui-monthpicker__dropdown {
+		.flatpickr-monthSelect-months {
+			direction: rtl;
+		}
+	}
+}

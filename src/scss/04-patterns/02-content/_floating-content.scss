@@ -1,3 +1,5 @@
+@use "../../tokens/variables";
+
 /* Patterns - Content - Floating Content */
 ////
 /// @group Patterns-Floating_Content
@@ -11,8 +13,8 @@
 
 	&.floating-content-full {
 		&-width {
-			left: 0;
-			right: 0;
+			inset-inline-end: 0;
+			inset-inline-start: 0;
 			width: auto;
 
 			& > .OSInline {
@@ -21,8 +23,8 @@
 		}
 
 		&-height {
-			margin-top: 0;
-			top: calc(var(--header-size) + var(--space-base) * 2);
+			margin-block-start: 0;
+			top: calc(var(--size-header) + variables.$token-space-400 * 2);
 
 			&.absolute-top {
 				top: var(--os-safe-area-top);
@@ -36,7 +38,7 @@
 		}
 
 		&-top-plus-header {
-			top: calc(var(--header-size) + var(--os-safe-area-top));
+			top: calc(var(--size-header) + var(--os-safe-area-top));
 		}
 	}
 
@@ -50,31 +52,31 @@
 
 	&-top {
 		left: 50%;
-		margin-top: 0;
-		top: calc(var(--header-size) + var(--space-base) * 2);
+		margin-block-start: 0;
+		top: calc(var(--size-header) + variables.$token-space-400 * 2);
 		transform: translateX(-50%);
 
 		&-left {
-			left: 0;
-			margin-top: 0;
-			top: calc(var(--header-size) + var(--space-base) * 2);
+			inset-inline-start: 0;
+			margin-block-start: 0;
+			top: calc(var(--size-header) + variables.$token-space-400 * 2);
 		}
 
 		&-right {
-			margin-top: 0;
-			right: 0;
-			top: calc(var(--header-size) + var(--space-base) * 2);
+			inset-inline-end: 0;
+			margin-block-start: 0;
+			top: calc(var(--size-header) + variables.$token-space-400 * 2);
 		}
 	}
 
 	&-left {
-		left: 0;
+		inset-inline-start: 0;
 		top: 50%;
 		transform: translateY(-50%);
 	}
 
 	&-right {
-		right: 0;
+		inset-inline-end: 0;
 		top: 50%;
 		transform: translateY(-50%);
 	}
@@ -111,12 +113,12 @@
 
 		&-left {
 			bottom: 0;
-			left: 0;
+			inset-inline-start: 0;
 		}
 
 		&-right {
 			bottom: 0;
-			right: 0;
+			inset-inline-end: 0;
 		}
 	}
 
@@ -152,22 +154,22 @@
 	}
 
 	&-margin {
-		margin: var(--space-l);
+		margin: variables.$token-space-800;
 
 		&.floating-content {
 			&-center {
-				left: calc(50% - var(--space-l));
-				top: calc(50% - var(--space-l));
+				inset-inline-start: calc(50% - variables.$token-space-800);
+				top: calc(50% - variables.$token-space-800);
 			}
 
 			&-left,
 			&-right {
-				top: calc(50% - var(--space-l));
+				top: calc(50% - variables.$token-space-800);
 			}
 			&-top,
 			&-bottom,
 			&-center {
-				left: calc(50% - var(--space-l));
+				inset-inline-start: calc(50% - variables.$token-space-800);
 			}
 		}
 	}
@@ -190,7 +192,7 @@
 			}
 
 			&.floating-content-full-height.floating-content-margin {
-				margin: var(--space-l);
+				margin: variables.$token-space-800;
 			}
 		}
 	}
@@ -212,14 +214,14 @@
 				&-top:not(.absolute-top),
 				&-center:not(.absolute-center),
 				&-bottom:not(.absolute-bottom) {
-					left: calc(50% + ((var(--side-menu-size) / 2)));
+					inset-inline-start: calc(50% + ((var(--size-side-menu) / 2)));
 				}
 
 				&.floating-content-full-width,
 				&-left:not(.absolute-left),
 				&-bottom-left:not(.absolute-left),
 				&-top-left:not(.absolute-left) {
-					left: var(--side-menu-size);
+					inset-inline-start: var(--size-side-menu);
 				}
 			}
 		}
@@ -235,7 +237,7 @@
 			&-left,
 			&-bottom-left {
 				&:not(.absolute-left) {
-					left: var(--side-menu-size);
+					inset-inline-start: var(--size-side-menu);
 				}
 			}
 		}
@@ -244,7 +246,7 @@
 	.layout-native {
 		.aside-visible {
 			.floating-content.floating-content-full-width {
-				left: var(--side-menu-size);
+				inset-inline-start: var(--size-side-menu);
 			}
 		}
 	}
@@ -257,7 +259,7 @@
 			.floating-content.floating-content-full-width {
 				.aside-visible.menu-visible {
 					.floating-content.floating-content-full-width {
-						left: var(--side-menu-size);
+						inset-inline-start: var(--size-side-menu);
 					}
 				}
 			}
@@ -276,8 +278,8 @@
 				}
 
 				&-width {
-					left: 0;
-					right: 0;
+					inset-inline-end: 0;
+					inset-inline-start: 0;
 				}
 			}
 
@@ -289,7 +291,7 @@
 				&,
 				&-left,
 				&-right {
-					bottom: calc(var(--bottom-bar-size) + var(--os-safe-area-bottom));
+					bottom: calc(var(--size-bottom-bar) + var(--os-safe-area-bottom));
 				}
 			}
 		}
@@ -330,7 +332,7 @@
 .os-high-contrast {
 	.floating {
 		&-button {
-			border: var(--border-size-m) solid get-border-color('neutral-7');
+			border: variables.$token-border-size-050 solid variables.$token-primitives-neutral-700;
 		}
 	}
 }

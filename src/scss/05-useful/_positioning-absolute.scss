@@ -14,22 +14,22 @@
 		top: 0;
 
 		&-right {
-			right: 0;
+			inset-inline-end: 0;
 			top: 0;
 		}
 
 		&-left {
-			left: 0;
+			inset-inline-start: 0;
 			top: 0;
 		}
 
 		&-plus-header {
-			top: calc(var(--header-size) + var(--os-safe-area-top));
+			top: calc(var(--size-header) + var(--os-safe-area-top));
 		}
 	}
 
 	&-right {
-		right: 0;
+		inset-inline-end: 0;
 	}
 
 	&-bottom {
@@ -37,12 +37,12 @@
 
 		&-right {
 			bottom: 0;
-			right: 0;
+			inset-inline-end: 0;
 		}
 
 		&-left {
 			bottom: 0;
-			left: 0;
+			inset-inline-start: 0;
 		}
 
 		&.absolute {
@@ -55,7 +55,7 @@
 	}
 
 	&-left {
-		left: 0;
+		inset-inline-start: 0;
 	}
 
 	&-center {
@@ -70,7 +70,7 @@
 		}
 
 		&-right {
-			right: 0;
+			inset-inline-end: 0;
 			top: 50%;
 			transform: translateY(-50%);
 		}
@@ -82,7 +82,7 @@
 		}
 
 		&-left {
-			left: 0;
+			inset-inline-start: 0;
 			top: 50%;
 			transform: translateY(-50%);
 		}

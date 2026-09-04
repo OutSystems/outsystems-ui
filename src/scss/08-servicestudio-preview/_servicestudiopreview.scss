@@ -1,3 +1,5 @@
+@use '../tokens/variables';
+
 ////
 /// @group ServiceStudio_Preview
 /* 
@@ -17,7 +19,7 @@ body > .app-menu-content {
 
 	& .app-menu-links {
 		-servicestudio-align-items: flex-start;
-		-servicestudio-padding: var(--space-none);
+		-servicestudio-padding: variables.$token-scale-0;
 		-servicestudio-width: 100% !important;
 	}
 }
@@ -26,8 +28,8 @@ body > .app-menu-content {
 .phone {
 	.app-menu-links {
 		a {
-			-servicestudio-margin-left: var(--space-none);
-			-servicestudio-padding: var(--space-s) var(--space-m);
+			-servicestudio-margin-left: variables.$token-scale-0;
+			-servicestudio-padding: variables.$token-scale-200 variables.$token-scale-600;
 			-servicestudio-width: 100%;
 		}
 	}
@@ -37,11 +39,11 @@ body > .app-menu-content {
 html[data-uieditorversion^='1'] {
 	body {
 		&:not(.phone):not(.tablet) .layout-side aside {
-			-servicestudio-background-color: get-background-color('neutral-0');
+			-servicestudio-background-color: variables.$token-bg-surface-default;
 			-servicestudio-bottom: 0;
 			-servicestudio-position: fixed;
 			-servicestudio-top: 0;
-			-servicestudio-width: var(--side-menu-size);
+			-servicestudio-width: var(--size-side-menu);
 			-servicestudio-z-index: var(--layer-global-navigation);
 		}
 

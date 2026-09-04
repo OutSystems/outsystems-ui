@@ -1,3 +1,5 @@
+@use "../tokens/variables";
+
 /* Page Layout - Menu - Header Logo */
 ////
 /// @group Layout-Menu-Header_Logo
@@ -6,8 +8,9 @@
 ///
 .layout-side {
 	.header-logo {
-		height: var(--header-size);
-		padding: var(--space-none) var(--space-m);
+		height: var(--size-header);
+		padding-block: variables.$token-scale-0;
+		padding-inline: variables.$token-scale-600;
 	}
 }
 
@@ -15,7 +18,8 @@
 .tablet,
 .phone {
 	.header-logo {
-		height: var(--header-size);
-		padding: var(--space-none) var(--space-m);
+		height: var(--size-header);
+		padding-block: variables.$token-scale-0;
+		padding-inline: variables.$token-scale-600;
 	}
 }

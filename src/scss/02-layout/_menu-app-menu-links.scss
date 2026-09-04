@@ -1,3 +1,5 @@
+@use "../tokens/variables";
+
 /* Page Layout - Menu - App Menu Link */
 ////
 /// @group Layout-Menu-App_Menu_Link
@@ -11,8 +13,8 @@
 	// Service Studio Preview
 	& {
 		-servicestudio-align-items: center;
+		-servicestudio-column-gap: variables.$token-scale-600;
 		-servicestudio-display: flex;
-		-servicestudio-column-gap: var(--space-m);
 	}
 
 	// Service Studio Preview
@@ -21,9 +23,9 @@
 
 		// Service Studio Preview
 		&:after {
-			-servicestudio-color: get-text-color('neutral-7');
+			-servicestudio-color: variables.$token-primitives-neutral-700;
 			-servicestudio-content: 'Drag screens to this container to create menu entries';
-			-servicestudio-font-size: var(--font-size-xs);
+			-servicestudio-font-size: variables.$token-font-size-300;
 			-servicestudio-left: 50%;
 			-servicestudio-position: absolute;
 			-servicestudio-text-align: center;
@@ -33,16 +35,16 @@
 	}
 
 	a {
-		color: get-text-color('neutral-9');
+		color: var(--color-text);
 
 		// Service Studio Preview
 		& {
-			-servicestudio-color: get-text-color('neutral-9');
+			-servicestudio-color: var(--color-text);
 		}
 
 		&:hover,
 		&.active {
-			color: get-text-color('primary');
+			color: variables.$token-semantics-primary-base;
 			text-decoration: none;
 		}
 	}
@@ -55,7 +57,7 @@ body {
 			// Service Studio Preview
 			& {
 				-servicestudio-align-items: flex-start;
-				-servicestudio-padding: var(--space-none);
+				-servicestudio-padding: variables.$token-scale-0;
 				-servicestudio-width: 100% !important;
 			}
 		}
@@ -77,12 +79,12 @@ body {
 	.app-menu-links {
 		a {
 			align-items: center;
-			border-bottom: var(--border-size-m) solid get-border-color('transparent');
-			border-top: var(--border-size-m) solid get-border-color('transparent');
+			border-block-end: variables.$token-border-size-050 solid transparent;
+			border-block-start: variables.$token-border-size-050 solid transparent;
 			display: inline-flex;
 
 			&.active {
-				border-bottom: var(--border-size-m) solid get-border-color('primary');
+				border-block-end: variables.$token-border-size-050 solid transparent;
 			}
 		}
 	}
@@ -93,11 +95,13 @@ body {
 .menu-visible {
 	.app-menu-links {
 		a {
-			border-bottom: 0;
-			border-left: var(--border-size-m) solid get-border-color('transparent');
-			border-top: 0;
-			margin-left: 0;
-			padding: var(--space-s) var(--space-m);
+			border-block-end: 0;
+			border-block-start: 0;
+			border-inline-start: 0;
+			border-radius: variables.$token-border-radius-200;
+			margin-inline-start: 0;
+			padding-block: variables.$token-scale-200;
+			padding-inline: variables.$token-scale-400;
 		}
 	}
 }
@@ -109,19 +113,23 @@ body {
 		& {
 			-servicestudio-align-items: flex-start;
 		}
+	}
+}
 
-		& {
-			display: flex;
-			flex-direction: column;
+.layout-side .app-menu-links,
+.menu-visible .app-menu-links {
+	display: flex;
+	flex-direction: column;
 
-			-webkit-overflow-scrolling: touch;
-			overflow-y: auto;
-			padding-top: var(--space-s);
-		}
+	-webkit-overflow-scrolling: touch;
+	overflow-y: auto;
+	padding: variables.$token-scale-200;
+	width: 100%;
 
-		a.active {
-			border-left: var(--border-size-m) solid get-border-color('primary');
-		}
+	> a.active {
+		background-color: variables.$token-bg-primary-subtle-default;
+		border-inline-start: 0;
+		border-radius: variables.$token-border-radius-200;
 	}
 }
 
@@ -147,35 +155,36 @@ body {
 .phone,
 .tablet {
 	.app-menu-links {
+		-webkit-overflow-scrolling: touch;
 		display: flex;
 		flex-direction: column;
-		-webkit-overflow-scrolling: touch;
 		overflow-y: auto;
-		padding-top: var(--space-s);
+		padding: variables.$token-scale-200;
+		width: 100%;
 
 		a {
 			// Service Studio preview
 			& {
-				-servicestudio-margin-left: var(--space-none);
-				-servicestudio-padding: var(--space-s) var(--space-m);
+				-servicestudio-margin-left: variables.$token-scale-0;
+				-servicestudio-padding: variables.$token-scale-200 variables.$token-scale-600;
 				-servicestudio-width: 100%;
 			}
 		}
 	}
 
 	.layout:not(.layout-side) .app-menu-links a.active {
-		border-bottom: 0;
+		border-block-end: 0;
 	}
 }
 
 // Accessibility -----------------------------------------------------------------
 .has-accessible-features {
 	.header a.active:focus {
-		color: get-text-color('primary');
+		color: variables.$token-semantics-primary-base;
 	}
 
 	.app-menu-links a:focus {
-		background-color: get-background-color('transparent');
-		box-shadow: 0 0 0 3px get-background-color('focus-outer');
+		background-color: transparent;
+		box-shadow: 0 0 0 variables.$token-border-size-075 var(--color-focus-outer);
 	}
 }

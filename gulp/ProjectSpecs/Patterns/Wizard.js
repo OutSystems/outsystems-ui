@@ -5,7 +5,7 @@ const patternInfo = {
 	"codeName": "Wizard",
 	"inDevelopment": false,
 	"name": "Wizard",
-	"scss": "../scripts/OSFramework/OSUI/Pattern/Wizard/scss/wizard",
+	"scss": "../scss/04-patterns/02-content/wizard/wizard",
 	"section": "Content"
 };
 

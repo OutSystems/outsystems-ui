@@ -1,3 +1,5 @@
+@use "../tokens/variables";
+
 /* Widgets - Table - Bulk Actions */
 ////
 /// @group Widgets-Table-Bulk_Actions
@@ -12,22 +14,19 @@
 	}
 
 	[data-checkbox] {
-		display: block;
-		height: 16px;
-		width: 16px;
+		--osui-checkbox-size: #{variables.$token-scale-400};
 
-		&:before {
-			height: 14px;
-			width: 14px;
-		}
+		display: block;
 
 		&:checked:after {
-			border: var(--border-size-m) solid get-border-color('neutral-0');
-			border-right: var(--border-size-none) !important;
-			border-top: var(--border-size-none) !important;
+			// physical sides: these borders draw the check glyph under the platform's
+			// physical rotate transform — a checkmark must not mirror in RTL
+			border: variables.$token-border-size-050 solid var(--color-text-inverse);
+			border-top: variables.$token-border-size-0 !important;
+			border-right: variables.$token-border-size-0 !important;
 			display: block;
-			height: 2px;
-			left: 4px;
+			height: variables.$token-scale-050;
+			left: variables.$token-scale-100; // physical: positions the rotated glyph
 			top: 5px;
 			width: 7px;
 		}
@@ -35,19 +34,19 @@
 
 	.checkbox-intermediate {
 		&:before {
-			background-color: get-background-color('primary');
-			border: var(--border-size-s) solid get-border-color('primary');
+			background-color: variables.$token-semantics-primary-base;
+			border: variables.$token-border-size-025 solid variables.$token-semantics-primary-base;
 		}
 
 		&:after {
-			background-color: get-background-color('neutral-0');
+			background-color: var(--color-text-inverse);
 			content: '';
 			height: 2px;
 			left: 50%;
 			position: absolute;
 			top: 50%;
 			transform: translateY(-50%) translateX(-50%);
-			width: 8px;
+			width: variables.$token-scale-200;
 
 			// Service Studio Preview
 			& {

@@ -1,0 +1,144 @@
+@use "../../../tokens/variables";
+
+/* Patterns - Content - Tooltip */
+////
+/// @group Patterns-Tooltip
+/// Patterns - Content - Tooltip
+
+///
+.osui-tooltip {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-tooltip-background: #{variables.$token-bg-surface-default};
+	--osui-tooltip-color: var(--color-text);
+	--osui-tooltip-border-radius: #{variables.$token-border-radius-200};
+	--osui-tooltip-padding: #{variables.$token-space-200} #{variables.$token-space-400};
+	--osui-tooltip-font-size: #{variables.$token-font-size-350};
+	--osui-tooltip-shadow: #{variables.$token-elevation-3};
+	--osui-tooltip-min-height: #{variables.$token-scale-900};
+	--osui-tooltip-max-width: #{variables.$token-scale-5000};
+	// ───────────────────────────────────────────────────────────────────
+
+	--osui-tooltip-background-color: var(--osui-tooltip-background);
+	--osui-tooltip-arrow-size: 10px;
+	--osui-floating-offset: #{variables.$token-scale-200};
+
+	display: inline-block;
+	position: relative;
+
+	// ServiceStudio Preview
+	& {
+		-servicestudio-vertical-align: middle;
+	}
+
+	.osui-balloon {
+		background-color: var(--osui-tooltip-background-color);
+		border-radius: var(--osui-tooltip-border-radius);
+		color: var(--osui-tooltip-color);
+		font-size: var(--osui-tooltip-font-size);
+		box-shadow: var(--osui-tooltip-shadow);
+		font-weight: variables.$token-font-weight-regular;
+		line-height: initial;
+		min-height: var(--osui-tooltip-min-height);
+		max-width: var(--osui-tooltip-max-width);
+		padding: var(--osui-tooltip-padding);
+
+		&[class*='top'] {
+			&:after {
+				inset-inline-start: 0;
+				top: calc(var(--osui-floating-offset) * 2);
+			}
+		}
+
+		&[class*='left'] {
+			&:after {
+				inset-inline-start: calc(var(--osui-floating-offset) * 2);
+				top: 0;
+			}
+		}
+
+		&[class*='bottom-end'] {
+			&:after {
+				inset-inline-start: 0;
+			}
+		}
+
+		// Increase hover size to fit the gap between trigger and balloon
+		&:after {
+			content: '';
+			position: absolute;
+			inset-inline-start: calc(0px - var(--osui-floating-offset) * 2);
+			top: calc(0px - var(--osui-floating-offset) * 2);
+			width: 100%;
+			height: 100%;
+			z-index: var(--layer-global-negative);
+		}
+
+		// Service Studio Preview
+		& {
+			-servicestudio-left: initial;
+			-servicestudio-max-height: initial;
+			-servicestudio-opacity: 1;
+			-servicestudio-overflow: initial;
+			-servicestudio-pointer-events: initial;
+		}
+	}
+
+	&__balloon-arrow {
+		position: absolute;
+		width: var(--osui-tooltip-arrow-size);
+		height: var(--osui-tooltip-arrow-size);
+		background-color: var(--osui-tooltip-background-color);
+		transform: rotate(45deg);
+		z-index: var(--layer-global-negative);
+	}
+
+	&__content {
+		cursor: pointer;
+
+		&:empty {
+			// ServiceStudio Preview
+			& {
+				-servicestudio-min-width: 80px;
+			}
+		}
+	}
+
+	// The balloon wrapper (.osui-balloon) already owns --osui-tooltip-padding, so
+	// the inner content element must not add any of its own or it doubles up.
+	&__balloon-wrapper__balloon {
+		overflow-wrap: anywhere;
+		padding: variables.$token-space-0;
+		text-wrap: wrap;
+	}
+}
+
+// Entrance animation
+@keyframes osui-tooltip-in {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+.osui-tooltip .osui-balloon--is-open {
+	animation: osui-tooltip-in variables.$token-transition-time-150 variables.$token-transition-curve-quick forwards;
+}
+// OS HighContrast Enabled -------------------------------------------------------
+///
+.os-high-contrast {
+	.osui-tooltip {
+		.osui-balloon {
+			border: variables.$token-border-size-025 solid var(--osui-tooltip-background-color);
+		}
+
+		&__balloon-arrow {
+			border: 0 solid var(--osui-tooltip-background-color);
+			// physical sides: the arrow is a square under rotate(45deg); which edges
+			// show depends on the rotation, not on text direction
+			border-right-width: variables.$token-border-size-025;
+			border-bottom-width: variables.$token-border-size-025;
+		}
+	}
+}

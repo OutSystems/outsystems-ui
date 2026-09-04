@@ -1,3 +1,5 @@
+@use "../tokens/variables";
+
 /* Widgets - Checkbox */
 ////
 /// @group Widgets-Checkbox
@@ -5,41 +7,56 @@
 
 ///
 [data-checkbox] {
-	height: 24px;
-	padding: var(--space-none);
-	width: 24px;
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-checkbox-size: #{variables.$token-scale-600};
+	--osui-checkbox-background: var(--color-background-input);
+	--osui-checkbox-border-color: var(--color-border-input);
+	// Same hover tier as .form-control[data-input], so a checkbox and an input
+	// react identically to the pointer
+	--osui-checkbox-hover-border-color: var(--color-border-input-hover);
+	--osui-checkbox-border-radius: var(--border-radius-soft);
+	--osui-checkbox-checked-color: var(--color-primary);
+	// ───────────────────────────────────────────────────────────────────
+
+	height: var(--osui-checkbox-size);
+	padding: variables.$token-scale-0;
+	width: var(--osui-checkbox-size);
 
 	&:before {
-		background: get-background-color('neutral-0');
-		border: var(--border-size-s) solid get-border-color('neutral-5');
-		border-radius: var(--border-radius-soft);
-		height: 22px;
+		background: var(--osui-checkbox-background);
+		border: variables.$token-border-size-025 solid var(--osui-checkbox-border-color);
+		border-radius: var(--osui-checkbox-border-radius);
+		height: calc(var(--osui-checkbox-size) - 2px);
 		opacity: 1;
-		transition: all 180ms linear;
-		width: 22px;
+		transition:
+			background-color variables.$token-transition-time-200 variables.$token-transition-curve-linear,
+			border-color variables.$token-transition-time-200 variables.$token-transition-curve-linear;
+		width: calc(var(--osui-checkbox-size) - 2px);
 	}
 
 	&:hover {
 		&:before {
-			border: var(--border-size-s) solid get-border-color('neutral-6');
+			border-color: var(--osui-checkbox-hover-border-color);
 		}
 	}
 
 	&:checked {
 		&:before {
-			background: get-background-color('primary');
-			border: var(--border-size-s) solid get-border-color('primary');
+			background: var(--osui-checkbox-checked-color);
+			border: variables.$token-border-size-025 solid var(--osui-checkbox-checked-color);
 		}
 
 		&:after {
-			border: var(--border-size-l) solid get-border-color('neutral-0');
-			border-right: var(--border-size-none) !important;
-			border-top: var(--border-size-none) !important;
+			// physical sides: these borders draw the check glyph under the platform's
+			// physical rotate transform — a checkmark must not mirror in RTL
+			border: variables.$token-border-size-075 solid var(--color-text-inverse);
+			border-right: variables.$token-border-size-0 !important;
+			border-top: variables.$token-border-size-0 !important;
 			display: block;
-			height: 4px;
-			left: 5px;
+			height: variables.$token-scale-100;
+			left: 5px; // physical: positions the rotated glyph
 			top: 7px;
-			width: 12px;
+			width: variables.$token-scale-300;
 		}
 	}
 
@@ -48,13 +65,13 @@
 
 		&:before,
 		&:checked:before {
-			background-color: get-background-color('neutral-2');
-			border: var(--border-size-s) solid get-border-color('neutral-4');
+			background-color: var(--color-border-subtle);
+			border: variables.$token-border-size-025 solid var(--color-border);
 		}
 
 		&:checked {
 			&:after {
-				border: var(--border-size-l) solid get-border-color('neutral-6');
+				border: variables.$token-border-size-075 solid var(--color-text-disabled);
 			}
 		}
 	}
@@ -65,17 +82,11 @@
 .tablet,
 .phone {
 	[data-checkbox] {
-		height: 32px;
-		width: 32px;
-
-		&:before {
-			height: 30px;
-			width: 30px;
-		}
+		--osui-checkbox-size: #{variables.$token-scale-800};
 
 		&:checked {
 			&:after {
-				left: 9px;
+				left: 9px; // physical: positions the rotated check glyph (see above)
 				top: 11px;
 			}
 		}
@@ -86,27 +97,29 @@
 ///
 .has-accessible-features {
 	[data-checkbox] {
-		border-radius: var(--border-radius-soft);
-
-		&:before {
-			border-color: get-border-color('neutral-7');
-		}
+		border-radius: var(--osui-checkbox-border-radius);
 
 		&:hover {
 			&:before {
-				border-color: get-border-color('neutral-8');
+				border-color: var(--osui-checkbox-hover-border-color);
+			}
+		}
+
+		&[disabled]:checked {
+			&:before {
+				border-color: var(--color-border);
 			}
 		}
 
 		&:checked {
 			&:before {
-				border-color: get-border-color('primary');
+				border-color: var(--osui-checkbox-checked-color);
 			}
 		}
 
 		&:focus {
 			&:before {
-				border-color: get-border-color('focus-inner');
+				border-color: var(--color-text);
 			}
 		}
 	}

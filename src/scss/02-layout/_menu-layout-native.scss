@@ -1,3 +1,6 @@
+@use '../00-abstract/index' as *;
+@use "../tokens/variables";
+
 /* Page Layout - Layout Native - Menu */
 ////
 /// @group Layout-Native-Menu
@@ -15,13 +18,13 @@
 
 	.app-menu-content {
 		&:after {
-			background: get-background-color('transparent');
+			background: transparent;
 			content: '';
 			height: 100%;
+			inset-inline-end: -24px;
 			position: absolute;
-			right: -24px;
-			top: calc(var(--header-size) + var(--header-size-content));
-			width: 24px;
+			top: calc(var(--size-header) + var(--size-header-content));
+			width: variables.$token-scale-600;
 		}
 	}
 }
@@ -34,12 +37,12 @@
 			&.layout-side {
 				&.aside-expandable {
 					.app-menu-content {
-						padding-top: calc(var(--header-size) + var(--header-size-content) + var(--os-safe-area-top));
+						padding-top: calc(var(--size-header) + var(--size-header-content) + var(--os-safe-area-top));
 					}
 
 					&.hide-header-on-scroll:not(.header-is--visible) {
 						.app-menu-content {
-							padding-top: var(--header-size-content);
+							padding-block-start: var(--size-header-content);
 						}
 					}
 				}
@@ -52,7 +55,7 @@
 			&-visible,
 			&-expandable {
 				.app-menu-content {
-					box-shadow: var(--shadow-m);
+					box-shadow: variables.$token-elevation-2;
 					z-index: var(--osui-menu-layer);
 				}
 			}
@@ -69,9 +72,7 @@
 				&.layout-side {
 					&.aside-expandable {
 						.app-menu-content {
-							padding-top: calc(
-								var(--header-size) + var(--header-size-content) + #{android-safe-area-top()}
-							);
+							padding-block-start: calc( var(--size-header) + var(--size-header-content) + #{android-safe-area-top()} );
 						}
 					}
 				}
@@ -92,8 +93,8 @@
 				&-visible,
 				&-expandable {
 					.app-menu-content {
-						box-shadow: var(--shadow-m);
-						left: 0;
+						box-shadow: variables.$token-elevation-2;
+						inset-inline-start: 0;
 						z-index: var(--osui-menu-layer);
 					}
 				}
@@ -102,7 +103,7 @@
 			&.layout-side {
 				&.aside-expandable {
 					.app-menu-content {
-						padding-top: calc(var(--header-size) + var(--header-size-content) + var(--os-safe-area-top));
+						padding-top: calc(var(--size-header) + var(--size-header-content) + var(--os-safe-area-top));
 					}
 				}
 			}
@@ -110,26 +111,7 @@
 
 		.layout-side.layout-native.aside-expandable.hide-header-on-scroll:not(.header-is--visible) {
 			.app-menu-content {
-				padding-top: var(--header-size-content);
-			}
-		}
-	}
-}
-
-// IsRTL -------------------------------------------------------------------------
-///
-.is-rtl {
-	.tablet {
-		&.landscape {
-			&.landscape {
-				&.aside {
-					&-visible,
-					&-expandable {
-						.app-menu-content {
-							right: 0;
-						}
-					}
-				}
+				padding-block-start: var(--size-header-content);
 			}
 		}
 	}

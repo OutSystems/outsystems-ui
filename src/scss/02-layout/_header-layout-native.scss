@@ -1,3 +1,6 @@
+@use '../00-abstract/index' as *;
+@use "../tokens/variables";
+
 /* Page Layout - Layout Native - Header */
 ////
 /// @group Layout-Native-Header
@@ -6,7 +9,7 @@
 ///
 .layout-native {
 	&.hide-header-on-scroll .header {
-		top: calc(-1 * (var(--header-size) + var(--os-safe-area-top)));
+		top: calc(-1 * (var(--size-header) + var(--os-safe-area-top)));
 	}
 
 	.header {
@@ -15,12 +18,13 @@
 		top: 0;
 
 		&-top {
-			padding: 0 var(--space-l);
+			padding-block: 0;
+			padding-inline: variables.$token-scale-800;
 		}
 
 		&-title {
-			font-size: var(--font-size-h5);
-			font-weight: var(--font-regular);
+			font-size: variables.$token-font-size-500;
+			font-weight: variables.$token-font-weight-regular;
 
 			// Service Studio Preview
 			& {
@@ -31,15 +35,15 @@
 
 		&-left {
 			flex: 1;
-			margin-right: var(--space-base);
+			margin-inline-end: variables.$token-scale-400;
 		}
 
 		&-right {
 			display: flex;
 			flex: 1;
 			justify-content: flex-end;
-			margin-left: var(--space-base);
-			margin-right: auto;
+			margin-inline-start: variables.$token-scale-400;
+			margin-inline-end: auto;
 
 			// ServiceStudio Preview
 			& {
@@ -64,7 +68,7 @@
 	}
 
 	.menu-icon {
-		margin-right: 0;
+		margin-inline-end: 0;
 	}
 }
 
@@ -86,7 +90,8 @@
 .phone {
 	.layout-native {
 		.header-top {
-			padding: 0 var(--space-m);
+			padding-block: 0;
+			padding-inline: variables.$token-scale-600;
 		}
 	}
 }
@@ -95,7 +100,7 @@
 .tablet {
 	.layout-native {
 		.header-title {
-			font-size: calc(var(--font-size-h5) - 1px);
+			font-size: calc(variables.$token-font-size-500 - 1px);
 		}
 	}
 }
@@ -104,7 +109,7 @@
 .phone {
 	.layout-native {
 		.header-title {
-			font-size: calc(var(--font-size-h5) - 2px);
+			font-size: calc(variables.$token-font-size-500 - 2px);
 		}
 	}
 }
@@ -113,14 +118,14 @@
 .android {
 	.layout-native {
 		&.hide-header-on-scroll .header {
-			top: calc(-1 * (var(--header-size) + #{android-safe-area-top()}));
+			top: calc(-1 * (var(--size-header) + #{android-safe-area-top()}));
 		}
 
 		.header,
 		.app-menu-content {
-			padding-top: #{android-safe-area-top()};
-			padding-right: var(--safe-area-inset-right, 0px);
-			padding-left: var(--safe-area-inset-left, 0px);
+			padding-block-start: #{android-safe-area-top()};
+			padding-inline-end: var(--safe-area-inset-right, 0px);
+			padding-inline-start: var(--safe-area-inset-left, 0px);
 		}
 	}
 }
@@ -129,21 +134,5 @@
 .ios {
 	.layout-native .header {
 		padding-top: var(--os-safe-area-top);
-	}
-}
-
-// IsRTL -------------------------------------------------------------------------
-///
-.is-rtl {
-	.layout-native {
-		.header-left {
-			margin-left: var(--space-base);
-			margin-right: 0;
-		}
-
-		.header-right {
-			margin-left: auto;
-			margin-right: var(--space-base);
-		}
 	}
 }

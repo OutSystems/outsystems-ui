@@ -1,3 +1,5 @@
+@use "../tokens/variables";
+
 /* Page Layout - Content */
 ////
 /// @group Layout-Content
@@ -11,7 +13,7 @@
 	position: relative;
 
 	&-breadcrumbs {
-		margin-bottom: var(--space-base);
+		margin-block-end: variables.$token-scale-400;
 	}
 
 	&-top {
@@ -19,20 +21,20 @@
 
 		&-title {
 			flex: 1;
-			margin-bottom: var(--space-l);
+			margin-block-end: variables.$token-scale-800;
 
 			// Retro Compatilibity
 			.Title_Links {
-				font-size: var(--font-size-s);
-				font-weight: var(--font-regular);
+				font-size: variables.$token-font-size-350;
+				font-weight: variables.$token-font-weight-regular;
 			}
 		}
 
 		&-actions {
 			flex: 1;
 			justify-content: flex-end;
-			margin-bottom: var(--space-l);
-			text-align: right;
+			margin-block-end: variables.$token-scale-800;
+			text-align: end;
 		}
 
 		&-title,
@@ -66,7 +68,7 @@
 ///
 .layout-native {
 	.content {
-		background-color: get-app-settings-background-color('body', --color-background-body);
+		background-color: var(--background-color-body, var(--color-background-body));
 	}
 
 	.content-middle {

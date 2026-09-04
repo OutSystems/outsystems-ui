@@ -10,14 +10,14 @@ const patternInfo = {
             "codeName": "Bar",
             "inDevelopment": false,
             "name": "Progress Bar",
-            "scss": "../scripts/OSFramework/OSUI/Pattern/Progress/Bar/scss/progressbar",
+            "scss": "../scss/04-patterns/05-numbers/progress/progressbar",
         },
         
         {
             "codeName": "Circle",
             "inDevelopment": false,
             "name": "Progress Circle",
-            "scss": "../scripts/OSFramework/OSUI/Pattern/Progress/Circle/scss/progresscircle"
+            "scss": "../scss/04-patterns/05-numbers/progress/progresscircle"
         }
     ]
 };

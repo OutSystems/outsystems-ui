@@ -1,9 +1,11 @@
+@use '../00-abstract/index' as *;
+
 /* Usefull - Colors Palette */
 ////
 /// @group UsefullClasses-Colors_Pallete
 /// Usefull - Colors Palette
 
-/* 
+/*
 	Note:
 	- In order to improve the SASSDOC generated file, the loop was splited in 2!
 */
@@ -15,11 +17,13 @@
 			&-#{$color} {
 				@if ($type == '') {
 					& {
-						background-color: get-background-color('#{$color}');
+						// entity colour → inherit the :root role so apps can re-skin it
+						background-color: var(--color-#{$color});
 					}
 				} @else {
 					&-#{$type} {
-						background-color: get-background-color('#{$color}-#{$type}');
+						// no entity record → no role; read the token directly
+						background-color: #{$value};
 					}
 				}
 			}
@@ -34,11 +38,13 @@
 			&-#{$color} {
 				@if ($type == '') {
 					& {
-						color: get-text-color('#{$color}');
+						// entity colour → inherit the :root role so apps can re-skin it
+						color: var(--color-#{$color});
 					}
 				} @else {
 					&-#{$type} {
-						color: get-text-color('#{$color}-#{$type}');
+						// no entity record → no role; read the token directly
+						color: #{$value};
 					}
 				}
 			}
