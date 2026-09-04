@@ -28,6 +28,8 @@ interface DropdownServerSideArgs {
 	isDisabled: boolean;
 }
 
+const PLACEHOLDER = 'Choose a fruit';
+
 const OPTIONS = [
 	{ label: 'Apple', value: 'apple' },
 	{ label: 'Banana', value: 'banana' },
@@ -46,6 +48,34 @@ export default meta;
 
 type Story = StoryObj<DropdownServerSideArgs>;
 
+/**
+ * Labels of the currently-selected options, read off the item's balloon-content
+ * siblings. Extracted from the click handler below to keep the callback chain
+ * inside `render` shallow.
+ */
+function selectedLabels(item: Element): string[] {
+	const content = item.closest('.osui-dropdown-serverside__balloon-content');
+	return [...(content?.children ?? [])]
+		.filter((it) => it.classList.contains('osui-dropdown-serverside-item--is-selected'))
+		.map((it) => it.textContent!.trim());
+}
+
+/**
+ * Emulate the server side: on the platform the screen's OnSelected action
+ * re-renders the selected-values placeholder; here we just mirror the selected
+ * item labels into the trigger text. Deferred a frame so the framework has
+ * already applied `--is-selected` by the time we read it.
+ */
+function mirrorSelectionToTrigger(root: HTMLElement, textEl: HTMLElement, placeholder: string): void {
+	root.querySelectorAll('.osui-dropdown-serverside-item').forEach((el) =>
+		el.addEventListener('click', () =>
+			requestAnimationFrame(() => {
+				textEl.textContent = selectedLabels(el).join(', ') || placeholder;
+			})
+		)
+	);
+}
+
 export const Default: Story = {
 	render: (args) => {
 		const id = uid('dropdown-ss');
@@ -62,7 +92,7 @@ export const Default: Story = {
 				<div ${osuiRoot(id)} class="osui-dropdown-serverside">
 					<div class="osui-dropdown-serverside__selected-values-wrapper" tabindex="0">
 						<div class="osui-dropdown-serverside__selected-values">
-							<span class="osui-dropdown-serverside__text">Choose a fruit</span>
+							<span class="osui-dropdown-serverside__text">${PLACEHOLDER}</span>
 						</div>
 					</div>
 					<div class="osui-dropdown-serverside__balloon osui-balloon" data-uniqueid="${id}">
@@ -90,20 +120,8 @@ export const Default: Story = {
 			);
 			P.DropdownAPI.Initialize(id);
 			itemIds.forEach((itemId) => P.DropdownServerSideItemAPI.Initialize(itemId));
-			// Emulate the server side: on the platform the screen's OnSelected
-			// action re-renders the selected-values placeholder; here we just
-			// mirror the selected item labels into the trigger text.
 			const textEl = _root.querySelector('.osui-dropdown-serverside__text') as HTMLElement;
-			_root.querySelectorAll('.osui-dropdown-serverside-item').forEach((el) =>
-				el.addEventListener('click', () => {
-					requestAnimationFrame(() => {
-						const labels = [...el.closest('.osui-dropdown-serverside__balloon-content')!.children]
-							.filter((it) => it.classList.contains('osui-dropdown-serverside-item--is-selected'))
-							.map((it) => it.textContent!.trim());
-						textEl.textContent = labels.join(', ') || 'Choose a fruit';
-					});
-				})
-			);
+			mirrorSelectionToTrigger(_root, textEl, PLACEHOLDER);
 			register(() => {
 				itemIds.forEach((itemId) => P.DropdownServerSideItemAPI.Dispose?.(itemId));
 				P.DropdownAPI.Dispose?.(id);
