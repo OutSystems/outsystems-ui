@@ -58,6 +58,17 @@
 }
 
 ///
+.menu-icon {
+	cursor: pointer;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	justify-content: center;
+	margin-inline-end: variables.$token-space-600;
+	width: variables.$token-scale-600;
+}
+
+///
 .menu-back {
 	color: var(--color-text-subtlest);
 }
