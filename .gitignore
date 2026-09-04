@@ -123,5 +123,8 @@ src/scss/tokens/
 # Storybook build output
 storybook-static/
 
+# npmrc file
+.npmrc
+
 # Generated TypeDoc output
 docs/
