@@ -50,6 +50,7 @@ namespace OSFramework.OSUI.GlobalEnum {
 		Placeholder = 'placeholder-empty',
 		Popup = 'popup-dialog',
 		SkipContent = 'skip-nav',
+		ThemeDark = 'theme-dark',
 	}
 
 	/**

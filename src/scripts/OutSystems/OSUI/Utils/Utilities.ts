@@ -185,6 +185,37 @@ namespace OutSystems.OSUI.Utils {
 	}
 
 	/**
+	 * Enables or disables the dark theme at runtime by applying or removing the dark theme class on the document root.
+	 * Use this for scenarios such as a dark/light theme toggle. The change takes effect immediately, without a page reload.
+	 *
+	 * @export
+	 * @param {boolean} IsDark True to enable the dark theme, False to disable it.
+	 * @return {*}  {string} JSON string with Success and ErrorMessage, consistent with the other client actions.
+	 */
+	export function SetDarkTheme(IsDark: boolean): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.Utilities.FailSetDarkTheme,
+			callback: () => {
+				const rootElement = document.documentElement;
+
+				if (IsDark) {
+					OSFramework.OSUI.Helper.Dom.Styles.AddClass(
+						rootElement,
+						OSFramework.OSUI.GlobalEnum.CssClassElements.ThemeDark
+					);
+				} else {
+					OSFramework.OSUI.Helper.Dom.Styles.RemoveClass(
+						rootElement,
+						OSFramework.OSUI.GlobalEnum.CssClassElements.ThemeDark
+					);
+				}
+			},
+		});
+
+		return result;
+	}
+
+	/**
 	 * Allows to change the selected state of Cards and List Items.
 	 * Set a Widget Id and the Active state to change an element on the screen.
 	 * @param ElementId
