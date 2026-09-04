@@ -39,13 +39,13 @@ const ICON_LIB_PHOSPHOR_FLATPICKR = 'icon-library-Phosphor';
 /**
  * Theme toggle — swaps the `#osui-theme` <link> href between the new token-based
  * theme (the freshly compiled bundle in /osui) and the pre-migration CSS snapshot
- * (/deprecated, the Phase 0 baseline). Lets reviewers eyeball the old vs new look
+ * (/legacy, the Phase 0 baseline). Lets reviewers eyeball the old vs new look
  * side by side without rebuilding. Both are full self-contained stylesheets, so
  * swapping the href is enough — no class toggling needed.
  */
 const THEME_HREF = {
 	new: '/osui/ODC.OutSystemsUI.css',
-	deprecated: '/deprecated/ODC.OutSystemsUI.css',
+	legacy: '/legacy/ODC.OutSystemsUI.css',
 } as const;
 
 function applyTheme(theme: string): void {
@@ -215,14 +215,14 @@ const preview: Preview = {
 	tags: ['ui-pending'],
 	globalTypes: {
 		theme: {
-			description: 'Switch between the new token-based theme and the deprecated pre-migration CSS',
+			description: 'Switch between the new token-based theme and the legacy pre-migration CSS',
 			defaultValue: 'new',
 			toolbar: {
 				title: 'Theme',
 				icon: 'paintbrush',
 				items: [
 					{ value: 'new', title: 'New theme (tokens)' },
-					{ value: 'deprecated', title: 'Deprecated theme' },
+					{ value: 'legacy', title: 'Legacy theme' },
 				],
 				dynamicTitle: true,
 			},

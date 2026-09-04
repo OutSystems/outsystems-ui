@@ -1,11 +1,11 @@
 ---
-description: Port a new-theme SCSS change into the deprecated (pre-token) theme snapshot under deprecated/
+description: Port a new-theme SCSS change into the legacy (pre-token) theme snapshot under legacy/
 argument-hint: "[commit-ish | file path | nothing for the working diff]"
 ---
 
-# Port to the deprecated theme
+# Port to the legacy theme
 
-Backport the change described by `$ARGUMENTS` from the token-based new theme into the deprecated pre-migration CSS snapshot in `deprecated/`.
+Backport the change described by `$ARGUMENTS` from the token-based new theme into the legacy pre-migration CSS snapshot in `legacy/`.
 
 `$ARGUMENTS` may be:
 - a commit-ish (`HEAD`, `6ce34d903`, `HEAD~3..HEAD`) → port that commit's SCSS changes
@@ -16,7 +16,7 @@ Backport the change described by `$ARGUMENTS` from the token-based new theme int
 
 ## Authoritative procedure
 
-@.claude/skills/osui-deprecated-theme/SKILL.md
+@.claude/skills/osui-legacy-theme/SKILL.md
 
 Follow it as written. The steps below are the execution order, not a substitute for the skill.
 
@@ -26,7 +26,7 @@ Follow it as written. The steps below are the execution order, not a substitute 
    - Commit-ish → `git show <ref> -- 'src/**/*.scss'`
    - Paths → `git diff HEAD -- <paths>`
    - Empty → `git diff HEAD -- '*.scss'`; if empty, `git show HEAD -- 'src/**/*.scss'`
-   - If the change set contains no SCSS, stop and say so — there is nothing to port. TypeScript changes have no deprecated-theme counterpart.
+   - If the change set contains no SCSS, stop and say so — there is nothing to port. TypeScript changes have no legacy-theme counterpart.
 
 2. **Audit the source before porting** (skill §7). For every `$token-*` the diff touches:
    - Confirm it exists: `grep -n '^\$token-<name>' src/scss/tokens/_variables.scss`
@@ -40,11 +40,11 @@ Follow it as written. The steps below are the execution order, not a substitute 
 
 4. **De-tokenise** every value using the skill's mapping tables (§3). Keep the `--osui-*` component API structure (§4). Note every approximation you are forced to make.
 
-5. **Locate insertion anchors** in both `deprecated/O11.OutSystemsUI.css` and `deprecated/ODC.OutSystemsUI.css` — the compiled new theme's immediately-preceding rule, so the block lands in the same relative position.
+5. **Locate insertion anchors** in both `legacy/O11.OutSystemsUI.css` and `legacy/ODC.OutSystemsUI.css` — the compiled new theme's immediately-preceding rule, so the block lands in the same relative position.
 
 6. **Patch both files** with a single Python script that asserts anchor uniqueness and non-duplication before writing (skill §6 step 5). Match the compiled formatting exactly (skill §5): `selector{`, no space after `:`, two-space indent, autoprefixer prefixes where the surrounding file carries them.
 
-7. **Log the port** in `deprecated/README.md` under a `## Hand-applied ports` heading (create it if absent). One entry per port:
+7. **Log the port** in `legacy/README.md` under a `## Hand-applied ports` heading (create it if absent). One entry per port:
    ```
    - **<date> — <ticket / commit>** — <selectors added>.
      Mapping: <token> → <old var> (…). Approximations: <…, or "none">.
@@ -52,10 +52,10 @@ Follow it as written. The steps below are the execution order, not a substitute 
    This log is what survives a snapshot refresh; without it the port is silently lost.
 
 8. **Verify** (skill §8) and report:
-   - `grep -c -- '--token-' deprecated/*.css` → must be 0 for both
+   - `grep -c -- '--token-' legacy/*.css` → must be 0 for both
    - identical selector/var counts across both files
-   - `git diff --stat deprecated/` → same insertion count per file
-   - read `git diff deprecated/` and confirm the formatting is indistinguishable from surrounding content
+   - `git diff --stat legacy/` → same insertion count per file
+   - read `git diff legacy/` and confirm the formatting is indistinguishable from surrounding content
    - confirm every selector the port targets actually exists in the old theme; if one doesn't, flag it as dead CSS rather than shipping it quietly
 
 ## Output

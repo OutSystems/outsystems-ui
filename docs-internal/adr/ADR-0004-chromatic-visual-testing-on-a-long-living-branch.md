@@ -45,7 +45,7 @@ Property 2 is the dangerous one. TurboSnap (`onlyChanged`) decides what to snaps
 **A → Option 3; B → Option 2.**
 
 - Triggers extended to `pull_request` and `push` on **both** `dev` and `ROU-12714`, with `autoAcceptChanges: '{dev,ROU-12714}'` so merges advance the baseline while PRs still require review in Chromatic. The `ROU-12714` entries are commented in-file as removable once the initiative lands on `dev`.
-- `externals: [src/**, gulp/**, deprecated/**]` accompanies `onlyChanged`. A change to any of those paths disables TurboSnap for that build and forces a full re-snapshot. `package.json`/lockfile and `.storybook/**` already force one automatically.
+- `externals: [src/**, gulp/**, legacy/**]` accompanies `onlyChanged`. A change to any of those paths disables TurboSnap for that build and forces a full re-snapshot. `package.json`/lockfile and `.storybook/**` already force one automatically.
 - Fork safety: an `IS_FORK` job-level env gates the Azure login, Key Vault fetch and internal-feed login; the Chromatic step is skipped when its token is empty; the PR-comment steps only run when Chromatic actually ran.
 
 Positive consequences:

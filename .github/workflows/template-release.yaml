@@ -19,7 +19,6 @@
 #         with:
 #             new-version: ${{ inputs.new-version }}
 #             update-prerelease-into-latest: true
-#             delete-rc-branch: true
 #
 # ======================================================================
 #
@@ -34,10 +33,6 @@ on:
                 required: true
             update-prerelease-into-latest:
                 description: 'Update pre-release into latest.'
-                type: boolean
-                default: true
-            delete-rc-branch:
-                description: 'Delete rc* branch at the end of process.'
                 type: boolean
                 default: true
         secrets:
@@ -66,7 +61,7 @@ jobs:
                   ref: rc${{ inputs.new-version }}
 
             - name: 📦 Setup Node
-              uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
+              uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
               with:
                   node-version: 24
 
@@ -83,6 +78,7 @@ jobs:
         permissions:
             id-token: write
             contents: read
+            pull-requests: write
 
         if: ${{ inputs.new-version }}
         steps:
@@ -104,13 +100,41 @@ jobs:
               with:
                   key-name: o11odc-github-gitpersonal-token-prd
 
-            - name: 🔄 Merge rc${{ inputs.new-version }} into main
-              uses: everlytic/branch-merge@c4a244dc23143f824ae6c022a10732566cb8e973 #v1.1.5
-              with:
-                  github_token: ${{ steps.get-github-token.outputs.az-keyvault-value }}
-                  source_ref: rc${{ inputs.new-version }}
-                  target_branch: 'main'
-                  commit_message_template: 'Merged rc${{ inputs.new-version }} into main. [skip ci]'
+            - name: 🔄 Create release PR for rc${{ inputs.new-version }} into main
+              env:
+                  GH_TOKEN: ${{ steps.get-github-token.outputs.az-keyvault-value }}
+              run: |
+                  SOURCE_BRANCH="rc${{ inputs.new-version }}"
+                  BASE_BRANCH="main"
+                  PR_TITLE="Merge ${SOURCE_BRANCH} into ${BASE_BRANCH} [skip ci]"
+
+                  COMPARE_STATUS=$(gh api \
+                    "repos/${{ github.repository }}/compare/${BASE_BRANCH}...${SOURCE_BRANCH}" \
+                    --template '{{.status}}')
+
+                  if [ "${COMPARE_STATUS}" = "identical" ] || [ "${COMPARE_STATUS}" = "behind" ]; then
+                    echo "${SOURCE_BRANCH} is already merged into ${BASE_BRANCH}."
+                    exit 0
+                  fi
+
+                  PR_NUMBER=$(gh pr list \
+                    --head "${SOURCE_BRANCH}" \
+                    --base "${BASE_BRANCH}" \
+                    --state open \
+                    --limit 1 \
+                    --json number \
+                    --jq '.[0].number // empty')
+
+                  if [ -z "${PR_NUMBER}" ]; then
+                    PR_URL=$(gh pr create \
+                      --base "${BASE_BRANCH}" \
+                      --head "${SOURCE_BRANCH}" \
+                      --title "${PR_TITLE}" \
+                      --body "$(printf 'This PR merges %s into %s.\n\nThis PR was automatically created by the Release workflow.\n' "${SOURCE_BRANCH}" "${BASE_BRANCH}")")
+                    echo "Release PR: ${PR_URL}"
+                  else
+                    echo "Release PR: https://github.com/${{ github.repository }}/pull/${PR_NUMBER}"
+                  fi
 
     set-pre-release-as-lts:
         name: Set pre-release as LTS
@@ -121,7 +145,7 @@ jobs:
             contents: read
 
         steps:
-            - name: 📥 Checkout repository
+            - name: 📥 Checkout into main
               uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
 
             - name: 🔐 Azure login
@@ -147,22 +171,3 @@ jobs:
                   prerelease: false
                   token: ${{ steps.get-github-token.outputs.az-keyvault-value }}
                   make_latest: true
-
-    delete-rc-branch:
-        name: Delete rc branch
-        needs: merge-rc-into-main
-        runs-on: ubuntu-latest
-        permissions:
-            contents: write
-
-        if: ${{ inputs.delete-rc-branch == true }}
-        steps:
-            - name: 📥 Checkout branch dev
-              uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
-              with:
-                  ref: dev
-
-            - name: 🗑️ Delete branch rc${{ inputs.new-version }}
-              shell: bash
-              run: |
-                  git push origin -d rc${{ inputs.new-version }}

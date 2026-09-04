@@ -10,13 +10,13 @@ This document is the contract for the migration. Each phase has a precise list o
 
 | Action | Path |
 |--------|------|
-| Create folder | `deprecated/` |
-| Run `npm run build`, copy output | `deprecated/O11.OutSystemsUI.css` |
-| Run `npm run build`, copy output | `deprecated/ODC.OutSystemsUI.css` |
-| Create | `deprecated/README.md` — one-liner: "Last compiled output before token migration. For reference only." |
+| Create folder | `legacy/` |
+| Run `npm run build`, copy output | `legacy/O11.OutSystemsUI.css` |
+| Run `npm run build`, copy output | `legacy/ODC.OutSystemsUI.css` |
+| Create | `legacy/README.md` — one-liner: "Last compiled output before token migration. For reference only." |
 
 ### Acceptance criteria
-- [ ] `deprecated/` exists and is committed
+- [ ] `legacy/` exists and is committed
 - [ ] Both CSS files are present and non-empty
 - [ ] No changes to any `src/` file
 
@@ -420,7 +420,7 @@ Add after the existing utility imports:
 - [ ] Zero occurrences of `get-border-color(` in `src/` (grep check)
 - [ ] Zero occurrences of `get-text-color(` in `src/` (grep check)
 - [ ] `_functions.scss` deleted
-- [ ] Visual output compared against `deprecated/` — intentional changes documented
+- [ ] Visual output compared against `legacy/` — intentional changes documented
 
 ---
 

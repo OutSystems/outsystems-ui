@@ -32,7 +32,7 @@ Replace OutSystemsUI's own design token system (SCSS maps → `:root` CSS vars) 
 
 This is **not** a backwards-compatible migration. We are replacing the OSUI token system entirely. No bridge layer, no legacy aliases.
 
-**Backwards compatibility:** The current compiled CSS output (`O11.OutSystemsUI.scss` / `ODC.OutSystemsUI.scss` → `dist/`) will be snapshotted and moved to a `deprecated/` folder before any changes, so consumers on the old system have a fallback. Moving forward, consumers adopt the new token-based output.
+**Backwards compatibility:** The current compiled CSS output (`O11.OutSystemsUI.scss` / `ODC.OutSystemsUI.scss` → `dist/`) will be snapshotted and moved to a `legacy/` folder before any changes, so consumers on the old system have a fallback. Moving forward, consumers adopt the new token-based output.
 
 ---
 
@@ -40,9 +40,9 @@ This is **not** a backwards-compatible migration. We are replacing the OSUI toke
 
 ### Phase 0 — Snapshot current output
 
-**What:** Run `npm run build` and copy the current `dist/` output to a `deprecated/` folder. This is the last known-good state of the old system.
+**What:** Run `npm run build` and copy the current `dist/` output to a `legacy/` folder. This is the last known-good state of the old system.
 
-**Files touched:** `deprecated/` (new folder, committed once)
+**Files touched:** `legacy/` (new folder, committed once)
 
 ---
 
@@ -78,7 +78,7 @@ This is **not** a backwards-compatible migration. We are replacing the OSUI toke
 - Zero references to old `--space-*`, `--color-*`, `--font-*`, `--border-size-*`, `--shadow-*` vars remain
 - Helper functions `get-background-color`, `get-text-color`, `get-border-color` removed from `_functions.scss`
 - `npm run lint` passes
-- Visual regression test against `deprecated/` output
+- Visual regression test against `legacy/` output
 
 ---
 

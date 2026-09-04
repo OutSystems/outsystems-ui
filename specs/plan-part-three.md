@@ -21,8 +21,8 @@ compiled bundle (`dist/ODC.OutSystemsUI.{js,css}`) exactly the way OutSystems
 Service Studio does at runtime, transcribed to high-code. This gives:
 
 1. A living catalogue of all 70+ patterns and CSS-only blocks.
-2. A side-by-side **new-theme vs deprecated-theme** toggle for reviewing the
-   token migration's visual impact (the Phase 0 snapshot in `deprecated/` is the
+2. A side-by-side **new-theme vs legacy-theme** toggle for reviewing the
+   token migration's visual impact (the Phase 0 snapshot in `legacy/` is the
    comparison baseline).
 3. An **icon-library** toggle (FontAwesome ↔ Phosphor) and an
    **`has-accessible-features`** toggle, so a11y affordances and both icon fonts
@@ -85,7 +85,7 @@ it's all served as static assets and loaded by `preview-head.html`:
 | Served at | From | Purpose |
 | --- | --- | --- |
 | `/osui` | `dist/` | Compiled OUI bundle (new token theme) |
-| `/deprecated` | `deprecated/` | Phase 0 pre-migration CSS snapshot (theme toggle target) |
+| `/legacy` | `legacy/` | Phase 0 pre-migration CSS snapshot (theme toggle target) |
 | `/platform` | `.storybook/platform/` | Core platform base widget CSS |
 | `/vendor/font-awesome` | `node_modules/font-awesome` | FA 4.7 default icon font |
 | `/vendor/phosphor` | `@phosphor-icons/web/src/regular` | Alternate icon font |
@@ -108,7 +108,7 @@ it's all served as static assets and loaded by `preview-head.html`:
    controls render invisible. Loading this AFTER OUI regresses to the legacy
    design (e.g. the switch goes back to legacy green instead of OUI blue).
 4. **OUI stylesheet** (`#osui-theme` link — the toolbar swaps its `href` between
-   `/osui` and `/deprecated`).
+   `/osui` and `/legacy`).
 5. **All `<script>`s are `defer`'d**, vendors before the bundle. Required: the
    OUI bundle attaches a `document.body` click listener at load (`BodyOnClick`);
    without `defer`, `document.body` is null in `<head>` and the bundle throws.
@@ -122,7 +122,7 @@ A single `withAppShell` decorator stamps the platform body shell
 (`.desktop`, `.active-screen`, `dir="ltr"`) and applies three toolbar globals:
 
 - **Theme** — swaps `#osui-theme` href between the new token theme (`/osui`) and
-  the deprecated snapshot (`/deprecated`). Both are self-contained stylesheets,
+  the legacy snapshot (`/legacy`). Both are self-contained stylesheets,
   so swapping the href is sufficient.
 - **Icons** — `FontAwesome` (default) vs `Phosphor`. Toggles root classes:
   `.icon-library-FontAwesome` / (`.iconLibrary-phosphor` + `.icon-library-Phosphor`).

@@ -42,7 +42,7 @@ Two structural facts make these merges more than a routine `git merge`:
 
 Corollaries:
 
-- Dev's **functional** SCSS fixes are ported, never taken verbatim: they are re-expressed in the token vocabulary (e.g. `--space-base` → `$token-scale-400`, `--color-neutral-6` → `$token-icon-subtlest`). The pre-migration CSS snapshot in `deprecated/` is the reference for what a legacy var was worth.
+- Dev's **functional** SCSS fixes are ported, never taken verbatim: they are re-expressed in the token vocabulary (e.g. `--space-base` → `$token-scale-400`, `--color-neutral-6` → `$token-icon-subtlest`). The pre-migration CSS snapshot in `legacy/` is the reference for what a legacy var was worth.
 - Brand-new dev patterns are adopted as-is on the TS side, while their SCSS is relocated into `src/scss/04-patterns/` and translated, keeping this branch's `--osui-*` component API. (Wizard/WizardItem was the first case; its `_wizard.scss` had to be rewritten because it used removed helpers.)
 - Generated entry files (`*.OutSystemsUI.scss`) are never hand-resolved — regenerate with `npm run create-osui-scss`.
 - Deliberate deletions on this branch (`PatternsDeprecated.js`, `10-deprecated/**`, legacy `.submenu` styles) stay deleted every time.
@@ -64,7 +64,7 @@ Negative consequences:
 ## Links
 
 - PR #1206 — first reconciliation (28 commits of `dev`)
-- `deprecated/README.md` — provenance of the legacy-value reference snapshot
+- `legacy/README.md` — provenance of the legacy-value reference snapshot
 - ADR-0006 — a platform regression this reconciliation exposed
 
 ## Date

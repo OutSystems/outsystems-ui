@@ -108,7 +108,7 @@ jobs:
                   # dist/ via <script>/<link> tags in preview-head.html, so nothing under src/
                   # is in Storybook's module graph and a SCSS-only PR — i.e. nearly every PR
                   # in this initiative — traces to no story at all. ADR-0004 mitigated that
-                  # with an `externals` list (src/**, gulp/**, deprecated/**), but that only
+                  # with an `externals` list (src/**, gulp/**, legacy/**), but that only
                   # classifies entries already in the changed-file list: on build #31 the list
                   # itself came back empty ("Found 0 changed files", against a squash-merged
                   # history TurboSnap could not resolve a parent build for), so it captured 0
