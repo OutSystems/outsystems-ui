@@ -371,24 +371,29 @@ export function CssArchitecturePage() {
 							</p>
 						</DocsNote>
 						<p>
-							<strong>Dark theme</strong> (<code>src/scss/01-foundations/_theme-dark.scss</code>) ships and
-							is opt-in, <strong>manual only</strong>:
+							<strong>Dark theme</strong> (<code>src/scss/tokens/_theme-dark.scss</code>) ships and
+							is opt-in. Two classes govern dark appearance:
 						</p>
 						<ul>
 							<li>
-								Add <code>.theme-dark</code> to <code>&lt;body&gt;</code> (the screen&apos;s outermost
-								element) to switch to dark; remove it for the default light palette.
+								<code>.os-dark-theme</code> — applies the actual dark token overrides. Add it
+								to <code>&lt;html&gt;</code> to switch to dark; remove it for the default light
+								palette. Toggled via the <code>SetDarkTheme</code> client action.
 							</li>
 							<li>
-								There is <strong>no OS auto-detection</strong> — an app that wants to follow the OS reads{' '}
-								<code>prefers-color-scheme</code> itself and toggles the class.
+								<code>.os-dark-mode</code> — a <strong>signal-only</strong> class with no CSS
+								effect. It is automatically added to <code>&lt;html&gt;</code> when the OS
+								reports <code>prefers-color-scheme:&nbsp;dark</code>, and removed when it
+								reports light. Customers can use it as a styling hook in their own CSS, but
+								the framework attaches no rules to it.
 							</li>
 						</ul>
 						<p>
-							It re-maps the dark <code>--token-*</code> <strong>and</strong> re-declares the{' '}
-							<code>--color-*</code> roles (needed because <code>--color-*</code> is substituted at{' '}
-							<code>:root</code>, so a token override on <code>&lt;body&gt;</code> alone wouldn&apos;t
-							reach components reading <code>--color-*</code>).
+							<code>.os-dark-theme</code> re-maps the ~447 dark <code>--token-*</code> values.
+							Because <code>--color-*</code> roles are declared at <code>:root</code> as{' '}
+							<code>var(--token-…)</code>, the class <strong>must</strong> sit on{' '}
+							<code>&lt;html&gt;</code> — a <code>&lt;body&gt;</code>-level token override
+							arrives after the roles have already resolved their light fallbacks.
 						</p>
 						<DocsNote title="Try it" variant="alt">
 							<p>

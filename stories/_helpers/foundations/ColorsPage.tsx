@@ -26,13 +26,13 @@ export function ColorsPage() {
 				<div className="fd-colors-toolbar">
 					<p>
 						Preview how tokens resolve in the shipped light and dark themes. Swatches and values read from{' '}
-						<code>--token-*</code> via the compiled bundle — the same <code>.theme-dark</code> scope components
+						<code>--token-*</code> via the compiled bundle — the same <code>.os-dark-theme</code> scope components
 						use.
 					</p>
 					<TokenThemeToggle dark={tokenDark} onChange={setTokenDark} />
 				</div>
 
-				<div className={`fd-colors-zone${tokenDark ? ' theme-dark' : ''}`}>
+				<div className={`fd-colors-zone${tokenDark ? ' os-dark-theme' : ''}`}>
 					<FdSection title="Semantic colours">
 						<p>
 							Semantic colour tokens are applied based on their intended meaning. The semantic palette includes

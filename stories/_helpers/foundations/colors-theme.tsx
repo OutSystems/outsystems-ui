@@ -23,7 +23,7 @@ export function useColorsTheme(): ColorsThemeContextValue {
 
 export type TokenColorProperty = 'color' | 'backgroundColor' | 'borderColor';
 
-/** Resolve a `--token-*` colour under an optional `.theme-dark` scope (matches Theme Editor probe). */
+/** Resolve a `--token-*` colour under an optional `.os-dark-theme` scope (matches Theme Editor probe). */
 export function resolveTokenCssValue(
 	cssVariable: string,
 	dark: boolean,
@@ -32,7 +32,7 @@ export function resolveTokenCssValue(
 	if (typeof document === 'undefined') return '';
 
 	const scope = document.createElement('div');
-	scope.className = dark ? 'theme-dark' : '';
+	scope.className = dark ? 'os-dark-theme' : '';
 	scope.style.cssText = 'position:absolute;visibility:hidden;pointer-events:none';
 	document.body.appendChild(scope);
 
@@ -65,7 +65,7 @@ export function useResolvedTokenValue(
 	return value;
 }
 
-/** Light = generated fallback hex; dark = live `var(--token-*)` inside `.theme-dark`. */
+/** Light = generated fallback hex; dark = live `var(--token-*)` inside `.os-dark-theme`. */
 export function useTokenColorFill(fallback: string, cssVariable: string): string {
 	const { dark } = useColorsTheme();
 	return dark ? tokenCssVar(cssVariable) : fallback;

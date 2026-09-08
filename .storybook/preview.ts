@@ -88,7 +88,7 @@ function applyDirection(rtl: boolean): void {
 /**
  * Appearance toggle — exercises the dark theme
  * (src/scss/tokens/_theme-dark.scss, generated from the design tokens' dark mode;
- * it re-maps the --token-* set and self-applies under `.theme-dark`).
+ * it re-maps the --token-* set and self-applies under `.os-dark-theme`).
  *
  * The class goes on `<html>`, NOT `<body>`, and that is load-bearing rather than
  * stylistic. The framework theme-layer roles (`--color-*`) are declared at
@@ -101,7 +101,7 @@ function applyDirection(rtl: boolean): void {
  * `--color-*` knobs (~488 reads across the bundle) flip to dark for free.
  * `--color-focus-outer` is a deliberate hardcoded yellow and stays put.
  *
- * `.theme-dark` is an element-agnostic class selector, so no CSS change was
+ * `.os-dark-theme` is an element-agnostic class selector, so no CSS change was
  * needed for this — only the choice of element. Light is the default and has no
  * class at all (there are no light `--token-*` declarations anywhere; light is
  * the fallback baked into every `$token-*`).
@@ -109,7 +109,7 @@ function applyDirection(rtl: boolean): void {
  * Requires a bundle built AFTER the dark theme was added (the dark CSS lives in
  * `/osui/ODC.OutSystemsUI.css`); rebuild with `npm run dev --target=odc`.
  */
-const PATTERN_DARK_CLASS = 'theme-dark';
+const PATTERN_DARK_CLASS = 'os-dark-theme';
 
 function applyColorScheme(scheme: string): void {
 	document.documentElement.classList.toggle(PATTERN_DARK_CLASS, scheme === 'dark');
@@ -268,7 +268,7 @@ const preview: Preview = {
 		},
 		colorScheme: {
 			description:
-				'Appearance. Dark adds the `.theme-dark` class to `<html>`; Light removes it (the default). Manual only — no OS detection.',
+				'Appearance. Dark adds the `.os-dark-theme` class to `<html>`; Light removes it (the default). Manual only — no OS detection. Note: `.os-dark-mode` (no CSS effect) is a separate signal class reflecting the OS `prefers-color-scheme` preference.',
 			defaultValue: 'light',
 			toolbar: {
 				title: 'Appearance',

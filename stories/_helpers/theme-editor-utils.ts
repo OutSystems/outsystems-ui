@@ -21,7 +21,7 @@ export function isChanged(name: string): boolean {
 	return currentOverride(name) !== '';
 }
 
-/** Resolve a role's shipped default, optionally under `.theme-dark`. Results are cached per session. */
+/** Resolve a role's shipped default, optionally under `.os-dark-theme`. Results are cached per session. */
 export function resolveDefault(role: Role, dark = false): string {
 	const cacheKey = `${dark ? 'd' : 'l'}:${role.name}`;
 	const cached = defaultCache.get(cacheKey);
@@ -32,7 +32,7 @@ export function resolveDefault(role: Role, dark = false): string {
 	if (override) root.style.removeProperty(role.name);
 
 	const scope = document.createElement('div');
-	scope.className = dark ? 'theme-dark' : '';
+	scope.className = dark ? 'os-dark-theme' : '';
 	scope.style.cssText = 'position:absolute;visibility:hidden;pointer-events:none';
 	document.body.appendChild(scope);
 
