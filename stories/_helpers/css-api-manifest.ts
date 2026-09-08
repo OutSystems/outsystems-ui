@@ -39,7 +39,7 @@ export type CssApiManifest = {
 };
 
 export const CSS_API_MANIFEST: CssApiManifest = {
-	generatedAt: '2026-09-08T14:53:25.650Z',
+	generatedAt: '2026-09-08T15:32:01.723Z',
 	totals: {
 		properties: 573,
 		components: 67,
@@ -4741,10 +4741,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-tabs-header-item-border-radius',
-								default: '#{$token-border-radius-100} #{$token-border-radius-100} 0 0',
+								default: 'var(--border-radius-lg, #{$token-shape-soft-lg}) var(--border-radius-lg, #{$token-shape-soft-lg}) 0 0',
 								kind: 'border',
-								chain: 'token',
-								hint: '#{$token-border-radius-100} #{$token-border-radius-100} 0 0',
+								chain: 'theme-role',
+								hint: 'var(--border-radius-lg, #{$token-shape-soft-lg}) var(--border-radius-lg, #{$token-shape-soft-lg}) 0 0',
 							},
 							{
 								name: '--osui-tabs-header-item-color',

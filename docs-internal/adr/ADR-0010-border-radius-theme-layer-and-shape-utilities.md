@@ -42,15 +42,15 @@ Component contract:
 
 ### Resolved design decisions
 
-| # | Decision |
-|---|---|
-| Q1 | Card uses **`xl`** tier for all shape profiles |
-| Q2 | Alert uses **`sm`** tier for all shape profiles |
-| Q3 | Accordion corners use **`xl`** tier |
-| Q4 | Portaled patterns use **CSS local knob remaps** (see below) — no TS changes |
-| Q5 | **`--border-radius-softer` retired** |
-| Q6 | Generated **`.token-shape-*`** utilities are not used by OSUI; `.shape-*` is the public API |
-| Q7 | Dropdown popup (all variants) uses **`lg`** tier; input/trigger uses **`xs`** |
+| # | Decision | Rationale |
+|---|---|---|
+| Q1 | Card uses **`xl`** tier for all shape profiles | Card is a primary surface container. **`xl`** keeps its corners visually distinct from controls (`xs`) and inline surfaces (`sm`), while still following the active profile when `.shape-*` remaps all tier slots. |
+| Q2 | Alert uses **`sm`** tier for all shape profiles | Alert is a compact inline surface, not a full card. **`sm`** gives a softer corner than controls without matching card-scale chrome. |
+| Q3 | Accordion corners use **`xl`** tier | Accordion chrome is surface-level (header + content panel). **`xl`** aligns accordion corners with card-level treatment in Figma rather than control-tier radius. |
+| Q4 | Portaled patterns use **CSS local knob remaps** (see below) — no TS changes | Balloon, BottomSheet, and OverflowMenu render outside the layout subtree, so layout `.shape-*` does not inherit. TS still writes `var(--border-radius-{soft\|none\|rounded})`; each portaled root remaps those legacy knobs to the correct surface-tier **tokens** locally. |
+| Q5 | **`--border-radius-softer` retired** | The old 16px intermediate knob duplicated what tier slots express explicitly. Consumers override `--border-radius-md`, `--border-radius-xl`, or another tier instead. |
+| Q6 | Generated **`.token-shape-*`** utilities are not used by OSUI; **`.shape-*`** is the public API | Token utilities map one token to one class. Layout shape is profile-wide: **`.shape-soft` / `.shape-round` / `.shape-rectangular`** remap every `--border-radius-{tier}` slot at once — the contract apps and Placeholders use. |
+| Q7 | Dropdown popup (all variants) uses **`lg`** tier; input/trigger uses **`xs`** | The list panel is an elevated surface (same tier family as other popups). The trigger and input remain control chrome and stay on **`xs`**, including when the popup is portaled to `<body>`. |
 
 ### Portaled patterns (Q4)
 
