@@ -381,11 +381,12 @@ export function CssArchitecturePage() {
 								palette. Toggled via the <code>SetDarkTheme</code> client action.
 							</li>
 							<li>
-								<code>.os-dark-mode</code> — a <strong>signal-only</strong> class with no CSS
-								effect. It is automatically added to <code>&lt;html&gt;</code> when the OS
-								reports <code>prefers-color-scheme:&nbsp;dark</code>, and removed when it
-								reports light. Customers can use it as a styling hook in their own CSS, but
-								the framework attaches no rules to it.
+								<code>.os-dark-mode</code> — a <strong>signal-only</strong> class that
+								reflects the user&apos;s system preference
+								(<code>prefers-color-scheme:&nbsp;dark</code>). It has no CSS effect —
+								the framework attaches no rules to it. Automatically added to{' '}
+								<code>&lt;html&gt;</code> when the OS is in dark mode, removed when it
+								switches to light. Customers can use it as a styling hook in their own CSS.
 							</li>
 						</ul>
 						<p>

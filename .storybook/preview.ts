@@ -268,7 +268,7 @@ const preview: Preview = {
 		},
 		colorScheme: {
 			description:
-				'Appearance. Dark adds the `.os-dark-theme` class to `<html>`; Light removes it (the default). Manual only — no OS detection. Note: `.os-dark-mode` (no CSS effect) is a separate signal class reflecting the OS `prefers-color-scheme` preference.',
+				'Appearance. Dark adds the `.os-dark-theme` class to `<html>`; Light removes it (the default). Manual only — no OS detection. Note: `.os-dark-mode` is a separate signal-only class that reflects the system preference (`prefers-color-scheme: dark`) with no CSS effect.',
 			defaultValue: 'light',
 			toolbar: {
 				title: 'Appearance',

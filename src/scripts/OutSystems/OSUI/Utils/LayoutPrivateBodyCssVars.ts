@@ -67,7 +67,7 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 				}
 			});
 
-			// Check if dark mode is active (OS preference).
+			// Check if dark mode is active based on the user's system preference (prefers-color-scheme).
 			// Applies os-dark-mode to <html> so customers can hook into it.
 			// This class has no CSS effect by default — it is a signal class only.
 			this._checkDarkModeStatus((isDarkMode) => {
