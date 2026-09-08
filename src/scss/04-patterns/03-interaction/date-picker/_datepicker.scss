@@ -13,6 +13,9 @@
 	--osui-datepicker-disabled-background: var(--color-background-input-disabled);
 	--osui-datepicker-disabled-border-color: var(--color-border);
 	--osui-datepicker-disabled-color: var(--color-text-disabled);
+	--osui-datepicker-input-border-radius: var(--border-radius-xs, #{variables.$token-shape-soft-xs});
+	// Input chrome — control tier (xs). Popup uses xl via `.osui-datepicker-calendar`.
+	--osui-input-border-radius: var(--osui-datepicker-input-border-radius);
 	// ───────────────────────────────────────────────────────────────────
 
 	input {

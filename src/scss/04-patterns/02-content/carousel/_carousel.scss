@@ -11,6 +11,7 @@
 .osui-carousel {
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-carousel-arrow-background:         var(--color-background-surface);
+	--osui-carousel-arrow-border-radius:      var(--border-radius-2xs, #{variables.$token-shape-soft-2xs});
 	--osui-carousel-arrow-shadow:             #{variables.$token-elevation-2};
 	--osui-carousel-arrow-icon-color:         var(--color-text);
 	--osui-carousel-arrow-disabled-overlay:   #{variables.$token-state-disabled};
@@ -24,6 +25,7 @@
 	.splide {
 		&__arrow {
 			background-color: var(--osui-carousel-arrow-background);
+			border-radius: var(--osui-carousel-arrow-border-radius);
 			box-shadow: var(--osui-carousel-arrow-shadow);
 			height: variables.$token-scale-1000;
 			opacity: 1;

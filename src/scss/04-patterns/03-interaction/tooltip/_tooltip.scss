@@ -10,7 +10,7 @@
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-tooltip-background: #{variables.$token-bg-surface-default};
 	--osui-tooltip-color: var(--color-text);
-	--osui-tooltip-border-radius: #{variables.$token-border-radius-200};
+	--osui-tooltip-border-radius: var(--border-radius-lg, #{variables.$token-shape-soft-lg});
 	--osui-tooltip-padding: #{variables.$token-space-200} #{variables.$token-space-400};
 	--osui-tooltip-font-size: #{variables.$token-font-size-350};
 	--osui-tooltip-shadow: #{variables.$token-elevation-3};
@@ -124,6 +124,12 @@
 
 .osui-tooltip .osui-balloon--is-open {
 	animation: osui-tooltip-in variables.$token-transition-time-150 variables.$token-transition-curve-quick forwards;
+}
+
+// Portaled balloon root — detached from `.osui-tooltip` (Balloon feature). See ADR-0010.
+.osui-tooltip__balloon-wrapper.osui-balloon {
+	--osui-tooltip-border-radius: var(--border-radius-lg, #{variables.$token-shape-soft-lg});
+	border-radius: var(--osui-tooltip-border-radius);
 }
 // OS HighContrast Enabled -------------------------------------------------------
 ///

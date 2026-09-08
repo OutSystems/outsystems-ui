@@ -26,7 +26,8 @@
 	--osui-input-border-color:        var(--color-border-input);
 	--osui-input-hover-border-color:  var(--color-border-input-hover);
 	--osui-input-color:               var(--color-text);
-	--osui-input-border-radius:       var(--border-radius-soft);
+	--osui-input-border-radius:       var(--border-radius-xs, #{variables.$token-shape-soft-xs});
+	--osui-textarea-border-radius:    var(--border-radius-xl, #{variables.$token-shape-soft-xl});
 	--osui-input-focus-border-color:  var(--color-border-primary);
 	--osui-input-focus-ring-color:    #{variables.$token-border-focus-default};
 	--osui-input-error-border-color:  #{variables.$token-border-danger-default};
@@ -36,7 +37,6 @@
 	&[data-textarea] {
 		background-color: var(--osui-input-background);
 		border: variables.$token-border-size-025 solid var(--osui-input-border-color);
-		border-radius: var(--osui-input-border-radius);
 		color: var(--osui-input-color);
 		font-size: variables.$token-font-size-350;
 		transition: border-color variables.$token-transition-time-100 variables.$token-transition-curve-base, background-color variables.$token-transition-time-100 variables.$token-transition-curve-base;
@@ -63,12 +63,14 @@
 	}
 
 	&[data-input] {
+		border-radius: var(--osui-input-border-radius);
 		height: variables.$token-scale-1000;
 		padding-block: variables.$token-scale-0;
 		padding-inline: variables.$token-scale-400;
 	}
 
 	&[data-textarea] {
+		border-radius: var(--osui-textarea-border-radius);
 		height: auto;
 		padding: variables.$token-scale-400;
 		resize: auto;

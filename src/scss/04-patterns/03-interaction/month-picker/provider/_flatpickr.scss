@@ -2,7 +2,10 @@
 
 // Flatpickr - MonthPicker
 .osui-monthpicker__dropdown {
+	--osui-monthpicker-popup-border-radius: var(--border-radius-lg, #{variables.$token-shape-soft-lg});
+
 	&.flatpickr-calendar {
+		border-radius: var(--osui-monthpicker-popup-border-radius);
 		width: auto;
 	}
 

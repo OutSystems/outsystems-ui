@@ -84,10 +84,18 @@
 	}
 
 	// ─── Theme layer · radius ────────────────────────────────────────────
-	--border-radius-none: var(--border-radius-default, #{variables.$token-border-radius-0}); // 0px
-	--border-radius-soft: var(--border-radius-default, #{variables.$token-border-radius-200}); // 8px · controls + flat surfaces
-	--border-radius-softer: var(--border-radius-default, #{variables.$token-border-radius-400}); // 16px · elevated surfaces
-	--border-radius-rounded: var(--border-radius-default, #{variables.$token-border-radius-full}); // 999px · circular
+	// Shape tier slots — soft-profile defaults. `.shape-*` utilities remap all tiers.
+	--border-radius-2xs: var(--border-radius-default, #{variables.$token-shape-soft-2xs});
+	--border-radius-xs: var(--border-radius-default, #{variables.$token-shape-soft-xs}); // 8px · controls
+	--border-radius-sm: var(--border-radius-default, #{variables.$token-shape-soft-sm}); // 12px · surfaces
+	--border-radius-md: var(--border-radius-default, #{variables.$token-shape-soft-md}); // 16px
+	--border-radius-lg: var(--border-radius-default, #{variables.$token-shape-soft-lg});
+	--border-radius-xl: var(--border-radius-default, #{variables.$token-shape-soft-xl});
+	--border-radius-2xl: var(--border-radius-default, #{variables.$token-shape-soft-2xl});
+	// Legacy aliases — read by TS `GetBorderRadiusValueFromShapeType` (`ShapeTypes`: none | soft | rounded).
+	--border-radius-none: #{variables.$token-border-radius-0}; // 0px
+	--border-radius-soft: #{variables.$token-shape-soft-xs}; // 8px
+	--border-radius-rounded: #{variables.$token-border-radius-full}; // 999px · fixed pill/circle chrome
 
 	// ─── Theme layer · space scale ───────────────────────────────────────
 	@each $type, $value in $osui-space-token-vars {

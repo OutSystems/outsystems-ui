@@ -8,9 +8,14 @@
 .osui-balloon {
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-balloon-background: var(--color-background-surface);
+	--osui-balloon-border-radius: var(--border-radius-sm, #{variables.$token-shape-soft-sm});
 	// ───────────────────────────────────────────────────────────────────
 
-	--border-radius-rounded: var(--border-radius-softer);
+	// TS Shape config writes `--osui-balloon-shape: var(--border-radius-{soft|none|rounded})`.
+	// Remap legacy knobs to surface tiers on this portaled subtree (no TS change).
+	--border-radius-soft: #{variables.$token-shape-soft-sm};
+	--border-radius-rounded: #{variables.$token-shape-soft-md};
+
 	--osui-floating-position-x: 0;
 	--osui-floating-position-y: 0;
 	--osui-balloon-shadow: #{variables.$token-elevation-1};
@@ -18,7 +23,7 @@
 	--osui-balloon-position: fixed;
 
 	box-shadow: var(--osui-balloon-shadow);
-	border-radius: var(--osui-balloon-shape);
+	border-radius: var(--osui-balloon-shape, var(--osui-balloon-border-radius));
 	background-color: var(--osui-balloon-background);
 	height: auto;
 	// physical: FloatingUI computes --osui-floating-position-x as a physical
