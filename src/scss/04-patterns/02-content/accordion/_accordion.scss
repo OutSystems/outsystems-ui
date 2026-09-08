@@ -7,6 +7,10 @@
 
 ///
 .osui-accordion {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-accordion-border-radius: var(--border-radius-xl, #{variables.$token-shape-soft-xl});
+	// ───────────────────────────────────────────────────────────────────
+
 	// All items inside accordion: no radius
 	& &-item,
 	.list .osui-accordion-item {
@@ -29,8 +33,8 @@
 	:first-child:not(.list) >,
 	.list :first-child > {
 		.osui-accordion-item {
-			border-start-end-radius: variables.$token-border-radius-400;
-			border-start-start-radius: variables.$token-border-radius-400;
+			border-start-end-radius: var(--osui-accordion-border-radius);
+			border-start-start-radius: var(--osui-accordion-border-radius);
 			overflow: hidden;
 		}
 	}
@@ -39,8 +43,8 @@
 	:last-child:not(.list) >,
 	.list :last-child > {
 		.osui-accordion-item {
-			border-end-end-radius: variables.$token-border-radius-400;
-			border-end-start-radius: variables.$token-border-radius-400;
+			border-end-end-radius: var(--osui-accordion-border-radius);
+			border-end-start-radius: var(--osui-accordion-border-radius);
 			overflow: hidden;
 
 			&:not(.osui-accordion-item--is-open) {
@@ -55,7 +59,7 @@
 	:only-child >,
 	.list :only-child > {
 		.osui-accordion-item {
-			border-radius: variables.$token-border-radius-400;
+			border-radius: var(--osui-accordion-border-radius);
 		}
 	}
 

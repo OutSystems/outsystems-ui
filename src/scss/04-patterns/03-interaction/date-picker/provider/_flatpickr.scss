@@ -10,7 +10,7 @@
 	--osui-flatpickr-shadow: #{variables.$token-elevation-3};
 
 	border: variables.$token-border-size-025 solid var(--color-border);
-	border-radius: variables.$token-border-radius-200;
+	border-radius: var(--osui-datepicker-border-radius, var(--border-radius-lg, #{variables.$token-shape-soft-lg}));
 	box-shadow: var(--osui-flatpickr-shadow);
 	width: 320px;
 
@@ -682,9 +682,10 @@ span.flatpickr-weekday {
 	// ─── Component CSS API ─────────────────────────────────────────────
 	// Declared here (not on .osui-datepicker) because the calendar is portaled
 	// to the body, detached from the pattern root.
+	--osui-datepicker-border-radius: var(--border-radius-lg, #{variables.$token-shape-soft-lg});
 	--osui-datepicker-time-background:     var(--osui-input-background, var(--color-background-input));
 	--osui-datepicker-time-border-color:   var(--osui-input-border-color, var(--color-border));
-	--osui-datepicker-time-border-radius:  #{variables.$token-border-radius-100};
+	--osui-datepicker-time-border-radius:  var(--border-radius-xs, #{variables.$token-shape-soft-xs});
 	--osui-datepicker-time-color:          var(--color-text-subtlest);
 	--osui-datepicker-time-focus-color:    #{variables.$token-semantics-primary-base};
 	--osui-datepicker-time-height:         #{variables.$token-scale-1000};

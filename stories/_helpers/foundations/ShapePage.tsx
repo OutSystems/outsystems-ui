@@ -4,52 +4,36 @@ import { BorderRadius } from '../token-data/borders';
 import { FdSection, FoundationsShell } from './FoundationsShell';
 import { VarStack } from './VarStack';
 
-type BorderRadiusRow = {
-	token: string;
-	css_variable: string;
-	utility_class: string;
-	value: string;
-};
-
-/** Theme-layer shape vocabulary — see src/scss/01-foundations/_root.scss */
-const SHAPE_THEME_VARIABLES = [
-	{
-		themeVariable: '--border-radius-none',
-		label: 'None',
-		tokenKey: 'border.radius.0',
-		usage: 'Sharp corners — panels and surfaces with no rounding.',
-	},
-	{
-		themeVariable: '--border-radius-soft',
-		label: 'Soft',
-		tokenKey: 'border.radius.200',
-		usage: 'Controls and flat surfaces — buttons, inputs, checkboxes, cards.',
-	},
-	{
-		themeVariable: '--border-radius-softer',
-		label: 'Softer',
-		tokenKey: 'border.radius.400',
-		usage: 'Elevated surfaces — dropdowns, popovers, balloons.',
-	},
-	{
-		themeVariable: '--border-radius-rounded',
-		label: 'Rounded',
-		tokenKey: 'border.radius.full',
-		usage: 'Circular elements — avatars, switches, badges, pills.',
-	},
+/** Shape tier slots — soft-profile defaults on :root. `.shape-*` utilities remap all tiers. */
+const SHAPE_TIER_SLOTS = [
+	{ themeVariable: '--border-radius-2xs', label: '2xs', usage: 'Small controls — Tag, Avatar (soft = 4px).' },
+	{ themeVariable: '--border-radius-xs', label: 'xs', usage: 'Controls — Button, Input, Dropdown (soft = 8px).' },
+	{ themeVariable: '--border-radius-sm', label: 'sm', usage: 'Surfaces — Alert, Popover, Balloon (soft = 12px).' },
+	{ themeVariable: '--border-radius-md', label: 'md', usage: 'Elevated surfaces — round profile surfaces (16px).' },
+	{ themeVariable: '--border-radius-xl', label: 'xl', usage: 'Card, Accordion, picker popups (soft = 8px).' },
 ] as const;
 
-/** Hero strip order — most rounded first, like Mobile UI Shape docs. */
-const HERO_THEME_VARIABLE_ORDER = [
-	'--border-radius-rounded',
-	'--border-radius-softer',
-	'--border-radius-soft',
+/** Layout shape profile utilities — remap every tier slot at once. */
+const SHAPE_PROFILE_UTILITIES = [
+	{ className: 'shape-soft', label: 'Soft', usage: 'Default profile — controls xs=8px, surfaces sm=12px, card/popup xl=8px.' },
+	{ className: 'shape-round', label: 'Round', usage: 'Pill/round profile — controls xs=999px, surfaces md=16px.' },
+	{ className: 'shape-rectangular', label: 'Rectangular', usage: 'All tiers → 0px.' },
+] as const;
+
+/** Legacy aliases kept for TS runtime reads. */
+const LEGACY_SHAPE_ALIASES = [
+	{ themeVariable: '--border-radius-none', label: 'None (alias)', usage: '0px — `ShapeTypes.Sharp`.' },
+	{ themeVariable: '--border-radius-soft', label: 'Soft (alias → xs)', usage: '8px — `ShapeTypes.SoftRounded`.' },
+	{ themeVariable: '--border-radius-rounded', label: 'Rounded (alias)', usage: '999px — fixed pill/circle chrome.' },
+] as const;
+
+/** Hero strip order — most rounded first. */
+const HERO_TIER_ORDER = [
+	'--border-radius-md',
+	'--border-radius-sm',
+	'--border-radius-xs',
 	'--border-radius-none',
 ] as const;
-
-function borderRadiusByToken(): Map<string, BorderRadiusRow> {
-	return new Map((BorderRadius as BorderRadiusRow[]).map((row) => [row.token, row]));
-}
 
 function ShapeBox({ radius, className = '' }: { radius: string; className?: string }) {
 	return (
@@ -62,96 +46,63 @@ function ShapeBox({ radius, className = '' }: { radius: string; className?: stri
 }
 
 export function ShapePage() {
-	const radiusByToken = borderRadiusByToken();
-	const themeVariableByKey = new Map(SHAPE_THEME_VARIABLES.map((entry) => [entry.themeVariable, entry]));
-
-	const heroDemos = HERO_THEME_VARIABLE_ORDER.map((themeVariable) => {
-		const entry = themeVariableByKey.get(themeVariable);
-		if (!entry) return null;
-		return {
-			...entry,
-			value: radiusByToken.get(entry.tokenKey)?.value ?? '0px',
-		};
-	}).filter(Boolean) as Array<(typeof SHAPE_THEME_VARIABLES)[number] & { value: string }>;
-
 	return (
-		<FoundationsShell
-			eyebrow="Design system · Shape"
-			title="Shape"
-			lede="OutSystems UI expresses shape through theme variables — semantic corner radii that components read via the CSS API. Set --border-radius-default once at :root to re-radius the whole framework."
-		>
-			<div className="fd-shape-container">
-				{heroDemos.map(({ themeVariable, label, value }) => (
-					<div
-						key={themeVariable}
-						className="fd-shape-hero-box"
-						style={{ '--fd-shape-radius': value } as React.CSSProperties}
-					>
-						{label}
-					</div>
-				))}
-			</div>
+		<FoundationsShell title="Shape" subtitle="Border radius — tier slots and layout profiles">
+			<DocsNote>
+				Components read a <strong>tier slot</strong> (<code>--border-radius-xs</code>,{' '}
+				<code>--border-radius-sm</code>, …). Layout utilities <code>.shape-soft</code>,{' '}
+				<code>.shape-round</code>, <code>.shape-rectangular</code> remap all tiers for the active
+				profile. See ADR-0010.
+			</DocsNote>
 
-			<FdSection title="Theme variables">
-				<p>
-					Components consume <code>--border-radius-*</code> theme variables, not primitive tokens directly.
-					Each theme variable falls back to a <code>--token-border-radius-*</code> value unless overridden.
-				</p>
-				<table className="fd-table fd-table--shape">
-					<thead>
-						<tr>
-							<th>Shape</th>
-							<th>Theme variable</th>
-							<th>Backing token</th>
-							<th>Usage</th>
-						</tr>
-					</thead>
-					<tbody>
-						{SHAPE_THEME_VARIABLES.map(({ themeVariable, label, tokenKey, usage }) => {
-							const row = radiusByToken.get(tokenKey);
-							if (!row) return null;
-
-							return (
-								<tr key={themeVariable}>
-									<td>
-										<div className="fd-shape-row">
-											<ShapeBox radius={row.value} />
-											<span className="fd-shape-row__label">
-												<b>{label}</b>
-											</span>
-										</div>
-									</td>
-									<td>
-										<VarStack
-											lines={[
-												{ label: 'Theme variable', value: themeVariable },
-												{ label: 'Value', value: row.value },
-											]}
-										/>
-									</td>
-									<td>
-										<VarStack
-											lines={[
-												{ label: 'CSS variable', value: row.css_variable },
-												{ label: 'Utility class', value: row.utility_class },
-												{ label: 'Token', value: row.token },
-											]}
-										/>
-									</td>
-									<td>{usage}</td>
-								</tr>
-							);
-						})}
-					</tbody>
-				</table>
+			<FdSection title="Tier slots (soft defaults)">
+				<div className="fd-shape-hero">
+					{HERO_TIER_ORDER.map((varName) => {
+						const row = SHAPE_TIER_SLOTS.find((s) => s.themeVariable === varName) ??
+							LEGACY_SHAPE_ALIASES.find((s) => s.themeVariable === varName);
+						if (!row) return null;
+						return (
+							<div key={varName} className="fd-shape-hero-item">
+								<ShapeBox radius={`var(${varName})`} />
+								<span className="fd-shape-hero-label">{row.label}</span>
+							</div>
+						);
+					})}
+				</div>
+				<VarStack
+					rows={SHAPE_TIER_SLOTS.map((s) => ({
+						name: s.themeVariable,
+						description: s.usage,
+					}))}
+				/>
 			</FdSection>
 
-			<DocsNote title="Primitive scale">
-				The full <code>--token-border-radius-*</code> scale (0 through full) lives on the{' '}
-				<strong>Borders</strong> page. OutSystems UI does not ship Mobile UI-style shape families (
-				<code>token-soft-*</code>, <code>token-round-*</code>) — use the theme variables above or override{' '}
-				<code>--border-radius-default</code> in the Theme Editor.
-			</DocsNote>
+			<FdSection title="Layout profiles (.shape-*)">
+				<VarStack
+					rows={SHAPE_PROFILE_UTILITIES.map((s) => ({
+						name: `.${s.className}`,
+						description: s.usage,
+					}))}
+				/>
+			</FdSection>
+
+			<FdSection title="Legacy aliases">
+				<VarStack
+					rows={LEGACY_SHAPE_ALIASES.map((s) => ({
+						name: s.themeVariable,
+						description: s.usage,
+					}))}
+				/>
+			</FdSection>
+
+			<FdSection title="Primitive border-radius tokens">
+				<VarStack
+					rows={(BorderRadius as BorderRadiusRow[]).map((row) => ({
+						name: row.css_variable,
+						description: `${row.value} — ${row.utility_class}`,
+					}))}
+				/>
+			</FdSection>
 		</FoundationsShell>
 	);
 }

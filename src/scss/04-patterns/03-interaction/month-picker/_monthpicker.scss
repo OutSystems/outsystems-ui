@@ -13,6 +13,8 @@
 	--osui-monthpicker-disabled-background: var(--color-background-input-disabled);
 	--osui-monthpicker-disabled-border-color: var(--color-border);
 	--osui-monthpicker-disabled-color: var(--color-text-disabled);
+	--osui-monthpicker-input-border-radius: var(--border-radius-xs, #{variables.$token-shape-soft-xs});
+	--osui-input-border-radius: var(--osui-monthpicker-input-border-radius);
 	// ───────────────────────────────────────────────────────────────────
 
 	// Service Studio Preview Container Styles

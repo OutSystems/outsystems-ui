@@ -12,7 +12,7 @@
 	--osui-upload-border-color:   var(--color-border);
 	--osui-upload-border-width:   #{variables.$token-border-size-025};
 	--osui-upload-color:          #{variables.$token-text-primary};
-	--osui-upload-border-radius:  var(--border-radius-soft);
+	--osui-upload-border-radius:  var(--border-radius-xl, #{variables.$token-shape-soft-xl});
 	--osui-upload-padding:        #{variables.$token-scale-400};
 	--osui-upload-icon-color:     #{variables.$token-icon-subtlest};
 	// ───────────────────────────────────────────────────────────────────
@@ -29,6 +29,12 @@
 	min-height: auto;
 	padding: var(--osui-upload-padding);
 	position: relative;
+
+	&.upload-image,
+	&.upload-image-withoverlay {
+		--osui-upload-image-border-radius: var(--border-radius-lg, #{variables.$token-shape-soft-lg});
+		border-radius: var(--osui-upload-image-border-radius);
+	}
 
 	&.upload-image-withoverlay {
 		flex-direction: column;

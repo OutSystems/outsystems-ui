@@ -12,9 +12,10 @@
 	--osui-overflow-menu-color:             var(--color-text);
 	--osui-overflow-menu-trigger-active-bg: #{variables.$token-bg-neutral-subtle-default};
 	--osui-overflow-menu-min-width: 170px;
+	--osui-overflow-menu-border-radius: var(--border-radius-lg, #{variables.$token-shape-soft-lg});
+	// TS Shape config writes `--osui-overflow-menu-shape` on the root; balloon child
+	// receives shape via `setBalloonShape`. Popup tier remaps — see portaled root below.
 	// ───────────────────────────────────────────────────────────────────
-
-	--border-radius-rounded: var(--border-radius-softer);
 
 	display: inline-block;
 
@@ -26,7 +27,7 @@
 		--osui-floating-offset: #{variables.$token-scale-200};
 
 		border: variables.$token-border-size-025 solid transparent;
-		border-radius: var(--osui-btn-border-radius, var(--border-radius-soft));
+		border-radius: var(--osui-btn-border-radius, var(--border-radius-xs, #{variables.$token-shape-soft-xs}));
 		color: var(--osui-overflow-menu-color);
 		padding: 0;
 		min-width: variables.$token-scale-800;
@@ -48,6 +49,7 @@
 
 	&__balloon {
 		--osui-balloon-background: var(--osui-overflow-menu-background);
+		--osui-balloon-border-radius: var(--osui-overflow-menu-border-radius);
 		--osui-balloon-shadow:     var(--osui-overflow-menu-shadow);
 
 		min-width: var(--osui-overflow-menu-min-width);
@@ -81,6 +83,15 @@
 			padding-inline: variables.$token-scale-400;
 		}
 	}
+}
+
+// Portaled popup root — detached from `.osui-overflow-menu` (Balloon feature).
+// CSS API must live on this selector, not the pattern root. See ADR-0010.
+.osui-overflow-menu__balloon.osui-balloon {
+	--osui-overflow-menu-border-radius: var(--border-radius-lg, #{variables.$token-shape-soft-lg});
+	--osui-balloon-border-radius: var(--osui-overflow-menu-border-radius);
+	--border-radius-soft: #{variables.$token-shape-soft-xs};
+	--border-radius-rounded: #{variables.$token-shape-soft-xl};
 }
 
 // Override .desktop .btn:hover blue border — trigger border must stay transparent

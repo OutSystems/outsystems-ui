@@ -12,7 +12,7 @@
 	--osui-alert-color: var(--color-text);
 	--osui-alert-accent-color: var(--color-border);
 	--osui-alert-icon-color: currentColor;
-	--osui-alert-border-radius: #{variables.$token-border-radius-300};
+	--osui-alert-border-radius: var(--border-radius-sm, #{variables.$token-shape-soft-sm});
 	--osui-alert-padding: #{variables.$token-scale-300} #{variables.$token-scale-400};
 	// ───────────────────────────────────────────────────────────────────
 
