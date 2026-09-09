@@ -148,7 +148,8 @@ $osui-tag-lightest-text-colors: (
 		}
 
 		&-secondary {
-			--osui-tag-color: var(--color-primary);
+			background-color: variables.$token-bg-neutral-base-default;
+			color: variables.$token-text-primary;
 		}
 
 		&-primary,
@@ -185,8 +186,8 @@ $osui-tag-lightest-text-colors: (
 	}
 
 	&.background-secondary-lightest {
-		background-color: variables.$token-bg-neutral-base-default;
-		color: var(--osui-tag-on-light-color);
+		background-color: variables.$token-bg-neutral-subtle-default;
+		color: variables.$token-text-primary;
 	}
 
 	// Extended palette IsLight=true — background comes from the token-backed
