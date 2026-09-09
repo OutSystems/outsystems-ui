@@ -36,20 +36,7 @@
 /* ============================================================================ */
 html {
 	color: var(--color-text);
-	font-family: var(
-		--token-font-family,
-		Inter,
-		-apple-system,
-		system-ui,
-		'Segoe UI',
-		Roboto,
-		Helvetica,
-		Arial,
-		sans-serif,
-		'Apple Color Emoji',
-		'Segoe UI Emoji',
-		'Segoe UI Symbol'
-	);
+	font-family: variables.$token-font-family;
 	-moz-osx-font-smoothing: grayscale;
 	-webkit-font-smoothing: antialiased;
 	overflow: hidden;
