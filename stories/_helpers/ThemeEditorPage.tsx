@@ -561,7 +561,7 @@ export function ThemeEditorPage(): React.ReactElement {
 				</main>
 
 				<aside className="te-side">
-					<div className={`te-preview-zone${previewDark ? ' theme-dark' : ''}`}>
+					<div className={`te-preview-zone${previewDark ? ' os-dark-theme' : ''}`}>
 						<div className="te-preview-zone__head">
 							<h3>
 								Preview <span className="te-live">live</span>

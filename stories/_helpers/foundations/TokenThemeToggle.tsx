@@ -18,7 +18,7 @@ type TokenThemeToggleProps = {
 	onChange: (dark: boolean) => void;
 };
 
-/** Light / dark token theme — applies `.theme-dark` on the colours preview zone. */
+/** Light / dark token theme — applies `.os-dark-theme` on the colours preview zone. */
 export function TokenThemeToggle({ dark, onChange }: TokenThemeToggleProps) {
 	return (
 		<div className="fd-token-theme" role="group" aria-label="Token theme">

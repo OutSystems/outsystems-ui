@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OutSystems.OSUI.Utils.LayoutPrivate {
 	export abstract class CssBodyVariables {
-		// Method that will check if dark mode is active
+		// Method that will check if dark mode is active based on OS preference
 		private static _checkDarkModeStatus(callback: (isDarkMode: boolean) => void): void {
 			if (typeof window !== 'undefined' && window.matchMedia) {
 				// Set the media query to check for dark mode
@@ -67,16 +67,18 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 				}
 			});
 
-			// Check if dark mode is active
+			// Check if dark mode is active based on the user's system preference (prefers-color-scheme).
+			// Applies os-dark-mode to <html> so customers can hook into it.
+			// This class has no CSS effect by default — it is a signal class only.
 			this._checkDarkModeStatus((isDarkMode) => {
 				if (isDarkMode) {
 					OSFramework.OSUI.Helper.Dom.Styles.AddClass(
-						document.body,
+						document.documentElement,
 						OSFramework.OSUI.GlobalEnum.CssClassElements.DarkMode
 					);
 				} else {
 					OSFramework.OSUI.Helper.Dom.Styles.RemoveClass(
-						document.body,
+						document.documentElement,
 						OSFramework.OSUI.GlobalEnum.CssClassElements.DarkMode
 					);
 				}
