@@ -96,7 +96,8 @@ $osui-badge-lightest-text-colors: (
 		}
 
 		&-secondary {
-			--osui-badge-color: var(--color-primary);
+			background-color: variables.$token-bg-neutral-base-default;
+			color: variables.$token-text-primary;
 		}
 
 		&-primary,
@@ -139,8 +140,8 @@ $osui-badge-lightest-text-colors: (
 	}
 
 	&.background-secondary-lightest {
-		background-color: #{variables.$token-bg-neutral-base-default};
-		color: var(--osui-badge-on-light-color);
+		background-color: #{variables.$token-bg-neutral-subtle-default};
+		color: variables.$token-text-primary;
 	}
 
 	&.background-transparent-lightest {
