@@ -1,27 +1,27 @@
 ---
 name: osui-legacy-theme
-description: Port SCSS changes from the token-based new theme into the legacy (pre-token-migration) theme snapshot under legacy/. Use this skill whenever a change lands in src/scss/** or src/scripts/**/scss/** and it also has to be reflected in the old theme — i.e. any time the words "old theme", "legacy theme", "legacy folder", "deprecated theme", "deprecated folder", "bring this to the old theme", or "backport to the pre-migration CSS" come up. Covers what the snapshot is, the token → legacy-var mapping table, the compiled-CSS formatting rules, insertion-point anchoring, and the verification checklist.
+description: Port SCSS changes from the token-based new theme into the classic (pre-token-migration) theme snapshot under classic-theme/. Use this skill whenever a change lands in src/scss/** or src/scripts/**/scss/** and it also has to be reflected in the old theme — i.e. any time the words "classic theme", "old theme", "legacy theme", "classic-theme folder", "legacy folder", "deprecated theme", "deprecated folder", "bring this to the old theme", or "backport to the pre-migration CSS" come up. Covers what the snapshot is, the token → classic-var mapping table, the compiled-CSS formatting rules, insertion-point anchoring, and the verification checklist.
 ---
 
-# Porting to the legacy (old) theme
+# Porting to the classic (old) theme
 
-## 1. What `legacy/` actually is
+## 1. What `classic-theme/` actually is
 
 ```
-legacy/O11.OutSystemsUI.css    ~774 KB
-legacy/ODC.OutSystemsUI.css    ~781 KB
-legacy/README.md
+classic-theme/O11.OutSystemsUI.css    ~774 KB
+classic-theme/ODC.OutSystemsUI.css    ~781 KB
+classic-theme/README.md
 ```
 
-Two **compiled CSS snapshots** of the pre-token-migration codebase — not SCSS, not partials, not a build target. There is no source tree behind them in this repo; the SCSS they came from lives on `dev` at the commit recorded in `legacy/README.md`.
+Two **compiled CSS snapshots** of the pre-token-migration codebase — not SCSS, not partials, not a build target. There is no source tree behind them in this repo; the SCSS they came from lives on `dev` at the commit recorded in `classic-theme/README.md`.
 
-Storybook serves them at `/legacy/*` (`.storybook/main.ts` `staticDirs`) and the **Theme** toolbar toggle (`.storybook/preview.ts`) swaps between `/osui/*` (new token theme) and `/legacy/*` (old theme) so reviewers can eyeball old vs new.
+Storybook serves them at `/classic-theme/*` (`.storybook/main.ts` `staticDirs`) and the **Theme** toolbar toggle (`.storybook/preview.ts`) swaps between `/osui/*` (new token theme) and `/classic-theme/*` (old theme) so reviewers can eyeball old vs new.
 
 **Consequences that drive everything below:**
 
 - Porting a change means **hand-editing compiled CSS**. There is no `npm run build` that will do it for you.
 - Both files must be patched. They are separate platform bundles that share ~95% of their content; a rule present in one and absent in the other is a bug.
-- Hand-applied edits are **destroyed by a snapshot refresh** (rebuild `dev`, copy `dist/*.OutSystemsUI.css` over these). So every port must be logged in `legacy/README.md` under **Hand-applied ports** — that log is the only record that survives review and the only way a future refresh can be replayed.
+- Hand-applied edits are **destroyed by a snapshot refresh** (rebuild `dev`, copy `dist/*.OutSystemsUI.css` over these). So every port must be logged in `classic-theme/README.md` under **Hand-applied ports** — that log is the only record that survives review and the only way a future refresh can be replayed.
 
 ## 2. The one hard rule: no tokens
 
@@ -30,10 +30,10 @@ The old theme predates `outsystems-design-tokens`. Its entire vocabulary is the 
 **Never** let a `--token-*` or `$token-*` reach these files. Invariant to check after every port:
 
 ```bash
-grep -c -- '--token-' legacy/*.css      # must stay 0 for both
+grep -c -- '--token-' classic-theme/*.css      # must stay 0 for both
 ```
 
-## 3. Token → legacy-var mapping
+## 3. Token → classic-var mapping
 
 Resolve the new theme's `$token-*` to its literal value first (`src/scss/tokens/_variables.scss`, gitignored but present locally — each line ends in a hardcoded fallback), then map the literal onto the old vocabulary.
 
@@ -117,14 +117,14 @@ This one bites: the `--size-*` / `*-size` flip is a rename, so a copy-paste port
 
 ## 4. The `--osui-*` component API layer — keep it
 
-The legacy snapshot already contains ~40 `--osui-*` custom properties (`--osui-balloon-shape`, `--osui-dropdown-min-width`, …) — the pattern-scoped-variable convention predates the token migration. So **keep the component CSS API structure** when porting; only the *defaults* get de-tokenised:
+The classic-theme snapshot already contains ~40 `--osui-*` custom properties (`--osui-balloon-shape`, `--osui-dropdown-min-width`, …) — the pattern-scoped-variable convention predates the token migration. So **keep the component CSS API structure** when porting; only the *defaults* get de-tokenised:
 
 ```css
 /* new theme, compiled */
 .layout.layout-side-no-header{
   --osui-layout-main-padding:var(--token-space-1000, var(--token-scale-1000, 40px));
 }
-/* legacy port */
+/* classic-theme port */
 .layout.layout-side-no-header{
   --osui-layout-main-padding:var(--space-xl);
 }
@@ -152,21 +152,21 @@ These files were produced by dart-sass (compressed-ish `expanded` style) plus au
    ```
    This is the shape you are porting — never hand-derive it from the SCSS.
 3. **De-tokenise** each value using §3.
-4. **Find the insertion anchor** — the compiled new theme's immediately-preceding rule, located in the legacy file so the ported block lands in the same relative position:
+4. **Find the insertion anchor** — the compiled new theme's immediately-preceding rule, located in the classic-theme file so the ported block lands in the same relative position:
    ```bash
-   grep -n 'layout.layout-side.aside-overlay .main' legacy/*.css
+   grep -n 'layout.layout-side.aside-overlay .main' classic-theme/*.css
    ```
    Anchor on a **unique, multi-line, exact** string (selector + body). Assert `count == 1` before replacing.
 5. **Patch both files** with one script, asserting anchor uniqueness and that the new selector is not already present:
    ```python
-   for p in ('legacy/O11.OutSystemsUI.css', 'legacy/ODC.OutSystemsUI.css'):
+   for p in ('classic-theme/O11.OutSystemsUI.css', 'classic-theme/ODC.OutSystemsUI.css'):
        s = open(p, encoding='utf-8').read()
        assert '<new-selector>' not in s, p
        assert s.count(ANCHOR) == 1, p
        open(p, 'w', encoding='utf-8').write(s.replace(ANCHOR, ANCHOR + BLOCK))
    ```
    Prefer this over `sed` — these are 780 KB single-purpose files and a mis-anchored global substitution is hard to spot.
-6. **Log it** in `legacy/README.md` under **Hand-applied ports**: date, source commit/ticket, selectors added, and every approximation you had to make.
+6. **Log it** in `classic-theme/README.md` under **Hand-applied ports**: date, source commit/ticket, selectors added, and every approximation you had to make.
 7. **Verify** (§8).
 
 ## 7. Check the source before porting it
@@ -181,25 +181,25 @@ Fix the source first, recompile, then port the corrected output. Tell the user w
 ## 8. Verification checklist
 
 ```bash
-grep -c -- '--token-' legacy/*.css                 # 0, both files
-grep -c '<new-selector>' legacy/*.css              # identical count, both files
-grep -o -- '--osui-<component>-[a-z-]*' legacy/*.css | sort | uniq -c   # same vars, same counts
-git diff --stat legacy/                            # identical insertion count per file
-git diff legacy/O11.OutSystemsUI.css               # read it; formatting must be indistinguishable
+grep -c -- '--token-' classic-theme/*.css                 # 0, both files
+grep -c '<new-selector>' classic-theme/*.css              # identical count, both files
+grep -o -- '--osui-<component>-[a-z-]*' classic-theme/*.css | sort | uniq -c   # same vars, same counts
+git diff --stat classic-theme/                            # identical insertion count per file
+git diff classic-theme/O11.OutSystemsUI.css               # read it; formatting must be indistinguishable
 ```
 
-Then, for anything visual: `npm run storybook`, flip the **Theme** toolbar to *Legacy theme*, and confirm the ported rule takes effect. Also grep that every selector the ported block targets actually exists in the old theme — the old markup contract may differ:
+Then, for anything visual: `npm run storybook`, flip the **Theme** toolbar to *Classic theme*, and confirm the ported rule takes effect. Also grep that every selector the ported block targets actually exists in the old theme — the old markup contract may differ:
 
 ```bash
-grep -n 'app-menu-content\|app-login-info\|main-content' legacy/ODC.OutSystemsUI.css | head
+grep -n 'app-menu-content\|app-login-info\|main-content' classic-theme/ODC.OutSystemsUI.css | head
 ```
 
 A ported rule targeting a class the old theme never emits is dead CSS; say so rather than shipping it silently.
 
 ## 9. What not to do
 
-- Don't hand-edit `src/scss/O11.OutSystemsUI.scss` / `ODC.OutSystemsUI.scss` (regenerated every build) — unrelated files, easy to confuse by name with the `legacy/` ones.
+- Don't hand-edit `src/scss/O11.OutSystemsUI.scss` / `ODC.OutSystemsUI.scss` (regenerated every build) — unrelated files, easy to confuse by name with the `classic-theme/` ones.
 - Don't rebuild the snapshot to apply a port. A refresh from `dev` wipes every prior hand-applied port.
-- Don't reformat, minify, or run Prettier over `legacy/*.css`. They are byte-comparable artefacts; a reformat destroys that.
+- Don't reformat, minify, or run Prettier over `classic-theme/*.css`. They are byte-comparable artefacts; a reformat destroys that.
 - Don't write **any** `var()` fallback chain — not a token one (`var(--token-space-1000, var(--space-xl))`), not an old semantic-override one (`var(--border-color-neutral-4, var(--color-neutral-4))`). One flat `var(--old-name)` per value (§3).
 - Don't port to only one platform bundle.
