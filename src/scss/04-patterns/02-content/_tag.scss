@@ -41,7 +41,7 @@ $osui-tag-lightest-text-colors: (
 	font-weight: variables.$token-font-weight-medium;
 	gap: variables.$token-space-200;
 	justify-content: center;
-	line-height: var(--osui-font-line-height-full);
+	line-height: normal;
 	min-height: variables.$token-scale-500;
 	min-width: unset;
 	padding-block: variables.$token-space-0;
