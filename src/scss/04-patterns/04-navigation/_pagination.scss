@@ -11,11 +11,12 @@
 	--osui-pagination-button-background: transparent;
 	--osui-pagination-button-border-color: transparent;
 	--osui-pagination-button-border-width: #{variables.$token-border-size-025};
-	--osui-pagination-button-font-weight: #{variables.$token-font-weight-medium};
+	--osui-pagination-button-font-weight: #{variables.$token-font-weight-regular};
 	--osui-pagination-button-hover-background: #{variables.$token-bg-neutral-subtlest-hover};
 	--osui-pagination-button-padding: #{variables.$token-scale-0} #{variables.$token-scale-100};
 	--osui-pagination-button-size: #{variables.$token-scale-900};
 	--osui-pagination-button-text-color: var(--color-text);
+	--osui-pagination-active-background: #{variables.$token-bg-neutral-subtlest-default};
 	--osui-pagination-active-border-color: var(--color-border);
 	--osui-pagination-active-color: var(--color-text);
 	--osui-pagination-counter-color: var(--color-text-subtlest);
@@ -68,12 +69,12 @@
 			pointer-events: none;
 		}
 
-		&:focus {
-			border-color: variables.$token-semantics-primary-base;
+		&:focus-visible {
 			box-shadow: 0 0 0 variables.$token-border-size-075 color-mix(in srgb, #{variables.$token-semantics-primary-base} 22%, transparent);
 		}
 
 		&.is--active {
+			background-color: var(--osui-pagination-active-background);
 			border-color: var(--osui-pagination-active-border-color);
 			color: var(--osui-pagination-active-color);
 			cursor: auto;

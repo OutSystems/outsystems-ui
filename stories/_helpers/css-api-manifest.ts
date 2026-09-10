@@ -39,9 +39,9 @@ export type CssApiManifest = {
 };
 
 export const CSS_API_MANIFEST: CssApiManifest = {
-	generatedAt: '2026-09-08T15:32:01.723Z',
+	generatedAt: '2026-09-10T21:30:42.351Z',
 	totals: {
-		properties: 573,
+		properties: 574,
 		components: 67,
 		categories: 9,
 	},
@@ -4363,6 +4363,13 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							selector: '.pagination',
 							properties: [
 							{
+								name: '--osui-pagination-active-background',
+								default: '#{$token-bg-neutral-subtlest-default}',
+								kind: 'color',
+								chain: 'token',
+								hint: '#{$token-bg-neutral-subtlest-default}',
+							},
+							{
 								name: '--osui-pagination-active-border-color',
 								default: 'var(--color-border)',
 								kind: 'color',
@@ -4406,10 +4413,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-pagination-button-font-weight',
-								default: '#{$token-font-weight-medium}',
+								default: '#{$token-font-weight-regular}',
 								kind: 'other',
 								chain: 'token',
-								hint: '#{$token-font-weight-medium}',
+								hint: '#{$token-font-weight-regular}',
 							},
 							{
 								name: '--osui-pagination-button-hover-background',
