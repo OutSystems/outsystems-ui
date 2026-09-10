@@ -102,8 +102,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 					index = data.index;
 				}
 
-				const groupedOption = this._groupedOptionsList[groupIndex];
-				const option = groupedOption && groupedOption.options[index];
+				const option = this._groupedOptionsList[groupIndex]?.options[index];
 
 				if (option) {
 					// Check if an image should be added to the Option item
