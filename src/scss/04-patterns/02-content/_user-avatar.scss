@@ -120,7 +120,8 @@ $osui-avatar-lightest-text-colors: (
 		}
 
 		&-secondary {
-			--osui-avatar-color: var(--color-primary);
+			background-color: variables.$token-bg-neutral-base-default;
+			--osui-avatar-color: #{variables.$token-text-primary};
 		}
 
 		&-primary,
@@ -158,7 +159,8 @@ $osui-avatar-lightest-text-colors: (
 	}
 
 	&.background-secondary-lightest {
-		background-color: variables.$token-bg-neutral-base-default;
+		background-color: variables.$token-bg-neutral-subtle-default;
+		--osui-avatar-on-light-color: #{variables.$token-text-primary};
 		color: var(--osui-avatar-on-light-color);
 	}
 
