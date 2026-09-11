@@ -16,7 +16,7 @@ Backport the change described by `$ARGUMENTS` from the token-based new theme int
 
 ## Authoritative procedure
 
-@.claude/skills/osui-legacy-theme/SKILL.md
+@.claude/skills/osui-classic-theme/SKILL.md
 
 Follow it as written. The steps below are the execution order, not a substitute for the skill.
 

@@ -1,5 +1,5 @@
 ---
-name: osui-legacy-theme
+name: osui-classic-theme
 description: Port SCSS changes from the token-based new theme into the classic (pre-token-migration) theme snapshot under classic-theme/. Use this skill whenever a change lands in src/scss/** or src/scripts/**/scss/** and it also has to be reflected in the old theme — i.e. any time the words "classic theme", "old theme", "legacy theme", "classic-theme folder", "legacy folder", "deprecated theme", "deprecated folder", "bring this to the old theme", or "backport to the pre-migration CSS" come up. Covers what the snapshot is, the token → classic-var mapping table, the compiled-CSS formatting rules, insertion-point anchoring, and the verification checklist.
 ---
 

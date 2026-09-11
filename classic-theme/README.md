@@ -10,7 +10,7 @@ then replaying every entry under **Hand-applied ports** below.
 
 Changes back-ported from the new (token) theme by hand, de-tokenised onto the old
 vocabulary. **A snapshot refresh wipes these** — replay every entry after rebuilding.
-Procedure: `/port-to-legacy` (see `.claude/skills/osui-legacy-theme/SKILL.md`).
+Procedure: `/port-to-classic` (see `.claude/skills/osui-classic-theme/SKILL.md`).
 
 - **2026-08-27 — ROU-12992 / 6ce34d903 "add new layout rules"** — added
   `.layout.layout-side-no-header` (+ `.main-content`, `.app-menu-content`,
