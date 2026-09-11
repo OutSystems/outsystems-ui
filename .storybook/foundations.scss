@@ -1,0 +1,803 @@
+/* Foundations docs — design token reference pages (Mobile UI parity, OUI chrome). */
+
+.sbdocs-wrapper:has(.osui-foundations) {
+  padding: 0 !important;
+  background: #fff;
+  max-width: none !important;
+  width: 100% !important;
+}
+
+.sbdocs-wrapper:has(.osui-foundations) .sbdocs-content,
+.sbdocs-wrapper:has(.osui-foundations) .sbdocs {
+  max-width: none !important;
+  width: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.sbdocs-wrapper:has(.osui-foundations) .sbdocs-title,
+.sbdocs-wrapper:has(.osui-foundations) h1.sbdocs-title {
+  display: none !important;
+}
+
+.osui-foundations {
+  --fd-primary-100: #f0f2ff;
+  --fd-primary-700: #105cef;
+  --fd-n-100: #f9f9f9;
+  --fd-n-200: #f2f2f2;
+  --fd-n-300: #e8e8e8;
+  --fd-n-700: #8d8d8d;
+  --fd-ink: #242424;
+  --fd-ink-2: #454545;
+  --fd-ink-3: #6b6b6b;
+  --fd-brand-a: #ff5e3e;
+  --fd-brand-b: #d8161e;
+  --fd-r-200: 8px;
+  --fd-r-300: 12px;
+  --fd-r-full: 999px;
+  /* Aliases for shared `.api-copy-icon` styles */
+  --api-primary-700: var(--fd-primary-700);
+  --api-ink: var(--fd-ink);
+  --api-ink-3: var(--fd-ink-3);
+  --api-n-200: var(--fd-n-200);
+
+  box-sizing: border-box;
+  color: var(--fd-ink);
+  font-family: "Inter", -apple-system, system-ui, sans-serif;
+  font-size: 14.5px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+
+  *, *::before, *::after { box-sizing: border-box; }
+}
+
+.osui-foundations .fd-head {
+  position: relative;
+  overflow: hidden;
+  padding: 56px 36px 44px;
+  border-bottom: 1px solid var(--fd-n-300);
+  margin-bottom: 52px;
+}
+
+.osui-foundations .fd-head::before {
+  content: "";
+  position: absolute;
+  inset: -70% -10% auto -10%;
+  height: 460px;
+  pointer-events: none;
+  background:
+    radial-gradient(50% 46% at 18% 34%, rgba(16, 92, 239, 0.12), transparent 70%),
+    radial-gradient(42% 44% at 74% 12%, rgba(255, 94, 62, 0.18), transparent 68%);
+  filter: blur(6px);
+}
+
+.osui-foundations .fd-head-in {
+  position: relative;
+}
+
+.osui-foundations .fd-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  height: 23px;
+  padding: 0 10px;
+  border-radius: var(--fd-r-full);
+  background: var(--fd-primary-100);
+  color: var(--fd-primary-700);
+  font-size: 11.5px;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+.sbdocs-wrapper .osui-foundations .fd-head h1 {
+  font-size: 34px !important;
+  line-height: 1.1 !important;
+  letter-spacing: -0.026em !important;
+  margin: 0 0 12px !important;
+  font-weight: 780 !important;
+  border: none !important;
+  color: var(--fd-ink) !important;
+}
+
+.osui-foundations .fd-lede {
+  font-size: 16px !important;
+  line-height: 1.55 !important;
+  color: var(--fd-ink-3) !important;
+  max-width: 720px;
+  margin: 0;
+}
+
+.osui-foundations .fd-body h2,
+.osui-foundations .fd-sec > h2 {
+  font-size: 23px;
+  font-weight: 750;
+  letter-spacing: -0.02em;
+  margin: 0 0 14px;
+  color: var(--fd-ink);
+}
+
+.osui-foundations .fd-body p,
+.osui-foundations .fd-sec p {
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: var(--fd-ink-2);
+  margin: 0 0 18px;
+}
+
+.osui-foundations .fd-body h3,
+.osui-foundations .fd-sec > h3 {
+  font-size: 15.5px;
+  font-weight: 680;
+  margin: 36px 0 12px;
+  color: var(--fd-ink);
+}
+
+.osui-foundations .fd-sec {
+  padding: 0 0 64px;
+  margin: 0;
+}
+
+.osui-foundations .fd-divider {
+  border: 0;
+  border-top: 1px solid var(--fd-n-300);
+  margin: 0 0 64px;
+}
+
+.osui-foundations .fd-diagram {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  margin: 20px 0 24px;
+}
+
+.osui-foundations .fd-checklist {
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 12px 0 0;
+}
+
+.osui-foundations .fd-checklist li {
+  position: relative;
+  list-style: none !important;
+  padding: 6px 0 6px 28px;
+  font-size: 15px;
+  color: var(--fd-ink-2);
+}
+
+.osui-foundations .fd-checklist li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--fd-primary-700);
+  font-weight: 700;
+}
+
+.osui-foundations .fd-naming-list,
+.osui-foundations .fd-cat-list {
+  padding-left: 20px;
+  margin: 16px 0;
+}
+
+.osui-foundations .fd-naming-list li,
+.osui-foundations .fd-cat-list li {
+  margin-bottom: 12px;
+  font-size: 15px;
+  color: var(--fd-ink-2);
+}
+
+.osui-foundations .fd-do-dont p {
+  margin-bottom: 8px;
+}
+
+.osui-foundations .fd-do { color: #16a34a; }
+.osui-foundations .fd-dont { color: #dc2626; }
+
+/* ── Tables ─────────────────────────────────────────────────────── */
+
+.osui-foundations .fd-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0 24px;
+  font-size: 13px;
+}
+
+.osui-foundations .fd-table th {
+  text-align: left;
+  font-weight: 700;
+  color: var(--fd-ink-3);
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0 12px 14px 0;
+  border-bottom: 1px solid var(--fd-n-300);
+}
+
+.osui-foundations .fd-table td {
+  padding: 14px 12px 14px 0;
+  vertical-align: middle;
+  border-bottom: 1px solid var(--fd-n-200);
+  color: var(--fd-ink-2);
+  font-size: 13px;
+}
+
+.sbdocs-wrapper .osui-foundations .fd-table code:not(pre code),
+.osui-foundations .fd-table code {
+  font-family: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, monospace !important;
+  font-size: 11px !important;
+  line-height: 12px;
+  font-weight: 500;
+  color: var(--fd-ink) !important;
+  background: var(--fd-n-100) !important;
+  border: 1px solid var(--fd-n-300) !important;
+  border-radius: 5px;
+  padding: 5px;
+  word-break: break-word;
+}
+
+.osui-foundations .fd-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.osui-foundations .fd-flex {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.osui-foundations .fd-var-stack {
+  display: grid;
+  gap: 8px;
+}
+
+.osui-foundations .fd-var-line {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 6px;
+  min-height: 26px;
+}
+
+.osui-foundations .fd-var-line__label {
+  flex: none;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 16px;
+  color: var(--fd-ink);
+  white-space: nowrap;
+}
+
+.osui-foundations .fd-var-line code {
+  flex: none;
+  white-space: nowrap;
+  word-break: normal;
+}
+
+.osui-foundations .fd-var-line .api-copy-icon {
+  flex: none;
+}
+
+/* Legacy inline labels (Typography composite table) */
+.osui-foundations .fd-var-label {
+  flex: none;
+  font-size: 11px;
+  font-weight: 650;
+  color: var(--fd-ink-3);
+  white-space: nowrap;
+}
+
+.osui-foundations .fd-table--typo .fd-inline {
+  flex-wrap: nowrap;
+}
+
+.osui-foundations .fd-table--shape td {
+  vertical-align: top;
+}
+
+.osui-foundations .fd-table--shape .fd-shape-row {
+  min-height: 30px;
+  padding-top: 2px;
+}
+
+.osui-foundations .fd-token-pill {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 12px;
+}
+
+/* ── Colours page — token theme toggle ───────────────────────────── */
+
+.osui-foundations .fd-colors-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px 24px;
+  margin: 0 0 28px;
+  padding: 16px 18px;
+  background: var(--fd-n-100, #f5f5f5);
+  border: 1px solid var(--fd-n-400, #e0e0e0);
+  border-radius: 8px;
+}
+
+.osui-foundations .fd-colors-toolbar p {
+  flex: 1 1 280px;
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--fd-ink-2);
+}
+
+.osui-foundations .fd-token-theme {
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+}
+
+.osui-foundations .fd-token-theme__label {
+  margin-right: 10px;
+  font-size: 12px;
+  font-weight: 650;
+  color: var(--fd-ink-3);
+  letter-spacing: 0.02em;
+}
+
+.osui-foundations .fd-token-theme__group {
+  display: inline-flex;
+  align-items: center;
+}
+
+.osui-foundations .fd-token-theme__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 11px;
+  border: 1px solid var(--fd-n-400, #e0e0e0);
+  border-radius: 0;
+  background: #fff;
+  color: var(--fd-ink-3);
+  font: 600 12.5px/1 "Inter", sans-serif;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.osui-foundations .fd-token-theme__btn + .fd-token-theme__btn {
+  margin-left: -1px;
+}
+
+.osui-foundations .fd-token-theme__group .fd-token-theme__btn:first-child {
+  border-radius: 6px 0 0 6px;
+}
+
+.osui-foundations .fd-token-theme__group .fd-token-theme__btn:last-child {
+  border-radius: 0 6px 6px 0;
+}
+
+.osui-foundations .fd-token-theme__btn svg {
+  flex: none;
+  opacity: 0.72;
+}
+
+.osui-foundations .fd-token-theme__btn[aria-pressed="true"] {
+  position: relative;
+  z-index: 1;
+  background: var(--fd-primary-100, #eef3ff);
+  border-color: color-mix(in srgb, var(--fd-primary-700, #105cef) 35%, var(--fd-n-400, #e0e0e0));
+  color: var(--fd-primary-700, #105cef);
+}
+
+.osui-foundations .fd-token-theme__btn[aria-pressed="true"] svg {
+  opacity: 1;
+}
+
+/* ── Colour palette ─────────────────────────────────────────────── */
+
+.osui-foundations .fd-color-line {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  min-height: 50px;
+  margin-bottom: 6px;
+}
+
+.osui-foundations .fd-color-line__name {
+  flex: none;
+  width: 120px;
+  font-size: 14px;
+  font-weight: 550;
+  padding-top: 14px;
+  color: var(--fd-ink);
+}
+
+.osui-foundations .fd-color-swatch {
+  flex: 1;
+  min-width: 0;
+  height: 50px;
+  margin: 2px;
+  padding: 0;
+  border: none;
+  border-radius: 4px;
+  background: var(--fd-swatch, #eee);
+  cursor: pointer;
+}
+
+.osui-foundations .fd-color-swatch:hover {
+  outline: 2px solid var(--fd-ink);
+  outline-offset: 1px;
+}
+
+.osui-foundations .fd-color-line--labels {
+  min-height: 0;
+  margin-bottom: 2px;
+  align-items: flex-end;
+}
+
+.osui-foundations .fd-color-line--labels .fd-color-line__name {
+  padding-top: 0;
+}
+
+.osui-foundations .fd-color-line--labels .fd-color-line__label {
+  flex: 1;
+  text-align: center;
+  font-size: 10px;
+  line-height: 1;
+  color: var(--fd-ink-3);
+  padding: 0 2px 3px;
+  margin: 0 2px;
+}
+
+.osui-foundations .fd-color-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 16px 0 24px;
+}
+
+.osui-foundations .fd-color-card {
+  flex: 1 1 168px;
+  max-width: 216px;
+  border-radius: var(--fd-r-200);
+  overflow: hidden;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05), 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+.osui-foundations .fd-color-card__swatch {
+  height: 72px;
+  background: var(--fd-swatch, #eee);
+  display: flex;
+  align-items: flex-end;
+  padding: 8px 10px;
+  color: #fff;
+  font-size: 13px;
+}
+
+.osui-foundations .fd-color-card__body {
+  padding: 10px 10px 12px;
+  font-size: 11px;
+}
+
+.osui-foundations .fd-color-card__body p {
+  margin: 0 0 8px;
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+.osui-foundations .fd-color-card__body p:last-child {
+  margin-bottom: 0;
+}
+
+.osui-foundations .fd-color-card__body strong {
+  display: block;
+  font-size: 10px;
+  font-weight: 650;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--fd-ink-3);
+  margin-bottom: 2px;
+}
+
+.sbdocs-wrapper .osui-foundations .fd-color-card__body code:not(pre code),
+.osui-foundations .fd-color-card__body code {
+  display: inline;
+  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+  font-size: 10.5px !important;
+  line-height: 1.5 !important;
+  font-weight: 500;
+  color: var(--fd-ink-2) !important;
+  background: var(--fd-n-200) !important;
+  border: 0 !important;
+  border-radius: 3px;
+  padding: 1px 5px !important;
+  overflow-wrap: anywhere;
+  word-break: normal;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+.osui-foundations .fd-color-token-cell {
+  align-items: center;
+  gap: 8px;
+  flex-wrap: nowrap;
+}
+
+.osui-foundations .fd-color-swatch-preview--text {
+  flex: none;
+  width: 30px;
+  height: 20px;
+  border-radius: 3px;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.osui-foundations .fd-color-swatch-preview--icon {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.osui-foundations .fd-color-swatch-preview--icon svg {
+  display: block;
+}
+
+.osui-foundations .fd-color-swatch-preview--bg {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 3px;
+}
+
+.osui-foundations .fd-border-token-preview {
+  width: 40px;
+  height: 20px;
+  box-sizing: border-box;
+  border: var(--fd-border-size, 1.5px) var(--fd-border-style, solid) var(--fd-border-color, var(--fd-ink));
+  border-radius: var(--fd-border-radius, 0);
+  background: var(--fd-n-100);
+}
+
+.osui-foundations .fd-table--borders td:first-child,
+.osui-foundations .fd-table--border-color td:first-child {
+  width: 1%;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.osui-foundations .fd-color-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  display: grid;
+  place-items: start center;
+  padding-top: 80px;
+  z-index: 1000;
+}
+
+.osui-foundations .fd-color-modal__panel {
+  background: #fff;
+  border-radius: var(--fd-r-300);
+  width: min(400px, 92vw);
+  overflow: hidden;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.2);
+}
+
+.osui-foundations .fd-color-modal__swatch {
+  height: 140px;
+}
+
+.osui-foundations .fd-color-modal__body {
+  padding: 20px;
+}
+
+.osui-foundations .fd-color-modal__body h3 {
+  margin: 0 0 12px;
+  font-size: 15.5px;
+  font-weight: 680;
+}
+
+.osui-foundations .fd-color-modal__body p {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-size: 13px;
+  margin: 6px 0;
+}
+
+/* ── Previews ───────────────────────────────────────────────────── */
+
+.osui-foundations .fd-shape-box {
+  width: 30px;
+  height: 30px;
+  flex: none;
+  box-sizing: border-box;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: var(--fd-shape-radius, 0);
+}
+
+.osui-foundations .fd-shape-container {
+  width: 100%;
+  min-height: 200px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 48px 80px;
+  padding: 40px 36px;
+  margin: 20px 0 32px;
+  background: #fafafa;
+  border: 1px solid #e0e0e0;
+  box-sizing: border-box;
+}
+
+.osui-foundations .fd-shape-hero-box {
+  flex: none;
+  width: 120px;
+  height: 120px;
+  display: grid;
+  place-items: center;
+  background: #fff;
+  border: 2px solid #e0e0e0;
+  border-radius: var(--fd-shape-radius, 0);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--fd-ink-2);
+}
+
+.osui-foundations .fd-shape-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.osui-foundations .fd-shape-row__label {
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--fd-ink-2);
+}
+
+.osui-foundations .fd-shape-row__label b {
+  font-weight: 600;
+  color: var(--fd-ink);
+}
+
+.osui-foundations .fd-table--shape td:first-child {
+  width: 1%;
+  white-space: nowrap;
+  vertical-align: top;
+}
+
+.osui-foundations .fd-table--spacing td:first-child {
+  width: 1%;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.osui-foundations .fd-space-preview {
+  display: inline-flex;
+  align-items: center;
+  width: 120px;
+  height: 24px;
+  padding: 0 4px;
+  background: #f2f4fd;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.osui-foundations .fd-space-preview__gap {
+  flex: none;
+  height: 16px;
+  min-width: 0;
+}
+
+.osui-foundations .fd-space-preview__bar {
+  flex: none;
+  width: 20px;
+  height: 16px;
+  background: var(--fd-primary-700);
+  border-radius: 2px;
+}
+
+.osui-foundations .fd-elevation-container {
+  width: 100%;
+  min-height: 150px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px 50px;
+  padding: 30px 36px;
+  margin: 20px 0 32px;
+  background: #fafafa;
+  border: 1px solid #e0e0e0;
+  box-sizing: border-box;
+}
+
+.osui-foundations .fd-elevation-hero-box {
+  flex: none;
+  width: 120px;
+  height: 80px;
+  display: grid;
+  place-items: center;
+  background: #fff;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--fd-ink-2);
+}
+
+.osui-foundations .fd-elevation-box {
+  width: 20px;
+  height: 20px;
+  flex: none;
+  background: #fff;
+  border-radius: 3px;
+}
+
+.osui-foundations .fd-table--elevation td:first-child {
+  width: 1%;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.osui-foundations .fd-typo-preview {
+  font-family: "Inter", sans-serif;
+  color: var(--fd-ink);
+  white-space: nowrap;
+}
+
+.osui-foundations .fd-typo-preview--token {
+  font-size: 18px;
+}
+
+.osui-foundations .fd-typo-preview--lh {
+  border-top: 1px dashed var(--fd-n-400, #ccc);
+  border-bottom: 1px dashed var(--fd-n-400, #ccc);
+}
+
+.osui-foundations .fd-transition-preview {
+  width: 80px;
+  height: 24px;
+  background: var(--fd-n-200);
+  border-radius: 999px;
+  position: relative;
+  overflow: hidden;
+}
+
+.osui-foundations .fd-transition-dot {
+  position: absolute;
+  left: 4px;
+  top: 4px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--fd-primary-700);
+  animation: fd-token-move 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes fd-token-move {
+  from { transform: translateX(0); }
+  to { transform: translateX(52px); }
+}
+
+.sbdocs-wrapper .osui-foundations code:not(pre code) {
+  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+  font-size: 12.5px !important;
+  color: var(--fd-ink-2) !important;
+  background: var(--fd-n-200) !important;
+  border: 0 !important;
+  border-radius: 4px;
+  padding: 1px 5px;
+}
+
+.sbdocs-wrapper .osui-foundations a {
+  color: var(--fd-primary-700);
+}

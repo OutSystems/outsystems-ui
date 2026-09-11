@@ -1,3 +1,5 @@
+@use "../../tokens/variables";
+
 /* Patterns - Interaction - Stacked Cards */
 ////
 /// @group Patterns-StackedCards
@@ -5,6 +7,14 @@
 
 ///
 .stackedcards {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-stacked-cards-background: var(--color-background-surface);
+	--osui-stacked-cards-overlay-color: var(--color-text-inverse);
+	--osui-stacked-cards-overlay-top-background: var(--color-info);
+	--osui-stacked-cards-overlay-right-background: var(--color-success);
+	--osui-stacked-cards-overlay-left-background: var(--color-error);
+	// ───────────────────────────────────────────────────────────────────
+
 	position: relative;
 
 	* {
@@ -13,11 +23,11 @@
 
 	.stackedcards-container {
 		.OSAutoMarginTop {
-			margin-top: var(--space-none);
+			margin-block-start: variables.$token-scale-0;
 		}
 
 		.list.list-group {
-			background-color: get-background-color('transparent');
+			background-color: transparent;
 			height: 100%;
 			z-index: var(--layer-global-screen);
 
@@ -40,7 +50,7 @@
 			&:not([data-animation-disabled]) {
 				// Service Studio Preview
 				& {
-					-servicestudio-min-height: 225px;
+					-servicestudio-min-height: 225px; // design-spec: SS preview fixed height
 					-servicestudio-pointer-events: none;
 				}
 			}
@@ -49,7 +59,7 @@
 			&:not([data-animation-disabled]):after {
 				// Service Studio Preview
 				& {
-					-servicestudio-background-color: get-background-color('neutral-0');
+					-servicestudio-background-color: variables.$token-bg-surface-default;
 					-servicestudio-background-position: center;
 					-servicestudio-background-repeat: no-repeat;
 					-servicestudio-background-size: 291px 225px;
@@ -107,7 +117,9 @@
 	}
 
 	&--animatable {
-		transition: all 400ms ease;
+		transition:
+			transform,
+			opacity variables.$token-transition-time-300 variables.$token-transition-curve-expressive;
 	}
 
 	.init {
@@ -130,7 +142,7 @@
 	&-bottom,
 	&-top,
 	&-none {
-		background-color: get-background-color('neutral-0');
+		background-color: var(--osui-stacked-cards-background);
 		height: 100%;
 	}
 
@@ -169,7 +181,7 @@
 		display: flex;
 		height: 100%;
 		justify-content: center;
-		left: 0;
+		inset-inline-start: 0;
 		opacity: 0;
 		top: 0;
 
@@ -192,12 +204,12 @@
 	}
 
 	&.top {
-		background-color: get-background-color('info');
-		color: get-text-color('neutral-0');
+		background-color: var(--osui-stacked-cards-overlay-top-background);
+		color: var(--osui-stacked-cards-overlay-color);
 
 		// Service Studio Preview
 		& {
-			-servicestudio-background-color: get-background-color('blue-light');
+			-servicestudio-background-color: var(--osui-stacked-cards-overlay-top-background);
 			-servicestudio-float: none;
 			-servicestudio-min-height: 80px;
 			-servicestudio-width: 100%;
@@ -206,12 +218,12 @@
 	}
 
 	&.right {
-		background-color: get-background-color('success');
-		color: get-text-color('neutral-0');
+		background-color: var(--osui-stacked-cards-overlay-right-background);
+		color: var(--osui-stacked-cards-overlay-color);
 
 		// Service Studio Preview
 		& {
-			-servicestudio-background-color: get-background-color('green');
+			-servicestudio-background-color: var(--osui-stacked-cards-overlay-right-background);
 			-servicestudio-float: right;
 			-servicestudio-min-height: 80px;
 			-servicestudio-width: 50%;
@@ -220,12 +232,12 @@
 	}
 
 	&.left {
-		background-color: get-background-color('error');
-		color: get-text-color('neutral-0');
+		background-color: var(--osui-stacked-cards-overlay-left-background);
+		color: var(--osui-stacked-cards-overlay-color);
 
 		// Service Studio Preview
 		& {
-			-servicestudio-background-color: get-background-color('red');
+			-servicestudio-background-color: var(--osui-stacked-cards-overlay-left-background);
 			-servicestudio-float: none;
 			-servicestudio-min-height: 80px;
 			-servicestudio-width: 50%;

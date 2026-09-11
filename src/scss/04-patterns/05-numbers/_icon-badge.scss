@@ -1,3 +1,5 @@
+@use "../../tokens/variables";
+
 /* Patterns - Numbers - Icon Badge */
 ////
 /// @group Patterns-Icon_Badge
@@ -5,18 +7,32 @@
 
 ///
 .icon-badge {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-icon-badge-ring-color: #{variables.$token-border-subtlest};
+	--osui-icon-badge-shadow: 0 0 0 1px var(--osui-icon-badge-ring-color);
+	// ───────────────────────────────────────────────────────────────────
+
 	display: inline-block;
 	position: relative;
 
 	.badge {
-		@include absolute-left-top(45%, 0);
+		position: absolute;
+		top: 0;
+		right: 0;
+		left: auto;
 
+		align-items: center;
 		border-radius: var(--border-radius-rounded);
-		font-size: var(--font-size-xs);
-		height: 18px;
-		min-width: 18px;
-		padding: var(--space-none) var(--space-xs);
-		transform: translateY(-40%);
+		box-shadow: var(--osui-icon-badge-shadow);
+		display: inline-flex;
+		font-size: variables.$token-font-size-250;
+		font-weight: variables.$token-font-weight-bold;
+		height: variables.$token-scale-400;
+		justify-content: center;
+		min-width: variables.$token-scale-400;
+		padding-block: variables.$token-scale-0;
+		padding-inline: variables.$token-scale-100;
+		transform: translate(50%, -50%);
 		white-space: nowrap;
 
 		[data-expression] {
@@ -25,7 +41,7 @@
 	}
 
 	.icon {
-		font-size: var(--font-size-h4);
+		font-size: variables.$token-font-size-550;
 	}
 
 	div:first-child:empty {

@@ -1,3 +1,5 @@
+@use "../tokens/variables";
+
 /* Widgets - Form */
 ////
 /// @group Widgets-Form
@@ -7,12 +9,12 @@
 .form {
 	&.OSFillParent {
 		.form-control[class*='ThemeGrid_Width'].not-valid ~ span.validation-message {
-			left: 22px;
+			inset-inline-start: 22px;
 		}
 	}
 
 	label {
-		margin-bottom: var(--space-s);
+		margin-block-end: variables.$token-scale-200;
 	}
 
 	.dropdown,
@@ -20,7 +22,7 @@
 	input[data-input],
 	textarea[data-textarea],
 	[data-switch] {
-		margin-bottom: var(--space-m);
+		margin-block-end: variables.$token-scale-600;
 	}
 
 	span {
@@ -28,7 +30,7 @@
 
 		&.validation-message {
 			bottom: -32px;
-			left: 0;
+			inset-inline-start: 0;
 			position: absolute;
 			white-space: nowrap;
 			width: 100%;
@@ -38,7 +40,7 @@
 	& > span.input-text {
 		.form-control[class*='ThemeGrid_Width'].not-valid {
 			& + span.validation-message {
-				left: 0;
+				inset-inline-start: 0;
 			}
 		}
 	}
@@ -52,14 +54,14 @@
 	}
 
 	.upload-file span.validation-message {
-		bottom: 8px;
+		bottom: variables.$token-scale-200;
 		position: relative;
 	}
 
 	.dropdown-container {
 
 		&[class*='ThemeGrid_Width'].not-valid span.validation-message {
-			bottom: 4px;
+			bottom: variables.$token-scale-100;
 		}
 
 		&,
@@ -84,7 +86,7 @@
 	textarea[data-textarea] {
 		& + span {
 			&.validation-message {
-				bottom: 4px;
+				bottom: variables.$token-scale-100;
 			}
 		}
 	}
@@ -92,20 +94,20 @@
 
 ///
 span.validation-message {
-	color: get-text-color('error');
-	font-size: var(--font-size-xs);
-	margin-left: var(--space-none);
+	color: variables.$token-text-danger;
+	font-size: variables.$token-font-size-300;
+	margin-inline-start: variables.$token-scale-0;
 }
 
 ///
 .form-control[class*='ThemeGrid_Width'].not-valid + span.validation-message {
-	left: 10px;
+	inset-inline-start: 10px;
 }
 
 // Responsive --------------------------------------------------------------------
 .phone {
 	.layout-native .form.OSFillParent .form-control[class*='ThemeGrid_Width'].not-valid + span.validation-message {
-		left: 6px;
+		inset-inline-start: variables.$token-scale-150;
 	}
 
 	.form.OSFillParent span.input-text .form-control[class*='ThemeGrid_Width'].not-valid + span.validation-message,
@@ -114,19 +116,6 @@ span.validation-message {
 		.form-control[class*='ThemeGrid_Width'].not-valid.ThemeGrid_MarginGutter
 		+ span.validation-message,
 	.form-control[class*='ThemeGrid_Width'].not-valid + span.validation-message {
-		left: 0;
-	}
-}
-
-// IsRTL -------------------------------------------------------------------------
-///
-.is-rtl {
-	form {
-		&.OSFillParent {
-			.form-control[class*='ThemeGrid_Width'].not-valid ~ span.validation-message {
-				left: initial;
-				right: 22px;
-			}
-		}
+		inset-inline-start: 0;
 	}
 }

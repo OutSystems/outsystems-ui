@@ -1,28 +1,88 @@
+@use 'sass:map';
+@use '../00-abstract/index' as *;
+@use '../tokens/variables';
+
 /* Usefull - Border Radius */
 ////
 /// @group UsefullClasses-Border_Radius
 /// Usefull - Border Radius
 
+// Profile → tier → $token-shape-{profile}-{tier}. See ADR-0010 / shape-tier-slots plan.
+$osui-shape-profile-tiers: (
+	'soft': (
+		'2xs': variables.$token-shape-soft-2xs,
+		'xs': variables.$token-shape-soft-xs,
+		'sm': variables.$token-shape-soft-sm,
+		'md': variables.$token-shape-soft-md,
+		'lg': variables.$token-shape-soft-lg,
+		'xl': variables.$token-shape-soft-xl,
+		'2xl': variables.$token-shape-soft-2xl,
+	),
+	'round': (
+		'2xs': variables.$token-shape-round-2xs,
+		'xs': variables.$token-shape-round-xs,
+		'sm': variables.$token-shape-round-sm,
+		'md': variables.$token-shape-round-md,
+		'lg': variables.$token-shape-round-lg,
+		'xl': variables.$token-shape-round-xl,
+		'2xl': variables.$token-shape-round-2xl,
+	),
+	'rectangular': (
+		'2xs': variables.$token-shape-rectangular-2xs,
+		'xs': variables.$token-shape-rectangular-xs,
+		'sm': variables.$token-shape-rectangular-sm,
+		'md': variables.$token-shape-rectangular-md,
+		'lg': variables.$token-shape-rectangular-lg,
+		'xl': variables.$token-shape-rectangular-xl,
+		'2xl': variables.$token-shape-rectangular-2xl,
+	),
+);
+
+// Maps legacy `.border-radius-*` property utilities to token SCSS variables.
+// Soft is 4px here (`$token-border-radius-100`), not the 8px shape `xs` tier.
+// Service Studio still emits these on Tag, Avatar and Badge.
+$osui-border-radius-token-vars: (
+	'none': variables.$token-border-radius-0,
+	'soft': variables.$token-border-radius-100,
+	'rounded': variables.$token-border-radius-full,
+	'circle': 50%,
+);
+
+///
+.shape {
+	@each $profile in $osui-shape-profiles {
+		$tier-map: map.get($osui-shape-profile-tiers, $profile);
+
+		// Generated — e.g. `.shape-soft`, `.shape-round`, `.shape-rectangular`
+		&-#{$profile} {
+			@each $tier, $value in $tier-map {
+				--border-radius-#{$tier}: #{$value};
+			}
+		}
+	}
+}
+
 ///
 .border-radius {
 	@each $type, $value in $osui-border-radius-types {
+		$token: map.get($osui-border-radius-token-vars, $type);
 		// Generated - Eg: .border-radius-none
 		&-#{$type} {
-			border-radius: var(--border-radius-#{$type});
+			border-radius: #{$token};
 		}
 
 		@each $osui-box-corner in $osui-box-corners {
 			// Generated - Eg: .border-radius-top-left-none
 			&-#{$osui-box-corner}-#{$type} {
-				border-#{$osui-box-corner}-radius: var(--border-radius-#{$type});
+				border-#{$osui-box-corner}-radius: #{$token};
 			}
 		}
 
 		@each $osui-border-side, $osui-border-corner1, $osui-border-corner2 in $osui-border-radius-box-sides {
 			// Generated - Eg: .border-radius-top-none
 			&-#{$osui-border-side}-#{$type} {
-				border-#{$osui-border-side}-#{$osui-border-corner1}-radius: var(--border-radius-#{$type});
-				border-#{$osui-border-side}-#{$osui-border-corner2}-radius: var(--border-radius-#{$type});
+				border-#{$osui-border-side}-#{$osui-border-corner1}-radius: #{$token};
+				border-#{$osui-border-side}-#{$osui-border-corner2}-radius: #{$token};
 			}
 		}
 	}

@@ -1,3 +1,5 @@
+@use "../tokens/variables";
+
 /* Widgets - Switch */
 ////
 /// @group Widgets-Switch
@@ -5,52 +7,61 @@
 
 ///
 [data-switch] {
-	background-color: get-background-color('transparent');
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-switch-height: #{variables.$token-scale-600}; // 24px
+	--osui-switch-width: #{variables.$token-scale-1000}; // 40px
+	--osui-switch-thumb-size: #{variables.$token-scale-500}; // 20px
+	--osui-switch-thumb-offset-start: 2px;
+	--osui-switch-thumb-offset-end: 18px;
+	--osui-switch-track-color: #{variables.$token-bg-neutral-base-default};
+	--osui-switch-checked-track-color: var(--color-primary);
+	--osui-switch-disabled-overlay: #{variables.$token-state-disabled};
+	--osui-switch-thumb-color: #{variables.$token-bg-surface-inverse};
+	--osui-switch-thumb-shadow: #{variables.$token-elevation-1};
+	// ───────────────────────────────────────────────────────────────────
+
+	background-color: transparent;
 	border-radius: 0;
-	height: 32px;
+	height: var(--osui-switch-height);
 	overflow: initial;
-	width: 50px;
+	width: var(--osui-switch-width);
 
 	&:empty {
 		&:before {
-			background-color: get-background-color('neutral-5');
-			border: var(--border-size-s) solid get-border-color('neutral-5');
+			background-color: var(--osui-switch-track-color);
+			border: 0;
 			border-radius: var(--border-radius-rounded);
-			height: 30px;
+			height: var(--osui-switch-height);
 			opacity: 1;
-			transition: all 180ms linear;
-			width: 48px;
+			transition: background-color variables.$token-transition-time-200 variables.$token-transition-curve-linear;
+			width: var(--osui-switch-width);
 		}
 
 		&:after {
+			background-color: var(--osui-switch-thumb-color);
 			border: 0;
 			bottom: 0;
-			box-shadow: none;
-			height: 24px;
+			box-shadow: var(--osui-switch-thumb-shadow);
+			height: var(--osui-switch-thumb-size);
+			// Physical on purpose: the thumb offset is a `translateX`, which has no logical
+			// form. A logical inset would flip the anchor in RTL while the transform kept
+			// pushing the same way, sliding the thumb outside the track.
 			left: 0;
 			margin-left: 0;
-			top: 4px;
-			transform: translateX(4px) translateZ(0);
-			transition: all 180ms linear;
-			width: 24px;
-		}
-	}
-
-	&:hover {
-		&:before {
-			background-color: get-background-color('neutral-6');
-			border: var(--border-size-s) solid var(--color-neutral-6);
+			top: calc((var(--osui-switch-height) - var(--osui-switch-thumb-size)) / 2);
+			transform: translateX(var(--osui-switch-thumb-offset-start)) translateZ(0);
+			transition: transform variables.$token-transition-time-200 variables.$token-transition-curve-linear;
+			width: var(--osui-switch-thumb-size);
 		}
 	}
 
 	&:checked {
 		&:before {
-			background-color: get-background-color('primary');
-			border: var(--border-size-s) solid get-border-color('primary');
+			background-color: var(--osui-switch-checked-track-color);
 		}
 
 		&:after {
-			transform: translateX(22px) translateZ(0);
+			transform: translateX(var(--osui-switch-thumb-offset-end)) translateZ(0);
 		}
 	}
 
@@ -59,15 +70,25 @@
 
 		&:empty {
 			&:before {
-				background-color: get-background-color('neutral-2');
-				border: var(--border-size-s) solid get-border-color('neutral-4');
+				background-color: var(--osui-switch-track-color);
+				border: 0;
+				box-shadow: inset 0 0 0 999px var(--osui-switch-disabled-overlay);
 			}
 
 			&:after {
-				background-color: get-background-color('neutral-5');
+				background-color: var(--osui-switch-thumb-color);
 				border: 0;
+				box-shadow: var(--osui-switch-thumb-shadow);
 			}
 		}
+
+		&:checked:empty:before {
+			background-color: var(--osui-switch-checked-track-color);
+		}
+	}
+
+	&:focus-visible:empty:before {
+		box-shadow: 0 0 0 variables.$token-border-size-075 color-mix(in srgb, #{variables.$token-semantics-primary-base} 22%, transparent);
 	}
 }
 
@@ -79,29 +100,27 @@
 
 		&:empty {
 			&:before {
-				background-color: get-background-color('neutral-7');
-				border-color: get-border-color('neutral-7');
+				background-color: var(--color-border-input);
+				border-color: var(--color-border-input);
 			}
 		}
 
 		&:hover {
 			&:before {
-				background-color: get-background-color('neutral-8');
-				border-color: get-border-color('neutral-8');
+				background-color: var(--color-border-input-hover);
+				border-color: var(--color-border-input-hover);
 			}
 		}
 
 		&:checked {
 			&:before {
-				background-color: get-background-color('primary');
-				border-color: get-border-color('primary');
+				background-color: var(--osui-switch-checked-track-color);
+				border-color: var(--osui-switch-checked-track-color);
 			}
 		}
 
-		&:focus {
-			&:before {
-				border-color: get-border-color('focus-inner');
-			}
+		&:focus:before {
+			border-color: variables.$token-semantics-primary-base;
 		}
 	}
 }
@@ -112,14 +131,14 @@
 	[data-switch] {
 		&:empty:after {
 			align-items: center;
-			border: var(--border-size-s) solid get-border-color('neutral-6');
+			border: variables.$token-border-size-025 solid var(--color-text-disabled);
 			content: '0';
 			display: flex;
 			font-family: monospace;
-			font-size: var(--font-size-xs);
+			font-size: variables.$token-font-size-300;
 			justify-content: center;
-			left: -1px;
-			top: 3px;
+			inset-inline-start: -1px;
+			top: variables.$token-scale-075;
 		}
 
 		&:checked:after {

@@ -1,3 +1,5 @@
+@use "../tokens/variables";
+
 /* Widgets - List Item */
 ////
 /// @group Widgets-List_Item
@@ -5,50 +7,60 @@
 
 ///
 .list-item {
-	border-bottom: var(--border-size-s) solid get-border-color('neutral-4');
-	overflow: hidden;
-	padding: var(--space-m);
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-list-item-border-color:            var(--color-border);
+	--osui-list-item-background:              var(--color-background-surface);
+	--osui-list-item-hover-background:        #{variables.$token-bg-neutral-subtlest-hover};
+	--osui-list-item-active-background:       #{variables.$token-bg-neutral-subtlest-press};
+	--osui-list-item-selected-background:     var(--osui-list-item-background);
+	--osui-list-item-selected-icon-color:     #{variables.$token-icon-select};
+	// ───────────────────────────────────────────────────────────────────
+
+	border-block-end: variables.$token-border-size-025 solid var(--osui-list-item-border-color);
+	padding-block: variables.$token-space-300;
+	padding-inline: variables.$token-space-600;
 	position: relative;
+	transition: background-color variables.$token-transition-time-100 variables.$token-transition-curve-base;
 
 	&:last-of-type {
-		border-bottom: none;
+		border-block-end: none;
 	}
 
-	&.list-item-no-click-effect {
-		.scale-animation {
-			// !important should be in use in order to grant the expected behaviour when this class is assigned!
-			background: get-background-color('transparent') !important;
-			opacity: 0 !important;
-		}
-	}
-
+	// ButtonsEffect.ts still injects a `.scale-animation` span on click and relies on the
+	// `animationend` event to remove it. Click feedback is now the `:active` background
+	// below, so the animation is kept running but paints nothing: a zero-sized transparent
+	// box. 
 	.scale-animation {
-		animation: list-item-scale-animation 1500ms;
-		background-color: rgba(0, 0, 0, 0.1);
-		border-radius: 100px;
+		animation: list-item-scale-animation variables.$token-transition-time-1500;
+		background: transparent;
 		display: block;
-		height: 10px;
-		left: 50%;
+		height: 0;
+		inset-inline-start: 50%;
+		opacity: 0;
 		pointer-events: none;
 		position: absolute;
 		top: 50%;
-		width: 10px;
-		will-change: transform;
-		z-index: var(--layer-global-screen);
+		width: 0;
 	}
 }
 
 ///
 .list {
 	.list-item {
-		background-color: get-background-color('neutral-0');
+		background-color: var(--osui-list-item-background);
+		cursor: pointer;
+
+		// Pressed state, on every device — replaces the legacy ripple animation.
+		&:active {
+			background-color: var(--osui-list-item-active-background);
+		}
 	}
 }
 
 ///
 .layout-native {
 	.list-item {
-		padding: var(--space-base);
+		padding: variables.$token-scale-400;
 	}
 }
 
@@ -57,8 +69,9 @@
 .desktop {
 	.list {
 		.list-item:hover {
-			&:not(.list-item-no-hover):not(.list-item-selected) {
-				background-color: get-background-color('neutral-2');
+			// `:not(:active)` keeps this higher-specificity rule from masking the pressed state.
+			&:not(.list-item-no-hover):not(.list-item-selected):not(:active) {
+				background-color: var(--osui-list-item-hover-background);
 			}
 		}
 	}
@@ -69,19 +82,16 @@
 .tablet.landscape {
 	.list {
 		.list-item-selected {
-			background: get-background-color('primary') get-background-color('primary-lightest');
+			background-color: var(--osui-list-item-selected-background);
+
+			// Restated here so the pressed state also wins over the selected background.
+			&:active {
+				background-color: var(--osui-list-item-active-background);
+			}
 
 			.list-item-content {
-				&-title {
-					color: get-text-color('neutral-10');
-				}
-
-				&-text {
-					color: get-text-color('neutral-8');
-				}
-
 				&-right .icon {
-					color: get-text-color('primary');
+					color: var(--osui-list-item-selected-icon-color);
 				}
 			}
 		}
@@ -99,16 +109,16 @@
 				position: relative;
 
 				&:before {
-					@include a11y-high-contrast-outline(true, var(--border-size-s));
-					border-right-width: 0;
-					border-left-width: var(--border-size-l);
+					border: variables.$token-border-size-025 solid variables.$token-semantics-primary-base;
+					border-inline-end-width: variables.$token-border-size-0;
+					border-inline-start-width: variables.$token-border-size-075;
 					bottom: 0;
 					content: '';
 					display: block;
-					left: 0;
+					inset-inline-start: 0;
 					pointer-events: none;
 					position: absolute;
-					right: 0;
+					inset-inline-end: 0;
 					top: 0;
 				}
 			}

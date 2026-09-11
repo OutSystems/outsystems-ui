@@ -1,3 +1,5 @@
+@use '../tokens/variables';
+
 ////
 /// @group Root
 /// Icon library CSS variables (FontAwesome vs Phosphor) and component overrides.
@@ -49,6 +51,7 @@
 	// Lightbox
 	--osui-icon-arrow-next: '\f061';
 	--osui-icon-arrow-previous: '\f060';
+	--osui-icon-zoom-in: '\f00e'; // fa-search-plus
 
 	// Password Policy
 	--osui-icon-circle-x: '\f057';
@@ -101,6 +104,7 @@ body.iconLibrary-phosphor {
 	// Lightbox
 	--osui-icon-arrow-next: '\e06c';
 	--osui-icon-arrow-previous: '\e058';
+	--osui-icon-zoom-in: '\e310'; // ph-magnifying-glass-plus
 
 	// Password Policy
 	--osui-icon-circle-x: '\e4f8';
@@ -120,15 +124,16 @@ body.iconLibrary-phosphor {
 	font-family: var(--osui-icon-font-family);
 }
 
-// Search – search icon
+// Search – search icon (ported from dev #1188/#1191, retokenized: --space-base → $token-scale-400,
+// --space-xl → $token-scale-1000, --color-neutral-6 → $token-icon-subtlest)
 .osui-search .osui-search__input > span {
 	position: relative;
 
 	&::after {
-		color: var(--color-neutral-6);
+		color: variables.$token-icon-subtlest;
 		content: var(--osui-icon-search);
 		font-family: var(--osui-icon-font-family);
-		left: var(--space-base);
+		inset-inline-start: variables.$token-scale-400;
 		pointer-events: none;
 		position: absolute;
 		top: 50%;
@@ -136,39 +141,22 @@ body.iconLibrary-phosphor {
 	}
 
 	.form-control[data-input] {
-		padding-left: var(--space-xl);
-	}
-}
-
-.is-rtl .osui-search .osui-search__input > span {
-	&::after {
-		left: auto;
-		right: var(--space-base);
-	}
-
-	.form-control[data-input] {
-		padding-left: var(--space-base);
-		padding-right: var(--space-xl);
+		padding-inline-start: variables.$token-scale-1000;
 	}
 }
 
 // Submenu – header arrow
 .osui-submenu {
 	&__header__icon {
-		display: none;
-		margin-inline-start: var(--space-s);
+		// Visibility (display/--is-dropdown) lives in _submenu.scss — platform-agnostic
+		// behaviour; this file owns only the glyph.
+		margin-inline-start: variables.$token-scale-200;
 		transition: transform 200ms ease;
 		transform-origin: center;
 
 		&:after {
 			content: var(--osui-icon-arrow-down);
 			font-family: var(--osui-icon-font-family);
-		}
-	}
-
-	&--is-dropdown {
-		.osui-submenu__header__icon {
-			display: inline-flex;
 		}
 	}
 
@@ -181,22 +169,23 @@ body.iconLibrary-phosphor {
 
 // Dropdown Widget
 .dropdown-container:after {
-	color: var(--color-neutral-7);
+	align-items: center;
+	color: var(--osui-dropdown-arrow-color, #{variables.$token-icon-subtlest});
 	content: var(--osui-icon-arrow-down);
 	cursor: pointer;
+	display: flex;
 	font-family: var(--osui-icon-font-family);
-	font-size: var(--font-size-h5);
+	font-size: var(--osui-dropdown-arrow-size, #{variables.$token-scale-400});
+	height: var(--osui-dropdown-arrow-size, #{variables.$token-scale-400});
+	justify-content: center;
+	line-height: 1;
 	pointer-events: none;
 	position: absolute;
-	right: var(--space-base);
+	inset-inline-end: variables.$token-scale-400;
 	top: 50%;
 	transform: translateY(-50%);
 	transition: transform 200ms ease;
-}
-
-.is-rtl .dropdown-container:after {
-	left: var(--space-base);
-	right: auto;
+	width: var(--osui-dropdown-arrow-size, #{variables.$token-scale-400});
 }
 
 .dropdown-expanded.dropdown-container {
@@ -208,30 +197,31 @@ body.iconLibrary-phosphor {
 
 .form {
 	.dropdown-container[class*='ThemeGrid_Width']:has(select):after {
-		top: calc(50% - var(--space-m) / 2);
+		top: calc(50% - var(--token-scale-600, 24px) / 2);
 	}
 }
 
 // Table Widget - Sortable Icon
 .sortable-icon {
-	display: inline-block;
+	align-items: center;
+	display: inline-flex;
+	flex-direction: column;
 	font-family: var(--osui-icon-font-family);
-	font-size: var(--font-size-xs);
+	font-size: variables.$token-font-size-300;
 	height: 11px;
-	margin-left: var(--space-s);
+	justify-content: center;
+	line-height: 0.5; // compress each glyph's line-box so the up/down chevrons stack without overlapping
+	margin-inline-start: variables.$token-scale-200;
 	position: relative;
+	vertical-align: middle;
 	width: 10px;
-
-	&:after {
-		bottom: -65%;
-		content: var(--osui-icon-arrow-down);
-		position: absolute;
-	}
 
 	&:before {
 		content: var(--osui-icon-arrow-up);
-		position: absolute;
-		top: -65%;
+	}
+
+	&:after {
+		content: var(--osui-icon-arrow-down);
 	}
 }
 
@@ -242,7 +232,7 @@ body.iconLibrary-phosphor {
 	&:after {
 		content: var(--osui-icon-chevron-left);
 		font-family: var(--osui-icon-font-family);
-		font-size: var(--font-size-h6);
+		font-size: variables.$token-font-size-450;
 	}
 }
 
@@ -257,7 +247,7 @@ body.iconLibrary-phosphor {
 			font-family: var(--osui-icon-font-family);
 			font-size: 24px;
 			height: 100%;
-			left: 0;
+			inset-inline-start: 0;
 			line-height: 1;
 			position: absolute;
 			top: 0;
@@ -300,8 +290,7 @@ body.iconLibrary-phosphor {
 // ChatMessage
 .chat-message-wrapper .chat-message-status {
 	display: inline-flex;
-	gap: var(--space-xs);
-	padding: none;
+	gap: variables.$token-scale-100;
 }
 
 .chat-message-status {
@@ -313,12 +302,12 @@ body.iconLibrary-phosphor {
 			content: var(--osui-icon-sent);
 			position: absolute;
 			top: 0;
-			left: 0;
+			inset-inline-start: 0;
 			font-family: var(--osui-icon-font-family);
 		}
 
 		&.is-read {
-			color: var(--color-green);
+			color: #37b24d;
 		}
 
 		&-time {
@@ -329,7 +318,7 @@ body.iconLibrary-phosphor {
 			&:after {
 				content: var(--osui-icon-time);
 				font-family: var(--osui-icon-font-family);
-				left: 0;
+				inset-inline-start: 0;
 				position: absolute;
 				top: 0;
 			}
@@ -341,12 +330,11 @@ body.iconLibrary-phosphor {
 .osui-dropdown-serverside__selected-values:after {
 	content: var(--osui-icon-arrow-down);
 	font-family: var(--osui-icon-font-family);
-	font-size: var(--font-size-h5);
+	font-size: var(--osui-dropdown-ss-arrow-size, #{variables.$token-scale-400});
 }
 
 // DropdownSearch (VirtualSelect)
 .vscomp-toggle-button:after,
-.vscomp-search-container:before,
 .vscomp-search-clear:after,
 .vscomp-ele .vscomp-clear-icon:after {
 	font-family: var(--osui-icon-font-family);
@@ -356,11 +344,6 @@ body.iconLibrary-phosphor {
 .vscomp-toggle-button:after {
 	content: var(--osui-icon-arrow-down);
 	font-size: var(--vscomp-toogle-btn-arrow-size);
-}
-
-.vscomp-search-container:before {
-	content: var(--osui-icon-search);
-	font-size: 14px;
 }
 
 .vscomp-search-clear:after,
@@ -373,52 +356,49 @@ body.iconLibrary-phosphor {
 	border: none;
 	content: var(--osui-icon-checkbox-checked);
 	font-family: var(--osui-icon-font-family);
-	color: var(--color-neutral-0);
+	color: variables.$token-primitives-base-white;
 	transform: none !important; // !important required to override the element from provider
 	position: absolute;
 	width: 100%;
 	height: 100%;
 	top: 1px;
-	font-size: var(--font-size-xs);
+	font-size: variables.$token-font-size-300;
 	line-height: 1;
 	display: flex;
-	left: 1px;
-}
-
-.is-rtl .vscomp-wrapper.multiple .vscomp-option.selected .checkbox-icon:after {
-	left: auto;
-	right: 1px;
+	inset-inline-start: 1px;
 }
 
 .osui-dropdown-search {
 	// Service Studio Preview
 	&-ss-preview {
-		-servicestudio-background-color: get-background-color('neutral-0');
-		-servicestudio-border-radius: var(--border-radius-soft);
-		-servicestudio-border: var(--border-size-s) solid get-border-color('neutral-5');
+		-servicestudio-background-color: variables.$token-primitives-base-white;
+		-servicestudio-border-radius: variables.$token-border-radius-200;
+		-servicestudio-border: variables.$token-border-size-025 solid variables.$token-primitives-neutral-500;
+		-servicestudio-color: variables.$token-text-subtlest;
 		-servicestudio-display: inline-flex;
 		-servicestudio-justify-content: space-between;
 		-servicestudio-height: 40px;
 		-servicestudio-line-height: 40px;
 		-servicestudio-min-width: 180px;
-		-servicestudio-padding: 0 var(--space-m);
+		-servicestudio-padding: 0 variables.$token-scale-400;
 		-servicestudio-position: relative;
 		-servicestudio-vertical-align: middle;
 		-servicestudio-width: 100%;
+		-servicestudio-align-items: center;
 
 		&__arrow-icon {
 			-servicestudio-position: relative;
 			-servicestudio-width: 12px;
 
 			&::after {
-				-servicestudio-color: get-text-color('neutral-7');
+				-servicestudio-color: variables.$token-primitives-neutral-700;
 				-servicestudio-position: absolute;
 				-servicestudio-top: 50%;
 				-servicestudio-left: 0;
 				-servicestudio-content: var(--osui-icon-arrow-down);
 				-servicestudio-font-family: var(--osui-icon-font-family);
 				-servicestudio-transform: translateY(-50%);
-				-servicestudio-font-size: var(--font-size-h5);
+				-servicestudio-font-size: variables.$token-font-size-500;
 			}
 		}
 	}
@@ -428,27 +408,28 @@ body.iconLibrary-phosphor {
 	// Service Studio Preview
 	&-ss-preview {
 		-servicestudio-justify-content: space-between;
-		-servicestudio-background-color: get-background-color('neutral-0');
-		-servicestudio-border-radius: var(--border-radius-soft);
-		-servicestudio-border: var(--border-size-s) solid get-border-color('neutral-5');
-		-servicestudio-color: get-text-color('neutral-3');
+		-servicestudio-background-color: variables.$token-primitives-base-white;
+		-servicestudio-border-radius: variables.$token-border-radius-200;
+		-servicestudio-border: variables.$token-border-size-025 solid variables.$token-primitives-neutral-500;
+		-servicestudio-color: variables.$token-text-subtlest;
 		-servicestudio-display: flex;
 		-servicestudio-height: 40px;
 		-servicestudio-min-width: 180px;
-		-servicestudio-padding: 0 var(--space-m);
+		-servicestudio-padding: 0 variables.$token-scale-400;
 		-servicestudio-position: relative;
 		-servicestudio-vertical-align: middle;
 		-servicestudio-width: 100%;
+		-servicestudio-align-items: center;
 
 		&-as-tag {
 			-servicestudio-align-items: center;
 			-servicestudio-justify-content: space-between;
-			-servicestudio-background-color: get-background-color('neutral-3');
+			-servicestudio-background-color: variables.$token-primitives-neutral-300;
 			-servicestudio-border-radius: 30px;
-			-servicestudio-color: get-text-color('neutral-7');
+			-servicestudio-color: variables.$token-primitives-neutral-700;
 			-servicestudio-display: flex;
-			-servicestudio-font-size: var(--font-size-s);
-			-servicestudio-font-weight: var(--font-semi-bold);
+			-servicestudio-font-size: variables.$token-font-size-350;
+			-servicestudio-font-weight: variables.$token-font-weight-semi-bold;
 			-servicestudio-height: 30px;
 			-servicestudio-padding: 8px;
 			-servicestudio-position: relative;
@@ -472,9 +453,9 @@ body.iconLibrary-phosphor {
 
 			&__arrow-icon {
 				-servicestudio-align-self: center;
-				-servicestudio-color: get-text-color('neutral-7');
+				-servicestudio-color: variables.$token-primitives-neutral-700;
 				-servicestudio-position: relative;
-				-servicestudio-font-size: var(--font-size-h5);
+				-servicestudio-font-size: variables.$token-font-size-500;
 				-servicestudio-font-weight: normal;
 				-servicestudio-width: 12px;
 
@@ -494,7 +475,7 @@ body.iconLibrary-phosphor {
 .form {
 	// Service Studio Preview
 	.dropdown-container:has(> select.dropdown-display):after {
-		-servicestudio-top: calc(50% - var(--space-m) / 2);
+		-servicestudio-top: calc(50% - #{variables.$token-scale-600} / 2);
 	}
 }
 
@@ -505,9 +486,25 @@ body.iconLibrary-phosphor {
 
 .splide__arrow--next:after,
 .splide__arrow--prev:after {
-	color: var(--color-neutral-7);
 	font-family: var(--osui-icon-font-family);
 	position: absolute;
+	font-size: variables.$token-font-size-600;
+	color: variables.$token-primitives-neutral-1000;
+}
+
+// Splide swaps the arrow BUTTONS when it runs RTL (`.splide__arrows--rtl`), but the glyph
+// is `content` on ::after and does not follow — leaving both arrows pointing inward.
+// Swap the glyphs to match the buttons.
+.splide--rtl {
+	.splide__arrow--next:after {
+		content: var(--osui-icon-chevron-left);
+		transform: translateX(-1px);
+	}
+
+	.splide__arrow--prev:after {
+		content: var(--osui-icon-chevron-right);
+		transform: translateX(1px);
+	}
 }
 
 .splide__arrow--next:after {
@@ -528,18 +525,18 @@ body.iconLibrary-phosphor {
 
 .flatpickr-months .flatpickr-prev-month:before,
 .flatpickr-months .flatpickr-next-month:before {
-	color: var(--color-primary);
+	color: variables.$token-semantics-primary-base;
 	font-family: var(--osui-icon-font-family);
 }
 
 .icon-library-FontAwesome .flatpickr-months .flatpickr-prev-month:before,
 .icon-library-FontAwesome .flatpickr-months .flatpickr-next-month:before {
-	font-size: var(--font-size-h5);
+	font-size: variables.$token-font-size-500;
 }
 
 .icon-library-Phosphor .flatpickr-months .flatpickr-prev-month:before,
 .icon-library-Phosphor .flatpickr-months .flatpickr-next-month:before {
-	font-weight: var(--font-semi-bold);
+	font-weight: variables.$token-font-weight-semi-bold;
 }
 
 .flatpickr-prev-month:before {
@@ -566,36 +563,69 @@ body.iconLibrary-phosphor {
 }
 
 // Lightbox
-.pswp__button,
-.pswp__button--arrow--left:before,
-.pswp__button--arrow--right:before {
+// Drop the vendor sprite so the glyphs below show through. On the button itself the
+// `background` shorthand is fine, but NOT on the arrow pseudo-elements: default-skin.css
+// paints both the sprite AND the arrows' translucent square in that one shorthand, so
+// resetting it wholesale silently removes the square too (see the arrow rule below).
+.pswp__button {
 	background: none !important;
 }
 
-.pswp__button.pswp__button--close:before {
-	color: var(--color-neutral-0);
-	content: var(--osui-icon-clear);
+// Top-bar buttons share one glyph box so they stay aligned with each other; only
+// the `content` differs. `.pswp__button` is `position: relative` in photoswipe.css,
+// which is what these absolute glyphs are positioned against.
+.pswp__button.pswp__button--close:before,
+.pswp__button.pswp__button--zoom:before {
+	color: variables.$token-icon-inverse;
 	font-family: var(--osui-icon-font-family);
-	font-size: var(--font-size-h5);
+	font-size: variables.$token-font-size-700;
 	position: absolute;
-	right: 25%;
 	top: 50%;
 	transform: translateY(-50%) translateX(-50%);
 }
 
+.pswp__button.pswp__button--close:before {
+	content: var(--osui-icon-clear);
+}
+
+.pswp__button.pswp__button--zoom:before {
+	content: var(--osui-icon-zoom-in);
+}
+
+// The arrows' translucent square lives on the pseudo-element; the button itself is
+// only a 70x100 hit area. Only the sprite is dropped here — `background-image`, not
+// the shorthand, which would take the square with it. `!important` is required
+// because `.pswp--svg …:before` swaps in the SVG sprite at higher specificity.
+//
+// Geometry is 32x32 inset 4px, replacing the vendor's 30x32 inset 6px. 32px is the
+// design's icon container (an 18x18 glyph with 7px padding all round); the 4px inset is
+// measured off the design frame and snapped to the ramp. Centred with
+// `top: 50%`/`translateY` rather than the vendor's hardcoded `top: 35px`, so the
+// square stays centred regardless of the button's height.
 .pswp__button--arrow--right:before,
 .pswp__button--arrow--left:before {
-	color: var(--color-neutral-0);
+	align-items: center;
+	background-color: variables.$token-backdrop;
+	background-image: none !important;
+	color: variables.$token-icon-inverse;
+	display: flex;
 	font-family: var(--osui-icon-font-family);
-	font-size: var(--font-size-h5);
+	font-size: variables.$token-font-size-450;
+	height: variables.$token-scale-800;
+	justify-content: center;
+	top: 50%;
+	transform: translateY(-50%);
+	width: variables.$token-scale-800;
 }
 
 .pswp__button--arrow--right:before {
 	content: var(--osui-icon-arrow-next);
+	inset-inline-end: variables.$token-scale-100;
 }
 
 .pswp__button--arrow--left:before {
 	content: var(--osui-icon-arrow-previous);
+	inset-inline-start: variables.$token-scale-100;
 }
 
 // Password Policy
@@ -608,11 +638,11 @@ body.iconLibrary-phosphor {
 		content: var(--osui-icon-circle-x);
 		font-family: var(--osui-icon-font-family);
 		top: 0;
-		left: 0;
+		inset-inline-start: 0;
 	}
 
 	&.is-valid::after {
 		content: var(--osui-icon-circle-check);
-		color: var(--color-green-darker);
+		color: #267d36;
 	}
 }

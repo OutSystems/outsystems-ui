@@ -9,8 +9,9 @@ namespace Providers.OSUI.RangeSlider.NoUiSlider {
 	 * @extends {OSFramework.OSUI.Patterns.RangeSlider
 	 * 		.AbstractRangeSliderConfig}
 	 */
-	export abstract class AbstractNoUiSliderConfig extends OSFramework.OSUI.Patterns.RangeSlider
-		.AbstractRangeSliderConfig {
+	export abstract class AbstractNoUiSliderConfig
+		extends OSFramework.OSUI.Patterns.RangeSlider.AbstractRangeSliderConfig
+	{
 		// Store the Provider Options
 		private _providerOptions: NoUiSliderOptions;
 		// Store configs set using extensibility

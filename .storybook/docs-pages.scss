@@ -1,0 +1,193 @@
+/* Shared docs layout — consistent shell and prose width across long-form pages. */
+
+.osui-welcome,
+.osui-getting-started,
+.osui-css-architecture,
+.osui-css-api-reference,
+.osui-component-library,
+.osui-foundations {
+  --docs-shell-max: 1060px;
+  --docs-shell-pad-x: 36px;
+  --docs-head-max: 988px;
+  --docs-toc-width: 176px;
+  --docs-toc-gap: 56px;
+  --docs-prose-max: 44em;
+}
+
+.osui-getting-started .docs-inner,
+.osui-css-architecture .ca-inner,
+.osui-css-api-reference .api-inner,
+.osui-foundations .fd-inner {
+  max-width: var(--docs-shell-max);
+  margin: 0 auto;
+  padding: 0 var(--docs-shell-pad-x) 120px;
+}
+
+/* API Reference browser — full iframe width (like Theme Editor workspace). */
+.osui-css-api-reference .api-wrap {
+  max-width: none !important;
+  width: 100%;
+  margin: 0;
+}
+
+.osui-css-api-reference .api-toolbar-in {
+  max-width: none !important;
+  width: 100%;
+  margin: 0;
+  padding: 0 var(--docs-shell-pad-x);
+}
+
+.osui-theme-editor .te-toolbar-in {
+  max-width: none !important;
+  width: 100%;
+  margin: 0;
+  padding: 0 var(--docs-shell-pad-x);
+}
+
+.osui-css-api-reference .api-inner {
+  padding-bottom: 0;
+}
+
+.osui-component-library .cl-body {
+  max-width: var(--docs-shell-max);
+  margin: 0 auto;
+  padding: 0 var(--docs-shell-pad-x) 64px;
+}
+
+.osui-getting-started .cols,
+.osui-css-architecture .cols,
+.osui-css-api-reference .cols {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--docs-toc-width);
+  gap: var(--docs-toc-gap);
+  align-items: start;
+}
+
+.osui-getting-started .head-in,
+.osui-css-architecture .ca-head-in,
+.osui-css-api-reference .api-head-in,
+.osui-component-library .cl-head-in,
+.osui-foundations .fd-head-in {
+  max-width: var(--docs-head-max);
+  margin: 0 auto;
+}
+
+.osui-getting-started article,
+.osui-css-architecture .ca-body,
+.osui-css-api-reference .api-body {
+  min-width: 0;
+}
+
+/* Readable line length for body copy and headings */
+.osui-getting-started .lede,
+.osui-css-architecture .ca-lede,
+.osui-css-api-reference .api-lede,
+.osui-component-library .cl-lede,
+.osui-getting-started article .sec > :is(p, ul, ol, h2, h3, .legend),
+.osui-getting-started article .sec .prose > :is(p, ul, ol, h2, h3, .legend),
+.osui-css-architecture .ca-body > :is(p, ul, ol, h2, h3),
+.osui-css-api-reference .api-body > :is(p, ul, ol, h2, h3, .api-guide p, .api-guide li),
+.osui-css-api-reference .api-guide > :is(p, ul, ol) {
+  max-width: var(--docs-prose-max);
+}
+
+/* Cards, tables, and code span the main column */
+.osui-getting-started article .sec > :is(
+  table,
+  .code,
+  .note,
+  .standout,
+  .props,
+  .viz,
+  .feat,
+  .tech,
+  .res,
+  .steps4,
+  .journey
+),
+.osui-getting-started article .sec :is(table, .code, .standout, .tech),
+.osui-css-architecture .ca-body > :is(table, .code, .ca-hops, .note),
+.osui-css-api-reference .api-body > :is(.api-toolbar, .api-table-wrap, .note, .code, .api-guide),
+.osui-foundations .fd-body > :is(.fd-table, .note, .fd-color-line, .fd-color-cards, .fd-shape-container, .fd-elevation-container) {
+  max-width: none;
+  width: 100%;
+}
+
+/* Info callouts — shared with Getting Started */
+:is(.osui-getting-started, .osui-css-architecture, .osui-css-api-reference, .osui-foundations) .note {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 12px;
+  border: 1px solid #e8e8e8;
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin: 22px 0;
+  background: linear-gradient(180deg, #fbfcff, #fff);
+}
+
+:is(.osui-getting-started, .osui-css-architecture, .osui-css-api-reference, .osui-foundations) .note .ic {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #f0f2ff;
+  color: #105cef;
+  display: grid;
+  place-items: center;
+}
+
+:is(.osui-getting-started, .osui-css-architecture, .osui-css-api-reference, .osui-foundations) .note .ic svg {
+  width: 15px;
+  height: 15px;
+}
+
+:is(.osui-getting-started, .osui-css-architecture, .osui-css-api-reference, .osui-foundations) .note b {
+  display: block;
+  font-size: 13.5px;
+  margin-bottom: 3px;
+  color: #242424;
+  font-weight: 650;
+}
+
+.sbdocs-wrapper :is(.osui-getting-started, .osui-css-architecture, .osui-css-api-reference, .osui-foundations) .note p {
+  margin: 0 !important;
+  font-size: 13.5px !important;
+  color: #6b6b6b !important;
+  line-height: 1.5 !important;
+  max-width: none !important;
+}
+
+.sbdocs-wrapper :is(.osui-getting-started, .osui-css-architecture, .osui-css-api-reference, .osui-foundations) .note p + p {
+  margin-top: 8px !important;
+}
+
+:is(.osui-getting-started, .osui-css-architecture, .osui-css-api-reference, .osui-foundations) .note.alt {
+  background: linear-gradient(180deg, #fffdf5, #fff);
+}
+
+:is(.osui-getting-started, .osui-css-architecture, .osui-css-api-reference, .osui-foundations) .note.alt .ic {
+  background: #fff6de;
+  color: #7a5600;
+}
+
+:is(.osui-getting-started, .osui-css-architecture, .osui-css-api-reference, .osui-foundations) .note.error {
+  background: linear-gradient(180deg, #fff5f5, #fff);
+}
+
+:is(.osui-getting-started, .osui-css-architecture, .osui-css-api-reference, .osui-foundations) .note.error .ic {
+  background: #ffe4e4;
+  color: #b91c1c;
+}
+
+@media (max-width: 900px) {
+  .osui-getting-started .cols,
+  .osui-css-architecture .cols,
+  .osui-css-api-reference .cols {
+    grid-template-columns: 1fr;
+  }
+
+  .osui-getting-started .toc,
+  .osui-css-architecture .toc,
+  .osui-css-api-reference .toc {
+    display: none;
+  }
+}
