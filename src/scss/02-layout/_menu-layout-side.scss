@@ -1,5 +1,5 @@
 @use '../00-abstract/index' as *;
-@use "../tokens/variables";
+@use '../tokens/variables';
 
 /* Page Layout Side - Layout Side - Menu */
 ////
@@ -43,8 +43,8 @@
 	}
 
 	.app-menu-content.is--open {
-		left: calc(-1 * var(--size-side-menu));
-		transform: translateX(var(--size-side-menu)) translateZ(0);
+		left: calc(-1 * var(--side-menu-size));
+		transform: translateX(var(--side-menu-size)) translateZ(0);
 		transition: transform 330ms ease-out;
 	}
 }
@@ -60,7 +60,7 @@
 		}
 
 		&.aside-expandable:not(.fixed-header) .app-menu-content {
-			padding-block-start: var(--size-header);
+			padding-block-start: var(--header-size);
 			top: 0;
 		}
 	}
@@ -72,7 +72,7 @@
 			}
 
 			.main {
-				margin-inline-start: var(--size-side-menu);
+				margin-inline-start: var(--side-menu-size);
 			}
 		}
 
@@ -83,7 +83,7 @@
 }
 
 ///
-.desktop, 
+.desktop,
 .tablet.landscape {
 	.layout-native.aside-expandable.menu-visible {
 		.app-menu-content.is--open {
@@ -91,13 +91,12 @@
 			transform: none;
 			transition: none;
 		}
-	}	
+	}
 }
 
 // IsRTL -------------------------------------------------------------------------
 ///
 .is-rtl {
-
 	.app-menu-content {
 		transition: transform 330ms ease-in;
 	}

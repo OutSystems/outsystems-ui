@@ -13,7 +13,7 @@ import { cls, extendedClassArgType } from './_helpers/lowcode';
  *   .floating-content-full-width / -full-height  stretch along an axis
  *
  * The demo box is a transformed containing block so `position: fixed` anchors
- * to it instead of the viewport. Top positions offset by `--size-header`, so
+ * to it instead of the viewport. Top positions offset by `--header-size`, so
  * the demo box zeroes it.
  */
 
@@ -69,7 +69,7 @@ type Story = StoryObj<FloatingContentArgs>;
 export const Default: Story = {
 	render: ({ position, useMargin, fullWidth, fullHeight, extendedClass }) =>
 		renderStatic(`
-			<div style="position: relative; transform: translateZ(0); overflow: hidden; height: 360px; --size-header: 0px; border-radius: var(--border-radius-soft); background: var(--color-background-body);">
+			<div style="position: relative; transform: translateZ(0); overflow: hidden; height: 360px; --header-size: 0px; border-radius: var(--border-radius-soft); background: var(--color-background-body);">
 				<div style="padding: 16px; color: var(--color-text-subtle);">Screen content scrolls behind the floating block.</div>
 				<div class="${cls(
 					'floating-content',

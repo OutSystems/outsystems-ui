@@ -1,4 +1,4 @@
-@use "../../tokens/variables";
+@use '../../tokens/variables';
 
 /* Patterns - Content - Floating Content */
 ////
@@ -24,7 +24,7 @@
 
 		&-height {
 			margin-block-start: 0;
-			top: calc(var(--size-header) + variables.$token-space-400 * 2);
+			top: calc(var(--header-size) + variables.$token-space-400 * 2);
 
 			&.absolute-top {
 				top: var(--os-safe-area-top);
@@ -53,19 +53,19 @@
 	&-top {
 		left: 50%;
 		margin-block-start: 0;
-		top: calc(var(--size-header) + variables.$token-space-400 * 2);
+		top: calc(var(--header-size) + variables.$token-space-400 * 2);
 		transform: translateX(-50%);
 
 		&-left {
 			inset-inline-start: 0;
 			margin-block-start: 0;
-			top: calc(var(--size-header) + variables.$token-space-400 * 2);
+			top: calc(var(--header-size) + variables.$token-space-400 * 2);
 		}
 
 		&-right {
 			inset-inline-end: 0;
 			margin-block-start: 0;
-			top: calc(var(--size-header) + variables.$token-space-400 * 2);
+			top: calc(var(--header-size) + variables.$token-space-400 * 2);
 		}
 	}
 
@@ -214,14 +214,14 @@
 				&-top:not(.absolute-top),
 				&-center:not(.absolute-center),
 				&-bottom:not(.absolute-bottom) {
-					inset-inline-start: calc(50% + ((var(--size-side-menu) / 2)));
+					inset-inline-start: calc(50% + ((var(--side-menu-size) / 2)));
 				}
 
 				&.floating-content-full-width,
 				&-left:not(.absolute-left),
 				&-bottom-left:not(.absolute-left),
 				&-top-left:not(.absolute-left) {
-					inset-inline-start: var(--size-side-menu);
+					inset-inline-start: var(--side-menu-size);
 				}
 			}
 		}
@@ -237,7 +237,7 @@
 			&-left,
 			&-bottom-left {
 				&:not(.absolute-left) {
-					inset-inline-start: var(--size-side-menu);
+					inset-inline-start: var(--side-menu-size);
 				}
 			}
 		}
@@ -246,7 +246,7 @@
 	.layout-native {
 		.aside-visible {
 			.floating-content.floating-content-full-width {
-				inset-inline-start: var(--size-side-menu);
+				inset-inline-start: var(--side-menu-size);
 			}
 		}
 	}
@@ -259,7 +259,7 @@
 			.floating-content.floating-content-full-width {
 				.aside-visible.menu-visible {
 					.floating-content.floating-content-full-width {
-						inset-inline-start: var(--size-side-menu);
+						inset-inline-start: var(--side-menu-size);
 					}
 				}
 			}

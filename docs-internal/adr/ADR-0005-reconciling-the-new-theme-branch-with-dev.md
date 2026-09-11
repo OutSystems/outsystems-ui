@@ -12,8 +12,8 @@ The token migration and UI refresh happen on the long-living integration branch 
 
 Two structural facts make these merges more than a routine `git merge`:
 
-1. **The branch deliberately rewrote the styling layer.** Helper functions (`get-background-color()` and friends) were hard-removed, legacy vars (`--space-*`, `--font-size-*`, `--shadow-*`, `--border-size-*`) were retired, framework vars were renamed (`--side-menu-size` → `--size-side-menu`, `--header-size` → `--size-header`), and all pattern SCSS was consolidated from the scripts tree into `src/scss/04-patterns/`. Any SCSS arriving from `dev` is written against the *old* vocabulary and, in the case of brand-new files, **does not compile here at all**.
-2. **Deletions on either side can silently destroy work on the other.** `dev` renamed the old Wizard styles into `10-deprecated/` — a tree this branch had deleted — so the merge removed this branch's already-restyled `_wizard.scss` *without reporting a conflict*.
+1. **The branch deliberately rewrote the styling layer.** Helper functions (`get-background-color()` and friends) were hard-removed, legacy vars (`--space-*`, `--font-size-*`, `--shadow-*`, `--border-size-*`) were retired, framework vars were renamed (`--side-menu-size` → `--size-side-menu`, `--header-size` → `--size-header`), and all pattern SCSS was consolidated from the scripts tree into `src/scss/04-patterns/`. Any SCSS arriving from `dev` is written against the _old_ vocabulary and, in the case of brand-new files, **does not compile here at all**.
+2. **Deletions on either side can silently destroy work on the other.** `dev` renamed the old Wizard styles into `10-deprecated/` — a tree this branch had deleted — so the merge removed this branch's already-restyled `_wizard.scss` _without reporting a conflict_.
 
 ## Decision Drivers
 
@@ -33,16 +33,16 @@ Two structural facts make these merges more than a routine `git merge`:
 
 **Option 3**, with a standing ownership policy:
 
-| Domain | Winner |
-| :--- | :--- |
-| UI / SCSS styling | **This branch** — it *is* the new theme |
-| TypeScript behaviour, tooling, build system | **`dev`** |
-| Menus (specifically) | **`dev`**, for now — the source of truth for that element |
-| Anything ambiguous | Escalate and discuss; do not guess |
+| Domain                                      | Winner                                                    |
+| :------------------------------------------ | :-------------------------------------------------------- |
+| UI / SCSS styling                           | **This branch** — it _is_ the new theme                   |
+| TypeScript behaviour, tooling, build system | **`dev`**                                                 |
+| Menus (specifically)                        | **`dev`**, for now — the source of truth for that element |
+| Anything ambiguous                          | Escalate and discuss; do not guess                        |
 
 Corollaries:
 
-- Dev's **functional** SCSS fixes are ported, never taken verbatim: they are re-expressed in the token vocabulary (e.g. `--space-base` → `$token-scale-400`, `--color-neutral-6` → `$token-icon-subtlest`). The pre-migration CSS snapshot in `legacy/` is the reference for what a legacy var was worth.
+- Dev's **functional** SCSS fixes are ported, never taken verbatim: they are re-expressed in the token vocabulary (e.g. `--space-base` → `$token-scale-400`, `--color-neutral-6` → `$token-icon-subtlest`). The pre-migration CSS snapshot in `classic-theme/` is the reference for what a classic-theme var was worth.
 - Brand-new dev patterns are adopted as-is on the TS side, while their SCSS is relocated into `src/scss/04-patterns/` and translated, keeping this branch's `--osui-*` component API. (Wizard/WizardItem was the first case; its `_wizard.scss` had to be rewritten because it used removed helpers.)
 - Generated entry files (`*.OutSystemsUI.scss`) are never hand-resolved — regenerate with `npm run create-osui-scss`.
 - Deliberate deletions on this branch (`PatternsDeprecated.js`, `10-deprecated/**`, legacy `.submenu` styles) stay deleted every time.
@@ -53,7 +53,7 @@ Positive consequences:
 
 - The artifact diff caught defects the source review missed: two retired-var leaks, the silently deleted Wizard styles, and (on a later sync) a platform-specific behaviour regression — see ADR-0006.
 - It also produced a durable statement of the branch's true delta: the compiled JS differs from `dev` by only ~102 lines, all deliberate — the `LegacyTokenMap` runtime shim, two `GlobalEnum` var renames (`--footer-height` → `--size-footer`, `--header-size-content` → `--size-header-content`), a few behaviour tweaks, and prettier-only formatting noise. That list is the agenda for the eventual merge-to-`dev` review.
-  > **Update (ROU-12975, 2026-08-20):** the `LegacyTokenMap` shim has since been deleted — `--space-*` was restored to `:root`, which was the only gap it genuinely covered — so the JS delta is now smaller than recorded above. The two `GlobalEnum` renames still stand.
+    > **Update (ROU-12975, 2026-08-20):** the `LegacyTokenMap` shim has since been deleted — `--space-*` was restored to `:root`, which was the only gap it genuinely covered — so the JS delta is now smaller than recorded above. The two `GlobalEnum` renames still stand.
 
 Negative consequences:
 
@@ -64,7 +64,7 @@ Negative consequences:
 ## Links
 
 - PR #1206 — first reconciliation (28 commits of `dev`)
-- `legacy/README.md` — provenance of the legacy-value reference snapshot
+- `classic-theme/README.md` — provenance of the classic-theme reference snapshot
 - ADR-0006 — a platform regression this reconciliation exposed
 
 ## Date

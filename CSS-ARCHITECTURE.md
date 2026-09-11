@@ -6,7 +6,7 @@ It documents the three cooperating layers — **design tokens**, the **framework
 theme layer at `:root`**, and the per-component **CSS API** — and the single read
 chain that ties them together.
 
-It is a *summary*; the authoring rules live in [`.claude/rules/scss.md`](./.claude/rules/scss.md)
+It is a _summary_; the authoring rules live in [`.claude/rules/scss.md`](./.claude/rules/scss.md)
 and the cross-cutting decisions in [`docs-internal/adr/`](./docs-internal/adr/Readme.md).
 The phase-by-phase migration working notes (`specs/`) were removed once the migration
 landed; they remain in git history.
@@ -30,24 +30,33 @@ Concrete example (the Card background), top to bottom:
 
 ```scss
 .card {
-  --osui-card-background: var(--color-background-surface); // Tier 4 → Tier 3
+	--osui-card-background: var(--color-background-surface); // Tier 4 → Tier 3
 }
-background-color: var(--osui-card-background);             // property → Tier 4
+background-color: var(--osui-card-background); // property → Tier 4
 ```
+
 ```scss
 // Tier 3 — src/scss/01-foundations/_root.scss
-:root { --color-background-surface: #{$token-bg-surface-default}; }   // → Tier 2
+:root {
+	--color-background-surface: #{$token-bg-surface-default};
+} // → Tier 2
 ```
+
 ```scss
 // Tier 2 — src/scss/tokens/_variables.scss   (generated)
-$token-bg-surface-default: var(--token-bg-surface-default, var(--token-primitives-base-white, #ffffff));  // → Tier 1
+$token-bg-surface-default: var(--token-bg-surface-default, var(--token-primitives-base-white, #ffffff)); // → Tier 1
 ```
 
 The fully-resolved CSS that ships is therefore:
 
 ```css
-.card { --osui-card-background: var(--color-background-surface); background-color: var(--osui-card-background); }
-:root { --color-background-surface: var(--token-bg-surface-default, var(--token-primitives-base-white, #ffffff)); }
+.card {
+	--osui-card-background: var(--color-background-surface);
+	background-color: var(--osui-card-background);
+}
+:root {
+	--color-background-surface: var(--token-bg-surface-default, var(--token-primitives-base-white, #ffffff));
+}
 ```
 
 **Anyone can intercept at any hop:** an app sets `--token-bg-surface-default` to
@@ -69,11 +78,11 @@ npx build.tokens --dest src/scss/tokens/ --prefix token   # runs in prebuild / p
 
 This emits three files into `src/scss/tokens/` (all **gitignored**):
 
-| File | Contents | Layer it represents |
-|---|---|---|
-| `_root.scss` | `--token-*` custom properties at `:root` (raw hex/rem/px values) | The **runtime override surface** |
-| `_variables.scss` | `$token-*` SCSS vars, each = `var(--token-*, <fallback>)` | The **compile-time surface** |
-| `_utilities.scss` | token-backed maps for utility-class generation | — |
+| File              | Contents                                                         | Layer it represents              |
+| ----------------- | ---------------------------------------------------------------- | -------------------------------- |
+| `_root.scss`      | `--token-*` custom properties at `:root` (raw hex/rem/px values) | The **runtime override surface** |
+| `_variables.scss` | `$token-*` SCSS vars, each = `var(--token-*, <fallback>)`        | The **compile-time surface**     |
+| `_utilities.scss` | token-backed maps for utility-class generation                   | —                                |
 
 ### Three sub-tiers within the token package
 
@@ -88,15 +97,15 @@ $token-elevation-1, $token-scale-600, $token-border-radius-200 …              
 
 A **semantic** token (`bg-surface-default`) falls back through a **primitive**
 (`primitives-base-white`) which falls back to a literal — so a component is
-correct even if *no* `--token-*` are defined at runtime.
+correct even if _no_ `--token-*` are defined at runtime.
 
 ### How the two layers are used (the non-negotiable rule)
 
 - **`$token-*` SCSS vars are what component SCSS writes.** They give compile-time
   typo-checking, IDE autocomplete, and a baked-in fallback.
-  - In a CSS **property value** → `$token-*` directly: `padding: $token-scale-600;`
-  - In a CSS **custom-property declaration** → interpolate: `--osui-card-padding: #{$token-scale-600};`
-- **`--token-*` is the public theming surface**, *not* something the bundle ships.
+    - In a CSS **property value** → `$token-*` directly: `padding: $token-scale-600;`
+    - In a CSS **custom-property declaration** → interpolate: `--osui-card-padding: #{$token-scale-600};`
+- **`--token-*` is the public theming surface**, _not_ something the bundle ships.
 
 > **Verified subtlety:** the compiled bundle (`dist/*.OutSystemsUI.css`) does **not**
 > emit the `--token-*` `:root` block — it relies entirely on the `var(--token-*, fallback)`
@@ -117,7 +126,7 @@ correct even if *no* `--token-*` are defined at runtime.
 File: **`src/scss/01-foundations/_root.scss`** (hand-authored, checked in).
 
 This is OUI's **stable, framework-owned theming contract** — a set of role knobs
-that sit *between* the design tokens and the components. It is deliberately
+that sit _between_ the design tokens and the components. It is deliberately
 **un-prefixed** (no `--os-`) to stay backward-compatible with the historical
 public theming surface (`--color-primary`, etc.). Each knob defaults **through**
 a `$token-*`, so overriding the token still cascades.
@@ -134,25 +143,30 @@ a `$token-*`, so overriding the token still cascades.
   --color-error:   #{$token-semantics-danger-base};
   --color-neutral-0 … --color-neutral-10: #{$token-primitives-neutral-*};
 
-  // radius — one shape vocabulary; each resolves var(--border-radius-default, <own>)
-  --border-radius-soft:   var(--border-radius-default, #{$token-border-radius-200}); // 8px  · controls + flat surfaces
-  --border-radius-softer: var(--border-radius-default, #{$token-border-radius-400}); // 16px · elevated surfaces
-  --border-radius-rounded:var(--border-radius-default, #{$token-border-radius-full});// 999px· circular
+  // radius — shape tier slots holding the active profile (soft defaults here);
+  // .shape-soft / .shape-round / .shape-rectangular remap the whole set, and a
+  // component reads the tier for its category (controls -> xs, surfaces -> sm, ...)
+  --border-radius-2xs … --border-radius-2xl: var(--border-radius-default, #{$token-shape-soft-*});
+  // legacy aliases, kept for TS GetBorderRadiusValueFromShapeType (no -default indirection)
+  --border-radius-none:    #{$token-border-radius-0};    // 0px
+  --border-radius-soft:    #{$token-shape-soft-xs};      // 8px
+  --border-radius-rounded: #{$token-border-radius-full}; // 999px · fixed pill/circle chrome
+  // --border-radius-softer is RETIRED — use the tier slot (md) instead
 }
 ```
 
 What lives here:
 
-| Group | Vars | Notes |
-|---|---|---|
-| **Surfaces** | `--color-background-{body,surface,header,sidemenu,footer,login,input,…}` | |
-| **Text** | `--color-text`, `--color-text-{subtle,subtlest,disabled,inverse}` | |
-| **Borders** | `--color-border`, `--color-border-{subtle,subtlest,input,…}` | |
-| **Brand / status / neutral** | `--color-{primary,primary-hover,primary-selected,primary-active,secondary,error,warning,success,info}`, `--color-neutral-0..10` | brand + neutrals are Color-entity records read by TS `GetColorValueFromColorType`; the four status roles are **not** entity records, just public O11 names |
-| **Palette** | `--color-{red,orange,yellow,lime,green,teal,cyan,blue,indigo,violet,grape,pink}` | the 12 Color-entity families; entity-bound, so the names cannot change. The light/dark variants (`-lightest` … `-darkest`) are deliberately **not** roles — their utility classes read `$token-*` directly |
-| **Focus ring** | `--color-focus-outer` (translucent wash), `--color-focus-inner` (solid line on top) | read by `.has-accessible-features :focus` |
-| **Radius** | `--border-radius-{none,soft,softer,rounded}` | set **`--border-radius-default`** once at `:root` to re-radius everything; `none/soft/rounded` ↔ TS `GetBorderRadiusValueFromShapeType`, `softer` is CSS-only |
-| **Spacing** | `--space-{none,xs,s,base,m,l,xl,xxl}` | token-backed onto `$token-scale-*`; also read at runtime by Gallery `ItemsGap`. Prefer `$token-scale-*` in new component SCSS |
+| Group                        | Vars                                                                                                                            | Notes                                                                                                                                                                                                                                           |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Surfaces**                 | `--color-background-{body,surface,header,sidemenu,footer,login,input,…}`                                                        |                                                                                                                                                                                                                                                 |
+| **Text**                     | `--color-text`, `--color-text-{subtle,subtlest,disabled,inverse}`                                                               |                                                                                                                                                                                                                                                 |
+| **Borders**                  | `--color-border`, `--color-border-{subtle,subtlest,input,…}`                                                                    |                                                                                                                                                                                                                                                 |
+| **Brand / status / neutral** | `--color-{primary,primary-hover,primary-selected,primary-active,secondary,error,warning,success,info}`, `--color-neutral-0..10` | brand + neutrals are Color-entity records read by TS `GetColorValueFromColorType`; the four status roles are **not** entity records, just public O11 names                                                                                      |
+| **Palette**                  | `--color-{red,orange,yellow,lime,green,teal,cyan,blue,indigo,violet,grape,pink}`                                                | the 12 Color-entity families; entity-bound, so the names cannot change. The light/dark variants (`-lightest` … `-darkest`) are deliberately **not** roles — their utility classes read `$token-*` directly                                      |
+| **Focus ring**               | `--color-focus-outer` (translucent wash), `--color-focus-inner` (solid line on top)                                             | read by `.has-accessible-features :focus`                                                                                                                                                                                                       |
+| **Radius**                   | tier slots `--border-radius-{2xs,xs,sm,md,lg,xl,2xl}` + legacy aliases `--border-radius-{none,soft,rounded}`                    | set **`--border-radius-default`** once at `:root` to re-radius every tier slot, or swap profile with `.shape-soft` / `.shape-round` / `.shape-rectangular`; the three aliases ↔ TS `GetBorderRadiusValueFromShapeType`. `softer` is **retired** |
+| **Spacing**                  | `--space-{none,xs,s,base,m,l,xl,xxl}`                                                                                           | token-backed onto `$token-scale-*`; also read at runtime by Gallery `ItemsGap`. Prefer `$token-scale-*` in new component SCSS                                                                                                                   |
 
 > **Renaming any entity-bound name is a breaking change.**
 > `Helper.Dom.GetColorValueFromColorType` builds `'--color-' + <Color entity value>` at
@@ -167,7 +181,10 @@ components read `$token-text-danger` / `$token-border-danger-default` directly,
 because neither has an entity record or a cross-component consumer.
 
 **Also in `_root.scss` but NOT part of the theme contract** (app-layout
-plumbing): layout sizes `--size-*`, z-index `--layer-global-*` / `--layer-local-*`,
+plumbing): layout sizes `--header-size` / `--header-size-content` / `--side-menu-size` /
+`--bottom-bar-size` / `--footer-height` (dev's names, kept deliberately — a public surface
+apps read, two of them written from TS via `GlobalEnum.CSSVariables`),
+z-index `--layer-global-*` / `--layer-local-*`,
 safe areas `--os-safe-area-*` (the one retained `--os-` prefix), and the
 portaled-pattern `--osui-*-layer` vars (read off-DOM, so they must live at `:root`).
 
@@ -185,20 +202,20 @@ selector**, defaulting either to a Tier-3 role (themeable props) or straight to 
 
 ```scss
 .card {
-  // ─── Component CSS API ─────────────────────────────────────────────
-  --osui-card-background:    var(--color-background-surface);   // → theme role (themeable)
-  --osui-card-border-color:  var(--osui-border-subtle);
-  --osui-card-border-width:  #{$token-border-size-025};         // → token directly (structural)
-  --osui-card-border-radius: var(--border-radius-soft);
-  --osui-card-padding:       #{$token-scale-600};
-  --osui-card-shadow:        #{$token-elevation-1};
-  // ───────────────────────────────────────────────────────────────────
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-card-background: var(--color-background-surface); // → theme role (themeable)
+	--osui-card-border-color: var(--osui-border-subtle);
+	--osui-card-border-width: #{$token-border-size-025}; // → token directly (structural)
+	--osui-card-border-radius: var(--border-radius-soft);
+	--osui-card-padding: #{$token-scale-600};
+	--osui-card-shadow: #{$token-elevation-1};
+	// ───────────────────────────────────────────────────────────────────
 
-  background-color: var(--osui-card-background);
-  border:           var(--osui-card-border-width) solid var(--osui-card-border-color);
-  border-radius:    var(--osui-card-border-radius);
-  box-shadow:       var(--osui-card-shadow);
-  padding:          var(--osui-card-padding);
+	background-color: var(--osui-card-background);
+	border: var(--osui-card-border-width) solid var(--osui-card-border-color);
+	border-radius: var(--osui-card-border-radius);
+	box-shadow: var(--osui-card-shadow);
+	padding: var(--osui-card-padding);
 }
 ```
 
@@ -213,7 +230,7 @@ Rules:
   and **structural/size props straight to `$token-*`** — as Card does above
   (colour/radius → role, padding/border-width → token). This keeps the theme able
   to recolour without resizing.
-- Defaults live on the component root. A theme overrides *variables only* — it
+- Defaults live on the component root. A theme overrides _variables only_ — it
   never edits a component rule.
 
 Pattern SCSS (`src/scripts/**/scss/`) follows the same shape with `osui-`-prefixed
@@ -232,16 +249,24 @@ component rule, **no** `$token-*` value, and **no** pre-existing `--osui-*` defa
 
 ```css
 /* Re-skin one role across the whole framework */
-:root            { --color-primary: #6d28d9; }
+:root {
+	--color-primary: #6d28d9;
+}
 /* Re-skin globally by overriding a token (cascades through every role + component) */
-:root            { --token-bg-surface-default: #1b1b1b; }
+:root {
+	--token-bg-surface-default: #1b1b1b;
+}
 /* Round every corner at once */
-:root            { --border-radius-default: 12px; }
+:root {
+	--border-radius-default: 12px;
+}
 /* Override a single component instance */
-.card.is-promo   { --osui-card-shadow: var(--osui-elevation-overlay); }
+.card.is-promo {
+	--osui-card-shadow: var(--osui-elevation-overlay);
+}
 ```
 
-> **Invariant:** if a theme ever needs to touch a *component rule*, that is a
+> **Invariant:** if a theme ever needs to touch a _component rule_, that is a
 > **leak in that component's CSS API** — fix it in the component (add/route the
 > missing `--osui-*` knob), not in the theme.
 
@@ -286,7 +311,7 @@ declare the same property, so they cannot compete, and custom-property
 substitution happens per element at computed-value time rather than by source
 order. Moving dark earlier or later changes nothing today.
 
-It stops being a no-op the moment light `--token-*` values *are* emitted at
+It stops being a no-op the moment light `--token-*` values _are_ emitted at
 `:root` — i.e. if `build:tokens` is ever run with `--root true`. `:root` and
 `.os-dark-theme` are both specificity `0-1-0`, so at that point **later wins**, and
 dark placed ahead of root would silently lose to light. Hence: after root.
@@ -299,10 +324,10 @@ A `var()` inside a custom-property declaration is substituted using the computed
 custom properties of the element the declaration applies to — and `--color-*` is
 declared at `:root`, i.e. on `<html>`:
 
-| `.os-dark-theme` on | `--token-*` readers | `--color-*` readers (~488 reads) |
-| :--- | :--- | :--- |
-| `<body>` | dark ✅ | **stay light** — the roles already resolved to their light fallbacks on `<html>` and inherit down as literals |
-| **`<html>`** ← what we do | dark ✅ | **dark ✅** — the tokens are defined on the very element the roles resolve on |
+| `.os-dark-theme` on       | `--token-*` readers | `--color-*` readers (~488 reads)                                                                              |
+| :------------------------ | :------------------ | :------------------------------------------------------------------------------------------------------------ |
+| `<body>`                  | dark ✅             | **stay light** — the roles already resolved to their light fallbacks on `<html>` and inherit down as literals |
+| **`<html>`** ← what we do | dark ✅             | **dark ✅** — the tokens are defined on the very element the roles resolve on                                 |
 
 So the class is applied to `document.documentElement`. **43 of the 44 `--color-*`
 knobs** follow the theme this way; the exception is `--color-focus-outer`, a
@@ -313,7 +338,7 @@ nothing in the CSS had to change; only the element.
 
 **What still will not follow the theme.** 17 of the 21 `--osui-*` defaults
 declared at `:root` are hardcoded literals rather than token reads — each already
-carries a `// future: --token-*` note in `_root.scss`. Also `--size-*` and
+carries a `// future: --token-*` note in `_root.scss`. Also the layout sizes and
 `--layer-*`, but those are layout plumbing, not colour (§Framework theme layer).
 Routing the remaining literals onto tokens is Phase E work.
 
@@ -335,15 +360,15 @@ It carried two things beyond the palette, and both went with it:
 
 ## 6. File & build map
 
-| Path | Role | Source |
-|---|---|---|
-| `src/scss/tokens/_root.scss` | Tier 1 — `--token-*` at `:root` (override surface) | generated, gitignored |
-| `src/scss/tokens/_variables.scss` | Tier 1 — `$token-*` = `var(--token-*, fallback)` | generated, gitignored |
-| `src/scss/00-abstract/_setup-global-vars.scss` | `@import`s `tokens/variables`; token bridges; utility maps | checked in |
-| `src/scss/01-foundations/_root.scss` | Tier 3 — framework theme layer + layout plumbing | checked in |
-| `src/scss/04-patterns/**`, `src/scripts/**/scss/**` | Tier 4 — component CSS APIs | checked in |
-| `src/scss/{O11,ODC}.OutSystemsUI.scss` | generated entry files | **never hand-edit** (regen on every build) |
-| `dist/{O11,ODC}.OutSystemsUI.css` | compiled bundle (ships fallbacks, not `--token-*` root) | build output |
+| Path                                                | Role                                                       | Source                                     |
+| --------------------------------------------------- | ---------------------------------------------------------- | ------------------------------------------ |
+| `src/scss/tokens/_root.scss`                        | Tier 1 — `--token-*` at `:root` (override surface)         | generated, gitignored                      |
+| `src/scss/tokens/_variables.scss`                   | Tier 1 — `$token-*` = `var(--token-*, fallback)`           | generated, gitignored                      |
+| `src/scss/00-abstract/_setup-global-vars.scss`      | `@import`s `tokens/variables`; token bridges; utility maps | checked in                                 |
+| `src/scss/01-foundations/_root.scss`                | Tier 3 — framework theme layer + layout plumbing           | checked in                                 |
+| `src/scss/04-patterns/**`, `src/scripts/**/scss/**` | Tier 4 — component CSS APIs                                | checked in                                 |
+| `src/scss/{O11,ODC}.OutSystemsUI.scss`              | generated entry files                                      | **never hand-edit** (regen on every build) |
+| `dist/{O11,ODC}.OutSystemsUI.css`                   | compiled bundle (ships fallbacks, not `--token-*` root)    | build output                               |
 
 Build order (per generated entry): `00-abstract/setup-global-vars` (pulls in
 `$token-*`) → `00-abstract/mixins` → `01-foundations/root` (theme layer) →

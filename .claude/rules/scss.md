@@ -29,7 +29,7 @@ Rules of thumb:
 - Never hardcode hex/rem/px if a matching `$token-*` exists.
 - Still retired (do **not** reintroduce): `--font-size-*`, `--shadow-*`, `--border-size-*`. Use `$token-*` instead.
 - **`--space-*` is NOT retired** (restored ROU-12975). It is the public spacing vocabulary — `--space-none` … `--space-xxl`, generated in `_root.scss` from `$osui-space-token-vars` and token-backed onto `$token-scale-*`. Prefer `$token-scale-*` directly in new component SCSS; `--space-*` exists so apps (and Gallery's runtime `ItemsGap`) keep a stable override surface.
-- **Exception — the framework theme layer (Part Four).** `--color-*`, `--border-radius-*`, `--size-*`, and `--layer-*` are **not** retired: they are the framework theme layer (Tier 3) — see §13. They were deliberately un-prefixed (dropping the old `--os-` prefix) to stay backward-compatible with the historical public theming surface. Components route through them; each defaults through a `$token-*`.
+- **Exception — the framework theme layer (Part Four).** `--color-*`, `--border-radius-*`, the layout sizes (`--header-size`, `--side-menu-size`, …), and `--layer-*` are **not** retired: they are the framework theme layer (Tier 3) — see §13. They were deliberately un-prefixed (dropping the old `--os-` prefix) to stay backward-compatible with the historical public theming surface. Components route through them; each defaults through a `$token-*`.
 
 ## 3. Component CSS API — the `--osui-*` layer
 
@@ -37,15 +37,15 @@ Every visual component declares its own CSS custom properties at its root select
 
 ```scss
 .card {
-  // ─── Component CSS API ─────────────────────────
-  --osui-card-background: #{$token-bg-surface-default};
-  --osui-card-shadow:     #{$token-elevation-1};
-  --osui-card-padding:    #{$token-scale-400};
-  // ───────────────────────────────────────────────
+	// ─── Component CSS API ─────────────────────────
+	--osui-card-background: #{$token-bg-surface-default};
+	--osui-card-shadow: #{$token-elevation-1};
+	--osui-card-padding: #{$token-scale-400};
+	// ───────────────────────────────────────────────
 
-  background-color: var(--osui-card-background);
-  box-shadow:       var(--osui-card-shadow);
-  padding:          var(--osui-card-padding);
+	background-color: var(--osui-card-background);
+	box-shadow: var(--osui-card-shadow);
+	padding: var(--osui-card-padding);
 }
 ```
 
@@ -91,9 +91,9 @@ Pattern SCSS files declare their own `--osui-{pattern}-{prop}` variables at the 
 
 ```scss
 .osui-bottom-sheet {
-  --osui-bottom-sheet-max-height: calc(100vh - 54px);
-  --osui-bottom-sheet-draggable-area: 56px;
-  --osui-bottom-sheet-transition-function: cubic-bezier(0.19, 0.35, 0.56, 0.96);
+	--osui-bottom-sheet-max-height: calc(100vh - 54px);
+	--osui-bottom-sheet-draggable-area: 56px;
+	--osui-bottom-sheet-transition-function: cubic-bezier(0.19, 0.35, 0.56, 0.96);
 }
 ```
 
@@ -107,9 +107,9 @@ To add a new SCSS partial:
 
 1. Create it under the appropriate `src/scss/<section>/` folder.
 2. Register it in the matching section spec in `gulp/ProjectSpecs/ScssStructure/*.js`:
-   ```js
-   { "name": "Description", "path": "01-foundations/foo" }
-   ```
+    ```js
+    { "name": "Description", "path": "01-foundations/foo" }
+    ```
 3. Run `npm run dev -- --target ODC` and verify the partial appears in `dist/dev.ODC.OutSystemsUI.css`.
 
 ## 10. Provider files
@@ -128,6 +128,7 @@ Pattern files that consume a provider import the override SCSS directly:
 > **Note:** a dark theme **does ship**, and it is **fully generated** — `src/scss/tokens/_theme-dark.scss`, written by `npm run build:tokens` from the design tokens' dark mode (that directory is gitignored). It re-maps the ~447 `--token-*` values that differ in dark and self-applies them under `.os-dark-theme`. Registered in `gulp/ProjectSpecs/ScssStructure/Root.js`; never hand-add it to the entry files (§9).
 >
 > Two classes govern dark appearance:
+>
 > - **`.os-dark-theme`** — applies the actual dark token overrides. Add it to **`<html>`** (`document.documentElement`) to switch to dark; remove it for the default light palette. Toggled via the `SetDarkTheme` client action.
 > - **`.os-dark-mode`** — a **signal-only** class that reflects the user's system preference (`prefers-color-scheme: dark`). It has no CSS effect — the framework attaches no rules to it. Automatically added to `<html>` when the OS is in dark mode, removed when it switches to light. Available as a customer styling hook.
 >
@@ -144,7 +145,7 @@ A theme is **entirely** CSS-custom-property overrides scoped under a single clas
 Mobile safe-area wrapping pattern — keep the indirection, don't collapse:
 
 ```scss
---os-safe-area-top: #{safe-area(top)};  // wraps max(env(safe-area-inset-top, 0px), var(--overridable))
+--os-safe-area-top: #{safe-area(top)}; // wraps max(env(safe-area-inset-top, 0px), var(--overridable))
 ```
 
 ## 13. Framework theme layer (Tier 3) — `_root.scss`
@@ -161,7 +162,7 @@ Each role knob defaults **through** a `$token-*`, so overriding the token (e.g. 
 - **Brand / status / neutral colors** — `--color-primary`, `--color-secondary`, `--color-error`, `--color-warning`, `--color-success`, `--color-info`, `--color-neutral-0..10`. (Also read by TS `GetColorValueFromColorType`.)
 - **Surfaces / text** — `--color-background-{body,surface,header,sidemenu,footer,login}`, `--color-text`.
 - **Radius — shape tier slots** — `--border-radius-{2xs,xs,sm,md,lg,xl,2xl}` hold the active shape profile (soft-profile defaults on `:root`). Layout utilities `.shape-soft`, `.shape-round`, `.shape-rectangular` remap all tier slots. Components read the tier that matches their category (e.g. controls → `xs`, surfaces → `sm`, accordion → `xl`). Legacy aliases `--border-radius-none`, `--border-radius-soft` (→ `xs`), `--border-radius-rounded` remain for TS `GetBorderRadiusValueFromShapeType`. `--border-radius-softer` is **retired**. Each knob resolves `var(--border-radius-default, <own-default>)`.
-- **App-layout plumbing (NOT part of the theme contract)** — layout sizes `--size-*`, z-index `--layer-*`, and safe areas `--os-safe-area-*` (the **one** retained `--os-` prefix — see §12).
+- **App-layout plumbing (NOT part of the theme contract)** — layout sizes `--header-size`, `--header-size-content`, `--side-menu-size`, `--bottom-bar-size`, `--footer-height`; z-index `--layer-*`; safe areas `--os-safe-area-*` (the **one** retained `--os-` prefix — see §12). The layout sizes keep dev's original names deliberately: they are a public surface apps read, and `--header-size-content` / `--footer-height` are written from TS via `GlobalEnum.CSSVariables`. A `--size-*` prefix was tried and reverted — **do not reintroduce it**.
 
 These are intentionally not `--osui-*`: theme-layer roles are app-level knobs an end-user theme overrides once; `--osui-*` is per-component. See `CSS-ARCHITECTURE.md` §3 for the full architecture.
 
@@ -170,7 +171,7 @@ These are intentionally not `--osui-*`: theme-layer roles are app-level knobs an
 Flag in review:
 
 - Hardcoded hex / rgb / rgba where a `$token-*` exists.
-- Re-declaration of genuinely-retired vars (`--font-size-*`, `--shadow-*`, `--border-size-*`). NOTE: `--color-*`, `--space-*`, `--border-radius-*`, `--size-*`, `--layer-*` are **not** retired — they are the framework theme layer (§13).
+- Re-declaration of genuinely-retired vars (`--font-size-*`, `--shadow-*`, `--border-size-*`). NOTE: `--color-*`, `--space-*`, `--border-radius-*`, the layout sizes, `--layer-*` are **not** retired — they are the framework theme layer (§13).
 - Calls to `get-background-color()` / `get-text-color()` / `get-border-color()`.
 - New rules that touch `.os-dark-theme` from the component side.
 - Imports of `_*_lib.scss` vendor baselines.
@@ -182,15 +183,15 @@ Flag in review:
 `padding`, `margin`, `border` and `inset` are written **logically**. A physical side needs a
 comment saying why.
 
-| Write this | Not this |
-|---|---|
-| `padding-inline-start` / `-end` | `padding-left` / `-right` |
-| `padding-block-start` / `-end` | `padding-top` / `-bottom` |
-| `padding-block: a; padding-inline: b` | `padding: a b` |
-| `border-inline-start` (+ `-width` / `-style` / `-color`) | `border-left` |
-| `border-start-start-radius` … | `border-top-left-radius` … |
-| `inset-inline-start` / `-end` | `left` / `right` |
-| `text-align: start` / `end` | `text-align: left` / `right` |
+| Write this                                               | Not this                     |
+| -------------------------------------------------------- | ---------------------------- |
+| `padding-inline-start` / `-end`                          | `padding-left` / `-right`    |
+| `padding-block-start` / `-end`                           | `padding-top` / `-bottom`    |
+| `padding-block: a; padding-inline: b`                    | `padding: a b`               |
+| `border-inline-start` (+ `-width` / `-style` / `-color`) | `border-left`                |
+| `border-start-start-radius` …                            | `border-top-left-radius` …   |
+| `inset-inline-start` / `-end`                            | `left` / `right`             |
+| `text-align: start` / `end`                              | `text-align: left` / `right` |
 
 Corollaries:
 

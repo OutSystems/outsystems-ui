@@ -1,4 +1,4 @@
-@use "../../tokens/variables";
+@use '../../tokens/variables';
 
 /* Patterns - Interaction - Input With Icon */
 ////
@@ -8,7 +8,7 @@
 ///
 .input-with-icon {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-input-with-icon-icon-color:       variables.$token-icon-default;
+	--osui-input-with-icon-icon-color: #{variables.$token-icon-default};
 	--osui-input-with-icon-icon-hover-color: var(--color-text-subtlest);
 	// ───────────────────────────────────────────────────────────────────
 

@@ -1,4 +1,4 @@
-@use "../../../tokens/variables";
+@use '../../../tokens/variables';
 
 /* Patterns - Interaction - DropdownServerSide */
 ////
@@ -539,7 +539,10 @@ $balloonMobileTopMargin: 5vh;
 
 			&-container {
 				background: variables.$token-bg-surface-default;
-				border-radius: var(--osui-dropdown-ss-popup-border-radius, var(--border-radius-lg, #{variables.$token-shape-soft-lg}));
+				border-radius: var(
+					--osui-dropdown-ss-popup-border-radius,
+					var(--border-radius-lg, #{variables.$token-shape-soft-lg})
+				);
 				box-shadow: variables.$token-elevation-4;
 				display: flex;
 				flex-direction: column;
@@ -568,7 +571,7 @@ $balloonMobileTopMargin: 5vh;
 			&--has-not-search {
 				.osui-dropdown-serverside__balloon-container {
 					margin-block-start: $balloonMobileTopMargin;
-					max-height: calc(var(--viewport-height, 100vh) - $balloonMobileTopMargin - var(--size-header));
+					max-height: calc(var(--viewport-height, 100vh) - $balloonMobileTopMargin - var(--header-size));
 				}
 			}
 		}

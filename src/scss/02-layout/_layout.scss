@@ -1,4 +1,4 @@
-@use "../tokens/variables";
+@use '../tokens/variables';
 
 ////
 /// @group Layout
@@ -40,7 +40,7 @@ body,
 
 		&-side {
 			.main {
-				margin-inline-start: var(--size-side-menu);
+				margin-inline-start: var(--side-menu-size);
 			}
 
 			&.aside-overlay .main {
@@ -180,8 +180,8 @@ body,
 					&-visible,
 					&-expandable {
 						.main {
-							margin-inline-start: var(--size-side-menu);
-							width: calc(100% - var(--size-side-menu));
+							margin-inline-start: var(--side-menu-size);
+							width: calc(100% - var(--side-menu-size));
 						}
 					}
 				}
@@ -190,7 +190,7 @@ body,
 
 		.layout-side.layout-native.aside-expandable {
 			&.menu-visible .main {
-				margin-inline-start: var(--size-side-menu);
+				margin-inline-start: var(--side-menu-size);
 			}
 
 			.main {

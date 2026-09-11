@@ -1,5 +1,5 @@
 @use '../../../00-abstract/index' as *;
-@use "../../../tokens/variables";
+@use '../../../tokens/variables';
 
 /* Patterns - section - SectionIndex */
 ////
@@ -13,7 +13,7 @@
 	--osui-section-index-border-width: #{variables.$token-border-size-025};
 	// ───────────────────────────────────────────────────────────────────
 
-	--top-position: calc(var(--size-header) + var(--size-header-content) + #{android-safe-area-top()});
+	--top-position: calc(var(--header-size) + var(--header-size-content) + #{android-safe-area-top()});
 	display: flex;
 	flex-direction: column;
 	position: relative;
@@ -40,18 +40,20 @@
 
 .osui-section-index-item {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-section-index-item-color:             var(--color-text-subtlest);
-	--osui-section-index-item-color-hover:       var(--color-text);
-	--osui-section-index-item-active-color:      var(--color-primary-selected);
-	--osui-section-index-item-border-radius:     #{variables.$token-border-radius-0};
-	--osui-section-index-item-hover-background:  #{variables.$token-bg-neutral-subtlest-hover};
-	--osui-section-index-item-press-background:  #{variables.$token-bg-neutral-subtlest-press};
+	--osui-section-index-item-color: var(--color-text-subtlest);
+	--osui-section-index-item-color-hover: var(--color-text);
+	--osui-section-index-item-active-color: var(--color-primary-selected);
+	--osui-section-index-item-border-radius: #{variables.$token-border-radius-0};
+	--osui-section-index-item-hover-background: #{variables.$token-bg-neutral-subtlest-hover};
+	--osui-section-index-item-press-background: #{variables.$token-bg-neutral-subtlest-press};
 	--osui-section-index-active-indicator-color: var(--color-primary-selected);
 	--osui-section-index-active-indicator-width: #{variables.$token-border-size-025};
 	// Half a rail-width, so the marker only partially covers the rail (design spec).
 	// Reads the rail knob off .osui-section-index (custom properties inherit) and keeps
 	// its own token fallback for an item rendered outside the nav.
-	--osui-section-index-active-indicator-offset: calc(var(--osui-section-index-border-width, #{variables.$token-border-size-025}) / 2);
+	--osui-section-index-active-indicator-offset: calc(
+		var(--osui-section-index-border-width, #{variables.$token-border-size-025}) / 2
+	);
 	// ───────────────────────────────────────────────────────────────────
 
 	&,

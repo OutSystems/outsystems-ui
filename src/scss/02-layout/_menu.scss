@@ -1,5 +1,5 @@
 @use '../00-abstract/index' as *;
-@use "../tokens/variables";
+@use '../tokens/variables';
 
 /* Page Layout - Menu */
 ////
@@ -18,12 +18,12 @@
 }
 
 .app-menu-content {
-	left: calc(-1 * var(--size-side-menu));
+	left: calc(-1 * var(--side-menu-size));
 	transform: translateX(0) translateZ(0);
 	transition: transform 130ms ease-in;
 
 	&.is--open {
-		transform: translateX(var(--size-side-menu)) translateZ(0);
+		transform: translateX(var(--side-menu-size)) translateZ(0);
 		transition: transform 330ms ease-out;
 	}
 }
@@ -172,7 +172,7 @@
 		height: 100%;
 		position: fixed;
 		top: 0;
-		width: var(--size-side-menu);
+		width: var(--side-menu-size);
 		will-change: transform;
 		z-index: var(--osui-menu-layer);
 	}

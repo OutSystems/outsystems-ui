@@ -63,10 +63,14 @@ const CODE_ROOT =
 	'  --color-text:               #{$token-text-default};\n' +
 	'  --color-primary:            #{$token-semantics-primary-base};\n' +
 	'\n' +
-	'  // one shape vocabulary; set --border-radius-default once to re-radius everything\n' +
-	'  --border-radius-soft:   var(--border-radius-default, #{$token-border-radius-200}); // 8px\n' +
-	'  --border-radius-softer: var(--border-radius-default, #{$token-border-radius-400}); // 16px\n' +
-	'  --border-radius-rounded:var(--border-radius-default, #{$token-border-radius-full});// 999px\n' +
+	'  // shape tier slots; set --border-radius-default once to re-radius every tier,\n' +
+	'  // or swap profile with .shape-soft / .shape-round / .shape-rectangular\n' +
+	'  --border-radius-xs: var(--border-radius-default, #{$token-shape-soft-xs}); // 8px  · controls\n' +
+	'  --border-radius-sm: var(--border-radius-default, #{$token-shape-soft-sm}); // 12px · surfaces\n' +
+	'  // ... 2xs, md, lg, xl, 2xl\n' +
+	'\n' +
+	'  // legacy aliases (TS GetBorderRadiusValueFromShapeType)\n' +
+	'  --border-radius-rounded: #{$token-border-radius-full}; // 999px\n' +
 	'}';
 
 const CODE_CARD_API =
@@ -170,10 +174,13 @@ export function CssArchitecturePage() {
 					<h1>CSS Architecture</h1>
 					<p className="ca-lede">
 						How OutSystems UI styles every component: three cooperating layers —{' '}
-						<strong>design tokens</strong>, a <strong>framework theme layer at <code>:root</code></strong>,
-						and a per-component <strong>CSS API</strong> — tied together by a single resolution chain. This
-						is the Storybook summary; the full write-up lives in <code>docs/css-architecture.md</code>, and
-						every <code>--osui-*</code> property is catalogued on the <strong>CSS API Reference</strong>{' '}
+						<strong>design tokens</strong>, a{' '}
+						<strong>
+							framework theme layer at <code>:root</code>
+						</strong>
+						, and a per-component <strong>CSS API</strong> — tied together by a single resolution chain.
+						This is the Storybook summary; the full write-up lives in <code>docs/css-architecture.md</code>,
+						and every <code>--osui-*</code> property is catalogued on the <strong>CSS API Reference</strong>{' '}
 						page.
 					</p>
 				</div>
@@ -183,8 +190,8 @@ export function CssArchitecturePage() {
 					<article className="ca-body">
 						<h2 id="big-picture">The big picture</h2>
 						<p>
-							Every property resolves through a <strong>four-hop chain</strong>. Each hop is one layer with
-							one job, and each has a sensible default so the layer below is optional:
+							Every property resolves through a <strong>four-hop chain</strong>. Each hop is one layer
+							with one job, and each has a sensible default so the layer below is optional:
 						</p>
 						<HopChain />
 						<p>Traced through the Card background, top to bottom:</p>
@@ -225,8 +232,8 @@ export function CssArchitecturePage() {
 										each expands to <code>var(--token-*, &lt;fallback&gt;)</code>
 									</td>
 									<td>
-										<strong>writing component SCSS</strong> — gives compile-time checking + a baked-in
-										fallback
+										<strong>writing component SCSS</strong> — gives compile-time checking + a
+										baked-in fallback
 									</td>
 								</tr>
 								<tr>
@@ -266,8 +273,8 @@ export function CssArchitecturePage() {
 							</li>
 							<li>
 								Retired, never reintroduce: <code>--space-*</code>, <code>--font-size-*</code>,{' '}
-								<code>--shadow-*</code>, <code>--border-size-*</code>, and the <code>get-*-color()</code>{' '}
-								helpers.
+								<code>--shadow-*</code>, <code>--border-size-*</code>, and the{' '}
+								<code>get-*-color()</code> helpers.
 							</li>
 						</ul>
 
@@ -292,19 +299,23 @@ export function CssArchitecturePage() {
 								<tr>
 									<td>Surfaces</td>
 									<td>
-										<code>--color-background-{'{body,surface,header,sidemenu,footer,login,input,…}'}</code>
+										<code>
+											--color-background-{'{body,surface,header,sidemenu,footer,login,input,…}'}
+										</code>
 									</td>
 								</tr>
 								<tr>
 									<td>Text</td>
 									<td>
-										<code>--color-text</code>, <code>--color-text-{'{subtle,subtlest,disabled,inverse}'}</code>
+										<code>--color-text</code>,{' '}
+										<code>--color-text-{'{subtle,subtlest,disabled,inverse}'}</code>
 									</td>
 								</tr>
 								<tr>
 									<td>Borders</td>
 									<td>
-										<code>--color-border</code>, <code>--color-border-{'{subtle,subtlest,input,…}'}</code>
+										<code>--color-border</code>,{' '}
+										<code>--color-border-{'{subtle,subtlest,input,…}'}</code>
 									</td>
 								</tr>
 								<tr>
@@ -323,8 +334,9 @@ export function CssArchitecturePage() {
 							</tbody>
 						</table>
 						<p>
-							App-layout plumbing also lives in <code>_root.scss</code> but is <strong>not</strong> part of
-							the theme contract: <code>--size-*</code>, z-index <code>--layer-*</code>, and safe areas{' '}
+							App-layout plumbing also lives in <code>_root.scss</code> but is <strong>not</strong> part
+							of the theme contract: the layout sizes (<code>--header-size</code>,{' '}
+							<code>--side-menu-size</code>, …), z-index <code>--layer-*</code>, and safe areas{' '}
 							<code>--os-safe-area-*</code>.
 						</p>
 
@@ -343,13 +355,13 @@ export function CssArchitecturePage() {
 								Naming: <code>--osui-{'{component}-{property}'}</code>.
 							</li>
 							<li>
-								Property declarations <strong>must</strong> go through the <code>--osui-*</code> var (never
-								directly through <code>$token-*</code> / <code>--color-*</code>), so a consumer can
-								override one instance without touching tokens or the theme.
+								Property declarations <strong>must</strong> go through the <code>--osui-*</code> var
+								(never directly through <code>$token-*</code> / <code>--color-*</code>), so a consumer
+								can override one instance without touching tokens or the theme.
 							</li>
 							<li>
-								Route <strong>themeable</strong> props through the theme role, <strong>structural</strong>{' '}
-								props straight to <code>$token-*</code>.
+								Route <strong>themeable</strong> props through the theme role,{' '}
+								<strong>structural</strong> props straight to <code>$token-*</code>.
 							</li>
 						</ul>
 						<p>
@@ -359,9 +371,9 @@ export function CssArchitecturePage() {
 
 						<h2 id="theming">Theming &amp; dark mode</h2>
 						<p>
-							A theme is <strong>entirely CSS-custom-property overrides</strong> scoped under a single class
-							(or a media query). It overrides theme-layer roles and/or the underlying tokens — never a
-							component rule.
+							A theme is <strong>entirely CSS-custom-property overrides</strong> scoped under a single
+							class (or a media query). It overrides theme-layer roles and/or the underlying tokens —
+							never a component rule.
 						</p>
 						<DocsCodeBlock code={CODE_THEME_EXAMPLES} />
 						<DocsNote title="Invariant">
@@ -371,40 +383,41 @@ export function CssArchitecturePage() {
 							</p>
 						</DocsNote>
 						<p>
-							<strong>Dark theme</strong> (<code>src/scss/tokens/_theme-dark.scss</code>) ships and
-							is opt-in. Two classes govern dark appearance:
+							<strong>Dark theme</strong> (<code>src/scss/tokens/_theme-dark.scss</code>) ships and is
+							opt-in. Two classes govern dark appearance:
 						</p>
 						<ul>
 							<li>
-								<code>.os-dark-theme</code> — applies the actual dark token overrides. Add it
-								to <code>&lt;html&gt;</code> to switch to dark; remove it for the default light
-								palette. Toggled via the <code>SetDarkTheme</code> client action.
+								<code>.os-dark-theme</code> — applies the actual dark token overrides. Add it to{' '}
+								<code>&lt;html&gt;</code> to switch to dark; remove it for the default light palette.
+								Toggled via the <code>SetDarkTheme</code> client action.
 							</li>
 							<li>
-								<code>.os-dark-mode</code> — a <strong>signal-only</strong> class that
-								reflects the user&apos;s system preference
-								(<code>prefers-color-scheme:&nbsp;dark</code>). It has no CSS effect —
-								the framework attaches no rules to it. Automatically added to{' '}
-								<code>&lt;html&gt;</code> when the OS is in dark mode, removed when it
-								switches to light. Customers can use it as a styling hook in their own CSS.
+								<code>.os-dark-mode</code> — a <strong>signal-only</strong> class that reflects the
+								user&apos;s system preference (<code>prefers-color-scheme:&nbsp;dark</code>). It has no
+								CSS effect — the framework attaches no rules to it. Automatically added to{' '}
+								<code>&lt;html&gt;</code> when the OS is in dark mode, removed when it switches to
+								light. Customers can use it as a styling hook in their own CSS.
 							</li>
 						</ul>
 						<p>
-							<code>.os-dark-theme</code> re-maps the ~447 dark <code>--token-*</code> values.
-							Because <code>--color-*</code> roles are declared at <code>:root</code> as{' '}
+							<code>.os-dark-theme</code> re-maps the ~447 dark <code>--token-*</code> values. Because{' '}
+							<code>--color-*</code> roles are declared at <code>:root</code> as{' '}
 							<code>var(--token-…)</code>, the class <strong>must</strong> sit on{' '}
-							<code>&lt;html&gt;</code> — a <code>&lt;body&gt;</code>-level token override
-							arrives after the roles have already resolved their light fallbacks.
+							<code>&lt;html&gt;</code> — a <code>&lt;body&gt;</code>-level token override arrives after
+							the roles have already resolved their light fallbacks.
 						</p>
 						<DocsNote title="Try it" variant="alt">
 							<p>
-								Use the <strong>Appearance</strong> toolbar control above to switch Light / Dark across any
-								story.
+								Use the <strong>Appearance</strong> toolbar control above to switch Light / Dark across
+								any story.
 							</p>
 						</DocsNote>
 
 						<h2 id="authoring">Quick reference</h2>
-						<p>Walk <strong>down</strong> the chain only as far as you need:</p>
+						<p>
+							Walk <strong>down</strong> the chain only as far as you need:
+						</p>
 						<ol>
 							<li>
 								Reading a <strong>themeable</strong> colour/radius? → use the theme role:{' '}
@@ -415,8 +428,8 @@ export function CssArchitecturePage() {
 								<code>$token-*</code> directly.
 							</li>
 							<li>
-								Exposing it on a component? → declare <code>--osui-{'{component}-{prop}'}</code> defaulting
-								to (1) or (2), and read the <code>--osui-*</code> var in the property.
+								Exposing it on a component? → declare <code>--osui-{'{component}-{prop}'}</code>{' '}
+								defaulting to (1) or (2), and read the <code>--osui-*</code> var in the property.
 							</li>
 						</ol>
 						<DocsNote title="Red flags" variant="error">
