@@ -17,7 +17,7 @@ $balloonMobileTopMargin: 5vh;
 	--osui-dropdown-ss-background: var(--color-background-input);
 	--osui-dropdown-ss-balloon-max-height: 300px;
 	--osui-dropdown-ss-border-color: var(--color-border-input);
-	--osui-dropdown-ss-border-radius: var(--border-radius-soft);
+	--osui-dropdown-ss-border-radius: var(--border-radius-xs, #{variables.$token-shape-soft-xs});
 	--osui-dropdown-ss-color: var(--color-text);
 	--osui-dropdown-ss-disabled-background: var(--color-background-input-disabled);
 	--osui-dropdown-ss-disabled-color: var(--color-text-disabled);
@@ -38,7 +38,9 @@ $balloonMobileTopMargin: 5vh;
 	.osui-balloon {
 		// Match the widget Dropdown list container: soft radius, overlay elevation, neutral border
 		--osui-balloon-shadow: #{variables.$token-elevation-3};
-		--osui-balloon-shape: var(--border-radius-soft);
+		--osui-dropdown-ss-popup-border-radius: var(--border-radius-lg, #{variables.$token-shape-soft-lg});
+		// Popup tier (lg) on portaled balloon — see detached-root rules at file end.
+		--osui-balloon-border-radius: var(--osui-dropdown-ss-popup-border-radius);
 
 		border: variables.$token-border-size-025 solid var(--color-border);
 		display: flex;
@@ -142,6 +144,8 @@ $balloonMobileTopMargin: 5vh;
 
 	// Balloon section
 	&__balloon {
+		--osui-dropdown-ss-popup-border-radius: var(--border-radius-lg, #{variables.$token-shape-soft-lg});
+
 		// Search Wrapper
 		&-search-wrapper {
 			background-color: var(--osui-dropdown-ss-background);
@@ -513,7 +517,7 @@ $balloonMobileTopMargin: 5vh;
 			align-items: center;
 			background-color: variables.$token-backdrop;
 			border: none;
-			border-radius: var(--border-radius-sharp);
+			border-radius: #{variables.$token-border-radius-0};
 			display: flex;
 			inset-inline-start: 0;
 			max-width: 100vw;
@@ -535,7 +539,7 @@ $balloonMobileTopMargin: 5vh;
 
 			&-container {
 				background: variables.$token-bg-surface-default;
-				border-radius: var(--osui-balloon-shape);
+				border-radius: var(--osui-dropdown-ss-popup-border-radius, var(--border-radius-lg, #{variables.$token-shape-soft-lg}));
 				box-shadow: variables.$token-elevation-4;
 				display: flex;
 				flex-direction: column;
@@ -622,4 +626,16 @@ $balloonMobileTopMargin: 5vh;
 			}
 		}
 	}
+}
+
+// Portaled popup roots — detached from `.osui-dropdown-serverside` (Balloon feature).
+// CSS API must live on these selectors, not the pattern root. See ADR-0010.
+.osui-dropdown-serverside__balloon.osui-balloon {
+	--osui-dropdown-ss-popup-border-radius: var(--border-radius-lg, #{variables.$token-shape-soft-lg});
+	--osui-balloon-border-radius: var(--osui-dropdown-ss-popup-border-radius);
+}
+
+.osui-dropdown-serverside__balloon-container {
+	--osui-dropdown-ss-popup-border-radius: var(--border-radius-lg, #{variables.$token-shape-soft-lg});
+	border-radius: var(--osui-dropdown-ss-popup-border-radius);
 }

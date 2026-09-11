@@ -12,8 +12,8 @@
 	--osui-tabs-header-gap: #{variables.$token-space-800}; // horizontal only; Justified stretches instead
 	--osui-tabs-header-item-color: var(--color-text-subtlest);
 	--osui-tabs-header-item-font-size: #{variables.$token-font-size-350};
-	--osui-tabs-header-item-border-radius: #{variables.$token-border-radius-100} #{variables.$token-border-radius-100} 0
-		0;
+	--osui-tabs-header-item-border-radius: var(--border-radius-lg, #{variables.$token-shape-soft-lg})
+		var(--border-radius-lg, #{variables.$token-shape-soft-lg}) 0 0;
 	// Figma says 21px; the scale's nearest step is 20px.
 	--osui-tabs-header-item-line-height: #{variables.$token-font-line-height-500};
 	--osui-tabs-header-item-color-active: #{variables.$token-text-select};

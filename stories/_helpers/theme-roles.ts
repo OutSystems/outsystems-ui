@@ -150,10 +150,16 @@ export const THEME_ROLE_GROUPS: RoleGroup[] = [
 		},
 		[
 			['--border-radius-default', 'All (master override)', 'unset by default'],
-			['--border-radius-none', 'None'],
-			['--border-radius-soft', 'Soft (controls, flat)'],
-			['--border-radius-softer', 'Softer (elevated)'],
-			['--border-radius-rounded', 'Rounded (circular)'],
+			['--border-radius-2xs', 'Tier 2xs (soft default 4px)'],
+			['--border-radius-xs', 'Tier xs (soft default 8px)'],
+			['--border-radius-sm', 'Tier sm (soft default 12px)'],
+			['--border-radius-md', 'Tier md (soft default 16px)'],
+			['--border-radius-lg', 'Tier lg'],
+			['--border-radius-xl', 'Tier xl'],
+			['--border-radius-2xl', 'Tier 2xl'],
+			['--border-radius-none', 'Legacy alias — 0px'],
+			['--border-radius-soft', 'Legacy knob — $token-shape-soft-xs (8px) on :root; portaled roots remap via shape-tier tokens'],
+			['--border-radius-rounded', 'Legacy knob — $token-border-radius-full (999px) on :root; portaled roots remap locally'],
 		]
 	),
 	group(

@@ -53,7 +53,7 @@ Rules:
 
 - Naming: `--osui-{component}-{property}` (decision D11).
 - Property declarations **must** go through the `--osui-*` var, not directly through `$token-*`, so consumers can override per-instance without touching tokens.
-- Defaults live on the component root. Themes (e.g. `.theme-dark`) only override variables — never touch component rules.
+- Defaults live on the component root. Themes (e.g. `.os-dark-theme`) only override variables — never touch component rules.
 
 ## 4. Helper functions — deprecated, don't reintroduce
 
@@ -125,9 +125,13 @@ Pattern files that consume a provider import the override SCSS directly:
 
 ## 11. Theme invariant
 
-> **Note:** a dark theme **does ship**, and it is **fully generated** — `src/scss/tokens/_theme-dark.scss`, written by `npm run build:tokens` from the design tokens' dark mode (that directory is gitignored). It re-maps the ~447 `--token-*` values that differ in dark and self-applies them under `.theme-dark`. Registered in `gulp/ProjectSpecs/ScssStructure/Root.js`; never hand-add it to the entry files (§9).
+> **Note:** a dark theme **does ship**, and it is **fully generated** — `src/scss/tokens/_theme-dark.scss`, written by `npm run build:tokens` from the design tokens' dark mode (that directory is gitignored). It re-maps the ~447 `--token-*` values that differ in dark and self-applies them under `.os-dark-theme`. Registered in `gulp/ProjectSpecs/ScssStructure/Root.js`; never hand-add it to the entry files (§9).
 >
-> Opt-in, manual only: add `.theme-dark` to **`<html>`** (`document.documentElement`) — no OS auto-detection (an app that wants to follow `prefers-color-scheme` toggles the class itself). It must be `<html>`, not `<body>`: `--color-*` is declared at `:root` and substitutes its `var(--token-…)` against that element, so a `<body>`-level token override lands after the roles have already resolved light. `.theme-dark` is an element-agnostic class selector — the element is the whole mechanism, no CSS change involved.
+> Two classes govern dark appearance:
+> - **`.os-dark-theme`** — applies the actual dark token overrides. Add it to **`<html>`** (`document.documentElement`) to switch to dark; remove it for the default light palette. Toggled via the `SetDarkTheme` client action.
+> - **`.os-dark-mode`** — a **signal-only** class that reflects the user's system preference (`prefers-color-scheme: dark`). It has no CSS effect — the framework attaches no rules to it. Automatically added to `<html>` when the OS is in dark mode, removed when it switches to light. Available as a customer styling hook.
+>
+> The theme class must be on `<html>`, not `<body>`: `--color-*` is declared at `:root` and substitutes its `var(--token-…)` against that element, so a `<body>`-level token override lands after the roles have already resolved light. `.os-dark-theme` is an element-agnostic class selector — the element is the whole mechanism, no CSS change involved.
 >
 > The hand-written `01-foundations/_theme-dark.scss` has been **deleted**, and with it both the `--color-*` role bridge (made redundant by scoping the class to `<html>`) and the old **"KNOWN CSS-API LEAKS"** block. The invariant below is therefore now structurally true rather than aspirational: the shipped theme is nothing but `--token-*` overrides. Do **not** reintroduce a hand-written theme partial to patch a component; add the `--osui-*` knob to the component instead.
 
@@ -156,7 +160,7 @@ Each role knob defaults **through** a `$token-*`, so overriding the token (e.g. 
 
 - **Brand / status / neutral colors** — `--color-primary`, `--color-secondary`, `--color-error`, `--color-warning`, `--color-success`, `--color-info`, `--color-neutral-0..10`. (Also read by TS `GetColorValueFromColorType`.)
 - **Surfaces / text** — `--color-background-{body,surface,header,sidemenu,footer,login}`, `--color-text`.
-- **Radius** — one shape vocabulary `--border-radius-{none,soft,softer,rounded}` (8px=`soft` for controls + flat surfaces, 16px=`softer` for elevated surfaces, 999px=`rounded` for circular). Each resolves `var(--border-radius-default, <own-default>)`, so setting **`--border-radius-default`** at `:root` re-radiuses the whole framework with one override (undefined by default). `none`/`soft`/`rounded` are also read by TS `GetBorderRadiusValueFromShapeType`; `softer` is CSS-only.
+- **Radius — shape tier slots** — `--border-radius-{2xs,xs,sm,md,lg,xl,2xl}` hold the active shape profile (soft-profile defaults on `:root`). Layout utilities `.shape-soft`, `.shape-round`, `.shape-rectangular` remap all tier slots. Components read the tier that matches their category (e.g. controls → `xs`, surfaces → `sm`, accordion → `xl`). Legacy aliases `--border-radius-none`, `--border-radius-soft` (→ `xs`), `--border-radius-rounded` remain for TS `GetBorderRadiusValueFromShapeType`. `--border-radius-softer` is **retired**. Each knob resolves `var(--border-radius-default, <own-default>)`.
 - **App-layout plumbing (NOT part of the theme contract)** — layout sizes `--size-*`, z-index `--layer-*`, and safe areas `--os-safe-area-*` (the **one** retained `--os-` prefix — see §12).
 
 These are intentionally not `--osui-*`: theme-layer roles are app-level knobs an end-user theme overrides once; `--osui-*` is per-component. See `CSS-ARCHITECTURE.md` §3 for the full architecture.
@@ -168,7 +172,7 @@ Flag in review:
 - Hardcoded hex / rgb / rgba where a `$token-*` exists.
 - Re-declaration of genuinely-retired vars (`--font-size-*`, `--shadow-*`, `--border-size-*`). NOTE: `--color-*`, `--space-*`, `--border-radius-*`, `--size-*`, `--layer-*` are **not** retired — they are the framework theme layer (§13).
 - Calls to `get-background-color()` / `get-text-color()` / `get-border-color()`.
-- New rules that touch `.theme-dark` from the component side.
+- New rules that touch `.os-dark-theme` from the component side.
 - Imports of `_*_lib.scss` vendor baselines.
 - Hand-edits of `O11.OutSystemsUI.scss` / `ODC.OutSystemsUI.scss`.
 - Style rules on `08-servicestudio-preview/` files (read-only for runtime code).

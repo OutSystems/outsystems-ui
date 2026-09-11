@@ -39,6 +39,10 @@ $osui-sizes: 'none', 'xs', 's', 'base', 'm', 'l', 'xl', 'xxl';
 $osui-shadow-types: 'none', 'xs', 's', 'm', 'l', 'xl';
 $osui-border-size: 'none', 's', 'm', 'l';
 $osui-border-radius-types: 'none', 'soft', 'rounded', 'circle';
+// Shape tier slots — iterated by 05-useful/_border-radius.scss for `.shape-*`
+// utilities. Profile names are public class suffixes; tiers match the token package.
+$osui-shape-profiles: 'soft', 'round', 'rectangular';
+$osui-shape-tiers: '2xs', 'xs', 'sm', 'md', 'lg', 'xl', '2xl';
 $osui-typography-sizes: 'base', 's', 'xs', 'label';
 $osui-typography-weight: 'light', 'regular', 'semi-bold', 'bold';
 

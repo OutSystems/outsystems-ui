@@ -1,5 +1,5 @@
 @use '../../00-abstract/index' as *;
-@use "../../tokens/variables";
+@use '../../tokens/variables';
 
 /* Patterns - Adaptive - Master Detail */
 ////
@@ -169,7 +169,8 @@
 
 				&.open {
 					transform: translateX(0) translateZ(0);
-					transition: transform variables.$token-transition-time-200 variables.$token-transition-curve-expressive;
+					transition: transform variables.$token-transition-time-200
+						variables.$token-transition-curve-expressive;
 				}
 
 				// Service Studio Preview

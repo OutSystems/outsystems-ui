@@ -10,13 +10,13 @@
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-submenu-items-background: var(--color-background-surface);
 	--osui-submenu-items-border-color: var(--color-border);
-	--osui-submenu-items-border-radius: #{variables.$token-border-radius-300};
+	--osui-submenu-items-border-radius: var(--border-radius-lg, #{variables.$token-shape-soft-lg});
 	--osui-submenu-items-shadow: #{variables.$token-elevation-3};
 	--osui-submenu-item-color: var(--color-text);
 	--osui-submenu-item-font-size: #{variables.$token-font-size-350};
 	// Figma says 21px; the scale's nearest step is 20px.
 	--osui-submenu-item-line-height: #{variables.$token-font-line-height-500};
-	--osui-submenu-item-border-radius: #{variables.$token-border-radius-100};
+	--osui-submenu-item-border-radius: var(--border-radius-none, #{variables.$token-border-radius-0});
 	--osui-submenu-item-selected-background: #{variables.$token-bg-primary-subtle-default};
 	// Named `pressed` (not `active`) because `.active` already means "selected" in this pattern.
 	--osui-submenu-item-pressed-background: #{variables.$token-bg-neutral-subtlest-press};

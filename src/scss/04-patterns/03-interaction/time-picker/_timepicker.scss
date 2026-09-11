@@ -5,7 +5,7 @@
 
 /// Import Flatpickr library styles
 @use 'provider/flatpickr';
-@use "../../../tokens/variables";
+@use '../../../tokens/variables';
 
 ///
 .osui-timepicker {
@@ -13,6 +13,8 @@
 	--osui-timepicker-disabled-background: var(--color-background-input-disabled);
 	--osui-timepicker-disabled-border-color: var(--color-border);
 	--osui-timepicker-disabled-color: var(--color-text-disabled);
+	--osui-timepicker-input-border-radius: var(--border-radius-xs, #{variables.$token-shape-soft-xs});
+	--osui-input-border-radius: var(--osui-timepicker-input-border-radius);
 	// ───────────────────────────────────────────────────────────────────
 
 	input {

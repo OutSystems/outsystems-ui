@@ -12,7 +12,8 @@
 		--osui-dropdown-border-color: var(--color-border-input);
 		--osui-dropdown-border-width: #{variables.$token-border-size-025};
 		--osui-dropdown-color: var(--color-text);
-		--osui-dropdown-border-radius: var(--border-radius-soft);
+		--osui-dropdown-border-radius: var(--border-radius-xs, #{variables.$token-shape-soft-xs});
+		--osui-dropdown-popup-border-radius: var(--border-radius-lg, #{variables.$token-shape-soft-lg});
 		--osui-dropdown-hover-border-color: var(--color-border-input-hover);
 		--osui-dropdown-prompt-color: var(--color-text-subtlest);
 		--osui-dropdown-list-background: var(--color-background-surface);
@@ -86,7 +87,7 @@
 		& > div.dropdown-list {
 			background-color: var(--osui-dropdown-list-background);
 			border: var(--osui-dropdown-border-width) solid var(--osui-dropdown-list-border-color);
-			border-radius: var(--osui-dropdown-border-radius);
+			border-radius: var(--osui-dropdown-popup-border-radius, var(--osui-dropdown-border-radius));
 			box-shadow: var(--osui-dropdown-list-shadow);
 			inset-inline-start: 0 !important;
 			max-height: var(--osui-dropdown-list-max-height);

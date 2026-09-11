@@ -39,10 +39,10 @@ export type CssApiManifest = {
 };
 
 export const CSS_API_MANIFEST: CssApiManifest = {
-	generatedAt: '2026-09-04T11:57:45.760Z',
+	generatedAt: '2026-09-11T07:43:38.138Z',
 	totals: {
-		properties: 545,
-		components: 63,
+		properties: 573,
+		components: 67,
 		categories: 9,
 	},
 	categories: [
@@ -657,10 +657,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-btn-border-radius',
-								default: 'var(--border-radius-soft)',
+								default: 'var(--border-radius-xs, #{$token-shape-soft-xs})',
 								kind: 'border',
 								chain: 'theme-role',
-								hint: 'var(--border-radius-soft)',
+								hint: 'var(--border-radius-xs, #{$token-shape-soft-xs})',
 							},
 							{
 								name: '--osui-btn-border-width',
@@ -810,10 +810,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-button-group-border-radius',
-								default: '#{$token-border-radius-200}',
+								default: 'var(--border-radius-xs, #{$token-shape-soft-xs})',
 								kind: 'border',
-								chain: 'token',
-								hint: '#{$token-border-radius-200}',
+								chain: 'theme-role',
+								hint: 'var(--border-radius-xs, #{$token-shape-soft-xs})',
 							},
 							{
 								name: '--osui-button-group-border-width',
@@ -838,10 +838,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-button-group-container-border-radius',
-								default: '#{$token-border-radius-200}',
+								default: 'var(--border-radius-xs, #{$token-shape-soft-xs})',
 								kind: 'border',
-								chain: 'token',
-								hint: '#{$token-border-radius-200}',
+								chain: 'theme-role',
+								hint: 'var(--border-radius-xs, #{$token-shape-soft-xs})',
 							},
 							{
 								name: '--osui-button-group-container-gap',
@@ -956,10 +956,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-checkbox-border-radius',
-								default: 'var(--border-radius-soft)',
+								default: 'var(--border-radius-xs, #{$token-shape-soft-xs})',
 								kind: 'border',
 								chain: 'theme-role',
-								hint: 'var(--border-radius-soft)',
+								hint: 'var(--border-radius-xs, #{$token-shape-soft-xs})',
 							},
 							{
 								name: '--osui-checkbox-checked-color',
@@ -1037,10 +1037,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-dropdown-border-radius',
-								default: 'var(--border-radius-soft)',
+								default: 'var(--border-radius-xs, #{$token-shape-soft-xs})',
 								kind: 'border',
 								chain: 'theme-role',
-								hint: 'var(--border-radius-soft)',
+								hint: 'var(--border-radius-xs, #{$token-shape-soft-xs})',
 							},
 							{
 								name: '--osui-dropdown-border-width',
@@ -1106,6 +1106,13 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 								hint: '#{$token-elevation-3}',
 							},
 							{
+								name: '--osui-dropdown-popup-border-radius',
+								default: 'var(--border-radius-lg, #{$token-shape-soft-lg})',
+								kind: 'border',
+								chain: 'theme-role',
+								hint: 'var(--border-radius-lg, #{$token-shape-soft-lg})',
+							},
+							{
 								name: '--osui-dropdown-prompt-color',
 								default: 'var(--color-text-subtlest)',
 								kind: 'color',
@@ -1134,10 +1141,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-feedback-message-border-radius',
-								default: 'var(--border-radius-soft)',
+								default: 'var(--border-radius-xl, #{$token-shape-soft-xl})',
 								kind: 'border',
 								chain: 'theme-role',
-								hint: 'var(--border-radius-soft)',
+								hint: 'var(--border-radius-xl, #{$token-shape-soft-xl})',
 							},
 							{
 								name: '--osui-feedback-message-box-shadow',
@@ -1279,10 +1286,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-input-border-radius',
-								default: 'var(--border-radius-soft)',
+								default: 'var(--border-radius-xs, #{$token-shape-soft-xs})',
 								kind: 'border',
 								chain: 'theme-role',
-								hint: 'var(--border-radius-soft)',
+								hint: 'var(--border-radius-xs, #{$token-shape-soft-xs})',
 							},
 							{
 								name: '--osui-input-color',
@@ -1318,6 +1325,13 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 								kind: 'color',
 								chain: 'theme-role',
 								hint: 'var(--color-border-input-hover)',
+							},
+							{
+								name: '--osui-textarea-border-radius',
+								default: 'var(--border-radius-xl, #{$token-shape-soft-xl})',
+								kind: 'color',
+								chain: 'theme-role',
+								hint: 'var(--border-radius-xl, #{$token-shape-soft-xl})',
 							},
 						],
 					},
@@ -1396,10 +1410,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-popover-border-radius',
-								default: 'var(--border-radius-soft)',
+								default: 'var(--border-radius-xl, #{$token-shape-soft-xl})',
 								kind: 'border',
 								chain: 'theme-role',
-								hint: 'var(--border-radius-soft)',
+								hint: 'var(--border-radius-xl, #{$token-shape-soft-xl})',
 							},
 							{
 								name: '--osui-popover-color',
@@ -1451,10 +1465,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-popup-border-radius',
-								default: 'var(--border-radius-soft)',
+								default: 'var(--border-radius-xl, #{$token-shape-soft-xl})',
 								kind: 'border',
 								chain: 'theme-role',
-								hint: 'var(--border-radius-soft)',
+								hint: 'var(--border-radius-xl, #{$token-shape-soft-xl})',
 							},
 							{
 								name: '--osui-popup-border-width',
@@ -1665,10 +1679,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-table-border-radius',
-								default: 'var(--border-radius-soft)',
+								default: 'var(--border-radius-lg, #{$token-shape-soft-lg})',
 								kind: 'border',
 								chain: 'theme-role',
-								hint: 'var(--border-radius-soft)',
+								hint: 'var(--border-radius-lg, #{$token-shape-soft-lg})',
 							},
 							{
 								name: '--osui-table-cell-background',
@@ -1748,10 +1762,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-upload-border-radius',
-								default: 'var(--border-radius-soft)',
+								default: 'var(--border-radius-xl, #{$token-shape-soft-xl})',
 								kind: 'border',
 								chain: 'theme-role',
-								hint: 'var(--border-radius-soft)',
+								hint: 'var(--border-radius-xl, #{$token-shape-soft-xl})',
 							},
 							{
 								name: '--osui-upload-border-width',
@@ -1773,6 +1787,13 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 								kind: 'color',
 								chain: 'token',
 								hint: '#{$token-icon-subtlest}',
+							},
+							{
+								name: '--osui-upload-image-border-radius',
+								default: 'var(--border-radius-lg, #{$token-shape-soft-lg})',
+								kind: 'border',
+								chain: 'theme-role',
+								hint: 'var(--border-radius-lg, #{$token-shape-soft-lg})',
 							},
 							{
 								name: '--osui-upload-padding',
@@ -1896,6 +1917,26 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 			order: 3,
 			components: [
 				{
+					name: 'Accordion',
+					slug: 'patterns-content-accordion',
+					file: 'src/scss/04-patterns/02-content/accordion/_accordion.scss',
+					storyId: 'patterns-content-accordion--default',
+					variants: [
+						{
+							selector: '.osui-accordion',
+							properties: [
+							{
+								name: '--osui-accordion-border-radius',
+								default: 'var(--border-radius-xl, #{$token-shape-soft-xl})',
+								kind: 'border',
+								chain: 'theme-role',
+								hint: 'var(--border-radius-xl, #{$token-shape-soft-xl})',
+							},
+						],
+					},
+				],
+				},
+				{
 					name: 'Accordion Item',
 					slug: 'patterns-content-accordion-item',
 					file: 'src/scss/04-patterns/02-content/accordion-item/_accordion-item.scss',
@@ -2003,10 +2044,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-alert-border-radius',
-								default: '#{$token-border-radius-300}',
+								default: 'var(--border-radius-sm, #{$token-shape-soft-sm})',
 								kind: 'border',
-								chain: 'token',
-								hint: '#{$token-border-radius-300}',
+								chain: 'theme-role',
+								hint: 'var(--border-radius-sm, #{$token-shape-soft-sm})',
 							},
 							{
 								name: '--osui-alert-color',
@@ -2085,10 +2126,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-card-border-radius',
-								default: 'var(--border-radius-softer)',
+								default: 'var(--border-radius-xl, #{$token-shape-soft-xl})',
 								kind: 'border',
 								chain: 'theme-role',
-								hint: 'var(--border-radius-softer)',
+								hint: 'var(--border-radius-xl, #{$token-shape-soft-xl})',
 							},
 							{
 								name: '--osui-card-border-width',
@@ -2133,10 +2174,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-card-background-border-radius',
-								default: 'var(--border-radius-softer)',
+								default: 'var(--border-radius-xl, #{$token-shape-soft-xl})',
 								kind: 'color',
 								chain: 'theme-role',
-								hint: 'var(--border-radius-softer)',
+								hint: 'var(--border-radius-xl, #{$token-shape-soft-xl})',
 							},
 							{
 								name: '--osui-card-background-border-width',
@@ -2191,6 +2232,13 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 								kind: 'color',
 								chain: 'theme-role',
 								hint: 'var(--color-background-surface)',
+							},
+							{
+								name: '--osui-carousel-arrow-border-radius',
+								default: 'var(--border-radius-2xs, #{$token-shape-soft-2xs})',
+								kind: 'border',
+								chain: 'theme-role',
+								hint: 'var(--border-radius-2xs, #{$token-shape-soft-2xs})',
 							},
 							{
 								name: '--osui-carousel-arrow-disabled-overlay',
@@ -2263,10 +2311,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-chat-message-border-radius',
-								default: '#{$token-border-radius-200}',
+								default: 'var(--border-radius-lg, #{$token-shape-soft-lg})',
 								kind: 'border',
-								chain: 'token',
-								hint: '#{$token-border-radius-200}',
+								chain: 'theme-role',
+								hint: 'var(--border-radius-lg, #{$token-shape-soft-lg})',
 							},
 							{
 								name: '--osui-chat-message-sent-background',
@@ -2670,10 +2718,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-action-sheet-border-radius',
-								default: '#{$token-border-radius-200}',
+								default: 'var(--border-radius-lg, #{$token-shape-soft-lg})',
 								kind: 'border',
-								chain: 'token',
-								hint: '#{$token-border-radius-200}',
+								chain: 'theme-role',
+								hint: 'var(--border-radius-lg, #{$token-shape-soft-lg})',
 							},
 							{
 								name: '--osui-action-sheet-cancel-color',
@@ -2873,6 +2921,13 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 								hint: 'var(--color-background-surface)',
 							},
 							{
+								name: '--osui-balloon-border-radius',
+								default: 'var(--border-radius-sm, #{$token-shape-soft-sm})',
+								kind: 'border',
+								chain: 'theme-role',
+								hint: 'var(--border-radius-sm, #{$token-shape-soft-sm})',
+							},
+							{
 								name: '--osui-balloon-position',
 								default: 'fixed',
 								kind: 'other',
@@ -2940,6 +2995,20 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 								kind: 'color',
 								chain: 'theme-role',
 								hint: 'var(--color-text-disabled)',
+							},
+							{
+								name: '--osui-datepicker-input-border-radius',
+								default: 'var(--border-radius-xs, #{$token-shape-soft-xs})',
+								kind: 'border',
+								chain: 'theme-role',
+								hint: 'var(--border-radius-xs, #{$token-shape-soft-xs})',
+							},
+							{
+								name: '--osui-input-border-radius',
+								default: 'var(--osui-datepicker-input-border-radius)',
+								kind: 'border',
+								chain: 'theme-role',
+								hint: 'var(--osui-datepicker-input-border-radius)',
 							},
 						],
 					},
@@ -3018,10 +3087,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-dropdown-border-radius',
-								default: 'var(--border-radius-soft)',
+								default: 'var(--border-radius-xs, #{$token-shape-soft-xs})',
 								kind: 'border',
 								chain: 'theme-role',
-								hint: 'var(--border-radius-soft)',
+								hint: 'var(--border-radius-xs, #{$token-shape-soft-xs})',
 							},
 							{
 								name: '--osui-dropdown-focus-border-color',
@@ -3065,18 +3134,18 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							selector: '.osui-dropdown-serverside',
 							properties: [
 							{
+								name: '--osui-balloon-border-radius',
+								default: 'var(--osui-dropdown-ss-popup-border-radius)',
+								kind: 'border',
+								chain: 'theme-role',
+								hint: 'var(--osui-dropdown-ss-popup-border-radius)',
+							},
+							{
 								name: '--osui-balloon-shadow',
 								default: '#{$token-elevation-3}',
 								kind: 'color',
 								chain: 'token',
 								hint: '#{$token-elevation-3}',
-							},
-							{
-								name: '--osui-balloon-shape',
-								default: 'var(--border-radius-soft)',
-								kind: 'other',
-								chain: 'theme-role',
-								hint: 'var(--border-radius-soft)',
 							},
 							{
 								name: '--osui-dropdown-ss-arrow-color',
@@ -3115,10 +3184,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-dropdown-ss-border-radius',
-								default: 'var(--border-radius-soft)',
+								default: 'var(--border-radius-xs, #{$token-shape-soft-xs})',
 								kind: 'border',
 								chain: 'theme-role',
-								hint: 'var(--border-radius-soft)',
+								hint: 'var(--border-radius-xs, #{$token-shape-soft-xs})',
 							},
 							{
 								name: '--osui-dropdown-ss-color',
@@ -3170,6 +3239,13 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 								hint: '170px',
 							},
 							{
+								name: '--osui-dropdown-ss-popup-border-radius',
+								default: 'var(--border-radius-lg, #{$token-shape-soft-lg})',
+								kind: 'border',
+								chain: 'theme-role',
+								hint: 'var(--border-radius-lg, #{$token-shape-soft-lg})',
+							},
+							{
 								name: '--osui-dropdown-ss-prompt-color',
 								default: 'var(--color-text-subtlest)',
 								kind: 'color',
@@ -3216,6 +3292,37 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 						],
 					},
+						{
+							selector: '.osui-dropdown-serverside__balloon.osui-balloon',
+							properties: [
+							{
+								name: '--osui-balloon-border-radius',
+								default: 'var(--osui-dropdown-ss-popup-border-radius)',
+								kind: 'border',
+								chain: 'theme-role',
+								hint: 'var(--osui-dropdown-ss-popup-border-radius)',
+							},
+							{
+								name: '--osui-dropdown-ss-popup-border-radius',
+								default: 'var(--border-radius-lg, #{$token-shape-soft-lg})',
+								kind: 'border',
+								chain: 'theme-role',
+								hint: 'var(--border-radius-lg, #{$token-shape-soft-lg})',
+							},
+						],
+					},
+						{
+							selector: '.osui-dropdown-serverside__balloon-container',
+							properties: [
+							{
+								name: '--osui-dropdown-ss-popup-border-radius',
+								default: 'var(--border-radius-lg, #{$token-shape-soft-lg})',
+								kind: 'border',
+								chain: 'theme-role',
+								hint: 'var(--border-radius-lg, #{$token-shape-soft-lg})',
+							},
+						],
+					},
 				],
 				},
 				{
@@ -3257,10 +3364,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-dropdown-border-radius',
-								default: 'var(--border-radius-soft)',
+								default: 'var(--border-radius-xs, #{$token-shape-soft-xs})',
 								kind: 'border',
 								chain: 'theme-role',
-								hint: 'var(--border-radius-soft)',
+								hint: 'var(--border-radius-xs, #{$token-shape-soft-xs})',
 							},
 							{
 								name: '--osui-dropdown-focus-border-color',
@@ -3376,6 +3483,13 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							selector: '.osui-datepicker-calendar',
 							properties: [
 							{
+								name: '--osui-datepicker-border-radius',
+								default: 'var(--border-radius-lg, #{$token-shape-soft-lg})',
+								kind: 'border',
+								chain: 'theme-role',
+								hint: 'var(--border-radius-lg, #{$token-shape-soft-lg})',
+							},
+							{
 								name: '--osui-datepicker-time-background',
 								default: 'var(--osui-input-background, var(--color-background-input))',
 								kind: 'color',
@@ -3391,10 +3505,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-datepicker-time-border-radius',
-								default: '#{$token-border-radius-100}',
+								default: 'var(--border-radius-xs, #{$token-shape-soft-xs})',
 								kind: 'border',
-								chain: 'token',
-								hint: '#{$token-border-radius-100}',
+								chain: 'theme-role',
+								hint: 'var(--border-radius-xs, #{$token-shape-soft-xs})',
 							},
 							{
 								name: '--osui-datepicker-time-color',
@@ -3441,6 +3555,46 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 				],
 				},
 				{
+					name: 'Flatpickr',
+					slug: 'patterns-interaction-flatpickr',
+					file: 'src/scss/04-patterns/03-interaction/month-picker/provider/_flatpickr.scss',
+					storyId: null,
+					variants: [
+						{
+							selector: '.osui-monthpicker__dropdown',
+							properties: [
+							{
+								name: '--osui-monthpicker-popup-border-radius',
+								default: 'var(--border-radius-lg, #{$token-shape-soft-lg})',
+								kind: 'border',
+								chain: 'theme-role',
+								hint: 'var(--border-radius-lg, #{$token-shape-soft-lg})',
+							},
+						],
+					},
+				],
+				},
+				{
+					name: 'Flatpickr',
+					slug: 'patterns-interaction-flatpickr',
+					file: 'src/scss/04-patterns/03-interaction/time-picker/provider/_flatpickr.scss',
+					storyId: null,
+					variants: [
+						{
+							selector: '.osui-timepicker__dropdown',
+							properties: [
+							{
+								name: '--osui-timepicker-popup-border-radius',
+								default: 'var(--border-radius-lg, #{$token-shape-soft-lg})',
+								kind: 'border',
+								chain: 'theme-role',
+								hint: 'var(--border-radius-lg, #{$token-shape-soft-lg})',
+							},
+						],
+					},
+				],
+				},
+				{
 					name: 'Floating Actions',
 					slug: 'patterns-interaction-floating-actions',
 					file: 'src/scss/04-patterns/03-interaction/_floating-actions.scss',
@@ -3469,6 +3623,13 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 								kind: 'color',
 								chain: 'theme-role',
 								hint: 'var(--color-primary-selected)',
+							},
+							{
+								name: '--osui-floating-actions-button-border-radius',
+								default: 'var(--border-radius-md, #{$token-shape-soft-md})',
+								kind: 'border',
+								chain: 'theme-role',
+								hint: 'var(--border-radius-md, #{$token-shape-soft-md})',
 							},
 							{
 								name: '--osui-floating-actions-button-color',
@@ -3504,6 +3665,13 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 								kind: 'color',
 								chain: 'token',
 								hint: '#{$token-bg-neutral-subtlest-press}',
+							},
+							{
+								name: '--osui-floating-actions-item-border-radius',
+								default: 'var(--border-radius-md, #{$token-shape-soft-md})',
+								kind: 'border',
+								chain: 'theme-role',
+								hint: 'var(--border-radius-md, #{$token-shape-soft-md})',
 							},
 							{
 								name: '--osui-floating-actions-item-color',
@@ -3567,6 +3735,13 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							selector: '.osui-monthpicker',
 							properties: [
 							{
+								name: '--osui-input-border-radius',
+								default: 'var(--osui-monthpicker-input-border-radius)',
+								kind: 'border',
+								chain: 'theme-role',
+								hint: 'var(--osui-monthpicker-input-border-radius)',
+							},
+							{
 								name: '--osui-monthpicker-disabled-background',
 								default: 'var(--color-background-input-disabled)',
 								kind: 'color',
@@ -3586,6 +3761,13 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 								kind: 'color',
 								chain: 'theme-role',
 								hint: 'var(--color-text-disabled)',
+							},
+							{
+								name: '--osui-monthpicker-input-border-radius',
+								default: 'var(--border-radius-xs, #{$token-shape-soft-xs})',
+								kind: 'border',
+								chain: 'theme-role',
+								hint: 'var(--border-radius-xs, #{$token-shape-soft-xs})',
 							},
 						],
 					},
@@ -3609,10 +3791,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-notification-border-radius',
-								default: '#{$token-border-radius-100}',
+								default: 'var(--border-radius-lg, #{$token-shape-soft-lg})',
 								kind: 'border',
-								chain: 'token',
-								hint: '#{$token-border-radius-100}',
+								chain: 'theme-role',
+								hint: 'var(--border-radius-lg, #{$token-shape-soft-lg})',
 							},
 							{
 								name: '--osui-notification-color',
@@ -3682,6 +3864,13 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 								hint: 'var(--osui-overflow-menu-background)',
 							},
 							{
+								name: '--osui-balloon-border-radius',
+								default: 'var(--osui-overflow-menu-border-radius)',
+								kind: 'border',
+								chain: 'theme-role',
+								hint: 'var(--osui-overflow-menu-border-radius)',
+							},
+							{
 								name: '--osui-balloon-shadow',
 								default: 'var(--osui-overflow-menu-shadow)',
 								kind: 'color',
@@ -3731,6 +3920,13 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 								hint: 'var(--color-background-surface)',
 							},
 							{
+								name: '--osui-overflow-menu-border-radius',
+								default: 'var(--border-radius-lg, #{$token-shape-soft-lg})',
+								kind: 'border',
+								chain: 'theme-role',
+								hint: 'var(--border-radius-lg, #{$token-shape-soft-lg})',
+							},
+							{
 								name: '--osui-overflow-menu-color',
 								default: 'var(--color-text)',
 								kind: 'color',
@@ -3757,6 +3953,25 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 								kind: 'other',
 								chain: 'token',
 								hint: '#{$token-bg-neutral-subtle-default}',
+							},
+						],
+					},
+						{
+							selector: '.osui-overflow-menu__balloon.osui-balloon',
+							properties: [
+							{
+								name: '--osui-balloon-border-radius',
+								default: 'var(--osui-overflow-menu-border-radius)',
+								kind: 'border',
+								chain: 'theme-role',
+								hint: 'var(--osui-overflow-menu-border-radius)',
+							},
+							{
+								name: '--osui-overflow-menu-border-radius',
+								default: 'var(--border-radius-lg, #{$token-shape-soft-lg})',
+								kind: 'border',
+								chain: 'theme-role',
+								hint: 'var(--border-radius-lg, #{$token-shape-soft-lg})',
 							},
 						],
 					},
@@ -3889,6 +4104,13 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							selector: '.osui-timepicker',
 							properties: [
 							{
+								name: '--osui-input-border-radius',
+								default: 'var(--osui-timepicker-input-border-radius)',
+								kind: 'border',
+								chain: 'theme-role',
+								hint: 'var(--osui-timepicker-input-border-radius)',
+							},
+							{
 								name: '--osui-timepicker-disabled-background',
 								default: 'var(--color-background-input-disabled)',
 								kind: 'color',
@@ -3908,6 +4130,13 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 								kind: 'color',
 								chain: 'theme-role',
 								hint: 'var(--color-text-disabled)',
+							},
+							{
+								name: '--osui-timepicker-input-border-radius',
+								default: 'var(--border-radius-xs, #{$token-shape-soft-xs})',
+								kind: 'border',
+								chain: 'theme-role',
+								hint: 'var(--border-radius-xs, #{$token-shape-soft-xs})',
 							},
 						],
 					},
@@ -3952,10 +4181,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-tooltip-border-radius',
-								default: '#{$token-border-radius-200}',
+								default: 'var(--border-radius-lg, #{$token-shape-soft-lg})',
 								kind: 'border',
-								chain: 'token',
-								hint: '#{$token-border-radius-200}',
+								chain: 'theme-role',
+								hint: 'var(--border-radius-lg, #{$token-shape-soft-lg})',
 							},
 							{
 								name: '--osui-tooltip-color',
@@ -3998,6 +4227,38 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 								kind: 'color',
 								chain: 'token',
 								hint: '#{$token-elevation-3}',
+							},
+						],
+					},
+						{
+							selector: '.osui-tooltip__balloon-wrapper.osui-balloon',
+							properties: [
+							{
+								name: '--osui-tooltip-border-radius',
+								default: 'var(--border-radius-lg, #{$token-shape-soft-lg})',
+								kind: 'border',
+								chain: 'theme-role',
+								hint: 'var(--border-radius-lg, #{$token-shape-soft-lg})',
+							},
+						],
+					},
+				],
+				},
+				{
+					name: 'Virtualselect',
+					slug: 'patterns-interaction-virtualselect',
+					file: 'src/scss/04-patterns/03-interaction/dropdown/provider/_virtualselect.scss',
+					storyId: null,
+					variants: [
+						{
+							selector: '.vscomp-dropbox',
+							properties: [
+							{
+								name: '--osui-dropdown-popup-border-radius',
+								default: 'var(--border-radius-lg, #{$token-shape-soft-lg})',
+								kind: 'border',
+								chain: 'theme-role',
+								hint: 'var(--border-radius-lg, #{$token-shape-soft-lg})',
 							},
 						],
 					},
@@ -4128,6 +4389,13 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 								kind: 'color',
 								chain: 'other',
 								hint: 'transparent',
+							},
+							{
+								name: '--osui-pagination-button-border-radius',
+								default: 'var(--border-radius-xl, #{$token-shape-soft-xl})',
+								kind: 'border',
+								chain: 'theme-role',
+								hint: 'var(--border-radius-xl, #{$token-shape-soft-xl})',
 							},
 							{
 								name: '--osui-pagination-button-border-width',
@@ -4350,10 +4618,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-submenu-item-border-radius',
-								default: '#{$token-border-radius-100}',
+								default: 'var(--border-radius-none, #{$token-border-radius-0})',
 								kind: 'border',
-								chain: 'token',
-								hint: '#{$token-border-radius-100}',
+								chain: 'theme-role',
+								hint: 'var(--border-radius-none, #{$token-border-radius-0})',
 							},
 							{
 								name: '--osui-submenu-item-color',
@@ -4413,10 +4681,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-submenu-items-border-radius',
-								default: '#{$token-border-radius-300}',
+								default: 'var(--border-radius-lg, #{$token-shape-soft-lg})',
 								kind: 'border',
-								chain: 'token',
-								hint: '#{$token-border-radius-300}',
+								chain: 'theme-role',
+								hint: 'var(--border-radius-lg, #{$token-shape-soft-lg})',
 							},
 							{
 								name: '--osui-submenu-items-shadow',
@@ -4473,10 +4741,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-tabs-header-item-border-radius',
-								default: '#{$token-border-radius-100} #{$token-border-radius-100} 0 0',
+								default: 'var(--border-radius-lg, #{$token-shape-soft-lg}) var(--border-radius-lg, #{$token-shape-soft-lg}) 0 0',
 								kind: 'border',
-								chain: 'token',
-								hint: '#{$token-border-radius-100} #{$token-border-radius-100} 0 0',
+								chain: 'theme-role',
+								hint: 'var(--border-radius-lg, #{$token-shape-soft-lg}) var(--border-radius-lg, #{$token-shape-soft-lg}) 0 0',
 							},
 							{
 								name: '--osui-tabs-header-item-color',

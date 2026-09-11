@@ -2,6 +2,11 @@
 
 // TimePicker
 .osui-timepicker__dropdown {
+	--osui-timepicker-popup-border-radius: var(--border-radius-lg, #{variables.$token-shape-soft-lg});
+
+	&.flatpickr-calendar {
+		border-radius: var(--osui-timepicker-popup-border-radius);
+	}
 	.numInputWrapper {
 		.numInput {
 			color: var(--color-text);
