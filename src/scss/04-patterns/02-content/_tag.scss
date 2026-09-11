@@ -149,7 +149,7 @@ $osui-tag-lightest-text-colors: (
 
 		&-secondary {
 			background-color: variables.$token-bg-neutral-base-default;
-			--osui-tag-color: var(--color-primary);
+			--osui-tag-color: #{variables.$token-text-primary};
 		}
 
 		&-primary,
