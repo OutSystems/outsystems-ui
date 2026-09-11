@@ -7,26 +7,25 @@
 
 ///
 .timeline {
-	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-timeline-content-gap: #{variables.$token-space-100};
-	--osui-timeline-content-spacing: #{variables.$token-space-600};
-	--osui-timeline-font-size: #{variables.$token-font-size-350};
-	--osui-timeline-gap: #{variables.$token-space-200};
-	--osui-timeline-gutter: #{variables.$token-space-400};
-	--osui-timeline-icon-color: var(--color-text-inverse);
-	--osui-timeline-icon-size: #{variables.$token-scale-600};
-	--osui-timeline-line-color: var(--color-border);
-	// Figma says 21px; the scale's nearest step is 20px.
-	--osui-timeline-line-height: #{variables.$token-font-line-height-500};
-	--osui-timeline-text-color: var(--color-text-subtlest);
-	--osui-timeline-title-color: var(--color-text);
-	--osui-timeline-title-font-weight: #{variables.$token-font-weight-medium};
-	// ───────────────────────────────────────────────────────────────────
-
-	display: flex;
-	flex-direction: column;
-
+	// CSS API lives on the item: the platform TimelineItem block has no `.timeline` wrapper.
 	&-item {
+		// ─── Component CSS API ─────────────────────────────────────────────
+		--osui-timeline-content-gap: #{variables.$token-space-100};
+		--osui-timeline-content-spacing: #{variables.$token-space-600};
+		--osui-timeline-font-size: #{variables.$token-font-size-350};
+		--osui-timeline-gap: #{variables.$token-space-200};
+		--osui-timeline-gutter: #{variables.$token-space-400};
+		--osui-timeline-icon-color: var(--color-text-inverse);
+		--osui-timeline-icon-size: #{variables.$token-scale-600};
+		--osui-timeline-icon-background-color: #{variables.$token-bg-neutral-bold-default};
+		--osui-timeline-line-color: var(--color-border);
+		// Figma says 21px; the scale's nearest step is 20px.
+		--osui-timeline-line-height: #{variables.$token-font-line-height-500};
+		--osui-timeline-text-color: var(--color-text-subtlest);
+		--osui-timeline-title-color: var(--color-text);
+		--osui-timeline-title-font-weight: #{variables.$token-font-weight-medium};
+		// ───────────────────────────────────────────────────────────────────
+
 		display: flex;
 		font-size: var(--osui-timeline-font-size);
 		justify-content: space-between;
@@ -72,7 +71,8 @@
 			margin-block: variables.$token-space-0;
 			margin-inline: var(--osui-timeline-gutter);
 			text-align: center;
-			width: var(--osui-timeline-icon-size);
+			width: var(--osui-timeline-icon-size, #{variables.$token-scale-600});
+			background-color: var(--osui-timeline-icon-background-color);
 
 			&:empty {
 				height: variables.$token-scale-200; // 8px dot
@@ -93,7 +93,7 @@
 		white-space: nowrap;
 	}
 
-	.timeline-item .timeline-content .timeline-content-inner {
+	&-content-inner {
 		margin: 0;
 		padding: 0;
 	}
