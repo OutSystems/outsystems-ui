@@ -4,6 +4,14 @@ import { BorderRadius } from '../token-data/borders';
 import { FdSection, FoundationsShell } from './FoundationsShell';
 import { VarStack } from './VarStack';
 
+/** Row shape of the generated `BorderRadius` table in ../token-data/borders. */
+type BorderRadiusRow = {
+	token: string;
+	css_variable: string;
+	utility_class: string;
+	value: string;
+};
+
 /** Shape tier slots — soft-profile defaults on :root. `.shape-*` utilities remap all tiers. */
 const SHAPE_TIER_SLOTS = [
 	{ themeVariable: '--border-radius-2xs', label: '2xs', usage: 'Small controls — Tag, Avatar (soft = 4px).' },
@@ -47,8 +55,12 @@ function ShapeBox({ radius, className = '' }: { radius: string; className?: stri
 
 export function ShapePage() {
 	return (
-		<FoundationsShell title="Shape" subtitle="Border radius — tier slots and layout profiles">
-			<DocsNote>
+		<FoundationsShell
+			eyebrow="Design system · Shape"
+			title="Shape"
+			lede="Border radius — tier slots and layout profiles"
+		>
+			<DocsNote title="How shape works">
 				Components read a <strong>tier slot</strong> (<code>--border-radius-xs</code>,{' '}
 				<code>--border-radius-sm</code>, …). Layout utilities <code>.shape-soft</code>,{' '}
 				<code>.shape-round</code>, <code>.shape-rectangular</code> remap all tiers for the active
@@ -70,36 +82,36 @@ export function ShapePage() {
 					})}
 				</div>
 				<VarStack
-					rows={SHAPE_TIER_SLOTS.map((s) => ({
-						name: s.themeVariable,
-						description: s.usage,
+					lines={SHAPE_TIER_SLOTS.map((s) => ({
+						label: s.usage,
+						value: s.themeVariable,
 					}))}
 				/>
 			</FdSection>
 
 			<FdSection title="Layout profiles (.shape-*)">
 				<VarStack
-					rows={SHAPE_PROFILE_UTILITIES.map((s) => ({
-						name: `.${s.className}`,
-						description: s.usage,
+					lines={SHAPE_PROFILE_UTILITIES.map((s) => ({
+						label: s.usage,
+						value: `.${s.className}`,
 					}))}
 				/>
 			</FdSection>
 
 			<FdSection title="Legacy aliases">
 				<VarStack
-					rows={LEGACY_SHAPE_ALIASES.map((s) => ({
-						name: s.themeVariable,
-						description: s.usage,
+					lines={LEGACY_SHAPE_ALIASES.map((s) => ({
+						label: s.usage,
+						value: s.themeVariable,
 					}))}
 				/>
 			</FdSection>
 
 			<FdSection title="Primitive border-radius tokens">
 				<VarStack
-					rows={(BorderRadius as BorderRadiusRow[]).map((row) => ({
-						name: row.css_variable,
-						description: `${row.value} — ${row.utility_class}`,
+					lines={(BorderRadius as BorderRadiusRow[]).map((row) => ({
+						label: `${row.value} — ${row.utility_class}`,
+						value: row.css_variable,
 					}))}
 				/>
 			</FdSection>
