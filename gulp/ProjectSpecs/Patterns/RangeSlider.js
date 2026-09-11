@@ -3,7 +3,7 @@
 **/
 const patternInfo = {
     "codeName": "RangeSlider",
-    "scss": "../scripts/OSFramework/OSUI/Pattern/RangeSlider/scss/rangeslider",
+    "scss": "../scss/04-patterns/03-interaction/range-slider/rangeslider",
     "section": "Interaction",
 
     "assets": [

@@ -155,10 +155,7 @@ declare global {
 	};
 
 	type ProviderConfigs =
-		| RangeSliderProviderConfigs
-		| CarouselProviderConfigs
-		| DatePickerProviderConfigs
-		| VirtualSelect;
+		RangeSliderProviderConfigs | CarouselProviderConfigs | DatePickerProviderConfigs | VirtualSelect;
 	// ---------------------------------------------------------------------------
 
 	// RangeSlider ---------------------------------------------------------------

@@ -1,0 +1,995 @@
+/* App-wide dark mode — `html.sb-app-dark` in preview + `.docs-dark` on custom page roots. */
+
+@mixin dark-page($root) {
+  html.sb-app-dark #{$root},
+  #{$root}.docs-dark {
+    @content;
+  }
+}
+
+@mixin dark-docs-has($selector) {
+  html.sb-app-dark .sbdocs-wrapper:has(#{$selector}) {
+    @content;
+  }
+}
+
+html.sb-app-dark {
+  --docs-bg: #141414;
+  --docs-surface: #1c1c1c;
+  --docs-surface-2: #242424;
+  --docs-border: #333333;
+  --docs-border-subtle: #2a2a2a;
+  --docs-ink: #ededed;
+  --docs-ink-2: #c8c8c8;
+  --docs-ink-3: #9a9a9a;
+  --docs-primary-100: rgba(105, 134, 242, 0.16);
+  --docs-primary-200: rgba(105, 134, 242, 0.24);
+  --docs-primary-700: #7cb3ff;
+  --docs-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.28), 0 1px 3px rgba(0, 0, 0, 0.18);
+  --docs-shadow-md: 0 8px 24px rgba(0, 0, 0, 0.32);
+  --docs-shadow-lg: 0 18px 40px -12px rgba(0, 0, 0, 0.45);
+}
+
+/* ─── Generic Storybook docs (CSS API Reference, etc.) ─── */
+html.sb-app-dark .sbdocs-wrapper {
+  background: var(--docs-bg) !important;
+  color: var(--docs-ink);
+}
+
+html.sb-app-dark .sbdocs-wrapper .sbdocs,
+html.sb-app-dark .sbdocs-wrapper .sbdocs-content {
+  background: var(--docs-bg);
+  color: var(--docs-ink);
+}
+
+html.sb-app-dark .sbdocs-wrapper :is(h1, h2, h3, h4, h5, h6, p, li, td, th, label, span) {
+  color: var(--docs-ink);
+}
+
+html.sb-app-dark .sbdocs-wrapper a {
+  color: var(--docs-primary-700);
+}
+
+html.sb-app-dark .sbdocs-wrapper code:not(pre code):not(.ca-hop-form) {
+  background: var(--docs-surface-2);
+  color: var(--docs-ink-2);
+  border: 1px solid var(--docs-border-subtle);
+}
+
+html.sb-app-dark .sbdocs-wrapper pre {
+  background: #12131a !important;
+  border: 1px solid var(--docs-border);
+}
+
+html.sb-app-dark .sbdocs-wrapper table.docs-table {
+  box-shadow: none;
+  border: 1px solid var(--docs-border);
+}
+
+html.sb-app-dark .sbdocs-wrapper table.docs-table thead {
+  background: var(--docs-surface-2) !important;
+}
+
+html.sb-app-dark .sbdocs-wrapper table.docs-table tbody tr:nth-of-type(2n) {
+  background: var(--docs-surface) !important;
+}
+
+html.sb-app-dark .sbdocs-wrapper table.docs-table :is(.variable, .variable_heading) {
+  background-color: var(--docs-surface-2) !important;
+  border-color: var(--docs-border) !important;
+  color: var(--docs-ink-2) !important;
+}
+
+html.sb-app-dark .sbdocs-wrapper .index-nav .links a {
+  color: var(--docs-ink-2) !important;
+}
+
+html.sb-app-dark .sbdocs-wrapper .index-nav .links a:hover,
+html.sb-app-dark .sbdocs-wrapper .index-nav .links a.selected {
+  background-color: var(--docs-surface-2) !important;
+  color: var(--docs-ink) !important;
+}
+
+html.sb-app-dark .sbdocs-wrapper .divider {
+  border-color: var(--docs-border) !important;
+}
+
+/* Full-bleed custom doc pages — beat per-page `background: #fff` */
+@include dark-docs-has(".osui-welcome") {
+  background: var(--docs-bg) !important;
+}
+
+@include dark-docs-has(".osui-getting-started") {
+  background: var(--docs-bg) !important;
+}
+
+@include dark-docs-has(".osui-component-library") {
+  background: var(--docs-bg) !important;
+}
+
+@include dark-docs-has(".osui-css-architecture") {
+  background: var(--docs-bg) !important;
+}
+
+@include dark-docs-has(".osui-css-api-reference") {
+  background: var(--docs-bg) !important;
+}
+
+@include dark-docs-has(".osui-theme-editor") {
+  background: var(--docs-bg) !important;
+}
+
+@include dark-docs-has(".osui-foundations") {
+  background: var(--docs-bg) !important;
+}
+
+.sbdocs-wrapper:has(.docs-dark) {
+  background: var(--docs-bg) !important;
+}
+
+/* ─── Welcome + Component Library tokens ─── */
+@include dark-page(".osui-welcome") {
+  --w-primary-100: var(--docs-primary-100);
+  --w-primary-200: var(--docs-primary-200);
+  --w-primary-400: #5a7ae8;
+  --w-primary-600: #6986f2;
+  --w-primary-700: var(--docs-primary-700);
+  --w-n-0: var(--docs-surface);
+  --w-n-100: var(--docs-surface);
+  --w-n-200: var(--docs-surface-2);
+  --w-n-300: var(--docs-border);
+  --w-n-400: #404040;
+  --w-n-500: #525252;
+  --w-n-600: #737373;
+  --w-n-700: #9a9a9a;
+  --w-ink: var(--docs-ink);
+  --w-ink-2: var(--docs-ink-2);
+  --w-ink-3: var(--docs-ink-3);
+  --w-shadow-sm: var(--docs-shadow-sm);
+  --w-shadow-md: var(--docs-shadow-md);
+  --w-shadow-lg: var(--docs-shadow-lg);
+  --w-brand-a: #f6856b;
+  --w-brand-b: #d9504a;
+  --w-brand-c: #aa3d55;
+  background: var(--docs-bg);
+  color: var(--docs-ink);
+}
+
+@include dark-page(".osui-component-library") {
+  --w-primary-100: var(--docs-primary-100);
+  --w-primary-200: var(--docs-primary-200);
+  --w-primary-400: #5a7ae8;
+  --w-primary-600: #6986f2;
+  --w-primary-700: var(--docs-primary-700);
+  --w-n-0: var(--docs-surface);
+  --w-n-100: var(--docs-surface);
+  --w-n-200: var(--docs-surface-2);
+  --w-n-300: var(--docs-border);
+  --w-n-400: #404040;
+  --w-n-500: #525252;
+  --w-n-600: #737373;
+  --w-n-700: #9a9a9a;
+  --w-ink: var(--docs-ink);
+  --w-ink-2: var(--docs-ink-2);
+  --w-ink-3: var(--docs-ink-3);
+  --w-shadow-sm: var(--docs-shadow-sm);
+  --w-shadow-md: var(--docs-shadow-md);
+  --w-shadow-lg: var(--docs-shadow-lg);
+  --w-brand-a: #f6856b;
+  --w-brand-b: #d9504a;
+  --w-brand-c: #aa3d55;
+  background: var(--docs-bg);
+  color: var(--docs-ink);
+}
+
+@include dark-page(".osui-getting-started") {
+  --gs-primary-100: var(--docs-primary-100);
+  --gs-primary-200: var(--docs-primary-200);
+  --gs-primary-700: var(--docs-primary-700);
+  --gs-n-0: var(--docs-surface);
+  --gs-n-100: var(--docs-surface);
+  --gs-n-200: var(--docs-surface-2);
+  --gs-n-300: var(--docs-border);
+  --gs-n-400: #404040;
+  --gs-n-500: #525252;
+  --gs-n-600: #737373;
+  --gs-n-700: #9a9a9a;
+  --gs-ink: var(--docs-ink);
+  --gs-ink-2: var(--docs-ink-2);
+  --gs-ink-3: var(--docs-ink-3);
+  --gs-navy: #9eb4e8;
+  --gs-shadow-sm: var(--docs-shadow-sm);
+  --gs-shadow-md: var(--docs-shadow-md);
+  --gs-brand-a: #f6856b;
+  --gs-brand-b: #d9504a;
+  background: var(--docs-bg);
+  color: var(--docs-ink);
+}
+
+@include dark-page(".osui-css-architecture") {
+  --ca-primary-100: var(--docs-primary-100);
+  --ca-primary-700: var(--docs-primary-700);
+  --ca-n-100: var(--docs-surface);
+  --ca-n-200: var(--docs-surface-2);
+  --ca-n-300: var(--docs-border);
+  --ca-n-400: #404040;
+  --ca-n-700: #9a9a9a;
+  --ca-ink: var(--docs-ink);
+  --ca-ink-2: var(--docs-ink-2);
+  --ca-ink-3: var(--docs-ink-3);
+  --ca-hop-api: #7cb3ff;
+  --ca-hop-theme: #2dd4bf;
+  --ca-hop-scss: #67e8f9;
+  --ca-hop-token: #86efac;
+  --ca-brand-a: #f6856b;
+  --ca-brand-b: #d9504a;
+  background: var(--docs-bg);
+  color: var(--docs-ink);
+}
+
+@include dark-page(".osui-css-api-reference") {
+  --api-primary-100: var(--docs-primary-100);
+  --api-primary-700: var(--docs-primary-700);
+  --api-n-100: var(--docs-surface);
+  --api-n-200: var(--docs-surface-2);
+  --api-n-300: var(--docs-border);
+  --api-n-700: #9a9a9a;
+  --api-ink: var(--docs-ink);
+  --api-ink-2: var(--docs-ink-2);
+  --api-ink-3: var(--docs-ink-3);
+  --api-code-bg: var(--docs-surface-2);
+  --api-code-border: var(--docs-border);
+  --api-code-ink: var(--docs-ink-2);
+  --api-brand-a: #f6856b;
+  --api-brand-b: #d9504a;
+  background: var(--docs-bg);
+  color: var(--docs-ink);
+
+  .api-head::before {
+    opacity: 0.45;
+  }
+
+  .api-copy-icon {
+    background: transparent;
+    color: var(--docs-ink-3);
+  }
+
+  .api-copy-icon:hover {
+    background: var(--docs-surface-2);
+    color: var(--docs-ink);
+  }
+
+  .api-copy-icon.is-copied {
+    color: var(--docs-primary-700);
+  }
+
+  .api-toolbar {
+    background: var(--docs-surface);
+    border-top-color: var(--docs-border);
+    border-bottom-color: var(--docs-border);
+  }
+
+  .api-rail {
+    border-right-color: var(--docs-border);
+    background: linear-gradient(180deg, var(--docs-surface) 0%, var(--docs-bg) 120px);
+  }
+
+  .api-rail.is-rail-collapsed {
+    background: var(--docs-surface);
+  }
+
+  .api-toolbar-label {
+    color: var(--docs-ink-2);
+  }
+
+  .api-search,
+  .api-chip,
+  .api-rail-handle {
+    background: var(--docs-bg);
+    border-color: var(--docs-border);
+    color: var(--docs-ink);
+  }
+
+  .api-rail-handle:hover {
+    background: var(--docs-surface-2);
+    color: var(--docs-primary-700);
+    border-color: rgba(16, 92, 239, 0.35);
+  }
+
+  .api-rail-head__title {
+    color: var(--docs-ink);
+  }
+
+  .api-rail-head__meta,
+  .api-rail-peek__label {
+    color: var(--docs-ink-3);
+  }
+
+  .api-rail-peek__label:hover {
+    color: var(--docs-primary-700);
+  }
+
+  .api-search input {
+    color: var(--docs-ink);
+  }
+
+  .api-chip--color.is-active {
+    background: rgba(16, 92, 239, 0.15);
+    border-color: rgba(16, 92, 239, 0.35);
+    color: #7eb0ff;
+  }
+
+  .api-chip--spacing.is-active {
+    background: rgba(26, 122, 40, 0.15);
+    border-color: rgba(26, 122, 40, 0.35);
+    color: #7dd48a;
+  }
+
+  .api-chip--shadow.is-active {
+    background: rgba(91, 63, 212, 0.15);
+    border-color: rgba(91, 63, 212, 0.35);
+    color: #b8a8ff;
+  }
+
+  .api-chip--border.is-active {
+    background: rgba(180, 83, 9, 0.15);
+    border-color: rgba(180, 83, 9, 0.35);
+    color: #fbbf24;
+  }
+
+  .api-chip--other.is-active {
+    background: var(--docs-surface-2);
+    border-color: var(--docs-border);
+    color: var(--docs-ink-2);
+  }
+
+  .api-nav-group__toggle:hover {
+    background: var(--docs-surface);
+    color: var(--docs-ink-2);
+  }
+
+  .api-nav-item:hover {
+    background: var(--docs-surface);
+  }
+
+  .api-nav-item.is-active {
+    background: var(--docs-primary-100);
+    color: var(--docs-primary-700);
+  }
+
+  .api-panel,
+  .api-prop-head,
+  .api-prop-row {
+    border-color: var(--docs-border-subtle);
+  }
+
+  .api-prop-head > span {
+    color: var(--docs-ink-3);
+  }
+
+  .api-kind--color {
+    background: rgba(16, 92, 239, 0.15);
+    color: #7eb0ff;
+  }
+
+  .api-kind--spacing {
+    background: rgba(26, 122, 40, 0.15);
+    color: #7dd48a;
+  }
+
+  .api-kind--shadow {
+    background: rgba(91, 63, 212, 0.15);
+    color: #b8a8ff;
+  }
+
+  .api-kind--border {
+    background: rgba(180, 83, 9, 0.15);
+    color: #fbbf24;
+  }
+
+  .api-kind--other {
+    background: var(--docs-surface-2);
+    color: var(--docs-ink-3);
+  }
+
+  .api-clear,
+  .api-lede a,
+  .api-panel-links a {
+    color: var(--docs-primary-700);
+  }
+
+  .api-empty {
+    border-color: var(--docs-border);
+    color: var(--docs-ink-3);
+  }
+}
+
+@include dark-page(".osui-theme-editor") {
+  --te-primary-100: var(--docs-primary-100);
+  --te-primary-700: var(--docs-primary-700);
+  --te-n-0: var(--docs-bg);
+  --te-n-100: var(--docs-surface);
+  --te-n-200: var(--docs-surface-2);
+  --te-n-300: var(--docs-border);
+  --te-n-400: #404040;
+  --te-n-700: #9a9a9a;
+  --te-ink: var(--docs-ink);
+  --te-ink-2: var(--docs-ink-2);
+  --te-ink-3: var(--docs-ink-3);
+  --te-code-bg: var(--docs-surface-2);
+  --te-code-border: var(--docs-border);
+  --te-code-ink: var(--docs-ink-2);
+  --te-brand-a: #f6856b;
+  --te-brand-b: #d9504a;
+  background: var(--docs-bg);
+  color: var(--docs-ink);
+
+  .te-toolbar {
+    background: var(--docs-surface);
+    border-top-color: var(--docs-border);
+    border-bottom-color: var(--docs-border);
+  }
+
+  .te-head::before {
+    opacity: 0.45;
+  }
+
+  .te-head {
+    border-bottom-color: var(--docs-border);
+  }
+
+  .te-seg button[aria-pressed="true"] {
+    background: var(--docs-surface);
+    color: var(--docs-ink);
+  }
+
+  .te-theme-mode__btn {
+    background: var(--docs-bg);
+    border-color: var(--docs-border);
+    color: var(--docs-ink-3);
+  }
+
+  .te-theme-mode__btn[aria-pressed="true"] {
+    background: color-mix(in srgb, var(--docs-primary) 14%, var(--docs-bg));
+    border-color: color-mix(in srgb, var(--docs-primary) 40%, var(--docs-border));
+    color: var(--docs-primary);
+  }
+
+  .te-editor-bar {
+    background: var(--docs-surface);
+    border-color: var(--docs-border);
+  }
+
+  .te-btn--ghost,
+  .te-role__val input {
+    background: var(--docs-bg);
+    border-color: var(--docs-border);
+    color: var(--docs-ink);
+  }
+
+  .te-btn--ghost:hover {
+    background: var(--docs-surface);
+  }
+
+  .te-panel {
+    background: var(--docs-surface);
+    border-color: var(--docs-border);
+  }
+
+  .te-role.is-changed {
+    background: rgba(16, 92, 239, 0.08);
+  }
+
+  .te-role.is-changed:hover {
+    background: rgba(16, 92, 239, 0.12);
+  }
+
+  .te-lede code,
+  .te-rail__hint code {
+    background: var(--docs-surface-2) !important;
+    border: 0 !important;
+    color: var(--docs-ink-2) !important;
+  }
+
+  .te-role__meta code {
+    background: none !important;
+    color: var(--docs-ink-3) !important;
+  }
+
+  .te-nav-item:hover {
+    background: var(--docs-surface);
+  }
+
+  .te-nav-item.is-active {
+    background: var(--docs-primary-100);
+    color: var(--docs-primary-700);
+  }
+
+  .te-rail {
+    border-right-color: var(--docs-border);
+    background: linear-gradient(180deg, var(--docs-surface) 0%, var(--docs-bg) 120px);
+  }
+
+  .te-rail.is-rail-collapsed {
+    background: var(--docs-surface);
+  }
+
+  .te-rail-handle,
+  .te-search {
+    background: var(--docs-bg);
+    border-color: var(--docs-border);
+    color: var(--docs-ink);
+  }
+
+  .te-rail-handle:hover,
+  .te-rail-peek__label:hover {
+    color: var(--docs-primary-700);
+    border-color: rgba(16, 92, 239, 0.35);
+  }
+
+  .te-rail-head__title {
+    color: var(--docs-ink);
+  }
+
+  .te-rail-head__meta,
+  .te-rail-peek__label {
+    color: var(--docs-ink-3);
+  }
+}
+
+@mixin dark-pattern-browser {
+  .browser,
+  .browser-top,
+  .browser-foot {
+    background: var(--w-n-100);
+    border-color: var(--w-n-300);
+  }
+
+  .search {
+    background: var(--w-n-0) !important;
+    border-color: var(--w-n-400);
+    color: var(--w-ink-3);
+  }
+
+  .search input {
+    color: var(--w-ink);
+    background: transparent;
+  }
+
+  .search input::placeholder {
+    color: var(--w-ink-3);
+  }
+
+  .search svg {
+    color: var(--w-ink-3);
+  }
+
+  .cats button {
+    background: var(--w-n-0) !important;
+    border-color: var(--w-n-300);
+    color: var(--w-ink-2) !important;
+  }
+
+  .cats button i {
+    color: var(--w-ink-3);
+    opacity: 1;
+  }
+
+  .cats button:hover {
+    border-color: var(--w-n-500);
+    background: var(--w-n-200) !important;
+  }
+
+  /* Keep per-category pressed colours from welcome.scss — do not override with neutral ink. */
+  .pat[data-cat="content"]:hover {
+    background: color-mix(in srgb, var(--cat-content) 12%, var(--w-n-0));
+  }
+
+  .pat[data-cat="interaction"]:hover {
+    background: color-mix(in srgb, var(--cat-interaction) 12%, var(--w-n-0));
+  }
+
+  .pat[data-cat="navigation"]:hover {
+    background: color-mix(in srgb, var(--cat-navigation) 12%, var(--w-n-0));
+  }
+
+  .pat[data-cat="adaptive"]:hover {
+    background: color-mix(in srgb, var(--cat-adaptive) 12%, var(--w-n-0));
+  }
+
+  .pat[data-cat="numbers"]:hover {
+    background: color-mix(in srgb, var(--cat-numbers) 12%, var(--w-n-0));
+  }
+
+  .pat[data-cat="utilities"]:hover {
+    background: color-mix(in srgb, var(--cat-utilities) 12%, var(--w-n-0));
+  }
+
+  .pat[data-cat="advanced"]:hover {
+    background: color-mix(in srgb, var(--cat-advanced) 12%, var(--w-n-0));
+  }
+}
+
+/* ─── Welcome surfaces ─── */
+@include dark-page(".osui-welcome") {
+  @include dark-pattern-browser;
+
+  :is(.w-card, .preview, .tabs-demo, .card-demo, .piece, .pat, .tpl, .tpl .shot .blk) {
+    background: var(--w-n-0);
+  }
+
+  .hero-cta .w-btn-primary {
+    background: var(--docs-ink);
+    color: var(--docs-bg);
+    border-color: var(--docs-ink);
+  }
+
+  .hero-cta .w-btn-primary:hover {
+    background: #fff;
+    color: var(--docs-bg);
+  }
+
+  .w-btn-ghost {
+    background: transparent;
+    border-color: var(--w-n-500);
+    color: var(--docs-ink);
+  }
+
+  .w-btn-ghost:hover {
+    background: var(--w-n-200);
+    border-color: var(--w-n-600);
+    color: var(--docs-ink);
+  }
+
+  .w-btn-white {
+    background: var(--w-n-0);
+    border-color: var(--w-n-300);
+    color: var(--w-ink);
+  }
+
+  .piece:hover {
+    background: var(--w-n-200);
+  }
+
+  .tabs-demo button[aria-selected="true"] {
+    background: var(--docs-ink);
+    color: var(--docs-bg);
+  }
+
+  .hero::before {
+    opacity: 0.38;
+  }
+
+  .cta {
+    background: var(--docs-surface-2);
+    color: var(--docs-ink);
+    border: 1px solid var(--docs-border);
+  }
+
+  .cta p {
+    color: var(--docs-ink-3);
+  }
+
+  .sec-kicker {
+    color: var(--docs-ink-3);
+  }
+}
+
+html.sb-app-dark .sbdocs-wrapper .osui-welcome .hero-cta .w-btn-primary,
+.osui-welcome.docs-dark .hero-cta .w-btn-primary {
+  color: var(--docs-bg) !important;
+}
+
+html.sb-app-dark .sbdocs-wrapper .osui-welcome .hero-cta .w-btn-ghost,
+.osui-welcome.docs-dark .hero-cta .w-btn-ghost {
+  color: var(--docs-ink) !important;
+}
+
+html.sb-app-dark .sbdocs-wrapper .osui-welcome .cta h2,
+.osui-welcome.docs-dark .cta h2 {
+  color: var(--docs-ink) !important;
+}
+
+/* ─── Getting Started surfaces ─── */
+@include dark-page(".osui-getting-started") {
+  :is(
+    .jump a,
+    .dev,
+    .thumb,
+    .box,
+    .tk,
+    .mini-card,
+    .mini-card .p2,
+    .feat div,
+    .prop,
+    .tech div,
+    .standout,
+    .viz
+  ) {
+    background: var(--gs-n-0);
+  }
+
+  .viz {
+    background: var(--gs-n-200);
+    border-color: var(--gs-n-300);
+  }
+
+  .st .n {
+    background: var(--docs-ink);
+    color: var(--docs-bg);
+  }
+
+  .st .pic {
+    background: var(--gs-pic-canvas);
+    border-color: var(--gs-n-400);
+  }
+
+  --gs-pic-canvas: var(--gs-n-200);
+  --gs-pic-surface: #2e2e2e;
+  --gs-pic-stroke: #525252;
+  --gs-pic-accent: rgba(105, 134, 242, 0.22);
+  --gs-pic-muted: #404040;
+  --gs-pic-muted2: #363636;
+  --gs-pic-primary: var(--docs-primary-700);
+  --gs-pic-arrow: #8d8d8d;
+  --gs-pic-focus: rgba(124, 179, 255, 0.14);
+
+  .step .n {
+    box-shadow: 0 0 0 5px var(--docs-bg);
+  }
+
+  .head::before {
+    opacity: 0.45;
+  }
+
+  .toc a {
+    color: var(--docs-ink-3);
+  }
+
+  .toc a:hover {
+    color: var(--docs-ink-2);
+  }
+
+  .toc a.is-active {
+    color: var(--docs-primary-700);
+    border-color: var(--docs-primary-700);
+  }
+
+  table.split th {
+    color: var(--docs-ink-2);
+    border-bottom-color: var(--docs-border) !important;
+  }
+
+  table.split td {
+    border-bottom-color: var(--docs-border-subtle) !important;
+  }
+
+  code {
+    background: var(--docs-surface-2);
+    color: var(--docs-ink-2);
+  }
+}
+
+/* ─── CSS Architecture surfaces ─── */
+@include dark-page(".osui-css-architecture") {
+  .ca-head::before {
+    opacity: 0.45;
+  }
+
+  .sbdocs-wrapper .sbdocs-content .osui-css-architecture code:not(pre code):not(.ca-hop-form),
+  .sbdocs-wrapper .osui-css-architecture code:not(pre code):not(.ca-hop-form),
+  .ca-lede code,
+  .ca-body code:not(.ca-hop-form) {
+    background: var(--docs-surface-2) !important;
+    border: 0 !important;
+    color: var(--docs-ink-2) !important;
+  }
+
+  .ca-body td {
+    border-bottom-color: var(--docs-border-subtle) !important;
+  }
+
+  .ca-body th {
+    border-bottom-color: var(--docs-border) !important;
+  }
+
+  .toc a {
+    color: var(--docs-ink-3);
+  }
+
+  .toc a.is-active {
+    color: var(--docs-primary-700);
+    border-color: var(--docs-primary-700);
+  }
+
+  .ca-hop-note {
+    color: var(--docs-ink-2);
+  }
+
+  .ca-hops-label {
+    color: var(--docs-ink-2);
+  }
+
+  .ca-hop-fall {
+    color: var(--docs-ink-2);
+  }
+
+  .ca-hop-fall::before,
+  .ca-hop-fall::after {
+    border-top-color: var(--docs-border);
+  }
+
+  /* Beat Storybook `.sbdocs-content code` light inline chrome in dark mode */
+  .ca-hop-form {
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+  }
+}
+
+/* ─── Component Library ─── */
+@include dark-page(".osui-component-library") {
+  @include dark-pattern-browser;
+
+  .cl-head::before {
+    opacity: 0.45;
+  }
+
+  .pat {
+    background: var(--docs-surface-2);
+  }
+}
+
+/* ─── Shared info callouts (docs-pages.scss) ─── */
+html.sb-app-dark :is(.osui-getting-started, .osui-css-architecture, .osui-css-api-reference, .osui-foundations) .note,
+:is(.osui-getting-started.docs-dark, .osui-css-architecture.docs-dark, .osui-css-api-reference.docs-dark, .osui-foundations.docs-dark) .note {
+  border-color: var(--docs-border);
+  background: linear-gradient(180deg, #1a2238, var(--docs-surface));
+}
+
+html.sb-app-dark :is(.osui-getting-started, .osui-css-architecture, .osui-css-api-reference, .osui-foundations) .note .ic,
+:is(.osui-getting-started.docs-dark, .osui-css-architecture.docs-dark, .osui-css-api-reference.docs-dark, .osui-foundations.docs-dark) .note .ic {
+  background: var(--docs-primary-100);
+  color: var(--docs-primary-700);
+}
+
+html.sb-app-dark :is(.osui-getting-started, .osui-css-architecture, .osui-css-api-reference, .osui-foundations) .note b,
+:is(.osui-getting-started.docs-dark, .osui-css-architecture.docs-dark, .osui-css-api-reference.docs-dark, .osui-foundations.docs-dark) .note b {
+  color: var(--docs-ink);
+}
+
+html.sb-app-dark .sbdocs-wrapper :is(.osui-getting-started, .osui-css-architecture, .osui-css-api-reference, .osui-foundations) .note p,
+.sbdocs-wrapper :is(.osui-getting-started.docs-dark, .osui-css-architecture.docs-dark, .osui-css-api-reference.docs-dark, .osui-foundations.docs-dark) .note p {
+  color: var(--docs-ink-3) !important;
+}
+
+html.sb-app-dark :is(.osui-getting-started, .osui-css-architecture, .osui-css-api-reference, .osui-foundations) .note.alt,
+:is(.osui-getting-started.docs-dark, .osui-css-architecture.docs-dark, .osui-css-api-reference.docs-dark, .osui-foundations.docs-dark) .note.alt {
+  background: linear-gradient(180deg, #2a2418, var(--docs-surface));
+}
+
+html.sb-app-dark :is(.osui-getting-started, .osui-css-architecture, .osui-css-api-reference, .osui-foundations) .note.alt .ic,
+:is(.osui-getting-started.docs-dark, .osui-css-architecture.docs-dark, .osui-css-api-reference.docs-dark, .osui-foundations.docs-dark) .note.alt .ic {
+  background: rgba(233, 161, 0, 0.2);
+  color: #f0c060;
+}
+
+html.sb-app-dark :is(.osui-getting-started, .osui-css-architecture, .osui-css-api-reference, .osui-foundations) .note.error,
+:is(.osui-getting-started.docs-dark, .osui-css-architecture.docs-dark, .osui-css-api-reference.docs-dark, .osui-foundations.docs-dark) .note.error {
+  background: linear-gradient(180deg, #2a1818, var(--docs-surface));
+}
+
+html.sb-app-dark :is(.osui-getting-started, .osui-css-architecture, .osui-css-api-reference, .osui-foundations) .note.error .ic,
+:is(.osui-getting-started.docs-dark, .osui-css-architecture.docs-dark, .osui-css-api-reference.docs-dark, .osui-foundations.docs-dark) .note.error .ic {
+  background: rgba(185, 28, 28, 0.22);
+  color: #f87171;
+}
+
+/* ─── Foundations ─── */
+@include dark-page(".osui-foundations") {
+  --fd-primary-100: var(--docs-primary-100);
+  --fd-primary-700: var(--docs-primary-700);
+  --fd-n-100: var(--docs-surface);
+  --fd-n-200: var(--docs-surface-2);
+  --fd-n-300: var(--docs-border-subtle);
+  --fd-n-700: var(--docs-ink-3);
+  --fd-ink: var(--docs-ink);
+  --fd-ink-2: var(--docs-ink-2);
+  --fd-ink-3: var(--docs-ink-3);
+  --api-primary-700: var(--docs-primary-700);
+  --api-ink: var(--docs-ink);
+  --api-ink-3: var(--docs-ink-3);
+  --api-n-200: var(--docs-surface-2);
+
+  .fd-head::before {
+    opacity: 0.45;
+  }
+
+  .fd-colors-toolbar {
+    background: var(--docs-surface-2);
+    border-color: var(--docs-border-subtle);
+  }
+
+  .fd-token-theme__btn {
+    background: var(--docs-surface);
+    border-color: var(--docs-border-subtle);
+    color: var(--docs-ink-3);
+  }
+
+  .fd-token-theme__btn[aria-pressed="true"] {
+    background: color-mix(in srgb, var(--docs-primary-700) 14%, var(--docs-surface));
+    border-color: color-mix(in srgb, var(--docs-primary-700) 35%, var(--docs-border-subtle));
+    color: var(--docs-primary-700);
+  }
+
+  .fd-color-modal__panel {
+    background: var(--docs-surface);
+  }
+
+  .fd-elevation-container {
+    background: var(--docs-surface-2);
+    border-color: var(--docs-border-subtle);
+  }
+
+  .fd-elevation-hero-box,
+  .fd-elevation-box {
+    background: var(--docs-surface);
+  }
+
+  .fd-space-preview {
+    background: rgba(16, 92, 239, 0.12);
+  }
+
+  .fd-border-token-preview {
+    background: var(--docs-surface);
+    border-color: var(--fd-border-color, var(--docs-ink));
+  }
+
+  .fd-shape-preview {
+    background: var(--docs-surface);
+    border-color: var(--docs-border-subtle);
+  }
+
+  .fd-shape-container {
+    background: var(--docs-surface-2);
+    border-color: var(--docs-border-subtle);
+  }
+
+  .fd-shape-hero-box,
+  .fd-shape-box {
+    background: var(--docs-surface);
+    border-color: var(--docs-border-subtle);
+  }
+
+  .fd-table td,
+  .fd-table th {
+    border-bottom-color: var(--docs-border-subtle);
+  }
+
+  .api-copy-icon {
+    background: transparent;
+    color: var(--docs-ink-3);
+  }
+
+  .api-copy-icon:hover {
+    color: var(--docs-ink);
+    background: var(--docs-surface-2);
+  }
+
+  .api-copy-icon.is-copied {
+    color: var(--docs-primary-700);
+    background: transparent;
+  }
+
+  .sbdocs-wrapper .osui-foundations .fd-table code:not(pre code) {
+    background: var(--docs-surface-2) !important;
+    border-color: var(--docs-border-subtle) !important;
+    color: var(--docs-ink) !important;
+  }
+
+  .sbdocs-wrapper .osui-foundations .fd-color-card__body code:not(pre code) {
+    background: var(--docs-surface-2) !important;
+    color: var(--docs-ink-2) !important;
+  }
+}

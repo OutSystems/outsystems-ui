@@ -1,0 +1,878 @@
+/*!
+ * OutSystems core platform widget base styles — STORYBOOK-ONLY VENDORED COPY.
+ *
+ * ─── What this is ────────────────────────────────────────────────────────────
+ * In a real OutSystems app the platform loads a base CSS layer BEFORE the theme
+ * (OutSystems UI). That layer establishes the *structural* form of the
+ * data-attribute widgets — notably the pseudo-element `content` that generates
+ * the checkbox box, the switch track/thumb, and the radio dot. Without it those
+ * controls render as bare native inputs and every widget story is meaningless.
+ *
+ * `preview-head.html` links this file as `/platform/platform-core.css` ahead of
+ * the OUI stylesheet, mirroring that real load order.
+ *
+ * ─── Provenance ──────────────────────────────────────────────────────────────
+ * Extracted from @outsystems/runtime-widgets-js@6.25.4
+ * (dist/OutSystemsReactWidgets.css), with the FontAwesome `@font-face` block
+ * stripped — its relative `../fonts/*` URLs would 404 here, and the icon fonts
+ * are served separately from /vendor/*. Three `url('Images/*.png')` empty-state
+ * backgrounds also 404 here (they resolve against the platform's own asset
+ * folder); they were already 404ing when this file was generated at startup, and
+ * no widget story exercises them.
+ *
+ * ─── Scope and maintenance ───────────────────────────────────────────────────
+ * Storybook-only. It is NOT part of the OutSystems UI build, is not shipped in
+ * dist/, and no runtime code reads it. It exists so this repository — which is
+ * public — can render its own widget stories with zero access to the internal
+ * Azure Artifacts package feed. See docs-internal/adr/ADR-0009.
+ *
+ * Refresh trigger: when the platform changes the structural contract of the
+ * data-attribute widgets. Re-extract from the package's
+ * dist/OutSystemsReactWidgets.css, strip the FontAwesome @font-face, and keep
+ * this header. Drift shows up as a visual diff in Chromatic, which is the point.
+ *
+ * Do not hand-tune values here to fix a component's look — that belongs in
+ * src/scss/03-widgets/. This file is a faithful copy of the platform baseline.
+ */
+[data-button-group] > div {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+[data-button-group-item] {
+    -webkit-box-flex:1;
+    -webkit-flex:1;
+        -ms-flex:1;
+            flex:1;
+}
+
+[data-button-group-item].button-group-selected-item {
+    color:#999;
+}
+[data-checkbox] {
+  position: relative;
+  display: inline-block;
+  background-color: transparent;
+  cursor: pointer;
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #bdc5c7;
+}
+
+[data-checkbox]:focus {
+    /* csslint ignore:start */
+	outline: 0;
+    /* csslint ignore:end */
+}
+
+[data-checkbox]:before {
+	display: table;
+	width: 100%;
+	height: 100%;
+	content: ' ';
+    opacity: 0;
+    background-color: #bdc5c7;
+    transition: opacity 200ms ease-in;
+ }
+ 
+[data-checkbox]:checked:before {
+	opacity: 1;
+}
+
+[data-checkbox]:checked:after {
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    position: absolute;
+    display: table;
+    top: 3px;
+    left: 3px;
+    width: 10px;
+    height: 6px;
+    border-width: 0 0 2px 2px;
+    border-style: solid;
+    border-color: white;
+    content: ' ';
+}
+
+[data-checkbox][disabled] {
+    border-color: #ccc;
+}
+
+[data-checkbox][disabled]:checked:before {
+    background-color: #E9E9E9;
+}
+
+[data-checkbox][disabled]:checked:after {
+    border-color: #A6A6A6;
+}
+[data-dropdown] {
+    cursor: pointer;
+    -servicestudio-overflow-x: hidden;
+}
+
+[data-dropdown] > .dropdown-display {
+    border: 1px solid #aaa;
+    position: relative;
+	padding: 5px;
+}
+
+[data-dropdown] > .dropdown-background-window {
+	z-index: 1;
+}
+
+[data-dropdown] > .dropdown-display:after {
+    display: inline-block;
+    content: " "; /* down triangle*/
+    color: #aaa;
+    border-style: solid;      
+    border-width: 5px;
+    border-color: transparent #aaa #aaa transparent;
+    vertical-align: bottom;
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+}
+
+[data-dropdown] .dropdown-display-content {
+    display: inline-block;
+    white-space: nowrap;
+}
+
+[data-dropdown] .scrollable-list {
+    max-height: 240px;
+    height: inherit;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    z-index: 4;
+    -ms-overflow-style: none; /* Hide the scrollbar in IE */
+}
+
+[data-dropdown] .scrollable-list::-webkit-scrollbar { 
+    /* csslint ignore:start */
+    width: 0 !important; /* Hide the scrollbar in Chrome */
+    /* csslint ignore:end */
+}
+
+/* Dark css magic to add the shadows on the top and bottom of the list when the scroll is active */
+/* Refer here for more information: http://kizu.ru/en/fun/shadowscroll/ */
+
+[data-dropdown] .scrollable-list-with-scroll {
+    position: relative;
+    
+    background: #FFF no-repeat;
+    background-image:
+        -webkit-radial-gradient(50% 0, farthest-side, rgba(0,0,0,0.2), rgba(0,0,0,0)),
+        -webkit-radial-gradient(50% 100%,farthest-side, rgba(0,0,0,0.2), rgba(0,0,0,0));
+    background-image:
+        -moz-radial-gradient(50% 0, farthest-side, rgba(0,0,0,0.2), rgba(0,0,0,0)),
+        -moz-radial-gradient(50% 100%,farthest-side, rgba(0,0,0,0.2), rgba(0,0,0,0));
+    background-image:
+        radial-gradient(farthest-side at 50% 0, rgba(0,0,0,0.2), rgba(0,0,0,0)),
+        radial-gradient(farthest-side at 50% 100%, rgba(0,0,0,0.2), rgba(0,0,0,0));
+    background-position: 0 0, 0 100%;
+    background-size: 100% 14px;
+}
+
+[data-dropdown] .scrollable-list-with-scroll:before,
+[data-dropdown] .scrollable-list-with-scroll:after {
+    content: "";
+    position: relative;
+    z-index: -1;
+
+    display: block;
+
+    height: 30px;
+    margin: 0 0 -30px;
+    background: -webkit-linear-gradient(top,#FFF,#FFF 30%,rgba(255,255,255,0));
+    background:    -moz-linear-gradient(top,#FFF,#FFF 30%,rgba(255,255,255,0));
+    background:   linear-gradient(to bottom,#FFF,#FFF 30%,rgba(255,255,255,0));
+}
+
+[data-dropdown] .scrollable-list-with-scroll:after {
+    margin: -30px 0 0;
+    background: -webkit-linear-gradient(top,rgba(255,255,255,0),#FFF 70%,#FFF);
+    background:    -moz-linear-gradient(top,rgba(255,255,255,0),#FFF 70%,#FFF);
+    background:   linear-gradient(to bottom,rgba(255,255,255,0),#FFF 70%,#FFF);
+}
+
+
+[data-dropdown] > .dropdown-list {
+    position: fixed;
+    background: white;
+    border: 1px solid #ccc;
+    -webkit-transform: translateZ(0);/* To enable hardware accelaration */
+    transform: translateZ(0);
+    z-index: 2;
+    overflow: visible;
+}
+
+[data-dropdown] .dropdown-popup-row {
+    padding: 10px;
+    padding-right: 50px;
+    white-space: nowrap;
+    position: relative;
+    z-index: 4;
+}
+
+[data-dropdown] .dropdown-popup-row:hover {
+    background-color: #eaeaea;
+}
+
+[data-dropdown] .dropdown-popup-row:empty {
+    display: none;
+}
+
+[data-dropdown] .dropdown-popup-row-selected {
+    background-color: #E6F0F1;
+}
+
+/* Right-To-Left Support */
+
+/*
+ * ADDED FOR STORYBOOK — not present in the vendored source.
+ *
+ * A real RTL app renders <html lang="ar" dir="rtl"> with <body class="… is-rtl …">, and
+ * the running platform gives the document an author-level `direction: rtl`. That rule is
+ * NOT in the extracted widget CSS this file was copied from, and without it OutSystems
+ * UI's own `body { direction: ltr }` reset (01-foundations/_resets.scss — an author
+ * declaration, so it outranks the UA mapping of the `dir` attribute) wins at <body> and
+ * every logical property in the bundle resolves LTR. The RTL toolbar toggle then appears
+ * to do nothing.
+ *
+ * Both selectors are (0,1,1), so they beat `body` (0,0,1) regardless of load order.
+ */
+[dir='rtl'] body,
+body.is-rtl {
+    direction: rtl;
+}
+
+
+.is-rtl [data-dropdown] > .dropdown-display:after {
+    left: 5px;
+    right: auto;
+}
+
+.is-rtl [data-dropdown] .dropdown-popup-row {
+    padding-left: 50px;
+    padding-right: 10px;
+}
+
+/* Design mode only */
+
+body[data-ss-design] [data-dropdown] > .dropdown-display:not(:first-child) {
+    -servicestudio-display: none;
+}
+
+body[data-ss-design] [data-dropdown] > .dropdown-display:empty:before {
+    -servicestudio-content: "Drag an id variable here";
+    -servicestudio-font-size: 11px;
+    -servicestudio-color: #666;
+    -servicestudio-padding: 10px;
+}
+[data-expression] {
+	white-space: pre-wrap;
+}
+
+[data-expression]:empty:after {
+    content: "\200b";
+}
+body[data-ss-design] [data-form]:empty {
+    background-image: url('Images/FormEmptyState.png');
+    background-color: white;
+    width: 100%;
+    min-width: 291px;
+    min-height: 170px;
+    background-position: center;
+    background-size: 291px 122px;
+    background-repeat: no-repeat;
+}
+
+[data-form] [data-label].mandatory-label:after {
+    content: "*";
+	color: #BF1601;
+	position: absolute;
+	padding: 0 5px 5px 3px;
+}
+@-webkit-keyframes imageBounceIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes imageBounceIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+[data-image].image-lazyload {
+    -webkit-animation-duration: 1s;
+     animation-duration: 1s;
+     -webkit-animation-name: imageBounceIn;
+     animation-name: imageBounceIn;
+}
+[data-input]::-webkit-outer-spin-button, /* Removes arrows */
+[data-input]::-webkit-inner-spin-button, /* Removes arrows */
+[data-input]::-webkit-clear-button { /* Removes blue cross */
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+[data-input] {
+	margin: 0;
+	border: 1px solid #aaa;
+}
+
+[data-input]::-ms-clear { /* Removes cross on IE */
+    display: none;
+}
+
+[data-input]:empty {
+    height: 32px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+[data-input][type=number] { /* Removes arrows on firefox */
+    -moz-appearance: textfield;
+}
+
+[data-input][type=search],
+[data-input][type=date],
+[data-input][type=datetime-local],
+[data-input][type=time] {
+    -webkit-appearance: none;
+}
+
+::-webkit-calendar-picker-indicator { /* Removes dropdown for picker */
+   -servicestudio-opacity: 0;
+   -servicestudio--webkit-appearance: none;
+}
+[data-label].mandatory:after {
+    content: "*";
+}
+
+[data-label]:empty {
+    -servicestudio-min-height: 20px;
+}
+
+[data-list] .empty-message {
+	color: #666;
+	font-size: 12px;
+	font-weight: normal;
+	height: 1em;
+	display: block;
+	margin-bottom: 1.5em;
+	margin-top: 30px;
+	margin-left: 0;
+}
+
+body[data-ss-design] [data-list]:empty {
+    background-image: url('Images/ListEmptyState.png');
+    background-color: white;
+    width: 100%;
+    min-width: 291px;
+    min-height: 170px;
+    background-position: center;
+    background-size: 291px 122px;
+    background-repeat: no-repeat;
+}
+
+[data-list]:empty {
+    -servicestudio-min-height: 30px;
+    -servicestudio-line-height: 30px;
+}
+[data-list-item]:after {
+    content: '';
+    display: block;
+    clear: both;    
+}
+
+[data-list-item] img {
+    /* Avoid rendering issues */
+    -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+}
+ /* Double size container to allow swipe */
+[data-list-item] .list-item-container {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+	width: 200%;
+    -servicestudio-width: auto;
+    -servicestudio-position: relative;
+}
+ /* The content will fill 100% of the parent (50% of 200%) */
+[data-list-item] .list-item {
+	width: 50%;
+    -servicestudio-width: 100%;
+}
+ /* Invisible until user swipes */
+[data-list-item] .list-item-animating .list-item-left-actions,
+[data-list-item] .list-item-animating .list-item-right-actions {
+    width: 0;
+    transition: all .5s ease;
+}
+[data-list-item] .list-item-left-actions,
+[data-list-item] .list-item-right-actions {
+    width: 0;
+    transition: none;
+    -servicestudio-width: auto;
+    -servicestudio-height: 100%;
+    -servicestudio-position: absolute;
+    -servicestudio-z-index: 1000;
+}
+
+.list-item {
+    display: block;
+}
+[data-list-item] .list-item-left-actions,
+[data-list-item] .list-item-right-actions {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+}
+[data-list-item] .list-item-right-actions {
+    -webkit-box-pack: end;
+    -webkit-justify-content: flex-end;
+    -ms-flex-pack: end;
+     justify-content: flex-end;
+    -servicestudio-right: 0;
+}
+ /* Show just leftmost or rightmost actions of a full swipe */
+[data-list-item] .list-item-full-swipe .list-item-right-actions [data-list-item-action]:not(:last-child),
+[data-list-item] .list-item-full-swipe .list-item-left-actions [data-list-item-action]:not(:first-child) {
+    -webkit-box-flex:0;
+    -webkit-flex:0;
+    -ms-flex:0;
+    flex:0;
+}
+
+[data-list-item] [data-list-item-action] {
+    -webkit-box-flex:1;
+    -webkit-flex:1;
+    -ms-flex:1;
+    flex:1;
+
+    padding: 0;
+    border: 0;
+    margin: 0;
+
+	overflow-x: hidden;
+    transition: all .5s ease;
+    max-width: 75px;
+    -servicestudio-width: 75px;
+}
+
+[data-list-item] .list-item-full-swipe [data-list-item-action] {
+    max-width: 100%;
+}
+
+
+ /* Animations */
+[data-list-item] .list-item-container.list-item-animating {
+    transition: all .5s ease;
+}
+[data-list-item] .list-item-show-right-buttons,
+[data-list-item] .list-item-show-left-buttons,
+[data-list-item] .list-item-show-left-buttons [data-list-item-action],
+[data-list-item] .list-item-show-right-buttons [data-list-item-action] {
+    transition: all .5s ease;
+}
+
+[data-list-item] .list-item-float-right {
+    float: right;
+
+    -webkit-box-pack: end;
+    -webkit-justify-content: flex-end;
+    -ms-flex-pack: end;
+    justify-content: flex-end;
+}
+
+[data-list-item] .list-item-float-left {
+    float: left;
+
+    -webkit-box-pack: start;
+    -webkit-justify-content: flex-start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+}
+
+/* Design mode only */
+
+body[data-ss-design] [data-list-item][expanded=False] .list-item-left-actions,
+body[data-ss-design] [data-list-item][expanded=False] .list-item-right-actions {
+    /* csslint ignore:start */
+    -servicestudio-display: none !important;
+    /* csslint ignore:end */
+}
+
+body[data-ss-design] .list-item-right-actions:empty,
+body[data-ss-design] .list-item-left-actions:empty {
+    z-index: -1;
+}
+[data-popover] {
+	display: inline;
+	position: relative;
+}
+
+[data-popover] [data-icon] {
+	vertical-align: 15%;
+	margin-left: 5px;
+}
+
+[data-popover] > .popover-top {
+	cursor: pointer;
+	display: inline-block;
+	position: relative;
+	border: 1px solid #aaa;
+	padding: 5px;
+}
+
+[data-popover] > .popover-bottom {
+	background-color: #ffffff;
+	z-index: 2;
+	position: absolute;
+	min-width: 160px;
+	min-height: 32px;
+	-webkit-transform: translateX(-50%);
+	transform: translateX(-50%);
+	padding: 10px;
+	margin-left: -50%;
+	display: inline-block;
+	-webkit-animation-duration: .25s;
+	animation-duration: .25s;
+	-webkit-animation-fill-mode: both;
+	animation-fill-mode: both;
+	-webkit-animation-name: popoverAppear;
+	animation-name: popoverAppear;
+	border: 1px solid #ddd;
+	-servicestudio-min-height: 100px;
+	-servicestudio-margin-top: 30px;
+	-servicestudio--webkit-transform: none;
+	-servicestudio-left: 0;
+	-servicestudio-margin-left: 0;
+}
+
+[data-popover] > .popover-bottom.align-left {
+	transform: translateX(0);
+	-webkit-transform: translateX(0);
+	left: 0;
+	margin-left: 0;
+}
+
+[data-popover]>.popover-bottom.align-right {
+	transform: translateX(0);
+	-webkit-transform: translateX(0);
+	right: 0;
+}
+
+[data-popover]>.popover-bottom.align-center {
+	transform: translateX(-50%);
+	-webkit-transform: translateX(-50%);
+}
+
+[data-popover]>.popover-bottom.align-bottom {
+	transform: translateY(-100%);
+	-webkit-transform: translateY(-100%);
+	margin-top: 20px;
+}
+
+@-webkit-keyframes popoverAppear {
+	0% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
+	}
+}
+
+@keyframes popoverAppear {
+	0% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
+	}
+}
+
+/* Design mode only */
+
+/* csslint ignore:start */
+body[data-ss-design] div[style*="align:right"] > [data-popover] > .popover-bottom {
+	-servicestudio-left: auto;
+	-servicestudio-right: 0;
+}
+
+body[data-ss-design] div[style*="align:center"] > [data-popover] > .popover-bottom {
+	-servicestudio--webkit-transform: translateX(-50%);
+	-servicestudio-margin-left: -50%;
+	-servicestudio-left: auto;
+}
+
+body[data-ss-design] [data-popover][data-ss-is-passive="true"] > .popover-bottom {
+	-servicestudio-display: none;
+}
+
+body[data-ss-design] [data-popover][expanded=False] > .popover-bottom {
+	-servicestudio-display: none !important;
+}
+/* csslint ignore:end */
+[data-popup] {
+    position: relative;
+    text-align: left;
+    max-width: 90%;
+    max-height: 90%;
+    min-width:  300px;
+    min-height: 100px;	
+    overflow: auto;
+   	background-color: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+	-webkit-background-clip: padding-box;
+    background-clip: padding-box;
+	padding: 10px;
+    -servicestudio-max-height: none;
+    -servicestudio-overflow: hidden;
+    -servicestudio-left: 0;
+    -servicestudio-right: 0;
+    -servicestudio-top: 25%;
+    -servicestudio-margin: 0;
+    -servicestudio-position: relative;
+}
+
+@media (max-width: 480px) {    
+    [data-popup] {
+        max-width:  300px;
+    }
+}
+
+[data-popup] {
+    transition: opacity 0.15s ease-in;
+}
+
+.popup-animation-enter > [data-popup] {
+    opacity: 0.01;
+}
+
+.popup-animation-enter-done > [data-popup] {
+    opacity: 1;
+}
+
+[data-popup-backdrop] {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;    
+    background-color: rgba(0, 0, 0, 0.3);
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+        -ms-flex-align: center;
+            align-items: center;    
+    text-align: center;
+    z-index: 100;
+    -servicestudio-margin-bottom:21px;
+}
+
+.popup-disable-scroll {
+    height: 100%;
+    overflow: hidden;
+}
+
+/* Design mode only */
+
+body[data-ss-design] [data-popup-backdrop][data-ss-is-passive="true"],
+body[data-ss-design] [data-popup-backdrop][expanded=False] {
+    -servicestudio-display: inline;
+    -servicestudio-background: none;
+    -servicestudio-position: static;
+}
+
+body[data-ss-design] [data-popup-backdrop][data-ss-is-passive="true"] > [data-popup],
+body[data-ss-design] [data-popup-backdrop][expanded=False] > [data-popup] {
+    -servicestudio-display: inline-block;
+    -servicestudio-width: 20px;
+    -servicestudio-height: 20px;
+    -servicestudio-min-height: 20px;
+    -servicestudio-min-width: 20px;
+    -servicestudio-max-height: 20px;
+    -servicestudio-max-width: 20px;
+    -servicestudio-overflow: hidden;
+    -servicestudio-position: static;
+    -servicestudio-padding: 0;     
+    -servicestudio-border: 2px solid #999;
+    -servicestudio-border-radius: 2px;
+}
+
+/* csslint ignore:start */
+body[data-ss-design] [data-popup-backdrop][data-ss-is-passive="true"]  > [data-popup] > div > *,
+body[data-ss-design] [data-popup-backdrop][expanded=False] > [data-popup] > div > * {
+    -servicestudio-display: none !important;
+}
+/* csslint ignore:end */
+[data-switch] {
+    width: 37px;
+	height: 24px;
+    position: relative;
+    display: inline-block;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    -webkit-appearance: none;
+    margin: 0;
+    background-color: #ccc;
+    border-radius: 24px;
+    overflow: hidden;
+}
+
+[data-switch]:empty:before {
+    opacity: 0;
+}
+
+[data-switch]:empty:before, 
+[data-switch]:empty:after {
+	position: absolute;
+	display: inline-block;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	content: ' ';
+	width: 37px;
+	height: 24px;
+	background-color: #bdc5c7;
+	transition: opacity 100ms ease-in;
+	cursor: pointer;
+}
+
+[data-switch]:empty:after {
+	width: 16px;
+	height: 16px;
+	top: 3.5px;
+	bottom: 3.5px;
+	margin-left: 4.5px;
+	background-color: #fff;
+	border-radius: 50%;
+}
+
+[data-switch]:checked:before {
+	background-color: #8CC83C;
+    opacity: 1;
+}
+
+[data-switch]:checked:after {
+	margin-left: 16px;
+}
+
+[data-switch][disabled]:empty:before {
+    border-color: #ddd;
+    background-color: #f5f5f5;
+}
+
+[data-switch][disabled]:empty:after {
+    border-color: #ddd;
+    background-color: #f5f5f5;
+}
+
+[data-switch][disabled]:checked:before {
+    border-color: #ccc; 
+    background-color: #ccc;
+}
+
+[data-switch][disabled]:checked:after {
+    border-color: #f5f5f5;
+    background-color: #f5f5f5;
+}
+body[data-ss-design] [data-table] > thead > tr:empty {
+    background-image: url('Images/EmptyState.png');
+    background-color: white;
+    width: 100%;
+    height: 170px;
+    background-size: 248px 170px;
+    background-position: center 10px;
+    background-repeat: no-repeat;
+}
+
+body[data-ss-design] [data-table] > tbody > tr:empty {
+    background-color: white;
+}
+[data-upload] {
+    display: inline-block;
+    background-color: #e6e7e8;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+    position: relative;
+    cursor: pointer;
+	min-height: 32px;
+}
+
+/*iOS hack. Inner elements were trapping the on click event.*/
+[data-upload] > * {
+    /* csslint ignore:start */
+    pointer-events: none;
+    /* csslint ignore:end */
+}
+
+[data-upload] img {
+    vertical-align: middle;
+}
+
+[data-upload] span {
+    white-space: nowrap;
+}
+
+[data-upload].upload-image-withoverlay .change-image {
+    position: absolute;
+    bottom: 0;
+    background-color: black;
+    opacity: 0.8;
+    color: white;
+    height: 32px;
+    width: 100%;
+    margin-top: 0;
+    white-space: nowrap;
+}
+
+[data-upload].upload-image-withoverlay [data-icon],
+[data-upload].upload-image-withoverlay.uploaded [data-icon] {
+    background-color: transparent;
+}
+
+[data-upload].upload-image-withoverlay img:not([src]),
+[data-upload].upload-image-withoverlay img[src=''],
+[data-upload].upload-image-withoverlay img[src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNgYAAAAAMAASsJTYQAAAAASUVORK5CYII='] {
+    content: url('data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCIKCSB2aWV3Qm94PSIwIDAgMTA2IDEwNiIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgMTA2IDEwNiIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+CjxnPgoJPGc+CgkJPGc+CgkJCTxnPgoJCQkJPHJlY3QgeD0iLTAuMSIgeT0iMCIgZmlsbD0iI0E3QTlBQyIgd2lkdGg9IjEwNiIgaGVpZ2h0PSIxMDYiLz4KCQkJPC9nPgoJCTwvZz4KCQk8cG9seWdvbiBmaWxsPSIjRTZFN0U4IiBwb2ludHM9IjEwNiwxMDYgLTAuMywxMDYgMjMuMSw3MSA0MS4zLDk1LjIgNzMuMyw1MS42IDEwNiw5NS4zIAkJIi8+CgkJPGNpcmNsZSBmaWxsPSIjRTZFN0U4IiBjeD0iMjQiIGN5PSIzNC4zIiByPSIxMi44Ii8+Cgk8L2c+CjwvZz4KPC9zdmc+');
+    background-position: center;
+    background-size: 100%;
+}
+
+[data-upload] [data-icon] {
+	color: white;
+    background-color: #a7a9ac;
+	line-height: 32px;
+    width: 32px;
+	text-align: center;
+    margin-right: 15px;
+}
+	
+[data-upload].uploaded [data-icon] {
+    background-color: #384142;
+}

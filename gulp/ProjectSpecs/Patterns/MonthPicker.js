@@ -5,7 +5,7 @@ const patternInfo = {
     "codeName": "MonthPicker",
     "inDevelopment": false,
     "name": "MonthPicker",
-    "scss": "../scripts/OSFramework/OSUI/Pattern/MonthPicker/scss/monthpicker",
+    "scss": "../scss/04-patterns/03-interaction/month-picker/monthpicker",
     "section": "Interaction"
 };
 

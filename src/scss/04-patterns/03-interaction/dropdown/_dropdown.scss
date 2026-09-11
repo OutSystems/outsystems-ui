@@ -1,0 +1,72 @@
+/* Patterns - Interaction - Dropdown */
+////
+/// @group Patterns-Dropdown
+/// Patterns - Interaction - Dropdown
+
+// Import common dropdown styles based on Current provider
+@use 'provider/virtualselect';
+@use "../../../tokens/variables";
+
+// Common dropdown styles
+.osui-dropdown {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-dropdown-disabled-background:   var(--color-background-input-disabled);
+	--osui-dropdown-disabled-border-color: var(--color-border-input);
+	--osui-dropdown-disabled-color:        var(--color-text-disabled);
+	// ───────────────────────────────────────────────────────────────────
+
+	&-search,
+	&-tags {
+		/// Disable states for dropdowns
+		&.vscomp-ele[disabled] {
+			// Override of library cursor on disable states
+			cursor: initial;
+
+			.vscomp {
+				&-toggle-button {
+					background-color: var(--osui-dropdown-disabled-background);
+					border: variables.$token-border-size-025 solid var(--osui-dropdown-disabled-border-color);
+					color: var(--osui-dropdown-disabled-color);
+					pointer-events: none;
+				}
+
+				&-wrapper,
+				&-wrapper:not(.has-value) .vscomp-value {
+					opacity: inherit;
+				}
+			}
+		}
+
+		// Override the font-family of provider
+		.vscomp-wrapper {
+			font-family: inherit;
+		}
+	}
+
+	/// Dropdown Option Item image
+	&-option {
+		&-image {
+			border-radius: 100%;
+			display: inline-block;
+			height: variables.$token-scale-600;
+			margin-inline-end: variables.$token-scale-200;
+			width: variables.$token-scale-600;
+			background-color: variables.$token-bg-neutral-subtle-default;
+			overflow: hidden;
+		}
+
+		&-icon {
+			color: var(--color-text);
+			font-size: variables.$token-font-size-450;
+			margin-inline-end: variables.$token-scale-200;
+		}
+	}
+
+	/// Error message
+	&-error-message {
+		color: variables.$token-semantics-danger-base;
+		font-size: variables.$token-font-size-300;
+		margin-inline-start: variables.$token-scale-0;
+		margin-block-start: variables.$token-scale-075;
+	}
+}

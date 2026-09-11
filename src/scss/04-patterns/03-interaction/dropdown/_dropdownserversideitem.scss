@@ -1,0 +1,122 @@
+@use "../../../tokens/variables";
+
+/* Patterns - section - DropdownServerSideItem */
+////
+/// @group Patterns-DropdownServerSideItem
+/// Patterns - section - DropdownServerSideItem
+
+///
+.osui-dropdown-serverside-item {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-dropdown-item-background: transparent;
+	--osui-dropdown-item-color: var(--color-text);
+	--osui-dropdown-item-hover-bg: var(--color-border-subtle);
+	// ───────────────────────────────────────────────────────────────────
+
+	align-items: center;
+	background-color: var(--osui-dropdown-item-background);
+	color: var(--osui-dropdown-item-color);
+	cursor: pointer;
+	display: flex;
+	flex: 1;
+	min-height: variables.$token-scale-1000;
+	overflow: hidden;
+	padding-block: variables.$token-scale-200;
+	padding-inline: variables.$token-scale-400;
+	position: relative;
+	transition: background variables.$token-transition-time-300 variables.$token-transition-curve-expressive;
+	width: 100%;
+	z-index: var(--layer-global-screen);
+
+	&:hover {
+		background-color: var(--osui-dropdown-item-hover-bg);
+		z-index: var(--layer-local-tier-1);
+
+		// Service Studio Preview
+		-servicestudio-background-color: variables.$token-bg-surface-default;
+	}
+
+	&--is-selected {
+		background-color: transparent;
+		z-index: var(--layer-local-tier-1);
+
+		// Service Studio Preview
+		-servicestudio-background-color: variables.$token-bg-surface-default;
+
+		// Right-side checkmark — requires --osui-icon-check + --osui-icon-font-family (icon library)
+		&::after {
+			color: variables.$token-semantics-primary-base;
+			content: var(--osui-icon-check);
+			flex-shrink: 0;
+			font-family: var(--osui-icon-font-family);
+			font-size: variables.$token-font-size-400;
+			margin-inline-start: variables.$token-scale-200;
+		}
+	}
+
+	&__content {
+		align-items: center;
+		display: flex;
+		flex: 1;
+		height: inherit;
+		overflow: hidden;
+		pointer-events: none;
+
+		// Override platform .bold utility class applied to item text
+		.bold {
+			font-weight: variables.$token-font-weight-regular;
+		}
+
+		& > *:first-child {
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			width: 100%;
+		}
+	}
+}
+
+// Accessibility -----------------------------------------------------------------
+///
+.has-accessible-features {
+	.osui-dropdown-serverside-item {
+		&:hover {
+			background-color: variables.$token-bg-neutral-subtle-press;
+		}
+
+		&:focus {
+			box-shadow: inset 0 0 0 variables.$token-border-size-075 var(--color-focus-outer);
+		}
+	}
+}
+
+// OS HighContrast Enabled -------------------------------------------------------
+///
+.os-high-contrast {
+	.osui-dropdown-serverside-item {
+		&:hover,
+		&:focus {
+			outline: none;
+
+			&:before {
+				box-shadow: inset 0 0 0 variables.$token-border-size-075 var(--color-focus-outer);
+				bottom: 0;
+				content: '';
+				display: block;
+				inset-inline-start: 0;
+				position: absolute;
+				inset-inline-end: 0;
+				top: 0;
+			}
+		}
+	}
+}
+
+// Responsive --------------------------------------------------------------------
+///
+.tablet,
+.phone {
+	.osui-dropdown-serverside-item {
+		height: variables.$token-scale-1200;
+	}
+}

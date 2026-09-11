@@ -1,0 +1,127 @@
+@use "../../../tokens/variables";
+
+/* Patterns - Numbers - ProgressBar */
+////
+/// @group Patterns-ProgressBar
+/// Patterns - Numbers - Progress Bar
+
+///
+.osui-progress {
+	&-bar {
+		--progress-value: 0%;
+
+		min-height: var(--thickness);
+		position: relative;
+
+		& {
+			-servicestudio-min-height: var(--thickness, #{variables.$token-scale-200});
+		}
+
+		&__container {
+			min-height: var(--thickness);
+			position: relative;
+
+			& {
+				-servicestudio-min-height: var(--thickness, #{variables.$token-scale-200});
+			}
+
+			&.animate {
+				&-entrance .osui-progress-bar__value:before {
+					transition-delay: var(--progress-initial-speed, 0.5s);
+				}
+				&-entrance,
+				&-progress-change {
+					.osui-progress-bar__value:before {
+						transition-duration: var(--progress-speed, 0.35s);
+					}
+				}
+			}
+		}
+
+		&__value {
+			border-radius: calc(var(--shape) / 2);
+			height: var(--thickness);
+			inset-inline-end: 0;
+			inset-inline-start: 0;
+			overflow: hidden;
+			position: absolute;
+
+			& {
+				-servicestudio-height: var(--thickness, #{variables.$token-scale-200});
+			}
+
+			&:after,
+			&:before {
+				border-radius: calc(var(--shape) / 2);
+				content: '';
+				height: 100%;
+				inset-inline-start: 0;
+				position: absolute;
+				top: 0;
+
+				& {
+					-servicestudio-border-radius: var(--shape, variables.$token-border-radius-full);
+				}
+			}
+
+			&:after {
+				background: var(--trail-color, #{variables.$token-bg-neutral-subtle-default});
+				width: 100%;
+
+				& {
+					-servicestudio-background: var(--trail-color, #{variables.$token-bg-neutral-subtle-default});
+				}
+			}
+
+			&:before {
+				background: var(--progress-gradient, var(--progress-color));
+				width: var(--progress-value);
+				z-index: var(--layer-local-tier-1);
+
+				& {
+					-servicestudio-background: var(--progress-color, variables.$token-semantics-primary-base);
+					-servicestudio-width: var(--progress-value, 50%);
+				}
+			}
+		}
+
+		&__content {
+			inset-inline-start: 0;
+			padding-block: variables.$token-scale-0;
+			padding-inline: variables.$token-scale-200;
+			position: absolute;
+			top: 50%;
+			transform: translateY(-50%);
+			width: 100%;
+			z-index: var(--layer-local-tier-1);
+
+			& {
+				-servicestudio-text-align: center;
+			}
+		}
+	}
+}
+
+// OS HighContrast Enabled -------------------------------------------------------
+///
+.os-high-contrast {
+	.osui-progress {
+		&-bar {
+			&__container {
+				min-height: calc(2 * var(--thickness));
+			}
+
+			&__value {
+				border: variables.$token-border-size-050 solid var(--color-border-input);
+				height: calc(2 * var(--thickness));
+
+				&:before,
+				&:after {
+					border: variables.$token-border-size-050 solid var(--color-border-input);
+					inset-inline-start: calc(-1 * variables.$token-border-size-050);
+					top: calc(-1 * variables.$token-border-size-050);
+				}
+			}
+		}
+	}
+}

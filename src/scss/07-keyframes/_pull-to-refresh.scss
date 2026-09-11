@@ -1,3 +1,5 @@
+@use "../tokens/variables";
+
 /* KeyFrames - Pull To Refresh */
 ////
 /// @group KeyFrames-Pull_To_Refresh
@@ -10,7 +12,7 @@
 		transform: translateY(0) scale(0.3);
 	}
 	100% {
-		background-color: get-background-color('neutral-0');
+		background-color: variables.$token-bg-surface-default;
 		opacity: 1;
 		transform: scale(1);
 	}

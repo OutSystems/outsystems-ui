@@ -15,9 +15,22 @@ function createPartialsListProd(platformType) {
     return createPartialsList(project.globalConsts.envType.production, platformType);
 }
 
-// Method used to create the import text
-function getImportLineText(text) {
-	return `@import '${text}';\n`;
+// Method used to create the use text
+// Loaded 'as *' since this file only aggregates partials for their CSS output and never
+// references any of their members by namespace - avoids default-namespace collisions
+// between partials that happen to share a basename.
+function getUseLineText(text) {
+	return `@use '${text}' as *;\n`;
+}
+
+// Method used to get the abstracts barrel '@use' line. Must be emitted as the very first
+// statement in the generated file - CreateScssFile.js places it ahead of the header/section
+// index comments. Dart Sass duplicates a comment that precedes a file's first '@use' once
+// for every nested '@use' encountered deeper in the module graph (reproduced empirically:
+// every partial '@use'-ing the abstracts barrel added one extra copy of the header comment);
+// having a real '@use' as the first statement avoids it entirely.
+function getAbstractsUseLine() {
+	return getUseLineText(scssStructure.structure['css-variables-setup'].assets[0].path);
 }
 
 // Method used to create the section title of each section!
@@ -55,6 +68,8 @@ function createPartialsList(env, platformType) {
 
     // 0. Go through all the Sections
     for (const section in scssStructure.structure) {
+        if (section === 'css-variables-setup') continue; // emitted separately by getAbstractsUseLine()
+
         const sectionInfo = scssStructure.structure[section];
 
         // Create Block comment
@@ -82,7 +97,7 @@ function createPartialsList(env, platformType) {
 
                     // Check if the current asset do not have other assets assigned (Patterns case)
                     if (asset.path !== undefined) {
-                        partialsListText += getImportLineText(asset.path);
+                        partialsListText += getUseLineText(asset.path);
                     }
                 }
 
@@ -98,7 +113,7 @@ function createPartialsList(env, platformType) {
                         } else if (subAsset.key === undefined) {
                             partialsListText += createSectionCommentTitle(`${sectionIndex}.${assetIndex}.${subAssetIndex}. ${subAsset.name}`, 2);
 
-                            partialsListText += getImportLineText(subAsset.path);
+                            partialsListText += getUseLineText(subAsset.path);
                         } else {
 
                             // Get the info about the current object key (Pattern)
@@ -122,7 +137,7 @@ function createPartialsList(env, platformType) {
                                 }
 
                                 if (assetInfo.scss) {
-                                    partialsListText += getImportLineText(assetInfo.scss);
+                                    partialsListText += getUseLineText(assetInfo.scss);
                                 }
 
                                 // Check if the current asset is a group (Ex: DatePicker case)
@@ -139,7 +154,7 @@ function createPartialsList(env, platformType) {
                                             if (assetItem.scss) {
                                                 partialsListText += createSectionCommentTitle(`${sectionIndex}.${assetIndex}.${subAssetIndex}.${assetInfoItemIndex} ${assetItem.name}`, 2);
 
-                                                partialsListText += getImportLineText(assetItem.scss);
+                                                partialsListText += getUseLineText(assetItem.scss);
 
                                                 // Increase AssetItem iteractor
                                                 assetInfoItemIndex++;
@@ -179,3 +194,4 @@ function createPartialsList(env, platformType) {
 // Expose the IndexSection Text
 exports.textDev = createPartialsListDev;
 exports.textProd = createPartialsListProd;
+exports.abstractsUseLine = getAbstractsUseLine;

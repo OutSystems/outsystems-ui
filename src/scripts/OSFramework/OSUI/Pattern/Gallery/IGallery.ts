@@ -7,5 +7,5 @@ namespace OSFramework.OSUI.Patterns.Gallery {
 	 * @interface IGallery
 	 * @extends {Interface.IPattern}
 	 */
-	export type IGallery = Interface.IPattern
+	export type IGallery = Interface.IPattern;
 }

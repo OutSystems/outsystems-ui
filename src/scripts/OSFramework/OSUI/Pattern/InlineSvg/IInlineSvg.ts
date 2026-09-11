@@ -3,5 +3,5 @@ namespace OSFramework.OSUI.Patterns.InlineSvg {
 	/**
 	 * Defines the interface for OutSystemsUI InlineSvg Pattern
 	 */
-	export type IInlineSvg = Interface.IPattern
+	export type IInlineSvg = Interface.IPattern;
 }

@@ -4,7 +4,7 @@
     // "incremental": true,                   /* Enable incremental compilation */
     "target": "es2017", /* Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018', 'ES2019', 'ES2020', or 'ESNEXT'. */
     "module": "amd", /* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', 'es2020', or 'ESNext'. */
-    // "lib": [],                             /* Specify library files to be included in the compilation. */
+    "lib": ["ES2019", "DOM", "DOM.Iterable"], /* Runtime APIs the shipped code may use (e.g. Array.flat needs ES2019). Explicit because `types: []` stopped @types/node from implicitly pulling newer libs in via its reference directives; emit still targets es2017. */
     "allowJs": false, /* Allow javascript files to be compiled. */
     "checkJs": false, /* Report errors in .js files. */
     // "jsx": "preserve",                     /* Specify JSX code generation: 'preserve', 'react-native', or 'react'. */
@@ -40,7 +40,7 @@
     // "baseUrl": "./",                       /* Base directory to resolve non-absolute module names. */
     // "paths": {},                           /* A series of entries which re-map imports to lookup locations relative to the 'baseUrl'. */
     // "typeRoots": [],                       /* List of folders to include type definitions from. */
-    // "types": [],                           /* Type declaration files to be included in compilation. */
+    "types": [], /* Type declaration files to be included in compilation. Deliberately EMPTY: the library is browser-only ambient-namespace code that needs no @types package, while node_modules/@types is full of packages pulled in transitively by dev tooling (vite, storybook, browser-sync, …). Without this, TS auto-includes all of them, and since no lockfile is committed a fresh install floats to versions that may use syntax newer than the pinned TypeScript can parse (this broke the build once: @types/node 26 used TS-5.0-only syntax against the then-pinned TS 4.9 — 50 parse errors that `skipLibCheck` cannot suppress). Keeping it empty removes the whole failure class. */
     // "allowSyntheticDefaultImports": true,  /* Allow default imports from modules with no default export. This does not affect code emit, just typechecking. */
     "esModuleInterop": true, /* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */
     // "preserveSymlinks": true,              /* Do not resolve the real path of symlinks. */

@@ -1,3 +1,7 @@
+@use "sass:map";
+@use '../00-abstract/index' as *;
+@use "../tokens/variables";
+
 /* Usefull - Margin */
 ////
 /// @group UsefullClasses-Margin
@@ -7,45 +11,26 @@
 .margin {
 	@each $type, $value in $osui-sizes {
 		&-#{$type} {
-			margin: var(--space-#{$type});
+			margin: #{map.get($osui-space-token-vars, $type)};
 		}
 
-		@each $osui-box-side in $osui-box-sides {
+		@each $osui-box-side, $osui-logical-side in $osui-box-sides {
 			&-#{$osui-box-side}-#{$type} {
-				margin-#{$osui-box-side}: var(--space-#{$type});
+				margin-#{$osui-logical-side}: #{map.get($osui-space-token-vars, $type)};
 			}
 		}
 
 		&-x-#{$type} {
-			margin-left: var(--space-#{$type});
-			margin-right: var(--space-#{$type});
+			margin-inline: #{map.get($osui-space-token-vars, $type)};
 		}
 
 		&-y-#{$type} {
-			margin-bottom: var(--space-#{$type});
-			margin-top: var(--space-#{$type});
+			margin-block: #{map.get($osui-space-token-vars, $type)};
 		}
 	}
 
 	&-auto {
-		margin: 0 auto;
-	}
-}
-
-// IsRTL -------------------------------------------------------------------------
-///
-.is-rtl {
-	@each $type, $value in $osui-sizes {
-		.margin {
-			&-right-#{$type} {
-				margin-left: var(--space-#{$type});
-				margin-right: var(--space-none);
-			}
-
-			&-left-#{$type} {
-				margin-left: var(--space-none);
-				margin-right: var(--space-#{$type});
-			}
-		}
+		margin-block: 0;
+		margin-inline: auto;
 	}
 }
