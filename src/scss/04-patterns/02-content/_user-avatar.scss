@@ -121,7 +121,7 @@ $osui-avatar-lightest-text-colors: (
 
 		&-secondary {
 			background-color: variables.$token-bg-neutral-base-default;
-			--osui-avatar-color: var(--color-primary);
+			--osui-avatar-color: #{variables.$token-text-primary};
 		}
 
 		&-primary,
