@@ -24,6 +24,13 @@ Procedure: `/port-to-classic` (see `.claude/skills/osui-classic-theme/SKILL.md`)
 - **2026-08-27 — ROU-12992 (working tree)** — added
   `.layout.layout-side-no-header .app-menu-links{gap}` in both bundles.
   Mapping: `$token-space-200` (8px) → `--space-s`. Approximations: none (exact match).
+- **2026-09-11 — autoprefixer correction to the 2026-08-27 ROU-12992 port (working tree)** —
+  added the `-webkit-border-end` / `-webkit-border-before` prefix pairs the original port
+  omitted on `.layout.layout-side-no-header .app-menu-content` and `.app-login-info`.
+  Dev's own autoprefixer (`overrideBrowserslist: ['last 10 versions']`) does prefix
+  single-side logical properties — see `.osui-submenu__header__icon` in a clean dev build —
+  so the unprefixed port would not have applied on the older WebKit still in that range.
+  `margin-block` / `margin-inline` are **not** prefixed, so `.menu-icon` needed no change.
 - **2026-09-10 — ServiceStudio ApplicationTitle fix (working tree)** — added
   `.layout:not(.layout-side) .header-content > [data-block*=ApplicationTitle] .application-name`
   with `-servicestudio-display:none !important`, in both bundles, immediately after the
