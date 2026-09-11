@@ -9,7 +9,7 @@
 ///
 .layout-native {
 	&.hide-header-on-scroll .header {
-		top: calc(-1 * (var(--size-header) + var(--os-safe-area-top)));
+		top: calc(-1 * (var(--header-size) + var(--os-safe-area-top)));
 	}
 
 	.header {
@@ -118,7 +118,7 @@
 .android {
 	.layout-native {
 		&.hide-header-on-scroll .header {
-			top: calc(-1 * (var(--size-header) + #{android-safe-area-top()}));
+			top: calc(-1 * (var(--header-size) + #{android-safe-area-top()}));
 		}
 
 		.header,

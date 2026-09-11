@@ -44,7 +44,7 @@
 @mixin app-logo {
 	border-radius: variables.$token-border-radius-100;
 	margin-inline-end: variables.$token-scale-200;
-	max-height: var(--size-header);
+	max-height: var(--header-size);
 	max-width: 120px;
 }
 

@@ -738,8 +738,8 @@ function generateShape(variables, utilities) {
     };
     
     Object.entries(variables).forEach(([varName, data]) => {
-        if (varName.match(/^token-rectangular-(2xs|xs|sm|md|lg|xl|2xl)$/)) {
-            const size = varName.match(/rectangular-(.+)$/)[1];
+        if (varName.match(/^token-shape-rectangular-(2xs|xs|sm|md|lg|xl|2xl)$/)) {
+            const size = varName.match(/shape-rectangular-(.+)$/)[1];
             const value = resolveValue(data.value, variables);
             
             rectangularShapes.push({
@@ -751,8 +751,8 @@ function generateShape(variables, utilities) {
                 value: value,
                 usage: "",
             });
-        } else if (varName.match(/^token-round-(2xs|xs|sm|md|lg|xl|2xl)$/)) {
-            const size = varName.match(/round-(.+)$/)[1];
+        } else if (varName.match(/^token-shape-round-(2xs|xs|sm|md|lg|xl|2xl)$/)) {
+            const size = varName.match(/shape-round-(.+)$/)[1];
             const value = resolveValue(data.value, variables);
             
             roundShapes.push({
@@ -764,8 +764,8 @@ function generateShape(variables, utilities) {
                 value: value,
                 usage: "",
             });
-        } else if (varName.match(/^token-soft-(2xs|xs|sm|md|lg|xl|2xl)$/)) {
-            const size = varName.match(/soft-(.+)$/)[1];
+        } else if (varName.match(/^token-shape-soft-(2xs|xs|sm|md|lg|xl|2xl)$/)) {
+            const size = varName.match(/shape-soft-(.+)$/)[1];
             const value = resolveValue(data.value, variables);
             
             softShapes.push({

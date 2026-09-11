@@ -63,10 +63,14 @@ const CODE_ROOT =
 	'  --color-text:               #{$token-text-default};\n' +
 	'  --color-primary:            #{$token-semantics-primary-base};\n' +
 	'\n' +
-	'  // one shape vocabulary; set --border-radius-default once to re-radius everything\n' +
-	'  --border-radius-soft:   var(--border-radius-default, #{$token-border-radius-200}); // 8px\n' +
-	'  --border-radius-softer: var(--border-radius-default, #{$token-border-radius-400}); // 16px\n' +
-	'  --border-radius-rounded:var(--border-radius-default, #{$token-border-radius-full});// 999px\n' +
+	'  // shape tier slots; set --border-radius-default once to re-radius every tier,\n' +
+	'  // or swap profile with .shape-soft / .shape-round / .shape-rectangular\n' +
+	'  --border-radius-xs: var(--border-radius-default, #{$token-shape-soft-xs}); // 8px  · controls\n' +
+	'  --border-radius-sm: var(--border-radius-default, #{$token-shape-soft-sm}); // 12px · surfaces\n' +
+	'  // ... 2xs, md, lg, xl, 2xl\n' +
+	'\n' +
+	'  // legacy aliases (TS GetBorderRadiusValueFromShapeType)\n' +
+	'  --border-radius-rounded: #{$token-border-radius-full}; // 999px\n' +
 	'}';
 
 const CODE_CARD_API =
@@ -324,7 +328,8 @@ export function CssArchitecturePage() {
 						</table>
 						<p>
 							App-layout plumbing also lives in <code>_root.scss</code> but is <strong>not</strong> part of
-							the theme contract: <code>--size-*</code>, z-index <code>--layer-*</code>, and safe areas{' '}
+							the theme contract: the layout sizes (<code>--header-size</code>,{' '}
+							<code>--side-menu-size</code>, …), z-index <code>--layer-*</code>, and safe areas{' '}
 							<code>--os-safe-area-*</code>.
 						</p>
 

@@ -35,6 +35,13 @@ body > .app-menu-content {
 	}
 }
 
+// The application name comes from the platform's ApplicationTitle block. Only
+// layout-side has room for it in the header, so hide it at design time for every
+// other layout. Runtime counterpart: the .desktop rule in 02-layout/_header.scss.
+.layout:not(.layout-side) .header-content > [data-block*='ApplicationTitle'] .application-name {
+	-servicestudio-display: none !important;
+}
+
 // ServiceStudio Hybrid
 html[data-uieditorversion^='1'] {
 	body {
@@ -43,7 +50,7 @@ html[data-uieditorversion^='1'] {
 			-servicestudio-bottom: 0;
 			-servicestudio-position: fixed;
 			-servicestudio-top: 0;
-			-servicestudio-width: var(--size-side-menu);
+			-servicestudio-width: var(--side-menu-size);
 			-servicestudio-z-index: var(--layer-global-navigation);
 		}
 
@@ -123,8 +130,13 @@ html[data-uieditorversion^='1'] {
 	}
 
 	.chat-message-status {
+		&:has(.uieditor-if-widget-container) {
+			-servicestudio-display: inline-flex;
+		}
+
 		.uieditor-if-branch-widget {
 			-servicestudio-display: inline-flex;
+			-servicestudio-align-items: center;
 
 			&:empty {
 				-servicestudio-display: none;

@@ -21,7 +21,7 @@
 		}
 
 		.header {
-			inset-inline-start: var(--size-side-menu);
+			inset-inline-start: var(--side-menu-size);
 		}
 	}
 
@@ -31,7 +31,7 @@
 
 	.aside-expandable {
 		&:not(.fixed-header) .main .header {
-			margin-inline-start: calc(var(--size-side-menu) * -1);
+			margin-inline-start: calc(var(--side-menu-size) * -1);
 		}
 
 		&.menu-visible {

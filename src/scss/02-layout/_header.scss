@@ -18,7 +18,7 @@
 	}
 
 	&-top {
-		height: var(--size-header);
+		height: var(--header-size);
 	}
 
 	&-logo {
@@ -55,6 +55,17 @@
 		inset-inline-end: 0;
 		top: 0;
 	}
+}
+
+///
+.menu-icon {
+	cursor: pointer;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	justify-content: center;
+	margin-inline-end: variables.$token-space-600;
+	width: variables.$token-scale-600;
 }
 
 ///

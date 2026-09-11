@@ -1,5 +1,5 @@
 Compiled CSS output of the pre-token-migration codebase — the **old theme** snapshot,
-kept for reference and visual regression comparison only (served at /legacy in
+kept for reference and visual regression comparison only (served at /classic-theme in
 Storybook for the "Theme" toolbar toggle).
 
 Snapshot provenance: built from `dev` @ a67fcf378 (ROU-12926, v2.30.1, 2026-09-04).
@@ -10,7 +10,7 @@ then replaying every entry under **Hand-applied ports** below.
 
 Changes back-ported from the new (token) theme by hand, de-tokenised onto the old
 vocabulary. **A snapshot refresh wipes these** — replay every entry after rebuilding.
-Procedure: `/port-to-legacy` (see `.claude/skills/osui-legacy-theme/SKILL.md`).
+Procedure: `/port-to-classic` (see `.claude/skills/osui-classic-theme/SKILL.md`).
 
 - **2026-08-27 — ROU-12992 / 6ce34d903 "add new layout rules"** — added
   `.layout.layout-side-no-header` (+ `.main-content`, `.app-menu-content`,
@@ -24,6 +24,19 @@ Procedure: `/port-to-legacy` (see `.claude/skills/osui-legacy-theme/SKILL.md`).
 - **2026-08-27 — ROU-12992 (working tree)** — added
   `.layout.layout-side-no-header .app-menu-links{gap}` in both bundles.
   Mapping: `$token-space-200` (8px) → `--space-s`. Approximations: none (exact match).
+- **2026-09-11 — autoprefixer correction to the 2026-08-27 ROU-12992 port (working tree)** —
+  added the `-webkit-border-end` / `-webkit-border-before` prefix pairs the original port
+  omitted on `.layout.layout-side-no-header .app-menu-content` and `.app-login-info`.
+  Dev's own autoprefixer (`overrideBrowserslist: ['last 10 versions']`) does prefix
+  single-side logical properties — see `.osui-submenu__header__icon` in a clean dev build —
+  so the unprefixed port would not have applied on the older WebKit still in that range.
+  `margin-block` / `margin-inline` are **not** prefixed, so `.menu-icon` needed no change.
+- **2026-09-10 — ServiceStudio ApplicationTitle fix (working tree)** — added
+  `.layout:not(.layout-side) .header-content > [data-block*=ApplicationTitle] .application-name`
+  with `-servicestudio-display:none !important`, in both bundles, immediately after the
+  `.phone/.tablet .app-menu-links a` SS-preview rule (same relative position as the new theme).
+  Mapping: none needed — the rule is a single `-servicestudio-*` declaration with no token
+  values, so it is byte-identical in both themes. Approximations: none.
 
 ### Refresh log
 

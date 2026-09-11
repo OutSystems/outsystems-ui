@@ -34,9 +34,18 @@ declare global {
 export const Patterns = (): any => window.OutSystems?.OSUI?.Patterns;
 
 let _seq = 0;
-/** Stable-per-render unique id. Fresh ids avoid "already registered" throws. */
+/**
+ * Stable-per-render unique id. Fresh ids avoid "already registered" throws.
+ *
+ * The counter alone is not enough: HMR re-evaluates this module and resets it,
+ * while OUI's registry still holds the ids from before the reload. The random
+ * suffix comes from `crypto` rather than `Math.random()` — these ids are only
+ * DOM handles, but a CSPRNG costs nothing here and keeps SonarCloud's PRNG rule
+ * from flagging the line.
+ */
 export function uid(prefix = 'osui'): string {
-	return `${prefix}-${(_seq++).toString(36)}-${Math.random().toString(36).slice(2, 7)}`;
+	const rand = crypto.getRandomValues(new Uint32Array(1))[0].toString(36);
+	return `${prefix}-${(_seq++).toString(36)}-${rand}`;
 }
 
 /**

@@ -70,7 +70,7 @@
 			.split-right-close {
 				left: calc(var(--os-safe-area-left) + variables.$token-scale-600);
 				position: fixed;
-				top: calc(var(--os-safe-area-right) + (var(--size-header) + var(--token-scale-600, 24px)) / 2);
+				top: calc(var(--os-safe-area-right) + (var(--header-size) + var(--token-scale-600, 24px)) / 2);
 				z-index: var(--layer-global-screen);
 				transform: translateY(-50%);
 
@@ -158,7 +158,7 @@
 				padding-bottom: calc(var(--os-safe-area-bottom) + variables.$token-scale-600);
 				padding-left: calc(var(--os-safe-area-left) + variables.$token-scale-600);
 				padding-right: calc(var(--os-safe-area-right) + variables.$token-scale-600);
-				padding-top: calc(var(--os-safe-area-right) + var(--size-header) + var(--token-scale-600, 24px));
+				padding-top: calc(var(--os-safe-area-right) + var(--header-size) + var(--token-scale-600, 24px));
 				position: fixed;
 				top: 0;
 				transform: translateX(100%) translateZ(0);
@@ -187,7 +187,7 @@
 			padding-bottom: calc(var(--os-safe-area-bottom) + variables.$token-scale-400);
 			padding-left: calc(var(--os-safe-area-left) + variables.$token-scale-400);
 			padding-right: calc(var(--os-safe-area-right) + variables.$token-scale-400);
-			padding-top: calc(var(--size-header) + var(--os-safe-area-top));
+			padding-top: calc(var(--header-size) + var(--os-safe-area-top));
 
 			.split-right-close {
 				display: block;
@@ -199,7 +199,7 @@
 	&.android {
 		.layout-native {
 			.split-right {
-				padding-block-start: calc(var(--size-header) + #{android-safe-area-top()});
+				padding-block-start: calc(var(--header-size) + #{android-safe-area-top()});
 			}
 		}
 	}

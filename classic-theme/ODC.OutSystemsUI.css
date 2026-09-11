@@ -1187,13 +1187,15 @@ body,
   padding:var(--osui-layout-main-padding);
 }
 .layout.layout-side-no-header .app-menu-content{
-  border-inline-end:var(--osui-layout-aside-lines);
+  -webkit-border-end:var(--osui-layout-aside-lines);
+          border-inline-end:var(--osui-layout-aside-lines);
 }
 .layout.layout-side-no-header .app-menu-links{
   gap:var(--space-s);
 }
 .layout.layout-side-no-header .app-login-info{
-  border-block-start:var(--osui-layout-aside-lines);
+  -webkit-border-before:var(--osui-layout-aside-lines);
+          border-block-start:var(--osui-layout-aside-lines);
 }
 .layout.layout-side-no-header .menu-icon{
   margin:var(--space-base) var(--space-m);
@@ -2015,6 +2017,9 @@ body .app-menu-content .app-menu-links{
   -servicestudio-margin-left:var(--space-none);
   -servicestudio-padding:var(--space-s) var(--space-m);
   -servicestudio-width:100%;
+}
+.layout:not(.layout-side) .header-content > [data-block*=ApplicationTitle] .application-name{
+  -servicestudio-display:none !important;
 }
 .phone .layout:not(.layout-side) .app-menu-links a.active,
 .tablet .layout:not(.layout-side) .app-menu-links a.active{

@@ -69,7 +69,7 @@
 		}
 
 		&.bottom-bar-exists {
-			bottom: calc(var(--size-bottom-bar) + variables.$token-scale-400);
+			bottom: calc(var(--bottom-bar-size) + variables.$token-scale-400);
 		}
 
 		&.no-rotation {

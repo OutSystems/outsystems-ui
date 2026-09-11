@@ -163,7 +163,7 @@
 		max-height: var(--bottom-sheet-max-height);
 		overflow-y: scroll;
 		padding: var(--osui-bottom-sheet-padding);
-		padding-bottom: calc(var(--size-bottom-bar) + variables.$token-scale-600 + var(--os-safe-area-bottom));
+		padding-bottom: calc(var(--bottom-bar-size) + variables.$token-scale-600 + var(--os-safe-area-bottom));
 	}
 }
 

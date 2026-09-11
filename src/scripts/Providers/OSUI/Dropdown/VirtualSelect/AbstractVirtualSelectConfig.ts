@@ -102,16 +102,20 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 					index = data.index;
 				}
 
-				// Check if an image should be added to the Option item
-				const hasFigureType = this._checkForFigType(this._groupedOptionsList[groupIndex].options[index]);
+				const option = this._groupedOptionsList[groupIndex]?.options[index];
 
-				switch (hasFigureType) {
-					case Enum.FigureType.Image:
-						prefix = this._getOptionImagePrefix(this._groupedOptionsList[groupIndex].options[index]);
-						break;
-					case Enum.FigureType.Icon:
-						prefix = this._getOptionIconPrefix(this._groupedOptionsList[groupIndex].options[index]);
-						break;
+				if (option) {
+					// Check if an image should be added to the Option item
+					const hasFigureType = this._checkForFigType(option);
+
+					switch (hasFigureType) {
+						case Enum.FigureType.Image:
+							prefix = this._getOptionImagePrefix(option);
+							break;
+						case Enum.FigureType.Icon:
+							prefix = this._getOptionIconPrefix(option);
+							break;
+					}
 				}
 			}
 

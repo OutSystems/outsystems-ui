@@ -134,10 +134,15 @@ a `$token-*`, so overriding the token still cascades.
   --color-error:   #{$token-semantics-danger-base};
   --color-neutral-0 … --color-neutral-10: #{$token-primitives-neutral-*};
 
-  // radius — one shape vocabulary; each resolves var(--border-radius-default, <own>)
-  --border-radius-soft:   var(--border-radius-default, #{$token-border-radius-200}); // 8px  · controls + flat surfaces
-  --border-radius-softer: var(--border-radius-default, #{$token-border-radius-400}); // 16px · elevated surfaces
-  --border-radius-rounded:var(--border-radius-default, #{$token-border-radius-full});// 999px· circular
+  // radius — shape tier slots holding the active profile (soft defaults here);
+  // .shape-soft / .shape-round / .shape-rectangular remap the whole set, and a
+  // component reads the tier for its category (controls -> xs, surfaces -> sm, ...)
+  --border-radius-2xs … --border-radius-2xl: var(--border-radius-default, #{$token-shape-soft-*});
+  // legacy aliases, kept for TS GetBorderRadiusValueFromShapeType (no -default indirection)
+  --border-radius-none:    #{$token-border-radius-0};    // 0px
+  --border-radius-soft:    #{$token-shape-soft-xs};      // 8px
+  --border-radius-rounded: #{$token-border-radius-full}; // 999px · fixed pill/circle chrome
+  // --border-radius-softer is RETIRED — use the tier slot (md) instead
 }
 ```
 
@@ -151,7 +156,7 @@ What lives here:
 | **Brand / status / neutral** | `--color-{primary,primary-hover,primary-selected,primary-active,secondary,error,warning,success,info}`, `--color-neutral-0..10` | brand + neutrals are Color-entity records read by TS `GetColorValueFromColorType`; the four status roles are **not** entity records, just public O11 names |
 | **Palette** | `--color-{red,orange,yellow,lime,green,teal,cyan,blue,indigo,violet,grape,pink}` | the 12 Color-entity families; entity-bound, so the names cannot change. The light/dark variants (`-lightest` … `-darkest`) are deliberately **not** roles — their utility classes read `$token-*` directly |
 | **Focus ring** | `--color-focus-outer` (translucent wash), `--color-focus-inner` (solid line on top) | read by `.has-accessible-features :focus` |
-| **Radius** | `--border-radius-{none,soft,softer,rounded}` | set **`--border-radius-default`** once at `:root` to re-radius everything; `none/soft/rounded` ↔ TS `GetBorderRadiusValueFromShapeType`, `softer` is CSS-only |
+| **Radius** | tier slots `--border-radius-{2xs,xs,sm,md,lg,xl,2xl}` + legacy aliases `--border-radius-{none,soft,rounded}` | set **`--border-radius-default`** once at `:root` to re-radius every tier slot, or swap profile with `.shape-soft` / `.shape-round` / `.shape-rectangular`; the three aliases ↔ TS `GetBorderRadiusValueFromShapeType`. `softer` is **retired** |
 | **Spacing** | `--space-{none,xs,s,base,m,l,xl,xxl}` | token-backed onto `$token-scale-*`; also read at runtime by Gallery `ItemsGap`. Prefer `$token-scale-*` in new component SCSS |
 
 > **Renaming any entity-bound name is a breaking change.**
@@ -167,7 +172,10 @@ components read `$token-text-danger` / `$token-border-danger-default` directly,
 because neither has an entity record or a cross-component consumer.
 
 **Also in `_root.scss` but NOT part of the theme contract** (app-layout
-plumbing): layout sizes `--size-*`, z-index `--layer-global-*` / `--layer-local-*`,
+plumbing): layout sizes `--header-size` / `--header-size-content` / `--side-menu-size` /
+`--bottom-bar-size` / `--footer-height` (dev's names, kept deliberately — a public surface
+apps read, two of them written from TS via `GlobalEnum.CSSVariables`),
+z-index `--layer-global-*` / `--layer-local-*`,
 safe areas `--os-safe-area-*` (the one retained `--os-` prefix), and the
 portaled-pattern `--osui-*-layer` vars (read off-DOM, so they must live at `:root`).
 
@@ -313,7 +321,7 @@ nothing in the CSS had to change; only the element.
 
 **What still will not follow the theme.** 17 of the 21 `--osui-*` defaults
 declared at `:root` are hardcoded literals rather than token reads — each already
-carries a `// future: --token-*` note in `_root.scss`. Also `--size-*` and
+carries a `// future: --token-*` note in `_root.scss`. Also the layout sizes and
 `--layer-*`, but those are layout plumbing, not colour (§Framework theme layer).
 Routing the remaining literals onto tokens is Phase E work.
 

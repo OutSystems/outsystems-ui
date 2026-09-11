@@ -243,8 +243,17 @@ function escTsString(v) {
 	return v.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
 }
 
+// Explicit comparator so the sort is not the type-dependent default. Compares by
+// code unit rather than localeCompare: this generator's output is a committed
+// artifact, so file order must not vary with the machine's locale.
+function compareCodeUnits(a, b) {
+	if (a < b) return -1;
+	if (a > b) return 1;
+	return 0;
+}
+
 // ── Build the model ────────────────────────────────────────────────────────
-const files = walk(scssRoot).sort();
+const files = walk(scssRoot).sort(compareCodeUnits);
 const patternStories = loadPatternStoryMap();
 const categories = new Map();
 
