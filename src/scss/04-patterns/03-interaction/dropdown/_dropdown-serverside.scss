@@ -463,7 +463,7 @@ $balloonMobileTopMargin: 5vh;
 		}
 
 		.osui-dropdown-serverside__balloon-container {
-			max-height: calc(90vh - $balloonMobileTopMargin - var(--size-header));
+			max-height: calc(90vh - $balloonMobileTopMargin - var(--header-size));
 		}
 	}
 
@@ -471,7 +471,7 @@ $balloonMobileTopMargin: 5vh;
 		.osui-dropdown-serverside__search-input--is-focused {
 			.osui-dropdown-serverside__balloon-container {
 				// 100vw because ios split in half the vertical height when keyboard is open!
-				max-height: calc(100vw - $balloonMobileTopMargin - var(--size-header));
+				max-height: calc(100vw - $balloonMobileTopMargin - var(--header-size));
 			}
 		}
 	}
@@ -480,7 +480,7 @@ $balloonMobileTopMargin: 5vh;
 		.osui-dropdown-serverside {
 			&--at-content {
 				.osui-dropdown-serverside__balloon-container {
-					--ballon-top-margin-value: calc(var(--size-header) + var(--size-header-content) + 5vw);
+					--ballon-top-margin-value: calc(var(--header-size) + var(--header-size-content) + 5vw);
 				}
 			}
 		}
@@ -546,7 +546,7 @@ $balloonMobileTopMargin: 5vh;
 				height: auto;
 				margin-block-start: $balloonMobileTopMargin;
 				// 90vh - maxHeight in order to create a margin top/bottom with 5vh
-				max-height: calc(90vh - $balloonMobileTopMargin - var(--size-header));
+				max-height: calc(90vh - $balloonMobileTopMargin - var(--header-size));
 				overflow: hidden;
 				width: 85vw;
 
@@ -568,7 +568,7 @@ $balloonMobileTopMargin: 5vh;
 			&--has-not-search {
 				.osui-dropdown-serverside__balloon-container {
 					margin-block-start: $balloonMobileTopMargin;
-					max-height: calc(var(--viewport-height, 100vh) - $balloonMobileTopMargin - var(--size-header));
+					max-height: calc(var(--viewport-height, 100vh) - $balloonMobileTopMargin - var(--header-size));
 				}
 			}
 		}

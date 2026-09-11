@@ -13,7 +13,7 @@
 	--osui-section-index-border-width: #{variables.$token-border-size-025};
 	// ───────────────────────────────────────────────────────────────────
 
-	--top-position: calc(var(--size-header) + var(--size-header-content) + #{android-safe-area-top()});
+	--top-position: calc(var(--header-size) + var(--header-size-content) + #{android-safe-area-top()});
 	display: flex;
 	flex-direction: column;
 	position: relative;

@@ -16,7 +16,7 @@ import { cls, extendedClassArgType } from './_helpers/lowcode';
  * `<a>` — so the mock uses `div`. The SCSS covers `> a, > div` for that reason.
  *
  * In the native layout the wrapper lives in a `.footer` sized by
- * `--size-bottom-bar`; the demo box reproduces that height.
+ * `--bottom-bar-size`; the demo box reproduces that height.
  */
 
 interface BottomBarArgs {
@@ -50,7 +50,7 @@ type Story = StoryObj<BottomBarArgs>;
 export const Default: Story = {
 	render: ({ activeIndex, extendedClass }) =>
 		renderStatic(`
-			<div style="max-width: 420px; height: var(--size-bottom-bar, 56px);">
+			<div style="max-width: 420px; height: var(--bottom-bar-size, 56px);">
 				<div class="${cls('bottom-bar-wrapper', extendedClass)}">
 					<div class="bottom-bar" style="height: 100%;">
 						${ITEMS.map(

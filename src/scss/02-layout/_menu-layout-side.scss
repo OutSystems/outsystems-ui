@@ -19,7 +19,7 @@
 		height: auto;
 		position: fixed;
 		top: 0;
-		width: var(--size-side-menu);
+		width: var(--side-menu-size);
 		z-index: var(--osui-menu-layer);
 	}
 }
@@ -31,20 +31,20 @@
 		background-color: variables.$token-bg-surface-default;
 		flex-direction: column;
 		height: 100%;
-		left: calc(-1 * var(--size-side-menu));
+		left: calc(-1 * var(--side-menu-size));
 		position: fixed;
 		top: 0;
 		transform: translateX(0) translateZ(0);
 		transition: transform 130ms ease-in;
-		width: var(--size-side-menu);
+		width: var(--side-menu-size);
 
 		will-change: transform;
 		z-index: var(--osui-menu-layer);
 	}
 
 	.app-menu-content.is--open {
-		left: calc(-1 * var(--size-side-menu));
-		transform: translateX(var(--size-side-menu)) translateZ(0);
+		left: calc(-1 * var(--side-menu-size));
+		transform: translateX(var(--side-menu-size)) translateZ(0);
 		transition: transform 330ms ease-out;
 	}
 }
@@ -60,7 +60,7 @@
 		}
 
 		&.aside-expandable:not(.fixed-header) .app-menu-content {
-			padding-block-start: var(--size-header);
+			padding-block-start: var(--header-size);
 			top: 0;
 		}
 	}
@@ -72,7 +72,7 @@
 			}
 
 			.main {
-				margin-inline-start: var(--size-side-menu);
+				margin-inline-start: var(--side-menu-size);
 			}
 		}
 

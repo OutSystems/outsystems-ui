@@ -172,7 +172,10 @@ components read `$token-text-danger` / `$token-border-danger-default` directly,
 because neither has an entity record or a cross-component consumer.
 
 **Also in `_root.scss` but NOT part of the theme contract** (app-layout
-plumbing): layout sizes `--size-*`, z-index `--layer-global-*` / `--layer-local-*`,
+plumbing): layout sizes `--header-size` / `--header-size-content` / `--side-menu-size` /
+`--bottom-bar-size` / `--footer-height` (dev's names, kept deliberately — a public surface
+apps read, two of them written from TS via `GlobalEnum.CSSVariables`),
+z-index `--layer-global-*` / `--layer-local-*`,
 safe areas `--os-safe-area-*` (the one retained `--os-` prefix), and the
 portaled-pattern `--osui-*-layer` vars (read off-DOM, so they must live at `:root`).
 
@@ -318,7 +321,7 @@ nothing in the CSS had to change; only the element.
 
 **What still will not follow the theme.** 17 of the 21 `--osui-*` defaults
 declared at `:root` are hardcoded literals rather than token reads — each already
-carries a `// future: --token-*` note in `_root.scss`. Also `--size-*` and
+carries a `// future: --token-*` note in `_root.scss`. Also the layout sizes and
 `--layer-*`, but those are layout plumbing, not colour (§Framework theme layer).
 Routing the remaining literals onto tokens is Phase E work.
 

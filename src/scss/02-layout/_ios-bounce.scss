@@ -31,7 +31,7 @@
 				}
 
 				.pull-to-refresh {
-					top: calc(var(--size-header) + var(--size-header-content) + var(--os-safe-area-top));
+					top: calc(var(--header-size) + var(--header-size-content) + var(--os-safe-area-top));
 				}
 
 				.content {

@@ -104,16 +104,15 @@ Leave the existing occurrences alone.
 
 `--font-size-{h1..h6,display,base,s,xs,label}`, `--font-{light,regular,semi-bold,bold}`, `--shadow-{none,xs,s,m,l,xl}`. Map `$token-elevation-1..4` onto `--shadow-s`/`--shadow-m`/`--shadow-l`/`--shadow-xl` — the elevation tokens are two-layer shadows with no old equivalent, so this is a deliberate approximation. Log it.
 
-### Layout plumbing — names differ, not just values
+### Layout plumbing — names are the same in both themes
 
-| new theme | old theme |
-|-----------|-----------|
-| `--size-side-menu` | `--side-menu-size` |
-| `--size-header` | `--header-size` |
-| `--size-bottom-bar` | `--bottom-bar-size` |
-| `--layer-global-*`, `--layer-local-tier-*`, `--os-safe-area-*` | same names, no change |
+`--header-size`, `--header-size-content`, `--side-menu-size`, `--bottom-bar-size`,
+`--footer-height`, `--layer-global-*`, `--layer-local-tier-*` and `--os-safe-area-*` are
+spelled identically in both themes, so they copy across unchanged.
 
-This one bites: the `--size-*` / `*-size` flip is a rename, so a copy-paste port silently produces a dead `var()`.
+(Historical note: the new theme briefly renamed the five layout sizes to a `--size-*`
+prefix. That was reverted — they are a public surface apps read, and two of them are
+written from TS via `GlobalEnum.CSSVariables`. Don't reintroduce the prefix.)
 
 ## 4. The `--osui-*` component API layer — keep it
 

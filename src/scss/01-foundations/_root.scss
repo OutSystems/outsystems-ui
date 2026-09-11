@@ -103,11 +103,11 @@
 	}
 
 	// ─── Theme layer · layout sizes ──────────────────────────────────────
-	--size-header: #{$header-size};
-	--size-header-content: #{$header-size-content};
-	--size-side-menu: #{$side-menu-size};
-	--size-bottom-bar: #{$bottom-bar-size};
-	--size-footer: #{$footer-height};
+	--header-size: #{$header-size};
+	--header-size-content: #{$header-size-content};
+	--side-menu-size: #{$side-menu-size};
+	--bottom-bar-size: #{$bottom-bar-size};
+	--footer-height: #{$footer-height};
 
 	// ─── Theme layer · safe areas ────────────────────────────────────────
 	--os-safe-area-top: #{safe-area(top)};

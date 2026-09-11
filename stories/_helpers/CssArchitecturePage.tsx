@@ -328,7 +328,8 @@ export function CssArchitecturePage() {
 						</table>
 						<p>
 							App-layout plumbing also lives in <code>_root.scss</code> but is <strong>not</strong> part of
-							the theme contract: <code>--size-*</code>, z-index <code>--layer-*</code>, and safe areas{' '}
+							the theme contract: the layout sizes (<code>--header-size</code>,{' '}
+							<code>--side-menu-size</code>, …), z-index <code>--layer-*</code>, and safe areas{' '}
 							<code>--os-safe-area-*</code>.
 						</p>
 
