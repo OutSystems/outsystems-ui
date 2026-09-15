@@ -39,9 +39,9 @@ export type CssApiManifest = {
 };
 
 export const CSS_API_MANIFEST: CssApiManifest = {
-	generatedAt: '2026-09-11T07:43:38.138Z',
+	generatedAt: '2026-09-11T19:45:39.841Z',
 	totals: {
-		properties: 573,
+		properties: 574,
 		components: 67,
 		categories: 9,
 	},
@@ -3709,10 +3709,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							properties: [
 							{
 								name: '--osui-input-with-icon-icon-color',
-								default: '$token-icon-default',
+								default: '#{$token-icon-default}',
 								kind: 'color',
-								chain: 'other',
-								hint: '$token-icon-default',
+								chain: 'token',
+								hint: '#{$token-icon-default}',
 							},
 							{
 								name: '--osui-input-with-icon-icon-hover-color',
@@ -4363,6 +4363,13 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							selector: '.pagination',
 							properties: [
 							{
+								name: '--osui-pagination-active-background',
+								default: '#{$token-bg-neutral-subtlest-default}',
+								kind: 'color',
+								chain: 'token',
+								hint: '#{$token-bg-neutral-subtlest-default}',
+							},
+							{
 								name: '--osui-pagination-active-border-color',
 								default: 'var(--color-border)',
 								kind: 'color',
@@ -4406,10 +4413,10 @@ export const CSS_API_MANIFEST: CssApiManifest = {
 							},
 							{
 								name: '--osui-pagination-button-font-weight',
-								default: '#{$token-font-weight-medium}',
+								default: '#{$token-font-weight-regular}',
 								kind: 'other',
 								chain: 'token',
-								hint: '#{$token-font-weight-medium}',
+								hint: '#{$token-font-weight-regular}',
 							},
 							{
 								name: '--osui-pagination-button-hover-background',
