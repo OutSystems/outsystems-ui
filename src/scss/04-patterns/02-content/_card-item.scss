@@ -9,7 +9,7 @@
 .card-detail {
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-card-detail-title-color: var(--color-text);
-	--osui-card-detail-text-color:  var(--color-text-subtlest);
+	--osui-card-detail-text-color: var(--color-text-subtlest);
 	// ───────────────────────────────────────────────────────────────────
 
 	align-items: center;
@@ -30,7 +30,7 @@
 
 	&-title {
 		color: var(--osui-card-detail-title-color);
-		font-size: variables.$token-font-size-650;
+		font-size: variables.$token-font-size-500;
 		font-weight: variables.$token-font-weight-semi-bold;
 	}
 
