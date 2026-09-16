@@ -48,3 +48,13 @@ export const WithIcon: Story = {
 				${btn('btn btn-primary', 'Disabled', true, '<i class="ph ph-plus" aria-hidden="true" data-icon=""></i>')}
 			</div>`),
 };
+
+export const Sizes: Story = {
+	render: () =>
+		renderStatic(`
+			<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+				${btn('btn btn-primary btn-small', 'Small', false)}
+				${btn('btn btn-primary', 'Default', false)}
+				${btn('btn btn-primary btn-large', 'Large', false)}
+			</div>`),
+};

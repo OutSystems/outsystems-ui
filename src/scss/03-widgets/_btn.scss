@@ -13,7 +13,7 @@
 	// Confirmed against Figma file mMqGdwjw4xuQv2shvFVNMB, node 2812:23083
 	// (ROU-13008) — previously this matched the wrong Figma type (see git log
 	// for the pre-ROU-13008 solid-fill version this replaced).
-	--osui-btn-height: #{variables.$token-scale-1000};
+	--osui-btn-min-height: #{variables.$token-scale-1000};
 	--osui-btn-background: var(--color-background-surface);
 	--osui-btn-color: var(--color-text-subtle);
 	--osui-btn-border-color: var(--color-border);
@@ -54,10 +54,10 @@
 	filter: brightness(1);
 	font-weight: variables.$token-font-weight-medium;
 	gap: variables.$token-space-200;
-	height: var(--osui-btn-height);
 	justify-content: center;
-	line-height: variables.$token-font-line-height-400;
+	line-height: variables.$token-font-line-height-600;
 	margin: 0;
+	min-height: var(--osui-btn-min-height);
 	padding-block: variables.$token-space-0;
 	padding-inline: variables.$token-space-250;
 	position: relative;
@@ -120,14 +120,18 @@
 
 	&-small {
 		font-size: variables.$token-font-size-300;
-		height: variables.$token-scale-800;
+		line-height: variables.$token-font-line-height-500;
+		min-height: variables.$token-scale-800;
 		padding-block: variables.$token-scale-0;
 		padding-inline: variables.$token-scale-200;
 	}
 
 	&-large {
 		font-size: variables.$token-font-size-400;
-		height: variables.$token-scale-1200;
+		line-height: variables.$token-font-line-height-600;
+		min-height: variables.$token-scale-1200;
+		padding-block: variables.$token-scale-0;
+		padding-inline: variables.$token-scale-300;
 	}
 
 	&-cancel {
