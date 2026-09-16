@@ -53,13 +53,13 @@
 	display: inline-flex;
 	filter: brightness(1);
 	font-weight: variables.$token-font-weight-medium;
-	gap: variables.$token-scale-200;
+	gap: variables.$token-space-200;
 	height: var(--osui-btn-height);
 	justify-content: center;
 	line-height: variables.$token-font-line-height-400;
 	margin: 0;
-	padding-block: variables.$token-scale-0;
-	padding-inline: variables.$token-scale-400;
+	padding-block: variables.$token-space-0;
+	padding-inline: variables.$token-space-250;
 	position: relative;
 	transition:
 		background-color variables.$token-transition-time-100 variables.$token-transition-curve-base,
