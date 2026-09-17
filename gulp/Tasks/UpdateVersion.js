@@ -78,8 +78,8 @@ function getFilesList(cb) {
 			
 			case filesList.classicThemeReadme:
 			case filesList.readme:
-				findFor = `# OutSystems UI · v${defaultSpecs.info.version}`;
-				replaceTo = `# OutSystems UI · v${newVersionToBeSet}`;
+				findFor = `# OutSystems UI · ${defaultSpecs.info.version}`;
+				replaceTo = `# OutSystems UI · ${newVersionToBeSet}`;
 				break;
 		}
 
