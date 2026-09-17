@@ -46,18 +46,18 @@ namespace OSFramework.OSUI.Helper {
 		 */
 		public static IsValid(url: string): boolean {
 			const pattern = new RegExp(
-				'^(https?:\\/\\/)?' + // protocol
+				String.raw`^(https?:\/\/)?` + // protocol
 					// domain name: each label starts and ends alphanumeric, hyphens allowed in between.
 					// Written as [a-z\d](?:[a-z\d-]*[a-z\d])? instead of the previous
 					// [a-z\d]([a-z\d-]*[a-z\d])* - same accepted strings, but the nested quantifier
 					// backtracked exponentially on non-matching input (ReDoS, ROU-13054).
-					'(([a-z\\d](?:[a-z\\d-]*[a-z\\d])?\\.)+[a-z]{2,}|' +
-					'((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
-					'(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
-					'(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
-					'(\\#[-a-z\\d_]*)?$',
+					String.raw`(([a-z\d](?:[a-z\d-]*[a-z\d])?\.)+[a-z]{2,}|` +
+					String.raw`((\d{1,3}\.){3}\d{1,3}))` + // OR ip (v4) address
+					String.raw`(\:\d+)?(\/[-a-z\d%_.~+]*)*` + // port and path
+					String.raw`(\?[;&a-z\d%_.~+=-]*)?` + // query string
+					String.raw`(\#[-a-z\d_]*)?$`, // fragment locator
 				'i'
-			); // fragment locator
+			);
 
 			return pattern.test(url) || pattern.test(window.location.host + url);
 		}
