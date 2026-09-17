@@ -20,8 +20,8 @@ const meta: Meta = { title: 'Widgets/Button' };
 export default meta;
 type Story = StoryObj;
 
-const btn = (style: string, label: string, disabled = false) =>
-	`<button data-button="" class="${style}" type="button"${disabled ? ' disabled=""' : ''}>${label}</button>`;
+const btn = (style: string, label: string, disabled = false, icon = '') =>
+	`<button data-button="" class="${style}" type="button"${disabled ? ' disabled=""' : ''}>${icon}${label}</button>`;
 
 export const Variants: Story = {
 	render: () =>
@@ -33,5 +33,28 @@ export const Variants: Story = {
 				${btn('btn btn-success', 'Confirm')}
 				${btn('btn btn-error', 'Delete')}
 				${btn('btn btn-primary', 'Disabled', true)}
+			</div>`),
+};
+
+export const WithIcon: Story = {
+	render: () =>
+		renderStatic(`
+			<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+				${btn('btn btn-primary', 'Primary', false, '<i class="ph ph-plus" aria-hidden="true" data-icon=""></i>')}
+				${btn('btn', 'Secondary', false, '<i class="ph ph-plus" aria-hidden="true" data-icon=""></i>')}
+				${btn('btn btn-cancel', 'Cancel', false, '<i class="ph ph-plus" aria-hidden="true" data-icon=""></i>')}
+				${btn('btn btn-success', 'Confirm', false, '<i class="ph ph-plus" aria-hidden="true" data-icon=""></i>')}
+				${btn('btn btn-error', 'Delete', false, '<i class="ph ph-plus" aria-hidden="true" data-icon=""></i>')}
+				${btn('btn btn-primary', 'Disabled', true, '<i class="ph ph-plus" aria-hidden="true" data-icon=""></i>')}
+			</div>`),
+};
+
+export const Sizes: Story = {
+	render: () =>
+		renderStatic(`
+			<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+				${btn('btn btn-primary btn-small', 'Small', false)}
+				${btn('btn btn-primary', 'Default', false)}
+				${btn('btn btn-primary btn-large', 'Large', false)}
 			</div>`),
 };
