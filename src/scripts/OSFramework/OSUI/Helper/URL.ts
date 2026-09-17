@@ -29,32 +29,5 @@ namespace OSFramework.OSUI.Helper {
 				) !== null
 			);
 		}
-
-		/**
-		 * Function that validates if a given URL is a valid URL (optional http/https protocol,
-		 * domain name or IPv4 address, optional port, path, query string and fragment).
-		 *
-		 * The domain-name segment is deliberately written without nested quantifiers so the
-		 * regex runs in linear time on any input (ReDoS fix, ROU-13054).
-		 *
-		 * @deprecated This helper has no callers inside OutSystems UI and will be removed in a
-		 * future major version. Prefer the native URL constructor (new URL(url) in a try/catch).
-		 * @static
-		 * @param {string} url
-		 * @return {*}  {boolean}
-		 * @memberof OSFramework.Helper.URL
-		 */
-		public static IsValid(url: string): boolean {
-			// Segments, in order: optional protocol | domain name OR ip (v4) address | optional port and path |
-			// optional query string | optional fragment.
-			// Domain name: each label starts and ends alphanumeric, hyphens allowed in between. It is written as
-			// [a-z\d](?:[a-z\d-]*[a-z\d])? instead of the previous [a-z\d]([a-z\d-]*[a-z\d])* - same accepted
-			// strings, but the nested quantifier backtracked exponentially on non-matching input (ReDoS, ROU-13054).
-			// Kept as a single literal (not new RegExp) so static ReDoS analysers can keep checking the pattern.
-			const pattern =
-				/^(https?:\/\/)?(([a-z\d](?:[a-z\d-]*[a-z\d])?\.)+[a-z]{2,}|((\d{1,3}\.){3}\d{1,3}))(:\d+)?(\/[-a-z\d%_.~+]*)*(\?[;&a-z\d%_.~+=-]*)?(#[-a-z\d_]*)?$/i; // NOSONAR (S5843) the complexity is inherent to the URL grammar; the regex is proven linear-time (ROU-13054)
-
-			return pattern.test(url) || pattern.test(window.location.host + url);
-		}
 	}
 }
