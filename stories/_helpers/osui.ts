@@ -34,18 +34,51 @@ declare global {
 export const Patterns = (): any => window.OutSystems?.OSUI?.Patterns;
 
 let _seq = 0;
+let _scope = '';
+
+/**
+ * Per-story id scope. Called from the `withAppShell` decorator with the
+ * Storybook story id, immediately before the story's `render` runs.
+ *
+ * Resetting the counter per story is what makes the ids reproducible: without
+ * it, the number a story gets depends on how many stories rendered before it in
+ * the same page load, which is navigation-order dependent. The scope string then
+ * keeps ids unique *between* stories, so a reset can never collide with an
+ * instance the previous story failed to dispose.
+ */
+export function setUidScope(scope: string): void {
+	_scope = scope;
+	_seq = 0;
+}
+
 /**
  * Stable-per-render unique id. Fresh ids avoid "already registered" throws.
  *
- * The counter alone is not enough: HMR re-evaluates this module and resets it,
- * while OUI's registry still holds the ids from before the reload. The random
- * suffix comes from `crypto` rather than `Math.random()` — these ids are only
- * DOM handles, but a CSPRNG costs nothing here and keeps SonarCloud's PRNG rule
- * from flagging the line.
+ * Deterministic in a built Storybook, random in dev — because the two
+ * environments need opposite things:
+ *
+ *  • **Dev** has HMR, which re-evaluates this module and resets both `_seq` and
+ *    the `_teardowns` array while OUI's registry still holds the ids from before
+ *    the reload. Those orphaned instances are never disposed, so a reused id
+ *    throws on `Create`. A random suffix sidesteps it. (`crypto` rather than
+ *    `Math.random()`: these ids are only DOM handles, but a CSPRNG costs nothing
+ *    here and keeps SonarCloud's PRNG rule from flagging the line.)
+ *
+ *  • **Built Storybook** — what Chromatic snapshots — has no HMR, so the
+ *    collision the randomness guards against cannot happen. There the randomness
+ *    is actively harmful: every id changes on every run, so Chromatic reports a
+ *    DOM diff on all 29 uid-using stories for PRs that touched nothing related,
+ *    burying real changes in noise.
  */
 export function uid(prefix = 'osui'): string {
-	const rand = crypto.getRandomValues(new Uint32Array(1))[0].toString(36);
-	return `${prefix}-${(_seq++).toString(36)}-${rand}`;
+	const seq = (_seq++).toString(36);
+
+	if (import.meta.env.DEV) {
+		const rand = crypto.getRandomValues(new Uint32Array(1))[0].toString(36);
+		return `${prefix}-${seq}-${rand}`;
+	}
+
+	return _scope ? `${prefix}-${seq}-${_scope}` : `${prefix}-${seq}`;
 }
 
 /**

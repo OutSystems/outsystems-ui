@@ -22,6 +22,8 @@ import {
 } from '../stories/_helpers/theme-roles';
 import { initDocsAppearanceSync, applyAppAppearance } from '../stories/_helpers/docs-appearance';
 import { readStoredAppearance } from '../stories/_helpers/storybook-appearance.js';
+import { waitForCanvasFonts } from '../stories/_helpers/fonts';
+import { setUidScope } from '../stories/_helpers/osui';
 
 /**
  * Icon-library root classes (see src/scss/01-foundations/_icon-library-odc.scss):
@@ -192,6 +194,10 @@ initDocsAppearanceSync();
 initPreviewToolbarSync();
 
 const withAppShell: Decorator = (storyFn, context) => {
+	// Scope pattern ids to this story, so a built Storybook produces the same ids
+	// on every run (see `setUidScope`). Must run before `storyFn()`, which is what
+	// calls `uid()`.
+	setUidScope(context.id);
 	applyPreviewGlobals(context.globals);
 	applyAppAppearance(readStoredAppearance());
 	// Channel may not be ready at preview module load — wire docs sync from the decorator too.
@@ -209,6 +215,11 @@ const withAppShell: Decorator = (storyFn, context) => {
 
 const preview: Preview = {
 	decorators: [withAppShell],
+	// Gate every story on the canvas fonts being loaded. Patterns that measure DOM
+	// geometry once at build time (Tabs' active-indicator width, etc.) otherwise
+	// race the Inter `display=swap` re-flow and bake in fallback-font metrics,
+	// which surfaces as a flaky few-px Chromatic diff. See `_helpers/fonts.ts`.
+	loaders: [() => waitForCanvasFonts()],
 	// UI-review tracking: every story starts as `ui-pending`. As a component's UI
 	// is signed off, its meta opts out with `!ui-pending` and adds `ui-reviewed`
 	// (see e.g. Accordion / Alert stories). Filter by either in the sidebar's tag menu.
