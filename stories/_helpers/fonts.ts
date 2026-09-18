@@ -66,7 +66,10 @@ let fontsReady: Promise<void> | undefined;
  * promise, so this costs nothing after startup.
  */
 export function waitForCanvasFonts(): Promise<void> {
-	if (fontsReady) return fontsReady;
+	// `!== undefined`, not a truthiness check: a Promise is always truthy, so
+	// `if (fontsReady)` reads as a test of the promise's *value* when what is
+	// meant is "has the memo been populated". (SonarCloud S6544.)
+	if (fontsReady !== undefined) return fontsReady;
 
 	// Non-browser / older-engine safety: `document.fonts` is optional in the type
 	// domain we compile against, and these files are not part of the library build.
