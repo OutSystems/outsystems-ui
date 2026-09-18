@@ -9,6 +9,9 @@ let newVersionToBeSet = '';
 
 // List of files path to be updated
 let filesList = {
+	classicThemeO11: './classic-theme/O11.OutSystemsUI.css',
+	classicThemeODC: './classic-theme/ODC.OutSystemsUI.css',
+	classicThemeReadme: './classic-theme/README.md',
 	constants: './src/scripts/OSFramework/OSUI/Constants.ts',
 	package: './package.json',
 	readme: './README.md',
@@ -55,6 +58,13 @@ function getFilesList(cb) {
 
 
 		switch (filesList[path]) {
+			// Both bundles share the same banner prefix, only the platform suffix differs
+			case filesList.classicThemeO11:
+			case filesList.classicThemeODC:
+				findFor = `OutSystems UI ${defaultSpecs.info.version}`
+				replaceTo = `OutSystems UI ${newVersionToBeSet}`
+				break;
+
 			case filesList.constants:
 				findFor = `OSUIVersion = '${defaultSpecs.info.version}';`
 				replaceTo = `OSUIVersion = '${newVersionToBeSet}';`
@@ -66,14 +76,22 @@ function getFilesList(cb) {
 				replaceTo = `"version": "${newVersionToBeSet}",`
 				break;
 			
+			case filesList.classicThemeReadme:
 			case filesList.readme:
-				findFor = `# OutSystems UI · v${defaultSpecs.info.version}`;
-				replaceTo = `# OutSystems UI · v${newVersionToBeSet}`;
+				findFor = `# OutSystems UI · ${defaultSpecs.info.version}`;
+				replaceTo = `# OutSystems UI · ${newVersionToBeSet}`;
 				break;
 		}
 
 		// Read file code
 		let code = fs.readFileSync(filesList[path], 'utf8');
+
+		// Skip the file when there is nothing to look for, or when the expected version is not there
+		if (findFor === '' || code.includes(findFor) === false) {
+			console.warn(`\n ⚠️  Skipped '${filesList[path]}': couldn't find "${findFor}"! \n`);
+			continue;
+		}
+
 		// Update code
 		let updatedCode = code.replace(findFor, replaceTo);
 		// Update the existing file info with the new one!
