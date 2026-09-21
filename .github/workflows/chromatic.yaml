@@ -20,12 +20,10 @@ name: 'Storybook'
 # baseline at all. See ADR-0008 and ADR-0009.
 on:
     pull_request:
-        # ROU-12714 is the "Make Great UI" long-living integration branch; drop it
-        # from these lists once it merges into dev (ROU-12955).
-        branches: ['dev', 'ROU-12714']
+        branches: ['dev']
         types: [opened, reopened, synchronize]
     push:
-        branches: ['dev', 'ROU-12714']
+        branches: ['dev']
     workflow_dispatch: {}
 
 concurrency:
@@ -128,9 +126,9 @@ jobs:
                   exitZeroOnChanges: true
                   skip: 'dependabot/**'
                   buildScriptName: build-storybook
-                  # Merges to a long-living branch auto-accept the build as the new
-                  # baseline; PRs still require review in Chromatic.
-                  autoAcceptChanges: '{dev,ROU-12714}'
+                  # Merges to dev auto-accept the build as the new baseline; PRs
+                  # still require review in Chromatic.
+                  autoAcceptChanges: 'dev'
 
             - name: 🔎 Find Chromatic comment
               if: github.event_name == 'pull_request' && steps.chromatic.outcome == 'success'
