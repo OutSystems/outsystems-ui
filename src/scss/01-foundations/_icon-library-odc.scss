@@ -326,6 +326,16 @@ body.iconLibrary-phosphor {
 	}
 }
 
+.iconLibrary-phosphor .chat-message-status {
+	&_icon {
+		font-size: variables.$token-font-size-400;
+		&.is-read,
+		&.is-received {
+			--osui-icon-sent: '\e53a';
+		}
+	}
+}
+
 // DropdownServerSide
 .osui-dropdown-serverside__selected-values:after {
 	content: var(--osui-icon-arrow-down);
