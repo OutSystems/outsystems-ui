@@ -279,14 +279,14 @@
 		}
 
 		& > div {
-			-servicestudio-background-color: variables.$token-primitives-neutral-300;
+			-servicestudio-background-color: variables.$token-bg-neutral-subtlest-hover;
 			-servicestudio-border-radius: 30px;
-			-servicestudio-color: variables.$token-primitives-neutral-700;
+			-servicestudio-color: variables.$token-text-subtlest;
 			-servicestudio-display: inline-block;
-			-servicestudio-font-size: variables.$token-font-size-350;
+			-servicestudio-font-size: variables.$token-font-size-300;
 			-servicestudio-font-weight: variables.$token-font-weight-semi-bold;
 			-servicestudio-height: 30px;
-			-servicestudio-padding: 5px 35px 5px 10px;
+			-servicestudio-padding: 2px 35px 2px 10px;
 			-servicestudio-position: relative;
 			-servicestudio-top: 50%;
 			-servicestudio-transform: translateY(-50%);
@@ -296,9 +296,8 @@
 			}
 
 			& > .icon {
-				-servicestudio-background-color: variables.$token-primitives-neutral-700;
 				-servicestudio-border-radius: 100%;
-				-servicestudio-color: variables.$token-primitives-base-white;
+				-servicestudio-color: variables.$token-text-subtlest;
 				-servicestudio-display: block;
 				-servicestudio-font-size: variables.$token-font-size-350;
 				-servicestudio-height: 15px;
@@ -314,8 +313,8 @@
 				&:before {
 					-servicestudio-content: '˟';
 					-servicestudio-display: inline-block;
-					-servicestudio-font-size: variables.$token-font-size-650;
-					-servicestudio-height: 20px;
+					-servicestudio-font-size: variables.$token-font-size-500;
+					-servicestudio-height: 15px;
 					-servicestudio-left: 50%;
 					-servicestudio-position: absolute;
 					-servicestudio-top: 50%;
