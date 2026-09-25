@@ -126,3 +126,6 @@ storybook-static/
 
 # Generated TypeDoc output
 docs/
+
+# Local implementation plans and drafts (never committed)
+specs/

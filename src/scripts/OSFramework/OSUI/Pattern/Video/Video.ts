@@ -105,16 +105,33 @@ namespace OSFramework.OSUI.Patterns.Video {
 			// Get the file extension from URL
 			const _urlFileExtension = OSUI.Helper.URL.GetFileTypeFromURL(this.configs.URL);
 
-			if (_urlFileExtension === null) {
-				console.warn(`The URL '${this.configs.URL}' is not a valid URL.`);
-			}
-
 			// Add class to video source element
 			OSUI.Helper.Dom.Styles.AddClass(this._videoSourceElement, Patterns.Video.Enum.CssClass.VideoSource);
 
-			// Set the attributes to video source created
+			// Set the source URL
 			this._videoSourceElement.src = this.configs.URL;
-			this._videoSourceElement.type = Patterns.Video.Enum.VideoAttributes.TypePath + _urlFileExtension;
+
+			// Build the MIME type as 'video/<extension>' from the URL. The type attribute is only a pre-filter for
+			// the browser's resource selection: a <source> whose type the browser cannot play is skipped without
+			// any request. Since the value is guessed from the URL string it can be wrong (e.g. "video/null" when
+			// there is no extension, "video/0" for ".../GetVideo?v=1.0"), so canPlayType asks the browser the same
+			// question up front and the type is only written when the browser accepts it.
+			const _sourceType =
+				_urlFileExtension !== null
+					? Patterns.Video.Enum.VideoAttributes.TypePath + _urlFileExtension
+					: Constants.EmptyString;
+
+			if (
+				_sourceType !== Constants.EmptyString &&
+				this._videoElement.canPlayType(_sourceType) !== Constants.EmptyString
+			) {
+				OSUI.Helper.Dom.Attribute.Set(this._videoSourceElement, GlobalEnum.HTMLAttributes.Type, _sourceType);
+			} else {
+				// Without type, the browser fetches the resource and detects the media type from the response.
+				// Nothing is logged here on purpose: a URL without file extension (or with one the browser does not
+				// claim) is a supported use case, not an error, so the console stays clean for the app developer.
+				OSUI.Helper.Dom.Attribute.Remove(this._videoSourceElement, GlobalEnum.HTMLAttributes.Type);
+			}
 		}
 
 		// Method create the track element
@@ -277,6 +294,9 @@ namespace OSFramework.OSUI.Patterns.Video {
 		 * @memberof OSFramework.Patterns.Video.Video
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
+			// Keep the previous URL to only reload the media element when it actually changes
+			const _previousUrl = this.configs.URL;
+
 			super.changeProperty(propertyName, propertyValue);
 
 			if (this.isBuilt) {
@@ -298,7 +318,14 @@ namespace OSFramework.OSUI.Patterns.Video {
 						this._setPosterUrl();
 						break;
 					case Enum.Properties.URL:
-						this._setVideoSource();
+						// load() resets the media element, so only do it when the URL really changed
+						if (this.configs.URL !== _previousUrl) {
+							this._setVideoSource();
+							// A changed <source src> is only picked up by the media element after load()
+							this._videoElement.load();
+							// load() pauses the element without a pause event, so re-sync the state
+							this._triggerOnStateChangedEvent(Patterns.Video.Enum.VideoStates.Unstarted);
+						}
 						break;
 					case Enum.Properties.Width:
 						this._setWidth();
