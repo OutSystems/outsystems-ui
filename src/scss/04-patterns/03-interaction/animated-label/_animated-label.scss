@@ -80,6 +80,7 @@
 		& {
 			-servicestudio-left: 0 !important;
 			-servicestudio-position: static !important;
+			-servicestudio-width: fit-content !important;
 		}
 	}
 
@@ -204,6 +205,12 @@
 		.animated-label-text {
 			top: variables.$token-scale-400;
 			transform: none;
+
+			// Service Studio Preview
+			& {
+				-servicestudio-transform: TranslateY(-50%) !important;
+				-servicestudio-width: fit-content!important;
+			}
 		}
 	}
 
