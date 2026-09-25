@@ -130,9 +130,9 @@ namespace OSFramework.OSUI.Patterns.Video {
 				// Without type, the browser fetches the resource and detects the media type from the response
 				OSUI.Helper.Dom.Attribute.Remove(this._videoSourceElement, GlobalEnum.HTMLAttributes.Type);
 
-				// Informational, not a warning: both cases below are supported and do play. The message is here so
-				// that whoever inspects the DOM knows why this source carries no type attribute. An empty URL is
-				// skipped, since the text would be misleading for a video that has no source set yet.
+				// Both cases below are supported and do play, but an omitted type is worth surfacing: it tells
+				// whoever inspects the DOM why this source carries no type attribute. An empty URL is skipped,
+				// since the text would be misleading for a video that has no source set yet.
 				if (this.configs.URL !== Constants.EmptyString) {
 					const _reason =
 						_sourceType === Constants.EmptyString
