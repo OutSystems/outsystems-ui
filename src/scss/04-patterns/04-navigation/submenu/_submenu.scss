@@ -200,6 +200,11 @@
 			transition: background-color variables.$token-transition-time-150 variables.$token-transition-curve-linear;
 			white-space: nowrap;
 
+			// Service Studio Preview
+			& {
+				-servicestudio-display: block !important;
+			}
+
 			&.active {
 				background-color: var(--osui-submenu-item-selected-background);
 				color: var(--osui-submenu-active-border-color);

@@ -438,11 +438,11 @@ body.iconLibrary-phosphor {
 			-servicestudio-border-radius: 30px;
 			-servicestudio-color: variables.$token-primitives-neutral-700;
 			-servicestudio-display: flex;
-			-servicestudio-font-size: variables.$token-font-size-350;
+			-servicestudio-font-size: variables.$token-font-size-300;
 			-servicestudio-font-weight: variables.$token-font-weight-semi-bold;
 			-servicestudio-height: 30px;
 			-servicestudio-padding: 8px;
-			-servicestudio-position: relative;
+			-servicestudio-position: absolute;
 			-servicestudio-top: 50%;
 			-servicestudio-transform: translateY(-50%);
 			-servicestudio-width: 70px;
@@ -464,7 +464,8 @@ body.iconLibrary-phosphor {
 			&__arrow-icon {
 				-servicestudio-align-self: center;
 				-servicestudio-color: variables.$token-primitives-neutral-700;
-				-servicestudio-position: relative;
+				-servicestudio-position: absolute;
+				-servicestudio-right: variables.$token-scale-400;
 				-servicestudio-font-size: variables.$token-font-size-500;
 				-servicestudio-font-weight: normal;
 				-servicestudio-width: 12px;
