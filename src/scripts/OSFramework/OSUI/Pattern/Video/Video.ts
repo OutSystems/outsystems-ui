@@ -127,10 +127,22 @@ namespace OSFramework.OSUI.Patterns.Video {
 			) {
 				OSUI.Helper.Dom.Attribute.Set(this._videoSourceElement, GlobalEnum.HTMLAttributes.Type, _sourceType);
 			} else {
-				// Without type, the browser fetches the resource and detects the media type from the response.
-				// Nothing is logged here on purpose: a URL without file extension (or with one the browser does not
-				// claim) is a supported use case, not an error, so the console stays clean for the app developer.
+				// Without type, the browser fetches the resource and detects the media type from the response
 				OSUI.Helper.Dom.Attribute.Remove(this._videoSourceElement, GlobalEnum.HTMLAttributes.Type);
+
+				// Informational, not a warning: both cases below are supported and do play. The message is here so
+				// that whoever inspects the DOM knows why this source carries no type attribute. An empty URL is
+				// skipped, since the text would be misleading for a video that has no source set yet.
+				if (this.configs.URL !== Constants.EmptyString) {
+					const _reason =
+						_sourceType === Constants.EmptyString
+							? `has no file extension`
+							: `has a file extension the browser does not report as playable ('${_sourceType}')`;
+
+					console.warn(
+						`${GlobalEnum.PatternName.Video} (${this.widgetId}): The URL '${this.configs.URL}' ${_reason}. The source type attribute was omitted, so the browser will detect the media type from the response.`
+					);
+				}
 			}
 		}
 
