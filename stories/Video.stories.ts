@@ -58,63 +58,31 @@ export const Default: Story = {
 };
 
 /**
- * URL without a file extension (ROU-13023). The pattern must omit the `<source type>`
- * attribute so the browser fetches the resource and detects the media type from the response.
- * The public sample from `url` is fetched and exposed through a `blob:` URL, which has no file
- * extension, so the story depends on no private endpoint (ADR-0009). Snapshotting is disabled:
- * a streaming video frame is not a stable visual baseline.
+ * URL without a file extension (ROU-13023). The pattern must omit the `<source type>` attribute so
+ * that the browser fetches the resource and detects the media type from the response instead of
+ * skipping the source unplayed.
+ *
+ * This Cloudinary demo asset is served from a path that carries no extension, so it reproduces the
+ * customer case over real HTTP while staying public: any clone can run it, with no private endpoint
+ * involved (ADR-0009). Snapshot disabled, a streaming video frame is not a stable visual baseline.
  */
 export const UrlWithoutExtension: Story = {
-	render: (args) => {
-		const id = uid('video');
-		const template = `<video ${osuiRoot(id)} class="osui-video" style="max-width:480px;width:100%;"></video>`;
-		return renderPattern(template, (_root, register) => {
-			const P = Patterns();
-			let blobUrl = '';
-			let disposed = false;
-
-			register(() => {
-				disposed = true;
-				P.VideoAPI.Dispose?.(id);
-				if (blobUrl) URL.revokeObjectURL(blobUrl);
-			});
-
-			(async () => {
-				const response = await fetch(args.url);
-				const blob = await response.blob();
-				if (disposed) return;
-				blobUrl = URL.createObjectURL(blob);
-				P.VideoAPI.Create(
-					id,
-					cfg({
-						URL: blobUrl,
-						Controls: args.controls,
-						Muted: args.muted,
-						Loop: args.loop,
-						Autoplay: false,
-						Width: '',
-						Height: '',
-						PosterURL: '',
-						Captions: '[]',
-					})
-				);
-				P.VideoAPI.Initialize(id);
-			})();
-		});
-	},
+	args: { url: 'https://res.cloudinary.com/demo/video/upload/glide-over-coastal-beach' },
+	render: renderVideo,
 	parameters: { chromatic: { disableSnapshot: true } },
 };
 
 /**
- * Same scenario against a real HTTP endpoint (ROU-13023): a server that streams a video from a URL
- * with no file extension, so the browser has to detect the media type from the response. That is the
- * customer case, and the one thing the `blob:` story above cannot reproduce.
+ * The same scenario against an internal endpoint (ROU-13023). The story above already exercises a
+ * real HTTP response, but it comes from a CDN that labels it correctly as `video/mp4`. The endpoint
+ * the customer reported labels its response `video/aspx`, so the browser has to fall back on
+ * inspecting the container itself. This story is here to try that case against the environment
+ * under test.
  *
- * No URL ships with this story. The endpoints that behave this way live on internal OutSystems
- * environments, this repository is public, and anything written here would be inlined into every
- * published Storybook build. Paste the endpoint of the environment under test into the **URL**
- * control instead: it is read at render time, so nothing is committed and nothing is published.
- * Snapshot disabled, there is no stable baseline.
+ * No URL ships with it. Those endpoints live on internal OutSystems environments, this repository is
+ * public, and anything written here would be inlined into every published Storybook build. Paste the
+ * endpoint into the **URL** control instead: it is read at render time, so nothing is committed and
+ * nothing is published. Snapshot disabled, there is no stable baseline.
  */
 export const UrlWithoutExtensionLiveEndpoint: Story = {
 	args: { url: '' },
