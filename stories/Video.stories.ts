@@ -83,6 +83,10 @@ export const UrlWithoutExtension: Story = {
  * public, and anything written here would be inlined into every published Storybook build. Paste the
  * endpoint into the **URL** control instead: it is read at render time, so nothing is committed and
  * nothing is published. Snapshot disabled, there is no stable baseline.
+ *
+ * The same control also takes a base64 data URL (`data:video/mp4;base64,...`, ROU-11717): the pattern
+ * omits the `<source type>` and the browser plays the embedded data. Storybook does not persist such a
+ * value in the story link (only `[a-zA-Z0-9 _-]` survive in URL args), so paste it into the control.
  */
 export const UrlWithoutExtensionLiveEndpoint: Story = {
 	args: { url: '' },
