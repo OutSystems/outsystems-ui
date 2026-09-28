@@ -104,8 +104,8 @@ namespace OSFramework.OSUI.Patterns.Video {
 		private _setVideoSource(): void {
 			// A data URL ('data:video/mp4;base64,...') has no file extension to guess a type from and can be megabytes
 			// long, so it is neither scanned nor logged: the browser detects the media type from the data itself.
-			const _isDataUrl = this.configs.URL.startsWith(Patterns.Video.Enum.VideoAttributes.DataUrlScheme);
-
+			const _dataUrlScheme = Patterns.Video.Enum.VideoAttributes.DataUrlScheme;
+			const _isDataUrl = this.configs.URL.slice(0, _dataUrlScheme.length).toLowerCase() === _dataUrlScheme;
 			// Get the file extension from URL
 			const _urlFileExtension = _isDataUrl ? null : OSUI.Helper.URL.GetFileTypeFromURL(this.configs.URL);
 
