@@ -55,7 +55,7 @@ const CODE_TOKEN_VAR =
 	'// Design tokens — src/scss/tokens/_variables.scss  (generated)\n' +
 	'$token-bg-surface-default: var(--token-bg-surface-default, var(--token-primitives-base-white, #ffffff));';
 
-const CODE_BUILD = 'npx build.tokens --dest src/scss/tokens/ --prefix token   # runs in prebuild / predev';
+const CODE_BUILD = 'npx build-tokens --dest src/scss/tokens/ --prefix token   # runs in prebuild / predev';
 
 const CODE_ROOT =
 	':root {\n' +
