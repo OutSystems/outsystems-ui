@@ -102,8 +102,12 @@ namespace OSFramework.OSUI.Patterns.Video {
 
 		// Method to create the source element
 		private _setVideoSource(): void {
+			// A data URL ('data:video/mp4;base64,...') has no file extension to guess a type from and can be megabytes
+			// long, so it is neither scanned nor logged: the browser detects the media type from the data itself.
+			const _dataUrlScheme = Patterns.Video.Enum.VideoAttributes.DataUrlScheme;
+			const _isDataUrl = this.configs.URL.slice(0, _dataUrlScheme.length).toLowerCase() === _dataUrlScheme;
 			// Get the file extension from URL
-			const _urlFileExtension = OSUI.Helper.URL.GetFileTypeFromURL(this.configs.URL);
+			const _urlFileExtension = _isDataUrl ? null : OSUI.Helper.URL.GetFileTypeFromURL(this.configs.URL);
 
 			// Add class to video source element
 			OSUI.Helper.Dom.Styles.AddClass(this._videoSourceElement, Patterns.Video.Enum.CssClass.VideoSource);
@@ -132,8 +136,9 @@ namespace OSFramework.OSUI.Patterns.Video {
 
 				// Both cases below are supported and do play, but an omitted type is worth surfacing: it tells
 				// whoever inspects the DOM why this source carries no type attribute. An empty URL is skipped,
-				// since the text would be misleading for a video that has no source set yet.
-				if (this.configs.URL !== Constants.EmptyString) {
+				// since the text would be misleading for a video that has no source set yet, and so is a data URL,
+				// which is expected to carry no type.
+				if (this.configs.URL !== Constants.EmptyString && _isDataUrl === false) {
 					const _reason =
 						_sourceType === Constants.EmptyString
 							? `has no file extension`
