@@ -64,7 +64,7 @@ package (a dependency, pinned in `package.json`). It is **generated**, never
 hand-edited:
 
 ```bash
-npx build.tokens --dest src/scss/tokens/ --prefix token   # runs in prebuild / predev
+npx build-tokens --dest src/scss/tokens/ --prefix token   # runs in prebuild / predev
 ```
 
 This emits three files into `src/scss/tokens/` (all **gitignored**):

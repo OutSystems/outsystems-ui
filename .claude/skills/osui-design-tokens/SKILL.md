@@ -11,7 +11,7 @@ Design tokens are the styling contract between OutSystems UI (the component libr
 
 - **Package:** [`outsystems-design-tokens`](https://www.npmjs.com/package/outsystems-design-tokens) (pinned in `package.json`, currently `^1.3.7`).
 - **Source of truth:** JSON files in the token package itself (`tokens/primitives.json`, `tokens/color scheme.json`, `tokens/typography.json`, `tokens/theme/*.json`, `tokens/shape/*.json`). Edited either directly or via the Token Studio Figma plugin.
-- **Generated locally in this repo:** running `npx build.tokens` (wired into the gulp pipeline) writes three files into `src/scss/tokens/`:
+- **Generated locally in this repo:** running `npx build-tokens` (wired into the gulp pipeline) writes three files into `src/scss/tokens/`:
   - `_root.scss` — all `--token-*` CSS custom properties on `:root`.
   - `_variables.scss` — matching `$token-*` SCSS variables, each expanding to `var(--token-*, <hardcoded-fallback>)`.
   - `_utilities.scss` — utility classes.
