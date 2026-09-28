@@ -434,13 +434,13 @@ body.iconLibrary-phosphor {
 		&-as-tag {
 			-servicestudio-align-items: center;
 			-servicestudio-justify-content: space-between;
-			-servicestudio-background-color: variables.$token-primitives-neutral-300;
+			-servicestudio-background-color: variables.$token-bg-neutral-subtlest-hover;
 			-servicestudio-border-radius: 30px;
 			-servicestudio-color: variables.$token-primitives-neutral-700;
 			-servicestudio-display: flex;
 			-servicestudio-font-size: variables.$token-font-size-300;
 			-servicestudio-font-weight: variables.$token-font-weight-semi-bold;
-			-servicestudio-height: 30px;
+			-servicestudio-height: 28px;
 			-servicestudio-padding: 8px;
 			-servicestudio-position: absolute;
 			-servicestudio-top: 50%;
@@ -457,6 +457,7 @@ body.iconLibrary-phosphor {
 					-servicestudio-left: 0;
 					-servicestudio-content: var(--osui-icon-clear);
 					-servicestudio-font-family: var(--osui-icon-font-family);
+					-servicestudio-opacity: 0.5;
 					-servicestudio-transform: translateY(-50%);
 				}
 			}
