@@ -1,6 +1,10 @@
 const gulp = require('gulp');
 
-const autoprefixer = require('gulp-autoprefixer');
+// gulp-autoprefixer 9+ is ESM-only, so require() hands back the module namespace and the callable sits on
+// `.default`. Reading it with a fallback keeps this working on the CommonJS majors (8 and below) too.
+// The other ESM plugins below (postcss-discard-comments/-duplicates 9+) already unwrap to a function.
+const autoprefixerModule = require('gulp-autoprefixer');
+const autoprefixer = autoprefixerModule.default ?? autoprefixerModule;
 const postcss = require('gulp-postcss');
 const postcssdc = require('postcss-discard-comments');
 const postcssdd = require('postcss-discard-duplicates');
