@@ -3,7 +3,7 @@ import path from 'node:path';
 import { test } from 'node:test';
 import { fileURLToPath } from 'node:url';
 
-import { buildInventory } from '../lib/inventory.mjs';
+import { buildInventory, matchStory } from '../lib/inventory.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..', '..');
 const inv = buildInventory(root);
@@ -36,11 +36,15 @@ test('provider-based patterns include provider directories and their config file
 	const d = byName.Dropdown;
 	assert.ok(d.providerDirs.map(rel).includes('src/scripts/Providers/OSUI/Dropdown'));
 	assert.ok(
-		d.configFiles.map(rel).includes('src/scripts/Providers/OSUI/Dropdown/VirtualSelect/AbstractVirtualSelectConfig.ts')
+		d.configFiles
+			.map(rel)
+			.includes('src/scripts/Providers/OSUI/Dropdown/VirtualSelect/AbstractVirtualSelectConfig.ts')
 	);
 	assert.ok(d.factoryFiles.map(rel).includes('src/scripts/OSFramework/OSUI/Pattern/Dropdown/DropdownFactory.ts'));
 	// nested pattern sub-directories are walked
-	assert.ok(d.classFiles.map(rel).includes('src/scripts/OSFramework/OSUI/Pattern/Dropdown/ServerSide/DropdownServerSide.ts'));
+	assert.ok(
+		d.classFiles.map(rel).includes('src/scripts/OSFramework/OSUI/Pattern/Dropdown/ServerSide/DropdownServerSide.ts')
+	);
 	// case-insensitive provider directory match (Datepicker vs DatePicker)
 	assert.ok(byName.DatePicker.providerDirs.map(rel).includes('src/scripts/Providers/OSUI/Datepicker'));
 });
@@ -70,4 +74,14 @@ test('CSS-only components exclude vendor baselines, previews and pattern-owned p
 	const card = inv.cssComponents.find((c) => c.name === 'card');
 	assert.equal(rel(card.scssFile), 'src/scss/04-patterns/02-content/_card.scss');
 	assert.equal(rel(card.storyFile), 'stories/Card.stories.ts');
+});
+
+test('matchStory resolves the widget-story aliases of btn and radio-button', () => {
+	const stories = new Map([
+		['button', '/s/widgets/Button.stories.ts'],
+		['radiogroup', '/s/widgets/RadioGroup.stories.ts'],
+	]);
+	assert.equal(matchStory('btn', stories), '/s/widgets/Button.stories.ts');
+	assert.equal(matchStory('radio-button', stories), '/s/widgets/RadioGroup.stories.ts');
+	assert.equal(matchStory('badge', stories), null);
 });

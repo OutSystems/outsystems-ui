@@ -94,6 +94,7 @@ API (OutSystems.OSUI.Patterns.ButtonLoadingAPI):
 - ForceIsLoadingDisabledState(buttonLoadingId: string, isDisabled: boolean): string
 - RegisterCallback(dropdownId: string, eventName: EventName, callback: OSGeneric): string
 CSS classes: btn osui-btn-loading--is-loading osui-btn-loading-show-spinner osui-btn-loading__spinner-animation
+CSS API: --osui-btn-loading-font-size --osui-btn-loading-spinner-size --osui-btn-loading-spinner-gap --osui-btn-loading-spinner-border-width
 Markup skeleton (from stories/ButtonLoading.stories.ts): <div class="osui-btn-loading"><button class="btn btn-primary" type="button"><span class="osui-btn-loading__spinner-animation"></span> Save changes </button></div>
 
 ## Carousel

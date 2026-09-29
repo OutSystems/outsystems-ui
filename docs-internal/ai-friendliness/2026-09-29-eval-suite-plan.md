@@ -127,6 +127,16 @@ The refine loop now covers both suites: measure → apply what is additive → r
 - [ ] Next additive candidates, in order of value: `.os-high-contrast` rules for the 78 components without them (R02), loading and invalid state styles where the component has the state but no style (R06), a density knob on `menu-app-menu-links` (R05), Arrow-key handlers for TabsHeaderItem / WizardItem / SectionIndexItem (R03, behaviour addition, needs review).
 - [ ] Breakpoint rules (R05) and new components (R01) stay out of the loop: layout changes and roadmap work.
 
+### Task 19: Loop run 2 (`loop-8`) — findings from both suites ✅
+Enterprise Readiness Index 65.7 → 67.9; AI-Friendliness Index 88.2 → 87.9 (E07 −2.9 because 22 more components are now measured, see below; E08 +0.4, E09 +0.1).
+- [x] E07: 20 static-markup stories for the CSS-only components without one (layout, header, menu, login, content, balloon, animate, align-center, pull-to-refresh, ios-bounce, provider login button, themegrid container, bulk actions) and story aliases for `btn` → Button and `radio-button` → RadioGroup, which already had widget stories. Every component is now measured; the deep layout contracts pull the mean down honestly.
+- [x] E08: additive knobs with defaults equal to the previous values on bulk-actions (check and indeterminate colours), ButtonLoading (spinner size, gap, border, label size) and scrollable-area (scrollbar size, thumb colours and radius; three literal colours routed). Dropdown left out: its balloon is portaled (B-7 review); menu-layout-native left out: its values are structural offsets, not theme values.
+- [x] R03 fidelity: a key handled by a family member (Tabs for its header items) or by a shared feature the pattern uses (Balloon for Escape) counts; a native control created in TypeScript (Rating's radios) activates itself; provider credit per key; Gallery is a static grid, step indicators and link lists are not roving-focus widgets.
+- [x] E01: guidance line in `llms.txt` to load a component card, never the compiled typings.
+- [ ] E02 prop counts and stringly-typed enums: public-contract changes, documented as B-9; not applied.
+- [ ] E08 `!important` removal: cascade change, documented as B-8; not applied.
+- [ ] R03 remaining: Accordion (parent, no activation of its own by design), TimePicker / Carousel arrow keys beyond the provider, Wizard and SectionIndex families; behaviour additions that need design review.
+
 ### Task 12: Report + ADR
 **Files:** `docs-internal/ai-friendliness/REPORT.md`, `docs-internal/adr/ADR-0011-ai-friendliness-eval-suite.md`, ADR log row.
 - [ ] Six sections as requested; BEFORE/AFTER snippets for each documented breaking change; tracking matrix from `results/history.json`.

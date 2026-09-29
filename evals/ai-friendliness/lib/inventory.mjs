@@ -140,6 +140,12 @@ function resolveScssPartial(srcDir, baseDir, rel) {
 const norm = (s) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
 
 /**
+ * CSS components whose story is filed under the platform widget's name (normalised story name).
+ * `btn` is styled by the Button widget story, `radio-button` by the RadioGroup widget story.
+ */
+const STORY_ALIASES = { btn: 'button', 'radio-button': 'radiogroup' };
+
+/**
  * Exact (case-insensitive) story match, else the longest story name that prefixes the
  * component name (AccordionItem → Accordion). Names are normalised to lower-case alnum.
  * @param {string} name
@@ -149,6 +155,8 @@ const norm = (s) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
 export function matchStory(name, storiesByNorm) {
 	const n = norm(name);
 	if (storiesByNorm.has(n)) return /** @type {string} */ (storiesByNorm.get(n));
+	const alias = STORY_ALIASES[/** @type {keyof typeof STORY_ALIASES} */ (name)];
+	if (alias && storiesByNorm.has(alias)) return /** @type {string} */ (storiesByNorm.get(alias));
 	let best = null;
 	let bestLen = 3; // require at least 4 characters of overlap
 	for (const [storyNorm, file] of storiesByNorm) {

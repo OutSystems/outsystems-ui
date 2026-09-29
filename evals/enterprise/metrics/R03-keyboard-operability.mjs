@@ -3,8 +3,10 @@
  * R03 · Keyboard Operability.
  *
  * For every interactive pattern, the keys its role needs and whether its TypeScript handles them
- * (`GlobalEnum.Keycodes.*` or key literals). Provider-backed patterns whose wrapper handles no key
- * are credited to the provider library and marked as such, since the library ships the handlers.
+ * (`GlobalEnum.Keycodes.*` or key literals). A key handled by a family member (Tabs for its header
+ * items) or by a shared feature the pattern uses (Balloon for Escape) counts; a native control in the
+ * story or created in TypeScript activates on Enter/Space by itself; a provider-backed pattern is
+ * credited to its library for the keys the wrapper does not handle, and flagged.
  */
 import { mean, round1 } from '../../ai-friendliness/lib/score.mjs';
 import {
@@ -14,6 +16,7 @@ import {
 	OVERLAY_PATTERNS,
 	patternText,
 	PROVIDER_PATTERNS,
+	sharedText,
 } from '../lib/signals.mjs';
 
 /** Key → needles that show the key is handled. */
@@ -44,31 +47,56 @@ export function requiredKeys(name) {
 	return keys;
 }
 
-/** Markup that activates with Enter and Space natively. */
-export const NATIVE_ACTIVATION = ['<button', 'role="button"', '<a href', '<input', '<select', '<summary'];
+/** Markup that activates with Enter and Space natively (story markup or elements created in TypeScript). */
+export const NATIVE_ACTIVATION = [
+	'<button',
+	'role="button"',
+	'<a href',
+	'<input',
+	'<select',
+	'<summary',
+	"createElement('button'",
+	"createElement('input'",
+];
 
 /**
  * @param {string} name
  * @param {string} ts pattern TypeScript
- * @param {string} [story] the pattern's story markup; native buttons handle Enter/Space themselves
+ * @param {string} [story] the pattern's story markup
+ * @param {string} [shared] TypeScript of family members and shared features the pattern relies on
  */
-export function checksFor(name, ts, story = '') {
+export function checksFor(name, ts, story = '', shared = '') {
 	const required = requiredKeys(name);
-	/** @type {Record<string, { applicable: boolean, pass: boolean, via: 'pattern'|'provider'|null }>} */
+	/** @type {Record<string, { applicable: boolean, pass: boolean, via: 'pattern'|'shared'|'native'|'provider'|null }>} */
 	const checks = {};
-	const handlesAny = Object.values(KEY_NEEDLES).some((needles) => includesAny(ts, needles));
-	const delegated = PROVIDER_PATTERNS.has(name) && !handlesAny;
+	let delegated = false;
 	for (const key of Object.keys(KEY_NEEDLES)) {
+		const needles = KEY_NEEDLES[/** @type {keyof typeof KEY_NEEDLES} */ (key)];
 		const applicable = required.includes(/** @type {any} */ (key));
-		const own = includesAny(ts, KEY_NEEDLES[/** @type {keyof typeof KEY_NEEDLES} */ (key)]);
-		const native = key === 'activate' && includesAny(story, NATIVE_ACTIVATION);
-		let via = null;
-		if (own) via = 'pattern';
-		else if (native) via = 'native';
-		else if (delegated) via = 'provider';
-		checks[key] = { applicable, pass: own || native || delegated, via };
+		const via = viaFor(name, key, {
+			own: includesAny(ts, needles),
+			shared: includesAny(shared, needles),
+			native: key === 'activate' && includesAny(`${story}\n${ts}`, NATIVE_ACTIVATION),
+		});
+		if (via === 'provider' && applicable) delegated = true;
+		checks[key] = { applicable, pass: via !== null, via };
 	}
 	return { checks, delegated };
+}
+
+/**
+ * Who handles a key, in order of preference.
+ * @param {string} name
+ * @param {string} key
+ * @param {{ own: boolean, shared: boolean, native: boolean }} found
+ * @returns {'pattern'|'shared'|'native'|'provider'|null}
+ */
+function viaFor(name, key, found) {
+	if (found.own) return 'pattern';
+	if (found.shared) return 'shared';
+	if (found.native) return 'native';
+	if (PROVIDER_PATTERNS.has(name) && key !== 'tab') return 'provider';
+	return null;
 }
 
 export default {
@@ -76,7 +104,7 @@ export default {
 	name: 'Keyboard Operability',
 	criterion: 'Enterprise requirements §1 keyboard navigation',
 	formula:
-		'per interactive pattern: 100 · handled / required keys; required = Enter/Space for all (a native button, link or input in the story markup counts), Escape and tab order for overlays, Arrow keys and tab order for composite widgets; a provider-backed pattern with no handler of its own is credited to the provider and flagged; mean over patterns',
+		'per interactive pattern: 100 · handled / required keys; required = Enter/Space for all (a native button, link or input in the story markup or created in TypeScript counts), Escape and tab order for overlays, Arrow keys and tab order for composite widgets; a key handled by a family member or a shared feature counts; a provider-backed pattern is credited to its library for the keys its wrapper does not handle, and flagged; mean over patterns',
 	movable: true,
 	cls: 'movable',
 	/** @param {import('../../ai-friendliness/lib/context.mjs').EvalContext} ctx */
@@ -85,7 +113,8 @@ export default {
 			.filter((p) => !NON_INTERACTIVE_PATTERNS.has(p.name))
 			.map((p) => {
 				const story = p.storyFile ? ctx.readText(p.storyFile) : '';
-				const { checks, delegated } = checksFor(p.name, patternText(ctx, p), story);
+				const own = patternText(ctx, p);
+				const { checks, delegated } = checksFor(p.name, own, story, sharedText(ctx, p, own));
 				const applicable = Object.entries(checks).filter(([, c]) => c.applicable);
 				const passed = applicable.filter(([, c]) => c.pass).length;
 				const failed = applicable
@@ -104,7 +133,7 @@ export default {
 		const viaProvider = perComponent.filter((r) => r.delegated).length;
 		return {
 			score: round1(mean(perComponent.map((r) => r.score)) ?? 0),
-			summary: `${own}/${perComponent.length} interactive patterns handle every required key themselves, ${viaProvider} rely on their provider, ${perComponent.filter((r) => r.score < 100 && !r.delegated).length} miss keys`,
+			summary: `${own}/${perComponent.length} interactive patterns handle every required key in their own or shared code, ${viaProvider} rely on their provider for some keys, ${perComponent.filter((r) => r.score < 100).length} miss keys`,
 			raw: {
 				interactive: perComponent.length,
 				complete: own,

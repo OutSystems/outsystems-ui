@@ -7,6 +7,13 @@
 
 ///
 .table {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	// Bulk-action checkbox colours; defaults equal the previous fixed values.
+	--osui-bulk-actions-check-color: var(--color-text-inverse);
+	--osui-bulk-actions-indeterminate-background: #{variables.$token-semantics-primary-base};
+	--osui-bulk-actions-indeterminate-border-color: #{variables.$token-semantics-primary-base};
+	// ───────────────────────────────────────────────────────────────────
+
 	// Add this selector to fix the horizontal align of checkbox enclosed on a container
 	div span [data-checkbox] {
 		display: inline-block;
@@ -21,7 +28,7 @@
 		&:checked:after {
 			// physical sides: these borders draw the check glyph under the platform's
 			// physical rotate transform — a checkmark must not mirror in RTL
-			border: variables.$token-border-size-050 solid var(--color-text-inverse);
+			border: variables.$token-border-size-050 solid var(--osui-bulk-actions-check-color);
 			border-top: variables.$token-border-size-0 !important;
 			border-right: variables.$token-border-size-0 !important;
 			display: block;
@@ -34,12 +41,12 @@
 
 	.checkbox-intermediate {
 		&:before {
-			background-color: variables.$token-semantics-primary-base;
-			border: variables.$token-border-size-025 solid variables.$token-semantics-primary-base;
+			background-color: var(--osui-bulk-actions-indeterminate-background);
+			border: variables.$token-border-size-025 solid var(--osui-bulk-actions-indeterminate-border-color);
 		}
 
 		&:after {
-			background-color: var(--color-text-inverse);
+			background-color: var(--osui-bulk-actions-check-color);
 			content: '';
 			height: 2px;
 			left: 50%;

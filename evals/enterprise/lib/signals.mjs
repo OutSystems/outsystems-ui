@@ -8,6 +8,9 @@
  */
 import path from 'node:path';
 
+import { walk } from '../../ai-friendliness/lib/inventory.mjs';
+import { insideDir } from '../../ai-friendliness/lib/paths.mjs';
+
 /** Patterns whose behaviour is delegated to a provider library (flatpickr, noUiSlider, VirtualSelect, Splide). */
 export const PROVIDER_PATTERNS = new Set([
 	'Carousel',
@@ -21,6 +24,7 @@ export const PROVIDER_PATTERNS = new Set([
 /** Patterns that render no interactive control of their own. */
 export const NON_INTERACTIVE_PATTERNS = new Set([
 	'AnimatedLabel',
+	'Gallery',
 	'InlineSvg',
 	'Progress',
 	'SectionIndex',
@@ -34,7 +38,6 @@ export const OVERLAY_PATTERNS = new Set([
 	'BottomSheet',
 	'Dropdown',
 	'DropdownServerSideItem',
-	'Gallery',
 	'Notification',
 	'OverflowMenu',
 	'Sidebar',
@@ -49,13 +52,47 @@ export const COMPOSITE_PATTERNS = new Set([
 	'MonthPicker',
 	'RangeSlider',
 	'Rating',
-	'SectionIndexItem',
 	'Tabs',
 	'TabsHeaderItem',
 	'TimePicker',
-	'Wizard',
-	'WizardItem',
 ]);
+
+/** Parent and child patterns that implement one keyboard model together (roving focus lives on the parent). */
+export const PATTERN_FAMILIES = {
+	Accordion: ['AccordionItem'],
+	AccordionItem: ['Accordion'],
+	SectionIndex: ['SectionIndexItem'],
+	SectionIndexItem: ['SectionIndex'],
+	Tabs: ['TabsContentItem', 'TabsHeaderItem'],
+	TabsContentItem: ['Tabs'],
+	TabsHeaderItem: ['Tabs'],
+	Wizard: ['WizardItem'],
+	WizardItem: ['Wizard'],
+};
+
+/** Shared runtime features, by the name a pattern references and the directory that implements them. */
+export const SHARED_FEATURES = { Balloon: ['src', 'scripts', 'OSFramework', 'OSUI', 'Feature', 'Balloon'] };
+
+/**
+ * Text of the code a pattern shares its behaviour with: its family members and the shared features
+ * it references. Keyboard handling found there counts for the pattern.
+ * @param {import('../../ai-friendliness/lib/context.mjs').EvalContext} ctx
+ * @param {import('../../ai-friendliness/lib/inventory.mjs').Pattern} p
+ * @param {string} ownText the pattern's own TypeScript
+ */
+export function sharedText(ctx, p, ownText) {
+	const parts = [];
+	for (const name of PATTERN_FAMILIES[/** @type {keyof typeof PATTERN_FAMILIES} */ (p.name)] ?? []) {
+		const member = ctx.inventory.patterns.find((x) => x.name === name);
+		if (member) parts.push(patternText(ctx, member));
+	}
+	for (const [feature, segments] of Object.entries(SHARED_FEATURES)) {
+		if (!ownText.includes(feature)) continue;
+		for (const file of walk(insideDir(ctx.root, ...segments)))
+			if (file.endsWith('.ts')) parts.push(ctx.readText(file));
+	}
+	return parts.join('\n');
+}
 
 /** Patterns that give feedback and should announce it. */
 export const FEEDBACK_PATTERNS = new Set(['ButtonLoading', 'Notification', 'Progress', 'Search']);
@@ -68,7 +105,7 @@ export const THEME_RESETS = ['src', 'scss', '01-foundations', '_resets.scss'];
  * @param {import('../../ai-friendliness/lib/context.mjs').EvalContext} ctx
  */
 export function themeGuards(ctx) {
-	const resets = ctx.readText(path.join(ctx.root, ...THEME_RESETS));
+	const resets = ctx.readText(insideDir(ctx.root, ...THEME_RESETS));
 	return {
 		reducedMotion: resets.includes('prefers-reduced-motion'),
 		focusRing: resets.includes('.has-accessible-features :focus'),

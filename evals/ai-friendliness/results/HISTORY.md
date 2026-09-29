@@ -19,26 +19,27 @@ The ten evals E01–E10: how legible the library is to coding agents.
 | loop-5 | 2026-09-29 | `c529820ec` | 99.9 | 94.7 | 100.0 | 100.0 | 100.0 | 98.7 | 75.1 | 72.4 | 79.9 | 60.8 | **88.2** | +0.1 | +23.9 |
 | loop-6 | 2026-09-29 | `261bc01aa` | 99.9 | 94.7 | 100.0 | 100.0 | 100.0 | 98.7 | 75.1 | 72.4 | 79.9 | 60.8 | **88.2** | 0.0 | +23.9 |
 | loop-7 | 2026-09-29 | `261bc01aa` | 99.9 | 94.7 | 100.0 | 100.0 | 100.0 | 98.7 | 75.1 | 72.5 | 79.9 | 60.8 | **88.2** | 0.0 | +23.9 |
+| loop-8 | 2026-09-29 | `87eedc4bc` | 99.9 | 94.7 | 100.0 | 100.0 | 100.0 | 98.7 | 72.2 | 72.9 | 80.0 | 60.8 | **87.9** | -0.3 | +23.6 |
 
 ### Per-eval scores
 
-| ID | Eval | Class | baseline | loop-1 | loop-2 | loop-3 | loop-4 | loop-5 | loop-6 | loop-7 | Δ total |
-| --- | --- | :---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| E01 | Context Token Cost | movable | 64.9 | 100.0 | 100.0 | 99.9 | 99.9 | 99.9 | 99.9 | 99.9 | **+35.0** |
-| E02 | Prop Surface & Typing Precision | movable | 94.6 | 94.6 | 94.6 | 94.6 | 94.7 | 94.7 | 94.7 | 94.7 | **+0.1** |
-| E03 | Machine-Readable Schema Completeness | movable | 0.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | **+100.0** |
-| E04 | Type Strictness | movable | 83.2 | 83.2 | 99.2 | 99.3 | 100.0 | 100.0 | 100.0 | 100.0 | **+16.8** |
-| E05 | Documentation Coverage | movable | 35.8 | 85.8 | 85.8 | 97.6 | 100.0 | 100.0 | 100.0 | 100.0 | **+64.2** |
-| E06 | Public API Shape Consistency | movable | 97.7 | 97.7 | 97.8 | 97.8 | 98.7 | 98.7 | 98.7 | 98.7 | **+1.0** |
-| E07 | Markup Contract Depth | structural | 75.1 | 75.1 | 75.1 | 75.1 | 75.1 | 75.1 | 75.1 | 75.1 | 0.0 |
-| E08 | Design Token Semantics | movable | 72.3 | 72.3 | 72.3 | 72.3 | 72.3 | 72.4 | 72.4 | 72.5 | **+0.2** |
-| E09 | CSS Selector Complexity | structural | 79.9 | 79.9 | 79.9 | 79.9 | 79.9 | 79.9 | 79.9 | 79.9 | 0.0 |
-| E10 | Composition Model & Standards Alignment | structural | 39.4 | 39.4 | 52.4 | 52.4 | 60.8 | 60.8 | 60.8 | 60.8 | **+21.4** |
-| — | **Index** | | **64.3** | **82.8** | **85.7** | **86.9** | **88.1** | **88.2** | **88.2** | **88.2** | **+23.9** |
+| ID | Eval | Class | baseline | loop-1 | loop-2 | loop-3 | loop-4 | loop-5 | loop-6 | loop-7 | loop-8 | Δ total |
+| --- | --- | :---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| E01 | Context Token Cost | movable | 64.9 | 100.0 | 100.0 | 99.9 | 99.9 | 99.9 | 99.9 | 99.9 | 99.9 | **+35.0** |
+| E02 | Prop Surface & Typing Precision | movable | 94.6 | 94.6 | 94.6 | 94.6 | 94.7 | 94.7 | 94.7 | 94.7 | 94.7 | **+0.1** |
+| E03 | Machine-Readable Schema Completeness | movable | 0.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | **+100.0** |
+| E04 | Type Strictness | movable | 83.2 | 83.2 | 99.2 | 99.3 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | **+16.8** |
+| E05 | Documentation Coverage | movable | 35.8 | 85.8 | 85.8 | 97.6 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | **+64.2** |
+| E06 | Public API Shape Consistency | movable | 97.7 | 97.7 | 97.8 | 97.8 | 98.7 | 98.7 | 98.7 | 98.7 | 98.7 | **+1.0** |
+| E07 | Markup Contract Depth | structural | 75.1 | 75.1 | 75.1 | 75.1 | 75.1 | 75.1 | 75.1 | 75.1 | 72.2 | **-2.9** |
+| E08 | Design Token Semantics | movable | 72.3 | 72.3 | 72.3 | 72.3 | 72.3 | 72.4 | 72.4 | 72.5 | 72.9 | **+0.6** |
+| E09 | CSS Selector Complexity | structural | 79.9 | 79.9 | 79.9 | 79.9 | 79.9 | 79.9 | 79.9 | 79.9 | 80.0 | **+0.1** |
+| E10 | Composition Model & Standards Alignment | structural | 39.4 | 39.4 | 52.4 | 52.4 | 60.8 | 60.8 | 60.8 | 60.8 | 60.8 | **+21.4** |
+| — | **Index** | | **64.3** | **82.8** | **85.7** | **86.9** | **88.1** | **88.2** | **88.2** | **88.2** | **87.9** | **+23.6** |
 
 ### What moved
 
-From `baseline` (64.3) to `loop-7` (88.2): +23.9 points over 8 runs.
+From `baseline` (64.3) to `loop-8` (87.9): +23.6 points over 9 runs.
 
 Biggest movers:
 
@@ -48,13 +49,10 @@ Biggest movers:
 - E10 Composition Model & Standards Alignment +21.4
 - E04 Type Strictness +16.8
 - E06 Public API Shape Consistency +1.0
-- E08 Design Token Semantics +0.2
+- E08 Design Token Semantics +0.6
 - E02 Prop Surface & Typing Precision +0.1
-
-Unchanged across all runs:
-
-- E07 Markup Contract Depth (75.1) — structural; moves only with a documented breaking change
-- E09 CSS Selector Complexity (79.9) — structural; moves only with a documented breaking change
+- E09 CSS Selector Complexity +0.1
+- E07 Markup Contract Depth -2.9
 
 ## Enterprise Readiness Index
 
@@ -66,29 +64,30 @@ The six evals R01–R06: how far the token theme and the patterns meet the enter
 | --- | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | loop-6 | 2026-09-29 | `261bc01aa` | 68.9 | 31.0 | 55.1 | 75.7 | 44.6 | 28.7 | **50.7** | — | — |
 | loop-7 | 2026-09-29 | `261bc01aa` | 68.9 | 64.6 | 76.9 | 83.8 | 47.9 | 52.4 | **65.7** | +15.0 | +15.0 |
+| loop-8 | 2026-09-29 | `87eedc4bc` | 68.9 | 64.7 | 89.3 | 84.4 | 47.9 | 52.4 | **67.9** | +2.2 | +17.2 |
 
 ### Per-eval scores
 
-| ID | Eval | Class | loop-6 | loop-7 | Δ total |
-| --- | --- | :---: | ---: | ---: | ---: |
-| R01 | Enterprise Component Coverage | roadmap | 68.9 | 68.9 | 0.0 |
-| R02 | Accessibility Contract | movable | 31.0 | 64.6 | **+33.6** |
-| R03 | Keyboard Operability | movable | 55.1 | 76.9 | **+21.8** |
-| R04 | Theme Foundations | movable | 75.7 | 83.8 | **+8.1** |
-| R05 | Responsiveness and Density | movable | 44.6 | 47.9 | **+3.3** |
-| R06 | Feedback and State Behaviours | movable | 28.7 | 52.4 | **+23.7** |
-| — | **Index** | | **50.7** | **65.7** | **+15.0** |
+| ID | Eval | Class | loop-6 | loop-7 | loop-8 | Δ total |
+| --- | --- | :---: | ---: | ---: | ---: | ---: |
+| R01 | Enterprise Component Coverage | roadmap | 68.9 | 68.9 | 68.9 | 0.0 |
+| R02 | Accessibility Contract | movable | 31.0 | 64.6 | 64.7 | **+33.7** |
+| R03 | Keyboard Operability | movable | 55.1 | 76.9 | 89.3 | **+34.2** |
+| R04 | Theme Foundations | movable | 75.7 | 83.8 | 84.4 | **+8.7** |
+| R05 | Responsiveness and Density | movable | 44.6 | 47.9 | 47.9 | **+3.3** |
+| R06 | Feedback and State Behaviours | movable | 28.7 | 52.4 | 52.4 | **+23.7** |
+| — | **Index** | | **50.7** | **65.7** | **67.9** | **+17.2** |
 
 ### What moved
 
-From `loop-6` (50.7) to `loop-7` (65.7): +15.0 points over 2 runs.
+From `loop-6` (50.7) to `loop-8` (67.9): +17.2 points over 3 runs.
 
 Biggest movers:
 
-- R02 Accessibility Contract +33.6
+- R03 Keyboard Operability +34.2
+- R02 Accessibility Contract +33.7
 - R06 Feedback and State Behaviours +23.7
-- R03 Keyboard Operability +21.8
-- R04 Theme Foundations +8.1
+- R04 Theme Foundations +8.7
 - R05 Responsiveness and Density +3.3
 
 Unchanged across all runs:

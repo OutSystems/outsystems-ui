@@ -81,8 +81,20 @@ test('R03: required keys follow the role and providers are credited only when th
 	assert.equal(provider.checks.arrows.pass, true);
 	assert.equal(provider.checks.arrows.via, 'provider');
 	const partial = keys('Dropdown', 'Keycodes.Escape');
-	assert.equal(partial.delegated, false, 'a wrapper that handles one key is not delegated');
-	assert.equal(partial.checks.activate.pass, false);
+	assert.equal(partial.checks.escape.via, 'pattern');
+	assert.equal(partial.checks.activate.via, 'provider', 'the provider covers the keys the wrapper does not handle');
+	assert.equal(partial.delegated, true);
+	const shared = keys('TabsHeaderItem', 'no handlers', '', 'case GlobalEnum.Keycodes.ArrowRight: focusNext()');
+	assert.equal(shared.checks.arrows.via, 'shared', 'the parent implements the roving focus');
+	const escapeViaFeature = keys(
+		'OverflowMenu',
+		'new Feature.Balloon.Balloon(this)',
+		'',
+		'const isEscapedPressed = e.key === GlobalEnum.Keycodes.Escape;'
+	);
+	assert.equal(escapeViaFeature.checks.escape.via, 'shared');
+	const inputInTs = keys('Rating', 'const input = `<input type="radio">`', '');
+	assert.equal(inputInTs.checks.activate.via, 'native', 'a native input created in TypeScript activates itself');
 	const native = keys('Tabs', 'no handlers', '<button class="osui-tabs__header-item">Tab</button>');
 	assert.equal(native.checks.activate.pass, true, 'a native button activates with Enter/Space');
 	assert.equal(native.checks.activate.via, 'native');
