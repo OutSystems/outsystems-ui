@@ -88,8 +88,8 @@ Negative consequences:
     workflow in the repository, because `package-lock.json` is git-ignored by policy and the
     `.npmrc` release-age rule is the supply-chain guard. SonarCloud reports this as an unlocked
     dependency hotspot on new code, which the security-rating condition of the quality gate counts.
-    Clearing it is a repository-wide decision (commit a lockfile, exclude workflows from the rule,
-    or review the hotspot as safe), not a change this suite can make on its own.
+    Decision: the issue is accepted in SonarCloud with that justification; committing a lockfile
+    or excluding workflows from the rule would be a repository-wide change outside this suite.
 
 ## Links
 

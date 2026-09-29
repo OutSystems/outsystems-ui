@@ -91,7 +91,7 @@
 - [x] `evaluateGate`/`pickBaseline` tested; CLI compares a no-write run with the newest history entry; fails on a drop > `--max-drop` (default 1).
 - [x] `compareDocs` tested (CRLF-insensitive); CLI regenerates into a temp dir and reports modified/missing files.
 - [x] Workflow on `pull_request` into `dev` and `workflow_dispatch` (any branch, `max-drop` input).
-- [ ] SonarCloud flags the workflow's `npm install` as an unlocked-dependency hotspot (fails the quality gate's security rating on new code). Every repository workflow installs the same way and the lockfile is git-ignored by policy, so this needs an owner decision: commit a lockfile, exclude workflows from the rule, or review the hotspot as safe in SonarCloud.
+- [x] SonarCloud flags the workflow's `npm install` as an unlocked-dependency hotspot (fails the quality gate's security rating on new code). Every repository workflow installs the same way and the lockfile is git-ignored by policy, so it is accepted in SonarCloud with that justification (owner decision); a lockfile or a rule exclusion would be a repository-wide change.
 
 ### Task 14: Publication of the agent docs ◐
 - [x] `postdocs` copies `docs-ai/` into the TypeDoc output (`npm run docs`), so the documentation deployment serves `/llms.txt` and friends at its root.
