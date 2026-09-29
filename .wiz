@@ -6,3 +6,7 @@ ignore:
             reason: BY_DESIGN
         /docs/**:
             reason: BY_DESIGN
+        # Repository-local developer tooling (eval suite and doc generators): it reads and writes
+        # files inside the checkout it is pointed at by design; the paths are not user input.
+        /evals/**:
+            reason: BY_DESIGN
