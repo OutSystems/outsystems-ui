@@ -45,150 +45,161 @@ const r1 = (/** @type {number} */ n) => Math.round(n * 10) / 10;
 const list = (/** @type {string[]} */ xs, max = 4) =>
 	xs.length > max ? `${xs.slice(0, max).join(', ')} +${xs.length - max} more` : xs.join(', ');
 
+/** @typedef {{ s: number|null, w: 'ok'|'na'|'unmeasured', h: string }} Cell */
+
+/**
+ * @param {number|null} s
+ * @param {string} h
+ * @returns {Cell}
+ */
+const ok = (s, h) => ({ s, w: 'ok', h });
+
+/** @param {string[]} todo @param {string} [fallback] */
+const toDoHint = (todo, fallback = '') => (todo.length ? ` To do: ${todo.join('; ')}.` : fallback);
+
+/**
+ * @param {string} id
+ * @param {{ kind?: string, reason?: string }} ctx
+ * @returns {Cell}
+ */
+function missingCell(id, ctx) {
+	if (PATTERN_ONLY.has(id) && ctx.kind === 'css') {
+		return {
+			s: null,
+			w: 'na',
+			h: 'Not applicable: this eval measures the TypeScript contract and this is a CSS-only component.',
+		};
+	}
+	const reason = ctx.reason ?? 'no measurement in this run';
+	const fix = {
+		E07: 'Add a Storybook story with an HTML template so the markup contract can be measured.',
+		E08: 'Nothing to change: the compiled CSS has no colour, spacing, radius or typography declarations to theme.',
+		E09: 'Nothing to change: the partial compiles to no rules.',
+	}[id];
+	const fixHint = fix ? ` ${fix}` : '';
+	return { s: null, w: 'unmeasured', h: `Not measured (${reason}).${fixHint}` };
+}
+
+/** @param {any} row */
+function e01NextStep(row) {
+	if (row.source === 'manifest card') {
+		return row.score < 100 ? ' Trim the card: fewer or shorter prop descriptions.' : '';
+	}
+	return row.cardTokens === null
+		? ' The manifest card is below 80 % complete, so agents fall back to the source: complete its facets.'
+		: '';
+}
+
+/** Per-eval heatmap cell for a component the metric measured. @type {Record<string, (row: any) => Cell>} */
+const CELL_BUILDERS = {
+	E01: (row) => {
+		const via =
+			row.source === 'manifest card'
+				? `via its manifest card (${row.tokens} tokens; source contract ${row.srcTokens} across ${row.files} files)`
+				: `from the source contract (${row.tokens} tokens across ${row.files} files)`;
+		return ok(row.score, `Read ${via}.${e01NextStep(row)}`);
+	},
+	E02: (row) => {
+		const parts = [`${row.precise} of ${row.n} props precise`];
+		if (row.n > FREE_PROPS) parts.push(`${row.n - FREE_PROPS} props over the free allowance of ${FREE_PROPS}`);
+		const todo = [];
+		if (row.stringlyTypedEnums?.length)
+			todo.push(
+				`type as enums: ${list(row.stringlyTypedEnums.map((/** @type {string} */ s) => s.split(' (')[0]))}`
+			);
+		if (row.untyped?.length) todo.push(`give a type to: ${list(row.untyped)}`);
+		return ok(row.score, `${parts.join('; ')}.${toDoHint(todo)}`);
+	},
+	E03: (row) => {
+		if (!row.present) return ok(row.score, 'Missing from the manifest: run npm run docs:ai.');
+		const weak = Object.entries(row.facets ?? {})
+			.filter(([, v]) => Number(v) < 100)
+			.map(([k, v]) => `${k} ${v}`);
+		return ok(
+			row.score,
+			weak.length
+				? `Facets below 100: ${weak.join(', ')}. Add the missing defaults, descriptions or markup skeleton to the source the generator reads.`
+				: 'All six manifest facets complete.'
+		);
+	},
+	E05: (row) => {
+		const total = row.apiTotal + row.propsTotal;
+		const done = row.apiDocumented + row.propsDocumented;
+		const todo = [
+			...(row.undocumentedApi ?? []).map((/** @type {string} */ f) => `${f}()`),
+			...(row.undocumentedProps ?? []),
+		];
+		const documentHint = todo.length ? ` Document: ${list(todo)}.` : '';
+		return ok(
+			pct(done, total),
+			`${row.apiDocumented}/${row.apiTotal} API functions and ${row.propsDocumented}/${row.propsTotal} props documented.${documentHint}`
+		);
+	},
+	E06: (row) => {
+		const todo = [];
+		if (row.missing?.length) todo.push(`add canonical members: ${list(row.missing)}`);
+		if (row.unwrapped?.length)
+			todo.push(`return the response envelope from: ${list(row.unwrapped)} (behaviour change, see B-3)`);
+		if (row.nonCamelParams?.length) todo.push(`camelCase parameters: ${list(row.nonCamelParams)}`);
+		if (row.inlineCodes?.length) todo.push(`replace inline error codes: ${list(row.inlineCodes)}`);
+		return ok(row.score, `${row.functions} API functions.${toDoHint(todo, ' Matches the canonical shape.')}`);
+	},
+	E07: (row) => {
+		const over = [];
+		if (row.depth > FREE_DEPTH) over.push(`${row.depth - FREE_DEPTH} levels over the free depth of ${FREE_DEPTH}`);
+		if (row.elements > FREE_ELEMENTS)
+			over.push(`${row.elements - FREE_ELEMENTS} parts over the free ${FREE_ELEMENTS}`);
+		const overHint = over.length
+			? ` ${over.join('; ')}. Flattening needs a DOM-contract change (B-5).`
+			: ' Within the allowance.';
+		return ok(
+			row.score,
+			`Story markup: depth ${row.depth}, ${row.elements} distinct parts, ${row.classes} classes.${overHint}`
+		);
+	},
+	E08: (row) => {
+		const todo = [];
+		if (row.literal) todo.push(`replace ${row.literal} hardcoded values with tokens`);
+		if (row.total && row.routed / row.total < 0.6)
+			todo.push(`route more reads through --osui-* knobs (${row.knobs} knobs today; B-7)`);
+		if (row.important) todo.push(`remove ${row.important} !important (B-8)`);
+		return ok(
+			row.score,
+			`${row.routed} of ${row.total} themeable declarations read via --osui-* knobs, ${row.literal} hardcoded, ${row.important} !important.${toDoHint(todo)}`
+		);
+	},
+	E09: (row) => {
+		const todo = [];
+		if (row.avgDepth > 1) todo.push('flatten combinator chains into state classes on the styled element (B-6)');
+		if (row.p90b > 2) todo.push(`lower class specificity (p90 ${row.p90b}, max depth ${row.maxDepth})`);
+		return ok(
+			row.score,
+			`${row.selectors} selectors, mean ${r1(row.avgDepth)} combinators, p90 class specificity ${row.p90b}.${toDoHint(todo, ' Flat cascade.')}`
+		);
+	},
+	E10: (row) => {
+		const todo = [];
+		if (row.depth > 1) todo.push(`inheritance depth ${row.depth} (${row.chain})`);
+		if (row.files > 4) todo.push(`${row.files} contract files (free allowance 4)`);
+		if (row.configShape === 0) todo.push('Create accepts only a JSON string');
+		if (row.eventModel === 0) todo.push('event names typed as string');
+		if (row.moduleFormat === 0) todo.push('global namespace instead of an ES module (B-4)');
+		return ok(row.score, todo.length ? `Costs: ${todo.join('; ')}.` : 'Flat, typed and modular.');
+	},
+};
+
 /**
  * One heatmap cell: `s` score (or null), `w` why (`ok` | `na` | `unmeasured`), `h` hint text.
  * @param {string} id eval id
  * @param {any} row the metric's per-component row, or null when it has none for this component
  * @param {{ kind?: string, reason?: string }} [ctx]
- * @returns {{ s: number|null, w: 'ok'|'na'|'unmeasured', h: string }}
+ * @returns {Cell}
  */
 export function cellFor(id, row, ctx = {}) {
-	if (!row) {
-		if (PATTERN_ONLY.has(id) && ctx.kind === 'css') {
-			return {
-				s: null,
-				w: 'na',
-				h: 'Not applicable: this eval measures the TypeScript contract and this is a CSS-only component.',
-			};
-		}
-		const reason = ctx.reason ?? 'no measurement in this run';
-		const fix = {
-			E07: 'Add a Storybook story with an HTML template so the markup contract can be measured.',
-			E08: 'Nothing to change: the compiled CSS has no colour, spacing, radius or typography declarations to theme.',
-			E09: 'Nothing to change: the partial compiles to no rules.',
-		}[id];
-		return { s: null, w: 'unmeasured', h: `Not measured (${reason}).${fix ? ` ${fix}` : ''}` };
-	}
-	switch (id) {
-		case 'E01': {
-			const via =
-				row.source === 'manifest card'
-					? `via its manifest card (${row.tokens} tokens; source contract ${row.srcTokens} across ${row.files} files)`
-					: `from the source contract (${row.tokens} tokens across ${row.files} files)`;
-			const next =
-				row.source === 'manifest card'
-					? row.score < 100
-						? ' Trim the card: fewer or shorter prop descriptions.'
-						: ''
-					: row.cardTokens === null
-						? ' The manifest card is below 80 % complete, so agents fall back to the source: complete its facets.'
-						: '';
-			return { s: row.score, w: 'ok', h: `Read ${via}.${next}` };
-		}
-		case 'E02': {
-			const parts = [`${row.precise} of ${row.n} props precise`];
-			if (row.n > FREE_PROPS) parts.push(`${row.n - FREE_PROPS} props over the free allowance of ${FREE_PROPS}`);
-			const todo = [];
-			if (row.stringlyTypedEnums?.length)
-				todo.push(
-					`type as enums: ${list(row.stringlyTypedEnums.map((/** @type {string} */ s) => s.split(' (')[0]))}`
-				);
-			if (row.untyped?.length) todo.push(`give a type to: ${list(row.untyped)}`);
-			return {
-				s: row.score,
-				w: 'ok',
-				h: `${parts.join('; ')}.${todo.length ? ` To do: ${todo.join('; ')}.` : ''}`,
-			};
-		}
-		case 'E03': {
-			if (!row.present) return { s: row.score, w: 'ok', h: 'Missing from the manifest: run npm run docs:ai.' };
-			const weak = Object.entries(row.facets ?? {})
-				.filter(([, v]) => Number(v) < 100)
-				.map(([k, v]) => `${k} ${v}`);
-			return {
-				s: row.score,
-				w: 'ok',
-				h: weak.length
-					? `Facets below 100: ${weak.join(', ')}. Add the missing defaults, descriptions or markup skeleton to the source the generator reads.`
-					: 'All six manifest facets complete.',
-			};
-		}
-		case 'E05': {
-			const total = row.apiTotal + row.propsTotal;
-			const done = row.apiDocumented + row.propsDocumented;
-			const todo = [
-				...(row.undocumentedApi ?? []).map((/** @type {string} */ f) => `${f}()`),
-				...(row.undocumentedProps ?? []),
-			];
-			return {
-				s: pct(done, total),
-				w: 'ok',
-				h: `${row.apiDocumented}/${row.apiTotal} API functions and ${row.propsDocumented}/${row.propsTotal} props documented.${todo.length ? ` Document: ${list(todo)}.` : ''}`,
-			};
-		}
-		case 'E06': {
-			const todo = [];
-			if (row.missing?.length) todo.push(`add canonical members: ${list(row.missing)}`);
-			if (row.unwrapped?.length)
-				todo.push(`return the response envelope from: ${list(row.unwrapped)} (behaviour change, see B-3)`);
-			if (row.nonCamelParams?.length) todo.push(`camelCase parameters: ${list(row.nonCamelParams)}`);
-			if (row.inlineCodes?.length) todo.push(`replace inline error codes: ${list(row.inlineCodes)}`);
-			return {
-				s: row.score,
-				w: 'ok',
-				h: `${row.functions} API functions.${todo.length ? ` To do: ${todo.join('; ')}.` : ' Matches the canonical shape.'}`,
-			};
-		}
-		case 'E07': {
-			const over = [];
-			if (row.depth > FREE_DEPTH)
-				over.push(`${row.depth - FREE_DEPTH} levels over the free depth of ${FREE_DEPTH}`);
-			if (row.elements > FREE_ELEMENTS)
-				over.push(`${row.elements - FREE_ELEMENTS} parts over the free ${FREE_ELEMENTS}`);
-			return {
-				s: row.score,
-				w: 'ok',
-				h: `Story markup: depth ${row.depth}, ${row.elements} distinct parts, ${row.classes} classes.${over.length ? ` ${over.join('; ')}. Flattening needs a DOM-contract change (B-5).` : ' Within the allowance.'}`,
-			};
-		}
-		case 'E08': {
-			const todo = [];
-			if (row.literal) todo.push(`replace ${row.literal} hardcoded values with tokens`);
-			if (row.total && row.routed / row.total < 0.6)
-				todo.push(`route more reads through --osui-* knobs (${row.knobs} knobs today; B-7)`);
-			if (row.important) todo.push(`remove ${row.important} !important (B-8)`);
-			return {
-				s: row.score,
-				w: 'ok',
-				h: `${row.routed} of ${row.total} themeable declarations read via --osui-* knobs, ${row.literal} hardcoded, ${row.important} !important.${todo.length ? ` To do: ${todo.join('; ')}.` : ''}`,
-			};
-		}
-		case 'E09': {
-			const todo = [];
-			if (row.avgDepth > 1) todo.push('flatten combinator chains into state classes on the styled element (B-6)');
-			if (row.p90b > 2) todo.push(`lower class specificity (p90 ${row.p90b}, max depth ${row.maxDepth})`);
-			return {
-				s: row.score,
-				w: 'ok',
-				h: `${row.selectors} selectors, mean ${r1(row.avgDepth)} combinators, p90 class specificity ${row.p90b}.${todo.length ? ` To do: ${todo.join('; ')}.` : ' Flat cascade.'}`,
-			};
-		}
-		case 'E10': {
-			const todo = [];
-			if (row.depth > 1) todo.push(`inheritance depth ${row.depth} (${row.chain})`);
-			if (row.files > 4) todo.push(`${row.files} contract files (free allowance 4)`);
-			if (row.configShape === 0) todo.push('Create accepts only a JSON string');
-			if (row.eventModel === 0) todo.push('event names typed as string');
-			if (row.moduleFormat === 0) todo.push('global namespace instead of an ES module (B-4)');
-			return {
-				s: row.score,
-				w: 'ok',
-				h: todo.length ? `Costs: ${todo.join('; ')}.` : 'Flat, typed and modular.',
-			};
-		}
-		default:
-			return { s: typeof row.score === 'number' ? row.score : null, w: 'ok', h: '' };
-	}
+	if (!row) return missingCell(id, ctx);
+	const build = CELL_BUILDERS[id];
+	if (build) return build(row);
+	return ok(typeof row.score === 'number' ? row.score : null, '');
 }
 
 /**
@@ -202,18 +213,13 @@ export function adviceFor(m) {
 	switch (m.id) {
 		case 'E01': {
 			const src = rows.filter((r) => r.source !== 'manifest card');
-			const out = [
+			return [
 				`Mean ${raw.meanTokens} tokens per pattern via cards, against ${raw.meanSourceTokens} from source; benchmark median ${raw.benchmark?.median ?? 912}.`,
-			];
-			out.push(
 				src.length
 					? `${src.length} patterns still read from source (card below 80 % complete): ${list(src.map((r) => r.name))}.`
-					: 'Every pattern is served by its manifest card; keep cards complete so this holds.'
-			);
-			out.push(
-				`The compiled .d.ts is ${raw.publicTypingsTokens ? Math.round(raw.publicTypingsTokens / 1000) : '~51'}k tokens: agents must load a card, never the whole typing file.`
-			);
-			return out;
+					: 'Every pattern is served by its manifest card; keep cards complete so this holds.',
+				`The compiled .d.ts is ${raw.publicTypingsTokens ? Math.round(raw.publicTypingsTokens / 1000) : '~51'}k tokens: agents must load a card, never the whole typing file.`,
+			];
 		}
 		case 'E02': {
 			const stringly = rows.flatMap((r) =>
@@ -229,15 +235,15 @@ export function adviceFor(m) {
 					: 'No pattern exceeds the prop allowance.',
 			];
 		}
-		case 'E03':
+		case 'E03': {
+			const facetMeans = Object.entries(raw.facetMeans ?? {})
+				.map(([k, v]) => `${k} ${v}`)
+				.join(', ');
 			return [
-				`${raw.patterns}/${raw.entries ?? raw.patterns} patterns in the manifest; facet means ${Object.entries(
-					raw.facetMeans ?? {}
-				)
-					.map(([k, v]) => `${k} ${v}`)
-					.join(', ')}.`,
+				`${raw.patterns}/${raw.entries ?? raw.patterns} patterns in the manifest; facet means ${facetMeans}.`,
 				'Keep it at 100 by running npm run docs:ai in every PR that touches a pattern; the CI freshness check fails a stale commit.',
 			];
+		}
 		case 'E04':
 			return [
 				`${raw.implicit} implicit-any, ${raw.explicit} explicit any, ${raw.suppressions} suppressions, ${raw.missingReturnTypes}/${raw.publicFunctions} public functions without a return type over ${raw.kloc} KLOC; noImplicitAny is on.`,
@@ -283,10 +289,8 @@ export function adviceFor(m) {
 			];
 		}
 		case 'E09': {
-			const worst = rows
-				.sort((a, b) => a.score - b.score)
-				.slice(0, 6)
-				.map((r) => `${r.name} (p90 ${r.p90b}, max ${r.maxDepth})`);
+			rows.sort((a, b) => a.score - b.score);
+			const worst = rows.slice(0, 6).map((r) => `${r.name} (p90 ${r.p90b}, max ${r.maxDepth})`);
 			return [
 				m.summary,
 				`Highest specificity: ${list(worst, 6)}. Flattening into state classes changes cascade order for existing overrides (B-6).`,
@@ -300,6 +304,50 @@ export function adviceFor(m) {
 		default:
 			return [m.summary];
 	}
+}
+
+/**
+ * Component universe and kind: E07 knows every component, E02 names the patterns.
+ * @param {any[]} results metric results of the latest run
+ * @returns {Map<string, string>}
+ */
+function componentKinds(results) {
+	/** @type {Map<string, string>} */
+	const kinds = new Map();
+	const e07 = results.find((m) => m.id === 'E07');
+	for (const row of Object.values(e07?.perComponent ?? {}))
+		kinds.set(/** @type {any} */ (row).name, /** @type {any} */ (row).kind);
+	for (const u of e07?.unmeasured ?? []) if (!kinds.has(u.name)) kinds.set(u.name, 'css');
+	for (const m of results) {
+		if (!HEATMAP_EVALS.includes(m.id)) continue;
+		for (const row of Object.values(m.perComponent ?? {})) {
+			const name = /** @type {any} */ (row).name;
+			if (!kinds.has(name)) kinds.set(name, PATTERN_ONLY.has(m.id) ? 'pattern' : 'css');
+		}
+	}
+	const e02 = results.find((m) => m.id === 'E02');
+	for (const r of Object.values(e02?.perComponent ?? {})) kinds.set(/** @type {any} */ (r).name, 'pattern');
+	return kinds;
+}
+
+/**
+ * @param {any[]} results metric results of the latest run
+ * @param {string} name component name
+ * @param {string} kind component kind
+ * @returns {Record<string, Cell>}
+ */
+function componentCells(results, name, kind) {
+	/** @type {Record<string, Cell>} */
+	const cells = {};
+	for (const m of results) {
+		if (!HEATMAP_EVALS.includes(m.id)) continue;
+		const row = Object.values(m.perComponent ?? {}).find((/** @type {any} */ r) => r.name === name) ?? null;
+		const un = (m.unmeasured ?? []).find(
+			(/** @type {any} */ u) => u.name === name || u.name.startsWith(`${name} (`)
+		);
+		cells[m.id] = cellFor(m.id, row, { kind, reason: un?.reason });
+	}
+	return cells;
 }
 
 /**
@@ -336,42 +384,12 @@ export function buildDashboardData(suiteDir, now = new Date()) {
 		},
 	}));
 
-	// component universe: E07 knows every component and its kind
-	/** @type {Map<string, string>} */
-	const kinds = new Map();
-	const e07 = latest.results.find((/** @type {any} */ m) => m.id === 'E07');
-	for (const row of Object.values(e07?.perComponent ?? {}))
-		kinds.set(/** @type {any} */ (row).name, /** @type {any} */ (row).kind);
-	for (const u of e07?.unmeasured ?? []) if (!kinds.has(u.name)) kinds.set(u.name, 'css');
-	for (const m of latest.results) {
-		if (!HEATMAP_EVALS.includes(m.id)) continue;
-		for (const row of Object.values(m.perComponent ?? {})) {
-			const name = /** @type {any} */ (row).name;
-			if (!kinds.has(name)) kinds.set(name, PATTERN_ONLY.has(m.id) ? 'pattern' : 'css');
-		}
-	}
-	const patternNames = new Set(
-		Object.values(latest.results.find((/** @type {any} */ m) => m.id === 'E02')?.perComponent ?? {}).map(
-			(/** @type {any} */ r) => r.name
-		)
-	);
-	for (const n of patternNames) kinds.set(n, 'pattern');
-
+	const kinds = componentKinds(latest.results);
 	const components = [...kinds.keys()]
 		.sort((a, b) => a.localeCompare(b))
 		.map((name) => {
 			const kind = kinds.get(name) ?? 'css';
-			/** @type {Record<string, ReturnType<typeof cellFor>>} */
-			const cells = {};
-			for (const m of latest.results) {
-				if (!HEATMAP_EVALS.includes(m.id)) continue;
-				const row = Object.values(m.perComponent ?? {}).find((/** @type {any} */ r) => r.name === name) ?? null;
-				const un = (m.unmeasured ?? []).find(
-					(/** @type {any} */ u) => u.name === name || u.name.startsWith(`${name} (`)
-				);
-				cells[m.id] = cellFor(m.id, row, { kind, reason: un?.reason });
-			}
-			return { n: name, k: kind, cells };
+			return { n: name, k: kind, cells: componentCells(latest.results, name, kind) };
 		});
 
 	return {

@@ -82,7 +82,7 @@ namespace Providers.OSUI.Utils {
 
 			// Set the computePosition method. This is the main provider method to set the balloon position
 			const _eventOnUpdatePosition = () => {
-				window.FloatingUIDOM.computePosition(
+				void window.FloatingUIDOM.computePosition(
 					this.floatingConfigs.AnchorElem,
 					this.floatingConfigs.FloatingElem,
 					{
