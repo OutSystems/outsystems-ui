@@ -53,7 +53,7 @@ export default {
 						.join(', ')}`
 				: 'no docs-ai/osui.components.json',
 			raw: { manifestPresent: raw.manifestPresent, entries: raw.entries, patterns: raw.patterns, facetMeans },
-			perComponent: perComponent.sort((a, b) => a.score - b.score),
+			perComponent: [...perComponent].sort((a, b) => a.score - b.score),
 			unmeasured: [],
 		};
 	},

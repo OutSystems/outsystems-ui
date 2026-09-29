@@ -46,6 +46,9 @@ export function publicType(ctx, pattern, type, prop) {
 /** @param {string} text */
 const jsdocLine = (text) => `/** ${text.replace(/\*\//g, '* /').trim()} */`;
 
+/** Code-point order, which is what the member-ordering lint rule ("alphabetically") checks. */
+const codePointCompare = (/** @type {string} */ a, /** @type {string} */ b) => (a < b ? -1 : Number(a > b));
+
 /**
  * Generated source, formatted with the repository Prettier configuration so it is stable and lint-clean.
  * @param {import('../../evals/ai-friendliness/lib/context.mjs').EvalContext} ctx
@@ -88,15 +91,17 @@ export function renderPatternTypesRaw(ctx, manifest) {
 		});
 		members.push({ name: 'ExtendedClass', type: 'string', doc: 'Extra CSS classes applied to the pattern root element.' });
 		// code-point order, which is what the member-ordering lint rule ("alphabetically") checks
-		for (const m of members.sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0))) {
+		members.sort((a, b) => codePointCompare(a.name, b.name));
+		for (const m of members) {
 			if (m.doc) lines.push(`\t\t${jsdocLine(m.doc)}`);
 			lines.push(`\t\t${m.name}?: ${m.type};`);
 		}
 		lines.push('\t};');
 		lines.push('');
 		const events = [...new Set([...e.events, 'Initialized', ...(p.providerDirs.length ? ['OnProviderConfigsApplied'] : [])])];
+		const eventUnion = events.map((ev) => `'${ev}'`).join(' | ');
 		lines.push('\t/** Event names understood by RegisterCallback; any other string is passed through unchanged. */');
-		lines.push(`\texport type EventName = ${events.map((ev) => `'${ev}'`).join(' | ')} | (string & {});`);
+		lines.push(`\texport type EventName = ${eventUnion} | (string & {});`);
 		lines.push('}');
 		blocks.push(lines.join('\n'));
 	}

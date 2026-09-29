@@ -113,7 +113,10 @@ function main() {
 	console.log(formatTable(run));
 	const unmeasured = results.reduce((s, r) => s + (r.unmeasured?.length ?? 0), 0);
 	if (unmeasured) console.log(`\n${unmeasured} component/metric pairs unmeasured (see results JSON → unmeasured).`);
-	if (args.write) console.log(`\nResults: ${path.relative(root, path.join(resultsDir, `${label}.json`))}`);
+	if (args.write) {
+		const resultsFile = path.relative(root, path.join(resultsDir, `${label}.json`));
+		console.log(`\nResults: ${resultsFile}`);
+	}
 }
 
 main();

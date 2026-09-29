@@ -74,13 +74,28 @@ export function resolveEnumReference(ctx, pattern, text) {
 	if (t === 'true') return true;
 	if (t === 'false') return false;
 	if (/^-?\d+(\.\d+)?$/.test(t)) return Number(t);
-	const str = t.match(/^(['"`])(.*)\1$/);
-	if (str) return str[2];
-	const ref = t.match(/(?:^|\.)(GlobalEnum|Enum)\.([A-Z]\w*)\.([A-Z]\w*)$/);
-	if (!ref) return null;
-	const e = findEnum(ctx, pattern, ref[1], ref[2]);
-	if (!e || !(ref[3] in e.members)) return null;
-	return e.members[ref[3]];
+	const quote = t[0];
+	if ((quote === "'" || quote === '"' || quote === '`') && t.length >= 2 && t.endsWith(quote)) return t.slice(1, -1);
+	const ref = parseEnumPath(t);
+	if (!ref || !ref.member) return null;
+	const e = findEnum(ctx, pattern, ref.scope, ref.enumName);
+	if (!e || !(ref.member in e.members)) return null;
+	return e.members[ref.member];
+}
+
+/**
+ * Split `…Enum.Name.Member` / `…GlobalEnum.Name` into its parts, or null when the text is not an
+ * enum path. The scope is the last `Enum`/`GlobalEnum` segment; at most one member segment follows.
+ * @param {string} text
+ * @returns {{ scope: 'Enum'|'GlobalEnum', enumName: string, member: string|null }|null}
+ */
+export function parseEnumPath(text) {
+	const parts = text.trim().split('.');
+	const scopeIndex = Math.max(parts.lastIndexOf('Enum'), parts.lastIndexOf('GlobalEnum'));
+	if (scopeIndex < 0) return null;
+	const rest = parts.slice(scopeIndex + 1);
+	if (rest.length === 0 || rest.length > 2 || !rest.every((p) => /^[A-Z]\w*$/.test(p))) return null;
+	return { scope: /** @type {'Enum'|'GlobalEnum'} */ (parts[scopeIndex]), enumName: rest[0], member: rest[1] ?? null };
 }
 
 /**
@@ -92,9 +107,9 @@ export function resolveEnumReference(ctx, pattern, text) {
  */
 export function enumValuesFor(ctx, pattern, text) {
 	if (!text) return null;
-	const ref = text.trim().match(/(?:^|\.)(GlobalEnum|Enum)\.([A-Z]\w*)(?:\.[A-Z]\w*)?$/);
+	const ref = parseEnumPath(text);
 	if (!ref) return null;
-	const e = findEnum(ctx, pattern, ref[1], ref[2]);
+	const e = findEnum(ctx, pattern, ref.scope, ref.enumName);
 	return e ? Object.values(e.members) : null;
 }
 
@@ -109,62 +124,86 @@ const unionType = (values) => values.map((v) => (typeof v === 'string' ? `'${v}'
 export function describeProp(ctx, pattern, prop) {
 	/** @type {{ type: string, default?: unknown, allowed?: (string|number)[], hint?: string, description?: string }} */
 	const out = { type: prop.typeText ?? 'unknown' };
-	/** @type {(string|number)[]|null} */
-	let allowed = null;
-
-	if (prop.validated === 'inRange') {
-		if (prop.allowed.length) {
-			const resolved = prop.allowed.map((a) => resolveEnumReference(ctx, pattern, a));
-			if (resolved.every((v) => v !== null)) allowed = /** @type {(string|number)[]} */ (resolved);
-		} else if (prop.allowedFrom) {
-			allowed = enumValuesFor(ctx, pattern, prop.allowedFrom);
-		}
-		if (!allowed && prop.allowed.length === 1) allowed = enumValuesFor(ctx, pattern, prop.allowed[0]);
-		// validateInRange falls back to the default, so the default is always an accepted value
-		const def = resolveEnumReference(ctx, pattern, prop.defaultText);
-		if (allowed && def !== null && typeof def !== 'boolean' && !allowed.includes(def)) allowed = [def, ...allowed];
-	}
-	if (!allowed && prop.kind === 'enum' && prop.typeText) {
-		allowed = enumValuesFor(ctx, pattern, `${prop.typeText}.X`);
-	}
-	// A string prop defaulted to a *pattern-local* enum member (Enum.IconType.Caret) is constrained to
-	// that enum. A GlobalEnum default (GlobalEnum.Direction.Right) is only a hint: the shared enum is a
-	// superset of what the pattern handles and the source does not validate the value, so no allowed
-	// list is fabricated — the gap is reported as-is.
-	/** @type {string|undefined} */
-	let hint;
-	const enumDefault = (prop.defaultText ?? '').match(/(^|\.)(GlobalEnum|Enum)\.([A-Z]\w*)\.[A-Z]\w*$/);
-	if (!allowed && prop.kind === 'string' && enumDefault) {
-		if (enumDefault[2] === 'Enum') allowed = enumValuesFor(ctx, pattern, prop.defaultText);
-		else hint = `default from ${enumDefault[2]}.${enumDefault[3]}; not validated — any string is accepted`;
-	}
-
-	switch (prop.kind) {
-		case 'boolean':
-		case 'number':
-		case 'string':
-			out.type = allowed ? unionType(allowed) : prop.kind;
-			break;
-		case 'enum':
-			out.type = allowed ? unionType(allowed) : (prop.typeText ?? 'enum');
-			break;
-		case 'any':
-		case 'unknown':
-		case 'untyped':
-			out.type = 'unknown';
-			break;
-		default:
-			out.type = prop.typeText ?? prop.kind;
-	}
+	const { allowed, hint } = allowedValuesFor(ctx, pattern, prop);
+	out.type = publicTypeText(prop, allowed);
 	if (allowed) out.allowed = allowed;
 	if (hint) out.hint = hint;
-
 	if (prop.defaultText !== null) {
 		const resolved = resolveEnumReference(ctx, pattern, prop.defaultText);
 		out.default = resolved !== null ? resolved : prop.defaultText;
 	}
 	if (prop.docText) out.description = prop.docText;
 	return out;
+}
+
+/**
+ * Allowed values of a `validateInRange` prop: the explicit list, an `Object.values(Enum)` operand, or a
+ * single enum reference expanded to its enum; the default is always accepted.
+ * @param {import('../../evals/ai-friendliness/lib/context.mjs').EvalContext} ctx
+ * @param {import('../../evals/ai-friendliness/lib/inventory.mjs').Pattern} pattern
+ * @param {import('../../evals/ai-friendliness/lib/ts.mjs').ConfigProp} prop
+ * @returns {(string|number)[]|null}
+ */
+function inRangeValues(ctx, pattern, prop) {
+	/** @type {(string|number)[]|null} */
+	let allowed = null;
+	if (prop.allowed.length) {
+		const resolved = prop.allowed.map((a) => resolveEnumReference(ctx, pattern, a));
+		if (resolved.every((v) => v !== null)) allowed = /** @type {(string|number)[]} */ (resolved);
+	} else if (prop.allowedFrom) {
+		allowed = enumValuesFor(ctx, pattern, prop.allowedFrom);
+	}
+	if (!allowed && prop.allowed.length === 1) allowed = enumValuesFor(ctx, pattern, prop.allowed[0]);
+	const def = resolveEnumReference(ctx, pattern, prop.defaultText);
+	if (allowed && def !== null && typeof def !== 'boolean' && !allowed.includes(def)) return [def, ...allowed];
+	return allowed;
+}
+
+/**
+ * Allowed values and, when the source does not constrain a string, a hint.
+ *
+ * A string prop defaulted to a *pattern-local* enum member (Enum.IconType.Caret) is constrained to
+ * that enum. A GlobalEnum default (GlobalEnum.Direction.Right) is only a hint: the shared enum is a
+ * superset of what the pattern handles and the source does not validate the value, so no allowed
+ * list is fabricated — the gap is reported as-is.
+ * @param {import('../../evals/ai-friendliness/lib/context.mjs').EvalContext} ctx
+ * @param {import('../../evals/ai-friendliness/lib/inventory.mjs').Pattern} pattern
+ * @param {import('../../evals/ai-friendliness/lib/ts.mjs').ConfigProp} prop
+ * @returns {{ allowed: (string|number)[]|null, hint?: string }}
+ */
+function allowedValuesFor(ctx, pattern, prop) {
+	if (prop.validated === 'inRange') {
+		const allowed = inRangeValues(ctx, pattern, prop);
+		if (allowed) return { allowed };
+	}
+	if (prop.kind === 'enum' && prop.typeText) return { allowed: enumValuesFor(ctx, pattern, `${prop.typeText}.X`) };
+	const enumDefault = prop.kind === 'string' ? parseEnumPath(prop.defaultText ?? '') : null;
+	if (!enumDefault?.member) return { allowed: null };
+	if (enumDefault.scope === 'Enum') return { allowed: enumValuesFor(ctx, pattern, prop.defaultText) };
+	return { allowed: null, hint: `default from ${enumDefault.scope}.${enumDefault.enumName}; not validated — any string is accepted` };
+}
+
+/**
+ * Type text shown to agents for a prop.
+ * @param {import('../../evals/ai-friendliness/lib/ts.mjs').ConfigProp} prop
+ * @param {(string|number)[]|null} allowed
+ */
+function publicTypeText(prop, allowed) {
+	if (allowed) return unionType(allowed);
+	switch (prop.kind) {
+		case 'boolean':
+		case 'number':
+		case 'string':
+			return prop.kind;
+		case 'enum':
+			return prop.typeText ?? 'enum';
+		case 'any':
+		case 'unknown':
+		case 'untyped':
+			return 'unknown';
+		default:
+			return prop.typeText ?? prop.kind;
+	}
 }
 
 /**
@@ -190,7 +229,15 @@ export function cleanMarkup(html) {
  */
 export function knobsOf(css) {
 	if (!css) return [];
-	return [...new Set([...css.matchAll(/^\s*(--osui-[\w-]+)\s*:/gm)].map((m) => m[1]))];
+	/** @type {Set<string>} */
+	const knobs = new Set();
+	for (const line of css.split('\n')) {
+		const trimmed = line.trim();
+		if (!trimmed.startsWith('--osui-')) continue;
+		const colon = trimmed.indexOf(':');
+		if (colon > 0) knobs.add(trimmed.slice(0, colon).trimEnd());
+	}
+	return [...knobs];
 }
 
 /**
@@ -423,8 +470,9 @@ export function renderCssComponents(ctx) {
 		const m = measureStory(ctx.readText(c.storyFile));
 		if (!m.html) continue;
 		const knobs = knobsOf(ctx.compiledCss(c.scssFile).css);
+		const skeleton = cleanMarkup(m.html).slice(0, 700);
 		lines.push(`## ${c.name} (${ctx.rel(c.scssFile)})`);
-		lines.push(`Skeleton (from ${ctx.rel(c.storyFile)}): ${cleanMarkup(m.html).slice(0, 700)}`);
+		lines.push(`Skeleton (from ${ctx.rel(c.storyFile)}): ${skeleton}`);
 		if (knobs.length) lines.push(`CSS API: ${knobs.join(' ')}`);
 		lines.push('');
 	}

@@ -68,7 +68,8 @@ export function formatTable(run) {
 	for (const r of run.results) {
 		lines.push(`| ${r.id} | ${r.name} | ${run.scores[r.id].toFixed(1)} | ${r.movable ? 'yes' : 'structural'} | ${r.summary ?? ''} |`);
 	}
-	lines.push(`| — | **AI-Friendliness Index** | **${run.index.toFixed(1)}** | | ${run.label}${run.sha ? ` @ ${run.sha}` : ''} |`);
+	const provenance = run.sha ? `${run.label} @ ${run.sha}` : run.label;
+	lines.push(`| — | **AI-Friendliness Index** | **${run.index.toFixed(1)}** | | ${provenance} |`);
 	return lines.join('\n');
 }
 

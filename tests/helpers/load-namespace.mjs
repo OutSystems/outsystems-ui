@@ -4,14 +4,37 @@
  * unit-tested without the browser or the full AMD bundle.
  *
  * `namespace OSFramework.OSUI.Helper { export function X() {} }` transpiles to an IIFE that
- * extends a root object named `OSFramework`. The transpiled code is evaluated as a function body
- * in the host realm (so `JSON`, `Error` and object prototypes are the test's own), receiving
- * fresh root objects for the namespaces the file declares plus anything passed in `globals`.
+ * extends a root object named `OSFramework`. The transpiled code is wrapped as a CommonJS module
+ * exporting a function whose parameters are the namespace roots, written to a temporary file and
+ * loaded through `require` — so no string is ever passed to `eval` or `new Function`. Inside the
+ * body, `var OSFramework;` re-declares the parameter without resetting it, so the IIFE populates
+ * the object we pass in. The source is repository code compiled by TypeScript, never external input.
  */
 import fs from 'node:fs';
-import vm from 'node:vm';
+import { createRequire } from 'node:module';
+import os from 'node:os';
+import path from 'node:path';
 
 import ts from 'typescript';
+
+const require = createRequire(import.meta.url);
+
+/**
+ * Namespace root identifiers declared in a source (`namespace Foo.Bar {` → `Foo`).
+ * @param {string} source
+ */
+function namespaceRoots(source) {
+	/** @type {Set<string>} */
+	const roots = new Set();
+	for (const line of source.split('\n')) {
+		const trimmed = line.trimStart();
+		if (!trimmed.startsWith('namespace ')) continue;
+		const name = trimmed.slice('namespace '.length).trimStart();
+		const root = name.split(/[.\s{]/)[0];
+		if (root) roots.add(root);
+	}
+	return roots;
+}
 
 /**
  * @param {string} file absolute path of the `.ts` source
@@ -29,15 +52,16 @@ export function loadNamespaceFile(file, globals = {}) {
 	}
 	/** @type {Record<string, any>} */
 	const context = { ...globals };
-	for (const m of source.matchAll(/^\s*namespace\s+([A-Za-z_$][\w$]*)/gm)) {
-		if (!(m[1] in context)) context[m[1]] = {};
-	}
+	for (const root of namespaceRoots(source)) if (!(root in context)) context[root] = {};
 	const names = Object.keys(context);
-	// The evaluated text is repository source compiled by TypeScript in this test process — never
-	// external input. It is compiled as a function whose parameters are the namespace roots:
-	// `var OSFramework;` inside the body re-declares the parameter without resetting it, so the
-	// IIFE populates the object we pass in.
-	const factory = vm.runInThisContext(`(function (${names.join(', ')}) {\n${outputText}\n})`, { filename: file });
-	factory(...names.map((n) => context[n]));
+
+	const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'osui-namespace-'));
+	const moduleFile = path.join(dir, `${path.basename(file, '.ts')}.cjs`);
+	fs.writeFileSync(moduleFile, `module.exports = function (${names.join(', ')}) {\n${outputText}\n};\n`);
+	try {
+		require(moduleFile)(...names.map((n) => context[n]));
+	} finally {
+		fs.rmSync(dir, { recursive: true, force: true });
+	}
 	return context;
 }

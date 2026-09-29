@@ -85,7 +85,7 @@ export default {
 				band: { best: T_MIN, worst: T_MAX },
 				benchmark: BENCHMARK,
 			},
-			perComponent: perComponent.sort((a, b) => b.tokens - a.tokens),
+			perComponent: [...perComponent].sort((a, b) => b.tokens - a.tokens),
 			unmeasured: [],
 		};
 	},

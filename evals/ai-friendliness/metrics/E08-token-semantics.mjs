@@ -73,7 +73,7 @@ export default {
 				literalRatio: round1(totals.literal / Math.max(1, totals.total)),
 				routedRatio: round1(totals.routed / Math.max(1, totals.total)),
 			},
-			perComponent: perComponent.sort((a, b) => a.score - b.score),
+			perComponent: [...perComponent].sort((a, b) => a.score - b.score),
 			unmeasured,
 			details: { hardcodedSamples: literals.slice(0, 200) },
 		};

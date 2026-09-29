@@ -63,7 +63,7 @@ export default {
 			score: mean(perComponent.map((c) => c.score)) ?? 0,
 			summary: `${missingTotal} missing canonical members, ${unwrappedTotal} functions without envelope, ${nonCamelTotal} non-camelCase params`,
 			raw: { missingTotal, unwrappedTotal, nonCamelTotal, functions: perComponent.reduce((s, c) => s + c.functions, 0) },
-			perComponent: perComponent.sort((a, b) => a.score - b.score),
+			perComponent: [...perComponent].sort((a, b) => a.score - b.score),
 			unmeasured: [],
 		};
 	},

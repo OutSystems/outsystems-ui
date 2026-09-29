@@ -72,7 +72,7 @@ export default {
 				stringlyTypedEnums: stringly,
 				untypedOrUnknown: untyped,
 			},
-			perComponent: perComponent.sort((a, b) => a.score - b.score),
+			perComponent: [...perComponent].sort((a, b) => a.score - b.score),
 			unmeasured: [],
 		};
 	},

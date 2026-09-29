@@ -66,7 +66,7 @@ export default {
 				meanElements: round1(mean(perComponent.map((c) => c.elements)) ?? 0),
 				benchmark: 'shadcn Accordion usage: depth 3, 4 elements → 100',
 			},
-			perComponent: perComponent.sort((a, b) => a.score - b.score),
+			perComponent: [...perComponent].sort((a, b) => a.score - b.score),
 			unmeasured,
 		};
 	},

@@ -45,52 +45,64 @@ const PSEUDO_ELEMENTS = new Set([
  * @property {[number, number, number]} specificity
  */
 
+const SPECIFICITY_ZERO = /** @type {[number, number, number]} */ ([0, 0, 0]);
+/** Functional pseudo-classes whose specificity is that of their most specific argument. */
+const FORWARDING_PSEUDOS = new Set(['not', 'is', 'has', 'matches']);
+
+/**
+ * Specificity contributed by one pseudo node.
+ * @param {import('postcss-selector-parser').Pseudo} node
+ * @returns {[number, number, number]}
+ */
+function pseudoSpecificity(node) {
+	const name = node.value.replace(/^:+/, '').toLowerCase();
+	if (node.value.startsWith('::') || PSEUDO_ELEMENTS.has(name)) return [0, 0, 1];
+	if (name === 'where') return SPECIFICITY_ZERO;
+	if (!FORWARDING_PSEUDOS.has(name)) return [0, 1, 0];
+	let best = SPECIFICITY_ZERO;
+	for (const inner of node.nodes ?? []) {
+		const s = specificityOf(inner);
+		if (compareSpec(s, best) > 0) best = s;
+	}
+	return best;
+}
+
+/**
+ * Specificity contributed by one simple selector node.
+ * @param {import('postcss-selector-parser').Node} node
+ * @returns {[number, number, number]}
+ */
+function nodeSpecificity(node) {
+	switch (node.type) {
+		case 'id':
+			return [1, 0, 0];
+		case 'class':
+		case 'attribute':
+			return [0, 1, 0];
+		case 'tag':
+			return node.value === '*' ? SPECIFICITY_ZERO : [0, 0, 1];
+		case 'pseudo':
+			return pseudoSpecificity(/** @type {import('postcss-selector-parser').Pseudo} */ (node));
+		default:
+			return SPECIFICITY_ZERO;
+	}
+}
+
 /**
  * Specificity of one parsed selector (postcss-selector-parser `Selector` node).
  * @param {import('postcss-selector-parser').Selector} sel
  * @returns {[number, number, number]}
  */
 function specificityOf(sel) {
-	let a = 0;
-	let b = 0;
-	let c = 0;
+	/** @type {[number, number, number]} */
+	const total = [0, 0, 0];
 	for (const node of sel.nodes) {
-		switch (node.type) {
-			case 'id':
-				a++;
-				break;
-			case 'class':
-			case 'attribute':
-				b++;
-				break;
-			case 'tag':
-				if (node.value !== '*') c++;
-				break;
-			case 'pseudo': {
-				const name = node.value.replace(/^:+/, '').toLowerCase();
-				if (node.value.startsWith('::') || PSEUDO_ELEMENTS.has(name)) {
-					c++;
-				} else if (name === 'where') {
-					// zero specificity by definition
-				} else if (name === 'not' || name === 'is' || name === 'has' || name === 'matches') {
-					let best = [0, 0, 0];
-					for (const inner of node.nodes ?? []) {
-						const s = specificityOf(inner);
-						if (compareSpec(s, best) > 0) best = s;
-					}
-					a += best[0];
-					b += best[1];
-					c += best[2];
-				} else {
-					b++;
-				}
-				break;
-			}
-			default:
-				break;
-		}
+		const s = nodeSpecificity(node);
+		total[0] += s[0];
+		total[1] += s[1];
+		total[2] += s[2];
 	}
-	return [a, b, c];
+	return total;
 }
 
 /** @param {number[]} x @param {number[]} y */

@@ -62,7 +62,7 @@ export default {
 				maxDepth: Math.max(0, ...perComponent.map((c) => c.maxDepth)),
 				deepSelectors: worst.length,
 			},
-			perComponent: perComponent.sort((a, b) => a.score - b.score),
+			perComponent: [...perComponent].sort((a, b) => a.score - b.score),
 			unmeasured,
 			details: { deepestSelectors: worst.slice(0, 50) },
 		};

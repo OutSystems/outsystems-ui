@@ -69,7 +69,7 @@ export default {
 			score: scoreGlobal(raw),
 			summary: `API JSDoc ${apiDocumented}/${apiTotal}, prop comments ${propsDocumented}/${propsTotal}, agent docs ${agentDocs}/100`,
 			raw: { ...raw, jsdocApi: round1(raw.jsdocApi * 100) / 100, jsdocProps: round1(raw.jsdocProps * 100) / 100, tiers, apiTotal, propsTotal },
-			perComponent: perComponent.sort((a, b) => a.apiDocumented / Math.max(1, a.apiTotal) - b.apiDocumented / Math.max(1, b.apiTotal)),
+			perComponent: [...perComponent].sort((a, b) => a.apiDocumented / Math.max(1, a.apiTotal) - b.apiDocumented / Math.max(1, b.apiTotal)),
 			unmeasured: [],
 		};
 	},

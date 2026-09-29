@@ -262,6 +262,65 @@ export function getClassesInFiles(program, files) {
  * @typedef {'boolean'|'number'|'string'|'enum'|'array'|'object'|'function'|'union'|'unknown'|'any'|'untyped'} PropKind
  */
 
+/** Kind implied by a keyword or simple type node. */
+const KEYWORD_KINDS = new Map([
+	[ts.SyntaxKind.BooleanKeyword, 'boolean'],
+	[ts.SyntaxKind.NumberKeyword, 'number'],
+	[ts.SyntaxKind.StringKeyword, 'string'],
+	[ts.SyntaxKind.UnknownKeyword, 'unknown'],
+	[ts.SyntaxKind.AnyKeyword, 'any'],
+	[ts.SyntaxKind.ArrayType, 'array'],
+	[ts.SyntaxKind.FunctionType, 'function'],
+	[ts.SyntaxKind.TypeLiteral, 'object'],
+	[ts.SyntaxKind.LiteralType, 'enum'],
+]);
+
+/**
+ * Kind inferred from an initializer when a property has no type annotation.
+ * @param {ts.Expression|undefined} initializer
+ * @returns {PropKind}
+ */
+function kindFromInitializer(initializer) {
+	if (!initializer) return 'untyped';
+	if (initializer.kind === ts.SyntaxKind.TrueKeyword || initializer.kind === ts.SyntaxKind.FalseKeyword) return 'boolean';
+	if (ts.isNumericLiteral(initializer)) return 'number';
+	if (ts.isStringLiteral(initializer) || ts.isTemplateLiteral(initializer)) return 'string';
+	if (ts.isArrayLiteralExpression(initializer)) return 'array';
+	if (ts.isObjectLiteralExpression(initializer)) return 'object';
+	return 'untyped';
+}
+
+/**
+ * Kind of a union type node: `| undefined`/`| null` are ignored, all-literal unions are enums.
+ * @param {ts.UnionTypeNode} typeNode
+ * @param {ts.TypeChecker} checker
+ * @returns {PropKind}
+ */
+function kindFromUnion(typeNode, checker) {
+	const isNullish = (/** @type {ts.TypeNode} */ t) =>
+		t.kind === ts.SyntaxKind.UndefinedKeyword || (ts.isLiteralTypeNode(t) && t.literal.kind === ts.SyntaxKind.NullKeyword);
+	const members = typeNode.types.filter((t) => !isNullish(t));
+	if (members.length === 1) return classifyType(members[0], undefined, checker);
+	return members.every((t) => ts.isLiteralTypeNode(t)) ? 'enum' : 'union';
+}
+
+/**
+ * Kind of a type reference, resolved through the checker (enums and literal unions → `enum`).
+ * @param {ts.TypeReferenceNode} typeNode
+ * @param {ts.TypeChecker} checker
+ * @returns {PropKind}
+ */
+function kindFromReference(typeNode, checker) {
+	if (typeNode.typeName.getText() === 'Array') return 'array';
+	const type = checker.getTypeAtLocation(typeNode);
+	const isEnumLike = (type.flags & ts.TypeFlags.EnumLike) !== 0;
+	const isLiteralUnion = type.isUnion() && type.types.every((t) => t.isLiteral() || (t.flags & ts.TypeFlags.EnumLiteral) !== 0);
+	if (isEnumLike || isLiteralUnion) return 'enum';
+	if (type.flags & ts.TypeFlags.Any) return 'any';
+	if (type.flags & ts.TypeFlags.Unknown) return 'unknown';
+	return 'object';
+}
+
 /**
  * @param {ts.TypeNode|undefined} typeNode
  * @param {ts.Expression|undefined} initializer
@@ -269,54 +328,11 @@ export function getClassesInFiles(program, files) {
  * @returns {PropKind}
  */
 function classifyType(typeNode, initializer, checker) {
-	if (!typeNode) {
-		if (!initializer) return 'untyped';
-		if (initializer.kind === ts.SyntaxKind.TrueKeyword || initializer.kind === ts.SyntaxKind.FalseKeyword) return 'boolean';
-		if (ts.isNumericLiteral(initializer)) return 'number';
-		if (ts.isStringLiteral(initializer) || ts.isTemplateLiteral(initializer)) return 'string';
-		if (ts.isArrayLiteralExpression(initializer)) return 'array';
-		if (ts.isObjectLiteralExpression(initializer)) return 'object';
-		return 'untyped';
-	}
-	switch (typeNode.kind) {
-		case ts.SyntaxKind.BooleanKeyword:
-			return 'boolean';
-		case ts.SyntaxKind.NumberKeyword:
-			return 'number';
-		case ts.SyntaxKind.StringKeyword:
-			return 'string';
-		case ts.SyntaxKind.UnknownKeyword:
-			return 'unknown';
-		case ts.SyntaxKind.AnyKeyword:
-			return 'any';
-		case ts.SyntaxKind.ArrayType:
-			return 'array';
-		case ts.SyntaxKind.FunctionType:
-			return 'function';
-		case ts.SyntaxKind.TypeLiteral:
-			return 'object';
-		case ts.SyntaxKind.LiteralType:
-			return 'enum';
-		default:
-			break;
-	}
-	if (ts.isUnionTypeNode(typeNode)) {
-		const members = typeNode.types.filter(
-			(t) => t.kind !== ts.SyntaxKind.UndefinedKeyword && !(ts.isLiteralTypeNode(t) && t.literal.kind === ts.SyntaxKind.NullKeyword)
-		);
-		if (members.length === 1) return classifyType(members[0], undefined, checker);
-		if (members.every((t) => ts.isLiteralTypeNode(t))) return 'enum';
-		return 'union';
-	}
-	if (ts.isTypeReferenceNode(typeNode)) {
-		if (typeNode.typeName.getText() === 'Array') return 'array';
-		const type = checker.getTypeAtLocation(typeNode);
-		if (type.flags & ts.TypeFlags.EnumLike) return 'enum';
-		if (type.isUnion() && type.types.every((t) => t.isLiteral() || (t.flags & ts.TypeFlags.EnumLiteral) !== 0)) return 'enum';
-		if (type.flags & ts.TypeFlags.Any) return 'any';
-		if (type.flags & ts.TypeFlags.Unknown) return 'unknown';
-		return 'object';
-	}
+	if (!typeNode) return kindFromInitializer(initializer);
+	const keyword = KEYWORD_KINDS.get(typeNode.kind);
+	if (keyword) return /** @type {PropKind} */ (keyword);
+	if (ts.isUnionTypeNode(typeNode)) return kindFromUnion(typeNode, checker);
+	if (ts.isTypeReferenceNode(typeNode)) return kindFromReference(typeNode, checker);
 	return 'object';
 }
 

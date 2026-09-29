@@ -35,7 +35,9 @@ export default {
 			const fns = expectationsFor(ctx, p).apiFunctions;
 			const create = fns.find((f) => f.name === 'Create');
 			const configsParam = create?.params.find((x) => /config/i.test(x.name));
-			const configShape = configsParam ? (configsParam.type && configsParam.type !== 'string' ? 1 : 0) : 1;
+			// no configs parameter → nothing to type; a typed (non-string) parameter → 1; JSON string only → 0
+			let configShape = 1;
+			if (configsParam) configShape = configsParam.type && configsParam.type !== 'string' ? 1 : 0;
 			const register = fns.find((f) => f.name === 'RegisterCallback');
 			const eventParam = register?.params.find((x) => /event/i.test(x.name));
 			const eventModel = register ? (eventParam && eventParam.type !== 'string' ? 1 : 0) : 1;
@@ -60,7 +62,7 @@ export default {
 				stringEventNames: perComponent.filter((c) => c.eventModel === 0).length,
 				globalNamespaceApis: perComponent.filter((c) => c.moduleFormat === 0).length,
 			},
-			perComponent: perComponent.sort((a, b) => a.score - b.score),
+			perComponent: [...perComponent].sort((a, b) => a.score - b.score),
 			unmeasured: [],
 		};
 	},
