@@ -40,22 +40,22 @@
 			&:after {
 				-servicestudio-color: variables.$token-semantics-primary-base;
 				-servicestudio-font-family: var(--osui-icon-font-family);
-				-servicestudio-font-size: clamp(10px, 1.7vw, 20px);
+				-servicestudio-font-size: clamp(20px, 1.7vw, 20px);
 				-servicestudio-position: absolute;
 				-servicestudio-height: 34px;
-				-servicestudio-padding-top: 6%;
+				-servicestudio-padding-top: 3%;
 				-servicestudio-top: 0;
 			}
 
 			&:before {
 				-servicestudio-content: var(--osui-icon-arrow-left);
-				-servicestudio-padding-right: 20%;
+				-servicestudio-padding-right: 16%;
 				-servicestudio-right: 0;
 			}
 
 			&:after {
 				-servicestudio-content: var(--osui-icon-arrow-right);
-				-servicestudio-padding-right: 12%;
+				-servicestudio-padding-right: 8%;
 				-servicestudio-right: 0;
 			}
 		}
