@@ -208,6 +208,11 @@
 			&.active {
 				background-color: var(--osui-submenu-item-selected-background);
 				color: var(--osui-submenu-active-border-color);
+
+				// Service Studio Preview
+				& {
+					-servicestudio-background-color: inherit !important;
+				}
 			}
 
 			// Pressed state — declared after `.active` so it wins on equal specificity.
