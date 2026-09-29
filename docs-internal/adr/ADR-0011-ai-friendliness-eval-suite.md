@@ -84,6 +84,12 @@ Negative consequences:
     The CI freshness check and the generated-file test make a stale commit fail.
 -   Scores are proxies; a structural change can move a score without changing agent outcomes.
     The design doc records each formula's rationale so the proxies can be revisited.
+-   The workflow installs dependencies with `npm install --ignore-scripts`, like every other
+    workflow in the repository, because `package-lock.json` is git-ignored by policy and the
+    `.npmrc` release-age rule is the supply-chain guard. SonarCloud reports this as an unlocked
+    dependency hotspot on new code, which the security-rating condition of the quality gate counts.
+    Clearing it is a repository-wide decision (commit a lockfile, exclude workflows from the rule,
+    or review the hotspot as safe), not a change this suite can make on its own.
 
 ## Links
 
