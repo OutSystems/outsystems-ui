@@ -307,6 +307,15 @@ export function adviceFor(m) {
 }
 
 /**
+ * @param {Map<string, string>} map
+ * @param {string} key
+ * @param {string} value
+ */
+function setIfAbsent(map, key, value) {
+	if (!map.has(key)) map.set(key, value);
+}
+
+/**
  * Component universe and kind: E07 knows every component, E02 names the patterns.
  * @param {any[]} results metric results of the latest run
  * @returns {Map<string, string>}
@@ -317,13 +326,10 @@ function componentKinds(results) {
 	const e07 = results.find((m) => m.id === 'E07');
 	for (const row of Object.values(e07?.perComponent ?? {}))
 		kinds.set(/** @type {any} */ (row).name, /** @type {any} */ (row).kind);
-	for (const u of e07?.unmeasured ?? []) if (!kinds.has(u.name)) kinds.set(u.name, 'css');
-	for (const m of results) {
-		if (!HEATMAP_EVALS.includes(m.id)) continue;
-		for (const row of Object.values(m.perComponent ?? {})) {
-			const name = /** @type {any} */ (row).name;
-			if (!kinds.has(name)) kinds.set(name, PATTERN_ONLY.has(m.id) ? 'pattern' : 'css');
-		}
+	for (const u of e07?.unmeasured ?? []) setIfAbsent(kinds, u.name, 'css');
+	for (const m of results.filter((r) => HEATMAP_EVALS.includes(r.id))) {
+		const kind = PATTERN_ONLY.has(m.id) ? 'pattern' : 'css';
+		for (const row of Object.values(m.perComponent ?? {})) setIfAbsent(kinds, /** @type {any} */ (row).name, kind);
 	}
 	const e02 = results.find((m) => m.id === 'E02');
 	for (const r of Object.values(e02?.perComponent ?? {})) kinds.set(/** @type {any} */ (r).name, 'pattern');
