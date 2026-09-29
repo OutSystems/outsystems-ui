@@ -10,19 +10,9 @@ CSS API: --osui-action-sheet-background --osui-action-sheet-border-radius --osui
 Skeleton (from stories/Alert.stories.ts): <div role="alert" aria-live="polite" aria-atomic="true" tabindex="0"><div class="alert-icon OSInline" aria-hidden="true"></div><div class="alert-message"><span></span></div></div>
 CSS API: --osui-alert-background --osui-alert-color --osui-alert-accent-color --osui-alert-icon-color --osui-alert-border-radius --osui-alert-padding
 
-## align-center (src/scss/04-patterns/06-utilities/_align-center.scss)
-Skeleton (from stories/AlignCenter.stories.ts): <div><div class="vertical-align"><span>Vertically centred content</span></div></div>
-
-## animate (src/scss/04-patterns/03-interaction/_animate.scss)
-Skeleton (from stories/Animate.stories.ts): <div class="animate fade-in"><div class="card">Fades in on render</div></div>
-
 ## badge (src/scss/04-patterns/05-numbers/_badge.scss)
 Skeleton (from stories/Badge.stories.ts): <div><span class="OSFillParent"></span></div>
 CSS API: --osui-badge-color --osui-badge-on-light-color
-
-## balloon (src/scss/04-patterns/03-interaction/balloon/_balloon.scss)
-Skeleton (from stories/Balloon.stories.ts): <div><button class="btn" type="button">Trigger</button><div class="osui-balloon osui-balloon--is-open bottom" role="dialog"><ul class="list" role="menu"><li class="list-item" role="menuitem">Edit</li><li class="list-item" role="menuitem">Duplicate</li><li class="list-item" role="menuitem">Delete</li></ul></div></div>
-CSS API: --osui-balloon-background --osui-balloon-border-radius --osui-floating-position-x --osui-floating-position-y --osui-balloon-shadow --osui-balloon-width --osui-balloon-position
 
 ## blank-slate (src/scss/04-patterns/02-content/_blank-slate.scss)
 Skeleton (from stories/BlankSlate.stories.ts): <div><div><div class="blank-slate-icon"><i class="icon ph ph-tray"></i></div><div class="blank-slate-description">No records have been added yet.</div><div class="blank-slate-actions"><button class="btn btn-primary"><span>Create item</span></button></div></div></div>
@@ -39,10 +29,6 @@ CSS API: --osui-breadcrumbs-item-color --osui-breadcrumbs-separator-color
 ## btn (src/scss/03-widgets/_btn.scss)
 Skeleton (from stories/widgets/Button.stories.ts): <div><button data-button="" type="button"></button><button data-button="" type="button"></button><button data-button="" type="button"></button><button data-button="" type="button"></button><button data-button="" type="button"></button><button data-button="" type="button"></button></div>
 CSS API: --osui-btn-min-height --osui-btn-background --osui-btn-color --osui-btn-border-color --osui-btn-hover-background --osui-btn-active-background --osui-btn-border-width --osui-btn-border-radius --osui-btn-disabled-overlay --osui-btn-primary-background --osui-btn-primary-border-color --osui-btn-primary-color --osui-btn-success-background --osui-btn-success-border-color --osui-btn-success-color --osui-btn-error-background --osui-btn-error-border-color --osui-btn-error-color --osui-btn-focus-shadow-width --osui-btn-focus-shadow-gap --osui-btn-focus-shadow-color
-
-## bulk-actions (src/scss/03-widgets/_bulk-actions.scss)
-Skeleton (from stories/widgets/BulkActions.stories.ts): <table class="table"><thead><tr><th><div><span><input data-checkbox="" type="checkbox" class="checkbox-intermediate" aria-label="Select all rows" checked=""></span></div></th><th>Order</th><th>Customer</th></tr></thead><tbody><tr><td><div><span><input data-checkbox="" type="checkbox" aria-label="Select row 1" checked=""></span></div></td><td>#10412</td><td>Acme Ltd</td></tr><tr><td><div><span><input data-checkbox="" type="checkbox" aria-label="Select row 2"></span></div></td><td>#10413</td><td>Globex</td></tr></tbody></table>
-CSS API: --osui-bulk-actions-check-color --osui-bulk-actions-indeterminate-background --osui-bulk-actions-indeterminate-border-color --osui-checkbox-size
 
 ## button-group (src/scss/03-widgets/_button-group.scss)
 Skeleton (from stories/widgets/ButtonGroup.stories.ts): <div><div data-button-group="" class="button-group" role="radiogroup"><div></div></div><div data-button-group="" class="button-group" role="radiogroup"><div></div></div><div data-button-group="" class="button-group" role="radiogroup"><div></div></div><div data-button-group="" class="button-group" role="radiogroup"><div></div></div><div data-button-group="" class="button-group" role="radiogroup"><div></div></div></div>
@@ -65,9 +51,6 @@ CSS API: --osui-checkbox-size --osui-checkbox-background --osui-checkbox-border-
 
 ## columns (src/scss/04-patterns/01-adaptive/_columns.scss)
 Skeleton (from stories/Columns.stories.ts): <div class="columns-item"><div class="card"></div></div>
-
-## content (src/scss/02-layout/_content.scss)
-Skeleton (from stories/Content.stories.ts): <div class="content"><div class="content-breadcrumbs"><div class="breadcrumbs"><a href="#">Home</a><span>Orders</span></div></div><div class="content-top"><div class="content-title"><h1>Orders</h1></div><div class="content-actions"><button class="btn" type="button">Export</button><button class="btn btn-primary" type="button">New order</button></div></div><div class="content-middle"><div class="card">Screen content</div></div></div>
 
 ## counter (src/scss/04-patterns/05-numbers/_counter.scss)
 Skeleton (from stories/Counter.stories.ts): <div><div><div class="font-size-display text-neutral-0">26</div><div>Completed requests</div><div><i class="icon ph ph-check"></i></div></div></div>
@@ -95,15 +78,6 @@ Skeleton (from stories/FloatingContent.stories.ts): <div><div>Screen content scr
 Skeleton (from stories/widgets/Form.stories.ts): <form data-form="" action="" novalidate=""><div><label data-label="" for="form-name">Name</label><span class="input-text"><input data-input="" class="form-control" required="" type="text" id="form-name" placeholder="Enter your name" aria-required="true" maxlength="100" value=""></span><div><button data-button="" class="btn btn-primary" type="button">Submit</button></div></div></form>
 CSS API: --osui-form-field-spacing
 
-## header (src/scss/02-layout/_header.scss)
-Skeleton (from stories/Header.stories.ts): <header class="header"><div class="header-top"><div class="header-logo"><img class="app-logo" alt="" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32'></svg>"></div><div class="application-name">Field Service</div><button class="menu-icon" type="button" aria-label="Open menu"><span></span></button></div><div class="header-navigation"><div class="header-content"><nav class="app-menu-links"><a class="active" href="#">Dashboard</a><a href="#">Work orders</a></nav></div><div class="user-info"><span class="user-avatar">FS</span><span>Alex Morgan</span></div></div></header>
-
-## header-layout-native (src/scss/02-layout/_header-layout-native.scss)
-Skeleton (from stories/HeaderLayoutNative.stories.ts): <div class="layout layout-native"><header class="header"><div class="header-top"><div class="header-title"><div class="header-title-left"><button class="menu-icon" type="button" aria-label="Open menu"><span></span></button></div><span>Work orders</span><div class="header-title-right"><button class="btn" type="button">Filter</button></div></div></div></header><div class="main"><div class="content">Screen content</div></div><div class="content-bottom"></div></div>
-
-## header-layout-side (src/scss/02-layout/_header-layout-side.scss)
-Skeleton (from stories/HeaderLayoutSide.stories.ts): <div class="layout layout-side fixed-header aside-expandable"><header class="header"><div class="header-navigation"><div class="header-content"><span class="application-name">Field Service</span></div></div></header><aside class="app-menu-content"><nav class="app-menu-links"><a class="active" href="#">Dashboard</a></nav></aside><div class="main"><div class="main-content">Screen content</div></div></div>
-
 ## icon-badge (src/scss/04-patterns/05-numbers/_icon-badge.scss)
 Skeleton (from stories/IconBadge.stories.ts): <div><div><i class="icon ph ph-bell"></i></div><div><span class="OSFillParent"></span></div></div>
 CSS API: --osui-icon-badge-ring-color --osui-icon-badge-shadow
@@ -116,13 +90,6 @@ CSS API: --osui-input-with-icon-icon-color --osui-input-with-icon-icon-hover-col
 Skeleton (from stories/widgets/Input.stories.ts): <span class="input-text"><input data-input="" class="form-control" type="text" placeholder="Enter your name" aria-required="false" maxlength="100" value=""></span>
 CSS API: --osui-input-background --osui-input-border-color --osui-input-hover-border-color --osui-input-color --osui-input-border-radius --osui-textarea-border-radius --osui-input-focus-border-color --osui-input-focus-ring-color --osui-input-error-border-color
 
-## ios-bounce (src/scss/02-layout/_ios-bounce.scss)
-Skeleton (from stories/IosBounce.stories.ts): <div class="ios"><div class="layout layout-native ios-bounce"><header class="header"><div class="header-top"><div class="header-title"><span>Inbox</span></div></div></header><div class="main"><div class="content"><div class="content-middle">Scrolls without bouncing the header</div><div class="content-bottom"></div></div></div></div></div>
-
-## layout (src/scss/02-layout/_layout.scss)
-Skeleton (from stories/Layout.stories.ts): <div class="screen-container"><div class="layout layout-side aside-expandable"><header class="header"><div class="header-top"><div class="application-name">Field Service</div></div></header><aside class="app-menu-content"><nav class="app-menu-links"><a class="active" href="#">Dashboard</a><a href="#">Work orders</a></nav><div class="app-login-info"><div class="user-info"><span>Alex Morgan</span></div></div></aside><div class="main"><div class="main-content"><div class="content"><div class="content-middle">Screen content</div></div></div></div></div></div>
-CSS API: --osui-layout-main-padding --osui-layout-aside-lines
-
 ## lightbox-image (src/scss/04-patterns/03-interaction/_lightbox-image.scss)
 Skeleton (from stories/LightboxImage.stories.ts): <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true"><div class="pswp__bg"></div><div class="pswp__scroll-wrap"><div class="pswp__container"><div class="pswp__item"></div><div class="pswp__item"></div><div class="pswp__item"></div></div><div class="pswp__ui pswp__ui--hidden"><div class="pswp__top-bar"><div class="pswp__counter"></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button><button class="pswp__button pswp__button--share" title="Share"></button><button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button><button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class="pswp__preloader"><div class="psw
 
@@ -133,33 +100,12 @@ Skeleton (from stories/widgets/List.stories.ts): <div class="list list-group"><d
 Skeleton (from stories/ListItemContent.stories.ts): <div> List Item Content is used inside a List Item, within a List widget. See the composed example: <a href="./?path=/story/widgets-list--default" target="_top">Widgets/List →</a></div>
 CSS API: --osui-list-item-content-title-color --osui-list-item-content-text-color --osui-list-item-content-text-line-height --osui-list-item-content-icon-size --osui-list-item-content-icon-color
 
-## login (src/scss/02-layout/_login.scss)
-Skeleton (from stories/Login.stories.ts): <div class="login"><div class="login-screen"><img alt="" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='64' height='64'></svg>"><form class="login-form" onsubmit="return false"><label for="login-user">Username</label><input id="login-user" class="form-control" type="text" data-input=""><label for="login-pass">Password</label><input id="login-pass" class="form-control" type="password" data-input=""><div class="login-button"><div class="osui-btn-loading"><button class="btn btn-primary" type="submit"><span data-expression="">Log in</span></button></div></div></form></div></div>
-
 ## margin-container (src/scss/04-patterns/06-utilities/_margin-container.scss)
 Skeleton (from stories/MarginContainer.stories.ts): <div><div><div class="card">Content inside a Margin Container keeps the standard screen padding (dashed line = container edge).</div></div></div>
 
 ## master-detail (src/scss/04-patterns/01-adaptive/_master-detail.scss)
 Skeleton (from stories/MasterDetail.stories.ts): <div><div class="split-left OSInline"><div class="list list-group"><div data-list-item class="list-item "><div class="list-item-content"><div class="list-item-content-center"><div class="list-item-content-title"></div></div></div></div><div data-list-item class="list-item "><div class="list-item-content"><div class="list-item-content-center"><div class="list-item-content-title"></div></div></div></div><div data-list-item class="list-item "><div class="list-item-content"><div class="list-item-content-center"><div class="list-item-content-title"></div></div></div></div></div></div><div><div class="split-right-content"><h2>Inbox</h2><p>Select an item from the list.</p></div></div></div>
 CSS API: --osui-master-detail-background --osui-master-detail-border-color --osui-master-detail-border-radius
-
-## menu (src/scss/02-layout/_menu.scss)
-Skeleton (from stories/Menu.stories.ts): <div class="layout layout-side menu-visible"><div class="app-menu-overlay"></div><aside class="app-menu-content is--open"><nav class="app-menu-links"><a class="active" href="#">Dashboard</a><a href="#">Work orders</a><a href="#">Settings</a></nav></aside><div class="main"><div class="main-content">Screen content</div></div></div>
-
-## menu-app-login-info (src/scss/02-layout/_menu-app-login-info.scss)
-Skeleton (from stories/MenuAppLoginInfo.stories.ts): <div class="layout layout-side"><div class="app-login-info"><div class="user-info"><span class="user-avatar">AM</span><span>Alex Morgan</span><a href="#">Log out</a></div></div></div>
-
-## menu-app-menu-links (src/scss/02-layout/_menu-app-menu-links.scss)
-Skeleton (from stories/MenuAppMenuLinks.stories.ts): <div class="layout layout-side"><nav class="app-menu-links"><a class="active" href="#">Dashboard</a><a href="#">Work orders</a><a href="#">Customers</a><a href="#">Settings</a></nav></div>
-
-## menu-header-logo (src/scss/02-layout/_menu-header-logo.scss)
-Skeleton (from stories/MenuHeaderLogo.stories.ts): <div class="layout layout-side"><header class="header"><div class="header-logo"><img class="app-logo" alt="Field Service" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32'></svg>"></div></header></div>
-
-## menu-layout-native (src/scss/02-layout/_menu-layout-native.scss)
-Skeleton (from stories/MenuLayoutNative.stories.ts): <div class="layout layout-native menu-visible"><aside class="app-menu-content is--open"><nav class="app-menu-links"><a class="active" href="#">Inbox</a><a href="#">Tasks</a></nav></aside><div class="main"><div class="content">Screen content</div></div></div>
-
-## menu-layout-side (src/scss/02-layout/_menu-layout-side.scss)
-Skeleton (from stories/MenuLayoutSide.stories.ts): <div class="layout layout-side aside-expandable"><aside class="app-menu-content is--open"><div class="app-logo"></div><nav class="app-menu-links"><a class="active" href="#">Dashboard</a><a href="#">Work orders</a></nav></aside><div class="main"><div class="main-content">Screen content</div></div></div>
 
 ## pagination (src/scss/04-patterns/04-navigation/_pagination.scss)
 Skeleton (from stories/Pagination.stories.ts): <button class="pagination-button" aria-label="Previous page"><i class="icon ph ph-caret-left"></i></button>
@@ -172,13 +118,6 @@ CSS API: --osui-popover-background --osui-popover-color --osui-popover-border-ra
 ## popup (src/scss/03-widgets/_popup.scss)
 Skeleton (from stories/widgets/Popup.stories.ts): <div class="portal-class"><div><div class="popup-backdrop" data-popup-backdrop=""><div data-popup="" class="popup-dialog " role="dialog" aria-modal="true"><div class="popup-content"><h2>Confirm action</h2><p>The platform Popup widget renders a centered dialog over a backdrop.</p></div></div></div></div></div>
 CSS API: --osui-popup-background --osui-popup-border-color --osui-popup-border-width --osui-popup-border-radius --osui-popup-shadow --osui-popup-padding --osui-popup-max-width
-
-## provider-login-button (src/scss/04-patterns/06-utilities/_provider-login-button.scss)
-Skeleton (from stories/ProviderLoginButton.stories.ts): <button class="btn btn-provider-login" type="button"><span class="btn-provider-login-logo"><img alt="" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20'></svg>"></span><span class="btn-provider-login-text"><span class="btn-provider-login-text-name">Log in with Provider</span></span></button>
-CSS API: --osui-provider-login-button-background --osui-provider-login-button-border-color --osui-provider-login-button-color
-
-## pull-to-refresh (src/scss/04-patterns/06-utilities/_pull-to-refresh.scss)
-Skeleton (from stories/PullToRefresh.stories.ts): <div class="layout layout-native ptr ptr-loading"><div class="pull-to-refresh"><span class="genericon" aria-hidden="true"></span><div class="pull-to-refresh-loading" role="status" aria-label="Refreshing"></div></div><div class="content"><div class="content-middle">List content</div></div></div>
 
 ## radio-button (src/scss/03-widgets/_radio-button.scss)
 Skeleton (from stories/widgets/RadioGroup.stories.ts): <div data-radio-group="" class="radio-group" role="radiogroup"><div><div data-radio-button=""><input type="radio" id="radio-" class="radio-button" name="radiogroup" tabindex="" value=""><label for="radio-"></label></div><div data-radio-button=""><input type="radio" id="radio-" class="radio-button" name="radiogroup" tabindex="" value=""><label for="radio-"></label></div><div data-radio-button=""><input type="radio" id="radio-" class="radio-button" name="radiogroup" tabindex="" value=""><label for="radio-"></label></div></div></div>
@@ -212,9 +151,6 @@ CSS API: --osui-table-border-color --osui-table-border-radius --osui-table-heade
 ## tag (src/scss/04-patterns/02-content/_tag.scss)
 Skeleton (from stories/Tag.stories.ts): <div>Label</div>
 CSS API: --osui-tag-color --osui-tag-on-light-color --osui-tag-soft-border-radius --osui-tag-medium-soft-border-radius
-
-## themegrid-container (src/scss/02-layout/_themegrid-container.scss)
-Skeleton (from stories/ThemegridContainer.stories.ts): <div class="layout"><header class="header"><div class="ThemeGrid_Container"><span class="application-name">Field Service</span></div></header><div class="main"><div class="main-content ThemeGrid_Container"><div class="ThemeGrid_Width8"><div class="card">Main column</div></div><div class="ThemeGrid_Width4"><div class="card">Side column</div></div></div></div><footer class="footer ThemeGrid_Container"><span>Footer</span></footer></div>
 
 ## timeline (src/scss/04-patterns/04-navigation/_timeline.scss)
 Skeleton (from stories/Timeline.stories.ts): <div class="timeline" role="list"><div role="listitem"><div class="timeline-left OSInline"></div><div class="timeline-icon OSInline"><div class="timeline-icon-line OSInline"></div><div><i class="icon ph "></i></div></div><div class="timeline-content"><div></div><div class="timeline-content-inner"></div></div></div><div role="listitem"><div class="timeline-left OSInline"></div><div class="timeline-icon OSInline"><div class="timeline-icon-line OSInline"></div><div><i class="icon ph "></i></div></div><div class="timeline-content"><div></div><div class="timeline-content-inner"></div></div></div><div role="listitem"><div class="timeline-left OSInline"></div><div class="timeline-icon OSInline"><di
