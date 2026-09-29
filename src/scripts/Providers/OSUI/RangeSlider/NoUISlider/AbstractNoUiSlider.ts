@@ -20,7 +20,7 @@ namespace Providers.OSUI.RangeSlider.NoUISlider {
 		// throttle before invoking the platform
 		protected throttleTimeValue = 200;
 		// throttle timer id
-		protected throttleTimer = undefined;
+		protected throttleTimer: number = undefined;
 
 		constructor(uniqueId: string, configs: C) {
 			super(uniqueId, configs);

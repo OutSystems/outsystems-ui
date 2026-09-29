@@ -44,7 +44,7 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 			let _locale: FlatpickrLocale;
 			try {
 				// Set the locale in order to define the calendar language
-				_locale = window.flatpickr.l10ns[this.Lang];
+				_locale = window.flatpickr.l10ns[this.Lang as FlatpickrLocaleKey];
 			} catch (error) {
 				throw new Error(`${Flatpickr.ErrorCodes.FailSetLocale}: Locale '${this.Lang}' not found!`);
 			}
@@ -137,10 +137,7 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 				onClose: this.OnCloseEventCallback,
 				onOpen: this.OnOpenEventCallback,
 				plugins: [
-					// Provider doesn't has the expected type difined
-					// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-					//@ts-expect-error
-					new monthSelectPlugin({
+					new window.monthSelectPlugin({
 						shorthand: true,
 						dateFormat: this.ServerDateFormat,
 						altFormat: this.DateFormat,

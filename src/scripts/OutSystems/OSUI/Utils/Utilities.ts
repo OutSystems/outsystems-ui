@@ -56,7 +56,7 @@ namespace OutSystems.OSUI.Utils {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.Utilities.FailListItemAnimate,
 			callback: () => {
-				let timeoutVar;
+				let timeoutVar: number;
 				const timeAnimation = AnimationTime / 6;
 
 				const waitListRender = function () {

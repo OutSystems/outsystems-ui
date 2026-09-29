@@ -28,17 +28,17 @@ namespace OutSystems.OSUI.Patterns.RatingAPI {
 	 *
 	 * @export
 	 * @param {string} ratingId ID of the Rating where the instance will be created.
-	 * @param {string} configs configurations for the Rating in JSON format.
+	 * @param {(string | Record<string, unknown>)} configs configurations for the Rating in JSON format.
 	 * @return {*}  {OSFramework.OSUI.Patterns.IRating}
 	 */
-	export function Create(ratingId: string, configs: string): OSFramework.OSUI.Patterns.Rating.IRating {
+	export function Create(ratingId: string, configs: string | Record<string, unknown>): OSFramework.OSUI.Patterns.Rating.IRating {
 		if (_ratingsMap.has(ratingId)) {
 			throw new Error(
 				`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.Rating} registered under id: ${ratingId}`
 			);
 		}
 
-		const _newRating = new OSFramework.OSUI.Patterns.Rating.Rating(ratingId, JSON.parse(configs));
+		const _newRating = new OSFramework.OSUI.Patterns.Rating.Rating(ratingId, OSFramework.OSUI.Helper.ParseConfigs(configs));
 		_ratingsMap.set(ratingId, _newRating);
 		return _newRating;
 	}

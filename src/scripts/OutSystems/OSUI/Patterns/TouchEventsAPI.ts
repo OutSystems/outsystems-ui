@@ -7,10 +7,10 @@ namespace OutSystems.OSUI.Patterns.TouchEventsAPI {
 	 *
 	 * @export
 	 * @param {string} touchEventsId ID of the Pattern that a new instance will be created.
-	 * @param {string} configs Configurations for the Pattern in JSON format.
+	 * @param {(string | Record<string, unknown>)} configs Configurations for the Pattern in JSON format.
 	 * @return {*}  {OSFramework.OSUI.Patterns TouchEvents. TouchEvents}
 	 */
-	export function Create(touchEventsId: string, configs: string): OSFramework.OSUI.Patterns.TouchEvents.ITouchEvents {
+	export function Create(touchEventsId: string, configs: string | Record<string, unknown>): OSFramework.OSUI.Patterns.TouchEvents.ITouchEvents {
 		if (_touchEventsMap.has(touchEventsId)) {
 			throw new Error(
 				`There is already an ${OSFramework.OSUI.GlobalEnum.PatternName.TouchEvents} registered under id: ${touchEventsId}`
@@ -19,7 +19,7 @@ namespace OutSystems.OSUI.Patterns.TouchEventsAPI {
 
 		const _newTouchEvents = new OSFramework.OSUI.Patterns.TouchEvents.TouchEvents(
 			touchEventsId,
-			JSON.parse(configs)
+			OSFramework.OSUI.Helper.ParseConfigs(configs)
 		);
 
 		_touchEventsMap.set(touchEventsId, _newTouchEvents);

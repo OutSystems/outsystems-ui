@@ -46,17 +46,17 @@ namespace OutSystems.OSUI.Patterns.AccordionAPI {
 	 *
 	 * @export
 	 * @param {string} accordionId ID of the Pattern that a new instance will be created.
-	 * @param {string} configs Configurations for the Pattern in JSON format.
+	 * @param {(string | Record<string, unknown>)} configs Configurations for the Pattern in JSON format.
 	 * @return {*}  {OSFramework.OSUI.Patterns.Accordion.IAccordion}
 	 */
-	export function Create(accordionId: string, configs: string): OSFramework.OSUI.Patterns.Accordion.IAccordion {
+	export function Create(accordionId: string, configs: string | Record<string, unknown>): OSFramework.OSUI.Patterns.Accordion.IAccordion {
 		if (_accordionMap.has(accordionId)) {
 			throw new Error(
 				`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.Accordion} registered under id: ${accordionId}`
 			);
 		}
 
-		const _newAccordion = new OSFramework.OSUI.Patterns.Accordion.Accordion(accordionId, JSON.parse(configs));
+		const _newAccordion = new OSFramework.OSUI.Patterns.Accordion.Accordion(accordionId, OSFramework.OSUI.Helper.ParseConfigs(configs));
 
 		_accordionMap.set(accordionId, _newAccordion);
 
@@ -118,15 +118,15 @@ namespace OutSystems.OSUI.Patterns.AccordionAPI {
 	 * Function that gets the instance of an Accordion by a given ID.
 	 *
 	 * @export
-	 * @param {string} AccordionId ID of the Accordion that will be looked for.
+	 * @param {string} accordionId ID of the Accordion that will be looked for.
 	 * @return {*}  {OSFramework.OSUI.Patterns.Accordion.IAccordion}
 	 */
-	export function GetAccordionById(AccordionId: string): OSFramework.OSUI.Patterns.Accordion.IAccordion {
+	export function GetAccordionById(accordionId: string): OSFramework.OSUI.Patterns.Accordion.IAccordion {
 		// Protects the code when you have the pattern of removing children and parents
 		// In this case, FloatingActionsItem, when destorying itself, will have a hard time looking for something that has already been disposed.
 		return OSFramework.OSUI.Helper.MapOperation.FindInMap(
 			'Accordion',
-			AccordionId,
+			accordionId,
 			_accordionMap
 		) as OSFramework.OSUI.Patterns.Accordion.IAccordion;
 	}

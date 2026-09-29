@@ -7,10 +7,10 @@ namespace OutSystems.OSUI.Patterns.SwipeEventsAPI {
 	 *
 	 * @export
 	 * @param {string} swipeEventsId ID of the Pattern that a new instance will be created.
-	 * @param {string} configs Configurations for the Pattern in JSON format.
+	 * @param {(string | Record<string, unknown>)} configs Configurations for the Pattern in JSON format.
 	 * @return {*}  {OSFramework.OSUI.Patterns SwipeEvents. SwipeEvents}
 	 */
-	export function Create(swipeEventsId: string, configs: string): OSFramework.OSUI.Patterns.SwipeEvents.ISwipeEvents {
+	export function Create(swipeEventsId: string, configs: string | Record<string, unknown>): OSFramework.OSUI.Patterns.SwipeEvents.ISwipeEvents {
 		if (_swipeEventsMap.has(swipeEventsId)) {
 			throw new Error(
 				`There is already an ${OSFramework.OSUI.GlobalEnum.PatternName.SwipeEvents} registered under id: ${swipeEventsId}`
@@ -19,7 +19,7 @@ namespace OutSystems.OSUI.Patterns.SwipeEventsAPI {
 
 		const _newSwipeEvents = new OSFramework.OSUI.Patterns.SwipeEvents.SwipeEvents(
 			swipeEventsId,
-			JSON.parse(configs)
+			OSFramework.OSUI.Helper.ParseConfigs(configs)
 		);
 
 		_swipeEventsMap.set(swipeEventsId, _newSwipeEvents);

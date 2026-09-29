@@ -35,7 +35,7 @@ namespace OSFramework.OSUI.Behaviors {
 		public LastY = 0;
 		public MoveX = 0;
 		public MoveY = 0;
-		public Size = undefined;
+		public Size: string = undefined;
 		public SpringAnimation: Animation;
 		public VerticalDrag = false;
 	}

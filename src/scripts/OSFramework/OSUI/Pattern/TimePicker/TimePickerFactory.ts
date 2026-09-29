@@ -5,12 +5,12 @@ namespace OSFramework.OSUI.Patterns.TimePicker.Factory {
 	 *
 	 * @export
 	 * @param {string} timePickerId ID of the Pattern that a new instance will be created.
-	 * @param {string} configs Configurations for the Pattern in JSON format.
+	 * @param {(string | Record<string, unknown>)} configs Configurations for the Pattern in JSON format.
 	 * @return {*}  {Patterns.Progress.ITimePicker}
 	 */
 	export function NewTimePicker(
 		timePickerId: string,
-		configs: string,
+		configs: string | Record<string, unknown>,
 		provider: string
 	): Patterns.TimePicker.ITimePicker {
 		let _timePickerItem = null;
@@ -18,7 +18,7 @@ namespace OSFramework.OSUI.Patterns.TimePicker.Factory {
 		if (provider === Enum.Provider.FlatPicker) {
 			_timePickerItem = new Providers.OSUI.TimePicker.Flatpickr.OSUIFlatpickrTime(
 				timePickerId,
-				JSON.parse(configs)
+				OSFramework.OSUI.Helper.ParseConfigs(configs)
 			);
 		} else {
 			throw new Error(`There is no ${GlobalEnum.PatternName.Timepicker} of the ${provider} provider`);

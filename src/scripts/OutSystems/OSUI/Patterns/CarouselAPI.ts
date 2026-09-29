@@ -66,12 +66,12 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	 *
 	 * @export
 	 * @param {string} carouselId ID of the Pattern that a new instance will be created.
-	 * @param {string} configs Configurations for the Pattern in JSON format.
+	 * @param {(string | Record<string, unknown>)} configs Configurations for the Pattern in JSON format.
 	 * @return {*}  {OSFramework.OSUI.Patterns.Carousel.ICarousel}
 	 */
 	export function Create(
 		carouselId: string,
-		configs: string,
+		configs: string | Record<string, unknown>,
 		provider: string
 	): OSFramework.OSUI.Patterns.Carousel.ICarousel {
 		if (_carouselItemsMap.has(carouselId)) {

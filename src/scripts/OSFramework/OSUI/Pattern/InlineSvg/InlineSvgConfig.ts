@@ -3,7 +3,7 @@ namespace OSFramework.OSUI.Patterns.InlineSvg {
 	export class InlineSvgConfig extends AbstractConfiguration {
 		public SVGCode: string;
 
-		constructor(config) {
+		constructor(config: JSON) {
 			super(config);
 		}
 

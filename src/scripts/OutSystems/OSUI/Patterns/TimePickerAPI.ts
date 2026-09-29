@@ -66,13 +66,13 @@ namespace OutSystems.OSUI.Patterns.TimePickerAPI {
 	 *
 	 * @export
 	 * @param {string} timePickerId ID of the Pattern that a new instance will be created.
-	 * @param {string} configs Configurations for the Pattern in JSON format.
+	 * @param {(string | Record<string, unknown>)} configs Configurations for the Pattern in JSON format.
 	 * @param {string} provider Set which provider should be used to create the calendar instance.
 	 * @return {*}  {OSFramework.OSUI.Patterns.TimePicker.ITimePicker}
 	 */
 	export function Create(
 		timePickerId: string,
-		configs: string,
+		configs: string | Record<string, unknown>,
 		provider: string
 	): OSFramework.OSUI.Patterns.TimePicker.ITimePicker {
 		if (_timePickerItemsMap.has(timePickerId)) {
@@ -97,12 +97,12 @@ namespace OutSystems.OSUI.Patterns.TimePickerAPI {
 	 * @param {string} timePickerId
 	 * @return {*}  {string}
 	 */
-	export function ToggleNativeBehavior(timePickerId: string, IsNative: boolean): string {
+	export function ToggleNativeBehavior(timePickerId: string, isNative: boolean): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.TimePicker.FailToggleNativeBehavior,
 			callback: () => {
 				const _timePicker = this.GetTimePickerItemById(timePickerId);
-				_timePicker.toggleNativeBehavior(IsNative);
+				_timePicker.toggleNativeBehavior(isNative);
 			},
 		});
 
@@ -385,15 +385,15 @@ namespace OutSystems.OSUI.Patterns.TimePickerAPI {
 	 *
 	 * @export
 	 * @param {string} timePickerId
-	 * @param {boolean} IsEditable
+	 * @param {boolean} isEditable
 	 * @return {*}  {string}
 	 */
-	export function SetEditableInput(timePickerId: string, IsEditable: boolean): string {
+	export function SetEditableInput(timePickerId: string, isEditable: boolean): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.TimePicker.FailSetEditableInput,
 			callback: () => {
 				const _timePicker = this.GetTimePickerItemById(timePickerId);
-				_timePicker.setEditableInput(IsEditable);
+				_timePicker.setEditableInput(isEditable);
 			},
 		});
 

@@ -28,17 +28,17 @@ namespace OutSystems.OSUI.Patterns.WizardItemAPI {
 	 *
 	 * @export
 	 * @param {string} wizardItemId ID of the Pattern that a new instance will be created.
-	 * @param {string} configs Configurations for the Pattern in JSON format.
+	 * @param {(string | Record<string, unknown>)} configs Configurations for the Pattern in JSON format.
 	 * @return {*}  {OSFramework.OSUI.Patterns.WizardItem.IWizardItem}
 	 */
-	export function Create(wizardItemId: string, configs: string): OSFramework.OSUI.Patterns.WizardItem.IWizardItem {
+	export function Create(wizardItemId: string, configs: string | Record<string, unknown>): OSFramework.OSUI.Patterns.WizardItem.IWizardItem {
 		if (_wizardItemMap.has(wizardItemId)) {
 			throw new Error(
 				`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.WizardItem} registered under id: ${wizardItemId}`
 			);
 		}
 
-		const _newWizardItem = new OSFramework.OSUI.Patterns.WizardItem.WizardItem(wizardItemId, JSON.parse(configs));
+		const _newWizardItem = new OSFramework.OSUI.Patterns.WizardItem.WizardItem(wizardItemId, OSFramework.OSUI.Helper.ParseConfigs(configs));
 
 		_wizardItemMap.set(wizardItemId, _newWizardItem);
 

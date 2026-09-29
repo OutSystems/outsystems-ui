@@ -52,7 +52,7 @@ namespace Providers.OSUI.RangeSlider.NoUISlider.IntervalSlider {
 		 */
 		protected redraw(): void {
 			// Get values so the the Range Slider keeps the same values as before is destroyed
-			const value = this.getValue();
+			const value = this.getValue() as number[];
 
 			this.configs.StartingValueFrom = value[0];
 			this.configs.StartingValueTo = value[1];

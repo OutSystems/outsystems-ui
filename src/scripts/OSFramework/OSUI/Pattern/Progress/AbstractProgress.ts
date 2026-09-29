@@ -160,10 +160,10 @@ namespace OSFramework.OSUI.Patterns.Progress {
 		 * Method to apply a CSS Gradient to the Progress
 		 *
 		 * @param {string} gradientType
-		 * @param {GradientColor} colors
+		 * @param {GradientColor[]} colors
 		 * @memberof AbstractProgress
 		 */
-		public progressApplyGradient(gradientType: string, colors: GradientColor): void {
+		public progressApplyGradient(gradientType: string, colors: GradientColor[]): void {
 			this.gradientLength = Object.keys(colors).length;
 
 			if (this.gradientLength < 2) {

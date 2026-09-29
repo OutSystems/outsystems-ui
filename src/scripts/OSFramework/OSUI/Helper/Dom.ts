@@ -145,8 +145,8 @@ namespace OSFramework.OSUI.Helper {
 			if (element) {
 				const currentClassesList = currentCssClasses.split(' ');
 				const newClassesList = newCssClass.split(' ');
-				let classesToRemove = [];
-				let classesToAdd = [];
+				let classesToRemove: string[] = [];
+				let classesToAdd: string[] = [];
 
 				if (currentCssClasses !== '') {
 					classesToRemove = currentClassesList.filter(

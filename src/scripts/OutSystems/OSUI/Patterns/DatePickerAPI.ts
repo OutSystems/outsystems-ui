@@ -66,14 +66,14 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	 *
 	 * @export
 	 * @param {string} datePickerId ID of the Pattern that a new instance will be created.
-	 * @param {string} configs Configurations for the Pattern in JSON format.
+	 * @param {(string | Record<string, unknown>)} configs Configurations for the Pattern in JSON format.
 	 * @param {string} mode Set which calendar type should be created (SingleDate, RangeDate).
 	 * @param {string} provider Set which provider should be used to create the calendar instance.
 	 * @return {*} (OSFramework.OSUI.Patterns.DatePicker.IDatePicker) - Instance created of the new DatePicker
 	 */
 	export function Create(
 		datePickerId: string,
-		configs: string,
+		configs: string | Record<string, unknown>,
 		mode: OSFramework.OSUI.Patterns.DatePicker.Enum.Mode,
 		provider: string
 	): OSFramework.OSUI.Patterns.DatePicker.IDatePicker {
@@ -100,12 +100,12 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	 * @param {string} datePickerId
 	 * @return {*} Response Object as a JSON String
 	 */
-	export function ToggleNativeBehavior(datePickerId: string, IsNative: boolean): string {
+	export function ToggleNativeBehavior(datePickerId: string, isNative: boolean): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.DatePicker.FailToggleNativeBehavior,
 			callback: () => {
 				const _datePicker = this.GetDatePickerItemById(datePickerId);
-				_datePicker.toggleNativeBehavior(IsNative);
+				_datePicker.toggleNativeBehavior(isNative);
 			},
 		});
 
@@ -455,15 +455,15 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	 *
 	 * @export
 	 * @param {string} datePickerId
-	 * @param {boolean} IsEditable
+	 * @param {boolean} isEditable
 	 * @return {*} Response Object as a JSON String
 	 */
-	export function SetEditableInput(datePickerId: string, IsEditable: boolean): string {
+	export function SetEditableInput(datePickerId: string, isEditable: boolean): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.DatePicker.FailSetEditableInput,
 			callback: () => {
 				const _datePicker = this.GetDatePickerItemById(datePickerId);
-				_datePicker.setEditableInput(IsEditable);
+				_datePicker.setEditableInput(isEditable);
 			},
 		});
 

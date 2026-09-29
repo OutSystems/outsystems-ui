@@ -9,11 +9,11 @@ Props (configs JSON, always include "ExtendedClass": ""):
 API (OutSystems.OSUI.Patterns.AccordionAPI):
 - ChangeProperty(accordionId: string, propertyName: string, propertyValue: unknown): string
 - CollapseAllItems(accordionId: string): string
-- Create(accordionId: string, configs: string): IAccordion
+- Create(accordionId: string, configs: string | object): IAccordion
 - Dispose(accordionId: string): string
 - ExpandAllItems(accordionId: string): string
 - GetAllAccordions(): Array<string>
-- GetAccordionById(AccordionId: string): IAccordion
+- GetAccordionById(accordionId: string): IAccordion
 - Initialize(accordionId: string): IAccordion
 - RegisterCallback(accordionId: string, eventName: string, callback: OSGeneric): string
 CSS classes: osui-accordion
@@ -33,7 +33,7 @@ API (OutSystems.OSUI.Patterns.AccordionItemAPI):
 - AllowTitleEvents(accordionItemId: string): string
 - ChangeProperty(accordionItemId: string, propertyName: string, propertyValue: unknown): string
 - Collapse(accordionItemId: string): string
-- Create(accordionItemId: string, configs: string): IAccordionItem
+- Create(accordionItemId: string, configs: string | object): IAccordionItem
 - Dispose(accordionItemId: string): string
 - Expand(accordionItemId: string): string
 - GetAllAccordionItems(): Array<string>
@@ -49,7 +49,7 @@ Lifecycle: Create(id, configs) → RegisterCallback(id, eventName, callback) →
 Props: none besides ExtendedClass
 API (OutSystems.OSUI.Patterns.AnimatedLabelAPI):
 - ChangeProperty(animatedLabelId: string, propertyName: string, propertyValue: unknown): string
-- Create(animatedLabelId: string, configs: string): IAnimatedLabel
+- Create(animatedLabelId: string, configs: string | object): IAnimatedLabel
 - Dispose(animatedLabelId: string): string
 - GetAllAnimatedLabels(): Array<string>
 - GetAnimatedLabelById(animatedLabelId: string): IAnimatedLabel
@@ -68,7 +68,7 @@ Props (configs JSON, always include "ExtendedClass": ""):
 Events (RegisterCallback eventName): OnToggle
 API (OutSystems.OSUI.Patterns.BottomSheetAPI):
 - ChangeProperty(bottomSheetId: string, propertyName: string, propertyValue: unknown): string
-- Create(bottomSheetId: string, configs: string): IBottomSheet
+- Create(bottomSheetId: string, configs: string | object): IBottomSheet
 - Dispose(bottomSheetId: string): string
 - GetAllBottomSheetItemsMap(): Array<string>
 - GetBottomSheetItemById(bottomSheetId: string): IBottomSheet
@@ -87,7 +87,7 @@ Props (configs JSON, always include "ExtendedClass": ""):
 - ShowLoadingAndLabel: boolean
 API (OutSystems.OSUI.Patterns.ButtonLoadingAPI):
 - ChangeProperty(buttonLoadingId: string, propertyName: string, propertyValue: unknown): string
-- Create(buttonLoadingId: string, configs: string): IButtonLoading
+- Create(buttonLoadingId: string, configs: string | object): IButtonLoading
 - Dispose(buttonLoadingId: string): string
 - GetAllButtonsLoading(): Array<string>
 - GetButtonLoadingById(buttonLoadingId: string): IButtonLoading
@@ -115,7 +115,7 @@ API (OutSystems.OSUI.Patterns.CarouselAPI):
 - CarouselEnableOnRender(carouselId: string): string
 - CarouselDisableOnRender(carouselId: string): string
 - ChangeProperty(carouselId: string, propertyName: string, propertyValue: unknown): string
-- Create(carouselId: string, configs: string, provider: string): ICarousel
+- Create(carouselId: string, configs: string | object, provider: string): ICarousel
 - Dispose(carouselId: string): string
 - GetAllCarouselItemsMap(): Array<string>
 - GetCarouselItemById(carouselId: string): ICarousel
@@ -159,8 +159,8 @@ API (OutSystems.OSUI.Patterns.DatePickerAPI):
 - ChangeProperty(datePickerId: string, propertyName: string, propertyValue: unknown): string
 - Clear(datePickerId: string): string
 - Close(datePickerId: string): string
-- Create(datePickerId: string, configs: string, mode: Enum.Mode, provider: string): IDatePicker
-- ToggleNativeBehavior(datePickerId: string, IsNative: boolean): string
+- Create(datePickerId: string, configs: string | object, mode: Enum.Mode, provider: string): IDatePicker
+- ToggleNativeBehavior(datePickerId: string, isNative: boolean): string
 - Dispose(datePickerId: string): string
 - GetAllDatePickerItemsMap(): Array<string>
 - GetDatePickerItemById(datePickerId: string): IDatePicker
@@ -177,7 +177,7 @@ API (OutSystems.OSUI.Patterns.DatePickerAPI):
 - SetProviderConfigs(datePickerId: string, providerConfigs: DatePickerProviderConfigs): string
 - SetProviderEvent(datePickerId: string, eventName: string, callback: Generic): string
 - UnsetProviderEvent(datePickerId: string, eventId: string): string
-- SetEditableInput(datePickerId: string, IsEditable: boolean): string
+- SetEditableInput(datePickerId: string, isEditable: boolean): string
 CSS classes: osui-datepicker-calendar osui-datepicker osui-datepicker-a11y flatpickr-today-button
 
 ## Dropdown
@@ -200,7 +200,7 @@ API (OutSystems.OSUI.Patterns.DropdownAPI):
 - ChangeProperty(dropdownId: string, propertyName: string, propertyValue: unknown): string
 - Clear(dropdownId: string, silentOnChangedEvent: unknown): string
 - Close(dropdownId: string): string
-- Create(dropdownId: string, mode: string, provider: string, configs: string): IDropdown
+- Create(dropdownId: string, mode: string, provider: string, configs: string | object): IDropdown
 - Disable(dropdownId: string): string
 - TogglePopup(dropdownId: string, isEnabled: boolean): string
 - Dispose(dropdownId: string): string
@@ -226,7 +226,7 @@ Props (configs JSON, always include "ExtendedClass": ""):
 Events (RegisterCallback eventName): OnSelected
 API (OutSystems.OSUI.Patterns.DropdownServerSideItemAPI):
 - ChangeProperty(dropdownServerSideItemId: string, propertyName: string, propertyValue: unknown): string
-- Create(dropdownServerSideItemId: string, configs: string): IDropdownServerSideItem
+- Create(dropdownServerSideItemId: string, configs: string | object): IDropdownServerSideItem
 - Dispose(dropdownServerSideItemId: string): string
 - GetAllDropdownServerSideItemItemsMap(): Array<string>
 - GetDropdownServerSideItemItemById(dropdownServerSideItemId: string): IDropdownServerSideItem
@@ -244,7 +244,7 @@ Props (configs JSON, always include "ExtendedClass": ""):
 Events (RegisterCallback eventName): OnToggle
 API (OutSystems.OSUI.Patterns.FlipContentAPI):
 - ChangeProperty(flipId: string, propertyName: string, propertyValue: unknown): string
-- Create(flipId: string, configs: string): IFlipContent
+- Create(flipId: string, configs: string | object): IFlipContent
 - Dispose(flipId: string): string
 - GetAllFlipContent(): Array<string>
 - GetFlipContentById(flipId: string): IFlipContent
@@ -265,7 +265,7 @@ Props (configs JSON, always include "ExtendedClass": ""):
 - RowItemsTablet: number
 API (OutSystems.OSUI.Patterns.GalleryAPI):
 - ChangeProperty(galleryId: string, propertyName: string, propertyValue: unknown): string
-- Create(galleryId: string, configs: string): IGallery
+- Create(galleryId: string, configs: string | object): IGallery
 - Dispose(galleryId: string): string
 - GetAllGalleries(): Array<string>
 - GetGalleryById(galleryId: string): IGallery
@@ -279,7 +279,7 @@ Props (configs JSON, always include "ExtendedClass": ""):
 - SVGCode: string
 API (OutSystems.OSUI.Patterns.InlineSvgAPI):
 - ChangeProperty(inlineSvgId: string, propertyName: string, propertyValue: unknown): string
-- Create(inlineSvgId: string, configs: string): IInlineSvg
+- Create(inlineSvgId: string, configs: string | object): IInlineSvg
 - Dispose(inlineSvgId: string): string
 - GetAllInlineSvgs(): Array<string>
 - GetInlineSvgById(inlineSvgId: string): IInlineSvg
@@ -307,7 +307,7 @@ API (OutSystems.OSUI.Patterns.MonthPickerAPI):
 - ChangeProperty(monthPickerId: string, propertyName: string, propertyValue: unknown): string
 - Clear(monthPickerId: string): string
 - Close(monthPickerId: string): string
-- Create(monthPickerId: string, configs: string, provider: string): IMonthPicker
+- Create(monthPickerId: string, configs: string | object, provider: string): IMonthPicker
 - Dispose(monthPickerId: string): string
 - GetAllMonthPickerItemsMap(): Array<string>
 - GetMonthPickerItemById(monthPickerId: string): IMonthPicker
@@ -318,7 +318,7 @@ API (OutSystems.OSUI.Patterns.MonthPickerAPI):
 - SetProviderConfigs(monthPickerId: string, providerConfigs: MonthPickerProviderConfigs): string
 - SetProviderEvent(monthPickerId: string, eventName: string, callback: Generic): string
 - SetLanguage(monthPickerId: string, isoCode: string): string
-- SetEditableInput(monthPickerId: string, IsEditable: boolean): string
+- SetEditableInput(monthPickerId: string, isEditable: boolean): string
 - UnsetProviderEvent(monthPickerId: string, eventId: string): string
 - UpdateInitialMonth(monthPickerId: string, monthYear: MonthYear): string
 - UpdatePrompt(monthPickerId: string, promptMessage: string): string
@@ -336,7 +336,7 @@ Props (configs JSON, always include "ExtendedClass": ""):
 Events (RegisterCallback eventName): OnToggle
 API (OutSystems.OSUI.Patterns.NotificationAPI):
 - ChangeProperty(notificationId: string, propertyName: string, propertyValue: unknown): string
-- Create(notificationId: string, configs: string): INotification
+- Create(notificationId: string, configs: string | object): INotification
 - Dispose(notificationId: string): string
 - GetAllNotifications(): Array<string>
 - GetNotificationById(notificationId: string): INotification
@@ -356,7 +356,7 @@ Props (configs JSON, always include "ExtendedClass": ""):
 Events (RegisterCallback eventName): OnToggle
 API (OutSystems.OSUI.Patterns.OverflowMenuAPI):
 - ChangeProperty(overflowMenuId: string, propertyName: string, propertyValue: unknown): string
-- Create(overflowMenuId: string, configs: string): IOverflowMenu
+- Create(overflowMenuId: string, configs: string | object): IOverflowMenu
 - Disable(overflowMenuId: string): string
 - Dispose(overflowMenuId: string): string
 - Enable(overflowMenuId: string): string
@@ -375,7 +375,7 @@ Lifecycle: Create(id, configs) → RegisterCallback(id, eventName, callback) →
 Props: none besides ExtendedClass
 API (OutSystems.OSUI.Patterns.ProgressAPI):
 - ChangeProperty(progressId: string, propertyName: string, propertyValue: unknown): string
-- Create(progressId: string, type: string, configs: string): IProgress
+- Create(progressId: string, type: string, configs: string | object): IProgress
 - Dispose(progressId: string): string
 - GetAllProgressItemsMap(): Array<string>
 - GetProgressItemById(progressId: string): IProgress
@@ -407,7 +407,7 @@ Props (configs JSON, always include "ExtendedClass": ""):
 - TickMarksInterval: number = 0
 API (OutSystems.OSUI.Patterns.RangeSliderAPI):
 - ChangeProperty(rangeSliderId: string, propertyName: string, propertyValue: unknown): string
-- Create(rangeSliderId: string, configs: string, mode: Enum.Mode, provider: string): IRangeSlider
+- Create(rangeSliderId: string, configs: string | object, mode: Enum.Mode, provider: string): IRangeSlider
 - Disable(rangeSliderId: string): string
 - Dispose(rangeSliderId: string): string
 - Enable(rangeSliderId: string): string
@@ -434,7 +434,7 @@ Props (configs JSON, always include "ExtendedClass": ""):
 Events (RegisterCallback eventName): OnSelected
 API (OutSystems.OSUI.Patterns.RatingAPI):
 - ChangeProperty(ratingId: string, propertyName: string, propertyValue: unknown): string
-- Create(ratingId: string, configs: string): IRating
+- Create(ratingId: string, configs: string | object): IRating
 - Disable(ratingId: string): string
 - Dispose(ratingId: string): string
 - Enable(ratingId: string): string
@@ -451,7 +451,7 @@ Lifecycle: Create(id, configs) → RegisterCallback(id, eventName, callback) →
 Props: none besides ExtendedClass
 API (OutSystems.OSUI.Patterns.SearchAPI):
 - ChangeProperty(searchId: string, propertyName: string, propertyValue: unknown): string
-- Create(searchId: string, configs: string): ISearch
+- Create(searchId: string, configs: string | object): ISearch
 - Dispose(searchId: string): string
 - GetAllSearches(): Array<string>
 - GetSearchById(searchId: string): ISearch
@@ -466,7 +466,7 @@ Props (configs JSON, always include "ExtendedClass": ""):
 - SmoothScrolling: boolean = false
 API (OutSystems.OSUI.Patterns.SectionIndexAPI):
 - ChangeProperty(sectionIndexId: string, propertyName: string, propertyValue: unknown): string
-- Create(sectionIndexId: string, configs: string): ISectionIndex
+- Create(sectionIndexId: string, configs: string | object): ISectionIndex
 - Dispose(sectionIndexId: string): string
 - GetAllSectionIndexItemsMap(): Array<string>
 - GetSectionIndexById(sectionIndexId: string): ISectionIndex
@@ -482,7 +482,7 @@ Props (configs JSON, always include "ExtendedClass": ""):
 - ScrollToWidgetId: string
 API (OutSystems.OSUI.Patterns.SectionIndexItemAPI):
 - ChangeProperty(sectionIndexItemId: string, propertyName: string, propertyValue: unknown): string
-- Create(sectionIndexItemId: string, configs: string): ISectionIndexItem
+- Create(sectionIndexItemId: string, configs: string | object): ISectionIndexItem
 - Dispose(sectionIndexItemId: string): string
 - GetAllSectionIndexItemItemsMap(): Array<string>
 - GetSectionIndexItemById(sectionIndexItemId: string): ISectionIndexItem
@@ -503,7 +503,7 @@ API (OutSystems.OSUI.Patterns.SidebarAPI):
 - ChangeProperty(sidebarId: string, propertyName: string, propertyValue: unknown): string
 - ClickOutsideToClose(sidebarId: string, closeOnOutSIdeClick: boolean): string
 - Close(sidebarId: string): string
-- Create(sidebarId: string, configs: string): ISidebar
+- Create(sidebarId: string, configs: string | object): ISidebar
 - Dispose(sidebarId: string): string
 - GetAllSidebars(): Array<string>
 - GetSidebarById(sidebarId: string): ISidebar
@@ -525,7 +525,7 @@ API (OutSystems.OSUI.Patterns.SubmenuAPI):
 - ClickOutsideToClose(submenuId: string, clickOutsideToClose: boolean): string
 - Close(submenuId: string): string
 - Open(submenuId: string): string
-- Create(submenuId: string, configs: string): ISubmenu
+- Create(submenuId: string, configs: string | object): ISubmenu
 - Dispose(submenuId: string): string
 - GetAllSubmenus(): Array<string>
 - GetSubmenuById(submenuId: string): ISubmenu
@@ -543,7 +543,7 @@ Props (configs JSON, always include "ExtendedClass": ""):
 - WidgetId: string
 Events (RegisterCallback eventName): SwipeUp, SwipeDown, SwipeRight, SwipeLeft
 API (OutSystems.OSUI.Patterns.SwipeEventsAPI):
-- Create(swipeEventsId: string, configs: string): ISwipeEvents
+- Create(swipeEventsId: string, configs: string | object): ISwipeEvents
 - Dispose(swipeEventsId: string): void
 - GetAllSwipeEvents(): Array<string>
 - GetSwipeEventsById(swipeEventsId: string): ISwipeEvents
@@ -565,7 +565,7 @@ Props (configs JSON, always include "ExtendedClass": ""):
 Events (RegisterCallback eventName): OnChange
 API (OutSystems.OSUI.Patterns.TabsAPI):
 - ChangeProperty(tabsId: string, propertyName: string, propertyValue: unknown): string
-- Create(tabsId: string, configs: string): ITabs
+- Create(tabsId: string, configs: string | object): ITabs
 - Dispose(tabsId: string): string
 - GetAllTabs(): Array<string>
 - GetTabsById(tabsId: string): ITabs
@@ -582,7 +582,7 @@ Lifecycle: Create(id, configs) → RegisterCallback(id, eventName, callback) →
 Props: none besides ExtendedClass
 API (OutSystems.OSUI.Patterns.TabsContentItemAPI):
 - ChangeProperty(tabsContentItemId: string, propertyName: string, propertyValue: unknown): string
-- Create(tabsContentItemId: string, configs: string): ITabsContentItem
+- Create(tabsContentItemId: string, configs: string | object): ITabsContentItem
 - Dispose(tabsContentItemId: string): string
 - GetAllTabsContentItems(): Array<string>
 - GetTabsContentItemById(tabsContentItemId: string): ITabsContentItem
@@ -595,7 +595,7 @@ Lifecycle: Create(id, configs) → RegisterCallback(id, eventName, callback) →
 Props: none besides ExtendedClass
 API (OutSystems.OSUI.Patterns.TabsHeaderItemAPI):
 - ChangeProperty(tabsHeaderItemId: string, propertyName: string, propertyValue: unknown): string
-- Create(tabsHeaderItemId: string, configs: string): ITabsHeaderItem
+- Create(tabsHeaderItemId: string, configs: string | object): ITabsHeaderItem
 - DisableTabItem(tabsHeaderItemId: string): string
 - Dispose(tabsHeaderItemId: string): string
 - EnableTabItem(tabsHeaderItemId: string): string
@@ -625,8 +625,8 @@ API (OutSystems.OSUI.Patterns.TimePickerAPI):
 - ChangeProperty(timePickerId: string, propertyName: string, propertyValue: unknown): string
 - Clear(timePickerId: string): string
 - Close(timePickerId: string): string
-- Create(timePickerId: string, configs: string, provider: string): ITimePicker
-- ToggleNativeBehavior(timePickerId: string, IsNative: boolean): string
+- Create(timePickerId: string, configs: string | object, provider: string): ITimePicker
+- ToggleNativeBehavior(timePickerId: string, isNative: boolean): string
 - Dispose(timePickerId: string): string
 - GetAllTimePickerItemsMap(): Array<string>
 - GetTimePickerItemById(timePickerId: string): ITimePicker
@@ -641,7 +641,7 @@ API (OutSystems.OSUI.Patterns.TimePickerAPI):
 - SetProviderConfigs(timePickerId: string, providerConfigs: TimePickerProviderConfigs): string
 - SetProviderEvent(timePickerId: string, eventName: string, callback: Generic): string
 - UnsetProviderEvent(timePickerId: string, eventId: string): string
-- SetEditableInput(timePickerId: string, IsEditable: boolean): string
+- SetEditableInput(timePickerId: string, isEditable: boolean): string
 CSS classes: osui-timepicker__dropdown osui-timepicker
 
 ## Tooltip
@@ -654,7 +654,7 @@ Events (RegisterCallback eventName): OnToggle
 API (OutSystems.OSUI.Patterns.TooltipAPI):
 - ChangeProperty(tooltipId: string, propertyName: string, propertyValue: unknown): string
 - Close(tooltipId: string): string
-- Create(tooltipId: string, configs: string): ITooltip
+- Create(tooltipId: string, configs: string | object): ITooltip
 - Dispose(tooltipId: string): string
 - GetAllTooltips(): Array<string>
 - GetTooltipById(tooltipId: string): ITooltip
@@ -671,7 +671,7 @@ Props (configs JSON, always include "ExtendedClass": ""):
 - WidgetId: string
 Events (RegisterCallback eventName): End, Move, Start
 API (OutSystems.OSUI.Patterns.TouchEventsAPI):
-- Create(touchEventsId: string, configs: string): ITouchEvents
+- Create(touchEventsId: string, configs: string | object): ITouchEvents
 - Dispose(touchEventsId: string): void
 - GetAllTouchEvents(): Array<string>
 - GetTouchEventsById(touchEventsId: string): ITouchEvents
@@ -694,7 +694,7 @@ Props (configs JSON, always include "ExtendedClass": ""):
 Events (RegisterCallback eventName): StateChanged
 API (OutSystems.OSUI.Patterns.VideoAPI):
 - ChangeProperty(videoId: string, propertyName: string, propertyValue: unknown): string
-- Create(videoId: string, configs: string): IVideo
+- Create(videoId: string, configs: string | object): IVideo
 - Dispose(videoId: string): string
 - GetAllVideos(): Array<string>
 - GetVideoById(videoId: string): IVideo
@@ -714,7 +714,7 @@ Props (configs JSON, always include "ExtendedClass": ""):
 - StepBehavior: 'Interactive' | 'ProgressOnly' = "Interactive"
 API (OutSystems.OSUI.Patterns.WizardAPI):
 - ChangeProperty(wizardId: string, propertyName: string, propertyValue: unknown): string
-- Create(wizardId: string, configs: string): IWizard
+- Create(wizardId: string, configs: string | object): IWizard
 - Dispose(wizardId: string): string
 - GetAllWizards(): Array<string>
 - GetWizardById(wizardId: string): IWizard
@@ -731,7 +731,7 @@ Props (configs JSON, always include "ExtendedClass": ""):
 Events (RegisterCallback eventName): OnClick
 API (OutSystems.OSUI.Patterns.WizardItemAPI):
 - ChangeProperty(wizardItemId: string, propertyName: string, propertyValue: unknown): string
-- Create(wizardItemId: string, configs: string): IWizardItem
+- Create(wizardItemId: string, configs: string | object): IWizardItem
 - Dispose(wizardItemId: string): string
 - GetAllWizardItems(): Array<string>
 - GetWizardItemById(wizardItemId: string): IWizardItem

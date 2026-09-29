@@ -31,6 +31,7 @@ const MARKUP_CAP = 1200;
  */
 export function shortType(type) {
 	return type
+		.replace(/string \| Record<string, unknown>/g, 'string | object')
 		.replace(/OSFramework\.OSUI\.GlobalCallbacks\./g, '')
 		.replace(/OSFramework\.OSUI\.Patterns\.\w+\./g, '')
 		.replace(/OSFramework\.OSUI\.(Patterns|Interface|Event\.\w+|Feature\.\w+)\./g, '')

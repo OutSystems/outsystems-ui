@@ -27,17 +27,17 @@ namespace OutSystems.OSUI.Patterns.VideoAPI {
 	 *
 	 * @export
 	 * @param {string} videoId
-	 * @param {string} configs
+	 * @param {(string | Record<string, unknown>)} configs
 	 * @return {*}  {OSFramework.OSUI.Patterns.Video.IVideo}
 	 */
-	export function Create(videoId: string, configs: string): OSFramework.OSUI.Patterns.Video.IVideo {
+	export function Create(videoId: string, configs: string | Record<string, unknown>): OSFramework.OSUI.Patterns.Video.IVideo {
 		if (_videoMap.has(videoId)) {
 			throw new Error(
 				`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.Video} registered under id: ${videoId}`
 			);
 		}
 
-		const _newVideo = new OSFramework.OSUI.Patterns.Video.Video(videoId, JSON.parse(configs));
+		const _newVideo = new OSFramework.OSUI.Patterns.Video.Video(videoId, OSFramework.OSUI.Helper.ParseConfigs(configs));
 		_videoMap.set(videoId, _newVideo);
 		return _newVideo;
 	}

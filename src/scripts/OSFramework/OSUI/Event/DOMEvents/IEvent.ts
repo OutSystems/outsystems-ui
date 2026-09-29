@@ -10,7 +10,7 @@ namespace OSFramework.OSUI.Event.DOMEvents {
 	export interface IEvent<D> {
 		handlers: GlobalCallbacks.OSGeneric[];
 		addEvent(): void;
-		addHandler(handler: GlobalCallbacks.OSGeneric, ...args): void;
+		addHandler(handler: GlobalCallbacks.OSGeneric, ...args: unknown[]): void;
 		hasHandler(handler: GlobalCallbacks.OSGeneric): boolean;
 		hasHandlers(): boolean;
 		removeEvent(): void;

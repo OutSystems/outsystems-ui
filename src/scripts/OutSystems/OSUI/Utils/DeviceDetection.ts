@@ -139,10 +139,11 @@ namespace OutSystems.OSUI.Utils.DeviceDetection {
 	 * @export
 	 * @param {number} phoneWidth
 	 * @param {number} tabletWidth
+	 * @return {*}  {() => string[]} Function that resolves [orientation, deviceType] for the current viewport
 	 */
-	export function SetDeviceBreakpoints(phoneWidth: number, tabletWidth: number): void {
-		// @ts-expect-error: this the way to interact with the active view component
-		return function () {
+	export function SetDeviceBreakpoints(phoneWidth: number, tabletWidth: number): () => string[] {
+		// The platform stores the returned function and invokes it to resolve the active view.
+		return function (): string[] {
 			const windowWidth = window.innerWidth || document.documentElement.clientWidth;
 			const windowHeight = window.innerHeight || document.documentElement.clientHeight;
 			const orient =

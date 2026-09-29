@@ -28,13 +28,13 @@ namespace OutSystems.OSUI.Patterns.ProgressAPI {
 	 *
 	 * @export
 	 * @param {string} progressId ID of the Pattern that a new instance will be created.
-	 * @param {string} configs Configurations for the Pattern in JSON format.
+	 * @param {(string | Record<string, unknown>)} configs Configurations for the Pattern in JSON format.
 	 * @return {*}  {OSFramework.OSUI.Patterns.Progress.IProgress}
 	 */
 	export function Create(
 		progressId: string,
 		type: string,
-		configs: string
+		configs: string | Record<string, unknown>
 	): OSFramework.OSUI.Patterns.Progress.IProgress {
 		if (_progressItemsMap.has(progressId)) {
 			throw new Error(`There is already an ProgressItem registered under id: ${progressId}`);

@@ -451,7 +451,7 @@ namespace OSFramework.OSUI.Patterns.Progress.Circle {
 		 * @param {string} gradientName
 		 * @param {unknown} gradientCoords
 		 * @param {string} gradientHtml
-		 * @param {GradientColor} colors
+		 * @param {GradientColor[]} colors
 		 * @memberof Circle
 		 */
 		public createSVGGradient(
@@ -459,7 +459,7 @@ namespace OSFramework.OSUI.Patterns.Progress.Circle {
 			gradientName: string,
 			gradientCoords: unknown,
 			gradientLenght: number,
-			colors: GradientColor
+			colors: GradientColor[]
 		): void {
 			// Start by removing the current gradient, in case there's already one created
 			this._gradientElem?.remove();
@@ -517,10 +517,10 @@ namespace OSFramework.OSUI.Patterns.Progress.Circle {
 		 * Method to apply a SVG Gradient
 		 *
 		 * @param {string} gradientType
-		 * @param {GradientColor} colors
+		 * @param {GradientColor[]} colors
 		 * @memberof Circle
 		 */
-		public progressApplyGradient(gradientType: string, colors: GradientColor): void {
+		public progressApplyGradient(gradientType: string, colors: GradientColor[]): void {
 			// Call super to clean and validate color string
 			super.progressApplyGradient(gradientType, colors);
 			// Store the expected gradient name to be used as html tag

@@ -35,12 +35,12 @@ namespace OutSystems.OSUI.Patterns.DropdownServerSideItemAPI {
 	 *
 	 * @export
 	 * @param {string} dropdownServerSideItemId ID of the Pattern that a new instance will be created.
-	 * @param {string} configs Configurations for the Pattern in JSON format.
+	 * @param {(string | Record<string, unknown>)} configs Configurations for the Pattern in JSON format.
 	 * @return {*}  {OSFramework.OSUI.Patterns.DropdownServerSideItem.IDropdownServerSideItem}
 	 */
 	export function Create(
 		dropdownServerSideItemId: string,
-		configs: string
+		configs: string | Record<string, unknown>
 	): OSFramework.OSUI.Patterns.DropdownServerSideItem.IDropdownServerSideItem {
 		if (_dropdownServerSideItemItemsMap.has(dropdownServerSideItemId)) {
 			throw new Error(
@@ -50,7 +50,7 @@ namespace OutSystems.OSUI.Patterns.DropdownServerSideItemAPI {
 
 		const _dropdownServerSideItemItem = new OSFramework.OSUI.Patterns.DropdownServerSideItem.DropdownServerSideItem(
 			dropdownServerSideItemId,
-			JSON.parse(configs)
+			OSFramework.OSUI.Helper.ParseConfigs(configs)
 		);
 
 		_dropdownServerSideItemItemsMap.set(dropdownServerSideItemId, _dropdownServerSideItemItem);

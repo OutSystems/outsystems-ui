@@ -19,7 +19,7 @@ namespace OSFramework.OSUI.Patterns {
 		private _childIdsByType: Map<string, string> = new Map<string, string>();
 
 		//  Associative Array that will contain the childType as keyName and a map with all childs of same type!
-		private _childItemsByType = {};
+		private _childItemsByType: Record<string, Map<string, CT>> = {};
 
 		/**
 		 * Get the child reference based on given Id

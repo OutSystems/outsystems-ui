@@ -67,17 +67,17 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	 *
 	 * @export
 	 * @param {string} sidebarId
-	 * @param {string} configs
+	 * @param {(string | Record<string, unknown>)} configs
 	 * @return {*}  {OSFramework.OSUI.Patterns.Sidebar.ISidebar}
 	 */
-	export function Create(sidebarId: string, configs: string): OSFramework.OSUI.Patterns.Sidebar.ISidebar {
+	export function Create(sidebarId: string, configs: string | Record<string, unknown>): OSFramework.OSUI.Patterns.Sidebar.ISidebar {
 		if (_sidebarMap.has(sidebarId)) {
 			throw new Error(
 				`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.Sidebar} registered under id: ${sidebarId}`
 			);
 		}
 
-		const _newSidebar = new OSFramework.OSUI.Patterns.Sidebar.Sidebar(sidebarId, JSON.parse(configs));
+		const _newSidebar = new OSFramework.OSUI.Patterns.Sidebar.Sidebar(sidebarId, OSFramework.OSUI.Helper.ParseConfigs(configs));
 		_sidebarMap.set(sidebarId, _newSidebar);
 		return _newSidebar;
 	}

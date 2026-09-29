@@ -52,7 +52,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		}
 
 		// Prevent the default behaviour of the event
-		private _onMouseUp(event) {
+		private _onMouseUp(event: MouseEvent) {
 			event.preventDefault();
 		}
 
@@ -490,7 +490,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 			// Make async call to wait for fetching data when the setValues API is called inside on OnAfterFecth
 			OSFramework.OSUI.Helper.AsyncInvocation(() => {
 				const selectedValues = this.getSelectedOptionsStructure().map((value) => value.value) || [];
-				let valuesToSelect = [];
+				let valuesToSelect: string[] = [];
 
 				if (optionsToSelect.length > 0) {
 					if (this.virtualselectOpts.multiple) valuesToSelect = optionsToSelect.map((option) => option.value);

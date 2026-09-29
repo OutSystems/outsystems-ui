@@ -67,6 +67,9 @@ declare global {
 		// Dropdown using VirtualSelect
 		VirtualSelect: any;
 
+		// MonthPicker => Flatpickr monthSelect plugin (global script loaded by the host application)
+		monthSelectPlugin: new (config: { shorthand?: boolean; dateFormat?: string; altFormat?: string; theme?: string }) => unknown;
+
 		// Dropdown created from scratch
 		OSUIComponents: any;
 	}

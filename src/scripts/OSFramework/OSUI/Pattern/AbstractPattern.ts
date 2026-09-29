@@ -143,7 +143,10 @@ namespace OSFramework.OSUI.Patterns {
 				//We also need to validate if the property can be changed.
 				if (this._configs.validateCanChange(this._isBuilt, propertyName)) {
 					//If the property can be changed, we then validate if the default value should be applied or not.
-					this._configs[propertyName] = this._configs.validateDefault(propertyName, propertyValue);
+					(this._configs as unknown as Record<string, unknown>)[propertyName] = this._configs.validateDefault(
+						propertyName,
+						propertyValue
+					);
 				}
 			} else {
 				throw new Error(`changeProperty - Property '${propertyName}' can't be changed.`);

@@ -9,7 +9,7 @@ namespace OutSystems.OSUI.Utils {
 	 * @return {*}  {*}
 	 */
 	export function ChildrenMatches(elem: HTMLElement, selector: string): Element[] {
-		let matchingChildren = [];
+		let matchingChildren: Element[] = [];
 
 		if (elem) {
 			matchingChildren = [...elem.children].filter((child) => child.matches(selector));

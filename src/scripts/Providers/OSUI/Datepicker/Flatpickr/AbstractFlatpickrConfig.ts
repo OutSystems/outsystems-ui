@@ -11,10 +11,10 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		extends OSFramework.OSUI.Patterns.DatePicker.AbstractDatePickerConfig
 	{
 		// Store a list of disable days
-		private _disabledDays = [];
+		private _disabledDays: string[] = [];
 
 		// Store a integer list of weekdays
-		private _disabledWeekDays = [];
+		private _disabledWeekDays: number[] = [];
 
 		// Store the language that will be assigned as a locale to the DatePicker
 		private _dynamicLang: string;
@@ -82,7 +82,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 			let _locale: FlatpickrLocale = window.flatpickr.l10ns.en;
 			try {
 				// Set the locale in order to define the calendar language
-				_locale = window.flatpickr.l10ns[this.Lang];
+				_locale = window.flatpickr.l10ns[this.Lang as FlatpickrLocaleKey];
 
 				// Set the calendar first week day
 				_locale.firstDayOfWeek = this.FirstWeekDay;
@@ -154,7 +154,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 
 			// Check if there are weekdays to be disabled
 			if (this._disabledWeekDays.length > 0) {
-				this.Disable.push((date) => {
+				this.Disable.push((date: Date) => {
 					return this._checkDisableWeeksDay(date);
 				});
 			}

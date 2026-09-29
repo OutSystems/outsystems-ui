@@ -224,7 +224,7 @@ namespace OSFramework.OSUI.Patterns.Progress.Bar {
 			super.dispose();
 		}
 
-		public progressApplyGradient(gradientType: string, colors: GradientColor): void {
+		public progressApplyGradient(gradientType: string, colors: GradientColor[]): void {
 			// Call super to clean and validate color string
 			super.progressApplyGradient(gradientType, colors);
 			// Stole gradient to later used on CSS Variable

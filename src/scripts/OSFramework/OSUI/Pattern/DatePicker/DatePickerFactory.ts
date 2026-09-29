@@ -5,12 +5,12 @@ namespace OSFramework.OSUI.Patterns.DatePicker.Factory {
 	 *
 	 * @export
 	 * @param {string} datePickerId ID of the Pattern that a new instance will be created.
-	 * @param {string} configs Configurations for the Pattern in JSON format.
+	 * @param {(string | Record<string, unknown>)} configs Configurations for the Pattern in JSON format.
 	 * @return {*}  {Patterns.Progress.IDatePicker}
 	 */
 	export function NewDatePicker(
 		datePickerId: string,
-		configs: string,
+		configs: string | Record<string, unknown>,
 		mode: Enum.Mode,
 		provider: string
 	): Patterns.DatePicker.IDatePicker {

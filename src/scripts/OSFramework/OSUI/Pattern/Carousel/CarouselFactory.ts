@@ -5,14 +5,14 @@ namespace OSFramework.OSUI.Patterns.Carousel.Factory {
 	 *
 	 * @export
 	 * @param {string} carouselId ID of the Pattern that a new instance will be created.
-	 * @param {string} configs Configurations for the Pattern in JSON format.
+	 * @param {(string | Record<string, unknown>)} configs Configurations for the Pattern in JSON format.
 	 * @return {*}  {Patterns.Carousel.ICarousel}
 	 */
-	export function NewCarousel(carouselId: string, configs: string, provider: string): Patterns.Carousel.ICarousel {
+	export function NewCarousel(carouselId: string, configs: string | Record<string, unknown>, provider: string): Patterns.Carousel.ICarousel {
 		let _carouselItem = null;
 
 		if (provider === Enum.Provider.Splide) {
-			_carouselItem = new Providers.OSUI.Carousel.Splide.OSUISplide(carouselId, JSON.parse(configs));
+			_carouselItem = new Providers.OSUI.Carousel.Splide.OSUISplide(carouselId, OSFramework.OSUI.Helper.ParseConfigs(configs));
 		} else {
 			throw new Error(`There is no  ${GlobalEnum.PatternName.Carousel}  of the ${provider} provider`);
 		}

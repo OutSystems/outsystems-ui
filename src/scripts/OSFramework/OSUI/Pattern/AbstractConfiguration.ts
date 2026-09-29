@@ -11,9 +11,10 @@ namespace OSFramework.OSUI.Patterns {
 		public ExtendedClass: string;
 
 		constructor(config: JSON) {
-			for (const key in config) {
-				if (config[key] !== undefined) {
-					this[key] = this.validateDefault(key, config[key]);
+			const source = config as unknown as Record<string, unknown>;
+			for (const key in source) {
+				if (source[key] !== undefined) {
+					(this as unknown as Record<string, unknown>)[key] = this.validateDefault(key, source[key]);
 				}
 			}
 		}

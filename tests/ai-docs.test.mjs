@@ -98,7 +98,11 @@ test('component cards stay within the token budget and cover every pattern', () 
 		const tokens = countTokens(`## ${s}`);
 		assert.ok(tokens <= CARD_TOKEN_BUDGET, `${s.split('\n')[0]} card is ${tokens} tokens`);
 	}
-	assert.match(cards, /Create\(accordionId: string, configs: string\): IAccordion\b/, 'namespace prefixes are abbreviated');
+	assert.match(
+		cards,
+		/Create\(accordionId: string, configs: string \| object\): IAccordion\b/,
+		'namespace prefixes are abbreviated and the configs union reads as string | object'
+	);
 });
 
 test('index and tokens documents are compact and name every pattern / theme role', () => {

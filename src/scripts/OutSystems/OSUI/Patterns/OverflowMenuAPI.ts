@@ -29,12 +29,12 @@ namespace OutSystems.OSUI.Patterns.OverflowMenuAPI {
 	 *
 	 * @export
 	 * @param {string} overflowMenuId
-	 * @param {string} configs
+	 * @param {(string | Record<string, unknown>)} configs
 	 * @return {*}  {OSFramework.OSUI.Patterns.OverflowMenu.IOverflowMenu}
 	 */
 	export function Create(
 		overflowMenuId: string,
-		configs: string
+		configs: string | Record<string, unknown>
 	): OSFramework.OSUI.Patterns.OverflowMenu.IOverflowMenu {
 		if (_overflowMenuMap.has(overflowMenuId)) {
 			throw new Error(
@@ -44,7 +44,7 @@ namespace OutSystems.OSUI.Patterns.OverflowMenuAPI {
 
 		const _overflowMenuItem = new OSFramework.OSUI.Patterns.OverflowMenu.OverflowMenu(
 			overflowMenuId,
-			JSON.parse(configs)
+			OSFramework.OSUI.Helper.ParseConfigs(configs)
 		);
 
 		_overflowMenuMap.set(overflowMenuId, _overflowMenuItem);

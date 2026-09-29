@@ -28,12 +28,12 @@ namespace OutSystems.OSUI.Patterns.SectionIndexItemAPI {
 	 *
 	 * @export
 	 * @param {string} sectionIndexItemId ID of the Pattern that a new instance will be created.
-	 * @param {string} configs Configurations for the Pattern in JSON format.
+	 * @param {(string | Record<string, unknown>)} configs Configurations for the Pattern in JSON format.
 	 * @return {*}  {OSFramework.OSUI.Patterns.SectionIndexItem.ISectionIndexItem}
 	 */
 	export function Create(
 		sectionIndexItemId: string,
-		configs: string
+		configs: string | Record<string, unknown>
 	): OSFramework.OSUI.Patterns.SectionIndexItem.ISectionIndexItem {
 		if (_sectionIndexItemMap.has(sectionIndexItemId)) {
 			throw new Error(`There is already a SectionIndexItem registered under id: ${sectionIndexItemId}`);
@@ -41,7 +41,7 @@ namespace OutSystems.OSUI.Patterns.SectionIndexItemAPI {
 
 		const _sectionIndexItem = new OSFramework.OSUI.Patterns.SectionIndexItem.SectionIndexItem(
 			sectionIndexItemId,
-			JSON.parse(configs)
+			OSFramework.OSUI.Helper.ParseConfigs(configs)
 		);
 
 		_sectionIndexItemMap.set(sectionIndexItemId, _sectionIndexItem);

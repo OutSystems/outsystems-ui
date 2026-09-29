@@ -27,17 +27,17 @@ namespace OutSystems.OSUI.Patterns.WizardAPI {
 	 *
 	 * @export
 	 * @param {string} wizardId ID of the Pattern that a new instance will be created.
-	 * @param {string} configs Configurations for the Pattern in JSON format.
+	 * @param {(string | Record<string, unknown>)} configs Configurations for the Pattern in JSON format.
 	 * @return {*}  {OSFramework.OSUI.Patterns.Wizard.IWizard}
 	 */
-	export function Create(wizardId: string, configs: string): OSFramework.OSUI.Patterns.Wizard.IWizard {
+	export function Create(wizardId: string, configs: string | Record<string, unknown>): OSFramework.OSUI.Patterns.Wizard.IWizard {
 		if (_wizardMap.has(wizardId)) {
 			throw new Error(
 				`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.Wizard} registered under id: ${wizardId}`
 			);
 		}
 
-		const _newWizard = new OSFramework.OSUI.Patterns.Wizard.Wizard(wizardId, JSON.parse(configs));
+		const _newWizard = new OSFramework.OSUI.Patterns.Wizard.Wizard(wizardId, OSFramework.OSUI.Helper.ParseConfigs(configs));
 
 		_wizardMap.set(wizardId, _newWizard);
 

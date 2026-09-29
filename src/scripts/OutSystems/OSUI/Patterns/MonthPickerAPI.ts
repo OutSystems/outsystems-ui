@@ -67,12 +67,12 @@ namespace OutSystems.OSUI.Patterns.MonthPickerAPI {
 	 * @export
 	 * @param {string} monthPickerId ID of the Pattern that a new instance will be created.
 	 * @param {string} provider Set which provider should be used to create the monthPicker instance.
-	 * @param {string} configs Configurations for the Pattern in JSON format.
+	 * @param {(string | Record<string, unknown>)} configs Configurations for the Pattern in JSON format.
 	 * @return {*}  {OSFramework.OSUI.Patterns.MonthPicker.IMonthPicker}
 	 */
 	export function Create(
 		monthPickerId: string,
-		configs: string,
+		configs: string | Record<string, unknown>,
 		provider: string
 	): OSFramework.OSUI.Patterns.MonthPicker.IMonthPicker {
 		if (_monthPickerItemsMap.has(monthPickerId)) {
@@ -292,15 +292,15 @@ namespace OutSystems.OSUI.Patterns.MonthPickerAPI {
 	 *
 	 * @export
 	 * @param {string} monthPickerId
-	 * @param {boolean} IsEditable
+	 * @param {boolean} isEditable
 	 * @return {*}  {string}
 	 */
-	export function SetEditableInput(monthPickerId: string, IsEditable: boolean): string {
+	export function SetEditableInput(monthPickerId: string, isEditable: boolean): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.MonthPicker.FailSetEditableInput,
 			callback: () => {
 				const _monthPicker = this.GetMonthPickerItemById(monthPickerId);
-				_monthPicker.setEditableInput(IsEditable);
+				_monthPicker.setEditableInput(isEditable);
 			},
 		});
 

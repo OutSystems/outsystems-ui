@@ -27,12 +27,12 @@ namespace OutSystems.OSUI.Patterns.NotificationAPI {
 	 *
 	 * @export
 	 * @param {string} notificationId
-	 * @param {string} configs
+	 * @param {(string | Record<string, unknown>)} configs
 	 * @return {*}  {OSFramework.OSUI.Patterns.Notification.INotification}
 	 */
 	export function Create(
 		notificationId: string,
-		configs: string
+		configs: string | Record<string, unknown>
 	): OSFramework.OSUI.Patterns.Notification.INotification {
 		if (_notificationMap.has(notificationId)) {
 			throw new Error(
@@ -42,7 +42,7 @@ namespace OutSystems.OSUI.Patterns.NotificationAPI {
 
 		const _newNotification = new OSFramework.OSUI.Patterns.Notification.Notification(
 			notificationId,
-			JSON.parse(configs)
+			OSFramework.OSUI.Helper.ParseConfigs(configs)
 		);
 		_notificationMap.set(notificationId, _newNotification);
 		return _newNotification;

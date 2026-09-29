@@ -54,7 +54,7 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 
 			// Add custom event reference to the window
 			if (isCustomEvent) {
-				window[this._eventName] = this._eventName;
+				(window as unknown as Record<string, unknown>)[this._eventName] = this._eventName;
 			}
 
 			// Make async call to wait for extended event Class to set tge eventCallback property first
@@ -68,7 +68,7 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 		 */
 		public addEvent(): void {
 			// Check if event exist in the window
-			if (this._eventName in window || window[this._eventName] !== undefined) {
+			if (this._eventName in window || (window as unknown as Record<string, unknown>)[this._eventName] !== undefined) {
 				this._eventTarget.addEventListener(this._eventType, this.eventCallback);
 			}
 		}
@@ -80,7 +80,7 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 		 */
 		public removeEvent(): void {
 			// Check if event exist in the window
-			if (this._eventName in window || window[this._eventName] !== undefined) {
+			if (this._eventName in window || (window as unknown as Record<string, unknown>)[this._eventName] !== undefined) {
 				this._eventTarget.removeEventListener(this._eventType, this.eventCallback);
 			}
 		}

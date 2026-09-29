@@ -23,6 +23,6 @@ namespace OSFramework.OSUI.Interface {
 			swipeLeftCallback: Event.GestureEvent.Callbacks.SwipeLeft,
 			swipeRightCallback: Event.GestureEvent.Callbacks.SwipeRight,
 			swipeUpCallback: Event.GestureEvent.Callbacks.SwipeUp
-		);
+		): void;
 	}
 }

@@ -28,12 +28,12 @@ namespace OutSystems.OSUI.Patterns.TabsHeaderItemAPI {
 	 *
 	 * @export
 	 * @param {string} tabsHeaderItemId ID of the Pattern that a new instance will be created.
-	 * @param {string} configs Configurations for the Pattern in JSON format.
+	 * @param {(string | Record<string, unknown>)} configs Configurations for the Pattern in JSON format.
 	 * @return {*}  {OSFramework.OSUI.Patterns.Tabs.ITabs}
 	 */
 	export function Create(
 		tabsHeaderItemId: string,
-		configs: string
+		configs: string | Record<string, unknown>
 	): OSFramework.OSUI.Patterns.TabsHeaderItem.ITabsHeaderItem {
 		if (_tabsHeaderItemMap.has(tabsHeaderItemId)) {
 			throw new Error(
@@ -43,7 +43,7 @@ namespace OutSystems.OSUI.Patterns.TabsHeaderItemAPI {
 
 		const _newTabsHeaderItem = new OSFramework.OSUI.Patterns.TabsHeaderItem.TabsHeaderItem(
 			tabsHeaderItemId,
-			JSON.parse(configs)
+			OSFramework.OSUI.Helper.ParseConfigs(configs)
 		);
 
 		_tabsHeaderItemMap.set(tabsHeaderItemId, _newTabsHeaderItem);

@@ -28,12 +28,12 @@ namespace OutSystems.OSUI.Patterns.ButtonLoadingAPI {
 	 *
 	 * @export
 	 * @param {string} ButtonLoadingId ID of the ButtonLoading where the instance will be created.
-	 * @param {string} configs configurations for the ButtonLoading in JSON format.
+	 * @param {(string | Record<string, unknown>)} configs configurations for the ButtonLoading in JSON format.
 	 * @return {*}  {OSFramework.OSUI.Patterns.IButtonLoading}
 	 */
 	export function Create(
 		buttonLoadingId: string,
-		configs: string
+		configs: string | Record<string, unknown>
 	): OSFramework.OSUI.Patterns.ButtonLoading.IButtonLoading {
 		if (_buttonsLoadingMap.has(buttonLoadingId)) {
 			throw new Error(
@@ -43,7 +43,7 @@ namespace OutSystems.OSUI.Patterns.ButtonLoadingAPI {
 
 		const _newButtonLoading = new OSFramework.OSUI.Patterns.ButtonLoading.ButtonLoading(
 			buttonLoadingId,
-			JSON.parse(configs)
+			OSFramework.OSUI.Helper.ParseConfigs(configs)
 		);
 
 		_buttonsLoadingMap.set(buttonLoadingId, _newButtonLoading);

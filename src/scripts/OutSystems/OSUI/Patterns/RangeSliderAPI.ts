@@ -28,14 +28,14 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	 *
 	 * @export
 	 * @param {string} rangeSliderId
-	 * @param {string} configs
+	 * @param {(string | Record<string, unknown>)} configs
 	 * @param {OSFramework.OSUI.Patterns.RangeSlider.Enum.Mode} mode
 	 * @param {string} provider
 	 * @return {*}  {OSFramework.OSUI.Patterns.RangeSlider.IRangeSlider}
 	 */
 	export function Create(
 		rangeSliderId: string,
-		configs: string,
+		configs: string | Record<string, unknown>,
 		mode: OSFramework.OSUI.Patterns.RangeSlider.Enum.Mode,
 		provider: string
 	): OSFramework.OSUI.Patterns.RangeSlider.IRangeSlider {

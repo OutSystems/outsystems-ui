@@ -21,6 +21,6 @@ namespace OSFramework.OSUI.Interface {
 			onGestureStart: Event.GestureEvent.Callbacks.GestureStart,
 			onGestureMove: Event.GestureEvent.Callbacks.GestureMove,
 			onGestureEnd: Event.GestureEvent.Callbacks.GestureEnd
-		);
+		): void;
 	}
 }

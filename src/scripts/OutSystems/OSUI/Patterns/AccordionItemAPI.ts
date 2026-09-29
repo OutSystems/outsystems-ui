@@ -67,12 +67,12 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 	 *
 	 * @export
 	 * @param {string} accordionItemId ID of the Pattern that a new instance will be created.
-	 * @param {string} configs Configurations for the Pattern in JSON format.
+	 * @param {(string | Record<string, unknown>)} configs Configurations for the Pattern in JSON format.
 	 * @return {*}  {OSFramework.OSUI.Patterns.AccordrionItem.IAccordionItem}
 	 */
 	export function Create(
 		accordionItemId: string,
-		configs: string
+		configs: string | Record<string, unknown>
 	): OSFramework.OSUI.Patterns.AccordionItem.IAccordionItem {
 		if (_accordionItemMap.has(accordionItemId)) {
 			throw new Error(
@@ -82,7 +82,7 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 
 		const _newAccordionItem = new OSFramework.OSUI.Patterns.AccordionItem.AccordionItem(
 			accordionItemId,
-			JSON.parse(configs)
+			OSFramework.OSUI.Helper.ParseConfigs(configs)
 		);
 
 		_accordionItemMap.set(accordionItemId, _newAccordionItem);

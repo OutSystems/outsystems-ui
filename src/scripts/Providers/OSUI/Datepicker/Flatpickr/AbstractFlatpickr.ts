@@ -29,7 +29,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		// Flatpickr onChange (SelectedDate) event
 		protected onSelectedCallbackEvent: OSFramework.OSUI.Patterns.DatePicker.Callbacks.OSOnChangeEvent;
 		// Property to store a custom callback called on OnClose Flatpickr event
-		public onCloseCustomCallback = undefined;
+		public onCloseCustomCallback: OSFramework.OSUI.GlobalCallbacks.Generic = undefined;
 
 		constructor(uniqueId: string, configs: C) {
 			super(uniqueId, configs);

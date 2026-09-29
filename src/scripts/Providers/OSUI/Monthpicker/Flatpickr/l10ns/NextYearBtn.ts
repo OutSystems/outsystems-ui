@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace Providers.OSUI.MonthPicker.Flatpickr.l10ns {
 	// Store all Next Year aria-label translations
-	export const NextYearBtn = {
+	export const NextYearBtn: Record<string, { ariaLabel: string }> = {
 		ar: {
 			ariaLabel: 'السنة التالية',
 		},

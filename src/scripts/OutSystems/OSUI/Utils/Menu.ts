@@ -691,7 +691,7 @@ namespace OutSystems.OSUI.Utils.Menu {
 				const menuIcon = OSFramework.OSUI.Helper.Dom.ClassSelector(document, 'menu-icon');
 
 				if (menuIcon) {
-					const menuIconOnKeypress = function (e) {
+					const menuIconOnKeypress = function (e: KeyboardEvent) {
 						//If enter or space use the menuIcon to validate
 						if (e.keyCode === 32 || e.keyCode === 13) {
 							e.preventDefault();
