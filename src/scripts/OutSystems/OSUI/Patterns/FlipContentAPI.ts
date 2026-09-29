@@ -6,7 +6,7 @@ namespace OutSystems.OSUI.Patterns.FlipContentAPI {
 	 * Function that will change the property of a flip content pattern.
 	 *
 	 * @export
-	 * @param {string} flipID ID of the Flip Content where the property will be changed.
+	 * @param {string} flipId ID of the Flip Content where the property will be changed.
 	 * @param {string} propertyName Property name that will be updated
 	 * @param {*} propertyValue Value that will be set to the property
 	 */
@@ -28,12 +28,12 @@ namespace OutSystems.OSUI.Patterns.FlipContentAPI {
 	 *
 	 * @export
 	 * @param {string} flipId ID of the Flip Content where the instance will be created.
-	 * @param {(string | Record<string, unknown>)} configs configurations for the Flip Content in JSON format.
+	 * @param {(string | Configs)} configs configurations for the Flip Content in JSON format.
 	 * @return {*}  {OSFramework.OSUI.Patterns.FlipContent.IFlipContent}
 	 */
 	export function Create(
 		flipId: string,
-		configs: string | Record<string, unknown>
+		configs: string | Configs
 	): OSFramework.OSUI.Patterns.FlipContent.IFlipContent {
 		if (_flipContentMap.has(flipId)) {
 			throw new Error(
@@ -123,7 +123,7 @@ namespace OutSystems.OSUI.Patterns.FlipContentAPI {
 	 */
 	export function RegisterCallback(
 		flipId: string,
-		eventName: string,
+		eventName: EventName,
 		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
 	): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({

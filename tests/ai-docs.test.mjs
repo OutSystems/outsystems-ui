@@ -101,8 +101,8 @@ test('component cards stay within the token budget and cover every pattern', () 
 	}
 	assert.match(
 		cards,
-		/Create\(accordionId: string, configs: string \| object\): IAccordion\b/,
-		'namespace prefixes are abbreviated and the configs union reads as string | object'
+		/Create\(accordionId: string, configs: string \| Configs\): IAccordion\b/,
+		'namespace prefixes are abbreviated and Create names the generated Configs type'
 	);
 });
 

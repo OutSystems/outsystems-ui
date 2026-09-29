@@ -383,7 +383,7 @@ namespace OSFramework.OSUI.Behaviors {
 
 			let frames = 0;
 			let frames_below_threshold = 0;
-			let largest_displ;
+			let largest_displ: number;
 
 			// CHange value to be used, depending if is a vertical or horizontal drag
 			let directionDisplacement = isVertical ? dy : dx;

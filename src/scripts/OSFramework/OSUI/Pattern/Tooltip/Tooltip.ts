@@ -243,7 +243,7 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 
 		// Method to translate the tooltip Position config to the expected Floating Position
 		private _transformPosition(tooltipPosition: GlobalEnum.Position): GlobalEnum.FloatingPosition {
-			let _finalPosition;
+			let _finalPosition: GlobalEnum.FloatingPosition;
 
 			switch (tooltipPosition) {
 				case GlobalEnum.Position.BottomLeft:
@@ -263,7 +263,8 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 					_finalPosition = GlobalEnum.FloatingPosition.Bottom;
 					break;
 				default:
-					_finalPosition = tooltipPosition;
+					// top/right/bottom/left share their string values across the two enums
+					_finalPosition = tooltipPosition as unknown as GlobalEnum.FloatingPosition;
 			}
 
 			return _finalPosition;

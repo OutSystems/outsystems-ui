@@ -27,12 +27,12 @@ namespace OutSystems.OSUI.Patterns.InlineSvgAPI {
 	 *
 	 * @export
 	 * @param {string} inlineSvgId
-	 * @param {(string | Record<string, unknown>)} configs
+	 * @param {(string | Configs)} configs
 	 * @return {*}  {OSFramework.OSUI.Patterns.InlineSvg.IInlineSvg}
 	 */
 	export function Create(
 		inlineSvgId: string,
-		configs: string | Record<string, unknown>
+		configs: string | Configs
 	): OSFramework.OSUI.Patterns.InlineSvg.IInlineSvg {
 		if (_inlineSvgMap.has(inlineSvgId)) {
 			throw new Error(
@@ -120,7 +120,7 @@ namespace OutSystems.OSUI.Patterns.InlineSvgAPI {
 	 */
 	export function RegisterCallback(
 		inlineSvgId: string,
-		eventName: string,
+		eventName: EventName,
 		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
 	): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({

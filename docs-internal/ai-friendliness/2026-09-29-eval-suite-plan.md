@@ -86,6 +86,28 @@
 ### Task 11: Loop iteration 4 — documentation coverage
 - [ ] JSDoc on config props and API functions lacking `@param`s; generated docs refreshed; evals `loop-4`; commit.
 
+### Task 13: CI gate and docs freshness ✅
+**Files:** `evals/ai-friendliness/tools/gate.mjs`, `scripts/lib/ai-docs-fresh.mjs`, `scripts/check-ai-docs-fresh.mjs`, `.github/workflows/ai-friendliness.yaml`, tests.
+- [x] `evaluateGate`/`pickBaseline` tested; CLI compares a no-write run with the newest history entry; fails on a drop > `--max-drop` (default 1).
+- [x] `compareDocs` tested (CRLF-insensitive); CLI regenerates into a temp dir and reports modified/missing files.
+- [x] Workflow on `pull_request` into `dev` and `workflow_dispatch` (any branch, `max-drop` input).
+
+### Task 14: Publication of the agent docs ◐
+- [x] `postdocs` copies `docs-ai/` into the TypeDoc output (`npm run docs`), so the documentation deployment serves `/llms.txt` and friends at its root.
+- [ ] Serve the same files at the OutSystems UI website root (external OutSystems application; needs a static-resource change there).
+- [ ] MCP server over `osui.components.json`.
+
+### Task 15: Backlog item 1 — generated `Configs` / `EventName` types ✅
+**Files:** `scripts/lib/pattern-types.mjs`, `scripts/generate-pattern-types.mjs`, `src/scripts/OutSystems/OSUI/Patterns/PatternTypes.ts`, 33 `*API.ts`, `tests/pattern-types.test.mjs`.
+- [x] Test-first: one namespace per pattern, alphabetical optional props with descriptions, no `Providers.`/`OSFramework.`/`GlobalEnum.` references in code, callbacks and lower-case provider fields excluded, `EventName` union + `(string & {})`, committed file fresh.
+- [x] Output formatted with the repo Prettier config inside the generator; lint warning-free.
+- [x] `Create(id, configs: string | Configs)`, `RegisterCallback(id, eventName: EventName, cb)` in all 33 APIs.
+
+### Task 16: Backlog items 2 and 3 — type hygiene and API completeness ✅ / ◐
+- [x] `Orientation` alias fixed; last 8 implicit-any sites annotated; `noImplicitAny: true`; three latent errors surfaced by it annotated (`AnimateOnDrag`, `Tabs`, `Tooltip`); `tsc --noEmit` clean.
+- [x] 24 JSDoc blocks completed; `ChangeProperty` + error codes for SwipeEvents/TouchEvents.
+- [ ] Envelope on the existing SwipeEvents/TouchEvents functions — documented breaking change (report B-3), not applied.
+
 ### Task 12: Report + ADR
 **Files:** `docs-internal/ai-friendliness/REPORT.md`, `docs-internal/adr/ADR-0011-ai-friendliness-eval-suite.md`, ADR log row.
 - [ ] Six sections as requested; BEFORE/AFTER snippets for each documented breaking change; tracking matrix from `results/history.json`.

@@ -7,12 +7,12 @@ namespace OutSystems.OSUI.Patterns.TouchEventsAPI {
 	 *
 	 * @export
 	 * @param {string} touchEventsId ID of the Pattern that a new instance will be created.
-	 * @param {(string | Record<string, unknown>)} configs Configurations for the Pattern in JSON format.
+	 * @param {(string | Configs)} configs Configurations for the Pattern in JSON format.
 	 * @return {*}  {OSFramework.OSUI.Patterns TouchEvents. TouchEvents}
 	 */
 	export function Create(
 		touchEventsId: string,
-		configs: string | Record<string, unknown>
+		configs: string | Configs
 	): OSFramework.OSUI.Patterns.TouchEvents.ITouchEvents {
 		if (_touchEventsMap.has(touchEventsId)) {
 			throw new Error(
@@ -58,7 +58,7 @@ namespace OutSystems.OSUI.Patterns.TouchEventsAPI {
 	 * Function that gets the instance of TouchEvents, by a given ID.
 	 *
 	 * @export
-	 * @param {string} TouchEventsId ID of the TouchEvents that will be looked for.
+	 * @param {string} touchEventsId ID of the TouchEvents that will be looked for.
 	 * @return {*}  {OSFramework.OSUI.Patterns TouchEvents. TouchEvents;}
 	 */
 	export function GetTouchEventsById(touchEventsId: string): OSFramework.OSUI.Patterns.TouchEvents.ITouchEvents {
@@ -94,11 +94,33 @@ namespace OutSystems.OSUI.Patterns.TouchEventsAPI {
 	 */
 	export function RegisterCallback(
 		touchEventsID: string,
-		eventName: string,
+		eventName: EventName,
 		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
 	): void {
 		const touchEvents = this.GetTouchEventsById(touchEventsID);
 
 		touchEvents.registerCallback(eventName, callback);
+	}
+
+	/**
+	 * Function that will change the property of a given TouchEvents pattern.
+	 *
+	 * @export
+	 * @param {string} touchEventsId ID of the TouchEvents where the property will be changed.
+	 * @param {string} propertyName Property name that will be updated
+	 * @param {unknown} propertyValue Value that will be set to the property
+	 * @return {*}  {string} Response object as a JSON string
+	 */
+	export function ChangeProperty(touchEventsId: string, propertyName: string, propertyValue: unknown): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.TouchEvents.FailChangeProperty,
+			callback: () => {
+				const pattern = GetTouchEventsById(touchEventsId);
+
+				pattern.changeProperty(propertyName, propertyValue);
+			},
+		});
+
+		return result;
 	}
 }

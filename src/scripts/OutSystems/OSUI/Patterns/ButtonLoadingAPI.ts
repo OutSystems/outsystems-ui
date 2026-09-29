@@ -6,7 +6,7 @@ namespace OutSystems.OSUI.Patterns.ButtonLoadingAPI {
 	 * Function that will change the property of a given ButtonLoading.
 	 *
 	 * @export
-	 * @param {string} ButtonLoadingId ID of the ButtonLoading where the property will be changed.
+	 * @param {string} buttonLoadingId ID of the ButtonLoading where the property will be changed.
 	 * @param {string} propertyName Property name that will be updated
 	 * @param {unknown} propertyValue Value that will be set to the property
 	 */
@@ -27,13 +27,13 @@ namespace OutSystems.OSUI.Patterns.ButtonLoadingAPI {
 	 * Create the new ButtonLoading instance and add it to the buttonsLoadingMap
 	 *
 	 * @export
-	 * @param {string} ButtonLoadingId ID of the ButtonLoading where the instance will be created.
-	 * @param {(string | Record<string, unknown>)} configs configurations for the ButtonLoading in JSON format.
+	 * @param {string} buttonLoadingId ID of the ButtonLoading where the instance will be created.
+	 * @param {(string | Configs)} configs configurations for the ButtonLoading in JSON format.
 	 * @return {*}  {OSFramework.OSUI.Patterns.IButtonLoading}
 	 */
 	export function Create(
 		buttonLoadingId: string,
-		configs: string | Record<string, unknown>
+		configs: string | Configs
 	): OSFramework.OSUI.Patterns.ButtonLoading.IButtonLoading {
 		if (_buttonsLoadingMap.has(buttonLoadingId)) {
 			throw new Error(
@@ -55,7 +55,7 @@ namespace OutSystems.OSUI.Patterns.ButtonLoadingAPI {
 	 * Function that will destroy the instance of the given ButtonLoading
 	 *
 	 * @export
-	 * @param {string} ButtonLoadingId
+	 * @param {string} buttonLoadingId ID of the ButtonLoading that will be destroyed.
 	 */
 	export function Dispose(buttonLoadingId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -86,7 +86,7 @@ namespace OutSystems.OSUI.Patterns.ButtonLoadingAPI {
 	 * Function that gets the instance of ButtonLoading, by a given ID.
 	 *
 	 * @export
-	 * @param {string} ButtonLoadingId ID of the ButtonLoading that will be looked for.
+	 * @param {string} buttonLoadingId ID of the ButtonLoading that will be looked for.
 	 * @return {*}  {OSFramework.OSUI.Patterns.ButtonLoading.IButtonLoading}
 	 */
 	export function GetButtonLoadingById(
@@ -103,7 +103,7 @@ namespace OutSystems.OSUI.Patterns.ButtonLoadingAPI {
 	 * Function that will initialize the pattern instance.
 	 *
 	 * @export
-	 * @param {string} ButtonLoadingId ID of the ButtonLoading that will be initialized.
+	 * @param {string} buttonLoadingId ID of the ButtonLoading that will be initialized.
 	 * @return {*}  {OSFramework.OSUI.Patterns.ButtonLoading.IButtonLoading}
 	 */
 	export function Initialize(buttonLoadingId: string): OSFramework.OSUI.Patterns.ButtonLoading.IButtonLoading {
@@ -146,7 +146,7 @@ namespace OutSystems.OSUI.Patterns.ButtonLoadingAPI {
 	 */
 	export function RegisterCallback(
 		dropdownId: string,
-		eventName: string,
+		eventName: EventName,
 		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
 	): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({

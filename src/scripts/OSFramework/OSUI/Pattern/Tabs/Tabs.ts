@@ -978,7 +978,7 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 			}
 
 			let newTabIndex;
-			let newHeaderItem;
+			let newHeaderItem: TabsHeaderItem.ITabsHeaderItem;
 
 			// changeTab can be called from non-click sources, like client action
 			// where the tabsHeaderItem will be passed as undefined
@@ -987,7 +987,10 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 				newTabIndex = this._getTargetIndex(tabIndex);
 
 				// Get the headerItem, based on the newTabIndex
-				newHeaderItem = this.getChildByIndex(newTabIndex, Enum.ChildTypes.TabsHeaderItem);
+				newHeaderItem = this.getChildByIndex(
+					newTabIndex,
+					Enum.ChildTypes.TabsHeaderItem
+				) as TabsHeaderItem.ITabsHeaderItem;
 			} else {
 				newTabIndex = tabIndex;
 				newHeaderItem = tabsHeaderItem;

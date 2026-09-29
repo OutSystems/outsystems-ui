@@ -48,7 +48,7 @@
 						},
 						{
 							"name": "configs",
-							"type": "string | Record<string, unknown>"
+							"type": "string | Configs"
 						}
 					],
 					"returns": "OSFramework.OSUI.Patterns.Accordion.IAccordion",
@@ -113,7 +113,7 @@
 						},
 						{
 							"name": "eventName",
-							"type": "string"
+							"type": "EventName"
 						},
 						{
 							"name": "callback",
@@ -207,7 +207,7 @@
 						},
 						{
 							"name": "configs",
-							"type": "string | Record<string, unknown>"
+							"type": "string | Configs"
 						}
 					],
 					"returns": "OSFramework.OSUI.Patterns.AccordionItem.IAccordionItem",
@@ -272,7 +272,7 @@
 						},
 						{
 							"name": "eventName",
-							"type": "string"
+							"type": "EventName"
 						},
 						{
 							"name": "callback",
@@ -411,7 +411,7 @@
 						},
 						{
 							"name": "configs",
-							"type": "string | Record<string, unknown>"
+							"type": "string | Configs"
 						}
 					],
 					"returns": "OSFramework.OSUI.Patterns.AnimatedLabel.IAnimatedLabel",
@@ -465,7 +465,7 @@
 						},
 						{
 							"name": "eventName",
-							"type": "string"
+							"type": "EventName"
 						},
 						{
 							"name": "callback",
@@ -553,7 +553,7 @@
 						},
 						{
 							"name": "configs",
-							"type": "string | Record<string, unknown>"
+							"type": "string | Configs"
 						}
 					],
 					"returns": "OSFramework.OSUI.Patterns.BottomSheet.IBottomSheet",
@@ -629,7 +629,7 @@
 						},
 						{
 							"name": "eventName",
-							"type": "string"
+							"type": "EventName"
 						},
 						{
 							"name": "callback",
@@ -727,7 +727,7 @@
 						},
 						{
 							"name": "configs",
-							"type": "string | Record<string, unknown>"
+							"type": "string | Configs"
 						}
 					],
 					"returns": "OSFramework.OSUI.Patterns.ButtonLoading.IButtonLoading",
@@ -796,7 +796,7 @@
 						},
 						{
 							"name": "eventName",
-							"type": "string"
+							"type": "EventName"
 						},
 						{
 							"name": "callback",
@@ -896,7 +896,7 @@
 						},
 						{
 							"name": "configs",
-							"type": "string | Record<string, unknown>"
+							"type": "string | Configs"
 						},
 						{
 							"name": "provider",
@@ -991,7 +991,7 @@
 						},
 						{
 							"name": "eventName",
-							"type": "string"
+							"type": "EventName"
 						},
 						{
 							"name": "callback",
@@ -1055,7 +1055,7 @@
 						}
 					],
 					"returns": "string",
-					"description": ""
+					"description": "Function to set provider configs by extensibility"
 				},
 				{
 					"name": "SetProviderEvent",
@@ -1254,7 +1254,7 @@
 						},
 						{
 							"name": "configs",
-							"type": "string | Record<string, unknown>"
+							"type": "string | Configs"
 						},
 						{
 							"name": "mode",
@@ -1353,7 +1353,7 @@
 						},
 						{
 							"name": "eventName",
-							"type": "string"
+							"type": "EventName"
 						},
 						{
 							"name": "callback",
@@ -1538,7 +1538,7 @@
 					"description": "Display format of the selected date (e.g. DD/MM/YYYY); empty uses the server date format."
 				},
 				"Disable": {
-					"type": "array",
+					"type": "Array<string | Date | ((date: Date) => boolean)>",
 					"default": "[]",
 					"description": "Stores the ability to disable a range of dates from datepicker"
 				},
@@ -1734,7 +1734,7 @@
 						},
 						{
 							"name": "configs",
-							"type": "string | Record<string, unknown>"
+							"type": "string | Configs"
 						}
 					],
 					"returns": "OSFramework.OSUI.Patterns.Dropdown.IDropdown",
@@ -1847,7 +1847,7 @@
 						},
 						{
 							"name": "eventName",
-							"type": "string"
+							"type": "EventName"
 						},
 						{
 							"name": "callback",
@@ -2110,7 +2110,7 @@
 						},
 						{
 							"name": "configs",
-							"type": "string | Record<string, unknown>"
+							"type": "string | Configs"
 						}
 					],
 					"returns": "OSFramework.OSUI.Patterns.DropdownServerSideItem.IDropdownServerSideItem",
@@ -2164,7 +2164,7 @@
 						},
 						{
 							"name": "eventName",
-							"type": "string"
+							"type": "EventName"
 						},
 						{
 							"name": "callback",
@@ -2247,7 +2247,7 @@
 						},
 						{
 							"name": "configs",
-							"type": "string | Record<string, unknown>"
+							"type": "string | Configs"
 						}
 					],
 					"returns": "OSFramework.OSUI.Patterns.FlipContent.IFlipContent",
@@ -2301,7 +2301,7 @@
 						},
 						{
 							"name": "eventName",
-							"type": "string"
+							"type": "EventName"
 						},
 						{
 							"name": "callback",
@@ -2414,7 +2414,7 @@
 						},
 						{
 							"name": "configs",
-							"type": "string | Record<string, unknown>"
+							"type": "string | Configs"
 						}
 					],
 					"returns": "OSFramework.OSUI.Patterns.Gallery.IGallery",
@@ -2468,7 +2468,7 @@
 						},
 						{
 							"name": "eventName",
-							"type": "string"
+							"type": "EventName"
 						},
 						{
 							"name": "callback",
@@ -2547,7 +2547,7 @@
 						},
 						{
 							"name": "configs",
-							"type": "string | Record<string, unknown>"
+							"type": "string | Configs"
 						}
 					],
 					"returns": "OSFramework.OSUI.Patterns.InlineSvg.IInlineSvg",
@@ -2601,7 +2601,7 @@
 						},
 						{
 							"name": "eventName",
-							"type": "string"
+							"type": "EventName"
 						},
 						{
 							"name": "callback",
@@ -2708,7 +2708,7 @@
 						},
 						{
 							"name": "configs",
-							"type": "string | Record<string, unknown>"
+							"type": "string | Configs"
 						},
 						{
 							"name": "provider",
@@ -2788,7 +2788,7 @@
 						},
 						{
 							"name": "eventName",
-							"type": "string"
+							"type": "EventName"
 						},
 						{
 							"name": "callback",
@@ -3029,7 +3029,7 @@
 						},
 						{
 							"name": "configs",
-							"type": "string | Record<string, unknown>"
+							"type": "string | Configs"
 						}
 					],
 					"returns": "OSFramework.OSUI.Patterns.Notification.INotification",
@@ -3094,7 +3094,7 @@
 						},
 						{
 							"name": "eventName",
-							"type": "string"
+							"type": "EventName"
 						},
 						{
 							"name": "callback",
@@ -3221,7 +3221,7 @@
 						},
 						{
 							"name": "configs",
-							"type": "string | Record<string, unknown>"
+							"type": "string | Configs"
 						}
 					],
 					"returns": "OSFramework.OSUI.Patterns.OverflowMenu.IOverflowMenu",
@@ -3297,7 +3297,7 @@
 						},
 						{
 							"name": "eventName",
-							"type": "string"
+							"type": "EventName"
 						},
 						{
 							"name": "callback",
@@ -3439,7 +3439,7 @@
 						},
 						{
 							"name": "configs",
-							"type": "string | Record<string, unknown>"
+							"type": "string | Configs"
 						}
 					],
 					"returns": "OSFramework.OSUI.Patterns.Progress.IProgress",
@@ -3493,7 +3493,7 @@
 						},
 						{
 							"name": "eventName",
-							"type": "string"
+							"type": "EventName"
 						},
 						{
 							"name": "callback",
@@ -3618,7 +3618,7 @@
 						},
 						{
 							"name": "configs",
-							"type": "string | Record<string, unknown>"
+							"type": "string | Configs"
 						},
 						{
 							"name": "mode",
@@ -3702,7 +3702,7 @@
 						},
 						{
 							"name": "eventName",
-							"type": "string"
+							"type": "EventName"
 						},
 						{
 							"name": "callback",
@@ -3832,7 +3832,7 @@
 					"description": "Lower bound of the range."
 				},
 				"Orientation": {
-					"type": "unknown",
+					"type": "'horizontal' | 'vertical'",
 					"allowed": [
 						"horizontal",
 						"vertical"
@@ -3959,7 +3959,7 @@
 						},
 						{
 							"name": "configs",
-							"type": "string | Record<string, unknown>"
+							"type": "string | Configs"
 						}
 					],
 					"returns": "OSFramework.OSUI.Patterns.Rating.IRating",
@@ -3985,7 +3985,7 @@
 						}
 					],
 					"returns": "string",
-					"description": ""
+					"description": "Function that will dispose the instance of the given Rating"
 				},
 				{
 					"name": "Enable",
@@ -4035,7 +4035,7 @@
 						},
 						{
 							"name": "eventName",
-							"type": "string"
+							"type": "EventName"
 						},
 						{
 							"name": "callback",
@@ -4129,7 +4129,7 @@
 						},
 						{
 							"name": "configs",
-							"type": "string | Record<string, unknown>"
+							"type": "string | Configs"
 						}
 					],
 					"returns": "OSFramework.OSUI.Patterns.Search.ISearch",
@@ -4183,7 +4183,7 @@
 						},
 						{
 							"name": "eventName",
-							"type": "string"
+							"type": "EventName"
 						},
 						{
 							"name": "callback",
@@ -4244,7 +4244,7 @@
 						},
 						{
 							"name": "configs",
-							"type": "string | Record<string, unknown>"
+							"type": "string | Configs"
 						}
 					],
 					"returns": "OSFramework.OSUI.Patterns.SectionIndex.ISectionIndex",
@@ -4298,7 +4298,7 @@
 						},
 						{
 							"name": "eventName",
-							"type": "string"
+							"type": "EventName"
 						},
 						{
 							"name": "callback",
@@ -4387,7 +4387,7 @@
 						},
 						{
 							"name": "configs",
-							"type": "string | Record<string, unknown>"
+							"type": "string | Configs"
 						}
 					],
 					"returns": "OSFramework.OSUI.Patterns.SectionIndexItem.ISectionIndexItem",
@@ -4441,7 +4441,7 @@
 						},
 						{
 							"name": "eventName",
-							"type": "string"
+							"type": "EventName"
 						},
 						{
 							"name": "callback",
@@ -4534,7 +4534,7 @@
 						},
 						{
 							"name": "configs",
-							"type": "string | Record<string, unknown>"
+							"type": "string | Configs"
 						}
 					],
 					"returns": "OSFramework.OSUI.Patterns.Sidebar.ISidebar",
@@ -4599,7 +4599,7 @@
 						},
 						{
 							"name": "eventName",
-							"type": "string"
+							"type": "EventName"
 						},
 						{
 							"name": "callback",
@@ -4758,7 +4758,7 @@
 						},
 						{
 							"name": "configs",
-							"type": "string | Record<string, unknown>"
+							"type": "string | Configs"
 						}
 					],
 					"returns": "OSFramework.OSUI.Patterns.Submenu.ISubmenu",
@@ -4812,7 +4812,7 @@
 						},
 						{
 							"name": "eventName",
-							"type": "string"
+							"type": "EventName"
 						},
 						{
 							"name": "callback",
@@ -4911,7 +4911,7 @@
 						},
 						{
 							"name": "configs",
-							"type": "string | Record<string, unknown>"
+							"type": "string | Configs"
 						}
 					],
 					"returns": "OSFramework.OSUI.Patterns.SwipeEvents.ISwipeEvents",
@@ -4965,7 +4965,7 @@
 						},
 						{
 							"name": "eventName",
-							"type": "string"
+							"type": "EventName"
 						},
 						{
 							"name": "callback",
@@ -5012,6 +5012,25 @@
 					],
 					"returns": "void",
 					"description": "Function that will detect the event type of the pattern instance."
+				},
+				{
+					"name": "ChangeProperty",
+					"params": [
+						{
+							"name": "swipeEventsId",
+							"type": "string"
+						},
+						{
+							"name": "propertyName",
+							"type": "string"
+						},
+						{
+							"name": "propertyValue",
+							"type": "unknown"
+						}
+					],
+					"returns": "string",
+					"description": "Function that will change the property of a given SwipeEvents pattern."
 				}
 			],
 			"props": {
@@ -5073,7 +5092,7 @@
 						},
 						{
 							"name": "configs",
-							"type": "string | Record<string, unknown>"
+							"type": "string | Configs"
 						}
 					],
 					"returns": "OSFramework.OSUI.Patterns.Tabs.ITabs",
@@ -5127,7 +5146,7 @@
 						},
 						{
 							"name": "eventName",
-							"type": "string"
+							"type": "EventName"
 						},
 						{
 							"name": "callback",
@@ -5288,7 +5307,7 @@
 						},
 						{
 							"name": "configs",
-							"type": "string | Record<string, unknown>"
+							"type": "string | Configs"
 						}
 					],
 					"returns": "OSFramework.OSUI.Patterns.TabsContentItem.ITabsContentItem",
@@ -5342,7 +5361,7 @@
 						},
 						{
 							"name": "eventName",
-							"type": "string"
+							"type": "EventName"
 						},
 						{
 							"name": "callback",
@@ -5401,7 +5420,7 @@
 						},
 						{
 							"name": "configs",
-							"type": "string | Record<string, unknown>"
+							"type": "string | Configs"
 						}
 					],
 					"returns": "OSFramework.OSUI.Patterns.TabsHeaderItem.ITabsHeaderItem",
@@ -5488,7 +5507,7 @@
 						},
 						{
 							"name": "eventName",
-							"type": "string"
+							"type": "EventName"
 						},
 						{
 							"name": "callback",
@@ -5571,7 +5590,7 @@
 						},
 						{
 							"name": "configs",
-							"type": "string | Record<string, unknown>"
+							"type": "string | Configs"
 						},
 						{
 							"name": "provider",
@@ -5666,7 +5685,7 @@
 						},
 						{
 							"name": "eventName",
-							"type": "string"
+							"type": "EventName"
 						},
 						{
 							"name": "callback",
@@ -5931,7 +5950,7 @@
 						},
 						{
 							"name": "configs",
-							"type": "string | Record<string, unknown>"
+							"type": "string | Configs"
 						}
 					],
 					"returns": "OSFramework.OSUI.Patterns.Tooltip.ITooltip",
@@ -5996,7 +6015,7 @@
 						},
 						{
 							"name": "eventName",
-							"type": "string"
+							"type": "EventName"
 						},
 						{
 							"name": "callback",
@@ -6090,7 +6109,7 @@
 						},
 						{
 							"name": "configs",
-							"type": "string | Record<string, unknown>"
+							"type": "string | Configs"
 						}
 					],
 					"returns": "OSFramework.OSUI.Patterns.TouchEvents.ITouchEvents",
@@ -6144,7 +6163,7 @@
 						},
 						{
 							"name": "eventName",
-							"type": "string"
+							"type": "EventName"
 						},
 						{
 							"name": "callback",
@@ -6153,6 +6172,25 @@
 					],
 					"returns": "void",
 					"description": "Function to register a callback"
+				},
+				{
+					"name": "ChangeProperty",
+					"params": [
+						{
+							"name": "touchEventsId",
+							"type": "string"
+						},
+						{
+							"name": "propertyName",
+							"type": "string"
+						},
+						{
+							"name": "propertyValue",
+							"type": "unknown"
+						}
+					],
+					"returns": "string",
+					"description": "Function that will change the property of a given TouchEvents pattern."
 				}
 			],
 			"props": {
@@ -6213,7 +6251,7 @@
 						},
 						{
 							"name": "configs",
-							"type": "string | Record<string, unknown>"
+							"type": "string | Configs"
 						}
 					],
 					"returns": "OSFramework.OSUI.Patterns.Video.IVideo",
@@ -6267,7 +6305,7 @@
 						},
 						{
 							"name": "eventName",
-							"type": "string"
+							"type": "EventName"
 						},
 						{
 							"name": "callback",
@@ -6420,7 +6458,7 @@
 						},
 						{
 							"name": "configs",
-							"type": "string | Record<string, unknown>"
+							"type": "string | Configs"
 						}
 					],
 					"returns": "OSFramework.OSUI.Patterns.Wizard.IWizard",
@@ -6474,7 +6512,7 @@
 						},
 						{
 							"name": "eventName",
-							"type": "string"
+							"type": "EventName"
 						},
 						{
 							"name": "callback",
@@ -6557,7 +6595,7 @@
 						},
 						{
 							"name": "configs",
-							"type": "string | Record<string, unknown>"
+							"type": "string | Configs"
 						}
 					],
 					"returns": "OSFramework.OSUI.Patterns.WizardItem.IWizardItem",
@@ -6611,7 +6649,7 @@
 						},
 						{
 							"name": "eventName",
-							"type": "string"
+							"type": "EventName"
 						},
 						{
 							"name": "callback",

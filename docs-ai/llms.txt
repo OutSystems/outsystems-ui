@@ -28,13 +28,13 @@ Scope: OutSystems UI ships a single token-based theme (light, plus the generated
 - SectionIndexItem: 1 props, 0 events, 7 API functions
 - Sidebar: 4 props, 1 events, 11 API functions
 - Submenu: 1 props, 1 events, 12 API functions
-- SwipeEvents: 1 props, 4 events, 8 API functions
+- SwipeEvents: 1 props, 4 events, 9 API functions
 - Tabs: 6 props, 1 events, 9 API functions
 - TabsContentItem: 0 props, 0 events, 7 API functions
 - TabsHeaderItem: 0 props, 0 events, 10 API functions
 - TimePicker: 12 props, 0 events, 20 API functions
 - Tooltip: 3 props, 1 events, 9 API functions
-- TouchEvents: 1 props, 3 events, 6 API functions
+- TouchEvents: 1 props, 3 events, 7 API functions
 - Video: 9 props, 1 events, 11 API functions
 - Wizard: 2 props, 0 events, 7 API functions
 - WizardItem: 2 props, 1 events, 7 API functions

@@ -28,12 +28,12 @@ namespace OutSystems.OSUI.Patterns.WizardItemAPI {
 	 *
 	 * @export
 	 * @param {string} wizardItemId ID of the Pattern that a new instance will be created.
-	 * @param {(string | Record<string, unknown>)} configs Configurations for the Pattern in JSON format.
+	 * @param {(string | Configs)} configs Configurations for the Pattern in JSON format.
 	 * @return {*}  {OSFramework.OSUI.Patterns.WizardItem.IWizardItem}
 	 */
 	export function Create(
 		wizardItemId: string,
-		configs: string | Record<string, unknown>
+		configs: string | Configs
 	): OSFramework.OSUI.Patterns.WizardItem.IWizardItem {
 		if (_wizardItemMap.has(wizardItemId)) {
 			throw new Error(
@@ -123,7 +123,7 @@ namespace OutSystems.OSUI.Patterns.WizardItemAPI {
 	 */
 	export function RegisterCallback(
 		wizardItemId: string,
-		eventName: string,
+		eventName: EventName,
 		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
 	): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({

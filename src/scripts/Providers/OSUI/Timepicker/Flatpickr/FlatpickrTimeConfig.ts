@@ -58,7 +58,7 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 			let _locale: FlatpickrLocale;
 			try {
 				// Set the locale in order to define the calendar language
-				_locale = window.flatpickr.l10ns[this.Lang as FlatpickrLocaleKey];
+				_locale = (window.flatpickr.l10ns as Record<string, FlatpickrLocale>)[this.Lang];
 
 				// Set the calendar first week day
 				_locale.firstDayOfWeek = this.FirstWeekDay;

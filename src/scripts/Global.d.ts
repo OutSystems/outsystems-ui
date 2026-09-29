@@ -129,7 +129,8 @@ declare global {
 	};
 
 	// Orientation type
-	type Orientation = OSFramework.GlobalEnum.Orientation.Vertical | OSFramework.GlobalEnum.Orientation.Horizontal;
+	type Orientation =
+		OSFramework.OSUI.GlobalEnum.Orientation.Vertical | OSFramework.OSUI.GlobalEnum.Orientation.Horizontal;
 
 	// Is Out Of Boundaries Type
 	type OutOfBoundaries = {

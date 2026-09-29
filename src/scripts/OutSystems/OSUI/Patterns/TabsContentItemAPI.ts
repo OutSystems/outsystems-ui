@@ -28,12 +28,12 @@ namespace OutSystems.OSUI.Patterns.TabsContentItemAPI {
 	 *
 	 * @export
 	 * @param {string} tabsContentItemId ID of the Pattern that a new instance will be created.
-	 * @param {(string | Record<string, unknown>)} configs Configurations for the Pattern in JSON format.
+	 * @param {(string | Configs)} configs Configurations for the Pattern in JSON format.
 	 * @return {*}  {OSFramework.OSUI.Patterns.Tabs.ITabs}
 	 */
 	export function Create(
 		tabsContentItemId: string,
-		configs: string | Record<string, unknown>
+		configs: string | Configs
 	): OSFramework.OSUI.Patterns.TabsContentItem.ITabsContentItem {
 		if (_tabsContentItemMap.has(tabsContentItemId)) {
 			throw new Error(
@@ -125,7 +125,7 @@ namespace OutSystems.OSUI.Patterns.TabsContentItemAPI {
 	 */
 	export function RegisterCallback(
 		tabsContentItemId: string,
-		eventName: string,
+		eventName: EventName,
 		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
 	): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({

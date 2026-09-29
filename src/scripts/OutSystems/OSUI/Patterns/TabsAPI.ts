@@ -28,13 +28,10 @@ namespace OutSystems.OSUI.Patterns.TabsAPI {
 	 *
 	 * @export
 	 * @param {string} tabsId ID of the Pattern that a new instance will be created.
-	 * @param {(string | Record<string, unknown>)} configs Configurations for the Pattern in JSON format.
+	 * @param {(string | Configs)} configs Configurations for the Pattern in JSON format.
 	 * @return {*}  {OSFramework.OSUI.Patterns.Tabs.ITabs}
 	 */
-	export function Create(
-		tabsId: string,
-		configs: string | Record<string, unknown>
-	): OSFramework.OSUI.Patterns.Tabs.ITabs {
+	export function Create(tabsId: string, configs: string | Configs): OSFramework.OSUI.Patterns.Tabs.ITabs {
 		if (_tabsMap.has(tabsId)) {
 			throw new Error(
 				`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.Tabs} registered under id: ${tabsId}`
@@ -120,7 +117,7 @@ namespace OutSystems.OSUI.Patterns.TabsAPI {
 	 */
 	export function RegisterCallback(
 		tabsId: string,
-		eventName: string,
+		eventName: EventName,
 		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
 	): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({

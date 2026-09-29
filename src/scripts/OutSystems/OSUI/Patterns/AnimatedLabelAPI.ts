@@ -28,12 +28,12 @@ namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
 	 *
 	 * @export
 	 * @param {string} animatedLabelId ID of the Pattern that a new instance will be created.
-	 * @param {(string | Record<string, unknown>)} configs Configurations for the Pattern in JSON format.
+	 * @param {(string | Configs)} configs Configurations for the Pattern in JSON format.
 	 * @return {*}  {OSFramework.OSUI.Patterns.AnimatedLabel.IAnimatedLabel}
 	 */
 	export function Create(
 		animatedLabelId: string,
-		configs: string | Record<string, unknown>
+		configs: string | Configs
 	): OSFramework.OSUI.Patterns.AnimatedLabel.IAnimatedLabel {
 		if (_animatedLabelsMap.has(animatedLabelId)) {
 			throw new Error(
@@ -125,7 +125,7 @@ namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
 	 */
 	export function RegisterCallback(
 		dropdownId: string,
-		eventName: string,
+		eventName: EventName,
 		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
 	): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({

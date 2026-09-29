@@ -451,7 +451,7 @@ namespace OSFramework.OSUI.Feature.Balloon {
 				if (isUpdate && this._floatingInstance !== undefined) {
 					this._floatingInstance.update(this._floatingOptions);
 				} else {
-					this._floatingInstance = new Utils.FloatingPosition.Factory.NewFloatingPosition(
+					this._floatingInstance = Utils.FloatingPosition.Factory.NewFloatingPosition(
 						this._floatingOptions,
 						Utils.FloatingPosition.Enum.Provider.FloatingUI
 					);

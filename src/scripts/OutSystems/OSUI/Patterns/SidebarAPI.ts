@@ -67,13 +67,10 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	 *
 	 * @export
 	 * @param {string} sidebarId
-	 * @param {(string | Record<string, unknown>)} configs
+	 * @param {(string | Configs)} configs
 	 * @return {*}  {OSFramework.OSUI.Patterns.Sidebar.ISidebar}
 	 */
-	export function Create(
-		sidebarId: string,
-		configs: string | Record<string, unknown>
-	): OSFramework.OSUI.Patterns.Sidebar.ISidebar {
+	export function Create(sidebarId: string, configs: string | Configs): OSFramework.OSUI.Patterns.Sidebar.ISidebar {
 		if (_sidebarMap.has(sidebarId)) {
 			throw new Error(
 				`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.Sidebar} registered under id: ${sidebarId}`
@@ -179,7 +176,7 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	 */
 	export function RegisterCallback(
 		sidebarId: string,
-		eventName: string,
+		eventName: EventName,
 		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
 	): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -198,7 +195,9 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	 * Function that toggle swipes on sidebar.
 	 *
 	 * @export
-	 * @param {string} sidebarId
+	 * @param {string} sidebarId ID of the Sidebar pattern.
+	 * @param {boolean} enableSwipe True to open/close the sidebar with swipe gestures.
+	 * @return {*}  {string} Response object as a JSON string
 	 */
 	export function ToggleGestures(sidebarId: string, enableSwipe: boolean): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({

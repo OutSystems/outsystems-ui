@@ -47,13 +47,10 @@ namespace OutSystems.OSUI.Patterns.TooltipAPI {
 	 *
 	 * @export
 	 * @param {string} tooltipId ID of the Tooltip where the instance will be created.
-	 * @param {(string | Record<string, unknown>)} configs configurations for the Tooltip in JSON format.
+	 * @param {(string | Configs)} configs configurations for the Tooltip in JSON format.
 	 * @return {*}  {OSFramework.OSUI.Patterns.ITooltip}
 	 */
-	export function Create(
-		tooltipId: string,
-		configs: string | Record<string, unknown>
-	): OSFramework.OSUI.Patterns.Tooltip.ITooltip {
+	export function Create(tooltipId: string, configs: string | Configs): OSFramework.OSUI.Patterns.Tooltip.ITooltip {
 		if (_tooltipsMap.has(tooltipId)) {
 			throw new Error(
 				`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.Tooltip} registered under id: ${tooltipId}`
@@ -161,7 +158,7 @@ namespace OutSystems.OSUI.Patterns.TooltipAPI {
 	 */
 	export function RegisterCallback(
 		tooltipId: string,
-		eventName: string,
+		eventName: EventName,
 		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
 	): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({

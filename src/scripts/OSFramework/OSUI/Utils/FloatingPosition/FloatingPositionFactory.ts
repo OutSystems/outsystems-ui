@@ -6,10 +6,10 @@ namespace OSFramework.OSUI.Utils.FloatingPosition.Factory {
 	 * @export
 	 * @param {FloatingPositionConfig} configs
 	 * @param {string} provider
-	 * @return {*}  {void}
+	 * @return {*}  {FloatingPosition}
 	 */
-	export function NewFloatingPosition(configs: FloatingPositionConfig, provider: string): void {
-		let _floatingPositionItem = null;
+	export function NewFloatingPosition(configs: FloatingPositionConfig, provider: string): FloatingPosition {
+		let _floatingPositionItem: FloatingPosition = null;
 
 		switch (provider) {
 			case Enum.Provider.FloatingUI:

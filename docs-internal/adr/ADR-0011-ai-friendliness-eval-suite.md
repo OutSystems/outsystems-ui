@@ -54,6 +54,22 @@ generated manifest scores ≥ 90 % on schema completeness for every pattern).
     manifest with a JSON Schema, `llms.txt`, `llms-components.txt`, `llms-tokens.txt`,
     `llms-patterns.txt`.
 -   `npm test` runs the node:test suites for both.
+-   **Gate and freshness in CI.** `.github/workflows/ai-friendliness.yaml` runs `npm run evals:gate`
+    (fails when the index drops more than one point against the newest `results/history.json`
+    entry) and `npm run docs:ai:check` (fails when `docs-ai/` differs from a fresh generation) on
+    pull requests into `dev` and on demand for any branch. Both commands run locally too.
+-   **Publication.** `postdocs` copies `docs-ai/` into the TypeDoc output, so the documentation
+    deployment serves `/llms.txt`, `/llms-components.txt`, `/llms-tokens.txt`, `/llms-utilities.txt`,
+    `/llms-patterns.txt` and `/osui.components.json` at its root. Serving them from the OutSystems
+    UI website itself is an external change to that application.
+-   **Generated public types.** `scripts/generate-pattern-types.mjs` (`npm run types:generate`)
+    writes `src/scripts/OutSystems/OSUI/Patterns/PatternTypes.ts`: for every pattern a `Configs`
+    type (optional, documented props; provider-typed values degrade to `unknown`) and an `EventName`
+    union with a `string` escape hatch, merged into the pattern's API namespace and used by `Create`
+    and `RegisterCallback`. The file is formatted by the generator and its freshness is asserted by a
+    test, so it cannot drift from the configuration classes.
+-   **Single theme.** Only the token-based theme is in scope; `classic-theme/` is a Storybook
+    comparison artifact and is excluded from evals and docs.
 
 Positive consequences:
 
@@ -63,9 +79,9 @@ Positive consequences:
 
 Negative consequences:
 
--   `docs-ai/` is generated output committed to the repository; it must be regenerated in the PR
-    that changes a pattern (a CI check comparing a fresh generation to the committed files is the
-    natural follow-up).
+-   `docs-ai/` and `PatternTypes.ts` are generated output committed to the repository; they must
+    be regenerated in the PR that changes a pattern (`npm run docs:ai && npm run types:generate`).
+    The CI freshness check and the generated-file test make a stale commit fail.
 -   Scores are proxies; a structural change can move a score without changing agent outcomes.
     The design doc records each formula's rationale so the proxies can be revisited.
 

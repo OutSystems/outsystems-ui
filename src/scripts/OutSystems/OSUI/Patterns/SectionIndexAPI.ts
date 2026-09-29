@@ -28,12 +28,12 @@ namespace OutSystems.OSUI.Patterns.SectionIndexAPI {
 	 *
 	 * @export
 	 * @param {string} sectionIndexId ID of the Pattern that a new instance will be created.
-	 * @param {(string | Record<string, unknown>)} configs Configurations for the Pattern in JSON format.
+	 * @param {(string | Configs)} configs Configurations for the Pattern in JSON format.
 	 * @return {*}  {OSFramework.OSUI.Patterns.SectionIndex.ISectionIndex}
 	 */
 	export function Create(
 		sectionIndexId: string,
-		configs: string | Record<string, unknown>
+		configs: string | Configs
 	): OSFramework.OSUI.Patterns.SectionIndex.ISectionIndex {
 		if (_sectionIndexItemsMap.has(sectionIndexId)) {
 			throw new Error(`There is already an SectionIndex registered under id: ${sectionIndexId}`);
@@ -121,7 +121,7 @@ namespace OutSystems.OSUI.Patterns.SectionIndexAPI {
 	 */
 	export function RegisterCallback(
 		sectionIndexId: string,
-		eventName: string,
+		eventName: EventName,
 		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
 	): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({

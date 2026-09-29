@@ -28,13 +28,10 @@ namespace OutSystems.OSUI.Patterns.RatingAPI {
 	 *
 	 * @export
 	 * @param {string} ratingId ID of the Rating where the instance will be created.
-	 * @param {(string | Record<string, unknown>)} configs configurations for the Rating in JSON format.
+	 * @param {(string | Configs)} configs configurations for the Rating in JSON format.
 	 * @return {*}  {OSFramework.OSUI.Patterns.IRating}
 	 */
-	export function Create(
-		ratingId: string,
-		configs: string | Record<string, unknown>
-	): OSFramework.OSUI.Patterns.Rating.IRating {
+	export function Create(ratingId: string, configs: string | Configs): OSFramework.OSUI.Patterns.Rating.IRating {
 		if (_ratingsMap.has(ratingId)) {
 			throw new Error(
 				`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.Rating} registered under id: ${ratingId}`
@@ -69,11 +66,11 @@ namespace OutSystems.OSUI.Patterns.RatingAPI {
 	}
 
 	/**
-	 *
+	 * Function that will dispose the instance of the given Rating
 	 *
 	 * @export
-	 * @param {string} ratingId
-	 * @return {*}  {*}
+	 * @param {string} ratingId ID of the Rating pattern.
+	 * @return {*}  {string} Response object as a JSON string
 	 */
 	export function Dispose(ratingId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -160,7 +157,7 @@ namespace OutSystems.OSUI.Patterns.RatingAPI {
 	 */
 	export function RegisterCallback(
 		ratingId: string,
-		eventName: string,
+		eventName: EventName,
 		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
 	): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({

@@ -35,7 +35,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		public CalendarMode: OSFramework.OSUI.Patterns.DatePicker.Enum.Mode;
 
 		// Stores the ability to disable a range of dates from datepicker
-		public Disable = [];
+		public Disable: Array<string | Date | ((date: Date) => boolean)> = [];
 
 		// Stores the ability to disable the mobile flatpickr behavior. False is the default provider option
 		public DisableMobile = false;
@@ -82,7 +82,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 			let _locale: FlatpickrLocale = window.flatpickr.l10ns.en;
 			try {
 				// Set the locale in order to define the calendar language
-				_locale = window.flatpickr.l10ns[this.Lang as FlatpickrLocaleKey];
+				_locale = (window.flatpickr.l10ns as Record<string, FlatpickrLocale>)[this.Lang];
 
 				// Set the calendar first week day
 				_locale.firstDayOfWeek = this.FirstWeekDay;

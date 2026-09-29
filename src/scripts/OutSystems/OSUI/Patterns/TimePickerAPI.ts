@@ -66,13 +66,13 @@ namespace OutSystems.OSUI.Patterns.TimePickerAPI {
 	 *
 	 * @export
 	 * @param {string} timePickerId ID of the Pattern that a new instance will be created.
-	 * @param {(string | Record<string, unknown>)} configs Configurations for the Pattern in JSON format.
+	 * @param {(string | Configs)} configs Configurations for the Pattern in JSON format.
 	 * @param {string} provider Set which provider should be used to create the calendar instance.
 	 * @return {*}  {OSFramework.OSUI.Patterns.TimePicker.ITimePicker}
 	 */
 	export function Create(
 		timePickerId: string,
-		configs: string | Record<string, unknown>,
+		configs: string | Configs,
 		provider: string
 	): OSFramework.OSUI.Patterns.TimePicker.ITimePicker {
 		if (_timePickerItemsMap.has(timePickerId)) {
@@ -94,8 +94,9 @@ namespace OutSystems.OSUI.Patterns.TimePickerAPI {
 	 * Function that will disable the native behavior of TimePicker
 	 *
 	 * @export
-	 * @param {string} timePickerId
-	 * @return {*}  {string}
+	 * @param {string} timePickerId ID of the TimePicker pattern.
+	 * @param {boolean} isNative True to use the native (mobile) picker, false to keep the provider dropdown.
+	 * @return {*}  {string} Response object as a JSON string
 	 */
 	export function ToggleNativeBehavior(timePickerId: string, isNative: boolean): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -219,7 +220,7 @@ namespace OutSystems.OSUI.Patterns.TimePickerAPI {
 	 */
 	export function RegisterCallback(
 		timePickerId: string,
-		eventName: string,
+		eventName: EventName,
 		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
 	): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -293,7 +294,7 @@ namespace OutSystems.OSUI.Patterns.TimePickerAPI {
 	/**
 	 * Function that will update the prompt message for a given TimePickerId
 	 *
-	 * @param {string} TimePickerId
+	 * @param {string} timePickerId ID of the TimePicker pattern.
 	 * @param {string} promptMessage The value for the prompt message
 	 * @return {*} Response Object as a JSON String
 	 */

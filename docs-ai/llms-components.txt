@@ -9,13 +9,13 @@ Props (configs JSON, always include "ExtendedClass": ""):
 API (OutSystems.OSUI.Patterns.AccordionAPI):
 - ChangeProperty(accordionId: string, propertyName: string, propertyValue: unknown): string
 - CollapseAllItems(accordionId: string): string
-- Create(accordionId: string, configs: string | object): IAccordion
+- Create(accordionId: string, configs: string | Configs): IAccordion
 - Dispose(accordionId: string): string
 - ExpandAllItems(accordionId: string): string
 - GetAllAccordions(): Array<string>
 - GetAccordionById(accordionId: string): IAccordion
 - Initialize(accordionId: string): IAccordion
-- RegisterCallback(accordionId: string, eventName: string, callback: OSGeneric): string
+- RegisterCallback(accordionId: string, eventName: EventName, callback: OSGeneric): string
 CSS classes: osui-accordion
 CSS API: --osui-accordion-border-radius
 Markup skeleton (from stories/Accordion.stories.ts): <div class="osui-accordion"><div id="" data-block="osui"><div name="" class="osui-accordion-item"><div class="osui-accordion-item__title" id="-title"><div class="osui-accordion-item__icon"></div><div class="osui-accordion-item__icon placeholder-empty"></div><span></span></div><div class="osui-accordion-item__content"><div id="-content"></div></div></div></div></div>
@@ -33,13 +33,13 @@ API (OutSystems.OSUI.Patterns.AccordionItemAPI):
 - AllowTitleEvents(accordionItemId: string): string
 - ChangeProperty(accordionItemId: string, propertyName: string, propertyValue: unknown): string
 - Collapse(accordionItemId: string): string
-- Create(accordionItemId: string, configs: string | object): IAccordionItem
+- Create(accordionItemId: string, configs: string | Configs): IAccordionItem
 - Dispose(accordionItemId: string): string
 - Expand(accordionItemId: string): string
 - GetAllAccordionItems(): Array<string>
 - GetAccordionItemById(accordionItemId: string): IAccordionItem
 - Initialize(accordionItemId: string): IAccordionItem
-- RegisterCallback(accordionItemId: string, eventName: string, callback: OSGeneric): string
+- RegisterCallback(accordionItemId: string, eventName: EventName, callback: OSGeneric): string
 - ToggleClickableZone(accordionItemId: string, isIconOnly: boolean): string
 CSS classes: osui-accordion-item__content--is-animating osui-accordion-item--is-closed osui-accordion-item__content--is-collapsed osui-accordion-item--is-disabled osui-accordion-item__content--is-expanded osui-accordion-item__click_zone osui-accordion-item__content osui-accordion-item__icon osui-accordion-item__icon--caret osui-accordion-item__icon--custom osui-accordion-item__icon--hidden osui-accordion-item__icon--plus-minus osui-accordion-item__title--is-left osui-accordion-item__title--is-right osui-accordion-item--is-open osui-accordion-item__title osui-accordion-item--toggle-with-icon
 
@@ -48,12 +48,12 @@ Lifecycle: Create(id, configs) → RegisterCallback(id, eventName, callback) →
 Props: none besides ExtendedClass
 API (OutSystems.OSUI.Patterns.AnimatedLabelAPI):
 - ChangeProperty(animatedLabelId: string, propertyName: string, propertyValue: unknown): string
-- Create(animatedLabelId: string, configs: string | object): IAnimatedLabel
+- Create(animatedLabelId: string, configs: string | Configs): IAnimatedLabel
 - Dispose(animatedLabelId: string): string
 - GetAllAnimatedLabels(): Array<string>
 - GetAnimatedLabelById(animatedLabelId: string): IAnimatedLabel
 - Initialize(animatedLabelId: string): IAnimatedLabel
-- RegisterCallback(dropdownId: string, eventName: string, callback: OSGeneric): string
+- RegisterCallback(dropdownId: string, eventName: EventName, callback: OSGeneric): string
 - UpdateOnRender(animatedLabelId: string): string
 CSS classes: animated-label-input active animated-label-text animated-label
 CSS API: --osui-animated-label-color --osui-animated-label-border-color --osui-animated-label-hover-border-color --osui-animated-label-focus-border-color --osui-animated-label-focus-ring-color --osui-animated-label-focus-shadow --osui-animated-label-error-color --osui-animated-label-disabled-background --osui-animated-label-disabled-color
@@ -67,14 +67,14 @@ Props (configs JSON, always include "ExtendedClass": ""):
 Events (RegisterCallback eventName): OnToggle
 API (OutSystems.OSUI.Patterns.BottomSheetAPI):
 - ChangeProperty(bottomSheetId: string, propertyName: string, propertyValue: unknown): string
-- Create(bottomSheetId: string, configs: string | object): IBottomSheet
+- Create(bottomSheetId: string, configs: string | Configs): IBottomSheet
 - Dispose(bottomSheetId: string): string
 - GetAllBottomSheetItemsMap(): Array<string>
 - GetBottomSheetItemById(bottomSheetId: string): IBottomSheet
 - Initialize(bottomSheetId: string): IBottomSheet
 - Open(bottomSheetId: string): string
 - Close(bottomSheetId: string): string
-- RegisterCallback(bottomSheetId: string, eventName: string, callback: OSGeneric): string
+- RegisterCallback(bottomSheetId: string, eventName: EventName, callback: OSGeneric): string
 CSS classes: osui-bottom-sheet--has-handler osui-bottom-sheet--has-scroll osui-bottom-sheet--is-open osui-bottom-sheet--is-active osui-bottom-sheet__content osui-bottom-sheet__header osui-bottom-sheet-overlay osui-bottom-sheet__header__top-bar
 CSS API: --osui-bottom-sheet-background --osui-bottom-sheet-shadow --osui-bottom-sheet-padding --osui-bottom-sheet-handler-background --osui-bottom-sheet-handler-width --osui-bottom-sheet-draggable-area --osui-bottom-sheet-transition-function
 Markup skeleton (from stories/BottomSheet.stories.ts): <div><button class="btn btn-primary" data-open type="button">Open bottom sheet</button><div class="osui-bottom-sheet" aria-hidden="true" tabindex="-1"><div class="osui-bottom-sheet__header"><div class="osui-bottom-sheet__header__top-bar"><strong>Sheet title</strong></div></div><div class="osui-bottom-sheet__content"><p>Bottom-sheet content slides up from the bottom edge.</p><button class="btn" data-close type="button">Close</button></div></div></div>
@@ -86,13 +86,13 @@ Props (configs JSON, always include "ExtendedClass": ""):
 - ShowLoadingAndLabel: boolean — Keeps the button label visible next to the spinner; otherwise only the spinner shows while loading.
 API (OutSystems.OSUI.Patterns.ButtonLoadingAPI):
 - ChangeProperty(buttonLoadingId: string, propertyName: string, propertyValue: unknown): string
-- Create(buttonLoadingId: string, configs: string | object): IButtonLoading
+- Create(buttonLoadingId: string, configs: string | Configs): IButtonLoading
 - Dispose(buttonLoadingId: string): string
 - GetAllButtonsLoading(): Array<string>
 - GetButtonLoadingById(buttonLoadingId: string): IButtonLoading
 - Initialize(buttonLoadingId: string): IButtonLoading
 - ForceIsLoadingDisabledState(buttonLoadingId: string, isDisabled: boolean): string
-- RegisterCallback(dropdownId: string, eventName: string, callback: OSGeneric): string
+- RegisterCallback(dropdownId: string, eventName: EventName, callback: OSGeneric): string
 CSS classes: btn osui-btn-loading--is-loading osui-btn-loading-show-spinner osui-btn-loading__spinner-animation
 Markup skeleton (from stories/ButtonLoading.stories.ts): <div class="osui-btn-loading"><button class="btn btn-primary" type="button"><span class="osui-btn-loading__spinner-animation"></span> Save changes </button></div>
 
@@ -114,7 +114,7 @@ API (OutSystems.OSUI.Patterns.CarouselAPI):
 - CarouselEnableOnRender(carouselId: string): string
 - CarouselDisableOnRender(carouselId: string): string
 - ChangeProperty(carouselId: string, propertyName: string, propertyValue: unknown): string
-- Create(carouselId: string, configs: string | object, provider: string): ICarousel
+- Create(carouselId: string, configs: string | Configs, provider: string): ICarousel
 - Dispose(carouselId: string): string
 - GetAllCarouselItemsMap(): Array<string>
 - GetCarouselItemById(carouselId: string): ICarousel
@@ -122,7 +122,7 @@ API (OutSystems.OSUI.Patterns.CarouselAPI):
 - Initialize(carouselId: string): ICarousel
 - Next(carouselId: string): string
 - Previous(carouselId: string): string
-- RegisterCallback(carouselId: string, eventName: string, callback: OSGeneric): string
+- RegisterCallback(carouselId: string, eventName: EventName, callback: OSGeneric): string
 - ToggleDrag(carouselId: string, hasDrag: boolean): string
 - UpdateOnRender(carouselId: string): string
 - SetCarouselDirection(carouselId: string, direction: string): string
@@ -137,7 +137,7 @@ Props (configs JSON, always include "ExtendedClass": ""):
 - AllowInput: boolean = false
 - CalendarMode: 'range' | 'single'
 - DateFormat: string = "Helper.Dates.ServerFormat"
-- Disable: array = "[]"
+- Disable: Array<string | Date | ((date: Date) => boolean)> = "[]"
 - DisableMobile: boolean = false
 - FirstWeekDay: number = 0
 - InitialDate: string | Date
@@ -156,7 +156,7 @@ API (OutSystems.OSUI.Patterns.DatePickerAPI):
 - ChangeProperty(datePickerId: string, propertyName: string, propertyValue: unknown): string
 - Clear(datePickerId: string): string
 - Close(datePickerId: string): string
-- Create(datePickerId: string, configs: string | object, mode: Enum.Mode, provider: string): IDatePicker
+- Create(datePickerId: string, configs: string | Configs, mode: Enum.Mode, provider: string): IDatePicker
 - ToggleNativeBehavior(datePickerId: string, isNative: boolean): string
 - Dispose(datePickerId: string): string
 - GetAllDatePickerItemsMap(): Array<string>
@@ -164,7 +164,7 @@ API (OutSystems.OSUI.Patterns.DatePickerAPI):
 - Initialize(datePickerId: string): IDatePicker
 - Open(datePickerId: string): string
 - OnRender(datePickerId: string): string
-- RegisterCallback(datePickerId: string, eventName: string, callback: OSGeneric): string
+- RegisterCallback(datePickerId: string, eventName: EventName, callback: OSGeneric): string
 - Redraw(datePickerId: string): string
 - SetLanguage(datePickerId: string, isoCode: string): string
 - UpdateInitialDate(datePickerId: string, date1: string, date2: string): string
@@ -197,7 +197,7 @@ API (OutSystems.OSUI.Patterns.DropdownAPI):
 - ChangeProperty(dropdownId: string, propertyName: string, propertyValue: unknown): string
 - Clear(dropdownId: string, silentOnChangedEvent: unknown): string
 - Close(dropdownId: string): string
-- Create(dropdownId: string, mode: string, provider: string, configs: string | object): IDropdown
+- Create(dropdownId: string, mode: string, provider: string, configs: string | Configs): IDropdown
 - Disable(dropdownId: string): string
 - TogglePopup(dropdownId: string, isEnabled: boolean): string
 - Dispose(dropdownId: string): string
@@ -207,7 +207,7 @@ API (OutSystems.OSUI.Patterns.DropdownAPI):
 - GetSelectedValues(dropdownId: string): string
 - Open(dropdownId: string): string
 - Initialize(dropdownId: string): IDropdown
-- RegisterCallback(dropdownId: string, eventName: string, callback: OSGeneric): string
+- RegisterCallback(dropdownId: string, eventName: EventName, callback: OSGeneric): string
 - SetProviderConfigs(dropdownId: string, providerConfigs: DatePickerProviderConfigs): string
 - SetProviderEvent(dropdownId: string, eventName: string, callback: Generic): string
 - UnsetProviderEvent(dropdownId: string, eventId: string): string
@@ -223,12 +223,12 @@ Props (configs JSON, always include "ExtendedClass": ""):
 Events (RegisterCallback eventName): OnSelected
 API (OutSystems.OSUI.Patterns.DropdownServerSideItemAPI):
 - ChangeProperty(dropdownServerSideItemId: string, propertyName: string, propertyValue: unknown): string
-- Create(dropdownServerSideItemId: string, configs: string | object): IDropdownServerSideItem
+- Create(dropdownServerSideItemId: string, configs: string | Configs): IDropdownServerSideItem
 - Dispose(dropdownServerSideItemId: string): string
 - GetAllDropdownServerSideItemItemsMap(): Array<string>
 - GetDropdownServerSideItemItemById(dropdownServerSideItemId: string): IDropdownServerSideItem
 - Initialize(dropdownServerSideItemId: string): IDropdownServerSideItem
-- RegisterCallback(dropdownServerSideItemId: string, eventName: string, callback: OSGeneric): string
+- RegisterCallback(dropdownServerSideItemId: string, eventName: EventName, callback: OSGeneric): string
 CSS classes: osui-dropdown-serverside__balloon osui-dropdown-serverside-item--is-selected
 CSS API: --osui-dropdown-item-background --osui-dropdown-item-color --osui-dropdown-item-hover-bg
 Markup skeleton (from stories/DropdownServerSide.stories.ts): <div><div class="osui-dropdown-serverside"><div class="osui-dropdown-serverside__selected-values-wrapper" tabindex="0"><div class="osui-dropdown-serverside__selected-values"><span class="osui-dropdown-serverside__text"></span></div></div><div class="osui-dropdown-serverside__balloon osui-balloon" data-uniqueid=""><div class="osui-dropdown-serverside__balloon-container"><div class="osui-dropdown-serverside__balloon-search"><input type="text" class="form-control" placeholder="Search…" /></div><div class="osui-dropdown-serverside__balloon-content"></div><div class="osui-dropdown-serverside__ballo…
@@ -241,12 +241,12 @@ Props (configs JSON, always include "ExtendedClass": ""):
 Events (RegisterCallback eventName): OnToggle
 API (OutSystems.OSUI.Patterns.FlipContentAPI):
 - ChangeProperty(flipId: string, propertyName: string, propertyValue: unknown): string
-- Create(flipId: string, configs: string | object): IFlipContent
+- Create(flipId: string, configs: string | Configs): IFlipContent
 - Dispose(flipId: string): string
 - GetAllFlipContent(): Array<string>
 - GetFlipContentById(flipId: string): IFlipContent
 - Initialize(flipId: string): IFlipContent
-- RegisterCallback(flipId: string, eventName: string, callback: OSGeneric): string
+- RegisterCallback(flipId: string, eventName: EventName, callback: OSGeneric): string
 - ShowBackContent(flipId: string): string
 - ShowFrontContent(flipId: string): string
 - ToggleFlipContent(flipId: string): string
@@ -262,12 +262,12 @@ Props (configs JSON, always include "ExtendedClass": ""):
 - RowItemsTablet: number — Number of items per row on tablets.
 API (OutSystems.OSUI.Patterns.GalleryAPI):
 - ChangeProperty(galleryId: string, propertyName: string, propertyValue: unknown): string
-- Create(galleryId: string, configs: string | object): IGallery
+- Create(galleryId: string, configs: string | Configs): IGallery
 - Dispose(galleryId: string): string
 - GetAllGalleries(): Array<string>
 - GetGalleryById(galleryId: string): IGallery
 - Initialize(galleryId: string): IGallery
-- RegisterCallback(dropdownId: string, eventName: string, callback: OSGeneric): string
+- RegisterCallback(dropdownId: string, eventName: EventName, callback: OSGeneric): string
 Markup skeleton (from stories/Gallery.stories.ts): <div class="osui-gallery"><div class="list"></div></div>
 
 ## InlineSvg
@@ -276,12 +276,12 @@ Props (configs JSON, always include "ExtendedClass": ""):
 - SVGCode: string — Raw <svg> markup rendered inline; invalid markup is rejected with a console error.
 API (OutSystems.OSUI.Patterns.InlineSvgAPI):
 - ChangeProperty(inlineSvgId: string, propertyName: string, propertyValue: unknown): string
-- Create(inlineSvgId: string, configs: string | object): IInlineSvg
+- Create(inlineSvgId: string, configs: string | Configs): IInlineSvg
 - Dispose(inlineSvgId: string): string
 - GetAllInlineSvgs(): Array<string>
 - GetInlineSvgById(inlineSvgId: string): IInlineSvg
 - Initialize(inlineSvgId: string): IInlineSvg
-- RegisterCallback(inlineSvgId: string, eventName: string, callback: OSGeneric): string
+- RegisterCallback(inlineSvgId: string, eventName: EventName, callback: OSGeneric): string
 - SetAccessibilityProperties(inlineSvgId: string, a11yOptions: string): string
 CSS classes: osui-inline-svg
 Markup skeleton (from stories/InlineSvg.stories.ts): <div class="osui-inline-svg"></div>
@@ -304,14 +304,14 @@ API (OutSystems.OSUI.Patterns.MonthPickerAPI):
 - ChangeProperty(monthPickerId: string, propertyName: string, propertyValue: unknown): string
 - Clear(monthPickerId: string): string
 - Close(monthPickerId: string): string
-- Create(monthPickerId: string, configs: string | object, provider: string): IMonthPicker
+- Create(monthPickerId: string, configs: string | Configs, provider: string): IMonthPicker
 - Dispose(monthPickerId: string): string
 - GetAllMonthPickerItemsMap(): Array<string>
 - GetMonthPickerItemById(monthPickerId: string): IMonthPicker
 - Initialize(monthPickerId: string): IMonthPicker
 - Open(monthPickerId: string): string
 - OnRender(monthPickerId: string): string
-- RegisterCallback(monthPickerId: string, eventName: string, callback: OSGeneric): string
+- RegisterCallback(monthPickerId: string, eventName: EventName, callback: OSGeneric): string
 - SetProviderConfigs(monthPickerId: string, providerConfigs: MonthPickerProviderConfigs): string
 - SetProviderEvent(monthPickerId: string, eventName: string, callback: Generic): string
 - SetLanguage(monthPickerId: string, isoCode: string): string
@@ -333,13 +333,13 @@ Props (configs JSON, always include "ExtendedClass": ""):
 Events (RegisterCallback eventName): OnToggle
 API (OutSystems.OSUI.Patterns.NotificationAPI):
 - ChangeProperty(notificationId: string, propertyName: string, propertyValue: unknown): string
-- Create(notificationId: string, configs: string | object): INotification
+- Create(notificationId: string, configs: string | Configs): INotification
 - Dispose(notificationId: string): string
 - GetAllNotifications(): Array<string>
 - GetNotificationById(notificationId: string): INotification
 - Hide(notificationId: string): string
 - Initialize(notificationId: string): INotification
-- RegisterCallback(notificationId: string, eventName: string, callback: OSGeneric): string
+- RegisterCallback(notificationId: string, eventName: EventName, callback: OSGeneric): string
 - Show(notificationId: string): string
 CSS classes: osui-notification osui-notification--is-open osui-notification--is-
 CSS API: --osui-notification-background --osui-notification-border-radius --osui-notification-shadow --osui-notification-color --osui-notification-gap --osui-notification-padding --osui-notification-margin
@@ -353,14 +353,14 @@ Props (configs JSON, always include "ExtendedClass": ""):
 Events (RegisterCallback eventName): OnToggle
 API (OutSystems.OSUI.Patterns.OverflowMenuAPI):
 - ChangeProperty(overflowMenuId: string, propertyName: string, propertyValue: unknown): string
-- Create(overflowMenuId: string, configs: string | object): IOverflowMenu
+- Create(overflowMenuId: string, configs: string | Configs): IOverflowMenu
 - Disable(overflowMenuId: string): string
 - Dispose(overflowMenuId: string): string
 - Enable(overflowMenuId: string): string
 - GetAllOverflowMenus(): Array<string>
 - GetOverflowMenuById(overflowMenuId: string): IOverflowMenu
 - Initialize(overflowMenuId: string): IOverflowMenu
-- RegisterCallback(overflowMenuId: string, eventName: string, callback: Generic): string
+- RegisterCallback(overflowMenuId: string, eventName: EventName, callback: Generic): string
 - Open(overflowMenuId: string): string
 - Close(overflowMenuId: string): string
 CSS classes: osui-overflow-menu--is-open osui-overflow-menu__trigger osui-overflow-menu__balloon
@@ -372,12 +372,12 @@ Lifecycle: Create(id, configs) → RegisterCallback(id, eventName, callback) →
 Props: none besides ExtendedClass
 API (OutSystems.OSUI.Patterns.ProgressAPI):
 - ChangeProperty(progressId: string, propertyName: string, propertyValue: unknown): string
-- Create(progressId: string, type: string, configs: string | object): IProgress
+- Create(progressId: string, type: string, configs: string | Configs): IProgress
 - Dispose(progressId: string): string
 - GetAllProgressItemsMap(): Array<string>
 - GetProgressItemById(progressId: string): IProgress
 - Initialize(progressId: string): IProgress
-- RegisterCallback(dropdownId: string, eventName: string, callback: OSGeneric): string
+- RegisterCallback(dropdownId: string, eventName: EventName, callback: OSGeneric): string
 - ResetProgressValue(progressId: string): string
 - SetProgressValue(progressId: string, progress: number): string
 - ProgressApplyGradient(progressId: string, gradientType: string, colors: string): string
@@ -393,7 +393,7 @@ Props (configs JSON, always include "ExtendedClass": ""):
 - IsInterval: boolean
 - MaxValue: number
 - MinValue: number
-- Orientation: unknown = "horizontal"
+- Orientation: 'horizontal' | 'vertical' = "horizontal"
 - rangeSliderMode: 'single' | 'interval'
 - ShowFloatingLabel: boolean = false
 - ShowTickMarks: boolean = false
@@ -404,14 +404,14 @@ Props (configs JSON, always include "ExtendedClass": ""):
 - TickMarksInterval: number = 0
 API (OutSystems.OSUI.Patterns.RangeSliderAPI):
 - ChangeProperty(rangeSliderId: string, propertyName: string, propertyValue: unknown): string
-- Create(rangeSliderId: string, configs: string | object, mode: Enum.Mode, provider: string): IRangeSlider
+- Create(rangeSliderId: string, configs: string | Configs, mode: Enum.Mode, provider: string): IRangeSlider
 - Disable(rangeSliderId: string): string
 - Dispose(rangeSliderId: string): string
 - Enable(rangeSliderId: string): string
 - GetAllRangeSliderItemsMap(): Array<string>
 - GetRangeSliderItemById(rangeSliderId: string): IRangeSlider
 - Initialize(rangeSliderId: string): IRangeSlider
-- RegisterCallback(rangeSliderId: string, eventName: string, callback: OSGeneric): string
+- RegisterCallback(rangeSliderId: string, eventName: EventName, callback: OSGeneric): string
 - SetRangeIntervalChangeOnDragEnd(rangeSliderId: string): string
 - SetRangeSliderValue(rangeSliderId: string, valueFrom: number, valueTo: number): string
 - ResetRangeSliderValue(rangeSliderId: string): string
@@ -430,14 +430,14 @@ Props (configs JSON, always include "ExtendedClass": ""):
 Events (RegisterCallback eventName): OnSelected
 API (OutSystems.OSUI.Patterns.RatingAPI):
 - ChangeProperty(ratingId: string, propertyName: string, propertyValue: unknown): string
-- Create(ratingId: string, configs: string | object): IRating
+- Create(ratingId: string, configs: string | Configs): IRating
 - Disable(ratingId: string): string
 - Dispose(ratingId: string): string
 - Enable(ratingId: string): string
 - GetAllRatings(): Array<string>
 - GetRatingById(ratingId: string): IRating
 - Initialize(ratingId: string): IRating
-- RegisterCallback(ratingId: string, eventName: string, callback: OSGeneric): string
+- RegisterCallback(ratingId: string, eventName: EventName, callback: OSGeneric): string
 CSS classes: icon-states is-edit is-half rating-input rating-item rating- wcag-hide-text
 CSS API: --osui-rating-filled-color --osui-rating-empty-color --osui-rating-disabled-color --osui-rating-disabled-empty-color
 Markup skeleton (from stories/Rating.stories.ts): <div class="icon-states"><div class="rating-item-filled"><i class="icon ph-fill ph-star"></i></div><div class="rating-item-half"><i class="icon ph ph-star-half"></i></div><div class="rating-item-empty"><i class="icon ph ph-star"></i></div></div>
@@ -447,12 +447,12 @@ Lifecycle: Create(id, configs) → RegisterCallback(id, eventName, callback) →
 Props: none besides ExtendedClass
 API (OutSystems.OSUI.Patterns.SearchAPI):
 - ChangeProperty(searchId: string, propertyName: string, propertyValue: unknown): string
-- Create(searchId: string, configs: string | object): ISearch
+- Create(searchId: string, configs: string | Configs): ISearch
 - Dispose(searchId: string): string
 - GetAllSearches(): Array<string>
 - GetSearchById(searchId: string): ISearch
 - Initialize(searchId: string): ISearch
-- RegisterCallback(searchId: string, eventName: string, callback: OSGeneric): string
+- RegisterCallback(searchId: string, eventName: EventName, callback: OSGeneric): string
 Markup skeleton (from stories/Search.stories.ts): <div class="osui-search"><input class="form-control" type="search" placeholder="Search…" data-input /></div>
 
 ## SectionIndex
@@ -462,12 +462,12 @@ Props (configs JSON, always include "ExtendedClass": ""):
 - SmoothScrolling: boolean = false — Animates the scroll to the target section.
 API (OutSystems.OSUI.Patterns.SectionIndexAPI):
 - ChangeProperty(sectionIndexId: string, propertyName: string, propertyValue: unknown): string
-- Create(sectionIndexId: string, configs: string | object): ISectionIndex
+- Create(sectionIndexId: string, configs: string | Configs): ISectionIndex
 - Dispose(sectionIndexId: string): string
 - GetAllSectionIndexItemsMap(): Array<string>
 - GetSectionIndexById(sectionIndexId: string): ISectionIndex
 - Initialize(sectionIndexId: string): ISectionIndex
-- RegisterCallback(sectionIndexId: string, eventName: string, callback: OSGeneric): string
+- RegisterCallback(sectionIndexId: string, eventName: EventName, callback: OSGeneric): string
 CSS classes: osui-section-index-item--is-active osui-section-index--is-sticky osui-section-index
 CSS API: --osui-section-index-border-color --osui-section-index-border-width --osui-section-index-item-color --osui-section-index-item-color-hover --osui-section-index-item-active-color --osui-section-index-item-border-radius --osui-section-index-item-hover-background --osui-section-index-item-press-background --osui-section-index-active-indicator-color --osui-section-index-active-indicator-width --osui-section-index-active-indicator-offset
 Markup skeleton (from stories/SectionIndex.stories.ts): <section id=""><h3></h3><p>Content for .</p></section>
@@ -478,12 +478,12 @@ Props (configs JSON, always include "ExtendedClass": ""):
 - ScrollToWidgetId: string — Id of the widget the page scrolls to when the item is clicked.
 API (OutSystems.OSUI.Patterns.SectionIndexItemAPI):
 - ChangeProperty(sectionIndexItemId: string, propertyName: string, propertyValue: unknown): string
-- Create(sectionIndexItemId: string, configs: string | object): ISectionIndexItem
+- Create(sectionIndexItemId: string, configs: string | Configs): ISectionIndexItem
 - Dispose(sectionIndexItemId: string): string
 - GetAllSectionIndexItemItemsMap(): Array<string>
 - GetSectionIndexItemById(sectionIndexItemId: string): ISectionIndexItem
 - Initialize(sectionIndexItemId: string): ISectionIndexItem
-- RegisterCallback(sectionIndexItemId: string, eventName: string, callback: OSGeneric): string
+- RegisterCallback(sectionIndexItemId: string, eventName: EventName, callback: OSGeneric): string
 CSS classes: osui-section-index-item__target
 Markup skeleton (from stories/SectionIndex.stories.ts): <section id=""><h3></h3><p>Content for .</p></section>
 
@@ -499,13 +499,13 @@ API (OutSystems.OSUI.Patterns.SidebarAPI):
 - ChangeProperty(sidebarId: string, propertyName: string, propertyValue: unknown): string
 - ClickOutsideToClose(sidebarId: string, closeOnOutSIdeClick: boolean): string
 - Close(sidebarId: string): string
-- Create(sidebarId: string, configs: string | object): ISidebar
+- Create(sidebarId: string, configs: string | Configs): ISidebar
 - Dispose(sidebarId: string): string
 - GetAllSidebars(): Array<string>
 - GetSidebarById(sidebarId: string): ISidebar
 - Initialize(sidebarId: string): ISidebar
 - Open(sidebarId: string): string
-- RegisterCallback(sidebarId: string, eventName: string, callback: OSGeneric): string
+- RegisterCallback(sidebarId: string, eventName: EventName, callback: OSGeneric): string
 - ToggleGestures(sidebarId: string, enableSwipe: boolean): string
 CSS classes: osui-sidebar osui-sidebar__content osui-sidebar--is- osui-sidebar--has-overlay osui-sidebar__header osui-sidebar--is-open osui-sidebar__overlay
 CSS API: --osui-sidebar-background --osui-sidebar-color --osui-sidebar-shadow --osui-sidebar-padding-inline --osui-sidebar-padding-block
@@ -521,12 +521,12 @@ API (OutSystems.OSUI.Patterns.SubmenuAPI):
 - ClickOutsideToClose(submenuId: string, clickOutsideToClose: boolean): string
 - Close(submenuId: string): string
 - Open(submenuId: string): string
-- Create(submenuId: string, configs: string | object): ISubmenu
+- Create(submenuId: string, configs: string | Configs): ISubmenu
 - Dispose(submenuId: string): string
 - GetAllSubmenus(): Array<string>
 - GetSubmenuById(submenuId: string): ISubmenu
 - Initialize(submenuId: string): ISubmenu
-- RegisterCallback(submenuId: string, eventName: string, callback: OSGeneric): string
+- RegisterCallback(submenuId: string, eventName: EventName, callback: OSGeneric): string
 - SubmenuOpenOnHover(submenuId: string): string
 - UpdateOnRender(submenuId: string): string
 CSS classes: osui-submenu active osui-submenu__header osui-submenu--is-dropdown osui-submenu--is-hidden osui-submenu--is-hover osui-submenu--is-open osui-submenu__header__icon osui-submenu__header__item osui-submenu__items
@@ -539,14 +539,15 @@ Props (configs JSON, always include "ExtendedClass": ""):
 - WidgetId: string — Id of the element that receives the swipe gesture listeners.
 Events (RegisterCallback eventName): SwipeUp, SwipeDown, SwipeRight, SwipeLeft
 API (OutSystems.OSUI.Patterns.SwipeEventsAPI):
-- Create(swipeEventsId: string, configs: string | object): ISwipeEvents
+- Create(swipeEventsId: string, configs: string | Configs): ISwipeEvents
 - Dispose(swipeEventsId: string): void
 - GetAllSwipeEvents(): Array<string>
 - GetSwipeEventsById(swipeEventsId: string): ISwipeEvents
 - Initialize(swipeEventsId: string): ISwipeEvents
-- RegisterCallback(swipeEventsID: string, eventName: string, callback: OSGeneric): void
+- RegisterCallback(swipeEventsID: string, eventName: EventName, callback: OSGeneric): void
 - GestureMove(swipeEventsId: string, event: TouchEvent): void
 - GestureEnd(swipeEventsId: string, offsetX: number, offsetY: number, timeTaken: number): void
+- ChangeProperty(swipeEventsId: string, propertyName: string, propertyValue: unknown): string
 Markup skeleton (from stories/SwipeEvents.stories.ts): <div><span data-output>Swipe inside this box (touch device / emulation)</span></div>
 
 ## Tabs
@@ -561,12 +562,12 @@ Props (configs JSON, always include "ExtendedClass": ""):
 Events (RegisterCallback eventName): OnChange
 API (OutSystems.OSUI.Patterns.TabsAPI):
 - ChangeProperty(tabsId: string, propertyName: string, propertyValue: unknown): string
-- Create(tabsId: string, configs: string | object): ITabs
+- Create(tabsId: string, configs: string | Configs): ITabs
 - Dispose(tabsId: string): string
 - GetAllTabs(): Array<string>
 - GetTabsById(tabsId: string): ITabs
 - Initialize(tabsId: string): ITabs
-- RegisterCallback(tabsId: string, eventName: string, callback: OSGeneric): string
+- RegisterCallback(tabsId: string, eventName: EventName, callback: OSGeneric): string
 - TabsToggleSwipe(tabsId: string, enableSwipe: boolean): string
 - SetActiveTab(tabsId: string, tabsNumber: number): string
 CSS classes: osui-tabs--is-active osui-tabs--is-vertical osui-tabs--is-horizontal osui-tabs--is-justified osui-tabs--has-auto-height osui-tabs--has-drag osui-tabs--is- osui-tabs osui-tabs__header osui-tabs__content osui-tabs__header-item osui-tabs__content-item osui-tabs__header__indicator
@@ -578,12 +579,12 @@ Lifecycle: Create(id, configs) → RegisterCallback(id, eventName, callback) →
 Props: none besides ExtendedClass
 API (OutSystems.OSUI.Patterns.TabsContentItemAPI):
 - ChangeProperty(tabsContentItemId: string, propertyName: string, propertyValue: unknown): string
-- Create(tabsContentItemId: string, configs: string | object): ITabsContentItem
+- Create(tabsContentItemId: string, configs: string | Configs): ITabsContentItem
 - Dispose(tabsContentItemId: string): string
 - GetAllTabsContentItems(): Array<string>
 - GetTabsContentItemById(tabsContentItemId: string): ITabsContentItem
 - Initialize(tabsContentItemId: string): ITabsContentItem
-- RegisterCallback(tabsContentItemId: string, eventName: string, callback: OSGeneric): string
+- RegisterCallback(tabsContentItemId: string, eventName: EventName, callback: OSGeneric): string
 Markup skeleton (from stories/Tabs.stories.ts): <section class="osui-tabs"><header class="osui-tabs__header"><div class="display-contents placeholder-empty"></div><div class="osui-tabs__header__indicator"></div></header><section class="osui-tabs__content"><div class="display-contents placeholder-empty"></div></section></section>
 
 ## TabsHeaderItem
@@ -591,7 +592,7 @@ Lifecycle: Create(id, configs) → RegisterCallback(id, eventName, callback) →
 Props: none besides ExtendedClass
 API (OutSystems.OSUI.Patterns.TabsHeaderItemAPI):
 - ChangeProperty(tabsHeaderItemId: string, propertyName: string, propertyValue: unknown): string
-- Create(tabsHeaderItemId: string, configs: string | object): ITabsHeaderItem
+- Create(tabsHeaderItemId: string, configs: string | Configs): ITabsHeaderItem
 - DisableTabItem(tabsHeaderItemId: string): string
 - Dispose(tabsHeaderItemId: string): string
 - EnableTabItem(tabsHeaderItemId: string): string
@@ -599,7 +600,7 @@ API (OutSystems.OSUI.Patterns.TabsHeaderItemAPI):
 - GetTabsHeaderItemById(tabsHeaderItemId: string): ITabsHeaderItem
 - UpdateOnRender(tabsHeaderItemId: string): string
 - Initialize(tabsHeaderItemId: string): ITabsHeaderItem
-- RegisterCallback(tabsHeaderItemId: string, eventName: string, callback: OSGeneric): string
+- RegisterCallback(tabsHeaderItemId: string, eventName: EventName, callback: OSGeneric): string
 Markup skeleton (from stories/Tabs.stories.ts): <section class="osui-tabs"><header class="osui-tabs__header"><div class="display-contents placeholder-empty"></div><div class="osui-tabs__header__indicator"></div></header><section class="osui-tabs__content"><div class="display-contents placeholder-empty"></div></section></section>
 
 ## TimePicker
@@ -621,7 +622,7 @@ API (OutSystems.OSUI.Patterns.TimePickerAPI):
 - ChangeProperty(timePickerId: string, propertyName: string, propertyValue: unknown): string
 - Clear(timePickerId: string): string
 - Close(timePickerId: string): string
-- Create(timePickerId: string, configs: string | object, provider: string): ITimePicker
+- Create(timePickerId: string, configs: string | Configs, provider: string): ITimePicker
 - ToggleNativeBehavior(timePickerId: string, isNative: boolean): string
 - Dispose(timePickerId: string): string
 - GetAllTimePickerItemsMap(): Array<string>
@@ -629,7 +630,7 @@ API (OutSystems.OSUI.Patterns.TimePickerAPI):
 - Initialize(timePickerId: string): ITimePicker
 - OnRender(timePickerId: string): string
 - Open(timePickerId: string): string
-- RegisterCallback(timePickerId: string, eventName: string, callback: OSGeneric): string
+- RegisterCallback(timePickerId: string, eventName: EventName, callback: OSGeneric): string
 - Redraw(timePickerId: string): string
 - SetLanguage(timePickerId: string, isoCode: string): string
 - UpdateInitialTime(timePickerId: string, time: string): string
@@ -650,13 +651,13 @@ Events (RegisterCallback eventName): OnToggle
 API (OutSystems.OSUI.Patterns.TooltipAPI):
 - ChangeProperty(tooltipId: string, propertyName: string, propertyValue: unknown): string
 - Close(tooltipId: string): string
-- Create(tooltipId: string, configs: string | object): ITooltip
+- Create(tooltipId: string, configs: string | Configs): ITooltip
 - Dispose(tooltipId: string): string
 - GetAllTooltips(): Array<string>
 - GetTooltipById(tooltipId: string): ITooltip
 - Initialize(tooltipId: string): ITooltip
 - Open(tooltipId: string): string
-- RegisterCallback(tooltipId: string, eventName: string, callback: OSGeneric): string
+- RegisterCallback(tooltipId: string, eventName: EventName, callback: OSGeneric): string
 CSS classes: osui-tooltip__balloon-arrow osui-tooltip__balloon-wrapper__balloon osui-tooltip__balloon-wrapper--is-open osui-tooltip__balloon-wrapper--is-opening osui-tooltip__balloon-wrapper osui-tooltip__content osui-tooltip--is-hover osui-tooltip--is-open osui-tooltip
 CSS API: --osui-tooltip-background --osui-tooltip-color --osui-tooltip-border-radius --osui-tooltip-padding --osui-tooltip-font-size --osui-tooltip-shadow --osui-tooltip-min-height --osui-tooltip-max-width --osui-tooltip-background-color --osui-tooltip-arrow-size --osui-floating-offset
 Markup skeleton (from stories/Tooltip.stories.ts): <div><div><div class="osui-tooltip"><div class="osui-tooltip__content" role="button" tabindex="0"><i class="icon ph ph-question"></i></div><div class="osui-tooltip__balloon-wrapper osui-balloon" role="tooltip"><div class="osui-tooltip__balloon-wrapper__balloon" id="-balloon"> Helpful hint text </div><div class="osui-tooltip__balloon-arrow"></div></div></div><div class="osui-tooltip"><div class="osui-tooltip__content" role="button" tabindex="0"><span class="btn">Hover me</span></div><div class="osui-tooltip__balloon-wrapper osui-balloon" role="tooltip"><div class="osui-tooltip__balloon-wrapper_…
@@ -667,12 +668,13 @@ Props (configs JSON, always include "ExtendedClass": ""):
 - WidgetId: string — Id of the element that receives the touch listeners.
 Events (RegisterCallback eventName): End, Move, Start
 API (OutSystems.OSUI.Patterns.TouchEventsAPI):
-- Create(touchEventsId: string, configs: string | object): ITouchEvents
+- Create(touchEventsId: string, configs: string | Configs): ITouchEvents
 - Dispose(touchEventsId: string): void
 - GetAllTouchEvents(): Array<string>
 - GetTouchEventsById(touchEventsId: string): ITouchEvents
 - Initialize(touchEventsId: string): ITouchEvents
-- RegisterCallback(touchEventsID: string, eventName: string, callback: OSGeneric): void
+- RegisterCallback(touchEventsID: string, eventName: EventName, callback: OSGeneric): void
+- ChangeProperty(touchEventsId: string, propertyName: string, propertyValue: unknown): string
 Markup skeleton (from stories/TouchEvents.stories.ts): <div><span data-output>Touch &amp; drag inside this box (touch device / emulation)</span></div>
 
 ## Video
@@ -690,12 +692,12 @@ Props (configs JSON, always include "ExtendedClass": ""):
 Events (RegisterCallback eventName): StateChanged
 API (OutSystems.OSUI.Patterns.VideoAPI):
 - ChangeProperty(videoId: string, propertyName: string, propertyValue: unknown): string
-- Create(videoId: string, configs: string | object): IVideo
+- Create(videoId: string, configs: string | Configs): IVideo
 - Dispose(videoId: string): string
 - GetAllVideos(): Array<string>
 - GetVideoById(videoId: string): IVideo
 - Initialize(videoId: string): IVideo
-- RegisterCallback(videoId: string, eventName: string, callback: OSGeneric): string
+- RegisterCallback(videoId: string, eventName: EventName, callback: OSGeneric): string
 - GetState(videoId: string): string
 - Pause(videoId: string): string
 - Play(videoId: string): string
@@ -710,12 +712,12 @@ Props (configs JSON, always include "ExtendedClass": ""):
 - StepBehavior: 'Interactive' | 'ProgressOnly' = "Interactive" — Interactive lets users navigate by clicking steps; ProgressOnly makes steps read-only indicators.
 API (OutSystems.OSUI.Patterns.WizardAPI):
 - ChangeProperty(wizardId: string, propertyName: string, propertyValue: unknown): string
-- Create(wizardId: string, configs: string | object): IWizard
+- Create(wizardId: string, configs: string | Configs): IWizard
 - Dispose(wizardId: string): string
 - GetAllWizards(): Array<string>
 - GetWizardById(wizardId: string): IWizard
 - Initialize(wizardId: string): IWizard
-- RegisterCallback(wizardId: string, eventName: string, callback: OSGeneric): string
+- RegisterCallback(wizardId: string, eventName: EventName, callback: OSGeneric): string
 CSS classes: osui-wizard is-horizontal is-interactive is-progress-only is-vertical
 Markup skeleton (from stories/Wizard.stories.ts): <div class="osui-wizard"><div class="list"><div id="" data-block="WizardItem.WizardItem"><div name="" class="osui-wizard-item"><div class="osui-wizard-item-icon-wrapper"><div class="osui-wizard-item-icon"></div></div><div class="osui-wizard-item-label"></div></div></div></div></div>
 
@@ -727,12 +729,12 @@ Props (configs JSON, always include "ExtendedClass": ""):
 Events (RegisterCallback eventName): OnClick
 API (OutSystems.OSUI.Patterns.WizardItemAPI):
 - ChangeProperty(wizardItemId: string, propertyName: string, propertyValue: unknown): string
-- Create(wizardItemId: string, configs: string | object): IWizardItem
+- Create(wizardItemId: string, configs: string | Configs): IWizardItem
 - Dispose(wizardItemId: string): string
 - GetAllWizardItems(): Array<string>
 - GetWizardItemById(wizardItemId: string): IWizardItem
 - Initialize(wizardItemId: string): IWizardItem
-- RegisterCallback(wizardItemId: string, eventName: string, callback: OSGeneric): string
+- RegisterCallback(wizardItemId: string, eventName: EventName, callback: OSGeneric): string
 CSS classes: osui-wizard-item is-reversed is-active is-next is-past osui-wizard-item-label
 CSS API: --osui-wizard-font-size --osui-wizard-icon-background --osui-wizard-icon-border-color --osui-wizard-icon-border-width --osui-wizard-icon-color --osui-wizard-icon-font-weight --osui-wizard-icon-glyph-size --osui-wizard-icon-padding --osui-wizard-icon-size --osui-wizard-item-spacing --osui-wizard-label-color --osui-wizard-label-line-height --osui-wizard-active-color --osui-wizard-active-icon-color --osui-wizard-next-icon-color --osui-wizard-past-background --osui-wizard-past-color --osui-wizard-connector-color --osui-wizard-connector-radius --osui-wizard-connector-size --osui-wizard-focus-halo-color --osui-wizard-focus-halo-width
 Markup skeleton (from stories/Wizard.stories.ts): <div class="osui-wizard"><div class="list"><div id="" data-block="WizardItem.WizardItem"><div name="" class="osui-wizard-item"><div class="osui-wizard-item-icon-wrapper"><div class="osui-wizard-item-icon"></div></div><div class="osui-wizard-item-label"></div></div></div></div></div>

@@ -28,13 +28,14 @@ namespace OutSystems.OSUI.Patterns.ProgressAPI {
 	 *
 	 * @export
 	 * @param {string} progressId ID of the Pattern that a new instance will be created.
-	 * @param {(string | Record<string, unknown>)} configs Configurations for the Pattern in JSON format.
+	 * @param {string} type Progress type: Bar or Circle.
+	 * @param {(string | Configs)} configs Configurations for the Pattern in JSON format.
 	 * @return {*}  {OSFramework.OSUI.Patterns.Progress.IProgress}
 	 */
 	export function Create(
 		progressId: string,
 		type: string,
-		configs: string | Record<string, unknown>
+		configs: string | Configs
 	): OSFramework.OSUI.Patterns.Progress.IProgress {
 		if (_progressItemsMap.has(progressId)) {
 			throw new Error(`There is already an ProgressItem registered under id: ${progressId}`);
@@ -119,7 +120,7 @@ namespace OutSystems.OSUI.Patterns.ProgressAPI {
 	 */
 	export function RegisterCallback(
 		dropdownId: string,
-		eventName: string,
+		eventName: EventName,
 		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
 	): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -155,7 +156,7 @@ namespace OutSystems.OSUI.Patterns.ProgressAPI {
 	/**
 	 * Function that sets the value of the progress circle or the progress bar
 	 * @export
-	 * @param {string} widgetId of the progress circle or progress bar that will have its value set
+	 * @param {string} progressId ID of the progress circle or progress bar that will have its value set
 	 * @param {number} progress value of the circle
 	 */
 	export function SetProgressValue(progressId: string, progress: number): string {

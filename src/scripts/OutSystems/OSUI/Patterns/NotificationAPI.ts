@@ -27,12 +27,12 @@ namespace OutSystems.OSUI.Patterns.NotificationAPI {
 	 *
 	 * @export
 	 * @param {string} notificationId
-	 * @param {(string | Record<string, unknown>)} configs
+	 * @param {(string | Configs)} configs
 	 * @return {*}  {OSFramework.OSUI.Patterns.Notification.INotification}
 	 */
 	export function Create(
 		notificationId: string,
-		configs: string | Record<string, unknown>
+		configs: string | Configs
 	): OSFramework.OSUI.Patterns.Notification.INotification {
 		if (_notificationMap.has(notificationId)) {
 			throw new Error(
@@ -139,7 +139,7 @@ namespace OutSystems.OSUI.Patterns.NotificationAPI {
 	 */
 	export function RegisterCallback(
 		notificationId: string,
-		eventName: string,
+		eventName: EventName,
 		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
 	): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({

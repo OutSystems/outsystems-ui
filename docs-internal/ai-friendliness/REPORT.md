@@ -47,19 +47,19 @@ repeatable evals, ran them against this repository, and drove a behavior-preserv
 
 ### Final scores
 
-| ID | Eval | Baseline | Final (loop-3) | Δ |
+| ID | Eval | Baseline | Final (loop-4) | Δ |
 | --- | --- | ---: | ---: | ---: |
 | E01 | Context Token Cost | 64.9 | 99.9 | +35.0 |
-| E02 | Prop Surface & Typing Precision | 94.6 | 94.6 | 0.0 |
+| E02 | Prop Surface & Typing Precision | 94.6 | 94.7 | +0.1 |
 | E03 | Machine-Readable Schema Completeness | 0.0 | 100.0 | +100.0 |
-| E04 | Type Strictness | 83.2 | 99.3 | +16.1 |
-| E05 | Documentation Coverage | 35.8 | 97.6 | +61.8 |
-| E06 | Public API Shape Consistency | 97.7 | 97.8 | +0.1 |
+| E04 | Type Strictness | 83.2 | 100.0 | +16.8 |
+| E05 | Documentation Coverage | 35.8 | 100.0 | +64.2 |
+| E06 | Public API Shape Consistency | 97.7 | 98.7 | +1.0 |
 | E07 | Markup Contract Depth | 75.1 | 75.1 | 0.0 (structural) |
 | E08 | Design Token Semantics | 72.3 | 72.3 | 0.0 (structural) |
 | E09 | CSS Selector Complexity | 79.9 | 79.9 | 0.0 (structural) |
-| E10 | Composition Model & Standards Alignment | 39.4 | 52.4 | +13.0 |
-| — | **AI-Friendliness Index** | **64.3** | **86.9** | **+22.6** |
+| E10 | Composition Model & Standards Alignment | 39.4 | 60.8 | +21.4 |
+| — | **AI-Friendliness Index** | **64.3** | **88.1** | **+23.8** |
 
 All applied changes compile for both platform targets with zero lint warnings, leave the emitted
 CSS untouched and change no runtime behavior (details in §5).
@@ -115,23 +115,25 @@ npm run evals:test                       # 46 unit tests for the suite itself
 
 ## 3. Eval Progression & Tracking Matrix
 
-| ID | baseline<br>`568ddb574` | loop-1<br>`3988bb953` | loop-2<br>`729fe256d` | loop-3<br>`1c54735f0` | Total Δ | What moved it |
-| --- | ---: | ---: | ---: | ---: | ---: | --- |
-| E01 | 64.9 | 100.0 | 100.0 | 99.9 | +35.0 | complete manifest cards (mean 2,656 → 435 tokens) |
-| E02 | 94.6 | 94.6 | 94.6 | 94.6 | 0.0 | stringly-typed enums need a behavior-affecting change (§5 B-9) |
-| E03 | 0.0 | 100.0 | 100.0 | 100.0 | +100.0 | `docs-ai/osui.components.json` generated from source |
-| E04 | 83.2 | 83.2 | 99.2 | 99.3 | +16.1 | 72 → 8 implicit-any, 4 → 0 suppressions |
-| E05 | 35.8 | 85.8 | 85.8 | 97.6 | +61.8 | llms.txt tiers (loop-1), 111 prop descriptions (loop-3) |
-| E06 | 97.7 | 97.7 | 97.8 | 97.8 | +0.1 | 6 parameters renamed to camelCase |
-| E07 | 75.1 | 75.1 | 75.1 | 75.1 | 0.0 | structural (DOM contracts) |
-| E08 | 72.3 | 72.3 | 72.3 | 72.3 | 0.0 | structural (knob routing); literal floor reached |
-| E09 | 79.9 | 79.9 | 79.9 | 79.9 | 0.0 | structural (cascade) |
-| E10 | 39.4 | 39.4 | 52.4 | 52.4 | +13.0 | `Create` accepts a typed object |
-| **Index** | **64.3** | **82.8** | **85.7** | **86.9** | **+22.6** | |
+| ID | baseline<br>`568ddb574` | loop-1<br>`3988bb953` | loop-2<br>`729fe256d` | loop-3<br>`1c54735f0` | loop-4<br>`69815c54d` | Total Δ | What moved it |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
+| E01 | 64.9 | 100.0 | 100.0 | 99.9 | 99.9 | +35.0 | complete manifest cards (mean 2,656 → 438 tokens) |
+| E02 | 94.6 | 94.6 | 94.6 | 94.6 | 94.7 | +0.1 | `Orientation` alias fixed; stringly-typed enums need a behavior-affecting change (§5 B-9) |
+| E03 | 0.0 | 100.0 | 100.0 | 100.0 | 100.0 | +100.0 | `docs-ai/osui.components.json` generated from source |
+| E04 | 83.2 | 83.2 | 99.2 | 99.3 | 100.0 | +16.8 | 72 → 0 implicit-any, 4 → 0 suppressions, `noImplicitAny` enabled |
+| E05 | 35.8 | 85.8 | 85.8 | 97.6 | 100.0 | +64.2 | llms.txt tiers (loop-1), 111 prop descriptions (loop-3), 24 JSDoc fixes (loop-4) |
+| E06 | 97.7 | 97.7 | 97.8 | 97.8 | 98.7 | +1.0 | camelCase params; `ChangeProperty` added to SwipeEvents/TouchEvents |
+| E07 | 75.1 | 75.1 | 75.1 | 75.1 | 75.1 | 0.0 | structural (DOM contracts) |
+| E08 | 72.3 | 72.3 | 72.3 | 72.3 | 72.3 | 0.0 | structural (knob routing); literal floor reached |
+| E09 | 79.9 | 79.9 | 79.9 | 79.9 | 79.9 | 0.0 | structural (cascade) |
+| E10 | 39.4 | 39.4 | 52.4 | 52.4 | 60.8 | +21.4 | `Create` accepts a typed object; generated `Configs`/`EventName` types |
+| **Index** | **64.3** | **82.8** | **85.7** | **86.9** | **88.1** | **+23.8** | |
 
-Iteration deltas: loop-1 **+18.5**, loop-2 **+2.9**, loop-3 **+1.2** → the movable evals have
-stabilized (every one ≥ 94 except E10, whose remaining terms are structural). The loop stopped here
-by the protocol in the design doc.
+Iteration deltas: loop-1 **+18.5**, loop-2 **+2.9**, loop-3 **+1.2**, loop-4 **+1.2**. Every movable
+eval is now ≥ 94.7; E06's last point and E10's remaining 39 points are the documented breaking
+changes (§5.2). The loop stopped here by the protocol in the design doc; from now on the CI gate
+(`npm run evals:gate`) keeps the index from regressing and `npm run docs:ai:check` keeps the
+generated docs fresh.
 
 Unmeasured pairs per run: 29 (22 CSS partials without a story for E07 — layout/menu plumbing —,
 6 partials with no themeable declarations for E08, 1 empty partial for E09). They are listed with
@@ -178,11 +180,10 @@ reasons in each results file.
   the runtime handles two or three values. The manifest now says so explicitly
   (`hint: "default from GlobalEnum.Direction; not validated — any string is accepted"`) instead of
   fabricating an allowed-list.
-- **Con — a type that resolves to `any`:** `RangeSlider.Orientation: Orientation` uses the alias
-  in `Global.d.ts:132`, which points at `OSFramework.GlobalEnum.Orientation` — a namespace path
-  that does not exist (`.OSUI` is missing). `skipLibCheck` hides the error and the checker types
-  the prop as `any`. Fixing the alias is type-only but cascades into enum-vs-string-literal
-  assignability in the noUiSlider wrapper, so it is a P0 item (B-10), not a loop edit.
+- **Con — a type that resolved to `any` (fixed in loop-4):** `RangeSlider.Orientation: Orientation`
+  used the alias in `Global.d.ts:132`, which pointed at `OSFramework.GlobalEnum.Orientation` — a
+  namespace path that does not exist (`.OSUI` is missing). `skipLibCheck` hid the error and the
+  checker typed the prop as `any`. The alias now points at the real enum (S-10).
 - **Con — no schema before this branch:** TypeDoc HTML exists for humans; nothing existed for
   machines. `docs-ai/osui.components.json` (+ JSON Schema) now covers lifecycle, API signatures,
   typed props with defaults/allowed values/descriptions, events, CSS classes, `--osui-*` knobs and
@@ -192,29 +193,32 @@ reasons in each results file.
 
 - **Pro:** zero explicit `any`, every public function declares a return type, error codes are
   constants, and the public envelope `{ code, isSuccess, message, value? }` is uniform.
-- **Con:** `strict` is off; the baseline had 72 `noImplicitAny` findings (38 of them string-indexed
-  access into `{}`/`JSON`-typed objects) and 4 `@ts-expect-error`. After loop-2, 8 remain
-  (FloatingUI middleware array 3, Flatpickr `Disable` list 2, Balloon factory `new` 1, two
-  `l10ns[Lang]` reads) and 0 suppressions. Turning `noImplicitAny` on in `tsconfig.json` is now a
-  small, safe step.
+- **Con (fixed):** `strict` is off; the baseline had 72 `noImplicitAny` findings (38 of them
+  string-indexed access into `{}`/`JSON`-typed objects) and 4 `@ts-expect-error`. Loop-2 removed
+  the suppressions and 64 findings; loop-4 annotated the last 8 and enabled `noImplicitAny: true`
+  in `tsconfig.json`. Enabling it also surfaced three latent type errors that the Gulp build never
+  reports (it emits despite diagnostics): an evolving-`let` in `AnimateOnDrag`, a header-item union
+  in `Tabs`, and a `Position`→`FloatingPosition` assignment in `Tooltip`; all three received
+  explicit annotations. `strictNullChecks` remains off and is the next step of this kind.
 
 ### 4.4 Agent documentation (E05)
 
 - **Pro:** 322/346 API functions carry JSDoc with descriptions and `@param`s; the repository's
   rules files are already written for AI-assisted work.
-- **Con (fixed):** 111/141 config props had no comment and no `llms.txt` existed. Remaining gaps:
-  24 API functions without a complete JSDoc (ButtonLoading's whole API, `Create` in Progress,
-  Carousel, Dropdown, `SetProviderConfigs`, `ToggleNativeBehavior`, `GestureMove/End`, …).
+- **Con (fixed):** 111/141 config props had no comment and no `llms.txt` existed; 24 API functions
+  had incomplete JSDoc (mostly `@param` names that no longer matched the parameter — `ButtonLoadingId`
+  vs `buttonLoadingId`, `accodrionItemId` — plus missing parameters on `Create` for Carousel,
+  Dropdown and Progress). All are complete after loop-4.
 
 ### 4.5 Snippet predictability (E06)
 
 - **Pro:** 31 of 33 APIs expose the full canonical set; 340 of 346 functions wrap
   `CreateApiResponse`; no inline error-code literals.
-- **Con:** `SwipeEvents` and `TouchEvents` have no `ChangeProperty` although they have a config
-  prop (`WidgetId`), and their `Dispose`/`RegisterCallback`/`GestureMove`/`GestureEnd` return
-  `void` instead of the envelope — an agent that pattern-matches the other 31 APIs will be wrong
-  here. Wrapping them changes error propagation (exceptions would be caught and serialized), so it
-  is documented (§5 B-3), not applied.
+- **Con:** `SwipeEvents` and `TouchEvents` had no `ChangeProperty` although they have a config
+  prop (`WidgetId`) — added in loop-4 — and their `Dispose`/`RegisterCallback`/`GestureMove`/
+  `GestureEnd` still return `void` instead of the envelope; an agent that pattern-matches the other
+  31 APIs will be wrong here. Wrapping them changes error propagation (exceptions would be caught and
+  serialized), so it is documented (§5 B-3), not applied.
 
 ### 4.6 Anatomy & composition (E07) — Block/Widget cross-reference
 
@@ -293,6 +297,10 @@ the "billions of tokens of React/HTML/Tailwind" the research credits for high pa
 | S-5 | `1c54735f0` | camelCase parameters: `GetAccordionById(accordionId)`, `ToggleNativeBehavior(isNative)`, `SetEditableInput(isEditable)` | JavaScript callers pass positionally |
 | S-6 | `6e5b0649a` | 111 config props documented with a verified `//` line | `removeComments: true` — comments never reach the bundle |
 | S-7 | `091ca001c`…`3988bb953` | the eval suite, its tests, `npm run evals`, `gpt-tokenizer` devDependency | tooling only; `.mjs` is outside `tsconfig include` and `eslint --ext .ts` |
+| S-8 | `69815c54d` | CI gate (`evals:gate`, index drop > 1 fails), docs freshness (`docs:ai:check`), `.github/workflows/ai-friendliness.yaml` (PRs into `dev` + manual run on any branch), `postdocs` publishes `docs-ai/` at the documentation-site root | tooling only |
+| S-9 | loop-4 | generated `PatternTypes.ts`: per pattern `Configs` (typed optional props with descriptions) and `EventName` (event union + `string` escape hatch); `Create(id, configs: string \| Configs)`, `RegisterCallback(id, eventName: EventName, cb)` | types are erased; relative to `dev` the object form is new, so nothing that compiled before stops compiling; `npm run types:generate`, freshness asserted by a test |
+| S-10 | loop-4 | `Orientation` alias in `Global.d.ts` points at `OSFramework.OSUI.GlobalEnum`; last 8 implicit-any sites annotated; `noImplicitAny: true` in `tsconfig.json`; factory `NewFloatingPosition` declares its real return type and is called without `new` | type-only; calling a factory that returns an object with or without `new` yields the same object |
+| S-11 | loop-4 | 24 API JSDoc blocks completed (param names, missing params, descriptions); `ChangeProperty` added to SwipeEvents and TouchEvents with new error codes | docs and an additive function; existing functions untouched |
 
 **S-2 — BEFORE / AFTER**
 
@@ -346,16 +354,16 @@ public StartingTab: number;
 
 | # | Change | Behavioral impact | Evals affected |
 | --- | --- | --- | --- |
-| B-1 | Per-pattern typed config interfaces (`Create(id, configs: string \| AccordionConfigInput)`) | type-level only at runtime, but narrows the `.d.ts` contract for TypeScript consumers (extra keys become errors) — ship as an additive overload first | E10 (+), E02 |
-| B-2 | Typed event names: `RegisterCallback(id, eventName: 'OnToggle', cb)` | same as B-1; additive overload recommended | E10 +10/pattern |
-| B-3 | `SwipeEvents`/`TouchEvents`: add `ChangeProperty`, wrap `Dispose`/`RegisterCallback`/`GestureMove`/`GestureEnd` in `CreateApiResponse` | exceptions currently propagate to the caller; the envelope would catch and serialize them; return type `void` → `string` | E06 → 100 |
+| B-1 | ~~Per-pattern typed config interfaces~~ — **applied as S-9** (`string \| Configs`, additive relative to `dev`) | — | — |
+| B-2 | ~~Typed event names~~ — **applied as S-9** (`EventName` union with a `string` escape hatch, so unknown names keep working) | — | — |
+| B-3 | `SwipeEvents`/`TouchEvents`: wrap `Dispose`/`RegisterCallback`/`GestureMove`/`GestureEnd` in `CreateApiResponse` (`ChangeProperty` was added in S-11) | exceptions currently propagate to the caller; the envelope would catch and serialize them; return type `void` → `string` | E06 → 100 |
 | B-4 | ES-module facade / npm package with named exports (`import { Accordion } from '@outsystems/ui'`) | distribution model change: bundle no longer a single AMD file; requires a compatibility shim for `OutSystems.OSUI.*` | E10 +15/pattern |
 | B-5 | Declarative auto-instantiation from data attributes (`<details data-osui="accordion-item">`) replacing the `name`/`id`/`[data-block]` + part-class contract | DOM contract change for every block; runtime would synthesize the current structure | E07, E10 |
 | B-6 | Flatten deep selectors into state classes on the element they style | cascade order changes; every override written against the current specificity breaks | E09 |
 | B-7 | Route the 1,829 direct token reads through `--osui-*` knobs (`form`, `checkbox`, `bulk-actions`, `scrollable-area`, Dropdown first) | additive when the default equals the current value, **except** for portaled elements (balloons, bottom sheets) where an inherited knob is undefined — needs per-component review | E08 routed 18 % → ≥ 60 % |
 | B-8 | Remove the 10 `!important`s | cascade change | E08 |
 | B-9 | Turn stringly-typed enums into validated enum types (`AccordionItem.Icon: Enum.IconType` with `validateInRange`) | invalid values that today reach the DOM as a class name would fall back to the default | E02 → ~99 |
-| B-10 | Fix the `Orientation` alias in `Global.d.ts` (`OSFramework.GlobalEnum.Orientation` → `OSFramework.OSUI.GlobalEnum.Orientation`) | type-only, but the now-real enum type no longer assigns to noUiSlider's `'horizontal' \| 'vertical'` literals — the wrapper needs a mapping or cast; verify the `.d.ts` diff | E02 |
+| B-10 | ~~Fix the `Orientation` alias~~ — **applied as S-10**; the feared enum-vs-literal cascade did not materialize (`tsc --noEmit` clean) | — | — |
 
 **B-3 — BEFORE / AFTER (illustrative)**
 
@@ -437,11 +445,11 @@ export function Dispose(swipeEventsId: string): string {
 
 | Priority | Action | Eval target | Effort |
 | --- | --- | --- | --- |
-| P0 | Run `npm run evals` and a `docs:ai` freshness check (regenerate and diff) in the PR pipeline; fail on index regression > 1 point | keeps 86.9 | S |
-| P0 | Publish `docs-ai/` at `/llms.txt`, `/llms-components.txt`, `/llms-tokens.txt`, `/llms-patterns.txt` on the OutSystems UI site, and expose the manifest through an MCP server (`list_components`, `get_component`, `search_css_api`) | research criteria 5, 6 | S–M |
-| P0 | Typed config interfaces and event-name unions as **additive overloads** (B-1, B-2); generate them from the manifest so they cannot drift | E10 → ~75, E02 | M |
-| P0 | Finish `noImplicitAny` (8 findings), fix `RangeSlider.Orientation` (B-10), enable `noImplicitAny: true` in `tsconfig.json` | E04 → 100 | S |
-| P1 | Complete the 24 API JSDoc gaps; add `ChangeProperty` parity and envelopes to `SwipeEvents`/`TouchEvents` (B-3, with the error-propagation change reviewed) | E05 → 100, E06 → 100 | S |
+| P0 ✅ | CI gate and docs freshness: `.github/workflows/ai-friendliness.yaml` runs `evals:gate` (fail on index drop > 1) and `docs:ai:check` on PRs into `dev` and on demand for any branch (S-8) | keeps 88.1 | done |
+| P0 ◐ | Publish `docs-ai/`: `postdocs` copies it into the TypeDoc output, so the documentation deployment serves `/llms.txt`, `/llms-components.txt`, `/llms-tokens.txt`, `/llms-utilities.txt`, `/llms-patterns.txt`, `/osui.components.json` (S-8). **Still external:** the OutSystems UI website is an OutSystems application; serving the same files at its root needs a static-resource change in that app, and the MCP server (`list_components`, `get_component`, `search_css_api`) is not started | research criteria 5, 6 | S–M |
+| P0 ✅ | Typed `Configs` and `EventName` generated from the source (S-9) | E10 52.4 → 60.8, E02 | done |
+| P0 ✅ | `noImplicitAny` finished and enabled; `Orientation` alias fixed (S-10) | E04 → 100 | done |
+| P1 ◐ | 24 API JSDoc gaps completed; `ChangeProperty` added to `SwipeEvents`/`TouchEvents` (S-11). **Open:** the envelope on their existing functions (B-3) changes error propagation and stays documented | E05 → 100 ✅, E06 → 98.7 | S |
 | P1 | Knob routing program, one component per PR, starting with `form`, `checkbox`, `bulk-actions`, `scrollable-area`, Dropdown (B-7); add the routed ratio to the CSS-API Storybook page | E08 → ≥ 85 | M–L |
 | P1 | Cascade flattening for Rating, Accordion, AnimatedLabel, Form, Columns, menu layouts (B-6); remove the 10 `!important`s (B-8) | E09 → ≥ 90 | M |
 | P1 | Validated enum types for the 7 stringly-typed props (B-9), released as a minor with the fallback documented | E02 → ~99 | S |

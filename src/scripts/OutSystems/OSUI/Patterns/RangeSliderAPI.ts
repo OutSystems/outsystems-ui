@@ -28,14 +28,14 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	 *
 	 * @export
 	 * @param {string} rangeSliderId
-	 * @param {(string | Record<string, unknown>)} configs
+	 * @param {(string | Configs)} configs
 	 * @param {OSFramework.OSUI.Patterns.RangeSlider.Enum.Mode} mode
 	 * @param {string} provider
 	 * @return {*}  {OSFramework.OSUI.Patterns.RangeSlider.IRangeSlider}
 	 */
 	export function Create(
 		rangeSliderId: string,
-		configs: string | Record<string, unknown>,
+		configs: string | Configs,
 		mode: OSFramework.OSUI.Patterns.RangeSlider.Enum.Mode,
 		provider: string
 	): OSFramework.OSUI.Patterns.RangeSlider.IRangeSlider {
@@ -166,7 +166,7 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	 */
 	export function RegisterCallback(
 		rangeSliderId: string,
-		eventName: string,
+		eventName: EventName,
 		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
 	): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -204,8 +204,10 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	 * Function to set the Range Slider value
 	 *
 	 * @export
-	 * @param {string} rangeSliderId
-	 * @param {number} value
+	 * @param {string} rangeSliderId ID of the RangeSlider pattern.
+	 * @param {number} valueFrom Value of the (lower) handle.
+	 * @param {number} [valueTo] Value of the upper handle (interval mode).
+	 * @return {*}  {string} Response object as a JSON string
 	 */
 	export function SetRangeSliderValue(rangeSliderId: string, valueFrom: number, valueTo?: number): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -242,7 +244,7 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	 *
 	 * @export
 	 * @param {string} rangeSliderId
-	 * @param {RangeSliderProviderConfigs} providerConfigs
+	 * @param {RangeSliderProviderConfigs} configs Provider (noUiSlider) options to merge into the instance.
 	 * @return {*}  {string}
 	 */
 	export function SetProviderConfigs(rangeSliderId: string, configs: RangeSliderProviderConfigs): string {

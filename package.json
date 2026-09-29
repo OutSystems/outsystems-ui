@@ -28,6 +28,7 @@
 		"docs:tokens": "node scripts/generate-token-data.mjs",
 		"docs:ai": "node scripts/generate-ai-docs.mjs",
 		"docs:ai:check": "node scripts/check-ai-docs-fresh.mjs",
+		"types:generate": "node scripts/generate-pattern-types.mjs",
 		"evals": "node evals/ai-friendliness/run.mjs",
 		"evals:gate": "node evals/ai-friendliness/tools/gate.mjs",
 		"evals:test": "node --test \"evals/ai-friendliness/tests/*.test.mjs\"",

@@ -67,12 +67,12 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 	 *
 	 * @export
 	 * @param {string} accordionItemId ID of the Pattern that a new instance will be created.
-	 * @param {(string | Record<string, unknown>)} configs Configurations for the Pattern in JSON format.
+	 * @param {(string | Configs)} configs Configurations for the Pattern in JSON format.
 	 * @return {*}  {OSFramework.OSUI.Patterns.AccordrionItem.IAccordionItem}
 	 */
 	export function Create(
 		accordionItemId: string,
-		configs: string | Record<string, unknown>
+		configs: string | Configs
 	): OSFramework.OSUI.Patterns.AccordionItem.IAccordionItem {
 		if (_accordionItemMap.has(accordionItemId)) {
 			throw new Error(
@@ -144,7 +144,7 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 	 * Function that gets the instance of an Accordion Item by a given ID.
 	 *
 	 * @export
-	 * @param {string} accodrionItemId ID of the AccordionItem that will be looked for.
+	 * @param {string} accordionItemId ID of the AccordionItem that will be looked for.
 	 * @return {*}  {OSFramework.OSUI.Patterns.AccordionItem.IAccordionItem}
 	 */
 	export function GetAccordionItemById(
@@ -183,7 +183,7 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 	 */
 	export function RegisterCallback(
 		accordionItemId: string,
-		eventName: string,
+		eventName: EventName,
 		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
 	): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({

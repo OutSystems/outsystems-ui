@@ -67,12 +67,12 @@ namespace OutSystems.OSUI.Patterns.MonthPickerAPI {
 	 * @export
 	 * @param {string} monthPickerId ID of the Pattern that a new instance will be created.
 	 * @param {string} provider Set which provider should be used to create the monthPicker instance.
-	 * @param {(string | Record<string, unknown>)} configs Configurations for the Pattern in JSON format.
+	 * @param {(string | Configs)} configs Configurations for the Pattern in JSON format.
 	 * @return {*}  {OSFramework.OSUI.Patterns.MonthPicker.IMonthPicker}
 	 */
 	export function Create(
 		monthPickerId: string,
-		configs: string | Record<string, unknown>,
+		configs: string | Configs,
 		provider: string
 	): OSFramework.OSUI.Patterns.MonthPicker.IMonthPicker {
 		if (_monthPickerItemsMap.has(monthPickerId)) {
@@ -200,7 +200,7 @@ namespace OutSystems.OSUI.Patterns.MonthPickerAPI {
 	 */
 	export function RegisterCallback(
 		monthPickerId: string,
-		eventName: string,
+		eventName: EventName,
 		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
 	): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({

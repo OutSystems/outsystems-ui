@@ -7,12 +7,12 @@ namespace OutSystems.OSUI.Patterns.SwipeEventsAPI {
 	 *
 	 * @export
 	 * @param {string} swipeEventsId ID of the Pattern that a new instance will be created.
-	 * @param {(string | Record<string, unknown>)} configs Configurations for the Pattern in JSON format.
+	 * @param {(string | Configs)} configs Configurations for the Pattern in JSON format.
 	 * @return {*}  {OSFramework.OSUI.Patterns SwipeEvents. SwipeEvents}
 	 */
 	export function Create(
 		swipeEventsId: string,
-		configs: string | Record<string, unknown>
+		configs: string | Configs
 	): OSFramework.OSUI.Patterns.SwipeEvents.ISwipeEvents {
 		if (_swipeEventsMap.has(swipeEventsId)) {
 			throw new Error(
@@ -58,7 +58,7 @@ namespace OutSystems.OSUI.Patterns.SwipeEventsAPI {
 	 * Function that gets the instance of SwipeEvents, by a given ID.
 	 *
 	 * @export
-	 * @param {string} SwipeEventsId ID of the SwipeEvents that will be looked for.
+	 * @param {string} swipeEventsId ID of the SwipeEvents that will be looked for.
 	 * @return {*}  {OSFramework.OSUI.Patterns SwipeEvents. SwipeEvents;}
 	 */
 	export function GetSwipeEventsById(swipeEventsId: string): OSFramework.OSUI.Patterns.SwipeEvents.ISwipeEvents {
@@ -94,7 +94,7 @@ namespace OutSystems.OSUI.Patterns.SwipeEventsAPI {
 	 */
 	export function RegisterCallback(
 		swipeEventsID: string,
-		eventName: string,
+		eventName: EventName,
 		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
 	): void {
 		const swipeEvents = this.GetSwipeEventsById(swipeEventsID);
@@ -106,7 +106,8 @@ namespace OutSystems.OSUI.Patterns.SwipeEventsAPI {
 	 * Function that will detect the event type of the pattern instance.
 	 *
 	 * @export
-	 * @param {string} swipeEventsId ID of the SwipeEvents that will be initialized.
+	 * @param {string} swipeEventsId ID of the SwipeEvents pattern.
+	 * @param {TouchEvent} event Touch event forwarded from the platform gesture handler.
 	 */
 	export function GestureMove(swipeEventsId: string, event: TouchEvent): void {
 		const SwipeEvents = GetSwipeEventsById(swipeEventsId);
@@ -118,11 +119,36 @@ namespace OutSystems.OSUI.Patterns.SwipeEventsAPI {
 	 * Function that will detect the event type of the pattern instance.
 	 *
 	 * @export
-	 * @param {string} swipeEventsId ID of the SwipeEvents that will be initialized.
+	 * @param {string} swipeEventsId ID of the SwipeEvents pattern.
+	 * @param {number} offsetX Horizontal distance travelled by the gesture, in pixels.
+	 * @param {number} offsetY Vertical distance travelled by the gesture, in pixels.
+	 * @param {number} timeTaken Duration of the gesture, in milliseconds.
 	 */
 	export function GestureEnd(swipeEventsId: string, offsetX: number, offsetY: number, timeTaken: number): void {
 		const SwipeEvents = GetSwipeEventsById(swipeEventsId);
 
 		SwipeEvents.EventGestureEnd(offsetX, offsetY, timeTaken);
+	}
+
+	/**
+	 * Function that will change the property of a given SwipeEvents pattern.
+	 *
+	 * @export
+	 * @param {string} swipeEventsId ID of the SwipeEvents where the property will be changed.
+	 * @param {string} propertyName Property name that will be updated
+	 * @param {unknown} propertyValue Value that will be set to the property
+	 * @return {*}  {string} Response object as a JSON string
+	 */
+	export function ChangeProperty(swipeEventsId: string, propertyName: string, propertyValue: unknown): string {
+		const result = OutSystems.OSUI.Utils.CreateApiResponse({
+			errorCode: ErrorCodes.SwipeEvents.FailChangeProperty,
+			callback: () => {
+				const pattern = GetSwipeEventsById(swipeEventsId);
+
+				pattern.changeProperty(propertyName, propertyValue);
+			},
+		});
+
+		return result;
 	}
 }

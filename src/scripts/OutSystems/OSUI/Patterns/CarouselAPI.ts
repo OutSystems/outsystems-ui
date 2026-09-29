@@ -66,12 +66,13 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	 *
 	 * @export
 	 * @param {string} carouselId ID of the Pattern that a new instance will be created.
-	 * @param {(string | Record<string, unknown>)} configs Configurations for the Pattern in JSON format.
+	 * @param {(string | Configs)} configs Configurations for the Pattern in JSON format.
+	 * @param {string} provider Name of the provider that renders the carousel (Splide).
 	 * @return {*}  {OSFramework.OSUI.Patterns.Carousel.ICarousel}
 	 */
 	export function Create(
 		carouselId: string,
-		configs: string | Record<string, unknown>,
+		configs: string | Configs,
 		provider: string
 	): OSFramework.OSUI.Patterns.Carousel.ICarousel {
 		if (_carouselItemsMap.has(carouselId)) {
@@ -218,7 +219,7 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	 */
 	export function RegisterCallback(
 		carouselId: string,
-		eventName: string,
+		eventName: EventName,
 		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
 	): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -277,8 +278,9 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	 * Function that will update the direction of the carousel
 	 *
 	 * @export
-	 * @param {string} carouselId
-	 * @return {*}  {OSFramework.OSUI.Patterns.Carousel.ICarousel}
+	 * @param {string} carouselId ID of the Carousel pattern.
+	 * @param {string} direction Slide direction: ltr, rtl or ttb.
+	 * @return {*}  {string} Response object as a JSON string
 	 */
 	export function SetCarouselDirection(carouselId: string, direction: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -293,6 +295,14 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 		return result;
 	}
 
+	/**
+	 * Function to set provider configs by extensibility
+	 *
+	 * @export
+	 * @param {string} carouselId ID of the Carousel pattern.
+	 * @param {CarouselProviderConfigs} configs Provider (Splide) options to merge into the instance.
+	 * @return {*}  {string} Response object as a JSON string
+	 */
 	export function SetProviderConfigs(carouselId: string, configs: CarouselProviderConfigs): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
 			errorCode: ErrorCodes.Carousel.FailRegisterProviderConfig,

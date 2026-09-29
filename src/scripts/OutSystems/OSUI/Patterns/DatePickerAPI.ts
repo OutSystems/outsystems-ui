@@ -66,14 +66,14 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	 *
 	 * @export
 	 * @param {string} datePickerId ID of the Pattern that a new instance will be created.
-	 * @param {(string | Record<string, unknown>)} configs Configurations for the Pattern in JSON format.
+	 * @param {(string | Configs)} configs Configurations for the Pattern in JSON format.
 	 * @param {string} mode Set which calendar type should be created (SingleDate, RangeDate).
 	 * @param {string} provider Set which provider should be used to create the calendar instance.
 	 * @return {*} (OSFramework.OSUI.Patterns.DatePicker.IDatePicker) - Instance created of the new DatePicker
 	 */
 	export function Create(
 		datePickerId: string,
-		configs: string | Record<string, unknown>,
+		configs: string | Configs,
 		mode: OSFramework.OSUI.Patterns.DatePicker.Enum.Mode,
 		provider: string
 	): OSFramework.OSUI.Patterns.DatePicker.IDatePicker {
@@ -97,7 +97,8 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	 * Function that will disable the native behavior of DatePicker
 	 *
 	 * @export
-	 * @param {string} datePickerId
+	 * @param {string} datePickerId ID of the DatePicker pattern.
+	 * @param {boolean} isNative True to use the native (mobile) picker, false to keep the provider calendar.
 	 * @return {*} Response Object as a JSON String
 	 */
 	export function ToggleNativeBehavior(datePickerId: string, isNative: boolean): string {
@@ -224,7 +225,7 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	 */
 	export function RegisterCallback(
 		datePickerId: string,
-		eventName: string,
+		eventName: EventName,
 		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
 	): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({

@@ -38,7 +38,7 @@ namespace Providers.OSUI.Utils {
 		 */
 		public setFloatingPosition(): void {
 			// Store the middleware to be added on the FloatingUI
-			const _middlewareArray = [];
+			const _middlewareArray: Array<ReturnType<typeof window.FloatingUIDOM.flip>> = [];
 
 			// If autoPlacement is true, add it to middleware
 			if (this.floatingConfigs.AutoPlacement) {
@@ -115,12 +115,12 @@ namespace Providers.OSUI.Utils {
 					if (middlewareData.arrow) {
 						const side = placement.split('-')[0];
 
-						const staticSide = {
+						const staticSide: string = {
 							top: OSFramework.OSUI.GlobalEnum.FloatingPosition.Bottom,
 							right: OSFramework.OSUI.GlobalEnum.FloatingPosition.Left,
 							bottom: OSFramework.OSUI.GlobalEnum.FloatingPosition.Top,
 							left: OSFramework.OSUI.GlobalEnum.FloatingPosition.Right,
-						}[side];
+						}[side as 'top' | 'right' | 'bottom' | 'left'];
 
 						const { x, y } = middlewareData.arrow;
 						Object.assign(this.floatingConfigs.ArrowElem.style, {

@@ -28,12 +28,12 @@ namespace OutSystems.OSUI.Patterns.BottomSheetAPI {
 	 *
 	 * @export
 	 * @param {string} bottomSheetId ID of the Pattern that a new instance will be created.
-	 * @param {(string | Record<string, unknown>)} configs Configurations for the Pattern in JSON format.
+	 * @param {(string | Configs)} configs Configurations for the Pattern in JSON format.
 	 * @return {*}  {OSFramework.OSUI.Patterns.BottomSheet.IBottomSheet}
 	 */
 	export function Create(
 		bottomSheetId: string,
-		configs: string | Record<string, unknown>
+		configs: string | Configs
 	): OSFramework.OSUI.Patterns.BottomSheet.IBottomSheet {
 		if (_bottomSheetItemsMap.has(bottomSheetId)) {
 			throw new Error('There is already an BottomSheet registered under id: ' + bottomSheetId);
@@ -161,7 +161,7 @@ namespace OutSystems.OSUI.Patterns.BottomSheetAPI {
 	 */
 	export function RegisterCallback(
 		bottomSheetId: string,
-		eventName: string,
+		eventName: EventName,
 		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
 	): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
