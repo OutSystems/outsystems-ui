@@ -155,10 +155,11 @@ export function enterpriseVerdict(baseline, run, maxDrop) {
 	const coverage = evaluateCoverageRule(baseline, run);
 	const ok = eResult.ok && (coverage?.ok ?? true);
 	const tail = eResult.message.slice(eResult.message.indexOf('Index'));
+	const coverageNote = coverage ? `; ${coverage.message}` : '';
 	const verdict = {
 		...eResult,
 		ok,
-		message: `${ok ? 'PASS' : 'FAIL'} — Enterprise Readiness ${tail}${coverage ? `; ${coverage.message}` : ''}`,
+		message: `${ok ? 'PASS' : 'FAIL'} — Enterprise Readiness ${tail}${coverageNote}`,
 	};
 	const report = formatGateReport(eBaseline, { ...run.enterprise, label: run.label, sha: run.sha }, verdict, {
 		maxDrop,

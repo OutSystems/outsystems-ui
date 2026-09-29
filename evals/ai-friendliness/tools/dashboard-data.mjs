@@ -226,7 +226,8 @@ function enterpriseCell(id, row) {
 	if (id === 'R05' && row.checks?.density?.knobs?.length)
 		extras.push(`density knobs: ${row.checks.density.knobs.join(', ')}`);
 	const head = failed.length ? `Missing: ${failed.join('; ')}.` : 'Every applicable check passes.';
-	return ok(row.score, `${head}${extras.length ? ` ${extras.join('. ')}.` : ''}`);
+	const tail = extras.length ? ` ${extras.join('. ')}.` : '';
+	return ok(row.score, `${head}${tail}`);
 }
 
 /**

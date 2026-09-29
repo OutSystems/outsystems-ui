@@ -23,7 +23,7 @@ import {
  */
 export const FOUNDATIONS = {
 	iconography: {
-		props: ['font-family: "osui-icons', 'content: "\\e', 'mask-image', '.icon'],
+		props: ['font-family: "osui-icons', String.raw`content: "\e`, 'mask-image', '.icon'],
 		tokens: ['--token-icon'],
 	},
 	colours: {
