@@ -6,6 +6,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
+import { insideDir, isRefName } from './paths.mjs';
+
 /**
  * Abbreviated commit id of HEAD read from the repository metadata (works for linked worktrees), without
  * spawning git. Returns 'unknown' when the checkout has no readable metadata.
@@ -15,7 +17,7 @@ export function readHeadCommit(root) {
 	try {
 		const gitDir = resolveGitDir(path.resolve(root));
 		if (!gitDir) return 'unknown';
-		const head = fs.readFileSync(path.join(gitDir, 'HEAD'), 'utf8').trim();
+		const head = fs.readFileSync(insideDir(gitDir, 'HEAD'), 'utf8').trim();
 		const commit = head.startsWith('ref:')
 			? resolveRef(gitDir, head.slice('ref:'.length).trim())
 			: head.slice(0, 9);
@@ -45,7 +47,7 @@ function shortCommitId(commit) {
  */
 function resolveGitDir(base) {
 	if (!fs.statSync(base).isDirectory()) return null;
-	const gitDir = path.join(base, '.git');
+	const gitDir = insideDir(base, '.git');
 	if (!fs.statSync(gitDir).isFile()) return gitDir;
 	const pointer = fs.readFileSync(gitDir, 'utf8').trim();
 	if (!pointer.startsWith('gitdir:')) return null;
@@ -57,23 +59,36 @@ function resolveGitDir(base) {
  * Abbreviated commit id a symbolic ref points at, from a loose ref file or `packed-refs`. A linked worktree keeps
  * its refs in the common directory recorded in `commondir`.
  * @param {string} gitDir
- * @param {string} ref e.g. `refs/heads/dev`
+ * @param {string} ref e.g. `refs/heads/dev`; anything but a plain `refs/…` name is rejected
  * @returns {string|null}
  */
 function resolveRef(gitDir, ref) {
-	const commonDirFile = path.join(gitDir, 'commondir');
-	const commonDir = fs.existsSync(commonDirFile)
-		? path.resolve(gitDir, fs.readFileSync(commonDirFile, 'utf8').trim())
-		: gitDir;
-	const refFile = path.join(commonDir, ref);
+	if (!isRefName(ref)) return null;
+	const commonDir = resolveCommonDir(gitDir);
+	if (!commonDir) return null;
+	// the ref name is validated above and the result is confined to the common directory
+	const refFile = insideDir(commonDir, ...ref.split('/'));
 	if (fs.existsSync(refFile)) return fs.readFileSync(refFile, 'utf8').trim().slice(0, 9);
-	const packed = path.join(commonDir, 'packed-refs');
+	const packed = insideDir(commonDir, 'packed-refs');
 	if (!fs.existsSync(packed)) return null;
 	for (const line of fs.readFileSync(packed, 'utf8').split('\n')) {
 		const [commit, name] = line.trim().split(' ');
 		if (name === ref && commit) return commit.slice(0, 9);
 	}
 	return null;
+}
+
+/**
+ * The directory holding the refs: the metadata directory itself, or for a linked worktree the
+ * `.git` directory named by its `commondir` file (accepted only when it is a `.git` directory).
+ * @param {string} gitDir
+ * @returns {string|null}
+ */
+function resolveCommonDir(gitDir) {
+	const commonDirFile = insideDir(gitDir, 'commondir');
+	if (!fs.existsSync(commonDirFile)) return gitDir;
+	const target = path.resolve(gitDir, fs.readFileSync(commonDirFile, 'utf8').trim());
+	return path.basename(target) === '.git' && fs.statSync(target).isDirectory() ? target : null;
 }
 
 import { buildInventory } from './inventory.mjs';
@@ -104,7 +119,12 @@ export function createContext(root, options = {}) {
 		inventory,
 		docsAiDir,
 		tokenizerName,
-		tokens: { countTokens, countFileTokens, countFilesTokens },
+		/** File paths handed to the token counters must lie inside the repository. */
+		tokens: {
+			countTokens,
+			countFileTokens: (/** @type {string} */ file) => countFileTokens(insideDir(root, file)),
+			countFilesTokens: (/** @type {string[]} */ files) => countFilesTokens(files.map((f) => insideDir(root, f))),
+		},
 
 		/** One program compiled with `noImplicitAny` so E04 can read the diagnostics. */
 		get program() {
@@ -118,7 +138,8 @@ export function createContext(root, options = {}) {
 		readText(file) {
 			let text = textCache.get(file);
 			if (text === undefined) {
-				text = fs.existsSync(file) ? fs.readFileSync(file, 'utf8') : '';
+				const safe = insideDir(root, file);
+				text = fs.existsSync(safe) ? fs.readFileSync(safe, 'utf8') : '';
 				textCache.set(file, text);
 			}
 			return text;
@@ -131,7 +152,7 @@ export function createContext(root, options = {}) {
 		compiledCss(file) {
 			let hit = cssCache.get(file);
 			if (!hit) {
-				hit = compileScss(file, { loadPaths: [path.join(root, 'src', 'scss')] });
+				hit = compileScss(insideDir(root, file), { loadPaths: [path.join(root, 'src', 'scss')] });
 				cssCache.set(file, hit);
 			}
 			return hit;
@@ -142,7 +163,7 @@ export function createContext(root, options = {}) {
 		 * @param {string} name
 		 */
 		docsAi(name) {
-			const file = path.join(docsAiDir, name);
+			const file = insideDir(docsAiDir, name);
 			return fs.existsSync(file) ? fs.readFileSync(file, 'utf8') : null;
 		},
 

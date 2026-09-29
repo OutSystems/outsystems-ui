@@ -16,6 +16,7 @@ import path from 'node:path';
 
 import { expectationsFor } from '../../evals/ai-friendliness/lib/expectations.mjs';
 import { measureStory } from '../../evals/ai-friendliness/lib/markup.mjs';
+import { insideDir } from '../../evals/ai-friendliness/lib/paths.mjs';
 import { countTokens } from '../../evals/ai-friendliness/lib/tokens.mjs';
 import { getClassesInFiles, getEnums, getSourceFile } from '../../evals/ai-friendliness/lib/ts.mjs';
 
@@ -636,6 +637,6 @@ export function writeDocs(ctx, outDir) {
 		'llms-utilities.txt': renderUtilities(ctx),
 		'llms-patterns.txt': renderCssComponents(ctx),
 	};
-	for (const [name, text] of Object.entries(files)) fs.writeFileSync(path.join(outDir, name), text);
+	for (const [name, text] of Object.entries(files)) fs.writeFileSync(insideDir(outDir, name), text);
 	return Object.keys(files).map((f) => path.join(outDir, f));
 }

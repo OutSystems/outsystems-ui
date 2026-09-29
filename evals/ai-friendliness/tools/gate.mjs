@@ -14,6 +14,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+import { insideDir } from '../lib/paths.mjs';
+
 const here = path.dirname(fileURLToPath(import.meta.url));
 const suiteDir = path.join(here, '..');
 
@@ -44,7 +46,12 @@ export function pickBaseline(history, label) {
 export function evaluateGate(baseline, run, { maxDrop = 1 } = {}) {
 	const delta = Math.round((run.index - baseline.index) * 10) / 10;
 	const regressed = Object.keys(baseline.scores)
-		.map((id) => ({ id, from: baseline.scores[id], to: run.scores[id] ?? 0, delta: Math.round(((run.scores[id] ?? 0) - baseline.scores[id]) * 10) / 10 }))
+		.map((id) => ({
+			id,
+			from: baseline.scores[id],
+			to: run.scores[id] ?? 0,
+			delta: Math.round(((run.scores[id] ?? 0) - baseline.scores[id]) * 10) / 10,
+		}))
 		.filter((x) => x.delta < 0)
 		.sort((a, b) => a.delta - b.delta);
 	const ok = delta >= -maxDrop;
@@ -63,13 +70,17 @@ function main() {
 		else if (argv[i] === '--max-drop') args.maxDrop = Number(argv[++i]);
 		else throw new Error(`Unknown argument: ${argv[i]}`);
 	}
-	const history = JSON.parse(fs.readFileSync(path.join(suiteDir, 'results', 'history.json'), 'utf8'));
+	const history = JSON.parse(fs.readFileSync(insideDir(suiteDir, 'results', 'history.json'), 'utf8'));
 	const baseline = pickBaseline(history, args.baseline);
-	const json = execFileSync(process.execPath, [path.join(suiteDir, 'run.mjs'), '--label', 'gate', '--no-write', '--json'], {
-		encoding: 'utf8',
-		maxBuffer: 64 * 1024 * 1024,
-		stdio: ['ignore', 'pipe', 'inherit'],
-	});
+	const json = execFileSync(
+		process.execPath,
+		[path.join(suiteDir, 'run.mjs'), '--label', 'gate', '--no-write', '--json'],
+		{
+			encoding: 'utf8',
+			maxBuffer: 64 * 1024 * 1024,
+			stdio: ['ignore', 'pipe', 'inherit'],
+		}
+	);
 	const run = JSON.parse(json);
 	const result = evaluateGate(baseline, run, { maxDrop: args.maxDrop });
 	console.log(result.message);

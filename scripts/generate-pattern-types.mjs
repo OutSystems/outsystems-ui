@@ -10,10 +10,11 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { createContext } from '../evals/ai-friendliness/lib/context.mjs';
+import { insideDir } from '../evals/ai-friendliness/lib/paths.mjs';
 import { buildManifest } from './lib/ai-docs.mjs';
 import { OUTPUT_FILE, renderPatternTypes } from './lib/pattern-types.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const ctx = createContext(root);
-fs.writeFileSync(path.join(root, OUTPUT_FILE), await renderPatternTypes(ctx, buildManifest(ctx)));
+fs.writeFileSync(insideDir(root, OUTPUT_FILE), await renderPatternTypes(ctx, buildManifest(ctx)));
 console.log(`wrote ${OUTPUT_FILE}`);

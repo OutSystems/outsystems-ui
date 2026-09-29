@@ -12,13 +12,14 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { createContext } from '../evals/ai-friendliness/lib/context.mjs';
+import { insideDir } from '../evals/ai-friendliness/lib/paths.mjs';
 import { compareDocs } from './lib/ai-docs-fresh.mjs';
 import { writeDocs } from './lib/ai-docs.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const fresh = fs.mkdtempSync(path.join(os.tmpdir(), 'osui-docs-ai-'));
+const fresh = insideDir(os.tmpdir(), fs.mkdtempSync(path.join(os.tmpdir(), 'osui-docs-ai-')));
 writeDocs(createContext(root), fresh);
-const drift = compareDocs(path.join(root, 'docs-ai'), fresh);
+const drift = compareDocs(insideDir(root, 'docs-ai'), fresh);
 fs.rmSync(fresh, { recursive: true, force: true });
 if (drift.length === 0) {
 	console.log('docs-ai/ is up to date with the source.');

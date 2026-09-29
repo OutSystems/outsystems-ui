@@ -82,6 +82,8 @@ docs-internal/adr/ADR-0011-*   decision record for the suite
 
 **Determinism.** No network, no time-dependent inputs; results carry the git SHA. Sorting is stable everywhere.
 
+**Path confinement.** Every file the suite and the generators touch is resolved through `lib/paths.mjs` (`insideDir`): a base directory the caller controls plus data-derived segments (CLI labels, directory listings, spec entries, git metadata), and anything that resolves outside the base is refused. Result labels must be single file names and git refs must be plain `refs/…` names.
+
 **Error handling.** A metric that cannot measure a component records it under `unmeasured` with a reason and excludes it from the mean; a metric that throws fails the whole run (a broken eval must not silently report a score).
 
 ## 4. The ten evals

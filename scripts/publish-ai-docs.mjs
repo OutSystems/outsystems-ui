@@ -9,11 +9,14 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+import { insideDir } from '../evals/ai-friendliness/lib/paths.mjs';
+
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const out = path.join(root, 'docs');
+const out = insideDir(root, 'docs');
+const docsAi = insideDir(root, 'docs-ai');
 if (!fs.existsSync(out)) {
 	console.error('docs/ does not exist — run `npm run docs` first.');
 	process.exit(1);
 }
-fs.cpSync(path.join(root, 'docs-ai'), out, { recursive: true });
-for (const f of fs.readdirSync(path.join(root, 'docs-ai'))) console.log(`published docs/${f}`);
+fs.cpSync(docsAi, out, { recursive: true });
+for (const f of fs.readdirSync(docsAi)) console.log(`published docs/${f}`);

@@ -14,6 +14,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
+import { insideDir } from './paths.mjs';
+
 /**
  * @typedef {object} Pattern
  * @property {string} name
@@ -71,7 +73,7 @@ export function walk(dir) {
 	/** @type {string[]} */
 	const out = [];
 	for (const entry of fs.readdirSync(dir, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name))) {
-		const full = path.join(dir, entry.name);
+		const full = insideDir(dir, entry.name);
 		if (entry.isDirectory()) out.push(...walk(full));
 		else out.push(full);
 	}
@@ -102,7 +104,7 @@ export function classifyTsFile(file) {
  * @returns {string[]}
  */
 export function readSpecScss(root, name) {
-	const specFile = path.join(root, ...SPEC_DIR, `${name}.js`);
+	const specFile = insideDir(root, ...SPEC_DIR, `${name}.js`);
 	if (!fs.existsSync(specFile)) return [];
 	// The spec is a CommonJS module, but it is read as text rather than executed: every `"scss": "…"`
 	// entry (top-level and nested sub-patterns) is collected, so no repository file is ever `require`d.
@@ -112,18 +114,20 @@ export function readSpecScss(root, name) {
 	for (const m of text.matchAll(/"scss"\s*:\s*"([^"]*)"/g)) values.push(m[1]);
 	return values
 		.filter(Boolean)
-		.map((rel) => resolveScssPartial(path.join(root, ...SRC), rel))
+		.map((rel) => resolveScssPartial(path.join(root, 'src'), path.join(root, ...SRC), rel))
 		.filter(/** @returns {f is string} */ (f) => f !== null);
 }
 
 /**
- * `../scss/04-patterns/02-content/accordion/accordion` → `<root>/src/scss/.../_accordion.scss`
- * @param {string} baseDir
+ * `../scss/04-patterns/02-content/accordion/accordion` → `<root>/src/scss/.../_accordion.scss`.
+ * The spec-relative path must stay inside `src/`.
+ * @param {string} srcDir `<root>/src`, the directory the result is confined to
+ * @param {string} baseDir `<root>/src/scripts`, which spec paths are relative to
  * @param {string} rel
  * @returns {string|null}
  */
-function resolveScssPartial(baseDir, rel) {
-	const abs = path.resolve(baseDir, rel);
+function resolveScssPartial(srcDir, baseDir, rel) {
+	const abs = insideDir(srcDir, path.resolve(baseDir, rel));
 	const dir = path.dirname(abs);
 	const base = path.basename(abs);
 	for (const candidate of [path.join(dir, `_${base}.scss`), path.join(dir, `${base}.scss`)]) {
@@ -162,7 +166,7 @@ export function matchStory(name, storiesByNorm) {
  * @returns {Inventory}
  */
 export function buildInventory(root) {
-	const apiDir = path.join(root, ...API_DIR);
+	const apiDir = insideDir(root, ...API_DIR);
 	const apiFiles = fs
 		.readdirSync(apiDir)
 		.filter((f) => f.endsWith('API.ts'))
@@ -170,17 +174,18 @@ export function buildInventory(root) {
 
 	const storyFiles = walk(path.join(root, 'stories')).filter((f) => f.endsWith('.stories.ts'));
 	const storiesByNorm = new Map(storyFiles.map((f) => [norm(path.basename(f).replace(/\.stories\.ts$/, '')), f]));
-	const providerRoots = fs.existsSync(path.join(root, ...PROVIDER_DIR))
+	const providerDir = insideDir(root, ...PROVIDER_DIR);
+	const providerRoots = fs.existsSync(providerDir)
 		? fs
-				.readdirSync(path.join(root, ...PROVIDER_DIR), { withFileTypes: true })
+				.readdirSync(providerDir, { withFileTypes: true })
 				.filter((d) => d.isDirectory())
-				.map((d) => path.join(root, ...PROVIDER_DIR, d.name))
+				.map((d) => insideDir(providerDir, d.name))
 		: [];
 
 	/** @type {Pattern[]} */
 	const patterns = apiFiles.map((apiBase) => {
 		const name = apiBase.replace(/API\.ts$/, '');
-		const patternDirCandidate = path.join(root, ...PATTERN_DIR, name);
+		const patternDirCandidate = insideDir(root, ...PATTERN_DIR, name);
 		const patternDir = fs.existsSync(patternDirCandidate) ? patternDirCandidate : null;
 		const providerDirs = providerRoots.filter((d) => path.basename(d).toLowerCase() === name.toLowerCase());
 
@@ -193,7 +198,7 @@ export function buildInventory(root) {
 		}
 
 		const scssFiles = readSpecScss(root, name);
-		const apiFile = path.join(apiDir, apiBase);
+		const apiFile = insideDir(apiDir, apiBase);
 		return {
 			name,
 			apiFile,
@@ -221,7 +226,7 @@ export function buildInventory(root) {
 
 	const claimedScss = new Set(patterns.flatMap((p) => p.scssFiles));
 	/** @type {CssComponent[]} */
-	const cssComponents = CSS_COMPONENT_DIRS.flatMap((segments) => walk(path.join(root, ...segments)))
+	const cssComponents = CSS_COMPONENT_DIRS.flatMap((segments) => walk(insideDir(root, ...segments)))
 		.filter((f) => f.endsWith('.scss') && !CSS_EXCLUDE.test(f) && !claimedScss.has(f))
 		.map((scssFile) => {
 			const name = path

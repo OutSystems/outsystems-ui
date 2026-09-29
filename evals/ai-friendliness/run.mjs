@@ -13,11 +13,21 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { createContext } from './lib/context.mjs';
+import { insideDir, isSingleSegment } from './lib/paths.mjs';
 import { aggregate, compareRuns, formatComparison, formatTable, upsertHistory } from './lib/results.mjs';
 import { metrics } from './metrics/index.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const resultsDir = path.join(here, 'results');
+
+/**
+ * `results/<label>.json`; the label comes from the command line, so it must be one plain file name.
+ * @param {string} label
+ */
+function resultsFileFor(label) {
+	if (!isSingleSegment(label)) throw new Error(`Label must be a plain file name, got "${label}"`);
+	return insideDir(resultsDir, `${label}.json`);
+}
 
 /** CLI output: the run report is the program's product, written to stdout (not a diagnostic log). */
 const out = (/** @type {string} */ text) => process.stdout.write(`${text}\n`);
@@ -45,7 +55,7 @@ function parseArgs(argv) {
 
 /** @param {string} label */
 function loadRun(label) {
-	const file = path.join(resultsDir, `${label}.json`);
+	const file = resultsFileFor(label);
 	if (!fs.existsSync(file)) throw new Error(`No results for label "${label}" (${file})`);
 	return JSON.parse(fs.readFileSync(file, 'utf8'));
 }
@@ -86,9 +96,9 @@ function runMetrics(ctx, selected, quiet) {
  */
 function writeRun(run) {
 	fs.mkdirSync(resultsDir, { recursive: true });
-	fs.writeFileSync(path.join(resultsDir, `${run.label}.json`), `${JSON.stringify(run, null, '\t')}\n`);
+	fs.writeFileSync(resultsFileFor(run.label), `${JSON.stringify(run, null, '\t')}\n`);
 	if (run.partial) return;
-	const historyFile = path.join(resultsDir, 'history.json');
+	const historyFile = insideDir(resultsDir, 'history.json');
 	const history = fs.existsSync(historyFile) ? JSON.parse(fs.readFileSync(historyFile, 'utf8')) : [];
 	const entry = { label: run.label, date: run.date, sha: run.sha, scores: run.scores, index: run.index };
 	fs.writeFileSync(historyFile, `${JSON.stringify(upsertHistory(history, entry), null, '\t')}\n`);
@@ -111,7 +121,7 @@ function printRun(run, args) {
 	);
 	if (unmeasured) out(`\n${unmeasured} component/metric pairs unmeasured (see results JSON → unmeasured).`);
 	if (args.write) {
-		const resultsFile = path.relative(process.cwd(), path.join(resultsDir, `${run.label}.json`));
+		const resultsFile = path.relative(process.cwd(), resultsFileFor(run.label));
 		out(`\nResults: ${resultsFile}`);
 	}
 }
