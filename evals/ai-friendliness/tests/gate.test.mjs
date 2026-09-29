@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 
-import { evaluateCoverageRule, evaluateGate, formatGateReport, pickBaseline } from '../tools/gate.mjs';
+import { evaluateCoverageRule, evaluateGate, formatGateReport, pickBaseline, pickOrigin } from '../tools/gate.mjs';
 
 const history = [
 	{ label: 'baseline', date: '2026-09-29T09:00:00Z', sha: 'a', scores: { E01: 64.9, E02: 94.6 }, index: 64.3 },
@@ -14,6 +14,49 @@ test('pickBaseline uses the newest history entry unless a label is given', () =>
 	assert.equal(pickBaseline(history, 'loop-1').label, 'loop-1');
 	assert.throws(() => pickBaseline(history, 'nope'), /no history entry/);
 	assert.throws(() => pickBaseline([]), /history is empty/);
+});
+
+test('pickOrigin returns the oldest entry, a labelled one, or the oldest with the enterprise suite', () => {
+	assert.equal(pickOrigin(history).label, 'baseline');
+	assert.equal(pickOrigin(history, 'loop-1').label, 'loop-1');
+	const withEnt = [
+		...history,
+		{
+			label: 'loop-6',
+			date: '2026-09-29T12:00:00Z',
+			sha: 'd',
+			scores: { E01: 99.9 },
+			index: 88,
+			enterprise: { scores: { R01: 68.9 }, index: 50.7 },
+		},
+	];
+	assert.equal(pickOrigin(withEnt, undefined, true).label, 'loop-6');
+	assert.equal(
+		pickOrigin(withEnt, 'baseline', true).label,
+		'loop-6',
+		'a labelled entry without the suite falls back'
+	);
+	assert.throws(() => pickOrigin(history, undefined, true), /no entry/);
+});
+
+test('formatGateReport compares with the origin and names the regression gate separately', () => {
+	const origin = { label: 'baseline', sha: 'o', index: 64.3, scores: { E01: 64.9, E02: 94.6 } };
+	const newest = { label: 'loop-8', sha: 'n', index: 87.9, scores: { E01: 99.9, E02: 94.7 } };
+	const run = {
+		label: 'gate',
+		sha: 'h',
+		index: 87.9,
+		scores: { E01: 99.9, E02: 94.7 },
+		results: [{ id: 'E01', name: 'Context Token Cost', movable: true }],
+	};
+	const md = formatGateReport(origin, run, evaluateGate(newest, run), { gate: newest });
+	assert.ok(md.includes('Since the branch baseline `baseline` @ `o`: 64.3 → **87.9** (+23.6)'), md);
+	assert.match(
+		md,
+		/Regression gate against the newest recorded run `loop-8` @ `n`: 87.9 → 87.9 (0.0), tolerance −1./
+	);
+	assert.ok(md.includes('| E01 | Context Token Cost | 64.9 | 99.9 | 🔼 +35.0 |'), md);
+	assert.ok(md.includes('| — | **Index** | **64.3** | **87.9** | **+23.6** |'), md);
 });
 
 test('evaluateGate passes on equal or higher index and on a drop within the tolerance', () => {

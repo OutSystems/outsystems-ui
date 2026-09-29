@@ -16,7 +16,7 @@ npm run evals                          # full run of both suites (E01–E10 and 
 npm run evals -- --suite enterprise    # one suite only (partial run; see evals/enterprise/README.md)
 npm run evals:report                   # regenerate results/HISTORY.md (index over time) from history.json
 npm run evals:dashboard                # regenerate results/dashboard.json (history, per-eval next steps, per-component hints); the dashboard artifact reads this document from its database — publish it after a run to refresh the page
-npm run evals:gate -- --report out.md  # gate + Markdown before/after table (what the PR comment shows)
+npm run evals:gate -- --report out.md  # gate + Markdown before/after table (what the PR comment shows): the table compares with the oldest recorded run (the state before the branch's work; --report-baseline <label> to choose), the pass/fail verdict with the newest
 npm run evals -- --label loop-2        # named run (updates results/history.json)
 npm run evals -- --only E01,E03        # subset (written, but not added to history)
 npm run evals -- --compare baseline loop-2

@@ -48,7 +48,9 @@ Chosen option: **2**, a second suite `evals/enterprise/` (R01–R06) with the **
   dashboard show the class instead of the yes/structural flag.
 - **Gate.** The same drop rule applies to each index (`--max-drop`, `--max-drop-enterprise` to override),
   plus a no-decrease rule on R01: a removed component or feature fails the gate whatever the index does.
-  The PR comment and job summary carry one before → after table per index.
+  The PR comment and job summary carry one before → after table per index, each compared with the
+  oldest run that carries the suite (for the enterprise index, its first measurement) while the
+  verdict compares with the newest run.
 - **Proxies.** R02 and R03 are static proxies for accessibility and keyboard operability. The dynamic phase
   (axe over the existing Storybook stories, in the Chromatic workflow) is planned separately and will feed
   R02's detail; the static score stays as the offline signal.

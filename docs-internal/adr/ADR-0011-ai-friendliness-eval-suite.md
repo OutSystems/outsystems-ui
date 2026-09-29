@@ -58,7 +58,9 @@ generated manifest scores ≥ 90 % on schema completeness for every pattern).
     (fails when the index drops more than one point against the newest `results/history.json`
     entry) and `npm run docs:ai:check` (fails when `docs-ai/` differs from a fresh generation) on
     pull requests into `dev` and on demand for any branch. Both commands run locally too. The gate
-    writes a before → after table per eval to the job summary and to one sticky PR comment, and
+    writes a before → after table per eval to the job summary and to one sticky PR comment (the table
+    compares with the oldest recorded run, the state before the branch's work, while the verdict
+    compares with the newest, so a pull request shows its full effect and still fails on a fresh drop), and
     every full run regenerates `results/HISTORY.md` (`npm run evals:report`), the index over time, and
     `results/dashboard.json` (`npm run evals:dashboard`): history, per-eval next steps and one hint per
     component × eval, derived from the metric rows. A dashboard artifact renders that document and
