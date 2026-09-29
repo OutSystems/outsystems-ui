@@ -85,3 +85,11 @@ test('matchStory resolves the widget-story aliases of btn and radio-button', () 
 	assert.equal(matchStory('radio-button', stories), '/s/widgets/RadioGroup.stories.ts');
 	assert.equal(matchStory('badge', stories), null);
 });
+
+test('host-styled CSS components carry their host; components with a contract of their own do not', () => {
+	const css = Object.fromEntries(inv.cssComponents.map((c) => [c.name, c]));
+	assert.match(css.layout.host.host, /Layout blocks/);
+	assert.match(css.login.host.host, /Login common screen/);
+	assert.equal(css.badge.host, null);
+	assert.equal(css['bulk-actions'].host, null, 'bulk actions have a markup contract of their own');
+});

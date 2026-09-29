@@ -101,6 +101,7 @@ function runMetrics(ctx, selected, quiet) {
 			raw: r.raw,
 			perComponent: r.perComponent,
 			unmeasured: r.unmeasured,
+			notApplicable: r.notApplicable,
 			details: r.details,
 			ms,
 		};

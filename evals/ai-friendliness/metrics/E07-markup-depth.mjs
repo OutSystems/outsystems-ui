@@ -22,16 +22,28 @@ export default {
 	compute(ctx) {
 		/** @type {{ name: string, kind: string, story: string|null }[]} */
 		const components = [
-			...ctx.inventory.patterns.map((p) => ({ name: p.name, kind: 'pattern', story: p.storyFile })),
-			...ctx.inventory.cssComponents.map((c) => ({ name: c.name, kind: 'css', story: c.storyFile })),
+			...ctx.inventory.patterns.map((p) => ({ name: p.name, kind: 'pattern', story: p.storyFile, host: null })),
+			...ctx.inventory.cssComponents.map((c) => ({
+				name: c.name,
+				kind: 'css',
+				story: c.storyFile,
+				host: c.host,
+			})),
 		];
 		/** @type {any[]} */
 		const perComponent = [];
 		/** @type {{ name: string, reason: string }[]} */
 		const unmeasured = [];
+		/** @type {{ name: string, reason: string }[]} */
+		const notApplicable = [];
 		/** @type {Map<string, ReturnType<typeof measureStory>>} */
 		const measured = new Map();
 		for (const c of components) {
+			if (c.host) {
+				// styles markup owned by something else: an agent never emits it, so there is no contract to measure
+				notApplicable.push({ name: c.name, reason: `host-styled: markup emitted by ${c.host.host}` });
+				continue;
+			}
 			if (!c.story) {
 				unmeasured.push({ name: c.name, reason: 'no story' });
 				continue;
@@ -58,9 +70,10 @@ export default {
 		}
 		return {
 			score: mean(perComponent.map((c) => c.score)) ?? 0,
-			summary: `${perComponent.length} components measured; mean depth ${round1(mean(perComponent.map((c) => c.depth)) ?? 0)}, max ${Math.max(0, ...perComponent.map((c) => c.depth))}; ${unmeasured.length} without story`,
+			summary: `${perComponent.length} components measured; mean depth ${round1(mean(perComponent.map((c) => c.depth)) ?? 0)}, max ${Math.max(0, ...perComponent.map((c) => c.depth))}; ${unmeasured.length} without story; ${notApplicable.length} host-styled (not applicable)`,
 			raw: {
 				measured: perComponent.length,
+				hostStyled: notApplicable.length,
 				meanDepth: round1(mean(perComponent.map((c) => c.depth)) ?? 0),
 				maxDepth: Math.max(0, ...perComponent.map((c) => c.depth)),
 				meanElements: round1(mean(perComponent.map((c) => c.elements)) ?? 0),
@@ -68,6 +81,7 @@ export default {
 			},
 			perComponent: [...perComponent].sort((a, b) => a.score - b.score),
 			unmeasured,
+			notApplicable,
 		};
 	},
 };

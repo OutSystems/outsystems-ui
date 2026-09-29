@@ -528,10 +528,22 @@ export function renderCssComponents(ctx) {
 		'',
 		'These components have no TypeScript behaviour: emit the markup and classes below and the compiled stylesheet does the rest. Skeletons come from the Storybook stories; `--osui-*` knobs are the per-instance overrides.',
 		'',
+		'Components marked **host-styled** style markup that something else emits (the app template Layout and Menu blocks, the Login common screen, the platform runtime, or another pattern). Never generate that markup: place content in the host placeholders and adjust the look through the knobs listed.',
+		'',
 	];
 	/** @type {Set<string>} */
 	const seen = new Set();
 	for (const c of ctx.inventory.cssComponents) {
+		if (c.host) {
+			const knobs = knobsOf(ctx.compiledCss(c.scssFile).css);
+			lines.push(
+				`## ${c.name} (${ctx.rel(c.scssFile)}) — host-styled`,
+				`Markup emitted by: ${c.host.host}. ${c.host.reason}. Do not generate this markup.`,
+				...(knobs.length ? [`CSS API: ${knobs.join(' ')}`] : []),
+				''
+			);
+			continue;
+		}
 		if (!c.storyFile || seen.has(c.storyFile)) continue;
 		seen.add(c.storyFile);
 		const m = measureStory(ctx.readText(c.storyFile));

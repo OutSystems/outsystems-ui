@@ -132,6 +132,7 @@ Scores are 0–100, higher is better. `clamp(x)` bounds to [0,1]. Component mean
 - `depth` = maximum element nesting depth across templates; `elements` = element count of the deepest template.
 - Score: `clamp0(100 − 20·max(0, depth − 3) − 4·max(0, elements − 6))`.
 - Calibration: shadcn Accordion usage is `Accordion > AccordionItem > (Trigger, Content)` → depth 3, 4 elements → 100.
+- Not applicable: CSS-only components listed in `lib/host-styled.json` style markup owned by something else (app template Layout and Menu blocks, the Login common screen, the platform runtime, or the patterns that position them). An agent never emits that markup, so they are excluded from the mean and reported as `notApplicable` with their host, distinct from `unmeasured` (a component with a contract of its own but no story).
 
 ### E08 · Design Token Semantics — Semantic Tokens & Theming
 - Unit: component SCSS file (04-patterns, 03-widgets, 02-layout; vendor `_lib`, `_ss_preview`, `provider/` excluded).

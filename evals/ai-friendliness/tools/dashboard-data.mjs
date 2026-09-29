@@ -439,6 +439,15 @@ function componentCells(results, name, kind) {
 	for (const m of results) {
 		if (!ALL_HEATMAP.has(m.id)) continue;
 		const row = Object.values(m.perComponent ?? {}).find((/** @type {any} */ r) => r.name === name) ?? null;
+		const na = (m.notApplicable ?? []).find((/** @type {any} */ u) => u.name === name);
+		if (na) {
+			cells[m.id] = {
+				s: null,
+				w: 'na',
+				h: `Not applicable: ${na.reason}. Style it through its --osui-* knobs; the markup is not yours to emit.`,
+			};
+			continue;
+		}
 		const un = (m.unmeasured ?? []).find(
 			(/** @type {any} */ u) => u.name === name || u.name.startsWith(`${name} (`)
 		);

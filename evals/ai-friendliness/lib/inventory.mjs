@@ -13,6 +13,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 import { insideDir } from './paths.mjs';
 
@@ -39,7 +40,20 @@ import { insideDir } from './paths.mjs';
  * @property {string} name
  * @property {string} scssFile
  * @property {string|null} storyFile
+ * @property {{ host: string, reason: string }|null} host set when the component styles markup owned by
+ *   something else (app template blocks, common screens, the runtime); such a component has no markup
+ *   contract of its own
  */
+
+/** @type {Record<string, { host: string, reason: string }>} */
+const HOST_STYLED = readHostStyled();
+
+function readHostStyled() {
+	const here = path.dirname(fileURLToPath(import.meta.url));
+	const raw = JSON.parse(fs.readFileSync(insideDir(here, 'host-styled.json'), 'utf8'));
+	delete raw.$comment;
+	return raw;
+}
 
 /**
  * @typedef {object} Inventory
@@ -241,7 +255,7 @@ export function buildInventory(root) {
 				.basename(scssFile)
 				.replace(/^_/, '')
 				.replace(/\.scss$/, '');
-			return { name, scssFile, storyFile: matchStory(name, storiesByNorm) };
+			return { name, scssFile, storyFile: matchStory(name, storiesByNorm), host: HOST_STYLED[name] ?? null };
 		})
 		.sort((a, b) => a.name.localeCompare(b.name));
 

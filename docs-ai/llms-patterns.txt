@@ -2,6 +2,8 @@
 
 These components have no TypeScript behaviour: emit the markup and classes below and the compiled stylesheet does the rest. Skeletons come from the Storybook stories; `--osui-*` knobs are the per-instance overrides.
 
+Components marked **host-styled** style markup that something else emits (the app template Layout and Menu blocks, the Login common screen, the platform runtime, or another pattern). Never generate that markup: place content in the host placeholders and adjust the look through the knobs listed.
+
 ## action-sheet (src/scss/04-patterns/03-interaction/_action-sheet.scss)
 Skeleton (from stories/ActionSheet.stories.ts): <div><div><button type="button" class="btn btn-primary" data-open>Open action sheet</button></div><div><div class="action-sheet"><div class="action-sheet-buttons"><div class="action-sheet-actions"><button type="button" class="btn"></button></div></div></div></div></div>
 CSS API: --osui-action-sheet-background --osui-action-sheet-border-radius --osui-action-sheet-cancel-color --osui-action-sheet-color --osui-action-sheet-divider-color --osui-action-sheet-shadow --osui-action-sheet-overlay-background --osui-btn-background --osui-btn-border-radius --osui-btn-color --osui-btn-height --osui-btn-hover-background --osui-btn-active-background --osui-action-sheet-actions-layer
@@ -10,9 +12,19 @@ CSS API: --osui-action-sheet-background --osui-action-sheet-border-radius --osui
 Skeleton (from stories/Alert.stories.ts): <div role="alert" aria-live="polite" aria-atomic="true" tabindex="0"><div class="alert-icon OSInline" aria-hidden="true"></div><div class="alert-message"><span></span></div></div>
 CSS API: --osui-alert-background --osui-alert-color --osui-alert-accent-color --osui-alert-icon-color --osui-alert-border-radius --osui-alert-padding
 
+## align-center (src/scss/04-patterns/06-utilities/_align-center.scss) — host-styled
+Markup emitted by: runtime utility classes. an alignment class applied to any element; no anatomy of its own. Do not generate this markup.
+
+## animate (src/scss/04-patterns/03-interaction/_animate.scss) — host-styled
+Markup emitted by: runtime utility classes. effect classes applied to any element; no anatomy of its own. Do not generate this markup.
+
 ## badge (src/scss/04-patterns/05-numbers/_badge.scss)
 Skeleton (from stories/Badge.stories.ts): <div><span class="OSFillParent"></span></div>
 CSS API: --osui-badge-color --osui-badge-on-light-color
+
+## balloon (src/scss/04-patterns/03-interaction/balloon/_balloon.scss) — host-styled
+Markup emitted by: OutSystems UI patterns (OverflowMenu and others). a floating layer created and positioned by the patterns that use it; measured through their stories. Do not generate this markup.
+CSS API: --osui-balloon-background --osui-balloon-border-radius --osui-floating-position-x --osui-floating-position-y --osui-balloon-shadow --osui-balloon-width --osui-balloon-position
 
 ## blank-slate (src/scss/04-patterns/02-content/_blank-slate.scss)
 Skeleton (from stories/BlankSlate.stories.ts): <div><div><div class="blank-slate-icon"><i class="icon ph ph-tray"></i></div><div class="blank-slate-description">No records have been added yet.</div><div class="blank-slate-actions"><button class="btn btn-primary"><span>Create item</span></button></div></div></div>
@@ -29,6 +41,10 @@ CSS API: --osui-breadcrumbs-item-color --osui-breadcrumbs-separator-color
 ## btn (src/scss/03-widgets/_btn.scss)
 Skeleton (from stories/widgets/Button.stories.ts): <div><button data-button="" type="button"></button><button data-button="" type="button"></button><button data-button="" type="button"></button><button data-button="" type="button"></button><button data-button="" type="button"></button><button data-button="" type="button"></button></div>
 CSS API: --osui-btn-min-height --osui-btn-background --osui-btn-color --osui-btn-border-color --osui-btn-hover-background --osui-btn-active-background --osui-btn-border-width --osui-btn-border-radius --osui-btn-disabled-overlay --osui-btn-primary-background --osui-btn-primary-border-color --osui-btn-primary-color --osui-btn-success-background --osui-btn-success-border-color --osui-btn-success-color --osui-btn-error-background --osui-btn-error-border-color --osui-btn-error-color --osui-btn-focus-shadow-width --osui-btn-focus-shadow-gap --osui-btn-focus-shadow-color
+
+## bulk-actions (src/scss/03-widgets/_bulk-actions.scss)
+Skeleton (from stories/widgets/BulkActions.stories.ts): <table class="table" role="grid"><thead><tr class="table-header"><th><span><input data-checkbox="" type="checkbox" id="" aria-label=""></span></th><th>Order</th><th>Customer</th></tr></thead><tbody><tr class="table-row table-row-stripping"><td data-header=""><span><input data-checkbox="" type="checkbox" id="" aria-label=""></span></td><td data-header="Order"></td><td data-header="Customer"></td></tr><tr class="table-row table-row-stripping"><td data-header=""><span><input data-checkbox="" type="checkbox" id="" aria-label=""></span></td><td data-header="Order"></td><td data-header="Customer"></td></tr><tr class="table-row table-row-stripping"><td data-header=""><span><input data-checkbox="" t
+CSS API: --osui-bulk-actions-check-color --osui-bulk-actions-indeterminate-background --osui-bulk-actions-indeterminate-border-color --osui-checkbox-size
 
 ## button-group (src/scss/03-widgets/_button-group.scss)
 Skeleton (from stories/widgets/ButtonGroup.stories.ts): <div><div data-button-group="" class="button-group" role="radiogroup"><div></div></div><div data-button-group="" class="button-group" role="radiogroup"><div></div></div><div data-button-group="" class="button-group" role="radiogroup"><div></div></div><div data-button-group="" class="button-group" role="radiogroup"><div></div></div><div data-button-group="" class="button-group" role="radiogroup"><div></div></div></div>
@@ -51,6 +67,9 @@ CSS API: --osui-checkbox-size --osui-checkbox-background --osui-checkbox-border-
 
 ## columns (src/scss/04-patterns/01-adaptive/_columns.scss)
 Skeleton (from stories/Columns.stories.ts): <div class="columns-item"><div class="card"></div></div>
+
+## content (src/scss/02-layout/_content.scss) — host-styled
+Markup emitted by: app template Layout blocks. the .content region and its title/actions rows are placeholders of the Layout block. Do not generate this markup.
 
 ## counter (src/scss/04-patterns/05-numbers/_counter.scss)
 Skeleton (from stories/Counter.stories.ts): <div><div><div class="font-size-display text-neutral-0">26</div><div>Completed requests</div><div><i class="icon ph ph-check"></i></div></div></div>
@@ -78,6 +97,15 @@ Skeleton (from stories/FloatingContent.stories.ts): <div><div>Screen content scr
 Skeleton (from stories/widgets/Form.stories.ts): <form data-form="" action="" novalidate=""><div><label data-label="" for="form-name">Name</label><span class="input-text"><input data-input="" class="form-control" required="" type="text" id="form-name" placeholder="Enter your name" aria-required="true" maxlength="100" value=""></span><div><button data-button="" class="btn btn-primary" type="button">Submit</button></div></div></form>
 CSS API: --osui-form-field-spacing
 
+## header (src/scss/02-layout/_header.scss) — host-styled
+Markup emitted by: app template Layout blocks. the header is a placeholder group of the Layout block. Do not generate this markup.
+
+## header-layout-native (src/scss/02-layout/_header-layout-native.scss) — host-styled
+Markup emitted by: app template Layout blocks (native). header variant of the native layout. Do not generate this markup.
+
+## header-layout-side (src/scss/02-layout/_header-layout-side.scss) — host-styled
+Markup emitted by: app template Layout blocks (side menu). header variant of the side-menu layout. Do not generate this markup.
+
 ## icon-badge (src/scss/04-patterns/05-numbers/_icon-badge.scss)
 Skeleton (from stories/IconBadge.stories.ts): <div><div><i class="icon ph ph-bell"></i></div><div><span class="OSFillParent"></span></div></div>
 CSS API: --osui-icon-badge-ring-color --osui-icon-badge-shadow
@@ -90,6 +118,13 @@ CSS API: --osui-input-with-icon-icon-color --osui-input-with-icon-icon-hover-col
 Skeleton (from stories/widgets/Input.stories.ts): <span class="input-text"><input data-input="" class="form-control" type="text" placeholder="Enter your name" aria-required="false" maxlength="100" value=""></span>
 CSS API: --osui-input-background --osui-input-border-color --osui-input-hover-border-color --osui-input-color --osui-input-border-radius --osui-textarea-border-radius --osui-input-focus-border-color --osui-input-focus-ring-color --osui-input-error-border-color
 
+## ios-bounce (src/scss/02-layout/_ios-bounce.scss) — host-styled
+Markup emitted by: platform runtime (iOS). a fix applied to the native layout by the runtime; no markup of its own. Do not generate this markup.
+
+## layout (src/scss/02-layout/_layout.scss) — host-styled
+Markup emitted by: app template Layout blocks. the screen layout skeleton (.screen-container > .layout) comes from the template's Layout block. Do not generate this markup.
+CSS API: --osui-layout-main-padding --osui-layout-aside-lines
+
 ## lightbox-image (src/scss/04-patterns/03-interaction/_lightbox-image.scss)
 Skeleton (from stories/LightboxImage.stories.ts): <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true"><div class="pswp__bg"></div><div class="pswp__scroll-wrap"><div class="pswp__container"><div class="pswp__item"></div><div class="pswp__item"></div><div class="pswp__item"></div></div><div class="pswp__ui pswp__ui--hidden"><div class="pswp__top-bar"><div class="pswp__counter"></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button><button class="pswp__button pswp__button--share" title="Share"></button><button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button><button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class="pswp__preloader"><div class="psw
 
@@ -100,12 +135,33 @@ Skeleton (from stories/widgets/List.stories.ts): <div class="list list-group"><d
 Skeleton (from stories/ListItemContent.stories.ts): <div> List Item Content is used inside a List Item, within a List widget. See the composed example: <a href="./?path=/story/widgets-list--default" target="_top">Widgets/List →</a></div>
 CSS API: --osui-list-item-content-title-color --osui-list-item-content-text-color --osui-list-item-content-text-line-height --osui-list-item-content-icon-size --osui-list-item-content-icon-color
 
+## login (src/scss/02-layout/_login.scss) — host-styled
+Markup emitted by: app template Login common screen. the login screen and its form come from the template's common screen. Do not generate this markup.
+
 ## margin-container (src/scss/04-patterns/06-utilities/_margin-container.scss)
 Skeleton (from stories/MarginContainer.stories.ts): <div><div><div class="card">Content inside a Margin Container keeps the standard screen padding (dashed line = container edge).</div></div></div>
 
 ## master-detail (src/scss/04-patterns/01-adaptive/_master-detail.scss)
 Skeleton (from stories/MasterDetail.stories.ts): <div><div class="split-left OSInline"><div class="list list-group"><div data-list-item class="list-item "><div class="list-item-content"><div class="list-item-content-center"><div class="list-item-content-title"></div></div></div></div><div data-list-item class="list-item "><div class="list-item-content"><div class="list-item-content-center"><div class="list-item-content-title"></div></div></div></div><div data-list-item class="list-item "><div class="list-item-content"><div class="list-item-content-center"><div class="list-item-content-title"></div></div></div></div></div></div><div><div class="split-right-content"><h2>Inbox</h2><p>Select an item from the list.</p></div></div></div>
 CSS API: --osui-master-detail-background --osui-master-detail-border-color --osui-master-detail-border-radius
+
+## menu (src/scss/02-layout/_menu.scss) — host-styled
+Markup emitted by: app template Menu block. the application menu container and overlay come from the Menu block. Do not generate this markup.
+
+## menu-app-login-info (src/scss/02-layout/_menu-app-login-info.scss) — host-styled
+Markup emitted by: app template Menu block. the signed-in user block is part of the Menu block. Do not generate this markup.
+
+## menu-app-menu-links (src/scss/02-layout/_menu-app-menu-links.scss) — host-styled
+Markup emitted by: app template Menu block. the navigation links are generated by the Menu block from the app's screens. Do not generate this markup.
+
+## menu-header-logo (src/scss/02-layout/_menu-header-logo.scss) — host-styled
+Markup emitted by: app template Menu block. the logo slot is part of the Menu block. Do not generate this markup.
+
+## menu-layout-native (src/scss/02-layout/_menu-layout-native.scss) — host-styled
+Markup emitted by: app template Menu block (native). menu variant of the native layout. Do not generate this markup.
+
+## menu-layout-side (src/scss/02-layout/_menu-layout-side.scss) — host-styled
+Markup emitted by: app template Menu block (side menu). menu variant of the side-menu layout. Do not generate this markup.
 
 ## pagination (src/scss/04-patterns/04-navigation/_pagination.scss)
 Skeleton (from stories/Pagination.stories.ts): <button class="pagination-button" aria-label="Previous page"><i class="icon ph ph-caret-left"></i></button>
@@ -118,6 +174,13 @@ CSS API: --osui-popover-background --osui-popover-color --osui-popover-border-ra
 ## popup (src/scss/03-widgets/_popup.scss)
 Skeleton (from stories/widgets/Popup.stories.ts): <div class="portal-class"><div><div class="popup-backdrop" data-popup-backdrop=""><div data-popup="" class="popup-dialog " role="dialog" aria-modal="true"><div class="popup-content"><h2>Confirm action</h2><p>The platform Popup widget renders a centered dialog over a backdrop.</p></div></div></div></div></div>
 CSS API: --osui-popup-background --osui-popup-border-color --osui-popup-border-width --osui-popup-border-radius --osui-popup-shadow --osui-popup-padding --osui-popup-max-width
+
+## provider-login-button (src/scss/04-patterns/06-utilities/_provider-login-button.scss)
+Skeleton (from stories/ProviderLoginButton.stories.ts): <span class="btn-provider-login-logo" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="currentColor" opacity="0.2"></circle></svg></span>
+CSS API: --osui-provider-login-button-background --osui-provider-login-button-border-color --osui-provider-login-button-color
+
+## pull-to-refresh (src/scss/04-patterns/06-utilities/_pull-to-refresh.scss) — host-styled
+Markup emitted by: platform runtime (native). the pull indicator is injected by the platform runtime. Do not generate this markup.
 
 ## radio-button (src/scss/03-widgets/_radio-button.scss)
 Skeleton (from stories/widgets/RadioGroup.stories.ts): <div data-radio-group="" class="radio-group" role="radiogroup"><div><div data-radio-button=""><input type="radio" id="radio-" class="radio-button" name="radiogroup" tabindex="" value=""><label for="radio-"></label></div><div data-radio-button=""><input type="radio" id="radio-" class="radio-button" name="radiogroup" tabindex="" value=""><label for="radio-"></label></div><div data-radio-button=""><input type="radio" id="radio-" class="radio-button" name="radiogroup" tabindex="" value=""><label for="radio-"></label></div></div></div>
@@ -151,6 +214,9 @@ CSS API: --osui-table-border-color --osui-table-border-radius --osui-table-heade
 ## tag (src/scss/04-patterns/02-content/_tag.scss)
 Skeleton (from stories/Tag.stories.ts): <div>Label</div>
 CSS API: --osui-tag-color --osui-tag-on-light-color --osui-tag-soft-border-radius --osui-tag-medium-soft-border-radius
+
+## themegrid-container (src/scss/02-layout/_themegrid-container.scss) — host-styled
+Markup emitted by: app template Layout blocks. the grid container wraps header, content and footer placeholders of the Layout block. Do not generate this markup.
 
 ## timeline (src/scss/04-patterns/04-navigation/_timeline.scss)
 Skeleton (from stories/Timeline.stories.ts): <div class="timeline" role="list"><div role="listitem"><div class="timeline-left OSInline"></div><div class="timeline-icon OSInline"><div class="timeline-icon-line OSInline"></div><div><i class="icon ph "></i></div></div><div class="timeline-content"><div></div><div class="timeline-content-inner"></div></div></div><div role="listitem"><div class="timeline-left OSInline"></div><div class="timeline-icon OSInline"><div class="timeline-icon-line OSInline"></div><div><i class="icon ph "></i></div></div><div class="timeline-content"><div></div><div class="timeline-content-inner"></div></div></div><div role="listitem"><div class="timeline-left OSInline"></div><div class="timeline-icon OSInline"><di
