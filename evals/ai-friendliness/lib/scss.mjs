@@ -166,11 +166,48 @@ export function analyseSelectors(css) {
 	};
 }
 
-const THEMEABLE =
-	/^(color|background|background-color|border|border-(top|right|bottom|left|block|inline)(-(start|end))?|border(-(top|right|bottom|left|block|inline)(-(start|end))?)?-(color|width)|border(-[a-z]+)*-radius|box-shadow|text-shadow|outline|outline-(color|width)|padding|padding-[a-z-]+|margin|margin-[a-z-]+|gap|row-gap|column-gap|inset|inset-[a-z-]+|top|right|bottom|left|font-size|line-height|fill|stroke)$/;
+const THEMEABLE_EXACT = new Set([
+	'color',
+	'background',
+	'background-color',
+	'border',
+	'box-shadow',
+	'text-shadow',
+	'outline',
+	'outline-color',
+	'outline-width',
+	'padding',
+	'margin',
+	'gap',
+	'row-gap',
+	'column-gap',
+	'inset',
+	'top',
+	'right',
+	'bottom',
+	'left',
+	'font-size',
+	'line-height',
+	'fill',
+	'stroke',
+]);
+const THEMEABLE_PREFIXES = ['padding-', 'margin-', 'inset-'];
+
+/**
+ * Properties whose value is a colour, space, radius, shadow or type size — the ones a theme or a
+ * component knob is expected to drive.
+ * @param {string} prop lower-case property name
+ */
+export function isThemeableProp(prop) {
+	if (THEMEABLE_EXACT.has(prop)) return true;
+	if (THEMEABLE_PREFIXES.some((p) => prop.startsWith(p))) return true;
+	if (!prop.startsWith('border-')) return false;
+	// border sides/axes (`border-inline-start`), their colour/width, and every radius longhand
+	return prop.endsWith('-radius') || prop.endsWith('-color') || prop.endsWith('-width') || /^border-(top|right|bottom|left|block|inline)(-(start|end))?$/.test(prop);
+}
 
 const COLOR_LITERAL = /#[0-9a-f]{3,8}\b|\b(rgb|rgba|hsl|hsla)\(|(?<![\w-])(white|black)(?![\w-])/i;
-const SIZE_LITERAL = /(?<![\w.-])(-?\d*\.?\d+)(px|rem|em|pt)(?![\w-])/gi;
+const SIZE_TOKEN = /^-?(\d+\.?\d*|\.\d+)(px|rem|em|pt)$/i;
 
 /**
  * True when the value carries a raw colour or a non-zero px/rem/em/pt number.
@@ -178,8 +215,9 @@ const SIZE_LITERAL = /(?<![\w.-])(-?\d*\.?\d+)(px|rem|em|pt)(?![\w-])/gi;
  */
 export function isLiteralValue(value) {
 	if (COLOR_LITERAL.test(value)) return true;
-	for (const m of value.matchAll(SIZE_LITERAL)) {
-		if (Number.parseFloat(m[1]) !== 0) return true;
+	for (const token of value.split(/[\s,()/]+/)) {
+		const m = SIZE_TOKEN.exec(token);
+		if (m && Number.parseFloat(m[1]) !== 0) return true;
 	}
 	return false;
 }
@@ -202,7 +240,7 @@ export function analyseDeclarations(css) {
 	root.walkDecls((decl) => {
 		const prop = decl.prop.toLowerCase();
 		const isKnob = prop.startsWith('--osui-');
-		if (!isKnob && !THEMEABLE.test(prop)) return;
+		if (!isKnob && !isThemeableProp(prop)) return;
 		if (prop.startsWith('--') && !isKnob) return;
 		total++;
 		if (isKnob) knobs++;
@@ -226,12 +264,34 @@ export function analyseDeclarations(css) {
  * @param {string} css
  */
 export function resolveTokenFallbacks(css) {
+	const marker = 'var(--token-';
 	let out = css;
-	const re = /var\(\s*--token-[\w-]+\s*,\s*/g;
-	// iterate until stable: each pass unwraps the innermost var(--token-…, X)
-	for (let i = 0; i < 20 && re.test(out); i++) {
-		out = out.replace(/var\(\s*--token-[\w-]+\s*,\s*([^()]*?(?:\([^()]*\)[^()]*?)*)\)/g, '$1');
-		re.lastIndex = 0;
+	let from = 0;
+	for (;;) {
+		const start = out.indexOf(marker, from);
+		if (start < 0) return out;
+		// walk to the matching parenthesis, remembering the first top-level comma
+		let depth = 0;
+		let comma = -1;
+		let end = -1;
+		for (let i = start + 'var'.length; i < out.length; i++) {
+			const ch = out[i];
+			if (ch === '(') depth++;
+			else if (ch === ')') {
+				depth--;
+				if (depth === 0) {
+					end = i;
+					break;
+				}
+			} else if (ch === ',' && depth === 1 && comma < 0) comma = i;
+		}
+		if (end < 0) return out;
+		if (comma < 0) {
+			// no fallback: nothing to resolve, keep scanning after this var()
+			from = end + 1;
+			continue;
+		}
+		out = out.slice(0, start) + out.slice(comma + 1, end).trim() + out.slice(end + 1);
+		from = start; // the fallback may itself contain a var(--token-…)
 	}
-	return out;
 }

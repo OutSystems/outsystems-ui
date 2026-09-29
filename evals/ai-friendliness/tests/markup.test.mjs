@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 
-import { extractTemplates, measureHtml, measureStory } from '../lib/markup.mjs';
+import { extractTemplates, measureHtml, measureStory, scanTags } from '../lib/markup.mjs';
 
 test('measureHtml counts nesting depth, elements and class names', () => {
 	const r = measureHtml('<div><div class="a b"><span>x</span></div><img src="x"/><input></div>');
@@ -53,4 +53,13 @@ test('measureStory picks the deepest template of a story source', () => {
 	assert.equal(r.depth, 4);
 	assert.equal(r.elements, 4);
 	assert.equal(r.templates, 2);
+});
+
+test('scanTags reads tags without regular expressions and skips stray angle brackets', () => {
+	const tags = scanTags('a < b <div class="x"><br/></div> <3 <span>');
+	assert.deepEqual(
+		tags.map((t) => `${t.closing ? '/' : ''}${t.tag}`),
+		['div', 'br', '/div', 'span']
+	);
+	assert.equal(tags[0].attrs, ' class="x"');
 });

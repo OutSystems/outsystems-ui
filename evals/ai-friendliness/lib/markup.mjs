@@ -137,8 +137,43 @@ export function extractTemplates(source) {
  * Nesting depth, element count and class names of an HTML fragment.
  * @param {string} html
  */
+/**
+ * Tags of an HTML fragment, scanned without regular expressions: `<`, optional `/`, a name starting
+ * with a letter, then everything up to the next `>` (a `<` before that aborts the candidate).
+ * @param {string} html
+ * @returns {{ closing: boolean, tag: string, attrs: string }[]}
+ */
+export function scanTags(html) {
+	/** @type {{ closing: boolean, tag: string, attrs: string }[]} */
+	const tags = [];
+	const isNameChar = (/** @type {string} */ ch) => /[\w-]/.test(ch);
+	let i = 0;
+	while (i < html.length) {
+		const open = html.indexOf('<', i);
+		if (open < 0) break;
+		let j = open + 1;
+		const closing = html[j] === '/';
+		if (closing) j++;
+		const nameStart = j;
+		if (!/[a-zA-Z]/.test(html[j] ?? '')) {
+			i = open + 1;
+			continue;
+		}
+		while (j < html.length && isNameChar(html[j])) j++;
+		const tag = html.slice(nameStart, j);
+		const end = html.indexOf('>', j);
+		const nextOpen = html.indexOf('<', j);
+		if (end < 0 || (nextOpen >= 0 && nextOpen < end)) {
+			i = open + 1;
+			continue;
+		}
+		tags.push({ closing, tag, attrs: html.slice(j, end) });
+		i = end + 1;
+	}
+	return tags;
+}
+
 export function measureHtml(html) {
-	const re = /<(\/)?([a-zA-Z][\w-]*)([^<>]*)>/g;
 	let depth = 0;
 	let max = 0;
 	let elements = 0;
@@ -146,8 +181,7 @@ export function measureHtml(html) {
 	const classes = new Set();
 	/** @type {Set<string>} */
 	const signatures = new Set();
-	for (const m of html.matchAll(re)) {
-		const [, closing, tag, attrs] = m;
+	for (const { closing, tag, attrs } of scanTags(html)) {
 		if (closing) {
 			depth = Math.max(0, depth - 1);
 			continue;
@@ -165,7 +199,8 @@ export function measureHtml(html) {
 				});
 		}
 		// repeated siblings (list items, table rows) share one signature: an agent learns the part once
-		signatures.add(`${tag.toLowerCase()}.${own.sort(byCodePoint).join('.')}`);
+		own.sort(byCodePoint);
+		signatures.add(`${tag.toLowerCase()}.${own.join('.')}`);
 		if (VOID_ELEMENTS.has(tag.toLowerCase()) || /\/\s*$/.test(attrs)) continue;
 		depth++;
 		if (depth > max) max = depth;

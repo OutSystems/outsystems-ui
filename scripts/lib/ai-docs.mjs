@@ -216,11 +216,11 @@ function publicTypeText(prop, allowed) {
 export function cleanMarkup(html) {
 	if (!html) return '';
 	let out = html
-		.replace(/\s+style="[^"]*"/g, '')
-		.replace(/\$\{[^}]*\}/g, '')
-		.replace(/\s+class=""/g, '')
-		.replace(/>\s+</g, '><')
 		.replace(/\s+/g, ' ')
+		.replace(/ style="[^"]*"/g, '')
+		.replace(/\$\{[^}]*\}/g, '')
+		.replace(/ class=""/g, '')
+		.replace(/> </g, '><')
 		.trim();
 	if (out.length > MARKUP_CAP) out = `${out.slice(0, MARKUP_CAP)}…`;
 	return out;
@@ -444,14 +444,42 @@ export const SINGLE_THEME_SCOPE =
 	'Scope: OutSystems UI ships a single token-based theme (light, plus the generated dark mode under class os-dark-theme on <html>). The pre-migration "classic" CSS snapshot under classic-theme/ is a Storybook comparison artifact, not a target for generated code.';
 
 /**
+ * Theme-layer custom properties declared in `_root.scss`: literal declarations (`--color-text: …`) and
+ * `@each`-generated families (`--color-#{$color}: …` → `--color-<color>`), in source order.
+ * @param {string} rootScss
+ */
+export function themeRolesOf(rootScss) {
+	/** @type {Set<string>} */
+	const roles = new Set();
+	/** @type {Set<string>} */
+	const generated = new Set();
+	for (const line of rootScss.split('\n')) {
+		const t = line.trim();
+		if (!t.startsWith('--')) continue;
+		const colon = t.indexOf(':');
+		if (colon < 0) continue;
+		const name = t.slice(0, colon).trim();
+		const interp = name.indexOf('#{$');
+		if (interp < 0) {
+			roles.add(name);
+			continue;
+		}
+		const close = name.indexOf('}', interp);
+		if (close < 0) continue;
+		const variable = name.slice(interp + '#{$'.length, close);
+		generated.add(`${name.slice(0, interp)}<${variable}>`);
+	}
+	return { roles: [...roles], generated: [...generated] };
+}
+
+/**
  * llms-tokens.txt — theme roles and component knobs.
  * @param {import('../../evals/ai-friendliness/lib/context.mjs').EvalContext} ctx
  * @param {ReturnType<typeof buildManifest>} manifest
  */
 export function renderTokens(ctx, manifest) {
 	const rootScss = ctx.readText(path.join(ctx.root, 'src', 'scss', '01-foundations', '_root.scss'));
-	const roles = [...new Set([...rootScss.matchAll(/^\s*(--[a-z][\w-]*)\s*:/gm)].map((m) => m[1]))];
-	const generated = [...rootScss.matchAll(/--([a-z-]+)-#\{\$(\w+)\}/g)].map((m) => `--${m[1]}-<${m[2]}>`);
+	const { roles, generated } = themeRolesOf(rootScss);
 	const legacyNote =
 		' — legacy alias kept for GetColorValueFromColorType / GetBorderRadiusValueFromShapeType / Gallery ItemsGap; prefer --osui-* knobs or --token-*';
 	const roleLine = (/** @type {string} */ r, /** @type {string} */ suffix = '') =>
