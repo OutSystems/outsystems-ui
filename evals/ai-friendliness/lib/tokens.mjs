@@ -29,7 +29,7 @@ export function countTokens(text) {
  */
 export function countFileTokens(file) {
 	const text = fs.readFileSync(file, 'utf8');
-	const hash = createHash('sha1').update(text).digest('hex');
+	const hash = createHash('sha256').update(text).digest('hex');
 	const hit = cache.get(file);
 	if (hit && hit.hash === hash) return hit.tokens;
 	const tokens = countTokens(text);

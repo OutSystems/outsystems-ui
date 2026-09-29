@@ -38,12 +38,14 @@ jobs:
               with:
                   node-version: 24
 
-            # .npmrc carries min-release-age-exclude[], which needs npm >= 11.17
+            # .npmrc carries min-release-age-exclude[], which needs npm >= 11.17 (pinned to the volta version)
             - name: 📦 Ensure npm >= 11.17
-              run: npm install -g npm@11
+              run: npm install -g npm@11.18.0 --ignore-scripts
 
+            # No lockfile is committed in this repository (see .gitignore); .npmrc's min-release-age
+            # policy is the supply-chain guard. Lifecycle scripts are not needed by the evals.
             - name: 🕸️ Install project dependencies
-              run: npm install
+              run: npm install --ignore-scripts
 
             - name: 🎨 Generate design tokens (the SCSS evals compile against them)
               run: npm run build:tokens

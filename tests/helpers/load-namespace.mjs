@@ -9,6 +9,7 @@
  * fresh root objects for the namespaces the file declares plus anything passed in `globals`.
  */
 import fs from 'node:fs';
+import vm from 'node:vm';
 
 import ts from 'typescript';
 
@@ -32,9 +33,11 @@ export function loadNamespaceFile(file, globals = {}) {
 		if (!(m[1] in context)) context[m[1]] = {};
 	}
 	const names = Object.keys(context);
+	// The evaluated text is repository source compiled by TypeScript in this test process — never
+	// external input. It is compiled as a function whose parameters are the namespace roots:
 	// `var OSFramework;` inside the body re-declares the parameter without resetting it, so the
 	// IIFE populates the object we pass in.
-	// eslint-disable-next-line no-new-func
-	new Function(...names, outputText)(...names.map((n) => context[n]));
+	const factory = vm.runInThisContext(`(function (${names.join(', ')}) {\n${outputText}\n})`, { filename: file });
+	factory(...names.map((n) => context[n]));
 	return context;
 }
