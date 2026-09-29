@@ -13,6 +13,7 @@ import {
 	renderComponentCards,
 	renderIndex,
 	renderTokens,
+	renderUtilities,
 	resolveEnumReference,
 } from '../scripts/lib/ai-docs.mjs';
 
@@ -105,10 +106,34 @@ test('component cards stay within the token budget and cover every pattern', () 
 	);
 });
 
+test('utilities document lists every token-generated utility class grouped by family', () => {
+	const doc = renderUtilities(ctx);
+	assert.match(doc, /^## Spacing · margin/m);
+	assert.match(doc, /\bmargin-top-base\b/);
+	assert.match(doc, /\bdisplay-flex\b/);
+	assert.match(doc, /\bbackground-red-lightest\b/);
+	const classes = new Set(doc.match(/(?<=^|\s)[a-z][a-z0-9-]*(?=\s|$)/gm));
+	assert.ok(classes.size >= 500, `only ${classes.size} classes listed`);
+	assert.ok(countTokens(doc) <= 3500, `llms-utilities.txt is ${countTokens(doc)} tokens`);
+	assert.match(doc, /^## Spacing · margin \(\d+; reads \$token-(space|scale)-\*/m, 'families state the token family they read');
+});
+
+test('tokens document marks the classic-compatible aliases and states the single-theme scope', () => {
+	const tokens = renderTokens(ctx, manifest);
+	assert.match(tokens, /single token-based theme/i);
+	assert.match(tokens, /^- --color-neutral-0 .*legacy alias/m);
+	assert.match(tokens, /^- --border-radius-soft .*legacy alias/m);
+	assert.match(tokens, /^- --space-<type> .*legacy alias/m);
+	assert.doesNotMatch(tokens, /^- --color-primary .*legacy alias/m, 'real roles are not marked');
+	assert.match(tokens, /GetColorValueFromColorType/, 'the runtime readers that keep the aliases alive are named');
+});
+
 test('index and tokens documents are compact and name every pattern / theme role', () => {
 	const index = renderIndex(manifest);
 	assert.ok(countTokens(index) <= 1500, `llms.txt is ${countTokens(index)} tokens`);
 	for (const p of ctx.inventory.patterns) assert.ok(index.includes(p.name), `${p.name} missing from llms.txt`);
+	assert.match(index, /llms-utilities\.txt/);
+	assert.match(index, /single token-based theme/i);
 	const tokens = renderTokens(ctx, manifest);
 	assert.match(tokens, /--color-primary/);
 	assert.match(tokens, /--osui-card-padding/);

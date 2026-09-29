@@ -1,0 +1,79 @@
+# OutSystems UI — utility classes
+
+Scope: OutSystems UI ships a single token-based theme (light, plus the generated dark mode under class os-dark-theme on <html>). The pre-migration "classic" CSS snapshot under classic-theme/ is a Storybook comparison artifact, not a target for generated code.
+
+554 classes in 24 families, generated from src/scss/05-useful and the design tokens.
+Long-form names only (margin-top-base, display-flex, justify-content-space-between); Tailwind-style short names do not exist. Responsive variants come from the body classes phone / tablet / desktop, not from prefixes. Size scale: none xs s base m l xl xxl.
+
+## Accessibility (5; reads $token-scale-*)
+focus-trap-bottom focus-trap-top has-accessible-features skip-nav wcag-hide-text
+
+## Border radius & shape (32; reads $token-border-radius-*, $token-scale-*, $token-shape-rectangular-*, $token-shape-round-*, $token-shape-soft-*)
+border-radius-bottom-circle border-radius-bottom-left-circle border-radius-bottom-left-none border-radius-bottom-left-rounded border-radius-bottom-left-soft border-radius-bottom-none border-radius-bottom-right-circle border-radius-bottom-right-none border-radius-bottom-right-rounded border-radius-bottom-right-soft border-radius-bottom-rounded border-radius-bottom-soft border-radius-circle border-radius-none border-radius-rounded border-radius-soft border-radius-top-circle border-radius-top-left-circle border-radius-top-left-none border-radius-top-left-rounded border-radius-top-left-soft border-radius-top-none border-radius-top-right-circle border-radius-top-right-none border-radius-top-right-rounded border-radius-top-right-soft border-radius-top-rounded border-radius-top-soft scss shape-rectangular shape-round shape-soft
+
+## Border size (19; reads $token-border-size-*, $token-scale-*)
+border-bottom-l border-bottom-m border-bottom-s border-left-l border-left-m border-left-s border-right-l border-right-m border-right-s border-size-l border-size-m border-size-none border-size-s border-top-l border-top-m border-top-s columns columns-item scss
+
+## Box height (6)
+auto-height full-height full-height-minus-header full-height-vh half-height half-height-vh
+
+## Box width (4)
+full-width full-width-vw half-width half-width-vw
+
+## Colours · brand (8; reads $token-bg-surface-*, $token-primitives-base-*, $token-primitives-blue-*, $token-semantics-primary-*, --color-*)
+background-primary background-primary-lightest background-secondary background-secondary-lightest text-primary text-primary-darker text-secondary text-secondary-darker
+
+## Colours · neutral (40; reads $token-bg-surface-*, $token-primitives-base-*, --color-*)
+background-neutral-0 background-neutral-0-lightest background-neutral-1 background-neutral-1-lightest background-neutral-10 background-neutral-10-lightest background-neutral-2 background-neutral-2-lightest background-neutral-3 background-neutral-3-lightest background-neutral-4 background-neutral-4-lightest background-neutral-5 background-neutral-5-lightest background-neutral-6 background-neutral-6-lightest background-neutral-7 background-neutral-7-lightest background-neutral-8 background-neutral-8-lightest background-neutral-9 background-neutral-9-lightest scss text-neutral-0 text-neutral-1 text-neutral-10 text-neutral-10-darker text-neutral-2 text-neutral-3 text-neutral-4 text-neutral-5 text-neutral-5-darker text-neutral-6 text-neutral-6-darker text-neutral-7 text-neutral-7-darker text-neutral-8 text-neutral-8-darker text-neutral-9 text-neutral-9-darker
+
+## Colours · other (1)
+background-transparent
+
+## Colours · palette (169; reads $token-bg-danger-*, $token-bg-extended-*, $token-bg-info-*, $token-bg-success-*, $token-bg-warning-*, $token-primitives-aqua-*, $token-primitives-blue-*, $token-primitives-green-*, $token-primitives-indigo-*, $token-primitives-lime-*, $token-primitives-orange-*, $token-primitives-pink-*, $token-primitives-purple-*, $token-primitives-red-*, $token-primitives-teal-*, $token-primitives-violet-*, $token-primitives-yellow-*, $token-semantics-danger-*, $token-semantics-success-*, --color-*)
+background-blue background-blue-dark background-blue-darker background-blue-darkest background-blue-light background-blue-lighter background-blue-lightest background-cyan background-cyan-dark background-cyan-darker background-cyan-darkest background-cyan-light background-cyan-lighter background-cyan-lightest background-grape background-grape-dark background-grape-darker background-grape-darkest background-grape-light background-grape-lighter background-grape-lightest background-green background-green-dark background-green-darker background-green-darkest background-green-light background-green-lighter background-green-lightest background-indigo background-indigo-dark background-indigo-darker background-indigo-darkest background-indigo-light background-indigo-lighter background-indigo-lightest background-lime background-lime-dark background-lime-darker background-lime-darkest background-lime-light background-lime-lighter background-lime-lightest background-orange background-orange-dark background-orange-darker background-orange-darkest background-orange-light background-orange-lighter background-orange-lightest background-pink background-pink-dark background-pink-darker background-pink-darkest background-pink-light background-pink-lighter background-pink-lightest background-red background-red-dark background-red-darker background-red-darkest background-red-light background-red-lighter background-red-lightest background-teal background-teal-dark background-teal-darker background-teal-darkest background-teal-light background-teal-lighter background-teal-lightest background-violet background-violet-dark background-violet-darker background-violet-darkest background-violet-light background-violet-lighter background-violet-lightest background-yellow background-yellow-dark background-yellow-darker background-yellow-darkest background-yellow-light background-yellow-lighter background-yellow-lightest scss text-blue text-blue-dark text-blue-darker text-blue-darkest text-blue-light text-blue-lighter text-blue-lightest text-cyan text-cyan-dark text-cyan-darker text-cyan-darkest text-cyan-light text-cyan-lighter text-cyan-lightest text-grape text-grape-dark text-grape-darker text-grape-darkest text-grape-light text-grape-lighter text-grape-lightest text-green text-green-dark text-green-darker text-green-darkest text-green-light text-green-lighter text-green-lightest text-indigo text-indigo-dark text-indigo-darker text-indigo-darkest text-indigo-light text-indigo-lighter text-indigo-lightest text-lime text-lime-dark text-lime-darker text-lime-darkest text-lime-light text-lime-lighter text-lime-lightest text-orange text-orange-dark text-orange-darker text-orange-darkest text-orange-light text-orange-lighter text-orange-lightest text-pink text-pink-dark text-pink-darker text-pink-darkest text-pink-light text-pink-lighter text-pink-lightest text-red text-red-dark text-red-darker text-red-darkest text-red-light text-red-lighter text-red-lightest text-teal text-teal-dark text-teal-darker text-teal-darkest text-teal-light text-teal-lighter text-teal-lightest text-violet text-violet-dark text-violet-darker text-violet-darkest text-violet-light text-violet-lighter text-violet-lightest text-yellow text-yellow-dark text-yellow-darker text-yellow-darkest text-yellow-light text-yellow-lighter text-yellow-lightest
+
+## Colours · semantic (17; reads $token-primitives-blue-*, $token-primitives-green-*, $token-primitives-red-*, $token-primitives-yellow-*, $token-semantics-danger-*, $token-semantics-info-*, $token-semantics-success-*, $token-semantics-warning-*)
+background-error background-error-light background-info background-info-light background-success background-success-light background-warning background-warning-light scss text-error text-error-light text-info text-info-light text-success text-success-light text-warning text-warning-light
+
+## Display · alignment (28)
+align-content-baseline align-content-center align-content-flex-end align-content-flex-start align-content-space-around align-content-space-between align-content-space-evenly align-content-stretch align-items-baseline align-items-center align-items-flex-end align-items-flex-start align-items-initial align-items-stretch align-self-baseline align-self-center align-self-flex-end align-self-flex-start align-self-stretch bottom-center bottom-left bottom-right center center-left center-right top-center top-left top-right
+
+## Display · flex (38; reads $token-scale-*)
+column-gap-base column-gap-l column-gap-m column-gap-s column-gap-xl column-gap-xs column-gap-xxl display-flex flex-direction-column flex-direction-column-reverse flex-direction-row flex-direction-row-reverse flex-nowrap flex-wrap flex-wrap-reverse flex1 flex2 flex3 gap-base gap-l gap-m gap-s gap-xl gap-xs gap-xxl justify-content-center justify-content-flex-end justify-content-flex-start justify-content-space-around justify-content-space-between justify-content-space-evenly row-gap-base row-gap-l row-gap-m row-gap-s row-gap-xl row-gap-xs row-gap-xxl
+
+## Display (7)
+display-block display-contents display-grid display-inline display-inline-block display-inline-flex display-none
+
+## Images (4; reads $token-bg-surface-*, $token-border-size-*, $token-primitives-base-*, $token-scale-*, --color-*)
+img-circle img-cover img-rounded thumbnail
+
+## Miscellaneous (7)
+no-transform no-transition phone phone-full-width sticky-observer tablet tablet-full-width
+
+## Overflow (3)
+overflow-hidden overflow-horizontal overflow-vertical
+
+## Positioning · absolute (15)
+absolute-bottom absolute-bottom-left absolute-bottom-right absolute-center absolute-center-bottom absolute-center-left absolute-center-right absolute-center-top absolute-left absolute-right absolute-top absolute-top-left absolute-top-plus-header absolute-top-right position-absolute
+
+## Positioning (3)
+fixed position-relative sticky
+
+## Shadow (7; reads $token-elevation-*, $token-shadow-*, $token-shadow-blur-*, $token-shadow-offset-*, $token-shadow-spread-*)
+scss shadow-l shadow-m shadow-none shadow-s shadow-xl shadow-xs
+
+## Spacing · margin (58; reads $token-scale-*)
+margin-auto margin-base margin-bottom-base margin-bottom-l margin-bottom-m margin-bottom-none margin-bottom-s margin-bottom-xl margin-bottom-xs margin-bottom-xxl margin-l margin-left-base margin-left-l margin-left-m margin-left-none margin-left-s margin-left-xl margin-left-xs margin-left-xxl margin-m margin-none margin-right-base margin-right-l margin-right-m margin-right-none margin-right-s margin-right-xl margin-right-xs margin-right-xxl margin-s margin-top-base margin-top-l margin-top-m margin-top-none margin-top-s margin-top-xl margin-top-xs margin-top-xxl margin-x-base margin-x-l margin-x-m margin-x-none margin-x-s margin-x-xl margin-x-xs margin-x-xxl margin-xl margin-xs margin-xxl margin-y-base margin-y-l margin-y-m margin-y-none margin-y-s margin-y-xl margin-y-xs margin-y-xxl scss
+
+## Spacing · padding (58; reads $token-scale-*)
+padding-auto padding-base padding-bottom-base padding-bottom-l padding-bottom-m padding-bottom-none padding-bottom-s padding-bottom-xl padding-bottom-xs padding-bottom-xxl padding-l padding-left-base padding-left-l padding-left-m padding-left-none padding-left-s padding-left-xl padding-left-xs padding-left-xxl padding-m padding-none padding-right-base padding-right-l padding-right-m padding-right-none padding-right-s padding-right-xl padding-right-xs padding-right-xxl padding-s padding-top-base padding-top-l padding-top-m padding-top-none padding-top-s padding-top-xl padding-top-xs padding-top-xxl padding-x-base padding-x-l padding-x-m padding-x-none padding-x-s padding-x-xl padding-x-xs padding-x-xxl padding-xl padding-xs padding-xxl padding-y-base padding-y-l padding-y-m padding-y-none padding-y-s padding-y-xl padding-y-xs padding-y-xxl scss
+
+## Text (6)
+break-word is-rtl text-align-center text-align-left text-align-right white-space-nowrap
+
+## Typography (16; reads $token-font-size-*, $token-font-weight-*)
+bold font-bold font-light font-regular font-semi-bold font-size-base font-size-label font-size-s font-size-xs italic oblique scss text-capitalize text-ellipsis text-lowercase text-uppercase
+
+## Visibility (3)
+hidden hide-on-service-studio hide-scrollbar
+

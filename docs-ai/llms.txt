@@ -2,6 +2,8 @@
 
 > Browser-side TypeScript behaviours + SCSS for the OutSystems UI patterns (O11 Reactive/Mobile and ODC). The build emits one AMD bundle and one CSS bundle per platform (`dist/<O11|ODC>.OutSystemsUI.{js,css}`). Patterns are driven through the global namespace `OutSystems.OSUI.Patterns.<Name>API`; third-party providers (Flatpickr, Splide, noUiSlider, VirtualSelect, Floating UI) are loaded by the host app as window globals.
 
+Scope: OutSystems UI ships a single token-based theme (light, plus the generated dark mode under class os-dark-theme on <html>). The pre-migration "classic" CSS snapshot under classic-theme/ is a Storybook comparison artifact, not a target for generated code.
+
 ## Components (33)
 - Accordion: 1 props, 0 events, 9 API functions
 - AccordionItem: 5 props, 1 events, 11 API functions
@@ -39,7 +41,8 @@
 
 ## Read next
 - llms-components.txt — per-pattern card: lifecycle, typed props with defaults/allowed values, events, API signatures, CSS classes, CSS API knobs, markup skeleton
-- llms-tokens.txt — framework theme roles (--color-*, --border-radius-*, --space-*) and every --osui-* component knob
+- llms-tokens.txt — framework theme roles (--color-*, --border-radius-*) and every --osui-* component knob; legacy aliases are marked
+- llms-utilities.txt — every utility class (spacing, display, colours, typography, …) grouped by family
 - llms-patterns.txt — markup skeletons of the CSS-only components (Card, Section, Badge, Tag, layout, widgets)
 - osui.components.json — the same data, machine-readable (schema/osui.components.schema.json)
 
@@ -50,5 +53,5 @@
 4. Every runtime API function returns a JSON string envelope `{ code, isSuccess, message, value? }`; only `Create` throws (duplicate id).
 5. Styling is token-based: override CSS custom properties (`--color-primary`, `--border-radius-default`, `--osui-card-padding`), never component rules. Dark mode = class `os-dark-theme` on `<html>`.
 6. Responsiveness is class-driven: the runtime sets `phone`, `tablet` or `desktop` (and `landscape`/`portrait`) on `<body>`; write `.phone .card { … }` rather than media queries.
-7. Utility classes are long-form (`margin-top-base`, `display-flex`, `justify-content-space-between`); Tailwind-style short names do not exist.
+7. Utility classes are long-form (`margin-top-base`, `display-flex`, `justify-content-space-between`); Tailwind-style short names do not exist. The full list is in llms-utilities.txt.
 8. Logical CSS properties are the default (`padding-inline-start`, not `padding-left`); RTL is handled by the framework.

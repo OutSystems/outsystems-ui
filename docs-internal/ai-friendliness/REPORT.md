@@ -64,6 +64,16 @@ repeatable evals, ran them against this repository, and drove a behavior-preserv
 All applied changes compile for both platform targets with zero lint warnings, leave the emitted
 CSS untouched and change no runtime behavior (details in §5).
 
+**Scope assumption: a single token-based theme.** Agents target only the token theme on `dev`
+(light plus the generated dark mode). The pre-migration snapshot in `classic-theme/` is two compiled
+CSS files served by Storybook for a visual comparison toggle; it has no source, no build target and
+is absent from `dist/`. Checking the assumption changed no score: the evals never measured the
+snapshot, removing the 201 Service Studio-only preview rules from component CSS leaves E08 unchanged
+and moves E09 from 79.9 to 79.6, and no component partial reads the classic-compatible aliases.
+What it did change is scope: the 554 token-generated utility classes are now documented
+(`docs-ai/llms-utilities.txt`), the 16 legacy alias roles are marked in `llms-tokens.txt`, and the
+next-generation specification (§6) assumes one theme.
+
 ---
 
 ## 2. Top-10 AI-Friendliness Eval Suite Specification
@@ -276,7 +286,7 @@ the "billions of tokens of React/HTML/Tailwind" the research credits for high pa
 
 | # | Commit | Change | Evidence it is non-breaking |
 | --- | --- | --- | --- |
-| S-1 | `729fe256d` | `scripts/generate-ai-docs.mjs` → `docs-ai/` (manifest + JSON Schema, `llms.txt`, `llms-components.txt`, `llms-tokens.txt`, `llms-patterns.txt`); `npm run docs:ai` | files only; nothing under `src/` |
+| S-1 | `729fe256d` | `scripts/generate-ai-docs.mjs` → `docs-ai/` (manifest + JSON Schema, `llms.txt`, `llms-components.txt`, `llms-tokens.txt`, `llms-utilities.txt`, `llms-patterns.txt`); `npm run docs:ai` | files only; nothing under `src/` |
 | S-2 | `1c54735f0` | `Helper.ParseConfigs` — `Create(id, configs: string \| Record<string, unknown>)` in 33 APIs and 9 factories | string path is byte-for-byte `JSON.parse`; unit-tested; objects were rejected before, accepted now (additive) |
 | S-3 | `1c54735f0` | 4 `@ts-expect-error` replaced by typed casts / a `window.monthSelectPlugin` declaration / the true return type of `SetDeviceBreakpoints` | emitted JS identical (casts and types are erased) |
 | S-4 | `1c54735f0` | 65 implicit-any annotations (`AbstractParent` child maps, config indexing, l10n dictionaries, `GradientColor[]`, listener/window indexing, provider callbacks) | type-only |
@@ -503,11 +513,20 @@ import { Accordion, AccordionItem } from '@outsystems/ui';
 
 | Tier | Content | Budget |
 | --- | --- | --- |
-| `llms.txt` | index, gotchas, read-next | ≤ 1,500 tokens (today 1,104) |
+| `llms.txt` | index, gotchas, read-next | ≤ 1,500 tokens (today 1,196) |
 | component card | props, events, slots, knobs, skeleton | ≤ 400 tokens (today mean 435, max 645) |
 | component source | one flat file | ≤ 900 tokens (shadcn median) |
-| theming surface | roles + knobs | ≤ 4,500 tokens (today 4,218) |
+| theming surface | roles + knobs, one theme | ≤ 4,500 tokens (today 4,853 with the alias notes; drops below once the aliases retire) |
+| utilities | 554 classes by family with the token family each reads | ≤ 3,500 tokens (today 2,610) |
 | recipes | 10–15 composition recipes | ≤ 300 tokens each |
+
+**Single theme by design.** The next-generation framework ships exactly one theme: the design
+tokens, their generated dark mode, and per-component knobs. There is no classic vocabulary to
+back-port to, so the `--color-neutral-*` / `--space-*` / `--border-radius-{none,soft,rounded}`
+aliases retire together with the three runtime readers that keep them alive today
+(`GetColorValueFromColorType`, `GetBorderRadiusValueFromShapeType`, Gallery `ItemsGap`), which move
+onto tokens directly. Utility classes stay token-generated, so their list is always derivable and
+never hand-maintained.
 
 Progressive disclosure: the agent reads the index, then only the cards it needs, then source only
 when it must customize. MCP `get_component` returns the card; `get_source` the file.

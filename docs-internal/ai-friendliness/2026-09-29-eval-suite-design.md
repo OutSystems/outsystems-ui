@@ -26,6 +26,12 @@
 - Token counts use the `o200k_base` BPE (via `gpt-tokenizer`) as a cross-vendor proxy; absolute numbers differ per model, relative comparisons hold.
 - Size/space/radius literal → design-token substitutions are behavior-preserving (the shipped dark theme re-maps only colour tokens); colour literal → token substitutions change dark-theme rendering and are therefore *documented*, not applied.
 - Adding devDependencies, scripts, generated docs and tests is non-breaking for the runtime bundle.
+- **Single theme.** Agents target only the token-based theme (light plus the generated dark mode). The
+  pre-migration snapshot in `classic-theme/` is a compiled Storybook comparison artifact with no source,
+  no build target and no presence in `dist/`; it is outside every eval and every generated document.
+  Verified 2026-09-29: the inventory never read it, removing the 201 Service Studio-only preview rules
+  from component CSS leaves E08 unchanged and moves E09 by −0.3, and no component partial reads the
+  classic-compatible aliases (`--color-neutral-*`, `--space-*`, `--border-radius-none|soft|rounded`).
 
 ## 2. Research baseline → measurable criteria
 

@@ -333,12 +333,15 @@ export function renderIndex(manifest) {
 
 > Browser-side TypeScript behaviours + SCSS for the OutSystems UI patterns (O11 Reactive/Mobile and ODC). The build emits one AMD bundle and one CSS bundle per platform (\`dist/<O11|ODC>.OutSystemsUI.{js,css}\`). Patterns are driven through the global namespace \`OutSystems.OSUI.Patterns.<Name>API\`; third-party providers (Flatpickr, Splide, noUiSlider, VirtualSelect, Floating UI) are loaded by the host app as window globals.
 
+${SINGLE_THEME_SCOPE}
+
 ## Components (${names.length})
 ${rows.join('\n')}
 
 ## Read next
 - llms-components.txt — per-pattern card: lifecycle, typed props with defaults/allowed values, events, API signatures, CSS classes, CSS API knobs, markup skeleton
-- llms-tokens.txt — framework theme roles (--color-*, --border-radius-*, --space-*) and every --osui-* component knob
+- llms-tokens.txt — framework theme roles (--color-*, --border-radius-*) and every --osui-* component knob; legacy aliases are marked
+- llms-utilities.txt — every utility class (spacing, display, colours, typography, …) grouped by family
 - llms-patterns.txt — markup skeletons of the CSS-only components (Card, Section, Badge, Tag, layout, widgets)
 - osui.components.json — the same data, machine-readable (schema/osui.components.schema.json)
 
@@ -349,10 +352,20 @@ ${rows.join('\n')}
 4. Every runtime API function returns a JSON string envelope \`{ code, isSuccess, message, value? }\`; only \`Create\` throws (duplicate id).
 5. Styling is token-based: override CSS custom properties (\`--color-primary\`, \`--border-radius-default\`, \`--osui-card-padding\`), never component rules. Dark mode = class \`os-dark-theme\` on \`<html>\`.
 6. Responsiveness is class-driven: the runtime sets \`phone\`, \`tablet\` or \`desktop\` (and \`landscape\`/\`portrait\`) on \`<body>\`; write \`.phone .card { … }\` rather than media queries.
-7. Utility classes are long-form (\`margin-top-base\`, \`display-flex\`, \`justify-content-space-between\`); Tailwind-style short names do not exist.
+7. Utility classes are long-form (\`margin-top-base\`, \`display-flex\`, \`justify-content-space-between\`); Tailwind-style short names do not exist. The full list is in llms-utilities.txt.
 8. Logical CSS properties are the default (\`padding-inline-start\`, not \`padding-left\`); RTL is handled by the framework.
 `;
 }
+
+/**
+ * Classic-compatible aliases in the theme layer. They predate the token migration and survive
+ * for three runtime readers only (`GetColorValueFromColorType`, `GetBorderRadiusValueFromShapeType`,
+ * Gallery `ItemsGap`); no component SCSS reads them.
+ */
+export const LEGACY_ALIAS = /^--(color-neutral(-\d+)?|color-<color>|space-<type>|border-radius-(none|soft|rounded))$/;
+
+export const SINGLE_THEME_SCOPE =
+	'Scope: OutSystems UI ships a single token-based theme (light, plus the generated dark mode under class os-dark-theme on <html>). The pre-migration "classic" CSS snapshot under classic-theme/ is a Storybook comparison artifact, not a target for generated code.';
 
 /**
  * llms-tokens.txt — theme roles and component knobs.
@@ -363,15 +376,21 @@ export function renderTokens(ctx, manifest) {
 	const rootScss = ctx.readText(path.join(ctx.root, 'src', 'scss', '01-foundations', '_root.scss'));
 	const roles = [...new Set([...rootScss.matchAll(/^\s*(--[a-z][\w-]*)\s*:/gm)].map((m) => m[1]))];
 	const generated = [...rootScss.matchAll(/--([a-z-]+)-#\{\$(\w+)\}/g)].map((m) => `--${m[1]}-<${m[2]}>`);
+	const legacyNote =
+		' — legacy alias kept for GetColorValueFromColorType / GetBorderRadiusValueFromShapeType / Gallery ItemsGap; prefer --osui-* knobs or --token-*';
+	const roleLine = (/** @type {string} */ r, /** @type {string} */ suffix = '') =>
+		`- ${r}${suffix}${LEGACY_ALIAS.test(r) ? legacyNote : ''}`;
 	const lines = [
 		'# OutSystems UI — theming surface',
+		'',
+		SINGLE_THEME_SCOPE,
 		'',
 		'Read chain: property → var(--osui-{component}-{prop}) → var(--{role}) → $token-* → var(--token-*, fallback).',
 		'Override variables only. App/theme: set roles or --token-* at :root (dark: class os-dark-theme on <html>). Instance: set an --osui-* knob inline or in a class.',
 		'',
 		'## Framework theme roles (src/scss/01-foundations/_root.scss)',
-		...roles.map((r) => `- ${r}`),
-		...generated.map((g) => `- ${g} (generated per family)`),
+		...roles.map((r) => roleLine(r)),
+		...generated.map((g) => roleLine(g, ' (generated per family)')),
 		'',
 		'## Component CSS API knobs (--osui-*)',
 	];
@@ -412,6 +431,73 @@ export function renderCssComponents(ctx) {
 	return `${lines.join('\n')}\n`;
 }
 
+/** Human-readable family names for the utility partials under src/scss/05-useful. */
+const UTILITY_FAMILIES = {
+	_a11y: 'Accessibility',
+	'_border-radius': 'Border radius & shape',
+	'_border-size': 'Border size',
+	'_box-height': 'Box height',
+	'_box-width': 'Box width',
+	'_colors-brand': 'Colours · brand',
+	'_colors-neutral': 'Colours · neutral',
+	'_colors-others': 'Colours · other',
+	'_colors-palette': 'Colours · palette',
+	'_colors-semantic': 'Colours · semantic',
+	'_display-align': 'Display · alignment',
+	'_display-flex': 'Display · flex',
+	_display: 'Display',
+	_images: 'Images',
+	_miscellaneous: 'Miscellaneous',
+	_overflow: 'Overflow',
+	'_positioning-absolute': 'Positioning · absolute',
+	_positioning: 'Positioning',
+	_shadow: 'Shadow',
+	'_space-margin': 'Spacing · margin',
+	'_space-padding': 'Spacing · padding',
+	_text: 'Text',
+	_typography: 'Typography',
+	_visibility: 'Visibility',
+};
+
+/**
+ * llms-utilities.txt — every utility class, grouped by family, with the token family it reads.
+ * In the token theme the utilities are generated from token maps, so the list is stable and complete.
+ * @param {import('../../evals/ai-friendliness/lib/context.mjs').EvalContext} ctx
+ */
+export function renderUtilities(ctx) {
+	const dir = path.join(ctx.root, 'src', 'scss', '05-useful');
+	const lines = [
+		'# OutSystems UI — utility classes',
+		'',
+		SINGLE_THEME_SCOPE,
+		'',
+		'Long-form names only (margin-top-base, display-flex, justify-content-space-between); Tailwind-style short names do not exist. Responsive variants come from the body classes phone / tablet / desktop, not from prefixes. Size scale: none xs s base m l xl xxl.',
+		'',
+	];
+	let total = 0;
+	for (const file of fs.readdirSync(dir).filter((f) => f.endsWith('.scss')).sort()) {
+		const { css } = ctx.compiledCss(path.join(dir, file));
+		if (!css) continue;
+		/** @type {Set<string>} */
+		const classes = new Set();
+		/** @type {Set<string>} */
+		const reads = new Set();
+		for (const m of css.matchAll(/\.([a-zA-Z_][\w-]*)/g)) classes.add(m[1]);
+		for (const m of css.matchAll(/var\(--(token-[a-z]+(?:-[a-z]+)?|color|space|border-radius|shadow)/g)) {
+			reads.add(m[1].startsWith('token-') ? `$${m[1]}-*` : `--${m[1]}-*`);
+		}
+		if (classes.size === 0) continue;
+		total += classes.size;
+		const base = file.replace(/\.scss$/, '');
+		const title = UTILITY_FAMILIES[base] ?? base.replace(/^_/, '');
+		lines.push(`## ${title} (${classes.size}${reads.size ? `; reads ${[...reads].sort().join(', ')}` : ''})`);
+		lines.push([...classes].sort().join(' '));
+		lines.push('');
+	}
+	lines.splice(4, 0, `${total} classes in ${lines.filter((l) => l.startsWith('## ')).length} families, generated from src/scss/05-useful and the design tokens.`);
+	return `${lines.join('\n')}\n`;
+}
+
 /**
  * Write the whole docs set.
  * @param {import('../../evals/ai-friendliness/lib/context.mjs').EvalContext} ctx
@@ -425,6 +511,7 @@ export function writeDocs(ctx, outDir) {
 		'llms.txt': renderIndex(manifest),
 		'llms-components.txt': renderComponentCards(manifest),
 		'llms-tokens.txt': renderTokens(ctx, manifest),
+		'llms-utilities.txt': renderUtilities(ctx),
 		'llms-patterns.txt': renderCssComponents(ctx),
 	};
 	for (const [name, text] of Object.entries(files)) fs.writeFileSync(path.join(outDir, name), text);

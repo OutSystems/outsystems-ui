@@ -1,5 +1,7 @@
 # OutSystems UI — theming surface
 
+Scope: OutSystems UI ships a single token-based theme (light, plus the generated dark mode under class os-dark-theme on <html>). The pre-migration "classic" CSS snapshot under classic-theme/ is a Storybook comparison artifact, not a target for generated code.
+
 Read chain: property → var(--osui-{component}-{prop}) → var(--{role}) → $token-* → var(--token-*, fallback).
 Override variables only. App/theme: set roles or --token-* at :root (dark: class os-dark-theme on <html>). Instance: set an --osui-* knob inline or in a class.
 
@@ -33,18 +35,18 @@ Override variables only. App/theme: set roles or --token-* at :root (dark: class
 - --color-primary-selected
 - --color-primary-active
 - --color-secondary
-- --color-neutral
-- --color-neutral-0
-- --color-neutral-1
-- --color-neutral-2
-- --color-neutral-3
-- --color-neutral-4
-- --color-neutral-5
-- --color-neutral-6
-- --color-neutral-7
-- --color-neutral-8
-- --color-neutral-9
-- --color-neutral-10
+- --color-neutral — legacy alias kept for GetColorValueFromColorType / GetBorderRadiusValueFromShapeType / Gallery ItemsGap; prefer --osui-* knobs or --token-*
+- --color-neutral-0 — legacy alias kept for GetColorValueFromColorType / GetBorderRadiusValueFromShapeType / Gallery ItemsGap; prefer --osui-* knobs or --token-*
+- --color-neutral-1 — legacy alias kept for GetColorValueFromColorType / GetBorderRadiusValueFromShapeType / Gallery ItemsGap; prefer --osui-* knobs or --token-*
+- --color-neutral-2 — legacy alias kept for GetColorValueFromColorType / GetBorderRadiusValueFromShapeType / Gallery ItemsGap; prefer --osui-* knobs or --token-*
+- --color-neutral-3 — legacy alias kept for GetColorValueFromColorType / GetBorderRadiusValueFromShapeType / Gallery ItemsGap; prefer --osui-* knobs or --token-*
+- --color-neutral-4 — legacy alias kept for GetColorValueFromColorType / GetBorderRadiusValueFromShapeType / Gallery ItemsGap; prefer --osui-* knobs or --token-*
+- --color-neutral-5 — legacy alias kept for GetColorValueFromColorType / GetBorderRadiusValueFromShapeType / Gallery ItemsGap; prefer --osui-* knobs or --token-*
+- --color-neutral-6 — legacy alias kept for GetColorValueFromColorType / GetBorderRadiusValueFromShapeType / Gallery ItemsGap; prefer --osui-* knobs or --token-*
+- --color-neutral-7 — legacy alias kept for GetColorValueFromColorType / GetBorderRadiusValueFromShapeType / Gallery ItemsGap; prefer --osui-* knobs or --token-*
+- --color-neutral-8 — legacy alias kept for GetColorValueFromColorType / GetBorderRadiusValueFromShapeType / Gallery ItemsGap; prefer --osui-* knobs or --token-*
+- --color-neutral-9 — legacy alias kept for GetColorValueFromColorType / GetBorderRadiusValueFromShapeType / Gallery ItemsGap; prefer --osui-* knobs or --token-*
+- --color-neutral-10 — legacy alias kept for GetColorValueFromColorType / GetBorderRadiusValueFromShapeType / Gallery ItemsGap; prefer --osui-* knobs or --token-*
 - --color-error
 - --color-warning
 - --color-success
@@ -56,9 +58,9 @@ Override variables only. App/theme: set roles or --token-* at :root (dark: class
 - --border-radius-lg
 - --border-radius-xl
 - --border-radius-2xl
-- --border-radius-none
-- --border-radius-soft
-- --border-radius-rounded
+- --border-radius-none — legacy alias kept for GetColorValueFromColorType / GetBorderRadiusValueFromShapeType / Gallery ItemsGap; prefer --osui-* knobs or --token-*
+- --border-radius-soft — legacy alias kept for GetColorValueFromColorType / GetBorderRadiusValueFromShapeType / Gallery ItemsGap; prefer --osui-* knobs or --token-*
+- --border-radius-rounded — legacy alias kept for GetColorValueFromColorType / GetBorderRadiusValueFromShapeType / Gallery ItemsGap; prefer --osui-* knobs or --token-*
 - --header-size
 - --header-size-content
 - --side-menu-size
@@ -88,8 +90,8 @@ Override variables only. App/theme: set roles or --token-* at :root (dark: class
 - --osui-popup-layer
 - --osui-sidebar-layer
 - --osui-menu-layer
-- --color-<color> (generated per family)
-- --space-<type> (generated per family)
+- --color-<color> (generated per family) — legacy alias kept for GetColorValueFromColorType / GetBorderRadiusValueFromShapeType / Gallery ItemsGap; prefer --osui-* knobs or --token-*
+- --space-<type> (generated per family) — legacy alias kept for GetColorValueFromColorType / GetBorderRadiusValueFromShapeType / Gallery ItemsGap; prefer --osui-* knobs or --token-*
 
 ## Component CSS API knobs (--osui-*)
 - Accordion: --osui-accordion-border-radius
