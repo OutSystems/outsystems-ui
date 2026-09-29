@@ -33,9 +33,8 @@ export function readHeadCommit(root) {
  */
 function shortCommitId(commit) {
 	if (!commit) return 'unknown';
-	const hex = '0123456789abcdef';
-	const chars = [...commit.toLowerCase().slice(0, 9)];
-	return chars.length >= 4 && chars.every((ch) => hex.includes(ch)) ? chars.join('') : 'unknown';
+	const id = commit.toLowerCase().slice(0, 9);
+	return /^[0-9a-f]{4,9}$/.test(id) ? id : 'unknown';
 }
 
 /**
