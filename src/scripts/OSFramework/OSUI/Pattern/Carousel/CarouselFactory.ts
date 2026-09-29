@@ -8,11 +8,18 @@ namespace OSFramework.OSUI.Patterns.Carousel.Factory {
 	 * @param {(string | Record<string, unknown>)} configs Configurations for the Pattern in JSON format.
 	 * @return {*}  {Patterns.Carousel.ICarousel}
 	 */
-	export function NewCarousel(carouselId: string, configs: string | Record<string, unknown>, provider: string): Patterns.Carousel.ICarousel {
+	export function NewCarousel(
+		carouselId: string,
+		configs: string | Record<string, unknown>,
+		provider: string
+	): Patterns.Carousel.ICarousel {
 		let _carouselItem = null;
 
 		if (provider === Enum.Provider.Splide) {
-			_carouselItem = new Providers.OSUI.Carousel.Splide.OSUISplide(carouselId, OSFramework.OSUI.Helper.ParseConfigs(configs));
+			_carouselItem = new Providers.OSUI.Carousel.Splide.OSUISplide(
+				carouselId,
+				OSFramework.OSUI.Helper.ParseConfigs(configs)
+			);
 		} else {
 			throw new Error(`There is no  ${GlobalEnum.PatternName.Carousel}  of the ${provider} provider`);
 		}

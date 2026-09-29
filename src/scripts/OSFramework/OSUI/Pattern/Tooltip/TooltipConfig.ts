@@ -8,8 +8,11 @@ namespace OSFramework.OSUI.Patterns.Tooltip {
 	 * @extends {AbstractConfiguration}
 	 */
 	export class TooltipConfig extends AbstractConfiguration {
+		// Opens on hover/focus; when false it opens on click.
 		public IsHover: boolean;
+		// Placement of the balloon relative to the trigger (GlobalEnum.Position).
 		public Position: GlobalEnum.Position;
+		// Shows the tooltip as soon as it is built.
 		public StartVisible: boolean;
 
 		constructor(config: JSON) {

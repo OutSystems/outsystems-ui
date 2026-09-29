@@ -1,11 +1,17 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSFramework.OSUI.Patterns.TimePicker {
 	export abstract class AbstractTimePickerConfig extends Patterns.AbstractProviderConfiguration {
+		// First day of the week (0 = Sunday); forwarded to the provider locale.
 		public FirstWeekDay: number;
+		// Time selected when the picker is built (HH:mm).
 		public InitialTime: string;
+		// Uses a 24-hour clock; false shows an AM/PM selector.
 		public Is24Hours: boolean;
+		// Latest selectable time (HH:mm).
 		public MaxTime: string;
+		// Earliest selectable time (HH:mm).
 		public MinTime: string;
+		// Display format of the selected time.
 		public TimeFormat: string;
 
 		constructor(config: JSON) {

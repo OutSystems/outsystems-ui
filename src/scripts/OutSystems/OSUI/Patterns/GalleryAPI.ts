@@ -30,14 +30,20 @@ namespace OutSystems.OSUI.Patterns.GalleryAPI {
 	 * @param {(string | Record<string, unknown>)} configs configurations for the Gallery in JSON format.
 	 * @return {*}  {OSFramework.OSUI.Patterns.IGallery}
 	 */
-	export function Create(galleryId: string, configs: string | Record<string, unknown>): OSFramework.OSUI.Patterns.Gallery.IGallery {
+	export function Create(
+		galleryId: string,
+		configs: string | Record<string, unknown>
+	): OSFramework.OSUI.Patterns.Gallery.IGallery {
 		if (_galleryMap.has(galleryId)) {
 			throw new Error(
 				`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.Gallery} registered under id: ${galleryId}`
 			);
 		}
 
-		const _newGallery = new OSFramework.OSUI.Patterns.Gallery.Gallery(galleryId, OSFramework.OSUI.Helper.ParseConfigs(configs));
+		const _newGallery = new OSFramework.OSUI.Patterns.Gallery.Gallery(
+			galleryId,
+			OSFramework.OSUI.Helper.ParseConfigs(configs)
+		);
 
 		_galleryMap.set(galleryId, _newGallery);
 

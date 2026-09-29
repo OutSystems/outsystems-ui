@@ -8,7 +8,9 @@ namespace OSFramework.OSUI.Patterns.SectionIndex {
 	 * @extends {AbstractConfiguration}
 	 */
 	export class SectionIndexConfig extends AbstractConfiguration {
+		// Keeps the index fixed while the page scrolls.
 		public IsFixed: boolean;
+		// Animates the scroll to the target section.
 		public SmoothScrolling: boolean;
 
 		/**

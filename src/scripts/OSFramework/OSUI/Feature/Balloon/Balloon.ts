@@ -359,7 +359,8 @@ namespace OSFramework.OSUI.Feature.Balloon {
 			this._eventOnKeypress = undefined;
 			this._onToggleEvent = undefined;
 			this._eventOnWindowResize = undefined;
-			(window as unknown as Record<string, unknown>)[OSFramework.OSUI.GlobalEnum.CustomEvent.BalloonOnToggle] = undefined;
+			(window as unknown as Record<string, unknown>)[OSFramework.OSUI.GlobalEnum.CustomEvent.BalloonOnToggle] =
+				undefined;
 		}
 
 		/**

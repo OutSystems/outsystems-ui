@@ -1,6 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSFramework.OSUI.Patterns.InlineSvg {
 	export class InlineSvgConfig extends AbstractConfiguration {
+		// Raw <svg> markup rendered inline; invalid markup is rejected with a console error.
 		public SVGCode: string;
 
 		constructor(config: JSON) {

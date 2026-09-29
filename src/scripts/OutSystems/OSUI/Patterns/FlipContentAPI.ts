@@ -31,14 +31,20 @@ namespace OutSystems.OSUI.Patterns.FlipContentAPI {
 	 * @param {(string | Record<string, unknown>)} configs configurations for the Flip Content in JSON format.
 	 * @return {*}  {OSFramework.OSUI.Patterns.FlipContent.IFlipContent}
 	 */
-	export function Create(flipId: string, configs: string | Record<string, unknown>): OSFramework.OSUI.Patterns.FlipContent.IFlipContent {
+	export function Create(
+		flipId: string,
+		configs: string | Record<string, unknown>
+	): OSFramework.OSUI.Patterns.FlipContent.IFlipContent {
 		if (_flipContentMap.has(flipId)) {
 			throw new Error(
 				`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.FlipContent} registered under id: ${flipId}`
 			);
 		}
 
-		const _newFlip = new OSFramework.OSUI.Patterns.FlipContent.FlipContent(flipId, OSFramework.OSUI.Helper.ParseConfigs(configs));
+		const _newFlip = new OSFramework.OSUI.Patterns.FlipContent.FlipContent(
+			flipId,
+			OSFramework.OSUI.Helper.ParseConfigs(configs)
+		);
 
 		_flipContentMap.set(flipId, _newFlip);
 

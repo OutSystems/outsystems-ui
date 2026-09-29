@@ -8,11 +8,17 @@ namespace OSFramework.OSUI.Patterns.Notification {
 	 * @extends {AbstractConfiguration}
 	 */
 	export class NotificationConfig extends AbstractConfiguration {
+		// Milliseconds after which the notification closes itself; 0 or undefined keeps it open.
 		public CloseAfterTime: number;
+		// Closes the notification on interaction outside it (click outside or Escape); ignored on native apps.
 		public InteractToClose: boolean;
+		// Enables swipe gestures to dismiss the notification.
 		public NeedsSwipes: boolean;
+		// Screen position: top (default), top-left, top-right, bottom, bottom-left, bottom-right or center.
 		public Position: string;
+		// Shows the notification as soon as it is built.
 		public StartsOpen: boolean;
+		// Width of the notification (CSS length); 370px by default.
 		public Width: string;
 
 		/**

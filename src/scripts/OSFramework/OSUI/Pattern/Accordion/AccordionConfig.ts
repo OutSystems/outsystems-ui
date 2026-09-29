@@ -8,6 +8,7 @@ namespace OSFramework.OSUI.Patterns.Accordion {
 	 * @extends {AbstractConfiguration}
 	 */
 	export class AccordionConfig extends AbstractConfiguration {
+		// Allows several items to be expanded at once; when false, expanding an item collapses the others.
 		public MultipleItems: boolean;
 
 		constructor(config: JSON) {

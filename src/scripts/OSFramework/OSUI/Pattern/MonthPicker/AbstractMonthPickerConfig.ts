@@ -8,9 +8,13 @@ namespace OSFramework.OSUI.Patterns.MonthPicker {
 	 * @extends {AbstractProviderConfiguration}
 	 */
 	export abstract class AbstractMonthPickerConfig extends Patterns.AbstractProviderConfiguration {
+		// Display format of the selected month (e.g. MM/YYYY).
 		public DateFormat: string;
+		// Month selected when the picker is built ({ Month, Year }).
 		public InitialMonth: MonthYear;
+		// Latest selectable month ({ Month, Year }).
 		public MaxMonth: MonthYear;
+		// Earliest selectable month ({ Month, Year }).
 		public MinMonth: MonthYear;
 
 		constructor(config: JSON) {

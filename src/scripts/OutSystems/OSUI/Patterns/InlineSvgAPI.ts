@@ -30,14 +30,20 @@ namespace OutSystems.OSUI.Patterns.InlineSvgAPI {
 	 * @param {(string | Record<string, unknown>)} configs
 	 * @return {*}  {OSFramework.OSUI.Patterns.InlineSvg.IInlineSvg}
 	 */
-	export function Create(inlineSvgId: string, configs: string | Record<string, unknown>): OSFramework.OSUI.Patterns.InlineSvg.IInlineSvg {
+	export function Create(
+		inlineSvgId: string,
+		configs: string | Record<string, unknown>
+	): OSFramework.OSUI.Patterns.InlineSvg.IInlineSvg {
 		if (_inlineSvgMap.has(inlineSvgId)) {
 			throw new Error(
 				`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.InlineSvg} registered under id: ${inlineSvgId}`
 			);
 		}
 
-		const _newInlineSvg = new OSFramework.OSUI.Patterns.InlineSvg.InlineSvg(inlineSvgId, OSFramework.OSUI.Helper.ParseConfigs(configs));
+		const _newInlineSvg = new OSFramework.OSUI.Patterns.InlineSvg.InlineSvg(
+			inlineSvgId,
+			OSFramework.OSUI.Helper.ParseConfigs(configs)
+		);
 		_inlineSvgMap.set(inlineSvgId, _newInlineSvg);
 		return _newInlineSvg;
 	}

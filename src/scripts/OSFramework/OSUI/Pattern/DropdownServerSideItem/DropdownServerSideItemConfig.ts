@@ -8,7 +8,9 @@ namespace OSFramework.OSUI.Patterns.DropdownServerSideItem {
 	 * @extends {AbstractConfiguration}
 	 */
 	export class DropdownServerSideItemConfig extends AbstractConfiguration {
+		// Marks the item as selected when it is built.
 		public IsSelected: boolean;
+		// Identifier of the item reported to the parent dropdown when it is selected.
 		public ItemId: string;
 
 		constructor(config: JSON) {

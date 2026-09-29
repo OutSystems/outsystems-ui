@@ -31,7 +31,10 @@ namespace OutSystems.OSUI.Patterns.BottomSheetAPI {
 	 * @param {(string | Record<string, unknown>)} configs Configurations for the Pattern in JSON format.
 	 * @return {*}  {OSFramework.OSUI.Patterns.BottomSheet.IBottomSheet}
 	 */
-	export function Create(bottomSheetId: string, configs: string | Record<string, unknown>): OSFramework.OSUI.Patterns.BottomSheet.IBottomSheet {
+	export function Create(
+		bottomSheetId: string,
+		configs: string | Record<string, unknown>
+	): OSFramework.OSUI.Patterns.BottomSheet.IBottomSheet {
 		if (_bottomSheetItemsMap.has(bottomSheetId)) {
 			throw new Error('There is already an BottomSheet registered under id: ' + bottomSheetId);
 		}

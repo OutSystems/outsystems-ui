@@ -16,15 +16,24 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		private _providerOptions: VirtualSelectOpts;
 		// Store configs set using extensibility
 		protected providerExtendedOptions: VirtualSelectOpts;
+		// CSS id selector of the element the provider renders into; set by the pattern from its own element.
 		public ElementId: string;
+		// Message shown when there are no options.
 		public NoOptionsText: string;
+		// Message shown when a search matches no option.
 		public NoResultsText: string;
+		// Options to render: { value, label, image_url_or_class?, description?, group_name? }.
 		public OptionsList: DropDownOption[];
+		// Viewport width (CSS length) below which the dropbox opens as a popup; set to the screen size on mobile.
 		public PopupDropboxBreakpoint: string;
+		// Placeholder shown while nothing is selected.
 		public Prompt: string;
+		// Escapes HTML in option labels and values before they are rendered.
 		public SanitizeDropdownValues = false;
+		// Placeholder of the search input.
 		public SearchPrompt: string;
 		public ShowDropboxAsPopup = true;
+		// Options selected when the dropdown is built (same shape as OptionsList).
 		public StartingSelection: DropDownOption[];
 
 		// Method used to check if an image or an icon should be added to the given option

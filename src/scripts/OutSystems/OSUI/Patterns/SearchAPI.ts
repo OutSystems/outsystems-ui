@@ -30,14 +30,20 @@ namespace OutSystems.OSUI.Patterns.SearchAPI {
 	 * @param {(string | Record<string, unknown>)} configs
 	 * @return {*}  {OSFramework.OSUI.Patterns.Search.ISearch}
 	 */
-	export function Create(searchId: string, configs: string | Record<string, unknown>): OSFramework.OSUI.Patterns.Search.ISearch {
+	export function Create(
+		searchId: string,
+		configs: string | Record<string, unknown>
+	): OSFramework.OSUI.Patterns.Search.ISearch {
 		if (_searchMap.has(searchId)) {
 			throw new Error(
 				`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.Search} registered under id: ${searchId}`
 			);
 		}
 
-		const _newSearch = new OSFramework.OSUI.Patterns.Search.Search(searchId, OSFramework.OSUI.Helper.ParseConfigs(configs));
+		const _newSearch = new OSFramework.OSUI.Patterns.Search.Search(
+			searchId,
+			OSFramework.OSUI.Helper.ParseConfigs(configs)
+		);
 		_searchMap.set(searchId, _newSearch);
 		return _newSearch;
 	}

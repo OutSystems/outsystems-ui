@@ -8,7 +8,9 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 	 * @extends {AbstractConfiguration}
 	 */
 	export class BottomSheetConfig extends AbstractConfiguration {
+		// Corner shape of the sheet: SoftRounded (default), Rounded or Sharp.
 		public Shape: GlobalEnum.ShapeTypes;
+		// Shows the drag handler bar at the top of the sheet.
 		public ShowHandler: boolean;
 
 		constructor(config: JSON) {

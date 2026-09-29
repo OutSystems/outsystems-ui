@@ -10,7 +10,10 @@ namespace OutSystems.OSUI.Patterns.TouchEventsAPI {
 	 * @param {(string | Record<string, unknown>)} configs Configurations for the Pattern in JSON format.
 	 * @return {*}  {OSFramework.OSUI.Patterns TouchEvents. TouchEvents}
 	 */
-	export function Create(touchEventsId: string, configs: string | Record<string, unknown>): OSFramework.OSUI.Patterns.TouchEvents.ITouchEvents {
+	export function Create(
+		touchEventsId: string,
+		configs: string | Record<string, unknown>
+	): OSFramework.OSUI.Patterns.TouchEvents.ITouchEvents {
 		if (_touchEventsMap.has(touchEventsId)) {
 			throw new Error(
 				`There is already an ${OSFramework.OSUI.GlobalEnum.PatternName.TouchEvents} registered under id: ${touchEventsId}`

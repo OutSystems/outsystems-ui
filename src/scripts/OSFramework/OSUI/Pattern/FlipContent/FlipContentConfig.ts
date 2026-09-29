@@ -8,7 +8,9 @@ namespace OSFramework.OSUI.Patterns.FlipContent {
 	 * @extends {AbstractConfiguration}
 	 */
 	export class FlipContentConfig extends AbstractConfiguration {
+		// Flips the content when it is clicked; otherwise flipping happens only through the API.
 		public FlipSelf: boolean;
+		// Starts with the back face visible.
 		public IsFlipped: boolean;
 
 		constructor(config: JSON) {

@@ -8,7 +8,9 @@ namespace OSFramework.OSUI.Patterns.Wizard {
 	 * @extends {AbstractConfiguration}
 	 */
 	export class WizardConfig extends AbstractConfiguration {
+		// Stacks the steps vertically.
 		public IsVertical: boolean;
+		// Interactive lets users navigate by clicking steps; ProgressOnly makes steps read-only indicators.
 		public StepBehavior: Enum.StepBehavior;
 
 		/**

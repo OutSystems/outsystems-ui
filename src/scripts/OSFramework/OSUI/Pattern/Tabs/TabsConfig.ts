@@ -8,11 +8,17 @@ namespace OSFramework.OSUI.Patterns.Tabs {
 	 * @extends {AbstractConfiguration}
 	 */
 	export class TabsConfig extends AbstractConfiguration {
+		// Sizes the content area to the active tab instead of the tallest tab.
 		public ContentAutoHeight: boolean;
+		// Height of the tabs content (CSS length); auto by default.
 		public Height: string;
+		// Stretches the header items to fill the available width.
 		public JustifyHeaders: boolean;
+		// Zero-based index of the tab active when built; cannot be changed afterwards.
 		public StartingTab: number;
+		// horizontal (headers above the content) or vertical (headers beside it).
 		public TabsOrientation: GlobalEnum.Orientation;
+		// Side of the content where vertical headers sit: left or right.
 		public TabsVerticalPosition: GlobalEnum.Direction;
 
 		/**

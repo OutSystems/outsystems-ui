@@ -68,7 +68,10 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 		 */
 		public addEvent(): void {
 			// Check if event exist in the window
-			if (this._eventName in window || (window as unknown as Record<string, unknown>)[this._eventName] !== undefined) {
+			if (
+				this._eventName in window ||
+				(window as unknown as Record<string, unknown>)[this._eventName] !== undefined
+			) {
 				this._eventTarget.addEventListener(this._eventType, this.eventCallback);
 			}
 		}
@@ -80,7 +83,10 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 		 */
 		public removeEvent(): void {
 			// Check if event exist in the window
-			if (this._eventName in window || (window as unknown as Record<string, unknown>)[this._eventName] !== undefined) {
+			if (
+				this._eventName in window ||
+				(window as unknown as Record<string, unknown>)[this._eventName] !== undefined
+			) {
 				this._eventTarget.removeEventListener(this._eventType, this.eventCallback);
 			}
 		}

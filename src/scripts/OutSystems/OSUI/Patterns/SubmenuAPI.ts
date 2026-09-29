@@ -90,14 +90,20 @@ namespace OutSystems.OSUI.Patterns.SubmenuAPI {
 	 * @param {(string | Record<string, unknown>)} configs configurations for the Submenu in JSON format.
 	 * @return {*}  {OSFramework.OSUI.Patterns.ISubmenu}
 	 */
-	export function Create(submenuId: string, configs: string | Record<string, unknown>): OSFramework.OSUI.Patterns.Submenu.ISubmenu {
+	export function Create(
+		submenuId: string,
+		configs: string | Record<string, unknown>
+	): OSFramework.OSUI.Patterns.Submenu.ISubmenu {
 		if (_submenusMap.has(submenuId)) {
 			throw new Error(
 				`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.Submenu} registered under id: ${submenuId}`
 			);
 		}
 
-		const _newSubmenu = new OSFramework.OSUI.Patterns.Submenu.Submenu(submenuId, OSFramework.OSUI.Helper.ParseConfigs(configs));
+		const _newSubmenu = new OSFramework.OSUI.Patterns.Submenu.Submenu(
+			submenuId,
+			OSFramework.OSUI.Helper.ParseConfigs(configs)
+		);
 
 		_submenusMap.set(submenuId, _newSubmenu);
 

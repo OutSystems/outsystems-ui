@@ -8,18 +8,28 @@ namespace OSFramework.OSUI.Patterns.Progress.Factory {
 	 * @param {(string | Record<string, unknown>)} configs Configurations for the Pattern in JSON format.
 	 * @return {*}  {Patterns.Progress.IProgress}
 	 */
-	export function NewProgress(progressId: string, type: string, configs: string | Record<string, unknown>): Patterns.Progress.IProgress {
+	export function NewProgress(
+		progressId: string,
+		type: string,
+		configs: string | Record<string, unknown>
+	): Patterns.Progress.IProgress {
 		let _progressItem = null;
 
 		switch (type) {
 			case ProgressEnum.ProgressTypes.Circle:
-				_progressItem = new Patterns.Progress.Circle.Circle(progressId, OSFramework.OSUI.Helper.ParseConfigs(configs));
+				_progressItem = new Patterns.Progress.Circle.Circle(
+					progressId,
+					OSFramework.OSUI.Helper.ParseConfigs(configs)
+				);
 
 				break;
 
 			case ProgressEnum.ProgressTypes.Bar:
 				// eslint-disable-next-line @typescript-eslint/no-unused-vars
-				_progressItem = new Patterns.Progress.Bar.Bar(progressId, OSFramework.OSUI.Helper.ParseConfigs(configs));
+				_progressItem = new Patterns.Progress.Bar.Bar(
+					progressId,
+					OSFramework.OSUI.Helper.ParseConfigs(configs)
+				);
 
 				break;
 

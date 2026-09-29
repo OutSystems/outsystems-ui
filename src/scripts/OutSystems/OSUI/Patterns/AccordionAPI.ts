@@ -49,14 +49,20 @@ namespace OutSystems.OSUI.Patterns.AccordionAPI {
 	 * @param {(string | Record<string, unknown>)} configs Configurations for the Pattern in JSON format.
 	 * @return {*}  {OSFramework.OSUI.Patterns.Accordion.IAccordion}
 	 */
-	export function Create(accordionId: string, configs: string | Record<string, unknown>): OSFramework.OSUI.Patterns.Accordion.IAccordion {
+	export function Create(
+		accordionId: string,
+		configs: string | Record<string, unknown>
+	): OSFramework.OSUI.Patterns.Accordion.IAccordion {
 		if (_accordionMap.has(accordionId)) {
 			throw new Error(
 				`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.Accordion} registered under id: ${accordionId}`
 			);
 		}
 
-		const _newAccordion = new OSFramework.OSUI.Patterns.Accordion.Accordion(accordionId, OSFramework.OSUI.Helper.ParseConfigs(configs));
+		const _newAccordion = new OSFramework.OSUI.Patterns.Accordion.Accordion(
+			accordionId,
+			OSFramework.OSUI.Helper.ParseConfigs(configs)
+		);
 
 		_accordionMap.set(accordionId, _newAccordion);
 

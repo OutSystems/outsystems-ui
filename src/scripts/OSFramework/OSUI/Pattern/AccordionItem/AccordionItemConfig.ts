@@ -8,10 +8,15 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 	 * @extends {AbstractConfiguration}
 	 */
 	export class AccordionItemConfig extends AbstractConfiguration {
+		// Indicator icon: Caret, PlusMinus or Custom (a developer-supplied icon in the item's icon placeholder).
 		public Icon: string;
+		// Side of the title where the indicator icon is rendered (left or right).
 		public IconPosition: string;
+		// Prevents the user from expanding or collapsing the item.
 		public IsDisabled: boolean;
+		// Renders the item already expanded when it is built.
 		public StartsExpanded: boolean;
+		// When true only the icon toggles the item; otherwise the whole title area does.
 		public ToggleWithIcon: boolean;
 
 		constructor(config: JSON) {

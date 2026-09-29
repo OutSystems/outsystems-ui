@@ -31,7 +31,10 @@ namespace OutSystems.OSUI.Patterns.TabsAPI {
 	 * @param {(string | Record<string, unknown>)} configs Configurations for the Pattern in JSON format.
 	 * @return {*}  {OSFramework.OSUI.Patterns.Tabs.ITabs}
 	 */
-	export function Create(tabsId: string, configs: string | Record<string, unknown>): OSFramework.OSUI.Patterns.Tabs.ITabs {
+	export function Create(
+		tabsId: string,
+		configs: string | Record<string, unknown>
+	): OSFramework.OSUI.Patterns.Tabs.ITabs {
 		if (_tabsMap.has(tabsId)) {
 			throw new Error(
 				`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.Tabs} registered under id: ${tabsId}`

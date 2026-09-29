@@ -127,7 +127,8 @@
 			"props": {
 				"MultipleItems": {
 					"type": "boolean",
-					"default": false
+					"default": false,
+					"description": "Allows several items to be expanded at once; when false, expanding an item collapses the others."
 				}
 			},
 			"events": [],
@@ -305,23 +306,28 @@
 						"Custom",
 						"PlusMinus"
 					],
-					"default": "Caret"
+					"default": "Caret",
+					"description": "Indicator icon: Caret, PlusMinus or Custom (a developer-supplied icon in the item's icon placeholder)."
 				},
 				"IconPosition": {
 					"type": "string",
 					"hint": "default from GlobalEnum.Direction; not validated — any string is accepted",
-					"default": "right"
+					"default": "right",
+					"description": "Side of the title where the indicator icon is rendered (left or right)."
 				},
 				"IsDisabled": {
 					"type": "boolean",
-					"default": false
+					"default": false,
+					"description": "Prevents the user from expanding or collapsing the item."
 				},
 				"StartsExpanded": {
-					"type": "boolean"
+					"type": "boolean",
+					"description": "Renders the item already expanded when it is built."
 				},
 				"ToggleWithIcon": {
 					"type": "boolean",
-					"default": false
+					"default": false,
+					"description": "When true only the icon toggles the item; otherwise the whole title area does."
 				}
 			},
 			"events": [
@@ -642,11 +648,13 @@
 						"none",
 						"rounded"
 					],
-					"default": "soft"
+					"default": "soft",
+					"description": "Corner shape of the sheet: SoftRounded (default), Rounded or Sharp."
 				},
 				"ShowHandler": {
 					"type": "boolean",
-					"default": false
+					"default": false,
+					"description": "Shows the drag handler bar at the top of the sheet."
 				}
 			},
 			"events": [
@@ -801,10 +809,12 @@
 			],
 			"props": {
 				"IsLoading": {
-					"type": "boolean"
+					"type": "boolean",
+					"description": "Shows the loading spinner and blocks interaction while true."
 				},
 				"ShowLoadingAndLabel": {
-					"type": "boolean"
+					"type": "boolean",
+					"description": "Keeps the button label visible next to the spinner; otherwise only the spinner shows while loading."
 				}
 			},
 			"events": [],
@@ -1085,34 +1095,42 @@
 			"props": {
 				"AutoPlay": {
 					"type": "boolean",
-					"default": false
+					"default": false,
+					"description": "Advances the slides automatically."
 				},
 				"Direction": {
-					"type": "GlobalEnum.Direction.LTR | GlobalEnum.Direction.RTL | GlobalEnum.Direction.TTB"
+					"type": "GlobalEnum.Direction.LTR | GlobalEnum.Direction.RTL | GlobalEnum.Direction.TTB",
+					"description": "Slide direction: ltr, rtl or ttb (vertical)."
 				},
 				"Height": {
 					"type": "string | number",
-					"default": "auto"
+					"default": "auto",
+					"description": "Height of the carousel (CSS length or pixel number); auto by default, required for the vertical direction."
 				},
 				"ItemsDesktop": {
 					"type": "number",
-					"default": 1
+					"default": 1,
+					"description": "Number of items visible at once on desktop."
 				},
 				"ItemsGap": {
 					"type": "string | number",
-					"default": "0px"
+					"default": "0px",
+					"description": "Gap between items (CSS length or pixel number); 0px by default."
 				},
 				"ItemsPhone": {
 					"type": "number",
-					"default": 1
+					"default": 1,
+					"description": "Number of items visible at once on phones."
 				},
 				"ItemsTablet": {
 					"type": "number",
-					"default": 1
+					"default": 1,
+					"description": "Number of items visible at once on tablets."
 				},
 				"Loop": {
 					"type": "boolean",
-					"default": true
+					"default": true,
+					"description": "Rewinds to the first item after the last one."
 				},
 				"Navigation": {
 					"type": "'both' | 'arrows' | 'dots' | 'none'",
@@ -1122,14 +1140,17 @@
 						"dots",
 						"none"
 					],
-					"default": "both"
+					"default": "both",
+					"description": "Navigation controls to render: Arrows, Dots, Both or None."
 				},
 				"Padding": {
 					"type": "string | number",
-					"default": "0px"
+					"default": "0px",
+					"description": "Padding on both ends of the track so neighbouring items peek in (CSS length or pixel number)."
 				},
 				"StartingPosition": {
-					"type": "number"
+					"type": "number",
+					"description": "Zero-based index of the item shown first."
 				}
 			},
 			"events": [],
@@ -1513,7 +1534,8 @@
 				},
 				"DateFormat": {
 					"type": "string",
-					"default": "Helper.Dates.ServerFormat"
+					"default": "Helper.Dates.ServerFormat",
+					"description": "Display format of the selected date (e.g. DD/MM/YYYY); empty uses the server date format."
 				},
 				"Disable": {
 					"type": "array",
@@ -1527,7 +1549,8 @@
 				},
 				"FirstWeekDay": {
 					"type": "number",
-					"default": 0
+					"default": 0,
+					"description": "First day of the week in the calendar (0 = Sunday … 6 = Saturday)."
 				},
 				"InitialDate": {
 					"type": "string | Date",
@@ -1543,11 +1566,13 @@
 				},
 				"MaxDate": {
 					"type": "string",
-					"default": "undefined"
+					"default": "undefined",
+					"description": "Latest selectable date; empty for no upper limit."
 				},
 				"MinDate": {
 					"type": "string",
-					"default": "undefined"
+					"default": "undefined",
+					"description": "Earliest selectable date; empty for no lower limit."
 				},
 				"OnChange": {
 					"type": "OSFramework.OSUI.GlobalCallbacks.Generic",
@@ -1567,10 +1592,12 @@
 				},
 				"ShowTodayButton": {
 					"type": "boolean",
-					"default": false
+					"default": false,
+					"description": "Renders a Today button in the calendar footer."
 				},
 				"ShowWeekNumbers": {
-					"type": "boolean"
+					"type": "boolean",
+					"description": "Shows the week-number column in the calendar."
 				},
 				"TimeFormat": {
 					"type": "'disabled' | '12' | '24'",
@@ -1579,7 +1606,8 @@
 						"12",
 						"24"
 					],
-					"default": "disabled"
+					"default": "disabled",
+					"description": "Time selection appended to the calendar: disabled (date only), 12 or 24 (hour format)."
 				}
 			},
 			"events": [],
@@ -1924,39 +1952,50 @@
 					"description": "Properties"
 				},
 				"ElementId": {
-					"type": "string"
+					"type": "string",
+					"description": "CSS id selector of the element the provider renders into; set by the pattern from its own element."
 				},
 				"IsDisabled": {
 					"type": "boolean",
-					"default": false
+					"default": false,
+					"description": "Renders the dropdown disabled."
 				},
 				"NoOptionsText": {
-					"type": "string"
+					"type": "string",
+					"description": "Message shown when there are no options."
 				},
 				"NoResultsText": {
-					"type": "string"
+					"type": "string",
+					"description": "Message shown when a search matches no option."
 				},
 				"OptionsList": {
-					"type": "DropDownOption[]"
+					"type": "DropDownOption[]",
+					"description": "Options to render: { value, label, image_url_or_class?, description?, group_name? }."
 				},
 				"PopupDropboxBreakpoint": {
-					"type": "string"
+					"type": "string",
+					"description": "Viewport width (CSS length) below which the dropbox opens as a popup; set to the screen size on mobile."
 				},
 				"Prompt": {
-					"type": "string"
+					"type": "string",
+					"description": "Placeholder shown while nothing is selected."
 				},
 				"SanitizeDropdownValues": {
 					"type": "boolean",
-					"default": false
+					"default": false,
+					"description": "Escapes HTML in option labels and values before they are rendered."
 				},
 				"SearchPrompt": {
-					"type": "string"
+					"type": "string",
+					"description": "Placeholder of the search input."
 				},
 				"ShowDropboxAsPopup": {
-					"type": "boolean"
+					"type": "boolean",
+					"description": "Opens the options list as a centred popup instead of an anchored dropbox (below PopupDropboxBreakpoint)."
 				},
 				"StartingSelection": {
-					"type": "DropDownOption[]"
+					"type": "DropDownOption[]",
+					"description": "Options selected when the dropdown is built (same shape as OptionsList)."
 				}
 			},
 			"events": [
@@ -2139,11 +2178,13 @@
 			"props": {
 				"IsSelected": {
 					"type": "boolean",
-					"default": false
+					"default": false,
+					"description": "Marks the item as selected when it is built."
 				},
 				"ItemId": {
 					"type": "string",
-					"default": "undefined"
+					"default": "undefined",
+					"description": "Identifier of the item reported to the parent dropdown when it is selected."
 				}
 			},
 			"events": [
@@ -2306,10 +2347,12 @@
 			],
 			"props": {
 				"FlipSelf": {
-					"type": "boolean"
+					"type": "boolean",
+					"description": "Flips the content when it is clicked; otherwise flipping happens only through the API."
 				},
 				"IsFlipped": {
-					"type": "boolean"
+					"type": "boolean",
+					"description": "Starts with the back face visible."
 				}
 			},
 			"events": [
@@ -2438,16 +2481,20 @@
 			],
 			"props": {
 				"ItemsGap": {
-					"type": "string"
+					"type": "string",
+					"description": "Gap between items as a framework space name (none, xs, s, base, m, l, xl, xxl), mapped to --space-*."
 				},
 				"RowItemsDesktop": {
-					"type": "number"
+					"type": "number",
+					"description": "Number of items per row on desktop."
 				},
 				"RowItemsPhone": {
-					"type": "number"
+					"type": "number",
+					"description": "Number of items per row on phones."
 				},
 				"RowItemsTablet": {
-					"type": "number"
+					"type": "number",
+					"description": "Number of items per row on tablets."
 				}
 			},
 			"events": [],
@@ -2582,7 +2629,8 @@
 			],
 			"props": {
 				"SVGCode": {
-					"type": "string"
+					"type": "string",
+					"description": "Raw <svg> markup rendered inline; invalid markup is rejected with a console error."
 				}
 			},
 			"events": [],
@@ -2868,7 +2916,8 @@
 				},
 				"DateFormat": {
 					"type": "string",
-					"default": "MM/YYYY"
+					"default": "MM/YYYY",
+					"description": "Display format of the selected month (e.g. MM/YYYY)."
 				},
 				"DisableMobile": {
 					"type": "boolean",
@@ -2876,13 +2925,16 @@
 					"description": "Stores the ability to disable the mobile flatpickr behavior. False is the default provider option"
 				},
 				"InitialMonth": {
-					"type": "MonthYear"
+					"type": "MonthYear",
+					"description": "Month selected when the picker is built ({ Month, Year })."
 				},
 				"MaxMonth": {
-					"type": "MonthYear"
+					"type": "MonthYear",
+					"description": "Latest selectable month ({ Month, Year })."
 				},
 				"MinMonth": {
-					"type": "MonthYear"
+					"type": "MonthYear",
+					"description": "Earliest selectable month ({ Month, Year })."
 				},
 				"OnChangeEventCallback": {
 					"type": "OSFramework.OSUI.GlobalCallbacks.Generic",
@@ -3067,15 +3119,18 @@
 			"props": {
 				"CloseAfterTime": {
 					"type": "number",
-					"default": "undefined"
+					"default": "undefined",
+					"description": "Milliseconds after which the notification closes itself; 0 or undefined keeps it open."
 				},
 				"InteractToClose": {
 					"type": "boolean",
-					"default": true
+					"default": true,
+					"description": "Closes the notification on interaction outside it (click outside or Escape); ignored on native apps."
 				},
 				"NeedsSwipes": {
 					"type": "boolean",
-					"default": false
+					"default": false,
+					"description": "Enables swipe gestures to dismiss the notification."
 				},
 				"Position": {
 					"type": "'top' | '370px'",
@@ -3083,11 +3138,13 @@
 						"top",
 						"370px"
 					],
-					"default": "top"
+					"default": "top",
+					"description": "Screen position: top (default), top-left, top-right, bottom, bottom-left, bottom-right or center."
 				},
 				"StartsOpen": {
 					"type": "boolean",
-					"default": false
+					"default": false,
+					"description": "Shows the notification as soon as it is built."
 				},
 				"Width": {
 					"type": "'top' | '370px'",
@@ -3095,7 +3152,8 @@
 						"top",
 						"370px"
 					],
-					"default": "370px"
+					"default": "370px",
+					"description": "Width of the notification (CSS length); 370px by default."
 				}
 			},
 			"events": [
@@ -3291,7 +3349,8 @@
 						"top-end",
 						"top-start"
 					],
-					"default": "auto"
+					"default": "auto",
+					"description": "Preferred placement of the menu relative to its trigger (GlobalEnum.FloatingPosition); auto picks the best fit."
 				},
 				"Shape": {
 					"type": "'soft' | 'none' | 'rounded'",
@@ -3300,7 +3359,8 @@
 						"none",
 						"rounded"
 					],
-					"default": "soft"
+					"default": "soft",
+					"description": "Corner shape of the menu: SoftRounded (default), Rounded or Sharp."
 				}
 			},
 			"events": [
@@ -3751,20 +3811,25 @@
 				},
 				"InitialValueTo": {
 					"type": "number",
-					"default": 0
+					"default": 0,
+					"description": "Value of the upper handle when the slider is built (interval mode)."
 				},
 				"IsDisabled": {
 					"type": "boolean",
-					"default": false
+					"default": false,
+					"description": "Renders the slider disabled."
 				},
 				"IsInterval": {
-					"type": "boolean"
+					"type": "boolean",
+					"description": "Uses two handles (from/to) instead of a single one."
 				},
 				"MaxValue": {
-					"type": "number"
+					"type": "number",
+					"description": "Upper bound of the range."
 				},
 				"MinValue": {
-					"type": "number"
+					"type": "number",
+					"description": "Lower bound of the range."
 				},
 				"Orientation": {
 					"type": "unknown",
@@ -3772,7 +3837,8 @@
 						"horizontal",
 						"vertical"
 					],
-					"default": "horizontal"
+					"default": "horizontal",
+					"description": "horizontal (default) or vertical."
 				},
 				"rangeSliderMode": {
 					"type": "'single' | 'interval'",
@@ -3784,29 +3850,36 @@
 				},
 				"ShowFloatingLabel": {
 					"type": "boolean",
-					"default": false
+					"default": false,
+					"description": "Shows the current value in a floating label above the handle."
 				},
 				"ShowTickMarks": {
 					"type": "boolean",
-					"default": false
+					"default": false,
+					"description": "Renders tick marks (pips) along the track."
 				},
 				"Size": {
 					"type": "string",
-					"default": "this.Orientation === (GlobalEnum.Orientation.Horizontal as string)\n\t\t\t\t\t\t\t? Enum.DefaultValues.PercentualSize\n\t\t\t\t\t\t\t: Enum.DefaultValues.PixelSize"
+					"default": "this.Orientation === (GlobalEnum.Orientation.Horizontal as string)\n\t\t\t\t\t\t\t? Enum.DefaultValues.PercentualSize\n\t\t\t\t\t\t\t: Enum.DefaultValues.PixelSize",
+					"description": "Track length (CSS length); 100% when horizontal, 100px when vertical."
 				},
 				"StartingValueFrom": {
-					"type": "number"
+					"type": "number",
+					"description": "Current value of the (lower) handle, kept across provider redraws."
 				},
 				"StartingValueTo": {
-					"type": "number"
+					"type": "number",
+					"description": "Current value of the upper handle, kept across provider redraws (interval mode)."
 				},
 				"Step": {
 					"type": "number",
-					"default": 1
+					"default": 1,
+					"description": "Increment between selectable values."
 				},
 				"TickMarksInterval": {
 					"type": "number",
-					"default": 0
+					"default": 0,
+					"description": "Distance between tick marks in slider units."
 				}
 			},
 			"events": [],
@@ -3975,16 +4048,20 @@
 			],
 			"props": {
 				"IsEdit": {
-					"type": "boolean"
+					"type": "boolean",
+					"description": "Lets the user change the rating; when false it is read-only."
 				},
 				"RatingScale": {
-					"type": "number"
+					"type": "number",
+					"description": "Number of rating items (0–100)."
 				},
 				"RatingValue": {
-					"type": "number"
+					"type": "number",
+					"description": "Current rating; decimals render a half-filled item."
 				},
 				"Size": {
-					"type": "string"
+					"type": "string",
+					"description": "Size modifier appended as the rating-<Size> class (empty for the default size)."
 				}
 			},
 			"events": [
@@ -4235,11 +4312,13 @@
 			"props": {
 				"IsFixed": {
 					"type": "boolean",
-					"default": false
+					"default": false,
+					"description": "Keeps the index fixed while the page scrolls."
 				},
 				"SmoothScrolling": {
 					"type": "boolean",
-					"default": false
+					"default": false,
+					"description": "Animates the scroll to the target section."
 				}
 			},
 			"events": [],
@@ -4375,7 +4454,8 @@
 			],
 			"props": {
 				"ScrollToWidgetId": {
-					"type": "string"
+					"type": "string",
+					"description": "Id of the widget the page scrolls to when the item is clicked."
 				}
 			},
 			"events": [],
@@ -4557,18 +4637,21 @@
 				},
 				"HasOverlay": {
 					"type": "boolean",
-					"default": false
+					"default": false,
+					"description": "Dims the page behind the sidebar with an overlay while it is open (and closes on click outside)."
 				},
 				"StartsOpen": {
 					"type": "boolean",
-					"default": false
+					"default": false,
+					"description": "Renders the sidebar open when it is built."
 				},
 				"Width": {
 					"type": "'500px'",
 					"allowed": [
 						"500px"
 					],
-					"default": "500px"
+					"default": "500px",
+					"description": "Width of the sidebar (CSS length); 500px by default."
 				}
 			},
 			"events": [
@@ -4933,7 +5016,8 @@
 			],
 			"props": {
 				"WidgetId": {
-					"type": "string"
+					"type": "string",
+					"description": "Id of the element that receives the swipe gesture listeners."
 				}
 			},
 			"events": [
@@ -5087,19 +5171,23 @@
 			"props": {
 				"ContentAutoHeight": {
 					"type": "boolean",
-					"default": false
+					"default": false,
+					"description": "Sizes the content area to the active tab instead of the tallest tab."
 				},
 				"Height": {
 					"type": "string",
 					"hint": "default from GlobalEnum.CssProperties; not validated — any string is accepted",
-					"default": "auto"
+					"default": "auto",
+					"description": "Height of the tabs content (CSS length); auto by default."
 				},
 				"JustifyHeaders": {
 					"type": "boolean",
-					"default": false
+					"default": false,
+					"description": "Stretches the header items to fill the available width."
 				},
 				"StartingTab": {
-					"type": "number"
+					"type": "number",
+					"description": "Zero-based index of the tab active when built; cannot be changed afterwards."
 				},
 				"TabsOrientation": {
 					"type": "'horizontal' | 'vertical'",
@@ -5107,7 +5195,8 @@
 						"horizontal",
 						"vertical"
 					],
-					"default": "horizontal"
+					"default": "horizontal",
+					"description": "horizontal (headers above the content) or vertical (headers beside it)."
 				},
 				"TabsVerticalPosition": {
 					"type": "'left' | 'right'",
@@ -5115,7 +5204,8 @@
 						"left",
 						"right"
 					],
-					"default": "left"
+					"default": "left",
+					"description": "Side of the content where vertical headers sit: left or right."
 				}
 			},
 			"events": [
@@ -5719,23 +5809,28 @@
 					"description": "Stores the ability to disable the mobile flatpickr behavior. False is the default provider option"
 				},
 				"FirstWeekDay": {
-					"type": "number"
+					"type": "number",
+					"description": "First day of the week (0 = Sunday); forwarded to the provider locale."
 				},
 				"InitialTime": {
 					"type": "string",
-					"default": "undefined"
+					"default": "undefined",
+					"description": "Time selected when the picker is built (HH:mm)."
 				},
 				"Is24Hours": {
 					"type": "boolean",
-					"default": true
+					"default": true,
+					"description": "Uses a 24-hour clock; false shows an AM/PM selector."
 				},
 				"MaxTime": {
 					"type": "string",
-					"default": "undefined"
+					"default": "undefined",
+					"description": "Latest selectable time (HH:mm)."
 				},
 				"MinTime": {
 					"type": "string",
-					"default": "undefined"
+					"default": "undefined",
+					"description": "Earliest selectable time (HH:mm)."
 				},
 				"OnChangeEventCallback": {
 					"type": "OSFramework.OSUI.GlobalCallbacks.Generic",
@@ -5754,7 +5849,8 @@
 					"description": "Store the Server Date format that will be used to casting the selected dates into a knowned date by/for Flatpickr"
 				},
 				"TimeFormat": {
-					"type": "string"
+					"type": "string",
+					"description": "Display format of the selected time."
 				}
 			},
 			"events": [],
@@ -5914,7 +6010,8 @@
 			"props": {
 				"IsHover": {
 					"type": "boolean",
-					"default": true
+					"default": true,
+					"description": "Opens on hover/focus; when false it opens on click."
 				},
 				"Position": {
 					"type": "'bottom' | 'bottom-left' | 'bottom-right' | 'center' | 'left' | 'right' | 'top' | 'top-left' | 'top-right'",
@@ -5929,11 +6026,13 @@
 						"top-left",
 						"top-right"
 					],
-					"default": "right"
+					"default": "right",
+					"description": "Placement of the balloon relative to the trigger (GlobalEnum.Position)."
 				},
 				"StartVisible": {
 					"type": "boolean",
-					"default": false
+					"default": false,
+					"description": "Shows the tooltip as soon as it is built."
 				}
 			},
 			"events": [
@@ -6058,7 +6157,8 @@
 			],
 			"props": {
 				"WidgetId": {
-					"type": "string"
+					"type": "string",
+					"description": "Id of the element that receives the touch listeners."
 				}
 			},
 			"events": [
@@ -6228,31 +6328,40 @@
 			],
 			"props": {
 				"Autoplay": {
-					"type": "boolean"
+					"type": "boolean",
+					"description": "Starts playback automatically (browsers may require Muted)."
 				},
 				"Captions": {
-					"type": "string"
+					"type": "string",
+					"description": "JSON list of caption tracks: [{ LanguageCode, SourceFile, Label }]."
 				},
 				"Controls": {
-					"type": "boolean"
+					"type": "boolean",
+					"description": "Shows the native player controls."
 				},
 				"Height": {
-					"type": "string"
+					"type": "string",
+					"description": "Height of the player (CSS length)."
 				},
 				"Loop": {
-					"type": "boolean"
+					"type": "boolean",
+					"description": "Restarts playback when the video ends."
 				},
 				"Muted": {
-					"type": "boolean"
+					"type": "boolean",
+					"description": "Starts muted."
 				},
 				"PosterURL": {
-					"type": "string"
+					"type": "string",
+					"description": "Image shown before playback starts."
 				},
 				"URL": {
-					"type": "string"
+					"type": "string",
+					"description": "Video source: a URL or a base64 data URL."
 				},
 				"Width": {
-					"type": "string"
+					"type": "string",
+					"description": "Width of the player (CSS length)."
 				}
 			},
 			"events": [
@@ -6379,7 +6488,8 @@
 			"props": {
 				"IsVertical": {
 					"type": "boolean",
-					"default": false
+					"default": false,
+					"description": "Stacks the steps vertically."
 				},
 				"StepBehavior": {
 					"type": "'Interactive' | 'ProgressOnly'",
@@ -6387,7 +6497,8 @@
 						"Interactive",
 						"ProgressOnly"
 					],
-					"default": "Interactive"
+					"default": "Interactive",
+					"description": "Interactive lets users navigate by clicking steps; ProgressOnly makes steps read-only indicators."
 				}
 			},
 			"events": [],

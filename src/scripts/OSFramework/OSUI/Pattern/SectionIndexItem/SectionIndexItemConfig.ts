@@ -8,6 +8,7 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 	 * @extends {AbstractConfiguration}
 	 */
 	export class SectionIndexItemConfig extends AbstractConfiguration {
+		// Id of the widget the page scrolls to when the item is clicked.
 		public ScrollToWidgetId: string;
 
 		/**

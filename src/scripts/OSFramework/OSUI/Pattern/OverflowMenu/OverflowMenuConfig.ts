@@ -8,7 +8,9 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 	 * @extends {AbstractConfiguration}
 	 */
 	export class OverflowMenuConfig extends AbstractConfiguration {
+		// Preferred placement of the menu relative to its trigger (GlobalEnum.FloatingPosition); auto picks the best fit.
 		public Position: GlobalEnum.FloatingPosition;
+		// Corner shape of the menu: SoftRounded (default), Rounded or Sharp.
 		public Shape: GlobalEnum.ShapeTypes;
 
 		constructor(config: JSON) {

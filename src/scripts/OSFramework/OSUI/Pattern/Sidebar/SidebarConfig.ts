@@ -10,8 +10,11 @@ namespace OSFramework.OSUI.Patterns.Sidebar {
 	export class SidebarConfig extends AbstractConfiguration {
 		/** PUBLIC PROPERTIES **/
 		public Direction: GlobalEnum.Direction;
+		// Dims the page behind the sidebar with an overlay while it is open (and closes on click outside).
 		public HasOverlay: boolean;
+		// Renders the sidebar open when it is built.
 		public StartsOpen: boolean;
+		// Width of the sidebar (CSS length); 500px by default.
 		public Width: string;
 
 		constructor(config: JSON) {
