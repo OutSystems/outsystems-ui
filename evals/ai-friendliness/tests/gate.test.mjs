@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 
-import { evaluateGate, formatGateReport, pickBaseline } from '../tools/gate.mjs';
+import { evaluateCoverageRule, evaluateGate, formatGateReport, pickBaseline } from '../tools/gate.mjs';
 
 const history = [
 	{ label: 'baseline', date: '2026-09-29T09:00:00Z', sha: 'a', scores: { E01: 64.9, E02: 94.6 }, index: 64.3 },
@@ -61,4 +61,60 @@ test('formatGateReport reports a failed gate', () => {
 	const base = history[2];
 	const run = { label: 'gate', index: 85, scores: { E01: 90, E02: 94.6 }, results: [] };
 	assert.match(formatGateReport(base, run, evaluateGate(base, run)), /❌ \*\*Failed\*\*/);
+});
+
+test('evaluateCoverageRule fails when enterprise component coverage decreases and is null without the suite', () => {
+	const base = { ...history[2], enterprise: { scores: { R01: 68.9, R02: 31 }, index: 50 } };
+	assert.equal(evaluateCoverageRule(base, { enterprise: { scores: { R01: 68.9 } } }).ok, true);
+	assert.equal(evaluateCoverageRule(base, { enterprise: { scores: { R01: 70.2 } } }).ok, true);
+	const drop = evaluateCoverageRule(base, { enterprise: { scores: { R01: 68.3 } } });
+	assert.equal(drop.ok, false);
+	assert.match(drop.message, /may not decrease/);
+	assert.equal(evaluateCoverageRule(history[2], { enterprise: { scores: { R01: 1 } } }), null);
+	assert.equal(evaluateCoverageRule(base, {}), null);
+});
+
+test('formatGateReport takes a title and an extra line for the second index', () => {
+	const base = { label: 'b', sha: 'x', index: 50, scores: { R01: 68.9 } };
+	const run = {
+		label: 'gate',
+		sha: 'y',
+		index: 51,
+		scores: { R01: 68.9 },
+		results: [{ id: 'R01', name: 'Coverage', movable: false }],
+	};
+	const md = formatGateReport(base, run, evaluateGate(base, run), {
+		title: 'Enterprise Readiness Index',
+		extra: 'Coverage rule: ok.',
+	});
+	assert.match(md, /### 📊 Enterprise Readiness Index: ✅/);
+	assert.match(md, /\nCoverage rule: ok\.\n/);
+});
+
+test('evaluateCoverageRule fails when enterprise component coverage decreases and is null without the suite', () => {
+	const base = { ...history[2], enterprise: { scores: { R01: 68.9, R02: 31 }, index: 50 } };
+	assert.equal(evaluateCoverageRule(base, { enterprise: { scores: { R01: 68.9 } } }).ok, true);
+	assert.equal(evaluateCoverageRule(base, { enterprise: { scores: { R01: 70.2 } } }).ok, true);
+	const drop = evaluateCoverageRule(base, { enterprise: { scores: { R01: 68.3 } } });
+	assert.equal(drop.ok, false);
+	assert.match(drop.message, /may not decrease/);
+	assert.equal(evaluateCoverageRule(history[2], { enterprise: { scores: { R01: 1 } } }), null);
+	assert.equal(evaluateCoverageRule(base, {}), null);
+});
+
+test('formatGateReport takes a title and an extra line for the second index', () => {
+	const base = { label: 'b', sha: 'x', index: 50, scores: { R01: 68.9 } };
+	const run = {
+		label: 'gate',
+		sha: 'y',
+		index: 51,
+		scores: { R01: 68.9 },
+		results: [{ id: 'R01', name: 'Coverage', movable: false }],
+	};
+	const md = formatGateReport(base, run, evaluateGate(base, run), {
+		title: 'Enterprise Readiness Index',
+		extra: 'Coverage rule: ok.',
+	});
+	assert.match(md, /### 📊 Enterprise Readiness Index: ✅/);
+	assert.match(md, /\nCoverage rule: ok\.\n/);
 });

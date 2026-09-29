@@ -12,7 +12,8 @@ commit and track progression over time.
 ## Run
 
 ```bash
-npm run evals                          # full run, label = run-<sha>; also refreshes results/HISTORY.md
+npm run evals                          # full run of both suites (E01–E10 and the enterprise R01–R06), label = run-<sha>; also refreshes results/HISTORY.md
+npm run evals -- --suite enterprise    # one suite only (partial run; see evals/enterprise/README.md)
 npm run evals:report                   # regenerate results/HISTORY.md (index over time) from history.json
 npm run evals:dashboard                # regenerate results/dashboard.json (history, per-eval next steps, per-component hints); the dashboard artifact reads this document from its database — publish it after a run to refresh the page
 npm run evals:gate -- --report out.md  # gate + Markdown before/after table (what the PR comment shows)

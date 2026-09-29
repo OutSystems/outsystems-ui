@@ -43,7 +43,7 @@ test('compareRuns lists per-metric deltas and the index delta', () => {
 test('formatTable renders a markdown table with one row per metric and an index row', () => {
 	const table = formatTable({ label: 'baseline', sha: 'abc1234', results, ...aggregate(results) });
 	const lines = table.trim().split('\n');
-	assert.match(lines[0], /^\| ID \| Eval \| Score \| Movable \|/);
+	assert.match(lines[0], /^\| ID \| Eval \| Score \| Class \|/);
 	assert.equal(lines.length, 2 + results.length + 1, 'header, separator, rows, index');
 	assert.match(lines[lines.length - 1], /Index.*50\.4/);
 });

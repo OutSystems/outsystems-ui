@@ -38,6 +38,7 @@ Each ADR should follow the template in `ADR-0000-Title-of-ADR.md`.
 | ADR-0009   | Static widget stories and zero private dependencies                    | Accepted | 2026-08-21 |
 | ADR-0010   | Border-radius theme layer and shape tier slots                         | Accepted | 2026-09-04 |
 | ADR-0011   | AI-friendliness eval suite and generated agent documentation           | Proposed | 2026-09-29 |
+| ADR-0012   | Enterprise-readiness evals as a second index                           | Proposed | 2026-09-29 |
 
 > The **"Make Great UI"** initiative (epic ROU-12776) also kept a phase-by-phase decision
 > history (`D-n` numbers) in its `specs/` working notes. That folder was removed once the

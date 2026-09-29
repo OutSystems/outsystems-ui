@@ -22,7 +22,8 @@ namespace OSFramework.OSUI.Patterns.Search {
 		 * @memberof OSFramework.Patterns.Search.Search
 		 */
 		protected setA11YProperties(): void {
-			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
+			// The pattern wraps the search input, so it is the search landmark of the screen.
+			Helper.A11Y.RoleSearch(this.selfElement);
 		}
 
 		/**

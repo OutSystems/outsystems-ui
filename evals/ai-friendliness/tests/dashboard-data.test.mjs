@@ -78,7 +78,14 @@ test('cellFor explains a cell with no measurement', () => {
 
 test('buildDashboardData assembles history, evals with advice and components with one cell per heatmap eval', () => {
 	const d = buildDashboardData(suiteDir);
-	assert.equal(d.v, 1);
+	assert.equal(d.v, 2);
+	assert.ok(d.enterprise, 'the enterprise suite is present once a run carries it');
+	assert.equal(d.enterprise.evals.length, 6);
+	assert.deepEqual(d.enterprise.heatmapEvals, ['R02', 'R03', 'R04', 'R05', 'R06']);
+	assert.ok(d.enterprise.requirements.length > 80);
+	assert.equal(d.enterprise.flows.length, 9);
+	assert.equal(d.components.find((c) => c.n === 'Accordion').cells.R02.w, 'ok');
+	assert.equal(d.components.find((c) => c.k === 'css').cells.R03.w, 'na', 'keyboard checks need a script');
 	assert.ok(d.history.length >= 2);
 	assert.equal(d.evals.length, 10);
 	assert.equal(d.latest.label, d.history.sort((a, b) => a.date.localeCompare(b.date)).at(-1).label);

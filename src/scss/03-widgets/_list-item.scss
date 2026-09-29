@@ -14,11 +14,14 @@
 	--osui-list-item-active-background:       #{variables.$token-bg-neutral-subtlest-press};
 	--osui-list-item-selected-background:     var(--osui-list-item-background);
 	--osui-list-item-selected-icon-color:     #{variables.$token-icon-select};
+	// Density axis: defaults equal the previous fixed values, so nothing changes until a theme sets them.
+	--osui-list-item-padding-block:           #{variables.$token-space-300};
+	--osui-list-item-padding-inline:          #{variables.$token-space-600};
 	// ───────────────────────────────────────────────────────────────────
 
 	border-block-end: variables.$token-border-size-025 solid var(--osui-list-item-border-color);
-	padding-block: variables.$token-space-300;
-	padding-inline: variables.$token-space-600;
+	padding-block: var(--osui-list-item-padding-block);
+	padding-inline: var(--osui-list-item-padding-inline);
 	position: relative;
 	transition: background-color variables.$token-transition-time-100 variables.$token-transition-curve-base;
 

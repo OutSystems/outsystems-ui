@@ -30,6 +30,7 @@
 		"docs:ai:check": "node scripts/check-ai-docs-fresh.mjs",
 		"types:generate": "node scripts/generate-pattern-types.mjs",
 		"evals": "node evals/ai-friendliness/run.mjs",
+		"evals:enterprise": "node evals/ai-friendliness/run.mjs --suite enterprise",
 		"evals:gate": "node evals/ai-friendliness/tools/gate.mjs",
 		"evals:report": "node evals/ai-friendliness/tools/report.mjs",
 		"evals:dashboard": "node evals/ai-friendliness/tools/dashboard-data.mjs",

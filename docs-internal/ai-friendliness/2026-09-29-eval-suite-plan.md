@@ -111,6 +111,22 @@
 - [x] 24 JSDoc blocks completed; `ChangeProperty` + error codes for SwipeEvents/TouchEvents.
 - [ ] Envelope on the existing SwipeEvents/TouchEvents functions — documented breaking change (report B-3), not applied.
 
+### Task 17: Enterprise-readiness evals (R01–R06) ✅
+**Files:** `evals/enterprise/` (requirements.json, lib/signals.mjs, metrics/R01–R06, tests, README), `run.mjs` (`--suite`, `enterprise` block in runs and history), `lib/results.mjs` (class column, titled tables), `tools/gate.mjs` (second index, coverage no-decrease rule, `--max-drop-enterprise`), `tools/report.mjs` and `tools/dashboard-data.mjs` (second suite), ADR-0012, proposal doc.
+- [x] Requirements map transcribed from the document with owner, status and evidence rules; a test fails when an evidence rule stops matching.
+- [x] R02–R06 built from substring signals over TypeScript and compiled CSS (no regexes over source, no execution, paths confined); per-component rows with failed checks as hints.
+- [x] Second index, never merged with the AI-Friendliness Index; `roadmap` class for R01.
+- [x] Baseline `loop-6`: Enterprise Readiness Index 50.7 (R01 68.9, R02 31.0, R03 55.1, R04 75.7, R05 44.6, R06 28.7).
+- [ ] Dynamic phase: axe over the Storybook stories in the Chromatic workflow, feeding R02's detail.
+- [ ] Owner review of the hand-set statuses in `requirements.json` (partial / missing rows carry the reason).
+
+### Task 18: Enterprise loop, run 1 (`loop-7`) ✅
+The refine loop now covers both suites: measure → apply what is additive → re-measure → record. Enterprise Readiness Index 50.7 → 65.7; AI-Friendliness Index unchanged (E08 +0.1).
+- [x] Metric fidelity first (no runtime change): the theme-level reduced-motion guard in `01-foundations/_resets.scss` and its global focus ring count for every component (R04, R06, R02); gesture helpers without DOM are out of the ARIA check; a native button, link or input in the story markup satisfies Enter/Space (R03); Progress already announces through `role="progressbar"` + `aria-valuenow`; Wizard is navigation, not feedback; density is expected on items, not containers (R05).
+- [x] Additive code, computed values unchanged: density knobs with defaults equal to the previous fixed values on list-item, accordion-item title, card-detail gap, card-sectioned padding, dropdown-serverside item, form field spacing (R05 +3.3, E08 +0.1); `role="search"` on the Search pattern, whose accessibility hook was a stub (R02).
+- [ ] Next additive candidates, in order of value: `.os-high-contrast` rules for the 78 components without them (R02), loading and invalid state styles where the component has the state but no style (R06), a density knob on `menu-app-menu-links` (R05), Arrow-key handlers for TabsHeaderItem / WizardItem / SectionIndexItem (R03, behaviour addition, needs review).
+- [ ] Breakpoint rules (R05) and new components (R01) stay out of the loop: layout changes and roadmap work.
+
 ### Task 12: Report + ADR
 **Files:** `docs-internal/ai-friendliness/REPORT.md`, `docs-internal/adr/ADR-0011-ai-friendliness-eval-suite.md`, ADR log row.
 - [ ] Six sections as requested; BEFORE/AFTER snippets for each documented breaking change; tracking matrix from `results/history.json`.

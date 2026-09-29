@@ -9,12 +9,14 @@
 .card {
 	&-sectioned {
 		--card-sectioned-gap: #{variables.$token-scale-600};
-		--card-sectioned-top-padding-block: #{variables.$token-scale-600};
-		--card-sectioned-top-padding-inline: #{variables.$token-scale-600} #{variables.$token-scale-0};
-		--card-sectioned-image-padding-block: #{variables.$token-scale-600};
-		--card-sectioned-image-padding-inline: #{variables.$token-scale-0} #{variables.$token-scale-600};
-		--card-sectioned-bottom-padding-block: #{variables.$token-scale-600} #{variables.$token-scale-0};
-		--card-sectioned-bottom-padding-inline: #{variables.$token-scale-600};
+		// Density axis: one public knob feeds every section padding; default equals the previous fixed value.
+		--osui-card-sectioned-padding: #{variables.$token-scale-600};
+		--card-sectioned-top-padding-block: var(--osui-card-sectioned-padding);
+		--card-sectioned-top-padding-inline: var(--osui-card-sectioned-padding) #{variables.$token-scale-0};
+		--card-sectioned-image-padding-block: var(--osui-card-sectioned-padding);
+		--card-sectioned-image-padding-inline: #{variables.$token-scale-0} var(--osui-card-sectioned-padding);
+		--card-sectioned-bottom-padding-block: var(--osui-card-sectioned-padding) #{variables.$token-scale-0};
+		--card-sectioned-bottom-padding-inline: var(--osui-card-sectioned-padding);
 
 		display: flex;
 		gap: var(--card-sectioned-gap);

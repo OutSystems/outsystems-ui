@@ -19,7 +19,11 @@ import { mean, round1 } from './score.mjs';
  * @property {string} sha
  * @property {Record<string, number>} scores
  * @property {number} index
+ * @property {{ scores: Record<string, number>, index: number }} [enterprise] the enterprise-readiness suite, when it ran
  */
+
+/** Display names of the two indices. */
+export const INDEX_NAMES = { ai: 'AI-Friendliness Index', enterprise: 'Enterprise Readiness Index' };
 
 /**
  * Rounded per-metric scores and the unweighted index.
@@ -59,17 +63,24 @@ export function compareRuns(a, b) {
 	return { from: a.label, to: b.label, rows, indexDelta: round1(b.index - a.index) };
 }
 
+/** Movability class of a metric result: explicit `cls`, else derived from `movable`. */
+export function classOf(/** @type {{ movable: boolean, cls?: string }} */ r) {
+	if (r.cls) return r.cls;
+	return r.movable ? 'movable' : 'structural';
+}
+
 /**
- * Markdown table for one run.
+ * Markdown table for one run (or one suite of a run).
  * @param {{ label: string, sha?: string, results: MetricResult[], scores: Record<string, number>, index: number }} run
+ * @param {{ title?: string }} [options] index title, default the AI-Friendliness Index
  */
-export function formatTable(run) {
-	const lines = ['| ID | Eval | Score | Movable | Notes |', '| --- | --- | ---: | :---: | --- |'];
+export function formatTable(run, { title = INDEX_NAMES.ai } = {}) {
+	const lines = ['| ID | Eval | Score | Class | Notes |', '| --- | --- | ---: | :---: | --- |'];
 	for (const r of run.results) {
-		lines.push(`| ${r.id} | ${r.name} | ${run.scores[r.id].toFixed(1)} | ${r.movable ? 'yes' : 'structural'} | ${r.summary ?? ''} |`);
+		lines.push(`| ${r.id} | ${r.name} | ${run.scores[r.id].toFixed(1)} | ${classOf(r)} | ${r.summary ?? ''} |`);
 	}
 	const provenance = run.sha ? `${run.label} @ ${run.sha}` : run.label;
-	lines.push(`| — | **AI-Friendliness Index** | **${run.index.toFixed(1)}** | | ${provenance} |`);
+	lines.push(`| — | **${title}** | **${run.index.toFixed(1)}** | | ${provenance} |`);
 	return lines.join('\n');
 }
 
