@@ -98,7 +98,11 @@ export function parseEnumPath(text) {
 	if (scopeIndex < 0) return null;
 	const rest = parts.slice(scopeIndex + 1);
 	if (rest.length === 0 || rest.length > 2 || !rest.every((p) => /^[A-Z]\w*$/.test(p))) return null;
-	return { scope: /** @type {'Enum'|'GlobalEnum'} */ (parts[scopeIndex]), enumName: rest[0], member: rest[1] ?? null };
+	return {
+		scope: /** @type {'Enum'|'GlobalEnum'} */ (parts[scopeIndex]),
+		enumName: rest[0],
+		member: rest[1] ?? null,
+	};
 }
 
 /**
@@ -183,7 +187,10 @@ function allowedValuesFor(ctx, pattern, prop) {
 	const enumDefault = prop.kind === 'string' ? parseEnumPath(prop.defaultText ?? '') : null;
 	if (!enumDefault?.member) return { allowed: null };
 	if (enumDefault.scope === 'Enum') return { allowed: enumValuesFor(ctx, pattern, prop.defaultText) };
-	return { allowed: null, hint: `default from ${enumDefault.scope}.${enumDefault.enumName}; not validated — any string is accepted` };
+	return {
+		allowed: null,
+		hint: `default from ${enumDefault.scope}.${enumDefault.enumName}; not validated — any string is accepted`,
+	};
 }
 
 /**
@@ -275,7 +282,8 @@ export function buildManifest(ctx) {
 		const e = expectationsFor(ctx, p);
 		/** @type {Record<string, any>} */
 		const props = {};
-		for (const prop of [...e.props].sort((a, b) => a.name.localeCompare(b.name))) props[prop.name] = describeProp(ctx, p, prop);
+		for (const prop of [...e.props].sort((a, b) => a.name.localeCompare(b.name)))
+			props[prop.name] = describeProp(ctx, p, prop);
 		const api = e.apiFunctions.map((f) => ({
 			name: f.name,
 			params: f.params.map((x) => ({ name: x.name, type: x.type ?? 'unknown' })),
@@ -528,10 +536,13 @@ export function renderCssComponents(ctx) {
 		if (!m.html) continue;
 		const knobs = knobsOf(ctx.compiledCss(c.scssFile).css);
 		const skeleton = cleanMarkup(m.html).slice(0, 700);
-		lines.push(`## ${c.name} (${ctx.rel(c.scssFile)})`);
-		lines.push(`Skeleton (from ${ctx.rel(c.storyFile)}): ${skeleton}`);
-		if (knobs.length) lines.push(`CSS API: ${knobs.join(' ')}`);
-		lines.push('');
+		const knobLine = knobs.length ? [`CSS API: ${knobs.join(' ')}`] : [];
+		lines.push(
+			`## ${c.name} (${ctx.rel(c.scssFile)})`,
+			`Skeleton (from ${ctx.rel(c.storyFile)}): ${skeleton}`,
+			...knobLine,
+			''
+		);
 	}
 	return `${lines.join('\n')}\n`;
 }
@@ -580,7 +591,10 @@ export function renderUtilities(ctx) {
 		'',
 	];
 	let total = 0;
-	for (const file of fs.readdirSync(dir).filter((f) => f.endsWith('.scss')).sort((a, b) => a.localeCompare(b))) {
+	for (const file of fs
+		.readdirSync(dir)
+		.filter((f) => f.endsWith('.scss'))
+		.sort((a, b) => a.localeCompare(b))) {
 		const { css } = ctx.compiledCss(path.join(dir, file));
 		if (!css) continue;
 		/** @type {Set<string>} */
@@ -596,11 +610,13 @@ export function renderUtilities(ctx) {
 		const base = file.replace(/\.scss$/, '');
 		const title = UTILITY_FAMILIES[base] ?? base.replace(/^_/, '');
 		const readsNote = reads.size ? `; reads ${[...reads].sort(byCodePoint).join(', ')}` : '';
-		lines.push(`## ${title} (${classes.size}${readsNote})`);
-		lines.push([...classes].sort(byCodePoint).join(' '));
-		lines.push('');
+		lines.push(`## ${title} (${classes.size}${readsNote})`, [...classes].sort(byCodePoint).join(' '), '');
 	}
-	lines.splice(4, 0, `${total} classes in ${lines.filter((l) => l.startsWith('## ')).length} families, generated from src/scss/05-useful and the design tokens.`);
+	lines.splice(
+		4,
+		0,
+		`${total} classes in ${lines.filter((l) => l.startsWith('## ')).length} families, generated from src/scss/05-useful and the design tokens.`
+	);
 	return `${lines.join('\n')}\n`;
 }
 

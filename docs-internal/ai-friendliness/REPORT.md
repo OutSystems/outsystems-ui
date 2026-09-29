@@ -301,6 +301,7 @@ the "billions of tokens of React/HTML/Tailwind" the research credits for high pa
 | S-9 | loop-4 | generated `PatternTypes.ts`: per pattern `Configs` (typed optional props with descriptions) and `EventName` (event union + `string` escape hatch); `Create(id, configs: string \| Configs)`, `RegisterCallback(id, eventName: EventName, cb)` | types are erased; relative to `dev` the object form is new, so nothing that compiled before stops compiling; `npm run types:generate`, freshness asserted by a test |
 | S-10 | loop-4 | `Orientation` alias in `Global.d.ts` points at `OSFramework.OSUI.GlobalEnum`; last 8 implicit-any sites annotated; `noImplicitAny: true` in `tsconfig.json`; factory `NewFloatingPosition` declares its real return type and is called without `new` | type-only; calling a factory that returns an object with or without `new` yields the same object |
 | S-11 | loop-4 | 24 API JSDoc blocks completed (param names, missing params, descriptions); `ChangeProperty` added to SwipeEvents and TouchEvents with new error codes | docs and an additive function; existing functions untouched |
+| S-12 | static-analysis follow-up | `Menu.ts` menu-icon key handler reads `e.key === ' ' \|\| e.key === 'Enter'` instead of the deprecated `keyCode` 32/13 (the only `keyCode` use in the runtime); tooling reads gulp specs as text instead of `require`, loads the test namespace through a temp ES module, and guards the git-metadata path | same keys in every supported browser; the rest is tooling |
 
 **S-2 — BEFORE / AFTER**
 

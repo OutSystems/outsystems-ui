@@ -12,10 +12,7 @@
  * (Card, Badge, Tag, the widget styles, …).
  */
 import fs from 'node:fs';
-import { createRequire } from 'node:module';
 import path from 'node:path';
-
-const require = createRequire(import.meta.url);
 
 /**
  * @typedef {object} Pattern
@@ -107,32 +104,16 @@ export function classifyTsFile(file) {
 export function readSpecScss(root, name) {
 	const specFile = path.join(root, ...SPEC_DIR, `${name}.js`);
 	if (!fs.existsSync(specFile)) return [];
+	// The spec is a CommonJS module, but it is read as text rather than executed: every `"scss": "…"`
+	// entry (top-level and nested sub-patterns) is collected, so no repository file is ever `require`d.
+	const text = fs.readFileSync(specFile, 'utf8');
 	/** @type {string[]} */
 	const values = [];
-	try {
-		const info = require(specFile).info;
-		collectScss(info, values);
-	} catch {
-		const text = fs.readFileSync(specFile, 'utf8');
-		for (const m of text.matchAll(/"scss"\s*:\s*"([^"]*)"/g)) values.push(m[1]);
-	}
+	for (const m of text.matchAll(/"scss"\s*:\s*"([^"]*)"/g)) values.push(m[1]);
 	return values
 		.filter(Boolean)
 		.map((rel) => resolveScssPartial(path.join(root, ...SRC), rel))
 		.filter(/** @returns {f is string} */ (f) => f !== null);
-}
-
-/** @param {unknown} node @param {string[]} out */
-function collectScss(node, out) {
-	if (!node || typeof node !== 'object') return;
-	if (Array.isArray(node)) {
-		node.forEach((n) => collectScss(n, out));
-		return;
-	}
-	for (const [key, value] of Object.entries(node)) {
-		if (key === 'scss' && typeof value === 'string') out.push(value);
-		else if (value && typeof value === 'object') collectScss(value, out);
-	}
 }
 
 /**
@@ -243,7 +224,10 @@ export function buildInventory(root) {
 	const cssComponents = CSS_COMPONENT_DIRS.flatMap((segments) => walk(path.join(root, ...segments)))
 		.filter((f) => f.endsWith('.scss') && !CSS_EXCLUDE.test(f) && !claimedScss.has(f))
 		.map((scssFile) => {
-			const name = path.basename(scssFile).replace(/^_/, '').replace(/\.scss$/, '');
+			const name = path
+				.basename(scssFile)
+				.replace(/^_/, '')
+				.replace(/\.scss$/, '');
 			return { name, scssFile, storyFile: matchStory(name, storiesByNorm) };
 		})
 		.sort((a, b) => a.name.localeCompare(b.name));

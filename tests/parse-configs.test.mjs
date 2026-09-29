@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 import { loadNamespaceFile } from './helpers/load-namespace.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const { OSFramework } = loadNamespaceFile(path.join(root, 'src/scripts/OSFramework/OSUI/Helper/ParseConfigs.ts'));
+const { OSFramework } = await loadNamespaceFile(path.join(root, 'src/scripts/OSFramework/OSUI/Helper/ParseConfigs.ts'));
 const { ParseConfigs } = OSFramework.OSUI.Helper;
 
 test('a JSON string is parsed exactly like JSON.parse did', () => {

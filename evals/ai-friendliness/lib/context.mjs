@@ -13,18 +13,26 @@ import path from 'node:path';
  */
 export function readGitSha(root) {
 	try {
-		let gitDir = path.join(root, '.git');
+		// `root` is the repository root chosen on the command line; only its `.git` entry is read,
+		// and a worktree pointer is honoured only when it names a `.git` metadata directory.
+		const base = path.resolve(root);
+		if (!fs.statSync(base).isDirectory()) return 'unknown';
+		let gitDir = path.join(base, '.git');
 		if (fs.statSync(gitDir).isFile()) {
 			const pointer = fs.readFileSync(gitDir, 'utf8').trim();
 			if (!pointer.startsWith('gitdir:')) return 'unknown';
-			gitDir = path.resolve(root, pointer.slice('gitdir:'.length).trim());
+			const target = path.resolve(base, pointer.slice('gitdir:'.length).trim());
+			if (!target.split(path.sep).includes('.git')) return 'unknown';
+			gitDir = target;
 		}
 		const head = fs.readFileSync(path.join(gitDir, 'HEAD'), 'utf8').trim();
 		if (!head.startsWith('ref:')) return head.slice(0, 9);
 		const ref = head.slice('ref:'.length).trim();
 		// a linked worktree keeps refs in the common dir
 		const commonDirFile = path.join(gitDir, 'commondir');
-		const commonDir = fs.existsSync(commonDirFile) ? path.resolve(gitDir, fs.readFileSync(commonDirFile, 'utf8').trim()) : gitDir;
+		const commonDir = fs.existsSync(commonDirFile)
+			? path.resolve(gitDir, fs.readFileSync(commonDirFile, 'utf8').trim())
+			: gitDir;
 		const refFile = path.join(commonDir, ref);
 		if (fs.existsSync(refFile)) return fs.readFileSync(refFile, 'utf8').trim().slice(0, 9);
 		const packed = path.join(commonDir, 'packed-refs');

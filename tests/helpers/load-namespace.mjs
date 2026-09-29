@@ -4,20 +4,19 @@
  * unit-tested without the browser or the full AMD bundle.
  *
  * `namespace OSFramework.OSUI.Helper { export function X() {} }` transpiles to an IIFE that
- * extends a root object named `OSFramework`. The transpiled code is wrapped as a CommonJS module
- * exporting a function whose parameters are the namespace roots, written to a temporary file and
- * loaded through `require` — so no string is ever passed to `eval` or `new Function`. Inside the
- * body, `var OSFramework;` re-declares the parameter without resetting it, so the IIFE populates
- * the object we pass in. The source is repository code compiled by TypeScript, never external input.
+ * extends a root object named `OSFramework`. The transpiled code is wrapped as an ES module that
+ * exports a function whose parameters are the namespace roots, written to a temporary file under
+ * the OS temp directory and loaded with a static-shaped `import()` of that file URL — no `eval`,
+ * `new Function`, `vm` or `require(variable)`. Inside the body, `var OSFramework;` re-declares the
+ * parameter without resetting it, so the IIFE populates the object we pass in. The source is
+ * repository code compiled by TypeScript, never external input.
  */
 import fs from 'node:fs';
-import { createRequire } from 'node:module';
 import os from 'node:os';
 import path from 'node:path';
+import { pathToFileURL } from 'node:url';
 
 import ts from 'typescript';
-
-const require = createRequire(import.meta.url);
 
 /**
  * Namespace root identifiers declared in a source (`namespace Foo.Bar {` → `Foo`).
@@ -39,9 +38,9 @@ function namespaceRoots(source) {
 /**
  * @param {string} file absolute path of the `.ts` source
  * @param {Record<string, unknown>} [globals] extra globals (stubs for other namespaces, `window`, …)
- * @returns {Record<string, any>} the populated namespace roots and globals
+ * @returns {Promise<Record<string, any>>} the populated namespace roots and globals
  */
-export function loadNamespaceFile(file, globals = {}) {
+export async function loadNamespaceFile(file, globals = {}) {
 	const source = fs.readFileSync(file, 'utf8');
 	const { outputText, diagnostics } = ts.transpileModule(source, {
 		compilerOptions: { target: ts.ScriptTarget.ES2017, module: ts.ModuleKind.None, removeComments: true },
@@ -56,10 +55,11 @@ export function loadNamespaceFile(file, globals = {}) {
 	const names = Object.keys(context);
 
 	const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'osui-namespace-'));
-	const moduleFile = path.join(dir, `${path.basename(file, '.ts')}.cjs`);
-	fs.writeFileSync(moduleFile, `module.exports = function (${names.join(', ')}) {\n${outputText}\n};\n`);
+	const moduleFile = path.join(dir, `${path.basename(file, '.ts')}.mjs`);
+	fs.writeFileSync(moduleFile, `export default function (${names.join(', ')}) {\n${outputText}\n}\n`);
 	try {
-		require(moduleFile)(...names.map((n) => context[n]));
+		const { default: populate } = await import(pathToFileURL(moduleFile).href);
+		populate(...names.map((n) => context[n]));
 	} finally {
 		fs.rmSync(dir, { recursive: true, force: true });
 	}
