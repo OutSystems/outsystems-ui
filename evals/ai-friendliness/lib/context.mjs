@@ -7,17 +7,19 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 /**
- * Short SHA of HEAD read from the repository metadata (works for linked worktrees), without
+ * Abbreviated commit id of HEAD read from the repository metadata (works for linked worktrees), without
  * spawning git. Returns 'unknown' when the checkout has no readable metadata.
  * @param {string} root
  */
-export function readGitSha(root) {
+export function readHeadCommit(root) {
 	try {
 		const gitDir = resolveGitDir(path.resolve(root));
 		if (!gitDir) return 'unknown';
 		const head = fs.readFileSync(path.join(gitDir, 'HEAD'), 'utf8').trim();
-		const sha = head.startsWith('ref:') ? resolveRef(gitDir, head.slice('ref:'.length).trim()) : head.slice(0, 9);
-		return shortSha(sha);
+		const commit = head.startsWith('ref:')
+			? resolveRef(gitDir, head.slice('ref:'.length).trim())
+			: head.slice(0, 9);
+		return shortCommitId(commit);
 	} catch {
 		return 'unknown';
 	}
@@ -25,12 +27,12 @@ export function readGitSha(root) {
 
 /**
  * Only a short hexadecimal object id is ever returned (and later printed); anything else is 'unknown'.
- * @param {string|null} sha
+ * @param {string|null} commit
  */
-function shortSha(sha) {
-	if (!sha) return 'unknown';
+function shortCommitId(commit) {
+	if (!commit) return 'unknown';
 	const hex = '0123456789abcdef';
-	const chars = [...sha.toLowerCase().slice(0, 9)];
+	const chars = [...commit.toLowerCase().slice(0, 9)];
 	return chars.length >= 4 && chars.every((ch) => hex.includes(ch)) ? chars.join('') : 'unknown';
 }
 
@@ -52,7 +54,7 @@ function resolveGitDir(base) {
 }
 
 /**
- * Short SHA a symbolic ref points at, from a loose ref file or `packed-refs`. A linked worktree keeps
+ * Abbreviated commit id a symbolic ref points at, from a loose ref file or `packed-refs`. A linked worktree keeps
  * its refs in the common directory recorded in `commondir`.
  * @param {string} gitDir
  * @param {string} ref e.g. `refs/heads/dev`
@@ -68,8 +70,8 @@ function resolveRef(gitDir, ref) {
 	const packed = path.join(commonDir, 'packed-refs');
 	if (!fs.existsSync(packed)) return null;
 	for (const line of fs.readFileSync(packed, 'utf8').split('\n')) {
-		const [sha, name] = line.trim().split(' ');
-		if (name === ref && sha) return sha.slice(0, 9);
+		const [commit, name] = line.trim().split(' ');
+		if (name === ref && commit) return commit.slice(0, 9);
 	}
 	return null;
 }
@@ -144,9 +146,9 @@ export function createContext(root, options = {}) {
 			return fs.existsSync(file) ? fs.readFileSync(file, 'utf8') : null;
 		},
 
-		/** Short git SHA of the working tree HEAD, or 'unknown'. */
-		gitSha() {
-			return readGitSha(root);
+		/** Abbreviated commit id of the working tree HEAD, or 'unknown'. */
+		headCommit() {
+			return readHeadCommit(root);
 		},
 
 		/** @param {string} file */

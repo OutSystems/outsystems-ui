@@ -127,8 +127,8 @@ function main() {
 
 	const root = path.resolve(args.root ?? path.join(here, '..', '..'));
 	const ctx = createContext(root);
-	const sha = ctx.gitSha();
-	const label = args.label ?? `run-${sha}`;
+	const commit = ctx.headCommit();
+	const label = args.label ?? `run-${commit}`;
 	const selected = args.only ? metrics.filter((m) => args.only?.includes(m.id)) : metrics;
 	if (selected.length === 0) throw new Error('No metrics selected');
 
@@ -136,7 +136,7 @@ function main() {
 	const run = {
 		label,
 		date: new Date().toISOString(),
-		sha,
+		sha: commit,
 		node: process.version,
 		tokenizer: ctx.tokenizerName,
 		partial: Boolean(args.only),
