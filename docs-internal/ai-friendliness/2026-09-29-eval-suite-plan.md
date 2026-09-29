@@ -92,6 +92,7 @@
 - [x] `compareDocs` tested (CRLF-insensitive); CLI regenerates into a temp dir and reports modified/missing files.
 - [x] Workflow on `pull_request` into `dev` and `workflow_dispatch` (any branch, `max-drop` input).
 - [x] Gate `--report` writes a before → after table (job summary + sticky PR comment); `results/HISTORY.md` generated from `history.json` (`npm run evals:report`, refreshed by every full run, freshness asserted by a test).
+- [x] `results/dashboard.json` (`npm run evals:dashboard`, refreshed by every full run, freshness asserted by a test): the data set behind the dashboard artifact, which reads it from its database on refresh.
 - [x] SonarCloud flags the workflow's `npm install` as an unlocked-dependency hotspot (fails the quality gate's security rating on new code). Every repository workflow installs the same way and the lockfile is git-ignored by policy, so it is accepted in SonarCloud with that justification (owner decision); a lockfile or a rule exclusion would be a repository-wide change.
 
 ### Task 14: Publication of the agent docs ◐

@@ -16,6 +16,7 @@ import { createContext } from './lib/context.mjs';
 import { insideDir, isSingleSegment } from './lib/paths.mjs';
 import { aggregate, compareRuns, formatComparison, formatTable, upsertHistory } from './lib/results.mjs';
 import { metrics } from './metrics/index.mjs';
+import { writeDashboardData } from './tools/dashboard-data.mjs';
 import { writeHistoryReport } from './tools/report.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
@@ -92,7 +93,7 @@ function runMetrics(ctx, selected, quiet) {
 }
 
 /**
- * Persist a run: its own JSON file and, for full runs, the history entry and the HISTORY.md report.
+ * Persist a run: its own JSON file and, for full runs, the history entry, HISTORY.md and dashboard.json.
  * @param {any} run
  */
 function writeRun(run) {
@@ -105,6 +106,7 @@ function writeRun(run) {
 	const updated = upsertHistory(history, entry);
 	fs.writeFileSync(historyFile, `${JSON.stringify(updated, null, '\t')}\n`);
 	writeHistoryReport(here, updated, metrics);
+	writeDashboardData(here);
 }
 
 /**

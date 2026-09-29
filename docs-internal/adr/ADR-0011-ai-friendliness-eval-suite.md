@@ -59,7 +59,10 @@ generated manifest scores ≥ 90 % on schema completeness for every pattern).
     entry) and `npm run docs:ai:check` (fails when `docs-ai/` differs from a fresh generation) on
     pull requests into `dev` and on demand for any branch. Both commands run locally too. The gate
     writes a before → after table per eval to the job summary and to one sticky PR comment, and
-    every full run regenerates `results/HISTORY.md` (`npm run evals:report`), the index over time.
+    every full run regenerates `results/HISTORY.md` (`npm run evals:report`), the index over time, and
+    `results/dashboard.json` (`npm run evals:dashboard`): history, per-eval next steps and one hint per
+    component × eval, derived from the metric rows. A dashboard artifact renders that document and
+    reloads it from its database on demand, so a run followed by a publish of the file refreshes it.
 -   **Publication.** `postdocs` copies `docs-ai/` into the TypeDoc output, so the documentation
     deployment serves `/llms.txt`, `/llms-components.txt`, `/llms-tokens.txt`, `/llms-utilities.txt`,
     `/llms-patterns.txt` and `/osui.components.json` at its root. Serving them from the OutSystems

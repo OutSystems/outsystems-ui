@@ -14,6 +14,7 @@ commit and track progression over time.
 ```bash
 npm run evals                          # full run, label = run-<sha>; also refreshes results/HISTORY.md
 npm run evals:report                   # regenerate results/HISTORY.md (index over time) from history.json
+npm run evals:dashboard                # regenerate results/dashboard.json (history, per-eval next steps, per-component hints); the dashboard artifact reads this document from its database — publish it after a run to refresh the page
 npm run evals:gate -- --report out.md  # gate + Markdown before/after table (what the PR comment shows)
 npm run evals -- --label loop-2        # named run (updates results/history.json)
 npm run evals -- --only E01,E03        # subset (written, but not added to history)
