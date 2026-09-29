@@ -24,6 +24,7 @@ concurrency:
 
 permissions:
     contents: read
+    pull-requests: write # one sticky "before → after" comment per pull request
 
 jobs:
     gate:
@@ -53,8 +54,55 @@ jobs:
             - name: 🧪 Unit tests (suite + generator)
               run: npm test
 
+            # Both checks keep going on failure so the report below is always posted; the last
+            # step turns their outcomes into the job result.
             - name: 📊 AI-Friendliness Index must not regress
-              run: node evals/ai-friendliness/tools/gate.mjs --max-drop "${{ inputs.max-drop || '1' }}"
+              id: gate
+              continue-on-error: true
+              run: |
+                  node evals/ai-friendliness/tools/gate.mjs --max-drop "${{ inputs.max-drop || '1' }}" --report gate-report.md
+                  cat gate-report.md >> "$GITHUB_STEP_SUMMARY"
 
             - name: 📄 docs-ai/ must be fresh
+              id: docs
+              continue-on-error: true
               run: npm run docs:ai:check
+
+            - name: 🔎 Find previous evals comment
+              if: github.event_name == 'pull_request'
+              id: find_evals_comment
+              uses: peter-evans/find-comment@3eae4d37986fb5a8592848f6a574fdf654e61f9e # v3.1.0
+              with:
+                  issue-number: ${{ github.event.pull_request.number }}
+                  comment-author: 'github-actions[bot]'
+                  body-includes: <!-- ai-friendliness-gate-comment -->
+
+            - name: 💬 Post the before → after report on the PR
+              if: github.event_name == 'pull_request'
+              uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+              env:
+                  DOCS_OUTCOME: ${{ steps.docs.outcome }}
+                  EXISTING_COMMENT_ID: ${{ steps.find_evals_comment.outputs.comment-id }}
+              with:
+                  script: |
+                      const fs = require('fs');
+                      const report = fs.existsSync('gate-report.md')
+                        ? fs.readFileSync('gate-report.md', 'utf8')
+                        : '### 📊 AI-Friendliness Index: ❌ **Failed**\n\nThe evals did not produce a report; see the job log.';
+                      const docs = process.env.DOCS_OUTCOME === 'success'
+                        ? '✅ `docs-ai/` matches a fresh generation from the source.'
+                        : '❌ `docs-ai/` is stale — run `npm run docs:ai` and commit the result.';
+                      const body = `<!-- ai-friendliness-gate-comment -->\n${report}\n\n${docs}\n`;
+                      const params = { owner: context.repo.owner, repo: context.repo.repo, body };
+                      const existing = process.env.EXISTING_COMMENT_ID;
+                      if (existing) {
+                        await github.rest.issues.updateComment({ ...params, comment_id: Number(existing) });
+                      } else {
+                        await github.rest.issues.createComment({ ...params, issue_number: context.issue.number });
+                      }
+
+            - name: 🚦 Job result
+              if: steps.gate.outcome != 'success' || steps.docs.outcome != 'success'
+              run: |
+                  echo "::error::AI-Friendliness gate: ${{ steps.gate.outcome }}; docs-ai freshness: ${{ steps.docs.outcome }}"
+                  exit 1
