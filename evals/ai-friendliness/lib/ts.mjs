@@ -328,6 +328,7 @@ function classifyType(typeNode, initializer, checker) {
  * @property {string|null} typeText
  * @property {PropKind} kind
  * @property {boolean} hasDoc
+ * @property {string} docText       comment text preceding the declaration ('' when undocumented)
  * @property {string|null} validated  `boolean` | `string` | `number` | `inRange` | `date` | `time` | …
  * @property {string|null} defaultText
  * @property {string[]} allowed        source text of allowed values (validateInRange)
@@ -409,14 +410,24 @@ export function getConfigProps(program, configFiles) {
 				const name = m.name.getText(sf);
 				if (name === 'ExtendedClass' || name.startsWith('_')) continue;
 				const v = validation.get(name);
-				const hasDoc = (ts.getLeadingCommentRanges(sf.text, m.getFullStart()) ?? []).length > 0;
+				const comments = ts.getLeadingCommentRanges(sf.text, m.getFullStart()) ?? [];
+				const docText = comments
+					.map((c) => sf.text.slice(c.pos, c.end))
+					.join('\n')
+					.replace(/^\s*\/\*\*?|\*\/\s*$/g, '')
+					.split('\n')
+					.map((l) => l.replace(/^\s*(\*|\/\/)\s?/, '').trim())
+					.filter((l) => l && !l.startsWith('@'))
+					.join(' ')
+					.trim();
 				const prop = {
 					name,
 					className: n.name.text,
 					file,
 					typeText: m.type ? m.type.getText(sf) : null,
 					kind: classifyType(m.type, m.initializer, checker),
-					hasDoc,
+					hasDoc: comments.length > 0,
+					docText,
 					validated: v?.validated ?? null,
 					defaultText: v?.defaultText ?? (m.initializer ? m.initializer.getText(sf) : null),
 					allowed: v?.allowed ?? [],

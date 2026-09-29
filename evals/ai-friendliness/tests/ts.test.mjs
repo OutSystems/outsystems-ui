@@ -90,6 +90,9 @@ test('getConfigProps classifies public config props and reads validateDefault', 
 	assert.equal(byName.IsOpen.validated, 'boolean');
 	assert.equal(byName.IsOpen.defaultText, 'false');
 	assert.equal(byName.IsOpen.hasDoc, true);
+	assert.equal(byName.IsOpen.docText, 'Whether it starts open.');
+	assert.equal(byName.Position.docText, 'Where the thing sits');
+	assert.equal(byName.Mode.docText, '');
 	assert.equal(byName.Position.kind, 'string');
 	assert.equal(byName.Position.validated, 'inRange');
 	assert.deepEqual(byName.Position.allowed, ["'left'", "'right'"]);

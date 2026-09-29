@@ -1,0 +1,54 @@
+# OutSystems UI (llms.txt)
+
+> Browser-side TypeScript behaviours + SCSS for the OutSystems UI patterns (O11 Reactive/Mobile and ODC). The build emits one AMD bundle and one CSS bundle per platform (`dist/<O11|ODC>.OutSystemsUI.{js,css}`). Patterns are driven through the global namespace `OutSystems.OSUI.Patterns.<Name>API`; third-party providers (Flatpickr, Splide, noUiSlider, VirtualSelect, Floating UI) are loaded by the host app as window globals.
+
+## Components (33)
+- Accordion: 1 props, 0 events, 9 API functions
+- AccordionItem: 5 props, 1 events, 11 API functions
+- AnimatedLabel: 0 props, 0 events, 8 API functions
+- BottomSheet: 2 props, 1 events, 9 API functions
+- ButtonLoading: 2 props, 0 events, 8 API functions
+- Carousel: 11 props, 0 events, 18 API functions
+- DatePicker: 18 props, 0 events, 22 API functions
+- Dropdown: 12 props, 5 events, 19 API functions
+- DropdownServerSideItem: 2 props, 1 events, 7 API functions
+- FlipContent: 2 props, 1 events, 10 API functions
+- Gallery: 4 props, 0 events, 7 API functions
+- InlineSvg: 1 props, 0 events, 8 API functions
+- MonthPicker: 10 props, 1 events, 18 API functions
+- Notification: 6 props, 1 events, 9 API functions
+- OverflowMenu: 2 props, 1 events, 11 API functions
+- Progress: 0 props, 0 events, 10 API functions
+- RangeSlider: 15 props, 0 events, 15 API functions
+- Rating: 4 props, 1 events, 9 API functions
+- Search: 0 props, 0 events, 7 API functions
+- SectionIndex: 2 props, 0 events, 7 API functions
+- SectionIndexItem: 1 props, 0 events, 7 API functions
+- Sidebar: 4 props, 1 events, 11 API functions
+- Submenu: 1 props, 1 events, 12 API functions
+- SwipeEvents: 1 props, 4 events, 8 API functions
+- Tabs: 6 props, 1 events, 9 API functions
+- TabsContentItem: 0 props, 0 events, 7 API functions
+- TabsHeaderItem: 0 props, 0 events, 10 API functions
+- TimePicker: 12 props, 0 events, 20 API functions
+- Tooltip: 3 props, 1 events, 9 API functions
+- TouchEvents: 1 props, 3 events, 6 API functions
+- Video: 9 props, 1 events, 11 API functions
+- Wizard: 2 props, 0 events, 7 API functions
+- WizardItem: 2 props, 1 events, 7 API functions
+
+## Read next
+- llms-components.txt — per-pattern card: lifecycle, typed props with defaults/allowed values, events, API signatures, CSS classes, CSS API knobs, markup skeleton
+- llms-tokens.txt — framework theme roles (--color-*, --border-radius-*, --space-*) and every --osui-* component knob
+- llms-patterns.txt — markup skeletons of the CSS-only components (Card, Section, Badge, Tag, layout, widgets)
+- osui.components.json — the same data, machine-readable (schema/osui.components.schema.json)
+
+## Gotchas (read before generating)
+1. A pattern root element needs `name="<id>"`; the runtime resolves it with `getElementsByName`. It must sit inside an element with `[data-block]` whose `id` becomes the pattern's `widgetId` (callbacks receive that id first).
+2. Lifecycle: `Create(id, configsJson)` → `RegisterCallback` → `Initialize(id)`. Parents before children on Create/Initialize; children before parents on Dispose.
+3. `configs` is a JSON *string*. Always include `"ExtendedClass": ""`; invalid values fall back to defaults silently.
+4. Every runtime API function returns a JSON string envelope `{ code, isSuccess, message, value? }`; only `Create` throws (duplicate id).
+5. Styling is token-based: override CSS custom properties (`--color-primary`, `--border-radius-default`, `--osui-card-padding`), never component rules. Dark mode = class `os-dark-theme` on `<html>`.
+6. Responsiveness is class-driven: the runtime sets `phone`, `tablet` or `desktop` (and `landscape`/`portrait`) on `<body>`; write `.phone .card { … }` rather than media queries.
+7. Utility classes are long-form (`margin-top-base`, `display-flex`, `justify-content-space-between`); Tailwind-style short names do not exist.
+8. Logical CSS properties are the default (`padding-inline-start`, not `padding-left`); RTL is handled by the framework.
