@@ -13,39 +13,54 @@ import path from 'node:path';
  */
 export function readGitSha(root) {
 	try {
-		// `root` is the repository root chosen on the command line; only its `.git` entry is read,
-		// and a worktree pointer is honoured only when it names a `.git` metadata directory.
-		const base = path.resolve(root);
-		if (!fs.statSync(base).isDirectory()) return 'unknown';
-		let gitDir = path.join(base, '.git');
-		if (fs.statSync(gitDir).isFile()) {
-			const pointer = fs.readFileSync(gitDir, 'utf8').trim();
-			if (!pointer.startsWith('gitdir:')) return 'unknown';
-			const target = path.resolve(base, pointer.slice('gitdir:'.length).trim());
-			if (!target.split(path.sep).includes('.git')) return 'unknown';
-			gitDir = target;
-		}
+		const gitDir = resolveGitDir(path.resolve(root));
+		if (!gitDir) return 'unknown';
 		const head = fs.readFileSync(path.join(gitDir, 'HEAD'), 'utf8').trim();
 		if (!head.startsWith('ref:')) return head.slice(0, 9);
-		const ref = head.slice('ref:'.length).trim();
-		// a linked worktree keeps refs in the common dir
-		const commonDirFile = path.join(gitDir, 'commondir');
-		const commonDir = fs.existsSync(commonDirFile)
-			? path.resolve(gitDir, fs.readFileSync(commonDirFile, 'utf8').trim())
-			: gitDir;
-		const refFile = path.join(commonDir, ref);
-		if (fs.existsSync(refFile)) return fs.readFileSync(refFile, 'utf8').trim().slice(0, 9);
-		const packed = path.join(commonDir, 'packed-refs');
-		if (fs.existsSync(packed)) {
-			for (const line of fs.readFileSync(packed, 'utf8').split('\n')) {
-				const [sha, name] = line.trim().split(' ');
-				if (name === ref && sha) return sha.slice(0, 9);
-			}
-		}
-		return 'unknown';
+		return resolveRef(gitDir, head.slice('ref:'.length).trim()) ?? 'unknown';
 	} catch {
 		return 'unknown';
 	}
+}
+
+/**
+ * The `.git` metadata directory of a checkout. `base` is the repository root chosen on the command
+ * line; only its `.git` entry is read, and a linked-worktree pointer is honoured only when it names a
+ * `.git` metadata directory.
+ * @param {string} base resolved repository root
+ * @returns {string|null}
+ */
+function resolveGitDir(base) {
+	if (!fs.statSync(base).isDirectory()) return null;
+	const gitDir = path.join(base, '.git');
+	if (!fs.statSync(gitDir).isFile()) return gitDir;
+	const pointer = fs.readFileSync(gitDir, 'utf8').trim();
+	if (!pointer.startsWith('gitdir:')) return null;
+	const target = path.resolve(base, pointer.slice('gitdir:'.length).trim());
+	return target.split(path.sep).includes('.git') ? target : null;
+}
+
+/**
+ * Short SHA a symbolic ref points at, from a loose ref file or `packed-refs`. A linked worktree keeps
+ * its refs in the common directory recorded in `commondir`.
+ * @param {string} gitDir
+ * @param {string} ref e.g. `refs/heads/dev`
+ * @returns {string|null}
+ */
+function resolveRef(gitDir, ref) {
+	const commonDirFile = path.join(gitDir, 'commondir');
+	const commonDir = fs.existsSync(commonDirFile)
+		? path.resolve(gitDir, fs.readFileSync(commonDirFile, 'utf8').trim())
+		: gitDir;
+	const refFile = path.join(commonDir, ref);
+	if (fs.existsSync(refFile)) return fs.readFileSync(refFile, 'utf8').trim().slice(0, 9);
+	const packed = path.join(commonDir, 'packed-refs');
+	if (!fs.existsSync(packed)) return null;
+	for (const line of fs.readFileSync(packed, 'utf8').split('\n')) {
+		const [sha, name] = line.trim().split(' ');
+		if (name === ref && sha) return sha.slice(0, 9);
+	}
+	return null;
 }
 
 import { buildInventory } from './inventory.mjs';
