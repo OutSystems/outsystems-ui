@@ -72,6 +72,7 @@ Skeleton (from stories/FloatingContent.stories.ts): <div><div>Screen content scr
 
 ## form (src/scss/03-widgets/_form.scss)
 Skeleton (from stories/widgets/Form.stories.ts): <form data-form="" action="" novalidate=""><div><label data-label="" for="form-name">Name</label><span class="input-text"><input data-input="" class="form-control" required="" type="text" id="form-name" placeholder="Enter your name" aria-required="true" maxlength="100" value=""></span><div><button data-button="" class="btn btn-primary" type="button">Submit</button></div></div></form>
+CSS API: --osui-form-field-spacing
 
 ## icon-badge (src/scss/04-patterns/05-numbers/_icon-badge.scss)
 Skeleton (from stories/IconBadge.stories.ts): <div><div><i class="icon ph ph-bell"></i></div><div><span class="OSFillParent"></span></div></div>

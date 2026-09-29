@@ -230,7 +230,7 @@ API (OutSystems.OSUI.Patterns.DropdownServerSideItemAPI):
 - Initialize(dropdownServerSideItemId: string): IDropdownServerSideItem
 - RegisterCallback(dropdownServerSideItemId: string, eventName: EventName, callback: OSGeneric): string
 CSS classes: osui-dropdown-serverside__balloon osui-dropdown-serverside-item--is-selected
-CSS API: --osui-dropdown-item-background --osui-dropdown-item-color --osui-dropdown-item-hover-bg
+CSS API: --osui-dropdown-item-background --osui-dropdown-item-color --osui-dropdown-item-hover-bg --osui-dropdown-item-padding-block --osui-dropdown-item-padding-inline
 Markup skeleton (from stories/DropdownServerSide.stories.ts): <div><div class="osui-dropdown-serverside"><div class="osui-dropdown-serverside__selected-values-wrapper" tabindex="0"><div class="osui-dropdown-serverside__selected-values"><span class="osui-dropdown-serverside__text"></span></div></div><div class="osui-dropdown-serverside__balloon osui-balloon" data-uniqueid=""><div class="osui-dropdown-serverside__balloon-container"><div class="osui-dropdown-serverside__balloon-search"><input type="text" class="form-control" placeholder="Search…" /></div><div class="osui-dropdown-serverside__balloon-content"></div><div class="osui-dropdown-serverside__ballo…
 
 ## FlipContent
