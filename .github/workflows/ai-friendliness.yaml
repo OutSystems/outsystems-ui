@@ -1,0 +1,58 @@
+name: AI-friendliness gate
+
+# Two checks that keep the library legible to coding agents:
+#   1. the ten-eval AI-Friendliness Index must not drop by more than 1 point against the newest
+#      entry of evals/ai-friendliness/results/history.json;
+#   2. docs-ai/ (component manifest + llms.txt tiers) must match a fresh generation from the source.
+# Runs on pull requests into dev and on demand for any branch (Actions → AI-friendliness gate →
+# Run workflow), so the checks can be exercised on a draft PR or a feature branch. Locally:
+#   npm run evals:gate && npm run docs:ai:check
+on:
+    pull_request:
+        branches: ['dev']
+        types: [opened, reopened, synchronize]
+    workflow_dispatch:
+        inputs:
+            max-drop:
+                description: 'Allowed drop of the AI-Friendliness Index, in points'
+                type: string
+                default: '1'
+
+concurrency:
+    group: ${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
+
+permissions:
+    contents: read
+
+jobs:
+    gate:
+        name: Evals gate and docs-ai freshness
+        runs-on: ubuntu-latest
+        steps:
+            - name: 📥 Checkout
+              uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+
+            - name: 📦 Setup Node
+              uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
+              with:
+                  node-version: 24
+
+            # .npmrc carries min-release-age-exclude[], which needs npm >= 11.17
+            - name: 📦 Ensure npm >= 11.17
+              run: npm install -g npm@11
+
+            - name: 🕸️ Install project dependencies
+              run: npm install
+
+            - name: 🎨 Generate design tokens (the SCSS evals compile against them)
+              run: npm run build:tokens
+
+            - name: 🧪 Unit tests (suite + generator)
+              run: npm test
+
+            - name: 📊 AI-Friendliness Index must not regress
+              run: node evals/ai-friendliness/tools/gate.mjs --max-drop "${{ inputs.max-drop || '1' }}"
+
+            - name: 📄 docs-ai/ must be fresh
+              run: npm run docs:ai:check

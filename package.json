@@ -13,6 +13,7 @@
 		"predev": "npm run build:tokens",
 		"dev": "gulp startDevelopment --target",
 		"docs": "npx typedoc",
+		"postdocs": "node scripts/publish-ai-docs.mjs",
 		"lint": "eslint . --ext .ts",
 		"lintfix": "eslint . --fix --ext .ts",
 		"prettier": "prettier --config ./.prettierrc.json --write \"**/*.+(js|ts|css)\"",
@@ -26,7 +27,9 @@
 		"docs:css-api": "node scripts/generate-css-api-reference.mjs",
 		"docs:tokens": "node scripts/generate-token-data.mjs",
 		"docs:ai": "node scripts/generate-ai-docs.mjs",
+		"docs:ai:check": "node scripts/check-ai-docs-fresh.mjs",
 		"evals": "node evals/ai-friendliness/run.mjs",
+		"evals:gate": "node evals/ai-friendliness/tools/gate.mjs",
 		"evals:test": "node --test \"evals/ai-friendliness/tests/*.test.mjs\"",
 		"test": "node --test \"tests/*.test.mjs\" \"evals/ai-friendliness/tests/*.test.mjs\""
 	},
