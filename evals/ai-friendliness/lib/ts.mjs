@@ -416,61 +416,101 @@ export function getConfigProps(program, configFiles) {
 		const sf = getSourceFile(program, file);
 		if (!sf) continue;
 		walkNodes(sf, (n) => {
-			if (!ts.isClassDeclaration(n) || !n.name || !/Config(uration)?$/.test(n.name.text)) return;
-			if (/^Abstract(Provider)?Configuration$/.test(n.name.text)) return;
+			if (!isPatternConfigClass(n)) return;
 			const validation = readValidateDefault(n, sf);
-			for (const m of n.members) {
-				if (!ts.isPropertyDeclaration(m)) continue;
-				const flags = ts.getCombinedModifierFlags(m);
-				if (flags & (ts.ModifierFlags.Private | ts.ModifierFlags.Protected | ts.ModifierFlags.Static)) continue;
-				const name = m.name.getText(sf);
-				if (name === 'ExtendedClass' || name.startsWith('_')) continue;
-				const v = validation.get(name);
-				const comments = ts.getLeadingCommentRanges(sf.text, m.getFullStart()) ?? [];
-				const docText = comments
-					.map((c) => sf.text.slice(c.pos, c.end))
-					.join('\n')
-					.replace(/^\s*\/\*\*?|\*\/\s*$/g, '')
-					.split('\n')
-					.map((l) => l.replace(/^\s*(\*|\/\/)\s?/, '').trim())
-					.filter((l) => l && !l.startsWith('@'))
-					.join(' ')
-					.trim();
-				const prop = {
-					name,
-					className: n.name.text,
-					file,
-					typeText: m.type ? m.type.getText(sf) : null,
-					kind: classifyType(m.type, m.initializer, checker),
-					hasDoc: comments.length > 0,
-					docText,
-					validated: v?.validated ?? null,
-					defaultText: v?.defaultText ?? (m.initializer ? m.initializer.getText(sf) : null),
-					allowed: v?.allowed ?? [],
-					allowedFrom: v?.allowedFrom ?? null,
-				};
-				const existing = props.get(name);
-				if (!existing) props.set(name, prop);
-				else if (!existing.validated && prop.validated) {
-					existing.validated = prop.validated;
-					existing.defaultText = prop.defaultText;
-					existing.allowed = prop.allowed;
-					existing.allowedFrom = prop.allowedFrom;
-				}
-			}
+			for (const prop of classConfigProps(n, sf, file, checker, validation)) mergeProp(props, prop);
 			// validation cases for inherited props declared in another class of the chain
 			for (const [name, v] of validation) {
 				const existing = props.get(name);
-				if (existing && !existing.validated) {
-					existing.validated = v.validated;
-					existing.defaultText = v.defaultText;
-					existing.allowed = v.allowed;
-					existing.allowedFrom = v.allowedFrom;
-				}
+				if (existing && !existing.validated) Object.assign(existing, v);
 			}
 		});
 	}
 	return [...props.values()];
+}
+
+/**
+ * @param {ts.Node} n
+ * @returns {n is ts.ClassDeclaration & { name: ts.Identifier }}
+ */
+function isPatternConfigClass(n) {
+	if (!ts.isClassDeclaration(n) || !n.name) return false;
+	return /Config(uration)?$/.test(n.name.text) && !/^Abstract(Provider)?Configuration$/.test(n.name.text);
+}
+
+/**
+ * Comment text preceding a declaration, with comment syntax and JSDoc tags stripped.
+ * @param {ts.SourceFile} sf
+ * @param {ts.Node} node
+ */
+function leadingDocText(sf, node) {
+	const comments = ts.getLeadingCommentRanges(sf.text, node.getFullStart()) ?? [];
+	const text = comments
+		.map((c) => sf.text.slice(c.pos, c.end))
+		.join('\n')
+		.replace(/^\s*\/\*\*?|\*\/\s*$/g, '')
+		.split('\n')
+		.map((l) => l.replace(/^\s*(\*|\/\/)\s?/, '').trim())
+		.filter((l) => l && !l.startsWith('@'))
+		.join(' ')
+		.trim();
+	return { hasDoc: comments.length > 0, docText: text };
+}
+
+/**
+ * Public, non-static, non-underscore configuration props of one class.
+ * @param {ts.ClassDeclaration & { name: ts.Identifier }} cls
+ * @param {ts.SourceFile} sf
+ * @param {string} file
+ * @param {ts.TypeChecker} checker
+ * @param {ReturnType<typeof readValidateDefault>} validation
+ * @returns {ConfigProp[]}
+ */
+function classConfigProps(cls, sf, file, checker, validation) {
+	/** @type {ConfigProp[]} */
+	const out = [];
+	for (const m of cls.members) {
+		if (!ts.isPropertyDeclaration(m)) continue;
+		const flags = ts.getCombinedModifierFlags(m);
+		if (flags & (ts.ModifierFlags.Private | ts.ModifierFlags.Protected | ts.ModifierFlags.Static)) continue;
+		const name = m.name.getText(sf);
+		if (name === 'ExtendedClass' || name.startsWith('_')) continue;
+		const v = validation.get(name);
+		const { hasDoc, docText } = leadingDocText(sf, m);
+		out.push({
+			name,
+			className: cls.name.text,
+			file,
+			typeText: m.type ? m.type.getText(sf) : null,
+			kind: classifyType(m.type, m.initializer, checker),
+			hasDoc,
+			docText,
+			validated: v?.validated ?? null,
+			defaultText: v?.defaultText ?? (m.initializer ? m.initializer.getText(sf) : null),
+			allowed: v?.allowed ?? [],
+			allowedFrom: v?.allowedFrom ?? null,
+		});
+	}
+	return out;
+}
+
+/**
+ * First declaration wins; a later declaration only contributes validation info the first lacked.
+ * @param {Map<string, ConfigProp>} props
+ * @param {ConfigProp} prop
+ */
+function mergeProp(props, prop) {
+	const existing = props.get(prop.name);
+	if (!existing) {
+		props.set(prop.name, prop);
+		return;
+	}
+	if (!existing.validated && prop.validated) {
+		existing.validated = prop.validated;
+		existing.defaultText = prop.defaultText;
+		existing.allowed = prop.allowed;
+		existing.allowedFrom = prop.allowedFrom;
+	}
 }
 
 /**

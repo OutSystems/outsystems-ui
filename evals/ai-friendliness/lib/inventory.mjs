@@ -185,7 +185,7 @@ export function buildInventory(root) {
 	const apiFiles = fs
 		.readdirSync(apiDir)
 		.filter((f) => f.endsWith('API.ts'))
-		.sort();
+		.sort((a, b) => a.localeCompare(b));
 
 	const storyFiles = walk(path.join(root, 'stories')).filter((f) => f.endsWith('.stories.ts'));
 	const storiesByNorm = new Map(storyFiles.map((f) => [norm(path.basename(f).replace(/\.stories\.ts$/, '')), f]));

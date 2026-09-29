@@ -40,7 +40,9 @@ export default {
 			if (configsParam) configShape = configsParam.type && configsParam.type !== 'string' ? 1 : 0;
 			const register = fns.find((f) => f.name === 'RegisterCallback');
 			const eventParam = register?.params.find((x) => /event/i.test(x.name));
-			const eventModel = register ? (eventParam && eventParam.type !== 'string' ? 1 : 0) : 1;
+			// no RegisterCallback → nothing to type; a typed (non-string) event name → 1; plain string → 0
+			let eventModel = 1;
+			if (register) eventModel = eventParam && eventParam.type !== 'string' ? 1 : 0;
 			const apiSf = getSourceFile(program, p.apiFile);
 			const moduleFormat = apiSf && ts.isExternalModule(apiSf) ? 1 : 0;
 			const raw = { depth, files: p.contractFiles.length, configShape, eventModel, moduleFormat };

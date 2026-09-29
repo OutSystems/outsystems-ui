@@ -16,7 +16,7 @@ const normalize = (text) => text.replace(/\r\n/g, '\n');
 export function compareDocs(committedDir, freshDir) {
 	/** @type {{ file: string, status: 'modified'|'missing' }[]} */
 	const drift = [];
-	for (const file of fs.readdirSync(freshDir).filter((f) => fs.statSync(path.join(freshDir, f)).isFile()).sort()) {
+	for (const file of fs.readdirSync(freshDir).filter((f) => fs.statSync(path.join(freshDir, f)).isFile()).sort((a, b) => a.localeCompare(b))) {
 		const committed = path.join(committedDir, file);
 		if (!fs.existsSync(committed)) {
 			drift.push({ file, status: 'missing' });

@@ -50,7 +50,7 @@ export function upsertHistory(history, entry) {
  * @param {{ label: string, scores: Record<string, number>, index: number }} b
  */
 export function compareRuns(a, b) {
-	const ids = [...new Set([...Object.keys(a.scores), ...Object.keys(b.scores)])].sort();
+	const ids = [...new Set([...Object.keys(a.scores), ...Object.keys(b.scores)])].sort((x, y) => x.localeCompare(y));
 	const rows = ids.map((id) => {
 		const from = a.scores[id] ?? 0;
 		const to = b.scores[id] ?? 0;

@@ -49,7 +49,8 @@ export function evaluateGate(baseline, run, { maxDrop = 1 } = {}) {
 		.sort((a, b) => a.delta - b.delta);
 	const ok = delta >= -maxDrop;
 	const head = `AI-Friendliness Index ${baseline.index.toFixed(1)} → ${run.index.toFixed(1)} (${delta >= 0 ? '+' : ''}${delta.toFixed(1)}; baseline "${baseline.label}" @ ${baseline.sha}, tolerance −${maxDrop})`;
-	const detail = regressed.length ? `\nregressed: ${regressed.map((x) => `${x.id} ${x.from.toFixed(1)} → ${x.to.toFixed(1)}`).join(', ')}` : '';
+	const regressedList = regressed.map((x) => `${x.id} ${x.from.toFixed(1)} → ${x.to.toFixed(1)}`).join(', ');
+	const detail = regressed.length ? `\nregressed: ${regressedList}` : '';
 	return { ok, delta, regressed, message: `${ok ? 'PASS' : 'FAIL'} — ${head}${detail}` };
 }
 

@@ -4,10 +4,6 @@ namespace OSFramework.OSUI.Patterns.InlineSvg {
 		// Raw <svg> markup rendered inline; invalid markup is rejected with a console error.
 		public SVGCode: string;
 
-		constructor(config: JSON) {
-			super(config);
-		}
-
 		/**
 		 * Method that will check if a given property (key) value is the type expected!
 		 *

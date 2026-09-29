@@ -20,6 +20,9 @@ import { countTokens } from '../../evals/ai-friendliness/lib/tokens.mjs';
 import { getClassesInFiles, getEnums, getSourceFile } from '../../evals/ai-friendliness/lib/ts.mjs';
 
 export const MANIFEST_VERSION = '1';
+
+/** Explicit, locale-independent string order. */
+export const byCodePoint = (/** @type {string} */ a, /** @type {string} */ b) => (a < b ? -1 : Number(a > b));
 /** DatePicker (18 props, 20 API functions) is the largest card and needs ~620 tokens with types kept. */
 export const CARD_TOKEN_BUDGET = 650;
 const MARKUP_CAP = 1200;
@@ -315,39 +318,65 @@ const CARD_STAGES = [
 	{ markupChars: 0, withCssApi: false, maxClasses: 6, withDescriptions: false },
 ];
 
+/**
+ * @param {any} c manifest component
+ * @param {boolean} withDescriptions
+ */
+function renderCardProps(c, withDescriptions) {
+	const props = Object.entries(c.props);
+	if (props.length === 0) return ['Props: none besides ExtendedClass'];
+	const lines = ['Props (configs JSON, always include "ExtendedClass": ""):'];
+	for (const [name, d] of props) {
+		let line = `- ${name}: ${d.type}`;
+		if (d.default !== undefined) line += ` = ${JSON.stringify(d.default)}`;
+		if (d.hint) line += ` (${d.hint})`;
+		if (withDescriptions && d.description) line += ` — ${d.description}`;
+		lines.push(line);
+	}
+	return lines;
+}
+
+/** @param {any} c */
+function renderCardApi(c) {
+	const lines = [`API (OutSystems.OSUI.Patterns.${c.name}API):`];
+	for (const a of c.api) {
+		const params = a.params.map((/** @type {any} */ p) => `${p.name}: ${shortType(p.type)}`).join(', ');
+		const returns = shortType(a.returns);
+		lines.push(`- ${a.name}(${params}): ${returns}`);
+	}
+	return lines;
+}
+
+/**
+ * @param {any} c
+ * @param {number} maxClasses
+ */
+function renderCardClasses(c, maxClasses) {
+	const classes = Object.values(c.cssClasses);
+	if (classes.length === 0) return [];
+	const shown = classes.slice(0, maxClasses);
+	const more = classes.length - shown.length;
+	const suffix = more > 0 ? ` (+${more} more in osui.components.json)` : '';
+	return [`CSS classes: ${shown.join(' ')}${suffix}`];
+}
+
+/**
+ * @param {any} c
+ * @param {number} markupChars
+ */
+function renderCardMarkup(c, markupChars) {
+	if (!c.markup || markupChars <= 0) return [];
+	const m = c.markup.length > markupChars ? `${c.markup.slice(0, markupChars)}…` : c.markup;
+	return [`Markup skeleton (from ${c.story}): ${m}`];
+}
+
 /** @param {any} c */
 function renderCard(c, { markupChars = 600, withCssApi = true, maxClasses = Infinity, withDescriptions = true } = {}) {
-	const lines = [`## ${c.name}`];
-	lines.push(`Lifecycle: ${c.lifecycle}`);
-	const props = Object.entries(c.props);
-	if (props.length) {
-		lines.push('Props (configs JSON, always include "ExtendedClass": ""):');
-		for (const [name, d] of props) {
-			let line = `- ${name}: ${d.type}`;
-			if (d.default !== undefined) line += ` = ${JSON.stringify(d.default)}`;
-			if (d.hint) line += ` (${d.hint})`;
-			if (withDescriptions && d.description) line += ` — ${d.description}`;
-			lines.push(line);
-		}
-	} else {
-		lines.push('Props: none besides ExtendedClass');
-	}
+	const lines = [`## ${c.name}`, `Lifecycle: ${c.lifecycle}`, ...renderCardProps(c, withDescriptions)];
 	if (c.events.length) lines.push(`Events (RegisterCallback eventName): ${c.events.join(', ')}`);
-	lines.push(`API (OutSystems.OSUI.Patterns.${c.name}API):`);
-	for (const a of c.api) {
-		lines.push(`- ${a.name}(${a.params.map((p) => `${p.name}: ${shortType(p.type)}`).join(', ')}): ${shortType(a.returns)}`);
-	}
-	const classes = Object.values(c.cssClasses);
-	if (classes.length) {
-		const shown = classes.slice(0, maxClasses);
-		const more = classes.length - shown.length;
-		lines.push(`CSS classes: ${shown.join(' ')}${more > 0 ? ` (+${more} more in osui.components.json)` : ''}`);
-	}
+	lines.push(...renderCardApi(c), ...renderCardClasses(c, maxClasses));
 	if (withCssApi && c.cssApi.length) lines.push(`CSS API: ${c.cssApi.join(' ')}`);
-	if (c.markup && markupChars > 0) {
-		const m = c.markup.length > markupChars ? `${c.markup.slice(0, markupChars)}…` : c.markup;
-		lines.push(`Markup skeleton (from ${c.story}): ${m}`);
-	}
+	lines.push(...renderCardMarkup(c, markupChars));
 	return lines.join('\n');
 }
 
@@ -523,7 +552,7 @@ export function renderUtilities(ctx) {
 		'',
 	];
 	let total = 0;
-	for (const file of fs.readdirSync(dir).filter((f) => f.endsWith('.scss')).sort()) {
+	for (const file of fs.readdirSync(dir).filter((f) => f.endsWith('.scss')).sort((a, b) => a.localeCompare(b))) {
 		const { css } = ctx.compiledCss(path.join(dir, file));
 		if (!css) continue;
 		/** @type {Set<string>} */
@@ -538,8 +567,9 @@ export function renderUtilities(ctx) {
 		total += classes.size;
 		const base = file.replace(/\.scss$/, '');
 		const title = UTILITY_FAMILIES[base] ?? base.replace(/^_/, '');
-		lines.push(`## ${title} (${classes.size}${reads.size ? `; reads ${[...reads].sort().join(', ')}` : ''})`);
-		lines.push([...classes].sort().join(' '));
+		const readsNote = reads.size ? `; reads ${[...reads].sort(byCodePoint).join(', ')}` : '';
+		lines.push(`## ${title} (${classes.size}${readsNote})`);
+		lines.push([...classes].sort(byCodePoint).join(' '));
 		lines.push('');
 	}
 	lines.splice(4, 0, `${total} classes in ${lines.filter((l) => l.startsWith('## ')).length} families, generated from src/scss/05-useful and the design tokens.`);

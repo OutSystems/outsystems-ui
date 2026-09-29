@@ -6,6 +6,9 @@
  */
 import ts from 'typescript';
 
+/** Explicit, locale-independent string order. */
+const byCodePoint = (/** @type {string} */ a, /** @type {string} */ b) => (a < b ? -1 : Number(a > b));
+
 const VOID_ELEMENTS = new Set(['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'source', 'track', 'wbr']);
 const MAX_INLINE_DEPTH = 4;
 
@@ -162,12 +165,12 @@ export function measureHtml(html) {
 				});
 		}
 		// repeated siblings (list items, table rows) share one signature: an agent learns the part once
-		signatures.add(`${tag.toLowerCase()}.${own.sort().join('.')}`);
+		signatures.add(`${tag.toLowerCase()}.${own.sort(byCodePoint).join('.')}`);
 		if (VOID_ELEMENTS.has(tag.toLowerCase()) || /\/\s*$/.test(attrs)) continue;
 		depth++;
 		if (depth > max) max = depth;
 	}
-	return { depth: max, elements, distinctElements: signatures.size, classes: [...classes].sort() };
+	return { depth: max, elements, distinctElements: signatures.size, classes: [...classes].sort(byCodePoint) };
 }
 
 /**

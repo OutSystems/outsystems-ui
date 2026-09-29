@@ -19,9 +19,13 @@ import { metrics } from './metrics/index.mjs';
 const here = path.dirname(fileURLToPath(import.meta.url));
 const resultsDir = path.join(here, 'results');
 
+/**
+ * @typedef {{ label?: string, only?: string[], json: boolean, write: boolean, compare?: [string, string], root?: string }} Args
+ */
+
 /** @param {string[]} argv */
 function parseArgs(argv) {
-	/** @type {{ label?: string, only?: string[], json: boolean, write: boolean, compare?: [string, string], root?: string }} */
+	/** @type {Args} */
 	const args = { json: false, write: true };
 	for (let i = 0; i < argv.length; i++) {
 		const a = argv[i];
@@ -43,6 +47,69 @@ function loadRun(label) {
 	return JSON.parse(fs.readFileSync(file, 'utf8'));
 }
 
+/**
+ * Compute every selected metric, reporting progress on stderr unless `quiet`.
+ * @param {import('./lib/context.mjs').EvalContext} ctx
+ * @param {typeof metrics} selected
+ * @param {boolean} quiet
+ */
+function runMetrics(ctx, selected, quiet) {
+	return selected.map((m) => {
+		const t0 = Date.now();
+		if (!quiet) process.stderr.write(`▸ ${m.id} ${m.name} … `);
+		const r = m.compute(ctx);
+		const ms = Date.now() - t0;
+		if (!quiet) process.stderr.write(`${r.score.toFixed(1)} (${ms} ms)\n`);
+		return {
+			id: m.id,
+			name: m.name,
+			criterion: m.criterion,
+			formula: m.formula,
+			movable: m.movable,
+			score: r.score,
+			summary: r.summary,
+			raw: r.raw,
+			perComponent: r.perComponent,
+			unmeasured: r.unmeasured,
+			details: r.details,
+			ms,
+		};
+	});
+}
+
+/**
+ * Persist a run: its own JSON file and, for full runs, the history entry.
+ * @param {any} run
+ */
+function writeRun(run) {
+	fs.mkdirSync(resultsDir, { recursive: true });
+	fs.writeFileSync(path.join(resultsDir, `${run.label}.json`), `${JSON.stringify(run, null, '\t')}\n`);
+	if (run.partial) return;
+	const historyFile = path.join(resultsDir, 'history.json');
+	const history = fs.existsSync(historyFile) ? JSON.parse(fs.readFileSync(historyFile, 'utf8')) : [];
+	const entry = { label: run.label, date: run.date, sha: run.sha, scores: run.scores, index: run.index };
+	fs.writeFileSync(historyFile, `${JSON.stringify(upsertHistory(history, entry), null, '\t')}\n`);
+}
+
+/**
+ * @param {any} run
+ * @param {Args} args
+ */
+function printRun(run, args) {
+	if (args.json) {
+		console.log(JSON.stringify(run, null, 2));
+		return;
+	}
+	console.log('');
+	console.log(formatTable(run));
+	const unmeasured = run.results.reduce((/** @type {number} */ s, /** @type {any} */ r) => s + (r.unmeasured?.length ?? 0), 0);
+	if (unmeasured) console.log(`\n${unmeasured} component/metric pairs unmeasured (see results JSON → unmeasured).`);
+	if (args.write) {
+		const resultsFile = path.relative(process.cwd(), path.join(resultsDir, `${run.label}.json`));
+		console.log(`\nResults: ${resultsFile}`);
+	}
+}
+
 function main() {
 	const args = parseArgs(process.argv.slice(2));
 	if (args.compare) {
@@ -59,30 +126,7 @@ function main() {
 	const selected = args.only ? metrics.filter((m) => args.only?.includes(m.id)) : metrics;
 	if (selected.length === 0) throw new Error('No metrics selected');
 
-	const results = [];
-	for (const m of selected) {
-		const t0 = Date.now();
-		if (!args.json) process.stderr.write(`▸ ${m.id} ${m.name} … `);
-		const r = m.compute(ctx);
-		const ms = Date.now() - t0;
-		if (!args.json) process.stderr.write(`${r.score.toFixed(1)} (${ms} ms)\n`);
-		results.push({
-			id: m.id,
-			name: m.name,
-			criterion: m.criterion,
-			formula: m.formula,
-			movable: m.movable,
-			score: r.score,
-			summary: r.summary,
-			raw: r.raw,
-			perComponent: r.perComponent,
-			unmeasured: r.unmeasured,
-			details: r.details,
-			ms,
-		});
-	}
-
-	const agg = aggregate(results);
+	const results = runMetrics(ctx, selected, args.json);
 	const run = {
 		label,
 		date: new Date().toISOString(),
@@ -90,33 +134,11 @@ function main() {
 		node: process.version,
 		tokenizer: ctx.tokenizerName,
 		partial: Boolean(args.only),
-		...agg,
+		...aggregate(results),
 		results,
 	};
-
-	if (args.write) {
-		fs.mkdirSync(resultsDir, { recursive: true });
-		fs.writeFileSync(path.join(resultsDir, `${label}.json`), `${JSON.stringify(run, null, '\t')}\n`);
-		if (!run.partial) {
-			const historyFile = path.join(resultsDir, 'history.json');
-			const history = fs.existsSync(historyFile) ? JSON.parse(fs.readFileSync(historyFile, 'utf8')) : [];
-			const entry = { label, date: run.date, sha, scores: agg.scores, index: agg.index };
-			fs.writeFileSync(historyFile, `${JSON.stringify(upsertHistory(history, entry), null, '\t')}\n`);
-		}
-	}
-
-	if (args.json) {
-		console.log(JSON.stringify(run, null, 2));
-		return;
-	}
-	console.log('');
-	console.log(formatTable(run));
-	const unmeasured = results.reduce((s, r) => s + (r.unmeasured?.length ?? 0), 0);
-	if (unmeasured) console.log(`\n${unmeasured} component/metric pairs unmeasured (see results JSON → unmeasured).`);
-	if (args.write) {
-		const resultsFile = path.relative(root, path.join(resultsDir, `${label}.json`));
-		console.log(`\nResults: ${resultsFile}`);
-	}
+	if (args.write) writeRun(run);
+	printRun(run, args);
 }
 
 main();

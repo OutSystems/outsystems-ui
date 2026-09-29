@@ -179,7 +179,7 @@ const SIZE_LITERAL = /(?<![\w.-])(-?\d*\.?\d+)(px|rem|em|pt)(?![\w-])/gi;
 export function isLiteralValue(value) {
 	if (COLOR_LITERAL.test(value)) return true;
 	for (const m of value.matchAll(SIZE_LITERAL)) {
-		if (parseFloat(m[1]) !== 0) return true;
+		if (Number.parseFloat(m[1]) !== 0) return true;
 	}
 	return false;
 }
