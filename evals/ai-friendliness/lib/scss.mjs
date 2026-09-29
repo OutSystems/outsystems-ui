@@ -207,7 +207,30 @@ export function isThemeableProp(prop) {
 }
 
 const COLOR_LITERAL = /#[0-9a-f]{3,8}\b|\b(rgb|rgba|hsl|hsla)\(|(?<![\w-])(white|black)(?![\w-])/i;
-const SIZE_TOKEN = /^-?(\d+\.?\d*|\.\d+)(px|rem|em|pt)$/i;
+const SIZE_UNITS = ['rem', 'px', 'em', 'pt'];
+
+/**
+ * Numeric part of a `<number><unit>` token such as `16px`, `-0.5rem` or `.5em`; null when the token
+ * is not a size literal. Scanned character by character so no regex backtracking is involved.
+ * @param {string} token
+ * @returns {number|null}
+ */
+export function parseSizeLiteral(token) {
+	const lower = token.toLowerCase();
+	const unit = SIZE_UNITS.find((u) => lower.endsWith(u));
+	if (!unit) return null;
+	let num = lower.slice(0, -unit.length);
+	if (num.startsWith('-')) num = num.slice(1);
+	let digits = 0;
+	let dots = 0;
+	for (const ch of num) {
+		if (ch >= '0' && ch <= '9') digits++;
+		else if (ch === '.') dots++;
+		else return null;
+	}
+	if (digits === 0 || dots > 1) return null;
+	return Number(lower.slice(0, -unit.length));
+}
 
 /**
  * True when the value carries a raw colour or a non-zero px/rem/em/pt number.
@@ -216,8 +239,8 @@ const SIZE_TOKEN = /^-?(\d+\.?\d*|\.\d+)(px|rem|em|pt)$/i;
 export function isLiteralValue(value) {
 	if (COLOR_LITERAL.test(value)) return true;
 	for (const token of value.split(/[\s,()/]+/)) {
-		const m = SIZE_TOKEN.exec(token);
-		if (m && Number.parseFloat(m[1]) !== 0) return true;
+		const size = parseSizeLiteral(token);
+		if (size !== null && size !== 0) return true;
 	}
 	return false;
 }
@@ -270,28 +293,34 @@ export function resolveTokenFallbacks(css) {
 	for (;;) {
 		const start = out.indexOf(marker, from);
 		if (start < 0) return out;
-		// walk to the matching parenthesis, remembering the first top-level comma
-		let depth = 0;
-		let comma = -1;
-		let end = -1;
-		for (let i = start + 'var'.length; i < out.length; i++) {
-			const ch = out[i];
-			if (ch === '(') depth++;
-			else if (ch === ')') {
-				depth--;
-				if (depth === 0) {
-					end = i;
-					break;
-				}
-			} else if (ch === ',' && depth === 1 && comma < 0) comma = i;
-		}
-		if (end < 0) return out;
-		if (comma < 0) {
+		const call = parenSpan(out, start + 'var'.length);
+		if (!call) return out;
+		if (call.comma < 0) {
 			// no fallback: nothing to resolve, keep scanning after this var()
-			from = end + 1;
+			from = call.end + 1;
 			continue;
 		}
-		out = out.slice(0, start) + out.slice(comma + 1, end).trim() + out.slice(end + 1);
+		out = out.slice(0, start) + out.slice(call.comma + 1, call.end).trim() + out.slice(call.end + 1);
 		from = start; // the fallback may itself contain a var(--token-…)
 	}
+}
+
+/**
+ * Index of the parenthesis closing the group that opens at `open`, and of the first top-level comma
+ * inside it (−1 when absent); null when the group is not closed.
+ * @param {string} text
+ * @param {number} open index of the opening `(`
+ * @returns {{ end: number, comma: number }|null}
+ */
+function parenSpan(text, open) {
+	let depth = 0;
+	let comma = -1;
+	for (let i = open; i < text.length; i++) {
+		const ch = text[i];
+		if (ch === '(') depth++;
+		else if (ch === ')') depth--;
+		else if (ch === ',' && depth === 1 && comma < 0) comma = i;
+		if (depth === 0) return { end: i, comma };
+	}
+	return null;
 }

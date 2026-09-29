@@ -5,7 +5,7 @@ import path from 'node:path';
 import { test } from 'node:test';
 import { fileURLToPath } from 'node:url';
 
-import { analyseDeclarations, analyseSelectors, compileScss, isThemeableProp, resolveTokenFallbacks } from '../lib/scss.mjs';
+import { analyseDeclarations, analyseSelectors, compileScss, isThemeableProp, parseSizeLiteral, resolveTokenFallbacks } from '../lib/scss.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..', '..');
 const scssRoot = path.join(root, 'src', 'scss');
@@ -85,4 +85,15 @@ test('isThemeableProp covers colours, box model axes, radii, shadows and type si
 	for (const p of ['color', 'padding-inline-start', 'border-start-start-radius', 'border-inline-end-color', 'box-shadow', 'line-height', 'inset-inline-start', 'border-block'])
 		assert.equal(isThemeableProp(p), true, p);
 	for (const p of ['width', 'display', 'border-collapse', 'transform', 'z-index']) assert.equal(isThemeableProp(p), false, p);
+});
+
+test('parseSizeLiteral accepts px/rem/em/pt numbers and rejects everything else', () => {
+	assert.equal(parseSizeLiteral('16px'), 16);
+	assert.equal(parseSizeLiteral('-0.5rem'), -0.5);
+	assert.equal(parseSizeLiteral('.5em'), 0.5);
+	assert.equal(parseSizeLiteral('0px'), 0);
+	assert.equal(parseSizeLiteral('100%'), null);
+	assert.equal(parseSizeLiteral('px'), null);
+	assert.equal(parseSizeLiteral('1.2.3px'), null);
+	assert.equal(parseSizeLiteral('auto'), null);
 });
