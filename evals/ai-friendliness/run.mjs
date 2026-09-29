@@ -19,6 +19,9 @@ import { metrics } from './metrics/index.mjs';
 const here = path.dirname(fileURLToPath(import.meta.url));
 const resultsDir = path.join(here, 'results');
 
+/** CLI output: the run report is the program's product, written to stdout (not a diagnostic log). */
+const out = (/** @type {string} */ text) => process.stdout.write(`${text}\n`);
+
 /**
  * @typedef {{ label?: string, only?: string[], json: boolean, write: boolean, compare?: [string, string], root?: string }} Args
  */
@@ -97,16 +100,19 @@ function writeRun(run) {
  */
 function printRun(run, args) {
 	if (args.json) {
-		console.log(JSON.stringify(run, null, 2));
+		out(JSON.stringify(run, null, 2));
 		return;
 	}
-	console.log('');
-	console.log(formatTable(run));
-	const unmeasured = run.results.reduce((/** @type {number} */ s, /** @type {any} */ r) => s + (r.unmeasured?.length ?? 0), 0);
-	if (unmeasured) console.log(`\n${unmeasured} component/metric pairs unmeasured (see results JSON → unmeasured).`);
+	out('');
+	out(formatTable(run));
+	const unmeasured = run.results.reduce(
+		(/** @type {number} */ s, /** @type {any} */ r) => s + (r.unmeasured?.length ?? 0),
+		0
+	);
+	if (unmeasured) out(`\n${unmeasured} component/metric pairs unmeasured (see results JSON → unmeasured).`);
 	if (args.write) {
 		const resultsFile = path.relative(process.cwd(), path.join(resultsDir, `${run.label}.json`));
-		console.log(`\nResults: ${resultsFile}`);
+		out(`\nResults: ${resultsFile}`);
 	}
 }
 
@@ -115,7 +121,7 @@ function main() {
 	if (args.compare) {
 		const [a, b] = args.compare.map(loadRun);
 		const c = compareRuns(a, b);
-		console.log(args.json ? JSON.stringify(c, null, 2) : formatComparison(c));
+		out(args.json ? JSON.stringify(c, null, 2) : formatComparison(c));
 		return;
 	}
 

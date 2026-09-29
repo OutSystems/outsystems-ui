@@ -16,11 +16,22 @@ export function readGitSha(root) {
 		const gitDir = resolveGitDir(path.resolve(root));
 		if (!gitDir) return 'unknown';
 		const head = fs.readFileSync(path.join(gitDir, 'HEAD'), 'utf8').trim();
-		if (!head.startsWith('ref:')) return head.slice(0, 9);
-		return resolveRef(gitDir, head.slice('ref:'.length).trim()) ?? 'unknown';
+		const sha = head.startsWith('ref:') ? resolveRef(gitDir, head.slice('ref:'.length).trim()) : head.slice(0, 9);
+		return shortSha(sha);
 	} catch {
 		return 'unknown';
 	}
+}
+
+/**
+ * Only a short hexadecimal object id is ever returned (and later printed); anything else is 'unknown'.
+ * @param {string|null} sha
+ */
+function shortSha(sha) {
+	if (!sha) return 'unknown';
+	const hex = '0123456789abcdef';
+	const chars = [...sha.toLowerCase().slice(0, 9)];
+	return chars.length >= 4 && chars.every((ch) => hex.includes(ch)) ? chars.join('') : 'unknown';
 }
 
 /**
