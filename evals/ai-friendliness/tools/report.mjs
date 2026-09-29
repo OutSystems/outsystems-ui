@@ -22,8 +22,10 @@ export const HISTORY_FILE = 'results/HISTORY.md';
 
 /** @param {number} d */
 const signed = (d) => (d > 0 ? `+${d.toFixed(1)}` : d.toFixed(1));
+/** @param {string} s */
+const bold = (s) => `**${s}**`;
 /** @param {number} d */
-const strongIfMoved = (d) => (d === 0 ? signed(d) : `**${signed(d)}**`);
+const strongIfMoved = (d) => (d === 0 ? signed(d) : bold(signed(d)));
 /** @param {number} a @param {number} b */
 const delta = (a, b) => Math.round((a - b) * 10) / 10;
 
@@ -57,9 +59,13 @@ export function renderHistory(history, evals) {
 		);
 	});
 
-	lines.push('', '## Per-eval scores', '');
-	lines.push(`| ID | Eval | Movable | ${runs.map((r) => r.label).join(' | ')} | Δ total |`);
-	lines.push(`| --- | --- | :---: | ${runs.map(() => '---:').join(' | ')} | ---: |`);
+	lines.push(
+		'',
+		'## Per-eval scores',
+		'',
+		`| ID | Eval | Movable | ${runs.map((r) => r.label).join(' | ')} | Δ total |`,
+		`| --- | --- | :---: | ${runs.map(() => '---:').join(' | ')} | ---: |`
+	);
 	/** @type {{ id: string, name: string, movable: boolean, moved: number }[]} */
 	const movement = [];
 	for (const e of evals) {
@@ -70,14 +76,15 @@ export function renderHistory(history, evals) {
 			`| ${e.id} | ${e.name} | ${e.movable ? 'yes' : 'structural'} | ${cells} | ${strongIfMoved(moved)} |`
 		);
 	}
-	lines.push(
-		`| — | **Index** | | ${runs.map((r) => `**${r.index.toFixed(1)}**`).join(' | ')} | **${signed(delta(last.index, first.index))}** |`
-	);
+	const indexCells = runs.map((r) => bold(r.index.toFixed(1))).join(' | ');
+	lines.push(`| — | **Index** | | ${indexCells} | **${signed(delta(last.index, first.index))}** |`);
 
 	const movers = movement.filter((m) => m.moved !== 0).sort((a, b) => b.moved - a.moved);
 	const still = movement.filter((m) => m.moved === 0);
-	lines.push('', '## What moved', '');
 	lines.push(
+		'',
+		'## What moved',
+		'',
 		`From \`${first.label}\` (${first.index.toFixed(1)}) to \`${last.label}\` (${last.index.toFixed(1)}): ${signed(delta(last.index, first.index))} points over ${runs.length} runs.`,
 		''
 	);

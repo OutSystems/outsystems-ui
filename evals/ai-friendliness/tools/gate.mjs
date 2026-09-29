@@ -62,6 +62,31 @@ export function evaluateGate(baseline, run, { maxDrop = 1 } = {}) {
 	return { ok, delta, regressed, message: `${ok ? 'PASS' : 'FAIL'} — ${head}${detail}` };
 }
 
+/** @param {number} d */
+const signed = (d) => (d > 0 ? `+${d.toFixed(1)}` : d.toFixed(1));
+
+/** @param {number | null} d */
+function formatMark(d) {
+	if (d === null) return 'new';
+	if (d < 0) return `🔻 ${signed(d)}`;
+	if (d > 0) return `🔼 ${signed(d)}`;
+	return '0.0';
+}
+
+/**
+ * @param {HistoryEntry} baseline
+ * @param {Record<string, number>} scores
+ * @param {{ id: string, name: string, movable: boolean, summary?: string }} r
+ */
+function formatEvalRow(baseline, scores, r) {
+	const before = baseline.scores[r.id];
+	const after = scores[r.id] ?? 0;
+	const d = before === undefined ? null : Math.round((after - before) * 10) / 10;
+	const movable = r.movable ? '' : ' _(structural)_';
+	const beforeCell = before === undefined ? '—' : before.toFixed(1);
+	return `| ${r.id} | ${r.name}${movable} | ${beforeCell} | ${after.toFixed(1)} | ${formatMark(d)} | ${r.summary ?? ''} |`;
+}
+
 /**
  * Markdown "before → after" report for a PR check: one row per eval, the index, and the verdict.
  * @param {HistoryEntry} baseline
@@ -70,8 +95,6 @@ export function evaluateGate(baseline, run, { maxDrop = 1 } = {}) {
  * @param {{ maxDrop?: number }} [options]
  */
 export function formatGateReport(baseline, run, verdict, { maxDrop = 1 } = {}) {
-	/** @param {number} d */
-	const signed = (d) => (d > 0 ? `+${d.toFixed(1)}` : d.toFixed(1));
 	const status = verdict.ok ? '✅ **Passed**' : '❌ **Failed**';
 	const lines = [
 		`### 📊 AI-Friendliness Index: ${status}`,
@@ -80,24 +103,11 @@ export function formatGateReport(baseline, run, verdict, { maxDrop = 1 } = {}) {
 		'',
 		'| ID | Eval | Before | After | Δ | Notes |',
 		'| --- | --- | ---: | ---: | ---: | --- |',
-	];
-	for (const r of run.results) {
-		const before = baseline.scores[r.id];
-		const after = run.scores[r.id] ?? 0;
-		const d = before === undefined ? null : Math.round((after - before) * 10) / 10;
-		const mark = d === null ? 'new' : d < 0 ? `🔻 ${signed(d)}` : d > 0 ? `🔼 ${signed(d)}` : '0.0';
-		const movable = r.movable ? '' : ' _(structural)_';
-		lines.push(
-			`| ${r.id} | ${r.name}${movable} | ${before === undefined ? '—' : before.toFixed(1)} | ${after.toFixed(1)} | ${mark} | ${r.summary ?? ''} |`
-		);
-	}
-	lines.push(
-		`| — | **Index** | **${baseline.index.toFixed(1)}** | **${run.index.toFixed(1)}** | **${signed(verdict.delta)}** | |`
-	);
-	lines.push(
+		...run.results.map((r) => formatEvalRow(baseline, run.scores, r)),
+		`| — | **Index** | **${baseline.index.toFixed(1)}** | **${run.index.toFixed(1)}** | **${signed(verdict.delta)}** | |`,
 		'',
-		'History of every run: `evals/ai-friendliness/results/HISTORY.md`. Formulas and bands: `docs-internal/ai-friendliness/2026-09-29-eval-suite-design.md`.'
-	);
+		'History of every run: `evals/ai-friendliness/results/HISTORY.md`. Formulas and bands: `docs-internal/ai-friendliness/2026-09-29-eval-suite-design.md`.',
+	];
 	return lines.join('\n');
 }
 
