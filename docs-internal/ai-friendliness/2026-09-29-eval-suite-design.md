@@ -153,6 +153,15 @@ Scores are 0–100, higher is better. `clamp(x)` bounds to [0,1]. Component mean
 4. Re-run, record, commit with a conventional-commit message (no ticket keys).
 5. Stop when the movable evals gain < 1 point in an iteration or reach ≥ 90.
 
+**Decision taken during the loop (E08).** The 96 hardcoded declarations the baseline found are
+almost all deliberate local values — `-1px`/`-2px` positional nudges, `50px`/`100px` pill radii,
+vendor-override line-heights — with no exact design-token counterpart, which is exactly the case
+the SCSS rules allow ("need a value with no token yet? keep it local"). An automated literal → token
+codemod would therefore be low-value and semantically dubious, and the planned CSS-equivalence gate
+was not needed. E08's real gap is the *routing* term (18% of themeable declarations read through an
+`--osui-*` knob); closing it is a per-component design decision recorded in the roadmap, not a loop
+iteration.
+
 ## 6. Non-goals
 - Running LLM generation experiments (pass@1) — the suite is static and deterministic so it can gate CI.
 - Changing DOM structures, class names, selectors, public signatures or the module format on this branch — those are specified as breaking changes in the report.
