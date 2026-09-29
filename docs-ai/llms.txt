@@ -54,5 +54,5 @@ Scope: OutSystems UI ships a single token-based theme (light, plus the generated
 5. Styling is token-based: override CSS custom properties (`--color-primary`, `--border-radius-default`, `--osui-card-padding`), never component rules. Dark mode = class `os-dark-theme` on `<html>`.
 6. Responsiveness is class-driven: the runtime sets `phone`, `tablet` or `desktop` (and `landscape`/`portrait`) on `<body>`; write `.phone .card { … }` rather than media queries.
 7. Utility classes are long-form (`margin-top-base`, `display-flex`, `justify-content-space-between`); Tailwind-style short names do not exist. The full list is in llms-utilities.txt.
-8. Load one card from llms-components.txt per pattern you use (about 450 tokens each). Never load the compiled typings (dist/*.d.ts, about 53k tokens): the cards carry the same contract with defaults, allowed values and markup.
 8. Logical CSS properties are the default (`padding-inline-start`, not `padding-left`); RTL is handled by the framework.
+9. Load one card from llms-components.txt per pattern you use (about 450 tokens each). Never load the compiled typings (dist/*.d.ts, about 53k tokens): the cards carry the same contract with defaults, allowed values and markup.
