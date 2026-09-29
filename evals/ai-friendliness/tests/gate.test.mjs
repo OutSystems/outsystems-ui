@@ -51,9 +51,9 @@ test('formatGateReport compares with the origin and names the regression gate se
 	};
 	const md = formatGateReport(origin, run, evaluateGate(newest, run), { gate: newest });
 	assert.ok(md.includes('Since the branch baseline `baseline` @ `o`: 64.3 → **87.9** (+23.6)'), md);
-	assert.match(
-		md,
-		/Regression gate against the newest recorded run `loop-8` @ `n`: 87.9 → 87.9 (0.0), tolerance −1./
+	assert.ok(
+		md.includes('Regression gate against the newest recorded run `loop-8` @ `n`: 87.9 → 87.9 (0.0), tolerance −1.'),
+		md
 	);
 	assert.ok(md.includes('| E01 | Context Token Cost | 64.9 | 99.9 | 🔼 +35.0 |'), md);
 	assert.ok(md.includes('| — | **Index** | **64.3** | **87.9** | **+23.6** |'), md);
