@@ -141,6 +141,8 @@ export function measureHtml(html) {
 	let elements = 0;
 	/** @type {Set<string>} */
 	const classes = new Set();
+	/** @type {Set<string>} */
+	const signatures = new Set();
 	for (const m of html.matchAll(re)) {
 		const [, closing, tag, attrs] = m;
 		if (closing) {
@@ -148,17 +150,24 @@ export function measureHtml(html) {
 			continue;
 		}
 		elements++;
+		/** @type {string[]} */
+		const own = [];
 		for (const cm of attrs.matchAll(/class\s*=\s*["']([^"']*)["']/g)) {
 			cm[1]
 				.split(/\s+/)
 				.filter((c) => c && !/[${}()]/.test(c))
-				.forEach((c) => classes.add(c));
+				.forEach((c) => {
+					classes.add(c);
+					own.push(c);
+				});
 		}
+		// repeated siblings (list items, table rows) share one signature: an agent learns the part once
+		signatures.add(`${tag.toLowerCase()}.${own.sort().join('.')}`);
 		if (VOID_ELEMENTS.has(tag.toLowerCase()) || /\/\s*$/.test(attrs)) continue;
 		depth++;
 		if (depth > max) max = depth;
 	}
-	return { depth: max, elements, classes: [...classes].sort() };
+	return { depth: max, elements, distinctElements: signatures.size, classes: [...classes].sort() };
 }
 
 /**
@@ -167,7 +176,13 @@ export function measureHtml(html) {
  */
 export function measureStory(source) {
 	const templates = extractTemplates(source);
-	let best = { depth: 0, elements: 0, classes: /** @type {string[]} */ ([]), html: /** @type {string|null} */ (null) };
+	let best = {
+		depth: 0,
+		elements: 0,
+		distinctElements: 0,
+		classes: /** @type {string[]} */ ([]),
+		html: /** @type {string|null} */ (null),
+	};
 	for (const html of templates) {
 		const m = measureHtml(html);
 		if (m.depth > best.depth || (m.depth === best.depth && m.elements > best.elements)) best = { ...m, html };

@@ -7,7 +7,15 @@ test('measureHtml counts nesting depth, elements and class names', () => {
 	const r = measureHtml('<div><div class="a b"><span>x</span></div><img src="x"/><input></div>');
 	assert.equal(r.depth, 3);
 	assert.equal(r.elements, 5);
+	assert.equal(r.distinctElements, 5);
 	assert.deepEqual(r.classes, ['a', 'b']);
+});
+
+test('measureHtml collapses repeated sibling structures into distinct element signatures', () => {
+	const r = measureHtml('<ul class="list"><li class="item"><span>a</span></li><li class="item"><span>b</span></li><li class="item"><span>c</span></li></ul>');
+	assert.equal(r.elements, 7);
+	assert.equal(r.distinctElements, 3, 'ul.list, li.item and span');
+	assert.equal(r.depth, 3);
 });
 
 test('extractTemplates returns HTML template literals and inlines local helper templates', () => {

@@ -10,7 +10,9 @@ import selectorParser from 'postcss-selector-parser';
 import * as sass from 'sass';
 
 /**
- * Compile one SCSS file on its own.
+ * Compile one SCSS file on its own. Vendor baselines (`_*_lib.scss`, `splide-core.scss`) are
+ * never imported by component partials — the build pulls them in through the gulp specs — so a
+ * standalone compile measures authored rules only.
  * @param {string} file
  * @param {{ loadPaths?: string[] }} [options]
  * @returns {{ css: string|null, error: string|null }}
