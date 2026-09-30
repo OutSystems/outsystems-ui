@@ -118,11 +118,17 @@ function runMetrics(ctx, selected, quiet) {
  */
 function writeRun(run) {
 	fs.mkdirSync(resultsDir, { recursive: true });
-	fs.writeFileSync(resultsFileFor(run.label), `${JSON.stringify(run, null, '\t')}\n`);
+	const json = `${JSON.stringify(run, null, '\t')}\n`;
+	fs.writeFileSync(resultsFileFor(run.label), json);
 	if (run.partial) return;
+	// latest.json is what the results branch keeps (not versioned in the repository; see .gitignore)
+	fs.writeFileSync(insideDir(resultsDir, 'latest.json'), json);
 	const historyFile = insideDir(resultsDir, 'history.json');
 	const history = fs.existsSync(historyFile) ? JSON.parse(fs.readFileSync(historyFile, 'utf8')) : [];
-	const updated = upsertHistory(history.map(normalizeHistoryEntry), historyEntryOf(run));
+	const updated = upsertHistory(
+		history.map((e) => normalizeHistoryEntry(e)),
+		historyEntryOf(run)
+	);
 	fs.writeFileSync(historyFile, `${JSON.stringify(updated, null, '\t')}\n`);
 	writeHistoryReport(here, updated, SUITES);
 	writeDashboardData(here);
@@ -159,7 +165,7 @@ function printRun(run, args) {
  * @param {Args} args
  */
 function compare(args) {
-	const [a, b] = /** @type {[string, string]} */ (args.compare).map(loadRun);
+	const [a, b] = /** @type {[string, string]} */ (args.compare).map((label) => loadRun(label));
 	/** @type {Record<string, ReturnType<typeof compareRuns>>} */
 	const comparisons = {};
 	for (const suite of SUITES) {

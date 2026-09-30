@@ -132,3 +132,6 @@ specs/
 
 # Built dashboard page (npm run evals:dashboard:page); the template lives in evals/dashboard/
 evals/results/dashboard.html
+
+# Copy of the newest full run, for the evals-results branch (npm run evals writes it)
+evals/results/latest.json

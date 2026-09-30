@@ -114,14 +114,16 @@ export function renderDoctor(r) {
 		}
 		lines.push('');
 	}
-	if (r.stale.length) lines.push(`Entries without a component: ${r.stale.map((n) => `\`${n}\``).join(', ')}.`, '');
-	if (r.kindMismatch.length)
-		lines.push(
-			`Kind mismatches: ${r.kindMismatch.map((k) => `\`${k.name}\` is ${k.inventory}, registered as ${k.registry}`).join('; ')}.`,
-			''
-		);
-	if (r.badRoles.length)
-		lines.push(`Unknown roles: ${r.badRoles.map((b) => `\`${b.name}\` → ${b.role}`).join(', ')}.`, '');
+	const code = (/** @type {string} */ s) => `\`${s}\``;
+	if (r.stale.length) lines.push(`Entries without a component: ${r.stale.map((n) => code(n)).join(', ')}.`, '');
+	if (r.kindMismatch.length) {
+		const mismatches = r.kindMismatch.map((k) => `${code(k.name)} is ${k.inventory}, registered as ${k.registry}`);
+		lines.push(`Kind mismatches: ${mismatches.join('; ')}.`, '');
+	}
+	if (r.badRoles.length) {
+		const roles = r.badRoles.map((b) => `${code(b.name)} → ${b.role}`);
+		lines.push(`Unknown roles: ${roles.join(', ')}.`, '');
+	}
 	if (r.noStory.length)
 		lines.push(`Without a Storybook story (E07 cannot measure them): ${r.noStory.join(', ')}.`, '');
 	lines.push(
@@ -146,9 +148,9 @@ export function applyFixes(registry, r) {
 }
 
 function main() {
-	const argv = process.argv.slice(2);
-	const fix = argv.includes('--fix');
-	const markdown = argv.includes('--markdown');
+	const flags = new Set(process.argv.slice(2));
+	const fix = flags.has('--fix');
+	const markdown = flags.has('--markdown');
 	const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
 	const ctx = createContext(root);
 	const registry = loadRegistry();
@@ -167,10 +169,12 @@ function main() {
 		);
 		return;
 	}
+	const noStory = r.noStory.length ? ` Without a story: ${r.noStory.join(', ')}.` : '';
+	const body = renderDoctor(r).replace(/^### 🩺 Component registry\n\n/, '');
 	process.stdout.write(
 		disagree
-			? `${renderDoctor(r).replace(/^### 🩺 Component registry\n\n/, '')}\n`
-			: `components.json classifies every component the inventory discovers (${Object.keys(registry.components).length}).${r.noStory.length ? ` Without a story: ${r.noStory.join(', ')}.` : ''}\n`
+			? `${body}\n`
+			: `components.json classifies every component the inventory discovers (${Object.keys(registry.components).length}).${noStory}\n`
 	);
 	process.exitCode = disagree ? 1 : 0;
 }

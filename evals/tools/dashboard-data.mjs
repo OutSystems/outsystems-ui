@@ -122,8 +122,8 @@ function componentCells(results, name, kind) {
 	for (const m of results) {
 		if (!presentOf(m.id)?.heatmap) continue;
 		const row = Object.values(m.perComponent ?? {}).find((/** @type {any} */ r) => r.name === name) ?? null;
-		const na = (m.notApplicable ?? []).find(isMine);
-		const un = (m.unmeasured ?? []).find(isMine);
+		const na = (m.notApplicable ?? []).find((u) => isMine(u));
+		const un = (m.unmeasured ?? []).find((u) => isMine(u));
 		cells[m.id] = cellFor(m.id, row, { kind, reason: un?.reason, notApplicable: na });
 	}
 	return cells;
@@ -164,8 +164,7 @@ function evalOf(m, baseScores) {
  * @param {any} latest the latest run, in the suites shape
  */
 function suiteBlock(suite, history, latest) {
-	const runs = history.filter((h) => h.suites[suite.id]);
-	const first = runs[0];
+	const first = history.find((h) => h.suites[suite.id]);
 	const latestSuite = latest.suites[suite.id];
 	if (!first || !latestSuite) return null;
 	const results = /** @type {any[]} */ (latestSuite.results ?? []);
@@ -198,10 +197,14 @@ export function buildDashboardData(evalsDir, now = new Date()) {
 		JSON.parse(fs.readFileSync(insideDir(evalsDir, 'results', ...p), 'utf8'));
 	/** @type {import('../lib/results.mjs').HistoryEntry[]} */
 	const history = read('history.json')
-		.map(normalizeHistoryEntry)
+		.map((/** @type {any} */ e) => normalizeHistoryEntry(e))
 		.sort((/** @type {any} */ a, /** @type {any} */ b) => a.date.localeCompare(b.date));
 	const last = history[history.length - 1];
-	const latest = normalizeRun(read(`${last.label}.json`));
+	// the results branch keeps only latest.json; a checkout keeps every labelled run
+	const latestFile = fs.existsSync(insideDir(evalsDir, 'results', `${last.label}.json`))
+		? `${last.label}.json`
+		: 'latest.json';
+	const latest = normalizeRun(read(latestFile));
 
 	const suites = SUITES.map((s) => suiteBlock(s, history, latest)).filter((b) => b !== null);
 	const allResults = Object.values(latest.suites).flatMap((/** @type {any} */ s) => s.results ?? []);

@@ -21,7 +21,7 @@ import { insideDir } from '../lib/paths.mjs';
 export const TEMPLATE_FILE = 'dashboard/index.html';
 export const MODULE_FILE = 'dashboard/dashboard.mjs';
 export const PAGE_FILE = 'results/dashboard.html';
-export const PLACEHOLDER = '__DASHBOARD_SCRIPT__';
+export const PLACEHOLDER = '/*__DASHBOARD_SCRIPT__*/';
 const EXPORT_LINE = 'export function mount(';
 
 /** Sections the page must fill for any data set. */
@@ -50,6 +50,48 @@ export function buildDashboardPage(evalsDir) {
 	return template.replace(PLACEHOLDER, script);
 }
 
+/** One element of the document stub. @param {string} [id] */
+function element(id) {
+	/** @type {any} */
+	const el = {
+		id,
+		innerHTML: '',
+		textContent: '',
+		className: '',
+		hidden: false,
+		disabled: false,
+		title: '',
+		value: '',
+		checked: false,
+		open: false,
+		dataset: {},
+		style: {},
+		classList: {
+			toggle() {},
+			add() {},
+			remove() {},
+			contains() {
+				return false;
+			},
+		},
+		setAttribute() {},
+		getAttribute() {
+			return null;
+		},
+		addEventListener() {},
+		querySelector() {
+			return element();
+		},
+		querySelectorAll() {
+			return [];
+		},
+		getBoundingClientRect() {
+			return { left: 0, top: 0, width: 960, height: 260 };
+		},
+	};
+	return el;
+}
+
 /**
  * A document stub with just enough surface for the page module: elements by id or selector, innerHTML and
  * textContent, class and attribute setters, no-op listeners. Sections the module fills are readable back.
@@ -57,47 +99,6 @@ export function buildDashboardPage(evalsDir) {
 export function createDocumentStub() {
 	/** @type {Map<string, any>} */
 	const byId = new Map();
-	/** @param {string} [id] */
-	function element(id) {
-		/** @type {any} */
-		const el = {
-			id,
-			innerHTML: '',
-			textContent: '',
-			className: '',
-			hidden: false,
-			disabled: false,
-			title: '',
-			value: '',
-			checked: false,
-			open: false,
-			dataset: {},
-			style: {},
-			classList: {
-				toggle() {},
-				add() {},
-				remove() {},
-				contains() {
-					return false;
-				},
-			},
-			setAttribute() {},
-			getAttribute() {
-				return null;
-			},
-			addEventListener() {},
-			querySelector() {
-				return element();
-			},
-			querySelectorAll() {
-				return [];
-			},
-			getBoundingClientRect() {
-				return { left: 0, top: 0, width: 960, height: 260 };
-			},
-		};
-		return el;
-	}
 	const document = {
 		/** @param {string} id */
 		getElementById(id) {

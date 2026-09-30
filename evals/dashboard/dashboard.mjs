@@ -16,8 +16,6 @@ export function mount(document, window, localStorage, EMBEDDED) {
 	const DATA_VERSION = 3;
 	const f1 = (n) => (Math.round(n * 10) / 10).toFixed(1);
 	const signed = (n) => (n > 0 ? '+' : '') + f1(n);
-	const cls = (n) => (n >= 80 ? 'good' : n >= 60 ? 'warn' : 'bad');
-	const deltaCls = (d) => (d > 0 ? 'up' : d < 0 ? 'down' : 'flat');
 	const esc = (s) =>
 		String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
 	const meanOf = (xs) => (xs.length ? xs.reduce((s, x) => s + x, 0) / xs.length : 0);
@@ -25,6 +23,36 @@ export function mount(document, window, localStorage, EMBEDDED) {
 	const tone = (s) => `t${s.tone % 3}`;
 	const clsOf = (e) => e.cls || (e.movable ? 'movable' : 'structural');
 	const range = (evals) => (evals.length ? `${evals[0].id}–${evals[evals.length - 1].id}` : '');
+	const plural = (n, word) => (n === 1 ? word : `${word}s`);
+
+	/** Score band class. */
+	function cls(n) {
+		if (n >= 80) return 'good';
+		if (n >= 60) return 'warn';
+		return 'bad';
+	}
+	/** Direction class of a delta. */
+	function deltaCls(d) {
+		if (d > 0) return 'up';
+		if (d < 0) return 'down';
+		return 'flat';
+	}
+	/** Inline style of a heatmap cell. */
+	function shade(v) {
+		if (v === null) return '';
+		if (v >= 80) return 'background:var(--good-soft);color:var(--good)';
+		if (v >= 60) return 'background:var(--warn-soft);color:var(--warn)';
+		return 'background:var(--bad-soft);color:var(--bad)';
+	}
+	/** Text of a heatmap cell. */
+	function cellText(v) {
+		if (v.s !== null) return f1(v.s);
+		return v.w === 'na' ? 'n/a' : '—';
+	}
+	/** `<div class="…">…</div>` or nothing. */
+	function block(className, content) {
+		return content ? `<div class="${className}">${content}</div>` : '';
+	}
 
 	// Documentation of the branch work, linked to the evals it moved. Kept in the page: it is
 	// narrative, not a measurement.
@@ -55,7 +83,7 @@ export function mount(document, window, localStorage, EMBEDDED) {
 		},
 		{
 			evals: ['all'],
-			what: 'The measurement loop itself: suites, registry, gate, doctor, reports (S-7, S-8, S-13 to S-15)',
+			what: 'The measurement loop itself: suites, registry, gate, doctor, reports (S-7, S-8, S-13 to S-16)',
 			detail: 'evals/: a suite registry (suites.mjs) the runner, gate, history report and this data set iterate; self-describing metrics (each carries the meaning of its cells, its advice and its gate rules); a component registry (components.json) every classification is read from, with a doctor that flags unclassified or renamed components and derives defaults from code; results per run with per-component rows, unmeasured and not-applicable pairs, history.json, HISTORY.md and this data set. CI: the gate fails when an index drops more than 1 point, when one eval drops more than 3, when a no-decrease eval (R01 coverage) goes down or when an eval leaves more components unmeasured than the baseline; docs-ai/ freshness is checked; a sticky PR comment carries the before → after tables and the registry section.',
 			do: 'npm run evals -- --label <name> after a change, then npm run evals:gate and npm run docs:ai:check; a new component gets its entry through npm run evals:doctor -- --fix.',
 		},
@@ -92,6 +120,12 @@ export function mount(document, window, localStorage, EMBEDDED) {
 			impact: 'the single AMD bundle becomes several files; needs a compatibility shim for OutSystems.OSUI.*',
 		},
 	};
+	const WHY = {
+		movable:
+			'Moves with additive changes: documentation, generated docs and types, annotations, token routing, ARIA, key handlers, state styles',
+		structural: 'Moves only with a change to the DOM contract, the cascade or the composition model',
+		roadmap: 'Moves with new components or features',
+	};
 
 	let D = EMBEDDED;
 	let heatSort = { key: 'mean', dir: 'asc' };
@@ -104,62 +138,17 @@ export function mount(document, window, localStorage, EMBEDDED) {
 	function render() {
 		const runs = [...D.history].sort((a, b) => a.date.localeCompare(b.date));
 		const last = runs[runs.length - 1];
+		const indices = D.suites.map((s) => `${s.indexName} (${range(s.evals)})`).join(' and ');
 		document.getElementById('meta').textContent =
-			`${D.suites.map((s) => `${s.indexName} (${range(s.evals)})`).join(' and ')}, each an unweighted mean · ${runs.length} runs · latest ${last.label} @ ${last.sha} · data generated ${when(D.generated)}`;
-
-		// summary strip
-		const evals = allEvals().map(({ e }) => e);
-		const movable = evals.filter((e) => clsOf(e) === 'movable'),
-			structural = evals.filter((e) => clsOf(e) === 'structural');
-		const unmeasured = evals.reduce((s, e) => s + e.unmeasured.n, 0);
-		const tiles = [
-			...D.suites.map((s) => {
-				const first = s.baseline;
-				return {
-					cls: `index ${tone(s)}`,
-					label: s.indexName,
-					value: f1(s.latest.index),
-					sub:
-						first.label === last.label
-							? `first measured in ${first.label}`
-							: `${signed(s.latest.index - first.index)} since ${first.label} (${f1(first.index)})`,
-				};
-			}),
-			{
-				label: 'Movable evals',
-				value: `${movable.filter((e) => e.score >= 80).length} / ${movable.length} ≥ 80`,
-				sub: `mean ${f1(meanOf(movable.map((e) => e.score)))} · ${movable.filter((e) => e.score >= 99.9).length} at 100`,
-			},
-			structural.length
-				? {
-						label: 'Structural evals',
-						value: f1(meanOf(structural.map((e) => e.score))),
-						sub: `${structural.map((e) => e.id).join(', ')} · wait on a breaking-change decision`,
-					}
-				: null,
-			{
-				label: 'Components measured',
-				value: String(D.components.length),
-				sub: `${D.components.filter((c) => c.k === 'pattern').length} patterns, ${D.components.filter((c) => c.k === 'css').length} CSS-only`,
-			},
-			{
-				label: 'Unmeasured pairs',
-				value: String(unmeasured),
-				sub:
-					evals
-						.filter((e) => e.unmeasured.n)
-						.map((e) => `${e.id} ${e.unmeasured.n}`)
-						.join(' · ') || 'everything measurable is measured',
-			},
-		];
-		document.getElementById('strip').innerHTML = tiles
-			.filter(Boolean)
-			.map(
-				(t) =>
-					`<div class="tile ${t.cls || ''}"><span class="eyebrow">${esc(t.label)}</span><span class="value">${esc(t.value)}</span><span class="sub">${esc(t.sub)}</span></div>`
-			)
+			`${indices}, each an unweighted mean · ${runs.length} runs · latest ${last.label} @ ${last.sha} · data generated ${when(D.generated)}`;
+		document.getElementById('strip').innerHTML = tiles(last)
+			.map((t) => {
+				const label = `<span class="eyebrow">${esc(t.label)}</span>`;
+				const value = `<span class="value">${esc(t.value)}</span>`;
+				const sub = `<span class="sub">${esc(t.sub)}</span>`;
+				return `<div class="tile ${t.cls || ''}">${label}${value}${sub}</div>`;
+			})
 			.join('');
-
 		renderTrend(runs);
 		renderMultiples(runs);
 		renderEvals();
@@ -167,77 +156,154 @@ export function mount(document, window, localStorage, EMBEDDED) {
 		renderFindings();
 	}
 
+	/** The summary strip: one index tile per suite, then the cross-suite counts. */
+	function tiles(last) {
+		const evals = allEvals().map(({ e }) => e);
+		const movable = evals.filter((e) => clsOf(e) === 'movable');
+		const structural = evals.filter((e) => clsOf(e) === 'structural');
+		const unmeasured = evals.reduce((s, e) => s + e.unmeasured.n, 0);
+		const unmeasuredBy = evals
+			.filter((e) => e.unmeasured.n)
+			.map((e) => `${e.id} ${e.unmeasured.n}`)
+			.join(' · ');
+		const out = D.suites.map((s) => {
+			const first = s.baseline;
+			const sub =
+				first.label === last.label
+					? `first measured in ${first.label}`
+					: `${signed(s.latest.index - first.index)} since ${first.label} (${f1(first.index)})`;
+			return { cls: `index ${tone(s)}`, label: s.indexName, value: f1(s.latest.index), sub };
+		});
+		out.push({
+			cls: '',
+			label: 'Movable evals',
+			value: `${movable.filter((e) => e.score >= 80).length} / ${movable.length} ≥ 80`,
+			sub: `mean ${f1(meanOf(movable.map((e) => e.score)))} · ${movable.filter((e) => e.score >= 99.9).length} at 100`,
+		});
+		if (structural.length) {
+			out.push({
+				cls: '',
+				label: 'Structural evals',
+				value: f1(meanOf(structural.map((e) => e.score))),
+				sub: `${structural.map((e) => e.id).join(', ')} · wait on a breaking-change decision`,
+			});
+		}
+		out.push({
+			cls: '',
+			label: 'Components measured',
+			value: String(D.components.length),
+			sub: `${D.components.filter((c) => c.k === 'pattern').length} patterns, ${D.components.filter((c) => c.k === 'css').length} CSS-only`,
+		});
+		out.push({
+			cls: '',
+			label: 'Unmeasured pairs',
+			value: String(unmeasured),
+			sub: unmeasuredBy || 'everything measurable is measured',
+		});
+		return out;
+	}
+
 	function renderTrend(runs) {
-		const W = 960,
-			H = 260,
-			padL = 44,
-			padR = 28,
-			padT = 26,
-			padB = 48;
+		const W = 960;
+		const H = 260;
+		const padL = 44;
+		const padR = 28;
+		const padT = 26;
+		const padB = 48;
 		const xs = runs.map((_, i) => padL + (i * (W - padL - padR)) / Math.max(1, runs.length - 1));
 		const y = (v) => padT + (H - padT - padB) * (1 - v / 100);
-		let s = `<svg class="trend" viewBox="0 0 ${W} ${H}" role="img" aria-label="Index per run and suite, scale 0 to 100">`;
-		for (const g of [0, 25, 50, 75, 100])
-			s += `<line class="grid" x1="${padL}" x2="${W - padR}" y1="${y(g)}" y2="${y(g)}"/><text x="${padL - 8}" y="${y(g) + 4}" text-anchor="end">${g}</text>`;
-		D.suites.forEach((suite, k) => {
-			const pts = runs.map((r, i) => ({ r, i })).filter(({ r }) => r.suites[suite.id]);
-			if (!pts.length) return;
-			const poly = pts.map(({ r, i }) => `${xs[i]},${y(r.suites[suite.id].index)}`).join(' ');
-			s += `<g class="${tone(suite)}">`;
-			if (k === 0)
-				s += `<polygon class="area" points="${xs[pts[0].i]},${y(0)} ${poly} ${xs[pts[pts.length - 1].i]},${y(0)}"/>`;
-			if (pts.length > 1) s += `<polyline class="line" points="${poly}"/>`;
-			pts.forEach(({ r, i }, j) => {
-				const isLast = j === pts.length - 1,
-					v = r.suites[suite.id].index;
-				s += `<circle class="dot ${isLast ? 'last' : ''}" cx="${xs[i]}" cy="${y(v)}" r="4.5"/>`;
-				if (j === 0 || isLast)
-					s += `<text class="label" x="${xs[i]}" y="${y(v) + (k === 0 ? -12 : 20)}" text-anchor="${j === 0 ? 'start' : 'end'}">${f1(v)}</text>`;
-			});
-			s += '</g>';
-		});
+		const parts = [
+			`<svg class="trend" viewBox="0 0 ${W} ${H}" role="img" aria-label="Index per run and suite, scale 0 to 100">`,
+		];
+		for (const g of [0, 25, 50, 75, 100]) {
+			parts.push(`<line class="grid" x1="${padL}" x2="${W - padR}" y1="${y(g)}" y2="${y(g)}"/>`);
+			parts.push(`<text x="${padL - 8}" y="${y(g) + 4}" text-anchor="end">${g}</text>`);
+		}
+		D.suites.forEach((suite, k) => parts.push(trendLine(suite, k, runs, xs, y)));
 		runs.forEach((r, i) => {
-			s += `<text x="${xs[i]}" y="${H - padB + 18}" text-anchor="middle">${esc(r.label)}</text><text x="${xs[i]}" y="${H - padB + 34}" text-anchor="middle" style="font-family:var(--font-mono);font-size:11px">${esc(r.sha)}</text>`;
+			parts.push(`<text x="${xs[i]}" y="${H - padB + 18}" text-anchor="middle">${esc(r.label)}</text>`);
+			parts.push(
+				`<text x="${xs[i]}" y="${H - padB + 34}" text-anchor="middle" style="font-family:var(--font-mono);font-size:11px">${esc(r.sha)}</text>`
+			);
 		});
-		s += `<line class="cross" id="cross" x1="0" x2="0" y1="${padT}" y2="${H - padB}" visibility="hidden"/>`;
+		parts.push(`<line class="cross" id="cross" x1="0" x2="0" y1="${padT}" y2="${H - padB}" visibility="hidden"/>`);
 		const half = runs.length > 1 ? (xs[1] - xs[0]) / 2 : (W - padL - padR) / 2;
 		runs.forEach((r, i) => {
-			s += `<rect class="hit" data-i="${i}" x="${xs[i] - half}" y="${padT}" width="${half * 2}" height="${H - padT - padB}"/>`;
+			parts.push(
+				`<rect class="hit" data-i="${i}" x="${xs[i] - half}" y="${padT}" width="${half * 2}" height="${H - padT - padB}"/>`
+			);
 		});
-		s += '</svg>';
+		parts.push('</svg>');
+		const legend = D.suites
+			.map((suite) => `<span class="${tone(suite)}"><i></i>${esc(suite.indexName)}</span>`)
+			.join('');
 		const host = document.getElementById('trend');
-		host.innerHTML =
-			s +
-			`<div class="chart-legend">${D.suites.map((suite) => `<span class="${tone(suite)}"><i></i>${esc(suite.indexName)}</span>`).join('')}</div>`;
+		host.innerHTML = `${parts.join('')}<div class="chart-legend">${legend}</div>`;
+		const captions = D.suites.map((suite) => {
+			const rs = suiteRuns(runs, suite);
+			return `${suite.name} ${f1(rs[0].suites[suite.id].index)} → ${f1(rs[rs.length - 1].suites[suite.id].index)} over ${rs.length} runs`;
+		});
 		document.getElementById('trend-caption').textContent =
-			D.suites
-				.map((suite) => {
-					const rs = suiteRuns(runs, suite);
-					return `${suite.name} ${f1(rs[0].suites[suite.id].index)} → ${f1(rs[rs.length - 1].suites[suite.id].index)} over ${rs.length} runs`;
-				})
-				.join('; ') + '. Each eval has its own small chart below so no line hides another.';
-		const tip = document.getElementById('tip'),
-			svg = host.querySelector('svg'),
-			cross = host.querySelector('#cross');
+			`${captions.join('; ')}. Each eval has its own small chart below so no line hides another.`;
+		wireTrendTips(host, runs, xs, y, W, H);
+	}
+
+	/** One suite's polyline, dots and end labels on the trend chart. */
+	function trendLine(suite, k, runs, xs, y) {
+		const pts = runs.map((r, i) => ({ r, i })).filter(({ r }) => r.suites[suite.id]);
+		if (!pts.length) return '';
+		const poly = pts.map(({ r, i }) => `${xs[i]},${y(r.suites[suite.id].index)}`).join(' ');
+		const parts = [`<g class="${tone(suite)}">`];
+		if (k === 0) {
+			parts.push(
+				`<polygon class="area" points="${xs[pts[0].i]},${y(0)} ${poly} ${xs[pts[pts.length - 1].i]},${y(0)}"/>`
+			);
+		}
+		if (pts.length > 1) parts.push(`<polyline class="line" points="${poly}"/>`);
+		pts.forEach(({ r, i }, j) => {
+			const isLast = j === pts.length - 1;
+			const v = r.suites[suite.id].index;
+			parts.push(`<circle class="dot ${isLast ? 'last' : ''}" cx="${xs[i]}" cy="${y(v)}" r="4.5"/>`);
+			if (j === 0 || isLast) {
+				const dy = k === 0 ? -12 : 20;
+				const anchor = j === 0 ? 'start' : 'end';
+				parts.push(`<text class="label" x="${xs[i]}" y="${y(v) + dy}" text-anchor="${anchor}">${f1(v)}</text>`);
+			}
+		});
+		parts.push('</g>');
+		return parts.join('');
+	}
+
+	/** Tooltip text for one run of the trend chart: every suite's index and its move from the previous run. */
+	function trendTip(r, prev) {
+		const branch = r.branch ? ` · ${esc(r.branch)}` : '';
+		const lines = D.suites
+			.filter((suite) => r.suites[suite.id])
+			.map((suite) => {
+				const index = r.suites[suite.id].index;
+				const vsPrev =
+					prev && prev.suites[suite.id]
+						? ` (${signed(index - prev.suites[suite.id].index)} vs ${esc(prev.label)})`
+						: '';
+				return `<br>${esc(suite.name)} ${f1(index)}${vsPrev}`;
+			});
+		return `<b>${esc(r.label)}</b> @ ${esc(r.sha)} · ${esc(r.date.slice(0, 10))}${branch}${lines.join('')}`;
+	}
+
+	function wireTrendTips(host, runs, xs, y, W, H) {
+		const tip = document.getElementById('tip');
+		const svg = host.querySelector('svg');
+		const cross = host.querySelector('#cross');
 		host.querySelectorAll('.hit').forEach((rect) => {
 			rect.addEventListener('mousemove', () => {
-				const i = Number(rect.dataset.i),
-					r = runs[i],
-					prev = runs[i - 1];
-				const box = svg.getBoundingClientRect(),
-					hostBox = host.getBoundingClientRect();
+				const i = Number(rect.dataset.i);
+				const r = runs[i];
+				const box = svg.getBoundingClientRect();
+				const hostBox = host.getBoundingClientRect();
 				const first = D.suites.find((suite) => r.suites[suite.id]);
-				const px = box.left - hostBox.left + (xs[i] / W) * box.width,
-					py = box.top - hostBox.top + (y(first ? r.suites[first.id].index : 0) / H) * box.height;
-				tip.innerHTML =
-					`<b>${esc(r.label)}</b> @ ${esc(r.sha)} · ${esc(r.date.slice(0, 10))}${r.branch ? ` · ${esc(r.branch)}` : ''}` +
-					D.suites
-						.filter((suite) => r.suites[suite.id])
-						.map(
-							(suite) =>
-								`<br>${esc(suite.name)} ${f1(r.suites[suite.id].index)}${prev && prev.suites[suite.id] ? ` (${signed(r.suites[suite.id].index - prev.suites[suite.id].index)} vs ${esc(prev.label)})` : ''}`
-						)
-						.join('');
+				const px = box.left - hostBox.left + (xs[i] / W) * box.width;
+				const py = box.top - hostBox.top + (y(first ? r.suites[first.id].index : 0) / H) * box.height;
+				tip.innerHTML = trendTip(r, runs[i - 1]);
 				tip.style.left = `${px}px`;
 				tip.style.top = `${py}px`;
 				tip.hidden = false;
@@ -252,56 +318,99 @@ export function mount(document, window, localStorage, EMBEDDED) {
 		});
 	}
 
+	/** The right-hand label of a small multiple. */
+	function rangeLabel(vals, flat, d) {
+		if (vals.length < 2) return 'first run';
+		if (flat) return 'unchanged';
+		return signed(d);
+	}
+
 	function renderMultiples(runs) {
-		const W = 200,
-			H = 56,
-			pad = 6;
+		const W = 200;
+		const H = 56;
+		const pad = 6;
 		document.getElementById('multiples').innerHTML = allEvals()
 			.map(({ e, s }) => {
 				const vals = suiteRuns(runs, s).map((r) => r.suites[s.id].scores[e.id] ?? 0);
 				const xs = vals.map((_, i) => pad + (i * (W - 2 * pad)) / Math.max(1, vals.length - 1));
 				const y = (v) => pad + (H - 2 * pad) * (1 - v / 100);
 				const flat = vals.every((v) => v === vals[0]);
+				const flatCls = flat ? 'flat' : '';
 				const pts = vals.map((v, i) => `${xs[i]},${y(v)}`).join(' ');
 				const d = vals[vals.length - 1] - vals[0];
-				return `<div class="multiple ${tone(s)}" title="${esc(e.name)}: ${vals.map(f1).join(' → ')}">
-				<div class="t"><b>${esc(e.id)} <span class="muted">${esc(e.name)}</span></b><span class="mono">${esc(clsOf(e))}</span></div>
-				<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(e.name)} ${vals.map(f1).join(', ')}">
-					<line class="grid" x1="${pad}" x2="${W - pad}" y1="${y(0)}" y2="${y(0)}"/>
-					<polygon class="sparea" points="${xs[0]},${y(0)} ${pts} ${xs[xs.length - 1]},${y(0)}"/>
-					<polyline class="spark ${flat ? 'flat' : ''}" points="${pts}"/>
-					<circle class="end ${flat ? 'flat' : ''}" cx="${xs[xs.length - 1]}" cy="${y(vals[vals.length - 1])}" r="3.5"/>
-				</svg>
-				<div class="range"><span>${f1(vals[0])}</span><span class="delta ${deltaCls(d)}">${vals.length < 2 ? 'first run' : flat ? 'unchanged' : signed(d)}</span><span><b>${f1(vals[vals.length - 1])}</b></span></div>
-			</div>`;
+				const first = f1(vals[0]);
+				const lastValue = f1(vals[vals.length - 1]);
+				const series = vals.map((v) => f1(v));
+				const title = `<div class="t"><b>${esc(e.id)} <span class="muted">${esc(e.name)}</span></b><span class="mono">${esc(clsOf(e))}</span></div>`;
+				const chart = [
+					`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(e.name)} ${series.join(', ')}">`,
+					`<line class="grid" x1="${pad}" x2="${W - pad}" y1="${y(0)}" y2="${y(0)}"/>`,
+					`<polygon class="sparea" points="${xs[0]},${y(0)} ${pts} ${xs[xs.length - 1]},${y(0)}"/>`,
+					`<polyline class="spark ${flatCls}" points="${pts}"/>`,
+					`<circle class="end ${flatCls}" cx="${xs[xs.length - 1]}" cy="${y(vals[vals.length - 1])}" r="3.5"/>`,
+					'</svg>',
+				].join('');
+				const footer = `<div class="range"><span>${first}</span><span class="delta ${deltaCls(d)}">${rangeLabel(vals, flat, d)}</span><span><b>${lastValue}</b></span></div>`;
+				return `<div class="multiple ${tone(s)}" title="${esc(e.name)}: ${series.join(' → ')}">${title}${chart}${footer}</div>`;
 			})
 			.join('');
 	}
 
 	function renderEvals() {
-		const WHY = {
-			movable:
-				'Moves with additive changes: documentation, generated docs and types, annotations, token routing, ARIA, key handlers, state styles',
-			structural: 'Moves only with a change to the DOM contract, the cascade or the composition model',
-			roadmap: 'Moves with new components or features',
-		};
 		document.querySelector('#evals tbody').innerHTML = allEvals()
 			.map(({ e, s }) => {
-				const base = e.base ?? e.score,
-					d = e.score - base;
+				const base = e.base ?? e.score;
+				const d = e.score - base;
 				const klass = clsOf(e);
-				return `<tr class="${tone(s)}">
-				<td class="mono">${esc(e.id)}${D.suites.length > 1 ? ` <span class="suite-tag">${esc(s.name)}</span>` : ''}</td>
-				<td><div class="eval-name">${esc(e.name)}</div><div class="eval-crit">${esc(e.criterion)}</div></td>
-				<td><div class="bar" title="${f1(e.score)} (baseline ${f1(base)})"><i style="width:${e.score}%"></i><b style="left:${base}%"></b></div></td>
-				<td class="num">${f1(base)}</td>
-				<td class="num"><span class="pill ${cls(e.score)}">${f1(e.score)}</span></td>
-				<td class="num delta ${deltaCls(d)}">${signed(d)}</td>
-				<td><span class="pill neutral" title="${esc(WHY[klass] || '')}">${esc(klass)}</span></td>
-				<td class="notes">${esc(e.summary)}</td>
-			</tr>`;
+				const suiteTag = D.suites.length > 1 ? ` <span class="suite-tag">${esc(s.name)}</span>` : '';
+				const cells = [
+					`<td class="mono">${esc(e.id)}${suiteTag}</td>`,
+					`<td><div class="eval-name">${esc(e.name)}</div><div class="eval-crit">${esc(e.criterion)}</div></td>`,
+					`<td><div class="bar" title="${f1(e.score)} (baseline ${f1(base)})"><i style="width:${e.score}%"></i><b style="left:${base}%"></b></div></td>`,
+					`<td class="num">${f1(base)}</td>`,
+					`<td class="num"><span class="pill ${cls(e.score)}">${f1(e.score)}</span></td>`,
+					`<td class="num delta ${deltaCls(d)}">${signed(d)}</td>`,
+					`<td><span class="pill neutral" title="${esc(WHY[klass] || '')}">${esc(klass)}</span></td>`,
+					`<td class="notes">${esc(e.summary)}</td>`,
+				];
+				return `<tr class="${tone(s)}">${cells.join('')}</tr>`;
 			})
 			.join('');
+	}
+
+	/** Human name of a heatmap sort key. */
+	function sortLabel(key) {
+		if (key === 'n') return 'name';
+		if (key === 'k') return 'kind';
+		if (key === 'mean') return 'mean score';
+		return key;
+	}
+	/** aria-sort value of a heatmap column. */
+	function ariaSort(key) {
+		if (heatSort.key !== key) return 'none';
+		return heatSort.dir === 'asc' ? 'ascending' : 'descending';
+	}
+
+	/** The heatmap legend: bands, cell states, suite colours and the evals without a column. */
+	function heatLegend(noColumn) {
+		const suites = D.suites.map((s) => {
+			const prefix = s.evals.length ? s.evals[0].id.charAt(0) : '';
+			return `<span class="suite-tag ${tone(s)}">${esc(prefix)} · ${esc(s.name)}</span>`;
+		});
+		let noColumnNote = '';
+		if (noColumn.length) {
+			const verb = noColumn.length === 1 ? 'is' : 'are';
+			const have = noColumn.length === 1 ? 'it has' : 'they have';
+			noColumnNote = ` ${noColumn.join(', ')} ${verb} measured per file or per requirement, so ${have} no column.`;
+		}
+		return [
+			'<span><i style="background:var(--good-soft)"></i>≥ 80</span>',
+			'<span><i style="background:var(--warn-soft)"></i>60 – 79</span>',
+			'<span><i style="background:var(--bad-soft)"></i>&lt; 60</span>',
+			'<span><i style="background:var(--surface-2)"></i>n/a, not applicable: the eval does not measure this kind of component, or there is nothing of its kind to check (hover for the reason)</span>',
+			'<span><i style="background:repeating-linear-gradient(135deg, var(--surface-2) 0 3px, transparent 3px 6px)"></i>— not measured: the component lacks what the eval reads, such as a story (hover for the reason and the fix)</span>',
+			`<span>Column ids are coloured by suite: ${suites.join(' ')}. Click a row for what each eval found and what to do.${noColumnNote}</span>`,
+		].join('');
 	}
 
 	function renderHeat() {
@@ -312,14 +421,7 @@ export function mount(document, window, localStorage, EMBEDDED) {
 		const noColumn = allEvals()
 			.filter(({ e, s }) => !s.heatmapEvals.includes(e.id))
 			.map(({ e }) => e.id);
-		document.getElementById('heat-legend').innerHTML = [
-			'<span><i style="background:var(--good-soft)"></i>≥ 80</span>',
-			'<span><i style="background:var(--warn-soft)"></i>60 – 79</span>',
-			'<span><i style="background:var(--bad-soft)"></i>&lt; 60</span>',
-			'<span><i style="background:var(--surface-2)"></i>n/a, not applicable: the eval does not measure this kind of component, or there is nothing of its kind to check (hover for the reason)</span>',
-			'<span><i style="background:repeating-linear-gradient(135deg, var(--surface-2) 0 3px, transparent 3px 6px)"></i>— not measured: the component lacks what the eval reads, such as a story (hover for the reason and the fix)</span>',
-			`<span>Column ids are coloured by suite: ${D.suites.map((s) => `<span class="suite-tag ${tone(s)}">${esc(s.evals[0]?.id.charAt(0) ?? '')} · ${esc(s.name)}</span>`).join(' ')}. Click a row for what each eval found and what to do.${noColumn.length ? ` ${noColumn.join(', ')} ${noColumn.length === 1 ? 'is' : 'are'} measured per file or per requirement, so ${noColumn.length === 1 ? 'it has' : 'they have'} no column.` : ''}</span>`,
-		].join('');
+		document.getElementById('heat-legend').innerHTML = heatLegend(noColumn);
 		const rows = D.components.map((c) => {
 			const vals = ids.map((id) => c.cells[id] || { s: null, w: 'unmeasured', h: 'No cell in this data set.' });
 			const measured = vals.filter((v) => v.s !== null).map((v) => v.s);
@@ -330,21 +432,16 @@ export function mount(document, window, localStorage, EMBEDDED) {
 				min: measured.length ? Math.min(...measured) : null,
 			};
 		});
-		const thead = document.querySelector('#heat thead'),
-			tbody = document.querySelector('#heat tbody');
-		const filterEl = document.getElementById('heat-filter'),
-			kindEl = document.getElementById('heat-kind'),
-			weakEl = document.getElementById('heat-weak');
-		const shade = (v) =>
-			v === null
-				? ''
-				: v >= 80
-					? 'background:var(--good-soft);color:var(--good)'
-					: v >= 60
-						? 'background:var(--warn-soft);color:var(--warn)'
-						: 'background:var(--bad-soft);color:var(--bad)';
-		const value = (r, key) =>
-			key === 'n' || key === 'k' ? r[key] : key === 'mean' ? r.mean : r.vals[ids.indexOf(key)].s;
+		const thead = document.querySelector('#heat thead');
+		const tbody = document.querySelector('#heat tbody');
+		const filterEl = document.getElementById('heat-filter');
+		const kindEl = document.getElementById('heat-kind');
+		const weakEl = document.getElementById('heat-weak');
+		function value(r, key) {
+			if (key === 'n' || key === 'k') return r[key];
+			if (key === 'mean') return r.mean;
+			return r.vals[ids.indexOf(key)].s;
+		}
 		function header() {
 			const heads = [
 				{ key: 'n', label: 'Component' },
@@ -352,39 +449,55 @@ export function mount(document, window, localStorage, EMBEDDED) {
 				...ids.map((id) => ({ key: id, label: id, title: lookup[id]?.e.name || id })),
 				{ key: 'mean', label: 'Mean' },
 			];
-			thead.innerHTML =
-				'<tr>' +
-				heads
-					.map(
-						(c) =>
-							`<th class="${ids.includes(c.key) || c.key === 'mean' ? 'num' : ''} ${toneOf[c.key] || ''}"><button type="button" data-key="${c.key}" aria-sort="${heatSort.key === c.key ? (heatSort.dir === 'asc' ? 'ascending' : 'descending') : 'none'}" title="${esc(c.title || 'sort')}">${esc(c.label)}</button></th>`
-					)
-					.join('') +
-				'</tr>';
+			const cells = heads.map((c) => {
+				const num = ids.includes(c.key) || c.key === 'mean' ? 'num' : '';
+				const button = `<button type="button" data-key="${c.key}" aria-sort="${ariaSort(c.key)}" title="${esc(c.title || 'sort')}">${esc(c.label)}</button>`;
+				return `<th scope="col" class="${num} ${toneOf[c.key] || ''}">${button}</th>`;
+			});
+			thead.innerHTML = `<tr>${cells.join('')}</tr>`;
 			thead.querySelectorAll('button').forEach((b) =>
 				b.addEventListener('click', () => {
 					const key = b.dataset.key;
-					heatSort =
-						heatSort.key === key
-							? { key, dir: heatSort.dir === 'asc' ? 'desc' : 'asc' }
-							: { key, dir: 'asc' };
+					const flipped = heatSort.dir === 'asc' ? 'desc' : 'asc';
+					heatSort = heatSort.key === key ? { key, dir: flipped } : { key, dir: 'asc' };
 					draw();
 				})
 			);
 		}
 		function detail(r) {
-			return `<tr class="detail"><td colspan="${ids.length + 3}"><ul>${ids
-				.map((id, i) => {
-					const v = r.vals[i];
-					return `<li><span class="id">${esc(id)}</span><span class="s" style="${shade(v.s)}">${v.s === null ? (v.w === 'na' ? 'n/a' : '—') : f1(v.s)}</span><span>${esc(v.h)}</span></li>`;
-				})
-				.join('')}</ul></td></tr>`;
+			const items = ids.map((id, i) => {
+				const v = r.vals[i];
+				return `<li><span class="id">${esc(id)}</span><span class="s" style="${shade(v.s)}">${cellText(v)}</span><span>${esc(v.h)}</span></li>`;
+			});
+			return `<tr class="detail"><td colspan="${ids.length + 3}"><ul>${items.join('')}</ul></td></tr>`;
+		}
+		function cell(v) {
+			if (v.s === null) return `<td class="cell ${v.w}" title="${esc(v.h)}">${cellText(v)}</td>`;
+			return `<td class="cell" style="${shade(v.s)}" title="${esc(v.h)}">${f1(v.s)}</td>`;
+		}
+		function row(r) {
+			const kind = r.k === 'pattern' ? 'pattern' : 'css';
+			const mean = r.mean === null ? '—' : f1(r.mean);
+			const cells = r.vals.map((v) => cell(v)).join('');
+			const head = `<td class="name">${esc(r.n)}</td><td class="kind">${kind}</td>`;
+			const tail = `<td class="cell mean" style="${shade(r.mean)}">${mean}</td>`;
+			const open = expanded.has(r.n);
+			return `<tr class="row" tabindex="0" data-n="${esc(r.n)}" aria-expanded="${open}">${head}${cells}${tail}</tr>${open ? detail(r) : ''}`;
+		}
+		function compare(a, b) {
+			const va = value(a, heatSort.key);
+			const vb = value(b, heatSort.key);
+			if (va === null && vb === null) return a.n.localeCompare(b.n);
+			if (va === null) return 1;
+			if (vb === null) return -1;
+			const c = typeof va === 'string' ? va.localeCompare(vb) : va - vb;
+			return (heatSort.dir === 'asc' ? c : -c) || a.n.localeCompare(b.n);
 		}
 		function draw() {
 			header();
-			const q = (filterEl.value || '').trim().toLowerCase(),
-				kind = kindEl.value || 'all',
-				weak = Boolean(weakEl.checked);
+			const q = (filterEl.value || '').trim().toLowerCase();
+			const kind = kindEl.value || 'all';
+			const weak = Boolean(weakEl.checked);
 			const shown = rows
 				.filter(
 					(r) =>
@@ -392,24 +505,8 @@ export function mount(document, window, localStorage, EMBEDDED) {
 						(kind === 'all' || r.k === kind) &&
 						(!weak || (r.min !== null && r.min < 60))
 				)
-				.sort((a, b) => {
-					const va = value(a, heatSort.key),
-						vb = value(b, heatSort.key);
-					if (va === null && vb === null) return a.n.localeCompare(b.n);
-					if (va === null) return 1;
-					if (vb === null) return -1;
-					const c = typeof va === 'string' ? va.localeCompare(vb) : va - vb;
-					return (heatSort.dir === 'asc' ? c : -c) || a.n.localeCompare(b.n);
-				});
-			tbody.innerHTML = shown
-				.map(
-					(r) => `<tr class="row" tabindex="0" data-n="${esc(r.n)}" aria-expanded="${expanded.has(r.n)}">
-				<td class="name">${esc(r.n)}</td><td class="kind">${r.k === 'pattern' ? 'pattern' : 'css'}</td>
-				${r.vals.map((v) => (v.s === null ? `<td class="cell ${v.w}" title="${esc(v.h)}">${v.w === 'na' ? 'n/a' : '—'}</td>` : `<td class="cell" style="${shade(v.s)}" title="${esc(v.h)}">${f1(v.s)}</td>`)).join('')}
-				<td class="cell mean" style="${shade(r.mean)}">${r.mean === null ? '—' : f1(r.mean)}</td>
-			</tr>${expanded.has(r.n) ? detail(r) : ''}`
-				)
-				.join('');
+				.sort((a, b) => compare(a, b));
+			tbody.innerHTML = shown.map((r) => row(r)).join('');
 			tbody.querySelectorAll('tr.row').forEach((tr) => {
 				const toggle = () => {
 					const n = tr.dataset.n;
@@ -425,8 +522,9 @@ export function mount(document, window, localStorage, EMBEDDED) {
 					}
 				});
 			});
+			const direction = heatSort.dir === 'asc' ? 'ascending' : 'descending';
 			document.getElementById('heat-count').textContent =
-				`${shown.length} of ${rows.length} components shown, sorted by ${heatSort.key === 'n' ? 'name' : heatSort.key === 'k' ? 'kind' : heatSort.key === 'mean' ? 'mean score' : heatSort.key} ${heatSort.dir === 'asc' ? 'ascending' : 'descending'}. Cell values are the eval's per-component score in ${D.latest.label}; a documentation eval shows the documented share.`;
+				`${shown.length} of ${rows.length} components shown, sorted by ${sortLabel(heatSort.key)} ${direction}. Cell values are the eval's per-component score in ${D.latest.label}; a documentation eval shows the documented share.`;
 		}
 		[filterEl, kindEl, weakEl].forEach((el) => {
 			el.oninput = draw;
@@ -437,148 +535,185 @@ export function mount(document, window, localStorage, EMBEDDED) {
 			`${rows.length} components × ${ids.length} evals from ${D.latest.label}. ${weakest} components have at least one eval below 60.`;
 	}
 
+	// ---- findings
+
 	function chip(id, lookup) {
-		if (id === 'all') return `<span class="chip">all</span>`;
+		if (id === 'all') return '<span class="chip">all</span>';
 		const hit = lookup[id];
-		const score = hit ? hit.e.score : null;
-		return `<span class="chip ${score === null ? '' : cls(score)}" title="${esc(hit ? hit.e.name : '')}">${esc(id)}</span>`;
+		const band = hit ? cls(hit.e.score) : '';
+		const name = hit ? hit.e.name : '';
+		return `<span class="chip ${band}" title="${esc(name)}">${esc(id)}</span>`;
+	}
+	/** One finding: chips for the evals it moves, what, what is missing, what to do, extra markup. */
+	function item(lookup, ids, what, missing, todo, extra = '') {
+		const chips = ids.map((id) => chip(id, lookup)).join('');
+		return `<li class="item"><div class="chips">${chips}</div><div><div class="what">${what}</div>${block('missing', missing)}${block('do', todo)}${extra}</div></li>`;
+	}
+	function unmeasuredGroup(evals, lookup) {
+		const un = evals.filter((e) => e.unmeasured.n);
+		if (!un.length) return null;
+		const items = un.map((e) => {
+			const reasons = [...new Set(e.unmeasured.items.map((i) => i.r))].map((r) => esc(r));
+			const names = e.unmeasured.items.map((i) => `<li>${esc(i.n)}</li>`).join('');
+			const count = `${e.unmeasured.n} ${plural(e.unmeasured.n, 'component')}`;
+			const list = `<details><summary>${count}</summary><ul>${names}</ul></details>`;
+			return item(
+				lookup,
+				[e.id],
+				`${esc(e.name)}: ${count}`,
+				reasons.join('; '),
+				esc(e.unmeasuredHint || 'Give the component what the eval reads.'),
+				list
+			);
+		});
+		return {
+			cls: 'warn',
+			title: 'Not measured yet',
+			lead: 'Component / eval pairs the suite cannot score in the latest run; they count as absent, not as zero. Components an eval does not apply to are not listed.',
+			items,
+		};
+	}
+	/** One requirement row of the roadmap table. */
+	function requirementRow(r) {
+		const reason = r.reason ? ` <small>· ${esc(r.reason)}</small>` : '';
+		return `<li><span>${esc(r.name)}${reason}</span><span class="status-pill st-${esc(r.status)}">${esc(r.status)}</span></li>`;
+	}
+	/** The roadmap group of a suite that reports requirements; null when it reports none. */
+	function roadmapGroup(s, lookup) {
+		const reqs = s.extra && s.extra.requirements;
+		if (!reqs) return null;
+		const roadmapIds = s.evals.filter((e) => clsOf(e) === 'roadmap').map((e) => e.id);
+		const own = reqs.filter((r) => r.owner === 'osui' && r.status !== 'offered');
+		const flows = (s.extra.flows || []).filter((f) => f.kit !== 'complete');
+		const byGroup = {};
+		for (const r of own) {
+			if (!byGroup[r.group]) byGroup[r.group] = [];
+			byGroup[r.group].push(r);
+		}
+		const items = Object.entries(byGroup).map(([g, rs]) => {
+			const missing = rs.filter((r) => r.status === 'missing').length;
+			const partial = rs.filter((r) => r.status === 'partial').length;
+			const rows = rs
+				.sort((a, b) => a.status.localeCompare(b.status) || a.name.localeCompare(b.name))
+				.map((r) => requirementRow(r))
+				.join('');
+			return item(
+				lookup,
+				roadmapIds,
+				`${esc(g)}: ${missing} missing, ${partial} partial`,
+				'',
+				'',
+				`<ul class="req-groups">${rows}</ul>`
+			);
+		});
+		if (flows.length) {
+			const text = flows.map((f) => `${esc(f.flow)}: ${esc([...f.missing, ...f.partial].join(', '))}`).join('; ');
+			items.push(
+				item(
+					lookup,
+					roadmapIds,
+					'Flows not kit-complete',
+					text,
+					'A flow is kit-complete when every UI element the document lists for it is offered or delegated.'
+				)
+			);
+		}
+		const delegated = reqs.filter((r) => r.owner !== 'osui');
+		if (delegated.length) {
+			items.push(
+				item(
+					lookup,
+					roadmapIds,
+					`Delegated to other OutSystems products (${delegated.length})`,
+					delegated.map((r) => `${esc(r.name)} → ${esc(r.owner)}`).join('; '),
+					'Reported so the parity table matches the document; not scored here.'
+				)
+			);
+		}
+		const roadmapScore = roadmapIds.length ? f1(lookup[roadmapIds[0]].e.score) : '';
+		return {
+			cls: 'roadmap',
+			title: `Roadmap: ${s.name} requirements not offered yet`,
+			lead: `${roadmapIds.join(', ')} at ${roadmapScore}. New components or features from the requirements document; neither refactors nor breaking changes.`,
+			items,
+		};
+	}
+	function movableGroup(evals, lookup) {
+		const mov = evals.filter((e) => clsOf(e) === 'movable' && e.score < 99.95);
+		const items = mov.map((e) => {
+			const b = BACKLOG[e.id];
+			const beyond = b ? ` Beyond that: ${esc(b.id)}, ${esc(b.what)} (${esc(b.impact)}).` : '';
+			return item(
+				lookup,
+				[e.id],
+				`${esc(e.name)} at ${f1(e.score)}`,
+				esc(e.advice[0]),
+				esc(e.advice.slice(1).join(' ')) + beyond
+			);
+		});
+		return {
+			cls: 'accent',
+			title: 'Movable: next steps on this branch',
+			lead: 'Evals that can still move without a behaviour change. What the latest run found, and the step that moves it.',
+			items,
+		};
+	}
+	function structuralGroup(evals, lookup) {
+		const str = evals.filter((e) => clsOf(e) === 'structural');
+		if (!str.length) return null;
+		const items = str.map((e) => {
+			const b = BACKLOG[e.id];
+			const what = b
+				? `${esc(e.name)} at ${f1(e.score)} · ${esc(b.id)} ${esc(b.what)}`
+				: `${esc(e.name)} at ${f1(e.score)}`;
+			const impact = b ? `Impact: ${esc(b.impact)}.` : '';
+			return item(lookup, [e.id], what, esc(e.advice.join(' ')), impact);
+		});
+		return {
+			cls: 'bad',
+			title: 'Structural: waits on a breaking-change decision',
+			lead: 'Documented in REPORT.md §5.2 with illustrative code and behavioural impact; each needs an owner decision and its own PR.',
+			items,
+		};
+	}
+	function doneGroup(evals, lookup) {
+		const done = evals.filter((e) => clsOf(e) === 'movable' && e.score >= 99.95);
+		const doneLead = done.length ? `${done.map((e) => e.id).join(', ')} at 100. ` : '';
+		const items = APPLIED.map((a) => {
+			const chips = a.evals.map((id) => chip(id, lookup)).join('');
+			return `<li class="item"><div class="chips">${chips}</div><div><div class="what">${esc(a.what)}</div><div class="detail">${esc(a.detail)}</div><div class="do">${esc(a.do)}</div></div></li>`;
+		});
+		return {
+			cls: 'good',
+			title: 'Done on the branch, behaviour-preserving',
+			lead: `${doneLead}What was built, what it changed and how to keep it there; S-numbers refer to REPORT.md §5.1.`,
+			items,
+		};
+	}
+	function readOpenState() {
+		try {
+			return JSON.parse(localStorage.getItem('osui-evals-findings-open') || '{}');
+		} catch {
+			return {};
+		}
 	}
 	function renderFindings() {
 		const lookup = byId();
 		const evals = allEvals().map(({ e }) => e);
-		const item = (ids, what, missing, todo, extra = '') =>
-			`<li class="item"><div class="chips">${ids.map((id) => chip(id, lookup)).join('')}</div><div><div class="what">${what}</div>${missing ? `<div class="missing">${missing}</div>` : ''}${todo ? `<div class="do">${todo}</div>` : ''}${extra}</div></li>`;
-
-		const groups = [];
-		// 1. cannot measure
-		const un = evals.filter((e) => e.unmeasured.n);
-		if (un.length)
-			groups.push({
-				cls: 'warn',
-				title: 'Not measured yet',
-				lead: 'Component / eval pairs the suite cannot score in the latest run; they count as absent, not as zero. Components an eval does not apply to are not listed.',
-				items: un.map((e) => {
-					const reasons = [...new Set(e.unmeasured.items.map((i) => i.r))];
-					return item(
-						[e.id],
-						`${esc(e.name)}: ${e.unmeasured.n} component${e.unmeasured.n === 1 ? '' : 's'}`,
-						`${reasons.map(esc).join('; ')}`,
-						esc(e.unmeasuredHint || 'Give the component what the eval reads.'),
-						`<details><summary>${e.unmeasured.n} component${e.unmeasured.n === 1 ? '' : 's'}</summary><ul>${e.unmeasured.items.map((i) => `<li>${esc(i.n)}</li>`).join('')}</ul></details>`
-					);
-				}),
-			});
-		// 2. roadmap: requirements a suite reports as missing or partial
-		for (const s of D.suites) {
-			const reqs = s.extra && s.extra.requirements;
-			if (!reqs) continue;
-			const roadmapIds = s.evals.filter((e) => clsOf(e) === 'roadmap').map((e) => e.id);
-			const own = reqs.filter((r) => r.owner === 'osui' && r.status !== 'offered');
-			const flows = (s.extra.flows || []).filter((f) => f.kit !== 'complete');
-			const byGroup = {};
-			for (const r of own) (byGroup[r.group] ??= []).push(r);
-			const groupItems = Object.entries(byGroup).map(([g, rs]) =>
-				item(
-					roadmapIds,
-					`${esc(g)}: ${rs.filter((r) => r.status === 'missing').length} missing, ${rs.filter((r) => r.status === 'partial').length} partial`,
-					'',
-					'',
-					`<ul class="req-groups">${rs
-						.sort((a, b) => a.status.localeCompare(b.status) || a.name.localeCompare(b.name))
-						.map(
-							(r) =>
-								`<li><span>${esc(r.name)}${r.reason ? ` <small>· ${esc(r.reason)}</small>` : ''}</span><span class="status-pill st-${esc(r.status)}">${esc(r.status)}</span></li>`
-						)
-						.join('')}</ul>`
-				)
-			);
-			if (flows.length)
-				groupItems.push(
-					item(
-						roadmapIds,
-						'Flows not kit-complete',
-						flows.map((f) => `${esc(f.flow)}: ${esc([...f.missing, ...f.partial].join(', '))}`).join('; '),
-						'A flow is kit-complete when every UI element the document lists for it is offered or delegated.'
-					)
-				);
-			const delegated = reqs.filter((r) => r.owner !== 'osui');
-			if (delegated.length)
-				groupItems.push(
-					item(
-						roadmapIds,
-						`Delegated to other OutSystems products (${delegated.length})`,
-						delegated.map((r) => `${esc(r.name)} → ${esc(r.owner)}`).join('; '),
-						'Reported so the parity table matches the document; not scored here.'
-					)
-				);
-			const roadmapScore = roadmapIds.length ? f1(lookup[roadmapIds[0]].e.score) : '';
-			groups.push({
-				cls: 'roadmap',
-				title: `Roadmap: ${s.name} requirements not offered yet`,
-				lead: `${roadmapIds.join(', ')} at ${roadmapScore}. New components or features from the requirements document; neither refactors nor breaking changes.`,
-				items: groupItems,
-			});
-		}
-		// 3. movable next steps
-		const mov = evals.filter((e) => clsOf(e) === 'movable' && e.score < 99.95);
-		groups.push({
-			cls: 'accent',
-			title: 'Movable: next steps on this branch',
-			lead: 'Evals that can still move without a behaviour change. What the latest run found, and the step that moves it.',
-			items: mov.map((e) =>
-				item(
-					[e.id],
-					`${esc(e.name)} at ${f1(e.score)}`,
-					esc(e.advice[0]),
-					esc(e.advice.slice(1).join(' ')) +
-						(BACKLOG[e.id]
-							? ` Beyond that: ${esc(BACKLOG[e.id].id)}, ${esc(BACKLOG[e.id].what)} (${esc(BACKLOG[e.id].impact)}).`
-							: '')
-				)
-			),
-		});
-		// 4. structural
-		const str = evals.filter((e) => clsOf(e) === 'structural');
-		if (str.length)
-			groups.push({
-				cls: 'bad',
-				title: 'Structural: waits on a breaking-change decision',
-				lead: 'Documented in REPORT.md §5.2 with illustrative code and behavioural impact; each needs an owner decision and its own PR.',
-				items: str.map((e) => {
-					const b = BACKLOG[e.id];
-					return b
-						? item(
-								[e.id],
-								`${esc(e.name)} at ${f1(e.score)} · ${esc(b.id)} ${esc(b.what)}`,
-								esc(e.advice.join(' ')),
-								`Impact: ${esc(b.impact)}.`
-							)
-						: item([e.id], `${esc(e.name)} at ${f1(e.score)}`, esc(e.advice.join(' ')), '');
-				}),
-			});
-		// 5. complete movable evals + applied
-		const done = evals.filter((e) => clsOf(e) === 'movable' && e.score >= 99.95);
-		groups.push({
-			cls: 'good',
-			title: 'Done on the branch, behaviour-preserving',
-			lead: `${done.length ? `${done.map((e) => e.id).join(', ')} at 100. ` : ''}What was built, what it changed and how to keep it there; S-numbers refer to REPORT.md §5.1.`,
-			items: APPLIED.map(
-				(a) =>
-					`<li class="item"><div class="chips">${a.evals.map((id) => chip(id, lookup)).join('')}</div><div><div class="what">${esc(a.what)}</div><div class="detail">${esc(a.detail)}</div><div class="do">${esc(a.do)}</div></div></li>`
-			),
-		});
-
-		let openState = {};
-		try {
-			openState = JSON.parse(localStorage.getItem('osui-evals-findings-open') || '{}');
-		} catch {
-			openState = {};
-		}
+		const groups = [
+			unmeasuredGroup(evals, lookup),
+			...D.suites.map((s) => roadmapGroup(s, lookup)),
+			movableGroup(evals, lookup),
+			structuralGroup(evals, lookup),
+			doneGroup(evals, lookup),
+		].filter((g) => g !== null);
+		const openState = readOpenState();
 		document.getElementById('findings').innerHTML = groups
-			.map(
-				(g, i) =>
-					`<details class="group ${g.cls}" data-key="${esc(g.cls)}" ${(openState[g.cls] ?? i === 0) ? 'open' : ''}><summary><div class="top"><h3>${esc(g.title)} <span class="count">${g.items.length}</span></h3><p class="muted">${esc(g.lead)}</p></div></summary><ol>${g.items.join('')}</ol></details>`
-			)
+			.map((g, i) => {
+				const open = (openState[g.cls] ?? i === 0) ? 'open' : '';
+				const summary = `<summary><div class="top"><h3>${esc(g.title)} <span class="count">${g.items.length}</span></h3><p class="muted">${esc(g.lead)}</p></div></summary>`;
+				return `<details class="group ${g.cls}" data-key="${esc(g.cls)}" ${open}>${summary}<ol>${g.items.join('')}</ol></details>`;
+			})
 			.join('');
 		document.querySelectorAll('#findings details').forEach((d) =>
 			d.addEventListener('toggle', () => {
@@ -593,10 +728,10 @@ export function mount(document, window, localStorage, EMBEDDED) {
 	}
 
 	// ---- live data through the artifact database
-	const btn = document.getElementById('refresh'),
-		txt = document.getElementById('refresh-text'),
-		status = document.getElementById('status'),
-		badge = document.getElementById('source-badge');
+	const btn = document.getElementById('refresh');
+	const txt = document.getElementById('refresh-text');
+	const status = document.getElementById('status');
+	const badge = document.getElementById('source-badge');
 	let dbPromise = null;
 	function setStatus(text, kind) {
 		status.textContent = text;
@@ -609,13 +744,17 @@ export function mount(document, window, localStorage, EMBEDDED) {
 		txt.textContent = on ? 'Refreshing' : 'Refresh';
 		btn.title = on ? 'Refreshing' : 'Refresh';
 	}
-	async function getDb() {
-		if (!dbPromise)
+	function getDb() {
+		if (!dbPromise) {
 			dbPromise =
 				window.claude && typeof window.claude.use === 'function'
 					? window.claude.use('db').catch(() => null)
 					: Promise.resolve(null);
+		}
 		return dbPromise;
+	}
+	function isDataSet(data) {
+		return Boolean(data) && data.v === DATA_VERSION && Array.isArray(data.history) && Array.isArray(data.suites);
 	}
 	async function refresh(manual) {
 		setLoading(true);
@@ -638,7 +777,7 @@ export function mount(document, window, localStorage, EMBEDDED) {
 				return;
 			}
 			const data = snap.data();
-			if (!data || data.v !== DATA_VERSION || !Array.isArray(data.history) || !Array.isArray(data.suites)) {
+			if (!isDataSet(data)) {
 				setStatus(
 					`The published data set is not version ${DATA_VERSION}; showing the embedded snapshot.`,
 					'warn'
@@ -652,22 +791,24 @@ export function mount(document, window, localStorage, EMBEDDED) {
 				render();
 				badge.textContent = 'live';
 				badge.className = 'badge live';
+				const verb = newer ? 'Updated' : 'Up to date';
+				const checked = new Date().toLocaleTimeString(undefined, { timeStyle: 'short' });
 				setStatus(
-					`${newer ? 'Updated' : 'Up to date'}: ${data.latest.label} @ ${data.latest.sha}, generated ${when(data.generated)}. Checked ${new Date().toLocaleTimeString(undefined, { timeStyle: 'short' })}.`,
+					`${verb}: ${data.latest.label} @ ${data.latest.sha}, generated ${when(data.generated)}. Checked ${checked}.`,
 					'live'
 				);
 			}
 		} catch (e) {
-			setStatus(
-				`Could not read the dashboard database (${e && e.code ? e.code : 'error'}); showing the last data set.`,
-				'warn'
-			);
+			const code = e && e.code ? e.code : 'error';
+			setStatus(`Could not read the dashboard database (${code}); showing the last data set.`, 'warn');
 		} finally {
 			setLoading(false);
 		}
 	}
-	btn.addEventListener('click', () => refresh(true));
+	btn.addEventListener('click', () => {
+		void refresh(true);
+	});
 
 	render();
-	refresh(false);
+	void refresh(false);
 }

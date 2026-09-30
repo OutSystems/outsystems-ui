@@ -79,7 +79,7 @@ button.icon:focus-visible { outline: 2px solid var(--tone-0); outline-offset: 2p
 button.icon.loading #refresh-icon { animation: spin 0.9s linear infinite; color: var(--ink-3); }
 @keyframes spin { to { transform: rotate(360deg); } }
 @media (prefers-reduced-motion: reduce) { button.icon.loading #refresh-icon { animation: none; opacity: 0.5; } }
-.status { font-size: 0.78rem; color: var(--ink-3); text-align: right; max-width: 52ch; }
+.status { display: block; font-size: 0.78rem; color: var(--ink-3); text-align: right; max-width: 52ch; }
 .status.live { color: var(--good); }
 .status.warn { color: var(--warn); }
 .badge { display: inline-block; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; padding: 1px 7px; border-radius: 999px; background: var(--surface-2); color: var(--ink-2); vertical-align: middle; }
@@ -91,16 +91,10 @@ button.icon.loading #refresh-icon { animation: spin 0.9s linear infinite; color:
 .tile.index { border-color: var(--tone); background: var(--tone-soft); }
 .tile.index .value { color: var(--tone); }
 .suite-tag { display: inline-block; font-size: 0.7rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; padding: 1px 6px; border-radius: 3px; background: var(--tone-soft, var(--surface-2)); color: var(--tone, var(--ink-2)); vertical-align: middle; }
-svg .line { stroke: var(--tone, var(--tone-0)); }
-svg .dot { stroke: var(--tone, var(--tone-0)); }
 svg .dot.last { fill: var(--tone, var(--tone-0)); }
-svg .area { fill: var(--tone, var(--tone-0)); }
-.multiple .spark { stroke: var(--tone, var(--tone-0)); }
-.multiple .sparea { fill: var(--tone, var(--tone-0)); }
 .multiple .end { fill: var(--tone, var(--tone-0)); }
 .chart-legend { display: flex; gap: 16px; font-size: 0.8rem; color: var(--ink-2); flex-wrap: wrap; }
 .chart-legend i { display: inline-block; width: 18px; height: 3px; vertical-align: middle; margin-right: 6px; border-radius: 2px; background: var(--tone, var(--tone-0)); }
-.heat th button { color: var(--tone, inherit); }
 .status-pill { display: inline-block; padding: 0 7px; border-radius: 999px; font-size: 0.74rem; font-weight: 500; }
 .status-pill.st-offered { background: var(--good-soft); color: var(--good); }
 .status-pill.st-partial { background: var(--warn-soft); color: var(--warn); }
@@ -126,9 +120,9 @@ section > .head p { max-width: 80ch; }
 svg.trend { width: 100%; height: auto; display: block; }
 svg text { font-family: var(--font-body); fill: var(--ink-2); font-size: 12px; }
 svg .grid { stroke: var(--line); stroke-width: 1; }
-svg .area { opacity: 0.12; }
-svg .line { fill: none; stroke-width: 2; stroke-linejoin: round; }
-svg .dot { fill: var(--surface); stroke-width: 2; }
+svg .area { fill: var(--tone, var(--tone-0)); opacity: 0.12; }
+svg .line { fill: none; stroke: var(--tone, var(--tone-0)); stroke-width: 2; stroke-linejoin: round; }
+svg .dot { fill: var(--surface); stroke: var(--tone, var(--tone-0)); stroke-width: 2; }
 svg .label { fill: var(--ink); font-weight: 500; font-variant-numeric: tabular-nums; }
 svg .hit { fill: transparent; }
 svg .cross { stroke: var(--ink-3); stroke-dasharray: 3 3; }
@@ -140,9 +134,9 @@ svg .cross { stroke: var(--ink-3); stroke-dasharray: 3 3; }
 .multiple .t b { font-weight: 500; }
 .multiple .t .mono { color: var(--ink-3); }
 .multiple svg { width: 100%; height: 56px; display: block; }
-.multiple .spark { fill: none; stroke-width: 1.8; }
+.multiple .spark { fill: none; stroke: var(--tone, var(--tone-0)); stroke-width: 1.8; }
 .multiple .spark.flat { stroke: var(--ink-3); }
-.multiple .sparea { opacity: 0.1; }
+.multiple .sparea { fill: var(--tone, var(--tone-0)); opacity: 0.1; }
 .multiple .end.flat { fill: var(--ink-3); }
 .multiple .range { display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--ink-2); font-variant-numeric: tabular-nums; }
 
@@ -237,7 +231,7 @@ footer { font-size: 0.82rem; color: var(--ink-3); border-top: 1px solid var(--li
 				<span class="badge" id="source-badge">embedded snapshot</span>
 				<button class="icon" id="refresh" type="button" aria-label="Refresh from the newest published data set" title="Refresh"><span id="refresh-icon" aria-hidden="true">↻</span><span id="refresh-text" class="sr">Refresh</span></button>
 			</div>
-			<p class="status" id="status" role="status" aria-live="polite">Loads the newest data set published after an eval run.</p>
+			<output class="status" id="status" aria-live="polite">Loads the newest data set published after an eval run.</output>
 		</div>
 	</header>
 
@@ -286,7 +280,7 @@ footer { font-size: 0.82rem; color: var(--ink-3); border-top: 1px solid var(--li
 			</div>
 			<div class="legend" id="heat-legend"></div>
 			<div class="table-wrap">
-				<table class="heat" id="heat"><thead></thead><tbody></tbody></table>
+				<table class="heat" id="heat"><thead><tr><th scope="col">Component</th><th scope="col">Kind</th><th scope="col" class="num">Mean</th></tr></thead><tbody></tbody></table>
 			</div>
 			<p class="faint" id="heat-count"></p>
 		</div>
@@ -308,4 +302,4 @@ footer { font-size: 0.82rem; color: var(--ink-3); border-top: 1px solid var(--li
 
 <div class="tip" id="tip" hidden></div>
 
-<script>__DASHBOARD_SCRIPT__</script>
+<script>/*__DASHBOARD_SCRIPT__*/</script>

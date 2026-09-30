@@ -61,13 +61,13 @@ export function isDevEntry(e) {
  */
 export function pickBaseline(history, label) {
 	if (history.length === 0) throw new Error('history is empty — run the suite with --label first');
-	const entries = history.map(normalizeHistoryEntry);
+	const entries = history.map((e) => normalizeHistoryEntry(e));
 	if (label) {
 		const hit = entries.find((h) => h.label === label);
 		if (!hit) throw new Error(`no history entry labelled "${label}"`);
 		return hit;
 	}
-	const dev = byDate(entries.filter(isDevEntry));
+	const dev = byDate(entries.filter((e) => isDevEntry(e)));
 	if (dev.length) return dev[dev.length - 1];
 	return byDate(entries)[entries.length - 1];
 }
@@ -81,11 +81,11 @@ export function pickBaseline(history, label) {
  * @returns {HistoryEntry}
  */
 export function pickOrigin(history, suiteId, label) {
-	const eligible = history.map(normalizeHistoryEntry).filter((h) => h.suites[suiteId]);
+	const eligible = history.map((e) => normalizeHistoryEntry(e)).filter((h) => h.suites[suiteId]);
 	if (eligible.length === 0) throw new Error(`history has no entry to compare against for suite "${suiteId}"`);
 	const labelled = label ? eligible.find((h) => h.label === label) : undefined;
 	if (labelled) return labelled;
-	const dev = byDate(eligible.filter(isDevEntry));
+	const dev = byDate(eligible.filter((e) => isDevEntry(e)));
 	if (dev.length) return dev[dev.length - 1];
 	return byDate(eligible)[0];
 }
@@ -125,9 +125,10 @@ export function evaluateGate(baseline, run, { maxDrop = 1, maxEvalDrop = Number.
 	const head = `Index ${f1(baseline.index)} → ${f1(run.index)} (${signed(delta)}; baseline "${baseline.label}" @ ${baseline.sha ?? 'unknown'}, tolerance −${maxDrop})`;
 	const regressedList = regressed.map((x) => `${x.id} ${f1(x.from)} → ${f1(x.to)}`).join(', ');
 	const detail = regressed.length ? `\nregressed: ${regressedList}` : '';
-	const evalDetail = overEval.length
-		? `\n${overEval.map((x) => `${x.id} ${f1(x.from)} → ${f1(x.to)} dropped more than ${maxEvalDrop}`).join('; ')}`
-		: '';
+	const overList = overEval
+		.map((x) => `${x.id} ${f1(x.from)} → ${f1(x.to)} dropped more than ${maxEvalDrop}`)
+		.join('; ');
+	const evalDetail = overEval.length ? `\n${overList}` : '';
 	return { ok, delta, regressed, overEval, message: `${ok ? 'PASS' : 'FAIL'} — ${head}${detail}${evalDetail}` };
 }
 
@@ -276,8 +277,11 @@ export function gateSuite(suite, history, run, options = {}) {
 	return { verdict, report };
 }
 
-function main() {
-	const argv = process.argv.slice(2);
+/**
+ * @param {string[]} argv
+ * @returns {{ baseline?: string, reportBaseline?: string, maxDrop?: number, maxEvalDrop?: number, report?: string, perSuite: Record<string, number> }}
+ */
+export function parseArgs(argv) {
 	/** @type {{ baseline?: string, reportBaseline?: string, maxDrop?: number, maxEvalDrop?: number, report?: string, perSuite: Record<string, number> }} */
 	const args = { perSuite: {} };
 	for (let i = 0; i < argv.length; i++) {
@@ -290,6 +294,11 @@ function main() {
 		else if (a.startsWith('--max-drop-')) args.perSuite[a.slice('--max-drop-'.length)] = Number(argv[++i]);
 		else throw new Error(`Unknown argument: ${a}`);
 	}
+	return args;
+}
+
+function main() {
+	const args = parseArgs(process.argv.slice(2));
 	const history = JSON.parse(fs.readFileSync(insideDir(evalsDir, 'results', 'history.json'), 'utf8'));
 	const json = execFileSync(
 		process.execPath,

@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
+import { createRequire } from 'node:module';
 import path from 'node:path';
 import { test } from 'node:test';
 import { fileURLToPath } from 'node:url';
@@ -7,6 +8,7 @@ import { fileURLToPath } from 'node:url';
 import { buildDashboardData, cellFor, DASHBOARD_FILE } from '../tools/dashboard-data.mjs';
 
 const evalsDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const require = createRequire(import.meta.url);
 
 test('cellFor turns each metric row into a score, a state and a concrete hint through the metric itself', () => {
 	const e02 = cellFor('E02', {
@@ -108,4 +110,18 @@ test('the committed dashboard.json is fresh', () => {
 	const built = buildDashboardData(evalsDir);
 	built.generated = fresh.generated; // the generation date is the only field allowed to differ
 	assert.deepEqual(fresh, built, 'run `npm run evals:dashboard` and commit results/dashboard.json');
+});
+
+test('buildDashboardData falls back to results/latest.json when the latest run file is absent', () => {
+	const os = require('node:os');
+	const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'osui-dash-'));
+	fs.mkdirSync(path.join(tmp, 'results'));
+	const history = JSON.parse(fs.readFileSync(path.join(evalsDir, 'results', 'history.json'), 'utf8'));
+	const last = [...history].sort((a, b) => a.date.localeCompare(b.date)).at(-1);
+	fs.writeFileSync(path.join(tmp, 'results', 'history.json'), JSON.stringify(history));
+	fs.copyFileSync(path.join(evalsDir, 'results', `${last.label}.json`), path.join(tmp, 'results', 'latest.json'));
+	const d = buildDashboardData(tmp);
+	assert.equal(d.latest.label, last.label);
+	assert.equal(d.suites.length, 2);
+	fs.rmSync(tmp, { recursive: true, force: true });
 });

@@ -113,7 +113,7 @@ function suiteSections(runs, evals, h) {
  * @returns {string} Markdown
  */
 export function renderHistory(history, suites) {
-	const entries = history.map(normalizeHistoryEntry).sort((a, b) => a.date.localeCompare(b.date));
+	const entries = history.map((e) => normalizeHistoryEntry(e)).sort((a, b) => a.date.localeCompare(b.date));
 	const lines = [
 		'# Eval indices — history',
 		'',
@@ -134,10 +134,11 @@ export function renderHistory(history, suites) {
 		if (runs.length === 0) continue;
 		const ids = suite.metrics.map((m) => m.id);
 		const later = runs[0].label !== entries[0].label;
+		const since = later ? ` Measured from \`${runs[0].label}\` on; earlier runs have no value.` : '';
 		lines.push(
 			`## ${suite.indexName}`,
 			'',
-			`The ${suite.metrics.length} evals ${ids[0]}–${ids[ids.length - 1]}: ${suite.describe}.${later ? ` Measured from \`${runs[0].label}\` on; earlier runs have no value.` : ''}`,
+			`The ${suite.metrics.length} evals ${ids[0]}–${ids[ids.length - 1]}: ${suite.describe}.${since}`,
 			'',
 			...suiteSections(runs, suite.metrics, '###')
 		);

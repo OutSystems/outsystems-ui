@@ -74,12 +74,13 @@ export default {
 			const values = present.map((c) => c.facets[facet]).filter((v) => typeof v === 'number');
 			facetMeans[facet] = values.length ? round1(/** @type {number} */ (mean(values))) : null;
 		}
+		const facetList = Object.entries(facetMeans)
+			.map(([k, v]) => `${k} ${v ?? '–'}`)
+			.join(', ');
 		return {
 			score: scoreEval(raw),
 			summary: manifest
-				? `${present.length}/${patterns.length} patterns in manifest; facet means ${Object.entries(facetMeans)
-						.map(([k, v]) => `${k} ${v ?? '–'}`)
-						.join(', ')}`
+				? `${present.length}/${patterns.length} patterns in manifest; facet means ${facetList}`
 				: 'no docs-ai/osui.components.json',
 			raw: { manifestPresent: raw.manifestPresent, entries: raw.entries, patterns: raw.patterns, facetMeans },
 			perComponent: [...perComponent].sort((a, b) => a.score - b.score),
