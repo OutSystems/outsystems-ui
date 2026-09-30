@@ -67,7 +67,16 @@ of any label (`--baseline <label>` to choose). In CI the history comes from the 
 
 The `--report` tables compare with the origin (the newest `dev` run, else the oldest run carrying the suite:
 the state before the branch's work; `--report-baseline <label>` to choose) and name the baseline the verdict
-used. The report ends with the component registry section when the tree and `components.json` disagree.
+used. With `--changed <file>` (one repository path per line, as `git diff --name-only` prints) the report adds
+a **components touched** section: the patterns and CSS components those files belong to, each heatmap cell
+before → after (the "before" run is `--base-run <run.json>`, in CI the results branch's `latest.json`), and
+the hints of the cells that dropped or sit below 80. Locally:
+
+```bash
+git diff --name-only origin/dev > /tmp/changed.txt && npm run evals:gate -- --changed /tmp/changed.txt
+```
+
+The report ends with the component registry section when the tree and `components.json` disagree.
 Tolerances live per suite in `suites.mjs`; `--max-drop`, `--max-drop-<suite>` and `--max-eval-drop` override
 them for one run.
 

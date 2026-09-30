@@ -4,7 +4,7 @@
  * Regression gate for every eval suite.
  *
  *   node evals/tools/gate.mjs [--baseline <label>] [--report-baseline <label>] [--max-drop 1] [--max-eval-drop 3]
- *                             [--max-drop-<suite> n] [--report <file.md>]
+ *                             [--max-drop-<suite> n] [--report <file.md>] [--changed <files.txt>] [--base-run <run.json>]
  *
  * Runs every suite without writing results and, per suite, compares the run with the baseline:
  *   - the index may not drop by more than `--max-drop` points (default: the suite's `maxDrop`);
@@ -15,7 +15,10 @@
  * label (`--baseline <label>` to choose). `--report` appends a Markdown before → after table per suite to a
  * file (for a PR comment or `$GITHUB_STEP_SUMMARY`); without dev runs its table compares with the oldest
  * recorded run, the state before the branch's work (`--report-baseline <label>` to choose), while the
- * verdict keeps the newest run. Exit code 1 when any suite fails. Usable locally and in CI alike.
+ * verdict keeps the newest run. `--changed` (one repository path per line, as `git diff --name-only` prints)
+ * adds the components those files belong to, each heatmap cell before → after; the "before" run is
+ * `--base-run` (the results branch's latest.json in CI), else the baseline's own run file when the checkout has
+ * it. Exit code 1 when any suite fails. Usable locally and in CI alike.
  */
 import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
@@ -28,6 +31,7 @@ import { loadRegistry } from '../lib/registry.mjs';
 import { normalizeHistoryEntry, normalizeRun, unmeasuredCounts } from '../lib/results.mjs';
 import { SUITES } from '../suites.mjs';
 import { diagnose, renderDoctor } from './doctor.mjs';
+import { componentsForFiles, formatTouchedReport, readChangedFiles } from './touched.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const evalsDir = path.join(here, '..');
@@ -279,10 +283,10 @@ export function gateSuite(suite, history, run, options = {}) {
 
 /**
  * @param {string[]} argv
- * @returns {{ baseline?: string, reportBaseline?: string, maxDrop?: number, maxEvalDrop?: number, report?: string, perSuite: Record<string, number> }}
+ * @returns {{ baseline?: string, reportBaseline?: string, maxDrop?: number, maxEvalDrop?: number, report?: string, changed?: string, baseRun?: string, perSuite: Record<string, number> }}
  */
 export function parseArgs(argv) {
-	/** @type {{ baseline?: string, reportBaseline?: string, maxDrop?: number, maxEvalDrop?: number, report?: string, perSuite: Record<string, number> }} */
+	/** @type {{ baseline?: string, reportBaseline?: string, maxDrop?: number, maxEvalDrop?: number, report?: string, changed?: string, baseRun?: string, perSuite: Record<string, number> }} */
 	const args = { perSuite: {} };
 	for (let i = 0; i < argv.length; i++) {
 		const a = argv[i];
@@ -291,10 +295,28 @@ export function parseArgs(argv) {
 		else if (a === '--max-drop') args.maxDrop = Number(argv[++i]);
 		else if (a === '--max-eval-drop') args.maxEvalDrop = Number(argv[++i]);
 		else if (a === '--report') args.report = argv[++i];
+		else if (a === '--changed') args.changed = argv[++i];
+		else if (a === '--base-run') args.baseRun = argv[++i];
 		else if (a.startsWith('--max-drop-')) args.perSuite[a.slice('--max-drop-'.length)] = Number(argv[++i]);
 		else throw new Error(`Unknown argument: ${a}`);
 	}
 	return args;
+}
+
+/**
+ * The run the touched-components section compares with: the given file, else the baseline's own run file
+ * when this checkout has it, else the results directory's latest.json, else null.
+ * @param {any[]} history
+ * @param {string} [baselineLabel]
+ * @param {string} [file]
+ */
+function baseRun(history, baselineLabel, file) {
+	const candidates = [];
+	if (file) candidates.push(path.resolve(file));
+	candidates.push(insideDir(evalsDir, 'results', `${pickBaseline(history, baselineLabel).label}.json`));
+	candidates.push(insideDir(evalsDir, 'results', 'latest.json'));
+	const hit = candidates.find((f) => fs.existsSync(f));
+	return hit ? normalizeRun(JSON.parse(fs.readFileSync(hit, 'utf8'))) : null;
 }
 
 function main() {
@@ -325,9 +347,19 @@ function main() {
 		if (verdict) verdicts.push(verdict);
 		reports.push(report);
 	}
+	const ctx = createContext(path.join(evalsDir, '..'));
+	// the components the change touches, each cell before → after (informational)
+	if (args.changed) {
+		const files = readChangedFiles(fs.readFileSync(path.resolve(args.changed), 'utf8'));
+		const touched = componentsForFiles(ctx.inventory, ctx.root, files);
+		const before = baseRun(history, args.baseline, args.baseRun);
+		const heatmapIds = SUITES.flatMap((s) => s.metrics.filter((m) => m.present?.heatmap).map((m) => m.id));
+		const section = formatTouchedReport(touched, before, run, heatmapIds);
+		if (section) reports.push(section);
+	}
 	// the component registry section: what a new or renamed component still needs (informational; the
 	// registry test is what fails the job)
-	const doctor = renderDoctor(diagnose(createContext(path.join(evalsDir, '..')), loadRegistry()));
+	const doctor = renderDoctor(diagnose(ctx, loadRegistry()));
 	if (doctor) reports.push(doctor);
 	if (args.report) {
 		// appended, so it can target $GITHUB_STEP_SUMMARY as well as a fresh file

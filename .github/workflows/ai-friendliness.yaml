@@ -82,6 +82,21 @@ jobs:
                     echo "History: evals/results/history.json (no $RESULTS_BRANCH branch yet)."
                   fi
 
+            # The files the pull request changes (the checkout is the merge with the base, so a two-dot diff
+            # against the base is exactly the PR) and the base branch's newest run, for the touched-components
+            # section of the report.
+            - name: 🧩 Changed files and the base branch's newest run
+              if: github.event_name == 'pull_request'
+              env:
+                  BASE_REF: ${{ github.base_ref }}
+              run: |
+                  git fetch --quiet --depth=1 origin "$BASE_REF"
+                  git diff --name-only "origin/$BASE_REF" HEAD > "$RUNNER_TEMP/changed-files.txt"
+                  echo "$(wc -l < "$RUNNER_TEMP/changed-files.txt") changed files"
+                  if git fetch --quiet origin "$RESULTS_BRANCH" 2>/dev/null; then
+                    git show "origin/$RESULTS_BRANCH:latest.json" > "$RUNNER_TEMP/base-run.json"
+                  fi
+
             # ---- pull requests and dispatches: the gate and the freshness check. Both keep going on
             # failure so the report below is always posted; the last step turns their outcomes into the
             # job result.
@@ -92,7 +107,10 @@ jobs:
               env:
                   MAX_DROP: ${{ inputs.max-drop || '1' }}
               run: |
-                  node evals/tools/gate.mjs --max-drop "$MAX_DROP" --report gate-report.md
+                  args=(--max-drop "$MAX_DROP" --report gate-report.md)
+                  [[ -f "$RUNNER_TEMP/changed-files.txt" ]] && args+=(--changed "$RUNNER_TEMP/changed-files.txt")
+                  [[ -f "$RUNNER_TEMP/base-run.json" ]] && args+=(--base-run "$RUNNER_TEMP/base-run.json")
+                  node evals/tools/gate.mjs "${args[@]}"
                   cat gate-report.md >> "$GITHUB_STEP_SUMMARY"
 
             - name: 📄 docs-ai/ must be fresh

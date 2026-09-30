@@ -162,7 +162,7 @@ Indices unchanged (AI-Friendliness 88.2, Enterprise Readiness 67.9); E07 measure
 - [x] Every push to `dev` records `dev-<sha>` and publishes history.json, HISTORY.md, dashboard.json, latest.json and the last 20 run files to the orphan `evals-results` branch with git plumbing; nothing is committed to `dev`. The gate job fetches that history as its baseline when the branch exists, so a PR is judged against its base branch.
 - [x] Stale generated files fail the PR with instructions; `npm run evals:fix` regenerates docs-ai/, the pattern types, HISTORY.md, dashboard.json and the registry entries locally. No bot commits on PR branches.
 - [x] The dashboard stays a Claude artifact, refreshed from `results/dashboard.html` and `dashboard.json` after a run.
-- [ ] PR-scoped section (components touched by the PR with their cells before → after): possible now that `latest.json` lives on the results branch; not started.
+- [x] PR-scoped section: `evals/tools/touched.mjs` maps the changed files (API, contract, typing and SCSS files, story, pattern and provider directories) to components; the gate (`--changed`, `--base-run`) appends each touched component with its heatmap cells before → after and the hints of cells that dropped or sit below 80; the workflow diffs the PR against its base and takes `latest.json` from the results branch.
 - [ ] The first push to `dev` after the merge creates the branch; until then the gate compares with the committed history.
 
 ### Task 12: Report + ADR

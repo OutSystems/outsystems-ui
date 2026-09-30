@@ -115,7 +115,7 @@ const baseName = (name) => name.replace(/ \(.*\)$/, '');
  * @param {string} kind component kind
  * @returns {Record<string, Cell>}
  */
-function componentCells(results, name, kind) {
+export function componentCells(results, name, kind) {
 	/** @type {Record<string, Cell>} */
 	const cells = {};
 	const isMine = (/** @type {{ name: string }} */ u) => u.name === name || u.name.startsWith(`${name} (`);
