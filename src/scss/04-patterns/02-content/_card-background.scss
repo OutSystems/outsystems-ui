@@ -9,7 +9,6 @@
 ///
 .card-background {
 	// ─── Component CSS API ─────────────────────────────────────────────
-	--osui-card-background-color: transparent;
 	--osui-card-background-color-rgb: 0, 0, 0;
 	--osui-card-background-border-color: #{variables.$token-border-subtle};
 	--osui-card-background-border-width: #{variables.$token-border-size-025};
