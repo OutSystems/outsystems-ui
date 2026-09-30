@@ -10,7 +10,8 @@
  * `criterion`, `formula`, `movable`, optional `cls` (one of CLASSES), `compute(ctx)`, and `present`:
  *   - `scope`        what a per-component cell means and why some components have none
  *   - `heatmap`      true when `perComponent` rows are components (a dashboard column)
- *   - `appliesTo`    'pattern' | 'css' | 'both' — components the eval can measure at all
+ *   - `appliesTo`    the tiers the eval measures (lib/tiers.mjs: pattern, component, layout, utility); a
+ *                    component outside them gets a not-applicable cell that names its tier
  *   - `cell(row)`    optional: `{ s, h }` score and hint for one measured row
  *   - `advice(m)`    optional: eval-level next steps from the latest result
  *   - `extra(m)`     optional: suite-level data the dashboard shows (R01's requirement table)
@@ -19,6 +20,7 @@
  */
 import { metrics as aiMetrics } from './ai-friendliness/metrics/index.mjs';
 import { metrics as enterpriseMetrics } from './enterprise/metrics/index.mjs';
+import { metrics as utilityMetrics } from './utilities/metrics/index.mjs';
 
 /** Movability classes: what kind of change moves an eval. */
 export const CLASSES = ['movable', 'structural', 'roadmap'];
@@ -59,6 +61,17 @@ export const SUITES = [
 		maxDrop: 1,
 		maxEvalDrop: 3,
 		tone: 1,
+	},
+	{
+		id: 'utilities',
+		name: 'Utilities',
+		indexName: 'Utilities Index',
+		idPrefix: 'U',
+		describe: 'how predictable and documented the utility classes are for an agent composing styles from them',
+		metrics: utilityMetrics,
+		maxDrop: 1,
+		maxEvalDrop: 3,
+		tone: 2,
 	},
 ];
 

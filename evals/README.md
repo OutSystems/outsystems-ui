@@ -7,16 +7,24 @@ answers one question with its own index (an unweighted mean of its evals, 0–10
 | ------------ | ----------------------------------------------- | ------------------------------------ | ---------------------------------------------------------------------------- |
 | `ai`         | [`ai-friendliness/`](ai-friendliness/README.md) | AI-Friendliness Index (E01–E10)      | how legible the library is to coding agents                                  |
 | `enterprise` | [`enterprise/`](enterprise/README.md)           | Enterprise Readiness Index (R01–R06) | how far the token theme and the patterns meet the enterprise UI requirements |
+| `utilities`  | [`utilities/`](utilities/README.md)             | Utilities Index (U01–U06)            | how predictable and documented the utility classes are for an agent          |
 
 Everything else in this directory is shared: the runner, the libraries, the tools, the results and the
 component registry.
+
+Components belong to one of four **tiers** (`lib/tiers.mjs`): `pattern` (TypeScript + SCSS), `component`
+(CSS-only, with an anatomy and a story), `layout` (host-styled partials of the app templates) and `utility`
+(helper classes and the `05-useful` families). A metric lists the tiers it measures in `present.appliesTo`;
+a component outside them gets a not-applicable cell that names its tier. Besides its index, every suite
+reports an index per tier (the same evals scored over the components of one tier), so a helper class cannot
+move the pattern figure. The AI and enterprise suites leave utility classes to the utilities suite.
 
 ```
 evals/
   run.mjs              CLI: run every suite (or one), write results, print tables, compare labels
   suites.mjs           the suite registry: id, index name, eval prefix, metrics, gate tolerances, dashboard tone
-  components.json      the component registry: one classified entry per pattern and CSS-only component
-  lib/                 inventory (discovery) · registry · context · ts · scss · tokens · markup · manifest · expectations · score · results · present · paths
+  components.json      the component registry: one classified entry per pattern, CSS-only component, layout partial and utility family
+  lib/                 inventory (discovery) · registry · tiers · utilities · context · ts · scss · tokens · markup · manifest · expectations · score · results · present · paths
   tools/               gate · report (HISTORY.md) · dashboard-data (dashboard.json) · dashboard-page · doctor
   dashboard/           index.html, the dashboard page template
   results/             history.json · HISTORY.md · dashboard.json · <label>.json per run
@@ -55,8 +63,8 @@ recording step on `dev` follows the same rule, so an infrastructure merge publis
   components it could not measure (`unmeasured`, with the reason) and the components it does not apply to
   (`notApplicable`, with the reason and a hint). Unmeasured and not-applicable components do not count in
   the score: an eval averages what it measured.
-- `results/history.json`: one entry per label: date, commit, branch, and per suite the scores, the index
-  and the unmeasured count per eval.
+- `results/history.json`: one entry per label: date, commit, branch, and per suite the scores, the index,
+  the unmeasured count per eval and, from `loop-13` on, the scores and index per tier (`tiers`).
 - `results/HISTORY.md` and `results/dashboard.json`: rendered from the two above; tests assert both are fresh.
 
 ## The gate
@@ -115,7 +123,7 @@ not push fixes. Run `npm run evals:fix` locally: it regenerates `docs-ai/`, the 
     	present: {
     		scope: '…', // what a per-component cell means and why some components have none
     		heatmap: true, // perComponent rows are components → a dashboard column
-    		appliesTo: 'both', // 'pattern' | 'css' | 'both'
+    		appliesTo: ['pattern', 'component', 'layout'], // the tiers it measures (lib/tiers.mjs)
     		unmeasuredHint: '…', // what gives an unmeasured component what the eval reads
     		cell(row) {
     			return { s: row.score, h: '…' };
@@ -150,18 +158,22 @@ not push fixes. Run `npm run evals:fix` locally: it regenerates `docs-ai/`, the 
 
 The inventory (`lib/inventory.mjs`) discovers components from the tree: a `*API.ts` file is a pattern, its
 SCSS comes from the gulp spec, its story is matched by name; a partial under `src/scss/02-layout`,
-`03-widgets` or `04-patterns` is a CSS-only component. What a component _is_ comes from `components.json`:
+`03-widgets`, `04-patterns` or `05-useful` is a CSS component whose directory gives its default tier
+(`02-layout` → layout, `05-useful` and `04-patterns/06-utilities` → utility, else component). Two partials
+sharing a file name keep one name each (`section`, `layout-section`). What a component _is_ comes from
+`components.json`:
 
-| Field                              | Applies to | Meaning                                                                                                                                                                                                      |
-| ---------------------------------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `kind`                             | all        | `pattern` or `css`; must match discovery                                                                                                                                                                     |
-| `roles`                            | patterns   | `provider` (behaviour in a provider library), `overlay` (opens a layer: Escape, focus), `composite` (arrow keys), `feedback` (announces status), `non-interactive`, `no-dom` (attaches to existing elements) |
-| `family`                           | patterns   | patterns implementing one keyboard model together share the parent's name (Tabs, Accordion, Wizard, SectionIndex)                                                                                            |
-| `host` `{ host, reason }`          | css        | styles markup something else emits (app template blocks, common screens, the runtime): no markup contract of its own                                                                                         |
-| `story`                            | css        | normalised story name when it differs from the component name (`btn` → `button`)                                                                                                                             |
-| `interactive`                      | css        | operated by the user (patterns are interactive unless `non-interactive`)                                                                                                                                     |
-| `loading`, `validating`, `density` | all        | has a loading state, an invalid state, or is expected to offer a density axis                                                                                                                                |
-| `derived`                          | all        | appended by the doctor from code signals; review, adjust and remove the flag                                                                                                                                 |
+| Field                              | Applies to | Meaning                                                                                                                                                                                                                       |
+| ---------------------------------- | ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `kind`                             | all        | the tier: `pattern`, `component`, `layout` or `utility` (`css` still reads as `component`); a pattern cannot be registered as anything else, a CSS component may override its directory tier (`animate`, `columns` → utility) |
+| `title`                            | utility    | display name of a utility family in `llms-utilities.txt` (`Spacing · margin`)                                                                                                                                                 |
+| `roles`                            | patterns   | `provider` (behaviour in a provider library), `overlay` (opens a layer: Escape, focus), `composite` (arrow keys), `feedback` (announces status), `non-interactive`, `no-dom` (attaches to existing elements)                  |
+| `family`                           | patterns   | patterns implementing one keyboard model together share the parent's name (Tabs, Accordion, Wizard, SectionIndex)                                                                                                             |
+| `host` `{ host, reason }`          | css        | styles markup something else emits (app template blocks, common screens, the runtime): no markup contract of its own                                                                                                          |
+| `story`                            | css        | normalised story name when it differs from the component name (`btn` → `button`)                                                                                                                                              |
+| `interactive`                      | css        | operated by the user (patterns are interactive unless `non-interactive`)                                                                                                                                                      |
+| `loading`, `validating`, `density` | all        | has a loading state, an invalid state, or is expected to offer a density axis                                                                                                                                                 |
+| `derived`                          | all        | appended by the doctor from code signals; review, adjust and remove the flag                                                                                                                                                  |
 
 A test fails when the registry and the inventory disagree. When a component is added or renamed:
 

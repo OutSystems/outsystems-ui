@@ -49,16 +49,23 @@ test('cellFor turns each metric row into a score, a state and a concrete hint th
 });
 
 test('cellFor explains a cell with no measurement from the metric scope and hints', () => {
-	const na = cellFor('E02', null, { kind: 'css' });
+	const na = cellFor('E02', null, { kind: 'component' });
 	assert.equal(na.s, null);
 	assert.equal(na.w, 'na');
-	assert.match(na.h, /CSS-only/);
-	const un = cellFor('E07', null, { kind: 'css', reason: 'no story' });
+	assert.match(na.h, /measures patterns; this is a CSS-only component/);
+	assert.match(cellFor('E02', null, { kind: 'css' }).h, /CSS-only/, 'the previous css kind still reads as component');
+	const layout = cellFor('E07', null, { kind: 'layout' });
+	assert.equal(layout.w, 'na');
+	assert.match(layout.h, /measures patterns, components; layout partials style markup the app template/);
+	const utility = cellFor('R04', null, { kind: 'utility' });
+	assert.equal(utility.w, 'na');
+	assert.match(utility.h, /utility classes have no anatomy/);
+	const un = cellFor('E07', null, { kind: 'component', reason: 'no story' });
 	assert.equal(un.w, 'unmeasured');
 	assert.match(un.h, /no story/);
 	assert.match(un.h, /Storybook story/);
 	const host = cellFor('E07', null, {
-		kind: 'css',
+		kind: 'component',
 		notApplicable: { reason: 'host-styled: markup emitted by X', hint: 'Style it through its knobs.' },
 	});
 	assert.equal(host.w, 'na');
@@ -68,12 +75,24 @@ test('cellFor explains a cell with no measurement from the metric scope and hint
 
 test('buildDashboardData assembles the history, one block per suite and components with one cell per heatmap eval', () => {
 	const d = buildDashboardData(evalsDir);
-	assert.equal(d.v, 3);
+	assert.equal(d.v, 4);
 	assert.deepEqual(
 		d.suites.map((s) => s.id),
-		['ai', 'enterprise']
+		['ai', 'enterprise', 'utilities']
 	);
-	const [ai, ent] = d.suites;
+	const [ai, ent, util] = d.suites;
+	assert.equal(util.evals.length, 6);
+	assert.deepEqual(util.heatmapEvals, ['U01', 'U02', 'U03', 'U04', 'U05', 'U06']);
+	assert.deepEqual(Object.keys(util.tiers), ['utility']);
+	assert.equal(
+		d.components.filter((c) => c.k === 'utility').length,
+		24,
+		'the utility families are the rows of the utilities suite'
+	);
+	const margin = d.components.find((c) => c.n === 'space-margin');
+	assert.equal(margin.cells.U01.w, 'ok');
+	assert.equal(margin.cells.E07, undefined, 'the AI evals do not apply to a utility family');
+	assert.deepEqual(util.evals[0].appliesTo, ['utility']);
 	assert.equal(ai.indexName, 'AI-Friendliness Index');
 	assert.equal(ai.evals.length, 10);
 	assert.ok(!ai.heatmapEvals.includes('E04'), 'E04 is measured per file, so it is not a heatmap column');
@@ -98,9 +117,24 @@ test('buildDashboardData assembles the history, one block per suite and componen
 	for (const id of [...ai.heatmapEvals, ...ent.heatmapEvals])
 		assert.ok(accordion.cells[id], `Accordion has an ${id} cell`);
 	assert.equal(accordion.cells.R02.w, 'ok');
-	const css = d.components.find((c) => c.k === 'css');
-	assert.equal(css.cells.E02.w, 'na');
-	assert.equal(css.cells.R03.w, 'na', 'keyboard checks need a script');
+	// a cell an eval does not apply to by tier is omitted: the page composes it from the eval's appliesTo
+	const css = d.components.find((c) => c.k === 'component');
+	assert.equal(css.cells.E02, undefined, 'E02 measures patterns only');
+	assert.equal(css.cells.R03, undefined, 'keyboard checks need a script');
+	assert.deepEqual(e02.appliesTo, ['pattern'], 'every eval carries the tiers it applies to');
+	const layout = d.components.find((c) => c.n === 'header');
+	assert.equal(layout.k, 'layout');
+	assert.equal(layout.cells.E07, undefined, 'a layout partial has no markup contract to measure');
+	assert.equal(layout.cells.E08.w, 'ok');
+	const balloon = d.components.find((c) => c.n === 'balloon');
+	assert.equal(balloon.cells.E07.w, 'na', 'a host-styled component keeps the cell the metric declared');
+	assert.match(balloon.cells.E07.h, /host-styled/);
+	assert.equal(d.components.filter((c) => c.k === 'pattern').length, 33);
+	for (const s of d.suites.filter((x) => x.id !== 'utilities')) {
+		assert.ok(s.tiers, `${s.id} carries per-tier indices`);
+		assert.equal(typeof s.tiers.pattern.index, 'number');
+		assert.ok(!('utility' in s.tiers), 'the AI and enterprise suites have no utility tier');
+	}
 	assert.ok(JSON.stringify(d).length < 240 * 1024, 'fits the 256 KiB document limit of the artifact database');
 });
 
@@ -122,6 +156,6 @@ test('buildDashboardData falls back to results/latest.json when the latest run f
 	fs.copyFileSync(path.join(evalsDir, 'results', `${last.label}.json`), path.join(tmp, 'results', 'latest.json'));
 	const d = buildDashboardData(tmp);
 	assert.equal(d.latest.label, last.label);
-	assert.equal(d.suites.length, 2);
+	assert.equal(d.suites.length, 3);
 	fs.rmSync(tmp, { recursive: true, force: true });
 });

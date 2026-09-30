@@ -1,12 +1,13 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 
+import { TIERS } from '../lib/tiers.mjs';
 import { allMetrics, CLASSES, metricById, SUITES, suiteOf } from '../suites.mjs';
 
 test('the registry lists every suite with an id, an index name, a prefix, metrics and gate tolerances', () => {
 	assert.deepEqual(
 		SUITES.map((s) => s.id),
-		['ai', 'enterprise']
+		['ai', 'enterprise', 'utilities']
 	);
 	for (const s of SUITES) {
 		assert.ok(s.name && s.indexName && s.describe, `${s.id} documents itself`);
@@ -33,7 +34,11 @@ test('every metric of every suite honours the metric contract', () => {
 			assert.ok(m.present, `${m.id} describes how it is presented`);
 			assert.ok(m.present.scope.length > 20, `${m.id} explains its per-component cell`);
 			assert.equal(typeof m.present.heatmap, 'boolean', m.id);
-			assert.ok(['pattern', 'css', 'both'].includes(m.present.appliesTo), `${m.id} says what it applies to`);
+			assert.ok(
+				Array.isArray(m.present.appliesTo) && m.present.appliesTo.length > 0,
+				`${m.id} lists the tiers it applies to`
+			);
+			for (const t of m.present.appliesTo) assert.ok(TIERS.includes(t), `${m.id} applies to a known tier (${t})`);
 			for (const fn of ['cell', 'advice', 'extra']) {
 				if (m.present[fn] !== undefined)
 					assert.equal(typeof m.present[fn], 'function', `${m.id}.present.${fn}`);
@@ -47,5 +52,15 @@ test('every metric of every suite honours the metric contract', () => {
 	assert.equal(metricById('R01').suite.id, 'enterprise');
 	assert.equal(metricById('E07').metric.present.heatmap, true);
 	assert.equal(metricById('E04').metric.present.heatmap, false, 'E04 reports files, not components');
+	assert.deepEqual(metricById('E02').metric.present.appliesTo, ['pattern']);
+	assert.deepEqual(metricById('E07').metric.present.appliesTo, ['pattern', 'component']);
+	assert.deepEqual(metricById('R04').metric.present.appliesTo, ['pattern', 'component', 'layout']);
+	for (const s of SUITES.filter((x) => x.id === 'ai' || x.id === 'enterprise')) {
+		for (const m of s.metrics)
+			assert.ok(
+				!m.present.appliesTo.includes('utility'),
+				`${m.id} leaves utility classes to the utilities suite`
+			);
+	}
 	assert.equal(metricById('nope'), null);
 });
