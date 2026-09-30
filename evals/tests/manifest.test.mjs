@@ -26,7 +26,11 @@ const expectations = {
 test('loadManifest returns null when the file is missing or invalid', () => {
 	assert.equal(loadManifest(fakeCtx({})), null);
 	assert.equal(loadManifest(fakeCtx({ 'osui.components.json': '{ not json' })), null);
-	assert.equal(loadManifest(fakeCtx({ 'osui.components.json': '{"components":{}}' })), null, 'a version or $schema is required');
+	assert.equal(
+		loadManifest(fakeCtx({ 'osui.components.json': '{"components":{}}' })),
+		null,
+		'a version or $schema is required'
+	);
 });
 
 test('componentFacets scores the six facets against source-derived expectations', () => {

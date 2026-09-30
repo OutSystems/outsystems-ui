@@ -1,6 +1,7 @@
 // @ts-check
 import { clamp01, mean, round1 } from '../../lib/score.mjs';
 import { analyseDeclarations } from '../../lib/scss.mjs';
+import { list, rowsOf, toDoHint } from '../../lib/present.mjs';
 
 /**
  * @param {{ total: number, literal: number, routed: number, important: number }} raw
@@ -8,7 +9,9 @@ import { analyseDeclarations } from '../../lib/scss.mjs';
  */
 export function scoreComponent({ total, literal, routed, important }) {
 	if (total === 0) return null;
-	return 100 * (0.55 * (1 - literal / total) + 0.3 * (routed / total) + 0.15 * clamp01(1 - important / (0.02 * total)));
+	return (
+		100 * (0.55 * (1 - literal / total) + 0.3 * (routed / total) + 0.15 * clamp01(1 - important / (0.02 * total)))
+	);
 }
 
 /**
@@ -30,24 +33,64 @@ export default {
 	formula:
 		'per component SCSS (compiled): 100 · (0.55·(1 − hardcoded/themeable) + 0.30·(reads via --osui-* API/themeable) + 0.15·clamp(1 − !important/(2% of themeable)))',
 	movable: true,
+	present: {
+		scope: 'Per component SCSS: themeable declarations that are hardcoded, routed through --osui-* knobs, or read a token. Files with nothing themeable have nothing to score.',
+		heatmap: true,
+		appliesTo: 'both',
+		unmeasuredHint: 'Fix the SCSS compile error so the partial can be scored.',
+		/** @param {any} row */
+		cell(row) {
+			const todo = [];
+			if (row.literal) todo.push(`replace ${row.literal} hardcoded values with tokens`);
+			if (row.total && row.routed / row.total < 0.6)
+				todo.push(`route more reads through --osui-* knobs (${row.knobs} knobs today; B-7)`);
+			if (row.important) todo.push(`remove ${row.important} !important (B-8)`);
+			return {
+				s: row.score,
+				h: `${row.routed} of ${row.total} themeable declarations read via --osui-* knobs, ${row.literal} hardcoded, ${row.important} !important.${toDoHint(todo)}`,
+			};
+		},
+		/** @param {any} m */
+		advice(m) {
+			const raw = m.raw ?? {};
+			const worst = rowsOf(m)
+				.filter((r) => r.total >= 10)
+				.sort((a, b) => a.routed / a.total - b.routed / b.total)
+				.slice(0, 6)
+				.map((r) => `${r.name} (${r.routed}/${r.total})`);
+			return [
+				`${raw.routed} of ${raw.total} themeable declarations (${Math.round((100 * raw.routed) / raw.total)} %) read through --osui-* knobs; ${raw.literal} hardcoded; ${raw.important} !important.`,
+				`Lowest knob routing: ${list(worst, 6)}. Routing is additive when the knob default equals the current value, except for portaled elements (B-7).`,
+			];
+		},
+	},
 	/** @param {import('../../lib/context.mjs').EvalContext} ctx */
 	compute(ctx) {
 		/** @type {any[]} */
 		const perComponent = [];
 		/** @type {{ name: string, reason: string }[]} */
 		const unmeasured = [];
+		/** @type {{ name: string, reason: string, hint: string }[]} */
+		const notApplicable = [];
 		/** @type {{ component: string, selector: string, prop: string, value: string }[]} */
 		const literals = [];
 		let totals = { total: 0, literal: 0, routed: 0, tokened: 0, important: 0, knobs: 0 };
 		for (const { name, file } of componentScssFiles(ctx)) {
 			const { css, error } = ctx.compiledCss(file);
 			if (!css) {
-				unmeasured.push({ name: `${name} (${ctx.rel(file)})`, reason: `compile error: ${(error ?? '').split('\n')[0]}` });
+				unmeasured.push({
+					name: `${name} (${ctx.rel(file)})`,
+					reason: `compile error: ${(error ?? '').split('\n')[0]}`,
+				});
 				continue;
 			}
 			const d = analyseDeclarations(css);
 			if (d.total === 0) {
-				unmeasured.push({ name: `${name} (${ctx.rel(file)})`, reason: 'no themeable declarations' });
+				notApplicable.push({
+					name: `${name} (${ctx.rel(file)})`,
+					reason: 'no themeable declarations',
+					hint: 'Nothing to change: the compiled CSS has no colour, spacing, radius or typography declarations to theme.',
+				});
 				continue;
 			}
 			for (const k of Object.keys(totals)) totals[k] += d[k];
@@ -75,6 +118,7 @@ export default {
 			},
 			perComponent: [...perComponent].sort((a, b) => a.score - b.score),
 			unmeasured,
+			notApplicable,
 			details: { hardcodedSamples: literals.slice(0, 200) },
 		};
 	},

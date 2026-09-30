@@ -1,7 +1,15 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 
-import { aggregate, compareRuns, formatTable, upsertHistory } from '../lib/results.mjs';
+import {
+	aggregate,
+	compareRuns,
+	formatTable,
+	historyEntryOf,
+	normalizeHistoryEntry,
+	normalizeRun,
+	upsertHistory,
+} from '../lib/results.mjs';
 
 const results = [
 	{ id: 'E01', name: 'Context Token Cost', score: 71.24, movable: true, raw: { meanTokens: 2400 } },
@@ -46,4 +54,66 @@ test('formatTable renders a markdown table with one row per metric and an index 
 	assert.match(lines[0], /^\| ID \| Eval \| Score \| Class \|/);
 	assert.equal(lines.length, 2 + results.length + 1, 'header, separator, rows, index');
 	assert.match(lines[lines.length - 1], /Index.*50\.4/);
+});
+
+test('normalizeHistoryEntry lifts the legacy shape into suites and leaves the new shape alone', () => {
+	const legacy = {
+		label: 'loop-6',
+		date: 'd',
+		sha: 'a',
+		scores: { E01: 1 },
+		index: 1,
+		enterprise: { scores: { R01: 2 }, index: 2 },
+	};
+	const n = normalizeHistoryEntry(legacy);
+	assert.deepEqual(n, {
+		label: 'loop-6',
+		date: 'd',
+		sha: 'a',
+		suites: { ai: { scores: { E01: 1 }, index: 1 }, enterprise: { scores: { R01: 2 }, index: 2 } },
+	});
+	assert.deepEqual(normalizeHistoryEntry({ label: 'b', date: 'd', sha: 'a', scores: { E01: 1 }, index: 1 }).suites, {
+		ai: { scores: { E01: 1 }, index: 1 },
+	});
+	const fresh = { label: 'dev-1', date: 'd', sha: 'a', branch: 'dev', suites: { ai: { scores: {}, index: 0 } } };
+	assert.equal(normalizeHistoryEntry(fresh), fresh);
+});
+
+test('normalizeRun lifts a legacy run file into suites with their results', () => {
+	const legacy = {
+		label: 'loop-6',
+		sha: 'a',
+		scores: { E01: 1 },
+		index: 1,
+		results: [{ id: 'E01' }],
+		enterprise: { scores: { R01: 2 }, index: 2, results: [{ id: 'R01' }] },
+	};
+	const n = normalizeRun(legacy);
+	assert.deepEqual(Object.keys(n.suites), ['ai', 'enterprise']);
+	assert.deepEqual(n.suites.enterprise.results, [{ id: 'R01' }]);
+	assert.equal(n.scores, undefined, 'the legacy top-level fields are gone');
+	assert.equal(n.label, 'loop-6');
+});
+
+test('historyEntryOf keeps label, date, sha and branch and, per suite, scores, index and unmeasured counts', () => {
+	const run = {
+		label: 'x',
+		date: 'd',
+		sha: 's',
+		branch: 'dev',
+		suites: {
+			ai: {
+				scores: { E07: 90 },
+				index: 90,
+				results: [{ id: 'E07', unmeasured: [{ name: 'a' }, { name: 'b' }], notApplicable: [{ name: 'c' }] }],
+			},
+		},
+	};
+	assert.deepEqual(historyEntryOf(run), {
+		label: 'x',
+		date: 'd',
+		sha: 's',
+		branch: 'dev',
+		suites: { ai: { scores: { E07: 90 }, index: 90, unmeasured: { E07: 2 } } },
+	});
 });

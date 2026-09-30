@@ -23,6 +23,29 @@ export default {
 	formula:
 		'100 − 12·max(0, inheritance depth − 1) − 5·max(0, contract files − 4) − 15·(configs accepted only as JSON string) − 10·(event names typed as string) − 15·(global namespaces instead of ES modules)',
 	movable: false,
+	present: {
+		scope: 'Per pattern: inheritance depth, contract files, typed configs and events, module format. CSS-only components have no classes.',
+		heatmap: true,
+		appliesTo: 'pattern',
+		/** @param {any} row */
+		cell(row) {
+			const todo = [];
+			if (row.depth > 1) todo.push(`inheritance depth ${row.depth} (${row.chain})`);
+			if (row.files > 4) todo.push(`${row.files} contract files (free allowance 4)`);
+			if (row.configShape === 0) todo.push('Create accepts only a JSON string');
+			if (row.eventModel === 0) todo.push('event names typed as string');
+			if (row.moduleFormat === 0) todo.push('global namespace instead of an ES module (B-4)');
+			return { s: row.score, h: todo.length ? `Costs: ${todo.join('; ')}.` : 'Flat, typed and modular.' };
+		},
+		/** @param {any} m */
+		advice(m) {
+			const raw = m.raw ?? {};
+			return [
+				`Mean inheritance depth ${raw.meanDepth} (max ${raw.maxDepth}), mean ${raw.meanFiles} contract files; ${raw.jsonStringConfigs} JSON-string-only Create, ${raw.stringEventNames} string event names, ${raw.globalNamespaceApis} global-namespace APIs.`,
+				'Configs and events are typed additively (S-9). The remaining cost is the AMD global namespace and provider inheritance chains, which need the ES-module facade (B-4).',
+			];
+		},
+	},
 	/** @param {import('../../lib/context.mjs').EvalContext} ctx */
 	compute(ctx) {
 		const program = ctx.program;
@@ -30,7 +53,10 @@ export default {
 			const classes = getClassesInFiles(program, p.classFiles);
 			const concrete = classes.filter((c) => !c.isAbstract && c.chain.length > 1);
 			const pool = concrete.length ? concrete : classes;
-			const deepest = pool.reduce((best, c) => (c.chain.length > (best?.chain.length ?? 0) ? c : best), /** @type {any} */ (null));
+			const deepest = pool.reduce(
+				(best, c) => (c.chain.length > (best?.chain.length ?? 0) ? c : best),
+				/** @type {any} */ (null)
+			);
 			const depth = deepest ? deepest.chain.length - 1 : 0;
 			const fns = expectationsFor(ctx, p).apiFunctions;
 			const create = fns.find((f) => f.name === 'Create');

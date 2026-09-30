@@ -12,9 +12,12 @@ import {
 	componentUniverse,
 	describeChecks,
 	includesAny,
+	NO_PARTIAL,
+	NO_PARTIAL_HINT,
 	osuiVarNames,
 	scoreChecks,
 } from '../lib/signals.mjs';
+import { checksCell, list } from '../../lib/present.mjs';
 
 /** Components the document expects to offer a density or size axis. */
 export const DENSITY_COMPONENTS = new Set([
@@ -102,22 +105,47 @@ export default {
 		'per component: 100 · passed / applicable for: breakpoint rules where it lays out, a size or density axis where the document expects one (variant classes or --osui-* padding/height/size knobs), .is-rtl rules where direction matters; mean over components',
 	movable: true,
 	cls: 'movable',
+	present: {
+		scope: 'Per component CSS: breakpoint rules where it lays out, a size or density axis where the document expects one, RTL rules where direction matters.',
+		heatmap: true,
+		appliesTo: 'both',
+		unmeasuredHint: 'Fix the SCSS compile error so the partial can be scored.',
+		/** @param {any} row */
+		cell(row) {
+			const knobs = row.checks?.density?.knobs ?? [];
+			return checksCell(row, knobs.length ? [`density knobs: ${knobs.join(', ')}`] : []);
+		},
+		/** @param {any} m */
+		advice(m) {
+			return [
+				m.summary,
+				`No density axis yet: ${list(m.raw?.densityMissing ?? [], 10)}. Knobs with defaults equal to today are additive; variant classes that change defaults are structural.`,
+			];
+		},
+	},
 	/** @param {import('../../lib/context.mjs').EvalContext} ctx */
 	compute(ctx) {
 		/** @type {any[]} */
 		const perComponent = [];
 		/** @type {{ name: string, reason: string }[]} */
 		const unmeasured = [];
+		/** @type {{ name: string, reason: string, hint: string }[]} */
+		const notApplicable = [];
 		for (const c of componentUniverse(ctx)) {
 			const { css, error } = componentCss(ctx, c);
 			if (css === null) {
-				unmeasured.push({ name: c.name, reason: error ?? 'no CSS' });
+				if (error === NO_PARTIAL) notApplicable.push({ name: c.name, reason: error, hint: NO_PARTIAL_HINT });
+				else unmeasured.push({ name: c.name, reason: error ?? 'no CSS' });
 				continue;
 			}
 			const checks = checksFor(c.name, css);
 			const score = scoreChecks(checks);
 			if (score === null) {
-				unmeasured.push({ name: c.name, reason: 'no layout, density or directional declarations' });
+				notApplicable.push({
+					name: c.name,
+					reason: 'no layout, density or directional declarations',
+					hint: 'Nothing to change: the compiled CSS lays nothing out and sets no direction.',
+				});
 				continue;
 			}
 			const { failed } = describeChecks(checks, LABELS);
@@ -137,6 +165,7 @@ export default {
 			},
 			perComponent: [...perComponent].sort((a, b) => a.score - b.score || a.name.localeCompare(b.name)),
 			unmeasured,
+			notApplicable,
 		};
 	},
 };

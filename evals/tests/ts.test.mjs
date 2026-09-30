@@ -108,7 +108,10 @@ test('getExportedFunctions reports params, return types, JSDoc, calls and string
 	const fns = getExportedFunctions(program.getSourceFile('b.ts'));
 	const byName = Object.fromEntries(fns.map((f) => [f.name, f]));
 	assert.deepEqual(Object.keys(byName).sort(), ['Create', 'Dispose']);
-	assert.deepEqual(byName.Create.params.map((p) => p.name), ['id', 'configs']);
+	assert.deepEqual(
+		byName.Create.params.map((p) => p.name),
+		['id', 'configs']
+	);
 	assert.equal(byName.Create.hasReturnType, true);
 	assert.equal(byName.Create.returnType, 'Foo.Bar.Leaf');
 	assert.equal(byName.Create.jsDoc.description, 'Creates it.');

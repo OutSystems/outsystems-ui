@@ -37,9 +37,7 @@ export function expectationsFor(ctx, pattern) {
 	const props = getConfigProps(program, pattern.configFiles);
 	const apiFunctions = getExportedFunctions(getSourceFile(program, pattern.apiFile));
 	const enums = pattern.enumFiles.flatMap((f) => getEnums(getSourceFile(program, f)));
-	const events = enums
-		.filter((e) => e.name === 'Events')
-		.flatMap((e) => Object.values(e.members).map(String));
+	const events = enums.filter((e) => e.name === 'Events').flatMap((e) => Object.values(e.members).map(String));
 	/** @type {Record<string, string>} */
 	const cssClassMap = {};
 	for (const e of enums.filter((e) => /^Css(Class|Classes)$/.test(e.name))) {

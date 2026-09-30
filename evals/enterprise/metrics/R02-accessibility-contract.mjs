@@ -19,6 +19,7 @@ import {
 	scoreChecks,
 	themeGuards,
 } from '../lib/signals.mjs';
+import { checksCell, list } from '../../lib/present.mjs';
 
 export const ARIA_NEEDLES = ['A11Y.', 'aria-', "'role'", '"role"'];
 /** Patterns that attach behaviour to existing elements and render no DOM of their own. */
@@ -80,6 +81,27 @@ export default {
 		'per component: 100 · passed / applicable over five checks — ARIA set (patterns that render DOM), feedback announced (feedback patterns), focus managed (overlay patterns), visible focus (.has-accessible-features rules, or the theme-level focus ring), .os-high-contrast styles; mean over components. A static proxy: detects the contract being addressed, not conformance',
 	movable: true,
 	cls: 'movable',
+	present: {
+		scope: 'Per component: ARIA set and, where the role needs it, feedback announced and focus managed (patterns); .has-accessible-features and .os-high-contrast styles (every component with CSS).',
+		heatmap: true,
+		appliesTo: 'both',
+		unmeasuredHint: 'Fix the SCSS compile error so the style checks can run.',
+		/** @param {any} row */
+		cell(row) {
+			return checksCell(row);
+		},
+		/** @param {any} m */
+		advice(m) {
+			const noAria = m.raw?.patternsWithoutAria ?? [];
+			return [
+				m.summary,
+				noAria.length
+					? `Patterns setting no ARIA from TypeScript: ${list(noAria, 8)} (provider-rendered pickers rely on their library).`
+					: 'Every pattern sets ARIA.',
+				'Adding .has-accessible-features and .os-high-contrast rules per component is additive; a dynamic axe pass over Storybook is the next step for real violations.',
+			];
+		},
+	},
 	/** @param {import('../../lib/context.mjs').EvalContext} ctx */
 	compute(ctx) {
 		/** @type {any[]} */

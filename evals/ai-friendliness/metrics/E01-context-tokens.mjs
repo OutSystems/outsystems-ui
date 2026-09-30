@@ -5,6 +5,7 @@ import { expectationsFor } from '../../lib/expectations.mjs';
 import { componentFacets, loadManifest } from '../../lib/manifest.mjs';
 import { insideDir } from '../../lib/paths.mjs';
 import { band, mean, round1 } from '../../lib/score.mjs';
+import { list } from '../../lib/present.mjs';
 
 export const T_MIN = 600;
 export const T_MAX = 6000;
@@ -41,12 +42,48 @@ export function parseCards(text) {
 	return cards;
 }
 
+/** The next step for one pattern's E01 row. @param {any} row */
+function nextStep(row) {
+	if (row.source === 'manifest card')
+		return row.score < 100 ? ' Trim the card: fewer or shorter prop descriptions.' : '';
+	return row.cardTokens === null
+		? ' The manifest card is below 80 % complete, so agents fall back to the source: complete its facets.'
+		: '';
+}
+
 export default {
 	id: 'E01',
 	name: 'Context Token Cost',
 	criterion: 'Token & Context Efficiency',
 	formula: `100 · clamp((${T_MAX} − T) / ${T_MAX - T_MIN}) per pattern; T = min(tokens of API+Config+Enum+Interface files, tokens of a ≥80%-complete manifest card)`,
 	movable: true,
+	present: {
+		scope: 'Per pattern: tokens an agent must read to use it (its manifest card when ≥ 80 % complete, else the API + config + enum + interface files). CSS-only components have no TypeScript contract.',
+		heatmap: true,
+		appliesTo: 'pattern',
+		/** @param {any} row */
+		cell(row) {
+			const via =
+				row.source === 'manifest card'
+					? `via its manifest card (${row.tokens} tokens; source contract ${row.srcTokens} across ${row.files} files)`
+					: `from the source contract (${row.tokens} tokens across ${row.files} files)`;
+			return { s: row.score, h: `Read ${via}.${nextStep(row)}` };
+		},
+		/** @param {any} m */
+		advice(m) {
+			const raw = m.raw ?? {};
+			const src = Object.values(m.perComponent ?? {}).filter(
+				(/** @type {any} */ r) => r.source !== 'manifest card'
+			);
+			return [
+				`Mean ${raw.meanTokens} tokens per pattern via cards, against ${raw.meanSourceTokens} from source; benchmark median ${raw.benchmark?.median ?? BENCHMARK.medianTokens}.`,
+				src.length
+					? `${src.length} patterns still read from source (card below 80 % complete): ${list(src.map((/** @type {any} */ r) => r.name))}.`
+					: 'Every pattern is served by its manifest card; keep cards complete so this holds.',
+				`The compiled .d.ts is ${raw.publicTypingsTokens ? Math.round(raw.publicTypingsTokens / 1000) : '~51'}k tokens: agents must load a card, never the whole typing file.`,
+			];
+		},
+	},
 	/** @param {import('../../lib/context.mjs').EvalContext} ctx */
 	compute(ctx) {
 		const manifest = loadManifest(ctx);

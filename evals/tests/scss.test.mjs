@@ -5,7 +5,14 @@ import path from 'node:path';
 import { test } from 'node:test';
 import { fileURLToPath } from 'node:url';
 
-import { analyseDeclarations, analyseSelectors, compileScss, isThemeableProp, parseSizeLiteral, resolveTokenFallbacks } from '../lib/scss.mjs';
+import {
+	analyseDeclarations,
+	analyseSelectors,
+	compileScss,
+	isThemeableProp,
+	parseSizeLiteral,
+	resolveTokenFallbacks,
+} from '../lib/scss.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
 const scssRoot = path.join(root, 'src', 'scss');
@@ -74,7 +81,8 @@ test('analyseDeclarations distinguishes literals, routed CSS-API reads and token
 });
 
 test('resolveTokenFallbacks unwraps nested var(--token-*, fallback) chains and leaves other vars alone', () => {
-	const css = '.a { padding: var(--token-scale-400, var(--token-primitives-400, 16px)); color: var(--osui-a, var(--color-text)); margin: var(--token-x); }';
+	const css =
+		'.a { padding: var(--token-scale-400, var(--token-primitives-400, 16px)); color: var(--osui-a, var(--color-text)); margin: var(--token-x); }';
 	assert.equal(
 		resolveTokenFallbacks(css),
 		'.a { padding: 16px; color: var(--osui-a, var(--color-text)); margin: var(--token-x); }'
@@ -82,9 +90,19 @@ test('resolveTokenFallbacks unwraps nested var(--token-*, fallback) chains and l
 });
 
 test('isThemeableProp covers colours, box model axes, radii, shadows and type sizes', () => {
-	for (const p of ['color', 'padding-inline-start', 'border-start-start-radius', 'border-inline-end-color', 'box-shadow', 'line-height', 'inset-inline-start', 'border-block'])
+	for (const p of [
+		'color',
+		'padding-inline-start',
+		'border-start-start-radius',
+		'border-inline-end-color',
+		'box-shadow',
+		'line-height',
+		'inset-inline-start',
+		'border-block',
+	])
 		assert.equal(isThemeableProp(p), true, p);
-	for (const p of ['width', 'display', 'border-collapse', 'transform', 'z-index']) assert.equal(isThemeableProp(p), false, p);
+	for (const p of ['width', 'display', 'border-collapse', 'transform', 'z-index'])
+		assert.equal(isThemeableProp(p), false, p);
 });
 
 test('parseSizeLiteral accepts px/rem/em/pt numbers and rejects everything else', () => {

@@ -1,16 +1,21 @@
 #!/usr/bin/env node
 // @ts-check
 /**
- * AI-friendliness regression gate.
+ * Regression gate for every eval suite.
  *
- *   node evals/tools/gate.mjs [--baseline <label>] [--report-baseline <label>] [--max-drop 1] [--max-drop-enterprise 1] [--report <file.md>]
+ *   node evals/tools/gate.mjs [--baseline <label>] [--report-baseline <label>] [--max-drop 1] [--max-eval-drop 3]
+ *                             [--max-drop-<suite> n] [--report <file.md>]
  *
- * Runs the suite without writing results, compares the index with the newest entry of
- * results/history.json (or the given label) and exits 1 when it dropped by more than
- * `--max-drop` points; the Enterprise Readiness Index gets the same rule (`--max-drop-enterprise` to
- * override) plus a no-decrease rule on component coverage (R01). `--report` appends a Markdown before/after table to a file (for a PR
- * comment or `$GITHUB_STEP_SUMMARY`); its table compares with the oldest recorded run, the state before the
- * branch's work (`--report-baseline <label>` to choose), while the verdict keeps the newest run. Usable locally and in CI alike.
+ * Runs every suite without writing results and, per suite, compares the run with the baseline:
+ *   - the index may not drop by more than `--max-drop` points (default: the suite's `maxDrop`);
+ *   - no single eval may drop by more than `--max-eval-drop` points (default: the suite's `maxEvalDrop`);
+ *   - evals that declare a `no-decrease` rule (R01 coverage) may not go down at all;
+ *   - no eval may leave more components unmeasured than the baseline did (once the baseline records counts).
+ * The baseline is the newest run recorded on `dev` when history has one, else the newest run of any
+ * label (`--baseline <label>` to choose). `--report` appends a Markdown before → after table per suite to a
+ * file (for a PR comment or `$GITHUB_STEP_SUMMARY`); without dev runs its table compares with the oldest
+ * recorded run, the state before the branch's work (`--report-baseline <label>` to choose), while the
+ * verdict keeps the newest run. Exit code 1 when any suite fails. Usable locally and in CI alike.
  */
 import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
@@ -18,92 +23,160 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { insideDir } from '../lib/paths.mjs';
+import { normalizeHistoryEntry, normalizeRun, unmeasuredCounts } from '../lib/results.mjs';
+import { SUITES } from '../suites.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
-const suiteDir = path.join(here, '..');
+const evalsDir = path.join(here, '..');
 
 /**
- * @typedef {{ label: string, date: string, sha: string, scores: Record<string, number>, index: number, enterprise?: { scores: Record<string, number>, index: number } }} HistoryEntry
+ * @typedef {import('../lib/results.mjs').HistoryEntry} HistoryEntry
+ * @typedef {{ label: string, sha?: string, scores: Record<string, number>, index: number, unmeasured?: Record<string, number> }} SuiteBaseline
+ * @typedef {{ ok: boolean, message: string }} RuleResult
  */
 
-/**
- * Enterprise coverage (R01) may never decrease: a removed component or feature is a regression whatever
- * the index does. Returns null when either side has no enterprise suite.
- * @param {HistoryEntry} baseline
- * @param {{ enterprise?: { scores: Record<string, number> } }} run
- * @returns {{ ok: boolean, from: number, to: number, message: string }|null}
- */
-export function evaluateCoverageRule(baseline, run) {
-	const from = baseline.enterprise?.scores.R01;
-	const to = run.enterprise?.scores.R01;
-	if (from === undefined || to === undefined) return null;
-	const ok = to >= from;
-	return {
-		ok,
-		from,
-		to,
-		message: ok
-			? `coverage R01 ${from.toFixed(1)} → ${to.toFixed(1)} (may not decrease: ok)`
-			: `coverage R01 ${from.toFixed(1)} → ${to.toFixed(1)}: enterprise component coverage may not decrease`,
-	};
+/** @param {number} n */
+const f1 = (n) => n.toFixed(1);
+/** @param {number} d */
+const signed = (d) => (d > 0 ? `+${f1(d)}` : f1(d));
+/** @param {number} n */
+const r1 = (n) => Math.round(n * 10) / 10;
+/** @param {any[]} history */
+const byDate = (history) => [...history].sort((a, b) => a.date.localeCompare(b.date));
+
+/** A run recorded on the base branch. @param {HistoryEntry} e */
+export function isDevEntry(e) {
+	return e.branch === 'dev' || e.label.startsWith('dev-');
 }
 
 /**
- * Newest history entry, or the one with the given label.
- * @param {HistoryEntry[]} history
+ * The entry the verdict compares with: the labelled one, else the newest run recorded on dev, else the
+ * newest run of any label.
+ * @param {any[]} history
  * @param {string} [label]
+ * @returns {HistoryEntry}
  */
 export function pickBaseline(history, label) {
 	if (history.length === 0) throw new Error('history is empty — run the suite with --label first');
+	const entries = history.map(normalizeHistoryEntry);
 	if (label) {
-		const hit = history.find((h) => h.label === label);
+		const hit = entries.find((h) => h.label === label);
 		if (!hit) throw new Error(`no history entry labelled "${label}"`);
 		return hit;
 	}
-	return [...history].sort((a, b) => a.date.localeCompare(b.date))[history.length - 1];
+	const dev = byDate(entries.filter(isDevEntry));
+	if (dev.length) return dev[dev.length - 1];
+	return byDate(entries)[entries.length - 1];
 }
 
 /**
- * The origin of the before → after table: the oldest history entry (the state of the base branch when
- * the work started), or the one with the given label. With `needsEnterprise`, the oldest entry that
- * carries the enterprise suite (a labelled entry without it falls back to that).
- * @param {HistoryEntry[]} history
+ * The origin of a suite's before → after table: the labelled entry when it carries the suite, else the
+ * newest dev run carrying it, else the oldest entry carrying it (the state before the branch's work).
+ * @param {any[]} history
+ * @param {string} suiteId
  * @param {string} [label]
- * @param {boolean} [needsEnterprise]
+ * @returns {HistoryEntry}
  */
-export function pickOrigin(history, label, needsEnterprise = false) {
-	const eligible = history.filter((h) => !needsEnterprise || h.enterprise);
-	if (eligible.length === 0) throw new Error('history has no entry to compare against');
+export function pickOrigin(history, suiteId, label) {
+	const eligible = history.map(normalizeHistoryEntry).filter((h) => h.suites[suiteId]);
+	if (eligible.length === 0) throw new Error(`history has no entry to compare against for suite "${suiteId}"`);
 	const labelled = label ? eligible.find((h) => h.label === label) : undefined;
 	if (labelled) return labelled;
-	return [...eligible].sort((a, b) => a.date.localeCompare(b.date))[0];
+	const dev = byDate(eligible.filter(isDevEntry));
+	if (dev.length) return dev[dev.length - 1];
+	return byDate(eligible)[0];
 }
 
 /**
- * @param {HistoryEntry} baseline
- * @param {{ index: number, scores: Record<string, number> }} run
- * @param {{ maxDrop?: number }} [options]
+ * One suite of a history entry, flattened for the gate; null when the entry does not carry it.
+ * @param {any} entry
+ * @param {string} suiteId
+ * @returns {SuiteBaseline|null}
  */
-export function evaluateGate(baseline, run, { maxDrop = 1 } = {}) {
-	const delta = Math.round((run.index - baseline.index) * 10) / 10;
+export function suiteView(entry, suiteId) {
+	const e = normalizeHistoryEntry(entry);
+	const s = e.suites[suiteId];
+	if (!s) return null;
+	return { label: e.label, sha: e.sha, scores: s.scores, index: s.index, unmeasured: s.unmeasured };
+}
+
+/**
+ * The index rule and the per-eval rule of one suite.
+ * @param {SuiteBaseline} baseline
+ * @param {{ index: number, scores: Record<string, number> }} run
+ * @param {{ maxDrop?: number, maxEvalDrop?: number }} [options]
+ */
+export function evaluateGate(baseline, run, { maxDrop = 1, maxEvalDrop = Number.POSITIVE_INFINITY } = {}) {
+	const delta = r1(run.index - baseline.index);
 	const regressed = Object.keys(baseline.scores)
 		.map((id) => ({
 			id,
 			from: baseline.scores[id],
 			to: run.scores[id] ?? 0,
-			delta: Math.round(((run.scores[id] ?? 0) - baseline.scores[id]) * 10) / 10,
+			delta: r1((run.scores[id] ?? 0) - baseline.scores[id]),
 		}))
 		.filter((x) => x.delta < 0)
 		.sort((a, b) => a.delta - b.delta);
-	const ok = delta >= -maxDrop;
-	const head = `AI-Friendliness Index ${baseline.index.toFixed(1)} → ${run.index.toFixed(1)} (${delta >= 0 ? '+' : ''}${delta.toFixed(1)}; baseline "${baseline.label}" @ ${baseline.sha}, tolerance −${maxDrop})`;
-	const regressedList = regressed.map((x) => `${x.id} ${x.from.toFixed(1)} → ${x.to.toFixed(1)}`).join(', ');
+	const overEval = regressed.filter((x) => x.delta < -maxEvalDrop);
+	const ok = delta >= -maxDrop && overEval.length === 0;
+	const head = `Index ${f1(baseline.index)} → ${f1(run.index)} (${signed(delta)}; baseline "${baseline.label}" @ ${baseline.sha ?? 'unknown'}, tolerance −${maxDrop})`;
+	const regressedList = regressed.map((x) => `${x.id} ${f1(x.from)} → ${f1(x.to)}`).join(', ');
 	const detail = regressed.length ? `\nregressed: ${regressedList}` : '';
-	return { ok, delta, regressed, message: `${ok ? 'PASS' : 'FAIL'} — ${head}${detail}` };
+	const evalDetail = overEval.length
+		? `\n${overEval.map((x) => `${x.id} ${f1(x.from)} → ${f1(x.to)} dropped more than ${maxEvalDrop}`).join('; ')}`
+		: '';
+	return { ok, delta, regressed, overEval, message: `${ok ? 'PASS' : 'FAIL'} — ${head}${detail}${evalDetail}` };
 }
 
-/** @param {number} d */
-const signed = (d) => (d > 0 ? `+${d.toFixed(1)}` : d.toFixed(1));
+/**
+ * The `no-decrease` rules the suite's metrics declare, evaluated where both sides have the eval.
+ * @param {{ id: string, rules?: { kind: string, why: string }[] }[]} metrics
+ * @param {SuiteBaseline} baseline
+ * @param {{ scores: Record<string, number> }} run
+ * @returns {RuleResult[]}
+ */
+export function evaluateRules(metrics, baseline, run) {
+	/** @type {RuleResult[]} */
+	const out = [];
+	for (const m of metrics) {
+		for (const rule of m.rules ?? []) {
+			if (rule.kind !== 'no-decrease') continue;
+			const from = baseline.scores[m.id];
+			const to = run.scores[m.id];
+			if (from === undefined || to === undefined) continue;
+			const ok = to >= from;
+			out.push({
+				ok,
+				message: ok
+					? `${m.id} ${f1(from)} → ${f1(to)} (may not decrease: ok)`
+					: `${m.id} ${f1(from)} → ${f1(to)}: ${rule.why}`,
+			});
+		}
+	}
+	return out;
+}
+
+/**
+ * No eval may leave more components unmeasured than the baseline did. Null when the baseline predates
+ * the counts.
+ * @param {SuiteBaseline} baseline
+ * @param {{ results: { id: string, unmeasured?: unknown[] }[] }} run
+ * @returns {RuleResult|null}
+ */
+export function evaluateMeasurementRule(baseline, run) {
+	if (!baseline.unmeasured) return null;
+	const counts = unmeasuredCounts(run.results);
+	const grew = Object.entries(counts)
+		.filter(([id, to]) => baseline.unmeasured?.[id] !== undefined && to > (baseline.unmeasured?.[id] ?? 0))
+		.map(([id, to]) => `${id} ${baseline.unmeasured?.[id]} → ${to}`);
+	const ok = grew.length === 0;
+	return {
+		ok,
+		message: ok
+			? 'measurement coverage: no eval leaves more components unmeasured than the baseline (ok)'
+			: `measurement coverage: ${grew.join(', ')} more components unmeasured than the baseline`,
+	};
+}
 
 /** @param {number | null} d */
 function formatMark(d) {
@@ -114,51 +187,47 @@ function formatMark(d) {
 }
 
 /**
- * @param {HistoryEntry} baseline
+ * @param {SuiteBaseline} origin
  * @param {Record<string, number>} scores
- * @param {{ id: string, name: string, movable: boolean, summary?: string }} r
+ * @param {{ id: string, name: string, movable: boolean, cls?: string, summary?: string }} r
  */
-function formatEvalRow(baseline, scores, r) {
-	const before = baseline.scores[r.id];
+function formatEvalRow(origin, scores, r) {
+	const before = origin.scores[r.id];
 	const after = scores[r.id] ?? 0;
-	const d = before === undefined ? null : Math.round((after - before) * 10) / 10;
+	const d = before === undefined ? null : r1(after - before);
 	const cls = r.cls ?? (r.movable ? 'movable' : 'structural');
 	const tag = cls === 'movable' ? '' : ` _(${cls})_`;
-	const beforeCell = before === undefined ? '—' : before.toFixed(1);
-	return `| ${r.id} | ${r.name}${tag} | ${beforeCell} | ${after.toFixed(1)} | ${formatMark(d)} | ${r.summary ?? ''} |`;
+	const beforeCell = before === undefined ? '—' : f1(before);
+	return `| ${r.id} | ${r.name}${tag} | ${beforeCell} | ${f1(after)} | ${formatMark(d)} | ${r.summary ?? ''} |`;
 }
 
 /**
- * Markdown "before → after" report for a PR check. The table compares this run with `origin` (the state
- * before the branch's work); the verdict comes from the regression gate against the newest recorded run,
- * which `gate` names so both comparisons are visible.
- * @param {HistoryEntry} origin
- * @param {{ label: string, sha?: string, index: number, scores: Record<string, number>, results: { id: string, name: string, movable: boolean, summary?: string }[] }} run
- * @param {ReturnType<typeof evaluateGate>} verdict
- * @param {{ maxDrop?: number, title?: string, extra?: string, gate?: { label: string, sha?: string, index: number } }} [options]
+ * Markdown "before → after" report of one suite for a PR check. The table compares this run with
+ * `origin`; the verdict comes from the regression gate against `gate` (the baseline), named when it
+ * differs from the origin so both comparisons are visible.
+ * @param {SuiteBaseline} origin
+ * @param {{ label: string, sha?: string, index: number, scores: Record<string, number>, results: { id: string, name: string, movable: boolean, cls?: string, summary?: string }[] }} run
+ * @param {{ ok: boolean, delta: number }} verdict
+ * @param {{ maxDrop?: number, title?: string, extra?: string|string[], gate?: SuiteBaseline }} [options]
  */
-export function formatGateReport(
-	origin,
-	run,
-	verdict,
-	{ maxDrop = 1, title = 'AI-Friendliness Index', extra = '', gate } = {}
-) {
+export function formatGateReport(origin, run, verdict, { maxDrop = 1, title = 'Index', extra = [], gate } = {}) {
 	const status = verdict.ok ? '✅ **Passed**' : '❌ **Failed**';
-	const sinceOrigin = Math.round((run.index - origin.index) * 10) / 10;
+	const sinceOrigin = r1(run.index - origin.index);
+	const extraLines = (Array.isArray(extra) ? extra : [extra]).filter(Boolean);
 	const gateLine =
 		gate && gate.label !== origin.label
-			? `Regression gate against the newest recorded run \`${gate.label}\` @ \`${gate.sha ?? 'unknown'}\`: ${gate.index.toFixed(1)} → ${run.index.toFixed(1)} (${signed(verdict.delta)}), tolerance −${maxDrop}.`
+			? `Regression gate against the newest recorded run \`${gate.label}\` @ \`${gate.sha ?? 'unknown'}\`: ${f1(gate.index)} → ${f1(run.index)} (${signed(verdict.delta)}), tolerance −${maxDrop}.`
 			: `Tolerance −${maxDrop}.`;
 	const lines = [
 		`### 📊 ${title}: ${status}`,
-		...(extra ? ['', extra] : []),
+		...(extraLines.length ? ['', ...extraLines] : []),
 		'',
-		`Since the branch baseline \`${origin.label}\` @ \`${origin.sha}\`: ${origin.index.toFixed(1)} → **${run.index.toFixed(1)}** (${signed(sinceOrigin)}); this run @ \`${run.sha ?? 'unknown'}\`. ${gateLine}`,
+		`Since the branch baseline \`${origin.label}\` @ \`${origin.sha}\`: ${f1(origin.index)} → **${f1(run.index)}** (${signed(sinceOrigin)}); this run @ \`${run.sha ?? 'unknown'}\`. ${gateLine}`,
 		'',
 		'| ID | Eval | Before | After | Δ | Notes |',
 		'| --- | --- | ---: | ---: | ---: | --- |',
 		...run.results.map((r) => formatEvalRow(origin, run.scores, r)),
-		`| — | **Index** | **${origin.index.toFixed(1)}** | **${run.index.toFixed(1)}** | **${signed(sinceOrigin)}** | |`,
+		`| — | **Index** | **${f1(origin.index)}** | **${f1(run.index)}** | **${signed(sinceOrigin)}** | |`,
 		'',
 		'History of every run: `evals/results/HISTORY.md`. Formulas and bands: `docs-internal/ai-friendliness/2026-09-29-eval-suite-design.md`.',
 	];
@@ -166,72 +235,83 @@ export function formatGateReport(
 }
 
 /**
- * Gate the Enterprise Readiness Index: the drop rule plus the coverage no-decrease rule.
- * @param {HistoryEntry} baseline the newest recorded run, for the regression rule
- * @param {any} run the full run (with `enterprise`)
- * @param {number} maxDrop
- * @param {HistoryEntry} [origin] the entry the before → after table compares with (default: the baseline)
- * @returns {{ verdict: ReturnType<typeof evaluateGate>, report: string }|null} null when either side lacks the suite
+ * Gate one suite of a run: every rule, one verdict, one report section.
+ * @param {import('../suites.mjs').Suite} suite
+ * @param {any[]} history
+ * @param {any} run the full run, in the suites shape
+ * @param {{ baselineLabel?: string, originLabel?: string, maxDrop?: number, maxEvalDrop?: number }} [options]
+ * @returns {{ verdict: { ok: boolean, message: string }|null, report: string }}
  */
-export function enterpriseVerdict(baseline, run, maxDrop, origin = baseline) {
-	if (!baseline.enterprise || !run.enterprise || !origin.enterprise) return null;
-	const eBaseline = { ...baseline, scores: baseline.enterprise.scores, index: baseline.enterprise.index };
-	const eOrigin = { ...origin, scores: origin.enterprise.scores, index: origin.enterprise.index };
-	const eResult = evaluateGate(eBaseline, run.enterprise, { maxDrop });
-	const coverage = evaluateCoverageRule(baseline, run);
-	const ok = eResult.ok && (coverage?.ok ?? true);
-	const tail = eResult.message.slice(eResult.message.indexOf('Index'));
-	const coverageNote = coverage ? `; ${coverage.message}` : '';
+export function gateSuite(suite, history, run, options = {}) {
+	const runSuite = run.suites[suite.id];
+	const maxDrop = options.maxDrop ?? suite.maxDrop;
+	const maxEvalDrop = options.maxEvalDrop ?? suite.maxEvalDrop;
+	const baseline = suiteView(pickBaseline(history, options.baselineLabel), suite.id);
+	if (!baseline) {
+		return { verdict: null, report: `### 📊 ${suite.indexName}: first measurement, no baseline yet\n` };
+	}
+	const origin = /** @type {SuiteBaseline} */ (
+		suiteView(pickOrigin(history, suite.id, options.originLabel), suite.id)
+	);
+	const index = evaluateGate(baseline, runSuite, { maxDrop, maxEvalDrop });
+	const rules = [...evaluateRules(suite.metrics, baseline, runSuite)];
+	const measurement = evaluateMeasurementRule(baseline, runSuite);
+	if (measurement) rules.push(measurement);
+	const ok = index.ok && rules.every((r) => r.ok);
+	const tail = index.message.slice(index.message.indexOf('Index'));
+	const ruleNotes = rules.map((r) => `; ${r.message}`).join('');
 	const verdict = {
-		...eResult,
 		ok,
-		message: `${ok ? 'PASS' : 'FAIL'} — Enterprise Readiness ${tail}${coverageNote}`,
+		message: `${ok ? 'PASS' : 'FAIL'} — ${suite.indexName.replace(/ Index$/, '')} ${tail}${ruleNotes}`,
 	};
-	const report = formatGateReport(eOrigin, { ...run.enterprise, label: run.label, sha: run.sha }, verdict, {
+	const report = formatGateReport(origin, { ...runSuite, label: run.label, sha: run.sha }, index, {
 		maxDrop,
-		title: 'Enterprise Readiness Index',
-		extra: coverage ? `Coverage rule: ${coverage.message}.` : '',
-		gate: eBaseline,
+		title: suite.indexName,
+		extra: rules.map((r) => `${r.ok ? '✅' : '❌'} ${r.message}.`),
+		gate: baseline,
 	});
 	return { verdict, report };
 }
 
 function main() {
 	const argv = process.argv.slice(2);
-	/** @type {{ baseline?: string, reportBaseline?: string, maxDrop: number, maxDropEnterprise?: number, report?: string }} */
-	const args = { maxDrop: 1 };
+	/** @type {{ baseline?: string, reportBaseline?: string, maxDrop?: number, maxEvalDrop?: number, report?: string, perSuite: Record<string, number> }} */
+	const args = { perSuite: {} };
 	for (let i = 0; i < argv.length; i++) {
-		if (argv[i] === '--baseline') args.baseline = argv[++i];
-		else if (argv[i] === '--report-baseline') args.reportBaseline = argv[++i];
-		else if (argv[i] === '--max-drop') args.maxDrop = Number(argv[++i]);
-		else if (argv[i] === '--max-drop-enterprise') args.maxDropEnterprise = Number(argv[++i]);
-		else if (argv[i] === '--report') args.report = argv[++i];
-		else throw new Error(`Unknown argument: ${argv[i]}`);
+		const a = argv[i];
+		if (a === '--baseline') args.baseline = argv[++i];
+		else if (a === '--report-baseline') args.reportBaseline = argv[++i];
+		else if (a === '--max-drop') args.maxDrop = Number(argv[++i]);
+		else if (a === '--max-eval-drop') args.maxEvalDrop = Number(argv[++i]);
+		else if (a === '--report') args.report = argv[++i];
+		else if (a.startsWith('--max-drop-')) args.perSuite[a.slice('--max-drop-'.length)] = Number(argv[++i]);
+		else throw new Error(`Unknown argument: ${a}`);
 	}
-	const history = JSON.parse(fs.readFileSync(insideDir(suiteDir, 'results', 'history.json'), 'utf8'));
-	const baseline = pickBaseline(history, args.baseline);
-	const origin = pickOrigin(history, args.reportBaseline);
+	const history = JSON.parse(fs.readFileSync(insideDir(evalsDir, 'results', 'history.json'), 'utf8'));
 	const json = execFileSync(
 		process.execPath,
-		[path.join(suiteDir, 'run.mjs'), '--label', 'gate', '--no-write', '--json'],
+		[path.join(evalsDir, 'run.mjs'), '--label', 'gate', '--no-write', '--json'],
 		{
 			encoding: 'utf8',
 			maxBuffer: 64 * 1024 * 1024,
 			stdio: ['ignore', 'pipe', 'inherit'],
 		}
 	);
-	const run = JSON.parse(json);
-	const result = evaluateGate(baseline, run, { maxDrop: args.maxDrop });
-	const verdicts = [result];
+	const run = normalizeRun(JSON.parse(json));
+	/** @type {{ ok: boolean, message: string }[]} */
+	const verdicts = [];
 	/** @type {string[]} */
-	const reports = [formatGateReport(origin, run, result, { maxDrop: args.maxDrop, gate: baseline })];
-	const eOrigin = run.enterprise ? pickOrigin(history, args.reportBaseline, true) : origin;
-	const enterprise = enterpriseVerdict(baseline, run, args.maxDropEnterprise ?? args.maxDrop, eOrigin);
-	if (enterprise) {
-		verdicts.push(enterprise.verdict);
-		reports.push(enterprise.report);
-	} else if (run.enterprise) {
-		reports.push('### 📊 Enterprise Readiness Index: first measurement, no baseline yet\n');
+	const reports = [];
+	for (const suite of SUITES) {
+		if (!run.suites[suite.id]) continue;
+		const { verdict, report } = gateSuite(suite, history, run, {
+			baselineLabel: args.baseline,
+			originLabel: args.reportBaseline,
+			maxDrop: args.perSuite[suite.id] ?? args.maxDrop,
+			maxEvalDrop: args.maxEvalDrop,
+		});
+		if (verdict) verdicts.push(verdict);
+		reports.push(report);
 	}
 	if (args.report) {
 		// appended, so it can target $GITHUB_STEP_SUMMARY as well as a fresh file

@@ -19,7 +19,12 @@ import * as sass from 'sass';
  */
 export function compileScss(file, { loadPaths = [] } = {}) {
 	try {
-		const result = sass.compile(file, { loadPaths, style: 'expanded', logger: sass.Logger.silent, quietDeps: true });
+		const result = sass.compile(file, {
+			loadPaths,
+			style: 'expanded',
+			logger: sass.Logger.silent,
+			quietDeps: true,
+		});
 		return { css: result.css, error: null };
 	} catch (e) {
 		return { css: null, error: String(/** @type {any} */ (e)?.message ?? e) };
@@ -203,7 +208,12 @@ export function isThemeableProp(prop) {
 	if (THEMEABLE_PREFIXES.some((p) => prop.startsWith(p))) return true;
 	if (!prop.startsWith('border-')) return false;
 	// border sides/axes (`border-inline-start`), their colour/width, and every radius longhand
-	return prop.endsWith('-radius') || prop.endsWith('-color') || prop.endsWith('-width') || /^border-(top|right|bottom|left|block|inline)(-(start|end))?$/.test(prop);
+	return (
+		prop.endsWith('-radius') ||
+		prop.endsWith('-color') ||
+		prop.endsWith('-width') ||
+		/^border-(top|right|bottom|left|block|inline)(-(start|end))?$/.test(prop)
+	);
 }
 
 const COLOR_LITERAL = /#[0-9a-f]{3,8}\b|\b(rgb|rgba|hsl|hsla)\(|(?<![\w-])(white|black)(?![\w-])/i;

@@ -28,6 +28,25 @@ export function readHeadCommit(root) {
 }
 
 /**
+ * Name of the branch HEAD points at (`refs/heads/<name>` → `<name>`), or null for a detached HEAD or
+ * unreadable metadata. Read from the repository metadata, without spawning git.
+ * @param {string} root
+ * @returns {string|null}
+ */
+export function readHeadBranch(root) {
+	try {
+		const gitDir = resolveGitDir(path.resolve(root));
+		if (!gitDir) return null;
+		const head = fs.readFileSync(insideDir(gitDir, 'HEAD'), 'utf8').trim();
+		if (!head.startsWith('ref: refs/heads/')) return null;
+		const ref = head.slice('ref: '.length);
+		return isRefName(ref) ? ref.slice('refs/heads/'.length) : null;
+	} catch {
+		return null;
+	}
+}
+
+/**
  * Only a short hexadecimal object id is ever returned (and later printed); anything else is 'unknown'.
  * @param {string|null} commit
  */
@@ -169,6 +188,11 @@ export function createContext(root, options = {}) {
 		/** Abbreviated commit id of the working tree HEAD, or 'unknown'. */
 		headCommit() {
 			return readHeadCommit(root);
+		},
+
+		/** Branch of the working tree HEAD, or null when detached. */
+		headBranch() {
+			return readHeadBranch(root);
 		},
 
 		/** @param {string} file */

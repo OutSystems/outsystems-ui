@@ -5,7 +5,7 @@ Each row is one full run (`npm run evals --label <name>`); each index is the unw
 
 ## AI-Friendliness Index
 
-The ten evals E01–E10: how legible the library is to coding agents.
+The 10 evals E01–E10: how legible the library is to coding agents.
 
 ### Index over time
 
@@ -58,7 +58,7 @@ Biggest movers:
 
 ## Enterprise Readiness Index
 
-The six evals R01–R06: how far the token theme and the patterns meet the enterprise UI requirements. Measured from `loop-6` on; earlier runs have no value.
+The 6 evals R01–R06: how far the token theme and the patterns meet the enterprise UI requirements. Measured from `loop-6` on; earlier runs have no value.
 
 ### Index over time
 

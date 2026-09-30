@@ -18,6 +18,35 @@ export default {
 	formula:
 		'mean over manifest entries of the mean of six facets (props typed, defaults, api, events, cssClasses, markup) · 100 · (entries / patterns); 0 without docs-ai/osui.components.json',
 	movable: true,
+	present: {
+		scope: 'Per pattern: how complete its entry in docs-ai/osui.components.json is across six facets. CSS-only components are documented in llms-patterns.txt instead.',
+		heatmap: true,
+		appliesTo: 'pattern',
+		/** @param {any} row */
+		cell(row) {
+			if (!row.present) return { s: row.score, h: 'Missing from the manifest: run npm run docs:ai.' };
+			const weak = Object.entries(row.facets ?? {})
+				.filter(([, v]) => Number(v) < 100)
+				.map(([k, v]) => `${k} ${v}`);
+			return {
+				s: row.score,
+				h: weak.length
+					? `Facets below 100: ${weak.join(', ')}. Add the missing defaults, descriptions or markup skeleton to the source the generator reads.`
+					: 'All six manifest facets complete.',
+			};
+		},
+		/** @param {any} m */
+		advice(m) {
+			const raw = m.raw ?? {};
+			const facetMeans = Object.entries(raw.facetMeans ?? {})
+				.map(([k, v]) => `${k} ${v}`)
+				.join(', ');
+			return [
+				`${raw.patterns}/${raw.entries ?? raw.patterns} patterns in the manifest; facet means ${facetMeans}.`,
+				'Keep it at 100 by running npm run docs:ai in every PR that touches a pattern; the CI freshness check fails a stale commit.',
+			];
+		},
+	},
 	/** @param {import('../../lib/context.mjs').EvalContext} ctx */
 	compute(ctx) {
 		const manifest = loadManifest(ctx);

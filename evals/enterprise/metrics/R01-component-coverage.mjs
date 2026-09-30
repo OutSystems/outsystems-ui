@@ -14,6 +14,7 @@ import { fileURLToPath } from 'node:url';
 import { walk } from '../../lib/inventory.mjs';
 import { insideDir } from '../../lib/paths.mjs';
 import { round1 } from '../../lib/score.mjs';
+import { list, rowsOf } from '../../lib/present.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 export const REQUIREMENTS_FILE = insideDir(path.resolve(here, '..'), 'requirements.json');
@@ -137,6 +138,44 @@ export default {
 		'100 · Σ_group weight · mean(points) over requirements owned by OutSystems UI; offered = 1, partial = 0.5, missing = 0; requirements owned by the platform, Data Grid, Charts or Maps are reported as delegated and excluded',
 	movable: false,
 	cls: 'roadmap',
+	rules: [{ kind: 'no-decrease', why: 'a removed component or feature is a regression whatever the index does' }],
+	present: {
+		scope: 'Per requirement of the enterprise UI document, not per component: offered, partial or missing, with delegated rows for other OutSystems products.',
+		heatmap: false,
+		appliesTo: 'both',
+		/** @param {any} m */
+		advice(m) {
+			const rows = rowsOf(m);
+			const raw = m.raw ?? {};
+			const missing = rows.filter((r) => !r.delegated && r.status === 'missing').map((r) => r.name);
+			const partial = rows.filter((r) => !r.delegated && r.status === 'partial').map((r) => r.name);
+			const flows = (raw.flows ?? [])
+				.filter((/** @type {any} */ f) => f.kit !== 'complete')
+				.map((/** @type {any} */ f) => `${f.flow} (${[...f.missing, ...f.partial].join(', ')})`);
+			return [
+				`Missing (${missing.length}): ${list(missing, 12)}.`,
+				`Partial (${partial.length}): ${list(partial, 12)}.`,
+				flows.length
+					? `Flows not kit-complete: ${flows.join('; ')}.`
+					: 'Every flow of the document is kit-complete.',
+				'Each missing item is new work (roadmap), not a refactor; delegated rows (Table, Data Grid, Charts, Maps) are reported but not scored.',
+			];
+		},
+		/** The requirement table and the flows, for the dashboard. @param {any} m */
+		extra(m) {
+			return {
+				requirements: rowsOf(m).map((r) => ({
+					id: r.id,
+					name: r.name,
+					group: r.group,
+					owner: r.owner,
+					status: r.status,
+					reason: r.reason,
+				})),
+				flows: m.raw?.flows ?? [],
+			};
+		},
+	},
 	/** @param {import('../../lib/context.mjs').EvalContext} ctx */
 	compute(ctx) {
 		const map = loadRequirements();

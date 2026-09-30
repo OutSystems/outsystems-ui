@@ -17,6 +17,7 @@ import {
 	scoreChecks,
 	themeGuards,
 } from '../lib/signals.mjs';
+import { checksCell } from '../../lib/present.mjs';
 
 /** CSS-only components that are operated (the patterns are interactive unless listed as non-interactive). */
 export const INTERACTIVE_CSS = new Set([
@@ -132,12 +133,31 @@ export default {
 		'per component: 100 · passed / applicable for: hover, focus-visible, press/open, disabled (interactive components), loading (loading components), invalid (input components), motion guarded by prefers-reduced-motion (animating components); mean over components',
 	movable: true,
 	cls: 'movable',
+	present: {
+		scope: 'Per component: hover, focus-visible, press/open and disabled states where interactive; loading, invalid and guarded motion where they apply.',
+		heatmap: true,
+		appliesTo: 'both',
+		unmeasuredHint: 'Fix the SCSS compile error so the state checks can run.',
+		/** @param {any} row */
+		cell(row) {
+			return checksCell(row);
+		},
+		/** @param {any} m */
+		advice(m) {
+			return [
+				m.summary,
+				'State styles and prefers-reduced-motion guards are additive; a skeleton-loading component is R01 roadmap work.',
+			];
+		},
+	},
 	/** @param {import('../../lib/context.mjs').EvalContext} ctx */
 	compute(ctx) {
 		/** @type {any[]} */
 		const perComponent = [];
 		/** @type {{ name: string, reason: string }[]} */
 		const unmeasured = [];
+		/** @type {{ name: string, reason: string, hint: string }[]} */
+		const notApplicable = [];
 		const guards = themeGuards(ctx);
 		for (const c of componentUniverse(ctx)) {
 			const compiled = componentCss(ctx, c);
@@ -151,9 +171,10 @@ export default {
 			const checks = checksFor(c, css, ts, guards);
 			const score = scoreChecks(checks);
 			if (score === null) {
-				unmeasured.push({
+				notApplicable.push({
 					name: c.name,
 					reason: 'no interactive, loading, input or motion behaviour to check',
+					hint: 'State checks apply once the component is interactive, loads, validates or animates.',
 				});
 				continue;
 			}
@@ -173,6 +194,7 @@ export default {
 			raw: Object.fromEntries(Object.keys(LABELS).map((k) => [k, count(k)])),
 			perComponent: [...perComponent].sort((a, b) => a.score - b.score || a.name.localeCompare(b.name)),
 			unmeasured,
+			notApplicable,
 		};
 	},
 };

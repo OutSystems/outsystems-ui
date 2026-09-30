@@ -9,7 +9,21 @@ import ts from 'typescript';
 /** Explicit, locale-independent string order. */
 const byCodePoint = (/** @type {string} */ a, /** @type {string} */ b) => (a < b ? -1 : Number(a > b));
 
-const VOID_ELEMENTS = new Set(['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'source', 'track', 'wbr']);
+const VOID_ELEMENTS = new Set([
+	'area',
+	'base',
+	'br',
+	'col',
+	'embed',
+	'hr',
+	'img',
+	'input',
+	'link',
+	'meta',
+	'source',
+	'track',
+	'wbr',
+]);
 const MAX_INLINE_DEPTH = 4;
 
 /** @param {string} text */
@@ -42,7 +56,12 @@ function returnedTemplate(body) {
 	let found = null;
 	walk(body, (n) => {
 		if (found) return;
-		if (ts.isReturnStatement(n) && n.expression && isTemplate(n.expression) && looksLikeHtml(n.expression.getText())) {
+		if (
+			ts.isReturnStatement(n) &&
+			n.expression &&
+			isTemplate(n.expression) &&
+			looksLikeHtml(n.expression.getText())
+		) {
 			found = n.expression;
 		}
 	});

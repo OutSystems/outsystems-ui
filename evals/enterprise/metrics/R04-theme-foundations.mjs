@@ -13,9 +13,12 @@ import {
 	componentUniverse,
 	describeChecks,
 	includesAny,
+	NO_PARTIAL,
+	NO_PARTIAL_HINT,
 	scoreChecks,
 	themeGuards,
 } from '../lib/signals.mjs';
+import { checksCell } from '../../lib/present.mjs';
 
 /**
  * Foundation rows → the CSS properties that declare them and the token families that carry them.
@@ -142,26 +145,53 @@ export default {
 		'40 · (foundation rows defined in the token theme and consumed by a component)/8 + 60 · mean over components of passed/applicable for: every declared family read via tokens or knobs, .os-dark rules when colours are set, .is-rtl rules when direction matters, prefers-reduced-motion guard when it animates',
 	movable: true,
 	cls: 'movable',
+	present: {
+		scope: 'Per component CSS: declared foundation families read via tokens or knobs, dark-ready colours, RTL rules where direction matters, a reduced-motion guard where it animates.',
+		heatmap: true,
+		appliesTo: 'both',
+		unmeasuredHint: 'Fix the SCSS compile error so the partial can be scored.',
+		/** @param {any} row */
+		cell(row) {
+			return checksCell(
+				row,
+				row.untokened?.length ? [`families read with literals: ${row.untokened.join(', ')}`] : []
+			);
+		},
+		/** @param {any} m */
+		advice(m) {
+			return [
+				m.summary,
+				'Dark mode follows the token set, so the remaining work is literal colour reads and the reduced-motion guard on animating components; both additive.',
+			];
+		},
+	},
 	/** @param {import('../../lib/context.mjs').EvalContext} ctx */
 	compute(ctx) {
 		/** @type {any[]} */
 		const perComponent = [];
 		/** @type {{ name: string, reason: string }[]} */
 		const unmeasured = [];
+		/** @type {{ name: string, reason: string, hint: string }[]} */
+		const notApplicable = [];
 		/** @type {string[]} */
 		const cssTexts = [];
 		const guards = themeGuards(ctx);
 		for (const c of componentUniverse(ctx)) {
 			const { css, error } = componentCss(ctx, c);
 			if (css === null) {
-				unmeasured.push({ name: c.name, reason: error ?? 'no CSS' });
+				if (error === NO_PARTIAL) notApplicable.push({ name: c.name, reason: error, hint: NO_PARTIAL_HINT });
+				else unmeasured.push({ name: c.name, reason: error ?? 'no CSS' });
 				continue;
 			}
 			cssTexts.push(css);
 			const r = checksFor(css, guards);
 			const score = scoreChecks(r.checks);
 			if (score === null) {
-				unmeasured.push({ name: c.name, reason: 'no foundation declarations' });
+				notApplicable.push({
+					name: c.name,
+					reason: 'no foundation declarations',
+					hint: 'Nothing to change: the compiled CSS declares no colour, typography, shape, spacing, elevation or grid family.',
+				});
 				continue;
 			}
 			const { failed } = describeChecks(r.checks, {
@@ -203,6 +233,7 @@ export default {
 			},
 			perComponent: [...perComponent].sort((a, b) => a.score - b.score || a.name.localeCompare(b.name)),
 			unmeasured,
+			notApplicable,
 		};
 	},
 };

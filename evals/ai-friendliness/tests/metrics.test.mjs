@@ -43,12 +43,34 @@ test('E02 prop surface: size band after 8 props, typing precision ratio', () => 
 });
 
 test('E02 flags string props validated in range or defaulted to an enum member as stringly-typed enums', () => {
-	const base = { name: 'X', className: 'C', file: 'f', typeText: 'string', hasDoc: false, allowed: [], allowedFrom: null };
+	const base = {
+		name: 'X',
+		className: 'C',
+		file: 'f',
+		typeText: 'string',
+		hasDoc: false,
+		allowed: [],
+		allowedFrom: null,
+	};
 	assert.equal(isStringlyTypedEnum({ ...base, kind: 'string', validated: 'inRange', defaultText: "'left'" }), true);
-	assert.equal(isStringlyTypedEnum({ ...base, kind: 'string', validated: 'string', defaultText: 'Enum.IconType.Caret' }), true);
-	assert.equal(isStringlyTypedEnum({ ...base, kind: 'string', validated: 'string', defaultText: 'GlobalEnum.Direction.Right' }), true);
+	assert.equal(
+		isStringlyTypedEnum({ ...base, kind: 'string', validated: 'string', defaultText: 'Enum.IconType.Caret' }),
+		true
+	);
+	assert.equal(
+		isStringlyTypedEnum({
+			...base,
+			kind: 'string',
+			validated: 'string',
+			defaultText: 'GlobalEnum.Direction.Right',
+		}),
+		true
+	);
 	assert.equal(isStringlyTypedEnum({ ...base, kind: 'string', validated: 'string', defaultText: "''" }), false);
-	assert.equal(isStringlyTypedEnum({ ...base, kind: 'enum', validated: 'inRange', defaultText: 'Enum.Kind.A' }), false);
+	assert.equal(
+		isStringlyTypedEnum({ ...base, kind: 'enum', validated: 'inRange', defaultText: 'Enum.Kind.A' }),
+		false
+	);
 });
 
 test('E03 schema completeness: mean facet score scaled by manifest coverage', () => {
@@ -94,4 +116,29 @@ test('E10 composition model: inheritance depth, file count and standards flags',
 	close(e10({ depth: 1, files: 4, configShape: 1, eventModel: 1, moduleFormat: 1 }), 100);
 	close(e10({ depth: 4, files: 8, configShape: 0, eventModel: 0, moduleFormat: 0 }), 4);
 	close(e10({ depth: 2, files: 5, configShape: 0, eventModel: 0, moduleFormat: 0 }), 43);
+});
+
+test('E09 reports a partial that compiles to no rules as not applicable, not as unmeasured', async () => {
+	const { createContext } = await import('../../lib/context.mjs');
+	const path = await import('node:path');
+	const { fileURLToPath } = await import('node:url');
+	const E09 = (await import('../metrics/E09-selector-complexity.mjs')).default;
+	const ctx = createContext(path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..', '..'));
+	const r = E09.compute(ctx);
+	assert.ok(r.notApplicable.length >= 1, 'at least one partial has no rules today');
+	assert.match(r.notApplicable[0].reason, /no rules/);
+	assert.ok(r.notApplicable[0].hint, 'the row says there is nothing to change');
+	assert.ok(!r.unmeasured.some((u) => u.reason === 'no rules'));
+});
+
+test('E07 marks host-styled components not applicable with a hint about the host and the knobs', async () => {
+	const { createContext } = await import('../../lib/context.mjs');
+	const path = await import('node:path');
+	const { fileURLToPath } = await import('node:url');
+	const E07 = (await import('../metrics/E07-markup-depth.mjs')).default;
+	const ctx = createContext(path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..', '..'));
+	const r = E07.compute(ctx);
+	const layout = r.notApplicable.find((n) => n.name === 'layout');
+	assert.ok(layout);
+	assert.match(layout.hint, /knobs/);
 });

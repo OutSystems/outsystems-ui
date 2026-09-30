@@ -184,3 +184,22 @@ test('R06: states apply by interactivity, loading and validation membership, mot
 	assert.equal(dd.invalid.pass, true);
 	assert.equal(dd.disabled.pass, true, 'a scripted disabled state counts');
 });
+
+test('R03 and R06 report components with nothing to check as not applicable, with a hint, not as unmeasured', async () => {
+	const { createContext } = await import('../../lib/context.mjs');
+	const path = await import('node:path');
+	const { fileURLToPath } = await import('node:url');
+	const R03 = (await import('../metrics/R03-keyboard-operability.mjs')).default;
+	const R06 = (await import('../metrics/R06-feedback-states.mjs')).default;
+	const ctx = createContext(path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..', '..'));
+	const r03 = R03.compute(ctx);
+	const gallery = r03.notApplicable.find((n) => n.name === 'Gallery');
+	assert.ok(gallery, 'a non-interactive pattern is not applicable to keyboard checks');
+	assert.match(gallery.reason, /not interactive/);
+	assert.ok(gallery.hint, 'the row says what would make it applicable');
+	assert.deepEqual(r03.unmeasured, [], 'nothing is left unmeasured');
+	const r06 = R06.compute(ctx);
+	const sep = r06.notApplicable.find((n) => n.name === 'separator');
+	assert.ok(sep, 'a component with no interactive, loading, input or motion behaviour is not applicable');
+	assert.ok(!r06.unmeasured.some((u) => u.name === 'separator'));
+});

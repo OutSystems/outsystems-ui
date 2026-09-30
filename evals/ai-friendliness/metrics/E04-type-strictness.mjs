@@ -28,6 +28,19 @@ export default {
 	formula:
 		'100 − min(40, 4·implicitAny/KLOC) − min(20, 10·explicitAny/KLOC) − min(10, 2.5·suppressions) − 30·(exported public functions without return type / total)',
 	movable: true,
+	present: {
+		scope: 'Measured per file over the whole program (implicit any, explicit any, suppressions, return types), so it has no per-component cell.',
+		heatmap: false,
+		appliesTo: 'pattern',
+		/** @param {any} m */
+		advice(m) {
+			const raw = m.raw ?? {};
+			return [
+				`${raw.implicit} implicit-any, ${raw.explicit} explicit any, ${raw.suppressions} suppressions, ${raw.missingReturnTypes}/${raw.publicFunctions} public functions without a return type over ${raw.kloc} KLOC; noImplicitAny is on.`,
+				'Next step of this kind: strictNullChecks, which is a larger behaviour-neutral annotation pass.',
+			];
+		},
+	},
 	/** @param {import('../../lib/context.mjs').EvalContext} ctx */
 	compute(ctx) {
 		const program = ctx.program;

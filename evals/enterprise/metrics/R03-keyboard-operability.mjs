@@ -18,6 +18,7 @@ import {
 	PROVIDER_PATTERNS,
 	sharedText,
 } from '../lib/signals.mjs';
+import { checksCell, list } from '../../lib/present.mjs';
 
 /** Key → needles that show the key is handled. */
 export const KEY_NEEDLES = {
@@ -107,6 +108,23 @@ export default {
 		'per interactive pattern: 100 · handled / required keys; required = Enter/Space for all (a native button, link or input in the story markup or created in TypeScript counts), Escape and tab order for overlays, Arrow keys and tab order for composite widgets; a key handled by a family member or a shared feature counts; a provider-backed pattern is credited to its library for the keys its wrapper does not handle, and flagged; mean over patterns',
 	movable: true,
 	cls: 'movable',
+	present: {
+		scope: 'Per interactive pattern: the keys its role needs (Enter/Space; Escape and tab order for overlays; Arrow keys and tab order for composite widgets). CSS-only components have no script.',
+		heatmap: true,
+		appliesTo: 'pattern',
+		/** @param {any} row */
+		cell(row) {
+			return checksCell(row, row.delegated ? ['keys handled by the provider library, not the wrapper'] : []);
+		},
+		/** @param {any} m */
+		advice(m) {
+			return [
+				m.summary,
+				`Missing keys: ${list(m.raw?.missing ?? [], 8)}.`,
+				'Key handlers are additive; overlays need Escape and a managed tab order, composite widgets need Arrow keys.',
+			];
+		},
+	},
 	/** @param {import('../../lib/context.mjs').EvalContext} ctx */
 	compute(ctx) {
 		const perComponent = ctx.inventory.patterns
@@ -141,9 +159,14 @@ export default {
 				missing: perComponent.filter((r) => r.score < 100).map((r) => `${r.name}: ${r.failed.join(', ')}`),
 			},
 			perComponent: [...perComponent].sort((a, b) => a.score - b.score || a.name.localeCompare(b.name)),
-			unmeasured: ctx.inventory.patterns
+			unmeasured: [],
+			notApplicable: ctx.inventory.patterns
 				.filter((p) => NON_INTERACTIVE_PATTERNS.has(p.name))
-				.map((p) => ({ name: p.name, reason: 'not interactive' })),
+				.map((p) => ({
+					name: p.name,
+					reason: 'not interactive',
+					hint: 'Keyboard checks apply once the pattern renders an interactive control of its own.',
+				})),
 		};
 	},
 };

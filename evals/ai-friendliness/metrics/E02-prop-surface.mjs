@@ -1,6 +1,7 @@
 // @ts-check
 import { expectationsFor } from '../../lib/expectations.mjs';
 import { clamp01, mean, round1 } from '../../lib/score.mjs';
+import { list, rowsOf, toDoHint } from '../../lib/present.mjs';
 
 export const FREE_PROPS = 8;
 export const PROPS_TO_ZERO = 12;
@@ -42,6 +43,39 @@ export default {
 	criterion: 'Schema & Metadata · Anatomy',
 	formula: `100 · (0.4·clamp(1 − max(0, props − ${FREE_PROPS})/${PROPS_TO_ZERO}) + 0.6·precise/props); precise = boolean | number | enum/union | typed object/array | free string; a string validated with validateInRange or defaulted to an enum member is a stringly-typed enum (imprecise)`,
 	movable: true,
+	present: {
+		scope: 'Per pattern: how many config props it has and how many are precisely typed. CSS-only components have no props.',
+		heatmap: true,
+		appliesTo: 'pattern',
+		/** @param {any} row */
+		cell(row) {
+			const parts = [`${row.precise} of ${row.n} props precise`];
+			if (row.n > FREE_PROPS) parts.push(`${row.n - FREE_PROPS} props over the free allowance of ${FREE_PROPS}`);
+			const todo = [];
+			if (row.stringlyTypedEnums?.length)
+				todo.push(
+					`type as enums: ${list(row.stringlyTypedEnums.map((/** @type {string} */ s) => s.split(' (')[0]))}`
+				);
+			if (row.untyped?.length) todo.push(`give a type to: ${list(row.untyped)}`);
+			return { s: row.score, h: `${parts.join('; ')}.${toDoHint(todo)}` };
+		},
+		/** @param {any} m */
+		advice(m) {
+			const rows = rowsOf(m);
+			const stringly = rows.flatMap((r) =>
+				(r.stringlyTypedEnums ?? []).map((/** @type {string} */ s) => `${r.name}.${s.split(' (')[0]}`)
+			);
+			const big = rows.filter((r) => r.n > FREE_PROPS).map((r) => `${r.name} (${r.n})`);
+			return [
+				stringly.length
+					? `${stringly.length} stringly-typed enums remain: ${list(stringly, 7)}. Turning them into validated enum types changes runtime fallback behaviour (B-9).`
+					: 'No stringly-typed enums remain.',
+				big.length
+					? `Patterns over the free allowance of ${FREE_PROPS} props: ${list(big, 6)}; splitting or grouping props is a public-contract change.`
+					: 'No pattern exceeds the prop allowance.',
+			];
+		},
+	},
 	/** @param {import('../../lib/context.mjs').EvalContext} ctx */
 	compute(ctx) {
 		const perComponent = ctx.inventory.patterns.map((p) => {

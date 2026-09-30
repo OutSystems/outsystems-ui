@@ -252,7 +252,13 @@ export function getClassesInFiles(program, files) {
 			const implementsNames = (n.heritageClauses ?? [])
 				.filter((c) => c.token === ts.SyntaxKind.ImplementsKeyword)
 				.flatMap((c) => c.types.map((t) => t.expression.getText(sf).split('.').pop() ?? ''));
-			out.push({ name: n.name.text, file, isAbstract, chain: getClassChain(program, n.name.text), implementsNames });
+			out.push({
+				name: n.name.text,
+				file,
+				isAbstract,
+				chain: getClassChain(program, n.name.text),
+				implementsNames,
+			});
 		});
 	}
 	return out;
@@ -282,7 +288,8 @@ const KEYWORD_KINDS = new Map([
  */
 function kindFromInitializer(initializer) {
 	if (!initializer) return 'untyped';
-	if (initializer.kind === ts.SyntaxKind.TrueKeyword || initializer.kind === ts.SyntaxKind.FalseKeyword) return 'boolean';
+	if (initializer.kind === ts.SyntaxKind.TrueKeyword || initializer.kind === ts.SyntaxKind.FalseKeyword)
+		return 'boolean';
 	if (ts.isNumericLiteral(initializer)) return 'number';
 	if (ts.isStringLiteral(initializer) || ts.isTemplateLiteral(initializer)) return 'string';
 	if (ts.isArrayLiteralExpression(initializer)) return 'array';
@@ -298,7 +305,8 @@ function kindFromInitializer(initializer) {
  */
 function kindFromUnion(typeNode, checker) {
 	const isNullish = (/** @type {ts.TypeNode} */ t) =>
-		t.kind === ts.SyntaxKind.UndefinedKeyword || (ts.isLiteralTypeNode(t) && t.literal.kind === ts.SyntaxKind.NullKeyword);
+		t.kind === ts.SyntaxKind.UndefinedKeyword ||
+		(ts.isLiteralTypeNode(t) && t.literal.kind === ts.SyntaxKind.NullKeyword);
 	const members = typeNode.types.filter((t) => !isNullish(t));
 	if (members.length === 1) return classifyType(members[0], undefined, checker);
 	return members.every((t) => ts.isLiteralTypeNode(t)) ? 'enum' : 'union';
@@ -314,7 +322,8 @@ function kindFromReference(typeNode, checker) {
 	if (typeNode.typeName.getText() === 'Array') return 'array';
 	const type = checker.getTypeAtLocation(typeNode);
 	const isEnumLike = (type.flags & ts.TypeFlags.EnumLike) !== 0;
-	const isLiteralUnion = type.isUnion() && type.types.every((t) => t.isLiteral() || (t.flags & ts.TypeFlags.EnumLiteral) !== 0);
+	const isLiteralUnion =
+		type.isUnion() && type.types.every((t) => t.isLiteral() || (t.flags & ts.TypeFlags.EnumLiteral) !== 0);
 	if (isEnumLike || isLiteralUnion) return 'enum';
 	if (type.flags & ts.TypeFlags.Any) return 'any';
 	if (type.flags & ts.TypeFlags.Unknown) return 'unknown';
@@ -369,7 +378,9 @@ function readValidateDefault(cls, sf) {
 		for (const clause of n.caseBlock.clauses) {
 			if (ts.isCaseClause(clause)) {
 				const text = clause.expression.getText(sf);
-				const name = ts.isStringLiteral(clause.expression) ? clause.expression.text : text.split('.').pop() ?? text;
+				const name = ts.isStringLiteral(clause.expression)
+					? clause.expression.text
+					: (text.split('.').pop() ?? text);
 				pending.push(name);
 			}
 			if (clause.statements.length === 0) continue;
@@ -393,7 +404,8 @@ function readValidateDefault(cls, sf) {
 				}
 				info = { validated: kind, defaultText: args[1] ?? null, allowed, allowedFrom };
 			});
-			for (const name of pending) out.set(name, info ?? { validated: 'custom', defaultText: null, allowed: [], allowedFrom: null });
+			for (const name of pending)
+				out.set(name, info ?? { validated: 'custom', defaultText: null, allowed: [], allowedFrom: null });
 			pending = [];
 		}
 	});

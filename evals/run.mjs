@@ -1,14 +1,13 @@
 #!/usr/bin/env node
 // @ts-check
 /**
- * AI-friendliness eval runner.
+ * Eval runner for every suite of the registry (suites.mjs).
  *
- *   node evals/run.mjs [--label <name>] [--suite ai|enterprise|all] [--only E01,R02] [--json] [--no-write]
+ *   node evals/run.mjs [--label <name>] [--suite <id>|all] [--only E01,R02] [--branch <name>] [--json] [--no-write]
  *   node evals/run.mjs --compare <labelA> <labelB>
  *
- * Runs the AI-friendliness evals (E01–E10) and the enterprise-readiness evals (R01–R06); each suite has
- * its own index. Writes `results/<label>.json` (full details) and, for full runs of both suites,
- * updates `results/history.json`, HISTORY.md and dashboard.json.
+ * Each suite has its own index. Writes `results/<label>.json` (full details) and, for full runs of every
+ * suite, updates `results/history.json`, HISTORY.md and dashboard.json.
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -16,13 +15,17 @@ import { fileURLToPath } from 'node:url';
 
 import { createContext } from './lib/context.mjs';
 import { insideDir, isSingleSegment } from './lib/paths.mjs';
-import { aggregate, compareRuns, formatComparison, formatTable, INDEX_NAMES, upsertHistory } from './lib/results.mjs';
-import { metrics as aiMetrics } from './ai-friendliness/metrics/index.mjs';
-import { metrics as enterpriseMetrics } from './enterprise/metrics/index.mjs';
-
-/** Every eval of both suites, keyed by suite. */
-const SUITES = { ai: aiMetrics, enterprise: enterpriseMetrics };
-const metrics = aiMetrics;
+import {
+	aggregate,
+	compareRuns,
+	formatComparison,
+	formatTable,
+	historyEntryOf,
+	normalizeHistoryEntry,
+	normalizeRun,
+	upsertHistory,
+} from './lib/results.mjs';
+import { SUITES, suiteOf } from './suites.mjs';
 import { writeDashboardData } from './tools/dashboard-data.mjs';
 import { writeHistoryReport } from './tools/report.mjs';
 
@@ -42,7 +45,7 @@ function resultsFileFor(label) {
 const out = (/** @type {string} */ text) => process.stdout.write(`${text}\n`);
 
 /**
- * @typedef {{ label?: string, only?: string[], suite: 'ai'|'enterprise'|'all', json: boolean, write: boolean, compare?: [string, string], root?: string }} Args
+ * @typedef {{ label?: string, only?: string[], suite: string, branch?: string, json: boolean, write: boolean, compare?: [string, string], root?: string }} Args
  */
 
 /** @param {string[]} argv */
@@ -54,6 +57,7 @@ function parseArgs(argv) {
 		if (a === '--label') args.label = argv[++i];
 		else if (a === '--suite') args.suite = parseSuite(argv[++i]);
 		else if (a === '--only') args.only = argv[++i].split(',').map((s) => s.trim().toUpperCase());
+		else if (a === '--branch') args.branch = argv[++i];
 		else if (a === '--json') args.json = true;
 		else if (a === '--no-write') args.write = false;
 		else if (a === '--root') args.root = argv[++i];
@@ -65,21 +69,21 @@ function parseArgs(argv) {
 
 /** @param {string} value */
 function parseSuite(value) {
-	if (value === 'ai' || value === 'enterprise' || value === 'all') return value;
-	throw new Error(`--suite must be ai, enterprise or all, got "${value}"`);
+	if (value === 'all') return value;
+	return suiteOf(value).id;
 }
 
 /** @param {string} label */
 function loadRun(label) {
 	const file = resultsFileFor(label);
 	if (!fs.existsSync(file)) throw new Error(`No results for label "${label}" (${file})`);
-	return JSON.parse(fs.readFileSync(file, 'utf8'));
+	return normalizeRun(JSON.parse(fs.readFileSync(file, 'utf8')));
 }
 
 /**
  * Compute every selected metric, reporting progress on stderr unless `quiet`.
  * @param {import('./lib/context.mjs').EvalContext} ctx
- * @param {typeof metrics} selected
+ * @param {any[]} selected
  * @param {boolean} quiet
  */
 function runMetrics(ctx, selected, quiet) {
@@ -118,11 +122,9 @@ function writeRun(run) {
 	if (run.partial) return;
 	const historyFile = insideDir(resultsDir, 'history.json');
 	const history = fs.existsSync(historyFile) ? JSON.parse(fs.readFileSync(historyFile, 'utf8')) : [];
-	const entry = { label: run.label, date: run.date, sha: run.sha, scores: run.scores, index: run.index };
-	if (run.enterprise) entry.enterprise = { scores: run.enterprise.scores, index: run.enterprise.index };
-	const updated = upsertHistory(history, entry);
+	const updated = upsertHistory(history.map(normalizeHistoryEntry), historyEntryOf(run));
 	fs.writeFileSync(historyFile, `${JSON.stringify(updated, null, '\t')}\n`);
-	writeHistoryReport(here, updated, metrics, enterpriseMetrics);
+	writeHistoryReport(here, updated, SUITES);
 	writeDashboardData(here);
 }
 
@@ -135,16 +137,17 @@ function printRun(run, args) {
 		out(JSON.stringify(run, null, 2));
 		return;
 	}
-	out('');
-	if (run.results.length) out(formatTable(run));
-	if (run.enterprise) {
+	let unmeasured = 0;
+	for (const suite of SUITES) {
+		const s = run.suites[suite.id];
+		if (!s) continue;
 		out('');
-		out(formatTable({ ...run.enterprise, label: run.label, sha: run.sha }, { title: INDEX_NAMES.enterprise }));
+		out(formatTable({ ...s, label: run.label, sha: run.sha }, { title: suite.indexName }));
+		unmeasured += s.results.reduce(
+			(/** @type {number} */ n, /** @type {any} */ r) => n + (r.unmeasured?.length ?? 0),
+			0
+		);
 	}
-	const unmeasured = [...run.results, ...(run.enterprise?.results ?? [])].reduce(
-		(/** @type {number} */ s, /** @type {any} */ r) => s + (r.unmeasured?.length ?? 0),
-		0
-	);
 	if (unmeasured) out(`\n${unmeasured} component/metric pairs unmeasured (see results JSON → unmeasured).`);
 	if (args.write) {
 		const resultsFile = path.relative(process.cwd(), resultsFileFor(run.label));
@@ -152,21 +155,35 @@ function printRun(run, args) {
 	}
 }
 
+/**
+ * @param {Args} args
+ */
+function compare(args) {
+	const [a, b] = /** @type {[string, string]} */ (args.compare).map(loadRun);
+	/** @type {Record<string, ReturnType<typeof compareRuns>>} */
+	const comparisons = {};
+	for (const suite of SUITES) {
+		if (a.suites[suite.id] && b.suites[suite.id]) {
+			comparisons[suite.id] = compareRuns(
+				{ ...a.suites[suite.id], label: a.label },
+				{ ...b.suites[suite.id], label: b.label }
+			);
+		}
+	}
+	if (args.json) {
+		out(JSON.stringify(comparisons, null, 2));
+		return;
+	}
+	for (const suite of SUITES) {
+		const c = comparisons[suite.id];
+		if (c) out(`**${suite.indexName}**\n\n${formatComparison(c)}\n`);
+	}
+}
+
 function main() {
 	const args = parseArgs(process.argv.slice(2));
 	if (args.compare) {
-		const [a, b] = args.compare.map(loadRun);
-		const c = compareRuns(a, b);
-		const e =
-			a.enterprise && b.enterprise
-				? compareRuns({ ...a.enterprise, label: a.label }, { ...b.enterprise, label: b.label })
-				: null;
-		if (args.json) {
-			out(JSON.stringify({ ai: c, enterprise: e }, null, 2));
-			return;
-		}
-		out(`**${INDEX_NAMES.ai}**\n\n${formatComparison(c)}`);
-		if (e) out(`\n**${INDEX_NAMES.enterprise}**\n\n${formatComparison(e)}`);
+		compare(args);
 		return;
 	}
 
@@ -174,29 +191,30 @@ function main() {
 	const ctx = createContext(root);
 	const commit = ctx.headCommit();
 	const label = args.label ?? `run-${commit}`;
-	const wantAi = args.suite !== 'enterprise';
-	const wantEnterprise = args.suite !== 'ai';
-	const pick = (/** @type {typeof metrics} */ list) =>
-		args.only ? list.filter((m) => args.only?.includes(m.id)) : list;
-	const selectedAi = wantAi ? pick(SUITES.ai) : [];
-	const selectedEnterprise = wantEnterprise ? pick(SUITES.enterprise) : [];
-	if (selectedAi.length + selectedEnterprise.length === 0) throw new Error('No metrics selected');
+	const selectedSuites = args.suite === 'all' ? SUITES : [suiteOf(args.suite)];
+	/** @type {Record<string, any>} */
+	const suites = {};
+	let selectedCount = 0;
+	for (const suite of selectedSuites) {
+		const selected = args.only ? suite.metrics.filter((m) => args.only?.includes(m.id)) : suite.metrics;
+		if (selected.length === 0) continue;
+		selectedCount += selected.length;
+		const results = runMetrics(ctx, selected, args.json);
+		suites[suite.id] = { ...aggregate(results), results };
+	}
+	if (selectedCount === 0) throw new Error('No metrics selected');
 
-	const results = runMetrics(ctx, selectedAi, args.json);
-	const enterpriseResults = runMetrics(ctx, selectedEnterprise, args.json);
 	const full = !args.only && args.suite === 'all';
+	const branch = args.branch ?? ctx.headBranch();
 	const run = {
 		label,
 		date: new Date().toISOString(),
 		sha: commit,
+		...(branch ? { branch } : {}),
 		node: process.version,
 		tokenizer: ctx.tokenizerName,
 		partial: !full,
-		...aggregate(results),
-		results,
-		...(enterpriseResults.length
-			? { enterprise: { ...aggregate(enterpriseResults), results: enterpriseResults } }
-			: {}),
+		suites,
 	};
 	if (args.write) writeRun(run);
 	printRun(run, args);

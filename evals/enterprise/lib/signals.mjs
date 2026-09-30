@@ -153,6 +153,10 @@ export function componentUniverse(ctx) {
 	return out;
 }
 
+/** A pattern that ships no SCSS partial has no styles to check: not applicable, not unmeasured. */
+export const NO_PARTIAL = 'no SCSS partial';
+export const NO_PARTIAL_HINT = 'A pattern without a partial has no style surface of its own; nothing to change.';
+
 /**
  * Compiled CSS of a component (all its partials), or null with the first compile error.
  * @param {import('../../lib/context.mjs').EvalContext} ctx
@@ -160,7 +164,7 @@ export function componentUniverse(ctx) {
  * @returns {{ css: string|null, error: string|null }}
  */
 export function componentCss(ctx, c) {
-	if (c.scssFiles.length === 0) return { css: null, error: 'no SCSS partial' };
+	if (c.scssFiles.length === 0) return { css: null, error: NO_PARTIAL };
 	const parts = [];
 	for (const f of c.scssFiles) {
 		const hit = ctx.compiledCss(f);
