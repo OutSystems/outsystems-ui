@@ -1,6 +1,6 @@
 // @ts-check
-import { expectationsFor } from '../lib/expectations.mjs';
-import { clamp01, mean, round1 } from '../lib/score.mjs';
+import { expectationsFor } from '../../lib/expectations.mjs';
+import { clamp01, mean, round1 } from '../../lib/score.mjs';
 
 export const FREE_PROPS = 8;
 export const PROPS_TO_ZERO = 12;
@@ -12,7 +12,7 @@ const ENUM_MEMBER = /(^|\.)(Global)?Enum\.[A-Z]\w*\.[A-Z]\w*$/;
  * A `string` prop is a *stringly-typed enum* when the source validates it against a fixed set
  * (`validateInRange`) or defaults it to an enum member: the type says "any string" while only a
  * handful of values are valid, which is exactly what an agent cannot see.
- * @param {import('../lib/ts.mjs').ConfigProp} prop
+ * @param {import('../../lib/ts.mjs').ConfigProp} prop
  */
 export function isStringlyTypedEnum(prop) {
 	if (prop.kind !== 'string') return false;
@@ -20,7 +20,7 @@ export function isStringlyTypedEnum(prop) {
 }
 
 /**
- * @param {import('../lib/ts.mjs').ConfigProp} prop
+ * @param {import('../../lib/ts.mjs').ConfigProp} prop
  */
 export function isPrecise(prop) {
 	if (PRECISE_KINDS.has(prop.kind)) return true;
@@ -42,7 +42,7 @@ export default {
 	criterion: 'Schema & Metadata · Anatomy',
 	formula: `100 · (0.4·clamp(1 − max(0, props − ${FREE_PROPS})/${PROPS_TO_ZERO}) + 0.6·precise/props); precise = boolean | number | enum/union | typed object/array | free string; a string validated with validateInRange or defaulted to an enum member is a stringly-typed enum (imprecise)`,
 	movable: true,
-	/** @param {import('../lib/context.mjs').EvalContext} ctx */
+	/** @param {import('../../lib/context.mjs').EvalContext} ctx */
 	compute(ctx) {
 		const perComponent = ctx.inventory.patterns.map((p) => {
 			const props = expectationsFor(ctx, p).props;

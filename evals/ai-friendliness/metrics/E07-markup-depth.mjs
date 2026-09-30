@@ -1,6 +1,6 @@
 // @ts-check
-import { measureStory } from '../lib/markup.mjs';
-import { mean, penalty, round1 } from '../lib/score.mjs';
+import { measureStory } from '../../lib/markup.mjs';
+import { mean, penalty, round1 } from '../../lib/score.mjs';
 
 export const FREE_DEPTH = 3;
 export const FREE_ELEMENTS = 6;
@@ -18,7 +18,7 @@ export default {
 	criterion: 'Anatomy & Composition',
 	formula: `100 − 20·max(0, depth − ${FREE_DEPTH}) − 4·max(0, distinct elements − ${FREE_ELEMENTS}); measured on the deepest HTML template of the component's story; distinct = unique tag+classes signatures (repeated items count once)`,
 	movable: false,
-	/** @param {import('../lib/context.mjs').EvalContext} ctx */
+	/** @param {import('../../lib/context.mjs').EvalContext} ctx */
 	compute(ctx) {
 		/** @type {{ name: string, kind: string, story: string|null }[]} */
 		const components = [

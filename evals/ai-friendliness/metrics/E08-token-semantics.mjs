@@ -1,6 +1,6 @@
 // @ts-check
-import { clamp01, mean, round1 } from '../lib/score.mjs';
-import { analyseDeclarations } from '../lib/scss.mjs';
+import { clamp01, mean, round1 } from '../../lib/score.mjs';
+import { analyseDeclarations } from '../../lib/scss.mjs';
 
 /**
  * @param {{ total: number, literal: number, routed: number, important: number }} raw
@@ -13,7 +13,7 @@ export function scoreComponent({ total, literal, routed, important }) {
 
 /**
  * Component SCSS files: every pattern partial plus the CSS-only components.
- * @param {import('../lib/context.mjs').EvalContext} ctx
+ * @param {import('../../lib/context.mjs').EvalContext} ctx
  */
 export function componentScssFiles(ctx) {
 	/** @type {{ name: string, file: string }[]} */
@@ -30,7 +30,7 @@ export default {
 	formula:
 		'per component SCSS (compiled): 100 · (0.55·(1 − hardcoded/themeable) + 0.30·(reads via --osui-* API/themeable) + 0.15·clamp(1 − !important/(2% of themeable)))',
 	movable: true,
-	/** @param {import('../lib/context.mjs').EvalContext} ctx */
+	/** @param {import('../../lib/context.mjs').EvalContext} ctx */
 	compute(ctx) {
 		/** @type {any[]} */
 		const perComponent = [];

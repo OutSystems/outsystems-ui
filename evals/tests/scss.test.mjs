@@ -7,7 +7,7 @@ import { fileURLToPath } from 'node:url';
 
 import { analyseDeclarations, analyseSelectors, compileScss, isThemeableProp, parseSizeLiteral, resolveTokenFallbacks } from '../lib/scss.mjs';
 
-const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..', '..');
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
 const scssRoot = path.join(root, 'src', 'scss');
 
 test('compileScss compiles a partial standalone against src/scss load paths', () => {

@@ -44,8 +44,8 @@ test('renderHistory orders runs by date whatever the input order', () => {
 });
 
 test('the committed HISTORY.md is fresh', async () => {
-	const { metrics } = await import('../metrics/index.mjs');
-	const { metrics: enterprise } = await import('../../enterprise/metrics/index.mjs');
+	const { metrics } = await import('../ai-friendliness/metrics/index.mjs');
+	const { metrics: enterprise } = await import('../enterprise/metrics/index.mjs');
 	const stored = JSON.parse(fs.readFileSync(path.join(suiteDir, 'results', 'history.json'), 'utf8'));
 	const committed = fs.readFileSync(path.join(suiteDir, HISTORY_FILE), 'utf8').replace(/\r\n/g, '\n');
 	assert.equal(

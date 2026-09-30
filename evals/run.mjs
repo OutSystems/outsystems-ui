@@ -3,8 +3,8 @@
 /**
  * AI-friendliness eval runner.
  *
- *   node evals/ai-friendliness/run.mjs [--label <name>] [--suite ai|enterprise|all] [--only E01,R02] [--json] [--no-write]
- *   node evals/ai-friendliness/run.mjs --compare <labelA> <labelB>
+ *   node evals/run.mjs [--label <name>] [--suite ai|enterprise|all] [--only E01,R02] [--json] [--no-write]
+ *   node evals/run.mjs --compare <labelA> <labelB>
  *
  * Runs the AI-friendliness evals (E01–E10) and the enterprise-readiness evals (R01–R06); each suite has
  * its own index. Writes `results/<label>.json` (full details) and, for full runs of both suites,
@@ -17,8 +17,8 @@ import { fileURLToPath } from 'node:url';
 import { createContext } from './lib/context.mjs';
 import { insideDir, isSingleSegment } from './lib/paths.mjs';
 import { aggregate, compareRuns, formatComparison, formatTable, INDEX_NAMES, upsertHistory } from './lib/results.mjs';
-import { metrics as aiMetrics } from './metrics/index.mjs';
-import { metrics as enterpriseMetrics } from '../enterprise/metrics/index.mjs';
+import { metrics as aiMetrics } from './ai-friendliness/metrics/index.mjs';
+import { metrics as enterpriseMetrics } from './enterprise/metrics/index.mjs';
 
 /** Every eval of both suites, keyed by suite. */
 const SUITES = { ai: aiMetrics, enterprise: enterpriseMetrics };
@@ -170,7 +170,7 @@ function main() {
 		return;
 	}
 
-	const root = path.resolve(args.root ?? path.join(here, '..', '..'));
+	const root = path.resolve(args.root ?? path.join(here, '..'));
 	const ctx = createContext(root);
 	const commit = ctx.headCommit();
 	const label = args.label ?? `run-${commit}`;

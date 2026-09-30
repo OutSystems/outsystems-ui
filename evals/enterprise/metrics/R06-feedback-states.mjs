@@ -6,7 +6,7 @@
  * CSS (and TypeScript for scripted states) where it applies: hover, focus-visible, press/active,
  * disabled, loading, invalid, and guarded motion.
  */
-import { mean, round1 } from '../../ai-friendliness/lib/score.mjs';
+import { mean, round1 } from '../../lib/score.mjs';
 import {
 	componentCss,
 	componentUniverse,
@@ -132,7 +132,7 @@ export default {
 		'per component: 100 · passed / applicable for: hover, focus-visible, press/open, disabled (interactive components), loading (loading components), invalid (input components), motion guarded by prefers-reduced-motion (animating components); mean over components',
 	movable: true,
 	cls: 'movable',
-	/** @param {import('../../ai-friendliness/lib/context.mjs').EvalContext} ctx */
+	/** @param {import('../../lib/context.mjs').EvalContext} ctx */
 	compute(ctx) {
 		/** @type {any[]} */
 		const perComponent = [];

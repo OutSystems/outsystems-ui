@@ -1,7 +1,7 @@
 // @ts-check
-import { expectationsFor } from '../lib/expectations.mjs';
-import { componentFacets, loadManifest } from '../lib/manifest.mjs';
-import { mean, round1 } from '../lib/score.mjs';
+import { expectationsFor } from '../../lib/expectations.mjs';
+import { componentFacets, loadManifest } from '../../lib/manifest.mjs';
+import { mean, round1 } from '../../lib/score.mjs';
 
 /**
  * @param {{ componentScores: number[], entries: number, patterns: number }} raw
@@ -18,7 +18,7 @@ export default {
 	formula:
 		'mean over manifest entries of the mean of six facets (props typed, defaults, api, events, cssClasses, markup) · 100 · (entries / patterns); 0 without docs-ai/osui.components.json',
 	movable: true,
-	/** @param {import('../lib/context.mjs').EvalContext} ctx */
+	/** @param {import('../../lib/context.mjs').EvalContext} ctx */
 	compute(ctx) {
 		const manifest = loadManifest(ctx);
 		const patterns = ctx.inventory.patterns;

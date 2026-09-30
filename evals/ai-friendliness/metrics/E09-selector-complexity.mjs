@@ -1,6 +1,6 @@
 // @ts-check
-import { clamp01, mean, round1 } from '../lib/score.mjs';
-import { analyseSelectors } from '../lib/scss.mjs';
+import { clamp01, mean, round1 } from '../../lib/score.mjs';
+import { analyseSelectors } from '../../lib/scss.mjs';
 import { componentScssFiles } from './E08-token-semantics.mjs';
 
 /**
@@ -16,7 +16,7 @@ export default {
 	criterion: 'Predictable Cascade · Anatomy',
 	formula: 'per component SCSS (compiled): 100 · (0.6·clamp(1 − max(0, mean combinators − 1)/3) + 0.4·clamp(1 − max(0, p90 class-specificity − 2)/4))',
 	movable: false,
-	/** @param {import('../lib/context.mjs').EvalContext} ctx */
+	/** @param {import('../../lib/context.mjs').EvalContext} ctx */
 	compute(ctx) {
 		/** @type {any[]} */
 		const perComponent = [];

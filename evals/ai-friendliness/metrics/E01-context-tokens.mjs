@@ -1,10 +1,10 @@
 // @ts-check
 import fs from 'node:fs';
 
-import { expectationsFor } from '../lib/expectations.mjs';
-import { componentFacets, loadManifest } from '../lib/manifest.mjs';
-import { insideDir } from '../lib/paths.mjs';
-import { band, mean, round1 } from '../lib/score.mjs';
+import { expectationsFor } from '../../lib/expectations.mjs';
+import { componentFacets, loadManifest } from '../../lib/manifest.mjs';
+import { insideDir } from '../../lib/paths.mjs';
+import { band, mean, round1 } from '../../lib/score.mjs';
 
 export const T_MIN = 600;
 export const T_MAX = 6000;
@@ -47,7 +47,7 @@ export default {
 	criterion: 'Token & Context Efficiency',
 	formula: `100 · clamp((${T_MAX} − T) / ${T_MAX - T_MIN}) per pattern; T = min(tokens of API+Config+Enum+Interface files, tokens of a ≥80%-complete manifest card)`,
 	movable: true,
-	/** @param {import('../lib/context.mjs').EvalContext} ctx */
+	/** @param {import('../../lib/context.mjs').EvalContext} ctx */
 	compute(ctx) {
 		const manifest = loadManifest(ctx);
 		const cards = parseCards(ctx.docsAi('llms-components.txt'));

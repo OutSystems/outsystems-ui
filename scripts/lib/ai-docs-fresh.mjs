@@ -2,7 +2,7 @@
 /** Freshness check for the generated docs-ai/ set: regenerate into a temp dir and compare. */
 import fs from 'node:fs';
 
-import { insideDir } from '../../evals/ai-friendliness/lib/paths.mjs';
+import { insideDir } from '../../evals/lib/paths.mjs';
 
 /** @param {string} text */
 const normalize = (text) => text.replace(/\r\n/g, '\n');

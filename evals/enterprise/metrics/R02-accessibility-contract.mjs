@@ -7,7 +7,7 @@
  * announcements where the pattern gives feedback, focus management where it opens a layer, and
  * the `.has-accessible-features` / `.os-high-contrast` styles in its compiled CSS.
  */
-import { mean, round1 } from '../../ai-friendliness/lib/score.mjs';
+import { mean, round1 } from '../../lib/score.mjs';
 import {
 	componentCss,
 	componentUniverse,
@@ -80,7 +80,7 @@ export default {
 		'per component: 100 · passed / applicable over five checks — ARIA set (patterns that render DOM), feedback announced (feedback patterns), focus managed (overlay patterns), visible focus (.has-accessible-features rules, or the theme-level focus ring), .os-high-contrast styles; mean over components. A static proxy: detects the contract being addressed, not conformance',
 	movable: true,
 	cls: 'movable',
-	/** @param {import('../../ai-friendliness/lib/context.mjs').EvalContext} ctx */
+	/** @param {import('../../lib/context.mjs').EvalContext} ctx */
 	compute(ctx) {
 		/** @type {any[]} */
 		const perComponent = [];

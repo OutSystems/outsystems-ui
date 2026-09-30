@@ -26,7 +26,7 @@
 ---
 
 ### Task 1: Inventory
-**Files:** `evals/ai-friendliness/lib/inventory.mjs`, `evals/ai-friendliness/tests/inventory.test.mjs`
+**Files:** `evals/lib/inventory.mjs`, `evals/tests/inventory.test.mjs`
 **Produces:** `buildInventory(root) → { patterns: Pattern[], cssComponents: CssComponent[] }` where `Pattern = { name, apiFile, patternDir, providerDirs[], configFiles[], enumFiles[], interfaceFile, factoryFiles[], classFiles[], scssFile, storyFile }`, `CssComponent = { name, scssFile, storyFile }`.
 - [ ] Test: inventory on the real repo lists 33 patterns, `Accordion.scssFile` ends with `accordion/_accordion.scss`, `Dropdown.configFiles` includes provider configs, `AccordionItem.storyFile` resolves to `Accordion.stories.ts`.
 - [ ] Implement discovery from `OutSystems/OSUI/Patterns/*API.ts`, `gulp/ProjectSpecs/Patterns/*.js` (scss path), case-insensitive provider dir match, longest-prefix story match.
@@ -78,7 +78,7 @@
 - [ ] `npm run build` green; evals `loop-2`; commit.
 
 ### Task 10: Loop iteration 3 — SCSS token hygiene (behavior-preserving)
-**Files:** `evals/ai-friendliness/tools/css-equivalence.mjs`, `tools/tokenize-literals.mjs` (codemod), changed SCSS.
+**Files:** `evals/tools/css-equivalence.mjs`, `tools/tokenize-literals.mjs` (codemod), changed SCSS.
 - [ ] Tests: equivalence tool reports identical for `padding: 16px` vs `padding: var(--token-scale-400, 16px)`; reports a diff for a changed value.
 - [ ] Codemod only size/space/radius/font literals with a unique `$token-*` match in the property family; never colours.
 - [ ] Compile before/after, assert equivalence; `npm run build`; evals `loop-3`; commit.
@@ -87,7 +87,7 @@
 - [ ] JSDoc on config props and API functions lacking `@param`s; generated docs refreshed; evals `loop-4`; commit.
 
 ### Task 13: CI gate and docs freshness ✅
-**Files:** `evals/ai-friendliness/tools/gate.mjs`, `scripts/lib/ai-docs-fresh.mjs`, `scripts/check-ai-docs-fresh.mjs`, `.github/workflows/ai-friendliness.yaml`, tests.
+**Files:** `evals/tools/gate.mjs`, `scripts/lib/ai-docs-fresh.mjs`, `scripts/check-ai-docs-fresh.mjs`, `.github/workflows/ai-friendliness.yaml`, tests.
 - [x] `evaluateGate`/`pickBaseline` tested; CLI compares a no-write run with the newest history entry; fails on a drop > `--max-drop` (default 1).
 - [x] `compareDocs` tested (CRLF-insensitive); CLI regenerates into a temp dir and reports modified/missing files.
 - [x] Workflow on `pull_request` into `dev` and `workflow_dispatch` (any branch, `max-drop` input).
@@ -134,7 +134,7 @@ Enterprise Readiness Index 65.7 → 67.9; AI-Friendliness Index 88.2 → 87.9 (E
 
 ### Task 20: Loop run 3 (`loop-10`) — host-styled components ✅
 Indices unchanged (AI-Friendliness 88.2, Enterprise Readiness 67.9); E07 measures 85 components, 0 without story, 18 not applicable.
-- [x] `evals/ai-friendliness/lib/host-styled.json`: 18 CSS-only components that style markup owned by something else, each with its host and reason: the app template Layout and Menu blocks (layout, content, header, header-layout-*, menu, menu-layout-*, menu-app-*, menu-header-logo, themegrid-container), the Login common screen (login), runtime utility classes (animate, align-center), the platform runtime (ios-bounce, pull-to-refresh) and the patterns that position it (balloon). E07 reports them as not applicable instead of "no story"; the dashboard shows them as n/a with the host.
+- [x] `evals/lib/host-styled.json`: 18 CSS-only components that style markup owned by something else, each with its host and reason: the app template Layout and Menu blocks (layout, content, header, header-layout-*, menu, menu-layout-*, menu-app-*, menu-header-logo, themegrid-container), the Login common screen (login), runtime utility classes (animate, align-center), the platform runtime (ios-bounce, pull-to-refresh) and the patterns that position it (balloon). E07 reports them as not applicable instead of "no story"; the dashboard shows them as n/a with the host.
 - [x] `llms-patterns.txt` marks them **host-styled** with the host and "do not generate this markup", listing their knobs; the intro explains the rule.
 - [x] Stories for the two components with a contract of their own: `widgets/BulkActions` (Table widget DOM with the Checkbox widget selection column, following the ADR-0009 transcription method) and `ProviderLoginButton`.
 - [ ] Optional: one captured reference story per layout family (Side, Top, Blank, Native) from a generated app, scored once, if the depth of the host an agent works inside should be measured at all.

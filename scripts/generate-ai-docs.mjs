@@ -10,7 +10,7 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { createContext } from '../evals/ai-friendliness/lib/context.mjs';
+import { createContext } from '../evals/lib/context.mjs';
 import { writeDocs } from './lib/ai-docs.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');

@@ -1,12 +1,12 @@
 // @ts-check
-import { penalty, round1 } from '../lib/score.mjs';
+import { penalty, round1 } from '../../lib/score.mjs';
 import {
 	countAnyKeywords,
 	countProgramLines,
 	countSuppressions,
 	getExportedFunctions,
 	implicitAnyDiagnostics,
-} from '../lib/ts.mjs';
+} from '../../lib/ts.mjs';
 
 /**
  * @param {{ implicit: number, explicit: number, suppressions: number, missingReturnRatio: number, kloc: number }} raw
@@ -28,7 +28,7 @@ export default {
 	formula:
 		'100 − min(40, 4·implicitAny/KLOC) − min(20, 10·explicitAny/KLOC) − min(10, 2.5·suppressions) − 30·(exported public functions without return type / total)',
 	movable: true,
-	/** @param {import('../lib/context.mjs').EvalContext} ctx */
+	/** @param {import('../../lib/context.mjs').EvalContext} ctx */
 	compute(ctx) {
 		const program = ctx.program;
 		const srcRoot = `${ctx.root}/src/scripts`.replace(/\\/g, '/').toLowerCase();

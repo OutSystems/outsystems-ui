@@ -8,7 +8,7 @@
  * story or created in TypeScript activates on Enter/Space by itself; a provider-backed pattern is
  * credited to its library for the keys the wrapper does not handle, and flagged.
  */
-import { mean, round1 } from '../../ai-friendliness/lib/score.mjs';
+import { mean, round1 } from '../../lib/score.mjs';
 import {
 	COMPOSITE_PATTERNS,
 	includesAny,
@@ -107,7 +107,7 @@ export default {
 		'per interactive pattern: 100 · handled / required keys; required = Enter/Space for all (a native button, link or input in the story markup or created in TypeScript counts), Escape and tab order for overlays, Arrow keys and tab order for composite widgets; a key handled by a family member or a shared feature counts; a provider-backed pattern is credited to its library for the keys its wrapper does not handle, and flagged; mean over patterns',
 	movable: true,
 	cls: 'movable',
-	/** @param {import('../../ai-friendliness/lib/context.mjs').EvalContext} ctx */
+	/** @param {import('../../lib/context.mjs').EvalContext} ctx */
 	compute(ctx) {
 		const perComponent = ctx.inventory.patterns
 			.filter((p) => !NON_INTERACTIVE_PATTERNS.has(p.name))

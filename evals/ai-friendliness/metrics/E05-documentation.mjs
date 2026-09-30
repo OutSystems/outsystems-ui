@@ -1,6 +1,6 @@
 // @ts-check
-import { expectationsFor } from '../lib/expectations.mjs';
-import { round1 } from '../lib/score.mjs';
+import { expectationsFor } from '../../lib/expectations.mjs';
+import { round1 } from '../../lib/score.mjs';
 import { parseCards } from './E01-context-tokens.mjs';
 
 /**
@@ -11,7 +11,7 @@ export function scoreGlobal({ jsdocApi, jsdocProps, agentDocs }) {
 }
 
 /**
- * @param {import('../lib/ts.mjs').ExportedFunction} fn
+ * @param {import('../../lib/ts.mjs').ExportedFunction} fn
  */
 export function isDocumented(fn) {
 	if (!fn.jsDoc || fn.jsDoc.description.length === 0) return false;
@@ -25,7 +25,7 @@ export default {
 	criterion: 'Agent Documentation (llms.txt tiers) · JSDoc',
 	formula: '35·(API functions with description + @param per parameter) + 15·(config props with a comment) + 0.5·agentDocs; agentDocs = 25·llms.txt + 25·llms-components coverage + 25·llms-tokens.txt + 25·llms-patterns.txt',
 	movable: true,
-	/** @param {import('../lib/context.mjs').EvalContext} ctx */
+	/** @param {import('../../lib/context.mjs').EvalContext} ctx */
 	compute(ctx) {
 		let apiTotal = 0;
 		let apiDocumented = 0;

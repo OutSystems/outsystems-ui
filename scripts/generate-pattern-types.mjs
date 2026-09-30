@@ -9,8 +9,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { createContext } from '../evals/ai-friendliness/lib/context.mjs';
-import { insideDir } from '../evals/ai-friendliness/lib/paths.mjs';
+import { createContext } from '../evals/lib/context.mjs';
+import { insideDir } from '../evals/lib/paths.mjs';
 import { buildManifest } from './lib/ai-docs.mjs';
 import { OUTPUT_FILE, renderPatternTypes } from './lib/pattern-types.mjs';
 

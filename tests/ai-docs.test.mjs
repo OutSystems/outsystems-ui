@@ -3,10 +3,10 @@ import path from 'node:path';
 import { test } from 'node:test';
 import { fileURLToPath } from 'node:url';
 
-import { createContext } from '../evals/ai-friendliness/lib/context.mjs';
-import { expectationsFor } from '../evals/ai-friendliness/lib/expectations.mjs';
-import { componentFacets } from '../evals/ai-friendliness/lib/manifest.mjs';
-import { countTokens } from '../evals/ai-friendliness/lib/tokens.mjs';
+import { createContext } from '../evals/lib/context.mjs';
+import { expectationsFor } from '../evals/lib/expectations.mjs';
+import { componentFacets } from '../evals/lib/manifest.mjs';
+import { countTokens } from '../evals/lib/tokens.mjs';
 import {
 	buildManifest,
 	CARD_TOKEN_BUDGET,

@@ -6,7 +6,7 @@
  * document asks for one (tables, lists, forms, inputs, dropdowns, tabs, cards, pagination, bulk
  * actions), and RTL handling where direction matters.
  */
-import { mean, round1 } from '../../ai-friendliness/lib/score.mjs';
+import { mean, round1 } from '../../lib/score.mjs';
 import {
 	componentCss,
 	componentUniverse,
@@ -102,7 +102,7 @@ export default {
 		'per component: 100 · passed / applicable for: breakpoint rules where it lays out, a size or density axis where the document expects one (variant classes or --osui-* padding/height/size knobs), .is-rtl rules where direction matters; mean over components',
 	movable: true,
 	cls: 'movable',
-	/** @param {import('../../ai-friendliness/lib/context.mjs').EvalContext} ctx */
+	/** @param {import('../../lib/context.mjs').EvalContext} ctx */
 	compute(ctx) {
 		/** @type {any[]} */
 		const perComponent = [];

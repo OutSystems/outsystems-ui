@@ -8,8 +8,8 @@
  */
 import path from 'node:path';
 
-import { walk } from '../../ai-friendliness/lib/inventory.mjs';
-import { insideDir } from '../../ai-friendliness/lib/paths.mjs';
+import { walk } from '../../lib/inventory.mjs';
+import { insideDir } from '../../lib/paths.mjs';
 
 /** Patterns whose behaviour is delegated to a provider library (flatpickr, noUiSlider, VirtualSelect, Splide). */
 export const PROVIDER_PATTERNS = new Set([
@@ -76,8 +76,8 @@ export const SHARED_FEATURES = { Balloon: ['src', 'scripts', 'OSFramework', 'OSU
 /**
  * Text of the code a pattern shares its behaviour with: its family members and the shared features
  * it references. Keyboard handling found there counts for the pattern.
- * @param {import('../../ai-friendliness/lib/context.mjs').EvalContext} ctx
- * @param {import('../../ai-friendliness/lib/inventory.mjs').Pattern} p
+ * @param {import('../../lib/context.mjs').EvalContext} ctx
+ * @param {import('../../lib/inventory.mjs').Pattern} p
  * @param {string} ownText the pattern's own TypeScript
  */
 export function sharedText(ctx, p, ownText) {
@@ -102,7 +102,7 @@ export const THEME_RESETS = ['src', 'scss', '01-foundations', '_resets.scss'];
 
 /**
  * Theme-level guards a component inherits without rules of its own.
- * @param {import('../../ai-friendliness/lib/context.mjs').EvalContext} ctx
+ * @param {import('../../lib/context.mjs').EvalContext} ctx
  */
 export function themeGuards(ctx) {
 	const resets = ctx.readText(insideDir(ctx.root, ...THEME_RESETS));
@@ -124,8 +124,8 @@ export function includesAny(text, needles) {
 /**
  * Concatenated TypeScript source of a pattern: API, classes, configs, enums, interfaces, factories,
  * typings, across the framework and provider directories.
- * @param {import('../../ai-friendliness/lib/context.mjs').EvalContext} ctx
- * @param {import('../../ai-friendliness/lib/inventory.mjs').Pattern} p
+ * @param {import('../../lib/context.mjs').EvalContext} ctx
+ * @param {import('../../lib/inventory.mjs').Pattern} p
  */
 export function patternText(ctx, p) {
 	const files = [...new Set([...p.contractFiles, ...p.typingFiles])];
@@ -133,12 +133,12 @@ export function patternText(ctx, p) {
 }
 
 /**
- * @typedef {{ name: string, kind: 'pattern'|'css', pattern: import('../../ai-friendliness/lib/inventory.mjs').Pattern|null, scssFiles: string[], storyFile: string|null }} Component
+ * @typedef {{ name: string, kind: 'pattern'|'css', pattern: import('../../lib/inventory.mjs').Pattern|null, scssFiles: string[], storyFile: string|null }} Component
  */
 
 /**
  * Every component the SCSS-based evals look at: each pattern and each CSS-only component.
- * @param {import('../../ai-friendliness/lib/context.mjs').EvalContext} ctx
+ * @param {import('../../lib/context.mjs').EvalContext} ctx
  * @returns {Component[]}
  */
 export function componentUniverse(ctx) {
@@ -155,7 +155,7 @@ export function componentUniverse(ctx) {
 
 /**
  * Compiled CSS of a component (all its partials), or null with the first compile error.
- * @param {import('../../ai-friendliness/lib/context.mjs').EvalContext} ctx
+ * @param {import('../../lib/context.mjs').EvalContext} ctx
  * @param {Component} c
  * @returns {{ css: string|null, error: string|null }}
  */

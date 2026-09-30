@@ -3,7 +3,7 @@ import path from 'node:path';
 import { test } from 'node:test';
 import { fileURLToPath } from 'node:url';
 
-import { createContext } from '../../ai-friendliness/lib/context.mjs';
+import { createContext } from '../../lib/context.mjs';
 import R01, {
 	evidenceIndex,
 	loadRequirements,

@@ -1,7 +1,7 @@
 // @ts-check
-import { expectationsFor } from '../lib/expectations.mjs';
-import { mean, penalty, round1 } from '../lib/score.mjs';
-import { getClassesInFiles, getSourceFile, ts } from '../lib/ts.mjs';
+import { expectationsFor } from '../../lib/expectations.mjs';
+import { mean, penalty, round1 } from '../../lib/score.mjs';
+import { getClassesInFiles, getSourceFile, ts } from '../../lib/ts.mjs';
 
 /**
  * @param {{ depth: number, files: number, configShape: number, eventModel: number, moduleFormat: number }} raw
@@ -23,7 +23,7 @@ export default {
 	formula:
 		'100 − 12·max(0, inheritance depth − 1) − 5·max(0, contract files − 4) − 15·(configs accepted only as JSON string) − 10·(event names typed as string) − 15·(global namespaces instead of ES modules)',
 	movable: false,
-	/** @param {import('../lib/context.mjs').EvalContext} ctx */
+	/** @param {import('../../lib/context.mjs').EvalContext} ctx */
 	compute(ctx) {
 		const program = ctx.program;
 		const perComponent = ctx.inventory.patterns.map((p) => {

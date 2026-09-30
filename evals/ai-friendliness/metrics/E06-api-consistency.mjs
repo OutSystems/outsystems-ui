@@ -1,6 +1,6 @@
 // @ts-check
-import { expectationsFor } from '../lib/expectations.mjs';
-import { mean, round1 } from '../lib/score.mjs';
+import { expectationsFor } from '../../lib/expectations.mjs';
+import { mean, round1 } from '../../lib/score.mjs';
 
 export const CANONICAL = [
 	{ label: 'Create', test: /^Create$/ },
@@ -29,7 +29,7 @@ export default {
 	formula:
 		'100 · (0.4·canonical members present/7 + 0.3·non-lifecycle functions returning the CreateApiResponse envelope + 0.2·camelCase parameters + 0.1·no inline error-code literals)',
 	movable: true,
-	/** @param {import('../lib/context.mjs').EvalContext} ctx */
+	/** @param {import('../../lib/context.mjs').EvalContext} ctx */
 	compute(ctx) {
 		const perComponent = ctx.inventory.patterns.map((p) => {
 			const fns = expectationsFor(ctx, p).apiFunctions;

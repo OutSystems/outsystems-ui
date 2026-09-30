@@ -11,7 +11,7 @@
 **Who it is for.** The UI Components team and the Model Services team exploring the "TS Coding Agent → Application TS Code → TS Model Framework → OML" pipeline, in which OutSystems UI is one of the runtime libraries an agent composes against.
 
 **Success looks like.**
-- `node evals/ai-friendliness/run.mjs` produces the same scores for the same commit, and a history file tracks progression across commits.
+- `node evals/run.mjs` produces the same scores for the same commit, and a history file tracks progression across commits.
 - Each of the ten evals has a written definition, a formula and a benchmark band calibrated against the research baseline (shadcn/ui, Radix, Tailwind-style systems).
 - The loop applies only changes that keep runtime behavior identical (verified by build + CSS-equivalence check), and documents every improvement that would change behavior with BEFORE/AFTER snippets.
 - The final report has the six requested sections.

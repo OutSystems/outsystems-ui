@@ -2,7 +2,7 @@ name: AI-friendliness gate
 
 # Two checks that keep the library legible to coding agents:
 #   1. the ten-eval AI-Friendliness Index must not drop by more than 1 point against the newest
-#      entry of evals/ai-friendliness/results/history.json;
+#      entry of evals/results/history.json;
 #   2. docs-ai/ (component manifest + llms.txt tiers) must match a fresh generation from the source.
 # Runs on pull requests into dev and on demand for any branch (Actions → AI-friendliness gate →
 # Run workflow), so the checks can be exercised on a draft PR or a feature branch. Locally:
@@ -60,7 +60,7 @@ jobs:
               id: gate
               continue-on-error: true
               run: |
-                  node evals/ai-friendliness/tools/gate.mjs --max-drop "${{ inputs.max-drop || '1' }}" --report gate-report.md
+                  node evals/tools/gate.mjs --max-drop "${{ inputs.max-drop || '1' }}" --report gate-report.md
                   cat gate-report.md >> "$GITHUB_STEP_SUMMARY"
 
             - name: 📄 docs-ai/ must be fresh

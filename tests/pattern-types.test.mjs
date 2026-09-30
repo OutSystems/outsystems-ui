@@ -4,7 +4,7 @@ import path from 'node:path';
 import { test } from 'node:test';
 import { fileURLToPath } from 'node:url';
 
-import { createContext } from '../evals/ai-friendliness/lib/context.mjs';
+import { createContext } from '../evals/lib/context.mjs';
 import { buildManifest } from '../scripts/lib/ai-docs.mjs';
 import { OUTPUT_FILE, renderPatternTypes } from '../scripts/lib/pattern-types.mjs';
 

@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 
 import { buildInventory, matchStory } from '../lib/inventory.mjs';
 
-const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..', '..');
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
 const inv = buildInventory(root);
 const byName = Object.fromEntries(inv.patterns.map((p) => [p.name, p]));
 const rel = (p) => (p ? path.relative(root, p).split(path.sep).join('/') : p);

@@ -3,7 +3,7 @@
 /**
  * AI-friendliness regression gate.
  *
- *   node evals/ai-friendliness/tools/gate.mjs [--baseline <label>] [--report-baseline <label>] [--max-drop 1] [--max-drop-enterprise 1] [--report <file.md>]
+ *   node evals/tools/gate.mjs [--baseline <label>] [--report-baseline <label>] [--max-drop 1] [--max-drop-enterprise 1] [--report <file.md>]
  *
  * Runs the suite without writing results, compares the index with the newest entry of
  * results/history.json (or the given label) and exits 1 when it dropped by more than
@@ -160,7 +160,7 @@ export function formatGateReport(
 		...run.results.map((r) => formatEvalRow(origin, run.scores, r)),
 		`| — | **Index** | **${origin.index.toFixed(1)}** | **${run.index.toFixed(1)}** | **${signed(sinceOrigin)}** | |`,
 		'',
-		'History of every run: `evals/ai-friendliness/results/HISTORY.md`. Formulas and bands: `docs-internal/ai-friendliness/2026-09-29-eval-suite-design.md`.',
+		'History of every run: `evals/results/HISTORY.md`. Formulas and bands: `docs-internal/ai-friendliness/2026-09-29-eval-suite-design.md`.',
 	];
 	return lines.join('\n');
 }

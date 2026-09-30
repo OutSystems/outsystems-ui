@@ -9,7 +9,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { insideDir } from '../evals/ai-friendliness/lib/paths.mjs';
+import { insideDir } from '../evals/lib/paths.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const out = insideDir(root, 'docs');

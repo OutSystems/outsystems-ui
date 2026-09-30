@@ -11,9 +11,9 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { walk } from '../../ai-friendliness/lib/inventory.mjs';
-import { insideDir } from '../../ai-friendliness/lib/paths.mjs';
-import { round1 } from '../../ai-friendliness/lib/score.mjs';
+import { walk } from '../../lib/inventory.mjs';
+import { insideDir } from '../../lib/paths.mjs';
+import { round1 } from '../../lib/score.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 export const REQUIREMENTS_FILE = insideDir(path.resolve(here, '..'), 'requirements.json');
@@ -34,7 +34,7 @@ const POINTS = { offered: 1, partial: 0.5, missing: 0 };
 
 /**
  * Build the evidence lookups once per run.
- * @param {import('../../ai-friendliness/lib/context.mjs').EvalContext} ctx
+ * @param {import('../../lib/context.mjs').EvalContext} ctx
  */
 export function evidenceIndex(ctx) {
 	const patterns = new Set(ctx.inventory.patterns.map((p) => p.name));
@@ -137,7 +137,7 @@ export default {
 		'100 · Σ_group weight · mean(points) over requirements owned by OutSystems UI; offered = 1, partial = 0.5, missing = 0; requirements owned by the platform, Data Grid, Charts or Maps are reported as delegated and excluded',
 	movable: false,
 	cls: 'roadmap',
-	/** @param {import('../../ai-friendliness/lib/context.mjs').EvalContext} ctx */
+	/** @param {import('../../lib/context.mjs').EvalContext} ctx */
 	compute(ctx) {
 		const map = loadRequirements();
 		const index = evidenceIndex(ctx);

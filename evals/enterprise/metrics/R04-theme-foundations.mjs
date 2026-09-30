@@ -7,7 +7,7 @@
  * the foundation families it declares that it reads through tokens or knobs, plus the dark-theme,
  * RTL and reduced-motion variants where the component needs them.
  */
-import { mean, round1 } from '../../ai-friendliness/lib/score.mjs';
+import { mean, round1 } from '../../lib/score.mjs';
 import {
 	componentCss,
 	componentUniverse,
@@ -142,7 +142,7 @@ export default {
 		'40 · (foundation rows defined in the token theme and consumed by a component)/8 + 60 · mean over components of passed/applicable for: every declared family read via tokens or knobs, .os-dark rules when colours are set, .is-rtl rules when direction matters, prefers-reduced-motion guard when it animates',
 	movable: true,
 	cls: 'movable',
-	/** @param {import('../../ai-friendliness/lib/context.mjs').EvalContext} ctx */
+	/** @param {import('../../lib/context.mjs').EvalContext} ctx */
 	compute(ctx) {
 		/** @type {any[]} */
 		const perComponent = [];

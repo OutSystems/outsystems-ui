@@ -14,7 +14,7 @@ import path from 'node:path';
 
 import prettier from 'prettier';
 
-import { expectationsFor } from '../../evals/ai-friendliness/lib/expectations.mjs';
+import { expectationsFor } from '../../evals/lib/expectations.mjs';
 import { resolveEnumReference } from './ai-docs.mjs';
 
 export const OUTPUT_FILE = 'src/scripts/OutSystems/OSUI/Patterns/PatternTypes.ts';
@@ -25,10 +25,10 @@ const INTERNAL_CALLBACK = /Callbacks|Generic/;
 
 /**
  * TypeScript type text usable inside `OutSystems.OSUI.Patterns.*` for a manifest prop type.
- * @param {import('../../evals/ai-friendliness/lib/context.mjs').EvalContext} ctx
- * @param {import('../../evals/ai-friendliness/lib/inventory.mjs').Pattern} pattern
+ * @param {import('../../evals/lib/context.mjs').EvalContext} ctx
+ * @param {import('../../evals/lib/inventory.mjs').Pattern} pattern
  * @param {string} type manifest type text
- * @param {import('../../evals/ai-friendliness/lib/ts.mjs').ConfigProp} prop
+ * @param {import('../../evals/lib/ts.mjs').ConfigProp} prop
  * @returns {{ type: string, note?: string }}
  */
 export function publicType(ctx, pattern, type, prop) {
@@ -52,7 +52,7 @@ const codePointCompare = (/** @type {string} */ a, /** @type {string} */ b) => (
 
 /**
  * Generated source, formatted with the repository Prettier configuration so it is stable and lint-clean.
- * @param {import('../../evals/ai-friendliness/lib/context.mjs').EvalContext} ctx
+ * @param {import('../../evals/lib/context.mjs').EvalContext} ctx
  * @param {ReturnType<typeof import('./ai-docs.mjs').buildManifest>} manifest
  * @returns {Promise<string>}
  */
@@ -63,7 +63,7 @@ export async function renderPatternTypes(ctx, manifest) {
 }
 
 /**
- * @param {import('../../evals/ai-friendliness/lib/context.mjs').EvalContext} ctx
+ * @param {import('../../evals/lib/context.mjs').EvalContext} ctx
  * @param {ReturnType<typeof import('./ai-docs.mjs').buildManifest>} manifest
  */
 export function renderPatternTypesRaw(ctx, manifest) {

@@ -14,11 +14,11 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-import { expectationsFor } from '../../evals/ai-friendliness/lib/expectations.mjs';
-import { measureStory } from '../../evals/ai-friendliness/lib/markup.mjs';
-import { insideDir } from '../../evals/ai-friendliness/lib/paths.mjs';
-import { countTokens } from '../../evals/ai-friendliness/lib/tokens.mjs';
-import { getClassesInFiles, getEnums, getSourceFile } from '../../evals/ai-friendliness/lib/ts.mjs';
+import { expectationsFor } from '../../evals/lib/expectations.mjs';
+import { measureStory } from '../../evals/lib/markup.mjs';
+import { insideDir } from '../../evals/lib/paths.mjs';
+import { countTokens } from '../../evals/lib/tokens.mjs';
+import { getClassesInFiles, getEnums, getSourceFile } from '../../evals/lib/ts.mjs';
 
 export const MANIFEST_VERSION = '1';
 
@@ -44,7 +44,7 @@ export function shortType(type) {
 		.replace(/Providers\.OSUI\.\w+\.\w+\./g, '');
 }
 
-/** @param {import('../../evals/ai-friendliness/lib/context.mjs').EvalContext} ctx */
+/** @param {import('../../evals/lib/context.mjs').EvalContext} ctx */
 function globalEnums(ctx) {
 	const file = path.join(ctx.root, 'src', 'scripts', 'OSFramework', 'OSUI', 'GlobalEnum.ts');
 	return getEnums(getSourceFile(ctx.program, file));
@@ -52,8 +52,8 @@ function globalEnums(ctx) {
 
 /**
  * Enum declarations visible to a pattern: its own `Enum.*` files (framework + provider) and `GlobalEnum`.
- * @param {import('../../evals/ai-friendliness/lib/context.mjs').EvalContext} ctx
- * @param {import('../../evals/ai-friendliness/lib/inventory.mjs').Pattern} pattern
+ * @param {import('../../evals/lib/context.mjs').EvalContext} ctx
+ * @param {import('../../evals/lib/inventory.mjs').Pattern} pattern
  * @param {string} scope `Enum` | `GlobalEnum`
  * @param {string} enumName
  */
@@ -66,8 +66,8 @@ function findEnum(ctx, pattern, scope, enumName) {
  * Literal value of a source expression used as a default or allowed value.
  * `'x'` → `x`, `false` → false, `3` → 3, `Enum.IconType.Caret` → `Caret`, `GlobalEnum.Direction.Right` → `right`.
  * Unresolvable references return null.
- * @param {import('../../evals/ai-friendliness/lib/context.mjs').EvalContext} ctx
- * @param {import('../../evals/ai-friendliness/lib/inventory.mjs').Pattern} pattern
+ * @param {import('../../evals/lib/context.mjs').EvalContext} ctx
+ * @param {import('../../evals/lib/inventory.mjs').Pattern} pattern
  * @param {string|null} text
  * @returns {string|number|boolean|null}
  */
@@ -108,8 +108,8 @@ export function parseEnumPath(text) {
 
 /**
  * All member values of the enum an expression belongs to (`Enum.IconType.Caret` → every IconType value).
- * @param {import('../../evals/ai-friendliness/lib/context.mjs').EvalContext} ctx
- * @param {import('../../evals/ai-friendliness/lib/inventory.mjs').Pattern} pattern
+ * @param {import('../../evals/lib/context.mjs').EvalContext} ctx
+ * @param {import('../../evals/lib/inventory.mjs').Pattern} pattern
  * @param {string|null} text enum member reference or `Object.values(Enum.X)` operand
  * @returns {(string|number)[]|null}
  */
@@ -125,9 +125,9 @@ export function enumValuesFor(ctx, pattern, text) {
 const unionType = (values) => values.map((v) => (typeof v === 'string' ? `'${v}'` : String(v))).join(' | ');
 
 /**
- * @param {import('../../evals/ai-friendliness/lib/context.mjs').EvalContext} ctx
- * @param {import('../../evals/ai-friendliness/lib/inventory.mjs').Pattern} pattern
- * @param {import('../../evals/ai-friendliness/lib/ts.mjs').ConfigProp} prop
+ * @param {import('../../evals/lib/context.mjs').EvalContext} ctx
+ * @param {import('../../evals/lib/inventory.mjs').Pattern} pattern
+ * @param {import('../../evals/lib/ts.mjs').ConfigProp} prop
  */
 export function describeProp(ctx, pattern, prop) {
 	/** @type {{ type: string, default?: unknown, allowed?: (string|number)[], hint?: string, description?: string }} */
@@ -147,9 +147,9 @@ export function describeProp(ctx, pattern, prop) {
 /**
  * Allowed values of a `validateInRange` prop: the explicit list, an `Object.values(Enum)` operand, or a
  * single enum reference expanded to its enum; the default is always accepted.
- * @param {import('../../evals/ai-friendliness/lib/context.mjs').EvalContext} ctx
- * @param {import('../../evals/ai-friendliness/lib/inventory.mjs').Pattern} pattern
- * @param {import('../../evals/ai-friendliness/lib/ts.mjs').ConfigProp} prop
+ * @param {import('../../evals/lib/context.mjs').EvalContext} ctx
+ * @param {import('../../evals/lib/inventory.mjs').Pattern} pattern
+ * @param {import('../../evals/lib/ts.mjs').ConfigProp} prop
  * @returns {(string|number)[]|null}
  */
 function inRangeValues(ctx, pattern, prop) {
@@ -174,9 +174,9 @@ function inRangeValues(ctx, pattern, prop) {
  * that enum. A GlobalEnum default (GlobalEnum.Direction.Right) is only a hint: the shared enum is a
  * superset of what the pattern handles and the source does not validate the value, so no allowed
  * list is fabricated — the gap is reported as-is.
- * @param {import('../../evals/ai-friendliness/lib/context.mjs').EvalContext} ctx
- * @param {import('../../evals/ai-friendliness/lib/inventory.mjs').Pattern} pattern
- * @param {import('../../evals/ai-friendliness/lib/ts.mjs').ConfigProp} prop
+ * @param {import('../../evals/lib/context.mjs').EvalContext} ctx
+ * @param {import('../../evals/lib/inventory.mjs').Pattern} pattern
+ * @param {import('../../evals/lib/ts.mjs').ConfigProp} prop
  * @returns {{ allowed: (string|number)[]|null, hint?: string }}
  */
 function allowedValuesFor(ctx, pattern, prop) {
@@ -196,7 +196,7 @@ function allowedValuesFor(ctx, pattern, prop) {
 
 /**
  * Type text shown to agents for a prop.
- * @param {import('../../evals/ai-friendliness/lib/ts.mjs').ConfigProp} prop
+ * @param {import('../../evals/lib/ts.mjs').ConfigProp} prop
  * @param {(string|number)[]|null} allowed
  */
 function publicTypeText(prop, allowed) {
@@ -252,8 +252,8 @@ export function knobsOf(css) {
 }
 
 /**
- * @param {import('../../evals/ai-friendliness/lib/context.mjs').EvalContext} ctx
- * @param {import('../../evals/ai-friendliness/lib/inventory.mjs').Pattern} pattern
+ * @param {import('../../evals/lib/context.mjs').EvalContext} ctx
+ * @param {import('../../evals/lib/inventory.mjs').Pattern} pattern
  */
 function lifecycleOf(ctx, pattern) {
 	const names = new Set(expectationsFor(ctx, pattern).api);
@@ -274,7 +274,7 @@ function lifecycleOf(ctx, pattern) {
 
 /**
  * Build the component manifest.
- * @param {import('../../evals/ai-friendliness/lib/context.mjs').EvalContext} ctx
+ * @param {import('../../evals/lib/context.mjs').EvalContext} ctx
  */
 export function buildManifest(ctx) {
 	/** @type {Record<string, any>} */
@@ -484,7 +484,7 @@ export function themeRolesOf(rootScss) {
 
 /**
  * llms-tokens.txt — theme roles and component knobs.
- * @param {import('../../evals/ai-friendliness/lib/context.mjs').EvalContext} ctx
+ * @param {import('../../evals/lib/context.mjs').EvalContext} ctx
  * @param {ReturnType<typeof buildManifest>} manifest
  */
 export function renderTokens(ctx, manifest) {
@@ -520,7 +520,7 @@ export function renderTokens(ctx, manifest) {
 
 /**
  * llms-patterns.txt — skeletons of the CSS-only components.
- * @param {import('../../evals/ai-friendliness/lib/context.mjs').EvalContext} ctx
+ * @param {import('../../evals/lib/context.mjs').EvalContext} ctx
  */
 export function renderCssComponents(ctx) {
 	const lines = [
@@ -592,7 +592,7 @@ const UTILITY_FAMILIES = {
 /**
  * llms-utilities.txt — every utility class, grouped by family, with the token family it reads.
  * In the token theme the utilities are generated from token maps, so the list is stable and complete.
- * @param {import('../../evals/ai-friendliness/lib/context.mjs').EvalContext} ctx
+ * @param {import('../../evals/lib/context.mjs').EvalContext} ctx
  */
 export function renderUtilities(ctx) {
 	const dir = path.join(ctx.root, 'src', 'scss', '05-useful');
@@ -636,7 +636,7 @@ export function renderUtilities(ctx) {
 
 /**
  * Write the whole docs set.
- * @param {import('../../evals/ai-friendliness/lib/context.mjs').EvalContext} ctx
+ * @param {import('../../evals/lib/context.mjs').EvalContext} ctx
  * @param {string} outDir
  */
 export function writeDocs(ctx, outDir) {
