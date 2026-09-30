@@ -53,6 +53,51 @@ function cell(v) {
 	return `<td class="cell" style="${shade(v.s)}" title="${esc(v.h)}">${f1(v.s)}</td>`;
 }
 
+/** One suite's polyline, dots and end labels on the trend chart. */
+function trendLine(suite, k, runs, xs, y) {
+	const pts = runs.map((r, i) => ({ r, i })).filter(({ r }) => r.suites[suite.id]);
+	if (!pts.length) return '';
+	const poly = pts.map(({ r, i }) => `${xs[i]},${y(r.suites[suite.id].index)}`).join(' ');
+	const parts = [`<g class="${tone(suite)}">`];
+	if (k === 0) {
+		parts.push(
+			`<polygon class="area" points="${xs[pts[0].i]},${y(0)} ${poly} ${xs[pts[pts.length - 1].i]},${y(0)}"/>`
+		);
+	}
+	if (pts.length > 1) parts.push(`<polyline class="line" points="${poly}"/>`);
+	pts.forEach(({ r, i }, j) => {
+		const isLast = j === pts.length - 1;
+		const v = r.suites[suite.id].index;
+		parts.push(`<circle class="dot ${isLast ? 'last' : ''}" cx="${xs[i]}" cy="${y(v)}" r="4.5"/>`);
+		if (j === 0 || isLast) {
+			const dy = k === 0 ? -12 : 20;
+			const anchor = j === 0 ? 'start' : 'end';
+			parts.push(`<text class="label" x="${xs[i]}" y="${y(v) + dy}" text-anchor="${anchor}">${f1(v)}</text>`);
+		}
+	});
+	parts.push('</g>');
+	return parts.join('');
+}
+/** The right-hand label of a small multiple. */
+function rangeLabel(vals, flat, d) {
+	if (vals.length < 2) return 'first run';
+	if (flat) return 'unchanged';
+	return signed(d);
+}
+/** A chip for one eval id, coloured by its score. */
+function chip(id, lookup) {
+	if (id === 'all') return '<span class="chip">all</span>';
+	const hit = lookup[id];
+	const band = hit ? cls(hit.e.score) : '';
+	const name = hit ? hit.e.name : '';
+	return `<span class="chip ${band}" title="${esc(name)}">${esc(id)}</span>`;
+}
+/** One requirement row of the roadmap table. */
+function requirementRow(r) {
+	const reason = r.reason ? ` <small>· ${esc(r.reason)}</small>` : '';
+	return `<li><span>${esc(r.name)}${reason}</span><span class="status-pill st-${esc(r.status)}">${esc(r.status)}</span></li>`;
+}
+
 /**
  * The dashboard page logic. `mount` renders the embedded data set into the page and wires the refresh
  * button to the artifact database. The build (tools/dashboard-page.mjs) inlines this module into
@@ -266,32 +311,6 @@ export function mount(document, window, localStorage, EMBEDDED) {
 		wireTrendTips(host, runs, xs, y, W, H);
 	}
 
-	/** One suite's polyline, dots and end labels on the trend chart. */
-	function trendLine(suite, k, runs, xs, y) {
-		const pts = runs.map((r, i) => ({ r, i })).filter(({ r }) => r.suites[suite.id]);
-		if (!pts.length) return '';
-		const poly = pts.map(({ r, i }) => `${xs[i]},${y(r.suites[suite.id].index)}`).join(' ');
-		const parts = [`<g class="${tone(suite)}">`];
-		if (k === 0) {
-			parts.push(
-				`<polygon class="area" points="${xs[pts[0].i]},${y(0)} ${poly} ${xs[pts[pts.length - 1].i]},${y(0)}"/>`
-			);
-		}
-		if (pts.length > 1) parts.push(`<polyline class="line" points="${poly}"/>`);
-		pts.forEach(({ r, i }, j) => {
-			const isLast = j === pts.length - 1;
-			const v = r.suites[suite.id].index;
-			parts.push(`<circle class="dot ${isLast ? 'last' : ''}" cx="${xs[i]}" cy="${y(v)}" r="4.5"/>`);
-			if (j === 0 || isLast) {
-				const dy = k === 0 ? -12 : 20;
-				const anchor = j === 0 ? 'start' : 'end';
-				parts.push(`<text class="label" x="${xs[i]}" y="${y(v) + dy}" text-anchor="${anchor}">${f1(v)}</text>`);
-			}
-		});
-		parts.push('</g>');
-		return parts.join('');
-	}
-
 	/** Tooltip text for one run of the trend chart: every suite's index and its move from the previous run. */
 	function trendTip(r, prev) {
 		const branch = r.branch ? ` · ${esc(r.branch)}` : '';
@@ -334,13 +353,6 @@ export function mount(document, window, localStorage, EMBEDDED) {
 				cross.setAttribute('visibility', 'hidden');
 			});
 		});
-	}
-
-	/** The right-hand label of a small multiple. */
-	function rangeLabel(vals, flat, d) {
-		if (vals.length < 2) return 'first run';
-		if (flat) return 'unchanged';
-		return signed(d);
 	}
 
 	function renderMultiples(runs) {
@@ -544,13 +556,6 @@ export function mount(document, window, localStorage, EMBEDDED) {
 
 	// ---- findings
 
-	function chip(id, lookup) {
-		if (id === 'all') return '<span class="chip">all</span>';
-		const hit = lookup[id];
-		const band = hit ? cls(hit.e.score) : '';
-		const name = hit ? hit.e.name : '';
-		return `<span class="chip ${band}" title="${esc(name)}">${esc(id)}</span>`;
-	}
 	/** One finding: chips for the evals it moves, what, what is missing, what to do, extra markup. */
 	function item(lookup, ids, what, missing, todo, extra = '') {
 		const chips = ids.map((id) => chip(id, lookup)).join('');
@@ -579,11 +584,6 @@ export function mount(document, window, localStorage, EMBEDDED) {
 			lead: 'Component / eval pairs the suite cannot score in the latest run; they count as absent, not as zero. Components an eval does not apply to are not listed.',
 			items,
 		};
-	}
-	/** One requirement row of the roadmap table. */
-	function requirementRow(r) {
-		const reason = r.reason ? ` <small>· ${esc(r.reason)}</small>` : '';
-		return `<li><span>${esc(r.name)}${reason}</span><span class="status-pill st-${esc(r.status)}">${esc(r.status)}</span></li>`;
 	}
 	/** The roadmap group of a suite that reports requirements; null when it reports none. */
 	function roadmapGroup(s, lookup) {

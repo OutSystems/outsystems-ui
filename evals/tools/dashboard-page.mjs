@@ -43,9 +43,10 @@ export function buildDashboardPage(evalsDir) {
 	if (!template.includes(PLACEHOLDER)) throw new Error(`${TEMPLATE_FILE} has no ${PLACEHOLDER} placeholder`);
 	const source = fs.readFileSync(insideDir(evalsDir, MODULE_FILE), 'utf8');
 	if (!source.includes(EXPORT_LINE)) throw new Error(`${MODULE_FILE} must export mount()`);
+	const data = readDataSet(evalsDir).replace(/</g, String.raw`\u003c`);
 	const script = [
 		source.replace(EXPORT_LINE, 'function mount('),
-		`mount(document, window, localStorage, ${readDataSet(evalsDir).replace(/</g, String.raw`\u003c`)});`,
+		`mount(document, window, localStorage, ${data});`,
 	].join('\n');
 	return template.replace(PLACEHOLDER, script);
 }

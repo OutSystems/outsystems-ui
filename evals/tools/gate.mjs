@@ -313,8 +313,10 @@ export function parseArgs(argv) {
 function baseRun(history, baselineLabel, file) {
 	const candidates = [];
 	if (file) candidates.push(path.resolve(file));
-	candidates.push(insideDir(evalsDir, 'results', `${pickBaseline(history, baselineLabel).label}.json`));
-	candidates.push(insideDir(evalsDir, 'results', 'latest.json'));
+	candidates.push(
+		insideDir(evalsDir, 'results', `${pickBaseline(history, baselineLabel).label}.json`),
+		insideDir(evalsDir, 'results', 'latest.json')
+	);
 	const hit = candidates.find((f) => fs.existsSync(f));
 	return hit ? normalizeRun(JSON.parse(fs.readFileSync(hit, 'utf8'))) : null;
 }

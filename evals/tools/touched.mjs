@@ -46,8 +46,10 @@ export function componentsForFiles(inventory, root, files) {
 	};
 	for (const file of files) {
 		for (const p of inventory.patterns) {
-			const own = [p.apiFile, ...p.contractFiles, ...p.typingFiles, ...p.scssFiles, p.storyFile].map(rel);
-			const dirs = [p.patternDir, ...p.providerDirs].map(rel).filter((d) => d !== null);
+			const own = [p.apiFile, ...p.contractFiles, ...p.typingFiles, ...p.scssFiles, p.storyFile].map((f) =>
+				rel(f)
+			);
+			const dirs = [p.patternDir, ...p.providerDirs].map((d) => rel(d)).filter((d) => d !== null);
 			if (own.includes(file) || dirs.some((d) => file.startsWith(`${d}/`))) add(p.name, 'pattern', file);
 		}
 		for (const c of inventory.cssComponents) {
@@ -65,6 +67,12 @@ const f1 = (n) => n.toFixed(1);
 /** @param {number} d */
 const signed = (d) => (d > 0 ? `+${f1(d)}` : f1(d));
 
+/** Text of a cell on its own: the score, `n/a`, or `—` when unmeasured. @param {{ s: number|null, w: string }} c */
+function cellText(c) {
+	if (c.s !== null) return f1(c.s);
+	return c.w === 'na' ? 'n/a' : '—';
+}
+
 /**
  * `80.0 → 100.0 (🔼 +20.0)`, `— → 71.0 (new)`, `n/a`, or `71.0` without a baseline.
  * @param {{ s: number|null, w: string }|undefined} before
@@ -72,7 +80,7 @@ const signed = (d) => (d > 0 ? `+${f1(d)}` : f1(d));
  * @param {boolean} hasBaseline
  */
 function movement(before, after, hasBaseline) {
-	const afterText = after.s === null ? (after.w === 'na' ? 'n/a' : '—') : f1(after.s);
+	const afterText = cellText(after);
 	if (!hasBaseline) return afterText;
 	const beforeScore = before && before.s !== null ? before.s : null;
 	const beforeText = beforeScore === null ? '—' : f1(beforeScore);
@@ -84,6 +92,45 @@ function movement(before, after, hasBaseline) {
 	if (d < 0) mark = `🔻 ${signed(d)}`;
 	return `${beforeText} → ${afterText} (${mark})`;
 }
+
+/**
+ * The lines of one touched component: its cells before → after, then the hints of the cells that dropped or
+ * sit below 80.
+ * @param {string} name
+ * @param {Touched} t
+ * @param {any[]} afterResults
+ * @param {any[]|null} beforeResults
+ * @param {string[]} heatmapIds
+ */
+function componentLines(name, t, afterResults, beforeResults, heatmapIds) {
+	const cellsAfter = componentCells(afterResults, name, t.kind);
+	const cellsBefore = beforeResults ? componentCells(beforeResults, name, t.kind) : {};
+	const parts = [];
+	const hints = [];
+	for (const id of heatmapIds) {
+		const a = cellsAfter[id];
+		if (!a) continue;
+		const b = cellsBefore[id];
+		parts.push(`${id} ${movement(b, a, beforeResults !== null)}`);
+		if (needsHint(b, a)) hints.push(`- ${id}: ${a.h}`);
+	}
+	const files = `${t.files.length} ${plural(t.files.length, 'file')}`;
+	return [`**${name}** (${t.kind}) — ${files} → ${parts.join(', ')}`, ...hints, ''];
+}
+
+/**
+ * A cell deserves its hint when it dropped against the baseline or sits below 80.
+ * @param {{ s: number|null }|undefined} before
+ * @param {{ s: number|null }} after
+ */
+function needsHint(before, after) {
+	if (after.s === null) return false;
+	const dropped = Boolean(before) && before.s !== null && after.s < before.s;
+	return after.s < 80 || dropped;
+}
+
+/** @param {number} n @param {string} word */
+const plural = (n, word) => (n === 1 ? word : `${word}s`);
 
 /**
  * Markdown section: each touched component with its heatmap cells before → after, and the hints of the
@@ -103,30 +150,17 @@ export function formatTouchedReport(touched, before, after, heatmapIds, { maxCom
 		? `before = \`${before.label}\` @ \`${before.sha ?? 'unknown'}\``
 		: 'no baseline run to compare with, scores of this run only';
 	const names = [...touched.keys()].sort((a, b) => a.localeCompare(b));
+	const counts = `${names.length} ${plural(names.length, 'component')} from ${files.size} changed ${plural(files.size, 'file')}`;
 	const lines = [
 		'### 🧩 Components touched by this pull request',
 		'',
-		`${names.length} component${names.length === 1 ? '' : 's'} from ${files.size} changed file${files.size === 1 ? '' : 's'}; ${baseline}. Cells are the per-component scores of the evals that measure components.`,
+		`${counts}; ${baseline}. Cells are the per-component scores of the evals that measure components.`,
 		'',
 	];
 	for (const name of names.slice(0, maxComponents)) {
-		const t = /** @type {Touched} */ (touched.get(name));
-		const cellsAfter = componentCells(afterResults, name, t.kind);
-		const cellsBefore = beforeResults ? componentCells(beforeResults, name, t.kind) : {};
-		const parts = [];
-		const hints = [];
-		for (const id of heatmapIds) {
-			const a = cellsAfter[id];
-			if (!a) continue;
-			const b = cellsBefore[id];
-			parts.push(`${id} ${movement(b, a, beforeResults !== null)}`);
-			const dropped = b && b.s !== null && a.s !== null && a.s < b.s;
-			if (a.s !== null && (a.s < 80 || dropped)) hints.push(`- ${id}: ${a.h}`);
-		}
 		lines.push(
-			`**${name}** (${t.kind}) — ${t.files.length} file${t.files.length === 1 ? '' : 's'} → ${parts.join(', ')}`
+			...componentLines(name, /** @type {Touched} */ (touched.get(name)), afterResults, beforeResults, heatmapIds)
 		);
-		lines.push(...hints, '');
 	}
 	if (names.length > maxComponents) {
 		lines.push(`… and ${names.length - maxComponents} more: ${names.slice(maxComponents).join(', ')}.`, '');
