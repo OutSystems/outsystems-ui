@@ -13,11 +13,11 @@ branch="${RESULTS_BRANCH:-evals-results}"
 keep="${KEEP_RUNS:-20}"
 results="evals/results"
 dry_run=0
-[ "${1:-}" = "--dry-run" ] && dry_run=1
+[[ "${1:-}" == "--dry-run" ]] && dry_run=1
 
 label="$(node -e "const h=require('./$results/history.json');const s=[...h].sort((a,b)=>a.date.localeCompare(b.date));console.log(s[s.length-1].label)")"
 for f in history.json HISTORY.md dashboard.json latest.json "$label.json"; do
-	[ -f "$results/$f" ] || { echo "missing $results/$f" >&2; exit 1; }
+	[[ -f "$results/$f" ]] || { echo "missing $results/$f" >&2; exit 1; }
 done
 
 export GIT_INDEX_FILE="${RUNNER_TEMP:-/tmp}/evals-results.index"
@@ -30,8 +30,11 @@ else
 	git read-tree --empty
 fi
 
+# add <source file> <path in the branch>
 add() {
-	git update-index --add --cacheinfo "100644,$(git hash-object -w "$1"),$2"
+	local source="$1"
+	local target="$2"
+	git update-index --add --cacheinfo "100644,$(git hash-object -w "$source"),$target"
 }
 add "$results/history.json" history.json
 add "$results/HISTORY.md" HISTORY.md
@@ -47,7 +50,7 @@ done
 
 tree="$(git write-tree)"
 message="evals: record $label"
-if [ -n "$parent" ]; then
+if [[ -n "$parent" ]]; then
 	commit="$(git commit-tree "$tree" -p "$parent" -m "$message")"
 else
 	commit="$(git commit-tree "$tree" -m "$message")"
@@ -56,7 +59,7 @@ rm -f "$GIT_INDEX_FILE"
 
 echo "$branch: $message → $commit"
 git ls-tree --name-only -r "$tree"
-if [ "$dry_run" = "1" ]; then
+if [[ "$dry_run" == "1" ]]; then
 	echo "dry run: not pushed"
 	exit 0
 fi

@@ -45,7 +45,7 @@ export function buildDashboardPage(evalsDir) {
 	if (!source.includes(EXPORT_LINE)) throw new Error(`${MODULE_FILE} must export mount()`);
 	const script = [
 		source.replace(EXPORT_LINE, 'function mount('),
-		`mount(document, window, localStorage, ${readDataSet(evalsDir).replace(/</g, '\\u003c')});`,
+		`mount(document, window, localStorage, ${readDataSet(evalsDir).replace(/</g, String.raw`\u003c`)});`,
 	].join('\n');
 	return template.replace(PLACEHOLDER, script);
 }

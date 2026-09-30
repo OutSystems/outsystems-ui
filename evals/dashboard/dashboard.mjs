@@ -1,4 +1,58 @@
 // @ts-check
+// ---- pure helpers: formatting, escaping, score bands
+const f1 = (n) => (Math.round(n * 10) / 10).toFixed(1);
+const signed = (n) => (n > 0 ? '+' : '') + f1(n);
+const esc = (s) =>
+	String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+const meanOf = (xs) => (xs.length ? xs.reduce((s, x) => s + x, 0) / xs.length : 0);
+const when = (iso) => new Date(iso).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' });
+const tone = (s) => `t${s.tone % 3}`;
+const clsOf = (e) => e.cls || (e.movable ? 'movable' : 'structural');
+const range = (evals) => (evals.length ? `${evals[0].id}–${evals[evals.length - 1].id}` : '');
+const plural = (n, word) => (n === 1 ? word : `${word}s`);
+
+/** Score band class. */
+function cls(n) {
+	if (n >= 80) return 'good';
+	if (n >= 60) return 'warn';
+	return 'bad';
+}
+/** Direction class of a delta. */
+function deltaCls(d) {
+	if (d > 0) return 'up';
+	if (d < 0) return 'down';
+	return 'flat';
+}
+/** Inline style of a heatmap cell. */
+function shade(v) {
+	if (v === null) return '';
+	if (v >= 80) return 'background:var(--good-soft);color:var(--good)';
+	if (v >= 60) return 'background:var(--warn-soft);color:var(--warn)';
+	return 'background:var(--bad-soft);color:var(--bad)';
+}
+/** Text of a heatmap cell. */
+function cellText(v) {
+	if (v.s !== null) return f1(v.s);
+	return v.w === 'na' ? 'n/a' : '—';
+}
+/** `<div class="…">…</div>` or nothing. */
+function block(className, content) {
+	return content ? `<div class="${className}">${content}</div>` : '';
+}
+
+/** Human name of a heatmap sort key. */
+function sortLabel(key) {
+	if (key === 'n') return 'name';
+	if (key === 'k') return 'kind';
+	if (key === 'mean') return 'mean score';
+	return key;
+}
+/** One heatmap cell. */
+function cell(v) {
+	if (v.s === null) return `<td class="cell ${v.w}" title="${esc(v.h)}">${cellText(v)}</td>`;
+	return `<td class="cell" style="${shade(v.s)}" title="${esc(v.h)}">${f1(v.s)}</td>`;
+}
+
 /**
  * The dashboard page logic. `mount` renders the embedded data set into the page and wires the refresh
  * button to the artifact database. The build (tools/dashboard-page.mjs) inlines this module into
@@ -14,46 +68,6 @@
 export function mount(document, window, localStorage, EMBEDDED) {
 	const DOC_PATH = 'evals/dashboard';
 	const DATA_VERSION = 3;
-	const f1 = (n) => (Math.round(n * 10) / 10).toFixed(1);
-	const signed = (n) => (n > 0 ? '+' : '') + f1(n);
-	const esc = (s) =>
-		String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
-	const meanOf = (xs) => (xs.length ? xs.reduce((s, x) => s + x, 0) / xs.length : 0);
-	const when = (iso) => new Date(iso).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' });
-	const tone = (s) => `t${s.tone % 3}`;
-	const clsOf = (e) => e.cls || (e.movable ? 'movable' : 'structural');
-	const range = (evals) => (evals.length ? `${evals[0].id}–${evals[evals.length - 1].id}` : '');
-	const plural = (n, word) => (n === 1 ? word : `${word}s`);
-
-	/** Score band class. */
-	function cls(n) {
-		if (n >= 80) return 'good';
-		if (n >= 60) return 'warn';
-		return 'bad';
-	}
-	/** Direction class of a delta. */
-	function deltaCls(d) {
-		if (d > 0) return 'up';
-		if (d < 0) return 'down';
-		return 'flat';
-	}
-	/** Inline style of a heatmap cell. */
-	function shade(v) {
-		if (v === null) return '';
-		if (v >= 80) return 'background:var(--good-soft);color:var(--good)';
-		if (v >= 60) return 'background:var(--warn-soft);color:var(--warn)';
-		return 'background:var(--bad-soft);color:var(--bad)';
-	}
-	/** Text of a heatmap cell. */
-	function cellText(v) {
-		if (v.s !== null) return f1(v.s);
-		return v.w === 'na' ? 'n/a' : '—';
-	}
-	/** `<div class="…">…</div>` or nothing. */
-	function block(className, content) {
-		return content ? `<div class="${className}">${content}</div>` : '';
-	}
-
 	// Documentation of the branch work, linked to the evals it moved. Kept in the page: it is
 	// narrative, not a measurement.
 	const APPLIED = [
@@ -188,18 +202,20 @@ export function mount(document, window, localStorage, EMBEDDED) {
 				sub: `${structural.map((e) => e.id).join(', ')} · wait on a breaking-change decision`,
 			});
 		}
-		out.push({
-			cls: '',
-			label: 'Components measured',
-			value: String(D.components.length),
-			sub: `${D.components.filter((c) => c.k === 'pattern').length} patterns, ${D.components.filter((c) => c.k === 'css').length} CSS-only`,
-		});
-		out.push({
-			cls: '',
-			label: 'Unmeasured pairs',
-			value: String(unmeasured),
-			sub: unmeasuredBy || 'everything measurable is measured',
-		});
+		out.push(
+			{
+				cls: '',
+				label: 'Components measured',
+				value: String(D.components.length),
+				sub: `${D.components.filter((c) => c.k === 'pattern').length} patterns, ${D.components.filter((c) => c.k === 'css').length} CSS-only`,
+			},
+			{
+				cls: '',
+				label: 'Unmeasured pairs',
+				value: String(unmeasured),
+				sub: unmeasuredBy || 'everything measurable is measured',
+			}
+		);
 		return out;
 	}
 
@@ -216,13 +232,15 @@ export function mount(document, window, localStorage, EMBEDDED) {
 			`<svg class="trend" viewBox="0 0 ${W} ${H}" role="img" aria-label="Index per run and suite, scale 0 to 100">`,
 		];
 		for (const g of [0, 25, 50, 75, 100]) {
-			parts.push(`<line class="grid" x1="${padL}" x2="${W - padR}" y1="${y(g)}" y2="${y(g)}"/>`);
-			parts.push(`<text x="${padL - 8}" y="${y(g) + 4}" text-anchor="end">${g}</text>`);
+			parts.push(
+				`<line class="grid" x1="${padL}" x2="${W - padR}" y1="${y(g)}" y2="${y(g)}"/>`,
+				`<text x="${padL - 8}" y="${y(g) + 4}" text-anchor="end">${g}</text>`
+			);
 		}
 		D.suites.forEach((suite, k) => parts.push(trendLine(suite, k, runs, xs, y)));
 		runs.forEach((r, i) => {
-			parts.push(`<text x="${xs[i]}" y="${H - padB + 18}" text-anchor="middle">${esc(r.label)}</text>`);
 			parts.push(
+				`<text x="${xs[i]}" y="${H - padB + 18}" text-anchor="middle">${esc(r.label)}</text>`,
 				`<text x="${xs[i]}" y="${H - padB + 34}" text-anchor="middle" style="font-family:var(--font-mono);font-size:11px">${esc(r.sha)}</text>`
 			);
 		});
@@ -378,13 +396,6 @@ export function mount(document, window, localStorage, EMBEDDED) {
 			.join('');
 	}
 
-	/** Human name of a heatmap sort key. */
-	function sortLabel(key) {
-		if (key === 'n') return 'name';
-		if (key === 'k') return 'kind';
-		if (key === 'mean') return 'mean score';
-		return key;
-	}
 	/** aria-sort value of a heatmap column. */
 	function ariaSort(key) {
 		if (heatSort.key !== key) return 'none';
@@ -470,10 +481,6 @@ export function mount(document, window, localStorage, EMBEDDED) {
 				return `<li><span class="id">${esc(id)}</span><span class="s" style="${shade(v.s)}">${cellText(v)}</span><span>${esc(v.h)}</span></li>`;
 			});
 			return `<tr class="detail"><td colspan="${ids.length + 3}"><ul>${items.join('')}</ul></td></tr>`;
-		}
-		function cell(v) {
-			if (v.s === null) return `<td class="cell ${v.w}" title="${esc(v.h)}">${cellText(v)}</td>`;
-			return `<td class="cell" style="${shade(v.s)}" title="${esc(v.h)}">${f1(v.s)}</td>`;
 		}
 		function row(r) {
 			const kind = r.k === 'pattern' ? 'pattern' : 'css';
