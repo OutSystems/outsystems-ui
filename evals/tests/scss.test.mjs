@@ -8,6 +8,7 @@ import { fileURLToPath } from 'node:url';
 import {
 	analyseDeclarations,
 	analyseSelectors,
+	classNamesOf,
 	compileScss,
 	isThemeableProp,
 	parseSizeLiteral,
@@ -33,6 +34,16 @@ test('compileScss reports a compile error instead of throwing', () => {
 	const { css, error } = compileScss(file, { loadPaths: [scssRoot] });
 	assert.equal(css, null);
 	assert.match(error, /does-not-exist/);
+});
+
+test('classNamesOf reads class names from selectors only, in first-seen order', () => {
+	const css = `/* src/scss/05-useful/_x.scss */
+.margin-s { margin: 4px } .margin-s.is-rtl, .phone .margin-m { margin: 8px }
+@media (min-width: 1px) { .gap-l:hover { gap: 1px } }
+@keyframes spin { .not-a-class { } }
+.a\\:b { color: red }`;
+	assert.deepEqual(classNamesOf(css), ['margin-s', 'is-rtl', 'phone', 'margin-m', 'gap-l', 'a:b']);
+	assert.deepEqual(classNamesOf(''), []);
 });
 
 test('analyseSelectors computes combinator depth and specificity, skipping keyframes', () => {

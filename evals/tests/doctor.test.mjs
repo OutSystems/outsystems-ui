@@ -44,18 +44,28 @@ test('suggestEntry derives a pattern entry from its code signals', () => {
 	assert.deepEqual(events.roles, ['no-dom']);
 });
 
-test('suggestEntry derives a CSS component entry from its compiled CSS', () => {
+test('suggestEntry derives a CSS component entry from its compiled CSS and keeps the discovered tier', () => {
 	const chip = suggestEntry({
-		kind: 'css',
+		kind: 'component',
 		name: 'chip',
 		text: '',
 		css: '.chip:hover{} .chip.is-loading{} .chip.not-valid{}',
 	});
-	assert.deepEqual(chip, { kind: 'css', interactive: true, loading: true, validating: true, derived: true });
-	assert.deepEqual(suggestEntry({ kind: 'css', name: 'rule', text: '', css: '.rule{height:1px}' }), {
-		kind: 'css',
+	assert.deepEqual(chip, { kind: 'component', interactive: true, loading: true, validating: true, derived: true });
+	assert.deepEqual(suggestEntry({ kind: 'component', name: 'rule', text: '', css: '.rule{height:1px}' }), {
+		kind: 'component',
 		derived: true,
 	});
+	assert.deepEqual(suggestEntry({ kind: 'layout', name: 'footer', text: '', css: '.footer:hover{}' }), {
+		kind: 'layout',
+		interactive: true,
+		derived: true,
+	});
+	assert.deepEqual(
+		suggestEntry({ kind: 'utility', name: 'space-gap', text: '', css: '.gap-s:hover{}' }),
+		{ kind: 'utility', derived: true },
+		'a utility family is classified by its tier alone'
+	);
 });
 
 test('diagnose lists unknown and stale components with suggestions, and components without a story', () => {
@@ -76,9 +86,11 @@ test('diagnose lists unknown and stale components with suggestions, and componen
 		r.unknown.map((u) => [u.name, u.kind, u.suggested.derived]),
 		[
 			['Accordion', 'pattern', true],
-			['badge', 'css', true],
+			['badge', 'component', true],
 		]
 	);
+	assert.deepEqual(r.badKinds, []);
+	assert.ok(Array.isArray(r.tierOverride), 'tier overrides are reported, not failed');
 	assert.deepEqual(r.stale, ['Ghost']);
 	const md = renderDoctor(r);
 	assert.match(md, /Accordion/);
@@ -87,7 +99,7 @@ test('diagnose lists unknown and stale components with suggestions, and componen
 	assert.equal(renderDoctor(clean), '', 'nothing to say when the registry and the tree agree');
 	const fixed = applyFixes(broken, r);
 	assert.equal(fixed.components.Accordion.derived, true);
-	assert.equal(fixed.components.badge.kind, 'css');
+	assert.equal(fixed.components.badge.kind, 'component');
 	assert.equal('Ghost' in fixed.components, false, 'stale entries are dropped');
 	assert.deepEqual(
 		Object.keys(fixed.components),

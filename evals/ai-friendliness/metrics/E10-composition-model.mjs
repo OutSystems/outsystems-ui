@@ -26,7 +26,7 @@ export default {
 	present: {
 		scope: 'Per pattern: inheritance depth, contract files, typed configs and events, module format. CSS-only components have no classes.',
 		heatmap: true,
-		appliesTo: 'pattern',
+		appliesTo: ['pattern'],
 		/** @param {any} row */
 		cell(row) {
 			const todo = [];

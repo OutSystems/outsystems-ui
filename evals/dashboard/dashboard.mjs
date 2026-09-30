@@ -43,10 +43,33 @@ function block(className, content) {
 /** Human name of a heatmap sort key. */
 function sortLabel(key) {
 	if (key === 'n') return 'name';
-	if (key === 'k') return 'kind';
+	if (key === 'k') return 'tier';
 	if (key === 'mean') return 'mean score';
 	return key;
 }
+/** Why a component of a tier sits outside an eval (the data set omits those cells to stay small). */
+const OUTSIDE_TIER = {
+	pattern: 'this is a pattern with a TypeScript contract',
+	component: 'this is a CSS-only component with an anatomy but no TypeScript contract',
+	layout: 'layout partials style markup the app template or the runtime emits, so they have no markup contract of their own',
+	utility: 'utility classes have no anatomy, knobs or story of their own; the utilities suite measures them',
+};
+
+/** The cell of a component for an eval: the data set's, else not applicable by tier, else no cell. */
+function cellOf(c, id, e) {
+	const hit = c.cells[id];
+	if (hit) return hit;
+	if (e && Array.isArray(e.appliesTo) && !e.appliesTo.includes(c.k)) {
+		const measures = e.appliesTo.map((t) => `${t}s`).join(', ');
+		return {
+			s: null,
+			w: 'na',
+			h: `Not applicable: this eval measures ${measures}; ${OUTSIDE_TIER[c.k] || `${c.k} components are outside it`}.`,
+		};
+	}
+	return { s: null, w: 'unmeasured', h: 'No cell in this data set.' };
+}
+
 /** One heatmap cell. */
 function cell(v) {
 	if (v.s === null) return `<td class="cell ${v.w}" title="${esc(v.h)}">${cellText(v)}</td>`;
@@ -108,11 +131,17 @@ function requirementRow(r) {
  * @param {any} document
  * @param {any} window
  * @param {{ getItem(key: string): string|null, setItem(key: string, value: string): void }} localStorage
- * @param {any} EMBEDDED the data set built by tools/dashboard-data.mjs (v3)
+ * @param {any} EMBEDDED the data set built by tools/dashboard-data.mjs (v4)
  */
 export function mount(document, window, localStorage, EMBEDDED) {
 	const DOC_PATH = 'evals/dashboard';
-	const DATA_VERSION = 3;
+	const DATA_VERSION = 4;
+	const TIER_LABEL = {
+		pattern: 'patterns',
+		component: 'CSS-only components',
+		layout: 'layout partials',
+		utility: 'utility classes',
+	};
 	// Documentation of the branch work, linked to the evals it moved. Kept in the page: it is
 	// narrative, not a measurement.
 	const APPLIED = [
@@ -233,6 +262,21 @@ export function mount(document, window, localStorage, EMBEDDED) {
 					: `${signed(s.latest.index - first.index)} since ${first.label} (${f1(first.index)})`;
 			return { cls: `index ${tone(s)}`, label: s.indexName, value: f1(s.latest.index), sub };
 		});
+		// the same evals scored per tier, so a helper class cannot move the pattern figure
+		for (const s of D.suites) {
+			for (const [tier, t] of Object.entries(s.tiers || {})) {
+				const moved =
+					t.base === null || t.baseLabel === last.label
+						? `first measured in ${last.label}`
+						: `${signed(t.index - t.base)} since ${t.baseLabel} (${f1(t.base)})`;
+				out.push({
+					cls: `tier ${tone(s)}`,
+					label: `${s.name} · ${TIER_LABEL[tier] || tier}`,
+					value: f1(t.index),
+					sub: `${t.evals} evals apply · ${moved}`,
+				});
+			}
+		}
 		out.push({
 			cls: '',
 			label: 'Movable evals',
@@ -252,7 +296,11 @@ export function mount(document, window, localStorage, EMBEDDED) {
 				cls: '',
 				label: 'Components measured',
 				value: String(D.components.length),
-				sub: `${D.components.filter((c) => c.k === 'pattern').length} patterns, ${D.components.filter((c) => c.k === 'css').length} CSS-only`,
+				sub: Object.entries(TIER_LABEL)
+					.map(([k, label]) => [D.components.filter((c) => c.k === k).length, label])
+					.filter(([n]) => n > 0)
+					.map(([n, label]) => `${n} ${label}`)
+					.join(', '),
 			},
 			{
 				cls: '',
@@ -446,7 +494,7 @@ export function mount(document, window, localStorage, EMBEDDED) {
 			.map(({ e }) => e.id);
 		document.getElementById('heat-legend').innerHTML = heatLegend(noColumn);
 		const rows = D.components.map((c) => {
-			const vals = ids.map((id) => c.cells[id] || { s: null, w: 'unmeasured', h: 'No cell in this data set.' });
+			const vals = ids.map((id) => cellOf(c, id, lookup[id]?.e));
 			const measured = vals.filter((v) => v.s !== null).map((v) => v.s);
 			return {
 				...c,
@@ -468,7 +516,7 @@ export function mount(document, window, localStorage, EMBEDDED) {
 		function header() {
 			const heads = [
 				{ key: 'n', label: 'Component' },
-				{ key: 'k', label: 'Kind' },
+				{ key: 'k', label: 'Tier' },
 				...ids.map((id) => ({ key: id, label: id, title: lookup[id]?.e.name || id })),
 				{ key: 'mean', label: 'Mean' },
 			];
@@ -495,10 +543,9 @@ export function mount(document, window, localStorage, EMBEDDED) {
 			return `<tr class="detail"><td colspan="${ids.length + 3}"><ul>${items.join('')}</ul></td></tr>`;
 		}
 		function row(r) {
-			const kind = r.k === 'pattern' ? 'pattern' : 'css';
 			const mean = r.mean === null ? '—' : f1(r.mean);
 			const cells = r.vals.map((v) => cell(v)).join('');
-			const head = `<td class="name">${esc(r.n)}</td><td class="kind">${kind}</td>`;
+			const head = `<td class="name">${esc(r.n)}</td><td class="kind">${esc(r.k)}</td>`;
 			const tail = `<td class="cell mean" style="${shade(r.mean)}">${mean}</td>`;
 			const open = expanded.has(r.n);
 			return `<tr class="row" tabindex="0" data-n="${esc(r.n)}" aria-expanded="${open}">${head}${cells}${tail}</tr>${open ? detail(r) : ''}`;

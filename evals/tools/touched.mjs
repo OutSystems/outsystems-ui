@@ -25,7 +25,7 @@ export function readChangedFiles(text) {
 }
 
 /**
- * @typedef {{ kind: 'pattern'|'css', files: string[] }} Touched
+ * @typedef {{ kind: import('../lib/tiers.mjs').Tier, files: string[] }} Touched
  */
 
 /**
@@ -39,7 +39,11 @@ export function componentsForFiles(inventory, root, files) {
 	const rel = (/** @type {string|null} */ f) => (f ? posix(path.relative(root, f)) : null);
 	/** @type {Map<string, Touched>} */
 	const out = new Map();
-	const add = (/** @type {string} */ name, /** @type {'pattern'|'css'} */ kind, /** @type {string} */ file) => {
+	const add = (
+		/** @type {string} */ name,
+		/** @type {import('../lib/tiers.mjs').Tier} */ kind,
+		/** @type {string} */ file
+	) => {
 		const hit = out.get(name) ?? { kind, files: [] };
 		if (!hit.files.includes(file)) hit.files.push(file);
 		out.set(name, hit);
@@ -53,7 +57,7 @@ export function componentsForFiles(inventory, root, files) {
 			if (own.includes(file) || dirs.some((d) => file.startsWith(`${d}/`))) add(p.name, 'pattern', file);
 		}
 		for (const c of inventory.cssComponents) {
-			if (rel(c.scssFile) === file || rel(c.storyFile) === file) add(c.name, 'css', file);
+			if (rel(c.scssFile) === file || rel(c.storyFile) === file) add(c.name, c.kind, file);
 		}
 	}
 	return out;

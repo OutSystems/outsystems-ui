@@ -64,6 +64,9 @@ export function checksFor(c, css, ts, guards = {}) {
 	};
 }
 
+/** The tiers this eval measures (lib/tiers.mjs). */
+const APPLIES_TO = ['pattern', 'component', 'layout'];
+
 export default {
 	id: 'R06',
 	name: 'Feedback and State Behaviours',
@@ -75,7 +78,7 @@ export default {
 	present: {
 		scope: 'Per component: hover, focus-visible, press/open and disabled states where interactive; loading, invalid and guarded motion where they apply.',
 		heatmap: true,
-		appliesTo: 'both',
+		appliesTo: APPLIES_TO,
 		unmeasuredHint: 'Fix the SCSS compile error so the state checks can run.',
 		/** @param {any} row */
 		cell(row) {
@@ -98,7 +101,7 @@ export default {
 		/** @type {{ name: string, reason: string, hint: string }[]} */
 		const notApplicable = [];
 		const guards = themeGuards(ctx);
-		for (const c of componentUniverse(ctx)) {
+		for (const c of componentUniverse(ctx, APPLIES_TO)) {
 			const compiled = componentCss(ctx, c);
 			if (compiled.css === null && !c.pattern) {
 				unmeasured.push({ name: c.name, reason: compiled.error ?? 'no CSS' });

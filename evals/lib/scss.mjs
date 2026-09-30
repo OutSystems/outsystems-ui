@@ -129,6 +129,25 @@ export function percentile(values, p) {
 }
 
 /**
+ * Class names a compiled stylesheet selects, in first-seen order: read from the rule selectors, never
+ * from comments or values (`.scss` in a source comment is not a class). Keyframe steps are skipped.
+ * @param {string} css
+ * @returns {string[]}
+ */
+export function classNamesOf(css) {
+	const root = postcss.parse(css);
+	/** @type {Set<string>} */
+	const out = new Set();
+	root.walkRules((rule) => {
+		const parent = rule.parent;
+		if (parent && parent.type === 'atrule' && /keyframes$/i.test(/** @type {any} */ (parent).name)) return;
+		// an escaped character (`.a\:b`) belongs to the name; the backslash itself does not
+		for (const m of rule.selector.matchAll(/\.(-?[_a-zA-Z](?:[\w-]|\\.)*)/g)) out.add(m[1].replace(/\\/g, ''));
+	});
+	return [...out];
+}
+
+/**
  * Selector complexity of a compiled stylesheet. Keyframe step selectors are skipped.
  * @param {string} css
  */

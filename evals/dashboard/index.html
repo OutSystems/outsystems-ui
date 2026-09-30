@@ -90,6 +90,8 @@ button.icon.loading #refresh-icon { animation: spin 0.9s linear infinite; color:
 .tile .value { font-size: 1.9rem; font-weight: 600; line-height: 1.1; font-variant-numeric: tabular-nums; }
 .tile.index { border-color: var(--tone); background: var(--tone-soft); }
 .tile.index .value { color: var(--tone); }
+.tile.tier { border-color: var(--tone); }
+.tile.tier .value { color: var(--tone); font-size: 1.5rem; }
 .suite-tag { display: inline-block; font-size: 0.7rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; padding: 1px 6px; border-radius: 3px; background: var(--tone-soft, var(--surface-2)); color: var(--tone, var(--ink-2)); vertical-align: middle; }
 svg .dot.last { fill: var(--tone, var(--tone-0)); }
 .multiple .end { fill: var(--tone, var(--tone-0)); }
@@ -269,11 +271,13 @@ footer { font-size: 0.82rem; color: var(--ink-3); border-top: 1px solid var(--li
 		<div class="panel" style="display:grid; gap:12px">
 			<div class="controls">
 				<label>Filter <input type="search" id="heat-filter" placeholder="component name" autocomplete="off"></label>
-				<label>Kind
+				<label>Tier
 					<select id="heat-kind">
 						<option value="all">all</option>
 						<option value="pattern">patterns (TypeScript + SCSS)</option>
-						<option value="css">CSS-only components</option>
+						<option value="component">CSS-only components</option>
+						<option value="layout">layout partials (host-styled)</option>
+						<option value="utility">utility classes</option>
 					</select>
 				</label>
 				<label><input type="checkbox" id="heat-weak"> only components with a score below 60</label>

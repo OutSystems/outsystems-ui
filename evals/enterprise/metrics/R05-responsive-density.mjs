@@ -78,6 +78,9 @@ export function checksFor(name, css) {
 	};
 }
 
+/** The tiers this eval measures (lib/tiers.mjs). */
+const APPLIES_TO = ['pattern', 'component', 'layout'];
+
 export default {
 	id: 'R05',
 	name: 'Responsiveness and Density',
@@ -89,7 +92,7 @@ export default {
 	present: {
 		scope: 'Per component CSS: breakpoint rules where it lays out, a size or density axis where the document expects one, RTL rules where direction matters.',
 		heatmap: true,
-		appliesTo: 'both',
+		appliesTo: APPLIES_TO,
 		unmeasuredHint: 'Fix the SCSS compile error so the partial can be scored.',
 		/** @param {any} row */
 		cell(row) {
@@ -112,7 +115,7 @@ export default {
 		const unmeasured = [];
 		/** @type {{ name: string, reason: string, hint: string }[]} */
 		const notApplicable = [];
-		for (const c of componentUniverse(ctx)) {
+		for (const c of componentUniverse(ctx, APPLIES_TO)) {
 			const { css, error } = componentCss(ctx, c);
 			if (css === null) {
 				if (error === NO_PARTIAL) notApplicable.push({ name: c.name, reason: error, hint: NO_PARTIAL_HINT });

@@ -1,6 +1,10 @@
 {
-	"$comment": "Component registry: one entry per pattern (TypeScript + SCSS) and per CSS-only component, keyed by name; the inventory discovers the components, this file classifies them, and a test fails when the two disagree (npm run evals:doctor lists the differences and --fix appends derived entries). Fields: kind (pattern | css, must match discovery); roles (patterns): provider = behaviour delegated to a provider library, overlay = opens a layer and must manage focus and Escape, composite = arrow-key widget, feedback = announces status, non-interactive = renders no control of its own, no-dom = attaches behaviour to existing elements; family: patterns that implement one keyboard model together share the parent name; host {host, reason} (CSS components): styles markup something else emits, so no markup contract of its own; story: normalised story name when it differs from the component name; interactive (CSS components): operated by the user; loading / validating: has a loading or an invalid state; density: the enterprise document expects a size or density axis; derived: true when the doctor appended the entry from code signals, remove after review.",
+	"$comment": "Component registry: one entry per pattern (TypeScript + SCSS), per CSS-only component, per layout partial and per utility family, keyed by name; the inventory discovers the components, this file classifies them, and a test fails when the two disagree (npm run evals:doctor lists the differences and --fix appends derived entries). Fields: kind = tier (pattern | component | layout | utility; the directory gives the default, the registry may override it, e.g. animate and columns are helpers filed under 04-patterns); roles (patterns): provider = behaviour delegated to a provider library, overlay = opens a layer and must manage focus and Escape, composite = arrow-key widget, feedback = announces status, non-interactive = renders no control of its own, no-dom = attaches behaviour to existing elements; family: patterns that implement one keyboard model together share the parent name; host {host, reason} (components and layout): styles markup something else emits, so no markup contract of its own; story: normalised story name when it differs from the component name; title (utility families): display name in the utilities documentation; interactive (CSS-only components): operated by the user; loading / validating: has a loading or an invalid state; density: the enterprise document expects a size or density axis; derived: true when the doctor appended the entry from code signals, remove after review.",
 	"components": {
+		"a11y": {
+			"kind": "utility",
+			"title": "Accessibility"
+		},
 		"Accordion": {
 			"kind": "pattern",
 			"family": "Accordion"
@@ -11,25 +15,17 @@
 			"density": true
 		},
 		"action-sheet": {
-			"kind": "css",
+			"kind": "component",
 			"interactive": true
 		},
 		"alert": {
-			"kind": "css"
+			"kind": "component"
 		},
 		"align-center": {
-			"kind": "css",
-			"host": {
-				"host": "runtime utility classes",
-				"reason": "an alignment class applied to any element; no anatomy of its own"
-			}
+			"kind": "utility"
 		},
 		"animate": {
-			"kind": "css",
-			"host": {
-				"host": "runtime utility classes",
-				"reason": "effect classes applied to any element; no anatomy of its own"
-			}
+			"kind": "utility"
 		},
 		"AnimatedLabel": {
 			"kind": "pattern",
@@ -38,20 +34,28 @@
 			]
 		},
 		"badge": {
-			"kind": "css"
+			"kind": "component"
 		},
 		"balloon": {
-			"kind": "css",
+			"kind": "component",
 			"host": {
 				"host": "OutSystems UI patterns (OverflowMenu and others)",
 				"reason": "a floating layer created and positioned by the patterns that use it; measured through their stories"
 			}
 		},
 		"blank-slate": {
-			"kind": "css"
+			"kind": "component"
+		},
+		"border-radius": {
+			"kind": "utility",
+			"title": "Border radius & shape"
+		},
+		"border-size": {
+			"kind": "utility",
+			"title": "Border size"
 		},
 		"bottom-bar-item": {
-			"kind": "css"
+			"kind": "component"
 		},
 		"BottomSheet": {
 			"kind": "pattern",
@@ -59,23 +63,31 @@
 				"overlay"
 			]
 		},
+		"box-height": {
+			"kind": "utility",
+			"title": "Box height"
+		},
+		"box-width": {
+			"kind": "utility",
+			"title": "Box width"
+		},
 		"breadcrumbs": {
-			"kind": "css",
+			"kind": "component",
 			"interactive": true
 		},
 		"btn": {
-			"kind": "css",
+			"kind": "component",
 			"story": "button",
 			"interactive": true,
 			"loading": true
 		},
 		"bulk-actions": {
-			"kind": "css",
+			"kind": "component",
 			"interactive": true,
 			"density": true
 		},
 		"button-group": {
-			"kind": "css",
+			"kind": "component",
 			"interactive": true
 		},
 		"ButtonLoading": {
@@ -86,19 +98,19 @@
 			"loading": true
 		},
 		"card": {
-			"kind": "css",
+			"kind": "component",
 			"loading": true,
 			"density": true
 		},
 		"card-background": {
-			"kind": "css"
+			"kind": "component"
 		},
 		"card-item": {
-			"kind": "css",
+			"kind": "component",
 			"density": true
 		},
 		"card-sectioned": {
-			"kind": "css",
+			"kind": "component",
 			"density": true
 		},
 		"Carousel": {
@@ -110,28 +122,48 @@
 			"loading": true
 		},
 		"center-content": {
-			"kind": "css"
+			"kind": "utility"
 		},
 		"chat-message": {
-			"kind": "css"
+			"kind": "component"
 		},
 		"checkbox": {
-			"kind": "css",
+			"kind": "component",
 			"interactive": true,
 			"validating": true
 		},
+		"colors-brand": {
+			"kind": "utility",
+			"title": "Colours · brand"
+		},
+		"colors-neutral": {
+			"kind": "utility",
+			"title": "Colours · neutral"
+		},
+		"colors-others": {
+			"kind": "utility",
+			"title": "Colours · other"
+		},
+		"colors-palette": {
+			"kind": "utility",
+			"title": "Colours · palette"
+		},
+		"colors-semantic": {
+			"kind": "utility",
+			"title": "Colours · semantic"
+		},
 		"columns": {
-			"kind": "css"
+			"kind": "utility"
 		},
 		"content": {
-			"kind": "css",
+			"kind": "layout",
 			"host": {
 				"host": "app template Layout blocks",
 				"reason": "the .content region and its title/actions rows are placeholders of the Layout block"
 			}
 		},
 		"counter": {
-			"kind": "css"
+			"kind": "component"
 		},
 		"DatePicker": {
 			"kind": "pattern",
@@ -141,8 +173,20 @@
 			],
 			"validating": true
 		},
+		"display": {
+			"kind": "utility",
+			"title": "Display"
+		},
+		"display-align": {
+			"kind": "utility",
+			"title": "Display · alignment"
+		},
+		"display-flex": {
+			"kind": "utility",
+			"title": "Display · flex"
+		},
 		"dropdown": {
-			"kind": "css",
+			"kind": "component",
 			"interactive": true
 		},
 		"Dropdown": {
@@ -156,7 +200,7 @@
 			"density": true
 		},
 		"dropdown-serverside": {
-			"kind": "css",
+			"kind": "component",
 			"interactive": true
 		},
 		"DropdownServerSideItem": {
@@ -169,21 +213,21 @@
 			"density": true
 		},
 		"feedback-message": {
-			"kind": "css",
+			"kind": "component",
 			"validating": true
 		},
 		"FlipContent": {
 			"kind": "pattern"
 		},
 		"floating-actions": {
-			"kind": "css",
+			"kind": "component",
 			"interactive": true
 		},
 		"floating-content": {
-			"kind": "css"
+			"kind": "component"
 		},
 		"form": {
-			"kind": "css",
+			"kind": "component",
 			"interactive": true,
 			"loading": true,
 			"validating": true,
@@ -197,28 +241,32 @@
 			"loading": true
 		},
 		"header": {
-			"kind": "css",
+			"kind": "layout",
 			"host": {
 				"host": "app template Layout blocks",
 				"reason": "the header is a placeholder group of the Layout block"
 			}
 		},
 		"header-layout-native": {
-			"kind": "css",
+			"kind": "layout",
 			"host": {
 				"host": "app template Layout blocks (native)",
 				"reason": "header variant of the native layout"
 			}
 		},
 		"header-layout-side": {
-			"kind": "css",
+			"kind": "layout",
 			"host": {
 				"host": "app template Layout blocks (side menu)",
 				"reason": "header variant of the side-menu layout"
 			}
 		},
 		"icon-badge": {
-			"kind": "css"
+			"kind": "component"
+		},
+		"images": {
+			"kind": "utility",
+			"title": "Images"
 		},
 		"InlineSvg": {
 			"kind": "pattern",
@@ -227,52 +275,55 @@
 			]
 		},
 		"input-with-icon": {
-			"kind": "css",
+			"kind": "component",
 			"interactive": true,
 			"validating": true
 		},
 		"inputs-and-textareas": {
-			"kind": "css",
+			"kind": "component",
 			"interactive": true,
 			"validating": true,
 			"density": true
 		},
 		"ios-bounce": {
-			"kind": "css",
+			"kind": "layout",
 			"host": {
 				"host": "platform runtime (iOS)",
 				"reason": "a fix applied to the native layout by the runtime; no markup of its own"
 			}
 		},
 		"layout": {
-			"kind": "css",
+			"kind": "layout",
 			"host": {
 				"host": "app template Layout blocks",
 				"reason": "the screen layout skeleton (.screen-container > .layout) comes from the template's Layout block"
 			}
 		},
+		"layout-section": {
+			"kind": "layout"
+		},
 		"lightbox-image": {
-			"kind": "css"
+			"kind": "component"
 		},
 		"list": {
-			"kind": "css",
+			"kind": "component",
 			"loading": true
 		},
 		"list-item": {
-			"kind": "css",
+			"kind": "component",
 			"interactive": true,
 			"density": true
 		},
 		"list-item-content": {
-			"kind": "css",
+			"kind": "component",
 			"density": true
 		},
 		"list-updating": {
-			"kind": "css",
+			"kind": "component",
 			"loading": true
 		},
 		"login": {
-			"kind": "css",
+			"kind": "layout",
 			"host": {
 				"host": "app template Login common screen",
 				"reason": "the login screen and its form come from the template's common screen"
@@ -280,13 +331,13 @@
 			"interactive": true
 		},
 		"margin-container": {
-			"kind": "css"
+			"kind": "utility"
 		},
 		"master-detail": {
-			"kind": "css"
+			"kind": "component"
 		},
 		"menu": {
-			"kind": "css",
+			"kind": "layout",
 			"host": {
 				"host": "app template Menu block",
 				"reason": "the application menu container and overlay come from the Menu block"
@@ -294,14 +345,14 @@
 			"interactive": true
 		},
 		"menu-app-login-info": {
-			"kind": "css",
+			"kind": "layout",
 			"host": {
 				"host": "app template Menu block",
 				"reason": "the signed-in user block is part of the Menu block"
 			}
 		},
 		"menu-app-menu-links": {
-			"kind": "css",
+			"kind": "layout",
 			"host": {
 				"host": "app template Menu block",
 				"reason": "the navigation links are generated by the Menu block from the app's screens"
@@ -309,25 +360,29 @@
 			"density": true
 		},
 		"menu-header-logo": {
-			"kind": "css",
+			"kind": "layout",
 			"host": {
 				"host": "app template Menu block",
 				"reason": "the logo slot is part of the Menu block"
 			}
 		},
 		"menu-layout-native": {
-			"kind": "css",
+			"kind": "layout",
 			"host": {
 				"host": "app template Menu block (native)",
 				"reason": "menu variant of the native layout"
 			}
 		},
 		"menu-layout-side": {
-			"kind": "css",
+			"kind": "layout",
 			"host": {
 				"host": "app template Menu block (side menu)",
 				"reason": "menu variant of the side-menu layout"
 			}
+		},
+		"miscellaneous": {
+			"kind": "utility",
+			"title": "Miscellaneous"
 		},
 		"MonthPicker": {
 			"kind": "pattern",
@@ -344,6 +399,10 @@
 				"feedback"
 			]
 		},
+		"overflow": {
+			"kind": "utility",
+			"title": "Overflow"
+		},
 		"OverflowMenu": {
 			"kind": "pattern",
 			"roles": [
@@ -351,20 +410,28 @@
 			]
 		},
 		"pagination": {
-			"kind": "css",
+			"kind": "component",
 			"interactive": true,
 			"density": true
 		},
 		"popover": {
-			"kind": "css",
+			"kind": "component",
 			"interactive": true
 		},
 		"popover-odc": {
-			"kind": "css"
+			"kind": "component"
 		},
 		"popup": {
-			"kind": "css",
+			"kind": "component",
 			"interactive": true
+		},
+		"positioning": {
+			"kind": "utility",
+			"title": "Positioning"
+		},
+		"positioning-absolute": {
+			"kind": "utility",
+			"title": "Positioning · absolute"
 		},
 		"Progress": {
 			"kind": "pattern",
@@ -375,10 +442,10 @@
 			"loading": true
 		},
 		"provider-login-button": {
-			"kind": "css"
+			"kind": "component"
 		},
 		"pull-to-refresh": {
-			"kind": "css",
+			"kind": "layout",
 			"host": {
 				"host": "platform runtime (native)",
 				"reason": "the pull indicator is injected by the platform runtime"
@@ -386,7 +453,7 @@
 			"interactive": true
 		},
 		"radio-button": {
-			"kind": "css",
+			"kind": "component",
 			"story": "radiogroup",
 			"interactive": true,
 			"validating": true
@@ -400,7 +467,7 @@
 			"validating": true
 		},
 		"rangeslider-odc": {
-			"kind": "css"
+			"kind": "component"
 		},
 		"Rating": {
 			"kind": "pattern",
@@ -409,7 +476,7 @@
 			]
 		},
 		"scrollable-area": {
-			"kind": "css",
+			"kind": "component",
 			"interactive": true
 		},
 		"Search": {
@@ -421,7 +488,7 @@
 			"validating": true
 		},
 		"section": {
-			"kind": "css"
+			"kind": "component"
 		},
 		"SectionIndex": {
 			"kind": "pattern",
@@ -435,7 +502,11 @@
 			"family": "SectionIndex"
 		},
 		"separator": {
-			"kind": "css"
+			"kind": "utility"
+		},
+		"shadow": {
+			"kind": "utility",
+			"title": "Shadow"
 		},
 		"Sidebar": {
 			"kind": "pattern",
@@ -443,8 +514,16 @@
 				"overlay"
 			]
 		},
+		"space-margin": {
+			"kind": "utility",
+			"title": "Spacing · margin"
+		},
+		"space-padding": {
+			"kind": "utility",
+			"title": "Spacing · padding"
+		},
 		"stacked-cards": {
-			"kind": "css"
+			"kind": "component"
 		},
 		"Submenu": {
 			"kind": "pattern",
@@ -460,12 +539,12 @@
 			]
 		},
 		"switch": {
-			"kind": "css",
+			"kind": "component",
 			"interactive": true,
 			"validating": true
 		},
 		"table": {
-			"kind": "css",
+			"kind": "component",
 			"loading": true,
 			"density": true
 		},
@@ -490,18 +569,22 @@
 			"density": true
 		},
 		"tag": {
-			"kind": "css",
+			"kind": "component",
 			"interactive": true
 		},
+		"text": {
+			"kind": "utility",
+			"title": "Text"
+		},
 		"themegrid-container": {
-			"kind": "css",
+			"kind": "layout",
 			"host": {
 				"host": "app template Layout blocks",
 				"reason": "the grid container wraps header, content and footer placeholders of the Layout block"
 			}
 		},
 		"timeline": {
-			"kind": "css"
+			"kind": "component"
 		},
 		"TimePicker": {
 			"kind": "pattern",
@@ -524,14 +607,18 @@
 				"no-dom"
 			]
 		},
+		"typography": {
+			"kind": "utility",
+			"title": "Typography"
+		},
 		"upload": {
-			"kind": "css",
+			"kind": "component",
 			"interactive": true,
 			"loading": true,
 			"validating": true
 		},
 		"user-avatar": {
-			"kind": "css"
+			"kind": "component"
 		},
 		"Video": {
 			"kind": "pattern",
@@ -539,6 +626,10 @@
 				"non-interactive"
 			],
 			"loading": true
+		},
+		"visibility": {
+			"kind": "utility",
+			"title": "Visibility"
 		},
 		"Wizard": {
 			"kind": "pattern",

@@ -130,6 +130,9 @@ export function flowKits(flows, rows) {
 	});
 }
 
+/** The tiers this eval measures (lib/tiers.mjs); utility classes still count as evidence for a requirement. */
+const APPLIES_TO = ['pattern', 'component', 'layout'];
+
 export default {
 	id: 'R01',
 	name: 'Enterprise Component Coverage',
@@ -142,7 +145,7 @@ export default {
 	present: {
 		scope: 'Per requirement of the enterprise UI document, not per component: offered, partial or missing, with delegated rows for other OutSystems products.',
 		heatmap: false,
-		appliesTo: 'both',
+		appliesTo: APPLIES_TO,
 		/** @param {any} m */
 		advice(m) {
 			const rows = rowsOf(m);

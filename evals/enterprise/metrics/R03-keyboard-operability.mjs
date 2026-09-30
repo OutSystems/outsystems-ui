@@ -111,7 +111,7 @@ export default {
 	present: {
 		scope: 'Per interactive pattern: the keys its role needs (Enter/Space; Escape and tab order for overlays; Arrow keys and tab order for composite widgets). CSS-only components have no script.',
 		heatmap: true,
-		appliesTo: 'pattern',
+		appliesTo: ['pattern'],
 		/** @param {any} row */
 		cell(row) {
 			return checksCell(row, row.delegated ? ['keys handled by the provider library, not the wrapper'] : []);

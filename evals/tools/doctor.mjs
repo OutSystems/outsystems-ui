@@ -43,13 +43,15 @@ function has(text, needles) {
 /**
  * A registry entry derived from what the code shows: the defaults the evals would otherwise apply
  * silently, made explicit and flagged for review.
- * @param {{ kind: 'pattern'|'css', name: string, providerDirs?: string[], text?: string, css?: string }} c
+ * @param {{ kind: import('../lib/tiers.mjs').Tier, name: string, providerDirs?: string[], text?: string, css?: string }} c
  * @returns {import('../lib/registry.mjs').Entry}
  */
 export function suggestEntry({ kind, name, providerDirs = [], text = '', css = '' }) {
-	if (kind === 'css') {
+	// a utility family or helper class has classes, not states: its tier is the whole classification
+	if (kind === 'utility') return { kind, derived: true };
+	if (kind !== 'pattern') {
 		/** @type {import('../lib/registry.mjs').Entry} */
-		const e = { kind: 'css' };
+		const e = { kind };
 		if (has(css, SIGNALS.cssInteractive)) e.interactive = true;
 		if (has(css, SIGNALS.cssLoading)) e.loading = true;
 		if (has(css, SIGNALS.cssValidating)) e.validating = true;
@@ -84,16 +86,33 @@ export function diagnose(ctx, registry) {
 			};
 		}
 		const c = /** @type {any} */ (ctx.inventory.cssComponents.find((x) => x.name === u.name));
+		const kind = /** @type {import('../lib/tiers.mjs').Tier} */ (u.kind);
 		return {
 			...u,
-			suggested: suggestEntry({ kind: 'css', name: u.name, css: ctx.compiledCss(c.scssFile).css ?? '' }),
+			suggested: suggestEntry({ kind, name: u.name, css: ctx.compiledCss(c.scssFile).css ?? '' }),
 		};
 	});
+	// utility classes have no anatomy to render: no story is expected of them
 	const noStory = [
 		...ctx.inventory.patterns.filter((p) => !p.storyFile).map((p) => p.name),
-		...ctx.inventory.cssComponents.filter((c) => !c.storyFile && !c.host).map((c) => c.name),
+		...ctx.inventory.cssComponents
+			.filter((c) => !c.storyFile && !c.host && c.kind !== 'utility')
+			.map((c) => c.name),
 	];
-	return { unknown, stale: v.stale, badRoles: v.badRoles, kindMismatch: v.kindMismatch, noStory };
+	return {
+		unknown,
+		stale: v.stale,
+		badRoles: v.badRoles,
+		badKinds: v.badKinds,
+		kindMismatch: v.kindMismatch,
+		tierOverride: v.tierOverride,
+		noStory,
+	};
+}
+
+/** Whether the registry and the tree disagree in a way that fails the registry test. @param {ReturnType<typeof diagnose>} r */
+export function disagrees(r) {
+	return r.unknown.length + r.stale.length + r.badRoles.length + r.badKinds.length + r.kindMismatch.length > 0;
 }
 
 /**
@@ -101,7 +120,7 @@ export function diagnose(ctx, registry) {
  * @param {ReturnType<typeof diagnose>} r
  */
 export function renderDoctor(r) {
-	if (!r.unknown.length && !r.stale.length && !r.badRoles.length && !r.kindMismatch.length) return '';
+	if (!disagrees(r)) return '';
 	const lines = ['### 🩺 Component registry', ''];
 	if (r.unknown.length) {
 		lines.push(
@@ -123,6 +142,10 @@ export function renderDoctor(r) {
 	if (r.badRoles.length) {
 		const roles = r.badRoles.map((b) => `${code(b.name)} → ${b.role}`);
 		lines.push(`Unknown roles: ${roles.join(', ')}.`, '');
+	}
+	if (r.badKinds.length) {
+		const kinds = r.badKinds.map((b) => `${code(b.name)} → ${b.kind}`);
+		lines.push(`Unknown kinds (tiers are pattern, component, layout, utility): ${kinds.join(', ')}.`, '');
 	}
 	if (r.noStory.length)
 		lines.push(`Without a Storybook story (E07 cannot measure them): ${r.noStory.join(', ')}.`, '');
@@ -155,7 +178,7 @@ function main() {
 	const ctx = createContext(root);
 	const registry = loadRegistry();
 	const r = diagnose(ctx, registry);
-	const disagree = r.unknown.length + r.stale.length + r.badRoles.length + r.kindMismatch.length > 0;
+	const disagree = disagrees(r);
 	if (markdown) {
 		process.stdout.write(renderDoctor(r));
 		return;

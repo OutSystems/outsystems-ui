@@ -8,8 +8,54 @@ import {
 	historyEntryOf,
 	normalizeHistoryEntry,
 	normalizeRun,
+	tierSummary,
 	upsertHistory,
 } from '../lib/results.mjs';
+
+test('tierSummary scores each tier from the rows of its components, and metrics without rows by their score', () => {
+	const kindOf = (name) =>
+		({ Tabs: 'pattern', DatePicker: 'pattern', card: 'component', header: 'layout' })[name] ?? null;
+	const metrics = [
+		{ id: 'X01', present: { appliesTo: ['pattern'], heatmap: true } },
+		{
+			id: 'X02',
+			present: { appliesTo: ['pattern', 'component', 'layout'], heatmap: true, cell: (r) => ({ s: r.pct }) },
+		},
+		{ id: 'X03', present: { appliesTo: ['pattern', 'component'], heatmap: false } },
+	];
+	const results = [
+		{
+			id: 'X01',
+			score: 50,
+			perComponent: [
+				{ name: 'Tabs', score: 40 },
+				{ name: 'DatePicker', score: 60 },
+			],
+		},
+		{
+			id: 'X02',
+			score: 70,
+			perComponent: {
+				a: { name: 'Tabs', pct: 100 },
+				b: { name: 'card', pct: 20 },
+				c: { name: 'header', pct: 61 },
+			},
+		},
+		{ id: 'X03', score: 88.26, perComponent: [{ name: 'file.ts', score: 1 }] },
+	];
+	const tiers = tierSummary(results, kindOf, metrics, ['pattern', 'component', 'layout', 'utility']);
+	assert.deepEqual(tiers.pattern, { scores: { X01: 50, X02: 100, X03: 88.3 }, index: 79.4 });
+	assert.deepEqual(tiers.component, { scores: { X02: 20, X03: 88.3 }, index: 54.2 });
+	assert.deepEqual(tiers.layout, { scores: { X02: 61 }, index: 61 });
+	assert.equal('utility' in tiers, false, 'a tier no metric applies to is absent');
+	const entry = historyEntryOf({
+		label: 'l',
+		date: 'd',
+		sha: 's',
+		suites: { ai: { scores: { X01: 50 }, index: 50, results, tiers } },
+	});
+	assert.deepEqual(entry.suites.ai.tiers.layout, { scores: { X02: 61 }, index: 61 });
+});
 
 const results = [
 	{ id: 'E01', name: 'Context Token Cost', score: 71.24, movable: true, raw: { meanTokens: 2400 } },

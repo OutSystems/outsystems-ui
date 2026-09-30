@@ -15,16 +15,25 @@ export function scoreComponent({ total, literal, routed, important }) {
 }
 
 /**
- * Component SCSS files: every pattern partial plus the CSS-only components.
+ * Component SCSS files of the tiers an eval measures: every pattern partial plus the CSS-only components.
  * @param {import('../../lib/context.mjs').EvalContext} ctx
+ * @param {readonly string[]} tiers the eval's `present.appliesTo`
  */
-export function componentScssFiles(ctx) {
-	/** @type {{ name: string, file: string }[]} */
+export function componentScssFiles(ctx, tiers) {
+	/** @type {{ name: string, file: string, kind: import('../../lib/tiers.mjs').Tier }[]} */
 	const files = [];
-	for (const p of ctx.inventory.patterns) for (const f of p.scssFiles) files.push({ name: p.name, file: f });
-	for (const c of ctx.inventory.cssComponents) files.push({ name: c.name, file: c.scssFile });
+	if (tiers.includes('pattern')) {
+		for (const p of ctx.inventory.patterns)
+			for (const f of p.scssFiles) files.push({ name: p.name, file: f, kind: 'pattern' });
+	}
+	for (const c of ctx.inventory.cssComponents) {
+		if (tiers.includes(c.kind)) files.push({ name: c.name, file: c.scssFile, kind: c.kind });
+	}
 	return files;
 }
+
+/** The tiers this eval measures (lib/tiers.mjs). */
+const APPLIES_TO = ['pattern', 'component', 'layout'];
 
 export default {
 	id: 'E08',
@@ -36,7 +45,7 @@ export default {
 	present: {
 		scope: 'Per component SCSS: themeable declarations that are hardcoded, routed through --osui-* knobs, or read a token. Files with nothing themeable have nothing to score.',
 		heatmap: true,
-		appliesTo: 'both',
+		appliesTo: APPLIES_TO,
 		unmeasuredHint: 'Fix the SCSS compile error so the partial can be scored.',
 		/** @param {any} row */
 		cell(row) {
@@ -75,7 +84,7 @@ export default {
 		/** @type {{ component: string, selector: string, prop: string, value: string }[]} */
 		const literals = [];
 		let totals = { total: 0, literal: 0, routed: 0, tokened: 0, important: 0, knobs: 0 };
-		for (const { name, file } of componentScssFiles(ctx)) {
+		for (const { name, file, kind } of componentScssFiles(ctx, APPLIES_TO)) {
 			const { css, error } = ctx.compiledCss(file);
 			if (!css) {
 				unmeasured.push({
@@ -97,6 +106,7 @@ export default {
 			for (const s of d.samples) literals.push({ component: name, ...s });
 			perComponent.push({
 				name,
+				kind,
 				file: ctx.rel(file),
 				total: d.total,
 				literal: d.literal,

@@ -8,14 +8,17 @@
  * (`Providers/OSUI/<name>/`, matched case-insensitively), the SCSS partial registered in
  * `gulp/ProjectSpecs/Patterns/<Name>.js`, and the Storybook story that renders it.
  *
- * A *CSS component* is a component SCSS partial with no TypeScript behaviour behind it
- * (Card, Badge, Tag, the widget styles, …).
+ * A *CSS component* is a SCSS partial with no TypeScript behaviour behind it: a CSS-only component
+ * (Card, Badge, Tag, the widget styles), a host-styled layout partial, a helper class or a utility
+ * family under `05-useful`. Its directory gives it a default tier; the registry may override it
+ * (lib/tiers.mjs).
  */
 import fs from 'node:fs';
 import path from 'node:path';
 
 import { insideDir } from './paths.mjs';
-import { registry } from './registry.mjs';
+import { registry, tierOf } from './registry.mjs';
+import { defaultTierFor } from './tiers.mjs';
 
 /**
  * @typedef {object} Pattern
@@ -43,6 +46,9 @@ import { registry } from './registry.mjs';
  * @property {{ host: string, reason: string }|null} host set when the component styles markup owned by
  *   something else (app template blocks, common screens, the runtime); such a component has no markup
  *   contract of its own
+ * @property {import('./tiers.mjs').Tier} tier   default tier from the directory
+ * @property {import('./tiers.mjs').Tier} kind   tier after the registry override (what the evals use)
+ * @property {'layout'|'widgets'|'patterns'|'useful'} source top-level directory the partial lives in
  */
 
 /** The component registry: hosts of host-styled partials and story aliases are read from it. */
@@ -61,10 +67,12 @@ const API_DIR = [...SRC, 'OutSystems', 'OSUI', 'Patterns'];
 const PATTERN_DIR = [...SRC, 'OSFramework', 'OSUI', 'Pattern'];
 const PROVIDER_DIR = [...SRC, 'Providers', 'OSUI'];
 const SPEC_DIR = ['gulp', 'ProjectSpecs', 'Patterns'];
+/** @type {[string[], 'layout'|'widgets'|'patterns'|'useful'][]} */
 const CSS_COMPONENT_DIRS = [
-	['src', 'scss', '02-layout'],
-	['src', 'scss', '03-widgets'],
-	['src', 'scss', '04-patterns'],
+	[['src', 'scss', '02-layout'], 'layout'],
+	[['src', 'scss', '03-widgets'], 'widgets'],
+	[['src', 'scss', '04-patterns'], 'patterns'],
+	[['src', 'scss', '05-useful'], 'useful'],
 ];
 
 /** Vendor baselines, Service Studio preview images and provider overrides are not components. */
@@ -236,18 +244,37 @@ export function buildInventory(root) {
 
 	const claimedScss = new Set(patterns.flatMap((p) => p.scssFiles));
 	/** @type {CssComponent[]} */
-	const cssComponents = CSS_COMPONENT_DIRS.flatMap((segments) => walk(insideDir(root, ...segments)))
-		.filter((f) => f.endsWith('.scss') && !CSS_EXCLUDE.test(f) && !claimedScss.has(f))
-		.map((scssFile) => {
-			const name = path
+	const partials = CSS_COMPONENT_DIRS.flatMap(([segments, source]) =>
+		walk(insideDir(root, ...segments)).map((scssFile) => ({ scssFile, source }))
+	)
+		.filter(({ scssFile: f }) => f.endsWith('.scss') && !CSS_EXCLUDE.test(f) && !claimedScss.has(f))
+		.map(({ scssFile, source }) => ({
+			scssFile,
+			source,
+			base: path
 				.basename(scssFile)
 				.replace(/^_/, '')
-				.replace(/\.scss$/, '');
+				.replace(/\.scss$/, ''),
+		}));
+	// two partials may share a file name (`_section.scss` under 02-layout and 04-patterns): the one
+	// outside 04-patterns takes its directory group as prefix so every component has one name
+	const baseCount = new Map();
+	for (const p of partials) baseCount.set(p.base, (baseCount.get(p.base) ?? 0) + 1);
+	/** @type {CssComponent[]} */
+	const cssComponents = partials
+		.map(({ scssFile, source, base }) => {
+			const name = (baseCount.get(base) ?? 0) > 1 && source !== 'patterns' ? `${source}-${base}` : base;
+			const tier = defaultTierFor(scssFile);
+			const registryTier = tierOf(REG, name, tier);
 			return {
 				name,
 				scssFile,
-				storyFile: matchStory(name, storiesByNorm),
+				// a utility family has classes, not an anatomy: no story is looked up for it
+				storyFile: source === 'useful' ? null : matchStory(name, storiesByNorm),
 				host: REG.components[name]?.host ?? null,
+				tier,
+				kind: registryTier === 'pattern' ? tier : registryTier,
+				source,
 			};
 		})
 		.sort((a, b) => a.name.localeCompare(b.name));

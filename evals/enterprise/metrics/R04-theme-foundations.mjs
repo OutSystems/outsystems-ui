@@ -137,6 +137,9 @@ export function foundationsPresent(tokensText, componentCssTexts) {
 	return out;
 }
 
+/** The tiers this eval measures (lib/tiers.mjs). */
+const APPLIES_TO = ['pattern', 'component', 'layout'];
+
 export default {
 	id: 'R04',
 	name: 'Theme Foundations',
@@ -148,7 +151,7 @@ export default {
 	present: {
 		scope: 'Per component CSS: declared foundation families read via tokens or knobs, dark-ready colours, RTL rules where direction matters, a reduced-motion guard where it animates.',
 		heatmap: true,
-		appliesTo: 'both',
+		appliesTo: APPLIES_TO,
 		unmeasuredHint: 'Fix the SCSS compile error so the partial can be scored.',
 		/** @param {any} row */
 		cell(row) {
@@ -176,7 +179,7 @@ export default {
 		/** @type {string[]} */
 		const cssTexts = [];
 		const guards = themeGuards(ctx);
-		for (const c of componentUniverse(ctx)) {
+		for (const c of componentUniverse(ctx, APPLIES_TO)) {
 			const { css, error } = componentCss(ctx, c);
 			if (css === null) {
 				if (error === NO_PARTIAL) notApplicable.push({ name: c.name, reason: error, hint: NO_PARTIAL_HINT });

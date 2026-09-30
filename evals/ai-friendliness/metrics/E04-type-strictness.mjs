@@ -31,7 +31,7 @@ export default {
 	present: {
 		scope: 'Measured per file over the whole program (implicit any, explicit any, suppressions, return types), so it has no per-component cell.',
 		heatmap: false,
-		appliesTo: 'pattern',
+		appliesTo: ['pattern'],
 		/** @param {any} m */
 		advice(m) {
 			const raw = m.raw ?? {};

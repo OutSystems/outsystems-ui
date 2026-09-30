@@ -108,6 +108,32 @@ function suiteSections(runs, evals, h) {
 }
 
 /**
+ * The per-tier view of the newest run that carries one: the same evals, scored over the components of
+ * each tier only, so a helper class cannot move the pattern figure. Empty for runs recorded before tiers.
+ * @param {import('../lib/results.mjs').HistoryEntry|undefined} newest
+ * @param {string} suiteId
+ * @param {string} h heading marker
+ * @returns {string[]}
+ */
+function tierSection(newest, suiteId, h) {
+	const tiers = newest?.suites[suiteId]?.tiers;
+	if (!tiers) return [];
+	const lines = [
+		`${h} Index by tier (${newest.label})`,
+		'',
+		'Each eval scored over the components of one tier only; the suite index above is the mean over every measured component.',
+		'',
+		'| Tier | Index | Evals that apply |',
+		'| --- | ---: | --- |',
+	];
+	for (const [tier, t] of Object.entries(tiers)) {
+		lines.push(`| ${tier} | **${t.index.toFixed(1)}** | ${Object.keys(t.scores).join(', ')} |`);
+	}
+	lines.push('');
+	return lines;
+}
+
+/**
  * @param {any[]} history entries in either shape
  * @param {SuiteMeta[]} suites the registry (or any list of suites with their metrics)
  * @returns {string} Markdown
@@ -135,12 +161,14 @@ export function renderHistory(history, suites) {
 		const ids = suite.metrics.map((m) => m.id);
 		const later = runs[0].label !== entries[0].label;
 		const since = later ? ` Measured from \`${runs[0].label}\` on; earlier runs have no value.` : '';
+		const newest = entries.filter((e) => e.suites[suite.id]).at(-1);
 		lines.push(
 			`## ${suite.indexName}`,
 			'',
 			`The ${suite.metrics.length} evals ${ids[0]}–${ids[ids.length - 1]}: ${suite.describe}.${since}`,
 			'',
-			...suiteSections(runs, suite.metrics, '###')
+			...suiteSections(runs, suite.metrics, '###'),
+			...tierSection(newest, suite.id, '###')
 		);
 	}
 	lines.push(

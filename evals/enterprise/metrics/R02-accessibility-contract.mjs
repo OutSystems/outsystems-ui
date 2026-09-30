@@ -72,6 +72,9 @@ export function checksFor(c, ts, css, guards = {}) {
 	};
 }
 
+/** The tiers this eval measures (lib/tiers.mjs). */
+const APPLIES_TO = ['pattern', 'component', 'layout'];
+
 export default {
 	id: 'R02',
 	name: 'Accessibility Contract',
@@ -83,7 +86,7 @@ export default {
 	present: {
 		scope: 'Per component: ARIA set and, where the role needs it, feedback announced and focus managed (patterns); .has-accessible-features and .os-high-contrast styles (every component with CSS).',
 		heatmap: true,
-		appliesTo: 'both',
+		appliesTo: APPLIES_TO,
 		unmeasuredHint: 'Fix the SCSS compile error so the style checks can run.',
 		/** @param {any} row */
 		cell(row) {
@@ -108,7 +111,7 @@ export default {
 		/** @type {{ name: string, reason: string }[]} */
 		const unmeasured = [];
 		const guards = themeGuards(ctx);
-		for (const c of componentUniverse(ctx)) {
+		for (const c of componentUniverse(ctx, APPLIES_TO)) {
 			const compiled = componentCss(ctx, c);
 			if (compiled.css === null && !c.pattern) {
 				unmeasured.push({ name: c.name, reason: compiled.error ?? 'no CSS' });

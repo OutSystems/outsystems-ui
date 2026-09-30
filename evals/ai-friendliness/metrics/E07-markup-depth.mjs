@@ -13,6 +13,9 @@ export function scoreComponent({ depth, elements }) {
 	return penalty([20 * Math.max(0, depth - FREE_DEPTH), 4 * Math.max(0, elements - FREE_ELEMENTS)]);
 }
 
+/** The tiers this eval measures (lib/tiers.mjs). */
+const APPLIES_TO = ['pattern', 'component'];
+
 export default {
 	id: 'E07',
 	name: 'Markup Contract Depth',
@@ -22,7 +25,7 @@ export default {
 	present: {
 		scope: 'Per component: depth and distinct parts of the deepest HTML template in its Storybook story. Components without a story cannot be measured; host-styled components have no markup contract of their own.',
 		heatmap: true,
-		appliesTo: 'both',
+		appliesTo: APPLIES_TO,
 		unmeasuredHint: 'Add a Storybook story with an HTML template so the markup contract can be measured.',
 		/** @param {any} row */
 		cell(row) {
@@ -58,12 +61,9 @@ export default {
 		/** @type {{ name: string, kind: string, story: string|null }[]} */
 		const components = [
 			...ctx.inventory.patterns.map((p) => ({ name: p.name, kind: 'pattern', story: p.storyFile, host: null })),
-			...ctx.inventory.cssComponents.map((c) => ({
-				name: c.name,
-				kind: 'css',
-				story: c.storyFile,
-				host: c.host,
-			})),
+			...ctx.inventory.cssComponents
+				.filter((c) => APPLIES_TO.includes(c.kind))
+				.map((c) => ({ name: c.name, kind: c.kind, story: c.storyFile, host: c.host })),
 		];
 		/** @type {any[]} */
 		const perComponent = [];

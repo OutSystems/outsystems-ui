@@ -33,7 +33,7 @@ export default {
 	present: {
 		scope: 'Per pattern: canonical API members present, functions returning the response envelope, camelCase parameters. CSS-only components have no API.',
 		heatmap: true,
-		appliesTo: 'pattern',
+		appliesTo: ['pattern'],
 		/** @param {any} row */
 		cell(row) {
 			const todo = [];

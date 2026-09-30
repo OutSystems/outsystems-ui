@@ -60,7 +60,7 @@ export default {
 	present: {
 		scope: 'Per pattern: tokens an agent must read to use it (its manifest card when ≥ 80 % complete, else the API + config + enum + interface files). CSS-only components have no TypeScript contract.',
 		heatmap: true,
-		appliesTo: 'pattern',
+		appliesTo: ['pattern'],
 		/** @param {any} row */
 		cell(row) {
 			const via =

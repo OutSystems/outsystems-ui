@@ -199,7 +199,12 @@ test('R03 and R06 report components with nothing to check as not applicable, wit
 	assert.ok(gallery.hint, 'the row says what would make it applicable');
 	assert.deepEqual(r03.unmeasured, [], 'nothing is left unmeasured');
 	const r06 = R06.compute(ctx);
-	const sep = r06.notApplicable.find((n) => n.name === 'separator');
-	assert.ok(sep, 'a component with no interactive, loading, input or motion behaviour is not applicable');
-	assert.ok(!r06.unmeasured.some((u) => u.name === 'separator'));
+	const badge = r06.notApplicable.find((n) => n.name === 'badge');
+	assert.ok(badge, 'a component with no interactive, loading, input or motion behaviour is not applicable');
+	assert.ok(!r06.unmeasured.some((u) => u.name === 'badge'));
+	const rows = Object.values(r06.perComponent).map((c) => c.name);
+	assert.ok(
+		!rows.includes('separator') && !r06.notApplicable.some((n) => n.name === 'separator'),
+		'helper classes are outside R06'
+	);
 });

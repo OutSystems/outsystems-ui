@@ -37,7 +37,7 @@ export const FEEDBACK_PATTERNS = namesWhere(REG, (e) => hasRole(e, 'feedback'));
 export const DENSITY_COMPONENTS = namesWhere(REG, (e) => e.density === true);
 
 /** CSS-only components that are operated (the patterns are interactive unless non-interactive). */
-export const INTERACTIVE_CSS = namesWhere(REG, (e) => e.kind === 'css' && e.interactive === true);
+export const INTERACTIVE_CSS = namesWhere(REG, (e) => e.kind !== 'pattern' && e.interactive === true);
 
 /** Components that load or wait. */
 export const LOADING_COMPONENTS = namesWhere(REG, (e) => e.loading === true);
@@ -105,22 +105,26 @@ export function patternText(ctx, p) {
 }
 
 /**
- * @typedef {{ name: string, kind: 'pattern'|'css', pattern: import('../../lib/inventory.mjs').Pattern|null, scssFiles: string[], storyFile: string|null }} Component
+ * @typedef {{ name: string, kind: import('../../lib/tiers.mjs').Tier, pattern: import('../../lib/inventory.mjs').Pattern|null, scssFiles: string[], storyFile: string|null }} Component
  */
 
 /**
- * Every component the SCSS-based evals look at: each pattern and each CSS-only component.
+ * The components an eval looks at: each pattern and each CSS-only component of the tiers it applies to.
  * @param {import('../../lib/context.mjs').EvalContext} ctx
+ * @param {readonly string[]} tiers the eval's `present.appliesTo`
  * @returns {Component[]}
  */
-export function componentUniverse(ctx) {
+export function componentUniverse(ctx, tiers) {
 	/** @type {Component[]} */
 	const out = [];
-	for (const p of ctx.inventory.patterns) {
-		out.push({ name: p.name, kind: 'pattern', pattern: p, scssFiles: p.scssFiles, storyFile: p.storyFile });
+	if (tiers.includes('pattern')) {
+		for (const p of ctx.inventory.patterns) {
+			out.push({ name: p.name, kind: 'pattern', pattern: p, scssFiles: p.scssFiles, storyFile: p.storyFile });
+		}
 	}
 	for (const c of ctx.inventory.cssComponents) {
-		out.push({ name: c.name, kind: 'css', pattern: null, scssFiles: [c.scssFile], storyFile: c.storyFile });
+		if (!tiers.includes(c.kind)) continue;
+		out.push({ name: c.name, kind: c.kind, pattern: null, scssFiles: [c.scssFile], storyFile: c.storyFile });
 	}
 	return out;
 }

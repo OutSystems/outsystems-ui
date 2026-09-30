@@ -46,7 +46,7 @@ export default {
 	present: {
 		scope: 'Per pattern: how many config props it has and how many are precisely typed. CSS-only components have no props.',
 		heatmap: true,
-		appliesTo: 'pattern',
+		appliesTo: ['pattern'],
 		/** @param {any} row */
 		cell(row) {
 			const parts = [`${row.precise} of ${row.n} props precise`];

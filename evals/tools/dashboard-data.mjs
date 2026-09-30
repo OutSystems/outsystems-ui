@@ -18,6 +18,7 @@ import { fileURLToPath } from 'node:url';
 
 import { insideDir } from '../lib/paths.mjs';
 import { normalizeHistoryEntry, normalizeRun } from '../lib/results.mjs';
+import { appliesTo, normalizeKind, TIERS, tierText } from '../lib/tiers.mjs';
 import { metricById, SUITES } from '../suites.mjs';
 
 export const DASHBOARD_FILE = 'results/dashboard.json';
@@ -40,12 +41,10 @@ function missingCell(id, ctx) {
 		const hint = ctx.notApplicable.hint ? ` ${ctx.notApplicable.hint}` : '';
 		return { s: null, w: 'na', h: `Not applicable: ${ctx.notApplicable.reason}.${hint}` };
 	}
-	if (present && present.appliesTo !== 'both' && ctx.kind && present.appliesTo !== ctx.kind) {
-		const what =
-			ctx.kind === 'css'
-				? 'the TypeScript contract and this is a CSS-only component'
-				: 'CSS-only components and this is a pattern';
-		return { s: null, w: 'na', h: `Not applicable: this eval measures ${what}.` };
+	const kind = normalizeKind(ctx.kind);
+	if (present && kind && !appliesTo(present, kind)) {
+		const measures = (present.appliesTo ?? []).map((/** @type {string} */ t) => `${t}s`).join(', ');
+		return { s: null, w: 'na', h: `Not applicable: this eval measures ${measures}; ${tierText(kind)}.` };
 	}
 	const reason = ctx.reason ?? 'no measurement in this run';
 	const fix = present?.unmeasuredHint ? ` ${present.unmeasuredHint}` : '';
@@ -96,8 +95,9 @@ function componentKinds(results) {
 		}
 	}
 	for (const m of heat) {
-		const applies = presentOf(m.id)?.appliesTo;
-		const fallback = applies === 'pattern' ? 'pattern' : 'css';
+		const applies = presentOf(m.id)?.appliesTo ?? [];
+		// an eval that measures one tier names it; otherwise a row without a kind is a CSS-only component
+		const fallback = applies.length === 1 ? applies[0] : 'component';
 		for (const row of Object.values(m.perComponent ?? {}))
 			setIfAbsent(kinds, /** @type {any} */ (row).name, fallback);
 		for (const u of [...(m.unmeasured ?? []), ...(m.notApplicable ?? [])])
@@ -119,11 +119,16 @@ export function componentCells(results, name, kind) {
 	/** @type {Record<string, Cell>} */
 	const cells = {};
 	const isMine = (/** @type {{ name: string }} */ u) => u.name === name || u.name.startsWith(`${name} (`);
+	const tier = normalizeKind(kind);
 	for (const m of results) {
-		if (!presentOf(m.id)?.heatmap) continue;
+		const present = presentOf(m.id);
+		if (!present?.heatmap) continue;
 		const row = Object.values(m.perComponent ?? {}).find((/** @type {any} */ r) => r.name === name) ?? null;
 		const na = (m.notApplicable ?? []).find((u) => isMine(u));
 		const un = (m.unmeasured ?? []).find((u) => isMine(u));
+		// an eval that does not apply to the component's tier and said nothing about it has no cell: the
+		// page composes "not applicable" from the eval's appliesTo, which keeps the data set small
+		if (!row && !na && !un && tier && !appliesTo(present, tier)) continue;
 		cells[m.id] = cellFor(m.id, row, { kind, reason: un?.reason, notApplicable: na });
 	}
 	return cells;
@@ -146,6 +151,7 @@ function evalOf(m, baseScores) {
 		score: m.score,
 		base: baseScores[m.id] ?? null,
 		summary: m.summary,
+		appliesTo: present?.appliesTo ?? [...TIERS],
 		scope: present?.scope ?? '',
 		advice: present?.advice ? present.advice(m) : [m.summary],
 		unmeasured: {
@@ -167,6 +173,21 @@ function suiteBlock(suite, history, latest) {
 	const first = history.find((h) => h.suites[suite.id]);
 	const latestSuite = latest.suites[suite.id];
 	if (!first || !latestSuite) return null;
+	// per-tier indices exist from the run that introduced them on; the first such run is their baseline
+	const firstTiers = history.find((h) => h.suites[suite.id]?.tiers);
+	const tiers = latestSuite.tiers
+		? Object.fromEntries(
+				Object.entries(latestSuite.tiers).map(([tier, t]) => [
+					tier,
+					{
+						index: /** @type {any} */ (t).index,
+						evals: Object.keys(/** @type {any} */ (t).scores).length,
+						base: firstTiers?.suites[suite.id].tiers?.[tier]?.index ?? null,
+						baseLabel: firstTiers?.label ?? null,
+					},
+				])
+			)
+		: null;
 	const results = /** @type {any[]} */ (latestSuite.results ?? []);
 	/** @type {Record<string, unknown>} */
 	let extra = {};
@@ -184,6 +205,7 @@ function suiteBlock(suite, history, latest) {
 		heatmapEvals: results.filter((m) => presentOf(m.id)?.heatmap).map((m) => m.id),
 		baseline: { label: first.label, sha: first.sha, date: first.date, index: first.suites[suite.id].index },
 		latest: { index: latestSuite.index },
+		tiers,
 		extra,
 	};
 }
@@ -212,12 +234,12 @@ export function buildDashboardData(evalsDir, now = new Date()) {
 	const components = [...kinds.keys()]
 		.sort((a, b) => a.localeCompare(b))
 		.map((name) => {
-			const kind = kinds.get(name) ?? 'css';
+			const kind = kinds.get(name) ?? 'component';
 			return { n: name, k: kind, cells: componentCells(allResults, name, kind) };
 		});
 
 	return {
-		v: 3,
+		v: 4,
 		generated: now.toISOString(),
 		latest: { label: last.label, sha: last.sha, date: last.date },
 		history,

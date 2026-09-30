@@ -11,6 +11,9 @@ export function scoreComponent({ avgDepth, p90b }) {
 	return 100 * (0.6 * clamp01(1 - Math.max(0, avgDepth - 1) / 3) + 0.4 * clamp01(1 - Math.max(0, p90b - 2) / 4));
 }
 
+/** The tiers this eval measures (lib/tiers.mjs). */
+const APPLIES_TO = ['pattern', 'component', 'layout'];
+
 export default {
 	id: 'E09',
 	name: 'CSS Selector Complexity',
@@ -21,7 +24,7 @@ export default {
 	present: {
 		scope: 'Per component SCSS: mean combinators per selector and the p90 class specificity. Files with no rules have nothing to score.',
 		heatmap: true,
-		appliesTo: 'both',
+		appliesTo: APPLIES_TO,
 		unmeasuredHint: 'Fix the SCSS compile error so the partial can be scored.',
 		/** @param {any} row */
 		cell(row) {
@@ -57,7 +60,7 @@ export default {
 		const worst = [];
 		let selectorsTotal = 0;
 		let rulesTotal = 0;
-		for (const { name, file } of componentScssFiles(ctx)) {
+		for (const { name, file, kind } of componentScssFiles(ctx, APPLIES_TO)) {
 			const { css, error } = ctx.compiledCss(file);
 			if (!css) {
 				unmeasured.push({
@@ -80,6 +83,7 @@ export default {
 			for (const s of r.selectors) if (s.depth >= 3) worst.push({ component: name, ...s });
 			perComponent.push({
 				name,
+				kind,
 				file: ctx.rel(file),
 				selectors: r.selectors.length,
 				avgDepth: r.avgDepth,

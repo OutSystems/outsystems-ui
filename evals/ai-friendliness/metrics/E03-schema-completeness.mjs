@@ -21,7 +21,7 @@ export default {
 	present: {
 		scope: 'Per pattern: how complete its entry in docs-ai/osui.components.json is across six facets. CSS-only components are documented in llms-patterns.txt instead.',
 		heatmap: true,
-		appliesTo: 'pattern',
+		appliesTo: ['pattern'],
 		/** @param {any} row */
 		cell(row) {
 			if (!row.present) return { s: row.score, h: 'Missing from the manifest: run npm run docs:ai.' };
