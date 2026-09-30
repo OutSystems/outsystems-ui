@@ -5,10 +5,9 @@ namespace OutSystems.OSUI.Patterns.SwipeEventsAPI {
 	/**
 	 * Create the new SwipeEvents instance and add it to the SwipeEventssMap
 	 *
-	 * @export
-	 * @param {string} swipeEventsId ID of the Pattern that a new instance will be created.
-	 * @param {(string | Configs)} configs Configurations for the Pattern in JSON format.
-	 * @return {*}  {OSFramework.OSUI.Patterns SwipeEvents. SwipeEvents}
+	 * @param swipeEventsId ID of the Pattern that a new instance will be created.
+	 * @param configs Configurations for the Pattern in JSON format.
+	 * @returns the SwipeEvents instance
 	 */
 	export function Create(
 		swipeEventsId: string,
@@ -33,8 +32,7 @@ namespace OutSystems.OSUI.Patterns.SwipeEventsAPI {
 	/**
 	 * Function that will dispose the instance of the given SwipeEvents
 	 *
-	 * @export
-	 * @param {string} swipeEventsId
+	 * @param swipeEventsId
 	 */
 	export function Dispose(swipeEventsId: string): void {
 		const swipeEvent = GetSwipeEventsById(swipeEventsId);
@@ -47,8 +45,7 @@ namespace OutSystems.OSUI.Patterns.SwipeEventsAPI {
 	/**
 	 * Function that will return the Map with all the SwipeEvents instances at the page
 	 *
-	 * @export
-	 * @return {*}  {Map<string, OSFramework.OSUI.Patterns SwipeEvents.ISwipeEvents>}
+	 * @returns the ids of every SwipeEvents instance
 	 */
 	export function GetAllSwipeEvents(): Array<string> {
 		return OSFramework.OSUI.Helper.MapOperation.ExportKeys(_swipeEventsMap);
@@ -57,9 +54,8 @@ namespace OutSystems.OSUI.Patterns.SwipeEventsAPI {
 	/**
 	 * Function that gets the instance of SwipeEvents, by a given ID.
 	 *
-	 * @export
-	 * @param {string} swipeEventsId ID of the SwipeEvents that will be looked for.
-	 * @return {*}  {OSFramework.OSUI.Patterns SwipeEvents. SwipeEvents;}
+	 * @param swipeEventsId ID of the SwipeEvents that will be looked for.
+	 * @returns the SwipeEvents instance
 	 */
 	export function GetSwipeEventsById(swipeEventsId: string): OSFramework.OSUI.Patterns.SwipeEvents.ISwipeEvents {
 		return OSFramework.OSUI.Helper.MapOperation.FindInMap(
@@ -72,9 +68,8 @@ namespace OutSystems.OSUI.Patterns.SwipeEventsAPI {
 	/**
 	 * Function that will initialize the pattern instance.
 	 *
-	 * @export
-	 * @param {string} swipeEventsId ID of the SwipeEvents that will be initialized.
-	 * @return {*}  {OSFramework.OSUI.Patterns SwipeEvents. SwipeEvents}
+	 * @param swipeEventsId ID of the SwipeEvents that will be initialized.
+	 * @returns the SwipeEvents instance
 	 */
 	export function Initialize(swipeEventsId: string): OSFramework.OSUI.Patterns.SwipeEvents.ISwipeEvents {
 		const SwipeEvents = GetSwipeEventsById(swipeEventsId);
@@ -87,10 +82,9 @@ namespace OutSystems.OSUI.Patterns.SwipeEventsAPI {
 	/**
 	 * Function to register a callback
 	 *
-	 * @export
-	 * @param {string} swipeEventsID
-	 * @param {string} eventName
-	 * @param {OSFramework.OSUI.GlobalCallbacks.OSGeneric} callback
+	 * @param swipeEventsID
+	 * @param eventName
+	 * @param callback
 	 */
 	export function RegisterCallback(
 		swipeEventsID: string,
@@ -105,9 +99,8 @@ namespace OutSystems.OSUI.Patterns.SwipeEventsAPI {
 	/**
 	 * Function that will detect the event type of the pattern instance.
 	 *
-	 * @export
-	 * @param {string} swipeEventsId ID of the SwipeEvents pattern.
-	 * @param {TouchEvent} event Touch event forwarded from the platform gesture handler.
+	 * @param swipeEventsId ID of the SwipeEvents pattern.
+	 * @param event Touch event forwarded from the platform gesture handler.
 	 */
 	export function GestureMove(swipeEventsId: string, event: TouchEvent): void {
 		const SwipeEvents = GetSwipeEventsById(swipeEventsId);
@@ -118,11 +111,10 @@ namespace OutSystems.OSUI.Patterns.SwipeEventsAPI {
 	/**
 	 * Function that will detect the event type of the pattern instance.
 	 *
-	 * @export
-	 * @param {string} swipeEventsId ID of the SwipeEvents pattern.
-	 * @param {number} offsetX Horizontal distance travelled by the gesture, in pixels.
-	 * @param {number} offsetY Vertical distance travelled by the gesture, in pixels.
-	 * @param {number} timeTaken Duration of the gesture, in milliseconds.
+	 * @param swipeEventsId ID of the SwipeEvents pattern.
+	 * @param offsetX Horizontal distance travelled by the gesture, in pixels.
+	 * @param offsetY Vertical distance travelled by the gesture, in pixels.
+	 * @param timeTaken Duration of the gesture, in milliseconds.
 	 */
 	export function GestureEnd(swipeEventsId: string, offsetX: number, offsetY: number, timeTaken: number): void {
 		const SwipeEvents = GetSwipeEventsById(swipeEventsId);
@@ -133,11 +125,10 @@ namespace OutSystems.OSUI.Patterns.SwipeEventsAPI {
 	/**
 	 * Function that will change the property of a given SwipeEvents pattern.
 	 *
-	 * @export
-	 * @param {string} swipeEventsId ID of the SwipeEvents where the property will be changed.
-	 * @param {string} propertyName Property name that will be updated
-	 * @param {unknown} propertyValue Value that will be set to the property
-	 * @return {*}  {string} Response object as a JSON string
+	 * @param swipeEventsId ID of the SwipeEvents where the property will be changed.
+	 * @param propertyName Property name that will be updated
+	 * @param propertyValue Value that will be set to the property
+	 * @returns Response object as a JSON string
 	 */
 	export function ChangeProperty(swipeEventsId: string, propertyName: string, propertyValue: unknown): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({

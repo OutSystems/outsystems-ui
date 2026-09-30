@@ -82,11 +82,9 @@ namespace OSFramework.OSUI.Helper {
 		/**
 		 *  Function used to check if an element, body or elementId, contains invalid inputs
 		 *
-		 * @static
-		 * @param {string} elementId
-		 * @param {boolean} isSmooth
-		 * @return {*}  {string}
-		 * @memberof InvalidInputs
+		 * @param elementId
+		 * @param isSmooth
+		 * @param elementParentClass
 		 */
 		public static FocusFirstInvalidInput(elementId: string, isSmooth: boolean, elementParentClass: string): string {
 			const result = OutSystems.OSUI.Utils.CreateApiResponse({

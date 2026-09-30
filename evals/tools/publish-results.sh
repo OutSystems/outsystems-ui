@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 # Publish the result files of the run just recorded to the orphan branch $RESULTS_BRANCH (default
-# evals-results): history.json, HISTORY.md, dashboard.json, latest.json, README.md and the last
-# $KEEP_RUNS run files under runs/. Built with git plumbing on a temporary index on top of the previous
-# branch commit (none the first time), so the working tree is never touched and no checkout is needed.
+# evals-results): history.json, HISTORY.md, dashboard.json, latest.json, README.md, the last $KEEP_RUNS run
+# files under runs/ and the agent documentation (docs-ai/, so the newest llms.txt set is always fetchable
+# from the branch). Built with git plumbing on a temporary index on top of the previous branch commit (none
+# the first time), so the working tree is never touched and no checkout is needed.
 #
 #   RESULTS_BRANCH=evals-results KEEP_RUNS=20 bash evals/tools/publish-results.sh [--dry-run]
 #
@@ -47,6 +48,10 @@ add "$results/dashboard.json" dashboard.json
 add "$results/latest.json" latest.json
 add "$results/$label.json" "runs/$label.json"
 add evals/RESULTS-BRANCH.md README.md
+# the agent docs of the same commit; a run is recorded whenever they change, so the copy is never stale
+while IFS= read -r doc; do
+	add "$doc" "$doc"
+done < <(git ls-files docs-ai)
 
 # keep the newest $keep run files, by the date recorded in history.json
 for stale in $(node -e "const h=require('./$results/history.json');const s=[...h].sort((a,b)=>b.date.localeCompare(a.date)).map((e)=>e.label);console.log(s.slice($keep).join(' '))"); do

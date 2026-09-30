@@ -5,10 +5,10 @@ namespace OutSystems.OSUI.Patterns.TabsAPI {
 	/**
 	 * Function that will change the property of a given Tabs pattern.
 	 *
-	 * @export
-	 * @param {string} tabsId ID of the Tabs where the property will be changed.
-	 * @param {string} propertyName Property name that will be updated
-	 * @param {*} propertyValue Value that will be set to the property
+	 * @param tabsId ID of the Tabs where the property will be changed.
+	 * @param propertyName Property name that will be updated
+	 * @param propertyValue Value that will be set to the property
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function ChangeProperty(tabsId: string, propertyName: string, propertyValue: unknown): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -26,10 +26,9 @@ namespace OutSystems.OSUI.Patterns.TabsAPI {
 	/**
 	 * Create the new Tabs instance and add it to the _tabsMap
 	 *
-	 * @export
-	 * @param {string} tabsId ID of the Pattern that a new instance will be created.
-	 * @param {(string | Configs)} configs Configurations for the Pattern in JSON format.
-	 * @return {*}  {OSFramework.OSUI.Patterns.Tabs.ITabs}
+	 * @param tabsId ID of the Pattern that a new instance will be created.
+	 * @param configs Configurations for the Pattern in JSON format.
+	 * @returns the Tabs instance
 	 */
 	export function Create(tabsId: string, configs: string | Configs): OSFramework.OSUI.Patterns.Tabs.ITabs {
 		if (_tabsMap.has(tabsId)) {
@@ -48,8 +47,8 @@ namespace OutSystems.OSUI.Patterns.TabsAPI {
 	/**
 	 * Function that will dispose the instance of the given Tabs
 	 *
-	 * @export
-	 * @param {string} tabsId
+	 * @param tabsId
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Dispose(tabsId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -69,8 +68,7 @@ namespace OutSystems.OSUI.Patterns.TabsAPI {
 	/**
 	 * Fucntion that will return the Map with all the Tabs instances at the page
 	 *
-	 * @export
-	 * @return {*}  {Map<string, OSFramework.OSUI.Patterns.Tabs.ITabs>}
+	 * @returns the ids of every Tabs instance
 	 */
 	export function GetAllTabs(): Array<string> {
 		return OSFramework.OSUI.Helper.MapOperation.ExportKeys(_tabsMap);
@@ -79,9 +77,8 @@ namespace OutSystems.OSUI.Patterns.TabsAPI {
 	/**
 	 * Function that gets the instance of Tabs by a given ID.
 	 *
-	 * @export
-	 * @param {string} tabsId ID of the Tabs that will be looked for.
-	 * @return {*}  {OSFramework.OSUI.Patterns.Tabs.ITabs}
+	 * @param tabsId ID of the Tabs that will be looked for.
+	 * @returns the Tabs instance
 	 */
 	export function GetTabsById(tabsId: string): OSFramework.OSUI.Patterns.Tabs.ITabs {
 		return OSFramework.OSUI.Helper.MapOperation.FindInMap(
@@ -94,9 +91,8 @@ namespace OutSystems.OSUI.Patterns.TabsAPI {
 	/**
 	 * Function that will initialize the pattern instance.
 	 *
-	 * @export
-	 * @param {string} tabsId ID of the Tabs pattern that will be initialized.
-	 * @return {*}  {OSFramework.OSUI.Patterns.Tabs.ITabs}
+	 * @param tabsId ID of the Tabs pattern that will be initialized.
+	 * @returns the Tabs instance
 	 */
 	export function Initialize(tabsId: string): OSFramework.OSUI.Patterns.Tabs.ITabs {
 		const tabs = GetTabsById(tabsId);
@@ -109,11 +105,10 @@ namespace OutSystems.OSUI.Patterns.TabsAPI {
 	/**
 	 * Function that will register a pattern callback.
 	 *
-	 * @export
-	 * @param {string} tabsId
-	 * @param {string} eventName
-	 * @param {OSFramework.OSUI.GlobalCallbacks.OSGeneric} callback
-	 * @return {*}  {string}
+	 * @param tabsId
+	 * @param eventName
+	 * @param callback
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function RegisterCallback(
 		tabsId: string,
@@ -135,9 +130,9 @@ namespace OutSystems.OSUI.Patterns.TabsAPI {
 	/**
 	 * Function that will toggle the Swipe gestures on Tabs
 	 *
-	 * @export
-	 * @param {string} tabsId
-	 * @param {boolean} enableSwipe
+	 * @param tabsId
+	 * @param enableSwipe
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function TabsToggleSwipe(tabsId: string, enableSwipe: boolean): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -155,9 +150,9 @@ namespace OutSystems.OSUI.Patterns.TabsAPI {
 	/**
 	 * Function that will open a given tabs item.
 	 *
-	 * @export
-	 * @param {string} tabsId
-	 * @param {number} tabsNumber
+	 * @param tabsId
+	 * @param tabsNumber
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function SetActiveTab(tabsId: string, tabsNumber: number): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({

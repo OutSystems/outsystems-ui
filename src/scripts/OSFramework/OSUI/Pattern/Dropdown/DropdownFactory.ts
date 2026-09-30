@@ -3,10 +3,10 @@ namespace OSFramework.OSUI.Patterns.Dropdown.Factory {
 	/**
 	 * Create the new Dropdown instance object according given provider
 	 *
-	 * @export
-	 * @param {string} dropdownId ID of the Pattern that a new instance will be created.
-	 * @param {(string | Record<string, unknown>)} configs Configurations for the Pattern in JSON format.
-	 * @return {*}  {OSFramework.Patterns.Progress.IDropdown}
+	 * @param dropdownId ID of the Pattern that a new instance will be created.
+	 * @param mode
+	 * @param provider
+	 * @param configs Configurations for the Pattern in JSON format.
 	 */
 	export function NewDropdown(
 		dropdownId: string,

@@ -7,9 +7,8 @@ namespace OSFramework.OSUI.Helper {
 	 * Storybook stories and generated code may pass a plain object instead, so both are accepted and
 	 * a JSON string keeps exactly the JSON.parse behavior it always had.
 	 *
-	 * @export
-	 * @param {(string | Record<string, unknown>)} configs JSON string or plain object with the pattern configuration
-	 * @return {*}  {JSON} The configuration object handed to the pattern's Config class
+	 * @param configs JSON string or plain object with the pattern configuration
+	 * @returns The configuration object handed to the pattern's Config class
 	 */
 	export function ParseConfigs(configs: string | Record<string, unknown>): JSON {
 		if (typeof configs === 'string') {

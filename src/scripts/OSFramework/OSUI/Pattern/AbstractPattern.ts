@@ -3,11 +3,7 @@ namespace OSFramework.OSUI.Patterns {
 	/**
 	 * Defines the Default props and methods for OutSystemsUI Patterns
 	 *
-	 * @export
 	 * @abstract
-	 * @class AbstractPattern
-	 * @implements {Interface.IPattern}
-	 * @template C
 	 */
 	export abstract class AbstractPattern<C extends AbstractConfiguration> implements Interface.IPattern {
 		// Pattern configurations (doubling as current state). Extends AbstractConfiguration.
@@ -28,9 +24,8 @@ namespace OSFramework.OSUI.Patterns {
 		/**
 		 * Creates an instance of AbstractPattern.
 		 *
-		 * @param {string} uniqueId
-		 * @param {C} configs
-		 * @memberof OSFramework.Patterns.AbstractPattern
+		 * @param uniqueId
+		 * @param configs
 		 */
 		constructor(uniqueId: string, configs: C) {
 			this._uniqueId = uniqueId;
@@ -56,7 +51,6 @@ namespace OSFramework.OSUI.Patterns {
 		 * Marks the built as being finished.
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.AbstractPattern
 		 */
 		protected finishBuild(): void {
 			// Check if this is a provider based pattern, If true Initialization cb Event will be triggered at the new provider instance creation.
@@ -74,9 +68,8 @@ namespace OSFramework.OSUI.Patterns {
 		 * Triggers a generic platform event.
 		 *
 		 * @protected
-		 * @param {GlobalCallbacks.OSGeneric} platFormCallback
-		 * @param {...unknown[]} args
-		 * @memberof AbstractProviderPattern
+		 * @param platFormCallback
+		 * @param args
 		 */
 		protected triggerPlatformEventCallback(platFormCallback: GlobalCallbacks.OSGeneric, ...args: unknown[]): void {
 			if (platFormCallback !== undefined) {
@@ -88,7 +81,6 @@ namespace OSFramework.OSUI.Patterns {
 		 * Trigger the Initialized callback platform event.
 		 *
 		 * @protected
-		 * @memberof AbstractPattern
 		 */
 		protected triggerPlatformInitializedEventCallback() {
 			if (this._platformEventInitialized !== undefined && this._isBuilt === false) {
@@ -102,7 +94,6 @@ namespace OSFramework.OSUI.Patterns {
 		 * This naming is used to prevent overriding the unsetCallback method on all patterns
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.AbstractPattern
 		 */
 		protected unsetGlobalCallbacks(): void {
 			this._platformEventInitialized = undefined;
@@ -110,8 +101,6 @@ namespace OSFramework.OSUI.Patterns {
 
 		/**
 		 * Builds the pattern.
-		 *
-		 * @memberof OSFramework.Patterns.AbstractPattern
 		 */
 		public build(): void {
 			this._setCommonHtmlElements();
@@ -121,9 +110,8 @@ namespace OSFramework.OSUI.Patterns {
 		 * Changes the value of the properties in the configurations and
 		 * if changes are to a common property, applies the changes.
 		 *
-		 * @param {string} propertyName
-		 * @param {unknown} propertyValue
-		 * @memberof OSFramework.Patterns.AbstractPattern
+		 * @param propertyName
+		 * @param propertyValue
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			if (this._configs.hasOwnProperty(propertyName)) {
@@ -155,8 +143,6 @@ namespace OSFramework.OSUI.Patterns {
 
 		/**
 		 * Disposes the pattern.
-		 *
-		 * @memberof OSFramework.Patterns.AbstractPattern
 		 */
 		public dispose(): void {
 			this._isBuilt = false;
@@ -168,9 +154,7 @@ namespace OSFramework.OSUI.Patterns {
 		/**
 		 * Enables to uniquely identify the pattern in all ways.
 		 *
-		 * @param {string} patternId
-		 * @return {*}  {boolean}
-		 * @memberof OSFramework.Patterns.AbstractPattern
+		 * @param patternId
 		 */
 		public equalsToID(patternId: string): boolean {
 			return patternId === this._uniqueId || patternId === this._widgetId;
@@ -180,9 +164,8 @@ namespace OSFramework.OSUI.Patterns {
 		 * Register a given callback event handler.
 		 *
 		 * @abstract
-		 * @param {string} eventName
-		 * @param {GlobalCallbacks.OSGeneric} callback
-		 * @memberof OSFramework.Patterns.AbstractPattern
+		 * @param eventName
+		 * @param callback
 		 */
 		public registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
@@ -203,8 +186,6 @@ namespace OSFramework.OSUI.Patterns {
 		 *
 		 * @readonly
 		 * @protected
-		 * @type {boolean}
-		 * @memberof OSFramework.Patterns.AbstractPattern
 		 */
 		//TODO: getter to remove.
 		protected get _enableAccessibility(): boolean {
@@ -215,8 +196,6 @@ namespace OSFramework.OSUI.Patterns {
 		 * Getter that allows to obtain the self element.
 		 *
 		 * @readonly
-		 * @type {(HTMLElement | undefined)}
-		 * @memberof OSFramework.Patterns.AbstractPattern
 		 */
 		public get selfElement(): HTMLElement {
 			return this._selfElem;
@@ -226,8 +205,6 @@ namespace OSFramework.OSUI.Patterns {
 		 * Getter that tells if the pattern is already built.
 		 *
 		 * @readonly
-		 * @type {boolean}
-		 * @memberof OSFramework.Patterns.AbstractPattern
 		 */
 		public get isBuilt(): boolean {
 			return this._isBuilt;
@@ -237,8 +214,6 @@ namespace OSFramework.OSUI.Patterns {
 		 * Current configurations/state of the pattern.
 		 *
 		 * @readonly
-		 * @type {C}
-		 * @memberof OSFramework.Patterns.AbstractPattern
 		 */
 		public get configs(): C {
 			return this._configs;
@@ -248,8 +223,6 @@ namespace OSFramework.OSUI.Patterns {
 		 * Unique id of the pattern. Internal use only.
 		 *
 		 * @readonly
-		 * @type {string}
-		 * @memberof OSFramework.Patterns.AbstractPattern
 		 */
 		public get uniqueId(): string {
 			return this._uniqueId;
@@ -259,8 +232,6 @@ namespace OSFramework.OSUI.Patterns {
 		 * Id of the pattern known by the developer. External use only.
 		 *
 		 * @readonly
-		 * @type {string}
-		 * @memberof OSFramework.Patterns.AbstractPattern
 		 */
 		public get widgetId(): string {
 			return this._widgetId;

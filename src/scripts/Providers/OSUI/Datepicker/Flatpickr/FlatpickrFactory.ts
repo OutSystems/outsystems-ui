@@ -3,10 +3,9 @@ namespace Providers.OSUI.Datepicker.Flatpickr.Factory {
 	/**
 	 * Create the new Flatpickr instance object according given Mode
 	 *
-	 * @export
-	 * @param {string} datePickerId ID of the Pattern that a new instance will be created.
-	 * @param {(string | Record<string, unknown>)} configs Configurations for the Pattern in JSON format.
-	 * @return {*}  {OSFramework.OSUI.Patterns.Progress.IDatePicker}
+	 * @param datePickerId ID of the Pattern that a new instance will be created.
+	 * @param mode
+	 * @param configs Configurations for the Pattern in JSON format.
 	 */
 	export function NewFlatpickr(
 		datePickerId: string,

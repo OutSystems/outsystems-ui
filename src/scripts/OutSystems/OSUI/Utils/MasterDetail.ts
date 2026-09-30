@@ -4,8 +4,6 @@ namespace OutSystems.OSUI.Utils {
 	 * Function used to check if has MasterDetail, this is used only for native apps,
 	 * on the DEPRECATED_LayoutReadyMobile. Removing this now would be a breaking-change
 	 * and it needs to be present as long as the DEPRECATED_LayoutReadyMobile isn’t removed.
-	 *
-	 * @export
 	 */
 	export function HasMasterDetail(): boolean {
 		let returnOutput = false;

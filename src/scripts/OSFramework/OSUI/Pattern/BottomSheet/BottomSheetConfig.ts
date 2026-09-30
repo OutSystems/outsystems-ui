@@ -2,15 +2,11 @@
 namespace OSFramework.OSUI.Patterns.BottomSheet {
 	/**
 	 * Class that represents the custom configurations received by the BottomSheet.
-	 *
-	 * @export
-	 * @class BottomSheetConfig
-	 * @extends {AbstractConfiguration}
 	 */
 	export class BottomSheetConfig extends AbstractConfiguration {
-		// Corner shape of the sheet: SoftRounded (default), Rounded or Sharp.
+		/** Corner shape of the sheet: SoftRounded (default), Rounded or Sharp. */
 		public Shape: GlobalEnum.ShapeTypes;
-		// Shows the drag handler bar at the top of the sheet.
+		/** Shows the drag handler bar at the top of the sheet. */
 		public ShowHandler: boolean;
 
 		constructor(config: JSON) {
@@ -20,10 +16,8 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 		/**
 		 * Override, Validate configs key values
 		 *
-		 * @param {string} key
-		 * @param {unknown} value
-		 * @return {*}  {unknown}
-		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheetConfig
+		 * @param key
+		 * @param value
 		 */
 		public validateDefault(key: string, value: unknown): unknown {
 			let validatedValue = undefined;

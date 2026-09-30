@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSFramework.OSUI.Patterns.InlineSvg {
 	export class InlineSvgConfig extends AbstractConfiguration {
-		// Raw <svg> markup rendered inline; invalid markup is rejected with a console error.
+		/** Raw <svg> markup rendered inline; invalid markup is rejected with a console error. */
 		public SVGCode: string;
 
 		/**
@@ -9,8 +9,7 @@ namespace OSFramework.OSUI.Patterns.InlineSvg {
 		 *
 		 * @param key property name
 		 * @param value value to be check
-		 * @returns {unknown} value
-		 * @memberof  OSFramework.Patterns.InlineSvg.InlineSvgConfig
+		 * @returns value
 		 */
 		public validateDefault(key: string, value: unknown): unknown {
 			let validatedValue = undefined;

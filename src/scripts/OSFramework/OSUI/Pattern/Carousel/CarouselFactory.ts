@@ -3,10 +3,9 @@ namespace OSFramework.OSUI.Patterns.Carousel.Factory {
 	/**
 	 * Create the new Carousel instance object according given provider
 	 *
-	 * @export
-	 * @param {string} carouselId ID of the Pattern that a new instance will be created.
-	 * @param {(string | Record<string, unknown>)} configs Configurations for the Pattern in JSON format.
-	 * @return {*}  {Patterns.Carousel.ICarousel}
+	 * @param carouselId ID of the Pattern that a new instance will be created.
+	 * @param configs Configurations for the Pattern in JSON format.
+	 * @param provider
 	 */
 	export function NewCarousel(
 		carouselId: string,

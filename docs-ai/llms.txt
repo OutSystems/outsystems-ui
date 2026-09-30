@@ -42,9 +42,11 @@ Scope: OutSystems UI ships a single token-based theme (light, plus the generated
 ## Read next
 - llms-components.txt — per-pattern card: lifecycle, typed props with defaults/allowed values, events, API signatures, CSS classes, CSS API knobs, markup skeleton
 - llms-tokens.txt — framework theme roles (--color-*, --border-radius-*) and every --osui-* component knob; legacy aliases are marked
-- llms-utilities.txt — every utility class (spacing, display, colours, typography, …) grouped by family
-- llms-patterns.txt — markup skeletons of the CSS-only components (Card, Section, Badge, Tag, layout, widgets)
-- osui.components.json — the same data, machine-readable (schema/osui.components.schema.json)
+- llms-utilities.txt — the utility grammar (<property>[-<side>][-<value>], the size scale, colour hues and shades) and every family as template rows with their declarations
+- osui.utilities.json — every utility class with its declarations, variants and tokens, machine-readable (schema/osui.utilities.schema.json)
+- llms-patterns.txt — CSS-only components (markup skeleton, knobs), layout partials (host-styled: never generate their markup) and helper classes, one group per tier
+- osui.components.json — the same data, machine-readable (schema/osui.components.schema.json), plus a usage example per pattern (Create with every default, Initialize)
+- schema/configs/<Name>.schema.json — JSON Schema of each pattern's configs string, to validate before Create
 
 ## Gotchas (read before generating)
 1. A pattern root element needs `name="<id>"`; the runtime resolves it with `getElementsByName`. It must sit inside an element with `[data-block]` whose `id` becomes the pattern's `widgetId` (callbacks receive that id first).
@@ -53,6 +55,6 @@ Scope: OutSystems UI ships a single token-based theme (light, plus the generated
 4. Every runtime API function returns a JSON string envelope `{ code, isSuccess, message, value? }`; only `Create` throws (duplicate id).
 5. Styling is token-based: override CSS custom properties (`--color-primary`, `--border-radius-default`, `--osui-card-padding`), never component rules. Dark mode = class `os-dark-theme` on `<html>`.
 6. Responsiveness is class-driven: the runtime sets `phone`, `tablet` or `desktop` (and `landscape`/`portrait`) on `<body>`; write `.phone .card { … }` rather than media queries.
-7. Utility classes are long-form (`margin-top-base`, `display-flex`, `justify-content-space-between`); Tailwind-style short names do not exist. The full list is in llms-utilities.txt.
+7. Utility classes follow `<property>[-<side>][-<value>]` in long form (`margin-top-base`, `display-flex`, `justify-content-space-between`); Tailwind-style short names do not exist. The grammar and the size scale are in llms-utilities.txt, every class with its CSS in osui.utilities.json.
 8. Logical CSS properties are the default (`padding-inline-start`, not `padding-left`); RTL is handled by the framework.
 9. Load one card from llms-components.txt per pattern you use (about 450 tokens each). Never load the compiled typings (dist/*.d.ts, about 53k tokens): the cards carry the same contract with defaults, allowed values and markup.

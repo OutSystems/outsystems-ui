@@ -4,10 +4,10 @@ namespace OutSystems.OSUI.Patterns.NotificationAPI {
 	/**
 	 * Function that will change the property of a given Notification.
 	 *
-	 * @export
-	 * @param {string} notificationId
-	 * @param {string} propertyName
-	 * @param {*} propertyValue
+	 * @param notificationId
+	 * @param propertyName
+	 * @param propertyValue
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function ChangeProperty(notificationId: string, propertyName: string, propertyValue: unknown): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -25,10 +25,9 @@ namespace OutSystems.OSUI.Patterns.NotificationAPI {
 	/**
 	 * Create the new Notification instance and add it to the notificationsMap
 	 *
-	 * @export
-	 * @param {string} notificationId
-	 * @param {(string | Configs)} configs
-	 * @return {*}  {OSFramework.OSUI.Patterns.Notification.INotification}
+	 * @param notificationId
+	 * @param configs
+	 * @returns the Notification instance
 	 */
 	export function Create(
 		notificationId: string,
@@ -51,8 +50,8 @@ namespace OutSystems.OSUI.Patterns.NotificationAPI {
 	/**
 	 * Function that will destroy the instance of the given Notification
 	 *
-	 * @export
-	 * @param {string} notificationId
+	 * @param notificationId
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Dispose(notificationId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -72,8 +71,7 @@ namespace OutSystems.OSUI.Patterns.NotificationAPI {
 	/**
 	 * Fucntion that will return the Map with all the Notification instances at the page
 	 *
-	 * @export
-	 * @return {*}  {Array<string>}
+	 * @returns the ids of every Notification instance
 	 */
 	export function GetAllNotifications(): Array<string> {
 		return OSFramework.OSUI.Helper.MapOperation.ExportKeys(_notificationMap);
@@ -82,9 +80,8 @@ namespace OutSystems.OSUI.Patterns.NotificationAPI {
 	/**
 	 * Function that gets the instance of Notification, by a given ID.
 	 *
-	 * @export
-	 * @param {string} notificationId
-	 * @return {*}  {OSFramework.OSUI.Patterns.Notification.INotification}
+	 * @param notificationId
+	 * @returns the Notification instance
 	 */
 	export function GetNotificationById(notificationId: string): OSFramework.OSUI.Patterns.Notification.INotification {
 		return OSFramework.OSUI.Helper.MapOperation.FindInMap(
@@ -97,8 +94,8 @@ namespace OutSystems.OSUI.Patterns.NotificationAPI {
 	/**
 	 * Function that will Show a given notification.
 	 *
-	 * @export
-	 * @param {string} notificationId ID of the notification that will be hidden
+	 * @param notificationId ID of the notification that will be hidden
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Hide(notificationId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -116,9 +113,8 @@ namespace OutSystems.OSUI.Patterns.NotificationAPI {
 	/**
 	 * Function that will initialize the pattern instance.
 	 *
-	 * @export
-	 * @param {string} notificationId
-	 * @return {*}  {OSFramework.OSUI.Patterns.Notification.INotification}
+	 * @param notificationId
+	 * @returns the Notification instance
 	 */
 	export function Initialize(notificationId: string): OSFramework.OSUI.Patterns.Notification.INotification {
 		const notification = GetNotificationById(notificationId);
@@ -131,11 +127,10 @@ namespace OutSystems.OSUI.Patterns.NotificationAPI {
 	/**
 	 * Function to register a provider callback
 	 *
-	 * @export
-	 * @param {string} notificationId
-	 * @param {string} eventName
-	 * @param {OSFramework.OSUI.GlobalCallbacks.OSGeneric} callback
-	 * @return {*} {string} Return Message Success or message of error info if it's the case.
+	 * @param notificationId
+	 * @param eventName
+	 * @param callback
+	 * @returns Return Message Success or message of error info if it's the case.
 	 */
 	export function RegisterCallback(
 		notificationId: string,
@@ -157,8 +152,8 @@ namespace OutSystems.OSUI.Patterns.NotificationAPI {
 	/**
 	 * Function that will open a given notification.
 	 *
-	 * @export
-	 * @param {string} notificationId ID of the notification that will be shown
+	 * @param notificationId ID of the notification that will be shown
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Show(notificationId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({

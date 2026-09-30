@@ -3,11 +3,8 @@ namespace OutSystems.OSUI.Utils {
 	/**
 	 * [Deprecated] Function to get closest element, in use by AnimatedLabel
 	 *
-	 * @export
-	 * @param {HTMLElement} elem
-	 * @param {string} selector
-	 * @return {*}  {*}
-	 *
+	 * @param elem
+	 * @param selector
 	 */
 	//TODO: Is this function necessary?
 	export function GetClosest(elem: HTMLElement, selector: string): unknown {

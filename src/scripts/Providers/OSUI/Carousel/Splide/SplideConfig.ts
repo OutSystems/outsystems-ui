@@ -68,9 +68,6 @@ namespace Providers.OSUI.Carousel.Splide {
 
 		/**
 		 * Method to get and merge internal and external provider configs
-		 *
-		 * @return {*}  {SplideOpts}
-		 * @memberof Providers.OSUI.Carousel.Splide.SplideConfig
 		 */
 		public getProviderConfig(): SplideOpts {
 			this._providerOptions = {
@@ -105,8 +102,7 @@ namespace Providers.OSUI.Carousel.Splide {
 		/**
 		 * Method to set and save the extensibility provider configs
 		 *
-		 * @param {SplideOpts} newConfigs
-		 * @memberof Providers.OSUI.Carousel.Splide.SplideConfig
+		 * @param newConfigs
 		 */
 		public setExtensibilityConfigs(newConfigs: SplideOpts): void {
 			this._providerExtendedOptions = newConfigs;

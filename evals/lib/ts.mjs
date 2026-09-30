@@ -94,7 +94,9 @@ function hasExportModifier(node) {
  * @typedef {object} JsDocInfo
  * @property {string} description
  * @property {string[]} params  names carried by `@param` tags
- * @property {string[]} tags    tag names (`param`, `return`, `export`, …)
+ * @property {Record<string, string>} paramDescriptions  text of each `@param` tag, by parameter name
+ * @property {string|null} returns  text of the `@returns` (or `@return`) tag; null without one, '' when bare
+ * @property {string[]} tags    tag names (`param`, `returns`, `deprecated`, …)
  */
 
 /**
@@ -108,8 +110,25 @@ export function getJsDoc(node) {
 	const doc = docs[docs.length - 1];
 	const description = (ts.getTextOfJSDocComment(doc.comment) ?? '').trim();
 	const tags = (doc.tags ?? []).map((t) => t.tagName.text);
-	const params = (doc.tags ?? []).filter(ts.isJSDocParameterTag).map((t) => t.name.getText());
-	return { description, params, tags };
+	/** @type {Record<string, string>} */
+	const paramDescriptions = {};
+	for (const t of (doc.tags ?? []).filter(ts.isJSDocParameterTag)) {
+		paramDescriptions[t.name.getText()] = (ts.getTextOfJSDocComment(t.comment) ?? '').trim();
+	}
+	const returnTag = (doc.tags ?? []).find((t) => ts.isJSDocReturnTag(t));
+	const returns = returnTag ? (ts.getTextOfJSDocComment(returnTag.comment) ?? '').trim() : null;
+	return { description, params: Object.keys(paramDescriptions), paramDescriptions, returns, tags };
+}
+
+/**
+ * The `@defaultValue` a property documents, as source text, or null.
+ * @param {ts.Node} node
+ */
+export function documentedDefault(node) {
+	const tag = ts.getJSDocTags(node).find((t) => t.tagName.text === 'defaultValue');
+	if (!tag) return null;
+	const text = (ts.getTextOfJSDocComment(tag.comment) ?? '').trim();
+	return text.length ? text : null;
 }
 
 /**
@@ -464,6 +483,8 @@ function leadingDocText(sf, node) {
 		.split('\n')
 		.map((l) => l.replace(/^\s*(\*|\/\/)\s?/, '').trim())
 		.filter((l) => l && !l.startsWith('@'))
+		// an inline tag (`Whether it starts open. @defaultValue false`) is not part of the description
+		.map((l) => l.replace(/\s+@\w+.*$/, ''))
 		.join(' ')
 		.trim();
 	return { hasDoc: comments.length > 0, docText: text };
@@ -498,7 +519,8 @@ function classConfigProps(cls, sf, file, checker, validation) {
 			hasDoc,
 			docText,
 			validated: v?.validated ?? null,
-			defaultText: v?.defaultText ?? (m.initializer ? m.initializer.getText(sf) : null),
+			// the default the code applies (validateDefault, initializer), else the one the comment documents
+			defaultText: v?.defaultText ?? (m.initializer ? m.initializer.getText(sf) : null) ?? documentedDefault(m),
 			allowed: v?.allowed ?? [],
 			allowedFrom: v?.allowedFrom ?? null,
 		});

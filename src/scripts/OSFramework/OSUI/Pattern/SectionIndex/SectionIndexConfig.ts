@@ -2,15 +2,11 @@
 namespace OSFramework.OSUI.Patterns.SectionIndex {
 	/**
 	 * Class that represents the custom configurations received by the SectionIndex.
-	 *
-	 * @export
-	 * @class SectionIndexConfig
-	 * @extends {AbstractConfiguration}
 	 */
 	export class SectionIndexConfig extends AbstractConfiguration {
-		// Keeps the index fixed while the page scrolls.
+		/** Keeps the index fixed while the page scrolls. */
 		public IsFixed: boolean;
-		// Animates the scroll to the target section.
+		/** Animates the scroll to the target section. */
 		public SmoothScrolling: boolean;
 
 		/**
@@ -18,8 +14,7 @@ namespace OSFramework.OSUI.Patterns.SectionIndex {
 		 *
 		 * @param key property name
 		 * @param value value to be check
-		 * @returns {unknown} value
-		 * @memberof  OSFramework.Patterns.SectionIndex.SectionIndexConfig
+		 * @returns value
 		 */
 		public validateDefault(key: string, value: unknown): unknown {
 			let validatedValue = undefined;

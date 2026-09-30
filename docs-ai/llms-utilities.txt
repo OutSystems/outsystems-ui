@@ -2,78 +2,213 @@
 
 Scope: OutSystems UI ships a single token-based theme (light, plus the generated dark mode under class os-dark-theme on <html>). The pre-migration "classic" CSS snapshot under classic-theme/ is a Storybook comparison artifact, not a target for generated code.
 
-554 classes in 24 families, generated from src/scss/05-useful and the design tokens.
-Long-form names only (margin-top-base, display-flex, justify-content-space-between); Tailwind-style short names do not exist. Responsive variants come from the body classes phone / tablet / desktop, not from prefixes. Size scale: none xs s base m l xl xxl.
+538 classes in 24 families, generated from src/scss/05-useful and the design tokens. Machine-readable, with every declaration: osui.utilities.json (schema/osui.utilities.schema.json).
 
-## Accessibility (5; reads $token-scale-*)
-focus-trap-bottom focus-trap-top has-accessible-features skip-nav wcag-hide-text
+## Grammar
 
-## Border radius & shape (32; reads $token-border-radius-*, $token-scale-*, $token-shape-rectangular-*, $token-shape-round-*, $token-shape-soft-*)
-border-radius-bottom-circle border-radius-bottom-left-circle border-radius-bottom-left-none border-radius-bottom-left-rounded border-radius-bottom-left-soft border-radius-bottom-none border-radius-bottom-right-circle border-radius-bottom-right-none border-radius-bottom-right-rounded border-radius-bottom-right-soft border-radius-bottom-rounded border-radius-bottom-soft border-radius-circle border-radius-none border-radius-rounded border-radius-soft border-radius-top-circle border-radius-top-left-circle border-radius-top-left-none border-radius-top-left-rounded border-radius-top-left-soft border-radius-top-none border-radius-top-right-circle border-radius-top-right-none border-radius-top-right-rounded border-radius-top-right-soft border-radius-top-rounded border-radius-top-soft scss shape-rectangular shape-round shape-soft
+- Name: <property>[-<side>][-<value>], long-form, no abbreviations (margin-top-base, display-flex, justify-content-space-between). Tailwind-style short names (p-4, mt-2) do not exist.
+- Property heads: margin padding display flex-direction flex-wrap flex justify-content align-items align-content align-self gap row-gap column-gap background text font-size font border-radius border-size border shadow position overflow width height white-space shape.
+- Sides: top bottom left right (left/right compile to the logical inline-start/inline-end) · x = inline · y = block.
+- Steps, the size scale: none xs s base m l xl xxl. Values: none = --token-scale-0 (0px) · xs = --token-scale-100 (4px) · s = --token-scale-200 (8px) · base = --token-scale-400 (16px) · m = --token-scale-600 (24px) · l = --token-scale-800 (32px) · xl = --token-scale-1000 (40px) · xxl = --token-scale-1200 (48px).
+- Colours: background-<hue>[-<shade>] and text-<hue>[-<shade>]; hues: blue cyan grape green indigo lime orange pink red teal violet yellow primary secondary error info success warning; shades: lightest lighter light dark darker darkest (no suffix = base). Neutrals are numbered: background-neutral-<0..10>[-lightest], text-neutral-<0..10>[-darker].
+- Responsive: no prefixes. The runtime sets phone / tablet / desktop on <body>; write `.phone .x { … }` for a viewport rule. Only phone-full-width and tablet-full-width ship as viewport helpers.
+- A row with {placeholders} stands for every combination of the listed values (margin-{side}-{step} → margin-top-xs, margin-x-base, …). A row without braces is one class. [legacy name] marks a name outside the grammar.
 
-## Border size (19; reads $token-border-size-*, $token-scale-*)
-border-bottom-l border-bottom-m border-bottom-s border-left-l border-left-m border-left-s border-right-l border-right-m border-right-s border-size-l border-size-m border-size-none border-size-s border-top-l border-top-m border-top-s columns columns-item scss
+## Accessibility (2 classes; src/scss/05-useful/_a11y.scss)
 
-## Box height (6)
-auto-height full-height full-height-minus-header full-height-vh half-height half-height-vh
+- wcag-hide-text → border: 0; clip: rect(0 0 0 0); height: 1px; margin: -1px (+6 more in osui.utilities.json) [legacy name]
+- skip-nav → inset-inline-start: --token-scale-1000 (40px); opacity: 0; padding-block: --token-scale-200 (8px); padding-inline: --token-scale-400 (16px) (+5 more in osui.utilities.json) [legacy name]
 
-## Box width (4)
-full-width full-width-vw half-width half-width-vw
+## Border radius & shape (31 classes; src/scss/05-useful/_border-radius.scss)
 
-## Colours · brand (8; reads $token-bg-surface-*, $token-primitives-base-*, $token-primitives-blue-*, $token-semantics-primary-*, --color-*)
-background-primary background-primary-lightest background-secondary background-secondary-lightest text-primary text-primary-darker text-secondary text-secondary-darker
+- border-radius-{side}-{side}-{radius} → border-top-left-radius | border-top-right-radius | border-bottom-right-radius | border-bottom-left-radius (side: top bottom left right; radius: none soft rounded circle; 16 classes)
+- border-radius-{side}-{radius} → border-top-left-radius | border-top-right-radius | border-bottom-left-radius | border-bottom-right-radius (side: top bottom; radius: none soft rounded circle; 8 classes)
+- border-radius-{radius} → border-radius (radius: none soft rounded circle; 4 classes)
+- shape-soft → --border-radius-2xs: --token-shape-soft-2xs (4px); --border-radius-xs: --token-shape-soft-xs (8px); --border-radius-sm: --token-shape-soft-sm (12px); --border-radius-md: --token-shape-soft-md (16px) (+3 more in osui.utilities.json)
+- shape-round → --border-radius-2xs: --token-shape-round-2xs (999px); --border-radius-xs: --token-shape-round-xs (999px); --border-radius-sm: --token-shape-round-sm (999px); --border-radius-md: --token-shape-round-md (999px) (+3 more in osui.utilities.json)
+- shape-rectangular → --border-radius-2xs: --token-shape-rectangular-2xs (0px); --border-radius-xs: --token-shape-rectangular-xs (0px); --border-radius-sm: --token-shape-rectangular-sm (0px); --border-radius-md: --token-shape-rectangular-md (0px) (+3 more in osui.utilities.json)
 
-## Colours · neutral (40; reads $token-bg-surface-*, $token-primitives-base-*, --color-*)
-background-neutral-0 background-neutral-0-lightest background-neutral-1 background-neutral-1-lightest background-neutral-10 background-neutral-10-lightest background-neutral-2 background-neutral-2-lightest background-neutral-3 background-neutral-3-lightest background-neutral-4 background-neutral-4-lightest background-neutral-5 background-neutral-5-lightest background-neutral-6 background-neutral-6-lightest background-neutral-7 background-neutral-7-lightest background-neutral-8 background-neutral-8-lightest background-neutral-9 background-neutral-9-lightest scss text-neutral-0 text-neutral-1 text-neutral-10 text-neutral-10-darker text-neutral-2 text-neutral-3 text-neutral-4 text-neutral-5 text-neutral-5-darker text-neutral-6 text-neutral-6-darker text-neutral-7 text-neutral-7-darker text-neutral-8 text-neutral-8-darker text-neutral-9 text-neutral-9-darker
+## Border size (17 classes; src/scss/05-useful/_border-size.scss)
 
-## Colours · other (1)
-background-transparent
+- border-{side}-{step} → border-block-start | border-inline-end | border-block-end | border-inline-start (side: top bottom left right; step: s m l; 12 classes)
+- border-size-{step} → border-width | border (step: none s m l; 4 classes)
+- columns-item → [.border-top-s.columns > :not(:last-child)] border-block-start: var(--token-border-size-025, var(--token-scale-025, 1px)) sol… [legacy name]
 
-## Colours · palette (169; reads $token-bg-danger-*, $token-bg-extended-*, $token-bg-info-*, $token-bg-success-*, $token-bg-warning-*, $token-primitives-aqua-*, $token-primitives-blue-*, $token-primitives-green-*, $token-primitives-indigo-*, $token-primitives-lime-*, $token-primitives-orange-*, $token-primitives-pink-*, $token-primitives-purple-*, $token-primitives-red-*, $token-primitives-teal-*, $token-primitives-violet-*, $token-primitives-yellow-*, $token-semantics-danger-*, $token-semantics-success-*, --color-*)
-background-blue background-blue-dark background-blue-darker background-blue-darkest background-blue-light background-blue-lighter background-blue-lightest background-cyan background-cyan-dark background-cyan-darker background-cyan-darkest background-cyan-light background-cyan-lighter background-cyan-lightest background-grape background-grape-dark background-grape-darker background-grape-darkest background-grape-light background-grape-lighter background-grape-lightest background-green background-green-dark background-green-darker background-green-darkest background-green-light background-green-lighter background-green-lightest background-indigo background-indigo-dark background-indigo-darker background-indigo-darkest background-indigo-light background-indigo-lighter background-indigo-lightest background-lime background-lime-dark background-lime-darker background-lime-darkest background-lime-light background-lime-lighter background-lime-lightest background-orange background-orange-dark background-orange-darker background-orange-darkest background-orange-light background-orange-lighter background-orange-lightest background-pink background-pink-dark background-pink-darker background-pink-darkest background-pink-light background-pink-lighter background-pink-lightest background-red background-red-dark background-red-darker background-red-darkest background-red-light background-red-lighter background-red-lightest background-teal background-teal-dark background-teal-darker background-teal-darkest background-teal-light background-teal-lighter background-teal-lightest background-violet background-violet-dark background-violet-darker background-violet-darkest background-violet-light background-violet-lighter background-violet-lightest background-yellow background-yellow-dark background-yellow-darker background-yellow-darkest background-yellow-light background-yellow-lighter background-yellow-lightest scss text-blue text-blue-dark text-blue-darker text-blue-darkest text-blue-light text-blue-lighter text-blue-lightest text-cyan text-cyan-dark text-cyan-darker text-cyan-darkest text-cyan-light text-cyan-lighter text-cyan-lightest text-grape text-grape-dark text-grape-darker text-grape-darkest text-grape-light text-grape-lighter text-grape-lightest text-green text-green-dark text-green-darker text-green-darkest text-green-light text-green-lighter text-green-lightest text-indigo text-indigo-dark text-indigo-darker text-indigo-darkest text-indigo-light text-indigo-lighter text-indigo-lightest text-lime text-lime-dark text-lime-darker text-lime-darkest text-lime-light text-lime-lighter text-lime-lightest text-orange text-orange-dark text-orange-darker text-orange-darkest text-orange-light text-orange-lighter text-orange-lightest text-pink text-pink-dark text-pink-darker text-pink-darkest text-pink-light text-pink-lighter text-pink-lightest text-red text-red-dark text-red-darker text-red-darkest text-red-light text-red-lighter text-red-lightest text-teal text-teal-dark text-teal-darker text-teal-darkest text-teal-light text-teal-lighter text-teal-lightest text-violet text-violet-dark text-violet-darker text-violet-darkest text-violet-light text-violet-lighter text-violet-lightest text-yellow text-yellow-dark text-yellow-darker text-yellow-darkest text-yellow-light text-yellow-lighter text-yellow-lightest
+## Box height (6 classes; src/scss/05-useful/_box-height.scss)
 
-## Colours · semantic (17; reads $token-primitives-blue-*, $token-primitives-green-*, $token-primitives-red-*, $token-primitives-yellow-*, $token-semantics-danger-*, $token-semantics-info-*, $token-semantics-success-*, $token-semantics-warning-*)
-background-error background-error-light background-info background-info-light background-success background-success-light background-warning background-warning-light scss text-error text-error-light text-info text-info-light text-success text-success-light text-warning text-warning-light
+- full-height → height: 100% [legacy name]
+- full-height-vh → height: 100vh [legacy name]
+- full-height-minus-header → height: calc(100vh - var(--header-size)); -servicestudio-height: auto [legacy name]
+- half-height → height: 50% [legacy name]
+- half-height-vh → height: 50vh; -servicestudio-height: auto [legacy name]
+- auto-height → height: auto [legacy name]
 
-## Display · alignment (28)
-align-content-baseline align-content-center align-content-flex-end align-content-flex-start align-content-space-around align-content-space-between align-content-space-evenly align-content-stretch align-items-baseline align-items-center align-items-flex-end align-items-flex-start align-items-initial align-items-stretch align-self-baseline align-self-center align-self-flex-end align-self-flex-start align-self-stretch bottom-center bottom-left bottom-right center center-left center-right top-center top-left top-right
+## Box width (4 classes; src/scss/05-useful/_box-width.scss)
 
-## Display · flex (38; reads $token-scale-*)
-column-gap-base column-gap-l column-gap-m column-gap-s column-gap-xl column-gap-xs column-gap-xxl display-flex flex-direction-column flex-direction-column-reverse flex-direction-row flex-direction-row-reverse flex-nowrap flex-wrap flex-wrap-reverse flex1 flex2 flex3 gap-base gap-l gap-m gap-s gap-xl gap-xs gap-xxl justify-content-center justify-content-flex-end justify-content-flex-start justify-content-space-around justify-content-space-between justify-content-space-evenly row-gap-base row-gap-l row-gap-m row-gap-s row-gap-xl row-gap-xs row-gap-xxl
+- full-width → width: 100% [legacy name]
+- full-width-vw → width: 100vw [legacy name]
+- half-width → width: 50% [legacy name]
+- half-width-vw → width: 50vw [legacy name]
 
-## Display (7)
-display-block display-contents display-grid display-inline display-inline-block display-inline-flex display-none
+## Colours · brand (8 classes; src/scss/05-useful/_colors-brand.scss)
 
-## Images (4; reads $token-bg-surface-*, $token-border-size-*, $token-primitives-base-*, $token-scale-*, --color-*)
-img-circle img-cover img-rounded thumbnail
+- background-primary → background-color: --color-primary
+- background-secondary → background-color: --color-secondary
+- background-primary-lightest → background-color: --token-bg-surface-default (#ffffff)
+- background-secondary-lightest → background-color: --token-bg-surface-default (#ffffff)
+- text-primary → color: --token-semantics-primary-base (#105cef)
+- text-secondary → color: --color-text-subtle
+- text-primary-darker → color: --token-semantics-primary-base (#105cef)
+- text-secondary-darker → color: --color-text-subtle
 
-## Miscellaneous (7)
-no-transform no-transition phone phone-full-width sticky-observer tablet tablet-full-width
+## Colours · neutral (39 classes; src/scss/05-useful/_colors-neutral.scss)
 
-## Overflow (3)
-overflow-hidden overflow-horizontal overflow-vertical
+- background-neutral-{n} → background-color (n: 0 1 2 3 4 5 6 7 8 9 10; 11 classes)
+- background-neutral-{n}-{shade} → background-color (shade: lightest; n: 0 1 2 3 4 5 6 7 8 9 10; 11 classes)
+- text-neutral-{n} → color (n: 0 1 2 3 4 5 6 7 8 9 10; 11 classes)
+- text-neutral-{n}-{shade} → color (shade: darker; n: 5 6 7 8 9 10; 6 classes)
 
-## Positioning · absolute (15)
-absolute-bottom absolute-bottom-left absolute-bottom-right absolute-center absolute-center-bottom absolute-center-left absolute-center-right absolute-center-top absolute-left absolute-right absolute-top absolute-top-left absolute-top-plus-header absolute-top-right position-absolute
+## Colours · other (1 classes; src/scss/05-useful/_colors-others.scss)
 
-## Positioning (3)
-fixed position-relative sticky
+- background-transparent → background-color: transparent
 
-## Shadow (7; reads $token-elevation-*, $token-shadow-*, $token-shadow-blur-*, $token-shadow-offset-*, $token-shadow-spread-*)
-scss shadow-l shadow-m shadow-none shadow-s shadow-xl shadow-xs
+## Colours · palette (168 classes; src/scss/05-useful/_colors-palette.scss)
 
-## Spacing · margin (58; reads $token-scale-*)
-margin-auto margin-base margin-bottom-base margin-bottom-l margin-bottom-m margin-bottom-none margin-bottom-s margin-bottom-xl margin-bottom-xs margin-bottom-xxl margin-l margin-left-base margin-left-l margin-left-m margin-left-none margin-left-s margin-left-xl margin-left-xs margin-left-xxl margin-m margin-none margin-right-base margin-right-l margin-right-m margin-right-none margin-right-s margin-right-xl margin-right-xs margin-right-xxl margin-s margin-top-base margin-top-l margin-top-m margin-top-none margin-top-s margin-top-xl margin-top-xs margin-top-xxl margin-x-base margin-x-l margin-x-m margin-x-none margin-x-s margin-x-xl margin-x-xs margin-x-xxl margin-xl margin-xs margin-xxl margin-y-base margin-y-l margin-y-m margin-y-none margin-y-s margin-y-xl margin-y-xs margin-y-xxl scss
+- background-{hue}-{shade} → background-color (hue: blue cyan grape green indigo lime orange pink red teal violet yellow; shade: lightest lighter light dark darker darkest; 72 classes)
+- text-{hue}-{shade} → color (hue: blue cyan grape green indigo lime orange pink red teal violet yellow; shade: lightest lighter light dark darker darkest; 72 classes)
+- background-{hue} → background-color (hue: blue cyan grape green indigo lime orange pink red teal violet yellow; 12 classes)
+- text-{hue} → color (hue: blue cyan grape green indigo lime orange pink red teal violet yellow; 12 classes)
 
-## Spacing · padding (58; reads $token-scale-*)
-padding-auto padding-base padding-bottom-base padding-bottom-l padding-bottom-m padding-bottom-none padding-bottom-s padding-bottom-xl padding-bottom-xs padding-bottom-xxl padding-l padding-left-base padding-left-l padding-left-m padding-left-none padding-left-s padding-left-xl padding-left-xs padding-left-xxl padding-m padding-none padding-right-base padding-right-l padding-right-m padding-right-none padding-right-s padding-right-xl padding-right-xs padding-right-xxl padding-s padding-top-base padding-top-l padding-top-m padding-top-none padding-top-s padding-top-xl padding-top-xs padding-top-xxl padding-x-base padding-x-l padding-x-m padding-x-none padding-x-s padding-x-xl padding-x-xs padding-x-xxl padding-xl padding-xs padding-xxl padding-y-base padding-y-l padding-y-m padding-y-none padding-y-s padding-y-xl padding-y-xs padding-y-xxl scss
+## Colours · semantic (16 classes; src/scss/05-useful/_colors-semantic.scss)
 
-## Text (6)
-break-word is-rtl text-align-center text-align-left text-align-right white-space-nowrap
+- background-{hue}-{shade} → background-color (hue: error info success warning; shade: light; 4 classes)
+- background-{hue} → background-color (hue: error info success warning; 4 classes)
+- text-{hue}-{shade} → color (hue: error info success warning; shade: light; 4 classes)
+- text-{hue} → color (hue: error info success warning; 4 classes)
 
-## Typography (16; reads $token-font-size-*, $token-font-weight-*)
-bold font-bold font-light font-regular font-semi-bold font-size-base font-size-label font-size-s font-size-xs italic oblique scss text-capitalize text-ellipsis text-lowercase text-uppercase
+## Display (7 classes; src/scss/05-useful/_display.scss)
 
-## Visibility (3)
-hidden hide-on-service-studio hide-scrollbar
+- display-none → display: none
+- display-block → display: block
+- display-contents → display: contents
+- display-inline → display: inline
+- display-inline-block → display: inline-block
+- display-inline-flex → display: inline-flex
+- display-grid → display: grid
+
+## Display · alignment (28 classes; src/scss/05-useful/_display-align.scss)
+
+- align-content-{align} → align-content (align: baseline center flex-end flex-start stretch space-around space-between space-evenly; 8 classes)
+- align-items-{align} → align-items (align: baseline center flex-end flex-start initial stretch; 6 classes)
+- align-self-{align} → align-self (align: baseline center flex-end flex-start stretch; 5 classes)
+- {side}-{side} → align-items | justify-content (side: top bottom left right; 4 classes)
+- top-center → align-items: flex-start; justify-content: center [legacy name]
+- bottom-center → align-items: flex-end; justify-content: center [legacy name]
+- center → align-items: center; justify-content: center [legacy name]
+- center-left → align-items: center; justify-content: flex-start [legacy name]
+- center-right → align-items: center; justify-content: flex-end [legacy name]
+
+## Display · flex (38 classes; src/scss/05-useful/_display-flex.scss)
+
+- gap-{step} → gap (step: xs s base m l xl xxl; 7 classes)
+- row-gap-{step} → row-gap (step: xs s base m l xl xxl; 7 classes)
+- column-gap-{step} → column-gap (step: xs s base m l xl xxl; 7 classes)
+- justify-content-{align} → justify-content (align: center flex-end flex-start space-around space-between space-evenly; 6 classes)
+- flex{n} → flex (n: 1 2 3; 3 classes)
+- display-flex → display: flex
+- flex-direction-column → flex-direction: column
+- flex-direction-column-reverse → flex-direction: column-reverse
+- flex-direction-row → flex-direction: row
+- flex-direction-row-reverse → flex-direction: row-reverse
+- flex-wrap → flex-wrap: wrap
+- flex-wrap-reverse → flex-wrap: wrap-reverse
+- flex-nowrap → flex-wrap: nowrap
+
+## Images (4 classes; src/scss/05-useful/_images.scss)
+
+- img-cover → height: 100%; object-fit: cover [legacy name]
+- img-rounded → [img] border-radius: 10px [legacy name]
+- img-circle → [img] border-radius: 50% [legacy name]
+- thumbnail → [img] background-color: --token-bg-surface-default (#ffffff); border: --token-border-size-025 (var(--token-scale-025, 1px)) solid var(--color-border); padding: --token-scale-100 (4px) [legacy name]
+
+## Miscellaneous (5 classes; src/scss/05-useful/_miscellaneous.scss)
+
+- no-transition → transition: none !important [legacy name]
+- no-transform → transform: none !important [legacy name]
+- sticky-observer → height: --header-size; inset-inline-end: 0; inset-inline-start: 0; position: absolute (+2 more in osui.utilities.json) [legacy name]
+- tablet-full-width → [.tablet] margin-inline-start: 0; width: 100% [legacy name]
+- phone-full-width → [.phone] margin-inline-start: 0; width: 100% [legacy name]
+
+## Overflow (3 classes; src/scss/05-useful/_overflow.scss)
+
+- overflow-hidden → overflow: hidden; -servicestudio-overflow: visible
+- overflow-horizontal → overflow-x: auto; -servicestudio-overflow: visible
+- overflow-vertical → overflow-y: auto; -servicestudio-overflow: visible
+
+## Positioning (3 classes; src/scss/05-useful/_positioning.scss)
+
+- position-relative → position: relative
+- fixed → position: fixed [legacy name]
+- sticky → position: -webkit-sticky; position: sticky [legacy name]
+
+## Positioning · absolute (15 classes; src/scss/05-useful/_positioning-absolute.scss)
+
+- absolute-{side} → top | inset-inline-end | bottom | left | transform | inset-inline-start (side: top bottom left right; 4 classes)
+- absolute-{side}-{side} → inset-inline-end | top | inset-inline-start | bottom (side: top bottom left right; 4 classes)
+- absolute-center-{side} → left | top | transform | inset-inline-end | bottom | inset-inline-start (side: top bottom left right; 4 classes)
+- position-absolute → position: absolute
+- absolute-top-plus-header → top: calc(var(--header-size) + var(--os-safe-area-top)) [legacy name]
+- absolute-center → left: 50%; top: 50%; transform: translate(-50%, -50%) [legacy name]
+
+## Shadow (6 classes; src/scss/05-useful/_shadow.scss)
+
+- shadow-{step} → box-shadow (step: none xs s m l xl; 6 classes)
+
+## Spacing · margin (57 classes; src/scss/05-useful/_space-margin.scss)
+
+- margin-{side}-{step} → margin-block-start | margin-inline-end | margin-block-end | margin-inline-start | margin-inline | margin-block (side: top bottom left right x y; step: none xs s base m l xl xxl; 48 classes)
+- margin-{step} → margin (step: none xs s base m l xl xxl; 8 classes)
+- margin-auto → margin-block: 0; margin-inline: auto
+
+## Spacing · padding (57 classes; src/scss/05-useful/_space-padding.scss)
+
+- padding-{side}-{step} → padding-block-start | padding-inline-end | padding-block-end | padding-inline-start | padding-inline | padding-block (side: top bottom left right x y; step: none xs s base m l xl xxl; 48 classes)
+- padding-{step} → padding (step: none xs s base m l xl xxl; 8 classes)
+- padding-auto → padding-block: 0; padding-inline: auto
+
+## Text (5 classes; src/scss/05-useful/_text.scss)
+
+- break-word → word-break: break-word [legacy name]
+- text-align-left → text-align: start
+- text-align-right → text-align: end
+- text-align-center → text-align: center
+- white-space-nowrap → white-space: nowrap
+
+## Typography (15 classes; src/scss/05-useful/_typography.scss)
+
+- font-size-{step} → font-size (step: xs s base; 3 classes)
+- font-size-label → font-size: --token-font-size-275 (0.6875rem)
+- font-light → font-weight: --token-font-weight-light (300)
+- font-regular → font-weight: --token-font-weight-regular (400)
+- font-semi-bold → font-weight: --token-font-weight-semi-bold (600)
+- font-bold → font-weight: --token-font-weight-bold (700)
+- bold → font-weight: --token-font-weight-bold (700) [legacy name]
+- italic → font-style: italic [legacy name]
+- oblique → font-style: oblique [legacy name]
+- text-lowercase → text-transform: lowercase
+- text-uppercase → text-transform: uppercase
+- text-capitalize → text-transform: capitalize
+- text-ellipsis → overflow: hidden; text-overflow: ellipsis; white-space: nowrap
+
+## Visibility (3 classes; src/scss/05-useful/_visibility.scss)
+
+- hidden → display: none [legacy name]
+- hide-scrollbar → -ms-overflow-style: none; scrollbar-width: none [legacy name]
+- hide-on-service-studio → -servicestudio-display: none [legacy name]
+
+## Legacy names (57)
+
+Names outside the grammar, kept for compatibility; their effect is in their family row above. Prefer the grammar form when one exists (display-none over hidden, font-bold over bold).
+
+wcag-hide-text skip-nav columns-item full-height full-height-vh full-height-minus-header half-height half-height-vh auto-height full-width full-width-vw half-width half-width-vw top-left top-center top-right center center-left center-right bottom-left bottom-center bottom-right flex1 flex2 flex3 img-cover img-rounded img-circle thumbnail no-transition no-transform sticky-observer tablet-full-width phone-full-width fixed sticky absolute-top absolute-top-right absolute-top-left absolute-top-plus-header absolute-right absolute-bottom absolute-bottom-right absolute-bottom-left absolute-left absolute-center absolute-center-top absolute-center-right absolute-center-bottom absolute-center-left break-word bold italic oblique hidden hide-scrollbar hide-on-service-studio
 

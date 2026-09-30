@@ -5,10 +5,10 @@ namespace OutSystems.OSUI.Patterns.RatingAPI {
 	/**
 	 * Function that will change the property of a given rating.
 	 *
-	 * @export
-	 * @param {string} ratingId ID of the Rating where the property will be changed.
-	 * @param {string} propertyName Property name that will be updated
-	 * @param {*} propertyValue Value that will be set to the property
+	 * @param ratingId ID of the Rating where the property will be changed.
+	 * @param propertyName Property name that will be updated
+	 * @param propertyValue Value that will be set to the property
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function ChangeProperty(ratingId: string, propertyName: string, propertyValue: unknown): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -26,10 +26,9 @@ namespace OutSystems.OSUI.Patterns.RatingAPI {
 	/**
 	 * Create the new rating instance and add it to the ratingsMap
 	 *
-	 * @export
-	 * @param {string} ratingId ID of the Rating where the instance will be created.
-	 * @param {(string | Configs)} configs configurations for the Rating in JSON format.
-	 * @return {*}  {OSFramework.OSUI.Patterns.IRating}
+	 * @param ratingId ID of the Rating where the instance will be created.
+	 * @param configs configurations for the Rating in JSON format.
+	 * @returns the Rating instance
 	 */
 	export function Create(ratingId: string, configs: string | Configs): OSFramework.OSUI.Patterns.Rating.IRating {
 		if (_ratingsMap.has(ratingId)) {
@@ -49,8 +48,8 @@ namespace OutSystems.OSUI.Patterns.RatingAPI {
 	/**
 	 * Function that will set Rating with given ID as disabled
 	 *
-	 * @export
-	 * @param {string} ratingId
+	 * @param ratingId
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Disable(ratingId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -68,9 +67,8 @@ namespace OutSystems.OSUI.Patterns.RatingAPI {
 	/**
 	 * Function that will dispose the instance of the given Rating
 	 *
-	 * @export
-	 * @param {string} ratingId ID of the Rating pattern.
-	 * @return {*}  {string} Response object as a JSON string
+	 * @param ratingId ID of the Rating pattern.
+	 * @returns Response object as a JSON string
 	 */
 	export function Dispose(ratingId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -90,8 +88,8 @@ namespace OutSystems.OSUI.Patterns.RatingAPI {
 	/**
 	 * Function that will set Rating with given ID as enabled
 	 *
-	 * @export
-	 * @param {string} ratingId
+	 * @param ratingId
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Enable(ratingId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -109,8 +107,7 @@ namespace OutSystems.OSUI.Patterns.RatingAPI {
 	/**
 	 * Function that will return the Map with all the Rating instances at the page
 	 *
-	 * @export
-	 * @return {*}  {Map<string, OSFramework.OSUI.Patterns.IRating>}
+	 * @returns the ids of every Rating instance
 	 */
 	export function GetAllRatings(): Array<string> {
 		return OSFramework.OSUI.Helper.MapOperation.ExportKeys(_ratingsMap);
@@ -119,9 +116,8 @@ namespace OutSystems.OSUI.Patterns.RatingAPI {
 	/**
 	 * Function that gets the instance of rating, by a given ID.
 	 *
-	 * @export
-	 * @param {string} ratingId ID of the Rating that will be looked for.
-	 * @return {*}  {OSFramework.OSUI.Patterns.IRating}
+	 * @param ratingId ID of the Rating that will be looked for.
+	 * @returns the Rating instance
 	 */
 	export function GetRatingById(ratingId: string): OSFramework.OSUI.Patterns.Rating.IRating {
 		return OSFramework.OSUI.Helper.MapOperation.FindInMap(
@@ -134,9 +130,8 @@ namespace OutSystems.OSUI.Patterns.RatingAPI {
 	/**
 	 * Function that will initialize the pattern instance.
 	 *
-	 * @export
-	 * @param {string} ratingId ID of the Rating that will be initialized.
-	 * @return {*}  {OSFramework.OSUI.Patterns.IRating}
+	 * @param ratingId ID of the Rating that will be initialized.
+	 * @returns the Rating instance
 	 */
 	export function Initialize(ratingId: string): OSFramework.OSUI.Patterns.Rating.IRating {
 		const rating = GetRatingById(ratingId);
@@ -149,11 +144,10 @@ namespace OutSystems.OSUI.Patterns.RatingAPI {
 	/**
 	 * Function to register a provider callback
 	 *
-	 * @export
-	 * @param {string} ratingId
-	 * @param {string} eventName
-	 * @param {OSFramework.OSUI.GlobalCallbacks.OSGeneric} callback
-	 * @return {*}  {string}
+	 * @param ratingId
+	 * @param eventName
+	 * @param callback
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function RegisterCallback(
 		ratingId: string,

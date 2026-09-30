@@ -139,6 +139,15 @@
 				"--osui-accordion-border-radius"
 			],
 			"markup": "<div class=\"osui-accordion\"><div id=\"\" data-block=\"osui\"><div name=\"\" class=\"osui-accordion-item\"><div class=\"osui-accordion-item__title\" id=\"-title\"><div class=\"osui-accordion-item__icon\"></div><div class=\"osui-accordion-item__icon placeholder-empty\"></div><span></span></div><div class=\"osui-accordion-item__content\"><div id=\"-content\"></div></div></div></div></div>",
+			"usage": {
+				"configs": {
+					"MultipleItems": false,
+					"ExtendedClass": ""
+				},
+				"create": "OutSystems.OSUI.Patterns.AccordionAPI.Create(\"accordion1\", \"{\\\"MultipleItems\\\":false,\\\"ExtendedClass\\\":\\\"\\\"}\")",
+				"initialize": "OutSystems.OSUI.Patterns.AccordionAPI.Initialize(\"accordion1\")"
+			},
+			"schema": "schema/configs/Accordion.schema.json",
 			"story": "stories/Accordion.stories.ts",
 			"scss": [
 				"src/scss/04-patterns/02-content/accordion/_accordion.scss"
@@ -365,6 +374,18 @@
 				"--osui-accordion-item-plus-minus-size"
 			],
 			"markup": "<div class=\"osui-accordion\"><div id=\"\" data-block=\"osui\"><div name=\"\" class=\"osui-accordion-item\"><div class=\"osui-accordion-item__title\" id=\"-title\"><div class=\"osui-accordion-item__icon\"></div><div class=\"osui-accordion-item__icon placeholder-empty\"></div><span></span></div><div class=\"osui-accordion-item__content\"><div id=\"-content\"></div></div></div></div></div>",
+			"usage": {
+				"configs": {
+					"Icon": "Caret",
+					"IconPosition": "right",
+					"IsDisabled": false,
+					"ToggleWithIcon": false,
+					"ExtendedClass": ""
+				},
+				"create": "OutSystems.OSUI.Patterns.AccordionItemAPI.Create(\"accordionItem1\", \"{\\\"Icon\\\":\\\"Caret\\\",\\\"IconPosition\\\":\\\"right\\\",\\\"IsDisabled\\\":false,\\\"ToggleWithIcon\\\":false,\\\"ExtendedClass\\\":\\\"\\\"}\")",
+				"initialize": "OutSystems.OSUI.Patterns.AccordionItemAPI.Initialize(\"accordionItem1\")"
+			},
+			"schema": "schema/configs/AccordionItem.schema.json",
 			"story": "stories/Accordion.stories.ts",
 			"scss": [
 				"src/scss/04-patterns/02-content/accordion-item/_accordion-item.scss"
@@ -507,6 +528,14 @@
 				"--osui-animated-label-disabled-color"
 			],
 			"markup": "<div class=\"animated-label\"><div class=\"animated-label-text\"><label for=\"\" data-label></label></div><div class=\"animated-label-input\"><input id=\"\" type=\"text\" data-input value=\"\" /></div></div>",
+			"usage": {
+				"configs": {
+					"ExtendedClass": ""
+				},
+				"create": "OutSystems.OSUI.Patterns.AnimatedLabelAPI.Create(\"animatedLabel1\", \"{\\\"ExtendedClass\\\":\\\"\\\"}\")",
+				"initialize": "OutSystems.OSUI.Patterns.AnimatedLabelAPI.Initialize(\"animatedLabel1\")"
+			},
+			"schema": "schema/configs/AnimatedLabel.schema.json",
 			"story": "stories/AnimatedLabel.stories.ts",
 			"scss": [
 				"src/scss/04-patterns/03-interaction/animated-label/_animated-label.scss"
@@ -680,6 +709,16 @@
 				"--osui-bottom-sheet-transition-function"
 			],
 			"markup": "<div><button class=\"btn btn-primary\" data-open type=\"button\">Open bottom sheet</button><div class=\"osui-bottom-sheet\" aria-hidden=\"true\" tabindex=\"-1\"><div class=\"osui-bottom-sheet__header\"><div class=\"osui-bottom-sheet__header__top-bar\"><strong>Sheet title</strong></div></div><div class=\"osui-bottom-sheet__content\"><p>Bottom-sheet content slides up from the bottom edge.</p><button class=\"btn\" data-close type=\"button\">Close</button></div></div></div>",
+			"usage": {
+				"configs": {
+					"Shape": "soft",
+					"ShowHandler": false,
+					"ExtendedClass": ""
+				},
+				"create": "OutSystems.OSUI.Patterns.BottomSheetAPI.Create(\"bottomSheet1\", \"{\\\"Shape\\\":\\\"soft\\\",\\\"ShowHandler\\\":false,\\\"ExtendedClass\\\":\\\"\\\"}\")",
+				"initialize": "OutSystems.OSUI.Patterns.BottomSheetAPI.Initialize(\"bottomSheet1\")"
+			},
+			"schema": "schema/configs/BottomSheet.schema.json",
 			"story": "stories/BottomSheet.stories.ts",
 			"scss": [
 				"src/scss/04-patterns/01-adaptive/bottom-sheet/_bottomsheet.scss"
@@ -831,6 +870,14 @@
 				"--osui-btn-loading-spinner-border-width"
 			],
 			"markup": "<div class=\"osui-btn-loading\"><button class=\"btn btn-primary\" type=\"button\"><span class=\"osui-btn-loading__spinner-animation\"></span> Save changes </button></div>",
+			"usage": {
+				"configs": {
+					"ExtendedClass": ""
+				},
+				"create": "OutSystems.OSUI.Patterns.ButtonLoadingAPI.Create(\"buttonLoading1\", \"{\\\"ExtendedClass\\\":\\\"\\\"}\")",
+				"initialize": "OutSystems.OSUI.Patterns.ButtonLoadingAPI.Initialize(\"buttonLoading1\")"
+			},
+			"schema": "schema/configs/ButtonLoading.schema.json",
 			"story": "stories/ButtonLoading.stories.ts",
 			"scss": [
 				"src/scss/04-patterns/03-interaction/button-loading/_button-loading.scss"
@@ -1183,6 +1230,23 @@
 				"--osui-carousel-pagination-margin"
 			],
 			"markup": "<div class=\"osui-carousel\" ><div class=\"osui-carousel__track\"><div class=\"osui-carousel__content\"></div></div></div>",
+			"usage": {
+				"configs": {
+					"AutoPlay": false,
+					"Height": "auto",
+					"ItemsDesktop": 1,
+					"ItemsGap": "0px",
+					"ItemsPhone": 1,
+					"ItemsTablet": 1,
+					"Loop": true,
+					"Navigation": "both",
+					"Padding": "0px",
+					"ExtendedClass": ""
+				},
+				"create": "OutSystems.OSUI.Patterns.CarouselAPI.Create(\"carousel1\", \"{\\\"AutoPlay\\\":false,\\\"Height\\\":\\\"auto\\\",\\\"ItemsDesktop\\\":1,\\\"ItemsGap\\\":\\\"0px\\\",\\\"ItemsPhone\\\":1,\\\"ItemsTablet\\\":1,\\\"Loop\\\":true,\\\"Navigation\\\":\\\"both\\\",\\\"Padding\\\":\\\"0px\\\",\\\"ExtendedClass\\\":\\\"\\\"}\")",
+				"initialize": "OutSystems.OSUI.Patterns.CarouselAPI.Initialize(\"carousel1\")"
+			},
+			"schema": "schema/configs/Carousel.schema.json",
 			"story": "stories/Carousel.stories.ts",
 			"scss": [
 				"src/scss/04-patterns/02-content/carousel/_carousel.scss"
@@ -1641,6 +1705,23 @@
 				"--osui-input-border-radius"
 			],
 			"markup": "<div class=\"osui-datepicker\" data-uniqueid=\"\"><input id=\"-input\" class=\"form-control\" type=\"text\" placeholder=\"\" /></div><!-- a11y keyboard-instructions container; the provider finds it via TagSelector(selfElement.parentElement, '.osui-datepicker-a11y') --><div class=\"osui-datepicker-a11y\"></div>",
+			"usage": {
+				"configs": {
+					"AllowInput": false,
+					"DateFormat": "Helper.Dates.ServerFormat",
+					"Disable": "[]",
+					"DisableMobile": false,
+					"FirstWeekDay": 0,
+					"MaxDate": "undefined",
+					"MinDate": "undefined",
+					"ShowTodayButton": false,
+					"TimeFormat": "disabled",
+					"ExtendedClass": ""
+				},
+				"create": "OutSystems.OSUI.Patterns.DatePickerAPI.Create(\"datePicker1\", \"{\\\"AllowInput\\\":false,\\\"DateFormat\\\":\\\"Helper.Dates.ServerFormat\\\",\\\"Disable\\\":\\\"[]\\\",\\\"DisableMobile\\\":false,\\\"FirstWeekDay\\\":0,\\\"MaxDate\\\":\\\"undefined\\\",\\\"MinDate\\\":\\\"undefined\\\",\\\"ShowTodayButton\\\":false,\\\"TimeFormat\\\":\\\"disabled\\\",\\\"ExtendedClass\\\":\\\"\\\"}\")",
+				"initialize": "OutSystems.OSUI.Patterns.DatePickerAPI.Initialize(\"datePicker1\")"
+			},
+			"schema": "schema/configs/DatePicker.schema.json",
 			"story": "stories/DatePicker.stories.ts",
 			"scss": [
 				"src/scss/04-patterns/03-interaction/date-picker/_datepicker.scss"
@@ -2050,6 +2131,17 @@
 				"--osui-dropdown-tag-color"
 			],
 			"markup": "<div><div data-dropdown=\"\" class=\"dropdown-container dropdown-expanded dropdown-expanded-down\"><div class=\"dropdown-display\" tabindex=\"0\"><div class=\"dropdown-display-content\">Banana</div></div><div class=\"dropdown-list\"><div class=\"scrollable-list scrollable-list-with-scroll\"><div class=\"dropdown-popup-row drowpdown-empty-value-row \" tabindex=\"0\"><span></span></div><div class=\"dropdown-popup-row dropdown-popup-row-selected\" tabindex=\"0\"></div></div></div><div class=\"dropdown-background-window\"></div></div></div>",
+			"usage": {
+				"configs": {
+					"AllowMultipleSelection": false,
+					"IsDisabled": false,
+					"SanitizeDropdownValues": false,
+					"ExtendedClass": ""
+				},
+				"create": "OutSystems.OSUI.Patterns.DropdownAPI.Create(\"dropdown1\", \"{\\\"AllowMultipleSelection\\\":false,\\\"IsDisabled\\\":false,\\\"SanitizeDropdownValues\\\":false,\\\"ExtendedClass\\\":\\\"\\\"}\")",
+				"initialize": "OutSystems.OSUI.Patterns.DropdownAPI.Initialize(\"dropdown1\")"
+			},
+			"schema": "schema/configs/Dropdown.schema.json",
 			"story": "stories/widgets/Dropdown.stories.ts",
 			"scss": [
 				"src/scss/04-patterns/03-interaction/dropdown/_dropdown.scss",
@@ -2207,6 +2299,16 @@
 				"--osui-dropdown-item-padding-inline"
 			],
 			"markup": "<div><div class=\"osui-dropdown-serverside\"><div class=\"osui-dropdown-serverside__selected-values-wrapper\" tabindex=\"0\"><div class=\"osui-dropdown-serverside__selected-values\"><span class=\"osui-dropdown-serverside__text\"></span></div></div><div class=\"osui-dropdown-serverside__balloon osui-balloon\" data-uniqueid=\"\"><div class=\"osui-dropdown-serverside__balloon-container\"><div class=\"osui-dropdown-serverside__balloon-search\"><input type=\"text\" class=\"form-control\" placeholder=\"Search…\" /></div><div class=\"osui-dropdown-serverside__balloon-content\"></div><div class=\"osui-dropdown-serverside__balloon-footer\"></div></div></div></div></div>",
+			"usage": {
+				"configs": {
+					"IsSelected": false,
+					"ItemId": "undefined",
+					"ExtendedClass": ""
+				},
+				"create": "OutSystems.OSUI.Patterns.DropdownServerSideItemAPI.Create(\"dropdownServerSideItem1\", \"{\\\"IsSelected\\\":false,\\\"ItemId\\\":\\\"undefined\\\",\\\"ExtendedClass\\\":\\\"\\\"}\")",
+				"initialize": "OutSystems.OSUI.Patterns.DropdownServerSideItemAPI.Initialize(\"dropdownServerSideItem1\")"
+			},
+			"schema": "schema/configs/DropdownServerSideItem.schema.json",
 			"story": "stories/DropdownServerSide.stories.ts",
 			"scss": [
 				"src/scss/04-patterns/03-interaction/dropdown/_dropdownserversideitem.scss"
@@ -2375,6 +2477,14 @@
 			},
 			"cssApi": [],
 			"markup": "<div class=\"osui-flip-content\"><div class=\"osui-flip-content__container\"><div class=\"osui-flip-content__container__front\">Front — click to flip</div><div class=\"osui-flip-content__container__back\">Back side</div></div></div>",
+			"usage": {
+				"configs": {
+					"ExtendedClass": ""
+				},
+				"create": "OutSystems.OSUI.Patterns.FlipContentAPI.Create(\"flipContent1\", \"{\\\"ExtendedClass\\\":\\\"\\\"}\")",
+				"initialize": "OutSystems.OSUI.Patterns.FlipContentAPI.Initialize(\"flipContent1\")"
+			},
+			"schema": "schema/configs/FlipContent.schema.json",
 			"story": "stories/FlipContent.stories.ts",
 			"scss": [
 				"src/scss/04-patterns/02-content/flip-content/_flipcontent.scss"
@@ -2508,6 +2618,14 @@
 			"cssClasses": {},
 			"cssApi": [],
 			"markup": "<div class=\"osui-gallery\"><div class=\"list\"></div></div>",
+			"usage": {
+				"configs": {
+					"ExtendedClass": ""
+				},
+				"create": "OutSystems.OSUI.Patterns.GalleryAPI.Create(\"gallery1\", \"{\\\"ExtendedClass\\\":\\\"\\\"}\")",
+				"initialize": "OutSystems.OSUI.Patterns.GalleryAPI.Initialize(\"gallery1\")"
+			},
+			"schema": "schema/configs/Gallery.schema.json",
 			"story": "stories/Gallery.stories.ts",
 			"scss": [
 				"src/scss/04-patterns/01-adaptive/gallery/_gallery.scss"
@@ -2646,6 +2764,14 @@
 			},
 			"cssApi": [],
 			"markup": "<div class=\"osui-inline-svg\"></div>",
+			"usage": {
+				"configs": {
+					"ExtendedClass": ""
+				},
+				"create": "OutSystems.OSUI.Patterns.InlineSvgAPI.Create(\"inlineSvg1\", \"{\\\"ExtendedClass\\\":\\\"\\\"}\")",
+				"initialize": "OutSystems.OSUI.Patterns.InlineSvgAPI.Initialize(\"inlineSvg1\")"
+			},
+			"schema": "schema/configs/InlineSvg.schema.json",
 			"story": "stories/InlineSvg.stories.ts",
 			"scss": [],
 			"files": [
@@ -2980,6 +3106,17 @@
 				"--osui-input-border-radius"
 			],
 			"markup": "<div class=\"osui-monthpicker\"><label for=\"-input\">Pick a month</label><input id=\"-input\" class=\"form-control\" type=\"text\" placeholder=\"Select a month\" /></div><div class=\"osui-monthpicker-a11y\"></div>",
+			"usage": {
+				"configs": {
+					"AllowInput": false,
+					"DateFormat": "MM/YYYY",
+					"DisableMobile": true,
+					"ExtendedClass": ""
+				},
+				"create": "OutSystems.OSUI.Patterns.MonthPickerAPI.Create(\"monthPicker1\", \"{\\\"AllowInput\\\":false,\\\"DateFormat\\\":\\\"MM/YYYY\\\",\\\"DisableMobile\\\":true,\\\"ExtendedClass\\\":\\\"\\\"}\")",
+				"initialize": "OutSystems.OSUI.Patterns.MonthPickerAPI.Initialize(\"monthPicker1\")"
+			},
+			"schema": "schema/configs/MonthPicker.schema.json",
 			"story": "stories/MonthPicker.stories.ts",
 			"scss": [
 				"src/scss/04-patterns/03-interaction/month-picker/_monthpicker.scss"
@@ -3181,6 +3318,20 @@
 				"--osui-notification-margin"
 			],
 			"markup": "<div><button class=\"btn btn-primary\" data-open type=\"button\">Show notification</button><div class=\"osui-notification\" aria-hidden=\"true\" tabindex=\"-1\"><div>Saved successfully. ✓</div></div></div>",
+			"usage": {
+				"configs": {
+					"CloseAfterTime": "undefined",
+					"InteractToClose": true,
+					"NeedsSwipes": false,
+					"Position": "top",
+					"StartsOpen": false,
+					"Width": "370px",
+					"ExtendedClass": ""
+				},
+				"create": "OutSystems.OSUI.Patterns.NotificationAPI.Create(\"notification1\", \"{\\\"CloseAfterTime\\\":\\\"undefined\\\",\\\"InteractToClose\\\":true,\\\"NeedsSwipes\\\":false,\\\"Position\\\":\\\"top\\\",\\\"StartsOpen\\\":false,\\\"Width\\\":\\\"370px\\\",\\\"ExtendedClass\\\":\\\"\\\"}\")",
+				"initialize": "OutSystems.OSUI.Patterns.NotificationAPI.Initialize(\"notification1\")"
+			},
+			"schema": "schema/configs/Notification.schema.json",
 			"story": "stories/Notification.stories.ts",
 			"scss": [
 				"src/scss/04-patterns/03-interaction/notification/_notification.scss"
@@ -3395,6 +3546,16 @@
 				"--osui-balloon-shadow"
 			],
 			"markup": "<div class=\"separator separator-horizontal\"></div><a href=\"#\"><span class=\"display-flex align-items-center gap-s\"><i class=\"icon ph \"></i><span></span></span></a>",
+			"usage": {
+				"configs": {
+					"Position": "auto",
+					"Shape": "soft",
+					"ExtendedClass": ""
+				},
+				"create": "OutSystems.OSUI.Patterns.OverflowMenuAPI.Create(\"overflowMenu1\", \"{\\\"Position\\\":\\\"auto\\\",\\\"Shape\\\":\\\"soft\\\",\\\"ExtendedClass\\\":\\\"\\\"}\")",
+				"initialize": "OutSystems.OSUI.Patterns.OverflowMenuAPI.Initialize(\"overflowMenu1\")"
+			},
+			"schema": "schema/configs/OverflowMenu.schema.json",
 			"story": "stories/OverflowMenu.stories.ts",
 			"scss": [
 				"src/scss/04-patterns/03-interaction/overflow-menu/_overflowmenu.scss"
@@ -3570,6 +3731,14 @@
 			},
 			"cssApi": [],
 			"markup": "<div class=\"osui-progress-circle\" role=\"progressbar\" aria-valuemin=\"0\" aria-valuemax=\"100\"><div class=\"osui-progress-circle__container\"><div class=\"svg-wrapper\"><svg><defs></defs><circle class=\"osui-progress-circle__container__trail-path\"></circle><circle class=\"osui-progress-circle__container__progress-path\"></circle></svg></div></div><div class=\"osui-progress-circle__content\" id=\"-label\"></div></div>",
+			"usage": {
+				"configs": {
+					"ExtendedClass": ""
+				},
+				"create": "OutSystems.OSUI.Patterns.ProgressAPI.Create(\"progress1\", \"{\\\"ExtendedClass\\\":\\\"\\\"}\")",
+				"initialize": "OutSystems.OSUI.Patterns.ProgressAPI.Initialize(\"progress1\")"
+			},
+			"schema": "schema/configs/Progress.schema.json",
 			"story": "stories/Progress.stories.ts",
 			"scss": [
 				"src/scss/04-patterns/05-numbers/progress/_progressbar.scss",
@@ -3908,6 +4077,23 @@
 				"--osui-range-slider-disabled-color"
 			],
 			"markup": "<style> .osui-rs-matrix { align-items: center; display: grid; gap: 24px 40px; grid-template-columns: max-content repeat(2, minmax(240px, 1fr)); } .osui-rs-matrix__head { color: var(--color-text-subtle); font-family: monospace; font-size: 0.8125rem; } /* Room for the floating label above and the pips below, which both sit outside the track's own box. */ .osui-rs-cell { padding: 28px 8px 8px; } </style><div class=\"osui-rs-matrix\"><div></div><div class=\"osui-rs-matrix__head\">Default</div><div class=\"osui-rs-matrix__head\">Disabled</div><div class=\"osui-rs-matrix__head\"></div><div class=\"osui-rs-cell\"><div class=\"osui-range-slider\"><div class=\"osui-range-slider__provider\"></div></div></div></div>",
+			"usage": {
+				"configs": {
+					"InitialValueFrom": 0,
+					"InitialValueTo": 0,
+					"IsDisabled": false,
+					"Orientation": "horizontal",
+					"ShowFloatingLabel": false,
+					"ShowTickMarks": false,
+					"Size": "this.Orientation === (GlobalEnum.Orientation.Horizontal as string)\n\t\t\t\t\t\t\t? Enum.DefaultValues.PercentualSize\n\t\t\t\t\t\t\t: Enum.DefaultValues.PixelSize",
+					"Step": 1,
+					"TickMarksInterval": 0,
+					"ExtendedClass": ""
+				},
+				"create": "OutSystems.OSUI.Patterns.RangeSliderAPI.Create(\"rangeSlider1\", \"{\\\"InitialValueFrom\\\":0,\\\"InitialValueTo\\\":0,\\\"IsDisabled\\\":false,\\\"Orientation\\\":\\\"horizontal\\\",\\\"ShowFloatingLabel\\\":false,\\\"ShowTickMarks\\\":false,\\\"Size\\\":\\\"this.Orientation === (GlobalEnum.Orientation.Horizontal as string)\\\\n\\\\t\\\\t\\\\t\\\\t\\\\t\\\\t\\\\t? Enum.DefaultValues.PercentualSize\\\\n\\\\t\\\\t\\\\t\\\\t\\\\t\\\\t\\\\t: Enum.DefaultValues.PixelSize\\\",\\\"Step\\\":1,\\\"TickMarksInterval\\\":0,\\\"ExtendedClass\\\":\\\"\\\"}\")",
+				"initialize": "OutSystems.OSUI.Patterns.RangeSliderAPI.Initialize(\"rangeSlider1\")"
+			},
+			"schema": "schema/configs/RangeSlider.schema.json",
 			"story": "stories/RangeSlider.stories.ts",
 			"scss": [
 				"src/scss/04-patterns/03-interaction/range-slider/_rangeslider.scss"
@@ -4090,6 +4276,14 @@
 				"--osui-rating-disabled-empty-color"
 			],
 			"markup": "<div class=\"icon-states\"><div class=\"rating-item-filled\"><i class=\"icon ph-fill ph-star\"></i></div><div class=\"rating-item-half\"><i class=\"icon ph ph-star-half\"></i></div><div class=\"rating-item-empty\"><i class=\"icon ph ph-star\"></i></div></div>",
+			"usage": {
+				"configs": {
+					"ExtendedClass": ""
+				},
+				"create": "OutSystems.OSUI.Patterns.RatingAPI.Create(\"rating1\", \"{\\\"ExtendedClass\\\":\\\"\\\"}\")",
+				"initialize": "OutSystems.OSUI.Patterns.RatingAPI.Initialize(\"rating1\")"
+			},
+			"schema": "schema/configs/Rating.schema.json",
 			"story": "stories/Rating.stories.ts",
 			"scss": [
 				"src/scss/04-patterns/05-numbers/rating/_rating.scss"
@@ -4206,6 +4400,14 @@
 			"cssClasses": {},
 			"cssApi": [],
 			"markup": "<div class=\"osui-search\"><input class=\"form-control\" type=\"search\" placeholder=\"Search…\" data-input /></div>",
+			"usage": {
+				"configs": {
+					"ExtendedClass": ""
+				},
+				"create": "OutSystems.OSUI.Patterns.SearchAPI.Create(\"search1\", \"{\\\"ExtendedClass\\\":\\\"\\\"}\")",
+				"initialize": "OutSystems.OSUI.Patterns.SearchAPI.Initialize(\"search1\")"
+			},
+			"schema": "schema/configs/Search.schema.json",
 			"story": "stories/Search.stories.ts",
 			"scss": [
 				"src/scss/04-patterns/03-interaction/search/_search.scss"
@@ -4348,6 +4550,16 @@
 				"--osui-section-index-active-indicator-offset"
 			],
 			"markup": "<section id=\"\"><h3></h3><p>Content for .</p></section>",
+			"usage": {
+				"configs": {
+					"IsFixed": false,
+					"SmoothScrolling": false,
+					"ExtendedClass": ""
+				},
+				"create": "OutSystems.OSUI.Patterns.SectionIndexAPI.Create(\"sectionIndex1\", \"{\\\"IsFixed\\\":false,\\\"SmoothScrolling\\\":false,\\\"ExtendedClass\\\":\\\"\\\"}\")",
+				"initialize": "OutSystems.OSUI.Patterns.SectionIndexAPI.Initialize(\"sectionIndex1\")"
+			},
+			"schema": "schema/configs/SectionIndex.schema.json",
 			"story": "stories/SectionIndex.stories.ts",
 			"scss": [
 				"src/scss/04-patterns/04-navigation/section-index/_sectionindex.scss"
@@ -4471,6 +4683,14 @@
 			},
 			"cssApi": [],
 			"markup": "<section id=\"\"><h3></h3><p>Content for .</p></section>",
+			"usage": {
+				"configs": {
+					"ExtendedClass": ""
+				},
+				"create": "OutSystems.OSUI.Patterns.SectionIndexItemAPI.Create(\"sectionIndexItem1\", \"{\\\"ExtendedClass\\\":\\\"\\\"}\")",
+				"initialize": "OutSystems.OSUI.Patterns.SectionIndexItemAPI.Initialize(\"sectionIndexItem1\")"
+			},
+			"schema": "schema/configs/SectionIndexItem.schema.json",
 			"story": "stories/SectionIndex.stories.ts",
 			"scss": [],
 			"files": [
@@ -4681,6 +4901,18 @@
 				"--osui-sidebar-padding-block"
 			],
 			"markup": "<div><button class=\"btn btn-primary\" data-open type=\"button\">Open sidebar</button><p> The sidebar is <code>position: fixed</code>; it slides in over the preview from the . </p><aside class=\"osui-sidebar\" role=\"complementary\" aria-haspopup=\"true\" tabindex=\"-1\" aria-hidden=\"true\"><div class=\"osui-sidebar__header\"><strong>Navigation</strong><button class=\"btn\" data-close type=\"button\">✕</button></div><div class=\"osui-sidebar__content\"><ul><li><a href=\"#dashboard\">Dashboard</a></li><li><a href=\"#projects\">Projects</a></li><li><a href=\"#settings\">Settings</a></li></ul></div></aside></div>",
+			"usage": {
+				"configs": {
+					"Direction": "right",
+					"HasOverlay": false,
+					"StartsOpen": false,
+					"Width": "500px",
+					"ExtendedClass": ""
+				},
+				"create": "OutSystems.OSUI.Patterns.SidebarAPI.Create(\"sidebar1\", \"{\\\"Direction\\\":\\\"right\\\",\\\"HasOverlay\\\":false,\\\"StartsOpen\\\":false,\\\"Width\\\":\\\"500px\\\",\\\"ExtendedClass\\\":\\\"\\\"}\")",
+				"initialize": "OutSystems.OSUI.Patterns.SidebarAPI.Initialize(\"sidebar1\")"
+			},
+			"schema": "schema/configs/Sidebar.schema.json",
 			"story": "stories/Sidebar.stories.ts",
 			"scss": [
 				"src/scss/04-patterns/04-navigation/sidebar/_sidebar.scss"
@@ -4891,6 +5123,15 @@
 				"--osui-submenu-max-height"
 			],
 			"markup": "<div class=\"osui-submenu\"><button class=\"osui-submenu__header\" id=\"-header\" type=\"button\"><span class=\"osui-submenu__header__item\">Products</span><span class=\"osui-submenu__header__icon\"></span></button><div class=\"osui-submenu__items\" id=\"-items\"><a href=\"#one\">Analytics</a><a class=\"active\" href=\"#two\">Automation</a><a href=\"#three\">Integrations</a><a aria-disabled=\"true\" class=\"is-disabled\" href=\"#four\">Reports</a></div></div>",
+			"usage": {
+				"configs": {
+					"OpenOnHover": false,
+					"ExtendedClass": ""
+				},
+				"create": "OutSystems.OSUI.Patterns.SubmenuAPI.Create(\"submenu1\", \"{\\\"OpenOnHover\\\":false,\\\"ExtendedClass\\\":\\\"\\\"}\")",
+				"initialize": "OutSystems.OSUI.Patterns.SubmenuAPI.Initialize(\"submenu1\")"
+			},
+			"schema": "schema/configs/Submenu.schema.json",
 			"story": "stories/Submenu.stories.ts",
 			"scss": [
 				"src/scss/04-patterns/04-navigation/submenu/_submenu.scss"
@@ -5055,6 +5296,14 @@
 			"cssClasses": {},
 			"cssApi": [],
 			"markup": "<div><span data-output>Swipe inside this box (touch device / emulation)</span></div>",
+			"usage": {
+				"configs": {
+					"ExtendedClass": ""
+				},
+				"create": "OutSystems.OSUI.Patterns.SwipeEventsAPI.Create(\"swipeEvents1\", \"{\\\"ExtendedClass\\\":\\\"\\\"}\")",
+				"initialize": "OutSystems.OSUI.Patterns.SwipeEventsAPI.Initialize(\"swipeEvents1\")"
+			},
+			"schema": "schema/configs/SwipeEvents.schema.json",
 			"story": "stories/SwipeEvents.stories.ts",
 			"scss": [],
 			"files": [
@@ -5267,6 +5516,19 @@
 				"--osui-tabs-indicator-color"
 			],
 			"markup": "<section class=\"osui-tabs\"><header class=\"osui-tabs__header\"><div class=\"display-contents placeholder-empty\"></div><div class=\"osui-tabs__header__indicator\"></div></header><section class=\"osui-tabs__content\"><div class=\"display-contents placeholder-empty\"></div></section></section>",
+			"usage": {
+				"configs": {
+					"ContentAutoHeight": false,
+					"Height": "auto",
+					"JustifyHeaders": false,
+					"TabsOrientation": "horizontal",
+					"TabsVerticalPosition": "left",
+					"ExtendedClass": ""
+				},
+				"create": "OutSystems.OSUI.Patterns.TabsAPI.Create(\"tabs1\", \"{\\\"ContentAutoHeight\\\":false,\\\"Height\\\":\\\"auto\\\",\\\"JustifyHeaders\\\":false,\\\"TabsOrientation\\\":\\\"horizontal\\\",\\\"TabsVerticalPosition\\\":\\\"left\\\",\\\"ExtendedClass\\\":\\\"\\\"}\")",
+				"initialize": "OutSystems.OSUI.Patterns.TabsAPI.Initialize(\"tabs1\")"
+			},
+			"schema": "schema/configs/Tabs.schema.json",
 			"story": "stories/Tabs.stories.ts",
 			"scss": [
 				"src/scss/04-patterns/04-navigation/tabs/_tabs.scss"
@@ -5384,6 +5646,14 @@
 			"cssClasses": {},
 			"cssApi": [],
 			"markup": "<section class=\"osui-tabs\"><header class=\"osui-tabs__header\"><div class=\"display-contents placeholder-empty\"></div><div class=\"osui-tabs__header__indicator\"></div></header><section class=\"osui-tabs__content\"><div class=\"display-contents placeholder-empty\"></div></section></section>",
+			"usage": {
+				"configs": {
+					"ExtendedClass": ""
+				},
+				"create": "OutSystems.OSUI.Patterns.TabsContentItemAPI.Create(\"tabsContentItem1\", \"{\\\"ExtendedClass\\\":\\\"\\\"}\")",
+				"initialize": "OutSystems.OSUI.Patterns.TabsContentItemAPI.Initialize(\"tabsContentItem1\")"
+			},
+			"schema": "schema/configs/TabsContentItem.schema.json",
 			"story": "stories/Tabs.stories.ts",
 			"scss": [],
 			"files": [
@@ -5530,6 +5800,14 @@
 			"cssClasses": {},
 			"cssApi": [],
 			"markup": "<section class=\"osui-tabs\"><header class=\"osui-tabs__header\"><div class=\"display-contents placeholder-empty\"></div><div class=\"osui-tabs__header__indicator\"></div></header><section class=\"osui-tabs__content\"><div class=\"display-contents placeholder-empty\"></div></section></section>",
+			"usage": {
+				"configs": {
+					"ExtendedClass": ""
+				},
+				"create": "OutSystems.OSUI.Patterns.TabsHeaderItemAPI.Create(\"tabsHeaderItem1\", \"{\\\"ExtendedClass\\\":\\\"\\\"}\")",
+				"initialize": "OutSystems.OSUI.Patterns.TabsHeaderItemAPI.Initialize(\"tabsHeaderItem1\")"
+			},
+			"schema": "schema/configs/TabsHeaderItem.schema.json",
 			"story": "stories/Tabs.stories.ts",
 			"scss": [],
 			"files": [
@@ -5893,6 +6171,20 @@
 				"--osui-input-border-radius"
 			],
 			"markup": "<div class=\"osui-timepicker\"><label for=\"-input\">Pick a time</label><input id=\"-input\" class=\"form-control\" type=\"text\" placeholder=\"Select a time\" /></div>",
+			"usage": {
+				"configs": {
+					"AllowInput": false,
+					"DisableMobile": false,
+					"InitialTime": "undefined",
+					"Is24Hours": true,
+					"MaxTime": "undefined",
+					"MinTime": "undefined",
+					"ExtendedClass": ""
+				},
+				"create": "OutSystems.OSUI.Patterns.TimePickerAPI.Create(\"timePicker1\", \"{\\\"AllowInput\\\":false,\\\"DisableMobile\\\":false,\\\"InitialTime\\\":\\\"undefined\\\",\\\"Is24Hours\\\":true,\\\"MaxTime\\\":\\\"undefined\\\",\\\"MinTime\\\":\\\"undefined\\\",\\\"ExtendedClass\\\":\\\"\\\"}\")",
+				"initialize": "OutSystems.OSUI.Patterns.TimePickerAPI.Initialize(\"timePicker1\")"
+			},
+			"schema": "schema/configs/TimePicker.schema.json",
 			"story": "stories/TimePicker.stories.ts",
 			"scss": [
 				"src/scss/04-patterns/03-interaction/time-picker/_timepicker.scss"
@@ -6089,6 +6381,17 @@
 				"--osui-floating-offset"
 			],
 			"markup": "<div><div><div class=\"osui-tooltip\"><div class=\"osui-tooltip__content\" role=\"button\" tabindex=\"0\"><i class=\"icon ph ph-question\"></i></div><div class=\"osui-tooltip__balloon-wrapper osui-balloon\" role=\"tooltip\"><div class=\"osui-tooltip__balloon-wrapper__balloon\" id=\"-balloon\"> Helpful hint text </div><div class=\"osui-tooltip__balloon-arrow\"></div></div></div><div class=\"osui-tooltip\"><div class=\"osui-tooltip__content\" role=\"button\" tabindex=\"0\"><span class=\"btn\">Hover me</span></div><div class=\"osui-tooltip__balloon-wrapper osui-balloon\" role=\"tooltip\"><div class=\"osui-tooltip__balloon-wrapper__balloon\" id=\"-balloon\"> This is a helpful but long tip that will explain to you a lot of interesting things in your application. </div><div class=\"osui-tooltip__balloon-arrow\"></div></div></div></div></div>",
+			"usage": {
+				"configs": {
+					"IsHover": true,
+					"Position": "right",
+					"StartVisible": false,
+					"ExtendedClass": ""
+				},
+				"create": "OutSystems.OSUI.Patterns.TooltipAPI.Create(\"tooltip1\", \"{\\\"IsHover\\\":true,\\\"Position\\\":\\\"right\\\",\\\"StartVisible\\\":false,\\\"ExtendedClass\\\":\\\"\\\"}\")",
+				"initialize": "OutSystems.OSUI.Patterns.TooltipAPI.Initialize(\"tooltip1\")"
+			},
+			"schema": "schema/configs/Tooltip.schema.json",
 			"story": "stories/Tooltip.stories.ts",
 			"scss": [
 				"src/scss/04-patterns/03-interaction/tooltip/_tooltip.scss"
@@ -6214,6 +6517,14 @@
 			"cssClasses": {},
 			"cssApi": [],
 			"markup": "<div><span data-output>Touch &amp; drag inside this box (touch device / emulation)</span></div>",
+			"usage": {
+				"configs": {
+					"ExtendedClass": ""
+				},
+				"create": "OutSystems.OSUI.Patterns.TouchEventsAPI.Create(\"touchEvents1\", \"{\\\"ExtendedClass\\\":\\\"\\\"}\")",
+				"initialize": "OutSystems.OSUI.Patterns.TouchEventsAPI.Initialize(\"touchEvents1\")"
+			},
+			"schema": "schema/configs/TouchEvents.schema.json",
 			"story": "stories/TouchEvents.stories.ts",
 			"scss": [],
 			"files": [
@@ -6418,6 +6729,14 @@
 			},
 			"cssApi": [],
 			"markup": "<video class=\"osui-video\"></video>",
+			"usage": {
+				"configs": {
+					"ExtendedClass": ""
+				},
+				"create": "OutSystems.OSUI.Patterns.VideoAPI.Create(\"video1\", \"{\\\"ExtendedClass\\\":\\\"\\\"}\")",
+				"initialize": "OutSystems.OSUI.Patterns.VideoAPI.Initialize(\"video1\")"
+			},
+			"schema": "schema/configs/Video.schema.json",
 			"story": "stories/Video.stories.ts",
 			"scss": [
 				"src/scss/04-patterns/02-content/video/_video.scss"
@@ -6556,6 +6875,16 @@
 			},
 			"cssApi": [],
 			"markup": "<div class=\"osui-wizard\"><div class=\"list\"><div id=\"\" data-block=\"WizardItem.WizardItem\"><div name=\"\" class=\"osui-wizard-item\"><div class=\"osui-wizard-item-icon-wrapper\"><div class=\"osui-wizard-item-icon\"></div></div><div class=\"osui-wizard-item-label\"></div></div></div></div></div>",
+			"usage": {
+				"configs": {
+					"IsVertical": false,
+					"StepBehavior": "Interactive",
+					"ExtendedClass": ""
+				},
+				"create": "OutSystems.OSUI.Patterns.WizardAPI.Create(\"wizard1\", \"{\\\"IsVertical\\\":false,\\\"StepBehavior\\\":\\\"Interactive\\\",\\\"ExtendedClass\\\":\\\"\\\"}\")",
+				"initialize": "OutSystems.OSUI.Patterns.WizardAPI.Initialize(\"wizard1\")"
+			},
+			"schema": "schema/configs/Wizard.schema.json",
 			"story": "stories/Wizard.stories.ts",
 			"scss": [
 				"src/scss/04-patterns/02-content/wizard/_wizard.scss"
@@ -6720,6 +7049,16 @@
 				"--osui-wizard-focus-halo-width"
 			],
 			"markup": "<div class=\"osui-wizard\"><div class=\"list\"><div id=\"\" data-block=\"WizardItem.WizardItem\"><div name=\"\" class=\"osui-wizard-item\"><div class=\"osui-wizard-item-icon-wrapper\"><div class=\"osui-wizard-item-icon\"></div></div><div class=\"osui-wizard-item-label\"></div></div></div></div></div>",
+			"usage": {
+				"configs": {
+					"ReverseLabelPosition": false,
+					"Status": "active",
+					"ExtendedClass": ""
+				},
+				"create": "OutSystems.OSUI.Patterns.WizardItemAPI.Create(\"wizardItem1\", \"{\\\"ReverseLabelPosition\\\":false,\\\"Status\\\":\\\"active\\\",\\\"ExtendedClass\\\":\\\"\\\"}\")",
+				"initialize": "OutSystems.OSUI.Patterns.WizardItemAPI.Initialize(\"wizardItem1\")"
+			},
+			"schema": "schema/configs/WizardItem.schema.json",
 			"story": "stories/Wizard.stories.ts",
 			"scss": [
 				"src/scss/04-patterns/02-content/wizard/_wizard-item.scss"

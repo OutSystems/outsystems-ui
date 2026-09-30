@@ -7,10 +7,14 @@ import { createContext } from '../evals/lib/context.mjs';
 import { expectationsFor } from '../evals/lib/expectations.mjs';
 import { componentFacets } from '../evals/lib/manifest.mjs';
 import { countTokens } from '../evals/lib/tokens.mjs';
+import { docCoverage, utilityFamilies } from '../evals/lib/utilities.mjs';
 import {
 	buildManifest,
+	buildUtilitiesManifest,
 	CARD_TOKEN_BUDGET,
+	configSchemaOf,
 	renderComponentCards,
+	renderCssComponents,
 	renderIndex,
 	renderTokens,
 	renderUtilities,
@@ -106,16 +110,114 @@ test('component cards stay within the token budget and cover every pattern', () 
 	);
 });
 
-test('utilities document lists every token-generated utility class grouped by family', () => {
+test('CSS-only document groups components, layout partials and helper classes by tier', () => {
+	const doc = renderCssComponents(ctx);
+	const groups = doc.split(/^## /m).slice(1);
+	assert.deepEqual(
+		groups.map((g) => g.split('\n')[0]),
+		['Components', 'Layout partials (host-styled)', 'Helper classes']
+	);
+	const [components, layout, helpers] = groups;
+	assert.match(
+		components,
+		/^### card \(src\/scss\/04-patterns\/02-content\/_card\.scss\)\nSkeleton \(from stories\/Card\.stories\.ts\)/m
+	);
+	assert.match(components, /^### balloon .* — host-styled/m, 'a layer another pattern creates stays a component');
+	assert.match(components, /^### section \(src\/scss\/04-patterns/m);
+	assert.match(
+		layout,
+		/^### header \(src\/scss\/02-layout\/_header\.scss\) — host-styled\nMarkup emitted by: app template Layout blocks/m
+	);
+	assert.match(layout, /^### layout-section \(src\/scss\/02-layout\/_section\.scss\)/m);
+	assert.doesNotMatch(layout, /Skeleton \(from/, 'layout partials show no skeleton to generate');
+	assert.match(
+		helpers,
+		/^### align-center \(src\/scss\/04-patterns\/06-utilities\/_align-center\.scss\)\nClasses: /m
+	);
+	assert.match(helpers, /^### animate .*\nClasses: .*animate/m);
+	assert.doesNotMatch(helpers, /Do not generate/, 'a helper class has no host: nothing emits its markup');
+	assert.doesNotMatch(doc, /space-margin|05-useful/, 'utility families belong to llms-utilities.txt');
+});
+
+test('every pattern gets a configs JSON Schema and a usage example, and its card points at them', () => {
+	const accordion = manifest.components.Accordion;
+	assert.equal(accordion.schema, 'schema/configs/Accordion.schema.json');
+	assert.deepEqual(accordion.usage.configs, { MultipleItems: false, ExtendedClass: '' });
+	assert.equal(
+		accordion.usage.create,
+		'OutSystems.OSUI.Patterns.AccordionAPI.Create("accordion1", "{\\"MultipleItems\\":false,\\"ExtendedClass\\":\\"\\"}")'
+	);
+	assert.equal(accordion.usage.initialize, 'OutSystems.OSUI.Patterns.AccordionAPI.Initialize("accordion1")');
+	const schema = configSchemaOf(accordion);
+	assert.equal(schema.type, 'object');
+	assert.equal(schema.additionalProperties, false);
+	assert.deepEqual(schema.properties.MultipleItems, {
+		description: 'Allows several items to be expanded at once; when false, expanding an item collapses the others.',
+		default: false,
+		type: 'boolean',
+	});
+	assert.deepEqual(schema.properties.ExtendedClass.default, '');
+	const item = configSchemaOf(manifest.components.AccordionItem);
+	assert.deepEqual(item.properties.Icon.enum, ['Caret', 'Custom', 'PlusMinus']);
+	assert.equal(item.properties.Icon.default, 'Caret');
+	const picker = configSchemaOf(manifest.components.DatePicker);
+	assert.match(
+		picker.properties.OnChange.description,
+		/source type: .*Generic/,
+		'a callback type stays open and is described'
+	);
+	assert.match(renderComponentCards(manifest), /^Configs schema: schema\/configs\/Accordion\.schema\.json/m);
+});
+
+test('utilities document states the grammar, then every family as template rows with declarations', () => {
 	const doc = renderUtilities(ctx);
-	assert.match(doc, /^## Spacing · margin/m);
-	assert.match(doc, /\bmargin-top-base\b/);
-	assert.match(doc, /\bdisplay-flex\b/);
-	assert.match(doc, /\bbackground-red-lightest\b/);
-	const classes = new Set(doc.match(/(?<=^|\s)[a-z][a-z0-9-]*(?=\s|$)/gm));
-	assert.ok(classes.size >= 500, `only ${classes.size} classes listed`);
-	assert.ok(countTokens(doc) <= 3500, `llms-utilities.txt is ${countTokens(doc)} tokens`);
-	assert.match(doc, /^## Spacing · margin \(\d+; reads \$token-(space|scale)-\*/m, 'families state the token family they read');
+	assert.match(doc, /^## Grammar/m);
+	assert.match(doc, /Name: <property>\[-<side>\]\[-<value>\]/);
+	assert.match(
+		doc,
+		/none = --token-scale-0 \(0px\) · xs = --token-scale-100 \(4px\)/,
+		'the size scale resolves each step to its token and fallback'
+	);
+	assert.match(doc, /^## Spacing · margin \(\d+ classes; src\/scss\/05-useful\/_space-margin\.scss\)/m);
+	assert.match(
+		doc,
+		/^- margin-\{side\}-\{step\} → margin-block-start \| .*\(side: top bottom left right x y; step: none xs s base m l xl xxl; 48 classes\)/m
+	);
+	assert.match(doc, /^- margin-auto → margin-block: 0; margin-inline: auto$/m, 'a singleton shows its declarations');
+	assert.match(doc, /^- display-flex → display: flex$/m);
+	assert.match(doc, /^- background-\{hue\}-\{shade\} → background-color/m);
+	assert.match(doc, /^- bold → font-weight: .* \[legacy name\]$/m, 'names outside the grammar are marked');
+	assert.match(doc, /^- phone-full-width → \[\.phone\] /m, 'a variant-only class shows its context');
+	assert.match(doc, /^## Legacy names \(\d+\)/m);
+	assert.doesNotMatch(doc, /(^|\s)scss(\s|$)/m, 'no class named after the source comment');
+	assert.doesNotMatch(doc, /^- (phone|tablet) →/m, 'runtime body classes are not utilities');
+	// the grammar plus a declaration per row; the previous list of bare names was 3,300 tokens for less information
+	assert.ok(countTokens(doc) <= 4000, `llms-utilities.txt is ${countTokens(doc)} tokens`);
+	const families = utilityFamilies(ctx);
+	for (const f of families) {
+		const covered = docCoverage(doc, f.classes);
+		const missing = f.classes.filter((c) => !covered.get(c.name)).map((c) => c.name);
+		assert.deepEqual(missing, [], `${f.name} classes covered by a row`);
+	}
+});
+
+test('utilities manifest carries the grammar and every class with declarations, variants and tokens', () => {
+	const m = buildUtilitiesManifest(ctx);
+	assert.equal(m.version, '1');
+	assert.deepEqual(m.grammar.steps, ['none', 'xs', 's', 'base', 'm', 'l', 'xl', 'xxl']);
+	assert.equal(m.families.length, 24);
+	const classes = m.families.flatMap((f) => f.classes);
+	assert.ok(classes.length >= 500, `${classes.length} classes`);
+	for (const c of classes) {
+		assert.ok(c.declarations.length + c.variants.length > 0, `${c.name} has a rule`);
+		assert.equal(typeof c.conformant, 'boolean');
+		assert.ok(c.template.length > 0);
+	}
+	const xs = classes.find((c) => c.name === 'margin-xs');
+	assert.deepEqual(xs.declarations, [{ prop: 'margin', value: 'var(--token-scale-100, 4px)', important: false }]);
+	assert.deepEqual(xs.tokens, ['--token-scale-100']);
+	assert.equal(xs.template, 'margin-{step}');
+	assert.ok(JSON.stringify(m).length < 400 * 1024, 'the manifest stays a reasonable download');
 });
 
 test('tokens document marks the classic-compatible aliases and states the single-theme scope', () => {

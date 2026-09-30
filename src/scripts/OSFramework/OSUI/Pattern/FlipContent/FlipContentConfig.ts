@@ -2,15 +2,11 @@
 namespace OSFramework.OSUI.Patterns.FlipContent {
 	/**
 	 * Class that represents the custom configurations received by the FlipContent.
-	 *
-	 * @export
-	 * @class FlipContentConfig
-	 * @extends {AbstractConfiguration}
 	 */
 	export class FlipContentConfig extends AbstractConfiguration {
-		// Flips the content when it is clicked; otherwise flipping happens only through the API.
+		/** Flips the content when it is clicked; otherwise flipping happens only through the API. */
 		public FlipSelf: boolean;
-		// Starts with the back face visible.
+		/** Starts with the back face visible. */
 		public IsFlipped: boolean;
 
 		constructor(config: JSON) {
@@ -22,8 +18,7 @@ namespace OSFramework.OSUI.Patterns.FlipContent {
 		 *
 		 * @param isBuilt True when pattern has been built!
 		 * @param key property name
-		 * @returns {boolean} boolean
-		 * @memberof  OSFramework.Patterns.FlipContent.FlipContentConfig
+		 * @returns boolean
 		 */
 		public validateCanChange(isBuilt: boolean, key: string): boolean {
 			if (isBuilt) {

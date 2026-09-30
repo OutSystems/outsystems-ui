@@ -11,8 +11,6 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 	/**
 	 * Function used to Fix Inputs for iOS devices
 	 *
-	 * @export
-	 *
 	 * ToDo:
 	 * 	- Check this function since this method is used at LayoutReady and LayoutReadyMobile but both of this
 	 * client actions are not in use by us!
@@ -87,7 +85,6 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 	 * Function used to set the RTL observer
 	 *
 	 * @param callback
-	 * @returns
 	 */
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	export function RTLObserver(callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): void {
@@ -104,7 +101,6 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 	 * Function used to Set and Update the Device Classes and CSS inline variables to body
 	 *
 	 * @param IsWebApp
-	 *
 	 */
 	export function SetDeviceClass(IsWebApp: boolean): void {
 		const operatingSystem = OSFramework.OSUI.Helper.DeviceInfo.GetOperatingSystem();

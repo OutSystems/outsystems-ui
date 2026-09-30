@@ -17,7 +17,18 @@
 	"$defs": {
 		"component": {
 			"type": "object",
-			"required": ["name", "kind", "lifecycle", "api", "props", "events", "cssClasses", "cssApi", "markup", "files"],
+			"required": [
+				"name",
+				"kind",
+				"lifecycle",
+				"api",
+				"props",
+				"events",
+				"cssClasses",
+				"cssApi",
+				"markup",
+				"files"
+			],
 			"properties": {
 				"name": { "type": "string" },
 				"kind": { "type": "string", "enum": ["pattern"] },
@@ -29,6 +40,20 @@
 				"cssClasses": { "type": "object", "additionalProperties": { "type": "string" } },
 				"cssApi": { "type": "array", "items": { "type": "string", "pattern": "^--osui-" } },
 				"markup": { "type": "string" },
+				"usage": {
+					"type": "object",
+					"description": "The canonical call shape: a configs example carrying every documented default, and the Create / Initialize calls.",
+					"required": ["configs", "create", "initialize"],
+					"properties": {
+						"configs": { "type": "object" },
+						"create": { "type": "string" },
+						"initialize": { "type": "string" }
+					}
+				},
+				"schema": {
+					"type": "string",
+					"description": "path of the JSON Schema of the parsed configs string, relative to docs-ai/"
+				},
 				"story": { "type": ["string", "null"] },
 				"scss": { "type": "array", "items": { "type": "string" } },
 				"files": { "type": "array", "items": { "type": "string" } }

@@ -3,9 +3,9 @@ namespace OSFramework.OSUI.Helper.MapOperation {
 	/**
 	 * Finds in a map the pattern element
 	 *
-	 * @export
-	 * @param {Map} map
-	 * @return {*}  {string}
+	 * @param patternName
+	 * @param patternId
+	 * @param map
 	 */
 	export function FindInMap(
 		patternName: string,
@@ -40,9 +40,7 @@ namespace OSFramework.OSUI.Helper.MapOperation {
 	 * Function that helps exporting all keys from a map.
 	 * Useful to list the IDs of all patterns (of given type) in the page.
 	 *
-	 * @export
-	 * @param {Map<string, Interface.IPattern>} map
-	 * @return {*}  {Array<string>}
+	 * @param map
 	 */
 	export function ExportKeys(map: Map<string, Interface.IPattern>): Array<string> {
 		//TODO: a future improvement would be get the widget Id of all Patterns, instead of the unique ID.

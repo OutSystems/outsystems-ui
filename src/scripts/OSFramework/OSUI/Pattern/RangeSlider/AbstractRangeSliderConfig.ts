@@ -1,33 +1,33 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 namespace OSFramework.OSUI.Patterns.RangeSlider {
 	export abstract class AbstractRangeSliderConfig extends Patterns.AbstractProviderConfiguration {
-		// These variables hold the inital state of a RangeSlider
+		/** These variables hold the inital state of a RangeSlider */
 		public InitialValueFrom: number;
-		// Value of the upper handle when the slider is built (interval mode).
+		/** Value of the upper handle when the slider is built (interval mode). */
 		public InitialValueTo: number;
-		// Renders the slider disabled.
+		/** Renders the slider disabled. */
 		public IsDisabled: boolean;
-		// Uses two handles (from/to) instead of a single one.
+		/** Uses two handles (from/to) instead of a single one. */
 		public IsInterval: boolean;
-		// Upper bound of the range.
+		/** Upper bound of the range. */
 		public MaxValue: number;
-		// Lower bound of the range.
+		/** Lower bound of the range. */
 		public MinValue: number;
-		// horizontal (default) or vertical.
+		/** horizontal (default) or vertical. */
 		public Orientation: Orientation;
-		// Shows the current value in a floating label above the handle.
+		/** Shows the current value in a floating label above the handle. */
 		public ShowFloatingLabel: boolean;
-		// Renders tick marks (pips) along the track.
+		/** Renders tick marks (pips) along the track. */
 		public ShowTickMarks: boolean;
-		// Track length (CSS length); 100% when horizontal, 100px when vertical.
+		/** Track length (CSS length); 100% when horizontal, 100px when vertical. */
 		public Size: string;
-		// Current value of the (lower) handle, kept across provider redraws.
+		/** Current value of the (lower) handle, kept across provider redraws. */
 		public StartingValueFrom: number;
-		// Current value of the upper handle, kept across provider redraws (interval mode).
+		/** Current value of the upper handle, kept across provider redraws (interval mode). */
 		public StartingValueTo: number;
-		// Increment between selectable values.
+		/** Increment between selectable values. */
 		public Step: number;
-		// Distance between tick marks in slider units.
+		/** Distance between tick marks in slider units. */
 		public TickMarksInterval: number;
 
 		constructor(config: JSON) {
@@ -39,8 +39,7 @@ namespace OSFramework.OSUI.Patterns.RangeSlider {
 		 *
 		 * @param key property name
 		 * @param value value to be check
-		 * @returns {unknown} value
-		 * @memberof  OSFramework.Patterns.RangeSlider.AbstractRangeSliderConfig
+		 * @returns value
 		 */
 		public validateDefault(key: string, value: unknown): unknown {
 			let validatedValue = undefined;

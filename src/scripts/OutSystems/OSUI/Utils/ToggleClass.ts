@@ -3,10 +3,9 @@ namespace OutSystems.OSUI.Utils {
 	/**
 	 * [Deprecated] Function used to Toogle a class to a given element
 	 *
-	 * @export
-	 * @param {HTMLElement} element
-	 * @param {*} state
-	 * @param {string} className
+	 * @param element
+	 * @param state
+	 * @param className
 	 */
 	export function ToggleClass(element: HTMLElement, state: unknown, className: string): void {
 		if (!state) {

@@ -5,10 +5,10 @@ namespace OutSystems.OSUI.Patterns.BottomSheetAPI {
 	/**
 	 * Function that will change the property of a given BottomSheet Id.
 	 *
-	 * @export
-	 * @param {string} bottomSheetId ID of the BottomSheet where the property will be changed.
-	 * @param {string} propertyName Property name that will be updated
-	 * @param {*} propertyValue Value that will be set to the property
+	 * @param bottomSheetId ID of the BottomSheet where the property will be changed.
+	 * @param propertyName Property name that will be updated
+	 * @param propertyValue Value that will be set to the property
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function ChangeProperty(bottomSheetId: string, propertyName: string, propertyValue: unknown): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -26,10 +26,9 @@ namespace OutSystems.OSUI.Patterns.BottomSheetAPI {
 	/**
 	 * Create the new BottomSheetItem instance and add it to the bottomSheetItemsMap
 	 *
-	 * @export
-	 * @param {string} bottomSheetId ID of the Pattern that a new instance will be created.
-	 * @param {(string | Configs)} configs Configurations for the Pattern in JSON format.
-	 * @return {*}  {OSFramework.OSUI.Patterns.BottomSheet.IBottomSheet}
+	 * @param bottomSheetId ID of the Pattern that a new instance will be created.
+	 * @param configs Configurations for the Pattern in JSON format.
+	 * @returns the BottomSheet instance
 	 */
 	export function Create(
 		bottomSheetId: string,
@@ -52,8 +51,8 @@ namespace OutSystems.OSUI.Patterns.BottomSheetAPI {
 	/**
 	 * Function that will dispose the instance of the given BottomSheetItem Id
 	 *
-	 * @export
-	 * @param {string} bottomSheetId
+	 * @param bottomSheetId
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Dispose(bottomSheetId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -73,8 +72,7 @@ namespace OutSystems.OSUI.Patterns.BottomSheetAPI {
 	/**
 	 * Fucntion that will return the Map with all the BottomSheet instances at the page
 	 *
-	 * @export
-	 * @return {*}  Array<string>
+	 * @returns Array<string>
 	 */
 	export function GetAllBottomSheetItemsMap(): Array<string> {
 		return OSFramework.OSUI.Helper.MapOperation.ExportKeys(_bottomSheetItemsMap);
@@ -83,9 +81,8 @@ namespace OutSystems.OSUI.Patterns.BottomSheetAPI {
 	/**
 	 * Function that gets the instance of BottomSheet, by a given ID.
 	 *
-	 * @export
-	 * @param {string} bottomSheetId ID of the BottomSheet that will be looked for.
-	 * @return {*}  {OSFramework.OSUI.Patterns.BottomSheet.IBottomSheet;}
+	 * @param bottomSheetId ID of the BottomSheet that will be looked for.
+	 * @returns the BottomSheet instance
 	 */
 	export function GetBottomSheetItemById(bottomSheetId: string): OSFramework.OSUI.Patterns.BottomSheet.IBottomSheet {
 		return OSFramework.OSUI.Helper.MapOperation.FindInMap(
@@ -98,9 +95,8 @@ namespace OutSystems.OSUI.Patterns.BottomSheetAPI {
 	/**
 	 * Function that will initialize the pattern instance.
 	 *
-	 * @export
-	 * @param {string} bottomSheetId ID of the BottomSheetItem that will be initialized.
-	 * @return {*}  {OSFramework.OSUI.Patterns.BottomSheet.IBottomSheet}
+	 * @param bottomSheetId ID of the BottomSheetItem that will be initialized.
+	 * @returns the BottomSheet instance
 	 */
 	export function Initialize(bottomSheetId: string): OSFramework.OSUI.Patterns.BottomSheet.IBottomSheet {
 		const _bottomSheetItem = GetBottomSheetItemById(bottomSheetId);
@@ -113,9 +109,8 @@ namespace OutSystems.OSUI.Patterns.BottomSheetAPI {
 	/**
 	 * Function to open this pattern
 	 *
-	 * @export
-	 * @param {string} bottomSheetId
-	 * @return {*}  {string}
+	 * @param bottomSheetId
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Open(bottomSheetId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -133,9 +128,8 @@ namespace OutSystems.OSUI.Patterns.BottomSheetAPI {
 	/**
 	 * Function to close this pattern
 	 *
-	 * @export
-	 * @param {string} bottomSheetId
-	 * @return {*}  {string}
+	 * @param bottomSheetId
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Close(bottomSheetId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -153,11 +147,10 @@ namespace OutSystems.OSUI.Patterns.BottomSheetAPI {
 	/**
 	 * Function to register a callback on this pattern
 	 *
-	 * @export
-	 * @param {string} bottomSheetId
-	 * @param {string} eventName
-	 * @param {OSFramework.OSUI.GlobalCallbacks.OSGeneric} callback
-	 * @return {*}  {string}
+	 * @param bottomSheetId
+	 * @param eventName
+	 * @param callback
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function RegisterCallback(
 		bottomSheetId: string,

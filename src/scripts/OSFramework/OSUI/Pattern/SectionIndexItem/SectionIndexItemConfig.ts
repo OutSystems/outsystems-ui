@@ -2,13 +2,9 @@
 namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 	/**
 	 * Class that represents the custom configurations received by the SectionIndexItem.
-	 *
-	 * @export
-	 * @class SectionIndexItemConfig
-	 * @extends {AbstractConfiguration}
 	 */
 	export class SectionIndexItemConfig extends AbstractConfiguration {
-		// Id of the widget the page scrolls to when the item is clicked.
+		/** Id of the widget the page scrolls to when the item is clicked. */
 		public ScrollToWidgetId: string;
 
 		/**
@@ -16,8 +12,7 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 		 *
 		 * @param isBuilt True when pattern has been built!
 		 * @param key property name
-		 * @returns {boolean} boolean
-		 * @memberof  OSFramework.Patterns.SectionIndexItem.SectionIndexItemConfig
+		 * @returns boolean
 		 */
 		public validateCanChange(isBuilt: boolean, key: string): boolean {
 			if (isBuilt) {

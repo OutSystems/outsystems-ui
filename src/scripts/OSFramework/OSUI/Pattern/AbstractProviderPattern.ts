@@ -3,11 +3,7 @@ namespace OSFramework.OSUI.Patterns {
 	/**
 	 * Defines the Default props and methods for OutSystemsUI Patterns
 	 *
-	 * @export
 	 * @abstract
-	 * @class AbstractPattern
-	 * @implements {Interface.IPattern}
-	 * @template C
 	 */
 	export abstract class AbstractProviderPattern<P, C extends AbstractConfiguration>
 		extends AbstractPattern<C>
@@ -29,9 +25,8 @@ namespace OSFramework.OSUI.Patterns {
 		/**
 		 * Creates an instance of AbstractProviderPattern.
 		 *
-		 * @param {string} uniqueId
-		 * @param {C} configs
-		 * @memberof OSFramework.Patterns.AbstractProviderPattern
+		 * @param uniqueId
+		 * @param configs
 		 */
 		constructor(uniqueId: string, configs: C) {
 			super(uniqueId, configs);
@@ -126,7 +121,6 @@ namespace OSFramework.OSUI.Patterns {
 		 * Method that will be responsible to redraw pattern when needed
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.AbstractProviderPattern
 		 */
 		protected redraw(): void {
 			/* If a redraw has been trigger before the previous occured, 
@@ -143,7 +137,6 @@ namespace OSFramework.OSUI.Patterns {
 		 * Unsets the callbacks.
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.AbstractProviderPattern
 		 */
 		protected unsetCallbacks(): void {
 			this._platformEventProviderConfigsAppliedCallback = undefined;
@@ -151,8 +144,6 @@ namespace OSFramework.OSUI.Patterns {
 
 		/**
 		 * Method to build the pattern
-		 *
-		 * @memberof OSFramework.Patterns.AbstractProviderPattern
 		 */
 		public build(): void {
 			this.providerInfo = {
@@ -174,8 +165,6 @@ namespace OSFramework.OSUI.Patterns {
 
 		/**
 		 * Method to check for pending events to be added
-		 *
-		 * @memberof OSFramework.Patterns.AbstractProviderPattern
 		 */
 		public checkAddedProviderEvents(): void {
 			if (this.providerEventsManagerInstance?.hasEvents) {
@@ -188,8 +177,6 @@ namespace OSFramework.OSUI.Patterns {
 
 		/**
 		 * Method to check for saved events to be added after a destroy/init cycle
-		 *
-		 * @memberof OSFramework.Patterns.AbstractProviderPattern
 		 */
 		public checkPendingProviderEvents(): void {
 			if (this.providerEventsManagerInstance?.hasPendingEvents) {
@@ -203,8 +190,6 @@ namespace OSFramework.OSUI.Patterns {
 
 		/**
 		 * Method to destroy created instance
-		 *
-		 * @memberof OSFramework.Patterns.AbstractProviderPattern
 		 */
 		public dispose(): void {
 			OSFramework.OSUI.Event.DOMEvents.Observers.GlobalObserverManager.Instance.removeHandler(
@@ -221,9 +206,8 @@ namespace OSFramework.OSUI.Patterns {
 		 * Register the default events for provider based patterns.
 		 *
 		 * @abstract
-		 * @param {string} eventName
-		 * @param {GlobalCallbacks.OSGeneric} callback
-		 * @memberof AbstractProviderPattern
+		 * @param eventName
+		 * @param callback
 		 */
 		public registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
@@ -240,8 +224,7 @@ namespace OSFramework.OSUI.Patterns {
 		/**
 		 * Method used to set all the provider configs. In the AbstractProviderPattern, it
 		 * will simply trigger the callback to warn that the configs have been applied to the provider.
-		 * @param {ProviderConfigs} providerConfigs
-		 * @memberof AbstractProviderPattern
+		 * @param providerConfigs
 		 */
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		public setProviderConfigs(providerConfigs: unknown): void {
@@ -251,12 +234,10 @@ namespace OSFramework.OSUI.Patterns {
 		/**
 		 * Method to add a provider event using extensibility
 		 *
-		 * @param {string} eventName
-		 * @param {GlobalCallbacks.Generic} callback
-		 * @param {string} uniqueId
-		 * @param {boolean} [saveEvent=true]
-		 * @return {*}  {void}
-		 * @memberof OSFramework.Patterns.AbstractProviderPattern
+		 * @param eventName
+		 * @param callback
+		 * @param uniqueId
+		 * @param [saveEvent=true]
 		 */
 		public setProviderEvent(
 			eventName: string,
@@ -287,9 +268,7 @@ namespace OSFramework.OSUI.Patterns {
 		/**
 		 * Method to remove a provider event using extensibility
 		 *
-		 * @param {string} eventId
-		 * @return {*}  {void}
-		 * @memberof OSFramework.Patterns.AbstractProviderPattern
+		 * @param eventId
 		 */
 		public unsetProviderEvent(eventId: string): void {
 			// Get event from saved events map
@@ -315,8 +294,7 @@ namespace OSFramework.OSUI.Patterns {
 		/**
 		 * Method to update the provider events API instance and save/pending events
 		 *
-		 * @param {ProviderInfo} providerInfo
-		 * @memberof OSFramework.Patterns.AbstractProviderPattern
+		 * @param providerInfo
 		 */
 		public updateProviderEvents(providerInfo: ProviderInfo): void {
 			// Update provider instance reference
@@ -338,8 +316,6 @@ namespace OSFramework.OSUI.Patterns {
 		 * ProviderInfo getter
 		 *
 		 * @readonly
-		 * @type {ProviderInfo}
-		 * @memberof OSFramework.Patterns.AbstractProviderPattern
 		 */
 		public get providerInfo(): ProviderInfo {
 			return this._providerInfo;
@@ -347,8 +323,6 @@ namespace OSFramework.OSUI.Patterns {
 
 		/**
 		 * ProviderInfo setter
-		 *
-		 * @memberof OSFramework.Patterns.AbstractProviderPattern
 		 */
 		public set providerInfo(providerInfo: ProviderInfo) {
 			this._providerInfo = providerInfo;
@@ -356,8 +330,6 @@ namespace OSFramework.OSUI.Patterns {
 
 		/**
 		 * Provider setter
-		 *
-		 * @memberof OSFramework.Patterns.AbstractProviderPattern
 		 */
 		public set provider(p: P) {
 			this._provider = p;
@@ -367,8 +339,6 @@ namespace OSFramework.OSUI.Patterns {
 		 * Provider getter
 		 *
 		 * @readonly
-		 * @type {P}
-		 * @memberof OSFramework.Patterns.AbstractProviderPattern
 		 */
 		public get provider(): P {
 			return this._provider;

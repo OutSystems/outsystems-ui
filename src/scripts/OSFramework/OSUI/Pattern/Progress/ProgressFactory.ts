@@ -3,10 +3,9 @@ namespace OSFramework.OSUI.Patterns.Progress.Factory {
 	/**
 	 * Create the new Progress instance object according given type
 	 *
-	 * @export
-	 * @param {string} progressId ID of the Pattern that a new instance will be created.
-	 * @param {(string | Record<string, unknown>)} configs Configurations for the Pattern in JSON format.
-	 * @return {*}  {Patterns.Progress.IProgress}
+	 * @param progressId ID of the Pattern that a new instance will be created.
+	 * @param type
+	 * @param configs Configurations for the Pattern in JSON format.
 	 */
 	export function NewProgress(
 		progressId: string,

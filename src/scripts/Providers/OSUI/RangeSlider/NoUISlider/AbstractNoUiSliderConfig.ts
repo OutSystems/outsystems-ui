@@ -3,11 +3,7 @@ namespace Providers.OSUI.RangeSlider.NoUiSlider {
 	/**
 	 * Class that represents the custom configurations received by the RangeSlider.
 	 *
-	 * @export
 	 * @abstract
-	 * @class AbstractNoUiSliderConfig
-	 * @extends {OSFramework.OSUI.Patterns.RangeSlider
-	 * 		.AbstractRangeSliderConfig}
 	 */
 	export abstract class AbstractNoUiSliderConfig
 		extends OSFramework.OSUI.Patterns.RangeSlider.AbstractRangeSliderConfig
@@ -21,9 +17,6 @@ namespace Providers.OSUI.RangeSlider.NoUiSlider {
 
 		/**
 		 * Method to get the configs for the Pips option (ShowTickMarks)
-		 *
-		 * @return {*}  {unknown}
-		 * @memberof Providers.OSUI.RangeSlider.NoUiSlider.AbstractNoUiSliderConfig
 		 */
 		public getPipsConfig(): NoUiSliderPips {
 			let tickMarksValues = Math.floor(this.TickMarksInterval);
@@ -70,9 +63,6 @@ namespace Providers.OSUI.RangeSlider.NoUiSlider {
 
 		/**
 		 * Method to set the common configs for the provider
-		 *
-		 * @return {*}  {NoUiSliderOptions}
-		 * @memberof Providers.OSUI.RangeSlider.NoUiSlider.AbstractNoUiSliderConfig
 		 */
 		public getProviderConfig(): NoUiSliderOptions {
 			this._providerOptions = {
@@ -91,9 +81,6 @@ namespace Providers.OSUI.RangeSlider.NoUiSlider {
 
 		/**
 		 * Method to get the configs for the Range option (Min/Max values)
-		 *
-		 * @return {*}  {unknown}
-		 * @memberof Providers.OSUI.RangeSlider.NoUiSlider.AbstractNoUiSliderConfig
 		 */
 		public getRangeConfig(): NoUiSliderRange {
 			return {
@@ -104,9 +91,6 @@ namespace Providers.OSUI.RangeSlider.NoUiSlider {
 
 		/**
 		 * Method to get the configs for the Tooltip option (ShowFloatingLabel)
-		 *
-		 * @return {*}  {string[]}
-		 * @memberof Providers.OSUI.RangeSlider.NoUiSlider.AbstractNoUiSliderConfig
 		 */
 		public getTooltipFormat(): NoUISliderTooltip {
 			const tooltipValue = this.ShowFloatingLabel ? window.wNumb({ decimals: 0 }) : false;
@@ -124,8 +108,7 @@ namespace Providers.OSUI.RangeSlider.NoUiSlider {
 		/**
 		 * Method to validate and save the external provider configs
 		 *
-		 * @param {NoUiSliderOptions} newConfigs
-		 * @memberof Providers.OSUI.RangeSlider.NoUiSlider.AbstractNoUiSliderConfig
+		 * @param newConfigs
 		 */
 		public setExtensibilityConfigs(newConfigs: NoUiSliderOptions): void {
 			this.providerExtendedOptions = newConfigs;

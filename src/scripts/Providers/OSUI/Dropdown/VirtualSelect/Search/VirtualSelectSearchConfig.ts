@@ -2,10 +2,6 @@
 namespace Providers.OSUI.Dropdown.VirtualSelect.Search {
 	/**
 	 * Class that represents the custom configurations received by the Dropdown Search mode.
-	 *
-	 * @export
-	 * @class VirtualSelectSearchConfig
-	 * @extends {AbstractVirtualSelectConfig}
 	 */
 	export class VirtualSelectSearchConfig extends AbstractVirtualSelectConfig {
 		public AllowMultipleSelection: boolean;
@@ -14,8 +10,6 @@ namespace Providers.OSUI.Dropdown.VirtualSelect.Search {
 		 * Method used to get the key values of the given selected values
 		 *
 		 * @protected
-		 * @return {*}  {string[]}
-		 * @memberof Providers.OSUI.Dropdown.VirtualSelect.Search.VirtualSelectSearchConfig
 		 */
 		protected getSelectedValues(): string[] {
 			const selectedKeyvalues = [];
@@ -42,9 +36,6 @@ namespace Providers.OSUI.Dropdown.VirtualSelect.Search {
 
 		/**
 		 * Set the configs for the Dropdown Search mode
-		 *
-		 * @return {*}  {VirtualSelectOpts}
-		 * @memberof Providers.OSUI.Dropdown.VirtualSelect.Search.VirtualSelectSearchConfig
 		 */
 		public getProviderConfig(): VirtualSelectOpts {
 			const virtualSelectSearchOpts = {
@@ -60,10 +51,8 @@ namespace Providers.OSUI.Dropdown.VirtualSelect.Search {
 		/**
 		 * Override, validate configs key values
 		 *
-		 * @param {string} key
-		 * @param {unknown} value
-		 * @return {*}  {unknown}
-		 * @memberof Providers.OSUI.Dropdown.VirtualSelect.Search.VirtualSelectSearchConfig
+		 * @param key
+		 * @param value
 		 */
 		public validateDefault(key: string, value: unknown): unknown {
 			let validatedValue = undefined;

@@ -4,10 +4,10 @@ namespace OutSystems.OSUI.Patterns.VideoAPI {
 	/**
 	 * Function that will change the property of a given Video.
 	 *
-	 * @export
-	 * @param {string} videoId
-	 * @param {string} propertyName
-	 * @param {*} propertyValue
+	 * @param videoId
+	 * @param propertyName
+	 * @param propertyValue
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function ChangeProperty(videoId: string, propertyName: string, propertyValue: unknown): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -25,10 +25,9 @@ namespace OutSystems.OSUI.Patterns.VideoAPI {
 	/**
 	 * Create the new Video instance and add it to the videosMap
 	 *
-	 * @export
-	 * @param {string} videoId
-	 * @param {(string | Configs)} configs
-	 * @return {*}  {OSFramework.OSUI.Patterns.Video.IVideo}
+	 * @param videoId
+	 * @param configs
+	 * @returns the Video instance
 	 */
 	export function Create(videoId: string, configs: string | Configs): OSFramework.OSUI.Patterns.Video.IVideo {
 		if (_videoMap.has(videoId)) {
@@ -48,8 +47,8 @@ namespace OutSystems.OSUI.Patterns.VideoAPI {
 	/**
 	 * Function that will destroy the instance of the given Video
 	 *
-	 * @export
-	 * @param {string} videoId
+	 * @param videoId
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Dispose(videoId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -69,8 +68,7 @@ namespace OutSystems.OSUI.Patterns.VideoAPI {
 	/**
 	 * Fucntion that will return the Map with all the Video instances at the page
 	 *
-	 * @export
-	 * @return {*}  {Array<string>}
+	 * @returns the ids of every Video instance
 	 */
 	export function GetAllVideos(): Array<string> {
 		return OSFramework.OSUI.Helper.MapOperation.ExportKeys(_videoMap);
@@ -79,9 +77,8 @@ namespace OutSystems.OSUI.Patterns.VideoAPI {
 	/**
 	 * Function that gets the instance of Video, by a given ID.
 	 *
-	 * @export
-	 * @param {string} videoId
-	 * @return {*}  {OSFramework.OSUI.Patterns.Video.IVideo}
+	 * @param videoId
+	 * @returns the Video instance
 	 */
 	export function GetVideoById(videoId: string): OSFramework.OSUI.Patterns.Video.IVideo {
 		return OSFramework.OSUI.Helper.MapOperation.FindInMap(
@@ -94,9 +91,8 @@ namespace OutSystems.OSUI.Patterns.VideoAPI {
 	/**
 	 * Function that will initialize the pattern instance.
 	 *
-	 * @export
-	 * @param {string} videoId
-	 * @return {*}  {OSFramework.OSUI.Patterns.Video.IVideo}
+	 * @param videoId
+	 * @returns the Video instance
 	 */
 	export function Initialize(videoId: string): OSFramework.OSUI.Patterns.Video.IVideo {
 		const video = GetVideoById(videoId);
@@ -109,11 +105,10 @@ namespace OutSystems.OSUI.Patterns.VideoAPI {
 	/**
 	 * Function to register a provider callback
 	 *
-	 * @export
-	 * @param {string} videoId
-	 * @param {string} eventName
-	 * @param {OSFramework.OSUI.GlobalCallbacks.OSGeneric} callback
-	 * @return {*} {string} Return Message Success or message of error info if it's the case.
+	 * @param videoId
+	 * @param eventName
+	 * @param callback
+	 * @returns Return Message Success or message of error info if it's the case.
 	 */
 	export function RegisterCallback(
 		videoId: string,
@@ -135,9 +130,8 @@ namespace OutSystems.OSUI.Patterns.VideoAPI {
 	/**
 	 * Function that returns the state of a given video
 	 *
-	 * @export
-	 * @param {string} videoId
-	 * @return {*}  {string}
+	 * @param videoId
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function GetState(videoId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -156,9 +150,8 @@ namespace OutSystems.OSUI.Patterns.VideoAPI {
 	/**
 	 *
 	 * Function that pause video on a given video
-	 * @export
-	 * @param {string} videoId
-	 * @return {*}  {string}
+	 * @param videoId
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Pause(videoId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -176,9 +169,8 @@ namespace OutSystems.OSUI.Patterns.VideoAPI {
 	/**
 	 * Function that play video on a given video
 	 *
-	 * @export
-	 * @param {string} videoId
-	 * @return {*}  {string}
+	 * @param videoId
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Play(videoId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -196,10 +188,9 @@ namespace OutSystems.OSUI.Patterns.VideoAPI {
 	/**
 	 * Function that jump to a specific time on a given video
 	 *
-	 * @export
-	 * @param {string} videoId
-	 * @param {number} currentTime
-	 * @return {*}  {string}
+	 * @param videoId
+	 * @param currentTime
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function JumpToTime(videoId: string, currentTime: number): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({

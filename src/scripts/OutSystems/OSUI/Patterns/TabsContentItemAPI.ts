@@ -5,10 +5,10 @@ namespace OutSystems.OSUI.Patterns.TabsContentItemAPI {
 	/**
 	 * Function that will change the property of a given Tabs pattern.
 	 *
-	 * @export
-	 * @param {string} tabsContentItemId ID of the Tabs Item where the property will be changed.
-	 * @param {string} propertyName Property name that will be updated
-	 * @param {*} propertyValue Value that will be set to the property
+	 * @param tabsContentItemId ID of the Tabs Item where the property will be changed.
+	 * @param propertyName Property name that will be updated
+	 * @param propertyValue Value that will be set to the property
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function ChangeProperty(tabsContentItemId: string, propertyName: string, propertyValue: unknown): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -26,10 +26,9 @@ namespace OutSystems.OSUI.Patterns.TabsContentItemAPI {
 	/**
 	 * Create the new TabsContentItem instance and add it to the tabsContentItem Map
 	 *
-	 * @export
-	 * @param {string} tabsContentItemId ID of the Pattern that a new instance will be created.
-	 * @param {(string | Configs)} configs Configurations for the Pattern in JSON format.
-	 * @return {*}  {OSFramework.OSUI.Patterns.Tabs.ITabs}
+	 * @param tabsContentItemId ID of the Pattern that a new instance will be created.
+	 * @param configs Configurations for the Pattern in JSON format.
+	 * @returns the TabsContentItem instance
 	 */
 	export function Create(
 		tabsContentItemId: string,
@@ -54,8 +53,8 @@ namespace OutSystems.OSUI.Patterns.TabsContentItemAPI {
 	/**
 	 * Function that will dispose the instance of the given Tabs
 	 *
-	 * @export
-	 * @param {string} tabsContentItemId
+	 * @param tabsContentItemId
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Dispose(tabsContentItemId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -75,8 +74,7 @@ namespace OutSystems.OSUI.Patterns.TabsContentItemAPI {
 	/**
 	 * Function that will return the Map with all the Tabs instances at the page
 	 *
-	 * @export
-	 * @return {*}  {Map<string, OSFramework.OSUI.Patterns.Tabs.ITabs>}
+	 * @returns the ids of every TabsContentItem instance
 	 */
 	export function GetAllTabsContentItems(): Array<string> {
 		return OSFramework.OSUI.Helper.MapOperation.ExportKeys(_tabsContentItemMap);
@@ -85,9 +83,8 @@ namespace OutSystems.OSUI.Patterns.TabsContentItemAPI {
 	/**
 	 * Function that gets the instance of Tabs by a given ID.
 	 *
-	 * @export
-	 * @param {string} tabsContentItemId ID of the Tabs that will be looked for.
-	 * @return {*}  {OSFramework.OSUI.Patterns.Tabs.ITabs}
+	 * @param tabsContentItemId ID of the Tabs that will be looked for.
+	 * @returns the TabsContentItem instance
 	 */
 	export function GetTabsContentItemById(
 		tabsContentItemId: string
@@ -102,9 +99,8 @@ namespace OutSystems.OSUI.Patterns.TabsContentItemAPI {
 	/**
 	 * Function that will initialize the pattern instance.
 	 *
-	 * @export
-	 * @param {string} tabsContentItemId ID of the TabsContentItem pattern that will be initialized.
-	 * @return {*}  {OSFramework.OSUI.Patterns.TabsContentItem.ITabsContentItem}
+	 * @param tabsContentItemId ID of the TabsContentItem pattern that will be initialized.
+	 * @returns the TabsContentItem instance
 	 */
 	export function Initialize(tabsContentItemId: string): OSFramework.OSUI.Patterns.TabsContentItem.ITabsContentItem {
 		const tabsContentItem = GetTabsContentItemById(tabsContentItemId);
@@ -117,11 +113,10 @@ namespace OutSystems.OSUI.Patterns.TabsContentItemAPI {
 	/**
 	 * Function that will register a pattern callback.
 	 *
-	 * @export
-	 * @param {string} tabsContentItemId
-	 * @param {string} eventName
-	 * @param {OSFramework.OSUI.GlobalCallbacks.OSGeneric} callback
-	 * @return {*}  {string}
+	 * @param tabsContentItemId
+	 * @param eventName
+	 * @param callback
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function RegisterCallback(
 		tabsContentItemId: string,

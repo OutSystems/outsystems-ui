@@ -122,6 +122,42 @@ test('getExportedFunctions reports params, return types, JSDoc, calls and string
 	assert.ok(byName.Dispose.stringLiterals.includes('OSUI-API-01'));
 });
 
+test('getJsDoc reads parameter texts, the returns text and a documented default', () => {
+	const src = `namespace Docs.API {
+	/**
+	 * Opens it.
+	 *
+	 * @param id The id of the pattern.
+	 * @param configs
+	 * @returns the API response envelope as a JSON string
+	 */
+	export function Open(id: string, configs: string): string { return id + configs; }
+	/**
+	 * Bare return tag.
+	 * @return {*}
+	 */
+	export function Bare(id: string): string { return id; }
+	export class ThingConfig extends Base {
+		/** Whether it starts open. @defaultValue false */
+		public StartsOpen: boolean;
+		// line comment, no default
+		public Label: string;
+		public Count = 3;
+	}
+}`;
+	const p = createProgramFromSources({ 'd.ts': src });
+	const fns = Object.fromEntries(getExportedFunctions(p.getSourceFile('d.ts')).map((f) => [f.name, f]));
+	assert.deepEqual(fns.Open.jsDoc.paramDescriptions, { id: 'The id of the pattern.', configs: '' });
+	assert.equal(fns.Open.jsDoc.returns, 'the API response envelope as a JSON string');
+	assert.equal(fns.Bare.jsDoc.returns, '', 'a bare @return tag carries no text');
+	const props = Object.fromEntries(getConfigProps(p, ['d.ts']).map((x) => [x.name, x]));
+	assert.equal(props.StartsOpen.defaultText, 'false', 'the documented default stands in for a code default');
+	assert.equal(props.StartsOpen.docText, 'Whether it starts open.');
+	assert.equal(props.Label.defaultText, null);
+	assert.equal(props.Label.hasDoc, true);
+	assert.equal(props.Count.defaultText, '3', 'an initializer wins over the comment');
+});
+
 test('countAnyKeywords and countSuppressions', () => {
 	const p = createProgramFromSources({
 		'c.ts': 'let x: any; function f(a: any): void {}\n// @ts-ignore\nconst y = 1;\n// @ts-expect-error\nconst z = 2;',

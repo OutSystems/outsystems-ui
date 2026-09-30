@@ -5,9 +5,8 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	/**
 	 * Function that will enable updates on OnRender event
 	 *
-	 * @export
-	 * @param {string} carouselId
-	 * @return {*}  {string}
+	 * @param carouselId
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function CarouselEnableOnRender(carouselId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -24,9 +23,8 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	/**
 	 * Function that will disable updates on OnRender event
 	 *
-	 * @export
-	 * @param {string} carouselId
-	 * @return {*}  {string}
+	 * @param carouselId
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function CarouselDisableOnRender(carouselId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -43,10 +41,10 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	/**
 	 * Function that will change the property of a given Carousel Id.
 	 *
-	 * @export
-	 * @param {string} carouselId ID of the Carousel where the property will be changed.
-	 * @param {string} propertyName Property name that will be updated
-	 * @param {*} propertyValue Value that will be set to the property
+	 * @param carouselId ID of the Carousel where the property will be changed.
+	 * @param propertyName Property name that will be updated
+	 * @param propertyValue Value that will be set to the property
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function ChangeProperty(carouselId: string, propertyName: string, propertyValue: unknown): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -64,11 +62,10 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	/**
 	 * Create the new CarouselItem instance and add it to the carouselItemsMap
 	 *
-	 * @export
-	 * @param {string} carouselId ID of the Pattern that a new instance will be created.
-	 * @param {(string | Configs)} configs Configurations for the Pattern in JSON format.
-	 * @param {string} provider Name of the provider that renders the carousel (Splide).
-	 * @return {*}  {OSFramework.OSUI.Patterns.Carousel.ICarousel}
+	 * @param carouselId ID of the Pattern that a new instance will be created.
+	 * @param configs Configurations for the Pattern in JSON format.
+	 * @param provider Name of the provider that renders the carousel (Splide).
+	 * @returns the Carousel instance
 	 */
 	export function Create(
 		carouselId: string,
@@ -91,8 +88,8 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	/**
 	 * Function that will dispose the instance of the given CarouselItem Id
 	 *
-	 * @export
-	 * @param {string} carouselId
+	 * @param carouselId
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Dispose(carouselId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -112,8 +109,7 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	/**
 	 * Fucntion that will return the Map with all the Carousel instances at the page
 	 *
-	 * @export
-	 * @return {*}  Array<string>
+	 * @returns Array<string>
 	 */
 	export function GetAllCarouselItemsMap(): Array<string> {
 		return OSFramework.OSUI.Helper.MapOperation.ExportKeys(_carouselItemsMap);
@@ -122,9 +118,8 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	/**
 	 * Function that gets the instance of Carousel, by a given ID.
 	 *
-	 * @export
-	 * @param {string} carouselId ID of the Carousel that will be looked for.
-	 * @return {*}  {OSFramework.OSUI.Patterns.Carousel.ICarousel;}
+	 * @param carouselId ID of the Carousel that will be looked for.
+	 * @returns the Carousel instance
 	 */
 	export function GetCarouselItemById(carouselId: string): OSFramework.OSUI.Patterns.Carousel.ICarousel {
 		return OSFramework.OSUI.Helper.MapOperation.FindInMap(
@@ -137,9 +132,9 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	/**
 	 * Function to go to a especific page index
 	 *
-	 * @export
-	 * @param {string} carouselId
-	 * @param {number} index
+	 * @param carouselId
+	 * @param index
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function GoTo(carouselId: string, index: number): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -157,9 +152,8 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	/**
 	 * Function that will initialize the pattern instance.
 	 *
-	 * @export
-	 * @param {string} carouselId ID of the CarouselItem that will be initialized.
-	 * @return {*}  {OSFramework.OSUI.Patterns.Carousel.ICarousel}
+	 * @param carouselId ID of the CarouselItem that will be initialized.
+	 * @returns the Carousel instance
 	 */
 	export function Initialize(carouselId: string): OSFramework.OSUI.Patterns.Carousel.ICarousel {
 		const _carouselItem = GetCarouselItemById(carouselId);
@@ -172,9 +166,8 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	/**
 	 * Function to go to the next page
 	 *
-	 * @export
-	 * @param {string} carouselId
-	 * @param {string} target
+	 * @param carouselId
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Next(carouselId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -192,9 +185,8 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	/**
 	 * Function to go to the previous page
 	 *
-	 * @export
-	 * @param {string} carouselId
-	 * @param {string} target
+	 * @param carouselId
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Previous(carouselId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -212,10 +204,10 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	/**
 	 * Function to register a provider callback
 	 *
-	 * @export
-	 * @param {string} carouselId
-	 * @param {string} eventName
-	 * @param {OSFramework.OSUI.GlobalCallbacks.OSGeneric} callback
+	 * @param carouselId
+	 * @param eventName
+	 * @param callback
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function RegisterCallback(
 		carouselId: string,
@@ -237,9 +229,9 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	/**
 	 * Function to toggle the drag events on the Carousel
 	 *
-	 * @export
-	 * @param {string} carouselId
-	 * @param {boolean} hasDrag
+	 * @param carouselId
+	 * @param hasDrag
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function ToggleDrag(carouselId: string, hasDrag: boolean): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -257,9 +249,8 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	/**
 	 * Function that will update on DOM changes inside the Carousel
 	 *
-	 * @export
-	 * @param {string} carouselId
-	 * @return {*}  {OSFramework.OSUI.Patterns.Carousel.ICarousel}
+	 * @param carouselId
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function UpdateOnRender(carouselId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -277,10 +268,9 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	/**
 	 * Function that will update the direction of the carousel
 	 *
-	 * @export
-	 * @param {string} carouselId ID of the Carousel pattern.
-	 * @param {string} direction Slide direction: ltr, rtl or ttb.
-	 * @return {*}  {string} Response object as a JSON string
+	 * @param carouselId ID of the Carousel pattern.
+	 * @param direction Slide direction: ltr, rtl or ttb.
+	 * @returns Response object as a JSON string
 	 */
 	export function SetCarouselDirection(carouselId: string, direction: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -298,10 +288,9 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	/**
 	 * Function to set provider configs by extensibility
 	 *
-	 * @export
-	 * @param {string} carouselId ID of the Carousel pattern.
-	 * @param {CarouselProviderConfigs} configs Provider (Splide) options to merge into the instance.
-	 * @return {*}  {string} Response object as a JSON string
+	 * @param carouselId ID of the Carousel pattern.
+	 * @param configs Provider (Splide) options to merge into the instance.
+	 * @returns Response object as a JSON string
 	 */
 	export function SetProviderConfigs(carouselId: string, configs: CarouselProviderConfigs): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -318,11 +307,10 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	/**
 	 * Function to set providerEvents by extensibility
 	 *
-	 * @export
-	 * @param {string} carouselId
-	 * @param {string} eventName
-	 * @param {OSFramework.OSUI.GlobalCallbacks.Generic} callback
-	 * @return {*}  {string}
+	 * @param carouselId
+	 * @param eventName
+	 * @param callback
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function SetProviderEvent(
 		carouselId: string,
@@ -347,10 +335,9 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	/**
 	 * Function to remove providerEvents added by extensibility
 	 *
-	 * @export
-	 * @param {string} carouselId
-	 * @param {string} eventId
-	 * @return {*}  {string}
+	 * @param carouselId
+	 * @param eventId
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function UnsetProviderEvent(carouselId: string, eventId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({

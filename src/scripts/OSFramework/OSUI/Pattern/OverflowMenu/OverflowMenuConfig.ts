@@ -2,15 +2,11 @@
 namespace OSFramework.OSUI.Patterns.OverflowMenu {
 	/**
 	 * Class that represents the custom configurations received by the OverflowMenu.
-	 *
-	 * @export
-	 * @class OverflowMenuConfig
-	 * @extends {AbstractConfiguration}
 	 */
 	export class OverflowMenuConfig extends AbstractConfiguration {
-		// Preferred placement of the menu relative to its trigger (GlobalEnum.FloatingPosition); auto picks the best fit.
+		/** Preferred placement of the menu relative to its trigger (GlobalEnum.FloatingPosition); auto picks the best fit. */
 		public Position: GlobalEnum.FloatingPosition;
-		// Corner shape of the menu: SoftRounded (default), Rounded or Sharp.
+		/** Corner shape of the menu: SoftRounded (default), Rounded or Sharp. */
 		public Shape: GlobalEnum.ShapeTypes;
 
 		constructor(config: JSON) {
@@ -20,10 +16,8 @@ namespace OSFramework.OSUI.Patterns.OverflowMenu {
 		/**
 		 * Override, Validate configs key values
 		 *
-		 * @param {string} key
-		 * @param {unknown} value
-		 * @return {*}  {unknown}
-		 * @memberof OverflowMenuConfig
+		 * @param key
+		 * @param value
 		 */
 		public validateDefault(key: string, value: unknown): unknown {
 			let validatedValue = undefined;

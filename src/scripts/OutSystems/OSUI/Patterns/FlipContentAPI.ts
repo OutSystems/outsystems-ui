@@ -5,10 +5,10 @@ namespace OutSystems.OSUI.Patterns.FlipContentAPI {
 	/**
 	 * Function that will change the property of a flip content pattern.
 	 *
-	 * @export
-	 * @param {string} flipId ID of the Flip Content where the property will be changed.
-	 * @param {string} propertyName Property name that will be updated
-	 * @param {*} propertyValue Value that will be set to the property
+	 * @param flipId ID of the Flip Content where the property will be changed.
+	 * @param propertyName Property name that will be updated
+	 * @param propertyValue Value that will be set to the property
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function ChangeProperty(flipId: string, propertyName: string, propertyValue: unknown): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -26,10 +26,9 @@ namespace OutSystems.OSUI.Patterns.FlipContentAPI {
 	/**
 	 * Create the new flip content instance and add it to flipMap
 	 *
-	 * @export
-	 * @param {string} flipId ID of the Flip Content where the instance will be created.
-	 * @param {(string | Configs)} configs configurations for the Flip Content in JSON format.
-	 * @return {*}  {OSFramework.OSUI.Patterns.FlipContent.IFlipContent}
+	 * @param flipId ID of the Flip Content where the instance will be created.
+	 * @param configs configurations for the Flip Content in JSON format.
+	 * @returns the FlipContent instance
 	 */
 	export function Create(
 		flipId: string,
@@ -54,8 +53,8 @@ namespace OutSystems.OSUI.Patterns.FlipContentAPI {
 	/**
 	 * Function that will destroy the instance of the given Flip Content
 	 *
-	 * @export
-	 * @param {string} flipId
+	 * @param flipId
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Dispose(flipId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -75,8 +74,7 @@ namespace OutSystems.OSUI.Patterns.FlipContentAPI {
 	/**
 	 * Function that will return the Map with all the Flip Content instances at the page
 	 *
-	 * @export
-	 * @return {*}  {Map<string, OSFramework.OSUI.Patterns.FlipContent.IFlipContent>}
+	 * @returns the ids of every FlipContent instance
 	 */
 	export function GetAllFlipContent(): Array<string> {
 		return OSFramework.OSUI.Helper.MapOperation.ExportKeys(_flipContentMap);
@@ -85,9 +83,8 @@ namespace OutSystems.OSUI.Patterns.FlipContentAPI {
 	/**
 	 * Function that gets the instance of flip content, by a given ID.
 	 *
-	 * @export
-	 * @param {string} flipId ID of the Flip Content that will be looked for.
-	 * @return {*}  {OSFramework.OSUI.Patterns.FlipContent.IFlipContent}
+	 * @param flipId ID of the Flip Content that will be looked for.
+	 * @returns the FlipContent instance
 	 */
 	export function GetFlipContentById(flipId: string): OSFramework.OSUI.Patterns.FlipContent.IFlipContent {
 		return OSFramework.OSUI.Helper.MapOperation.FindInMap(
@@ -100,9 +97,8 @@ namespace OutSystems.OSUI.Patterns.FlipContentAPI {
 	/**
 	 * Function that will initialize the pattern instance.
 	 *
-	 * @export
-	 * @param {string} flipId ID of the Flip Content that will be initialized.
-	 * @return {*}  {OSFramework.OSUI.Patterns.FlipContent.IFlipContent}
+	 * @param flipId ID of the Flip Content that will be initialized.
+	 * @returns the FlipContent instance
 	 */
 	export function Initialize(flipId: string): OSFramework.OSUI.Patterns.FlipContent.IFlipContent {
 		const flipContent = GetFlipContentById(flipId);
@@ -115,11 +111,10 @@ namespace OutSystems.OSUI.Patterns.FlipContentAPI {
 	/**
 	 * * Function that will register a pattern callback.
 	 *
-	 * @export
-	 * @param {string} flipId
-	 * @param {string} eventName
-	 * @param {OSFramework.OSUI.GlobalCallbacks.OSGeneric} callback
-	 * @return {*}  {string}
+	 * @param flipId
+	 * @param eventName
+	 * @param callback
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function RegisterCallback(
 		flipId: string,
@@ -140,8 +135,8 @@ namespace OutSystems.OSUI.Patterns.FlipContentAPI {
 	/**
 	 * Function that will show the back part of the content.
 	 *
-	 * @export
-	 * @param {string} flipId
+	 * @param flipId
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function ShowBackContent(flipId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -159,8 +154,8 @@ namespace OutSystems.OSUI.Patterns.FlipContentAPI {
 	/**
 	 * Function that will show the front part of the content.
 	 *
-	 * @export
-	 * @param {string} flipId
+	 * @param flipId
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function ShowFrontContent(flipId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -178,8 +173,8 @@ namespace OutSystems.OSUI.Patterns.FlipContentAPI {
 	/**
 	 * Function that will flip the content.
 	 *
-	 * @export
-	 * @param {string} flipId
+	 * @param flipId
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function ToggleFlipContent(flipId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({

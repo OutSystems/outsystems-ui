@@ -21,12 +21,6 @@ namespace OSFramework.OSUI.Feature.Balloon {
 
 	/**
 	 * Class for the Balloon Feature
-	 *
-	 * @export
-	 * @class Balloon
-	 * @extends {AbstractFeature<PT, BalloonOptions>}
-	 * @implements {IBalloon}
-	 * @template PT
 	 */
 	export class Balloon<PT> extends AbstractFeature<PT, BalloonOptions> implements IBalloon {
 		// Store the current focused element's index
@@ -365,8 +359,6 @@ namespace OSFramework.OSUI.Feature.Balloon {
 
 		/**
 		 * Method to build the Feature
-		 *
-		 * @memberof Balloon
 		 */
 		public build(): void {
 			this._setCallbacks();
@@ -384,8 +376,6 @@ namespace OSFramework.OSUI.Feature.Balloon {
 
 		/**
 		 * Method to close the Balloon
-		 *
-		 * @memberof Balloon
 		 */
 		public close(): void {
 			if (this.isOpen && this.featureElem !== undefined) {
@@ -395,8 +385,6 @@ namespace OSFramework.OSUI.Feature.Balloon {
 
 		/**
 		 * Destroy the Balloon.
-		 *
-		 * @memberof Balloon
 		 */
 		public dispose(): void {
 			this._floatingInstance?.dispose();
@@ -407,8 +395,6 @@ namespace OSFramework.OSUI.Feature.Balloon {
 
 		/**
 		 * Method to open the Balloon
-		 *
-		 * @memberof Balloon
 		 */
 		public open(
 			isOpenedByApi: boolean,
@@ -423,8 +409,7 @@ namespace OSFramework.OSUI.Feature.Balloon {
 		/**
 		 * Method to handle the Shape config css variable
 		 *
-		 * @param {GlobalEnum.ShapeTypes} [shape]
-		 * @memberof Balloon
+		 * @param [shape]
 		 */
 		public setBalloonShape(shape?: GlobalEnum.ShapeTypes): void {
 			if (shape !== undefined) {
@@ -441,8 +426,7 @@ namespace OSFramework.OSUI.Feature.Balloon {
 		/**
 		 * Method to set the Floating Util
 		 *
-		 * @param {boolean} [isUpdate]
-		 * @memberof Balloon
+		 * @param [isUpdate]
 		 */
 		public setFloatingBehaviour(isUpdate?: boolean): void {
 			if (isUpdate || this._floatingInstance === undefined) {
@@ -463,8 +447,6 @@ namespace OSFramework.OSUI.Feature.Balloon {
 
 		/**
 		 * Method to set the Floating configs
-		 *
-		 * @memberof Balloon
 		 */
 		public setFloatingConfigs(): void {
 			this._floatingOptions = {
@@ -484,8 +466,7 @@ namespace OSFramework.OSUI.Feature.Balloon {
 		/**
 		 * Method to update the FloatingUI options
 		 *
-		 * @param {Providers.OSUI.Utils.FloatingUIOptions} [floatingConfigs]
-		 * @memberof Balloon
+		 * @param [floatingConfigs]
 		 */
 		public updateFloatingConfigs(floatingConfigs?: Utils.FloatingPosition.FloatingPositionConfig): void {
 			if (floatingConfigs !== undefined) {
@@ -498,8 +479,7 @@ namespace OSFramework.OSUI.Feature.Balloon {
 		/**
 		 * Method to update the Position config on the FloatingUI
 		 *
-		 * @param {GlobalEnum.FloatingPosition} position
-		 * @memberof Balloon
+		 * @param position
 		 */
 		public updatePositionOption(position: GlobalEnum.FloatingPosition): void {
 			this.featureOptions.position = position;

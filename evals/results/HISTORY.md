@@ -22,39 +22,50 @@ The 10 evals E01–E10: how legible the library is to coding agents.
 | loop-9 | 2026-09-29 | `5edd346a5` | 99.9 | 94.7 | 100.0 | 100.0 | 100.0 | 98.7 | 75.4 | 72.9 | 80.0 | 60.8 | **88.2** | +0.3 | +23.9 |
 | loop-10 | 2026-09-29 | `82ff0ab5c` | 99.9 | 94.7 | 100.0 | 100.0 | 100.0 | 98.7 | 75.4 | 72.9 | 80.0 | 60.8 | **88.2** | 0.0 | +23.9 |
 | loop-12 | 2026-09-30 | `309303188` | 99.9 | 94.7 | 100.0 | 100.0 | 100.0 | 98.7 | 75.4 | 72.9 | 80.0 | 60.8 | **88.2** | 0.0 | +23.9 |
+| loop-13 | 2026-09-30 | `a4cf5f283` | 100.0 | 94.7 | 100.0 | 100.0 | 94.0 | 98.7 | 74.6 | 73.0 | 79.6 | 60.8 | **87.5** | -0.7 | +23.2 |
 
 ### Per-eval scores
 
-| ID | Eval | Class | baseline | loop-1 | loop-2 | loop-3 | loop-4 | loop-5 | loop-7 | loop-8 | loop-9 | loop-10 | loop-12 | Δ total |
-| --- | --- | :---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| E01 | Context Token Cost | movable | 64.9 | 100.0 | 100.0 | 99.9 | 99.9 | 99.9 | 99.9 | 99.9 | 99.9 | 99.9 | 99.9 | **+35.0** |
-| E02 | Prop Surface & Typing Precision | movable | 94.6 | 94.6 | 94.6 | 94.6 | 94.7 | 94.7 | 94.7 | 94.7 | 94.7 | 94.7 | 94.7 | **+0.1** |
-| E03 | Machine-Readable Schema Completeness | movable | 0.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | **+100.0** |
-| E04 | Type Strictness | movable | 83.2 | 83.2 | 99.2 | 99.3 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | **+16.8** |
-| E05 | Documentation Coverage | movable | 35.8 | 85.8 | 85.8 | 97.6 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | **+64.2** |
-| E06 | Public API Shape Consistency | movable | 97.7 | 97.7 | 97.8 | 97.8 | 98.7 | 98.7 | 98.7 | 98.7 | 98.7 | 98.7 | 98.7 | **+1.0** |
-| E07 | Markup Contract Depth | structural | 75.1 | 75.1 | 75.1 | 75.1 | 75.1 | 75.1 | 75.1 | 72.2 | 75.4 | 75.4 | 75.4 | **+0.3** |
-| E08 | Design Token Semantics | movable | 72.3 | 72.3 | 72.3 | 72.3 | 72.3 | 72.4 | 72.5 | 72.9 | 72.9 | 72.9 | 72.9 | **+0.6** |
-| E09 | CSS Selector Complexity | structural | 79.9 | 79.9 | 79.9 | 79.9 | 79.9 | 79.9 | 79.9 | 80.0 | 80.0 | 80.0 | 80.0 | **+0.1** |
-| E10 | Composition Model & Standards Alignment | structural | 39.4 | 39.4 | 52.4 | 52.4 | 60.8 | 60.8 | 60.8 | 60.8 | 60.8 | 60.8 | 60.8 | **+21.4** |
-| — | **Index** | | **64.3** | **82.8** | **85.7** | **86.9** | **88.1** | **88.2** | **88.2** | **87.9** | **88.2** | **88.2** | **88.2** | **+23.9** |
+| ID | Eval | Class | baseline | loop-1 | loop-2 | loop-3 | loop-4 | loop-5 | loop-7 | loop-8 | loop-9 | loop-10 | loop-12 | loop-13 | Δ total |
+| --- | --- | :---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| E01 | Context Token Cost | movable | 64.9 | 100.0 | 100.0 | 99.9 | 99.9 | 99.9 | 99.9 | 99.9 | 99.9 | 99.9 | 99.9 | 100.0 | **+35.1** |
+| E02 | Prop Surface & Typing Precision | movable | 94.6 | 94.6 | 94.6 | 94.6 | 94.7 | 94.7 | 94.7 | 94.7 | 94.7 | 94.7 | 94.7 | 94.7 | **+0.1** |
+| E03 | Machine-Readable Schema Completeness | movable | 0.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | **+100.0** |
+| E04 | Type Strictness | movable | 83.2 | 83.2 | 99.2 | 99.3 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | **+16.8** |
+| E05 | Documentation Coverage | movable | 35.8 | 85.8 | 85.8 | 97.6 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 94.0 | **+58.2** |
+| E06 | Public API Shape Consistency | movable | 97.7 | 97.7 | 97.8 | 97.8 | 98.7 | 98.7 | 98.7 | 98.7 | 98.7 | 98.7 | 98.7 | 98.7 | **+1.0** |
+| E07 | Markup Contract Depth | structural | 75.1 | 75.1 | 75.1 | 75.1 | 75.1 | 75.1 | 75.1 | 72.2 | 75.4 | 75.4 | 75.4 | 74.6 | **-0.5** |
+| E08 | Design Token Semantics | movable | 72.3 | 72.3 | 72.3 | 72.3 | 72.3 | 72.4 | 72.5 | 72.9 | 72.9 | 72.9 | 72.9 | 73.0 | **+0.7** |
+| E09 | CSS Selector Complexity | structural | 79.9 | 79.9 | 79.9 | 79.9 | 79.9 | 79.9 | 79.9 | 80.0 | 80.0 | 80.0 | 80.0 | 79.6 | **-0.3** |
+| E10 | Composition Model & Standards Alignment | structural | 39.4 | 39.4 | 52.4 | 52.4 | 60.8 | 60.8 | 60.8 | 60.8 | 60.8 | 60.8 | 60.8 | 60.8 | **+21.4** |
+| — | **Index** | | **64.3** | **82.8** | **85.7** | **86.9** | **88.1** | **88.2** | **88.2** | **87.9** | **88.2** | **88.2** | **88.2** | **87.5** | **+23.2** |
 
 ### What moved
 
-From `baseline` (64.3) to `loop-12` (88.2): +23.9 points over 11 runs.
+From `baseline` (64.3) to `loop-13` (87.5): +23.2 points over 12 runs.
 
 Biggest movers:
 
 - E03 Machine-Readable Schema Completeness +100.0
-- E05 Documentation Coverage +64.2
-- E01 Context Token Cost +35.0
+- E05 Documentation Coverage +58.2
+- E01 Context Token Cost +35.1
 - E10 Composition Model & Standards Alignment +21.4
 - E04 Type Strictness +16.8
 - E06 Public API Shape Consistency +1.0
-- E08 Design Token Semantics +0.6
-- E07 Markup Contract Depth +0.3
+- E08 Design Token Semantics +0.7
 - E02 Prop Surface & Typing Precision +0.1
-- E09 CSS Selector Complexity +0.1
+- E09 CSS Selector Complexity -0.3
+- E07 Markup Contract Depth -0.5
+
+### Index by tier (loop-13)
+
+Each eval scored over the components of one tier only; the suite index above is the mean over every measured component.
+
+| Tier | Index | Evals that apply |
+| --- | ---: | --- |
+| pattern | **87.4** | E01, E02, E03, E04, E05, E06, E07, E08, E09, E10 |
+| component | **75.5** | E07, E08, E09 |
+| layout | **71.9** | E08, E09 |
 
 ## Enterprise Readiness Index
 
@@ -70,33 +81,87 @@ The 6 evals R01–R06: how far the token theme and the patterns meet the enterpr
 | loop-9 | 2026-09-29 | `5edd346a5` | 68.9 | 64.7 | 89.3 | 84.4 | 47.9 | 52.4 | **67.9** | 0.0 | +17.2 |
 | loop-10 | 2026-09-29 | `82ff0ab5c` | 68.9 | 64.7 | 89.3 | 84.4 | 47.9 | 52.4 | **67.9** | 0.0 | +17.2 |
 | loop-12 | 2026-09-30 | `309303188` | 68.9 | 64.7 | 89.3 | 84.4 | 47.9 | 52.4 | **67.9** | 0.0 | +17.2 |
+| loop-13 | 2026-09-30 | `a4cf5f283` | 68.9 | 65.6 | 89.3 | 86.4 | 48.9 | 51.6 | **68.5** | +0.6 | +17.8 |
 
 ### Per-eval scores
 
-| ID | Eval | Class | loop-5 | loop-7 | loop-8 | loop-9 | loop-10 | loop-12 | Δ total |
-| --- | --- | :---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| R01 | Enterprise Component Coverage | roadmap | 68.9 | 68.9 | 68.9 | 68.9 | 68.9 | 68.9 | 0.0 |
-| R02 | Accessibility Contract | movable | 31.0 | 64.6 | 64.7 | 64.7 | 64.7 | 64.7 | **+33.7** |
-| R03 | Keyboard Operability | movable | 55.1 | 76.9 | 89.3 | 89.3 | 89.3 | 89.3 | **+34.2** |
-| R04 | Theme Foundations | movable | 75.7 | 83.8 | 84.4 | 84.4 | 84.4 | 84.4 | **+8.7** |
-| R05 | Responsiveness and Density | movable | 44.6 | 47.9 | 47.9 | 47.9 | 47.9 | 47.9 | **+3.3** |
-| R06 | Feedback and State Behaviours | movable | 28.7 | 52.4 | 52.4 | 52.4 | 52.4 | 52.4 | **+23.7** |
-| — | **Index** | | **50.7** | **65.7** | **67.9** | **67.9** | **67.9** | **67.9** | **+17.2** |
+| ID | Eval | Class | loop-5 | loop-7 | loop-8 | loop-9 | loop-10 | loop-12 | loop-13 | Δ total |
+| --- | --- | :---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| R01 | Enterprise Component Coverage | roadmap | 68.9 | 68.9 | 68.9 | 68.9 | 68.9 | 68.9 | 68.9 | 0.0 |
+| R02 | Accessibility Contract | movable | 31.0 | 64.6 | 64.7 | 64.7 | 64.7 | 64.7 | 65.6 | **+34.6** |
+| R03 | Keyboard Operability | movable | 55.1 | 76.9 | 89.3 | 89.3 | 89.3 | 89.3 | 89.3 | **+34.2** |
+| R04 | Theme Foundations | movable | 75.7 | 83.8 | 84.4 | 84.4 | 84.4 | 84.4 | 86.4 | **+10.7** |
+| R05 | Responsiveness and Density | movable | 44.6 | 47.9 | 47.9 | 47.9 | 47.9 | 47.9 | 48.9 | **+4.3** |
+| R06 | Feedback and State Behaviours | movable | 28.7 | 52.4 | 52.4 | 52.4 | 52.4 | 52.4 | 51.6 | **+22.9** |
+| — | **Index** | | **50.7** | **65.7** | **67.9** | **67.9** | **67.9** | **67.9** | **68.5** | **+17.8** |
 
 ### What moved
 
-From `loop-5` (50.7) to `loop-12` (67.9): +17.2 points over 6 runs.
+From `loop-5` (50.7) to `loop-13` (68.5): +17.8 points over 7 runs.
 
 Biggest movers:
 
+- R02 Accessibility Contract +34.6
 - R03 Keyboard Operability +34.2
-- R02 Accessibility Contract +33.7
-- R06 Feedback and State Behaviours +23.7
-- R04 Theme Foundations +8.7
-- R05 Responsiveness and Density +3.3
+- R06 Feedback and State Behaviours +22.9
+- R04 Theme Foundations +10.7
+- R05 Responsiveness and Density +4.3
 
 Unchanged across all runs:
 
 - R01 Enterprise Component Coverage (68.9) — roadmap; moves with new components or features
+
+### Index by tier (loop-13)
+
+Each eval scored over the components of one tier only; the suite index above is the mean over every measured component.
+
+| Tier | Index | Evals that apply |
+| --- | ---: | --- |
+| pattern | **69.9** | R01, R02, R03, R04, R05, R06 |
+| component | **62.5** | R01, R02, R04, R05, R06 |
+| layout | **54.3** | R01, R02, R04, R05, R06 |
+
+## Utilities Index
+
+The 6 evals U01–U06: how predictable and documented the utility classes are for an agent composing styles from them. Measured from `loop-13` on; earlier runs have no value.
+
+### Index over time
+
+| Run | Date | Commit | U01 | U02 | U03 | U04 | U05 | U06 | Index | Δ previous | Δ baseline |
+| --- | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| loop-13 | 2026-09-30 | `a4cf5f283` | 90.6 | 75.0 | 99.4 | 100.0 | 89.4 | 0.0 | **75.7** | — | — |
+
+### Per-eval scores
+
+| ID | Eval | Class | loop-13 | Δ total |
+| --- | --- | :---: | ---: | ---: |
+| U01 | Naming Grammar | movable | 90.6 | 0.0 |
+| U02 | Scale Completeness | movable | 75.0 | 0.0 |
+| U03 | Token Routing | movable | 99.4 | 0.0 |
+| U04 | Documentation Parity | movable | 100.0 | 0.0 |
+| U05 | Synonym Pressure | movable | 89.4 | 0.0 |
+| U06 | Responsive Coverage | roadmap | 0.0 | 0.0 |
+| — | **Index** | | **75.7** | **0.0** |
+
+### What moved
+
+From `loop-13` (75.7) to `loop-13` (75.7): 0.0 points over 1 runs.
+
+Unchanged across all runs:
+
+- U01 Naming Grammar (90.6)
+- U02 Scale Completeness (75.0)
+- U03 Token Routing (99.4)
+- U04 Documentation Parity (100.0)
+- U05 Synonym Pressure (89.4)
+- U06 Responsive Coverage (0.0) — roadmap; moves with new components or features
+
+### Index by tier (loop-13)
+
+Each eval scored over the components of one tier only; the suite index above is the mean over every measured component.
+
+| Tier | Index | Evals that apply |
+| --- | ---: | --- |
+| utility | **72.1** | U01, U02, U03, U04, U05, U06 |
 
 Per-run details (raw measurements, per-component scores, unmeasured pairs) live in `results/<label>.json`.

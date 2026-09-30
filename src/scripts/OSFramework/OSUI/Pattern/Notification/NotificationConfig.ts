@@ -2,23 +2,19 @@
 namespace OSFramework.OSUI.Patterns.Notification {
 	/**
 	 * Class that represents the custom configurations received by the Notification.
-	 *
-	 * @export
-	 * @class NotificationConfig
-	 * @extends {AbstractConfiguration}
 	 */
 	export class NotificationConfig extends AbstractConfiguration {
-		// Milliseconds after which the notification closes itself; 0 or undefined keeps it open.
+		/** Milliseconds after which the notification closes itself; 0 or undefined keeps it open. */
 		public CloseAfterTime: number;
-		// Closes the notification on interaction outside it (click outside or Escape); ignored on native apps.
+		/** Closes the notification on interaction outside it (click outside or Escape); ignored on native apps. */
 		public InteractToClose: boolean;
-		// Enables swipe gestures to dismiss the notification.
+		/** Enables swipe gestures to dismiss the notification. */
 		public NeedsSwipes: boolean;
-		// Screen position: top (default), top-left, top-right, bottom, bottom-left, bottom-right or center.
+		/** Screen position: top (default), top-left, top-right, bottom, bottom-left, bottom-right or center. */
 		public Position: string;
-		// Shows the notification as soon as it is built.
+		/** Shows the notification as soon as it is built. */
 		public StartsOpen: boolean;
-		// Width of the notification (CSS length); 370px by default.
+		/** Width of the notification (CSS length); 370px by default. */
 		public Width: string;
 
 		/**
@@ -26,8 +22,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		 *
 		 * @param isBuilt True when pattern has been built!
 		 * @param key property name
-		 * @returns {boolean} boolean
-		 * @memberof  OSFramework.Patterns.Notification.NotificationConfig
+		 * @returns boolean
 		 */
 		public validateCanChange(isBuilt: boolean, key: string): boolean {
 			if (isBuilt) {
@@ -41,8 +36,7 @@ namespace OSFramework.OSUI.Patterns.Notification {
 		 *
 		 * @param key property name
 		 * @param value value to be check
-		 * @returns {unknown} value
-		 * @memberof  OSFramework.Patterns.Notification.NotificationConfig
+		 * @returns value
 		 */
 		public validateDefault(key: string, value: unknown): unknown {
 			let validatedValue = undefined;

@@ -2,11 +2,6 @@
 namespace OSFramework.OSUI.Patterns.Video {
 	/**
 	 * Defines the interface for OutSystemsUI Patterns
-	 *
-	 * @export
-	 * @class Video
-	 * @extends {AbstractPattern<VideoConfig>}
-	 * @implements {IVideo}
 	 */
 	export class Video extends AbstractPattern<VideoConfig> implements IVideo {
 		// Store the platform events
@@ -22,9 +17,8 @@ namespace OSFramework.OSUI.Patterns.Video {
 
 		/**
 		 * Creates an instance of Video.
-		 * @param {string} uniqueId
-		 * @param {JSON} configs
-		 * @memberof Video
+		 * @param uniqueId
+		 * @param configs
 		 */
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new VideoConfig(configs));
@@ -207,7 +201,6 @@ namespace OSFramework.OSUI.Patterns.Video {
 		 * Sets the A11Y properties when the pattern is built.
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Video.Video
 		 */
 		protected setA11YProperties(): void {
 			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -217,7 +210,6 @@ namespace OSFramework.OSUI.Patterns.Video {
 		 * Sets the callbacks to be used in the pattern.
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Video.Video
 		 */
 		protected setCallbacks(): void {
 			// Check the video time and trigger the event if is 0 with the status Unstarted
@@ -245,7 +237,6 @@ namespace OSFramework.OSUI.Patterns.Video {
 		 * Set the html references that will be used to manage the cssClasses and atribute properties
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Video.Video
 		 */
 		protected setHtmlElements(): void {
 			// Set the video element
@@ -267,7 +258,6 @@ namespace OSFramework.OSUI.Patterns.Video {
 		 * Method to remove all assigned callbacks
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Video.Video
 		 */
 		protected unsetCallbacks(): void {
 			this._platformEventOnStateChanged = undefined;
@@ -281,7 +271,6 @@ namespace OSFramework.OSUI.Patterns.Video {
 		 * Release references to HTML elements.
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Video.Video
 		 */
 		protected unsetHtmlElements(): void {
 			this._videoElement = undefined;
@@ -290,8 +279,6 @@ namespace OSFramework.OSUI.Patterns.Video {
 
 		/**
 		 * Method to build the Video
-		 *
-		 * @memberof OSFramework.Patterns.Video.Video
 		 */
 		public build(): void {
 			super.build();
@@ -306,9 +293,8 @@ namespace OSFramework.OSUI.Patterns.Video {
 		/**
 		 * Method to change the value of configs/current state.
 		 *
-		 * @param {string} propertyName
-		 * @param {unknown} propertyValue
-		 * @memberof OSFramework.Patterns.Video.Video
+		 * @param propertyName
+		 * @param propertyValue
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			// Keep the previous URL to only reload the media element when it actually changes
@@ -356,8 +342,6 @@ namespace OSFramework.OSUI.Patterns.Video {
 
 		/**
 		 * Method to destroy Video instance
-		 *
-		 * @memberof OSFramework.Patterns.Video.Video
 		 */
 		public dispose(): void {
 			this.unsetCallbacks();
@@ -370,8 +354,6 @@ namespace OSFramework.OSUI.Patterns.Video {
 
 		/**
 		 * Method to get video state
-		 *
-		 * @memberof OSFramework.Patterns.Video.Video
 		 */
 		public get getVideoState(): string {
 			return this._videoState;
@@ -380,8 +362,8 @@ namespace OSFramework.OSUI.Patterns.Video {
 		/**
 		 * Set callbacks for the pattern
 		 *
-		 * @param {string} eventName
-		 * @param {GlobalCallbacks.OSGeneric} callback
+		 * @param eventName
+		 * @param callback
 		 @memberof OSFramework.Patterns.Video.Video
 		 */
 		public registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void {
@@ -402,8 +384,7 @@ namespace OSFramework.OSUI.Patterns.Video {
 		/**
 		 * Method to set current time
 		 *
-		 * @param {number} currentTime value in seconds
-		 * @memberof Video
+		 * @param currentTime value in seconds
 		 */
 		public setVideoJumpToTime(currentTime: number): void {
 			this._videoElement.currentTime = currentTime;
@@ -411,8 +392,6 @@ namespace OSFramework.OSUI.Patterns.Video {
 
 		/**
 		 * Method to pause video
-		 *
-		 * @memberof OSFramework.Patterns.Video.Video
 		 */
 		public setVideoPause(): void {
 			this._videoElement.pause();
@@ -420,8 +399,6 @@ namespace OSFramework.OSUI.Patterns.Video {
 
 		/**
 		 * Method to play video
-		 *
-		 * @memberof OSFramework.Patterns.Video.Video
 		 */
 		public setVideoPlay(): void {
 			this._videoElement.play();

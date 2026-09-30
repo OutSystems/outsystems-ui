@@ -30,7 +30,6 @@ namespace OutSystems.OSUI.Utils {
 
 	/**
 	 * Function that exposes if RTL is applied.
-	 * @returns
 	 */
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	export function GetIsRTL(): boolean {
@@ -188,9 +187,8 @@ namespace OutSystems.OSUI.Utils {
 	 * Enables or disables the dark theme at runtime by applying or removing the dark theme class on the document root.
 	 * Use this for scenarios such as a dark/light theme toggle. The change takes effect immediately, without a page reload.
 	 *
-	 * @export
-	 * @param {boolean} IsDark True to enable the dark theme, False to disable it.
-	 * @return {*}  {string} JSON string with Success and ErrorMessage, consistent with the other client actions.
+	 * @param IsDark True to enable the dark theme, False to disable it.
+	 * @returns JSON string with Success and ErrorMessage, consistent with the other client actions.
 	 */
 	export function SetDarkTheme(IsDark: boolean): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -267,9 +265,6 @@ namespace OutSystems.OSUI.Utils {
 
 	/**
 	 * Method that will return the platformType in use.
-	 *
-	 * @export
-	 * @return {*}  {string}
 	 */
 	export function GetPlatformType(): string {
 		return OSFramework.OSUI.Constants.OSPlatform;
@@ -279,9 +274,7 @@ namespace OutSystems.OSUI.Utils {
 	 * Shows and hides the value of an Input of type password, allowing users to view their entered password temporarily for verification or editing purposes.
 	 * If WidgetId does not exist or is left empty, the action affects the first password Input on the screen.
 	 *
-	 * @export
-	 * @param {string} [WidgetId] Identifier of the Input widget.
-	 * @return {*}  {string}
+	 * @param [WidgetId] Identifier of the Input widget.
 	 */
 	export function ShowPassword(WidgetId?: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({

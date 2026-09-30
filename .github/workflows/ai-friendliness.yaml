@@ -10,8 +10,9 @@ name: AI-friendliness gate
 #   2. docs-ai/ (component manifest + llms.txt tiers) must match a fresh generation from the source;
 #      a stale PR fails with the command that regenerates everything (npm run evals:fix).
 #   3. on every push to dev, the suites are recorded as `dev-<sha>` and published to the orphan branch
-#      evals-results (history.json, HISTORY.md, dashboard.json, latest.json, the last 20 run files),
-#      so history advances with the base branch and nothing is committed to dev.
+#      evals-results (history.json, HISTORY.md, dashboard.json, latest.json, the last 20 run files and
+#      the docs-ai/ set of that commit), so history advances with the base branch, the newest llms.txt
+#      set is always fetchable from the branch, and nothing is committed to dev.
 # One job serves both events: the setup steps are shared and the gate steps run on pull requests and
 # dispatches, the recording steps on pushes to dev. Locally: npm run evals:gate && npm run docs:ai:check;
 # npm run evals:fix regenerates the generated files.

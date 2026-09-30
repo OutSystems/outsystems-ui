@@ -3,11 +3,7 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 	/**
 	 * Abstract class that will be responsible for the basic behaviours of a listener, namely storing the callbacks.
 	 *
-	 * @export
 	 * @abstract
-	 * @class AbstractListener
-	 * @implements {IListener<T>}
-	 * @template T
 	 */
 	export abstract class AbstractListener<T> extends AbstractEvent<T> implements IListener {
 		// Store the listener name, to check later if event is supported on the window
@@ -21,8 +17,6 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 		 * Store the listener callback
 		 *
 		 * @protected
-		 * @type {EventListenerObject}
-		 * @memberof AbstractListener
 		 */
 		protected eventCallback: EventListenerObject;
 
@@ -30,16 +24,14 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 		 * Flag to indicate if event will be dispatched to the registered listener before being dispatched to any EventTarget beneath it in the DOM tree.
 		 *
 		 * @protected
-		 * @memberof AbstractListener
 		 */
 		protected useCapture = false;
 
 		/**
 		 * Creates an instance of AbstractListener.
-		 * @param {(HTMLElement | Document | Window)} eventTarget
-		 * @param {(GlobalEnum.HTMLEvent | GlobalEnum.CustomEvent)} eventType
-		 * @param {boolean} [isCustomEvent=false]
-		 * @memberof AbstractListener
+		 * @param eventTarget
+		 * @param eventType
+		 * @param [isCustomEvent=false]
 		 */
 		constructor(
 			eventTarget: HTMLElement | Document | Window,
@@ -63,8 +55,6 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 
 		/**
 		 * Method to add a new eventListener
-		 *
-		 * @memberof AbstractListener
 		 */
 		public addEvent(): void {
 			// Check if event exist in the window
@@ -78,8 +68,6 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 
 		/**
 		 * Method to remove a eventListener
-		 *
-		 * @memberof AbstractListener
 		 */
 		public removeEvent(): void {
 			// Check if event exist in the window
@@ -95,8 +83,6 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 		 * Getter that allows to obtain the eventTarget reference
 		 *
 		 * @readonly
-		 * @type {HTMLElement | Document | Window}
-		 * @memberof AbstractListener
 		 */
 		public get eventTarget(): HTMLElement | Document | Window {
 			return this._eventTarget;
@@ -104,8 +90,6 @@ namespace OSFramework.OSUI.Event.DOMEvents.Listeners {
 
 		/**
 		 * Setter that allows to update the eventTarget reference
-		 *
-		 * @memberof AbstractListener
 		 */
 		public set eventTarget(el: HTMLElement | Document | Window) {
 			this._eventTarget = el;

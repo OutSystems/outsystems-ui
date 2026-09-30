@@ -8,8 +8,8 @@ namespace OSFramework.OSUI.Behaviors {
 	/**
 	 * Trigger a scroll navigation into a given offset position
 	 *
-	 * @param {HTMLElement} element Element where the scroll will happen
-	 * @param isSmooth True if the scroll should be smooth
+	 * @param element Element where the scroll will happen
+	 * @param options True if the scroll should be smooth
 	 */
 	export function Scroll(element: HTMLElement, options: ScrollIntoViewOptions): void {
 		if (element) {
@@ -22,7 +22,7 @@ namespace OSFramework.OSUI.Behaviors {
 	 * Get the Sroll Vertical position based on viewport height
 	 *
 	 * @param scrollableElement Element where the scroll will happen
-	 * @returns {ScrollPosition} ScrollPosition
+	 * @returns ScrollPosition
 	 */
 	export function ScrollVerticalPosition(
 		scrollableElement: HTMLElement = Helper.Dom.ClassSelector(
