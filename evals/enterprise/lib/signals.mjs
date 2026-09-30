@@ -10,65 +10,40 @@ import path from 'node:path';
 
 import { walk } from '../../lib/inventory.mjs';
 import { insideDir } from '../../lib/paths.mjs';
+import { familyMembers, hasRole, namesWhere, registry } from '../../lib/registry.mjs';
+
+/** Every classification below is read from the component registry (evals/components.json). */
+const REG = registry();
 
 /** Patterns whose behaviour is delegated to a provider library (flatpickr, noUiSlider, VirtualSelect, Splide). */
-export const PROVIDER_PATTERNS = new Set([
-	'Carousel',
-	'DatePicker',
-	'Dropdown',
-	'MonthPicker',
-	'RangeSlider',
-	'TimePicker',
-]);
+export const PROVIDER_PATTERNS = namesWhere(REG, (e) => hasRole(e, 'provider'));
 
 /** Patterns that render no interactive control of their own. */
-export const NON_INTERACTIVE_PATTERNS = new Set([
-	'AnimatedLabel',
-	'Gallery',
-	'InlineSvg',
-	'Progress',
-	'SectionIndex',
-	'SwipeEvents',
-	'TouchEvents',
-	'Video',
-]);
+export const NON_INTERACTIVE_PATTERNS = namesWhere(REG, (e) => hasRole(e, 'non-interactive'));
 
 /** Patterns that open a layer and must manage focus and dismissal. */
-export const OVERLAY_PATTERNS = new Set([
-	'BottomSheet',
-	'Dropdown',
-	'DropdownServerSideItem',
-	'Notification',
-	'OverflowMenu',
-	'Sidebar',
-	'Submenu',
-	'Tooltip',
-]);
+export const OVERLAY_PATTERNS = namesWhere(REG, (e) => hasRole(e, 'overlay'));
 
 /** Composite widgets whose keyboard model needs arrow keys. */
-export const COMPOSITE_PATTERNS = new Set([
-	'Carousel',
-	'DatePicker',
-	'MonthPicker',
-	'RangeSlider',
-	'Rating',
-	'Tabs',
-	'TabsHeaderItem',
-	'TimePicker',
-]);
+export const COMPOSITE_PATTERNS = namesWhere(REG, (e) => hasRole(e, 'composite'));
 
-/** Parent and child patterns that implement one keyboard model together (roving focus lives on the parent). */
-export const PATTERN_FAMILIES = {
-	Accordion: ['AccordionItem'],
-	AccordionItem: ['Accordion'],
-	SectionIndex: ['SectionIndexItem'],
-	SectionIndexItem: ['SectionIndex'],
-	Tabs: ['TabsContentItem', 'TabsHeaderItem'],
-	TabsContentItem: ['Tabs'],
-	TabsHeaderItem: ['Tabs'],
-	Wizard: ['WizardItem'],
-	WizardItem: ['Wizard'],
-};
+/** Patterns that attach behaviour to existing elements and render no DOM of their own. */
+export const NO_DOM_PATTERNS = namesWhere(REG, (e) => hasRole(e, 'no-dom'));
+
+/** Patterns that give feedback and should announce it. */
+export const FEEDBACK_PATTERNS = namesWhere(REG, (e) => hasRole(e, 'feedback'));
+
+/** Components the enterprise document expects to offer a density or size axis. */
+export const DENSITY_COMPONENTS = namesWhere(REG, (e) => e.density === true);
+
+/** CSS-only components that are operated (the patterns are interactive unless non-interactive). */
+export const INTERACTIVE_CSS = namesWhere(REG, (e) => e.kind === 'css' && e.interactive === true);
+
+/** Components that load or wait. */
+export const LOADING_COMPONENTS = namesWhere(REG, (e) => e.loading === true);
+
+/** Components that take input and can be invalid. */
+export const VALIDATING_COMPONENTS = namesWhere(REG, (e) => e.validating === true);
 
 /** Shared runtime features, by the name a pattern references and the directory that implements them. */
 export const SHARED_FEATURES = { Balloon: ['src', 'scripts', 'OSFramework', 'OSUI', 'Feature', 'Balloon'] };
@@ -82,7 +57,7 @@ export const SHARED_FEATURES = { Balloon: ['src', 'scripts', 'OSFramework', 'OSU
  */
 export function sharedText(ctx, p, ownText) {
 	const parts = [];
-	for (const name of PATTERN_FAMILIES[/** @type {keyof typeof PATTERN_FAMILIES} */ (p.name)] ?? []) {
+	for (const name of familyMembers(REG, p.name)) {
 		const member = ctx.inventory.patterns.find((x) => x.name === name);
 		if (member) parts.push(patternText(ctx, member));
 	}
@@ -93,9 +68,6 @@ export function sharedText(ctx, p, ownText) {
 	}
 	return parts.join('\n');
 }
-
-/** Patterns that give feedback and should announce it. */
-export const FEEDBACK_PATTERNS = new Set(['ButtonLoading', 'Notification', 'Progress', 'Search']);
 
 /** The theme's foundations: rules that hold for every component (motion guard, focus ring). */
 export const THEME_RESETS = ['src', 'scss', '01-foundations', '_resets.scss'];

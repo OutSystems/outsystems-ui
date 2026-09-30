@@ -153,6 +153,7 @@ function evalOf(m, baseScores) {
 			items: (m.unmeasured ?? []).map((/** @type {any} */ u) => ({ n: baseName(u.name), r: u.reason })),
 		},
 		notApplicable: (m.notApplicable ?? []).length,
+		unmeasuredHint: present?.unmeasuredHint ?? '',
 	};
 }
 

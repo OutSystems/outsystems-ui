@@ -12,76 +12,15 @@ import {
 	componentUniverse,
 	describeChecks,
 	includesAny,
+	INTERACTIVE_CSS,
+	LOADING_COMPONENTS,
 	NON_INTERACTIVE_PATTERNS,
 	patternText,
+	VALIDATING_COMPONENTS,
 	scoreChecks,
 	themeGuards,
 } from '../lib/signals.mjs';
 import { checksCell } from '../../lib/present.mjs';
-
-/** CSS-only components that are operated (the patterns are interactive unless listed as non-interactive). */
-export const INTERACTIVE_CSS = new Set([
-	'action-sheet',
-	'breadcrumbs',
-	'btn',
-	'bulk-actions',
-	'button-group',
-	'checkbox',
-	'dropdown',
-	'dropdown-serverside',
-	'floating-actions',
-	'form',
-	'input-with-icon',
-	'inputs-and-textareas',
-	'list-item',
-	'login',
-	'menu',
-	'pagination',
-	'popover',
-	'popup',
-	'pull-to-refresh',
-	'radio-button',
-	'scrollable-area',
-	'switch',
-	'tag',
-	'upload',
-]);
-/** Components that load or wait. */
-export const LOADING_COMPONENTS = new Set([
-	'ButtonLoading',
-	'Carousel',
-	'Dropdown',
-	'DropdownServerSideItem',
-	'Gallery',
-	'Progress',
-	'Search',
-	'Video',
-	'btn',
-	'card',
-	'form',
-	'list',
-	'list-updating',
-	'table',
-	'upload',
-]);
-/** Components that take input and can be invalid. */
-export const VALIDATING_COMPONENTS = new Set([
-	'DatePicker',
-	'Dropdown',
-	'DropdownServerSideItem',
-	'MonthPicker',
-	'RangeSlider',
-	'Search',
-	'TimePicker',
-	'checkbox',
-	'feedback-message',
-	'form',
-	'input-with-icon',
-	'inputs-and-textareas',
-	'radio-button',
-	'switch',
-	'upload',
-]);
 
 const HOVER = [':hover'];
 const FOCUS = [':focus-visible', ':focus', '.is-focus-in'];

@@ -22,9 +22,12 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+import { createContext } from '../lib/context.mjs';
 import { insideDir } from '../lib/paths.mjs';
+import { loadRegistry } from '../lib/registry.mjs';
 import { normalizeHistoryEntry, normalizeRun, unmeasuredCounts } from '../lib/results.mjs';
 import { SUITES } from '../suites.mjs';
+import { diagnose, renderDoctor } from './doctor.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const evalsDir = path.join(here, '..');
@@ -313,6 +316,10 @@ function main() {
 		if (verdict) verdicts.push(verdict);
 		reports.push(report);
 	}
+	// the component registry section: what a new or renamed component still needs (informational; the
+	// registry test is what fails the job)
+	const doctor = renderDoctor(diagnose(createContext(path.join(evalsDir, '..')), loadRegistry()));
+	if (doctor) reports.push(doctor);
 	if (args.report) {
 		// appended, so it can target $GITHUB_STEP_SUMMARY as well as a fresh file
 		fs.appendFileSync(path.resolve(args.report), `${reports.join('\n\n')}\n`);

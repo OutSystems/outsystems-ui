@@ -10,6 +10,7 @@ import { mean, round1 } from '../../lib/score.mjs';
 import {
 	componentCss,
 	componentUniverse,
+	DENSITY_COMPONENTS,
 	describeChecks,
 	includesAny,
 	NO_PARTIAL,
@@ -18,26 +19,6 @@ import {
 	scoreChecks,
 } from '../lib/signals.mjs';
 import { checksCell, list } from '../../lib/present.mjs';
-
-/** Components the document expects to offer a density or size axis. */
-export const DENSITY_COMPONENTS = new Set([
-	'AccordionItem',
-	'Dropdown',
-	'DropdownServerSideItem',
-	'Tabs',
-	'TabsHeaderItem',
-	'bulk-actions',
-	'card',
-	'card-item',
-	'card-sectioned',
-	'form',
-	'inputs-and-textareas',
-	'list-item',
-	'list-item-content',
-	'menu-app-menu-links',
-	'pagination',
-	'table',
-]);
 
 const LAYOUT = [
 	'display: flex',

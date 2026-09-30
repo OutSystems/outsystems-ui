@@ -13,9 +13,9 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 
 import { insideDir } from './paths.mjs';
+import { registry } from './registry.mjs';
 
 /**
  * @typedef {object} Pattern
@@ -45,15 +45,8 @@ import { insideDir } from './paths.mjs';
  *   contract of its own
  */
 
-/** @type {Record<string, { host: string, reason: string }>} */
-const HOST_STYLED = readHostStyled();
-
-function readHostStyled() {
-	const here = path.dirname(fileURLToPath(import.meta.url));
-	const raw = JSON.parse(fs.readFileSync(insideDir(here, 'host-styled.json'), 'utf8'));
-	delete raw.$comment;
-	return raw;
-}
+/** The component registry: hosts of host-styled partials and story aliases are read from it. */
+const REG = registry();
 
 /**
  * @typedef {object} Inventory
@@ -154,12 +147,6 @@ function resolveScssPartial(srcDir, baseDir, rel) {
 const norm = (s) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
 
 /**
- * CSS components whose story is filed under the platform widget's name (normalised story name).
- * `btn` is styled by the Button widget story, `radio-button` by the RadioGroup widget story.
- */
-const STORY_ALIASES = { btn: 'button', 'radio-button': 'radiogroup' };
-
-/**
  * Exact (case-insensitive) story match, else the longest story name that prefixes the
  * component name (AccordionItem → Accordion). Names are normalised to lower-case alnum.
  * @param {string} name
@@ -169,7 +156,8 @@ const STORY_ALIASES = { btn: 'button', 'radio-button': 'radiogroup' };
 export function matchStory(name, storiesByNorm) {
 	const n = norm(name);
 	if (storiesByNorm.has(n)) return /** @type {string} */ (storiesByNorm.get(n));
-	const alias = STORY_ALIASES[/** @type {keyof typeof STORY_ALIASES} */ (name)];
+	// a component whose story is filed under the platform widget's name (btn → Button, radio-button → RadioGroup)
+	const alias = REG.components[name]?.story;
 	if (alias && storiesByNorm.has(alias)) return /** @type {string} */ (storiesByNorm.get(alias));
 	let best = null;
 	let bestLen = 3; // require at least 4 characters of overlap
@@ -255,7 +243,12 @@ export function buildInventory(root) {
 				.basename(scssFile)
 				.replace(/^_/, '')
 				.replace(/\.scss$/, '');
-			return { name, scssFile, storyFile: matchStory(name, storiesByNorm), host: HOST_STYLED[name] ?? null };
+			return {
+				name,
+				scssFile,
+				storyFile: matchStory(name, storiesByNorm),
+				host: REG.components[name]?.host ?? null,
+			};
 		})
 		.sort((a, b) => a.name.localeCompare(b.name));
 

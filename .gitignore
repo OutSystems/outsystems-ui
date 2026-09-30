@@ -129,3 +129,6 @@ docs/
 
 # Local implementation plans and drafts (never committed)
 specs/
+
+# Built dashboard page (npm run evals:dashboard:page); the template lives in evals/dashboard/
+evals/results/dashboard.html

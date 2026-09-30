@@ -14,6 +14,7 @@ import {
 	describeChecks,
 	FEEDBACK_PATTERNS,
 	includesAny,
+	NO_DOM_PATTERNS,
 	OVERLAY_PATTERNS,
 	patternText,
 	scoreChecks,
@@ -22,8 +23,6 @@ import {
 import { checksCell, list } from '../../lib/present.mjs';
 
 export const ARIA_NEEDLES = ['A11Y.', 'aria-', "'role'", '"role"'];
-/** Patterns that attach behaviour to existing elements and render no DOM of their own. */
-export const NO_DOM_PATTERNS = new Set(['SwipeEvents', 'TouchEvents']);
 export const LIVE_NEEDLES = [
 	'Role.Progressbar',
 	'aria-valuenow',

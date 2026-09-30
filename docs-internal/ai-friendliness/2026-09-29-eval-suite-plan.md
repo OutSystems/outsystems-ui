@@ -134,7 +134,7 @@ Enterprise Readiness Index 65.7 → 67.9; AI-Friendliness Index 88.2 → 87.9 (E
 
 ### Task 20: Loop run 3 (`loop-10`) — host-styled components ✅
 Indices unchanged (AI-Friendliness 88.2, Enterprise Readiness 67.9); E07 measures 85 components, 0 without story, 18 not applicable.
-- [x] `evals/lib/host-styled.json`: 18 CSS-only components that style markup owned by something else, each with its host and reason: the app template Layout and Menu blocks (layout, content, header, header-layout-*, menu, menu-layout-*, menu-app-*, menu-header-logo, themegrid-container), the Login common screen (login), runtime utility classes (animate, align-center), the platform runtime (ios-bounce, pull-to-refresh) and the patterns that position it (balloon). E07 reports them as not applicable instead of "no story"; the dashboard shows them as n/a with the host.
+- [x] `evals/lib/host-styled.json` (since Task 21: the `host` field of `evals/components.json`): 18 CSS-only components that style markup owned by something else, each with its host and reason: the app template Layout and Menu blocks (layout, content, header, header-layout-*, menu, menu-layout-*, menu-app-*, menu-header-logo, themegrid-container), the Login common screen (login), runtime utility classes (animate, align-center), the platform runtime (ios-bounce, pull-to-refresh) and the patterns that position it (balloon). E07 reports them as not applicable instead of "no story"; the dashboard shows them as n/a with the host.
 - [x] `llms-patterns.txt` marks them **host-styled** with the host and "do not generate this markup", listing their knobs; the intro explains the rule.
 - [x] Stories for the two components with a contract of their own: `widgets/BulkActions` (Table widget DOM with the Checkbox widget selection column, following the ADR-0009 transcription method) and `ProviderLoginButton`.
 - [ ] Optional: one captured reference story per layout family (Side, Top, Blank, Native) from a generated app, scored once, if the depth of the host an agent works inside should be measured at all.
@@ -145,6 +145,23 @@ Indices unchanged (AI-Friendliness 88.2, Enterprise Readiness 67.9); E07 measure
 - [ ] E02 prop counts and stringly-typed enums: public-contract changes, documented as B-9; not applied.
 - [ ] E08 `!important` removal: cascade change, documented as B-8; not applied.
 - [ ] R03 remaining: Accordion (parent, no activation of its own by design), TimePicker / Carousel arrow keys beyond the provider, Wizard and SectionIndex families; behaviour additions that need design review.
+
+### Task 21: Scaling review, batches 1–3 (`loop-11`) ✅
+**Files:** `evals/suites.mjs`, `evals/components.json`, `evals/lib/{registry,present,results}.mjs`, `evals/tools/{gate,report,dashboard-data,dashboard-page,doctor}.mjs`, `evals/dashboard/index.html`, every metric (`present` block), `evals/README.md`, ADR-0013. Review note: `docs-internal/ai-friendliness/2026-09-30-evals-scaling-review.md` (working note, not committed).
+- [x] Shared runner, libraries, tools, results and tests moved to `evals/`; a suite directory holds metrics, tests and README. `npm test` runs the enterprise tests (the previous glob skipped them: 97 → 107 tests).
+- [x] Suite registry; history entries and run files carry one block per suite (older shapes normalised on read); the runner, gate, history report, dashboard data and page iterate the registry.
+- [x] Self-describing metrics (`present`, `rules`) with a contract test over every suite; the dashboard data tool knows no eval by id. Every measured cell and advice text identical to loop-10.
+- [x] Not applicable distinct from unmeasured in R03–R06, E08 and E09, each with a hint; history records the unmeasured count per eval.
+- [x] Gate: per-eval tolerance (3), no-decrease rules from the metrics, measurement-coverage rule, baseline and origin from the newest `dev` run once one exists; the report carries the doctor section.
+- [x] Component registry seeded from the previous sets (102 entries); inventory and enterprise signals read it; a test fails when the tree and the registry disagree; `npm run evals:doctor` (`--fix`) derives entries from code. Checked: a probe partial is flagged with its derived entry and missing story, and the tree is clean again once removed.
+- [x] Dashboard page template versioned with a build (`npm run evals:dashboard:page -- --check`) that renders the page in a document stub; data set v3 with one block per suite.
+- [x] `evals/README.md` entry point (run, gate rules, add an eval, add a suite, classify a component, publish, hygiene conventions); suite READMEs, design doc and ADR-0013 updated.
+
+### Task 22: Scaling review, batch 4 — CI recording and auto-fix (decision pending)
+- [ ] Record runs on push to `dev` (`dev-<sha>`) and commit history.json, HISTORY.md, dashboard.json and latest.json; per-run files as workflow artifacts.
+- [ ] Regenerate stale generated files (docs-ai, types, HISTORY.md, dashboard.json, registry defaults) in the PR job and commit to same-repo PR branches; forks keep the failing check.
+- [ ] PR-scoped section: components touched by the PR with their cells before → after.
+- [ ] Dashboard home: artifact with manual refresh, or GitHub Pages through the deploy-docs branch.
 
 ### Task 12: Report + ADR
 **Files:** `docs-internal/ai-friendliness/REPORT.md`, `docs-internal/adr/ADR-0011-ai-friendliness-eval-suite.md`, ADR log row.

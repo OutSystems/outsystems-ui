@@ -11,16 +11,15 @@ commit and track progression over time.
 
 ## Run
 
+This suite runs through the shared runner in `evals/`; see [`evals/README.md`](../README.md) for every
+command. The ones used most:
+
 ```bash
-npm run evals                          # full run of both suites (E01–E10 and the enterprise R01–R06), label = run-<sha>; also refreshes results/HISTORY.md
-npm run evals -- --suite enterprise    # one suite only (partial run; see evals/enterprise/README.md)
-npm run evals:report                   # regenerate results/HISTORY.md (index over time) from history.json
-npm run evals:dashboard                # regenerate results/dashboard.json (history, per-eval next steps, per-component hints); the dashboard artifact reads this document from its database — publish it after a run to refresh the page
-npm run evals:gate -- --report out.md  # gate + Markdown before/after table (what the PR comment shows): the table compares with the oldest recorded run (the state before the branch's work; --report-baseline <label> to choose), the pass/fail verdict with the newest
-npm run evals -- --label loop-2        # named run (updates results/history.json)
-npm run evals -- --only E01,E03        # subset (written, but not added to history)
-npm run evals -- --compare baseline loop-2
-npm run evals:test                     # unit tests for the suite itself
+npm run evals -- --label <name>        # full run of every suite; updates results/history.json, HISTORY.md, dashboard.json
+npm run evals -- --suite ai            # this suite only (partial run, nothing written to history)
+npm run evals -- --only E01,E03        # a few evals (partial run)
+npm run evals:gate -- --report out.md  # every suite gated; before → after tables (what the PR comment shows)
+npm test                               # unit tests, including this suite's formula tests
 ```
 
 `E01` reads `dist/ODC.OutSystemsUI.d.ts` for the public-typings size when present (run
@@ -30,23 +29,23 @@ npm run evals:test                     # unit tests for the suite itself
 ## Output
 
 - `results/<label>.json` — full run: per-metric score, formula, raw counters, per-component rows
-  (sorted worst-first) and the list of component/metric pairs that could not be measured, with the reason.
-- `results/history.json` — one row per label: date, git SHA, the ten scores and the index.
+  (sorted worst-first), the component/metric pairs that could not be measured (with the reason) and the components the eval does not apply to (with the reason and a hint).
+- `results/history.json` — one entry per label: date, git SHA, branch, and per suite the scores, the index and the unmeasured count per eval.
 
 ## The ten evals
 
-| ID | Eval | Criterion | Movable by non-breaking changes? |
-| --- | --- | --- | --- |
-| E01 | Context Token Cost | Token & context efficiency | yes (complete manifest cards count as the cheaper source) |
-| E02 | Prop Surface & Typing Precision | Schema & anatomy | yes |
-| E03 | Machine-Readable Schema Completeness | Schema & metadata | yes |
-| E04 | Type Strictness | Type-constrained determinism | yes |
-| E05 | Documentation Coverage | Agent documentation (llms.txt tiers) | yes |
-| E06 | Public API Shape Consistency | Snippet predictability | yes |
-| E07 | Markup Contract Depth | Anatomy & composition | structural |
-| E08 | Design Token Semantics | Semantic tokens & theming | yes |
-| E09 | CSS Selector Complexity | Predictable cascade | structural |
-| E10 | Composition Model & Standards Alignment | Pre-training density | structural |
+| ID  | Eval                                    | Criterion                            | Movable by non-breaking changes?                          |
+| --- | --------------------------------------- | ------------------------------------ | --------------------------------------------------------- |
+| E01 | Context Token Cost                      | Token & context efficiency           | yes (complete manifest cards count as the cheaper source) |
+| E02 | Prop Surface & Typing Precision         | Schema & anatomy                     | yes                                                       |
+| E03 | Machine-Readable Schema Completeness    | Schema & metadata                    | yes                                                       |
+| E04 | Type Strictness                         | Type-constrained determinism         | yes                                                       |
+| E05 | Documentation Coverage                  | Agent documentation (llms.txt tiers) | yes                                                       |
+| E06 | Public API Shape Consistency            | Snippet predictability               | yes                                                       |
+| E07 | Markup Contract Depth                   | Anatomy & composition                | structural                                                |
+| E08 | Design Token Semantics                  | Semantic tokens & theming            | yes                                                       |
+| E09 | CSS Selector Complexity                 | Predictable cascade                  | structural                                                |
+| E10 | Composition Model & Standards Alignment | Pre-training density                 | structural                                                |
 
 Formulas, bands and calibration are documented in
 [`docs-internal/ai-friendliness/2026-09-29-eval-suite-design.md`](../../docs-internal/ai-friendliness/2026-09-29-eval-suite-design.md)
@@ -55,16 +54,19 @@ and repeated in each metric module's `formula` field (also written into every re
 ## Layout
 
 ```
-run.mjs            CLI
-lib/               inventory · tokens · ts (compiler API) · scss · markup · manifest · expectations · score · results · context
-metrics/           E01 … E10, one module each: { id, name, criterion, formula, movable, compute(ctx) }
-tests/             node:test unit tests (formulas are tested with synthetic inputs; helpers with fixtures)
-results/           committed snapshots + history
+metrics/           E01 … E10, one module each: { id, name, criterion, formula, movable, present, compute(ctx) }
+tests/             formula tests with synthetic inputs (metrics.test.mjs)
+README.md          this file
 ```
+
+The runner, the libraries (inventory, TypeScript and SCSS helpers, token counting, scoring), the tools
+(gate, history report, dashboard data and page, doctor), the results and the component registry are shared
+by every suite and live one level up, in `evals/`.
 
 ## Extending
 
-Add `metrics/E11-<slug>.mjs` exporting a default metric object and a pure `scoreComponent`/`scoreGlobal`
-function, register it in `metrics/index.mjs`, add a formula test to `tests/metrics.test.mjs`, and
-document the band in the design doc. A metric must report components it cannot measure under
-`unmeasured` instead of scoring them.
+Add `metrics/E11-<slug>.mjs` with a default metric object (formula, `present` block, `compute`) and a pure
+`scoreComponent`/`scoreGlobal` function, register it in `metrics/index.mjs`, add a formula test to
+`tests/metrics.test.mjs`, and document the band in the design doc. The step-by-step guide and the metric
+contract are in [`evals/README.md`](../README.md#adding-an-eval). A metric reports components it cannot
+measure under `unmeasured` and components it does not apply to under `notApplicable`; it never scores either.

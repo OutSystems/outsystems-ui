@@ -53,28 +53,35 @@ Two research criteria are *not* measurable statically inside this repository and
 ## 3. Architecture
 
 ```
-evals/ai-friendliness/
-  run.mjs                 CLI: run all/selected evals, write results, print table, compare labels
+evals/
+  run.mjs                 CLI: run every suite (or one), write results, print tables, compare labels
+  suites.mjs              suite registry: id, index name, eval prefix, metrics, gate tolerances, dashboard tone
+  components.json         component registry: one classified entry per pattern and CSS-only component
   lib/
     inventory.mjs         pattern & component discovery (API files, config/enum/interface, gulp specs, stories, scss)
+    registry.mjs          the component registry: roles, families, hosts, story aliases, state flags; validation
     tokens.mjs            o200k token counting (gpt-tokenizer)
     ts.mjs                TypeScript compiler-API helpers (program, AST walkers, JSDoc, inheritance)
     scss.mjs              per-component SCSS compile (sass), postcss parse, selector specificity/depth
     markup.mjs            HTML template-literal extraction from stories, depth/element counting
-    score.mjs             clamp/linear-band helpers, aggregation
-  metrics/
-    E01-context-tokens.mjs … E10-composition-model.mjs   one module per eval: { id, name, criterion, formula, compute(ctx) }
-  tests/                  node:test unit tests with inline fixtures (TDD)
+    score.mjs             clamp/linear-band helpers; results.mjs aggregation, history and run shapes
+    present.mjs           helpers for a metric's present block (cell hints, advice lists)
+  tools/                  gate · report (HISTORY.md) · dashboard-data (dashboard.json) · dashboard-page · doctor
+  dashboard/index.html    the dashboard page template (built with results/dashboard.json embedded)
   results/
-    history.json          [{ label, date, sha, scores: {E01..E10, index} }]
-    <label>.json          full per-component details for one run
-  README.md               how to run, how to read, how to extend
+    history.json          [{ label, date, sha, branch, suites: { <id>: { scores, index, unmeasured } } }]
+    <label>.json          full per-component details for one run, one block per suite
+  tests/                  node:test unit tests of the shared code
+  ai-friendliness/        metrics/E01 … E10 + index.mjs, tests/metrics.test.mjs, README.md
+  enterprise/             metrics/R01 … R06 + index.mjs, requirements.json, lib/signals.mjs, tests/, README.md
 scripts/generate-ai-docs.mjs   generates docs-ai/* from the same inventory (loop iteration 1)
 docs-ai/                       osui.components.json (+ JSON Schema), llms.txt, llms-components.txt, llms-tokens.txt, llms-patterns.txt
 tests/                         node:test unit tests for src helpers changed in the loop (namespace files transpiled in isolation)
 docs-internal/ai-friendliness/ this design, the plan, the REPORT
-docs-internal/adr/ADR-0011-*   decision record for the suite
+docs-internal/adr/ADR-0011…13  decision records: the suite, the second index, the registries
 ```
+
+**Metric contract.** A metric module exports `{ id, name, criterion, formula, movable, cls?, present, rules?, compute(ctx) }`. `present` (`scope`, `heatmap`, `appliesTo`, `cell`, `advice`, `extra`, `unmeasuredHint`) is how the dashboard shows the eval; `rules` (`no-decrease`) is what the gate enforces on it. `compute` returns `{ score, summary, raw, perComponent, unmeasured, notApplicable }`: *unmeasured* is a component the eval could measure but lacks input for (no story, compile error); *not applicable* is a component with nothing of the eval's kind to check (a non-interactive pattern for keyboard checks, a partial with nothing themeable, a pattern without SCSS for style checks) and carries a hint. Neither counts in the mean; the gate keeps the unmeasured count from growing. The registry (`suites.mjs`) and a contract test (`tests/suites.test.mjs`) make the runner, gate, report and dashboard independent of eval ids; ADR-0013 records the decision.
 
 **Runtime.** Node ≥ 22 (repo pins 24), ESM `.mjs`, zero build step. Reuses existing devDependencies (`typescript`, `sass`, `postcss`, `postcss-selector-parser`); adds one (`gpt-tokenizer`). `.mjs` mirrors the existing `scripts/*.mjs` tooling convention and stays outside `eslint . --ext .ts` and `tsconfig include`, so it cannot affect the library build.
 
@@ -132,7 +139,7 @@ Scores are 0–100, higher is better. `clamp(x)` bounds to [0,1]. Component mean
 - `depth` = maximum element nesting depth across templates; `elements` = element count of the deepest template.
 - Score: `clamp0(100 − 20·max(0, depth − 3) − 4·max(0, elements − 6))`.
 - Calibration: shadcn Accordion usage is `Accordion > AccordionItem > (Trigger, Content)` → depth 3, 4 elements → 100.
-- Not applicable: CSS-only components listed in `lib/host-styled.json` style markup owned by something else (app template Layout and Menu blocks, the Login common screen, the platform runtime, or the patterns that position them). An agent never emits that markup, so they are excluded from the mean and reported as `notApplicable` with their host, distinct from `unmeasured` (a component with a contract of its own but no story).
+- Not applicable: CSS-only components with a `host` in `evals/components.json` style markup owned by something else (app template Layout and Menu blocks, the Login common screen, the platform runtime, or the patterns that position them). An agent never emits that markup, so they are excluded from the mean and reported as `notApplicable` with their host, distinct from `unmeasured` (a component with a contract of its own but no story).
 
 ### E08 · Design Token Semantics — Semantic Tokens & Theming
 - Unit: component SCSS file (04-patterns, 03-widgets, 02-layout; vendor `_lib`, `_ss_preview`, `provider/` excluded).

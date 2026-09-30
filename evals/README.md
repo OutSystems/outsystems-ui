@@ -1,0 +1,157 @@
+# Evals
+
+Offline, deterministic measurements of the OutSystems UI library, organised in **suites**. Each suite
+answers one question with its own index (an unweighted mean of its evals, 0–100); indices are never merged.
+
+| Suite        | Directory                                       | Index                                | Question                                                                     |
+| ------------ | ----------------------------------------------- | ------------------------------------ | ---------------------------------------------------------------------------- |
+| `ai`         | [`ai-friendliness/`](ai-friendliness/README.md) | AI-Friendliness Index (E01–E10)      | how legible the library is to coding agents                                  |
+| `enterprise` | [`enterprise/`](enterprise/README.md)           | Enterprise Readiness Index (R01–R06) | how far the token theme and the patterns meet the enterprise UI requirements |
+
+Everything else in this directory is shared: the runner, the libraries, the tools, the results and the
+component registry.
+
+```
+evals/
+  run.mjs              CLI: run every suite (or one), write results, print tables, compare labels
+  suites.mjs           the suite registry: id, index name, eval prefix, metrics, gate tolerances, dashboard tone
+  components.json      the component registry: one classified entry per pattern and CSS-only component
+  lib/                 inventory (discovery) · registry · context · ts · scss · tokens · markup · manifest · expectations · score · results · present · paths
+  tools/               gate · report (HISTORY.md) · dashboard-data (dashboard.json) · dashboard-page · doctor
+  dashboard/           index.html, the dashboard page template
+  results/             history.json · HISTORY.md · dashboard.json · <label>.json per run
+  tests/               node:test unit tests of the shared code (each suite tests its own metrics)
+  <suite>/             metrics/ (one module per eval + index.mjs) · tests/ · README.md
+```
+
+## Run
+
+```bash
+npm run evals -- --label <name>           # full run of every suite; updates history.json, HISTORY.md, dashboard.json
+npm run evals -- --suite enterprise       # one suite (partial run, nothing written to history)
+npm run evals -- --only E01,R03           # a few evals (partial run)
+npm run evals -- --compare loop-10 loop-11
+npm run evals:gate -- --report out.md     # every suite gated; Markdown before → after tables (what the PR comment shows)
+npm run evals:doctor                      # the tree vs the component registry; --fix appends derived entries
+npm run evals:report                      # regenerate results/HISTORY.md
+npm run evals:dashboard                   # regenerate results/dashboard.json
+npm run evals:dashboard:page -- --check   # build results/dashboard.html from the template and render-check it
+npm test                                  # unit tests: scripts, shared code, every suite
+```
+
+A fresh clone needs `npm install` and `npm run build:tokens` (the SCSS evals compile against the generated
+tokens). A full run takes about 30 s; the metrics themselves about 7 s.
+
+## What a run records
+
+- `results/<label>.json`: per suite, each eval's score, formula, raw counters, per-component rows, the
+  components it could not measure (`unmeasured`, with the reason) and the components it does not apply to
+  (`notApplicable`, with the reason and a hint). Unmeasured and not-applicable components do not count in
+  the score: an eval averages what it measured.
+- `results/history.json`: one entry per label: date, commit, branch, and per suite the scores, the index
+  and the unmeasured count per eval.
+- `results/HISTORY.md` and `results/dashboard.json`: rendered from the two above; tests assert both are fresh.
+
+## The gate
+
+`npm run evals:gate` runs every suite without writing results and compares each with its baseline: the
+newest run recorded on `dev` when history has one (`branch: "dev"` or a `dev-` label), else the newest run
+of any label (`--baseline <label>` to choose). Per suite it applies:
+
+1. the index may not drop by more than `maxDrop` points (1);
+2. no single eval may drop by more than `maxEvalDrop` points (3);
+3. evals that declare a `no-decrease` rule may not go down at all (R01, component coverage);
+4. no eval may leave more components unmeasured than the baseline did (once the baseline records counts).
+
+The `--report` tables compare with the origin (the newest `dev` run, else the oldest run carrying the suite:
+the state before the branch's work; `--report-baseline <label>` to choose) and name the baseline the verdict
+used. The report ends with the component registry section when the tree and `components.json` disagree.
+Tolerances live per suite in `suites.mjs`; `--max-drop`, `--max-drop-<suite>` and `--max-eval-drop` override
+them for one run.
+
+## Adding an eval
+
+1. Create `<suite>/metrics/<ID>-<slug>.mjs` exporting a default metric object:
+
+    ```js
+    export default {
+    	id: 'E11', // <suite prefix><two digits>, unique across suites
+    	name: '…',
+    	criterion: '…', // the research or requirements criterion it measures
+    	formula: '…', // repeated in every results file
+    	movable: true, // moves with additive changes; false = structural (or cls: 'roadmap')
+    	present: {
+    		scope: '…', // what a per-component cell means and why some components have none
+    		heatmap: true, // perComponent rows are components → a dashboard column
+    		appliesTo: 'both', // 'pattern' | 'css' | 'both'
+    		unmeasuredHint: '…', // what gives an unmeasured component what the eval reads
+    		cell(row) {
+    			return { s: row.score, h: '…' };
+    		}, // one measured row → score and hint
+    		advice(m) {
+    			return ['…'];
+    		}, // eval-level next steps from the latest result
+    	},
+    	// rules: [{ kind: 'no-decrease', why: '…' }],      // optional gate rule on this eval's score
+    	compute(ctx) {
+    		return { score, summary, raw, perComponent, unmeasured, notApplicable };
+    	},
+    };
+    ```
+
+    Keep the scoring in a pure `scoreComponent` / `scoreGlobal` function and test it with synthetic inputs.
+    Report what you cannot measure under `unmeasured` (`{ name, reason }`) and what does not apply under
+    `notApplicable` (`{ name, reason, hint }`); never score either.
+
+2. Register it in `<suite>/metrics/index.mjs`. The contract test in `tests/suites.test.mjs` checks the
+   shape; the gate, HISTORY.md and dashboard.json pick the eval up from the registry.
+3. Add a formula test to the suite's tests and document the band in the design document.
+
+## Adding a suite
+
+1. Create `evals/<suite>/` with `metrics/index.mjs` (exporting `metrics`), `tests/` and a `README.md`.
+2. Add one entry to `suites.mjs`: `id`, `name`, `indexName`, `idPrefix`, `describe`, `metrics`, `maxDrop`,
+   `maxEvalDrop`, `tone`. The runner, gate, history report, dashboard data and page iterate the registry.
+3. Run `npm run evals -- --label <name>`: the first run that carries the suite becomes its baseline.
+
+## Classifying a component
+
+The inventory (`lib/inventory.mjs`) discovers components from the tree: a `*API.ts` file is a pattern, its
+SCSS comes from the gulp spec, its story is matched by name; a partial under `src/scss/02-layout`,
+`03-widgets` or `04-patterns` is a CSS-only component. What a component _is_ comes from `components.json`:
+
+| Field                              | Applies to | Meaning                                                                                                                                                                                                      |
+| ---------------------------------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `kind`                             | all        | `pattern` or `css`; must match discovery                                                                                                                                                                     |
+| `roles`                            | patterns   | `provider` (behaviour in a provider library), `overlay` (opens a layer: Escape, focus), `composite` (arrow keys), `feedback` (announces status), `non-interactive`, `no-dom` (attaches to existing elements) |
+| `family`                           | patterns   | patterns implementing one keyboard model together share the parent's name (Tabs, Accordion, Wizard, SectionIndex)                                                                                            |
+| `host` `{ host, reason }`          | css        | styles markup something else emits (app template blocks, common screens, the runtime): no markup contract of its own                                                                                         |
+| `story`                            | css        | normalised story name when it differs from the component name (`btn` → `button`)                                                                                                                             |
+| `interactive`                      | css        | operated by the user (patterns are interactive unless `non-interactive`)                                                                                                                                     |
+| `loading`, `validating`, `density` | all        | has a loading state, an invalid state, or is expected to offer a density axis                                                                                                                                |
+| `derived`                          | all        | appended by the doctor from code signals; review, adjust and remove the flag                                                                                                                                 |
+
+A test fails when the registry and the inventory disagree. When a component is added or renamed:
+
+```bash
+npm run evals:doctor            # what is unclassified, stale or without a story, with the entry the code suggests
+npm run evals:doctor -- --fix   # append the derived entries, drop stale ones; then review components.json
+npm run docs:ai                 # regenerate docs-ai/ (the manifest card and llms files)
+npm run evals -- --label <name> # measure; the new component appears in every applicable eval
+```
+
+The requirements of the enterprise suite (`enterprise/requirements.json`) name the evidence that satisfies
+them, so a component that fulfils a missing requirement flips it without editing the file.
+
+## Publishing the dashboard
+
+`npm run evals:dashboard:page -- --check` builds `results/dashboard.html` from `dashboard/index.html` with
+`results/dashboard.json` embedded and render-checks it. The page also refreshes from the artifact database
+document `evals/dashboard` when published as an artifact; write the new `dashboard.json` there after a run.
+
+## Conventions the static analysis expects
+
+Every path built from data goes through `insideDir` (`lib/paths.mjs`); scanners are substring tests, never
+regular expressions over source text; no nested template literals; `String.raw` for backslashes; explicit
+comparators for every sort; functions under the cognitive-complexity limit; no code execution or spawned
+processes except the gate running the runner. `.wiz` lists `evals/**` as by design.
