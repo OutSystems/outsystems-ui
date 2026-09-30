@@ -88,9 +88,11 @@ found four gaps:
 - Scores are unchanged by the refactor (loop-10 and loop-11 agree to the decimal); dashboard cells differ
   only where not-applicable rows now carry their reason and hint.
 - The history file changed shape once; readers normalise the old shape, so older run files stay readable.
-- What remains manual: recording runs on `dev`, regenerating stale generated files in CI, refreshing the
-  published dashboard (the artifact sandbox cannot fetch from GitHub). These are the CI options of the
-  review's batch 4.
+- Recording: every push to `dev` records `dev-<sha>` and publishes the results to the orphan `evals-results`
+  branch (git plumbing, no checkout, nothing committed to `dev`); the gate reads its baseline there. Stale
+  generated files fail a pull request with instructions (`npm run evals:fix`); no bot commits on PR
+  branches. The dashboard stays an artifact refreshed after a run, because the artifact sandbox cannot fetch
+  from GitHub.
 
 ## References
 

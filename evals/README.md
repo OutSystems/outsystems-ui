@@ -36,6 +36,7 @@ npm run evals:doctor                      # the tree vs the component registry; 
 npm run evals:report                      # regenerate results/HISTORY.md
 npm run evals:dashboard                   # regenerate results/dashboard.json
 npm run evals:dashboard:page -- --check   # build results/dashboard.html from the template and render-check it
+npm run evals:fix                         # regenerate every generated file: docs-ai/, pattern types, HISTORY.md, dashboard.json, registry entries
 npm test                                  # unit tests: scripts, shared code, every suite
 ```
 
@@ -56,7 +57,8 @@ tokens). A full run takes about 30 s; the metrics themselves about 7 s.
 
 `npm run evals:gate` runs every suite without writing results and compares each with its baseline: the
 newest run recorded on `dev` when history has one (`branch: "dev"` or a `dev-` label), else the newest run
-of any label (`--baseline <label>` to choose). Per suite it applies:
+of any label (`--baseline <label>` to choose). In CI the history comes from the `evals-results` branch (see
+"Recording on dev" below), so a pull request is judged against its base branch. Per suite it applies:
 
 1. the index may not drop by more than `maxDrop` points (1);
 2. no single eval may drop by more than `maxEvalDrop` points (3);
@@ -68,6 +70,21 @@ the state before the branch's work; `--report-baseline <label>` to choose) and n
 used. The report ends with the component registry section when the tree and `components.json` disagree.
 Tolerances live per suite in `suites.mjs`; `--max-drop`, `--max-drop-<suite>` and `--max-eval-drop` override
 them for one run.
+
+## Recording on dev
+
+Every push to `dev` runs the job "Record the run on dev" of the same workflow: it seeds the history from the
+`evals-results` branch, runs every suite as `dev-<sha>` with `--branch dev`, and publishes `history.json`,
+`HISTORY.md`, `dashboard.json`, `latest.json` and the last 20 run files to that orphan branch with git
+plumbing (`tools/publish-results.sh`; `--dry-run` builds the commit locally without pushing). Nothing is
+committed to `dev`; the branch holds no source and is never edited by hand (`RESULTS-BRANCH.md` is its
+README). The gate job fetches the branch's `history.json` as its baseline when the branch exists.
+
+## Stale generated files
+
+The gate job fails a pull request whose generated files are stale and says so in the PR comment; it does
+not push fixes. Run `npm run evals:fix` locally: it regenerates `docs-ai/`, the pattern types,
+`HISTORY.md` and `dashboard.json`, and appends derived registry entries for new components, then commit.
 
 ## Adding an eval
 
@@ -146,8 +163,11 @@ them, so a component that fulfils a missing requirement flips it without editing
 ## Publishing the dashboard
 
 `npm run evals:dashboard:page -- --check` builds `results/dashboard.html` from `dashboard/index.html` and the page module `dashboard/dashboard.mjs` with
-`results/dashboard.json` embedded and render-checks it. The page also refreshes from the artifact database
-document `evals/dashboard` when published as an artifact; write the new `dashboard.json` there after a run.
+`results/dashboard.json` embedded and render-checks it. The dashboard lives as a Claude artifact: the page is
+republished from `results/dashboard.html` and the new `dashboard.json` is written to the artifact database
+document `evals/dashboard` after a run (a Claude session or scheduled task does both). The artifact sandbox
+cannot fetch from GitHub, so the workflow does not refresh it; `dashboard.json` on the `evals-results` branch
+is always the newest data set to publish.
 
 ## Conventions the static analysis expects
 

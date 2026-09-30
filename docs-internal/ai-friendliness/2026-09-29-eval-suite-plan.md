@@ -157,11 +157,13 @@ Indices unchanged (AI-Friendliness 88.2, Enterprise Readiness 67.9); E07 measure
 - [x] Dashboard page template versioned with a build (`npm run evals:dashboard:page -- --check`) that renders the page in a document stub; data set v3 with one block per suite.
 - [x] `evals/README.md` entry point (run, gate rules, add an eval, add a suite, classify a component, publish, hygiene conventions); suite READMEs, design doc and ADR-0013 updated.
 
-### Task 22: Scaling review, batch 4 — CI recording and auto-fix (decision pending)
-- [ ] Record runs on push to `dev` (`dev-<sha>`) and commit history.json, HISTORY.md, dashboard.json and latest.json; per-run files as workflow artifacts.
-- [ ] Regenerate stale generated files (docs-ai, types, HISTORY.md, dashboard.json, registry defaults) in the PR job and commit to same-repo PR branches; forks keep the failing check.
-- [ ] PR-scoped section: components touched by the PR with their cells before → after.
-- [ ] Dashboard home: artifact with manual refresh, or GitHub Pages through the deploy-docs branch.
+### Task 22: Scaling review, batch 4 — CI recording and stale-file handling ✅ (decisions: results branch · fail with instructions · artifact)
+**Files:** `.github/workflows/ai-friendliness.yaml` (record job, baseline step), `evals/tools/publish-results.sh`, `evals/RESULTS-BRANCH.md`, `package.json` (`evals:fix`), `evals/run.mjs` (latest.json), `evals/tools/dashboard-data.mjs` (latest.json fallback).
+- [x] Every push to `dev` records `dev-<sha>` and publishes history.json, HISTORY.md, dashboard.json, latest.json and the last 20 run files to the orphan `evals-results` branch with git plumbing; nothing is committed to `dev`. The gate job fetches that history as its baseline when the branch exists, so a PR is judged against its base branch.
+- [x] Stale generated files fail the PR with instructions; `npm run evals:fix` regenerates docs-ai/, the pattern types, HISTORY.md, dashboard.json and the registry entries locally. No bot commits on PR branches.
+- [x] The dashboard stays a Claude artifact, refreshed from `results/dashboard.html` and `dashboard.json` after a run.
+- [ ] PR-scoped section (components touched by the PR with their cells before → after): possible now that `latest.json` lives on the results branch; not started.
+- [ ] The first push to `dev` after the merge creates the branch; until then the gate compares with the committed history.
 
 ### Task 12: Report + ADR
 **Files:** `docs-internal/ai-friendliness/REPORT.md`, `docs-internal/adr/ADR-0011-ai-friendliness-eval-suite.md`, ADR log row.

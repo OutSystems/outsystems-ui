@@ -1,23 +1,28 @@
 name: AI-friendliness gate
 
-# Two checks that keep the library legible to coding agents and ready for enterprise apps:
-#   1. every eval suite of evals/suites.mjs is gated against the newest entry of evals/results/history.json
-#      (the newest run recorded on dev once one exists): its index may not drop by more than 1 point, no
-#      eval by more than 3, no-decrease evals (R01 coverage) not at all, and no eval may leave more
-#      components unmeasured than the baseline; the report also lists components evals/components.json
-#      does not classify yet;
-#   2. docs-ai/ (component manifest + llms.txt tiers) must match a fresh generation from the source.
-# Runs on pull requests into dev and on demand for any branch (Actions → AI-friendliness gate →
-# Run workflow), so the checks can be exercised on a draft PR or a feature branch. Locally:
-#   npm run evals:gate && npm run docs:ai:check
+# Keeps the library legible to coding agents and ready for enterprise apps:
+#   1. on pull requests into dev (and on demand), every eval suite of evals/suites.mjs is gated against
+#      its baseline: its index may not drop by more than 1 point, no eval by more than 3, no-decrease
+#      evals (R01 coverage) not at all, and no eval may leave more components unmeasured than the
+#      baseline. The baseline is the newest run recorded on dev (the evals-results branch, see below),
+#      else the newest entry of evals/results/history.json. The report also lists components that
+#      evals/components.json does not classify yet.
+#   2. docs-ai/ (component manifest + llms.txt tiers) must match a fresh generation from the source;
+#      a stale PR fails with the command that regenerates everything (npm run evals:fix).
+#   3. on every push to dev, the suites are recorded as `dev-<sha>` and published to the orphan branch
+#      evals-results (history.json, HISTORY.md, dashboard.json, latest.json, the last 20 run files),
+#      so history advances with the base branch and nothing is committed to dev.
+# Locally: npm run evals:gate && npm run docs:ai:check; npm run evals:fix regenerates the generated files.
 on:
     pull_request:
         branches: ['dev']
         types: [opened, reopened, synchronize]
+    push:
+        branches: ['dev']
     workflow_dispatch:
         inputs:
             max-drop:
-                description: 'Allowed drop of the AI-Friendliness Index, in points'
+                description: 'Allowed drop of an index, in points'
                 type: string
                 default: '1'
 
@@ -27,12 +32,18 @@ concurrency:
 
 permissions:
     contents: read
-    pull-requests: write # one sticky "before → after" comment per pull request
+
+env:
+    RESULTS_BRANCH: evals-results
 
 jobs:
     gate:
         name: Evals gate and docs-ai freshness
+        if: github.event_name != 'push'
         runs-on: ubuntu-latest
+        permissions:
+            contents: read
+            pull-requests: write # one sticky "before → after" comment per pull request
         steps:
             - name: 📥 Checkout
               uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
@@ -57,13 +68,26 @@ jobs:
             - name: 🧪 Unit tests (suite + generator)
               run: npm test
 
+            # The runs recorded on dev are the baseline once the branch exists; until then the gate
+            # compares with the history committed in the repository.
+            - name: 📚 Baseline from the runs recorded on dev
+              run: |
+                  if git fetch --quiet origin "$RESULTS_BRANCH" 2>/dev/null; then
+                    git show "origin/$RESULTS_BRANCH:history.json" > evals/results/history.json
+                    echo "Baseline: the newest run recorded on dev ($RESULTS_BRANCH branch)."
+                  else
+                    echo "Baseline: evals/results/history.json (no $RESULTS_BRANCH branch yet)."
+                  fi
+
             # Both checks keep going on failure so the report below is always posted; the last
             # step turns their outcomes into the job result.
-            - name: 📊 AI-Friendliness Index must not regress
+            - name: 📊 Indices must not regress
               id: gate
               continue-on-error: true
+              env:
+                  MAX_DROP: ${{ inputs.max-drop || '1' }}
               run: |
-                  node evals/tools/gate.mjs --max-drop "${{ inputs.max-drop || '1' }}" --report gate-report.md
+                  node evals/tools/gate.mjs --max-drop "$MAX_DROP" --report gate-report.md
                   cat gate-report.md >> "$GITHUB_STEP_SUMMARY"
 
             - name: 📄 docs-ai/ must be fresh
@@ -91,10 +115,10 @@ jobs:
                       const fs = require('fs');
                       const report = fs.existsSync('gate-report.md')
                         ? fs.readFileSync('gate-report.md', 'utf8')
-                        : '### 📊 AI-Friendliness Index: ❌ **Failed**\n\nThe evals did not produce a report; see the job log.';
+                        : '### 📊 Evals: ❌ **Failed**\n\nThe evals did not produce a report; see the job log.';
                       const docs = process.env.DOCS_OUTCOME === 'success'
                         ? '✅ `docs-ai/` matches a fresh generation from the source.'
-                        : '❌ `docs-ai/` is stale — run `npm run docs:ai` and commit the result.';
+                        : '❌ `docs-ai/` is stale — run `npm run evals:fix` (regenerates docs-ai/, the pattern types, HISTORY.md, dashboard.json and the component registry) and commit the result.';
                       const body = `<!-- ai-friendliness-gate-comment -->\n${report}\n\n${docs}\n`;
                       const params = { owner: context.repo.owner, repo: context.repo.repo, body };
                       const existing = process.env.EXISTING_COMMENT_ID;
@@ -107,5 +131,51 @@ jobs:
             - name: 🚦 Job result
               if: steps.gate.outcome != 'success' || steps.docs.outcome != 'success'
               run: |
-                  echo "::error::AI-Friendliness gate: ${{ steps.gate.outcome }}; docs-ai freshness: ${{ steps.docs.outcome }}"
+                  echo "::error::Evals gate: ${{ steps.gate.outcome }}; docs-ai freshness: ${{ steps.docs.outcome }}"
                   exit 1
+
+    record:
+        name: Record the run on dev
+        if: github.event_name == 'push'
+        runs-on: ubuntu-latest
+        permissions:
+            contents: write # pushes the evals-results branch only; nothing is committed to dev
+        steps:
+            - name: 📥 Checkout
+              uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+
+            - name: 📦 Setup Node
+              uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
+              with:
+                  node-version: 24
+
+            - name: 📦 Ensure npm >= 11.17
+              run: npm install -g npm@11.18.0 --ignore-scripts
+
+            - name: 🕸️ Install project dependencies
+              run: npm install --ignore-scripts
+
+            - name: 🎨 Generate design tokens
+              run: npm run build:tokens
+
+            # The history the run appends to is the one recorded on dev so far, when it exists.
+            - name: 📚 History from the runs recorded so far
+              run: |
+                  if git fetch --quiet origin "$RESULTS_BRANCH" 2>/dev/null; then
+                    git show "origin/$RESULTS_BRANCH:history.json" > evals/results/history.json
+                  fi
+
+            - name: 📊 Record dev-<sha>
+              run: node evals/run.mjs --label "dev-${GITHUB_SHA:0:9}" --branch dev
+
+            # The branch is written with git plumbing: a tree built from the result files on top of the
+            # previous branch commit (or none, the first time), so no checkout, worktree or token URL is
+            # needed and the working tree of dev is never touched.
+            - name: 📤 Publish to the evals-results branch
+              env:
+                  GIT_AUTHOR_NAME: github-actions[bot]
+                  GIT_AUTHOR_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
+                  GIT_COMMITTER_NAME: github-actions[bot]
+                  GIT_COMMITTER_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
+                  KEEP_RUNS: '20'
+              run: bash evals/tools/publish-results.sh
