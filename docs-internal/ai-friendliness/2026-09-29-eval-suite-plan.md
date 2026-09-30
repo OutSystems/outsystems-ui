@@ -165,6 +165,11 @@ Indices unchanged (AI-Friendliness 88.2, Enterprise Readiness 67.9); E07 measure
 - [x] PR-scoped section: `evals/tools/touched.mjs` maps the changed files (API, contract, typing and SCSS files, story, pattern and provider directories) to components; the gate (`--changed`, `--base-run`) appends each touched component with its heatmap cells before → after and the hints of cells that dropped or sit below 80; the workflow diffs the PR against its base and takes `latest.json` from the results branch.
 - [ ] The first push to `dev` after the merge creates the branch; until then the gate compares with the committed history.
 
+### Task 23: Loops measure pattern code only ✅
+**Files:** `evals/lib/inputs.mjs`, `evals/run.mjs` (`--force`), `evals/lib/results.mjs` (`inputs` in history entries), `evals/tools/publish-results.sh`, `evals/results/history.json`.
+- [x] Rule: a run is recorded only when the fingerprint of `src/` (without generated tokens), `stories/` and `docs-ai/` differs from the newest recorded run's; tooling, dashboard, workflow and docs changes write the run file but no history entry; `--force` overrides for a deliberate re-baseline.
+- [x] History corrected by the same rule, checked against the recording commits: `loop-6` (first enterprise measurement, run on exactly `loop-5`'s tree) folded into `loop-5` as its enterprise block; `loop-11` (tooling only, 0 measured files) removed. Every remaining loop changed pattern sources, stories or agent docs (`loop-8` 29 files, `loop-9` 22, `loop-10` 3, `loop-12` 3 from the `dev` merge). Fingerprints back-filled from the recording commits.
+
 ### Task 12: Report + ADR
 **Files:** `docs-internal/ai-friendliness/REPORT.md`, `docs-internal/adr/ADR-0011-ai-friendliness-eval-suite.md`, ADR log row.
 - [ ] Six sections as requested; BEFORE/AFTER snippets for each documented breaking change; tracking matrix from `results/history.json`.

@@ -45,6 +45,12 @@ tokens). A full run takes about 30 s; the metrics themselves about 7 s.
 
 ## What a run records
 
+A loop is a measurement of pattern code. The runner fingerprints the measured inputs (`src/` without the
+generated tokens, `stories/`, `docs-ai/`) and records a full run in the history only when that fingerprint
+differs from the newest recorded run's; a change to the evals, the dashboard, the workflow or the docs
+writes the run file but adds no entry (`--force` records anyway, for a deliberate re-baseline). The
+recording step on `dev` follows the same rule, so an infrastructure merge publishes nothing.
+
 - `results/<label>.json`: per suite, each eval's score, formula, raw counters, per-component rows, the
   components it could not measure (`unmeasured`, with the reason) and the components it does not apply to
   (`notApplicable`, with the reason and a hint). Unmeasured and not-applicable components do not count in

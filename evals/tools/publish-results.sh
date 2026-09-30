@@ -16,6 +16,11 @@ dry_run=0
 [[ "${1:-}" == "--dry-run" ]] && dry_run=1
 
 label="$(node -e "const h=require('./$results/history.json');const s=[...h].sort((a,b)=>a.date.localeCompare(b.date));console.log(s[s.length-1].label)")"
+# the runner records a run only when the measured inputs changed; nothing new to publish otherwise
+if [[ ! -f "$results/$label.json" ]]; then
+	echo "nothing new to publish: the newest recorded run is $label and this push did not change the measured inputs"
+	exit 0
+fi
 for f in history.json HISTORY.md dashboard.json latest.json "$label.json"; do
 	[[ -f "$results/$f" ]] || { echo "missing $results/$f" >&2; exit 1; }
 done

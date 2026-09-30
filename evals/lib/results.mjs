@@ -22,6 +22,7 @@ import { mean, round1 } from './score.mjs';
  * @property {string} date
  * @property {string} sha
  * @property {string} [branch] branch the run was recorded on, when known
+ * @property {string} [inputs] fingerprint of the measured inputs (lib/inputs.mjs)
  * @property {Record<string, SuiteEntry>} suites one entry per suite the run carried, keyed by suite id
  */
 
@@ -79,7 +80,7 @@ export function unmeasuredCounts(results) {
 
 /**
  * The history entry of a run: identity plus, per suite, scores, index and unmeasured counts.
- * @param {{ label: string, date: string, sha: string, branch?: string, suites: Record<string, { scores: Record<string, number>, index: number, results: any[] }> }} run
+ * @param {{ label: string, date: string, sha: string, branch?: string, inputs?: string, suites: Record<string, { scores: Record<string, number>, index: number, results: any[] }> }} run
  * @returns {HistoryEntry}
  */
 export function historyEntryOf(run) {
@@ -88,9 +89,11 @@ export function historyEntryOf(run) {
 	for (const [id, s] of Object.entries(run.suites)) {
 		suites[id] = { scores: s.scores, index: s.index, unmeasured: unmeasuredCounts(s.results) };
 	}
-	return run.branch
-		? { label: run.label, date: run.date, sha: run.sha, branch: run.branch, suites }
-		: { label: run.label, date: run.date, sha: run.sha, suites };
+	/** @type {HistoryEntry} */
+	const entry = { label: run.label, date: run.date, sha: run.sha, suites };
+	if (run.branch) entry.branch = run.branch;
+	if (run.inputs) entry.inputs = run.inputs;
+	return entry;
 }
 
 /**

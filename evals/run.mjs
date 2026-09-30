@@ -3,17 +3,20 @@
 /**
  * Eval runner for every suite of the registry (suites.mjs).
  *
- *   node evals/run.mjs [--label <name>] [--suite <id>|all] [--only E01,R02] [--branch <name>] [--json] [--no-write]
+ *   node evals/run.mjs [--label <name>] [--suite <id>|all] [--only E01,R02] [--branch <name>] [--json] [--no-write] [--force]
  *   node evals/run.mjs --compare <labelA> <labelB>
  *
  * Each suite has its own index. Writes `results/<label>.json` (full details) and, for full runs of every
- * suite, updates `results/history.json`, HISTORY.md and dashboard.json.
+ * suite, updates `results/history.json`, HISTORY.md and dashboard.json — unless the measured inputs (src/,
+ * stories/, docs-ai/) equal the newest recorded run's: a loop measures pattern code, so a tooling-only
+ * change is not recorded (`--force` overrides).
  */
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { createContext } from './lib/context.mjs';
+import { measuredFingerprint, shouldRecord } from './lib/inputs.mjs';
 import { insideDir, isSingleSegment } from './lib/paths.mjs';
 import {
 	aggregate,
@@ -45,13 +48,13 @@ function resultsFileFor(label) {
 const out = (/** @type {string} */ text) => process.stdout.write(`${text}\n`);
 
 /**
- * @typedef {{ label?: string, only?: string[], suite: string, branch?: string, json: boolean, write: boolean, compare?: [string, string], root?: string }} Args
+ * @typedef {{ label?: string, only?: string[], suite: string, branch?: string, json: boolean, write: boolean, force: boolean, compare?: [string, string], root?: string }} Args
  */
 
 /** @param {string[]} argv */
 function parseArgs(argv) {
 	/** @type {Args} */
-	const args = { json: false, write: true, suite: 'all' };
+	const args = { json: false, write: true, force: false, suite: 'all' };
 	for (let i = 0; i < argv.length; i++) {
 		const a = argv[i];
 		if (a === '--label') args.label = argv[++i];
@@ -60,6 +63,7 @@ function parseArgs(argv) {
 		else if (a === '--branch') args.branch = argv[++i];
 		else if (a === '--json') args.json = true;
 		else if (a === '--no-write') args.write = false;
+		else if (a === '--force') args.force = true;
 		else if (a === '--root') args.root = argv[++i];
 		else if (a === '--compare') args.compare = [argv[++i], argv[++i]];
 		else throw new Error(`Unknown argument: ${a}`);
@@ -113,18 +117,23 @@ function runMetrics(ctx, selected, quiet) {
 }
 
 /**
- * Persist a run: its own JSON file and, for full runs, the history entry, HISTORY.md and dashboard.json.
+ * Persist a run: its own JSON file and, for full runs whose measured inputs changed, the history entry,
+ * HISTORY.md and dashboard.json. Returns the label of the recorded run the inputs equal, when not recorded.
  * @param {any} run
+ * @param {boolean} force record even when the inputs equal the newest recorded run's
+ * @returns {string|null}
  */
-function writeRun(run) {
+function writeRun(run, force) {
 	fs.mkdirSync(resultsDir, { recursive: true });
 	const json = `${JSON.stringify(run, null, '\t')}\n`;
 	fs.writeFileSync(resultsFileFor(run.label), json);
-	if (run.partial) return;
-	// latest.json is what the results branch keeps (not versioned in the repository; see .gitignore)
-	fs.writeFileSync(insideDir(resultsDir, 'latest.json'), json);
+	if (run.partial) return null;
 	const historyFile = insideDir(resultsDir, 'history.json');
 	const history = fs.existsSync(historyFile) ? JSON.parse(fs.readFileSync(historyFile, 'utf8')) : [];
+	const decision = shouldRecord(history, run.inputs, force);
+	if (!decision.record) return decision.same;
+	// latest.json is what the results branch keeps (not versioned in the repository; see .gitignore)
+	fs.writeFileSync(insideDir(resultsDir, 'latest.json'), json);
 	const updated = upsertHistory(
 		history.map((e) => normalizeHistoryEntry(e)),
 		historyEntryOf(run)
@@ -132,13 +141,15 @@ function writeRun(run) {
 	fs.writeFileSync(historyFile, `${JSON.stringify(updated, null, '\t')}\n`);
 	writeHistoryReport(here, updated, SUITES);
 	writeDashboardData(here);
+	return null;
 }
 
 /**
  * @param {any} run
  * @param {Args} args
+ * @param {string|null} notRecorded label of the recorded run whose inputs this run equals, when not recorded
  */
-function printRun(run, args) {
+function printRun(run, args, notRecorded) {
 	if (args.json) {
 		out(JSON.stringify(run, null, 2));
 		return;
@@ -158,6 +169,10 @@ function printRun(run, args) {
 	if (args.write) {
 		const resultsFile = path.relative(process.cwd(), resultsFileFor(run.label));
 		out(`\nResults: ${resultsFile}`);
+		if (notRecorded)
+			out(
+				`Not recorded in history: the measured inputs (src/, stories/, docs-ai/) are those of ${notRecorded}; a loop measures pattern code. Pass --force to record anyway.`
+			);
 	}
 }
 
@@ -217,13 +232,14 @@ function main() {
 		date: new Date().toISOString(),
 		sha: commit,
 		...(branch ? { branch } : {}),
+		inputs: measuredFingerprint(root),
 		node: process.version,
 		tokenizer: ctx.tokenizerName,
 		partial: !full,
 		suites,
 	};
-	if (args.write) writeRun(run);
-	printRun(run, args);
+	const notRecorded = args.write ? writeRun(run, args.force) : null;
+	printRun(run, args, notRecorded);
 }
 
 main();
