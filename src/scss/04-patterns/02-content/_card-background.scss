@@ -9,6 +9,7 @@
 ///
 .card-background {
 	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-card-background-color-rgb: 0, 0, 0;
 	--osui-card-background-border-color: #{variables.$token-border-subtle};
 	--osui-card-background-border-width: #{variables.$token-border-size-025};
 	--osui-card-background-border-radius: var(--border-radius-xl, #{variables.$token-shape-soft-xl});
@@ -35,7 +36,7 @@
 		justify-content: center;
 		position: relative;
 		width: 100%;
-		z-index: var(--layer-local-tier-1);
+		z-index: var(--layer-local-tier-2);
 
 		// Service Studio Preview
 		& {
@@ -67,6 +68,7 @@
 
 		height: 100%;
 		width: 100%;
+		z-index: var(--layer-local-tier-1);
 	}
 
 	&-image {
@@ -79,10 +81,59 @@
 	}
 
 	&-color {
-		opacity: 0.6;
+		/* !important is needed to override the default selector "ex: background-red" that's added through Service Studio */
+		background-color: transparent !important;
+
+		&.background {
+			/* List of colors */
+			$colors: (
+				'primary': variables.$token-semantics-primary-700-rgb,
+				'red': variables.$token-primitives-red-700-rgb,
+				'orange': variables.$token-primitives-orange-700-rgb,
+				'yellow': variables.$token-primitives-yellow-700-rgb,
+				'lime': variables.$token-primitives-lime-700-rgb,
+				'green': variables.$token-primitives-green-700-rgb,
+				'teal': variables.$token-primitives-teal-700-rgb,
+				'blue': variables.$token-primitives-blue-700-rgb,
+				'indigo': variables.$token-primitives-indigo-700-rgb,
+				'violet': variables.$token-primitives-violet-700-rgb,
+				'pink': variables.$token-primitives-pink-700-rgb,
+				'pumpkin': variables.$token-primitives-pumpkin-700-rgb,
+				'aqua': variables.$token-primitives-aqua-700-rgb,
+				'purple': variables.$token-primitives-purple-700-rgb,
+				'magenta': variables.$token-primitives-magenta-700-rgb,
+				'neutral-100': variables.$token-primitives-neutral-100-rgb,
+				'neutral-200': variables.$token-primitives-neutral-200-rgb,
+				'neutral-300': variables.$token-primitives-neutral-300-rgb,
+				'neutral-400': variables.$token-primitives-neutral-400-rgb,
+				'neutral-500': variables.$token-primitives-neutral-500-rgb,
+				'neutral-600': variables.$token-primitives-neutral-600-rgb,
+				'neutral-700': variables.$token-primitives-neutral-700-rgb,
+				'neutral-800': variables.$token-primitives-neutral-800-rgb,
+				'neutral-900': variables.$token-primitives-neutral-900-rgb,
+				'neutral-1000': variables.$token-primitives-neutral-1000-rgb,
+				'neutral-1100': variables.$token-primitives-neutral-1100-rgb,
+				'neutral-1200': variables.$token-primitives-neutral-1200-rgb,
+				'info': variables.$token-semantics-info-700-rgb,
+				'success': variables.$token-semantics-success-700-rgb,
+				'danger': variables.$token-semantics-danger-700-rgb,
+				'warning': variables.$token-semantics-warning-700-rgb,
+			);
+
+			@each $name, $channels in $colors {
+				&-#{$name} {
+					--osui-card-background-color-rgb: #{$channels};
+				}
+			}
+		}
 
 		&:after {
-			background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%);
+			background: linear-gradient(
+				180deg,
+				rgba(var(--osui-card-background-color-rgb), 0.8) 0%,
+				rgba(#{variables.$token-primitives-base-black-rgb}, 0.8) 60%
+			);
+
 			content: '';
 			height: 100%;
 			inset-inline-start: 0;
@@ -90,7 +141,6 @@
 			position: absolute;
 			top: 0;
 			width: 100%;
-			z-index: var(--layer-local-tier-1);
 		}
 	}
 }
