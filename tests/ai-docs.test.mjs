@@ -13,6 +13,7 @@ import {
 	buildUtilitiesManifest,
 	CARD_TOKEN_BUDGET,
 	configSchemaOf,
+	parseVarChain,
 	renderComponentCards,
 	renderCssComponents,
 	renderIndex,
@@ -199,6 +200,21 @@ test('utilities document states the grammar, then every family as template rows 
 		const missing = f.classes.filter((c) => !covered.get(c.name)).map((c) => c.name);
 		assert.deepEqual(missing, [], `${f.name} classes covered by a row`);
 	}
+});
+
+test('parseVarChain splits a var() value into its token and fallback without a regular expression', () => {
+	assert.deepEqual(parseVarChain('var(--token-scale-100, 4px)'), { token: '--token-scale-100', fallback: '4px' });
+	assert.deepEqual(parseVarChain('var(--a, var(--b, 0px))'), { token: '--a', fallback: 'var(--b, 0px)' });
+	assert.deepEqual(parseVarChain(' var(--a) '), { token: '--a', fallback: null });
+	assert.equal(parseVarChain('4px'), null);
+	assert.equal(parseVarChain('var(--a, 4px) solid'), null, 'the value must be one var() call');
+	assert.equal(parseVarChain('var(--a, 4px)) x ('), null, 'unbalanced parentheses are not a chain');
+	assert.equal(parseVarChain('var(a, 4px)'), null, 'the token must be a custom property');
+	assert.match(
+		renderUtilities(ctx),
+		/none = --token-scale-0 \(0px\)/,
+		'the step table still resolves through the parser'
+	);
 });
 
 test('utilities manifest carries the grammar and every class with declarations, variants and tokens', () => {

@@ -126,7 +126,7 @@ Override variables only. App/theme: set roles or --token-* at :root (dark: class
 - bulk-actions: --osui-bulk-actions-check-color --osui-bulk-actions-indeterminate-background --osui-bulk-actions-indeterminate-border-color --osui-checkbox-size
 - button-group: --osui-button-group-container-background --osui-button-group-container-padding --osui-button-group-container-gap --osui-button-group-container-border-radius --osui-button-group-background --osui-button-group-border-color --osui-button-group-border-width --osui-button-group-color --osui-button-group-border-radius --osui-button-group-font-size --osui-button-group-height --osui-button-group-min-width --osui-button-group-padding-inline --osui-button-group-selected-background --osui-button-group-selected-border-color --osui-button-group-selected-color --osui-button-group-hover-background --osui-button-group-disabled-color --osui-button-group-disabled-overlay
 - card: --osui-card-background --osui-card-border-color --osui-card-border-width --osui-card-border-radius --osui-card-padding --osui-card-shadow
-- card-background: --osui-card-background-border-color --osui-card-background-border-width --osui-card-background-border-radius
+- card-background: --osui-card-background-color-rgb --osui-card-background-border-color --osui-card-background-border-width --osui-card-background-border-radius
 - card-item: --osui-card-detail-title-color --osui-card-detail-text-color --osui-card-detail-gap
 - card-sectioned: --osui-card-sectioned-padding
 - chat-message: --osui-chat-message-background --osui-chat-message-border-radius --osui-chat-message-sent-background --osui-chat-message-sent-color --osui-chat-message-status-color --osui-chat-message-status-line-height

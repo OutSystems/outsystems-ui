@@ -484,7 +484,10 @@ function leadingDocText(sf, node) {
 		.map((l) => l.replace(/^\s*(\*|\/\/)\s?/, '').trim())
 		.filter((l) => l && !l.startsWith('@'))
 		// an inline tag (`Whether it starts open. @defaultValue false`) is not part of the description
-		.map((l) => l.replace(/\s+@\w+.*$/, ''))
+		.map((l) => {
+			const tag = l.search(/\s@[A-Za-z]/);
+			return tag >= 0 ? l.slice(0, tag) : l;
+		})
 		.join(' ')
 		.trim();
 	return { hasDoc: comments.length > 0, docText: text };

@@ -145,13 +145,14 @@ jobs:
                         ? '✅ `docs-ai/` matches a fresh generation from the source.'
                         : '❌ `docs-ai/` is stale — merge `dev` if it moved, run `npm run evals:fix` (regenerates docs-ai/, the pattern types, HISTORY.md, dashboard.json and the component registry) and commit the result.';
                       const body = `<!-- ai-friendliness-gate-comment -->\n${report}\n\n${docs}\n`;
-                      const params = { owner: context.repo.owner, repo: context.repo.repo, body };
+                      const params = { owner: context.repo.owner, repo: context.repo.repo };
+                      // one report comment per pull request, re-created rather than edited: an edit leaves the
+                      // comment where it was first posted and notifies nobody, so the report went unnoticed
                       const existing = process.env.EXISTING_COMMENT_ID;
                       if (existing) {
-                        await github.rest.issues.updateComment({ ...params, comment_id: Number(existing) });
-                      } else {
-                        await github.rest.issues.createComment({ ...params, issue_number: context.issue.number });
+                        await github.rest.issues.deleteComment({ ...params, comment_id: Number(existing) });
                       }
+                      await github.rest.issues.createComment({ ...params, issue_number: context.issue.number, body });
 
             - name: 🚦 Job result
               if: env.IS_PUSH != 'true' && (steps.gate.outcome != 'success' || steps.docs.outcome != 'success')

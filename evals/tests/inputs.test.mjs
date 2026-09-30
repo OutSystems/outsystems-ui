@@ -4,7 +4,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { test } from 'node:test';
 
-import { blobId, MEASURED_DIRS, measuredFingerprint, shouldRecord } from '../lib/inputs.mjs';
+import { blobId, blobIds, MEASURED_DIRS, measuredFingerprint, shouldRecord } from '../lib/inputs.mjs';
 
 function scaffold() {
 	const root = fs.mkdtempSync(path.join(os.tmpdir(), 'osui-inputs-'));
@@ -24,6 +24,15 @@ function scaffold() {
 test('blobId is the git blob id of the content', () => {
 	assert.equal(blobId(Buffer.from('')), 'e69de29bb2d1d6434b8b29ae775ad8c2e48c5391');
 	assert.equal(blobId(Buffer.from('hello\n')), 'ce013625030ba8dba906f756967f9e9ca394464a');
+});
+
+test('blobIds hashes many files in one git call, in the order given, outside a repository too', () => {
+	const root = scaffold();
+	const ids = blobIds(root, ['src/a.ts', 'docs-ai/llms.txt']);
+	assert.deepEqual(ids, [blobId(Buffer.from('export const a = 1;\n')), blobId(Buffer.from('# docs\n'))]);
+	assert.deepEqual(blobIds(root, []), []);
+	assert.throws(() => blobIds(root, ['../outside.txt']), RangeError, 'paths stay under the root');
+	fs.rmSync(root, { recursive: true, force: true });
 });
 
 test('measuredFingerprint covers the pattern sources, stories and agent docs, not tooling or generated tokens', () => {

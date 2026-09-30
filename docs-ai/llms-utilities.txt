@@ -129,7 +129,7 @@ Scope: OutSystems UI ships a single token-based theme (light, plus the generated
 - img-cover → height: 100%; object-fit: cover [legacy name]
 - img-rounded → [img] border-radius: 10px [legacy name]
 - img-circle → [img] border-radius: 50% [legacy name]
-- thumbnail → [img] background-color: --token-bg-surface-default (#ffffff); border: --token-border-size-025 (var(--token-scale-025, 1px)) solid var(--color-border); padding: --token-scale-100 (4px) [legacy name]
+- thumbnail → [img] background-color: --token-bg-surface-default (#ffffff); border: var(--token-border-size-025, var(--token-scale-025, 1px)) sol…; padding: --token-scale-100 (4px) [legacy name]
 
 ## Miscellaneous (5 classes; src/scss/05-useful/_miscellaneous.scss)
 

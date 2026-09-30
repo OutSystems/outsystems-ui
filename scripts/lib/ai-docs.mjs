@@ -680,7 +680,33 @@ export function renderCssComponents(ctx) {
 	return `${lines.join('\n')}\n`;
 }
 
-const VAR_CHAIN = /^var\((--[\w-]+)(?:,\s*(.+))?\)$/;
+/**
+ * A whole value of the form `var(--name)` or `var(--name, fallback)`, split without a regular
+ * expression: the token name and the fallback text (null without one); null when the value is anything
+ * else. The fallback may itself be a `var(…)` chain.
+ * @param {string} value
+ * @returns {{ token: string, fallback: string|null }|null}
+ */
+export function parseVarChain(value) {
+	const v = value.trim();
+	if (!v.startsWith('var(') || !v.endsWith(')')) return null;
+	const inner = v.slice(4, -1);
+	const comma = inner.indexOf(',');
+	const token = (comma === -1 ? inner : inner.slice(0, comma)).trim();
+	if (!/^--[\w-]+$/.test(token)) return null;
+	// the closing parenthesis must be the one that ends the outer var(): the fallback is balanced
+	let depth = 0;
+	for (const ch of inner) {
+		if (ch === '(') depth++;
+		else if (ch === ')') {
+			depth--;
+			if (depth < 0) return null;
+		}
+	}
+	if (depth !== 0) return null;
+	const fallback = comma === -1 ? null : inner.slice(comma + 1).trim();
+	return { token, fallback: fallback || null };
+}
 
 /**
  * A CSS value for a text row: a token chain shows the token it reads and the literal it falls back to
@@ -689,11 +715,17 @@ const VAR_CHAIN = /^var\((--[\w-]+)(?:,\s*(.+))?\)$/;
  * @param {string} value
  */
 function shortValue(value) {
-	const m = value.match(VAR_CHAIN);
-	if (m) {
-		let fallback = m[2];
-		for (let inner = fallback?.match(VAR_CHAIN); inner; inner = fallback?.match(VAR_CHAIN)) fallback = inner[2];
-		return fallback ? `${m[1]} (${fallback.trim()})` : m[1];
+	const chain = parseVarChain(value);
+	if (chain) {
+		let fallback = chain.fallback;
+		for (
+			let inner = fallback ? parseVarChain(fallback) : null;
+			inner;
+			inner = fallback ? parseVarChain(fallback) : null
+		) {
+			fallback = inner.fallback;
+		}
+		return fallback ? `${chain.token} (${fallback})` : chain.token;
 	}
 	return value.length > 64 ? `${value.slice(0, 61)}…` : value;
 }
@@ -742,10 +774,9 @@ function templateRow(g) {
 function stepsLine(steps) {
 	return Object.entries(steps)
 		.map(([step, s]) => {
-			const fallback = s.value.match(/^var\(--[\w-]+,\s*([^)]+)\)$/);
-			return s.token
-				? `${step} = ${s.token}${fallback ? ` (${fallback[1].trim()})` : ''}`
-				: `${step} = ${s.value}`;
+			const chain = parseVarChain(s.value);
+			const fallback = chain?.fallback && !chain.fallback.startsWith('var(') ? ` (${chain.fallback})` : '';
+			return s.token ? `${step} = ${s.token}${fallback}` : `${step} = ${s.value}`;
 		})
 		.join(' · ');
 }
