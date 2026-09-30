@@ -6,7 +6,7 @@ Components marked **host-styled** style markup that something else emits (the ap
 
 ## action-sheet (src/scss/04-patterns/03-interaction/_action-sheet.scss)
 Skeleton (from stories/ActionSheet.stories.ts): <div><div><button type="button" class="btn btn-primary" data-open>Open action sheet</button></div><div><div class="action-sheet"><div class="action-sheet-buttons"><div class="action-sheet-actions"><button type="button" class="btn"></button></div></div></div></div></div>
-CSS API: --osui-action-sheet-background --osui-action-sheet-border-radius --osui-action-sheet-cancel-color --osui-action-sheet-color --osui-action-sheet-divider-color --osui-action-sheet-shadow --osui-action-sheet-overlay-background --osui-btn-background --osui-btn-border-radius --osui-btn-color --osui-btn-height --osui-btn-hover-background --osui-btn-active-background --osui-action-sheet-actions-layer
+CSS API: --osui-action-sheet-background --osui-action-sheet-border-radius --osui-action-sheet-cancel-color --osui-action-sheet-color --osui-action-sheet-divider-color --osui-action-sheet-shadow --osui-action-sheet-overlay-background --osui-btn-background --osui-btn-border-radius --osui-btn-color --osui-btn-height --osui-action-sheet-actions-layer
 
 ## alert (src/scss/04-patterns/02-content/_alert.scss)
 Skeleton (from stories/Alert.stories.ts): <div role="alert" aria-live="polite" aria-atomic="true" tabindex="0"><div class="alert-icon OSInline" aria-hidden="true"></div><div class="alert-message"><span></span></div></div>
