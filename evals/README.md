@@ -145,7 +145,7 @@ them, so a component that fulfils a missing requirement flips it without editing
 
 ## Publishing the dashboard
 
-`npm run evals:dashboard:page -- --check` builds `results/dashboard.html` from `dashboard/index.html` with
+`npm run evals:dashboard:page -- --check` builds `results/dashboard.html` from `dashboard/index.html` and the page module `dashboard/dashboard.mjs` with
 `results/dashboard.json` embedded and render-checks it. The page also refreshes from the artifact database
 document `evals/dashboard` when published as an artifact; write the new `dashboard.json` there after a run.
 

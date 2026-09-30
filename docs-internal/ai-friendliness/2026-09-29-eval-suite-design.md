@@ -67,7 +67,7 @@ evals/
     score.mjs             clamp/linear-band helpers; results.mjs aggregation, history and run shapes
     present.mjs           helpers for a metric's present block (cell hints, advice lists)
   tools/                  gate · report (HISTORY.md) · dashboard-data (dashboard.json) · dashboard-page · doctor
-  dashboard/index.html    the dashboard page template (built with results/dashboard.json embedded)
+  dashboard/              index.html (page template) and dashboard.mjs (page logic, mount(document, window, localStorage, data)); the build inlines both with results/dashboard.json
   results/
     history.json          [{ label, date, sha, branch, suites: { <id>: { scores, index, unmeasured } } }]
     <label>.json          full per-component details for one run, one block per suite

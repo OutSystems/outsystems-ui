@@ -7,23 +7,26 @@ import { buildDashboardPage, PLACEHOLDER, renderCheck, REQUIRED_SECTIONS } from 
 
 const evalsDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
-test('buildDashboardPage embeds the committed data set in the template and escapes script-ending sequences', () => {
+test('buildDashboardPage inlines the page module and the committed data set into the template', () => {
 	const html = buildDashboardPage(evalsDir);
 	assert.ok(!html.includes(PLACEHOLDER));
-	assert.match(html, /<script id="data" type="application\/json">\{"v":3,/);
-	const data = /<script id="data" type="application\/json">([\s\S]*?)<\/script>/.exec(html)[1];
-	assert.ok(!data.includes('</'), 'no `</` survives inside the embedded JSON');
-	assert.equal(JSON.parse(data).v, 3, 'the escaped JSON still parses');
+	assert.ok(!html.includes('export function mount('), 'the module export becomes a plain declaration');
+	assert.ok(html.includes('function mount(document, window, localStorage, EMBEDDED)'));
+	assert.ok(html.includes('mount(document, window, localStorage, {"v":3,'), 'the data set is passed to mount');
+	const start =
+		html.indexOf('mount(document, window, localStorage, {') + 'mount(document, window, localStorage, '.length;
+	const json = html.slice(start, html.lastIndexOf(');'));
+	assert.ok(!json.includes('</'), 'no `</` survives inside the embedded JSON');
+	assert.equal(JSON.parse(json).v, 3, 'the escaped JSON still parses');
 	assert.match(html, /<title>[^<]+<\/title>/);
 });
 
-test('the page script renders the committed data set in a document stub and fills every section', () => {
-	const filled = renderCheck(buildDashboardPage(evalsDir));
+test('the page module renders the committed data set in a document stub and fills every section', async () => {
+	const filled = await renderCheck(evalsDir);
 	for (const s of REQUIRED_SECTIONS) assert.ok(filled.includes(s), `${s} is filled (filled: ${filled.join(', ')})`);
 });
 
-test('the page script renders a data set with a single suite and a single run', () => {
-	const html = buildDashboardPage(evalsDir);
+test('the page module renders a data set with a single suite and a single run', async () => {
 	const one = {
 		v: 3,
 		generated: '2026-09-30T00:00:00.000Z',
@@ -71,11 +74,7 @@ test('the page script renders a data set with a single suite and a single run', 
 			{ n: 'comp', k: 'css', cells: { X01: { s: null, w: 'unmeasured', h: 'Not measured (no story).' } } },
 		],
 	};
-	const swapped = html.replace(
-		/<script id="data" type="application\/json">[\s\S]*?<\/script>/,
-		`<script id="data" type="application/json">${JSON.stringify(one)}</script>`
-	);
-	const filled = renderCheck(swapped);
+	const filled = await renderCheck(evalsDir, one);
 	for (const s of REQUIRED_SECTIONS)
 		assert.ok(filled.includes(s), `${s} is filled with one suite (filled: ${filled.join(', ')})`);
 });
