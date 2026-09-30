@@ -1,7 +1,7 @@
 # Eval runs recorded on dev
 
-This branch is written by the `AI-friendliness gate` workflow on every push to `dev` (job "Record the
-run on dev"). It holds no source code; do not commit to it by hand.
+This branch is written by the `AI-friendliness gate` workflow on every push to `dev` (steps "Record
+dev-<sha>" and "Publish to the evals-results branch"). It holds no source code; do not commit to it by hand.
 
 | File                | Content                                                                                   |
 | ------------------- | ----------------------------------------------------------------------------------------- |

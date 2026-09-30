@@ -73,12 +73,12 @@ them for one run.
 
 ## Recording on dev
 
-Every push to `dev` runs the job "Record the run on dev" of the same workflow: it seeds the history from the
+Every push to `dev` runs the recording steps of the same workflow job: it seeds the history from the
 `evals-results` branch, runs every suite as `dev-<sha>` with `--branch dev`, and publishes `history.json`,
 `HISTORY.md`, `dashboard.json`, `latest.json` and the last 20 run files to that orphan branch with git
 plumbing (`tools/publish-results.sh`; `--dry-run` builds the commit locally without pushing). Nothing is
 committed to `dev`; the branch holds no source and is never edited by hand (`RESULTS-BRANCH.md` is its
-README). The gate job fetches the branch's `history.json` as its baseline when the branch exists.
+README). On pull requests the same job fetches the branch's `history.json` as its baseline when the branch exists.
 
 ## Stale generated files
 
