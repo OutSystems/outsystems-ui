@@ -46,6 +46,92 @@ function item(lookup, ids, what, missing, todo, extra = '') {
 	return `<li class="item"><div class="chips">${chips}</div><div><div class="what">${what}</div>${block('missing', missing)}${block('do', todo)}${extra}</div></li>`;
 }
 
+function unmeasuredGroup(evals, lookup) {
+	const un = evals.filter((e) => e.unmeasured.n);
+	if (!un.length) return null;
+	const items = un.map((e) => {
+		const reasons = [...new Set(e.unmeasured.items.map((i) => i.r))].map((r) => esc(r));
+		const names = e.unmeasured.items.map((i) => `<li>${esc(i.n)}</li>`).join('');
+		const count = `${e.unmeasured.n} ${plural(e.unmeasured.n, 'component')}`;
+		const list = `<details><summary>${count}</summary><ul>${names}</ul></details>`;
+		return item(
+			lookup,
+			[e.id],
+			`${esc(e.name)}: ${count}`,
+			reasons.join('; '),
+			esc(e.unmeasuredHint || 'Give the component what the eval reads.'),
+			list
+		);
+	});
+	return {
+		cls: 'warn',
+		title: 'Not measured yet',
+		lead: 'Component / eval pairs the suite cannot score in the latest run; they count as absent, not as zero. Components an eval does not apply to are not listed.',
+		items,
+	};
+}
+
+/** The roadmap group of a suite that reports requirements; null when it reports none. */
+function roadmapGroup(s, lookup) {
+	const reqs = s.extra && s.extra.requirements;
+	if (!reqs) return null;
+	const roadmapIds = s.evals.filter((e) => clsOf(e) === 'roadmap').map((e) => e.id);
+	const own = reqs.filter((r) => r.owner === 'osui' && r.status !== 'offered');
+	const flows = (s.extra.flows || []).filter((f) => f.kit !== 'complete');
+	const byGroup = {};
+	for (const r of own) {
+		if (!byGroup[r.group]) byGroup[r.group] = [];
+		byGroup[r.group].push(r);
+	}
+	const items = Object.entries(byGroup).map(([g, rs]) => {
+		const missing = rs.filter((r) => r.status === 'missing').length;
+		const partial = rs.filter((r) => r.status === 'partial').length;
+		const rows = rs
+			.sort((a, b) => a.status.localeCompare(b.status) || a.name.localeCompare(b.name))
+			.map((r) => requirementRow(r))
+			.join('');
+		return item(
+			lookup,
+			roadmapIds,
+			`${esc(g)}: ${missing} missing, ${partial} partial`,
+			'',
+			'',
+			`<ul class="req-groups">${rows}</ul>`
+		);
+	});
+	if (flows.length) {
+		const text = flows.map((f) => `${esc(f.flow)}: ${esc([...f.missing, ...f.partial].join(', '))}`).join('; ');
+		items.push(
+			item(
+				lookup,
+				roadmapIds,
+				'Flows not kit-complete',
+				text,
+				'A flow is kit-complete when every UI element the document lists for it is offered or delegated.'
+			)
+		);
+	}
+	const delegated = reqs.filter((r) => r.owner !== 'osui');
+	if (delegated.length) {
+		items.push(
+			item(
+				lookup,
+				roadmapIds,
+				`Delegated to other OutSystems products (${delegated.length})`,
+				delegated.map((r) => `${esc(r.name)} → ${esc(r.owner)}`).join('; '),
+				'Reported so the parity table matches the document; not scored here.'
+			)
+		);
+	}
+	const roadmapScore = roadmapIds.length ? f1(lookup[roadmapIds[0]].e.score) : '';
+	return {
+		cls: 'roadmap',
+		title: `Roadmap: ${s.name} requirements not offered yet`,
+		lead: `${roadmapIds.join(', ')} at ${roadmapScore}. New components or features from the requirements document; neither refactors nor breaking changes.`,
+		items,
+	};
+}
+
 /** Human name of a heatmap sort key. */
 function sortLabel(key) {
 	if (key === 'n') return 'name';
@@ -606,90 +692,6 @@ export function mount(document, window, localStorage, EMBEDDED) {
 
 	// ---- findings
 
-	function unmeasuredGroup(evals, lookup) {
-		const un = evals.filter((e) => e.unmeasured.n);
-		if (!un.length) return null;
-		const items = un.map((e) => {
-			const reasons = [...new Set(e.unmeasured.items.map((i) => i.r))].map((r) => esc(r));
-			const names = e.unmeasured.items.map((i) => `<li>${esc(i.n)}</li>`).join('');
-			const count = `${e.unmeasured.n} ${plural(e.unmeasured.n, 'component')}`;
-			const list = `<details><summary>${count}</summary><ul>${names}</ul></details>`;
-			return item(
-				lookup,
-				[e.id],
-				`${esc(e.name)}: ${count}`,
-				reasons.join('; '),
-				esc(e.unmeasuredHint || 'Give the component what the eval reads.'),
-				list
-			);
-		});
-		return {
-			cls: 'warn',
-			title: 'Not measured yet',
-			lead: 'Component / eval pairs the suite cannot score in the latest run; they count as absent, not as zero. Components an eval does not apply to are not listed.',
-			items,
-		};
-	}
-	/** The roadmap group of a suite that reports requirements; null when it reports none. */
-	function roadmapGroup(s, lookup) {
-		const reqs = s.extra && s.extra.requirements;
-		if (!reqs) return null;
-		const roadmapIds = s.evals.filter((e) => clsOf(e) === 'roadmap').map((e) => e.id);
-		const own = reqs.filter((r) => r.owner === 'osui' && r.status !== 'offered');
-		const flows = (s.extra.flows || []).filter((f) => f.kit !== 'complete');
-		const byGroup = {};
-		for (const r of own) {
-			if (!byGroup[r.group]) byGroup[r.group] = [];
-			byGroup[r.group].push(r);
-		}
-		const items = Object.entries(byGroup).map(([g, rs]) => {
-			const missing = rs.filter((r) => r.status === 'missing').length;
-			const partial = rs.filter((r) => r.status === 'partial').length;
-			const rows = rs
-				.sort((a, b) => a.status.localeCompare(b.status) || a.name.localeCompare(b.name))
-				.map((r) => requirementRow(r))
-				.join('');
-			return item(
-				lookup,
-				roadmapIds,
-				`${esc(g)}: ${missing} missing, ${partial} partial`,
-				'',
-				'',
-				`<ul class="req-groups">${rows}</ul>`
-			);
-		});
-		if (flows.length) {
-			const text = flows.map((f) => `${esc(f.flow)}: ${esc([...f.missing, ...f.partial].join(', '))}`).join('; ');
-			items.push(
-				item(
-					lookup,
-					roadmapIds,
-					'Flows not kit-complete',
-					text,
-					'A flow is kit-complete when every UI element the document lists for it is offered or delegated.'
-				)
-			);
-		}
-		const delegated = reqs.filter((r) => r.owner !== 'osui');
-		if (delegated.length) {
-			items.push(
-				item(
-					lookup,
-					roadmapIds,
-					`Delegated to other OutSystems products (${delegated.length})`,
-					delegated.map((r) => `${esc(r.name)} → ${esc(r.owner)}`).join('; '),
-					'Reported so the parity table matches the document; not scored here.'
-				)
-			);
-		}
-		const roadmapScore = roadmapIds.length ? f1(lookup[roadmapIds[0]].e.score) : '';
-		return {
-			cls: 'roadmap',
-			title: `Roadmap: ${s.name} requirements not offered yet`,
-			lead: `${roadmapIds.join(', ')} at ${roadmapScore}. New components or features from the requirements document; neither refactors nor breaking changes.`,
-			items,
-		};
-	}
 	function movableGroup(evals, lookup) {
 		const mov = evals.filter((e) => clsOf(e) === 'movable' && e.score < 99.95);
 		const items = mov.map((e) => {
