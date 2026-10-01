@@ -161,7 +161,7 @@ export function renderHistory(history, suites) {
 		const ids = suite.metrics.map((m) => m.id);
 		const later = runs[0].label !== entries[0].label;
 		const since = later ? ` Measured from \`${runs[0].label}\` on; earlier runs have no value.` : '';
-		const newest = entries.filter((e) => e.suites[suite.id]).at(-1);
+		const newest = entries.findLast((e) => e.suites[suite.id]);
 		lines.push(
 			`## ${suite.indexName}`,
 			'',

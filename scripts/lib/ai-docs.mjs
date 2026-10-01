@@ -362,7 +362,11 @@ function schemaPropOf(d) {
 	else if (/\[\]$|^Array</.test(d.type)) out.type = 'array';
 	else if (/^'[^']*'( \| '[^']*')+$/.test(d.type))
 		out.enum = d.type.split(' | ').map((/** @type {string} */ s) => s.slice(1, -1));
-	else out.description = `${out.description ? `${out.description} ` : ''}(source type: ${d.type})`;
+	else {
+		// out.description is d.description when present
+		const prefix = d.description ? `${d.description} ` : '';
+		out.description = `${prefix}(source type: ${d.type})`;
+	}
 	return out;
 }
 
@@ -738,7 +742,8 @@ function declText(decls) {
 		.slice(0, MAX_DECLS)
 		.map((d) => `${d.prop}: ${shortValue(d.value)}${d.important ? ' !important' : ''}`);
 	const more = decls.length - shown.length;
-	return `${shown.join('; ')}${more > 0 ? ` (+${more} more in osui.utilities.json)` : ''}`;
+	const rest = more > 0 ? ` (+${more} more in osui.utilities.json)` : '';
+	return `${shown.join('; ')}${rest}`;
 }
 
 /**

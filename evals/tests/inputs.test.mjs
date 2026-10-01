@@ -4,7 +4,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { test } from 'node:test';
 
-import { blobId, blobIds, MEASURED_DIRS, measuredFingerprint, shouldRecord } from '../lib/inputs.mjs';
+import { contentHash, MEASURED_DIRS, measuredFingerprint, shouldRecord } from '../lib/inputs.mjs';
 
 function scaffold() {
 	const root = fs.mkdtempSync(path.join(os.tmpdir(), 'osui-inputs-'));
@@ -21,17 +21,24 @@ function scaffold() {
 	return root;
 }
 
-test('blobId is the git blob id of the content', () => {
-	assert.equal(blobId(Buffer.from('')), 'e69de29bb2d1d6434b8b29ae775ad8c2e48c5391');
-	assert.equal(blobId(Buffer.from('hello\n')), 'ce013625030ba8dba906f756967f9e9ca394464a');
+test('contentHash is the SHA-256 of the content with line endings normalised to LF', () => {
+	assert.equal(
+		contentHash(Buffer.from('hello\n')),
+		'5891b5b522d5df086d0ff0b110fbd9d21bb4fc7163af34d08286a2e846f6be03'
+	);
+	assert.equal(
+		contentHash(Buffer.from('a\r\nb\r\n')),
+		contentHash(Buffer.from('a\nb\n')),
+		'a CRLF checkout hashes as LF'
+	);
+	assert.notEqual(contentHash(Buffer.from('a\n')), contentHash(Buffer.from('b\n')));
 });
 
-test('blobIds hashes many files in one git call, in the order given, outside a repository too', () => {
+test('measuredFingerprint is the same for a CRLF and an LF checkout of the same files', () => {
 	const root = scaffold();
-	const ids = blobIds(root, ['src/a.ts', 'docs-ai/llms.txt']);
-	assert.deepEqual(ids, [blobId(Buffer.from('export const a = 1;\n')), blobId(Buffer.from('# docs\n'))]);
-	assert.deepEqual(blobIds(root, []), []);
-	assert.throws(() => blobIds(root, ['../outside.txt']), RangeError, 'paths stay under the root');
+	const lf = measuredFingerprint(root);
+	fs.writeFileSync(path.join(root, 'src', 'a.ts'), 'export const a = 1;\r\n');
+	assert.equal(measuredFingerprint(root), lf);
 	fs.rmSync(root, { recursive: true, force: true });
 });
 

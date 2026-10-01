@@ -40,6 +40,12 @@ function block(className, content) {
 	return content ? `<div class="${className}">${content}</div>` : '';
 }
 
+/** One finding: chips for the evals it moves, what, what is missing, what to do, extra markup. */
+function item(lookup, ids, what, missing, todo, extra = '') {
+	const chips = ids.map((id) => chip(id, lookup)).join('');
+	return `<li class="item"><div class="chips">${chips}</div><div><div class="what">${what}</div>${block('missing', missing)}${block('do', todo)}${extra}</div></li>`;
+}
+
 /** Human name of a heatmap sort key. */
 function sortLabel(key) {
 	if (key === 'n') return 'name';
@@ -61,11 +67,8 @@ function cellOf(c, id, e) {
 	if (hit) return hit;
 	if (e && Array.isArray(e.appliesTo) && !e.appliesTo.includes(c.k)) {
 		const measures = e.appliesTo.map((t) => `${t}s`).join(', ');
-		return {
-			s: null,
-			w: 'na',
-			h: `Not applicable: this eval measures ${measures}; ${OUTSIDE_TIER[c.k] || `${c.k} components are outside it`}.`,
-		};
+		const outside = OUTSIDE_TIER[c.k] || `${c.k} components are outside it`;
+		return { s: null, w: 'na', h: `Not applicable: this eval measures ${measures}; ${outside}.` };
 	}
 	return { s: null, w: 'unmeasured', h: 'No cell in this data set.' };
 }
@@ -603,11 +606,6 @@ export function mount(document, window, localStorage, EMBEDDED) {
 
 	// ---- findings
 
-	/** One finding: chips for the evals it moves, what, what is missing, what to do, extra markup. */
-	function item(lookup, ids, what, missing, todo, extra = '') {
-		const chips = ids.map((id) => chip(id, lookup)).join('');
-		return `<li class="item"><div class="chips">${chips}</div><div><div class="what">${what}</div>${block('missing', missing)}${block('do', todo)}${extra}</div></li>`;
-	}
 	function unmeasuredGroup(evals, lookup) {
 		const un = evals.filter((e) => e.unmeasured.n);
 		if (!un.length) return null;

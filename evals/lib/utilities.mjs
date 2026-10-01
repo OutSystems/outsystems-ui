@@ -171,21 +171,43 @@ export function parseUtilityCss(css) {
 		for (const raw of rule.selectors) {
 			const subject = subjectOf(raw.trim());
 			if (!subject) continue;
-			let entry = classes.get(subject.name);
-			if (!entry) {
-				entry = { name: subject.name, declarations: [], variants: [], tokens: [] };
-				classes.set(subject.name, entry);
-			}
+			const entry = classEntry(classes, subject.name);
 			if (subject.context === '') entry.declarations.push(...declarations);
 			else entry.variants.push({ context: subject.context, declarations });
-			for (const d of declarations) {
-				for (const m of d.value.matchAll(/var\(\s*(--[a-zA-Z0-9-]+)/g)) {
-					if (!entry.tokens.includes(m[1])) entry.tokens.push(m[1]);
-				}
-			}
+			addTokens(entry, declarations);
 		}
 	});
 	return [...classes.values()];
+}
+
+/**
+ * The entry of a class name, created on first sight.
+ * @param {Map<string, UtilityClass>} classes
+ * @param {string} name
+ */
+function classEntry(classes, name) {
+	let entry = classes.get(name);
+	if (!entry) {
+		entry = { name, declarations: [], variants: [], tokens: [] };
+		classes.set(name, entry);
+	}
+	return entry;
+}
+
+/**
+ * Add the custom properties a list of declarations reads through `var()`, once each.
+ * @param {UtilityClass} entry
+ * @param {Declaration[]} declarations
+ */
+function addTokens(entry, declarations) {
+	for (const d of declarations) {
+		for (const m of d.value.matchAll(/var\(\s*(--[a-zA-Z0-9-]+)/g)) addUnique(entry.tokens, m[1]);
+	}
+}
+
+/** @param {string[]} list @param {string} value */
+function addUnique(list, value) {
+	if (!list.includes(value)) list.push(value);
 }
 
 /**
@@ -283,51 +305,80 @@ export function templateGroups(classes) {
 		const key = templateKey(c.name);
 		let g = groups.get(key);
 		if (!g) {
-			g = {
-				key,
-				members: [],
-				props: [],
-				sides: [],
-				steps: [],
-				shades: [],
-				hues: [],
-				radii: [],
-				aligns: [],
-				ns: [],
-				template: null,
-			};
+			g = emptyGroup(key);
 			groups.set(key, g);
 		}
-		g.members.push(c);
-		for (const d of [...c.declarations, ...c.variants.flatMap((v) => v.declarations)]) {
-			if (!g.props.includes(d.prop)) g.props.push(d.prop);
-		}
-		const align = classifyName(c.name).value;
-		if (key.endsWith('{align}') && align && !g.aligns.includes(align)) g.aligns.push(align);
-		else {
-			for (const s of segmentsOf(c.name)) {
-				if (s.kind === 'side' && !g.sides.includes(s.text)) g.sides.push(s.text);
-				if (s.kind === 'step' && !g.steps.includes(s.text)) g.steps.push(s.text);
-				if (s.kind === 'shade' && !g.shades.includes(s.text)) g.shades.push(s.text);
-				if (s.kind === 'hue' && !g.hues.includes(s.text)) g.hues.push(s.text);
-				if (s.kind === 'radius' && !g.radii.includes(s.text)) g.radii.push(s.text);
-				if (s.kind === 'n' && !g.ns.includes(s.text)) g.ns.push(s.text);
-			}
-		}
+		addToGroup(g, c);
 	}
-	const order = (/** @type {readonly string[]} */ list) => (/** @type {string} */ a, /** @type {string} */ b) =>
-		list.indexOf(a) - list.indexOf(b);
-	for (const g of groups.values()) {
-		g.sides.sort(order(SIDES));
-		g.steps.sort(order(STEPS));
-		g.shades.sort(order(SHADES));
-		g.hues.sort(order(HUES));
-		g.radii.sort(order(RADII));
-		g.aligns.sort(order(ALIGNS));
-		g.ns.sort((a, b) => Number(a) - Number(b));
-		g.template = g.members.length >= 3 ? g.key : null;
-	}
+	for (const g of groups.values()) finishGroup(g);
 	return [...groups.values()];
+}
+
+/** The list of a template group that collects each placeholder kind. */
+const GROUP_FIELD = /** @type {const} */ ({
+	side: 'sides',
+	step: 'steps',
+	shade: 'shades',
+	hue: 'hues',
+	radius: 'radii',
+	n: 'ns',
+});
+
+/** The order each list of a template group is sorted in. */
+const GROUP_ORDER = /** @type {const} */ ([
+	['sides', SIDES],
+	['steps', STEPS],
+	['shades', SHADES],
+	['hues', HUES],
+	['radii', RADII],
+	['aligns', ALIGNS],
+]);
+
+/** @param {string} key @returns {TemplateGroup} */
+function emptyGroup(key) {
+	return {
+		key,
+		members: [],
+		props: [],
+		sides: [],
+		steps: [],
+		shades: [],
+		hues: [],
+		radii: [],
+		aligns: [],
+		ns: [],
+		template: null,
+	};
+}
+
+/**
+ * What one class adds to its group: itself, the properties it sets, the values of its placeholders.
+ * @param {TemplateGroup} g
+ * @param {UtilityClass} c
+ */
+function addToGroup(g, c) {
+	g.members.push(c);
+	for (const d of [...c.declarations, ...c.variants.flatMap((v) => v.declarations)]) addUnique(g.props, d.prop);
+	const align = classifyName(c.name).value;
+	if (g.key.endsWith('{align}') && align) {
+		addUnique(g.aligns, align);
+		return;
+	}
+	for (const s of segmentsOf(c.name)) {
+		if (s.kind) addUnique(g[GROUP_FIELD[s.kind]], s.text);
+	}
+}
+
+/** Sort the lists of a group and decide whether it renders as a template. @param {TemplateGroup} g */
+function finishGroup(g) {
+	for (const [field, list] of GROUP_ORDER) {
+		g[field].sort(
+			(a, b) =>
+				/** @type {readonly string[]} */ (list).indexOf(a) - /** @type {readonly string[]} */ (list).indexOf(b)
+		);
+	}
+	g.ns.sort((a, b) => Number(a) - Number(b));
+	g.template = g.members.length >= 3 ? g.key : null;
 }
 
 /**
@@ -398,7 +449,7 @@ export function stepValues(classes, head) {
 		const c = classes.find((x) => x.name === `${head}-${step}`);
 		const d = c?.declarations[0];
 		if (!d) continue;
-		const token = d.value.match(/var\(\s*(--[a-zA-Z0-9-]+)/);
+		const token = /var\(\s*(--[a-zA-Z0-9-]+)/.exec(d.value);
 		out[step] = { value: d.value, token: token ? token[1] : null };
 	}
 	return out;

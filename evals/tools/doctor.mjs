@@ -49,15 +49,7 @@ function has(text, needles) {
 export function suggestEntry({ kind, name, providerDirs = [], text = '', css = '' }) {
 	// a utility family or helper class has classes, not states: its tier is the whole classification
 	if (kind === 'utility') return { kind, derived: true };
-	if (kind !== 'pattern') {
-		/** @type {import('../lib/registry.mjs').Entry} */
-		const e = { kind };
-		if (has(css, SIGNALS.cssInteractive)) e.interactive = true;
-		if (has(css, SIGNALS.cssLoading)) e.loading = true;
-		if (has(css, SIGNALS.cssValidating)) e.validating = true;
-		e.derived = true;
-		return e;
-	}
+	if (kind !== 'pattern') return suggestStyledEntry(kind, css);
 	if (name.endsWith('Events')) return { kind: 'pattern', roles: ['no-dom'], derived: true };
 	const roles = [];
 	if (providerDirs.length) roles.push('provider');
@@ -66,6 +58,22 @@ export function suggestEntry({ kind, name, providerDirs = [], text = '', css = '
 	if (has(text, SIGNALS.feedback)) roles.push('feedback');
 	if (roles.length === 0 && !has(text, SIGNALS.interactive)) roles.push('non-interactive');
 	return roles.length ? { kind: 'pattern', roles, derived: true } : { kind: 'pattern', derived: true };
+}
+
+/**
+ * The entry of a CSS-only component or layout partial: the states its compiled CSS styles.
+ * @param {import('../lib/tiers.mjs').Tier} kind
+ * @param {string} css
+ * @returns {import('../lib/registry.mjs').Entry}
+ */
+function suggestStyledEntry(kind, css) {
+	/** @type {import('../lib/registry.mjs').Entry} */
+	const e = { kind };
+	if (has(css, SIGNALS.cssInteractive)) e.interactive = true;
+	if (has(css, SIGNALS.cssLoading)) e.loading = true;
+	if (has(css, SIGNALS.cssValidating)) e.validating = true;
+	e.derived = true;
+	return e;
 }
 
 /**
