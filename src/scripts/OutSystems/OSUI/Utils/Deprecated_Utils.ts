@@ -11,7 +11,7 @@ namespace OutSystems.OSUI.Utils {
 	 *
 	 */
 	export function GetClosest(elem: HTMLElement, selector: string): unknown {
-		console.warn(`This method is deprecated. Use instead the API OSFramework.OSUI.Helper.Dom.GetClosest`);
+		console.warn(`This method is deprecated.`);
 		return elem.closest(selector) ? elem.closest(selector) : false;
 	}
 
