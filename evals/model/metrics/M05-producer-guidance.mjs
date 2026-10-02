@@ -9,7 +9,7 @@ import { isMarked, isRuntimeOnlyLine, PRODUCERS_HEADING, RUNTIME_GOTCHA_NEEDLES 
 import { round1 } from '../../lib/score.mjs';
 
 /** @param {string|null} text */
-const linesOf = (text) => (text ?? '').split('\n').map((l) => l.replace('\r', ''));
+const linesOf = (text) => (text ?? '').split('\n').map((l) => l.replace(/\r/g, ''));
 
 /**
  * Lines of one `## ` section (from its heading to the next `## `).
