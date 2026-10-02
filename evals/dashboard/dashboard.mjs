@@ -502,11 +502,11 @@ export function mount(document, window, localStorage, EMBEDDED) {
 			rect.addEventListener('mousemove', () => {
 				const i = Number(rect.dataset.i);
 				const r = runs[i];
+				// the tip is a child of the body, so it is placed in page coordinates (viewport box + scroll)
 				const box = svg.getBoundingClientRect();
-				const hostBox = host.getBoundingClientRect();
 				const first = D.suites.find((suite) => r.suites[suite.id]);
-				const px = box.left - hostBox.left + (xs[i] / W) * box.width;
-				const py = box.top - hostBox.top + (y(first ? r.suites[first.id].index : 0) / H) * box.height;
+				const px = box.left + (window.scrollX || 0) + (xs[i] / W) * box.width;
+				const py = box.top + (window.scrollY || 0) + (y(first ? r.suites[first.id].index : 0) / H) * box.height;
 				tip.innerHTML = trendTip(r, runs[i - 1], i);
 				tip.style.left = `${px}px`;
 				tip.style.top = `${py}px`;
