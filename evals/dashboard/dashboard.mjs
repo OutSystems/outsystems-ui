@@ -165,9 +165,6 @@ function roadmapGroup(s, lookup) {
 	};
 }
 
-/** `loop-14` → `L14`: the axis label of a run. */
-const shortLabel = (label) => (label.startsWith('loop-') ? `L${label.slice('loop-'.length)}` : label);
-
 /** Human name of a heatmap sort key. */
 function sortLabel(key) {
 	if (key === 'n') return 'name';
@@ -461,8 +458,8 @@ export function mount(document, window, localStorage, EMBEDDED) {
 		D.suites.forEach((suite, k) => parts.push(trendLine(suite, k, runs, xs, y)));
 		runs.forEach((r, i) => {
 			parts.push(
-				// short run labels: loop-14 reads L14; the commit stays in the tooltip
-				`<text x="${xs[i]}" y="${H - padB + 20}" text-anchor="middle">${esc(shortLabel(r.label))}</text>`
+				// the axis numbers the runs in date order (L1, L2, …); label, commit and date stay in the tooltip
+				`<text x="${xs[i]}" y="${H - padB + 20}" text-anchor="middle">L${i + 1}</text>`
 			);
 		});
 		parts.push(`<line class="cross" id="cross" x1="0" x2="0" y1="${padT}" y2="${H - padB}" visibility="hidden"/>`);
@@ -482,7 +479,7 @@ export function mount(document, window, localStorage, EMBEDDED) {
 	}
 
 	/** Tooltip text for one run of the trend chart: every suite's index and its move from the previous run. */
-	function trendTip(r, prev) {
+	function trendTip(r, prev, runIndex) {
 		const branch = r.branch ? ` · ${esc(r.branch)}` : '';
 		const lines = D.suites
 			.filter((suite) => r.suites[suite.id])
@@ -494,7 +491,7 @@ export function mount(document, window, localStorage, EMBEDDED) {
 						: '';
 				return `<br>${esc(suite.name)} ${f1(index)}${vsPrev}`;
 			});
-		return `<b>${esc(r.label)}</b> @ ${esc(r.sha)} · ${esc(r.date.slice(0, 10))}${branch}${lines.join('')}`;
+		return `<b>L${runIndex + 1} · ${esc(r.label)}</b> @ ${esc(r.sha)} · ${esc(r.date.slice(0, 10))}${branch}${lines.join('')}`;
 	}
 
 	function wireTrendTips(host, runs, xs, y, W, H) {
@@ -510,7 +507,7 @@ export function mount(document, window, localStorage, EMBEDDED) {
 				const first = D.suites.find((suite) => r.suites[suite.id]);
 				const px = box.left - hostBox.left + (xs[i] / W) * box.width;
 				const py = box.top - hostBox.top + (y(first ? r.suites[first.id].index : 0) / H) * box.height;
-				tip.innerHTML = trendTip(r, runs[i - 1]);
+				tip.innerHTML = trendTip(r, runs[i - 1], i);
 				tip.style.left = `${px}px`;
 				tip.style.top = `${py}px`;
 				tip.hidden = false;

@@ -420,8 +420,8 @@ test('the trend axis shows short run labels without commits, and a block table w
 	};
 	const doc = await renderWith(data);
 	const trend = doc.getElementById('trend').innerHTML;
-	assert.ok(trend.includes('>L14<'), 'loop-14 reads L14 on the axis');
-	assert.ok(trend.includes('>baseline<'));
+	assert.ok(trend.includes('>L1<') && trend.includes('>L2<'), 'runs are numbered in date order on the axis');
+	assert.ok(!trend.includes('>baseline<') && !trend.includes('>L14<'), 'labels live in the tooltip, not on the axis');
 	assert.ok(!trend.includes('abcdef123'), 'no commit on the axis');
 	assert.ok(!doc.filled().includes('trend-caption'), 'no trend caption is written');
 	const findings = doc.getElementById('findings').innerHTML;
