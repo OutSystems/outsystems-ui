@@ -43,7 +43,7 @@ test('measuredFingerprint is the same for a CRLF and an LF checkout of the same 
 });
 
 test('measuredFingerprint covers the pattern sources, stories and agent docs, not tooling or generated tokens', () => {
-	assert.deepEqual(MEASURED_DIRS, ['src', 'stories', 'docs-ai']);
+	assert.deepEqual(MEASURED_DIRS, ['src', 'stories', 'docs-ai', 'evals/model']);
 	const root = scaffold();
 	const first = measuredFingerprint(root);
 	assert.match(first, /^[0-9a-f]{64}$/);
@@ -72,4 +72,17 @@ test('shouldRecord refuses a run whose measured inputs equal the newest recorded
 		{ record: true, same: null },
 		'an entry without a fingerprint cannot block'
 	);
+});
+
+test('a snapshot under evals/model is a measured input; the model suite code is not', () => {
+	const root = scaffold();
+	fs.mkdirSync(path.join(root, 'evals', 'model', 'metrics'), { recursive: true });
+	fs.writeFileSync(path.join(root, 'evals', 'model', 'osui.blocks.json'), '{"version":1}\n');
+	fs.writeFileSync(path.join(root, 'evals', 'model', 'metrics', 'M01.mjs'), '// code\n');
+	const before = measuredFingerprint(root);
+	fs.writeFileSync(path.join(root, 'evals', 'model', 'metrics', 'M01.mjs'), '// changed code\n');
+	assert.equal(measuredFingerprint(root), before, 'metric code does not count');
+	fs.writeFileSync(path.join(root, 'evals', 'model', 'osui.blocks.json'), '{"version":1,"x":1}\n');
+	assert.notEqual(measuredFingerprint(root), before, 'a new snapshot counts');
+	assert.ok(MEASURED_DIRS.includes('evals/model'));
 });

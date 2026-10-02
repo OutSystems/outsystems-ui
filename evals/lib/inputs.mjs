@@ -1,6 +1,7 @@
 // @ts-check
 /**
- * The measured inputs of a run, fingerprinted: a loop is a measurement of pattern code, so a run whose
+ * The measured inputs of a run, fingerprinted: a loop is a measurement of pattern code and of the block
+ * snapshot, so a run whose
  * pattern sources, stories and agent docs equal the newest recorded run's is not recorded again. Tooling
  * (evals/, workflows, docs-internal), results and generated design tokens do not count.
  *
@@ -15,10 +16,16 @@ import path from 'node:path';
 import { walk } from './inventory.mjs';
 import { insideDir } from './paths.mjs';
 
-/** Repository directories whose content a run measures. */
-export const MEASURED_DIRS = ['src', 'stories', 'docs-ai'];
-/** Generated from the design-tokens package at build time; not pattern code. */
-const EXCLUDED = ['src/scss/tokens/'];
+/** Repository directories whose content a run measures (the block snapshots under evals/model are inputs too). */
+export const MEASURED_DIRS = ['src', 'stories', 'docs-ai', 'evals/model'];
+/** Generated tokens are not pattern code; the model suite's own code and docs are tooling, not inputs. */
+const EXCLUDED = [
+	'src/scss/tokens/',
+	'evals/model/metrics/',
+	'evals/model/lib/',
+	'evals/model/tests/',
+	'evals/model/README.md',
+];
 
 /**
  * A checkout may carry CRLF where git stores LF (core.autocrlf); hash what git stores.
