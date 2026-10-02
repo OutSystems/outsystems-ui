@@ -3,13 +3,11 @@ namespace OutSystems.OSUI.Utils {
 	/**
 	 * Function to get a children matching a specific selector
 	 *
-	 * @export
-	 * @param {*} elem
-	 * @param {*} selector
-	 * @return {*}  {*}
+	 * @param elem
+	 * @param selector
 	 */
 	export function ChildrenMatches(elem: HTMLElement, selector: string): Element[] {
-		let matchingChildren = [];
+		let matchingChildren: Element[] = [];
 
 		if (elem) {
 			matchingChildren = [...elem.children].filter((child) => child.matches(selector));

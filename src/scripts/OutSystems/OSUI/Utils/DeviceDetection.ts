@@ -24,7 +24,6 @@ namespace OutSystems.OSUI.Utils.DeviceDetection {
 	/**
 	 * Identifies the operating system being used.
 	 * @param UserAgent
-	 * @returns
 	 */
 	export function GetOperatingSystem(UserAgent: string): string {
 		return OSFramework.OSUI.Helper.DeviceInfo.GetOperatingSystem(UserAgent);
@@ -32,7 +31,6 @@ namespace OutSystems.OSUI.Utils.DeviceDetection {
 
 	/**
 	 * Checks if the current device is desktop
-	 * @returns
 	 */
 	export function IsDesktop(): boolean {
 		return OSFramework.OSUI.Helper.DeviceInfo.IsDesktop;
@@ -40,7 +38,6 @@ namespace OutSystems.OSUI.Utils.DeviceDetection {
 
 	/**
 	 * Checks if is the layout native is being used
-	 * @returns
 	 */
 	export function CheckIsLayoutNative(): boolean {
 		const layout = OSFramework.OSUI.Helper.Dom.ClassSelector(
@@ -60,7 +57,6 @@ namespace OutSystems.OSUI.Utils.DeviceDetection {
 
 	/**
 	 * Checks if is the layout side menu is being used
-	 * @returns
 	 */
 	export function CheckIsLayoutSide(): boolean {
 		const layout = OSFramework.OSUI.Helper.Dom.ClassSelector(
@@ -80,7 +76,6 @@ namespace OutSystems.OSUI.Utils.DeviceDetection {
 
 	/**
 	 * Checks if running as PWA.
-	 * @returns
 	 */
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	export function IsRunningAsPWA(): boolean {
@@ -89,7 +84,6 @@ namespace OutSystems.OSUI.Utils.DeviceDetection {
 
 	/**
 	 * Checks if the current device is phone
-	 * @returns
 	 */
 	export function IsPhone(): boolean {
 		return OSFramework.OSUI.Helper.DeviceInfo.IsPhone;
@@ -97,7 +91,6 @@ namespace OutSystems.OSUI.Utils.DeviceDetection {
 
 	/**
 	 * Action to check if App is currently running as a Native App.
-	 * @returns
 	 */
 	export function IsRunningAsNativeApp(): boolean {
 		return OSFramework.OSUI.Helper.DeviceInfo.IsNative;
@@ -105,7 +98,6 @@ namespace OutSystems.OSUI.Utils.DeviceDetection {
 
 	/**
 	 * Checks if the current device is tablet
-	 * @returns
 	 */
 	export function IsTablet(): boolean {
 		return OSFramework.OSUI.Helper.DeviceInfo.IsTablet;
@@ -113,7 +105,6 @@ namespace OutSystems.OSUI.Utils.DeviceDetection {
 
 	/**
 	 * Returns true if using a WebApp Template
-	 * @returns
 	 */
 	export function IsWebApp(): boolean {
 		const layout = OSFramework.OSUI.Helper.Dom.ClassSelector(
@@ -136,13 +127,13 @@ namespace OutSystems.OSUI.Utils.DeviceDetection {
 	 * Register a function that provides a list of classes to apply to the document body.
 	 * Expected classes to be returned are portrait or landscape — for orientation — and phone or tablet for device type. The method provided may emit other classes.
 	 *
-	 * @export
-	 * @param {number} phoneWidth
-	 * @param {number} tabletWidth
+	 * @param phoneWidth
+	 * @param tabletWidth
+	 * @returns Function that resolves [orientation, deviceType] for the current viewport
 	 */
-	export function SetDeviceBreakpoints(phoneWidth: number, tabletWidth: number): void {
-		// @ts-expect-error: this the way to interact with the active view component
-		return function () {
+	export function SetDeviceBreakpoints(phoneWidth: number, tabletWidth: number): () => string[] {
+		// The platform stores the returned function and invokes it to resolve the active view.
+		return function (): string[] {
 			const windowWidth = window.innerWidth || document.documentElement.clientWidth;
 			const windowHeight = window.innerHeight || document.documentElement.clientHeight;
 			const orient =

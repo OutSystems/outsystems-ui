@@ -2,10 +2,6 @@
 namespace Providers.OSUI.TimePicker.Flatpickr {
 	/**
 	 * Class that represents the custom configurations received by the Timepicker.
-	 *
-	 * @export
-	 * @class FlatpickrTimeConfig
-	 * @extends {AbstractTimePickerConfig}
 	 */
 	export class FlatpickrTimeConfig extends OSFramework.OSUI.Patterns.TimePicker.AbstractTimePickerConfig {
 		// Store the dynamic language that will be assigned as a locale to the TimePicker
@@ -17,18 +13,18 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 		// Store configs set using extensibility
 		protected providerExtendedOptions: FlatpickrOptions;
 
-		// Stores the ability to allow inputs to be editable or not
+		/** Stores the ability to allow inputs to be editable or not */
 		public AllowInput = false;
-		// Stores the ability to disable the mobile flatpickr behavior. False is the default provider option
+		/** Stores the ability to disable the mobile flatpickr behavior. False is the default provider option */
 		public DisableMobile = false;
-		// Store the OnChange Event callback to be defined in the specific context for each Flatpickr mode
+		/** Store the OnChange Event callback to be defined in the specific context for each Flatpickr mode */
 		public OnChangeEventCallback: OSFramework.OSUI.GlobalCallbacks.Generic;
-		// Store the OnClose callback to be defined to the Flatpicker config instance
+		/** Store the OnClose callback to be defined to the Flatpicker config instance */
 		public OnCloseEventCallback: OSFramework.OSUI.GlobalCallbacks.Generic;
-		// Store the OnOpen callback to be defined to the Flatpicker config instance
+		/** Store the OnOpen callback to be defined to the Flatpicker config instance */
 		public OnOpenEventCallback: OSFramework.OSUI.GlobalCallbacks.Generic;
 
-		// Store the Server Date format that will be used to casting the selected dates into a knowned date by/for Flatpickr
+		/** Store the Server Date format that will be used to casting the selected dates into a knowned date by/for Flatpickr */
 		public ServerDateFormat: string;
 
 		constructor(config: JSON) {
@@ -50,15 +46,14 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 		/**
 		 * Method used to check the language and also map it into Flatpickr expected format
 		 *
-		 * @return {FlatpickrLocale} FlatpickrLocale
-		 * @memberof Providers.OSUI.TimePicker.Flatpickr.FlatpickrTimeConfig
+		 * @returns FlatpickrLocale
 		 */
 		protected _checkLocale(): FlatpickrLocale {
 			// FlatpickrLocale script file is already loaded
 			let _locale: FlatpickrLocale;
 			try {
 				// Set the locale in order to define the calendar language
-				_locale = window.flatpickr.l10ns[this.Lang];
+				_locale = (window.flatpickr.l10ns as Record<string, FlatpickrLocale>)[this.Lang];
 
 				// Set the calendar first week day
 				_locale.firstDayOfWeek = this.FirstWeekDay;
@@ -72,8 +67,7 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 		/**
 		 * Method used to set all the config properties for the Time mode type
 		 *
-		 * @return {FlatpickrOptions} FlatpickrOptions
-		 * @memberof Providers.OSUI.TimePicker.Flatpickr.FlatpickrTimeConfig
+		 * @returns FlatpickrOptions
 		 */
 		public getProviderConfig(): FlatpickrOptions {
 			this._providerOptions = {
@@ -107,8 +101,7 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 		/**
 		 * Method to set and save the extensibility provider configs
 		 *
-		 * @param {FlatpickrOptions} newConfigs
-		 * @memberof Providers.OSUI.TimePicker.Flatpickr.FlatpickrTimeConfig
+		 * @param newConfigs
 		 */
 		public setExtensibilityConfigs(newConfigs: FlatpickrOptions): void {
 			this.providerExtendedOptions = newConfigs;
@@ -118,8 +111,6 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 		 * Getter that allows to obtain the TimePicker Locale language
 		 *
 		 * @readonly
-		 * @type {string}
-		 * @memberof Providers.OSUI.TimePicker.Flatpickr.FlatpickrTimeConfig
 		 */
 		public get Lang(): string {
 			return this._dynamicLang !== undefined ? this._dynamicLang : OSFramework.OSUI.Helper.Language.ShortLang;
@@ -127,8 +118,6 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 
 		/**
 		 * Set TimePicker Locale
-		 *
-		 * @memberof Providers.OSUI.TimePicker.Flatpickr.FlatpickrTimeConfig
 		 */
 		public set Lang(value: string) {
 			// substring is needed to avoid passing values like "en-EN" since we must use only "en"

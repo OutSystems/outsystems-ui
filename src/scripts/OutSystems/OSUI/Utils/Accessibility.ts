@@ -5,8 +5,8 @@ namespace OutSystems.OSUI.Utils.Accessibility {
 	 *
 	 * E.g. use this action to change Alert default values for the role attribute.
 	 * This action should be used only when the pattern's visibility is set to true.
-	 * @param {string} widgetId
-	 * @param {string} role
+	 * @param widgetId
+	 * @param role
 	 */
 	export function SetAccessibilityRole(widgetId: string, role: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({

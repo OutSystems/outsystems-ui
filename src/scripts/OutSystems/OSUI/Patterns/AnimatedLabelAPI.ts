@@ -5,10 +5,10 @@ namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
 	/**
 	 * Function that will change the property of a given animatedLabel.
 	 *
-	 * @export
-	 * @param {string} animatedLabelId ID of the AnimatedLabel where the property will be changed.
-	 * @param {string} propertyName Property name that will be updated
-	 * @param {unknown} propertyValue Value that will be set to the property
+	 * @param animatedLabelId ID of the AnimatedLabel where the property will be changed.
+	 * @param propertyName Property name that will be updated
+	 * @param propertyValue Value that will be set to the property
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function ChangeProperty(animatedLabelId: string, propertyName: string, propertyValue: unknown): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -26,14 +26,13 @@ namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
 	/**
 	 * Create the new AnimatedLabel instance and add it to the animatedLabelsMap
 	 *
-	 * @export
-	 * @param {string} animatedLabelId ID of the Pattern that a new instance will be created.
-	 * @param {string} configs Configurations for the Pattern in JSON format.
-	 * @return {*}  {OSFramework.OSUI.Patterns.AnimatedLabel.IAnimatedLabel}
+	 * @param animatedLabelId ID of the Pattern that a new instance will be created.
+	 * @param configs Configurations for the Pattern in JSON format.
+	 * @returns the AnimatedLabel instance
 	 */
 	export function Create(
 		animatedLabelId: string,
-		configs: string
+		configs: string | Configs
 	): OSFramework.OSUI.Patterns.AnimatedLabel.IAnimatedLabel {
 		if (_animatedLabelsMap.has(animatedLabelId)) {
 			throw new Error(
@@ -43,7 +42,7 @@ namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
 
 		const _newAnimatedLabel = new OSFramework.OSUI.Patterns.AnimatedLabel.AnimatedLabel(
 			animatedLabelId,
-			JSON.parse(configs)
+			OSFramework.OSUI.Helper.ParseConfigs(configs)
 		);
 
 		_animatedLabelsMap.set(animatedLabelId, _newAnimatedLabel);
@@ -54,8 +53,8 @@ namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
 	/**
 	 * Function that will dispose the instance of the given AnimatedLabel
 	 *
-	 * @export
-	 * @param {string} animatedLabelId
+	 * @param animatedLabelId
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Dispose(animatedLabelId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -75,8 +74,7 @@ namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
 	/**
 	 * Fucntion that will return the Map with all the Animatedlabels instances at the page
 	 *
-	 * @export
-	 * @return {*}  {Map<string, OSFramework.OSUI.Patterns.AnimatedLabel.IAnimatedLabel>}
+	 * @returns the ids of every AnimatedLabel instance
 	 */
 	export function GetAllAnimatedLabels(): Array<string> {
 		return OSFramework.OSUI.Helper.MapOperation.ExportKeys(_animatedLabelsMap);
@@ -85,9 +83,8 @@ namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
 	/**
 	 * Function that gets the instance of AnimatedLabel, by a given ID.
 	 *
-	 * @export
-	 * @param {string} animatedLabelId ID of the AnimatedLabel that will be looked for.
-	 * @return {*}  {OSFramework.OSUI.Patterns.AnimatedLabel.IAnimatedLabel;}
+	 * @param animatedLabelId ID of the AnimatedLabel that will be looked for.
+	 * @returns the AnimatedLabel instance
 	 */
 	export function GetAnimatedLabelById(
 		animatedLabelId: string
@@ -102,9 +99,8 @@ namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
 	/**
 	 * Function that will initialize the pattern instance.
 	 *
-	 * @export
-	 * @param {string} animatedLabelId ID of the Animatedlabel that will be initialized.
-	 * @return {*}  {OSFramework.OSUI.Patterns.AnimatedLabel.IAnimatedLabel}
+	 * @param animatedLabelId ID of the Animatedlabel that will be initialized.
+	 * @returns the AnimatedLabel instance
 	 */
 	export function Initialize(animatedLabelId: string): OSFramework.OSUI.Patterns.AnimatedLabel.IAnimatedLabel {
 		const animatedlabel = GetAnimatedLabelById(animatedLabelId);
@@ -117,15 +113,14 @@ namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
 	/**
 	 * Function to register a provider callback
 	 *
-	 * @export
-	 * @param {string} dropdownId
-	 * @param {string} eventName
-	 * @param {OSFramework.OSUI.GlobalCallbacks.OSGeneric} callback
-	 * @return {*}  {string}
+	 * @param dropdownId
+	 * @param eventName
+	 * @param callback
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function RegisterCallback(
 		dropdownId: string,
-		eventName: string,
+		eventName: EventName,
 		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
 	): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -143,9 +138,8 @@ namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
 	/**
 	 * Fucntion that will update the Label text according text has been changed inside the input
 	 *
-	 * @export
-	 * @param {string} animatedLabelId ID of the Animatedlabel that will be updated.
-	 * @return {*}  {OSFramework.OSUI.Patterns.AnimatedLabel.IAnimatedLabel}
+	 * @param animatedLabelId ID of the Animatedlabel that will be updated.
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function UpdateOnRender(animatedLabelId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({

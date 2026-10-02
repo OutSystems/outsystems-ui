@@ -4,10 +4,10 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	/**
 	 * Function that will change the property of a given Sidebar.
 	 *
-	 * @export
-	 * @param {string} sidebarId
-	 * @param {string} propertyName
-	 * @param {*} propertyValue
+	 * @param sidebarId
+	 * @param propertyName
+	 * @param propertyValue
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function ChangeProperty(sidebarId: string, propertyName: string, propertyValue: unknown): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -25,10 +25,9 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	/**
 	 * Function that will toggle the click on outside to close the sidebar.
 	 *
-	 * @export
-	 * @param {string} sidebarId
-	 * @param {boolean} closeOnOutSIdeClick
-	 * @return {*}  {string}
+	 * @param sidebarId
+	 * @param closeOnOutSIdeClick
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function ClickOutsideToClose(sidebarId: string, closeOnOutSIdeClick: boolean): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -46,8 +45,8 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	/**
 	 * Function that Closes the sidebar.
 	 *
-	 * @export
-	 * @param {string} sidebarId
+	 * @param sidebarId
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Close(sidebarId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -65,19 +64,21 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	/**
 	 * Create the new Sidebar instance and add it to the sidebarsMap
 	 *
-	 * @export
-	 * @param {string} sidebarId
-	 * @param {string} configs
-	 * @return {*}  {OSFramework.OSUI.Patterns.Sidebar.ISidebar}
+	 * @param sidebarId
+	 * @param configs
+	 * @returns the Sidebar instance
 	 */
-	export function Create(sidebarId: string, configs: string): OSFramework.OSUI.Patterns.Sidebar.ISidebar {
+	export function Create(sidebarId: string, configs: string | Configs): OSFramework.OSUI.Patterns.Sidebar.ISidebar {
 		if (_sidebarMap.has(sidebarId)) {
 			throw new Error(
 				`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.Sidebar} registered under id: ${sidebarId}`
 			);
 		}
 
-		const _newSidebar = new OSFramework.OSUI.Patterns.Sidebar.Sidebar(sidebarId, JSON.parse(configs));
+		const _newSidebar = new OSFramework.OSUI.Patterns.Sidebar.Sidebar(
+			sidebarId,
+			OSFramework.OSUI.Helper.ParseConfigs(configs)
+		);
 		_sidebarMap.set(sidebarId, _newSidebar);
 		return _newSidebar;
 	}
@@ -85,8 +86,8 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	/**
 	 * Function that will destroy the instance of the given Sidebar
 	 *
-	 * @export
-	 * @param {string} sidebarId
+	 * @param sidebarId
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Dispose(sidebarId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -106,8 +107,7 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	/**
 	 * Fucntion that will return the Map with all the Sidebar instances at the page
 	 *
-	 * @export
-	 * @return {*}  {Array<string>}
+	 * @returns the ids of every Sidebar instance
 	 */
 	export function GetAllSidebars(): Array<string> {
 		return OSFramework.OSUI.Helper.MapOperation.ExportKeys(_sidebarMap);
@@ -116,9 +116,8 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	/**
 	 * Function that gets the instance of Sidebar, by a given ID.
 	 *
-	 * @export
-	 * @param {string} sidebarId
-	 * @return {*}  {OSFramework.OSUI.Patterns.Sidebar.ISidebar}
+	 * @param sidebarId
+	 * @returns the Sidebar instance
 	 */
 	export function GetSidebarById(sidebarId: string): OSFramework.OSUI.Patterns.Sidebar.ISidebar {
 		return OSFramework.OSUI.Helper.MapOperation.FindInMap(
@@ -131,9 +130,8 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	/**
 	 * Function that will initialize the pattern instance.
 	 *
-	 * @export
-	 * @param {string} sidebarId
-	 * @return {*}  {OSFramework.OSUI.Patterns.Sidebar.ISidebar}
+	 * @param sidebarId
+	 * @returns the Sidebar instance
 	 */
 	export function Initialize(sidebarId: string): OSFramework.OSUI.Patterns.Sidebar.ISidebar {
 		const sidebar = GetSidebarById(sidebarId);
@@ -146,8 +144,8 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	/**
 	 * Function that opens the sidebar.
 	 *
-	 * @export
-	 * @param {string} sidebarId
+	 * @param sidebarId
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Open(sidebarId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -165,15 +163,14 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	/**
 	 * Function to register a provider callback
 	 *
-	 * @export
-	 * @param {string} sidebarId
-	 * @param {string} eventName
-	 * @param {OSFramework.OSUI.GlobalCallbacks.OSGeneric} callback
-	 * @return {*} {string} Return Message Success or message of error info if it's the case.
+	 * @param sidebarId
+	 * @param eventName
+	 * @param callback
+	 * @returns Return Message Success or message of error info if it's the case.
 	 */
 	export function RegisterCallback(
 		sidebarId: string,
-		eventName: string,
+		eventName: EventName,
 		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
 	): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -191,8 +188,9 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	/**
 	 * Function that toggle swipes on sidebar.
 	 *
-	 * @export
-	 * @param {string} sidebarId
+	 * @param sidebarId ID of the Sidebar pattern.
+	 * @param enableSwipe True to open/close the sidebar with swipe gestures.
+	 * @returns Response object as a JSON string
 	 */
 	export function ToggleGestures(sidebarId: string, enableSwipe: boolean): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({

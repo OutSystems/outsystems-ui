@@ -1,0 +1,214 @@
+# OutSystems UI — utility classes
+
+Scope: OutSystems UI ships a single token-based theme (light, plus the generated dark mode under class os-dark-theme on <html>). The pre-migration "classic" CSS snapshot under classic-theme/ is a Storybook comparison artifact, not a target for generated code.
+
+538 classes in 24 families, generated from src/scss/05-useful and the design tokens. Machine-readable, with every declaration: osui.utilities.json (schema/osui.utilities.schema.json).
+
+## Grammar
+
+- Name: <property>[-<side>][-<value>], long-form, no abbreviations (margin-top-base, display-flex, justify-content-space-between). Tailwind-style short names (p-4, mt-2) do not exist.
+- Property heads: margin padding display flex-direction flex-wrap flex justify-content align-items align-content align-self gap row-gap column-gap background text font-size font border-radius border-size border shadow position overflow width height white-space shape.
+- Sides: top bottom left right (left/right compile to the logical inline-start/inline-end) · x = inline · y = block.
+- Steps, the size scale: none xs s base m l xl xxl. Values: none = --token-scale-0 (0px) · xs = --token-scale-100 (4px) · s = --token-scale-200 (8px) · base = --token-scale-400 (16px) · m = --token-scale-600 (24px) · l = --token-scale-800 (32px) · xl = --token-scale-1000 (40px) · xxl = --token-scale-1200 (48px).
+- Colours: background-<hue>[-<shade>] and text-<hue>[-<shade>]; hues: blue cyan grape green indigo lime orange pink red teal violet yellow primary secondary error info success warning; shades: lightest lighter light dark darker darkest (no suffix = base). Neutrals are numbered: background-neutral-<0..10>[-lightest], text-neutral-<0..10>[-darker].
+- Responsive: no prefixes. The runtime sets phone / tablet / desktop on <body>; write `.phone .x { … }` for a viewport rule. Only phone-full-width and tablet-full-width ship as viewport helpers.
+- A row with {placeholders} stands for every combination of the listed values (margin-{side}-{step} → margin-top-xs, margin-x-base, …). A row without braces is one class. [legacy name] marks a name outside the grammar.
+
+## Accessibility (2 classes; src/scss/05-useful/_a11y.scss)
+
+- wcag-hide-text → border: 0; clip: rect(0 0 0 0); height: 1px; margin: -1px (+6 more in osui.utilities.json) [legacy name]
+- skip-nav → inset-inline-start: --token-scale-1000 (40px); opacity: 0; padding-block: --token-scale-200 (8px); padding-inline: --token-scale-400 (16px) (+5 more in osui.utilities.json) [legacy name]
+
+## Border radius & shape (31 classes; src/scss/05-useful/_border-radius.scss)
+
+- border-radius-{side}-{side}-{radius} → border-top-left-radius | border-top-right-radius | border-bottom-right-radius | border-bottom-left-radius (side: top bottom left right; radius: none soft rounded circle; 16 classes)
+- border-radius-{side}-{radius} → border-top-left-radius | border-top-right-radius | border-bottom-left-radius | border-bottom-right-radius (side: top bottom; radius: none soft rounded circle; 8 classes)
+- border-radius-{radius} → border-radius (radius: none soft rounded circle; 4 classes)
+- shape-soft → --border-radius-2xs: --token-shape-soft-2xs (4px); --border-radius-xs: --token-shape-soft-xs (8px); --border-radius-sm: --token-shape-soft-sm (12px); --border-radius-md: --token-shape-soft-md (16px) (+3 more in osui.utilities.json)
+- shape-round → --border-radius-2xs: --token-shape-round-2xs (999px); --border-radius-xs: --token-shape-round-xs (999px); --border-radius-sm: --token-shape-round-sm (999px); --border-radius-md: --token-shape-round-md (999px) (+3 more in osui.utilities.json)
+- shape-rectangular → --border-radius-2xs: --token-shape-rectangular-2xs (0px); --border-radius-xs: --token-shape-rectangular-xs (0px); --border-radius-sm: --token-shape-rectangular-sm (0px); --border-radius-md: --token-shape-rectangular-md (0px) (+3 more in osui.utilities.json)
+
+## Border size (17 classes; src/scss/05-useful/_border-size.scss)
+
+- border-{side}-{step} → border-block-start | border-inline-end | border-block-end | border-inline-start (side: top bottom left right; step: s m l; 12 classes)
+- border-size-{step} → border-width | border (step: none s m l; 4 classes)
+- columns-item → [.border-top-s.columns > :not(:last-child)] border-block-start: var(--token-border-size-025, var(--token-scale-025, 1px)) sol… [legacy name]
+
+## Box height (6 classes; src/scss/05-useful/_box-height.scss)
+
+- full-height → height: 100% [legacy name]
+- full-height-vh → height: 100vh [legacy name]
+- full-height-minus-header → height: calc(100vh - var(--header-size)); -servicestudio-height: auto [legacy name]
+- half-height → height: 50% [legacy name]
+- half-height-vh → height: 50vh; -servicestudio-height: auto [legacy name]
+- auto-height → height: auto [legacy name]
+
+## Box width (4 classes; src/scss/05-useful/_box-width.scss)
+
+- full-width → width: 100% [legacy name]
+- full-width-vw → width: 100vw [legacy name]
+- half-width → width: 50% [legacy name]
+- half-width-vw → width: 50vw [legacy name]
+
+## Colours · brand (8 classes; src/scss/05-useful/_colors-brand.scss)
+
+- background-primary → background-color: --color-primary
+- background-secondary → background-color: --color-secondary
+- background-primary-lightest → background-color: --token-bg-surface-default (#ffffff)
+- background-secondary-lightest → background-color: --token-bg-surface-default (#ffffff)
+- text-primary → color: --token-semantics-primary-base (#105cef)
+- text-secondary → color: --color-text-subtle
+- text-primary-darker → color: --token-semantics-primary-base (#105cef)
+- text-secondary-darker → color: --color-text-subtle
+
+## Colours · neutral (39 classes; src/scss/05-useful/_colors-neutral.scss)
+
+- background-neutral-{n} → background-color (n: 0 1 2 3 4 5 6 7 8 9 10; 11 classes)
+- background-neutral-{n}-{shade} → background-color (shade: lightest; n: 0 1 2 3 4 5 6 7 8 9 10; 11 classes)
+- text-neutral-{n} → color (n: 0 1 2 3 4 5 6 7 8 9 10; 11 classes)
+- text-neutral-{n}-{shade} → color (shade: darker; n: 5 6 7 8 9 10; 6 classes)
+
+## Colours · other (1 classes; src/scss/05-useful/_colors-others.scss)
+
+- background-transparent → background-color: transparent
+
+## Colours · palette (168 classes; src/scss/05-useful/_colors-palette.scss)
+
+- background-{hue}-{shade} → background-color (hue: blue cyan grape green indigo lime orange pink red teal violet yellow; shade: lightest lighter light dark darker darkest; 72 classes)
+- text-{hue}-{shade} → color (hue: blue cyan grape green indigo lime orange pink red teal violet yellow; shade: lightest lighter light dark darker darkest; 72 classes)
+- background-{hue} → background-color (hue: blue cyan grape green indigo lime orange pink red teal violet yellow; 12 classes)
+- text-{hue} → color (hue: blue cyan grape green indigo lime orange pink red teal violet yellow; 12 classes)
+
+## Colours · semantic (16 classes; src/scss/05-useful/_colors-semantic.scss)
+
+- background-{hue}-{shade} → background-color (hue: error info success warning; shade: light; 4 classes)
+- background-{hue} → background-color (hue: error info success warning; 4 classes)
+- text-{hue}-{shade} → color (hue: error info success warning; shade: light; 4 classes)
+- text-{hue} → color (hue: error info success warning; 4 classes)
+
+## Display (7 classes; src/scss/05-useful/_display.scss)
+
+- display-none → display: none
+- display-block → display: block
+- display-contents → display: contents
+- display-inline → display: inline
+- display-inline-block → display: inline-block
+- display-inline-flex → display: inline-flex
+- display-grid → display: grid
+
+## Display · alignment (28 classes; src/scss/05-useful/_display-align.scss)
+
+- align-content-{align} → align-content (align: baseline center flex-end flex-start stretch space-around space-between space-evenly; 8 classes)
+- align-items-{align} → align-items (align: baseline center flex-end flex-start initial stretch; 6 classes)
+- align-self-{align} → align-self (align: baseline center flex-end flex-start stretch; 5 classes)
+- {side}-{side} → align-items | justify-content (side: top bottom left right; 4 classes)
+- top-center → align-items: flex-start; justify-content: center [legacy name]
+- bottom-center → align-items: flex-end; justify-content: center [legacy name]
+- center → align-items: center; justify-content: center [legacy name]
+- center-left → align-items: center; justify-content: flex-start [legacy name]
+- center-right → align-items: center; justify-content: flex-end [legacy name]
+
+## Display · flex (38 classes; src/scss/05-useful/_display-flex.scss)
+
+- gap-{step} → gap (step: xs s base m l xl xxl; 7 classes)
+- row-gap-{step} → row-gap (step: xs s base m l xl xxl; 7 classes)
+- column-gap-{step} → column-gap (step: xs s base m l xl xxl; 7 classes)
+- justify-content-{align} → justify-content (align: center flex-end flex-start space-around space-between space-evenly; 6 classes)
+- flex{n} → flex (n: 1 2 3; 3 classes)
+- display-flex → display: flex
+- flex-direction-column → flex-direction: column
+- flex-direction-column-reverse → flex-direction: column-reverse
+- flex-direction-row → flex-direction: row
+- flex-direction-row-reverse → flex-direction: row-reverse
+- flex-wrap → flex-wrap: wrap
+- flex-wrap-reverse → flex-wrap: wrap-reverse
+- flex-nowrap → flex-wrap: nowrap
+
+## Images (4 classes; src/scss/05-useful/_images.scss)
+
+- img-cover → height: 100%; object-fit: cover [legacy name]
+- img-rounded → [img] border-radius: 10px [legacy name]
+- img-circle → [img] border-radius: 50% [legacy name]
+- thumbnail → [img] background-color: --token-bg-surface-default (#ffffff); border: var(--token-border-size-025, var(--token-scale-025, 1px)) sol…; padding: --token-scale-100 (4px) [legacy name]
+
+## Miscellaneous (5 classes; src/scss/05-useful/_miscellaneous.scss)
+
+- no-transition → transition: none !important [legacy name]
+- no-transform → transform: none !important [legacy name]
+- sticky-observer → height: --header-size; inset-inline-end: 0; inset-inline-start: 0; position: absolute (+2 more in osui.utilities.json) [legacy name]
+- tablet-full-width → [.tablet] margin-inline-start: 0; width: 100% [legacy name]
+- phone-full-width → [.phone] margin-inline-start: 0; width: 100% [legacy name]
+
+## Overflow (3 classes; src/scss/05-useful/_overflow.scss)
+
+- overflow-hidden → overflow: hidden; -servicestudio-overflow: visible
+- overflow-horizontal → overflow-x: auto; -servicestudio-overflow: visible
+- overflow-vertical → overflow-y: auto; -servicestudio-overflow: visible
+
+## Positioning (3 classes; src/scss/05-useful/_positioning.scss)
+
+- position-relative → position: relative
+- fixed → position: fixed [legacy name]
+- sticky → position: -webkit-sticky; position: sticky [legacy name]
+
+## Positioning · absolute (15 classes; src/scss/05-useful/_positioning-absolute.scss)
+
+- absolute-{side} → top | inset-inline-end | bottom | left | transform | inset-inline-start (side: top bottom left right; 4 classes)
+- absolute-{side}-{side} → inset-inline-end | top | inset-inline-start | bottom (side: top bottom left right; 4 classes)
+- absolute-center-{side} → left | top | transform | inset-inline-end | bottom | inset-inline-start (side: top bottom left right; 4 classes)
+- position-absolute → position: absolute
+- absolute-top-plus-header → top: calc(var(--header-size) + var(--os-safe-area-top)) [legacy name]
+- absolute-center → left: 50%; top: 50%; transform: translate(-50%, -50%) [legacy name]
+
+## Shadow (6 classes; src/scss/05-useful/_shadow.scss)
+
+- shadow-{step} → box-shadow (step: none xs s m l xl; 6 classes)
+
+## Spacing · margin (57 classes; src/scss/05-useful/_space-margin.scss)
+
+- margin-{side}-{step} → margin-block-start | margin-inline-end | margin-block-end | margin-inline-start | margin-inline | margin-block (side: top bottom left right x y; step: none xs s base m l xl xxl; 48 classes)
+- margin-{step} → margin (step: none xs s base m l xl xxl; 8 classes)
+- margin-auto → margin-block: 0; margin-inline: auto
+
+## Spacing · padding (57 classes; src/scss/05-useful/_space-padding.scss)
+
+- padding-{side}-{step} → padding-block-start | padding-inline-end | padding-block-end | padding-inline-start | padding-inline | padding-block (side: top bottom left right x y; step: none xs s base m l xl xxl; 48 classes)
+- padding-{step} → padding (step: none xs s base m l xl xxl; 8 classes)
+- padding-auto → padding-block: 0; padding-inline: auto
+
+## Text (5 classes; src/scss/05-useful/_text.scss)
+
+- break-word → word-break: break-word [legacy name]
+- text-align-left → text-align: start
+- text-align-right → text-align: end
+- text-align-center → text-align: center
+- white-space-nowrap → white-space: nowrap
+
+## Typography (15 classes; src/scss/05-useful/_typography.scss)
+
+- font-size-{step} → font-size (step: xs s base; 3 classes)
+- font-size-label → font-size: --token-font-size-275 (0.6875rem)
+- font-light → font-weight: --token-font-weight-light (300)
+- font-regular → font-weight: --token-font-weight-regular (400)
+- font-semi-bold → font-weight: --token-font-weight-semi-bold (600)
+- font-bold → font-weight: --token-font-weight-bold (700)
+- bold → font-weight: --token-font-weight-bold (700) [legacy name]
+- italic → font-style: italic [legacy name]
+- oblique → font-style: oblique [legacy name]
+- text-lowercase → text-transform: lowercase
+- text-uppercase → text-transform: uppercase
+- text-capitalize → text-transform: capitalize
+- text-ellipsis → overflow: hidden; text-overflow: ellipsis; white-space: nowrap
+
+## Visibility (3 classes; src/scss/05-useful/_visibility.scss)
+
+- hidden → display: none [legacy name]
+- hide-scrollbar → -ms-overflow-style: none; scrollbar-width: none [legacy name]
+- hide-on-service-studio → -servicestudio-display: none [legacy name]
+
+## Legacy names (57)
+
+Names outside the grammar, kept for compatibility; their effect is in their family row above. Prefer the grammar form when one exists (display-none over hidden, font-bold over bold).
+
+wcag-hide-text skip-nav columns-item full-height full-height-vh full-height-minus-header half-height half-height-vh auto-height full-width full-width-vw half-width half-width-vw top-left top-center top-right center center-left center-right bottom-left bottom-center bottom-right flex1 flex2 flex3 img-cover img-rounded img-circle thumbnail no-transition no-transform sticky-observer tablet-full-width phone-full-width fixed sticky absolute-top absolute-top-right absolute-top-left absolute-top-plus-header absolute-right absolute-bottom absolute-bottom-right absolute-bottom-left absolute-left absolute-center absolute-center-top absolute-center-right absolute-center-bottom absolute-center-left break-word bold italic oblique hidden hide-scrollbar hide-on-service-studio
+

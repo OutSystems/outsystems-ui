@@ -7,6 +7,14 @@
 
 ///
 .osui-btn-loading {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	// Spinner geometry and label size; defaults equal the previous fixed values.
+	--osui-btn-loading-font-size: #{variables.$token-font-size-350};
+	--osui-btn-loading-spinner-size: #{variables.$token-scale-400};
+	--osui-btn-loading-spinner-gap: #{variables.$token-scale-200};
+	--osui-btn-loading-spinner-border-width: #{variables.$token-border-size-050};
+	// ───────────────────────────────────────────────────────────────────
+
 	// Service Studio Preview
 	& {
 		-servicestudio-display: inline-flex;
@@ -54,19 +62,19 @@
 
 		& > * {
 			display: inline-block;
-			font-size: variables.$token-font-size-350;
+			font-size: var(--osui-btn-loading-font-size);
 			vertical-align: middle;
 		}
 
 		.osui-btn-loading__spinner-animation {
 			display: none;
 			animation: loadingSpinner variables.$token-transition-time-1000 cubic-bezier(0.7, 1.05, 0.78, 0.78) infinite;
-			border: variables.$token-border-size-050 solid currentColor;
+			border: var(--osui-btn-loading-spinner-border-width) solid currentColor;
 			border-radius: var(--border-radius-rounded);
 			border-block-start-color: transparent;
-			height: variables.$token-scale-400;
-			margin-inline-end: variables.$token-scale-200;
-			width: variables.$token-scale-400;
+			height: var(--osui-btn-loading-spinner-size);
+			margin-inline-end: var(--osui-btn-loading-spinner-gap);
+			width: var(--osui-btn-loading-spinner-size);
 			will-change: transform;
 
 			// ServiceStudio Preview

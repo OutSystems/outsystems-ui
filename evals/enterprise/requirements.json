@@ -1,0 +1,832 @@
+{
+	"$comment": "Enterprise UI requirements transcribed from 'UI Enterprise apps requirements' (OutSystems, 2025-07-30), sections 2.1 and 5. owner: who provides it (osui = this repository; platform = OutSystems platform widgets; datagrid/charts/maps = separate OutSystems components). status: 'auto' lets the evidence rules decide (offered when all match, partial when some do, missing when none), 'partial' and 'missing' are hand-set with a reason for requirements the rules cannot see. Evidence kinds: pattern (TypeScript pattern name), css (CSS-only component name), story (Storybook story name), scss-text / ts-text (substring present in the token theme SCSS / the TypeScript sources).",
+	"groups": { "components": 0.5, "forms": 0.2, "navigation": 0.2, "dataviz": 0.1 },
+	"requirements": [
+		{
+			"id": "accordion",
+			"group": "components",
+			"requirement": "Accordion",
+			"owner": "osui",
+			"status": "auto",
+			"evidence": [{ "kind": "pattern", "match": "Accordion" }]
+		},
+		{
+			"id": "action-sheet",
+			"group": "components",
+			"requirement": "Action Sheet",
+			"owner": "osui",
+			"status": "auto",
+			"evidence": [{ "kind": "css", "match": "action-sheet" }]
+		},
+		{
+			"id": "alert-inline",
+			"group": "components",
+			"requirement": "Alert Inline",
+			"owner": "osui",
+			"status": "auto",
+			"evidence": [{ "kind": "css", "match": "alert" }]
+		},
+		{
+			"id": "avatar",
+			"group": "components",
+			"requirement": "Avatar",
+			"owner": "osui",
+			"status": "auto",
+			"evidence": [{ "kind": "css", "match": "user-avatar" }]
+		},
+		{
+			"id": "badge",
+			"group": "components",
+			"requirement": "Badge",
+			"owner": "osui",
+			"status": "auto",
+			"evidence": [{ "kind": "css", "match": "badge" }]
+		},
+		{
+			"id": "blank-slate",
+			"group": "components",
+			"requirement": "Blank Slate",
+			"owner": "osui",
+			"status": "auto",
+			"evidence": [{ "kind": "css", "match": "blank-slate" }]
+		},
+		{
+			"id": "bottom-bar",
+			"group": "components",
+			"requirement": "Bottom bar",
+			"owner": "osui",
+			"status": "auto",
+			"evidence": [{ "kind": "css", "match": "bottom-bar-item" }]
+		},
+		{
+			"id": "bottom-sheet",
+			"group": "components",
+			"requirement": "Bottom Sheet / Drawer",
+			"owner": "osui",
+			"status": "auto",
+			"evidence": [{ "kind": "pattern", "match": "BottomSheet" }]
+		},
+		{
+			"id": "button",
+			"group": "components",
+			"requirement": "Button",
+			"owner": "osui",
+			"status": "auto",
+			"evidence": [{ "kind": "css", "match": "btn" }]
+		},
+		{
+			"id": "button-group",
+			"group": "components",
+			"requirement": "Button Group / Toggle Group",
+			"owner": "osui",
+			"status": "auto",
+			"evidence": [{ "kind": "css", "match": "button-group" }]
+		},
+		{
+			"id": "card",
+			"group": "components",
+			"requirement": "Card",
+			"owner": "osui",
+			"status": "auto",
+			"evidence": [{ "kind": "css", "match": "card" }]
+		},
+		{
+			"id": "carousel",
+			"group": "components",
+			"requirement": "Carousel",
+			"owner": "osui",
+			"status": "auto",
+			"evidence": [{ "kind": "pattern", "match": "Carousel" }]
+		},
+		{
+			"id": "checkbox",
+			"group": "components",
+			"requirement": "Checkbox",
+			"owner": "osui",
+			"status": "auto",
+			"evidence": [{ "kind": "css", "match": "checkbox" }]
+		},
+		{
+			"id": "chat-message",
+			"group": "components",
+			"requirement": "Chat Message",
+			"owner": "osui",
+			"status": "auto",
+			"evidence": [{ "kind": "css", "match": "chat-message" }]
+		},
+		{
+			"id": "collapsible",
+			"group": "components",
+			"requirement": "Collapsible (standalone)",
+			"owner": "osui",
+			"status": "partial",
+			"reason": "AccordionItem collapses inside an Accordion; there is no standalone collapsible region",
+			"evidence": [{ "kind": "pattern", "match": "AccordionItem" }]
+		},
+		{
+			"id": "columns",
+			"group": "components",
+			"requirement": "Columns",
+			"owner": "osui",
+			"status": "auto",
+			"evidence": [{ "kind": "css", "match": "columns" }]
+		},
+		{
+			"id": "counter",
+			"group": "components",
+			"requirement": "Counter",
+			"owner": "osui",
+			"status": "auto",
+			"evidence": [{ "kind": "css", "match": "counter" }]
+		},
+		{
+			"id": "combobox",
+			"group": "components",
+			"requirement": "Dropdown Search / Combobox",
+			"owner": "osui",
+			"status": "auto",
+			"evidence": [
+				{ "kind": "pattern", "match": "Dropdown" },
+				{ "kind": "css", "match": "dropdown-serverside" }
+			]
+		},
+		{
+			"id": "command",
+			"group": "components",
+			"requirement": "Command palette",
+			"owner": "osui",
+			"status": "missing",
+			"reason": "no command / quick-action palette component",
+			"evidence": []
+		},
+		{
+			"id": "context-menu",
+			"group": "components",
+			"requirement": "Context Menu (right-click)",
+			"owner": "osui",
+			"status": "missing",
+			"reason": "OverflowMenu opens from a trigger; no pointer-position context menu",
+			"evidence": []
+		},
+		{
+			"id": "data-table",
+			"group": "components",
+			"requirement": "Data Table",
+			"owner": "datagrid",
+			"status": "auto",
+			"evidence": []
+		},
+		{
+			"id": "datetime-picker",
+			"group": "components",
+			"requirement": "DateTime Picker",
+			"owner": "osui",
+			"status": "auto",
+			"evidence": [
+				{ "kind": "pattern", "match": "DatePicker" },
+				{ "kind": "pattern", "match": "TimePicker" }
+			]
+		},
+		{
+			"id": "separator",
+			"group": "components",
+			"requirement": "Divider / Separator",
+			"owner": "osui",
+			"status": "auto",
+			"evidence": [{ "kind": "css", "match": "separator" }]
+		},
+		{
+			"id": "select",
+			"group": "components",
+			"requirement": "Dropdown / Select",
+			"owner": "osui",
+			"status": "auto",
+			"evidence": [{ "kind": "pattern", "match": "Dropdown" }]
+		},
+		{
+			"id": "flip-content",
+			"group": "components",
+			"requirement": "Flip Content",
+			"owner": "osui",
+			"status": "auto",
+			"evidence": [{ "kind": "pattern", "match": "FlipContent" }]
+		},
+		{
+			"id": "form",
+			"group": "components",
+			"requirement": "Form",
+			"owner": "osui",
+			"status": "auto",
+			"evidence": [{ "kind": "css", "match": "form" }]
+		},
+		{
+			"id": "gallery",
+			"group": "components",
+			"requirement": "Gallery",
+			"owner": "osui",
+			"status": "auto",
+			"evidence": [{ "kind": "pattern", "match": "Gallery" }]
+		},
+		{
+			"id": "hover-card",
+			"group": "components",
+			"requirement": "Hover Card",
+			"owner": "osui",
+			"status": "partial",
+			"reason": "Tooltip and the popover styles cover text; no rich hover card with structured content",
+			"evidence": [
+				{ "kind": "pattern", "match": "Tooltip" },
+				{ "kind": "css", "match": "popover" }
+			]
+		},
+		{
+			"id": "icon-badge",
+			"group": "components",
+			"requirement": "Icon badge",
+			"owner": "osui",
+			"status": "auto",
+			"evidence": [{ "kind": "css", "match": "icon-badge" }]
+		},
+		{
+			"id": "input",
+			"group": "components",
+			"requirement": "Input",
+			"owner": "osui",
+			"status": "auto",
+			"evidence": [{ "kind": "css", "match": "inputs-and-textareas" }]
+		},
+		{
+			"id": "input-search",
+			"group": "components",
+			"requirement": "Input search",
+			"owner": "osui",
+			"status": "auto",
+			"evidence": [{ "kind": "pattern", "match": "Search" }]
+		},
+		{
+			"id": "label",
+			"group": "components",
+			"requirement": "Label",
+			"owner": "osui",
+			"status": "auto",
+			"evidence": [
+				{ "kind": "pattern", "match": "AnimatedLabel" },
+				{ "kind": "css", "match": "form" }
+			]
+		},
+		{
+			"id": "lightbox",
+			"group": "components",
+			"requirement": "LightBox",
+			"owner": "osui",
+			"status": "auto",
+			"evidence": [{ "kind": "css", "match": "lightbox-image" }]
+		},
+		{
+			"id": "list",
+			"group": "components",
+			"requirement": "List / List Item",
+			"owner": "osui",
+			"status": "auto",
+			"evidence": [
+				{ "kind": "css", "match": "list" },
+				{ "kind": "css", "match": "list-item" }
+			]
+		},
+		{
+			"id": "master-detail",
+			"group": "components",
+			"requirement": "Master Detail",
+			"owner": "osui",
+			"status": "auto",
+			"evidence": [{ "kind": "css", "match": "master-detail" }]
+		},
+		{
+			"id": "menubar",
+			"group": "components",
+			"requirement": "Menubar",
+			"owner": "osui",
+			"status": "partial",
+			"reason": "the top menu layout with Submenu covers horizontal navigation; no application menubar with nested command menus",
+			"evidence": [
+				{ "kind": "css", "match": "menu" },
+				{ "kind": "pattern", "match": "Submenu" }
+			]
+		},
+		{
+			"id": "modal",
+			"group": "components",
+			"requirement": "Modal / Popup / Dialog",
+			"owner": "osui",
+			"status": "auto",
+			"evidence": [{ "kind": "css", "match": "popup" }]
+		},
+		{
+			"id": "navigation-menu",
+			"group": "components",
+			"requirement": "Navigation Menu",
+			"owner": "osui",
+			"status": "auto",
+			"evidence": [
+				{ "kind": "css", "match": "menu" },
+				{ "kind": "pattern", "match": "Submenu" }
+			]
+		},
+		{
+			"id": "notification",
+			"group": "components",
+			"requirement": "Notification / Toast",
+			"owner": "osui",
+			"status": "auto",
+			"evidence": [{ "kind": "pattern", "match": "Notification" }]
+		},
+		{
+			"id": "otp-input",
+			"group": "components",
+			"requirement": "OTP Input",
+			"owner": "osui",
+			"status": "missing",
+			"reason": "no one-time-code input",
+			"evidence": []
+		},
+		{
+			"id": "pagination",
+			"group": "components",
+			"requirement": "Pagination",
+			"owner": "osui",
+			"status": "auto",
+			"evidence": [{ "kind": "css", "match": "pagination" }]
+		},
+		{
+			"id": "popover-menu",
+			"group": "components",
+			"requirement": "Popover / Dropdown Menu / Overflow Menu",
+			"owner": "osui",
+			"status": "auto",
+			"evidence": [
+				{ "kind": "pattern", "match": "OverflowMenu" },
+				{ "kind": "css", "match": "popover" }
+			]
+		},
+		{
+			"id": "progress-bar",
+			"group": "components",
+			"requirement": "Progress bar",
+			"owner": "osui",
+			"status": "auto",
+			"evidence": [{ "kind": "pattern", "match": "Progress" }]
+		},
+		{
+			"id": "progress-circle",
+			"group": "components",
+			"requirement": "Progress Circle",
+			"owner": "osui",
+			"status": "auto",
+			"evidence": [
+				{ "kind": "pattern", "match": "Progress" },
+				{ "kind": "ts-text", "match": "ProgressCircle" }
+			]
+		},
+		{
+			"id": "radio",
+			"group": "components",
+			"requirement": "Radio button",
+			"owner": "osui",
+			"status": "auto",
+			"evidence": [{ "kind": "css", "match": "radio-button" }]
+		},
+		{
+			"id": "range-slider",
+			"group": "components",
+			"requirement": "Range Slider",
+			"owner": "osui",
+			"status": "auto",
+			"evidence": [{ "kind": "pattern", "match": "RangeSlider" }]
+		},
+		{
+			"id": "rating",
+			"group": "components",
+			"requirement": "Rating",
+			"owner": "osui",
+			"status": "auto",
+			"evidence": [{ "kind": "pattern", "match": "Rating" }]
+		},
+		{
+			"id": "scroll-area",
+			"group": "components",
+			"requirement": "Scroll-area / Scrollable Area",
+			"owner": "osui",
+			"status": "auto",
+			"evidence": [{ "kind": "css", "match": "scrollable-area" }]
+		},
+		{
+			"id": "section",
+			"group": "components",
+			"requirement": "Section",
+			"owner": "osui",
+			"status": "auto",
+			"evidence": [{ "kind": "css", "match": "section" }]
+		},
+		{
+			"id": "section-index",
+			"group": "components",
+			"requirement": "SectionIndex",
+			"owner": "osui",
+			"status": "auto",
+			"evidence": [{ "kind": "pattern", "match": "SectionIndex" }]
+		},
+		{
+			"id": "sidebar-sheet",
+			"group": "components",
+			"requirement": "Side menu / Sidebar / Sheet",
+			"owner": "osui",
+			"status": "auto",
+			"evidence": [{ "kind": "pattern", "match": "Sidebar" }]
+		},
+		{
+			"id": "skeleton",
+			"group": "components",
+			"requirement": "Skeleton loading",
+			"owner": "osui",
+			"status": "missing",
+			"reason": "no skeleton placeholder component; ButtonLoading and Progress cover indicators only",
+			"evidence": []
+		},
+		{
+			"id": "stacked-cards",
+			"group": "components",
+			"requirement": "Stacked Cards",
+			"owner": "osui",
+			"status": "auto",
+			"evidence": [{ "kind": "css", "match": "stacked-cards" }]
+		},
+		{
+			"id": "spinner",
+			"group": "components",
+			"requirement": "Spinner",
+			"owner": "osui",
+			"status": "partial",
+			"reason": "a spinner exists inside ButtonLoading; no standalone spinner component",
+			"evidence": [{ "kind": "scss-text", "match": "spinner" }]
+		},
+		{
+			"id": "switch",
+			"group": "components",
+			"requirement": "Switch (Toggle)",
+			"owner": "osui",
+			"status": "auto",
+			"evidence": [{ "kind": "css", "match": "switch" }]
+		},
+		{
+			"id": "tabs",
+			"group": "components",
+			"requirement": "Tabs",
+			"owner": "osui",
+			"status": "auto",
+			"evidence": [{ "kind": "pattern", "match": "Tabs" }]
+		},
+		{
+			"id": "tag",
+			"group": "components",
+			"requirement": "Tag",
+			"owner": "osui",
+			"status": "auto",
+			"evidence": [{ "kind": "css", "match": "tag" }]
+		},
+		{
+			"id": "textarea",
+			"group": "components",
+			"requirement": "Textarea",
+			"owner": "osui",
+			"status": "auto",
+			"evidence": [{ "kind": "css", "match": "inputs-and-textareas" }]
+		},
+		{
+			"id": "tooltip",
+			"group": "components",
+			"requirement": "Tooltip",
+			"owner": "osui",
+			"status": "auto",
+			"evidence": [{ "kind": "pattern", "match": "Tooltip" }]
+		},
+		{
+			"id": "top-bar",
+			"group": "components",
+			"requirement": "Top bar",
+			"owner": "osui",
+			"status": "auto",
+			"evidence": [{ "kind": "css", "match": "header" }]
+		},
+		{
+			"id": "video",
+			"group": "components",
+			"requirement": "Video",
+			"owner": "osui",
+			"status": "auto",
+			"evidence": [{ "kind": "pattern", "match": "Video" }]
+		},
+		{
+			"id": "upload",
+			"group": "components",
+			"requirement": "Upload",
+			"owner": "osui",
+			"status": "auto",
+			"evidence": [{ "kind": "css", "match": "upload" }]
+		},
+		{
+			"id": "wizard",
+			"group": "components",
+			"requirement": "Wizard",
+			"owner": "osui",
+			"status": "auto",
+			"evidence": [{ "kind": "pattern", "match": "Wizard" }]
+		},
+		{
+			"id": "table-fixed-header",
+			"group": "components",
+			"requirement": "Table: fixed header",
+			"owner": "platform",
+			"status": "missing",
+			"reason": "document: not offered by the platform Table widget",
+			"evidence": []
+		},
+		{
+			"id": "table-filtering",
+			"group": "components",
+			"requirement": "Table: filtering",
+			"owner": "platform",
+			"status": "partial",
+			"reason": "document: not complete",
+			"evidence": []
+		},
+		{
+			"id": "table-sorting",
+			"group": "components",
+			"requirement": "Table: sorting",
+			"owner": "platform",
+			"status": "offered",
+			"evidence": []
+		},
+		{
+			"id": "table-pagination",
+			"group": "components",
+			"requirement": "Table: pagination and loading",
+			"owner": "osui",
+			"status": "auto",
+			"evidence": [
+				{ "kind": "css", "match": "pagination" },
+				{ "kind": "css", "match": "list-updating" }
+			]
+		},
+		{
+			"id": "table-responsive",
+			"group": "components",
+			"requirement": "Table: responsiveness",
+			"owner": "platform",
+			"status": "missing",
+			"reason": "document: not offered",
+			"evidence": []
+		},
+		{
+			"id": "table-bulk-actions",
+			"group": "components",
+			"requirement": "Table: bulk actions",
+			"owner": "osui",
+			"status": "auto",
+			"evidence": [{ "kind": "css", "match": "bulk-actions" }]
+		},
+		{
+			"id": "table-row-actions",
+			"group": "components",
+			"requirement": "Table: row actions",
+			"owner": "osui",
+			"status": "auto",
+			"evidence": [{ "kind": "pattern", "match": "OverflowMenu" }]
+		},
+		{
+			"id": "table-density",
+			"group": "components",
+			"requirement": "Table: density (compact / standard / relaxed)",
+			"owner": "osui",
+			"status": "missing",
+			"reason": "no density variants on the table styles",
+			"evidence": []
+		},
+		{
+			"id": "table-zebra",
+			"group": "components",
+			"requirement": "Table: zebra striping",
+			"owner": "osui",
+			"status": "auto",
+			"evidence": [{ "kind": "scss-text", "match": "-stripping:nth-child(even)" }]
+		},
+		{
+			"id": "datagrid-features",
+			"group": "components",
+			"requirement": "Data Grid: grouping, column customisation, freezing, inline editing, conditional formatting, lazy loading, real-time",
+			"owner": "datagrid",
+			"status": "offered",
+			"evidence": []
+		},
+		{
+			"id": "typeahead",
+			"group": "forms",
+			"requirement": "Typeahead / Autocomplete",
+			"owner": "osui",
+			"status": "missing",
+			"reason": "Dropdown filters a fixed list and DropdownServerSide delegates the search to the app; no free-text suggestion input",
+			"evidence": []
+		},
+		{
+			"id": "date-time-pickers",
+			"group": "forms",
+			"requirement": "Date and Time Pickers with formats and time zones",
+			"owner": "osui",
+			"status": "partial",
+			"reason": "DatePicker, TimePicker and MonthPicker exist; no combined date-time picker and no time-zone handling",
+			"evidence": [
+				{ "kind": "pattern", "match": "DatePicker" },
+				{ "kind": "pattern", "match": "TimePicker" },
+				{ "kind": "pattern", "match": "MonthPicker" }
+			]
+		},
+		{
+			"id": "multi-select",
+			"group": "forms",
+			"requirement": "Multi-select dropdown with search",
+			"owner": "osui",
+			"status": "auto",
+			"evidence": [
+				{ "kind": "pattern", "match": "Dropdown" },
+				{ "kind": "ts-text", "match": "AllowMultipleSelection" }
+			]
+		},
+		{
+			"id": "multi-step-wizard",
+			"group": "forms",
+			"requirement": "Multi-step wizard",
+			"owner": "osui",
+			"status": "auto",
+			"evidence": [{ "kind": "pattern", "match": "Wizard" }]
+		},
+		{
+			"id": "advanced-validation",
+			"group": "forms",
+			"requirement": "Advanced validation with clear error messages",
+			"owner": "osui",
+			"status": "partial",
+			"reason": "invalid-state styles and the feedback message exist; real-time and server-side validation logic is left to the app",
+			"evidence": [
+				{ "kind": "css", "match": "feedback-message" },
+				{ "kind": "scss-text", "match": "not-valid" }
+			]
+		},
+		{
+			"id": "file-uploader",
+			"group": "forms",
+			"requirement": "Advanced file uploader",
+			"owner": "osui",
+			"status": "partial",
+			"reason": "upload styles exist; no drag-and-drop, progress or multi-file management",
+			"evidence": [{ "kind": "css", "match": "upload" }]
+		},
+		{
+			"id": "rich-text",
+			"group": "forms",
+			"requirement": "Rich text area",
+			"owner": "osui",
+			"status": "missing",
+			"reason": "no rich text editor",
+			"evidence": []
+		},
+		{
+			"id": "nav-sidebar",
+			"group": "navigation",
+			"requirement": "Sidebar navigation",
+			"owner": "osui",
+			"status": "auto",
+			"evidence": [
+				{ "kind": "css", "match": "menu-layout-side" },
+				{ "kind": "pattern", "match": "Sidebar" }
+			]
+		},
+		{
+			"id": "nav-icon-sidebar",
+			"group": "navigation",
+			"requirement": "Icon sidebar (collapsed to icons)",
+			"owner": "osui",
+			"status": "missing",
+			"reason": "the side menu has no icon-only collapsed state",
+			"evidence": []
+		},
+		{
+			"id": "nav-topbar",
+			"group": "navigation",
+			"requirement": "Topbar navigation",
+			"owner": "osui",
+			"status": "auto",
+			"evidence": [
+				{ "kind": "css", "match": "header" },
+				{ "kind": "css", "match": "menu" }
+			]
+		},
+		{
+			"id": "nav-mega-menu",
+			"group": "navigation",
+			"requirement": "Mega menu",
+			"owner": "osui",
+			"status": "partial",
+			"reason": "Submenu opens one level; no multi-column panel",
+			"evidence": [{ "kind": "pattern", "match": "Submenu" }]
+		},
+		{
+			"id": "nav-breadcrumbs",
+			"group": "navigation",
+			"requirement": "Breadcrumbs",
+			"owner": "osui",
+			"status": "auto",
+			"evidence": [{ "kind": "css", "match": "breadcrumbs" }]
+		},
+		{
+			"id": "nav-global-search",
+			"group": "navigation",
+			"requirement": "Global search",
+			"owner": "osui",
+			"status": "missing",
+			"reason": "Search is an input pattern; no global search entry point with results across the app",
+			"evidence": []
+		},
+		{
+			"id": "charts",
+			"group": "dataviz",
+			"requirement": "Advanced charts (line, area, bar, pie, radar)",
+			"owner": "charts",
+			"status": "offered",
+			"evidence": []
+		},
+		{
+			"id": "timeline",
+			"group": "dataviz",
+			"requirement": "Timeline",
+			"owner": "osui",
+			"status": "partial",
+			"reason": "document: not complete; a vertical timeline style exists without grouping or date axis",
+			"evidence": [{ "kind": "css", "match": "timeline" }]
+		},
+		{
+			"id": "calendar",
+			"group": "dataviz",
+			"requirement": "Full-screen calendar",
+			"owner": "osui",
+			"status": "missing",
+			"reason": "pickers only; no calendar view",
+			"evidence": []
+		},
+		{
+			"id": "maps",
+			"group": "dataviz",
+			"requirement": "Maps with data overlays",
+			"owner": "maps",
+			"status": "partial",
+			"evidence": []
+		},
+		{
+			"id": "kpi-cards",
+			"group": "dataviz",
+			"requirement": "KPI cards / detailed summaries",
+			"owner": "osui",
+			"status": "partial",
+			"reason": "document: not complete; card and counter styles exist without trend or comparison variants",
+			"evidence": [
+				{ "kind": "css", "match": "card" },
+				{ "kind": "css", "match": "counter" }
+			]
+		},
+		{
+			"id": "kanban",
+			"group": "dataviz",
+			"requirement": "Kanban board / workflow visualisation",
+			"owner": "osui",
+			"status": "missing",
+			"reason": "no board or workflow component",
+			"evidence": []
+		}
+	],
+	"flows": [
+		{
+			"flow": "Authentication & access control",
+			"elements": ["form", "input", "button", "alert-inline", "nav-sidebar"]
+		},
+		{ "flow": "CRUD", "elements": ["button", "form", "table-sorting", "modal", "table-row-actions"] },
+		{
+			"flow": "Search & filter",
+			"elements": ["input-search", "select", "checkbox", "datetime-picker", "tag", "table-filtering"]
+		},
+		{ "flow": "User & admin management", "elements": ["table-sorting", "select", "checkbox", "popover-menu"] },
+		{ "flow": "Configuration & settings", "elements": ["tabs", "sidebar-sheet", "switch", "form", "button"] },
+		{ "flow": "Notifications & alerts", "elements": ["notification", "badge", "alert-inline", "icon-badge"] },
+		{ "flow": "Approval & workflow", "elements": ["list", "notification", "button", "chat-message", "timeline"] },
+		{ "flow": "Reporting & analytics", "elements": ["charts", "datetime-picker", "select", "button", "kpi-cards"] },
+		{ "flow": "Data import / export", "elements": ["upload", "progress-bar", "table-sorting", "popover-menu"] }
+	]
+}

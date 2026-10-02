@@ -5,10 +5,10 @@ namespace OutSystems.OSUI.Patterns.ProgressAPI {
 	/**
 	 * Function that will change the property of a given Progress Id.
 	 *
-	 * @export
-	 * @param {string} progressId ID of the Progress where the property will be changed.
-	 * @param {string} propertyName Property name that will be updated
-	 * @param {*} propertyValue Value that will be set to the property
+	 * @param progressId ID of the Progress where the property will be changed.
+	 * @param propertyName Property name that will be updated
+	 * @param propertyValue Value that will be set to the property
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function ChangeProperty(progressId: string, propertyName: string, propertyValue: unknown): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -26,15 +26,15 @@ namespace OutSystems.OSUI.Patterns.ProgressAPI {
 	/**
 	 * Create the new ProgressItem instance and add it to the progressItemsMap
 	 *
-	 * @export
-	 * @param {string} progressId ID of the Pattern that a new instance will be created.
-	 * @param {string} configs Configurations for the Pattern in JSON format.
-	 * @return {*}  {OSFramework.OSUI.Patterns.Progress.IProgress}
+	 * @param progressId ID of the Pattern that a new instance will be created.
+	 * @param type Progress type: Bar or Circle.
+	 * @param configs Configurations for the Pattern in JSON format.
+	 * @returns the Progress instance
 	 */
 	export function Create(
 		progressId: string,
 		type: string,
-		configs: string
+		configs: string | Configs
 	): OSFramework.OSUI.Patterns.Progress.IProgress {
 		if (_progressItemsMap.has(progressId)) {
 			throw new Error(`There is already an ProgressItem registered under id: ${progressId}`);
@@ -50,8 +50,8 @@ namespace OutSystems.OSUI.Patterns.ProgressAPI {
 	/**
 	 * Function that will dispose the instance of the given ProgressItem Id
 	 *
-	 * @export
-	 * @param {string} progressId
+	 * @param progressId
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Dispose(progressId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -71,8 +71,7 @@ namespace OutSystems.OSUI.Patterns.ProgressAPI {
 	/**
 	 * Fucntion that will return the Map with all the Progress instances at the page
 	 *
-	 * @export
-	 * @return {*}  Array<string>
+	 * @returns Array<string>
 	 */
 	export function GetAllProgressItemsMap(): Array<string> {
 		return OSFramework.OSUI.Helper.MapOperation.ExportKeys(_progressItemsMap);
@@ -81,9 +80,8 @@ namespace OutSystems.OSUI.Patterns.ProgressAPI {
 	/**
 	 * Function that gets the instance of Progress, by a given ID.
 	 *
-	 * @export
-	 * @param {string} progressId ID of the Progress that will be looked for.
-	 * @return {*}  {OSFramework.OSUI.Patterns.Progress.IProgress;}
+	 * @param progressId ID of the Progress that will be looked for.
+	 * @returns the Progress instance
 	 */
 	export function GetProgressItemById(progressId: string): OSFramework.OSUI.Patterns.Progress.IProgress {
 		return OSFramework.OSUI.Helper.MapOperation.FindInMap(
@@ -96,9 +94,8 @@ namespace OutSystems.OSUI.Patterns.ProgressAPI {
 	/**
 	 * Function that will initialize the pattern instance.
 	 *
-	 * @export
-	 * @param {string} progressId ID of the ProgressItem that will be initialized.
-	 * @return {*}  {OSFramework.OSUI.Patterns.Progress.IProgress}
+	 * @param progressId ID of the ProgressItem that will be initialized.
+	 * @returns the Progress instance
 	 */
 	export function Initialize(progressId: string): OSFramework.OSUI.Patterns.Progress.IProgress {
 		const _progressItem = GetProgressItemById(progressId);
@@ -111,15 +108,14 @@ namespace OutSystems.OSUI.Patterns.ProgressAPI {
 	/**
 	 * Function to register a provider callback
 	 *
-	 * @export
-	 * @param {string} dropdownId
-	 * @param {string} eventName
-	 * @param {OSFramework.OSUI.GlobalCallbacks.OSGeneric} callback
-	 * @return {*}  {string}
+	 * @param dropdownId
+	 * @param eventName
+	 * @param callback
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function RegisterCallback(
 		dropdownId: string,
-		eventName: string,
+		eventName: EventName,
 		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
 	): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -137,8 +133,8 @@ namespace OutSystems.OSUI.Patterns.ProgressAPI {
 	/**
 	 * Function to reset the Progress Bar/Circle
 	 *
-	 * @export
-	 * @param {string} progressId
+	 * @param progressId
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function ResetProgressValue(progressId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -154,9 +150,9 @@ namespace OutSystems.OSUI.Patterns.ProgressAPI {
 
 	/**
 	 * Function that sets the value of the progress circle or the progress bar
-	 * @export
-	 * @param {string} widgetId of the progress circle or progress bar that will have its value set
-	 * @param {number} progress value of the circle
+	 * @param progressId ID of the progress circle or progress bar that will have its value set
+	 * @param progress value of the circle
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function SetProgressValue(progressId: string, progress: number): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -174,11 +170,10 @@ namespace OutSystems.OSUI.Patterns.ProgressAPI {
 	/**
 	 * Funciton that sets a Progress Gradient
 	 *
-	 * @export
-	 * @param {string} progressId
-	 * @param {string} gradientType
-	 * @param {string} colors
-	 * @return {*}  {string}
+	 * @param progressId
+	 * @param gradientType
+	 * @param colors
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function ProgressApplyGradient(progressId: string, gradientType: string, colors: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({

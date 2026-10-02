@@ -11,6 +11,9 @@
 	--osui-dropdown-item-background: transparent;
 	--osui-dropdown-item-color: var(--color-text);
 	--osui-dropdown-item-hover-bg: var(--color-border-subtle);
+	// Density axis: defaults equal the previous fixed values, so nothing changes until a theme sets them.
+	--osui-dropdown-item-padding-block: #{variables.$token-scale-200};
+	--osui-dropdown-item-padding-inline: #{variables.$token-scale-400};
 	// ───────────────────────────────────────────────────────────────────
 
 	align-items: center;
@@ -21,8 +24,8 @@
 	flex: 1;
 	min-height: variables.$token-scale-1000;
 	overflow: hidden;
-	padding-block: variables.$token-scale-200;
-	padding-inline: variables.$token-scale-400;
+	padding-block: var(--osui-dropdown-item-padding-block);
+	padding-inline: var(--osui-dropdown-item-padding-inline);
 	position: relative;
 	transition: background variables.$token-transition-time-300 variables.$token-transition-curve-expressive;
 	width: 100%;

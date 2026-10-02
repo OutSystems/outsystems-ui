@@ -1,0 +1,65 @@
+# OutSystems UI (llms.txt)
+
+> Browser-side TypeScript behaviours + SCSS for the OutSystems UI patterns (O11 Reactive/Mobile and ODC). The build emits one AMD bundle and one CSS bundle per platform (`dist/<O11|ODC>.OutSystemsUI.{js,css}`). Patterns are driven through the global namespace `OutSystems.OSUI.Patterns.<Name>API`; third-party providers (Flatpickr, Splide, noUiSlider, VirtualSelect, Floating UI) are loaded by the host app as window globals.
+
+Scope: OutSystems UI ships a single token-based theme (light, plus the generated dark mode under class os-dark-theme on <html>). The pre-migration "classic" CSS snapshot under classic-theme/ is a Storybook comparison artifact, not a target for generated code.
+
+## Components (33)
+- Accordion: 1 props, 0 events, 9 API functions
+- AccordionItem: 5 props, 1 events, 11 API functions
+- AnimatedLabel: 0 props, 0 events, 8 API functions
+- BottomSheet: 2 props, 1 events, 9 API functions
+- ButtonLoading: 2 props, 0 events, 8 API functions
+- Carousel: 11 props, 0 events, 18 API functions
+- DatePicker: 18 props, 0 events, 22 API functions
+- Dropdown: 12 props, 5 events, 19 API functions
+- DropdownServerSideItem: 2 props, 1 events, 7 API functions
+- FlipContent: 2 props, 1 events, 10 API functions
+- Gallery: 4 props, 0 events, 7 API functions
+- InlineSvg: 1 props, 0 events, 8 API functions
+- MonthPicker: 10 props, 1 events, 18 API functions
+- Notification: 6 props, 1 events, 9 API functions
+- OverflowMenu: 2 props, 1 events, 11 API functions
+- Progress: 0 props, 0 events, 10 API functions
+- RangeSlider: 15 props, 0 events, 15 API functions
+- Rating: 4 props, 1 events, 9 API functions
+- Search: 0 props, 0 events, 7 API functions
+- SectionIndex: 2 props, 0 events, 7 API functions
+- SectionIndexItem: 1 props, 0 events, 7 API functions
+- Sidebar: 4 props, 1 events, 11 API functions
+- Submenu: 1 props, 1 events, 12 API functions
+- SwipeEvents: 1 props, 4 events, 9 API functions
+- Tabs: 6 props, 1 events, 9 API functions
+- TabsContentItem: 0 props, 0 events, 7 API functions
+- TabsHeaderItem: 0 props, 0 events, 10 API functions
+- TimePicker: 12 props, 0 events, 20 API functions
+- Tooltip: 3 props, 1 events, 9 API functions
+- TouchEvents: 1 props, 3 events, 7 API functions
+- Video: 9 props, 1 events, 11 API functions
+- Wizard: 2 props, 0 events, 7 API functions
+- WizardItem: 2 props, 1 events, 7 API functions
+
+## Producers
+- OML producers (Model bridge dialects, Service Studio): compose blocks from llms-blocks.txt — 91 blocks; never emit a pattern's markup or Create/Initialize calls. Styling inputs: llms-utilities.txt, llms-tokens.txt, osui.enums.json, osui.icons.json.
+- Runtime producers (standalone pages, Storybook): read llms-components.txt; [runtime-only] lines are yours alone.
+
+## Read next
+- llms-blocks.txt — per-block card with OpenUI/TSX recipes (osui.blocks.json: same data; osui.enums.json: enum values; osui.icons.json: icon names)
+- llms-components.txt — per-pattern card: lifecycle, typed props with defaults/allowed values, events, API signatures, CSS classes, CSS API knobs, markup skeleton
+- llms-tokens.txt — framework theme roles (--color-*, --border-radius-*) and every --osui-* component knob; legacy aliases are marked
+- llms-utilities.txt — the utility grammar (<property>[-<side>][-<value>], the size scale, colour hues and shades) and every family as template rows with their declarations
+- osui.utilities.json — every utility class with its declarations, variants and tokens, machine-readable (schema/osui.utilities.schema.json)
+- llms-patterns.txt — CSS-only components (markup skeleton, knobs), layout partials (host-styled: never generate their markup) and helper classes, one group per kind
+- osui.components.json — the same data, machine-readable (schema/osui.components.schema.json), plus a usage example per pattern (Create with every default, Initialize)
+- schema/configs/<Name>.schema.json — JSON Schema of each pattern's configs string, to validate before Create
+
+## Gotchas (read before generating)
+1. [runtime-only] A pattern root element needs `name="<id>"`; the runtime resolves it with `getElementsByName`. It must sit inside an element with `[data-block]` whose `id` becomes the pattern's `widgetId` (callbacks receive that id first).
+2. [runtime-only] Lifecycle: `Create(id, configsJson)` → `RegisterCallback` → `Initialize(id)`. Parents before children on Create/Initialize; children before parents on Dispose.
+3. [runtime-only] `configs` is a JSON *string*. Always include `"ExtendedClass": ""`; invalid values fall back to defaults silently.
+4. [runtime-only] Every runtime API function returns a JSON string envelope `{ code, isSuccess, message, value? }`; only `Create` throws (duplicate id).
+5. Styling is token-based: override CSS custom properties (`--color-primary`, `--border-radius-default`, `--osui-card-padding`), never component rules. Dark mode = class `os-dark-theme` on `<html>`.
+6. Responsiveness is class-driven: the runtime sets `phone`, `tablet` or `desktop` (and `landscape`/`portrait`) on `<body>`; write `.phone .card { … }` rather than media queries.
+7. Utility classes follow `<property>[-<side>][-<value>]` in long form (`margin-top-base`, `display-flex`, `justify-content-space-between`); Tailwind-style short names do not exist. The grammar and the size scale are in llms-utilities.txt, every class with its CSS in osui.utilities.json.
+8. Logical CSS properties are the default (`padding-inline-start`, not `padding-left`); RTL is handled by the framework.
+9. [runtime-only] Load one card from llms-components.txt per pattern you use (about 450 tokens each). Never load the compiled typings (dist/*.d.ts, about 53k tokens): the cards carry the same contract with defaults, allowed values and markup.

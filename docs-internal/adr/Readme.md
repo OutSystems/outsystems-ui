@@ -24,19 +24,26 @@ Each ADR should follow the template in `ADR-0000-Title-of-ADR.md`.
 
 ## ADR Log
 
-| ADR Number | Title                                                                  | Status   | Date       |
-| :--------- | :--------------------------------------------------------------------- | :------- | :--------- |
-| ADR-0000   | Template for ADRs                                                      | Meta     | 2026-07-29 |
-| ADR-0001   | Replace JS-forced pixel viewport height with CSS viewport units on iOS | Proposed | 2026-07-29 |
-| ADR-0002   | VirtualSelect 1.4.0 upgrade and OSUI validation ownership              | Accepted | 2026-08-11 |
-| ADR-0003   | Public-repo readiness for the Storybook harness                        | Superseded by ADR-0009 | 2026-08-12 |
-| ADR-0004   | Chromatic visual testing on a long-living branch                       | Accepted | 2026-08-12 |
-| ADR-0005   | Reconciling the new-theme branch with `dev`                            | Accepted | 2026-08-12 |
-| ADR-0006   | O11 SCSS bundle and per-platform icon libraries                        | Accepted | 2026-08-12 |
-| ADR-0007   | Build and tooling hygiene                                              | Accepted | 2026-08-12 |
+| ADR Number | Title                                                                    | Status                             | Date       |
+| :--------- | :----------------------------------------------------------------------- | :--------------------------------- | :--------- |
+| ADR-0000   | Template for ADRs                                                        | Meta                               | 2026-07-29 |
+| ADR-0001   | Replace JS-forced pixel viewport height with CSS viewport units on iOS   | Proposed                           | 2026-07-29 |
+| ADR-0002   | VirtualSelect 1.4.0 upgrade and OSUI validation ownership                | Accepted                           | 2026-08-11 |
+| ADR-0003   | Public-repo readiness for the Storybook harness                          | Superseded by ADR-0009             | 2026-08-12 |
+| ADR-0004   | Chromatic visual testing on a long-living branch                         | Accepted                           | 2026-08-12 |
+| ADR-0005   | Reconciling the new-theme branch with `dev`                              | Accepted                           | 2026-08-12 |
+| ADR-0006   | O11 SCSS bundle and per-platform icon libraries                          | Accepted                           | 2026-08-12 |
+| ADR-0007   | Build and tooling hygiene                                                | Accepted                           | 2026-08-12 |
 | ADR-0008   | Chromatic baseline builds on `ROU-12714` and the widget-story dependency | Accepted (§C resolved by ADR-0009) | 2026-08-13 |
-| ADR-0009   | Static widget stories and zero private dependencies                    | Accepted | 2026-08-21 |
-| ADR-0010   | Border-radius theme layer and shape tier slots                         | Accepted | 2026-09-04 |
+| ADR-0009   | Static widget stories and zero private dependencies                      | Accepted                           | 2026-08-21 |
+| ADR-0010   | Border-radius theme layer and shape tier slots                           | Accepted                           | 2026-09-04 |
+| ADR-0011   | AI-friendliness eval suite and generated agent documentation             | Proposed                           | 2026-09-29 |
+| ADR-0012   | Enterprise-readiness evals as a second index                             | Proposed                           | 2026-09-29 |
+| ADR-0013   | Eval registries and self-describing metrics                              | Proposed                           | 2026-09-30 |
+| ADR-0014   | Component tiers, a utilities suite and TSDoc as the documentation source | Proposed                           | 2026-09-30 |
+| ADR-0015   | Model bridge readiness suite and block-level agent docs                  | Proposed                           | 2026-10-02 |
+| ADR-0016   | The composable OML block as the unit of measurement; two categories      | Proposed                           | 2026-10-02 |
+| ADR-0017   | Platform defaults for block parameters; ExtendedClass is Text on purpose | Proposed                           | 2026-10-02 |
 
 > The **"Make Great UI"** initiative (epic ROU-12776) also kept a phase-by-phase decision
 > history (`D-n` numbers) in its `specs/` working notes. That folder was removed once the

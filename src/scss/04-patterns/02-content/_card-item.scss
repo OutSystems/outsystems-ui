@@ -10,6 +10,8 @@
 	// ─── Component CSS API ─────────────────────────────────────────────
 	--osui-card-detail-title-color: var(--color-text);
 	--osui-card-detail-text-color: var(--color-text-subtlest);
+	// Density axis: the gap between the side blocks and the centre; default equals the previous fixed value.
+	--osui-card-detail-gap: #{variables.$token-scale-400};
 	// ───────────────────────────────────────────────────────────────────
 
 	align-items: center;
@@ -17,7 +19,7 @@
 
 	&-left {
 		max-width: 120px;
-		padding-inline-end: variables.$token-scale-400;
+		padding-inline-end: var(--osui-card-detail-gap);
 	}
 
 	&-center {
@@ -25,7 +27,7 @@
 	}
 
 	&-right {
-		padding-inline-start: variables.$token-scale-400;
+		padding-inline-start: var(--osui-card-detail-gap);
 	}
 
 	&-title {

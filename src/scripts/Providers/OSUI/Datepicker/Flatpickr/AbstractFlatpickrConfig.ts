@@ -2,19 +2,15 @@
 namespace Providers.OSUI.Datepicker.Flatpickr {
 	/**
 	 * Class that represents the custom configurations received by the Datepicker.
-	 *
-	 * @export
-	 * @class AbstractFlatpickrConfig
-	 * @extends {AbstractDatePickerConfig}
 	 */
 	export abstract class AbstractFlatpickrConfig
 		extends OSFramework.OSUI.Patterns.DatePicker.AbstractDatePickerConfig
 	{
 		// Store a list of disable days
-		private _disabledDays = [];
+		private _disabledDays: string[] = [];
 
 		// Store a integer list of weekdays
-		private _disabledWeekDays = [];
+		private _disabledWeekDays: number[] = [];
 
 		// Store the language that will be assigned as a locale to the DatePicker
 		private _dynamicLang: string;
@@ -28,28 +24,28 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		// Store configs set using extensibility
 		protected providerExtendedOptions: FlatpickrOptions;
 
-		// Stores the ability to allow inputs to be editable or not
+		/** Stores the ability to allow inputs to be editable or not */
 		public AllowInput = false;
 
-		// Store calendar mode is in use
+		/** Store calendar mode is in use */
 		public CalendarMode: OSFramework.OSUI.Patterns.DatePicker.Enum.Mode;
 
 		// Stores the ability to disable a range of dates from datepicker
-		public Disable = [];
+		public Disable: Array<string | Date | ((date: Date) => boolean)> = [];
 
-		// Stores the ability to disable the mobile flatpickr behavior. False is the default provider option
+		/** Stores the ability to disable the mobile flatpickr behavior. False is the default provider option */
 		public DisableMobile = false;
 
-		// Set the OnChange Event that will be defined in the specific context for each Flatpickr mode
+		/** Set the OnChange Event that will be defined in the specific context for each Flatpickr mode */
 		public OnChange: OSFramework.OSUI.GlobalCallbacks.Generic;
 
-		// Set the OnClose callback to be used whenever the Flatpickr close
+		/** Set the OnClose callback to be used whenever the Flatpickr close */
 		public OnClose: OSFramework.OSUI.GlobalCallbacks.Generic;
 
-		// Set the OnMonthChange callback to be used whenever the Flatpickr month changes
+		/** Set the OnMonthChange callback to be used whenever the Flatpickr month changes */
 		public OnMonthChange: OSFramework.OSUI.GlobalCallbacks.Generic;
 
-		// Set the OnOpen callback to be used whenever the Flatpickr opens
+		/** Set the OnOpen callback to be used whenever the Flatpickr opens */
 		public OnOpen: OSFramework.OSUI.GlobalCallbacks.Generic;
 
 		constructor(config: JSON) {
@@ -82,7 +78,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 			let _locale: FlatpickrLocale = window.flatpickr.l10ns.en;
 			try {
 				// Set the locale in order to define the calendar language
-				_locale = window.flatpickr.l10ns[this.Lang];
+				_locale = (window.flatpickr.l10ns as Record<string, FlatpickrLocale>)[this.Lang];
 
 				// Set the calendar first week day
 				_locale.firstDayOfWeek = this.FirstWeekDay;
@@ -154,7 +150,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 
 			// Check if there are weekdays to be disabled
 			if (this._disabledWeekDays.length > 0) {
-				this.Disable.push((date) => {
+				this.Disable.push((date: Date) => {
 					return this._checkDisableWeeksDay(date);
 				});
 			}
@@ -182,9 +178,6 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 
 		/**
 		 * Method used to get all the global Flatpickr properties across the different types of instances
-		 *
-		 * @return {*}  {FlatpickrOptions}
-		 * @memberof Providers.OSUI.DatePicker.Flatpickr.AbstractFlatpickrConfig
 		 */
 		public getProviderConfig(): FlatpickrOptions {
 			this._isUsingDateTime =
@@ -230,8 +223,7 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		/**
 		 * Method to set and save the extensibility provider configs
 		 *
-		 * @param {FlatpickrOptions} newConfigs
-		 * @memberof Providers.OSUI.DatePicker.Flatpickr.AbstractFlatpickrConfig
+		 * @param newConfigs
 		 */
 		public setExtensibilityConfigs(newConfigs: FlatpickrOptions): void {
 			this.providerExtendedOptions = newConfigs;
@@ -241,8 +233,6 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		 * Getter that allows to obtain the DatePicker Locale language
 		 *
 		 * @readonly
-		 * @type {string}
-		 * @memberof Providers.OSUI.DatePicker.Flatpickr.AbstractFlatpickrConfig
 		 */
 		public get Lang(): string {
 			return this._dynamicLang !== undefined ? this._dynamicLang : OSFramework.OSUI.Helper.Language.ShortLang;
@@ -250,8 +240,6 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 
 		/**
 		 * Set DatePicker Locale
-		 *
-		 * @memberof Providers.OSUI.DatePicker.Flatpickr.AbstractFlatpickrConfig
 		 */
 		public set Lang(value: string) {
 			// substring is needed to avoid passing values like "en-EN" since we must use only "en"
@@ -262,8 +250,6 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 		 * Get the ServerDate Format
 		 *
 		 * @readonly
-		 * @type {string}
-		 * @memberof Providers.OSUI.DatePicker.Flatpickr.AbstractFlatpickrConfig
 		 */
 		public get ServerDateFormat(): string {
 			return OSFramework.OSUI.Helper.Dates.ServerFormat.replace(
@@ -276,8 +262,6 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 
 		/**
 		 * Set DisableDays
-		 *
-		 * @memberof Providers.OSUI.DatePicker.Flatpickr.AbstractFlatpickrConfig
 		 */
 		public set DisabledDays(value: string[]) {
 			this._disabledDays = value;
@@ -285,8 +269,6 @@ namespace Providers.OSUI.Datepicker.Flatpickr {
 
 		/**
 		 * Set DisableWeekDays
-		 *
-		 * @memberof Providers.OSUI.DatePicker.Flatpickr.AbstractFlatpickrConfig
 		 */
 		public set DisabledWeekDays(value: number[]) {
 			this._disabledWeekDays = value;

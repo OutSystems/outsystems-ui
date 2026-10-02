@@ -15,8 +15,7 @@ namespace OSFramework.OSUI.Event.DOMEvents.Observers.MutationObservers.RTL {
 		/**
 		 * Observer callback method
 		 *
-		 * @param {MutationRecord[]} mutationList
-		 * @memberof RTLObserver
+		 * @param mutationList
 		 */
 		public observerHandler(mutationList: MutationRecord[]): void {
 			mutationList.forEach((mutation) => {

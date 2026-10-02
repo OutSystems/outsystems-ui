@@ -52,7 +52,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		}
 
 		// Prevent the default behaviour of the event
-		private _onMouseUp(event) {
+		private _onMouseUp(event: MouseEvent) {
 			event.preventDefault();
 		}
 
@@ -132,7 +132,6 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		 * Create the provider instance
 		 *
 		 * @protected
-		 * @memberof Providers.OSUI.Dropdown.VirtualSelect.AbstractVirtualSelect
 		 */
 		protected createProviderInstance(): void {
 			// Create the provider instance
@@ -191,7 +190,6 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		 * then builds provider options and creates the instance.
 		 *
 		 * @protected
-		 * @memberof Providers.OSUI.Dropdown.VirtualSelect.AbstractVirtualSelect
 		 */
 		protected prepareConfigs(): void {
 			const selected = this.provider?.getSelectedOptions();
@@ -210,7 +208,6 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		 * This method has no implementation on this pattern context!
 		 *
 		 * @protected
-		 * @memberof Providers.OSUI.Dropdown.VirtualSelect.AbstractVirtualSelect
 		 */
 		protected setA11YProperties(): void {
 			console.log(OSFramework.OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -220,7 +217,6 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		 * Set the callbacks that will be assigned to the window click event
 		 *
 		 * @protected
-		 * @memberof Providers.OSUI.Dropdown.VirtualSelect.AbstractVirtualSelect
 		 */
 		protected setCallbacks(): void {
 			// Set the events callback reference
@@ -234,7 +230,6 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		 * This method has no implementation on this pattern context!
 		 *
 		 * @protected
-		 * @memberof Providers.OSUI.Dropdown.VirtualSelect.AbstractVirtualSelect
 		 */
 		protected setHtmlElements(): void {
 			console.log(OSFramework.OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -244,7 +239,6 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		 * Unset callbacks that has been assigned to the element
 		 *
 		 * @protected
-		 * @memberof Providers.OSUI.Dropdown.VirtualSelect.AbstractVirtualSelect
 		 */
 		protected unsetCallbacks(): void {
 			this._eventOnWindowResize = undefined;
@@ -260,7 +254,6 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		 * This method has no implementation on this pattern context!
 		 *
 		 * @protected
-		 * @memberof Providers.OSUI.Dropdown.VirtualSelect.AbstractVirtualSelect
 		 */
 		protected unsetHtmlElements(): void {
 			console.log(OSFramework.OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -268,8 +261,6 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 
 		/**
 		 * Builds the Pattern
-		 *
-		 * @memberof Providers.OSUI.Dropdown.VirtualSelect.AbstractVirtualSelect
 		 */
 		public build(): void {
 			super.build();
@@ -288,9 +279,8 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		/**
 		 * Update property value from a given property name at OnParametersChange
 		 *
-		 * @param {string} propertyName the name of the property that will be changed
-		 * @param {unknown} propertyValue the new value that should be assigned to the given property name
-		 * @memberof Providers.OSUI.Dropdown.VirtualSelect.AbstractVirtualSelect
+		 * @param propertyName the name of the property that will be changed
+		 * @param propertyValue the new value that should be assigned to the given property name
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			// Ensure Dropdown will be closed before any possible redraw, since provider needs it!
@@ -328,8 +318,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		/**
 		 * Clear any selected values from the Dropdown
 		 *
-		 * @param {boolean} silentOnChangedEvent If True, OnChange event will not be triggered
-		 * @memberof Providers.OSUI.Dropdown.VirtualSelect.AbstractVirtualSelect
+		 * @param silentOnChangedEvent If True, OnChange event will not be triggered
 		 */
 		public clear(silentOnChangedEvent = true): void {
 			this.virtualselectConfigs.reset(false, silentOnChangedEvent);
@@ -337,8 +326,6 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 
 		/**
 		 * Method used to close the Dropdown if is opened
-		 *
-		 * @memberof Providers.OSUI.Dropdown.VirtualSelect.AbstractVirtualSelect
 		 */
 		public close(): void {
 			// SetTimeout is needed in order to ensure there is no conflit between OnClickBody and a button click that trigger this method.
@@ -351,8 +338,6 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 
 		/**
 		 * Set Dropdown as disabled
-		 *
-		 * @memberof Providers.OSUI.Dropdown.VirtualSelect.AbstractVirtualSelect
 		 */
 		public disable(): void {
 			if (this.configs.IsDisabled === false && this.provider !== undefined) {
@@ -363,8 +348,6 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 
 		/**
 		 * Destroy the Dropdown.
-		 *
-		 * @memberof Providers.OSUI.Dropdown.VirtualSelect.AbstractVirtualSelect
 		 */
 		public dispose(): void {
 			if (this.isBuilt) {
@@ -390,8 +373,6 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 
 		/**
 		 * Set Dropdown as enabled
-		 *
-		 * @memberof Providers.OSUI.Dropdown.VirtualSelect.AbstractVirtualSelect
 		 */
 		public enable(): void {
 			if (this.configs.IsDisabled && this.provider !== undefined) {
@@ -402,8 +383,6 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 
 		/**
 		 * Get the selected values
-		 *
-		 * @memberof Providers.OSUI.Dropdown.VirtualSelect.AbstractVirtualSelect
 		 */
 		public getSelectedValues(): string {
 			let optionsSelected = this.getSelectedOptionsStructure();
@@ -425,8 +404,6 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 
 		/**
 		 * Method used to open the Dropdown
-		 *
-		 * @memberof Providers.OSUI.Dropdown.VirtualSelect.AbstractVirtualSelect
 		 */
 		public open(): void {
 			// SetTimeout is needed in order to ensure there is no conflit between OnClickBody and a button click that trigger this method.
@@ -436,9 +413,8 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		/**
 		 * Method used to register the provider callback
 		 *
-		 * @param {string} eventName Event name that will be assigned
-		 * @param {OSFramework.OSUI.GlobalCallbacks.OSGeneric} callback Function name that will be passed as a callback function to the event above
-		 * @memberof Providers.OSUI.Dropdown.VirtualSelect.AbstractVirtualSelect
+		 * @param eventName Event name that will be assigned
+		 * @param callback Function name that will be passed as a callback function to the event above
 		 */
 		public registerCallback(eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
@@ -470,8 +446,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		/**
 		 * Method used to set all the extended VirtualSelect properties across the different types of instances
 		 *
-		 * @param {VirtualSelectOpts} newConfigs
-		 * @memberof Providers.OSUI.Dropdown.VirtualSelect.AbstractVirtualSelect
+		 * @param newConfigs
 		 */
 		public setProviderConfigs(newConfigs: VirtualSelectOpts): void {
 			this.configs.setExtensibilityConfigs(newConfigs);
@@ -482,15 +457,14 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		/**
 		 * Method used to set the Dropdown options values dynamically
 		 *
-		 * @param {DropDownOption[]} optionsToSelect List of options to bet set
-		 * @param {boolean} silentOnChangedEvent If True, OnChange event will not be triggered
-		 * @memberof Providers.OSUI.Dropdown.VirtualSelect.AbstractVirtualSelect
+		 * @param optionsToSelect List of options to bet set
+		 * @param silentOnChangedEvent If True, OnChange event will not be triggered
 		 */
 		public setValue(optionsToSelect: DropDownOption[], silentOnChangedEvent = true): void {
 			// Make async call to wait for fetching data when the setValues API is called inside on OnAfterFecth
 			OSFramework.OSUI.Helper.AsyncInvocation(() => {
 				const selectedValues = this.getSelectedOptionsStructure().map((value) => value.value) || [];
-				let valuesToSelect = [];
+				let valuesToSelect: string[] = [];
 
 				if (optionsToSelect.length > 0) {
 					if (this.virtualselectOpts.multiple) valuesToSelect = optionsToSelect.map((option) => option.value);
@@ -504,8 +478,6 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 
 		/**
 		 * Toggle the dropbox as popup on small screen like mobile
-		 *
-		 * @memberof Providers.OSUI.Dropdown.VirtualSelect.AbstractVirtualSelect
 		 */
 		public togglePopup(isEnabled: boolean): void {
 			if (this.configs.ShowDropboxAsPopup !== isEnabled) {
@@ -517,9 +489,8 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		/**
 		 * Set the validation status, and also pass the message to show
 		 *
-		 * @param {boolean} Set if the dropdown is valid or not
-		 * @param {string} Pass the text message to show
-		 * @memberof Providers.OSUI.Dropdown.VirtualSelect.AbstractVirtualSelect
+		 * @param isValid if the dropdown is valid or not
+		 * @param validationMessage the text message to show
 		 */
 		public validation(isValid: boolean, validationMessage: string): void {
 			if (isValid === false) {

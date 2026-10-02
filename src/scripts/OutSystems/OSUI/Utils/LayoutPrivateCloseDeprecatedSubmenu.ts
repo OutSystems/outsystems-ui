@@ -32,10 +32,8 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 				// Close all of them if contains the class open
 				for (const item of this._deprecatedSubmenuItems) {
 					if (item.classList.contains('open')) {
-						// This method is to trigger the platform global action of deprecated submenu
-						// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-						//@ts-expect-error
-						item.CloseMenu();
+						// This method triggers the platform global action of the deprecated submenu; the platform attaches it at runtime.
+						(item as unknown as { CloseMenu: () => void }).CloseMenu();
 					}
 				}
 			}

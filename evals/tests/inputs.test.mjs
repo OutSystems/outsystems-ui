@@ -1,0 +1,88 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import { test } from 'node:test';
+
+import { contentHash, MEASURED_DIRS, measuredFingerprint, shouldRecord } from '../lib/inputs.mjs';
+
+function scaffold() {
+	const root = fs.mkdtempSync(path.join(os.tmpdir(), 'osui-inputs-'));
+	fs.mkdirSync(path.join(root, 'src', 'scss', 'tokens'), { recursive: true });
+	fs.mkdirSync(path.join(root, 'stories'));
+	fs.mkdirSync(path.join(root, 'docs-ai'));
+	fs.mkdirSync(path.join(root, 'evals'));
+	fs.writeFileSync(path.join(root, 'src', 'a.ts'), 'export const a = 1;\n');
+	fs.writeFileSync(path.join(root, 'src', 'scss', '_b.scss'), '.b { color: red; }\n');
+	fs.writeFileSync(path.join(root, 'src', 'scss', 'tokens', '_generated.scss'), ':root { --t: 1px; }\n');
+	fs.writeFileSync(path.join(root, 'stories', 'A.stories.ts'), 'export default {};\n');
+	fs.writeFileSync(path.join(root, 'docs-ai', 'llms.txt'), '# docs\n');
+	fs.writeFileSync(path.join(root, 'evals', 'x.mjs'), '// tooling\n');
+	return root;
+}
+
+test('contentHash is the SHA-256 of the content with line endings normalised to LF', () => {
+	assert.equal(
+		contentHash(Buffer.from('hello\n')),
+		'5891b5b522d5df086d0ff0b110fbd9d21bb4fc7163af34d08286a2e846f6be03'
+	);
+	assert.equal(
+		contentHash(Buffer.from('a\r\nb\r\n')),
+		contentHash(Buffer.from('a\nb\n')),
+		'a CRLF checkout hashes as LF'
+	);
+	assert.notEqual(contentHash(Buffer.from('a\n')), contentHash(Buffer.from('b\n')));
+});
+
+test('measuredFingerprint is the same for a CRLF and an LF checkout of the same files', () => {
+	const root = scaffold();
+	const lf = measuredFingerprint(root);
+	fs.writeFileSync(path.join(root, 'src', 'a.ts'), 'export const a = 1;\r\n');
+	assert.equal(measuredFingerprint(root), lf);
+	fs.rmSync(root, { recursive: true, force: true });
+});
+
+test('measuredFingerprint covers the pattern sources, stories and agent docs, not tooling or generated tokens', () => {
+	assert.deepEqual(MEASURED_DIRS, ['src', 'stories', 'docs-ai', 'evals/model']);
+	const root = scaffold();
+	const first = measuredFingerprint(root);
+	assert.match(first, /^[0-9a-f]{64}$/);
+	fs.writeFileSync(path.join(root, 'evals', 'x.mjs'), '// tooling changed\n');
+	fs.writeFileSync(path.join(root, 'src', 'scss', 'tokens', '_generated.scss'), ':root { --t: 2px; }\n');
+	assert.equal(measuredFingerprint(root), first, 'tooling and generated tokens do not count');
+	fs.writeFileSync(path.join(root, 'src', 'scss', '_b.scss'), '.b { color: blue; }\n');
+	const second = measuredFingerprint(root);
+	assert.notEqual(second, first, 'a pattern partial counts');
+	fs.writeFileSync(path.join(root, 'stories', 'B.stories.ts'), 'export default {};\n');
+	assert.notEqual(measuredFingerprint(root), second, 'a new story counts');
+	fs.rmSync(root, { recursive: true, force: true });
+});
+
+test('shouldRecord refuses a run whose measured inputs equal the newest recorded entry unless forced', () => {
+	const history = [
+		{ label: 'a', date: '2026-09-29T09:00:00Z', inputs: 'f1' },
+		{ label: 'b', date: '2026-09-29T10:00:00Z', inputs: 'f2' },
+	];
+	assert.deepEqual(shouldRecord(history, 'f2'), { record: false, same: 'b' });
+	assert.deepEqual(shouldRecord(history, 'f1'), { record: true, same: null }, 'only the newest entry counts');
+	assert.deepEqual(shouldRecord(history, 'f2', true), { record: true, same: 'b' });
+	assert.deepEqual(shouldRecord([], 'f2'), { record: true, same: null });
+	assert.deepEqual(
+		shouldRecord([{ label: 'old', date: '2026-09-29T09:00:00Z' }], 'f2'),
+		{ record: true, same: null },
+		'an entry without a fingerprint cannot block'
+	);
+});
+
+test('a snapshot under evals/model is a measured input; the model suite code is not', () => {
+	const root = scaffold();
+	fs.mkdirSync(path.join(root, 'evals', 'model', 'metrics'), { recursive: true });
+	fs.writeFileSync(path.join(root, 'evals', 'model', 'osui.blocks.json'), '{"version":1}\n');
+	fs.writeFileSync(path.join(root, 'evals', 'model', 'metrics', 'M01.mjs'), '// code\n');
+	const before = measuredFingerprint(root);
+	fs.writeFileSync(path.join(root, 'evals', 'model', 'metrics', 'M01.mjs'), '// changed code\n');
+	assert.equal(measuredFingerprint(root), before, 'metric code does not count');
+	fs.writeFileSync(path.join(root, 'evals', 'model', 'osui.blocks.json'), '{"version":1,"x":1}\n');
+	assert.notEqual(measuredFingerprint(root), before, 'a new snapshot counts');
+	assert.ok(MEASURED_DIRS.includes('evals/model'));
+});

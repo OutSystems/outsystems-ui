@@ -260,7 +260,6 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 		 * Add the A11Y attributes values
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Submenu.Submenu
 		 */
 		protected setA11YProperties(): void {
 			// Apply the default A11Y
@@ -289,7 +288,6 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 		 * Add Pattern Events
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Submenu.Submenu
 		 */
 		protected setCallbacks(): void {
 			// Define the callbacks that will be used
@@ -307,7 +305,6 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 		 * Update info based on htmlContent
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Submenu.Submenu
 		 */
 		protected setHtmlElements(): void {
 			this._submenuHeaderElement = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.PatternHeader);
@@ -327,7 +324,6 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 		 * Set the cssClasses that should be assigned to the element on it's initialization
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Submenu.Submenu
 		 */
 		protected setInitialStates(): void {
 			// Add active class to pattern based on links whith active state
@@ -354,7 +350,6 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 		 * Remove all the assigned Events
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Submenu.Submenu
 		 */
 		protected unsetCallbacks(): void {
 			// Reassign the elements to undefined, preventing memory leaks
@@ -371,7 +366,6 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 		 * Reassign the HTML elements to undefined, preventing memory leaks
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Submenu.Submenu
 		 */
 		protected unsetHtmlElements(): void {
 			this._submenuHeaderElement = undefined;
@@ -382,8 +376,6 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 
 		/**
 		 * Method to build the Submenu
-		 *
-		 * @memberof OSFramework.Patterns.Submenu.Submenu
 		 */
 		public build(): void {
 			super.build();
@@ -404,8 +396,7 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 		/**
 		 * Method to toggle the behaviour to close submenu when clicking the body
 		 *
-		 * @param {boolean} clickOutsideToClose
-		 * @memberof Submenu
+		 * @param clickOutsideToClose
 		 */
 		public clickOutsideToClose(clickOutsideToClose: boolean): void {
 			this.hasClickOutsideToClose = clickOutsideToClose;
@@ -426,8 +417,6 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 
 		/**
 		 * Close Submenu
-		 *
-		 * @memberof OSFramework.Patterns.Submenu.Submenu
 		 */
 		public close(): void {
 			if (this._isOpen) {
@@ -461,8 +450,6 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 
 		/**
 		 * Destroy the Submenu
-		 *
-		 * @memberof OSFramework.Patterns.Submenu.Submenu
 		 */
 		public dispose(): void {
 			// Remove event listners
@@ -478,8 +465,6 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 
 		/**
 		 * Public Open Submenu
-		 *
-		 * @memberof OSFramework.Patterns.Submenu.Submenu
 		 */
 		public open(): void {
 			// Add the A11Y states to focus trap
@@ -509,9 +494,8 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 		/**
 		 * Method used to register the provider callback
 		 *
-		 * @param {string} eventName
-		 * @param {GlobalCallbacks.OSGeneric} callback
-		 * @memberof Submenu
+		 * @param eventName
+		 * @param callback
 		 */
 		public registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
@@ -527,8 +511,6 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 
 		/**
 		 * Manage Callbacks needed to show submenu on hover
-		 *
-		 * @memberof Submenu
 		 */
 		public setOpenOnHover(): void {
 			// OpenOnHover is only available for devices where the hover exists
@@ -547,8 +529,6 @@ namespace OSFramework.OSUI.Patterns.Submenu {
 
 		/**
 		 * Trigger on submenu onRender, to update active state
-		 *
-		 * @memberof OSFramework.Patterns.Submenu.Submenu
 		 */
 		public updateOnRender(): void {
 			if (this.isBuilt) {

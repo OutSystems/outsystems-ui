@@ -1,0 +1,1002 @@
+# OutSystems UI — block reference cards (OML producers)
+
+One card per composable OutSystems UI block, from the OML (OutSystemsUI ODC 13.1369.2.60000). Compose blocks with these signatures; never emit a pattern's markup or lifecycle calls — the block does that. Values for an `<Entity> Identifier` come from osui.enums.json; classes for ExtendedClass (Text on purpose) from llms-utilities.txt. An optional parameter shows its default: the OML's, else the platform default of its data type.
+
+## Adaptive/Columns2
+Purpose: Split content in 2 columns with responsive capabilities to improve the way information is displayed.
+Params:
+- GutterSize: GutterSize Identifier = Entities.GutterSize.Base — Defines the space between columns.
+- TabletBehavior: BreakColumns Identifier = Entities.BreakColumns.None — Responsive behavior for tablet.
+- PhoneBehavior: BreakColumns Identifier = Entities.BreakColumns.None — Responsive behavior for phone.
+- ExtendedClass: Text = "" — Add custom style classes to the Pattern.
+Slots: Column1 — Drag your content to this placeholder. · Column2 — Drag your content to this placeholder.
+OpenUI: _Columns21 = Block(SourceBlock: Adaptive/Columns2, GutterSize: Entities.GutterSize.Base, TabletBehavior: Entities.BreakColumns.None, PhoneBehavior: Entities.BreakColumns.None, Column1: [_Column11], Column2: [_Column21])
+TSX: <Columns2 id={"_Columns21"} data-source={"Adaptive/Columns2"} GutterSize={Entities.GutterSize.Base} TabletBehavior={Entities.BreakColumns.None} PhoneBehavior={Entities.BreakColumns.None} Column1={<>…</>} Column2={<>…</>} />
+
+## Adaptive/Columns3
+Purpose: Split content in 3 columns with responsive capabilities to improve the way information is displayed.
+Params:
+- GutterSize: GutterSize Identifier = Entities.GutterSize.Base
+- TabletBehavior: BreakColumns Identifier = Entities.BreakColumns.None
+- PhoneBehavior: BreakColumns Identifier = Entities.BreakColumns.None
+- ExtendedClass: Text = ""
+Slots: Column1 · Column2 · Column3
+OpenUI: _Columns31 = Block(SourceBlock: Adaptive/Columns3, GutterSize: Entities.GutterSize.Base, TabletBehavior: Entities.BreakColumns.None, PhoneBehavior: Entities.BreakColumns.None, Column1: [_Column11], Column2: [_Column21], Column3: [_Column31])
+TSX: <Columns3 id={"_Columns31"} data-source={"Adaptive/Columns3"} GutterSize={Entities.GutterSize.Base} TabletBehavior={Entities.BreakColumns.None} PhoneBehavior={Entities.BreakColumns.None} Column1={<>…</>} Column2={<>…</>} Column3={<>…</>} />
+
+## Adaptive/Columns4
+Purpose: Split content in 4 columns with responsive capabilities to improve the way information is displayed.
+Params:
+- GutterSize: GutterSize Identifier = Entities.GutterSize.Base
+- TabletBehavior: BreakColumns Identifier = Entities.BreakColumns.None
+- PhoneBehavior: BreakColumns Identifier = Entities.BreakColumns.None
+- ExtendedClass: Text = ""
+Slots: Column1 · Column2 · Column3 · Column4
+OpenUI: _Columns41 = Block(SourceBlock: Adaptive/Columns4, GutterSize: Entities.GutterSize.Base, TabletBehavior: Entities.BreakColumns.None, PhoneBehavior: Entities.BreakColumns.None, Column1: [_Column11], Column2: [_Column21], Column3: [_Column31], Column4: [_Column41])
+TSX: <Columns4 id={"_Columns41"} data-source={"Adaptive/Columns4"} GutterSize={Entities.GutterSize.Base} TabletBehavior={Entities.BreakColumns.None} PhoneBehavior={Entities.BreakColumns.None} Column1={<>…</>} Column2={<>…</>} Column3={<>…</>} Column4={<>…</>} />
+
+## Adaptive/Columns5
+Params:
+- GutterSize: GutterSize Identifier = Entities.GutterSize.Base
+- TabletBehavior: BreakColumns Identifier = Entities.BreakColumns.None
+- PhoneBehavior: BreakColumns Identifier = Entities.BreakColumns.None
+- ExtendedClass: Text = ""
+Slots: Column1 · Column2 · Column3 · Column4 · Column5
+OpenUI: _Columns51 = Block(SourceBlock: Adaptive/Columns5, Column1: [_Column11], Column2: [_Column21], Column3: [_Column31], Column4: [_Column41], Column5: [_Column51])
+TSX: <Columns5 id={"_Columns51"} data-source={"Adaptive/Columns5"} Column1={<>…</>} Column2={<>…</>} Column3={<>…</>} Column4={<>…</>} Column5={<>…</>} />
+
+## Adaptive/Columns6
+Params:
+- GutterSize: GutterSize Identifier = Entities.GutterSize.Base
+- TabletBehavior: BreakColumns Identifier = Entities.BreakColumns.None
+- PhoneBehavior: BreakColumns Identifier = Entities.BreakColumns.None
+- ExtendedClass: Text = ""
+Slots: Column1 · Column2 · Column3 · Column4 · Column5 · Column6
+OpenUI: _Columns61 = Block(SourceBlock: Adaptive/Columns6, Column1: [_Column11], Column2: [_Column21], Column3: [_Column31], Column4: [_Column41], Column5: [_Column51], Column6: [_Column61])
+TSX: <Columns6 id={"_Columns61"} data-source={"Adaptive/Columns6"} Column1={<>…</>} Column2={<>…</>} Column3={<>…</>} Column4={<>…</>} Column5={<>…</>} Column6={<>…</>} />
+
+## Adaptive/ColumnsMediumLeft
+Purpose: Split content in 2 columns with responsive capabilities to improve the way information is displayed.
+Params:
+- GutterSize: GutterSize Identifier = Entities.GutterSize.Base
+- TabletBehavior: BreakColumns Identifier = Entities.BreakColumns.None
+- PhoneBehavior: BreakColumns Identifier = Entities.BreakColumns.None
+- ExtendedClass: Text = ""
+Slots: Column1 · Column2
+OpenUI: _ColumnsMediumLeft1 = Block(SourceBlock: Adaptive/ColumnsMediumLeft, GutterSize: Entities.GutterSize.Base, TabletBehavior: Entities.BreakColumns.None, PhoneBehavior: Entities.BreakColumns.None, Column1: [_Column11], Column2: [_Column21])
+TSX: <ColumnsMediumLeft id={"_ColumnsMediumLeft1"} data-source={"Adaptive/ColumnsMediumLeft"} GutterSize={Entities.GutterSize.Base} TabletBehavior={Entities.BreakColumns.None} PhoneBehavior={Entities.BreakColumns.None} Column1={<>…</>} Column2={<>…</>} />
+
+## Adaptive/ColumnsMediumRight
+Purpose: Split content in 2 columns with responsive capabilities to improve the way information is displayed.
+Params:
+- GutterSize: GutterSize Identifier = Entities.GutterSize.Base
+- TabletBehavior: BreakColumns Identifier = Entities.BreakColumns.None
+- PhoneBehavior: BreakColumns Identifier = Entities.BreakColumns.None
+- ExtendedClass: Text = ""
+Slots: Column1 · Column2
+OpenUI: _ColumnsMediumRight1 = Block(SourceBlock: Adaptive/ColumnsMediumRight, GutterSize: Entities.GutterSize.Base, TabletBehavior: Entities.BreakColumns.None, PhoneBehavior: Entities.BreakColumns.None, Column1: [_Column11], Column2: [_Column21])
+TSX: <ColumnsMediumRight id={"_ColumnsMediumRight1"} data-source={"Adaptive/ColumnsMediumRight"} GutterSize={Entities.GutterSize.Base} TabletBehavior={Entities.BreakColumns.None} PhoneBehavior={Entities.BreakColumns.None} Column1={<>…</>} Column2={<>…</>} />
+
+## Adaptive/ColumnsSmallLeft
+Purpose: Split content in 2 columns with responsive capabilities to improve the way information is displayed.
+Params:
+- GutterSize: GutterSize Identifier = Entities.GutterSize.Base
+- TabletBehavior: BreakColumns Identifier = Entities.BreakColumns.None
+- PhoneBehavior: BreakColumns Identifier = Entities.BreakColumns.None
+- ExtendedClass: Text = ""
+Slots: Column1 · Column2
+OpenUI: _ColumnsSmallLeft1 = Block(SourceBlock: Adaptive/ColumnsSmallLeft, GutterSize: Entities.GutterSize.Base, TabletBehavior: Entities.BreakColumns.None, PhoneBehavior: Entities.BreakColumns.None, Column1: [_Column11], Column2: [_Column21])
+TSX: <ColumnsSmallLeft id={"_ColumnsSmallLeft1"} data-source={"Adaptive/ColumnsSmallLeft"} GutterSize={Entities.GutterSize.Base} TabletBehavior={Entities.BreakColumns.None} PhoneBehavior={Entities.BreakColumns.None} Column1={<>…</>} Column2={<>…</>} />
+
+## Adaptive/ColumnsSmallRight
+Purpose: Split content in 2 columns with responsive capabilities to improve the way information is displayed.
+Params:
+- GutterSize: GutterSize Identifier = Entities.GutterSize.Base
+- TabletBehavior: BreakColumns Identifier = Entities.BreakColumns.None
+- PhoneBehavior: BreakColumns Identifier = Entities.BreakColumns.None
+- ExtendedClass: Text = ""
+Slots: Column1 · Column2
+OpenUI: _ColumnsSmallRight1 = Block(SourceBlock: Adaptive/ColumnsSmallRight, GutterSize: Entities.GutterSize.Base, TabletBehavior: Entities.BreakColumns.None, PhoneBehavior: Entities.BreakColumns.None, Column1: [_Column11], Column2: [_Column21])
+TSX: <ColumnsSmallRight id={"_ColumnsSmallRight1"} data-source={"Adaptive/ColumnsSmallRight"} GutterSize={Entities.GutterSize.Base} TabletBehavior={Entities.BreakColumns.None} PhoneBehavior={Entities.BreakColumns.None} Column1={<>…</>} Column2={<>…</>} />
+
+## Adaptive/DisplayOnDevice
+Purpose: Display content depending on which device is being used. There are placeholders for Phone, Tablet and Desktop.
+Params: none
+Slots: OnDesktop — Add content to be displayed on Desktop · OnTablet — Add content to be displayed on Tablet · OnPhone — Add content to be displayed on Phone
+OpenUI: _DisplayOnDevice1 = Block(SourceBlock: Adaptive/DisplayOnDevice, OnDesktop: [_OnDesktop1], OnTablet: [_OnTablet1], OnPhone: [_OnPhone1])
+TSX: <DisplayOnDevice id={"_DisplayOnDevice1"} data-source={"Adaptive/DisplayOnDevice"} OnDesktop={<>…</>} OnTablet={<>…</>} OnPhone={<>…</>} />
+
+## Adaptive/Gallery
+Purpose: Display content in gallery style with different columns per device type/orientation
+Params:
+- RowItemsDesktop: Integer = 4
+- RowItemsTablet: Integer = 3
+- RowItemsPhone: Integer = 1
+- ItemsGap: Space Identifier = Entities.Space.Base
+- ExtendedClass: Text = ""
+Slots: Content
+Events: Initialized(GalleryId: Text)
+Runtime pattern: Gallery (llms-components.txt)
+OpenUI: _Gallery1 = Block(SourceBlock: Adaptive/Gallery, RowItemsDesktop: 4, RowItemsTablet: 3, RowItemsPhone: 1, Content: [_Content1])
+TSX: <Gallery id={"_Gallery1"} data-source={"Adaptive/Gallery"} RowItemsDesktop={4} RowItemsTablet={3} RowItemsPhone={1} Content={<>…</>} />
+
+## Adaptive/MasterDetail
+Purpose: Displays a list of items and their related details, for example, a list of employees and their corresponding details.
+Params:
+- LeftPercentage: Decimal = 50 — Set the LeftContent width, using percentage.
+- OpenedOnPhone: Boolean = False — Variable to hold if the detail is opened on phone.
+- Height: Text = "" — By default, the height will be the same as window, minus the title and header. Use the Height parameter to set a custom height. The parameter accepts pixels or %.
+Slots: LeftContent — Add content for the Left side · RightContent — Add content for the Right side
+Events: DetailClose() — Event triggered after a detail is closed.
+OpenUI: _MasterDetail1 = Block(SourceBlock: Adaptive/MasterDetail, LeftPercentage: 50, OpenedOnPhone: False, Height: "", LeftContent: [_LeftContent1], RightContent: [_RightContent1])
+TSX: <MasterDetail id={"_MasterDetail1"} data-source={"Adaptive/MasterDetail"} LeftPercentage={50} OpenedOnPhone={False} Height={""} LeftContent={<>…</>} RightContent={<>…</>} />
+
+## Advanced/DropdownServerSide
+Params:
+- AllowMultipleSelection: Boolean = False
+- IsDisabled: Boolean = False
+- ExtendedClass: Text = ""
+Slots: SelectedValues · BalloonContent · BalloonFooter · BalloonSearchInput · BalloonSearchInputIcon
+Events: Initialized(DropdownServerSideId: Text) · OnToggle(DropdownServerSideId: Text, IsOpen: Boolean)
+Runtime pattern: Dropdown (llms-components.txt)
+OpenUI: _DropdownServerSide1 = Block(SourceBlock: Advanced/DropdownServerSide, SelectedValues: [_SelectedValues1], BalloonContent: [_BalloonContent1], BalloonFooter: [_BalloonFooter1], BalloonSearchInput: [_BalloonSearchInput1], BalloonSearchInputIcon: [_BalloonSearchInputIcon1])
+TSX: <DropdownServerSide id={"_DropdownServerSide1"} data-source={"Advanced/DropdownServerSide"} SelectedValues={<>…</>} BalloonContent={<>…</>} BalloonFooter={<>…</>} BalloonSearchInput={<>…</>} BalloonSearchInputIcon={<>…</>} />
+
+## Advanced/DropdownServerSideItem
+Purpose: DropdownOptionItem block, this block should be use as a DropdownServerAction option item.
+Params:
+- ItemId: Text (required)
+- IsSelected: Boolean = False
+- ExtendedClass: Text = ""
+Slots: DropdownItemContent
+Events: Initialized(DropdownServerSideItemId: Text) · OnSelected(DropdownServerSideItemId: Text, ItemOptionId: Text, DropdownServerSideId: Text)
+Runtime pattern: DropdownServerSideItem (llms-components.txt)
+OpenUI: _DropdownServerSideItem1 = Block(SourceBlock: Advanced/DropdownServerSideItem, ItemId: "", IsSelected: False, ExtendedClass: "", DropdownItemContent: [_DropdownItemContent1])
+TSX: <DropdownServerSideItem id={"_DropdownServerSideItem1"} data-source={"Advanced/DropdownServerSideItem"} ItemId={""} IsSelected={False} ExtendedClass={""} DropdownItemContent={<>…</>} />
+
+## Content/Accordion
+Purpose: Arrange the content by having vertically stacked tabs that expand when clicked.
+Params:
+- MultipleItems: Boolean = False — Set to True to allow multiple Accordion items to be expanded simultaneously.
+- ExtendedClass: Text = "" — Add custom style classes to the Pattern.
+Slots: Content — Drag AccordionItem blocks to this placeholder.
+Events: Initialized(AccordionId: Text) — Event triggered after the Accordion instance is ready.
+Runtime pattern: Accordion (llms-components.txt) · MultipleItems→MultipleItems, ExtendedClass→ExtendedClass
+OpenUI: _Accordion1 = Block(SourceBlock: Content/Accordion, MultipleItems: False, ExtendedClass: "", Content: [_Content1])
+TSX: <Accordion id={"_Accordion1"} data-source={"Content/Accordion"} MultipleItems={False} ExtendedClass={""} Content={<>…</>} />
+
+## Content/AccordionItem
+Purpose: An area that can be expanded or collapsed.
+Params:
+- StartsExpanded: Boolean = False
+- Icon: AccordionIconType Identifier = Entities.AccordionIconType.Caret
+- IconPosition: AccordionIconPosition Identifier = Entities.AccordionIconPosition.Right
+- IsDisabled: Boolean = False
+- ExtendedClass: Text = ""
+Slots: Title · CustomIcon · Content
+Events: Initialized(AccordionItemId: Text) · OnToggle(AccordionItemId: Text, IsExpanded: Boolean)
+Runtime pattern: AccordionItem (llms-components.txt)
+OpenUI: _AccordionItem1 = Block(SourceBlock: Content/AccordionItem, StartsExpanded: False, Icon: Entities.AccordionIconType.Caret, IconPosition: Entities.AccordionIconPosition.Right, Title: [_Title1], CustomIcon: [_CustomIcon1], Content: [_Content1])
+TSX: <AccordionItem id={"_AccordionItem1"} data-source={"Content/AccordionItem"} StartsExpanded={False} Icon={Entities.AccordionIconType.Caret} IconPosition={Entities.AccordionIconPosition.Right} Title={<>…</>} CustomIcon={<>…</>} Content={<>…</>} />
+
+## Content/Alert
+Purpose: Alert box with a placeholder for custom content, supports Success, Danger, Warning and Info messages.
+Params:
+- AlertType: Alert Identifier = Entities.Alert.Info [Error, Info, Success, Warning] — Type of the alert message
+- ExtendedClass: Text = "" — Add custom style classes to the Pattern.
+Slots: MessageText — Type your message to be displayed
+OpenUI: _Alert1 = Block(SourceBlock: Content/Alert, AlertType: Entities.Alert.Info, ExtendedClass: "", MessageText: [_MessageText1])
+TSX: <Alert id={"_Alert1"} data-source={"Content/Alert"} AlertType={Entities.Alert.Info} ExtendedClass={""} MessageText={<>…</>} />
+
+## Content/BlankSlate
+Purpose: A simple box that presents an empty state to the user and provides directions.
+Params:
+- FullHeight: Boolean = True — Display a larger BlankSlate, taking over full page height.
+- ExtendedClass: Text = "" — Add custom style classes to the Pattern.
+Slots: Icon — Drag an Icon to this placeholder · Content — Add the Blank Slate content to this placeholder · Actions — Drag Buttons to this placeholder
+OpenUI: _BlankSlate1 = Block(SourceBlock: Content/BlankSlate, FullHeight: True, ExtendedClass: "", Icon: [_Icon1], Content: [_Content1], Actions: [_Actions1])
+TSX: <BlankSlate id={"_BlankSlate1"} data-source={"Content/BlankSlate"} FullHeight={True} ExtendedClass={""} Icon={<>…</>} Content={<>…</>} Actions={<>…</>} />
+
+## Content/Card
+Purpose: Card with placeholder for Content.
+Params:
+- UsePadding: Boolean = True — When true, content has padding
+- ExtendedClass: Text = "" — Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples: - Blank - No custom styles are added (default value). - "myclass" - Adds the myclass style to the UI styles being applied. - "myclass1 myclass2" - Adds the myclass1 and myclass2 styles to the UI styles being applied. You can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet
+Slots: Content — Add content to this placeholder
+OpenUI: _Card1 = Block(SourceBlock: Content/Card, UsePadding: True, ExtendedClass: "", Content: [_Content1])
+TSX: <Card id={"_Card1"} data-source={"Content/Card"} UsePadding={True} ExtendedClass={""} Content={<>…</>} />
+
+## Content/CardBackground
+Purpose: Card with a background image, GIF or video.
+Params:
+- Color: Color Identifier = Entities.Color.Transparent — Background color of the Block
+- MinHeight: Integer = 0 — Set the minimum height of the Card, in pixels.
+- ExtendedClass: Text = "" — Add custom style classes to the Pattern.
+Slots: Content — Add content to this placeholder · BackgroundImage — Drag a background image, GIF or video to this placeholder
+OpenUI: _CardBackground1 = Block(SourceBlock: Content/CardBackground, Color: Entities.Color.Transparent, MinHeight: 0, ExtendedClass: "", Content: [_Content1], BackgroundImage: [_BackgroundImage1])
+TSX: <CardBackground id={"_CardBackground1"} data-source={"Content/CardBackground"} Color={Entities.Color.Transparent} MinHeight={0} ExtendedClass={""} Content={<>…</>} BackgroundImage={<>…</>} />
+
+## Content/CardItem
+Purpose: Card with placeholders for Title, Text, Left side and Right side.
+Params:
+- ExtendedClass: Text = "" — Add custom style classes to the Pattern.
+Slots: Left — Add left content to this placeholder · Right — Add right content to this placeholder · Title — Add title to this placeholder · Content — Add content to this placeholder
+OpenUI: _CardItem1 = Block(SourceBlock: Content/CardItem, ExtendedClass: "", Left: [_Left1], Right: [_Right1], Title: [_Title1], Content: [_Content1])
+TSX: <CardItem id={"_CardItem1"} data-source={"Content/CardItem"} ExtendedClass={""} Left={<>…</>} Right={<>…</>} Title={<>…</>} Content={<>…</>} />
+
+## Content/CardSectioned
+Purpose: Card with placeholders for Title, Content and Footer.
+Params:
+- UsePadding: Boolean = True — When true, content has padding
+- IsVertical: Boolean = True — Set the orientation.
+- ImagePadding: Boolean = True — When true, image has 24px of padding.
+- ExtendedClass: Text = "" — Add custom style classes to the Pattern.
+Slots: Image · Title — Add title to this placeholder · Content — Add content to this placeholder · Footer — Add footer content to this placeholder
+OpenUI: _CardSectioned1 = Block(SourceBlock: Content/CardSectioned, UsePadding: True, IsVertical: True, ImagePadding: True, Image: [_Image1], Title: [_Title1], Content: [_Content1], Footer: [_Footer1])
+TSX: <CardSectioned id={"_CardSectioned1"} data-source={"Content/CardSectioned"} UsePadding={True} IsVertical={True} ImagePadding={True} Image={<>…</>} Title={<>…</>} Content={<>…</>} Footer={<>…</>} />
+
+## Content/ChatMessage
+Purpose: Block with Chat Message content, such as user photo, text, images, delivery time and status.
+Params:
+- DisplayOnRight: Boolean = False
+- Time: Time = #00:00:00#
+- MessageStatus: MessageStatus Identifier (required)
+- ExtendedClass: Text = ""
+Slots: Image · Content
+OpenUI: _ChatMessage1 = Block(SourceBlock: Content/ChatMessage, MessageStatus: Entities.MessageStatus.Hidden, DisplayOnRight: False, Time: #00:00:00#, Image: [_Image1], Content: [_Content1])
+TSX: <ChatMessage id={"_ChatMessage1"} data-source={"Content/ChatMessage"} MessageStatus={Entities.MessageStatus.Hidden} DisplayOnRight={False} Time={#00:00:00#} Image={<>…</>} Content={<>…</>} />
+
+## Content/FlipContent
+Purpose: Flip between two placeholders.
+Params:
+- StartsFlipped: Boolean = False
+- FlipOnClick: Boolean = True
+- ExtendedClass: Text = ""
+Slots: CardFront · CardBack
+Events: Initialized(FlipContentId: Text) · OnFlip(FlipContentId: Text, IsFlipped: Boolean)
+Runtime pattern: FlipContent (llms-components.txt)
+OpenUI: _FlipContent1 = Block(SourceBlock: Content/FlipContent, StartsFlipped: False, FlipOnClick: True, ExtendedClass: "", CardFront: [_CardFront1], CardBack: [_CardBack1])
+TSX: <FlipContent id={"_FlipContent1"} data-source={"Content/FlipContent"} StartsFlipped={False} FlipOnClick={True} ExtendedClass={""} CardFront={<>…</>} CardBack={<>…</>} />
+
+## Content/FloatingContent
+Purpose: Inserts a floating panel with content docked to a direction in the page
+Params:
+- Position: Position Identifier (required) — Place where the Floating Content will be in the screen
+- UseFullHeight: Boolean = False — Defines if the panel has full height
+- UseFullWidth: Boolean = False — Defines if the panel has full width
+- UseMargin: Boolean = True — Defines if the panel has margin
+- ExtendedClass: Text = "" — Add custom style classes to the Pattern.
+Slots: Content — Insert floating content here
+OpenUI: _FloatingContent1 = Block(SourceBlock: Content/FloatingContent, Position: Entities.Position.Bottom, UseFullHeight: False, UseFullWidth: False, Content: [_Content1])
+TSX: <FloatingContent id={"_FloatingContent1"} data-source={"Content/FloatingContent"} Position={Entities.Position.Bottom} UseFullHeight={False} UseFullWidth={False} Content={<>…</>} />
+
+## Content/ListItemContent
+Purpose: Block to use inside a List Item to create content on the left, center and right.
+Params:
+- ExtendedClass: Text = "" — Add custom style classes to the Pattern.
+Slots: Left — Left · Right — Right · Title — Title · Content — Content
+OpenUI: _ListItemContent1 = Block(SourceBlock: Content/ListItemContent, ExtendedClass: "", Left: [_Left1], Right: [_Right1], Title: [_Title1], Content: [_Content1])
+TSX: <ListItemContent id={"_ListItemContent1"} data-source={"Content/ListItemContent"} ExtendedClass={""} Left={<>…</>} Right={<>…</>} Title={<>…</>} Content={<>…</>} />
+
+## Content/Section
+Purpose: Use it to segment and arrange blocks of content on a page.
+Params:
+- UsePadding: Boolean = True — True by default, applies padding to the Content area.
+- ExtendedClass: Text = "" — Add custom style classes to the Pattern.
+Slots: Title — Section Title · Content — Add content to this placeholder
+OpenUI: _Section1 = Block(SourceBlock: Content/Section, UsePadding: True, ExtendedClass: "", Title: [_Title1], Content: [_Content1])
+TSX: <Section id={"_Section1"} data-source={"Content/Section"} UsePadding={True} ExtendedClass={""} Title={<>…</>} Content={<>…</>} />
+
+## Content/SectionGroup
+Purpose: Use to apply sticky headers to Sections inside this Block.
+Params:
+- HasStickyTitles: Boolean = True — Defines if the Section Titles will be Sticky in the top of the page content
+- TopPosition: Integer = 0 — Set the top position when the SectionGroup is sticky.
+- ExtendedClass: Text = "" — Add custom style classes to the Pattern.
+Slots: Sections — Add Sections inside this placeholder
+OpenUI: _SectionGroup1 = Block(SourceBlock: Content/SectionGroup, HasStickyTitles: True, TopPosition: 0, ExtendedClass: "", Sections: [_Sections1])
+TSX: <SectionGroup id={"_SectionGroup1"} data-source={"Content/SectionGroup"} HasStickyTitles={True} TopPosition={0} ExtendedClass={""} Sections={<>…</>} />
+
+## Content/Tag
+Purpose: Display text highlighting its importance.
+Params:
+- Color: Color Identifier = Entities.Color.Primary — Background color of the Block
+- Size: Size Identifier = NullIdentifier() [Medium, Small] — Set the shape.
+- Shape: Shape Identifier = Entities.Shape.Rounded [Rounded, Sharp, SoftRounded] — Set the shape.
+- IsLight: Boolean = False — Use the lightest color version for the background and the darker color version for the text.
+- ExtendedClass: Text = "" — Add custom style classes to the Pattern.
+Slots: Tag — Text
+OpenUI: _Tag1 = Block(SourceBlock: Content/Tag, Color: Entities.Color.Primary, Size: NullIdentifier(), Shape: Entities.Shape.Rounded, Tag: [_Tag1])
+TSX: <Tag id={"_Tag1"} data-source={"Content/Tag"} Color={Entities.Color.Primary} Size={NullIdentifier()} Shape={Entities.Shape.Rounded} Tag={<>…</>} />
+
+## Content/Tooltip
+Purpose: Dynamic tooltip displaying simple content.
+Params:
+- Position: Position Identifier = Entities.Position.Right
+- StartsOpen: Boolean = False
+- Trigger: Trigger Identifier = Entities.Trigger.OnHover
+- ExtendedClass: Text = ""
+Slots: Content · Tooltip
+Events: Initialized(TooltipId: Text) · OnToggle(TooltipId: Text, IsOpened: Boolean)
+Runtime pattern: Tooltip (llms-components.txt)
+OpenUI: _Tooltip1 = Block(SourceBlock: Content/Tooltip, Position: Entities.Position.Right, StartsOpen: False, Trigger: Entities.Trigger.OnHover, Content: [_Content1], Tooltip: [_Tooltip1])
+TSX: <Tooltip id={"_Tooltip1"} data-source={"Content/Tooltip"} Position={Entities.Position.Right} StartsOpen={False} Trigger={Entities.Trigger.OnHover} Content={<>…</>} Tooltip={<>…</>} />
+
+## Content/UserAvatar
+Purpose: Display the picture or initials of a user.
+Params:
+- Name: Text = "Jonh Doe" — Name of the user
+- Image: Binary Data = empty binary — Image of the user
+- Color: Color Identifier = Entities.Color.Primary — Background color of the Block
+- Size: Size Identifier = NullIdentifier() [Medium, Small] — Set the shape.
+- Shape: Shape Identifier = Entities.Shape.Rounded [Rounded, Sharp, SoftRounded] — Set the shape.
+- IsLight: Boolean = False — Use the lightest color version for the background and the darker color version for the text.
+- ExtendedClass: Text = "" — Add custom style classes to the Pattern.
+OpenUI: _UserAvatar1 = Block(SourceBlock: Content/UserAvatar, Name: "Jonh Doe", Image: …, Color: Entities.Color.Primary)
+TSX: <UserAvatar id={"_UserAvatar1"} data-source={"Content/UserAvatar"} Name={"Jonh Doe"} Image={…} Color={Entities.Color.Primary} />
+
+## Interaction/ActionSheet
+Purpose: Menu with several buttons and a slide-up animation.
+Params:
+- IsOpen: Boolean (required) — Assign a varibable to open / close the Action Sheet
+- ExtendedClass: Text = "" — Add custom style classes to the Pattern.
+Slots: Button1 — Placeholder for Button 1 · Button2 — Placeholder for Button 2 · Button3 — Placeholder for Button 3 · Button4 — Placeholder for Button 4 · Button5 — Placeholder for Button 5
+Events: OnClose() — Action to execute after closing the Action Sheet
+OpenUI: _ActionSheet1 = Block(SourceBlock: Interaction/ActionSheet, IsOpen: False, ExtendedClass: "", Button1: [_Button11], Button2: [_Button21], Button3: [_Button31], Button4: [_Button41], Button5: [_Button51])
+TSX: <ActionSheet id={"_ActionSheet1"} data-source={"Interaction/ActionSheet"} IsOpen={False} ExtendedClass={""} Button1={<>…</>} Button2={<>…</>} Button3={<>…</>} Button4={<>…</>} Button5={<>…</>} />
+
+## Interaction/Animate
+Purpose: Use this Block to emphasise elements as they come on screen or while the screen is loading. Drag content inside the placeholder and configure the animation type of the Block. You can also define the amount of wait time before an animation starts and define how long the animation lasts.
+Params:
+- AnimationType: AnimationType Identifier (required) — Kind of animation to be used on this Block
+- Delay: Integer = 0 — Time to wait before animation starts, in miliseconds
+- Speed: Speed Identifier = NullIdentifier() [Fast, Normal, Slow] — Time necessary for the animation reach the end.
+Slots: Content — Drag elements to be animated
+OpenUI: _Animate1 = Block(SourceBlock: Interaction/Animate, AnimationType: Entities.AnimationType.BottomToTop, Delay: 0, Speed: NullIdentifier(), Content: [_Content1])
+TSX: <Animate id={"_Animate1"} data-source={"Interaction/Animate"} AnimationType={Entities.AnimationType.BottomToTop} Delay={0} Speed={NullIdentifier()} Content={<>…</>} />
+
+## Interaction/AnimatedLabel
+Purpose: Input fields with labels that animate when users focus the input.
+Params:
+- ExtendedClass: Text = "" — Add custom style classes to the pattern.
+Slots: Label — Insert label text. · Input — Drag input control.
+Events: Initialized(AnimatedLabelId: Text) — Event triggered after the AnimatedLabel instance is ready.
+Runtime pattern: AnimatedLabel (llms-components.txt) · ExtendedClass→ExtendedClass
+OpenUI: _AnimatedLabel1 = Block(SourceBlock: Interaction/AnimatedLabel, ExtendedClass: "", Label: [_Label1], Input: [_Input1])
+TSX: <AnimatedLabel id={"_AnimatedLabel1"} data-source={"Interaction/AnimatedLabel"} ExtendedClass={""} Label={<>…</>} Input={<>…</>} />
+
+## Interaction/BottomSheet
+Purpose: Use this block to add a container that slides up from the bottom of the screen to reveal more content.
+Params:
+- Shape: Shape Identifier = Entities.Shape.SoftRounded
+- ShowHandler: Boolean = True
+- ExtendedClass: Text = ""
+Slots: Content · TopBar
+Events: Initialized(BottomSheetId: Text) · OnToggle(BottomSheetId: Text, IsOpen: Boolean)
+Runtime pattern: BottomSheet (llms-components.txt)
+OpenUI: _BottomSheet1 = Block(SourceBlock: Interaction/BottomSheet, Shape: Entities.Shape.SoftRounded, ShowHandler: True, ExtendedClass: "", Content: [_Content1], TopBar: [_TopBar1])
+TSX: <BottomSheet id={"_BottomSheet1"} data-source={"Interaction/BottomSheet"} Shape={Entities.Shape.SoftRounded} ShowHandler={True} ExtendedClass={""} Content={<>…</>} TopBar={<>…</>} />
+
+## Interaction/Carousel
+Purpose: Displays multiple items in a horizontal slide.
+Params:
+- Navigation: CarouselNavigation Identifier = Entities.CarouselNavigation.Both
+- Height: Text = "auto"
+- ItemsPerSlide: CarouselItems = empty CarouselItems
+- OptionalConfigs: CarouselOptionalConfigs = empty CarouselOptionalConfigs
+- ExtendedClass: Text = ""
+Slots: CarouselItems
+Events: Initialized(CarouselId: Text) · OnSlideMoved(CarouselId: Text, ItemIndex: Integer)
+Runtime pattern: Carousel (llms-components.txt)
+OpenUI: _Carousel1 = Block(SourceBlock: Interaction/Carousel, Navigation: Entities.CarouselNavigation.Both, Height: "auto", ItemsPerSlide: …, CarouselItems: [_CarouselItems1])
+TSX: <Carousel id={"_Carousel1"} data-source={"Interaction/Carousel"} Navigation={Entities.CarouselNavigation.Both} Height={"auto"} ItemsPerSlide={…} CarouselItems={<>…</>} />
+
+## Interaction/DatePicker
+Purpose: Allows the user to select a single date using a calendar.
+Params:
+- DateFormat: Text = ""
+- ShowTodayButton: Boolean = False
+- TimeFormat: DatePickerTimeFormat Identifier = Entities.DatePickerTimeFormat.Disabled
+- OptionalConfigs: DatePickerOptionalConfigs = empty DatePickerOptionalConfigs
+- ExtendedClass: Text = ""
+Slots: Datepicker · Placeholder_SSPreview
+Events: Initialized(DatePickerId: Text) · OnSelected(DatePickerId: Text, SelectedDateTime: Date Time)
+Runtime pattern: DatePicker (llms-components.txt)
+OpenUI: _DatePicker1 = Block(SourceBlock: Interaction/DatePicker, DateFormat: "", ShowTodayButton: False, TimeFormat: Entities.DatePickerTimeFormat.Disabled, Datepicker: [_Datepicker1], Placeholder_SSPreview: [_Placeholder_SSPreview1])
+TSX: <DatePicker id={"_DatePicker1"} data-source={"Interaction/DatePicker"} DateFormat={""} ShowTodayButton={False} TimeFormat={Entities.DatePickerTimeFormat.Disabled} Datepicker={<>…</>} Placeholder_SSPreview={<>…</>} />
+
+## Interaction/DatePickerRange
+Purpose: Allows the user to select a range of dates using a calendar.
+Params:
+- DateFormat: Text = ""
+- ShowTodayButton: Boolean = False
+- OptionalConfigs: DatePickerRangeOptionalConfigs = empty DatePickerRangeOptionalConfigs
+- ExtendedClass: Text = ""
+Slots: Datepicker · Placeholder_SSPreview
+Events: Initialized(DatePickerId: Text) · OnSelected(DatePickerId: Text, SelectedStartDate: Date, SelectedEndDate: Date)
+Runtime pattern: DatePicker (llms-components.txt)
+OpenUI: _DatePickerRange1 = Block(SourceBlock: Interaction/DatePickerRange, DateFormat: "", ShowTodayButton: False, OptionalConfigs: …, Datepicker: [_Datepicker1], Placeholder_SSPreview: [_Placeholder_SSPreview1])
+TSX: <DatePickerRange id={"_DatePickerRange1"} data-source={"Interaction/DatePickerRange"} DateFormat={""} ShowTodayButton={False} OptionalConfigs={…} Datepicker={<>…</>} Placeholder_SSPreview={<>…</>} />
+
+## Interaction/DropdownSearch
+Purpose: Enhanced DropdownSearch block, with search functionality.
+Params:
+- OptionsList: DropdownOption List (required) — List of options to show in dropdown.
+- StartingSelection: DropdownOption List = empty list — List of options that will appear pre-selected in the DropdownSearch.
+- Prompt: Text = "Select..." — Text to display when there are no items selected and to serve as an empty value.
+- OptionalConfigs: DropdownOptionalConfigs = empty DropdownOptionalConfigs — Extra configurations.
+- ExtendedClass: Text = "" — Add custom style classes to the pattern.
+Events: Initialized(DropdownSearchId: Text) — Event triggered after the DropdownSearch instance is ready. · OnChanged(DropdownSearchId: Text, SelectedOptionList: DropdownOption List) — Event triggered each time an option is selected.
+Runtime pattern: Dropdown (llms-components.txt)
+OpenUI: _DropdownSearch1 = Block(SourceBlock: Interaction/DropdownSearch, OptionsList: …, StartingSelection: …, Prompt: "Select...")
+TSX: <DropdownSearch id={"_DropdownSearch1"} data-source={"Interaction/DropdownSearch"} OptionsList={…} StartingSelection={…} Prompt={"Select..."} />
+
+## Interaction/DropdownTags
+Purpose: Enhanced Dropdown block, with search functionality and multiple tags selection.
+Params:
+- OptionsList: DropdownOption List (required)
+- StartingSelection: DropdownOption List = empty list
+- Prompt: Text = "Select..."
+- OptionalConfigs: DropdownTagsOptionalConfigs = empty DropdownTagsOptionalConfigs
+- ExtendedClass: Text = ""
+Events: Initialized(DropdownTagsId: Text) · OnChanged(DropdownTagsId: Text, SelectedOptionList: DropdownOption List)
+Runtime pattern: Dropdown (llms-components.txt)
+OpenUI: _DropdownTags1 = Block(SourceBlock: Interaction/DropdownTags, OptionsList: …, StartingSelection: …, Prompt: "Select...")
+TSX: <DropdownTags id={"_DropdownTags1"} data-source={"Interaction/DropdownTags"} OptionsList={…} StartingSelection={…} Prompt={"Select..."} />
+
+## Interaction/FloatingActions
+Purpose: Display an action that floats on the bottom right of the screen, providing access to a set of additional actions.
+Params:
+- IsExpanded: Boolean = False — Initial state of the Block, the default value is False
+- IsHover: Boolean = False — Set to true, to use hover as interaction trigger.
+- ExtendedClass: Text = "" — Add custom style classes to the Pattern.
+Slots: Button — Drag the Icon widget to this placeholder. · Items — Drag FloatingActionItems blocks to this placeholder
+Events: OnToggle() — Event fired after the floating actions are toggled
+OpenUI: _FloatingActions1 = Block(SourceBlock: Interaction/FloatingActions, IsExpanded: False, IsHover: False, ExtendedClass: "", Button: [_Button1], Items: [_Items1])
+TSX: <FloatingActions id={"_FloatingActions1"} data-source={"Interaction/FloatingActions"} IsExpanded={False} IsHover={False} ExtendedClass={""} Button={<>…</>} Items={<>…</>} />
+
+## Interaction/FloatingActionsItem
+Purpose: Used within the FloatingActions Pattern.
+Params:
+- ExtendedClass: Text = "" — Add custom style classes to the Pattern.
+Slots: Label — Drag the Label widget to this placeholder. · Item — Drag the Icon widget to this placeholder.
+OpenUI: _FloatingActionsItem1 = Block(SourceBlock: Interaction/FloatingActionsItem, ExtendedClass: "", Label: [_Label1], Item: [_Item1])
+TSX: <FloatingActionsItem id={"_FloatingActionsItem1"} data-source={"Interaction/FloatingActionsItem"} ExtendedClass={""} Label={<>…</>} Item={<>…</>} />
+
+## Interaction/InputWithIcon
+Purpose: Customize an input with an Icon.
+Params:
+- AlignIconRight: Boolean = False — If set as true, sets the icon to the right.
+- ExtendedClass: Text = "" — Add custom style classes to the Pattern.
+Slots: Icon — Drag the Icon widget to this placeholder. · Input — Drag the Input widget to this placeholder.
+OpenUI: _InputWithIcon1 = Block(SourceBlock: Interaction/InputWithIcon, AlignIconRight: False, ExtendedClass: "", Icon: [_Icon1], Input: [_Input1])
+TSX: <InputWithIcon id={"_InputWithIcon1"} data-source={"Interaction/InputWithIcon"} AlignIconRight={False} ExtendedClass={""} Icon={<>…</>} Input={<>…</>} />
+
+## Interaction/LightboxImage
+Purpose: Block with only one placeholder for image.
+Params:
+- Title: Text = ""
+- Group: Text = ""
+- ImageURL: Text = ""
+- ImageZoom: Decimal = 2
+- ExtendedClass: Text = ""
+- OptionalConfigs: LightboxImageOptionalConfigs = empty LightboxImageOptionalConfigs
+Slots: Thumbnail
+Events: Initialized(LightboxObj: Object)
+OpenUI: _LightboxImage1 = Block(SourceBlock: Interaction/LightboxImage, Title: "", Group: "", ImageURL: "", Thumbnail: [_Thumbnail1])
+TSX: <LightboxImage id={"_LightboxImage1"} data-source={"Interaction/LightboxImage"} Title={""} Group={""} ImageURL={""} Thumbnail={<>…</>} />
+
+## Interaction/MonthPicker
+Purpose: Allows the user to select a single month and year using a calendar.
+Params:
+- DateFormat: Text = "MM/YYYY"
+- InitialMonth: MonthYear = empty MonthYear
+- MinMonth: MonthYear = empty MonthYear
+- MaxMonth: MonthYear = empty MonthYear
+- ExtendedClass: Text = ""
+Slots: MonthPicker · Placeholder_SSPreview
+Events: Initialized(MonthpickerId: Text) · OnSelected(MonthpickerId: Text, SelectedMonth: MonthOrderYear)
+Runtime pattern: MonthPicker (llms-components.txt)
+OpenUI: _MonthPicker1 = Block(SourceBlock: Interaction/MonthPicker, DateFormat: "MM/YYYY", InitialMonth: …, MinMonth: …, MonthPicker: [_MonthPicker1], Placeholder_SSPreview: [_Placeholder_SSPreview1])
+TSX: <MonthPicker id={"_MonthPicker1"} data-source={"Interaction/MonthPicker"} DateFormat={"MM/YYYY"} InitialMonth={…} MinMonth={…} MonthPicker={<>…</>} Placeholder_SSPreview={<>…</>} />
+
+## Interaction/Notification
+Purpose: Use this block to add a notification.
+Params:
+- StartsOpen: Boolean = False — Set the initial state of the Notification.
+- Width: Text = "370px" — Set the Notification width.
+- Position: Position Identifier = Entities.Position.Top — Set the position where the notification appears on the screen.
+- OptionalConfigs: NotificationOptionalConfigs = empty NotificationOptionalConfigs — Set additional parameters to customize the notification behavior and functionality.
+- ExtendedClass: Text = "" — Add custom style classes to the pattern.
+Slots: Content — Add content to this placeholder.
+Events: Initialized(NotificationId: Text) — Event triggered when the Notification instance is ready. · OnToggle(IsOpen: Boolean) — Triggered when the Notification is toggled.
+Runtime pattern: Notification (llms-components.txt)
+OpenUI: _Notification1 = Block(SourceBlock: Interaction/Notification, StartsOpen: False, Width: "370px", Position: Entities.Position.Top, Content: [_Content1])
+TSX: <Notification id={"_Notification1"} data-source={"Interaction/Notification"} StartsOpen={False} Width={"370px"} Position={Entities.Position.Top} Content={<>…</>} />
+
+## Interaction/RangeSlider
+Purpose: Select a single value within a range, using a sliding handle.
+Params:
+- MinValue: Decimal (required)
+- MaxValue: Decimal (required)
+- StartingValue: Decimal (required)
+- Orientation: Orientation Identifier = Entities.Orientation.Horizontal
+- Size: Text = "100%"
+- OptionalConfigs: RangeSliderOptionalConfigs = empty RangeSliderOptionalConfigs
+- ExtendedClass: Text = ""
+Events: Initialized(RangeSliderId: Text) · OnValueChange(RangeSliderId: Text, Value: Decimal)
+Runtime pattern: RangeSlider (llms-components.txt)
+OpenUI: _RangeSlider1 = Block(SourceBlock: Interaction/RangeSlider, MinValue: 0, MaxValue: 0, StartingValue: 0)
+TSX: <RangeSlider id={"_RangeSlider1"} data-source={"Interaction/RangeSlider"} MinValue={0} MaxValue={0} StartingValue={0} />
+
+## Interaction/RangeSliderInterval
+Purpose: Select an interval within a range of values, using two sliding handles.
+Params:
+- MinValue: Decimal (required)
+- MaxValue: Decimal (required)
+- StartingValueFrom: Decimal (required)
+- StartingValueTo: Decimal (required)
+- Orientation: Orientation Identifier = Entities.Orientation.Horizontal
+- Size: Text = "100%"
+- OptionalConfigs: RangeSliderOptionalConfigs = empty RangeSliderOptionalConfigs
+- ExtendedClass: Text = ""
+Events: Initialized(RangeSliderIntervalId: Text) · OnValueChange(RangeSliderIntervalId: Text, IntervalStart: Decimal, IntervalEnd: Decimal)
+Runtime pattern: RangeSlider (llms-components.txt)
+OpenUI: _RangeSliderInterval1 = Block(SourceBlock: Interaction/RangeSliderInterval, MinValue: 0, MaxValue: 0, StartingValueFrom: 0, StartingValueTo: 0)
+TSX: <RangeSliderInterval id={"_RangeSliderInterval1"} data-source={"Interaction/RangeSliderInterval"} MinValue={0} MaxValue={0} StartingValueFrom={0} StartingValueTo={0} />
+
+## Interaction/ScrollableArea
+Purpose: Simple scrollable Block with a placeholder for content.
+Params:
+- Orientation: Orientation Identifier = Entities.Orientation.Horizontal [Horizontal, Vertical] — Choose from Horizontal or Vertical orientation.
+- Height: Text = "" — Define the height of the component.
+- Width: Text = "" — Define the width of the component.
+- ScrollbarStyle: ScrollbarStyle Identifier = Entities.ScrollbarStyle.Default [Compact, Default, None] — Choose between different styles for the scrollbar.
+- ExtendedClass: Text = "" — Add custom style classes to the Pattern.
+Slots: Content — Add content to this placeholder
+OpenUI: _ScrollableArea1 = Block(SourceBlock: Interaction/ScrollableArea, Orientation: Entities.Orientation.Horizontal, Height: "", Width: "", Content: [_Content1])
+TSX: <ScrollableArea id={"_ScrollableArea1"} data-source={"Interaction/ScrollableArea"} Orientation={Entities.Orientation.Horizontal} Height={""} Width={""} Content={<>…</>} />
+
+## Interaction/Search
+Purpose: Input with search icon to search within the application.
+Params:
+- ExtendedClass: Text = "" — Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples: - Blank - No custom styles are added (default value). - "myclass" - Adds the myclass style to the UI styles being applied. - "myclass1 myclass2" - Adds the myclass1 and myclass2 styles to the UI styles being applied. You can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet
+Slots: Input — Drag the search input to this placeholder
+Events: Initialized(SearchId: Text) — Event triggered when the Search instance is ready.
+Runtime pattern: Search (llms-components.txt) · ExtendedClass→ExtendedClass
+OpenUI: _Search1 = Block(SourceBlock: Interaction/Search, ExtendedClass: "", Input: [_Input1])
+TSX: <Search id={"_Search1"} data-source={"Interaction/Search"} ExtendedClass={""} Input={<>…</>} />
+
+## Interaction/Sidebar
+Purpose: Display additional information on a floating panel on the side of the screen.
+Params:
+- StartsOpen: Boolean = False
+- Direction: Direction Identifier = Entities.Direction.Right
+- HasOverlay: Boolean = False
+- Width: Text = "500px"
+- ExtendedClass: Text = ""
+Slots: Header · Content
+Events: Initialized(SidebarId: Text) · OnToggle(SidebarId: Text, IsOpen: Boolean)
+Runtime pattern: Sidebar (llms-components.txt)
+OpenUI: _Sidebar1 = Block(SourceBlock: Interaction/Sidebar, StartsOpen: False, Direction: Entities.Direction.Right, HasOverlay: False, Header: [_Header1], Content: [_Content1])
+TSX: <Sidebar id={"_Sidebar1"} data-source={"Interaction/Sidebar"} StartsOpen={False} Direction={Entities.Direction.Right} HasOverlay={False} Header={<>…</>} Content={<>…</>} />
+
+## Interaction/StackedCards
+Params:
+- StackedOptions: StackedCardsPosition Identifier = Entities.StackedCardsPosition.Bottom
+- Rotate: Boolean = True
+- Items: Integer = 5
+- ElementsMargin: Integer = 5
+- UseOverlays: Boolean = True
+- ExtendedClass: Text = ""
+Slots: Content · OverlayTop · OverlayRight · OverlayLeft
+Events: OnItemChange(CurrentPosition: Integer) · OnLeftSwipe(CurrentPosition: Integer) · OnRightSwipe(CurrentPosition: Integer) · OnTopSwipe(CurrentPosition: Integer)
+OpenUI: _StackedCards1 = Block(SourceBlock: Interaction/StackedCards, Content: [_Content1], OverlayTop: [_OverlayTop1], OverlayRight: [_OverlayRight1], OverlayLeft: [_OverlayLeft1])
+TSX: <StackedCards id={"_StackedCards1"} data-source={"Interaction/StackedCards"} Content={<>…</>} OverlayTop={<>…</>} OverlayRight={<>…</>} OverlayLeft={<>…</>} />
+
+## Interaction/TimePicker
+Purpose: Allows the user to select a time using a picker.
+Params:
+- TimeFormat: Text = ""
+- Is24Hours: Boolean = True
+- InitialTime: Time = #00:00:00#
+- OptionalConfigs: TimePickerOptionalConfigs = empty TimePickerOptionalConfigs
+- ExtendedClass: Text = ""
+Slots: Timepicker · Placeholder_SSPreview
+Events: Initialized(TimePickerId: Text) · OnSelected(TimePickerId: Text, SelectedTime: Time)
+Runtime pattern: TimePicker (llms-components.txt)
+OpenUI: _TimePicker1 = Block(SourceBlock: Interaction/TimePicker, TimeFormat: "", Is24Hours: True, InitialTime: #00:00:00#, Timepicker: [_Timepicker1], Placeholder_SSPreview: [_Placeholder_SSPreview1])
+TSX: <TimePicker id={"_TimePicker1"} data-source={"Interaction/TimePicker"} TimeFormat={""} Is24Hours={True} InitialTime={#00:00:00#} Timepicker={<>…</>} Placeholder_SSPreview={<>…</>} />
+
+## Interaction/Video
+Purpose: Drag the pattern to the screen to add video content without the need for a third-party plug-in.
+Params:
+- URL: Text (required)
+- Controls: Boolean = True
+- Width: Text = ""
+- Height: Text = ""
+- Captions: VideoCaptions List = empty list
+- OptionalConfigs: VideoOptionalConfigs = empty VideoOptionalConfigs
+- ExtendedClass: Text = ""
+Events: Initialized(VideoId: Text) · StateChanged(VideoId: Text, VideoState: VideoState Identifier)
+Runtime pattern: Video (llms-components.txt)
+OpenUI: _Video1 = Block(SourceBlock: Interaction/Video, URL: "", Controls: True, Width: "")
+TSX: <Video id={"_Video1"} data-source={"Interaction/Video"} URL={""} Controls={True} Width={""} />
+
+## Navigation/BottomBarItem
+Purpose: Item to be placed inside the Bottom Bar.
+Params:
+- ExtendedClass: Text = "" — Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples: - Blank - No custom styles are added (default value). - "myclass" - Adds the myclass style to the UI styles being applied. - "myclass1 myclass2" - Adds the myclass1 and myclass2 styles to the UI styles being applied. You can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet
+Slots: Icon — Drag bottom bar item icon · Text — Insert bottom bar item text
+OpenUI: _BottomBarItem1 = Block(SourceBlock: Navigation/BottomBarItem, ExtendedClass: "", Icon: [_Icon1], Text: [_Text1])
+TSX: <BottomBarItem id={"_BottomBarItem1"} data-source={"Navigation/BottomBarItem"} ExtendedClass={""} Icon={<>…</>} Text={<>…</>} />
+
+## Navigation/Breadcrumbs
+Purpose: Present the current user location in applications with a deep page hierarchy.
+Params:
+- ExtendedClass: Text = "" — Add custom style classes to the Pattern.
+Slots: Content — Drag BeadcrumbsItem blocks to this placeholder.
+OpenUI: _Breadcrumbs1 = Block(SourceBlock: Navigation/Breadcrumbs, ExtendedClass: "", Content: [_Content1])
+TSX: <Breadcrumbs id={"_Breadcrumbs1"} data-source={"Navigation/Breadcrumbs"} ExtendedClass={""} Content={<>…</>} />
+
+## Navigation/BreadcrumbsItem
+Purpose: Used in the Content placeholder of the Breadcrumbs Block.
+Params:
+- ExtendedClass: Text = "" — Add custom style classes to the Pattern.
+Slots: Title — Use this placeholder to set your title. · Icon — Drag the Icon widget to this placeholder.
+OpenUI: _BreadcrumbsItem1 = Block(SourceBlock: Navigation/BreadcrumbsItem, ExtendedClass: "", Title: [_Title1], Icon: [_Icon1])
+TSX: <BreadcrumbsItem id={"_BreadcrumbsItem1"} data-source={"Navigation/BreadcrumbsItem"} ExtendedClass={""} Title={<>…</>} Icon={<>…</>} />
+
+## Navigation/OverflowMenu
+Purpose: Clickable element that displays hidden actions, settings, or secondary options.
+Params:
+- BalloonShape: Shape Identifier = Entities.Shape.SoftRounded
+- BalloonPosition: FloatingPosition Identifier = NullIdentifier()
+- ExtendedClass: Text = ""
+Slots: Menu · TriggerContent
+Events: Initialized(OverflowMenuId: Text) · OnMenuToggle(OverflowMenuId: Text, IsOpen: Boolean)
+Runtime pattern: OverflowMenu (llms-components.txt)
+OpenUI: _OverflowMenu1 = Block(SourceBlock: Navigation/OverflowMenu, BalloonShape: Entities.Shape.SoftRounded, BalloonPosition: NullIdentifier(), ExtendedClass: "", Menu: [_Menu1], TriggerContent: [_TriggerContent1])
+TSX: <OverflowMenu id={"_OverflowMenu1"} data-source={"Navigation/OverflowMenu"} BalloonShape={Entities.Shape.SoftRounded} BalloonPosition={NullIdentifier()} ExtendedClass={""} Menu={<>…</>} TriggerContent={<>…</>} />
+
+## Navigation/Pagination
+Purpose: Drag the Pagination block to your screen.
+Params:
+- StartIndex: Integer (required) — Set the initial index to start pagination.
+- MaxRecords: Integer (required) — Number of records per page.
+- TotalCount: Long Integer (required) — Total records of list.
+- ShowGoToPage: Boolean = False — Set to true, to show pagination with an input that allows to jump to a specific page.
+- ExtendedClass: Text = "" — Add custom style classes to the Pattern.
+Slots: Previous — Add content to be displayed inside Previous button · Next — Add content to be displayed inside Next button
+Events: OnNavigate(NewStartIndex: Integer) — Event triggered on navigate.
+OpenUI: _Pagination1 = Block(SourceBlock: Navigation/Pagination, StartIndex: 0, MaxRecords: 0, TotalCount: 0, Previous: [_Previous1], Next: [_Next1])
+TSX: <Pagination id={"_Pagination1"} data-source={"Navigation/Pagination"} StartIndex={0} MaxRecords={0} TotalCount={0} Previous={<>…</>} Next={<>…</>} />
+
+## Navigation/SectionIndex
+Purpose: Use the Section Index to organize a screen's content, enabling quick navigation within a page.
+Params:
+- SmoothScrolling: Boolean = True — If True, navigation to the destination is animated.
+- IsFixed: Boolean = False — If True, the Section Index Pattern is always in the same position on the screen.
+- ExtendedClass: Text = "" — Add custom style classes to the Pattern.
+Slots: Content — Drag SectionIndexItem blocks to this placeholder.
+Events: Initialized(SectionIndexId: Text) — Event triggered after the SectionIndex instance is ready.
+Runtime pattern: SectionIndex (llms-components.txt) · SmoothScrolling→SmoothScrolling, IsFixed→IsFixed, ExtendedClass→ExtendedClass
+OpenUI: _SectionIndex1 = Block(SourceBlock: Navigation/SectionIndex, SmoothScrolling: True, IsFixed: False, ExtendedClass: "", Content: [_Content1])
+TSX: <SectionIndex id={"_SectionIndex1"} data-source={"Navigation/SectionIndex"} SmoothScrolling={True} IsFixed={False} ExtendedClass={""} Content={<>…</>} />
+
+## Navigation/SectionIndexItem
+Purpose: Use the Section Index to organize a screen's content, enabling quick navigation within a page.
+Params:
+- ScrollToWidgetId: Text (required) — Element to where the page will navigate.
+- ExtendedClass: Text = "" — Add custom style classes to the Pattern.
+Slots: Content — Add content to this placeholder
+Events: Initialized(SectionIndexItemId: Text) — Event triggered after the SectionIndexItem instance is ready.
+Runtime pattern: SectionIndexItem (llms-components.txt) · ScrollToWidgetId→ScrollToWidgetId, ExtendedClass→ExtendedClass
+OpenUI: _SectionIndexItem1 = Block(SourceBlock: Navigation/SectionIndexItem, ScrollToWidgetId: "", ExtendedClass: "", Content: [_Content1])
+TSX: <SectionIndexItem id={"_SectionIndexItem1"} data-source={"Navigation/SectionIndexItem"} ScrollToWidgetId={""} ExtendedClass={""} Content={<>…</>} />
+
+## Navigation/Submenu
+Purpose: Menu item able to hold additional links inside the Submenu Items placeholder.
+Params:
+- ExtendedClass: Text = "" — Add custom style classes to the pattern.
+Slots: Menu — Menu item · Items — Submenu items
+Events: Initialized(SubmenuId: Text) — Event triggered after the Submenu is ready. · OnToggle(SubmenuId: Text, IsOpened: Boolean) — Event triggered each time a Submenu opens or closes.
+Runtime pattern: Submenu (llms-components.txt) · ExtendedClass→ExtendedClass
+OpenUI: _Submenu1 = Block(SourceBlock: Navigation/Submenu, ExtendedClass: "", Menu: [_Menu1], Items: [_Items1])
+TSX: <Submenu id={"_Submenu1"} data-source={"Navigation/Submenu"} ExtendedClass={""} Menu={<>…</>} Items={<>…</>} />
+
+## Navigation/Tabs
+Purpose: Set of Tabs with placeholders for Title and Content.
+Params:
+- TabsOrientation: Orientation Identifier = Entities.Orientation.Horizontal
+- StartingTab: Integer = 0
+- Height: Text = "auto"
+- TabsVerticalPosition: Direction Identifier = Entities.Direction.Left
+- OptionalConfigs: TabsOptionalConfigs = empty TabsOptionalConfigs
+- ExtendedClass: Text = ""
+Slots: Header · Content
+Events: Initialized(TabsId: Text) · OnTabChange(TabsId: Text, ActiveTab: Integer)
+Runtime pattern: Tabs (llms-components.txt)
+OpenUI: _Tabs1 = Block(SourceBlock: Navigation/Tabs, TabsOrientation: Entities.Orientation.Horizontal, StartingTab: 0, Height: "auto", Header: [_Header1], Content: [_Content1])
+TSX: <Tabs id={"_Tabs1"} data-source={"Navigation/Tabs"} TabsOrientation={Entities.Orientation.Horizontal} StartingTab={0} Height={"auto"} Header={<>…</>} Content={<>…</>} />
+
+## Navigation/TabsContentItem
+Purpose: Item for placeholder Content in the Tabs Block.
+Params:
+- ExtendedClass: Text = "" — Add custom style classes to the Pattern.
+Slots: Content — Drag your content to this placeholder.
+Events: Initialized(TabsContentItemId: Text) — Event triggered after the TabsContentItem instance is ready.
+Runtime pattern: TabsContentItem (llms-components.txt) · ExtendedClass→ExtendedClass
+OpenUI: _TabsContentItem1 = Block(SourceBlock: Navigation/TabsContentItem, ExtendedClass: "", Content: [_Content1])
+TSX: <TabsContentItem id={"_TabsContentItem1"} data-source={"Navigation/TabsContentItem"} ExtendedClass={""} Content={<>…</>} />
+
+## Navigation/TabsHeaderItem
+Purpose: Item for placeholder Header in the Tabs Block.
+Params:
+- ExtendedClass: Text = "" — Add custom style classes to the Pattern.
+Slots: Title — Use this placeholder to set your title.
+Events: Initialized(TabsHeaderItemId: Text) — Event triggered after the TabsHeaderItem instance is ready.
+Runtime pattern: TabsHeaderItem (llms-components.txt) · ExtendedClass→ExtendedClass
+OpenUI: _TabsHeaderItem1 = Block(SourceBlock: Navigation/TabsHeaderItem, ExtendedClass: "", Title: [_Title1])
+TSX: <TabsHeaderItem id={"_TabsHeaderItem1"} data-source={"Navigation/TabsHeaderItem"} ExtendedClass={""} Title={<>…</>} />
+
+## Navigation/TimelineItem
+Purpose: Item to create a timeline of event information, with placeholders for icon, title text and actions.
+Params:
+- IsActive: Boolean = False — Set item as active in the timeline.
+- Color: Color Identifier = Entities.Color.Primary — Color of the icon.
+- ExtendedClass: Text = "" — Add custom style classes to the Pattern.
+Slots: Left — Add text to this placeholder · Right — Add text to this placeholder · Icon — Add icon to this placeholder · Title — Add title to this placeholder · Content — Add content to this placeholder
+OpenUI: _TimelineItem1 = Block(SourceBlock: Navigation/TimelineItem, IsActive: False, Color: Entities.Color.Primary, ExtendedClass: "", Left: [_Left1], Right: [_Right1], Icon: [_Icon1], Title: [_Title1], Content: [_Content1])
+TSX: <TimelineItem id={"_TimelineItem1"} data-source={"Navigation/TimelineItem"} IsActive={False} Color={Entities.Color.Primary} ExtendedClass={""} Left={<>…</>} Right={<>…</>} Icon={<>…</>} Title={<>…</>} Content={<>…</>} />
+
+## Navigation/Wizard
+Purpose: Used to split larger tasks into more manageable steps.
+Params:
+- IsVertical: Boolean = False — Set the orientation.
+- StepsBehaviour: StepsBehaviour Identifier = Entities.StepsBehaviour.Interactive [Interactive, ProgressOnly] — Defines how the wizard steps behave in the user interface.
+- ExtendedClass: Text = "" — Add custom style classes to the Pattern.
+Slots: Content — Add Wizard Items to this placeholder
+Events: Initialized(WizardId: Text) — Event triggered after the Wizard instance is ready.
+Runtime pattern: Wizard (llms-components.txt) · IsVertical→IsVertical, StepsBehaviour→StepBehavior, ExtendedClass→ExtendedClass
+OpenUI: _Wizard1 = Block(SourceBlock: Navigation/Wizard, IsVertical: False, StepsBehaviour: Entities.StepsBehaviour.Interactive, ExtendedClass: "", Content: [_Content1])
+TSX: <Wizard id={"_Wizard1"} data-source={"Navigation/Wizard"} IsVertical={False} StepsBehaviour={Entities.StepsBehaviour.Interactive} ExtendedClass={""} Content={<>…</>} />
+
+## Navigation/WizardItem
+Purpose: Step item to add in the Wizard pattern.
+Params:
+- Status: Steps Identifier (required)
+- ReverseLabelPosition: Boolean = False
+- ExtendedClass: Text = ""
+Slots: Label · Icon
+Events: Initialized(WizardItemId: Text) · OnClick(WizardItemId: Text)
+Runtime pattern: WizardItem (llms-components.txt)
+OpenUI: _WizardItem1 = Block(SourceBlock: Navigation/WizardItem, Status: Entities.Steps.Active, ReverseLabelPosition: False, ExtendedClass: "", Label: [_Label1], Icon: [_Icon1])
+TSX: <WizardItem id={"_WizardItem1"} data-source={"Navigation/WizardItem"} Status={Entities.Steps.Active} ReverseLabelPosition={False} ExtendedClass={""} Label={<>…</>} Icon={<>…</>} />
+
+## Numbers/Badge
+Purpose: Displays a number as notification, a nice way to notify a user about new messages or tasks.
+Params:
+- Number: Long Integer (required) — Number to be displayed
+- Color: Color Identifier = Entities.Color.Primary — Background color of the Block
+- Size: Size Identifier = NullIdentifier() [Medium, Small] — Set the size.
+- Shape: Shape Identifier = Entities.Shape.Rounded [Rounded, Sharp, SoftRounded] — Set the shape.
+- IsLight: Boolean = False — Use the lightest color version for the background and the darker color version for the text.
+- ExtendedClass: Text = "" — Add custom style classes to the Pattern.
+OpenUI: _Badge1 = Block(SourceBlock: Numbers/Badge, Number: 0, Color: Entities.Color.Primary, Size: NullIdentifier())
+TSX: <Badge id={"_Badge1"} data-source={"Numbers/Badge"} Number={0} Color={Entities.Color.Primary} Size={NullIdentifier()} />
+
+## Numbers/Counter
+Purpose: Use counters to give feedback about the current count of several elements.
+Params:
+- BackgroundColor: Color Identifier = Entities.Color.Neutral0 — Background color of the Block
+- IsVertical: Boolean = False — If set to True, the content will be displayed vertically.
+- Height: Text = "100" — Height of the block, use Pixel units.
+- ExtendedClass: Text = "" — Add custom style classes to the Pattern.
+Slots: Content — Drag your content to this placeholder.
+OpenUI: _Counter1 = Block(SourceBlock: Numbers/Counter, BackgroundColor: Entities.Color.Neutral0, IsVertical: False, Height: "100", Content: [_Content1])
+TSX: <Counter id={"_Counter1"} data-source={"Numbers/Counter"} BackgroundColor={Entities.Color.Neutral0} IsVertical={False} Height={"100"} Content={<>…</>} />
+
+## Numbers/IconBadge
+Purpose: Icon with a Badge stacked on top of it.
+Params:
+- Number: Long Integer (required) — Number to be displayed
+- Color: Color Identifier = Entities.Color.Primary — Background color of the Block
+- IsLight: Boolean = False — Use the lightest color version for the background and the darker color version for the text.
+- ExtendedClass: Text = "" — Add custom style classes to the Pattern.
+Slots: Icon — Icon
+OpenUI: _IconBadge1 = Block(SourceBlock: Numbers/IconBadge, Number: 0, Color: Entities.Color.Primary, IsLight: False, Icon: [_Icon1])
+TSX: <IconBadge id={"_IconBadge1"} data-source={"Numbers/IconBadge"} Number={0} Color={Entities.Color.Primary} IsLight={False} Icon={<>…</>} />
+
+## Numbers/ProgressBar
+Purpose: You can use the ProgressBar to display the current progress in a bar.
+Params:
+- Progress: Integer (required)
+- ProgressColor: Color Identifier = Entities.Color.Primary
+- TrailColor: Color Identifier = Entities.Color.Neutral4
+- Thickness: Integer = 12
+- OptionalConfigs: ProgressBarOptionalConfigs = empty ProgressBarOptionalConfigs
+- ExtendedClass: Text = ""
+Slots: Content
+Events: Initialized(ProgressBarId: Text)
+Runtime pattern: Progress (llms-components.txt)
+OpenUI: _ProgressBar1 = Block(SourceBlock: Numbers/ProgressBar, Progress: 0, ProgressColor: Entities.Color.Primary, TrailColor: Entities.Color.Neutral4, Content: [_Content1])
+TSX: <ProgressBar id={"_ProgressBar1"} data-source={"Numbers/ProgressBar"} Progress={0} ProgressColor={Entities.Color.Primary} TrailColor={Entities.Color.Neutral4} Content={<>…</>} />
+
+## Numbers/ProgressCircle
+Purpose: Circular progress indicator with a placeholder on the center of the circle.
+Params:
+- Progress: Integer (required)
+- ProgressColor: Color Identifier = Entities.Color.Primary
+- Size: Text = "auto"
+- TrailColor: Color Identifier = Entities.Color.Neutral4
+- Thickness: Integer = 8
+- OptionalConfigs: ProgressCircleOptionalConfigs = empty ProgressCircleOptionalConfigs
+- ExtendedClass: Text = ""
+Slots: Content
+Events: Initialized(ProgressCircleId: Text)
+Runtime pattern: Progress (llms-components.txt)
+OpenUI: _ProgressCircle1 = Block(SourceBlock: Numbers/ProgressCircle, Progress: 0, ProgressColor: Entities.Color.Primary, Size: "auto", Content: [_Content1])
+TSX: <ProgressCircle id={"_ProgressCircle1"} data-source={"Numbers/ProgressCircle"} Progress={0} ProgressColor={Entities.Color.Primary} Size={"auto"} Content={<>…</>} />
+
+## Numbers/Rating
+Purpose: Use this pattern to let your users score your products and services.
+Params:
+- RatingValue: Decimal (required)
+- RatingScale: Integer = 5
+- IsEdit: Boolean = False
+- Size: Size Identifier = NullIdentifier()
+- ExtendedClass: Text = ""
+Slots: FilledState · HalfState · EmptyState
+Events: Initialized(RatingId: Text) · OnSelect(RatingId: Text, Value: Decimal)
+Runtime pattern: Rating (llms-components.txt)
+OpenUI: _Rating1 = Block(SourceBlock: Numbers/Rating, RatingValue: 0, RatingScale: 5, IsEdit: False, FilledState: [_FilledState1], HalfState: [_HalfState1], EmptyState: [_EmptyState1])
+TSX: <Rating id={"_Rating1"} data-source={"Numbers/Rating"} RatingValue={0} RatingScale={5} IsEdit={False} FilledState={<>…</>} HalfState={<>…</>} EmptyState={<>…</>} />
+
+## Private/ApplicationLoadEvents
+Purpose: Handles the loading progress on a splash screen.
+Params:
+- MinimumDisplayTimeMs: Integer = 1000 — Minimum length of time you want to wait before the OnLoadComplete event is called.
+Events: OnLoadComplete(RedirectURL: Text) — Triggers once the load event is completed. · OnUpgradeProgress(Completed: Integer, Total: Integer) — Triggers once the upgrade process event is updated.
+OpenUI: _ApplicationLoadEvents1 = Block(SourceBlock: Private/ApplicationLoadEvents, MinimumDisplayTimeMs: 1000)
+TSX: <ApplicationLoadEvents id={"_ApplicationLoadEvents1"} data-source={"Private/ApplicationLoadEvents"} MinimumDisplayTimeMs={1000} />
+
+## Private/LightBox
+Purpose: Base elements to create the Lightbox panel that Lightbox Items open on click. The Layout already has this Block inside it.
+Params: none
+OpenUI: _LightBox1 = Block(SourceBlock: Private/LightBox)
+TSX: <LightBox id={"_LightBox1"} data-source={"Private/LightBox"} />
+
+## Private/MenuDrag
+Purpose: Contains the mobile phone screen gestures logic to apply on the menu to show its content.
+Params:
+- MenuId: Text (required)
+Events: OnClose() — Event triggered when the Menu is closed. · OnOpen() — Event triggered when the Menu is opened.
+OpenUI: _MenuDrag1 = Block(SourceBlock: Private/MenuDrag, MenuId: "")
+TSX: <MenuDrag id={"_MenuDrag1"} data-source={"Private/MenuDrag"} MenuId={""} />
+
+## Private/NetworkStatusChanged
+Purpose: Triggers different events depending on the device's network connection status.
+Params: none
+Events: NetworkStatusChanged(IsOnline: Boolean)
+OpenUI: _NetworkStatusChanged1 = Block(SourceBlock: Private/NetworkStatusChanged)
+TSX: <NetworkStatusChanged id={"_NetworkStatusChanged1"} data-source={"Private/NetworkStatusChanged"} />
+
+## Private/OfflineDataSyncCore
+Purpose: Synchronizes data that can be used offline.
+Params: none
+Events: OnConfigure() · OnSync(SyncUnit: Text) · OnSyncComplete(SyncUnit: Text) — Action to execute when when a background offline data sync completes with success. · OnSyncError(SyncUnit: Text, ErrorMessage: Text) — Action to execute when when a background offline data sync fails. · OnSyncStart(SyncUnit: Text) — Action to execute when when a background offline data sync starts.
+OpenUI: _OfflineDataSyncCore1 = Block(SourceBlock: Private/OfflineDataSyncCore)
+TSX: <OfflineDataSyncCore id={"_OfflineDataSyncCore1"} data-source={"Private/OfflineDataSyncCore"} />
+
+## Private/PullToRefresh
+Purpose: Enable swiping down on the screen's content to trigger an action (usually refreshing part of the screen). The Layout already has this Block inside it.
+Params: none
+Events: OnContentPull() — Action to execute when users pull to refresh screen data
+OpenUI: _PullToRefresh1 = Block(SourceBlock: Private/PullToRefresh)
+TSX: <PullToRefresh id={"_PullToRefresh1"} data-source={"Private/PullToRefresh"} />
+
+## Utilities/AlignCenter
+Purpose: Vertically aligns multiple elements with different heights.
+Params:
+- IsHorizontal: Boolean = True — Set the orientation of the content inside.
+- ExtendedClass: Text = "" — Add custom style classes to the Pattern.
+Slots: Content — Add items to align
+OpenUI: _AlignCenter1 = Block(SourceBlock: Utilities/AlignCenter, IsHorizontal: True, ExtendedClass: "", Content: [_Content1])
+TSX: <AlignCenter id={"_AlignCenter1"} data-source={"Utilities/AlignCenter"} IsHorizontal={True} ExtendedClass={""} Content={<>…</>} />
+
+## Utilities/ButtonLoading
+Purpose: Button with loading state when is clicked.
+Params:
+- IsLoading: Boolean (required) — If True, the button shows the loading spinner.
+- ShowLabelOnLoading: Boolean = False — If True, the loading spinner displays beside the label.
+- ExtendedClass: Text = "" — Add custom style classes to the pattern.
+Slots: Button — Drag a Button or a Link to this placeholder.
+Events: Initialized(ButtonLoadingId: Text) — Event triggered after the ButtomLoading instance is ready.
+Runtime pattern: ButtonLoading (llms-components.txt) · IsLoading→IsLoading, ShowLabelOnLoading→ShowLoadingAndLabel, ExtendedClass→ExtendedClass
+OpenUI: _ButtonLoading1 = Block(SourceBlock: Utilities/ButtonLoading, IsLoading: False, ShowLabelOnLoading: False, ExtendedClass: "", Button: [_Button1])
+TSX: <ButtonLoading id={"_ButtonLoading1"} data-source={"Utilities/ButtonLoading"} IsLoading={False} ShowLabelOnLoading={False} ExtendedClass={""} Button={<>…</>} />
+
+## Utilities/CenterContent
+Purpose: Vertically aligns content to the middle of its parent.
+Params:
+- Height: Integer = 0 — Height of the block, in pixels.
+- ExtendedClass: Text = "" — Add custom style classes to the Pattern.
+Slots: Top — Add top content to this placeholder · Center — Add content to be centered to this placeholder · Bottom — Add bottom content to this placeholder
+OpenUI: _CenterContent1 = Block(SourceBlock: Utilities/CenterContent, Height: 0, ExtendedClass: "", Top: [_Top1], Center: [_Center1], Bottom: [_Bottom1])
+TSX: <CenterContent id={"_CenterContent1"} data-source={"Utilities/CenterContent"} Height={0} ExtendedClass={""} Top={<>…</>} Center={<>…</>} Bottom={<>…</>} />
+
+## Utilities/InlineSVG
+Purpose: Use this pattern to be able to use an SVG inline, so that you can change the fill and stroke properties, or animate the SVG paths.
+Params:
+- SVGCode: Text = "" — SVG markup code, that is going to be appended on the HTML.
+- ExtendedClass: Text = "" — Add custom style classes to the pattern.
+Events: Initialized(InlineSVGId: Text) — Event triggered after the InlineSVG instance is ready.
+Runtime pattern: InlineSvg (llms-components.txt) · SVGCode→SVGCode, ExtendedClass→ExtendedClass
+OpenUI: _InlineSVG1 = Block(SourceBlock: Utilities/InlineSVG, SVGCode: "", ExtendedClass: "")
+TSX: <InlineSVG id={"_InlineSVG1"} data-source={"Utilities/InlineSVG"} SVGCode={""} ExtendedClass={""} />
+
+## Utilities/MarginContainer
+Purpose: Adds a margin around this block's placeholder.
+Params:
+- ExtendedClass: Text = "" — Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples: - Blank - No custom styles are added (default value). - "myclass" - Adds the myclass style to the UI styles being applied. - "myclass1 myclass2" - Adds the myclass1 and myclass2 styles to the UI styles being applied. You can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet
+Slots: MarginContainer — Add your content to this placeholder
+OpenUI: _MarginContainer1 = Block(SourceBlock: Utilities/MarginContainer, ExtendedClass: "", MarginContainer: [_MarginContainer1])
+TSX: <MarginContainer id={"_MarginContainer1"} data-source={"Utilities/MarginContainer"} ExtendedClass={""} MarginContainer={<>…</>} />
+
+## Utilities/MouseEvents
+Purpose: Enables Mouse events on a specific widget.
+Params:
+- WidgetId: Text (required) — Element that will be affected by the gesture
+- PreventDefaults: Boolean = True — If Prevent Default should be applied
+Events: End(X: Decimal, Y: Decimal, OffsetX: Decimal, OffsetY: Decimal, TimeTaken: Decimal) — Event triggered when the mouse events end. · Move(X: Decimal, Y: Decimal, OffsetX: Decimal, OffsetY: Decimal, Evt: Object) — Event triggered when the mouse events move. · Start(X: Decimal, Y: Decimal) — Event triggered as the mouse events start.
+OpenUI: _MouseEvents1 = Block(SourceBlock: Utilities/MouseEvents, WidgetId: "", PreventDefaults: True)
+TSX: <MouseEvents id={"_MouseEvents1"} data-source={"Utilities/MouseEvents"} WidgetId={""} PreventDefaults={True} />
+
+## Utilities/PasswordPolicy
+Purpose: Block that verifies and informs the user on the status of the password's built-in validation. Use the block with authentication flows that use the OutSystems built-in identity provider.
+Params:
+- Password: Text (required) — User password.
+Events: Compliant(IsValid: Boolean) — Event that informs if the password is compliant with the policy.
+OpenUI: _PasswordPolicy1 = Block(SourceBlock: Utilities/PasswordPolicy, Password: "")
+TSX: <PasswordPolicy id={"_PasswordPolicy1"} data-source={"Utilities/PasswordPolicy"} Password={""} />
+
+## Utilities/ProviderLoginButton
+Purpose: An authentication button that follows the current brand guidelines for Apple, Facebook, and Google external identity providers.
+Params:
+- IdentityProvider: IdentityProvider Identifier (required) [Apple, Facebook, Google] — Select Facebook, Google or Apple to configure the button's UI according to brand guidelines.
+- IconOnly: Boolean = False — Set true to provide a button with an icon only and no label.
+- Shape: Shape Identifier = Entities.Shape.SoftRounded [Rounded, Sharp, SoftRounded] — Set the button's shape.
+- ExtendedClass: Text = "" — Add custom style classes to the pattern.
+Events: OnClick() — Event sent when the button is clicked.
+OpenUI: _ProviderLoginButton1 = Block(SourceBlock: Utilities/ProviderLoginButton, IdentityProvider: Entities.IdentityProvider.Apple, IconOnly: False, Shape: Entities.Shape.SoftRounded)
+TSX: <ProviderLoginButton id={"_ProviderLoginButton1"} data-source={"Utilities/ProviderLoginButton"} IdentityProvider={Entities.IdentityProvider.Apple} IconOnly={False} Shape={Entities.Shape.SoftRounded} />
+
+## Utilities/Separator
+Purpose: Allows to split information with a horizontal line.
+Params:
+- IsVertical: Boolean = False — If set as true, then the Separator becomes vertical.
+- Space: Space Identifier = Entities.Space.Base [Base, ExtraLarge, ExtraSmall, Large, Medium, None, Small, XXLarge] — Set the space around the Separator line.
+- Color: Color Identifier = Entities.Color.Neutral4 — Set the color of the Separator line.
+- ExtendedClass: Text = "" — Add custom style classes to the Pattern.
+OpenUI: _Separator1 = Block(SourceBlock: Utilities/Separator, IsVertical: False, Space: Entities.Space.Base, Color: Entities.Color.Neutral4)
+TSX: <Separator id={"_Separator1"} data-source={"Utilities/Separator"} IsVertical={False} Space={Entities.Space.Base} Color={Entities.Color.Neutral4} />
+
+## Utilities/SwipeEvents
+Purpose: Enable swipe events on a specific widget.
+Params:
+- WidgetId: Text (required) — Element that will be swipeable
+Events: SwipeDown() — The event is triggered after a swipe down. · SwipeLeft() — The event is triggered after a swipe left. · SwipeRight() — The event is triggered after a swipe right. · SwipeUp() — The event is triggered after a swipe up.
+Runtime pattern: SwipeEvents (llms-components.txt)
+OpenUI: _SwipeEvents1 = Block(SourceBlock: Utilities/SwipeEvents, WidgetId: "")
+TSX: <SwipeEvents id={"_SwipeEvents1"} data-source={"Utilities/SwipeEvents"} WidgetId={""} />
+
+## Utilities/TouchEvents
+Purpose: Enables touch events on a specific widget.
+Params:
+- WidgetId: Text (required) — Element that will be affected by the gesture
+- PreventDefaults: Boolean = True — If Prevent Default should be applied
+Events: End(X: Decimal, Y: Decimal, OffsetX: Decimal, OffsetY: Decimal, TimeTaken: Decimal) — The event is triggered after the movement event finishes. · Move(X: Decimal, Y: Decimal, OffsetX: Decimal, OffsetY: Decimal, Evt: Object) — Event triggered when the mouse events move. · Start(X: Decimal, Y: Decimal) — The event is triggered as the touch movement starts.
+Runtime pattern: TouchEvents (llms-components.txt)
+OpenUI: _TouchEvents1 = Block(SourceBlock: Utilities/TouchEvents, WidgetId: "", PreventDefaults: True)
+TSX: <TouchEvents id={"_TouchEvents1"} data-source={"Utilities/TouchEvents"} WidgetId={""} PreventDefaults={True} />

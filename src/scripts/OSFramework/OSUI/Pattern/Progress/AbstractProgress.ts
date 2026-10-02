@@ -52,7 +52,6 @@ namespace OSFramework.OSUI.Patterns.Progress {
 		 * Method to add the initial animation to progress
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Progress.AbstractProgress
 		 */
 		protected animateInitial(): void {
 			// Do the initial animation
@@ -66,7 +65,6 @@ namespace OSFramework.OSUI.Patterns.Progress {
 		 * Method to add the animation to progress on value change
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Progress.AbstractProgress
 		 */
 		protected animateOnValueChange(): void {
 			// Do the transition animation
@@ -80,7 +78,6 @@ namespace OSFramework.OSUI.Patterns.Progress {
 		 * Method to set the calbacks
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Progress.AbstractProgress
 		 */
 		protected setCallbacks(): void {
 			this._eventAnimateEntranceEnd = this._animateEntranceEnd.bind(this);
@@ -90,7 +87,6 @@ namespace OSFramework.OSUI.Patterns.Progress {
 		 * Method to unset the calbacks
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Progress.AbstractProgress
 		 */
 		protected unsetCallbacks(): void {
 			this._eventAnimateEntranceEnd = undefined;
@@ -100,7 +96,6 @@ namespace OSFramework.OSUI.Patterns.Progress {
 		 * Method to set the html elements used
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Progress.AbstractProgress
 		 */
 		protected unsetHtmlElements(): void {
 			this.progressElem = undefined;
@@ -111,7 +106,6 @@ namespace OSFramework.OSUI.Patterns.Progress {
 		 * Method to validate the value limits and apply the A11Y on progress, based on progress value
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Progress.AbstractProgress
 		 */
 		protected updatedProgressValue(): void {
 			// If negative value, set it as minimum progress value by default
@@ -159,11 +153,10 @@ namespace OSFramework.OSUI.Patterns.Progress {
 		/**
 		 * Method to apply a CSS Gradient to the Progress
 		 *
-		 * @param {string} gradientType
-		 * @param {GradientColor} colors
-		 * @memberof AbstractProgress
+		 * @param gradientType
+		 * @param colors
 		 */
-		public progressApplyGradient(gradientType: string, colors: GradientColor): void {
+		public progressApplyGradient(gradientType: string, colors: GradientColor[]): void {
 			this.gradientLength = Object.keys(colors).length;
 
 			if (this.gradientLength < 2) {
@@ -178,7 +171,6 @@ namespace OSFramework.OSUI.Patterns.Progress {
 		 * Method used to reset the progress value
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Progress.AbstractProgress
 		 */
 		public resetProgressValue(): void {
 			this.setElementProgressValue(this.configs.InitialProgress);
@@ -188,7 +180,6 @@ namespace OSFramework.OSUI.Patterns.Progress {
 		 * Method used to set the progress value
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Progress.AbstractProgress
 		 */
 		public setProgressValue(value: number): void {
 			this.setElementProgressValue(value);

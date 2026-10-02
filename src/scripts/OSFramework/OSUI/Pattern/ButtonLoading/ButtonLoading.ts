@@ -3,11 +3,6 @@ namespace OSFramework.OSUI.Patterns.ButtonLoading {
 	//TODO: change the namespace to Pattern instead of Patterns
 	/**
 	 *  Class that implements the ButtonLoading pattern.
-	 *
-	 * @export
-	 * @class ButtonLoading
-	 * @extends {AbstractPattern<ButtonLoadingConfig>}
-	 * @implements {IButtonLoading}
 	 */
 	export class ButtonLoading extends AbstractPattern<ButtonLoadingConfig> implements IButtonLoading {
 		// Store the button html element that must exist inside ButtonLoading placeholder
@@ -73,7 +68,6 @@ namespace OSFramework.OSUI.Patterns.ButtonLoading {
 		 * Add the Accessibility Attributes values
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.ButtonLoading.ButtonLoading
 		 */
 		protected setA11YProperties(): void {
 			Helper.A11Y.AriaLivePolite(this.selfElement);
@@ -85,7 +79,6 @@ namespace OSFramework.OSUI.Patterns.ButtonLoading {
 		 * This method has no implementation on this pattern context!
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.ButtonLoading.ButtonLoading
 		 */
 		protected setCallbacks(): void {
 			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -95,7 +88,6 @@ namespace OSFramework.OSUI.Patterns.ButtonLoading {
 		 * Update info based on htmlContent
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.ButtonLoading.ButtonLoading
 		 */
 		protected setHtmlElements(): void {
 			this._buttonElement = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.Button);
@@ -125,7 +117,6 @@ namespace OSFramework.OSUI.Patterns.ButtonLoading {
 		 * This method has no implementation on this pattern context!
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.ButtonLoading.ButtonLoading
 		 */
 		protected unsetCallbacks(): void {
 			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -135,7 +126,6 @@ namespace OSFramework.OSUI.Patterns.ButtonLoading {
 		 * Removes the local value of the variables pointing to HTML elements;
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.ButtonLoading.ButtonLoading
 		 */
 		protected unsetHtmlElements(): void {
 			this._buttonElement = undefined;
@@ -144,8 +134,6 @@ namespace OSFramework.OSUI.Patterns.ButtonLoading {
 
 		/**
 		 * Method to build the button loading.
-		 *
-		 * @memberof OSFramework.Patterns.ButtonLoading.ButtonLoading
 		 */
 		public build(): void {
 			super.build();
@@ -162,9 +150,8 @@ namespace OSFramework.OSUI.Patterns.ButtonLoading {
 		/**
 		 * Applies the changes of state/value of the configurations.
 		 *
-		 * @param {string} propertyName
-		 * @param {unknown} propertyValue
-		 * @memberof OSFramework.Patterns.ButtonLoading.ButtonLoading
+		 * @param propertyName
+		 * @param propertyValue
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
@@ -185,8 +172,7 @@ namespace OSFramework.OSUI.Patterns.ButtonLoading {
 		/**
 		 * Method to force the disabled attribute on the button element to be managed by IsLoading property.
 		 *
-		 * @param {boolean} isDisabled When true, the button is disabled while IsLoading is true.
-		 * @memberof OSFramework.Patterns.ButtonLoading.ButtonLoading
+		 * @param isDisabled When true, the button is disabled while IsLoading is true.
 		 */
 		public disabledStateOnIsLoading(isDisabled: boolean): void {
 			// Grant value is different from the current one
@@ -205,8 +191,6 @@ namespace OSFramework.OSUI.Patterns.ButtonLoading {
 
 		/**
 		 * Disposes the current pattern.
-		 *
-		 * @memberof OSFramework.Patterns.ButtonLoading.ButtonLoading
 		 */
 		public dispose(): void {
 			this.unsetHtmlElements();

@@ -9,7 +9,7 @@ namespace Providers.OSUI.RangeSlider.NoUISlider.Utils {
 			if (_noUiSliderConfigs.range.length <= 0) {
 				delete _noUiSliderConfigs.range;
 			} else {
-				const _rangeValues = {};
+				const _rangeValues: Record<string, unknown> = {};
 
 				// Check the range values and change to a single object
 				for (const element of _noUiSliderConfigs.range) {

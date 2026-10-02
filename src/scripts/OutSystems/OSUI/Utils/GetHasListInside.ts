@@ -3,9 +3,7 @@ namespace OutSystems.OSUI.Utils {
 	/**
 	 * Method that returns if the target has a list widget inside
 	 *
-	 * @export
-	 * @param {HTMLElement} targetElem
-	 * @return {*}  {boolean}
+	 * @param targetElem
 	 */
 	export function GetHasListInside(targetElem: HTMLElement): boolean {
 		const listElements = OSUI.Utils.ChildrenMatches(

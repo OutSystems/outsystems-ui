@@ -2,17 +2,13 @@
 namespace Providers.OSUI.Utils {
 	/**
 	 * Floating UI Class to handle the Floating UI provider utils
-	 *
-	 * @export
-	 * @class FloatingUI
 	 */
 	// eslint-disable-next-line @typescript-eslint/naming-convention
 	export class FloatingUI extends OSFramework.OSUI.Utils.FloatingPosition.FloatingPosition {
 		private _currentPlacement: OSFramework.OSUI.GlobalEnum.FloatingPosition;
 		/**
 		 * Creates an instance of FloatingUI.
-		 * @param {FloatingUIConfig} options
-		 * @memberof FloatingUI
+		 * @param options
 		 */
 		constructor(options: FloatingUIConfig) {
 			super(options);
@@ -20,8 +16,6 @@ namespace Providers.OSUI.Utils {
 
 		/**
 		 * Method to destroy the FloatingUI
-		 *
-		 * @memberof FloatingUI
 		 */
 		public dispose(): void {
 			if (this.floatingConfigs.UpdatePosition) {
@@ -33,12 +27,10 @@ namespace Providers.OSUI.Utils {
 
 		/**
 		 * Method to call the FloatingUI provider
-		 *
-		 * @memberof FloatingUI
 		 */
 		public setFloatingPosition(): void {
 			// Store the middleware to be added on the FloatingUI
-			const _middlewareArray = [];
+			const _middlewareArray: Array<ReturnType<typeof window.FloatingUIDOM.flip>> = [];
 
 			// If autoPlacement is true, add it to middleware
 			if (this.floatingConfigs.AutoPlacement) {
@@ -82,7 +74,7 @@ namespace Providers.OSUI.Utils {
 
 			// Set the computePosition method. This is the main provider method to set the balloon position
 			const _eventOnUpdatePosition = () => {
-				window.FloatingUIDOM.computePosition(
+				void window.FloatingUIDOM.computePosition(
 					this.floatingConfigs.AnchorElem,
 					this.floatingConfigs.FloatingElem,
 					{
@@ -115,12 +107,12 @@ namespace Providers.OSUI.Utils {
 					if (middlewareData.arrow) {
 						const side = placement.split('-')[0];
 
-						const staticSide = {
+						const staticSide: string = {
 							top: OSFramework.OSUI.GlobalEnum.FloatingPosition.Bottom,
 							right: OSFramework.OSUI.GlobalEnum.FloatingPosition.Left,
 							bottom: OSFramework.OSUI.GlobalEnum.FloatingPosition.Top,
 							left: OSFramework.OSUI.GlobalEnum.FloatingPosition.Right,
-						}[side];
+						}[side as 'top' | 'right' | 'bottom' | 'left'];
 
 						const { x, y } = middlewareData.arrow;
 						Object.assign(this.floatingConfigs.ArrowElem.style, {
@@ -159,8 +151,6 @@ namespace Providers.OSUI.Utils {
 
 		/**
 		 * Method to run when the target closes. This will clean listeners on the provider side and stop observing the target
-		 *
-		 * @memberof FloatingUI
 		 */
 		public unsetFloatingPosition(): void {
 			this.eventOnUpdateCallback();

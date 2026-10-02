@@ -4,10 +4,10 @@ namespace OutSystems.OSUI.Patterns.SearchAPI {
 	/**
 	 * Function that will change the property of a given Search.
 	 *
-	 * @export
-	 * @param {string} searchId
-	 * @param {string} propertyName
-	 * @param {*} propertyValue
+	 * @param searchId
+	 * @param propertyName
+	 * @param propertyValue
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function ChangeProperty(searchId: string, propertyName: string, propertyValue: unknown): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -25,19 +25,21 @@ namespace OutSystems.OSUI.Patterns.SearchAPI {
 	/**
 	 * Create the new Search instance and add it to the SearchesMap
 	 *
-	 * @export
-	 * @param {string} searchId
-	 * @param {string} configs
-	 * @return {*}  {OSFramework.OSUI.Patterns.Search.ISearch}
+	 * @param searchId
+	 * @param configs
+	 * @returns the Search instance
 	 */
-	export function Create(searchId: string, configs: string): OSFramework.OSUI.Patterns.Search.ISearch {
+	export function Create(searchId: string, configs: string | Configs): OSFramework.OSUI.Patterns.Search.ISearch {
 		if (_searchMap.has(searchId)) {
 			throw new Error(
 				`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.Search} registered under id: ${searchId}`
 			);
 		}
 
-		const _newSearch = new OSFramework.OSUI.Patterns.Search.Search(searchId, JSON.parse(configs));
+		const _newSearch = new OSFramework.OSUI.Patterns.Search.Search(
+			searchId,
+			OSFramework.OSUI.Helper.ParseConfigs(configs)
+		);
 		_searchMap.set(searchId, _newSearch);
 		return _newSearch;
 	}
@@ -45,8 +47,8 @@ namespace OutSystems.OSUI.Patterns.SearchAPI {
 	/**
 	 * Function that will destroy the instance of the given Search
 	 *
-	 * @export
-	 * @param {string} searchId
+	 * @param searchId
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Dispose(searchId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -66,8 +68,7 @@ namespace OutSystems.OSUI.Patterns.SearchAPI {
 	/**
 	 * Fucntion that will return the Map with all the Search instances at the page
 	 *
-	 * @export
-	 * @return {*}  {Array<string>}
+	 * @returns the ids of every Search instance
 	 */
 	export function GetAllSearches(): Array<string> {
 		return OSFramework.OSUI.Helper.MapOperation.ExportKeys(_searchMap);
@@ -76,9 +77,8 @@ namespace OutSystems.OSUI.Patterns.SearchAPI {
 	/**
 	 * Function that gets the instance of Search, by a given ID.
 	 *
-	 * @export
-	 * @param {string} searchId
-	 * @return {*}  {OSFramework.OSUI.Patterns.Search.ISearch}
+	 * @param searchId
+	 * @returns the Search instance
 	 */
 	export function GetSearchById(searchId: string): OSFramework.OSUI.Patterns.Search.ISearch {
 		return OSFramework.OSUI.Helper.MapOperation.FindInMap(
@@ -91,9 +91,8 @@ namespace OutSystems.OSUI.Patterns.SearchAPI {
 	/**
 	 * Function that will initialize the pattern instance.
 	 *
-	 * @export
-	 * @param {string} searchId
-	 * @return {*}  {OSFramework.OSUI.Patterns.Search.ISearch}
+	 * @param searchId
+	 * @returns the Search instance
 	 */
 	export function Initialize(searchId: string): OSFramework.OSUI.Patterns.Search.ISearch {
 		const search = GetSearchById(searchId);
@@ -106,15 +105,14 @@ namespace OutSystems.OSUI.Patterns.SearchAPI {
 	/**
 	 * Function to register a provider callback
 	 *
-	 * @export
-	 * @param {string} searchId
-	 * @param {string} eventName
-	 * @param {OSFramework.OSUI.GlobalCallbacks.OSGeneric} callback
-	 * @return {*} {string} Return Message Success or message of error info if it's the case.
+	 * @param searchId
+	 * @param eventName
+	 * @param callback
+	 * @returns Return Message Success or message of error info if it's the case.
 	 */
 	export function RegisterCallback(
 		searchId: string,
-		eventName: string,
+		eventName: EventName,
 		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
 	): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({

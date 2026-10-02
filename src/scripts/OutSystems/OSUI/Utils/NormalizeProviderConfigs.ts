@@ -7,6 +7,7 @@ namespace OutSystems.OSUI.Utils {
 	 * Function that will normalize the ProviderConfigs in order to properly return boolean attributes
 	 *
 	 * @param providerConfigs All the configs that will be assigned to the provider in order to create it's instance
+	 * @param htmlElementsProps
 	 * @returns ProviderConfigs with all boolean as a boolean instead of string
 	 */
 	export function AbstractNormalizeProviderConfigs(

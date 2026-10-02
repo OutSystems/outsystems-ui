@@ -5,11 +5,10 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	/**
 	 * Function that will change the property of a given Dropdown Id.
 	 *
-	 * @export
-	 * @param {string} dropdownId ID of the Dropdown where the property will be changed.
-	 * @param {string} propertyName Property name that will be updated
-	 * @param {*} propertyValue Value that will be set to the property
-	 * @return {*} {string} Return Message Success or message of error info if it's the case.
+	 * @param dropdownId ID of the Dropdown where the property will be changed.
+	 * @param propertyName Property name that will be updated
+	 * @param propertyValue Value that will be set to the property
+	 * @returns Return Message Success or message of error info if it's the case.
 	 */
 	export function ChangeProperty(dropdownId: string, propertyName: string, propertyValue: unknown): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -27,10 +26,9 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	/**
 	 * Function that will clear any selected values from the Dropdown with given Id
 	 *
-	 * @export
-	 * @param {string} dropdownId
-	 * @param {boolean} silentOnChangedEvent
-	 * @return {*} {string} Return Message Success or message of error info if it's the case.
+	 * @param dropdownId
+	 * @param silentOnChangedEvent
+	 * @returns Return Message Success or message of error info if it's the case.
 	 */
 	export function Clear(dropdownId: string, silentOnChangedEvent = true): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -48,9 +46,8 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	/**
 	 * Function that will Close the Dropdown with the given Id
 	 *
-	 * @export
-	 * @param {string} dropdownId
-	 * @return {*} {string} Return Message Success or message of error info if it's the case.
+	 * @param dropdownId
+	 * @returns Return Message Success or message of error info if it's the case.
 	 */
 	export function Close(dropdownId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -68,16 +65,17 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	/**
 	 * Create the new DropdownItem instance and add it to the dropdownItemsMap
 	 *
-	 * @export
-	 * @param {string} dropdownId ID of the Pattern that a new instance will be created.
-	 * @param {string} configs Configurations for the Pattern in JSON format.
-	 * @return {*}  {OSFramework.OSUI.Patterns.Dropdown.IDropdown}
+	 * @param dropdownId ID of the Pattern that a new instance will be created.
+	 * @param mode Dropdown mode (search, tags or server-side).
+	 * @param provider Provider that renders the dropdown (VirtualSelect or OSUIComponents).
+	 * @param configs Configurations for the Pattern in JSON format.
+	 * @returns the Dropdown instance
 	 */
 	export function Create(
 		dropdownId: string,
 		mode: string,
 		provider: string,
-		configs: string
+		configs: string | Configs
 	): OSFramework.OSUI.Patterns.Dropdown.IDropdown {
 		if (_dropdownItemsMap.has(dropdownId)) {
 			throw new Error(`There is already an Dropdown registered under id: ${dropdownId}`);
@@ -98,9 +96,8 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	/**
 	 * Function that will set Dropdown with given ID as Disabled
 	 *
-	 * @export
-	 * @param {string} dropdownId
-	 * @return {*} {string} Return Message Success or message of error info if it's the case.
+	 * @param dropdownId
+	 * @returns Return Message Success or message of error info if it's the case.
 	 */
 	export function Disable(dropdownId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -118,10 +115,9 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	/**
 	 * Function that toggle the dropbox as popup on small screen like mobile
 	 *
-	 * @export
-	 * @param {string} dropdownId
-	 * @param {boolean} isEnabled
-	 * @return {*} {string} Return Message Success or message of error info if it's the case.
+	 * @param dropdownId
+	 * @param isEnabled
+	 * @returns Return Message Success or message of error info if it's the case.
 	 */
 	export function TogglePopup(dropdownId: string, isEnabled: boolean): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -138,9 +134,8 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	/**
 	 * Function that will dispose the instance of the given DropDownItem Id
 	 *
-	 * @export
-	 * @param {string} dropdownId
-	 * @return {*} {string} Return Message Success or message of error info if it's the case.
+	 * @param dropdownId
+	 * @returns Return Message Success or message of error info if it's the case.
 	 */
 	export function Dispose(dropdownId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -160,9 +155,8 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	/**
 	 * Function that will set Dropdown with given ID as enabled
 	 *
-	 * @export
-	 * @param {string} dropdownId
-	 * @return {*} {string} Return Message Success or message of error info if it's the case.
+	 * @param dropdownId
+	 * @returns Return Message Success or message of error info if it's the case.
 	 */
 	export function Enable(dropdownId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -180,8 +174,7 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	/**
 	 * Fucntion that will return the Map with all the Dropdown instances at the page
 	 *
-	 * @export
-	 * @return {*}  Array<string>
+	 * @returns Array<string>
 	 */
 	export function GetAllDropdowns(): Array<string> {
 		return OSFramework.OSUI.Helper.MapOperation.ExportKeys(_dropdownItemsMap);
@@ -190,9 +183,8 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	/**
 	 * Function that gets the instance of Dropdown, by a given ID.
 	 *
-	 * @export
-	 * @param {string} dropdownId ID of the DropdownId that will be looked for.
-	 * @return {*}  {OSFramework.OSUI.Patterns.Dropdown.IDropdown}
+	 * @param dropdownId ID of the DropdownId that will be looked for.
+	 * @returns the Dropdown instance
 	 */
 	export function GetDropdownById(dropdownId: string): OSFramework.OSUI.Patterns.Dropdown.IDropdown {
 		return OSFramework.OSUI.Helper.MapOperation.FindInMap(
@@ -205,9 +197,8 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	/**
 	 * Fucntion that will return all the selected values from a given Dropdown Id
 	 *
-	 * @export
-	 * @param {string} dropdownId
-	 * @return {*}  {string}
+	 * @param dropdownId
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function GetSelectedValues(dropdownId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -226,9 +217,8 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	/**
 	 * Function that will Open the Dropdown with the given Id
 	 *
-	 * @export
-	 * @param {string} dropdownId
-	 * @return {*} {string} Return Message Success or message of error info if it's the case.
+	 * @param dropdownId
+	 * @returns Return Message Success or message of error info if it's the case.
 	 */
 	export function Open(dropdownId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -246,9 +236,8 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	/**
 	 * Function that will initialize the pattern instance.
 	 *
-	 * @export
-	 * @param {string} dropdownId ID of the DropdownItem that will be initialized.
-	 * @return {*}  {OSFramework.OSUI.Patterns.Dropdown.IDropdown}
+	 * @param dropdownId ID of the DropdownItem that will be initialized.
+	 * @returns the Dropdown instance
 	 */
 	export function Initialize(dropdownId: string): OSFramework.OSUI.Patterns.Dropdown.IDropdown {
 		const _dropdownItem = GetDropdownById(dropdownId);
@@ -261,15 +250,14 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	/**
 	 * Function to register a provider callback
 	 *
-	 * @export
-	 * @param {string} dropdownId
-	 * @param {string} eventName
-	 * @param {OSFramework.OSUI.GlobalCallbacks.OSGeneric} callback
-	 * @return {*} {string} Return Message Success or message of error info if it's the case.
+	 * @param dropdownId
+	 * @param eventName
+	 * @param callback
+	 * @returns Return Message Success or message of error info if it's the case.
 	 */
 	export function RegisterCallback(
 		dropdownId: string,
-		eventName: string,
+		eventName: EventName,
 		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
 	): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -287,10 +275,9 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	/**
 	 * Function to set providerConfigs by extensibility
 	 *
-	 * @export
-	 * @param {string} dropdownId
-	 * @param {DropdownProviderConfigs} providerConfigs
-	 * @return {*}  {string}
+	 * @param dropdownId
+	 * @param providerConfigs
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function SetProviderConfigs(dropdownId: string, providerConfigs: DatePickerProviderConfigs): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -299,7 +286,7 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 				const _dropdownItem = GetDropdownById(dropdownId);
 
 				// Check if the given Dropdown has a provider (DropdownServerSide do not have it!)
-				if (_dropdownItem['provider'] !== undefined) {
+				if ((_dropdownItem as unknown as { provider?: unknown }).provider !== undefined) {
 					_dropdownItem.setProviderConfigs(providerConfigs);
 				} else {
 					throw new Error(`Dropdown with Id:${dropdownId} does not have a provider.`);
@@ -313,11 +300,10 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	/**
 	 * Function to set providerEvents by extensibility
 	 *
-	 * @export
-	 * @param {string} dropdownId
-	 * @param {string} eventName
-	 * @param {OSFramework.OSUI.GlobalCallbacks.Generic} callback
-	 * @return {*}  {string}
+	 * @param dropdownId
+	 * @param eventName
+	 * @param callback
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function SetProviderEvent(
 		dropdownId: string,
@@ -342,10 +328,9 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	/**
 	 * Function to remove providerEvents added by extensibility
 	 *
-	 * @export
-	 * @param {string} dropdownId
-	 * @param {string} eventId
-	 * @return {*}  {string}
+	 * @param dropdownId
+	 * @param eventId
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function UnsetProviderEvent(dropdownId: string, eventId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -362,11 +347,10 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	/**
 	 * Function used to set the validation status to the given Dropdown Id
 	 *
-	 * @export
-	 * @param {string} dropdownId
-	 * @param {boolean} isValid
-	 * @param {string} validationMessage
-	 * @return {*} {string} Return Message Success or message of error info if it's the case.
+	 * @param dropdownId
+	 * @param isValid
+	 * @param validationMessage
+	 * @returns Return Message Success or message of error info if it's the case.
 	 */
 	export function SetValidation(dropdownId: string, isValid: boolean, validationMessage: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -384,11 +368,10 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	/**
 	 * Function used to set the value(s) of a given Dropdown Id
 	 *
-	 * @export
-	 * @param {string} dropdownId
-	 * @param {string} selectedValues
-	 * @param {boolean} silentOnChangedEvent
-	 * @return {*} {string} Return Message Success or message of error info if it's the case.
+	 * @param dropdownId
+	 * @param selectedValues
+	 * @param silentOnChangedEvent
+	 * @returns Return Message Success or message of error info if it's the case.
 	 */
 	export function SetValues(dropdownId: string, selectedValues: string, silentOnChangedEvent = true): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({

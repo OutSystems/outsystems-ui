@@ -26,10 +26,8 @@ namespace OutSystems.OSUI.Utils.IconLibrary {
 	 * Apply icon library class to document.documentElement.
 	 * Normalizes iconLibrary (strips digits/dots) and adds class `icon-library-${normalized}`.
 	 *
-	 * @export
-	 * @param {string} iconLibrary
-	 * @param {boolean} isInitialize
-	 * @return {*}  {void}
+	 * @param iconLibrary
+	 * @param isInitialize
 	 */
 	export function ApplyIconLibraryClass(iconLibrary: string, isInitialize: boolean): void {
 		const newIconLibrary = iconLibrary.replace(/[\d.]/g, '').toLowerCase(); // Normalizes name (strips digits/dots, lowercases)

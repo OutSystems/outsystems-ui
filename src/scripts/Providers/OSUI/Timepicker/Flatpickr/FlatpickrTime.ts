@@ -145,7 +145,6 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 		 * Method that will be triggered at Flatpickr instance is ready
 		 *
 		 * @protected
-		 * @memberof Providers.OSUI.TimePicker.Flatpickr.OSUIFlatpickrTime
 		 */
 		protected createProviderInstance(): void {
 			// Ensure we have the input cleaned before setting the provider instance.
@@ -203,7 +202,6 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 		 * Method that will be triggered each time TimePicker will be closed
 		 *
 		 * @protected
-		 * @memberof Providers.OSUI.TimePicker.Flatpickr.OSUIFlatpickrTime
 		 */
 		protected onClose(): void {
 			// Check if bodyOnClickEvent exist
@@ -217,7 +215,6 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 		 * Method that will be triggered each time TimePicker will open
 		 *
 		 * @protected
-		 * @memberof Providers.OSUI.TimePicker.Flatpickr.OSUIFlatpickrTime
 		 */
 		protected onOpen(): void {
 			// Check if bodyOnClickEvent exist
@@ -244,7 +241,6 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 		 * Method that will set the provider configurations in order to properly create its instance
 		 *
 		 * @protected
-		 * @memberof Providers.OSUI.TimePicker.Flatpickr.OSUIFlatpickrTime
 		 */
 		protected prepareConfigs(): void {
 			// Get the library configurations
@@ -257,7 +253,6 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 		 * This method has no implementation on this pattern context!
 		 *
 		 * @protected
-		 * @memberof Providers.OSUI.TimePicker.Flatpickr.OSUIFlatpickrTime
 		 */
 		protected setA11YProperties(): void {
 			// Since native behaviour could be enabled, check if the calendar container exist!
@@ -284,7 +279,6 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 		 * This method has no implementation on this pattern context!
 		 *
 		 * @protected
-		 * @memberof Providers.OSUI.TimePicker.Flatpickr.OSUIFlatpickrTime
 		 */
 		protected setCallbacks(): void {
 			console.log(OSFramework.OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -294,7 +288,6 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 		 * Method to set the html elements used
 		 *
 		 * @protected
-		 * @memberof Providers.OSUI.TimePicker.Flatpickr.OSUIFlatpickrTime
 		 */
 		protected setHtmlElements(): void {
 			// Set the inputHTML element
@@ -315,7 +308,6 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 		 * Remove all the assigned Events
 		 *
 		 * @protected
-		 * @memberof Providers.OSUI.TimePicker.Flatpickr.OSUIFlatpickrTime
 		 */
 		protected unsetCallbacks(): void {
 			this.configs.OnChangeEventCallback = undefined;
@@ -330,7 +322,6 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 		 * Unsets the refences to the HTML elements.
 		 *
 		 * @protected
-		 * @memberof Providers.OSUI.TimePicker.Flatpickr.OSUIFlatpickrTime
 		 */
 		protected unsetHtmlElements(): void {
 			this.timePickerPlatformInputElem = undefined;
@@ -340,7 +331,6 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 		 * Used to set needed properties to the platform input.
 		 *
 		 * @protected
-		 * @memberof Providers.OSUI.TimePicker.Flatpickr.OSUIFlatpickrTime
 		 */
 		protected updatePlatformInputAttrs(): void {
 			// Set the type attribute value
@@ -363,9 +353,8 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 		/**
 		 * Method used to change given propertyName at OnParametersChange platform event
 		 *
-		 * @param {string} propertyName the name of the property that will be changed
-		 * @param {unknown} propertyValue the new value that should be assigned to the given property name
-		 * @memberof Providers.OSUI.TimePicker.Flatpickr.OSUIFlatpickrTime
+		 * @param propertyName the name of the property that will be changed
+		 * @param propertyValue the new value that should be assigned to the given property name
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			//Storing the current ExtendedClass, before possibly changing this property.
@@ -397,8 +386,6 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 
 		/**
 		 * Method used to clear the selected date
-		 *
-		 * @memberof Providers.OSUI.TimePicker.Flatpickr.OSUIFlatpickrTime
 		 */
 		public clear(): void {
 			const isInputDisable = this.timePickerPlatformInputElem.disabled;
@@ -409,8 +396,6 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 
 		/**
 		 * Method used to close TimePicker
-		 *
-		 * @memberof Providers.OSUI.TimePicker.Flatpickr.OSUIFlatpickrTime
 		 */
 		public close(): void {
 			if (this.provider.isOpen) {
@@ -420,8 +405,6 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 
 		/**
 		 * Method to remove and destroy TimePicker instance
-		 *
-		 * @memberof Providers.OSUI.TimePicker.Flatpickr.OSUIFlatpickrTime
 		 */
 		public dispose(): void {
 			if (this.isBuilt) {
@@ -442,8 +425,6 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 
 		/**
 		 * Method used to update certain properties at OnRender
-		 *
-		 * @memberof Providers.OSUI.TimePicker.Flatpickr.OSUIFlatpickrTime
 		 */
 		public onRender(): void {
 			// Get the current status of the platform input
@@ -458,8 +439,6 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 
 		/**
 		 * Method used to open TimePicker
-		 *
-		 * @memberof Providers.OSUI.TimePicker.Flatpickr.OSUIFlatpickrTime
 		 */
 		public open(): void {
 			const isInputDisable = this.timePickerPlatformInputElem.disabled;
@@ -470,8 +449,6 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 
 		/**
 		 * Method used to regist callback events
-		 *
-		 * @memberof Providers.OSUI.TimePicker.Flatpickr.OSUIFlatpickrTime
 		 */
 		public registerCallback(eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
@@ -486,8 +463,6 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 		}
 		/**
 		 * Method used to set the TimePicker as editable on its input
-		 *
-		 * @memberof Providers.OSUI.TimePicker.Flatpickr.OSUIFlatpickrTime
 		 */
 		public setEditableInput(isEditable: boolean): void {
 			if (this.configs.AllowInput !== isEditable) {
@@ -498,8 +473,6 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 
 		/**
 		 * Method used to set the TimePicker language
-		 *
-		 * @memberof Providers.OSUI.TimePicker.Flatpickr.OSUIFlatpickrTime
 		 */
 		public setLanguage(value: string): void {
 			// Set the new Language
@@ -514,8 +487,7 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 		/**
 		 * Method used to set all the extended Flatpickr properties across the different types of instances
 		 *
-		 * @param {FlatpickrOptions} newConfigs
-		 * @memberof Providers.OSUI.TimePicker.Flatpickr.OSUIFlatpickrTime
+		 * @param newConfigs
 		 */
 		public setProviderConfigs(newConfigs: FlatpickrOptions): void {
 			this.configs.setExtensibilityConfigs(newConfigs);
@@ -527,8 +499,6 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 
 		/**
 		 * Method used to toggle the default native behavior of TimePicker
-		 *
-		 * @memberof Providers.OSUI.TimePicker.Flatpickr.OSUIFlatpickrTime
 		 */
 		public toggleNativeBehavior(isNative: boolean): void {
 			// Invert the boolean value of IsNative because of provider option
@@ -541,8 +511,7 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 		/**
 		 * Method used to update the InitialTime config value
 		 *
-		 * @param {string} value The new InitialTime value that will be set
-		 * @memberof Providers.OSUI.TimePicker.Flatpickr.OSUIFlatpickrTime
+		 * @param value The new InitialTime value that will be set
 		 */
 		public updateInitialTime(value: string): void {
 			if (this.timePickerPlatformInputElem.disabled === false) {
@@ -557,7 +526,6 @@ namespace Providers.OSUI.TimePicker.Flatpickr {
 		 * Method used to update the prompt message
 		 *
 		 * @param promptMessage The new prompt message value
-		 * @memberof Providers.OSUI.TimePicker.Flatpickr.OSUIFlatpickrTime
 		 */
 		public updatePrompt(promptMessage: string): void {
 			this.flatpickrInputElem.placeholder = promptMessage;

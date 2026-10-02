@@ -10,9 +10,6 @@ namespace OSFramework.OSUI.Behaviors {
 
 	/**
 	 * Class that represents the focus trap.
-	 *
-	 * @export
-	 * @class FocusTrap
 	 */
 	export class FocusTrap {
 		private _canTargetContainOtherPatts = false;
@@ -31,8 +28,7 @@ namespace OSFramework.OSUI.Behaviors {
 		/**
 		 * Creates an instance of FocusTrap.
 		 *
-		 * @param {FocusTrapParams} opts
-		 * @memberof FocusTrap
+		 * @param opts
 		 */
 		constructor(opts: FocusTrapParams) {
 			this._focusableElements = [];
@@ -192,8 +188,6 @@ namespace OSFramework.OSUI.Behaviors {
 
 		/**
 		 *  Set element disabled for A11Y
-		 *
-		 * @memberof OSFramework.Behaviors.FocusTrap
 		 */
 		public disableForA11y(): void {
 			this._hasBeenPassThoughFirstOne = false;
@@ -209,8 +203,6 @@ namespace OSFramework.OSUI.Behaviors {
 
 		/**
 		 * Method to remove the event listeners and unset the callbacks
-		 *
-		 * @memberof OSFramework.Behaviors.FocusTrap
 		 */
 		public dispose(): void {
 			// remove events added
@@ -225,8 +217,6 @@ namespace OSFramework.OSUI.Behaviors {
 
 		/**
 		 *  Set element enabled for A11Y
-		 *
-		 * @memberof OSFramework.Behaviors.FocusTrap
 		 */
 		public enableForA11y(): void {
 			// Set A11Y properties to bottom & top focusable element
@@ -245,8 +235,6 @@ namespace OSFramework.OSUI.Behaviors {
 		 * Getter that allows to obtain the bottomElement reference
 		 *
 		 * @readonly
-		 * @type {HTMLElement}
-		 * @memberof OSFramework.Behaviors.FocusTrap
 		 */
 		public get bottomElement(): HTMLElement {
 			return this._predictableBottomElement;
@@ -256,8 +244,6 @@ namespace OSFramework.OSUI.Behaviors {
 		 * Getter that allows to obtain the bottomElement reference
 		 *
 		 * @readonly
-		 * @type {HTMLElement}
-		 * @memberof OSFramework.Behaviors.FocusTrap
 		 */
 		public get topElement(): HTMLElement {
 			return this._predictableTopElement;
@@ -267,8 +253,6 @@ namespace OSFramework.OSUI.Behaviors {
 		 * Getter that allows to obtain the list of focusable elements
 		 *
 		 * @readonly
-		 * @type {HTMLElement}
-		 * @memberof OSFramework.Behaviors.FocusTrap
 		 */
 		public get focusableElements(): HTMLElement[] {
 			return this._focusableElements;

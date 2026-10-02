@@ -13,19 +13,35 @@ OutSystems UI is a browser-side library providing the TypeScript behaviors and S
 
 ## Command Quick Reference
 
-| Command | Purpose |
-| --- | --- |
-| `npm run setup` | `npm i` + start dev server on `http://localhost:3000` |
-| `npm run dev -- --target O11` | Dev build/watch for one target (`O11` or `ODC`); omit `--target` for both |
-| `npm run build` | Production build for all targets, then `lintfix` + `lint` |
-| `npm run lint` / `lintfix` / `prettier` | Quality gates (lint must be zero errors *and* zero warnings) |
-| `npm run build:tokens` | Regenerate `src/scss/tokens/` from `outsystems-design-tokens` (runs automatically before `dev` and `build`) |
-| `npm run create-osui-scss` | Regenerate the per-platform SCSS entry files |
-| `npm run storybook` / `build-storybook` / `chromatic` | Storybook against the compiled `dist/` bundle, and its visual-test upload |
-| `npm run update-version` | Interactive version bump across project files |
-| `npm run docs` / `docs:css-api` / `docs:tokens` | TypeDoc output into `docs/`; regenerate the Storybook CSS-API and token reference pages |
+| Command                                                       | Purpose                                                                                                                                                                                                                                                                                                                                        |
+| ------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `npm run setup`                                               | `npm i` + start dev server on `http://localhost:3000`                                                                                                                                                                                                                                                                                          |
+| `npm run dev -- --target O11`                                 | Dev build/watch for one target (`O11` or `ODC`); omit `--target` for both                                                                                                                                                                                                                                                                      |
+| `npm run build`                                               | Production build for all targets, then `lintfix` + `lint`                                                                                                                                                                                                                                                                                      |
+| `npm run lint` / `lintfix` / `prettier`                       | Quality gates (lint must be zero errors _and_ zero warnings)                                                                                                                                                                                                                                                                                   |
+| `npm run build:tokens`                                        | Regenerate `src/scss/tokens/` from `outsystems-design-tokens` (runs automatically before `dev` and `build`)                                                                                                                                                                                                                                    |
+| `npm run create-osui-scss`                                    | Regenerate the per-platform SCSS entry files                                                                                                                                                                                                                                                                                                   |
+| `npm run storybook` / `build-storybook` / `chromatic`         | Storybook against the compiled `dist/` bundle, and its visual-test upload                                                                                                                                                                                                                                                                      |
+| `npm run update-version`                                      | Interactive version bump across project files                                                                                                                                                                                                                                                                                                  |
+| `npm run docs` / `docs:css-api` / `docs:tokens`               | TypeDoc output into `docs/`; regenerate the Storybook CSS-API and token reference pages                                                                                                                                                                                                                                                        |
+| `npm run docs:ai` / `docs:ai:check`                           | Regenerate the agent documentation under `docs-ai/` (`llms.txt` levels, component and utility manifests, config schemas); the check fails when the committed copy is stale                                                                                                                                                                     |
+| `npm run types:generate`                                      | Regenerate the `Configs` and `EventName` types of every pattern (`PatternTypes.ts`)                                                                                                                                                                                                                                                            |
+| `npm test`                                                    | Unit tests of the eval suites and the docs generator (`tests/`, `evals/**/tests`)                                                                                                                                                                                                                                                              |
+| `npm run evals` / `evals:gate` / `evals:doctor` / `evals:fix` | Measure the AI-friendliness, enterprise-readiness, utilities and model-bridge suites over the rows of the universe (composable OML blocks, category `component`, and platform styles, category `platform`); gate the indices; classify new components and link blocks; regenerate every generated file the gate checks (see `evals/README.md`) |
 
-There is no test runner in this repository — nothing to run locally beyond build and lint.
+There is no test runner for the library in this repository: its E2E suite lives in a separate repository, and locally there is nothing to run for the library beyond build and lint. `npm test` exercises only the repository's own tooling (the eval suites and the docs generator).
+
+## Agent documentation
+
+`docs-ai/` is generated from the source by `npm run docs:ai` and is the first thing an agent should read:
+`llms.txt` (index and gotchas), `llms-components.txt` (one card per pattern), `llms-patterns.txt` (CSS-only
+components, layout partials, helper classes), `llms-utilities.txt` (the utility grammar and every family),
+`llms-tokens.txt` (theme roles and `--osui-*` knobs), plus `osui.components.json`, `osui.utilities.json` and
+the config schemas under `schema/configs/`. For OML producers (the Model bridge, Service Studio): `llms-blocks.txt` (one card per
+OutSystems UI block, from the snapshot `evals/model/osui.blocks.json` exported from the module OML), `osui.blocks.json`,
+`osui.enums.json` and `osui.icons.json`; lines marked `[runtime-only]` concern the browser runtime only. `AGENTS.md` is the vendor-neutral entry point. Comments are TSDoc
+(see `.claude/rules/typescript.md` §7): the generator and the evals read them, so a new function or prop needs
+its comment before `docs-ai/` regenerates.
 
 ## Domain Terminology
 
@@ -65,13 +81,13 @@ Every visual component has a two-step value chain declared at its root selector:
 
 ```scss
 .card {
-  // ─── Component CSS API ─────────────────────────────────────────────
-  --osui-card-background: #{$token-bg-surface-default};
-  --osui-card-shadow:     #{$token-elevation-1};
-  // ───────────────────────────────────────────────────────────────────
+	// ─── Component CSS API ─────────────────────────────────────────────
+	--osui-card-background: #{$token-bg-surface-default};
+	--osui-card-shadow: #{$token-elevation-1};
+	// ───────────────────────────────────────────────────────────────────
 
-  background-color: var(--osui-card-background);
-  box-shadow: var(--osui-card-shadow);
+	background-color: var(--osui-card-background);
+	box-shadow: var(--osui-card-shadow);
 }
 ```
 
@@ -96,6 +112,7 @@ The `path` is resolved relative to `src/scss/` and the `_` / `.scss` extension a
 > A dark theme **ships, and it is now entirely generated**: `src/scss/tokens/_theme-dark.scss`, produced by `npm run build:tokens` from the design tokens' dark mode (the whole `src/scss/tokens/` directory is gitignored). It re-maps the ~447 `--token-*` values that differ in dark and self-applies them under `.os-dark-theme`, so importing it is all dark mode needs. It is registered in `gulp/ProjectSpecs/ScssStructure/Root.js` — **not** hand-added to the entry files, which every build regenerates.
 >
 > Two classes govern dark appearance:
+>
 > - **`.os-dark-theme`** — applies the actual dark token overrides. Add it to **`<html>`** (`document.documentElement`) to switch to dark; remove it for the default light palette. Toggled via the `SetDarkTheme` client action.
 > - **`.os-dark-mode`** — a **signal-only** class that reflects the user's system preference (`prefers-color-scheme: dark`). It has no CSS effect — the framework attaches no rules to it. Automatically added to `<html>` when the OS is in dark mode, removed when it switches to light. Available as a customer styling hook.
 >

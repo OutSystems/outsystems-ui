@@ -4,10 +4,10 @@ namespace OutSystems.OSUI.Patterns.InlineSvgAPI {
 	/**
 	 * Function that will change the property of a given InlineSvg.
 	 *
-	 * @export
-	 * @param {string} inlineSvgId
-	 * @param {string} propertyName
-	 * @param {*} propertyValue
+	 * @param inlineSvgId
+	 * @param propertyName
+	 * @param propertyValue
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function ChangeProperty(inlineSvgId: string, propertyName: string, propertyValue: unknown): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -25,19 +25,24 @@ namespace OutSystems.OSUI.Patterns.InlineSvgAPI {
 	/**
 	 * Create the new InlineSvg instance and add it to the InlineSvgsMap
 	 *
-	 * @export
-	 * @param {string} inlineSvgId
-	 * @param {string} configs
-	 * @return {*}  {OSFramework.OSUI.Patterns.InlineSvg.IInlineSvg}
+	 * @param inlineSvgId
+	 * @param configs
+	 * @returns the InlineSvg instance
 	 */
-	export function Create(inlineSvgId: string, configs: string): OSFramework.OSUI.Patterns.InlineSvg.IInlineSvg {
+	export function Create(
+		inlineSvgId: string,
+		configs: string | Configs
+	): OSFramework.OSUI.Patterns.InlineSvg.IInlineSvg {
 		if (_inlineSvgMap.has(inlineSvgId)) {
 			throw new Error(
 				`There is already a ${OSFramework.OSUI.GlobalEnum.PatternName.InlineSvg} registered under id: ${inlineSvgId}`
 			);
 		}
 
-		const _newInlineSvg = new OSFramework.OSUI.Patterns.InlineSvg.InlineSvg(inlineSvgId, JSON.parse(configs));
+		const _newInlineSvg = new OSFramework.OSUI.Patterns.InlineSvg.InlineSvg(
+			inlineSvgId,
+			OSFramework.OSUI.Helper.ParseConfigs(configs)
+		);
 		_inlineSvgMap.set(inlineSvgId, _newInlineSvg);
 		return _newInlineSvg;
 	}
@@ -45,8 +50,8 @@ namespace OutSystems.OSUI.Patterns.InlineSvgAPI {
 	/**
 	 * Function that will destroy the instance of the given InlineSvg
 	 *
-	 * @export
-	 * @param {string} inlineSvgId
+	 * @param inlineSvgId
+	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Dispose(inlineSvgId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -66,8 +71,7 @@ namespace OutSystems.OSUI.Patterns.InlineSvgAPI {
 	/**
 	 * Fucntion that will return the Map with all the InlineSvg instances at the page
 	 *
-	 * @export
-	 * @return {*}  {Array<string>}
+	 * @returns the ids of every InlineSvg instance
 	 */
 	export function GetAllInlineSvgs(): Array<string> {
 		return OSFramework.OSUI.Helper.MapOperation.ExportKeys(_inlineSvgMap);
@@ -76,9 +80,8 @@ namespace OutSystems.OSUI.Patterns.InlineSvgAPI {
 	/**
 	 * Function that gets the instance of InlineSvg, by a given ID.
 	 *
-	 * @export
-	 * @param {string} inlineSvgId
-	 * @return {*}  {OSFramework.OSUI.Patterns.InlineSvg.IInlineSvg}
+	 * @param inlineSvgId
+	 * @returns the InlineSvg instance
 	 */
 	export function GetInlineSvgById(inlineSvgId: string): OSFramework.OSUI.Patterns.InlineSvg.IInlineSvg {
 		return OSFramework.OSUI.Helper.MapOperation.FindInMap(
@@ -91,9 +94,8 @@ namespace OutSystems.OSUI.Patterns.InlineSvgAPI {
 	/**
 	 * Function that will initialize the pattern instance.
 	 *
-	 * @export
-	 * @param {string} inlineSvgId
-	 * @return {*}  {OSFramework.OSUI.Patterns.InlineSvg.IInlineSvg}
+	 * @param inlineSvgId
+	 * @returns the InlineSvg instance
 	 */
 	export function Initialize(inlineSvgId: string): OSFramework.OSUI.Patterns.InlineSvg.IInlineSvg {
 		const inlineSvg = GetInlineSvgById(inlineSvgId);
@@ -106,15 +108,14 @@ namespace OutSystems.OSUI.Patterns.InlineSvgAPI {
 	/**
 	 * Function to register a provider callback
 	 *
-	 * @export
-	 * @param {string} inlineSvgId
-	 * @param {string} eventName
-	 * @param {OSFramework.OSUI.GlobalCallbacks.OSGeneric} callback
-	 * @return {*} {string} Return Message Success or message of error info if it's the case.
+	 * @param inlineSvgId
+	 * @param eventName
+	 * @param callback
+	 * @returns Return Message Success or message of error info if it's the case.
 	 */
 	export function RegisterCallback(
 		inlineSvgId: string,
-		eventName: string,
+		eventName: EventName,
 		callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric
 	): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -132,10 +133,9 @@ namespace OutSystems.OSUI.Patterns.InlineSvgAPI {
 	/**
 	 * Function to set the accessibility properties of the InlineSvg
 	 *
-	 * @export
-	 * @param {string} inlineSvgId
-	 * @param {string} a11yOptions
-	 * @return {*} {string} Return Message Success or message of error info if it's the case.
+	 * @param inlineSvgId
+	 * @param a11yOptions
+	 * @returns Return Message Success or message of error info if it's the case.
 	 */
 	export function SetAccessibilityProperties(inlineSvgId: string, a11yOptions: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
