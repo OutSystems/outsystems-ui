@@ -17,15 +17,15 @@ conventions; this file is the short path to the right context.
 
 ## Commands
 
-| Command                            | Purpose                                                                                     |
-| ---------------------------------- | ------------------------------------------------------------------------------------------- |
-| `npm run build`                    | Production build for O11 and ODC, then lint (zero errors and zero warnings)                 |
-| `npm run lint` / `npm run lintfix` | ESLint over `src/scripts` (TSDoc rules included)                                            |
-| `npm test`                         | Unit tests of the eval suites and the docs generator (`tests/`, `evals/**/tests`)           |
-| `npm run docs:ai`                  | Regenerate `docs-ai/` from the source; CI fails a pull request whose copy is stale          |
-| `npm run types:generate`           | Regenerate the `Configs` and `EventName` types of every pattern                             |
-| `npm run evals`                    | Measure the AI-friendliness, enterprise-readiness and utilities suites (`evals/README.md`)  |
-| `npm run evals:fix`                | Regenerate every generated file the gate checks (docs, types, history, dashboard, registry) |
+| Command                            | Purpose                                                                                                              |
+| ---------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| `npm run build`                    | Production build for O11 and ODC, then lint (zero errors and zero warnings)                                          |
+| `npm run lint` / `npm run lintfix` | ESLint over `src/scripts` (TSDoc rules included)                                                                     |
+| `npm test`                         | Unit tests of the eval suites and the docs generator (`tests/`, `evals/**/tests`)                                    |
+| `npm run docs:ai`                  | Regenerate `docs-ai/` from the source; CI fails a pull request whose copy is stale                                   |
+| `npm run types:generate`           | Regenerate the `Configs` and `EventName` types of every pattern                                                      |
+| `npm run evals`                    | Measure the four suites over the rows of the universe: composable OML blocks and platform styles (`evals/README.md`) |
+| `npm run evals:fix`                | Regenerate every generated file the gate checks (docs, types, history, dashboard, registry)                          |
 
 ## Rules that matter most
 

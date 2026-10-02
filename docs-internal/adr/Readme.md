@@ -42,6 +42,7 @@ Each ADR should follow the template in `ADR-0000-Title-of-ADR.md`.
 | ADR-0013   | Eval registries and self-describing metrics                              | Proposed                           | 2026-09-30 |
 | ADR-0014   | Component tiers, a utilities suite and TSDoc as the documentation source | Proposed                           | 2026-09-30 |
 | ADR-0015   | Model bridge readiness suite and block-level agent docs                  | Proposed                           | 2026-10-02 |
+| ADR-0016   | The composable OML block as the unit of measurement; two categories      | Proposed                           | 2026-10-02 |
 
 > The **"Make Great UI"** initiative (epic ROU-12776) also kept a phase-by-phase decision
 > history (`D-n` numbers) in its `specs/` working notes. That folder was removed once the

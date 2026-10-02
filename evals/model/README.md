@@ -10,7 +10,9 @@ How well the library serves the Model team's bridge, which composes OutSystems U
 parameters (type, kind, default, description), placeholders, events and the `*API` names its JavaScript
 reaches, plus the static entities and structures those parameters reference. Schema: `osui.blocks.schema.json`
 (a test validates the file). One file per platform (`osui.blocks.json` = ODC; `osui.blocks.o11.json` when
-exported). Non-public blocks are kept in the file and reported as not applicable by the evals.
+exported). The evals, the block cards and the doctor read the **composable** set: public blocks that are not
+`DEPRECATED_*` and not the documentation-only `Licenses/Licenses` (91 today); the others stay in the file and are
+reported as not applicable.
 
 Refresh it with the exporter (`osui-blocks-export`, a .NET console tool kept outside this repository; it
 needs .NET 10, the OutSystems Azure NuGet feed and GitHub CLI):
@@ -32,5 +34,9 @@ input: a new file records a run.
 | M05 | Producer-scoped guidance    | `llms.txt`, the component cards, `llms-patterns.txt`                           | the `[runtime-only]` markers and the Producers section               |
 | M06 | Silent-failure surfaces     | `osui.utilities.json`, `llms-tokens.txt`, `osui.icons.json`, `osui.enums.json` | the generated allowlists                                             |
 
-Blocks are not components: M01, M03 and M04 report a table per block on the dashboard (`extra`), M02 is
-the pattern heatmap, M05 and M06 are whole-repository figures. Non-public blocks are not applicable.
+Every composable block is a row of the dashboard (`evals/lib/universe.mjs`, category `component`): M01, M03
+and M04 are its own heatmap cells (`appliesTo: ['block']`), the E- and R-evals it inherits from the pattern or
+stylesheet it drives (the `block` links of `evals/components.json`), M02 is the pattern heatmap, M05 and M06 are
+whole-repository figures. M01, M03 and M04 also report a table per block in the findings (`extra`): columns
+`Block · Score · Missing · Do`, lowest score first, with a lead line saying what 100 means. Non-composable blocks
+are not applicable.
