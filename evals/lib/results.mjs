@@ -2,7 +2,7 @@
 /** Aggregation, history and presentation of eval runs. */
 import { rowApplies } from './kinds.mjs';
 import { mean, round1 } from './score.mjs';
-import { CATEGORIES, rowIndex, rowsForResult } from './universe.mjs';
+import { CATEGORIES, rowIndex } from './universe.mjs';
 
 /**
  * @typedef {object} MetricResult
@@ -55,7 +55,6 @@ export function projectedValue(result, present, row, index) {
 	for (const name of candidates) {
 		const hit = perComponent.find((r) => r.name === name);
 		if (!hit) continue;
-		if (!rowsForResult(index, name).some((r) => r.id === row.id)) continue;
 		const s = present?.cell ? present.cell(hit).s : hit.score;
 		return typeof s === 'number' ? s : null;
 	}

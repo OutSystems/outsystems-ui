@@ -264,3 +264,31 @@ test('validateBlockLinks rejects a block linked twice, a map on a stylesheet ent
 	assert.ok(messages.some((m) => m.includes('animate: a utility family never links a block')));
 	assert.ok(messages.some((m) => m.includes('DEPRECATED_Card: deprecated blocks are not composable')));
 });
+
+test('validateBlockLinks rejects a non-public target and the Licenses block as not composable', () => {
+	const blocksByKey = new Map([
+		[
+			'Private/MenuDrag',
+			{ key: 'Private/MenuDrag', name: 'MenuDrag', public: false, inputParameters: [], events: [] },
+		],
+		[
+			'Licenses/Licenses',
+			{ key: 'Licenses/Licenses', name: 'Licenses', public: true, inputParameters: [], events: [] },
+		],
+	]);
+	const reg = {
+		components: {
+			menu: { kind: 'component', block: [{ flow: 'Private', name: 'MenuDrag' }] },
+			card: { kind: 'component', block: [{ flow: 'Licenses', name: 'Licenses' }] },
+		},
+	};
+	const messages = validateBlockLinks(reg, blocksByKey, new Map(), new Map(), {}).map((e) => e.message);
+	assert.ok(
+		messages.some((m) => m.includes('Private/MenuDrag: not public in the module, not composable')),
+		messages.join('; ')
+	);
+	assert.ok(
+		messages.some((m) => m.includes('Licenses/Licenses: documentation-only block, not composable')),
+		messages.join('; ')
+	);
+});

@@ -296,3 +296,39 @@ test('applyFixes appends a derived link to a stylesheet entry without a paramMap
 	const fixed = applyFixes(registry, /** @type {any} */ (r));
 	assert.deepEqual(fixed.components.card.block, [{ flow: 'Content', name: 'Card', derived: true }]);
 });
+
+test('blockHintsFor: a pattern/stylesheet name collision proposes nothing, API proposals skip linked blocks, duplicates across snapshots collapse', () => {
+	const hints = (apiCalls) => ({ apiCalls });
+	const b = (flow, name, label, apiCalls = []) => ({
+		key: `${flow}/${name}`,
+		label,
+		flow,
+		name,
+		public: true,
+		patternHints: hints(apiCalls),
+	});
+	const blocks = [
+		b('Interaction', 'Dropdown', 'Interaction/Dropdown (ODC)'),
+		b('Interaction', 'Dropdown', 'Interaction/Dropdown (O11)'),
+		b('Content', 'Card', 'Content/Card (ODC)', ['TooltipAPI']),
+		b('Content', 'Card', 'Content/Card (O11)', ['TooltipAPI']),
+		b('Content', 'Tag', 'Content/Tag (ODC)'),
+		b('Content', 'Tag', 'Content/Tag (O11)'),
+	];
+	const registry = {
+		components: {
+			Dropdown: { kind: 'pattern' },
+			dropdown: { kind: 'component' },
+			card: { kind: 'component', block: [{ flow: 'Content', name: 'Card' }] },
+			Tooltip: { kind: 'pattern' },
+			tag: { kind: 'component' },
+		},
+	};
+	const r = blockHintsFor(['Dropdown', 'Tooltip'], ['dropdown', 'card', 'tag'], registry, blocks);
+	assert.deepEqual(
+		r.proposals,
+		[{ style: 'tag', blocks: [{ flow: 'Content', name: 'Tag' }], source: 'name' }],
+		'no proposal for the ambiguous Dropdown name, none for Tooltip from an already linked block, one Tag entry for two snapshots'
+	);
+	assert.deepEqual(r.unlinked, ['Interaction/Dropdown'], 'listed once, by key');
+});

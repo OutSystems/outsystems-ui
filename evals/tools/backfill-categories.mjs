@@ -16,7 +16,7 @@ import { insideDir } from '../lib/paths.mjs';
 import { registry } from '../lib/registry.mjs';
 import { categorySummary, normalizeHistoryEntry, normalizeRun } from '../lib/results.mjs';
 import { buildUniverse, rowIndex, rowsForResult } from '../lib/universe.mjs';
-import { flattenBlocks } from '../model/lib/snapshot.mjs';
+import { flattenBlocks, isComposable } from '../model/lib/snapshot.mjs';
 import { SUITES } from '../suites.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
@@ -45,7 +45,7 @@ export function backfillCategories(history, readRun, universe, options = {}) {
 		const file = readRun(entry.label);
 		if (!file) {
 			missing.push(entry.label);
-			return entry;
+			return { ...entry, suites: withoutTiers(entry.suites) };
 		}
 		const run = normalizeRun(file);
 		/** @type {Record<string, any>} */
@@ -70,6 +70,19 @@ export function backfillCategories(history, readRun, universe, options = {}) {
 		return { ...entry, suites };
 	});
 	return { history: out, runs, missing, dropped };
+}
+
+/**
+ * The suites of a history entry without the old `tiers` field.
+ * @param {Record<string, any>} suites
+ */
+function withoutTiers(suites) {
+	return Object.fromEntries(
+		Object.entries(suites).map(([id, s]) => {
+			const { tiers, ...rest } = s;
+			return [id, rest];
+		})
+	);
 }
 
 /**
@@ -106,7 +119,12 @@ function main() {
 		const file = insideDir(evalsDir, 'results', `${label}.json`);
 		return fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, 'utf8')) : null;
 	};
-	const ignore = new Set(flattenBlocks(ctx.modelSnapshots()).map((b) => b.label));
+	// the labels of the blocks that are not composable: their rows left the M-evals on purpose
+	const ignore = new Set(
+		flattenBlocks(ctx.modelSnapshots())
+			.filter((b) => !isComposable(b))
+			.map((b) => b.label)
+	);
 	const r = backfillCategories(history, readRun, universe, { ignore });
 	fs.writeFileSync(historyFile, `${JSON.stringify(r.history, null, '\t')}\n`);
 	for (const [label, run] of Object.entries(r.runs)) {

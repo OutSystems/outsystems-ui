@@ -183,7 +183,9 @@ function cellOf(c, id, e, kindTexts) {
 	if (hit) return hit;
 	if (e && !rowApplies(e, c)) {
 		const measures = e.appliesTo.map(measuresText).join(', ');
-		const outside = kindTexts[c.k] || `rows of the ${c.k} kind are outside it`;
+		const styleBlock = c.c === 'component' && (c.k === 'component' || c.k === 'layout');
+		const outside =
+			(styleBlock && kindTexts.styleBlock) || kindTexts[c.k] || `rows of the ${c.k} kind are outside it`;
 		return { s: null, w: 'na', h: `Not applicable: this eval measures ${measures}; ${outside}.` };
 	}
 	return { s: null, w: 'unmeasured', h: 'No cell in this data set.' };

@@ -255,3 +255,47 @@ test('historyEntryOf keeps label, date, sha and branch and, per suite, scores, i
 		suites: { ai: { scores: { E07: 90 }, index: 90, unmeasured: { E07: 2 } } },
 	});
 });
+
+test('two snapshots: a pattern feeds the row of each platform and the block evals read their own platform row', () => {
+	const two = [
+		{
+			id: 'Content/Tooltip (O11)',
+			name: 'Tooltip',
+			flow: 'Content',
+			category: 'component',
+			kind: 'pattern',
+			runtime: { pattern: 'Tooltip', style: null },
+			platform: 'O11',
+		},
+		{
+			id: 'Content/Tooltip (ODC)',
+			name: 'Tooltip',
+			flow: 'Content',
+			category: 'component',
+			kind: 'pattern',
+			runtime: { pattern: 'Tooltip', style: null },
+			platform: 'ODC',
+		},
+	];
+	const metrics = [
+		{ id: 'E02', present: { heatmap: true, appliesTo: ['pattern'] } },
+		{ id: 'M03', present: { heatmap: true, appliesTo: ['block'] } },
+	];
+	const results = [
+		{ id: 'E02', score: 80, perComponent: [{ name: 'Tooltip', score: 80 }] },
+		{
+			id: 'M03',
+			score: 60,
+			perComponent: [
+				{ name: 'Content/Tooltip (O11)', score: 40 },
+				{ name: 'Content/Tooltip (ODC)', score: 80 },
+			],
+		},
+	];
+	const index = rowIndex(two);
+	assert.equal(projectedValue(results[0], metrics[0].present, two[0], index), 80);
+	assert.equal(projectedValue(results[0], metrics[0].present, two[1], index), 80);
+	assert.equal(projectedValue(results[1], metrics[1].present, two[0], index), 40);
+	assert.equal(projectedValue(results[1], metrics[1].present, two[1], index), 80);
+	assert.deepEqual(categorySummary(results, two, metrics).component, { scores: { E02: 80, M03: 60 }, index: 70 });
+});

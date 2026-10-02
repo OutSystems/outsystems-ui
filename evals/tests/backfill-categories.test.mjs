@@ -110,3 +110,18 @@ test('backfillCategories is idempotent', () => {
 	const twice = backfillCategories(once.history, () => once.runs.a, rows);
 	assert.deepEqual(twice.history, once.history);
 });
+
+test('backfillCategories removes the old tiers field from an entry whose run file is missing', () => {
+	const history = [
+		{
+			label: 'gone',
+			date: '2026-09-29T00:00:00.000Z',
+			sha: 'abc',
+			suites: { ai: { scores: { E07: 50 }, index: 50, tiers: { pattern: { scores: {}, index: 1 } } } },
+		},
+	];
+	const out = backfillCategories(history, () => null, rows);
+	assert.deepEqual(out.missing, ['gone']);
+	assert.equal(out.history[0].suites.ai.tiers, undefined);
+	assert.equal(out.history[0].suites.ai.index, 50);
+});

@@ -77,13 +77,6 @@ function suggestStyledEntry(kind, css) {
 	return e;
 }
 
-/**
- * Block links the snapshot suggests: a pattern without a `block` entry whose `<Name>API` a block's
- * JavaScript calls, and public blocks whose API calls name no pattern (missing or renamed pattern).
- * @param {string[]} patterns pattern names of the inventory
- * @param {{ components: Record<string, any> }} registry
- * @param {{ key: string, flow: string, name: string, public: boolean, patternHints: { apiCalls: string[] } }[]} blocks
- */
 /** `CardSectioned` and `card-sectioned` → `card-sectioned`: one key for a block name and a registry name. @param {string} s */
 export function normalizedName(s) {
 	let out = '';
@@ -113,20 +106,34 @@ export function normalizedName(s) {
  */
 export function blockHintsFor(patterns, styles, registry, blocks) {
 	const unlinkedEntry = (/** @type {string} */ name) => (registry.components[name]?.block ?? []).length === 0;
-	const { proposals, orphans } = apiProposals(patterns, blocks, unlinkedEntry);
-	const unlinked = nameProposals(patterns, styles, registry, blocks, proposals, unlinkedEntry);
+	const unique = uniqueByKey(blocks);
+	const { proposals, orphans } = apiProposals(patterns, registry, unique, unlinkedEntry);
+	const unlinked = nameProposals(patterns, styles, registry, unique, proposals, unlinkedEntry);
 	return { proposals, orphans, unlinked };
 }
 
 /**
- * Proposals from the API calls of the blocks' JavaScript, for patterns with no link yet; and the blocks whose
- * API calls name no pattern.
+ * One row per block key: with several snapshots a block appears once per platform.
+ * @template {{ key: string }} T
+ * @param {T[]} blocks
+ */
+function uniqueByKey(blocks) {
+	/** @type {Map<string, T>} */
+	const byKey = new Map();
+	for (const b of blocks) if (!byKey.has(b.key)) byKey.set(b.key, b);
+	return [...byKey.values()];
+}
+
+/**
+ * Proposals from the API calls of the blocks' JavaScript, for patterns with no link yet and blocks no entry
+ * links; and the blocks whose API calls name no pattern.
  * @param {string[]} patterns
+ * @param {{ components: Record<string, any> }} registry
  * @param {{ key: string, flow: string, name: string, patternHints: { apiCalls: string[] } }[]} blocks
  * @param {(name: string) => boolean} unlinkedEntry
  * @returns {{ proposals: LinkProposal[], orphans: { key: string, apiCalls: string[] }[] }}
  */
-function apiProposals(patterns, blocks, unlinkedEntry) {
+function apiProposals(patterns, registry, blocks, unlinkedEntry) {
 	const byApi = new Map(patterns.map((p) => [`${p}API`, p]));
 	/** @type {Map<string, { flow: string, name: string }[]>} */
 	const hinted = new Map();
@@ -135,6 +142,8 @@ function apiProposals(patterns, blocks, unlinkedEntry) {
 	for (const b of blocks) {
 		const unknown = b.patternHints.apiCalls.filter((api) => !byApi.has(api));
 		if (unknown.length) orphans.push({ key: b.key, apiCalls: unknown });
+		const runtime = blockRuntimeOf(registry, b.flow, b.name);
+		if (runtime.pattern || runtime.style) continue;
 		for (const api of b.patternHints.apiCalls) {
 			const pattern = byApi.get(api);
 			if (!pattern) continue;
@@ -165,10 +174,14 @@ function apiProposals(patterns, blocks, unlinkedEntry) {
  */
 function nameProposals(patterns, styles, registry, blocks, proposals, unlinkedEntry) {
 	const proposedBlocks = new Set(proposals.flatMap((p) => p.blocks.map((b) => `${b.flow}/${b.name}`)));
-	/** @type {Map<string, { pattern?: string, style?: string }>} */
+	// a normalised name both a pattern and a stylesheet use is ambiguous: no proposal for it
+	/** @type {Map<string, { pattern?: string, style?: string, ambiguous?: boolean }>} */
 	const byNorm = new Map();
 	for (const p of patterns) byNorm.set(normalizedName(p), { pattern: p });
-	for (const s of styles) byNorm.set(normalizedName(s), { style: s });
+	for (const s of styles) {
+		const key = normalizedName(s);
+		byNorm.set(key, byNorm.has(key) ? { ambiguous: true } : { style: s });
+	}
 	/** @type {string[]} */
 	const unlinked = [];
 	for (const b of blocks) {
@@ -176,13 +189,14 @@ function nameProposals(patterns, styles, registry, blocks, proposals, unlinkedEn
 		if (runtime.pattern || runtime.style || proposedBlocks.has(b.key)) continue;
 		const hit = byNorm.get(normalizedName(b.name));
 		const entry = hit?.pattern ?? hit?.style;
-		if (!hit || !entry || !unlinkedEntry(entry)) {
+		if (!hit || hit.ambiguous || !entry || !unlinkedEntry(entry)) {
 			unlinked.push(b.key);
 			continue;
 		}
 		const existing = proposals.find((p) => (p.pattern ?? p.style) === entry);
+		const link = hit.pattern ? { pattern: hit.pattern } : { style: /** @type {string} */ (hit.style) };
 		if (existing) existing.blocks.push({ flow: b.flow, name: b.name });
-		else proposals.push({ ...hit, blocks: [{ flow: b.flow, name: b.name }], source: 'name' });
+		else proposals.push({ ...link, blocks: [{ flow: b.flow, name: b.name }], source: 'name' });
 	}
 	return unlinked;
 }

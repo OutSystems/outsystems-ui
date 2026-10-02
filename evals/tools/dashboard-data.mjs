@@ -18,11 +18,11 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { createContext } from '../lib/context.mjs';
-import { KIND_TEXT, KINDS, kindText, rowApplies } from '../lib/kinds.mjs';
+import { KIND_TEXT, KINDS, rowApplies, rowKindText } from '../lib/kinds.mjs';
 import { insideDir } from '../lib/paths.mjs';
 import { registry } from '../lib/registry.mjs';
 import { normalizeHistoryEntry, normalizeRun } from '../lib/results.mjs';
-import { buildUniverse, CATEGORY_LABEL } from '../lib/universe.mjs';
+import { buildUniverse, CATEGORY_LABEL, rowIndex, rowsForResult } from '../lib/universe.mjs';
 import { metricById, SUITES } from '../suites.mjs';
 
 export const DASHBOARD_FILE = 'results/dashboard.json';
@@ -50,9 +50,10 @@ function missingCell(id, ctx) {
 		return { s: null, w: 'na', h: `Not applicable: ${ctx.notApplicable.reason}.${hint}` };
 	}
 	const kind = ctx.kind && KINDS.includes(/** @type {any} */ (ctx.kind)) ? ctx.kind : null;
-	if (present && kind && !rowApplies(present, { kind, category: ctx.category ?? 'platform' })) {
+	const row = { kind: kind ?? '', category: ctx.category ?? 'platform' };
+	if (present && kind && !rowApplies(present, row)) {
 		const measures = (present.appliesTo ?? []).map(measuresText).join(', ');
-		return { s: null, w: 'na', h: `Not applicable: this eval measures ${measures}; ${kindText(kind)}.` };
+		return { s: null, w: 'na', h: `Not applicable: this eval measures ${measures}; ${rowKindText(row)}.` };
 	}
 	// the metric named this row with a reason: its hint applies; a row it never mentioned gets a neutral text
 	if (ctx.reason === undefined)
@@ -146,6 +147,37 @@ function evalOf(m, baseScores) {
 }
 
 /**
+ * The first run that carries a category of a suite: its index and label, or nulls.
+ * @param {{ label: string, suites: Record<string, any> }[]} history sorted by date
+ * @param {string} suiteId
+ * @param {string} category
+ */
+export function categoryBaseline(history, suiteId, category) {
+	const first = history.find((h) => h.suites[suiteId]?.categories?.[category]);
+	return { base: first?.suites[suiteId].categories[category].index ?? null, baseLabel: first?.label ?? null };
+}
+
+/**
+ * The per-row entries of the heatmap evals that name no row of the universe (a component renamed since the
+ * run, or a result file older than the registry), once per eval.
+ * @param {any[]} results
+ * @param {ReturnType<typeof rowIndex>} index
+ * @returns {{ id: string, names: string[] }[]}
+ */
+export function unknownResultRows(results, index) {
+	/** @type {{ id: string, names: string[] }[]} */
+	const out = [];
+	for (const m of results) {
+		if (!presentOf(m.id)?.heatmap) continue;
+		const names = [...new Set(Object.values(m.perComponent ?? {}).map((/** @type {any} */ r) => r.name))].filter(
+			(name) => rowsForResult(index, name).length === 0
+		);
+		if (names.length) out.push({ id: m.id, names });
+	}
+	return out;
+}
+
+/**
  * The block of one suite: present when the latest run carries it.
  * @param {import('../suites.mjs').Suite} suite
  * @param {import('../lib/results.mjs').HistoryEntry[]} history sorted by date
@@ -155,8 +187,7 @@ function suiteBlock(suite, history, latest) {
 	const first = history.find((h) => h.suites[suite.id]);
 	const latestSuite = latest.suites[suite.id];
 	if (!first || !latestSuite) return null;
-	// the category series start at the first run that carries them (the backfill gives every run its own)
-	const firstCategories = history.find((h) => h.suites[suite.id]?.categories);
+	// each category series starts at the first run that carries that category (the backfill gives every run its own)
 	const categories = latestSuite.categories
 		? Object.fromEntries(
 				Object.entries(latestSuite.categories).map(([category, c]) => [
@@ -164,8 +195,7 @@ function suiteBlock(suite, history, latest) {
 					{
 						index: /** @type {any} */ (c).index,
 						evals: Object.keys(/** @type {any} */ (c).scores).length,
-						base: firstCategories?.suites[suite.id].categories?.[category]?.index ?? null,
-						baseLabel: firstCategories?.label ?? null,
+						...categoryBaseline(history, suite.id, category),
 					},
 				])
 			)
@@ -215,6 +245,9 @@ export function buildDashboardData(evalsDir, now = new Date(), root = path.resol
 	const allResults = Object.values(latest.suites).flatMap((/** @type {any} */ s) => s.results ?? []);
 	const ctx = createContext(root);
 	const universe = buildUniverse(ctx.modelSnapshots(), registry(), ctx.inventory);
+	for (const u of unknownResultRows(allResults, rowIndex(universe))) {
+		process.stderr.write(`${u.id}: rows without a universe entry: ${u.names.join(', ')}\n`);
+	}
 	const components = universe.map((row) => ({
 		n: row.name,
 		id: row.id,

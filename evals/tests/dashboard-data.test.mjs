@@ -227,3 +227,63 @@ test('splitForDatabase keeps every document under the artifact database limit an
 		assert.ok(Buffer.byteLength(JSON.stringify(doc)) <= DB_DOC_LIMIT, 'fits the 256 KiB document limit');
 	assert.equal(DB_DOC_LIMIT, 256 * 1024);
 });
+
+test('unknownResultRows lists the heatmap result rows the universe cannot place, once each', async () => {
+	const { unknownResultRows } = await import('../tools/dashboard-data.mjs');
+	const { rowIndex } = await import('../lib/universe.mjs');
+	const rows = [
+		{
+			id: 'Content/Tooltip',
+			name: 'Tooltip',
+			flow: 'Content',
+			category: 'component',
+			kind: 'pattern',
+			runtime: { pattern: 'Tooltip', style: null },
+			platform: 'ODC',
+		},
+		{
+			id: 'btn',
+			name: 'btn',
+			flow: null,
+			category: 'platform',
+			kind: 'component',
+			runtime: { pattern: null, style: 'btn' },
+			platform: '',
+		},
+	];
+	const results = [
+		{ id: 'E07', perComponent: [{ name: 'Tooltip' }, { name: 'Renamed' }, { name: 'btn' }, { name: 'Renamed' }] },
+		{ id: 'E04', perComponent: [{ name: 'src/x.ts' }] },
+	];
+	assert.deepEqual(unknownResultRows(results, rowIndex(rows)), [{ id: 'E07', names: ['Renamed'] }]);
+});
+
+test('cellFor names the block-specific reason when a stylesheet-only block meets a pattern eval', () => {
+	const c = cellFor('E02', null, { kind: 'component', category: 'component' });
+	assert.equal(c.w, 'na');
+	assert.match(c.h, /this block drives a CSS-only component, not a TypeScript pattern/);
+	const platform = cellFor('E02', null, { kind: 'component', category: 'platform' });
+	assert.match(platform.h, /this is a CSS-only component with an anatomy/);
+	const pure = cellFor('E02', null, { kind: 'block', category: 'component' });
+	assert.match(pure.h, /pure OML block/);
+});
+
+test('categoryBaseline finds the first run that carries the given category of the suite', async () => {
+	const { categoryBaseline } = await import('../tools/dashboard-data.mjs');
+	const history = [
+		{ label: 'a', suites: { x: { scores: {}, index: 1, categories: { platform: { scores: {}, index: 10 } } } } },
+		{
+			label: 'b',
+			suites: {
+				x: {
+					scores: {},
+					index: 2,
+					categories: { platform: { scores: {}, index: 11 }, component: { scores: {}, index: 20 } },
+				},
+			},
+		},
+	];
+	assert.deepEqual(categoryBaseline(history, 'x', 'platform'), { base: 10, baseLabel: 'a' });
+	assert.deepEqual(categoryBaseline(history, 'x', 'component'), { base: 20, baseLabel: 'b' });
+	assert.deepEqual(categoryBaseline(history, 'y', 'component'), { base: null, baseLabel: null });
+});

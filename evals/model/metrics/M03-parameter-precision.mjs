@@ -75,7 +75,7 @@ export default {
 	name: 'Block Parameter Precision',
 	criterion: 'Typed contracts at the block boundary',
 	formula:
-		'per public block with parameters: 50·(params with a description) + 30·(optional params with a default; 1 when none is optional) + 20·(params whose type is not free Text or Object); mean over blocks',
+		'per composable block with parameters: 50·(params with a description) + 30·(optional params with a default; 1 when none is optional) + 20·(params whose type is not free Text or Object); mean over blocks',
 	movable: true,
 	present: {
 		scope: 'Per composable OML block: how far an agent can fill its parameters from the signature alone. Blocks without parameters and non-composable blocks are not applicable.',

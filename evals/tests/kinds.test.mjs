@@ -44,3 +44,19 @@ test('kindText explains why a kind is outside an eval, the pure OML block includ
 	assert.match(kindText('layout'), /layout partials/);
 	assert.match(kindText('nonsense'), /nonsense/);
 });
+
+test('rowKindText: a stylesheet-only block and a pure OML block get block-specific texts, other rows their kind text', async () => {
+	const { rowKindText } = await import('../lib/kinds.mjs');
+	assert.match(
+		rowKindText({ kind: 'component', category: 'component' }),
+		/this block drives a CSS-only component, not a TypeScript pattern/
+	);
+	assert.match(
+		rowKindText({ kind: 'layout', category: 'component' }),
+		/this block drives a CSS-only component, not a TypeScript pattern/
+	);
+	assert.match(rowKindText({ kind: 'block', category: 'component' }), /pure OML block/);
+	assert.equal(rowKindText({ kind: 'component', category: 'platform' }), KIND_TEXT.component);
+	assert.equal(rowKindText({ kind: 'pattern', category: 'component' }), KIND_TEXT.pattern);
+	assert.equal(typeof KIND_TEXT.styleBlock, 'string');
+});

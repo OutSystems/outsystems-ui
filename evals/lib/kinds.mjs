@@ -62,13 +62,14 @@ export function rowApplies(present, row) {
 	return row.category === 'component' && present.appliesTo.includes('block');
 }
 
-/** @type {Record<Kind, string>} */
+/** @type {Record<Kind | 'styleBlock', string>} */
 export const KIND_TEXT = {
 	pattern: 'this is a pattern with a TypeScript contract',
 	component: 'this is a CSS-only component with an anatomy but no TypeScript contract',
 	layout: 'layout partials style markup the app template or the runtime emits, so they have no markup contract of their own',
 	utility: 'utility classes have no anatomy, knobs or story of their own; the utilities suite measures them',
 	block: 'a pure OML block: no TypeScript pattern and no OutSystems UI stylesheet of its own',
+	styleBlock: 'this block drives a CSS-only component, not a TypeScript pattern',
 };
 
 /**
@@ -77,4 +78,15 @@ export const KIND_TEXT = {
  */
 export function kindText(kind) {
 	return KIND_TEXT[/** @type {Kind} */ (kind)] ?? `rows of the ${kind} kind are outside this eval`;
+}
+
+/**
+ * Why a row sits outside an eval: a block that drives a stylesheet gets the block-specific text, every other
+ * row the text of its kind.
+ * @param {{ kind: string, category: string }} row
+ */
+export function rowKindText(row) {
+	if (row.category === 'component' && (row.kind === 'component' || row.kind === 'layout'))
+		return KIND_TEXT.styleBlock;
+	return kindText(row.kind);
 }

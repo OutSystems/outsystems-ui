@@ -13,6 +13,7 @@ import { fileURLToPath } from 'node:url';
 
 import { insideDir } from './paths.mjs';
 import { normalizeKind } from './kinds.mjs';
+import { LICENSES_KEY } from '../model/lib/snapshot.mjs';
 
 const evalsDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 export const REGISTRY_FILE = insideDir(evalsDir, 'components.json');
@@ -238,7 +239,7 @@ export function validateBlockLinks(reg, blocksByKey, propsByPattern, eventsByPat
  * @param {import('./kinds.mjs').Kind|null} kind entry kind
  * @param {BlockLink} link
  * @param {string} key
- * @param {{ inputParameters: { name: string, typeKind: string, typeRef: string|null }[], events: { name: string }[] }|undefined} block
+ * @param {{ public?: boolean, inputParameters: { name: string, typeKind: string, typeRef: string|null }[], events: { name: string }[] }|undefined} block
  * @param {{ props: string[], events: string[], structures: Record<string, { attributes: { name: string }[] }> }} ctx
  */
 function linkErrors(name, kind, link, key, block, ctx) {
@@ -248,6 +249,8 @@ function linkErrors(name, kind, link, key, block, ctx) {
 		if (map) return [`${map} on a CSS-only component`];
 	}
 	if (!block) return [`block ${key} is not in the snapshot`];
+	if (key === LICENSES_KEY) return [`${key}: documentation-only block, not composable`];
+	if (block.public === false) return [`${key}: not public in the module, not composable`];
 	return [
 		...paramMapErrors(link, key, block, ctx.props, ctx.structures),
 		...platformOnlyErrors(link, key, block, ctx.structures),

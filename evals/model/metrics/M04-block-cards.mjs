@@ -64,7 +64,7 @@ export default {
 	id: 'M04',
 	name: 'Block Card Cost and Recipes',
 	criterion: 'Token budget of the block-level agent docs',
-	formula: `per public block: 70·band(card tokens, ${CARD_BUDGET_BLOCK}, ${CARD_WORST}) + 30·(OpenUI and TSX recipe lines present)/2; a block without a card scores 0; mean over blocks`,
+	formula: `per composable block: 70·band(card tokens, ${CARD_BUDGET_BLOCK}, ${CARD_WORST}) + 30·(OpenUI and TSX recipe lines present)/2; a block without a card scores 0; mean over blocks`,
 	movable: true,
 	present: {
 		scope: 'Per composable OML block: the o200k tokens of its card in llms-blocks.txt against the 250-token budget, and whether both dialect recipes are present.',

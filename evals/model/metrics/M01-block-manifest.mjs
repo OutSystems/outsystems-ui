@@ -1,6 +1,6 @@
 // @ts-check
 /**
- * M01 · Block Manifest Completeness. For every public block of the snapshot, how complete its entry in
+ * M01 · Block Manifest Completeness. For every composable block of the snapshot, how complete its entry in
  * docs-ai/osui.blocks.json is: typed and described parameters with defaults when optional, described
  * placeholders, events with payload descriptions, both recipes, and a pattern link (or an honest null when no
  * hint names one).
@@ -117,7 +117,7 @@ export default {
 	name: 'Block Manifest Completeness',
 	criterion: 'Machine-readable block contract for the Model bridge',
 	formula:
-		'per public block, mean of facets (params typed+described with defaults when optional, placeholders described, events with payload descriptions, both recipes, pattern link or no hint) · 100 · (manifest blocks / snapshot public blocks); 0 without docs-ai/osui.blocks.json',
+		'per composable block, mean of facets (params typed+described with defaults when optional, placeholders described, events with payload descriptions, both recipes, pattern link settled or no hint) · 100 · (manifest blocks / composable blocks); 0 without docs-ai/osui.blocks.json',
 	movable: true,
 	present: {
 		scope: 'Per composable OML block: how complete its generated entry in docs-ai/osui.blocks.json is. Deprecated, non-public and documentation-only blocks are not applicable.',
@@ -135,7 +135,7 @@ export default {
 				.join(', ');
 			const worst = (m.perComponent ?? []).slice(0, 6).map((/** @type {any} */ r) => `${r.label} ${r.score}`);
 			return [
-				`${raw.entries ?? 0}/${raw.blocks ?? 0} public blocks in the manifest; facet means ${means || '–'}.`,
+				`${raw.entries ?? 0}/${raw.blocks ?? 0} composable blocks in the manifest; facet means ${means || '–'}.`,
 				worst.length ? `Lowest: ${list(worst, 6)}.` : 'No block measured.',
 				'Descriptions and defaults live in the OML (next Forge release); recipes and links come from npm run docs:ai.',
 			];
@@ -178,7 +178,7 @@ export default {
 			const values = present.map((r) => r.facets[f]).filter((v) => typeof v === 'number');
 			facetMeans[f] = values.length ? round1(/** @type {number} */ (mean(values))) : null;
 		}
-		let summary = `${present.length}/${blocks.length} public blocks in the manifest`;
+		let summary = `${present.length}/${blocks.length} composable blocks in the manifest`;
 		if (snapshots.length === 0) summary = NO_SNAPSHOT;
 		else if (!manifest) summary = 'no docs-ai/osui.blocks.json';
 		return {
