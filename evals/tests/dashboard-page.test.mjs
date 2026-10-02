@@ -271,3 +271,84 @@ test('the heatmap keys rows by id and labels the first column Row, so two platfo
 	assert.ok(doc.querySelector('#heat thead').innerHTML.includes('>Row<'), 'the first column is Row');
 	assert.ok(!doc.querySelector('#heat thead').innerHTML.includes('>Component<'));
 });
+
+test('the refresh merges the row documents the main database document announces', async () => {
+	const { createDocumentStub } = await import('../tools/dashboard-page.mjs');
+	const { mount } = await import('../dashboard/dashboard.mjs');
+	const base = {
+		v: 5,
+		generated: '2026-10-02T00:00:00.000Z',
+		latest: { label: 'old', sha: 'aaa', date: '2026-10-02T00:00:00.000Z' },
+		history: [
+			{
+				label: 'old',
+				date: '2026-10-02T00:00:00.000Z',
+				sha: 'aaa',
+				suites: { x: { scores: { X01: 50 }, index: 50 } },
+			},
+		],
+		suites: [
+			{
+				id: 'x',
+				name: 'X',
+				indexName: 'X Index',
+				describe: 'd',
+				tone: 0,
+				evals: [
+					{
+						id: 'X01',
+						name: 'One',
+						criterion: 'c',
+						formula: 'f',
+						movable: true,
+						cls: 'movable',
+						score: 50,
+						base: 50,
+						summary: 's',
+						scope: 'sc',
+						appliesTo: ['component'],
+						advice: ['a'],
+						unmeasured: { n: 0, items: [] },
+						notApplicable: 0,
+						unmeasuredHint: '',
+					},
+				],
+				heatmapEvals: ['X01'],
+				baseline: { label: 'old', sha: 'aaa', date: '2026-10-02T00:00:00.000Z', index: 50 },
+				latest: { index: 50 },
+				extra: {},
+			},
+		],
+		components: [],
+		kindTexts: { pattern: 'p', component: 'c', layout: 'l', utility: 'u', block: 'b' },
+		categoryLabels: { component: 'components (OML blocks)', platform: 'platform & layout styles' },
+	};
+	const row = (id) => ({
+		n: id,
+		id,
+		k: 'component',
+		c: 'component',
+		f: 'Content',
+		rt: { p: null, s: null },
+		cells: { X01: { s: 50, w: 'ok', h: 'h' } },
+	});
+	const published = {
+		...base,
+		generated: '2026-10-03T00:00:00.000Z',
+		latest: { label: 'new', sha: 'bbb', date: '2026-10-03T00:00:00.000Z' },
+		rowDocs: 2,
+	};
+	delete published.components;
+	const docs = {
+		'evals/dashboard': published,
+		'evals/dashboard-rows-1': { part: 1, of: 2, components: [row('Content/A'), row('Content/B')] },
+		'evals/dashboard-rows-2': { part: 2, of: 2, components: [row('Content/C')] },
+	};
+	const db = { doc: (path) => ({ get: async () => ({ exists: path in docs, data: () => docs[path] }) }) };
+	const window = { claude: { use: async () => db } };
+	const document = createDocumentStub();
+	mount(document, window, { getItem: () => null, setItem() {} }, base);
+	await new Promise((resolve) => setTimeout(resolve, 20));
+	assert.match(document.getElementById('heat-count').textContent, /^3 of 3 rows shown/);
+	assert.match(document.getElementById('status').textContent, /new @ bbb/);
+});

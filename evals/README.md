@@ -197,8 +197,10 @@ them, so a component that fulfils a missing requirement flips it without editing
 
 `npm run evals:dashboard:page -- --check` builds `results/dashboard.html` from `dashboard/index.html` and the page module `dashboard/dashboard.mjs` with
 `results/dashboard.json` embedded and render-checks it. The dashboard lives as a Claude artifact: the page is
-republished from `results/dashboard.html` and the new `dashboard.json` is written to the artifact database
-document `evals/dashboard` after a run (a Claude session or scheduled task does both). The artifact sandbox
+republished from `results/dashboard.html` and the new data set is written to the artifact database after a run
+(a Claude session or scheduled task does both) from `results/dashboard-db/`: `main.json` to the document
+`evals/dashboard` and every `rows-<n>.json` to `evals/dashboard-rows-<n>` (the database takes 256 KiB per
+document; the rows are chunked under it and the page reads them back through `rowDocs`). The artifact sandbox
 cannot fetch from GitHub, so the workflow does not refresh it; `dashboard.json` on the `evals-results` branch
 is always the newest data set to publish.
 

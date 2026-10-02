@@ -135,3 +135,6 @@ evals/results/dashboard.html
 
 # Copy of the newest full run, for the evals-results branch (npm run evals writes it)
 evals/results/latest.json
+
+# The data set split into artifact-database documents (npm run evals:dashboard writes it; a session publishes it)
+evals/results/dashboard-db/

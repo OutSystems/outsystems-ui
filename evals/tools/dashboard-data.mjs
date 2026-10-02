@@ -26,6 +26,10 @@ import { buildUniverse, CATEGORY_LABEL } from '../lib/universe.mjs';
 import { metricById, SUITES } from '../suites.mjs';
 
 export const DASHBOARD_FILE = 'results/dashboard.json';
+/** Where the data set is written in the shape the artifact database takes (one main document, the rows chunked). */
+export const DASHBOARD_DB_DIR = 'results/dashboard-db';
+/** The artifact database's limit per document. */
+export const DB_DOC_LIMIT = 256 * 1024;
 
 /** @typedef {{ s: number|null, w: 'ok'|'na'|'unmeasured', h: string }} Cell */
 
@@ -234,11 +238,44 @@ export function buildDashboardData(evalsDir, now = new Date(), root = path.resol
 }
 
 /**
+ * The data set in the shape the artifact database takes: a main document without the rows plus `rowDocs`, and
+ * the rows chunked into documents `{ part, of, components }` that each stay under the limit. The page's refresh
+ * reads the main document `evals/dashboard` and the rows from `evals/dashboard-rows-<part>`.
+ * @param {any} data the data set
+ * @param {number} [limit] bytes per row document (a margin under the database limit by default); the main document must fit the database limit
+ */
+export function splitForDatabase(data, limit = DB_DOC_LIMIT - 16 * 1024) {
+	const { components, ...rest } = data;
+	const size = (/** @type {unknown} */ o) => Buffer.byteLength(JSON.stringify(o));
+	/** @type {any[][]} */
+	const chunks = [[]];
+	for (const row of components) {
+		const current = chunks[chunks.length - 1];
+		if (current.length > 0 && size({ part: 0, of: 0, components: [...current, row] }) > limit) chunks.push([row]);
+		else current.push(row);
+	}
+	const rows = chunks.map((c, i) => ({ part: i + 1, of: chunks.length, components: c }));
+	const main = { ...rest, rowDocs: rows.length };
+	if (size(main) > DB_DOC_LIMIT)
+		throw new Error(`the main dashboard document is ${size(main)} bytes, over ${DB_DOC_LIMIT}`);
+	return { main, rows };
+}
+
+/**
+ * Writes results/dashboard.json (the page embeds it) and results/dashboard-db/ (main.json, rows-<part>.json: the
+ * documents to publish to the artifact database).
  * @param {string} evalsDir
  */
 export function writeDashboardData(evalsDir) {
+	const data = buildDashboardData(evalsDir);
 	const file = insideDir(evalsDir, DASHBOARD_FILE);
-	fs.writeFileSync(file, `${JSON.stringify(buildDashboardData(evalsDir))}\n`);
+	fs.writeFileSync(file, `${JSON.stringify(data)}\n`);
+	const dir = insideDir(evalsDir, DASHBOARD_DB_DIR);
+	fs.rmSync(dir, { recursive: true, force: true });
+	fs.mkdirSync(dir, { recursive: true });
+	const { main, rows } = splitForDatabase(data);
+	fs.writeFileSync(insideDir(dir, 'main.json'), `${JSON.stringify(main)}\n`);
+	for (const r of rows) fs.writeFileSync(insideDir(dir, `rows-${r.part}.json`), `${JSON.stringify(r)}\n`);
 	return file;
 }
 

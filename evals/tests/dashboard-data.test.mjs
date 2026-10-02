@@ -181,7 +181,6 @@ test('buildDashboardData assembles the history, one block per suite and the rows
 		);
 		assert.equal(s.tiers, undefined);
 	}
-	assert.ok(JSON.stringify(d).length < 1024 * 1024, 'fits the 1 MiB document limit of the artifact database');
 });
 
 test('the committed dashboard.json is fresh', () => {
@@ -204,4 +203,27 @@ test('buildDashboardData falls back to results/latest.json when the latest run f
 	assert.equal(d.latest.label, last.label);
 	assert.equal(d.suites.length, 4);
 	fs.rmSync(tmp, { recursive: true, force: true });
+});
+
+test('splitForDatabase keeps every document under the artifact database limit and round-trips the rows', async () => {
+	const { splitForDatabase, DB_DOC_LIMIT } = await import('../tools/dashboard-data.mjs');
+	const d = buildDashboardData(evalsDir);
+	const { main, rows } = splitForDatabase(d, 60 * 1024);
+	assert.equal(main.components, undefined, 'the main document carries no rows');
+	assert.equal(main.rowDocs, rows.length);
+	assert.ok(rows.length >= 3, `rows are chunked (${rows.length} documents at a 60 KiB limit)`);
+	for (const doc of rows)
+		assert.ok(Buffer.byteLength(JSON.stringify(doc)) <= 60 * 1024, 'every row document fits the test limit');
+	assert.ok(Buffer.byteLength(JSON.stringify(main)) <= DB_DOC_LIMIT, 'the main document fits the database limit');
+	assert.deepEqual(
+		rows.flatMap((r) => r.components),
+		d.components,
+		'the chunks concatenate back to the rows in order'
+	);
+	assert.equal(rows[0].part, 1);
+	assert.equal(rows[0].of, rows.length);
+	const real = splitForDatabase(d);
+	for (const doc of [real.main, ...real.rows])
+		assert.ok(Buffer.byteLength(JSON.stringify(doc)) <= DB_DOC_LIMIT, 'fits the 256 KiB document limit');
+	assert.equal(DB_DOC_LIMIT, 256 * 1024);
 });

@@ -842,7 +842,24 @@ export function mount(document, window, localStorage, EMBEDDED) {
 		return dbPromise;
 	}
 	function isDataSet(data) {
-		return Boolean(data) && data.v === DATA_VERSION && Array.isArray(data.history) && Array.isArray(data.suites);
+		return (
+			Boolean(data) &&
+			data.v === DATA_VERSION &&
+			Array.isArray(data.history) &&
+			Array.isArray(data.suites) &&
+			Array.isArray(data.components)
+		);
+	}
+	/** The rows of a published data set: inline, or read from the row documents the main document announces. */
+	async function withRows(db, data) {
+		if (!data || Array.isArray(data.components) || !(data.rowDocs > 0)) return data;
+		const parts = [];
+		for (let i = 1; i <= data.rowDocs; i++) {
+			const part = await db.doc(`${DOC_PATH}-rows-${i}`).get();
+			if (!part.exists) return { ...data, components: null };
+			parts.push(...(part.data().components || []));
+		}
+		return { ...data, components: parts };
 	}
 	async function refresh(manual) {
 		setLoading(true);
@@ -864,7 +881,7 @@ export function mount(document, window, localStorage, EMBEDDED) {
 				);
 				return;
 			}
-			const data = snap.data();
+			const data = await withRows(db, snap.data());
 			if (!isDataSet(data)) {
 				setStatus(
 					`The published data set is not version ${DATA_VERSION}; showing the embedded snapshot.`,
