@@ -19,6 +19,7 @@ import { fileURLToPath } from 'node:url';
 
 import { createContext } from '../lib/context.mjs';
 import { loadRegistry, REGISTRY_FILE, validateRegistry } from '../lib/registry.mjs';
+import { flattenBlocks, loadSnapshots, publicBlocks } from '../model/lib/snapshot.mjs';
 
 /** Code signals a derived entry is read from: plain substrings, no regular expressions over source. */
 const SIGNALS = {
@@ -77,6 +78,55 @@ function suggestStyledEntry(kind, css) {
 }
 
 /**
+ * Block links the snapshot suggests: a pattern without a `block` entry whose `<Name>API` a block's
+ * JavaScript calls, and public blocks whose API calls name no pattern (missing or renamed pattern).
+ * @param {string[]} patterns pattern names of the inventory
+ * @param {{ components: Record<string, any> }} registry
+ * @param {{ key: string, flow: string, name: string, public: boolean, patternHints: { apiCalls: string[] } }[]} blocks
+ */
+export function blockHintsFor(patterns, registry, blocks) {
+	const byApi = new Map(patterns.map((p) => [`${p}API`, p]));
+	/** @type {Map<string, { flow: string, name: string }[]>} */
+	const hinted = new Map();
+	/** @type {{ key: string, apiCalls: string[] }[]} */
+	const orphans = [];
+	for (const b of blocks.filter((x) => x.public)) {
+		const unknown = b.patternHints.apiCalls.filter((api) => !byApi.has(api));
+		if (unknown.length) orphans.push({ key: b.key, apiCalls: unknown });
+		for (const api of b.patternHints.apiCalls) {
+			const pattern = byApi.get(api);
+			if (!pattern) continue;
+			const found = hinted.get(pattern) ?? [];
+			found.push({ flow: b.flow, name: b.name });
+			hinted.set(pattern, found);
+		}
+	}
+	const proposals = patterns
+		.filter((p) => hinted.has(p) && !((registry.components[p]?.block ?? []).length > 0))
+		.map((p) => ({ pattern: p, blocks: /** @type {{ flow: string, name: string }[]} */ (hinted.get(p)) }));
+	return { proposals, orphans };
+}
+
+/** The block-links section of the doctor output: information, never a disagreement. @param {any} r */
+export function renderDoctorBlocks(r) {
+	const hints = r.blockHints ?? { proposals: [], orphans: [] };
+	if (hints.proposals.length === 0 && hints.orphans.length === 0) return '';
+	const lines = ['### 🧩 Block links', ''];
+	for (const p of hints.proposals) {
+		const blocks = p.blocks.map((/** @type {any} */ b) => `${b.flow}/${b.name}`).join(', ');
+		lines.push(`- \`${p.pattern}\` has no block link; the snapshot's JavaScript calls its API from: ${blocks}`);
+	}
+	for (const o of hints.orphans) {
+		lines.push(`- block \`${o.key}\` calls ${o.apiCalls.join(', ')}, which no pattern provides`);
+	}
+	lines.push(
+		'',
+		'Run `npm run evals:doctor -- --fix` to append single-block proposals as derived links, then fill their `paramMap` and review.'
+	);
+	return lines.join('\n');
+}
+
+/**
  * @param {import('../lib/context.mjs').EvalContext} ctx
  * @param {import('../lib/registry.mjs').Registry} registry
  */
@@ -107,8 +157,15 @@ export function diagnose(ctx, registry) {
 			.filter((c) => !c.storyFile && !c.host && c.kind !== 'utility')
 			.map((c) => c.name),
 	];
+	const blocks = publicBlocks(flattenBlocks(loadSnapshots()));
+	const blockHints = blockHintsFor(
+		ctx.inventory.patterns.map((p) => p.name),
+		registry,
+		blocks
+	);
 	return {
 		unknown,
+		blockHints,
 		stale: v.stale,
 		badRoles: v.badRoles,
 		badKinds: v.badKinds,
@@ -160,7 +217,8 @@ export function renderDoctor(r) {
 	lines.push(
 		'Run `npm run evals:doctor -- --fix` to append the derived entries (flagged `derived: true`) and drop the stale ones, review them, then commit `evals/components.json`.'
 	);
-	return lines.join('\n');
+	const blocksSection = renderDoctorBlocks(r);
+	return blocksSection ? `${lines.join('\n')}\n\n${blocksSection}` : lines.join('\n');
 }
 
 /**
@@ -174,6 +232,10 @@ export function applyFixes(registry, r) {
 	const components = { ...registry.components };
 	for (const name of r.stale) delete components[name];
 	for (const u of r.unknown) components[u.name] = u.suggested;
+	for (const p of r.blockHints?.proposals ?? []) {
+		if (p.blocks.length !== 1 || !components[p.pattern]) continue;
+		components[p.pattern] = { ...components[p.pattern], block: [{ ...p.blocks[0], paramMap: {}, derived: true }] };
+	}
 	const sorted = Object.fromEntries(Object.entries(components).sort(([a], [b]) => a.localeCompare(b)));
 	return { ...registry, components: sorted };
 }
@@ -191,21 +253,23 @@ function main() {
 		process.stdout.write(renderDoctor(r));
 		return;
 	}
-	if (fix && disagree) {
+	const proposals = r.blockHints.proposals.filter((p) => p.blocks.length === 1).length;
+	if (fix && (disagree || proposals > 0)) {
 		const raw = JSON.parse(fs.readFileSync(REGISTRY_FILE, 'utf8'));
 		const fixed = applyFixes(registry, r);
 		fs.writeFileSync(REGISTRY_FILE, `${JSON.stringify({ ...raw, components: fixed.components }, null, '\t')}\n`);
 		process.stdout.write(
-			`components.json: ${r.unknown.length} derived entr${r.unknown.length === 1 ? 'y' : 'ies'} appended (review the derived: true flags), ${r.stale.length} stale removed.\n`
+			`components.json: ${r.unknown.length} derived entr${r.unknown.length === 1 ? 'y' : 'ies'} appended (review the derived: true flags), ${r.stale.length} stale removed, ${proposals} derived block link(s) added.\n`
 		);
 		return;
 	}
 	const noStory = r.noStory.length ? ` Without a story: ${r.noStory.join(', ')}.` : '';
 	const body = renderDoctor(r).replace(/^### 🩺 Component registry\n\n/, '');
+	const blocksSection = renderDoctorBlocks(r);
 	process.stdout.write(
 		disagree
 			? `${body}\n`
-			: `components.json classifies every component the inventory discovers (${Object.keys(registry.components).length}).${noStory}\n`
+			: `components.json classifies every component the inventory discovers (${Object.keys(registry.components).length}).${noStory}\n${blocksSection ? `${blocksSection}\n` : ''}`
 	);
 	process.exitCode = disagree ? 1 : 0;
 }
