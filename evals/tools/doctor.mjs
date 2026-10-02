@@ -102,7 +102,7 @@ export function blockHintsFor(patterns, registry, blocks) {
 		}
 	}
 	const proposals = patterns
-		.filter((p) => hinted.has(p) && !((registry.components[p]?.block ?? []).length > 0))
+		.filter((p) => hinted.has(p) && (registry.components[p]?.block ?? []).length === 0)
 		.map((p) => ({ pattern: p, blocks: /** @type {{ flow: string, name: string }[]} */ (hinted.get(p)) }));
 	return { proposals, orphans };
 }
@@ -266,11 +266,9 @@ function main() {
 	const noStory = r.noStory.length ? ` Without a story: ${r.noStory.join(', ')}.` : '';
 	const body = renderDoctor(r).replace(/^### 🩺 Component registry\n\n/, '');
 	const blocksSection = renderDoctorBlocks(r);
-	process.stdout.write(
-		disagree
-			? `${body}\n`
-			: `components.json classifies every component the inventory discovers (${Object.keys(registry.components).length}).${noStory}\n${blocksSection ? `${blocksSection}\n` : ''}`
-	);
+	const blocksTail = blocksSection ? `${blocksSection}\n` : '';
+	const agreeLine = `components.json classifies every component the inventory discovers (${Object.keys(registry.components).length}).${noStory}\n`;
+	process.stdout.write(disagree ? `${body}\n` : agreeLine + blocksTail);
 	process.exitCode = disagree ? 1 : 0;
 }
 

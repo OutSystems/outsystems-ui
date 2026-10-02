@@ -8,8 +8,13 @@ import { parseCards } from '../../ai-friendliness/metrics/E01-context-tokens.mjs
 import { isMarked, isRuntimeOnlyLine, PRODUCERS_HEADING, RUNTIME_GOTCHA_NEEDLES } from '../../lib/producers.mjs';
 import { round1 } from '../../lib/score.mjs';
 
-/** @param {string|null} text */
-const linesOf = (text) => (text ?? '').split('\n').map((l) => l.replace(/\r/g, ''));
+/** @param {string} line */
+const stripCr = (line) => (line.endsWith('\r') ? line.slice(0, -1) : line);
+/**
+ * The lines of a document, CRLF or LF.
+ * @param {string|null} text
+ */
+export const linesOf = (text) => (text ?? '').split('\n').map(stripCr);
 
 /**
  * Lines of one `## ` section (from its heading to the next `## `).

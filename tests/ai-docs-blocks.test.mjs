@@ -87,8 +87,11 @@ test('buildEnumsManifest lists referenced static entities with their values and 
 	assert.deepEqual(e.Color.usedBy, ['Interaction/Carousel.Color']);
 });
 
-test('on the committed snapshot every public block gets a card within budget (when a snapshot exists)', () => {
-	if (loadSnapshots().length === 0) return;
+test('on the committed snapshot every public block gets a card within budget (when a snapshot exists)', (t) => {
+	if (loadSnapshots().length === 0) {
+		t.skip('no evals/model/osui.blocks*.json snapshot');
+		return;
+	}
 	const ctx = createContext(root);
 	const manifest = buildBlocksManifest(ctx);
 	const text = renderBlockCards(manifest);

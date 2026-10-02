@@ -358,8 +358,23 @@ export function usageOf(name, props) {
 	};
 }
 
+/**
+ * The members of a union of quoted literals (`'a' | 'b'`), or null when the type is not one. A substring
+ * test per member, so no backtracking on a long type string.
+ * @param {string} type
+ * @returns {string[]|null}
+ */
+export function quotedUnionMembers(type) {
+	const parts = type.split(' | ');
+	if (parts.length < 2) return null;
+	const isQuoted = (/** @type {string} */ p) =>
+		p.length >= 2 && p.startsWith("'") && p.endsWith("'") && !p.slice(1, -1).includes("'");
+	return parts.every(isQuoted) ? parts.map((p) => p.slice(1, -1)) : null;
+}
+
 /** JSON Schema type of one manifest prop; a type beyond JSON primitives stays open and is described. @param {any} d */
 function schemaPropOf(d) {
+	const union = quotedUnionMembers(String(d.type ?? ''));
 	/** @type {Record<string, unknown>} */
 	const out = {};
 	if (d.description) out.description = d.description;
@@ -367,8 +382,7 @@ function schemaPropOf(d) {
 	if (Array.isArray(d.allowed) && d.allowed.length) out.enum = d.allowed;
 	else if (d.type === 'boolean' || d.type === 'number' || d.type === 'string') out.type = d.type;
 	else if (/\[\]$|^Array</.test(d.type)) out.type = 'array';
-	else if (/^'[^']*'( \| '[^']*')+$/.test(d.type))
-		out.enum = d.type.split(' | ').map((/** @type {string} */ s) => s.slice(1, -1));
+	else if (union) out.enum = union;
 	else {
 		// out.description is d.description when present
 		const prefix = d.description ? `${d.description} ` : '';

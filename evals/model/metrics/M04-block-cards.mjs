@@ -101,20 +101,22 @@ export default {
 		}
 		const withCard = perComponent.filter((r) => r.tokens !== null);
 		const tokenMean = mean(withCard.map((r) => /** @type {number} */ (r.tokens)));
+		const meanTokens = tokenMean === null ? null : Math.round(tokenMean);
+		perComponent.sort((a, b) => a.score - b.score || byCodePoint(a.label, b.label));
 		return {
 			score: round1(mean(perComponent.map((r) => r.score)) ?? 0),
 			summary:
 				snapshots.length === 0
 					? NO_SNAPSHOT
-					: `${withCard.length}/${perComponent.length} blocks with a card; mean ${tokenMean === null ? '–' : Math.round(tokenMean)} tokens`,
+					: `${withCard.length}/${perComponent.length} blocks with a card; mean ${meanTokens ?? '–'} tokens`,
 			raw: {
 				blocks: perComponent.length,
 				withCard: withCard.length,
-				meanTokens: tokenMean === null ? null : Math.round(tokenMean),
+				meanTokens,
 				withBothRecipes: perComponent.filter((r) => r.openui && r.tsx).length,
 				budget: CARD_BUDGET_BLOCK,
 			},
-			perComponent: perComponent.sort((a, b) => a.score - b.score || byCodePoint(a.label, b.label)),
+			perComponent,
 			unmeasured: [],
 			notApplicable,
 		};

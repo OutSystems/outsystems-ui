@@ -11,6 +11,11 @@ import { flattenBlocks, isFreeText, NO_SNAPSHOT } from '../lib/snapshot.mjs';
 
 /** @param {string} a @param {string} b */
 const byCodePoint = (a, b) => (a < b ? -1 : Number(a > b));
+/** Lowest score first, then by label; sorts in place and returns the same array. @template {{ score: number, label: string }} T @param {T[]} rows */
+function sortedByScore(rows) {
+	rows.sort((a, b) => a.score - b.score || byCodePoint(a.label, b.label));
+	return rows;
+}
 
 /** @param {{ params: number, described: number, optional: number, defaulted: number, precise: number }} r */
 export function scorePrecision({ params, described, optional, defaulted, precise }) {
@@ -112,7 +117,7 @@ export default {
 					? NO_SNAPSHOT
 					: `${totals.described}/${totals.params} params described, ${totals.defaulted}/${totals.optional} defaulted, ${totals.freeText} free-Text across ${perComponent.length} blocks`,
 			raw: totals,
-			perComponent: perComponent.sort((a, b) => a.score - b.score || byCodePoint(a.label, b.label)),
+			perComponent: sortedByScore(perComponent),
 			unmeasured: [],
 			notApplicable,
 		};

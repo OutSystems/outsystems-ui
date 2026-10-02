@@ -47,3 +47,10 @@ test('M05 is a whole-docs eval', () => {
 	assert.equal(r.score, 0);
 	assert.deepEqual(r.perComponent, []);
 });
+
+test('linesOf strips only a trailing carriage return from each line', async () => {
+	const { linesOf } = await import('../metrics/M05-producer-guidance.mjs');
+	assert.deepEqual(linesOf('a\r\nb\r\n'), ['a', 'b', '']);
+	assert.deepEqual(linesOf('a\rb\r\n'), ['a\rb', '']);
+	assert.deepEqual(linesOf(null), ['']);
+});

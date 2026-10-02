@@ -200,35 +200,63 @@ export function blockHasParameter(block, key, structures) {
 export function validateBlockLinks(reg, blocksByKey, propsByPattern, eventsByPattern, structures) {
 	/** @type {{ pattern: string, message: string }[]} */
 	const out = [];
-	const err = (/** @type {string} */ pattern, /** @type {string} */ message) =>
-		out.push({ pattern, message: `${pattern}: ${message}` });
 	for (const [pattern, entry] of Object.entries(reg.components)) {
 		for (const link of entry.block ?? []) {
 			const key = `${link.flow}/${link.name}`;
 			const block = blocksByKey.get(key);
-			if (!block) {
-				err(pattern, `block ${key} is not in the snapshot`);
-				continue;
-			}
-			const props = propsByPattern.get(pattern) ?? [];
-			for (const [param, prop] of Object.entries(link.paramMap ?? {})) {
-				if (!blockHasParameter(block, param, structures))
-					err(pattern, `block ${key} has no parameter "${param}"`);
-				else if (!props.includes(prop))
-					err(pattern, `pattern has no config prop "${prop}" (paramMap ${param})`);
-			}
-			for (const param of link.platformOnly ?? []) {
-				if (!blockHasParameter(block, param, structures))
-					err(pattern, `block ${key} has no parameter "${param}" (platformOnly)`);
-			}
-			const events = eventsByPattern.get(pattern) ?? [];
-			for (const [blockEvent, runtimeEvent] of Object.entries(link.eventMap ?? {})) {
-				if (!block.events.some((e) => e.name === blockEvent))
-					err(pattern, `block ${key} has no event "${blockEvent}"`);
-				else if (!events.includes(runtimeEvent))
-					err(pattern, `pattern has no event "${runtimeEvent}" (eventMap ${blockEvent})`);
-			}
+			const messages = block
+				? [
+						...paramMapErrors(link, key, block, propsByPattern.get(pattern) ?? [], structures),
+						...platformOnlyErrors(link, key, block, structures),
+						...eventMapErrors(link, key, block, eventsByPattern.get(pattern) ?? []),
+					]
+				: [`block ${key} is not in the snapshot`];
+			for (const message of messages) out.push({ pattern, message: `${pattern}: ${message}` });
 		}
+	}
+	return out;
+}
+
+/**
+ * @param {BlockLink} link
+ * @param {string} key
+ * @param {{ inputParameters: { name: string, typeKind: string, typeRef: string|null }[] }} block
+ * @param {string[]} props
+ * @param {Record<string, { attributes: { name: string }[] }>} structures
+ */
+function paramMapErrors(link, key, block, props, structures) {
+	const out = [];
+	for (const [param, prop] of Object.entries(link.paramMap ?? {})) {
+		if (!blockHasParameter(block, param, structures)) out.push(`block ${key} has no parameter "${param}"`);
+		else if (!props.includes(prop)) out.push(`pattern has no config prop "${prop}" (paramMap ${param})`);
+	}
+	return out;
+}
+
+/**
+ * @param {BlockLink} link
+ * @param {string} key
+ * @param {{ inputParameters: { name: string, typeKind: string, typeRef: string|null }[] }} block
+ * @param {Record<string, { attributes: { name: string }[] }>} structures
+ */
+function platformOnlyErrors(link, key, block, structures) {
+	return (link.platformOnly ?? [])
+		.filter((param) => !blockHasParameter(block, param, structures))
+		.map((param) => `block ${key} has no parameter "${param}" (platformOnly)`);
+}
+
+/**
+ * @param {BlockLink} link
+ * @param {string} key
+ * @param {{ events: { name: string }[] }} block
+ * @param {string[]} events
+ */
+function eventMapErrors(link, key, block, events) {
+	const out = [];
+	for (const [blockEvent, runtimeEvent] of Object.entries(link.eventMap ?? {})) {
+		if (!block.events.some((e) => e.name === blockEvent)) out.push(`block ${key} has no event "${blockEvent}"`);
+		else if (!events.includes(runtimeEvent))
+			out.push(`pattern has no event "${runtimeEvent}" (eventMap ${blockEvent})`);
 	}
 	return out;
 }

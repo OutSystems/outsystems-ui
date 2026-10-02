@@ -83,7 +83,8 @@ function tablesGroup(s, lookup) {
 	const items = tables.map(([key, v]) => {
 		const id = s.evals.map((e) => e.id).find((x) => key.endsWith(x));
 		const head = v.columns.map((c) => `<th>${esc(c)}</th>`).join('');
-		const body = v.rows.map((r) => `<tr>${r.map((c) => `<td>${esc(String(c))}</td>`).join('')}</tr>`).join('');
+		const cellsOf = (r) => r.map((c) => `<td>${esc(String(c))}</td>`).join('');
+		const body = v.rows.map((r) => `<tr>${cellsOf(r)}</tr>`).join('');
 		const table = `<table class="block-table"><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table>`;
 		return item(lookup, id ? [id] : [], esc(v.title), '', '', table);
 	});

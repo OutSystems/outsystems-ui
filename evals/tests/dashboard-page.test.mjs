@@ -87,3 +87,9 @@ test('the findings render the per-block tables a suite contributes through extra
 	assert.ok(html.includes('<table class="block-table">'), 'rendered as a table');
 	assert.ok(html.includes('Interaction/Carousel'), 'rows name the blocks');
 });
+
+test('the heatmap tier filter defaults to patterns', () => {
+	const html = buildDashboardPage(evalsDir);
+	assert.ok(html.includes('<option value="pattern" selected>'), 'patterns is the selected tier');
+	assert.ok(!html.includes('<option value="all" selected>'));
+});

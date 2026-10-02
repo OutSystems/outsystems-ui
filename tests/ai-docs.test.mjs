@@ -287,3 +287,12 @@ test('writeDocs emits the block-level files', async () => {
 		assert.ok(files.includes(f), f);
 	fs.rmSync(dir, { recursive: true, force: true });
 });
+
+test('quotedUnionMembers reads a union of quoted literals without a regular expression', async () => {
+	const { quotedUnionMembers } = await import('../scripts/lib/ai-docs.mjs');
+	assert.deepEqual(quotedUnionMembers("'a' | 'b c'"), ['a', 'b c']);
+	assert.equal(quotedUnionMembers("'a'"), null, 'one literal is not a union');
+	assert.equal(quotedUnionMembers("'a' | b"), null, 'an unquoted member');
+	assert.equal(quotedUnionMembers("'a' | 'b'c'"), null, 'a quote inside a member');
+	assert.equal(quotedUnionMembers('string'), null);
+});

@@ -145,37 +145,45 @@ const collapsed = (text) => text.split(/\s+/).filter(Boolean).join(' ');
 export function renderBlockCard(b, stage = 0) {
 	const desc = (/** @type {string} */ s) => (stage >= 1 ? firstSentence(s) : collapsed(s));
 	const withDescriptions = stage < 4;
+	/** ` — description` when the stage keeps descriptions and there is one, else nothing. */
+	const tail = (/** @type {string|undefined} */ s) => (withDescriptions && s ? ` — ${desc(s)}` : '');
 	const lines = [`## ${b.label ?? b.key}`];
 	if (b.description && stage < 5) lines.push(`Purpose: ${desc(b.description)}`);
 	lines.push(b.params.length ? 'Params:' : 'Params: none');
-	for (const p of b.params) {
-		let line = `- ${p.name}: ${p.type}${p.mandatory ? ' (required)' : ''}`;
-		if (p.default) line += ` = ${p.default}`;
-		if (stage < 2 && p.values?.length && p.values.length <= 8) line += ` [${p.values.join(', ')}]`;
-		if (withDescriptions && p.description) line += ` — ${desc(p.description)}`;
-		lines.push(line);
-	}
+	for (const p of b.params) lines.push(paramLine(p, stage) + tail(p.description));
 	if (b.placeholders.length) {
-		const slots = b.placeholders.map((/** @type {any} */ ph) =>
-			withDescriptions && ph.description ? `${ph.name} — ${desc(ph.description)}` : ph.name
-		);
+		const slots = b.placeholders.map((/** @type {any} */ ph) => ph.name + tail(ph.description));
 		lines.push(`Slots: ${slots.join(' · ')}`);
 	}
 	if (b.events.length) {
-		const events = b.events.map((/** @type {any} */ e) => {
-			const payload = e.parameters.map((/** @type {any} */ p) => `${p.name}: ${p.type}`).join(', ');
-			return `${e.name}(${payload})${withDescriptions && e.description ? ` — ${desc(e.description)}` : ''}`;
-		});
+		const events = b.events.map((/** @type {any} */ e) => eventSignature(e) + tail(e.description));
 		lines.push(`Events: ${events.join(' · ')}`);
 	}
-	if (b.pattern) {
-		const map = Object.entries(b.paramMap).map(([k, v]) => `${k}→${v}`);
-		const tail = stage < 3 && map.length ? ` · ${map.join(', ')}` : '';
-		lines.push(`Runtime pattern: ${b.pattern} (llms-components.txt)${tail}`);
-	}
+	if (b.pattern) lines.push(patternLine(b, stage));
 	const recipes = stage >= 5 ? recipesFor(b, { mandatoryOnly: true }) : b.recipes;
 	lines.push(`OpenUI: ${recipes.openui}`, `TSX: ${recipes.tsx}`);
 	return lines.join('\n');
+}
+
+/** The card line of one parameter without its description. @param {any} p @param {number} stage */
+function paramLine(p, stage) {
+	let line = `- ${p.name}: ${p.type}${p.mandatory ? ' (required)' : ''}`;
+	if (p.default) line += ` = ${p.default}`;
+	if (stage < 2 && p.values?.length && p.values.length <= 8) line += ` [${p.values.join(', ')}]`;
+	return line;
+}
+
+/** `Name(param: Type, …)`. @param {any} e */
+function eventSignature(e) {
+	const payload = e.parameters.map((/** @type {any} */ p) => `${p.name}: ${p.type}`).join(', ');
+	return `${e.name}(${payload})`;
+}
+
+/** The runtime-pattern line, with the parameter map until stage 3. @param {any} b @param {number} stage */
+function patternLine(b, stage) {
+	const map = Object.entries(b.paramMap).map(([k, v]) => `${k}→${v}`);
+	const mapTail = stage < 3 && map.length ? ` · ${map.join(', ')}` : '';
+	return `Runtime pattern: ${b.pattern} (llms-components.txt)${mapTail}`;
 }
 
 /** @param {ReturnType<typeof buildBlocksManifest>} manifest */
@@ -188,7 +196,7 @@ export function renderBlockCards(manifest) {
 		return renderBlockCard(b, STAGES);
 	});
 	const sources = manifest.snapshots
-		.map((s) => `${s.module} ${s.platform}${s.moduleVersion ? ` ${s.moduleVersion}` : ''}`)
+		.map((s) => [s.module, s.platform, s.moduleVersion].filter(Boolean).join(' '))
 		.join(', ');
 	const intro = manifest.snapshots.length
 		? `One card per public OutSystems UI block, from the OML (${sources}). Compose blocks with these signatures; never emit a pattern's markup or lifecycle calls — the block does that. Values for an \`<Entity> Identifier\` come from osui.enums.json; classes for ExtendedClass from llms-utilities.txt.`
