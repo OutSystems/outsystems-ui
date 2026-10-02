@@ -1,0 +1,39 @@
+import assert from 'node:assert/strict';
+import { test } from 'node:test';
+
+import { linksFor, patternOfBlock } from '../lib/crosswalk.mjs';
+import { flattenBlocks } from '../lib/snapshot.mjs';
+import { sample } from './snapshot.test.mjs';
+
+const blocks = flattenBlocks([sample()]); // [Content/Internal, Interaction/Carousel]
+
+test('linksFor prefers the registry and falls back to the snapshot hints', () => {
+	const reg = {
+		components: {
+			Carousel: {
+				kind: 'pattern',
+				block: [{ flow: 'Interaction', name: 'Carousel', paramMap: { Color: 'Color' } }],
+			},
+		},
+	};
+	assert.deepEqual(
+		linksFor('Carousel', reg, blocks).map((l) => [l.key, l.source, l.paramMap]),
+		[['Interaction/Carousel', 'registry', { Color: 'Color' }]]
+	);
+	assert.deepEqual(
+		linksFor('Carousel', { components: { Carousel: { kind: 'pattern' } } }, blocks).map((l) => [l.key, l.source]),
+		[['Interaction/Carousel', 'hint']]
+	);
+	assert.deepEqual(linksFor('Tabs', { components: {} }, blocks), []);
+});
+
+test('patternOfBlock resolves a registry link, a single hint, and nothing otherwise', () => {
+	const reg = { components: { Carousel: { kind: 'pattern', block: [{ flow: 'Interaction', name: 'Carousel' }] } } };
+	assert.deepEqual(patternOfBlock(blocks[1], ['Carousel'], reg), { pattern: 'Carousel', source: 'registry' });
+	assert.deepEqual(patternOfBlock(blocks[1], ['Carousel'], { components: {} }), {
+		pattern: 'Carousel',
+		source: 'hint',
+	});
+	assert.deepEqual(patternOfBlock(blocks[1], ['Tabs'], { components: {} }), { pattern: null, source: null });
+	assert.deepEqual(patternOfBlock(blocks[0], ['Carousel'], { components: {} }), { pattern: null, source: null });
+});
