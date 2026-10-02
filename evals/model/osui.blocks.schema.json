@@ -1,0 +1,181 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://github.com/OutSystems/outsystems-ui/evals/model/osui.blocks.schema.json",
+	"title": "OutSystems UI block snapshot",
+	"description": "Block signatures, static entities and structures of one OutSystems UI module, exported from its OML with CloneESpace. Keys of blocks, staticEntities and structures are sorted by code point; arrays keep model order; the same OML yields a byte-identical file.",
+	"type": "object",
+	"required": ["version", "source", "staticEntities", "structures", "blocks"],
+	"additionalProperties": false,
+	"properties": {
+		"$schema": { "type": "string" },
+		"version": { "const": 1 },
+		"source": {
+			"type": "object",
+			"required": ["module", "platform", "exporter", "exportedAt"],
+			"additionalProperties": false,
+			"properties": {
+				"module": { "type": "string" },
+				"platform": { "enum": ["ODC", "O11"] },
+				"moduleVersion": { "type": ["string", "null"] },
+				"lastModifiedUtc": { "type": ["string", "null"] },
+				"omlKey": { "type": ["string", "null"] },
+				"origin": {
+					"type": "object",
+					"required": ["sha256"],
+					"additionalProperties": false,
+					"properties": {
+						"repository": { "type": ["string", "null"] },
+						"path": { "type": ["string", "null"] },
+						"commit": { "type": ["string", "null"] },
+						"blobSha": { "type": ["string", "null"] },
+						"sha256": { "type": "string" }
+					}
+				},
+				"exporter": { "type": "string" },
+				"exportedAt": { "type": "null" }
+			}
+		},
+		"staticEntities": {
+			"type": "object",
+			"additionalProperties": {
+				"type": "object",
+				"required": ["description", "records"],
+				"additionalProperties": false,
+				"properties": {
+					"description": { "type": "string" },
+					"records": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"required": ["identifier", "label", "attributes"],
+							"additionalProperties": false,
+							"properties": {
+								"identifier": { "type": "string" },
+								"label": { "type": "string" },
+								"attributes": {
+									"type": "object",
+									"additionalProperties": { "type": ["string", "null"] }
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"structures": {
+			"type": "object",
+			"additionalProperties": {
+				"type": "object",
+				"required": ["description", "attributes"],
+				"additionalProperties": false,
+				"properties": {
+					"description": { "type": "string" },
+					"attributes": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"required": ["name", "type", "typeKind", "typeRef", "mandatory", "default", "description"],
+							"additionalProperties": false,
+							"properties": {
+								"name": { "type": "string" },
+								"type": { "type": "string" },
+								"typeKind": {
+									"enum": ["basic", "identifier", "staticEntity", "structure", "list", "other"]
+								},
+								"typeRef": { "type": ["string", "null"] },
+								"mandatory": { "type": "boolean" },
+								"default": { "type": ["string", "null"] },
+								"description": { "type": "string" }
+							}
+						}
+					}
+				}
+			}
+		},
+		"blocks": {
+			"type": "object",
+			"additionalProperties": {
+				"type": "object",
+				"required": [
+					"flow",
+					"name",
+					"public",
+					"description",
+					"inputParameters",
+					"placeholders",
+					"events",
+					"requiredScripts",
+					"patternHints"
+				],
+				"additionalProperties": false,
+				"properties": {
+					"flow": { "type": "string" },
+					"name": { "type": "string" },
+					"public": { "type": "boolean" },
+					"description": { "type": "string" },
+					"inputParameters": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"required": ["name", "type", "typeKind", "typeRef", "mandatory", "default", "description"],
+							"additionalProperties": false,
+							"properties": {
+								"name": { "type": "string" },
+								"type": { "type": "string" },
+								"typeKind": {
+									"enum": ["basic", "identifier", "staticEntity", "structure", "list", "other"]
+								},
+								"typeRef": { "type": ["string", "null"] },
+								"mandatory": { "type": "boolean" },
+								"default": { "type": ["string", "null"] },
+								"description": { "type": "string" }
+							}
+						}
+					},
+					"placeholders": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"required": ["name", "description"],
+							"additionalProperties": false,
+							"properties": { "name": { "type": "string" }, "description": { "type": "string" } }
+						}
+					},
+					"events": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"required": ["name", "mandatory", "description", "parameters"],
+							"additionalProperties": false,
+							"properties": {
+								"name": { "type": "string" },
+								"mandatory": { "type": "boolean" },
+								"description": { "type": "string" },
+								"parameters": {
+									"type": "array",
+									"items": {
+										"type": "object",
+										"required": ["name", "type", "description"],
+										"additionalProperties": false,
+										"properties": {
+											"name": { "type": "string" },
+											"type": { "type": "string" },
+											"description": { "type": "string" }
+										}
+									}
+								}
+							}
+						}
+					},
+					"requiredScripts": { "type": "array", "items": { "type": "string" } },
+					"patternHints": {
+						"type": "object",
+						"required": ["apiCalls"],
+						"additionalProperties": false,
+						"properties": { "apiCalls": { "type": "array", "items": { "type": "string" } } }
+					}
+				}
+			}
+		}
+	}
+}
