@@ -11,14 +11,14 @@
  * A *CSS component* is a SCSS partial with no TypeScript behaviour behind it: a CSS-only component
  * (Card, Badge, Tag, the widget styles), a host-styled layout partial, a helper class or a utility
  * family under `05-useful`. Its directory gives it a default tier; the registry may override it
- * (lib/tiers.mjs).
+ * (lib/kinds.mjs).
  */
 import fs from 'node:fs';
 import path from 'node:path';
 
 import { insideDir } from './paths.mjs';
 import { registry, tierOf } from './registry.mjs';
-import { defaultTierFor } from './tiers.mjs';
+import { defaultKindFor } from './kinds.mjs';
 
 /**
  * @typedef {object} Pattern
@@ -46,8 +46,8 @@ import { defaultTierFor } from './tiers.mjs';
  * @property {{ host: string, reason: string }|null} host set when the component styles markup owned by
  *   something else (app template blocks, common screens, the runtime); such a component has no markup
  *   contract of its own
- * @property {import('./tiers.mjs').Tier} tier   default tier from the directory
- * @property {import('./tiers.mjs').Tier} kind   tier after the registry override (what the evals use)
+ * @property {import('./kinds.mjs').Kind} tier   default tier from the directory
+ * @property {import('./kinds.mjs').Kind} kind   tier after the registry override (what the evals use)
  * @property {'layout'|'widgets'|'patterns'|'useful'} source top-level directory the partial lives in
  */
 
@@ -264,7 +264,7 @@ export function buildInventory(root) {
 	const cssComponents = partials
 		.map(({ scssFile, source, base }) => {
 			const name = (baseCount.get(base) ?? 0) > 1 && source !== 'patterns' ? `${source}-${base}` : base;
-			const tier = defaultTierFor(scssFile);
+			const tier = defaultKindFor(scssFile);
 			const registryTier = tierOf(REG, name, tier);
 			return {
 				name,

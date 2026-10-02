@@ -44,7 +44,7 @@ function has(text, needles) {
 /**
  * A registry entry derived from what the code shows: the defaults the evals would otherwise apply
  * silently, made explicit and flagged for review.
- * @param {{ kind: import('../lib/tiers.mjs').Tier, name: string, providerDirs?: string[], text?: string, css?: string }} c
+ * @param {{ kind: import('../lib/kinds.mjs').Tier, name: string, providerDirs?: string[], text?: string, css?: string }} c
  * @returns {import('../lib/registry.mjs').Entry}
  */
 export function suggestEntry({ kind, name, providerDirs = [], text = '', css = '' }) {
@@ -63,7 +63,7 @@ export function suggestEntry({ kind, name, providerDirs = [], text = '', css = '
 
 /**
  * The entry of a CSS-only component or layout partial: the states its compiled CSS styles.
- * @param {import('../lib/tiers.mjs').Tier} kind
+ * @param {import('../lib/kinds.mjs').Kind} kind
  * @param {string} css
  * @returns {import('../lib/registry.mjs').Entry}
  */
@@ -144,7 +144,7 @@ export function diagnose(ctx, registry) {
 			};
 		}
 		const c = /** @type {any} */ (ctx.inventory.cssComponents.find((x) => x.name === u.name));
-		const kind = /** @type {import('../lib/tiers.mjs').Tier} */ (u.kind);
+		const kind = /** @type {import('../lib/kinds.mjs').Kind} */ (u.kind);
 		return {
 			...u,
 			suggested: suggestEntry({ kind, name: u.name, css: ctx.compiledCss(c.scssFile).css ?? '' }),

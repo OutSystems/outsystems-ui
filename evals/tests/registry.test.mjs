@@ -15,7 +15,7 @@ import {
 	validateBlockLinks,
 	validateRegistry,
 } from '../lib/registry.mjs';
-import { TIERS } from '../lib/tiers.mjs';
+import { KINDS, normalizeKind } from '../lib/kinds.mjs';
 import { createContext } from '../lib/context.mjs';
 import { expectationsFor } from '../lib/expectations.mjs';
 import { flattenBlocks, loadSnapshots } from '../model/lib/snapshot.mjs';
@@ -46,10 +46,11 @@ test('namesWhere, hasRole, familyMembers and tierOf read the registry', () => {
 	assert.equal(tierOf(fake, 'unknown', 'component'), 'component', 'falls back to the discovered tier');
 });
 
-test('normalizeRegistry lifts the previous css kind to component and keeps every other field', () => {
+test('normalizeRegistry keeps every entry as written; the legacy css kind is no longer a kind', () => {
 	const reg = normalizeRegistry({ components: { card: { kind: 'css', loading: true }, Tabs: { kind: 'pattern' } } });
-	assert.deepEqual(reg.components.card, { kind: 'component', loading: true });
+	assert.deepEqual(reg.components.card, { kind: 'css', loading: true });
 	assert.equal(reg.components.Tabs.kind, 'pattern');
+	assert.equal(normalizeKind('css'), null);
 });
 
 test('validateRegistry reports unknown components, stale entries, bad kinds, pattern mismatches and tier overrides', () => {
@@ -115,7 +116,7 @@ test('the committed registry classifies exactly the components the inventory dis
 	assert.deepEqual(r.badRoles, []);
 	assert.deepEqual(r.badKinds, []);
 	assert.deepEqual(r.kindMismatch, []);
-	for (const [name, e] of Object.entries(reg.components)) assert.ok(TIERS.includes(e.kind), `${name} has a tier`);
+	for (const [name, e] of Object.entries(reg.components)) assert.ok(KINDS.includes(e.kind), `${name} has a tier`);
 	assert.equal(reg.components.card.kind, 'component');
 	assert.equal(reg.components.header.kind, 'layout');
 	assert.equal(reg.components.animate.kind, 'utility', 'helpers filed under 04-patterns are overridden to utility');

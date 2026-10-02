@@ -105,7 +105,7 @@ export function patternText(ctx, p) {
 }
 
 /**
- * @typedef {{ name: string, kind: import('../../lib/tiers.mjs').Tier, pattern: import('../../lib/inventory.mjs').Pattern|null, scssFiles: string[], storyFile: string|null }} Component
+ * @typedef {{ name: string, kind: import('../../lib/kinds.mjs').Tier, pattern: import('../../lib/inventory.mjs').Pattern|null, scssFiles: string[], storyFile: string|null }} Component
  */
 
 /**

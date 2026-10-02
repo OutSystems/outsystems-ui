@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 
-import { TIERS } from '../lib/tiers.mjs';
+import { KINDS } from '../lib/kinds.mjs';
 import { allMetrics, CLASSES, metricById, SUITES, suiteOf } from '../suites.mjs';
 
 test('the registry lists every suite with an id, an index name, a prefix, metrics and gate tolerances', () => {
@@ -38,7 +38,7 @@ test('every metric of every suite honours the metric contract', () => {
 				Array.isArray(m.present.appliesTo) && m.present.appliesTo.length > 0,
 				`${m.id} lists the tiers it applies to`
 			);
-			for (const t of m.present.appliesTo) assert.ok(TIERS.includes(t), `${m.id} applies to a known tier (${t})`);
+			for (const t of m.present.appliesTo) assert.ok(KINDS.includes(t), `${m.id} applies to a known tier (${t})`);
 			for (const fn of ['cell', 'advice', 'extra']) {
 				if (m.present[fn] !== undefined)
 					assert.equal(typeof m.present[fn], 'function', `${m.id}.present.${fn}`);

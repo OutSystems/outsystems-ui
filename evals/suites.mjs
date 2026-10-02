@@ -10,7 +10,7 @@
  * `criterion`, `formula`, `movable`, optional `cls` (one of CLASSES), `compute(ctx)`, and `present`:
  *   - `scope`        what a per-component cell means and why some components have none
  *   - `heatmap`      true when `perComponent` rows are components (a dashboard column)
- *   - `appliesTo`    the tiers the eval measures (lib/tiers.mjs: pattern, component, layout, utility); a
+ *   - `appliesTo`    the tiers the eval measures (lib/kinds.mjs: pattern, component, layout, utility); a
  *                    component outside them gets a not-applicable cell that names its tier
  *   - `cell(row)`    optional: `{ s, h }` score and hint for one measured row
  *   - `advice(m)`    optional: eval-level next steps from the latest result

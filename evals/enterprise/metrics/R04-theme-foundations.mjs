@@ -137,7 +137,7 @@ export function foundationsPresent(tokensText, componentCssTexts) {
 	return out;
 }
 
-/** The tiers this eval measures (lib/tiers.mjs). */
+/** The tiers this eval measures (lib/kinds.mjs). */
 const APPLIES_TO = ['pattern', 'component', 'layout'];
 
 export default {

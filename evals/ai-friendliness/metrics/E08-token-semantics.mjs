@@ -20,7 +20,7 @@ export function scoreComponent({ total, literal, routed, important }) {
  * @param {readonly string[]} tiers the eval's `present.appliesTo`
  */
 export function componentScssFiles(ctx, tiers) {
-	/** @type {{ name: string, file: string, kind: import('../../lib/tiers.mjs').Tier }[]} */
+	/** @type {{ name: string, file: string, kind: import('../../lib/kinds.mjs').Tier }[]} */
 	const files = [];
 	if (tiers.includes('pattern')) {
 		for (const p of ctx.inventory.patterns)
@@ -32,7 +32,7 @@ export function componentScssFiles(ctx, tiers) {
 	return files;
 }
 
-/** The tiers this eval measures (lib/tiers.mjs). */
+/** The tiers this eval measures (lib/kinds.mjs). */
 const APPLIES_TO = ['pattern', 'component', 'layout'];
 
 export default {

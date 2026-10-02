@@ -13,7 +13,7 @@ export function scoreComponent({ depth, elements }) {
 	return penalty([20 * Math.max(0, depth - FREE_DEPTH), 4 * Math.max(0, elements - FREE_ELEMENTS)]);
 }
 
-/** The tiers this eval measures (lib/tiers.mjs). */
+/** The tiers this eval measures (lib/kinds.mjs). */
 const APPLIES_TO = ['pattern', 'component'];
 
 export default {

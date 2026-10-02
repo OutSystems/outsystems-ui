@@ -25,7 +25,7 @@ export function readChangedFiles(text) {
 }
 
 /**
- * @typedef {{ kind: import('../lib/tiers.mjs').Tier, files: string[] }} Touched
+ * @typedef {{ kind: import('../lib/kinds.mjs').Tier, files: string[] }} Touched
  */
 
 /**
@@ -41,7 +41,7 @@ export function componentsForFiles(inventory, root, files) {
 	const out = new Map();
 	const add = (
 		/** @type {string} */ name,
-		/** @type {import('../lib/tiers.mjs').Tier} */ kind,
+		/** @type {import('../lib/kinds.mjs').Kind} */ kind,
 		/** @type {string} */ file
 	) => {
 		const hit = out.get(name) ?? { kind, files: [] };

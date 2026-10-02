@@ -29,7 +29,7 @@ import {
 	tierSummary,
 	upsertHistory,
 } from './lib/results.mjs';
-import { TIERS } from './lib/tiers.mjs';
+import { KINDS } from './lib/kinds.mjs';
 import { SUITES, suiteOf } from './suites.mjs';
 import { writeDashboardData } from './tools/dashboard-data.mjs';
 import { writeHistoryReport } from './tools/report.mjs';
@@ -231,7 +231,7 @@ function main() {
 		const results = runMetrics(ctx, selected, args.json);
 		suites[suite.id] = {
 			...aggregate(results),
-			tiers: tierSummary(results, kindOf, suite.metrics, TIERS),
+			tiers: tierSummary(results, kindOf, suite.metrics, KINDS),
 			results,
 		};
 	}

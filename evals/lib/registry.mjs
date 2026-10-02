@@ -4,7 +4,7 @@
  * classifies them. Every eval that needs to know what a component *is* (a provider wrapper, an overlay,
  * a host-styled partial, a component with a loading state, a utility family, …) reads it from here, so
  * a new component is classified in one place, and a test fails when the registry and the inventory
- * disagree. A component's `kind` is its tier (lib/tiers.mjs); the directory gives the default and the
+ * disagree. A component's `kind` is its tier (lib/kinds.mjs); the directory gives the default and the
  * registry may override it.
  */
 import fs from 'node:fs';
@@ -12,7 +12,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { insideDir } from './paths.mjs';
-import { normalizeKind } from './tiers.mjs';
+import { normalizeKind } from './kinds.mjs';
 
 const evalsDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 export const REGISTRY_FILE = insideDir(evalsDir, 'components.json');
@@ -22,7 +22,7 @@ export const ROLES = ['provider', 'overlay', 'composite', 'feedback', 'non-inter
 
 /**
  * @typedef {object} Entry
- * @property {import('./tiers.mjs').Tier} kind tier: pattern | component | layout | utility (`css` read as component)
+ * @property {import('./kinds.mjs').Kind} kind tier: pattern | component | layout | utility (`css` read as component)
  * @property {string[]} [roles]
  * @property {string} [family]        patterns implementing one keyboard model together share a name
  * @property {{ host: string, reason: string }} [host] component or layout partial styling markup something else emits
@@ -41,18 +41,13 @@ export const ROLES = ['provider', 'overlay', 'composite', 'feedback', 'non-inter
  */
 
 /**
- * The registry with every kind normalised to a tier (`css` → `component`); unknown kinds are kept for
- * `validateRegistry` to report.
+ * The registry as a `{ components }` object; kinds are kept as written, for `validateRegistry` to report
+ * the unknown ones.
  * @param {{ components?: Record<string, any> }} raw
  * @returns {Registry}
  */
 export function normalizeRegistry(raw) {
-	/** @type {Record<string, Entry>} */
-	const components = {};
-	for (const [name, e] of Object.entries(raw.components ?? {})) {
-		components[name] = { ...e, kind: normalizeKind(e.kind) ?? e.kind };
-	}
-	return { components };
+	return { components: { ...(raw.components ?? {}) } };
 }
 
 /**
@@ -84,8 +79,8 @@ export function entryOf(reg, name) {
  * The tier of a component: the registry's when it names one, else the discovered default.
  * @param {Registry} reg
  * @param {string} name
- * @param {import('./tiers.mjs').Tier} fallback
- * @returns {import('./tiers.mjs').Tier}
+ * @param {import('./kinds.mjs').Kind} fallback
+ * @returns {import('./kinds.mjs').Kind}
  */
 export function tierOf(reg, name, fallback) {
 	return normalizeKind(reg.components[name]?.kind) ?? fallback;

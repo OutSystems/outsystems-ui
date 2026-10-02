@@ -130,7 +130,7 @@ export function flowKits(flows, rows) {
 	});
 }
 
-/** The tiers this eval measures (lib/tiers.mjs); utility classes still count as evidence for a requirement. */
+/** The tiers this eval measures (lib/kinds.mjs); utility classes still count as evidence for a requirement. */
 const APPLIES_TO = ['pattern', 'component', 'layout'];
 
 export default {

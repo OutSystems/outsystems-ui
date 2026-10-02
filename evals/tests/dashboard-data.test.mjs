@@ -53,7 +53,7 @@ test('cellFor explains a cell with no measurement from the metric scope and hint
 	assert.equal(na.s, null);
 	assert.equal(na.w, 'na');
 	assert.match(na.h, /measures patterns; this is a CSS-only component/);
-	assert.match(cellFor('E02', null, { kind: 'css' }).h, /CSS-only/, 'the previous css kind still reads as component');
+	assert.equal(cellFor('E02', null, { kind: 'css' }).w, 'unmeasured', 'css is no longer a kind: no not-applicable text for it');
 	const layout = cellFor('E07', null, { kind: 'layout' });
 	assert.equal(layout.w, 'na');
 	assert.match(layout.h, /measures patterns, components; layout partials style markup the app template/);

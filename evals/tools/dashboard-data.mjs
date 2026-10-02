@@ -18,7 +18,7 @@ import { fileURLToPath } from 'node:url';
 
 import { insideDir } from '../lib/paths.mjs';
 import { normalizeHistoryEntry, normalizeRun } from '../lib/results.mjs';
-import { appliesTo, normalizeKind, TIERS, tierText } from '../lib/tiers.mjs';
+import { appliesTo, normalizeKind, KINDS, kindText } from '../lib/kinds.mjs';
 import { metricById, SUITES } from '../suites.mjs';
 
 export const DASHBOARD_FILE = 'results/dashboard.json';
@@ -44,7 +44,7 @@ function missingCell(id, ctx) {
 	const kind = normalizeKind(ctx.kind);
 	if (present && kind && !appliesTo(present, kind)) {
 		const measures = (present.appliesTo ?? []).map((/** @type {string} */ t) => `${t}s`).join(', ');
-		return { s: null, w: 'na', h: `Not applicable: this eval measures ${measures}; ${tierText(kind)}.` };
+		return { s: null, w: 'na', h: `Not applicable: this eval measures ${measures}; ${kindText(kind)}.` };
 	}
 	const reason = ctx.reason ?? 'no measurement in this run';
 	const fix = present?.unmeasuredHint ? ` ${present.unmeasuredHint}` : '';
@@ -151,7 +151,7 @@ function evalOf(m, baseScores) {
 		score: m.score,
 		base: baseScores[m.id] ?? null,
 		summary: m.summary,
-		appliesTo: present?.appliesTo ?? [...TIERS],
+		appliesTo: present?.appliesTo ?? [...KINDS],
 		scope: present?.scope ?? '',
 		advice: present?.advice ? present.advice(m) : [m.summary],
 		unmeasured: {
