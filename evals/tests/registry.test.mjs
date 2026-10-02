@@ -219,7 +219,10 @@ test('every block link of the committed registry resolves against the snapshot a
 	const ctx = createContext(root);
 	const blocks = new Map(flattenBlocks(snapshots).map((b) => [b.key, b]));
 	const props = new Map(
-		ctx.inventory.patterns.map((p) => [p.name, expectationsFor(ctx, p).props.map((x) => x.name)])
+		ctx.inventory.patterns.map((p) => [
+			p.name,
+			[...expectationsFor(ctx, p).props.map((x) => x.name), 'ExtendedClass'],
+		])
 	);
 	const events = new Map(
 		ctx.inventory.patterns.map((p) => [p.name, [...expectationsFor(ctx, p).events, 'Initialized']])
