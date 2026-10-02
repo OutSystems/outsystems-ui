@@ -110,3 +110,28 @@ test('buildIconsManifest documents both libraries from the installed packages', 
 	assert.ok(icons.fontawesome4.classes.includes('fa-search'));
 	assert.equal(icons.phosphor.usage, 'icon ph ph-<name>');
 });
+
+test('with two platform snapshots the manifest, the cards and M01/M04 agree on the labelled identity', async () => {
+	const { default: M01 } = await import('../evals/model/metrics/M01-block-manifest.mjs');
+	const { default: M04 } = await import('../evals/model/metrics/M04-block-cards.mjs');
+	const two = { ...fakeCtx(), modelSnapshots: () => [sample('ODC'), sample('O11')] };
+	const manifest = buildBlocksManifest(/** @type {any} */ (two));
+	assert.deepEqual(Object.keys(manifest.blocks), ['Interaction/Carousel (O11)', 'Interaction/Carousel (ODC)']);
+	const text = renderBlockCards(manifest);
+	assert.ok(text.includes('\n## Interaction/Carousel (ODC)\n') && text.includes('\n## Interaction/Carousel (O11)\n'));
+	const docs = { 'osui.blocks.json': JSON.stringify(manifest), 'llms-blocks.txt': text };
+	const ctx = { ...two, docsAi: (n) => docs[n] ?? null, tokens: { countTokens } };
+	const m01 = M01.compute(/** @type {any} */ (ctx));
+	assert.deepEqual(
+		m01.perComponent.map((r) => [r.label, r.present]),
+		[
+			['Interaction/Carousel (O11)', true],
+			['Interaction/Carousel (ODC)', true],
+		]
+	);
+	const m04 = M04.compute(/** @type {any} */ (ctx));
+	assert.deepEqual(
+		m04.perComponent.map((r) => r.tokens !== null),
+		[true, true]
+	);
+});

@@ -19,6 +19,7 @@
 	"blocks": {
 		"Adaptive/Columns2": {
 			"key": "Adaptive/Columns2",
+			"label": "Adaptive/Columns2",
 			"flow": "Adaptive",
 			"name": "Columns2",
 			"platform": "ODC",
@@ -110,6 +111,7 @@
 		},
 		"Adaptive/Columns3": {
 			"key": "Adaptive/Columns3",
+			"label": "Adaptive/Columns3",
 			"flow": "Adaptive",
 			"name": "Columns3",
 			"platform": "ODC",
@@ -205,6 +207,7 @@
 		},
 		"Adaptive/Columns4": {
 			"key": "Adaptive/Columns4",
+			"label": "Adaptive/Columns4",
 			"flow": "Adaptive",
 			"name": "Columns4",
 			"platform": "ODC",
@@ -304,6 +307,7 @@
 		},
 		"Adaptive/Columns5": {
 			"key": "Adaptive/Columns5",
+			"label": "Adaptive/Columns5",
 			"flow": "Adaptive",
 			"name": "Columns5",
 			"platform": "ODC",
@@ -407,6 +411,7 @@
 		},
 		"Adaptive/Columns6": {
 			"key": "Adaptive/Columns6",
+			"label": "Adaptive/Columns6",
 			"flow": "Adaptive",
 			"name": "Columns6",
 			"platform": "ODC",
@@ -514,6 +519,7 @@
 		},
 		"Adaptive/ColumnsMediumLeft": {
 			"key": "Adaptive/ColumnsMediumLeft",
+			"label": "Adaptive/ColumnsMediumLeft",
 			"flow": "Adaptive",
 			"name": "ColumnsMediumLeft",
 			"platform": "ODC",
@@ -605,6 +611,7 @@
 		},
 		"Adaptive/ColumnsMediumRight": {
 			"key": "Adaptive/ColumnsMediumRight",
+			"label": "Adaptive/ColumnsMediumRight",
 			"flow": "Adaptive",
 			"name": "ColumnsMediumRight",
 			"platform": "ODC",
@@ -696,6 +703,7 @@
 		},
 		"Adaptive/ColumnsSmallLeft": {
 			"key": "Adaptive/ColumnsSmallLeft",
+			"label": "Adaptive/ColumnsSmallLeft",
 			"flow": "Adaptive",
 			"name": "ColumnsSmallLeft",
 			"platform": "ODC",
@@ -787,6 +795,7 @@
 		},
 		"Adaptive/ColumnsSmallRight": {
 			"key": "Adaptive/ColumnsSmallRight",
+			"label": "Adaptive/ColumnsSmallRight",
 			"flow": "Adaptive",
 			"name": "ColumnsSmallRight",
 			"platform": "ODC",
@@ -878,6 +887,7 @@
 		},
 		"Adaptive/DEPRECATED_Gallery": {
 			"key": "Adaptive/DEPRECATED_Gallery",
+			"label": "Adaptive/DEPRECATED_Gallery",
 			"flow": "Adaptive",
 			"name": "DEPRECATED_Gallery",
 			"platform": "ODC",
@@ -951,6 +961,7 @@
 		},
 		"Adaptive/DisplayOnDevice": {
 			"key": "Adaptive/DisplayOnDevice",
+			"label": "Adaptive/DisplayOnDevice",
 			"flow": "Adaptive",
 			"name": "DisplayOnDevice",
 			"platform": "ODC",
@@ -985,6 +996,7 @@
 		},
 		"Adaptive/Gallery": {
 			"key": "Adaptive/Gallery",
+			"label": "Adaptive/Gallery",
 			"flow": "Adaptive",
 			"name": "Gallery",
 			"platform": "ODC",
@@ -1090,6 +1102,7 @@
 		},
 		"Adaptive/MasterDetail": {
 			"key": "Adaptive/MasterDetail",
+			"label": "Adaptive/MasterDetail",
 			"flow": "Adaptive",
 			"name": "MasterDetail",
 			"platform": "ODC",
@@ -1155,6 +1168,7 @@
 		},
 		"Advanced/DropdownServerSide": {
 			"key": "Advanced/DropdownServerSide",
+			"label": "Advanced/DropdownServerSide",
 			"flow": "Advanced",
 			"name": "DropdownServerSide",
 			"platform": "ODC",
@@ -1264,6 +1278,7 @@
 		},
 		"Advanced/DropdownServerSideItem": {
 			"key": "Advanced/DropdownServerSideItem",
+			"label": "Advanced/DropdownServerSideItem",
 			"flow": "Advanced",
 			"name": "DropdownServerSideItem",
 			"platform": "ODC",
@@ -1362,6 +1377,7 @@
 		},
 		"Content/Accordion": {
 			"key": "Content/Accordion",
+			"label": "Content/Accordion",
 			"flow": "Content",
 			"name": "Accordion",
 			"platform": "ODC",
@@ -1427,6 +1443,7 @@
 		},
 		"Content/AccordionItem": {
 			"key": "Content/AccordionItem",
+			"label": "Content/AccordionItem",
 			"flow": "Content",
 			"name": "AccordionItem",
 			"platform": "ODC",
@@ -1557,6 +1574,7 @@
 		},
 		"Content/Alert": {
 			"key": "Content/Alert",
+			"label": "Content/Alert",
 			"flow": "Content",
 			"name": "Alert",
 			"platform": "ODC",
@@ -1608,6 +1626,7 @@
 		},
 		"Content/BlankSlate": {
 			"key": "Content/BlankSlate",
+			"label": "Content/BlankSlate",
 			"flow": "Content",
 			"name": "BlankSlate",
 			"platform": "ODC",
@@ -1661,6 +1680,7 @@
 		},
 		"Content/Card": {
 			"key": "Content/Card",
+			"label": "Content/Card",
 			"flow": "Content",
 			"name": "Card",
 			"platform": "ODC",
@@ -1706,6 +1726,7 @@
 		},
 		"Content/CardBackground": {
 			"key": "Content/CardBackground",
+			"label": "Content/CardBackground",
 			"flow": "Content",
 			"name": "CardBackground",
 			"platform": "ODC",
@@ -1792,6 +1813,7 @@
 		},
 		"Content/CardItem": {
 			"key": "Content/CardItem",
+			"label": "Content/CardItem",
 			"flow": "Content",
 			"name": "CardItem",
 			"platform": "ODC",
@@ -1840,6 +1862,7 @@
 		},
 		"Content/CardSectioned": {
 			"key": "Content/CardSectioned",
+			"label": "Content/CardSectioned",
 			"flow": "Content",
 			"name": "CardSectioned",
 			"platform": "ODC",
@@ -1915,6 +1938,7 @@
 		},
 		"Content/ChatMessage": {
 			"key": "Content/ChatMessage",
+			"label": "Content/ChatMessage",
 			"flow": "Content",
 			"name": "ChatMessage",
 			"platform": "ODC",
@@ -1988,6 +2012,7 @@
 		},
 		"Content/DEPRECATED_Accordion": {
 			"key": "Content/DEPRECATED_Accordion",
+			"label": "Content/DEPRECATED_Accordion",
 			"flow": "Content",
 			"name": "DEPRECATED_Accordion",
 			"platform": "ODC",
@@ -2033,6 +2058,7 @@
 		},
 		"Content/DEPRECATED_AccordionItem": {
 			"key": "Content/DEPRECATED_AccordionItem",
+			"label": "Content/DEPRECATED_AccordionItem",
 			"flow": "Content",
 			"name": "DEPRECATED_AccordionItem",
 			"platform": "ODC",
@@ -2113,6 +2139,7 @@
 		},
 		"Content/DEPRECATED_FlipContent": {
 			"key": "Content/DEPRECATED_FlipContent",
+			"label": "Content/DEPRECATED_FlipContent",
 			"flow": "Content",
 			"name": "DEPRECATED_FlipContent",
 			"platform": "ODC",
@@ -2184,6 +2211,7 @@
 		},
 		"Content/DEPRECATED_Tooltip": {
 			"key": "Content/DEPRECATED_Tooltip",
+			"label": "Content/DEPRECATED_Tooltip",
 			"flow": "Content",
 			"name": "DEPRECATED_Tooltip",
 			"platform": "ODC",
@@ -2262,6 +2290,7 @@
 		},
 		"Content/FlipContent": {
 			"key": "Content/FlipContent",
+			"label": "Content/FlipContent",
 			"flow": "Content",
 			"name": "FlipContent",
 			"platform": "ODC",
@@ -2359,6 +2388,7 @@
 		},
 		"Content/FloatingContent": {
 			"key": "Content/FloatingContent",
+			"label": "Content/FloatingContent",
 			"flow": "Content",
 			"name": "FloatingContent",
 			"platform": "ODC",
@@ -2442,6 +2472,7 @@
 		},
 		"Content/ListItemContent": {
 			"key": "Content/ListItemContent",
+			"label": "Content/ListItemContent",
 			"flow": "Content",
 			"name": "ListItemContent",
 			"platform": "ODC",
@@ -2490,6 +2521,7 @@
 		},
 		"Content/Section": {
 			"key": "Content/Section",
+			"label": "Content/Section",
 			"flow": "Content",
 			"name": "Section",
 			"platform": "ODC",
@@ -2539,6 +2571,7 @@
 		},
 		"Content/SectionGroup": {
 			"key": "Content/SectionGroup",
+			"label": "Content/SectionGroup",
 			"flow": "Content",
 			"name": "SectionGroup",
 			"platform": "ODC",
@@ -2593,6 +2626,7 @@
 		},
 		"Content/Tag": {
 			"key": "Content/Tag",
+			"label": "Content/Tag",
 			"flow": "Content",
 			"name": "Tag",
 			"platform": "ODC",
@@ -2702,6 +2736,7 @@
 		},
 		"Content/Tooltip": {
 			"key": "Content/Tooltip",
+			"label": "Content/Tooltip",
 			"flow": "Content",
 			"name": "Tooltip",
 			"platform": "ODC",
@@ -2824,6 +2859,7 @@
 		},
 		"Content/UserAvatar": {
 			"key": "Content/UserAvatar",
+			"label": "Content/UserAvatar",
 			"flow": "Content",
 			"name": "UserAvatar",
 			"platform": "ODC",
@@ -2946,6 +2982,7 @@
 		},
 		"Interaction/ActionSheet": {
 			"key": "Interaction/ActionSheet",
+			"label": "Interaction/ActionSheet",
 			"flow": "Interaction",
 			"name": "ActionSheet",
 			"platform": "ODC",
@@ -3014,6 +3051,7 @@
 		},
 		"Interaction/Animate": {
 			"key": "Interaction/Animate",
+			"label": "Interaction/Animate",
 			"flow": "Interaction",
 			"name": "Animate",
 			"platform": "ODC",
@@ -3084,6 +3122,7 @@
 		},
 		"Interaction/AnimatedLabel": {
 			"key": "Interaction/AnimatedLabel",
+			"label": "Interaction/AnimatedLabel",
 			"flow": "Interaction",
 			"name": "AnimatedLabel",
 			"platform": "ODC",
@@ -3143,6 +3182,7 @@
 		},
 		"Interaction/BottomSheet": {
 			"key": "Interaction/BottomSheet",
+			"label": "Interaction/BottomSheet",
 			"flow": "Interaction",
 			"name": "BottomSheet",
 			"platform": "ODC",
@@ -3245,6 +3285,7 @@
 		},
 		"Interaction/Carousel": {
 			"key": "Interaction/Carousel",
+			"label": "Interaction/Carousel",
 			"flow": "Interaction",
 			"name": "Carousel",
 			"platform": "ODC",
@@ -3369,6 +3410,7 @@
 		},
 		"Interaction/DEPRECATED_Carousel": {
 			"key": "Interaction/DEPRECATED_Carousel",
+			"label": "Interaction/DEPRECATED_Carousel",
 			"flow": "Interaction",
 			"name": "DEPRECATED_Carousel",
 			"platform": "ODC",
@@ -3523,6 +3565,7 @@
 		},
 		"Interaction/DEPRECATED_DatePicker": {
 			"key": "Interaction/DEPRECATED_DatePicker",
+			"label": "Interaction/DEPRECATED_DatePicker",
 			"flow": "Interaction",
 			"name": "DEPRECATED_DatePicker",
 			"platform": "ODC",
@@ -3716,6 +3759,7 @@
 		},
 		"Interaction/DEPRECATED_DropdownSearch": {
 			"key": "Interaction/DEPRECATED_DropdownSearch",
+			"label": "Interaction/DEPRECATED_DropdownSearch",
 			"flow": "Interaction",
 			"name": "DEPRECATED_DropdownSearch",
 			"platform": "ODC",
@@ -3823,6 +3867,7 @@
 		},
 		"Interaction/DEPRECATED_DropdownTags": {
 			"key": "Interaction/DEPRECATED_DropdownTags",
+			"label": "Interaction/DEPRECATED_DropdownTags",
 			"flow": "Interaction",
 			"name": "DEPRECATED_DropdownTags",
 			"platform": "ODC",
@@ -3930,6 +3975,7 @@
 		},
 		"Interaction/DEPRECATED_Notification": {
 			"key": "Interaction/DEPRECATED_Notification",
+			"label": "Interaction/DEPRECATED_Notification",
 			"flow": "Interaction",
 			"name": "DEPRECATED_Notification",
 			"platform": "ODC",
@@ -3982,6 +4028,7 @@
 		},
 		"Interaction/DEPRECATED_RangeSliderInterval": {
 			"key": "Interaction/DEPRECATED_RangeSliderInterval",
+			"label": "Interaction/DEPRECATED_RangeSliderInterval",
 			"flow": "Interaction",
 			"name": "DEPRECATED_RangeSliderInterval",
 			"platform": "ODC",
@@ -4139,6 +4186,7 @@
 		},
 		"Interaction/DEPRECATED_RangeSliderV2": {
 			"key": "Interaction/DEPRECATED_RangeSliderV2",
+			"label": "Interaction/DEPRECATED_RangeSliderV2",
 			"flow": "Interaction",
 			"name": "DEPRECATED_RangeSliderV2",
 			"platform": "ODC",
@@ -4282,6 +4330,7 @@
 		},
 		"Interaction/DEPRECATED_Search": {
 			"key": "Interaction/DEPRECATED_Search",
+			"label": "Interaction/DEPRECATED_Search",
 			"flow": "Interaction",
 			"name": "DEPRECATED_Search",
 			"platform": "ODC",
@@ -4325,6 +4374,7 @@
 		},
 		"Interaction/DEPRECATED_Sidebar": {
 			"key": "Interaction/DEPRECATED_Sidebar",
+			"label": "Interaction/DEPRECATED_Sidebar",
 			"flow": "Interaction",
 			"name": "DEPRECATED_Sidebar",
 			"platform": "ODC",
@@ -4381,6 +4431,7 @@
 		},
 		"Interaction/DEPRECATED_Video": {
 			"key": "Interaction/DEPRECATED_Video",
+			"label": "Interaction/DEPRECATED_Video",
 			"flow": "Interaction",
 			"name": "DEPRECATED_Video",
 			"platform": "ODC",
@@ -4484,6 +4535,7 @@
 		},
 		"Interaction/DatePicker": {
 			"key": "Interaction/DatePicker",
+			"label": "Interaction/DatePicker",
 			"flow": "Interaction",
 			"name": "DatePicker",
 			"platform": "ODC",
@@ -4609,6 +4661,7 @@
 		},
 		"Interaction/DatePickerRange": {
 			"key": "Interaction/DatePickerRange",
+			"label": "Interaction/DatePickerRange",
 			"flow": "Interaction",
 			"name": "DatePickerRange",
 			"platform": "ODC",
@@ -4725,6 +4778,7 @@
 		},
 		"Interaction/DropdownSearch": {
 			"key": "Interaction/DropdownSearch",
+			"label": "Interaction/DropdownSearch",
 			"flow": "Interaction",
 			"name": "DropdownSearch",
 			"platform": "ODC",
@@ -4838,6 +4892,7 @@
 		},
 		"Interaction/DropdownTags": {
 			"key": "Interaction/DropdownTags",
+			"label": "Interaction/DropdownTags",
 			"flow": "Interaction",
 			"name": "DropdownTags",
 			"platform": "ODC",
@@ -4950,6 +5005,7 @@
 		},
 		"Interaction/FloatingActions": {
 			"key": "Interaction/FloatingActions",
+			"label": "Interaction/FloatingActions",
 			"flow": "Interaction",
 			"name": "FloatingActions",
 			"platform": "ODC",
@@ -5015,6 +5071,7 @@
 		},
 		"Interaction/FloatingActionsItem": {
 			"key": "Interaction/FloatingActionsItem",
+			"label": "Interaction/FloatingActionsItem",
 			"flow": "Interaction",
 			"name": "FloatingActionsItem",
 			"platform": "ODC",
@@ -5055,6 +5112,7 @@
 		},
 		"Interaction/InputWithIcon": {
 			"key": "Interaction/InputWithIcon",
+			"label": "Interaction/InputWithIcon",
 			"flow": "Interaction",
 			"name": "InputWithIcon",
 			"platform": "ODC",
@@ -5104,6 +5162,7 @@
 		},
 		"Interaction/LightboxImage": {
 			"key": "Interaction/LightboxImage",
+			"label": "Interaction/LightboxImage",
 			"flow": "Interaction",
 			"name": "LightboxImage",
 			"platform": "ODC",
@@ -5198,6 +5257,7 @@
 		},
 		"Interaction/MonthPicker": {
 			"key": "Interaction/MonthPicker",
+			"label": "Interaction/MonthPicker",
 			"flow": "Interaction",
 			"name": "MonthPicker",
 			"platform": "ODC",
@@ -5315,6 +5375,7 @@
 		},
 		"Interaction/Notification": {
 			"key": "Interaction/Notification",
+			"label": "Interaction/Notification",
 			"flow": "Interaction",
 			"name": "Notification",
 			"platform": "ODC",
@@ -5435,6 +5496,7 @@
 		},
 		"Interaction/RangeSlider": {
 			"key": "Interaction/RangeSlider",
+			"label": "Interaction/RangeSlider",
 			"flow": "Interaction",
 			"name": "RangeSlider",
 			"platform": "ODC",
@@ -5570,6 +5632,7 @@
 		},
 		"Interaction/RangeSliderInterval": {
 			"key": "Interaction/RangeSliderInterval",
+			"label": "Interaction/RangeSliderInterval",
 			"flow": "Interaction",
 			"name": "RangeSliderInterval",
 			"platform": "ODC",
@@ -5720,6 +5783,7 @@
 		},
 		"Interaction/ScrollableArea": {
 			"key": "Interaction/ScrollableArea",
+			"label": "Interaction/ScrollableArea",
 			"flow": "Interaction",
 			"name": "ScrollableArea",
 			"platform": "ODC",
@@ -5801,6 +5865,7 @@
 		},
 		"Interaction/Search": {
 			"key": "Interaction/Search",
+			"label": "Interaction/Search",
 			"flow": "Interaction",
 			"name": "Search",
 			"platform": "ODC",
@@ -5856,6 +5921,7 @@
 		},
 		"Interaction/Sidebar": {
 			"key": "Interaction/Sidebar",
+			"label": "Interaction/Sidebar",
 			"flow": "Interaction",
 			"name": "Sidebar",
 			"platform": "ODC",
@@ -5977,6 +6043,7 @@
 		},
 		"Interaction/StackedCards": {
 			"key": "Interaction/StackedCards",
+			"label": "Interaction/StackedCards",
 			"flow": "Interaction",
 			"name": "StackedCards",
 			"platform": "ODC",
@@ -6124,6 +6191,7 @@
 		},
 		"Interaction/TimePicker": {
 			"key": "Interaction/TimePicker",
+			"label": "Interaction/TimePicker",
 			"flow": "Interaction",
 			"name": "TimePicker",
 			"platform": "ODC",
@@ -6241,6 +6309,7 @@
 		},
 		"Interaction/Video": {
 			"key": "Interaction/Video",
+			"label": "Interaction/Video",
 			"flow": "Interaction",
 			"name": "Video",
 			"platform": "ODC",
@@ -6372,6 +6441,7 @@
 		},
 		"Licenses/Licenses": {
 			"key": "Licenses/Licenses",
+			"label": "Licenses/Licenses",
 			"flow": "Licenses",
 			"name": "Licenses",
 			"platform": "ODC",
@@ -6398,6 +6468,7 @@
 		},
 		"Navigation/BottomBarItem": {
 			"key": "Navigation/BottomBarItem",
+			"label": "Navigation/BottomBarItem",
 			"flow": "Navigation",
 			"name": "BottomBarItem",
 			"platform": "ODC",
@@ -6438,6 +6509,7 @@
 		},
 		"Navigation/Breadcrumbs": {
 			"key": "Navigation/Breadcrumbs",
+			"label": "Navigation/Breadcrumbs",
 			"flow": "Navigation",
 			"name": "Breadcrumbs",
 			"platform": "ODC",
@@ -6474,6 +6546,7 @@
 		},
 		"Navigation/BreadcrumbsItem": {
 			"key": "Navigation/BreadcrumbsItem",
+			"label": "Navigation/BreadcrumbsItem",
 			"flow": "Navigation",
 			"name": "BreadcrumbsItem",
 			"platform": "ODC",
@@ -6514,6 +6587,7 @@
 		},
 		"Navigation/DEPRECATED_SectionIndex": {
 			"key": "Navigation/DEPRECATED_SectionIndex",
+			"label": "Navigation/DEPRECATED_SectionIndex",
 			"flow": "Navigation",
 			"name": "DEPRECATED_SectionIndex",
 			"platform": "ODC",
@@ -6572,6 +6646,7 @@
 		},
 		"Navigation/DEPRECATED_Submenu": {
 			"key": "Navigation/DEPRECATED_Submenu",
+			"label": "Navigation/DEPRECATED_Submenu",
 			"flow": "Navigation",
 			"name": "DEPRECATED_Submenu",
 			"platform": "ODC",
@@ -6612,6 +6687,7 @@
 		},
 		"Navigation/DEPRECATED_Tabs": {
 			"key": "Navigation/DEPRECATED_Tabs",
+			"label": "Navigation/DEPRECATED_Tabs",
 			"flow": "Navigation",
 			"name": "DEPRECATED_Tabs",
 			"platform": "ODC",
@@ -6701,6 +6777,7 @@
 		},
 		"Navigation/DEPRECATED_TabsContentItem": {
 			"key": "Navigation/DEPRECATED_TabsContentItem",
+			"label": "Navigation/DEPRECATED_TabsContentItem",
 			"flow": "Navigation",
 			"name": "DEPRECATED_TabsContentItem",
 			"platform": "ODC",
@@ -6737,6 +6814,7 @@
 		},
 		"Navigation/DEPRECATED_TabsHeaderItem": {
 			"key": "Navigation/DEPRECATED_TabsHeaderItem",
+			"label": "Navigation/DEPRECATED_TabsHeaderItem",
 			"flow": "Navigation",
 			"name": "DEPRECATED_TabsHeaderItem",
 			"platform": "ODC",
@@ -6773,6 +6851,7 @@
 		},
 		"Navigation/DEPRECATED_WizardItemV2": {
 			"key": "Navigation/DEPRECATED_WizardItemV2",
+			"label": "Navigation/DEPRECATED_WizardItemV2",
 			"flow": "Navigation",
 			"name": "DEPRECATED_WizardItemV2",
 			"platform": "ODC",
@@ -6843,6 +6922,7 @@
 		},
 		"Navigation/DEPRECATED_WizardV2": {
 			"key": "Navigation/DEPRECATED_WizardV2",
+			"label": "Navigation/DEPRECATED_WizardV2",
 			"flow": "Navigation",
 			"name": "DEPRECATED_WizardV2",
 			"platform": "ODC",
@@ -6888,6 +6968,7 @@
 		},
 		"Navigation/OverflowMenu": {
 			"key": "Navigation/OverflowMenu",
+			"label": "Navigation/OverflowMenu",
 			"flow": "Navigation",
 			"name": "OverflowMenu",
 			"platform": "ODC",
@@ -7006,6 +7087,7 @@
 		},
 		"Navigation/Pagination": {
 			"key": "Navigation/Pagination",
+			"label": "Navigation/Pagination",
 			"flow": "Navigation",
 			"name": "Pagination",
 			"platform": "ODC",
@@ -7095,6 +7177,7 @@
 		},
 		"Navigation/SectionIndex": {
 			"key": "Navigation/SectionIndex",
+			"label": "Navigation/SectionIndex",
 			"flow": "Navigation",
 			"name": "SectionIndex",
 			"platform": "ODC",
@@ -7170,6 +7253,7 @@
 		},
 		"Navigation/SectionIndexItem": {
 			"key": "Navigation/SectionIndexItem",
+			"label": "Navigation/SectionIndexItem",
 			"flow": "Navigation",
 			"name": "SectionIndexItem",
 			"platform": "ODC",
@@ -7235,6 +7319,7 @@
 		},
 		"Navigation/Submenu": {
 			"key": "Navigation/Submenu",
+			"label": "Navigation/Submenu",
 			"flow": "Navigation",
 			"name": "Submenu",
 			"platform": "ODC",
@@ -7312,6 +7397,7 @@
 		},
 		"Navigation/Tabs": {
 			"key": "Navigation/Tabs",
+			"label": "Navigation/Tabs",
 			"flow": "Navigation",
 			"name": "Tabs",
 			"platform": "ODC",
@@ -7448,6 +7534,7 @@
 		},
 		"Navigation/TabsContentItem": {
 			"key": "Navigation/TabsContentItem",
+			"label": "Navigation/TabsContentItem",
 			"flow": "Navigation",
 			"name": "TabsContentItem",
 			"platform": "ODC",
@@ -7503,6 +7590,7 @@
 		},
 		"Navigation/TabsHeaderItem": {
 			"key": "Navigation/TabsHeaderItem",
+			"label": "Navigation/TabsHeaderItem",
 			"flow": "Navigation",
 			"name": "TabsHeaderItem",
 			"platform": "ODC",
@@ -7558,6 +7646,7 @@
 		},
 		"Navigation/TimelineItem": {
 			"key": "Navigation/TimelineItem",
+			"label": "Navigation/TimelineItem",
 			"flow": "Navigation",
 			"name": "TimelineItem",
 			"platform": "ODC",
@@ -7656,6 +7745,7 @@
 		},
 		"Navigation/Wizard": {
 			"key": "Navigation/Wizard",
+			"label": "Navigation/Wizard",
 			"flow": "Navigation",
 			"name": "Wizard",
 			"platform": "ODC",
@@ -7735,6 +7825,7 @@
 		},
 		"Navigation/WizardItem": {
 			"key": "Navigation/WizardItem",
+			"label": "Navigation/WizardItem",
 			"flow": "Navigation",
 			"name": "WizardItem",
 			"platform": "ODC",
@@ -7832,6 +7923,7 @@
 		},
 		"Numbers/Badge": {
 			"key": "Numbers/Badge",
+			"label": "Numbers/Badge",
 			"flow": "Numbers",
 			"name": "Badge",
 			"platform": "ODC",
@@ -7945,6 +8037,7 @@
 		},
 		"Numbers/Counter": {
 			"key": "Numbers/Counter",
+			"label": "Numbers/Counter",
 			"flow": "Numbers",
 			"name": "Counter",
 			"platform": "ODC",
@@ -8036,6 +8129,7 @@
 		},
 		"Numbers/DEPRECATED_ProgressBar": {
 			"key": "Numbers/DEPRECATED_ProgressBar",
+			"label": "Numbers/DEPRECATED_ProgressBar",
 			"flow": "Numbers",
 			"name": "DEPRECATED_ProgressBar",
 			"platform": "ODC",
@@ -8154,6 +8248,7 @@
 		},
 		"Numbers/DEPRECATED_ProgressCircle": {
 			"key": "Numbers/DEPRECATED_ProgressCircle",
+			"label": "Numbers/DEPRECATED_ProgressCircle",
 			"flow": "Numbers",
 			"name": "DEPRECATED_ProgressCircle",
 			"platform": "ODC",
@@ -8248,6 +8343,7 @@
 		},
 		"Numbers/DEPRECATED_ProgressCircleFraction": {
 			"key": "Numbers/DEPRECATED_ProgressCircleFraction",
+			"label": "Numbers/DEPRECATED_ProgressCircleFraction",
 			"flow": "Numbers",
 			"name": "DEPRECATED_ProgressCircleFraction",
 			"platform": "ODC",
@@ -8342,6 +8438,7 @@
 		},
 		"Numbers/IconBadge": {
 			"key": "Numbers/IconBadge",
+			"label": "Numbers/IconBadge",
 			"flow": "Numbers",
 			"name": "IconBadge",
 			"platform": "ODC",
@@ -8433,6 +8530,7 @@
 		},
 		"Numbers/ProgressBar": {
 			"key": "Numbers/ProgressBar",
+			"label": "Numbers/ProgressBar",
 			"flow": "Numbers",
 			"name": "ProgressBar",
 			"platform": "ODC",
@@ -8594,6 +8692,7 @@
 		},
 		"Numbers/ProgressCircle": {
 			"key": "Numbers/ProgressCircle",
+			"label": "Numbers/ProgressCircle",
 			"flow": "Numbers",
 			"name": "ProgressCircle",
 			"platform": "ODC",
@@ -8765,6 +8864,7 @@
 		},
 		"Numbers/Rating": {
 			"key": "Numbers/Rating",
+			"label": "Numbers/Rating",
 			"flow": "Numbers",
 			"name": "Rating",
 			"platform": "ODC",
@@ -8890,6 +8990,7 @@
 		},
 		"Private/ApplicationLoadEvents": {
 			"key": "Private/ApplicationLoadEvents",
+			"label": "Private/ApplicationLoadEvents",
 			"flow": "Private",
 			"name": "ApplicationLoadEvents",
 			"platform": "ODC",
@@ -8951,6 +9052,7 @@
 		},
 		"Private/LightBox": {
 			"key": "Private/LightBox",
+			"label": "Private/LightBox",
 			"flow": "Private",
 			"name": "LightBox",
 			"platform": "ODC",
@@ -8972,6 +9074,7 @@
 		},
 		"Private/MenuDrag": {
 			"key": "Private/MenuDrag",
+			"label": "Private/MenuDrag",
 			"flow": "Private",
 			"name": "MenuDrag",
 			"platform": "ODC",
@@ -9016,6 +9119,7 @@
 		},
 		"Private/NetworkStatusChanged": {
 			"key": "Private/NetworkStatusChanged",
+			"label": "Private/NetworkStatusChanged",
 			"flow": "Private",
 			"name": "NetworkStatusChanged",
 			"platform": "ODC",
@@ -9050,6 +9154,7 @@
 		},
 		"Private/OfflineDataSyncCore": {
 			"key": "Private/OfflineDataSyncCore",
+			"label": "Private/OfflineDataSyncCore",
 			"flow": "Private",
 			"name": "OfflineDataSyncCore",
 			"platform": "ODC",
@@ -9131,6 +9236,7 @@
 		},
 		"Private/PullToRefresh": {
 			"key": "Private/PullToRefresh",
+			"label": "Private/PullToRefresh",
 			"flow": "Private",
 			"name": "PullToRefresh",
 			"platform": "ODC",
@@ -9159,6 +9265,7 @@
 		},
 		"Utilities/AlignCenter": {
 			"key": "Utilities/AlignCenter",
+			"label": "Utilities/AlignCenter",
 			"flow": "Utilities",
 			"name": "AlignCenter",
 			"platform": "ODC",
@@ -9204,6 +9311,7 @@
 		},
 		"Utilities/ButtonLoading": {
 			"key": "Utilities/ButtonLoading",
+			"label": "Utilities/ButtonLoading",
 			"flow": "Utilities",
 			"name": "ButtonLoading",
 			"platform": "ODC",
@@ -9279,6 +9387,7 @@
 		},
 		"Utilities/CenterContent": {
 			"key": "Utilities/CenterContent",
+			"label": "Utilities/CenterContent",
 			"flow": "Utilities",
 			"name": "CenterContent",
 			"platform": "ODC",
@@ -9332,6 +9441,7 @@
 		},
 		"Utilities/DEPRECATED_ButtonLoading": {
 			"key": "Utilities/DEPRECATED_ButtonLoading",
+			"label": "Utilities/DEPRECATED_ButtonLoading",
 			"flow": "Utilities",
 			"name": "DEPRECATED_ButtonLoading",
 			"platform": "ODC",
@@ -9386,6 +9496,7 @@
 		},
 		"Utilities/InlineSVG": {
 			"key": "Utilities/InlineSVG",
+			"label": "Utilities/InlineSVG",
 			"flow": "Utilities",
 			"name": "InlineSVG",
 			"platform": "ODC",
@@ -9446,6 +9557,7 @@
 		},
 		"Utilities/MarginContainer": {
 			"key": "Utilities/MarginContainer",
+			"label": "Utilities/MarginContainer",
 			"flow": "Utilities",
 			"name": "MarginContainer",
 			"platform": "ODC",
@@ -9482,6 +9594,7 @@
 		},
 		"Utilities/MouseEvents": {
 			"key": "Utilities/MouseEvents",
+			"label": "Utilities/MouseEvents",
 			"flow": "Utilities",
 			"name": "MouseEvents",
 			"platform": "ODC",
@@ -9604,6 +9717,7 @@
 		},
 		"Utilities/PasswordPolicy": {
 			"key": "Utilities/PasswordPolicy",
+			"label": "Utilities/PasswordPolicy",
 			"flow": "Utilities",
 			"name": "PasswordPolicy",
 			"platform": "ODC",
@@ -9648,6 +9762,7 @@
 		},
 		"Utilities/ProviderLoginButton": {
 			"key": "Utilities/ProviderLoginButton",
+			"label": "Utilities/ProviderLoginButton",
 			"flow": "Utilities",
 			"name": "ProviderLoginButton",
 			"platform": "ODC",
@@ -9723,6 +9838,7 @@
 		},
 		"Utilities/Separator": {
 			"key": "Utilities/Separator",
+			"label": "Utilities/Separator",
 			"flow": "Utilities",
 			"name": "Separator",
 			"platform": "ODC",
@@ -9819,6 +9935,7 @@
 		},
 		"Utilities/SwipeEvents": {
 			"key": "Utilities/SwipeEvents",
+			"label": "Utilities/SwipeEvents",
 			"flow": "Utilities",
 			"name": "SwipeEvents",
 			"platform": "ODC",
@@ -9875,6 +9992,7 @@
 		},
 		"Utilities/TouchEvents": {
 			"key": "Utilities/TouchEvents",
+			"label": "Utilities/TouchEvents",
 			"flow": "Utilities",
 			"name": "TouchEvents",
 			"platform": "ODC",

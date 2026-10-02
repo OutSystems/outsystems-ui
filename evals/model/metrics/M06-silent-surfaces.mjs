@@ -37,6 +37,22 @@ export function knobNamesOf(css) {
 	return [...out].sort((a, b) => (a < b ? -1 : Number(a > b)));
 }
 
+/**
+ * Whether the tokens document names the knob as a whole word (`--osui-card-padding-inline` does not document
+ * `--osui-card-padding`).
+ * @param {string} doc
+ * @param {string} knob
+ */
+export function knobDocumented(doc, knob) {
+	let from = 0;
+	while ((from = doc.indexOf(knob, from)) !== -1) {
+		const next = doc[from + knob.length];
+		if (next === undefined || !isNameChar(next)) return true;
+		from += knob.length;
+	}
+	return false;
+}
+
 /** @param {import('../../lib/context.mjs').EvalContext} ctx */
 export function declaredIconLibraries(ctx) {
 	const text = ICON_PARTIALS.map((f) => ctx.readText(insideDir(ctx.root, ...f.split('/')))).join('\n');
@@ -109,7 +125,7 @@ export default {
 		);
 		const surfaces = {
 			utilities: { documented: classes.filter((c) => inManifest.has(c)).length, total: classes.length },
-			knobs: { documented: [...knobs].filter((k) => tokensDoc.includes(k)).length, total: knobs.size },
+			knobs: { documented: [...knobs].filter((k) => knobDocumented(tokensDoc, k)).length, total: knobs.size },
 			icons: { documented: libraries.filter((l) => iconsDocumented.has(l)).length, total: libraries.length },
 			enums: { documented: [...entities].filter((e) => enumsDocumented.has(e)).length, total: entities.size },
 		};

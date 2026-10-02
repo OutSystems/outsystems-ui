@@ -7,7 +7,7 @@
 import { list } from '../../lib/present.mjs';
 import { mean, round1 } from '../../lib/score.mjs';
 import { blockTable } from '../lib/manifest.mjs';
-import { flattenBlocks, isFreeText } from '../lib/snapshot.mjs';
+import { flattenBlocks, isFreeText, NO_SNAPSHOT } from '../lib/snapshot.mjs';
 
 /** @param {string} a @param {string} b */
 const byCodePoint = (a, b) => (a < b ? -1 : Number(a > b));
@@ -81,7 +81,8 @@ export default {
 	},
 	/** @param {import('../../lib/context.mjs').EvalContext} ctx */
 	compute(ctx) {
-		const rows = flattenBlocks(ctx.modelSnapshots());
+		const snapshots = ctx.modelSnapshots();
+		const rows = flattenBlocks(snapshots);
 		/** @type {any[]} */
 		const perComponent = [];
 		/** @type {{ name: string, reason: string, hint?: string }[]} */
@@ -106,7 +107,10 @@ export default {
 		}
 		return {
 			score: round1(mean(perComponent.map((r) => r.score)) ?? 0),
-			summary: `${totals.described}/${totals.params} params described, ${totals.defaulted}/${totals.optional} defaulted, ${totals.freeText} free-Text across ${perComponent.length} blocks`,
+			summary:
+				snapshots.length === 0
+					? NO_SNAPSHOT
+					: `${totals.described}/${totals.params} params described, ${totals.defaulted}/${totals.optional} defaulted, ${totals.freeText} free-Text across ${perComponent.length} blocks`,
 			raw: totals,
 			perComponent: perComponent.sort((a, b) => a.score - b.score || byCodePoint(a.label, b.label)),
 			unmeasured: [],

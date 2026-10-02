@@ -8,7 +8,7 @@
 import { list } from '../../lib/present.mjs';
 import { mean, round1 } from '../../lib/score.mjs';
 import { blockTable, loadBlocksManifest } from '../lib/manifest.mjs';
-import { flattenBlocks, publicBlocks } from '../lib/snapshot.mjs';
+import { flattenBlocks, NO_SNAPSHOT, publicBlocks } from '../lib/snapshot.mjs';
 
 export const FACETS = ['params', 'placeholders', 'events', 'recipes', 'pattern'];
 
@@ -109,7 +109,7 @@ export default {
 		const blocks = publicBlocks(rows);
 		const manifest = loadBlocksManifest(ctx);
 		const perComponent = blocks.map((b) => {
-			const entry = manifest?.blocks?.[b.key];
+			const entry = manifest?.blocks?.[b.label];
 			const r = scoreBlockFacets(b, entry);
 			return {
 				name: b.label,
@@ -128,7 +128,7 @@ export default {
 			facetMeans[f] = values.length ? round1(/** @type {number} */ (mean(values))) : null;
 		}
 		let summary = `${present.length}/${blocks.length} public blocks in the manifest`;
-		if (snapshots.length === 0) summary = 'no evals/model/osui.blocks*.json snapshot';
+		if (snapshots.length === 0) summary = NO_SNAPSHOT;
 		else if (!manifest) summary = 'no docs-ai/osui.blocks.json';
 		return {
 			score: scoreEval({

@@ -1,9 +1,9 @@
 {
 	"label": "model-1",
-	"date": "2026-10-02T10:16:10.811Z",
-	"sha": "83d8e5196",
+	"date": "2026-10-02T11:28:59.574Z",
+	"sha": "2f2b5da08",
 	"branch": "agents/osui-validate-evals",
-	"inputs": "fae7d2970e94571406f59fdc8736a56ad787b58cf88298d9e9bd3d5304bd42aa",
+	"inputs": "95e6f454adea55c4d2c526a13c5eabf647606e7263c97dbde4d34fa5f5127d11",
 	"node": "v24.19.0",
 	"tokenizer": "o200k_base",
 	"partial": false,
@@ -383,7 +383,7 @@
 						}
 					],
 					"unmeasured": [],
-					"ms": 1045
+					"ms": 908
 				},
 				{
 					"id": "E02",
@@ -680,7 +680,7 @@
 						}
 					],
 					"unmeasured": [],
-					"ms": 1
+					"ms": 0
 				},
 				{
 					"id": "E03",
@@ -1095,7 +1095,7 @@
 						}
 					],
 					"unmeasured": [],
-					"ms": 3
+					"ms": 4
 				},
 				{
 					"id": "E04",
@@ -1121,7 +1121,7 @@
 					"details": {
 						"missingReturnTypes": []
 					},
-					"ms": 1072
+					"ms": 924
 				},
 				{
 					"id": "E05",
@@ -1655,7 +1655,7 @@
 						}
 					],
 					"unmeasured": [],
-					"ms": 4
+					"ms": 3
 				},
 				{
 					"id": "E06",
@@ -1980,7 +1980,7 @@
 						}
 					],
 					"unmeasured": [],
-					"ms": 2
+					"ms": 1
 				},
 				{
 					"id": "E07",
@@ -2809,7 +2809,7 @@
 							"hint": "Style it through its --osui-* knobs; the markup is not yours to emit."
 						}
 					],
-					"ms": 115
+					"ms": 78
 				},
 				{
 					"id": "E08",
@@ -4505,7 +4505,7 @@
 							}
 						]
 					},
-					"ms": 4452
+					"ms": 3163
 				},
 				{
 					"id": "E09",
@@ -5968,7 +5968,7 @@
 							}
 						]
 					},
-					"ms": 161
+					"ms": 97
 				},
 				{
 					"id": "E10",
@@ -6320,7 +6320,7 @@
 						}
 					],
 					"unmeasured": [],
-					"ms": 1375
+					"ms": 1092
 				}
 			]
 		},
@@ -7722,7 +7722,7 @@
 						}
 					],
 					"unmeasured": [],
-					"ms": 114
+					"ms": 57
 				},
 				{
 					"id": "R02",
@@ -10954,7 +10954,7 @@
 						}
 					],
 					"unmeasured": [],
-					"ms": 91
+					"ms": 50
 				},
 				{
 					"id": "R03",
@@ -11311,7 +11311,7 @@
 							"hint": "Keyboard checks apply once the pattern renders an interactive control of its own."
 						}
 					],
-					"ms": 13
+					"ms": 8
 				},
 				{
 					"id": "R04",
@@ -14363,7 +14363,7 @@
 							"hint": "Nothing to change: the compiled CSS declares no colour, typography, shape, spacing, elevation or grid family."
 						}
 					],
-					"ms": 68
+					"ms": 56
 				},
 				{
 					"id": "R05",
@@ -16525,7 +16525,7 @@
 							"hint": "Nothing to change: the compiled CSS lays nothing out and sets no direction."
 						}
 					],
-					"ms": 16
+					"ms": 14
 				},
 				{
 					"id": "R06",
@@ -19226,7 +19226,7 @@
 							"hint": "State checks apply once the component is interactive, loads, validates or animates."
 						}
 					],
-					"ms": 25
+					"ms": 20
 				}
 			]
 		},
@@ -19571,7 +19571,7 @@
 							"hint": "Nothing to rename: these classes mark behaviour (skip links, hidden text, viewport helpers), not a style."
 						}
 					],
-					"ms": 692
+					"ms": 479
 				},
 				{
 					"id": "U02",
@@ -19848,7 +19848,7 @@
 							"hint": "Only spacing, gaps, font sizes, shadows and border sizes follow the none … xxl scale; border-radius keeps its shape vocabulary (ADR-0010), colours their shades."
 						}
 					],
-					"ms": 13
+					"ms": 8
 				},
 				{
 					"id": "U03",
@@ -20042,7 +20042,7 @@
 							"hint": "Nothing to route: the family sets display, position, overflow or text behaviour, not a themed value."
 						}
 					],
-					"ms": 15
+					"ms": 8
 				},
 				{
 					"id": "U04",
@@ -20279,7 +20279,7 @@
 					],
 					"unmeasured": [],
 					"notApplicable": [],
-					"ms": 30
+					"ms": 15
 				},
 				{
 					"id": "U05",
@@ -20970,7 +20970,7 @@
 					],
 					"unmeasured": [],
 					"notApplicable": [],
-					"ms": 15
+					"ms": 19
 				},
 				{
 					"id": "U06",
@@ -21136,7 +21136,7 @@
 							"hint": "Colours, shadows, images and hooks look the same on every viewport."
 						}
 					],
-					"ms": 12
+					"ms": 7
 				}
 			]
 		},
@@ -22856,7 +22856,7 @@
 					],
 					"unmeasured": [],
 					"notApplicable": [],
-					"ms": 14
+					"ms": 11
 				},
 				{
 					"id": "M02",
@@ -23370,7 +23370,7 @@
 							"hint": "Item and no-DOM patterns are driven by their parent block."
 						}
 					],
-					"ms": 7
+					"ms": 5
 				},
 				{
 					"id": "M03",
@@ -25518,7 +25518,7 @@
 							"reason": "no input parameters"
 						}
 					],
-					"ms": 7
+					"ms": 5
 				},
 				{
 					"id": "M04",
@@ -26602,7 +26602,7 @@
 					],
 					"unmeasured": [],
 					"notApplicable": [],
-					"ms": 42
+					"ms": 36
 				},
 				{
 					"id": "M05",
@@ -26625,7 +26625,7 @@
 					"perComponent": [],
 					"unmeasured": [],
 					"notApplicable": [],
-					"ms": 6
+					"ms": 4
 				},
 				{
 					"id": "M06",
@@ -26665,7 +26665,7 @@
 					"perComponent": [],
 					"unmeasured": [],
 					"notApplicable": [],
-					"ms": 164
+					"ms": 121
 				}
 			]
 		}

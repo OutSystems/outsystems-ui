@@ -7,7 +7,7 @@ import { list, toDoHint } from '../../lib/present.mjs';
 import { registry } from '../../lib/registry.mjs';
 import { mean, round1 } from '../../lib/score.mjs';
 import { linksFor } from '../lib/crosswalk.mjs';
-import { flattenBlocks } from '../lib/snapshot.mjs';
+import { flattenBlocks, NO_SNAPSHOT } from '../lib/snapshot.mjs';
 
 /** @param {string} a @param {string} b */
 const byCodePoint = (a, b) => (a < b ? -1 : Number(a > b));
@@ -131,7 +131,10 @@ export default {
 		}
 		return {
 			score: round1(mean(perComponent.map((r) => r.score)) ?? 0),
-			summary: `${totals.linked}/${ctx.inventory.patterns.length} patterns linked (${totals.fromRegistry} confirmed, ${totals.fromHints} hinted); ${totals.mapped}/${totals.params} block params mapped`,
+			summary:
+				snapshots.length === 0
+					? NO_SNAPSHOT
+					: `${totals.linked}/${ctx.inventory.patterns.length} patterns linked (${totals.fromRegistry} confirmed, ${totals.fromHints} hinted); ${totals.mapped}/${totals.params} block params mapped`,
 			raw: { ...totals, patterns: ctx.inventory.patterns.length },
 			perComponent: perComponent.sort((a, b) => a.score - b.score || byCodePoint(a.name, b.name)),
 			unmeasured,

@@ -71,6 +71,30 @@ function unmeasuredGroup(evals, lookup) {
 	};
 }
 
+/**
+ * The per-block tables a suite contributes through its evals' `extra` ({ title, columns, rows }); null when it
+ * contributes none. Blocks are not components, so their figures live here rather than in the heatmap.
+ */
+function tablesGroup(s, lookup) {
+	const tables = Object.entries(s.extra || {}).filter(
+		([, v]) => v && Array.isArray(v.columns) && Array.isArray(v.rows) && typeof v.title === 'string'
+	);
+	if (!tables.length) return null;
+	const items = tables.map(([key, v]) => {
+		const id = s.evals.map((e) => e.id).find((x) => key.endsWith(x));
+		const head = v.columns.map((c) => `<th>${esc(c)}</th>`).join('');
+		const body = v.rows.map((r) => `<tr>${r.map((c) => `<td>${esc(String(c))}</td>`).join('')}</tr>`).join('');
+		const table = `<table class="block-table"><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table>`;
+		return item(lookup, id ? [id] : [], esc(v.title), '', '', table);
+	});
+	return {
+		cls: `tables-${s.id}`,
+		title: `${s.name}: per-block tables`,
+		lead: 'One row per OML block, lowest score first, with what would move it. Blocks are not components and have no heatmap cells.',
+		items,
+	};
+}
+
 /** The roadmap group of a suite that reports requirements; null when it reports none. */
 function roadmapGroup(s, lookup) {
 	const reqs = s.extra && s.extra.requirements;
@@ -757,6 +781,7 @@ export function mount(document, window, localStorage, EMBEDDED) {
 		const groups = [
 			unmeasuredGroup(evals, lookup),
 			...D.suites.map((s) => roadmapGroup(s, lookup)),
+			...D.suites.map((s) => tablesGroup(s, lookup)),
 			movableGroup(evals, lookup),
 			structuralGroup(evals, lookup),
 			doneGroup(evals, lookup),

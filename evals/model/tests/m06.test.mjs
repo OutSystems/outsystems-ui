@@ -33,3 +33,10 @@ test('M06 is a whole-repository eval', () => {
 	assert.equal(M06.present.heatmap, false);
 	assert.equal(typeof M06.present.advice, 'function');
 });
+
+test('a knob counts as documented only when its full name appears, not a longer name with the same prefix', async () => {
+	const { knobDocumented } = await import('../metrics/M06-silent-surfaces.mjs');
+	assert.equal(knobDocumented('- --osui-card-padding-inline\n', '--osui-card-padding'), false);
+	assert.equal(knobDocumented('- --osui-card-padding — the padding\n', '--osui-card-padding'), true);
+	assert.equal(knobDocumented('x --osui-card-padding: 4px', '--osui-card-padding'), true);
+});

@@ -78,3 +78,12 @@ test('the page module renders a data set with a single suite and a single run', 
 	for (const s of REQUIRED_SECTIONS)
 		assert.ok(filled.includes(s), `${s} is filled with one suite (filled: ${filled.join(', ')})`);
 });
+
+test('the findings render the per-block tables a suite contributes through extra', async () => {
+	const { renderSection } = await import('../tools/dashboard-page.mjs');
+	const html = await renderSection(evalsDir, 'findings');
+	assert.ok(html.includes('M01 · manifest completeness per block'), 'M01 table title');
+	assert.ok(html.includes('M03 · parameter precision per block'), 'M03 table title');
+	assert.ok(html.includes('<table class="block-table">'), 'rendered as a table');
+	assert.ok(html.includes('Interaction/Carousel'), 'rows name the blocks');
+});

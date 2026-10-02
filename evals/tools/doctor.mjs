@@ -19,7 +19,7 @@ import { fileURLToPath } from 'node:url';
 
 import { createContext } from '../lib/context.mjs';
 import { loadRegistry, REGISTRY_FILE, validateRegistry } from '../lib/registry.mjs';
-import { flattenBlocks, loadSnapshots, publicBlocks } from '../model/lib/snapshot.mjs';
+import { flattenBlocks, publicBlocks } from '../model/lib/snapshot.mjs';
 
 /** Code signals a derived entry is read from: plain substrings, no regular expressions over source. */
 const SIGNALS = {
@@ -157,7 +157,7 @@ export function diagnose(ctx, registry) {
 			.filter((c) => !c.storyFile && !c.host && c.kind !== 'utility')
 			.map((c) => c.name),
 	];
-	const blocks = publicBlocks(flattenBlocks(loadSnapshots()));
+	const blocks = publicBlocks(flattenBlocks(ctx.modelSnapshots()));
 	const blockHints = blockHintsFor(
 		ctx.inventory.patterns.map((p) => p.name),
 		registry,

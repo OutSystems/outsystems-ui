@@ -204,3 +204,33 @@ test('renderDoctorBlocks lists proposals and orphans without turning them into a
 	assert.ok(text.includes('Interaction/Gallery') && text.includes('GalleryAPI'));
 	assert.equal(renderDoctorBlocks({ ...r, blockHints: { proposals: [], orphans: [] } }), '');
 });
+
+test('diagnose reads the snapshot through the context, not the repository default', () => {
+	const ctx = createContext(root);
+	const fake = {
+		...ctx,
+		modelSnapshots: () => [
+			{
+				version: 1,
+				source: { module: 'X', platform: 'ODC' },
+				staticEntities: {},
+				structures: {},
+				blocks: {
+					'Zed/Only': {
+						flow: 'Zed',
+						name: 'Only',
+						public: true,
+						description: '',
+						inputParameters: [],
+						placeholders: [],
+						events: [],
+						requiredScripts: [],
+						patternHints: { apiCalls: ['SearchAPI'] },
+					},
+				},
+			},
+		],
+	};
+	const r = diagnose(/** @type {any} */ (fake), { components: { Search: { kind: 'pattern' } } });
+	assert.deepEqual(r.blockHints.proposals, [{ pattern: 'Search', blocks: [{ flow: 'Zed', name: 'Only' }] }]);
+});

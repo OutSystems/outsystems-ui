@@ -147,6 +147,25 @@ export async function renderCheck(evalsDir, data) {
 }
 
 /**
+ * The HTML the page module writes into one section, from the committed data set or the given one.
+ * @param {string} evalsDir
+ * @param {string} id section id (REQUIRED_SECTIONS)
+ * @param {any} [data]
+ */
+export async function renderSection(evalsDir, id, data) {
+	const { mount } = await import(pathToFileURL(insideDir(evalsDir, MODULE_FILE)).href);
+	const document = createDocumentStub();
+	const storage = {
+		getItem() {
+			return null;
+		},
+		setItem() {},
+	};
+	mount(document, {}, storage, data ?? JSON.parse(readDataSet(evalsDir)));
+	return document.getElementById(id)?.innerHTML ?? '';
+}
+
+/**
  * @param {string} evalsDir
  */
 export function writeDashboardPage(evalsDir) {

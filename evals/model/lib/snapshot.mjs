@@ -13,6 +13,8 @@ import { validate } from '../../lib/schema.mjs';
 
 export const MODEL_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 export const SCHEMA_FILE = insideDir(MODEL_DIR, 'osui.blocks.schema.json');
+/** The summary every snapshot-driven eval reports when no snapshot is present. */
+export const NO_SNAPSHOT = 'no evals/model/osui.blocks*.json snapshot';
 
 /** @param {string} a @param {string} b */
 const byCodePoint = (a, b) => (a < b ? -1 : Number(a > b));

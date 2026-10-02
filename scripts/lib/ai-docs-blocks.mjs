@@ -38,6 +38,7 @@ export function buildBlocksManifest(ctx) {
 		const link = pattern ? linksFor(pattern, reg, rows).find((l) => l.key === b.key) : undefined;
 		const entry = {
 			key: b.key,
+			label: b.label,
 			flow: b.flow,
 			name: b.name,
 			platform: b.platform,
@@ -144,7 +145,7 @@ const collapsed = (text) => text.split(/\s+/).filter(Boolean).join(' ');
 export function renderBlockCard(b, stage = 0) {
 	const desc = (/** @type {string} */ s) => (stage >= 1 ? firstSentence(s) : collapsed(s));
 	const withDescriptions = stage < 4;
-	const lines = [`## ${b.key}`];
+	const lines = [`## ${b.label ?? b.key}`];
 	if (b.description && stage < 5) lines.push(`Purpose: ${desc(b.description)}`);
 	lines.push(b.params.length ? 'Params:' : 'Params: none');
 	for (const p of b.params) {

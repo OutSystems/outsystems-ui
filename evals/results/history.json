@@ -849,8 +849,8 @@
 	},
 	{
 		"label": "model-1",
-		"date": "2026-10-02T10:16:10.811Z",
-		"sha": "83d8e5196",
+		"date": "2026-10-02T11:28:59.574Z",
+		"sha": "2f2b5da08",
 		"suites": {
 			"ai": {
 				"scores": {
@@ -1043,6 +1043,6 @@
 			}
 		},
 		"branch": "agents/osui-validate-evals",
-		"inputs": "fae7d2970e94571406f59fdc8736a56ad787b58cf88298d9e9bd3d5304bd42aa"
+		"inputs": "95e6f454adea55c4d2c526a13c5eabf647606e7263c97dbde4d34fa5f5127d11"
 	}
 ]

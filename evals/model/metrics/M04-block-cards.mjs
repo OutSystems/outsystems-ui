@@ -7,7 +7,7 @@ import { parseCards } from '../../ai-friendliness/metrics/E01-context-tokens.mjs
 import { list } from '../../lib/present.mjs';
 import { band, mean, round1 } from '../../lib/score.mjs';
 import { blockTable } from '../lib/manifest.mjs';
-import { flattenBlocks } from '../lib/snapshot.mjs';
+import { flattenBlocks, NO_SNAPSHOT } from '../lib/snapshot.mjs';
 
 export const CARD_BUDGET_BLOCK = 250;
 export const CARD_WORST = 600;
@@ -75,7 +75,8 @@ export default {
 	},
 	/** @param {import('../../lib/context.mjs').EvalContext} ctx */
 	compute(ctx) {
-		const rows = flattenBlocks(ctx.modelSnapshots());
+		const snapshots = ctx.modelSnapshots();
+		const rows = flattenBlocks(snapshots);
 		const cards = parseCards(ctx.docsAi('llms-blocks.txt'));
 		/** @type {any[]} */
 		const perComponent = [];
@@ -86,7 +87,7 @@ export default {
 				notApplicable.push({ name: b.label, reason: 'not public in the module' });
 				continue;
 			}
-			const card = cards.get(b.key) ?? null;
+			const card = cards.get(b.label) ?? null;
 			const tokens = card === null ? null : ctx.tokens.countTokens(card);
 			const recipes = card === null ? { openui: false, tsx: false } : recipesOf(card);
 			perComponent.push({
@@ -102,7 +103,10 @@ export default {
 		const tokenMean = mean(withCard.map((r) => /** @type {number} */ (r.tokens)));
 		return {
 			score: round1(mean(perComponent.map((r) => r.score)) ?? 0),
-			summary: `${withCard.length}/${perComponent.length} blocks with a card; mean ${tokenMean === null ? '–' : Math.round(tokenMean)} tokens`,
+			summary:
+				snapshots.length === 0
+					? NO_SNAPSHOT
+					: `${withCard.length}/${perComponent.length} blocks with a card; mean ${tokenMean === null ? '–' : Math.round(tokenMean)} tokens`,
 			raw: {
 				blocks: perComponent.length,
 				withCard: withCard.length,
