@@ -60,15 +60,27 @@ Biggest movers:
 - E09 CSS Selector Complexity -0.3
 - E07 Markup Contract Depth -0.5
 
-### Index by tier (model-1)
+### Index by category
 
-Each eval scored over the components of one tier only; the suite index above is the mean over every measured component.
+Each eval scored over the rows of one category only (a block row inherits the scores of the pattern or stylesheet it drives); the suite index above is the mean over every eval.
 
-| Tier | Index | Evals that apply |
-| --- | ---: | --- |
-| pattern | **87.4** | E01, E02, E03, E04, E05, E06, E07, E08, E09, E10 |
-| component | **75.4** | E07, E08, E09 |
-| layout | **71.9** | E08, E09 |
+| Run | components (OML blocks) | platform & layout styles |
+| --- | ---: | ---: |
+| baseline | **66.9** | **72.0** |
+| loop-1 | **81.0** | **72.0** |
+| loop-2 | **83.8** | **72.0** |
+| loop-3 | **85.8** | **72.0** |
+| loop-4 | **87.3** | **72.0** |
+| loop-5 | **87.3** | **72.0** |
+| loop-7 | **87.3** | **72.0** |
+| loop-8 | **87.4** | **72.3** |
+| loop-9 | **87.3** | **72.9** |
+| loop-10 | **87.4** | **72.6** |
+| loop-12 | **87.4** | **72.6** |
+| loop-13 | **86.2** | **72.7** |
+| loop-14 | **86.2** | **72.7** |
+| model-0 | **86.2** | **72.7** |
+| model-1 | **86.2** | **72.7** |
 
 ## Enterprise Readiness Index
 
@@ -117,15 +129,22 @@ Unchanged across all runs:
 
 - R01 Enterprise Component Coverage (68.9) — roadmap; moves with new components or features
 
-### Index by tier (model-1)
+### Index by category
 
-Each eval scored over the components of one tier only; the suite index above is the mean over every measured component.
+Each eval scored over the rows of one category only (a block row inherits the scores of the pattern or stylesheet it drives); the suite index above is the mean over every eval.
 
-| Tier | Index | Evals that apply |
-| --- | ---: | --- |
-| pattern | **69.9** | R01, R02, R03, R04, R05, R06 |
-| component | **62.5** | R01, R02, R04, R05, R06 |
-| layout | **54.3** | R01, R02, R04, R05, R06 |
+| Run | components (OML blocks) | platform & layout styles |
+| --- | ---: | ---: |
+| loop-5 | **51.1** | **47.3** |
+| loop-7 | **65.6** | **62.7** |
+| loop-8 | **67.6** | **62.7** |
+| loop-9 | **67.6** | **62.7** |
+| loop-10 | **67.6** | **62.7** |
+| loop-12 | **67.6** | **62.7** |
+| loop-13 | **68.7** | **61.9** |
+| loop-14 | **68.7** | **61.9** |
+| model-0 | **68.7** | **61.9** |
+| model-1 | **68.7** | **61.9** |
 
 ## Utilities Index
 
@@ -165,13 +184,16 @@ Unchanged across all runs:
 - U05 Synonym Pressure (89.4)
 - U06 Responsive Coverage (0.0) — roadmap; moves with new components or features
 
-### Index by tier (model-1)
+### Index by category
 
-Each eval scored over the components of one tier only; the suite index above is the mean over every measured component.
+Each eval scored over the rows of one category only (a block row inherits the scores of the pattern or stylesheet it drives); the suite index above is the mean over every eval.
 
-| Tier | Index | Evals that apply |
-| --- | ---: | --- |
-| utility | **72.1** | U01, U02, U03, U04, U05, U06 |
+| Run | components (OML blocks) | platform & layout styles |
+| --- | ---: | ---: |
+| loop-13 | — | **72.1** |
+| loop-14 | — | **72.1** |
+| model-0 | — | **72.1** |
+| model-1 | — | **72.1** |
 
 ## Model Bridge Readiness Index
 
@@ -212,14 +234,13 @@ Unchanged across all runs:
 
 - M03 Block Parameter Precision (75.4)
 
-### Index by tier (model-1)
+### Index by category
 
-Each eval scored over the components of one tier only; the suite index above is the mean over every measured component.
+Each eval scored over the rows of one category only (a block row inherits the scores of the pattern or stylesheet it drives); the suite index above is the mean over every eval.
 
-| Tier | Index | Evals that apply |
-| --- | ---: | --- |
-| pattern | **93.5** | M01, M02, M03, M04, M05, M06 |
-| component | **100.0** | M05, M06 |
-| layout | **100.0** | M05, M06 |
+| Run | components (OML blocks) | platform & layout styles |
+| --- | ---: | ---: |
+| model-0 | **29.2** | **25.0** |
+| model-1 | **93.4** | **100.0** |
 
 Per-run details (raw measurements, per-component scores, unmeasured pairs) live in `results/<label>.json`.

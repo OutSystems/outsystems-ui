@@ -37,7 +37,8 @@
 		"evals:dashboard": "node evals/tools/dashboard-data.mjs",
 		"evals:doctor": "node evals/tools/doctor.mjs",
 		"evals:dashboard:page": "node evals/tools/dashboard-page.mjs",
-		"evals:fix": "npm run docs:ai && npm run types:generate && npm run evals:report && npm run evals:dashboard && node evals/tools/doctor.mjs --fix",
+		"evals:history:categories": "node evals/tools/backfill-categories.mjs",
+		"evals:fix": "npm run docs:ai && npm run types:generate && npm run evals:history:categories && npm run evals:report && npm run evals:dashboard && node evals/tools/doctor.mjs --fix",
 		"evals:test": "node --test \"evals/**/*.test.mjs\"",
 		"test": "node --test \"tests/*.test.mjs\" \"evals/**/*.test.mjs\""
 	},

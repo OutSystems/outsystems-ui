@@ -13,6 +13,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { insideDir } from '../lib/paths.mjs';
+import { CATEGORIES, CATEGORY_LABEL } from '../lib/universe.mjs';
 import { normalizeHistoryEntry } from '../lib/results.mjs';
 
 export const HISTORY_FILE = 'results/HISTORY.md';
@@ -108,26 +109,25 @@ function suiteSections(runs, evals, h) {
 }
 
 /**
- * The per-tier view of the newest run that carries one: the same evals, scored over the components of
- * each tier only, so a helper class cannot move the pattern figure. Empty for runs recorded before tiers.
- * @param {import('../lib/results.mjs').HistoryEntry|undefined} newest
- * @param {string} suiteId
+ * The per-category view of a suite over its runs: the component and platform indices of every run that
+ * carries them, a dash for the runs recorded before the categories existed.
+ * @param {{ label: string, categories?: Record<string, { index: number }> }[]} runs the suite's runs, by date
  * @param {string} h heading marker
  * @returns {string[]}
  */
-function tierSection(newest, suiteId, h) {
-	const tiers = newest?.suites[suiteId]?.tiers;
-	if (!tiers) return [];
+function categorySection(runs, h) {
+	if (!runs.some((r) => r.categories)) return [];
+	const cell = (/** @type {{ index: number }|undefined} */ c) => (c ? `**${c.index.toFixed(1)}**` : '—');
 	const lines = [
-		`${h} Index by tier (${newest.label})`,
+		`${h} Index by category`,
 		'',
-		'Each eval scored over the components of one tier only; the suite index above is the mean over every measured component.',
+		'Each eval scored over the rows of one category only (a block row inherits the scores of the pattern or stylesheet it drives); the suite index above is the mean over every eval.',
 		'',
-		'| Tier | Index | Evals that apply |',
-		'| --- | ---: | --- |',
+		`| Run | ${CATEGORIES.map((c) => CATEGORY_LABEL[c]).join(' | ')} |`,
+		`| --- | ${CATEGORIES.map(() => '---:').join(' | ')} |`,
 	];
-	for (const [tier, t] of Object.entries(tiers)) {
-		lines.push(`| ${tier} | **${t.index.toFixed(1)}** | ${Object.keys(t.scores).join(', ')} |`);
+	for (const r of runs) {
+		lines.push(`| ${r.label} | ${CATEGORIES.map((c) => cell(r.categories?.[c])).join(' | ')} |`);
 	}
 	lines.push('');
 	return lines;
@@ -156,19 +156,19 @@ export function renderHistory(history, suites) {
 				sha: e.sha,
 				scores: e.suites[suite.id].scores,
 				index: e.suites[suite.id].index,
+				categories: e.suites[suite.id].categories,
 			}));
 		if (runs.length === 0) continue;
 		const ids = suite.metrics.map((m) => m.id);
 		const later = runs[0].label !== entries[0].label;
 		const since = later ? ` Measured from \`${runs[0].label}\` on; earlier runs have no value.` : '';
-		const newest = entries.findLast((e) => e.suites[suite.id]);
 		lines.push(
 			`## ${suite.indexName}`,
 			'',
 			`The ${suite.metrics.length} evals ${ids[0]}–${ids[ids.length - 1]}: ${suite.describe}.${since}`,
 			'',
 			...suiteSections(runs, suite.metrics, '###'),
-			...tierSection(newest, suite.id, '###')
+			...categorySection(runs, '###')
 		);
 	}
 	lines.push(

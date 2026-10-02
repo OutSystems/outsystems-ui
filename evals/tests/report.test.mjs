@@ -91,3 +91,35 @@ test('the committed HISTORY.md is fresh', async () => {
 	const committed = fs.readFileSync(path.join(evalsDir, HISTORY_FILE), 'utf8').replace(/\r\n/g, '\n');
 	assert.equal(committed, renderHistory(stored, SUITES), 'run `npm run evals:report` and commit results/HISTORY.md');
 });
+
+test('renderHistory adds an "Index by category" table for the runs that carry categories', () => {
+	const runs = [
+		{
+			label: 'r1',
+			date: '2026-09-29T00:00:00.000Z',
+			sha: 'aaa',
+			suites: { ai: { scores: { E01: 10 }, index: 10 } },
+		},
+		{
+			label: 'r2',
+			date: '2026-09-30T00:00:00.000Z',
+			sha: 'bbb',
+			suites: {
+				ai: {
+					scores: { E01: 20 },
+					index: 20,
+					categories: {
+						component: { scores: { E01: 25 }, index: 25 },
+						platform: { scores: { E01: 15 }, index: 15 },
+					},
+				},
+			},
+		},
+	];
+	const md = renderHistory(runs, [ai]);
+	assert.match(md, /### Index by category/);
+	assert.match(md, /\| Run \| components \(OML blocks\) \| platform & layout styles \|/);
+	assert.match(md, /\| r1 \| — \| — \|/);
+	assert.match(md, /\| r2 \| \*\*25\.0\*\* \| \*\*15\.0\*\* \|/);
+	assert.ok(!/\btiers?\b/i.test(md), 'no tier wording');
+});
