@@ -3913,7 +3913,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "URL for an image that can be a replacement for the Image Placeholder image. To get the URl of a binary image, use the BinaryToURLImage actions from the Utilities folder.",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "a URL"
 				},
 				{
 					"name": "ImageZoom",
@@ -5111,7 +5112,8 @@
 					"mandatory": true,
 					"default": null,
 					"description": "Set the URL of the video file, preferably mp4 or webm format.",
-					"defaultSource": null
+					"defaultSource": null,
+					"textOnPurpose": "a URL"
 				},
 				{
 					"name": "Controls",

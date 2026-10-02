@@ -146,6 +146,8 @@ export const TEXT_ON_PURPOSE = {
 	DateFormat: 'a text mask',
 	TimeFormat: 'a text mask',
 	SVGCode: 'the content of an SVG',
+	ImageURL: 'a URL',
+	URL: 'a URL',
 };
 
 /**
@@ -159,10 +161,11 @@ export function textOnPurpose(param) {
 
 /**
  * A parameter an agent cannot type without guessing: an Object/unknown type or free Text, except the Text
- * parameters that are Text on purpose (TEXT_ON_PURPOSE).
+ * parameters that are Text on purpose (TEXT_ON_PURPOSE). Binary Data is precise: it carries binary content.
  * @param {{ name?: string, typeKind: string, type: string }} param
  */
 export function isFreeText(param) {
 	if (textOnPurpose(param) !== null) return false;
-	return param.typeKind === 'other' || (param.typeKind === 'basic' && param.type === 'Text');
+	if (param.typeKind === 'other') return param.type !== 'Binary Data';
+	return param.typeKind === 'basic' && param.type === 'Text';
 }

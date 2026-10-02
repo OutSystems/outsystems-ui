@@ -222,3 +222,17 @@ test('isFreeText leaves the Text-on-purpose parameters alone and textOnPurpose n
 	assert.equal(textOnPurpose(text('Label')), null);
 	assert.equal(isFreeText(text('Label')), true);
 });
+
+test('URLs are Text on purpose and Binary Data is a precise type', async () => {
+	const { isFreeText, textOnPurpose } = await import('../lib/snapshot.mjs');
+	for (const name of ['ImageURL', 'URL']) {
+		assert.equal(isFreeText({ name, typeKind: 'basic', type: 'Text' }), false, name);
+		assert.match(textOnPurpose({ name, typeKind: 'basic', type: 'Text' }) ?? '', /URL/);
+	}
+	assert.equal(
+		isFreeText({ name: 'Image', typeKind: 'other', type: 'Binary Data' }),
+		false,
+		'binary content is what it is'
+	);
+	assert.equal(isFreeText({ name: 'Anything', typeKind: 'other', type: 'Object' }), true, 'an Object stays a guess');
+});

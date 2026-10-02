@@ -36,7 +36,8 @@ wrong: it is Text by design and its vocabulary is `llms-utilities.txt`.
    `ExtendedClass` (CSS utility classes); `MenuId`, `ScrollToWidgetId`, `WidgetId`, `ItemId` (the identifier
    of another element in the DOM); `Title`, `Group`, `Prompt`, `Name`, `Password` (free text shown as is);
    `Size`, `Height`, `Width` (a measure with its unit, such as `120px` or `70%`); `DateFormat`, `TimeFormat`
-   (a text mask); `SVGCode` (the content of an SVG). The list is by name and applies to Text parameters only.
+   (a text mask); `SVGCode` (the content of an SVG); `ImageURL`, `URL` (a URL). The list is by name and applies to Text
+   parameters only. Binary Data is a precise type: binary content is what it is.
 4. M03 weighs descriptions 60 and precise types 40; the defaults term is gone because it is settled by the
    platform. The per-block table still lists how many optional parameters take the platform default. M01's
    parameter facet is complete once a parameter is typed and described.
@@ -44,8 +45,8 @@ wrong: it is Text by design and its vocabulary is `llms-utilities.txt`.
 ## Consequences
 
 - The Forge request list (M03's table) names only what the OML must change: descriptions and the free-Text
-  types not on the allowlist. After the allowlist, 3 parameters remain: `Image` (Binary Data), `ImageURL` and
-  `URL` (Text).
+  types not on the allowlist. After the allowlist no free-Text parameter remains in the current OML; the check
+  stays for the next release.
 - M03 moves from 74.8 under the previous weights; the run `platform-defaults` is the new baseline.
 - Block cards grow by one default per optional parameter; the 250-token budget still holds (M04 measures it).
 - A platform default is a statement about the runtime, not about the OML: the manifest keeps the source so
