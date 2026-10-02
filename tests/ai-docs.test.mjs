@@ -7,7 +7,9 @@ import { createContext } from '../evals/lib/context.mjs';
 import { expectationsFor } from '../evals/lib/expectations.mjs';
 import { componentFacets } from '../evals/lib/manifest.mjs';
 import { countTokens } from '../evals/lib/tokens.mjs';
+import { isMarked, isRuntimeOnlyLine, PRODUCERS_HEADING, RUNTIME_GOTCHA_NEEDLES } from '../evals/lib/producers.mjs';
 import { docCoverage, utilityFamilies } from '../evals/lib/utilities.mjs';
+import { buildBlocksManifest } from '../scripts/lib/ai-docs-blocks.mjs';
 import {
 	buildManifest,
 	buildUtilitiesManifest,
@@ -20,6 +22,7 @@ import {
 	renderTokens,
 	renderUtilities,
 	resolveEnumReference,
+	writeDocs,
 } from '../scripts/lib/ai-docs.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -121,7 +124,7 @@ test('CSS-only document groups components, layout partials and helper classes by
 	const [components, layout, helpers] = groups;
 	assert.match(
 		components,
-		/^### card \(src\/scss\/04-patterns\/02-content\/_card\.scss\)\nSkeleton \(from stories\/Card\.stories\.ts\)/m
+		/^### card \(src\/scss\/04-patterns\/02-content\/_card\.scss\)\n\[runtime-only\] Skeleton \(from stories\/Card\.stories\.ts\)/m
 	);
 	assert.match(components, /^### balloon .* — host-styled/m, 'a layer another pattern creates stays a component');
 	assert.match(components, /^### section \(src\/scss\/04-patterns/m);
@@ -248,11 +251,39 @@ test('tokens document marks the classic-compatible aliases and states the single
 
 test('index and tokens documents are compact and name every pattern / theme role', () => {
 	const index = renderIndex(manifest);
-	assert.ok(countTokens(index) <= 1500, `llms.txt is ${countTokens(index)} tokens`);
+	assert.ok(countTokens(index) <= 1600, `llms.txt is ${countTokens(index)} tokens`);
 	for (const p of ctx.inventory.patterns) assert.ok(index.includes(p.name), `${p.name} missing from llms.txt`);
 	assert.match(index, /llms-utilities\.txt/);
 	assert.match(index, /single token-based theme/i);
 	const tokens = renderTokens(ctx, manifest);
 	assert.match(tokens, /--color-primary/);
 	assert.match(tokens, /--osui-card-padding/);
+});
+
+test('llms.txt has a Producers section that routes OML and runtime producers, and marks runtime-only gotchas', () => {
+	const text = renderIndex(manifest, buildBlocksManifest(ctx));
+	const lines = text.split('\n');
+	const start = lines.findIndex((l) => l.startsWith(PRODUCERS_HEADING));
+	assert.ok(start > 0);
+	const end = lines.findIndex((l, i) => i > start && l.startsWith('## '));
+	const section = lines.slice(start + 1, end).join('\n');
+	assert.ok(section.includes('llms-blocks.txt') && section.includes('llms-components.txt'));
+	const gotchas = lines.slice(lines.findIndex((l) => l.startsWith('## Gotchas')) + 1);
+	for (const l of gotchas.filter((l) => RUNTIME_GOTCHA_NEEDLES.some((n) => l.includes(n)))) assert.ok(isMarked(l), l);
+	assert.ok(text.includes('- llms-blocks.txt —'), 'read-next lists the block cards');
+});
+
+test('every runtime-only line of the cards and of llms-patterns.txt carries the marker', () => {
+	for (const l of renderComponentCards(manifest).split('\n').filter(isRuntimeOnlyLine)) assert.ok(isMarked(l), l);
+	for (const l of renderCssComponents(ctx).split('\n').filter(isRuntimeOnlyLine)) assert.ok(isMarked(l), l);
+});
+
+test('writeDocs emits the block-level files', async () => {
+	const fs = await import('node:fs');
+	const os = await import('node:os');
+	const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'osui-docs-'));
+	const files = writeDocs(ctx, dir).map((f) => path.relative(dir, f).split(path.sep).join('/'));
+	for (const f of ['osui.blocks.json', 'llms-blocks.txt', 'osui.enums.json', 'osui.icons.json'])
+		assert.ok(files.includes(f), f);
+	fs.rmSync(dir, { recursive: true, force: true });
 });

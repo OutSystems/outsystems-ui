@@ -39,7 +39,12 @@ Scope: OutSystems UI ships a single token-based theme (light, plus the generated
 - Wizard: 2 props, 0 events, 7 API functions
 - WizardItem: 2 props, 1 events, 7 API functions
 
+## Producers
+- OML producers (Model bridge dialects, Service Studio): compose blocks from llms-blocks.txt — 118 blocks; never emit a pattern's markup or Create/Initialize calls. Styling inputs: llms-utilities.txt, llms-tokens.txt, osui.enums.json, osui.icons.json.
+- Runtime producers (standalone pages, Storybook): read llms-components.txt; [runtime-only] lines are yours alone.
+
 ## Read next
+- llms-blocks.txt — per-block card with OpenUI/TSX recipes (osui.blocks.json: same data; osui.enums.json: enum values; osui.icons.json: icon names)
 - llms-components.txt — per-pattern card: lifecycle, typed props with defaults/allowed values, events, API signatures, CSS classes, CSS API knobs, markup skeleton
 - llms-tokens.txt — framework theme roles (--color-*, --border-radius-*) and every --osui-* component knob; legacy aliases are marked
 - llms-utilities.txt — the utility grammar (<property>[-<side>][-<value>], the size scale, colour hues and shades) and every family as template rows with their declarations
@@ -49,12 +54,12 @@ Scope: OutSystems UI ships a single token-based theme (light, plus the generated
 - schema/configs/<Name>.schema.json — JSON Schema of each pattern's configs string, to validate before Create
 
 ## Gotchas (read before generating)
-1. A pattern root element needs `name="<id>"`; the runtime resolves it with `getElementsByName`. It must sit inside an element with `[data-block]` whose `id` becomes the pattern's `widgetId` (callbacks receive that id first).
-2. Lifecycle: `Create(id, configsJson)` → `RegisterCallback` → `Initialize(id)`. Parents before children on Create/Initialize; children before parents on Dispose.
-3. `configs` is a JSON *string*. Always include `"ExtendedClass": ""`; invalid values fall back to defaults silently.
-4. Every runtime API function returns a JSON string envelope `{ code, isSuccess, message, value? }`; only `Create` throws (duplicate id).
+1. [runtime-only] A pattern root element needs `name="<id>"`; the runtime resolves it with `getElementsByName`. It must sit inside an element with `[data-block]` whose `id` becomes the pattern's `widgetId` (callbacks receive that id first).
+2. [runtime-only] Lifecycle: `Create(id, configsJson)` → `RegisterCallback` → `Initialize(id)`. Parents before children on Create/Initialize; children before parents on Dispose.
+3. [runtime-only] `configs` is a JSON *string*. Always include `"ExtendedClass": ""`; invalid values fall back to defaults silently.
+4. [runtime-only] Every runtime API function returns a JSON string envelope `{ code, isSuccess, message, value? }`; only `Create` throws (duplicate id).
 5. Styling is token-based: override CSS custom properties (`--color-primary`, `--border-radius-default`, `--osui-card-padding`), never component rules. Dark mode = class `os-dark-theme` on `<html>`.
 6. Responsiveness is class-driven: the runtime sets `phone`, `tablet` or `desktop` (and `landscape`/`portrait`) on `<body>`; write `.phone .card { … }` rather than media queries.
 7. Utility classes follow `<property>[-<side>][-<value>]` in long form (`margin-top-base`, `display-flex`, `justify-content-space-between`); Tailwind-style short names do not exist. The grammar and the size scale are in llms-utilities.txt, every class with its CSS in osui.utilities.json.
 8. Logical CSS properties are the default (`padding-inline-start`, not `padding-left`); RTL is handled by the framework.
-9. Load one card from llms-components.txt per pattern you use (about 450 tokens each). Never load the compiled typings (dist/*.d.ts, about 53k tokens): the cards carry the same contract with defaults, allowed values and markup.
+9. [runtime-only] Load one card from llms-components.txt per pattern you use (about 450 tokens each). Never load the compiled typings (dist/*.d.ts, about 53k tokens): the cards carry the same contract with defaults, allowed values and markup.

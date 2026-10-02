@@ -8,6 +8,10 @@
  *   docs-ai/llms-components.txt    one reference card per pattern (≤ 500 tokens each)
  *   docs-ai/llms-tokens.txt        framework theme roles (--color-*, --border-radius-*, …) and every --osui-* knob
  *   docs-ai/llms-patterns.txt      skeletons of the CSS-only components (Card, Section, Badge, layout, …)
+ *   docs-ai/osui.blocks.json       one entry per public OML block (signature, crosswalk, recipes) — OML producers
+ *   docs-ai/llms-blocks.txt        one card per block (≤ 250 tokens) with an OpenUI and a TSX recipe
+ *   docs-ai/osui.enums.json        static entities block parameters take · docs-ai/osui.icons.json icon class names
+ * Lines that only concern the browser runtime (lifecycle, markup) carry the [runtime-only] marker.
  *
  * Everything is derived with the same readers the AI-friendliness evals use, so the two cannot drift.
  */
@@ -17,6 +21,7 @@ import path from 'node:path';
 import { expectationsFor } from '../../evals/lib/expectations.mjs';
 import { measureStory } from '../../evals/lib/markup.mjs';
 import { insideDir } from '../../evals/lib/paths.mjs';
+import { PRODUCERS_HEADING, RUNTIME_ONLY } from '../../evals/lib/producers.mjs';
 import { classNamesOf } from '../../evals/lib/scss.mjs';
 import {
 	classifyName,
@@ -32,13 +37,15 @@ import {
 } from '../../evals/lib/utilities.mjs';
 import { countTokens } from '../../evals/lib/tokens.mjs';
 import { getClassesInFiles, getEnums, getSourceFile } from '../../evals/lib/ts.mjs';
+import { buildBlocksManifest, buildEnumsManifest, renderBlockCards } from './ai-docs-blocks.mjs';
+import { buildIconsManifest } from './ai-docs-icons.mjs';
 
 export const MANIFEST_VERSION = '1';
 
 /** Explicit, locale-independent string order. */
 export const byCodePoint = (/** @type {string} */ a, /** @type {string} */ b) => (a < b ? -1 : Number(a > b));
-/** DatePicker (18 props, 20 API functions) is the largest card and needs ~620 tokens with types kept. */
-export const CARD_TOKEN_BUDGET = 650;
+/** DatePicker (18 props, 20 API functions) is the largest card and needs ~650 tokens with types kept and the [runtime-only] markers. */
+export const CARD_TOKEN_BUDGET = 660;
 const MARKUP_CAP = 1200;
 
 /**
@@ -454,12 +461,16 @@ function renderCardClasses(c, maxClasses) {
 function renderCardMarkup(c, markupChars) {
 	if (!c.markup || markupChars <= 0) return [];
 	const m = c.markup.length > markupChars ? `${c.markup.slice(0, markupChars)}…` : c.markup;
-	return [`Markup skeleton (from ${c.story}): ${m}`];
+	return [`${RUNTIME_ONLY} Markup skeleton (from ${c.story}): ${m}`];
 }
 
 /** @param {any} c */
 function renderCard(c, { markupChars = 600, withCssApi = true, maxClasses = Infinity, withDescriptions = true } = {}) {
-	const lines = [`## ${c.name}`, `Lifecycle: ${c.lifecycle}`, ...renderCardProps(c, withDescriptions)];
+	const lines = [
+		`## ${c.name}`,
+		`${RUNTIME_ONLY} Lifecycle: ${c.lifecycle}`,
+		...renderCardProps(c, withDescriptions),
+	];
 	if (c.events.length) lines.push(`Events (RegisterCallback eventName): ${c.events.join(', ')}`);
 	lines.push(...renderCardApi(c), ...renderCardClasses(c, maxClasses));
 	if (withCssApi && c.cssApi.length) lines.push(`CSS API: ${c.cssApi.join(' ')}`);
@@ -484,15 +495,18 @@ export function renderComponentCards(manifest) {
 }
 
 /**
- * llms.txt — index and gotchas.
+ * llms.txt — index, producer routes and gotchas.
  * @param {ReturnType<typeof buildManifest>} manifest
+ * @param {{ blocks: Record<string, unknown> }|null} [blocks] the blocks manifest, to count the block cards
  */
-export function renderIndex(manifest) {
+export function renderIndex(manifest, blocks = null) {
 	const names = Object.keys(manifest.components);
 	const rows = names.map((n) => {
 		const c = manifest.components[n];
 		return `- ${n}: ${Object.keys(c.props).length} props, ${c.events.length} events, ${c.api.length} API functions`;
 	});
+	const blockCount = blocks ? Object.keys(blocks.blocks).length : 0;
+	const blockNote = blockCount ? ` — ${blockCount} blocks` : '';
 	return `# OutSystems UI (llms.txt)
 
 > Browser-side TypeScript behaviours + SCSS for the OutSystems UI patterns (O11 Reactive/Mobile and ODC). The build emits one AMD bundle and one CSS bundle per platform (\`dist/<O11|ODC>.OutSystemsUI.{js,css}\`). Patterns are driven through the global namespace \`OutSystems.OSUI.Patterns.<Name>API\`; third-party providers (Flatpickr, Splide, noUiSlider, VirtualSelect, Floating UI) are loaded by the host app as window globals.
@@ -502,7 +516,12 @@ ${SINGLE_THEME_SCOPE}
 ## Components (${names.length})
 ${rows.join('\n')}
 
+${PRODUCERS_HEADING}
+- OML producers (Model bridge dialects, Service Studio): compose blocks from llms-blocks.txt${blockNote}; never emit a pattern's markup or Create/Initialize calls. Styling inputs: llms-utilities.txt, llms-tokens.txt, osui.enums.json, osui.icons.json.
+- Runtime producers (standalone pages, Storybook): read llms-components.txt; ${RUNTIME_ONLY} lines are yours alone.
+
 ## Read next
+- llms-blocks.txt — per-block card with OpenUI/TSX recipes (osui.blocks.json: same data; osui.enums.json: enum values; osui.icons.json: icon names)
 - llms-components.txt — per-pattern card: lifecycle, typed props with defaults/allowed values, events, API signatures, CSS classes, CSS API knobs, markup skeleton
 - llms-tokens.txt — framework theme roles (--color-*, --border-radius-*) and every --osui-* component knob; legacy aliases are marked
 - llms-utilities.txt — the utility grammar (<property>[-<side>][-<value>], the size scale, colour hues and shades) and every family as template rows with their declarations
@@ -512,15 +531,15 @@ ${rows.join('\n')}
 - schema/configs/<Name>.schema.json — JSON Schema of each pattern's configs string, to validate before Create
 
 ## Gotchas (read before generating)
-1. A pattern root element needs \`name="<id>"\`; the runtime resolves it with \`getElementsByName\`. It must sit inside an element with \`[data-block]\` whose \`id\` becomes the pattern's \`widgetId\` (callbacks receive that id first).
-2. Lifecycle: \`Create(id, configsJson)\` → \`RegisterCallback\` → \`Initialize(id)\`. Parents before children on Create/Initialize; children before parents on Dispose.
-3. \`configs\` is a JSON *string*. Always include \`"ExtendedClass": ""\`; invalid values fall back to defaults silently.
-4. Every runtime API function returns a JSON string envelope \`{ code, isSuccess, message, value? }\`; only \`Create\` throws (duplicate id).
+1. ${RUNTIME_ONLY} A pattern root element needs \`name="<id>"\`; the runtime resolves it with \`getElementsByName\`. It must sit inside an element with \`[data-block]\` whose \`id\` becomes the pattern's \`widgetId\` (callbacks receive that id first).
+2. ${RUNTIME_ONLY} Lifecycle: \`Create(id, configsJson)\` → \`RegisterCallback\` → \`Initialize(id)\`. Parents before children on Create/Initialize; children before parents on Dispose.
+3. ${RUNTIME_ONLY} \`configs\` is a JSON *string*. Always include \`"ExtendedClass": ""\`; invalid values fall back to defaults silently.
+4. ${RUNTIME_ONLY} Every runtime API function returns a JSON string envelope \`{ code, isSuccess, message, value? }\`; only \`Create\` throws (duplicate id).
 5. Styling is token-based: override CSS custom properties (\`--color-primary\`, \`--border-radius-default\`, \`--osui-card-padding\`), never component rules. Dark mode = class \`os-dark-theme\` on \`<html>\`.
 6. Responsiveness is class-driven: the runtime sets \`phone\`, \`tablet\` or \`desktop\` (and \`landscape\`/\`portrait\`) on \`<body>\`; write \`.phone .card { … }\` rather than media queries.
 7. Utility classes follow \`<property>[-<side>][-<value>]\` in long form (\`margin-top-base\`, \`display-flex\`, \`justify-content-space-between\`); Tailwind-style short names do not exist. The grammar and the size scale are in llms-utilities.txt, every class with its CSS in osui.utilities.json.
 8. Logical CSS properties are the default (\`padding-inline-start\`, not \`padding-left\`); RTL is handled by the framework.
-9. Load one card from llms-components.txt per pattern you use (about 450 tokens each). Never load the compiled typings (dist/*.d.ts, about 53k tokens): the cards carry the same contract with defaults, allowed values and markup.
+9. ${RUNTIME_ONLY} Load one card from llms-components.txt per pattern you use (about 450 tokens each). Never load the compiled typings (dist/*.d.ts, about 53k tokens): the cards carry the same contract with defaults, allowed values and markup.
 `;
 }
 
@@ -658,7 +677,7 @@ function cssComponentEntry(ctx, c, seenStories) {
 	const m = measureStory(ctx.readText(c.storyFile));
 	if (!m.html) return [];
 	const skeleton = cleanMarkup(m.html).slice(0, 700);
-	return [heading, `Skeleton (from ${ctx.rel(c.storyFile)}): ${skeleton}`, ...knobLine, ''];
+	return [heading, `${RUNTIME_ONLY} Skeleton (from ${ctx.rel(c.storyFile)}): ${skeleton}`, ...knobLine, ''];
 }
 
 /**
@@ -877,10 +896,15 @@ export function buildUtilitiesManifest(ctx) {
  */
 export function writeDocs(ctx, outDir) {
 	const manifest = buildManifest(ctx);
+	const blocks = buildBlocksManifest(ctx);
 	fs.mkdirSync(outDir, { recursive: true });
 	const files = {
 		'osui.components.json': `${JSON.stringify(manifest, null, '\t')}\n`,
-		'llms.txt': renderIndex(manifest),
+		'llms.txt': renderIndex(manifest, blocks),
+		'osui.blocks.json': `${JSON.stringify(blocks, null, '\t')}\n`,
+		'llms-blocks.txt': renderBlockCards(blocks),
+		'osui.enums.json': `${JSON.stringify(buildEnumsManifest(ctx), null, '\t')}\n`,
+		'osui.icons.json': `${JSON.stringify(buildIconsManifest(ctx), null, '\t')}\n`,
 		'llms-components.txt': renderComponentCards(manifest),
 		'llms-tokens.txt': renderTokens(ctx, manifest),
 		'llms-utilities.txt': renderUtilities(ctx),

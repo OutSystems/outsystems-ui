@@ -78,7 +78,7 @@ test('buildDashboardData assembles the history, one block per suite and componen
 	assert.equal(d.v, 4);
 	assert.deepEqual(
 		d.suites.map((s) => s.id),
-		['ai', 'enterprise', 'utilities']
+		['ai', 'enterprise', 'utilities', 'model']
 	);
 	const [ai, ent, util] = d.suites;
 	assert.equal(util.evals.length, 6);
@@ -156,6 +156,6 @@ test('buildDashboardData falls back to results/latest.json when the latest run f
 	fs.copyFileSync(path.join(evalsDir, 'results', `${last.label}.json`), path.join(tmp, 'results', 'latest.json'));
 	const d = buildDashboardData(tmp);
 	assert.equal(d.latest.label, last.label);
-	assert.equal(d.suites.length, 3);
+	assert.equal(d.suites.length, 4);
 	fs.rmSync(tmp, { recursive: true, force: true });
 });

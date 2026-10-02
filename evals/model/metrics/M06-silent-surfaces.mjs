@@ -72,7 +72,7 @@ export default {
 	present: {
 		scope: 'Whole repository, not per component: the four allowlists an agent needs because a wrong class, knob, icon or enum value renders as nothing without an error.',
 		heatmap: false,
-		appliesTo: ['pattern', 'component', 'layout', 'utility'],
+		appliesTo: ['pattern', 'component', 'layout'],
 		/** @param {any} m */
 		advice(m) {
 			const raw = m.raw ?? {};
@@ -98,13 +98,13 @@ export default {
 		const libraries = declaredIconLibraries(ctx);
 		const iconsDocumented = keysWithContent(ctx.docsAi('osui.icons.json'), (p) =>
 			Object.entries(p)
-				.filter(([, v]) => /** @type {any} */ ((v).classes ?? []).length > 0)
+				.filter(([, v]) => /** @type {any} */ (v.classes ?? []).length > 0)
 				.map(([k]) => k)
 		);
 		const entities = staticEntitiesReferenced(ctx.modelSnapshots());
 		const enumsDocumented = keysWithContent(ctx.docsAi('osui.enums.json'), (p) =>
 			Object.entries(p)
-				.filter(([, v]) => /** @type {any} */ ((v).values ?? []).length > 0)
+				.filter(([, v]) => /** @type {any} */ (v.values ?? []).length > 0)
 				.map(([k]) => k)
 		);
 		const surfaces = {
