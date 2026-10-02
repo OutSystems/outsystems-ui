@@ -18,7 +18,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { createContext } from '../lib/context.mjs';
-import { loadRegistry, REGISTRY_FILE, validateRegistry } from '../lib/registry.mjs';
+import { blockRuntimeOf, loadRegistry, REGISTRY_FILE, validateRegistry } from '../lib/registry.mjs';
 import { composableBlocks, flattenBlocks } from '../model/lib/snapshot.mjs';
 
 /** Code signals a derived entry is read from: plain substrings, no regular expressions over source. */
@@ -84,7 +84,34 @@ function suggestStyledEntry(kind, css) {
  * @param {{ components: Record<string, any> }} registry
  * @param {{ key: string, flow: string, name: string, public: boolean, patternHints: { apiCalls: string[] } }[]} blocks
  */
-export function blockHintsFor(patterns, registry, blocks) {
+/** `CardSectioned` and `card-sectioned` → `card-sectioned`: one key for a block name and a registry name. @param {string} s */
+export function normalizedName(s) {
+	let out = '';
+	for (let i = 0; i < s.length; i++) {
+		const c = s[i];
+		const upper = c !== c.toLowerCase();
+		if (upper && i > 0 && out[out.length - 1] !== '-') out += '-';
+		out += c.toLowerCase();
+	}
+	return out;
+}
+
+/**
+ * @typedef {{ pattern?: string, style?: string, blocks: { flow: string, name: string }[], source: 'api'|'name' }} LinkProposal
+ */
+
+/**
+ * Block links the snapshot suggests, for entries without a `block` field: by API call (a block's JavaScript
+ * calls `<Pattern>API`), then by exact normalised name (`Content/Card` ↔ `card`, `Utilities/SwipeEvents` ↔
+ * `SwipeEvents`). Also the blocks whose API calls name no pattern, and the composable blocks left with no
+ * runtime at all. Callers pass the composable set.
+ * @param {string[]} patterns pattern names of the inventory
+ * @param {string[]} styles names of the registry's CSS-only components and layout partials
+ * @param {{ components: Record<string, any> }} registry
+ * @param {{ key: string, flow: string, name: string, public: boolean, patternHints: { apiCalls: string[] } }[]} blocks
+ * @returns {{ proposals: LinkProposal[], orphans: { key: string, apiCalls: string[] }[], unlinked: string[] }}
+ */
+export function blockHintsFor(patterns, styles, registry, blocks) {
 	const byApi = new Map(patterns.map((p) => [`${p}API`, p]));
 	/** @type {Map<string, { flow: string, name: string }[]>} */
 	const hinted = new Map();
@@ -101,27 +128,60 @@ export function blockHintsFor(patterns, registry, blocks) {
 			hinted.set(pattern, found);
 		}
 	}
+	const unlinkedEntry = (/** @type {string} */ name) => (registry.components[name]?.block ?? []).length === 0;
+	/** @type {LinkProposal[]} */
 	const proposals = patterns
-		.filter((p) => hinted.has(p) && (registry.components[p]?.block ?? []).length === 0)
-		.map((p) => ({ pattern: p, blocks: /** @type {{ flow: string, name: string }[]} */ (hinted.get(p)) }));
-	return { proposals, orphans };
+		.filter((p) => hinted.has(p) && unlinkedEntry(p))
+		.map((p) => ({
+			pattern: p,
+			blocks: /** @type {{ flow: string, name: string }[]} */ (hinted.get(p)),
+			source: /** @type {const} */ ('api'),
+		}));
+	const proposedBlocks = new Set(proposals.flatMap((p) => p.blocks.map((b) => `${b.flow}/${b.name}`)));
+	/** @type {Map<string, { pattern?: string, style?: string }>} */
+	const byNorm = new Map();
+	for (const p of patterns) byNorm.set(normalizedName(p), { pattern: p });
+	for (const s of styles) byNorm.set(normalizedName(s), { style: s });
+	/** @type {string[]} */
+	const unlinked = [];
+	for (const b of blocks) {
+		const runtime = blockRuntimeOf(registry, b.flow, b.name);
+		if (runtime.pattern || runtime.style || proposedBlocks.has(b.key)) continue;
+		const hit = byNorm.get(normalizedName(b.name));
+		const entry = hit?.pattern ?? hit?.style;
+		if (!hit || !entry || !unlinkedEntry(entry)) {
+			unlinked.push(b.key);
+			continue;
+		}
+		const existing = proposals.find((p) => (p.pattern ?? p.style) === entry);
+		if (existing) existing.blocks.push({ flow: b.flow, name: b.name });
+		else proposals.push({ ...hit, blocks: [{ flow: b.flow, name: b.name }], source: 'name' });
+	}
+	return { proposals, orphans, unlinked };
 }
 
 /** The block-links section of the doctor output: information, never a disagreement. @param {any} r */
 export function renderDoctorBlocks(r) {
-	const hints = r.blockHints ?? { proposals: [], orphans: [] };
-	if (hints.proposals.length === 0 && hints.orphans.length === 0) return '';
+	const hints = r.blockHints ?? { proposals: [], orphans: [], unlinked: [] };
+	const unlinked = hints.unlinked ?? [];
+	if (hints.proposals.length === 0 && hints.orphans.length === 0 && unlinked.length === 0) return '';
 	const lines = ['### 🧩 Block links', ''];
 	for (const p of hints.proposals) {
 		const blocks = p.blocks.map((/** @type {any} */ b) => `${b.flow}/${b.name}`).join(', ');
-		lines.push(`- \`${p.pattern}\` has no block link; the snapshot's JavaScript calls its API from: ${blocks}`);
+		const how = p.source === 'name' ? 'matches it by name' : "the snapshot's JavaScript calls its API from it";
+		lines.push(`- \`${p.pattern ?? p.style}\` has no block link; ${blocks}: ${how}`);
+	}
+	if (unlinked.length) {
+		lines.push(
+			`- Unlinked composable blocks (pure OML, or a name the registry does not use): ${unlinked.join(', ')}`
+		);
 	}
 	for (const o of hints.orphans) {
 		lines.push(`- block \`${o.key}\` calls ${o.apiCalls.join(', ')}, which no pattern provides`);
 	}
 	lines.push(
 		'',
-		'Run `npm run evals:doctor -- --fix` to append single-block proposals as derived links, then fill their `paramMap` and review.'
+		'Run `npm run evals:doctor -- --fix` to append single-block proposals as derived links (a pattern link then needs its `paramMap`), then review.'
 	);
 	return lines.join('\n');
 }
@@ -160,6 +220,7 @@ export function diagnose(ctx, registry) {
 	const blocks = composableBlocks(flattenBlocks(ctx.modelSnapshots()));
 	const blockHints = blockHintsFor(
 		ctx.inventory.patterns.map((p) => p.name),
+		ctx.inventory.cssComponents.filter((c) => c.kind === 'component' || c.kind === 'layout').map((c) => c.name),
 		registry,
 		blocks
 	);
@@ -233,8 +294,10 @@ export function applyFixes(registry, r) {
 	for (const name of r.stale) delete components[name];
 	for (const u of r.unknown) components[u.name] = u.suggested;
 	for (const p of r.blockHints?.proposals ?? []) {
-		if (p.blocks.length !== 1 || !components[p.pattern]) continue;
-		components[p.pattern] = { ...components[p.pattern], block: [{ ...p.blocks[0], paramMap: {}, derived: true }] };
+		const entry = p.pattern ?? p.style;
+		if (p.blocks.length !== 1 || !entry || !components[entry]) continue;
+		const link = p.pattern ? { ...p.blocks[0], paramMap: {}, derived: true } : { ...p.blocks[0], derived: true };
+		components[entry] = { ...components[entry], block: [link] };
 	}
 	const sorted = Object.fromEntries(Object.entries(components).sort(([a], [b]) => a.localeCompare(b)));
 	return { ...registry, components: sorted };

@@ -1,5 +1,6 @@
 // @ts-check
 /** The pattern ↔ block crosswalk: registry links first (confirmed by hand), snapshot API hints second (derived). */
+import { normalizeKind } from '../../lib/kinds.mjs';
 
 /** @typedef {{ flow: string, name: string, key: string, paramMap: Record<string, string>, platformOnly: string[], eventMap: Record<string, string>, source: 'registry'|'hint' }} Link */
 
@@ -43,6 +44,7 @@ export function linksFor(pattern, registry, blocks) {
  */
 export function patternOfBlock(block, patterns, registry) {
 	for (const [pattern, entry] of Object.entries(registry.components)) {
+		if (normalizeKind(entry.kind) !== 'pattern') continue;
 		const links = entry.block ?? [];
 		if (links.some((/** @type {any} */ l) => l.flow === block.flow && l.name === block.name)) {
 			return { pattern, source: 'registry' };

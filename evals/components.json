@@ -46,10 +46,22 @@
 		},
 		"action-sheet": {
 			"kind": "component",
-			"interactive": true
+			"interactive": true,
+			"block": [
+				{
+					"flow": "Interaction",
+					"name": "ActionSheet"
+				}
+			]
 		},
 		"alert": {
-			"kind": "component"
+			"kind": "component",
+			"block": [
+				{
+					"flow": "Content",
+					"name": "Alert"
+				}
+			]
 		},
 		"align-center": {
 			"kind": "utility"
@@ -74,7 +86,13 @@
 			]
 		},
 		"badge": {
-			"kind": "component"
+			"kind": "component",
+			"block": [
+				{
+					"flow": "Numbers",
+					"name": "Badge"
+				}
+			]
 		},
 		"balloon": {
 			"kind": "component",
@@ -84,7 +102,13 @@
 			}
 		},
 		"blank-slate": {
-			"kind": "component"
+			"kind": "component",
+			"block": [
+				{
+					"flow": "Content",
+					"name": "BlankSlate"
+				}
+			]
 		},
 		"border-radius": {
 			"kind": "utility",
@@ -95,7 +119,13 @@
 			"title": "Border size"
 		},
 		"bottom-bar-item": {
-			"kind": "component"
+			"kind": "component",
+			"block": [
+				{
+					"flow": "Navigation",
+					"name": "BottomBarItem"
+				}
+			]
 		},
 		"BottomSheet": {
 			"kind": "pattern",
@@ -126,7 +156,17 @@
 		},
 		"breadcrumbs": {
 			"kind": "component",
-			"interactive": true
+			"interactive": true,
+			"block": [
+				{
+					"flow": "Navigation",
+					"name": "Breadcrumbs"
+				},
+				{
+					"flow": "Navigation",
+					"name": "BreadcrumbsItem"
+				}
+			]
 		},
 		"btn": {
 			"kind": "component",
@@ -165,18 +205,42 @@
 		"card": {
 			"kind": "component",
 			"loading": true,
-			"density": true
+			"density": true,
+			"block": [
+				{
+					"flow": "Content",
+					"name": "Card"
+				}
+			]
 		},
 		"card-background": {
-			"kind": "component"
+			"kind": "component",
+			"block": [
+				{
+					"flow": "Content",
+					"name": "CardBackground"
+				}
+			]
 		},
 		"card-item": {
 			"kind": "component",
-			"density": true
+			"density": true,
+			"block": [
+				{
+					"flow": "Content",
+					"name": "CardItem"
+				}
+			]
 		},
 		"card-sectioned": {
 			"kind": "component",
-			"density": true
+			"density": true,
+			"block": [
+				{
+					"flow": "Content",
+					"name": "CardSectioned"
+				}
+			]
 		},
 		"Carousel": {
 			"kind": "pattern",
@@ -209,7 +273,13 @@
 			"kind": "utility"
 		},
 		"chat-message": {
-			"kind": "component"
+			"kind": "component",
+			"block": [
+				{
+					"flow": "Content",
+					"name": "ChatMessage"
+				}
+			]
 		},
 		"checkbox": {
 			"kind": "component",
@@ -247,7 +317,13 @@
 			}
 		},
 		"counter": {
-			"kind": "component"
+			"kind": "component",
+			"block": [
+				{
+					"flow": "Numbers",
+					"name": "Counter"
+				}
+			]
 		},
 		"DatePicker": {
 			"kind": "pattern",
@@ -419,10 +495,26 @@
 		},
 		"floating-actions": {
 			"kind": "component",
-			"interactive": true
+			"interactive": true,
+			"block": [
+				{
+					"flow": "Interaction",
+					"name": "FloatingActions"
+				},
+				{
+					"flow": "Interaction",
+					"name": "FloatingActionsItem"
+				}
+			]
 		},
 		"floating-content": {
-			"kind": "component"
+			"kind": "component",
+			"block": [
+				{
+					"flow": "Content",
+					"name": "FloatingContent"
+				}
+			]
 		},
 		"form": {
 			"kind": "component",
@@ -474,7 +566,13 @@
 			}
 		},
 		"icon-badge": {
-			"kind": "component"
+			"kind": "component",
+			"block": [
+				{
+					"flow": "Numbers",
+					"name": "IconBadge"
+				}
+			]
 		},
 		"images": {
 			"kind": "utility",
@@ -500,7 +598,13 @@
 		"input-with-icon": {
 			"kind": "component",
 			"interactive": true,
-			"validating": true
+			"validating": true,
+			"block": [
+				{
+					"flow": "Interaction",
+					"name": "InputWithIcon"
+				}
+			]
 		},
 		"inputs-and-textareas": {
 			"kind": "component",
@@ -526,7 +630,13 @@
 			"kind": "layout"
 		},
 		"lightbox-image": {
-			"kind": "component"
+			"kind": "component",
+			"block": [
+				{
+					"flow": "Interaction",
+					"name": "LightboxImage"
+				}
+			]
 		},
 		"list": {
 			"kind": "component",
@@ -539,7 +649,13 @@
 		},
 		"list-item-content": {
 			"kind": "component",
-			"density": true
+			"density": true,
+			"block": [
+				{
+					"flow": "Content",
+					"name": "ListItemContent"
+				}
+			]
 		},
 		"list-updating": {
 			"kind": "component",
@@ -557,7 +673,13 @@
 			"kind": "utility"
 		},
 		"master-detail": {
-			"kind": "component"
+			"kind": "component",
+			"block": [
+				{
+					"flow": "Adaptive",
+					"name": "MasterDetail"
+				}
+			]
 		},
 		"menu": {
 			"kind": "layout",
@@ -677,7 +799,13 @@
 		"pagination": {
 			"kind": "component",
 			"interactive": true,
-			"density": true
+			"density": true,
+			"block": [
+				{
+					"flow": "Navigation",
+					"name": "Pagination"
+				}
+			]
 		},
 		"popover": {
 			"kind": "component",
@@ -739,7 +867,13 @@
 			]
 		},
 		"provider-login-button": {
-			"kind": "component"
+			"kind": "component",
+			"block": [
+				{
+					"flow": "Utilities",
+					"name": "ProviderLoginButton"
+				}
+			]
 		},
 		"pull-to-refresh": {
 			"kind": "layout",
@@ -747,7 +881,13 @@
 				"host": "platform runtime (native)",
 				"reason": "the pull indicator is injected by the platform runtime"
 			},
-			"interactive": true
+			"interactive": true,
+			"block": [
+				{
+					"flow": "Private",
+					"name": "PullToRefresh"
+				}
+			]
 		},
 		"radio-button": {
 			"kind": "component",
@@ -829,7 +969,13 @@
 		},
 		"scrollable-area": {
 			"kind": "component",
-			"interactive": true
+			"interactive": true,
+			"block": [
+				{
+					"flow": "Interaction",
+					"name": "ScrollableArea"
+				}
+			]
 		},
 		"Search": {
 			"kind": "pattern",
@@ -850,7 +996,17 @@
 			]
 		},
 		"section": {
-			"kind": "component"
+			"kind": "component",
+			"block": [
+				{
+					"flow": "Content",
+					"name": "Section"
+				},
+				{
+					"flow": "Content",
+					"name": "SectionGroup"
+				}
+			]
 		},
 		"SectionIndex": {
 			"kind": "pattern",
@@ -925,7 +1081,13 @@
 			"title": "Spacing · padding"
 		},
 		"stacked-cards": {
-			"kind": "component"
+			"kind": "component",
+			"block": [
+				{
+					"flow": "Interaction",
+					"name": "StackedCards"
+				}
+			]
 		},
 		"Submenu": {
 			"kind": "pattern",
@@ -946,7 +1108,14 @@
 		},
 		"SwipeEvents": {
 			"kind": "pattern",
-			"roles": ["non-interactive", "no-dom"]
+			"roles": ["non-interactive", "no-dom"],
+			"block": [
+				{
+					"flow": "Utilities",
+					"name": "SwipeEvents",
+					"paramMap": {}
+				}
+			]
 		},
 		"switch": {
 			"kind": "component",
@@ -1019,7 +1188,13 @@
 		},
 		"tag": {
 			"kind": "component",
-			"interactive": true
+			"interactive": true,
+			"block": [
+				{
+					"flow": "Content",
+					"name": "Tag"
+				}
+			]
 		},
 		"text": {
 			"kind": "utility",
@@ -1033,7 +1208,13 @@
 			}
 		},
 		"timeline": {
-			"kind": "component"
+			"kind": "component",
+			"block": [
+				{
+					"flow": "Navigation",
+					"name": "TimelineItem"
+				}
+			]
 		},
 		"TimePicker": {
 			"kind": "pattern",
@@ -1079,7 +1260,14 @@
 		},
 		"TouchEvents": {
 			"kind": "pattern",
-			"roles": ["non-interactive", "no-dom"]
+			"roles": ["non-interactive", "no-dom"],
+			"block": [
+				{
+					"flow": "Utilities",
+					"name": "TouchEvents",
+					"paramMap": {}
+				}
+			]
 		},
 		"typography": {
 			"kind": "utility",
@@ -1092,7 +1280,13 @@
 			"validating": true
 		},
 		"user-avatar": {
-			"kind": "component"
+			"kind": "component",
+			"block": [
+				{
+					"flow": "Content",
+					"name": "UserAvatar"
+				}
+			]
 		},
 		"Video": {
 			"kind": "pattern",

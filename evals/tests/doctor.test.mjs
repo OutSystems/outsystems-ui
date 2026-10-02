@@ -154,8 +154,15 @@ test('blockHintsFor proposes links for patterns the snapshot hints at and lists 
 		},
 	];
 	// callers pass the composable set; the function does not filter
-	const r = blockHintsFor(['Carousel', 'Tabs'], registry, blocks.filter((b) => b.public));
-	assert.deepEqual(r.proposals, [{ pattern: 'Carousel', blocks: [{ flow: 'Interaction', name: 'Carousel' }] }]);
+	const r = blockHintsFor(
+		['Carousel', 'Tabs'],
+		[],
+		registry,
+		blocks.filter((b) => b.public)
+	);
+	assert.deepEqual(r.proposals, [
+		{ pattern: 'Carousel', blocks: [{ flow: 'Interaction', name: 'Carousel' }], source: 'api' },
+	]);
 	assert.deepEqual(r.orphans, [{ key: 'Interaction/Gallery', apiCalls: ['GalleryAPI'] }]);
 });
 
@@ -233,5 +240,59 @@ test('diagnose reads the snapshot through the context, not the repository defaul
 		],
 	};
 	const r = diagnose(/** @type {any} */ (fake), { components: { Search: { kind: 'pattern' } } });
-	assert.deepEqual(r.blockHints.proposals, [{ pattern: 'Search', blocks: [{ flow: 'Zed', name: 'Only' }] }]);
+	assert.deepEqual(r.blockHints.proposals, [
+		{ pattern: 'Search', blocks: [{ flow: 'Zed', name: 'Only' }], source: 'api' },
+	]);
+});
+
+test('normalizedName maps PascalCase and kebab-case to one key', async () => {
+	const { normalizedName } = await import('../tools/doctor.mjs');
+	assert.equal(normalizedName('CardSectioned'), 'card-sectioned');
+	assert.equal(normalizedName('card-sectioned'), 'card-sectioned');
+	assert.equal(normalizedName('InputWithIcon'), 'input-with-icon');
+	assert.equal(normalizedName('SwipeEvents'), 'swipe-events');
+});
+
+test('blockHintsFor proposes links by exact name for patterns and stylesheets, never by prefix', () => {
+	const hints = (apiCalls) => ({ apiCalls });
+	const blocks = [
+		{ key: 'Content/Card', flow: 'Content', name: 'Card', public: true, patternHints: hints([]) },
+		{ key: 'Numbers/ProgressBar', flow: 'Numbers', name: 'ProgressBar', public: true, patternHints: hints([]) },
+		{ key: 'Utilities/SwipeEvents', flow: 'Utilities', name: 'SwipeEvents', public: true, patternHints: hints([]) },
+		{ key: 'Content/Tooltip', flow: 'Content', name: 'Tooltip', public: true, patternHints: hints(['TooltipAPI']) },
+	];
+	const registry = {
+		components: {
+			card: { kind: 'component' },
+			progress: { kind: 'component' },
+			SwipeEvents: { kind: 'pattern' },
+			Tooltip: { kind: 'pattern' },
+		},
+	};
+	const r = blockHintsFor(['Tooltip', 'SwipeEvents'], ['card', 'progress'], registry, blocks);
+	const byKey = Object.fromEntries(r.proposals.map((p) => [p.pattern ?? p.style, p]));
+	assert.deepEqual(byKey.card, { style: 'card', blocks: [{ flow: 'Content', name: 'Card' }], source: 'name' });
+	assert.deepEqual(byKey.SwipeEvents, {
+		pattern: 'SwipeEvents',
+		blocks: [{ flow: 'Utilities', name: 'SwipeEvents' }],
+		source: 'name',
+	});
+	assert.equal(byKey.Tooltip.source, 'api');
+	assert.equal(byKey.progress, undefined, 'ProgressBar does not match progress');
+	assert.deepEqual(r.unlinked, ['Numbers/ProgressBar']);
+});
+
+test('applyFixes appends a derived link to a stylesheet entry without a paramMap', () => {
+	const registry = { components: { card: { kind: 'component' } } };
+	const r = {
+		stale: [],
+		unknown: [],
+		blockHints: {
+			proposals: [{ style: 'card', blocks: [{ flow: 'Content', name: 'Card' }], source: 'name' }],
+			orphans: [],
+			unlinked: [],
+		},
+	};
+	const fixed = applyFixes(registry, /** @type {any} */ (r));
+	assert.deepEqual(fixed.components.card.block, [{ flow: 'Content', name: 'Card', derived: true }]);
 });

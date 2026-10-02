@@ -37,3 +37,25 @@ test('patternOfBlock resolves a registry link, a single hint, and nothing otherw
 	assert.deepEqual(patternOfBlock(blocks[1], ['Tabs'], { components: {} }), { pattern: null, source: null });
 	assert.deepEqual(patternOfBlock(blocks[0], ['Carousel'], { components: {} }), { pattern: null, source: null });
 });
+
+test('patternOfBlock ignores stylesheet entries: a block linked from a CSS-only component has no pattern', () => {
+	const registry = {
+		components: {
+			card: { kind: 'component', block: [{ flow: 'Content', name: 'Card' }] },
+			Tooltip: { kind: 'pattern', block: [{ flow: 'Content', name: 'Tooltip', paramMap: {} }] },
+		},
+	};
+	const block = (flow, name) => ({
+		flow,
+		name,
+		key: `${flow}/${name}`,
+		label: `${flow}/${name}`,
+		public: true,
+		patternHints: { apiCalls: [] },
+	});
+	assert.deepEqual(patternOfBlock(block('Content', 'Card'), ['Tooltip'], registry), { pattern: null, source: null });
+	assert.deepEqual(patternOfBlock(block('Content', 'Tooltip'), ['Tooltip'], registry), {
+		pattern: 'Tooltip',
+		source: 'registry',
+	});
+});
