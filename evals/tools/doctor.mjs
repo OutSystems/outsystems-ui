@@ -112,6 +112,21 @@ export function normalizedName(s) {
  * @returns {{ proposals: LinkProposal[], orphans: { key: string, apiCalls: string[] }[], unlinked: string[] }}
  */
 export function blockHintsFor(patterns, styles, registry, blocks) {
+	const unlinkedEntry = (/** @type {string} */ name) => (registry.components[name]?.block ?? []).length === 0;
+	const { proposals, orphans } = apiProposals(patterns, blocks, unlinkedEntry);
+	const unlinked = nameProposals(patterns, styles, registry, blocks, proposals, unlinkedEntry);
+	return { proposals, orphans, unlinked };
+}
+
+/**
+ * Proposals from the API calls of the blocks' JavaScript, for patterns with no link yet; and the blocks whose
+ * API calls name no pattern.
+ * @param {string[]} patterns
+ * @param {{ key: string, flow: string, name: string, patternHints: { apiCalls: string[] } }[]} blocks
+ * @param {(name: string) => boolean} unlinkedEntry
+ * @returns {{ proposals: LinkProposal[], orphans: { key: string, apiCalls: string[] }[] }}
+ */
+function apiProposals(patterns, blocks, unlinkedEntry) {
 	const byApi = new Map(patterns.map((p) => [`${p}API`, p]));
 	/** @type {Map<string, { flow: string, name: string }[]>} */
 	const hinted = new Map();
@@ -128,8 +143,6 @@ export function blockHintsFor(patterns, styles, registry, blocks) {
 			hinted.set(pattern, found);
 		}
 	}
-	const unlinkedEntry = (/** @type {string} */ name) => (registry.components[name]?.block ?? []).length === 0;
-	/** @type {LinkProposal[]} */
 	const proposals = patterns
 		.filter((p) => hinted.has(p) && unlinkedEntry(p))
 		.map((p) => ({
@@ -137,6 +150,20 @@ export function blockHintsFor(patterns, styles, registry, blocks) {
 			blocks: /** @type {{ flow: string, name: string }[]} */ (hinted.get(p)),
 			source: /** @type {const} */ ('api'),
 		}));
+	return { proposals, orphans };
+}
+
+/**
+ * Proposals by exact normalised name for the blocks with no runtime and no API proposal; appended to
+ * `proposals`. Returns the keys of the blocks left unlinked.
+ * @param {string[]} patterns
+ * @param {string[]} styles
+ * @param {{ components: Record<string, any> }} registry
+ * @param {{ key: string, flow: string, name: string }[]} blocks
+ * @param {LinkProposal[]} proposals
+ * @param {(name: string) => boolean} unlinkedEntry
+ */
+function nameProposals(patterns, styles, registry, blocks, proposals, unlinkedEntry) {
 	const proposedBlocks = new Set(proposals.flatMap((p) => p.blocks.map((b) => `${b.flow}/${b.name}`)));
 	/** @type {Map<string, { pattern?: string, style?: string }>} */
 	const byNorm = new Map();
@@ -157,7 +184,7 @@ export function blockHintsFor(patterns, styles, registry, blocks) {
 		if (existing) existing.blocks.push({ flow: b.flow, name: b.name });
 		else proposals.push({ ...hit, blocks: [{ flow: b.flow, name: b.name }], source: 'name' });
 	}
-	return { proposals, orphans, unlinked };
+	return unlinked;
 }
 
 /** The block-links section of the doctor output: information, never a disagreement. @param {any} r */

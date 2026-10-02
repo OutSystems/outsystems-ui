@@ -34,8 +34,19 @@ const byCodePoint = (a, b) => (a < b ? -1 : Number(a > b));
  * @returns {Row[]}
  */
 export function buildUniverse(snapshots, registry, inventory) {
+	const { rows, linked } = blockRows(snapshots, registry);
+	return [...rows, ...platformRows(inventory, linked)];
+}
+
+/**
+ * The block rows (category `component`) and the names of the patterns and stylesheets they drive.
+ * @param {import('../model/lib/snapshot.mjs').Snapshot[]} snapshots
+ * @param {import('./registry.mjs').Registry} registry
+ */
+function blockRows(snapshots, registry) {
 	/** @type {Row[]} */
 	const rows = [];
+	/** @type {Set<string>} */
 	const linked = new Set();
 	for (const b of composableBlocks(flattenBlocks(snapshots))) {
 		const runtime = blockRuntimeOf(registry, b.flow, b.name);
@@ -53,11 +64,20 @@ export function buildUniverse(snapshots, registry, inventory) {
 		});
 	}
 	rows.sort((a, b) => byCodePoint(a.id, b.id));
+	return { rows, linked };
+}
+
+/**
+ * The platform rows: every pattern and stylesheet of the inventory no block links to.
+ * @param {{ patterns: { name: string }[], cssComponents: { name: string, kind: string }[] }} inventory
+ * @param {Set<string>} linked
+ */
+function platformRows(inventory, linked) {
 	/** @type {Row[]} */
-	const platform = [];
+	const rows = [];
 	for (const p of inventory.patterns) {
 		if (linked.has(p.name)) continue;
-		platform.push({
+		rows.push({
 			id: p.name,
 			name: p.name,
 			flow: null,
@@ -69,19 +89,18 @@ export function buildUniverse(snapshots, registry, inventory) {
 	}
 	for (const c of inventory.cssComponents) {
 		if (linked.has(c.name)) continue;
-		const kind = normalizeKind(c.kind) ?? 'component';
-		platform.push({
+		rows.push({
 			id: c.name,
 			name: c.name,
 			flow: null,
 			category: 'platform',
-			kind,
+			kind: normalizeKind(c.kind) ?? 'component',
 			runtime: { pattern: null, style: c.name },
 			platform: '',
 		});
 	}
-	platform.sort((a, b) => byCodePoint(a.id, b.id));
-	return [...rows, ...platform];
+	rows.sort((a, b) => byCodePoint(a.id, b.id));
+	return rows;
 }
 
 /**
