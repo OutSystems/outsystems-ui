@@ -3,7 +3,7 @@
  * M04 · Block Card Cost and Recipes. What an OML agent reads to place one block: its card in
  * docs-ai/llms-blocks.txt, within a 250-token budget, with a recipe in OpenUI and in TSX.
  */
-import { parseCards } from '../../ai-friendliness/metrics/E01-context-tokens.mjs';
+import { parseCards } from '../../lib/cards.mjs';
 import { list } from '../../lib/present.mjs';
 import { band, mean, round1 } from '../../lib/score.mjs';
 import { blockTable } from '../lib/manifest.mjs';

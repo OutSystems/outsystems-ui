@@ -4,7 +4,7 @@
  * producer apart: a Producers section in llms.txt, runtime-only gotchas and card lines marked as such, and
  * a block-level document the index points at. Measured as literal markers the generator emits.
  */
-import { parseCards } from '../../ai-friendliness/metrics/E01-context-tokens.mjs';
+import { parseCards } from '../../lib/cards.mjs';
 import { isMarked, isRuntimeOnlyLine, PRODUCERS_HEADING, RUNTIME_GOTCHA_NEEDLES } from '../../lib/producers.mjs';
 import { round1 } from '../../lib/score.mjs';
 

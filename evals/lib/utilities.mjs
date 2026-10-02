@@ -14,6 +14,28 @@ import selectorParser from 'postcss-selector-parser';
 
 import { registry } from './registry.mjs';
 
+/**
+ * Classes the manifest documents with at least one declaration or variant.
+ * @param {string|null} text
+ * @returns {Set<string>}
+ */
+export function manifestClasses(text) {
+	/** @type {Set<string>} */
+	const out = new Set();
+	if (!text) return out;
+	try {
+		const parsed = JSON.parse(text);
+		for (const f of parsed.families ?? []) {
+			for (const c of f.classes ?? []) {
+				if ((c.declarations?.length ?? 0) + (c.variants?.length ?? 0) > 0) out.add(c.name);
+			}
+		}
+	} catch {
+		return out;
+	}
+	return out;
+}
+
 /** The size scale every scalable property is expected to offer. */
 export const STEPS = /** @type {const} */ (['none', 'xs', 's', 'base', 'm', 'l', 'xl', 'xxl']);
 /** Box sides and axes a spacing or border class may name. */

@@ -6,6 +6,7 @@ import { componentFacets, loadManifest } from '../../lib/manifest.mjs';
 import { insideDir } from '../../lib/paths.mjs';
 import { band, mean, round1 } from '../../lib/score.mjs';
 import { list } from '../../lib/present.mjs';
+import { parseCards } from '../../lib/cards.mjs';
 
 export const T_MIN = 600;
 export const T_MAX = 6000;
@@ -25,21 +26,6 @@ export const BENCHMARK = {
  */
 export function scoreComponent({ tokens }) {
 	return band(tokens, T_MIN, T_MAX);
-}
-
-/**
- * `## <Name>` sections of llms-components.txt.
- * @param {string|null} text
- */
-export function parseCards(text) {
-	/** @type {Map<string, string>} */
-	const cards = new Map();
-	if (!text) return cards;
-	for (const section of text.split(/^## /m).slice(1)) {
-		const name = section.split('\n')[0].trim();
-		cards.set(name, `## ${section}`);
-	}
-	return cards;
 }
 
 /** The next step for one pattern's E01 row. @param {any} row */

@@ -8,7 +8,7 @@
  */
 import { expectationsFor } from '../../lib/expectations.mjs';
 import { round1 } from '../../lib/score.mjs';
-import { parseCards } from './E01-context-tokens.mjs';
+import { parseCards } from '../../lib/cards.mjs';
 import { list, pct } from '../../lib/present.mjs';
 
 /**

@@ -7,7 +7,6 @@
 import { insideDir } from '../../lib/paths.mjs';
 import { round1 } from '../../lib/score.mjs';
 import { utilityFamilies } from '../../lib/utilities.mjs';
-import { manifestClasses } from '../../utilities/metrics/U04-documentation-parity.mjs';
 import { staticEntitiesReferenced } from '../lib/snapshot.mjs';
 
 const ICON_PARTIALS = [

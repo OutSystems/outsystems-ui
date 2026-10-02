@@ -8,32 +8,10 @@
  */
 import { list, pct } from '../../lib/present.mjs';
 import { round1 } from '../../lib/score.mjs';
-import { docCoverage, utilityFamilies } from '../../lib/utilities.mjs';
+import { docCoverage, manifestClasses, utilityFamilies } from '../../lib/utilities.mjs';
 
 const APPLIES_TO = ['utility'];
 export const STALE_HINT = 'Run npm run docs:ai to regenerate llms-utilities.txt and osui.utilities.json.';
-
-/**
- * Classes the manifest documents with at least one declaration or variant.
- * @param {string|null} text
- * @returns {Set<string>}
- */
-export function manifestClasses(text) {
-	/** @type {Set<string>} */
-	const out = new Set();
-	if (!text) return out;
-	try {
-		const parsed = JSON.parse(text);
-		for (const f of parsed.families ?? []) {
-			for (const c of f.classes ?? []) {
-				if ((c.declarations?.length ?? 0) + (c.variants?.length ?? 0) > 0) out.add(c.name);
-			}
-		}
-	} catch {
-		return out;
-	}
-	return out;
-}
 
 export default {
 	id: 'U04',
