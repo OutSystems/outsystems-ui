@@ -11,7 +11,7 @@ import { round1 } from '../../lib/score.mjs';
 import { docCoverage, manifestClasses, utilityFamilies } from '../../lib/utilities.mjs';
 
 const APPLIES_TO = ['utility'];
-export const STALE_HINT = 'Run npm run docs:ai to regenerate llms-utilities.txt and osui.utilities.json.';
+const STALE_HINT = 'Run npm run docs:ai to regenerate llms-utilities.txt and osui.utilities.json.';
 
 export default {
 	id: 'U04',

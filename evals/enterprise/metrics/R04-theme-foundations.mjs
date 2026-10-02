@@ -24,7 +24,7 @@ import { checksCell } from '../../lib/present.mjs';
  * Foundation rows → the CSS properties that declare them and the token families that carry them.
  * Compiled SCSS keeps `var(--token-…)` / `var(--color-…)` / `var(--osui-…)` reads.
  */
-export const FOUNDATIONS = {
+const FOUNDATIONS = {
 	iconography: {
 		props: ['font-family: "osui-icons', String.raw`content: "\e`, 'mask-image', '.icon'],
 		tokens: ['--token-icon'],
@@ -55,7 +55,7 @@ export const FOUNDATIONS = {
 	},
 };
 
-export const VARIANT_LABELS = {
+const VARIANT_LABELS = {
 	dark: 'dark-ready where colours are set (tokened colours or .os-dark rules)',
 	rtl: 'RTL rules (.is-rtl) where direction matters',
 	motion: 'prefers-reduced-motion guard where it animates (own rule or the theme-level guard)',
@@ -137,7 +137,7 @@ export function foundationsPresent(tokensText, componentCssTexts) {
 	return out;
 }
 
-/** The tiers this eval measures (lib/kinds.mjs). */
+/** The kinds this eval measures (lib/kinds.mjs). */
 const APPLIES_TO = ['pattern', 'component', 'layout'];
 
 export default {

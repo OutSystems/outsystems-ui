@@ -22,8 +22,8 @@ import {
 } from '../lib/signals.mjs';
 import { checksCell, list } from '../../lib/present.mjs';
 
-export const ARIA_NEEDLES = ['A11Y.', 'aria-', "'role'", '"role"'];
-export const LIVE_NEEDLES = [
+const ARIA_NEEDLES = ['A11Y.', 'aria-', "'role'", '"role"'];
+const LIVE_NEEDLES = [
 	'Role.Progressbar',
 	'aria-valuenow',
 	'Aria.ValueMin',
@@ -37,7 +37,7 @@ export const LIVE_NEEDLES = [
 	'role="alert"',
 	'role="status"',
 ];
-export const FOCUS_NEEDLES = [
+const FOCUS_NEEDLES = [
 	'.focus(',
 	'FocusTrap',
 	'focusTrap',
@@ -72,7 +72,7 @@ export function checksFor(c, ts, css, guards = {}) {
 	};
 }
 
-/** The tiers this eval measures (lib/kinds.mjs). */
+/** The kinds this eval measures (lib/kinds.mjs). */
 const APPLIES_TO = ['pattern', 'component', 'layout'];
 
 export default {

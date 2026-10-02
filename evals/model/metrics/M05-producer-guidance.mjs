@@ -21,7 +21,7 @@ export const linesOf = (text) => (text ?? '').split('\n').map(stripCr);
  * @param {string[]} lines
  * @param {string} heading start of the heading line
  */
-export function sectionLines(lines, heading) {
+function sectionLines(lines, heading) {
 	const start = lines.findIndex((l) => l.startsWith(heading));
 	if (start === -1) return [];
 	const out = [];

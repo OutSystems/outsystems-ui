@@ -66,7 +66,6 @@ export function buildBlocksManifest(ctx) {
 	}
 	const sorted = Object.fromEntries(Object.entries(blocks).sort(([a], [b]) => byCodePoint(a, b)));
 	return {
-		$schema: null,
 		version: '1',
 		source: 'scripts/generate-ai-docs.mjs',
 		snapshots: snapshots.map((s) => ({
@@ -87,7 +86,7 @@ function shownParams(params) {
 }
 
 /** The expression text a recipe writes for a parameter. @param {any} p */
-export function recipeValue(p) {
+function recipeValue(p) {
 	if (p.default) return p.default;
 	if (p.typeKind === 'staticEntity' && p.typeRef)
 		return p.values?.length ? `Entities.${p.typeRef}.${p.values[0]}` : '…';
@@ -126,7 +125,7 @@ export function recipesFor(block, { mandatoryOnly = false } = {}) {
 }
 
 /** First sentence of a description, whitespace collapsed. @param {string} text */
-export function firstSentence(text) {
+function firstSentence(text) {
 	const t = text.split(/\s+/).filter(Boolean).join(' ');
 	const dot = t.indexOf('. ');
 	return dot === -1 ? t : t.slice(0, dot + 1);

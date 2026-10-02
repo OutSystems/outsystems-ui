@@ -86,25 +86,28 @@ test('matchStory resolves the widget-story aliases of btn and radio-button', () 
 	assert.equal(matchStory('badge', stories), null);
 });
 
-test('every CSS component carries its directory tier, its registry kind and its source group', () => {
+test('every CSS component carries its directory kind, its registry kind and its source group', () => {
 	const css = Object.fromEntries(inv.cssComponents.map((c) => [c.name, c]));
-	assert.deepEqual([css.card.tier, css.card.kind, css.card.source], ['component', 'component', 'patterns']);
-	assert.deepEqual([css.btn.tier, css.btn.kind, css.btn.source], ['component', 'component', 'widgets']);
-	assert.deepEqual([css.header.tier, css.header.kind, css.header.source], ['layout', 'layout', 'layout']);
-	assert.deepEqual([css.separator.tier, css.separator.kind], ['utility', 'utility']);
+	assert.deepEqual([css.card.defaultKind, css.card.kind, css.card.source], ['component', 'component', 'patterns']);
+	assert.deepEqual([css.btn.defaultKind, css.btn.kind, css.btn.source], ['component', 'component', 'widgets']);
+	assert.deepEqual([css.header.defaultKind, css.header.kind, css.header.source], ['layout', 'layout', 'layout']);
+	assert.deepEqual([css.separator.defaultKind, css.separator.kind], ['utility', 'utility']);
 	assert.deepEqual(
-		[css.animate.tier, css.animate.kind],
+		[css.animate.defaultKind, css.animate.kind],
 		['component', 'utility'],
 		'the registry overrides the directory'
 	);
-	assert.deepEqual([css.section.tier, css.section.kind, css.section.source], ['component', 'component', 'patterns']);
 	assert.deepEqual(
-		[css['layout-section'].tier, css['layout-section'].kind, rel(css['layout-section'].scssFile)],
+		[css.section.defaultKind, css.section.kind, css.section.source],
+		['component', 'component', 'patterns']
+	);
+	assert.deepEqual(
+		[css['layout-section'].defaultKind, css['layout-section'].kind, rel(css['layout-section'].scssFile)],
 		['layout', 'layout', 'src/scss/02-layout/_section.scss'],
 		'a partial sharing its file name with a pattern partial is named after its directory group'
 	);
 	assert.equal(new Set(inv.cssComponents.map((c) => c.name)).size, inv.cssComponents.length, 'names are unique');
-	assert.deepEqual([css['pull-to-refresh'].tier, css['pull-to-refresh'].kind], ['utility', 'layout']);
+	assert.deepEqual([css['pull-to-refresh'].defaultKind, css['pull-to-refresh'].kind], ['utility', 'layout']);
 	const families = inv.cssComponents.filter((c) => c.source === 'useful');
 	assert.equal(families.length, 24, 'the 05-useful partials are utility families');
 	assert.ok(families.every((c) => c.kind === 'utility' && c.storyFile === null && c.host === null));

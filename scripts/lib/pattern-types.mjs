@@ -18,7 +18,7 @@ import { expectationsFor } from '../../evals/lib/expectations.mjs';
 import { resolveEnumReference } from './ai-docs.mjs';
 
 export const OUTPUT_FILE = 'src/scripts/OutSystems/OSUI/Patterns/PatternTypes.ts';
-export const GENERATOR = 'scripts/generate-pattern-types.mjs';
+const GENERATOR = 'scripts/generate-pattern-types.mjs';
 
 const PRIMITIVE = /^(string|number|boolean|Date|MonthYear|'[^']*'|-?\d+(\.\d+)?|true|false)$/;
 const INTERNAL_CALLBACK = /Callbacks|Generic/;
@@ -31,7 +31,7 @@ const INTERNAL_CALLBACK = /Callbacks|Generic/;
  * @param {import('../../evals/lib/ts.mjs').ConfigProp} prop
  * @returns {{ type: string, note?: string }}
  */
-export function publicType(ctx, pattern, type, prop) {
+function publicType(ctx, pattern, type, prop) {
 	const parts = type.split(' | ').map((p) => p.trim());
 	if (parts.every((p) => PRIMITIVE.test(p))) return { type };
 	// enum member references (GlobalEnum.Direction.LTR | …) → literal values
@@ -66,7 +66,7 @@ export async function renderPatternTypes(ctx, manifest) {
  * @param {import('../../evals/lib/context.mjs').EvalContext} ctx
  * @param {ReturnType<typeof import('./ai-docs.mjs').buildManifest>} manifest
  */
-export function renderPatternTypesRaw(ctx, manifest) {
+function renderPatternTypesRaw(ctx, manifest) {
 	const blocks = [];
 	for (const p of ctx.inventory.patterns) {
 		const component = manifest.components[p.name];

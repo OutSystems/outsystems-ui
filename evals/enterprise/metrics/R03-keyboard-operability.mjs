@@ -21,7 +21,7 @@ import {
 import { checksCell, list } from '../../lib/present.mjs';
 
 /** Key → needles that show the key is handled. */
-export const KEY_NEEDLES = {
+const KEY_NEEDLES = {
 	activate: ['Keycodes.Enter', 'Keycodes.Space', "'Enter'", "' '"],
 	escape: ['Keycodes.Escape', "'Escape'"],
 	arrows: ['Keycodes.ArrowDown', 'Keycodes.ArrowUp', 'Keycodes.ArrowLeft', 'Keycodes.ArrowRight', "'Arrow"],
@@ -49,7 +49,7 @@ export function requiredKeys(name) {
 }
 
 /** Markup that activates with Enter and Space natively (story markup or elements created in TypeScript). */
-export const NATIVE_ACTIVATION = [
+const NATIVE_ACTIVATION = [
 	'<button',
 	'role="button"',
 	'<a href',

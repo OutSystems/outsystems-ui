@@ -121,7 +121,7 @@ function compareSpec(x, y) {
  * @param {number[]} values
  * @param {number} p 0–1
  */
-export function percentile(values, p) {
+function percentile(values, p) {
 	if (values.length === 0) return 0;
 	const sorted = [...values].sort((x, y) => x - y);
 	const rank = Math.max(1, Math.ceil(p * sorted.length));

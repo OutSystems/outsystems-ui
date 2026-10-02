@@ -4,7 +4,7 @@
  * classifies them. Every eval that needs to know what a component *is* (a provider wrapper, an overlay,
  * a host-styled partial, a component with a loading state, a utility family, …) reads it from here, so
  * a new component is classified in one place, and a test fails when the registry and the inventory
- * disagree. A component's `kind` is its tier (lib/kinds.mjs); the directory gives the default and the
+ * disagree. A component's `kind` is its source kind (lib/kinds.mjs); the directory gives the default and the
  * registry may override it.
  */
 import fs from 'node:fs';
@@ -22,7 +22,7 @@ export const ROLES = ['provider', 'overlay', 'composite', 'feedback', 'non-inter
 
 /**
  * @typedef {object} Entry
- * @property {import('./kinds.mjs').Kind} kind tier: pattern | component | layout | utility (`css` read as component)
+ * @property {import('./kinds.mjs').Kind} kind pattern | component | layout | utility
  * @property {string[]} [roles]
  * @property {string} [family]        patterns implementing one keyboard model together share a name
  * @property {{ host: string, reason: string }} [host] component or layout partial styling markup something else emits
@@ -68,16 +68,7 @@ export function registry() {
 }
 
 /**
- * @param {Registry} reg
- * @param {string} name
- * @returns {Entry|null}
- */
-export function entryOf(reg, name) {
-	return reg.components[name] ?? null;
-}
-
-/**
- * The tier of a component: the registry's when it names one, else the discovered default.
+ * The kind of a component: the registry's when it names one, else the discovered default.
  * @param {Registry} reg
  * @param {string} name
  * @param {import('./kinds.mjs').Kind} fallback
@@ -144,10 +135,10 @@ export function familyMembers(reg, name) {
 
 /**
  * Where the registry and the inventory disagree. `kindMismatch` (a pattern registered as something
- * else, or the reverse) and `badKinds` fail the registry test; `tierOverride` (a CSS-only component
- * whose registry tier differs from its directory default) is information: an override is the point.
+ * else, or the reverse) and `badKinds` fail the registry test; `kindOverride` (a CSS-only component
+ * whose registry kind differs from its directory default) is information: an override is the point.
  * @param {Registry} reg
- * @param {{ patterns: { name: string }[], cssComponents: { name: string, tier?: string }[] }} inventory
+ * @param {{ patterns: { name: string }[], cssComponents: { name: string, defaultKind?: string }[] }} inventory
  */
 export function validateRegistry(reg, inventory) {
 	/** @type {{ name: string, kind: string }[]} */
@@ -155,13 +146,13 @@ export function validateRegistry(reg, inventory) {
 	/** @type {{ name: string, registry: string, inventory: string }[]} */
 	const kindMismatch = [];
 	/** @type {{ name: string, registry: string, discovered: string }[]} */
-	const tierOverride = [];
+	const kindOverride = [];
 	/** @type {{ name: string, kind: string }[]} */
 	const badKinds = [];
 	const seen = new Set();
 	const discovered = [
 		...inventory.patterns.map((p) => ({ name: p.name, kind: 'pattern' })),
-		...inventory.cssComponents.map((c) => ({ name: c.name, kind: c.tier ?? 'component' })),
+		...inventory.cssComponents.map((c) => ({ name: c.name, kind: c.defaultKind ?? 'component' })),
 	];
 	for (const d of discovered) {
 		seen.add(d.name);
@@ -174,7 +165,7 @@ export function validateRegistry(reg, inventory) {
 		if (kind === null) badKinds.push({ name: d.name, kind: String(e.kind) });
 		else if ((kind === 'pattern') !== (d.kind === 'pattern'))
 			kindMismatch.push({ name: d.name, registry: kind, inventory: d.kind });
-		else if (kind !== d.kind) tierOverride.push({ name: d.name, registry: kind, discovered: d.kind });
+		else if (kind !== d.kind) kindOverride.push({ name: d.name, registry: kind, discovered: d.kind });
 	}
 	const stale = Object.keys(reg.components).filter((n) => !seen.has(n));
 	/** @type {{ name: string, role: string }[]} */
@@ -182,7 +173,7 @@ export function validateRegistry(reg, inventory) {
 	for (const [name, e] of Object.entries(reg.components)) {
 		for (const role of e.roles ?? []) if (!ROLES.includes(role)) badRoles.push({ name, role });
 	}
-	return { unknown, stale, badRoles, badKinds, kindMismatch, tierOverride };
+	return { unknown, stale, badRoles, badKinds, kindMismatch, kindOverride };
 }
 
 /**
@@ -192,7 +183,7 @@ export function validateRegistry(reg, inventory) {
  * @param {string} key
  * @param {Record<string, { attributes: { name: string }[] }>} structures
  */
-export function blockHasParameter(block, key, structures) {
+function blockHasParameter(block, key, structures) {
 	const dot = key.indexOf('.');
 	if (dot === -1) return block.inputParameters.some((p) => p.name === key);
 	const head = key.slice(0, dot);

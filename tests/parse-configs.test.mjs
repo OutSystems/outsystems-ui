@@ -10,7 +10,10 @@ const { OSFramework } = await loadNamespaceFile(path.join(root, 'src/scripts/OSF
 const { ParseConfigs } = OSFramework.OSUI.Helper;
 
 test('a JSON string is parsed exactly like JSON.parse did', () => {
-	assert.deepEqual(ParseConfigs('{"MultipleItems":true,"ExtendedClass":""}'), { MultipleItems: true, ExtendedClass: '' });
+	assert.deepEqual(ParseConfigs('{"MultipleItems":true,"ExtendedClass":""}'), {
+		MultipleItems: true,
+		ExtendedClass: '',
+	});
 	assert.deepEqual(ParseConfigs('{}'), {});
 });
 

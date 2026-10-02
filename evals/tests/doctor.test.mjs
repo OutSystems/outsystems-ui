@@ -52,7 +52,7 @@ test('suggestEntry derives a pattern entry from its code signals', () => {
 	assert.deepEqual(events.roles, ['no-dom']);
 });
 
-test('suggestEntry derives a CSS component entry from its compiled CSS and keeps the discovered tier', () => {
+test('suggestEntry derives a CSS component entry from its compiled CSS and keeps the discovered kind', () => {
 	const chip = suggestEntry({
 		kind: 'component',
 		name: 'chip',
@@ -72,7 +72,7 @@ test('suggestEntry derives a CSS component entry from its compiled CSS and keeps
 	assert.deepEqual(
 		suggestEntry({ kind: 'utility', name: 'space-gap', text: '', css: '.gap-s:hover{}' }),
 		{ kind: 'utility', derived: true },
-		'a utility family is classified by its tier alone'
+		'a utility family is classified by its kind alone'
 	);
 });
 
@@ -98,7 +98,7 @@ test('diagnose lists unknown and stale components with suggestions, and componen
 		]
 	);
 	assert.deepEqual(r.badKinds, []);
-	assert.ok(Array.isArray(r.tierOverride), 'tier overrides are reported, not failed');
+	assert.ok(Array.isArray(r.kindOverride), 'kind overrides are reported, not failed');
 	assert.deepEqual(r.stale, ['Ghost']);
 	const md = renderDoctor(r);
 	assert.match(md, /Accordion/);
@@ -179,7 +179,7 @@ test('applyFixes appends a derived block link for a single-block proposal and le
 		badRoles: [],
 		badKinds: [],
 		kindMismatch: [],
-		tierOverride: [],
+		kindOverride: [],
 		noStory: [],
 		blockHints: {
 			proposals: [{ pattern: 'Carousel', blocks: [{ flow: 'Interaction', name: 'Carousel' }] }],
@@ -199,7 +199,7 @@ test('renderDoctorBlocks lists proposals and orphans without turning them into a
 		badRoles: [],
 		badKinds: [],
 		kindMismatch: [],
-		tierOverride: [],
+		kindOverride: [],
 		noStory: [],
 		blockHints: {
 			proposals: [{ pattern: 'Carousel', blocks: [{ flow: 'Interaction', name: 'Carousel' }] }],

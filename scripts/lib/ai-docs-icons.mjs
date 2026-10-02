@@ -7,7 +7,7 @@ import fs from 'node:fs';
 
 import { insideDir } from '../../evals/lib/paths.mjs';
 
-export const ICON_SOURCES = [
+const ICON_SOURCES = [
 	{
 		key: 'phosphor',
 		prefix: 'ph-',

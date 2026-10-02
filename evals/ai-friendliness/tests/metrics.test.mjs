@@ -84,7 +84,7 @@ test('E04 type strictness: capped penalties per KLOC', () => {
 	close(e04({ implicit: 100, explicit: 0, suppressions: 0, missingReturnRatio: 0, kloc: 40 }), 90);
 });
 
-test('E05 documentation: weighted JSDoc coverage plus agent docs tiers', () => {
+test('E05 documentation: weighted JSDoc coverage plus agent docs levels', () => {
 	close(e05({ jsdocApi: 1, jsdocProps: 1, agentDocs: 100 }), 100);
 	close(e05({ jsdocApi: 0.8, jsdocProps: 0.5, agentDocs: 0 }), 35.5);
 });

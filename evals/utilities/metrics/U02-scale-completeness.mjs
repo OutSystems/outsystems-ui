@@ -11,7 +11,7 @@ import { mean, round1 } from '../../lib/score.mjs';
 import { SCALED, STEPS, utilityFamilies } from '../../lib/utilities.mjs';
 
 const APPLIES_TO = ['utility'];
-export const NO_SCALE_HINT =
+const NO_SCALE_HINT =
 	'Only spacing, gaps, font sizes, shadows and border sizes follow the none … xxl scale; border-radius keeps its shape vocabulary (ADR-0010), colours their shades.';
 
 /**

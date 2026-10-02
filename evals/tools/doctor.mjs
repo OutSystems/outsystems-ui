@@ -44,11 +44,11 @@ function has(text, needles) {
 /**
  * A registry entry derived from what the code shows: the defaults the evals would otherwise apply
  * silently, made explicit and flagged for review.
- * @param {{ kind: import('../lib/kinds.mjs').Tier, name: string, providerDirs?: string[], text?: string, css?: string }} c
+ * @param {{ kind: import('../lib/kinds.mjs').Kind, name: string, providerDirs?: string[], text?: string, css?: string }} c
  * @returns {import('../lib/registry.mjs').Entry}
  */
 export function suggestEntry({ kind, name, providerDirs = [], text = '', css = '' }) {
-	// a utility family or helper class has classes, not states: its tier is the whole classification
+	// a utility family or helper class has classes, not states: its kind is the whole classification
 	if (kind === 'utility') return { kind, derived: true };
 	if (kind !== 'pattern') return suggestStyledEntry(kind, css);
 	if (name.endsWith('Events')) return { kind: 'pattern', roles: ['no-dom'], derived: true };
@@ -231,7 +231,7 @@ export function diagnose(ctx, registry) {
 		badRoles: v.badRoles,
 		badKinds: v.badKinds,
 		kindMismatch: v.kindMismatch,
-		tierOverride: v.tierOverride,
+		kindOverride: v.kindOverride,
 		noStory,
 	};
 }
@@ -271,7 +271,7 @@ export function renderDoctor(r) {
 	}
 	if (r.badKinds.length) {
 		const kinds = r.badKinds.map((b) => `${code(b.name)} → ${b.kind}`);
-		lines.push(`Unknown kinds (tiers are pattern, component, layout, utility): ${kinds.join(', ')}.`, '');
+		lines.push(`Unknown kinds (pattern, component, layout, utility): ${kinds.join(', ')}.`, '');
 	}
 	if (r.noStory.length)
 		lines.push(`Without a Storybook story (E07 cannot measure them): ${r.noStory.join(', ')}.`, '');

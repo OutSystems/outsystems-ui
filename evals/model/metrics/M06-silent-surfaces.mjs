@@ -53,7 +53,7 @@ export function knobDocumented(doc, knob) {
 }
 
 /** @param {import('../../lib/context.mjs').EvalContext} ctx */
-export function declaredIconLibraries(ctx) {
+function declaredIconLibraries(ctx) {
 	const text = ICON_PARTIALS.map((f) => ctx.readText(insideDir(ctx.root, ...f.split('/')))).join('\n');
 	return ICON_LIBRARIES.filter((l) => text.includes(l.needle)).map((l) => l.key);
 }

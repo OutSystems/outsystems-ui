@@ -15,24 +15,24 @@ export function scoreComponent({ total, literal, routed, important }) {
 }
 
 /**
- * Component SCSS files of the tiers an eval measures: every pattern partial plus the CSS-only components.
+ * Component SCSS files of the kinds an eval measures: every pattern partial plus the CSS-only components.
  * @param {import('../../lib/context.mjs').EvalContext} ctx
- * @param {readonly string[]} tiers the eval's `present.appliesTo`
+ * @param {readonly string[]} kinds the eval's `present.appliesTo`
  */
-export function componentScssFiles(ctx, tiers) {
-	/** @type {{ name: string, file: string, kind: import('../../lib/kinds.mjs').Tier }[]} */
+export function componentScssFiles(ctx, kinds) {
+	/** @type {{ name: string, file: string, kind: import('../../lib/kinds.mjs').Kind }[]} */
 	const files = [];
-	if (tiers.includes('pattern')) {
+	if (kinds.includes('pattern')) {
 		for (const p of ctx.inventory.patterns)
 			for (const f of p.scssFiles) files.push({ name: p.name, file: f, kind: 'pattern' });
 	}
 	for (const c of ctx.inventory.cssComponents) {
-		if (tiers.includes(c.kind)) files.push({ name: c.name, file: c.scssFile, kind: c.kind });
+		if (kinds.includes(c.kind)) files.push({ name: c.name, file: c.scssFile, kind: c.kind });
 	}
 	return files;
 }
 
-/** The tiers this eval measures (lib/kinds.mjs). */
+/** The kinds this eval measures (lib/kinds.mjs). */
 const APPLIES_TO = ['pattern', 'component', 'layout'];
 
 export default {

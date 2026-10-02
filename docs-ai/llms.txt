@@ -49,7 +49,7 @@ Scope: OutSystems UI ships a single token-based theme (light, plus the generated
 - llms-tokens.txt — framework theme roles (--color-*, --border-radius-*) and every --osui-* component knob; legacy aliases are marked
 - llms-utilities.txt — the utility grammar (<property>[-<side>][-<value>], the size scale, colour hues and shades) and every family as template rows with their declarations
 - osui.utilities.json — every utility class with its declarations, variants and tokens, machine-readable (schema/osui.utilities.schema.json)
-- llms-patterns.txt — CSS-only components (markup skeleton, knobs), layout partials (host-styled: never generate their markup) and helper classes, one group per tier
+- llms-patterns.txt — CSS-only components (markup skeleton, knobs), layout partials (host-styled: never generate their markup) and helper classes, one group per kind
 - osui.components.json — the same data, machine-readable (schema/osui.components.schema.json), plus a usage example per pattern (Create with every default, Initialize)
 - schema/configs/<Name>.schema.json — JSON Schema of each pattern's configs string, to validate before Create
 

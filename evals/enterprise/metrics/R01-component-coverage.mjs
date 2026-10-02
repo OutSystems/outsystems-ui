@@ -17,7 +17,7 @@ import { round1 } from '../../lib/score.mjs';
 import { list, rowsOf } from '../../lib/present.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
-export const REQUIREMENTS_FILE = insideDir(path.resolve(here, '..'), 'requirements.json');
+const REQUIREMENTS_FILE = insideDir(path.resolve(here, '..'), 'requirements.json');
 
 /**
  * @typedef {{ kind: 'pattern'|'css'|'story'|'scss-text'|'ts-text', match: string }} Evidence
@@ -117,7 +117,7 @@ export function scoreCoverage(rows, groups) {
  * @param {{ flow: string, elements: string[] }[]} flows
  * @param {{ id: string, name: string, status: string }[]} rows
  */
-export function flowKits(flows, rows) {
+function flowKits(flows, rows) {
 	const byId = new Map(rows.map((r) => [r.id, r]));
 	return flows.map((f) => {
 		const elements = f.elements.map((id) => byId.get(id)).filter((r) => r !== undefined);
@@ -130,7 +130,7 @@ export function flowKits(flows, rows) {
 	});
 }
 
-/** The tiers this eval measures (lib/kinds.mjs); utility classes still count as evidence for a requirement. */
+/** The kinds this eval measures (lib/kinds.mjs); utility classes still count as evidence for a requirement. */
 const APPLIES_TO = ['pattern', 'component', 'layout'];
 
 export default {

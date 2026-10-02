@@ -18,9 +18,9 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 
 import { insideDir } from '../lib/paths.mjs';
 
-export const TEMPLATE_FILE = 'dashboard/index.html';
-export const MODULE_FILE = 'dashboard/dashboard.mjs';
-export const PAGE_FILE = 'results/dashboard.html';
+const TEMPLATE_FILE = 'dashboard/index.html';
+const MODULE_FILE = 'dashboard/dashboard.mjs';
+const PAGE_FILE = 'results/dashboard.html';
 export const PLACEHOLDER = '/*__DASHBOARD_SCRIPT__*/';
 const EXPORT_LINE = 'export function mount(';
 
@@ -168,7 +168,7 @@ export async function renderSection(evalsDir, id, data) {
 /**
  * @param {string} evalsDir
  */
-export function writeDashboardPage(evalsDir) {
+function writeDashboardPage(evalsDir) {
 	const html = buildDashboardPage(evalsDir);
 	const file = insideDir(evalsDir, PAGE_FILE);
 	fs.writeFileSync(file, html);

@@ -10,7 +10,7 @@
  *
  * A *CSS component* is a SCSS partial with no TypeScript behaviour behind it: a CSS-only component
  * (Card, Badge, Tag, the widget styles), a host-styled layout partial, a helper class or a utility
- * family under `05-useful`. Its directory gives it a default tier; the registry may override it
+ * family under `05-useful`. Its directory gives it a default kind; the registry may override it
  * (lib/kinds.mjs).
  */
 import fs from 'node:fs';
@@ -46,8 +46,8 @@ import { defaultKindFor } from './kinds.mjs';
  * @property {{ host: string, reason: string }|null} host set when the component styles markup owned by
  *   something else (app template blocks, common screens, the runtime); such a component has no markup
  *   contract of its own
- * @property {import('./kinds.mjs').Kind} tier   default tier from the directory
- * @property {import('./kinds.mjs').Kind} kind   tier after the registry override (what the evals use)
+ * @property {import('./kinds.mjs').Kind} defaultKind default kind from the directory
+ * @property {import('./kinds.mjs').Kind} kind   kind after the registry override (what the evals use)
  * @property {'layout'|'widgets'|'patterns'|'useful'} source top-level directory the partial lives in
  */
 
@@ -100,7 +100,7 @@ export function walk(dir) {
  * @param {string} file
  * @returns {'config'|'enum'|'interface'|'factory'|'typing'|'class'|'ignore'}
  */
-export function classifyTsFile(file) {
+function classifyTsFile(file) {
 	const base = path.basename(file);
 	if (!base.endsWith('.ts')) return 'ignore';
 	if (base.endsWith('.d.ts')) return 'typing';
@@ -118,7 +118,7 @@ export function classifyTsFile(file) {
  * @param {string} name
  * @returns {string[]}
  */
-export function readSpecScss(root, name) {
+function readSpecScss(root, name) {
 	const specFile = insideDir(root, ...SPEC_DIR, `${name}.js`);
 	if (!fs.existsSync(specFile)) return [];
 	// The spec is a CommonJS module, but it is read as text rather than executed: every `"scss": "…"`
@@ -264,16 +264,16 @@ export function buildInventory(root) {
 	const cssComponents = partials
 		.map(({ scssFile, source, base }) => {
 			const name = (baseCount.get(base) ?? 0) > 1 && source !== 'patterns' ? `${source}-${base}` : base;
-			const tier = defaultKindFor(scssFile);
-			const registryKind = kindOf(REG, name, tier);
+			const defaultKind = defaultKindFor(scssFile);
+			const registryKind = kindOf(REG, name, defaultKind);
 			return {
 				name,
 				scssFile,
 				// a utility family has classes, not an anatomy: no story is looked up for it
 				storyFile: source === 'useful' ? null : matchStory(name, storiesByNorm),
 				host: REG.components[name]?.host ?? null,
-				tier,
-				kind: registryKind === 'pattern' ? tier : registryKind,
+				defaultKind,
+				kind: registryKind === 'pattern' ? defaultKind : registryKind,
 				source,
 			};
 		})

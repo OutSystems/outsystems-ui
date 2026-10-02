@@ -13,7 +13,7 @@ import ts from 'typescript';
  * Compiler options + file list from the repository tsconfig.
  * @param {string} root
  */
-export function loadRepoConfig(root) {
+function loadRepoConfig(root) {
 	const configPath = path.join(root, 'tsconfig.json');
 	const { config, error } = ts.readConfigFile(configPath, ts.sys.readFile);
 	if (error) throw new Error(ts.flattenDiagnosticMessageText(error.messageText, '\n'));
@@ -80,7 +80,7 @@ export function getSourceFile(program, file) {
  * @param {ts.Node} node
  * @param {(n: ts.Node) => void} visit
  */
-export function walkNodes(node, visit) {
+function walkNodes(node, visit) {
 	visit(node);
 	ts.forEachChild(node, (child) => walkNodes(child, visit));
 }
@@ -124,7 +124,7 @@ export function getJsDoc(node) {
  * The `@defaultValue` a property documents, as source text, or null.
  * @param {ts.Node} node
  */
-export function documentedDefault(node) {
+function documentedDefault(node) {
 	const tag = ts.getJSDocTags(node).find((t) => t.tagName.text === 'defaultValue');
 	if (!tag) return null;
 	const text = (ts.getTextOfJSDocComment(tag.comment) ?? '').trim();

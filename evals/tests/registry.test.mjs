@@ -44,7 +44,7 @@ test('namesWhere, hasRole, familyMembers and kindOf read the registry', () => {
 	assert.deepEqual(familyMembers(fake, 'badge'), []);
 	assert.equal(kindOf(fake, 'layout', 'component'), 'layout');
 	assert.equal(kindOf(fake, 'space-margin', 'component'), 'utility');
-	assert.equal(kindOf(fake, 'unknown', 'component'), 'component', 'falls back to the discovered tier');
+	assert.equal(kindOf(fake, 'unknown', 'component'), 'component', 'falls back to the discovered kind');
 });
 
 test('normalizeRegistry keeps every entry as written; the legacy css kind is no longer a kind', () => {
@@ -54,15 +54,15 @@ test('normalizeRegistry keeps every entry as written; the legacy css kind is no 
 	assert.equal(normalizeKind('css'), null);
 });
 
-test('validateRegistry reports unknown components, stale entries, bad kinds, pattern mismatches and tier overrides', () => {
+test('validateRegistry reports unknown components, stale entries, bad kinds, pattern mismatches and kind overrides', () => {
 	const inventory = {
 		patterns: [{ name: 'Tabs' }, { name: 'TabsHeaderItem' }, { name: 'Dropdown' }, { name: 'Search' }],
 		cssComponents: [
-			{ name: 'badge', tier: 'component' },
-			{ name: 'card', tier: 'component' },
-			{ name: 'layout', tier: 'layout' },
-			{ name: 'space-margin', tier: 'utility' },
-			{ name: 'animate', tier: 'component' },
+			{ name: 'badge', defaultKind: 'component' },
+			{ name: 'card', defaultKind: 'component' },
+			{ name: 'layout', defaultKind: 'layout' },
+			{ name: 'space-margin', defaultKind: 'utility' },
+			{ name: 'animate', defaultKind: 'component' },
 		],
 	};
 	const reg = {
@@ -83,13 +83,13 @@ test('validateRegistry reports unknown components, stale entries, bad kinds, pat
 	assert.deepEqual(r.badKinds, []);
 	assert.deepEqual(r.kindMismatch, [{ name: 'Dropdown', registry: 'component', inventory: 'pattern' }]);
 	assert.deepEqual(
-		r.tierOverride,
+		r.kindOverride,
 		[{ name: 'animate', registry: 'utility', discovered: 'component' }],
-		'a registry tier that differs from the directory default is reported, not failed'
+		'a registry kind that differs from the directory default is reported, not failed'
 	);
 	const bad = validateRegistry(
 		{ components: { Tabs: { kind: 'pattern', roles: ['flying'] }, badge: { kind: 'widget' } } },
-		{ patterns: [{ name: 'Tabs' }], cssComponents: [{ name: 'badge', tier: 'component' }] }
+		{ patterns: [{ name: 'Tabs' }], cssComponents: [{ name: 'badge', defaultKind: 'component' }] }
 	);
 	assert.deepEqual(bad.badRoles, [{ name: 'Tabs', role: 'flying' }]);
 	assert.deepEqual(bad.badKinds, [{ name: 'badge', kind: 'widget' }]);
@@ -98,14 +98,10 @@ test('validateRegistry reports unknown components, stale entries, bad kinds, pat
 		{ components: { badge: { kind: 'css' } } },
 		{ patterns: [], cssComponents: [{ name: 'badge' }] }
 	);
-	assert.deepEqual(
-		legacy.kindMismatch,
-		[],
-		'css still means component; a component without a tier defaults to component'
-	);
+	assert.deepEqual(legacy.kindMismatch, [], 'a component without a default kind defaults to component');
 });
 
-test('the committed registry classifies exactly the components the inventory discovers, with tiers and valid roles', () => {
+test('the committed registry classifies exactly the components the inventory discovers, with kinds and valid roles', () => {
 	const reg = loadRegistry();
 	const r = validateRegistry(reg, buildInventory(root));
 	assert.deepEqual(
@@ -117,7 +113,7 @@ test('the committed registry classifies exactly the components the inventory dis
 	assert.deepEqual(r.badRoles, []);
 	assert.deepEqual(r.badKinds, []);
 	assert.deepEqual(r.kindMismatch, []);
-	for (const [name, e] of Object.entries(reg.components)) assert.ok(KINDS.includes(e.kind), `${name} has a tier`);
+	for (const [name, e] of Object.entries(reg.components)) assert.ok(KINDS.includes(e.kind), `${name} has a kind`);
 	assert.equal(reg.components.card.kind, 'component');
 	assert.equal(reg.components.header.kind, 'layout');
 	assert.equal(reg.components.animate.kind, 'utility', 'helpers filed under 04-patterns are overridden to utility');
@@ -128,7 +124,7 @@ test('the committed registry classifies exactly the components the inventory dis
 		'a helper class has no host: nothing emits its markup'
 	);
 	assert.deepEqual(
-		r.tierOverride.map((o) => o.name).sort((a, b) => a.localeCompare(b)),
+		r.kindOverride.map((o) => o.name).sort((a, b) => a.localeCompare(b)),
 		['animate', 'columns', 'list-updating', 'provider-login-button', 'pull-to-refresh']
 	);
 	assert.equal(reg.components['layout-section'].kind, 'layout');

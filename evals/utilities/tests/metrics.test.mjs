@@ -16,7 +16,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '.
 const ctx = createContext(root);
 const rowsOf = (r) => Object.values(r.perComponent);
 
-test('the utilities suite registers six evals with utility as their only tier', () => {
+test('the utilities suite registers six evals with utility as their only kind', () => {
 	assert.deepEqual(
 		metrics.map((m) => m.id),
 		['U01', 'U02', 'U03', 'U04', 'U05', 'U06']

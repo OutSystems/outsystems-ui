@@ -3,7 +3,7 @@ import { expectationsFor } from '../../lib/expectations.mjs';
 import { mean, round1 } from '../../lib/score.mjs';
 import { list, rowsOf, toDoHint } from '../../lib/present.mjs';
 
-export const CANONICAL = [
+const CANONICAL = [
 	{ label: 'Create', test: /^Create$/ },
 	{ label: 'Initialize', test: /^Initialize$/ },
 	{ label: 'Dispose', test: /^Dispose$/ },

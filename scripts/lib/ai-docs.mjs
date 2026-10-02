@@ -40,7 +40,7 @@ import { getClassesInFiles, getEnums, getSourceFile } from '../../evals/lib/ts.m
 import { buildBlocksManifest, buildEnumsManifest, renderBlockCards } from './ai-docs-blocks.mjs';
 import { buildIconsManifest } from './ai-docs-icons.mjs';
 
-export const MANIFEST_VERSION = '1';
+const MANIFEST_VERSION = '1';
 
 /** Explicit, locale-independent string order. */
 export const byCodePoint = (/** @type {string} */ a, /** @type {string} */ b) => (a < b ? -1 : Number(a > b));
@@ -53,7 +53,7 @@ const MARKUP_CAP = 1200;
  * `IAccordionItem`, not `OSFramework.OSUI.Patterns.AccordionItem.IAccordionItem`.
  * @param {string} type
  */
-export function shortType(type) {
+function shortType(type) {
 	return type
 		.replace(/string \| Record<string, unknown>/g, 'string | object')
 		.replace(/OSFramework\.OSUI\.GlobalCallbacks\./g, '')
@@ -113,7 +113,7 @@ export function resolveEnumReference(ctx, pattern, text) {
  * @param {string} text
  * @returns {{ scope: 'Enum'|'GlobalEnum', enumName: string, member: string|null }|null}
  */
-export function parseEnumPath(text) {
+function parseEnumPath(text) {
 	const parts = text.trim().split('.');
 	const scopeIndex = Math.max(parts.lastIndexOf('Enum'), parts.lastIndexOf('GlobalEnum'));
 	if (scopeIndex < 0) return null;
@@ -133,7 +133,7 @@ export function parseEnumPath(text) {
  * @param {string|null} text enum member reference or `Object.values(Enum.X)` operand
  * @returns {(string|number)[]|null}
  */
-export function enumValuesFor(ctx, pattern, text) {
+function enumValuesFor(ctx, pattern, text) {
 	if (!text) return null;
 	const ref = parseEnumPath(text);
 	if (!ref) return null;
@@ -149,7 +149,7 @@ const unionType = (values) => values.map((v) => (typeof v === 'string' ? `'${v}'
  * @param {import('../../evals/lib/inventory.mjs').Pattern} pattern
  * @param {import('../../evals/lib/ts.mjs').ConfigProp} prop
  */
-export function describeProp(ctx, pattern, prop) {
+function describeProp(ctx, pattern, prop) {
 	/** @type {{ type: string, default?: unknown, allowed?: (string|number)[], hint?: string, description?: string }} */
 	const out = { type: prop.typeText ?? 'unknown' };
 	const { allowed, hint } = allowedValuesFor(ctx, pattern, prop);
@@ -241,7 +241,7 @@ function publicTypeText(prop, allowed) {
  * Whitespace-collapsed story skeleton without demo styling or interpolation leftovers.
  * @param {string|null} html
  */
-export function cleanMarkup(html) {
+function cleanMarkup(html) {
 	if (!html) return '';
 	let out = html
 		.replace(/\s+/g, ' ')
@@ -258,7 +258,7 @@ export function cleanMarkup(html) {
  * `--osui-*` custom properties declared by a compiled stylesheet, in declaration order.
  * @param {string|null} css
  */
-export function knobsOf(css) {
+function knobsOf(css) {
 	if (!css) return [];
 	/** @type {Set<string>} */
 	const knobs = new Set();
@@ -345,7 +345,7 @@ export function buildManifest(ctx) {
  * @param {string} name
  * @param {Record<string, any>} props manifest props
  */
-export function usageOf(name, props) {
+function usageOf(name, props) {
 	/** @type {Record<string, unknown>} */
 	const configs = {};
 	for (const [k, d] of Object.entries(props)) if (d.default !== undefined) configs[k] = d.default;
@@ -540,7 +540,7 @@ ${PRODUCERS_HEADING}
 - llms-tokens.txt — framework theme roles (--color-*, --border-radius-*) and every --osui-* component knob; legacy aliases are marked
 - llms-utilities.txt — the utility grammar (<property>[-<side>][-<value>], the size scale, colour hues and shades) and every family as template rows with their declarations
 - osui.utilities.json — every utility class with its declarations, variants and tokens, machine-readable (schema/osui.utilities.schema.json)
-- llms-patterns.txt — CSS-only components (markup skeleton, knobs), layout partials (host-styled: never generate their markup) and helper classes, one group per tier
+- llms-patterns.txt — CSS-only components (markup skeleton, knobs), layout partials (host-styled: never generate their markup) and helper classes, one group per kind
 - osui.components.json — the same data, machine-readable (schema/osui.components.schema.json), plus a usage example per pattern (Create with every default, Initialize)
 - schema/configs/<Name>.schema.json — JSON Schema of each pattern's configs string, to validate before Create
 
@@ -562,9 +562,9 @@ ${PRODUCERS_HEADING}
  * for three runtime readers only (`GetColorValueFromColorType`, `GetBorderRadiusValueFromShapeType`,
  * Gallery `ItemsGap`); no component SCSS reads them.
  */
-export const LEGACY_ALIAS = /^--(color-neutral(-\d+)?|color-<color>|space-<type>|border-radius-(none|soft|rounded))$/;
+const LEGACY_ALIAS = /^--(color-neutral(-\d+)?|color-<color>|space-<type>|border-radius-(none|soft|rounded))$/;
 
-export const SINGLE_THEME_SCOPE =
+const SINGLE_THEME_SCOPE =
 	'Scope: OutSystems UI ships a single token-based theme (light, plus the generated dark mode under class os-dark-theme on <html>). The pre-migration "classic" CSS snapshot under classic-theme/ is a Storybook comparison artifact, not a target for generated code.';
 
 /**
@@ -572,7 +572,7 @@ export const SINGLE_THEME_SCOPE =
  * `@each`-generated families (`--color-#{$color}: …` → `--color-<color>`), in source order.
  * @param {string} rootScss
  */
-export function themeRolesOf(rootScss) {
+function themeRolesOf(rootScss) {
 	/** @type {Set<string>} */
 	const roles = new Set();
 	/** @type {Set<string>} */
@@ -633,20 +633,20 @@ export function renderTokens(ctx, manifest) {
 	return `${lines.join('\n')}\n`;
 }
 
-/** The three groups of llms-patterns.txt, by tier, with what an agent may do with each. */
+/** The three groups of llms-patterns.txt, by kind, with what an agent may do with each. */
 const CSS_GROUPS = [
 	{
-		tier: 'component',
+		kind: 'component',
 		title: 'Components',
 		intro: 'CSS-only components: no TypeScript behaviour. Emit the markup and classes below and the compiled stylesheet does the rest. Skeletons come from the Storybook stories; `--osui-*` knobs are the per-instance overrides. A component marked **host-styled** is a layer another pattern creates (a balloon): adjust it through its knobs only.',
 	},
 	{
-		tier: 'layout',
+		kind: 'layout',
 		title: 'Layout partials (host-styled)',
 		intro: 'They style markup that something else emits: the app template Layout and Menu blocks, the Login common screen or the platform runtime. Never generate that markup: place content in the host placeholders and adjust the look through the knobs listed.',
 	},
 	{
-		tier: 'utility',
+		kind: 'utility',
 		title: 'Helper classes',
 		intro: 'Single-purpose classes applied to any element: no anatomy, no knobs, nothing to generate but the class itself. The utility families (spacing, display, colours, typography, …) are in llms-utilities.txt.',
 	},
@@ -695,7 +695,7 @@ function cssComponentEntry(ctx, c, seenStories) {
 }
 
 /**
- * llms-patterns.txt — the CSS-only components by tier: components (skeleton and knobs), layout
+ * llms-patterns.txt — the CSS-only components by kind: components (skeleton and knobs), layout
  * partials (host-styled, never generated) and helper classes (class names only).
  * @param {import('../../evals/lib/context.mjs').EvalContext} ctx
  */
@@ -703,7 +703,7 @@ export function renderCssComponents(ctx) {
 	const lines = [
 		'# OutSystems UI — CSS-only components, layout partials and helper classes',
 		'',
-		'Three tiers of styles without TypeScript behaviour, each with a different contract. Read the group intro before using its entries.',
+		'Three kinds of styles without TypeScript behaviour, each with a different contract. Read the group intro before using its entries.',
 		'',
 	];
 	/** @type {Set<string>} */
@@ -712,7 +712,7 @@ export function renderCssComponents(ctx) {
 	const components = ctx.inventory.cssComponents.filter((c) => c.source !== 'useful');
 	for (const group of CSS_GROUPS) {
 		lines.push(`## ${group.title}`, '', group.intro, '');
-		for (const c of components.filter((x) => x.kind === group.tier)) lines.push(...cssComponentEntry(ctx, c, seen));
+		for (const c of components.filter((x) => x.kind === group.kind)) lines.push(...cssComponentEntry(ctx, c, seen));
 	}
 	return `${lines.join('\n')}\n`;
 }

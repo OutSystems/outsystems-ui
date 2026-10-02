@@ -1,6 +1,6 @@
 # OutSystems UI — CSS-only components, layout partials and helper classes
 
-Three tiers of styles without TypeScript behaviour, each with a different contract. Read the group intro before using its entries.
+Three kinds of styles without TypeScript behaviour, each with a different contract. Read the group intro before using its entries.
 
 ## Components
 

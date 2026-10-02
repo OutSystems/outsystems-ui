@@ -10,7 +10,7 @@ import { mean, round1 } from '../../lib/score.mjs';
 import { blockTable, loadBlocksManifest } from '../lib/manifest.mjs';
 import { composableBlocks, flattenBlocks, isComposable, NO_SNAPSHOT, notComposableReason } from '../lib/snapshot.mjs';
 
-export const FACETS = ['params', 'placeholders', 'events', 'recipes', 'pattern'];
+const FACETS = ['params', 'placeholders', 'events', 'recipes', 'pattern'];
 
 /** @param {number} hit @param {number} total */
 const ratio = (hit, total) => (total === 0 ? null : hit / total);

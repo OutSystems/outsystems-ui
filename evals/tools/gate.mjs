@@ -52,7 +52,7 @@ const r1 = (n) => Math.round(n * 10) / 10;
 const byDate = (history) => [...history].sort((a, b) => a.date.localeCompare(b.date));
 
 /** A run recorded on the base branch. @param {HistoryEntry} e */
-export function isDevEntry(e) {
+function isDevEntry(e) {
 	return e.branch === 'dev' || e.label.startsWith('dev-');
 }
 
@@ -250,7 +250,7 @@ export function formatGateReport(origin, run, verdict, { maxDrop = 1, title = 'I
  * @param {{ baselineLabel?: string, originLabel?: string, maxDrop?: number, maxEvalDrop?: number }} [options]
  * @returns {{ verdict: { ok: boolean, message: string }|null, report: string }}
  */
-export function gateSuite(suite, history, run, options = {}) {
+function gateSuite(suite, history, run, options = {}) {
 	const runSuite = run.suites[suite.id];
 	const maxDrop = options.maxDrop ?? suite.maxDrop;
 	const maxEvalDrop = options.maxEvalDrop ?? suite.maxEvalDrop;

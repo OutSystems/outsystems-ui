@@ -34,18 +34,18 @@ npm test                               # unit tests, including this suite's form
 
 ## The ten evals
 
-| ID  | Eval                                    | Criterion                            | Movable by non-breaking changes?                          |
-| --- | --------------------------------------- | ------------------------------------ | --------------------------------------------------------- |
-| E01 | Context Token Cost                      | Token & context efficiency           | yes (complete manifest cards count as the cheaper source) |
-| E02 | Prop Surface & Typing Precision         | Schema & anatomy                     | yes                                                       |
-| E03 | Machine-Readable Schema Completeness    | Schema & metadata                    | yes                                                       |
-| E04 | Type Strictness                         | Type-constrained determinism         | yes                                                       |
-| E05 | Documentation Coverage                  | Agent documentation (llms.txt tiers) | yes                                                       |
-| E06 | Public API Shape Consistency            | Snippet predictability               | yes                                                       |
-| E07 | Markup Contract Depth                   | Anatomy & composition                | structural                                                |
-| E08 | Design Token Semantics                  | Semantic tokens & theming            | yes                                                       |
-| E09 | CSS Selector Complexity                 | Predictable cascade                  | structural                                                |
-| E10 | Composition Model & Standards Alignment | Pre-training density                 | structural                                                |
+| ID  | Eval                                    | Criterion                             | Movable by non-breaking changes?                          |
+| --- | --------------------------------------- | ------------------------------------- | --------------------------------------------------------- |
+| E01 | Context Token Cost                      | Token & context efficiency            | yes (complete manifest cards count as the cheaper source) |
+| E02 | Prop Surface & Typing Precision         | Schema & anatomy                      | yes                                                       |
+| E03 | Machine-Readable Schema Completeness    | Schema & metadata                     | yes                                                       |
+| E04 | Type Strictness                         | Type-constrained determinism          | yes                                                       |
+| E05 | Documentation Coverage                  | Agent documentation (llms.txt levels) | yes                                                       |
+| E06 | Public API Shape Consistency            | Snippet predictability                | yes                                                       |
+| E07 | Markup Contract Depth                   | Anatomy & composition                 | structural                                                |
+| E08 | Design Token Semantics                  | Semantic tokens & theming             | yes                                                       |
+| E09 | CSS Selector Complexity                 | Predictable cascade                   | structural                                                |
+| E10 | Composition Model & Standards Alignment | Pre-training density                  | structural                                                |
 
 Formulas, bands and calibration are documented in
 [`docs-internal/ai-friendliness/2026-09-29-eval-suite-design.md`](../../docs-internal/ai-friendliness/2026-09-29-eval-suite-design.md)

@@ -13,7 +13,7 @@ import { insideDir, isRefName } from './paths.mjs';
  * spawning git. Returns 'unknown' when the checkout has no readable metadata.
  * @param {string} root
  */
-export function readHeadCommit(root) {
+function readHeadCommit(root) {
 	try {
 		const gitDir = resolveGitDir(path.resolve(root));
 		if (!gitDir) return 'unknown';
@@ -33,7 +33,7 @@ export function readHeadCommit(root) {
  * @param {string} root
  * @returns {string|null}
  */
-export function readHeadBranch(root) {
+function readHeadBranch(root) {
 	try {
 		const gitDir = resolveGitDir(path.resolve(root));
 		if (!gitDir) return null;

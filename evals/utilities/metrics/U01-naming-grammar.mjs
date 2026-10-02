@@ -11,8 +11,8 @@ import { round1 } from '../../lib/score.mjs';
 import { classifyName, HOOK_FAMILIES, utilityFamilies } from '../../lib/utilities.mjs';
 
 const APPLIES_TO = ['utility'];
-export const HOOK_REASON = 'behavioural or runtime hooks, not style utilities';
-export const HOOK_HINT =
+const HOOK_REASON = 'behavioural or runtime hooks, not style utilities';
+const HOOK_HINT =
 	'Nothing to rename: these classes mark behaviour (skip links, hidden text, viewport helpers), not a style.';
 
 export default {

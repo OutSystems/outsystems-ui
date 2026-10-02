@@ -8,12 +8,12 @@ import { band, mean, round1 } from '../../lib/score.mjs';
 import { list } from '../../lib/present.mjs';
 import { parseCards } from '../../lib/cards.mjs';
 
-export const T_MIN = 600;
-export const T_MAX = 6000;
+const T_MIN = 600;
+const T_MAX = 6000;
 /** A manifest card only counts as an authoritative source when this complete (see E03). */
-export const CARD_COMPLETENESS_GATE = 0.8;
+const CARD_COMPLETENESS_GATE = 0.8;
 /** Measured in this session on shadcn/ui `apps/v4/registry/new-york-v4/ui/*.tsx` (o200k_base). */
-export const BENCHMARK = {
+const BENCHMARK = {
 	name: 'shadcn/ui (10 components)',
 	medianTokens: 912,
 	meanTokens: 1325,

@@ -25,7 +25,7 @@ export function scoreCrosswalk({ linked, params, mapped, events, eventsMapped })
  * @param {import('../lib/crosswalk.mjs').Link[]} links
  * @param {Map<string, import('../lib/snapshot.mjs').BlockRow>} byKey
  */
-export function coverageOf(links, byKey) {
+function coverageOf(links, byKey) {
 	/** @type {string[]} */
 	const missing = [];
 	/** @type {string[]} */

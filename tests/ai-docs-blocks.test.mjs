@@ -153,3 +153,8 @@ test('the block manifest and cards cover the composable set only: no deprecated 
 	assert.ok(!text.includes('## Licenses/Licenses'));
 	assert.ok(!text.includes('DEPRECATED_'));
 });
+
+test('the block manifest carries no $schema key until a schema is published', () => {
+	const manifest = buildBlocksManifest(createContext(root));
+	assert.equal('$schema' in manifest, false);
+});

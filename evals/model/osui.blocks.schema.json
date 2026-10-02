@@ -2,7 +2,7 @@
 	"$schema": "https://json-schema.org/draft/2020-12/schema",
 	"$id": "https://github.com/OutSystems/outsystems-ui/evals/model/osui.blocks.schema.json",
 	"title": "OutSystems UI block snapshot",
-	"description": "Block signatures, static entities and structures of one OutSystems UI module, exported from its OML with CloneESpace. Keys of blocks, staticEntities and structures are sorted by code point; arrays keep model order; the same OML yields a byte-identical file.",
+	"description": "Block signatures, static entities and structures of one OutSystems UI module, exported from its OML with CloneESpace. Keys of blocks, staticEntities and structures are sorted by code point; static-entity records and block events are sorted by name; the same OML yields a byte-identical file.",
 	"type": "object",
 	"required": ["version", "source", "staticEntities", "structures", "blocks"],
 	"additionalProperties": false,

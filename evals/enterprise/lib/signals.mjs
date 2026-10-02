@@ -46,7 +46,7 @@ export const LOADING_COMPONENTS = namesWhere(REG, (e) => e.loading === true);
 export const VALIDATING_COMPONENTS = namesWhere(REG, (e) => e.validating === true);
 
 /** Shared runtime features, by the name a pattern references and the directory that implements them. */
-export const SHARED_FEATURES = { Balloon: ['src', 'scripts', 'OSFramework', 'OSUI', 'Feature', 'Balloon'] };
+const SHARED_FEATURES = { Balloon: ['src', 'scripts', 'OSFramework', 'OSUI', 'Feature', 'Balloon'] };
 
 /**
  * Text of the code a pattern shares its behaviour with: its family members and the shared features
@@ -70,7 +70,7 @@ export function sharedText(ctx, p, ownText) {
 }
 
 /** The theme's foundations: rules that hold for every component (motion guard, focus ring). */
-export const THEME_RESETS = ['src', 'scss', '01-foundations', '_resets.scss'];
+const THEME_RESETS = ['src', 'scss', '01-foundations', '_resets.scss'];
 
 /**
  * Theme-level guards a component inherits without rules of its own.
@@ -105,25 +105,25 @@ export function patternText(ctx, p) {
 }
 
 /**
- * @typedef {{ name: string, kind: import('../../lib/kinds.mjs').Tier, pattern: import('../../lib/inventory.mjs').Pattern|null, scssFiles: string[], storyFile: string|null }} Component
+ * @typedef {{ name: string, kind: import('../../lib/kinds.mjs').Kind, pattern: import('../../lib/inventory.mjs').Pattern|null, scssFiles: string[], storyFile: string|null }} Component
  */
 
 /**
- * The components an eval looks at: each pattern and each CSS-only component of the tiers it applies to.
+ * The components an eval looks at: each pattern and each CSS-only component of the kinds it applies to.
  * @param {import('../../lib/context.mjs').EvalContext} ctx
- * @param {readonly string[]} tiers the eval's `present.appliesTo`
+ * @param {readonly string[]} kinds the eval's `present.appliesTo`
  * @returns {Component[]}
  */
-export function componentUniverse(ctx, tiers) {
+export function componentUniverse(ctx, kinds) {
 	/** @type {Component[]} */
 	const out = [];
-	if (tiers.includes('pattern')) {
+	if (kinds.includes('pattern')) {
 		for (const p of ctx.inventory.patterns) {
 			out.push({ name: p.name, kind: 'pattern', pattern: p, scssFiles: p.scssFiles, storyFile: p.storyFile });
 		}
 	}
 	for (const c of ctx.inventory.cssComponents) {
-		if (!tiers.includes(c.kind)) continue;
+		if (!kinds.includes(c.kind)) continue;
 		out.push({ name: c.name, kind: c.kind, pattern: null, scssFiles: [c.scssFile], storyFile: c.storyFile });
 	}
 	return out;

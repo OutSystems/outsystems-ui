@@ -9,7 +9,7 @@ export const PRODUCERS_HEADING = '## Producers';
 /** Substrings that make a llms.txt gotcha runtime-only. */
 export const RUNTIME_GOTCHA_NEEDLES = ['name="<id>"', 'Lifecycle:', 'configs', 'envelope', 'Load one card'];
 /** Card and pattern-doc lines that describe the runtime contract only. */
-export const RUNTIME_ONLY_LINE_HEADS = ['Lifecycle:', 'Markup skeleton', 'Skeleton ('];
+const RUNTIME_ONLY_LINE_HEADS = ['Lifecycle:', 'Markup skeleton', 'Skeleton ('];
 
 /** `1. text` or `- text` → `text`, trimmed (CR included). @param {string} line */
 export function stripListPrefix(line) {

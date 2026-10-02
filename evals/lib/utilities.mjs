@@ -43,9 +43,9 @@ export const SIDES = /** @type {const} */ (['top', 'bottom', 'left', 'right', 'x
 /** Colour shade suffixes (no suffix is the base shade). */
 export const SHADES = /** @type {const} */ (['lightest', 'lighter', 'light', 'dark', 'darker', 'darkest']);
 /** The radius vocabulary (ADR-0010): border radius follows shapes, not the size scale. */
-export const RADII = /** @type {const} */ (['none', 'soft', 'rounded', 'circle']);
+const RADII = /** @type {const} */ (['none', 'soft', 'rounded', 'circle']);
 /** Alignment keywords of the flex and grid properties. */
-export const ALIGNS = /** @type {const} */ ([
+const ALIGNS = /** @type {const} */ ([
 	'baseline',
 	'center',
 	'flex-end',
@@ -146,7 +146,7 @@ function declarationsOf(rule) {
  * @param {string} selector
  * @returns {{ name: string, context: string }|null}
  */
-export function subjectOf(selector) {
+function subjectOf(selector) {
 	/** @type {{ name: string, context: string }|null} */
 	let found = null;
 	try {

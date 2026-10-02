@@ -4,7 +4,7 @@
  *
  * What an agent can learn from the comments and the generated agent docs. Per API function, three
  * facets: a description, a text for every parameter, a text for the return value (when it returns
- * one); per config prop, a description. Plus the five agent-docs tiers under docs-ai/.
+ * one); per config prop, a description. Plus the five agent-docs levels under docs-ai/.
  */
 import { expectationsFor } from '../../lib/expectations.mjs';
 import { round1 } from '../../lib/score.mjs';
@@ -12,7 +12,7 @@ import { parseCards } from '../../lib/cards.mjs';
 import { list, pct } from '../../lib/present.mjs';
 
 /**
- * @param {{ jsdocApi: number, jsdocProps: number, agentDocs: number }} raw facet means in [0,1] and a 0–100 tier score
+ * @param {{ jsdocApi: number, jsdocProps: number, agentDocs: number }} raw facet means in [0,1] and a 0–100 level score
  */
 export function scoreGlobal({ jsdocApi, jsdocProps, agentDocs }) {
 	return 35 * jsdocApi + 15 * jsdocProps + 0.5 * agentDocs;
@@ -46,7 +46,7 @@ export function docScore(fn) {
 }
 
 /** Fully documented: every applicable facet present. @param {import('../../lib/ts.mjs').ExportedFunction} fn */
-export function isDocumented(fn) {
+function isDocumented(fn) {
 	return docScore(fn) === 1;
 }
 
@@ -63,7 +63,7 @@ function lacking(fn) {
 export default {
 	id: 'E05',
 	name: 'Documentation Coverage',
-	criterion: 'Agent Documentation (llms.txt tiers) · TSDoc',
+	criterion: 'Agent Documentation (llms.txt levels) · TSDoc',
 	formula:
 		'35·mean over API functions of (description, @param text per parameter, @returns text when it returns a value) + 15·(config props with a description) + 0.5·agentDocs; agentDocs = 20·llms.txt + 20·llms-components coverage + 20·llms-tokens.txt + 20·llms-patterns.txt + 20·llms-utilities.txt',
 	movable: true,
@@ -122,14 +122,14 @@ export default {
 		const patterns = ctx.inventory.patterns.map((p) => p.name);
 		const cards = parseCards(ctx.docsAi('llms-components.txt'));
 		const componentsCoverage = patterns.filter((n) => cards.has(n)).length / Math.max(1, patterns.length);
-		const tiers = {
+		const levels = {
 			'llms.txt': ctx.docsAi('llms.txt') ? 20 : 0,
 			'llms-components.txt': round1(20 * componentsCoverage),
 			'llms-tokens.txt': ctx.docsAi('llms-tokens.txt') ? 20 : 0,
 			'llms-patterns.txt': ctx.docsAi('llms-patterns.txt') ? 20 : 0,
 			'llms-utilities.txt': ctx.docsAi('llms-utilities.txt') ? 20 : 0,
 		};
-		const agentDocs = Object.values(tiers).reduce((a, b) => a + b, 0);
+		const agentDocs = Object.values(levels).reduce((a, b) => a + b, 0);
 		const raw = {
 			jsdocApi: apiTotal ? apiDocumented / apiTotal : 1,
 			jsdocProps: propsTotal ? propsDocumented / propsTotal : 1,
@@ -143,7 +143,7 @@ export default {
 				...raw,
 				jsdocApi: round1(raw.jsdocApi * 100) / 100,
 				jsdocProps: round1(raw.jsdocProps * 100) / 100,
-				tiers,
+				levels,
 				apiTotal,
 				propsTotal,
 			},

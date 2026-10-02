@@ -11,7 +11,7 @@ export function scoreComponent({ avgDepth, p90b }) {
 	return 100 * (0.6 * clamp01(1 - Math.max(0, avgDepth - 1) / 3) + 0.4 * clamp01(1 - Math.max(0, p90b - 2) / 4));
 }
 
-/** The tiers this eval measures (lib/kinds.mjs). */
+/** The kinds this eval measures (lib/kinds.mjs). */
 const APPLIES_TO = ['pattern', 'component', 'layout'];
 
 export default {

@@ -1,5 +1,4 @@
 {
-	"$schema": null,
 	"version": "1",
 	"source": "scripts/generate-ai-docs.mjs",
 	"snapshots": [

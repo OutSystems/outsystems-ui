@@ -3,8 +3,8 @@ import { expectationsFor } from '../../lib/expectations.mjs';
 import { clamp01, mean, round1 } from '../../lib/score.mjs';
 import { list, rowsOf, toDoHint } from '../../lib/present.mjs';
 
-export const FREE_PROPS = 8;
-export const PROPS_TO_ZERO = 12;
+const FREE_PROPS = 8;
+const PROPS_TO_ZERO = 12;
 const PRECISE_KINDS = new Set(['boolean', 'number', 'enum', 'array', 'object', 'function', 'union']);
 /** `Enum.IconType.Caret`, `GlobalEnum.Direction.Right`, `Providers.OSUI.X.Enum.Mode.Single`, … */
 const ENUM_MEMBER = /(^|\.)(Global)?Enum\.[A-Z]\w*\.[A-Z]\w*$/;
@@ -23,7 +23,7 @@ export function isStringlyTypedEnum(prop) {
 /**
  * @param {import('../../lib/ts.mjs').ConfigProp} prop
  */
-export function isPrecise(prop) {
+function isPrecise(prop) {
 	if (PRECISE_KINDS.has(prop.kind)) return true;
 	return prop.kind === 'string' && !isStringlyTypedEnum(prop);
 }

@@ -3,8 +3,8 @@ import { measureStory } from '../../lib/markup.mjs';
 import { mean, penalty, round1 } from '../../lib/score.mjs';
 import { list, rowsOf } from '../../lib/present.mjs';
 
-export const FREE_DEPTH = 3;
-export const FREE_ELEMENTS = 6;
+const FREE_DEPTH = 3;
+const FREE_ELEMENTS = 6;
 
 /**
  * @param {{ depth: number, elements: number }} raw
@@ -13,7 +13,7 @@ export function scoreComponent({ depth, elements }) {
 	return penalty([20 * Math.max(0, depth - FREE_DEPTH), 4 * Math.max(0, elements - FREE_ELEMENTS)]);
 }
 
-/** The tiers this eval measures (lib/kinds.mjs). */
+/** The kinds this eval measures (lib/kinds.mjs). */
 const APPLIES_TO = ['pattern', 'component'];
 
 export default {
