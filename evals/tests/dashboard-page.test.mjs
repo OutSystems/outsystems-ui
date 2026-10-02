@@ -352,3 +352,79 @@ test('the refresh merges the row documents the main database document announces'
 	assert.match(document.getElementById('heat-count').textContent, /^3 of 3 rows shown/);
 	assert.match(document.getElementById('status').textContent, /new @ bbb/);
 });
+
+test('the trend axis shows short run labels without commits, and a block table where every row is at 100 collapses to one line', async () => {
+	const data = {
+		v: 5,
+		generated: '2026-10-02T00:00:00.000Z',
+		latest: { label: 'loop-14', sha: 'abcdef123', date: '2026-10-02T00:00:00.000Z' },
+		history: [
+			{
+				label: 'baseline',
+				date: '2026-09-29T00:00:00.000Z',
+				sha: '111111111',
+				suites: { x: { scores: { X01: 50 }, index: 50 } },
+			},
+			{
+				label: 'loop-14',
+				date: '2026-10-02T00:00:00.000Z',
+				sha: 'abcdef123',
+				suites: { x: { scores: { X01: 100 }, index: 100 } },
+			},
+		],
+		suites: [
+			{
+				id: 'x',
+				name: 'X',
+				indexName: 'X Index',
+				describe: 'd',
+				tone: 0,
+				evals: [
+					{
+						id: 'X01',
+						name: 'One',
+						criterion: 'c',
+						formula: 'f',
+						movable: true,
+						cls: 'movable',
+						score: 100,
+						base: 50,
+						summary: 's',
+						scope: 'sc',
+						appliesTo: ['block'],
+						advice: ['a'],
+						unmeasured: { n: 0, items: [] },
+						notApplicable: 0,
+						unmeasuredHint: '',
+					},
+				],
+				heatmapEvals: ['X01'],
+				baseline: { label: 'baseline', sha: '111111111', date: '2026-09-29T00:00:00.000Z', index: 50 },
+				latest: { index: 100 },
+				extra: {
+					blocksX01: {
+						title: 'T',
+						lead: '100 = all.',
+						columns: ['Block', 'Score', 'Missing', 'Do'],
+						rows: [
+							['Content/A', '100', 'nothing', ''],
+							['Content/B', '100', 'nothing', ''],
+						],
+					},
+				},
+			},
+		],
+		components: [],
+		kindTexts: { pattern: 'p', component: 'c', layout: 'l', utility: 'u', block: 'b' },
+		categoryLabels: { component: 'components (OML blocks)', platform: 'platform & layout styles' },
+	};
+	const doc = await renderWith(data);
+	const trend = doc.getElementById('trend').innerHTML;
+	assert.ok(trend.includes('>L14<'), 'loop-14 reads L14 on the axis');
+	assert.ok(trend.includes('>baseline<'));
+	assert.ok(!trend.includes('abcdef123'), 'no commit on the axis');
+	assert.ok(!doc.filled().includes('trend-caption'), 'no trend caption is written');
+	const findings = doc.getElementById('findings').innerHTML;
+	assert.match(findings, /Every block at 100: nothing missing, nothing to do\./);
+	assert.ok(!findings.includes('<table class="block-table">'), 'no table when every row is complete');
+});

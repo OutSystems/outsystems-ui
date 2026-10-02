@@ -87,6 +87,12 @@ function tablesGroup(s, lookup) {
 		const cellsOf = (r) => r.map((c) => `<td>${esc(String(c))}</td>`).join('');
 		const body = v.rows.map((r) => `<tr>${cellsOf(r)}</tr>`).join('');
 		const lead = typeof v.lead === 'string' && v.lead ? `<p class="block-lead">${esc(v.lead)}</p>` : '';
+		// every row complete: one line says so instead of a table of 'nothing'
+		const complete = v.rows.length > 0 && v.rows.every((r) => String(r[1]) === '100');
+		if (complete) {
+			const all = `<p class="block-lead">Every block at 100: nothing missing, nothing to do.</p>`;
+			return item(lookup, id ? [id] : [], esc(v.title), '', '', lead + all);
+		}
 		const table = `<table class="block-table"><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table>`;
 		return item(lookup, id ? [id] : [], esc(v.title), '', '', lead + table);
 	});
@@ -158,6 +164,9 @@ function roadmapGroup(s, lookup) {
 		items,
 	};
 }
+
+/** `loop-14` → `L14`: the axis label of a run. */
+const shortLabel = (label) => (label.startsWith('loop-') ? `L${label.slice('loop-'.length)}` : label);
 
 /** Human name of a heatmap sort key. */
 function sortLabel(key) {
@@ -452,8 +461,8 @@ export function mount(document, window, localStorage, EMBEDDED) {
 		D.suites.forEach((suite, k) => parts.push(trendLine(suite, k, runs, xs, y)));
 		runs.forEach((r, i) => {
 			parts.push(
-				`<text x="${xs[i]}" y="${H - padB + 18}" text-anchor="middle">${esc(r.label)}</text>`,
-				`<text x="${xs[i]}" y="${H - padB + 34}" text-anchor="middle" style="font-family:var(--font-mono);font-size:11px">${esc(r.sha)}</text>`
+				// short run labels: loop-14 reads L14; the commit stays in the tooltip
+				`<text x="${xs[i]}" y="${H - padB + 20}" text-anchor="middle">${esc(shortLabel(r.label))}</text>`
 			);
 		});
 		parts.push(`<line class="cross" id="cross" x1="0" x2="0" y1="${padT}" y2="${H - padB}" visibility="hidden"/>`);
@@ -469,12 +478,6 @@ export function mount(document, window, localStorage, EMBEDDED) {
 			.join('');
 		const host = document.getElementById('trend');
 		host.innerHTML = `${parts.join('')}<div class="chart-legend">${legend}</div>`;
-		const captions = D.suites.map((suite) => {
-			const rs = suiteRuns(runs, suite);
-			return `${suite.name} ${f1(rs[0].suites[suite.id].index)} → ${f1(rs[rs.length - 1].suites[suite.id].index)} over ${rs.length} runs`;
-		});
-		document.getElementById('trend-caption').textContent =
-			`${captions.join('; ')}. Each eval has its own small chart below so no line hides another.`;
 		wireTrendTips(host, runs, xs, y, W, H);
 	}
 
