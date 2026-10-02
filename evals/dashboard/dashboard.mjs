@@ -72,8 +72,9 @@ function unmeasuredGroup(evals, lookup) {
 }
 
 /**
- * The per-block tables a suite contributes through its evals' `extra` ({ title, columns, rows }); null when it
- * contributes none. Blocks are not components, so their figures live here rather than in the heatmap.
+ * The per-block tables a suite contributes through its evals' `extra` ({ title, lead, columns, rows }); null
+ * when it contributes none. The same figures sit in the heatmap as block cells; the table adds what is missing
+ * and what to do per block, lowest first.
  */
 function tablesGroup(s, lookup) {
 	const tables = Object.entries(s.extra || {}).filter(
@@ -85,13 +86,14 @@ function tablesGroup(s, lookup) {
 		const head = v.columns.map((c) => `<th>${esc(c)}</th>`).join('');
 		const cellsOf = (r) => r.map((c) => `<td>${esc(String(c))}</td>`).join('');
 		const body = v.rows.map((r) => `<tr>${cellsOf(r)}</tr>`).join('');
+		const lead = typeof v.lead === 'string' && v.lead ? `<p class="block-lead">${esc(v.lead)}</p>` : '';
 		const table = `<table class="block-table"><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table>`;
-		return item(lookup, id ? [id] : [], esc(v.title), '', '', table);
+		return item(lookup, id ? [id] : [], esc(v.title), '', '', lead + table);
 	});
 	return {
 		cls: `tables-${s.id}`,
 		title: `${s.name}: per-block tables`,
-		lead: 'One row per OML block, lowest score first, with what would move it. Blocks are not components and have no heatmap cells.',
+		lead: 'One row per OML block, lowest score first: what is missing and what to do. The same scores sit in the heatmap as block cells.',
 		items,
 	};
 }
@@ -160,28 +162,38 @@ function roadmapGroup(s, lookup) {
 /** Human name of a heatmap sort key. */
 function sortLabel(key) {
 	if (key === 'n') return 'name';
-	if (key === 'k') return 'tier';
+	if (key === 'k') return 'category';
 	if (key === 'mean') return 'mean score';
 	return key;
 }
-/** Why a component of a tier sits outside an eval (the data set omits those cells to stay small). */
-const OUTSIDE_TIER = {
-	pattern: 'this is a pattern with a TypeScript contract',
-	component: 'this is a CSS-only component with an anatomy but no TypeScript contract',
-	layout: 'layout partials style markup the app template or the runtime emits, so they have no markup contract of their own',
-	utility: 'utility classes have no anatomy, knobs or story of their own; the utilities suite measures them',
-};
+/** Whether an eval applies to a row: its kind is listed, or the list names blocks and the row is one. */
+function rowApplies(e, c) {
+	if (!Array.isArray(e.appliesTo)) return true;
+	return e.appliesTo.includes(c.k) || (c.c === 'component' && e.appliesTo.includes('block'));
+}
+/** `block` → `OML blocks`, else the plural of the kind. */
+const measuresText = (kind) => (kind === 'block' ? 'OML blocks' : `${kind}s`);
 
-/** The cell of a component for an eval: the data set's, else not applicable by tier, else no cell. */
-function cellOf(c, id, e) {
+/**
+ * The cell of a row for an eval: the data set's, else not applicable by kind (the data set omits those cells to
+ * stay small; the texts come with it), else no cell.
+ */
+function cellOf(c, id, e, kindTexts) {
 	const hit = c.cells[id];
 	if (hit) return hit;
-	if (e && Array.isArray(e.appliesTo) && !e.appliesTo.includes(c.k)) {
-		const measures = e.appliesTo.map((t) => `${t}s`).join(', ');
-		const outside = OUTSIDE_TIER[c.k] || `${c.k} components are outside it`;
+	if (e && !rowApplies(e, c)) {
+		const measures = e.appliesTo.map(measuresText).join(', ');
+		const outside = kindTexts[c.k] || `rows of the ${c.k} kind are outside it`;
 		return { s: null, w: 'na', h: `Not applicable: this eval measures ${measures}; ${outside}.` };
 	}
 	return { s: null, w: 'unmeasured', h: 'No cell in this data set.' };
+}
+/** The runtime note of a block row: the pattern or stylesheet it drives, or pure OML. */
+function runtimeNote(r) {
+	if (r.c !== 'component') return '';
+	if (r.rt && r.rt.p) return ` <small>pattern ${esc(r.rt.p)}</small>`;
+	if (r.rt && r.rt.s) return ` <small>style ${esc(r.rt.s)}</small>`;
+	return ' <small>pure OML</small>';
 }
 
 /** One heatmap cell. */
@@ -245,17 +257,12 @@ function requirementRow(r) {
  * @param {any} document
  * @param {any} window
  * @param {{ getItem(key: string): string|null, setItem(key: string, value: string): void }} localStorage
- * @param {any} EMBEDDED the data set built by tools/dashboard-data.mjs (v4)
+ * @param {any} EMBEDDED the data set built by tools/dashboard-data.mjs (v5)
  */
 export function mount(document, window, localStorage, EMBEDDED) {
 	const DOC_PATH = 'evals/dashboard';
-	const DATA_VERSION = 4;
-	const TIER_LABEL = {
-		pattern: 'patterns',
-		component: 'CSS-only components',
-		layout: 'layout partials',
-		utility: 'utility classes',
-	};
+	const DATA_VERSION = 5;
+	const categoryLabel = (c) => (D.categoryLabels && D.categoryLabels[c]) || c;
 	// Documentation of the branch work, linked to the evals it moved. Kept in the page: it is
 	// narrative, not a measurement.
 	const APPLIED = [
@@ -376,16 +383,16 @@ export function mount(document, window, localStorage, EMBEDDED) {
 					: `${signed(s.latest.index - first.index)} since ${first.label} (${f1(first.index)})`;
 			return { cls: `index ${tone(s)}`, label: s.indexName, value: f1(s.latest.index), sub };
 		});
-		// the same evals scored per tier, so a helper class cannot move the pattern figure
+		// the same evals scored per category: the OML blocks an agent composes, and the platform styles
 		for (const s of D.suites) {
-			for (const [tier, t] of Object.entries(s.tiers || {})) {
+			for (const [category, t] of Object.entries(s.categories || {})) {
 				const moved =
 					t.base === null || t.baseLabel === last.label
 						? `first measured in ${last.label}`
 						: `${signed(t.index - t.base)} since ${t.baseLabel} (${f1(t.base)})`;
 				out.push({
-					cls: `tier ${tone(s)}`,
-					label: `${s.name} · ${TIER_LABEL[tier] || tier}`,
+					cls: `category ${tone(s)}`,
+					label: `${s.name} · ${categoryLabel(category)}`,
 					value: f1(t.index),
 					sub: `${t.evals} evals apply · ${moved}`,
 				});
@@ -408,13 +415,9 @@ export function mount(document, window, localStorage, EMBEDDED) {
 		out.push(
 			{
 				cls: '',
-				label: 'Components measured',
+				label: 'Rows measured',
 				value: String(D.components.length),
-				sub: Object.entries(TIER_LABEL)
-					.map(([k, label]) => [D.components.filter((c) => c.k === k).length, label])
-					.filter(([n]) => n > 0)
-					.map(([n, label]) => `${n} ${label}`)
-					.join(', '),
+				sub: `${D.components.filter((c) => c.c === 'component').length} OML blocks · ${D.components.filter((c) => c.c !== 'component').length} platform styles`,
 			},
 			{
 				cls: '',
@@ -592,8 +595,8 @@ export function mount(document, window, localStorage, EMBEDDED) {
 			'<span><i style="background:var(--good-soft)"></i>≥ 80</span>',
 			'<span><i style="background:var(--warn-soft)"></i>60 – 79</span>',
 			'<span><i style="background:var(--bad-soft)"></i>&lt; 60</span>',
-			'<span><i style="background:var(--surface-2)"></i>n/a, not applicable: the eval does not measure this kind of component, or there is nothing of its kind to check (hover for the reason)</span>',
-			'<span><i style="background:repeating-linear-gradient(135deg, var(--surface-2) 0 3px, transparent 3px 6px)"></i>— not measured: the component lacks what the eval reads, such as a story (hover for the reason and the fix)</span>',
+			'<span><i style="background:var(--surface-2)"></i>n/a, not applicable: the eval does not measure this kind of row, or there is nothing of its kind to check (hover for the reason)</span>',
+			'<span><i style="background:repeating-linear-gradient(135deg, var(--surface-2) 0 3px, transparent 3px 6px)"></i>— not measured: the row lacks what the eval reads, such as a story (hover for the reason and the fix)</span>',
 			`<span>Column ids are coloured by suite: ${suites.join(' ')}. Click a row for what each eval found and what to do.${noColumnNote}</span>`,
 		].join('');
 	}
@@ -608,7 +611,7 @@ export function mount(document, window, localStorage, EMBEDDED) {
 			.map(({ e }) => e.id);
 		document.getElementById('heat-legend').innerHTML = heatLegend(noColumn);
 		const rows = D.components.map((c) => {
-			const vals = ids.map((id) => cellOf(c, id, lookup[id]?.e));
+			const vals = ids.map((id) => cellOf(c, id, lookup[id]?.e, D.kindTexts || {}));
 			const measured = vals.filter((v) => v.s !== null).map((v) => v.s);
 			return {
 				...c,
@@ -630,7 +633,7 @@ export function mount(document, window, localStorage, EMBEDDED) {
 		function header() {
 			const heads = [
 				{ key: 'n', label: 'Component' },
-				{ key: 'k', label: 'Tier' },
+				{ key: 'k', label: 'Category' },
 				...ids.map((id) => ({ key: id, label: id, title: lookup[id]?.e.name || id })),
 				{ key: 'mean', label: 'Mean' },
 			];
@@ -659,7 +662,8 @@ export function mount(document, window, localStorage, EMBEDDED) {
 		function row(r) {
 			const mean = r.mean === null ? '—' : f1(r.mean);
 			const cells = r.vals.map((v) => cell(v)).join('');
-			const head = `<td class="name">${esc(r.n)}</td><td class="kind">${esc(r.k)}</td>`;
+			const flow = r.f ? ` <span class="faint">${esc(r.f)}</span>` : '';
+			const head = `<td class="name">${esc(r.n)}${flow}</td><td class="kind">${esc(categoryLabel(r.c))}${runtimeNote(r)}</td>`;
 			const tail = `<td class="cell mean" style="${shade(r.mean)}">${mean}</td>`;
 			const open = expanded.has(r.n);
 			return `<tr class="row" tabindex="0" data-n="${esc(r.n)}" aria-expanded="${open}">${head}${cells}${tail}</tr>${open ? detail(r) : ''}`;
@@ -676,13 +680,14 @@ export function mount(document, window, localStorage, EMBEDDED) {
 		function draw() {
 			header();
 			const q = (filterEl.value || '').trim().toLowerCase();
-			const kind = kindEl.value || 'all';
+			// the template selects the component category; a document without a select value follows it
+			const kind = kindEl.value || 'component';
 			const weak = Boolean(weakEl.checked);
 			const shown = rows
 				.filter(
 					(r) =>
 						(!q || r.n.toLowerCase().includes(q)) &&
-						(kind === 'all' || r.k === kind) &&
+						(kind === 'all' || r.c === kind) &&
 						(!weak || (r.min !== null && r.min < 60))
 				)
 				.sort((a, b) => compare(a, b));
@@ -704,7 +709,7 @@ export function mount(document, window, localStorage, EMBEDDED) {
 			});
 			const direction = heatSort.dir === 'asc' ? 'ascending' : 'descending';
 			document.getElementById('heat-count').textContent =
-				`${shown.length} of ${rows.length} components shown, sorted by ${sortLabel(heatSort.key)} ${direction}. Cell values are the eval's per-component score in ${D.latest.label}; a documentation eval shows the documented share.`;
+				`${shown.length} of ${rows.length} rows shown, sorted by ${sortLabel(heatSort.key)} ${direction}. Cell values are the eval's score for the row in ${D.latest.label} (a block inherits its pattern's or stylesheet's); a documentation eval shows the documented share.`;
 		}
 		[filterEl, kindEl, weakEl].forEach((el) => {
 			el.oninput = draw;
@@ -712,7 +717,7 @@ export function mount(document, window, localStorage, EMBEDDED) {
 		draw();
 		const weakest = rows.filter((r) => r.min !== null && r.min < 60).length;
 		document.getElementById('heat-caption').textContent =
-			`${rows.length} components × ${ids.length} evals from ${D.latest.label}. ${weakest} components have at least one eval below 60.`;
+			`${rows.length} rows × ${ids.length} evals from ${D.latest.label}. ${weakest} rows have at least one eval below 60.`;
 	}
 
 	// ---- findings

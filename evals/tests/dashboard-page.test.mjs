@@ -3,7 +3,13 @@ import path from 'node:path';
 import { test } from 'node:test';
 import { fileURLToPath } from 'node:url';
 
-import { buildDashboardPage, PLACEHOLDER, renderCheck, REQUIRED_SECTIONS } from '../tools/dashboard-page.mjs';
+import {
+	buildDashboardPage,
+	createDocumentStub,
+	PLACEHOLDER,
+	renderCheck,
+	REQUIRED_SECTIONS,
+} from '../tools/dashboard-page.mjs';
 
 const evalsDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -28,7 +34,7 @@ test('the page module renders the committed data set in a document stub and fill
 
 test('the page module renders a data set with a single suite and a single run', async () => {
 	const one = {
-		v: 3,
+		v: 5,
 		generated: '2026-09-30T00:00:00.000Z',
 		latest: { label: 'only', sha: 'abc', date: '2026-09-30T00:00:00.000Z' },
 		history: [
@@ -71,7 +77,15 @@ test('the page module renders a data set with a single suite and a single run', 
 			},
 		],
 		components: [
-			{ n: 'comp', k: 'component', cells: { X01: { s: null, w: 'unmeasured', h: 'Not measured (no story).' } } },
+			{
+				n: 'comp',
+				id: 'Content/Comp',
+				k: 'component',
+				c: 'component',
+				f: 'Content',
+				rt: { p: null, s: 'comp' },
+				cells: { X01: { s: null, w: 'unmeasured', h: 'Not measured (no story).' } },
+			},
 		],
 	};
 	const filled = await renderCheck(evalsDir, one);
@@ -88,8 +102,103 @@ test('the findings render the per-block tables a suite contributes through extra
 	assert.ok(html.includes('Interaction/Carousel'), 'rows name the blocks');
 });
 
-test('the heatmap tier filter defaults to patterns', () => {
+test('the heatmap category filter offers the two categories with components selected', () => {
 	const html = buildDashboardPage(evalsDir);
-	assert.ok(html.includes('<option value="pattern" selected>'), 'patterns is the selected tier');
-	assert.ok(!html.includes('<option value="all" selected>'));
+	assert.ok(html.includes('<option value="all">all</option>'));
+	assert.ok(html.includes('<option value="component" selected>components (OML blocks)</option>'));
+	assert.ok(html.includes('<option value="platform">platform &amp; layout styles</option>'));
+	assert.ok(
+		!html.includes('value="pattern"') && !html.includes('value="layout"') && !html.includes('value="utility"')
+	);
+	const start = html.indexOf('mount(document, window, localStorage, {');
+	const withoutData = html.slice(0, start);
+	assert.ok(!/\btiers?\b/i.test(withoutData), 'no tier wording in the template or module');
+});
+
+/** Mounts the page module on a document stub with a data set and returns the document. @param {any} data */
+async function renderWith(data) {
+	const { mount } = await import('../dashboard/dashboard.mjs');
+	const document = createDocumentStub();
+	mount(document, {}, { getItem: () => null, setItem() {} }, data);
+	return document;
+}
+
+test('the page renders a v5 data set with a platform category only (no snapshot) and a block table with a lead', async () => {
+	const data = {
+		v: 5,
+		generated: '2026-10-02T00:00:00.000Z',
+		latest: { label: 'only', sha: 'abc', date: '2026-10-02T00:00:00.000Z' },
+		history: [
+			{
+				label: 'only',
+				date: '2026-10-02T00:00:00.000Z',
+				sha: 'abc',
+				suites: {
+					x: { scores: { X01: 50 }, index: 50, categories: { platform: { scores: { X01: 50 }, index: 50 } } },
+				},
+			},
+		],
+		suites: [
+			{
+				id: 'x',
+				name: 'X',
+				indexName: 'X Index',
+				describe: 'd',
+				tone: 0,
+				evals: [
+					{
+						id: 'X01',
+						name: 'One',
+						criterion: 'c',
+						formula: 'f',
+						movable: true,
+						cls: 'movable',
+						score: 50,
+						base: 50,
+						summary: 's',
+						scope: 'sc',
+						appliesTo: ['component'],
+						advice: ['a'],
+						unmeasured: { n: 0, items: [] },
+						notApplicable: 0,
+						unmeasuredHint: '',
+					},
+				],
+				heatmapEvals: ['X01'],
+				baseline: { label: 'only', sha: 'abc', date: '2026-10-02T00:00:00.000Z', index: 50 },
+				latest: { index: 50 },
+				categories: { platform: { index: 50, evals: 1, base: 50, baseLabel: 'only' } },
+				extra: {
+					blocksX01: {
+						title: 'T',
+						lead: '100 = all.',
+						columns: ['Block', 'Score', 'Missing', 'Do'],
+						rows: [['Content/Card', '50', 'params 1/2', 'OML: describe']],
+					},
+				},
+			},
+		],
+		components: [
+			{
+				n: 'btn',
+				id: 'btn',
+				k: 'component',
+				c: 'platform',
+				f: null,
+				rt: { p: null, s: 'btn' },
+				cells: { X01: { s: 50, w: 'ok', h: 'h' } },
+			},
+		],
+		kindTexts: { pattern: 'p', component: 'c', layout: 'l', utility: 'u', block: 'b' },
+		categoryLabels: { component: 'components (OML blocks)', platform: 'platform & layout styles' },
+	};
+	const doc = await renderWith(data);
+	assert.match(doc.getElementById('heat-count').textContent, /^0 of 1 rows shown/);
+	assert.match(doc.getElementById('strip').innerHTML, /X · platform &amp; layout styles/);
+	assert.ok(
+		!doc.getElementById('strip').innerHTML.includes('components (OML blocks)'),
+		'no component tile without a component category'
+	);
+	assert.match(doc.getElementById('findings').innerHTML, /100 = all\./);
+	assert.match(doc.getElementById('findings').innerHTML, /<th>Missing<\/th><th>Do<\/th>/);
 });

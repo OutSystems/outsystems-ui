@@ -6,7 +6,7 @@
 />
 <style>
 	/* The eval dashboard: summary strip, the index trend of every suite with one small multiple per
-   eval, the evals baseline → latest, the component heatmap with per-cell hints, and the findings
+   eval, the evals baseline → latest, the row heatmap (OML blocks and platform styles) with per-cell hints, and the findings
    grouped by what can be done. Each suite has a tone (t0, t1, t2); semantic colours for scores.
    The template is evals/dashboard/index.html; npm run evals:dashboard:page embeds results/dashboard.json. */
 	:root {
@@ -312,10 +312,10 @@
 	.tile.index .value {
 		color: var(--tone);
 	}
-	.tile.tier {
+	.tile.category {
 		border-color: var(--tone);
 	}
-	.tile.tier .value {
+	.tile.category .value {
 		color: var(--tone);
 		font-size: 1.5rem;
 	}
@@ -416,6 +416,19 @@
 	}
 	.block-table td:nth-child(2) {
 		white-space: nowrap;
+	}
+	.block-table td {
+		white-space: normal;
+	}
+	.block-lead {
+		font-size: 0.86rem;
+		color: var(--ink-2);
+		margin: 6px 0 0;
+	}
+	.heat td.kind small {
+		display: block;
+		color: var(--ink-3);
+		font-size: 0.72rem;
 	}
 	.req-groups li > span:first-child {
 		color: var(--ink);
@@ -1090,33 +1103,31 @@
 
 	<section>
 		<div class="head">
-			<h2>Per-component scores, latest run</h2>
+			<h2>Per-row scores, latest run</h2>
 			<p class="muted" id="heat-caption"></p>
 		</div>
 		<div class="panel" style="display: grid; gap: 12px">
 			<div class="controls">
 				<label
-					>Filter <input type="search" id="heat-filter" placeholder="component name" autocomplete="off"
+					>Filter <input type="search" id="heat-filter" placeholder="block or style name" autocomplete="off"
 				/></label>
 				<label
-					>Tier
+					>Category
 					<select id="heat-kind">
 						<option value="all">all</option>
-						<option value="pattern" selected>patterns (TypeScript + SCSS)</option>
-						<option value="component">CSS-only components</option>
-						<option value="layout">layout partials (host-styled)</option>
-						<option value="utility">utility classes</option>
+						<option value="component" selected>components (OML blocks)</option>
+						<option value="platform">platform &amp; layout styles</option>
 					</select>
 				</label>
-				<label><input type="checkbox" id="heat-weak" /> only components with a score below 60</label>
+				<label><input type="checkbox" id="heat-weak" /> only rows with a score below 60</label>
 			</div>
 			<div class="legend" id="heat-legend"></div>
 			<div class="table-wrap">
 				<table class="heat" id="heat">
 					<thead>
 						<tr>
-							<th scope="col">Component</th>
-							<th scope="col">Kind</th>
+							<th scope="col">Row</th>
+							<th scope="col">Category</th>
 							<th scope="col" class="num">Mean</th>
 						</tr>
 					</thead>
@@ -1144,7 +1155,9 @@
 			page reads <code>results/dashboard.json</code>, which every full <code>npm run evals</code> regenerates. The
 			Markdown twin is <code>results/HISTORY.md</code>. Formulas and bands:
 			<code>docs-internal/ai-friendliness/2026-09-29-eval-suite-design.md</code>; suites and evals:
-			<code>evals/suites.mjs</code>; component classification: <code>evals/components.json</code>.</span
+			<code>evals/suites.mjs</code>; the rows (OML blocks and their runtime, platform styles):
+			<code>evals/lib/universe.mjs</code> over <code>evals/components.json</code> and
+			<code>evals/model/osui.blocks.json</code>.</span
 		>
 		<span
 			>Pull request
