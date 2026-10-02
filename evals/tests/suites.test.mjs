@@ -36,9 +36,9 @@ test('every metric of every suite honours the metric contract', () => {
 			assert.equal(typeof m.present.heatmap, 'boolean', m.id);
 			assert.ok(
 				Array.isArray(m.present.appliesTo) && m.present.appliesTo.length > 0,
-				`${m.id} lists the tiers it applies to`
+				`${m.id} lists the kinds it applies to`
 			);
-			for (const t of m.present.appliesTo) assert.ok(KINDS.includes(t), `${m.id} applies to a known tier (${t})`);
+			for (const t of m.present.appliesTo) assert.ok(KINDS.includes(t), `${m.id} applies to a known kind (${t})`);
 			for (const fn of ['cell', 'advice', 'extra']) {
 				if (m.present[fn] !== undefined)
 					assert.equal(typeof m.present[fn], 'function', `${m.id}.present.${fn}`);
@@ -63,9 +63,14 @@ test('every metric of every suite honours the metric contract', () => {
 			);
 	}
 	assert.equal(metricById('M01').suite.id, 'model');
-	assert.equal(metricById('M02').metric.present.heatmap, true, 'M02 is the only model heatmap');
-	for (const id of ['M01', 'M03', 'M04', 'M05', 'M06']) {
-		assert.equal(metricById(id).metric.present.heatmap, false, `${id} reports its own table`);
+	for (const id of ['M01', 'M02', 'M03', 'M04']) {
+		assert.equal(metricById(id).metric.present.heatmap, true, `${id} has heatmap cells`);
+	}
+	for (const id of ['M01', 'M03', 'M04']) {
+		assert.deepEqual(metricById(id).metric.present.appliesTo, ['block'], `${id} measures every block row`);
+	}
+	for (const id of ['M05', 'M06']) {
+		assert.equal(metricById(id).metric.present.heatmap, false, `${id} is a whole-repository eval`);
 	}
 	assert.deepEqual(
 		suiteOf('model').metrics.map((m) => m.id),

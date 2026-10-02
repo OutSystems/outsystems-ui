@@ -37,3 +37,22 @@ test('M04 scores the sample block from a card text and reports blocks without a 
 	assert.equal(none.perComponent[0].tokens, null);
 	assert.equal(M04.present.extra(none).blocksM04.rows[0][1], '0');
 });
+
+test('M04 missing names the overrun and the absent recipe; do names the fix', async () => {
+	const { missingOf, doOf } = await import('../metrics/M04-block-cards.mjs');
+	assert.equal(
+		missingOf({ tokens: 312, openui: true, tsx: false }),
+		`312 tokens (62 over ${CARD_BUDGET_BLOCK}), no TSX recipe`
+	);
+	assert.equal(
+		doOf({ tokens: 312, openui: true, tsx: false }),
+		'trim the card (shorter descriptions, fewer listed values); regenerate: npm run docs:ai'
+	);
+	assert.equal(missingOf({ tokens: 200, openui: true, tsx: true }), 'nothing');
+	assert.equal(doOf({ tokens: 200, openui: true, tsx: true }), '');
+	assert.equal(missingOf({ tokens: null, openui: false, tsx: false }), 'card in llms-blocks.txt');
+	assert.equal(doOf({ tokens: null, openui: false, tsx: false }), 'npm run docs:ai');
+	assert.equal(M04.present.heatmap, true);
+	assert.deepEqual(M04.present.appliesTo, ['block']);
+	assert.match(M04.present.extra({ perComponent: [] }).blocksM04.lead, /^100 = /);
+});

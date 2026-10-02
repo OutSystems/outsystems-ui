@@ -1,7 +1,7 @@
 // @ts-check
 /**
  * Reader for the generated blocks manifest (docs-ai/osui.blocks.json) and the per-block table shape M01,
- * M03 and M04 hand to the dashboard.
+ * M03 and M04 hand to the dashboard findings (their cells also sit in the heatmap, one row per block).
  */
 
 /**
@@ -24,15 +24,19 @@ export function loadBlocksManifest(ctx) {
 const byCodePoint = (a, b) => (a < b ? -1 : Number(a > b));
 
 /**
- * The per-block table of a block-level eval (blocks are not components, so they get a table, not heatmap cells).
+ * A per-block table a metric contributes through `present.extra`: lowest score first, what is missing and
+ * what to do per block, and a lead line saying what 100 means.
  * @param {string} title
- * @param {{ label: string, score: number|null, hint: string }[]} rows
+ * @param {string} lead
+ * @param {{ label: string, score: number|null, missing: string, do: string }[]} rows
  */
-export function blockTable(title, rows) {
-	const sorted = [...rows].sort((a, b) => (a.score ?? -1) - (b.score ?? -1) || byCodePoint(a.label, b.label));
+export function blockTable(title, lead, rows) {
+	const sorted = [...rows];
+	sorted.sort((a, b) => (a.score ?? -1) - (b.score ?? -1) || byCodePoint(a.label, b.label));
 	return {
 		title,
-		columns: ['Block', 'Score', 'Hint'],
-		rows: sorted.map((r) => [r.label, r.score === null ? '–' : String(r.score), r.hint]),
+		lead,
+		columns: ['Block', 'Score', 'Missing', 'Do'],
+		rows: sorted.map((r) => [r.label, r.score === null ? '–' : String(r.score), r.missing, r.do]),
 	};
 }

@@ -28,19 +28,37 @@ export function recipesOf(card) {
 	return { openui: lines.some((l) => l.startsWith('OpenUI:')), tsx: lines.some((l) => l.startsWith('TSX:')) };
 }
 
-/** @param {any} row */
-function hintOf(row) {
-	if (row.tokens === null) return 'No card in llms-blocks.txt: run npm run docs:ai.';
-	const todo = [];
+/** The card's overrun and absent recipes, or "nothing". @param {any} row */
+export function missingOf(row) {
+	if (row.tokens === null) return 'card in llms-blocks.txt';
+	const parts = [];
 	if (row.tokens > CARD_BUDGET_BLOCK) {
-		todo.push(
-			`trim the card (${row.tokens} tokens, budget ${CARD_BUDGET_BLOCK}): shorter descriptions, fewer listed values`
-		);
+		parts.push(`${row.tokens} tokens (${row.tokens - CARD_BUDGET_BLOCK} over ${CARD_BUDGET_BLOCK})`);
 	}
-	if (!row.openui) todo.push('add the OpenUI recipe');
-	if (!row.tsx) todo.push('add the TSX recipe');
-	return todo.length ? `${todo.join('; ')}.` : `${row.tokens} tokens, both recipes present.`;
+	if (!row.openui) parts.push('no OpenUI recipe');
+	if (!row.tsx) parts.push('no TSX recipe');
+	return parts.length ? parts.join(', ') : 'nothing';
 }
+
+/** The fix: trim the card, regenerate, or both. @param {any} row */
+export function doOf(row) {
+	if (row.tokens === null) return 'npm run docs:ai';
+	const todo = [];
+	if (row.tokens > CARD_BUDGET_BLOCK) todo.push('trim the card (shorter descriptions, fewer listed values)');
+	if (!row.openui || !row.tsx) todo.push('regenerate: npm run docs:ai');
+	return todo.join('; ');
+}
+
+/** The heatmap cell text of one block. @param {any} row */
+function cellText(row) {
+	const missing = missingOf(row);
+	const todo = doOf(row);
+	return [missing === 'nothing' ? 'complete' : `Missing: ${missing}.`, todo ? `Do: ${todo}.` : '']
+		.filter(Boolean)
+		.join(' ');
+}
+
+const LEAD = `100 = a card within ${CARD_BUDGET_BLOCK} tokens with both recipes.`;
 
 export default {
 	id: 'M04',
@@ -49,9 +67,13 @@ export default {
 	formula: `per public block: 70·band(card tokens, ${CARD_BUDGET_BLOCK}, ${CARD_WORST}) + 30·(OpenUI and TSX recipe lines present)/2; a block without a card scores 0; mean over blocks`,
 	movable: true,
 	present: {
-		scope: 'Per OML block, in its own table: the o200k tokens of its card in llms-blocks.txt against the 250-token budget, and whether both dialect recipes are present.',
-		heatmap: false,
-		appliesTo: ['pattern'],
+		scope: 'Per composable OML block: the o200k tokens of its card in llms-blocks.txt against the 250-token budget, and whether both dialect recipes are present.',
+		heatmap: true,
+		appliesTo: ['block'],
+		/** @param {any} row */
+		cell(row) {
+			return { s: row.score, h: cellText(row) };
+		},
 		/** @param {any} m */
 		advice(m) {
 			const raw = m.raw ?? {};
@@ -68,9 +90,10 @@ export default {
 			const rows = (m.perComponent ?? []).map((/** @type {any} */ r) => ({
 				label: r.label,
 				score: r.score,
-				hint: hintOf(r),
+				missing: missingOf(r),
+				do: doOf(r),
 			}));
-			return { blocksM04: blockTable('M04 · card cost per block', rows) };
+			return { blocksM04: blockTable('M04 · card cost per block', LEAD, rows) };
 		},
 	},
 	/** @param {import('../../lib/context.mjs').EvalContext} ctx */

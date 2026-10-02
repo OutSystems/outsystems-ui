@@ -30,7 +30,6 @@ test('M03 marks blocks without parameters and non-public blocks as not applicabl
 	const r = M03.compute(/** @type {any} */ ({ modelSnapshots: () => [snap] }));
 	assert.equal(r.perComponent.length, 1);
 	assert.deepEqual(r.notApplicable.map((n) => n.name).sort(), ['Content/Internal', 'Content/Public']);
-	assert.equal(M03.present.heatmap, false);
 	assert.equal(M03.present.extra(r).blocksM03.rows.length, 1);
 });
 
@@ -40,4 +39,16 @@ test('M03 scores 0 with an empty table when no public block has parameters', () 
 	const r = M03.compute(/** @type {any} */ ({ modelSnapshots: () => [snap] }));
 	assert.equal(r.score, 0);
 	assert.deepEqual(r.perComponent, []);
+});
+
+test('M03 missing counts the gaps and do names the parameters, in the OML', async () => {
+	const { missingOf, doOf } = await import('../metrics/M03-parameter-precision.mjs');
+	const row = { undescribed: ['A', 'B'], undefaulted: ['C'], freeText: ['D'] };
+	assert.equal(missingOf(row), '2 undescribed, 1 undefaulted, 1 free Text');
+	assert.equal(doOf(row), 'In the OML: describe A, B; default C; type D as a static entity, structure or number');
+	assert.equal(missingOf({ undescribed: [], undefaulted: [], freeText: [] }), 'nothing');
+	assert.equal(doOf({ undescribed: [], undefaulted: [], freeText: [] }), '');
+	assert.equal(M03.present.heatmap, true);
+	assert.deepEqual(M03.present.appliesTo, ['block']);
+	assert.match(M03.present.extra({ perComponent: [] }).blocksM03.lead, /^100 = /);
 });

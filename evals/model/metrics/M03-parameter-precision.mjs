@@ -40,18 +40,35 @@ export function measureBlock(block) {
 	};
 }
 
-/** @param {any} row */
-function hintOf(row) {
+/** How many parameters fall short, by kind of gap, or "nothing". @param {any} row */
+export function missingOf(row) {
+	const parts = [];
+	if (row.undescribed.length) parts.push(`${row.undescribed.length} undescribed`);
+	if (row.undefaulted.length) parts.push(`${row.undefaulted.length} undefaulted`);
+	if (row.freeText.length) parts.push(`${row.freeText.length} free Text`);
+	return parts.length ? parts.join(', ') : 'nothing';
+}
+
+/** The OML edits, naming the parameters. @param {any} row */
+export function doOf(row) {
 	const todo = [];
 	if (row.undescribed.length) todo.push(`describe ${list(row.undescribed, 4)}`);
 	if (row.undefaulted.length) todo.push(`default ${list(row.undefaulted, 4)}`);
-	if (row.freeText.length) {
-		todo.push(`type ${list(row.freeText, 4)} (static entity, structure or number instead of Text)`);
-	}
-	return todo.length
-		? `In the OML: ${todo.join('; ')}.`
-		: 'Every parameter is described, defaulted when optional and precisely typed.';
+	if (row.freeText.length) todo.push(`type ${list(row.freeText, 4)} as a static entity, structure or number`);
+	return todo.length ? `In the OML: ${todo.join('; ')}` : '';
 }
+
+/** The heatmap cell text of one block. @param {any} row */
+function cellText(row) {
+	const missing = missingOf(row);
+	const todo = doOf(row);
+	return [missing === 'nothing' ? 'complete' : `Missing: ${missing}.`, todo ? `Do: ${todo}.` : '']
+		.filter(Boolean)
+		.join(' ');
+}
+
+const LEAD =
+	'100 = every parameter described, defaulted when optional, typed as a static entity, structure or number rather than Text.';
 
 export default {
 	id: 'M03',
@@ -61,9 +78,13 @@ export default {
 		'per public block with parameters: 50·(params with a description) + 30·(optional params with a default; 1 when none is optional) + 20·(params whose type is not free Text or Object); mean over blocks',
 	movable: true,
 	present: {
-		scope: 'Per OML block, in its own table: how far an agent can fill its parameters from the signature alone. Blocks without parameters and non-public blocks are not applicable.',
-		heatmap: false,
-		appliesTo: ['pattern'],
+		scope: 'Per composable OML block: how far an agent can fill its parameters from the signature alone. Blocks without parameters and non-composable blocks are not applicable.',
+		heatmap: true,
+		appliesTo: ['block'],
+		/** @param {any} row */
+		cell(row) {
+			return { s: row.score, h: cellText(row) };
+		},
 		/** @param {any} m */
 		advice(m) {
 			const raw = m.raw ?? {};
@@ -79,9 +100,10 @@ export default {
 			const rows = (m.perComponent ?? []).map((/** @type {any} */ r) => ({
 				label: r.label,
 				score: r.score,
-				hint: hintOf(r),
+				missing: missingOf(r),
+				do: doOf(r),
 			}));
-			return { blocksM03: blockTable('M03 · parameter precision per block', rows) };
+			return { blocksM03: blockTable('M03 · parameter precision per block', LEAD, rows) };
 		},
 	},
 	/** @param {import('../../lib/context.mjs').EvalContext} ctx */
