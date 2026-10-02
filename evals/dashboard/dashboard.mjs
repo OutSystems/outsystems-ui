@@ -6,7 +6,7 @@ const esc = (s) =>
 	String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
 const meanOf = (xs) => (xs.length ? xs.reduce((s, x) => s + x, 0) / xs.length : 0);
 const when = (iso) => new Date(iso).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' });
-const tone = (s) => `t${s.tone % 3}`;
+const tone = (s) => `t${s.tone % 4}`;
 const clsOf = (e) => e.cls || (e.movable ? 'movable' : 'structural');
 const range = (evals) => (evals.length ? `${evals[0].id}–${evals[evals.length - 1].id}` : '');
 const plural = (n, word) => (n === 1 ? word : `${word}s`);

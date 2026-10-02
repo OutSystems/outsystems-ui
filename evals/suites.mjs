@@ -20,6 +20,7 @@
  */
 import { metrics as aiMetrics } from './ai-friendliness/metrics/index.mjs';
 import { metrics as enterpriseMetrics } from './enterprise/metrics/index.mjs';
+import { metrics as modelMetrics } from './model/metrics/index.mjs';
 import { metrics as utilityMetrics } from './utilities/metrics/index.mjs';
 
 /** Movability classes: what kind of change moves an eval. */
@@ -72,6 +73,17 @@ export const SUITES = [
 		maxDrop: 1,
 		maxEvalDrop: 3,
 		tone: 2,
+	},
+	{
+		id: 'model',
+		name: 'Model bridge',
+		indexName: 'Model Bridge Readiness Index',
+		idPrefix: 'M',
+		describe: "how well the library serves the Model team's bridge, which composes OutSystems UI as OML blocks",
+		metrics: modelMetrics,
+		maxDrop: 1,
+		maxEvalDrop: 3,
+		tone: 3,
 	},
 ];
 

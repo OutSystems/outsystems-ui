@@ -3,11 +3,12 @@
 Offline, deterministic measurements of the OutSystems UI library, organised in **suites**. Each suite
 answers one question with its own index (an unweighted mean of its evals, 0–100); indices are never merged.
 
-| Suite        | Directory                                       | Index                                | Question                                                                     |
-| ------------ | ----------------------------------------------- | ------------------------------------ | ---------------------------------------------------------------------------- |
-| `ai`         | [`ai-friendliness/`](ai-friendliness/README.md) | AI-Friendliness Index (E01–E10)      | how legible the library is to coding agents                                  |
-| `enterprise` | [`enterprise/`](enterprise/README.md)           | Enterprise Readiness Index (R01–R06) | how far the token theme and the patterns meet the enterprise UI requirements |
-| `utilities`  | [`utilities/`](utilities/README.md)             | Utilities Index (U01–U06)            | how predictable and documented the utility classes are for an agent          |
+| Suite        | Directory                                       | Index                                  | Question                                                                                   |
+| ------------ | ----------------------------------------------- | -------------------------------------- | ------------------------------------------------------------------------------------------ |
+| `ai`         | [`ai-friendliness/`](ai-friendliness/README.md) | AI-Friendliness Index (E01–E10)        | how legible the library is to coding agents                                                |
+| `enterprise` | [`enterprise/`](enterprise/README.md)           | Enterprise Readiness Index (R01–R06)   | how far the token theme and the patterns meet the enterprise UI requirements               |
+| `utilities`  | [`utilities/`](utilities/README.md)             | Utilities Index (U01–U06)              | how predictable and documented the utility classes are for an agent                        |
+| `model`      | [`model/`](model/README.md)                     | Model Bridge Readiness Index (M01–M06) | how well the library serves the Model team's OML bridge (blocks, crosswalk, producer docs) |
 
 Everything else in this directory is shared: the runner, the libraries, the tools, the results and the
 component registry.
@@ -54,7 +55,7 @@ tokens). A full run takes about 30 s; the metrics themselves about 7 s.
 ## What a run records
 
 A loop is a measurement of pattern code. The runner fingerprints the measured inputs (`src/` without the
-generated tokens, `stories/`, `docs-ai/`) and records a full run in the history only when that fingerprint
+generated tokens, `stories/`, `docs-ai/`, the block snapshots under `evals/model/`) and records a full run in the history only when that fingerprint
 differs from the newest recorded run's; a change to the evals, the dashboard, the workflow or the docs
 writes the run file but adds no entry (`--force` records anyway, for a deliberate re-baseline). The
 recording step on `dev` follows the same rule, so an infrastructure merge publishes nothing.

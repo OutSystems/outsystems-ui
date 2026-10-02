@@ -20,6 +20,8 @@
 	--tone-1-soft: #e9dcee;
 	--tone-2: #8a5a1c;
 	--tone-2-soft: #f1e4d2;
+	--tone-3: #3f8a5a;
+	--tone-3-soft: #ddeee3;
 	--good: #1f7a4d;
 	--good-soft: #d5eddf;
 	--warn: #a86a00;
@@ -34,7 +36,7 @@
 		color-scheme: dark;
 		--bg: #10171c; --surface: #182128; --surface-2: #1f2a32;
 		--ink: #e7edf0; --ink-2: #a8b5bd; --ink-3: #7c8b95; --line: #2b3841;
-		--tone-0: #5cb7cb; --tone-0-soft: #143a44; --tone-1: #c393d4; --tone-1-soft: #3a2544; --tone-2: #d9a35c; --tone-2-soft: #3d2c14;
+		--tone-0: #5cb7cb; --tone-0-soft: #143a44; --tone-1: #c393d4; --tone-1-soft: #3a2544; --tone-2: #d9a35c; --tone-2-soft: #3d2c14; --tone-3: #7ccf9a; --tone-3-soft: #16361f;
 		--good: #5fc48d; --good-soft: #17352a; --warn: #e0a83c; --warn-soft: #3a2e12; --bad: #ee8477; --bad-soft: #3f1f1b;
 	}
 }
@@ -42,12 +44,13 @@
 	color-scheme: dark;
 	--bg: #10171c; --surface: #182128; --surface-2: #1f2a32;
 	--ink: #e7edf0; --ink-2: #a8b5bd; --ink-3: #7c8b95; --line: #2b3841;
-	--tone-0: #5cb7cb; --tone-0-soft: #143a44; --tone-1: #c393d4; --tone-1-soft: #3a2544; --tone-2: #d9a35c; --tone-2-soft: #3d2c14;
+	--tone-0: #5cb7cb; --tone-0-soft: #143a44; --tone-1: #c393d4; --tone-1-soft: #3a2544; --tone-2: #d9a35c; --tone-2-soft: #3d2c14; --tone-3: #7ccf9a; --tone-3-soft: #16361f;
 	--good: #5fc48d; --good-soft: #17352a; --warn: #e0a83c; --warn-soft: #3a2e12; --bad: #ee8477; --bad-soft: #3f1f1b;
 }
 .t0 { --tone: var(--tone-0); --tone-soft: var(--tone-0-soft); }
 .t1 { --tone: var(--tone-1); --tone-soft: var(--tone-1-soft); }
 .t2 { --tone: var(--tone-2); --tone-soft: var(--tone-2-soft); }
+.t3 { --tone: var(--tone-3); --tone-soft: var(--tone-3-soft); }
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.5 var(--font-body); padding-inline: clamp(16px, 4vw, 40px); padding-block: 24px 56px; }
 h1, h2, h3 { margin: 0; text-wrap: balance; font-weight: 600; }
@@ -168,7 +171,7 @@ tbody tr:last-child td { border-bottom: 0; }
 .legend i { display: inline-block; width: 14px; height: 10px; border-radius: 2px; vertical-align: middle; margin-right: 4px; border: 1px solid var(--line); }
 .heat { font-size: 0.84rem; }
 .heat th button { all: unset; cursor: pointer; font: inherit; color: inherit; text-transform: inherit; letter-spacing: inherit; }
-.heat th.t0 button, .heat th.t1 button, .heat th.t2 button { color: var(--tone); }
+.heat th.t0 button, .heat th.t1 button, .heat th.t2 button, .heat th.t3 button { color: var(--tone); }
 .heat th button[aria-sort="descending"]::after { content: " ↓"; }
 .heat th button[aria-sort="ascending"]::after { content: " ↑"; }
 .heat td { padding: 4px 6px; }

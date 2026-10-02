@@ -7,7 +7,7 @@ import { allMetrics, CLASSES, metricById, SUITES, suiteOf } from '../suites.mjs'
 test('the registry lists every suite with an id, an index name, a prefix, metrics and gate tolerances', () => {
 	assert.deepEqual(
 		SUITES.map((s) => s.id),
-		['ai', 'enterprise', 'utilities']
+		['ai', 'enterprise', 'utilities', 'model']
 	);
 	for (const s of SUITES) {
 		assert.ok(s.name && s.indexName && s.describe, `${s.id} documents itself`);
@@ -62,5 +62,14 @@ test('every metric of every suite honours the metric contract', () => {
 				`${m.id} leaves utility classes to the utilities suite`
 			);
 	}
+	assert.equal(metricById('M01').suite.id, 'model');
+	assert.equal(metricById('M02').metric.present.heatmap, true, 'M02 is the only model heatmap');
+	for (const id of ['M01', 'M03', 'M04', 'M05', 'M06']) {
+		assert.equal(metricById(id).metric.present.heatmap, false, `${id} reports its own table`);
+	}
+	assert.deepEqual(
+		suiteOf('model').metrics.map((m) => m.id),
+		['M01', 'M02', 'M03', 'M04', 'M05', 'M06']
+	);
 	assert.equal(metricById('nope'), null);
 });
