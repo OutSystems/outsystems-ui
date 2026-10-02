@@ -19,7 +19,7 @@ import { fileURLToPath } from 'node:url';
 
 import { createContext } from '../lib/context.mjs';
 import { loadRegistry, REGISTRY_FILE, validateRegistry } from '../lib/registry.mjs';
-import { flattenBlocks, publicBlocks } from '../model/lib/snapshot.mjs';
+import { composableBlocks, flattenBlocks } from '../model/lib/snapshot.mjs';
 
 /** Code signals a derived entry is read from: plain substrings, no regular expressions over source. */
 const SIGNALS = {
@@ -90,7 +90,7 @@ export function blockHintsFor(patterns, registry, blocks) {
 	const hinted = new Map();
 	/** @type {{ key: string, apiCalls: string[] }[]} */
 	const orphans = [];
-	for (const b of blocks.filter((x) => x.public)) {
+	for (const b of blocks) {
 		const unknown = b.patternHints.apiCalls.filter((api) => !byApi.has(api));
 		if (unknown.length) orphans.push({ key: b.key, apiCalls: unknown });
 		for (const api of b.patternHints.apiCalls) {
@@ -157,7 +157,7 @@ export function diagnose(ctx, registry) {
 			.filter((c) => !c.storyFile && !c.host && c.kind !== 'utility')
 			.map((c) => c.name),
 	];
-	const blocks = publicBlocks(flattenBlocks(ctx.modelSnapshots()));
+	const blocks = composableBlocks(flattenBlocks(ctx.modelSnapshots()));
 	const blockHints = blockHintsFor(
 		ctx.inventory.patterns.map((p) => p.name),
 		registry,

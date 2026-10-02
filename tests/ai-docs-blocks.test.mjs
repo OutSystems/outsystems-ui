@@ -138,3 +138,18 @@ test('with two platform snapshots the manifest, the cards and M01/M04 agree on t
 		[true, true]
 	);
 });
+
+test('the block manifest and cards cover the composable set only: no deprecated block, no Licenses', () => {
+	const ctx = createContext(root);
+	const manifest = buildBlocksManifest(ctx);
+	const keys = Object.keys(manifest.blocks);
+	assert.ok(keys.length > 0);
+	assert.ok(
+		keys.every((k) => !k.includes('DEPRECATED_')),
+		'no deprecated block'
+	);
+	assert.ok(!keys.includes('Licenses/Licenses'));
+	const text = renderBlockCards(manifest);
+	assert.ok(!text.includes('## Licenses/Licenses'));
+	assert.ok(!text.includes('DEPRECATED_'));
+});

@@ -1,6 +1,6 @@
 # OutSystems UI — block reference cards (OML producers)
 
-One card per public OutSystems UI block, from the OML (OutSystemsUI ODC 13.1369.2.60000). Compose blocks with these signatures; never emit a pattern's markup or lifecycle calls — the block does that. Values for an `<Entity> Identifier` come from osui.enums.json; classes for ExtendedClass from llms-utilities.txt.
+One card per composable OutSystems UI block, from the OML (OutSystemsUI ODC 13.1369.2.60000). Compose blocks with these signatures; never emit a pattern's markup or lifecycle calls — the block does that. Values for an `<Entity> Identifier` come from osui.enums.json; classes for ExtendedClass from llms-utilities.txt.
 
 ## Adaptive/Columns2
 Purpose: Split content in 2 columns with responsive capabilities to improve the way information is displayed.
@@ -98,17 +98,6 @@ Params:
 Slots: Column1 · Column2
 OpenUI: _ColumnsSmallRight1 = Block(SourceBlock: Adaptive/ColumnsSmallRight, GutterSize: Entities.GutterSize.Base, TabletBehavior: Entities.BreakColumns.None, PhoneBehavior: Entities.BreakColumns.None, Column1: [_Column11], Column2: [_Column21])
 TSX: <ColumnsSmallRight id={"_ColumnsSmallRight1"} data-source={"Adaptive/ColumnsSmallRight"} GutterSize={Entities.GutterSize.Base} TabletBehavior={Entities.BreakColumns.None} PhoneBehavior={Entities.BreakColumns.None} Column1={<>…</>} Column2={<>…</>} />
-
-## Adaptive/DEPRECATED_Gallery
-Purpose: Display content in gallery style with different columns per device type/orientation
-Params:
-- ItemInPhone: Phone Number = 1 — Number of items on phone. Defaut value is 1.
-- ItemsInTablet: Integer = 3 — Number of items on tablet. Defaut value is 3.
-- ItemsInDesktop: Integer = 4 — Number of items in Desktop. Defaut value is 4.
-- GutterSize: Space Identifier = Entities.Space.Base [Base, ExtraLarge, ExtraSmall, Large, Medium, None, Small, XXLarge] — Defines the space between items.
-Slots: Content — Drag widgets or other content
-OpenUI: _DEPRECATED_Gallery1 = Block(SourceBlock: Adaptive/DEPRECATED_Gallery, ItemInPhone: 1, ItemsInTablet: 3, ItemsInDesktop: 4, Content: [_Content1])
-TSX: <DEPRECATED_Gallery id={"_DEPRECATED_Gallery1"} data-source={"Adaptive/DEPRECATED_Gallery"} ItemInPhone={1} ItemsInTablet={3} ItemsInDesktop={4} Content={<>…</>} />
 
 ## Adaptive/DisplayOnDevice
 Purpose: Display content depending on which device is being used. There are placeholders for Phone, Tablet and Desktop.
@@ -257,49 +246,6 @@ Slots: Image — Drag an image or UserAvatar to this placeholder. · Content —
 OpenUI: _ChatMessage1 = Block(SourceBlock: Content/ChatMessage, MessageStatus: Entities.MessageStatus.Hidden, DisplayOnRight: False, Time: 0, Image: [_Image1], Content: [_Content1])
 TSX: <ChatMessage id={"_ChatMessage1"} data-source={"Content/ChatMessage"} MessageStatus={Entities.MessageStatus.Hidden} DisplayOnRight={False} Time={0} Image={<>…</>} Content={<>…</>} />
 
-## Content/DEPRECATED_Accordion
-Purpose: Arrange the content by having vertically stacked tabs that expand when clicked.
-Params:
-- MultipleItems: Boolean = False — Allows multiple Accordion Items to be opened having the effect of Section Expandables.
-- ExtendedClass: Text — Add custom style classes to the Pattern.
-Slots: Content — Drag AccordionItem blocks to this placeholder.
-OpenUI: _DEPRECATED_Accordion1 = Block(SourceBlock: Content/DEPRECATED_Accordion, MultipleItems: False, ExtendedClass: "", Content: [_Content1])
-TSX: <DEPRECATED_Accordion id={"_DEPRECATED_Accordion1"} data-source={"Content/DEPRECATED_Accordion"} MultipleItems={False} ExtendedClass={""} Content={<>…</>} />
-
-## Content/DEPRECATED_AccordionItem
-Purpose: An area that can be expanded or collapsed.
-Params:
-- IsExpanded: Boolean = False — Initial state of the Block, the default value is False
-- UsePadding: Boolean = True — When true, content has padding
-- IsDisabled: Boolean = False — Doesn't allow the Accordion Item to be clickable.
-- ExtendedClass: Text — Add custom style classes to the Pattern.
-Slots: Title — Section Title · Content — Add content to this placeholder
-Events: OnToggle(IsExpanded: Boolean) — Triggered when the section is expanded or collaped
-OpenUI: _DEPRECATED_AccordionItem1 = Block(SourceBlock: Content/DEPRECATED_AccordionItem, IsExpanded: False, UsePadding: True, IsDisabled: False, Title: [_Title1], Content: [_Content1])
-TSX: <DEPRECATED_AccordionItem id={"_DEPRECATED_AccordionItem1"} data-source={"Content/DEPRECATED_AccordionItem"} IsExpanded={False} UsePadding={True} IsDisabled={False} Title={<>…</>} Content={<>…</>} />
-
-## Content/DEPRECATED_FlipContent
-Purpose: This pattern is DEPRECATED.
-Params:
-- IsFlipped: Boolean = False — Boolean variable to handle the state of the Block.
-- FlipSelf: Boolean = True — Click on the Block flips itself.
-- ExtendedClass: Text — Add custom style classes to the Pattern.
-Slots: CardFront — Add content to the Flip Content front side · CardBack — Add content to the Flip Content back
-Events: OnFlip(IsFlipped: Boolean) — Event fired after the content is flipped
-OpenUI: _DEPRECATED_FlipContent1 = Block(SourceBlock: Content/DEPRECATED_FlipContent, IsFlipped: False, FlipSelf: True, ExtendedClass: "", CardFront: [_CardFront1], CardBack: [_CardBack1])
-TSX: <DEPRECATED_FlipContent id={"_DEPRECATED_FlipContent1"} data-source={"Content/DEPRECATED_FlipContent"} IsFlipped={False} FlipSelf={True} ExtendedClass={""} CardFront={<>…</>} CardBack={<>…</>} />
-
-## Content/DEPRECATED_Tooltip
-Purpose: This pattern is DEPRECATED.
-Params:
-- Position: Position Identifier (required) — Set the tooltip's position.
-- IsVisible: Boolean = False — If set as true, the block is visible when the page is first loaded (without the need for the initial trigger).
-- IsHover: Boolean = False — Set to true, to use hover as interaction trigger.
-- ExtendedClass: Text — Add custom style classes to the Pattern.
-Slots: Content — Content · Tooltip — Tooltip text
-OpenUI: _DEPRECATED_Tooltip1 = Block(SourceBlock: Content/DEPRECATED_Tooltip, Position: Entities.Position.Bottom, IsVisible: False, IsHover: False, Content: [_Content1], Tooltip: [_Tooltip1])
-TSX: <DEPRECATED_Tooltip id={"_DEPRECATED_Tooltip1"} data-source={"Content/DEPRECATED_Tooltip"} Position={Entities.Position.Bottom} IsVisible={False} IsHover={False} Content={<>…</>} Tooltip={<>…</>} />
-
 ## Content/FlipContent
 Purpose: Flip between two placeholders.
 Params:
@@ -444,161 +390,6 @@ Events: Initialized(CarouselId: Text) · OnSlideMoved(CarouselId: Text, ItemInde
 Runtime pattern: Carousel (llms-components.txt)
 OpenUI: _Carousel1 = Block(SourceBlock: Interaction/Carousel, Navigation: Entities.CarouselNavigation.Both, Height: "auto", ItemsPerSlide: …, CarouselItems: [_CarouselItems1])
 TSX: <Carousel id={"_Carousel1"} data-source={"Interaction/Carousel"} Navigation={Entities.CarouselNavigation.Both} Height={"auto"} ItemsPerSlide={…} CarouselItems={<>…</>} />
-
-## Interaction/DEPRECATED_Carousel
-Purpose: A Carousel with multiple items in an horizontal slide.
-Params:
-- Navigation: Boolean = False
-- Dots: Boolean = True
-- Margin: Integer = 0
-- Padding: Integer = 0
-- Autoplay: Autoplay Identifier = Entities.Autoplay.Disabled
-- Scale: Boolean = False
-- Loop: Boolean = False
-- Center: Boolean = False
-- InitialPosition: Integer = 0
-- ItemsPhone: Integer = 1
-- ItemsTablet: Integer = 1
-- ItemsDesktop: Integer = 1
-Slots: CarouselItems
-Events: OnItemChange(Index: Integer)
-OpenUI: _DEPRECATED_Carousel1 = Block(SourceBlock: Interaction/DEPRECATED_Carousel, Navigation: False, Dots: True, Margin: 0, CarouselItems: [_CarouselItems1])
-TSX: <DEPRECATED_Carousel id={"_DEPRECATED_Carousel1"} data-source={"Interaction/DEPRECATED_Carousel"} Navigation={False} Dots={True} Margin={0} CarouselItems={<>…</>} />
-
-## Interaction/DEPRECATED_DatePicker
-Params:
-- InputWidgetId: Text
-- ButtonWidgetId: Text
-- EventList: Date Time List
-- MinDate: Date Time
-- MaxDate: Date Time
-- InitialDate: Date Time
-- ShowWeekNumbers: Boolean
-- FirstWeekDay: Integer = 1
-- ShowTime: Boolean = False
-- Show24HourFormat: Boolean = True
-- DisabledDaysList: Date Time List
-- DisabledWeekDays: Text = ""
-- SelectInterval: Boolean
-- StartEmpty: Boolean = False
-- DateFormat: Text = ""
-- ShowTodayButton: Boolean = False
-- AdvancedFormat: Text
-Events: OnSelect(StartDate: Date Time, EndDate: Date Time)
-OpenUI: _DEPRECATED_DatePicker1 = Block(SourceBlock: Interaction/DEPRECATED_DatePicker)
-TSX: <DEPRECATED_DatePicker id={"_DEPRECATED_DatePicker1"} data-source={"Interaction/DEPRECATED_DatePicker"} />
-
-## Interaction/DEPRECATED_DropdownSearch
-Purpose: Enhanced Dropdown block, with search functionality.
-Params:
-- ItemList: DropdownItem List (required)
-- SelectedItem: DropdownItem
-- IsDisabled: Boolean = False
-- EmptyText: Text = "Select an item"
-- SearchPrompt: Text = "Search"
-- NoResultsText: Text = "No results found"
-- AdvancedFormat: Text = "{}"
-- ExtendedClass: Text = ""
-Events: OnSelect(SelectedItem: DropdownItem)
-OpenUI: _DEPRECATED_DropdownSearch1 = Block(SourceBlock: Interaction/DEPRECATED_DropdownSearch, ItemList: …, SelectedItem: …, IsDisabled: False)
-TSX: <DEPRECATED_DropdownSearch id={"_DEPRECATED_DropdownSearch1"} data-source={"Interaction/DEPRECATED_DropdownSearch"} ItemList={…} SelectedItem={…} IsDisabled={False} />
-
-## Interaction/DEPRECATED_DropdownTags
-Purpose: Enhanced Dropdown block, with search functionality and multiple tags selection.
-Params:
-- ItemList: DropdownItem List (required)
-- SelectedItemsList: DropdownItem List
-- IsRemoveItems: Boolean = True
-- IsDisabled: Boolean = False
-- SearchPrompt: Text = "Search"
-- NoResultsText: Text = "No results found"
-- AdvancedFormat: Text = "{}"
-- ExtendedClass: Text = ""
-Events: OnChange(CurrentList: DropdownItem List)
-OpenUI: _DEPRECATED_DropdownTags1 = Block(SourceBlock: Interaction/DEPRECATED_DropdownTags, ItemList: …, SelectedItemsList: …, IsRemoveItems: True)
-TSX: <DEPRECATED_DropdownTags id={"_DEPRECATED_DropdownTags1"} data-source={"Interaction/DEPRECATED_DropdownTags"} ItemList={…} SelectedItemsList={…} IsRemoveItems={True} />
-
-## Interaction/DEPRECATED_Notification
-Purpose: Simple notification Block displayed on top of the screen.
-Params:
-- IsOpen: Boolean (required) — Is notification visible on the screen
-- ExtendedClass: Text — Add custom style classes to the Pattern.
-Slots: Content — Add content to this placeholder
-Events: OnClose() — Event triggered when the Notification is closed.
-OpenUI: _DEPRECATED_Notification1 = Block(SourceBlock: Interaction/DEPRECATED_Notification, IsOpen: False, ExtendedClass: "", Content: [_Content1])
-TSX: <DEPRECATED_Notification id={"_DEPRECATED_Notification1"} data-source={"Interaction/DEPRECATED_Notification"} IsOpen={False} ExtendedClass={""} Content={<>…</>} />
-
-## Interaction/DEPRECATED_RangeSliderInterval
-Params:
-- MinValue: Decimal (required)
-- MaxValue: Decimal (required)
-- InitialIntervalStart: Decimal (required)
-- InitialIntervalEnd: Decimal (required)
-- Step: Decimal = 1
-- ShowPips: Boolean = True
-- PipsStep: Integer = -1
-- ChangeEventDuringSlide: Boolean = True
-- IsDisabled: Boolean = False
-- IsVertical: Boolean = False
-- VerticalHeight: Integer = 100
-- AdvancedFormat: Text
-- ExtendedClass: Text
-Events: OnChange(IntervalStart: Decimal, IntervalEnd: Decimal)
-OpenUI: _DEPRECATED_RangeSliderInterval1 = Block(SourceBlock: Interaction/DEPRECATED_RangeSliderInterval, MinValue: 0, MaxValue: 0, InitialIntervalStart: 0, InitialIntervalEnd: 0)
-TSX: <DEPRECATED_RangeSliderInterval id={"_DEPRECATED_RangeSliderInterval1"} data-source={"Interaction/DEPRECATED_RangeSliderInterval"} MinValue={0} MaxValue={0} InitialIntervalStart={0} InitialIntervalEnd={0} />
-
-## Interaction/DEPRECATED_RangeSliderV2
-Purpose: Select a single value within a range, using a sliding handle.
-Params:
-- MinValue: Decimal (required)
-- MaxValue: Decimal (required)
-- InitialValue: Decimal (required)
-- Step: Decimal = 1
-- ShowPips: Boolean = True
-- PipsStep: Integer = 0
-- ChangeEventDuringSlide: Boolean = True
-- IsDisabled: Boolean = False
-- IsVertical: Boolean = False
-- VerticalHeight: Integer = 100
-- AdvancedFormat: Text
-- ExtendedClass: Text
-Events: OnChange(Value: Decimal)
-OpenUI: _DEPRECATED_RangeSliderV21 = Block(SourceBlock: Interaction/DEPRECATED_RangeSliderV2, MinValue: 0, MaxValue: 0, InitialValue: 0)
-TSX: <DEPRECATED_RangeSliderV2 id={"_DEPRECATED_RangeSliderV21"} data-source={"Interaction/DEPRECATED_RangeSliderV2"} MinValue={0} MaxValue={0} InitialValue={0} />
-
-## Interaction/DEPRECATED_Search
-Purpose: A search icon that opens an input above the header to search within the application.
-Params:
-- ExtendedClass: Text — Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples: - Blank - No custom styles are added (default value). - "myclass" - Adds the myclass style to the UI styles being applied. - "myclass1 myclass2" - Adds the myclass1 and myclass2 styles to the UI styles being applied. You can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet
-Slots: Input — Drag the search input to this placeholder
-Events: OnCollapse() — Triggered when the search input is collapsed
-OpenUI: _DEPRECATED_Search1 = Block(SourceBlock: Interaction/DEPRECATED_Search, ExtendedClass: "", Input: [_Input1])
-TSX: <DEPRECATED_Search id={"_DEPRECATED_Search1"} data-source={"Interaction/DEPRECATED_Search"} ExtendedClass={""} Input={<>…</>} />
-
-## Interaction/DEPRECATED_Sidebar
-Purpose: This pattern is DEPRECATED.
-Params:
-- IsOpen: Boolean (required) — Assign a variable that handles the state of the Sidebar
-- ExtendedClass: Text — Add custom style classes to the Pattern.
-Slots: Header — Add your header content in this placeholder · Content — Add your Sidebar content in this placeholder
-Events: OnToggle() — Triggered when the Sidebar is toggled.
-OpenUI: _DEPRECATED_Sidebar1 = Block(SourceBlock: Interaction/DEPRECATED_Sidebar, IsOpen: False, ExtendedClass: "", Header: [_Header1], Content: [_Content1])
-TSX: <DEPRECATED_Sidebar id={"_DEPRECATED_Sidebar1"} data-source={"Interaction/DEPRECATED_Sidebar"} IsOpen={False} ExtendedClass={""} Header={<>…</>} Content={<>…</>} />
-
-## Interaction/DEPRECATED_Video
-Purpose: A simple way to embed video content directly into your web pages without the need for a third-party plug-in.
-Params:
-- VideoURL: Text (required)
-- PosterURL: Text
-- Width: Text = "100%"
-- Height: Text = "100%"
-- Muted: Boolean = False
-- Loop: Boolean = False
-- Controls: Boolean = False
-- Autoplay: Boolean = False
-- ExtendedClass: Text
-OpenUI: _DEPRECATED_Video1 = Block(SourceBlock: Interaction/DEPRECATED_Video, VideoURL: "", PosterURL: "", Width: "100%")
-TSX: <DEPRECATED_Video id={"_DEPRECATED_Video1"} data-source={"Interaction/DEPRECATED_Video"} VideoURL={""} PosterURL={""} Width={"100%"} />
 
 ## Interaction/DatePicker
 Purpose: Allows the user to select a single date using a calendar.
@@ -832,13 +623,6 @@ Runtime pattern: Video (llms-components.txt)
 OpenUI: _Video1 = Block(SourceBlock: Interaction/Video, URL: "", Controls: True, Width: "")
 TSX: <Video id={"_Video1"} data-source={"Interaction/Video"} URL={""} Controls={True} Width={""} />
 
-## Licenses/Licenses
-Purpose: Contains the OutSystems platform licenses.
-Params: none
-Slots: CustomLicenses — Add your custom licenses here.
-OpenUI: _Licenses1 = Block(SourceBlock: Licenses/Licenses, CustomLicenses: [_CustomLicenses1])
-TSX: <Licenses id={"_Licenses1"} data-source={"Licenses/Licenses"} CustomLicenses={<>…</>} />
-
 ## Navigation/BottomBarItem
 Purpose: Item to be placed inside the Bottom Bar.
 Params:
@@ -862,73 +646,6 @@ Params:
 Slots: Title — Use this placeholder to set your title. · Icon — Drag the Icon widget to this placeholder.
 OpenUI: _BreadcrumbsItem1 = Block(SourceBlock: Navigation/BreadcrumbsItem, ExtendedClass: "", Title: [_Title1], Icon: [_Icon1])
 TSX: <BreadcrumbsItem id={"_BreadcrumbsItem1"} data-source={"Navigation/BreadcrumbsItem"} ExtendedClass={""} Title={<>…</>} Icon={<>…</>} />
-
-## Navigation/DEPRECATED_SectionIndex
-Purpose: Use the Section Index to organize a screen's content, enabling quick navigation within a page.
-Params:
-- IsSmooth: Boolean = True — If IsSmooth is true, the navigation to destination will animate.
-- IsFixed: Boolean = True — If Fixed is true, SectionIndex will allways be in the same position within the screen.
-- TopPosition: Integer = 0 — Set the top position when the SectionIndex is fixed.
-- ExtendedClass: Text — Add custom style classes to the Pattern.
-OpenUI: _DEPRECATED_SectionIndex1 = Block(SourceBlock: Navigation/DEPRECATED_SectionIndex, IsSmooth: True, IsFixed: True, TopPosition: 0)
-TSX: <DEPRECATED_SectionIndex id={"_DEPRECATED_SectionIndex1"} data-source={"Navigation/DEPRECATED_SectionIndex"} IsSmooth={True} IsFixed={True} TopPosition={0} />
-
-## Navigation/DEPRECATED_Submenu
-Purpose: This pattern is DEPRECATED.
-Params:
-- ExtendedClass: Text — Add custom style classes to the Pattern.
-Slots: Items — Submenu items · Menu — Menu item
-OpenUI: _DEPRECATED_Submenu1 = Block(SourceBlock: Navigation/DEPRECATED_Submenu, ExtendedClass: "", Items: [_Items1], Menu: [_Menu1])
-TSX: <DEPRECATED_Submenu id={"_DEPRECATED_Submenu1"} data-source={"Navigation/DEPRECATED_Submenu"} ExtendedClass={""} Items={<>…</>} Menu={<>…</>} />
-
-## Navigation/DEPRECATED_Tabs
-Purpose: Set of Tabs with placeholders for Title and Content.
-Params:
-- StartingTab: Integer = 0
-- IsJustified: Boolean
-- IsVertical: Boolean = False
-- IsRight: Boolean = False
-- ExtendedClass: Text
-Slots: Header · Content
-Events: OnTabChange(ActiveTab: Integer)
-OpenUI: _DEPRECATED_Tabs1 = Block(SourceBlock: Navigation/DEPRECATED_Tabs, StartingTab: 0, IsJustified: False, IsVertical: False, Header: [_Header1], Content: [_Content1])
-TSX: <DEPRECATED_Tabs id={"_DEPRECATED_Tabs1"} data-source={"Navigation/DEPRECATED_Tabs"} StartingTab={0} IsJustified={False} IsVertical={False} Header={<>…</>} Content={<>…</>} />
-
-## Navigation/DEPRECATED_TabsContentItem
-Purpose: Item for placeholder Content in the Tabs Block. Drag as many items as you need.
-Params:
-- ExtendedClass: Text — Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples: - Blank - No custom styles are added (default value). - "myclass" - Adds the myclass style to the UI styles being applied. - "myclass1 myclass2" - Adds the myclass1 and myclass2 styles to the UI styles being applied. You can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet
-Slots: Content — Drag your content to this placeholder.
-OpenUI: _DEPRECATED_TabsContentItem1 = Block(SourceBlock: Navigation/DEPRECATED_TabsContentItem, ExtendedClass: "", Content: [_Content1])
-TSX: <DEPRECATED_TabsContentItem id={"_DEPRECATED_TabsContentItem1"} data-source={"Navigation/DEPRECATED_TabsContentItem"} ExtendedClass={""} Content={<>…</>} />
-
-## Navigation/DEPRECATED_TabsHeaderItem
-Purpose: Item for placeholder Header in the Tabs Block.
-Params:
-- ExtendedClass: Text — Add custom style classes to the Pattern.
-Slots: Title — Use this placeholder to set your title.
-OpenUI: _DEPRECATED_TabsHeaderItem1 = Block(SourceBlock: Navigation/DEPRECATED_TabsHeaderItem, ExtendedClass: "", Title: [_Title1])
-TSX: <DEPRECATED_TabsHeaderItem id={"_DEPRECATED_TabsHeaderItem1"} data-source={"Navigation/DEPRECATED_TabsHeaderItem"} ExtendedClass={""} Title={<>…</>} />
-
-## Navigation/DEPRECATED_WizardItemV2
-Purpose: Step item to add in the Wizard pattern.
-Params:
-- Status: Steps Identifier (required) — The UI of this step, it can be Active, Next or Past
-- UseTopLabel: Boolean = False — If true, label is placed above the icon.
-- ExtendedClass: Text — Add custom style classes to the Pattern.
-Slots: Label — Drag your content to this placeholder. · Icon — Set a number or leave it empty to show a circle icon.
-Events: OnClick() — Event triggered after clicking on the WizardItem.
-OpenUI: _DEPRECATED_WizardItemV21 = Block(SourceBlock: Navigation/DEPRECATED_WizardItemV2, Status: Entities.Steps.Active, UseTopLabel: False, ExtendedClass: "", Label: [_Label1], Icon: [_Icon1])
-TSX: <DEPRECATED_WizardItemV2 id={"_DEPRECATED_WizardItemV21"} data-source={"Navigation/DEPRECATED_WizardItemV2"} Status={Entities.Steps.Active} UseTopLabel={False} ExtendedClass={""} Label={<>…</>} Icon={<>…</>} />
-
-## Navigation/DEPRECATED_WizardV2
-Purpose: Used to split larger tasks into more manageable steps.
-Params:
-- IsVertical: Boolean = False — Set the orientation.
-- ExtendedClass: Text — Add custom style classes to the Pattern.
-Slots: Content — Add Wizard Items to this placeholder
-OpenUI: _DEPRECATED_WizardV21 = Block(SourceBlock: Navigation/DEPRECATED_WizardV2, IsVertical: False, ExtendedClass: "", Content: [_Content1])
-TSX: <DEPRECATED_WizardV2 id={"_DEPRECATED_WizardV21"} data-source={"Navigation/DEPRECATED_WizardV2"} IsVertical={False} ExtendedClass={""} Content={<>…</>} />
 
 ## Navigation/OverflowMenu
 Purpose: Clickable element that displays hidden actions, settings, or secondary options.
@@ -1080,47 +797,6 @@ Slots: Content — Drag your content to this placeholder.
 OpenUI: _Counter1 = Block(SourceBlock: Numbers/Counter, BackgroundColor: Entities.Color.Neutral0, IsVertical: False, Height: "100", Content: [_Content1])
 TSX: <Counter id={"_Counter1"} data-source={"Numbers/Counter"} BackgroundColor={Entities.Color.Neutral0} IsVertical={False} Height={"100"} Content={<>…</>} />
 
-## Numbers/DEPRECATED_ProgressBar
-Purpose: Animated progress bar.
-Params:
-- Progress: Integer (required) — Progress percentage.
-- Color: Color Identifier = Entities.Color.Primary — The background color of the progress bar
-- Height: Integer = 12 — Height, in pixels.
-- AnimateInitialProgress: Boolean = True — When True, the progress bar will show an animation going from zero to its initial progress.
-- Text: Text — Text to be displayed, if not text is defined, the progress percentage is shown
-- Shape: Shape Identifier = Entities.Shape.Rounded [Rounded, Sharp, SoftRounded] — Set the shape.
-- ExtendedClass: Text — Add custom style classes to the Pattern.
-OpenUI: _DEPRECATED_ProgressBar1 = Block(SourceBlock: Numbers/DEPRECATED_ProgressBar, Progress: 0, Color: Entities.Color.Primary, Height: 12)
-TSX: <DEPRECATED_ProgressBar id={"_DEPRECATED_ProgressBar1"} data-source={"Numbers/DEPRECATED_ProgressBar"} Progress={0} Color={Entities.Color.Primary} Height={12} />
-
-## Numbers/DEPRECATED_ProgressCircle
-Purpose: Circular progress indicator, with a label on the center of the circle showing the input text.
-Params:
-- Progress: Integer (required)
-- Text: Text = "-"
-- ProgressColor: Text = "rgba(0,0,0,0.6)"
-- TrailColor: Text = "rgba(0,0,0,0.2)"
-- TextColor: Text = "#333"
-- CircleThickness: Integer = 8
-- AnimateInitialProgress: Boolean = True
-- ExtendedClass: Text
-OpenUI: _DEPRECATED_ProgressCircle1 = Block(SourceBlock: Numbers/DEPRECATED_ProgressCircle, Progress: 0, Text: "-", ProgressColor: "rgba(0,0,0,0.6)")
-TSX: <DEPRECATED_ProgressCircle id={"_DEPRECATED_ProgressCircle1"} data-source={"Numbers/DEPRECATED_ProgressCircle"} Progress={0} Text={"-"} ProgressColor={"rgba(0,0,0,0.6)"} />
-
-## Numbers/DEPRECATED_ProgressCircleFraction
-Purpose: Circular progress indicator, with a label on the center of the circle showing progress as a fraction.
-Params:
-- Numerator: Integer (required)
-- Denominator: Integer (required)
-- ProgressColor: Text = "rgba(0,0,0,0.6)"
-- TrailColor: Text = "rgba(0,0,0,0.2)"
-- TextColor: Text = "#333"
-- CircleThickness: Integer = 8
-- AnimateInitialProgress: Boolean = True
-- ExtendedClass: Text
-OpenUI: _DEPRECATED_ProgressCircleFraction1 = Block(SourceBlock: Numbers/DEPRECATED_ProgressCircleFraction, Numerator: 0, Denominator: 0, ProgressColor: "rgba(0,0,0,0.6)")
-TSX: <DEPRECATED_ProgressCircleFraction id={"_DEPRECATED_ProgressCircleFraction1"} data-source={"Numbers/DEPRECATED_ProgressCircleFraction"} Numerator={0} Denominator={0} ProgressColor={"rgba(0,0,0,0.6)"} />
-
 ## Numbers/IconBadge
 Purpose: Icon with a Badge stacked on top of it.
 Params:
@@ -1249,16 +925,6 @@ Params:
 Slots: Top — Add top content to this placeholder · Center — Add content to be centered to this placeholder · Bottom — Add bottom content to this placeholder
 OpenUI: _CenterContent1 = Block(SourceBlock: Utilities/CenterContent, Height: 0, ExtendedClass: "", Top: [_Top1], Center: [_Center1], Bottom: [_Bottom1])
 TSX: <CenterContent id={"_CenterContent1"} data-source={"Utilities/CenterContent"} Height={0} ExtendedClass={""} Top={<>…</>} Center={<>…</>} Bottom={<>…</>} />
-
-## Utilities/DEPRECATED_ButtonLoading
-Purpose: This pattern is DEPRECATED.
-Params:
-- IsLoading: Boolean (required) — When true, the button shows the loading state.
-- ShowLoadingAndLabel: Boolean = False — If true, the loading spinner will appear side by side with the label.
-- ExtendedClass: Text — Add custom style classes to the Pattern.
-Slots: Button — Drag a Button or a link to this placeholder
-OpenUI: _DEPRECATED_ButtonLoading1 = Block(SourceBlock: Utilities/DEPRECATED_ButtonLoading, IsLoading: False, ShowLoadingAndLabel: False, ExtendedClass: "", Button: [_Button1])
-TSX: <DEPRECATED_ButtonLoading id={"_DEPRECATED_ButtonLoading1"} data-source={"Utilities/DEPRECATED_ButtonLoading"} IsLoading={False} ShowLoadingAndLabel={False} ExtendedClass={""} Button={<>…</>} />
 
 ## Utilities/InlineSVG
 Purpose: Use this pattern to be able to use an SVG inline, so that you can change the fill and stroke properties, or animate the SVG paths.

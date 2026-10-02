@@ -7,7 +7,7 @@ import { list, toDoHint } from '../../lib/present.mjs';
 import { registry } from '../../lib/registry.mjs';
 import { mean, round1 } from '../../lib/score.mjs';
 import { linksFor } from '../lib/crosswalk.mjs';
-import { flattenBlocks, NO_SNAPSHOT } from '../lib/snapshot.mjs';
+import { composableBlocks, flattenBlocks, NO_SNAPSHOT } from '../lib/snapshot.mjs';
 
 /** @param {string} a @param {string} b */
 const byCodePoint = (a, b) => (a < b ? -1 : Number(a > b));
@@ -83,7 +83,7 @@ export default {
 	/** @param {import('../../lib/context.mjs').EvalContext} ctx */
 	compute(ctx) {
 		const snapshots = ctx.modelSnapshots();
-		const blocks = flattenBlocks(snapshots);
+		const blocks = composableBlocks(flattenBlocks(snapshots));
 		const byKey = new Map(blocks.map((b) => [b.key, b]));
 		const reg = registry();
 		/** @type {any[]} */

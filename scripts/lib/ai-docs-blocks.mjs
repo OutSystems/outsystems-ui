@@ -1,7 +1,7 @@
 // @ts-check
 /**
  * Block-level agent documentation for OML producers (the Model bridge):
- *   docs-ai/osui.blocks.json   one entry per public OutSystems UI block: signature from the snapshot, the
+ *   docs-ai/osui.blocks.json   one entry per composable OutSystems UI block (public, not deprecated): signature from the snapshot, the
  *                              runtime pattern it drives and the parameter map (crosswalk), two recipes
  *   docs-ai/llms-blocks.txt    one card per block (≤ 250 tokens): purpose, params, slots, events, recipes
  *   docs-ai/osui.enums.json    the static entities block parameters take, with their values
@@ -10,7 +10,7 @@
 import { registry } from '../../evals/lib/registry.mjs';
 import { countTokens } from '../../evals/lib/tokens.mjs';
 import { linksFor, patternOfBlock } from '../../evals/model/lib/crosswalk.mjs';
-import { flattenBlocks, publicBlocks } from '../../evals/model/lib/snapshot.mjs';
+import { composableBlocks, flattenBlocks } from '../../evals/model/lib/snapshot.mjs';
 
 export const BLOCK_CARD_BUDGET = 250;
 const SHOWN_PARAMS = 3;
@@ -29,7 +29,7 @@ export function buildBlocksManifest(ctx) {
 	const snapshots = ctx.modelSnapshots();
 	const reg = registryOf(ctx);
 	const patterns = ctx.inventory.patterns.map((p) => p.name);
-	const rows = publicBlocks(flattenBlocks(snapshots));
+	const rows = composableBlocks(flattenBlocks(snapshots));
 	/** @type {Record<string, any>} */
 	const blocks = {};
 	for (const b of rows) {
@@ -199,7 +199,7 @@ export function renderBlockCards(manifest) {
 		.map((s) => [s.module, s.platform, s.moduleVersion].filter(Boolean).join(' '))
 		.join(', ');
 	const intro = manifest.snapshots.length
-		? `One card per public OutSystems UI block, from the OML (${sources}). Compose blocks with these signatures; never emit a pattern's markup or lifecycle calls — the block does that. Values for an \`<Entity> Identifier\` come from osui.enums.json; classes for ExtendedClass from llms-utilities.txt.`
+		? `One card per composable OutSystems UI block, from the OML (${sources}). Compose blocks with these signatures; never emit a pattern's markup or lifecycle calls — the block does that. Values for an \`<Entity> Identifier\` come from osui.enums.json; classes for ExtendedClass from llms-utilities.txt.`
 		: 'No block snapshot is present under evals/model; export one with osui-blocks-export (see evals/model/README.md).';
 	return `# OutSystems UI — block reference cards (OML producers)\n\n${intro}\n\n${cards.join('\n\n')}\n`;
 }

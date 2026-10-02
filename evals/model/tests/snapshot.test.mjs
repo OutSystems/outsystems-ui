@@ -9,7 +9,7 @@ import {
 	flattenBlocks,
 	isFreeText,
 	loadSnapshots,
-	publicBlocks,
+	composableBlocks,
 	snapshotFiles,
 	staticEntitiesReferenced,
 	validateSnapshot,
@@ -145,7 +145,7 @@ test('flattenBlocks labels duplicates by platform and keeps both rows', () => {
 	);
 	assert.equal(blockKey({ flow: 'A', name: 'B' }), 'A/B');
 	assert.deepEqual(
-		publicBlocks(single).map((r) => r.key),
+		composableBlocks(single).map((r) => r.key),
 		['Interaction/Carousel']
 	);
 });
@@ -161,4 +161,28 @@ test('staticEntitiesReferenced and isFreeText read parameter types', () => {
 
 test('the committed snapshot, when present, conforms to the schema', () => {
 	for (const s of loadSnapshots()) assert.deepEqual(validateSnapshot(s), [], s.file);
+});
+
+test('composableBlocks keeps public blocks that are not deprecated and not the Licenses block', async () => {
+	const { isComposable, LICENSES_KEY } = await import('../lib/snapshot.mjs');
+	const row = (flow, name, pub = true) => ({
+		flow,
+		name,
+		key: `${flow}/${name}`,
+		label: `${flow}/${name}`,
+		public: pub,
+	});
+	const rows = [
+		row('Content', 'Card'),
+		row('Content', 'DEPRECATED_Accordion'),
+		row('Licenses', 'Licenses'),
+		row('Private', 'MenuDrag', false),
+	];
+	assert.deepEqual(
+		composableBlocks(rows).map((r) => r.key),
+		['Content/Card']
+	);
+	assert.equal(LICENSES_KEY, 'Licenses/Licenses');
+	assert.equal(isComposable(row('Adaptive', 'Columns2')), true);
+	assert.equal(isComposable(row('Content', 'DEPRECATED_Card')), false);
 });

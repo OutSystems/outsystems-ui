@@ -83,20 +83,38 @@ export function flattenBlocks(snapshots) {
 	return rows;
 }
 
+/** The documentation-only block that is never composed. */
+export const LICENSES_KEY = 'Licenses/Licenses';
+
+/**
+ * Whether an agent may compose a block: public, not deprecated, not the Licenses block.
+ * @param {{ public: boolean, name: string, key: string }} block
+ */
+export function isComposable(block) {
+	return block.public && !block.name.startsWith('DEPRECATED_') && block.key !== LICENSES_KEY;
+}
+
 /** @param {BlockRow[]} rows */
-export function publicBlocks(rows) {
-	return rows.filter((r) => r.public);
+export function composableBlocks(rows) {
+	return rows.filter(isComposable);
+}
+
+/** Why a block is not composable, for a not-applicable entry. @param {{ public: boolean, name: string, key: string }} b */
+export function notComposableReason(b) {
+	if (!b.public) return 'not public in the module';
+	if (b.name.startsWith('DEPRECATED_')) return 'deprecated block';
+	return 'documentation-only block';
 }
 
 /**
- * Static entities a block parameter references, by name.
+ * Static entities a composable block's parameter references, by name.
  * @param {Snapshot[]} snapshots
  */
 export function staticEntitiesReferenced(snapshots) {
 	/** @type {Set<string>} */
 	const out = new Set();
 	for (const s of snapshots) {
-		for (const block of Object.values(s.blocks)) {
+		for (const block of composableBlocks(flattenBlocks([s]))) {
 			for (const p of block.inputParameters) if (p.typeKind === 'staticEntity' && p.typeRef) out.add(p.typeRef);
 		}
 	}

@@ -7,7 +7,7 @@ import { parseCards } from '../../ai-friendliness/metrics/E01-context-tokens.mjs
 import { list } from '../../lib/present.mjs';
 import { band, mean, round1 } from '../../lib/score.mjs';
 import { blockTable } from '../lib/manifest.mjs';
-import { flattenBlocks, NO_SNAPSHOT } from '../lib/snapshot.mjs';
+import { flattenBlocks, isComposable, NO_SNAPSHOT, notComposableReason } from '../lib/snapshot.mjs';
 
 export const CARD_BUDGET_BLOCK = 250;
 export const CARD_WORST = 600;
@@ -83,8 +83,8 @@ export default {
 		/** @type {{ name: string, reason: string }[]} */
 		const notApplicable = [];
 		for (const b of rows) {
-			if (!b.public) {
-				notApplicable.push({ name: b.label, reason: 'not public in the module' });
+			if (!isComposable(b)) {
+				notApplicable.push({ name: b.label, reason: notComposableReason(b) });
 				continue;
 			}
 			const card = cards.get(b.label) ?? null;

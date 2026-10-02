@@ -153,7 +153,8 @@ test('blockHintsFor proposes links for patterns the snapshot hints at and lists 
 			patternHints: { apiCalls: ['CarouselAPI'] },
 		},
 	];
-	const r = blockHintsFor(['Carousel', 'Tabs'], registry, blocks);
+	// callers pass the composable set; the function does not filter
+	const r = blockHintsFor(['Carousel', 'Tabs'], registry, blocks.filter((b) => b.public));
 	assert.deepEqual(r.proposals, [{ pattern: 'Carousel', blocks: [{ flow: 'Interaction', name: 'Carousel' }] }]);
 	assert.deepEqual(r.orphans, [{ key: 'Interaction/Gallery', apiCalls: ['GalleryAPI'] }]);
 });

@@ -7,7 +7,7 @@
 import { list } from '../../lib/present.mjs';
 import { mean, round1 } from '../../lib/score.mjs';
 import { blockTable } from '../lib/manifest.mjs';
-import { flattenBlocks, isFreeText, NO_SNAPSHOT } from '../lib/snapshot.mjs';
+import { flattenBlocks, isComposable, isFreeText, NO_SNAPSHOT, notComposableReason } from '../lib/snapshot.mjs';
 
 /** @param {string} a @param {string} b */
 const byCodePoint = (a, b) => (a < b ? -1 : Number(a > b));
@@ -94,8 +94,8 @@ export default {
 		const notApplicable = [];
 		const totals = { params: 0, described: 0, optional: 0, defaulted: 0, freeText: 0 };
 		for (const b of rows) {
-			if (!b.public) {
-				notApplicable.push({ name: b.label, reason: 'not public in the module' });
+			if (!isComposable(b)) {
+				notApplicable.push({ name: b.label, reason: notComposableReason(b) });
 				continue;
 			}
 			const m = measureBlock(b);

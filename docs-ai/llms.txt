@@ -40,7 +40,7 @@ Scope: OutSystems UI ships a single token-based theme (light, plus the generated
 - WizardItem: 2 props, 1 events, 7 API functions
 
 ## Producers
-- OML producers (Model bridge dialects, Service Studio): compose blocks from llms-blocks.txt — 118 blocks; never emit a pattern's markup or Create/Initialize calls. Styling inputs: llms-utilities.txt, llms-tokens.txt, osui.enums.json, osui.icons.json.
+- OML producers (Model bridge dialects, Service Studio): compose blocks from llms-blocks.txt — 91 blocks; never emit a pattern's markup or Create/Initialize calls. Styling inputs: llms-utilities.txt, llms-tokens.txt, osui.enums.json, osui.icons.json.
 - Runtime producers (standalone pages, Storybook): read llms-components.txt; [runtime-only] lines are yours alone.
 
 ## Read next

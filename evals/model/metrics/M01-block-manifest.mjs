@@ -8,7 +8,7 @@
 import { list } from '../../lib/present.mjs';
 import { mean, round1 } from '../../lib/score.mjs';
 import { blockTable, loadBlocksManifest } from '../lib/manifest.mjs';
-import { flattenBlocks, NO_SNAPSHOT, publicBlocks } from '../lib/snapshot.mjs';
+import { composableBlocks, flattenBlocks, isComposable, NO_SNAPSHOT, notComposableReason } from '../lib/snapshot.mjs';
 
 export const FACETS = ['params', 'placeholders', 'events', 'recipes', 'pattern'];
 
@@ -106,7 +106,7 @@ export default {
 	compute(ctx) {
 		const snapshots = ctx.modelSnapshots();
 		const rows = flattenBlocks(snapshots);
-		const blocks = publicBlocks(rows);
+		const blocks = composableBlocks(rows);
 		const manifest = loadBlocksManifest(ctx);
 		const perComponent = blocks.map((b) => {
 			const entry = manifest?.blocks?.[b.label];
@@ -147,11 +147,11 @@ export default {
 			perComponent: [...perComponent].sort((a, b) => a.score - b.score || byCodePoint(a.label, b.label)),
 			unmeasured: [],
 			notApplicable: rows
-				.filter((b) => !b.public)
+				.filter((b) => !isComposable(b))
 				.map((b) => ({
 					name: b.label,
-					reason: 'not public in the module',
-					hint: 'Only public blocks are composable from a consumer module.',
+					reason: notComposableReason(b),
+					hint: 'Only public, non-deprecated blocks are composable from a consumer module.',
 				})),
 		};
 	},
