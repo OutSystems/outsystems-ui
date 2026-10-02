@@ -125,11 +125,44 @@ export function staticEntitiesReferenced(snapshots) {
 export const EXTENDED_CLASS = 'ExtendedClass';
 
 /**
- * A parameter an agent cannot type without guessing: an Object/unknown type or free Text. `ExtendedClass`
- * is excluded: it carries CSS utility classes and is Text by design.
+ * Text parameters that are Text on purpose, by name, with the reason an agent reads in the manifest. A
+ * static entity or a number would not express what they carry.
+ * @type {Record<string, string>}
+ */
+export const TEXT_ON_PURPOSE = {
+	[EXTENDED_CLASS]: 'CSS utility classes (see llms-utilities.txt)',
+	MenuId: 'the identifier of another element in the DOM',
+	ScrollToWidgetId: 'the identifier of another element in the DOM',
+	WidgetId: 'the identifier of another element in the DOM',
+	ItemId: 'the identifier of another element in the DOM',
+	Title: 'free text shown as is',
+	Group: 'free text shown as is',
+	Prompt: 'free text shown as is',
+	Name: 'free text shown as is',
+	Password: 'free text shown as is',
+	Size: 'a measure with its unit, such as 120px or 70%',
+	Height: 'a measure with its unit, such as 120px or 70%',
+	Width: 'a measure with its unit, such as 120px or 70%',
+	DateFormat: 'a text mask',
+	TimeFormat: 'a text mask',
+	SVGCode: 'the content of an SVG',
+};
+
+/**
+ * The reason a Text parameter is Text on purpose, or null for any other parameter.
+ * @param {{ name?: string, typeKind: string, type: string }} param
+ */
+export function textOnPurpose(param) {
+	if (param.typeKind !== 'basic' || param.type !== 'Text' || !param.name) return null;
+	return TEXT_ON_PURPOSE[param.name] ?? null;
+}
+
+/**
+ * A parameter an agent cannot type without guessing: an Object/unknown type or free Text, except the Text
+ * parameters that are Text on purpose (TEXT_ON_PURPOSE).
  * @param {{ name?: string, typeKind: string, type: string }} param
  */
 export function isFreeText(param) {
-	if (param.name === EXTENDED_CLASS) return false;
+	if (textOnPurpose(param) !== null) return false;
 	return param.typeKind === 'other' || (param.typeKind === 'basic' && param.type === 'Text');
 }

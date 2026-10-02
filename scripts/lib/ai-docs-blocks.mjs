@@ -12,7 +12,7 @@ import { registry } from '../../evals/lib/registry.mjs';
 import { countTokens } from '../../evals/lib/tokens.mjs';
 import { linksFor, patternOfBlock } from '../../evals/model/lib/crosswalk.mjs';
 import { withPlatformDefault } from '../../evals/model/lib/defaults.mjs';
-import { composableBlocks, flattenBlocks } from '../../evals/model/lib/snapshot.mjs';
+import { composableBlocks, flattenBlocks, textOnPurpose } from '../../evals/model/lib/snapshot.mjs';
 
 export const BLOCK_CARD_BUDGET = 250;
 const SHOWN_PARAMS = 3;
@@ -52,7 +52,9 @@ export function buildBlocksManifest(ctx) {
 						? snapshot?.staticEntities[p.typeRef]?.records
 						: undefined;
 				const settled = withPlatformDefault(p);
-				return records ? { ...settled, values: records.map((r) => r.identifier) } : settled;
+				const reason = textOnPurpose(p);
+				const typed = reason ? { ...settled, textOnPurpose: reason } : settled;
+				return records ? { ...typed, values: records.map((r) => r.identifier) } : typed;
 			}),
 			placeholders: b.placeholders,
 			events: b.events,

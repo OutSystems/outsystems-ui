@@ -87,7 +87,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -183,7 +184,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -283,7 +285,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -387,7 +390,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -495,7 +499,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -607,7 +612,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -703,7 +709,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -799,7 +806,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -895,7 +903,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -1022,7 +1031,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -1103,7 +1113,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "By default, the height will be the same as window, minus the title and header.\n\nUse the Height parameter to set a custom height. The parameter accepts pixels or %.   \n",
-					"defaultSource": "oml"
+					"defaultSource": "oml",
+					"textOnPurpose": "a measure with its unit, such as 120px or 70%"
 				}
 			],
 			"placeholders": [
@@ -1172,7 +1183,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the pattern. You define your custom style classes in your application using CSS.\nFor more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet ",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -1265,7 +1277,8 @@
 					"mandatory": true,
 					"default": null,
 					"description": "Identifier of the DropdownServerSide item.",
-					"defaultSource": null
+					"defaultSource": null,
+					"textOnPurpose": "the identifier of another element in the DOM"
 				},
 				{
 					"name": "IsSelected",
@@ -1285,7 +1298,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the pattern. You define your custom style classes in your application using CSS.\nFor more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet ",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -1377,7 +1391,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -1484,7 +1499,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -1587,7 +1603,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -1635,7 +1652,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -1691,7 +1709,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -1777,7 +1796,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -1819,7 +1839,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -1899,7 +1920,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -1985,7 +2007,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -2047,7 +2070,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the pattern. You define your custom style classes in your application using CSS. Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -2179,7 +2203,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -2217,7 +2242,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -2277,7 +2303,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -2339,7 +2366,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -2454,7 +2482,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -2537,7 +2566,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the pattern. You define your custom style classes in your application using CSS. Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -2619,7 +2649,8 @@
 					"mandatory": false,
 					"default": "\"Jonh Doe\"",
 					"description": "Name of the user",
-					"defaultSource": "oml"
+					"defaultSource": "oml",
+					"textOnPurpose": "free text shown as is"
 				},
 				{
 					"name": "Image",
@@ -2716,7 +2747,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [],
@@ -2759,7 +2791,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -2894,7 +2927,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the pattern. You define your custom style classes in your application using CSS. Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet ",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -2980,7 +3014,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the pattern. You define your custom style classes in your application using CSS. Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet ",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -3077,7 +3112,8 @@
 					"mandatory": false,
 					"default": "\"auto\"",
 					"description": "Set a custom height for the carousel. The parameter accepts any CSS format, except percentage (library constraint). By default, 'auto'. ",
-					"defaultSource": "oml"
+					"defaultSource": "oml",
+					"textOnPurpose": "a measure with its unit, such as 120px or 70%"
 				},
 				{
 					"name": "ItemsPerSlide",
@@ -3107,7 +3143,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -3191,7 +3228,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Set the input date format. If empty, the date format will the same as the server format.\n\nHere's some of the examples that you can use:\n• \"DD/MM/YYYY\"    -> 23/03/2018\n• \"MM/DD/YYYY\"    -> 03/23/2018\n• \"DD MMM YYYY\"   -> 23 Mar 2018\n• \"DD-MMM-YYYY\"   -> 23-Mar-2018\n• \"DD.MMM.YYYY\"   -> 23.Mar.2018\n• \"MMM DDD, YYYY\" -> Mar Mond, 2021\n• \"MMM DDD, YY\"   -> Mar Mond, 21\n• ...\n\nThe time format will be determined by the TimeFormat property.",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "a text mask"
 				},
 				{
 					"name": "ShowTodayButton",
@@ -3236,7 +3274,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the pattern. You define your custom style classes in your application using CSS. Examples:\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/StyleGuidePreview/Styles",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -3322,7 +3361,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Set the input date format. If empty, the date format will be the same as the server format.\nWhen using formats with time, make sure to set the TimeFormat property.\n\nHere are some of the examples that you can use:\n• \"DD/MM/YYYY\"    -> 23/03/2018\n• \"MM/DD/YYYY\"    -> 03/23/2018\n• \"DD MMM YYYY\"   -> 23 Mar 2018\n• \"DD-MMM-YYYY\"   -> 23-Mar-2018\n• \"DD.MMM.YYYY\"   -> 23.Mar.2018\n• \"MMM DDD, YYYY\" -> Mar Mon, 2021\n• \"MMM DDD, YY\"   -> Mar Mon, 21",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "a text mask"
 				},
 				{
 					"name": "ShowTodayButton",
@@ -3352,7 +3392,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the pattern. You define your custom style classes in your app using CSS. Examples:\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI.\nYou can also use the classes available on the OutSystems UI. For more information, go to the OutSystems UI Cheatsheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -3463,7 +3504,8 @@
 					"mandatory": false,
 					"default": "\"Select...\"",
 					"description": "Text to display when there are no items selected and to serve as an empty value.",
-					"defaultSource": "oml"
+					"defaultSource": "oml",
+					"textOnPurpose": "free text shown as is"
 				},
 				{
 					"name": "OptionalConfigs",
@@ -3483,7 +3525,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the pattern. You define your custom style classes in your application using CSS.\nFor more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet ",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [],
@@ -3582,7 +3625,8 @@
 					"mandatory": false,
 					"default": "\"Select...\"",
 					"description": "Text to display when there are no items selected and to serve as an empty value.",
-					"defaultSource": "oml"
+					"defaultSource": "oml",
+					"textOnPurpose": "free text shown as is"
 				},
 				{
 					"name": "OptionalConfigs",
@@ -3602,7 +3646,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the pattern. You define your custom style classes in your application using CSS.\nFor more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet ",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [],
@@ -3700,7 +3745,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -3749,7 +3795,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -3801,7 +3848,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -3843,7 +3891,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Title of the image to be displayed",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "free text shown as is"
 				},
 				{
 					"name": "Group",
@@ -3853,7 +3902,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Images of the same group will be displayed in a gallery",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "free text shown as is"
 				},
 				{
 					"name": "ImageURL",
@@ -3883,7 +3933,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				},
 				{
 					"name": "OptionalConfigs",
@@ -3944,7 +3995,8 @@
 					"mandatory": false,
 					"default": "\"MM/YYYY\"",
 					"description": "Set the input date format. If empty, the date format will be the same as the server format.\nWhen using formats with time, make sure to set the TimeFormat property.\nHere are some of the examples that you can use:\n\n- \"MM/YYYY\" -> 03/2022\n- \"MMM YYYY\" -> Mar 2022\n- \"MMM-YYYY\" -> Mar-2022\n- \"MMM.YYYY\" -> Mar.2022\n- \"MMM, YY\" -> Mar, 22",
-					"defaultSource": "oml"
+					"defaultSource": "oml",
+					"textOnPurpose": "a text mask"
 				},
 				{
 					"name": "InitialMonth",
@@ -3984,7 +4036,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.\n\nExamples:\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -4077,7 +4130,8 @@
 					"mandatory": false,
 					"default": "\"370px\"",
 					"description": "Set the Notification width. Accepts any kind of unit (px, %, vw). Default is \"370px\".\nIn case, the value defined is bigger than the screen size, the notification width will be 100%.",
-					"defaultSource": "oml"
+					"defaultSource": "oml",
+					"textOnPurpose": "a measure with its unit, such as 120px or 70%"
 				},
 				{
 					"name": "Position",
@@ -4118,7 +4172,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the pattern. You define your custom style classes in your app using CSS. Examples:\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI.\n\nYou can also use the classes available on the OutSystems UI. For more information, go to the OutSystems UI Cheatsheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -4237,7 +4292,8 @@
 					"mandatory": false,
 					"default": "\"100%\"",
 					"description": "Set the RangeSlider size. If horizontal, the size is the width. Otherwise (vertical), the size is the height.  Accepts any kind of unit (px, %, vw). By default, \"100%\".\n\nExample: \"30%\"",
-					"defaultSource": "oml"
+					"defaultSource": "oml",
+					"textOnPurpose": "a measure with its unit, such as 120px or 70%"
 				},
 				{
 					"name": "OptionalConfigs",
@@ -4257,7 +4313,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [],
@@ -4390,7 +4447,8 @@
 					"mandatory": false,
 					"default": "\"100%\"",
 					"description": "Set the size of the Range Slider Interval. If the slider's orientation is horizontal, the size you set will be the width of the Range Slider Interval. Otherwise (vertical), the size you set will be the height. Accepts any kind of unit (px, %, vw). Default value is 100%.",
-					"defaultSource": "oml"
+					"defaultSource": "oml",
+					"textOnPurpose": "a measure with its unit, such as 120px or 70%"
 				},
 				{
 					"name": "OptionalConfigs",
@@ -4410,7 +4468,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [],
@@ -4509,7 +4568,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Define the height of the component. Mainly for the Vertical orientation, but also available for Horizontal.\nIf not defined, the height of the parent is used.",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "a measure with its unit, such as 120px or 70%"
 				},
 				{
 					"name": "Width",
@@ -4519,7 +4579,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Define the width of the component. Mainly for the Horizontal orientation, but also available for Vertical.\nIf not defined, the width of the parent is used.",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "a measure with its unit, such as 120px or 70%"
 				},
 				{
 					"name": "ScrollbarStyle",
@@ -4544,7 +4605,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -4582,7 +4644,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -4673,7 +4736,8 @@
 					"mandatory": false,
 					"default": "\"500px\"",
 					"description": "Set the Sidebar width. Accepts any kind of unit (px, %, vw). Default value is 500px.\n\nExample: \"30%\"",
-					"defaultSource": "oml"
+					"defaultSource": "oml",
+					"textOnPurpose": "a measure with its unit, such as 120px or 70%"
 				},
 				{
 					"name": "ExtendedClass",
@@ -4683,7 +4747,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the pattern. You define your custom style classes in your application using CSS. Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet ",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -4821,7 +4886,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -4920,7 +4986,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Set the input time format. If empty, the time format will be defined based on the Is24Hours parameter. \nHere is a list of formatting tokens that you can use:\n\nH → Hours (24 hours)\nh → Hours (12 hours)\nG → Hours (12 hours), 2 digits with leading zeros\ni → Minutes\ns → Seconds\nS → Seconds, 2 digits with leading zeros\nK → AM/PM\n\nYou may escape formatting tokens using \\\\.\n\nExamples:\n“H:i” → 15:30\n“G:i K” → 03:30 PM\n”h\\\\hi\\\\m K” → 3h30m PM\n”H \\\\ho\\\\ur\\\\s i \\\\m\\\\i\\\\n\\\\ute\\\\s” → 15 hours 30 minutes",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "a text mask"
 				},
 				{
 					"name": "Is24Hours",
@@ -4960,7 +5027,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the pattern. You define your custom style classes in your application using CSS. Examples:\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/StyleGuidePreview/Styles",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -5063,7 +5131,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Set the width (in pixel or percentage) of the video. By default, the original video width is detected. ",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "a measure with its unit, such as 120px or 70%"
 				},
 				{
 					"name": "Height",
@@ -5073,7 +5142,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Set the height (in pixel or percentage) of the video.\nBy default, the original video height is detected. ",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "a measure with its unit, such as 120px or 70%"
 				},
 				{
 					"name": "Captions",
@@ -5103,7 +5173,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\nBlank - No custom styles are added (default value).\n\n\"myclass\" - Adds the myclass style to the UI styles being applied.\n\n\"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [],
@@ -5182,7 +5253,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -5224,7 +5296,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -5262,7 +5335,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -5345,7 +5419,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the pattern. You define your custom style classes in your application using CSS. Examples:\n\nBlank - No custom styles are added (default value).\n\n\"myclass\" - Adds the myclass style to the UI styles being applied.\n\n\"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -5466,7 +5541,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -5541,7 +5617,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -5600,7 +5677,8 @@
 					"mandatory": true,
 					"default": null,
 					"description": "Element to where the page will navigate.",
-					"defaultSource": null
+					"defaultSource": null,
+					"textOnPurpose": "the identifier of another element in the DOM"
 				},
 				{
 					"name": "ExtendedClass",
@@ -5610,7 +5688,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -5668,7 +5747,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the pattern. You define your custom style classes in your application using CSS. Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -5771,7 +5851,8 @@
 					"mandatory": false,
 					"default": "\"auto\"",
 					"description": "Height of the tabs container. By default, \"auto\".\n\nExamples:\n- Auto - The tab height adjusts to the content. This is the default.\n- 400px - The height of the tab is 400px.",
-					"defaultSource": "oml"
+					"defaultSource": "oml",
+					"textOnPurpose": "a measure with its unit, such as 120px or 70%"
 				},
 				{
 					"name": "TabsVerticalPosition",
@@ -5805,7 +5886,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the pattern. You define your custom style classes in your application using CSS. Examples:\n\nBlank - No custom styles are added (default value).\n\n\"myclass\" - Adds the myclass style to the UI styles being applied.\n\n\"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -5890,7 +5972,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -5947,7 +6030,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -6052,7 +6136,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -6130,7 +6215,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -6214,7 +6300,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -6377,7 +6464,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [],
@@ -6458,7 +6546,8 @@
 					"mandatory": false,
 					"default": "\"100\"",
 					"description": "Height of the block, use Pixel units.",
-					"defaultSource": "oml"
+					"defaultSource": "oml",
+					"textOnPurpose": "a measure with its unit, such as 120px or 70%"
 				},
 				{
 					"name": "ExtendedClass",
@@ -6468,7 +6557,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -6564,7 +6654,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -6708,7 +6799,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS. Examples:\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -6818,7 +6910,8 @@
 					"mandatory": false,
 					"default": "\"auto\"",
 					"description": "Set the ProgressCircle diameter (height and width). Accepts any kind of unit (px, %, vw). By default, \"100%\".\n\nExample: \"30%\"",
-					"defaultSource": "oml"
+					"defaultSource": "oml",
+					"textOnPurpose": "a measure with its unit, such as 120px or 70%"
 				},
 				{
 					"name": "TrailColor",
@@ -6886,7 +6979,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS. Examples:\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -6993,7 +7087,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -7165,7 +7260,8 @@
 					"mandatory": true,
 					"default": null,
 					"description": "",
-					"defaultSource": null
+					"defaultSource": null,
+					"textOnPurpose": "the identifier of another element in the DOM"
 				}
 			],
 			"placeholders": [],
@@ -7367,7 +7463,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -7425,7 +7522,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the pattern. You define your custom style classes in your application using CSS. Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -7494,7 +7592,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -7540,7 +7639,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "SVG markup code, that is going to be appended on the HTML.",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "the content of an SVG"
 				},
 				{
 					"name": "ExtendedClass",
@@ -7550,7 +7650,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the pattern. You define your custom style classes in your application using CSS. Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [],
@@ -7603,7 +7704,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [
@@ -7641,7 +7743,8 @@
 					"mandatory": true,
 					"default": null,
 					"description": "Element that will be affected by the gesture",
-					"defaultSource": null
+					"defaultSource": null,
+					"textOnPurpose": "the identifier of another element in the DOM"
 				},
 				{
 					"name": "PreventDefaults",
@@ -7766,7 +7869,8 @@
 					"mandatory": true,
 					"default": null,
 					"description": "User password.",
-					"defaultSource": null
+					"defaultSource": null,
+					"textOnPurpose": "free text shown as is"
 				}
 			],
 			"placeholders": [],
@@ -7852,7 +7956,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the pattern. You define your custom style classes in your application using CSS. Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [],
@@ -7960,7 +8065,8 @@
 					"mandatory": false,
 					"default": "\"\"",
 					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
-					"defaultSource": "platform"
+					"defaultSource": "platform",
+					"textOnPurpose": "CSS utility classes (see llms-utilities.txt)"
 				}
 			],
 			"placeholders": [],
@@ -7993,7 +8099,8 @@
 					"mandatory": true,
 					"default": null,
 					"description": "Element that will be swipeable",
-					"defaultSource": null
+					"defaultSource": null,
+					"textOnPurpose": "the identifier of another element in the DOM"
 				}
 			],
 			"placeholders": [],
@@ -8051,7 +8158,8 @@
 					"mandatory": true,
 					"default": null,
 					"description": "Element that will be affected by the gesture",
-					"defaultSource": null
+					"defaultSource": null,
+					"textOnPurpose": "the identifier of another element in the DOM"
 				},
 				{
 					"name": "PreventDefaults",

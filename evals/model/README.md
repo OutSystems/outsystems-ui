@@ -49,4 +49,6 @@ An optional block parameter without a default in the OML takes the platform defa
 block manifest and cards carry it with its source (`defaultSource`: `oml` or `platform`), and the recipes use it only
 when it is an expression. M03 therefore scores descriptions (60) and precise types (40) and does not ask the OML for
 defaults. `ExtendedClass` is Text on purpose (CSS utility classes, see `llms-utilities.txt`) and is never counted as
-free Text (ADR-0017).
+free Text; the same holds for the other Text-on-purpose parameters (`TEXT_ON_PURPOSE`: DOM identifiers such as
+`WidgetId`, free texts such as `Title`, measures with a unit such as `Height`, the `DateFormat` / `TimeFormat` masks,
+`SVGCode`), whose reason the manifest carries as `textOnPurpose` (ADR-0017).

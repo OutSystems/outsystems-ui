@@ -28,26 +28,27 @@ The 10 evals E01–E10: how legible the library is to coding agents.
 | model-1 | 2026-10-02 | `2f2b5da08` | 99.9 | 94.7 | 100.0 | 100.0 | 94.0 | 98.7 | 74.6 | 72.9 | 79.6 | 60.8 | **87.5** | 0.0 | +23.2 |
 | block-universe | 2026-10-02 | `c3e011784` | 99.9 | 94.7 | 100.0 | 100.0 | 94.0 | 98.7 | 74.6 | 72.9 | 79.6 | 60.8 | **87.5** | 0.0 | +23.2 |
 | platform-defaults | 2026-10-02 | `bf8289fe0` | 99.9 | 94.7 | 100.0 | 100.0 | 94.0 | 98.7 | 74.6 | 72.9 | 79.6 | 60.8 | **87.5** | 0.0 | +23.2 |
+| text-on-purpose | 2026-10-02 | `ba1296b07` | 99.9 | 94.7 | 100.0 | 100.0 | 94.0 | 98.7 | 74.6 | 72.9 | 79.6 | 60.8 | **87.5** | 0.0 | +23.2 |
 
 ### Per-eval scores
 
-| ID | Eval | Class | baseline | loop-1 | loop-2 | loop-3 | loop-4 | loop-5 | loop-7 | loop-8 | loop-9 | loop-10 | loop-12 | loop-13 | loop-14 | model-0 | model-1 | block-universe | platform-defaults | Δ total |
-| --- | --- | :---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| E01 | Context Token Cost | movable | 64.9 | 100.0 | 100.0 | 99.9 | 99.9 | 99.9 | 99.9 | 99.9 | 99.9 | 99.9 | 99.9 | 100.0 | 100.0 | 100.0 | 99.9 | 99.9 | 99.9 | **+35.0** |
-| E02 | Prop Surface & Typing Precision | movable | 94.6 | 94.6 | 94.6 | 94.6 | 94.7 | 94.7 | 94.7 | 94.7 | 94.7 | 94.7 | 94.7 | 94.7 | 94.7 | 94.7 | 94.7 | 94.7 | 94.7 | **+0.1** |
-| E03 | Machine-Readable Schema Completeness | movable | 0.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | **+100.0** |
-| E04 | Type Strictness | movable | 83.2 | 83.2 | 99.2 | 99.3 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | **+16.8** |
-| E05 | Documentation Coverage | movable | 35.8 | 85.8 | 85.8 | 97.6 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 94.0 | 94.0 | 94.0 | 94.0 | 94.0 | 94.0 | **+58.2** |
-| E06 | Public API Shape Consistency | movable | 97.7 | 97.7 | 97.8 | 97.8 | 98.7 | 98.7 | 98.7 | 98.7 | 98.7 | 98.7 | 98.7 | 98.7 | 98.7 | 98.7 | 98.7 | 98.7 | 98.7 | **+1.0** |
-| E07 | Markup Contract Depth | structural | 75.1 | 75.1 | 75.1 | 75.1 | 75.1 | 75.1 | 75.1 | 72.2 | 75.4 | 75.4 | 75.4 | 74.6 | 74.6 | 74.6 | 74.6 | 74.6 | 74.6 | **-0.5** |
-| E08 | Design Token Semantics | movable | 72.3 | 72.3 | 72.3 | 72.3 | 72.3 | 72.4 | 72.5 | 72.9 | 72.9 | 72.9 | 72.9 | 73.0 | 72.9 | 72.9 | 72.9 | 72.9 | 72.9 | **+0.6** |
-| E09 | CSS Selector Complexity | structural | 79.9 | 79.9 | 79.9 | 79.9 | 79.9 | 79.9 | 79.9 | 80.0 | 80.0 | 80.0 | 80.0 | 79.6 | 79.6 | 79.6 | 79.6 | 79.6 | 79.6 | **-0.3** |
-| E10 | Composition Model & Standards Alignment | structural | 39.4 | 39.4 | 52.4 | 52.4 | 60.8 | 60.8 | 60.8 | 60.8 | 60.8 | 60.8 | 60.8 | 60.8 | 60.8 | 60.8 | 60.8 | 60.8 | 60.8 | **+21.4** |
-| — | **Index** | | **64.3** | **82.8** | **85.7** | **86.9** | **88.1** | **88.2** | **88.2** | **87.9** | **88.2** | **88.2** | **88.2** | **87.5** | **87.5** | **87.5** | **87.5** | **87.5** | **87.5** | **+23.2** |
+| ID | Eval | Class | baseline | loop-1 | loop-2 | loop-3 | loop-4 | loop-5 | loop-7 | loop-8 | loop-9 | loop-10 | loop-12 | loop-13 | loop-14 | model-0 | model-1 | block-universe | platform-defaults | text-on-purpose | Δ total |
+| --- | --- | :---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| E01 | Context Token Cost | movable | 64.9 | 100.0 | 100.0 | 99.9 | 99.9 | 99.9 | 99.9 | 99.9 | 99.9 | 99.9 | 99.9 | 100.0 | 100.0 | 100.0 | 99.9 | 99.9 | 99.9 | 99.9 | **+35.0** |
+| E02 | Prop Surface & Typing Precision | movable | 94.6 | 94.6 | 94.6 | 94.6 | 94.7 | 94.7 | 94.7 | 94.7 | 94.7 | 94.7 | 94.7 | 94.7 | 94.7 | 94.7 | 94.7 | 94.7 | 94.7 | 94.7 | **+0.1** |
+| E03 | Machine-Readable Schema Completeness | movable | 0.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | **+100.0** |
+| E04 | Type Strictness | movable | 83.2 | 83.2 | 99.2 | 99.3 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | **+16.8** |
+| E05 | Documentation Coverage | movable | 35.8 | 85.8 | 85.8 | 97.6 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 94.0 | 94.0 | 94.0 | 94.0 | 94.0 | 94.0 | 94.0 | **+58.2** |
+| E06 | Public API Shape Consistency | movable | 97.7 | 97.7 | 97.8 | 97.8 | 98.7 | 98.7 | 98.7 | 98.7 | 98.7 | 98.7 | 98.7 | 98.7 | 98.7 | 98.7 | 98.7 | 98.7 | 98.7 | 98.7 | **+1.0** |
+| E07 | Markup Contract Depth | structural | 75.1 | 75.1 | 75.1 | 75.1 | 75.1 | 75.1 | 75.1 | 72.2 | 75.4 | 75.4 | 75.4 | 74.6 | 74.6 | 74.6 | 74.6 | 74.6 | 74.6 | 74.6 | **-0.5** |
+| E08 | Design Token Semantics | movable | 72.3 | 72.3 | 72.3 | 72.3 | 72.3 | 72.4 | 72.5 | 72.9 | 72.9 | 72.9 | 72.9 | 73.0 | 72.9 | 72.9 | 72.9 | 72.9 | 72.9 | 72.9 | **+0.6** |
+| E09 | CSS Selector Complexity | structural | 79.9 | 79.9 | 79.9 | 79.9 | 79.9 | 79.9 | 79.9 | 80.0 | 80.0 | 80.0 | 80.0 | 79.6 | 79.6 | 79.6 | 79.6 | 79.6 | 79.6 | 79.6 | **-0.3** |
+| E10 | Composition Model & Standards Alignment | structural | 39.4 | 39.4 | 52.4 | 52.4 | 60.8 | 60.8 | 60.8 | 60.8 | 60.8 | 60.8 | 60.8 | 60.8 | 60.8 | 60.8 | 60.8 | 60.8 | 60.8 | 60.8 | **+21.4** |
+| — | **Index** | | **64.3** | **82.8** | **85.7** | **86.9** | **88.1** | **88.2** | **88.2** | **87.9** | **88.2** | **88.2** | **88.2** | **87.5** | **87.5** | **87.5** | **87.5** | **87.5** | **87.5** | **87.5** | **+23.2** |
 
 ### What moved
 
-From `baseline` (64.3) to `platform-defaults` (87.5): +23.2 points over 17 runs.
+From `baseline` (64.3) to `text-on-purpose` (87.5): +23.2 points over 18 runs.
 
 Biggest movers:
 
@@ -85,6 +86,7 @@ Each eval scored over the rows of one category only (a block row inherits the sc
 | model-1 | **86.2** | **72.7** |
 | block-universe | **86.2** | **72.7** |
 | platform-defaults | **86.2** | **72.7** |
+| text-on-purpose | **86.2** | **72.7** |
 
 ## Enterprise Readiness Index
 
@@ -106,22 +108,23 @@ The 6 evals R01–R06: how far the token theme and the patterns meet the enterpr
 | model-1 | 2026-10-02 | `2f2b5da08` | 68.9 | 65.6 | 89.3 | 86.4 | 48.9 | 51.6 | **68.5** | 0.0 | +17.8 |
 | block-universe | 2026-10-02 | `c3e011784` | 68.9 | 65.6 | 89.3 | 86.4 | 48.9 | 51.6 | **68.5** | 0.0 | +17.8 |
 | platform-defaults | 2026-10-02 | `bf8289fe0` | 68.9 | 65.6 | 89.3 | 86.4 | 48.9 | 51.6 | **68.5** | 0.0 | +17.8 |
+| text-on-purpose | 2026-10-02 | `ba1296b07` | 68.9 | 65.6 | 89.3 | 86.4 | 48.9 | 51.6 | **68.5** | 0.0 | +17.8 |
 
 ### Per-eval scores
 
-| ID | Eval | Class | loop-5 | loop-7 | loop-8 | loop-9 | loop-10 | loop-12 | loop-13 | loop-14 | model-0 | model-1 | block-universe | platform-defaults | Δ total |
-| --- | --- | :---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| R01 | Enterprise Component Coverage | roadmap | 68.9 | 68.9 | 68.9 | 68.9 | 68.9 | 68.9 | 68.9 | 68.9 | 68.9 | 68.9 | 68.9 | 68.9 | 0.0 |
-| R02 | Accessibility Contract | movable | 31.0 | 64.6 | 64.7 | 64.7 | 64.7 | 64.7 | 65.6 | 65.6 | 65.6 | 65.6 | 65.6 | 65.6 | **+34.6** |
-| R03 | Keyboard Operability | movable | 55.1 | 76.9 | 89.3 | 89.3 | 89.3 | 89.3 | 89.3 | 89.3 | 89.3 | 89.3 | 89.3 | 89.3 | **+34.2** |
-| R04 | Theme Foundations | movable | 75.7 | 83.8 | 84.4 | 84.4 | 84.4 | 84.4 | 86.4 | 86.4 | 86.4 | 86.4 | 86.4 | 86.4 | **+10.7** |
-| R05 | Responsiveness and Density | movable | 44.6 | 47.9 | 47.9 | 47.9 | 47.9 | 47.9 | 48.9 | 48.9 | 48.9 | 48.9 | 48.9 | 48.9 | **+4.3** |
-| R06 | Feedback and State Behaviours | movable | 28.7 | 52.4 | 52.4 | 52.4 | 52.4 | 52.4 | 51.6 | 51.6 | 51.6 | 51.6 | 51.6 | 51.6 | **+22.9** |
-| — | **Index** | | **50.7** | **65.7** | **67.9** | **67.9** | **67.9** | **67.9** | **68.5** | **68.5** | **68.5** | **68.5** | **68.5** | **68.5** | **+17.8** |
+| ID | Eval | Class | loop-5 | loop-7 | loop-8 | loop-9 | loop-10 | loop-12 | loop-13 | loop-14 | model-0 | model-1 | block-universe | platform-defaults | text-on-purpose | Δ total |
+| --- | --- | :---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| R01 | Enterprise Component Coverage | roadmap | 68.9 | 68.9 | 68.9 | 68.9 | 68.9 | 68.9 | 68.9 | 68.9 | 68.9 | 68.9 | 68.9 | 68.9 | 68.9 | 0.0 |
+| R02 | Accessibility Contract | movable | 31.0 | 64.6 | 64.7 | 64.7 | 64.7 | 64.7 | 65.6 | 65.6 | 65.6 | 65.6 | 65.6 | 65.6 | 65.6 | **+34.6** |
+| R03 | Keyboard Operability | movable | 55.1 | 76.9 | 89.3 | 89.3 | 89.3 | 89.3 | 89.3 | 89.3 | 89.3 | 89.3 | 89.3 | 89.3 | 89.3 | **+34.2** |
+| R04 | Theme Foundations | movable | 75.7 | 83.8 | 84.4 | 84.4 | 84.4 | 84.4 | 86.4 | 86.4 | 86.4 | 86.4 | 86.4 | 86.4 | 86.4 | **+10.7** |
+| R05 | Responsiveness and Density | movable | 44.6 | 47.9 | 47.9 | 47.9 | 47.9 | 47.9 | 48.9 | 48.9 | 48.9 | 48.9 | 48.9 | 48.9 | 48.9 | **+4.3** |
+| R06 | Feedback and State Behaviours | movable | 28.7 | 52.4 | 52.4 | 52.4 | 52.4 | 52.4 | 51.6 | 51.6 | 51.6 | 51.6 | 51.6 | 51.6 | 51.6 | **+22.9** |
+| — | **Index** | | **50.7** | **65.7** | **67.9** | **67.9** | **67.9** | **67.9** | **68.5** | **68.5** | **68.5** | **68.5** | **68.5** | **68.5** | **68.5** | **+17.8** |
 
 ### What moved
 
-From `loop-5` (50.7) to `platform-defaults` (68.5): +17.8 points over 12 runs.
+From `loop-5` (50.7) to `text-on-purpose` (68.5): +17.8 points over 13 runs.
 
 Biggest movers:
 
@@ -153,6 +156,7 @@ Each eval scored over the rows of one category only (a block row inherits the sc
 | model-1 | **68.7** | **61.9** |
 | block-universe | **68.7** | **61.9** |
 | platform-defaults | **68.7** | **61.9** |
+| text-on-purpose | **68.7** | **61.9** |
 
 ## Utilities Index
 
@@ -168,22 +172,23 @@ The 6 evals U01–U06: how predictable and documented the utility classes are fo
 | model-1 | 2026-10-02 | `2f2b5da08` | 90.6 | 75.0 | 99.4 | 100.0 | 89.4 | 0.0 | **75.7** | 0.0 | 0.0 |
 | block-universe | 2026-10-02 | `c3e011784` | 90.6 | 75.0 | 99.4 | 100.0 | 89.4 | 0.0 | **75.7** | 0.0 | 0.0 |
 | platform-defaults | 2026-10-02 | `bf8289fe0` | 90.6 | 75.0 | 99.4 | 100.0 | 89.4 | 0.0 | **75.7** | 0.0 | 0.0 |
+| text-on-purpose | 2026-10-02 | `ba1296b07` | 90.6 | 75.0 | 99.4 | 100.0 | 89.4 | 0.0 | **75.7** | 0.0 | 0.0 |
 
 ### Per-eval scores
 
-| ID | Eval | Class | loop-13 | loop-14 | model-0 | model-1 | block-universe | platform-defaults | Δ total |
-| --- | --- | :---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| U01 | Naming Grammar | movable | 90.6 | 90.6 | 90.6 | 90.6 | 90.6 | 90.6 | 0.0 |
-| U02 | Scale Completeness | movable | 75.0 | 75.0 | 75.0 | 75.0 | 75.0 | 75.0 | 0.0 |
-| U03 | Token Routing | movable | 99.4 | 99.4 | 99.4 | 99.4 | 99.4 | 99.4 | 0.0 |
-| U04 | Documentation Parity | movable | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 0.0 |
-| U05 | Synonym Pressure | movable | 89.4 | 89.4 | 89.4 | 89.4 | 89.4 | 89.4 | 0.0 |
-| U06 | Responsive Coverage | roadmap | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 |
-| — | **Index** | | **75.7** | **75.7** | **75.7** | **75.7** | **75.7** | **75.7** | **0.0** |
+| ID | Eval | Class | loop-13 | loop-14 | model-0 | model-1 | block-universe | platform-defaults | text-on-purpose | Δ total |
+| --- | --- | :---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| U01 | Naming Grammar | movable | 90.6 | 90.6 | 90.6 | 90.6 | 90.6 | 90.6 | 90.6 | 0.0 |
+| U02 | Scale Completeness | movable | 75.0 | 75.0 | 75.0 | 75.0 | 75.0 | 75.0 | 75.0 | 0.0 |
+| U03 | Token Routing | movable | 99.4 | 99.4 | 99.4 | 99.4 | 99.4 | 99.4 | 99.4 | 0.0 |
+| U04 | Documentation Parity | movable | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 100.0 | 0.0 |
+| U05 | Synonym Pressure | movable | 89.4 | 89.4 | 89.4 | 89.4 | 89.4 | 89.4 | 89.4 | 0.0 |
+| U06 | Responsive Coverage | roadmap | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 |
+| — | **Index** | | **75.7** | **75.7** | **75.7** | **75.7** | **75.7** | **75.7** | **75.7** | **0.0** |
 
 ### What moved
 
-From `loop-13` (75.7) to `platform-defaults` (75.7): 0.0 points over 6 runs.
+From `loop-13` (75.7) to `text-on-purpose` (75.7): 0.0 points over 7 runs.
 
 Unchanged across all runs:
 
@@ -206,6 +211,7 @@ Each eval scored over the rows of one category only (a block row inherits the sc
 | model-1 | — | **72.1** |
 | block-universe | — | **72.1** |
 | platform-defaults | — | **72.1** |
+| text-on-purpose | — | **72.1** |
 
 ## Model Bridge Readiness Index
 
@@ -219,22 +225,23 @@ The 6 evals M01–M06: how well the library serves the Model team's bridge, whic
 | model-1 | 2026-10-02 | `2f2b5da08` | 86.8 | 98.7 | 75.4 | 100.0 | 100.0 | 100.0 | **93.5** | +64.3 | +64.3 |
 | block-universe | 2026-10-02 | `c3e011784` | 86.7 | 95.8 | 74.8 | 100.0 | 100.0 | 100.0 | **92.9** | -0.6 | +63.7 |
 | platform-defaults | 2026-10-02 | `bf8289fe0` | 96.8 | 95.8 | 94.7 | 100.0 | 100.0 | 100.0 | **97.9** | +5.0 | +68.7 |
+| text-on-purpose | 2026-10-02 | `ba1296b07` | 96.8 | 95.8 | 99.1 | 100.0 | 100.0 | 100.0 | **98.6** | +0.7 | +69.4 |
 
 ### Per-eval scores
 
-| ID | Eval | Class | model-0 | model-1 | block-universe | platform-defaults | Δ total |
-| --- | --- | :---: | ---: | ---: | ---: | ---: | ---: |
-| M01 | Block Manifest Completeness | movable | 0.0 | 86.8 | 86.7 | 96.8 | **+96.8** |
-| M02 | Pattern–Block Crosswalk | movable | 50.0 | 98.7 | 95.8 | 95.8 | **+45.8** |
-| M03 | Block Parameter Precision | movable | 75.4 | 75.4 | 74.8 | 94.7 | **+19.3** |
-| M04 | Block Card Cost and Recipes | movable | 0.0 | 100.0 | 100.0 | 100.0 | **+100.0** |
-| M05 | Producer-Scoped Guidance | movable | 0.0 | 100.0 | 100.0 | 100.0 | **+100.0** |
-| M06 | Silent-Failure Surfaces | movable | 50.0 | 100.0 | 100.0 | 100.0 | **+50.0** |
-| — | **Index** | | **29.2** | **93.5** | **92.9** | **97.9** | **+68.7** |
+| ID | Eval | Class | model-0 | model-1 | block-universe | platform-defaults | text-on-purpose | Δ total |
+| --- | --- | :---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| M01 | Block Manifest Completeness | movable | 0.0 | 86.8 | 86.7 | 96.8 | 96.8 | **+96.8** |
+| M02 | Pattern–Block Crosswalk | movable | 50.0 | 98.7 | 95.8 | 95.8 | 95.8 | **+45.8** |
+| M03 | Block Parameter Precision | movable | 75.4 | 75.4 | 74.8 | 94.7 | 99.1 | **+23.7** |
+| M04 | Block Card Cost and Recipes | movable | 0.0 | 100.0 | 100.0 | 100.0 | 100.0 | **+100.0** |
+| M05 | Producer-Scoped Guidance | movable | 0.0 | 100.0 | 100.0 | 100.0 | 100.0 | **+100.0** |
+| M06 | Silent-Failure Surfaces | movable | 50.0 | 100.0 | 100.0 | 100.0 | 100.0 | **+50.0** |
+| — | **Index** | | **29.2** | **93.5** | **92.9** | **97.9** | **98.6** | **+69.4** |
 
 ### What moved
 
-From `model-0` (29.2) to `platform-defaults` (97.9): +68.7 points over 4 runs.
+From `model-0` (29.2) to `text-on-purpose` (98.6): +69.4 points over 5 runs.
 
 Biggest movers:
 
@@ -243,7 +250,7 @@ Biggest movers:
 - M01 Block Manifest Completeness +96.8
 - M06 Silent-Failure Surfaces +50.0
 - M02 Pattern–Block Crosswalk +45.8
-- M03 Block Parameter Precision +19.3
+- M03 Block Parameter Precision +23.7
 
 ### Index by category
 
@@ -255,5 +262,6 @@ Each eval scored over the rows of one category only (a block row inherits the sc
 | model-1 | **93.3** | **100.0** |
 | block-universe | **92.9** | **100.0** |
 | platform-defaults | **97.9** | **100.0** |
+| text-on-purpose | **98.6** | **100.0** |
 
 Per-run details (raw measurements, per-component scores, unmeasured pairs) live in `results/<label>.json`.

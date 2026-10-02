@@ -155,7 +155,11 @@ test('staticEntitiesReferenced and isFreeText read parameter types', () => {
 	const params = sample().blocks['Interaction/Carousel'].inputParameters;
 	assert.equal(isFreeText(params[0]), false, 'a structure is precise');
 	assert.equal(isFreeText(params[2]), false, 'ExtendedClass is Text on purpose');
-	assert.equal(isFreeText({ name: 'Label', typeKind: 'basic', type: 'Text' }), true, 'other free Text is not precise');
+	assert.equal(
+		isFreeText({ name: 'Label', typeKind: 'basic', type: 'Text' }),
+		true,
+		'other free Text is not precise'
+	);
 	assert.equal(isFreeText({ typeKind: 'other', type: 'Object' }), true);
 	assert.equal(isFreeText({ typeKind: 'basic', type: 'Integer' }), false);
 });
@@ -192,4 +196,29 @@ test('isFreeText leaves ExtendedClass alone: it is Text on purpose, for utility 
 	const { isFreeText } = await import('../lib/snapshot.mjs');
 	assert.equal(isFreeText({ name: 'ExtendedClass', typeKind: 'basic', type: 'Text' }), false);
 	assert.equal(isFreeText({ name: 'Label', typeKind: 'basic', type: 'Text' }), true);
+});
+
+test('isFreeText leaves the Text-on-purpose parameters alone and textOnPurpose names the reason', async () => {
+	const { isFreeText, textOnPurpose } = await import('../lib/snapshot.mjs');
+	const text = (name) => ({ name, typeKind: 'basic', type: 'Text' });
+	for (const name of ['MenuId', 'ScrollToWidgetId', 'WidgetId', 'ItemId']) {
+		assert.equal(isFreeText(text(name)), false, name);
+		assert.match(textOnPurpose(text(name)) ?? '', /identifier of another element/);
+	}
+	for (const name of ['Title', 'Group', 'Prompt', 'Name', 'Password'])
+		assert.equal(isFreeText(text(name)), false, name);
+	for (const name of ['Size', 'Height', 'Width']) {
+		assert.equal(isFreeText(text(name)), false, name);
+		assert.match(textOnPurpose(text(name)) ?? '', /measure with its unit/);
+	}
+	assert.match(textOnPurpose(text('DateFormat')) ?? '', /mask/);
+	assert.match(textOnPurpose(text('SVGCode')) ?? '', /SVG/);
+	assert.match(textOnPurpose(text('ExtendedClass')) ?? '', /utility classes/);
+	assert.equal(
+		textOnPurpose({ name: 'Size', typeKind: 'staticEntity', type: 'Size Identifier' }),
+		null,
+		'only Text parameters'
+	);
+	assert.equal(textOnPurpose(text('Label')), null);
+	assert.equal(isFreeText(text('Label')), true);
 });

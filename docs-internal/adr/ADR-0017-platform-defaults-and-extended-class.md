@@ -31,15 +31,21 @@ wrong: it is Text by design and its vocabulary is `llms-utilities.txt`.
 2. The generated block manifest (`docs-ai/osui.blocks.json`) and cards (`llms-blocks.txt`) carry the settled
    default and its source for every optional parameter. Recipes use a default only when it is an expression
    (basic types and identifiers); a structure, list or binary default keeps `…`.
-3. `ExtendedClass` is excluded from the free-Text check (`isFreeText`); the cards say it is Text on purpose.
+3. The Text parameters that are Text on purpose are excluded from the free-Text check (`TEXT_ON_PURPOSE` in
+   `evals/model/lib/snapshot.mjs`), each with the reason the manifest carries as `textOnPurpose`:
+   `ExtendedClass` (CSS utility classes); `MenuId`, `ScrollToWidgetId`, `WidgetId`, `ItemId` (the identifier
+   of another element in the DOM); `Title`, `Group`, `Prompt`, `Name`, `Password` (free text shown as is);
+   `Size`, `Height`, `Width` (a measure with its unit, such as `120px` or `70%`); `DateFormat`, `TimeFormat`
+   (a text mask); `SVGCode` (the content of an SVG). The list is by name and applies to Text parameters only.
 4. M03 weighs descriptions 60 and precise types 40; the defaults term is gone because it is settled by the
    platform. The per-block table still lists how many optional parameters take the platform default. M01's
    parameter facet is complete once a parameter is typed and described.
 
 ## Consequences
 
-- The Forge request list (M03's table) names only what the OML must change: descriptions and free-Text
-  types other than `ExtendedClass`. 33 free-Text parameters remain.
+- The Forge request list (M03's table) names only what the OML must change: descriptions and the free-Text
+  types not on the allowlist. After the allowlist, 3 parameters remain: `Image` (Binary Data), `ImageURL` and
+  `URL` (Text).
 - M03 moves from 74.8 under the previous weights; the run `platform-defaults` is the new baseline.
 - Block cards grow by one default per optional parameter; the 250-token budget still holds (M04 measures it).
 - A platform default is a statement about the runtime, not about the OML: the manifest keeps the source so

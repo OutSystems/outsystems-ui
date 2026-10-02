@@ -178,3 +178,11 @@ test('the block manifest fills platform defaults for optional parameters the OML
 	const { openui } = recipesFor(m.blocks['Interaction/Carousel']);
 	assert.ok(!openui.includes('empty ItemsPerSlide'), 'a structure default is not an expression: the recipe keeps …');
 });
+
+test('the block manifest marks Text-on-purpose parameters with their reason', () => {
+	const m = buildBlocksManifest(/** @type {any} */ (fakeCtx()));
+	const ext = m.blocks['Interaction/Carousel'].params.find((p) => p.name === 'ExtendedClass');
+	assert.match(ext.textOnPurpose, /utility classes/);
+	const other = m.blocks['Interaction/Carousel'].params.find((p) => p.name !== 'ExtendedClass');
+	assert.equal(other.textOnPurpose, undefined);
+});
