@@ -12,9 +12,13 @@ import {
 	normalizeRegistry,
 	ROLES,
 	tierOf,
+	validateBlockLinks,
 	validateRegistry,
 } from '../lib/registry.mjs';
 import { TIERS } from '../lib/tiers.mjs';
+import { createContext } from '../lib/context.mjs';
+import { expectationsFor } from '../lib/expectations.mjs';
+import { flattenBlocks, loadSnapshots } from '../model/lib/snapshot.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
 
@@ -126,4 +130,100 @@ test('the committed registry classifies exactly the components the inventory dis
 		['animate', 'columns', 'list-updating', 'provider-login-button', 'pull-to-refresh']
 	);
 	assert.equal(reg.components['layout-section'].kind, 'layout');
+});
+
+test('validateBlockLinks resolves blocks, parameters (dotted for structure attributes), props and events', () => {
+	const reg = normalizeRegistry({
+		components: {
+			Carousel: {
+				kind: 'pattern',
+				block: [
+					{
+						flow: 'Interaction',
+						name: 'Carousel',
+						paramMap: {
+							'ItemsPerSlide.Desktop': 'ItemsDesktop',
+							Navigation: 'Navigation',
+							Ghost: 'ItemsPhone',
+							'ItemsPerSlide.Nope': 'ItemsTablet',
+							Loop: 'NotAProp',
+						},
+						platformOnly: ['Position', 'Missing'],
+						eventMap: { OnSlideMoved: 'OnSlideMoved', OnNope: 'OnSlideMoved' },
+					},
+					{ flow: 'Interaction', name: 'Gone' },
+				],
+			},
+		},
+	});
+	const blocks = new Map([
+		[
+			'Interaction/Carousel',
+			{
+				inputParameters: [
+					{ name: 'ItemsPerSlide', typeKind: 'structure', typeRef: 'ItemsPerSlide' },
+					{ name: 'Navigation', typeKind: 'staticEntity', typeRef: 'Navigation' },
+					{ name: 'Loop', typeKind: 'basic', typeRef: null },
+					{ name: 'Position', typeKind: 'basic', typeRef: null },
+				],
+				events: [{ name: 'OnSlideMoved' }],
+			},
+		],
+	]);
+	const structures = { ItemsPerSlide: { attributes: [{ name: 'Desktop' }, { name: 'Tablet' }, { name: 'Phone' }] } };
+	const errors = validateBlockLinks(
+		reg,
+		blocks,
+		new Map([['Carousel', ['ItemsDesktop', 'ItemsTablet', 'ItemsPhone', 'Navigation', 'Loop']]]),
+		new Map([['Carousel', ['OnSlideMoved', 'Initialized']]]),
+		structures
+	).map((e) => e.message);
+	assert.deepEqual(errors, [
+		'Carousel: block Interaction/Carousel has no parameter "Ghost"',
+		'Carousel: block Interaction/Carousel has no parameter "ItemsPerSlide.Nope"',
+		'Carousel: pattern has no config prop "NotAProp" (paramMap Loop)',
+		'Carousel: block Interaction/Carousel has no parameter "Missing" (platformOnly)',
+		'Carousel: block Interaction/Carousel has no event "OnNope"',
+		'Carousel: block Interaction/Gone is not in the snapshot',
+	]);
+});
+
+test('validateBlockLinks reports a dotted key whose structure is missing from the snapshot instead of throwing', () => {
+	const reg = normalizeRegistry({
+		components: {
+			Carousel: {
+				kind: 'pattern',
+				block: [{ flow: 'I', name: 'C', paramMap: { 'ItemsPerSlide.Desktop': 'ItemsDesktop' } }],
+			},
+		},
+	});
+	const blocks = new Map([
+		[
+			'I/C',
+			{
+				inputParameters: [{ name: 'ItemsPerSlide', typeKind: 'structure', typeRef: 'ItemsPerSlide' }],
+				events: [],
+			},
+		],
+	]);
+	const errors = validateBlockLinks(reg, blocks, new Map([['Carousel', ['ItemsDesktop']]]), new Map(), {});
+	assert.deepEqual(
+		errors.map((e) => e.message),
+		['Carousel: block I/C has no parameter "ItemsPerSlide.Desktop"']
+	);
+});
+
+test('every block link of the committed registry resolves against the snapshot and the patterns', () => {
+	const snapshots = loadSnapshots();
+	if (snapshots.length === 0) return;
+	const ctx = createContext(root);
+	const blocks = new Map(flattenBlocks(snapshots).map((b) => [b.key, b]));
+	const props = new Map(
+		ctx.inventory.patterns.map((p) => [p.name, expectationsFor(ctx, p).props.map((x) => x.name)])
+	);
+	const events = new Map(
+		ctx.inventory.patterns.map((p) => [p.name, [...expectationsFor(ctx, p).events, 'Initialized']])
+	);
+	const structures = Object.assign({}, ...snapshots.map((s) => s.structures));
+	assert.deepEqual(validateBlockLinks(loadRegistry(), blocks, props, events, structures), []);
 });

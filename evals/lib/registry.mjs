@@ -33,6 +33,9 @@ export const ROLES = ['provider', 'overlay', 'composite', 'feedback', 'non-inter
  * @property {boolean} [validating]
  * @property {boolean} [density]      the enterprise document expects a size or density axis
  * @property {boolean} [derived]      appended by the doctor from code signals; remove after review
+ * @property {BlockLink[]} [block]    the OML block(s) a pattern drives, with the parameter and event maps (M02)
+ *
+ * @typedef {{ flow: string, name: string, paramMap?: Record<string, string>, platformOnly?: string[], eventMap?: Record<string, string>, derived?: boolean }} BlockLink
  *
  * @typedef {{ components: Record<string, Entry> }} Registry
  */
@@ -164,4 +167,68 @@ export function validateRegistry(reg, inventory) {
 		for (const role of e.roles ?? []) if (!ROLES.includes(role)) badRoles.push({ name, role });
 	}
 	return { unknown, stale, badRoles, badKinds, kindMismatch, tierOverride };
+}
+
+/**
+ * Whether a block has a parameter named `key`: a plain parameter name, or `Structure.Attribute` for an
+ * attribute of a structure-typed parameter (the structure must be in the snapshot).
+ * @param {{ inputParameters: { name: string, typeKind: string, typeRef: string|null }[] }} block
+ * @param {string} key
+ * @param {Record<string, { attributes: { name: string }[] }>} structures
+ */
+export function blockHasParameter(block, key, structures) {
+	const dot = key.indexOf('.');
+	if (dot === -1) return block.inputParameters.some((p) => p.name === key);
+	const head = key.slice(0, dot);
+	const tail = key.slice(dot + 1);
+	const param = block.inputParameters.find((p) => p.name === head && p.typeKind === 'structure');
+	if (!param || !param.typeRef) return false;
+	const structure = structures[param.typeRef];
+	return Boolean(structure && structure.attributes.some((a) => a.name === tail));
+}
+
+/**
+ * Where the `block` links of the registry disagree with the snapshot and the patterns: an unknown block,
+ * parameter, config prop or event. Empty when every link resolves.
+ * @param {Registry} reg
+ * @param {Map<string, { inputParameters: { name: string, typeKind: string, typeRef: string|null }[], events: { name: string }[] }>} blocksByKey
+ * @param {Map<string, string[]>} propsByPattern config prop names per pattern
+ * @param {Map<string, string[]>} eventsByPattern runtime event names per pattern
+ * @param {Record<string, { attributes: { name: string }[] }>} structures
+ * @returns {{ pattern: string, message: string }[]}
+ */
+export function validateBlockLinks(reg, blocksByKey, propsByPattern, eventsByPattern, structures) {
+	/** @type {{ pattern: string, message: string }[]} */
+	const out = [];
+	const err = (/** @type {string} */ pattern, /** @type {string} */ message) =>
+		out.push({ pattern, message: `${pattern}: ${message}` });
+	for (const [pattern, entry] of Object.entries(reg.components)) {
+		for (const link of entry.block ?? []) {
+			const key = `${link.flow}/${link.name}`;
+			const block = blocksByKey.get(key);
+			if (!block) {
+				err(pattern, `block ${key} is not in the snapshot`);
+				continue;
+			}
+			const props = propsByPattern.get(pattern) ?? [];
+			for (const [param, prop] of Object.entries(link.paramMap ?? {})) {
+				if (!blockHasParameter(block, param, structures))
+					err(pattern, `block ${key} has no parameter "${param}"`);
+				else if (!props.includes(prop))
+					err(pattern, `pattern has no config prop "${prop}" (paramMap ${param})`);
+			}
+			for (const param of link.platformOnly ?? []) {
+				if (!blockHasParameter(block, param, structures))
+					err(pattern, `block ${key} has no parameter "${param}" (platformOnly)`);
+			}
+			const events = eventsByPattern.get(pattern) ?? [];
+			for (const [blockEvent, runtimeEvent] of Object.entries(link.eventMap ?? {})) {
+				if (!block.events.some((e) => e.name === blockEvent))
+					err(pattern, `block ${key} has no event "${blockEvent}"`);
+				else if (!events.includes(runtimeEvent))
+					err(pattern, `pattern has no event "${runtimeEvent}" (eventMap ${blockEvent})`);
+			}
+		}
+	}
+	return out;
 }
