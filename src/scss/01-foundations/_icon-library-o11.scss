@@ -299,11 +299,12 @@
 				-servicestudio-width: 15px;
 
 				&:before {
-					-servicestudio-content: '˟';
+					-servicestudio-content: var(--osui-icon-clear);
 					-servicestudio-display: inline-block;
-					-servicestudio-font-size: variables.$token-font-size-500;
-					-servicestudio-height: 15px;
+					-servicestudio-font-weight: normal;
+					-servicestudio-font-size: variables.$token-font-size-300;
 					-servicestudio-left: 50%;
+					-servicestudio-opacity: 0.5;
 					-servicestudio-position: absolute;
 					-servicestudio-top: 50%;
 					-servicestudio-transform: translate(-50%, -50%);

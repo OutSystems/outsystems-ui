@@ -11,6 +11,11 @@ const constants = {
         O11: [
             './src/scripts/OutSystems/OSUI/Utils/PreviewInDevices/**/*',
             './src/scripts/OutSystems/OSUI/Utils/IconLibrary.ts'
+        ], 
+        ODC: [
+            './src/scripts/osui.ts',
+            './src/scripts/OutSystems/OSUI/Utils/LayoutPrivateCloseDeprecatedSubmenu.ts',
+            './src/scripts/OutSystems/OSUI/Utils/Deprecated_Utils.ts'
         ]
     },
     // list of platforms to compile (TypeScript bundles).
