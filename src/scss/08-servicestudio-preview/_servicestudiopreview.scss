@@ -177,16 +177,14 @@ html[data-uieditorversion^='1'] {
 				& > tr {
 					-servicestudio-position: relative;
 				}
+
+				& {
+					-servicestudio-display: table-header-group !important;
+				}
 			}
 
 			table.table > thead > tr:empty {
 				display: block;
-			}
-			
-
-			
-			thead {
-				-servicestudio-display: table-header-group !important;
 			}
 		}
 	}
