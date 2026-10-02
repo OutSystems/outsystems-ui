@@ -145,7 +145,7 @@ html[data-uieditorversion^='1'] {
 	}
 
 	.phone {
-		.table:not(.table-responsive) {
+		.table {
 			display: block;
 		}
 
@@ -156,21 +156,15 @@ html[data-uieditorversion^='1'] {
 				td {
 					-servicestudio-min-width: 10vw;
 				}
+			}
 
-				&:not(.table-no-responsive) {
-					th {
-						-servicestudio-display: none;
-					}
+			
+			thead {
+				& > tr:not(:empty):before {
+					-servicestudio-display: none;
 				}
 			}
 
-			.table-no-responsive {
-				thead {
-					& > tr:not(:empty):before {
-						-servicestudio-display: none;
-					}
-				}
-			}
 		}
 	}
 
@@ -185,18 +179,14 @@ html[data-uieditorversion^='1'] {
 				}
 			}
 
-			table.table > thead > tr {
-				display: none;
-
-				&:empty {
-					display: block;
-				}
+			table.table > thead > tr:empty {
+				display: block;
 			}
+			
 
-			.table-no-responsive {
-				thead {
-					-servicestudio-display: table-header-group !important;
-				}
+			
+			thead {
+				-servicestudio-display: table-header-group !important;
 			}
 		}
 	}
