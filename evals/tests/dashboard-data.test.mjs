@@ -53,7 +53,11 @@ test('cellFor explains a cell with no measurement from the metric scope and hint
 	assert.equal(na.s, null);
 	assert.equal(na.w, 'na');
 	assert.match(na.h, /measures patterns; this is a CSS-only component/);
-	assert.equal(cellFor('E02', null, { kind: 'css' }).w, 'unmeasured', 'css is no longer a kind: no not-applicable text for it');
+	assert.equal(
+		cellFor('E02', null, { kind: 'css' }).w,
+		'unmeasured',
+		'css is no longer a kind: no not-applicable text for it'
+	);
 	const layout = cellFor('E07', null, { kind: 'layout' });
 	assert.equal(layout.w, 'na');
 	assert.match(layout.h, /measures patterns, components; layout partials style markup the app template/);
@@ -73,23 +77,27 @@ test('cellFor explains a cell with no measurement from the metric scope and hint
 	assert.match(host.h, /knobs/);
 });
 
-test('buildDashboardData assembles the history, one block per suite and components with one cell per heatmap eval', () => {
+test('buildDashboardData assembles the history, one block per suite and the rows of the universe with their cells', () => {
 	const d = buildDashboardData(evalsDir);
-	assert.equal(d.v, 4);
+	assert.equal(d.v, 5);
+	assert.deepEqual(d.categoryLabels, { component: 'components (OML blocks)', platform: 'platform & layout styles' });
+	assert.equal(typeof d.kindTexts.block, 'string');
 	assert.deepEqual(
 		d.suites.map((s) => s.id),
 		['ai', 'enterprise', 'utilities', 'model']
 	);
-	const [ai, ent, util] = d.suites;
+	const [ai, ent, util, model] = d.suites;
 	assert.equal(util.evals.length, 6);
 	assert.deepEqual(util.heatmapEvals, ['U01', 'U02', 'U03', 'U04', 'U05', 'U06']);
-	assert.deepEqual(Object.keys(util.tiers), ['utility']);
-	assert.equal(
-		d.components.filter((c) => c.k === 'utility').length,
-		24,
-		'the utility families are the rows of the utilities suite'
-	);
-	const margin = d.components.find((c) => c.n === 'space-margin');
+	assert.deepEqual(Object.keys(util.categories), ['platform'], 'utility families are platform rows');
+	// the 24 families the utilities suite measures plus the 6 helper classes the registry files as utilities
+	assert.equal(d.components.filter((c) => c.k === 'utility').length, 30);
+	assert.equal(d.components.filter((c) => c.k === 'utility' && c.cells.U01?.w !== 'unmeasured').length, 24);
+	const animate = d.components.find((c) => c.id === 'animate');
+	assert.equal(animate.cells.U01.w, 'unmeasured');
+	assert.equal(animate.cells.U01.h, 'Not measured: the eval reports no entry for this row.');
+	const margin = d.components.find((c) => c.id === 'space-margin');
+	assert.equal(margin.c, 'platform');
 	assert.equal(margin.cells.U01.w, 'ok');
 	assert.equal(margin.cells.E07, undefined, 'the AI evals do not apply to a utility family');
 	assert.deepEqual(util.evals[0].appliesTo, ['utility']);
@@ -98,6 +106,7 @@ test('buildDashboardData assembles the history, one block per suite and componen
 	assert.ok(!ai.heatmapEvals.includes('E04'), 'E04 is measured per file, so it is not a heatmap column');
 	assert.equal(ent.evals.length, 6);
 	assert.deepEqual(ent.heatmapEvals, ['R02', 'R03', 'R04', 'R05', 'R06']);
+	assert.deepEqual(model.heatmapEvals, ['M01', 'M02', 'M03', 'M04'], 'the block evals have heatmap columns');
 	assert.ok(ent.extra.requirements.length > 80, 'R01 contributes the requirement table');
 	assert.equal(ent.extra.flows.length, 9);
 	assert.ok(ent.baseline.label, 'each suite names the first run that carried it');
@@ -112,30 +121,67 @@ test('buildDashboardData assembles the history, one block per suite and componen
 	assert.ok(e02.advice.length > 0, 'every eval carries at least one next step');
 	assert.ok(e02.scope.length > 10, 'every eval says what its per-component cells mean');
 	assert.equal(typeof e02.notApplicable, 'number');
-	const accordion = d.components.find((c) => c.n === 'Accordion');
-	assert.ok(accordion);
-	for (const id of [...ai.heatmapEvals, ...ent.heatmapEvals])
-		assert.ok(accordion.cells[id], `Accordion has an ${id} cell`);
-	assert.equal(accordion.cells.R02.w, 'ok');
-	// a cell an eval does not apply to by tier is omitted: the page composes it from the eval's appliesTo
-	const css = d.components.find((c) => c.k === 'component');
-	assert.equal(css.cells.E02, undefined, 'E02 measures patterns only');
-	assert.equal(css.cells.R03, undefined, 'keyboard checks need a script');
-	assert.deepEqual(e02.appliesTo, ['pattern'], 'every eval carries the tiers it applies to');
-	const layout = d.components.find((c) => c.n === 'header');
+	assert.deepEqual(e02.appliesTo, ['pattern'], 'every eval carries the kinds it applies to');
+
+	// block rows: id, name, flow, category, kind, runtime and projected cells
+	const accordion = d.components.find((c) => c.id === 'Content/Accordion');
+	assert.ok(accordion, 'the Accordion block is a row');
+	assert.equal(accordion.n, 'Accordion');
+	assert.equal(accordion.f, 'Content');
+	assert.equal(accordion.c, 'component');
+	assert.equal(accordion.k, 'pattern');
+	assert.deepEqual(accordion.rt, { p: 'Accordion', s: null });
+	for (const id of [...ai.heatmapEvals, ...ent.heatmapEvals, ...model.heatmapEvals])
+		assert.ok(accordion.cells[id], `Content/Accordion has an ${id} cell`);
+	assert.equal(accordion.cells.E01.w, 'ok', 'E01 projected from the Accordion pattern');
+	assert.equal(accordion.cells.M01.w, 'ok');
+	const card = d.components.find((c) => c.id === 'Content/Card');
+	assert.deepEqual(card.rt, { p: null, s: 'card' });
+	assert.equal(card.k, 'component');
+	assert.equal(card.cells.E07.w, 'ok', 'E07 projected from the card stylesheet');
+	assert.equal(
+		card.cells.E02,
+		undefined,
+		'a pattern eval has no cell for a stylesheet-only block: the page composes n/a'
+	);
+	const columns = d.components.find((c) => c.id === 'Adaptive/Columns2');
+	assert.equal(columns.k, 'block');
+	assert.equal(columns.cells.M03.w, 'ok', 'Columns2 has parameters');
+	const display = d.components.find((c) => c.id === 'Adaptive/DisplayOnDevice');
+	assert.equal(display.cells.M03.w, 'na', 'no parameters: M03 marks it not applicable');
+	assert.equal(columns.cells.E07, undefined, 'a pure OML block has no stylesheet to measure');
+	assert.ok(!d.components.some((c) => c.id.includes('DEPRECATED_')));
+	assert.ok(!d.components.some((c) => c.id === 'Licenses/Licenses'));
+
+	// platform rows keep their cells and get no block cell
+	const btn = d.components.find((c) => c.id === 'btn');
+	assert.equal(btn.c, 'platform');
+	assert.equal(btn.cells.M01, undefined);
+	assert.equal(btn.cells.E02, undefined, 'E02 measures patterns only');
+	assert.equal(btn.cells.R03, undefined, 'keyboard checks need a script');
+	const layout = d.components.find((c) => c.id === 'header');
 	assert.equal(layout.k, 'layout');
 	assert.equal(layout.cells.E07, undefined, 'a layout partial has no markup contract to measure');
 	assert.equal(layout.cells.E08.w, 'ok');
-	const balloon = d.components.find((c) => c.n === 'balloon');
+	const balloon = d.components.find((c) => c.id === 'balloon');
 	assert.equal(balloon.cells.E07.w, 'na', 'a host-styled component keeps the cell the metric declared');
 	assert.match(balloon.cells.E07.h, /host-styled/);
-	assert.equal(d.components.filter((c) => c.k === 'pattern').length, 33);
+	assert.equal(
+		d.components.filter((c) => c.c === 'component').length,
+		d.components.filter((c) => c.f !== null).length,
+		'every block row is a component row and the reverse'
+	);
 	for (const s of d.suites.filter((x) => x.id !== 'utilities')) {
-		assert.ok(s.tiers, `${s.id} carries per-tier indices`);
-		assert.equal(typeof s.tiers.pattern.index, 'number');
-		assert.ok(!('utility' in s.tiers), 'the AI and enterprise suites have no utility tier');
+		assert.ok(s.categories.component, `${s.id} carries a component index`);
+		assert.equal(typeof s.categories.component.index, 'number');
+		assert.equal(
+			s.categories.component.baseLabel,
+			s.baseline.label,
+			'the category series starts at the suite baseline'
+		);
+		assert.equal(s.tiers, undefined);
 	}
-	assert.ok(JSON.stringify(d).length < 240 * 1024, 'fits the 256 KiB document limit of the artifact database');
+	assert.ok(JSON.stringify(d).length < 1024 * 1024, 'fits the 1 MiB document limit of the artifact database');
 });
 
 test('the committed dashboard.json is fresh', () => {
@@ -154,7 +200,7 @@ test('buildDashboardData falls back to results/latest.json when the latest run f
 	const last = [...history].sort((a, b) => a.date.localeCompare(b.date)).at(-1);
 	fs.writeFileSync(path.join(tmp, 'results', 'history.json'), JSON.stringify(history));
 	fs.copyFileSync(path.join(evalsDir, 'results', `${last.label}.json`), path.join(tmp, 'results', 'latest.json'));
-	const d = buildDashboardData(tmp);
+	const d = buildDashboardData(tmp, new Date(), path.resolve(evalsDir, '..'));
 	assert.equal(d.latest.label, last.label);
 	assert.equal(d.suites.length, 4);
 	fs.rmSync(tmp, { recursive: true, force: true });

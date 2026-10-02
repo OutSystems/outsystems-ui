@@ -25,7 +25,7 @@ export function readChangedFiles(text) {
 }
 
 /**
- * @typedef {{ kind: import('../lib/kinds.mjs').Tier, files: string[] }} Touched
+ * @typedef {{ kind: import('../lib/kinds.mjs').Kind, files: string[] }} Touched
  */
 
 /**
@@ -98,6 +98,26 @@ function movement(before, after, hasBaseline) {
 }
 
 /**
+ * The universe row of a source component (pattern or stylesheet) by its own name, so the data set's cell
+ * reader applies the eval's kinds to it directly.
+ * @param {string} name
+ * @param {import('../lib/kinds.mjs').Kind} kind
+ * @returns {import('../lib/universe.mjs').Row}
+ */
+function sourceRow(name, kind) {
+	const pattern = kind === 'pattern' ? name : null;
+	return {
+		id: name,
+		name,
+		flow: null,
+		category: 'platform',
+		kind,
+		runtime: { pattern, style: pattern ? null : name },
+		platform: '',
+	};
+}
+
+/**
  * The lines of one touched component: its cells before → after, then the hints of the cells that dropped or
  * sit below 80.
  * @param {string} name
@@ -107,8 +127,10 @@ function movement(before, after, hasBaseline) {
  * @param {string[]} heatmapIds
  */
 function componentLines(name, t, afterResults, beforeResults, heatmapIds) {
-	const cellsAfter = componentCells(afterResults, name, t.kind);
-	const cellsBefore = beforeResults ? componentCells(beforeResults, name, t.kind) : {};
+	// a pull request changes a pattern or a stylesheet: the report reads its cells as a source row, not through the blocks it drives
+	const row = sourceRow(name, t.kind);
+	const cellsAfter = componentCells(afterResults, row);
+	const cellsBefore = beforeResults ? componentCells(beforeResults, row) : {};
 	const parts = [];
 	const hints = [];
 	for (const id of heatmapIds) {

@@ -12,12 +12,12 @@ test('buildDashboardPage inlines the page module and the committed data set into
 	assert.ok(!html.includes(PLACEHOLDER));
 	assert.ok(!html.includes('export function mount('), 'the module export becomes a plain declaration');
 	assert.ok(html.includes('function mount(document, window, localStorage, EMBEDDED)'));
-	assert.ok(html.includes('mount(document, window, localStorage, {"v":4,'), 'the data set is passed to mount');
+	assert.ok(html.includes('mount(document, window, localStorage, {"v":5,'), 'the data set is passed to mount');
 	const start =
 		html.indexOf('mount(document, window, localStorage, {') + 'mount(document, window, localStorage, '.length;
 	const json = html.slice(start, html.lastIndexOf(');'));
 	assert.ok(!json.includes('</'), 'no `</` survives inside the embedded JSON');
-	assert.equal(JSON.parse(json).v, 4, 'the escaped JSON still parses');
+	assert.equal(JSON.parse(json).v, 5, 'the escaped JSON still parses');
 	assert.match(html, /<title>[^<]+<\/title>/);
 });
 
