@@ -113,6 +113,7 @@ import { buildInventory } from './inventory.mjs';
 import { compileScss } from './scss.mjs';
 import { countFilesTokens, countFileTokens, countTokens, tokenizerName } from './tokens.mjs';
 import { createProgram } from './ts.mjs';
+import { loadSnapshots } from '../model/lib/snapshot.mjs';
 
 /**
  * @typedef {ReturnType<typeof createContext>} EvalContext
@@ -183,6 +184,11 @@ export function createContext(root, options = {}) {
 		docsAi(name) {
 			const file = insideDir(docsAiDir, name);
 			return fs.existsSync(file) ? fs.readFileSync(file, 'utf8') : null;
+		},
+
+		/** The block snapshots under evals/model (empty when none); metric tests inject their own. */
+		modelSnapshots() {
+			return loadSnapshots(insideDir(root, 'evals', 'model'));
 		},
 
 		/** Abbreviated commit id of the working tree HEAD, or 'unknown'. */
