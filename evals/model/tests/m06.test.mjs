@@ -40,3 +40,13 @@ test('a knob counts as documented only when its full name appears, not a longer 
 	assert.equal(knobDocumented('- --osui-card-padding — the padding\n', '--osui-card-padding'), true);
 	assert.equal(knobDocumented('x --osui-card-padding: 4px', '--osui-card-padding'), true);
 });
+
+test('M06 computes on the repository context (every reader it needs is imported)', async () => {
+	const { createContext } = await import('../../lib/context.mjs');
+	const path = await import('node:path');
+	const { fileURLToPath } = await import('node:url');
+	const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..', '..');
+	const r = M06.compute(createContext(root));
+	assert.equal(typeof r.score, 'number');
+	assert.ok(r.raw.surfaces.utilities.total > 0);
+});
