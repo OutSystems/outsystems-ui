@@ -17,7 +17,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 import { insideDir } from './paths.mjs';
-import { registry, tierOf } from './registry.mjs';
+import { registry, kindOf } from './registry.mjs';
 import { defaultKindFor } from './kinds.mjs';
 
 /**
@@ -265,7 +265,7 @@ export function buildInventory(root) {
 		.map(({ scssFile, source, base }) => {
 			const name = (baseCount.get(base) ?? 0) > 1 && source !== 'patterns' ? `${source}-${base}` : base;
 			const tier = defaultKindFor(scssFile);
-			const registryTier = tierOf(REG, name, tier);
+			const registryKind = kindOf(REG, name, tier);
 			return {
 				name,
 				scssFile,
@@ -273,7 +273,7 @@ export function buildInventory(root) {
 				storyFile: source === 'useful' ? null : matchStory(name, storiesByNorm),
 				host: REG.components[name]?.host ?? null,
 				tier,
-				kind: registryTier === 'pattern' ? tier : registryTier,
+				kind: registryKind === 'pattern' ? tier : registryKind,
 				source,
 			};
 		})

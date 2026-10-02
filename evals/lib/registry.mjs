@@ -33,7 +33,8 @@ export const ROLES = ['provider', 'overlay', 'composite', 'feedback', 'non-inter
  * @property {boolean} [validating]
  * @property {boolean} [density]      the enterprise document expects a size or density axis
  * @property {boolean} [derived]      appended by the doctor from code signals; remove after review
- * @property {BlockLink[]} [block]    the OML block(s) a pattern drives, with the parameter and event maps (M02)
+ * @property {BlockLink[]} [block]    the OML block(s) this entry drives: a pattern's links carry the parameter and event
+ *                                   maps (M02); a CSS-only component's or layout partial's links carry flow and name only
  *
  * @typedef {{ flow: string, name: string, paramMap?: Record<string, string>, platformOnly?: string[], eventMap?: Record<string, string>, derived?: boolean }} BlockLink
  *
@@ -82,8 +83,28 @@ export function entryOf(reg, name) {
  * @param {import('./kinds.mjs').Kind} fallback
  * @returns {import('./kinds.mjs').Kind}
  */
-export function tierOf(reg, name, fallback) {
+export function kindOf(reg, name, fallback) {
 	return normalizeKind(reg.components[name]?.kind) ?? fallback;
+}
+
+/**
+ * The pattern and the stylesheet (CSS-only component or layout partial) whose entries link a block.
+ * @param {Registry} reg
+ * @param {string} flow
+ * @param {string} name
+ * @returns {{ pattern: string|null, style: string|null }}
+ */
+export function blockRuntimeOf(reg, flow, name) {
+	/** @type {{ pattern: string|null, style: string|null }} */
+	const out = { pattern: null, style: null };
+	for (const [entryName, entry] of Object.entries(reg.components)) {
+		const linked = (entry.block ?? []).some((l) => l.flow === flow && l.name === name);
+		if (!linked) continue;
+		const kind = normalizeKind(entry.kind);
+		if (kind === 'pattern') out.pattern = entryName;
+		else if (kind === 'component' || kind === 'layout') out.style = entryName;
+	}
+	return out;
 }
 
 /**
@@ -195,21 +216,52 @@ export function blockHasParameter(block, key, structures) {
 export function validateBlockLinks(reg, blocksByKey, propsByPattern, eventsByPattern, structures) {
 	/** @type {{ pattern: string, message: string }[]} */
 	const out = [];
-	for (const [pattern, entry] of Object.entries(reg.components)) {
-		for (const link of entry.block ?? []) {
+	/** @type {Map<string, string[]>} */
+	const linkedFrom = new Map();
+	for (const [name, entry] of Object.entries(reg.components)) {
+		const kind = normalizeKind(entry.kind);
+		const links = entry.block ?? [];
+		if (kind === 'utility' && links.length) {
+			out.push({ pattern: name, message: `${name}: a utility family never links a block` });
+			continue;
+		}
+		for (const link of links) {
 			const key = `${link.flow}/${link.name}`;
-			const block = blocksByKey.get(key);
-			const messages = block
-				? [
-						...paramMapErrors(link, key, block, propsByPattern.get(pattern) ?? [], structures),
-						...platformOnlyErrors(link, key, block, structures),
-						...eventMapErrors(link, key, block, eventsByPattern.get(pattern) ?? []),
-					]
-				: [`block ${key} is not in the snapshot`];
-			for (const message of messages) out.push({ pattern, message: `${pattern}: ${message}` });
+			linkedFrom.set(key, [...(linkedFrom.get(key) ?? []), name]);
+			const ctx = { props: propsByPattern.get(name) ?? [], events: eventsByPattern.get(name) ?? [], structures };
+			for (const message of linkErrors(name, kind, link, key, blocksByKey.get(key), ctx)) {
+				out.push({ pattern: name, message: `${name}: ${message}` });
+			}
 		}
 	}
+	for (const [key, names] of linkedFrom) {
+		if (names.length > 1) out.push({ pattern: names[0], message: `${key} is linked from ${names.join(' and ')}` });
+	}
 	return out;
+}
+
+/**
+ * The errors of one link: a deprecated target, a map on a stylesheet entry, a missing block, then the
+ * parameter, platform-only and event checks of a pattern link.
+ * @param {string} name entry name
+ * @param {import('./kinds.mjs').Kind|null} kind entry kind
+ * @param {BlockLink} link
+ * @param {string} key
+ * @param {{ inputParameters: { name: string, typeKind: string, typeRef: string|null }[], events: { name: string }[] }|undefined} block
+ * @param {{ props: string[], events: string[], structures: Record<string, { attributes: { name: string }[] }> }} ctx
+ */
+function linkErrors(name, kind, link, key, block, ctx) {
+	if (link.name.startsWith('DEPRECATED_')) return [`${key}: deprecated blocks are not composable`];
+	if (kind === 'component' || kind === 'layout') {
+		const map = ['paramMap', 'eventMap', 'platformOnly'].find((f) => f in link);
+		if (map) return [`${map} on a CSS-only component`];
+	}
+	if (!block) return [`block ${key} is not in the snapshot`];
+	return [
+		...paramMapErrors(link, key, block, ctx.props, ctx.structures),
+		...platformOnlyErrors(link, key, block, ctx.structures),
+		...eventMapErrors(link, key, block, ctx.events),
+	];
 }
 
 /**

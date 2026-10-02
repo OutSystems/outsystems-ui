@@ -9,9 +9,10 @@ import {
 	hasRole,
 	loadRegistry,
 	namesWhere,
+	blockRuntimeOf,
+	kindOf,
 	normalizeRegistry,
 	ROLES,
-	tierOf,
 	validateBlockLinks,
 	validateRegistry,
 } from '../lib/registry.mjs';
@@ -34,16 +35,16 @@ const fake = {
 	},
 };
 
-test('namesWhere, hasRole, familyMembers and tierOf read the registry', () => {
+test('namesWhere, hasRole, familyMembers and kindOf read the registry', () => {
 	assert.deepEqual([...namesWhere(fake, (e) => hasRole(e, 'composite'))], ['Tabs', 'TabsHeaderItem']);
 	assert.deepEqual([...namesWhere(fake, (e) => e.kind !== 'pattern' && e.interactive === true)], ['btn']);
 	assert.equal(hasRole(fake.components.badge, 'overlay'), false);
 	assert.deepEqual(familyMembers(fake, 'Tabs'), ['TabsHeaderItem']);
 	assert.deepEqual(familyMembers(fake, 'TabsHeaderItem'), ['Tabs']);
 	assert.deepEqual(familyMembers(fake, 'badge'), []);
-	assert.equal(tierOf(fake, 'layout', 'component'), 'layout');
-	assert.equal(tierOf(fake, 'space-margin', 'component'), 'utility');
-	assert.equal(tierOf(fake, 'unknown', 'component'), 'component', 'falls back to the discovered tier');
+	assert.equal(kindOf(fake, 'layout', 'component'), 'layout');
+	assert.equal(kindOf(fake, 'space-margin', 'component'), 'utility');
+	assert.equal(kindOf(fake, 'unknown', 'component'), 'component', 'falls back to the discovered tier');
 });
 
 test('normalizeRegistry keeps every entry as written; the legacy css kind is no longer a kind', () => {
@@ -230,4 +231,40 @@ test('every block link of the committed registry resolves against the snapshot a
 	);
 	const structures = Object.assign({}, ...snapshots.map((s) => s.structures));
 	assert.deepEqual(validateBlockLinks(loadRegistry(), blocks, props, events, structures), []);
+});
+
+test('blockRuntimeOf finds the pattern and the stylesheet entry that link a block', () => {
+	const reg = {
+		components: {
+			Tooltip: { kind: 'pattern', block: [{ flow: 'Content', name: 'Tooltip', paramMap: {} }] },
+			card: { kind: 'component', block: [{ flow: 'Content', name: 'Card' }] },
+			btn: { kind: 'component' },
+		},
+	};
+	assert.deepEqual(blockRuntimeOf(reg, 'Content', 'Tooltip'), { pattern: 'Tooltip', style: null });
+	assert.deepEqual(blockRuntimeOf(reg, 'Content', 'Card'), { pattern: null, style: 'card' });
+	assert.deepEqual(blockRuntimeOf(reg, 'Adaptive', 'Columns2'), { pattern: null, style: null });
+});
+
+test('validateBlockLinks rejects a block linked twice, a map on a stylesheet entry, a link on a utility and a deprecated target', () => {
+	const blocksByKey = new Map([
+		['Content/Card', { inputParameters: [], events: [] }],
+		['Content/DEPRECATED_Card', { inputParameters: [], events: [] }],
+	]);
+	const reg = {
+		components: {
+			card: { kind: 'component', block: [{ flow: 'Content', name: 'Card', paramMap: { A: 'a' } }] },
+			'stacked-cards': { kind: 'component', block: [{ flow: 'Content', name: 'Card' }] },
+			animate: { kind: 'utility', block: [{ flow: 'Interaction', name: 'Animate' }] },
+			'card-item': { kind: 'component', block: [{ flow: 'Content', name: 'DEPRECATED_Card' }] },
+		},
+	};
+	const messages = validateBlockLinks(reg, blocksByKey, new Map(), new Map(), {}).map((e) => e.message);
+	assert.ok(
+		messages.some((m) => m.includes('card: paramMap on a CSS-only component')),
+		messages.join('; ')
+	);
+	assert.ok(messages.some((m) => m.includes('Content/Card is linked from card and stacked-cards')));
+	assert.ok(messages.some((m) => m.includes('animate: a utility family never links a block')));
+	assert.ok(messages.some((m) => m.includes('DEPRECATED_Card: deprecated blocks are not composable')));
 });
