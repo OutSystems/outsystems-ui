@@ -121,10 +121,15 @@ export function staticEntitiesReferenced(snapshots) {
 	return out;
 }
 
+/** The parameter every block offers for utility classes: Text on purpose, never a typing gap. */
+export const EXTENDED_CLASS = 'ExtendedClass';
+
 /**
- * A parameter an agent cannot type without guessing: an Object/unknown type or free Text.
- * @param {{ typeKind: string, type: string }} param
+ * A parameter an agent cannot type without guessing: an Object/unknown type or free Text. `ExtendedClass`
+ * is excluded: it carries CSS utility classes and is Text by design.
+ * @param {{ name?: string, typeKind: string, type: string }} param
  */
 export function isFreeText(param) {
+	if (param.name === EXTENDED_CLASS) return false;
 	return param.typeKind === 'other' || (param.typeKind === 'basic' && param.type === 'Text');
 }

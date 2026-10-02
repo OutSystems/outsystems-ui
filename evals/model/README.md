@@ -40,3 +40,13 @@ stylesheet it drives (the `block` links of `evals/components.json`), M02 is the 
 whole-repository figures. M01, M03 and M04 also report a table per block in the findings (`extra`): columns
 `Block · Score · Missing · Do`, lowest score first, with a lead line saying what 100 means. Non-composable blocks
 are not applicable.
+
+## Defaults and ExtendedClass
+
+An optional block parameter without a default in the OML takes the platform default of its data type at runtime
+(Boolean `False`, Integer `0`, Decimal `0.0`, Text `""`, Date `#1900-01-01#`, Time `#00:00:00#`, Date Time
+`#1900-01-01 00:00:00#`, identifiers `NullIdentifier()`, an empty structure or list). `lib/defaults.mjs` states it; the
+block manifest and cards carry it with its source (`defaultSource`: `oml` or `platform`), and the recipes use it only
+when it is an expression. M03 therefore scores descriptions (60) and precise types (40) and does not ask the OML for
+defaults. `ExtendedClass` is Text on purpose (CSS utility classes, see `llms-utilities.txt`) and is never counted as
+free Text (ADR-0017).

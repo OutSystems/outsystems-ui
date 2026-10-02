@@ -158,3 +158,23 @@ test('the block manifest carries no $schema key until a schema is published', ()
 	const manifest = buildBlocksManifest(createContext(root));
 	assert.equal('$schema' in manifest, false);
 });
+
+test('the block manifest fills platform defaults for optional parameters the OML leaves empty, and the recipes keep expressions only', () => {
+	const m = buildBlocksManifest(/** @type {any} */ (fakeCtx()));
+	const params = m.blocks['Interaction/Carousel'].params;
+	const items = params.find((p) => p.name === 'ItemsPerSlide');
+	assert.equal(items.default, 'empty ItemsPerSlide');
+	assert.equal(items.defaultSource, 'platform');
+	assert.ok(
+		params.every((p) => p.mandatory || p.default !== null),
+		'every optional parameter has a default'
+	);
+	assert.ok(
+		params.filter((p) => !p.mandatory && p.defaultSource === 'oml').length >= 1,
+		'OML defaults are kept and marked'
+	);
+	const card = renderBlockCard(m.blocks['Interaction/Carousel']);
+	assert.ok(card.includes('ItemsPerSlide: ItemsPerSlide = empty ItemsPerSlide'), card);
+	const { openui } = recipesFor(m.blocks['Interaction/Carousel']);
+	assert.ok(!openui.includes('empty ItemsPerSlide'), 'a structure default is not an expression: the recipe keeps …');
+});

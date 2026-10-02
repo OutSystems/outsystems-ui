@@ -2,7 +2,7 @@
 
 **Branch:** `agents/osui-validate-evals` (from `dev` @ `c0c45f9ad`) · **Date:** 2026-09-29
 **Suite:** `npm run evals` (`evals/ai-friendliness/`) · **Docs:** `npm run docs:ai` (`docs-ai/`) · **Tests:** `npm test` (57 passing)
-**Companion documents:** [eval design & formulas](./2026-09-29-eval-suite-design.md) · [implementation plan](./2026-09-29-eval-suite-plan.md) · [ADR-0011](../adr/ADR-0011-ai-friendliness-eval-suite.md)
+**Companion documents:** [eval design & formulas](./2026-09-29-eval-suite-design.md) · [ADR-0011](../adr/ADR-0011-ai-friendliness-eval-suite.md)
 
 ---
 
@@ -12,8 +12,8 @@
 
 OutSystems is moving towards a pipeline in which a **TypeScript coding agent** writes application
 code against runtime libraries — OutSystems UI, Charts, Maps, Data Grid — and a TS model framework
-compiles that code into OML. In that world a UI library is good for an agent when it is *legible to
-a model*: cheap to read, explicit about its contracts, predictable in shape, and styled through
+compiles that code into OML. In that world a UI library is good for an agent when it is _legible to
+a model_: cheap to read, explicit about its contracts, predictable in shape, and styled through
 semantic tokens rather than rules. The research baseline (shadcn/ui, Radix, Tailwind-style systems,
 HeroUI, React Suite) names the properties that make this true; this work turned them into ten
 repeatable evals, ran them against this repository, and drove a behavior-preserving refinement loop.
@@ -40,26 +40,26 @@ repeatable evals, ran them against this repository, and drove a behavior-preserv
    declarations routed through a `--osui-*` knob). These are specified, with before/after snippets,
    in §5 and §6 — not applied.
 5. **Pre-training density is the criterion no local change can fix.** `OutSystems.OSUI.Patterns.
-   AccordionAPI.Create(id, '{"MultipleItems":true,"ExtendedClass":""}')` plus the `name`/`id`/
+AccordionAPI.Create(id, '{"MultipleItems":true,"ExtendedClass":""}')` plus the `name`/`id`/
    `[data-block]` DOM contract exists in no public corpus; every agent call needs injected context.
    The generated cards make that injection ~430 tokens instead of ~2,700, but the long-term answer
    is the open-web composition model in §6.
 
 ### Final scores
 
-| ID | Eval | Baseline | Final (loop-4) | Δ |
-| --- | --- | ---: | ---: | ---: |
-| E01 | Context Token Cost | 64.9 | 99.9 | +35.0 |
-| E02 | Prop Surface & Typing Precision | 94.6 | 94.7 | +0.1 |
-| E03 | Machine-Readable Schema Completeness | 0.0 | 100.0 | +100.0 |
-| E04 | Type Strictness | 83.2 | 100.0 | +16.8 |
-| E05 | Documentation Coverage | 35.8 | 100.0 | +64.2 |
-| E06 | Public API Shape Consistency | 97.7 | 98.7 | +1.0 |
-| E07 | Markup Contract Depth | 75.1 | 75.1 | 0.0 (structural) |
-| E08 | Design Token Semantics | 72.3 | 72.3 | 0.0 (structural) |
-| E09 | CSS Selector Complexity | 79.9 | 79.9 | 0.0 (structural) |
-| E10 | Composition Model & Standards Alignment | 39.4 | 60.8 | +21.4 |
-| — | **AI-Friendliness Index** | **64.3** | **88.1** | **+23.8** |
+| ID  | Eval                                    | Baseline | Final (loop-4) |                Δ |
+| --- | --------------------------------------- | -------: | -------------: | ---------------: |
+| E01 | Context Token Cost                      |     64.9 |           99.9 |            +35.0 |
+| E02 | Prop Surface & Typing Precision         |     94.6 |           94.7 |             +0.1 |
+| E03 | Machine-Readable Schema Completeness    |      0.0 |          100.0 |           +100.0 |
+| E04 | Type Strictness                         |     83.2 |          100.0 |            +16.8 |
+| E05 | Documentation Coverage                  |     35.8 |          100.0 |            +64.2 |
+| E06 | Public API Shape Consistency            |     97.7 |           98.7 |             +1.0 |
+| E07 | Markup Contract Depth                   |     75.1 |           75.1 | 0.0 (structural) |
+| E08 | Design Token Semantics                  |     72.3 |           72.3 | 0.0 (structural) |
+| E09 | CSS Selector Complexity                 |     79.9 |           79.9 | 0.0 (structural) |
+| E10 | Composition Model & Standards Alignment |     39.4 |           60.8 |            +21.4 |
+| —   | **AI-Friendliness Index**               | **64.3** |       **88.1** |        **+23.8** |
 
 All applied changes compile for both platform targets with zero lint warnings, leave the emitted
 CSS untouched and change no runtime behavior (details in §5).
@@ -83,18 +83,18 @@ The suite is static and deterministic (no network, no model calls), runs in ~25 
 better; the Index is their unweighted mean. `clamp` bounds to [0, 1]; component means use equal
 weights. Formulas are also embedded in every results file.
 
-| ID | Eval · research criterion | Unit | Score formula | Benchmark / band | Movable by non-breaking change |
-| --- | --- | --- | --- | --- | --- |
-| E01 | **Context Token Cost** · token & context efficiency | TS pattern (33) | `100 · clamp((6000 − T) / 5400)`; `T = min(o200k tokens of API+Config+Enum+Interface files, tokens of a ≥80 %-complete manifest card)` | shadcn/ui components measured in-session: median 912, mean 1,325, range 173–5,564 tokens; 600 = one flat file, 6,000 = does not fit a task budget | yes |
-| E02 | **Prop Surface & Typing Precision** · schema & anatomy | TS pattern | `100 · (0.4·clamp(1 − max(0, n − 8)/12) + 0.6·precise/n)`; precise = boolean, number, enum/union, typed object/array, or free string. A string validated with `validateInRange` or defaulted to an enum member is a *stringly-typed enum* (imprecise) | ≤ 8 props free; 20 props → size term 0 | yes |
-| E03 | **Machine-Readable Schema Completeness** · schema & metadata | TS pattern | mean of six facets (props typed, defaults, api, events, cssClasses, markup) · 100 · (entries/patterns); 0 without a versioned `docs-ai/osui.components.json` | every facet compared against the source | yes |
-| E04 | **Type Strictness** · type-constrained determinism | whole program | `100 − min(40, 4·implicitAny/KLOC) − min(20, 10·explicitAny/KLOC) − min(10, 2.5·suppressions) − 30·(public fns without return type / total)` | program compiled with `noImplicitAny` | yes |
-| E05 | **Documentation Coverage** · agent docs (llms.txt tiers) + JSDoc | whole program | `35·apiJsDoc + 15·propComments + 0.5·agentDocs`; agentDocs = 25 each for `llms.txt`, `llms-components.txt` (prorated by pattern coverage), `llms-tokens.txt`, `llms-patterns.txt` | JSDoc counts only with a description and an `@param` per parameter | yes |
-| E06 | **Public API Shape Consistency** · snippet predictability | TS pattern | `100 · (0.4·canonical/7 + 0.3·envelope + 0.2·camelCase params + 0.1·no inline error codes)`; canonical = Create, Initialize, Dispose, ChangeProperty, RegisterCallback, Get\<Name\>ById, GetAll\<Name\> | envelope = `CreateApiResponse` on every non-lifecycle function | yes |
-| E07 | **Markup Contract Depth** · anatomy & composition | any component with a story (81) | `100 − 20·max(0, depth − 3) − 4·max(0, distinct − 6)`; measured on the deepest HTML template of the component's story; distinct = unique tag+classes signatures | shadcn Accordion usage: depth 3, 4 elements → 100 | structural |
-| E08 | **Design Token Semantics** · semantic tokens & theming | component SCSS partial, compiled standalone (94) | `100 · (0.55·(1 − hardcoded/themeable) + 0.30·(routed via --osui-*/themeable) + 0.15·clamp(1 − !important/(2 % of themeable)))` | hardcoded = raw colour or non-zero px/rem/em with no `var()`/token | yes (literals), structural (routing) |
-| E09 | **CSS Selector Complexity** · predictable cascade | component SCSS partial, compiled (99) | `100 · (0.6·clamp(1 − max(0, mean combinators − 1)/3) + 0.4·clamp(1 − max(0, p90 class-specificity − 2)/4))` | ≤ 1 combinator and ≤ 2 classes per selector → 100 | structural |
-| E10 | **Composition Model & Standards Alignment** · pre-training density | TS pattern | `100 − 12·max(0, inheritance depth − 1) − 5·max(0, contract files − 4) − 15·(configs only as JSON string) − 10·(event names typed string) − 15·(global namespaces instead of ES modules)` | one concrete class, ≤ 4 files, typed configs and events, ES modules → 100 | partly |
+| ID  | Eval · research criterion                                          | Unit                                             | Score formula                                                                                                                                                                                                                                         | Benchmark / band                                                                                                                                  | Movable by non-breaking change       |
+| --- | ------------------------------------------------------------------ | ------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------ |
+| E01 | **Context Token Cost** · token & context efficiency                | TS pattern (33)                                  | `100 · clamp((6000 − T) / 5400)`; `T = min(o200k tokens of API+Config+Enum+Interface files, tokens of a ≥80 %-complete manifest card)`                                                                                                                | shadcn/ui components measured in-session: median 912, mean 1,325, range 173–5,564 tokens; 600 = one flat file, 6,000 = does not fit a task budget | yes                                  |
+| E02 | **Prop Surface & Typing Precision** · schema & anatomy             | TS pattern                                       | `100 · (0.4·clamp(1 − max(0, n − 8)/12) + 0.6·precise/n)`; precise = boolean, number, enum/union, typed object/array, or free string. A string validated with `validateInRange` or defaulted to an enum member is a _stringly-typed enum_ (imprecise) | ≤ 8 props free; 20 props → size term 0                                                                                                            | yes                                  |
+| E03 | **Machine-Readable Schema Completeness** · schema & metadata       | TS pattern                                       | mean of six facets (props typed, defaults, api, events, cssClasses, markup) · 100 · (entries/patterns); 0 without a versioned `docs-ai/osui.components.json`                                                                                          | every facet compared against the source                                                                                                           | yes                                  |
+| E04 | **Type Strictness** · type-constrained determinism                 | whole program                                    | `100 − min(40, 4·implicitAny/KLOC) − min(20, 10·explicitAny/KLOC) − min(10, 2.5·suppressions) − 30·(public fns without return type / total)`                                                                                                          | program compiled with `noImplicitAny`                                                                                                             | yes                                  |
+| E05 | **Documentation Coverage** · agent docs (llms.txt tiers) + JSDoc   | whole program                                    | `35·apiJsDoc + 15·propComments + 0.5·agentDocs`; agentDocs = 25 each for `llms.txt`, `llms-components.txt` (prorated by pattern coverage), `llms-tokens.txt`, `llms-patterns.txt`                                                                     | JSDoc counts only with a description and an `@param` per parameter                                                                                | yes                                  |
+| E06 | **Public API Shape Consistency** · snippet predictability          | TS pattern                                       | `100 · (0.4·canonical/7 + 0.3·envelope + 0.2·camelCase params + 0.1·no inline error codes)`; canonical = Create, Initialize, Dispose, ChangeProperty, RegisterCallback, Get\<Name\>ById, GetAll\<Name\>                                               | envelope = `CreateApiResponse` on every non-lifecycle function                                                                                    | yes                                  |
+| E07 | **Markup Contract Depth** · anatomy & composition                  | any component with a story (81)                  | `100 − 20·max(0, depth − 3) − 4·max(0, distinct − 6)`; measured on the deepest HTML template of the component's story; distinct = unique tag+classes signatures                                                                                       | shadcn Accordion usage: depth 3, 4 elements → 100                                                                                                 | structural                           |
+| E08 | **Design Token Semantics** · semantic tokens & theming             | component SCSS partial, compiled standalone (94) | `100 · (0.55·(1 − hardcoded/themeable) + 0.30·(routed via --osui-*/themeable) + 0.15·clamp(1 − !important/(2 % of themeable)))`                                                                                                                       | hardcoded = raw colour or non-zero px/rem/em with no `var()`/token                                                                                | yes (literals), structural (routing) |
+| E09 | **CSS Selector Complexity** · predictable cascade                  | component SCSS partial, compiled (99)            | `100 · (0.6·clamp(1 − max(0, mean combinators − 1)/3) + 0.4·clamp(1 − max(0, p90 class-specificity − 2)/4))`                                                                                                                                          | ≤ 1 combinator and ≤ 2 classes per selector → 100                                                                                                 | structural                           |
+| E10 | **Composition Model & Standards Alignment** · pre-training density | TS pattern                                       | `100 − 12·max(0, inheritance depth − 1) − 5·max(0, contract files − 4) − 15·(configs only as JSON string) − 10·(event names typed string) − 15·(global namespaces instead of ES modules)`                                                             | one concrete class, ≤ 4 files, typed configs and events, ES modules → 100                                                                         | partly                               |
 
 **Calibration evidence (E01).** shadcn/ui `apps/v4/registry/new-york-v4/ui/*.tsx`, o200k_base:
 progress 173 · tooltip 439 · accordion 452 · card 531 · button 636 · tabs 912 · dialog 1,045 ·
@@ -121,19 +121,19 @@ enterprise-readiness proposal): baseline 50.7 at `loop-6`, 65.7 at `loop-7` afte
 (theme-level guards and native activation recognised by the metrics; density knobs and the Search role
 added, S-13). The AI-friendliness matrix through loop-4 follows.
 
-| ID | baseline<br>`568ddb574` | loop-1<br>`3988bb953` | loop-2<br>`729fe256d` | loop-3<br>`1c54735f0` | loop-4<br>`69815c54d` | Total Δ | What moved it |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-| E01 | 64.9 | 100.0 | 100.0 | 99.9 | 99.9 | +35.0 | complete manifest cards (mean 2,656 → 438 tokens) |
-| E02 | 94.6 | 94.6 | 94.6 | 94.6 | 94.7 | +0.1 | `Orientation` alias fixed; stringly-typed enums need a behavior-affecting change (§5 B-9) |
-| E03 | 0.0 | 100.0 | 100.0 | 100.0 | 100.0 | +100.0 | `docs-ai/osui.components.json` generated from source |
-| E04 | 83.2 | 83.2 | 99.2 | 99.3 | 100.0 | +16.8 | 72 → 0 implicit-any, 4 → 0 suppressions, `noImplicitAny` enabled |
-| E05 | 35.8 | 85.8 | 85.8 | 97.6 | 100.0 | +64.2 | llms.txt tiers (loop-1), 111 prop descriptions (loop-3), 24 JSDoc fixes (loop-4) |
-| E06 | 97.7 | 97.7 | 97.8 | 97.8 | 98.7 | +1.0 | camelCase params; `ChangeProperty` added to SwipeEvents/TouchEvents |
-| E07 | 75.1 | 75.1 | 75.1 | 75.1 | 75.1 | 0.0 | structural (DOM contracts) |
-| E08 | 72.3 | 72.3 | 72.3 | 72.3 | 72.3 | 0.0 | structural (knob routing); literal floor reached |
-| E09 | 79.9 | 79.9 | 79.9 | 79.9 | 79.9 | 0.0 | structural (cascade) |
-| E10 | 39.4 | 39.4 | 52.4 | 52.4 | 60.8 | +21.4 | `Create` accepts a typed object; generated `Configs`/`EventName` types |
-| **Index** | **64.3** | **82.8** | **85.7** | **86.9** | **88.1** | **+23.8** | |
+| ID        | baseline<br>`568ddb574` | loop-1<br>`3988bb953` | loop-2<br>`729fe256d` | loop-3<br>`1c54735f0` | loop-4<br>`69815c54d` |   Total Δ | What moved it                                                                             |
+| --------- | ----------------------: | --------------------: | --------------------: | --------------------: | --------------------: | --------: | ----------------------------------------------------------------------------------------- |
+| E01       |                    64.9 |                 100.0 |                 100.0 |                  99.9 |                  99.9 |     +35.0 | complete manifest cards (mean 2,656 → 438 tokens)                                         |
+| E02       |                    94.6 |                  94.6 |                  94.6 |                  94.6 |                  94.7 |      +0.1 | `Orientation` alias fixed; stringly-typed enums need a behavior-affecting change (§5 B-9) |
+| E03       |                     0.0 |                 100.0 |                 100.0 |                 100.0 |                 100.0 |    +100.0 | `docs-ai/osui.components.json` generated from source                                      |
+| E04       |                    83.2 |                  83.2 |                  99.2 |                  99.3 |                 100.0 |     +16.8 | 72 → 0 implicit-any, 4 → 0 suppressions, `noImplicitAny` enabled                          |
+| E05       |                    35.8 |                  85.8 |                  85.8 |                  97.6 |                 100.0 |     +64.2 | llms.txt tiers (loop-1), 111 prop descriptions (loop-3), 24 JSDoc fixes (loop-4)          |
+| E06       |                    97.7 |                  97.7 |                  97.8 |                  97.8 |                  98.7 |      +1.0 | camelCase params; `ChangeProperty` added to SwipeEvents/TouchEvents                       |
+| E07       |                    75.1 |                  75.1 |                  75.1 |                  75.1 |                  75.1 |       0.0 | structural (DOM contracts)                                                                |
+| E08       |                    72.3 |                  72.3 |                  72.3 |                  72.3 |                  72.3 |       0.0 | structural (knob routing); literal floor reached                                          |
+| E09       |                    79.9 |                  79.9 |                  79.9 |                  79.9 |                  79.9 |       0.0 | structural (cascade)                                                                      |
+| E10       |                    39.4 |                  39.4 |                  52.4 |                  52.4 |                  60.8 |     +21.4 | `Create` accepts a typed object; generated `Configs`/`EventName` types                    |
+| **Index** |                **64.3** |              **82.8** |              **85.7** |              **86.9** |              **88.1** | **+23.8** |                                                                                           |
 
 Iteration deltas: loop-1 **+18.5**, loop-2 **+2.9**, loop-3 **+1.2**, loop-4 **+1.2**. Every movable
 eval is now ≥ 94.7; E06's last point and E10's remaining 39 points are the documented breaking
@@ -151,21 +151,21 @@ reasons in each results file.
 
 ### 4.1 Token & context efficiency (E01)
 
-| Pattern | Source contract tokens (baseline) | Files | Card tokens (loop-3) |
-| --- | ---: | ---: | ---: |
-| Dropdown | 9,168 | 13 | 591 |
-| DatePicker | 8,155 | 11 | 620 |
-| MonthPicker | 5,296 | 7 | 605 |
-| RangeSlider | 5,060 | 9 | 645 |
-| TimePicker | 5,037 | 7 | 605 |
-| Carousel | 4,788 | 6 | 605 |
-| Search / TouchEvents (smallest) | ~1,000 | 4–5 | 189–211 |
-| **Mean / total** | **2,656 / 87,642** | 6.1 | **435** |
+| Pattern                         | Source contract tokens (baseline) | Files | Card tokens (loop-3) |
+| ------------------------------- | --------------------------------: | ----: | -------------------: |
+| Dropdown                        |                             9,168 |    13 |                  591 |
+| DatePicker                      |                             8,155 |    11 |                  620 |
+| MonthPicker                     |                             5,296 |     7 |                  605 |
+| RangeSlider                     |                             5,060 |     9 |                  645 |
+| TimePicker                      |                             5,037 |     7 |                  605 |
+| Carousel                        |                             4,788 |     6 |                  605 |
+| Search / TouchEvents (smallest) |                            ~1,000 |   4–5 |              189–211 |
+| **Mean / total**                |                **2,656 / 87,642** |   6.1 |              **435** |
 
-- **Pro:** the contract is *discoverable* — a public `*API.ts` per pattern, enums for every class
+- **Pro:** the contract is _discoverable_ — a public `*API.ts` per pattern, enums for every class
   name and property, a config class with `validateDefault` defaults. That is what made generation
   possible.
-- **Con:** the contract is *distributed*: props live in a config class, allowed values in enums or
+- **Con:** the contract is _distributed_: props live in a config class, allowed values in enums or
   `validateInRange` calls, defaults in a `switch`, markup only in stories, CSS knobs only in SCSS.
   Provider-backed patterns spread it over framework + provider directories (Dropdown: 13 files,
   22 with implementations). The compiled `.d.ts` is 50.7k tokens — an agent cannot load "the
@@ -232,18 +232,18 @@ The runtime contract every pattern shares: a root element with `name="<id>"` (re
 `getElementsByName`) inside a `[data-block]` ancestor whose `id` becomes the `widgetId`, then
 `Create` → `Initialize`. Child patterns additionally need specific part classes.
 
-| Service Studio Block | TS pattern / CSS component | Contract an agent must emit | Depth · distinct parts | E07 |
-| --- | --- | --- | --- | ---: |
-| Lightbox Image | CSS-only (`_lightbox-image.scss`) | gallery grid + figure + overlay chrome (PhotoSwipe) | 8 · 22 | 0 |
-| Master Detail | CSS-only | `.master-detail` > columns > list > items > content | 7 · 10 | 4 |
-| Sidebar | `Sidebar` | trigger + `aside.osui-sidebar` > `__header` / `__content` / footer | 6 · 12 | 16 |
-| Bottom Bar Item | CSS-only | nav > item > icon + label wrappers | 7 · 6 | 20 |
-| Dropdown (Search/Tags) | `Dropdown` (VirtualSelect) | `.osui-dropdown` wrapper > provider root; balloon detached to `<body>` | 6 · 10 | 24 |
-| List / List Item | widgets | `[data-list]` > `[data-block]` items > `.list-item` > content slots | 6 · 10 | 24 |
-| Input With Icon | CSS-only | wrapper > input group > icon + control | 5 · 14 | 28 |
-| Accordion + Item | `Accordion`, `AccordionItem` | `.osui-accordion` > `[data-block]` > `.osui-accordion-item` > `__title` (+ two `__icon`, one `.placeholder-empty`) + `__content` > placeholder | 5 · 6 | 60 |
-| Tabs | `Tabs`, `TabsHeaderItem`, `TabsContentItem` | `section.osui-tabs` > `header.osui-tabs__header` (+ `__indicator`) + `section.osui-tabs__content`; items are separate patterns | 3 · 5 | 100 |
-| Tag, User Avatar, Separator, Switch, Upload | CSS-only / widgets | one or two elements | 1–3 · 1–4 | 100 |
+| Service Studio Block                        | TS pattern / CSS component                  | Contract an agent must emit                                                                                                                    | Depth · distinct parts | E07 |
+| ------------------------------------------- | ------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------- | --: |
+| Lightbox Image                              | CSS-only (`_lightbox-image.scss`)           | gallery grid + figure + overlay chrome (PhotoSwipe)                                                                                            | 8 · 22                 |   0 |
+| Master Detail                               | CSS-only                                    | `.master-detail` > columns > list > items > content                                                                                            | 7 · 10                 |   4 |
+| Sidebar                                     | `Sidebar`                                   | trigger + `aside.osui-sidebar` > `__header` / `__content` / footer                                                                             | 6 · 12                 |  16 |
+| Bottom Bar Item                             | CSS-only                                    | nav > item > icon + label wrappers                                                                                                             | 7 · 6                  |  20 |
+| Dropdown (Search/Tags)                      | `Dropdown` (VirtualSelect)                  | `.osui-dropdown` wrapper > provider root; balloon detached to `<body>`                                                                         | 6 · 10                 |  24 |
+| List / List Item                            | widgets                                     | `[data-list]` > `[data-block]` items > `.list-item` > content slots                                                                            | 6 · 10                 |  24 |
+| Input With Icon                             | CSS-only                                    | wrapper > input group > icon + control                                                                                                         | 5 · 14                 |  28 |
+| Accordion + Item                            | `Accordion`, `AccordionItem`                | `.osui-accordion` > `[data-block]` > `.osui-accordion-item` > `__title` (+ two `__icon`, one `.placeholder-empty`) + `__content` > placeholder | 5 · 6                  |  60 |
+| Tabs                                        | `Tabs`, `TabsHeaderItem`, `TabsContentItem` | `section.osui-tabs` > `header.osui-tabs__header` (+ `__indicator`) + `section.osui-tabs__content`; items are separate patterns                 | 3 · 5                  | 100 |
+| Tag, User Avatar, Separator, Switch, Upload | CSS-only / widgets                          | one or two elements                                                                                                                            | 1–3 · 1–4              | 100 |
 
 Mean depth 3.7, mean 5.6 distinct parts. For comparison, a shadcn Accordion is
 `Accordion > AccordionItem > (AccordionTrigger, AccordionContent)`; the trigger renders its own
@@ -268,12 +268,12 @@ stories.
 
 ### 4.8 Composition model & pre-training density (E10)
 
-| Pattern group | Inheritance chain | Contract files | E10 |
-| --- | --- | ---: | ---: |
-| Dropdown, DatePicker, RangeSlider | concrete → Abstract\<Provider\> → Abstract\<Pattern\> → AbstractProviderPattern → AbstractPattern (depth 4) | 17–22 | 0 |
-| MonthPicker, TimePicker, Carousel | depth 3 | 11–15 | 0–16 |
-| Parent/child patterns (Accordion, Tabs, Wizard, SectionIndex + items) | depth 2 via AbstractParent/AbstractChild | 4–6 | 53–63 |
-| Simple patterns (Tooltip, Rating, Sidebar, …) | depth 1 | 4–6 | 65–75 |
+| Pattern group                                                         | Inheritance chain                                                                                           | Contract files |   E10 |
+| --------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- | -------------: | ----: |
+| Dropdown, DatePicker, RangeSlider                                     | concrete → Abstract\<Provider\> → Abstract\<Pattern\> → AbstractProviderPattern → AbstractPattern (depth 4) |          17–22 |     0 |
+| MonthPicker, TimePicker, Carousel                                     | depth 3                                                                                                     |          11–15 |  0–16 |
+| Parent/child patterns (Accordion, Tabs, Wizard, SectionIndex + items) | depth 2 via AbstractParent/AbstractChild                                                                    |            4–6 | 53–63 |
+| Simple patterns (Tooltip, Rating, Sidebar, …)                         | depth 1                                                                                                     |            4–6 | 65–75 |
 
 All 33 APIs are global AMD namespaces (`OutSystems.OSUI.Patterns.*`), all 33 `RegisterCallback`
 functions type the event name as `string`, and (before loop-2) all 33 `Create` functions accepted
@@ -294,24 +294,24 @@ the "billions of tokens of React/HTML/Tailwind" the research credits for high pa
 
 ### 5.1 Applied on the branch (behavior-preserving; `npm run build` green for O11 and ODC, lint 0/0, `npm test` 57/57)
 
-| # | Commit | Change | Evidence it is non-breaking |
-| --- | --- | --- | --- |
-| S-1 | `729fe256d` | `scripts/generate-ai-docs.mjs` → `docs-ai/` (manifest + JSON Schema, `llms.txt`, `llms-components.txt`, `llms-tokens.txt`, `llms-utilities.txt`, `llms-patterns.txt`); `npm run docs:ai` | files only; nothing under `src/` |
-| S-2 | `1c54735f0` | `Helper.ParseConfigs` — `Create(id, configs: string \| Record<string, unknown>)` in 33 APIs and 9 factories | string path is byte-for-byte `JSON.parse`; unit-tested; objects were rejected before, accepted now (additive) |
-| S-3 | `1c54735f0` | 4 `@ts-expect-error` replaced by typed casts / a `window.monthSelectPlugin` declaration / the true return type of `SetDeviceBreakpoints` | emitted JS identical (casts and types are erased) |
-| S-4 | `1c54735f0` | 65 implicit-any annotations (`AbstractParent` child maps, config indexing, l10n dictionaries, `GradientColor[]`, listener/window indexing, provider callbacks) | type-only |
-| S-5 | `1c54735f0` | camelCase parameters: `GetAccordionById(accordionId)`, `ToggleNativeBehavior(isNative)`, `SetEditableInput(isEditable)` | JavaScript callers pass positionally |
-| S-6 | `6e5b0649a` | 111 config props documented with a verified `//` line | `removeComments: true` — comments never reach the bundle |
-| S-7 | `091ca001c`…`3988bb953` | the eval suite, its tests, `npm run evals`, `gpt-tokenizer` devDependency | tooling only; `.mjs` is outside `tsconfig include` and `eslint --ext .ts` |
-| S-8 | `69815c54d` | CI gate (`evals:gate`, index drop > 1 fails), docs freshness (`docs:ai:check`), `.github/workflows/ai-friendliness.yaml` (PRs into `dev` + manual run on any branch), `postdocs` publishes `docs-ai/` at the documentation-site root | tooling only |
-| S-9 | loop-4 | generated `PatternTypes.ts`: per pattern `Configs` (typed optional props with descriptions) and `EventName` (event union + `string` escape hatch); `Create(id, configs: string \| Configs)`, `RegisterCallback(id, eventName: EventName, cb)` | types are erased; relative to `dev` the object form is new, so nothing that compiled before stops compiling; `npm run types:generate`, freshness asserted by a test |
-| S-10 | loop-4 | `Orientation` alias in `Global.d.ts` points at `OSFramework.OSUI.GlobalEnum`; last 8 implicit-any sites annotated; `noImplicitAny: true` in `tsconfig.json`; factory `NewFloatingPosition` declares its real return type and is called without `new` | type-only; calling a factory that returns an object with or without `new` yields the same object |
-| S-11 | loop-4 | 24 API JSDoc blocks completed (param names, missing params, descriptions); `ChangeProperty` added to SwipeEvents and TouchEvents with new error codes | docs and an additive function; existing functions untouched |
-| S-16 | tooling, no loop | the loop itself, made scalable (ADR-0013): a suite registry (`evals/suites.mjs`) and self-describing metrics, so an eval or a suite is one module or one entry; a component registry (`evals/components.json`) with a doctor that flags unclassified components and derives their entry from code; not-applicable rows distinct from unmeasured; gate rules per eval (3-point tolerance), no-decrease and measurement coverage; the dashboard page template versioned. Shared code moved from `evals/ai-friendliness/` to `evals/`; `npm test` now runs the enterprise tests. Loops record pattern code only: a run whose `src/`, `stories/` and `docs-ai/` equal the newest recorded run adds no history entry | tooling and docs only; both indices unchanged (88.2 / 67.9) and every measured dashboard cell identical to loop-10; not a loop |
-| S-15 | loop-10 | host-styled scope for E07 (`lib/host-styled.json`, 18 CSS-only components whose markup is emitted by the app template blocks, the Login common screen, the runtime or other patterns: not applicable rather than "no story"); `llms-patterns.txt` marks them host-styled with "do not generate this markup" and their knobs; stories for bulk-actions (Table widget DOM with the Checkbox selection column) and provider-login-button | eval scope and docs; stories are new files |
-| S-14 | loop-8 / loop-9 | knobs with defaults equal to the previous values on bulk-actions, ButtonLoading and scrollable-area (`--osui-bulk-actions-*`, `--osui-btn-loading-*`, `--osui-scrollable-area-*`); story aliases for `btn` and `radio-button` to their widget stories; a `llms.txt` line telling agents to load a card, never the compiled typings. The 20 generated static-markup stories of loop-8 were rolled back in loop-9: those components are CSS classes on platform-owned markup and need a considered representation first (plan Task 19) | the knobs resolve to the same values; aliases and docs only |
-| S-13 | loop-7 | density knobs with defaults equal to the previous fixed values (`--osui-list-item-padding-*`, `--osui-accordion-item-title-padding-*`, `--osui-card-detail-gap`, `--osui-card-sectioned-padding`, `--osui-dropdown-item-padding-*`, `--osui-form-field-spacing`); `role="search"` on the Search pattern | compiled CSS resolves to the same values (a knob default is the old literal), so rendering is identical until a theme sets a knob; the role is an attribute with no behaviour |
-| S-12 | static-analysis follow-up | `Menu.ts` menu-icon key handler reads `e.key === ' ' \|\| e.key === 'Enter'` instead of the deprecated `keyCode` 32/13 (the only `keyCode` use in the runtime); tooling reads gulp specs as text instead of `require`, loads the test namespace through a temp ES module, and guards the git-metadata path | same keys in every supported browser; the rest is tooling |
+| #    | Commit                    | Change                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          | Evidence it is non-breaking                                                                                                                                                   |
+| ---- | ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| S-1  | `729fe256d`               | `scripts/generate-ai-docs.mjs` → `docs-ai/` (manifest + JSON Schema, `llms.txt`, `llms-components.txt`, `llms-tokens.txt`, `llms-utilities.txt`, `llms-patterns.txt`); `npm run docs:ai`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | files only; nothing under `src/`                                                                                                                                              |
+| S-2  | `1c54735f0`               | `Helper.ParseConfigs` — `Create(id, configs: string \| Record<string, unknown>)` in 33 APIs and 9 factories                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     | string path is byte-for-byte `JSON.parse`; unit-tested; objects were rejected before, accepted now (additive)                                                                 |
+| S-3  | `1c54735f0`               | 4 `@ts-expect-error` replaced by typed casts / a `window.monthSelectPlugin` declaration / the true return type of `SetDeviceBreakpoints`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | emitted JS identical (casts and types are erased)                                                                                                                             |
+| S-4  | `1c54735f0`               | 65 implicit-any annotations (`AbstractParent` child maps, config indexing, l10n dictionaries, `GradientColor[]`, listener/window indexing, provider callbacks)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | type-only                                                                                                                                                                     |
+| S-5  | `1c54735f0`               | camelCase parameters: `GetAccordionById(accordionId)`, `ToggleNativeBehavior(isNative)`, `SetEditableInput(isEditable)`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | JavaScript callers pass positionally                                                                                                                                          |
+| S-6  | `6e5b0649a`               | 111 config props documented with a verified `//` line                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           | `removeComments: true` — comments never reach the bundle                                                                                                                      |
+| S-7  | `091ca001c`…`3988bb953`   | the eval suite, its tests, `npm run evals`, `gpt-tokenizer` devDependency                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | tooling only; `.mjs` is outside `tsconfig include` and `eslint --ext .ts`                                                                                                     |
+| S-8  | `69815c54d`               | CI gate (`evals:gate`, index drop > 1 fails), docs freshness (`docs:ai:check`), `.github/workflows/ai-friendliness.yaml` (PRs into `dev` + manual run on any branch), `postdocs` publishes `docs-ai/` at the documentation-site root                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | tooling only                                                                                                                                                                  |
+| S-9  | loop-4                    | generated `PatternTypes.ts`: per pattern `Configs` (typed optional props with descriptions) and `EventName` (event union + `string` escape hatch); `Create(id, configs: string \| Configs)`, `RegisterCallback(id, eventName: EventName, cb)`                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | types are erased; relative to `dev` the object form is new, so nothing that compiled before stops compiling; `npm run types:generate`, freshness asserted by a test           |
+| S-10 | loop-4                    | `Orientation` alias in `Global.d.ts` points at `OSFramework.OSUI.GlobalEnum`; last 8 implicit-any sites annotated; `noImplicitAny: true` in `tsconfig.json`; factory `NewFloatingPosition` declares its real return type and is called without `new`                                                                                                                                                                                                                                                                                                                                                                                                                                                            | type-only; calling a factory that returns an object with or without `new` yields the same object                                                                              |
+| S-11 | loop-4                    | 24 API JSDoc blocks completed (param names, missing params, descriptions); `ChangeProperty` added to SwipeEvents and TouchEvents with new error codes                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           | docs and an additive function; existing functions untouched                                                                                                                   |
+| S-16 | tooling, no loop          | the loop itself, made scalable (ADR-0013): a suite registry (`evals/suites.mjs`) and self-describing metrics, so an eval or a suite is one module or one entry; a component registry (`evals/components.json`) with a doctor that flags unclassified components and derives their entry from code; not-applicable rows distinct from unmeasured; gate rules per eval (3-point tolerance), no-decrease and measurement coverage; the dashboard page template versioned. Shared code moved from `evals/ai-friendliness/` to `evals/`; `npm test` now runs the enterprise tests. Loops record pattern code only: a run whose `src/`, `stories/` and `docs-ai/` equal the newest recorded run adds no history entry | tooling and docs only; both indices unchanged (88.2 / 67.9) and every measured dashboard cell identical to loop-10; not a loop                                                |
+| S-15 | loop-10                   | host-styled scope for E07 (`lib/host-styled.json`, 18 CSS-only components whose markup is emitted by the app template blocks, the Login common screen, the runtime or other patterns: not applicable rather than "no story"); `llms-patterns.txt` marks them host-styled with "do not generate this markup" and their knobs; stories for bulk-actions (Table widget DOM with the Checkbox selection column) and provider-login-button                                                                                                                                                                                                                                                                           | eval scope and docs; stories are new files                                                                                                                                    |
+| S-14 | loop-8 / loop-9           | knobs with defaults equal to the previous values on bulk-actions, ButtonLoading and scrollable-area (`--osui-bulk-actions-*`, `--osui-btn-loading-*`, `--osui-scrollable-area-*`); story aliases for `btn` and `radio-button` to their widget stories; a `llms.txt` line telling agents to load a card, never the compiled typings. The 20 generated static-markup stories of loop-8 were rolled back in loop-9: those components are CSS classes on platform-owned markup and need a considered representation first (plan Task 19)                                                                                                                                                                            | the knobs resolve to the same values; aliases and docs only                                                                                                                   |
+| S-13 | loop-7                    | density knobs with defaults equal to the previous fixed values (`--osui-list-item-padding-*`, `--osui-accordion-item-title-padding-*`, `--osui-card-detail-gap`, `--osui-card-sectioned-padding`, `--osui-dropdown-item-padding-*`, `--osui-form-field-spacing`); `role="search"` on the Search pattern                                                                                                                                                                                                                                                                                                                                                                                                         | compiled CSS resolves to the same values (a knob default is the old literal), so rendering is identical until a theme sets a knob; the role is an attribute with no behaviour |
+| S-12 | static-analysis follow-up | `Menu.ts` menu-icon key handler reads `e.key === ' ' \|\| e.key === 'Enter'` instead of the deprecated `keyCode` 32/13 (the only `keyCode` use in the runtime); tooling reads gulp specs as text instead of `require`, loads the test namespace through a temp ES module, and guards the git-metadata path                                                                                                                                                                                                                                                                                                                                                                                                      | same keys in every supported browser; the rest is tooling                                                                                                                     |
 
 **S-2 — BEFORE / AFTER**
 
@@ -363,18 +363,18 @@ public StartingTab: number;
 
 ### 5.2 Documented, not applied (would change runtime behavior or a public contract)
 
-| # | Change | Behavioral impact | Evals affected |
-| --- | --- | --- | --- |
-| B-1 | ~~Per-pattern typed config interfaces~~ — **applied as S-9** (`string \| Configs`, additive relative to `dev`) | — | — |
-| B-2 | ~~Typed event names~~ — **applied as S-9** (`EventName` union with a `string` escape hatch, so unknown names keep working) | — | — |
-| B-3 | `SwipeEvents`/`TouchEvents`: wrap `Dispose`/`RegisterCallback`/`GestureMove`/`GestureEnd` in `CreateApiResponse` (`ChangeProperty` was added in S-11) | exceptions currently propagate to the caller; the envelope would catch and serialize them; return type `void` → `string` | E06 → 100 |
-| B-4 | ES-module facade / npm package with named exports (`import { Accordion } from '@outsystems/ui'`) | distribution model change: bundle no longer a single AMD file; requires a compatibility shim for `OutSystems.OSUI.*` | E10 +15/pattern |
-| B-5 | Declarative auto-instantiation from data attributes (`<details data-osui="accordion-item">`) replacing the `name`/`id`/`[data-block]` + part-class contract | DOM contract change for every block; runtime would synthesize the current structure | E07, E10 |
-| B-6 | Flatten deep selectors into state classes on the element they style | cascade order changes; every override written against the current specificity breaks | E09 |
-| B-7 | Route the 1,829 direct token reads through `--osui-*` knobs (`form`, `checkbox`, `bulk-actions`, `scrollable-area`, Dropdown first) | additive when the default equals the current value, **except** for portaled elements (balloons, bottom sheets) where an inherited knob is undefined — needs per-component review | E08 routed 18 % → ≥ 60 % |
-| B-8 | Remove the 10 `!important`s | cascade change | E08 |
-| B-9 | Turn stringly-typed enums into validated enum types (`AccordionItem.Icon: Enum.IconType` with `validateInRange`) | invalid values that today reach the DOM as a class name would fall back to the default | E02 → ~99 |
-| B-10 | ~~Fix the `Orientation` alias~~ — **applied as S-10**; the feared enum-vs-literal cascade did not materialize (`tsc --noEmit` clean) | — | — |
+| #    | Change                                                                                                                                                      | Behavioral impact                                                                                                                                                                | Evals affected           |
+| ---- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------ |
+| B-1  | ~~Per-pattern typed config interfaces~~ — **applied as S-9** (`string \| Configs`, additive relative to `dev`)                                              | —                                                                                                                                                                                | —                        |
+| B-2  | ~~Typed event names~~ — **applied as S-9** (`EventName` union with a `string` escape hatch, so unknown names keep working)                                  | —                                                                                                                                                                                | —                        |
+| B-3  | `SwipeEvents`/`TouchEvents`: wrap `Dispose`/`RegisterCallback`/`GestureMove`/`GestureEnd` in `CreateApiResponse` (`ChangeProperty` was added in S-11)       | exceptions currently propagate to the caller; the envelope would catch and serialize them; return type `void` → `string`                                                         | E06 → 100                |
+| B-4  | ES-module facade / npm package with named exports (`import { Accordion } from '@outsystems/ui'`)                                                            | distribution model change: bundle no longer a single AMD file; requires a compatibility shim for `OutSystems.OSUI.*`                                                             | E10 +15/pattern          |
+| B-5  | Declarative auto-instantiation from data attributes (`<details data-osui="accordion-item">`) replacing the `name`/`id`/`[data-block]` + part-class contract | DOM contract change for every block; runtime would synthesize the current structure                                                                                              | E07, E10                 |
+| B-6  | Flatten deep selectors into state classes on the element they style                                                                                         | cascade order changes; every override written against the current specificity breaks                                                                                             | E09                      |
+| B-7  | Route the 1,829 direct token reads through `--osui-*` knobs (`form`, `checkbox`, `bulk-actions`, `scrollable-area`, Dropdown first)                         | additive when the default equals the current value, **except** for portaled elements (balloons, bottom sheets) where an inherited knob is undefined — needs per-component review | E08 routed 18 % → ≥ 60 % |
+| B-8  | Remove the 10 `!important`s                                                                                                                                 | cascade change                                                                                                                                                                   | E08                      |
+| B-9  | Turn stringly-typed enums into validated enum types (`AccordionItem.Icon: Enum.IconType` with `validateInRange`)                                            | invalid values that today reach the DOM as a class name would fall back to the default                                                                                           | E02 → ~99                |
+| B-10 | ~~Fix the `Orientation` alias~~ — **applied as S-10**; the feared enum-vs-literal cascade did not materialize (`tsc --noEmit` clean)                        | —                                                                                                                                                                                | —                        |
 
 **B-3 — BEFORE / AFTER (illustrative)**
 
@@ -414,7 +414,14 @@ export function Dispose(swipeEventsId: string): string {
 	</div>
 </div>
 <script>
-	OutSystems.OSUI.Patterns.AccordionItemAPI.Create('item-1', { Icon: 'Caret', IconPosition: 'right', IsDisabled: false, StartsExpanded: false, ToggleWithIcon: false, ExtendedClass: '' });
+	OutSystems.OSUI.Patterns.AccordionItemAPI.Create('item-1', {
+		Icon: 'Caret',
+		IconPosition: 'right',
+		IsDisabled: false,
+		StartsExpanded: false,
+		ToggleWithIcon: false,
+		ExtendedClass: '',
+	});
 	OutSystems.OSUI.Patterns.AccordionItemAPI.Initialize('item-1');
 </script>
 
@@ -439,12 +446,16 @@ export function Dispose(swipeEventsId: string): string {
 
 ```scss
 // BEFORE (_form.scss) — reads the token directly; no per-instance override
-.form .form-group { padding-block: variables.$token-scale-400; }
+.form .form-group {
+	padding-block: variables.$token-scale-400;
+}
 
 // AFTER — knob with the identical default, then the read
 .form {
 	--osui-form-group-padding-block: #{variables.$token-scale-400};
-	.form-group { padding-block: var(--osui-form-group-padding-block); }
+	.form-group {
+		padding-block: var(--osui-form-group-padding-block);
+	}
 }
 ```
 
@@ -454,18 +465,18 @@ export function Dispose(swipeEventsId: string): string {
 
 ### 6.1 Action plan for the current framework
 
-| Priority | Action | Eval target | Effort |
-| --- | --- | --- | --- |
-| P0 ✅ | CI gate and docs freshness: `.github/workflows/ai-friendliness.yaml` runs `evals:gate` (fail on index drop > 1) and `docs:ai:check` on PRs into `dev` and on demand for any branch (S-8) | keeps 88.1 | done |
-| P0 ◐ | Publish `docs-ai/`: `postdocs` copies it into the TypeDoc output, so the documentation deployment serves `/llms.txt`, `/llms-components.txt`, `/llms-tokens.txt`, `/llms-utilities.txt`, `/llms-patterns.txt`, `/osui.components.json` (S-8). **Still external:** the OutSystems UI website is an OutSystems application; serving the same files at its root needs a static-resource change in that app, and the MCP server (`list_components`, `get_component`, `search_css_api`) is not started | research criteria 5, 6 | S–M |
-| P0 ✅ | Typed `Configs` and `EventName` generated from the source (S-9) | E10 52.4 → 60.8, E02 | done |
-| P0 ✅ | `noImplicitAny` finished and enabled; `Orientation` alias fixed (S-10) | E04 → 100 | done |
-| P1 ◐ | 24 API JSDoc gaps completed; `ChangeProperty` added to `SwipeEvents`/`TouchEvents` (S-11). **Open:** the envelope on their existing functions (B-3) changes error propagation and stays documented | E05 → 100 ✅, E06 → 98.7 | S |
-| P1 | Knob routing program, one component per PR, starting with `form`, `checkbox`, `bulk-actions`, `scrollable-area`, Dropdown (B-7); add the routed ratio to the CSS-API Storybook page | E08 → ≥ 85 | M–L |
-| P1 | Cascade flattening for Rating, Accordion, AnimatedLabel, Form, Columns, menu layouts (B-6); remove the 10 `!important`s (B-8) | E09 → ≥ 90 | M |
-| P1 | Validated enum types for the 7 stringly-typed props (B-9), released as a minor with the fallback documented | E02 → ~99 | S |
-| P2 | Declarative auto-instantiation (`data-osui`) as an opt-in layer over the current `Create/Initialize` (B-5) | E07, E10 | L |
-| P2 | ES-module facade package with a compatibility shim (B-4) | E10 → ≥ 85 | L |
+| Priority | Action                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | Eval target              | Effort |
+| -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------ | ------ |
+| P0 ✅    | CI gate and docs freshness: `.github/workflows/ai-friendliness.yaml` runs `evals:gate` (fail on index drop > 1) and `docs:ai:check` on PRs into `dev` and on demand for any branch (S-8)                                                                                                                                                                                                                                                                                                          | keeps 88.1               | done   |
+| P0 ◐     | Publish `docs-ai/`: `postdocs` copies it into the TypeDoc output, so the documentation deployment serves `/llms.txt`, `/llms-components.txt`, `/llms-tokens.txt`, `/llms-utilities.txt`, `/llms-patterns.txt`, `/osui.components.json` (S-8). **Still external:** the OutSystems UI website is an OutSystems application; serving the same files at its root needs a static-resource change in that app, and the MCP server (`list_components`, `get_component`, `search_css_api`) is not started | research criteria 5, 6   | S–M    |
+| P0 ✅    | Typed `Configs` and `EventName` generated from the source (S-9)                                                                                                                                                                                                                                                                                                                                                                                                                                   | E10 52.4 → 60.8, E02     | done   |
+| P0 ✅    | `noImplicitAny` finished and enabled; `Orientation` alias fixed (S-10)                                                                                                                                                                                                                                                                                                                                                                                                                            | E04 → 100                | done   |
+| P1 ◐     | 24 API JSDoc gaps completed; `ChangeProperty` added to `SwipeEvents`/`TouchEvents` (S-11). **Open:** the envelope on their existing functions (B-3) changes error propagation and stays documented                                                                                                                                                                                                                                                                                                | E05 → 100 ✅, E06 → 98.7 | S      |
+| P1       | Knob routing program, one component per PR, starting with `form`, `checkbox`, `bulk-actions`, `scrollable-area`, Dropdown (B-7); add the routed ratio to the CSS-API Storybook page                                                                                                                                                                                                                                                                                                               | E08 → ≥ 85               | M–L    |
+| P1       | Cascade flattening for Rating, Accordion, AnimatedLabel, Form, Columns, menu layouts (B-6); remove the 10 `!important`s (B-8)                                                                                                                                                                                                                                                                                                                                                                     | E09 → ≥ 90               | M      |
+| P1       | Validated enum types for the 7 stringly-typed props (B-9), released as a minor with the fallback documented                                                                                                                                                                                                                                                                                                                                                                                       | E02 → ~99                | S      |
+| P2       | Declarative auto-instantiation (`data-osui`) as an opt-in layer over the current `Create/Initialize` (B-5)                                                                                                                                                                                                                                                                                                                                                                                        | E07, E10                 | L      |
+| P2       | ES-module facade package with a compatibility shim (B-4)                                                                                                                                                                                                                                                                                                                                                                                                                                          | E10 → ≥ 85               | L      |
 
 ### 6.2 Next-generation architecture specification
 
@@ -502,17 +513,17 @@ first-class:
 
 ```jsonc
 {
-  "name": "AccordionItem",
-  "props": {
-    "icon":         { "type": "enum", "values": ["caret", "plus-minus", "custom"], "default": "caret" },
-    "iconPosition": { "type": "enum", "values": ["start", "end"], "default": "end" },
-    "disabled":     { "type": "boolean", "default": false },
-    "open":         { "type": "boolean", "default": false, "mutable": true }
-  },
-  "slots":  { "summary": { "required": true }, "content": { "required": true }, "icon": {} },
-  "events": { "toggle": { "detail": { "open": "boolean" } } },
-  "cssApi": ["--osui-accordion-item-padding", "--osui-accordion-item-border-color"],
-  "a11y":   { "role": "button", "pattern": "WAI-ARIA disclosure" }
+	"name": "AccordionItem",
+	"props": {
+		"icon": { "type": "enum", "values": ["caret", "plus-minus", "custom"], "default": "caret" },
+		"iconPosition": { "type": "enum", "values": ["start", "end"], "default": "end" },
+		"disabled": { "type": "boolean", "default": false },
+		"open": { "type": "boolean", "default": false, "mutable": true },
+	},
+	"slots": { "summary": { "required": true }, "content": { "required": true }, "icon": {} },
+	"events": { "toggle": { "detail": { "open": "boolean" } } },
+	"cssApi": ["--osui-accordion-item-padding", "--osui-accordion-item-border-color"],
+	"a11y": { "role": "button", "pattern": "WAI-ARIA disclosure" },
 }
 ```
 
@@ -530,14 +541,14 @@ import { Accordion, AccordionItem } from '@outsystems/ui';
 
 **Token strategy (context budget).**
 
-| Tier | Content | Budget |
-| --- | --- | --- |
-| `llms.txt` | index, gotchas, read-next | ≤ 1,500 tokens (today 1,196) |
-| component card | props, events, slots, knobs, skeleton | ≤ 400 tokens (today mean 435, max 645) |
-| component source | one flat file | ≤ 900 tokens (shadcn median) |
-| theming surface | roles + knobs, one theme | ≤ 4,500 tokens (today 4,853 with the alias notes; drops below once the aliases retire) |
-| utilities | 554 classes by family with the token family each reads | ≤ 3,500 tokens (today 2,610) |
-| recipes | 10–15 composition recipes | ≤ 300 tokens each |
+| Tier             | Content                                                | Budget                                                                                 |
+| ---------------- | ------------------------------------------------------ | -------------------------------------------------------------------------------------- |
+| `llms.txt`       | index, gotchas, read-next                              | ≤ 1,500 tokens (today 1,196)                                                           |
+| component card   | props, events, slots, knobs, skeleton                  | ≤ 400 tokens (today mean 435, max 645)                                                 |
+| component source | one flat file                                          | ≤ 900 tokens (shadcn median)                                                           |
+| theming surface  | roles + knobs, one theme                               | ≤ 4,500 tokens (today 4,853 with the alias notes; drops below once the aliases retire) |
+| utilities        | 554 classes by family with the token family each reads | ≤ 3,500 tokens (today 2,610)                                                           |
+| recipes          | 10–15 composition recipes                              | ≤ 300 tokens each                                                                      |
 
 **Single theme by design.** The next-generation framework ships exactly one theme: the design
 tokens, their generated dark mode, and per-component knobs. There is no classic vocabulary to
@@ -551,6 +562,7 @@ Progressive disclosure: the agent reads the index, then only the cards it needs,
 when it must customize. MCP `get_component` returns the card; `get_source` the file.
 
 **Agent developer experience.**
+
 - Instantiate with a typed object or JSX; no `id`/`name`/`[data-block]` boilerplate — the runtime
   derives identity (auto-instantiation is the migration bridge, B-5).
 - Events as `CustomEvent`s with typed `detail`; results as typed objects, not JSON strings.

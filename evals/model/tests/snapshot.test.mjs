@@ -154,7 +154,8 @@ test('staticEntitiesReferenced and isFreeText read parameter types', () => {
 	assert.deepEqual([...staticEntitiesReferenced([sample()])], ['Color']);
 	const params = sample().blocks['Interaction/Carousel'].inputParameters;
 	assert.equal(isFreeText(params[0]), false, 'a structure is precise');
-	assert.equal(isFreeText(params[2]), true, 'free Text is not');
+	assert.equal(isFreeText(params[2]), false, 'ExtendedClass is Text on purpose');
+	assert.equal(isFreeText({ name: 'Label', typeKind: 'basic', type: 'Text' }), true, 'other free Text is not precise');
 	assert.equal(isFreeText({ typeKind: 'other', type: 'Object' }), true);
 	assert.equal(isFreeText({ typeKind: 'basic', type: 'Integer' }), false);
 });
@@ -185,4 +186,10 @@ test('composableBlocks keeps public blocks that are not deprecated and not the L
 	assert.equal(LICENSES_KEY, 'Licenses/Licenses');
 	assert.equal(isComposable(row('Adaptive', 'Columns2')), true);
 	assert.equal(isComposable(row('Content', 'DEPRECATED_Card')), false);
+});
+
+test('isFreeText leaves ExtendedClass alone: it is Text on purpose, for utility classes', async () => {
+	const { isFreeText } = await import('../lib/snapshot.mjs');
+	assert.equal(isFreeText({ name: 'ExtendedClass', typeKind: 'basic', type: 'Text' }), false);
+	assert.equal(isFreeText({ name: 'Label', typeKind: 'basic', type: 'Text' }), true);
 });

@@ -33,6 +33,7 @@
 					"mandatory": false,
 					"default": "Entities.GutterSize.Base",
 					"description": "Defines the space between columns.",
+					"defaultSource": "oml",
 					"values": [
 						"Base",
 						"ExtraLarge",
@@ -52,6 +53,7 @@
 					"mandatory": false,
 					"default": "Entities.BreakColumns.None",
 					"description": "Responsive behavior for tablet.",
+					"defaultSource": "oml",
 					"values": [
 						"All",
 						"First",
@@ -68,6 +70,7 @@
 					"mandatory": false,
 					"default": "Entities.BreakColumns.None",
 					"description": "Responsive behavior for phone.",
+					"defaultSource": "oml",
 					"values": [
 						"All",
 						"First",
@@ -82,8 +85,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -125,6 +129,7 @@
 					"mandatory": false,
 					"default": "Entities.GutterSize.Base",
 					"description": "Defines the space between columns.",
+					"defaultSource": "oml",
 					"values": [
 						"Base",
 						"ExtraLarge",
@@ -144,6 +149,7 @@
 					"mandatory": false,
 					"default": "Entities.BreakColumns.None",
 					"description": "Responsive behavior for tablet.",
+					"defaultSource": "oml",
 					"values": [
 						"All",
 						"First",
@@ -160,6 +166,7 @@
 					"mandatory": false,
 					"default": "Entities.BreakColumns.None",
 					"description": "Responsive behavior for phone.",
+					"defaultSource": "oml",
 					"values": [
 						"All",
 						"First",
@@ -174,8 +181,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -221,6 +229,7 @@
 					"mandatory": false,
 					"default": "Entities.GutterSize.Base",
 					"description": "Defines the space between columns.",
+					"defaultSource": "oml",
 					"values": [
 						"Base",
 						"ExtraLarge",
@@ -240,6 +249,7 @@
 					"mandatory": false,
 					"default": "Entities.BreakColumns.None",
 					"description": "Responsive behavior for tablet.",
+					"defaultSource": "oml",
 					"values": [
 						"All",
 						"First",
@@ -256,6 +266,7 @@
 					"mandatory": false,
 					"default": "Entities.BreakColumns.None",
 					"description": "Responsive behavior for phone.",
+					"defaultSource": "oml",
 					"values": [
 						"All",
 						"First",
@@ -270,8 +281,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -321,6 +333,7 @@
 					"mandatory": false,
 					"default": "Entities.GutterSize.Base",
 					"description": "Defines the space between columns.",
+					"defaultSource": "oml",
 					"values": [
 						"Base",
 						"ExtraLarge",
@@ -340,6 +353,7 @@
 					"mandatory": false,
 					"default": "Entities.BreakColumns.None",
 					"description": "Responsive behavior for tablet.",
+					"defaultSource": "oml",
 					"values": [
 						"All",
 						"First",
@@ -356,6 +370,7 @@
 					"mandatory": false,
 					"default": "Entities.BreakColumns.None",
 					"description": "Responsive behavior for phone.",
+					"defaultSource": "oml",
 					"values": [
 						"All",
 						"First",
@@ -370,8 +385,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -425,6 +441,7 @@
 					"mandatory": false,
 					"default": "Entities.GutterSize.Base",
 					"description": "Defines the space between columns.",
+					"defaultSource": "oml",
 					"values": [
 						"Base",
 						"ExtraLarge",
@@ -444,6 +461,7 @@
 					"mandatory": false,
 					"default": "Entities.BreakColumns.None",
 					"description": "Responsive behavior for tablet.",
+					"defaultSource": "oml",
 					"values": [
 						"All",
 						"First",
@@ -460,6 +478,7 @@
 					"mandatory": false,
 					"default": "Entities.BreakColumns.None",
 					"description": "Responsive behavior for phone.",
+					"defaultSource": "oml",
 					"values": [
 						"All",
 						"First",
@@ -474,8 +493,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -533,6 +553,7 @@
 					"mandatory": false,
 					"default": "Entities.GutterSize.Base",
 					"description": "Defines the space between columns.",
+					"defaultSource": "oml",
 					"values": [
 						"Base",
 						"ExtraLarge",
@@ -552,6 +573,7 @@
 					"mandatory": false,
 					"default": "Entities.BreakColumns.None",
 					"description": "Responsive behavior for tablet.",
+					"defaultSource": "oml",
 					"values": [
 						"All",
 						"First",
@@ -568,6 +590,7 @@
 					"mandatory": false,
 					"default": "Entities.BreakColumns.None",
 					"description": "Responsive behavior for phone.",
+					"defaultSource": "oml",
 					"values": [
 						"All",
 						"First",
@@ -582,8 +605,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -625,6 +649,7 @@
 					"mandatory": false,
 					"default": "Entities.GutterSize.Base",
 					"description": "Defines the space between columns.",
+					"defaultSource": "oml",
 					"values": [
 						"Base",
 						"ExtraLarge",
@@ -644,6 +669,7 @@
 					"mandatory": false,
 					"default": "Entities.BreakColumns.None",
 					"description": "Responsive behavior for tablet.",
+					"defaultSource": "oml",
 					"values": [
 						"All",
 						"First",
@@ -660,6 +686,7 @@
 					"mandatory": false,
 					"default": "Entities.BreakColumns.None",
 					"description": "Responsive behavior for phone.",
+					"defaultSource": "oml",
 					"values": [
 						"All",
 						"First",
@@ -674,8 +701,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -717,6 +745,7 @@
 					"mandatory": false,
 					"default": "Entities.GutterSize.Base",
 					"description": "Defines the space between columns.",
+					"defaultSource": "oml",
 					"values": [
 						"Base",
 						"ExtraLarge",
@@ -736,6 +765,7 @@
 					"mandatory": false,
 					"default": "Entities.BreakColumns.None",
 					"description": "Responsive behavior for tablet.",
+					"defaultSource": "oml",
 					"values": [
 						"All",
 						"First",
@@ -752,6 +782,7 @@
 					"mandatory": false,
 					"default": "Entities.BreakColumns.None",
 					"description": "Responsive behavior for phone.",
+					"defaultSource": "oml",
 					"values": [
 						"All",
 						"First",
@@ -766,8 +797,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -809,6 +841,7 @@
 					"mandatory": false,
 					"default": "Entities.GutterSize.Base",
 					"description": "Defines the space between columns.",
+					"defaultSource": "oml",
 					"values": [
 						"Base",
 						"ExtraLarge",
@@ -828,6 +861,7 @@
 					"mandatory": false,
 					"default": "Entities.BreakColumns.None",
 					"description": "Responsive behavior for tablet.",
+					"defaultSource": "oml",
 					"values": [
 						"All",
 						"First",
@@ -844,6 +878,7 @@
 					"mandatory": false,
 					"default": "Entities.BreakColumns.None",
 					"description": "Responsive behavior for phone.",
+					"defaultSource": "oml",
 					"values": [
 						"All",
 						"First",
@@ -858,8 +893,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -935,7 +971,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "4",
-					"description": "Set the number of items that are shown simultaneously per row in desktop. The number must be greater than 0. By default, 4. "
+					"description": "Set the number of items that are shown simultaneously per row in desktop. The number must be greater than 0. By default, 4. ",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "RowItemsTablet",
@@ -944,7 +981,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "3",
-					"description": "Set the number of items that are shown simultaneously per row in tablet. The number must be greater than 0. By default, 3."
+					"description": "Set the number of items that are shown simultaneously per row in tablet. The number must be greater than 0. By default, 3.",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "RowItemsPhone",
@@ -953,7 +991,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "1",
-					"description": "Set the number of items that are shown simultaneously per row in phone. The number must be greater than 0. By default, 1. "
+					"description": "Set the number of items that are shown simultaneously per row in phone. The number must be greater than 0. By default, 1. ",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "ItemsGap",
@@ -963,6 +1002,7 @@
 					"mandatory": false,
 					"default": "Entities.Space.Base",
 					"description": "Defines the space between the Gallery items.",
+					"defaultSource": "oml",
 					"values": [
 						"Base",
 						"ExtraLarge",
@@ -980,8 +1020,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -1041,7 +1082,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "50",
-					"description": "Set the LeftContent width, using percentage."
+					"description": "Set the LeftContent width, using percentage.",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "OpenedOnPhone",
@@ -1050,7 +1092,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "False",
-					"description": "Variable to hold if the detail is opened on phone."
+					"description": "Variable to hold if the detail is opened on phone.",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "Height",
@@ -1059,7 +1102,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "\"\"",
-					"description": "By default, the height will be the same as window, minus the title and header.\n\nUse the Height parameter to set a custom height. The parameter accepts pixels or %.   \n"
+					"description": "By default, the height will be the same as window, minus the title and header.\n\nUse the Height parameter to set a custom height. The parameter accepts pixels or %.   \n",
+					"defaultSource": "oml"
 				}
 			],
 			"placeholders": [
@@ -1106,8 +1150,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Set to True to allow users to select more than one option. By default, False (the dropdown only allows one option to be selected).\nIf AllowMultipleSelection is False, the dropdown will close automatically after the user picks an option. Otherwise (if AllowMultipleSelection is True), it will remain open."
+					"default": "False",
+					"description": "Set to True to allow users to select more than one option. By default, False (the dropdown only allows one option to be selected).\nIf AllowMultipleSelection is False, the dropdown will close automatically after the user picks an option. Otherwise (if AllowMultipleSelection is True), it will remain open.",
+					"defaultSource": "platform"
 				},
 				{
 					"name": "IsDisabled",
@@ -1116,7 +1161,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "False",
-					"description": " Set as True to disable the Dropdown. By default, False (the dropdown is active)."
+					"description": " Set as True to disable the Dropdown. By default, False (the dropdown is active).",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "ExtendedClass",
@@ -1124,8 +1170,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the pattern. You define your custom style classes in your application using CSS.\nFor more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet "
+					"default": "\"\"",
+					"description": "Add custom style classes to the pattern. You define your custom style classes in your application using CSS.\nFor more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet ",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -1217,7 +1264,8 @@
 					"typeRef": null,
 					"mandatory": true,
 					"default": null,
-					"description": "Identifier of the DropdownServerSide item."
+					"description": "Identifier of the DropdownServerSide item.",
+					"defaultSource": null
 				},
 				{
 					"name": "IsSelected",
@@ -1226,7 +1274,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "False",
-					"description": "Set to True to display this dropdown option as selected. By default, False."
+					"description": "Set to True to display this dropdown option as selected. By default, False.",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "ExtendedClass",
@@ -1234,8 +1283,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the pattern. You define your custom style classes in your application using CSS.\nFor more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet "
+					"default": "\"\"",
+					"description": "Add custom style classes to the pattern. You define your custom style classes in your application using CSS.\nFor more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet ",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -1316,7 +1366,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "False",
-					"description": "Set to True to allow multiple Accordion items to be expanded simultaneously. By default, False."
+					"description": "Set to True to allow multiple Accordion items to be expanded simultaneously. By default, False.",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "ExtendedClass",
@@ -1324,8 +1375,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -1382,7 +1434,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "False",
-					"description": "Initial state of the Block. If set to True, when the page is rendered, the Accordion Item is open. If set to False, the Accordion Item is closed. The default value is False."
+					"description": "Initial state of the Block. If set to True, when the page is rendered, the Accordion Item is open. If set to False, the Accordion Item is closed. The default value is False.",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "Icon",
@@ -1392,6 +1445,7 @@
 					"mandatory": false,
 					"default": "Entities.AccordionIconType.Caret",
 					"description": "Set the icons shown in of the AccordionItem.\n\nYou can pick between the following:\n- Carets - Arrow up icon when the item is expanded and arrow down icon when the item is collapsed. This is the default.\n- Plus/Minus - Minus icon (-) when the item is expanded and plus icon (+) when the item is collapsed.\n- Custom - Advanced option to customize the Accordion icons. To use custom icons, set the Icon property to Custom and drag and drop the Icon widget to the Accordion Item placeholder.",
+					"defaultSource": "oml",
 					"values": [
 						"Caret",
 						"Custom",
@@ -1406,6 +1460,7 @@
 					"mandatory": false,
 					"default": "Entities.AccordionIconPosition.Right",
 					"description": "Set the position of the accordion icon. By default, the icon appears on the right.",
+					"defaultSource": "oml",
 					"values": [
 						"Left",
 						"Right"
@@ -1418,7 +1473,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "False",
-					"description": "Doesn't allow the Accordion Item to be clickable. Default value is False. "
+					"description": "Doesn't allow the Accordion Item to be clickable. Default value is False. ",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "ExtendedClass",
@@ -1426,8 +1482,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -1514,6 +1571,7 @@
 					"mandatory": false,
 					"default": "Entities.Alert.Info",
 					"description": "Type of the alert message",
+					"defaultSource": "oml",
 					"values": [
 						"Error",
 						"Info",
@@ -1527,8 +1585,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -1565,7 +1624,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "True",
-					"description": "Display a larger BlankSlate, taking over full page height."
+					"description": "Display a larger BlankSlate, taking over full page height.",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "ExtendedClass",
@@ -1573,8 +1633,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -1619,7 +1680,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "True",
-					"description": "When true, content has padding"
+					"description": "When true, content has padding",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "ExtendedClass",
@@ -1627,8 +1689,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -1666,6 +1729,7 @@
 					"mandatory": false,
 					"default": "Entities.Color.Transparent",
 					"description": "Background color of the Block",
+					"defaultSource": "oml",
 					"values": [
 						"Blue",
 						"Cyan",
@@ -1701,8 +1765,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Set the minimum height of the Card, in pixels. Content will be vertically aligned by default."
+					"default": "0",
+					"description": "Set the minimum height of the Card, in pixels. Content will be vertically aligned by default.",
+					"defaultSource": "platform"
 				},
 				{
 					"name": "ExtendedClass",
@@ -1710,8 +1775,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -1751,8 +1817,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -1801,7 +1868,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "True",
-					"description": "When true, content has padding"
+					"description": "When true, content has padding",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "IsVertical",
@@ -1810,7 +1878,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "True",
-					"description": "Set the orientation."
+					"description": "Set the orientation.",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "ImagePadding",
@@ -1819,7 +1888,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "True",
-					"description": "When true, image has 24px of padding."
+					"description": "When true, image has 24px of padding.",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "ExtendedClass",
@@ -1827,8 +1897,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -1877,7 +1948,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "False",
-					"description": "Usually, sent messages are displayed on the right and received messages are on the left"
+					"description": "Usually, sent messages are displayed on the right and received messages are on the left",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "Time",
@@ -1885,8 +1957,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Time of the message"
+					"default": "#00:00:00#",
+					"description": "Time of the message",
+					"defaultSource": "platform"
 				},
 				{
 					"name": "MessageStatus",
@@ -1896,6 +1969,7 @@
 					"mandatory": true,
 					"default": null,
 					"description": "The status of the current message, it can be: sent, received, read or hidden ",
+					"defaultSource": null,
 					"values": [
 						"Hidden",
 						"Read",
@@ -1909,8 +1983,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -1931,8 +2006,8 @@
 			"platformOnly": [],
 			"eventMap": {},
 			"recipes": {
-				"openui": "_ChatMessage1 = Block(SourceBlock: Content/ChatMessage, MessageStatus: Entities.MessageStatus.Hidden, DisplayOnRight: False, Time: 0, Image: [_Image1], Content: [_Content1])",
-				"tsx": "<ChatMessage id={\"_ChatMessage1\"} data-source={\"Content/ChatMessage\"} MessageStatus={Entities.MessageStatus.Hidden} DisplayOnRight={False} Time={0} Image={<>…</>} Content={<>…</>} />"
+				"openui": "_ChatMessage1 = Block(SourceBlock: Content/ChatMessage, MessageStatus: Entities.MessageStatus.Hidden, DisplayOnRight: False, Time: #00:00:00#, Image: [_Image1], Content: [_Content1])",
+				"tsx": "<ChatMessage id={\"_ChatMessage1\"} data-source={\"Content/ChatMessage\"} MessageStatus={Entities.MessageStatus.Hidden} DisplayOnRight={False} Time={#00:00:00#} Image={<>…</>} Content={<>…</>} />"
 			}
 		},
 		"Content/FlipContent": {
@@ -1951,7 +2026,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "False",
-					"description": "Sets the initial state of the pattern. If True, the CardFront content is displayed first before flipping. If False, the CardBack content is displayed first before flipping. This is the default.\n\nUse one of the following actions to change the value afterwards:\n- FlipContentBack\n- FlipContentFront\n- FlipContentToggle"
+					"description": "Sets the initial state of the pattern. If True, the CardFront content is displayed first before flipping. If False, the CardBack content is displayed first before flipping. This is the default.\n\nUse one of the following actions to change the value afterwards:\n- FlipContentBack\n- FlipContentFront\n- FlipContentToggle",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "FlipOnClick",
@@ -1960,7 +2036,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "True",
-					"description": "If True, the flip event is triggered when the Flip Content card (front or back) is clicked. This is the default. If False, you can define the action that triggers the flip event."
+					"description": "If True, the flip event is triggered when the Flip Content card (front or back) is clicked. This is the default. If False, you can define the action that triggers the flip event.",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "ExtendedClass",
@@ -1968,8 +2045,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the pattern. You define your custom style classes in your application using CSS. Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the pattern. You define your custom style classes in your application using CSS. Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -2050,6 +2128,7 @@
 					"mandatory": true,
 					"default": null,
 					"description": "Place where the Floating Content will be in the screen",
+					"defaultSource": null,
 					"values": [
 						"Bottom",
 						"BottomLeft",
@@ -2069,7 +2148,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "False",
-					"description": "Defines if the panel has full height"
+					"description": "Defines if the panel has full height",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "UseFullWidth",
@@ -2078,7 +2158,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "False",
-					"description": "Defines if the panel has full width"
+					"description": "Defines if the panel has full width",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "UseMargin",
@@ -2087,7 +2168,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "True",
-					"description": "Defines if the panel has margin"
+					"description": "Defines if the panel has margin",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "ExtendedClass",
@@ -2095,8 +2177,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -2132,8 +2215,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -2182,7 +2266,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "True",
-					"description": "True by default, applies padding to the Content area."
+					"description": "True by default, applies padding to the Content area.",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "ExtendedClass",
@@ -2190,8 +2275,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -2232,7 +2318,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "True",
-					"description": "Defines if the Section Titles will be Sticky in the top of the page content"
+					"description": "Defines if the Section Titles will be Sticky in the top of the page content",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "TopPosition",
@@ -2241,7 +2328,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "0",
-					"description": "Set the top position when the SectionGroup is sticky. Just insert the number, the pixels unit will be added automatically."
+					"description": "Set the top position when the SectionGroup is sticky. Just insert the number, the pixels unit will be added automatically.",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "ExtendedClass",
@@ -2249,8 +2337,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -2288,6 +2377,7 @@
 					"mandatory": false,
 					"default": "Entities.Color.Primary",
 					"description": "Background color of the Block",
+					"defaultSource": "oml",
 					"values": [
 						"Blue",
 						"Cyan",
@@ -2323,8 +2413,9 @@
 					"typeKind": "staticEntity",
 					"typeRef": "Size",
 					"mandatory": false,
-					"default": null,
+					"default": "NullIdentifier()",
 					"description": "Set the shape.",
+					"defaultSource": "platform",
 					"values": [
 						"Medium",
 						"Small"
@@ -2338,6 +2429,7 @@
 					"mandatory": false,
 					"default": "Entities.Shape.Rounded",
 					"description": "Set the shape.",
+					"defaultSource": "oml",
 					"values": [
 						"Rounded",
 						"Sharp",
@@ -2351,7 +2443,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "False",
-					"description": "Use the lightest color version for the background and the darker color version for the text."
+					"description": "Use the lightest color version for the background and the darker color version for the text.",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "ExtendedClass",
@@ -2359,8 +2452,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -2377,8 +2471,8 @@
 			"platformOnly": [],
 			"eventMap": {},
 			"recipes": {
-				"openui": "_Tag1 = Block(SourceBlock: Content/Tag, Color: Entities.Color.Primary, Size: Entities.Size.Medium, Shape: Entities.Shape.Rounded, Tag: [_Tag1])",
-				"tsx": "<Tag id={\"_Tag1\"} data-source={\"Content/Tag\"} Color={Entities.Color.Primary} Size={Entities.Size.Medium} Shape={Entities.Shape.Rounded} Tag={<>…</>} />"
+				"openui": "_Tag1 = Block(SourceBlock: Content/Tag, Color: Entities.Color.Primary, Size: NullIdentifier(), Shape: Entities.Shape.Rounded, Tag: [_Tag1])",
+				"tsx": "<Tag id={\"_Tag1\"} data-source={\"Content/Tag\"} Color={Entities.Color.Primary} Size={NullIdentifier()} Shape={Entities.Shape.Rounded} Tag={<>…</>} />"
 			}
 		},
 		"Content/Tooltip": {
@@ -2398,6 +2492,7 @@
 					"mandatory": false,
 					"default": "Entities.Position.Right",
 					"description": "Set the Tooltip's position. Default is Right. \n\nThe predefined options are the following:\n- Bottom\n- BottomLeft\n- BottomRight\n- Center\n- Left\n- Right\n- Top\n- TopLeft\n- TopRight\n\nExamples:\n- Entities.Position.Right - The Tooltip is displayed to the right of the element.\n- Entities.Position.Bottom - The Tooltip is displayed underneath the element.",
+					"defaultSource": "oml",
 					"values": [
 						"Bottom",
 						"BottomLeft",
@@ -2417,7 +2512,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "False",
-					"description": "Set to True to show the Tooltip when the page is first loaded (without the need for the initial trigger). If False, the tooltip is not visible. This is the default."
+					"description": "Set to True to show the Tooltip when the page is first loaded (without the need for the initial trigger). If False, the tooltip is not visible. This is the default.",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "Trigger",
@@ -2427,6 +2523,7 @@
 					"mandatory": false,
 					"default": "Entities.Trigger.OnHover",
 					"description": "Set how the tooltip is triggered. By default, on mobile devices, the tooltip appears on click, while on other devices, it appears on hover.",
+					"defaultSource": "oml",
 					"values": [
 						"OnClick",
 						"OnHover"
@@ -2438,8 +2535,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the pattern. You define your custom style classes in your application using CSS. Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the pattern. You define your custom style classes in your application using CSS. Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -2520,7 +2618,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "\"Jonh Doe\"",
-					"description": "Name of the user"
+					"description": "Name of the user",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "Image",
@@ -2528,8 +2627,9 @@
 					"typeKind": "other",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Image of the user"
+					"default": "empty binary",
+					"description": "Image of the user",
+					"defaultSource": "platform"
 				},
 				{
 					"name": "Color",
@@ -2539,6 +2639,7 @@
 					"mandatory": false,
 					"default": "Entities.Color.Primary",
 					"description": "Background color of the Block",
+					"defaultSource": "oml",
 					"values": [
 						"Blue",
 						"Cyan",
@@ -2574,8 +2675,9 @@
 					"typeKind": "staticEntity",
 					"typeRef": "Size",
 					"mandatory": false,
-					"default": null,
+					"default": "NullIdentifier()",
 					"description": "Set the shape.",
+					"defaultSource": "platform",
 					"values": [
 						"Medium",
 						"Small"
@@ -2589,6 +2691,7 @@
 					"mandatory": false,
 					"default": "Entities.Shape.Rounded",
 					"description": "Set the shape.",
+					"defaultSource": "oml",
 					"values": [
 						"Rounded",
 						"Sharp",
@@ -2602,7 +2705,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "False",
-					"description": "Use the lightest color version for the background and the darker color version for the text."
+					"description": "Use the lightest color version for the background and the darker color version for the text.",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "ExtendedClass",
@@ -2610,8 +2714,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [],
@@ -2643,7 +2748,8 @@
 					"typeRef": null,
 					"mandatory": true,
 					"default": null,
-					"description": "Assign a varibable to open / close the Action Sheet"
+					"description": "Assign a varibable to open / close the Action Sheet",
+					"defaultSource": null
 				},
 				{
 					"name": "ExtendedClass",
@@ -2651,8 +2757,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -2713,6 +2820,7 @@
 					"mandatory": true,
 					"default": null,
 					"description": "Kind of animation to be used on this Block",
+					"defaultSource": null,
 					"values": [
 						"BottomToTop",
 						"Bounce",
@@ -2732,7 +2840,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "0",
-					"description": "Time to wait before animation starts, in miliseconds"
+					"description": "Time to wait before animation starts, in miliseconds",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "Speed",
@@ -2740,8 +2849,9 @@
 					"typeKind": "staticEntity",
 					"typeRef": "Speed",
 					"mandatory": false,
-					"default": null,
+					"default": "NullIdentifier()",
 					"description": "Time necessary for the animation reach the end.",
+					"defaultSource": "platform",
 					"values": [
 						"Fast",
 						"Normal",
@@ -2763,8 +2873,8 @@
 			"platformOnly": [],
 			"eventMap": {},
 			"recipes": {
-				"openui": "_Animate1 = Block(SourceBlock: Interaction/Animate, AnimationType: Entities.AnimationType.BottomToTop, Delay: 0, Speed: Entities.Speed.Fast, Content: [_Content1])",
-				"tsx": "<Animate id={\"_Animate1\"} data-source={\"Interaction/Animate\"} AnimationType={Entities.AnimationType.BottomToTop} Delay={0} Speed={Entities.Speed.Fast} Content={<>…</>} />"
+				"openui": "_Animate1 = Block(SourceBlock: Interaction/Animate, AnimationType: Entities.AnimationType.BottomToTop, Delay: 0, Speed: NullIdentifier(), Content: [_Content1])",
+				"tsx": "<Animate id={\"_Animate1\"} data-source={\"Interaction/Animate\"} AnimationType={Entities.AnimationType.BottomToTop} Delay={0} Speed={NullIdentifier()} Content={<>…</>} />"
 			}
 		},
 		"Interaction/AnimatedLabel": {
@@ -2782,8 +2892,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the pattern. You define your custom style classes in your application using CSS. Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet "
+					"default": "\"\"",
+					"description": "Add custom style classes to the pattern. You define your custom style classes in your application using CSS. Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet ",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -2844,6 +2955,7 @@
 					"mandatory": false,
 					"default": "Entities.Shape.SoftRounded",
 					"description": "Set the BottomSheet shape. The predefined options are:\n- SoftRounded\n- Rounded\n- Sharp\n\nExamples:\nEntities.Shape.Rounded - the inherit style will be rounded.\n\nBy default, 16px (Entities.Shape.SoftRounded). ",
+					"defaultSource": "oml",
 					"values": [
 						"Rounded",
 						"Sharp",
@@ -2857,7 +2969,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "True",
-					"description": "Set to True to show a handler on top of the BottomSheet. Set to False, otherwise.   "
+					"description": "Set to True to show a handler on top of the BottomSheet. Set to False, otherwise.   ",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "ExtendedClass",
@@ -2865,8 +2978,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the pattern. You define your custom style classes in your application using CSS. Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet "
+					"default": "\"\"",
+					"description": "Add custom style classes to the pattern. You define your custom style classes in your application using CSS. Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet ",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -2947,6 +3061,7 @@
 					"mandatory": false,
 					"default": "Entities.CarouselNavigation.Both",
 					"description": "Set the type of navigation of the carousel. Available options:\n\n- Arrows: show arrows on the sides\n- Dots: show dots under the carousel slides\n- Both: show arrows and dots on the carousel\n- None: no navigation controls are shown",
+					"defaultSource": "oml",
 					"values": [
 						"Arrows",
 						"Both",
@@ -2961,7 +3076,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "\"auto\"",
-					"description": "Set a custom height for the carousel. The parameter accepts any CSS format, except percentage (library constraint). By default, 'auto'. "
+					"description": "Set a custom height for the carousel. The parameter accepts any CSS format, except percentage (library constraint). By default, 'auto'. ",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "ItemsPerSlide",
@@ -2969,8 +3085,9 @@
 					"typeKind": "structure",
 					"typeRef": "CarouselItems",
 					"mandatory": false,
-					"default": null,
-					"description": "Set the number of items shown per slide according to the device. \n\n- Desktop: Set the number of items that are shown simultaneously in desktop. By default, 1 item in all devices.\n- Tablet: Set the number of items that are shown simultaneously in tablet. By default, 1 item in all devices.\n- Phone: Set the number of items that are shown simultaneously in phone. By default, 1 item in all devices."
+					"default": "empty CarouselItems",
+					"description": "Set the number of items shown per slide according to the device. \n\n- Desktop: Set the number of items that are shown simultaneously in desktop. By default, 1 item in all devices.\n- Tablet: Set the number of items that are shown simultaneously in tablet. By default, 1 item in all devices.\n- Phone: Set the number of items that are shown simultaneously in phone. By default, 1 item in all devices.",
+					"defaultSource": "platform"
 				},
 				{
 					"name": "OptionalConfigs",
@@ -2978,8 +3095,9 @@
 					"typeKind": "structure",
 					"typeRef": "CarouselOptionalConfigs",
 					"mandatory": false,
-					"default": null,
-					"description": "Set additional parameters to customize Carousel behavior and functionality."
+					"default": "empty CarouselOptionalConfigs",
+					"description": "Set additional parameters to customize Carousel behavior and functionality.",
+					"defaultSource": "platform"
 				},
 				{
 					"name": "ExtendedClass",
@@ -2987,8 +3105,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -3070,8 +3189,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Set the input date format. If empty, the date format will the same as the server format.\n\nHere's some of the examples that you can use:\n• \"DD/MM/YYYY\"    -> 23/03/2018\n• \"MM/DD/YYYY\"    -> 03/23/2018\n• \"DD MMM YYYY\"   -> 23 Mar 2018\n• \"DD-MMM-YYYY\"   -> 23-Mar-2018\n• \"DD.MMM.YYYY\"   -> 23.Mar.2018\n• \"MMM DDD, YYYY\" -> Mar Mond, 2021\n• \"MMM DDD, YY\"   -> Mar Mond, 21\n• ...\n\nThe time format will be determined by the TimeFormat property."
+					"default": "\"\"",
+					"description": "Set the input date format. If empty, the date format will the same as the server format.\n\nHere's some of the examples that you can use:\n• \"DD/MM/YYYY\"    -> 23/03/2018\n• \"MM/DD/YYYY\"    -> 03/23/2018\n• \"DD MMM YYYY\"   -> 23 Mar 2018\n• \"DD-MMM-YYYY\"   -> 23-Mar-2018\n• \"DD.MMM.YYYY\"   -> 23.Mar.2018\n• \"MMM DDD, YYYY\" -> Mar Mond, 2021\n• \"MMM DDD, YY\"   -> Mar Mond, 21\n• ...\n\nThe time format will be determined by the TimeFormat property.",
+					"defaultSource": "platform"
 				},
 				{
 					"name": "ShowTodayButton",
@@ -3080,7 +3200,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "False",
-					"description": "Set to True to show a button below the DatePicker that allows users to pick the current day date."
+					"description": "Set to True to show a button below the DatePicker that allows users to pick the current day date.",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "TimeFormat",
@@ -3090,6 +3211,7 @@
 					"mandatory": false,
 					"default": "Entities.DatePickerTimeFormat.Disabled",
 					"description": "Select the format of the time (12 hours or 24 hours). By default, no time is shown (Disabled).",
+					"defaultSource": "oml",
 					"values": [
 						"Disabled",
 						"Time12hFormat",
@@ -3102,8 +3224,9 @@
 					"typeKind": "structure",
 					"typeRef": "DatePickerOptionalConfigs",
 					"mandatory": false,
-					"default": null,
-					"description": "Set additional parameters to customize DatePicker behavior and functionality."
+					"default": "empty DatePickerOptionalConfigs",
+					"description": "Set additional parameters to customize DatePicker behavior and functionality.",
+					"defaultSource": "platform"
 				},
 				{
 					"name": "ExtendedClass",
@@ -3111,8 +3234,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the pattern. You define your custom style classes in your application using CSS. Examples:\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/StyleGuidePreview/Styles"
+					"default": "\"\"",
+					"description": "Add custom style classes to the pattern. You define your custom style classes in your application using CSS. Examples:\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/StyleGuidePreview/Styles",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -3196,8 +3320,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Set the input date format. If empty, the date format will be the same as the server format.\nWhen using formats with time, make sure to set the TimeFormat property.\n\nHere are some of the examples that you can use:\n• \"DD/MM/YYYY\"    -> 23/03/2018\n• \"MM/DD/YYYY\"    -> 03/23/2018\n• \"DD MMM YYYY\"   -> 23 Mar 2018\n• \"DD-MMM-YYYY\"   -> 23-Mar-2018\n• \"DD.MMM.YYYY\"   -> 23.Mar.2018\n• \"MMM DDD, YYYY\" -> Mar Mon, 2021\n• \"MMM DDD, YY\"   -> Mar Mon, 21"
+					"default": "\"\"",
+					"description": "Set the input date format. If empty, the date format will be the same as the server format.\nWhen using formats with time, make sure to set the TimeFormat property.\n\nHere are some of the examples that you can use:\n• \"DD/MM/YYYY\"    -> 23/03/2018\n• \"MM/DD/YYYY\"    -> 03/23/2018\n• \"DD MMM YYYY\"   -> 23 Mar 2018\n• \"DD-MMM-YYYY\"   -> 23-Mar-2018\n• \"DD.MMM.YYYY\"   -> 23.Mar.2018\n• \"MMM DDD, YYYY\" -> Mar Mon, 2021\n• \"MMM DDD, YY\"   -> Mar Mon, 21",
+					"defaultSource": "platform"
 				},
 				{
 					"name": "ShowTodayButton",
@@ -3206,7 +3331,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "False",
-					"description": "Set to \"True\" to show a button below the DatePicker that allows users to pick the current day date."
+					"description": "Set to \"True\" to show a button below the DatePicker that allows users to pick the current day date.",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "OptionalConfigs",
@@ -3214,8 +3340,9 @@
 					"typeKind": "structure",
 					"typeRef": "DatePickerRangeOptionalConfigs",
 					"mandatory": false,
-					"default": null,
-					"description": "Set additional parameters to customize the DatePickerRange behavior and functionality."
+					"default": "empty DatePickerRangeOptionalConfigs",
+					"description": "Set additional parameters to customize the DatePickerRange behavior and functionality.",
+					"defaultSource": "platform"
 				},
 				{
 					"name": "ExtendedClass",
@@ -3223,8 +3350,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the pattern. You define your custom style classes in your app using CSS. Examples:\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI.\nYou can also use the classes available on the OutSystems UI. For more information, go to the OutSystems UI Cheatsheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the pattern. You define your custom style classes in your app using CSS. Examples:\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI.\nYou can also use the classes available on the OutSystems UI. For more information, go to the OutSystems UI Cheatsheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -3314,7 +3442,8 @@
 					"typeRef": "DropdownOption",
 					"mandatory": true,
 					"default": null,
-					"description": "List of options to show in dropdown."
+					"description": "List of options to show in dropdown.",
+					"defaultSource": null
 				},
 				{
 					"name": "StartingSelection",
@@ -3322,8 +3451,9 @@
 					"typeKind": "list",
 					"typeRef": "DropdownOption",
 					"mandatory": false,
-					"default": null,
-					"description": "List of options that will appear pre-selected in the DropdownSearch."
+					"default": "empty list",
+					"description": "List of options that will appear pre-selected in the DropdownSearch.",
+					"defaultSource": "platform"
 				},
 				{
 					"name": "Prompt",
@@ -3332,7 +3462,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "\"Select...\"",
-					"description": "Text to display when there are no items selected and to serve as an empty value."
+					"description": "Text to display when there are no items selected and to serve as an empty value.",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "OptionalConfigs",
@@ -3340,8 +3471,9 @@
 					"typeKind": "structure",
 					"typeRef": "DropdownOptionalConfigs",
 					"mandatory": false,
-					"default": null,
-					"description": "Extra configurations."
+					"default": "empty DropdownOptionalConfigs",
+					"description": "Extra configurations.",
+					"defaultSource": "platform"
 				},
 				{
 					"name": "ExtendedClass",
@@ -3349,8 +3481,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the pattern. You define your custom style classes in your application using CSS.\nFor more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet "
+					"default": "\"\"",
+					"description": "Add custom style classes to the pattern. You define your custom style classes in your application using CSS.\nFor more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet ",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [],
@@ -3428,7 +3561,8 @@
 					"typeRef": "DropdownOption",
 					"mandatory": true,
 					"default": null,
-					"description": "List of options to show in dropdown."
+					"description": "List of options to show in dropdown.",
+					"defaultSource": null
 				},
 				{
 					"name": "StartingSelection",
@@ -3436,8 +3570,9 @@
 					"typeKind": "list",
 					"typeRef": "DropdownOption",
 					"mandatory": false,
-					"default": null,
-					"description": "List of options that will appear pre-selected in the DropdownTags."
+					"default": "empty list",
+					"description": "List of options that will appear pre-selected in the DropdownTags.",
+					"defaultSource": "platform"
 				},
 				{
 					"name": "Prompt",
@@ -3446,7 +3581,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "\"Select...\"",
-					"description": "Text to display when there are no items selected and to serve as an empty value."
+					"description": "Text to display when there are no items selected and to serve as an empty value.",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "OptionalConfigs",
@@ -3454,8 +3590,9 @@
 					"typeKind": "structure",
 					"typeRef": "DropdownTagsOptionalConfigs",
 					"mandatory": false,
-					"default": null,
-					"description": "Extra configurations."
+					"default": "empty DropdownTagsOptionalConfigs",
+					"description": "Extra configurations.",
+					"defaultSource": "platform"
 				},
 				{
 					"name": "ExtendedClass",
@@ -3463,8 +3600,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the pattern. You define your custom style classes in your application using CSS.\nFor more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet "
+					"default": "\"\"",
+					"description": "Add custom style classes to the pattern. You define your custom style classes in your application using CSS.\nFor more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet ",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [],
@@ -3541,7 +3679,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "False",
-					"description": "Initial state of the Block, the default value is False"
+					"description": "Initial state of the Block, the default value is False",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "IsHover",
@@ -3550,7 +3689,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "False",
-					"description": "Set to true, to use hover as interaction trigger. "
+					"description": "Set to true, to use hover as interaction trigger. ",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "ExtendedClass",
@@ -3558,8 +3698,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -3606,8 +3747,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -3648,7 +3790,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "False",
-					"description": "If set as true, sets the icon to the right."
+					"description": "If set as true, sets the icon to the right.",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "ExtendedClass",
@@ -3656,8 +3799,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -3697,8 +3841,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Title of the image to be displayed"
+					"default": "\"\"",
+					"description": "Title of the image to be displayed",
+					"defaultSource": "platform"
 				},
 				{
 					"name": "Group",
@@ -3706,8 +3851,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Images of the same group will be displayed in a gallery"
+					"default": "\"\"",
+					"description": "Images of the same group will be displayed in a gallery",
+					"defaultSource": "platform"
 				},
 				{
 					"name": "ImageURL",
@@ -3715,8 +3861,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "URL for an image that can be a replacement for the Image Placeholder image. To get the URl of a binary image, use the BinaryToURLImage actions from the Utilities folder."
+					"default": "\"\"",
+					"description": "URL for an image that can be a replacement for the Image Placeholder image. To get the URl of a binary image, use the BinaryToURLImage actions from the Utilities folder.",
+					"defaultSource": "platform"
 				},
 				{
 					"name": "ImageZoom",
@@ -3725,7 +3872,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "2",
-					"description": "The zoom value is used to define the size of the image that will open in full screen based on the thumbnail size. \n\nNote: try to use images with the same ratio to avoid rendering problems:\n      - thumbnail with 100x100 and zoom 2 will open with 200x200\n      - thumbnail with 500x500 and zoom 0.5 will open with 250x250"
+					"description": "The zoom value is used to define the size of the image that will open in full screen based on the thumbnail size. \n\nNote: try to use images with the same ratio to avoid rendering problems:\n      - thumbnail with 100x100 and zoom 2 will open with 200x200\n      - thumbnail with 500x500 and zoom 0.5 will open with 250x250",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "ExtendedClass",
@@ -3733,8 +3881,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				},
 				{
 					"name": "OptionalConfigs",
@@ -3742,8 +3891,9 @@
 					"typeKind": "structure",
 					"typeRef": "LightboxImageOptionalConfigs",
 					"mandatory": false,
-					"default": null,
-					"description": "Extra configurations."
+					"default": "empty LightboxImageOptionalConfigs",
+					"description": "Extra configurations.",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -3793,7 +3943,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "\"MM/YYYY\"",
-					"description": "Set the input date format. If empty, the date format will be the same as the server format.\nWhen using formats with time, make sure to set the TimeFormat property.\nHere are some of the examples that you can use:\n\n- \"MM/YYYY\" -> 03/2022\n- \"MMM YYYY\" -> Mar 2022\n- \"MMM-YYYY\" -> Mar-2022\n- \"MMM.YYYY\" -> Mar.2022\n- \"MMM, YY\" -> Mar, 22"
+					"description": "Set the input date format. If empty, the date format will be the same as the server format.\nWhen using formats with time, make sure to set the TimeFormat property.\nHere are some of the examples that you can use:\n\n- \"MM/YYYY\" -> 03/2022\n- \"MMM YYYY\" -> Mar 2022\n- \"MMM-YYYY\" -> Mar-2022\n- \"MMM.YYYY\" -> Mar.2022\n- \"MMM, YY\" -> Mar, 22",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "InitialMonth",
@@ -3801,8 +3952,9 @@
 					"typeKind": "structure",
 					"typeRef": "MonthYear",
 					"mandatory": false,
-					"default": null,
-					"description": "The initial selected month and year for the MonthPicker. If not set, no initial date is selected."
+					"default": "empty MonthYear",
+					"description": "The initial selected month and year for the MonthPicker. If not set, no initial date is selected.",
+					"defaultSource": "platform"
 				},
 				{
 					"name": "MinMonth",
@@ -3810,8 +3962,9 @@
 					"typeKind": "structure",
 					"typeRef": "MonthYear",
 					"mandatory": false,
-					"default": null,
-					"description": "Set the minimum month that can be selected. Any month before this is disabled and cannot be selected."
+					"default": "empty MonthYear",
+					"description": "Set the minimum month that can be selected. Any month before this is disabled and cannot be selected.",
+					"defaultSource": "platform"
 				},
 				{
 					"name": "MaxMonth",
@@ -3819,8 +3972,9 @@
 					"typeKind": "structure",
 					"typeRef": "MonthYear",
 					"mandatory": false,
-					"default": null,
-					"description": "Set the maximum month that can be selected. Any month after this is disabled and cannot be selected."
+					"default": "empty MonthYear",
+					"description": "Set the maximum month that can be selected. Any month after this is disabled and cannot be selected.",
+					"defaultSource": "platform"
 				},
 				{
 					"name": "ExtendedClass",
@@ -3828,8 +3982,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.\n\nExamples:\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.\n\nExamples:\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -3911,7 +4066,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "False",
-					"description": "Set the initial state of the Notification. If \"True\", the notification starts open. Use one of the following actions to change the value afterward:\n- NotificationOpen\n- NotificationClose"
+					"description": "Set the initial state of the Notification. If \"True\", the notification starts open. Use one of the following actions to change the value afterward:\n- NotificationOpen\n- NotificationClose",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "Width",
@@ -3920,7 +4076,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "\"370px\"",
-					"description": "Set the Notification width. Accepts any kind of unit (px, %, vw). Default is \"370px\".\nIn case, the value defined is bigger than the screen size, the notification width will be 100%."
+					"description": "Set the Notification width. Accepts any kind of unit (px, %, vw). Default is \"370px\".\nIn case, the value defined is bigger than the screen size, the notification width will be 100%.",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "Position",
@@ -3930,6 +4087,7 @@
 					"mandatory": false,
 					"default": "Entities.Position.Top",
 					"description": "Set the position where the notification appears on the screen. \n\nThe predefined options are:\n-Bottom\n-BottomLeft\n-BottomRight\n-Center\n-Left\n-Right\n-Top\n-TopLeft\n-TopRight\n\nExamples:\nEntities.Position.Right - The notification is displayed on the right side of the screen.\nEntities.Position.Bottom - The notification is displayed on the bottom of the screen.",
+					"defaultSource": "oml",
 					"values": [
 						"Bottom",
 						"BottomLeft",
@@ -3948,8 +4106,9 @@
 					"typeKind": "structure",
 					"typeRef": "NotificationOptionalConfigs",
 					"mandatory": false,
-					"default": null,
-					"description": "Set additional parameters to customize the notification behavior and functionality."
+					"default": "empty NotificationOptionalConfigs",
+					"description": "Set additional parameters to customize the notification behavior and functionality.",
+					"defaultSource": "platform"
 				},
 				{
 					"name": "ExtendedClass",
@@ -3957,8 +4116,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the pattern. You define your custom style classes in your app using CSS. Examples:\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI.\n\nYou can also use the classes available on the OutSystems UI. For more information, go to the OutSystems UI Cheatsheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the pattern. You define your custom style classes in your app using CSS. Examples:\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI.\n\nYou can also use the classes available on the OutSystems UI. For more information, go to the OutSystems UI Cheatsheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -4032,7 +4192,8 @@
 					"typeRef": null,
 					"mandatory": true,
 					"default": null,
-					"description": "The slider's minimum value."
+					"description": "The slider's minimum value.",
+					"defaultSource": null
 				},
 				{
 					"name": "MaxValue",
@@ -4041,7 +4202,8 @@
 					"typeRef": null,
 					"mandatory": true,
 					"default": null,
-					"description": "The slider's maximum value."
+					"description": "The slider's maximum value.",
+					"defaultSource": null
 				},
 				{
 					"name": "StartingValue",
@@ -4050,7 +4212,8 @@
 					"typeRef": null,
 					"mandatory": true,
 					"default": null,
-					"description": "Value selected by default. Must be between min and max values."
+					"description": "Value selected by default. Must be between min and max values.",
+					"defaultSource": null
 				},
 				{
 					"name": "Orientation",
@@ -4060,6 +4223,7 @@
 					"mandatory": false,
 					"default": "Entities.Orientation.Horizontal",
 					"description": "Set the direction of the RangeSlider. By default, horizontal.",
+					"defaultSource": "oml",
 					"values": [
 						"Horizontal",
 						"Vertical"
@@ -4072,7 +4236,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "\"100%\"",
-					"description": "Set the RangeSlider size. If horizontal, the size is the width. Otherwise (vertical), the size is the height.  Accepts any kind of unit (px, %, vw). By default, \"100%\".\n\nExample: \"30%\""
+					"description": "Set the RangeSlider size. If horizontal, the size is the width. Otherwise (vertical), the size is the height.  Accepts any kind of unit (px, %, vw). By default, \"100%\".\n\nExample: \"30%\"",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "OptionalConfigs",
@@ -4080,8 +4245,9 @@
 					"typeKind": "structure",
 					"typeRef": "RangeSliderOptionalConfigs",
 					"mandatory": false,
-					"default": null,
-					"description": "Set additional parameters to customize the RangeSlider behavior and functionality."
+					"default": "empty RangeSliderOptionalConfigs",
+					"description": "Set additional parameters to customize the RangeSlider behavior and functionality.",
+					"defaultSource": "platform"
 				},
 				{
 					"name": "ExtendedClass",
@@ -4089,8 +4255,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [],
@@ -4168,7 +4335,8 @@
 					"typeRef": null,
 					"mandatory": true,
 					"default": null,
-					"description": "Slider's minimum value. "
+					"description": "Slider's minimum value. ",
+					"defaultSource": null
 				},
 				{
 					"name": "MaxValue",
@@ -4177,7 +4345,8 @@
 					"typeRef": null,
 					"mandatory": true,
 					"default": null,
-					"description": "Slider's maximum value. "
+					"description": "Slider's maximum value. ",
+					"defaultSource": null
 				},
 				{
 					"name": "StartingValueFrom",
@@ -4186,7 +4355,8 @@
 					"typeRef": null,
 					"mandatory": true,
 					"default": null,
-					"description": "Default value for the interval's start. Must be between min and max values."
+					"description": "Default value for the interval's start. Must be between min and max values.",
+					"defaultSource": null
 				},
 				{
 					"name": "StartingValueTo",
@@ -4195,7 +4365,8 @@
 					"typeRef": null,
 					"mandatory": true,
 					"default": null,
-					"description": "Default value for the interval's end. Must be between min and max values."
+					"description": "Default value for the interval's end. Must be between min and max values.",
+					"defaultSource": null
 				},
 				{
 					"name": "Orientation",
@@ -4205,6 +4376,7 @@
 					"mandatory": false,
 					"default": "Entities.Orientation.Horizontal",
 					"description": "Set the direction of the RangeSlider. By default, horizontal.",
+					"defaultSource": "oml",
 					"values": [
 						"Horizontal",
 						"Vertical"
@@ -4217,7 +4389,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "\"100%\"",
-					"description": "Set the size of the Range Slider Interval. If the slider's orientation is horizontal, the size you set will be the width of the Range Slider Interval. Otherwise (vertical), the size you set will be the height. Accepts any kind of unit (px, %, vw). Default value is 100%."
+					"description": "Set the size of the Range Slider Interval. If the slider's orientation is horizontal, the size you set will be the width of the Range Slider Interval. Otherwise (vertical), the size you set will be the height. Accepts any kind of unit (px, %, vw). Default value is 100%.",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "OptionalConfigs",
@@ -4225,8 +4398,9 @@
 					"typeKind": "structure",
 					"typeRef": "RangeSliderOptionalConfigs",
 					"mandatory": false,
-					"default": null,
-					"description": "Set additional parameters to customize the RangeSliderInterval behavior and functionality."
+					"default": "empty RangeSliderOptionalConfigs",
+					"description": "Set additional parameters to customize the RangeSliderInterval behavior and functionality.",
+					"defaultSource": "platform"
 				},
 				{
 					"name": "ExtendedClass",
@@ -4234,8 +4408,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [],
@@ -4320,6 +4495,7 @@
 					"mandatory": false,
 					"default": "Entities.Orientation.Horizontal",
 					"description": "Choose from Horizontal or Vertical orientation.",
+					"defaultSource": "oml",
 					"values": [
 						"Horizontal",
 						"Vertical"
@@ -4331,8 +4507,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Define the height of the component. Mainly for the Vertical orientation, but also available for Horizontal.\nIf not defined, the height of the parent is used."
+					"default": "\"\"",
+					"description": "Define the height of the component. Mainly for the Vertical orientation, but also available for Horizontal.\nIf not defined, the height of the parent is used.",
+					"defaultSource": "platform"
 				},
 				{
 					"name": "Width",
@@ -4340,8 +4517,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Define the width of the component. Mainly for the Horizontal orientation, but also available for Vertical.\nIf not defined, the width of the parent is used."
+					"default": "\"\"",
+					"description": "Define the width of the component. Mainly for the Horizontal orientation, but also available for Vertical.\nIf not defined, the width of the parent is used.",
+					"defaultSource": "platform"
 				},
 				{
 					"name": "ScrollbarStyle",
@@ -4351,6 +4529,7 @@
 					"mandatory": false,
 					"default": "Entities.ScrollbarStyle.Default",
 					"description": "Choose between different styles for the scrollbar.\nHorizontal scroll is not enabled with the mouse wheel but can be done with mousepad gestures.\n'None' disables the scrollbar, but scrolling is still available with the same restrictions as the previous definition.",
+					"defaultSource": "oml",
 					"values": [
 						"Compact",
 						"Default",
@@ -4363,8 +4542,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -4400,8 +4580,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -4457,7 +4638,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "False",
-					"description": "Set to True to display the Sidebar. The default value is False."
+					"description": "Set to True to display the Sidebar. The default value is False.",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "Direction",
@@ -4467,6 +4649,7 @@
 					"mandatory": false,
 					"default": "Entities.Direction.Right",
 					"description": "Set the position where the Sidebar appears on the screen. \nThe predefined options are:\n-Left\n-Right\n\nExamples:\n    Entities.Direction.Right - The sidebar is displayed on the right side of the screen.\n    Entities.Direction.Left - The sidebar is displayed on the left side of the screen.",
+					"defaultSource": "oml",
 					"values": [
 						"Left",
 						"Right"
@@ -4479,7 +4662,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "False",
-					"description": "Set to True, to show an overlay when the Sidebar is open. When you click on the overlay, the Sidebar is closed."
+					"description": "Set to True, to show an overlay when the Sidebar is open. When you click on the overlay, the Sidebar is closed.",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "Width",
@@ -4488,7 +4672,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "\"500px\"",
-					"description": "Set the Sidebar width. Accepts any kind of unit (px, %, vw). Default value is 500px.\n\nExample: \"30%\""
+					"description": "Set the Sidebar width. Accepts any kind of unit (px, %, vw). Default value is 500px.\n\nExample: \"30%\"",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "ExtendedClass",
@@ -4496,8 +4681,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the pattern. You define your custom style classes in your application using CSS. Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet "
+					"default": "\"\"",
+					"description": "Add custom style classes to the pattern. You define your custom style classes in your application using CSS. Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet ",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -4580,6 +4766,7 @@
 					"mandatory": false,
 					"default": "Entities.StackedCardsPosition.Bottom",
 					"description": "Change stacked cards view from bottom, top or none.",
+					"defaultSource": "oml",
 					"values": [
 						"Bottom",
 						"None",
@@ -4593,7 +4780,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "True",
-					"description": "Activate the elements' rotation for each move on stacked cards."
+					"description": "Activate the elements' rotation for each move on stacked cards.",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "Items",
@@ -4602,7 +4790,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "5",
-					"description": "Number of visible elements when the stacked options are bottom or top."
+					"description": "Number of visible elements when the stacked options are bottom or top.",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "ElementsMargin",
@@ -4611,7 +4800,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "5",
-					"description": "Define the distance of each element when the stacked options are bottom or top."
+					"description": "Define the distance of each element when the stacked options are bottom or top.",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "UseOverlays",
@@ -4620,7 +4810,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "True",
-					"description": "Enable or disable the overlays for swipe elements."
+					"description": "Enable or disable the overlays for swipe elements.",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "ExtendedClass",
@@ -4628,8 +4819,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -4726,8 +4918,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Set the input time format. If empty, the time format will be defined based on the Is24Hours parameter. \nHere is a list of formatting tokens that you can use:\n\nH → Hours (24 hours)\nh → Hours (12 hours)\nG → Hours (12 hours), 2 digits with leading zeros\ni → Minutes\ns → Seconds\nS → Seconds, 2 digits with leading zeros\nK → AM/PM\n\nYou may escape formatting tokens using \\\\.\n\nExamples:\n“H:i” → 15:30\n“G:i K” → 03:30 PM\n”h\\\\hi\\\\m K” → 3h30m PM\n”H \\\\ho\\\\ur\\\\s i \\\\m\\\\i\\\\n\\\\ute\\\\s” → 15 hours 30 minutes"
+					"default": "\"\"",
+					"description": "Set the input time format. If empty, the time format will be defined based on the Is24Hours parameter. \nHere is a list of formatting tokens that you can use:\n\nH → Hours (24 hours)\nh → Hours (12 hours)\nG → Hours (12 hours), 2 digits with leading zeros\ni → Minutes\ns → Seconds\nS → Seconds, 2 digits with leading zeros\nK → AM/PM\n\nYou may escape formatting tokens using \\\\.\n\nExamples:\n“H:i” → 15:30\n“G:i K” → 03:30 PM\n”h\\\\hi\\\\m K” → 3h30m PM\n”H \\\\ho\\\\ur\\\\s i \\\\m\\\\i\\\\n\\\\ute\\\\s” → 15 hours 30 minutes",
+					"defaultSource": "platform"
 				},
 				{
 					"name": "Is24Hours",
@@ -4736,7 +4929,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "True",
-					"description": "Set to “True” to display the time in a 24 hour format without AM/PM selection. By default, the time is displayed using a 24 hour format."
+					"description": "Set to “True” to display the time in a 24 hour format without AM/PM selection. By default, the time is displayed using a 24 hour format.",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "InitialTime",
@@ -4744,8 +4938,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "The initial selected time for the TimePicker. If not set, no initial time will be displayed on the input and the TimePicker will start at 12:00."
+					"default": "#00:00:00#",
+					"description": "The initial selected time for the TimePicker. If not set, no initial time will be displayed on the input and the TimePicker will start at 12:00.",
+					"defaultSource": "platform"
 				},
 				{
 					"name": "OptionalConfigs",
@@ -4753,8 +4948,9 @@
 					"typeKind": "structure",
 					"typeRef": "TimePickerOptionalConfigs",
 					"mandatory": false,
-					"default": null,
-					"description": "Set additional parameters to customize TimePicker behavior and functionality."
+					"default": "empty TimePickerOptionalConfigs",
+					"description": "Set additional parameters to customize TimePicker behavior and functionality.",
+					"defaultSource": "platform"
 				},
 				{
 					"name": "ExtendedClass",
@@ -4762,8 +4958,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the pattern. You define your custom style classes in your application using CSS. Examples:\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/StyleGuidePreview/Styles"
+					"default": "\"\"",
+					"description": "Add custom style classes to the pattern. You define your custom style classes in your application using CSS. Examples:\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/StyleGuidePreview/Styles",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -4825,8 +5022,8 @@
 				"Initialized": "Initialized"
 			},
 			"recipes": {
-				"openui": "_TimePicker1 = Block(SourceBlock: Interaction/TimePicker, TimeFormat: \"\", Is24Hours: True, InitialTime: 0, Timepicker: [_Timepicker1], Placeholder_SSPreview: [_Placeholder_SSPreview1])",
-				"tsx": "<TimePicker id={\"_TimePicker1\"} data-source={\"Interaction/TimePicker\"} TimeFormat={\"\"} Is24Hours={True} InitialTime={0} Timepicker={<>…</>} Placeholder_SSPreview={<>…</>} />"
+				"openui": "_TimePicker1 = Block(SourceBlock: Interaction/TimePicker, TimeFormat: \"\", Is24Hours: True, InitialTime: #00:00:00#, Timepicker: [_Timepicker1], Placeholder_SSPreview: [_Placeholder_SSPreview1])",
+				"tsx": "<TimePicker id={\"_TimePicker1\"} data-source={\"Interaction/TimePicker\"} TimeFormat={\"\"} Is24Hours={True} InitialTime={#00:00:00#} Timepicker={<>…</>} Placeholder_SSPreview={<>…</>} />"
 			}
 		},
 		"Interaction/Video": {
@@ -4845,7 +5042,8 @@
 					"typeRef": null,
 					"mandatory": true,
 					"default": null,
-					"description": "Set the URL of the video file, preferably mp4 or webm format."
+					"description": "Set the URL of the video file, preferably mp4 or webm format.",
+					"defaultSource": null
 				},
 				{
 					"name": "Controls",
@@ -4854,7 +5052,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "True",
-					"description": "Set to True to sow the video controls. Set False to disable the video controls.\nIn case of mobile, the controls will always be enable.\nBy default, the controls are shown (True).\n\nDefault: True"
+					"description": "Set to True to sow the video controls. Set False to disable the video controls.\nIn case of mobile, the controls will always be enable.\nBy default, the controls are shown (True).\n\nDefault: True",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "Width",
@@ -4862,8 +5061,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Set the width (in pixel or percentage) of the video. By default, the original video width is detected. "
+					"default": "\"\"",
+					"description": "Set the width (in pixel or percentage) of the video. By default, the original video width is detected. ",
+					"defaultSource": "platform"
 				},
 				{
 					"name": "Height",
@@ -4871,8 +5071,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Set the height (in pixel or percentage) of the video.\nBy default, the original video height is detected. "
+					"default": "\"\"",
+					"description": "Set the height (in pixel or percentage) of the video.\nBy default, the original video height is detected. ",
+					"defaultSource": "platform"
 				},
 				{
 					"name": "Captions",
@@ -4880,8 +5081,9 @@
 					"typeKind": "list",
 					"typeRef": "VideoCaptions",
 					"mandatory": false,
-					"default": null,
-					"description": "List of the caption tracks (language, source file and label) that will be available for the video.\nBy default, the video has no captions."
+					"default": "empty list",
+					"description": "List of the caption tracks (language, source file and label) that will be available for the video.\nBy default, the video has no captions.",
+					"defaultSource": "platform"
 				},
 				{
 					"name": "OptionalConfigs",
@@ -4889,8 +5091,9 @@
 					"typeKind": "structure",
 					"typeRef": "VideoOptionalConfigs",
 					"mandatory": false,
-					"default": null,
-					"description": "Set additional parameters to customize the Video behavior and functionality."
+					"default": "empty VideoOptionalConfigs",
+					"description": "Set additional parameters to customize the Video behavior and functionality.",
+					"defaultSource": "platform"
 				},
 				{
 					"name": "ExtendedClass",
@@ -4898,8 +5101,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\nBlank - No custom styles are added (default value).\n\n\"myclass\" - Adds the myclass style to the UI styles being applied.\n\n\"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\nBlank - No custom styles are added (default value).\n\n\"myclass\" - Adds the myclass style to the UI styles being applied.\n\n\"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [],
@@ -4976,8 +5180,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -5017,8 +5222,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -5054,8 +5260,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -5097,6 +5304,7 @@
 					"mandatory": false,
 					"default": "Entities.Shape.SoftRounded",
 					"description": "Set the balloon shape. The predefined options are:\n- SoftRounded\n- Rounded\n- Sharp\n\nExamples:\nEntities.Shape.Rounded - the inherit style will be rounded.\n\nBy default, 4px (Entities.Shape.SoftRounded).\n\nDefault: Shape.SoftRounded",
+					"defaultSource": "oml",
 					"values": [
 						"Rounded",
 						"Sharp",
@@ -5109,8 +5317,9 @@
 					"typeKind": "staticEntity",
 					"typeRef": "FloatingPosition",
 					"mandatory": false,
-					"default": null,
+					"default": "NullIdentifier()",
 					"description": "Set the balloon’s position. The predefined options are:\n- Auto \n- Top\n- Top start\n- Top end\n- Right\n- Right start\n- Right end\n- Bottom\n- Bottom start\n- Bottom end\n- Left\n- Left start\n- Left end\n\nExamples:\n- Blank (Entities.BalloonPosition.Auto) - The placement of the balloon is automatically calculated based on the space available. This is the default.\n- Entities.BalloonPosition.Right - The balloon is displayed to the right of the element.",
+					"defaultSource": "platform",
 					"values": [
 						"Auto",
 						"Bottom",
@@ -5134,8 +5343,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the pattern. You define your custom style classes in your application using CSS. Examples:\n\nBlank - No custom styles are added (default value).\n\n\"myclass\" - Adds the myclass style to the UI styles being applied.\n\n\"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the pattern. You define your custom style classes in your application using CSS. Examples:\n\nBlank - No custom styles are added (default value).\n\n\"myclass\" - Adds the myclass style to the UI styles being applied.\n\n\"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -5195,8 +5405,8 @@
 				"OnMenuToggle": "OnToggle"
 			},
 			"recipes": {
-				"openui": "_OverflowMenu1 = Block(SourceBlock: Navigation/OverflowMenu, BalloonShape: Entities.Shape.SoftRounded, BalloonPosition: Entities.FloatingPosition.Auto, ExtendedClass: \"\", Menu: [_Menu1], TriggerContent: [_TriggerContent1])",
-				"tsx": "<OverflowMenu id={\"_OverflowMenu1\"} data-source={\"Navigation/OverflowMenu\"} BalloonShape={Entities.Shape.SoftRounded} BalloonPosition={Entities.FloatingPosition.Auto} ExtendedClass={\"\"} Menu={<>…</>} TriggerContent={<>…</>} />"
+				"openui": "_OverflowMenu1 = Block(SourceBlock: Navigation/OverflowMenu, BalloonShape: Entities.Shape.SoftRounded, BalloonPosition: NullIdentifier(), ExtendedClass: \"\", Menu: [_Menu1], TriggerContent: [_TriggerContent1])",
+				"tsx": "<OverflowMenu id={\"_OverflowMenu1\"} data-source={\"Navigation/OverflowMenu\"} BalloonShape={Entities.Shape.SoftRounded} BalloonPosition={NullIdentifier()} ExtendedClass={\"\"} Menu={<>…</>} TriggerContent={<>…</>} />"
 			}
 		},
 		"Navigation/Pagination": {
@@ -5215,7 +5425,8 @@
 					"typeRef": null,
 					"mandatory": true,
 					"default": null,
-					"description": "Set the initial index to start pagination."
+					"description": "Set the initial index to start pagination.",
+					"defaultSource": null
 				},
 				{
 					"name": "MaxRecords",
@@ -5224,7 +5435,8 @@
 					"typeRef": null,
 					"mandatory": true,
 					"default": null,
-					"description": "Number of records per page."
+					"description": "Number of records per page.",
+					"defaultSource": null
 				},
 				{
 					"name": "TotalCount",
@@ -5233,7 +5445,8 @@
 					"typeRef": null,
 					"mandatory": true,
 					"default": null,
-					"description": "Total records of list."
+					"description": "Total records of list.",
+					"defaultSource": null
 				},
 				{
 					"name": "ShowGoToPage",
@@ -5242,7 +5455,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "False",
-					"description": "Set to true, to show pagination with an input that allows to jump to a specific page."
+					"description": "Set to true, to show pagination with an input that allows to jump to a specific page.",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "ExtendedClass",
@@ -5250,8 +5464,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -5305,7 +5520,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "True",
-					"description": "If True, navigation to the destination is animated. If False, the navigation is instant. The default value is True."
+					"description": "If True, navigation to the destination is animated. If False, the navigation is instant. The default value is True.",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "IsFixed",
@@ -5314,7 +5530,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "False",
-					"description": "If True, the Section Index Pattern is always in the same position on the screen. This is the default. \nIf False, the Section Index Pattern scrolls with the page content. The default value is False.\n\nAs the SectionIndex uses the CSS position: sticky property, to achieve the fixed behaviour, there might be situations, depending on screen structure, where the pattern is not getting properly fixed. In these cases, adding the following CSS on the your Application Theme might help solving the issue:\n\n*:has( > [data-block] > .osui-section-index.osui-section-index--is-sticky) {\n  display: initial;\n}"
+					"description": "If True, the Section Index Pattern is always in the same position on the screen. This is the default. \nIf False, the Section Index Pattern scrolls with the page content. The default value is False.\n\nAs the SectionIndex uses the CSS position: sticky property, to achieve the fixed behaviour, there might be situations, depending on screen structure, where the pattern is not getting properly fixed. In these cases, adding the following CSS on the your Application Theme might help solving the issue:\n\n*:has( > [data-block] > .osui-section-index.osui-section-index--is-sticky) {\n  display: initial;\n}",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "ExtendedClass",
@@ -5322,8 +5539,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -5381,7 +5599,8 @@
 					"typeRef": null,
 					"mandatory": true,
 					"default": null,
-					"description": "Element to where the page will navigate."
+					"description": "Element to where the page will navigate.",
+					"defaultSource": null
 				},
 				{
 					"name": "ExtendedClass",
@@ -5389,8 +5608,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -5446,8 +5666,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the pattern. You define your custom style classes in your application using CSS. Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the pattern. You define your custom style classes in your application using CSS. Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -5526,6 +5747,7 @@
 					"mandatory": false,
 					"default": "Entities.Orientation.Horizontal",
 					"description": "Set the direction of the tabs. By default, the tabs are displayed horizontally.",
+					"defaultSource": "oml",
 					"values": [
 						"Horizontal",
 						"Vertical"
@@ -5538,7 +5760,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "0",
-					"description": "Set the index of the currently active tab. The index begins at 0.\n\nExamples:\n- Blank - The 1st tab is the active tab. This is the default.\n- 1 - The 2nd tab is the active tab."
+					"description": "Set the index of the currently active tab. The index begins at 0.\n\nExamples:\n- Blank - The 1st tab is the active tab. This is the default.\n- 1 - The 2nd tab is the active tab.",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "Height",
@@ -5547,7 +5770,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "\"auto\"",
-					"description": "Height of the tabs container. By default, \"auto\".\n\nExamples:\n- Auto - The tab height adjusts to the content. This is the default.\n- 400px - The height of the tab is 400px."
+					"description": "Height of the tabs container. By default, \"auto\".\n\nExamples:\n- Auto - The tab height adjusts to the content. This is the default.\n- 400px - The height of the tab is 400px.",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "TabsVerticalPosition",
@@ -5557,6 +5781,7 @@
 					"mandatory": false,
 					"default": "Entities.Direction.Left",
 					"description": "Sets the position of the tabs headers. By default, tabs appear on left.",
+					"defaultSource": "oml",
 					"values": [
 						"Left",
 						"Right"
@@ -5568,8 +5793,9 @@
 					"typeKind": "structure",
 					"typeRef": "TabsOptionalConfigs",
 					"mandatory": false,
-					"default": null,
-					"description": "Set additional parameters to customize the Tabs behavior and functionality."
+					"default": "empty TabsOptionalConfigs",
+					"description": "Set additional parameters to customize the Tabs behavior and functionality.",
+					"defaultSource": "platform"
 				},
 				{
 					"name": "ExtendedClass",
@@ -5577,8 +5803,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the pattern. You define your custom style classes in your application using CSS. Examples:\n\nBlank - No custom styles are added (default value).\n\n\"myclass\" - Adds the myclass style to the UI styles being applied.\n\n\"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the pattern. You define your custom style classes in your application using CSS. Examples:\n\nBlank - No custom styles are added (default value).\n\n\"myclass\" - Adds the myclass style to the UI styles being applied.\n\n\"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -5661,8 +5888,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -5717,8 +5945,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -5774,7 +6003,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "False",
-					"description": "Set item as active in the timeline."
+					"description": "Set item as active in the timeline.",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "Color",
@@ -5784,6 +6014,7 @@
 					"mandatory": false,
 					"default": "Entities.Color.Primary",
 					"description": "Color of the icon.",
+					"defaultSource": "oml",
 					"values": [
 						"Blue",
 						"Cyan",
@@ -5819,8 +6050,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -5873,7 +6105,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "False",
-					"description": "Set the orientation."
+					"description": "Set the orientation.",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "StepsBehaviour",
@@ -5883,6 +6116,7 @@
 					"mandatory": false,
 					"default": "Entities.StepsBehaviour.Interactive",
 					"description": "Defines how the wizard steps behave in the user interface.\n • Interactive - Wizard steps function as navigation controls between panels. All \"past\" steps are clickable, allowing users to jump between steps. Developers can implement custom logic to control step behavior (e.g., validation, conditional navigation). This is the default value.\n • ProgressOnly - Wizard steps are displayed as a visual progress indicator only. Steps are not clickable and do not allow direct navigation between panels. Users progress sequentially through the wizard.\n",
+					"defaultSource": "oml",
 					"values": [
 						"Interactive",
 						"ProgressOnly"
@@ -5894,8 +6128,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -5954,6 +6189,7 @@
 					"mandatory": true,
 					"default": null,
 					"description": "The UI of this step, it can be Active, Next or Past",
+					"defaultSource": null,
 					"values": [
 						"Active",
 						"Next",
@@ -5967,7 +6203,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "False",
-					"description": "When set to True, the label and icon positions are swapped."
+					"description": "When set to True, the label and icon positions are swapped.",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "ExtendedClass",
@@ -5975,8 +6212,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -6051,7 +6289,8 @@
 					"typeRef": null,
 					"mandatory": true,
 					"default": null,
-					"description": "Number to be displayed"
+					"description": "Number to be displayed",
+					"defaultSource": null
 				},
 				{
 					"name": "Color",
@@ -6061,6 +6300,7 @@
 					"mandatory": false,
 					"default": "Entities.Color.Primary",
 					"description": "Background color of the Block",
+					"defaultSource": "oml",
 					"values": [
 						"Blue",
 						"Cyan",
@@ -6096,8 +6336,9 @@
 					"typeKind": "staticEntity",
 					"typeRef": "Size",
 					"mandatory": false,
-					"default": null,
+					"default": "NullIdentifier()",
 					"description": "Set the size.",
+					"defaultSource": "platform",
 					"values": [
 						"Medium",
 						"Small"
@@ -6111,6 +6352,7 @@
 					"mandatory": false,
 					"default": "Entities.Shape.Rounded",
 					"description": "Set the shape.",
+					"defaultSource": "oml",
 					"values": [
 						"Rounded",
 						"Sharp",
@@ -6124,7 +6366,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "False",
-					"description": "Use the lightest color version for the background and the darker color version for the text."
+					"description": "Use the lightest color version for the background and the darker color version for the text.",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "ExtendedClass",
@@ -6132,8 +6375,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [],
@@ -6145,8 +6389,8 @@
 			"platformOnly": [],
 			"eventMap": {},
 			"recipes": {
-				"openui": "_Badge1 = Block(SourceBlock: Numbers/Badge, Number: 0, Color: Entities.Color.Primary, Size: Entities.Size.Medium)",
-				"tsx": "<Badge id={\"_Badge1\"} data-source={\"Numbers/Badge\"} Number={0} Color={Entities.Color.Primary} Size={Entities.Size.Medium} />"
+				"openui": "_Badge1 = Block(SourceBlock: Numbers/Badge, Number: 0, Color: Entities.Color.Primary, Size: NullIdentifier())",
+				"tsx": "<Badge id={\"_Badge1\"} data-source={\"Numbers/Badge\"} Number={0} Color={Entities.Color.Primary} Size={NullIdentifier()} />"
 			}
 		},
 		"Numbers/Counter": {
@@ -6166,6 +6410,7 @@
 					"mandatory": false,
 					"default": "Entities.Color.Neutral0",
 					"description": "Background color of the Block",
+					"defaultSource": "oml",
 					"values": [
 						"Blue",
 						"Cyan",
@@ -6202,7 +6447,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "False",
-					"description": "If set to True, the content will be displayed vertically."
+					"description": "If set to True, the content will be displayed vertically.",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "Height",
@@ -6211,7 +6457,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "\"100\"",
-					"description": "Height of the block, use Pixel units."
+					"description": "Height of the block, use Pixel units.",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "ExtendedClass",
@@ -6219,8 +6466,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -6257,7 +6505,8 @@
 					"typeRef": null,
 					"mandatory": true,
 					"default": null,
-					"description": "Number to be displayed"
+					"description": "Number to be displayed",
+					"defaultSource": null
 				},
 				{
 					"name": "Color",
@@ -6267,6 +6516,7 @@
 					"mandatory": false,
 					"default": "Entities.Color.Primary",
 					"description": "Background color of the Block",
+					"defaultSource": "oml",
 					"values": [
 						"Blue",
 						"Cyan",
@@ -6303,7 +6553,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "False",
-					"description": "Use the lightest color version for the background and the darker color version for the text."
+					"description": "Use the lightest color version for the background and the darker color version for the text.",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "ExtendedClass",
@@ -6311,8 +6562,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -6349,7 +6601,8 @@
 					"typeRef": null,
 					"mandatory": true,
 					"default": null,
-					"description": "Progress percentage. Usually a number (integer) between 0 and 100. You can also use functions and local variables."
+					"description": "Progress percentage. Usually a number (integer) between 0 and 100. You can also use functions and local variables.",
+					"defaultSource": null
 				},
 				{
 					"name": "ProgressColor",
@@ -6359,6 +6612,7 @@
 					"mandatory": false,
 					"default": "Entities.Color.Primary",
 					"description": "The color that fills the bar, as progress goes up. By default, the progress color is the primary color you chose when creating the app.\n\nTo use an RGB color, use: TextToIdentifier(“rgb(0,0,0)“)\nTo use an HEX color, use: TextToIdentifier(“#000000”) ",
+					"defaultSource": "oml",
 					"values": [
 						"Blue",
 						"Cyan",
@@ -6396,6 +6650,7 @@
 					"mandatory": false,
 					"default": "Entities.Color.Neutral4",
 					"description": "The color of the empty part of the bar. By default,  the trail color is Neutral 4 (#DEE2E6). \n\nTo use an RGB color, use: TextToIdentifier(“rgb(0,0,0)“)\nTo use an HEX color, use: TextToIdentifier(“#000000”) ",
+					"defaultSource": "oml",
 					"values": [
 						"Blue",
 						"Cyan",
@@ -6432,7 +6687,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "12",
-					"description": "Sets the height of the ProgressBar, in pixels. By default, the thickness is \"12\"."
+					"description": "Sets the height of the ProgressBar, in pixels. By default, the thickness is \"12\".",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "OptionalConfigs",
@@ -6440,8 +6696,9 @@
 					"typeKind": "structure",
 					"typeRef": "ProgressBarOptionalConfigs",
 					"mandatory": false,
-					"default": null,
-					"description": "Sets additional parameters to customize the ProgressBar behavior and functionality."
+					"default": "empty ProgressBarOptionalConfigs",
+					"description": "Sets additional parameters to customize the ProgressBar behavior and functionality.",
+					"defaultSource": "platform"
 				},
 				{
 					"name": "ExtendedClass",
@@ -6449,8 +6706,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS. Examples:\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS. Examples:\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -6511,7 +6769,8 @@
 					"typeRef": null,
 					"mandatory": true,
 					"default": null,
-					"description": "Progress percentage. Usually a number from from 0 to 100."
+					"description": "Progress percentage. Usually a number from from 0 to 100.",
+					"defaultSource": null
 				},
 				{
 					"name": "ProgressColor",
@@ -6521,6 +6780,7 @@
 					"mandatory": false,
 					"default": "Entities.Color.Primary",
 					"description": "The color that fills the circle, as progress goes up. By default, the progress color is the primary color you chose when creating the app. \n\nTo use an RGB color, use: TextToIdentifier(“rgb(0,0,0)“)\nTo use an HEX color, use: TextToIdentifier(“#000000”) ",
+					"defaultSource": "oml",
 					"values": [
 						"Blue",
 						"Cyan",
@@ -6557,7 +6817,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "\"auto\"",
-					"description": "Set the ProgressCircle diameter (height and width). Accepts any kind of unit (px, %, vw). By default, \"100%\".\n\nExample: \"30%\""
+					"description": "Set the ProgressCircle diameter (height and width). Accepts any kind of unit (px, %, vw). By default, \"100%\".\n\nExample: \"30%\"",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "TrailColor",
@@ -6567,6 +6828,7 @@
 					"mandatory": false,
 					"default": "Entities.Color.Neutral4",
 					"description": "The color of the empty part of the circle. By default, the trail color is Neutral 4 (#DEE2E6). \n\nTo use an RGB color, use: TextToIdentifier(“rgb(0,0,0)“)\nTo use an HEX color, use: TextToIdentifier(“#000000”) ",
+					"defaultSource": "oml",
 					"values": [
 						"Blue",
 						"Cyan",
@@ -6603,7 +6865,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "8",
-					"description": "Sets the thickness of the circle that marks the progress, in pixels. By default, the thickness is \"8\"."
+					"description": "Sets the thickness of the circle that marks the progress, in pixels. By default, the thickness is \"8\".",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "OptionalConfigs",
@@ -6611,8 +6874,9 @@
 					"typeKind": "structure",
 					"typeRef": "ProgressCircleOptionalConfigs",
 					"mandatory": false,
-					"default": null,
-					"description": "Sets additional parameters to customize the ProgressCircle behavior and functionality."
+					"default": "empty ProgressCircleOptionalConfigs",
+					"description": "Sets additional parameters to customize the ProgressCircle behavior and functionality.",
+					"defaultSource": "platform"
 				},
 				{
 					"name": "ExtendedClass",
@@ -6620,8 +6884,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS. Examples:\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS. Examples:\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -6683,7 +6948,8 @@
 					"typeRef": null,
 					"mandatory": true,
 					"default": null,
-					"description": "Rating number to be displayed."
+					"description": "Rating number to be displayed.",
+					"defaultSource": null
 				},
 				{
 					"name": "RatingScale",
@@ -6692,7 +6958,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "5",
-					"description": "Rating scale that determines the number of items to be displayed. By default, the scale is \"5\".\nIf set to 1, it will behave as a 'view only' element, with IsEdit automatically set to false. \nThe parameter maximum value is 100. If the value introduced is bigger, only 100 items will be displayed. "
+					"description": "Rating scale that determines the number of items to be displayed. By default, the scale is \"5\".\nIf set to 1, it will behave as a 'view only' element, with IsEdit automatically set to false. \nThe parameter maximum value is 100. If the value introduced is bigger, only 100 items will be displayed. ",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "IsEdit",
@@ -6701,7 +6968,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "False",
-					"description": "Set to True to allow users to interact with the pattern. Default value is False."
+					"description": "Set to True to allow users to interact with the pattern. Default value is False.",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "Size",
@@ -6709,8 +6977,9 @@
 					"typeKind": "staticEntity",
 					"typeRef": "Size",
 					"mandatory": false,
-					"default": null,
+					"default": "NullIdentifier()",
 					"description": "Sets the size of the Rating pattern. There are 3 sizes available; Small, Medium, and Base. Default size is Base.",
+					"defaultSource": "platform",
 					"values": [
 						"Medium",
 						"Small"
@@ -6722,8 +6991,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -6809,7 +7079,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "1000",
-					"description": "Minimum length of time you want to wait before the OnLoadComplete event is called."
+					"description": "Minimum length of time you want to wait before the OnLoadComplete event is called.",
+					"defaultSource": "oml"
 				}
 			],
 			"placeholders": [],
@@ -6893,7 +7164,8 @@
 					"typeRef": null,
 					"mandatory": true,
 					"default": null,
-					"description": ""
+					"description": "",
+					"defaultSource": null
 				}
 			],
 			"placeholders": [],
@@ -7084,7 +7356,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "True",
-					"description": "Set the orientation of the content inside."
+					"description": "Set the orientation of the content inside.",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "ExtendedClass",
@@ -7092,8 +7365,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -7130,7 +7404,8 @@
 					"typeRef": null,
 					"mandatory": true,
 					"default": null,
-					"description": "If True, the button shows the loading spinner. If False, the button doesn't show the loading spinner."
+					"description": "If True, the button shows the loading spinner. If False, the button doesn't show the loading spinner.",
+					"defaultSource": null
 				},
 				{
 					"name": "ShowLabelOnLoading",
@@ -7139,7 +7414,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "False",
-					"description": "If True, the loading spinner displays beside the label. If False, only the loading spinner is displayed. This is the default."
+					"description": "If True, the loading spinner displays beside the label. If False, only the loading spinner is displayed. This is the default.",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "ExtendedClass",
@@ -7147,8 +7423,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the pattern. You define your custom style classes in your application using CSS. Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the pattern. You define your custom style classes in your application using CSS. Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -7205,8 +7482,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Height of the block, in pixels. If the value is empty, it will try to adjust to the parent's height."
+					"default": "0",
+					"description": "Height of the block, in pixels. If the value is empty, it will try to adjust to the parent's height.",
+					"defaultSource": "platform"
 				},
 				{
 					"name": "ExtendedClass",
@@ -7214,8 +7492,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -7259,8 +7538,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "SVG markup code, that is going to be appended on the HTML."
+					"default": "\"\"",
+					"description": "SVG markup code, that is going to be appended on the HTML.",
+					"defaultSource": "platform"
 				},
 				{
 					"name": "ExtendedClass",
@@ -7268,8 +7548,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the pattern. You define your custom style classes in your application using CSS. Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the pattern. You define your custom style classes in your application using CSS. Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [],
@@ -7320,8 +7601,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [
@@ -7358,7 +7640,8 @@
 					"typeRef": null,
 					"mandatory": true,
 					"default": null,
-					"description": "Element that will be affected by the gesture"
+					"description": "Element that will be affected by the gesture",
+					"defaultSource": null
 				},
 				{
 					"name": "PreventDefaults",
@@ -7367,7 +7650,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "True",
-					"description": "If Prevent Default should be applied "
+					"description": "If Prevent Default should be applied ",
+					"defaultSource": "oml"
 				}
 			],
 			"placeholders": [],
@@ -7481,7 +7765,8 @@
 					"typeRef": null,
 					"mandatory": true,
 					"default": null,
-					"description": "User password."
+					"description": "User password.",
+					"defaultSource": null
 				}
 			],
 			"placeholders": [],
@@ -7527,6 +7812,7 @@
 					"mandatory": true,
 					"default": null,
 					"description": "Select Facebook, Google or Apple to configure the button's UI according to brand guidelines.",
+					"defaultSource": null,
 					"values": [
 						"Apple",
 						"Facebook",
@@ -7540,7 +7826,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "False",
-					"description": "Set true to provide a button with an icon only and no label."
+					"description": "Set true to provide a button with an icon only and no label.",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "Shape",
@@ -7550,6 +7837,7 @@
 					"mandatory": false,
 					"default": "Entities.Shape.SoftRounded",
 					"description": "Set the button's shape.",
+					"defaultSource": "oml",
 					"values": [
 						"Rounded",
 						"Sharp",
@@ -7562,8 +7850,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the pattern. You define your custom style classes in your application using CSS. Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the pattern. You define your custom style classes in your application using CSS. Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [],
@@ -7602,7 +7891,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "False",
-					"description": "If set as true, then the Separator becomes vertical."
+					"description": "If set as true, then the Separator becomes vertical.",
+					"defaultSource": "oml"
 				},
 				{
 					"name": "Space",
@@ -7612,6 +7902,7 @@
 					"mandatory": false,
 					"default": "Entities.Space.Base",
 					"description": "Set the space around the Separator line.",
+					"defaultSource": "oml",
 					"values": [
 						"Base",
 						"ExtraLarge",
@@ -7631,6 +7922,7 @@
 					"mandatory": false,
 					"default": "Entities.Color.Neutral4",
 					"description": "Set the color of the Separator line.",
+					"defaultSource": "oml",
 					"values": [
 						"Blue",
 						"Cyan",
@@ -7666,8 +7958,9 @@
 					"typeKind": "basic",
 					"typeRef": null,
 					"mandatory": false,
-					"default": null,
-					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet"
+					"default": "\"\"",
+					"description": "Add custom style classes to the Pattern. You define your custom style classes in your application using CSS.Examples:\n\n- Blank - No custom styles are added (default value).\n- \"myclass\" - Adds the myclass style to the UI styles being applied.\n- \"myclass1 myclass2\" - Adds the myclass1 and myclass2 styles to the UI styles being applied.\n\nYou can also use the classes available on the OutSystems UI. For more information, see the OutSystems UI Cheat Sheet: https://outsystemsui.outsystems.com/OutsystemsUiWebsite/CheatSheet",
+					"defaultSource": "platform"
 				}
 			],
 			"placeholders": [],
@@ -7699,7 +7992,8 @@
 					"typeRef": null,
 					"mandatory": true,
 					"default": null,
-					"description": "Element that will be swipeable"
+					"description": "Element that will be swipeable",
+					"defaultSource": null
 				}
 			],
 			"placeholders": [],
@@ -7756,7 +8050,8 @@
 					"typeRef": null,
 					"mandatory": true,
 					"default": null,
-					"description": "Element that will be affected by the gesture"
+					"description": "Element that will be affected by the gesture",
+					"defaultSource": null
 				},
 				{
 					"name": "PreventDefaults",
@@ -7765,7 +8060,8 @@
 					"typeRef": null,
 					"mandatory": false,
 					"default": "True",
-					"description": "If Prevent Default should be applied "
+					"description": "If Prevent Default should be applied ",
+					"defaultSource": "oml"
 				}
 			],
 			"placeholders": [],

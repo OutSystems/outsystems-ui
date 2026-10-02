@@ -1,7 +1,8 @@
 // @ts-check
 /**
  * Block-level agent documentation for OML producers (the Model bridge):
- *   docs-ai/osui.blocks.json   one entry per composable OutSystems UI block (public, not deprecated): signature from the snapshot, the
+ *   docs-ai/osui.blocks.json   one entry per composable OutSystems UI block (public, not deprecated): signature from the snapshot
+ *                              (optional parameters without an OML default carry the platform default of their type), the
  *                              runtime pattern it drives and the parameter map (crosswalk), two recipes
  *   docs-ai/llms-blocks.txt    one card per block (≤ 250 tokens): purpose, params, slots, events, recipes
  *   docs-ai/osui.enums.json    the static entities block parameters take, with their values
@@ -10,6 +11,7 @@
 import { registry } from '../../evals/lib/registry.mjs';
 import { countTokens } from '../../evals/lib/tokens.mjs';
 import { linksFor, patternOfBlock } from '../../evals/model/lib/crosswalk.mjs';
+import { withPlatformDefault } from '../../evals/model/lib/defaults.mjs';
 import { composableBlocks, flattenBlocks } from '../../evals/model/lib/snapshot.mjs';
 
 export const BLOCK_CARD_BUDGET = 250;
@@ -49,7 +51,8 @@ export function buildBlocksManifest(ctx) {
 					p.typeKind === 'staticEntity' && p.typeRef
 						? snapshot?.staticEntities[p.typeRef]?.records
 						: undefined;
-				return records ? { ...p, values: records.map((r) => r.identifier) } : { ...p };
+				const settled = withPlatformDefault(p);
+				return records ? { ...settled, values: records.map((r) => r.identifier) } : settled;
 			}),
 			placeholders: b.placeholders,
 			events: b.events,
@@ -87,7 +90,9 @@ function shownParams(params) {
 
 /** The expression text a recipe writes for a parameter. @param {any} p */
 function recipeValue(p) {
-	if (p.default) return p.default;
+	// an OML default is an expression; a platform default is one only for basic types and identifiers
+	const expression = p.defaultSource !== 'platform' || p.typeKind === 'basic' || p.typeKind === 'staticEntity';
+	if (p.default && expression && p.default !== 'empty binary') return p.default;
 	if (p.typeKind === 'staticEntity' && p.typeRef)
 		return p.values?.length ? `Entities.${p.typeRef}.${p.values[0]}` : '…';
 	if (p.typeKind === 'basic') {
@@ -198,7 +203,7 @@ export function renderBlockCards(manifest) {
 		.map((s) => [s.module, s.platform, s.moduleVersion].filter(Boolean).join(' '))
 		.join(', ');
 	const intro = manifest.snapshots.length
-		? `One card per composable OutSystems UI block, from the OML (${sources}). Compose blocks with these signatures; never emit a pattern's markup or lifecycle calls — the block does that. Values for an \`<Entity> Identifier\` come from osui.enums.json; classes for ExtendedClass from llms-utilities.txt.`
+		? `One card per composable OutSystems UI block, from the OML (${sources}). Compose blocks with these signatures; never emit a pattern's markup or lifecycle calls — the block does that. Values for an \`<Entity> Identifier\` come from osui.enums.json; classes for ExtendedClass (Text on purpose) from llms-utilities.txt. An optional parameter shows its default: the OML's, else the platform default of its data type.`
 		: 'No block snapshot is present under evals/model; export one with osui-blocks-export (see evals/model/README.md).';
 	return `# OutSystems UI — block reference cards (OML producers)\n\n${intro}\n\n${cards.join('\n\n')}\n`;
 }
