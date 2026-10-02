@@ -1,6 +1,8 @@
 // @ts-check
 /** Aggregation, history and presentation of eval runs. */
+import { rowApplies } from './kinds.mjs';
 import { mean, round1 } from './score.mjs';
+import { CATEGORIES, rowIndex, rowsForResult } from './universe.mjs';
 
 /**
  * @typedef {object} MetricResult
@@ -16,8 +18,8 @@ import { mean, round1 } from './score.mjs';
  */
 
 /**
- * @typedef {{ scores: Record<string, number>, index: number }} TierEntry
- * @typedef {{ scores: Record<string, number>, index: number, unmeasured?: Record<string, number>, tiers?: Record<string, TierEntry> }} SuiteEntry
+ * @typedef {{ scores: Record<string, number>, index: number }} CategoryEntry
+ * @typedef {{ scores: Record<string, number>, index: number, unmeasured?: Record<string, number>, categories?: Record<string, CategoryEntry> }} SuiteEntry
  * @typedef {object} HistoryEntry
  * @property {string} label
  * @property {string} date
@@ -39,38 +41,58 @@ export function aggregate(results) {
 }
 
 /**
- * Per-tier scores and index of one suite: for every tier a metric applies to, the mean of that
- * metric's per-component scores over the components of the tier (a metric without component rows
- * counts with its own score), then the unweighted mean over those metrics. Tiers no metric applies
- * to are absent. The suite index stays the mean over metric scores; this is the view by tier.
- * @param {MetricResult[]} results
- * @param {(name: string) => string|null} kindOf tier of a component, by name
- * @param {{ id: string, present?: { appliesTo?: readonly string[], heatmap?: boolean, cell?: (row: any) => { s: number|null } } }[]} metrics the suite's metric definitions
- * @param {readonly string[]} tiers the tiers to consider, in order
- * @returns {Record<string, TierEntry>}
+ * The value of one eval for one row: the eval's row for the row id (a block the eval measures itself), else
+ * for the row's pattern, else for its stylesheet; through `present.cell` when the metric defines one.
+ * @param {MetricResult & { perComponent?: any }} result
+ * @param {{ heatmap?: boolean, cell?: (row: any) => { s: number|null } }|undefined} present
+ * @param {import('./universe.mjs').Row} row
+ * @param {ReturnType<typeof rowIndex>} index
+ * @returns {number|null}
  */
-export function tierSummary(results, kindOf, metrics, tiers) {
-	/** @type {Record<string, TierEntry>} */
+export function projectedValue(result, present, row, index) {
+	const perComponent = /** @type {any[]} */ (Object.values(result.perComponent ?? {}));
+	const candidates = [row.id, row.runtime.pattern, row.runtime.style].filter((n) => n !== null);
+	for (const name of candidates) {
+		const hit = perComponent.find((r) => r.name === name);
+		if (!hit) continue;
+		if (!rowsForResult(index, name).some((r) => r.id === row.id)) continue;
+		const s = present?.cell ? present.cell(hit).s : hit.score;
+		return typeof s === 'number' ? s : null;
+	}
+	return null;
+}
+
+/**
+ * Per-category scores and index of one suite: for every heatmap eval that applies to at least one row of the
+ * category, the mean of the eval's projected values over those rows; a non-heatmap eval counts with its own
+ * score when it applies to a row of the category; then the unweighted mean over those evals. A category no
+ * eval applies to is absent. The suite index stays the mean over metric scores; this is the view by category.
+ * @param {(MetricResult & { perComponent?: any })[]} results
+ * @param {import('./universe.mjs').Row[]} rows
+ * @param {{ id: string, present?: { appliesTo?: readonly string[], heatmap?: boolean, cell?: (row: any) => { s: number|null } } }[]} metrics
+ * @returns {Record<string, CategoryEntry>}
+ */
+export function categorySummary(results, rows, metrics) {
+	const index = rowIndex(rows);
+	/** @type {Record<string, CategoryEntry>} */
 	const out = {};
-	for (const tier of tiers) {
+	for (const category of CATEGORIES) {
+		const mine = rows.filter((r) => r.category === category);
 		/** @type {Record<string, number>} */
 		const scores = {};
 		for (const r of results) {
-			const m = metrics.find((x) => x.id === r.id);
-			const present = m?.present;
-			if (present?.appliesTo && !present.appliesTo.includes(tier)) continue;
-			const rows = /** @type {any[]} */ (Object.values(r.perComponent ?? {})).filter(
-				(row) => kindOf(row.name) === tier
-			);
-			const values = present?.heatmap
-				? rows
-						.map((row) => (present.cell ? present.cell(row).s : row.score))
-						.filter((s) => typeof s === 'number')
-				: [];
-			scores[r.id] = round1(values.length ? /** @type {number} */ (mean(values)) : r.score);
+			const present = metrics.find((x) => x.id === r.id)?.present;
+			const applicable = mine.filter((row) => rowApplies(present, row));
+			if (applicable.length === 0) continue;
+			if (!present?.heatmap) {
+				scores[r.id] = round1(r.score);
+				continue;
+			}
+			const values = applicable.map((row) => projectedValue(r, present, row, index)).filter((v) => v !== null);
+			if (values.length) scores[r.id] = round1(/** @type {number} */ (mean(values)));
 		}
 		const values = Object.values(scores);
-		if (values.length) out[tier] = { scores, index: round1(/** @type {number} */ (mean(values))) };
+		if (values.length) out[category] = { scores, index: round1(/** @type {number} */ (mean(values))) };
 	}
 	return out;
 }
@@ -118,7 +140,7 @@ export function unmeasuredCounts(results) {
 
 /**
  * The history entry of a run: identity plus, per suite, scores, index and unmeasured counts.
- * @param {{ label: string, date: string, sha: string, branch?: string, inputs?: string, suites: Record<string, { scores: Record<string, number>, index: number, results: any[], tiers?: Record<string, TierEntry> }> }} run
+ * @param {{ label: string, date: string, sha: string, branch?: string, inputs?: string, suites: Record<string, { scores: Record<string, number>, index: number, results: any[], categories?: Record<string, CategoryEntry> }> }} run
  * @returns {HistoryEntry}
  */
 export function historyEntryOf(run) {
@@ -126,7 +148,7 @@ export function historyEntryOf(run) {
 	const suites = {};
 	for (const [id, s] of Object.entries(run.suites)) {
 		suites[id] = { scores: s.scores, index: s.index, unmeasured: unmeasuredCounts(s.results) };
-		if (s.tiers) suites[id].tiers = s.tiers;
+		if (s.categories) suites[id].categories = s.categories;
 	}
 	/** @type {HistoryEntry} */
 	const entry = { label: run.label, date: run.date, sha: run.sha, suites };

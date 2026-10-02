@@ -26,10 +26,11 @@ import {
 	historyEntryOf,
 	normalizeHistoryEntry,
 	normalizeRun,
-	tierSummary,
+	categorySummary,
 	upsertHistory,
 } from './lib/results.mjs';
-import { KINDS } from './lib/kinds.mjs';
+import { registry } from './lib/registry.mjs';
+import { buildUniverse } from './lib/universe.mjs';
 import { SUITES, suiteOf } from './suites.mjs';
 import { writeDashboardData } from './tools/dashboard-data.mjs';
 import { writeHistoryReport } from './tools/report.mjs';
@@ -212,12 +213,8 @@ function main() {
 
 	const root = path.resolve(args.root ?? path.join(here, '..'));
 	const ctx = createContext(root);
-	// tier of every component by name, for the per-tier view of each suite
-	const kinds = new Map([
-		...ctx.inventory.patterns.map((p) => /** @type {[string, string]} */ ([p.name, 'pattern'])),
-		...ctx.inventory.cssComponents.map((c) => /** @type {[string, string]} */ ([c.name, c.kind])),
-	]);
-	const kindOf = (/** @type {string} */ name) => kinds.get(name) ?? null;
+	// the rows of the universe, for the per-category view of each suite
+	const universe = buildUniverse(ctx.modelSnapshots(), registry(), ctx.inventory);
 	const commit = ctx.headCommit();
 	const label = args.label ?? `run-${commit}`;
 	const selectedSuites = args.suite === 'all' ? SUITES : [suiteOf(args.suite)];
@@ -231,7 +228,7 @@ function main() {
 		const results = runMetrics(ctx, selected, args.json);
 		suites[suite.id] = {
 			...aggregate(results),
-			tiers: tierSummary(results, kindOf, suite.metrics, KINDS),
+			categories: categorySummary(results, universe, suite.metrics),
 			results,
 		};
 	}
