@@ -13,21 +13,21 @@ OutSystems UI is a browser-side library providing the TypeScript behaviors and S
 
 ## Command Quick Reference
 
-| Command                                                       | Purpose                                                                                                                                                                                    |
-| ------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `npm run setup`                                               | `npm i` + start dev server on `http://localhost:3000`                                                                                                                                      |
-| `npm run dev -- --target O11`                                 | Dev build/watch for one target (`O11` or `ODC`); omit `--target` for both                                                                                                                  |
-| `npm run build`                                               | Production build for all targets, then `lintfix` + `lint`                                                                                                                                  |
-| `npm run lint` / `lintfix` / `prettier`                       | Quality gates (lint must be zero errors _and_ zero warnings)                                                                                                                               |
-| `npm run build:tokens`                                        | Regenerate `src/scss/tokens/` from `outsystems-design-tokens` (runs automatically before `dev` and `build`)                                                                                |
-| `npm run create-osui-scss`                                    | Regenerate the per-platform SCSS entry files                                                                                                                                               |
-| `npm run storybook` / `build-storybook` / `chromatic`         | Storybook against the compiled `dist/` bundle, and its visual-test upload                                                                                                                  |
-| `npm run update-version`                                      | Interactive version bump across project files                                                                                                                                              |
-| `npm run docs` / `docs:css-api` / `docs:tokens`               | TypeDoc output into `docs/`; regenerate the Storybook CSS-API and token reference pages                                                                                                    |
-| `npm run docs:ai` / `docs:ai:check`                           | Regenerate the agent documentation under `docs-ai/` (`llms.txt` tiers, component and utility manifests, config schemas); the check fails when the committed copy is stale                  |
-| `npm run types:generate`                                      | Regenerate the `Configs` and `EventName` types of every pattern (`PatternTypes.ts`)                                                                                                        |
-| `npm test`                                                    | Unit tests of the eval suites and the docs generator (`tests/`, `evals/**/tests`)                                                                                                          |
-| `npm run evals` / `evals:gate` / `evals:doctor` / `evals:fix` | Measure the AI-friendliness, enterprise-readiness and utilities suites; gate the indices; classify new components; regenerate every generated file the gate checks (see `evals/README.md`) |
+| Command                                                       | Purpose                                                                                                                                                                                                  |
+| ------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `npm run setup`                                               | `npm i` + start dev server on `http://localhost:3000`                                                                                                                                                    |
+| `npm run dev -- --target O11`                                 | Dev build/watch for one target (`O11` or `ODC`); omit `--target` for both                                                                                                                                |
+| `npm run build`                                               | Production build for all targets, then `lintfix` + `lint`                                                                                                                                                |
+| `npm run lint` / `lintfix` / `prettier`                       | Quality gates (lint must be zero errors _and_ zero warnings)                                                                                                                                             |
+| `npm run build:tokens`                                        | Regenerate `src/scss/tokens/` from `outsystems-design-tokens` (runs automatically before `dev` and `build`)                                                                                              |
+| `npm run create-osui-scss`                                    | Regenerate the per-platform SCSS entry files                                                                                                                                                             |
+| `npm run storybook` / `build-storybook` / `chromatic`         | Storybook against the compiled `dist/` bundle, and its visual-test upload                                                                                                                                |
+| `npm run update-version`                                      | Interactive version bump across project files                                                                                                                                                            |
+| `npm run docs` / `docs:css-api` / `docs:tokens`               | TypeDoc output into `docs/`; regenerate the Storybook CSS-API and token reference pages                                                                                                                  |
+| `npm run docs:ai` / `docs:ai:check`                           | Regenerate the agent documentation under `docs-ai/` (`llms.txt` tiers, component and utility manifests, config schemas); the check fails when the committed copy is stale                                |
+| `npm run types:generate`                                      | Regenerate the `Configs` and `EventName` types of every pattern (`PatternTypes.ts`)                                                                                                                      |
+| `npm test`                                                    | Unit tests of the eval suites and the docs generator (`tests/`, `evals/**/tests`)                                                                                                                        |
+| `npm run evals` / `evals:gate` / `evals:doctor` / `evals:fix` | Measure the AI-friendliness, enterprise-readiness, utilities and model-bridge suites; gate the indices; classify new components; regenerate every generated file the gate checks (see `evals/README.md`) |
 
 There is no test runner for the library in this repository: its E2E suite lives in a separate repository, and locally there is nothing to run for the library beyond build and lint. `npm test` exercises only the repository's own tooling (the eval suites and the docs generator).
 
@@ -37,7 +37,9 @@ There is no test runner for the library in this repository: its E2E suite lives 
 `llms.txt` (index and gotchas), `llms-components.txt` (one card per pattern), `llms-patterns.txt` (CSS-only
 components, layout partials, helper classes), `llms-utilities.txt` (the utility grammar and every family),
 `llms-tokens.txt` (theme roles and `--osui-*` knobs), plus `osui.components.json`, `osui.utilities.json` and
-the config schemas under `schema/configs/`. `AGENTS.md` is the vendor-neutral entry point. Comments are TSDoc
+the config schemas under `schema/configs/`. For OML producers (the Model bridge, Service Studio): `llms-blocks.txt` (one card per
+OutSystems UI block, from the snapshot `evals/model/osui.blocks.json` exported from the module OML), `osui.blocks.json`,
+`osui.enums.json` and `osui.icons.json`; lines marked `[runtime-only]` concern the browser runtime only. `AGENTS.md` is the vendor-neutral entry point. Comments are TSDoc
 (see `.claude/rules/typescript.md` §7): the generator and the evals read them, so a new function or prop needs
 its comment before `docs-ai/` regenerates.
 

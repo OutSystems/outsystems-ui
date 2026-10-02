@@ -10,7 +10,9 @@ conventions; this file is the short path to the right context.
 2. `docs-ai/llms-components.txt` (one card per pattern), `docs-ai/llms-patterns.txt` (CSS-only components,
    layout partials, helper classes), `docs-ai/llms-utilities.txt` (the utility grammar and every family),
    `docs-ai/llms-tokens.txt` (theme roles and `--osui-*` knobs). Machine-readable: `docs-ai/osui.components.json`,
-   `docs-ai/osui.utilities.json`, config schemas under `docs-ai/schema/configs/`.
+   `docs-ai/osui.utilities.json`, config schemas under `docs-ai/schema/configs/`. An agent writing OML (the Model
+   bridge dialects, Service Studio) composes blocks from `docs-ai/llms-blocks.txt` and `osui.enums.json` /
+   `osui.icons.json` instead; the lines marked `[runtime-only]` do not apply to it.
 3. `CLAUDE.md`, `ARCHITECTURE.md`, `CSS-ARCHITECTURE.md`, `.claude/rules/typescript.md`, `.claude/rules/scss.md`.
 
 ## Commands
