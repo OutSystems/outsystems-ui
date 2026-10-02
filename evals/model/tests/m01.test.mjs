@@ -135,3 +135,17 @@ test('M01 is a heatmap eval over block rows and its table carries Missing and Do
 	assert.equal(M01.present.cell(row).s, 50);
 	assert.match(M01.present.cell(row).h, /Missing: params 1\/2\. Do: OML: describe and default the parameters\./);
 });
+
+test('the pattern facet is settled by the registry: a stylesheet-linked block with API hints is complete', () => {
+	const entry = {
+		params: [],
+		placeholders: [],
+		events: [],
+		recipes: { openui: 'x', tsx: 'y' },
+		pattern: null,
+		patternSource: 'registry',
+		hints: ['TooltipAPI'],
+	};
+	const r = scoreBlockFacets({ ...block, inputParameters: [], placeholders: [], events: [] }, entry);
+	assert.equal(r.facets.pattern, 100);
+});

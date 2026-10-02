@@ -53,9 +53,30 @@ test('patternOfBlock ignores stylesheet entries: a block linked from a CSS-only 
 		public: true,
 		patternHints: { apiCalls: [] },
 	});
-	assert.deepEqual(patternOfBlock(block('Content', 'Card'), ['Tooltip'], registry), { pattern: null, source: null });
+	assert.deepEqual(patternOfBlock(block('Content', 'Card'), ['Tooltip'], registry), {
+		pattern: null,
+		source: 'registry',
+	});
 	assert.deepEqual(patternOfBlock(block('Content', 'Tooltip'), ['Tooltip'], registry), {
 		pattern: 'Tooltip',
 		source: 'registry',
 	});
+});
+
+test('patternOfBlock never falls back to an API hint for a block the registry links from a stylesheet', () => {
+	const registry = {
+		components: {
+			card: { kind: 'component', block: [{ flow: 'Content', name: 'Card' }] },
+			Tooltip: { kind: 'pattern' },
+		},
+	};
+	const block = {
+		flow: 'Content',
+		name: 'Card',
+		key: 'Content/Card',
+		label: 'Content/Card',
+		public: true,
+		patternHints: { apiCalls: ['TooltipAPI'] },
+	};
+	assert.deepEqual(patternOfBlock(block, ['Tooltip'], registry), { pattern: null, source: 'registry' });
 });

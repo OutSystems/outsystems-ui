@@ -202,3 +202,72 @@ test('the page renders a v5 data set with a platform category only (no snapshot)
 	assert.match(doc.getElementById('findings').innerHTML, /100 = all\./);
 	assert.match(doc.getElementById('findings').innerHTML, /<th>Missing<\/th><th>Do<\/th>/);
 });
+
+test('the heatmap keys rows by id and labels the first column Row, so two platforms never collide', async () => {
+	const row = (id, platform) => ({
+		n: 'Tooltip',
+		id,
+		k: 'pattern',
+		c: 'component',
+		f: 'Content',
+		rt: { p: 'Tooltip', s: null },
+		cells: { X01: { s: 50, w: 'ok', h: platform } },
+	});
+	const data = {
+		v: 5,
+		generated: '2026-10-02T00:00:00.000Z',
+		latest: { label: 'only', sha: 'abc', date: '2026-10-02T00:00:00.000Z' },
+		history: [
+			{
+				label: 'only',
+				date: '2026-10-02T00:00:00.000Z',
+				sha: 'abc',
+				suites: { x: { scores: { X01: 50 }, index: 50 } },
+			},
+		],
+		suites: [
+			{
+				id: 'x',
+				name: 'X',
+				indexName: 'X Index',
+				describe: 'd',
+				tone: 0,
+				evals: [
+					{
+						id: 'X01',
+						name: 'One',
+						criterion: 'c',
+						formula: 'f',
+						movable: true,
+						cls: 'movable',
+						score: 50,
+						base: 50,
+						summary: 's',
+						scope: 'sc',
+						appliesTo: ['pattern'],
+						advice: ['a'],
+						unmeasured: { n: 0, items: [] },
+						notApplicable: 0,
+						unmeasuredHint: '',
+					},
+				],
+				heatmapEvals: ['X01'],
+				baseline: { label: 'only', sha: 'abc', date: '2026-10-02T00:00:00.000Z', index: 50 },
+				latest: { index: 50 },
+				extra: {},
+			},
+		],
+		components: [row('Content/Tooltip (O11)', 'O11'), row('Content/Tooltip (ODC)', 'ODC')],
+		kindTexts: { pattern: 'p', component: 'c', layout: 'l', utility: 'u', block: 'b' },
+		categoryLabels: { component: 'components (OML blocks)', platform: 'platform & layout styles' },
+	};
+	const doc = await renderWith(data);
+	const body = doc.querySelector('#heat tbody').innerHTML;
+	assert.ok(
+		body.includes('data-n="Content/Tooltip (O11)"') && body.includes('data-n="Content/Tooltip (ODC)"'),
+		'rows are keyed by id'
+	);
+	assert.ok(body.includes('(O11)') && body.includes('(ODC)'), 'the platform suffix is visible');
+	assert.ok(doc.querySelector('#heat thead').innerHTML.includes('>Row<'), 'the first column is Row');
+	assert.ok(!doc.querySelector('#heat thead').innerHTML.includes('>Component<'));
+});

@@ -626,13 +626,14 @@ export function mount(document, window, localStorage, EMBEDDED) {
 		const kindEl = document.getElementById('heat-kind');
 		const weakEl = document.getElementById('heat-weak');
 		function value(r, key) {
-			if (key === 'n' || key === 'k') return r[key];
+			if (key === 'n') return r.id;
+			if (key === 'k') return `${r.c} ${r.k}`;
 			if (key === 'mean') return r.mean;
 			return r.vals[ids.indexOf(key)].s;
 		}
 		function header() {
 			const heads = [
-				{ key: 'n', label: 'Component' },
+				{ key: 'n', label: 'Row' },
 				{ key: 'k', label: 'Category' },
 				...ids.map((id) => ({ key: id, label: id, title: lookup[id]?.e.name || id })),
 				{ key: 'mean', label: 'Mean' },
@@ -662,20 +663,22 @@ export function mount(document, window, localStorage, EMBEDDED) {
 		function row(r) {
 			const mean = r.mean === null ? '—' : f1(r.mean);
 			const cells = r.vals.map((v) => cell(v)).join('');
-			const flow = r.f ? ` <span class="faint">${esc(r.f)}</span>` : '';
+			// a block row shows its name, its flow and, with several snapshots, its platform suffix from the id
+			const suffix = r.id.endsWith(')') ? ` ${r.id.slice(r.id.lastIndexOf('('))}` : '';
+			const flow = r.f ? ` <span class="faint">${esc(r.f)}${esc(suffix)}</span>` : '';
 			const head = `<td class="name">${esc(r.n)}${flow}</td><td class="kind">${esc(categoryLabel(r.c))}${runtimeNote(r)}</td>`;
 			const tail = `<td class="cell mean" style="${shade(r.mean)}">${mean}</td>`;
-			const open = expanded.has(r.n);
-			return `<tr class="row" tabindex="0" data-n="${esc(r.n)}" aria-expanded="${open}">${head}${cells}${tail}</tr>${open ? detail(r) : ''}`;
+			const open = expanded.has(r.id);
+			return `<tr class="row" tabindex="0" data-n="${esc(r.id)}" aria-expanded="${open}">${head}${cells}${tail}</tr>${open ? detail(r) : ''}`;
 		}
 		function compare(a, b) {
 			const va = value(a, heatSort.key);
 			const vb = value(b, heatSort.key);
-			if (va === null && vb === null) return a.n.localeCompare(b.n);
+			if (va === null && vb === null) return a.id.localeCompare(b.id);
 			if (va === null) return 1;
 			if (vb === null) return -1;
 			const c = typeof va === 'string' ? va.localeCompare(vb) : va - vb;
-			return (heatSort.dir === 'asc' ? c : -c) || a.n.localeCompare(b.n);
+			return (heatSort.dir === 'asc' ? c : -c) || a.id.localeCompare(b.id);
 		}
 		function draw() {
 			header();
@@ -686,7 +689,7 @@ export function mount(document, window, localStorage, EMBEDDED) {
 			const shown = rows
 				.filter(
 					(r) =>
-						(!q || r.n.toLowerCase().includes(q)) &&
+						(!q || r.id.toLowerCase().includes(q) || r.n.toLowerCase().includes(q)) &&
 						(kind === 'all' || r.c === kind) &&
 						(!weak || (r.min !== null && r.min < 60))
 				)

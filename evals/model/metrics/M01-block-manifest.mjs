@@ -41,7 +41,9 @@ export function scoreBlockFacets(block, entry) {
 		placeholders: ratio(placeholdersDone, block.placeholders.length),
 		events: ratio(eventsDone, block.events.length),
 		recipes: recipes / 2,
-		pattern: entry.pattern !== null || (entry.hints ?? []).length === 0 ? 1 : 0,
+		// settled by the registry (a pattern link, or a stylesheet link that says the block drives no pattern), else no hint left open
+		pattern:
+			entry.patternSource === 'registry' || entry.pattern !== null || (entry.hints ?? []).length === 0 ? 1 : 0,
 	};
 	/** @type {Record<string, [number, number]>} */
 	const counts = {
