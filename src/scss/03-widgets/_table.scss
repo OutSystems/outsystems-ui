@@ -138,96 +138,24 @@
 	}
 }
 
-/* enable the horizontal scroll when has the utility class */
-///
-.tablet {
-	.overflow-horizontal {
-		.table {
-			overflow-x: auto;
-		}
-	}
-}
-
 ///
 .phone,
 .tablet {
-	div:not(.overflow-horizontal) {
-		& > .table:not(.table-no-responsive) {
-			word-break: break-all;
-		}
-	}
-
 	.table {
 		th {
 			width: 100%;
 		}
 
-		&-no-responsive {
-			overflow-x: auto;
-			word-break: break-all;
+		overflow-x: auto;
 
-			// Service Studio Preview
-			& {
-				-servicestudio-word-break: normal;
-			}
-		}
-
-		&:not(.table-no-responsive) {
-			overflow: hidden;
-
-			thead {
-				display: none;
-
-				// Service Studio Preview
-				& {
-					-servicestudio-display: none;
-				}
-			}
-
-			tr,
-			td {
-				display: block;
-
-				// Service Studio Preview
-				& {
-					-servicestudio-word-break: normal;
-				}
-			}
-
-			tr {
-				border-block-end: variables.$token-border-size-025 solid var(--color-border);
-			}
-
-			td {
-				border-block-end: 0;
-				display: flex;
-				height: auto;
-				position: relative;
-				text-align: start !important;
-				width: 100% !important;
-
-				&:before {
-					content: attr(data-header);
-					display: block;
-					font-weight: bold;
-					margin-inline-end: 10px;
-					max-width: 110px;
-					min-width: 110px;
-					word-break: break-word;
-					white-space: normal;
-				}
-
-				&:not([data-header]) {
-					&:before {
-						display: none;
-					}
-				}
-			}
+		// Service Studio Preview
+		& {
+			-servicestudio-word-break: normal;
 		}
 	}
 
 	.layout-native {
-		.table:not(.table-responsive) {
+		.table {
 			thead {
 				display: table-header-group;
 			}
@@ -244,11 +172,6 @@
 				padding-inline: variables.$token-scale-600;
 				vertical-align: inherit;
 				width: auto !important;
-
-				// Service Studio Preview
-				& {
-					-servicestudio-word-break: break-all;
-				}
 			}
 
 			td:before {
@@ -256,43 +179,30 @@
 			}
 		}
 	}
-
-	.layout:not(.layout-native) .table:not(.table-no-responsive) tbody {
-		display: block;
-		width: 100%;
-	}
 }
 
 ///
 .phone {
 	.table {
-		&:not(.table-responsive) {
-			display: block;
-			overflow: auto;
-			position: relative;
+		display: block;
+		overflow: auto;
+		position: relative;
 
-			// Service Studio Preview
-			& {
-				-servicestudio-display: table;
-			}
+		// Service Studio Preview
+		& {
+			-servicestudio-display: table;
 		}
+		
 	}
 
 	.layout-native {
 		.table {
-			&:not(.table-responsive) {
-				td:before {
-					display: none;
-				}
+			td:before {
+				display: none;
 			}
 		}
 	}
 }
-
-/* ============================================================================= */
-/* Table > td */
-/* ============================================================================= */
-///td
 
 // Accessibility ------------------------------------------------------------------
 ///
