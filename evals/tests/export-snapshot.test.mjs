@@ -64,3 +64,23 @@ test('localOml finds a .oml file nested in a subfolder of the local folder', () 
 	assert.equal(localOml(dir), path.join(dir, '.oml', 'OutSystems UI.oml'));
 	fs.rmSync(dir, { recursive: true, force: true });
 });
+
+test('exporterDir finds the exporter beside the repository or beside the worktrees folder, or honours the env variable', async () => {
+	const { exporterDir } = await import('../tools/export-snapshot.mjs');
+	const base = fs.mkdtempSync(path.join(os.tmpdir(), 'osui-exp-'));
+	const root = path.join(base, 'repos.worktrees', 'branch');
+	fs.mkdirSync(root, { recursive: true });
+	assert.throws(() => exporterDir(root, {}), /set OSUI_BLOCKS_EXPORT/);
+	fs.mkdirSync(path.join(base, 'osui-blocks-export'));
+	fs.writeFileSync(path.join(base, 'osui-blocks-export', 'osui-blocks-export.csproj'), '<Project/>');
+	assert.equal(
+		exporterDir(root, {}),
+		path.join(base, 'osui-blocks-export'),
+		'two levels up, beside the worktrees folder'
+	);
+	assert.equal(
+		exporterDir(root, { OSUI_BLOCKS_EXPORT: path.join(base, 'osui-blocks-export') }),
+		path.join(base, 'osui-blocks-export')
+	);
+	fs.rmSync(base, { recursive: true, force: true });
+});
