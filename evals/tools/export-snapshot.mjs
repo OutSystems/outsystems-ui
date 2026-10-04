@@ -23,16 +23,28 @@ import { insideDir } from '../lib/paths.mjs';
 export const LOCAL_DIR = 'evals/model/local';
 export const SNAPSHOT = 'evals/model/osui.blocks.json';
 
+/** Every `.oml` file under a folder, any depth. @param {string} dir */
+function omlFiles(dir) {
+	/** @type {string[]} */
+	const out = [];
+	for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+		const file = insideDir(dir, entry.name);
+		if (entry.isDirectory()) out.push(...omlFiles(file));
+		else if (entry.name.toLowerCase().endsWith('.oml')) out.push(file);
+	}
+	return out;
+}
+
 /**
- * The one `.oml` file of the local folder, null when the folder is missing or empty.
+ * The one `.oml` file of the local folder (any depth), null when the folder is missing or holds none.
  * @param {string} dir
  */
 export function localOml(dir) {
 	if (!fs.existsSync(dir)) return null;
-	const omls = fs.readdirSync(dir).filter((f) => f.toLowerCase().endsWith('.oml'));
+	const omls = omlFiles(dir);
 	if (omls.length === 0) return null;
 	if (omls.length > 1) throw new Error(`${dir} holds ${omls.length} .oml files; keep one .oml in the local folder`);
-	return insideDir(dir, omls[0]);
+	return omls[0];
 }
 
 /**
