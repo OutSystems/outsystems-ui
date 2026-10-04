@@ -10,7 +10,7 @@
  *   node evals/tools/export-snapshot.mjs [--commit <40-hex>] [--platform ODC|O11]   (npm run evals:model:export)
  *
  * The exporter is the .NET tool osui-blocks-export, kept outside this repository: its project directory is
- * read from OSUI_BLOCKS_EXPORT, else ../osui-blocks-export next to the repository.
+ * read from OSUI_BLOCKS_EXPORT, else ../osui-blocks-export next to the repository or next to its worktrees folder.
  */
 import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
@@ -62,6 +62,25 @@ export function exportPlan({ local, source, platform, out, commit }) {
 	return { from: 'github', args: ['--github', `${repository}@${sha}:${file}`, '--platform', platform, '-o', out] };
 }
 
+/**
+ * The exporter's project directory: OSUI_BLOCKS_EXPORT, else `osui-blocks-export` next to the repository or
+ * next to the worktrees folder a checkout may live in.
+ * @param {string} root
+ * @param {Record<string, string|undefined>} [env]
+ */
+export function exporterDir(root, env = process.env) {
+	const candidates = env.OSUI_BLOCKS_EXPORT
+		? [env.OSUI_BLOCKS_EXPORT]
+		: [path.resolve(root, '..', 'osui-blocks-export'), path.resolve(root, '..', '..', 'osui-blocks-export')];
+	const found = candidates.find((dir) => fs.existsSync(path.join(dir, 'osui-blocks-export.csproj')));
+	if (!found) {
+		throw new Error(
+			`exporter not found at ${candidates.join(' or ')}: set OSUI_BLOCKS_EXPORT to the osui-blocks-export project directory`
+		);
+	}
+	return found;
+}
+
 /** @param {string[]} argv */
 function parseArgs(argv) {
 	/** @type {{ commit?: string, platform: string }} */
@@ -81,12 +100,7 @@ function main() {
 	const source = fs.existsSync(snapshotFile) ? JSON.parse(fs.readFileSync(snapshotFile, 'utf8')).source : null;
 	const local = localOml(insideDir(root, LOCAL_DIR));
 	const plan = exportPlan({ local, source, platform: args.platform, out: snapshotFile, commit: args.commit });
-	const exporter = process.env.OSUI_BLOCKS_EXPORT ?? path.resolve(root, '..', 'osui-blocks-export');
-	if (!fs.existsSync(path.join(exporter, 'osui-blocks-export.csproj'))) {
-		throw new Error(
-			`exporter not found at ${exporter}: set OSUI_BLOCKS_EXPORT to the osui-blocks-export project directory`
-		);
-	}
+	const exporter = exporterDir(root);
 	process.stdout.write(
 		plan.from === 'local'
 			? `exporting the local OML ${path.relative(root, /** @type {string} */ (local))} (iteration: do not commit this snapshot)\n`
