@@ -1,0 +1,65 @@
+/*!
+ * OutSystems platform layout helpers — STORYBOOK-ONLY VENDORED COPY.
+ *
+ * ─── What this is ────────────────────────────────────────────────────────────
+ * Every OutSystems app loads `css/_Basic.css` first, ahead of the widget base
+ * layer (platform-core.css) and the theme. It owns the widget-grid helper
+ * classes the platform stamps on rendered blocks and containers — `.OSInline`
+ * (a container's Width set to "auto"/inline), `.OSFillParent` (Width "fill
+ * parent"), `.OSBlockWidget` (the wrapper around every block instance). Stories
+ * that reproduce runtime markup carry these classes, and without this layer they
+ * would lay out differently from the app (e.g. the PasswordPolicy icons overlap
+ * their labels and the ProviderLoginButton name wraps onto a second line).
+ *
+ * `preview-head.html` links this file as `/platform/platform-basic.css` before
+ * platform-core.css and the OUI stylesheet, mirroring the runtime order
+ * (_Basic.css → OutSystemsReactWidgets.css → OutSystemsUI.css), so OUI rules
+ * such as `button.OSFillParent { display: inline-flex }` still win.
+ *
+ * ─── Provenance ──────────────────────────────────────────────────────────────
+ * Copied from the `_Basic.css` an ODC app served on 2026-10-04 (OutSystems UI
+ * 3.0.0). Only the grid-helper rules are kept: the FeedbackMessage @font-face,
+ * the body / screen-container resets and the screen-transition classes are left
+ * out because no story exercises them.
+ *
+ * ─── Scope and maintenance ───────────────────────────────────────────────────
+ * Storybook-only, like platform-core.css (see docs-internal/adr/ADR-0009). Do not
+ * hand-tune values here — this file is a faithful copy of the platform baseline.
+ */
+.OSFillParent {
+	display: block;
+	width: 100%;
+}
+table.OSFillParent {
+	display: table;
+}
+input.OSFillParent,
+button.OSFillParent,
+select.OSFillParent,
+textarea.OSFillParent {
+	display: inline-block;
+	box-sizing: border-box;
+}
+.OSInline {
+	display: inline-block;
+	vertical-align: top;
+}
+table.OSInline {
+	display: inline-table;
+}
+.OSAutoMarginTop {
+	margin-top: 10px;
+}
+div[class*='ThemeGrid_Width'] {
+	vertical-align: top;
+}
+[class*='ThemeGrid_Width'] {
+	display: inline-block;
+	box-sizing: border-box;
+}
+.ThemeGrid_Container {
+	box-sizing: border-box;
+}
+.OSBlockWidget {
+	display: inline;
+}
