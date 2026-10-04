@@ -56,3 +56,11 @@ test('localOml finds the one .oml file of the local folder, or null', () => {
 	assert.equal(localOml(path.join(dir, 'missing')), null, 'a missing folder means GitHub');
 	assert.equal(LOCAL_DIR, 'evals/model/local');
 });
+
+test('localOml finds a .oml file nested in a subfolder of the local folder', () => {
+	const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'osui-local-nested-'));
+	fs.mkdirSync(path.join(dir, '.oml'));
+	fs.writeFileSync(path.join(dir, '.oml', 'OutSystems UI.oml'), 'oml');
+	assert.equal(localOml(dir), path.join(dir, '.oml', 'OutSystems UI.oml'));
+	fs.rmSync(dir, { recursive: true, force: true });
+});
