@@ -14,14 +14,22 @@ exported). The evals, the block cards and the doctor read the **composable** set
 `DEPRECATED_*` and not the documentation-only `Licenses/Licenses` (91 today); the others stay in the file and are
 reported as not applicable.
 
-Refresh it with the exporter (`osui-blocks-export`, a .NET console tool kept outside this repository; it
-needs .NET 10, the OutSystems Azure NuGet feed and GitHub CLI):
+Refresh it with `npm run evals:model:export` (`evals/tools/export-snapshot.mjs`), which runs the exporter
+(`osui-blocks-export`, a .NET console tool kept outside this repository: `OSUI_BLOCKS_EXPORT` or
+`../osui-blocks-export`; it needs .NET 10, the OutSystems Azure NuGet feed and GitHub CLI):
 
-    osui-blocks-export --github OutSystems/OutSystems.Tenant.Starter.Apps@<commit>:src/10_Base/OutSystemsUI.oml --platform ODC -o evals/model/osui.blocks.json
+    npm run evals:model:export                      # GitHub at the commit the snapshot pins
+    npm run evals:model:export -- --commit <40-hex>  # GitHub at another commit
     npm run docs:ai && npm run evals -- --label <name>
 
 A branch name is refused; `source.origin` records the commit, blob SHA and SHA-256. The snapshot is a measured
 input: a new file records a run.
+
+**Iterating on a fixed OML.** Drop the module as the one `.oml` file of `evals/model/local/` (git-ignored) and
+run the same command: the local file is exported instead of GitHub, and the snapshot's `source.origin` names no
+repository. Run the docs and the evals as usual to see what the fix moves; remove the file to return to GitHub.
+The snapshot test refuses a repository-less snapshot unless a local OML is present, so an iteration snapshot
+is not committed by accident.
 
 ## The evals
 

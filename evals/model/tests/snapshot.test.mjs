@@ -236,3 +236,17 @@ test('URLs are Text on purpose and Binary Data is a precise type', async () => {
 	);
 	assert.equal(isFreeText({ name: 'Anything', typeKind: 'other', type: 'Object' }), true, 'an Object stays a guess');
 });
+
+test('the committed snapshot comes from GitHub, unless a local OML is being iterated on', async () => {
+	const { localOml, LOCAL_DIR } = await import('../../tools/export-snapshot.mjs');
+	const path = await import('node:path');
+	const { fileURLToPath } = await import('node:url');
+	const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..', '..');
+	for (const s of loadSnapshots()) {
+		if (localOml(path.join(root, LOCAL_DIR))) continue; // iterating on a fixed OML: a local snapshot is expected
+		assert.ok(
+			s.source.origin.repository,
+			`${s.file}: a snapshot exported from a local OML is for iteration, not for committing`
+		);
+	}
+});
