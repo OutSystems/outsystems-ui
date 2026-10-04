@@ -13090,10 +13090,6 @@ html[data-uieditorversion^="1"] .osui-tabs__preview--is-active::after{
   display:none;
   -servicestudio-display:none !important;
 }
-.btn.btn-provider-login-logo svg{
-  height:100%;
-  width:100%;
-}
 .btn.btn-provider-login.btn-small{
   padding:0 16px;
 }
@@ -13113,6 +13109,10 @@ html[data-uieditorversion^="1"] .osui-tabs__preview--is-active::after{
   border-radius:50%;
   height:20px;
   width:20px;
+}
+.btn.btn-provider-login .btn-provider-login-logo svg{
+  height:100%;
+  width:100%;
 }
 .btn.btn-provider-login .btn-provider-login-text{
   color:var(--text-color-neutral-7, var(--color-neutral-7));
