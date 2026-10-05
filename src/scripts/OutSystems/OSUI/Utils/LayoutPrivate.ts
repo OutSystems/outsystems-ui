@@ -84,23 +84,6 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 	}
 
 	/**
-	 * Function used to set the RTL observer
-	 *
-	 * @param callback
-	 * @returns
-	 */
-	// eslint-disable-next-line @typescript-eslint/naming-convention
-	export function RTLObserver(callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): void {
-		console.warn(
-			`This method is deprecated. Use instead the API OSFramework.OSUI.Event.DOMEvents.Observers.GlobalObserverManager.Instance.addHandler`
-		);
-		OSFramework.OSUI.Event.DOMEvents.Observers.GlobalObserverManager.Instance.addHandler(
-			OSFramework.OSUI.Event.DOMEvents.Observers.ObserverEvent.RTL,
-			callback
-		);
-	}
-
-	/**
 	 * Function used to Set and Update the Device Classes and CSS inline variables to body
 	 *
 	 * @param IsWebApp

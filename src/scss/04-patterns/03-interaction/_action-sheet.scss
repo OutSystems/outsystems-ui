@@ -123,8 +123,6 @@
 			--osui-btn-border-radius: 0;
 			--osui-btn-color: var(--osui-action-sheet-color);
 			--osui-btn-height: #{variables.$token-scale-1100};
-			--osui-btn-hover-background: #{variables.$token-bg-neutral-subtlest-hover};
-			--osui-btn-active-background: #{variables.$token-bg-neutral-subtlest-press};
 
 			@include apply-typography(variables.$token-body-action-sm);
 
@@ -146,8 +144,6 @@
 			--osui-btn-border-radius: var(--osui-action-sheet-border-radius);
 			--osui-btn-color: var(--osui-action-sheet-cancel-color);
 			--osui-btn-height: #{variables.$token-scale-1100};
-			--osui-btn-hover-background: #{variables.$token-bg-neutral-subtlest-hover};
-			--osui-btn-active-background: #{variables.$token-bg-neutral-subtlest-press};
 
 			@include apply-typography(variables.$token-body-action-sm);
 
