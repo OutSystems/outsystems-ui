@@ -26,15 +26,38 @@ Neither half is quotable without the other. The classic control run alone reattr
 records** to causes that have nothing to do with the theme. The suite is **not** flaky: 291 of 292
 failing scenarios reproduced across two consecutive passes (99.7%), with retries disabled.
 
-## 3. What we need, and from whom
+## 3. Action items
 
-| Ask | Who | Detail |
-|---|---|---|
-| **Q12 — verify the Submenu underline** | Whoever owns Submenu design | The header's hover/active underline is **gone** on the new theme — the border does not render at all. It is the one unresolved candidate in three passes, and it is **not yet established whether it is a bug or an intended redesign**. Verify, do not assume: check the ROU-12876 / ROU-12925 Figma first, then the component's SCSS history; escalate only if both are silent |
-| **Q1 — classic-theme visual coverage** | The team | Left **deliberately open**. The old WebDriverIO visual suite has been unable to execute since 2026-01-19 and the Applitools licence was cut in 2024, so the real choice is **resurrect / replace / accept a two-year-old loss**, not "delete live coverage". The evidence in ADR-0011 points at *accept*, but the call is the team's |
-| **Q9 and D7** | Whoever owns the tests repo's CI | **D7:** `--legacy` filters nothing — 37% of the failure list is `@legacy` rows driven against current components, so **no failure count is interpretable until it is fixed**. **Q9:** the functional PR gate's template reference does not resolve on `outsystems-ui-tests@dev` and may not have compiled since 2026-08-07. One look at the pipeline's last successful run settles it |
+**No Jira tickets have been filed** — this spike delivers recommendations only. Sizes are rough and
+relative. **A0a and A0b come first**: until they are done, every failure count is distorted and the
+urgency of everything else is unknown.
 
-No Jira tickets have been filed — this spike delivers recommendations only.
+**Three rows need a human answer rather than engineering work — A1, A12 and A0b. They are the reason
+this page exists.**
+
+| # | Action | Owner | Size |
+|---|---|---|---|
+| **A0a** | **D7 — fix `--legacy`, which filters nothing.** 37% of the failure list is `@legacy` rows driven against current components, so **no failure count is interpretable until this is fixed** | Tests-repo CI owner | S |
+| **A0b** | **Q9 — does the functional PR gate still compile?** Its template reference does not resolve on `outsystems-ui-tests@dev` and may not have compiled since 2026-08-07. One look at the pipeline's last successful run settles it | Tests-repo CI owner | XS |
+| **A1** | **Q12 — verify the Submenu underline.** The header's hover/active underline is **gone** on the new theme — the border does not render at all. The one unresolved candidate in three passes, and it is **not established whether it is a bug or an intended redesign**. Verify, do not assume: ROU-12876 / ROU-12925 Figma first, then the component's SCSS history; escalate only if both are silent | Submenu design owner | S |
+| **A2** | Convert the 29 `ExtendedClass` scenarios to a class check. Mechanical, independent, cheapest large win — a good first slice | QE | M |
+| **A3** | Rework the colour-as-state and position-as-behaviour assertions | QE | L |
+| **A4** | Re-express the `Color` API scenarios against the runtime-resolved token | QE | M |
+| **A5** | Delete the residue that is genuinely appearance-only | QE | S |
+| **A6** | Hygiene track — harness defects, stale locators, turn `strict` on (613 hidden errors), wire a type-check into CI | Tests-repo owner | L |
+| **A7** | Re-run the suite with `--legacy` fixed, against a module built from current `dev` | QE | M |
+| **A8** | Add `classic-theme` to the visual-surface path list in `chromatic.yaml`, so a classic-only PR stops silently disarming Chromatic's capture guard | OSUI | XS |
+| **A9** | Record in the port workflow that the manual Storybook Theme-toggle check is the **only** gate on a port | OSUI | XS |
+| **A10** | Notify **ROU-12962** — its acceptance criterion requires an Applitools visual run that **cannot execute** | Spike author | XS |
+| **A11** | Notify **ROU-13059** — four directly applicable determinism fixes are available | Spike author | XS |
+| **A12** | **Q1 — classic-theme visual coverage.** Deliberately open. The old visual suite has been unable to execute since 2026-01-19 and the Applitools licence was cut in 2024, so the real choice is **resurrect / replace / accept a two-year-old loss**, not "delete live coverage". The evidence points at *accept*; the call is **the team's**. Best closed before A2 | **The team** | — |
+| **A13** | **Q14 — do we want automated visual coverage of the real composed page?** The one gap with no owner: a platform- or app-level CSS change that restyles an OSUI component produces no PR in either repository, so no gate fires. Needs a team outside OSUI | TBD | — |
+| **A14** | **Q15 — who owns the O11 a11y visual impact?** Decide before ROU-13032 closes out of PO Acceptance and takes the question with it | TBD | — |
+
+Three standing practices alongside the above: a **scenario-count ratchet** across A2–A5 so a bulk
+edit cannot delete a scenario where only an assertion was meant to go; **harvest the determinism
+fixes**; and **keep the classic-theme control run as the default first step of any theme triage** —
+it reattributed 182 of 337 records in a single pass and needs no new infrastructure.
 
 ## 4. What changes if you are writing a test tomorrow
 
