@@ -4,8 +4,8 @@
 
 ## Status
 
-**Accepted** for the ownership split (D1), the deliverable shape (D3), the DatePicker closure (D4)
-and the evaluation of the Playwright rewrite (D6).
+**Accepted** for the ownership split (D1), the DatePicker closure (D4) and the evaluation of the
+Playwright rewrite (D6).
 
 **D2 — classic-theme visual coverage — is deliberately left open** (Q1). The evidence in this
 document points at one option, but closing the question is the team's call, not this spike's.
@@ -17,7 +17,7 @@ one look at an Azure DevOps definition, which the work behind this ADR could not
 
 ### C1. The theme shipped; the tests did not move with it
 
-[ROU-12872](https://outsystemsrd.atlassian.net/browse/ROU-12872) merged the token-based theme into
+ROU-12872 merged the token-based theme into
 `dev` and said so plainly in its own closing notes: *"Automated Tests were not updated yet, as there
 some architectural decisions we might need to make. A spike was created to tackle this."* This ADR
 is that spike's output.
@@ -149,17 +149,7 @@ replicate it?"*, because there is no live coverage to delete.
 - **Option C: port-scoped snapshots** — snapshot only when a port changes `classic-theme/`.
   *Pros:* none that survive scrutiny. *Cons:* **foreclosed**, not merely suspect. See D2.
 
-### C. Deliverable shape
-
-- **Option 1: an ADR alone.** *Pros:* tightest coupling to the code the decision governs.
-  *Cons:* QE, design and PO do not read `docs-internal/`.
-- **Option 2: an ADR plus a short Confluence page**, each for the audience it serves — the ADR
-  carries reasoning and alternatives, the page carries conclusions and asks. *Chosen.*
-- **Option 3: the ADR plus execution in the same spike** — landing the assertion removal in
-  `outsystems-ui-tests` here. *Cons:* mixes a decision that needs team agreement with mechanical
-  changes across 71 files in another repository. Rejected.
-
-### D. The Playwright rewrite (`outsystems-ui-tests-new`)
+### C. The Playwright rewrite (`outsystems-ui-tests-new`)
 
 - **Option 1: adopt it** as the route out of this spike. *Cons:* it is **less** theme-agnostic than
   the suite it replaces, and adoption is not a repository swap. See D6.
@@ -169,18 +159,18 @@ replicate it?"*, because there is no live coverage to delete.
 
 ## Decision Outcome
 
-**A → Option 4. B → open (Q1). C → Option 2. D → Option 2.**
+**A → Option 4. B → open (Q1). C → Option 2.**
 
 ### D1. The functional suite stops asserting appearance; Chromatic owns visual regression
 
 **This ADR makes that assignment.** It is not a pre-existing arrangement being written down.
 Research found **no Jira ticket, no ADR and no Confluence decision that ever transferred this
-ownership**: the only team debate — [ROU-12958](https://outsystemsrd.atlassian.net/browse/ROU-12958)
+ownership**: the only team debate — ROU-12958
 (*Add Storybook workflow and enable Chromatic visual testing*) — ended with an unanswered question
 and an alignment session whose outcome was never written down; Chromatic baselines were unblocked
-only on **2026-08-21** ([ROU-12997](https://outsystemsrd.atlassian.net/browse/ROU-12997)), five
+only on **2026-08-21** (ROU-12997), five
 weeks before this spike; and a prior attempt at exactly this decision,
-[RPOR-10387](https://outsystemsrd.atlassian.net/browse/RPOR-10387), was **Discarded**.
+RPOR-10387, was **Discarded**.
 
 From here:
 
@@ -413,7 +403,7 @@ of the assertions it dropped was load-bearing.
 The gap above is structural and real for **future** changes. The specific instance that prompted it
 is **not open**: it was measured, and the findings are named.
 
-[ROU-13032](https://outsystemsrd.atlassian.net/browse/ROU-13032) — *[OSUI] - Validate impact of a11y
+ROU-13032 — *[OSUI] - Validate impact of a11y
 widget improvements on UI Patterns*, Spike, High, currently **PO Acceptance** — did exactly this
 assessment. Three facts bound the risk more tightly than D1e implies on its own:
 
@@ -458,7 +448,7 @@ from now on should be defined by [others]."* That is fair — the spike did its 
 governance question can close along with the ticket, unanswered and unowned. **This ADR names it so
 that outcome is a choice rather than an accident** (Q15).
 
-**A pattern worth naming.** [ROU-13049](https://outsystemsrd.atlassian.net/browse/ROU-13049) found
+**A pattern worth naming.** ROU-13049 found
 genuine classic-vs-new breakage in real customer-shaped apps — by hand, with no automated suite
 involved. With ROU-13032 and the DatePicker spot-check, that is **three** instances of real
 appearance findings arriving from deliberate manual work rather than from any suite. App-level
@@ -484,7 +474,7 @@ not been able to since 2026-01-19.** Two independent causes, either sufficient a
    own ADR-0004 documents it as known and deliberately deferred; no follow-up fix exists.
 2. **The licence was cancelled.** Three Confluence pages (2024-05-07) carry the note *"Given that
    the applitools license was cut based on costs, we needed to disable all code pipelines for visual
-   tests!"*. [ROU-12492](https://outsystemsrd.atlassian.net/browse/ROU-12492), which proposed
+   tests!"*. ROU-12492, which proposed
    migrating off Applitools, was **Discarded on 2026-09-30**.
 
 Authoring stopped earlier still: `git log -- tests/visual-tests/` shows **0 commits in 2024 and 0 in
@@ -716,7 +706,7 @@ Two further reasons it is not a route out of this spike:
   Playwright emits JUnit. Adoption needs a new cross-repo template contract and a replacement for
   the `PublishCucumberReport@1` stage. Both its CI definitions are manual-only today.
 - **A competing, documented initiative pulls the other way.**
-  [ROU-12962](https://outsystemsrd.atlassian.net/browse/ROU-12962) (Tech Investment, To Do) commits
+  ROU-12962 (Tech Investment, To Do) commits
   `outsystems-ui-tests` and three sibling suites to a shared **WDIO + Cucumber** test-utils v2.
   Adopting Playwright here would strand that work, since the plan's value comes from all four
   converging — and the rewrite's `native/` tree has already forked that shared layer into a third
@@ -820,9 +810,6 @@ Stated explicitly, because each is easy to over-read:
   team agreement with mechanical changes across 71 files in another repository.
 - **Adopting the Playwright rewrite** as the route out. See D6: it inherits and widens the very
   coupling this decision removes.
-- **An ADR alone, without the Confluence page.** The audiences differ: QE, design and PO do not read
-  `docs-internal/`, and the people who most need to know that the functional suite stops owning
-  appearance are exactly the ones who would never see it.
 
 Note that **the classic Chromatic story set is not in this list.** It is a live option under D2, not
 a rejected alternative.
@@ -935,47 +922,50 @@ A finding in this document invalidates an assumption in each of these. Saying *"
 call"* is true but passive — the owner has to **learn** of it, or discovers it only on trying to
 execute.
 
-- **[ROU-12962](https://outsystemsrd.atlassian.net/browse/ROU-12962)** (shared test-utils v2) still
+- **ROU-12962** (shared test-utils v2) still
   budgets Applitools as a shared-test-layer dependency, and its acceptance criteria require *"The
   ui-tests Applitools visual run must stay green"*. Per D2 that is **unsatisfiable** — the run cannot
   execute. Worth noting *why* the criterion exists: ROU-12962 was created **2026-08-10**, seven
   months after the January breakage, which is evidence the breakage is not known to the team.
-- **[ROU-13059](https://outsystemsrd.atlassian.net/browse/ROU-13059)** (*Fix Flaky test 2nd
+- **ROU-13059** (*Fix Flaky test 2nd
   iteration*) is the direct target for D6's four determinism fixes, which are directly applicable and
   are root causes.
 
 ## Links
 
-- **Confluence summary of this ADR**, for the wider team:
-  [*Functional tests and the new theme — testing strategy*](https://outsystemsrd.atlassian.net/wiki/spaces/RDMBLVS/pages/6871941170/Functional+tests+and+the+new+theme+testing+strategy)
-  (child of *OutSystemsUI 3.0 (New Theme) — Vision*) — the conclusions, the asks and the action
-  items; this ADR carries the reasoning and the alternatives. The page is maintained in Confluence;
-  this ADR is the durable record.
-- [`ADR-0004-chromatic-visual-testing-on-a-long-living-branch.md`](./ADR-0004-chromatic-visual-testing-on-a-long-living-branch.md)
-  — why TurboSnap cannot be trusted here. D1 makes Chromatic load-bearing, so its correctness
-  constraints become this decision's constraints: a SCSS-only PR traces to no story, so full-capture
-  builds are not a preference but a requirement.
-- [`ADR-0008-chromatic-baseline-builds-and-the-widget-story-dependency.md`](./ADR-0008-chromatic-baseline-builds-and-the-widget-story-dependency.md)
-  — build #31, which reported green having captured nothing. That failure is what forecloses D2's
-  Option C, and the capture guard it introduced is what D2's first hardening move extends to
-  `classic-theme`.
-- [`ADR-0009-static-widget-stories-and-zero-private-dependencies.md`](./ADR-0009-static-widget-stories-and-zero-private-dependencies.md)
-  — initial-render-only capture (so hover and focus states are outside Chromatic's reach today, which
-  bears on D4a) and the vendored `platform-core.css` whose pinned, partial scope is central to D1e.
-- [ROU-13041](https://outsystemsrd.atlassian.net/browse/ROU-13041) — this spike.
-- [ROU-12776](https://outsystemsrd.atlassian.net/browse/ROU-12776) — parent epic, *OutSystems UI -
-  New theme*.
-- [ROU-12872](https://outsystemsrd.atlassian.net/browse/ROU-12872) — *Integrate new theme in
-  low-code*, the story that deferred this decision.
-- `.github/workflows/chromatic.yaml` · `pipelines/pr-pipeline.yaml` — the two files D2 and D5 discuss
-  and **neither of which this ADR changes**.
-- Confluence `6264848425` (*OutSystemsUI 3.0 (New Theme) — Vision*, the parent of the summary page
-  and where the O11 decision lived), `6278250633` (*Part II: Unify Storybook offering*, the
-  mocked-low-code-HTML constraint), `6806241361` (the ROU-13049 comparison write-up).
-- The specification, the three-pass re-run report and the two research documents behind this ADR are
-  **local working documents under `specs/ROU-13041-functional-tests-theme-strategy/`**. That
-  directory is gitignored and **does not ship**, which is why every figure above is written out here
-  rather than cited to it. Attached to the Confluence page for anyone who needs the raw evidence.
+References are given by name and identifier rather than as links, because this repository is public
+and the systems below are internal.
+
+**Related ADRs in this directory** (NFR4 — D1 makes Chromatic load-bearing, so the guarantees these
+record become this decision's constraints):
+
+- **ADR-0004**, *Chromatic visual testing on a long-living branch* — why TurboSnap cannot be trusted
+  here: a SCSS-only PR traces to no story, so full-capture builds are a requirement, not a
+  preference.
+- **ADR-0008**, *Chromatic baseline builds and the widget-story dependency* — build #31, which
+  reported green having captured nothing. That failure forecloses D2's Option C, and the capture
+  guard it introduced is what D2's first hardening move extends to `classic-theme`.
+- **ADR-0009**, *Static widget stories and zero private dependencies* — initial-render-only capture
+  (so hover and focus states are outside Chromatic's reach today, which bears on D4a) and the
+  vendored `platform-core.css` whose pinned, partial scope is central to D1e.
+
+**Jira** — ROU-13041 (this spike), ROU-12776 (parent epic, *OutSystems UI - New theme*), ROU-12872
+(*Integrate new theme in low-code*, the story that deferred this decision). Named in the decisions
+above: ROU-12958, ROU-12997, RPOR-10387, ROU-12492, ROU-12962, ROU-13032, ROU-13049, ROU-13059.
+
+**Confluence** (space `RDMBLVS`) — *Functional tests and the new theme — testing strategy*, the
+team-facing summary of this ADR, published as a child of *OutSystemsUI 3.0 (New Theme) — Vision*
+(`6264848425`), which is also where the O11 decision lived. Also `6278250633` (*Part II: Unify
+Storybook offering*, the mocked-low-code-HTML constraint) and `6806241361` (the ROU-13049 comparison
+write-up). The page is maintained in Confluence; this ADR is the durable record.
+
+**Files this ADR discusses and does not change** — `.github/workflows/chromatic.yaml`,
+`pipelines/pr-pipeline.yaml`.
+
+**Working documents** — the specification, the three-pass re-run report and the two research
+documents behind this ADR are local only, under a gitignored `specs/` directory, and **do not
+ship**. That is why every figure above is written out here rather than cited to them. They are
+attached to the Confluence page for anyone who needs the raw evidence.
 
 ## Date
 
