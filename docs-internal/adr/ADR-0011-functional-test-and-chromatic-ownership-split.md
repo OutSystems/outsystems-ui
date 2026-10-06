@@ -395,9 +395,10 @@ happens to sit in the right place.
 **Why D1 still holds.** Re-pointing the colour literals would not help: the next platform change
 breaks them again, and the suite still could not say whether the cause was OSUI or the platform.
 Attributing anything needed a purpose-built A/B comparison, which is precisely what a colour
-assertion cannot do. The gap is stated here rather than discovered later, and it leaves two
-questions this spike does not answer — **Q14** (how future changes get detected) and **Q15** (who
-owns this one).
+assertion cannot do. The gap is stated here rather than discovered later, and it leaves one question
+this spike does not answer — **Q14**, how a future change of this kind gets detected at all. Who
+fixes the *current* instance is not an open question here: it belongs to ROU-13032 and the Frontend
+Runtime team (D1e-1).
 
 Supporting evidence that D1's premise nonetheless holds: the Playwright rewrite (D6) ships **1,398
 tests with no visual suite and no Flatpickr colour assertions**, and still claims scenario parity —
@@ -452,7 +453,7 @@ and its own thread contains the sentence that would justify closing it unresolve
 this task has been achieved, differences with/without the feature has been raised, what comes out
 from now on should be defined by [others]."* That is fair — the spike did its job — but it means the
 governance question can close along with the ticket, unanswered and unowned. **This ADR names it so
-that outcome is a choice rather than an accident** (Q15).
+that outcome is a choice rather than an accident.** It is ROU-13032's to close, not this spike's.
 
 **A pattern worth naming.** ROU-13049 found
 genuine classic-vs-new breakage in real customer-shaped apps — by hand, with no automated suite
@@ -886,7 +887,6 @@ Two rows that were investigations in the first version of this ADR are now fixes
 | **A10** | Notify **ROU-13059**: D6's four determinism fixes are directly applicable and are root causes | Notify | Jira | this spike's author | XS |
 | **A11** | **Close Q1** — classic-theme visual coverage: resurrect, replace, or accept. Evidence points at *accept*; the call is the team's. Best closed before A2 | **Decide** | — | the team | — |
 | **A12** | **Answer Q14** — do we want automated visual coverage of the real composed page, and how? The one gap with no owner; needs a team outside OSUI | **Decide** | — | TBD | — |
-| **A13** | **Answer Q15** — who owns the O11 a11y visual impact, before ROU-13032 closes out of PO Acceptance and takes the question with it | **Decide** | ROU-13032 / Frontend Runtime | TBD | — |
 
 Three standing practices, not one-off actions: **G1** a scenario-count ratchet across A2–A5; **G2**
 harvest the determinism fixes; **G3** keep the classic-theme control run as the default triage step.
