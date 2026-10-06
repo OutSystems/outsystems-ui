@@ -4,8 +4,13 @@
 
 ## Status
 
-**Accepted** for the ownership split (D1), the DatePicker closure (D4) and the evaluation of the
-Playwright rewrite (D6).
+**Accepted** for the ownership split (D1) and the DatePicker closure (D4).
+
+**D6 — the Playwright rewrite — is evaluated, not decided.** The evaluation is accepted: it does not
+change D1, because the behaviour/appearance split is the same decision whichever runner executes it.
+**Whether the functional suite should move to it is left open** (Q16), and D5 makes that question
+sharper rather than softer — this ADR names an owner for behaviour, and that owner is a suite whose
+gate has not compiled since 2026-08-07.
 
 **D2 — classic-theme visual coverage — is deliberately left open** (Q1). The evidence in this
 document points at one option, but closing the question is the team's call, not this spike's.
@@ -159,13 +164,18 @@ replicate it?"*, because there is no live coverage to delete.
 
 - **Option 1: adopt it** as the route out of this spike. *Cons:* it is **less** theme-agnostic than
   the suite it replaces, and adoption is not a repository swap. See D6.
-- **Option 2: evaluate it, name it, and do not adopt it under this ticket.** *Chosen* — an ADR that
-  declares the Cucumber suite the owner of behaviour while an internal repository claims near-complete
-  parity for that same responsibility reads as either unaware or evasive.
+- **Option 2: evaluate it, name it, and leave adoption open** — out of scope to decide here, but
+  stated as a question with entry conditions rather than passed over. *Chosen.* An ADR that declares
+  the Cucumber suite the owner of behaviour, while an internal repository claims near-complete parity
+  for that same responsibility and the incumbent's gate does not compile, reads as either unaware or
+  evasive if it says nothing.
+- **Option 3: rule it out** on the theme-coupling evidence alone. *Cons:* the coupling is a real
+  objection but a fixable one, and ruling the rewrite out here would settle, in passing, a question
+  that is larger than this spike and belongs with whoever owns ROU-12962.
 
 ## Decision Outcome
 
-**A → Option 4. B → open (Q1). C → Option 2.**
+**A → Option 4. B → open (Q1). C → Option 2, with adoption left open (Q16).**
 
 ### D1. The functional suite stops asserting appearance; Chromatic owns visual regression
 
@@ -724,7 +734,7 @@ is not pinned to some other branch.
   reference.** That constraint exists to keep the spike narrow. The fix belongs in a separate
   change, and it should not wait on any of the conversion work.
 
-### D6. The Playwright rewrite exists, was evaluated, and changes nothing here
+### D6. The Playwright rewrite — evaluated here, but whether to adopt it is **OPEN** (Q16)
 
 `OutSystems/outsystems-ui-tests-new` (package name `osui-play`) is a 19-day, single-author
 Playwright reimplementation of the Cucumber suite. It reaches near-total scenario parity (**1,376
@@ -758,14 +768,70 @@ Two further reasons it is not a route out of this spike:
 | Asset | Value | Caveat |
 |---|---|---|
 | `scripts/parity-audit.mjs` | A scenario-count ratchet — exactly the guard that bulk assertion removal across 71 files needs | Broken on Windows (path-separator regex); needs the old repo as a pinned sibling checkout |
-| 4 determinism root-cause fixes | Portable to the Cucumber suite verbatim; serve **ROU-13059** directly | None |
+| 4 determinism root-cause fixes | Root causes rather than symptom patches; serve **ROU-13059** directly. Enumerated below | Two of the four are browser-specific — see the note |
 | The branch-suffix regex `/(ROU-?\d+)/i` | A one-line fix for the branch-naming defect | None |
 | `URL` / `PW_URL` base-URL override | An ODC escape hatch the old repo lacks; ODC work is live in this epic | None |
 | Evidence for D1's premise | 1,398 tests, no visual suite, parity retained | One dropped assertion was load-bearing (D4) |
 
+**The four determinism fixes, written out** so this ADR is self-contained and the hand-off to
+ROU-13059 carries content rather than a promise. Of nine fixes across the rewrite's five flakiness
+commits, seven are real determinism work and these four are root causes:
+
+| Root cause | Fix | Commit |
+|---|---|---|
+| WebKit ignores forced clicks on the flatpickr AM/PM `span` | `dispatchEvent('click')` instead of `click({ force: true })` | `d3b3c46` |
+| The `msedge` project runs Chromium, but the app reads the `Edg/` user agent | Key expectations off the project name, not the engine | `d3b3c46` |
+| WebKit does not re-layout the gallery on a runtime resize | Open the page **inside** the viewport change, not before | `d3b3c46` |
+| Firefox computes a `backface-visibility: hidden` rotated container as hidden | Assert on `[id*="-CardBack"]`, not `[id*="-FlipContainer"]` | `a70c1f9` |
+
+These are browser behaviours, so the **analysis** transfers to the Cucumber suite directly; the code
+does not — Playwright's API differs from WebdriverIO's, so each technique has to be re-expressed.
+**And they are not all equally applicable**: the PR gate runs Chrome and Safari, so the two WebKit
+items map straight onto Safari, while the Edge-user-agent and Firefox items only matter if the
+scheduled or manual pipelines run those browsers. Whoever picks this up should check the browser
+matrix before promising all four.
+
 **Not worth taking:** the `native/` tree (a stale fork carrying a byte-identical `constants.ts` with
 180 palette references — it *duplicates* the theme coupling) and the page-object layer (34 of 35
 objects have zero importers).
+
+#### Q16 — should the functional suite move to the rewrite at all? **Open.**
+
+Everything above says the rewrite does not change **D1**, and that holds: the behaviour/appearance
+split is the same decision whichever runner executes it. But "it does not change D1" is not the same
+as "there is nothing to decide", and this ADR should not let the second hide behind the first.
+
+**What makes it a live question rather than a curiosity:**
+
+- **The incumbent is not running.** D5 is now confirmed — the Cucumber PR gate has not compiled since
+  2026-08-07. This ADR assigns behaviour ownership to a suite that is currently dark. That was an
+  unverified worry when D6 was first written; it is a fact now, and it weakens the strongest argument
+  for the incumbent, which was that it is the thing that actually runs.
+- **The parity claim is not trivial.** 1,376 of 1,414 scenarios matched, 1 missing, 37 native-only,
+  and the non-legacy Chromium suite completes in minutes rather than hours.
+- **Three directions are competing**, and no one has chosen: stay on WDIO + Cucumber as-is, converge
+  on the shared test-utils v2 that ROU-12962 commits four suites to, or move to the rewrite. Doing
+  nothing is a choice in favour of the first, taken by default rather than on the evidence.
+
+**What argues against adopting it, and does not go away:** it is **less** theme-agnostic than what it
+replaces — the coupling this very ADR is paying down would widen from one file to 28 — it has no
+ADR, no CODEOWNERS, no pull requests and a single author, adoption needs a new cross-repo template
+contract and a replacement for the `PublishCucumberReport@1` stage, and it would strand ROU-12962.
+
+**This spike does not answer it, and should not.** Deciding it properly needs its own evaluation,
+argued against ROU-12962 rather than in isolation. Entry conditions worth stating now, so that
+evaluation starts from something:
+
+1. **ROU-12962 is decided first**, or at least consulted. The two are mutually exclusive directions
+   and whoever owns the shared layer has the larger stake.
+2. **The theme coupling is addressed as part of any adoption**, not after it. Adopting as-is makes
+   the conversion work in A2–A5 roughly 28 times more expensive to repeat.
+3. **The cross-repo contract is costed** — the template the tests repo owns, and cucumber JSON
+   versus JUnit.
+4. **It acquires an owner and a review trail.** A single-author, unreviewed repository is not a
+   dependency this team should take on, independently of how good the code is.
+
+Tracked as **Q16**.
 
 ### D7. `--legacy` filters nothing, and no count is interpretable until it does
 
@@ -887,6 +953,7 @@ Two rows that were investigations in the first version of this ADR are now fixes
 | **A10** | Notify **ROU-13059**: D6's four determinism fixes are directly applicable and are root causes | Notify | Jira | this spike's author | XS |
 | **A11** | **Close Q1** — classic-theme visual coverage: resurrect, replace, or accept. Evidence points at *accept*; the call is the team's. Best closed before A2 | **Decide** | — | the team | — |
 | **A12** | **Answer Q14** — do we want automated visual coverage of the real composed page, and how? The one gap with no owner; needs a team outside OSUI | **Decide** | — | TBD | — |
+| **A13** | **Answer Q16** — does the functional suite move to the Playwright rewrite, converge on ROU-12962's shared WDIO + Cucumber layer, or stay as it is? Doing nothing picks the third by default. Needs its own evaluation, argued against ROU-12962, with the four entry conditions in D6 | **Decide** | ROU-12962 owner + QE | TBD | — |
 
 Three standing practices, not one-off actions: **G1** a scenario-count ratchet across A2–A5; **G2**
 harvest the determinism fixes; **G3** keep the classic-theme control run as the default triage step.
