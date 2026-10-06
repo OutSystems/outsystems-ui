@@ -378,54 +378,28 @@ tests repo; this one has no commit in either, so no gate anywhere is invoked.
   assertions** and still claims scenario parity — a working demonstration at a scale no argument here
   matches, with D6's caveat that one dropped assertion was load-bearing.
 
+**The gap is structural for future changes; the instance that prompted it is already assessed.**
+ROU-13032 (*[OSUI] - Validate impact of a11y widget improvements on UI Patterns*, Spike, currently
+**PO Acceptance**) measured it, and three findings bound the risk more tightly than the above implies:
+the O11 Frontend team's changes unblock **WCAG 2.2**, are **off by default** and affect **O11 Reactive
+only**; the root cause is a specificity collision rather than an arbitrary restyle (*"New selectors are
+more specific than the ones defined at UI framework for both themes"*); and **the functional side came
+back clean**, so the impact is **visual-only** — a point *for* the ownership split, not against it.
+Its method is the reusable part and the cheapest known answer to **Q14**: sample screens built with
+the feature ON and OFF for both themes, screenshotted as deployed pages with Playwright and diffed —
+a visual run against a *real composed* page, done ad hoc by one person without Applitools, SauceLabs
+or any part of the broken harness, which suggests **replacing the dead visual coverage may be far
+cheaper than resurrecting it**. What stays open there is **governance, not detection**, and it is
+ROU-13032's to close, not this spike's — though it is at risk of evaporating, since that ticket sits
+in PO Acceptance carrying the sentence that would close it unresolved (*"the goal of this task has
+been achieved […] what comes out from now on should be defined by [others]"*). Note finally that
+ROU-13032, the DatePicker spot-check and ROU-13049 are **three** appearance findings that arrived from
+deliberate manual work rather than from any suite, and that cross-team notification, while it does
+work, is the ordinary best-effort Slack/email channel — which is why **Q14's cadence must be
+time-based, not event-triggered**.
+
 What is left open is **Q14** — how a future change of this kind gets detected at all. Who fixes the
-*current* instance is not open: it belongs to ROU-13032 and the Frontend Runtime team (D1e-1).
-
-#### D1e-1. This exact impact has already been assessed — ROU-13032
-
-The gap above is structural for **future** changes. The instance that prompted it is **not open**:
-ROU-13032 (*[OSUI] - Validate impact of a11y widget improvements on UI Patterns*, Spike, High,
-currently **PO Acceptance**) measured it. Three facts bound the risk more tightly than D1e implies:
-
-- The O11 Frontend team's changes unblock **WCAG 2.2** compliance, are **off by default**, and
-  **affect O11 Reactive only**.
-- The root cause is precise: *"New selectors are more specific than the ones defined at UI framework
-  for both themes."* A specificity collision, not an arbitrary restyle.
-- **The functional side came back clean**: *"OutSystemsUI components are already applying the rules
-  for the elements inside which ends on overriding what was done by the FrontendRuntime team. So for
-  what I was able to test nothing to be raised on that context."* The impact is **visual-only** —
-  a point *for* the ownership split, not against it.
-
-Findings as recorded: Button (Size Small 32 → 40, Size Large 48 → 40), Input (Size Small
-`height/min-height` 32px/0 → 40px/40px), Popover (new theme 24px/0 → 40px/40px, classic 21px/0 →
-40px/40px), Pagination and ActionSheet downstream of those, Popup, and the Input validation message —
-now always in the DOM and visible, so it takes vertical space when empty; classic is unaffected
-(`width: 0` when empty), the new theme is affected because `display: block`.
-
-**The method is the reusable part, and the closest thing to a working answer for Q14.** The assessment
-built sample screens with the feature ON and OFF, for both themes, on a dedicated platform instance,
-then screenshotted those deployed pages in both states with Playwright and diffed the images — a
-visual run against a *real composed* page, which is what the dead WebDriverIO suite used to be (D2).
-Done recently, ad hoc, by one person, without Applitools, SauceLabs or any part of the broken harness.
-The implication: **replacing the dead visual coverage may be far cheaper than resurrecting it.**
-
-What stays open is **governance, not detection**, and it is not this spike's to settle. ROU-13032
-concludes *"my suggestion is to share these visual issues with FrontendRuntime team to them create
-less specific selectors"*, and its thread records a genuine disagreement: one position holds the diffs
-are deliberate (larger hit targets) and belong to the team that shipped the feature; the other holds
-a11y changes should have no visual impact at all. Either way the dilemma is real — platform styles
-that do not override OSUI are useless, and ones that do, which OSUI then un-overrides, leave OSUI
-owning the final rendering and invalidating an IDE feature. **It belongs to ROU-13032, but is at risk
-of evaporating**: the ticket sits in PO Acceptance and its thread already carries the sentence that
-would close it unresolved — *"the goal of this task has been achieved […] what comes out from now on
-should be defined by [others]."*
-
-Three instances of real appearance findings have now arrived from deliberate manual work rather than
-from any suite: ROU-13032, the DatePicker spot-check, and ROU-13049, which found genuine
-classic-vs-new breakage in real customer-shaped apps by hand. Cross-team notification does work —
-ROU-13032 exists *because* Frontend Runtime told us — but it is the ordinary Slack/email channel, so
-it covers precisely the changes we would have heard about anyway. Hence Q14's cadence must be
-time-based, not event-triggered.
+*current* instance is not open: it belongs to ROU-13032 and the Frontend Runtime team.
 
 ### D2. Classic-theme visual coverage — **OPEN**
 
@@ -842,7 +816,8 @@ they are defined here so the ADR stands on its own.
 
 Two questions the specification carried are **not** open and are deliberately absent: whether to adopt
 a global token-resolution smoke check (closed by decomposition — see Rejected alternatives), and who
-owns the visual impact of the O11 accessibility styles (closed as a split — see D1e-1).
+owns the visual impact of the O11 accessibility styles (closed as a split: the fix belongs to
+ROU-13032 and the Frontend Runtime team, not to this spike — see D1e).
 
 ## Links
 
