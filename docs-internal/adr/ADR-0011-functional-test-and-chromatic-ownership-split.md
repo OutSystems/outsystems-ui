@@ -179,6 +179,15 @@ replicate it?"*, because there is no live coverage to delete.
 
 **A → Option 4. B → open (Q1). C → Option 2, with adoption left open (Q16).**
 
+> **On the numbering: there is no D3, deliberately.** The decisions below keep the numbers they carry
+> in this spike's working specification, so that anyone moving between the two documents finds the
+> same labels. **D3 was the "deliverable shape" decision** — whether to write an ADR, a Confluence
+> page, or both. That is a decision about this spike's own paperwork rather than about the
+> architecture, so it has been dropped from this record. The gap is left open rather than closed by
+> renumbering, because renumbering would silently break every D-number this spike's authors already
+> use. The same applies to **Q15**, absent from the Open questions section below for the reason given
+> there.
+
 ### D1. The functional suite stops asserting appearance; Chromatic owns visual regression
 
 **This ADR makes that assignment.** It is not a pre-existing arrangement being written down.
@@ -623,58 +632,12 @@ module that happens to carry the new theme. **Treat any single theme-attributed 
 provisional until the same staleness check is made, and prefer a purpose-made module built from
 current `dev` for the next pass.**
 
-#### D4a. The one real defect: the Submenu underline — **confirmed a regression**
+#### D4a. The Submenu underline is a real defect
 
-Two records, one root cause, reproduced in both new-theme passes and **both passing on the classic
-baseline**:
-
-- `Submenu: The user hovers the Menu Title 2`
-- `Submenu: The Submenu without items has active element`
-
-```
-Check bottom border color the Menu Menu Title 2.
-  Expected "rgb(16, 104, 235)" but found "rgb(36, 37, 40)".
-```
-
-**The colour is not what is wrong.** The element has no bottom border at all on the new theme, and
-nothing replaces it:
-
-| | classic | new theme |
-|---|---|---|
-| `border-bottom-width` | `2px` | **`0px`** |
-| `border-bottom-style` | `solid` | **`none`** |
-| `border-bottom-color` | `rgb(16, 104, 235)` | `rgb(36, 37, 40)` — i.e. `currentColor`, because there is no border |
-| `box-shadow` | `none` | `none` |
-| `::after` / `::before` | `none` | `none` |
-
-A related failure points the same way: `Submenu: The user hovers the Sub Menu Title 1.1` fails with
-`textDecorationLine` `underline` → `none`. **Two different hover affordances in the same component
-were both removed.**
-
-**Verified 2026-10-06: the removal was not intended. This is a real theme regression** — and the
-only one three full passes found. Q12 is **closed**; what follows is a fix, not an investigation.
-
-Consequences, now that the verdict is in:
-
-- **The Submenu needs its hover/active affordances restored** on the new theme — both of them, since
-  the header's `border-bottom` and the sub-title's `text-decoration` went together. The fix belongs
-  in this repository, under the ROU-12776 epic.
-- **These scenarios do not go in the deletion bucket.** Had the removal been intended they would
-  have been appearance-only and would have been deleted under step 5. They are not: they were
-  reporting a genuine defect, which is why step 5 was sequenced after this verification rather than
-  before it.
-- **Once fixed, the assertion is still converted, not restored as-is.** The old assertion read
-  `border-bottom-color`, which is the wrong subject (D1c) — it asserts a colour to infer an
-  affordance. The replacement asserts the active-state class, and **Chromatic takes the appearance
-  half**, which needs a submenu-hover baseline it does not have today (ADR-0009: initial render
-  only).
-
-**This is the single most load-bearing result in the exercise, and it is worth stating why.** The
-failure message said `Expected "rgb(16, 104, 235)" but found "rgb(36, 37, 40)"` — indistinguishable
-in shape from the 111 cosmetic colour failures around it. Every bulk-edit strategy considered in
-this document would have re-pointed it to the new value and turned a real regression into a passing
-test. It survived only because the *found* value was read and the element inspected (D1b). One real
-defect in 337 records is a low yield, but the one it found was invisible to every cheaper method.
+On the new theme the Submenu header loses its hover/active underline, and the sub-title loses its
+`text-decoration` with it. Verified 2026-10-06: **the removal was not intended. This is a theme
+regression and it needs fixing** — the only defect three full passes found. It belongs to this
+repository, under the ROU-12776 epic, and is action item **A1**.
 
 ### D5. The functional PR gate is not running at all — **confirmed**
 
@@ -1058,6 +1021,24 @@ execute.
 - **ROU-13059** (*Fix Flaky test 2nd
   iteration*) is the direct target for D6's four determinism fixes, which are directly applicable and
   are root causes.
+
+## Open questions
+
+The `Q` numbers used above come from this spike's working specification, which is a local document
+and **does not ship**. They are defined here so the ADR stands on its own.
+
+| ID | Question | Status | Where |
+|---|---|---|---|
+| **Q1** | Do we keep any visual coverage of the classic theme — resurrect it, replace it, or accept a loss already two years old? | **Open.** Evidence points at *accept*; the call is the team's. Best closed before the conversion work starts | D2, action **A11** |
+| **Q9** | Does the functional PR gate still compile? | **Closed 2026-10-06 — it does not**, and has not since 2026-08-07. Confirmed by the pipeline run on this ADR's own pull request | D5, action **A0b** |
+| **Q12** | Is the removed Submenu hover/active underline a bug or an intended redesign? | **Closed 2026-10-06 — a bug.** A real theme regression, and the only one three full passes found | D4a, action **A1** |
+| **Q14** | Do we want automated visual coverage of the real composed page, and if so how? | **Open.** The one gap with no owner; needs a team outside OSUI, and the cadence has to be time-based rather than triggered by notification | D1e, action **A12** |
+| **Q16** | Does the functional suite move to the Playwright rewrite, converge on ROU-12962's shared WDIO + Cucumber layer, or stay as it is? | **Open**, and raised by this ADR rather than inherited. Doing nothing picks the third by default | D6, action **A13** |
+
+Two further questions the specification carried are **not** open and are deliberately absent: whether
+to adopt a global token-resolution smoke check (closed by decomposition — see Rejected alternatives),
+and who owns the visual impact of the O11 accessibility styles (closed as a split: the fix belongs to
+ROU-13032 and the Frontend Runtime team, not to this spike — see D1e-1).
 
 ## Links
 
