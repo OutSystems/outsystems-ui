@@ -542,12 +542,24 @@ install base, port frequency would rise, and Option B's case would change comple
 the ticket assignee on 2026-10-02: yes, O11 adopts the new theme.** Both targets converge; the
 classic snapshot is not the long-term surface for the larger install base.
 
-**Two hardening moves that are *not* Option B** (≈0.5 d total), recommended under Option A:
+**One hardening move that is *not* Option B**, recommended under Option A: keep the manual Storybook
+Theme-toggle check as the prescribed port verification, and **state plainly in the port workflow
+that it is the only gate** — so the risk is owned rather than invisible. A port hand-edits ~775 KB
+of compiled CSS in two bundles, with no compiler, no lint, no test and no visual gate behind it; the
+person doing that should not have to infer that nothing else is watching.
 
-1. Add `classic-theme` to the visual-surface path list at `.github/workflows/chromatic.yaml:76`, so
-   a classic-only PR stops silently disarming the capture guard.
-2. Keep the manual Storybook Theme-toggle check as the prescribed port verification, and **state
-   plainly that it is the only gate** — so the risk is owned rather than invisible.
+> **A second move was proposed and has been withdrawn.** The research recommended adding
+> `classic-theme` to the visual-surface path list at `.github/workflows/chromatic.yaml:76`, on the
+> grounds that a classic-only PR "silently disarms the capture guard". That reasoning does not hold.
+> The guard exists to assert that *a comparison actually happened* when something changed that
+> **can move a snapshot** — which is what that path list means, in the workflow's own words. A
+> change under `classic-theme/` cannot move a snapshot, because no story loads that CSS. The guard
+> is therefore not disarmed; it is correctly inapplicable, and adding the path would make it assert
+> something vacuous (Chromatic photographs ~113 new-theme stories on every build, so the check would
+> pass unconditionally). Worse, it would encode in the workflow the claim that `classic-theme/` is
+> part of the visual surface Chromatic covers. It is not, and a future reader would reasonably
+> conclude the stories are verified in both themes. **If Option B is ever adopted, the path belongs
+> in that list as part of that work — not before.**
 
 **What is not open, under every outcome:** the `@legacy` / `@skipLegacy` **functional** stages in
 `pr-pipeline.yaml` stay exactly as they are. They exercise legacy **components**, not the old
@@ -869,13 +881,12 @@ Two rows that were investigations in the first version of this ADR are now fixes
 | **A5** | Delete the residue that is genuinely appearance-only | Convert | `outsystems-ui-tests` | QE | S |
 | **A6** | Hygiene track — harness defects, stale locators, turn `strict` on (613 hidden), resolve the 3 `TS2307`s, wire a type-check into CI | Fix | `outsystems-ui-tests` | tests-repo owner | L |
 | **A7** | Re-run all passes with `--legacy` fixed and against a module built from current `dev` | Verify | `outsystems-ui-tests` | QE | M |
-| **A8** | Add `classic-theme` to the visual-surface path list at `chromatic.yaml:76`, so a classic-only PR stops disarming the capture guard (**D2**, hardening 1 — *not* Option B) | Fix | **this repo** | OSUI | XS |
-| **A9** | Record in the port workflow that the manual Storybook Theme-toggle check is the **only** gate on a port (**D2**, hardening 2) | Document | **this repo** | OSUI | XS |
-| **A10** | Notify **ROU-12962**: its acceptance criterion *"the ui-tests Applitools visual run must stay green"* is unsatisfiable (**D2**) | Notify | Jira | this spike's author | XS |
-| **A11** | Notify **ROU-13059**: D6's four determinism fixes are directly applicable and are root causes | Notify | Jira | this spike's author | XS |
-| **A12** | **Close Q1** — classic-theme visual coverage: resurrect, replace, or accept. Evidence points at *accept*; the call is the team's. Best closed before A2 | **Decide** | — | the team | — |
-| **A13** | **Answer Q14** — do we want automated visual coverage of the real composed page, and how? The one gap with no owner; needs a team outside OSUI | **Decide** | — | TBD | — |
-| **A14** | **Answer Q15** — who owns the O11 a11y visual impact, before ROU-13032 closes out of PO Acceptance and takes the question with it | **Decide** | ROU-13032 / Frontend Runtime | TBD | — |
+| **A8** | Record in the port workflow that the manual Storybook Theme-toggle check is the **only** gate on a port (**D2**, the one hardening move) | Document | **this repo** | OSUI | XS |
+| **A9** | Notify **ROU-12962**: its acceptance criterion *"the ui-tests Applitools visual run must stay green"* is unsatisfiable (**D2**) | Notify | Jira | this spike's author | XS |
+| **A10** | Notify **ROU-13059**: D6's four determinism fixes are directly applicable and are root causes | Notify | Jira | this spike's author | XS |
+| **A11** | **Close Q1** — classic-theme visual coverage: resurrect, replace, or accept. Evidence points at *accept*; the call is the team's. Best closed before A2 | **Decide** | — | the team | — |
+| **A12** | **Answer Q14** — do we want automated visual coverage of the real composed page, and how? The one gap with no owner; needs a team outside OSUI | **Decide** | — | TBD | — |
+| **A13** | **Answer Q15** — who owns the O11 a11y visual impact, before ROU-13032 closes out of PO Acceptance and takes the question with it | **Decide** | ROU-13032 / Frontend Runtime | TBD | — |
 
 Three standing practices, not one-off actions: **G1** a scenario-count ratchet across A2–A5; **G2**
 harvest the determinism fixes; **G3** keep the classic-theme control run as the default triage step.
@@ -943,7 +954,7 @@ either gate**, so the count can grow again unseen.
   deleting a *scenario* where only an *assertion* was meant to go, and nothing in
   `outsystems-ui-tests` checks for that today. D6's `parity-audit.mjs` does exactly this at title
   level.
-- **G2 — harvest the four determinism fixes** (A11's payload). They are independent of the theme and
+- **G2 — harvest the four determinism fixes** (A10's payload). They are independent of the theme and
   of the rewrite's fate, and they are root causes rather than symptom patches.
 - **G3 — keep the classic-theme control run as standing practice.** It reattributed 182 of 337
   records in one pass, needs no new infrastructure, and is the cheapest attribution tool available.
@@ -976,8 +987,9 @@ record become this decision's constraints):
   here: a SCSS-only PR traces to no story, so full-capture builds are a requirement, not a
   preference.
 - **ADR-0008**, *Chromatic baseline builds and the widget-story dependency* — build #31, which
-  reported green having captured nothing. That failure forecloses D2's Option C, and the capture
-  guard it introduced is what D2's first hardening move extends to `classic-theme`.
+  reported green having captured nothing. That failure forecloses D2's Option C. Its capture guard
+  is also what D2's withdrawn second hardening move would have extended to `classic-theme`: the
+  guard asserts that a comparison happened, and a classic-only change has no comparison to assert.
 - **ADR-0009**, *Static widget stories and zero private dependencies* — initial-render-only capture
   (so hover and focus states are outside Chromatic's reach today, which bears on D4a) and the
   vendored `platform-core.css` whose pinned, partial scope is central to D1e.
