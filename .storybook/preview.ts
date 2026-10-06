@@ -10,6 +10,7 @@ import './getting-started.scss';
 import './component-library.scss';
 import './css-architecture.scss';
 import './css-api-reference.scss';
+import './migration.scss';
 import './theme-editor.scss';
 import './foundations.scss';
 import './docs-dark.scss';
@@ -305,6 +306,7 @@ const preview: Preview = {
 				order: [
 					'Welcome',
 					'Getting Started',
+					'Migration',
 					'Component Library',
 					'Design system',
 					[
