@@ -832,6 +832,36 @@ a rejected alternative.
 **No Jira tickets have been filed for any of this.** This spike delivers recommendations only; the
 sequencing below is a proposal for whoever schedules the work.
 
+### Action items at a glance
+
+Everything this ADR asks anyone to do, in one place. Sizes are rough and relative, not estimates.
+`A0a` and `A0b` come first for a reason: until they are done, every count below them is distorted
+(D7) and the urgency of all of it is unknown (D5). The detail behind each row is in the sequence
+that follows this table.
+
+| # | Action | Type | Where it lands | Owner | Size |
+|---|---|---|---|---|---|
+| **A0a** | Wire `--legacy` to a real tag expression — it currently filters nothing (**D7**) | Fix | `outsystems-ui-tests` | tests-repo CI owner | S |
+| **A0b** | Confirm whether the functional PR gate still compiles; one look at its last successful run (**D5 / Q9**) | Verify | Azure DevOps | tests-repo CI owner | XS |
+| **A1** | Verify the Submenu underline — bug or intended redesign (**D4a / Q12**). Figma (ROU-12876 / ROU-12925) → SCSS history → escalate only if both are silent | Verify | this repo | Submenu design owner | S |
+| **A2** | Convert the 29 `ExtendedClass` scenarios from a background-colour check to `classList.contains(…)` | Convert | `outsystems-ui-tests` | QE | M |
+| **A3** | Rework the proxy assertions — colour-as-state and position-as-behaviour (**D1a / D1b / D1c**) | Convert | `outsystems-ui-tests` | QE | L |
+| **A4** | Re-express the `Color` API scenarios against the runtime-resolved token; split per Examples row (**D1d**) | Convert | `outsystems-ui-tests` | QE | M |
+| **A5** | Delete the residue that is genuinely appearance-only | Convert | `outsystems-ui-tests` | QE | S |
+| **A6** | Hygiene track — harness defects, stale locators, turn `strict` on (613 hidden), resolve the 3 `TS2307`s, wire a type-check into CI | Fix | `outsystems-ui-tests` | tests-repo owner | L |
+| **A7** | Re-run all passes with `--legacy` fixed and against a module built from current `dev` | Verify | `outsystems-ui-tests` | QE | M |
+| **A8** | Add `classic-theme` to the visual-surface path list at `chromatic.yaml:76`, so a classic-only PR stops disarming the capture guard (**D2**, hardening 1 — *not* Option B) | Fix | **this repo** | OSUI | XS |
+| **A9** | Record in the port workflow that the manual Storybook Theme-toggle check is the **only** gate on a port (**D2**, hardening 2) | Document | **this repo** | OSUI | XS |
+| **A10** | Notify **ROU-12962**: its acceptance criterion *"the ui-tests Applitools visual run must stay green"* is unsatisfiable (**D2**) | Notify | Jira | this spike's author | XS |
+| **A11** | Notify **ROU-13059**: D6's four determinism fixes are directly applicable and are root causes | Notify | Jira | this spike's author | XS |
+| **A12** | **Close Q1** — classic-theme visual coverage: resurrect, replace, or accept. Evidence points at *accept*; the call is the team's. Best closed before A2 | **Decide** | — | the team | — |
+| **A13** | **Answer Q14** — do we want automated visual coverage of the real composed page, and how? The one gap with no owner; needs a team outside OSUI | **Decide** | — | TBD | — |
+| **A14** | **Answer Q15** — who owns the O11 a11y visual impact, before ROU-13032 closes out of PO Acceptance and takes the question with it | **Decide** | ROU-13032 / Frontend Runtime | TBD | — |
+
+Three standing practices, not one-off actions: **G1** a scenario-count ratchet across A2–A5; **G2**
+harvest the determinism fixes; **G3** keep the classic-theme control run as the default triage step.
+Each is expanded below.
+
 **Step 0a — fix `--legacy` (D7). This is the top of the list.** A third of the failure list is noise
 from it, and every subsequent count is distorted until the flag is wired to a real tag expression.
 
@@ -889,13 +919,15 @@ either gate**, so the count can grow again unseen.
 
 ### Three guards worth adopting alongside the sequence
 
-- **A scenario-count ratchet for steps 2–5.** Bulk removal across 71 files risks deleting a
-  *scenario* where only an *assertion* was meant to go, and nothing in `outsystems-ui-tests` checks
-  for that today. D6's `parity-audit.mjs` does exactly this at title level.
-- **Harvest the four determinism fixes.** They are independent of the theme and of the rewrite's
-  fate, and they are root causes rather than symptom patches.
-- **Keep the classic-theme control run as standing practice.** It reattributed 182 of 337 records in
-  one pass, needs no new infrastructure, and is the cheapest attribution tool available.
+- **G1 — a scenario-count ratchet for steps 2–5 (A2–A5).** Bulk removal across 71 files risks
+  deleting a *scenario* where only an *assertion* was meant to go, and nothing in
+  `outsystems-ui-tests` checks for that today. D6's `parity-audit.mjs` does exactly this at title
+  level.
+- **G2 — harvest the four determinism fixes** (A11's payload). They are independent of the theme and
+  of the rewrite's fate, and they are root causes rather than symptom patches.
+- **G3 — keep the classic-theme control run as standing practice.** It reattributed 182 of 337
+  records in one pass, needs no new infrastructure, and is the cheapest attribution tool available.
+  Make it the default first step of any future theme triage, not a special measure.
 
 ### Tickets that must be notified, not merely referenced
 
