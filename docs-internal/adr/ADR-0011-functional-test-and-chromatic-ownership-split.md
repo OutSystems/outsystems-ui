@@ -10,8 +10,13 @@ Playwright rewrite (D6).
 **D2 — classic-theme visual coverage — is deliberately left open** (Q1). The evidence in this
 document points at one option, but closing the question is the team's call, not this spike's.
 
-**D5 — whether the functional PR gate still compiles — is recorded as unverified** (Q9). It needs
-one look at an Azure DevOps definition, which the work behind this ADR could not reach.
+**D5 — the functional PR gate does not compile — is confirmed** (Q9, closed 2026-10-06). The PR
+pipeline run for this ADR's own pull request failed at template resolution. The gate has been dark
+since 2026-08-07, which means nothing was blocking on the 274 failures.
+
+**D4a — the Submenu hover/active underline is a real theme regression** (Q12, closed 2026-10-06).
+The removal was not intended. It is the only defect three full passes found, and it needs a fix
+under the ROU-12776 epic.
 
 ## Context
 
@@ -92,9 +97,10 @@ None of these is a detail. Each one changes how a number from this suite may be 
    differ only in columns absent from the title renders several `<testcase>` entries under one name.
    That is the records-versus-scenarios gap — 337 against 292 here, 319 against 274 in the
    reference. **The two numbers must never be compared with each other.**
-3. **The PR gate may not have compiled since 2026-08-07** (D5). If that holds, the 274 failures were
-   never a release blocker, because nothing was blocking on them — which would also explain how the
-   suite accumulated this much drift unobserved.
+3. **The PR gate has not compiled since 2026-08-07** (D5, confirmed 2026-10-06). It fails at
+   template resolution before any job is scheduled, so **the 274 failures were never a release
+   blocker — nothing was blocking on them.** That is also how the suite accumulated this much drift
+   unobserved, and it is why this ADR does not frame the work as "unblocking the release".
 
 ## Decision Drivers
 
@@ -592,7 +598,7 @@ module that happens to carry the new theme. **Treat any single theme-attributed 
 provisional until the same staleness check is made, and prefer a purpose-made module built from
 current `dev` for the next pass.**
 
-#### D4a. The one unresolved candidate: the Submenu underline
+#### D4a. The one real defect: the Submenu underline — **confirmed a regression**
 
 Two records, one root cause, reproduced in both new-theme passes and **both passing on the classic
 baseline**:
@@ -620,34 +626,32 @@ A related failure points the same way: `Submenu: The user hovers the Sub Menu Ti
 `textDecorationLine` `underline` → `none`. **Two different hover affordances in the same component
 were both removed.**
 
-**Whether that is a bug or an intended redesign is unverified.** It is not established either way —
-the functional suite cannot tell the two apart, and neither can this ADR. **The next action is a
-verification task, not a bug report and not a design meeting.** Cheapest first:
+**Verified 2026-10-06: the removal was not intended. This is a real theme regression** — and the
+only one three full passes found. Q12 is **closed**; what follows is a fix, not an investigation.
 
-1. **Check the Figma for Submenu.** The new theme's Submenu styling was delivered under **ROU-12876**
-   (*Navigation Patterns v1*) and **ROU-12925** (*Navigation v2*). If the design shows no
-   hover/active underline on the menu header, the removal is intended and the question closes
-   without anyone being asked.
-2. **Check the SCSS history.** Whether the `border-bottom` was deliberately dropped or fell out of
-   the token migration is visible in the component's own history, against the pre-migration rule.
-3. **Only if 1 and 2 disagree or are silent**, escalate to whoever owns the Submenu design.
+Consequences, now that the verdict is in:
 
-One check answers both affordances — they were almost certainly changed by the same work.
+- **The Submenu needs its hover/active affordances restored** on the new theme — both of them, since
+  the header's `border-bottom` and the sub-title's `text-decoration` went together. The fix belongs
+  in this repository, under the ROU-12776 epic.
+- **These scenarios do not go in the deletion bucket.** Had the removal been intended they would
+  have been appearance-only and would have been deleted under step 5. They are not: they were
+  reporting a genuine defect, which is why step 5 was sequenced after this verification rather than
+  before it.
+- **Once fixed, the assertion is still converted, not restored as-is.** The old assertion read
+  `border-bottom-color`, which is the wrong subject (D1c) — it asserts a colour to infer an
+  affordance. The replacement asserts the active-state class, and **Chromatic takes the appearance
+  half**, which needs a submenu-hover baseline it does not have today (ADR-0009: initial render
+  only).
 
-Outcome, either way:
+**This is the single most load-bearing result in the exercise, and it is worth stating why.** The
+failure message said `Expected "rgb(16, 104, 235)" but found "rgb(36, 37, 40)"` — indistinguishable
+in shape from the 111 cosmetic colour failures around it. Every bulk-edit strategy considered in
+this document would have re-pointed it to the new value and turned a real regression into a passing
+test. It survived only because the *found* value was read and the element inspected (D1b). One real
+defect in 337 records is a low yield, but the one it found was invisible to every cheaper method.
 
-- **Intended** — these scenarios are appearance-only and belong in the deletion bucket, and
-  **Chromatic should carry a baseline for submenu hover**, which today it does not (ADR-0009:
-  initial render only).
-- **Not intended** — this is a real theme regression, and the only one three full passes found. It
-  gets a bug under ROU-12776.
-
-**What it is not:** a state bug. The assertion never looked at the active-state class. If the
-removal is intended, the correct replacement assertion is that class, not any colour.
-
-Tracked as **Q12**.
-
-### D5. The functional PR gate may not be running at all — **unverified**
+### D5. The functional PR gate is not running at all — **confirmed**
 
 **This changes the ADR's tone, not its strategy.**
 
@@ -671,17 +675,41 @@ The one piece of counter-evidence is gone: build 2175929 did produce test result
 proof the gate runs, but the ticket assignee confirmed (2026-10-06) it was a **manual** run. It says
 nothing about the PR gate.
 
-**This is not yet fact.** A check against the Azure DevOps definition is still needed — the
-definition could point at different YAML or pin a branch outside the file. But if it holds:
+#### Confirmed 2026-10-06 — the gate does not compile
 
-- The 274 failures were **never a release blocker**, because nothing was blocking on them. "Unblock
-  the release" becomes "pay down a suite that stopped being consulted", and those are not the same
-  argument.
+**Q9 is closed.** The PR pipeline run for the pull request that carries this ADR failed at template
+resolution, with exactly the error this section predicted:
+
+```
+/pipelines/pr-pipeline.yaml: Could not find
+/pipelines/templates/build-and-execute-functional-tests-template.yml
+in repository outsystems-ui-tests hosted on https://github.com/
+using commit 6811bea4d3351f2b238d056574d7811bab226f98.
+GitHub reported the error, "Not Found"
+```
+
+The pipeline never reaches a test stage; it fails before any job is scheduled. The resolved commit
+named in the error is the tests repo's **current default branch**, which rules out the two
+alternative explanations this section had left open: the definition does point at this YAML, and it
+is not pinned to some other branch.
+
+**What follows, now that it is fact rather than hypothesis:**
+
+- **The 274 failures were never a release blocker, because nothing was blocking on them.** The
+  framing "unblock the release" is wrong and is not used in this ADR. The accurate framing is: *pay
+  down a suite that stopped being consulted.* It also explains how the suite accumulated this much
+  drift unobserved — nothing was reporting it.
+- **The gate has been dark since 2026-08-07**, the date the template moved (`5d7d688`, ROU-12581).
+  That is the window in which the theme merged and 274 scenarios started failing, with no gate
+  running.
+- **This is now the most urgent item in this document, and it is not the one anybody expected.**
+  Every conversion step below assumes a gate that will eventually run the converted suite. There is
+  no such gate today. Fixing the reference is a one-line change to `pipelines/pr-pipeline.yaml` —
+  point it at `pipelines/templates/steps/…`, or at the `templates/stages/` structure everything
+  still running has migrated to.
 - **The constraint that this spike changes no pipeline file must not be read as preserving a broken
-  reference.** That constraint exists to keep the spike narrow. If D5 confirms, the file needs
-  fixing — in a separate change, not this one.
-
-Cost to resolve: **one look at the pipeline's last successful run.** Tracked as **Q9**.
+  reference.** That constraint exists to keep the spike narrow. The fix belongs in a separate
+  change, and it should not wait on any of the conversion work.
 
 ### D6. The Playwright rewrite exists, was evaluated, and changes nothing here
 
@@ -822,15 +850,19 @@ sequencing below is a proposal for whoever schedules the work.
 ### Action items at a glance
 
 Everything this ADR asks anyone to do, in one place. Sizes are rough and relative, not estimates.
-`A0a` and `A0b` come first for a reason: until they are done, every count below them is distorted
-(D7) and the urgency of all of it is unknown (D5). The detail behind each row is in the sequence
-that follows this table.
+`A0a` and `A0b` come first for a reason: until `--legacy` is wired up, every count below is
+distorted (D7); and until the template reference is fixed, **there is no functional gate at all**
+(D5, confirmed) — every conversion step below assumes one that will eventually run. The detail
+behind each row is in the sequence that follows this table.
+
+Two rows that were investigations in the first version of this ADR are now fixes: **A0b** and
+**A1**. Both questions were answered on 2026-10-06, and both answers were the unwelcome one.
 
 | # | Action | Type | Where it lands | Owner | Size |
 |---|---|---|---|---|---|
 | **A0a** | Wire `--legacy` to a real tag expression — it currently filters nothing (**D7**) | Fix | `outsystems-ui-tests` | tests-repo CI owner | S |
-| **A0b** | Confirm whether the functional PR gate still compiles; one look at its last successful run (**D5 / Q9**) | Verify | Azure DevOps | tests-repo CI owner | XS |
-| **A1** | Verify the Submenu underline — bug or intended redesign (**D4a / Q12**). Figma (ROU-12876 / ROU-12925) → SCSS history → escalate only if both are silent | Verify | this repo | Submenu design owner | S |
+| **A0b** | **Fix the stale template reference in `pipelines/pr-pipeline.yaml`** — it points at `pipelines/templates/build-and-execute-functional-tests-template.yml`, which has not existed on `outsystems-ui-tests@dev` since 2026-08-07, so the gate fails to compile (**D5**, confirmed). One line; point it at `templates/steps/…` or the `templates/stages/` structure everything still running uses | Fix | **this repo** | tests-repo CI owner | XS |
+| **A1** | **Restore the Submenu hover/active affordances** — both the header's `border-bottom` and the sub-title's `text-decoration`. Confirmed a theme regression, not an intended redesign (**D4a**, Q12 closed); the only defect three passes found | Fix | **this repo** | OSUI | S |
 | **A2** | Convert the 29 `ExtendedClass` scenarios from a background-colour check to `classList.contains(…)` | Convert | `outsystems-ui-tests` | QE | M |
 | **A3** | Rework the proxy assertions — colour-as-state and position-as-behaviour (**D1a / D1b / D1c**) | Convert | `outsystems-ui-tests` | QE | L |
 | **A4** | Re-express the `Color` API scenarios against the runtime-resolved token; split per Examples row (**D1d**) | Convert | `outsystems-ui-tests` | QE | M |
@@ -852,15 +884,16 @@ Each is expanded below.
 **Step 0a — fix `--legacy` (D7). This is the top of the list.** A third of the failure list is noise
 from it, and every subsequent count is distorted until the flag is wired to a real tag expression.
 
-**Step 0b — resolve Q9 (D5), cheaper still.** One look at the pipeline's last successful run. If the
-PR gate has not compiled since 2026-08-07, that reframes the urgency of everything below it before
-any of it is scheduled.
+**Step 0b — fix the template reference in `pipelines/pr-pipeline.yaml` (D5, confirmed).** Q9 asked
+whether the gate still compiles; it does not, and the answer arrived from this ADR's own pull
+request. One line, and until it lands every step below converts a suite that nothing runs.
 
 Then:
 
-1. **Verify the Submenu underline (D4a / Q12)** — Figma first, then the SCSS history, escalating only
-   if both are silent. It does not block the conversion work, but it should be settled before step 5
-   decides whether those scenarios are deleted.
+1. **Restore the Submenu hover/active affordances (D4a).** Verified 2026-10-06 as a real regression,
+   not an intended redesign — the header's `border-bottom` and the sub-title's `text-decoration`
+   were both dropped and nothing replaced them. It does not block the conversion work, but it must
+   land before step 5, which would otherwise delete the scenarios that caught it.
 2. **Convert the `ExtendedClass` scenarios** (29 — the single largest group) from a background-colour
    check to `classList.contains(…)`. Mechanical, independent of every other step, and the cheapest
    large win: a good first slice.
