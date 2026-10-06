@@ -948,9 +948,9 @@ execute.
 
 - **Confluence summary of this ADR**, for the wider team:
   [*Functional tests and the new theme — testing strategy*](https://outsystemsrd.atlassian.net/wiki/spaces/RDMBLVS/pages/6871941170/Functional+tests+and+the+new+theme+testing+strategy)
-  (child of *OutSystemsUI 3.0 (New Theme) — Vision*) — the conclusions and the asks; this ADR
-  carries the reasoning and the alternatives. Its Markdown source is
-  [`ADR-0011-confluence-summary.md`](./ADR-0011-confluence-summary.md).
+  (child of *OutSystemsUI 3.0 (New Theme) — Vision*) — the conclusions, the asks and the action
+  items; this ADR carries the reasoning and the alternatives. The page is maintained in Confluence;
+  this ADR is the durable record.
 - [`ADR-0004-chromatic-visual-testing-on-a-long-living-branch.md`](./ADR-0004-chromatic-visual-testing-on-a-long-living-branch.md)
   — why TurboSnap cannot be trusted here. D1 makes Chromatic load-bearing, so its correctness
   constraints become this decision's constraints: a SCSS-only PR traces to no story, so full-capture
