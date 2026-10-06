@@ -848,12 +848,12 @@ write-up). The page is maintained in Confluence; this ADR is the durable record.
 `pipelines/pr-pipeline.yaml`.
 
 **Working documents** — the specification (`spec.md`), the three-pass re-run report
-(`rerun-report.md`) and the two research documents behind this ADR live under a gitignored
-`specs/ROU-13041-functional-tests-theme-strategy/` directory in the spike author's checkout. They
-**do not ship and are not published anywhere**, including as attachments to the Confluence page.
-**That is why every figure above is written out in full rather than cited to them** — this ADR is
-self-contained by construction, and nothing in it depends on a reader having the raw evidence. Ask
-the spike author if you need it.
+(`rerun-report.md`) and the two research documents behind Q1
+(`research-classic-theme-visual-coverage.md`) and Q16 (`research-outsystems-ui-tests-new.md`) live
+under a gitignored `specs/ROU-13041-functional-tests-theme-strategy/` directory and **do not ship**.
+That is why every figure above is written out here rather than cited to them — this ADR is
+self-contained by construction. The four are attached to the Confluence page for anyone who needs the
+raw evidence.
 
 ## Date
 
