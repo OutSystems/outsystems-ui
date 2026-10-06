@@ -162,8 +162,10 @@ replicate it?"*, because there is no live coverage to delete.
 
 ### C. The Playwright rewrite (`outsystems-ui-tests-new`)
 
-- **Option 1: adopt it** as the route out of this spike. *Cons:* it is **less** theme-agnostic than
-  the suite it replaces, and adoption is not a repository swap. See D6.
+- **Option 1: adopt it** as the route out of this spike. *Cons:* not adoptable as it stands — seven
+  things would have to change first, from applying D1 to it through to a PR-triggered pipeline and a
+  governance trail. Those are conditions, not disqualifications; they are simply more than this
+  spike can carry. See D6, Q16.
 - **Option 2: evaluate it, name it, and leave adoption open** — out of scope to decide here, but
   stated as a question with entry conditions rather than passed over. *Chosen.* An ADR that declares
   the Cucumber suite the owner of behaviour, while an internal repository claims near-complete parity
@@ -742,13 +744,18 @@ matched / 1 missing / 37 native-only** against 1,414) and runs the non-legacy Ch
 minutes rather than hours. It has no ADR, no CONTRIBUTING, no CODEOWNERS, no PRs, no second
 contributor and no Jira issue sanctioning it.
 
-**On D1's axis it makes the problem worse.** The rewrite is **less** theme-agnostic than the suite it
-replaces: it has no palette module at all. The old repository's single `constants.ts` was inlined
-into **105 colour literals across 28 of 43 spec files, 50 of them theme-derived**, with none in
-`src/` — so there is no shared seam. A theme change that today means editing **one file** would mean
-editing **28**. `RED_RGB_COLOR` is declared identically in 23 spec files and `BASE_PADDING` in 22,
-and the naming has drifted (`BLUE_RGB_COLOR`, `PIKA_SELECTED_BG` and `SELECTED_DAY_RGB_COLOR` all
-hold `rgb(16, 104, 235)`), so a symbol search does not find them — only a search by value does.
+**On D1's axis, it has further to travel.** The rewrite has no palette module: the old repository's
+single `constants.ts` was inlined into **105 colour literals across 28 of 43 spec files, 50 of them
+theme-derived**, with none in `src/`, so there is no shared seam. A theme change that today means
+editing **one file** would mean editing **28**. `RED_RGB_COLOR` is declared identically in 23 spec
+files and `BASE_PADDING` in 22, and the naming has drifted (`BLUE_RGB_COLOR`, `PIKA_SELECTED_BG` and
+`SELECTED_DAY_RGB_COLOR` all hold `rgb(16, 104, 235)`), so a symbol search does not find them — only
+a search by value does.
+
+That is a statement about distance, not about direction. **D1 applies to the rewrite exactly as it
+applies here**, and once appearance assertions leave, most of those 50 literals have no reason to
+exist in either codebase — see Q16, item 1. What it means in practice is that the conversion has to
+happen *before* any adoption, not that the rewrite is structurally wrong.
 
 Two further reasons it is not a route out of this spike:
 
@@ -813,23 +820,33 @@ as "there is nothing to decide", and this ADR should not let the second hide beh
   on the shared test-utils v2 that ROU-12962 commits four suites to, or move to the rewrite. Doing
   nothing is a choice in favour of the first, taken by default rather than on the evidence.
 
-**What argues against adopting it, and does not go away:** it is **less** theme-agnostic than what it
-replaces — the coupling this very ADR is paying down would widen from one file to 28 — it has no
-ADR, no CODEOWNERS, no pull requests and a single author, adoption needs a new cross-repo template
-contract and a replacement for the `PublishCucumberReport@1` stage, and it would strand ROU-12962.
+**What the rewrite would have to change to be adoptable.** Stated as work rather than as a verdict,
+because the question is open and a list of defects would prejudge it. None of these is a reason the
+rewrite *cannot* be adopted; each is a condition that has to be met first, and several are cheap.
 
-**This spike does not answer it, and should not.** Deciding it properly needs its own evaluation,
-argued against ROU-12962 rather than in isolation. Entry conditions worth stating now, so that
-evaluation starts from something:
+| # | Gap today | What would have to change | Size |
+|---|---|---|---|
+| **1** | **No shared palette seam.** `constants.ts` was inlined into 105 colour literals across 28 of 43 spec files, 50 of them theme-derived. The naming drifted — `BLUE_RGB_COLOR`, `PIKA_SELECTED_BG` and `SELECTED_DAY_RGB_COLOR` all hold `rgb(16, 104, 235)` — so a symbol search misses them and only a search by value finds them | **Apply D1 there, not a palette module.** Most of those 50 literals should not survive the behaviour/appearance split at all; they convert or get deleted, exactly as A2–A5 do here. A shared seam only matters for what remains, and what remains is small | M |
+| **2** | **Scenario parity is measured by title, not by assertion.** 1,376 of 1,414 matched — but it never ported the colour assertion for the current flatpickr widget, verifying selection through the input's text value instead. Its better DatePicker pass rate is partly a dropped check | **Extend `parity-audit.mjs` to compare assertions, not just scenario names**, and reconcile every gap it finds. Until that exists, the parity number cannot carry the weight the adoption case puts on it | M |
+| **3** | **Manual-only CI, and the wrong report format.** Both its pipeline definitions are manual; results publish as JUnit where the cross-repo contract consumes cucumber JSON through `PublishCucumberReport@1` | **A PR-triggered pipeline, plus either a cucumber-JSON reporter or a replacement publish stage**, and a cross-repo template this repository can call — the same shape the current one exposes | M |
+| **4** | **No governance trail.** No ADR, no CONTRIBUTING, no CODEOWNERS, no pull requests, one author, and no Jira issue sanctioning it | **CODEOWNERS, a PR-based workflow, and a sanctioning ticket.** Cheap, and it is what makes the rest reviewable rather than a matter of trust | S |
+| **5** | **`native/` is a stale fork.** 117 files differing by ~1,629 lines, older WDIO pins with no `resolutions` block, excluded from `tsconfig.json` so never type-checked, and a byte-identical `constants.ts` carrying 180 palette references | **Delete it or re-sync it.** As it stands it duplicates the very coupling item 1 removes | S–M |
+| **6** | **An unused page-object layer.** 34 of 35 objects have zero importers; everything funnels through one 1,028-line `functional-page.ts`. `src/utils/tags.ts` is unreferenced and its `@smoke` tag appears zero times | **Use the layer or delete it.** A single 1,028-line object is a maintainability risk at 1,398 tests, whichever way it is resolved | S |
+| **7** | **Reconciliation with ROU-12962.** Four suites are committed to a shared WDIO + Cucumber test-utils v2; the rewrite pulls a third way | **Argue it against ROU-12962 explicitly**, not in isolation. Either the rewrite is the better target for all four suites, or it is not adopted here | — |
 
-1. **ROU-12962 is decided first**, or at least consulted. The two are mutually exclusive directions
-   and whoever owns the shared layer has the larger stake.
-2. **The theme coupling is addressed as part of any adoption**, not after it. Adopting as-is makes
-   the conversion work in A2–A5 roughly 28 times more expensive to repeat.
-3. **The cross-repo contract is costed** — the template the tests repo owns, and cucumber JSON
-   versus JUnit.
-4. **It acquires an owner and a review trail.** A single-author, unreviewed repository is not a
-   dependency this team should take on, independently of how good the code is.
+**Note what item 1 does to the strongest objection.** "The coupling widens from one file to 28" is
+true of the rewrite *as it stands today* — but it is an artefact of the pre-D1 world. Once appearance
+assertions leave the functional suite, most of those literals have no reason to exist in **either**
+codebase. The objection shrinks to the handful of parameter round-trip values that D1d says to keep,
+and those are fine distributed. So the coupling is a reason to sequence D1 before any adoption, not a
+reason the rewrite is structurally wrong.
+
+**This spike does not answer Q16, and should not.** Deciding it properly needs its own evaluation,
+argued against ROU-12962 rather than in isolation, and it should start from the table above rather
+than from either suite's advocates. Two sequencing constraints worth stating now: **ROU-12962 is
+consulted first**, because whoever owns the shared layer has the larger stake; and **D1 is applied
+before adoption, not after**, or the conversion work in A2–A5 has to be repeated at 28 times the
+spread.
 
 Tracked as **Q16**.
 
