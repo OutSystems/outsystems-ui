@@ -324,6 +324,12 @@ export function mount(document, window, localStorage, EMBEDDED) {
 			detail: 'An optional block parameter without an OML default takes the platform default of its data type (False, 0, 0.0, "", #1900-01-01#, NullIdentifier(), an empty structure or list); the manifest and the cards carry it with its source. ExtendedClass, the DOM identifiers (MenuId, WidgetId, …), free texts (Title, Name, …), measures with a unit (Size, Height, Width), format masks, SVG content and URLs are Text on purpose and never a typing gap; Binary Data is precise. M03 weighs descriptions 60 and precise types 40.',
 			do: 'A parameter that is Text by design goes into TEXT_ON_PURPOSE (evals/model/lib/snapshot.mjs) with its reason; the OML request list then holds only descriptions and genuinely untyped parameters.',
 		},
+		{
+			evals: ['all'],
+			what: 'SonarCloud quality gate green, every open finding on the branch closed',
+			detail: 'The two gate failures were pinned to the commits that introduced them: the export tool ran dotnet by its bare name from PATH (S4036, Security rating B), now resolved once from DOTNET_ROOT or PATH; the Pagination story render function was at cognitive complexity 16 (Critical), now helpers for the arrow buttons and the page navigation with identical markup for 360 argument sets. The nine remaining findings followed: String#endsWith in the doctor name key, no fallback object in the registry spread, one helper drops the pre-category field in the history backfill, the row-document check is not inverted, the pagination range end is Math.min, the nested ternaries and nested template literal in the Pagination and PasswordPolicy stories are plain statements. Generated docs are byte-identical; the code is also checked locally with eslint-plugin-sonarjs before a push.',
+			do: 'Run the SonarJS rules locally over the changed files before pushing (cognitive complexity 15, nested ternaries, nested template literals, duplicated strings); the gate blocks on Critical issues and on any new vulnerability.',
+		},
 	];
 	const BACKLOG = {
 		E02: {
@@ -880,7 +886,7 @@ export function mount(document, window, localStorage, EMBEDDED) {
 	}
 	/** The rows of a published data set: inline, or read from the row documents the main document announces. */
 	async function withRows(db, data) {
-		if (!data || Array.isArray(data.components) || !(data.rowDocs > 0)) return data;
+		if (!data || Array.isArray(data.components) || (data.rowDocs ?? 0) <= 0) return data;
 		const parts = [];
 		for (let i = 1; i <= data.rowDocs; i++) {
 			const part = await db.doc(`${DOC_PATH}-rows-${i}`).get();
