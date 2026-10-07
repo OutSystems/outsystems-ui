@@ -100,6 +100,25 @@ const pageButton = (page: number, selected: number, label: string): string =>
 const ellipsis = (extra?: string): string =>
 	`<div data-container="" class="${cls('pagination-button is--ellipsis', extra, 'OSInline')}">...</div>`;
 
+/** The previous/next arrow button; `enabled` false renders it disabled, as the runtime does at either end. */
+const arrowButton = (side: 'previous' | 'next', icon: 'left' | 'right', enabled: boolean): string =>
+	`<button data-button="" class="pagination-button" type="button" aria-label="go to ${side} page"${enabled ? '' : ' disabled=""'}><div data-container="" class="pagination-${side} OSInline"><i class="icon ph ph-caret-${icon}" aria-hidden="true" data-icon=""></i></div></button>`;
+
+/** The numbered page buttons with their ellipses: first, leading …, the sliding window, trailing …, last. */
+const pageNavigation = (p: ReturnType<typeof paginate>): string => {
+	const middle = p.middle
+		.map((page) => pageButton(page, p.selected, page === p.selected ? `page ${page}` : `go to page ${page}`))
+		.join('');
+	return `
+			<div data-container="" class="display-flex">
+				${p.showFirst ? pageButton(1, p.selected, p.selected > 1 ? 'go to page 1' : 'page 1') : ''}
+				${p.showLeadingEllipsis ? ellipsis() : ''}
+				<div data-list="" data-virtualization-disabled="" data-animation-disabled="" class="list list-group" disable-virtualization="True" role="group">${middle}</div>
+				${p.showTrailingEllipsis ? ellipsis('hide-on-service-studio') : ''}
+				${p.showLast ? pageButton(p.lastPage, p.selected, `page ${p.lastPage}, is last page`) : ''}
+			</div>`;
+};
+
 const meta: Meta<PaginationArgs> = {
 	title: 'Patterns/Navigation/Pagination',
 	tags: ['!ui-pending', 'ui-reviewed'],
@@ -144,25 +163,9 @@ const meta: Meta<PaginationArgs> = {
 			</div>`;
 
 		const hasPages = p.totalPages > 0;
-		const prev = hasPages
-			? `<button data-button="" class="pagination-button" type="button" aria-label="go to previous page"${startIndex > 0 ? '' : ' disabled=""'}><div data-container="" class="pagination-previous OSInline"><i class="icon ph ph-caret-left" aria-hidden="true" data-icon=""></i></div></button>`
-			: '';
-		const next = hasPages
-			? `<button data-button="" class="pagination-button" type="button" aria-label="go to next page"${p.selected < p.totalPages + 1 ? '' : ' disabled=""'}><div data-container="" class="pagination-next OSInline"><i class="icon ph ph-caret-right" aria-hidden="true" data-icon=""></i></div></button>`
-			: '';
-
-		const pageNav = `
-			<div data-container="" class="display-flex">
-				${p.showFirst ? pageButton(1, p.selected, p.selected > 1 ? 'go to page 1' : 'page 1') : ''}
-				${p.showLeadingEllipsis ? ellipsis() : ''}
-				<div data-list="" data-virtualization-disabled="" data-animation-disabled="" class="list list-group" disable-virtualization="True" role="group">${p.middle
-					.map((page) =>
-						pageButton(page, p.selected, page === p.selected ? `page ${page}` : `go to page ${page}`)
-					)
-					.join('')}</div>
-				${p.showTrailingEllipsis ? ellipsis('hide-on-service-studio') : ''}
-				${p.showLast ? pageButton(p.lastPage, p.selected, `page ${p.lastPage}, is last page`) : ''}
-			</div>`;
+		const prev = hasPages ? arrowButton('previous', 'left', startIndex > 0) : '';
+		const next = hasPages ? arrowButton('next', 'right', p.selected < p.totalPages + 1) : '';
+		const pageNav = pageNavigation(p);
 
 		const goToPage = `
 			<div data-container="" class="pagination-input">
