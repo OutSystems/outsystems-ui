@@ -856,8 +856,8 @@ function numberRuns(names) {
 	/** @type {Map<string, number[]>} */
 	const slots = new Map();
 	for (const n of names) {
-		const m = n.match(/^(.*-)(\d+)(-.*|)$/);
-		if (m) slots.set(`${m[1]}\u0000${m[3]}`, [...(slots.get(`${m[1]}\u0000${m[3]}`) ?? []), Number(m[2])]);
+		const slot = numericSlot(n);
+		if (slot) slots.set(slot.key, [...(slots.get(slot.key) ?? []), slot.value]);
 	}
 	const taken = new Set();
 	/** @type {Map<string, string>} */
@@ -875,6 +875,24 @@ function numberRuns(names) {
 		for (const m of members) taken.add(m);
 	}
 	return { runAt, taken };
+}
+
+/** Whether a name segment is a whole number. @param {string} s */
+const isDigits = (s) => s.length > 0 && [...s].every((ch) => ch >= '0' && ch <= '9');
+
+/**
+ * The last all-digit segment of a hyphenated name, with the text before and after it as the slot key:
+ * `background-neutral-3-lightest` → key `background-neutral-\u0000-lightest`, value 3. Null without one.
+ * @param {string} n
+ */
+function numericSlot(n) {
+	const segments = n.split('-');
+	let i = segments.length - 1;
+	while (i > 0 && !isDigits(segments[i])) i--;
+	if (i <= 0) return null;
+	const pre = `${segments.slice(0, i).join('-')}-`;
+	const post = i < segments.length - 1 ? `-${segments.slice(i + 1).join('-')}` : '';
+	return { key: `${pre}\u0000${post}`, value: Number(segments[i]) };
 }
 
 /** The leading segments of a name when there are at least two (`background-teal-`), else ''. @param {string} n */
