@@ -17,15 +17,18 @@ Before diving in, search the customer's CSS for these patterns to identify which
 
 | If the CSS contains… | Verdict | Category |
 |---|---|---|
-| `var(--space-*)`, `var(--font-size-*)`, `var(--shadow-*)`, `var(--border-size-*)` | Retired — resolves to nothing | A (§2) |
-| `var(--background-color-*)`, `var(--text-color-*)`, `var(--border-color-*)` | Retired — resolves to nothing | A (§2) |
-| `--color-red`, `--color-indigo-light`, any extended-palette shade | Retired + hex changed | A (§2, extended palette) |
-| `--color-primary`, `--color-error`, `--color-background-body` | Still works but resolves to a different colour | F (§8) |
-| `--color-neutral-0` … `-10` | Still works but scale re-based — `neutral-0` is no longer white | F (§8, neutral trap) |
-| A rule against `.osui-*` with `!important` or direct property overrides | Probably replaceable with `--osui-*` variable | B (§1) |
-| `font-size` without `line-height` | May look wrong due to line-height model change | D (§1) |
-| `padding-left`, `margin-right` etc. on OSUI classes | May silently lose cascade race against logical properties | E (§1) |
-| `.shadow-m`, `.margin-base`, `.font-size-h1` (utility classes) | Still shipped but no longer driven by old variables | G (§9) |
+| `var(--space-*)`, `var(--font-size-*)`, `var(--shadow-*)`, `var(--border-size-*)` | Retired — resolves to nothing | A (Section 2) |
+| `var(--background-color-*)`, `var(--text-color-*)`, `var(--border-color-*)` | Retired — resolves to nothing | A (Section 2) |
+| `--color-red`, `--color-indigo-light`, any extended-palette shade | Retired + hex changed | A (Section 2, extended palette) |
+| `--color-primary`, `--color-error`, `--color-background-body` | Still works but resolves to a different colour | F (Section 8) |
+| `--color-neutral-0` … `-10` | Still works but scale re-based — `neutral-0` is no longer white | F (Section 8, neutral trap) |
+| A rule against `.osui-*`, or a legacy widget class (`.dropdown-container`, `.wizard-item-icon`, `[data-popup]`, `.form-control`), with `!important` or direct property overrides | Probably replaceable with an `--osui-*` variable on the current selector | B (Section 2) |
+| Dark mode inverts `--color-neutral-*` while `--color-primary` points at a neutral step | Primary button label stays white (`--color-text-light` is not remapped) | C (Section 2, button contrast) |
+| `font-size` without `line-height` | May look wrong due to line-height model change | D (Section 1) |
+| `padding-left`, `margin-right` etc. on OSUI classes | May silently lose cascade race against logical properties | E (Section 1) |
+| `.shadow-m`, `.margin-base`, `.font-size-h1` (utility classes) | Still shipped but no longer driven by old variables | G (Section 9) |
+| Dark block overrides 3+ `--color-neutral-*` steps (ramp flip) | Role variables (`--color-text`, `--color-background-header`, …) no longer cascade from neutrals — text, buttons, and surfaces go invisible | H (Section 2, neutral ramp flip) |
+| Component spacing visibly broken (collapsed, overlapping, shifted) | Framework component internal spacing changed to token-based values — fix only if layout breaks | I (Section 11) |
 
 ---
 
@@ -39,14 +42,14 @@ The largest source of breakage. These variable families **no longer exist** at `
 
 | Retired family | Example | What to use instead |
 |---|---|---|
-| `--background-color-*` | `--background-color-primary` | The matching `--color-*` role (§3 mapping) |
-| `--text-color-*` | `--text-color-neutral-0` | The matching `--color-text-*` role (§3 mapping) |
+| `--background-color-*` | `--background-color-primary` | The matching `--color-*` role (Section 3 mapping) |
+| `--text-color-*` | `--text-color-neutral-0` | The matching `--color-text-*` role (Section 3 mapping) |
 | `--border-color-*` | `--border-color-primary` | The matching `--color-*` or `--color-border-*` role |
-| `--shadow-*` | `--shadow-s`, `--shadow-l` | `--token-elevation-*` (§3 mapping) |
-| `--font-size-*` | `--font-size-h1`, `--font-size-base` | `--token-font-size-*` (§3 mapping) |
-| `--border-size-*` | `--border-size-s` | `--token-border-size-*` (§3 mapping) |
-| `--color-{family}-{shade}` | `--color-red-dark`, `--color-indigo-light` | `--token-primitives-{family}-*` (§3 extended palette) |
-| `--color-{status}-light` | `--color-error-light` | `--token-semantics-{role}-100` (§3 semantic shades) |
+| `--shadow-*` | `--shadow-s`, `--shadow-l` | `--token-elevation-*` (Section 3 mapping) |
+| `--font-size-*` | `--font-size-h1`, `--font-size-base` | `--token-font-size-*` (Section 3 mapping) |
+| `--border-size-*` | `--border-size-s` | `--token-border-size-*` (Section 3 mapping) |
+| `--color-{family}-{shade}` | `--color-red-dark`, `--color-indigo-light` | `--token-primitives-{family}-*` (Section 3 extended palette) |
+| `--color-{status}-light` | `--color-error-light` | `--token-semantics-{role}-100` (Section 3 semantic shades) |
 | `--border-radius-circle` | `border-radius: var(--border-radius-circle)` | Use `border-radius: 50%` or `--border-radius-rounded` |
 
 A `var(--background-color-primary, var(--color-primary))` still works because of the inner fallback — but `var(--background-color-primary)` without a fallback resolves to nothing and the declaration is silently dropped.
@@ -77,7 +80,22 @@ Patterns now declare their visual properties as `--osui-{component}-{property}` 
 
 Each pattern's knobs are listed in the Storybook **CSS API Reference** page.
 
-**Detection pattern:** CSS rules that target `.osui-*` selectors and set visual properties (`background`, `color`, `border`, `box-shadow`, `padding`, `margin`, `font-size`, `border-radius`, `gap`, `opacity`) directly rather than via `--osui-*` variables.
+**Detection pattern:** CSS rules that set visual properties (`background`, `color`, `border`, `box-shadow`, `padding`, `margin`, `font-size`, `border-radius`, `gap`, `opacity`) directly on a component, rather than via `--osui-*` variables. Search both current `.osui-*` selectors and the legacy selectors below. A rule on `.wizard-item-icon` is the same finding as a rule on `.osui-wizard-item-icon`.
+
+**Legacy selector → current knob.** Confirm the knob is actually read in `src/scss/` before swapping. The old class often no longer matches.
+
+| Legacy selector | Set the variable on | Knobs |
+|---|---|---|
+| `.dropdown-container`, `.dropdown-display`, `[data-dropdown] .dropdown-list` | `.dropdown-container` | `--osui-dropdown-background`, `--osui-dropdown-border-color`, `--osui-dropdown-border-width`, `--osui-dropdown-border-radius`, `--osui-dropdown-list-background`, `--osui-dropdown-color`, `--osui-dropdown-hover-border-color` |
+| `.form-control[data-input]`, `.form-control[data-textarea]` | `.form-control` | `--osui-input-background`, `--osui-input-border-color`, `--osui-input-hover-border-color`, `--osui-input-border-radius`, `--osui-input-color` |
+| `.progress-wizard .wizard-item-icon`, `.wizard-item-icon-wrapper` | `.osui-wizard-item` | `--osui-wizard-icon-background`, `--osui-wizard-icon-border-color`, `--osui-wizard-connector-color`, `--osui-wizard-past-background`, `--osui-wizard-active-color` |
+| `[data-popup]` background | `.popup-dialog` | `--osui-popup-background` |
+
+**When the lookup does not give a clean swap:**
+
+- The variable is declared but never read (example: `--osui-accordion-item-border-radius`). Keep the property. `--osui-accordion-border-radius` only rounds the first and last item of the group, so a per-item `border-radius` can still need `!important` against those longhands.
+- The framework sets `display: none` on the pseudo and there is no knob (range-slider handle `:before` / `:after`). Drop the restyle. It cannot show.
+- There is no knob (tick `height`, `.form-info-field`). Keep the direct rule and say so.
 
 ### Category C — Theme-layer role changes
 
@@ -93,17 +111,109 @@ Additionally, overriding `--color-primary` alone is no longer sufficient for but
 
 **Detection pattern:** overrides of `--color-primary` without companion `--color-primary-hover` / `--color-primary-active`.
 
+**Button contrast in an inverted dark palette.** Primary button text is `--osui-btn-primary-color: var(--color-text-light)`. `--color-text-light` resolves to white and `.os-dark-theme` does not remap it. If the customer's dark block turns `--color-primary` light — including when primary is `var(--color-neutral-10)` and that step flips to white — the label disappears on the white button. In that dark block set:
+
+```css
+--osui-btn-primary-color: var(--color-neutral-0);
+```
+
+Use `--color-text-dark` instead when their inverted `--color-neutral-0` is not the dark text.
+
+`.btn.background-white` keeps a white fill while `--color-text-subtle` flips light, and the framework excludes `.background-white` from the inverse-text rule. Under the dark selector set `--osui-btn-color: var(--color-text-dark)` on `.btn.background-white`.
+
+**Outline / transparent button variants.** The same invisible-label problem affects any button with a transparent or white background that inherits the default `--osui-btn-color`. Check for custom classes like `.btn-transparent-with-border`, `.btn-no-border`, or any outline variant the customer defines. Include them alongside `.btn.background-white` in the dark-mode fix:
+
+```css
+.dark-mode .btn.background-white,
+.os-dark-theme .btn.background-white,
+.dark-mode .btn.btn-transparent-with-border,
+.os-dark-theme .btn.btn-transparent-with-border {
+    --osui-btn-color: var(--color-text-dark);
+}
+```
+
 ### Category D — Line-height model
 
 `body` line-height changed from unitless `1.5` (relative to each element's font-size) to `1.5rem` (absolute 24 px). Every element that sets its own `font-size` but not its own `line-height` now inherits a fixed 24 px. Small text looks tall; large text overlaps.
 
 **Detection pattern:** any custom rule that sets `font-size` without a corresponding `line-height`. Recommend pairing with the matching `--token-font-line-height-*` token or a unitless number.
 
+**`border-radius: 100%` trap.** Adding `line-height` changes the element's height, which changes its aspect ratio. A `border-radius: 100%` on a non-square element produces an **ellipse**, not a circle. After pairing `line-height`, scan the same rule for `border-radius: 100%` and replace with `border-radius: 100px` (pill shape) or `border-radius: 50%` (circle only if the element is square). This commonly affects badge/pill/tag elements like chart labels.
+
 ### Category E — Logical properties
 
 Framework rules now use `padding-block` / `padding-inline` / `margin-inline-start` / `inset-inline-start` etc. A custom override using `padding-left` on the same element has **no specificity relationship** with `padding-inline-start` — whichever comes later wins — so a partial physical override can silently do nothing.
 
 **Detection pattern:** custom rules targeting OSUI classes that use physical properties (`padding-left`, `padding-right`, `margin-left`, `margin-right`, `left`, `right`, `border-left`, `border-right`) where the framework now uses the logical equivalent.
+
+### Category H — Neutral ramp flip (roles no longer cascade)
+
+The highest-impact dark-mode breakage. In the **old theme**, role variables were defined directly in terms of neutral steps:
+
+```css
+/* Old theme internals — roles read neutrals directly */
+--color-text: var(--color-neutral-9);
+--color-background-header: var(--color-neutral-0);
+--color-background-surface: var(--color-neutral-0);
+--color-border: var(--color-neutral-3);
+```
+
+Customers who built dark mode by flipping the entire neutral ramp (swapping `--color-neutral-0` ↔ `--color-neutral-10`, `--color-neutral-1` ↔ `--color-neutral-9`, etc.) got dark text, surfaces, and borders "for free" because every role cascaded through the ramp.
+
+In the **new theme**, roles resolve through `$token-*` variables that do **not** reference `--color-neutral-*`. Flipping the neutral ramp still changes elements that read neutrals directly (custom backgrounds, custom borders), but the framework's own text, surfaces, headers, and borders are unaffected — they keep their light-mode token values on a now-dark background, producing:
+
+- **Invisible / faded body text** — `--color-text` still resolves to dark text
+- **Invisible button labels** — `--osui-btn-color` still reads the light-mode token
+- **Invisible outline / secondary button text** — transparent-background buttons get white text on white fill
+- **Blue links instead of themed links** — link color is hardcoded to `$token-semantics-primary-base` (not `--color-primary`), so the customer's `--color-primary` override has no effect on links
+- **Missing header background** — `--color-background-header` still resolves to the light default
+- **Missing surface contrast** — `--color-background-surface` unchanged
+- **Invisible borders** — `--color-border` still resolves to its light value
+
+**Detection pattern:** a dark-mode block (`:root.dark-mode`, `:root.os-dark-theme`, `body.dark`, etc.) that overrides **3 or more** `--color-neutral-*` steps. This is the signature of a ramp-flip strategy.
+
+```
+:root\.(dark-mode|os-dark-theme)[^{]*\{[^}]*--color-neutral-[0-9]+:.*--color-neutral-[0-9]+:.*--color-neutral-[0-9]+:
+```
+
+**The fix:** add explicit role overrides in the dark block, mapping each role to the customer's intended neutral step. The mapping depends on which neutral step now serves each purpose after the flip:
+
+```css
+:root.dark-mode,
+:root.os-dark-theme {
+    /* ... existing neutral ramp overrides ... */
+
+    /* ─── Role overrides (required after ramp flip) ─── */
+    --color-text:                var(--color-neutral-10);  /* was neutral-9 in old theme */
+    --color-text-subtle:         var(--color-neutral-8);
+    --color-text-subtlest:       var(--color-neutral-7);
+    --color-background-header:   #141C4E;  /* or var(--header-color) if customer has a custom var */
+    --color-background-surface:  var(--color-neutral-1);
+    --color-border:              var(--color-neutral-3);
+    --color-border-subtle:       var(--color-neutral-2);
+    --token-semantics-primary-base: var(--color-neutral-10);  /* links + primary color follow the flipped ramp */
+    --token-semantics-primary-900:  var(--color-neutral-9);   /* link/primary hover state */
+}
+```
+
+The exact neutral step for each role depends on the customer's palette. Use the highest-contrast readable step for text (usually the one that flipped to near-white) and the closest-to-background step for surfaces/borders.
+
+**`--token-semantics-primary-base` is a shared root.** Overriding it changes both link color AND `--color-primary` (buttons, focus rings, etc.) because they all resolve through the same token. This is usually what ramp-flip customers want — their `--color-primary` already points at a neutral step that flipped. But if a customer needs links and primary to diverge in dark mode, skip the token override and add a direct rule instead:
+
+```css
+.dark-mode a,
+.os-dark-theme a {
+    color: var(--color-neutral-10);
+}
+```
+
+**Custom surface variables need wiring too.** If the customer declares custom variables like `--header-color` or `--sidebar-bg` that the old framework read by convention, these must now be wired to the framework's role variables explicitly. The new framework reads `--color-background-header`, not `--header-color`:
+
+```css
+:root {
+    --color-background-header: var(--header-color);
+}
+```
 
 ---
 
@@ -195,6 +305,22 @@ Family renames in the token package: **`grape` → `purple`**, **`cyan` → `aqu
 
 > **Prefer the semantic role over the family.** `--color-red` was a literal colour. Its replacement is usually `--color-error` (theme role) or `--token-bg-danger-base-default` (token). Route through the role and the CSS follows any future theme; hardcode a family primitive and it won't.
 
+**Customer-redeclared family colors are not dead.** If the sheet sets `--color-red` or `--color-green` (or another retired family base) and reads it back, the custom property still works for those rules. The framework no longer reads the name. Keep their hex, alias the role, and point the matching button variant at it. Do this in every block that defines the color, including dark mode:
+
+```css
+--color-error: #c92a2a;
+--color-red: var(--color-error);
+--osui-btn-error-background: var(--color-error);
+--osui-btn-error-border-color: var(--color-error);
+
+--color-success: #37b24d;
+--color-green: var(--color-success);
+--osui-btn-success-background: var(--color-success);
+--osui-btn-success-border-color: var(--color-success);
+```
+
+Do not auto-swap a shaded name (`--color-indigo-lightest`). The palette was recolored, so show the token from the extended-palette table and ask.
+
 **Detection pattern:**
 ```
 var\(\s*--color-(red|orange|yellow|lime|green|teal|cyan|blue|indigo|violet|grape|pink)-(lightest|lighter|light|dark|darker|darkest)\)
@@ -229,17 +355,17 @@ New additions: `--border-radius-default` (global override — set once to re-rad
 
 ## 4. Still valid — no change needed
 
-These variable families are **not retired** and work identically in the new theme (though some resolve to different values — see §8):
+These variable families are **not retired** and work identically in the new theme (though some resolve to different values — see Section 8):
 
 - **Brand/status colors:** `--color-primary`, `--color-secondary`, `--color-error`, `--color-warning`, `--color-success`, `--color-info`
-- **Neutral ramp:** `--color-neutral-0` through `--color-neutral-10` (values changed — see §8 neutral trap)
+- **Neutral ramp:** `--color-neutral-0` through `--color-neutral-10` (values changed — see Section 8 neutral trap)
 - **Spacing scale:** `--space-none`, `--space-xs`, `--space-s`, `--space-base`, `--space-m`, `--space-l`, `--space-xl`, `--space-xxl`
 - **Border radius:** `--border-radius-none`, `--border-radius-soft` (now 8px, was 4px), `--border-radius-rounded`
 - **Layout sizes:** `--header-size`, `--header-size-content`, `--side-menu-size`, `--bottom-bar-size`, `--footer-height`
 - **Z-index layers:** `--layer-global-*`, `--layer-local-tier-*`, `--layer-above`, `--layer-below`
 - **Safe areas:** `--os-safe-area-top`, `--os-safe-area-right`, `--os-safe-area-bottom`, `--os-safe-area-left`
 
-Do **not** flag these as needing migration — but see §8 for value changes that may cause visual diffs.
+Do **not** flag these as needing migration — but see Section 8 for value changes that may cause visual diffs.
 
 ---
 
@@ -315,7 +441,7 @@ Scan the full CSS for all five breakage categories, classify each finding as `au
 
 These are mechanical, safe, one-to-one replacements with no ambiguity:
 
-- **Retired variable swaps (Category A):** every `var(--border-size-s)` → `var(--token-border-size-025)`, every `var(--font-size-xs)` → `var(--token-font-size-300)`, every `var(--font-regular)` → `var(--token-font-weight-400)`, etc. Use the full mapping table in §2. The replacement is always the same regardless of context.
+- **Retired variable swaps (Category A):** every `var(--border-size-s)` → `var(--token-border-size-025)`, every `var(--font-size-xs)` → `var(--token-font-size-300)`, every `var(--font-regular)` → `var(--token-font-weight-400)`, etc. Use the full mapping table in Section 2. The replacement is always the same regardless of context.
 - **Missing `--color-primary-active` (Category C):** if `:root` overrides `--color-primary` and `--color-primary-hover` but not `--color-primary-active`, add `--color-primary-active` with the same value as `--color-primary-hover` (safe default — pressed state matches hover).
 
 **Output:** write the migrated CSS to the working file with `/* MIGRATED: ... */` comments on each changed line. Show a summary of what was changed (not the full CSS — that's in the file). Example of a migrated line:
@@ -332,7 +458,7 @@ These are mechanical, safe, one-to-one replacements with no ambiguity:
 #### What qualifies as auto-fixable
 
 A replacement is auto-fixable **only** when:
-1. The mapping is a single, unambiguous entry in §2 (one old var → one new var).
+1. The mapping is a single, unambiguous entry in Section 2 (one old var → one new var).
 2. The replacement produces the **same rendered value** (same px/color/weight). Font-size swaps where the new token renders a **different size** (h1–h3) are NOT auto-fixable.
 3. The replacement does not change the selector, property name, or specificity — only the value.
 
@@ -346,7 +472,7 @@ The order is intentional — most impactful / most broken first:
 
 #### Step 2a — Component CSS API overrides (Category B)
 
-For each `.osui-*` direct property override, look up the correct `--osui-*` knob by searching the component's SCSS source (`src/scripts/**/scss/`). Present a table with before/after for each finding. Ask: "Should I replace these with the CSS API variables? (yes/no/pick which ones)"
+For each direct visual override, look up the `--osui-*` knob in `src/scss/`. Include both `.osui-*` rules and the legacy selectors in the Category B table (dropdown, input, wizard, popup). A renamed class is still a finding: retarget it in the proposed replacement. Apply the "when the lookup does not give a clean swap" rules in that table (unused knob, `display: none` pseudo, no knob). Present a table with before/after for each finding. Ask: "Should I replace these with the CSS API variables? (yes/no/pick which ones)"
 
 **Wait for the user's response. Apply their choices to the working file. Then proceed to Step 2b.**
 
@@ -373,9 +499,48 @@ If the CSS uses a dark-mode selector other than `.os-dark-theme`, present the op
 - **Option A:** Keep the custom selector as-is (app manages its own dark mode).
 - **Option B:** Add `.os-dark-theme` alongside the custom selector to benefit from the framework's dark token overrides.
 
-Ask: "Which approach do you prefer?"
+In the same step, check button contrast. If the dark block makes `--color-primary` light (directly, or because it points at a neutral step that flips light), propose `--osui-btn-primary-color: var(--color-neutral-0)` in that block, or `--color-text-dark` when neutral-0 is not the dark text. Also propose `--osui-btn-color: var(--color-text-dark)` on `.btn.background-white` under the dark selector. `--color-text-light` stays white in `.os-dark-theme`, so skipping this leaves white labels on white buttons.
 
-**Wait for the user's response. Apply their choice to the working file.**
+Ask: "Which dark-mode approach do you want, and should I apply the button-label fix?"
+
+**Wait for the user's response. Apply their choice to the working file. Then proceed to Step 2e.**
+
+#### Step 2e — Redeclared palette colors (Category A)
+
+If the sheet declares a retired family base (`--color-red`, `--color-green`, or another `--color-{family}` with no shade) and uses it, propose the alias in Section 3: keep the hex on `--color-error` / `--color-success`, point the old name at that role, and set `--osui-btn-error-*` / `--osui-btn-success-*`. Repeat it in the dark block when that block defines its own hex. Shaded names stay in this step too, with the extended-palette token shown before applying, because the hex changed.
+
+Ask: "Should I alias these palette colors? (yes/no/pick which ones)"
+
+**Wait for the user's response. Apply their choices to the working file. Then proceed to Step 2f.**
+
+#### Step 2f — Neutral ramp flip role overrides (Category H, if applicable)
+
+If the dark block overrides 3 or more `--color-neutral-*` steps (the ramp-flip pattern), the framework's role variables no longer cascade from the neutrals. Present the customer with the list of role overrides needed, mapped to their specific neutral steps:
+
+1. **Identify the customer's text step** — whichever `--color-neutral-*` flipped to near-white (usually `--color-neutral-10` or `--color-neutral-9`).
+2. **Identify the customer's surface step** — the step closest to the dark background (usually `--color-neutral-1` or `--color-neutral-0`).
+3. **Identify the customer's border step** — typically `--color-neutral-2` or `--color-neutral-3`.
+4. **Check for custom surface variables** — if the customer declares variables like `--header-color`, `--sidebar-bg`, etc. that are NOT the framework's role names (`--color-background-header`, `--color-background-surface`), flag that these must be wired.
+
+Present a table like:
+
+| Role variable | Proposed value | Purpose |
+|---|---|---|
+| `--color-text` | `var(--color-neutral-10)` | Body text |
+| `--color-text-subtle` | `var(--color-neutral-8)` | Secondary text |
+| `--color-text-subtlest` | `var(--color-neutral-7)` | Hint/placeholder text |
+| `--color-background-header` | `var(--header-color)` or hex | Header background |
+| `--color-background-surface` | `var(--color-neutral-1)` | Card/panel surfaces |
+| `--color-border` | `var(--color-neutral-3)` | Default borders |
+| `--color-border-subtle` | `var(--color-neutral-2)` | Subtle/divider borders |
+| `--token-semantics-primary-base` | `var(--color-neutral-10)` | Link color + primary (framework hardcodes links to this token, not `--color-primary`) |
+| `--token-semantics-primary-900` | `var(--color-neutral-9)` | Link hover + primary hover state |
+
+Also check whether any custom variables need wiring to framework roles in the `:root` (light) block too (e.g. `--color-background-header: var(--header-color)`).
+
+Ask: "Should I add these role overrides to the dark block? (yes/no/pick which ones)"
+
+**Wait for the user's response. Apply their choices to the working file.**
 
 ### Phase 3 — Final output
 
@@ -435,6 +600,19 @@ Every utility class kept its name (`.shadow-m`, `.margin-base`, `.font-size-h1`,
 ## 10. Recipes — "I used to do X"
 
 Common migration patterns:
+
+### "My dark primary button lost its label"
+
+`--color-text-light` stays white. If dark mode turns `--color-primary` white, set the button label in that same block:
+
+```css
+:root.os-dark-theme {
+  --osui-btn-primary-color: var(--color-neutral-0);
+}
+.os-dark-theme .btn.background-white {
+  --osui-btn-color: var(--color-text-dark);
+}
+```
 
 ### "I re-branded the app by overriding `--color-primary`"
 
@@ -503,6 +681,43 @@ Use the surface roles:
 
 Consider adopting the built-in `.os-dark-theme` — it's implemented purely as variable overrides and composes with custom `--osui-*` and `--color-*` overrides. Toggle the class on `<html>` via the `SetDarkTheme` client action.
 
+### "I built dark mode by flipping the neutral ramp"
+
+A common pattern: override `--color-neutral-0` through `--color-neutral-10` in a dark block so that 0 becomes the darkest and 10 becomes the lightest. This worked in the old theme because role variables like `--color-text` were defined as `var(--color-neutral-9)` — flipping neutral-9 to a light color automatically made text light.
+
+In the new theme, roles go through tokens and **no longer cascade from neutrals**. The ramp flip still affects elements that read `var(--color-neutral-*)` directly (custom backgrounds, custom borders), but the framework's own text, headers, surfaces, and borders stay in light mode. Result: dark backgrounds with dark text — invisible UI.
+
+**Fix:** add explicit role overrides in the dark block, mapped to the flipped neutral steps:
+
+```css
+:root.dark-mode,
+:root.os-dark-theme {
+    /* Existing neutral ramp flip */
+    --color-neutral-0: #040D3F;
+    --color-neutral-10: #ffffff;
+    /* ... rest of ramp ... */
+
+    /* Role overrides — required in the new theme */
+    --color-text:                var(--color-neutral-10);
+    --color-text-subtle:         var(--color-neutral-8);
+    --color-text-subtlest:       var(--color-neutral-7);
+    --color-background-header:   #141C4E;  /* wire custom var or use hex */
+    --color-background-surface:  var(--color-neutral-1);
+    --color-border:              var(--color-neutral-3);
+    --color-border-subtle:       var(--color-neutral-2);
+    --color-link:                var(--color-neutral-10);
+    --color-link-hover:          var(--color-neutral-9);
+}
+```
+
+Also wire any custom surface variables to framework roles in the `:root` block:
+
+```css
+:root {
+    --color-background-header: var(--header-color);
+}
+```
+
 ### "I changed all the shadows / all the spacing / all the type"
 
 Override the tokens directly:
@@ -517,9 +732,42 @@ Override the tokens directly:
 
 ---
 
-## 11. What NOT to flag
+## 11. Framework visual diffs (Category I)
 
-- `var(--color-primary)`, `var(--space-base)`, `var(--border-radius-soft)` and other still-valid variables (§3).
+The new theme changed internal spacing, gap, and padding on many framework components because they now use token-based values (`$token-scale-*`) instead of hand-rolled px/rem. This can make components look tighter or looser than the old theme — even though the customer's CSS is unchanged.
+
+**These are not CSS migration issues** — no retired variable or selector is involved. But they can break a customer's layout when their custom CSS relies on the old component dimensions for alignment.
+
+**Detection:** visually compare the migrated app against the original. Look for:
+- Components that collapsed vertically (blank-slate, empty states, cards)
+- Spacing between stacked elements that tightened or widened
+- Form fields, buttons, or list items with different heights
+- Content areas that shifted because an adjacent framework component changed size
+
+**When to fix:** if the layout is visibly broken (elements overlapping, content cut off, alignment lost between adjacent custom and framework elements), propose a targeted spacing override. Otherwise, note it as a visual diff and move on.
+
+**Fix pattern:** override the specific component's spacing with a direct rule. Do not override global tokens — that would affect everything.
+
+```css
+/* Example: blank-slate collapsed too tight, restore vertical space */
+.table-empty .blank-slate.large {
+    min-height: 200px;
+}
+
+/* Example: card content area lost its old padding */
+.my-section .card-content {
+    padding: 24px;
+}
+```
+
+Present these in Phase 2 as a final visual-diff review step (after Step 2f). Show side-by-side description of what changed and the proposed override. Ask the customer whether they want to pin the old spacing or accept the new theme's default.
+
+---
+
+## 12. What NOT to flag
+
+- `var(--color-primary)`, `var(--space-base)`, `var(--border-radius-soft)` and other still-valid variables (Section 3).
 - Inline styles set by the OutSystems platform runtime — only flag CSS the customer authored.
 - Variables inside `env()` or `calc()` wrappers that are structurally correct.
 - Provider/vendor CSS (`.flatpickr-*`, `.vscomp-*`, `.splide-*`) — these are framework-owned.
+- Framework component spacing diffs that do not break layout (Category I) — note them for the customer but do not auto-fix.
