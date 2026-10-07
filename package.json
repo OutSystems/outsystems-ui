@@ -47,7 +47,7 @@
 	"homepage": "https://outsystemsui.outsystems.com/OutsystemsUiWebsite/",
 	"devDependencies": {
 		"@chromatic-com/storybook": "^5.2.1",
-		"@floating-ui/dom": "^1.8.0",
+		"@floating-ui/dom": "1.8.0",
 		"@phosphor-icons/web": "^2.1.2",
 		"@splidejs/splide": "4.1.4",
 		"@storybook/addon-docs": "10.5.9",
