@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import fs from 'node:fs';
 import path from 'node:path';
 import { test } from 'node:test';
 import { fileURLToPath } from 'node:url';
@@ -96,12 +97,23 @@ test('the page module renders a data set with a single suite and a single run', 
 test('the findings render the per-block tables a suite contributes through extra', async () => {
 	const { renderSection } = await import('../tools/dashboard-page.mjs');
 	const html = await renderSection(evalsDir, 'findings');
-	// on the committed data set M04 is complete (named in the Done lead); M01 and M03 still have rows to show
-	assert.ok(html.includes('M04: every block at 100.'), 'the Done lead names the complete block evals');
-	assert.ok(!html.includes('M04 · card cost per block'), 'a complete table leaves the Findings');
-	assert.ok(html.includes('M01 · manifest completeness per block'), 'an incomplete table stays');
-	assert.ok(html.includes('M03 · parameter precision per block'), 'an incomplete table stays');
-	assert.ok(html.includes('<table class="block-table">'), 'rendered as a table');
+	// a complete table (every block at 100) is named in the Done lead; an incomplete one is rendered as a table
+	const data = JSON.parse(fs.readFileSync(path.join(evalsDir, 'results', 'dashboard.json'), 'utf8'));
+	const model = data.suites.find((s) => s.id === 'model');
+	const tables = Object.entries(model.extra).filter(([, v]) => Array.isArray(v?.rows));
+	assert.ok(tables.length >= 3, 'M01, M03 and M04 contribute tables');
+	const complete = tables.filter(([, v]) => v.rows.every((r) => r[1] === '100'));
+	const open = tables.filter(([, v]) => v.rows.some((r) => r[1] !== '100'));
+	for (const [, v] of complete) assert.ok(!html.includes(v.title), `${v.title} leaves the Findings when complete`);
+	for (const [, v] of open) assert.ok(html.includes(v.title), `${v.title} stays while a block is below 100`);
+	if (complete.length) {
+		const ids = complete.map(([key]) => model.evals.map((e) => e.id).find((id) => key.endsWith(id)));
+		assert.ok(
+			html.includes(`${ids.join(', ')}: every block at 100.`),
+			'the Done lead names the complete block evals'
+		);
+	}
+	if (open.length) assert.ok(html.includes('<table class="block-table">'), 'rendered as a table');
 });
 
 test('the heatmap category filter offers the two categories with components selected', () => {

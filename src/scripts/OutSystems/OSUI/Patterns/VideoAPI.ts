@@ -4,9 +4,9 @@ namespace OutSystems.OSUI.Patterns.VideoAPI {
 	/**
 	 * Function that will change the property of a given Video.
 	 *
-	 * @param videoId
-	 * @param propertyName
-	 * @param propertyValue
+	 * @param videoId The id of the Video element
+	 * @param propertyName The name of the property to change
+	 * @param propertyValue The new value of the property
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function ChangeProperty(videoId: string, propertyName: string, propertyValue: unknown): string {
@@ -25,8 +25,8 @@ namespace OutSystems.OSUI.Patterns.VideoAPI {
 	/**
 	 * Create the new Video instance and add it to the videosMap
 	 *
-	 * @param videoId
-	 * @param configs
+	 * @param videoId The id of the Video element
+	 * @param configs The configuration options as a JSON string or object
 	 * @returns the Video instance
 	 */
 	export function Create(videoId: string, configs: string | Configs): OSFramework.OSUI.Patterns.Video.IVideo {
@@ -47,7 +47,7 @@ namespace OutSystems.OSUI.Patterns.VideoAPI {
 	/**
 	 * Function that will destroy the instance of the given Video
 	 *
-	 * @param videoId
+	 * @param videoId The id of the Video element
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Dispose(videoId: string): string {
@@ -77,7 +77,7 @@ namespace OutSystems.OSUI.Patterns.VideoAPI {
 	/**
 	 * Function that gets the instance of Video, by a given ID.
 	 *
-	 * @param videoId
+	 * @param videoId The id of the Video element
 	 * @returns the Video instance
 	 */
 	export function GetVideoById(videoId: string): OSFramework.OSUI.Patterns.Video.IVideo {
@@ -91,7 +91,7 @@ namespace OutSystems.OSUI.Patterns.VideoAPI {
 	/**
 	 * Function that will initialize the pattern instance.
 	 *
-	 * @param videoId
+	 * @param videoId The id of the Video element
 	 * @returns the Video instance
 	 */
 	export function Initialize(videoId: string): OSFramework.OSUI.Patterns.Video.IVideo {
@@ -105,9 +105,9 @@ namespace OutSystems.OSUI.Patterns.VideoAPI {
 	/**
 	 * Function to register a provider callback
 	 *
-	 * @param videoId
-	 * @param eventName
-	 * @param callback
+	 * @param videoId The id of the Video element
+	 * @param eventName The name of the event to register the callback for
+	 * @param callback The function invoked when the event fires
 	 * @returns Return Message Success or message of error info if it's the case.
 	 */
 	export function RegisterCallback(
@@ -130,7 +130,7 @@ namespace OutSystems.OSUI.Patterns.VideoAPI {
 	/**
 	 * Function that returns the state of a given video
 	 *
-	 * @param videoId
+	 * @param videoId The id of the Video element
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function GetState(videoId: string): string {
@@ -150,7 +150,7 @@ namespace OutSystems.OSUI.Patterns.VideoAPI {
 	/**
 	 *
 	 * Function that pause video on a given video
-	 * @param videoId
+	 * @param videoId The id of the Video element
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Pause(videoId: string): string {
@@ -169,7 +169,7 @@ namespace OutSystems.OSUI.Patterns.VideoAPI {
 	/**
 	 * Function that play video on a given video
 	 *
-	 * @param videoId
+	 * @param videoId The id of the Video element
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Play(videoId: string): string {
@@ -188,8 +188,8 @@ namespace OutSystems.OSUI.Patterns.VideoAPI {
 	/**
 	 * Function that jump to a specific time on a given video
 	 *
-	 * @param videoId
-	 * @param currentTime
+	 * @param videoId The id of the Video element
+	 * @param currentTime The time in seconds to jump to
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function JumpToTime(videoId: string, currentTime: number): string {

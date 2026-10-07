@@ -48,7 +48,7 @@ namespace OutSystems.OSUI.Patterns.RatingAPI {
 	/**
 	 * Function that will set Rating with given ID as disabled
 	 *
-	 * @param ratingId
+	 * @param ratingId The id of the Rating element
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Disable(ratingId: string): string {
@@ -88,7 +88,7 @@ namespace OutSystems.OSUI.Patterns.RatingAPI {
 	/**
 	 * Function that will set Rating with given ID as enabled
 	 *
-	 * @param ratingId
+	 * @param ratingId The id of the Rating element
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Enable(ratingId: string): string {
@@ -144,9 +144,9 @@ namespace OutSystems.OSUI.Patterns.RatingAPI {
 	/**
 	 * Function to register a provider callback
 	 *
-	 * @param ratingId
-	 * @param eventName
-	 * @param callback
+	 * @param ratingId The id of the Rating element
+	 * @param eventName The name of the event to register the callback for
+	 * @param callback The function invoked when the event fires
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function RegisterCallback(

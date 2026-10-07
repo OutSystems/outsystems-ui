@@ -4,9 +4,9 @@ namespace OutSystems.OSUI.Patterns.InlineSvgAPI {
 	/**
 	 * Function that will change the property of a given InlineSvg.
 	 *
-	 * @param inlineSvgId
-	 * @param propertyName
-	 * @param propertyValue
+	 * @param inlineSvgId The id of the InlineSvg element
+	 * @param propertyName The name of the property to change
+	 * @param propertyValue The new value of the property
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function ChangeProperty(inlineSvgId: string, propertyName: string, propertyValue: unknown): string {
@@ -25,8 +25,8 @@ namespace OutSystems.OSUI.Patterns.InlineSvgAPI {
 	/**
 	 * Create the new InlineSvg instance and add it to the InlineSvgsMap
 	 *
-	 * @param inlineSvgId
-	 * @param configs
+	 * @param inlineSvgId The id of the InlineSvg element
+	 * @param configs The configuration options as a JSON string or object
 	 * @returns the InlineSvg instance
 	 */
 	export function Create(
@@ -50,7 +50,7 @@ namespace OutSystems.OSUI.Patterns.InlineSvgAPI {
 	/**
 	 * Function that will destroy the instance of the given InlineSvg
 	 *
-	 * @param inlineSvgId
+	 * @param inlineSvgId The id of the InlineSvg element
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Dispose(inlineSvgId: string): string {
@@ -80,7 +80,7 @@ namespace OutSystems.OSUI.Patterns.InlineSvgAPI {
 	/**
 	 * Function that gets the instance of InlineSvg, by a given ID.
 	 *
-	 * @param inlineSvgId
+	 * @param inlineSvgId The id of the InlineSvg element
 	 * @returns the InlineSvg instance
 	 */
 	export function GetInlineSvgById(inlineSvgId: string): OSFramework.OSUI.Patterns.InlineSvg.IInlineSvg {
@@ -94,7 +94,7 @@ namespace OutSystems.OSUI.Patterns.InlineSvgAPI {
 	/**
 	 * Function that will initialize the pattern instance.
 	 *
-	 * @param inlineSvgId
+	 * @param inlineSvgId The id of the InlineSvg element
 	 * @returns the InlineSvg instance
 	 */
 	export function Initialize(inlineSvgId: string): OSFramework.OSUI.Patterns.InlineSvg.IInlineSvg {
@@ -108,9 +108,9 @@ namespace OutSystems.OSUI.Patterns.InlineSvgAPI {
 	/**
 	 * Function to register a provider callback
 	 *
-	 * @param inlineSvgId
-	 * @param eventName
-	 * @param callback
+	 * @param inlineSvgId The id of the InlineSvg element
+	 * @param eventName The name of the event to register the callback for
+	 * @param callback The function invoked when the event fires
 	 * @returns Return Message Success or message of error info if it's the case.
 	 */
 	export function RegisterCallback(
@@ -133,8 +133,8 @@ namespace OutSystems.OSUI.Patterns.InlineSvgAPI {
 	/**
 	 * Function to set the accessibility properties of the InlineSvg
 	 *
-	 * @param inlineSvgId
-	 * @param a11yOptions
+	 * @param inlineSvgId The id of the InlineSvg element
+	 * @param a11yOptions The accessibility properties to set, as a JSON string
 	 * @returns Return Message Success or message of error info if it's the case.
 	 */
 	export function SetAccessibilityProperties(inlineSvgId: string, a11yOptions: string): string {

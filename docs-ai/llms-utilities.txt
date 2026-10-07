@@ -206,6 +206,15 @@ Scope: OutSystems UI ships a single token-based theme (light, plus the generated
 - hide-scrollbar → -ms-overflow-style: none; scrollbar-width: none [legacy name]
 - hide-on-service-studio → -servicestudio-display: none [legacy name]
 
+## Synonyms (22 groups: same declarations; the first name is canonical, {a..b} a number run, {a,b} alternatives)
+
+- background-primary-lightest = background-neutral-{0..10}-lightest = background-secondary-lightest
+- text-primary, text-secondary, text-neutral-{5..10} = same + -darker
+- background-cyan-{lighter,light,dark,darker,darkest}, text-cyan-{lighter,light,dark,darker,darkest} = same with teal for cyan
+- display-none = hidden
+- shadow-s = shadow-xs
+- font-bold = bold
+
 ## Legacy names (57)
 
 Names outside the grammar, kept for compatibility; their effect is in their family row above. Prefer the grammar form when one exists (display-none over hidden, font-bold over bold).

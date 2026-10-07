@@ -987,7 +987,7 @@ Purpose: Enable swipe events on a specific widget.
 Params:
 - WidgetId: Text (required) — Element that will be swipeable
 Events: SwipeDown() — The event is triggered after a swipe down. · SwipeLeft() — The event is triggered after a swipe left. · SwipeRight() — The event is triggered after a swipe right. · SwipeUp() — The event is triggered after a swipe up.
-Runtime pattern: SwipeEvents (llms-components.txt)
+Runtime pattern: SwipeEvents (llms-components.txt) · WidgetId→WidgetId
 OpenUI: _SwipeEvents1 = Block(SourceBlock: Utilities/SwipeEvents, WidgetId: "")
 TSX: <SwipeEvents id={"_SwipeEvents1"} data-source={"Utilities/SwipeEvents"} WidgetId={""} />
 
@@ -997,6 +997,6 @@ Params:
 - WidgetId: Text (required) — Element that will be affected by the gesture
 - PreventDefaults: Boolean = True — If Prevent Default should be applied
 Events: End(X: Decimal, Y: Decimal, OffsetX: Decimal, OffsetY: Decimal, TimeTaken: Decimal) — The event is triggered after the movement event finishes. · Move(X: Decimal, Y: Decimal, OffsetX: Decimal, OffsetY: Decimal, Evt: Object) — Event triggered when the mouse events move. · Start(X: Decimal, Y: Decimal) — The event is triggered as the touch movement starts.
-Runtime pattern: TouchEvents (llms-components.txt)
+Runtime pattern: TouchEvents (llms-components.txt) · WidgetId→WidgetId
 OpenUI: _TouchEvents1 = Block(SourceBlock: Utilities/TouchEvents, WidgetId: "", PreventDefaults: True)
 TSX: <TouchEvents id={"_TouchEvents1"} data-source={"Utilities/TouchEvents"} WidgetId={""} PreventDefaults={True} />

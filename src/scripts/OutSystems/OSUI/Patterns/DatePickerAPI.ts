@@ -114,7 +114,7 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	/**
 	 * Function that will dispose the instance of the given DatePickerItem Id
 	 *
-	 * @param datePickerId
+	 * @param datePickerId The id of the DatePicker element
 	 * @returns Response Object as a JSON String
 	 */
 	export function Dispose(datePickerId: string): string {
@@ -191,7 +191,7 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	/**
 	 * Function that will be triggered everytime there is a render at DatePicker
 	 *
-	 * @param datePickerId
+	 * @param datePickerId The id of the DatePicker element
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function OnRender(datePickerId: string): string {
@@ -210,9 +210,9 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	/**
 	 * Function to register a provider callback
 	 *
-	 * @param datePickerId
-	 * @param eventName
-	 * @param callback
+	 * @param datePickerId The id of the DatePicker element
+	 * @param eventName The name of the event to register the callback for
+	 * @param callback The function invoked when the event fires
 	 * @returns Response Object as a JSON String
 	 */
 	export function RegisterCallback(
@@ -235,7 +235,7 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	/**
 	 * Fucntion that will/should be triggered after some parameters changed
 	 *
-	 * @param datePickerId
+	 * @param datePickerId The id of the DatePicker element
 	 * @returns Response Object as a JSON String
 	 */
 	export function Redraw(datePickerId: string): string {
@@ -254,7 +254,7 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	/**
 	 * Function that will set a different language to a given DatePickerId
 	 *
-	 * @param datePickerId
+	 * @param datePickerId The id of the DatePicker element
 	 * @param isoCode ISO Code language that will be assigned
 	 * @returns Response Object as a JSON String
 	 */
@@ -282,7 +282,7 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	 * 			=> Date1 = InitialStartDate
 	 * 			=> Date2 = InitialEndDate
 	 *
-	 * @param datePickerId
+	 * @param datePickerId The id of the DatePicker element
 	 * @param date1 The value for the date1
 	 * @param date2 The value for the date2
 	 * @returns Response Object as a JSON String
@@ -313,7 +313,7 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	/**
 	 * Function that will update the prompt message for a given DatepickerId
 	 *
-	 * @param datePickerId
+	 * @param datePickerId The id of the DatePicker element
 	 * @param promptMessage The value for the prompt message
 	 * @returns Response Object as a JSON String
 	 */
@@ -333,8 +333,8 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	/**
 	 * Function to disable days
 	 *
-	 * @param datePickerId
-	 * @param disableDays
+	 * @param datePickerId The id of the DatePicker element
+	 * @param disableDays The dates to disable, as a JSON array of ISO dates
 	 * @returns Response Object as a JSON String
 	 */
 	export function DisableDays(datePickerId: string, disableDays: string[]): string {
@@ -353,8 +353,8 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	/**
 	 * Function to disable weekdays
 	 *
-	 * @param datePickerId
-	 * @param disableWeekDays
+	 * @param datePickerId The id of the DatePicker element
+	 * @param disableWeekDays The week days to disable, 0 (Sunday) to 6
 	 * @returns Response Object as a JSON String
 	 */
 	export function DisableWeekDays(datePickerId: string, disableWeekDays: number[]): string {
@@ -373,8 +373,8 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	/**
 	 * Function to set providerConfigs by extensibility
 	 *
-	 * @param datePickerId
-	 * @param providerConfigs
+	 * @param datePickerId The id of the DatePicker element
+	 * @param providerConfigs The provider configuration options as a JSON string or object
 	 * @returns Response Object as a JSON String
 	 */
 	export function SetProviderConfigs(datePickerId: string, providerConfigs: DatePickerProviderConfigs): string {
@@ -393,9 +393,9 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	/**
 	 * Function to set providerEvents by extensibility
 	 *
-	 * @param datePickerId
-	 * @param eventName
-	 * @param callback
+	 * @param datePickerId The id of the DatePicker element
+	 * @param eventName The name of the event to register the callback for
+	 * @param callback The function invoked when the event fires
 	 * @returns Response Object as a JSON String
 	 */
 	export function SetProviderEvent(
@@ -421,8 +421,8 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	/**
 	 * Function to remove providerEvents added by extensibility
 	 *
-	 * @param datePickerId
-	 * @param eventId
+	 * @param datePickerId The id of the DatePicker element
+	 * @param eventId The id of the provider event
 	 * @returns Response Object as a JSON String
 	 */
 	export function UnsetProviderEvent(datePickerId: string, eventId: string): string {
@@ -440,8 +440,8 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	/**
 	 * Function that will set the input as editable
 	 *
-	 * @param datePickerId
-	 * @param isEditable
+	 * @param datePickerId The id of the DatePicker element
+	 * @param isEditable Whether the input accepts typed values
 	 * @returns Response Object as a JSON String
 	 */
 	export function SetEditableInput(datePickerId: string, isEditable: boolean): string {

@@ -53,7 +53,7 @@ namespace OutSystems.OSUI.Patterns.FlipContentAPI {
 	/**
 	 * Function that will destroy the instance of the given Flip Content
 	 *
-	 * @param flipId
+	 * @param flipId The id of the FlipContent element
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Dispose(flipId: string): string {
@@ -111,9 +111,9 @@ namespace OutSystems.OSUI.Patterns.FlipContentAPI {
 	/**
 	 * * Function that will register a pattern callback.
 	 *
-	 * @param flipId
-	 * @param eventName
-	 * @param callback
+	 * @param flipId The id of the FlipContent element
+	 * @param eventName The name of the event to register the callback for
+	 * @param callback The function invoked when the event fires
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function RegisterCallback(
@@ -135,7 +135,7 @@ namespace OutSystems.OSUI.Patterns.FlipContentAPI {
 	/**
 	 * Function that will show the back part of the content.
 	 *
-	 * @param flipId
+	 * @param flipId The id of the FlipContent element
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function ShowBackContent(flipId: string): string {
@@ -154,7 +154,7 @@ namespace OutSystems.OSUI.Patterns.FlipContentAPI {
 	/**
 	 * Function that will show the front part of the content.
 	 *
-	 * @param flipId
+	 * @param flipId The id of the FlipContent element
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function ShowFrontContent(flipId: string): string {
@@ -173,7 +173,7 @@ namespace OutSystems.OSUI.Patterns.FlipContentAPI {
 	/**
 	 * Function that will flip the content.
 	 *
-	 * @param flipId
+	 * @param flipId The id of the FlipContent element
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function ToggleFlipContent(flipId: string): string {

@@ -8135,9 +8135,16 @@
 			"pattern": "SwipeEvents",
 			"patternSource": "registry",
 			"hints": [],
-			"paramMap": {},
+			"paramMap": {
+				"WidgetId": "WidgetId"
+			},
 			"platformOnly": [],
-			"eventMap": {},
+			"eventMap": {
+				"SwipeUp": "SwipeUp",
+				"SwipeDown": "SwipeDown",
+				"SwipeRight": "SwipeRight",
+				"SwipeLeft": "SwipeLeft"
+			},
 			"recipes": {
 				"openui": "_SwipeEvents1 = Block(SourceBlock: Utilities/SwipeEvents, WidgetId: \"\")",
 				"tsx": "<SwipeEvents id={\"_SwipeEvents1\"} data-source={\"Utilities/SwipeEvents\"} WidgetId={\"\"} />"
@@ -8261,9 +8268,17 @@
 			"pattern": "TouchEvents",
 			"patternSource": "registry",
 			"hints": [],
-			"paramMap": {},
-			"platformOnly": [],
-			"eventMap": {},
+			"paramMap": {
+				"WidgetId": "WidgetId"
+			},
+			"platformOnly": [
+				"PreventDefaults"
+			],
+			"eventMap": {
+				"End": "End",
+				"Move": "Move",
+				"Start": "Start"
+			},
 			"recipes": {
 				"openui": "_TouchEvents1 = Block(SourceBlock: Utilities/TouchEvents, WidgetId: \"\", PreventDefaults: True)",
 				"tsx": "<TouchEvents id={\"_TouchEvents1\"} data-source={\"Utilities/TouchEvents\"} WidgetId={\"\"} PreventDefaults={True} />"

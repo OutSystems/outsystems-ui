@@ -71,7 +71,7 @@ namespace OutSystems.OSUI.Patterns.AccordionAPI {
 	/**
 	 * Function that will dispose the instance of the given Accordion
 	 *
-	 * @param accordionId
+	 * @param accordionId The id of the Accordion element
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Dispose(accordionId: string): string {
@@ -151,9 +151,9 @@ namespace OutSystems.OSUI.Patterns.AccordionAPI {
 	/**
 	 * Function to register a provider callback
 	 *
-	 * @param accordionId
-	 * @param eventName
-	 * @param callback
+	 * @param accordionId The id of the Accordion element
+	 * @param eventName The name of the event to register the callback for
+	 * @param callback The function invoked when the event fires
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function RegisterCallback(

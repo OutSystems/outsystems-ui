@@ -53,7 +53,7 @@ namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
 	/**
 	 * Function that will dispose the instance of the given AnimatedLabel
 	 *
-	 * @param animatedLabelId
+	 * @param animatedLabelId The id of the AnimatedLabel element
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Dispose(animatedLabelId: string): string {
@@ -113,9 +113,9 @@ namespace OutSystems.OSUI.Patterns.AnimatedLabelAPI {
 	/**
 	 * Function to register a provider callback
 	 *
-	 * @param dropdownId
-	 * @param eventName
-	 * @param callback
+	 * @param dropdownId The id of the Dropdown element
+	 * @param eventName The name of the event to register the callback for
+	 * @param callback The function invoked when the event fires
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function RegisterCallback(

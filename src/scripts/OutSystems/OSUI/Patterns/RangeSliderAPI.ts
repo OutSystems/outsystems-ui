@@ -26,10 +26,10 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	/**
 	 * Create the new RangeSliderItem instance and add it to the rangeSliderItemsMap
 	 *
-	 * @param rangeSliderId
-	 * @param configs
-	 * @param mode
-	 * @param provider
+	 * @param rangeSliderId The id of the RangeSlider element
+	 * @param configs The configuration options as a JSON string or object
+	 * @param mode The mode of the range slider: a single value or an interval
+	 * @param provider The provider name
 	 * @returns the RangeSlider instance
 	 */
 	export function Create(
@@ -59,7 +59,7 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	/**
 	 * Function that will set RangeSlider with given ID as disabled
 	 *
-	 * @param rangeSliderId
+	 * @param rangeSliderId The id of the RangeSlider element
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Disable(rangeSliderId: string): string {
@@ -78,7 +78,7 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	/**
 	 * Function that will dispose the instance of the given RangeSliderItem Id
 	 *
-	 * @param rangeSliderId
+	 * @param rangeSliderId The id of the RangeSlider element
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Dispose(rangeSliderId: string): string {
@@ -99,7 +99,7 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	/**
 	 * Function that will set RangeSlider with given ID as enabled
 	 *
-	 * @param rangeSliderId
+	 * @param rangeSliderId The id of the RangeSlider element
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Enable(rangeSliderId: string): string {
@@ -155,9 +155,9 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	/**
 	 * Function to register a provider callback
 	 *
-	 * @param rangeSliderId
-	 * @param eventName
-	 * @param callback
+	 * @param rangeSliderId The id of the RangeSlider element
+	 * @param eventName The name of the event to register the callback for
+	 * @param callback The function invoked when the event fires
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function RegisterCallback(
@@ -180,7 +180,7 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	/**
 	 * Function to change the Range Slider trigger to on DragEnd
 	 *
-	 * @param rangeSliderId
+	 * @param rangeSliderId The id of the RangeSlider element
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function SetRangeIntervalChangeOnDragEnd(rangeSliderId: string): string {
@@ -219,7 +219,7 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	/**
 	 * Function to reset the Range Slider
 	 *
-	 * @param rangeSliderId
+	 * @param rangeSliderId The id of the RangeSlider element
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function ResetRangeSliderValue(rangeSliderId: string): string {
@@ -237,7 +237,7 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	/**
 	 * Function to set providerConfigs by extensibility
 	 *
-	 * @param rangeSliderId
+	 * @param rangeSliderId The id of the RangeSlider element
 	 * @param configs Provider (noUiSlider) options to merge into the instance.
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
@@ -257,9 +257,9 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	/**
 	 * Function to set providerEvents by extensibility
 	 *
-	 * @param rangeSliderId
-	 * @param eventName
-	 * @param callback
+	 * @param rangeSliderId The id of the RangeSlider element
+	 * @param eventName The name of the event to register the callback for
+	 * @param callback The function invoked when the event fires
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function SetProviderEvent(
@@ -285,8 +285,8 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	/**
 	 * Function to remove providerEvents added by extensibility
 	 *
-	 * @param rangeSliderId
-	 * @param eventId
+	 * @param rangeSliderId The id of the RangeSlider element
+	 * @param eventId The id of the provider event
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function UnsetProviderEvent(rangeSliderId: string, eventId: string): string {

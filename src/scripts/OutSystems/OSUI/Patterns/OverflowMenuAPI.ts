@@ -5,9 +5,9 @@ namespace OutSystems.OSUI.Patterns.OverflowMenuAPI {
 	/**
 	 * Function that will change the property of a given OverflowMenu pattern.
 	 *
-	 * @param overflowMenuId
-	 * @param propertyName
-	 * @param propertyValue
+	 * @param overflowMenuId The id of the OverflowMenu element
+	 * @param propertyName The name of the property to change
+	 * @param propertyValue The new value of the property
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function ChangeProperty(overflowMenuId: string, propertyName: string, propertyValue: unknown): string {
@@ -26,8 +26,8 @@ namespace OutSystems.OSUI.Patterns.OverflowMenuAPI {
 	/**
 	 * Create the new OverflowMenu instance and add it to the OverflowMenu Map
 	 *
-	 * @param overflowMenuId
-	 * @param configs
+	 * @param overflowMenuId The id of the OverflowMenu element
+	 * @param configs The configuration options as a JSON string or object
 	 * @returns the OverflowMenu instance
 	 */
 	export function Create(
@@ -53,7 +53,7 @@ namespace OutSystems.OSUI.Patterns.OverflowMenuAPI {
 	/**
 	 * Function that will disable the given OverflowMenu
 	 *
-	 * @param overflowMenuId
+	 * @param overflowMenuId The id of the OverflowMenu element
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Disable(overflowMenuId: string): string {
@@ -72,7 +72,7 @@ namespace OutSystems.OSUI.Patterns.OverflowMenuAPI {
 	/**
 	 * Function that will dispose the instance of the given OverflowMenu
 	 *
-	 * @param overflowMenuId
+	 * @param overflowMenuId The id of the OverflowMenu element
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Dispose(overflowMenuId: string): string {
@@ -93,7 +93,7 @@ namespace OutSystems.OSUI.Patterns.OverflowMenuAPI {
 	/**
 	 * Function that will enable the given OverflowMenu
 	 *
-	 * @param overflowMenuId
+	 * @param overflowMenuId The id of the OverflowMenu element
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Enable(overflowMenuId: string): string {
@@ -121,7 +121,7 @@ namespace OutSystems.OSUI.Patterns.OverflowMenuAPI {
 	/**
 	 * Function that gets the instance of OverflowMenu by a given Id.
 	 *
-	 * @param overflowMenuId
+	 * @param overflowMenuId The id of the OverflowMenu element
 	 * @returns the OverflowMenu instance
 	 */
 	export function GetOverflowMenuById(overflowMenuId: string): OSFramework.OSUI.Patterns.OverflowMenu.IOverflowMenu {
@@ -149,9 +149,9 @@ namespace OutSystems.OSUI.Patterns.OverflowMenuAPI {
 	/**
 	 * Function to register a callback on this pattern
 	 *
-	 * @param overflowMenuId
-	 * @param eventName
-	 * @param callback
+	 * @param overflowMenuId The id of the OverflowMenu element
+	 * @param eventName The name of the event to register the callback for
+	 * @param callback The function invoked when the event fires
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function RegisterCallback(
@@ -174,7 +174,7 @@ namespace OutSystems.OSUI.Patterns.OverflowMenuAPI {
 	/**
 	 * Function to open this pattern
 	 *
-	 * @param overflowMenuId
+	 * @param overflowMenuId The id of the OverflowMenu element
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Open(overflowMenuId: string): string {
@@ -193,7 +193,7 @@ namespace OutSystems.OSUI.Patterns.OverflowMenuAPI {
 	/**
 	 * Function to close this pattern
 	 *
-	 * @param overflowMenuId
+	 * @param overflowMenuId The id of the OverflowMenu element
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Close(overflowMenuId: string): string {

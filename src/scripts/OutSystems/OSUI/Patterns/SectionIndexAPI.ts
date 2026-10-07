@@ -51,7 +51,7 @@ namespace OutSystems.OSUI.Patterns.SectionIndexAPI {
 	/**
 	 * Function that will dispose the instance of the given SectionIndexItem Id
 	 *
-	 * @param sectionIndexId
+	 * @param sectionIndexId The id of the SectionIndex element
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Dispose(sectionIndexId: string): string {
@@ -109,9 +109,9 @@ namespace OutSystems.OSUI.Patterns.SectionIndexAPI {
 	/**
 	 * Function to register a provider callback
 	 *
-	 * @param sectionIndexId
-	 * @param eventName
-	 * @param callback
+	 * @param sectionIndexId The id of the SectionIndex element
+	 * @param eventName The name of the event to register the callback for
+	 * @param callback The function invoked when the event fires
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function RegisterCallback(

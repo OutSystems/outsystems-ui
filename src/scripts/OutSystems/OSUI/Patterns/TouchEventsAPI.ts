@@ -32,7 +32,7 @@ namespace OutSystems.OSUI.Patterns.TouchEventsAPI {
 	/**
 	 * Function that will dispose the instance of the given TouchEvents
 	 *
-	 * @param touchEventsId
+	 * @param touchEventsId The id of the TouchEvents element
 	 */
 	export function Dispose(touchEventsId: string): void {
 		const swipeEvent = GetTouchEventsById(touchEventsId);
@@ -82,9 +82,9 @@ namespace OutSystems.OSUI.Patterns.TouchEventsAPI {
 	/**
 	 * Function to register a callback
 	 *
-	 * @param touchEventsID
-	 * @param eventName
-	 * @param callback
+	 * @param touchEventsID The id of the TouchEvents element
+	 * @param eventName The name of the event to register the callback for
+	 * @param callback The function invoked when the event fires
 	 */
 	export function RegisterCallback(
 		touchEventsID: string,

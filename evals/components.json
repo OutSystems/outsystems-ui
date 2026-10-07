@@ -1113,7 +1113,15 @@
 				{
 					"flow": "Utilities",
 					"name": "SwipeEvents",
-					"paramMap": {}
+					"paramMap": {
+						"WidgetId": "WidgetId"
+					},
+					"eventMap": {
+						"SwipeUp": "SwipeUp",
+						"SwipeDown": "SwipeDown",
+						"SwipeRight": "SwipeRight",
+						"SwipeLeft": "SwipeLeft"
+					}
 				}
 			]
 		},
@@ -1265,7 +1273,15 @@
 				{
 					"flow": "Utilities",
 					"name": "TouchEvents",
-					"paramMap": {}
+					"paramMap": {
+						"WidgetId": "WidgetId"
+					},
+					"platformOnly": ["PreventDefaults"],
+					"eventMap": {
+						"End": "End",
+						"Move": "Move",
+						"Start": "Start"
+					}
 				}
 			]
 		},

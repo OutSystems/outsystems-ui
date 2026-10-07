@@ -196,7 +196,7 @@ test('utilities document states the grammar, then every family as template rows 
 	assert.doesNotMatch(doc, /(^|\s)scss(\s|$)/m, 'no class named after the source comment');
 	assert.doesNotMatch(doc, /^- (phone|tablet) →/m, 'runtime body classes are not utilities');
 	// the grammar plus a declaration per row; the previous list of bare names was 3,300 tokens for less information
-	assert.ok(countTokens(doc) <= 4000, `llms-utilities.txt is ${countTokens(doc)} tokens`);
+	assert.ok(countTokens(doc) <= 4100, `llms-utilities.txt is ${countTokens(doc)} tokens`);
 	const families = utilityFamilies(ctx);
 	for (const f of families) {
 		const covered = docCoverage(doc, f.classes);
@@ -295,4 +295,50 @@ test('quotedUnionMembers reads a union of quoted literals without a regular expr
 	assert.equal(quotedUnionMembers("'a' | b"), null, 'an unquoted member');
 	assert.equal(quotedUnionMembers("'a' | 'b'c'"), null, 'a quote inside a member');
 	assert.equal(quotedUnionMembers('string'), null);
+});
+
+test('utility synonyms: the manifest names the canonical class of each group and the doc lists the groups', () => {
+	const ctx = createContext(root);
+	const m = buildUtilitiesManifest(ctx);
+	const byName = Object.fromEntries(m.families.flatMap((f) => f.classes.map((c) => [c.name, c])));
+	assert.equal(byName['display-none'].canonical, 'display-none', 'the grammar form is canonical');
+	assert.equal(byName.hidden.canonical, 'display-none', 'a synonym points at the canonical name');
+	assert.equal(byName['font-bold'].canonical, 'font-bold');
+	assert.equal(byName.bold.canonical, 'font-bold');
+	assert.equal(byName['text-primary'].canonical, 'text-primary');
+	assert.equal(byName['text-primary-darker'].canonical, 'text-primary');
+	assert.equal(byName['margin-top-s']?.canonical, null, 'a class with no synonym has none');
+	const doc = renderUtilities(ctx);
+	assert.match(doc, /^## Synonyms \(\d+ groups: /m);
+	assert.match(doc, /- display-none = hidden/);
+	assert.match(doc, /- font-bold = bold/);
+});
+
+test('synonymLines compacts the groups: number runs, shared substitutions and shared suffixes', async () => {
+	const { synonymLines } = await import('../scripts/lib/ai-docs.mjs');
+	const lines = synonymLines([
+		['display-none', 'hidden'],
+		['font-bold', 'bold'],
+		['text-primary', 'text-primary-darker'],
+		['text-secondary', 'text-secondary-darker'],
+		['text-neutral-5', 'text-neutral-5-darker'],
+		['text-neutral-6', 'text-neutral-6-darker'],
+		['background-teal-light', 'background-cyan-light'],
+		['background-teal-dark', 'background-cyan-dark'],
+		['text-teal-light', 'text-cyan-light'],
+		[
+			'background-primary-lightest',
+			'background-secondary-lightest',
+			'background-neutral-0-lightest',
+			'background-neutral-1-lightest',
+			'background-neutral-2-lightest',
+		],
+	]);
+	assert.deepEqual(lines, [
+		'- display-none = hidden',
+		'- font-bold = bold',
+		'- text-primary, text-secondary, text-neutral-{5..6} = same + -darker',
+		'- background-teal-{light,dark}, text-teal-light = same with cyan for teal',
+		'- background-primary-lightest = background-secondary-lightest = background-neutral-{0..2}-lightest',
+	]);
 });

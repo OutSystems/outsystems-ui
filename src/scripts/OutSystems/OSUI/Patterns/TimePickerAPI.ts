@@ -111,7 +111,7 @@ namespace OutSystems.OSUI.Patterns.TimePickerAPI {
 	/**
 	 * Function that will dispose the instance of the given TimePickerItem Id
 	 *
-	 * @param timePickerId
+	 * @param timePickerId The id of the TimePicker element
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Dispose(timePickerId: string): string {
@@ -169,7 +169,7 @@ namespace OutSystems.OSUI.Patterns.TimePickerAPI {
 	/**
 	 * Function that will be triggered everytime there is a render at TimePicker
 	 *
-	 * @param timePickerId
+	 * @param timePickerId The id of the TimePicker element
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function OnRender(timePickerId: string): string {
@@ -207,9 +207,9 @@ namespace OutSystems.OSUI.Patterns.TimePickerAPI {
 	/**
 	 * Function to register a provider callback
 	 *
-	 * @param timePickerId
-	 * @param eventName
-	 * @param callback
+	 * @param timePickerId The id of the TimePicker element
+	 * @param eventName The name of the event to register the callback for
+	 * @param callback The function invoked when the event fires
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function RegisterCallback(
@@ -232,7 +232,7 @@ namespace OutSystems.OSUI.Patterns.TimePickerAPI {
 	/**
 	 * Function that will/should be triggered after some parameters changed
 	 *
-	 * @param timePickerId
+	 * @param timePickerId The id of the TimePicker element
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Redraw(timePickerId: string): string {
@@ -251,7 +251,7 @@ namespace OutSystems.OSUI.Patterns.TimePickerAPI {
 	/**
 	 * Function that will set a different language to a given TimePickerId
 	 *
-	 * @param timePickerId
+	 * @param timePickerId The id of the TimePicker element
 	 * @param isoCode ISO Code language that will be assigned
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
@@ -270,7 +270,7 @@ namespace OutSystems.OSUI.Patterns.TimePickerAPI {
 
 	/**
 	 * Function that will update the InitialTime fot a given TimepickerId
-	 * @param timePickerId
+	 * @param timePickerId The id of the TimePicker element
 	 * @param time The value for the InitialTime
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
@@ -309,8 +309,8 @@ namespace OutSystems.OSUI.Patterns.TimePickerAPI {
 	/**
 	 * Function to set providerConfigs by extensibility
 	 *
-	 * @param timePickerId
-	 * @param providerConfigs
+	 * @param timePickerId The id of the TimePicker element
+	 * @param providerConfigs The provider configuration options as a JSON string or object
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function SetProviderConfigs(timePickerId: string, providerConfigs: TimePickerProviderConfigs): string {
@@ -329,9 +329,9 @@ namespace OutSystems.OSUI.Patterns.TimePickerAPI {
 	/**
 	 * Function to set providerEvents by extensibility
 	 *
-	 * @param timePickerId
-	 * @param eventName
-	 * @param callback
+	 * @param timePickerId The id of the TimePicker element
+	 * @param eventName The name of the event to register the callback for
+	 * @param callback The function invoked when the event fires
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function SetProviderEvent(
@@ -357,8 +357,8 @@ namespace OutSystems.OSUI.Patterns.TimePickerAPI {
 	/**
 	 * Function to remove providerEvents added by extensibility
 	 *
-	 * @param timePickerId
-	 * @param eventId
+	 * @param timePickerId The id of the TimePicker element
+	 * @param eventId The id of the provider event
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function UnsetProviderEvent(timePickerId: string, eventId: string): string {
@@ -376,8 +376,8 @@ namespace OutSystems.OSUI.Patterns.TimePickerAPI {
 	/**
 	 * Function that will set the input as editable
 	 *
-	 * @param timePickerId
-	 * @param isEditable
+	 * @param timePickerId The id of the TimePicker element
+	 * @param isEditable Whether the input accepts typed values
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function SetEditableInput(timePickerId: string, isEditable: boolean): string {

@@ -5,7 +5,7 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	/**
 	 * Function that will enable updates on OnRender event
 	 *
-	 * @param carouselId
+	 * @param carouselId The id of the Carousel element
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function CarouselEnableOnRender(carouselId: string): string {
@@ -23,7 +23,7 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	/**
 	 * Function that will disable updates on OnRender event
 	 *
-	 * @param carouselId
+	 * @param carouselId The id of the Carousel element
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function CarouselDisableOnRender(carouselId: string): string {
@@ -88,7 +88,7 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	/**
 	 * Function that will dispose the instance of the given CarouselItem Id
 	 *
-	 * @param carouselId
+	 * @param carouselId The id of the Carousel element
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Dispose(carouselId: string): string {
@@ -132,8 +132,8 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	/**
 	 * Function to go to a especific page index
 	 *
-	 * @param carouselId
-	 * @param index
+	 * @param carouselId The id of the Carousel element
+	 * @param index The zero-based index of the item to go to
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function GoTo(carouselId: string, index: number): string {
@@ -166,7 +166,7 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	/**
 	 * Function to go to the next page
 	 *
-	 * @param carouselId
+	 * @param carouselId The id of the Carousel element
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Next(carouselId: string): string {
@@ -185,7 +185,7 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	/**
 	 * Function to go to the previous page
 	 *
-	 * @param carouselId
+	 * @param carouselId The id of the Carousel element
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Previous(carouselId: string): string {
@@ -204,9 +204,9 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	/**
 	 * Function to register a provider callback
 	 *
-	 * @param carouselId
-	 * @param eventName
-	 * @param callback
+	 * @param carouselId The id of the Carousel element
+	 * @param eventName The name of the event to register the callback for
+	 * @param callback The function invoked when the event fires
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function RegisterCallback(
@@ -229,8 +229,8 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	/**
 	 * Function to toggle the drag events on the Carousel
 	 *
-	 * @param carouselId
-	 * @param hasDrag
+	 * @param carouselId The id of the Carousel element
+	 * @param hasDrag Whether dragging is enabled
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function ToggleDrag(carouselId: string, hasDrag: boolean): string {
@@ -249,7 +249,7 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	/**
 	 * Function that will update on DOM changes inside the Carousel
 	 *
-	 * @param carouselId
+	 * @param carouselId The id of the Carousel element
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function UpdateOnRender(carouselId: string): string {
@@ -307,9 +307,9 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	/**
 	 * Function to set providerEvents by extensibility
 	 *
-	 * @param carouselId
-	 * @param eventName
-	 * @param callback
+	 * @param carouselId The id of the Carousel element
+	 * @param eventName The name of the event to register the callback for
+	 * @param callback The function invoked when the event fires
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function SetProviderEvent(
@@ -335,8 +335,8 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	/**
 	 * Function to remove providerEvents added by extensibility
 	 *
-	 * @param carouselId
-	 * @param eventId
+	 * @param carouselId The id of the Carousel element
+	 * @param eventId The id of the provider event
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function UnsetProviderEvent(carouselId: string, eventId: string): string {

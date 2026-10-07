@@ -47,7 +47,7 @@ namespace OutSystems.OSUI.Patterns.TabsAPI {
 	/**
 	 * Function that will dispose the instance of the given Tabs
 	 *
-	 * @param tabsId
+	 * @param tabsId The id of the Tabs element
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Dispose(tabsId: string): string {
@@ -105,9 +105,9 @@ namespace OutSystems.OSUI.Patterns.TabsAPI {
 	/**
 	 * Function that will register a pattern callback.
 	 *
-	 * @param tabsId
-	 * @param eventName
-	 * @param callback
+	 * @param tabsId The id of the Tabs element
+	 * @param eventName The name of the event to register the callback for
+	 * @param callback The function invoked when the event fires
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function RegisterCallback(
@@ -130,8 +130,8 @@ namespace OutSystems.OSUI.Patterns.TabsAPI {
 	/**
 	 * Function that will toggle the Swipe gestures on Tabs
 	 *
-	 * @param tabsId
-	 * @param enableSwipe
+	 * @param tabsId The id of the Tabs element
+	 * @param enableSwipe Whether swiping between tabs is enabled
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function TabsToggleSwipe(tabsId: string, enableSwipe: boolean): string {
@@ -150,8 +150,8 @@ namespace OutSystems.OSUI.Patterns.TabsAPI {
 	/**
 	 * Function that will open a given tabs item.
 	 *
-	 * @param tabsId
-	 * @param tabsNumber
+	 * @param tabsId The id of the Tabs element
+	 * @param tabsNumber The number of tabs
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function SetActiveTab(tabsId: string, tabsNumber: number): string {

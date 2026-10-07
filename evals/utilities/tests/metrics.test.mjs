@@ -9,7 +9,8 @@ import U01 from '../metrics/U01-naming-grammar.mjs';
 import U02, { scaleCoverage } from '../metrics/U02-scale-completeness.mjs';
 import U03 from '../metrics/U03-token-routing.mjs';
 import U04 from '../metrics/U04-documentation-parity.mjs';
-import U05, { signatureOf } from '../metrics/U05-synonym-pressure.mjs';
+import { signatureOf } from '../../lib/utilities.mjs';
+import U05 from '../metrics/U05-synonym-pressure.mjs';
 import U06 from '../metrics/U06-responsive-coverage.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..', '..');

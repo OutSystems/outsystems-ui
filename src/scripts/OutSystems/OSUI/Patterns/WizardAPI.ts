@@ -49,7 +49,7 @@ namespace OutSystems.OSUI.Patterns.WizardAPI {
 	/**
 	 * Function that will dispose the instance of the given Wizard
 	 *
-	 * @param wizardId
+	 * @param wizardId The id of the Wizard element
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Dispose(wizardId: string): string {
@@ -107,9 +107,9 @@ namespace OutSystems.OSUI.Patterns.WizardAPI {
 	/**
 	 * Function to register a provider callback
 	 *
-	 * @param wizardId
-	 * @param eventName
-	 * @param callback
+	 * @param wizardId The id of the Wizard element
+	 * @param eventName The name of the event to register the callback for
+	 * @param callback The function invoked when the event fires
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function RegisterCallback(

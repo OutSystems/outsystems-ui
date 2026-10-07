@@ -7,21 +7,9 @@
  */
 import { list } from '../../lib/present.mjs';
 import { round1 } from '../../lib/score.mjs';
-import { utilityFamilies } from '../../lib/utilities.mjs';
+import { signatureOf, utilityFamilies } from '../../lib/utilities.mjs';
 
 const APPLIES_TO = ['utility'];
-
-/**
- * The declaration signature of a class: its plain declarations, normalised and sorted; null without any.
- * @param {{ declarations: { prop: string, value: string }[] }} c
- */
-export function signatureOf(c) {
-	if (c.declarations.length === 0) return null;
-	return [...c.declarations]
-		.map((d) => `${d.prop.toLowerCase()}:${d.value.replace(/\s+/g, ' ').trim().toLowerCase()}`)
-		.sort((a, b) => a.localeCompare(b))
-		.join(';');
-}
 
 export default {
 	id: 'U05',

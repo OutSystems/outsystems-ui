@@ -33,6 +33,7 @@ import {
 	stepValues,
 	templateGroups,
 	templateKey,
+	synonymGroups,
 	utilityFamilies,
 } from '../../evals/lib/utilities.mjs';
 import { countTokens } from '../../evals/lib/tokens.mjs';
@@ -819,6 +820,136 @@ function stepsLine(steps) {
 		.join(' · ');
 }
 
+/** @param {string} a @param {string} b */
+const byCode = (a, b) => (a < b ? -1 : Number(a > b));
+
+/**
+ * Names compacted for a doc line: a run of numbers in one slot reads `pre-{0..10}-post`, and names that
+ * share two or more leading segments read `pre-{a,b}`.
+ * @param {string[]} names
+ */
+function compactNames(names) {
+	/** @type {string[]} */
+	const out = [];
+	const left = [...names];
+	// number runs: the same name around a numeric segment
+	/** @type {Map<string, number[]>} */
+	const runs = new Map();
+	for (const n of left) {
+		const m = n.match(/^(.*-)(\d+)(-.*|)$/);
+		if (m) runs.set(`${m[1]}\u0000${m[3]}`, [...(runs.get(`${m[1]}\u0000${m[3]}`) ?? []), Number(m[2])]);
+	}
+	const taken = new Set();
+	/** @type {Map<string, string>} the run text, at the first name of the run */
+	const runAt = new Map();
+	for (const [key, nums] of runs) {
+		if (nums.length < 2) continue;
+		nums.sort((a, b) => a - b);
+		if (nums.some((v, i) => i > 0 && v !== nums[i - 1] + 1)) continue;
+		const [pre, post] = key.split('\u0000');
+		const members = nums.map((v) => `${pre}${v}${post}`);
+		const first = left.find((n) => members.includes(n)) ?? members[0];
+		runAt.set(first, `${pre}{${nums[0]}..${nums[nums.length - 1]}}${post}`);
+		for (const m of members) taken.add(m);
+	}
+	// shared leading segments (at least two) with one varying tail
+	/** @type {Map<string, string[]>} */
+	const tails = new Map();
+	for (const n of left.filter((x) => !taken.has(x))) {
+		const i = n.lastIndexOf('-');
+		const head = i > 0 && n.slice(0, i).includes('-') ? n.slice(0, i + 1) : '';
+		tails.set(head, [...(tails.get(head) ?? []), n]);
+	}
+	const done = new Set();
+	for (const n of left) {
+		const run = runAt.get(n);
+		if (run) out.push(run);
+		if (taken.has(n) || done.has(n)) continue;
+		const i = n.lastIndexOf('-');
+		const head = i > 0 && n.slice(0, i).includes('-') ? n.slice(0, i + 1) : '';
+		const group = head ? (tails.get(head) ?? [n]) : [n];
+		if (group.length > 1) {
+			out.push(`${head}{${group.map((g) => g.slice(head.length)).join(',')}}`);
+			for (const g of group) done.add(g);
+		} else {
+			out.push(n);
+			done.add(n);
+		}
+	}
+	return out;
+}
+
+/** The segments two names share at the start and at the end. @param {string} a @param {string} b */
+function sharedEnds(a, b) {
+	const sa = a.split('-');
+	const sb = b.split('-');
+	let p = 0;
+	while (p < sa.length && p < sb.length && sa[p] === sb[p]) p++;
+	let s = 0;
+	while (s < sa.length - p && s < sb.length - p && sa[sa.length - 1 - s] === sb[sb.length - 1 - s]) s++;
+	return {
+		shared: p + s,
+		midA: sa.slice(p, sa.length - s).join('-'),
+		midB: sb.slice(p, sb.length - s).join('-'),
+	};
+}
+
+/**
+ * Doc lines for the synonym groups (canonical name first in each group), compacted: pairs that add the same
+ * suffix or swap the same segment are listed together; number runs collapse.
+ * @param {string[][]} groups
+ * @returns {string[]}
+ */
+export function synonymLines(groups) {
+	/** @type {Map<string, { line: (names: string[]) => string, names: string[] }>} */
+	const buckets = new Map();
+	/** @type {{ key: string|null, text?: string }[]} */
+	const order = [];
+	for (const g of groups) {
+		if (g.length !== 2) {
+			order.push({ key: null, text: `- ${compactNames(g).join(' = ')}` });
+			continue;
+		}
+		const [a, b] = g;
+		const { shared, midA, midB } = sharedEnds(a, b);
+		/** @type {string|null} */
+		let key = null;
+		if (shared > 0 && midA === '' && midB) key = `suffix:${midB}`;
+		else if (shared > 0 && midA && midB) key = `swap:${midA}>${midB}`;
+		if (key === null) {
+			order.push({ key: null, text: `- ${a} = ${b}` });
+			continue;
+		}
+		if (!buckets.has(key)) {
+			const line = key.startsWith('suffix:')
+				? (/** @type {string[]} */ names) => `- ${compactNames(names).join(', ')} = same + -${midB}`
+				: (/** @type {string[]} */ names) =>
+						`- ${compactNames(names).join(', ')} = same with ${midB} for ${midA}`;
+			buckets.set(key, { line, names: [] });
+			order.push({ key });
+		}
+		/** @type {{ line: (names: string[]) => string, names: string[] }} */ (buckets.get(key)).names.push(a);
+	}
+	return order.map((o) => {
+		if (o.key === null) return /** @type {string} */ (o.text);
+		const bucket = /** @type {{ line: (names: string[]) => string, names: string[] }} */ (buckets.get(o.key));
+		return bucket.names.length === 1
+			? `- ${bucket.names[0]} = ${synonymOf(bucket.names[0], o.key)}`
+			: bucket.line(bucket.names);
+	});
+}
+
+/** The synonym a bucket key describes for one name. @param {string} name @param {string} key */
+function synonymOf(name, key) {
+	if (key.startsWith('suffix:')) return `${name}-${key.slice('suffix:'.length)}`;
+	const [from, to] = key.slice('swap:'.length).split('>');
+	return name
+		.split(`-${from}-`)
+		.join(`-${to}-`)
+		.replace(new RegExp(`^${from}-`), `${to}-`)
+		.replace(new RegExp(`-${from}$`), `-${to}`);
+}
+
 /**
  * llms-utilities.txt — the utility grammar first, then every family as template rows (a placeholder
  * per variable segment) and single rows with their declarations. Generated from the compiled partials
@@ -858,6 +989,15 @@ export function renderUtilities(ctx) {
 		for (const c of singles) lines.push(singletonRow(c));
 		lines.push('');
 	}
+	const groups = synonymGroups(all);
+	if (groups.length) {
+		lines.push(
+			`## Synonyms (${groups.length} groups: same declarations; the first name is canonical, {a..b} a number run, {a,b} alternatives)`,
+			'',
+			...synonymLines(groups),
+			''
+		);
+	}
 	lines.push(
 		`## Legacy names (${legacy.length})`,
 		'',
@@ -875,6 +1015,11 @@ export function renderUtilities(ctx) {
  * @param {import('../../evals/lib/context.mjs').EvalContext} ctx
  */
 export function buildUtilitiesManifest(ctx) {
+	const families = utilityFamilies(ctx);
+	// the canonical name of every class that shares its declarations with another (the grammar form, else the shortest)
+	const canonicalOf = new Map(
+		synonymGroups(families.flatMap((f) => f.classes)).flatMap((g) => g.map((n) => [n, g[0]]))
+	);
 	return {
 		$schema: './schema/osui.utilities.schema.json',
 		version: MANIFEST_VERSION,
@@ -887,13 +1032,14 @@ export function buildUtilitiesManifest(ctx) {
 			shades: [...SHADES],
 			hues: [...HUES],
 		},
-		families: utilityFamilies(ctx).map((f) => ({
+		families: families.map((f) => ({
 			name: f.name,
 			title: f.title,
 			file: f.file,
 			classes: f.classes.map((c) => ({
 				name: c.name,
 				conformant: classifyName(c.name).conformant,
+				canonical: canonicalOf.get(c.name) ?? null,
 				template: templateKey(c.name),
 				declarations: c.declarations,
 				variants: c.variants,

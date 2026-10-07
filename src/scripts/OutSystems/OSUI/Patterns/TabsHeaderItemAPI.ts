@@ -53,7 +53,7 @@ namespace OutSystems.OSUI.Patterns.TabsHeaderItemAPI {
 	/**
 	 * Funtion that will disable a specific TabHeaderItem by its Id
 	 *
-	 * @param tabsHeaderItemId
+	 * @param tabsHeaderItemId The id of the TabsHeaderItem element
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function DisableTabItem(tabsHeaderItemId: string): string {
@@ -71,7 +71,7 @@ namespace OutSystems.OSUI.Patterns.TabsHeaderItemAPI {
 	/**
 	 * Function that will dispose the instance of the given Tabs
 	 *
-	 * @param tabsHeaderItemId
+	 * @param tabsHeaderItemId The id of the TabsHeaderItem element
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Dispose(tabsHeaderItemId: string): string {
@@ -92,7 +92,7 @@ namespace OutSystems.OSUI.Patterns.TabsHeaderItemAPI {
 	/**
 	 * Funtion that will enable a specific TabHeaderItem by its Id
 	 *
-	 * @param tabsHeaderItemId
+	 * @param tabsHeaderItemId The id of the TabsHeaderItem element
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function EnableTabItem(tabsHeaderItemId: string): string {
@@ -135,7 +135,7 @@ namespace OutSystems.OSUI.Patterns.TabsHeaderItemAPI {
 	/**
 	 * Function that will update on DOM changes inside the TabsHeaderItem
 	 *
-	 * @param tabsHeaderItemId
+	 * @param tabsHeaderItemId The id of the TabsHeaderItem element
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function UpdateOnRender(tabsHeaderItemId: string): string {
@@ -168,9 +168,9 @@ namespace OutSystems.OSUI.Patterns.TabsHeaderItemAPI {
 	/**
 	 * Function that will register a pattern callback.
 	 *
-	 * @param tabsHeaderItemId
-	 * @param eventName
-	 * @param callback
+	 * @param tabsHeaderItemId The id of the TabsHeaderItem element
+	 * @param eventName The name of the event to register the callback for
+	 * @param callback The function invoked when the event fires
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function RegisterCallback(

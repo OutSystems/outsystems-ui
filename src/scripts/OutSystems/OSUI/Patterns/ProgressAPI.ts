@@ -50,7 +50,7 @@ namespace OutSystems.OSUI.Patterns.ProgressAPI {
 	/**
 	 * Function that will dispose the instance of the given ProgressItem Id
 	 *
-	 * @param progressId
+	 * @param progressId The id of the Progress element
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Dispose(progressId: string): string {
@@ -108,9 +108,9 @@ namespace OutSystems.OSUI.Patterns.ProgressAPI {
 	/**
 	 * Function to register a provider callback
 	 *
-	 * @param dropdownId
-	 * @param eventName
-	 * @param callback
+	 * @param dropdownId The id of the Dropdown element
+	 * @param eventName The name of the event to register the callback for
+	 * @param callback The function invoked when the event fires
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function RegisterCallback(
@@ -133,7 +133,7 @@ namespace OutSystems.OSUI.Patterns.ProgressAPI {
 	/**
 	 * Function to reset the Progress Bar/Circle
 	 *
-	 * @param progressId
+	 * @param progressId The id of the Progress element
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function ResetProgressValue(progressId: string): string {
@@ -170,9 +170,9 @@ namespace OutSystems.OSUI.Patterns.ProgressAPI {
 	/**
 	 * Funciton that sets a Progress Gradient
 	 *
-	 * @param progressId
-	 * @param gradientType
-	 * @param colors
+	 * @param progressId The id of the Progress element
+	 * @param gradientType The gradient type
+	 * @param colors The gradient colours, as a JSON string
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function ProgressApplyGradient(progressId: string, gradientType: string, colors: string): string {

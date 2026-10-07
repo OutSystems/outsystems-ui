@@ -26,8 +26,8 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	/**
 	 * Function that will clear any selected values from the Dropdown with given Id
 	 *
-	 * @param dropdownId
-	 * @param silentOnChangedEvent
+	 * @param dropdownId The id of the Dropdown element
+	 * @param silentOnChangedEvent Whether the OnChanged event stays silent for this change
 	 * @returns Return Message Success or message of error info if it's the case.
 	 */
 	export function Clear(dropdownId: string, silentOnChangedEvent = true): string {
@@ -46,7 +46,7 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	/**
 	 * Function that will Close the Dropdown with the given Id
 	 *
-	 * @param dropdownId
+	 * @param dropdownId The id of the Dropdown element
 	 * @returns Return Message Success or message of error info if it's the case.
 	 */
 	export function Close(dropdownId: string): string {
@@ -96,7 +96,7 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	/**
 	 * Function that will set Dropdown with given ID as Disabled
 	 *
-	 * @param dropdownId
+	 * @param dropdownId The id of the Dropdown element
 	 * @returns Return Message Success or message of error info if it's the case.
 	 */
 	export function Disable(dropdownId: string): string {
@@ -115,8 +115,8 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	/**
 	 * Function that toggle the dropbox as popup on small screen like mobile
 	 *
-	 * @param dropdownId
-	 * @param isEnabled
+	 * @param dropdownId The id of the Dropdown element
+	 * @param isEnabled Whether the pattern is enabled
 	 * @returns Return Message Success or message of error info if it's the case.
 	 */
 	export function TogglePopup(dropdownId: string, isEnabled: boolean): string {
@@ -134,7 +134,7 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	/**
 	 * Function that will dispose the instance of the given DropDownItem Id
 	 *
-	 * @param dropdownId
+	 * @param dropdownId The id of the Dropdown element
 	 * @returns Return Message Success or message of error info if it's the case.
 	 */
 	export function Dispose(dropdownId: string): string {
@@ -155,7 +155,7 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	/**
 	 * Function that will set Dropdown with given ID as enabled
 	 *
-	 * @param dropdownId
+	 * @param dropdownId The id of the Dropdown element
 	 * @returns Return Message Success or message of error info if it's the case.
 	 */
 	export function Enable(dropdownId: string): string {
@@ -197,7 +197,7 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	/**
 	 * Fucntion that will return all the selected values from a given Dropdown Id
 	 *
-	 * @param dropdownId
+	 * @param dropdownId The id of the Dropdown element
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function GetSelectedValues(dropdownId: string): string {
@@ -217,7 +217,7 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	/**
 	 * Function that will Open the Dropdown with the given Id
 	 *
-	 * @param dropdownId
+	 * @param dropdownId The id of the Dropdown element
 	 * @returns Return Message Success or message of error info if it's the case.
 	 */
 	export function Open(dropdownId: string): string {
@@ -250,9 +250,9 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	/**
 	 * Function to register a provider callback
 	 *
-	 * @param dropdownId
-	 * @param eventName
-	 * @param callback
+	 * @param dropdownId The id of the Dropdown element
+	 * @param eventName The name of the event to register the callback for
+	 * @param callback The function invoked when the event fires
 	 * @returns Return Message Success or message of error info if it's the case.
 	 */
 	export function RegisterCallback(
@@ -275,8 +275,8 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	/**
 	 * Function to set providerConfigs by extensibility
 	 *
-	 * @param dropdownId
-	 * @param providerConfigs
+	 * @param dropdownId The id of the Dropdown element
+	 * @param providerConfigs The provider configuration options as a JSON string or object
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function SetProviderConfigs(dropdownId: string, providerConfigs: DatePickerProviderConfigs): string {
@@ -300,9 +300,9 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	/**
 	 * Function to set providerEvents by extensibility
 	 *
-	 * @param dropdownId
-	 * @param eventName
-	 * @param callback
+	 * @param dropdownId The id of the Dropdown element
+	 * @param eventName The name of the event to register the callback for
+	 * @param callback The function invoked when the event fires
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function SetProviderEvent(
@@ -328,8 +328,8 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	/**
 	 * Function to remove providerEvents added by extensibility
 	 *
-	 * @param dropdownId
-	 * @param eventId
+	 * @param dropdownId The id of the Dropdown element
+	 * @param eventId The id of the provider event
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function UnsetProviderEvent(dropdownId: string, eventId: string): string {
@@ -347,9 +347,9 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	/**
 	 * Function used to set the validation status to the given Dropdown Id
 	 *
-	 * @param dropdownId
-	 * @param isValid
-	 * @param validationMessage
+	 * @param dropdownId The id of the Dropdown element
+	 * @param isValid Whether the value is valid
+	 * @param validationMessage The message shown when the value is not valid
 	 * @returns Return Message Success or message of error info if it's the case.
 	 */
 	export function SetValidation(dropdownId: string, isValid: boolean, validationMessage: string): string {
@@ -368,9 +368,9 @@ namespace OutSystems.OSUI.Patterns.DropdownAPI {
 	/**
 	 * Function used to set the value(s) of a given Dropdown Id
 	 *
-	 * @param dropdownId
-	 * @param selectedValues
-	 * @param silentOnChangedEvent
+	 * @param dropdownId The id of the Dropdown element
+	 * @param selectedValues The values to select, as a JSON string
+	 * @param silentOnChangedEvent Whether the OnChanged event stays silent for this change
 	 * @returns Return Message Success or message of error info if it's the case.
 	 */
 	export function SetValues(dropdownId: string, selectedValues: string, silentOnChangedEvent = true): string {

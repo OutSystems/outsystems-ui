@@ -15,6 +15,42 @@ import selectorParser from 'postcss-selector-parser';
 import { registry } from './registry.mjs';
 
 /**
+ * The declaration signature of a class: its plain declarations, normalised and sorted; null without any.
+ * @param {{ declarations: { prop: string, value: string }[] }} c
+ */
+export function signatureOf(c) {
+	if (c.declarations.length === 0) return null;
+	return [...c.declarations]
+		.map((d) => `${d.prop.toLowerCase()}:${d.value.replace(/\s+/g, ' ').trim().toLowerCase()}`)
+		.sort((a, b) => a.localeCompare(b))
+		.join(';');
+}
+
+/**
+ * The classes that share their plain declarations, grouped; in each group the canonical name comes first: a
+ * name that follows the grammar, else the shortest.
+ * @param {{ name: string, declarations: { prop: string, value: string }[] }[]} classes
+ * @returns {string[][]}
+ */
+export function synonymGroups(classes) {
+	/** @type {Map<string, string[]>} */
+	const bySignature = new Map();
+	for (const c of classes) {
+		const sig = signatureOf(c);
+		if (sig === null) continue;
+		bySignature.set(sig, [...(bySignature.get(sig) ?? []), c.name]);
+	}
+	const rank = (/** @type {string} */ n) => (classifyName(n).conformant ? 0 : 1);
+	return [...bySignature.values()]
+		.filter((names) => names.length > 1)
+		.map((names) => {
+			const sorted = [...names];
+			sorted.sort((a, b) => rank(a) - rank(b) || a.length - b.length || (a < b ? -1 : Number(a > b)));
+			return sorted;
+		});
+}
+
+/**
  * Classes the manifest documents with at least one declaration or variant.
  * @param {string|null} text
  * @returns {Set<string>}

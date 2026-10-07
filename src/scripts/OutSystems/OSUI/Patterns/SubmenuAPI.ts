@@ -26,8 +26,8 @@ namespace OutSystems.OSUI.Patterns.SubmenuAPI {
 	/**
 	 *
 	 * Function that will toggle the behaviour to close submenu when clicking the body
-	 * @param submenuId
-	 * @param clickOutsideToClose
+	 * @param submenuId The id of the Submenu element
+	 * @param clickOutsideToClose Whether a click outside the submenu closes it
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function ClickOutsideToClose(submenuId: string, clickOutsideToClose: boolean): string {
@@ -108,7 +108,7 @@ namespace OutSystems.OSUI.Patterns.SubmenuAPI {
 	/**
 	 * Function that will destroy the instance of the given submenu
 	 *
-	 * @param submenuId
+	 * @param submenuId The id of the Submenu element
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Dispose(submenuId: string): string {
@@ -166,9 +166,9 @@ namespace OutSystems.OSUI.Patterns.SubmenuAPI {
 	/**
 	 * Function to register a provider callback
 	 *
-	 * @param submenuId
-	 * @param eventName
-	 * @param callback
+	 * @param submenuId The id of the Submenu element
+	 * @param eventName The name of the event to register the callback for
+	 * @param callback The function invoked when the event fires
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function RegisterCallback(
@@ -191,7 +191,7 @@ namespace OutSystems.OSUI.Patterns.SubmenuAPI {
 	/**
 	 * Function that will set the hover trigger to a given submenu.
 	 *
-	 * @param submenuId
+	 * @param submenuId The id of the Submenu element
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function SubmenuOpenOnHover(submenuId: string): string {
@@ -210,7 +210,7 @@ namespace OutSystems.OSUI.Patterns.SubmenuAPI {
 	/**
 	 * Function that will run  on the pattern's OnRender.
 	 *
-	 * @param submenuId
+	 * @param submenuId The id of the Submenu element
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function UpdateOnRender(submenuId: string): string {

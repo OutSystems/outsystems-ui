@@ -4,9 +4,9 @@ namespace OutSystems.OSUI.Patterns.SearchAPI {
 	/**
 	 * Function that will change the property of a given Search.
 	 *
-	 * @param searchId
-	 * @param propertyName
-	 * @param propertyValue
+	 * @param searchId The id of the Search element
+	 * @param propertyName The name of the property to change
+	 * @param propertyValue The new value of the property
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function ChangeProperty(searchId: string, propertyName: string, propertyValue: unknown): string {
@@ -25,8 +25,8 @@ namespace OutSystems.OSUI.Patterns.SearchAPI {
 	/**
 	 * Create the new Search instance and add it to the SearchesMap
 	 *
-	 * @param searchId
-	 * @param configs
+	 * @param searchId The id of the Search element
+	 * @param configs The configuration options as a JSON string or object
 	 * @returns the Search instance
 	 */
 	export function Create(searchId: string, configs: string | Configs): OSFramework.OSUI.Patterns.Search.ISearch {
@@ -47,7 +47,7 @@ namespace OutSystems.OSUI.Patterns.SearchAPI {
 	/**
 	 * Function that will destroy the instance of the given Search
 	 *
-	 * @param searchId
+	 * @param searchId The id of the Search element
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Dispose(searchId: string): string {
@@ -77,7 +77,7 @@ namespace OutSystems.OSUI.Patterns.SearchAPI {
 	/**
 	 * Function that gets the instance of Search, by a given ID.
 	 *
-	 * @param searchId
+	 * @param searchId The id of the Search element
 	 * @returns the Search instance
 	 */
 	export function GetSearchById(searchId: string): OSFramework.OSUI.Patterns.Search.ISearch {
@@ -91,7 +91,7 @@ namespace OutSystems.OSUI.Patterns.SearchAPI {
 	/**
 	 * Function that will initialize the pattern instance.
 	 *
-	 * @param searchId
+	 * @param searchId The id of the Search element
 	 * @returns the Search instance
 	 */
 	export function Initialize(searchId: string): OSFramework.OSUI.Patterns.Search.ISearch {
@@ -105,9 +105,9 @@ namespace OutSystems.OSUI.Patterns.SearchAPI {
 	/**
 	 * Function to register a provider callback
 	 *
-	 * @param searchId
-	 * @param eventName
-	 * @param callback
+	 * @param searchId The id of the Search element
+	 * @param eventName The name of the event to register the callback for
+	 * @param callback The function invoked when the event fires
 	 * @returns Return Message Success or message of error info if it's the case.
 	 */
 	export function RegisterCallback(

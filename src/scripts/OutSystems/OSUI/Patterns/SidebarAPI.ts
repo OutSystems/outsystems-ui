@@ -4,9 +4,9 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	/**
 	 * Function that will change the property of a given Sidebar.
 	 *
-	 * @param sidebarId
-	 * @param propertyName
-	 * @param propertyValue
+	 * @param sidebarId The id of the Sidebar element
+	 * @param propertyName The name of the property to change
+	 * @param propertyValue The new value of the property
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function ChangeProperty(sidebarId: string, propertyName: string, propertyValue: unknown): string {
@@ -25,8 +25,8 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	/**
 	 * Function that will toggle the click on outside to close the sidebar.
 	 *
-	 * @param sidebarId
-	 * @param closeOnOutSIdeClick
+	 * @param sidebarId The id of the Sidebar element
+	 * @param closeOnOutSIdeClick Whether a click outside the sidebar closes it
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function ClickOutsideToClose(sidebarId: string, closeOnOutSIdeClick: boolean): string {
@@ -45,7 +45,7 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	/**
 	 * Function that Closes the sidebar.
 	 *
-	 * @param sidebarId
+	 * @param sidebarId The id of the Sidebar element
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Close(sidebarId: string): string {
@@ -64,8 +64,8 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	/**
 	 * Create the new Sidebar instance and add it to the sidebarsMap
 	 *
-	 * @param sidebarId
-	 * @param configs
+	 * @param sidebarId The id of the Sidebar element
+	 * @param configs The configuration options as a JSON string or object
 	 * @returns the Sidebar instance
 	 */
 	export function Create(sidebarId: string, configs: string | Configs): OSFramework.OSUI.Patterns.Sidebar.ISidebar {
@@ -86,7 +86,7 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	/**
 	 * Function that will destroy the instance of the given Sidebar
 	 *
-	 * @param sidebarId
+	 * @param sidebarId The id of the Sidebar element
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Dispose(sidebarId: string): string {
@@ -116,7 +116,7 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	/**
 	 * Function that gets the instance of Sidebar, by a given ID.
 	 *
-	 * @param sidebarId
+	 * @param sidebarId The id of the Sidebar element
 	 * @returns the Sidebar instance
 	 */
 	export function GetSidebarById(sidebarId: string): OSFramework.OSUI.Patterns.Sidebar.ISidebar {
@@ -130,7 +130,7 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	/**
 	 * Function that will initialize the pattern instance.
 	 *
-	 * @param sidebarId
+	 * @param sidebarId The id of the Sidebar element
 	 * @returns the Sidebar instance
 	 */
 	export function Initialize(sidebarId: string): OSFramework.OSUI.Patterns.Sidebar.ISidebar {
@@ -144,7 +144,7 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	/**
 	 * Function that opens the sidebar.
 	 *
-	 * @param sidebarId
+	 * @param sidebarId The id of the Sidebar element
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Open(sidebarId: string): string {
@@ -163,9 +163,9 @@ namespace OutSystems.OSUI.Patterns.SidebarAPI {
 	/**
 	 * Function to register a provider callback
 	 *
-	 * @param sidebarId
-	 * @param eventName
-	 * @param callback
+	 * @param sidebarId The id of the Sidebar element
+	 * @param eventName The name of the event to register the callback for
+	 * @param callback The function invoked when the event fires
 	 * @returns Return Message Success or message of error info if it's the case.
 	 */
 	export function RegisterCallback(

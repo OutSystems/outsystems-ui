@@ -5,7 +5,7 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 	/**
 	 * Function that will allow elements inside the title to be clicked without triggering the pattern toggle.
 	 *
-	 * @param accordionItemId
+	 * @param accordionItemId The id of the AccordionItem element
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function AllowTitleEvents(accordionItemId: string): string {
@@ -45,7 +45,7 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 	/**
 	 * Function to close the accordionItem
 	 *
-	 * @param accordionItemId
+	 * @param accordionItemId The id of the AccordionItem element
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Collapse(accordionItemId: string): string {
@@ -91,7 +91,7 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 	/**
 	 * Function that will dispose the instance of the given Accordrion Item
 	 *
-	 * @param accordionItemId
+	 * @param accordionItemId The id of the AccordionItem element
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Dispose(accordionItemId: string): string {
@@ -112,7 +112,7 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 	/**
 	 * Function to open the accordionItem
 	 *
-	 * @param accordionItemId
+	 * @param accordionItemId The id of the AccordionItem element
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Expand(accordionItemId: string): string {
@@ -170,9 +170,9 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 	/**
 	 * Function to register a callback on this pattern
 	 *
-	 * @param accordionItemId
-	 * @param eventName
-	 * @param callback
+	 * @param accordionItemId The id of the AccordionItem element
+	 * @param eventName The name of the event to register the callback for
+	 * @param callback The function invoked when the event fires
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function RegisterCallback(
@@ -195,8 +195,8 @@ namespace OutSystems.OSUI.Patterns.AccordionItemAPI {
 	/**
 	 * Function that enables toggling the active area to expand and collapse the accordion item.
 	 *
-	 * @param accordionItemId
-	 * @param isIconOnly
+	 * @param accordionItemId The id of the AccordionItem element
+	 * @param isIconOnly Whether only the icon toggles the item
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function ToggleClickableZone(accordionItemId: string, isIconOnly: boolean): string {

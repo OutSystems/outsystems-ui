@@ -51,7 +51,7 @@ namespace OutSystems.OSUI.Patterns.BottomSheetAPI {
 	/**
 	 * Function that will dispose the instance of the given BottomSheetItem Id
 	 *
-	 * @param bottomSheetId
+	 * @param bottomSheetId The id of the BottomSheet element
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Dispose(bottomSheetId: string): string {
@@ -109,7 +109,7 @@ namespace OutSystems.OSUI.Patterns.BottomSheetAPI {
 	/**
 	 * Function to open this pattern
 	 *
-	 * @param bottomSheetId
+	 * @param bottomSheetId The id of the BottomSheet element
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Open(bottomSheetId: string): string {
@@ -128,7 +128,7 @@ namespace OutSystems.OSUI.Patterns.BottomSheetAPI {
 	/**
 	 * Function to close this pattern
 	 *
-	 * @param bottomSheetId
+	 * @param bottomSheetId The id of the BottomSheet element
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Close(bottomSheetId: string): string {
@@ -147,9 +147,9 @@ namespace OutSystems.OSUI.Patterns.BottomSheetAPI {
 	/**
 	 * Function to register a callback on this pattern
 	 *
-	 * @param bottomSheetId
-	 * @param eventName
-	 * @param callback
+	 * @param bottomSheetId The id of the BottomSheet element
+	 * @param eventName The name of the event to register the callback for
+	 * @param callback The function invoked when the event fires
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function RegisterCallback(

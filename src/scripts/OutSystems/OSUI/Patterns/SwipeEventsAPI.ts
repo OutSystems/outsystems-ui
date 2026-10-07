@@ -32,7 +32,7 @@ namespace OutSystems.OSUI.Patterns.SwipeEventsAPI {
 	/**
 	 * Function that will dispose the instance of the given SwipeEvents
 	 *
-	 * @param swipeEventsId
+	 * @param swipeEventsId The id of the SwipeEvents element
 	 */
 	export function Dispose(swipeEventsId: string): void {
 		const swipeEvent = GetSwipeEventsById(swipeEventsId);
@@ -82,9 +82,9 @@ namespace OutSystems.OSUI.Patterns.SwipeEventsAPI {
 	/**
 	 * Function to register a callback
 	 *
-	 * @param swipeEventsID
-	 * @param eventName
-	 * @param callback
+	 * @param swipeEventsID The id of the SwipeEvents element
+	 * @param eventName The name of the event to register the callback for
+	 * @param callback The function invoked when the event fires
 	 */
 	export function RegisterCallback(
 		swipeEventsID: string,

@@ -69,7 +69,7 @@ namespace OutSystems.OSUI.Patterns.TooltipAPI {
 	/**
 	 * Function that will destroy the instance of the given tooltip
 	 *
-	 * @param tooltipId
+	 * @param tooltipId The id of the Tooltip element
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Dispose(tooltipId: string): string {
@@ -146,9 +146,9 @@ namespace OutSystems.OSUI.Patterns.TooltipAPI {
 	/**
 	 * Function to register a provider callback
 	 *
-	 * @param tooltipId
-	 * @param eventName
-	 * @param callback
+	 * @param tooltipId The id of the Tooltip element
+	 * @param eventName The name of the event to register the callback for
+	 * @param callback The function invoked when the event fires
 	 * @returns Return Message Success or message of error info if it's the case.
 	 */
 	export function RegisterCallback(

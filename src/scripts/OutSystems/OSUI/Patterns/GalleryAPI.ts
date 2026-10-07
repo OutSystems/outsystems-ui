@@ -49,7 +49,7 @@ namespace OutSystems.OSUI.Patterns.GalleryAPI {
 	/**
 	 * Function that will destroy the instance of the given search
 	 *
-	 * @param galleryId
+	 * @param galleryId The id of the Gallery element
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Dispose(galleryId: string): string {
@@ -103,9 +103,9 @@ namespace OutSystems.OSUI.Patterns.GalleryAPI {
 	/**
 	 * Function to register a provider callback
 	 *
-	 * @param dropdownId
-	 * @param eventName
-	 * @param callback
+	 * @param dropdownId The id of the Dropdown element
+	 * @param eventName The name of the event to register the callback for
+	 * @param callback The function invoked when the event fires
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function RegisterCallback(

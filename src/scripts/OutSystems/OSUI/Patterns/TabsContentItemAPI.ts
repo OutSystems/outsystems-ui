@@ -53,7 +53,7 @@ namespace OutSystems.OSUI.Patterns.TabsContentItemAPI {
 	/**
 	 * Function that will dispose the instance of the given Tabs
 	 *
-	 * @param tabsContentItemId
+	 * @param tabsContentItemId The id of the TabsContentItem element
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Dispose(tabsContentItemId: string): string {
@@ -113,9 +113,9 @@ namespace OutSystems.OSUI.Patterns.TabsContentItemAPI {
 	/**
 	 * Function that will register a pattern callback.
 	 *
-	 * @param tabsContentItemId
-	 * @param eventName
-	 * @param callback
+	 * @param tabsContentItemId The id of the TabsContentItem element
+	 * @param eventName The name of the event to register the callback for
+	 * @param callback The function invoked when the event fires
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function RegisterCallback(

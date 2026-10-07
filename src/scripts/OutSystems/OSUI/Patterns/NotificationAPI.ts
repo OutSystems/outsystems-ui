@@ -4,9 +4,9 @@ namespace OutSystems.OSUI.Patterns.NotificationAPI {
 	/**
 	 * Function that will change the property of a given Notification.
 	 *
-	 * @param notificationId
-	 * @param propertyName
-	 * @param propertyValue
+	 * @param notificationId The id of the Notification element
+	 * @param propertyName The name of the property to change
+	 * @param propertyValue The new value of the property
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function ChangeProperty(notificationId: string, propertyName: string, propertyValue: unknown): string {
@@ -25,8 +25,8 @@ namespace OutSystems.OSUI.Patterns.NotificationAPI {
 	/**
 	 * Create the new Notification instance and add it to the notificationsMap
 	 *
-	 * @param notificationId
-	 * @param configs
+	 * @param notificationId The id of the Notification element
+	 * @param configs The configuration options as a JSON string or object
 	 * @returns the Notification instance
 	 */
 	export function Create(
@@ -50,7 +50,7 @@ namespace OutSystems.OSUI.Patterns.NotificationAPI {
 	/**
 	 * Function that will destroy the instance of the given Notification
 	 *
-	 * @param notificationId
+	 * @param notificationId The id of the Notification element
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Dispose(notificationId: string): string {
@@ -80,7 +80,7 @@ namespace OutSystems.OSUI.Patterns.NotificationAPI {
 	/**
 	 * Function that gets the instance of Notification, by a given ID.
 	 *
-	 * @param notificationId
+	 * @param notificationId The id of the Notification element
 	 * @returns the Notification instance
 	 */
 	export function GetNotificationById(notificationId: string): OSFramework.OSUI.Patterns.Notification.INotification {
@@ -113,7 +113,7 @@ namespace OutSystems.OSUI.Patterns.NotificationAPI {
 	/**
 	 * Function that will initialize the pattern instance.
 	 *
-	 * @param notificationId
+	 * @param notificationId The id of the Notification element
 	 * @returns the Notification instance
 	 */
 	export function Initialize(notificationId: string): OSFramework.OSUI.Patterns.Notification.INotification {
@@ -127,9 +127,9 @@ namespace OutSystems.OSUI.Patterns.NotificationAPI {
 	/**
 	 * Function to register a provider callback
 	 *
-	 * @param notificationId
-	 * @param eventName
-	 * @param callback
+	 * @param notificationId The id of the Notification element
+	 * @param eventName The name of the event to register the callback for
+	 * @param callback The function invoked when the event fires
 	 * @returns Return Message Success or message of error info if it's the case.
 	 */
 	export function RegisterCallback(

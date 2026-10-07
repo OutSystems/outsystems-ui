@@ -60,7 +60,7 @@ namespace OutSystems.OSUI.Patterns.DropdownServerSideItemAPI {
 	/**
 	 * Function that will dispose the instance of the given DropdownServerSideItemItem Id
 	 *
-	 * @param dropdownServerSideItemId
+	 * @param dropdownServerSideItemId The id of the DropdownServerSideItem element
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function Dispose(dropdownServerSideItemId: string): string {
@@ -122,9 +122,9 @@ namespace OutSystems.OSUI.Patterns.DropdownServerSideItemAPI {
 	/**
 	 * Function to register a provider callback
 	 *
-	 * @param dropdownServerSideItemId
-	 * @param eventName
-	 * @param callback
+	 * @param dropdownServerSideItemId The id of the DropdownServerSideItem element
+	 * @param eventName The name of the event to register the callback for
+	 * @param callback The function invoked when the event fires
 	 * @returns the API response envelope as a JSON string: `{ code, isSuccess, message, value? }`
 	 */
 	export function RegisterCallback(
