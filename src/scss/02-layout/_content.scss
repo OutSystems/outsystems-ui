@@ -42,10 +42,6 @@
 			align-items: center;
 			display: flex;
 			flex-wrap: wrap;
-
-			& > div:not([class*='ThemeGrid_Width']) {
-				width: 100%;
-			}
 		}
 	}
 
@@ -91,4 +87,11 @@
 			}
 		}
 	}
+}
+
+// Android
+// Gives a padding to the content, this avoids some content to be unreachable under the bottom bar
+///
+.android .main:has(.footer:empty) .content {
+	padding-block-end: var(--safe-area-inset-bottom, 0px);
 }
