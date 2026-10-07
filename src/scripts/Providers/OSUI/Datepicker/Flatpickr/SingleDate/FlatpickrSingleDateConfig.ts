@@ -4,13 +4,9 @@
 namespace Providers.OSUI.Datepicker.Flatpickr.SingleDate {
 	/**
 	 * Class that represents the custom configurations received by the Datepicker Single mode.
-	 *
-	 * @export
-	 * @class FlatpickrSingleDateConfig
-	 * @extends {AbstractFlatpickrConfig}
 	 */
 	export class FlatpickrSingleDateConfig extends AbstractFlatpickrConfig {
-		// Set the property initialDate
+		/** Set the property initialDate */
 		public InitialDate: string | Date;
 
 		constructor(config: JSON) {
@@ -23,7 +19,6 @@ namespace Providers.OSUI.Datepicker.Flatpickr.SingleDate {
 		 * Method used to set all the config properties for the SingleDate mode type
 		 *
 		 * @returns [FlatpickrOptions]
-		 * @memberof Providers.OSUI.DatePicker.Flatpickr.SingleDate.FlatpickrSingleDateConfig
 		 */
 		public getProviderConfig(): FlatpickrOptions {
 			const flatpickrSingleDateOpts = {

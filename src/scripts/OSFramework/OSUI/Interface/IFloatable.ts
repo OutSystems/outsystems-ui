@@ -2,9 +2,6 @@
 namespace OSFramework.OSUI.Interface {
 	/**
 	 * Defines the interface for objects that will be placed on absolute position and be opened/closed
-	 *
-	 * @export
-	 * @interface IFloatable
 	 */
 	export type IFloatable = IOpenable;
 }

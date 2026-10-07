@@ -3,10 +3,9 @@ namespace Providers.OSUI.Dropdown.VirtualSelect.Factory {
 	/**
 	 * Create the new VirtualSelect instance object according given Mode
 	 *
-	 * @export
-	 * @param {string} dropdownId ID of the Pattern that a new instance will be created.
-	 * @param {string} configs Configurations for the Pattern in JSON format.
-	 * @return {*}  {OSFramework.OSUI.Patterns.Dropdown.IDropdown}
+	 * @param dropdownId ID of the Pattern that a new instance will be created.
+	 * @param mode
+	 * @param configs Configurations for the Pattern in JSON format.
 	 */
 	export function NewVirtualSelect(
 		dropdownId: string,

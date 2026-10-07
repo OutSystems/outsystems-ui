@@ -4,17 +4,13 @@ namespace OSFramework.OSUI.Helper {
 	 * Abstract class reponsible for manipulating attributes in dom elements.
 	 *
 	 * @abstract
-	 * @class AttributeManipulation
 	 */
 	abstract class AttributeManipulation {
 		/**
 		 * Method that will return a given attribute value from a given html element.
 		 *
-		 * @static
-		 * @param {HTMLElement} element Element where the attribute will be looked for.
-		 * @param {string} attrName Attribute name to be obtained the value.
-		 * @return {*}  {string}
-		 * @memberof OSFramework.Helper.AttributeManipulation
+		 * @param element Element where the attribute will be looked for.
+		 * @param attrName Attribute name to be obtained the value.
 		 */
 		public static Get(element: HTMLElement, attrName: string): string | undefined {
 			if (element) {
@@ -28,11 +24,8 @@ namespace OSFramework.OSUI.Helper {
 		/**
 		 * Method that will check if a given attribute exists for the given html element.
 		 *
-		 * @static
-		 * @param {HTMLElement} element
-		 * @param {string} attrName
-		 * @return {*}  {boolean}
-		 * @memberof OSFramework.Helper.AttributeManipulation
+		 * @param element
+		 * @param attrName
 		 */
 		public static Has(element: HTMLElement, attrName: string): boolean {
 			if (element) {
@@ -45,10 +38,7 @@ namespace OSFramework.OSUI.Helper {
 		/**
 		 * Method that will return the Id of the html element.
 		 *
-		 * @static
-		 * @param {HTMLElement} element
-		 * @return {*}  {(string | undefined)}
-		 * @memberof OSFramework.Helper.AttributeManipulation
+		 * @param element
 		 */
 		public static Id(element: HTMLElement): string | undefined {
 			return AttributeManipulation.Get(element, 'Id');
@@ -57,10 +47,8 @@ namespace OSFramework.OSUI.Helper {
 		/**
 		 * Method that will remove a given attribute from a given html element
 		 *
-		 * @static
-		 * @param {HTMLElement} element Element where the given attribute will be removed.
-		 * @param {string} attrName Attribute name to be removed.
-		 * @memberof OSFramework.Helper.AttributeManipulation
+		 * @param element Element where the given attribute will be removed.
+		 * @param attrName Attribute name to be removed.
 		 */
 		public static Remove(element: HTMLElement, attrName: string): void {
 			if (element) {
@@ -73,11 +61,9 @@ namespace OSFramework.OSUI.Helper {
 		/**
 		 * Method that will add a given attribute to a given html element.
 		 *
-		 * @static
-		 * @param {HTMLElement} element Element where the given attribute will be added.
-		 * @param {string} attrName Attribute name to be added.
-		 * @param {(boolean | number | string)} attrValue Attribute value to be added.
-		 * @memberof OSFramework.Helper.AttributeManipulation
+		 * @param element Element where the given attribute will be added.
+		 * @param attrName Attribute name to be added.
+		 * @param attrValue Attribute value to be added.
 		 */
 		public static Set(element: HTMLElement, attrName: string, attrValue: boolean | number | string): void {
 			if (element) {
@@ -92,16 +78,13 @@ namespace OSFramework.OSUI.Helper {
 	 * Abstract class reponsible for manipulating styles and classes in dom elements.
 	 *
 	 * @abstract
-	 * @class StyleManipulation
 	 */
 	abstract class StyleManipulation {
 		/**
 		 * Method that will add a given css class to a given html element.
 		 *
-		 * @static
-		 * @param {HTMLElement} element Element where the class will be added.
-		 * @param {string} cssClass Css class that will be added.
-		 * @memberof OSFramework.Helper.StyleManipulation
+		 * @param element Element where the class will be added.
+		 * @param cssClass Css class that will be added.
 		 */
 		public static AddClass(element: HTMLElement, cssClass: string): void {
 			if (element) {
@@ -116,11 +99,9 @@ namespace OSFramework.OSUI.Helper {
 		/**
 		 * Method that will check a given css class on a given html element.
 		 *
-		 * @static
-		 * @param {HTMLElement} element Element that will be checked for the class.
-		 * @param {string} cssClass Css class that will be checked.
-		 * @return {*}  {boolean} true if the element possess the class.
-		 * @memberof OSFramework.Helper.StyleManipulation
+		 * @param element Element that will be checked for the class.
+		 * @param cssClass Css class that will be checked.
+		 * @returns true if the element possess the class.
 		 */
 		public static ContainsClass(element: HTMLElement, cssClass: string): boolean {
 			if (element) {
@@ -135,18 +116,16 @@ namespace OSFramework.OSUI.Helper {
 		/**
 		 * Method that knows how to update the Extended class of the pattern.
 		 *
-		 * @static
-		 * @param {HTMLElement} element Element where the class will be toggled.
-		 * @param {string} currentCssClasses Css classes that are assigned to the given element
-		 * @param {string} newCssClass Css classes that will be assigned to the given element
-		 * @memberof OSFramework.Helper.StyleManipulation
+		 * @param element Element where the class will be toggled.
+		 * @param currentCssClasses Css classes that are assigned to the given element
+		 * @param newCssClass Css classes that will be assigned to the given element
 		 */
 		public static ExtendedClass(element: HTMLElement, currentCssClasses: string, newCssClass: string): void {
 			if (element) {
 				const currentClassesList = currentCssClasses.split(' ');
 				const newClassesList = newCssClass.split(' ');
-				let classesToRemove = [];
-				let classesToAdd = [];
+				let classesToRemove: string[] = [];
+				let classesToAdd: string[] = [];
 
 				if (currentCssClasses !== '') {
 					classesToRemove = currentClassesList.filter(
@@ -180,7 +159,6 @@ namespace OSFramework.OSUI.Helper {
 		 * Method used to get the border radius value based on shape entity
 		 *
 		 * @param shapeName
-		 * @returns
 		 */
 		public static GetBorderRadiusValueFromShapeType(shapeName: string): string {
 			return getComputedStyle(document.documentElement).getPropertyValue('--border-radius-' + shapeName);
@@ -190,7 +168,6 @@ namespace OSFramework.OSUI.Helper {
 		 * Method used to get the color value based on color entity given color name or on a value provided from user (HEX or RGB)
 		 *
 		 * @param colorName
-		 * @returns
 		 */
 		public static GetColorValueFromColorType(colorName: string): string {
 			// Store the color value based on the CSS variable color
@@ -207,10 +184,7 @@ namespace OSFramework.OSUI.Helper {
 		/**
 		 * Returns the CSS classes that a a given element has
 		 *
-		 * @static
-		 * @param {HTMLElement} element
-		 * @return {*}  {string[]}
-		 * @memberof OSFramework.Helper.StyleManipulation
+		 * @param element
 		 */
 		public static GetCssClasses(element: HTMLElement): Set<string> {
 			if (element) {
@@ -223,11 +197,8 @@ namespace OSFramework.OSUI.Helper {
 		/**
 		 * Returns the value of a CSS Custom Property
 		 *
-		 * @static
-		 * @param {HTMLElement} element
-		 * @param {string} propertyName
-		 * @return {*}
-		 * @memberof StyleManipulation
+		 * @param element
+		 * @param propertyName
 		 */
 		public static GetCustomProperty(element: HTMLElement, propertyName: string) {
 			if (element) {
@@ -240,10 +211,8 @@ namespace OSFramework.OSUI.Helper {
 		/**
 		 * Method that will remove a given css class from a given html element.
 		 *
-		 * @static
-		 * @param {HTMLElement} element Element where the class will be removed.
-		 * @param {string} cssClass Css class that will be removed.
-		 * @memberof OSFramework.Helper.StyleManipulation
+		 * @param element Element where the class will be removed.
+		 * @param cssClass Css class that will be removed.
 		 */
 		public static RemoveClass(element: HTMLElement, cssClass: string): void {
 			if (element) {
@@ -258,10 +227,8 @@ namespace OSFramework.OSUI.Helper {
 		/**
 		 * Method that remove a style attribute to a given html element.
 		 *
-		 * @static
-		 * @param {HTMLElement} element Element where the class will be toggled.
-		 * @param {string} cssProperty Css property that will be removed.
-		 * @memberof OSFramework.Helper.StyleManipulation
+		 * @param element Element where the class will be toggled.
+		 * @param cssProperty Css property that will be removed.
 		 */
 		public static RemoveStyleAttribute(element: HTMLElement, cssProperty: string): void {
 			if (element) {
@@ -276,11 +243,9 @@ namespace OSFramework.OSUI.Helper {
 		/**
 		 * Method that add a style attribute to a given html element.
 		 *
-		 * @static
-		 * @param {HTMLElement} element Element where the class will be toggled.
-		 * @param {string} cssProperty Css property that will be added.
-		 * @param {(number | string)} ruleValue Value of the CSS property.
-		 * @memberof OSFramework.Helper.StyleManipulation
+		 * @param element Element where the class will be toggled.
+		 * @param cssProperty Css property that will be added.
+		 * @param ruleValue Value of the CSS property.
 		 */
 		public static SetStyleAttribute(element: HTMLElement, cssProperty: string, ruleValue: number | string): void {
 			if (element) {
@@ -295,10 +260,8 @@ namespace OSFramework.OSUI.Helper {
 		/**
 		 * Method that will toggle a given css class from a given html element.
 		 *
-		 * @static
-		 * @param {HTMLElement} element Element where the class will be toggled.
-		 * @param {string} cssClass Css class that will be toggled.
-		 * @memberof OSFramework.Helper.StyleManipulation
+		 * @param element Element where the class will be toggled.
+		 * @param cssClass Css class that will be toggled.
 		 */
 		public static ToggleClass(element: HTMLElement, cssClass: string): void {
 			if (element) {
@@ -316,9 +279,6 @@ namespace OSFramework.OSUI.Helper {
 		 * Getter of the class that helps to manipulate the HTML attributes.
 		 *
 		 * @readonly
-		 * @static
-		 * @type {typeof AttributeManipulation}
-		 * @memberof OSFramework.Helper.Dom
 		 */
 		public static get Attribute(): typeof AttributeManipulation {
 			return AttributeManipulation;
@@ -328,9 +288,6 @@ namespace OSFramework.OSUI.Helper {
 		 * Getter of the class that helps to manipulate the HTML styles and classes.
 		 *
 		 * @readonly
-		 * @static
-		 * @type {typeof StyleManipulation}
-		 * @memberof OSFramework.Helper.Dom
 		 */
 		public static get Styles(): typeof StyleManipulation {
 			return StyleManipulation;
@@ -339,11 +296,9 @@ namespace OSFramework.OSUI.Helper {
 		/**
 		 * Function that performs a querySelector of a given class in a given element.
 		 *
-		 * @static
-		 * @param {HTMLElement} element Element to be queried.
-		 * @param {string} cssClass CSS class to test its value.
-		 * @return {*}  {(HTMLElement | undefined)} Return the HTMLElement found, of if not undefined.
-		 * @memberof OSFramework.Helper.Dom
+		 * @param element Element to be queried.
+		 * @param cssClass CSS class to test its value.
+		 * @returns Return the HTMLElement found, of if not undefined.
 		 */
 		public static ClassSelector(element: HTMLElement | Document, cssClass: string): HTMLElement | undefined {
 			let elementFound: HTMLElement = undefined;
@@ -364,9 +319,7 @@ namespace OSFramework.OSUI.Helper {
 		/**
 		 * Method that makes disables a given element.
 		 *
-		 * @static
-		 * @param {HTMLElement} element
-		 * @memberof OSFramework.Helper.Dom
+		 * @param element
 		 */
 		public static Disable(element: HTMLElement): void {
 			if (element) {
@@ -379,9 +332,7 @@ namespace OSFramework.OSUI.Helper {
 		/**
 		 * Method that enables a given element.
 		 *
-		 * @static
-		 * @param {HTMLElement} element
-		 * @memberof OSFramework.Helper.Dom
+		 * @param element
 		 */
 		public static Enable(element: HTMLElement): void {
 			if (element) {
@@ -393,9 +344,6 @@ namespace OSFramework.OSUI.Helper {
 
 		/**
 		 * Generate a Random String that could be assigned as a pattern UniqueId
-		 *
-		 * @export
-		 * @return {*}  {string}
 		 */
 		public static GenerateUniqueId(): string {
 			return Math.random().toString(36);
@@ -404,10 +352,8 @@ namespace OSFramework.OSUI.Helper {
 		/**
 		 * Responsable for finding a DOM Element by its Id.
 		 *
-		 * @static
-		 * @param {string} id Id of the element to be returned.
-		 * @return {*}  {HTMLElement} The respective DOM Element.
-		 * @memberof OSFramework.Helper.Dom
+		 * @param id Id of the element to be returned.
+		 * @returns The respective DOM Element.
 		 */
 		public static GetElementById(id: string): HTMLElement {
 			const obj = document.getElementById(id);
@@ -423,10 +369,8 @@ namespace OSFramework.OSUI.Helper {
 		 * Responsable for finding a DOM Element by its name attribute.
 		 * That is commonly used to store the uniqueID generated by the framework.
 		 *
-		 * @static
-		 * @param {string} uniqueId uniqueId generated by the framework.
-		 * @return {*}  {HTMLElement} The respective DOM Element.
-		 * @memberof OSFramework.Helper.Dom
+		 * @param uniqueId uniqueId generated by the framework.
+		 * @returns The respective DOM Element.
 		 */
 		public static GetElementByUniqueId(uniqueId: string): HTMLElement {
 			const obj = document.getElementsByName(uniqueId);
@@ -441,11 +385,9 @@ namespace OSFramework.OSUI.Helper {
 		/**
 		 * Method to get the list of focusable elements
 		 *
-		 * @static
-		 * @param {HTMLElement} element Element to be queried.
-		 * @param {boolean} [includeTabIndexHidden=false] Include elements with tabindex -1
-		 * @return {*}  {HTMLElement[]} List of focusable elements
-		 * @memberof Dom
+		 * @param element Element to be queried.
+		 * @param [includeTabIndexHidden=false] Include elements with tabindex -1
+		 * @returns List of focusable elements
 		 */
 		public static GetFocusableElements(element: HTMLElement, includeTabIndexHidden = false): HTMLElement[] {
 			const _focusableElems = element.querySelectorAll(
@@ -461,10 +403,7 @@ namespace OSFramework.OSUI.Helper {
 		/**
 		 * Method to check if element is inside a Popup widget
 		 *
-		 * @static
-		 * @param {HTMLElement} element
-		 * @return {*}  {boolean}
-		 * @memberof Dom
+		 * @param element
 		 */
 		public static IsInsidePopupWidget(element: HTMLElement): boolean {
 			const _popup = document.querySelectorAll(Constants.Dot + GlobalEnum.CssClassElements.Popup);
@@ -484,10 +423,8 @@ namespace OSFramework.OSUI.Helper {
 		/**
 		 * Moves a given HTML element to target position.
 		 *
-		 * @static
-		 * @param {HTMLElement} element Element to be moved.
-		 * @param {HTMLElement} target Location to where the Element is to be moved.
-		 * @memberof OSFramework.Helper.Dom
+		 * @param element Element to be moved.
+		 * @param target Location to where the Element is to be moved.
 		 */
 		public static Move(element: HTMLElement, target: HTMLElement): void {
 			if (element && target) {
@@ -498,9 +435,8 @@ namespace OSFramework.OSUI.Helper {
 		/**
 		 * Method that will help on setting the value of an input and trigger that change to the platform in order to update it's assigned variable, otherwise platform value do not get updated if/when only a value attribute get set!
 		 *
-		 * @param {HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement} inputElem Element where the value will be assigned!
-		 * @param {string} value Value to be assigned
-		 * @memberof OSFramework.Helper.Dom
+		 * @param inputElem Element where the value will be assigned!
+		 * @param value Value to be assigned
 		 */
 		public static SetInputValue(
 			inputElem: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement,
@@ -519,11 +455,8 @@ namespace OSFramework.OSUI.Helper {
 		/**
 		 * Function that performs a querySelector of a given html tag in a given element.
 		 *
-		 * @static
-		 * @param {HTMLElement} element Element to be queried.
-		 * @param {string} htmlTag HTML element to be searched for.
-		 * @return {*}  {(HTMLElement | undefined)}
-		 * @memberof OSFramework.Helper.Dom
+		 * @param element Element to be queried.
+		 * @param htmlTag HTML element to be searched for.
 		 */
 		public static TagSelector(element: HTMLElement, htmlTag: string): HTMLElement | undefined {
 			let elementFound: HTMLElement = undefined;
@@ -544,11 +477,8 @@ namespace OSFramework.OSUI.Helper {
 		/**
 		 * Function that performs a querySelectorAll of a given html tag in a given element.
 		 *
-		 * @static
-		 * @param {HTMLElement} element Element to be queried.
-		 * @param {string} htmlTag HTML element to be searched for.
-		 * @return {*}  {(HTMLElement | undefined)}
-		 * @memberof OSFramework.Helper.Dom
+		 * @param element Element to be queried.
+		 * @param htmlTag HTML element to be searched for.
 		 */
 		public static TagSelectorAll(element: HTMLElement | Document, htmlTag: string): HTMLElement[] | undefined {
 			let elementFound: HTMLElement[];

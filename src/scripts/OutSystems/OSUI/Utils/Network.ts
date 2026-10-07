@@ -2,8 +2,6 @@
 namespace OutSystems.OSUI.Utils.Network {
 	/**
 	 * Checks if device is online
-	 *
-	 * @returns
 	 */
 	export function IsOnline(): boolean {
 		// This method can't implement the CreateApiResponse method since it's defined as a function in SS
@@ -13,8 +11,6 @@ namespace OutSystems.OSUI.Utils.Network {
 
 	/**
 	 * Get connection type
-	 *
-	 * @returns
 	 */
 	export function Type(): string {
 		// This method can't implement the CreateApiResponse method since it's defined as a function in SS

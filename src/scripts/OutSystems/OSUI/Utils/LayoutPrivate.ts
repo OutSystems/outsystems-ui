@@ -11,8 +11,6 @@ namespace OutSystems.OSUI.Utils.LayoutPrivate {
 	/**
 	 * Function used to Fix Inputs for iOS devices
 	 *
-	 * @export
-	 *
 	 * ToDo:
 	 * 	- Check this function since this method is used at LayoutReady and LayoutReadyMobile but both of this
 	 * client actions are not in use by us!

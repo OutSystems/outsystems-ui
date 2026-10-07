@@ -2,10 +2,6 @@
 namespace Providers.OSUI.Dropdown.VirtualSelect {
 	/**
 	 * Class that represents the custom configurations received by the Dropdown.
-	 *
-	 * @export
-	 * @class AbstractVirtualSelectConfig
-	 * @extends {AbstractDropdownConfig}
 	 */
 	export abstract class AbstractVirtualSelectConfig
 		extends OSFramework.OSUI.Patterns.Dropdown.AbstractDropdownConfig
@@ -16,15 +12,24 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		private _providerOptions: VirtualSelectOpts;
 		// Store configs set using extensibility
 		protected providerExtendedOptions: VirtualSelectOpts;
+		/** CSS id selector of the element the provider renders into; set by the pattern from its own element. */
 		public ElementId: string;
+		/** Message shown when there are no options. */
 		public NoOptionsText: string;
+		/** Message shown when a search matches no option. */
 		public NoResultsText: string;
+		/** Options to render: { value, label, image_url_or_class?, description?, group_name? }. */
 		public OptionsList: DropDownOption[];
+		/** Viewport width (CSS length) below which the dropbox opens as a popup; set to the screen size on mobile. */
 		public PopupDropboxBreakpoint: string;
+		/** Placeholder shown while nothing is selected. */
 		public Prompt: string;
+		/** Escapes HTML in option labels and values before they are rendered. */
 		public SanitizeDropdownValues = false;
+		/** Placeholder of the search input. */
 		public SearchPrompt: string;
 		public ShowDropboxAsPopup = true;
+		/** Options selected when the dropdown is built (same shape as OptionsList). */
 		public StartingSelection: DropDownOption[];
 
 		// Method used to check if an image or an icon should be added to the given option
@@ -170,7 +175,6 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		 * Method used to set all the common VirtualSelect properties across the different types of instances
 		 *
 		 * @returns [VirtualSelectOpts]
-		 * @memberof Providers.OSUI.Dropdown.VirtualSelect.AbstractVirtualSelectConfig
 		 */
 		public getProviderConfig(): VirtualSelectOpts {
 			/* In order to avoid XSS let's sanitize the label of each all options
@@ -236,8 +240,7 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		/**
 		 * Method to validate and save the external provider configs
 		 *
-		 * @param {VirtualSelectOpts} newConfigs
-		 * @memberof Providers.OSUI.Dropdown.VirtualSelect.AbstractVirtualSelectConfig
+		 * @param newConfigs
 		 */
 		public setExtensibilityConfigs(newConfigs: VirtualSelectOpts): void {
 			if (newConfigs[Enum.ExtendedConfigs.hasOptionDescription] !== undefined)
@@ -251,9 +254,8 @@ namespace Providers.OSUI.Dropdown.VirtualSelect {
 		/**
 		 * Override, Validate configs key values
 		 *
-		 * @param {string} key
-		 * @param {unknown} value
-		 * @memberof Providers.OSUI.Dropdown.VirtualSelect.AbstractVirtualSelectConfig
+		 * @param key
+		 * @param value
 		 */
 		public validateDefault(key: string, value: unknown): unknown {
 			let validatedValue = undefined;

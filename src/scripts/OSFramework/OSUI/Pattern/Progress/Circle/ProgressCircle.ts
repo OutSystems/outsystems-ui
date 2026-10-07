@@ -226,7 +226,6 @@ namespace OSFramework.OSUI.Patterns.Progress.Circle {
 		 * Add the initial animation to the pattern if it's applicable
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Progress.Circle.Circle
 		 */
 		protected addInitialAnimation(): void {
 			// Check if the animation at init should be added
@@ -247,7 +246,6 @@ namespace OSFramework.OSUI.Patterns.Progress.Circle {
 		 * This method has no implementation on this pattern context!
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Progress.Circle.Circle
 		 */
 		protected setA11YProperties(): void {
 			if (this.contentElem.innerHTML) Helper.A11Y.AriaLabelledBy(this.selfElement, this.contentElem.id);
@@ -258,7 +256,6 @@ namespace OSFramework.OSUI.Patterns.Progress.Circle {
 		 * Method to set the callbacks
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Progress.Circle.Circle
 		 */
 		protected setCallbacks(): void {
 			super.setCallbacks();
@@ -268,7 +265,6 @@ namespace OSFramework.OSUI.Patterns.Progress.Circle {
 		 * Method used to set the progrees value
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Progress.Circle.Circle
 		 */
 		protected setElementProgressValue(value: number): void {
 			this.configs.Progress = value;
@@ -285,7 +281,6 @@ namespace OSFramework.OSUI.Patterns.Progress.Circle {
 		 * Method used to set the HTML elements reference
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Progress.Circle.Circle
 		 */
 		protected setHtmlElements(): void {
 			this._blockParent = document.getElementById(this.widgetId)?.parentElement;
@@ -304,7 +299,6 @@ namespace OSFramework.OSUI.Patterns.Progress.Circle {
 		/**
 		 * Method to unset the callbacks
 		 * @protected
-		 * @memberof OSFramework.Patterns.Progress.Circle.Circle
 		 */
 		protected unsetCallbacks(): void {
 			super.unsetCallbacks();
@@ -314,7 +308,6 @@ namespace OSFramework.OSUI.Patterns.Progress.Circle {
 		 * Method to unset the HTML elements reference
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Progress.Circle.Circle
 		 */
 		protected unsetHtmlElements(): void {
 			this._blockParent = undefined;
@@ -326,7 +319,6 @@ namespace OSFramework.OSUI.Patterns.Progress.Circle {
 		 * Update progress value
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Progress.Circle.Circle
 		 */
 		protected updateProgressColor(): void {
 			Helper.Dom.Styles.SetStyleAttribute(
@@ -340,7 +332,6 @@ namespace OSFramework.OSUI.Patterns.Progress.Circle {
 		 * Update shape type
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Progress.Circle.Circle
 		 */
 		protected updateShape(): void {
 			Helper.Dom.Styles.SetStyleAttribute(
@@ -356,7 +347,6 @@ namespace OSFramework.OSUI.Patterns.Progress.Circle {
 		 * Update shape thickness
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Progress.Circle.Circle
 		 */
 		protected updateThickness(): void {
 			this._updateCircleProps();
@@ -372,7 +362,6 @@ namespace OSFramework.OSUI.Patterns.Progress.Circle {
 		 * Update shape color
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Progress.Circle.Circle
 		 */
 		protected updateTrailColor(): void {
 			Helper.Dom.Styles.SetStyleAttribute(
@@ -384,8 +373,6 @@ namespace OSFramework.OSUI.Patterns.Progress.Circle {
 
 		/**
 		 * Method to build the ProgressCircle
-		 *
-		 * @memberof Circle
 		 */
 		public build(): void {
 			super.build();
@@ -406,9 +393,8 @@ namespace OSFramework.OSUI.Patterns.Progress.Circle {
 		/**
 		 * Update property value from a given property name at OnParametersChange
 		 *
-		 * @param {string} propertyName the name of the property that will be changed
-		 * @param {unknown} propertyValue the new value that should be assigned to the given property name
-		 * @memberof OSFramework.Patterns.Progress.Circle.Circle
+		 * @param propertyName the name of the property that will be changed
+		 * @param propertyValue the new value that should be assigned to the given property name
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			// Update the default values
@@ -447,19 +433,18 @@ namespace OSFramework.OSUI.Patterns.Progress.Circle {
 		/**
 		 * Method to create the SVG Gradient
 		 *
-		 * @param {string} gradientId
-		 * @param {string} gradientName
-		 * @param {unknown} gradientCoords
-		 * @param {string} gradientHtml
-		 * @param {GradientColor} colors
-		 * @memberof Circle
+		 * @param gradientId
+		 * @param gradientName
+		 * @param gradientCoords
+		 * @param gradientLenght
+		 * @param colors
 		 */
 		public createSVGGradient(
 			gradientId: string,
 			gradientName: string,
 			gradientCoords: unknown,
 			gradientLenght: number,
-			colors: GradientColor
+			colors: GradientColor[]
 		): void {
 			// Start by removing the current gradient, in case there's already one created
 			this._gradientElem?.remove();
@@ -497,8 +482,6 @@ namespace OSFramework.OSUI.Patterns.Progress.Circle {
 
 		/**
 		 * Destroy the ProgressCircle
-		 *
-		 * @memberof OSFramework.Patterns.Progress.Circle.Circle
 		 */
 		public dispose(): void {
 			super.dispose();
@@ -516,11 +499,10 @@ namespace OSFramework.OSUI.Patterns.Progress.Circle {
 		/**
 		 * Method to apply a SVG Gradient
 		 *
-		 * @param {string} gradientType
-		 * @param {GradientColor} colors
-		 * @memberof Circle
+		 * @param gradientType
+		 * @param colors
 		 */
-		public progressApplyGradient(gradientType: string, colors: GradientColor): void {
+		public progressApplyGradient(gradientType: string, colors: GradientColor[]): void {
 			// Call super to clean and validate color string
 			super.progressApplyGradient(gradientType, colors);
 			// Store the expected gradient name to be used as html tag

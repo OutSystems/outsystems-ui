@@ -13,6 +13,7 @@
 		"predev": "npm run build:tokens",
 		"dev": "gulp startDevelopment --target",
 		"docs": "npx typedoc",
+		"postdocs": "node scripts/publish-ai-docs.mjs",
 		"lint": "eslint . --ext .ts",
 		"lintfix": "eslint . --fix --ext .ts",
 		"prettier": "prettier --config ./.prettierrc.json --write \"**/*.+(js|ts|css)\"",
@@ -24,7 +25,23 @@
 		"gta-update-version": "gulp gtaSetVersion --newVersion",
 		"tokens:update": "npm install --save-dev outsystems-design-tokens@latest && npm run build:tokens && npm run docs:tokens",
 		"docs:css-api": "node scripts/generate-css-api-reference.mjs",
-		"docs:tokens": "node scripts/generate-token-data.mjs"
+		"docs:tokens": "node scripts/generate-token-data.mjs",
+		"docs:ai": "node scripts/generate-ai-docs.mjs",
+		"docs:ai:check": "node scripts/check-ai-docs-fresh.mjs",
+		"types:generate": "node scripts/generate-pattern-types.mjs",
+		"evals": "node evals/run.mjs",
+		"evals:enterprise": "node evals/run.mjs --suite enterprise",
+		"evals:utilities": "node evals/run.mjs --suite utilities",
+		"evals:gate": "node evals/tools/gate.mjs",
+		"evals:report": "node evals/tools/report.mjs",
+		"evals:dashboard": "node evals/tools/dashboard-data.mjs",
+		"evals:doctor": "node evals/tools/doctor.mjs",
+		"evals:dashboard:page": "node evals/tools/dashboard-page.mjs",
+		"evals:history:categories": "node evals/tools/backfill-categories.mjs",
+		"evals:model:export": "node evals/tools/export-snapshot.mjs",
+		"evals:fix": "npm run docs:ai && npm run types:generate && npm run evals:history:categories && npm run evals:report && npm run evals:dashboard && node evals/tools/doctor.mjs --fix",
+		"evals:test": "node --test \"evals/**/*.test.mjs\"",
+		"test": "node --test \"tests/*.test.mjs\" \"evals/**/*.test.mjs\""
 	},
 	"repository": {
 		"type": "git",
@@ -59,9 +76,11 @@
 		"chromatic": "^17.0.0",
 		"eslint": "^8.57.1",
 		"eslint-config-prettier": "^9.1.0",
+		"eslint-plugin-jsdoc": "^64.5.4",
 		"eslint-plugin-prettier": "^5.2.5",
 		"flatpickr": "^4.6.13",
 		"font-awesome": "^4.7.0",
+		"gpt-tokenizer": "4.0.0",
 		"gulp": "^5.0.1",
 		"gulp-autoprefixer": "^10.0.0",
 		"gulp-clean": "^0.4.0",
@@ -94,5 +113,8 @@
 		"virtual-select-plugin": "^1.1.0",
 		"vite": "^6.4.3",
 		"wnumb": "^1.2.0"
+	},
+	"overrides": {
+		"memfs": "4.78.1"
 	}
 }

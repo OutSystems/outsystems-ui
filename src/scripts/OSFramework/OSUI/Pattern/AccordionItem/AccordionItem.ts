@@ -139,9 +139,7 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 		/**
 		 * Method to handle the inert attribute
 		 *
-		 * @param {HTMLElement} element Target element to receive the value atributte
-		 * @returns
-		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
+		 * @param element Target element to receive the value atributte
 		 */
 		private _handleInertAttribute(element: HTMLElement): void {
 			if (this._isOpen) {
@@ -339,7 +337,6 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 		 * Method to handle Accessibility attributes
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
 		 */
 		protected setA11YProperties(): void {
 			// Set the static attributes on page load only
@@ -383,7 +380,6 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 		 * Method to set the listeners and callbacks
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
 		 */
 		protected setCallbacks(): void {
 			this._eventOnClick = this._accordionOnClickHandler.bind(this);
@@ -395,7 +391,6 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 		 * Method to set the HTML elements of the Accordion Item
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
 		 */
 		protected setHtmlElements(): void {
 			this._accordionItemTitleElem = Helper.Dom.ClassSelector(this.selfElement, Enum.CssClass.PatternTitle);
@@ -419,7 +414,6 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 		 * Method to set the initial CSS Classes
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
 		 */
 		protected setInitialCssClasses(): void {
 			if (this._isOpen) {
@@ -442,7 +436,6 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 		 * Method to remove all assigned callbacks
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
 		 */
 		protected unsetCallbacks(): void {
 			this._eventOnClick = undefined;
@@ -454,7 +447,6 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 		 * Method to unset the html elements
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
 		 */
 		protected unsetHtmlElements(): void {
 			this._accordionItemTitleElem = undefined;
@@ -468,8 +460,6 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 		 * Method to return the isDisabled value
 		 *
 		 * @readonly
-		 * @type {boolean}
-		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
 		 */
 		public get isDisabled(): boolean {
 			return this.configs.IsDisabled;
@@ -479,8 +469,6 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 		 * Method to return the IsOpen value
 		 *
 		 * @readonly
-		 * @type {boolean}
-		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
 		 */
 		public get isOpen(): boolean {
 			return this._isOpen;
@@ -488,8 +476,6 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 
 		/**
 		 * Method to prevent clicks inside thte title to open the accordion
-		 *
-		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
 		 */
 		public allowTitleEvents(): void {
 			this._allowTitleEvents = true;
@@ -497,8 +483,6 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 
 		/**
 		 * Method to build the AccordionItem
-		 *
-		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
 		 */
 		public build(): void {
 			super.build();
@@ -517,9 +501,8 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 		/**
 		 * Method to change the value of configs/current state.
 		 *
-		 * @param {string} propertyName
-		 * @param {unknown} propertyValue
-		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
+		 * @param propertyName
+		 * @param propertyValue
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
@@ -549,8 +532,6 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 
 		/**
 		 * Method to close the AccordionItem
-		 *
-		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
 		 */
 		public close(): void {
 			if (!this._isOpen) {
@@ -582,8 +563,6 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 
 		/**
 		 * Method to remove event listener and destroy AccordionItem instance
-		 *
-		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
 		 */
 		public dispose(): void {
 			this.unsetCallbacks();
@@ -601,8 +580,6 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 
 		/**
 		 * Method to open the AccordionItem
-		 *
-		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
 		 */
 		public open(): void {
 			if (this._isOpen) {
@@ -650,9 +627,8 @@ namespace OSFramework.OSUI.Patterns.AccordionItem {
 		/**
 		 * Method to register a given callback event handler.
 		 *
-		 * @param {string} eventName
-		 * @param {GlobalCallbacks.OSGeneric} callback
-		 * @memberof OSFramework.Patterns.AccordionItem.AccordionItem
+		 * @param eventName
+		 * @param callback
 		 */
 		public registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {

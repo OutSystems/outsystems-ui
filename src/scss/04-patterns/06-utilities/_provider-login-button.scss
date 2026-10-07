@@ -15,17 +15,11 @@
 	background: var(--osui-provider-login-button-background);
 	border-color: var(--osui-provider-login-button-border-color);
 	border-radius: 0;
-	&-logo {
-		&-only {
-			padding: 10px;
-			.btn-provider-login-text {
-				display: none;
-				-servicestudio-display: none !important;
-			}
-		}
-		svg {
-			height: 100%;
-			width: 100%;
+	&-logo-only {
+		padding: 10px;
+		.btn-provider-login-text {
+			display: none;
+			-servicestudio-display: none !important;
 		}
 	}
 	&.btn- {
@@ -52,6 +46,11 @@
 			border-radius: 50%;
 			height: variables.$token-scale-500;
 			width: variables.$token-scale-500;
+
+			svg {
+				height: 100%;
+				width: 100%;
+			}
 		}
 		&-text {
 			color: var(--osui-provider-login-button-color);

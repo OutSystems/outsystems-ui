@@ -2,11 +2,6 @@
 namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 	/**
 	 *  Class that implements the SectionIndexItem pattern.
-	 *
-	 * @export
-	 * @class SectionIndexItem
-	 * @extends {AbstractPattern<SectionIndexItemConfig>}
-	 * @implements {ISectionIndexItem}
 	 */
 	export class SectionIndexItem
 		extends AbstractChild<SectionIndexItemConfig, SectionIndex.ISectionIndex>
@@ -151,7 +146,6 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 		 * Method to add the A11Y attributes values
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.SectionIndexItem.SectionIndexItem
 		 */
 		protected setA11YProperties(): void {
 			// Set RoleButton attribute
@@ -164,7 +158,6 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 		 * Method to set the callbacks and event listeners
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.SectionIndexItem.SectionIndexItem
 		 */
 		protected setCallbacks(): void {
 			this._eventOnClick = this._onSelected.bind(this);
@@ -176,7 +169,6 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 		 * Method to set the HTMLElements used
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.SectionIndexItem.SectionIndexItem
 		 */
 		protected setHtmlElements(): void {
 			// Check if overlay is enabled => If StatusBar is enabled and if is iOS device
@@ -202,7 +194,6 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 		 *  Removes the listeners that were added in the code and unsets the callbacks.
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.SectionIndexItem.SectionIndexItem
 		 */
 		protected unsetCallbacks(): void {
 			this._removeEvents();
@@ -216,7 +207,6 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 		 * Method to unset the html elements used
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.SectionIndexItem.SectionIndexItem
 		 */
 		protected unsetHtmlElements(): void {
 			this._mainScrollContainerElement = undefined;
@@ -225,8 +215,6 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 
 		/**
 		 * Method to build the SectionIndexItem.
-		 *
-		 * @memberof OSFramework.Patterns.SectionIndexItem.SectionIndexItem
 		 */
 		public build(): void {
 			super.build();
@@ -255,9 +243,8 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 		/**
 		 * Applies the changes of state/value of the configurations.
 		 *
-		 * @param {string} propertyName
-		 * @param {unknown} propertyValue
-		 * @memberof OSFramework.Patterns.SectionIndexItem.SectionIndexItem
+		 * @param propertyName
+		 * @param propertyValue
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
@@ -275,8 +262,6 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 
 		/**
 		 * Disposes the current pattern.
-		 *
-		 * @memberof OSFramework.Patterns.SectionIndexItem.SectionIndexItem
 		 */
 		public dispose(): void {
 			this.unsetCallbacks();
@@ -292,8 +277,6 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 
 		/**
 		 * Adds active class from pattern.
-		 *
-		 * @memberof OSFramework.Patterns.SectionIndexItem.SectionIndexItem
 		 */
 		public setIsActive(): void {
 			if (this._isActive === false) {
@@ -305,8 +288,7 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 		/**
 		 * Set the scroll margin, that acts as scrollIntoView offset
 		 *
-		 * @param {(number | string)} margin
-		 * @memberof SectionIndexItem
+		 * @param margin
 		 */
 		public setTargetScrollMargin(margin: number | string): void {
 			// Add CSS Variable with the offset value for the scroll target, to be used on the CSS
@@ -315,8 +297,6 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 
 		/**
 		 * Removes active class from pattern.
-		 *
-		 * @memberof OSFramework.Patterns.SectionIndexItem.SectionIndexItem
 		 */
 		public unsetIsActive(): void {
 			if (this._isActive) {
@@ -329,8 +309,6 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 		 * Readable property to get the active state of the element
 		 *
 		 * @readonly
-		 * @type {boolean}
-		 * @memberof OSFramework.Patterns.SectionIndexItem.SectionIndexItem
 		 */
 		public get IsSelected(): boolean {
 			return this._isActive;
@@ -340,8 +318,6 @@ namespace OSFramework.OSUI.Patterns.SectionIndexItem {
 		 * Readable property to get targetElement object
 		 *
 		 * @readonly
-		 * @type {HTMLElement}
-		 * @memberof OSFramework.Patterns.SectionIndexItem.SectionIndexItem
 		 */
 		public get TargetElement(): HTMLElement {
 			return this._targetElement;

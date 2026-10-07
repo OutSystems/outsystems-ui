@@ -7,6 +7,11 @@
 
 ///
 .form {
+	// ─── Component CSS API ─────────────────────────────────────────────
+	// Density axis: spacing between fields; default equals the previous fixed value.
+	--osui-form-field-spacing: #{variables.$token-scale-600};
+	// ───────────────────────────────────────────────────────────────────
+
 	&.OSFillParent {
 		.form-control[class*='ThemeGrid_Width'].not-valid ~ span.validation-message {
 			inset-inline-start: 22px;
@@ -22,7 +27,7 @@
 	input[data-input],
 	textarea[data-textarea],
 	[data-switch] {
-		margin-block-end: variables.$token-scale-600;
+		margin-block-end: var(--osui-form-field-spacing);
 	}
 
 	span {

@@ -1,0 +1,178 @@
+name: AI-friendliness gate
+
+# Keeps the library legible to coding agents and ready for enterprise apps:
+#   1. on pull requests into dev (and on demand), every eval suite of evals/suites.mjs is gated against
+#      its baseline: its index may not drop by more than 1 point, no eval by more than 3, no-decrease
+#      evals (R01 coverage) not at all, and no eval may leave more components unmeasured than the
+#      baseline. The baseline is the newest run recorded on dev (the evals-results branch, see below),
+#      else the newest entry of evals/results/history.json. The report also lists components that
+#      evals/components.json does not classify yet.
+#   2. docs-ai/ (component manifest + llms.txt tiers) must match a fresh generation from the source;
+#      a stale PR fails with the command that regenerates everything (npm run evals:fix).
+#   3. on every push to dev, the suites are recorded as `dev-<sha>` and published to the orphan branch
+#      evals-results (history.json, HISTORY.md, dashboard.json, latest.json, the last 20 run files and
+#      the docs-ai/ set of that commit), so history advances with the base branch, the newest llms.txt
+#      set is always fetchable from the branch, and nothing is committed to dev.
+# One job serves both events: the setup steps are shared and the gate steps run on pull requests and
+# dispatches, the recording steps on pushes to dev. Locally: npm run evals:gate && npm run docs:ai:check;
+# npm run evals:fix regenerates the generated files.
+on:
+    pull_request:
+        branches: ['dev']
+        types: [opened, reopened, synchronize]
+    push:
+        branches: ['dev']
+    workflow_dispatch:
+        inputs:
+            max-drop:
+                description: 'Allowed drop of an index, in points'
+                type: string
+                default: '1'
+
+concurrency:
+    group: ${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
+
+# contents: write is used by the recording steps only, to push the evals-results branch; on pull
+# requests nothing is written to the repository (the sticky comment needs pull-requests: write).
+permissions:
+    contents: write
+    pull-requests: write
+
+env:
+    RESULTS_BRANCH: evals-results
+    IS_PUSH: ${{ github.event_name == 'push' }}
+
+jobs:
+    evals:
+        name: Evals gate and docs-ai freshness
+        runs-on: ubuntu-latest
+        steps:
+            - name: 📥 Checkout
+              uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+
+            - name: 📦 Setup Node
+              uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # v6.0.0
+              with:
+                  node-version: 24
+
+            # .npmrc carries min-release-age-exclude[], which needs npm >= 11.17 (pinned to the volta version)
+            - name: 📦 Ensure npm >= 11.17
+              run: npm install -g npm@11.18.0 --ignore-scripts
+
+            # No lockfile is committed in this repository (see .gitignore); .npmrc's min-release-age
+            # policy is the supply-chain guard. Lifecycle scripts are not needed by the evals.
+            - name: 🕸️ Install project dependencies
+              run: npm install --ignore-scripts
+
+            - name: 🎨 Generate design tokens (the SCSS evals compile against them)
+              run: npm run build:tokens
+
+            - name: 🧪 Unit tests (suite + generator)
+              if: env.IS_PUSH != 'true'
+              run: npm test
+
+            # The runs recorded on dev are the history once the branch exists: the gate compares with
+            # its newest entry, the recording appends to it. Until then the committed history is used.
+            - name: 📚 History from the runs recorded on dev
+              run: |
+                  if git fetch --quiet origin "$RESULTS_BRANCH" 2>/dev/null; then
+                    git show "origin/$RESULTS_BRANCH:history.json" > evals/results/history.json
+                    echo "History: the runs recorded on dev ($RESULTS_BRANCH branch)."
+                  else
+                    echo "History: evals/results/history.json (no $RESULTS_BRANCH branch yet)."
+                  fi
+
+            # The files the pull request changes (the checkout is the merge with the base, so a two-dot diff
+            # against the base is exactly the PR) and the base branch's newest run, for the touched-components
+            # section of the report.
+            - name: 🧩 Changed files and the base branch's newest run
+              if: github.event_name == 'pull_request'
+              env:
+                  BASE_REF: ${{ github.base_ref }}
+              run: |
+                  git fetch --quiet --depth=1 origin "$BASE_REF"
+                  git diff --name-only "origin/$BASE_REF" HEAD > "$RUNNER_TEMP/changed-files.txt"
+                  echo "$(wc -l < "$RUNNER_TEMP/changed-files.txt") changed files"
+                  if git fetch --quiet origin "$RESULTS_BRANCH" 2>/dev/null; then
+                    git show "origin/$RESULTS_BRANCH:latest.json" > "$RUNNER_TEMP/base-run.json"
+                  fi
+
+            # ---- pull requests and dispatches: the gate and the freshness check. Both keep going on
+            # failure so the report below is always posted; the last step turns their outcomes into the
+            # job result.
+            - name: 📊 Indices must not regress
+              if: env.IS_PUSH != 'true'
+              id: gate
+              continue-on-error: true
+              env:
+                  MAX_DROP: ${{ inputs.max-drop || '1' }}
+              run: |
+                  args=(--max-drop "$MAX_DROP" --report gate-report.md)
+                  [[ -f "$RUNNER_TEMP/changed-files.txt" ]] && args+=(--changed "$RUNNER_TEMP/changed-files.txt")
+                  [[ -f "$RUNNER_TEMP/base-run.json" ]] && args+=(--base-run "$RUNNER_TEMP/base-run.json")
+                  node evals/tools/gate.mjs "${args[@]}"
+                  cat gate-report.md >> "$GITHUB_STEP_SUMMARY"
+
+            - name: 📄 docs-ai/ must be fresh
+              if: env.IS_PUSH != 'true'
+              id: docs
+              continue-on-error: true
+              run: npm run docs:ai:check
+
+            - name: 🔎 Find previous evals comment
+              if: github.event_name == 'pull_request'
+              id: find_evals_comment
+              uses: peter-evans/find-comment@3eae4d37986fb5a8592848f6a574fdf654e61f9e # v3.1.0
+              with:
+                  issue-number: ${{ github.event.pull_request.number }}
+                  comment-author: 'github-actions[bot]'
+                  body-includes: <!-- ai-friendliness-gate-comment -->
+
+            - name: 💬 Post the before → after report on the PR
+              if: github.event_name == 'pull_request'
+              uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+              env:
+                  DOCS_OUTCOME: ${{ steps.docs.outcome }}
+                  EXISTING_COMMENT_ID: ${{ steps.find_evals_comment.outputs.comment-id }}
+              with:
+                  script: |
+                      const fs = require('fs');
+                      const report = fs.existsSync('gate-report.md')
+                        ? fs.readFileSync('gate-report.md', 'utf8')
+                        : '### 📊 Evals: ❌ **Failed**\n\nThe evals did not produce a report; see the job log.';
+                      const docs = process.env.DOCS_OUTCOME === 'success'
+                        ? '✅ `docs-ai/` matches a fresh generation from the source.'
+                        : '❌ `docs-ai/` is stale — merge `dev` if it moved, run `npm run evals:fix` (regenerates docs-ai/, the pattern types, HISTORY.md, dashboard.json and the component registry) and commit the result.';
+                      const body = `<!-- ai-friendliness-gate-comment -->\n${report}\n\n${docs}\n`;
+                      const params = { owner: context.repo.owner, repo: context.repo.repo };
+                      // one report comment per pull request, re-created rather than edited: an edit leaves the
+                      // comment where it was first posted and notifies nobody, so the report went unnoticed
+                      const existing = process.env.EXISTING_COMMENT_ID;
+                      if (existing) {
+                        await github.rest.issues.deleteComment({ ...params, comment_id: Number(existing) });
+                      }
+                      await github.rest.issues.createComment({ ...params, issue_number: context.issue.number, body });
+
+            - name: 🚦 Job result
+              if: env.IS_PUSH != 'true' && (steps.gate.outcome != 'success' || steps.docs.outcome != 'success')
+              run: |
+                  echo "::error::Evals gate: ${{ steps.gate.outcome }}; docs-ai freshness: ${{ steps.docs.outcome }}"
+                  exit 1
+
+            # ---- pushes to dev: record the run and publish it. The branch is written with git plumbing:
+            # a tree built from the result files on top of the previous branch commit (or none, the first
+            # time), so no checkout, worktree or token URL is needed and the working tree is never touched.
+            - name: 📊 Record dev-<sha>
+              if: env.IS_PUSH == 'true'
+              run: node evals/run.mjs --label "dev-${GITHUB_SHA:0:9}" --branch dev
+
+            - name: 📤 Publish to the evals-results branch
+              if: env.IS_PUSH == 'true'
+              env:
+                  GIT_AUTHOR_NAME: github-actions[bot]
+                  GIT_AUTHOR_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
+                  GIT_COMMITTER_NAME: github-actions[bot]
+                  GIT_COMMITTER_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
+                  KEEP_RUNS: '20'
+              run: bash evals/tools/publish-results.sh

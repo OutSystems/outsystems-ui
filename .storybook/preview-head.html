@@ -69,6 +69,11 @@
   public repo render the Widgets stories with no internal feed access at all.
   See docs-internal/adr/ADR-0009.
 -->
+<!--
+  Platform layout helpers (.OSInline, .OSFillParent, .OSBlockWidget) from the
+  app's _Basic.css — loads first, as at runtime. See the file header.
+-->
+<link rel="stylesheet" href="/platform/platform-basic.css" />
 <link rel="stylesheet" href="/platform/platform-core.css" />
 
 <!--

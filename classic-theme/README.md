@@ -48,6 +48,13 @@ Procedure: `/port-to-classic` (see `.claude/skills/osui-classic-theme/SKILL.md`)
   `.phone/.tablet .app-menu-links a` SS-preview rule (same relative position as the new theme).
   Mapping: none needed — the rule is a single `-servicestudio-*` declaration with no token
   values, so it is byte-identical in both themes. Approximations: none.
+- **2026-10-04 — Provider Login Button logo SVG selector fix (working tree)** — replaced the
+  dead `.btn.btn-provider-login-logo svg` (a SCSS nesting slip: no element carries both
+  `.btn` and `.btn-provider-login-logo`) with `.btn.btn-provider-login .btn-provider-login-logo svg`,
+  moved to immediately after `.btn.btn-provider-login .btn-provider-login-logo` (same relative
+  position as the new theme). **ODC bundle only** — the Provider Login Button styles are
+  ODC-only in both themes, so the O11 bundle has no provider-login rule to fix.
+  Mapping: none needed (`100%` literals). Approximations: none.
 
 ### Refresh log
 

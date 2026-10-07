@@ -1,0 +1,1376 @@
+{
+	"$comment": "Component registry: one entry per pattern (TypeScript + SCSS), per CSS-only component, per layout partial and per utility family, keyed by name; the inventory discovers the components, this file classifies them, and a test fails when the two disagree (npm run evals:doctor lists the differences and --fix appends derived entries). Fields: kind = tier (pattern | component | layout | utility; the directory gives the default, the registry may override it, e.g. animate and columns are helpers filed under 04-patterns); roles (patterns): provider = behaviour delegated to a provider library, overlay = opens a layer and must manage focus and Escape, composite = arrow-key widget, feedback = announces status, non-interactive = renders no control of its own, no-dom = attaches behaviour to existing elements; family: patterns that implement one keyboard model together share the parent name; host {host, reason} (components and layout): styles markup something else emits, so no markup contract of its own; story: normalised story name when it differs from the component name; title (utility families): display name in the utilities documentation; interactive (CSS-only components): operated by the user; loading / validating: has a loading or an invalid state; density: the enterprise document expects a size or density axis; derived: true when the doctor appended the entry from code signals, remove after review.",
+	"components": {
+		"a11y": {
+			"kind": "utility",
+			"title": "Accessibility"
+		},
+		"Accordion": {
+			"kind": "pattern",
+			"family": "Accordion",
+			"block": [
+				{
+					"flow": "Content",
+					"name": "Accordion",
+					"paramMap": {
+						"MultipleItems": "MultipleItems",
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized"
+					}
+				}
+			]
+		},
+		"AccordionItem": {
+			"kind": "pattern",
+			"family": "Accordion",
+			"density": true,
+			"block": [
+				{
+					"flow": "Content",
+					"name": "AccordionItem",
+					"paramMap": {
+						"StartsExpanded": "StartsExpanded",
+						"Icon": "Icon",
+						"IconPosition": "IconPosition",
+						"IsDisabled": "IsDisabled",
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized",
+						"OnToggle": "OnToggle"
+					}
+				}
+			]
+		},
+		"action-sheet": {
+			"kind": "component",
+			"interactive": true,
+			"block": [
+				{
+					"flow": "Interaction",
+					"name": "ActionSheet"
+				}
+			]
+		},
+		"alert": {
+			"kind": "component",
+			"block": [
+				{
+					"flow": "Content",
+					"name": "Alert"
+				}
+			]
+		},
+		"align-center": {
+			"kind": "utility"
+		},
+		"animate": {
+			"kind": "utility"
+		},
+		"AnimatedLabel": {
+			"kind": "pattern",
+			"roles": ["non-interactive"],
+			"block": [
+				{
+					"flow": "Interaction",
+					"name": "AnimatedLabel",
+					"paramMap": {
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized"
+					}
+				}
+			]
+		},
+		"badge": {
+			"kind": "component",
+			"block": [
+				{
+					"flow": "Numbers",
+					"name": "Badge"
+				}
+			]
+		},
+		"balloon": {
+			"kind": "component",
+			"host": {
+				"host": "OutSystems UI patterns (OverflowMenu and others)",
+				"reason": "a floating layer created and positioned by the patterns that use it; measured through their stories"
+			}
+		},
+		"blank-slate": {
+			"kind": "component",
+			"block": [
+				{
+					"flow": "Content",
+					"name": "BlankSlate"
+				}
+			]
+		},
+		"border-radius": {
+			"kind": "utility",
+			"title": "Border radius & shape"
+		},
+		"border-size": {
+			"kind": "utility",
+			"title": "Border size"
+		},
+		"bottom-bar-item": {
+			"kind": "component",
+			"block": [
+				{
+					"flow": "Navigation",
+					"name": "BottomBarItem"
+				}
+			]
+		},
+		"BottomSheet": {
+			"kind": "pattern",
+			"roles": ["overlay"],
+			"block": [
+				{
+					"flow": "Interaction",
+					"name": "BottomSheet",
+					"paramMap": {
+						"Shape": "Shape",
+						"ShowHandler": "ShowHandler",
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized",
+						"OnToggle": "OnToggle"
+					}
+				}
+			]
+		},
+		"box-height": {
+			"kind": "utility",
+			"title": "Box height"
+		},
+		"box-width": {
+			"kind": "utility",
+			"title": "Box width"
+		},
+		"breadcrumbs": {
+			"kind": "component",
+			"interactive": true,
+			"block": [
+				{
+					"flow": "Navigation",
+					"name": "Breadcrumbs"
+				},
+				{
+					"flow": "Navigation",
+					"name": "BreadcrumbsItem"
+				}
+			]
+		},
+		"btn": {
+			"kind": "component",
+			"story": "button",
+			"interactive": true,
+			"loading": true
+		},
+		"bulk-actions": {
+			"kind": "component",
+			"interactive": true,
+			"density": true
+		},
+		"button-group": {
+			"kind": "component",
+			"interactive": true
+		},
+		"ButtonLoading": {
+			"kind": "pattern",
+			"roles": ["feedback"],
+			"loading": true,
+			"block": [
+				{
+					"flow": "Utilities",
+					"name": "ButtonLoading",
+					"paramMap": {
+						"IsLoading": "IsLoading",
+						"ShowLabelOnLoading": "ShowLoadingAndLabel",
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized"
+					}
+				}
+			]
+		},
+		"card": {
+			"kind": "component",
+			"loading": true,
+			"density": true,
+			"block": [
+				{
+					"flow": "Content",
+					"name": "Card"
+				}
+			]
+		},
+		"card-background": {
+			"kind": "component",
+			"block": [
+				{
+					"flow": "Content",
+					"name": "CardBackground"
+				}
+			]
+		},
+		"card-item": {
+			"kind": "component",
+			"density": true,
+			"block": [
+				{
+					"flow": "Content",
+					"name": "CardItem"
+				}
+			]
+		},
+		"card-sectioned": {
+			"kind": "component",
+			"density": true,
+			"block": [
+				{
+					"flow": "Content",
+					"name": "CardSectioned"
+				}
+			]
+		},
+		"Carousel": {
+			"kind": "pattern",
+			"roles": ["provider", "composite"],
+			"loading": true,
+			"block": [
+				{
+					"flow": "Interaction",
+					"name": "Carousel",
+					"paramMap": {
+						"Navigation": "Navigation",
+						"Height": "Height",
+						"ItemsPerSlide.Desktop": "ItemsDesktop",
+						"ItemsPerSlide.Tablet": "ItemsTablet",
+						"ItemsPerSlide.Phone": "ItemsPhone",
+						"OptionalConfigs.AutoPlay": "AutoPlay",
+						"OptionalConfigs.Loop": "Loop",
+						"OptionalConfigs.Padding": "Padding",
+						"OptionalConfigs.ItemsGap": "ItemsGap",
+						"OptionalConfigs.StartingPosition": "StartingPosition",
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized"
+					}
+				}
+			]
+		},
+		"center-content": {
+			"kind": "utility"
+		},
+		"chat-message": {
+			"kind": "component",
+			"block": [
+				{
+					"flow": "Content",
+					"name": "ChatMessage"
+				}
+			]
+		},
+		"checkbox": {
+			"kind": "component",
+			"interactive": true,
+			"validating": true
+		},
+		"colors-brand": {
+			"kind": "utility",
+			"title": "Colours · brand"
+		},
+		"colors-neutral": {
+			"kind": "utility",
+			"title": "Colours · neutral"
+		},
+		"colors-others": {
+			"kind": "utility",
+			"title": "Colours · other"
+		},
+		"colors-palette": {
+			"kind": "utility",
+			"title": "Colours · palette"
+		},
+		"colors-semantic": {
+			"kind": "utility",
+			"title": "Colours · semantic"
+		},
+		"columns": {
+			"kind": "utility"
+		},
+		"content": {
+			"kind": "layout",
+			"host": {
+				"host": "app template Layout blocks",
+				"reason": "the .content region and its title/actions rows are placeholders of the Layout block"
+			}
+		},
+		"counter": {
+			"kind": "component",
+			"block": [
+				{
+					"flow": "Numbers",
+					"name": "Counter"
+				}
+			]
+		},
+		"DatePicker": {
+			"kind": "pattern",
+			"roles": ["provider", "composite"],
+			"validating": true,
+			"block": [
+				{
+					"flow": "Interaction",
+					"name": "DatePicker",
+					"paramMap": {
+						"DateFormat": "DateFormat",
+						"ShowTodayButton": "ShowTodayButton",
+						"TimeFormat": "TimeFormat",
+						"OptionalConfigs.InitialDate": "InitialDate",
+						"OptionalConfigs.MinDate": "MinDate",
+						"OptionalConfigs.MaxDate": "MaxDate",
+						"OptionalConfigs.FirstWeekDay": "FirstWeekDay",
+						"OptionalConfigs.ShowWeekNumbers": "ShowWeekNumbers",
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized"
+					}
+				},
+				{
+					"flow": "Interaction",
+					"name": "DatePickerRange",
+					"paramMap": {
+						"DateFormat": "DateFormat",
+						"ShowTodayButton": "ShowTodayButton",
+						"OptionalConfigs.InitialStartDate": "InitialStartDate",
+						"OptionalConfigs.InitialEndDate": "InitialEndDate",
+						"OptionalConfigs.MinDate": "MinDate",
+						"OptionalConfigs.MaxDate": "MaxDate",
+						"OptionalConfigs.FirstWeekDay": "FirstWeekDay",
+						"OptionalConfigs.ShowWeekNumbers": "ShowWeekNumbers",
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized"
+					}
+				}
+			]
+		},
+		"display": {
+			"kind": "utility",
+			"title": "Display"
+		},
+		"display-align": {
+			"kind": "utility",
+			"title": "Display · alignment"
+		},
+		"display-flex": {
+			"kind": "utility",
+			"title": "Display · flex"
+		},
+		"dropdown": {
+			"kind": "component",
+			"interactive": true
+		},
+		"Dropdown": {
+			"kind": "pattern",
+			"roles": ["provider", "overlay"],
+			"loading": true,
+			"validating": true,
+			"density": true,
+			"block": [
+				{
+					"flow": "Advanced",
+					"name": "DropdownServerSide",
+					"paramMap": {
+						"AllowMultipleSelection": "AllowMultipleSelection",
+						"IsDisabled": "IsDisabled",
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized",
+						"OnToggle": "OnToggle"
+					}
+				},
+				{
+					"flow": "Interaction",
+					"name": "DropdownSearch",
+					"paramMap": {
+						"OptionsList": "OptionsList",
+						"StartingSelection": "StartingSelection",
+						"Prompt": "Prompt",
+						"OptionalConfigs.AllowMultipleSelection": "AllowMultipleSelection",
+						"OptionalConfigs.IsDisabled": "IsDisabled",
+						"OptionalConfigs.NoResultsText": "NoResultsText",
+						"OptionalConfigs.SearchPrompt": "SearchPrompt",
+						"OptionalConfigs.NoOptionsText": "NoOptionsText",
+						"OptionalConfigs.SanitizeDropdownValues": "SanitizeDropdownValues",
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized",
+						"OnChanged": "OnSelected"
+					}
+				},
+				{
+					"flow": "Interaction",
+					"name": "DropdownTags",
+					"paramMap": {
+						"OptionsList": "OptionsList",
+						"StartingSelection": "StartingSelection",
+						"Prompt": "Prompt",
+						"OptionalConfigs.IsDisabled": "IsDisabled",
+						"OptionalConfigs.NoResultsText": "NoResultsText",
+						"OptionalConfigs.SearchPrompt": "SearchPrompt",
+						"OptionalConfigs.NoOptionsText": "NoOptionsText",
+						"OptionalConfigs.SanitizeDropdownValues": "SanitizeDropdownValues",
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized",
+						"OnChanged": "OnSelected"
+					}
+				}
+			]
+		},
+		"dropdown-serverside": {
+			"kind": "component",
+			"interactive": true
+		},
+		"DropdownServerSideItem": {
+			"kind": "pattern",
+			"roles": ["overlay"],
+			"loading": true,
+			"validating": true,
+			"density": true,
+			"block": [
+				{
+					"flow": "Advanced",
+					"name": "DropdownServerSideItem",
+					"paramMap": {
+						"ItemId": "ItemId",
+						"IsSelected": "IsSelected",
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized",
+						"OnSelected": "OnSelected"
+					}
+				}
+			]
+		},
+		"feedback-message": {
+			"kind": "component",
+			"validating": true
+		},
+		"FlipContent": {
+			"kind": "pattern",
+			"block": [
+				{
+					"flow": "Content",
+					"name": "FlipContent",
+					"paramMap": {
+						"StartsFlipped": "IsFlipped",
+						"FlipOnClick": "FlipSelf",
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized",
+						"OnFlip": "OnToggle"
+					}
+				}
+			]
+		},
+		"floating-actions": {
+			"kind": "component",
+			"interactive": true,
+			"block": [
+				{
+					"flow": "Interaction",
+					"name": "FloatingActions"
+				},
+				{
+					"flow": "Interaction",
+					"name": "FloatingActionsItem"
+				}
+			]
+		},
+		"floating-content": {
+			"kind": "component",
+			"block": [
+				{
+					"flow": "Content",
+					"name": "FloatingContent"
+				}
+			]
+		},
+		"form": {
+			"kind": "component",
+			"interactive": true,
+			"loading": true,
+			"validating": true,
+			"density": true
+		},
+		"Gallery": {
+			"kind": "pattern",
+			"roles": ["non-interactive"],
+			"loading": true,
+			"block": [
+				{
+					"flow": "Adaptive",
+					"name": "Gallery",
+					"paramMap": {
+						"RowItemsDesktop": "RowItemsDesktop",
+						"RowItemsTablet": "RowItemsTablet",
+						"RowItemsPhone": "RowItemsPhone",
+						"ItemsGap": "ItemsGap",
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized"
+					}
+				}
+			]
+		},
+		"header": {
+			"kind": "layout",
+			"host": {
+				"host": "app template Layout blocks",
+				"reason": "the header is a placeholder group of the Layout block"
+			}
+		},
+		"header-layout-native": {
+			"kind": "layout",
+			"host": {
+				"host": "app template Layout blocks (native)",
+				"reason": "header variant of the native layout"
+			}
+		},
+		"header-layout-side": {
+			"kind": "layout",
+			"host": {
+				"host": "app template Layout blocks (side menu)",
+				"reason": "header variant of the side-menu layout"
+			}
+		},
+		"icon-badge": {
+			"kind": "component",
+			"block": [
+				{
+					"flow": "Numbers",
+					"name": "IconBadge"
+				}
+			]
+		},
+		"images": {
+			"kind": "utility",
+			"title": "Images"
+		},
+		"InlineSvg": {
+			"kind": "pattern",
+			"roles": ["non-interactive"],
+			"block": [
+				{
+					"flow": "Utilities",
+					"name": "InlineSVG",
+					"paramMap": {
+						"SVGCode": "SVGCode",
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized"
+					}
+				}
+			]
+		},
+		"input-with-icon": {
+			"kind": "component",
+			"interactive": true,
+			"validating": true,
+			"block": [
+				{
+					"flow": "Interaction",
+					"name": "InputWithIcon"
+				}
+			]
+		},
+		"inputs-and-textareas": {
+			"kind": "component",
+			"interactive": true,
+			"validating": true,
+			"density": true
+		},
+		"ios-bounce": {
+			"kind": "layout",
+			"host": {
+				"host": "platform runtime (iOS)",
+				"reason": "a fix applied to the native layout by the runtime; no markup of its own"
+			}
+		},
+		"layout": {
+			"kind": "layout",
+			"host": {
+				"host": "app template Layout blocks",
+				"reason": "the screen layout skeleton (.screen-container > .layout) comes from the template's Layout block"
+			}
+		},
+		"layout-section": {
+			"kind": "layout"
+		},
+		"lightbox-image": {
+			"kind": "component",
+			"block": [
+				{
+					"flow": "Interaction",
+					"name": "LightboxImage"
+				}
+			]
+		},
+		"list": {
+			"kind": "component",
+			"loading": true
+		},
+		"list-item": {
+			"kind": "component",
+			"interactive": true,
+			"density": true
+		},
+		"list-item-content": {
+			"kind": "component",
+			"density": true,
+			"block": [
+				{
+					"flow": "Content",
+					"name": "ListItemContent"
+				}
+			]
+		},
+		"list-updating": {
+			"kind": "component",
+			"loading": true
+		},
+		"login": {
+			"kind": "layout",
+			"host": {
+				"host": "app template Login common screen",
+				"reason": "the login screen and its form come from the template's common screen"
+			},
+			"interactive": true
+		},
+		"margin-container": {
+			"kind": "utility"
+		},
+		"master-detail": {
+			"kind": "component",
+			"block": [
+				{
+					"flow": "Adaptive",
+					"name": "MasterDetail"
+				}
+			]
+		},
+		"menu": {
+			"kind": "layout",
+			"host": {
+				"host": "app template Menu block",
+				"reason": "the application menu container and overlay come from the Menu block"
+			},
+			"interactive": true
+		},
+		"menu-app-login-info": {
+			"kind": "layout",
+			"host": {
+				"host": "app template Menu block",
+				"reason": "the signed-in user block is part of the Menu block"
+			}
+		},
+		"menu-app-menu-links": {
+			"kind": "layout",
+			"host": {
+				"host": "app template Menu block",
+				"reason": "the navigation links are generated by the Menu block from the app's screens"
+			},
+			"density": true
+		},
+		"menu-header-logo": {
+			"kind": "layout",
+			"host": {
+				"host": "app template Menu block",
+				"reason": "the logo slot is part of the Menu block"
+			}
+		},
+		"menu-layout-native": {
+			"kind": "layout",
+			"host": {
+				"host": "app template Menu block (native)",
+				"reason": "menu variant of the native layout"
+			}
+		},
+		"menu-layout-side": {
+			"kind": "layout",
+			"host": {
+				"host": "app template Menu block (side menu)",
+				"reason": "menu variant of the side-menu layout"
+			}
+		},
+		"miscellaneous": {
+			"kind": "utility",
+			"title": "Miscellaneous"
+		},
+		"MonthPicker": {
+			"kind": "pattern",
+			"roles": ["provider", "composite"],
+			"validating": true,
+			"block": [
+				{
+					"flow": "Interaction",
+					"name": "MonthPicker",
+					"paramMap": {
+						"DateFormat": "DateFormat",
+						"InitialMonth": "InitialMonth",
+						"MinMonth": "MinMonth",
+						"MaxMonth": "MaxMonth",
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized",
+						"OnSelected": "OnSelected"
+					}
+				}
+			]
+		},
+		"Notification": {
+			"kind": "pattern",
+			"roles": ["overlay", "feedback"],
+			"block": [
+				{
+					"flow": "Interaction",
+					"name": "Notification",
+					"paramMap": {
+						"StartsOpen": "StartsOpen",
+						"Width": "Width",
+						"Position": "Position",
+						"OptionalConfigs.InteractToClose": "InteractToClose",
+						"OptionalConfigs.CloseAfterTime": "CloseAfterTime",
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized",
+						"OnToggle": "OnToggle"
+					}
+				}
+			]
+		},
+		"overflow": {
+			"kind": "utility",
+			"title": "Overflow"
+		},
+		"OverflowMenu": {
+			"kind": "pattern",
+			"roles": ["overlay"],
+			"block": [
+				{
+					"flow": "Navigation",
+					"name": "OverflowMenu",
+					"paramMap": {
+						"BalloonShape": "Shape",
+						"BalloonPosition": "Position",
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized",
+						"OnMenuToggle": "OnToggle"
+					}
+				}
+			]
+		},
+		"pagination": {
+			"kind": "component",
+			"interactive": true,
+			"density": true,
+			"block": [
+				{
+					"flow": "Navigation",
+					"name": "Pagination"
+				}
+			]
+		},
+		"popover": {
+			"kind": "component",
+			"interactive": true
+		},
+		"popover-odc": {
+			"kind": "component"
+		},
+		"popup": {
+			"kind": "component",
+			"interactive": true
+		},
+		"positioning": {
+			"kind": "utility",
+			"title": "Positioning"
+		},
+		"positioning-absolute": {
+			"kind": "utility",
+			"title": "Positioning · absolute"
+		},
+		"Progress": {
+			"kind": "pattern",
+			"roles": ["feedback", "non-interactive"],
+			"loading": true,
+			"block": [
+				{
+					"flow": "Numbers",
+					"name": "ProgressBar",
+					"paramMap": {},
+					"platformOnly": [
+						"Progress",
+						"ProgressColor",
+						"TrailColor",
+						"Thickness",
+						"OptionalConfigs",
+						"ExtendedClass"
+					],
+					"eventMap": {
+						"Initialized": "Initialized"
+					}
+				},
+				{
+					"flow": "Numbers",
+					"name": "ProgressCircle",
+					"paramMap": {},
+					"platformOnly": [
+						"Progress",
+						"ProgressColor",
+						"Size",
+						"TrailColor",
+						"Thickness",
+						"OptionalConfigs",
+						"ExtendedClass"
+					],
+					"eventMap": {
+						"Initialized": "Initialized"
+					}
+				}
+			]
+		},
+		"provider-login-button": {
+			"kind": "component",
+			"block": [
+				{
+					"flow": "Utilities",
+					"name": "ProviderLoginButton"
+				}
+			]
+		},
+		"pull-to-refresh": {
+			"kind": "layout",
+			"host": {
+				"host": "platform runtime (native)",
+				"reason": "the pull indicator is injected by the platform runtime"
+			},
+			"interactive": true,
+			"block": [
+				{
+					"flow": "Private",
+					"name": "PullToRefresh"
+				}
+			]
+		},
+		"radio-button": {
+			"kind": "component",
+			"story": "radiogroup",
+			"interactive": true,
+			"validating": true
+		},
+		"RangeSlider": {
+			"kind": "pattern",
+			"roles": ["provider", "composite"],
+			"validating": true,
+			"block": [
+				{
+					"flow": "Interaction",
+					"name": "RangeSlider",
+					"paramMap": {
+						"MinValue": "MinValue",
+						"MaxValue": "MaxValue",
+						"Orientation": "Orientation",
+						"Size": "Size",
+						"StartingValue": "StartingValueFrom",
+						"OptionalConfigs.ShowFloatingLabel": "ShowFloatingLabel",
+						"OptionalConfigs.Step": "Step",
+						"OptionalConfigs.ShowTickMarks": "ShowTickMarks",
+						"OptionalConfigs.TickMarksInterval": "TickMarksInterval",
+						"OptionalConfigs.IsDisabled": "IsDisabled",
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized"
+					}
+				},
+				{
+					"flow": "Interaction",
+					"name": "RangeSliderInterval",
+					"paramMap": {
+						"MinValue": "MinValue",
+						"MaxValue": "MaxValue",
+						"StartingValueFrom": "StartingValueFrom",
+						"StartingValueTo": "StartingValueTo",
+						"Orientation": "Orientation",
+						"Size": "Size",
+						"OptionalConfigs.ShowFloatingLabel": "ShowFloatingLabel",
+						"OptionalConfigs.Step": "Step",
+						"OptionalConfigs.ShowTickMarks": "ShowTickMarks",
+						"OptionalConfigs.TickMarksInterval": "TickMarksInterval",
+						"OptionalConfigs.IsDisabled": "IsDisabled",
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized"
+					}
+				}
+			]
+		},
+		"rangeslider-odc": {
+			"kind": "component"
+		},
+		"Rating": {
+			"kind": "pattern",
+			"roles": ["composite"],
+			"block": [
+				{
+					"flow": "Numbers",
+					"name": "Rating",
+					"paramMap": {
+						"RatingValue": "RatingValue",
+						"RatingScale": "RatingScale",
+						"IsEdit": "IsEdit",
+						"Size": "Size",
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized",
+						"OnSelect": "OnSelected"
+					}
+				}
+			]
+		},
+		"scrollable-area": {
+			"kind": "component",
+			"interactive": true,
+			"block": [
+				{
+					"flow": "Interaction",
+					"name": "ScrollableArea"
+				}
+			]
+		},
+		"Search": {
+			"kind": "pattern",
+			"roles": ["feedback"],
+			"loading": true,
+			"validating": true,
+			"block": [
+				{
+					"flow": "Interaction",
+					"name": "Search",
+					"paramMap": {
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized"
+					}
+				}
+			]
+		},
+		"section": {
+			"kind": "component",
+			"block": [
+				{
+					"flow": "Content",
+					"name": "Section"
+				},
+				{
+					"flow": "Content",
+					"name": "SectionGroup"
+				}
+			]
+		},
+		"SectionIndex": {
+			"kind": "pattern",
+			"roles": ["non-interactive"],
+			"family": "SectionIndex",
+			"block": [
+				{
+					"flow": "Navigation",
+					"name": "SectionIndex",
+					"paramMap": {
+						"SmoothScrolling": "SmoothScrolling",
+						"IsFixed": "IsFixed",
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized"
+					}
+				}
+			]
+		},
+		"SectionIndexItem": {
+			"kind": "pattern",
+			"family": "SectionIndex",
+			"block": [
+				{
+					"flow": "Navigation",
+					"name": "SectionIndexItem",
+					"paramMap": {
+						"ScrollToWidgetId": "ScrollToWidgetId",
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized"
+					}
+				}
+			]
+		},
+		"separator": {
+			"kind": "utility"
+		},
+		"shadow": {
+			"kind": "utility",
+			"title": "Shadow"
+		},
+		"Sidebar": {
+			"kind": "pattern",
+			"roles": ["overlay"],
+			"block": [
+				{
+					"flow": "Interaction",
+					"name": "Sidebar",
+					"paramMap": {
+						"StartsOpen": "StartsOpen",
+						"Direction": "Direction",
+						"HasOverlay": "HasOverlay",
+						"Width": "Width",
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized",
+						"OnToggle": "OnToggle"
+					}
+				}
+			]
+		},
+		"space-margin": {
+			"kind": "utility",
+			"title": "Spacing · margin"
+		},
+		"space-padding": {
+			"kind": "utility",
+			"title": "Spacing · padding"
+		},
+		"stacked-cards": {
+			"kind": "component",
+			"block": [
+				{
+					"flow": "Interaction",
+					"name": "StackedCards"
+				}
+			]
+		},
+		"Submenu": {
+			"kind": "pattern",
+			"roles": ["overlay"],
+			"block": [
+				{
+					"flow": "Navigation",
+					"name": "Submenu",
+					"paramMap": {
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized",
+						"OnToggle": "OnToggle"
+					}
+				}
+			]
+		},
+		"SwipeEvents": {
+			"kind": "pattern",
+			"roles": ["non-interactive", "no-dom"],
+			"block": [
+				{
+					"flow": "Utilities",
+					"name": "SwipeEvents",
+					"paramMap": {
+						"WidgetId": "WidgetId"
+					},
+					"eventMap": {
+						"SwipeUp": "SwipeUp",
+						"SwipeDown": "SwipeDown",
+						"SwipeRight": "SwipeRight",
+						"SwipeLeft": "SwipeLeft"
+					}
+				}
+			]
+		},
+		"switch": {
+			"kind": "component",
+			"interactive": true,
+			"validating": true
+		},
+		"table": {
+			"kind": "component",
+			"loading": true,
+			"density": true
+		},
+		"Tabs": {
+			"kind": "pattern",
+			"roles": ["composite"],
+			"family": "Tabs",
+			"density": true,
+			"block": [
+				{
+					"flow": "Navigation",
+					"name": "Tabs",
+					"paramMap": {
+						"TabsOrientation": "TabsOrientation",
+						"StartingTab": "StartingTab",
+						"Height": "Height",
+						"TabsVerticalPosition": "TabsVerticalPosition",
+						"OptionalConfigs.ContentAutoHeight": "ContentAutoHeight",
+						"OptionalConfigs.JustifyHeaders": "JustifyHeaders",
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized",
+						"OnTabChange": "OnChange"
+					}
+				}
+			]
+		},
+		"TabsContentItem": {
+			"kind": "pattern",
+			"family": "Tabs",
+			"block": [
+				{
+					"flow": "Navigation",
+					"name": "TabsContentItem",
+					"paramMap": {
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized"
+					}
+				}
+			]
+		},
+		"TabsHeaderItem": {
+			"kind": "pattern",
+			"roles": ["composite"],
+			"family": "Tabs",
+			"density": true,
+			"block": [
+				{
+					"flow": "Navigation",
+					"name": "TabsHeaderItem",
+					"paramMap": {
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized"
+					}
+				}
+			]
+		},
+		"tag": {
+			"kind": "component",
+			"interactive": true,
+			"block": [
+				{
+					"flow": "Content",
+					"name": "Tag"
+				}
+			]
+		},
+		"text": {
+			"kind": "utility",
+			"title": "Text"
+		},
+		"themegrid-container": {
+			"kind": "layout",
+			"host": {
+				"host": "app template Layout blocks",
+				"reason": "the grid container wraps header, content and footer placeholders of the Layout block"
+			}
+		},
+		"timeline": {
+			"kind": "component",
+			"block": [
+				{
+					"flow": "Navigation",
+					"name": "TimelineItem"
+				}
+			]
+		},
+		"TimePicker": {
+			"kind": "pattern",
+			"roles": ["provider", "composite"],
+			"validating": true,
+			"block": [
+				{
+					"flow": "Interaction",
+					"name": "TimePicker",
+					"paramMap": {
+						"TimeFormat": "TimeFormat",
+						"Is24Hours": "Is24Hours",
+						"InitialTime": "InitialTime",
+						"OptionalConfigs.MinTime": "MinTime",
+						"OptionalConfigs.MaxTime": "MaxTime",
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized"
+					}
+				}
+			]
+		},
+		"Tooltip": {
+			"kind": "pattern",
+			"roles": ["overlay"],
+			"block": [
+				{
+					"flow": "Content",
+					"name": "Tooltip",
+					"paramMap": {
+						"Position": "Position",
+						"StartsOpen": "StartVisible",
+						"Trigger": "IsHover",
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized",
+						"OnToggle": "OnToggle"
+					}
+				}
+			]
+		},
+		"TouchEvents": {
+			"kind": "pattern",
+			"roles": ["non-interactive", "no-dom"],
+			"block": [
+				{
+					"flow": "Utilities",
+					"name": "TouchEvents",
+					"paramMap": {
+						"WidgetId": "WidgetId"
+					},
+					"platformOnly": ["PreventDefaults"],
+					"eventMap": {
+						"End": "End",
+						"Move": "Move",
+						"Start": "Start"
+					}
+				}
+			]
+		},
+		"typography": {
+			"kind": "utility",
+			"title": "Typography"
+		},
+		"upload": {
+			"kind": "component",
+			"interactive": true,
+			"loading": true,
+			"validating": true
+		},
+		"user-avatar": {
+			"kind": "component",
+			"block": [
+				{
+					"flow": "Content",
+					"name": "UserAvatar"
+				}
+			]
+		},
+		"Video": {
+			"kind": "pattern",
+			"roles": ["non-interactive"],
+			"loading": true,
+			"block": [
+				{
+					"flow": "Interaction",
+					"name": "Video",
+					"paramMap": {
+						"URL": "URL",
+						"Controls": "Controls",
+						"Width": "Width",
+						"Height": "Height",
+						"Captions": "Captions",
+						"OptionalConfigs.Autoplay": "Autoplay",
+						"OptionalConfigs.Loop": "Loop",
+						"OptionalConfigs.Muted": "Muted",
+						"OptionalConfigs.PosterURL": "PosterURL",
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized",
+						"StateChanged": "StateChanged"
+					}
+				}
+			]
+		},
+		"visibility": {
+			"kind": "utility",
+			"title": "Visibility"
+		},
+		"Wizard": {
+			"kind": "pattern",
+			"family": "Wizard",
+			"block": [
+				{
+					"flow": "Navigation",
+					"name": "Wizard",
+					"paramMap": {
+						"IsVertical": "IsVertical",
+						"StepsBehaviour": "StepBehavior",
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized"
+					}
+				}
+			]
+		},
+		"WizardItem": {
+			"kind": "pattern",
+			"family": "Wizard",
+			"block": [
+				{
+					"flow": "Navigation",
+					"name": "WizardItem",
+					"paramMap": {
+						"Status": "Status",
+						"ReverseLabelPosition": "ReverseLabelPosition",
+						"ExtendedClass": "ExtendedClass"
+					},
+					"eventMap": {
+						"Initialized": "Initialized",
+						"OnClick": "OnClick"
+					}
+				}
+			]
+		}
+	}
+}

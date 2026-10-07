@@ -3,12 +3,7 @@ namespace OSFramework.OSUI.Feature {
 	/**
 	 * Abstract class to be extended by all Features
 	 *
-	 * @export
 	 * @abstract
-	 * @class AbstractFeature
-	 * @implements {IFeature}
-	 * @template PT Pattern type that will use this feature
-	 * @template O Feature Options type
 	 */
 	export abstract class AbstractFeature<PT, O> implements IFeature {
 		// Store the feature DOM elem
@@ -20,10 +15,9 @@ namespace OSFramework.OSUI.Feature {
 
 		/**
 		 * Creates an instance of AbstractFeature.
-		 * @param {PT} featurePattern The pattern reference that uses this feature
-		 * @param {HTMLElement} featureElem The feature DOM element that will be targeted
-		 * @param {O} options The options passed to this feature, by the featurePattern
-		 * @memberof AbstractFeature
+		 * @param featurePattern The pattern reference that uses this feature
+		 * @param featureElem The feature DOM element that will be targeted
+		 * @param options The options passed to this feature, by the featurePattern
 		 */
 		constructor(featurePattern: PT, featureElem: HTMLElement, options: O) {
 			this._featureOptions = options;
@@ -31,11 +25,6 @@ namespace OSFramework.OSUI.Feature {
 			this._featurePattern = featurePattern;
 		}
 
-		/**
-		 *
-		 *
-		 * @memberof AbstractFeature
-		 */
 		public dispose(): void {
 			this._featureOptions = undefined;
 			this._featureElem = undefined;
@@ -45,8 +34,6 @@ namespace OSFramework.OSUI.Feature {
 		 * Getter for the feature Elemement
 		 *
 		 * @readonly
-		 * @type {HTMLElement}
-		 * @memberof AbstractFeature
 		 */
 		public get featureElem(): HTMLElement {
 			return this._featureElem;
@@ -56,8 +43,6 @@ namespace OSFramework.OSUI.Feature {
 		 * Getter for the feature options
 		 *
 		 * @readonly
-		 * @type {O}
-		 * @memberof AbstractFeature
 		 */
 		public get featureOptions(): O {
 			return this._featureOptions;
@@ -67,8 +52,6 @@ namespace OSFramework.OSUI.Feature {
 		 * Getter for the the feature pattern element
 		 *
 		 * @readonly
-		 * @type {PT}
-		 * @memberof AbstractFeature
 		 */
 		public get featurePattern(): PT {
 			return this._featurePattern;

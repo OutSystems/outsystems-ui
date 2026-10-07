@@ -2,11 +2,6 @@
 namespace OSFramework.OSUI.Patterns.BottomSheet {
 	/**
 	 *  Class that implements the BottomSheet pattern.
-	 *
-	 * @export
-	 * @class BottomSheet
-	 * @extends {AbstractPattern<BottomSheetConfig>}
-	 * @implements {IBottomSheet}
 	 */
 	export class BottomSheet extends AbstractPattern<BottomSheetConfig> implements IBottomSheet, Interface.IDragEvent {
 		// Hold the animateOnDrag intance, that helps transition the sidebar on drag
@@ -46,8 +41,6 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 		 * Method to get Gesture Events Instance
 		 *
 		 * @readonly
-		 * @type {Event.GestureEvent.DragEvent}
-		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
 		 */
 		public get gestureEventInstance(): Event.GestureEvent.DragEvent {
 			return this._gestureEventInstance;
@@ -57,8 +50,6 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 		 * Method to get if has gesture events
 		 *
 		 * @readonly
-		 * @type {boolean}
-		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
 		 */
 		public get hasGestureEvents(): boolean {
 			return this._hasGestureEvents;
@@ -224,7 +215,6 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 		 * Method to remove the event listeners
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
 		 */
 		protected removeEventListeners(): void {
 			this._bottomSheetContentElem.removeEventListener(GlobalEnum.HTMLEvent.Scroll, this._eventOnContentScroll);
@@ -237,7 +227,6 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 		 * Method to add the Accessibility Attributes values
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
 		 */
 		protected setA11YProperties(): void {
 			if (!this.isBuilt) {
@@ -257,7 +246,6 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 		 * Method to set the listeners and platform event callbacks
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
 		 */
 		protected setCallbacks(): void {
 			this._eventOnContentScroll = this._onContentScrollCallback.bind(this);
@@ -268,7 +256,6 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 		 * Method to add event listeners
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
 		 */
 		protected setEventListeners(): void {
 			this._bottomSheetContentElem.addEventListener(GlobalEnum.HTMLEvent.Scroll, this._eventOnContentScroll);
@@ -288,7 +275,6 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 		 * Method to update info based on htmlContent
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
 		 */
 		protected setHtmlElements(): void {
 			this._parentSelf = Helper.Dom.GetElementById(this.widgetId);
@@ -300,7 +286,6 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 		 * Method to set initial options
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
 		 */
 		protected setInitialOptions(): void {
 			this._toggleHandler(this.configs.ShowHandler);
@@ -311,7 +296,6 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 		 * Method to unset callbacks
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
 		 */
 		protected unsetCallbacks(): void {
 			this._eventOnContentScroll = undefined;
@@ -323,7 +307,6 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 		 * Method to remove the local value of the variables pointing to HTML elements;
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
 		 */
 		protected unsetHtmlElements(): void {
 			this._parentSelf = undefined;
@@ -333,8 +316,6 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 
 		/**
 		 * Method to build the BottomSheet.
-		 *
-		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
 		 */
 		public build(): void {
 			super.build();
@@ -350,9 +331,8 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 		/**
 		 * Method to apply the changes of state/value of the configurations.
 		 *
-		 * @param {string} propertyName
-		 * @param {unknown} propertyValue
-		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
+		 * @param propertyName
+		 * @param propertyValue
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			super.changeProperty(propertyName, propertyValue);
@@ -372,8 +352,6 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 
 		/**
 		 * Method to close the BottomSHeet
-		 *
-		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
 		 */
 		public close(): void {
 			if (this._isOpen) {
@@ -383,8 +361,6 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 
 		/**
 		 * Method to destroy pattern.
-		 *
-		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
 		 */
 		public dispose(): void {
 			if (this._isOpen) {
@@ -404,8 +380,6 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 
 		/**
 		 * Method to open the BottomSheet
-		 *
-		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
 		 */
 		public open(): void {
 			if (this._isOpen === false) {
@@ -416,9 +390,8 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 		/**
 		 * Method to register a given callback event handler.
 		 *
-		 * @param {string} eventName
-		 * @param {GlobalCallbacks.OSGeneric} callback
-		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
+		 * @param eventName
+		 * @param callback
 		 */
 		public registerCallback(eventName: string, callback: GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
@@ -434,8 +407,6 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 
 		/**
 		 * Method to remove the gesture events to open/close the BottomSheet on Native Apps
-		 *
-		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
 		 */
 		public removeGestureEvents(): void {
 			if (this._gestureEventInstance !== undefined) {
@@ -451,7 +422,6 @@ namespace OSFramework.OSUI.Patterns.BottomSheet {
 		 * Method to set the gesture events to open/close the BottomSheet on Native Apps
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.BottomSheet.BottomSheet
 		 */
 		public setGestureEvents(
 			onGestureStart: Event.GestureEvent.Callbacks.GestureStart,

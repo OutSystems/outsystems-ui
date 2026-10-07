@@ -129,3 +129,15 @@ docs/
 
 # Local implementation plans and drafts (never committed)
 specs/
+
+# Built dashboard page (npm run evals:dashboard:page); the template lives in evals/dashboard/
+evals/results/dashboard.html
+
+# Copy of the newest full run, for the evals-results branch (npm run evals writes it)
+evals/results/latest.json
+
+# A fixed OML to iterate on before it reaches the repository (npm run evals:model:export reads it first)
+evals/model/local/
+
+# The data set split into artifact-database documents (npm run evals:dashboard writes it; a session publishes it)
+evals/results/dashboard-db/

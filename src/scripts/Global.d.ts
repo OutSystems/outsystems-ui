@@ -67,6 +67,14 @@ declare global {
 		// Dropdown using VirtualSelect
 		VirtualSelect: any;
 
+		// MonthPicker => Flatpickr monthSelect plugin (global script loaded by the host application)
+		monthSelectPlugin: new (config: {
+			shorthand?: boolean;
+			dateFormat?: string;
+			altFormat?: string;
+			theme?: string;
+		}) => unknown;
+
 		// Dropdown created from scratch
 		OSUIComponents: any;
 	}
@@ -121,7 +129,8 @@ declare global {
 	};
 
 	// Orientation type
-	type Orientation = OSFramework.GlobalEnum.Orientation.Vertical | OSFramework.GlobalEnum.Orientation.Horizontal;
+	type Orientation =
+		OSFramework.OSUI.GlobalEnum.Orientation.Vertical | OSFramework.OSUI.GlobalEnum.Orientation.Horizontal;
 
 	// Is Out Of Boundaries Type
 	type OutOfBoundaries = {

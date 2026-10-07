@@ -6,9 +6,6 @@
 namespace OutSystems.OSUI.Utils {
 	/**
 	 * Types of Provider Extensibility methods
-	 *
-	 * @export
-	 * @enum {number}
 	 */
 	export enum APIMethod {
 		SetProviderConfigs = 'SetProviderConfigs',
@@ -19,10 +16,8 @@ namespace OutSystems.OSUI.Utils {
 	/**
 	 * Method to get the correct Provider API
 	 *
-	 * @export
-	 * @param {string} widgetId
-	 * @param {APIMethod} method
-	 * @return {*}  {OSFramework.OSUI.GlobalCallbacks.Generic}
+	 * @param widgetId
+	 * @param method
 	 */
 	export function GetPickerExtensibilityAPI(
 		widgetId: string,

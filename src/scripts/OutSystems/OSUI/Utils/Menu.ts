@@ -369,9 +369,6 @@ namespace OutSystems.OSUI.Utils.Menu {
 
 	/**
 	 * Checks if the menu can be draggable
-	 *
-	 * @export
-	 * @return {*}  {string}
 	 */
 	export function IsMenuDraggable(): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -407,9 +404,6 @@ namespace OutSystems.OSUI.Utils.Menu {
 
 	/**
 	 * Closes the extended menu content
-	 *
-	 * @export
-	 * @return {*}  {string}
 	 */
 	export function MenuHide(): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -454,9 +448,6 @@ namespace OutSystems.OSUI.Utils.Menu {
 
 	/**
 	 * Opens the extended menu content
-	 *
-	 * @export
-	 * @return {*}  {string}
 	 */
 	export function MenuShow(): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -486,9 +477,6 @@ namespace OutSystems.OSUI.Utils.Menu {
 
 	/**
 	 * OnDestroy method that is called when the menu is destroyed
-	 *
-	 * @export
-	 * @return {*}  {string}
 	 */
 	export function OnDestroy(): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -505,9 +493,6 @@ namespace OutSystems.OSUI.Utils.Menu {
 
 	/**
 	 * OnReady method that is called when the menu is ready
-	 *
-	 * @export
-	 * @return {*}  {string}
 	 */
 	export function OnReady(callback: OSFramework.OSUI.GlobalCallbacks.Generic): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -526,11 +511,9 @@ namespace OutSystems.OSUI.Utils.Menu {
 	/**
 	 * Adds the selected states to menu items
 	 *
-	 * @export
-	 * @param {string} WidgetId
-	 * @param {number} ActiveItem
-	 * @param {number} ActiveSubItem
-	 * @return {*}  {string}
+	 * @param WidgetId
+	 * @param ActiveItem
+	 * @param ActiveSubItem
 	 */
 	export function SetActiveMenuItems(WidgetId: string, ActiveItem: number, ActiveSubItem: number): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -583,9 +566,7 @@ namespace OutSystems.OSUI.Utils.Menu {
 	 * Use this action on a BottomBar block to set an active state to a BottomBarItem
 	 * Used by default on the BottomBar block inside the OutSystems UI Mobile Templates
 	 *
-	 * @export
-	 * @param {*} [ActiveItem=-1]
-	 * @return {*}  {string}
+	 * @param [ActiveItem=-1]
 	 */
 	export function SetBottomBarActiveElement(ActiveItem = -1): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -605,9 +586,6 @@ namespace OutSystems.OSUI.Utils.Menu {
 
 	/**
 	 * Supports the items accessible on the menu
-	 *
-	 * @export
-	 * @return {*}  {string}
 	 */
 	export function SetMenuAttributes(): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -627,9 +605,7 @@ namespace OutSystems.OSUI.Utils.Menu {
 	/**
 	 * Changes the menu icon automatic behavior
 	 *
-	 * @export
-	 * @param {string} MenuAction
-	 * @return {*}  {string}
+	 * @param MenuAction
 	 */
 	export function SetMenuIcon(MenuAction: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -680,9 +656,6 @@ namespace OutSystems.OSUI.Utils.Menu {
 
 	/**
 	 * Makes the menu accessibility-ready
-	 *
-	 * @export
-	 * @return {*}  {string}
 	 */
 	export function SetMenuIconListeners(): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -691,9 +664,9 @@ namespace OutSystems.OSUI.Utils.Menu {
 				const menuIcon = OSFramework.OSUI.Helper.Dom.ClassSelector(document, 'menu-icon');
 
 				if (menuIcon) {
-					const menuIconOnKeypress = function (e) {
+					const menuIconOnKeypress = function (e: KeyboardEvent) {
 						//If enter or space use the menuIcon to validate
-						if (e.keyCode === 32 || e.keyCode === 13) {
+						if (e.key === ' ' || e.key === 'Enter') {
 							e.preventDefault();
 							e.stopPropagation();
 							_toggleMenu();
@@ -711,9 +684,7 @@ namespace OutSystems.OSUI.Utils.Menu {
 	/**
 	 * Makes the menu navigation accessibility-ready
 	 *
-	 * @export
-	 * @param {string} WidgetId
-	 * @return {*}  {string}
+	 * @param WidgetId
 	 */
 	export function SetMenuListeners(WidgetId: string): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({
@@ -750,9 +721,6 @@ namespace OutSystems.OSUI.Utils.Menu {
 
 	/**
 	 * Toggles the side menu visibility
-	 *
-	 * @export
-	 * @return {*}  {string}
 	 */
 	export function ToggleSideMenu(): string {
 		const result = OutSystems.OSUI.Utils.CreateApiResponse({

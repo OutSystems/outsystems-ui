@@ -1,0 +1,1169 @@
+<title>OSUI Eval Indices</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link
+	rel="stylesheet"
+	href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
+/>
+<style>
+	/* The eval dashboard: summary strip, the index trend of every suite with one small multiple per
+   eval, the evals baseline → latest, the row heatmap (OML blocks and platform styles) with per-cell hints, and the findings
+   grouped by what can be done. Each suite has a tone (t0, t1, t2); semantic colours for scores.
+   The template is evals/dashboard/index.html; npm run evals:dashboard:page embeds results/dashboard.json. */
+	:root {
+		--bg: #f6f7f8;
+		--surface: #ffffff;
+		--surface-2: #eef1f3;
+		--ink: #17232b;
+		--ink-2: #4b5a64;
+		--ink-3: #7b8891;
+		--line: #d9dfe3;
+		--tone-0: #0f5c6e;
+		--tone-0-soft: #d8e9ed;
+		--tone-1: #7b4a8c;
+		--tone-1-soft: #e9dcee;
+		--tone-2: #8a5a1c;
+		--tone-2-soft: #f1e4d2;
+		--tone-3: #3f8a5a;
+		--tone-3-soft: #ddeee3;
+		--good: #1f7a4d;
+		--good-soft: #d5eddf;
+		--warn: #a86a00;
+		--warn-soft: #f6e6c2;
+		--bad: #b13a2c;
+		--bad-soft: #f4d9d5;
+		--font-body: 'IBM Plex Sans', 'Segoe UI', system-ui, sans-serif;
+		--font-mono: 'IBM Plex Mono', Consolas, 'SFMono-Regular', monospace;
+	}
+	@media (prefers-color-scheme: dark) {
+		:root:not([data-theme='light']) {
+			color-scheme: dark;
+			--bg: #10171c;
+			--surface: #182128;
+			--surface-2: #1f2a32;
+			--ink: #e7edf0;
+			--ink-2: #a8b5bd;
+			--ink-3: #7c8b95;
+			--line: #2b3841;
+			--tone-0: #5cb7cb;
+			--tone-0-soft: #143a44;
+			--tone-1: #c393d4;
+			--tone-1-soft: #3a2544;
+			--tone-2: #d9a35c;
+			--tone-2-soft: #3d2c14;
+			--tone-3: #7ccf9a;
+			--tone-3-soft: #16361f;
+			--good: #5fc48d;
+			--good-soft: #17352a;
+			--warn: #e0a83c;
+			--warn-soft: #3a2e12;
+			--bad: #ee8477;
+			--bad-soft: #3f1f1b;
+		}
+	}
+	:root[data-theme='dark'] {
+		color-scheme: dark;
+		--bg: #10171c;
+		--surface: #182128;
+		--surface-2: #1f2a32;
+		--ink: #e7edf0;
+		--ink-2: #a8b5bd;
+		--ink-3: #7c8b95;
+		--line: #2b3841;
+		--tone-0: #5cb7cb;
+		--tone-0-soft: #143a44;
+		--tone-1: #c393d4;
+		--tone-1-soft: #3a2544;
+		--tone-2: #d9a35c;
+		--tone-2-soft: #3d2c14;
+		--tone-3: #7ccf9a;
+		--tone-3-soft: #16361f;
+		--good: #5fc48d;
+		--good-soft: #17352a;
+		--warn: #e0a83c;
+		--warn-soft: #3a2e12;
+		--bad: #ee8477;
+		--bad-soft: #3f1f1b;
+	}
+	.t0 {
+		--tone: var(--tone-0);
+		--tone-soft: var(--tone-0-soft);
+	}
+	.t1 {
+		--tone: var(--tone-1);
+		--tone-soft: var(--tone-1-soft);
+	}
+	.t2 {
+		--tone: var(--tone-2);
+		--tone-soft: var(--tone-2-soft);
+	}
+	.t3 {
+		--tone: var(--tone-3);
+		--tone-soft: var(--tone-3-soft);
+	}
+	* {
+		box-sizing: border-box;
+	}
+	body {
+		margin: 0;
+		background: var(--bg);
+		color: var(--ink);
+		font: 15px/1.5 var(--font-body);
+		padding-inline: clamp(16px, 4vw, 40px);
+		padding-block: 24px 56px;
+	}
+	h1,
+	h2,
+	h3 {
+		margin: 0;
+		text-wrap: balance;
+		font-weight: 600;
+	}
+	h1 {
+		font-size: 1.6rem;
+		letter-spacing: -0.01em;
+	}
+	h2 {
+		font-size: 1.15rem;
+	}
+	h3 {
+		font-size: 1rem;
+	}
+	p {
+		margin: 0;
+	}
+	.muted {
+		color: var(--ink-2);
+	}
+	.faint {
+		color: var(--ink-3);
+	}
+	.eyebrow {
+		font-size: 0.72rem;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		color: var(--ink-3);
+		font-weight: 500;
+	}
+	.mono {
+		font-family: var(--font-mono);
+		font-variant-numeric: tabular-nums;
+	}
+	code {
+		font-family: var(--font-mono);
+		font-size: 0.86em;
+		background: var(--surface-2);
+		padding: 0.05em 0.35em;
+		border-radius: 3px;
+	}
+	a {
+		color: var(--tone-0);
+	}
+	.page {
+		max-width: 1240px;
+		margin: 0 auto;
+		display: grid;
+		gap: 28px;
+	}
+
+	header.top {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) auto;
+		align-items: start;
+		gap: 8px 24px;
+	}
+	header.top > div:first-child {
+		min-width: 0;
+	}
+	header.top #meta {
+		max-width: 90ch;
+	}
+	.refresh {
+		display: grid;
+		gap: 4px;
+		justify-items: end;
+		padding-top: 2px;
+	}
+	@media (max-width: 640px) {
+		header.top {
+			grid-template-columns: 1fr;
+		}
+		.refresh {
+			justify-items: start;
+		}
+	}
+	.sr {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+		clip: rect(0 0 0 0);
+		white-space: nowrap;
+	}
+	button.icon {
+		font: inherit;
+		width: 32px;
+		height: 32px;
+		display: inline-grid;
+		place-items: center;
+		color: var(--tone-0);
+		background: var(--surface);
+		border: 1px solid var(--line);
+		border-radius: 6px;
+		cursor: pointer;
+		font-size: 1.05rem;
+		line-height: 1;
+	}
+	button.icon:hover {
+		border-color: var(--tone-0);
+	}
+	button.icon[disabled] {
+		cursor: progress;
+	}
+	button.icon:focus-visible {
+		outline: 2px solid var(--tone-0);
+		outline-offset: 2px;
+	}
+	.refresh .row {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		flex-wrap: wrap;
+		justify-content: flex-end;
+	}
+	.controls :focus-visible,
+	.heat th button:focus-visible,
+	.heat tr[tabindex]:focus-visible {
+		outline: 2px solid var(--tone-0);
+		outline-offset: 2px;
+	}
+	#refresh-icon {
+		display: inline-block;
+		transition: transform 200ms ease;
+	}
+	button.icon.loading #refresh-icon {
+		animation: spin 0.9s linear infinite;
+		color: var(--ink-3);
+	}
+	@keyframes spin {
+		to {
+			transform: rotate(360deg);
+		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		button.icon.loading #refresh-icon {
+			animation: none;
+			opacity: 0.5;
+		}
+	}
+	.status {
+		display: block;
+		font-size: 0.78rem;
+		color: var(--ink-3);
+		text-align: right;
+		max-width: 52ch;
+	}
+	.status.live {
+		color: var(--good);
+	}
+	.status.warn {
+		color: var(--warn);
+	}
+	.badge {
+		display: inline-block;
+		font-size: 0.72rem;
+		font-weight: 500;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+		padding: 1px 7px;
+		border-radius: 999px;
+		background: var(--surface-2);
+		color: var(--ink-2);
+		vertical-align: middle;
+	}
+	.badge.live {
+		background: var(--good-soft);
+		color: var(--good);
+	}
+
+	.strip {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+		gap: 12px;
+	}
+	.tile {
+		background: var(--surface);
+		border: 1px solid var(--line);
+		border-radius: 6px;
+		padding: 14px 16px;
+		display: grid;
+		gap: 4px;
+		align-content: start;
+	}
+	.tile .value {
+		font-size: 1.9rem;
+		font-weight: 600;
+		line-height: 1.1;
+		font-variant-numeric: tabular-nums;
+	}
+	.tile.index {
+		border-color: var(--tone);
+		background: var(--tone-soft);
+	}
+	.tile.index .value {
+		color: var(--tone);
+	}
+	.tile.category {
+		border-color: var(--tone);
+	}
+	.tile.category .value {
+		color: var(--tone);
+		font-size: 1.5rem;
+	}
+	.suite-tag {
+		display: inline-block;
+		font-size: 0.7rem;
+		font-weight: 500;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		padding: 1px 6px;
+		border-radius: 3px;
+		background: var(--tone-soft, var(--surface-2));
+		color: var(--tone, var(--ink-2));
+		vertical-align: middle;
+	}
+	svg .dot.last {
+		fill: var(--tone, var(--tone-0));
+	}
+	.multiple .end {
+		fill: var(--tone, var(--tone-0));
+	}
+	.chart-legend {
+		display: flex;
+		gap: 16px;
+		font-size: 0.8rem;
+		color: var(--ink-2);
+		flex-wrap: wrap;
+	}
+	.chart-legend i {
+		display: inline-block;
+		width: 18px;
+		height: 3px;
+		vertical-align: middle;
+		margin-right: 6px;
+		border-radius: 2px;
+		background: var(--tone, var(--tone-0));
+	}
+	.status-pill {
+		display: inline-block;
+		padding: 0 7px;
+		border-radius: 999px;
+		font-size: 0.74rem;
+		font-weight: 500;
+	}
+	.status-pill.st-offered {
+		background: var(--good-soft);
+		color: var(--good);
+	}
+	.status-pill.st-partial {
+		background: var(--warn-soft);
+		color: var(--warn);
+	}
+	.status-pill.st-missing {
+		background: var(--bad-soft);
+		color: var(--bad);
+	}
+	.status-pill.st-delegated {
+		background: var(--surface-2);
+		color: var(--ink-2);
+	}
+	.req-groups {
+		list-style: none;
+		margin: 6px 0 0;
+		padding: 0;
+		display: grid;
+		gap: 0;
+		font-size: 0.86rem;
+	}
+	.req-groups li {
+		display: flex;
+		gap: 12px;
+		align-items: baseline;
+		justify-content: space-between;
+		border-top: 1px solid var(--line);
+		padding: 5px 0;
+		min-width: 0;
+	}
+	.req-groups li:first-child {
+		border-top: 0;
+	}
+	.block-table {
+		border-collapse: collapse;
+		margin: 6px 0 0;
+		font-size: 0.82rem;
+		width: 100%;
+	}
+	.block-table th,
+	.block-table td {
+		text-align: left;
+		vertical-align: top;
+		padding: 4px 8px 4px 0;
+		border-top: 1px solid var(--line);
+	}
+	.block-table th {
+		color: var(--ink-2);
+		font-weight: 600;
+		border-top: 0;
+	}
+	.block-table td:nth-child(2) {
+		white-space: nowrap;
+	}
+	.block-table td {
+		white-space: normal;
+	}
+	.block-lead {
+		font-size: 0.86rem;
+		color: var(--ink-2);
+		margin: 6px 0 0;
+	}
+	.heat td.kind small {
+		display: block;
+		color: var(--ink-3);
+		font-size: 0.72rem;
+	}
+	.req-groups li > span:first-child {
+		color: var(--ink);
+		min-width: 0;
+	}
+	.req-groups li small {
+		color: var(--ink-3);
+	}
+	.req-groups .status-pill {
+		flex: none;
+	}
+	.tile .sub {
+		font-size: 0.86rem;
+		color: var(--ink-2);
+	}
+
+	.footnote {
+		font-size: 0.82rem;
+		color: var(--ink-3);
+		max-width: 110ch;
+		margin-top: -14px;
+	}
+	.footnote b {
+		color: var(--ink-2);
+		font-weight: 600;
+	}
+
+	section {
+		display: grid;
+		gap: 12px;
+	}
+	section > .head {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 6px 16px;
+	}
+	section > .head p {
+		max-width: 80ch;
+	}
+	.panel {
+		background: var(--surface);
+		border: 1px solid var(--line);
+		border-radius: 6px;
+		padding: 16px;
+	}
+
+	.chart-wrap {
+		overflow-x: auto;
+		position: relative;
+	}
+	svg.trend {
+		width: 100%;
+		height: auto;
+		display: block;
+	}
+	svg text {
+		font-family: var(--font-body);
+		fill: var(--ink-2);
+		font-size: 12px;
+	}
+	svg .grid {
+		stroke: var(--line);
+		stroke-width: 1;
+	}
+	svg .area {
+		fill: var(--tone, var(--tone-0));
+		opacity: 0.12;
+	}
+	svg .line {
+		fill: none;
+		stroke: var(--tone, var(--tone-0));
+		stroke-width: 2;
+		stroke-linejoin: round;
+	}
+	svg .dot {
+		fill: var(--surface);
+		stroke: var(--tone, var(--tone-0));
+		stroke-width: 2;
+	}
+	svg .label {
+		fill: var(--ink);
+		font-weight: 500;
+		font-variant-numeric: tabular-nums;
+	}
+	svg .hit {
+		fill: transparent;
+	}
+	svg .cross {
+		stroke: var(--ink-3);
+		stroke-dasharray: 3 3;
+	}
+	.tip {
+		position: absolute;
+		pointer-events: none;
+		background: var(--ink);
+		color: var(--bg);
+		font-size: 0.8rem;
+		padding: 6px 9px;
+		border-radius: 4px;
+		white-space: nowrap;
+		transform: translate(-50%, calc(-100% - 10px));
+	}
+	.tip[hidden] {
+		display: none;
+	}
+	.multiples {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+		gap: 10px;
+	}
+	.multiple {
+		background: var(--surface);
+		border: 1px solid var(--line);
+		border-radius: 6px;
+		padding: 10px 12px;
+		display: grid;
+		gap: 4px;
+	}
+	.multiple .t {
+		display: flex;
+		justify-content: space-between;
+		gap: 8px;
+		align-items: baseline;
+		font-size: 0.86rem;
+	}
+	.multiple .t b {
+		font-weight: 500;
+	}
+	.multiple .t .mono {
+		color: var(--ink-3);
+	}
+	.multiple svg {
+		width: 100%;
+		height: 56px;
+		display: block;
+	}
+	.multiple .spark {
+		fill: none;
+		stroke: var(--tone, var(--tone-0));
+		stroke-width: 1.8;
+	}
+	.multiple .spark.flat {
+		stroke: var(--ink-3);
+	}
+	.multiple .sparea {
+		fill: var(--tone, var(--tone-0));
+		opacity: 0.1;
+	}
+	.multiple .end.flat {
+		fill: var(--ink-3);
+	}
+	.multiple .range {
+		display: flex;
+		justify-content: space-between;
+		font-size: 0.8rem;
+		color: var(--ink-2);
+		font-variant-numeric: tabular-nums;
+	}
+
+	.table-wrap {
+		overflow-x: auto;
+	}
+	table {
+		width: 100%;
+		border-collapse: collapse;
+		font-size: 0.9rem;
+	}
+	th,
+	td {
+		text-align: left;
+		padding: 8px 10px;
+		border-bottom: 1px solid var(--line);
+		vertical-align: top;
+	}
+	th {
+		font-size: 0.72rem;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+		color: var(--ink-3);
+		font-weight: 500;
+		white-space: nowrap;
+	}
+	td.num,
+	th.num {
+		text-align: right;
+		font-variant-numeric: tabular-nums;
+	}
+	tbody tr:last-child td {
+		border-bottom: 0;
+	}
+	.bar {
+		position: relative;
+		height: 8px;
+		background: var(--surface-2);
+		border-radius: 2px;
+		min-width: 120px;
+		overflow: hidden;
+	}
+	.bar > i {
+		position: absolute;
+		inset: 0 auto 0 0;
+		background: var(--tone, var(--tone-0));
+		border-radius: 2px;
+	}
+	.bar > b {
+		position: absolute;
+		top: -2px;
+		bottom: -2px;
+		width: 2px;
+		background: var(--ink-3);
+	}
+	.pill {
+		display: inline-block;
+		padding: 1px 8px;
+		border-radius: 999px;
+		font-size: 0.78rem;
+		font-weight: 500;
+		white-space: nowrap;
+	}
+	.pill.good {
+		background: var(--good-soft);
+		color: var(--good);
+	}
+	.pill.warn {
+		background: var(--warn-soft);
+		color: var(--warn);
+	}
+	.pill.bad {
+		background: var(--bad-soft);
+		color: var(--bad);
+	}
+	.pill.neutral {
+		background: var(--surface-2);
+		color: var(--ink-2);
+	}
+	.delta.up {
+		color: var(--good);
+	}
+	.delta.down {
+		color: var(--bad);
+	}
+	.delta.flat {
+		color: var(--ink-3);
+	}
+	.eval-name {
+		font-weight: 500;
+	}
+	.eval-crit {
+		font-size: 0.8rem;
+		color: var(--ink-3);
+	}
+	.notes {
+		font-size: 0.84rem;
+		color: var(--ink-2);
+		max-width: 46ch;
+	}
+
+	.controls {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px 14px;
+		align-items: center;
+		font-size: 0.86rem;
+	}
+	.controls label {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+	}
+	.controls input[type='search'],
+	.controls select {
+		font: inherit;
+		color: var(--ink);
+		background: var(--surface);
+		border: 1px solid var(--line);
+		border-radius: 4px;
+		padding: 5px 8px;
+	}
+	.legend {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px 16px;
+		font-size: 0.82rem;
+		color: var(--ink-2);
+		align-items: center;
+	}
+	.legend i {
+		display: inline-block;
+		width: 14px;
+		height: 10px;
+		border-radius: 2px;
+		vertical-align: middle;
+		margin-right: 4px;
+		border: 1px solid var(--line);
+	}
+	.heat {
+		font-size: 0.84rem;
+	}
+	.heat th button {
+		all: unset;
+		cursor: pointer;
+		font: inherit;
+		color: inherit;
+		text-transform: inherit;
+		letter-spacing: inherit;
+	}
+	.heat th.t0 button,
+	.heat th.t1 button,
+	.heat th.t2 button,
+	.heat th.t3 button {
+		color: var(--tone);
+	}
+	.heat th button[aria-sort='descending']::after {
+		content: ' ↓';
+	}
+	.heat th button[aria-sort='ascending']::after {
+		content: ' ↑';
+	}
+	.heat td {
+		padding: 4px 6px;
+	}
+	.heat tr.row {
+		cursor: pointer;
+	}
+	.heat tr.row:hover td.name {
+		text-decoration: underline;
+		text-decoration-color: var(--ink-3);
+	}
+	.heat td.cell {
+		text-align: right;
+		font-variant-numeric: tabular-nums;
+		font-family: var(--font-mono);
+		font-size: 0.8rem;
+		width: 62px;
+	}
+	.heat td.cell.na {
+		background: var(--surface-2);
+		color: var(--ink-3);
+		text-align: center;
+		font-size: 0.72rem;
+	}
+	.heat td.cell,
+	.heat th.num {
+		border-left: 1px solid color-mix(in srgb, var(--line) 45%, transparent);
+	}
+	.heat td.cell.unmeasured {
+		color: var(--ink-3);
+		text-align: center;
+		background: repeating-linear-gradient(135deg, var(--surface-2) 0 4px, transparent 4px 8px);
+	}
+	.heat td.name {
+		white-space: nowrap;
+		font-weight: 500;
+	}
+	.heat td.name::before {
+		content: '▸ ';
+		color: var(--ink-3);
+		font-size: 0.75em;
+	}
+	.heat tr.row[aria-expanded='true'] td.name::before {
+		content: '▾ ';
+	}
+	.heat td.kind {
+		color: var(--ink-3);
+		font-size: 0.78rem;
+	}
+	.heat tr.detail td {
+		background: var(--surface-2);
+		padding: 10px 14px 12px 28px;
+		border-bottom: 1px solid var(--line);
+	}
+	.heat tr.detail ul {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		display: grid;
+		gap: 6px;
+	}
+	.heat tr.detail li {
+		display: grid;
+		grid-template-columns: 4.2rem 3.4rem 1fr;
+		gap: 8px;
+		align-items: baseline;
+		font-size: 0.86rem;
+	}
+	.heat tr.detail li .id {
+		font-family: var(--font-mono);
+		color: var(--ink-3);
+	}
+	.heat tr.detail li .s {
+		font-family: var(--font-mono);
+		text-align: right;
+	}
+	@media (max-width: 640px) {
+		.heat tr.detail li {
+			grid-template-columns: 4.2rem 1fr;
+		}
+		.heat tr.detail li .s {
+			display: none;
+		}
+	}
+
+	.groups {
+		display: grid;
+		gap: 12px;
+	}
+	.group {
+		background: var(--surface);
+		border: 1px solid var(--line);
+		border-left: 3px solid var(--line);
+		border-radius: 6px;
+		padding: 14px 16px;
+		display: grid;
+		gap: 10px;
+	}
+	.group.bad {
+		border-left-color: var(--bad);
+	}
+	.group.roadmap {
+		border-left-color: var(--tone-1);
+	}
+	.group.warn {
+		border-left-color: var(--warn);
+	}
+	.group.good {
+		border-left-color: var(--good);
+	}
+	.group.accent {
+		border-left-color: var(--tone-0);
+	}
+	.group.neutral {
+		border-left-color: var(--ink-3);
+	}
+	.group > summary {
+		list-style: none;
+		cursor: pointer;
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 4px;
+	}
+	.group > summary::-webkit-details-marker {
+		display: none;
+	}
+	.group > summary h3::before {
+		content: '▸';
+		display: inline-block;
+		width: 1.1em;
+		color: var(--ink-3);
+		font-size: 0.85em;
+	}
+	.group[open] > summary h3::before {
+		content: '▾';
+	}
+	.group > summary:focus-visible {
+		outline: 2px solid var(--tone-0);
+		outline-offset: 2px;
+		border-radius: 4px;
+	}
+	.group .count {
+		font-family: var(--font-mono);
+		font-size: 0.78rem;
+		font-weight: 500;
+		color: var(--ink-3);
+		margin-left: 6px;
+	}
+	.group[open] > ol {
+		margin-top: 4px;
+	}
+	.group .top {
+		display: grid;
+		gap: 4px;
+	}
+	.group .top p {
+		font-size: 0.88rem;
+	}
+	.group > ol {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		display: grid;
+		gap: 8px;
+	}
+	.group > ol > li {
+		display: grid;
+		grid-template-columns: max-content 1fr;
+		gap: 10px;
+		align-items: start;
+		font-size: 0.9rem;
+		padding-top: 8px;
+		border-top: 1px solid var(--line);
+	}
+	.group > ol > li:first-child {
+		border-top: 0;
+		padding-top: 0;
+	}
+	.chips {
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+		min-width: 3.6rem;
+	}
+	.chip {
+		font-family: var(--font-mono);
+		font-size: 0.74rem;
+		padding: 1px 6px;
+		border-radius: 4px;
+		background: var(--surface-2);
+		color: var(--ink-2);
+		text-align: center;
+	}
+	.chip.good {
+		background: var(--good-soft);
+		color: var(--good);
+	}
+	.chip.warn {
+		background: var(--warn-soft);
+		color: var(--warn);
+	}
+	.chip.bad {
+		background: var(--bad-soft);
+		color: var(--bad);
+	}
+	.item .what {
+		font-weight: 500;
+	}
+	.item .missing {
+		color: var(--ink-2);
+		font-size: 0.86rem;
+		margin-top: 2px;
+	}
+	.item .do {
+		font-size: 0.86rem;
+		margin-top: 2px;
+	}
+	.item .detail {
+		font-size: 0.86rem;
+		color: var(--ink-2);
+		margin-top: 2px;
+		max-width: 110ch;
+	}
+	.item .do::before {
+		content: 'Do: ';
+		font-weight: 600;
+		color: var(--ink-2);
+	}
+	.item .missing::before {
+		content: 'Missing: ';
+		font-weight: 600;
+	}
+	.item details {
+		margin-top: 4px;
+	}
+	.item summary {
+		cursor: pointer;
+		color: var(--tone-0);
+		font-size: 0.84rem;
+	}
+	.item details ul {
+		columns: 2;
+		column-gap: 24px;
+		margin: 6px 0 0;
+		padding-left: 18px;
+		font-size: 0.82rem;
+		color: var(--ink-2);
+	}
+	@media (max-width: 640px) {
+		.group li {
+			grid-template-columns: 1fr;
+		}
+		.chips {
+			flex-direction: row;
+			flex-wrap: wrap;
+		}
+		.item details ul {
+			columns: 1;
+		}
+		.refresh {
+			justify-items: start;
+		}
+		.status {
+			text-align: left;
+		}
+	}
+	@media (prefers-reduced-motion: no-preference) {
+		.bar > i {
+			transition: width 300ms ease;
+		}
+	}
+	footer {
+		font-size: 0.82rem;
+		color: var(--ink-3);
+		border-top: 1px solid var(--line);
+		padding-top: 14px;
+		display: grid;
+		gap: 4px;
+	}
+</style>
+
+<div class="page">
+	<header class="top">
+		<div>
+			<p class="eyebrow">OutSystems UI · agents/osui-validate-evals</p>
+			<h1>OSUI Eval Indices</h1>
+			<p class="muted" id="meta"></p>
+		</div>
+		<div class="refresh">
+			<div class="row">
+				<span class="badge" id="source-badge">embedded snapshot</span>
+				<button
+					class="icon"
+					id="refresh"
+					type="button"
+					aria-label="Refresh from the newest published data set"
+					title="Refresh"
+				>
+					<span id="refresh-icon" aria-hidden="true">↻</span><span id="refresh-text" class="sr">Refresh</span>
+				</button>
+			</div>
+			<output class="status" id="status" aria-live="polite"
+				>Loads the newest data set published after an eval run.</output
+			>
+		</div>
+	</header>
+
+	<div class="strip" id="strip"></div>
+
+	<p class="footnote">
+		<b>Movable</b> evals depend on things that change without altering runtime behaviour or a public contract
+		(documentation, generated docs and types, annotations, additive token routing, ARIA, key handlers, state styles)
+		and are worked in the refine loop. <b>Structural</b> evals depend on the DOM contract, the cascade or the
+		composition model; moving them is a breaking change, documented with its behavioural impact (B-4 to B-8) and
+		waiting on an owner decision, so they are expected to stay flat here. <b>Roadmap</b> evals move with new
+		components or features, which are neither refactors nor breaking changes.
+	</p>
+
+	<section>
+		<div class="head">
+			<h2>Index over time</h2>
+		</div>
+		<div class="panel chart-wrap" id="trend"></div>
+		<div class="multiples" id="multiples"></div>
+	</section>
+
+	<section>
+		<div class="head">
+			<h2>The evals, baseline → latest</h2>
+			<p class="muted">
+				Bar = latest score, tick = the suite's baseline. Hover the class column for what moves the eval.
+			</p>
+		</div>
+		<div class="panel table-wrap">
+			<table id="evals">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Eval · research criterion</th>
+						<th>Score</th>
+						<th class="num">Before</th>
+						<th class="num">After</th>
+						<th class="num">Δ</th>
+						<th>Class</th>
+						<th>Latest measurement</th>
+					</tr>
+				</thead>
+				<tbody></tbody>
+			</table>
+		</div>
+	</section>
+
+	<section>
+		<div class="head">
+			<h2>Per-row scores, latest run</h2>
+			<p class="muted" id="heat-caption"></p>
+		</div>
+		<div class="panel" style="display: grid; gap: 12px">
+			<div class="controls">
+				<label
+					>Filter <input type="search" id="heat-filter" placeholder="block or style name" autocomplete="off"
+				/></label>
+				<label
+					>Category
+					<select id="heat-kind">
+						<option value="all">all</option>
+						<option value="component" selected>components (OML blocks)</option>
+						<option value="platform">platform &amp; layout styles</option>
+					</select>
+				</label>
+				<label><input type="checkbox" id="heat-weak" /> only rows with a score below 60</label>
+			</div>
+			<div class="legend" id="heat-legend"></div>
+			<div class="table-wrap">
+				<table class="heat" id="heat">
+					<thead>
+						<tr>
+							<th scope="col">Row</th>
+							<th scope="col">Category</th>
+							<th scope="col" class="num">Mean</th>
+						</tr>
+					</thead>
+					<tbody></tbody>
+				</table>
+			</div>
+			<p class="faint" id="heat-count"></p>
+		</div>
+	</section>
+
+	<section>
+		<div class="head">
+			<h2>Findings</h2>
+		</div>
+		<div class="groups" id="findings"></div>
+	</section>
+
+	<footer>
+		<span
+			>Source of truth: <code>evals/results/history.json</code> and <code>results/&lt;label&gt;.json</code>; this
+			page reads <code>results/dashboard.json</code>, which every full <code>npm run evals</code> regenerates. The
+			Markdown twin is <code>results/HISTORY.md</code>. Formulas and bands:
+			<code>docs-internal/ai-friendliness/2026-09-29-eval-suite-design.md</code>; suites and evals:
+			<code>evals/suites.mjs</code>; the rows (OML blocks and their runtime, platform styles):
+			<code>evals/lib/universe.mjs</code> over <code>evals/components.json</code> and
+			<code>evals/model/osui.blocks.json</code>.</span
+		>
+		<span
+			>Pull request
+			<a href="https://github.com/OutSystems/outsystems-ui/pull/1277">OutSystems/outsystems-ui#1277</a> (draft, do
+			not merge). The gate check posts the same before → after tables on every push.</span
+		>
+	</footer>
+</div>
+
+<div class="tip" id="tip" hidden></div>
+
+<script>
+	/*__DASHBOARD_SCRIPT__*/
+</script>

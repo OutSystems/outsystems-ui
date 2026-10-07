@@ -20,7 +20,7 @@ namespace Providers.OSUI.RangeSlider.NoUISlider {
 		// throttle before invoking the platform
 		protected throttleTimeValue = 200;
 		// throttle timer id
-		protected throttleTimer = undefined;
+		protected throttleTimer: number = undefined;
 
 		constructor(uniqueId: string, configs: C) {
 			super(uniqueId, configs);
@@ -71,7 +71,6 @@ namespace Providers.OSUI.RangeSlider.NoUISlider {
 		 * Method that will create the provider
 		 *
 		 * @private
-		 * @memberof Providers.OSUI.RangeSlider.NoUISlider.AbstractNoUiSlider
 		 */
 		protected createProviderInstance(): void {
 			// Init provider
@@ -105,7 +104,6 @@ namespace Providers.OSUI.RangeSlider.NoUISlider {
 		 * Method to set the html elements used
 		 *
 		 * @protected
-		 * @memberof Providers.OSUI.RangeSlider.NoUISlider.AbstractNoUiSlider
 		 */
 		protected setHtmlElements(): void {
 			// Element that will be used to init the provider
@@ -119,7 +117,6 @@ namespace Providers.OSUI.RangeSlider.NoUISlider {
 		 * Method to set the initial CSS Classes
 		 *
 		 * @protected
-		 * @memberof Providers.OSUI.RangeSlider.NoUISlider.AbstractNoUiSlider
 		 */
 		protected setInitialCSSClasses(): void {
 			// If Orientation is vertical add class
@@ -155,7 +152,6 @@ namespace Providers.OSUI.RangeSlider.NoUISlider {
 		 * Method to set initial visual states from the configs
 		 *
 		 * @private
-		 * @memberof Providers.OSUI.RangeSlider.NoUISlider.AbstractNoUiSlider
 		 */
 		protected setInitialStates(): void {
 			this._setSize();
@@ -167,7 +163,6 @@ namespace Providers.OSUI.RangeSlider.NoUISlider {
 		 * Unsets the callbacks.
 		 *
 		 * @protected
-		 * @memberof Providers.OSUI.RangeSlider.NoUISlider.AbstractNoUiSlider
 		 */
 		protected unsetCallbacks(): void {
 			this.eventProviderValueChanged = undefined;
@@ -178,7 +173,6 @@ namespace Providers.OSUI.RangeSlider.NoUISlider {
 		 * Unsets the HTML elements.
 		 *
 		 * @protected
-		 * @memberof Providers.OSUI.RangeSlider.NoUISlider.AbstractNoUiSlider
 		 */
 		protected unsetHtmlElements(): void {
 			this._rangeSliderProviderElem = undefined;
@@ -186,8 +180,6 @@ namespace Providers.OSUI.RangeSlider.NoUISlider {
 
 		/**
 		 * Builds the Pattern
-		 *
-		 * @memberof Providers.OSUI.RangeSlider.NoUISlider.AbstractNoUiSlider
 		 */
 		public build(): void {
 			super.build();
@@ -197,9 +189,8 @@ namespace Providers.OSUI.RangeSlider.NoUISlider {
 		/**
 		 * Method to change the value of configs/current state.
 		 *
-		 * @param {string} propertyName
-		 * @param {unknown} propertyValue
-		 * @memberof Providers.OSUI.RangeSlider.NoUISlider.AbstractNoUiSlider
+		 * @param propertyName
+		 * @param propertyValue
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			// Check which property changed and call respective method to update it
@@ -242,8 +233,6 @@ namespace Providers.OSUI.RangeSlider.NoUISlider {
 
 		/**
 		 * Method to set the RangeSlider instance to disabled
-		 *
-		 * @memberof Providers.OSUI.RangeSlider.NoUISlider.AbstractNoUiSlider
 		 */
 		public disable(): void {
 			this._setIsDisabled(true);
@@ -251,8 +240,6 @@ namespace Providers.OSUI.RangeSlider.NoUISlider {
 
 		/**
 		 * Method to remove and destroy RangeSlider instance
-		 *
-		 * @memberof Providers.OSUI.RangeSlider.NoUISlider.AbstractNoUiSlider
 		 */
 		public dispose(): void {
 			if (this.isBuilt) {
@@ -267,8 +254,6 @@ namespace Providers.OSUI.RangeSlider.NoUISlider {
 
 		/**
 		 * Method to set the RangeSlider instance to enabled
-		 *
-		 * @memberof Providers.OSUI.RangeSlider.NoUISlider.AbstractNoUiSlider
 		 */
 		public enable(): void {
 			this._setIsDisabled(false);
@@ -276,9 +261,6 @@ namespace Providers.OSUI.RangeSlider.NoUISlider {
 
 		/**
 		 * Method to get current RangeSlider value
-		 *
-		 * @return {*}  {(number | number[])}
-		 * @memberof Providers.OSUI.RangeSlider.NoUISlider.AbstractNoUiSlider
 		 */
 		public getValue(): number | number[] {
 			return this.provider.get();
@@ -287,9 +269,8 @@ namespace Providers.OSUI.RangeSlider.NoUISlider {
 		/**
 		 * Sets the callbacks to be used to invoke the platform code.
 		 *
-		 * @param {string} eventName
-		 * @param {OSFramework.OSUI.GlobalCallbacks.OSGeneric} callback
-		 * @memberof Providers.OSUI.RangeSlider.NoUISlider.AbstractNoUiSlider
+		 * @param eventName
+		 * @param callback
 		 */
 		public registerCallback(eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
@@ -307,8 +288,7 @@ namespace Providers.OSUI.RangeSlider.NoUISlider {
 		/**
 		 * Method used to set all the extended NoUiSlider properties across the different types of instances
 		 *
-		 * @param {NoUiSliderOptions} newConfigs
-		 * @memberof Providers.OSUI.RangeSlider.NoUISlider.AbstractNoUiSlider
+		 * @param newConfigs
 		 */
 		public setProviderConfigs(newConfigs: NoUiSliderOptions): void {
 			this.configs.setExtensibilityConfigs(newConfigs);
@@ -319,8 +299,6 @@ namespace Providers.OSUI.RangeSlider.NoUISlider {
 
 		/**
 		 * Method to change the Range Slider trigger to on DragEnd
-		 *
-		 * @memberof Providers.OSUI.RangeSlider.NoUISlider.AbstractNoUiSlider
 		 */
 		public setRangeIntervalChangeOnDragEnd(): void {
 			// Remove slide default event

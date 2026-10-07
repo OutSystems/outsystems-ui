@@ -3,10 +3,7 @@ namespace OSFramework.OSUI.Utils.FloatingPosition {
 	/**
 	 * Abstract FloatingPosition Class to handle the Utils related to positioning elements
 	 *
-	 * @export
 	 * @abstract
-	 * @class FloatingPosition
-	 * @implements {IFloatingPosition}
 	 */
 	export abstract class FloatingPosition implements IFloatingPosition {
 		// Store the update callback
@@ -18,8 +15,7 @@ namespace OSFramework.OSUI.Utils.FloatingPosition {
 
 		/**
 		 * Creates an instance of FloatingPosition.
-		 * @param {FloatingPositionConfig} options
-		 * @memberof FloatingPosition
+		 * @param options
 		 */
 		constructor(options: FloatingPositionConfig) {
 			this.floatingConfigs = options;
@@ -36,8 +32,6 @@ namespace OSFramework.OSUI.Utils.FloatingPosition {
 
 		/**
 		 * Method to build the Util
-		 *
-		 * @memberof FloatingPosition
 		 */
 		public build(): void {
 			this.setFloatingPosition();
@@ -46,8 +40,6 @@ namespace OSFramework.OSUI.Utils.FloatingPosition {
 
 		/**
 		 * Method to destroy the util
-		 *
-		 * @memberof FloatingPosition
 		 */
 		public dispose(): void {
 			this.isBuilt = false;
@@ -56,8 +48,7 @@ namespace OSFramework.OSUI.Utils.FloatingPosition {
 		/**
 		 * Method to update the Util
 		 *
-		 * @param {FloatingPositionConfig} options
-		 * @memberof FloatingPosition
+		 * @param options
 		 */
 		public update(options: FloatingPositionConfig): void {
 			this.floatingConfigs = options;
@@ -68,7 +59,6 @@ namespace OSFramework.OSUI.Utils.FloatingPosition {
 		 * Mandatory impplementation of method to set floating position
 		 *
 		 * @abstract
-		 * @memberof FloatingPosition
 		 */
 		public abstract setFloatingPosition(): void;
 
@@ -76,7 +66,6 @@ namespace OSFramework.OSUI.Utils.FloatingPosition {
 		 * Mandatory impplementation of method to unset floating position
 		 *
 		 * @abstract
-		 * @memberof FloatingPosition
 		 */
 		public abstract unsetFloatingPosition(): void;
 	}

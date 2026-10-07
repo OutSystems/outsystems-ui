@@ -7,9 +7,8 @@ namespace OSFramework.OSUI.Patterns.Search {
 		/**
 		 * Creates an instance of Search.
 		 *
-		 * @param {string} uniqueId
-		 * @param {JSON} configs
-		 * @memberof Search
+		 * @param uniqueId
+		 * @param configs
 		 */
 		constructor(uniqueId: string, configs: JSON) {
 			super(uniqueId, new SearchConfig(configs));
@@ -19,17 +18,16 @@ namespace OSFramework.OSUI.Patterns.Search {
 		 * Sets the A11Y properties when the pattern is built.
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Search.Search
 		 */
 		protected setA11YProperties(): void {
-			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
+			// The pattern wraps the search input, so it is the search landmark of the screen.
+			Helper.A11Y.RoleSearch(this.selfElement);
 		}
 
 		/**
 		 * Set the callbacks that will be assigned to the pattern.
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Search.Search
 		 */
 		protected setCallbacks(): void {
 			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -39,7 +37,6 @@ namespace OSFramework.OSUI.Patterns.Search {
 		 * Set the html references that will be used to manage the cssClasses and atribute properties.
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Search.Search
 		 */
 		protected setHtmlElements(): void {
 			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -49,7 +46,6 @@ namespace OSFramework.OSUI.Patterns.Search {
 		 * Unset the callbacks that will be assigned to the pattern.
 		 *
 		 * @protected
-		 * @memberof Search
 		 */
 		protected unsetCallbacks(): void {
 			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -59,7 +55,6 @@ namespace OSFramework.OSUI.Patterns.Search {
 		 * Reassign the HTML elements to undefined, preventing memory leaks.
 		 *
 		 * @protected
-		 * @memberof OSFramework.Patterns.Search.Search
 		 */
 		protected unsetHtmlElements(): void {
 			console.log(GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -67,8 +62,6 @@ namespace OSFramework.OSUI.Patterns.Search {
 
 		/**
 		 * Method to build the Search
-		 *
-		 * @memberof OSFramework.Patterns.Search.Search
 		 */
 		public build(): void {
 			super.build();
@@ -78,8 +71,6 @@ namespace OSFramework.OSUI.Patterns.Search {
 
 		/**
 		 * Destroy the Search
-		 *
-		 * @memberof OSFramework.Patterns.Search.Search
 		 */
 		public dispose(): void {
 			if (this.isBuilt) {

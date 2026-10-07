@@ -2,8 +2,6 @@
 namespace OSFramework.OSUI.Helper {
 	/**
 	 * Keywords to identify the browsers.
-	 *
-	 * @enum {number}
 	 */
 	enum UAKeyword {
 		chrome = 'chrome',
@@ -39,8 +37,6 @@ namespace OSFramework.OSUI.Helper {
 
 	/**
 	 * Keywords to identify operating systems.
-	 *
-	 * @enum {number}
 	 */
 	enum OperatingSystemKeyword {
 		Android = 'android',
@@ -185,10 +181,7 @@ namespace OSFramework.OSUI.Helper {
 		 * Checks if it's running inside IE browser.
 		 *
 		 * @private
-		 * @static
-		 * @param {string} ua
-		 * @return {*}  {boolean}
-		 * @memberof OSFramework.Helper.DeviceInfo
+		 * @param ua
 		 */
 		// eslint-disable-next-line @typescript-eslint/naming-convention
 		private static _isIE(ua: string): boolean {
@@ -259,9 +252,6 @@ namespace OSFramework.OSUI.Helper {
 		 * Getter that returns if the application is running in a device with accessibility enabled.
 		 *
 		 * @readonly
-		 * @static
-		 * @type {boolean}
-		 * @memberof DeviceInfo
 		 */
 		public static get HasAccessibilityEnabled(): boolean {
 			return Helper.Dom.ClassSelector(document.body, Constants.HasAccessibilityClass) !== undefined;
@@ -271,9 +261,6 @@ namespace OSFramework.OSUI.Helper {
 		 * Getter that returns if the device has pointer
 		 *
 		 * @readonly
-		 * @static
-		 * @type {boolean}
-		 * @memberof DeviceInfo
 		 */
 		public static get HasCursorPointer(): boolean {
 			return window.matchMedia('(hover: hover) and (pointer: fine)').matches;
@@ -283,9 +270,6 @@ namespace OSFramework.OSUI.Helper {
 		 * Getter that returns if the application is running in a desktop device.
 		 *
 		 * @readonly
-		 * @static
-		 * @type {boolean}
-		 * @memberof OSFramework.Helper.DeviceInfo
 		 */
 		public static get IsDesktop(): boolean {
 			return DeviceInfo.GetDeviceType() === GlobalEnum.DeviceType.desktop;
@@ -295,9 +279,6 @@ namespace OSFramework.OSUI.Helper {
 		 * Getter that returns if the application is running in a phone device.
 		 *
 		 * @readonly
-		 * @static
-		 * @type {boolean}
-		 * @memberof OSFramework.Helper.DeviceInfo
 		 */
 		public static get IsPhone(): boolean {
 			return DeviceInfo.GetDeviceType() === GlobalEnum.DeviceType.phone;
@@ -307,9 +288,6 @@ namespace OSFramework.OSUI.Helper {
 		 * Getter that retuns if the application is running in a iPhone with a notch (iphoneX/iphone12/iphone13).
 		 *
 		 * @readonly
-		 * @static
-		 * @type {boolean}
-		 * @memberof OSFramework.Helper.DeviceInfo
 		 */
 		public static get IsIphoneWithNotch(): boolean {
 			if (DeviceInfo._isIphoneWithNotch === undefined) {
@@ -337,9 +315,6 @@ namespace OSFramework.OSUI.Helper {
 		 * Getter that returns if the device is set with an RTL language type
 		 *
 		 * @readonly
-		 * @static
-		 * @type {boolean}
-		 * @memberof DeviceInfo
 		 */
 		public static get IsRtlLang(): boolean {
 			return DeviceInfo._isRtlLanguage();
@@ -349,9 +324,6 @@ namespace OSFramework.OSUI.Helper {
 		 * Getter that returns if the application is running in a tablet device.
 		 *
 		 * @readonly
-		 * @static
-		 * @type {boolean}
-		 * @memberof OSFramework.Helper.DeviceInfo
 		 */
 		public static get IsTablet(): boolean {
 			return DeviceInfo.GetDeviceType() === GlobalEnum.DeviceType.tablet;
@@ -361,9 +333,6 @@ namespace OSFramework.OSUI.Helper {
 		 * Getter that returns if the application is running as a PWA.
 		 *
 		 * @readonly
-		 * @static
-		 * @type {boolean}
-		 * @memberof OSFramework.Helper.DeviceInfo
 		 */
 		public static get IsPwa(): boolean {
 			if (DeviceInfo._isPwa === undefined) {
@@ -378,9 +347,6 @@ namespace OSFramework.OSUI.Helper {
 		 * Getter that returns if the application is running inside a native shell.
 		 *
 		 * @readonly
-		 * @static
-		 * @type {boolean}
-		 * @memberof OSFramework.Helper.DeviceInfo
 		 */
 		public static get IsNative(): boolean {
 			if (DeviceInfo._isNativeApp === undefined) {
@@ -393,9 +359,6 @@ namespace OSFramework.OSUI.Helper {
 		 * Getter that returns if the application is running inside a native shell and the device is Android.
 		 *
 		 * @readonly
-		 * @static
-		 * @type {boolean}
-		 * @memberof DeviceInfo
 		 */
 		public static get IsAndroid(): boolean {
 			if (DeviceInfo._isAndroid === undefined) {
@@ -408,9 +371,6 @@ namespace OSFramework.OSUI.Helper {
 		 * Getter that returns if the application is running inside a native shell and the device is iOS.
 		 *
 		 * @readonly
-		 * @static
-		 * @type {boolean}
-		 * @memberof DeviceInfo
 		 */
 		public static get IsIos(): boolean {
 			if (DeviceInfo._isIos === undefined) {
@@ -423,9 +383,6 @@ namespace OSFramework.OSUI.Helper {
 		 * Getter that returns if the device is touched enabled or not.
 		 *
 		 * @readonly
-		 * @static
-		 * @type {boolean}
-		 * @memberof OSFramework.Helper.DeviceInfo
 		 */
 		public static get IsTouch(): boolean {
 			if (DeviceInfo._isTouch === undefined) {
@@ -450,9 +407,6 @@ namespace OSFramework.OSUI.Helper {
 		 * Method to return if is running on a mobile device
 		 *
 		 * @readonly
-		 * @static
-		 * @type {boolean}
-		 * @memberof DeviceInfo
 		 */
 		public static get IsMobileDevice(): boolean {
 			const isMobileDevice =
@@ -465,9 +419,7 @@ namespace OSFramework.OSUI.Helper {
 		 * Gets the Notch Position.
 		 *
 		 * @private
-		 * @static
 		 * @returns GlobalEnum.Position
-		 * @memberof OSFramework.Helper.DeviceInfo
 		 */
 		public static get NotchPosition(): GlobalEnum.Position {
 			// store the notch position value
@@ -506,10 +458,7 @@ namespace OSFramework.OSUI.Helper {
 		/**
 		 * Gets in which browser the framework is running, based in the UserAgent information.
 		 *
-		 * @static
-		 * @param {string} [userAgent=''] Optional parameter. If none is passed, the framework will get it.
-		 * @return {*}  {GlobalEnum.Browser}
-		 * @memberof OSFramework.Helper.DeviceInfo
+		 * @param [userAgent=''] Optional parameter. If none is passed, the framework will get it.
 		 */
 		public static GetBrowser(userAgent = ''): GlobalEnum.Browser {
 			let browser = GlobalEnum.Browser.unknown;
@@ -547,9 +496,7 @@ namespace OSFramework.OSUI.Helper {
 		/**
 		 * Gets the orientation of the device, based on the class added by OutSystems platform in the body.
 		 *
-		 * @static
-		 * @return {*}  {GlobalEnum.DeviceOrientation} Detected orientation of the device.
-		 * @memberof OSFramework.Helper.DeviceInfo
+		 * @returns Detected orientation of the device.
 		 */
 		public static GetDeviceOrientation(): GlobalEnum.DeviceOrientation {
 			let orientation = GlobalEnum.DeviceOrientation.unknown;
@@ -564,9 +511,7 @@ namespace OSFramework.OSUI.Helper {
 		/**
 		 * Gets the device in which the framework is running, based on the class added by the OutSystems platform in the body.
 		 *
-		 * @static
-		 * @return {*}  {GlobalEnum.DeviceType} Detected device type.
-		 * @memberof OSFramework.Helper.DeviceInfo
+		 * @returns Detected device type.
 		 */
 		public static GetDeviceType(): GlobalEnum.DeviceType {
 			let device = GlobalEnum.DeviceType.desktop;
@@ -582,10 +527,8 @@ namespace OSFramework.OSUI.Helper {
 		/**
 		 * Obtains the Operating system in which the framework is running
 		 *
-		 * @static
-		 * @param {string} [userAgent=''] Optional parameter. If none, the framework will obtain the UserAgent, calculate it once, and use the cache value afterwards.
-		 * @return {*}  {GlobalEnum.MobileOS} Detected operating system.
-		 * @memberof OSFramework.Helper.DeviceInfo
+		 * @param [userAgent=''] Optional parameter. If none, the framework will obtain the UserAgent, calculate it once, and use the cache value afterwards.
+		 * @returns Detected operating system.
 		 */
 		public static GetOperatingSystem(userAgent = ''): GlobalEnum.MobileOS {
 			let localOs;
@@ -605,9 +548,6 @@ namespace OSFramework.OSUI.Helper {
 
 		/**
 		 * Refresh the operating system information
-		 *
-		 * @static
-		 * @memberof DeviceInfo
 		 */
 		public static RefreshOperatingSystem(): void {
 			DeviceInfo._operatingSystem = DeviceInfo.GetOperatingSystem(DeviceInfo._getUserAgent());

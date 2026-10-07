@@ -165,7 +165,6 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 		 * Method that will be triggered at Flatpickr instance is ready
 		 *
 		 * @protected
-		 * @memberof Providers.OSUI.MonthPicker.Flatpickr.OSUIFlatpickrMonth
 		 */
 		protected createProviderInstance(): void {
 			/* In order to avoid dateFormat convert issues done by provider when InitialMonth was not defined and input has a default month lets clean that value before creating provider instance. This happen when DateFormat is different from YYYY-MM-DD */
@@ -222,7 +221,6 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 		 * Method that will be triggered each time MonthPicker will be closed
 		 *
 		 * @protected
-		 * @memberof Providers.OSUI.MonthPicker.Flatpickr.OSUIFlatpickrMonth
 		 */
 		protected onClose(): void {
 			// Check if bodyOnClickEvent exist
@@ -236,8 +234,7 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 		 * Method that will be triggered by library each month and year is selected
 		 *
 		 * @protected
-		 * @param {string[]} selectedMonthYear
-		 * @memberof Providers.OSUI.MonthPicker.Flatpickr.OSUIFlatpickrMonth
+		 * @param selectedMonthYear
 		 */
 		protected onMonthSelectedEvent(selectedMonthYear: Array<Date>): void {
 			// Default values to null values, so that a null date comes from the picker, we pass it correctly as null to the platform
@@ -281,7 +278,6 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 		 * Method that will be triggered each time MonthPicker will open
 		 *
 		 * @protected
-		 * @memberof Providers.OSUI.MonthPicker.Flatpickr.OSUIFlatpickrMonth
 		 */
 		protected onOpen(): void {
 			// Check if bodyOnClickEvent exist
@@ -295,7 +291,6 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 		 * Method that will set the provider configurations in order to properly create its instance
 		 *
 		 * @protected
-		 * @memberof Providers.OSUI.MonthPicker.Flatpickr.OSUIFlatpickrMonth
 		 */
 		protected prepareConfigs(): void {
 			// Get the library configurations
@@ -308,7 +303,6 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 		 * This method has no implementation on this pattern context!
 		 *
 		 * @protected
-		 * @memberof Providers.OSUI.MonthPicker.Flatpickr.OSUIFlatpickrMonth
 		 */
 		protected setA11YProperties(): void {
 			// This is needed once library set it as an hidden by default which can not be since otherwise the updating it's value will not be triggered the local variable update.
@@ -393,7 +387,6 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 		 * This method has no implementation on this pattern context!
 		 *
 		 * @protected
-		 * @memberof Providers.OSUI.MonthPicker.Flatpickr.OSUIFlatpickrMonth
 		 */
 		protected setCallbacks(): void {
 			console.log(OSFramework.OSUI.GlobalEnum.WarningMessages.MethodNotImplemented);
@@ -403,7 +396,6 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 		 * Method to set the html elements used
 		 *
 		 * @protected
-		 * @memberof Providers.OSUI.MonthPicker.Flatpickr.OSUIFlatpickrMonth
 		 */
 		protected setHtmlElements(): void {
 			// Set the inputHTML element
@@ -430,7 +422,6 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 		 * Remove all the assigned Events
 		 *
 		 * @protected
-		 * @memberof Providers.OSUI.MonthPicker.Flatpickr.OSUIFlatpickrMonth
 		 */
 		protected unsetCallbacks(): void {
 			this.configs.OnChangeEventCallback = undefined;
@@ -445,7 +436,6 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 		 * Unsets the references to the HTML elements.
 		 *
 		 * @protected
-		 * @memberof Providers.OSUI.MonthPicker.Flatpickr.OSUIFlatpickrMonth
 		 */
 		protected unsetHtmlElements(): void {
 			this.monthPickerPlatformInputElem = undefined;
@@ -455,7 +445,6 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 		 * Used to set needed properties to the platform input.
 		 *
 		 * @protected
-		 * @memberof Providers.OSUI.MonthPicker.Flatpickr.OSUIFlatpickrMonth
 		 */
 		protected updatePlatformInputAttrs(): void {
 			// Set the type attribute value
@@ -469,8 +458,6 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 
 		/**
 		 * Builds the Pattern
-		 *
-		 * @memberof Providers.OSUI.MonthPicker.Flatpickr.OSUIFlatpickrMonth
 		 */
 		public build(): void {
 			super.build();
@@ -483,9 +470,8 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 		/**
 		 * Method used to change given propertyName at OnParametersChange platform event
 		 *
-		 * @param {string} propertyName the name of the property that will be changed
-		 * @param {unknown} propertyValue the new value that should be assigned to the given property name
-		 * @memberof Providers.OSUI.MonthPicker.Flatpickr.OSUIFlatpickrMonth
+		 * @param propertyName the name of the property that will be changed
+		 * @param propertyValue the new value that should be assigned to the given property name
 		 */
 		public changeProperty(propertyName: string, propertyValue: unknown): void {
 			//Storing the current ExtendedClass, before possibly changing this property.
@@ -516,8 +502,6 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 
 		/**
 		 * Method used to clear the selected date
-		 *
-		 * @memberof Providers.OSUI.MonthPicker.Flatpickr.OSUIFlatpickrMonth
 		 */
 		public clear(): void {
 			const isInputDisable = this.monthPickerPlatformInputElem.disabled;
@@ -528,8 +512,6 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 
 		/**
 		 * Method used to close MonthPicker
-		 *
-		 * @memberof Providers.OSUI.MonthPicker.Flatpickr.OSUIFlatpickrMonth
 		 */
 		public close(): void {
 			if (this.provider.isOpen) {
@@ -539,8 +521,6 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 
 		/**
 		 * Method to remove and destroy MonthPicker instance
-		 *
-		 * @memberof Providers.OSUI.MonthPicker.Flatpickr.OSUIFlatpickrMonth
 		 */
 		public dispose(): void {
 			if (this.isBuilt) {
@@ -561,8 +541,6 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 
 		/**
 		 * Method used to update certain properties at OnRender
-		 *
-		 * @memberof Providers.OSUI.MonthPicker.Flatpickr.OSUIFlatpickrMonth
 		 */
 		public onRender(): void {
 			// Get the current status of the platform input
@@ -577,8 +555,6 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 
 		/**
 		 * Method used to open MonthPicker
-		 *
-		 * @memberof Providers.OSUI.MonthPicker.Flatpickr.OSUIFlatpickrMonth
 		 */
 		public open(): void {
 			const isInputDisable = this.monthPickerPlatformInputElem.disabled;
@@ -589,8 +565,6 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 
 		/**
 		 * Method used to regist callback events
-		 *
-		 * @memberof Providers.OSUI.MonthPicker.Flatpickr.OSUIFlatpickrMonth
 		 */
 		public registerCallback(eventName: string, callback: OSFramework.OSUI.GlobalCallbacks.OSGeneric): void {
 			switch (eventName) {
@@ -606,8 +580,6 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 
 		/**
 		 * Method used to set the MonthPicker as editable on its input
-		 *
-		 * @memberof Providers.OSUI.MonthPicker.Flatpickr.OSUIFlatpickrMonth
 		 */
 		public setEditableInput(isEditable: boolean): void {
 			if (this.configs.AllowInput !== isEditable) {
@@ -618,8 +590,6 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 
 		/**
 		 * Method used to set the MonthPicker language
-		 *
-		 * @memberof Providers.OSUI.MonthPicker.Flatpickr.OSUIFlatpickrMonth
 		 */
 		public setLanguage(value: string): void {
 			// Set the new Language
@@ -634,8 +604,7 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 		/**
 		 * Method used to set all the extended Flatpickr properties across the different types of instances
 		 *
-		 * @param {FlatpickrOptions} newConfigs
-		 * @memberof Providers.OSUI.MonthPicker.Flatpickr.OSUIFlatpickrMonth
+		 * @param newConfigs
 		 */
 		public setProviderConfigs(newConfigs: FlatpickrOptions): void {
 			this.configs.setExtensibilityConfigs(newConfigs);
@@ -647,8 +616,7 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 		/**
 		 * Method used to update the InitialMonth config value
 		 *
-		 * @param {string} value The new InitialMonth value that will be set
-		 * @memberof Providers.OSUI.MonthPicker.Flatpickr.OSUIFlatpickrMonth
+		 * @param monthYear The new InitialMonth value that will be set
 		 */
 		public updateInitialMonth(monthYear: MonthYear): void {
 			if (this.monthPickerPlatformInputElem.disabled === false) {
@@ -664,7 +632,6 @@ namespace Providers.OSUI.MonthPicker.Flatpickr {
 		 * Method used to update the prompt message
 		 *
 		 * @param promptMessage The new prompt message value
-		 * @memberof Providers.OSUI.MonthPicker.Flatpickr.OSUIFlatpickrMonth
 		 */
 		public updatePrompt(promptMessage: string): void {
 			this.flatpickrInputElem.placeholder = promptMessage;

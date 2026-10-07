@@ -3,11 +3,7 @@ namespace OSFramework.OSUI.Event.DOMEvents {
 	/**
 	 * Abstract class that will be responsible for the basic behaviours of an event, namely storing the handlers and their manipulation.
 	 *
-	 * @export
 	 * @abstract
-	 * @class AbstractEvent
-	 * @implements {IEvent<T>}
-	 * @template T
 	 */
 	export abstract class AbstractEvent<T> implements IEvent<T> {
 		// Array with all handlers for each event
@@ -18,8 +14,6 @@ namespace OSFramework.OSUI.Event.DOMEvents {
 		 *
 		 * @readonly
 		 * @public
-		 * @type {GlobalCallbacks.OSGeneric[]}
-		 * @memberof AbstractEvent
 		 */
 		public get handlers(): GlobalCallbacks.OSGeneric[] {
 			return this._handlers;
@@ -28,8 +22,7 @@ namespace OSFramework.OSUI.Event.DOMEvents {
 		/**
 		 * Method to add a new handler
 		 *
-		 * @param {GlobalCallbacks.OSGeneric} handler
-		 * @memberof AbstractEvent
+		 * @param handler
 		 */
 		public addHandler(handler: GlobalCallbacks.OSGeneric): void {
 			this._handlers.push(handler);
@@ -38,9 +31,7 @@ namespace OSFramework.OSUI.Event.DOMEvents {
 		/**
 		 * Method to check if the Array has a given handler
 		 *
-		 * @param {GlobalCallbacks.OSGeneric} handler
-		 * @return {*}  {boolean}
-		 * @memberof AbstractEvent
+		 * @param handler
 		 */
 		public hasHandler(handler: GlobalCallbacks.OSGeneric): boolean {
 			return this._handlers.includes(handler);
@@ -48,9 +39,6 @@ namespace OSFramework.OSUI.Event.DOMEvents {
 
 		/**
 		 * Method to check if the Array has handlers
-		 *
-		 * @return {*}  {boolean}
-		 * @memberof AbstractEvent
 		 */
 		public hasHandlers(): boolean {
 			return this._handlers.length > 0;
@@ -59,8 +47,7 @@ namespace OSFramework.OSUI.Event.DOMEvents {
 		/**
 		 * Method to remove a given handler
 		 *
-		 * @param {GlobalCallbacks.OSGeneric} handler
-		 * @memberof AbstractEvent
+		 * @param handler
 		 */
 		public removeHandler(handler: GlobalCallbacks.OSGeneric): void {
 			const index = this._handlers.findIndex((hd) => {
@@ -80,9 +67,8 @@ namespace OSFramework.OSUI.Event.DOMEvents {
 		/**
 		 * Method to trigger ahh handlers on the Array
 		 *
-		 * @param {T} [data]
-		 * @param {...unknown[]} args
-		 * @memberof AbstractEvent
+		 * @param [data]
+		 * @param args
 		 */
 		public trigger(data?: T, ...args: unknown[]): void {
 			this._handlers.slice(0).forEach((h) => Helper.AsyncInvocation(h, data, ...args));
@@ -92,7 +78,6 @@ namespace OSFramework.OSUI.Event.DOMEvents {
 		 * Mandatory method implemenation to add events. this will be different, if it's a listener or an observer
 		 *
 		 * @abstract
-		 * @memberof AbstractEvent
 		 */
 		public abstract addEvent(): void;
 
@@ -100,7 +85,6 @@ namespace OSFramework.OSUI.Event.DOMEvents {
 		 * Mandatory method implemenation to remove events. this will be different, if it's a listener or an observer
 		 *
 		 * @abstract
-		 * @memberof AbstractEvent
 		 */
 		public abstract removeEvent(): void;
 	}

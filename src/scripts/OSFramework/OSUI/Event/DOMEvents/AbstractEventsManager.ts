@@ -3,11 +3,7 @@ namespace OSFramework.OSUI.Event.DOMEvents {
 	/**
 	 * This class is a Manager of events (listeners, observers, etc.)
 	 *
-	 * @export
 	 * @abstract
-	 * @class AbstractEventsManager
-	 * @template ET EventType
-	 * @template D Event object
 	 */
 	export abstract class AbstractEventsManager<ET, D> {
 		// Store all events
@@ -22,7 +18,6 @@ namespace OSFramework.OSUI.Event.DOMEvents {
 		 *
 		 * @param eventType
 		 * @param handler
-		 * @memberof OSFramework.Event.AbstractEventsManager
 		 */
 		public addHandler(eventType: ET, handler: GlobalCallbacks.Generic): void {
 			if (this._events && this._events.has(eventType)) {
@@ -42,7 +37,6 @@ namespace OSFramework.OSUI.Event.DOMEvents {
 		 * @param eventType
 		 * @param handler
 		 * @returns boolean
-		 * @memberof OSFramework.Event.AbstractEventsManager
 		 */
 		public hasHandler(eventType: ET, handler: GlobalCallbacks.Generic): boolean {
 			let returnValue = false;
@@ -58,7 +52,6 @@ namespace OSFramework.OSUI.Event.DOMEvents {
 		 *
 		 * @param eventType
 		 * @returns boolean
-		 * @memberof OSFramework.Event.AbstractEventsManager
 		 */
 		public hasHandlers(eventType: ET): boolean {
 			let returnValue = false;
@@ -74,7 +67,6 @@ namespace OSFramework.OSUI.Event.DOMEvents {
 		 *
 		 * @param eventType
 		 * @param handler
-		 * @memberof OSFramework.Event.AbstractEventsManager
 		 */
 		public removeHandler(eventType: ET, handler: GlobalCallbacks.Generic): void {
 			if (this._events.has(eventType)) {
@@ -94,7 +86,6 @@ namespace OSFramework.OSUI.Event.DOMEvents {
 		 * @param eventType
 		 * @param data
 		 * @param args
-		 * @memberof OSFramework.Event.AbstractEventsManager
 		 */
 		public trigger(eventType: ET, data?: D, ...args: unknown[]): void {
 			if (this._events.has(eventType)) {
@@ -106,8 +97,6 @@ namespace OSFramework.OSUI.Event.DOMEvents {
 		 * Getter that allows to obtain the list of events
 		 *
 		 * @readonly
-		 * @type {Map<ET, IEvent<D>>}
-		 * @memberof OSFramework.Event.AbstractEventsManager
 		 */
 		public get events(): Map<ET, IEvent<D>> {
 			return this._events;
@@ -119,9 +108,8 @@ namespace OSFramework.OSUI.Event.DOMEvents {
 		 *
 		 * @protected
 		 * @abstract
-		 * @param {ET} eventType Type of the event that will we need an instance of.
-		 * @returns {*}  {IEvent<D>} Instance of the event.
-		 * @memberof OSFramework.Event.AbstractEventsManager
+		 * @param eventType Type of the event that will we need an instance of.
+		 * @returns Instance of the event.
 		 */
 		protected abstract getInstanceOfEventType(eventType: ET): IEvent<D>;
 	}

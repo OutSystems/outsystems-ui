@@ -7,9 +7,8 @@ namespace OSFramework.OSUI.Patterns.Dropdown {
 		/**
 		 * Creates an instance of AbstractDropdown.
 		 *
-		 * @param {string} uniqueId
-		 * @param {C} configs
-		 * @memberof AbstractDropdown
+		 * @param uniqueId
+		 * @param configs
 		 */
 		constructor(uniqueId: string, configs: C) {
 			super(uniqueId, configs);
