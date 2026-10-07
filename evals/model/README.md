@@ -16,7 +16,8 @@ reported as not applicable.
 
 Refresh it with `npm run evals:model:export` (`evals/tools/export-snapshot.mjs`), which runs the exporter
 (`osui-blocks-export`, a .NET console tool kept outside this repository: `OSUI_BLOCKS_EXPORT` or
-`../osui-blocks-export`; it needs .NET 10, the OutSystems Azure NuGet feed and GitHub CLI):
+`../osui-blocks-export`; it needs .NET 10 (`DOTNET_ROOT`, else the first `dotnet` on `PATH`), the OutSystems Azure
+NuGet feed and GitHub CLI):
 
     npm run evals:model:export                      # GitHub at the commit the snapshot pins
     npm run evals:model:export -- --commit <40-hex>  # GitHub at another commit

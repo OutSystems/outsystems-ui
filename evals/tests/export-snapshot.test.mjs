@@ -84,3 +84,20 @@ test('exporterDir finds the exporter beside the repository or beside the worktre
 	);
 	fs.rmSync(base, { recursive: true, force: true });
 });
+
+test('dotnetPath is the dotnet executable under DOTNET_ROOT, else the one found on PATH, else an error', async () => {
+	const { dotnetPath } = await import('../tools/export-snapshot.mjs');
+	const base = fs.mkdtempSync(path.join(os.tmpdir(), 'osui-dotnet-'));
+	const exe = process.platform === 'win32' ? 'dotnet.exe' : 'dotnet';
+	const onPath = path.join(base, 'bin');
+	const root = path.join(base, 'root');
+	fs.mkdirSync(onPath);
+	fs.mkdirSync(root);
+	assert.throws(() => dotnetPath({ PATH: onPath }), /dotnet not found/);
+	fs.writeFileSync(path.join(onPath, exe), '');
+	assert.equal(dotnetPath({ PATH: [path.join(base, 'empty'), onPath].join(path.delimiter) }), path.join(onPath, exe));
+	assert.throws(() => dotnetPath({ DOTNET_ROOT: root, PATH: onPath }), /DOTNET_ROOT/);
+	fs.writeFileSync(path.join(root, exe), '');
+	assert.equal(dotnetPath({ DOTNET_ROOT: root, PATH: onPath }), path.join(root, exe));
+	fs.rmSync(base, { recursive: true, force: true });
+});

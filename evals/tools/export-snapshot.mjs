@@ -11,6 +11,7 @@
  *
  * The exporter is the .NET tool osui-blocks-export, kept outside this repository: its project directory is
  * read from OSUI_BLOCKS_EXPORT, else ../osui-blocks-export next to the repository or next to its worktrees folder.
+ * It runs with the dotnet executable under DOTNET_ROOT, else the first one found on PATH, by its full path.
  */
 import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
@@ -82,6 +83,24 @@ export function exporterDir(root, env = process.env) {
 	return found;
 }
 
+/**
+ * The full path of the dotnet executable: under DOTNET_ROOT when set, else the first one on PATH. Resolved
+ * once here so the exporter is never run by a bare name looked up at call time.
+ * @param {Record<string, string|undefined>} [env]
+ */
+export function dotnetPath(env = process.env) {
+	const exe = process.platform === 'win32' ? 'dotnet.exe' : 'dotnet';
+	if (env.DOTNET_ROOT) {
+		const file = path.join(env.DOTNET_ROOT, exe);
+		if (!fs.existsSync(file)) throw new Error(`DOTNET_ROOT is set but ${file} does not exist`);
+		return file;
+	}
+	const dirs = (env.PATH ?? env.Path ?? '').split(path.delimiter).filter(Boolean);
+	const found = dirs.map((dir) => path.join(dir, exe)).find((file) => fs.existsSync(file));
+	if (!found) throw new Error('dotnet not found on PATH: install the .NET SDK or set DOTNET_ROOT to its folder');
+	return found;
+}
+
 /** @param {string[]} argv */
 function parseArgs(argv) {
 	/** @type {{ commit?: string, platform: string }} */
@@ -102,12 +121,13 @@ function main() {
 	const local = localOml(insideDir(root, LOCAL_DIR));
 	const plan = exportPlan({ local, source, platform: args.platform, out: snapshotFile, commit: args.commit });
 	const exporter = exporterDir(root);
+	const dotnet = dotnetPath();
 	process.stdout.write(
 		plan.from === 'local'
 			? `exporting the local OML ${path.relative(root, /** @type {string} */ (local))} (iteration: do not commit this snapshot)\n`
 			: `exporting ${plan.args[1]}\n`
 	);
-	execFileSync('dotnet', ['run', '--project', exporter, '--', ...plan.args], { stdio: 'inherit' });
+	execFileSync(dotnet, ['run', '--project', exporter, '--', ...plan.args], { stdio: 'inherit' });
 	const written = JSON.parse(fs.readFileSync(snapshotFile, 'utf8'));
 	process.stdout.write(
 		`wrote ${path.relative(root, snapshotFile)}: ${Object.keys(written.blocks).length} blocks, sha256 ${written.source.origin.sha256}\n`
