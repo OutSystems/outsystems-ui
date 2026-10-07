@@ -195,12 +195,6 @@ body.iconLibrary-phosphor {
 	}
 }
 
-.form {
-	.dropdown-container[class*='ThemeGrid_Width']:has(select):after {
-		top: calc(50% - var(--token-scale-600, 24px) / 2);
-	}
-}
-
 // Table Widget - Sortable Icon
 .sortable-icon {
 	align-items: center;
