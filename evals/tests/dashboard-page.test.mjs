@@ -96,9 +96,12 @@ test('the page module renders a data set with a single suite and a single run', 
 test('the findings render the per-block tables a suite contributes through extra', async () => {
 	const { renderSection } = await import('../tools/dashboard-page.mjs');
 	const html = await renderSection(evalsDir, 'findings');
-	// on the committed data set every block eval is complete: the tables leave the Findings and the Done lead names them
-	assert.ok(html.includes('M01, M03, M04: every block at 100.'), 'the Done lead names the complete block evals');
-	assert.ok(!html.includes('Model bridge: per-block tables'), 'no per-block group when every table is complete');
+	// on the committed data set M04 is complete (named in the Done lead); M01 and M03 still have rows to show
+	assert.ok(html.includes('M04: every block at 100.'), 'the Done lead names the complete block evals');
+	assert.ok(!html.includes('M04 · card cost per block'), 'a complete table leaves the Findings');
+	assert.ok(html.includes('M01 · manifest completeness per block'), 'an incomplete table stays');
+	assert.ok(html.includes('M03 · parameter precision per block'), 'an incomplete table stays');
+	assert.ok(html.includes('<table class="block-table">'), 'rendered as a table');
 });
 
 test('the heatmap category filter offers the two categories with components selected', () => {
