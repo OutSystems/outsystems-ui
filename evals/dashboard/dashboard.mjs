@@ -76,26 +76,28 @@ function unmeasuredGroup(evals, lookup) {
  * when it contributes none. The same figures sit in the heatmap as block cells; the table adds what is missing
  * and what to do per block, lowest first.
  */
+/** The per-block tables a suite's extra carries, keyed by the eval id they belong to. */
+function blockTables(s) {
+	return Object.entries(s.extra || {})
+		.filter(([, v]) => v && Array.isArray(v.columns) && Array.isArray(v.rows) && typeof v.title === 'string')
+		.map(([key, v]) => ({ id: s.evals.map((e) => e.id).find((x) => key.endsWith(x)), table: v }));
+}
+/** A table where every block scores 100 has nothing left to show. */
+const tableComplete = (v) => v.rows.length > 0 && v.rows.every((r) => String(r[1]) === '100');
+
 function tablesGroup(s, lookup) {
-	const tables = Object.entries(s.extra || {}).filter(
-		([, v]) => v && Array.isArray(v.columns) && Array.isArray(v.rows) && typeof v.title === 'string'
-	);
+	// complete tables leave this group: the Done group names them
+	const tables = blockTables(s).filter(({ table }) => !tableComplete(table));
 	if (!tables.length) return null;
-	const items = tables.map(([key, v]) => {
-		const id = s.evals.map((e) => e.id).find((x) => key.endsWith(x));
+	const items = tables.map(({ id, table: v }) => {
 		const head = v.columns.map((c) => `<th>${esc(c)}</th>`).join('');
 		const cellsOf = (r) => r.map((c) => `<td>${esc(String(c))}</td>`).join('');
 		const body = v.rows.map((r) => `<tr>${cellsOf(r)}</tr>`).join('');
 		const lead = typeof v.lead === 'string' && v.lead ? `<p class="block-lead">${esc(v.lead)}</p>` : '';
-		// every row complete: one line says so instead of a table of 'nothing'
-		const complete = v.rows.length > 0 && v.rows.every((r) => String(r[1]) === '100');
-		if (complete) {
-			const all = `<p class="block-lead">Every block at 100: nothing missing, nothing to do.</p>`;
-			return item(lookup, id ? [id] : [], esc(v.title), '', '', lead + all);
-		}
 		const table = `<table class="block-table"><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table>`;
 		return item(lookup, id ? [id] : [], esc(v.title), '', '', lead + table);
 	});
+	if (!items.length) return null;
 	return {
 		cls: `tables-${s.id}`,
 		title: `${s.name}: per-block tables`,
@@ -303,6 +305,24 @@ export function mount(document, window, localStorage, EMBEDDED) {
 			what: 'The measurement loop itself: suites, registry, gate, doctor, reports (S-7, S-8, S-13 to S-16)',
 			detail: 'evals/: a suite registry (suites.mjs) the runner, gate, history report and this data set iterate; self-describing metrics (each carries the meaning of its cells, its advice and its gate rules); a component registry (components.json) every classification is read from, with a doctor that flags unclassified or renamed components and derives defaults from code; results per run with per-component rows, unmeasured and not-applicable pairs, history.json, HISTORY.md and this data set. CI: the gate fails when an index drops more than 1 point, when one eval drops more than 3, when a no-decrease eval (R01 coverage) goes down or when an eval leaves more components unmeasured than the baseline; docs-ai/ freshness is checked; a sticky PR comment carries the before → after tables and the registry section.',
 			do: 'npm run evals -- --label <name> after a change, then npm run evals:gate and npm run docs:ai:check; a new component gets its entry through npm run evals:doctor -- --fix.',
+		},
+		{
+			evals: ['M01', 'M02', 'M04', 'M05', 'M06'],
+			what: 'The OML block snapshot, the block cards and the pattern ↔ block crosswalk (ADR-0015)',
+			detail: 'evals/model/osui.blocks.json is exported from the OutSystems UI module OML at a pinned commit (osui-blocks-export, outside the repository): 118 public blocks with parameters, placeholders, events, static entities and structures. From it the generator writes docs-ai/osui.blocks.json, llms-blocks.txt (one card per composable block, within 250 tokens, with an OpenUI and a TSX recipe), osui.enums.json and osui.icons.json, and llms.txt gains a Producers section with runtime-only markers. evals/components.json links every composable block to the pattern or stylesheet it drives (the doctor proposes links by API call and by name). The model suite M01–M06 scores the manifest, the crosswalk, the cards, the producer guidance and the silent surfaces (utility classes, knobs, icons, enum values).',
+			do: 'npm run evals:model:export after the module OML changes (a fixed OML in evals/model/local/ is exported instead, for iteration), then npm run docs:ai and npm run evals -- --label <name>.',
+		},
+		{
+			evals: ['M01', 'M03', 'M04'],
+			what: 'The composable OML block as the row, two categories instead of the four kinds (ADR-0016)',
+			detail: 'Every heatmap row is a composable block (public, not deprecated, not Licenses) or a platform style; a block inherits the cells of the pattern or stylesheet it drives and carries its own M01, M03 and M04 cells. The rows fall in two categories, components (OML blocks) and platform & layout styles, each with an index per suite computed back to the first recorded run. The per-block tables say what is missing and what to do; a complete table leaves the Findings and is named here.',
+			do: 'A new block needs a block link in evals/components.json (npm run evals:doctor -- --fix proposes it); npm run evals:history:categories recomputes the category series when the universe changes.',
+		},
+		{
+			evals: ['M01', 'M03'],
+			what: 'Platform defaults and the Text-on-purpose parameters (ADR-0017)',
+			detail: 'An optional block parameter without an OML default takes the platform default of its data type (False, 0, 0.0, "", #1900-01-01#, NullIdentifier(), an empty structure or list); the manifest and the cards carry it with its source. ExtendedClass, the DOM identifiers (MenuId, WidgetId, …), free texts (Title, Name, …), measures with a unit (Size, Height, Width), format masks, SVG content and URLs are Text on purpose and never a typing gap; Binary Data is precise. M03 weighs descriptions 60 and precise types 40.',
+			do: 'A parameter that is Text by design goes into TEXT_ON_PURPOSE (evals/model/lib/snapshot.mjs) with its reason; the OML request list then holds only descriptions and genuinely untyped parameters.',
 		},
 	];
 	const BACKLOG = {
@@ -768,6 +788,12 @@ export function mount(document, window, localStorage, EMBEDDED) {
 	function doneGroup(evals, lookup) {
 		const done = evals.filter((e) => clsOf(e) === 'movable' && e.score >= 99.95);
 		const doneLead = done.length ? `${done.map((e) => e.id).join(', ')} at 100. ` : '';
+		const blocksDone = D.suites.flatMap((s) =>
+			blockTables(s)
+				.filter(({ id, table }) => id && tableComplete(table))
+				.map(({ id }) => id)
+		);
+		const blocksLead = blocksDone.length ? `${blocksDone.join(', ')}: every block at 100. ` : '';
 		const items = APPLIED.map((a) => {
 			const chips = a.evals.map((id) => chip(id, lookup)).join('');
 			return `<li class="item"><div class="chips">${chips}</div><div><div class="what">${esc(a.what)}</div><div class="detail">${esc(a.detail)}</div><div class="do">${esc(a.do)}</div></div></li>`;
@@ -775,7 +801,7 @@ export function mount(document, window, localStorage, EMBEDDED) {
 		return {
 			cls: 'good',
 			title: 'Done on the branch, behaviour-preserving',
-			lead: `${doneLead}What was built, what it changed and how to keep it there; S-numbers refer to REPORT.md §5.1.`,
+			lead: `${doneLead}${blocksLead}What was built, what it changed and how to keep it there; S-numbers refer to REPORT.md §5.1, ADR numbers to docs-internal/adr.`,
 			items,
 		};
 	}
