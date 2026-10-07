@@ -28,7 +28,8 @@ Before diving in, search the customer's CSS for these patterns to identify which
 | `padding-left`, `margin-right` etc. on OSUI classes | May silently lose cascade race against logical properties | E (Section 1) |
 | `.shadow-m`, `.margin-base`, `.font-size-h1` (utility classes) | Still shipped but no longer driven by old variables | G (Section 9) |
 | Dark block overrides 3+ `--color-neutral-*` steps (ramp flip) | Role variables (`--color-text`, `--color-background-header`, …) no longer cascade from neutrals — text, buttons, and surfaces go invisible | H (Section 2, neutral ramp flip) |
-| Component spacing visibly broken (collapsed, overlapping, shifted) | Framework component internal spacing changed to token-based values — fix only if layout breaks | I (Section 11) |
+| Custom dark class (`.dark-mode`) without `.os-dark-theme` | ~447 `--token-*` overrides don't fire — feedback messages, inputs, surfaces stay light | Section 6, Step 2d |
+| Blank-slate icons turned grey | `--osui-blank-slate-icon-color` changed from primary-adjacent to `--color-text-disabled` | Section 10 recipe |
 
 ---
 
@@ -111,17 +112,26 @@ Additionally, overriding `--color-primary` alone is no longer sufficient for but
 
 **Detection pattern:** overrides of `--color-primary` without companion `--color-primary-hover` / `--color-primary-active`.
 
-**Button contrast in an inverted dark palette.** Primary button text is `--osui-btn-primary-color: var(--color-text-light)`. `--color-text-light` resolves to white and `.os-dark-theme` does not remap it. If the customer's dark block turns `--color-primary` light — including when primary is `var(--color-neutral-10)` and that step flips to white — the label disappears on the white button. In that dark block set:
+**Button contrast in an inverted dark palette.** Primary button text is `--osui-btn-primary-color: var(--color-text-light)`. `--color-text-light` resolves to white and `.os-dark-theme` does not remap it. If the customer's dark block turns `--color-primary` light — including when primary is `var(--color-neutral-10)` and that step flips to white — the label disappears on the white button.
+
+**Critical: set `--osui-btn-primary-color` on `.btn-primary`, NOT on `:root`.** The framework's `.btn` selector declares `--osui-btn-primary-color: var(--color-text-light)` directly on the element. A `:root`-level override is inherited but loses to the element-level declaration. The fix must target `.btn-primary` (or `.btn`) directly:
 
 ```css
---osui-btn-primary-color: var(--color-neutral-0);
+/* WRONG — inherited value loses to .btn's own declaration */
+:root.dark-mode {
+    --osui-btn-primary-color: var(--color-neutral-0);
+}
+
+/* RIGHT — sets the variable on the element itself */
+.dark-mode .btn-primary,
+.os-dark-theme .btn-primary {
+    --osui-btn-primary-color: var(--color-neutral-0);
+}
 ```
 
 Use `--color-text-dark` instead when their inverted `--color-neutral-0` is not the dark text.
 
-`.btn.background-white` keeps a white fill while `--color-text-subtle` flips light, and the framework excludes `.background-white` from the inverse-text rule. Under the dark selector set `--osui-btn-color: var(--color-text-dark)` on `.btn.background-white`.
-
-**Outline / transparent button variants.** The same invisible-label problem affects any button with a transparent or white background that inherits the default `--osui-btn-color`. Check for custom classes like `.btn-transparent-with-border`, `.btn-no-border`, or any outline variant the customer defines. Include them alongside `.btn.background-white` in the dark-mode fix:
+**Default button text must NOT be forced dark.** Do not set `--osui-btn-color: var(--color-text-dark)` on all `.btn` in dark mode. The default `.btn` has a dark surface background (`--color-background-surface`) and needs light text. Only target buttons with explicitly light/white backgrounds:
 
 ```css
 .dark-mode .btn.background-white,
@@ -131,6 +141,8 @@ Use `--color-text-dark` instead when their inverted `--color-neutral-0` is not t
     --osui-btn-color: var(--color-text-dark);
 }
 ```
+
+Do NOT use a blanket `.dark-mode .btn { --osui-btn-color: var(--color-text-dark); }` — it makes default and secondary button labels invisible on their dark backgrounds.
 
 ### Category D — Line-height model
 
@@ -166,9 +178,13 @@ In the **new theme**, roles resolve through `$token-*` variables that do **not**
 - **Invisible button labels** — `--osui-btn-color` still reads the light-mode token
 - **Invisible outline / secondary button text** — transparent-background buttons get white text on white fill
 - **Blue links instead of themed links** — link color is hardcoded to `$token-semantics-primary-base` (not `--color-primary`), so the customer's `--color-primary` override has no effect on links
+- **Link hover invisible** — `a:hover` uses `--token-semantics-primary-900` which stays at its light value; when links are overridden to match body text, hover must be overridden too (e.g. to `--color-text-subtle`)
 - **Missing header background** — `--color-background-header` still resolves to the light default
 - **Missing surface contrast** — `--color-background-surface` unchanged
 - **Invisible borders** — `--color-border` still resolves to its light value
+- **White feedback messages** — `--token-bg-info-subtle-default` and other feedback tokens stay at light values (see Section 6 — fix by adding `.os-dark-theme` or overriding the tokens manually)
+- **White active nav pill** — `.app-menu-links > a.active` gets `--token-bg-primary-subtle-default` (light blue) which stays light; text inside uses `--token-semantics-primary-base` which was overridden to white — white on light = invisible
+- **Grey blank-slate icons** — `--osui-blank-slate-icon-color` defaults to `--color-text-disabled` (grey) in the new theme; was closer to primary in the old theme
 
 **Detection pattern:** a dark-mode block (`:root.dark-mode`, `:root.os-dark-theme`, `body.dark`, etc.) that overrides **3 or more** `--color-neutral-*` steps. This is the signature of a ramp-flip strategy.
 
@@ -399,12 +415,12 @@ The new theme exposes additional roles that didn't exist before. Customers can u
 
 ## 6. Dark theme considerations
 
-The new theme ships a generated dark theme (`.os-dark-theme` class on `<html>`). Custom CSS with **hardcoded hex/rgb values** will not follow the theme switch. Flag:
+The new theme ships a generated dark theme (`.os-dark-theme` class on `<html>`) that overrides ~447 `--token-*` values for dark mode. Custom CSS with **hardcoded hex/rgb values** will not follow the theme switch. Flag:
 
 - Any hardcoded colour literal (`#abc123`, `rgb(...)`, `rgba(...)`, `hsl(...)`) that has a token or role equivalent.
 - Overrides pinned to a specific neutral step (e.g. `--color-neutral-9`) for text — these won't flip in dark mode. Prefer `--color-text` and its variants.
 
-Adding `.os-dark-theme` to the page improves dark-mode appearance even without full migration, because it handles `--color-text`, `--color-background-*`, and all `--token-*` overrides automatically.
+**If the customer uses a custom dark-mode class (e.g. `.dark-mode`) instead of `.os-dark-theme`, strongly recommend adding `.os-dark-theme` alongside it.** Without `.os-dark-theme`, framework component internals that read `--token-*` values (feedback messages, input backgrounds, dropdown popups, surface colors, shadows, state overlays) stay at their light-mode defaults — producing white feedback banners, light inputs, and other light-on-dark artefacts. Each must be overridden manually. Adding `.os-dark-theme` to `<html>` whenever the custom class is toggled fixes all of these automatically and composes cleanly with the customer's own `--color-*` and `--osui-*` overrides.
 
 ---
 
@@ -497,9 +513,13 @@ For each physical property on an OSUI/framework selector, present the logical eq
 
 If the CSS uses a dark-mode selector other than `.os-dark-theme`, present the options:
 - **Option A:** Keep the custom selector as-is (app manages its own dark mode).
-- **Option B:** Add `.os-dark-theme` alongside the custom selector to benefit from the framework's dark token overrides.
+- **Option B (recommended):** Add `.os-dark-theme` alongside the custom selector to benefit from the framework's dark token overrides.
 
-In the same step, check button contrast. If the dark block makes `--color-primary` light (directly, or because it points at a neutral step that flips light), propose `--osui-btn-primary-color: var(--color-neutral-0)` in that block, or `--color-text-dark` when neutral-0 is not the dark text. Also propose `--osui-btn-color: var(--color-text-dark)` on `.btn.background-white` under the dark selector. `--color-text-light` stays white in `.os-dark-theme`, so skipping this leaves white labels on white buttons.
+**Why Option B matters.** The framework ships ~447 dark-mode `--token-*` overrides scoped under `.os-dark-theme`. These cover feedback messages (`--token-bg-info-subtle-default`, `--token-bg-danger-subtle-default`, …), input backgrounds, surface colors, shadow colors, state overlays, and many component internals. Without `.os-dark-theme`, all of these stay at their light-mode values — producing white feedback messages, light inputs, and other light-on-dark glitches. Adding `.os-dark-theme` alongside the customer's class (e.g. toggling both `.dark-mode` and `.os-dark-theme` on `<html>`) fixes these automatically without needing individual token overrides.
+
+If the customer chooses Option A, flag that they will need to manually override every `--token-*` that their dark mode exposes (feedback messages, dropdowns, inputs, etc.). This is significantly more work than adding the class.
+
+In the same step, check button contrast. If the dark block makes `--color-primary` light (directly, or because it points at a neutral step that flips light), propose setting `--osui-btn-primary-color` **on `.btn-primary`** (not on `:root` — see Category C note). Also propose `--osui-btn-color: var(--color-text-dark)` on `.btn.background-white` and any other light-background button variants under the dark selector.
 
 Ask: "Which dark-mode approach do you want, and should I apply the button-label fix?"
 
@@ -603,12 +623,14 @@ Common migration patterns:
 
 ### "My dark primary button lost its label"
 
-`--color-text-light` stays white. If dark mode turns `--color-primary` white, set the button label in that same block:
+`--color-text-light` stays white. If dark mode turns `--color-primary` white, the label disappears. Set `--osui-btn-primary-color` **on `.btn-primary`**, not on `:root` (the framework re-declares it on `.btn`, so a `:root` override is inherited but loses):
 
 ```css
-:root.os-dark-theme {
+.dark-mode .btn-primary,
+.os-dark-theme .btn-primary {
   --osui-btn-primary-color: var(--color-neutral-0);
 }
+.dark-mode .btn.background-white,
 .os-dark-theme .btn.background-white {
   --osui-btn-color: var(--color-text-dark);
 }
@@ -677,9 +699,56 @@ Use the surface roles:
 }
 ```
 
+### "My links are blue / invisible in dark mode"
+
+The framework hardcodes link color to `$token-semantics-primary-base`, not `--color-primary`. Overriding `--color-primary` does not change links. Override the token in the dark block, or style links directly. When overriding link color, always override hover/focus too — `a:hover` reads `--token-semantics-primary-900` which also stays at its light value:
+
+```css
+/* Option 1: override the token (changes links AND primary) */
+:root.dark-mode {
+    --token-semantics-primary-base: var(--color-neutral-10);
+    --token-semantics-primary-900: var(--color-neutral-9);
+}
+
+/* Option 2: style links directly (independent of primary) */
+a[data-link] {
+    color: var(--color-text);
+}
+a[data-link]:hover,
+a[data-link]:focus {
+    color: var(--color-text-subtle);
+}
+```
+
+### "My active nav link is invisible in dark mode"
+
+The active menu pill uses `--token-bg-primary-subtle-default` (light blue) for its background and `--token-semantics-primary-base` for text. Without `.os-dark-theme`, the background stays light. If `--token-semantics-primary-base` was overridden to white, it's white text on a light pill — invisible.
+
+**Best fix:** add `.os-dark-theme` alongside the custom dark class — the token flips to a dark blue automatically.
+
+**Targeted fix** (without `.os-dark-theme`):
+
+```css
+.dark-mode .app-menu-links > a.active,
+.os-dark-theme .app-menu-links > a.active {
+    background-color: rgba(255, 255, 255, 0.15);
+    color: var(--color-neutral-10);
+}
+```
+
+### "My blank-slate icons turned grey"
+
+The new theme changed `--osui-blank-slate-icon-color` from a primary-adjacent colour to `--color-text-disabled` (grey). Override on the component:
+
+```css
+.blank-slate-icon {
+    color: var(--color-primary);
+}
+```
+
 ### "I hand-built a dark mode"
 
-Consider adopting the built-in `.os-dark-theme` — it's implemented purely as variable overrides and composes with custom `--osui-*` and `--color-*` overrides. Toggle the class on `<html>` via the `SetDarkTheme` client action.
+Consider adopting the built-in `.os-dark-theme` alongside the custom class — it's implemented purely as variable overrides and composes with custom `--osui-*` and `--color-*` overrides. Toggle the class on `<html>` via the `SetDarkTheme` client action. Without it, ~447 `--token-*` overrides (feedback messages, input backgrounds, shadows, etc.) stay at light-mode values.
 
 ### "I built dark mode by flipping the neutral ramp"
 
@@ -705,8 +774,8 @@ In the new theme, roles go through tokens and **no longer cascade from neutrals*
     --color-background-surface:  var(--color-neutral-1);
     --color-border:              var(--color-neutral-3);
     --color-border-subtle:       var(--color-neutral-2);
-    --color-link:                var(--color-neutral-10);
-    --color-link-hover:          var(--color-neutral-9);
+    --token-semantics-primary-base: var(--color-neutral-10);  /* links + primary */
+    --token-semantics-primary-900:  var(--color-neutral-9);   /* link/primary hover */
 }
 ```
 
@@ -732,42 +801,9 @@ Override the tokens directly:
 
 ---
 
-## 11. Framework visual diffs (Category I)
-
-The new theme changed internal spacing, gap, and padding on many framework components because they now use token-based values (`$token-scale-*`) instead of hand-rolled px/rem. This can make components look tighter or looser than the old theme — even though the customer's CSS is unchanged.
-
-**These are not CSS migration issues** — no retired variable or selector is involved. But they can break a customer's layout when their custom CSS relies on the old component dimensions for alignment.
-
-**Detection:** visually compare the migrated app against the original. Look for:
-- Components that collapsed vertically (blank-slate, empty states, cards)
-- Spacing between stacked elements that tightened or widened
-- Form fields, buttons, or list items with different heights
-- Content areas that shifted because an adjacent framework component changed size
-
-**When to fix:** if the layout is visibly broken (elements overlapping, content cut off, alignment lost between adjacent custom and framework elements), propose a targeted spacing override. Otherwise, note it as a visual diff and move on.
-
-**Fix pattern:** override the specific component's spacing with a direct rule. Do not override global tokens — that would affect everything.
-
-```css
-/* Example: blank-slate collapsed too tight, restore vertical space */
-.table-empty .blank-slate.large {
-    min-height: 200px;
-}
-
-/* Example: card content area lost its old padding */
-.my-section .card-content {
-    padding: 24px;
-}
-```
-
-Present these in Phase 2 as a final visual-diff review step (after Step 2f). Show side-by-side description of what changed and the proposed override. Ask the customer whether they want to pin the old spacing or accept the new theme's default.
-
----
-
-## 12. What NOT to flag
+## 11. What NOT to flag
 
 - `var(--color-primary)`, `var(--space-base)`, `var(--border-radius-soft)` and other still-valid variables (Section 3).
 - Inline styles set by the OutSystems platform runtime — only flag CSS the customer authored.
 - Variables inside `env()` or `calc()` wrappers that are structurally correct.
 - Provider/vendor CSS (`.flatpickr-*`, `.vscomp-*`, `.splide-*`) — these are framework-owned.
-- Framework component spacing diffs that do not break layout (Category I) — note them for the customer but do not auto-fix.
