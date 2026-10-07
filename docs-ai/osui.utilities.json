@@ -210,7 +210,7 @@
 						},
 						{
 							"prop": "top",
-							"value": "10px",
+							"value": "var(--token-scale-250, 10px)",
 							"important": false
 						},
 						{
@@ -275,6 +275,7 @@
 						"--token-scale-1000",
 						"--token-scale-200",
 						"--token-scale-400",
+						"--token-scale-250",
 						"--layer-global-instant-interaction"
 					]
 				}
@@ -6908,13 +6909,15 @@
 							"declarations": [
 								{
 									"prop": "border-radius",
-									"value": "10px",
+									"value": "var(--token-scale-250, 10px)",
 									"important": false
 								}
 							]
 						}
 					],
-					"tokens": []
+					"tokens": [
+						"--token-scale-250"
+					]
 				},
 				{
 					"name": "img-circle",

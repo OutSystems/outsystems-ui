@@ -121,3 +121,19 @@ test('U06 counts the layout families that offer a viewport variant', () => {
 	assert.equal(U06.cls, 'roadmap', 'variants are a product decision, not a refactor');
 	assert.ok(r.score < 30, `responsive coverage ${r.score}`);
 });
+
+test('U03 accepts the visually-hidden recipe and the a11y and images families read the scale', async () => {
+	const { acceptedLiteral } = await import('../metrics/U03-token-routing.mjs');
+	assert.equal(
+		acceptedLiteral('wcag-hide-text', 'margin', '-1px'),
+		true,
+		'the WCAG clip-rect pixel is not a spacing'
+	);
+	assert.equal(acceptedLiteral('wcag-hide-text', 'top', '10px'), false);
+	assert.equal(acceptedLiteral('skip-nav', 'margin', '-1px'), false);
+	const rows = rowsOf(U03.compute(ctx));
+	for (const name of ['a11y', 'images']) {
+		const row = rows.find((x) => x.name === name);
+		assert.equal(row.score, 100, `${name}: ${row.literals.join(', ')}`);
+	}
+});

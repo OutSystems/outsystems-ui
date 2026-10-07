@@ -15,7 +15,8 @@
 img {
 	&.img {
 		&-rounded {
-			border-radius: 10px;
+			// no radius token holds 10px; the scale token does, so the value follows the scale
+			border-radius: variables.$token-scale-250;
 		}
 
 		&-circle {

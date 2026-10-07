@@ -13,6 +13,21 @@ import { utilityFamilies } from '../../lib/utilities.mjs';
 
 const APPLIES_TO = ['utility'];
 
+/**
+ * Literals that are part of a recipe rather than a themed value: the WCAG visually-hidden pattern pulls the
+ * 1px box out of flow with a -1px margin, a geometry no spacing token should drive.
+ */
+const ACCEPTED_LITERALS = new Set(['wcag-hide-text margin: -1px']);
+
+/**
+ * @param {string} cls
+ * @param {string} prop
+ * @param {string} value
+ */
+export function acceptedLiteral(cls, prop, value) {
+	return ACCEPTED_LITERALS.has(`${cls} ${prop}: ${value}`);
+}
+
 /** @param {import('../../lib/utilities.mjs').UtilityClass} c */
 function themeableDeclarations(c) {
 	return [...c.declarations, ...c.variants.flatMap((v) => v.declarations)].filter((d) =>
@@ -25,7 +40,7 @@ export default {
 	name: 'Token Routing',
 	criterion: 'Theme-following values',
 	formula:
-		'100 · (1 − themeable utility declarations with a raw colour or non-zero size / themeable utility declarations); var(--…), 0, auto and keywords count as routed',
+		'100 · (1 − themeable utility declarations with a raw colour or non-zero size / themeable utility declarations); var(--…), 0, auto, keywords and the visually-hidden recipe count as routed',
 	movable: true,
 	present: {
 		scope: 'Per utility family: the share of its colour, spacing, radius, shadow and type-size declarations that read a token (cell), with the literals left.',
@@ -73,7 +88,9 @@ export default {
 				continue;
 			}
 			// `0`, `auto`, `none` and `transparent` need no token; a raw colour or a non-zero size does
-			const literals = decls.filter((d) => !d.value.includes('var(') && isLiteralValue(d.value));
+			const literals = decls.filter(
+				(d) => !d.value.includes('var(') && isLiteralValue(d.value) && !acceptedLiteral(d.cls, d.prop, d.value)
+			);
 			total += decls.length;
 			routed += decls.length - literals.length;
 			perComponent.push({
