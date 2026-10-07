@@ -133,7 +133,7 @@ namespace OutSystems.OSUI.Patterns.CarouselAPI {
 	};
 
 	/** Event names understood by RegisterCallback; any other string is passed through unchanged. */
-	export type EventName = 'Initialized' | 'OnProviderConfigsApplied' | (string & {});
+	export type EventName = 'OnSlideMoved' | 'Initialized' | 'OnProviderConfigsApplied' | (string & {});
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -176,7 +176,7 @@ namespace OutSystems.OSUI.Patterns.DatePickerAPI {
 	};
 
 	/** Event names understood by RegisterCallback; any other string is passed through unchanged. */
-	export type EventName = 'Initialized' | 'OnProviderConfigsApplied' | (string & {});
+	export type EventName = 'OnChange' | 'OnInitialize' | 'Initialized' | 'OnProviderConfigsApplied' | (string & {});
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -448,7 +448,8 @@ namespace OutSystems.OSUI.Patterns.RangeSliderAPI {
 	};
 
 	/** Event names understood by RegisterCallback; any other string is passed through unchanged. */
-	export type EventName = 'Initialized' | 'OnProviderConfigsApplied' | (string & {});
+	export type EventName =
+		'OnInitialize' | 'OnValueChange' | 'Initialized' | 'OnProviderConfigsApplied' | (string & {});
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -669,7 +670,7 @@ namespace OutSystems.OSUI.Patterns.TimePickerAPI {
 	};
 
 	/** Event names understood by RegisterCallback; any other string is passed through unchanged. */
-	export type EventName = 'Initialized' | 'OnProviderConfigsApplied' | (string & {});
+	export type EventName = 'OnChange' | 'Initialized' | 'OnProviderConfigsApplied' | (string & {});
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

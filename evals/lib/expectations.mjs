@@ -13,7 +13,7 @@ const cache = new WeakMap();
  * @property {import('./ts.mjs').ConfigProp[]} props
  * @property {import('./ts.mjs').ExportedFunction[]} apiFunctions
  * @property {string[]} api            exported API function names
- * @property {string[]} events         values of the pattern's `Events` enum(s)
+ * @property {string[]} events         values of the pattern's `Events` or `<Pattern>Events` enum(s)
  * @property {string[]} cssClasses     values of the pattern's `CssClass`/`CssClasses` enum(s)
  * @property {Record<string, string>} cssClassMap  member → value
  * @property {import('./ts.mjs').EnumInfo[]} enums
@@ -37,7 +37,9 @@ export function expectationsFor(ctx, pattern) {
 	const props = getConfigProps(program, pattern.configFiles);
 	const apiFunctions = getExportedFunctions(getSourceFile(program, pattern.apiFile));
 	const enums = pattern.enumFiles.flatMap((f) => getEnums(getSourceFile(program, f)));
-	const events = enums.filter((e) => e.name === 'Events').flatMap((e) => Object.values(e.members).map(String));
+	// the events enum is named Events, or after the pattern (CarouselEvents, DatePickerEvents, …)
+	const eventEnums = enums.filter((e) => e.name === 'Events' || e.name === pattern.name + 'Events');
+	const events = eventEnums.flatMap((e) => Object.values(e.members).map(String));
 	/** @type {Record<string, string>} */
 	const cssClassMap = {};
 	for (const e of enums.filter((e) => /^Css(Class|Classes)$/.test(e.name))) {

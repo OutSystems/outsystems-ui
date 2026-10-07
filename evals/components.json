@@ -264,7 +264,8 @@
 						"ExtendedClass": "ExtendedClass"
 					},
 					"eventMap": {
-						"Initialized": "Initialized"
+						"Initialized": "Initialized",
+						"OnSlideMoved": "OnSlideMoved"
 					}
 				}
 			]
@@ -345,7 +346,8 @@
 						"ExtendedClass": "ExtendedClass"
 					},
 					"eventMap": {
-						"Initialized": "Initialized"
+						"Initialized": "Initialized",
+						"OnSelected": "OnChange"
 					}
 				},
 				{
@@ -363,7 +365,8 @@
 						"ExtendedClass": "ExtendedClass"
 					},
 					"eventMap": {
-						"Initialized": "Initialized"
+						"Initialized": "Initialized",
+						"OnSelected": "OnChange"
 					}
 				}
 			]
@@ -917,7 +920,8 @@
 						"ExtendedClass": "ExtendedClass"
 					},
 					"eventMap": {
-						"Initialized": "Initialized"
+						"Initialized": "Initialized",
+						"OnValueChange": "OnValueChange"
 					}
 				},
 				{
@@ -938,7 +942,8 @@
 						"ExtendedClass": "ExtendedClass"
 					},
 					"eventMap": {
-						"Initialized": "Initialized"
+						"Initialized": "Initialized",
+						"OnValueChange": "OnValueChange"
 					}
 				}
 			]
@@ -1241,7 +1246,8 @@
 						"ExtendedClass": "ExtendedClass"
 					},
 					"eventMap": {
-						"Initialized": "Initialized"
+						"Initialized": "Initialized",
+						"OnSelected": "OnChange"
 					}
 				}
 			]

@@ -80,7 +80,9 @@ Negative consequences:
 - Four block events have no typed runtime counterpart (Carousel `OnSlideMoved`, DatePicker/TimePicker
   `OnSelected`, RangeSlider `OnValueChange`) and stay unmapped in M02.
 - `llms.txt` grew to about 1,520 tokens with the Producers section; its test budget moved from 1,500 to 1,600,
-  and the pattern-card budget from 650 to 660 for the markers.
+  and the pattern-card budget from 650 to 660 for the markers. The budget went to 680 when the pattern-named event enums
+  (CarouselEvents, DatePickerEvents, RangeSliderEvents, TimePickerEvents) started to be read and the picker
+  cards gained their events line.
 
 ## Links
 

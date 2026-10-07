@@ -46,7 +46,7 @@ const MANIFEST_VERSION = '1';
 /** Explicit, locale-independent string order. */
 export const byCodePoint = (/** @type {string} */ a, /** @type {string} */ b) => (a < b ? -1 : Number(a > b));
 /** DatePicker (18 props, 20 API functions) is the largest card and needs ~650 tokens with types kept and the [runtime-only] markers. */
-export const CARD_TOKEN_BUDGET = 660;
+export const CARD_TOKEN_BUDGET = 680; // 660 + the events line of the picker cards (DatePicker lists 22 API functions)
 const MARKUP_CAP = 1200;
 
 /**

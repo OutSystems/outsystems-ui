@@ -292,3 +292,11 @@ test('validateBlockLinks rejects a non-public target and the Licenses block as n
 		messages.join('; ')
 	);
 });
+
+test('expectationsFor reads a pattern-named event enum (CarouselEvents) as the pattern events', () => {
+	const ctx = createContext(root);
+	const carousel = ctx.inventory.patterns.find((p) => p.name === 'Carousel');
+	assert.deepEqual(expectationsFor(ctx, carousel).events, ['OnSlideMoved']);
+	const rangeSlider = ctx.inventory.patterns.find((p) => p.name === 'RangeSlider');
+	assert.deepEqual(expectationsFor(ctx, rangeSlider).events, ['OnInitialize', 'OnValueChange']);
+});

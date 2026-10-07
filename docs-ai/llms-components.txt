@@ -105,17 +105,18 @@ Configs schema: schema/configs/ButtonLoading.schema.json
 ## Carousel
 [runtime-only] Lifecycle: Create(id, configs) → RegisterCallback(id, eventName, callback) → Initialize(id) → … runtime calls (ChangeProperty, actions) … → Dispose(id)
 Props (configs JSON, always include "ExtendedClass": ""):
-- AutoPlay: boolean = false
-- Direction: GlobalEnum.Direction.LTR | GlobalEnum.Direction.RTL | GlobalEnum.Direction.TTB
-- Height: string | number = "auto"
-- ItemsDesktop: number = 1
-- ItemsGap: string | number = "0px"
-- ItemsPhone: number = 1
-- ItemsTablet: number = 1
-- Loop: boolean = true
-- Navigation: 'both' | 'arrows' | 'dots' | 'none' = "both"
-- Padding: string | number = "0px"
-- StartingPosition: number
+- AutoPlay: boolean = false — Advances the slides automatically.
+- Direction: GlobalEnum.Direction.LTR | GlobalEnum.Direction.RTL | GlobalEnum.Direction.TTB — Slide direction: ltr, rtl or ttb (vertical).
+- Height: string | number = "auto" — Height of the carousel (CSS length or pixel number); auto by default, required for the vertical direction.
+- ItemsDesktop: number = 1 — Number of items visible at once on desktop.
+- ItemsGap: string | number = "0px" — Gap between items (CSS length or pixel number); 0px by default.
+- ItemsPhone: number = 1 — Number of items visible at once on phones.
+- ItemsTablet: number = 1 — Number of items visible at once on tablets.
+- Loop: boolean = true — Rewinds to the first item after the last one.
+- Navigation: 'both' | 'arrows' | 'dots' | 'none' = "both" — Navigation controls to render: Arrows, Dots, Both or None.
+- Padding: string | number = "0px" — Padding on both ends of the track so neighbouring items peek in (CSS length or pixel number).
+- StartingPosition: number — Zero-based index of the item shown first.
+Events (RegisterCallback eventName): OnSlideMoved
 API (OutSystems.OSUI.Patterns.CarouselAPI):
 - CarouselEnableOnRender(carouselId: string): string
 - CarouselDisableOnRender(carouselId: string): string
@@ -135,7 +136,7 @@ API (OutSystems.OSUI.Patterns.CarouselAPI):
 - SetProviderConfigs(carouselId: string, configs: CarouselProviderConfigs): string
 - SetProviderEvent(carouselId: string, eventName: string, callback: Generic): string
 - UnsetProviderEvent(carouselId: string, eventId: string): string
-CSS classes: osui-carousel osui-carousel__content osui-carousel--has-pagination osui-carousel__track splide splide__track (+4 more in osui.components.json)
+CSS classes: osui-carousel osui-carousel__content osui-carousel--has-pagination osui-carousel__track splide splide__track splide__list splide__slide is-active splide__slide--clone
 Configs schema: schema/configs/Carousel.schema.json
 
 ## DatePicker
@@ -159,6 +160,7 @@ Props (configs JSON, always include "ExtendedClass": ""):
 - ShowTodayButton: boolean = false
 - ShowWeekNumbers: boolean
 - TimeFormat: 'disabled' | '12' | '24' = "disabled"
+Events (RegisterCallback eventName): OnChange, OnInitialize
 API (OutSystems.OSUI.Patterns.DatePickerAPI):
 - ChangeProperty(datePickerId: string, propertyName: string, propertyValue: unknown): string
 - Clear(datePickerId: string): string
@@ -419,6 +421,7 @@ Props (configs JSON, always include "ExtendedClass": ""):
 - StartingValueTo: number
 - Step: number = 1
 - TickMarksInterval: number = 0
+Events (RegisterCallback eventName): OnInitialize, OnValueChange
 API (OutSystems.OSUI.Patterns.RangeSliderAPI):
 - ChangeProperty(rangeSliderId: string, propertyName: string, propertyValue: unknown): string
 - Create(rangeSliderId: string, configs: string | Configs, mode: Enum.Mode, provider: string): IRangeSlider
@@ -596,6 +599,7 @@ API (OutSystems.OSUI.Patterns.TabsAPI):
 - TabsToggleSwipe(tabsId: string, enableSwipe: boolean): string
 - SetActiveTab(tabsId: string, tabsNumber: number): string
 CSS classes: osui-tabs--is-active osui-tabs--is-vertical osui-tabs--is-horizontal osui-tabs--is-justified osui-tabs--has-auto-height osui-tabs--has-drag osui-tabs--is- osui-tabs osui-tabs__header osui-tabs__content osui-tabs__header-item osui-tabs__content-item osui-tabs__header__indicator
+CSS API: --osui-tabs-border-color --osui-tabs-header-gap --osui-tabs-header-item-color --osui-tabs-header-item-font-size --osui-tabs-header-item-border-radius --osui-tabs-header-item-line-height --osui-tabs-header-item-color-active --osui-tabs-header-item-color-active-hover --osui-tabs-header-item-color-hover --osui-tabs-header-item-color-disabled --osui-tabs-header-item-hover-background --osui-tabs-indicator-color
 Configs schema: schema/configs/Tabs.schema.json
 [runtime-only] Markup skeleton (from stories/Tabs.stories.ts): <section class="osui-tabs"><header class="osui-tabs__header"><div class="display-contents placeholder-empty"></div><div class="osui-tabs__header__indicator"></div></header><section class="osui-tabs__content"><div class="display-contents placeholder-empty"></div></section></section>
 
@@ -645,6 +649,7 @@ Props (configs JSON, always include "ExtendedClass": ""):
 - OnOpenEventCallback: OSFramework.OSUI.GlobalCallbacks.Generic
 - ServerDateFormat: string
 - TimeFormat: string
+Events (RegisterCallback eventName): OnChange
 API (OutSystems.OSUI.Patterns.TimePickerAPI):
 - ChangeProperty(timePickerId: string, propertyName: string, propertyValue: unknown): string
 - Clear(timePickerId: string): string

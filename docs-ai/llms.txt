@@ -10,8 +10,8 @@ Scope: OutSystems UI ships a single token-based theme (light, plus the generated
 - AnimatedLabel: 0 props, 0 events, 8 API functions
 - BottomSheet: 2 props, 1 events, 9 API functions
 - ButtonLoading: 2 props, 0 events, 8 API functions
-- Carousel: 11 props, 0 events, 18 API functions
-- DatePicker: 18 props, 0 events, 22 API functions
+- Carousel: 11 props, 1 events, 18 API functions
+- DatePicker: 18 props, 2 events, 22 API functions
 - Dropdown: 12 props, 5 events, 19 API functions
 - DropdownServerSideItem: 2 props, 1 events, 7 API functions
 - FlipContent: 2 props, 1 events, 10 API functions
@@ -21,7 +21,7 @@ Scope: OutSystems UI ships a single token-based theme (light, plus the generated
 - Notification: 6 props, 1 events, 9 API functions
 - OverflowMenu: 2 props, 1 events, 11 API functions
 - Progress: 0 props, 0 events, 10 API functions
-- RangeSlider: 15 props, 0 events, 15 API functions
+- RangeSlider: 15 props, 2 events, 15 API functions
 - Rating: 4 props, 1 events, 9 API functions
 - Search: 0 props, 0 events, 7 API functions
 - SectionIndex: 2 props, 0 events, 7 API functions
@@ -32,7 +32,7 @@ Scope: OutSystems UI ships a single token-based theme (light, plus the generated
 - Tabs: 6 props, 1 events, 9 API functions
 - TabsContentItem: 0 props, 0 events, 7 API functions
 - TabsHeaderItem: 0 props, 0 events, 10 API functions
-- TimePicker: 12 props, 0 events, 20 API functions
+- TimePicker: 12 props, 1 events, 20 API functions
 - Tooltip: 3 props, 1 events, 9 API functions
 - TouchEvents: 1 props, 3 events, 7 API functions
 - Video: 9 props, 1 events, 11 API functions

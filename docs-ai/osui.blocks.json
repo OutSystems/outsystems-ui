@@ -3204,7 +3204,8 @@
 			},
 			"platformOnly": [],
 			"eventMap": {
-				"Initialized": "Initialized"
+				"Initialized": "Initialized",
+				"OnSlideMoved": "OnSlideMoved"
 			},
 			"recipes": {
 				"openui": "_Carousel1 = Block(SourceBlock: Interaction/Carousel, Navigation: Entities.CarouselNavigation.Both, Height: \"auto\", ItemsPerSlide: …, CarouselItems: [_CarouselItems1])",
@@ -3337,7 +3338,8 @@
 			},
 			"platformOnly": [],
 			"eventMap": {
-				"Initialized": "Initialized"
+				"Initialized": "Initialized",
+				"OnSelected": "OnChange"
 			},
 			"recipes": {
 				"openui": "_DatePicker1 = Block(SourceBlock: Interaction/DatePicker, DateFormat: \"\", ShowTodayButton: False, TimeFormat: Entities.DatePickerTimeFormat.Disabled, Datepicker: [_Datepicker1], Placeholder_SSPreview: [_Placeholder_SSPreview1])",
@@ -3460,7 +3462,8 @@
 			},
 			"platformOnly": [],
 			"eventMap": {
-				"Initialized": "Initialized"
+				"Initialized": "Initialized",
+				"OnSelected": "OnChange"
 			},
 			"recipes": {
 				"openui": "_DatePickerRange1 = Block(SourceBlock: Interaction/DatePickerRange, DateFormat: \"\", ShowTodayButton: False, OptionalConfigs: …, Datepicker: [_Datepicker1], Placeholder_SSPreview: [_Placeholder_SSPreview1])",
@@ -4370,7 +4373,8 @@
 			},
 			"platformOnly": [],
 			"eventMap": {
-				"Initialized": "Initialized"
+				"Initialized": "Initialized",
+				"OnValueChange": "OnValueChange"
 			},
 			"recipes": {
 				"openui": "_RangeSlider1 = Block(SourceBlock: Interaction/RangeSlider, MinValue: 0, MaxValue: 0, StartingValue: 0)",
@@ -4531,7 +4535,8 @@
 			},
 			"platformOnly": [],
 			"eventMap": {
-				"Initialized": "Initialized"
+				"Initialized": "Initialized",
+				"OnValueChange": "OnValueChange"
 			},
 			"recipes": {
 				"openui": "_RangeSliderInterval1 = Block(SourceBlock: Interaction/RangeSliderInterval, MinValue: 0, MaxValue: 0, StartingValueFrom: 0, StartingValueTo: 0)",
@@ -5088,7 +5093,8 @@
 			},
 			"platformOnly": [],
 			"eventMap": {
-				"Initialized": "Initialized"
+				"Initialized": "Initialized",
+				"OnSelected": "OnChange"
 			},
 			"recipes": {
 				"openui": "_TimePicker1 = Block(SourceBlock: Interaction/TimePicker, TimeFormat: \"\", Is24Hours: True, InitialTime: #00:00:00#, Timepicker: [_Timepicker1], Placeholder_SSPreview: [_Placeholder_SSPreview1])",

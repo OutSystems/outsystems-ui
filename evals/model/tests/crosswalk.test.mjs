@@ -80,3 +80,16 @@ test('patternOfBlock never falls back to an API hint for a block the registry li
 	};
 	assert.deepEqual(patternOfBlock(block, ['Tooltip'], registry), { pattern: null, source: 'registry' });
 });
+
+test('the committed registry maps every parameter and event of every block it links', async () => {
+	const path = await import('node:path');
+	const { fileURLToPath } = await import('node:url');
+	const { createContext } = await import('../../lib/context.mjs');
+	const M02 = (await import('../metrics/M02-crosswalk.mjs')).default;
+	const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..', '..');
+	const rows = M02.compute(createContext(root)).perComponent;
+	const gaps = rows
+		.filter((r) => r.missing?.length || r.unmappedEvents?.length)
+		.map((r) => `${r.name}: ${[...(r.missing ?? []), ...(r.unmappedEvents ?? [])].join(', ')}`);
+	assert.deepEqual(gaps, [], 'unmapped parameters or events');
+});
