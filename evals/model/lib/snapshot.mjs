@@ -129,25 +129,30 @@ export const EXTENDED_CLASS = 'ExtendedClass';
  * static entity or a number would not express what they carry.
  * @type {Record<string, string>}
  */
+const DOM_ID = 'the identifier of another element in the DOM';
+const FREE_TEXT = 'free text shown as is';
+const MEASURE = 'a measure with its unit, such as 120px or 70%';
+const MASK = 'a text mask';
+const A_URL = 'a URL';
 export const TEXT_ON_PURPOSE = {
 	[EXTENDED_CLASS]: 'CSS utility classes (see llms-utilities.txt)',
-	MenuId: 'the identifier of another element in the DOM',
-	ScrollToWidgetId: 'the identifier of another element in the DOM',
-	WidgetId: 'the identifier of another element in the DOM',
-	ItemId: 'the identifier of another element in the DOM',
-	Title: 'free text shown as is',
-	Group: 'free text shown as is',
-	Prompt: 'free text shown as is',
-	Name: 'free text shown as is',
-	Password: 'free text shown as is',
-	Size: 'a measure with its unit, such as 120px or 70%',
-	Height: 'a measure with its unit, such as 120px or 70%',
-	Width: 'a measure with its unit, such as 120px or 70%',
-	DateFormat: 'a text mask',
-	TimeFormat: 'a text mask',
+	MenuId: DOM_ID,
+	ScrollToWidgetId: DOM_ID,
+	WidgetId: DOM_ID,
+	ItemId: DOM_ID,
+	Title: FREE_TEXT,
+	Group: FREE_TEXT,
+	Prompt: FREE_TEXT,
+	Name: FREE_TEXT,
+	Password: FREE_TEXT,
+	Size: MEASURE,
+	Height: MEASURE,
+	Width: MEASURE,
+	DateFormat: MASK,
+	TimeFormat: MASK,
 	SVGCode: 'the content of an SVG',
-	ImageURL: 'a URL',
-	URL: 'a URL',
+	ImageURL: A_URL,
+	URL: A_URL,
 };
 
 /**

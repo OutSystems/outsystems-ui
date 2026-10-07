@@ -174,14 +174,7 @@ function apiProposals(patterns, registry, blocks, unlinkedEntry) {
  */
 function nameProposals(patterns, styles, registry, blocks, proposals, unlinkedEntry) {
 	const proposedBlocks = new Set(proposals.flatMap((p) => p.blocks.map((b) => `${b.flow}/${b.name}`)));
-	// a normalised name both a pattern and a stylesheet use is ambiguous: no proposal for it
-	/** @type {Map<string, { pattern?: string, style?: string, ambiguous?: boolean }>} */
-	const byNorm = new Map();
-	for (const p of patterns) byNorm.set(normalizedName(p), { pattern: p });
-	for (const s of styles) {
-		const key = normalizedName(s);
-		byNorm.set(key, byNorm.has(key) ? { ambiguous: true } : { style: s });
-	}
+	const byNorm = nameLookup(patterns, styles);
 	/** @type {string[]} */
 	const unlinked = [];
 	for (const b of blocks) {
@@ -193,12 +186,40 @@ function nameProposals(patterns, styles, registry, blocks, proposals, unlinkedEn
 			unlinked.push(b.key);
 			continue;
 		}
-		const existing = proposals.find((p) => (p.pattern ?? p.style) === entry);
-		const link = hit.pattern ? { pattern: hit.pattern } : { style: /** @type {string} */ (hit.style) };
-		if (existing) existing.blocks.push({ flow: b.flow, name: b.name });
-		else proposals.push({ ...link, blocks: [{ flow: b.flow, name: b.name }], source: 'name' });
+		addProposal(proposals, hit, entry, b);
 	}
 	return unlinked;
+}
+
+/**
+ * Pattern and stylesheet names by normalised name; a name both use is ambiguous and proposes nothing.
+ * @param {string[]} patterns
+ * @param {string[]} styles
+ * @returns {Map<string, { pattern?: string, style?: string, ambiguous?: boolean }>}
+ */
+function nameLookup(patterns, styles) {
+	/** @type {Map<string, { pattern?: string, style?: string, ambiguous?: boolean }>} */
+	const byNorm = new Map();
+	for (const p of patterns) byNorm.set(normalizedName(p), { pattern: p });
+	for (const s of styles) {
+		const key = normalizedName(s);
+		byNorm.set(key, byNorm.has(key) ? { ambiguous: true } : { style: s });
+	}
+	return byNorm;
+}
+
+/**
+ * Adds a block to the name proposal of an entry, creating the proposal on first use.
+ * @param {LinkProposal[]} proposals
+ * @param {{ pattern?: string, style?: string }} hit
+ * @param {string} entry
+ * @param {{ flow: string, name: string }} b
+ */
+function addProposal(proposals, hit, entry, b) {
+	const existing = proposals.find((p) => (p.pattern ?? p.style) === entry);
+	const link = hit.pattern ? { pattern: hit.pattern } : { style: /** @type {string} */ (hit.style) };
+	if (existing) existing.blocks.push({ flow: b.flow, name: b.name });
+	else proposals.push({ ...link, blocks: [{ flow: b.flow, name: b.name }], source: 'name' });
 }
 
 /** The block-links section of the doctor output: information, never a disagreement. @param {any} r */

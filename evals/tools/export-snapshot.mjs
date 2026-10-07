@@ -53,13 +53,14 @@ export function localOml(dir) {
  * @returns {{ from: 'local'|'github', args: string[] }}
  */
 export function exportPlan({ local, source, platform, out, commit }) {
-	if (local) return { from: 'local', args: ['--oml', local, '--platform', platform, '-o', out] };
+	const tail = ['--platform', platform, '-o', out];
+	if (local) return { from: 'local', args: ['--oml', local, ...tail] };
 	const origin = source?.origin ?? {};
 	const sha = commit ?? origin.commit;
 	const repository = origin.repository ?? 'OutSystems/OutSystems.Tenant.Starter.Apps';
 	const file = origin.path ?? 'src/10_Base/OutSystemsUI.oml';
 	if (!sha) throw new Error('no snapshot to read the pinned commit from: give --commit <40-hex sha>');
-	return { from: 'github', args: ['--github', `${repository}@${sha}:${file}`, '--platform', platform, '-o', out] };
+	return { from: 'github', args: ['--github', `${repository}@${sha}:${file}`, ...tail] };
 }
 
 /**
