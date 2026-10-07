@@ -23,6 +23,7 @@ Search your stylesheets for each pattern below. That tells you which sections of
 | `font-size` without `line-height` | May look wrong due to line-height model change | [Line-height model](#line-height-model) |
 | `padding-left`, `margin-right` etc. on OSUI classes | May silently lose cascade race against logical properties | [Logical properties](#logical-properties) |
 | `.shadow-m`, `.margin-base`, `.font-size-h1` (utility classes) | Still shipped but no longer driven by old variables | [Utility classes](#utility-classes) |
+| _Nothing_ — but a widget still looks different from before | The widget's own built-in defaults changed | [Framework defaults that changed](#framework-defaults-that-changed) |
 
 ---
 
@@ -196,6 +197,41 @@ Because they're custom properties, they cascade: set them on an ancestor to scop
 
 ---
 
+## Framework defaults that changed
+
+Every category above starts from something in *your* CSS, so you find them by searching. This one is the opposite: a number of widgets changed their own built-in appearance, so they look different even in an app that never styled them. No search will turn these up — you find them by comparing screens against the old app.
+
+Four changes repeat across the library. Once you recognise the shape, the fix follows:
+
+- **A hover fill where there was none.** Classic widgets changed only the text colour on hover. Many now paint a neutral background behind it. If your app had no hover wash, set the widget's hover-background knob to its resting background.
+- **The selected mark changed.** Classic marked the current item with a border, an underline, or a primary tint. Several widgets now use a neutral fill instead, or drop the mark entirely. Restore it on both the selected state **and** its `:hover` — the framework's hover rule is more specific and will otherwise paint over it.
+- **Icon colour moved to a token.** Framework icons read `--token-icon-subtlest`. A plain `.icon` in your own markup does **not** read it — it still inherits text colour, so the two drift apart in dark mode.
+- **Size and padding moved to knobs.** Heights, paddings, and type sizes now come from `--osui-*` defaults that differ from the classic pixel values.
+
+| Widget | What changed | Fix with |
+|---|---|---|
+| Button group | Gained a hover fill, container padding, and an inter-item gap. The item is now `inline-block` at 32px tall with 12px type; classic was 40px (48px on phone/tablet) with 14px type and `--space-base` padding | The `--osui-button-group-*` knobs. If the group used to fill its parent, also set `width: 100%` and `display: flex` on it, and `flex: 1` on the inner wrapper, so `inline-block` doesn't shrink it to the label width |
+| Top menu link | The current-page `border-block-end` was cleared, and a hover fill can now cover the `.active` item | Restore `border-block-end` on `.active`, and repeat it on `.active:hover` |
+| Tabs | Hover gained a background fill; the active item colour changed | `--osui-tabs-header-item-hover-background: transparent` and `--osui-tabs-header-item-color-active`. The indicator is still `--osui-tabs-indicator-color` |
+| Pagination | The active page was a primary border with primary text; it's now a neutral fill with a default border and label | `--osui-pagination-active-background: transparent`, plus `--osui-pagination-active-border-color` and `--osui-pagination-active-color` |
+| Section index | The active item's primary indicator bar changed, and hover/press fills were added | `--osui-section-index-item-hover-background` and `-press-background` to transparent, plus `--osui-section-index-item-active-color` and `-active-indicator-color` |
+| List item | The selected row's fill is gone — selected now equals the base background. Hover and press fills were added | `--osui-list-item-selected-background` and `--osui-list-item-selected-icon-color` |
+| Table | Header background, label colour, and selected-row colour all changed; stripe and hover knobs were added | The `--osui-table-*` knobs |
+| Card | New surface fill, subtler border, larger radius and padding, and **no shadow by default** | The `--osui-card-*` knobs, including `--osui-card-shadow` |
+| Bottom bar | The icon no longer inherits the item's colour — it has its own knob | `--osui-bottom-bar-item-icon-color` |
+| Icons | Framework icons read `--token-icon-subtlest`; your own `.icon` elements ignore it | Set `.icon { color: … }` yourself, and add `color: inherit` for icons sitting inside buttons, coloured cards, or anything else that sets its own text colour |
+| Outlined transparent button | The border and label used to follow text colour; the border token is now too dark on a dark surface | See [Button labels disappear in dark mode](#button-labels-disappear-in-dark-mode) |
+| Accordion item | The divider is now a `border-block-end` reading a knob, not a `border` or `:after` | `--osui-accordion-item-border-width` |
+| Range slider | The handle's `:before` / `:after` pseudo-elements are now `display: none`, so styling them does nothing | `--osui-range-slider-handle-background`, and delete the pseudo-element rules |
+| Carousel | The card gained padding and a taller minimum, so a hand-set `min-height` on the wrapper can clip its content | Re-measure the rendered card and raise the `min-height`. Worth re-checking any hand-set height around a carousel, list, or card grid |
+| Feedback message, alert, notification, tag, badge, avatar | Status colours moved to semantic roles and `--token-bg-extended-*` | The [extended palette](#extended-palette) mapping, plus the feedback tokens in [Neutral ramp flip](#neutral-ramp-flip--roles-no-longer-cascade) |
+| Switch, checkbox, radio, input, dropdown, upload | Each now has its own size, fill, border, and checked knobs — a direct property override loses to them | The widget's own `--osui-*` knobs |
+| Pickers, search, menus, sheets, tooltips, popups, sidebar, wizard, timeline, breadcrumbs, progress, rating, blank slate, gallery | Each exposes `--osui-*` surface, text, icon, and radius knobs; several also gained a hover fill | Look the knob up before writing it |
+
+> **Look the knob up — don't guess the name.** The **CSS API Reference** page in Storybook lists every `--osui-*` property the library actually reads. A plausible-looking name that isn't on that list silently does nothing.
+
+---
+
 ## Line-height model
 
 `body` line-height changed from unitless `1.5` (scales with each element's font-size) to `1.5rem` (absolute 24px). Any element that sets its own `font-size` but not its own `line-height` now inherits a fixed 24px — small text looks tall, large text overlaps.
@@ -212,6 +248,12 @@ Because they're custom properties, they cascade: set them on an ancestor to scop
 ```
 
 **Rule of thumb:** every custom rule that sets `font-size` should also set `line-height`. Use the matching `--token-font-line-height-*` token or a unitless number.
+
+### The `border-radius: 100%` trap
+
+Adding a `line-height` changes the element's height, which changes its aspect ratio — and `border-radius: 100%` on a non-square element draws an **ellipse**, not a circle. So fixing the line-height can be what finally makes a badge look lopsided.
+
+After you pair a `line-height`, check the same rule for `border-radius: 100%` and replace it with `border-radius: 100px` for a pill, or `border-radius: 50%` for a circle on an element you know is square. This mostly bites badges, tags, chart labels, and notification counters.
 
 ---
 
@@ -295,8 +337,19 @@ If your dark mode flips `--color-neutral-0` through `--color-neutral-10` (swappi
     --color-border-subtle:       var(--color-neutral-2);
     --token-semantics-primary-base: var(--color-neutral-10); /* links + primary */
     --token-semantics-primary-900:  var(--color-neutral-9);  /* link/primary hover */
+    --token-icon-subtlest:          var(--color-neutral-6);  /* framework icons */
+
+    /* Feedback surfaces — these stay light without an explicit override */
+    --token-bg-info-subtle-default:    var(--color-neutral-2);
+    --token-bg-danger-subtle-default:  #3d1a2a;
+    --token-bg-success-subtle-default: #1a3d2a;
+    --token-bg-warning-subtle-default: #3d3a1a;
 }
 ```
+
+**Point at the ramp, don't repeat the hex.** When a colour you need is already a step in your flipped ramp, write `var(--color-neutral-N)` rather than pasting the hex. Both render the same today, but the variable keeps following the ramp if you ever retune it, and it makes the intent readable. Reserve a literal hex for a tint no step actually holds — the feedback surfaces above are a fair example.
+
+**For a colour that must *not* flip**, find its hex in both ramps and point each mode at whichever step holds it there. A navy that is `neutral-6` in light may well be `neutral-4` after the flip, so the two blocks name different steps on purpose. Conversely, if the colour *should* flip with everything else, name the same step in both blocks and let the ramp do the work.
 
 ### Button labels disappear in dark mode
 
@@ -317,6 +370,18 @@ Do **not** set `--osui-btn-color: var(--color-text-dark)` on all `.btn` — that
 ```css
 .dark-mode .btn.background-white {
     --osui-btn-color: var(--color-text-dark);
+}
+```
+
+**A transparent outlined button is the opposite case.** It has no light fill, so `--color-text-dark` makes the label vanish — and its border token is too dark to see against a dark surface. Keep the fill transparent through every state and put both the border and the label on a light step:
+
+```css
+.dark-mode .btn.btn-transparent-with-border {
+    --osui-btn-background: transparent;
+    --osui-btn-hover-background: transparent;
+    --osui-btn-active-background: transparent;
+    --osui-btn-border-color: var(--color-neutral-10);
+    --osui-btn-color: var(--color-neutral-10);
 }
 ```
 
@@ -341,6 +406,7 @@ a[data-link]:hover { color: var(--color-text-subtle); }
 - Replace hardcoded colour literals with `--color-*` roles or `--token-*` values where a match exists.
 - Prefer `--color-text` over `--color-neutral-9` for body text — the role flips in dark mode, the neutral step does not.
 - Blank-slate icons changed from primary to grey (`--color-text-disabled`). Override with `.blank-slate-icon { color: var(--color-primary); }` if needed.
+- Your own `.icon` elements don't read `--token-icon-subtlest`, so setting that token moves the framework's icons and leaves yours behind. Set `.icon { color: … }` as well, and `color: inherit` for icons inside buttons or coloured blocks that set their own text colour.
 
 ---
 
@@ -447,3 +513,5 @@ Override the tokens directly:
 2. **Expect silent failures, not build errors.** A declaration that reads a retired variable is simply dropped. Those show up as "the page looks slightly off" rather than something obviously broken.
 3. **Delete, don't port, the `!important` overrides.** Most of them existed because there was no variable. Check the CSS API Reference for the component first.
 4. **Check the Storybook theme toggle.** Switch between the new theme and the deprecated theme snapshot to confirm whether a visual difference is intended.
+5. **Then walk the screens — grepping can't find everything.** The [framework defaults](#framework-defaults-that-changed) changed under widgets your CSS never mentions, so nothing in your stylesheet points at them. Open each screen side by side with the old app, in both light and dark mode, and give the interaction states their own pass — hover, selected, and disabled are where most of these show up.
+6. **Expect to find unrelated bugs, and fix them separately.** A migration is usually the first time anyone reads the whole stylesheet end to end. Two that turn up often: a bare colour in a shorthand, like `border: var(--color-green)`, which is invalid and makes the browser drop the whole declaration so there's no border at all; and a class selector missing its leading dot, like `my-tag { … }`, which has quietly never applied. Neither is theme breakage — keep them out of the migration commit so the diff stays reviewable.

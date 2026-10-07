@@ -30,6 +30,7 @@ Before diving in, search the customer's CSS for these patterns to identify which
 | Dark block overrides 3+ `--color-neutral-*` steps (ramp flip) | Role variables (`--color-text`, `--color-background-header`, …) no longer cascade from neutrals — text, buttons, and surfaces go invisible | H (Section 2, neutral ramp flip) |
 | Custom dark class (`.dark-mode`) without `.os-dark-theme` | ~447 `--token-*` overrides don't fire — feedback messages, inputs, surfaces stay light | Section 6, Step 2d |
 | Blank-slate icons turned grey | `--osui-blank-slate-icon-color` changed from primary-adjacent to `--color-text-disabled` | Section 10 recipe |
+| A widget looks different from the classic app, and the custom CSS never mentioned it | The new theme changed a framework default — these do not show up in any search of the customer's CSS | Section 11 catalog, applied in Phase 2g |
 
 ---
 
@@ -49,7 +50,7 @@ The largest source of breakage. These variable families **no longer exist** at `
 | `--shadow-*` | `--shadow-s`, `--shadow-l` | `--token-elevation-*` (Section 3 mapping) |
 | `--font-size-*` | `--font-size-h1`, `--font-size-base` | `--token-font-size-*` (Section 3 mapping) |
 | `--border-size-*` | `--border-size-s` | `--token-border-size-*` (Section 3 mapping) |
-| `--color-{family}-{shade}` | `--color-red-dark`, `--color-indigo-light` | `--token-primitives-{family}-*` (Section 3 extended palette) |
+| `--color-{family}-{shade}` | `--color-red-dark`, `--color-indigo-lightest` | Section 3 extended palette — `lightest` and the bare family are often `--token-bg-extended-*` or a status role, not a primitive |
 | `--color-{status}-light` | `--color-error-light` | `--token-semantics-{role}-100` (Section 3 semantic shades) |
 | `--border-radius-circle` | `border-radius: var(--border-radius-circle)` | Use `border-radius: 50%` or `--border-radius-rounded` |
 
@@ -91,11 +92,14 @@ Each pattern's knobs are listed in the Storybook **CSS API Reference** page.
 | `.form-control[data-input]`, `.form-control[data-textarea]` | `.form-control` | `--osui-input-background`, `--osui-input-border-color`, `--osui-input-hover-border-color`, `--osui-input-border-radius`, `--osui-input-color` |
 | `.progress-wizard .wizard-item-icon`, `.wizard-item-icon-wrapper` | `.osui-wizard-item` | `--osui-wizard-icon-background`, `--osui-wizard-icon-border-color`, `--osui-wizard-connector-color`, `--osui-wizard-past-background`, `--osui-wizard-active-color` |
 | `[data-popup]` background | `.popup-dialog` | `--osui-popup-background` |
+| `.button-group-item.button-group-selected-item` | `.button-group-item` | `--osui-button-group-selected-background: var(--color-primary)`, `--osui-button-group-selected-color: var(--color-neutral-0)`, `--osui-button-group-selected-border-color: transparent`. Unselected text was `--color-primary` → `--osui-button-group-color`. A direct `background-color` on `.button-group-item` loses to the selected rule. The classic widget has no hover fill. Set `--osui-button-group-hover-background` to the unselected background, and on `.desktop .button-group-item.button-group-selected-item:hover` set the background back to `--osui-button-group-selected-background` — one hover knob feeds both states |
+| `.button-group` padding / joined capsule | `.button-group` | `--osui-button-group-container-background`, `--osui-button-group-container-border-radius`, `--osui-button-group-container-padding: 0`, `--osui-button-group-container-gap: 0`. The new widget insets the items; the old one did not. It is also `inline-block`, 32px tall, and 12px type. The classic item is 40px (`48px` on `.phone` / `.tablet`), `--font-size-s` (`--token-font-size-350`), and padded with `--space-base`. When the old group filled its parent, set `width: 100%` and `display: flex` (and `flex: 1` on the inner wrapper) so `inline-block` does not shrink it to the label. Set `--osui-button-group-height`, `--osui-button-group-font-size`, `--osui-button-group-padding-inline: var(--space-base)`, and `--osui-button-group-min-width: 0` |
+| `.osui-accordion-item` `border` / `:after` `border-width` | `.osui-accordion-item` | `--osui-accordion-item-border-width` (the divider is `border-block-end` reading this knob). `border: none` does not clear that longhand |
+| `.osui-range-slider .noUi-handle` background | `.osui-range-slider` | `--osui-range-slider-handle-background`. Drop handle `:before` / `:after` rules — those pseudos are `display: none` |
 
 **When the lookup does not give a clean swap:**
 
-- The variable is declared but never read (example: `--osui-accordion-item-border-radius`). Keep the property. `--osui-accordion-border-radius` only rounds the first and last item of the group, so a per-item `border-radius` can still need `!important` against those longhands.
-- The framework sets `display: none` on the pseudo and there is no knob (range-slider handle `:before` / `:after`). Drop the restyle. It cannot show.
+- The variable is declared but never read (example: `--osui-accordion-item-border-radius`). Keep the property. `--osui-accordion-border-radius` only rounds the first and last item of the group, so a per-item `border-radius` can still need `!important` against those longhands. The border-width knob above is read; the radius knob is not.
 - There is no knob (tick `height`, `.form-info-field`). Keep the direct rule and say so.
 
 ### Category C — Theme-layer role changes
@@ -131,14 +135,25 @@ Additionally, overriding `--color-primary` alone is no longer sufficient for but
 
 Use `--color-text-dark` instead when their inverted `--color-neutral-0` is not the dark text.
 
-**Default button text must NOT be forced dark.** Do not set `--osui-btn-color: var(--color-text-dark)` on all `.btn` in dark mode. The default `.btn` has a dark surface background (`--color-background-surface`) and needs light text. Only target buttons with explicitly light/white backgrounds:
+**Default button text must NOT be forced dark.** Do not set `--osui-btn-color: var(--color-text-dark)` on all `.btn` in dark mode. The default `.btn` has a dark surface background (`--color-background-surface`) and needs light text. Only target buttons whose fill stays light:
 
 ```css
 .dark-mode .btn.background-white,
-.os-dark-theme .btn.background-white,
+.os-dark-theme .btn.background-white {
+    --osui-btn-color: var(--color-text-dark);
+}
+```
+
+A transparent outlined button on a dark surface is the other case. Dark text disappears, and the default border token stays too dark to see. Keep the fill transparent and point the label and border at the light text step:
+
+```css
 .dark-mode .btn.btn-transparent-with-border,
 .os-dark-theme .btn.btn-transparent-with-border {
-    --osui-btn-color: var(--color-text-dark);
+    --osui-btn-background: transparent;
+    --osui-btn-hover-background: transparent;
+    --osui-btn-active-background: transparent;
+    --osui-btn-border-color: var(--color-neutral-10);
+    --osui-btn-color: var(--color-neutral-10);
 }
 ```
 
@@ -157,6 +172,20 @@ Do NOT use a blanket `.dark-mode .btn { --osui-btn-color: var(--color-text-dark)
 Framework rules now use `padding-block` / `padding-inline` / `margin-inline-start` / `inset-inline-start` etc. A custom override using `padding-left` on the same element has **no specificity relationship** with `padding-inline-start` — whichever comes later wins — so a partial physical override can silently do nothing.
 
 **Detection pattern:** custom rules targeting OSUI classes that use physical properties (`padding-left`, `padding-right`, `margin-left`, `margin-right`, `left`, `right`, `border-left`, `border-right`) where the framework now uses the logical equivalent.
+
+**Delete obsolete `.is-rtl` mirror patches.** A rule whose only job is swapping `left` and `right` under `.is-rtl` on a framework widget was compensating for physical positioning. The new theme uses `inset-inline-start` / `inset-inline-end`, which follow `dir="rtl"` on their own. Delete the patch. Do not rewrite it as logical properties — that restates the framework and can pin the widget to the wrong side.
+
+```css
+/* OLD — manual mirror. Delete both rules. */
+.is-rtl .input-with-icon.input-with-icon-right .input-with-icon-content-icon {
+    left: 0;
+    right: auto;
+}
+.is-rtl .input-with-icon.input-with-icon-left .input-with-icon-content-icon {
+    left: auto;
+    right: 0;
+}
+```
 
 ### Category H — Neutral ramp flip (roles no longer cascade)
 
@@ -182,8 +211,8 @@ In the **new theme**, roles resolve through `$token-*` variables that do **not**
 - **Missing header background** — `--color-background-header` still resolves to the light default
 - **Missing surface contrast** — `--color-background-surface` unchanged
 - **Invisible borders** — `--color-border` still resolves to its light value
-- **White feedback messages** — `--token-bg-info-subtle-default` and other feedback tokens stay at light values (see Section 6 — fix by adding `.os-dark-theme` or overriding the tokens manually)
-- **White active nav pill** — `.app-menu-links > a.active` gets `--token-bg-primary-subtle-default` (light blue) which stays light; text inside uses `--token-semantics-primary-base` which was overridden to white — white on light = invisible
+- **White feedback messages** — `--token-bg-info-subtle-default`, `--token-bg-danger-subtle-default`, `--token-bg-success-subtle-default`, and `--token-bg-warning-subtle-default` stay at light values. `.os-dark-theme` flips them to the generated dark palette, which is a different theme from a custom ramp. Set the four tokens in the customer's dark block so the banners match the brand with or without that class.
+- **Selected nav item lost its underline** — the classic current page is `border-block-end` in `--color-primary`. The new theme clears that border and a hover fill (`--token-bg-neutral-subtlest-hover`) can cover the active item. On a dark custom header that fill stays a light grey, so the label washes out. Restore the underline on `.active` and `.active:hover`; keep the fill for non-active hover only.
 - **Grey blank-slate icons** — `--osui-blank-slate-icon-color` defaults to `--color-text-disabled` (grey) in the new theme; was closer to primary in the old theme
 
 **Detection pattern:** a dark-mode block (`:root.dark-mode`, `:root.os-dark-theme`, `body.dark`, etc.) that overrides **3 or more** `--color-neutral-*` steps. This is the signature of a ramp-flip strategy.
@@ -203,16 +232,29 @@ In the **new theme**, roles resolve through `$token-*` variables that do **not**
     --color-text:                var(--color-neutral-10);  /* was neutral-9 in old theme */
     --color-text-subtle:         var(--color-neutral-8);
     --color-text-subtlest:       var(--color-neutral-7);
-    --color-background-header:   #141C4E;  /* or var(--header-color) if customer has a custom var */
+    --color-background-header:   var(--header-color); /* or var(--color-neutral-N) when they have no custom header var */
     --color-background-surface:  var(--color-neutral-1);
     --color-border:              var(--color-neutral-3);
     --color-border-subtle:       var(--color-neutral-2);
     --token-semantics-primary-base: var(--color-neutral-10);  /* links + primary color follow the flipped ramp */
     --token-semantics-primary-900:  var(--color-neutral-9);   /* link/primary hover state */
+    /* The ramp step that still holds the intended icon color in this mode. */
+    --token-icon-subtlest:       var(--color-neutral-N);
+
+    /* Feedback banners. Point at a ramp step or an existing custom var.
+       A hex is only for a tint that is not already declared in this block. */
+    --token-bg-info-subtle-default:    var(--color-neutral-2);
+    --token-bg-danger-subtle-default:  var(--existing-var); /* or a hex if no variable already holds that color */
+    --token-bg-success-subtle-default: var(--color-neutral-N);
+    --token-bg-warning-subtle-default: var(--color-neutral-N);
 }
 ```
 
-The exact neutral step for each role depends on the customer's palette. Use the highest-contrast readable step for text (usually the one that flipped to near-white) and the closest-to-background step for surfaces/borders.
+**Icons.** Framework icons moved from `--color-neutral-6` to `--token-icon-subtlest`. App icons with class `.icon` do not read that token; set `color: var(--color-neutral-N)` on `.icon`, and `color: inherit` on icons inside buttons, colored cards, and other blocks that set their own text color. When the icon color follows the flipped ramp, use the same `--color-neutral-N` in both modes. Use a different step in dark only when the hex must stay the same, because a flip moves that hex onto another step. Do not paste the hex.
+
+**A color that must not flip.** The same rule applies to text or a fill on a custom block. Set `color` and, when descendants read it, `--color-text` to the `--color-neutral-N` that holds that hex in that mode. A single `var(--color-neutral-N)` on `:root` changes after the dark ramp flip.
+
+The exact neutral step for each role depends on the customer's palette. Map the four `--token-bg-*-subtle-default` feedback tokens to that palette too — the generated `.os-dark-theme` values are a different dark theme, so adding the class does not reproduce a custom brand. Use the highest-contrast readable step for text (usually the one that flipped to near-white) and the closest-to-background step for surfaces/borders. A feedback tint that is not a ramp step and not an existing custom variable keeps one hex; that hex is the definition.
 
 **`--token-semantics-primary-base` is a shared root.** Overriding it changes both link color AND `--color-primary` (buttons, focus rings, etc.) because they all resolve through the same token. This is usually what ramp-flip customers want — their `--color-primary` already points at a neutral step that flipped. But if a customer needs links and primary to diverge in dark mode, skip the token override and add a direct rule instead:
 
@@ -305,19 +347,31 @@ The exact neutral step for each role depends on the customer's palette. Use the 
 
 All `--color-{family}-{shade}` variables are **retired** (e.g. `--color-red-dark`, `--color-indigo-light`). The palette itself was also recoloured, so even the base hex values changed.
 
-Replacement by shade:
+Replacement by shade. Intermediate shades are primitives. `lightest` and the bare family name are not — they bind to a status role or a `--token-bg-extended-*` token:
 
 | Old shade | Replacement token pattern |
 |---|---|
-| `lightest` | `--token-bg-{role}-subtle-default` (e.g. `red` → `--token-bg-danger-subtle-default`) |
+| `lightest` | Status role, or `--token-bg-extended-{family}-subtle-default`. See the family table below |
 | `lighter` | `--token-primitives-{family}-300` |
 | `light` | `--token-primitives-{family}-500` |
-| _(base)_ | `--token-bg-{role}-base-default` (e.g. `green` → `--token-bg-success-base-default`) |
+| _(base)_ | Status role, or `--token-bg-extended-{family}-base-default`. See the family table below |
 | `dark` | `--token-primitives-{family}-800` |
 | `darker` | `--token-primitives-{family}-900` |
 | `darkest` | `--token-primitives-{family}-1000` |
 
-Family renames in the token package: **`grape` → `purple`**, **`cyan` → `aqua`**, **`error` → `danger`**.
+`lightest` and the bare family, from `src/scss/00-abstract/_setup-global-vars.scss`:
+
+| Family | `lightest` | bare family |
+|---|---|---|
+| red | `--token-bg-danger-subtle-default` | `--token-bg-danger-base-default` |
+| yellow | `--token-bg-warning-subtle-default` | `--token-bg-warning-base-default` |
+| green | `--token-bg-success-subtle-default` | `--token-bg-success-base-default` |
+| blue | `--token-bg-info-subtle-default` | `--token-bg-info-base-default` |
+| orange, lime, teal, indigo, violet, pink | `--token-bg-extended-{family}-subtle-default` | `--token-bg-extended-{family}-base-default` |
+| cyan | `--token-primitives-aqua-100` | `--token-primitives-aqua-900` |
+| grape | `--token-primitives-purple-100` | `--token-primitives-purple-800` |
+
+Family renames in the token package: **`grape` → `purple`**, **`cyan` → `aqua`**, **`error` → `danger`**. Cyan's intermediate shades bind to teal primitives, not aqua.
 
 > **Prefer the semantic role over the family.** `--color-red` was a literal colour. Its replacement is usually `--color-error` (theme role) or `--token-bg-danger-base-default` (token). Route through the role and the CSS follows any future theme; hardcode a family primitive and it won't.
 
@@ -428,6 +482,8 @@ The new theme ships a generated dark theme (`.os-dark-theme` class on `<html>`) 
 
 The migration is a **two-phase workflow**: auto-fix first, then interactive review. All work is done in a **working file** so progress is preserved between steps.
 
+Scanning the customer's CSS only finds rules they wrote. The new theme also changes framework defaults on widgets their sheet never mentions. Step 2g inventories the widgets the app actually uses and walks the Section 11 catalog against that set, even when the search in Section 1 comes back empty. Do not wait for the customer to name each one.
+
 ### Working file
 
 At the start of the migration, write the customer's CSS to a temporary working file in the **system temp directory** (works on macOS, Linux, and Windows):
@@ -480,6 +536,14 @@ A replacement is auto-fixable **only** when:
 
 Everything else goes to Phase 2.
 
+#### Also report — pre-existing CSS bugs
+
+These are not theme breakage, so never auto-fix them, but a migration pass is when someone finally reads the whole stylesheet. List them with the Phase 1 summary as a separate "unrelated bugs found" group and let the user decide.
+
+- **A bare color in a `border` / `outline` shorthand** — `border: var(--color-green)` is invalid, so the browser drops the whole declaration and the element has no border at all. Usually the author meant `border-color`.
+- **A class selector missing its leading dot** — `requeststatus-tag { … }` targets an element type that does not exist, so the rule never applies. Compare against the neighbouring selectors to confirm it was meant to be a class.
+- **A property that lost to a later duplicate** in the same rule, and vendor prefixes with no unprefixed fallback.
+
 ### Phase 2 — Interactive review (one group at a time)
 
 Present review-needed findings **one category at a time**. Show the table for that category, ask the user, **wait for their response**, apply their choices, then move to the next category. Never present multiple categories in the same message.
@@ -505,7 +569,7 @@ The suggested `line-height` follows this heuristic:
 
 #### Step 2c — Physical vs logical properties (Category E)
 
-For each physical property on an OSUI/framework selector, present the logical equivalent. Show which `.is-rtl` rules become unnecessary after conversion. Ask: "Should I convert these to logical properties? (yes/no/pick which ones)"
+For each physical property on an OSUI/framework selector, present the logical equivalent. Show which `.is-rtl` rules become unnecessary after conversion. Separately, list `.is-rtl` rules that only swap `left` and `right` on a framework widget the new theme already positions with logical properties (`.input-with-icon` is the usual case) and propose deleting them. Ask: "Should I convert these to logical properties, and delete the obsolete RTL patches? (yes/no/pick which ones)"
 
 **Wait for the user's response. Apply their choices to the working file. Then proceed to Step 2d.**
 
@@ -519,7 +583,7 @@ If the CSS uses a dark-mode selector other than `.os-dark-theme`, present the op
 
 If the customer chooses Option A, flag that they will need to manually override every `--token-*` that their dark mode exposes (feedback messages, dropdowns, inputs, etc.). This is significantly more work than adding the class.
 
-In the same step, check button contrast. If the dark block makes `--color-primary` light (directly, or because it points at a neutral step that flips light), propose setting `--osui-btn-primary-color` **on `.btn-primary`** (not on `:root` — see Category C note). Also propose `--osui-btn-color: var(--color-text-dark)` on `.btn.background-white` and any other light-background button variants under the dark selector.
+In the same step, check button contrast. If the dark block makes `--color-primary` light (directly, or because it points at a neutral step that flips light), propose setting `--osui-btn-primary-color` **on `.btn-primary`** (not on `:root` — see Category C note). Propose `--osui-btn-color: var(--color-text-dark)` on `.btn.background-white` and other buttons whose fill stays light. A transparent outlined button on a dark surface instead gets `--osui-btn-background: transparent`, `--osui-btn-color`, and `--osui-btn-border-color` set to the light text step.
 
 Ask: "Which dark-mode approach do you want, and should I apply the button-label fix?"
 
@@ -555,12 +619,43 @@ Present a table like:
 | `--color-border-subtle` | `var(--color-neutral-2)` | Subtle/divider borders |
 | `--token-semantics-primary-base` | `var(--color-neutral-10)` | Link color + primary (framework hardcodes links to this token, not `--color-primary`) |
 | `--token-semantics-primary-900` | `var(--color-neutral-9)` | Link hover + primary hover state |
+| `--token-icon-subtlest` | `var(--color-neutral-N)`. Same step in both modes when the icon follows the flip; a different dark step only when the hex must stay the same | Framework icons. Also set `.icon { color: var(--color-neutral-N) }` — plain icons do not read this token. Do not paste the hex |
+| `--token-bg-info-subtle-default` | `var(--color-neutral-2)` | Info feedback banner. Generated `.os-dark-theme` is a different palette |
+| `--token-bg-danger-subtle-default` | `var(--existing-var)` or one hex | Error feedback banner. Hex only when no variable already holds that color |
+| `--token-bg-success-subtle-default` | `var(--color-neutral-N)` or one hex | Success feedback banner |
+| `--token-bg-warning-subtle-default` | `var(--color-neutral-N)` or one hex | Warning feedback banner |
 
 Also check whether any custom variables need wiring to framework roles in the `:root` (light) block too (e.g. `--color-background-header: var(--header-color)`).
 
 Ask: "Should I add these role overrides to the dark block? (yes/no/pick which ones)"
 
-**Wait for the user's response. Apply their choices to the working file.**
+**Wait for the user's response. Apply their choices to the working file. Then proceed to Step 2g.**
+
+#### Step 2g — Framework defaults the custom CSS never mentioned
+
+A scan of the customer's CSS only finds rules they wrote. These are changes to framework defaults, so they fire on widgets the sheet never mentions. Drive this step from an inventory, not from the search results.
+
+**Build the inventory first.**
+
+1. **From the stylesheet** — every framework selector the sheet touches, including ones it only restyles lightly.
+2. **From the module**, when an OML or the running app is available — every widget the app places and never restyled. With the OutSystems CLI: `oml query <file> -` with `Root { MobileFlows { Name Nodes { Name } } }` for the screen list, then read a screen's widgets. A widget that is placed but unstyled still renders with the new defaults.
+3. If neither is available, ask which patterns the app uses, and offer the catalog list.
+
+Then take the Section 11 catalog rows for the inventoried widgets only. Propose one widget at a time, wait, apply, move on. After each apply, tell the customer to reload the working file and compare that widget with the classic app in **both** modes.
+
+Ask, per widget: "The classic app shows X. The new theme shows Y. Should I restore the classic behavior? (yes/no)"
+
+**Color resolution — apply to every value written in this step and Step 2f.**
+
+1. Find the hex in the light ramp and in the dark ramp.
+2. If one `--color-neutral-N` holds it in that mode, use `var(--color-neutral-N)`. Do not paste the hex.
+3. If the color should follow the flip, it is the same step in both modes.
+4. If the hex must stay the same, light and dark name different steps, because the flip moved it.
+5. A hex is only for a tint that is not already a variable in that block.
+
+**Wait for the user's response. Apply their choice to the working file.**
+
+**If a widget turns out to differ in a way the catalog does not list, add a row to Section 11.** Do not leave the fix only in the customer's stylesheet — the next migration will miss it.
 
 ### Phase 3 — Final output
 
@@ -722,17 +817,29 @@ a[data-link]:focus {
 
 ### "My active nav link is invisible in dark mode"
 
-The active menu pill uses `--token-bg-primary-subtle-default` (light blue) for its background and `--token-semantics-primary-base` for text. Without `.os-dark-theme`, the background stays light. If `--token-semantics-primary-base` was overridden to white, it's white text on a light pill — invisible.
+The classic top menu marks the current page with an underline, `border-block-end: var(--token-border-size-050) solid var(--color-primary)`, not a filled pill. The new theme clears that border (`border-block-end: transparent` on `.layout:not(.layout-side) .app-menu-links a.active`, and `border-block-end: none` under `.header-navigation`) and paints a hover fill. On a dark custom header that fill stays a light grey, so the label washes out.
 
-**Best fix:** add `.os-dark-theme` alongside the custom dark class — the token flips to a dark blue automatically.
-
-**Targeted fix** (without `.os-dark-theme`):
+Keep the hover fill on links that are not active. On `.active` and `.active:hover`, clear the background and restore the underline. `.desktop .header-navigation .app-menu-links > a.active:hover` beats a plain `.active` rule, so include `:hover`.
 
 ```css
-.dark-mode .app-menu-links > a.active,
-.os-dark-theme .app-menu-links > a.active {
-    background-color: rgba(255, 255, 255, 0.15);
-    color: var(--color-neutral-10);
+:root.dark-mode,
+:root.os-dark-theme {
+    --token-bg-neutral-subtlest-hover: rgba(255, 255, 255, 0.15);
+}
+
+.dark-mode .desktop .header-navigation .app-menu-links > a:hover,
+.os-dark-theme .desktop .header-navigation .app-menu-links > a:hover {
+    background-color: var(--token-bg-neutral-subtlest-hover);
+    color: var(--color-text);
+}
+
+.layout:not(.layout-side) .app-menu-links a.active,
+.desktop .header-navigation .app-menu-links > a.active,
+.desktop .header-navigation .app-menu-links > a.active:hover {
+    background-color: transparent;
+    border-block-end: var(--token-border-size-050) solid var(--color-primary);
+    border-radius: 0;
+    color: var(--color-primary);
 }
 ```
 
@@ -770,12 +877,19 @@ In the new theme, roles go through tokens and **no longer cascade from neutrals*
     --color-text:                var(--color-neutral-10);
     --color-text-subtle:         var(--color-neutral-8);
     --color-text-subtlest:       var(--color-neutral-7);
-    --color-background-header:   #141C4E;  /* wire custom var or use hex */
+    --color-background-header:   var(--header-color);
     --color-background-surface:  var(--color-neutral-1);
     --color-border:              var(--color-neutral-3);
     --color-border-subtle:       var(--color-neutral-2);
     --token-semantics-primary-base: var(--color-neutral-10);  /* links + primary */
     --token-semantics-primary-900:  var(--color-neutral-9);   /* link/primary hover */
+    --token-icon-subtlest:       var(--color-neutral-N); /* same step as light when the icon follows the flip */
+
+    /* Feedback surfaces. var() when the color is already in this block; one hex otherwise. */
+    --token-bg-info-subtle-default:    var(--color-neutral-2);
+    --token-bg-danger-subtle-default:  var(--existing-var);
+    --token-bg-success-subtle-default: var(--color-neutral-N);
+    --token-bg-warning-subtle-default: var(--color-neutral-N);
 }
 ```
 
@@ -801,7 +915,42 @@ Override the tokens directly:
 
 ---
 
-## 11. What NOT to flag
+## 11. Widget catalog — classic vs new defaults
+
+Step 2g walks this table. Each row is a change to a **framework default**, so it applies whether or not the customer's CSS mentions the widget.
+
+This table carries only the behavioral deltas. For the full knob list per component, read the root selector in `src/scss/` or the generated `stories/_helpers/css-api-manifest.ts` (rendered as the Storybook **CSS API Reference** page). Never guess a knob name — confirm it is actually read in `src/scss/` before writing it.
+
+Four deltas repeat across the library. Recognise the shape and the fix follows:
+
+- **A hover fill where classic had none.** Classic changed only the text color on hover. The new widget paints `$token-bg-neutral-subtlest-*`. If the customer's app had no hover wash, set the hover knob to the resting background.
+- **The selected mark changed.** Classic marked the current item with a border, an underline, or a primary tint. The new widget often uses a neutral fill, or drops the mark. Restore it on both `.active` / selected **and** its `:hover`, because the framework's `:hover` rule is more specific.
+- **Icon color moved to a token.** `--token-icon-subtlest` drives framework icons; a plain `.icon` does not read it.
+- **Size and padding moved to knobs.** Heights, paddings, and type sizes now come from `--osui-*` defaults that differ from the classic px values.
+
+| Widget | Classic | New default | Restore with |
+|---|---|---|---|
+| Button group | No hover fill. Item 40px (48px phone/tablet), `--font-size-s`, `--space-base` padding, group fills its parent | Hover fill, inset container padding and gap, `inline-block`, 32px, 12px type | Both Category B button-group rows |
+| Top menu link | Current page is `border-block-end` in `--color-primary` | Border cleared; hover fill can cover `.active` | Section 10 nav recipe |
+| Tabs | Hover changes text only (`neutral-8` → `neutral-10`). Active is `neutral-10` + text-shadow | `--osui-tabs-header-item-hover-background` adds a fill; active is `$token-text-select` | Set the hover knob to transparent; `--osui-tabs-header-item-color-active` to the classic step. Indicator stays `--osui-tabs-indicator-color` |
+| Pagination | Active is a `--color-primary` border with primary text | `--osui-pagination-active-background` neutral fill, `--color-border` border, `--color-text` label | `--osui-pagination-active-background: transparent`, `--osui-pagination-active-border-color` and `--osui-pagination-active-color` to `var(--color-primary)` |
+| Section index | Active is `neutral-9` + semi-bold with a `--color-primary` `::before` bar. No hover fill | Active is `--color-primary-selected`; hover and press backgrounds added | `--osui-section-index-item-hover-background` / `-press-background` to transparent; `--osui-section-index-item-active-color` and `-active-indicator-color` to the classic step |
+| List item | Selected row is filled `--color-primary-lightest`; selected icon is `--color-primary` | `--osui-list-item-selected-background` equals the base background — the fill is gone. Selected icon is `$token-icon-select`. Hover and press fills added | `--osui-list-item-selected-background` and `--osui-list-item-selected-icon-color` |
+| Table | Header is `neutral-0` on a `neutral-4` border, `neutral-8` label | `--osui-table-header-background` is `$token-bg-neutral-subtle-default`, label `--color-text-subtlest`; selected row is `--color-primary-selected`; stripe and hover knobs added | The `--osui-table-*` knobs |
+| Card | `neutral-0` fill, `neutral-4` border, soft radius, `--space-m` padding | Surface fill, `$token-border-subtle`, xl radius, `$token-scale-600` padding, `--osui-card-shadow: none` | The `--osui-card-*` knobs |
+| Bottom bar | Item `neutral-8`, active `--color-primary`; icon inherits the item color | Active color unchanged, but the icon has its own `--osui-bottom-bar-item-icon-color` from `$token-icon-subtlest` | `--osui-bottom-bar-item-icon-color` |
+| Icons | `.icon` inherits text color | Framework icons read `--token-icon-subtlest`; a plain `.icon` ignores it | Category H icon row, plus `.icon { color: var(--color-neutral-N) }` and `color: inherit` on icons inside buttons, colored cards, and other blocks that set their own text color |
+| Outlined transparent button | Border and label follow the text color | Dark label guidance sets `--color-text-dark`, invisible on a dark surface; the border token stays too dark | The Category C outline rule |
+| Accordion item | `border` / `:after` `border-width` | Divider is `border-block-end` reading a knob | `--osui-accordion-item-border-width` |
+| Range slider | Handle styled directly, with `:before` / `:after` | Pseudos are `display: none` | `--osui-range-slider-handle-background`; drop the pseudo rules |
+| Feedback message, alert, notification, tag, badge, user avatar | Status and family colors from `--color-{family}-{shade}` | Status roles and `--token-bg-extended-*`; the four `--token-bg-*-subtle-default` stay light without `.os-dark-theme` | Category A extended-palette rows; Step 2f feedback tokens |
+| Switch, checkbox, radio button, input, dropdown, upload | Sized and colored by direct properties | Each has its own `--osui-*` size, fill, border, and checked knobs | The widget's knobs — a direct property loses to them |
+| Carousel | Card content sized by the customer's own `min-height` on the wrapper | The card gained padding and a taller minimum, so a classic `min-height` now clips the content | Re-measure the rendered card and raise the wrapper's `min-height`. A hand-set height anywhere around a carousel, list, or card grid is worth re-checking for the same reason |
+| Date / time / month picker, search, overflow menu, action sheet, bottom sheet, tooltip, balloon, popover, popup, sidebar, timeline, breadcrumbs, wizard, progress, rating, counter, blank slate, chat message, gallery, master detail | Direct overrides on the pattern class | Each exposes `--osui-*` surface, text, icon, and radius knobs | Look the knob up before proposing; several of these also gained a hover fill |
+
+---
+
+## 12. What NOT to flag
 
 - `var(--color-primary)`, `var(--space-base)`, `var(--border-radius-soft)` and other still-valid variables (Section 3).
 - Inline styles set by the OutSystems platform runtime — only flag CSS the customer authored.
